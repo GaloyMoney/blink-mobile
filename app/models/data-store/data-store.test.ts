@@ -18,6 +18,14 @@ test("fiat accounts have balance and currency", () => {
   expect(instance.balance).toBe(100)
 })
 
+test("fiat updates correctly from server", async () => {
+  const instance: FiatAccount = FiatAccountModel.create({})
+  
+  await instance.update()
+
+  expect(instance.transactions).toHaveLength(20)
+})
+
 test("btc accounts have balance and currency", () => {
   const instance: CryptoAccount = CryptoAccountModel.create({balance: 100})
   

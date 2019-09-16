@@ -2,6 +2,7 @@ import { Instance, SnapshotOut, types, flow } from "mobx-state-tree"
 import { Api, GetPriceResult } from "../../services/api"
 import { CurrencyType } from "./CurrencyType"
 import { AccountType } from "../../screens/accounts-screen/AccountType"
+import { Firebase } from "../../services/firebase"
 
 /**
  * Model description here for TypeScript hints.
@@ -25,13 +26,29 @@ export const BaseAccountModel = types
 
 export const FiatFeaturesModel = BaseAccountModel
     .props ({
-        type: types.optional(
+        type: types.optional(  // TODO check if this succesfully forced Fiat / Crypto classes?
             types.refinement(
                 types.enumeration<AccountType>("Account Type", Object.values(AccountType)),
                 value => value == AccountType.Checking || value == AccountType.Saving
             ), 
             AccountType.Checking
         )
+    })
+    .actions(self => {
+        const update = flow(function*() {
+            const firebase_api = new Firebase()
+            firebase_api.setup()
+            const result = yield firebase_api.getTransactions()
+
+            if ("transactions" in result) {
+                self.transactions = result.transactions
+            } else {
+                console.tron.warn("issue with firebase API")
+                // TODO error management
+            }
+        })
+
+        return  { update }
     })
     .views(self => ({
         get currency() {
