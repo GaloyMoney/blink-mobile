@@ -153,7 +153,7 @@ export class AccountDetailScreen extends React.Component<AccountDetailScreenProp
       <Screen>
         <BalanceHeader
           amount={store.accounts.filter(item => item.type === account)[0].balance}
-          eq_dollar={store.balances[account]}
+          eq_dollar={store.usd_balances[account]}
           currency={currency}
         />
         <SectionList

@@ -6,7 +6,7 @@ import { AccountType } from "../../screens/accounts-screen/AccountType"
 /**
  * Model description here for TypeScript hints.
  */  
-export const Transaction = types
+export const TransactionModel = types
     .model ("Transaction", {
         name: types.string,
         icon: types.string,
@@ -16,24 +16,55 @@ export const Transaction = types
         // TODO add status
     })
 
-export const Account = types
+export const BaseAccountModel = types
     .model ("Account", {
-        transactions: types.optional(types.array(Transaction), []),
+        transactions: types.optional(types.array(TransactionModel), []),
         balance: 0,
-        type: types.enumeration<AccountType>("Account Type", Object.values(AccountType)),
-        currency: types.enumeration<CurrencyType>("Currency Type", Object.values(CurrencyType)),
     })
-    .actions(self => ({
-        add(transaction) {
-            self.transactions.push(transaction)
-        },
 
+
+export const FiatFeaturesModel = BaseAccountModel
+    .props ({
+        type: types.optional(
+            types.refinement(
+                types.enumeration<AccountType>("Account Type", Object.values(AccountType)),
+                value => value == AccountType.Checking || value == AccountType.Saving
+            ), 
+            AccountType.Checking
+        )
+    })
+    .views(self => ({
+        get currency() {
+            return CurrencyType.USD
+        },
     }))
 
-  
-export const Rates = types
+export const CryptoFeaturesModel = BaseAccountModel
+    .props ({
+        type: types.optional(
+            types.refinement(
+                types.enumeration<AccountType>("Account Type", Object.values(AccountType)),
+                value => value == AccountType.Bitcoin
+            ),
+            AccountType.Bitcoin
+        )
+    })
+    .views(self => ({
+        get currency() {
+            return CurrencyType.BTC
+        },
+    }))
+
+
+export const FiatAccountModel = types.compose(BaseAccountModel, FiatFeaturesModel)
+export const CryptoAccountModel = types.compose(BaseAccountModel, CryptoFeaturesModel)
+
+export const AccountModel = types.union(FiatAccountModel, CryptoAccountModel)
+
+
+export const RatesModel = types
     .model("Rates", {
-        USD: 1,
+        USD: 1,  // TODO is there a way to have enum as parameter?
         BTC: 0.0001, // Satoshi to USD default value
     })
     .actions(self => {
@@ -51,25 +82,26 @@ export const Rates = types
 
         return  { update }
     })
-  
+
+
 export const DataStoreModel = types
     .model("DataStore", {
-        accounts: types.optional(types.array(Account), []),
-        rates: types.optional(Rates, {})
+        accounts: types.optional(types.array(AccountModel), []),
+        rates: types.optional(RatesModel, {})
     })
     .views(self => ({
-        get total_balance() { // in USD
+        get total_usd_balance() { // in USD
             return self.accounts.reduce((balance, account) => account.balance * self.rates[account.currency] + balance, 0)
         },
 
-        get balances() { // return an Object mapping account to USD balance
-            let obj = {}
+        get usd_balances() { // return an Object mapping account to USD balance
+            const balances = {}
 
             self.accounts.forEach((account) => {
-                obj[account.type] = account.balance * self.rates[account.currency]
+                balances[account.type] = account.balance * self.rates[account.currency]
             })
         
-            return obj
+            return balances
         }
     }))
 
@@ -83,7 +115,16 @@ export const DataStoreModel = types
 
 type DataStoreType = Instance<typeof DataStoreModel>
 export interface DataStore extends DataStoreType {}
+
 type DataStoreSnapshotType = SnapshotOut<typeof DataStoreModel>
 export interface DataStoreSnapshot extends DataStoreSnapshotType {}
 
 
+type FiatAccountType = Instance<typeof FiatAccountModel>
+export interface FiatAccount extends FiatAccountType {}
+
+type CryptoAccountType = Instance<typeof CryptoAccountModel>
+export interface CryptoAccount extends CryptoAccountType {}
+
+type RatesType = Instance<typeof RatesModel>
+export interface Rates extends RatesType {}
