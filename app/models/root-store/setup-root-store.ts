@@ -1,7 +1,8 @@
 import { onSnapshot } from "mobx-state-tree"
-import { RootStoreModel, RootStore, defaultStoreState } from "./root-store"
+import { RootStoreModel, RootStore } from "./root-store"
 import { Environment } from "../environment"
 import * as storage from "../../utils/storage"
+import { defaultStoreState } from "./default-state"
 
 /**
  * The key we'll be saving our state as within async storage.
@@ -36,8 +37,8 @@ export async function setupRootStore() {
     // data = (await storage.load(ROOT_STATE_STORAGE_KEY)) || {}  // TODO: get back to this when store is dynamic 
     // rootStore = RootStoreModel.create(data, env)
 
-    rootStore = RootStoreModel.create(defaultStoreState, env)
-    // rootStore = RootStoreModel.create({}, env)
+    // rootStore = RootStoreModel.create(defaultStoreState, env)
+    rootStore = RootStoreModel.create({}, env)
 
   } catch (e) {
     // if there's any problems loading, then let's at least fallback to an empty state
