@@ -102,11 +102,18 @@ export class AccountDetailScreen extends React.Component<AccountDetailScreenProp
   };
 
   render() {
-    let account = this.props.navigation.getParam("account"); // FIXME how to pass this properly?
     let store = this.props.dataStore;
-    var currency = store.accounts.filter(item => item.type === account)[0].currency
 
-    let transactions = store.accounts.filter(item => item.type === account)[0].transactions;
+    let accountType = this.props.navigation.getParam("account"); // FIXME how to pass this properly?
+    let accountStore = store.accounts.filter(item => item.type === accountType)
+
+    if (accountStore.length === 0) {
+      return <Text>It's empty in here</Text>
+    }
+
+    var currency = accountStore[0].currency
+
+    let transactions = accountStore[0].transactions;
     transactions.slice().sort((a, b) => (a.date < b.date ? -1 : 1)); // warning without slice?
 
     let transactions_set = new Set(transactions);
@@ -118,19 +125,19 @@ export class AccountDetailScreen extends React.Component<AccountDetailScreenProp
     );
     
     let transactions_included = new Set([...today, ...yesterday])
-    let not_included_set = new Set(
+    let not_yet_included_set = new Set(
       [...transactions_set].filter(x => !transactions_included.has(x))
     );
 
-    let this_month = Array.from(not_included_set).filter(
+    let this_month = Array.from(not_yet_included_set).filter(
       tx => sameMonth(tx.date, new Date())); // FIXME wrong if first day of the month
 
     transactions_included = new Set([...today, ...yesterday, ...this_month]); //FIXME DRY
-    not_included_set = new Set(
+    not_yet_included_set = new Set(
       [...transactions_set].filter(x => !transactions_included.has(x))
     );
 
-    let before = Array.from(not_included_set);
+    let before = Array.from(not_yet_included_set);
 
     let sections = [];
     if (today.length > 0) {
@@ -152,14 +159,14 @@ export class AccountDetailScreen extends React.Component<AccountDetailScreenProp
     return (
       <Screen>
         <BalanceHeader
-          amount={store.accounts.filter(item => item.type === account)[0].balance}
-          eq_dollar={store.usd_balances[account]}
+          amount={accountStore[0].balance}
+          eq_dollar={store.usd_balances[accountType]}
           currency={currency}
         />
         <SectionList
           renderItem={({ item, index, section }) => (
             <WithNavigationAccountDetailItem 
-            account={account} currency={currency} {...item} />
+            account={accountType} currency={currency} {...item} />
           )}
           renderSectionHeader={({ section: { title } }) => (
             <Text style={styles.headerSection}>{title}</Text>
