@@ -1,5 +1,4 @@
 import { AccountType } from "../../screens/accounts-screen/AccountType"
-import { CurrencyType } from "../data-store/CurrencyType"
 
 export const defaultDataStore = {
   accounts: [{

@@ -56,7 +56,7 @@ const AccountItem = inject("dataStore")(observer((props) => {
               <Icon name={props.icon} color={color.primary} size={28} />
               <Text style={styles.accountTypeStyle}>{props.account}</Text>
               <Text style={styles.accountAmount}>
-                  {currency(props.dataStore.balances[props.account],
+                  {currency(props.dataStore.usd_balances[props.account],
                       { formatWithSymbol: true } ).format()}
               </Text>
           </View>
@@ -77,7 +77,7 @@ export class AccountsScreen extends React.Component<AccountsScreenProps, {}> {
   render () {
     return (
       <Screen>
-        <BalanceHeader amount={this.props.dataStore.total_balance} currency={CurrencyType.USD} />
+        <BalanceHeader amount={this.props.dataStore.total_usd_balance} currency={CurrencyType.USD} />
         <ScrollView>
           <FlatList
             data={this.menu}
