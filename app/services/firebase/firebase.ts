@@ -43,7 +43,8 @@ export class Firebase {
   }
 
   /**
-   * Gets price of BTC
+   * Gets list of Transaction for Checking
+   * TODO: Savings
    */
 
   async getTransactions(): Promise<any> {
@@ -59,6 +60,28 @@ export class Firebase {
     try {
         const transactions = response.data.transactions
         return { kind: "ok", transactions }
+    } catch {
+      return { kind: "bad-data" }
+    }
+  }
+
+  /**
+   * Gets list of Fiat Balances
+   */
+
+  async getBalances(): Promise<any> {
+    // make the api call
+    const response: ApiResponse<any> = await this.apisauce.get(`/getFiatBalances`)
+
+    // the typical ways to die when calling an api
+    if (!response.ok) {
+      return undefined // FIXME
+    }
+
+    // transform the data into the format we are expecting
+    try {
+        const balances = response.data
+        return { kind: "ok", balances }
     } catch {
       return { kind: "bad-data" }
     }
