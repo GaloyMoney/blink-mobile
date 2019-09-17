@@ -6,7 +6,7 @@ import { View, SectionList, StyleSheet } from "react-native";
 import { Text } from "../../components/text"
 import { Screen } from "../../components/screen"
 import { color } from "../../theme"
-import { NavigationScreenProps } from "react-navigation"
+import { NavigationScreenProps, withNavigationFocus } from "react-navigation"
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import { BalanceHeader } from "../../components/balance-header"
@@ -101,19 +101,30 @@ export class AccountDetailScreen extends React.Component<AccountDetailScreenProp
     };
   };
 
+  componentWillMount() {
+      // FIXME: duplicates
+
+      let store = this.props.dataStore;
+      let accountType = this.props.navigation.getParam("account"); // FIXME how to pass this properly?
+      let accountStore = store.account(accountType)
+
+      console.tron.log("123")
+      accountStore.update()
+  }
+
   render() {
     let store = this.props.dataStore;
 
     let accountType = this.props.navigation.getParam("account"); // FIXME how to pass this properly?
-    let accountStore = store.accounts.filter(item => item.type === accountType)
+    let accountStore = store.account(accountType)
+    let transactions = accountStore.transactions;
 
-    if (accountStore.length === 0) {
+    if (transactions.length === 0) {
       return <Text>It's empty in here</Text>
     }
 
-    var currency = accountStore[0].currency
+    var currency = accountStore.currency
 
-    let transactions = accountStore[0].transactions;
     transactions.slice().sort((a, b) => (a.date < b.date ? -1 : 1)); // warning without slice?
 
     let transactions_set = new Set(transactions);
@@ -159,7 +170,7 @@ export class AccountDetailScreen extends React.Component<AccountDetailScreenProp
     return (
       <Screen>
         <BalanceHeader
-          amount={accountStore[0].balance}
+          amount={accountStore.balance}
           eq_dollar={store.usd_balances[accountType]}
           currency={currency}
         />

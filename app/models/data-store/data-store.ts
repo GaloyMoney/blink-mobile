@@ -103,7 +103,13 @@ export const RatesModel = types
 
 export const DataStoreModel = types
     .model("DataStore", {
-        accounts: types.optional(types.array(AccountModel), []),
+        accounts: types.optional(types.array(AccountModel), () => 
+            [
+                FiatAccountModel.create({type: AccountType.Checking}),
+                FiatAccountModel.create({type: AccountType.Saving}),
+                CryptoAccountModel.create({type: AccountType.Bitcoin}),
+            ]
+        ),
         rates: types.optional(RatesModel, {})
     })
     .views(self => ({
@@ -119,7 +125,12 @@ export const DataStoreModel = types
             })
         
             return balances
+        },
+
+        account(accountType: AccountType) {  // this supposed a unique account for every type
+            return self.accounts.filter(item => item.type === accountType)[0]
         }
+
     }))
 
   /**

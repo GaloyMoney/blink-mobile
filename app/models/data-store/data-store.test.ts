@@ -9,6 +9,12 @@ test("can be created", () => {
   expect(instance).toBeTruthy()
 })
 
+test("can be created bis - test for duplicated account creation", () => {
+  const instance: DataStore = DataStoreModel.create({})
+
+  expect(instance).toBeTruthy()
+})
+
 
 test("fiat accounts have balance and currency", () => {
   const instance: FiatAccount = FiatAccountModel.create({balance: 100})
@@ -51,5 +57,18 @@ test("default state can be instanciate", () => {
   expect(instance.usd_balances).toEqual(
       { Checking: 1245.12, Bitcoin: 609.4474, Saving: 0 }
   )
+
+})
+
+test("I can get every account from using account[] view", () => {
+  const instance: DataStore = DataStoreModel.create({})
+
+  console.log(instance.account(AccountType.Checking))
+
+  expect(instance.account(AccountType.Checking).type).toBe(AccountType.Checking)
+  expect(instance.account(AccountType.Checking).type).not.toBe(AccountType.Saving)
+
+  expect(instance.account(AccountType.Saving).type).toBe(AccountType.Saving)
+  expect(instance.account(AccountType.Bitcoin).type).toBe(AccountType.Bitcoin)
 
 })
