@@ -72,3 +72,12 @@ test("I can get every account from using account[] view", () => {
   expect(instance.account(AccountType.Bitcoin).type).toBe(AccountType.Bitcoin)
 
 })
+
+test("I can get my balances updated", async () => {
+  const instance: DataStore = DataStoreModel.create({})
+
+  await instance.update_balances()
+
+  expect(instance.account(AccountType.Checking).balance).toBe(1245.12)
+  expect(instance.account(AccountType.Saving).balance).toBe(2500)
+})

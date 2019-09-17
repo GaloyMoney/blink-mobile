@@ -8,7 +8,7 @@ import { color } from "../../theme/color"
 import Icon from 'react-native-vector-icons/Ionicons';
 import currency from 'currency.js'
 import { BalanceHeader } from "../../components/balance-header"
-import { DataStore } from "../../models/data-store"
+import { DataStore, DataStoreModel } from "../../models/data-store"
 import { AccountType } from "./AccountType"
 import { CurrencyType } from "../../models/data-store/CurrencyType"
 
@@ -73,6 +73,10 @@ export class AccountsScreen extends React.Component<AccountsScreenProps, {}> {
     {key: "Saving", account: AccountType.Saving, icon: 'ios-leaf'},
     {key: "Bitcoin", account: AccountType.Bitcoin, icon: 'logo-bitcoin'},
   ]
+
+  componentDidMount() {
+    this.props.dataStore.update_balances() // TODO
+  }
 
   render () {
     return (

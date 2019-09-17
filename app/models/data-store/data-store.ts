@@ -112,6 +112,25 @@ export const DataStoreModel = types
         ),
         rates: types.optional(RatesModel, {})
     })
+    .actions(self => {
+        const update_balances = flow(function*() {
+            const firebase_api = new Firebase()
+            firebase_api.setup()
+            const result = yield firebase_api.getBalances()
+
+            if ("balances" in result) {
+                let { balances } = result
+
+                self.accounts.filter(item => item.type === AccountType.Checking)[0].balance = balances.Checking
+                self.accounts.filter(item => item.type === AccountType.Saving)[0].balance = balances.Saving
+            } else {
+                console.tron.warn("issue with firebase API")
+                // TODO error management
+            }
+        })
+
+        return  { update_balances }
+    })
     .views(self => ({
         get total_usd_balance() { // in USD
             return self.accounts.reduce((balance, account) => account.balance * self.rates[account.currency] + balance, 0)

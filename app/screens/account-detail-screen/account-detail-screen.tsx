@@ -108,7 +108,6 @@ export class AccountDetailScreen extends React.Component<AccountDetailScreenProp
       let accountType = this.props.navigation.getParam("account"); // FIXME how to pass this properly?
       let accountStore = store.account(accountType)
 
-      console.tron.log("123")
       accountStore.update()
   }
 
