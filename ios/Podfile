@@ -27,6 +27,9 @@ target 'GaloyApp' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
+  pod 'Firebase/Core' # TODO is that necessary with react 0.60?
+  pod 'RNFirebase', :path => '../node_modules/react-native-firebase/ios'
+
   target 'GaloyAppTests' do
     inherit! :search_paths
     # Pods for testing
