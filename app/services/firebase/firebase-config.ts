@@ -19,6 +19,6 @@ export interface ApiConfig {
  * The default configuration for the app.
  */
 export const DEFAULT_API_CONFIG: ApiConfig = {
-  url: 'https://us-central1-galoyapp.cloudfunctions.net/',
+  url: 'https://us-central1-galoyapp.cloudfunctions.net/api/',
   timeout: 5000
 }
