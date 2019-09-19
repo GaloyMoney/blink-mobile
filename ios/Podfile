@@ -28,6 +28,7 @@ target 'GaloyApp' do
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
   pod 'Firebase/Core' # TODO is that necessary with react 0.60?
+  pod 'Firebase/Auth' #'~> 6.3.0'
   pod 'RNFirebase', :path => '../node_modules/react-native-firebase/ios'
 
   target 'GaloyAppTests' do
