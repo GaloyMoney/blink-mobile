@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>72279297366-feuhvvmtop8ba5j0sgjbu4pubqa6cnfh.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.72279297366-feuhvvmtop8ba5j0sgjbu4pubqa6cnfh</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCFE9KsSzcme-0TBv52mE1orpN94fq77aQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>72279297366</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>io.galoy.app</string>
+	<key>PROJECT_ID</key>
+	<string>galoyapp</string>
+	<key>STORAGE_BUCKET</key>
+	<string>galoyapp.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false/>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true/>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:72279297366:ios:84cf5a292611d651a75af7</string>
+	<key>DATABASE_URL</key>
+	<string>https://galoyapp.firebaseio.com</string>
+</dict>
+</plist>
