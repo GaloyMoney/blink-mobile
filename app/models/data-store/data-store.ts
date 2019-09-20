@@ -2,7 +2,12 @@ import { Instance, SnapshotOut, types, flow } from "mobx-state-tree"
 import { Api, GetPriceResult } from "../../services/api"
 import { CurrencyType } from "./CurrencyType"
 import { AccountType } from "../../screens/accounts-screen/AccountType"
-import { Firebase } from "../../services/firebase"
+import firebase from "react-native-firebase"
+
+
+const getFiatTransactions = firebase.app().functions().httpsCallable('getFiatTransactions');
+const getFiatBalance = firebase.app().functions().httpsCallable('getFiatBalances');
+
 
 /**
  * Model description here for TypeScript hints.
@@ -23,7 +28,6 @@ export const BaseAccountModel = types
         balance: 0,
     })
 
-
 export const FiatFeaturesModel = BaseAccountModel
     .props ({
         type: types.optional(  // TODO check if this succesfully forced Fiat / Crypto classes?
@@ -36,16 +40,21 @@ export const FiatFeaturesModel = BaseAccountModel
     })
     .actions(self => {
         const update = flow(function*() {
-            const firebase_api = new Firebase()
-            firebase_api.setup()
-            const result = yield firebase_api.getTransactions()
 
-            if ("transactions" in result) {
-                self.transactions = result.transactions
-            } else {
-                console.tron.warn("issue with firebase API")
-                // TODO error management
+            try {
+                const result = yield getFiatTransactions({})
+                
+                console.tron.log("result: ")
+                console.tron.log(result)
+                
+                if ("data" in result) {
+                    self.transactions = result.data.transactions
+                }
+
+            } catch(err) {
+                console.tron.warn(err)
             }
+
         })
 
         return  { update }
@@ -114,19 +123,20 @@ export const DataStoreModel = types
     })
     .actions(self => {
         const update_balances = flow(function*() {
-            const firebase_api = new Firebase()
-            firebase_api.setup()
-            const result = yield firebase_api.getBalances()
 
-            if ("balances" in result) {
-                let { balances } = result
+            try {
+                var result = yield getFiatBalance({})
 
-                self.accounts.filter(item => item.type === AccountType.Checking)[0].balance = balances.Checking
-                self.accounts.filter(item => item.type === AccountType.Saving)[0].balance = balances.Saving
-            } else {
-                console.tron.warn("issue with firebase API")
-                // TODO error management
+                if ("data" in result) {
+                    let { data } = result
+    
+                    self.accounts.filter(item => item.type === AccountType.Checking)[0].balance = data.Checking
+                    self.accounts.filter(item => item.type === AccountType.Saving)[0].balance = data.Saving
+                }
+            } catch(err) {
+                console.tron.log(err);
             }
+
         })
 
         return  { update_balances }
