@@ -48,7 +48,7 @@ const AccountItem = inject("dataStore")(observer((props) => {
   return (
       <TouchableHighlight 
           underlayColor="white"
-          onPress={() => props.navigation.navigate('account_detail', {
+          onPress={() => props.navigation.navigate('accountDetail', {
             account: props.account,
           })}
           >
