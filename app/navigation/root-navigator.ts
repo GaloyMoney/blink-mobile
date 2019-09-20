@@ -1,12 +1,10 @@
-import { createStackNavigator } from "react-navigation-stack"
+import { createSwitchNavigator } from "react-navigation"
 import { PrimaryNavigator } from "./primary-navigator"
+import { AuthNavigator } from "./auth-navigator"
 
-export const RootNavigator = createStackNavigator(
+export const RootNavigator = createSwitchNavigator(
   {
+    loginStack: { screen: AuthNavigator },
     primaryStack: { screen: PrimaryNavigator },
-  },
-  {
-    headerMode: "none",
-    navigationOptions: { gesturesEnabled: false },
   },
 )

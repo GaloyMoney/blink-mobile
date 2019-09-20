@@ -63,7 +63,7 @@ function AccountDetailItem(props) {
   return (
     <TouchableHighlight 
     underlayColor="white"
-    onPress={() => props.navigation.navigate('transaction_detail', {
+    onPress={() => props.navigation.navigate('transactionDetail', {
       name: props.name,
       amount: props.amount,
       cashback: props.cashback,

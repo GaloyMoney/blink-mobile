@@ -5,8 +5,8 @@ import { AccountType } from "../../screens/accounts-screen/AccountType"
 import firebase from "react-native-firebase"
 
 
-const getFiatTransactions = firebase.app().functions().httpsCallable('getFiatTransactions');
-const getFiatBalance = firebase.app().functions().httpsCallable('getFiatBalances');
+const getFiatTransactions = firebase.functions().httpsCallable('getFiatTransactions');
+const getFiatBalance = firebase.functions().httpsCallable('getFiatBalances');
 
 
 /**
