@@ -110,8 +110,46 @@ export const RatesModel = types
     })
 
 
+    const Store = types.model({})
+    .actions(self => ({
+        fetchProjects: flow(function* fetchProjects(par1, par2) { // <- note the star, this a generator function!
+            console.log('flow called');
+            console.log(par1);
+            console.log(par2);
+        })
+    }));
+
+
+export const Auth = types
+    .model("Auth", {
+        email: "",
+        isAnonymous: false,
+        status: "anonymous", // unlogged / email-pending
+        // uid: "", # TODO is this needed?
+        emailVerified: false,
+        token: "", // should be behind faceId encryption?
+    })
+    .actions(self => {
+        const signUp = flow(function*(password) {
+            console.tron.log("flow sign up") // FIXME TODO?
+        })
+        const setEmail = ({email}) => {
+            self.email = email
+        }
+
+        const setEmailVerified = (emailVerified) => {
+            self.emailVerified = emailVerified
+        }
+        const setIsAnonymous = (isAnonymous) => {
+            self.isAnonymous = isAnonymous
+        }
+
+        return { signUp, setEmail, setEmailVerified, setIsAnonymous }
+    })
+
 export const DataStoreModel = types
     .model("DataStore", {
+        auth: types.optional(Auth, {}),
         accounts: types.optional(types.array(AccountModel), () => 
             [
                 FiatAccountModel.create({type: AccountType.Checking}),
