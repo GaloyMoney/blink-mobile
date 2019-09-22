@@ -1,6 +1,6 @@
 import * as React from "react"
 import { observer, inject } from "mobx-react"
-import { StyleSheet, TouchableHighlight, View } from "react-native"
+import { StyleSheet, TouchableHighlight, View, Alert, Button } from "react-native"
 import { Text } from "../../components/text"
 import { Screen } from "../../components/screen"
 import { NavigationScreenProps, ScrollView, FlatList, withNavigation } from "react-navigation"
@@ -11,6 +11,7 @@ import { BalanceHeader } from "../../components/balance-header"
 import { DataStore, DataStoreModel } from "../../models/data-store"
 import { AccountType } from "./AccountType"
 import { CurrencyType } from "../../models/data-store/CurrencyType"
+import firebase from "react-native-firebase"
 
 export interface AccountsScreenProps extends NavigationScreenProps<{}> {
   dataStore: DataStore
@@ -78,6 +79,17 @@ export class AccountsScreen extends React.Component<AccountsScreenProps, {}> {
     this.props.dataStore.update_balances() // TODO
   }
 
+  signOut() {
+    firebase.auth().signOut()
+    .then(result => {
+      this.props.navigation.navigate('loginStack')
+    })
+    .catch(err => {
+      console.tron.log(err)
+      Alert.alert(err.code)
+    })
+  }
+
   render () {
     return (
       <Screen>
@@ -89,6 +101,7 @@ export class AccountsScreen extends React.Component<AccountsScreenProps, {}> {
                 <WithNavigationAccountItem {...item} />
         )} />
         </ScrollView>
+        <Button title="Log out" onPress={() => this.signOut()}></Button>
       </Screen>
     )
   }

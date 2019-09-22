@@ -65,25 +65,9 @@ class LoginScreen extends React.Component<LoginScreenProps, State> {
       .catch(err => { console.tron.log(err) ; Alert.alert(err.code) } )
   }
 
-  signOut() {
-    firebase.auth().signOut()
-    .then(result => {
-      console.tron.log(result)
-    })
-    .catch(err => {
-      console.tron.log(err)
-      Alert.alert(err.code)
-    })
-  }
-
-  login() {
-    // firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
-    // .then(userCredential => {
-    //   console.tron.log(userCredential)
-    // }) 
-
-    // this.props.navigation.navigate('primaryStack')}
-
+  signIn() {
+    firebase.auth().signInWithEmailAndPassword(this.props.dataStore.auth.email, this.state.password)
+    .catch(err => Alert.alert(err.code))
   }  
 
 
@@ -119,8 +103,7 @@ class LoginScreen extends React.Component<LoginScreenProps, State> {
         <Input placeholder="password" value={password} onChangeText={password => this.setState({ password })} />
 
         <Button title="Sign up" onPress={() => this.signUp()}></Button>
-        <Button title="Sign in" onPress={() => this.login()}></Button>
-        <Button title="Log out" onPress={() => this.signOut()}></Button>
+        <Button title="Sign in" onPress={() => this.signIn()}></Button>
         
         <Text></Text>
       </Screen>
