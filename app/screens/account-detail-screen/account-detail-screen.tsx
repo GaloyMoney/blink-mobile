@@ -6,7 +6,7 @@ import { View, SectionList, StyleSheet } from "react-native";
 import { Text } from "../../components/text"
 import { Screen } from "../../components/screen"
 import { color } from "../../theme"
-import { NavigationScreenProps, withNavigationFocus } from "react-navigation"
+import { NavigationScreenProps } from "react-navigation"
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import { BalanceHeader } from "../../components/balance-header"
@@ -102,20 +102,20 @@ export class AccountDetailScreen extends React.Component<AccountDetailScreenProp
   };
 
   componentWillMount() {
-      // FIXME: duplicates
+      // FIXME: duplicates with render()
 
-      let store = this.props.dataStore;
+      const dataStore = this.props.dataStore;
       let accountType = this.props.navigation.getParam("account"); // FIXME how to pass this properly?
-      let accountStore = store.account(accountType)
+      let accountStore = dataStore.account(accountType)
 
       accountStore.update()
   }
 
   render() {
-    let store = this.props.dataStore;
+    const dataStore = this.props.dataStore;
 
     let accountType = this.props.navigation.getParam("account"); // FIXME how to pass this properly?
-    let accountStore = store.account(accountType)
+    let accountStore = dataStore.account(accountType)
     let transactions = accountStore.transactions;
 
     if (transactions.length === 0) {
@@ -170,7 +170,7 @@ export class AccountDetailScreen extends React.Component<AccountDetailScreenProp
       <Screen>
         <BalanceHeader
           amount={accountStore.balance}
-          eq_dollar={store.usd_balances[accountType]}
+          eq_dollar={dataStore.usd_balances[accountType]}
           currency={currency}
         />
         <SectionList
