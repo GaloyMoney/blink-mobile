@@ -24,7 +24,12 @@ export const Auth = types
             self.isAnonymous = isAnonymous
             self.uid = uid
         }
-        return { set }
+
+        const setEmail = (email: string) => {
+            self.email = email
+        }
+
+        return { set, setEmail }
     })
 
 export const TransactionModel = types
@@ -58,10 +63,7 @@ export const FiatFeaturesModel = BaseAccountModel
             const uid = getParentOfType(self, DataStoreModel).auth.uid
             try {
                 const doc = yield db.collection('users').doc(uid).get()
-                const result = doc.data() // TODO better error management
-                if ("transactions" in result) {
-                    self.transactions = result.transactions
-                }
+                self.transactions = doc.data().transactions // TODO better error management
             } catch(err) {
                 console.tron.warn(err)
             }
