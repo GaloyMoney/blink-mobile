@@ -1,5 +1,5 @@
 import * as React from "react"
-import { observer } from "mobx-react"
+import { observer, inject } from "mobx-react"
 import { Text } from "../../components/text"
 import { Screen } from "../../components/screen"
 import { NavigationScreenProps } from "react-navigation"
@@ -7,13 +7,13 @@ import { NavigationScreenProps } from "react-navigation"
 export interface VerifyEmailScreenProps extends NavigationScreenProps<{}> {
 }
 
-// @inject("mobxstuff")
+@inject("dataStore")
 @observer
 export class VerifyEmailScreen extends React.Component<VerifyEmailScreenProps, {}> {
   render () {
     return (
       <Screen>
-        <Text>Verify your email</Text>
+        <Text>Verify your email {this.props.dataStore.auth.email} to continue</Text>
       </Screen>
     )
   }

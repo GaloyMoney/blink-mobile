@@ -1,17 +1,43 @@
-import { Instance, SnapshotOut, types, flow } from "mobx-state-tree"
+import { Instance, SnapshotOut, types, flow, getParentOfType } from "mobx-state-tree"
 import { Api, GetPriceResult } from "../../services/api"
 import { CurrencyType } from "./CurrencyType"
 import { AccountType } from "../../screens/accounts-screen/AccountType"
 import firebase from "react-native-firebase"
 
 
-const getFiatTransactions = firebase.functions().httpsCallable('getFiatTransactions');
 const getFiatBalance = firebase.functions().httpsCallable('getFiatBalances');
 
+const db = firebase.firestore()                
 
-/**
- * Model description here for TypeScript hints.
- */  
+
+export const Auth = types
+    .model("Auth", {
+        email: "nicolas.burtey+default@gmail.com",
+        isAnonymous: false,
+        uid: "", 
+        emailVerified: false
+    })
+    .actions(self => {
+        const signUp = flow(function*(password) {
+            console.tron.log("flow sign up") // FIXME TODO?
+        })
+
+        const setEmail = (email: string) => {
+            self.email = email
+        }
+        const setEmailVerified = (emailVerified: boolean) => {
+            self.emailVerified = emailVerified
+        }
+        const setIsAnonymous = (isAnonymous: boolean) => {
+            self.isAnonymous = isAnonymous
+        }
+        const setUID = (uid: string) => {
+            self.uid = uid
+        }
+
+        return { signUp, setEmail, setEmailVerified, setIsAnonymous, setUID }
+    })
+
 export const TransactionModel = types
     .model ("Transaction", {
         name: types.string,
@@ -36,28 +62,28 @@ export const FiatFeaturesModel = BaseAccountModel
                 value => value == AccountType.Checking || value == AccountType.Saving
             ), 
             AccountType.Checking
-        )
+        ),
     })
     .actions(self => {
         const update = flow(function*() {
-
+            const uid = getParentOfType(self, DataStoreModel).auth.uid
             try {
-                const result = yield getFiatTransactions({})
-                
-                console.tron.log("result: ")
-                console.tron.log(result)
-                
-                if ("data" in result) {
-                    self.transactions = result.data.transactions
+                const doc = yield db.collection('users').doc(uid).get()
+                const result = doc.data() // TODO better error management
+                if ("transactions" in result) {
+                    self.transactions = result.transactions
                 }
-
             } catch(err) {
                 console.tron.warn(err)
             }
-
         })
 
-        return  { update }
+        const reset = () => {
+            self.transactions = [],
+            self.balance = 0
+        }
+
+        return  { update, reset }
     })
     .views(self => ({
         get currency() {
@@ -109,43 +135,6 @@ export const RatesModel = types
         return  { update }
     })
 
-
-    const Store = types.model({})
-    .actions(self => ({
-        fetchProjects: flow(function* fetchProjects(par1, par2) { // <- note the star, this a generator function!
-            console.log('flow called');
-            console.log(par1);
-            console.log(par2);
-        })
-    }));
-
-
-export const Auth = types
-    .model("Auth", {
-        email: "",
-        isAnonymous: false,
-        status: "anonymous", // unlogged / email-pending
-        // uid: "", # TODO is this needed?
-        emailVerified: false,
-        token: "", // should be behind faceId encryption?
-    })
-    .actions(self => {
-        const signUp = flow(function*(password) {
-            console.tron.log("flow sign up") // FIXME TODO?
-        })
-        const setEmail = ({email}) => {
-            self.email = email
-        }
-
-        const setEmailVerified = (emailVerified) => {
-            self.emailVerified = emailVerified
-        }
-        const setIsAnonymous = (isAnonymous) => {
-            self.isAnonymous = isAnonymous
-        }
-
-        return { signUp, setEmail, setEmailVerified, setIsAnonymous }
-    })
 
 export const DataStoreModel = types
     .model("DataStore", {
