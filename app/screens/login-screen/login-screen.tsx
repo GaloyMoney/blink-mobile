@@ -6,14 +6,20 @@ import { Button, Text, Alert } from "react-native"
 import { Input } from 'react-native-elements'
 
 import firebase from 'react-native-firebase'
+import { DataStore } from "../../models/data-store"
 
 
 export interface LoginScreenProps extends NavigationScreenProps<{}> {
+  dataStore: DataStore
+}
+
+interface State {
+  password: string
 }
 
 @inject("dataStore")
 @observer
-class LoginScreen extends React.Component<LoginScreenProps, {}> {
+class LoginScreen extends React.Component<LoginScreenProps, State> {
 
   constructor(props) {
     super(props)
@@ -22,6 +28,8 @@ class LoginScreen extends React.Component<LoginScreenProps, {}> {
       password: '123456'
     }
 
+    this.unsubscribeHandle = null
+
     this.signUp = this.signUp.bind(this)
     this.onUserChanged = this.onUserChanged.bind(this)
 
@@ -29,8 +37,6 @@ class LoginScreen extends React.Component<LoginScreenProps, {}> {
       firebase.auth().currentUser.reload()
         .catch(err => console.tron.warn(err))
     }
-    
-    firebase.auth().onUserChanged(this.onUserChanged)
   }
 
   onUserChanged(user: any) { // TODO : User type
@@ -94,16 +100,18 @@ class LoginScreen extends React.Component<LoginScreenProps, {}> {
   }
 
   componentDidMount() {
-    // setTimeout(this._bootstrapAsync, 3000);
-    this._bootstrapAsync();
-    
+    // this._bootstrapAsync();
+    this.unsubscribeHandle = firebase.auth().onUserChanged(this.onUserChanged)
+  }
+
+  componentWillUnmount() {
+    if (this.unsubscribeHandle) this.unsubscribeHandle();
   }
 
   _bootstrapAsync = async () => {
     // const userToken = await AsyncStorage.getItem('userToken');
     // this.props.navigation.navigate(userToken ? 'App' : 'Auth');
 
-    // console.tron.log(firebase.auth().currentUser)
   };
 
   render () {
