@@ -40,18 +40,11 @@ class LoginScreen extends React.Component<LoginScreenProps, State> {
   }
 
   onUserChanged(user: any) { // TODO : User type
-    console.tron.log(`state change called. user is idenfified: ${user !== null}`)
     console.tron.log(user)
     if (user === null) {
-      this.props.dataStore.auth.setEmailVerified(false)
-      this.props.dataStore.auth.setEmail("nicolas.burtey+default@gmail.com")
-      this.props.dataStore.auth.setIsAnonymous(true)
-      this.props.dataStore.auth.setUID("")
+      this.props.dataStore.auth.set("nicolas.burtey+default@gmail.com", false, true, "")
     } else {
-      this.props.dataStore.auth.setEmailVerified(user.emailVerified)
-      this.props.dataStore.auth.setEmail(user.email)
-      this.props.dataStore.auth.setIsAnonymous(user.isAnonymous)
-      this.props.dataStore.auth.setUID(user.uid)
+      this.props.dataStore.auth.set(user.email, user.emailVerified, user.isAnonymous, user.uid)
 
       // FIXME this initialized logic should probably not be here
       if(this.props.dataStore.auth.emailVerified === true) {

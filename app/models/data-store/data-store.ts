@@ -18,24 +18,13 @@ export const Auth = types
         emailVerified: false
     })
     .actions(self => {
-        const signUp = flow(function*(password) {
-            console.tron.log("flow sign up") // FIXME TODO?
-        })
-
-        const setEmail = (email: string) => {
+        const set = (email: string, emailVerified: boolean, isAnonymous: boolean, uid: string) => {
             self.email = email
-        }
-        const setEmailVerified = (emailVerified: boolean) => {
             self.emailVerified = emailVerified
-        }
-        const setIsAnonymous = (isAnonymous: boolean) => {
             self.isAnonymous = isAnonymous
-        }
-        const setUID = (uid: string) => {
             self.uid = uid
         }
-
-        return { signUp, setEmail, setEmailVerified, setIsAnonymous, setUID }
+        return { set }
     })
 
 export const TransactionModel = types
