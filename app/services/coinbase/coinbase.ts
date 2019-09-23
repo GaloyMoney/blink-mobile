@@ -1,7 +1,7 @@
 import { ApisauceInstance, create, ApiResponse } from "apisauce"
-import { getGeneralApiProblem } from "./api-problem"
-import { ApiConfig, DEFAULT_API_CONFIG } from "./api-config"
-import * as Types from "./api.types"
+import { getGeneralApiProblem } from "./coinbase-problem"
+import { ApiConfig, DEFAULT_API_CONFIG } from "./coinbase-config"
+import * as Types from "./coinbase.types"
 
 /**
  * Manages all requests to the API.

@@ -1,4 +1,4 @@
-import { getGeneralApiProblem } from "./api-problem"
+import { getGeneralApiProblem } from "./coinbase-problem"
 import { ApiErrorResponse } from "apisauce"
 
 test("handles connection errors", () => {

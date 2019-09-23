@@ -1,5 +1,5 @@
 import { Reactotron } from "../services/reactotron"
-import { Api } from "../services/api"
+import { Api } from "../services/coinbase"
 
 /**
  * The environment is a place where services and shared dependencies between

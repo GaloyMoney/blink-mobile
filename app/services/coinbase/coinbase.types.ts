@@ -1,4 +1,4 @@
-import { GeneralApiProblem } from "./api-problem"
+import { GeneralApiProblem } from "./coinbase-problem"
 
 // export interface Price {
 //   price: number
