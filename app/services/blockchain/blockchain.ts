@@ -44,10 +44,24 @@ export class Blockchain {
     })
   }
 
+  formatTransaction(tx) {
+    tx.moneyIn = tx.result > 0
+    tx.moneyIn ? tx.icon = "ios-download" : tx.icon = "ios-exit"
+    tx.moneyIn ? tx.name = "Received" : tx.name = "Sent"
+    tx.moneyIn ? 
+      tx.addr = tx.inputs[0].prev_out.addr : // show input (the other address) if money comes in
+      tx.addr = tx.out[0].addr
+    tx.addr_fmt = `${tx.addr.slice(0, 11)}...${tx.addr.slice(-10)}`
+    tx.addr = tx.addr_fmt // TODO FIXME better naming 
+    tx.date = tx.time
+    tx.amount = tx.result
+
+    return tx
+  }
+
   /**
    * Gets wallet of a Bitcoin address 
    */
-
   async getWallet(address: string): Promise<Types.GetWalletInfo> {
 
     // make the api call
@@ -64,14 +78,7 @@ export class Blockchain {
         const balance: number = response.data.wallet.final_balance
         const txs: Object[] = response.data.txs
 
-        txs.forEach((tx) => tx.moneyIn = tx.result > 0 )
-        txs.forEach((tx) => tx.moneyIn ? 
-          tx.name = tx.inputs[0].prev_out.addr : // show input (the other address) if money comes in
-          tx.name = tx.out[0].addr
-        )
-        txs.forEach((tx) => tx.moneyIn ? tx.icon = "ios-download" : tx.icon = "ios-exit" ) // TODO verify exit
-        txs.forEach((tx) => tx.date = tx.time)
-        txs.forEach((tx) => tx.amount = tx.result)
+        txs.forEach((tx) => this.formatTransaction(tx))
 
         return { kind: "ok", balance, txs }
     } catch {

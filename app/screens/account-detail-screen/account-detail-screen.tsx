@@ -81,6 +81,8 @@ function AccountDetailItem(props) {
           <Text style={styles.itemText}>{props.name}</Text>
           {props.cashback != null &&
             <Text style={styles.cashback}>{props.cashback} sats</Text> 
+          || props.addr != null &&
+            <Text style={styles.cashback}>{props.addr}</Text> 
           }
         </View>
         <CurrencyText amount={props.amount} currency={props.currency} />
@@ -101,7 +103,7 @@ export class AccountDetailScreen extends React.Component<AccountDetailScreenProp
     };
   };
 
-  componentWillMount() {
+  componentDidMount() {
       // FIXME: duplicates with render()
 
       const dataStore = this.props.dataStore;
