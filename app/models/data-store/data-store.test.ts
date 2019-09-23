@@ -1,4 +1,4 @@
-import { DataStoreModel, DataStore, FiatAccount, FiatAccountModel, CryptoAccountModel, CryptoAccount, Rates, RatesModel } from "./data-store"
+import { DataStoreModel, DataStore, FiatAccount, CheckingAccountModel, BitcoinAccountModel, CryptoAccount, Rates, RatesModel } from "./data-store"
 import { defaultDataStore } from "../root-store/default-state"
 import { AccountType } from "../../screens/accounts-screen/AccountType"
 import { CurrencyType } from "./CurrencyType"
@@ -17,7 +17,7 @@ test("can be created bis - test for duplicated account creation", () => {
 
 
 test("fiat accounts have balance and currency", () => {
-  const instance: FiatAccount = FiatAccountModel.create({balance: 100})
+  const instance: FiatAccount = CheckingAccountModel.create({balance: 100})
   
   expect(instance.type).toBe(AccountType.Checking)
   expect(instance.currency).toBe(CurrencyType.USD)
@@ -25,7 +25,7 @@ test("fiat accounts have balance and currency", () => {
 })
 
 test("fiat updates correctly from server", async () => {
-  const instance: FiatAccount = FiatAccountModel.create({})
+  const instance: FiatAccount = CheckingAccountModel.create({})
   
   await instance.update()
 
@@ -33,7 +33,7 @@ test("fiat updates correctly from server", async () => {
 })
 
 test("btc accounts have balance and currency", () => {
-  const instance: CryptoAccount = CryptoAccountModel.create({balance: 100})
+  const instance: CryptoAccount = BitcoinAccountModel.create({balance: 100})
   
   expect(instance.type).toBe(AccountType.Bitcoin)
   expect(instance.currency).toBe(CurrencyType.BTC)
@@ -55,7 +55,7 @@ test("default state can be instanciate", () => {
   expect(instance.accounts).toHaveLength(3)
   expect(instance.total_usd_balance).toBe(1854.5674)
   expect(instance.usd_balances).toEqual(
-      { Checking: 1245.12, Bitcoin: 609.4474, Saving: 0 }
+      { Checking: 1245.12, Bitcoin: 609.4474 }
   )
 
 })
@@ -66,9 +66,6 @@ test("I can get every account from using account[] view", () => {
   console.log(instance.account(AccountType.Checking))
 
   expect(instance.account(AccountType.Checking).type).toBe(AccountType.Checking)
-  expect(instance.account(AccountType.Checking).type).not.toBe(AccountType.Saving)
-
-  expect(instance.account(AccountType.Saving).type).toBe(AccountType.Saving)
   expect(instance.account(AccountType.Bitcoin).type).toBe(AccountType.Bitcoin)
 
 })
@@ -79,5 +76,4 @@ test("I can get my balances updated", async () => {
   await instance.update_balances()
 
   expect(instance.account(AccountType.Checking).balance).toBe(1245.12)
-  expect(instance.account(AccountType.Saving).balance).toBe(2500)
 })

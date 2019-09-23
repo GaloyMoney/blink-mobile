@@ -47,21 +47,21 @@ const styles = StyleSheet.create({
 
 const AccountItem = inject("dataStore")(observer((props) => {
   return (
-      <TouchableHighlight 
-          underlayColor="white"
-          onPress={() => props.navigation.navigate('accountDetail', {
-            account: props.account,
-          })}
-          >
-          <View style={styles.accountView} >
-              <Icon name={props.icon} color={color.primary} size={28} />
-              <Text style={styles.accountTypeStyle}>{props.account}</Text>
-              <Text style={styles.accountAmount}>
-                  {currency(props.dataStore.usd_balances[props.account],
-                      { formatWithSymbol: true } ).format()}
-              </Text>
-          </View>
-      </TouchableHighlight>
+    <TouchableHighlight 
+        underlayColor="white"
+        onPress={() => props.navigation.navigate('accountDetail', {
+          account: props.account,
+        })}
+        >
+        <View style={styles.accountView} >
+            <Icon name={props.icon} color={color.primary} size={28} />
+            <Text style={styles.accountTypeStyle}>{props.account}</Text>
+            <Text style={styles.accountAmount}>
+                {currency(props.dataStore.usd_balances[props.account],
+                    { formatWithSymbol: true } ).format()}
+            </Text>
+        </View>
+    </TouchableHighlight>
 )}))
 
 const WithNavigationAccountItem = withNavigation(AccountItem)
@@ -71,12 +71,11 @@ const WithNavigationAccountItem = withNavigation(AccountItem)
 export class AccountsScreen extends React.Component<AccountsScreenProps, {}> {
   menu: Array<Object> = [
     {key: "Checking", account: AccountType.Checking, icon: 'ios-cash'},
-    {key: "Saving", account: AccountType.Saving, icon: 'ios-leaf'},
     {key: "Bitcoin", account: AccountType.Bitcoin, icon: 'logo-bitcoin'},
   ]
 
   componentDidMount() {
-    this.props.dataStore.update_balances() // TODO
+    this.props.dataStore.update_balances() // TODO should be fetch also at regular interval and if user refresh it intentionnaly
   }
 
   signOut() {
