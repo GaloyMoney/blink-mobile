@@ -62,7 +62,18 @@ export class Blockchain {
     // transform the data into the format we are expecting
     try {
         const balance: number = response.data.wallet.final_balance
-        return { kind: "ok", balance }
+        const txs: Object[] = response.data.txs
+
+        txs.forEach((tx) => tx.moneyIn = tx.result > 0 )
+        txs.forEach((tx) => tx.moneyIn ? 
+          tx.name = tx.inputs[0].prev_out.addr : // show input (the other address) if money comes in
+          tx.name = tx.out[0].addr
+        )
+        txs.forEach((tx) => tx.moneyIn ? tx.icon = "ios-download" : tx.icon = "ios-exit" ) // TODO verify exit
+        txs.forEach((tx) => tx.date = tx.time)
+        txs.forEach((tx) => tx.amount = tx.result)
+
+        return { kind: "ok", balance, txs }
     } catch {
       return { kind: "bad-data" }
     }
