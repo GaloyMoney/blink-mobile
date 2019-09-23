@@ -1,12 +1,12 @@
 import { ApisauceInstance, create, ApiResponse } from "apisauce"
-import { getGeneralApiProblem } from "./coinbase-problem"
-import { ApiConfig, DEFAULT_API_CONFIG } from "./coinbase-config"
-import * as Types from "./coinbase.types"
+import { getGeneralApiProblem } from "./blockchain-problem"
+import { ApiConfig, DEFAULT_API_CONFIG } from "./blockchain-config"
+import * as Types from "./blockchain.types"
 
 /**
  * Manages all requests to the API.
  */
-export class Coinbase {
+export class Blockchain {
   /**
    * The underlying apisauce instance which performs the requests.
    */
@@ -45,12 +45,13 @@ export class Coinbase {
   }
 
   /**
-   * Gets price of BTC
+   * Gets wallet of a Bitcoin address 
    */
 
-  async getPrice(): Promise<Types.GetPriceResult> {
+  async getWallet(address: string): Promise<Types.GetWalletInfo> {
+
     // make the api call
-    const response: ApiResponse<any> = await this.apisauce.get(`/v2/prices/spot?currency=USD`)
+    const response: ApiResponse<any> = await this.apisauce.get(`/multiaddr?active=${address}`)
 
     // the typical ways to die when calling an api
     if (!response.ok) {
@@ -60,8 +61,8 @@ export class Coinbase {
 
     // transform the data into the format we are expecting
     try {
-        const price: number = response.data.data.amount * Math.pow(10, -8)
-        return { kind: "ok", price }
+        const balance: number = response.data.wallet.final_balance
+        return { kind: "ok", balance }
     } catch {
       return { kind: "bad-data" }
     }

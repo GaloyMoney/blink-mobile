@@ -1,5 +1,5 @@
 import { Reactotron } from "../services/reactotron"
-import { Api } from "../services/coinbase"
+import { Coinbase } from "../services/coinbase"
 
 /**
  * The environment is a place where services and shared dependencies between
@@ -9,7 +9,7 @@ export class Environment {
   constructor() {
     // create each service
     this.reactotron = new Reactotron()
-    this.api = new Api()
+    this.api = new Coinbase()
   }
 
   async setup() {
@@ -26,5 +26,5 @@ export class Environment {
   /**
    * Our api.
    */
-  api: Api
+  api: Coinbase
 }
