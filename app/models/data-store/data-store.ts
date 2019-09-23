@@ -105,15 +105,15 @@ export const CryptoFeaturesModel = BaseAccountModel
         )
     })
     .actions(self => {
+        const instance: Blockchain = new Blockchain()
+        instance.setup()
+        const address = "xpub6CUGRUonZSQ4TWtTMmzXdrXDtypWKiKrhko4egpiMZbpiaQL2jkwSB1icqYh2cfDfVxdx4df189oLKnC5fSwqPfgyP3hooxujYzAu3fDVmz"
+
         const update = flow(function*() {
-            // TODO
+            const result = yield instance.getWallet(address)
+            self.transactions = result.txs // TODO error manage
         })
         const update_balances = flow(function*() { 
-            const instance: Blockchain = new Blockchain()
-            instance.setup()
-            
-            const address = "xpub6CUGRUonZSQ4TWtTMmzXdrXDtypWKiKrhko4egpiMZbpiaQL2jkwSB1icqYh2cfDfVxdx4df189oLKnC5fSwqPfgyP3hooxujYzAu3fDVmz"
-        
             const result = yield instance.getWallet(address)
             self.balance = result.balance // TODO error management
         })
