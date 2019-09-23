@@ -3,6 +3,7 @@ import { Coinbase, GetPriceResult } from "../../services/coinbase"
 import { CurrencyType } from "./CurrencyType"
 import { AccountType } from "../../screens/accounts-screen/AccountType"
 import firebase from "react-native-firebase"
+import { Blockchain } from "../../services/blockchain"
 
 
 const getFiatBalance = firebase.functions().httpsCallable('getFiatBalances');
@@ -108,7 +109,13 @@ export const CryptoFeaturesModel = BaseAccountModel
             // TODO
         })
         const update_balances = flow(function*() { 
-            // TODO
+            const instance: Blockchain = new Blockchain()
+            instance.setup()
+            
+            const address = "xpub6CUGRUonZSQ4TWtTMmzXdrXDtypWKiKrhko4egpiMZbpiaQL2jkwSB1icqYh2cfDfVxdx4df189oLKnC5fSwqPfgyP3hooxujYzAu3fDVmz"
+        
+            const result = yield instance.getWallet(address)
+            self.balance = result.balance // TODO error management
         })
 
         return  { update, update_balances }
@@ -160,15 +167,12 @@ export const DataStoreModel = types
         rates: types.optional(RatesModel, {})
     })
     .actions(self => {
-        const update = flow(function*() {
-            // TODO
-        })
-        const update_balances = flow(function*() { 
+        const update_balances = flow(function*() {  // TODO move to an Accounts class
             // TODO parrallel call?
             self.accounts.forEach((account) => account.update_balances())
         })
 
-        return  { update, update_balances }
+        return  { update_balances }
     })
     .views(self => ({
         get total_usd_balance() { // in USD
