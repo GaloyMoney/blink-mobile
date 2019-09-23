@@ -39,6 +39,7 @@ export const TransactionModel = types
         amount: types.number,
         date: types.Date,
         cashback: types.maybe(types.number),
+        addr: types.maybe(types.string), // TODO derived 2 types of transactions for fiat/crytpo?
         // TODO add status
     })
 
