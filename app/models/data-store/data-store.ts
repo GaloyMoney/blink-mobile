@@ -6,7 +6,6 @@ import firebase from "react-native-firebase"
 
 
 const getFiatBalance = firebase.functions().httpsCallable('getFiatBalances');
-
 const db = firebase.firestore()                
 
 
@@ -53,7 +52,7 @@ export const FiatFeaturesModel = BaseAccountModel
         type: types.optional(  // TODO check if this is succesfully forcing Fiat / Crypto classes?
             types.refinement(
                 types.enumeration<AccountType>("Account Type", Object.values(AccountType)),
-                value => value == AccountType.Checking || value == AccountType.Saving
+                value => value == AccountType.Checking
             ), 
             AccountType.Checking
         ),
@@ -69,12 +68,24 @@ export const FiatFeaturesModel = BaseAccountModel
             }
         })
 
-        const reset = () => {
+        const update_balances = flow(function*() { 
+            try {
+                var result = yield getFiatBalance({})
+                if ("data" in result) {
+                    let { data } = result
+                    self.balance = data.Checking
+                }
+            } catch(err) {
+                console.tron.log(err);
+            }
+        })
+
+        const reset = () => { // TODO test
             self.transactions = [],
             self.balance = 0
         }
 
-        return  { update, reset }
+        return  { update, reset, update_balances }
     })
     .views(self => ({
         get currency() {
@@ -96,8 +107,11 @@ export const CryptoFeaturesModel = BaseAccountModel
         const update = flow(function*() {
             // TODO
         })
+        const update_balances = flow(function*() { 
+            // TODO
+        })
 
-        return  { update }
+        return  { update, update_balances }
     })
     .views(self => ({
         get currency() {
@@ -106,10 +120,10 @@ export const CryptoFeaturesModel = BaseAccountModel
     }))
 
 
-export const FiatAccountModel = types.compose(BaseAccountModel, FiatFeaturesModel)
-export const CryptoAccountModel = types.compose(BaseAccountModel, CryptoFeaturesModel)
+export const CheckingAccountModel = types.compose(BaseAccountModel, FiatFeaturesModel)
+export const BitcoinAccountModel = types.compose(BaseAccountModel, CryptoFeaturesModel)
 
-export const AccountModel = types.union(FiatAccountModel, CryptoAccountModel)
+export const AccountModel = types.union(CheckingAccountModel, BitcoinAccountModel)
 
 
 export const RatesModel = types
@@ -139,32 +153,22 @@ export const DataStoreModel = types
         auth: types.optional(Auth, {}),
         accounts: types.optional(types.array(AccountModel), () => 
             [
-                FiatAccountModel.create({type: AccountType.Checking}),
-                FiatAccountModel.create({type: AccountType.Saving}),
-                CryptoAccountModel.create({type: AccountType.Bitcoin}),
+                CheckingAccountModel.create({type: AccountType.Checking}),
+                BitcoinAccountModel.create({type: AccountType.Bitcoin}),
             ]
         ),
         rates: types.optional(RatesModel, {})
     })
     .actions(self => {
-        const update_balances = flow(function*() {
-
-            try {
-                var result = yield getFiatBalance({})
-
-                if ("data" in result) {
-                    let { data } = result
-    
-                    self.accounts.filter(item => item.type === AccountType.Checking)[0].balance = data.Checking
-                    self.accounts.filter(item => item.type === AccountType.Saving)[0].balance = data.Saving
-                }
-            } catch(err) {
-                console.tron.log(err);
-            }
-
+        const update = flow(function*() {
+            // TODO
+        })
+        const update_balances = flow(function*() { 
+            // TODO parrallel call?
+            self.accounts.forEach((account) => account.update_balances())
         })
 
-        return  { update_balances }
+        return  { update, update_balances }
     })
     .views(self => ({
         get total_usd_balance() { // in USD
@@ -202,10 +206,10 @@ type DataStoreSnapshotType = SnapshotOut<typeof DataStoreModel>
 export interface DataStoreSnapshot extends DataStoreSnapshotType {}
 
 
-type FiatAccountType = Instance<typeof FiatAccountModel>
+type FiatAccountType = Instance<typeof CheckingAccountModel>
 export interface FiatAccount extends FiatAccountType {}
 
-type CryptoAccountType = Instance<typeof CryptoAccountModel>
+type CryptoAccountType = Instance<typeof BitcoinAccountModel>
 export interface CryptoAccount extends CryptoAccountType {}
 
 type RatesType = Instance<typeof RatesModel>

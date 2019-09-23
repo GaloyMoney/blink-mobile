@@ -36,13 +36,7 @@ export const defaultDataStore = {
       ],
       balance: 6094474,
       type: AccountType.Bitcoin,
-  },{
-    transactions: [
-      { name: "La Carafe", icon: "ios-wine", amount: -21, cashback: 2202, date: new Date()},
-    ],
-    balance: 0,
-    type: AccountType.Saving,
-}],
+  }],
   rates: {
       BTC: 0.0001
   }
