@@ -1,5 +1,5 @@
 import { Instance, SnapshotOut, types, flow, getParentOfType } from "mobx-state-tree"
-import { Api, GetPriceResult } from "../../services/api"
+import { Api, GetPriceResult } from "../../services/coinbase"
 import { CurrencyType } from "./CurrencyType"
 import { AccountType } from "../../screens/accounts-screen/AccountType"
 import firebase from "react-native-firebase"
@@ -50,7 +50,7 @@ export const BaseAccountModel = types
 
 export const FiatFeaturesModel = BaseAccountModel
     .props ({
-        type: types.optional(  // TODO check if this succesfully forced Fiat / Crypto classes?
+        type: types.optional(  // TODO check if this is succesfully forcing Fiat / Crypto classes?
             types.refinement(
                 types.enumeration<AccountType>("Account Type", Object.values(AccountType)),
                 value => value == AccountType.Checking || value == AccountType.Saving
@@ -91,6 +91,13 @@ export const CryptoFeaturesModel = BaseAccountModel
             ),
             AccountType.Bitcoin
         )
+    })
+    .actions(self => {
+        const update = flow(function*() {
+            // TODO
+        })
+
+        return  { update }
     })
     .views(self => ({
         get currency() {
