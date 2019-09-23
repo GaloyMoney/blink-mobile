@@ -1,5 +1,5 @@
 import { Instance, SnapshotOut, types, flow, getParentOfType } from "mobx-state-tree"
-import { Api, GetPriceResult } from "../../services/coinbase"
+import { Coinbase, GetPriceResult } from "../../services/coinbase"
 import { CurrencyType } from "./CurrencyType"
 import { AccountType } from "../../screens/accounts-screen/AccountType"
 import firebase from "react-native-firebase"
@@ -119,7 +119,7 @@ export const RatesModel = types
     })
     .actions(self => {
         const update = flow(function*() {
-            const api = new Api()
+            const api = new Coinbase()
             api.setup()
             const result: GetPriceResult = yield api.getPrice()
             if ("price" in result) {
