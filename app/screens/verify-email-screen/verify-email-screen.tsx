@@ -5,10 +5,25 @@ import { Screen } from "../../components/screen"
 import { NavigationScreenProps } from "react-navigation"
 import { DataStore } from "../../models/data-store"
 import firebase from "react-native-firebase"
+import { StyleSheet, View } from "react-native"
+import style from "react-syntax-highlighter/dist/styles/hljs/atelier-cave-light"
 
 export interface VerifyEmailScreenProps extends NavigationScreenProps<{}> {
   dataStore: DataStore
 }
+
+const styles = StyleSheet.create({
+  text: {
+    fontSize: 18,
+    textAlign: "center",
+  },
+
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+  }
+})
 
 @inject("dataStore")
 @observer
@@ -29,7 +44,11 @@ export class VerifyEmailScreen extends React.Component<VerifyEmailScreenProps, {
   render () {
     return (
       <Screen>
-        <Text>Verify your email {this.props.dataStore.auth.email} to continue</Text>
+        <View style={styles.container}>
+          <Text style={styles.text}>Verify your email</Text>
+          <Text style={styles.text}>{this.props.dataStore.auth.email}</Text>
+          <Text style={styles.text}>to continue</Text>
+        </View>
       </Screen>
     )
   }
