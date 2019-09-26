@@ -10192,6 +10192,11 @@ react-native-localize@^1.0.0:
   resolved "https://registry.yarnpkg.com/react-native-localize/-/react-native-localize-1.2.1.tgz#7c68a9275117942763439bf570828f05fb5bbdc7"
   integrity sha512-givdHOFqu41EMgI6HikNnKhsze4jlJ+BVoznAAHuKFCLWwDr7z6S1tcq7c/C7zHrKlESpE5H1ZqAPU3R5Hhdog==
 
+react-native-maps@0.25.0:
+  version "0.25.0"
+  resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-0.25.0.tgz#81bc51eb50e33811a9e1c345cc48869413ead67d"
+  integrity sha512-PFJuW1pt+HnnnN0m0OGk29RSvICFVkK/DScX6cUk0SuCSN2DAHx0y6y57lZyYXcYqU4J4usNpfxgp/ccjASDiw==
+
 react-native-ratings@^6.3.0:
   version "6.5.0"
   resolved "https://registry.yarnpkg.com/react-native-ratings/-/react-native-ratings-6.5.0.tgz#a1606ccba3c5b54eec8e6cfa4765a45cf0e4ab8d"

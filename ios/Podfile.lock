@@ -181,6 +181,8 @@ PODS:
     - React-cxxreact (= 0.60.5)
     - React-jsi (= 0.60.5)
   - React-jsinspector (0.60.5)
+  - react-native-maps (0.25.0):
+    - React
   - react-native-splash-screen (3.2.0):
     - React
   - React-RCTActionSheet (0.60.5):
@@ -208,7 +210,7 @@ PODS:
     - React-Core (= 0.60.5)
   - RNCAsyncStorage (1.6.1):
     - React
-  - RNFBApp (0.5.2):
+  - RNFBApp (0.5.4):
     - Firebase/Core (~> 6.8.1)
     - React
   - RNFirebase (5.5.6):
@@ -224,7 +226,7 @@ PODS:
     - React
   - RNKeychain (3.1.3):
     - React
-  - RNLocalize (1.2.0):
+  - RNLocalize (1.2.1):
     - React
   - RNVectorIcons (6.6.0):
     - React
@@ -245,6 +247,7 @@ DEPENDENCIES:
   - React-jsi (from `../node_modules/react-native/ReactCommon/jsi`)
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
+  - react-native-maps (from `../node_modules/react-native-maps`)
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -313,6 +316,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsiexecutor"
   React-jsinspector:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
+  react-native-maps:
+    :path: "../node_modules/react-native-maps"
   react-native-splash-screen:
     :path: "../node_modules/react-native-splash-screen"
   React-RCTActionSheet:
@@ -387,6 +392,7 @@ SPEC CHECKSUMS:
   React-jsi: 4d8c9efb6312a9725b18d6fc818ffc103f60fec2
   React-jsiexecutor: 90ad2f9db09513fc763bc757fdc3c4ff8bde2a30
   React-jsinspector: e08662d1bf5b129a3d556eb9ea343a3f40353ae4
+  react-native-maps: 190c02ca533fddac5bb49cf17bdece3644612107
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   React-RCTActionSheet: b0f1ea83f4bf75fb966eae9bfc47b78c8d3efd90
   React-RCTAnimation: 359ba1b5690b1e87cc173558a78e82d35919333e
@@ -399,11 +405,11 @@ SPEC CHECKSUMS:
   React-RCTVibration: 2105b2e0e2b66a6408fc69a46c8a7fb5b2fdade0
   React-RCTWebSocket: cd932a16b7214898b6b7f788c8bddb3637246ac4
   RNCAsyncStorage: 2e2e3feb9bdadc752a026703d8c4065ca912e75a
-  RNFBApp: 7245920cf3a62ccada61903f89b6252d8c8c9078
+  RNFBApp: e1c06de70f28dd38981756e6b6ae51e38623e3a8
   RNFirebase: ac0de8b24c6f91ae9459575491ed6a77327619c6
   RNGestureHandler: 4cb47a93019c1a201df2644413a0a1569a51c8aa
   RNKeychain: c658833a9cb2cbcba6423bdd6e16cce59e27da0e
-  RNLocalize: 18737f1e6c0762579c8c5730c8f7eca881e2d205
+  RNLocalize: f42aea3133d91d7fa3ec01284a6895019af1a83f
   RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
   yoga: 312528f5bbbba37b4dcea5ef00e8b4033fdd9411
 
