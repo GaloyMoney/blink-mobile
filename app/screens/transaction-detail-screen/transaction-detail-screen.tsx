@@ -9,6 +9,8 @@ import currency from "currency.js"
 import Icon from 'react-native-vector-icons/Ionicons';
 import { color } from "../../theme";
 
+import MapView from 'react-native-maps';
+
 
 export interface TransactionDetailScreenProps extends NavigationScreenProps<{}> {
 }
@@ -38,12 +40,21 @@ const styles = StyleSheet.create({
 
   description: {
     flexDirection: "row",
-    margin: 12,
+    marginHorizontal: 30,
+    marginVertical: 12,
   },
 
   valueDescription: {
     marginLeft: 'auto'
-  }
+  },
+
+  map: {
+    height: 150,
+    width: 150,
+    marginLeft: 'auto',
+    marginRight: 30,
+    marginBottom: 12,
+  },
 
 })
 
@@ -90,21 +101,34 @@ export class TransactionDetailScreen extends React.Component<TransactionDetailSc
         </View>
         
         <View>
-          <View style={styles.iconView}>
-           <Icon name="ios-pin" style={styles.icon}
-           color={color.primary} size={28} />
-           <View style={{flexDirection: "column"}}>
-            <Text>3198 16th St,</Text>
-            <Text>San Francisco,</Text>
-            <Text>CA 94103</Text>
+          <View style={{flexDirection: "row"}}>
+            <View>
+              <View style={styles.iconView}>
+                <Icon name="ios-pin" style={styles.icon}
+                color={color.primary} size={28} />
+                <View style={{flexDirection: "column"}}>
+                  <Text>3198 16th St,</Text>
+                  <Text>San Francisco,</Text>
+                  <Text>CA 94103</Text>
+              </View>
+              </View>
+              <View style={styles.iconView}>
+                <Icon name="ios-call" style={styles.icon}
+                color={color.primary} size={28} />
+                <Text>(415) 829-8468</Text>
+              </View>
             </View>
+            <MapView 
+                style={styles.map}
+                initialRegion={{
+                  latitude: 37.78825,
+                  longitude: -122.4324,
+                  latitudeDelta: 0.0922,
+                  longitudeDelta: 0.0421,
+              }}
+            />
+
           </View>
-          <View style={styles.iconView}>
-            <Icon name="ios-call" style={styles.icon}
-            color={color.primary} size={28} />
-            <Text>(415) 829-8468</Text>
-          </View>
-          {/* <map></map> */}
         </View>
         <View style={styles.description}>
           <Text>Description</Text>
