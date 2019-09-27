@@ -94,6 +94,9 @@
     "solidarity": "^2.3.1",
     "typescript": "3.6.3"
   },
+  "peerDependencies": {
+    "solidarity": "^2.3.1"
+  },
   "jest": {
     "preset": "react-native",
     "moduleNameMapper": {
