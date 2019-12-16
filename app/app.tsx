@@ -13,6 +13,19 @@ import { BackButtonHandler } from "./navigation/back-button-handler"
 import { contains } from "ramda"
 import { DEFAULT_NAVIGATION_CONFIG } from "./navigation/navigation-config"
 
+
+
+import { NativeModules, NativeEventEmitter } from 'react-native'
+import IpcAction from './models/ipc';
+import GrpcAction from "./models/grpc-mobile"
+
+const grpc = new GrpcAction({}, NativeModules, NativeEventEmitter);
+const ipc = new IpcAction(grpc);
+
+grpc.initUnlocker()
+
+
+
 /**
  * Ignore some yellowbox warnings. Some of these are for deprecated functions
  * that we haven't gotten around to replacing yet.

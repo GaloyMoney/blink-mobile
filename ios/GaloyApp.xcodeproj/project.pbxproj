@@ -14,8 +14,6 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		23A4A34B4DE5446F90A48225 /* Montserrat-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E56B96B061C94521B07D317C /* Montserrat-ThinItalic.ttf */; };
 		250E46BF8E37474C98F8DB83 /* Montserrat-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3BDDEEF9DD3C4DFEA323F288 /* Montserrat-Thin.ttf */; };
-		26EDFEB9785055F6245EA7CA /* libPods-GaloyApp-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 345330DB609874003807DEFD /* libPods-GaloyApp-tvOS.a */; };
-		2CEA91A01B331B694F06091E /* libPods-GaloyApp-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F9CC7B9C69242F5278EA3D9 /* libPods-GaloyApp-tvOSTests.a */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -32,6 +30,11 @@
 		A49AE09CF484C8803F0BD694 /* libPods-GaloyApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4132DF240C5252BDEF5B6652 /* libPods-GaloyApp.a */; };
 		B20F99DABBCC49818406703B /* Montserrat-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F9D5B0455A3041D394F75C3B /* Montserrat-MediumItalic.ttf */; };
 		BF22DC1D52B040179D9A80EA /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D34878A3A0924E9F8CF52148 /* Montserrat-Bold.ttf */; };
+		C62C708523A81C08007124C4 /* LndReactModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C62C708423A81C07007124C4 /* LndReactModule.m */; };
+		C62C708623A81C08007124C4 /* LndReactModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C62C708423A81C07007124C4 /* LndReactModule.m */; };
+		C62C708823A81C40007124C4 /* lnd.conf in Resources */ = {isa = PBXBuildFile; fileRef = C62C708723A81C40007124C4 /* lnd.conf */; };
+		C62C708923A81C40007124C4 /* lnd.conf in Resources */ = {isa = PBXBuildFile; fileRef = C62C708723A81C40007124C4 /* lnd.conf */; };
+		C6591BB023A70E5300CB508E /* Lndmobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6591BAF23A70E5300CB508E /* Lndmobile.framework */; };
 		C69AA17D232DD68B00606E11 /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA16C232DD68A00606E11 /* Fontisto.ttf */; };
 		C69AA17E232DD68B00606E11 /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA16C232DD68A00606E11 /* Fontisto.ttf */; };
 		C69AA17F232DD68B00606E11 /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA16C232DD68A00606E11 /* Fontisto.ttf */; };
@@ -88,7 +91,6 @@
 		E53CC24F19EA4E2DB6CCC4EF /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AF6EA9CCFA9C4AC0910C5EA8 /* Montserrat-Regular.ttf */; };
 		ED8D98608CF44385A58F0F62 /* Montserrat-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AB4084855AFF4C59AB0914E5 /* Montserrat-Italic.ttf */; };
 		EEF0FCB6249149CE91E2C04A /* Montserrat-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 746C91AD18FF48D3A5745BBE /* Montserrat-Light.ttf */; };
-		FFBC3DDC3F93EAC1780424C2 /* libPods-GaloyAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7700763961F534B24356C567 /* libPods-GaloyAppTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -129,35 +131,34 @@
 		2E782F00A296471DB427D608 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		2EFF6533FCEE4AB58597954F /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
 		3417743CE84C46B7B7BC49F9 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
-		345330DB609874003807DEFD /* libPods-GaloyApp-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GaloyApp-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3AA3EC1AA44F4D358652CFFC /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
 		3BDDEEF9DD3C4DFEA323F288 /* Montserrat-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Thin.ttf"; path = "../app/theme/fonts/Montserrat-Thin.ttf"; sourceTree = "<group>"; };
 		3F49B60C79EF40B08647DEDF /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		4132DF240C5252BDEF5B6652 /* libPods-GaloyApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GaloyApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4277726FED2D4A36852C3291 /* Montserrat-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Black.ttf"; path = "../app/theme/fonts/Montserrat-Black.ttf"; sourceTree = "<group>"; };
-		551D7E1988A5BF10C5C6AE46 /* Pods-GaloyApp-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GaloyApp-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-GaloyApp-tvOSTests/Pods-GaloyApp-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		641BD61D5FDE432BA408632A /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		673E42F21AB74B5AAF79DFD2 /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
 		69BCDDECF78B6C8C07E2F58F /* Pods-GaloyAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GaloyAppTests.debug.xcconfig"; path = "Target Support Files/Pods-GaloyAppTests/Pods-GaloyAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		71C750D37E404A40B056FD6E /* Montserrat-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-LightItalic.ttf"; path = "../app/theme/fonts/Montserrat-LightItalic.ttf"; sourceTree = "<group>"; };
 		746C91AD18FF48D3A5745BBE /* Montserrat-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Light.ttf"; path = "../app/theme/fonts/Montserrat-Light.ttf"; sourceTree = "<group>"; };
 		7607B08C71E540A28DA96574 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
-		7700763961F534B24356C567 /* libPods-GaloyAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GaloyAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7AB6CFBCAB7241E4A3309DE0 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
-		802A92DBED914D499DBB3254 /* Pods-GaloyApp-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GaloyApp-tvOS.release.xcconfig"; path = "Target Support Files/Pods-GaloyApp-tvOS/Pods-GaloyApp-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		821637C995554B50B12C3A13 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		82BC61FD324542C5B6EE33A9 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
 		84DF051325F445B0BF0D6F86 /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-SemiBold.ttf"; path = "../app/theme/fonts/Montserrat-SemiBold.ttf"; sourceTree = "<group>"; };
 		8BB9CB264CB6434FA3B52051 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		8D64D4CE93744DD19E54A8BE /* Montserrat-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-ExtraLight.ttf"; path = "../app/theme/fonts/Montserrat-ExtraLight.ttf"; sourceTree = "<group>"; };
 		9C045C81CCE042B498E7F894 /* Montserrat-ExtraLightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-ExtraLightItalic.ttf"; path = "../app/theme/fonts/Montserrat-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
-		9F9CC7B9C69242F5278EA3D9 /* libPods-GaloyApp-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GaloyApp-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB4084855AFF4C59AB0914E5 /* Montserrat-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Italic.ttf"; path = "../app/theme/fonts/Montserrat-Italic.ttf"; sourceTree = "<group>"; };
 		AE2763418F1C46029317E911 /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Medium.ttf"; path = "../app/theme/fonts/Montserrat-Medium.ttf"; sourceTree = "<group>"; };
 		AF6EA9CCFA9C4AC0910C5EA8 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Regular.ttf"; path = "../app/theme/fonts/Montserrat-Regular.ttf"; sourceTree = "<group>"; };
 		B27D78CEEDEB42648A9E24DC /* Montserrat-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-ExtraBold.ttf"; path = "../app/theme/fonts/Montserrat-ExtraBold.ttf"; sourceTree = "<group>"; };
 		B32B7D09D5FF45EB8C3689F2 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		B5173FE621CC41AB828DE6C0 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
+		C62C708323A81C07007124C4 /* LndReactModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LndReactModule.h; path = lightning/LndReactModule.h; sourceTree = "<group>"; };
+		C62C708423A81C07007124C4 /* LndReactModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LndReactModule.m; path = lightning/LndReactModule.m; sourceTree = "<group>"; };
+		C62C708723A81C40007124C4 /* lnd.conf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = lnd.conf; path = lightning/lnd.conf; sourceTree = "<group>"; };
+		C6591BAF23A70E5300CB508E /* Lndmobile.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Lndmobile.framework; path = lightning/Lndmobile.framework; sourceTree = "<group>"; };
 		C69AA16C232DD68A00606E11 /* Fontisto.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Fontisto.ttf; sourceTree = "<group>"; };
 		C69AA16D232DD68A00606E11 /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
 		C69AA16E232DD68A00606E11 /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Feather.ttf; sourceTree = "<group>"; };
@@ -176,9 +177,7 @@
 		C69AA17B232DD68B00606E11 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
 		C6E810002333FDA400D41794 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C95E840368224E5EA37898C0 /* Montserrat-BlackItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-BlackItalic.ttf"; path = "../app/theme/fonts/Montserrat-BlackItalic.ttf"; sourceTree = "<group>"; };
-		D0C7D146FCE6FF4632DD845A /* Pods-GaloyApp-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GaloyApp-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-GaloyApp-tvOS/Pods-GaloyApp-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		D34878A3A0924E9F8CF52148 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Bold.ttf"; path = "../app/theme/fonts/Montserrat-Bold.ttf"; sourceTree = "<group>"; };
-		DC16A000A05FE52095FAD574 /* Pods-GaloyApp-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GaloyApp-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-GaloyApp-tvOSTests/Pods-GaloyApp-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		DC8400EA8205408B9E6318A5 /* Montserrat-SemiBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-SemiBoldItalic.ttf"; path = "../app/theme/fonts/Montserrat-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
 		E56B96B061C94521B07D317C /* Montserrat-ThinItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-ThinItalic.ttf"; path = "../app/theme/fonts/Montserrat-ThinItalic.ttf"; sourceTree = "<group>"; };
 		E5A2237A1830429A9171428B /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
@@ -194,7 +193,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FFBC3DDC3F93EAC1780424C2 /* libPods-GaloyAppTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -203,6 +201,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A49AE09CF484C8803F0BD694 /* libPods-GaloyApp.a in Frameworks */,
+				C6591BB023A70E5300CB508E /* Lndmobile.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -210,7 +209,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				26EDFEB9785055F6245EA7CA /* libPods-GaloyApp-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,7 +216,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2CEA91A01B331B694F06091E /* libPods-GaloyApp-tvOSTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -245,7 +242,11 @@
 		13B07FAE1A68108700A75B9A /* GaloyApp */ = {
 			isa = PBXGroup;
 			children = (
+				C6591BAF23A70E5300CB508E /* Lndmobile.framework */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
+				C62C708723A81C40007124C4 /* lnd.conf */,
+				C62C708323A81C07007124C4 /* LndReactModule.h */,
+				C62C708423A81C07007124C4 /* LndReactModule.m */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -262,9 +263,6 @@
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				4132DF240C5252BDEF5B6652 /* libPods-GaloyApp.a */,
-				345330DB609874003807DEFD /* libPods-GaloyApp-tvOS.a */,
-				9F9CC7B9C69242F5278EA3D9 /* libPods-GaloyApp-tvOSTests.a */,
-				7700763961F534B24356C567 /* libPods-GaloyAppTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -315,10 +313,6 @@
 			children = (
 				EBD61B2C93AC0EB26258A04C /* Pods-GaloyApp.debug.xcconfig */,
 				0947F8D8CDB2697A51DB5C93 /* Pods-GaloyApp.release.xcconfig */,
-				D0C7D146FCE6FF4632DD845A /* Pods-GaloyApp-tvOS.debug.xcconfig */,
-				802A92DBED914D499DBB3254 /* Pods-GaloyApp-tvOS.release.xcconfig */,
-				DC16A000A05FE52095FAD574 /* Pods-GaloyApp-tvOSTests.debug.xcconfig */,
-				551D7E1988A5BF10C5C6AE46 /* Pods-GaloyApp-tvOSTests.release.xcconfig */,
 				69BCDDECF78B6C8C07E2F58F /* Pods-GaloyAppTests.debug.xcconfig */,
 				EDC21AADBD08016C37D36FFF /* Pods-GaloyAppTests.release.xcconfig */,
 			);
@@ -433,7 +427,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "GaloyApp-tvOS" */;
 			buildPhases = (
-				D641357FDDCA17F4142BEDC4 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F122414F3F0027D42C /* Start Packager */,
 				2D02E4771E0B4A5D006451C7 /* Sources */,
 				2D02E4781E0B4A5D006451C7 /* Frameworks */,
@@ -453,7 +446,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "GaloyApp-tvOSTests" */;
 			buildPhases = (
-				83FA1A8AFD4A9492CDDDD311 /* [CP] Check Pods Manifest.lock */,
 				2D02E48C1E0B4A5D006451C7 /* Sources */,
 				2D02E48D1E0B4A5D006451C7 /* Frameworks */,
 				2D02E48E1E0B4A5D006451C7 /* Resources */,
@@ -526,6 +518,7 @@
 				C69AA199232DD68B00606E11 /* Foundation.ttf in Resources */,
 				C69AA1B5232DD68B00606E11 /* SimpleLineIcons.ttf in Resources */,
 				C69AA19D232DD68B00606E11 /* Ionicons.ttf in Resources */,
+				C62C708923A81C40007124C4 /* lnd.conf in Resources */,
 				C69AA1B1232DD68B00606E11 /* EvilIcons.ttf in Resources */,
 				C69AA1A5232DD68B00606E11 /* FontAwesome5_Regular.ttf in Resources */,
 				C69AA1AD232DD68B00606E11 /* Zocial.ttf in Resources */,
@@ -559,6 +552,7 @@
 				ED8D98608CF44385A58F0F62 /* Montserrat-Italic.ttf in Resources */,
 				EEF0FCB6249149CE91E2C04A /* Montserrat-Light.ttf in Resources */,
 				886531B54EB844BD8EDA9740 /* Montserrat-LightItalic.ttf in Resources */,
+				C62C708823A81C40007124C4 /* lnd.conf in Resources */,
 				D6D4FE9AAAD74B8186E9FD8C /* Montserrat-Medium.ttf in Resources */,
 				B20F99DABBCC49818406703B /* Montserrat-MediumItalic.ttf in Resources */,
 				E53CC24F19EA4E2DB6CCC4EF /* Montserrat-Regular.ttf in Resources */,
@@ -721,28 +715,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GaloyApp/Pods-GaloyApp-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		83FA1A8AFD4A9492CDDDD311 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-GaloyApp-tvOSTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		94231985FB9080C37DCDD8D7 /* [CP-User] [RNFB] Core Configuration */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -769,28 +741,6 @@
 			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-GaloyAppTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D641357FDDCA17F4142BEDC4 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-GaloyApp-tvOS-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -842,6 +792,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C62C708623A81C08007124C4 /* LndReactModule.m in Sources */,
 				00E356F31AD99517003FC87E /* GaloyAppTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -851,6 +802,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				C62C708523A81C08007124C4 /* LndReactModule.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -905,6 +857,14 @@
 			baseConfigurationReference = 69BCDDECF78B6C8C07E2F58F /* Pods-GaloyAppTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Crashlytics/iOS\"",
+					"\"${PODS_ROOT}/Fabric/iOS\"",
+					"\"${PODS_ROOT}/FirebaseAnalytics/Frameworks\"",
+					"\"${PODS_ROOT}/GoogleAppMeasurement/Frameworks\"",
+					"$(PROJECT_DIR)/lightning",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -929,6 +889,14 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Crashlytics/iOS\"",
+					"\"${PODS_ROOT}/Fabric/iOS\"",
+					"\"${PODS_ROOT}/FirebaseAnalytics/Frameworks\"",
+					"\"${PODS_ROOT}/GoogleAppMeasurement/Frameworks\"",
+					"$(PROJECT_DIR)/lightning",
+				);
 				INFOPLIST_FILE = GaloyAppTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -953,6 +921,10 @@
 				CURRENT_PROJECT_VERSION = 9;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 39Q9AL82ZL;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/lightning",
+				);
 				INFOPLIST_FILE = GaloyApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -977,6 +949,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = 39Q9AL82ZL;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/lightning",
+				);
 				INFOPLIST_FILE = GaloyApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -994,7 +970,6 @@
 		};
 		2D02E4971E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D0C7D146FCE6FF4632DD845A /* Pods-GaloyApp-tvOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1022,7 +997,6 @@
 		};
 		2D02E4981E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 802A92DBED914D499DBB3254 /* Pods-GaloyApp-tvOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1050,7 +1024,6 @@
 		};
 		2D02E4991E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DC16A000A05FE52095FAD574 /* Pods-GaloyApp-tvOSTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1077,7 +1050,6 @@
 		};
 		2D02E49A1E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 551D7E1988A5BF10C5C6AE46 /* Pods-GaloyApp-tvOSTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
