@@ -161,6 +161,8 @@ export const RatesModel = types
 // TODO: move to another file?
 import { NativeModules, NativeEventEmitter } from 'react-native'
 import GrpcAction from "./grpc-mobile"
+import IpcAction from "../../ipc"
+import LogAction from "../../log"
 
 export const LndModel = types
     .model("Lnd", {
@@ -168,9 +170,18 @@ export const LndModel = types
     })
     .actions(self => {
         const initUnlocker = flow(function*() {
-            const grpc = new GrpcAction({} /* FIXME */, NativeModules, NativeEventEmitter); 
-            grpc.initUnlocker() // FIXME is await done correctly?
+            const grpc = new GrpcAction({} /* FIXME */, NativeModules, NativeEventEmitter);
+            const ipc = new IpcAction(grpc);
+            const log = new LogAction({} /* FIXME */, ipc, false);
+
+            grpc.initUnlocker() 
             self.init = true
+        })
+
+        const nodeInfo = flow(function*() {
+            const grpc = new GrpcAction({} /* FIXME */, NativeModules, NativeEventEmitter); 
+            const nodeinfo = grpc.sendCommand('getNodeInfo');
+            console.tron.log("node info", nodeinfo)
         })
 
         return  { initUnlocker }

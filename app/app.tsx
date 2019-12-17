@@ -85,7 +85,7 @@ export class App extends React.Component<{}, AppState> {
     const { navigationStore, ...otherStores } = rootStore
 
     // launching lnd // TODO delay before launching 
-    console.tron.log(rootStore.dataStore.lnd.initUnlocker())
+    rootStore.dataStore.lnd.initUnlocker()
 
     return (
       <Provider rootStore={rootStore} navigationStore={navigationStore} {...otherStores}>
