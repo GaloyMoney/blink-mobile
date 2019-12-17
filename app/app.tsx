@@ -16,11 +16,9 @@ import { DEFAULT_NAVIGATION_CONFIG } from "./navigation/navigation-config"
 
 
 import { NativeModules, NativeEventEmitter } from 'react-native'
-import IpcAction from './models/ipc';
 import GrpcAction from "./models/grpc-mobile"
 
 const grpc = new GrpcAction({}, NativeModules, NativeEventEmitter);
-const ipc = new IpcAction(grpc);
 
 grpc.initUnlocker()
 
