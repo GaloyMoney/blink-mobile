@@ -156,6 +156,27 @@ export const RatesModel = types
     })
 
 
+
+
+// TODO: move to another file?
+import { NativeModules, NativeEventEmitter } from 'react-native'
+import GrpcAction from "./grpc-mobile"
+
+export const LndModel = types
+    .model("Lnd", {
+        init: false
+    })
+    .actions(self => {
+        const initUnlocker = flow(function*() {
+            const grpc = new GrpcAction({}, NativeModules, NativeEventEmitter);
+            grpc.initUnlocker() // FIXME is await done correctly?
+            self.init = true
+        })
+
+        return  { initUnlocker }
+})
+
+
 export const DataStoreModel = types
     .model("DataStore", {
         auth: types.optional(Auth, {}),
@@ -165,7 +186,8 @@ export const DataStoreModel = types
                 BitcoinAccountModel.create({type: AccountType.Bitcoin}),
             ]
         ),
-        rates: types.optional(RatesModel, {})
+        rates: types.optional(RatesModel, {}),
+        lnd: types.optional(LndModel, {}), // TODO should it stay optional?
     })
     .actions(self => {
         const update_balances = flow(function*() {  // TODO move to an Accounts class
