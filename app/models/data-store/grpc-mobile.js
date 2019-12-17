@@ -6,16 +6,13 @@
 
 
 import 'node-libs-react-native/globals'; // TODO add in App.tsx instead?
-
 import { Duplex } from 'readable-stream';
-// import * as log from './log';
-
 
 import base64 from 'base64-js';
 import { lnrpc } from '../../generated/rpc';
 
 
-// FIXME
+// FIXME refactor
 const toCaps = (value = '', separator = ' ', split = '-') => {
   return value
     .split(split)
@@ -56,7 +53,7 @@ class GrpcAction {
   async closeUnlocker() {
     // TODO: restart is not required on mobile
     // await this._lnd.closeUnlocker();
-    log.info('GRPC unlockerClosed');
+    console.tron.log('GRPC unlockerClosed');
   }
 
   /**
@@ -80,7 +77,7 @@ class GrpcAction {
    */
   async initAutopilot() {
     this._store.autopilotReady = true;
-    log.info('GRPC autopilotReady');
+    console.tron.log('GRPC autopilotReady');
   }
 
   /**
@@ -105,7 +102,7 @@ class GrpcAction {
   async initLnd() {
     // TODO: restart is not required on mobile
     // await this._lnd.start();
-    log.info('GRPC lndReady');
+    console.tron.log('GRPC lndReady');
     this._store.lndReady = true;
   }
 
@@ -117,7 +114,7 @@ class GrpcAction {
   async closeLnd() {
     // TODO: add api on mobile
     // await this._lnd.close();
-    log.info('GRPC lndClosed');
+    console.tron.log('GRPC lndClosed');
   }
 
   /**
