@@ -87,6 +87,7 @@
 		C6DC72E62330564700635D54 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB61A68108700A75B9A /* Info.plist */; };
 		C6E810012333FDA500D41794 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C6E810002333FDA400D41794 /* GoogleService-Info.plist */; };
 		CDAAC205C74A4EEDBFC6F3D8 /* Montserrat-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C95E840368224E5EA37898C0 /* Montserrat-BlackItalic.ttf */; };
+		CF1213EF28EE4706A013F9C5 /* libPods-GaloyAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F18ED6CF748260AB78E47698 /* libPods-GaloyAppTests.a */; };
 		D6D4FE9AAAD74B8186E9FD8C /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AE2763418F1C46029317E911 /* Montserrat-Medium.ttf */; };
 		E53CC24F19EA4E2DB6CCC4EF /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AF6EA9CCFA9C4AC0910C5EA8 /* Montserrat-Regular.ttf */; };
 		ED8D98608CF44385A58F0F62 /* Montserrat-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AB4084855AFF4C59AB0914E5 /* Montserrat-Italic.ttf */; };
@@ -185,6 +186,7 @@
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		EDC21AADBD08016C37D36FFF /* Pods-GaloyAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GaloyAppTests.release.xcconfig"; path = "Target Support Files/Pods-GaloyAppTests/Pods-GaloyAppTests.release.xcconfig"; sourceTree = "<group>"; };
+		F18ED6CF748260AB78E47698 /* libPods-GaloyAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GaloyAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9D5B0455A3041D394F75C3B /* Montserrat-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-MediumItalic.ttf"; path = "../app/theme/fonts/Montserrat-MediumItalic.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -193,6 +195,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF1213EF28EE4706A013F9C5 /* libPods-GaloyAppTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,6 +266,7 @@
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				4132DF240C5252BDEF5B6652 /* libPods-GaloyApp.a */,
+				F18ED6CF748260AB78E47698 /* libPods-GaloyAppTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

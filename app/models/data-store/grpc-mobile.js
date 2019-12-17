@@ -5,7 +5,9 @@
  */
 
 
-// import { Duplex } from 'stream';
+import 'node-libs-react-native/globals'; // TODO add in App.tsx instead?
+
+import { Duplex } from 'readable-stream';
 // import * as log from './log';
 
 
@@ -25,7 +27,7 @@ const toCaps = (value = '', separator = ' ', split = '-') => {
 
 class GrpcAction {
   constructor(store, NativeModules, NativeEventEmitter) {
-    this._store = store;
+    this._store = store; //FIXME
     this._lnd = NativeModules.LndReactModule;
     this._lndEvent = new NativeEventEmitter(this._lnd);
     this._streamCounter = 0;

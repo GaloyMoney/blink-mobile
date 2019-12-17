@@ -168,7 +168,7 @@ export const LndModel = types
     })
     .actions(self => {
         const initUnlocker = flow(function*() {
-            const grpc = new GrpcAction({}, NativeModules, NativeEventEmitter);
+            const grpc = new GrpcAction({} /* FIXME */, NativeModules, NativeEventEmitter); 
             grpc.initUnlocker() // FIXME is await done correctly?
             self.init = true
         })
