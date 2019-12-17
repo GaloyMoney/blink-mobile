@@ -14,16 +14,6 @@ import { contains } from "ramda"
 import { DEFAULT_NAVIGATION_CONFIG } from "./navigation/navigation-config"
 
 
-
-import { NativeModules, NativeEventEmitter } from 'react-native'
-import GrpcAction from "./models/grpc-mobile"
-
-const grpc = new GrpcAction({}, NativeModules, NativeEventEmitter);
-
-grpc.initUnlocker()
-
-
-
 /**
  * Ignore some yellowbox warnings. Some of these are for deprecated functions
  * that we haven't gotten around to replacing yet.
@@ -93,6 +83,9 @@ export class App extends React.Component<{}, AppState> {
 
     // wire stores defined in root-store.ts file
     const { navigationStore, ...otherStores } = rootStore
+
+    // launching lnd // TODO delay before launching 
+    console.tron.log(rootStore.dataStore.lnd.initUnlocker())
 
     return (
       <Provider rootStore={rootStore} navigationStore={navigationStore} {...otherStores}>

@@ -8,13 +8,9 @@
 // import { Duplex } from 'stream';
 // import * as log from './log';
 
-const log = {} // FIXME
-log['info'] = console.tron.log; // FIXME
-
 
 import base64 from 'base64-js';
-
-import { lnrpc } from '../generated/rpc';
+import { lnrpc } from '../../generated/rpc';
 
 
 // FIXME
@@ -29,8 +25,6 @@ const toCaps = (value = '', separator = ' ', split = '-') => {
 
 class GrpcAction {
   constructor(store, NativeModules, NativeEventEmitter) {
-    console.tron.log("NativeModules")
-    console.tron.log(NativeModules.LndReactModule)
     this._store = store;
     this._lnd = NativeModules.LndReactModule;
     this._lndEvent = new NativeEventEmitter(this._lnd);
@@ -49,8 +43,7 @@ class GrpcAction {
    */
   async initUnlocker() {
     await this._lnd.start();
-    log.info('GRPC unlockerReady');
-    // this._store.unlockerReady = true;
+    console.tron.log('GRPC unlockerReady');
   }
 
   /**
