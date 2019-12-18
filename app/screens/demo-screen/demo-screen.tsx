@@ -150,8 +150,26 @@ export class DemoScreen extends React.Component<DemoScreenProps, {}> {
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
-              tx="demoScreen.reactotron"
-              onPress={this.demoReactotron}
+              text="Gen Seed"
+              onPress={this.props.dataStore.lnd.genSeed}
+            />
+            <Button
+              style={DEMO}
+              textStyle={DEMO_TEXT}
+              text="nodeInfo"
+              onPress={this.props.dataStore.lnd.nodeInfo}
+            />
+            <Button
+              style={DEMO}
+              textStyle={DEMO_TEXT}
+              text="initWallet"
+              onPress={this.props.dataStore.lnd.initWallet}
+            />
+            <Button
+              style={DEMO}
+              textStyle={DEMO_TEXT}
+              text="unlock"
+              onPress={this.props.dataStore.lnd.unlockWallet}
             />
             <Text
               style={HINT}

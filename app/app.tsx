@@ -2,6 +2,10 @@
 //
 // In this file, we'll be kicking off our app or storybook.
 
+
+import 'node-libs-react-native/globals'; // needed for Buffer?
+
+
 import "./i18n"
 import * as React from "react"
 import { AppRegistry, YellowBox } from "react-native"

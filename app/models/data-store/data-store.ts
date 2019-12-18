@@ -166,7 +166,8 @@ import LogAction from "../../log"
 
 export const LndModel = types
     .model("Lnd", {
-        init: false
+        init: false,
+        walletUnlocked: false,
     })
     .actions(self => {
         const initUnlocker = flow(function*() {
@@ -178,13 +179,43 @@ export const LndModel = types
             self.init = true
         })
 
-        const nodeInfo = flow(function*() {
+        const genSeed = flow(function*() {
             const grpc = new GrpcAction({} /* FIXME */, NativeModules, NativeEventEmitter); 
-            const nodeinfo = grpc.sendCommand('getNodeInfo');
-            console.tron.log("node info", nodeinfo)
+            const seed = yield grpc.sendUnlockerCommand('GenSeed');
+            console.tron.log("seed", seed.cipherSeedMnemonic)
         })
 
-        return  { initUnlocker }
+        const unlockWallet = flow(function*() {
+            const password = 'abcdef12345678' // FIXME
+            const grpc = new GrpcAction({} /* FIXME */, NativeModules, NativeEventEmitter); 
+            const nodeinfo = yield grpc.sendUnlockerCommand('UnlockWallet', {
+                walletPassword: Buffer.from(password, 'utf8'),
+            })
+            console.tron.log("node info")
+            console.tron.log(nodeinfo)
+        })
+        
+        const nodeInfo = flow(function*() {
+            const grpc = new GrpcAction({} /* FIXME */, NativeModules, NativeEventEmitter); 
+            const nodeinfo = yield grpc.sendCommand('GetInfo')
+            console.tron.log("node info", nodeinfo)
+            console.tron.log(nodeinfo)
+        })
+ 
+        const initWallet = flow(function*() {
+            const grpc = new GrpcAction({} /* FIXME */, NativeModules, NativeEventEmitter); 
+
+            const seed = yield grpc.sendUnlockerCommand('GenSeed');
+
+            const password = 'abcdef12345678' // FIXME
+            const initWallet = grpc.sendUnlockerCommand('InitWallet', {
+                walletPassword: Buffer.from(password, 'utf8'),
+                cipherSeedMnemonic: seed.cipherSeedMnemonic,
+            })
+            self.walletUnlocked = true;
+        })
+
+        return  { initUnlocker, genSeed, nodeInfo, initWallet, unlockWallet }
 })
 
 

@@ -5,7 +5,6 @@
  */
 
 
-import 'node-libs-react-native/globals'; // TODO add in App.tsx instead?
 import { Duplex } from 'readable-stream';
 
 import base64 from 'base64-js';

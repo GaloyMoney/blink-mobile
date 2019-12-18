@@ -7,11 +7,11 @@ import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
 
 export const PrimaryNavigator = createStackNavigator(
   {
+    demo: { screen: DemoScreen },
+    welcome: { screen: WelcomeScreen },
     accounts: { screen: AccountsScreen },
     accountDetail: { screen: AccountDetailScreen },
     transactionDetail: { screen: TransactionDetailScreen },
-    welcome: { screen: WelcomeScreen },
-    demo: { screen: DemoScreen },
   },
   {
     headerMode: "float",
