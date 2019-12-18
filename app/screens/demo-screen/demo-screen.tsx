@@ -182,7 +182,7 @@ export class DemoScreen extends React.Component<DemoScreenProps, {}> {
               style={HINT}
               tx={`demoScreen.${Platform.OS}ReactotronHint`}
             />
-            <QRCode>{'https://galoy.io'}</QRCode>
+            <QRCode>{this.props.dataStore.lnd.onChainAddress}</QRCode>
           </View>
           <Image source={logoIgnite} style={IGNITE} />
           <View style={LOVE_WRAPPER}>

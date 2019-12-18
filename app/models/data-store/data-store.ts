@@ -95,6 +95,8 @@ export const FiatFeaturesModel = BaseAccountModel
         },
     }))
 
+
+// TODO: remove
 export const CryptoFeaturesModel = BaseAccountModel
     .props ({
         type: types.optional(
@@ -168,6 +170,7 @@ export const LndModel = types
     .model("Lnd", {
         init: false,
         walletUnlocked: false,
+        onChainAddress: "",
     })
     .actions(self => {
         
@@ -210,7 +213,8 @@ export const LndModel = types
         })
  
         const newAddress = flow(function*() {
-            const address = yield getGrpc().sendCommand('NewAddress', {type: 0})
+            const { address } = yield getGrpc().sendCommand('NewAddress', {type: 0})
+            self.onChainAddress = address
             console.tron.log(address)
         })
 
