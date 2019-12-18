@@ -5,7 +5,7 @@
  */
 
 
-import { Duplex } from 'stream';
+import { Duplex } from 'readable-stream';
 
 import base64 from 'base64-js';
 import { lnrpc } from '../../generated/rpc';
@@ -39,9 +39,9 @@ class GrpcAction {
    * made to the client.
    * @return {Promise<undefined>}
    */
-  async initUnlocker() {
+  async startLnd() {
     await this._lnd.start();
-    console.tron.log('GRPC unlockerReady');
+    console.tron.log('lnd Started. GRPC unlockerReady');
   }
 
   /**

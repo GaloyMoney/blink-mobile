@@ -108,16 +108,16 @@ export class AccountDetailScreen extends React.Component<AccountDetailScreenProp
 
       const dataStore = this.props.dataStore;
       let accountType = this.props.navigation.getParam("account"); // FIXME how to pass this properly?
-      let accountStore = dataStore.account(accountType)
+      let accountStore = accountType == AccountType.Checking ? this.props.dataStore.fiat : this.props.dataStore.lnd
 
       accountStore.update()
   }
 
   render() {
     const dataStore = this.props.dataStore;
-
     let accountType = this.props.navigation.getParam("account"); // FIXME how to pass this properly?
-    let accountStore = dataStore.account(accountType)
+    let accountStore = accountType == AccountType.Checking ? this.props.dataStore.fiat : this.props.dataStore.lnd
+
     let transactions = accountStore.transactions;
 
     if (transactions.length === 0) {

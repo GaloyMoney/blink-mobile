@@ -169,7 +169,7 @@ export class DemoScreen extends React.Component<DemoScreenProps, {}> {
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
-              text="unlock"
+              text={`unlock. status: ${this.props.dataStore.lnd.walletUnlocked ? "true": "false"}`}
               onPress={this.props.dataStore.lnd.unlockWallet}
             />
             <Button
@@ -177,6 +177,12 @@ export class DemoScreen extends React.Component<DemoScreenProps, {}> {
               textStyle={DEMO_TEXT}
               text="newAddress"
               onPress={this.props.dataStore.lnd.newAddress}
+            />
+            <Button
+              style={DEMO}
+              textStyle={DEMO_TEXT}
+              text="update_balances"
+              onPress={this.props.dataStore.lnd.update_balances}
             />
             <Text
               style={HINT}
