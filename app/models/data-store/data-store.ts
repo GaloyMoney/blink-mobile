@@ -3,14 +3,13 @@ import { Coinbase, GetPriceResult } from "../../services/coinbase"
 import { CurrencyType } from "./CurrencyType"
 import { AccountType } from "../../screens/accounts-screen/AccountType"
 import firebase from "react-native-firebase"
-import { Blockchain } from "../../services/blockchain"
-
+import { parseDate } from "../../utils/date"
 
 const getFiatBalance = firebase.functions().httpsCallable('getFiatBalances');
 const db = firebase.firestore()                
 
 
-export const Auth = types
+export const AuthModel = types
     .model("Auth", {
         email: "nicolas.burtey+default@gmail.com",
         isAnonymous: false,
@@ -47,17 +46,12 @@ export const BaseAccountModel = types
     .model ("Account", {
         transactions: types.optional(types.array(TransactionModel), []),
         balance: 0,
+        type: types.enumeration<AccountType>("Account Type", Object.values(AccountType))
     })
 
-export const FiatFeaturesModel = BaseAccountModel
+export const FiatAccountModel = BaseAccountModel
     .props ({
-        type: types.optional(  // TODO check if this is succesfully forcing Fiat / Crypto classes?
-            types.refinement(
-                types.enumeration<AccountType>("Account Type", Object.values(AccountType)),
-                value => value == AccountType.Checking
-            ), 
-            AccountType.Checking
-        ),
+        type: AccountType.Checking
     })
     .actions(self => {
         const update = flow(function*() {
@@ -96,32 +90,119 @@ export const FiatFeaturesModel = BaseAccountModel
     }))
 
 
-// TODO: remove
-export const CryptoFeaturesModel = BaseAccountModel
+// TODO: move to another file?
+import { NativeModules, NativeEventEmitter } from 'react-native'
+import GrpcAction from "./grpc-mobile"
+import IpcAction from "../../ipc"
+import LogAction from "../../log"
+
+export const LndModel = BaseAccountModel
+    .named("Lnd")
     .props ({
-        type: types.optional(
-            types.refinement(
-                types.enumeration<AccountType>("Account Type", Object.values(AccountType)),
-                value => value == AccountType.Bitcoin
-            ),
-            AccountType.Bitcoin
-        )
+        init: false,
+        walletUnlocked: false,
+        onChainAddress: "",
+        type: AccountType.Bitcoin,
     })
     .actions(self => {
-        const instance: Blockchain = new Blockchain()
-        instance.setup()
-        const address = "xpub6CUGRUonZSQ4TWtTMmzXdrXDtypWKiKrhko4egpiMZbpiaQL2jkwSB1icqYh2cfDfVxdx4df189oLKnC5fSwqPfgyP3hooxujYzAu3fDVmz"
+        
+        const getGrpc = () => new GrpcAction({} /* FIXME */, NativeModules, NativeEventEmitter); // TODO use a volatile state?
+        const password = 'abcdef12345678' // FIXME
 
-        const update = flow(function*() {
-            const result = yield instance.getWallet(address)
-            self.transactions = result.txs // TODO error manage
-        })
-        const update_balances = flow(function*() { 
-            const result = yield instance.getWallet(address)
-            self.balance = result.balance // TODO error management
+        const startLnd = flow(function*() {
+            const grpc = getGrpc()
+            const ipc = new IpcAction(grpc);
+            const log = new LogAction({} /* FIXME */, ipc, false);
+            grpc.startLnd() 
+            self.init = true
         })
 
-        return  { update, update_balances }
+        const genSeed = flow(function*() {
+            const seed = yield getGrpc().sendUnlockerCommand('GenSeed');
+            console.tron.log("seed", seed.cipherSeedMnemonic)
+        })
+
+        const unlockWallet = flow(function*() {
+            const nodeinfo = yield getGrpc().sendUnlockerCommand('UnlockWallet', {
+                walletPassword: Buffer.from(password, 'utf8'),
+            })
+            self.walletUnlocked = true
+        })
+        
+        const nodeInfo = flow(function*() {
+            const nodeinfo = yield getGrpc().sendCommand('GetInfo')
+            console.tron.log("node info", nodeinfo)
+        })
+ 
+        const initWallet = flow(function*() {
+            const seed = yield getGrpc().sendUnlockerCommand('GenSeed');
+            const initWallet = getGrpc().sendUnlockerCommand('InitWallet', {
+                walletPassword: Buffer.from(password, 'utf8'),
+                cipherSeedMnemonic: seed.cipherSeedMnemonic,
+            })
+            self.walletUnlocked = true;
+        })
+ 
+        const newAddress = flow(function*() {
+            const { address } = yield getGrpc().sendCommand('NewAddress', {type: 0})
+            self.onChainAddress = address
+            console.tron.log(address)
+        })
+
+        const update_balances = flow(function*() {
+            console.tron.log('updating balance')
+
+            try {
+              const { transactions } = yield getGrpc().sendCommand('getTransactions');
+              console.tron.log('raw tx: ', transactions)
+
+              const txs = transactions.map(transaction => ({
+                id: transaction.txHash,
+                type: 'bitcoin',
+                amount: transaction.amount,
+                fee: transaction.totalFees,
+                confirmations: transaction.numConfirmations,
+                status: transaction.numConfirmations < 3 ? 'unconfirmed' : 'confirmed',
+                date: parseDate(transaction.timeStamp),
+                moneyIn: transaction.amount > 0, // FIXME verify is this works like this for lnd
+              }));
+              console.tron.log('tx: ', txs)
+
+              self.transactions = txs.map(tx => ({
+                    name: tx.moneyIn? "Received" : "Sent",
+                    icon: tx.moneyIn? "ios-download" : "ios-exit",
+                    amount: tx.amount,
+                    date: tx.date,
+
+                    //   tx.moneyIn ? 
+                    //   tx.addr = tx.inputs[0].prev_out.addr : // show input (the other address) if money comes in
+                    //   tx.addr = tx.out[0].addr
+                    //   tx.addr_fmt = `${tx.addr.slice(0, 11)}...${tx.addr.slice(-10)}`
+                    //   tx.addr = tx.addr_fmt // TODO FIXME better naming 
+                    addr: tx.id,
+
+              }))
+
+            } catch (err) {
+              console.tron.error('Listing transactions failed', err);
+            }
+          })
+
+          const update = function() {
+            unlockWallet()
+          }
+
+        return  { 
+            startLnd, 
+            genSeed, 
+            nodeInfo, 
+            initWallet, 
+            unlockWallet, 
+            newAddress, 
+            update_balances,
+            update
+         }
+    
     })
     .views(self => ({
         get currency() {
@@ -130,10 +211,7 @@ export const CryptoFeaturesModel = BaseAccountModel
     }))
 
 
-export const CheckingAccountModel = types.compose(BaseAccountModel, FiatFeaturesModel)
-export const BitcoinAccountModel = types.compose(BaseAccountModel, CryptoFeaturesModel)
-
-export const AccountModel = types.union(CheckingAccountModel, BitcoinAccountModel)
+export const AccountModel = types.union(FiatAccountModel, LndModel)
 
 
 export const RatesModel = types
@@ -158,108 +236,33 @@ export const RatesModel = types
     })
 
 
-
-
-// TODO: move to another file?
-import { NativeModules, NativeEventEmitter } from 'react-native'
-import GrpcAction from "./grpc-mobile"
-import IpcAction from "../../ipc"
-import LogAction from "../../log"
-
-export const LndModel = types
-    .model("Lnd", {
-        init: false,
-        walletUnlocked: false,
-        onChainAddress: "",
-    })
-    .actions(self => {
-        
-        const getGrpc = () => new GrpcAction({} /* FIXME */, NativeModules, NativeEventEmitter); // TODO use a volatile state?
-        const password = 'abcdef12345678' // FIXME
-
-        const initUnlocker = flow(function*() {
-            const grpc = getGrpc()
-            const ipc = new IpcAction(grpc);
-            const log = new LogAction({} /* FIXME */, ipc, false);
-            grpc.initUnlocker() 
-            self.init = true
-        })
-
-        const genSeed = flow(function*() {
-            const seed = yield getGrpc().sendUnlockerCommand('GenSeed');
-            console.tron.log("seed", seed.cipherSeedMnemonic)
-        })
-
-        const unlockWallet = flow(function*() {
-            const nodeinfo = yield getGrpc().sendUnlockerCommand('UnlockWallet', {
-                walletPassword: Buffer.from(password, 'utf8'),
-            })
-            console.tron.log("node info")
-            console.tron.log(nodeinfo)
-        })
-        
-        const nodeInfo = flow(function*() {
-            const nodeinfo = yield getGrpc().sendCommand('GetInfo')
-            console.tron.log("node info", nodeinfo)
-        })
- 
-        const initWallet = flow(function*() {
-            const seed = yield getGrpc().sendUnlockerCommand('GenSeed');
-            const initWallet = getGrpc().sendUnlockerCommand('InitWallet', {
-                walletPassword: Buffer.from(password, 'utf8'),
-                cipherSeedMnemonic: seed.cipherSeedMnemonic,
-            })
-            self.walletUnlocked = true;
-        })
- 
-        const newAddress = flow(function*() {
-            const { address } = yield getGrpc().sendCommand('NewAddress', {type: 0})
-            self.onChainAddress = address
-            console.tron.log(address)
-        })
-
-        return  { initUnlocker, genSeed, nodeInfo, initWallet, unlockWallet, newAddress }
-})
-
-
 export const DataStoreModel = types
     .model("DataStore", {
-        auth: types.optional(Auth, {}),
-        accounts: types.optional(types.array(AccountModel), () => 
-            [
-                CheckingAccountModel.create({type: AccountType.Checking}),
-                BitcoinAccountModel.create({type: AccountType.Bitcoin}),
-            ]
-        ),
+        auth: types.optional(AuthModel, {}),
+        fiat: types.optional(FiatAccountModel, {}),
         rates: types.optional(RatesModel, {}),
-        lnd: types.optional(LndModel, {}), // TODO should it stay optional?
+        lnd: types.optional(LndModel, {}), // TODO should it be optional?
     })
     .actions(self => {
-        const update_balances = flow(function*() {  // TODO move to an Accounts class
+        const update_balances = flow(function*() {
             // TODO parrallel call?
-            self.accounts.forEach((account) => account.update_balances())
+            self.fiat.update_balances()
+            self.lnd.update_balances()
         })
 
         return  { update_balances }
     })
     .views(self => ({
         get total_usd_balance() { // in USD
-            return self.accounts.reduce((balance, account) => account.balance * self.rates[account.currency] + balance, 0)
+            return self.fiat.balance + self.lnd.balance * self.rates[self.lnd.currency]
         },
 
         get usd_balances() { // return an Object mapping account to USD balance
-            const balances = {}
-
-            self.accounts.forEach((account) => {
-                balances[account.type] = account.balance * self.rates[account.currency]
-            })
-        
+            const balances = {} // TODO refactor? AccountType.Bitcoin can't be used as key in constructor?
+            balances[AccountType.Bitcoin] = self.lnd.balance * self.rates[self.lnd.currency]
+            balances[AccountType.Checking] = self.fiat.balance
             return balances
         },
-
-        account(accountType: AccountType) {  // this supposed a unique account for every type
-            return self.accounts.filter(item => item.type === accountType)[0]
-        }
 
     }))
 
@@ -278,10 +281,10 @@ type DataStoreSnapshotType = SnapshotOut<typeof DataStoreModel>
 export interface DataStoreSnapshot extends DataStoreSnapshotType {}
 
 
-type FiatAccountType = Instance<typeof CheckingAccountModel>
+type FiatAccountType = Instance<typeof FiatAccountModel>
 export interface FiatAccount extends FiatAccountType {}
 
-type CryptoAccountType = Instance<typeof BitcoinAccountModel>
+type CryptoAccountType = Instance<typeof LndModel> // FIXME is that still accurate?
 export interface CryptoAccount extends CryptoAccountType {}
 
 type RatesType = Instance<typeof RatesModel>

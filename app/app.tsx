@@ -89,7 +89,7 @@ export class App extends React.Component<{}, AppState> {
     const { navigationStore, ...otherStores } = rootStore
 
     // launching lnd // TODO delay before launching 
-    rootStore.dataStore.lnd.initUnlocker()
+    rootStore.dataStore.lnd.startLnd()
 
     return (
       <Provider rootStore={rootStore} navigationStore={navigationStore} {...otherStores}>
