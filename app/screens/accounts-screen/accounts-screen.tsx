@@ -100,6 +100,7 @@ export class AccountsScreen extends React.Component<AccountsScreenProps, {}> {
                 <WithNavigationAccountItem {...item} />
         )} />
         </ScrollView>
+        <Button title="DemoScreen" onPress={() => this.props.navigation.navigate('demo')}></Button>
         <Button title="Log out" onPress={() => this.signOut()}></Button>
       </Screen>
     )

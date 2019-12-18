@@ -210,6 +210,10 @@ export const LndModel = BaseAccountModel
               }
           })
 
+          const send_transaction = flow(function*(addr, amount) {
+                yield getGrpc().sendCommand('sendCoins', {addr, amount});
+          })
+
         return  { 
             startLnd, 
             genSeed, 
@@ -219,6 +223,7 @@ export const LndModel = BaseAccountModel
             newAddress, 
             update_transactions,
             update_balance,
+            send_transaction,
          }
     
     })
