@@ -170,25 +170,25 @@ export const LndModel = types
         walletUnlocked: false,
     })
     .actions(self => {
+        
+        const getGrpc = () => new GrpcAction({} /* FIXME */, NativeModules, NativeEventEmitter); // TODO use a volatile state?
+        const password = 'abcdef12345678' // FIXME
+
         const initUnlocker = flow(function*() {
-            const grpc = new GrpcAction({} /* FIXME */, NativeModules, NativeEventEmitter);
+            const grpc = getGrpc()
             const ipc = new IpcAction(grpc);
             const log = new LogAction({} /* FIXME */, ipc, false);
-
             grpc.initUnlocker() 
             self.init = true
         })
 
         const genSeed = flow(function*() {
-            const grpc = new GrpcAction({} /* FIXME */, NativeModules, NativeEventEmitter); 
-            const seed = yield grpc.sendUnlockerCommand('GenSeed');
+            const seed = yield getGrpc().sendUnlockerCommand('GenSeed');
             console.tron.log("seed", seed.cipherSeedMnemonic)
         })
 
         const unlockWallet = flow(function*() {
-            const password = 'abcdef12345678' // FIXME
-            const grpc = new GrpcAction({} /* FIXME */, NativeModules, NativeEventEmitter); 
-            const nodeinfo = yield grpc.sendUnlockerCommand('UnlockWallet', {
+            const nodeinfo = yield getGrpc().sendUnlockerCommand('UnlockWallet', {
                 walletPassword: Buffer.from(password, 'utf8'),
             })
             console.tron.log("node info")
@@ -196,26 +196,25 @@ export const LndModel = types
         })
         
         const nodeInfo = flow(function*() {
-            const grpc = new GrpcAction({} /* FIXME */, NativeModules, NativeEventEmitter); 
-            const nodeinfo = yield grpc.sendCommand('GetInfo')
+            const nodeinfo = yield getGrpc().sendCommand('GetInfo')
             console.tron.log("node info", nodeinfo)
-            console.tron.log(nodeinfo)
         })
  
         const initWallet = flow(function*() {
-            const grpc = new GrpcAction({} /* FIXME */, NativeModules, NativeEventEmitter); 
-
-            const seed = yield grpc.sendUnlockerCommand('GenSeed');
-
-            const password = 'abcdef12345678' // FIXME
-            const initWallet = grpc.sendUnlockerCommand('InitWallet', {
+            const seed = yield getGrpc().sendUnlockerCommand('GenSeed');
+            const initWallet = getGrpc().sendUnlockerCommand('InitWallet', {
                 walletPassword: Buffer.from(password, 'utf8'),
                 cipherSeedMnemonic: seed.cipherSeedMnemonic,
             })
             self.walletUnlocked = true;
         })
+ 
+        const newAddress = flow(function*() {
+            const address = yield getGrpc().sendCommand('NewAddress', {type: 0})
+            console.tron.log(address)
+        })
 
-        return  { initUnlocker, genSeed, nodeInfo, initWallet, unlockWallet }
+        return  { initUnlocker, genSeed, nodeInfo, initWallet, unlockWallet, newAddress }
 })
 
 

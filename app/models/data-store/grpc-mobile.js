@@ -5,7 +5,7 @@
  */
 
 
-import { Duplex } from 'readable-stream';
+import { Duplex } from 'stream';
 
 import base64 from 'base64-js';
 import { lnrpc } from '../../generated/rpc';
