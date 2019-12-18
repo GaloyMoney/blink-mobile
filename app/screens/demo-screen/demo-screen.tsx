@@ -13,6 +13,7 @@ import { Text } from "../../components/text"
 import { Button } from "../../components/button"
 import { Wallpaper } from "../../components/wallpaper"
 import { Header } from "../../components/header"
+import { QRCode } from "../../components/qrcode"
 import { color, spacing } from "../../theme"
 import { logoIgnite, heart } from "./"
 import { BulletItem } from "../../components/bullet-item"
@@ -171,10 +172,17 @@ export class DemoScreen extends React.Component<DemoScreenProps, {}> {
               text="unlock"
               onPress={this.props.dataStore.lnd.unlockWallet}
             />
+            <Button
+              style={DEMO}
+              textStyle={DEMO_TEXT}
+              text="newAddress"
+              onPress={this.props.dataStore.lnd.newAddress}
+            />
             <Text
               style={HINT}
               tx={`demoScreen.${Platform.OS}ReactotronHint`}
             />
+            <QRCode>{'https://galoy.io'}</QRCode>
           </View>
           <Image source={logoIgnite} style={IGNITE} />
           <View style={LOVE_WRAPPER}>
