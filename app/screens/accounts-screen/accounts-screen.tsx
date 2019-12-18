@@ -8,7 +8,7 @@ import { color } from "../../theme/color"
 import Icon from 'react-native-vector-icons/Ionicons';
 import currency from 'currency.js'
 import { BalanceHeader } from "../../components/balance-header"
-import { DataStore, DataStoreModel } from "../../models/data-store"
+import { DataStore } from "../../models/data-store"
 import { AccountType } from "./AccountType"
 import { CurrencyType } from "../../models/data-store/CurrencyType"
 import firebase from "react-native-firebase"
@@ -75,7 +75,7 @@ export class AccountsScreen extends React.Component<AccountsScreenProps, {}> {
   ]
 
   componentDidMount() {
-    this.props.dataStore.update_balances() // TODO should be fetch also at regular interval and if user refresh it intentionnaly
+    this.props.dataStore.update_balance() // TODO should be fetch also at regular interval and if user refresh it intentionnaly
   }
 
   signOut() {

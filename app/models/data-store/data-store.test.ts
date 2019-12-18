@@ -73,7 +73,7 @@ test("I can get every account from using account[] view", () => {
 test("I can get my balances updated", async () => {
   const instance: DataStore = DataStoreModel.create({})
 
-  await instance.update_balances()
+  await instance.update_transactions()
 
   expect(instance.account(AccountType.Checking).balance).toBe(1245.12)
 })

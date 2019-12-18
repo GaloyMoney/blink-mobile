@@ -181,8 +181,8 @@ export class DemoScreen extends React.Component<DemoScreenProps, {}> {
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
-              text="update_balances"
-              onPress={this.props.dataStore.lnd.update_balances}
+              text="update_transactions"
+              onPress={this.props.dataStore.lnd.update_transactions}
             />
             <Text
               style={HINT}

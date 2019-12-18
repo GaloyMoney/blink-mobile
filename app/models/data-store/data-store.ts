@@ -45,16 +45,22 @@ export const TransactionModel = types
 export const BaseAccountModel = types
     .model ("Account", {
         transactions: types.optional(types.array(TransactionModel), []),
-        balance: 0,
+        confirmedBalance: 0,
+        unconfirmedBalance: 0,
         type: types.enumeration<AccountType>("Account Type", Object.values(AccountType))
     })
+    .views(self => ({
+        get balance() {
+            return self.confirmedBalance + self.unconfirmedBalance
+        },
+    }))
 
 export const FiatAccountModel = BaseAccountModel
     .props ({
         type: AccountType.Checking
     })
     .actions(self => {
-        const update = flow(function*() {
+        const update_transactions = flow(function*() {
             const uid = getParentOfType(self, DataStoreModel).auth.uid
             try {
                 const doc = yield db.collection('users').doc(uid).get()
@@ -64,12 +70,13 @@ export const FiatAccountModel = BaseAccountModel
             }
         })
 
-        const update_balances = flow(function*() { 
+        const update_balance = flow(function*() { 
             try {
                 var result = yield getFiatBalance({})
                 if ("data" in result) {
                     let { data } = result
-                    self.balance = data.Checking
+                    self.confirmedBalance = data.Checking
+                    // TODO: add unconfirmed balance
                 }
             } catch(err) {
                 console.tron.log(err);
@@ -78,10 +85,10 @@ export const FiatAccountModel = BaseAccountModel
 
         const reset = () => { // TODO test
             self.transactions = [],
-            self.balance = 0
+            self.confirmedBalance = 0
         }
 
-        return  { update, reset, update_balances }
+        return  { update_balance, reset, update_transactions }
     })
     .views(self => ({
         get currency() {
@@ -149,7 +156,7 @@ export const LndModel = BaseAccountModel
             console.tron.log(address)
         })
 
-        const update_balances = flow(function*() {
+        const update_transactions = flow(function*() {
             console.tron.log('updating balance')
 
             try {
@@ -179,8 +186,9 @@ export const LndModel = BaseAccountModel
                     //   tx.addr = tx.out[0].addr
                     //   tx.addr_fmt = `${tx.addr.slice(0, 11)}...${tx.addr.slice(-10)}`
                     //   tx.addr = tx.addr_fmt // TODO FIXME better naming 
-                    addr: tx.id,
 
+                    // FIXME: this is tx hash, use address instead
+                    addr: `${tx.id.slice(0, 11)}...${tx.id.slice(-10)}`,
               }))
 
             } catch (err) {
@@ -188,9 +196,19 @@ export const LndModel = BaseAccountModel
             }
           })
 
-          const update = function() {
-            unlockWallet()
-          }
+          const update_balance = flow(function*() {
+            yield unlockWallet() // FIXME
+
+            try {
+                const r = yield getGrpc().sendCommand('WalletBalance');
+                self.confirmedBalance = r.confirmedBalance;
+                self.unconfirmedBalance = r.unconfirmedBalance;
+
+                console.tron.log('lnd balance: ', r)
+              } catch (err) {
+                console.tron.error('Getting wallet balance failed', err);
+              }
+          })
 
         return  { 
             startLnd, 
@@ -199,8 +217,8 @@ export const LndModel = BaseAccountModel
             initWallet, 
             unlockWallet, 
             newAddress, 
-            update_balances,
-            update
+            update_transactions,
+            update_balance,
          }
     
     })
@@ -244,13 +262,18 @@ export const DataStoreModel = types
         lnd: types.optional(LndModel, {}), // TODO should it be optional?
     })
     .actions(self => {
-        const update_balances = flow(function*() {
+        const update_transactions = flow(function*() {
             // TODO parrallel call?
-            self.fiat.update_balances()
-            self.lnd.update_balances()
+            self.fiat.update_transactions()
+            self.lnd.update_transactions()
         })
 
-        return  { update_balances }
+        const update_balance = flow(function*() {
+            self.fiat.update_balance()
+            self.lnd.update_balance()
+        })
+
+        return  { update_transactions, update_balance }
     })
     .views(self => ({
         get total_usd_balance() { // in USD
