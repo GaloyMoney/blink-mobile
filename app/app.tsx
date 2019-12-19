@@ -18,6 +18,9 @@ import { contains } from "ramda"
 import { DEFAULT_NAVIGATION_CONFIG } from "./navigation/navigation-config"
 
 
+// FIXME remove?
+import Reactotron, { trackGlobalErrors } from 'reactotron-react-native'
+
 /**
  * Ignore some yellowbox warnings. Some of these are for deprecated functions
  * that we haven't gotten around to replacing yet.
@@ -56,6 +59,43 @@ export class App extends React.Component<{}, AppState> {
     this.setState({
       rootStore: await setupRootStore(),
     })
+
+
+    Reactotron
+    .configure()
+    .use(trackGlobalErrors({})) // <--- here we go!
+    .connect()
+
+    // FIXME not the right place for this
+    const rootStore = this.state && this.state.rootStore
+
+    async function subscribeTransactions() {
+      const stream = rootStore.dataStore.lnd.getGrpc()
+          .sendStreamCommand('subscribeTransactions');
+          try {
+            await new Promise((resolve, reject) => {
+              stream.on('data', () => {
+                console.log("rootStore", rootStore)
+
+                try {
+                  rootStore.dataStore.lnd.update_balance(); 
+                  rootStore.dataStore.lnd.update_transactions();
+                } catch (err) {
+                  console.tron.log("err3: ", err)
+                }
+                console.tron.log("onData");
+              });
+              stream.on('end', resolve);
+              stream.on('error', reject);
+              stream.on('status', status => console.tron.info(`Transactions update: ${status}`));
+            }).catch(err => console.tron.log("err1: ", err))
+        } catch (err) {
+          console.tron.log("err2: ", err)
+    }}
+
+    await subscribeTransactions()
+    console.tron.log("subscripe_transaction()")
+
   }
 
   /**

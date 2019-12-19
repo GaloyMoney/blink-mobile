@@ -197,7 +197,7 @@ export const LndModel = BaseAccountModel
           })
 
           const update_balance = flow(function*() {
-            yield unlockWallet() // FIXME
+            yield unlockWallet() // FIXME not the right place for this
 
             try {
                 const r = yield getGrpc().sendCommand('WalletBalance');
@@ -211,10 +211,11 @@ export const LndModel = BaseAccountModel
           })
 
           const send_transaction = flow(function*(addr, amount) {
-                yield getGrpc().sendCommand('sendCoins', {addr, amount});
+            yield getGrpc().sendCommand('sendCoins', {addr, amount});
           })
 
         return  { 
+            getGrpc, // FIXME remove
             startLnd, 
             genSeed, 
             nodeInfo, 
@@ -274,6 +275,7 @@ export const DataStoreModel = types
         })
 
         const update_balance = flow(function*() {
+            // TODO parrallel call?
             self.fiat.update_balance()
             self.lnd.update_balance()
         })
