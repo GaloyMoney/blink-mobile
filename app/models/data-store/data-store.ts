@@ -1,4 +1,4 @@
-import { Instance, SnapshotOut, types, flow, getParentOfType } from "mobx-state-tree"
+import { Instance, SnapshotOut, types, flow, getParentOfType, getEnv } from "mobx-state-tree"
 import { Coinbase, GetPriceResult } from "../../services/coinbase"
 import { CurrencyType } from "./CurrencyType"
 import { AccountType } from "../../screens/accounts-screen/AccountType"
@@ -97,53 +97,37 @@ export const FiatAccountModel = BaseAccountModel
     }))
 
 
-// TODO: move to another file?
-import { NativeModules, NativeEventEmitter } from 'react-native'
-import GrpcAction from "./grpc-mobile"
-import IpcAction from "../../ipc"
-import LogAction from "../../log"
-
 export const LndModel = BaseAccountModel
     .named("Lnd")
     .props ({
-        init: false,
         walletUnlocked: false,
         onChainAddress: "",
         type: AccountType.Bitcoin,
     })
     .actions(self => {
         
-        const getGrpc = () => new GrpcAction({} /* FIXME */, NativeModules, NativeEventEmitter); // TODO use a volatile state?
         const password = 'abcdef12345678' // FIXME
 
-        const startLnd = flow(function*() {
-            const grpc = getGrpc()
-            const ipc = new IpcAction(grpc);
-            const log = new LogAction({} /* FIXME */, ipc, false);
-            grpc.startLnd() 
-            self.init = true
-        })
-
         const genSeed = flow(function*() {
-            const seed = yield getGrpc().sendUnlockerCommand('GenSeed');
+            const seed = yield getEnv(self).lnd.grpc.sendUnlockerCommand('GenSeed');
             console.tron.log("seed", seed.cipherSeedMnemonic)
         })
 
         const unlockWallet = flow(function*() {
-            const nodeinfo = yield getGrpc().sendUnlockerCommand('UnlockWallet', {
+            const nodeinfo = yield getEnv(self).lnd.grpc.sendUnlockerCommand('UnlockWallet', {
                 walletPassword: Buffer.from(password, 'utf8'),
             })
             self.walletUnlocked = true
         })
         
         const nodeInfo = flow(function*() {
-            const nodeinfo = yield getGrpc().sendCommand('GetInfo')
+            const nodeinfo = yield getEnv(self).lnd.grpc.sendCommand('GetInfo')
             console.tron.log("node info", nodeinfo)
         })
  
         const initWallet = flow(function*() {
-            const seed = yield getGrpc().sendUnlockerCommand('GenSeed');
-            const initWallet = getGrpc().sendUnlockerCommand('InitWallet', {
+            const seed = yield getEnv(self).lnd.grpc.sendUnlockerCommand('GenSeed');
+            const initWallet = getEnv(self).lnd.grpc.sendUnlockerCommand('InitWallet', {
                 walletPassword: Buffer.from(password, 'utf8'),
                 cipherSeedMnemonic: seed.cipherSeedMnemonic,
             })
@@ -151,7 +135,7 @@ export const LndModel = BaseAccountModel
         })
  
         const newAddress = flow(function*() {
-            const { address } = yield getGrpc().sendCommand('NewAddress', {type: 0})
+            const { address } = yield getEnv(self).lnd.grpc.sendCommand('NewAddress', {type: 0})
             self.onChainAddress = address
             console.tron.log(address)
         })
@@ -160,7 +144,7 @@ export const LndModel = BaseAccountModel
             console.tron.log('updating balance')
 
             try {
-              const { transactions } = yield getGrpc().sendCommand('getTransactions');
+              const { transactions } = yield getEnv(self).lnd.grpc.sendCommand('getTransactions');
               console.tron.log('raw tx: ', transactions)
 
               const txs = transactions.map(transaction => ({
@@ -200,7 +184,7 @@ export const LndModel = BaseAccountModel
             yield unlockWallet() // FIXME not the right place for this
 
             try {
-                const r = yield getGrpc().sendCommand('WalletBalance');
+                const r = yield getEnv(self).lnd.grpc.sendCommand('WalletBalance');
                 self.confirmedBalance = r.confirmedBalance;
                 self.unconfirmedBalance = r.unconfirmedBalance;
 
@@ -211,12 +195,10 @@ export const LndModel = BaseAccountModel
           })
 
           const send_transaction = flow(function*(addr, amount) {
-            yield getGrpc().sendCommand('sendCoins', {addr, amount});
+            yield getEnv(self).lnd.grpc.sendCommand('sendCoins', {addr, amount});
           })
 
         return  { 
-            getGrpc, // FIXME remove
-            startLnd, 
             genSeed, 
             nodeInfo, 
             initWallet, 
@@ -225,7 +207,7 @@ export const LndModel = BaseAccountModel
             update_transactions,
             update_balance,
             send_transaction,
-         }
+        }
     
     })
     .views(self => ({
@@ -245,9 +227,7 @@ export const RatesModel = types
     })
     .actions(self => {
         const update = flow(function*() {
-            const api = new Coinbase()
-            api.setup()
-            const result: GetPriceResult = yield api.getPrice()
+            const result: GetPriceResult = yield getEnv(self).api.getPrice()
             if ("price" in result) {
                 self.BTC = result.price
             } else {
@@ -255,7 +235,6 @@ export const RatesModel = types
                 // TODO error management
             }
         })
-
         return  { update }
     })
 
@@ -272,10 +251,12 @@ export const DataStoreModel = types
             // TODO parrallel call?
             self.fiat.update_transactions()
             self.lnd.update_transactions()
+            self.lnd.update_balance()
         })
 
         const update_balance = flow(function*() {
             // TODO parrallel call?
+            self.rates.update()
             self.fiat.update_balance()
             self.lnd.update_balance()
         })
@@ -311,11 +292,14 @@ type DataStoreSnapshotType = SnapshotOut<typeof DataStoreModel>
 export interface DataStoreSnapshot extends DataStoreSnapshotType {}
 
 
+
+export type LndStore = Instance<typeof LndModel>
+
 type FiatAccountType = Instance<typeof FiatAccountModel>
 export interface FiatAccount extends FiatAccountType {}
 
-type CryptoAccountType = Instance<typeof LndModel> // FIXME is that still accurate?
-export interface CryptoAccount extends CryptoAccountType {}
+// type CryptoAccountType = Instance<typeof LndModel> // FIXME is that still accurate?
+// export interface CryptoAccount extends CryptoAccountType {}
 
 type RatesType = Instance<typeof RatesModel>
 export interface Rates extends RatesType {}
