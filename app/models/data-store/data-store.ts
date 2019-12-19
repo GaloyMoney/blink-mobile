@@ -181,8 +181,6 @@ export const LndModel = BaseAccountModel
           })
 
           const update_balance = flow(function*() {
-            yield unlockWallet() // FIXME not the right place for this
-
             try {
                 const r = yield getEnv(self).lnd.grpc.sendCommand('WalletBalance');
                 self.confirmedBalance = r.confirmedBalance;
