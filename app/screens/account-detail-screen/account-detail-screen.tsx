@@ -126,10 +126,12 @@ export class AccountDetailScreen extends React.Component<AccountDetailScreenProp
 
     var currency = accountStore.currency
 
-    transactions.slice().sort((a, b) => (a.date < b.date ? -1 : 1)); // warning without slice?
+    transactions = transactions.slice().sort((a, b) => (a.date > b.date ? -1 : 1)); // warning without slice?
 
     let transactions_set = new Set(transactions);
 
+    // FIXME: clean up logic. transactions were not ordered before.
+    // probably no need to use Set. 
     let today = transactions.filter(tx => sameDay(tx.date, new Date()));
 
     let yesterday = transactions.filter(tx =>
