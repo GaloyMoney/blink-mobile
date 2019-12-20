@@ -6,6 +6,7 @@ import {
   TextStyle,
   View,
   ViewStyle,
+  TextInput,
 } from "react-native"
 import { NavigationScreenProps } from "react-navigation"
 import { Screen } from "../../components/screen"
@@ -13,6 +14,7 @@ import { Text } from "../../components/text"
 import { Button } from "../../components/button"
 import { Wallpaper } from "../../components/wallpaper"
 import { Header } from "../../components/header"
+import { QRCode } from "../../components/qrcode"
 import { color, spacing } from "../../theme"
 import { logoIgnite, heart } from "./"
 import { BulletItem } from "../../components/bullet-item"
@@ -94,6 +96,14 @@ export interface DemoScreenProps extends NavigationScreenProps<{}> {}
 export class DemoScreen extends React.Component<DemoScreenProps, {}> {
   goBack = () => this.props.navigation.goBack(null)
 
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      addr: 'tb1'
+    }
+  }
+
   demoReactotron = async () => {
     console.tron.logImportant("I am important")
     console.tron.display({
@@ -119,8 +129,6 @@ export class DemoScreen extends React.Component<DemoScreenProps, {}> {
           "https://avatars2.githubusercontent.com/u/3902527?s=200&u=a0d16b13ed719f35d95ca0f4440f5d07c32c349a&v=4",
       },
     })
-
-    this.props.dataStore.rates.update()
 
     // Let's do some async storage stuff
     await save("Cool Name", "Boaty McBoatface")
@@ -150,12 +158,51 @@ export class DemoScreen extends React.Component<DemoScreenProps, {}> {
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
-              tx="demoScreen.reactotron"
-              onPress={this.demoReactotron}
+              text="Gen Seed"
+              onPress={this.props.dataStore.lnd.genSeed}
             />
-            <Text
-              style={HINT}
-              tx={`demoScreen.${Platform.OS}ReactotronHint`}
+            <Button
+              style={DEMO}
+              textStyle={DEMO_TEXT}
+              text="initWallet"
+              onPress={this.props.dataStore.lnd.initWallet}
+            />
+            <Button
+              style={DEMO}
+              textStyle={DEMO_TEXT}
+              text={`unlock. status: ${this.props.dataStore.lnd.walletUnlocked ? "true": "false"}`}
+              onPress={this.props.dataStore.lnd.unlockWallet}
+            />
+            <Button
+              style={DEMO}
+              textStyle={DEMO_TEXT}
+              text="nodeInfo"
+              onPress={this.props.dataStore.lnd.nodeInfo}
+            />
+            <Button
+              style={DEMO}
+              textStyle={DEMO_TEXT}
+              text="newAddress"
+              onPress={this.props.dataStore.lnd.newAddress}
+            />
+            <QRCode>{this.props.dataStore.lnd.onChainAddress}</QRCode>
+            <Button
+              style={DEMO}
+              textStyle={DEMO_TEXT}
+              text="update_transactions"
+              onPress={this.props.dataStore.lnd.update_transactions}
+            />            
+            <TextInput
+            style={HINT}
+            editable
+            onChangeText={addr => this.setState({ addr })}
+            value={this.state.addr}
+            />
+            <Button
+              style={DEMO}
+              textStyle={DEMO_TEXT}
+              text="sendCoins"
+              onPress={() => this.props.dataStore.lnd.send_transaction(this.state.addr, 1000)}
             />
           </View>
           <Image source={logoIgnite} style={IGNITE} />

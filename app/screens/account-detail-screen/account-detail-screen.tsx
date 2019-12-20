@@ -108,16 +108,16 @@ export class AccountDetailScreen extends React.Component<AccountDetailScreenProp
 
       const dataStore = this.props.dataStore;
       let accountType = this.props.navigation.getParam("account"); // FIXME how to pass this properly?
-      let accountStore = dataStore.account(accountType)
+      let accountStore = accountType == AccountType.Checking ? this.props.dataStore.fiat : this.props.dataStore.lnd
 
-      accountStore.update()
+      accountStore.update_transactions()
   }
 
   render() {
     const dataStore = this.props.dataStore;
-
     let accountType = this.props.navigation.getParam("account"); // FIXME how to pass this properly?
-    let accountStore = dataStore.account(accountType)
+    let accountStore = accountType == AccountType.Checking ? this.props.dataStore.fiat : this.props.dataStore.lnd
+
     let transactions = accountStore.transactions;
 
     if (transactions.length === 0) {
@@ -126,10 +126,12 @@ export class AccountDetailScreen extends React.Component<AccountDetailScreenProp
 
     var currency = accountStore.currency
 
-    transactions.slice().sort((a, b) => (a.date < b.date ? -1 : 1)); // warning without slice?
+    transactions = transactions.slice().sort((a, b) => (a.date > b.date ? -1 : 1)); // warning without slice?
 
     let transactions_set = new Set(transactions);
 
+    // FIXME: clean up logic. transactions were not ordered before.
+    // probably no need to use Set. 
     let today = transactions.filter(tx => sameDay(tx.date, new Date()));
 
     let yesterday = transactions.filter(tx =>

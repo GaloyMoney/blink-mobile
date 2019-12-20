@@ -5,6 +5,9 @@
  * @format
  */
 
+const path = require('path');
+
+
 module.exports = {
   transformer: {
     getTransformOptions: async () => ({
@@ -14,4 +17,10 @@ module.exports = {
       },
     }),
   },
+  resolver: {
+    extraNodeModules: {
+      stream: path.resolve(__dirname, 'node_modules/readable-stream'),
+      zlib: path.resolve(__dirname, 'node_modules/browserify-zlib'),
+    }
+ },
 }
