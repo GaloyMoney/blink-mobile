@@ -7,17 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00E356F31AD99517003FC87E /* GaloyAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* GaloyAppTests.m */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		23A4A34B4DE5446F90A48225 /* Montserrat-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E56B96B061C94521B07D317C /* Montserrat-ThinItalic.ttf */; };
 		250E46BF8E37474C98F8DB83 /* Montserrat-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3BDDEEF9DD3C4DFEA323F288 /* Montserrat-Thin.ttf */; };
-		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		2DCD954D1E0B4F2C00145EB5 /* GaloyAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* GaloyAppTests.m */; };
 		3543FC0DDB8C46C98BAC014E /* Montserrat-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DC8400EA8205408B9E6318A5 /* Montserrat-SemiBoldItalic.ttf */; };
 		3BA61EBF9FB240D485910E72 /* Montserrat-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 05C8EC1CA7454A03B69B630C /* Montserrat-BoldItalic.ttf */; };
 		46B8DCAD56534A49BB8AB6E3 /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84DF051325F445B0BF0D6F86 /* Montserrat-SemiBold.ttf */; };
@@ -31,89 +26,18 @@
 		B20F99DABBCC49818406703B /* Montserrat-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F9D5B0455A3041D394F75C3B /* Montserrat-MediumItalic.ttf */; };
 		BF22DC1D52B040179D9A80EA /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D34878A3A0924E9F8CF52148 /* Montserrat-Bold.ttf */; };
 		C62C708523A81C08007124C4 /* LndReactModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C62C708423A81C07007124C4 /* LndReactModule.m */; };
-		C62C708623A81C08007124C4 /* LndReactModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C62C708423A81C07007124C4 /* LndReactModule.m */; };
 		C62C708823A81C40007124C4 /* lnd.conf in Resources */ = {isa = PBXBuildFile; fileRef = C62C708723A81C40007124C4 /* lnd.conf */; };
-		C62C708923A81C40007124C4 /* lnd.conf in Resources */ = {isa = PBXBuildFile; fileRef = C62C708723A81C40007124C4 /* lnd.conf */; };
 		C6591BB023A70E5300CB508E /* Lndmobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6591BAF23A70E5300CB508E /* Lndmobile.framework */; };
-		C69AA17D232DD68B00606E11 /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA16C232DD68A00606E11 /* Fontisto.ttf */; };
-		C69AA17E232DD68B00606E11 /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA16C232DD68A00606E11 /* Fontisto.ttf */; };
-		C69AA17F232DD68B00606E11 /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA16C232DD68A00606E11 /* Fontisto.ttf */; };
-		C69AA181232DD68B00606E11 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA16D232DD68A00606E11 /* Octicons.ttf */; };
-		C69AA182232DD68B00606E11 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA16D232DD68A00606E11 /* Octicons.ttf */; };
-		C69AA183232DD68B00606E11 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA16D232DD68A00606E11 /* Octicons.ttf */; };
-		C69AA185232DD68B00606E11 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA16E232DD68A00606E11 /* Feather.ttf */; };
-		C69AA186232DD68B00606E11 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA16E232DD68A00606E11 /* Feather.ttf */; };
-		C69AA187232DD68B00606E11 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA16E232DD68A00606E11 /* Feather.ttf */; };
-		C69AA189232DD68B00606E11 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA16F232DD68A00606E11 /* Entypo.ttf */; };
-		C69AA18A232DD68B00606E11 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA16F232DD68A00606E11 /* Entypo.ttf */; };
-		C69AA18B232DD68B00606E11 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA16F232DD68A00606E11 /* Entypo.ttf */; };
-		C69AA18D232DD68B00606E11 /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA170232DD68A00606E11 /* FontAwesome5_Brands.ttf */; };
-		C69AA18E232DD68B00606E11 /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA170232DD68A00606E11 /* FontAwesome5_Brands.ttf */; };
-		C69AA18F232DD68B00606E11 /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA170232DD68A00606E11 /* FontAwesome5_Brands.ttf */; };
-		C69AA191232DD68B00606E11 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA171232DD68A00606E11 /* MaterialCommunityIcons.ttf */; };
-		C69AA192232DD68B00606E11 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA171232DD68A00606E11 /* MaterialCommunityIcons.ttf */; };
-		C69AA193232DD68B00606E11 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA171232DD68A00606E11 /* MaterialCommunityIcons.ttf */; };
-		C69AA195232DD68B00606E11 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA172232DD68A00606E11 /* AntDesign.ttf */; };
-		C69AA196232DD68B00606E11 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA172232DD68A00606E11 /* AntDesign.ttf */; };
-		C69AA197232DD68B00606E11 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA172232DD68A00606E11 /* AntDesign.ttf */; };
-		C69AA199232DD68B00606E11 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA173232DD68A00606E11 /* Foundation.ttf */; };
-		C69AA19A232DD68B00606E11 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA173232DD68A00606E11 /* Foundation.ttf */; };
-		C69AA19B232DD68B00606E11 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA173232DD68A00606E11 /* Foundation.ttf */; };
-		C69AA19D232DD68B00606E11 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA174232DD68A00606E11 /* Ionicons.ttf */; };
-		C69AA19E232DD68B00606E11 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA174232DD68A00606E11 /* Ionicons.ttf */; };
-		C69AA19F232DD68B00606E11 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA174232DD68A00606E11 /* Ionicons.ttf */; };
-		C69AA1A1232DD68B00606E11 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA175232DD68A00606E11 /* FontAwesome5_Solid.ttf */; };
-		C69AA1A2232DD68B00606E11 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA175232DD68A00606E11 /* FontAwesome5_Solid.ttf */; };
-		C69AA1A3232DD68B00606E11 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA175232DD68A00606E11 /* FontAwesome5_Solid.ttf */; };
-		C69AA1A5232DD68B00606E11 /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA176232DD68A00606E11 /* FontAwesome5_Regular.ttf */; };
-		C69AA1A6232DD68B00606E11 /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA176232DD68A00606E11 /* FontAwesome5_Regular.ttf */; };
-		C69AA1A7232DD68B00606E11 /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA176232DD68A00606E11 /* FontAwesome5_Regular.ttf */; };
-		C69AA1A9232DD68B00606E11 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA177232DD68A00606E11 /* FontAwesome.ttf */; };
-		C69AA1AA232DD68B00606E11 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA177232DD68A00606E11 /* FontAwesome.ttf */; };
-		C69AA1AB232DD68B00606E11 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA177232DD68A00606E11 /* FontAwesome.ttf */; };
-		C69AA1AD232DD68B00606E11 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA178232DD68A00606E11 /* Zocial.ttf */; };
-		C69AA1AE232DD68B00606E11 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA178232DD68A00606E11 /* Zocial.ttf */; };
-		C69AA1AF232DD68B00606E11 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA178232DD68A00606E11 /* Zocial.ttf */; };
-		C69AA1B1232DD68B00606E11 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA179232DD68A00606E11 /* EvilIcons.ttf */; };
-		C69AA1B2232DD68B00606E11 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA179232DD68A00606E11 /* EvilIcons.ttf */; };
-		C69AA1B3232DD68B00606E11 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA179232DD68A00606E11 /* EvilIcons.ttf */; };
-		C69AA1B5232DD68B00606E11 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA17A232DD68B00606E11 /* SimpleLineIcons.ttf */; };
-		C69AA1B6232DD68B00606E11 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA17A232DD68B00606E11 /* SimpleLineIcons.ttf */; };
-		C69AA1B7232DD68B00606E11 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA17A232DD68B00606E11 /* SimpleLineIcons.ttf */; };
-		C69AA1B9232DD68B00606E11 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA17B232DD68B00606E11 /* MaterialIcons.ttf */; };
-		C69AA1BA232DD68B00606E11 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA17B232DD68B00606E11 /* MaterialIcons.ttf */; };
-		C69AA1BB232DD68B00606E11 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69AA17B232DD68B00606E11 /* MaterialIcons.ttf */; };
-		C6DC72E52330564600635D54 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB61A68108700A75B9A /* Info.plist */; };
-		C6DC72E62330564700635D54 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB61A68108700A75B9A /* Info.plist */; };
 		C6E810012333FDA500D41794 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C6E810002333FDA400D41794 /* GoogleService-Info.plist */; };
 		CDAAC205C74A4EEDBFC6F3D8 /* Montserrat-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C95E840368224E5EA37898C0 /* Montserrat-BlackItalic.ttf */; };
-		CF1213EF28EE4706A013F9C5 /* libPods-GaloyAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F18ED6CF748260AB78E47698 /* libPods-GaloyAppTests.a */; };
 		D6D4FE9AAAD74B8186E9FD8C /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AE2763418F1C46029317E911 /* Montserrat-Medium.ttf */; };
 		E53CC24F19EA4E2DB6CCC4EF /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AF6EA9CCFA9C4AC0910C5EA8 /* Montserrat-Regular.ttf */; };
 		ED8D98608CF44385A58F0F62 /* Montserrat-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AB4084855AFF4C59AB0914E5 /* Montserrat-Italic.ttf */; };
 		EEF0FCB6249149CE91E2C04A /* Montserrat-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 746C91AD18FF48D3A5745BBE /* Montserrat-Light.ttf */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		00E356F41AD99517003FC87E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
-			remoteInfo = GaloyApp;
-		};
-		2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2D02E47A1E0B4A5D006451C7;
-			remoteInfo = "GaloyApp-tvOS";
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
-		00E356EE1AD99517003FC87E /* GaloyAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GaloyAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* GaloyAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GaloyAppTests.m; sourceTree = "<group>"; };
 		05C8EC1CA7454A03B69B630C /* Montserrat-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-BoldItalic.ttf"; path = "../app/theme/fonts/Montserrat-BoldItalic.ttf"; sourceTree = "<group>"; };
@@ -127,8 +51,6 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = GaloyApp/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = GaloyApp/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = GaloyApp/main.m; sourceTree = "<group>"; };
-		2D02E47B1E0B4A5D006451C7 /* GaloyApp-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GaloyApp-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2D02E4901E0B4A5D006451C7 /* GaloyApp-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "GaloyApp-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E782F00A296471DB427D608 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		2EFF6533FCEE4AB58597954F /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
 		3417743CE84C46B7B7BC49F9 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
@@ -191,34 +113,12 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		00E356EB1AD99517003FC87E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CF1213EF28EE4706A013F9C5 /* libPods-GaloyAppTests.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		13B07F8C1A680F5B00A75B9A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				A49AE09CF484C8803F0BD694 /* libPods-GaloyApp.a in Frameworks */,
 				C6591BB023A70E5300CB508E /* Lndmobile.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2D02E4781E0B4A5D006451C7 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2D02E48D1E0B4A5D006451C7 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -352,9 +252,6 @@
 			isa = PBXGroup;
 			children = (
 				13B07F961A680F5B00A75B9A /* GaloyApp.app */,
-				00E356EE1AD99517003FC87E /* GaloyAppTests.xctest */,
-				2D02E47B1E0B4A5D006451C7 /* GaloyApp-tvOS.app */,
-				2D02E4901E0B4A5D006451C7 /* GaloyApp-tvOSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -386,25 +283,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00E356ED1AD99517003FC87E /* GaloyAppTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "GaloyAppTests" */;
-			buildPhases = (
-				ADE04FEE80BA31C0D5109399 /* [CP] Check Pods Manifest.lock */,
-				00E356EA1AD99517003FC87E /* Sources */,
-				00E356EB1AD99517003FC87E /* Frameworks */,
-				00E356EC1AD99517003FC87E /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				00E356F51AD99517003FC87E /* PBXTargetDependency */,
-			);
-			name = GaloyAppTests;
-			productName = GaloyAppTests;
-			productReference = 00E356EE1AD99517003FC87E /* GaloyAppTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		13B07F861A680F5B00A75B9A /* GaloyApp */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "GaloyApp" */;
@@ -427,43 +305,6 @@
 			productReference = 13B07F961A680F5B00A75B9A /* GaloyApp.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2D02E47A1E0B4A5D006451C7 /* GaloyApp-tvOS */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "GaloyApp-tvOS" */;
-			buildPhases = (
-				FD10A7F122414F3F0027D42C /* Start Packager */,
-				2D02E4771E0B4A5D006451C7 /* Sources */,
-				2D02E4781E0B4A5D006451C7 /* Frameworks */,
-				2D02E4791E0B4A5D006451C7 /* Resources */,
-				2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "GaloyApp-tvOS";
-			productName = "GaloyApp-tvOS";
-			productReference = 2D02E47B1E0B4A5D006451C7 /* GaloyApp-tvOS.app */;
-			productType = "com.apple.product-type.application";
-		};
-		2D02E48F1E0B4A5D006451C7 /* GaloyApp-tvOSTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "GaloyApp-tvOSTests" */;
-			buildPhases = (
-				2D02E48C1E0B4A5D006451C7 /* Sources */,
-				2D02E48D1E0B4A5D006451C7 /* Frameworks */,
-				2D02E48E1E0B4A5D006451C7 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */,
-			);
-			name = "GaloyApp-tvOSTests";
-			productName = "GaloyApp-tvOSTests";
-			productReference = 2D02E4901E0B4A5D006451C7 /* GaloyApp-tvOSTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -473,22 +314,9 @@
 				LastUpgradeCheck = 1030;
 				ORGANIZATIONNAME = "Galoy Inc";
 				TargetAttributes = {
-					00E356ED1AD99517003FC87E = {
-						CreatedOnToolsVersion = 6.2;
-						TestTargetID = 13B07F861A680F5B00A75B9A;
-					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = 39Q9AL82ZL;
 						ProvisioningStyle = Automatic;
-					};
-					2D02E47A1E0B4A5D006451C7 = {
-						CreatedOnToolsVersion = 8.2.1;
-						ProvisioningStyle = Automatic;
-					};
-					2D02E48F1E0B4A5D006451C7 = {
-						CreatedOnToolsVersion = 8.2.1;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 2D02E47A1E0B4A5D006451C7;
 					};
 				};
 			};
@@ -506,38 +334,11 @@
 			projectRoot = "";
 			targets = (
 				13B07F861A680F5B00A75B9A /* GaloyApp */,
-				00E356ED1AD99517003FC87E /* GaloyAppTests */,
-				2D02E47A1E0B4A5D006451C7 /* GaloyApp-tvOS */,
-				2D02E48F1E0B4A5D006451C7 /* GaloyApp-tvOSTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		00E356EC1AD99517003FC87E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C69AA181232DD68B00606E11 /* Octicons.ttf in Resources */,
-				C69AA199232DD68B00606E11 /* Foundation.ttf in Resources */,
-				C69AA1B5232DD68B00606E11 /* SimpleLineIcons.ttf in Resources */,
-				C69AA19D232DD68B00606E11 /* Ionicons.ttf in Resources */,
-				C62C708923A81C40007124C4 /* lnd.conf in Resources */,
-				C69AA1B1232DD68B00606E11 /* EvilIcons.ttf in Resources */,
-				C69AA1A5232DD68B00606E11 /* FontAwesome5_Regular.ttf in Resources */,
-				C69AA1AD232DD68B00606E11 /* Zocial.ttf in Resources */,
-				C69AA189232DD68B00606E11 /* Entypo.ttf in Resources */,
-				C69AA1B9232DD68B00606E11 /* MaterialIcons.ttf in Resources */,
-				C69AA195232DD68B00606E11 /* AntDesign.ttf in Resources */,
-				C69AA1A1232DD68B00606E11 /* FontAwesome5_Solid.ttf in Resources */,
-				C69AA17D232DD68B00606E11 /* Fontisto.ttf in Resources */,
-				C69AA185232DD68B00606E11 /* Feather.ttf in Resources */,
-				C69AA191232DD68B00606E11 /* MaterialCommunityIcons.ttf in Resources */,
-				C69AA18D232DD68B00606E11 /* FontAwesome5_Brands.ttf in Resources */,
-				C69AA1A9232DD68B00606E11 /* FontAwesome.ttf in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		13B07F8E1A680F5B00A75B9A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -567,55 +368,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2D02E4791E0B4A5D006451C7 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C69AA19E232DD68B00606E11 /* Ionicons.ttf in Resources */,
-				C69AA1AA232DD68B00606E11 /* FontAwesome.ttf in Resources */,
-				C6DC72E52330564600635D54 /* Info.plist in Resources */,
-				C69AA17E232DD68B00606E11 /* Fontisto.ttf in Resources */,
-				C69AA192232DD68B00606E11 /* MaterialCommunityIcons.ttf in Resources */,
-				C69AA182232DD68B00606E11 /* Octicons.ttf in Resources */,
-				C69AA19A232DD68B00606E11 /* Foundation.ttf in Resources */,
-				C69AA1AE232DD68B00606E11 /* Zocial.ttf in Resources */,
-				C69AA186232DD68B00606E11 /* Feather.ttf in Resources */,
-				C69AA1A6232DD68B00606E11 /* FontAwesome5_Regular.ttf in Resources */,
-				C69AA18E232DD68B00606E11 /* FontAwesome5_Brands.ttf in Resources */,
-				C69AA18A232DD68B00606E11 /* Entypo.ttf in Resources */,
-				C69AA1BA232DD68B00606E11 /* MaterialIcons.ttf in Resources */,
-				C69AA196232DD68B00606E11 /* AntDesign.ttf in Resources */,
-				C69AA1A2232DD68B00606E11 /* FontAwesome5_Solid.ttf in Resources */,
-				C69AA1B6232DD68B00606E11 /* SimpleLineIcons.ttf in Resources */,
-				C69AA1B2232DD68B00606E11 /* EvilIcons.ttf in Resources */,
-				2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2D02E48E1E0B4A5D006451C7 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C69AA183232DD68B00606E11 /* Octicons.ttf in Resources */,
-				C69AA19B232DD68B00606E11 /* Foundation.ttf in Resources */,
-				C69AA1B7232DD68B00606E11 /* SimpleLineIcons.ttf in Resources */,
-				C69AA19F232DD68B00606E11 /* Ionicons.ttf in Resources */,
-				C69AA1B3232DD68B00606E11 /* EvilIcons.ttf in Resources */,
-				C69AA1A7232DD68B00606E11 /* FontAwesome5_Regular.ttf in Resources */,
-				C69AA1AF232DD68B00606E11 /* Zocial.ttf in Resources */,
-				C69AA18B232DD68B00606E11 /* Entypo.ttf in Resources */,
-				C69AA1BB232DD68B00606E11 /* MaterialIcons.ttf in Resources */,
-				C69AA197232DD68B00606E11 /* AntDesign.ttf in Resources */,
-				C6DC72E62330564700635D54 /* Info.plist in Resources */,
-				C69AA1A3232DD68B00606E11 /* FontAwesome5_Solid.ttf in Resources */,
-				C69AA17F232DD68B00606E11 /* Fontisto.ttf in Resources */,
-				C69AA187232DD68B00606E11 /* Feather.ttf in Resources */,
-				C69AA193232DD68B00606E11 /* MaterialCommunityIcons.ttf in Resources */,
-				C69AA18F232DD68B00606E11 /* FontAwesome5_Brands.ttf in Resources */,
-				C69AA1AB232DD68B00606E11 /* FontAwesome.ttf in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -632,20 +384,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
-		};
-		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Bundle React Native Code And Images";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
 		33C97DCB70B193AE6127FF0F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -729,48 +467,7 @@
 			shellPath = /bin/sh;
 			shellScript = "#!/usr/bin/env bash\n#\n# Copyright (c) 2016-present Invertase Limited & Contributors\n#\n# Licensed under the Apache License, Version 2.0 (the \"License\");\n# you may not use this library except in compliance with the License.\n# You may obtain a copy of the License at\n#\n#   http://www.apache.org/licenses/LICENSE-2.0\n#\n# Unless required by applicable law or agreed to in writing, software\n# distributed under the License is distributed on an \"AS IS\" BASIS,\n# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n# See the License for the specific language governing permissions and\n# limitations under the License.\n#\nset -e\n\n_MAX_LOOKUPS=2;\n_SEARCH_RESULT=''\n_RN_ROOT_EXISTS=''\n_CURRENT_LOOKUPS=1\n_JSON_ROOT=\"'react-native'\"\n_JSON_FILE_NAME='firebase.json'\n_JSON_OUTPUT_BASE64='e30=' # { }\n_CURRENT_SEARCH_DIR=${PROJECT_DIR}\n_PLIST_BUDDY=/usr/libexec/PlistBuddy\n_TARGET_PLIST=\"${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}\"\n_DSYM_PLIST=\"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist\"\n\n# plist arrays\n_PLIST_ENTRY_KEYS=()\n_PLIST_ENTRY_TYPES=()\n_PLIST_ENTRY_VALUES=()\n\nfunction setPlistValue {\n  echo \"info:      setting plist entry '$1' of type '$2' in file '$4'\"\n  ${_PLIST_BUDDY} -c \"Add :$1 $2 '$3'\" $4 || echo \"info:      '$1' already exists\"\n}\n\nfunction getFirebaseJsonKeyValue () {\n  if [[ ${_RN_ROOT_EXISTS} ]]; then\n    ruby -e \"require 'rubygems';require 'json'; output=JSON.parse('$1'); puts output[$_JSON_ROOT]['$2']\"\n  else\n    echo \"\"\n  fi;\n}\n\nfunction jsonBoolToYesNo () {\n  if [[ $1 == \"false\" ]]; then\n    echo \"NO\"\n  elif [[ $1 == \"true\" ]]; then\n    echo \"YES\"\n  else echo \"NO\"\n  fi\n}\n\necho \"info: -> RNFB build script started\"\necho \"info: 1) Locating ${_JSON_FILE_NAME} file:\"\n\nif [[ -z ${_CURRENT_SEARCH_DIR} ]]; then\n  _CURRENT_SEARCH_DIR=$(pwd)\nfi;\n\nwhile true; do\n  _CURRENT_SEARCH_DIR=$(dirname \"$_CURRENT_SEARCH_DIR\")\n  if [[ \"$_CURRENT_SEARCH_DIR\" == \"/\" ]] || [[ ${_CURRENT_LOOKUPS} -gt ${_MAX_LOOKUPS} ]]; then break; fi;\n  echo \"info:      ($_CURRENT_LOOKUPS of $_MAX_LOOKUPS) Searching in '$_CURRENT_SEARCH_DIR' for a ${_JSON_FILE_NAME} file.\"\n  _SEARCH_RESULT=$(find \"$_CURRENT_SEARCH_DIR\" -maxdepth 2 -name ${_JSON_FILE_NAME} -print | head -n 1)\n  if [[ ${_SEARCH_RESULT} ]]; then\n    echo \"info:      ${_JSON_FILE_NAME} found at $_SEARCH_RESULT\"\n    break;\n  fi;\n  _CURRENT_LOOKUPS=$((_CURRENT_LOOKUPS+1))\ndone\n\nif [[ ${_SEARCH_RESULT} ]]; then\n  _JSON_OUTPUT_RAW=$(cat \"${_SEARCH_RESULT}\")\n  _RN_ROOT_EXISTS=$(ruby -e \"require 'rubygems';require 'json'; output=JSON.parse('$_JSON_OUTPUT_RAW'); puts output[$_JSON_ROOT]\" || echo '')\n\n  if [[ ${_RN_ROOT_EXISTS} ]]; then\n    _JSON_OUTPUT_BASE64=$(python -c 'import json,sys,base64;print(base64.b64encode(json.dumps(json.loads(open('\"'${_SEARCH_RESULT}'\"').read())['${_JSON_ROOT}'])))' || echo \"e30=\")\n  fi\n\n  _PLIST_ENTRY_KEYS+=(\"firebase_json_raw\")\n  _PLIST_ENTRY_TYPES+=(\"string\")\n  _PLIST_ENTRY_VALUES+=(\"$_JSON_OUTPUT_BASE64\")\n\n  # config.messaging_auto_init_enabled\n  _MESSAGING_AUTO_INIT=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"messaging_auto_init_enabled\")\n  if [[ $_MESSAGING_AUTO_INIT ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseMessagingAutoInitEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_MESSAGING_AUTO_INIT\")\")\n  fi\n\n  # config.crashlytics_disable_auto_disabler - undocumented for now - mainly for debugging, document if becomes usful\n  _CRASHLYTICS_AUTO_DISABLE_ENABLED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"crashlytics_disable_auto_disabler\")\n  if [[ $_CRASHLYTICS_AUTO_DISABLE_ENABLED == \"true\" ]]; then\n    echo \"Disabled Crashlytics auto disabler.\" # do nothing\n  else\n    _PLIST_ENTRY_KEYS+=(\"firebase_crashlytics_collection_enabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"NO\")\n  fi\n\n  # config.admob_delay_app_measurement_init\n  _ADMOB_DELAY_APP_MEASUREMENT=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"admob_delay_app_measurement_init\")\n  if [[ $_ADMOB_DELAY_APP_MEASUREMENT == \"true\" ]]; then\n    _PLIST_ENTRY_KEYS+=(\"GADDelayAppMeasurementInit\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"YES\")\n  fi\n\n  # config.admob_ios_app_id\n  _ADMOB_IOS_APP_ID=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"admob_ios_app_id\")\n  if [[ $_ADMOB_IOS_APP_ID ]]; then\n    _PLIST_ENTRY_KEYS+=(\"GADApplicationIdentifier\")\n    _PLIST_ENTRY_TYPES+=(\"string\")\n    _PLIST_ENTRY_VALUES+=(\"$_ADMOB_IOS_APP_ID\")\n  fi\nelse\n  _PLIST_ENTRY_KEYS+=(\"firebase_json_raw\")\n  _PLIST_ENTRY_TYPES+=(\"string\")\n  _PLIST_ENTRY_VALUES+=(\"$_JSON_OUTPUT_BASE64\")\n  echo \"warning:   A firebase.json file was not found, whilst this file is optional it is recommended to include it to configure firebase services in React Native Firebase.\"\nfi;\n\necho \"info: 2) Injecting Info.plist entries: \"\n\n# Log out the keys we're adding\nfor i in \"${!_PLIST_ENTRY_KEYS[@]}\"; do\n  echo \"    ->  $i) ${_PLIST_ENTRY_KEYS[$i]}\" \"${_PLIST_ENTRY_TYPES[$i]}\" \"${_PLIST_ENTRY_VALUES[$i]}\"\ndone\n\nfor plist in ${_TARGET_PLIST} ${_DSYM_PLIST} ; do\n  if [[ -f ${plist} ]]; then\n    for i in \"${!_PLIST_ENTRY_KEYS[@]}\"; do\n      setPlistValue \"${_PLIST_ENTRY_KEYS[$i]}\" \"${_PLIST_ENTRY_TYPES[$i]}\" \"${_PLIST_ENTRY_VALUES[$i]}\" \"${plist}\"\n    done\n  else\n    echo \"warning:   A Info.plist build output file was not found (${plist})\"\n  fi\ndone\n\necho \"info: <- RNFB build script finished\"\n\n\n\n";
 		};
-		ADE04FEE80BA31C0D5109399 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-GaloyAppTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Start Packager";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "export RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\n  fi\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		FD10A7F122414F3F0027D42C /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -792,15 +489,6 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		00E356EA1AD99517003FC87E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C62C708623A81C08007124C4 /* LndReactModule.m in Sources */,
-				00E356F31AD99517003FC87E /* GaloyAppTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		13B07F871A680F5B00A75B9A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -811,37 +499,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2D02E4771E0B4A5D006451C7 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */,
-				2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2D02E48C1E0B4A5D006451C7 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2DCD954D1E0B4F2C00145EB5 /* GaloyAppTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* GaloyApp */;
-			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
-		};
-		2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2D02E47A1E0B4A5D006451C7 /* GaloyApp-tvOS */;
-			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		13B07FB11A68108700A75B9A /* LaunchScreen.xib */ = {
@@ -856,65 +514,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		00E356F61AD99517003FC87E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 69BCDDECF78B6C8C07E2F58F /* Pods-GaloyAppTests.debug.xcconfig */;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"${PODS_ROOT}/Crashlytics/iOS\"",
-					"\"${PODS_ROOT}/Fabric/iOS\"",
-					"\"${PODS_ROOT}/FirebaseAnalytics/Frameworks\"",
-					"\"${PODS_ROOT}/GoogleAppMeasurement/Frameworks\"",
-					"$(PROJECT_DIR)/lightning",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = GaloyAppTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-lc++",
-					"$(inherited)",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GaloyApp.app/GaloyApp";
-			};
-			name = Debug;
-		};
-		00E356F71AD99517003FC87E /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = EDC21AADBD08016C37D36FFF /* Pods-GaloyAppTests.release.xcconfig */;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"${PODS_ROOT}/Crashlytics/iOS\"",
-					"\"${PODS_ROOT}/Fabric/iOS\"",
-					"\"${PODS_ROOT}/FirebaseAnalytics/Frameworks\"",
-					"\"${PODS_ROOT}/GoogleAppMeasurement/Frameworks\"",
-					"$(PROJECT_DIR)/lightning",
-				);
-				INFOPLIST_FILE = GaloyAppTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-lc++",
-					"$(inherited)",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GaloyApp.app/GaloyApp";
-			};
-			name = Release;
-		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EBD61B2C93AC0EB26258A04C /* Pods-GaloyApp.debug.xcconfig */;
@@ -922,7 +521,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 23;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 39Q9AL82ZL;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -951,7 +550,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 23;
 				DEVELOPMENT_TEAM = 39Q9AL82ZL;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -969,112 +568,6 @@
 				PRODUCT_NAME = GaloyApp;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";
-			};
-			name = Release;
-		};
-		2D02E4971E0B4A5E006451C7 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_TESTABILITY = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "GaloyApp-tvOS/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-ObjC",
-					"-lc++",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.GaloyApp-tvOS";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = appletvos;
-				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 9.2;
-			};
-			name = Debug;
-		};
-		2D02E4981E0B4A5E006451C7 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "GaloyApp-tvOS/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-ObjC",
-					"-lc++",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.GaloyApp-tvOS";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = appletvos;
-				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 9.2;
-			};
-			name = Release;
-		};
-		2D02E4991E0B4A5E006451C7 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_TESTABILITY = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "GaloyApp-tvOSTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-ObjC",
-					"-lc++",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.GaloyApp-tvOSTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GaloyApp-tvOS.app/GaloyApp-tvOS";
-				TVOS_DEPLOYMENT_TARGET = 10.1;
-			};
-			name = Debug;
-		};
-		2D02E49A1E0B4A5E006451C7 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "GaloyApp-tvOSTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-ObjC",
-					"-lc++",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.GaloyApp-tvOSTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GaloyApp-tvOS.app/GaloyApp-tvOS";
-				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Release;
 		};
@@ -1182,38 +675,11 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "GaloyAppTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				00E356F61AD99517003FC87E /* Debug */,
-				00E356F71AD99517003FC87E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "GaloyApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
 				13B07F951A680F5B00A75B9A /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "GaloyApp-tvOS" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				2D02E4971E0B4A5E006451C7 /* Debug */,
-				2D02E4981E0B4A5E006451C7 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "GaloyApp-tvOSTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				2D02E4991E0B4A5E006451C7 /* Debug */,
-				2D02E49A1E0B4A5E006451C7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
