@@ -4,6 +4,8 @@ import { CurrencyType } from "./CurrencyType"
 import { AccountType } from "../../screens/accounts-screen/AccountType"
 import firebase from "react-native-firebase"
 import { parseDate } from "../../utils/date"
+import KeychainAction from "../../services/lnd/keychain"
+
 
 const getFiatBalance = firebase.functions().httpsCallable('getFiatBalances');
 const db = firebase.firestore()                
@@ -105,12 +107,21 @@ export const LndModel = BaseAccountModel
         type: AccountType.Bitcoin,
     })
     .actions(self => {
-        
+
         const password = 'abcdef12345678' // FIXME
 
         const genSeed = flow(function*() {
             const seed = yield getEnv(self).lnd.grpc.sendUnlockerCommand('GenSeed');
             console.tron.log("seed", seed.cipherSeedMnemonic)
+            yield new KeychainAction().setItem('seed', seed.cipherSeedMnemonic.join(" "))
+        })
+
+        const initWallet = flow(function*() {
+            const initWallet = getEnv(self).lnd.grpc.sendUnlockerCommand('InitWallet', {
+                walletPassword: Buffer.from(password, 'utf8'),
+                cipherSeedMnemonic: (yield new KeychainAction().getItem('seed')).split(" "),
+            })
+            self.walletUnlocked = true;
         })
 
         const unlockWallet = flow(function*() {
@@ -123,15 +134,6 @@ export const LndModel = BaseAccountModel
         const nodeInfo = flow(function*() {
             const nodeinfo = yield getEnv(self).lnd.grpc.sendCommand('GetInfo')
             console.tron.log("node info", nodeinfo)
-        })
- 
-        const initWallet = flow(function*() {
-            const seed = yield getEnv(self).lnd.grpc.sendUnlockerCommand('GenSeed');
-            const initWallet = getEnv(self).lnd.grpc.sendUnlockerCommand('InitWallet', {
-                walletPassword: Buffer.from(password, 'utf8'),
-                cipherSeedMnemonic: seed.cipherSeedMnemonic,
-            })
-            self.walletUnlocked = true;
         })
  
         const newAddress = flow(function*() {

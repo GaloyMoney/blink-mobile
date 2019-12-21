@@ -3,6 +3,10 @@ import GrpcAction from "./grpc-mobile"
 import IpcAction from "../../ipc"
 import LogAction from "../../log"
 import { LndStore } from "../../models/data-store/data-store"
+import RNKeychain from "./keychain"
+
+import { generateSecureRandom } from 'react-native-securerandom';
+
 
 /**
  * You'll probably never use the service like this since we hang the Reactotron
@@ -14,6 +18,7 @@ export class Lnd {
   ipc: IpcAction
   log: LogAction
   lndStore: LndStore
+  keychain: RNKeychain
 
 
   /**
@@ -25,6 +30,8 @@ export class Lnd {
     this.grpc = new GrpcAction({} /* FIXME */, NativeModules, NativeEventEmitter);
     this.ipc = new IpcAction(this.grpc);
     this.log = new LogAction({} /* FIXME */, this.ipc, false);
+
+    this.keychain = new RNKeychain()
   }
 
   /**
@@ -32,6 +39,13 @@ export class Lnd {
    */
   async setup() {
     this.grpc.startLnd()
+    console.tron.log('lnd started')
+  }
+
+  async randomPassword() {
+    const password = generateSecureRandom(24)
+    console.tron.log('password', password)
+    return password
   }
 
   /**
