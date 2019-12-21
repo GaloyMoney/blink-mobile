@@ -7,6 +7,7 @@ import {
   View,
   ViewStyle,
   TextInput,
+  Alert,
 } from "react-native"
 import { NavigationScreenProps } from "react-navigation"
 import { Screen } from "../../components/screen"
@@ -20,6 +21,9 @@ import { logoIgnite, heart } from "./"
 import { BulletItem } from "../../components/bullet-item"
 import { save } from "../../utils/storage"
 import { observer, inject } from "mobx-react"
+
+import { RNCamera } from 'react-native-camera';
+import { decode } from 'bip21'
 
 const FULL: ViewStyle = { flex: 1 }
 const CONTAINER: ViewStyle = {
@@ -88,6 +92,10 @@ const HINT: TextStyle = {
   lineHeight: 15,
   marginVertical: spacing[2],
 }
+const CAMERA: ViewStyle = {
+  width: 300,
+  height: 300,
+}
 
 export interface DemoScreenProps extends NavigationScreenProps<{}> {}
 
@@ -100,7 +108,8 @@ export class DemoScreen extends React.Component<DemoScreenProps, {}> {
     super(props)
 
     this.state = {
-      addr: 'tb1'
+      addr: 'tb1',
+      amount: 1000
     }
   }
 
@@ -192,17 +201,50 @@ export class DemoScreen extends React.Component<DemoScreenProps, {}> {
               text="update_transactions"
               onPress={this.props.dataStore.lnd.update_transactions}
             />            
+            <Button
+              style={DEMO}
+              textStyle={DEMO_TEXT}
+              text="scan_QRCode"
+              onPress={this.props.dataStore.lnd.update_transactions}
+            />
+            <RNCamera style={CAMERA}
+              captureAudio={false} 
+              onBarCodeRead={(event) => {
+                const qr = event.data
+                this.setState({qr})
+                try {
+                  const decoded = decode(qr)
+                  this.setState({addr: decoded.address})
+                  if (decoded.options.hasOwnProperty('amount')) {
+                    this.setState({amount: decoded.options.amount })
+                  }
+                } catch (err) {
+                  Alert.alert(err)
+                }
+              }}
+            />
+            <TextInput
+            style={HINT}
+            value={this.state.qr}
+            multiline={true}
+            />
             <TextInput
             style={HINT}
             editable
             onChangeText={addr => this.setState({ addr })}
             value={this.state.addr}
             />
+            <TextInput
+            style={HINT}
+            editable
+            onChangeText={amount => this.setState({ amount })}
+            value={this.state.amount}
+            />
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
               text="sendCoins"
-              onPress={() => this.props.dataStore.lnd.send_transaction(this.state.addr, 1000)}
+              onPress={() => this.props.dataStore.lnd.send_transaction(this.state.addr, this.state.amount)}
             />
           </View>
           <Image source={logoIgnite} style={IGNITE} />
