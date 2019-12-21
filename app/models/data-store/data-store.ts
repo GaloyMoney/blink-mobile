@@ -130,10 +130,11 @@ export const LndModel = BaseAccountModel
 
             yield new KeychainAction().setItem('password', wallet_password)
 
-            const initWallet = getEnv(self).lnd.grpc.sendUnlockerCommand('InitWallet', {
+            getEnv(self).lnd.grpc.sendUnlockerCommand('InitWallet', {
                 walletPassword: Buffer.from(wallet_password, 'hex'),
                 cipherSeedMnemonic: (yield new KeychainAction().getItem('seed')).split(" "),
-            })
+            }) // TODO manage error?
+
             self.walletUnlocked = true;
         })
 

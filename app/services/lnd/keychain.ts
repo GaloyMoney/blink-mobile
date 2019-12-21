@@ -8,10 +8,6 @@ const VERSION = '0';
 const USER = 'lightning';
 
 class KeychainAction {
-  constructor() {
-    this._RNKeychain = RNKeychain;
-  }
-
   /**
    * Store an item in the keychain.
    * @param {string} key   The key by which to do a lookup
@@ -20,10 +16,14 @@ class KeychainAction {
    */
   async setItem(key, value) {
     const options = {
-      accessible: this._RNKeychain.WHEN_UNLOCKED_THIS_DEVICE_ONLY,
+      accessible: RNKeychain.ACCESSIBLE.WHEN_UNLOCKED_THIS_DEVICE_ONLY,
+      // accessControl: RNKeychain.ACCESS_CONTROL.BIOMETRY_CURRENT_SET_OR_DEVICE_PASSCODE, 
+      // TODO figure out why this doesn't work
+      // may be related to https://github.com/oblador/react-native-keychain/issues/182
     };
     const vKey = `${VERSION}_${key}`;
-    await this._RNKeychain.setInternetCredentials(vKey, USER, value, options);
+    await RNKeychain.setInternetCredentials(vKey, USER, value, options);
+    // TODO error management
   }
 
   /**
@@ -33,7 +33,7 @@ class KeychainAction {
    */
   async getItem(key) {
     const vKey = `${VERSION}_${key}`;
-    const credentials = await this._RNKeychain.getInternetCredentials(vKey);
+    const credentials = await RNKeychain.getInternetCredentials(vKey);
     if (credentials) {
       return credentials.password;
     } else {
