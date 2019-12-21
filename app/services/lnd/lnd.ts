@@ -5,8 +5,6 @@ import LogAction from "../../log"
 import { LndStore } from "../../models/data-store/data-store"
 import RNKeychain from "./keychain"
 
-import { generateSecureRandom } from 'react-native-securerandom';
-
 
 /**
  * You'll probably never use the service like this since we hang the Reactotron
@@ -40,12 +38,6 @@ export class Lnd {
   async setup() {
     this.grpc.startLnd()
     console.tron.log('lnd started')
-  }
-
-  async randomPassword() {
-    const password = generateSecureRandom(24)
-    console.tron.log('password', password)
-    return password
   }
 
   /**

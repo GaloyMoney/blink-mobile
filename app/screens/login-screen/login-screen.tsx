@@ -156,7 +156,10 @@ class LoginScreen extends React.Component<LoginScreenProps, State> {
             />
           <Input placeholder="password" value={password} 
             onChangeText={password => this.setState({ password })}
-            inputContainerStyle={styles.form} />
+            inputContainerStyle={styles.form}
+            textContentType="newPassword" //TODO(check how to integrate with iCloud keychain)
+            secureTextEntry={true}
+            />
 
           <View style={styles.bottom}>
             <Button title="Create an account" titleStyle={styles.signUp}
