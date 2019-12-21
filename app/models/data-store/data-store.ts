@@ -1,9 +1,14 @@
 import { Instance, SnapshotOut, types, flow, getParentOfType, getEnv } from "mobx-state-tree"
-import { Coinbase, GetPriceResult } from "../../services/coinbase"
+import { GetPriceResult } from "../../services/coinbase"
 import { CurrencyType } from "./CurrencyType"
 import { AccountType } from "../../screens/accounts-screen/AccountType"
 import firebase from "react-native-firebase"
 import { parseDate } from "../../utils/date"
+import KeychainAction from "../../services/lnd/keychain"
+
+
+import { generateSecureRandom } from 'react-native-securerandom';
+
 
 const getFiatBalance = firebase.functions().httpsCallable('getFiatBalances');
 const db = firebase.firestore()                
@@ -105,17 +110,39 @@ export const LndModel = BaseAccountModel
         type: AccountType.Bitcoin,
     })
     .actions(self => {
-        
-        const password = 'abcdef12345678' // FIXME
 
         const genSeed = flow(function*() {
             const seed = yield getEnv(self).lnd.grpc.sendUnlockerCommand('GenSeed');
             console.tron.log("seed", seed.cipherSeedMnemonic)
+            yield new KeychainAction().setItem('seed', seed.cipherSeedMnemonic.join(" "))
+        })
+
+        const initWallet = flow(function*() {
+
+            function toHexString(byteArray) {
+                return Array.from(byteArray, function(byte: any) {
+                  return ('0' + (byte & 0xFF).toString(16)).slice(-2);
+                }).join('')
+              }
+
+            const random_number = yield generateSecureRandom(24)
+            const wallet_password = toHexString(random_number)
+
+            yield new KeychainAction().setItem('password', wallet_password)
+
+            getEnv(self).lnd.grpc.sendUnlockerCommand('InitWallet', {
+                walletPassword: Buffer.from(wallet_password, 'hex'),
+                cipherSeedMnemonic: (yield new KeychainAction().getItem('seed')).split(" "),
+            }) // TODO manage error?
+
+            self.walletUnlocked = true;
         })
 
         const unlockWallet = flow(function*() {
+            const wallet_password = yield new KeychainAction().getItem('password')
+
             const nodeinfo = yield getEnv(self).lnd.grpc.sendUnlockerCommand('UnlockWallet', {
-                walletPassword: Buffer.from(password, 'utf8'),
+                walletPassword: Buffer.from(wallet_password, 'hex'),
             })
             self.walletUnlocked = true
         })
@@ -123,15 +150,6 @@ export const LndModel = BaseAccountModel
         const nodeInfo = flow(function*() {
             const nodeinfo = yield getEnv(self).lnd.grpc.sendCommand('GetInfo')
             console.tron.log("node info", nodeinfo)
-        })
- 
-        const initWallet = flow(function*() {
-            const seed = yield getEnv(self).lnd.grpc.sendUnlockerCommand('GenSeed');
-            const initWallet = getEnv(self).lnd.grpc.sendUnlockerCommand('InitWallet', {
-                walletPassword: Buffer.from(password, 'utf8'),
-                cipherSeedMnemonic: seed.cipherSeedMnemonic,
-            })
-            self.walletUnlocked = true;
         })
  
         const newAddress = flow(function*() {

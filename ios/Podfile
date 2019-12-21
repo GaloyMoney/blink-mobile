@@ -40,10 +40,5 @@ target 'GaloyApp' do
   pod 'Firebase/Functions'
   pod 'Firebase/Firestore'
 
-  target 'GaloyAppTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
-
   use_native_modules!
 end
