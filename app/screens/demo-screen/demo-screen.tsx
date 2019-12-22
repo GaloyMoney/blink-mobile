@@ -2,7 +2,6 @@ import * as React from "react"
 import {
   Image,
   ImageStyle,
-  Platform,
   TextStyle,
   View,
   ViewStyle,
@@ -238,7 +237,7 @@ export class DemoScreen extends React.Component<DemoScreenProps, {}> {
             style={HINT}
             editable
             onChangeText={amount => this.setState({ amount })}
-            value={this.state.amount}
+            value={this.state.amount.toString()}
             />
             <Button
               style={DEMO}
