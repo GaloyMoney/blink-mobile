@@ -51,13 +51,9 @@ export class Lnd {
     try {
       new Promise((resolve, reject) => {
         stream.on('data', () => {
-          // try {
-            console.tron.log("onData");
-            this.lndStore.update_balance(); 
-            this.lndStore.update_transactions();
-          // } catch (err) {
-          //   console.tron.log("err3: ", err)
-          // }
+          console.tron.log("onData");
+          this.lndStore.update_balance(); 
+          this.lndStore.update_transactions();
         });
         stream.on('end', resolve);
         stream.on('error', reject);

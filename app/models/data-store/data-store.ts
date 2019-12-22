@@ -105,6 +105,7 @@ export const FiatAccountModel = BaseAccountModel
 export const LndModel = BaseAccountModel
     .named("Lnd")
     .props ({
+        walletExist: false,
         walletUnlocked: false,
         onChainAddress: "",
         type: AccountType.Bitcoin,
@@ -112,10 +113,30 @@ export const LndModel = BaseAccountModel
     })
     .actions(self => {
 
+        // stateless, but must be an action instead of a view because of the async call
+        const doesWalletExist = flow(function*() {
+            const ERROR_MESSAGE = "rpc error: code = Unknown desc = wallet already exists"
+            let walletExist = false
+            try {
+                yield getEnv(self).lnd.grpc.sendUnlockerCommand('GenSeed');
+            } catch (err) {
+                console.tron.log('wallet exist', err)
+                if (err.message === ERROR_MESSAGE) {
+                    walletExist = true
+                }
+            }
+            
+            self.walletExist = walletExist
+        })
+
         const genSeed = flow(function*() {
-            const seed = yield getEnv(self).lnd.grpc.sendUnlockerCommand('GenSeed');
-            console.tron.log("seed", seed.cipherSeedMnemonic)
-            yield new KeychainAction().setItem('seed', seed.cipherSeedMnemonic.join(" "))
+            try {
+                const seed = yield getEnv(self).lnd.grpc.sendUnlockerCommand('GenSeed');
+                console.tron.log("seed", seed.cipherSeedMnemonic)
+                yield new KeychainAction().setItem('seed', seed.cipherSeedMnemonic.join(" "))    
+            } catch (err) {
+                console.tron.error(err)
+            }
         })
 
         const initWallet = flow(function*() {
@@ -129,25 +150,36 @@ export const LndModel = BaseAccountModel
             const random_number = yield generateSecureRandom(24)
             const wallet_password = toHexString(random_number)
 
-            yield new KeychainAction().setItem('password', wallet_password)
+            try {
+                yield getEnv(self).lnd.grpc.sendUnlockerCommand('InitWallet', {
+                    walletPassword: Buffer.from(wallet_password, 'hex'),
+                    cipherSeedMnemonic: (yield new KeychainAction().getItem('seed')).split(" "),
+                })
+                
+                yield new KeychainAction().setItem('password', wallet_password)
 
-            getEnv(self).lnd.grpc.sendUnlockerCommand('InitWallet', {
-                walletPassword: Buffer.from(wallet_password, 'hex'),
-                cipherSeedMnemonic: (yield new KeychainAction().getItem('seed')).split(" "),
-            }) // TODO manage error?
-
-            self.walletUnlocked = true;
+                self.walletUnlocked = true;
+                self.walletExist = true;
+            } catch (err) {
+                console.tron.error(err)
+            }
         })
 
         const unlockWallet = flow(function*() {
+            // TODO: auth with biometrics/passcode
             const wallet_password = yield new KeychainAction().getItem('password')
 
-            const nodeinfo = yield getEnv(self).lnd.grpc.sendUnlockerCommand('UnlockWallet', {
-                walletPassword: Buffer.from(wallet_password, 'hex'),
-            })
+            try {
+                const nodeinfo = yield getEnv(self).lnd.grpc.sendUnlockerCommand('UnlockWallet', {
+                    walletPassword: Buffer.from(wallet_password, 'hex'),
+                })
 
-            self.pubkey = nodeinfo.identity_pubkey
-            self.walletUnlocked = true
+                self.pubkey = nodeinfo.identity_pubkey
+                self.walletUnlocked = true
+                    
+            } catch (err) {
+                console.tron.error(err)
+            }
         })
         
         const nodeInfo = flow(function*() {
@@ -204,8 +236,6 @@ export const LndModel = BaseAccountModel
                 const r = yield getEnv(self).lnd.grpc.sendCommand('WalletBalance');
                 self.confirmedBalance = r.confirmedBalance;
                 self.unconfirmedBalance = r.unconfirmedBalance;
-
-                console.tron.log('lnd balance: ', r)
               } catch (err) {
                 console.tron.error('Getting wallet balance failed', err);
               }
@@ -216,6 +246,7 @@ export const LndModel = BaseAccountModel
           })
 
         return  { 
+            doesWalletExist,
             genSeed, 
             nodeInfo, 
             initWallet, 
@@ -230,7 +261,7 @@ export const LndModel = BaseAccountModel
     .views(self => ({
         get currency() {
             return CurrencyType.BTC
-        },
+        }
     }))
 
 
