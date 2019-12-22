@@ -49,7 +49,7 @@ export const TransactionModel = types
 
 export const BaseAccountModel = types
     .model ("Account", {
-        transactions: types.maybe(types.array(TransactionModel)),
+        transactions: types.array(TransactionModel),
         confirmedBalance: 0,
         unconfirmedBalance: 0,
         type: types.enumeration<AccountType>("Account Type", Object.values(AccountType))
@@ -89,7 +89,7 @@ export const FiatAccountModel = BaseAccountModel
         })
 
         const reset = () => { // TODO test
-            self.transactions = null,
+            self.transactions.length = 0,
             self.confirmedBalance = 0
         }
 
