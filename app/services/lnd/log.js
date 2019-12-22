@@ -57,7 +57,8 @@ function pushLogs(message) {
   // if (len > MAX_LOG_LENGTH) {
     // _store.logs = _store.logs.substring(len - MAX_LOG_LENGTH, len);
   // }
-  console.tron.log('\n' + message.replace(/\s+$/, ''))
+
+  // console.tron.log('\n' + message.replace(/\s+$/, ''))
 }
 
 class LogAction {

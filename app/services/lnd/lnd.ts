@@ -1,7 +1,7 @@
 import { NativeModules, NativeEventEmitter } from 'react-native'
 import GrpcAction from "./grpc-mobile"
-import IpcAction from "../../ipc"
-import LogAction from "../../log"
+import IpcAction from "./ipc"
+import LogAction from "./log"
 import { LndStore } from "../../models/data-store/data-store"
 import RNKeychain from "../../utils/keychain"
 
@@ -43,8 +43,7 @@ export class Lnd {
   /**
    * @param lndStore The lnd store
    */
-  async setLndStore(lndStore: any) {
-    lndStore = lndStore as LndStore // typescript hack
+  async setLndStore(lndStore: LndStore) {
     this.lndStore = lndStore
 
     const stream = this.grpc.sendStreamCommand('subscribeTransactions');
@@ -62,6 +61,8 @@ export class Lnd {
     } catch (err) {
       console.tron.error("err2: ", err)
     }
+
+    await lndStore.initState()
 
     console.tron.log("subscribeTransactions init done", this.lndStore)
 
