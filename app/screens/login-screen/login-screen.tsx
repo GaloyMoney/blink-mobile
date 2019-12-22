@@ -2,7 +2,7 @@ import * as React from "react"
 import { observer, inject } from "mobx-react"
 import { Screen } from "../../components/screen"
 import { NavigationScreenProps, withNavigation } from "react-navigation"
-import { Text, Alert, StyleSheet, View, KeyboardAvoidingView } from "react-native"
+import { Text, Alert, StyleSheet, View } from "react-native"
 import { Input, Button } from 'react-native-elements'
 
 import firebase from 'react-native-firebase'
@@ -147,7 +147,6 @@ class LoginScreen extends React.Component<LoginScreenProps, State> {
     return (
 
       <Screen style={styles.container}>
-        <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
           <Text style={styles.title}>Galoy</Text>
           <Text style={styles.sub}>The bank built for crypto</Text>
           <Input placeholder="email" value={this.props.dataStore.auth.email}
@@ -167,7 +166,6 @@ class LoginScreen extends React.Component<LoginScreenProps, State> {
             <Button title="Sign in" buttonStyle={styles.signIn}
               onPress={() => this.signIn()} containerStyle={styles.buttonContainer}/>
           </View>
-        </KeyboardAvoidingView>
       </Screen>
     )
   }
