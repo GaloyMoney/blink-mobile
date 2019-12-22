@@ -110,9 +110,6 @@ export class DemoScreen extends React.Component<DemoScreenProps, {}> {
       addr: 'tb1',
       amount: 1000
     }
-
-    // TODO should in lnd?
-    this.props.dataStore.lnd.doesWalletExist()
   }
 
   demoReactotron = async () => {
@@ -184,12 +181,6 @@ export class DemoScreen extends React.Component<DemoScreenProps, {}> {
               textStyle={DEMO_TEXT}
               text={`unlock. status: ${this.props.dataStore.lnd.walletUnlocked ? "true": "false"}`}
               onPress={this.props.dataStore.lnd.unlockWallet}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              text="nodeInfo"
-              onPress={this.props.dataStore.lnd.nodeInfo}
             />
             <Button
               style={DEMO}

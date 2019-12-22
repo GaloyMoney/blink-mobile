@@ -114,15 +114,22 @@ export const LndModel = BaseAccountModel
     .actions(self => {
 
         // stateless, but must be an action instead of a view because of the async call
-        const doesWalletExist = flow(function*() {
-            const ERROR_MESSAGE = "rpc error: code = Unknown desc = wallet already exists"
+        const initState = flow(function*() {
+            const WALLET_EXIST = "rpc error: code = Unknown desc = wallet already exists"
+            const CLOSED = "Closed"
             let walletExist = false
             try {
                 yield getEnv(self).lnd.grpc.sendUnlockerCommand('GenSeed');
             } catch (err) {
                 console.tron.log('wallet exist', err)
-                if (err.message === ERROR_MESSAGE) {
+                if (err.message === WALLET_EXIST) {
                     walletExist = true
+                } 
+                if (err.message === CLOSED) {
+                    // We assumed that if sendUnlockerCommand is locked, the node is already launched.
+                    // FIXME validate this assumption
+                    walletExist = true
+                    walletGotOpened()
                 }
             }
             
@@ -165,28 +172,31 @@ export const LndModel = BaseAccountModel
             }
         })
 
+        // this get triggered after the wallet is being unlocked
+        const walletGotOpened = flow(function*() {
+            self.walletUnlocked = true
+            const nodeinfo = yield getEnv(self).lnd.grpc.sendCommand('GetInfo')
+            self.pubkey = nodeinfo.identityPubkey
+            newAddress()
+            update_transactions()
+            update_balance()
+        })
+
         const unlockWallet = flow(function*() {
             // TODO: auth with biometrics/passcode
             const wallet_password = yield new KeychainAction().getItem('password')
 
             try {
-                const nodeinfo = yield getEnv(self).lnd.grpc.sendUnlockerCommand('UnlockWallet', {
+                yield getEnv(self).lnd.grpc.sendUnlockerCommand('UnlockWallet', {
                     walletPassword: Buffer.from(wallet_password, 'hex'),
                 })
 
-                self.pubkey = nodeinfo.identity_pubkey
-                self.walletUnlocked = true
-                    
+                yield walletGotOpened()
             } catch (err) {
                 console.tron.error(err)
             }
         })
-        
-        const nodeInfo = flow(function*() {
-            const nodeinfo = yield getEnv(self).lnd.grpc.sendCommand('GetInfo')
-            console.tron.log("node info", nodeinfo)
-        })
- 
+         
         const newAddress = flow(function*() {
             const { address } = yield getEnv(self).lnd.grpc.sendCommand('NewAddress', {type: 0})
             self.onChainAddress = address
@@ -246,11 +256,11 @@ export const LndModel = BaseAccountModel
           })
 
         return  { 
-            doesWalletExist,
-            genSeed, 
-            nodeInfo, 
+            initState,
+            genSeed,
             initWallet, 
             unlockWallet, 
+            walletGotOpened,
             newAddress, 
             update_transactions,
             update_balance,
