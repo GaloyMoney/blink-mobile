@@ -1,63 +1,44 @@
-import * as ReactNativeKeychain from "react-native-keychain"
-
 /**
- * Saves some credentials securely.
- *
- * @param username The username
- * @param password The password
- * @param server The server these creds are for.
+ * @fileOverview action to handle secure key storage to platform apis.
  */
-export async function save(username: string, password: string, server?: string) {
-  if (server) {
-    await ReactNativeKeychain.setInternetCredentials(server, username, password)
-    return true
-  } else {
-    return ReactNativeKeychain.setGenericPassword(username, password)
+
+import * as RNKeychain from 'react-native-keychain';
+
+const VERSION = '0';
+const USER = 'lightning';
+
+class KeychainAction {
+  /**
+   * Store an item in the keychain.
+   * @param {string} key   The key by which to do a lookup
+   * @param {string} value The value to be stored
+   * @return {Promise<undefined>}
+   */
+  async setItem(key, value) {
+    const options = {
+      accessible: RNKeychain.ACCESSIBLE.WHEN_UNLOCKED_THIS_DEVICE_ONLY,
+      // accessControl: RNKeychain.ACCESS_CONTROL.BIOMETRY_CURRENT_SET_OR_DEVICE_PASSCODE, 
+      // TODO figure out why this doesn't work
+      // may be related to https://github.com/oblador/react-native-keychain/issues/182
+    };
+    const vKey = `${VERSION}_${key}`;
+    return await RNKeychain.setInternetCredentials(vKey, USER, value, options);
   }
-}
 
-/**
- * Loads credentials that were already saved.
- *
- * @param server The server that these creds are for
- */
-export async function load(server?: string) {
-  if (server) {
-    const creds = await ReactNativeKeychain.getInternetCredentials(server)
-    return {
-      username: creds.username,
-      password: creds.password,
-      server,
-    }
-  } else {
-    const creds = await ReactNativeKeychain.getGenericPassword()
-    if (typeof creds === "object") {
-      return {
-        username: creds.username,
-        password: creds.password,
-        server: null,
-      }
+  /**
+   * Read an item stored in the keychain.
+   * @param  {string} key      The key by which to do a lookup.
+   * @return {Promise<string>} The stored value
+   */
+  async getItem(key) {
+    const vKey = `${VERSION}_${key}`;
+    const credentials = await RNKeychain.getInternetCredentials(vKey);
+    if (credentials) {
+      return credentials.password;
     } else {
-      return {
-        username: null,
-        password: null,
-        server: null,
-      }
+      return null;
     }
   }
 }
 
-/**
- * Resets any existing credentials for the given server.
- *
- * @param server The server which has these creds
- */
-export async function reset(server?: string) {
-  if (server) {
-    await ReactNativeKeychain.resetInternetCredentials(server)
-    return true
-  } else {
-    const result = await ReactNativeKeychain.resetGenericPassword()
-    return result
-  }
-}
+export default KeychainAction;

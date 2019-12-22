@@ -4,7 +4,7 @@ import { CurrencyType } from "./CurrencyType"
 import { AccountType } from "../../screens/accounts-screen/AccountType"
 import firebase from "react-native-firebase"
 import { parseDate } from "../../utils/date"
-import KeychainAction from "../../services/lnd/keychain"
+import KeychainAction from "../../utils/keychain"
 
 
 import { generateSecureRandom } from 'react-native-securerandom';
@@ -49,7 +49,7 @@ export const TransactionModel = types
 
 export const BaseAccountModel = types
     .model ("Account", {
-        transactions: types.optional(types.array(TransactionModel), []),
+        transactions: types.maybe(types.array(TransactionModel)),
         confirmedBalance: 0,
         unconfirmedBalance: 0,
         type: types.enumeration<AccountType>("Account Type", Object.values(AccountType))
@@ -89,7 +89,7 @@ export const FiatAccountModel = BaseAccountModel
         })
 
         const reset = () => { // TODO test
-            self.transactions = [],
+            self.transactions = null,
             self.confirmedBalance = 0
         }
 
@@ -108,6 +108,7 @@ export const LndModel = BaseAccountModel
         walletUnlocked: false,
         onChainAddress: "",
         type: AccountType.Bitcoin,
+        pubkey: "",
     })
     .actions(self => {
 
@@ -144,6 +145,8 @@ export const LndModel = BaseAccountModel
             const nodeinfo = yield getEnv(self).lnd.grpc.sendUnlockerCommand('UnlockWallet', {
                 walletPassword: Buffer.from(wallet_password, 'hex'),
             })
+
+            self.pubkey = nodeinfo.identity_pubkey
             self.walletUnlocked = true
         })
         
@@ -159,8 +162,6 @@ export const LndModel = BaseAccountModel
         })
 
         const update_transactions = flow(function*() {
-            console.tron.log('updating balance')
-
             try {
               const { transactions } = yield getEnv(self).lnd.grpc.sendCommand('getTransactions');
               console.tron.log('raw tx: ', transactions)
