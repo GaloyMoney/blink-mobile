@@ -1,4 +1,8 @@
-import { DataStoreModel, DataStore, FiatAccount, CheckingAccountModel, BitcoinAccountModel, CryptoAccount, Rates, RatesModel } from "./data-store"
+import { DataStoreModel, DataStore, 
+  FiatAccount, FiatAccountModel, 
+  Rates, RatesModel,
+  LndStore, LndModel
+} from "./data-store"
 import { defaultDataStore } from "../root-store/default-state"
 import { AccountType } from "../../screens/accounts-screen/AccountType"
 import { CurrencyType } from "./CurrencyType"
@@ -17,7 +21,7 @@ test("can be created bis - test for duplicated account creation", () => {
 
 
 test("fiat accounts have balance and currency", () => {
-  const instance: FiatAccount = CheckingAccountModel.create({balance: 100})
+  const instance: FiatAccount = FiatAccountModel.create({balance: 100})
   
   expect(instance.type).toBe(AccountType.Checking)
   expect(instance.currency).toBe(CurrencyType.USD)
@@ -25,7 +29,7 @@ test("fiat accounts have balance and currency", () => {
 })
 
 test("fiat updates correctly from server", async () => {
-  const instance: FiatAccount = CheckingAccountModel.create({})
+  const instance: FiatAccount = FiatAccountModel.create({})
   
   await instance.update()
 
@@ -33,7 +37,7 @@ test("fiat updates correctly from server", async () => {
 })
 
 test("btc accounts have balance and currency", () => {
-  const instance: CryptoAccount = BitcoinAccountModel.create({balance: 100})
+  const instance: LndStore = LndModel.create({confirmedBalance: 100})
   
   expect(instance.type).toBe(AccountType.Bitcoin)
   expect(instance.currency).toBe(CurrencyType.BTC)

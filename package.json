@@ -58,6 +58,7 @@
     "react-navigation-stack": "^1.7.3",
     "reactotron-mst": "^3.1.1",
     "reactotron-react-native": "^4.0.0-beta.1",
+    "tempy": "^0.3.0",
     "ts-jest": "^24.2.0",
     "validate.js": "0.13.1"
   },
@@ -70,7 +71,7 @@
     "@storybook/addon-storyshots": "^5.1.9",
     "@storybook/react-native": "^5.2.0",
     "@storybook/react-native-server": "^5.2.0",
-    "@types/jest": "24.0.23",
+    "@types/jest": "^24.0.24",
     "@types/ramda": "0.26.38",
     "@types/react": "16.9.16",
     "@types/react-native": "0.60.25",
@@ -104,12 +105,13 @@
     "react-test-renderer": "16.12.0",
     "rimraf": "3.0.0",
     "solidarity": "^2.3.1",
-    "typescript": "3.7.3"
+    "typescript": "^3.7.4"
   },
   "peerDependencies": {
     "solidarity": "^2.3.1"
   },
   "jest": {
+    "preset": "react-native",
     "testPathIgnorePatterns": [
       "/node_modules",
       "/boilerplate"

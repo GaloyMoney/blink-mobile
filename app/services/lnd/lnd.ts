@@ -3,7 +3,7 @@ import GrpcAction from "./grpc-mobile"
 import IpcAction from "../../ipc"
 import LogAction from "../../log"
 import { LndStore } from "../../models/data-store/data-store"
-import RNKeychain from "./keychain"
+import RNKeychain from "../../utils/keychain"
 
 
 /**
