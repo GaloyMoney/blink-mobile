@@ -2,17 +2,12 @@ import { Instance, SnapshotOut, types, flow, getParentOfType, getEnv } from "mob
 import { GetPriceResult } from "../../services/coinbase"
 import { CurrencyType } from "./CurrencyType"
 import { AccountType } from "../../screens/accounts-screen/AccountType"
-import firebase from "react-native-firebase"
 import { parseDate } from "../../utils/date"
 import KeychainAction from "../../utils/keychain"
-
-
 import { generateSecureRandom } from 'react-native-securerandom';
 
-
-const getFiatBalance = firebase.functions().httpsCallable('getFiatBalances');
-const db = firebase.firestore()                
-
+import functions from '@react-native-firebase/functions';
+import firestore from '@react-native-firebase/firestore';
 
 export const AuthModel = types
     .model("Auth", {
@@ -68,7 +63,7 @@ export const FiatAccountModel = BaseAccountModel
         const update_transactions = flow(function*() {
             const uid = getParentOfType(self, DataStoreModel).auth.uid
             try {
-                const doc = yield db.collection('users').doc(uid).get()
+                const doc = yield firestore().collection('users').doc(uid).get()
                 self.transactions = doc.data().transactions // TODO better error management
             } catch(err) {
                 console.tron.warn(err)
@@ -77,7 +72,8 @@ export const FiatAccountModel = BaseAccountModel
 
         const update_balance = flow(function*() { 
             try {
-                var result = yield getFiatBalance({})
+                var result = yield functions().httpsCallable('getFiatBalances')({})
+                console.tron.log('balance', result)
                 if ("data" in result) {
                     self.confirmedBalance = result.data
                     // TODO: add unconfirmed balance

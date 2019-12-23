@@ -4,7 +4,7 @@ import { Text } from "../../components/text"
 import { Screen } from "../../components/screen"
 import { NavigationScreenProps } from "react-navigation"
 import { DataStore } from "../../models/data-store"
-import firebase from "react-native-firebase"
+import auth from "@react-native-firebase/auth"
 import { StyleSheet, View } from "react-native"
 import style from "react-syntax-highlighter/dist/styles/hljs/atelier-cave-light"
 
@@ -34,7 +34,7 @@ export class VerifyEmailScreen extends React.Component<VerifyEmailScreenProps, {
   }
 
   componentDidMount() {
-    this.timer = setInterval(() => firebase.auth().currentUser.reload(), 2000);
+    this.timer = setInterval(() => auth().currentUser.reload(), 2000);
   }
 
   componentWillUnmount() {

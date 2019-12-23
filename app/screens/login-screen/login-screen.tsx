@@ -5,7 +5,7 @@ import { NavigationScreenProps, withNavigation } from "react-navigation"
 import { Text, Alert, StyleSheet, View } from "react-native"
 import { Input, Button } from 'react-native-elements'
 
-import firebase from 'react-native-firebase'
+import auth from '@react-native-firebase/auth'
 import { DataStore } from "../../models/data-store"
 import { color } from "../../theme"
 
@@ -83,8 +83,8 @@ class LoginScreen extends React.Component<LoginScreenProps, State> {
     this.signUp = this.signUp.bind(this)
     this.onUserChanged = this.onUserChanged.bind(this)
 
-    if (firebase.auth().currentUser) {
-      firebase.auth().currentUser.reload()
+    if (auth().currentUser) {
+      auth().currentUser.reload()
         .catch(err => console.tron.warn(err))
     }
   }
@@ -108,7 +108,7 @@ class LoginScreen extends React.Component<LoginScreenProps, State> {
 
   signUp() {
 
-    firebase.auth().createUserWithEmailAndPassword(this.props.dataStore.auth.email, this.state.password)
+    auth().createUserWithEmailAndPassword(this.props.dataStore.auth.email, this.state.password)
       .then(userCredential => {
           userCredential.user.sendEmailVerification();
       })
@@ -116,7 +116,7 @@ class LoginScreen extends React.Component<LoginScreenProps, State> {
   }
 
   signIn() {
-    firebase.auth().signInWithEmailAndPassword(this.props.dataStore.auth.email, this.state.password)
+    auth().signInWithEmailAndPassword(this.props.dataStore.auth.email, this.state.password)
     .catch(err => Alert.alert(err.code))
   }  
 
@@ -128,7 +128,7 @@ class LoginScreen extends React.Component<LoginScreenProps, State> {
 
   componentDidMount() {
     // this._bootstrapAsync();
-    this.unsubscribeHandle = firebase.auth().onUserChanged(this.onUserChanged)
+    this.unsubscribeHandle = auth().onUserChanged(this.onUserChanged)
   }
 
   componentWillUnmount() {

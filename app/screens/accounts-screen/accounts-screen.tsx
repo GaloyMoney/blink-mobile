@@ -11,7 +11,7 @@ import { BalanceHeader } from "../../components/balance-header"
 import { DataStore } from "../../models/data-store"
 import { AccountType } from "./AccountType"
 import { CurrencyType } from "../../models/data-store/CurrencyType"
-import firebase from "react-native-firebase"
+import auth from "@react-native-firebase/auth"
 
 export interface AccountsScreenProps extends NavigationScreenProps<{}> {
   dataStore: DataStore
@@ -79,7 +79,7 @@ export class AccountsScreen extends React.Component<AccountsScreenProps, {}> {
   }
 
   signOut() {
-    firebase.auth().signOut()
+    auth().signOut()
     .then(result => {
       this.props.navigation.navigate('loginStack')
     })
