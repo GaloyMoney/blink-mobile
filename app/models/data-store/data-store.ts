@@ -110,6 +110,8 @@ export const LndModel = BaseAccountModel
         onChainAddress: "",
         type: AccountType.Bitcoin,
         pubkey: "",
+        syncedToChain: false,
+        blockHeight: 0,
     })
     .actions(self => {
 
@@ -177,6 +179,8 @@ export const LndModel = BaseAccountModel
             self.walletUnlocked = true
             const nodeinfo = yield getEnv(self).lnd.grpc.sendCommand('GetInfo')
             self.pubkey = nodeinfo.identityPubkey
+            self.blockHeight = nodeinfo.blockHeight
+            self.syncedToChain = nodeinfo.syncedToChain
             newAddress()
             update_transactions()
             update_balance()
