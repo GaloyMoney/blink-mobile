@@ -6,7 +6,6 @@ import { NavigationScreenProps } from "react-navigation"
 import { DataStore } from "../../models/data-store"
 import auth from "@react-native-firebase/auth"
 import { StyleSheet, View } from "react-native"
-import style from "react-syntax-highlighter/dist/styles/hljs/atelier-cave-light"
 
 export interface VerifyEmailScreenProps extends NavigationScreenProps<{}> {
   dataStore: DataStore
