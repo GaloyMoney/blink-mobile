@@ -79,8 +79,7 @@ export const FiatAccountModel = BaseAccountModel
             try {
                 var result = yield getFiatBalance({})
                 if ("data" in result) {
-                    let { data } = result
-                    self.confirmedBalance = data.Checking
+                    self.confirmedBalance = result.data
                     // TODO: add unconfirmed balance
                 }
             } catch(err) {
