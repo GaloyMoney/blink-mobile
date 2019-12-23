@@ -3,7 +3,7 @@ import { observer, inject } from "mobx-react"
 import { StyleSheet, TouchableHighlight, View, Alert, Button } from "react-native"
 import { Text } from "../../components/text"
 import { Screen } from "../../components/screen"
-import { NavigationScreenProps, ScrollView, FlatList, withNavigation } from "react-navigation"
+import { NavigationScreenProps, FlatList, withNavigation } from "react-navigation"
 import { color } from "../../theme/color"
 import Icon from 'react-native-vector-icons/Ionicons';
 import currency from 'currency.js'
