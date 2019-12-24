@@ -83,6 +83,19 @@ export const FiatAccountModel = BaseAccountModel
             }
         })
 
+        const quoteBTC = flow(function*() { 
+            try {
+                var result = yield functions().httpsCallable('quoteBTC')({
+                    satAmount: 10000
+                })
+                console.tron.log('result QuoteBTC', result)
+                
+
+            } catch(err) {
+                console.tron.log(err);
+            }
+        })
+
         const buyBTC = flow(function*() { 
             try {
                 var result = yield functions().httpsCallable('buyBTC')({
@@ -101,7 +114,7 @@ export const FiatAccountModel = BaseAccountModel
             self.confirmedBalance = 0
         }
 
-        return  { update_balance, reset, update_transactions, buyBTC }
+        return  { update_balance, reset, update_transactions, buyBTC, quoteBTC }
     })
     .views(self => ({
         get currency() {
