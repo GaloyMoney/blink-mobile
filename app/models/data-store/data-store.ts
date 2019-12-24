@@ -83,12 +83,25 @@ export const FiatAccountModel = BaseAccountModel
             }
         })
 
+        const buyBTC = flow(function*() { 
+            try {
+                var result = yield functions().httpsCallable('buyBTC')({
+                    btcAddress: getParentOfType(self, DataStoreModel).lnd.onChainAddress,
+                    satPrice: 10000 * 10 ** -8,
+                    satAmount: 1500,
+                })
+                console.tron.log('result BuyBTC', result)
+            } catch(err) {
+                console.tron.log(err);
+            }
+        })
+
         const reset = () => { // TODO test
             self.transactions.length = 0,
             self.confirmedBalance = 0
         }
 
-        return  { update_balance, reset, update_transactions }
+        return  { update_balance, reset, update_transactions, buyBTC }
     })
     .views(self => ({
         get currency() {
@@ -121,7 +134,7 @@ export const LndModel = BaseAccountModel
                 console.tron.log('wallet exist', err)
                 if (err.message === WALLET_EXIST) {
                     walletExist = true
-                } 
+                }
                 if (err.message === CLOSED) {
                     // We assumed that if sendUnlockerCommand is locked, the node is already launched.
                     // FIXME validate this assumption

@@ -96,11 +96,11 @@ const CAMERA: ViewStyle = {
   height: 300,
 }
 
-export interface DemoScreenProps extends NavigationScreenProps<{}> {}
+export interface debugScreenProps extends NavigationScreenProps<{}> {}
 
 @inject("dataStore")
 @observer
-export class DemoScreen extends React.Component<DemoScreenProps, {}> {
+export class debugScreen extends React.Component<debugScreenProps, {}> {
   goBack = () => this.props.navigation.goBack(null)
 
   constructor(props) {
@@ -151,19 +151,25 @@ export class DemoScreen extends React.Component<DemoScreenProps, {}> {
           preset="scroll"
           backgroundColor={color.transparent}>
           <Header
-            headerTx="demoScreen.howTo"
+            headerTx="debugScreen.howTo"
             leftIcon="back"
             onLeftPress={this.goBack}
             style={HEADER}
             titleStyle={HEADER_TITLE}
           />
-          <Text style={TITLE} preset="header" tx="demoScreen.title" />
-          <Text style={TAGLINE} tx="demoScreen.tagLine" />
+          <Text style={TITLE} preset="header" tx="debugScreen.title" />
+          <Text style={TAGLINE} tx="debugScreen.tagLine" />
           <Text>price: {this.props.dataStore.rates.BTC}</Text>
           <BulletItem text="Load up Reactotron!  You can inspect your app, view the events, interact, and so much more!" />
           <BulletItem text="Integrated here, Navigation with State, TypeScript, Storybook, Solidarity, and i18n." />
           <View>
             <Text style={TAGLINE} text={this.props.dataStore.lnd.walletExist ? "Wallet exist": "Wallet doesn't exist"} />
+            <Button
+              style={DEMO}
+              textStyle={DEMO_TEXT}
+              text="Buy BTC"
+              onPress={this.props.dataStore.fiat.buyBTC}
+            />
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
