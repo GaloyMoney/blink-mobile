@@ -98,7 +98,7 @@ export class AccountsScreen extends React.Component<AccountsScreenProps, {}> {
             renderItem={({ item }) => (
                 <WithNavigationAccountItem {...item} />
         )} />
-        <Button title="DemoScreen" onPress={() => this.props.navigation.navigate('demo')}></Button>
+        <Button title="debugScreen" onPress={() => this.props.navigation.navigate('demo')}></Button>
         <Button title="Log out" onPress={() => this.signOut()}></Button>
       </Screen>
     )
