@@ -9,6 +9,8 @@ import { generateSecureRandom } from 'react-native-securerandom';
 import functions from '@react-native-firebase/functions';
 import firestore from '@react-native-firebase/firestore';
 
+functions().useFunctionsEmulator('http://localhost:5000') // FIXME where to define this properly?
+
 export const AuthModel = types
     .model("Auth", {
         email: "nicolas.burtey+default@gmail.com",
@@ -55,9 +57,59 @@ export const BaseAccountModel = types
         },
     }))
 
+export const QuoteModel = types
+.model("Quote", {
+    satAmount: types.number,
+    satPrice: types.number,
+    validUntil: types.Date,
+    signature: ""
+})
+.actions(self => {
+
+    const quoteBTC = flow(function*() { 
+        try {
+            var result = yield functions().httpsCallable('quoteBTC')({
+                satAmount: 10000
+            })
+            console.tron.log('result QuoteBTC', result)
+
+            self.satAmount = result.satAmount
+            self.satPrice = result.satAmount
+            self.validUntil = result.satAmount
+            self.signature = result.signature
+
+            // 1 liner possible:
+            // self == result ?
+            // self .. {{ ... result }} ?
+
+        } catch(err) {
+            console.tron.log(err);
+        }
+    })
+
+    const buyBTC = flow(function*() { 
+        try {
+
+            if (self.quote.validUntil > Date.now()) {
+                return 'quote expired'
+            }
+
+            var result = yield functions().httpsCallable('buyBTC')({
+                quote: self.quote,
+                btcAddress: getParentOfType(self, DataStoreModel).lnd.onChainAddress,
+            })
+            console.tron.log('result BuyBTC', result)
+        } catch(err) {
+            console.tron.log(err);
+        }
+    })
+
+    return { update }
+})
+
 export const FiatAccountModel = BaseAccountModel
     .props ({
-        type: AccountType.Checking
+        type: AccountType.Checking,
     })
     .actions(self => {
         const update_transactions = flow(function*() {
@@ -83,38 +135,12 @@ export const FiatAccountModel = BaseAccountModel
             }
         })
 
-        const quoteBTC = flow(function*() { 
-            try {
-                var result = yield functions().httpsCallable('quoteBTC')({
-                    satAmount: 10000
-                })
-                console.tron.log('result QuoteBTC', result)
-                
-
-            } catch(err) {
-                console.tron.log(err);
-            }
-        })
-
-        const buyBTC = flow(function*() { 
-            try {
-                var result = yield functions().httpsCallable('buyBTC')({
-                    btcAddress: getParentOfType(self, DataStoreModel).lnd.onChainAddress,
-                    satPrice: 10000 * 10 ** -8,
-                    satAmount: 1500,
-                })
-                console.tron.log('result BuyBTC', result)
-            } catch(err) {
-                console.tron.log(err);
-            }
-        })
-
         const reset = () => { // TODO test
             self.transactions.length = 0,
             self.confirmedBalance = 0
         }
 
-        return  { update_balance, reset, update_transactions, buyBTC, quoteBTC }
+        return  { update_balance, reset, update_transactions }
     })
     .views(self => ({
         get currency() {
@@ -327,6 +353,7 @@ export const DataStoreModel = types
         auth: types.optional(AuthModel, {}),
         fiat: types.optional(FiatAccountModel, {}),
         rates: types.optional(RatesModel, {}),
+        quote: types.optional(QuoteModel, {}),
         lnd: types.optional(LndModel, {}), // TODO should it be optional?
     })
     .actions(self => {
