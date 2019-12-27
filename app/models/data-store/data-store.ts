@@ -59,10 +59,15 @@ export const BaseAccountModel = types
 
 export const QuoteModel = types
 .model("Quote", {
-    satAmount: types.number,
-    satPrice: types.number,
-    validUntil: types.Date,
+    satAmount: 0,
+    satPrice: 0,
+    validUntil: Date.now(),
     signature: ""
+})
+
+export const ExchangeModel = types
+.model("Exchange", {
+    quote: types.optional(QuoteModel, {}),
 })
 .actions(self => {
 
@@ -73,10 +78,10 @@ export const QuoteModel = types
             })
             console.tron.log('result QuoteBTC', result)
 
-            self.satAmount = result.satAmount
-            self.satPrice = result.satAmount
-            self.validUntil = result.satAmount
-            self.signature = result.signature
+            self.quote.satAmount = result.data.satAmount
+            self.quote.satPrice = result.data.satPrice
+            self.quote.validUntil = result.data.validUntil
+            self.quote.signature = result.data.signature
 
             // 1 liner possible:
             // self == result ?
@@ -90,12 +95,16 @@ export const QuoteModel = types
     const buyBTC = flow(function*() { 
         try {
 
-            if (self.quote.validUntil > Date.now()) {
-                return 'quote expired'
+            if (Date.now() > self.quote.validUntil) {
+                // TODO ask back for a new quote
+                console.tron.log('quote expired')
+                return
             }
 
             var result = yield functions().httpsCallable('buyBTC')({
                 quote: self.quote,
+
+                // TODO: wallet should be opened
                 btcAddress: getParentOfType(self, DataStoreModel).lnd.onChainAddress,
             })
             console.tron.log('result BuyBTC', result)
@@ -104,7 +113,7 @@ export const QuoteModel = types
         }
     })
 
-    return { update }
+    return { quoteBTC, buyBTC }
 })
 
 export const FiatAccountModel = BaseAccountModel
@@ -353,7 +362,7 @@ export const DataStoreModel = types
         auth: types.optional(AuthModel, {}),
         fiat: types.optional(FiatAccountModel, {}),
         rates: types.optional(RatesModel, {}),
-        quote: types.optional(QuoteModel, {}),
+        exchange: types.optional(ExchangeModel, {}),
         lnd: types.optional(LndModel, {}), // TODO should it be optional?
     })
     .actions(self => {
