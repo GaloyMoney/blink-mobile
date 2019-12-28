@@ -62,7 +62,9 @@ export const QuoteModel = types
     satAmount: 0,
     satPrice: 0,
     validUntil: Date.now(),
-    signature: ""
+    signature: "",
+    side: "", //enum "buy", "sell"
+    address: "" // only for sell, when wallet needs to send funds
 })
 
 export const ExchangeModel = types
@@ -73,22 +75,19 @@ export const ExchangeModel = types
 
     const quoteBTC = flow(function*() { 
         try {
-            var result = yield functions().httpsCallable('quoteBTC')({
-                satAmount: 10000
-            })
-            console.tron.log('result QuoteBTC', result)
 
-            self.quote.satAmount = result.data.satAmount
-            self.quote.satPrice = result.data.satPrice
-            self.quote.validUntil = result.data.validUntil
-            self.quote.signature = result.data.signature
+            const req = {
+                satAmount: 10000,
+                side: 'buy',
+            }
 
-            // 1 liner possible:
-            // self == result ?
-            // self .. {{ ... result }} ?
+            var result = yield functions().httpsCallable('quoteBTC')(req)
+            console.tron.log('result quoteBTC', result)
+            self.quote = result.data
 
         } catch(err) {
-            console.tron.log(err);
+            console.tron.error('quoteBTC: ', err);
+            throw err;
         }
     })
 
@@ -102,14 +101,15 @@ export const ExchangeModel = types
             }
 
             var result = yield functions().httpsCallable('buyBTC')({
-                quote: self.quote,
+                quote: { ... self.quote },
 
                 // TODO: wallet should be opened
                 btcAddress: getParentOfType(self, DataStoreModel).lnd.onChainAddress,
             })
             console.tron.log('result BuyBTC', result)
         } catch(err) {
-            console.tron.log(err);
+            console.tron.error(err);
+            throw err
         }
     })
 
