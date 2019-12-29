@@ -73,12 +73,12 @@ export const ExchangeModel = types
 })
 .actions(self => {
 
-    const quoteBTC = flow(function*() { 
+    const quoteBTC = flow(function*(side: "buy" | "sell") { 
         try {
 
             const req = {
                 satAmount: 10000,
-                side: 'buy',
+                side: side,
             }
 
             var result = yield functions().httpsCallable('quoteBTC')(req)
