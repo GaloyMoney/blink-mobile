@@ -49,8 +49,8 @@ export class Lnd {
     const stream = this.grpc.sendStreamCommand('subscribeTransactions');
     try {
       new Promise((resolve, reject) => {
-        stream.on('data', () => {
-          console.tron.log("onData");
+        stream.on('data', (data) => {
+          console.tron.log("onData", data);
           this.lndStore.update_balance(); 
           this.lndStore.update_transactions();
         });
