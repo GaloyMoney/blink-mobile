@@ -65,7 +65,12 @@ export const QuoteModel = types
     signature: "",
     side: "", //enum "buy", "sell"
     address: "" // only for sell, when wallet needs to send funds
-})
+}).actions(self => ({
+    reset() { // TODO there must be better way to do this
+        self.satAmount = self.satPrice = self.validUntil = 0
+        self.signature = self.side = self.address = ""
+    },
+}))
 
 export const ExchangeModel = types
 .model("Exchange", {
@@ -77,7 +82,7 @@ export const ExchangeModel = types
         try {
 
             const req = {
-                satAmount: 10000,
+                satAmount: 1000,
                 side: side,
             }
 
@@ -91,18 +96,30 @@ export const ExchangeModel = types
         }
     })
 
+    const commonBuySell = (side: string) : boolean /* success */ => {
+        if (self.quote.side !== side) {
+            console.tron.log(`not a quote to ${side}`)
+            return false
+        }
+        
+        const now = Date.now()
+        if (now > self.quote.validUntil) {
+            // TODO ask back for a new quote
+            console.tron.log(`quote ${self.quote.validUntil} has expired, now is ${now}`)
+            return false
+        }
+        
+        return true
+    }
+
     const buyBTC = flow(function*() { 
         try {
 
-            if (Date.now() > self.quote.validUntil) {
-                // TODO ask back for a new quote
-                console.tron.log('quote expired')
-                return
-            }
-
+            if (!commonBuySell('buy')) { return }
+            
             var result = yield functions().httpsCallable('buyBTC')({
                 quote: { ... self.quote },
-
+                
                 // TODO: wallet should be opened
                 btcAddress: getParentOfType(self, DataStoreModel).lnd.onChainAddress,
             })
@@ -111,9 +128,42 @@ export const ExchangeModel = types
             console.tron.error(err);
             throw err
         }
+
+        self.quote.reset()
+    })
+    
+    const sellBTC = flow(function*() { 
+        try {
+
+            if (!commonBuySell('sell')) { return }
+
+            // TODO: may be relevant to check signature 
+            // to make sure address is from Galoy?
+
+            const { txid } = yield getParentOfType(self, DataStoreModel).
+                lnd.send_transaction(self.quote.address, self.quote.satAmount)
+
+            console.tron.log(txid)
+
+            // TODO : make sure to manage error here, 
+            // eg: if the the on chain transaction is send by sellBTC
+            // is never called. 
+            // this could be done in the backend
+
+            const result = yield functions().httpsCallable('sellBTC')({
+                quote: { ... self.quote },
+                onchain_tx: txid,
+            })
+            console.tron.log('result SellBTC', result)
+        } catch(err) {
+            console.tron.error(err);
+            throw err
+        }
+
+        self.quote.reset()
     })
 
-    return { quoteBTC, buyBTC }
+    return { quoteBTC, buyBTC, sellBTC }
 })
 
 export const FiatAccountModel = BaseAccountModel
@@ -312,7 +362,7 @@ export const LndModel = BaseAccountModel
           })
 
           const send_transaction = flow(function*(addr, amount) {
-            yield getEnv(self).lnd.grpc.sendCommand('sendCoins', {addr, amount});
+            return yield getEnv(self).lnd.grpc.sendCommand('sendCoins', {addr, amount});
           })
 
         return  { 

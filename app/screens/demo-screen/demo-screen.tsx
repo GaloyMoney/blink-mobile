@@ -185,6 +185,12 @@ export class debugScreen extends React.Component<debugScreenProps, {}> {
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
+              text="Sell BTC"
+              onPress={this.props.dataStore.exchange.sellBTC}
+            />
+            <Button
+              style={DEMO}
+              textStyle={DEMO_TEXT}
               text="Gen Seed"
               onPress={this.props.dataStore.lnd.genSeed}
             />
