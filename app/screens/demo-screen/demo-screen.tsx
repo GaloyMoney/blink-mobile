@@ -167,6 +167,48 @@ export class debugScreen extends React.Component<debugScreenProps, {}> {
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
+              text="Gen Seed"
+              onPress={this.props.dataStore.lnd.genSeed}
+            />
+            <Button
+              style={DEMO}
+              textStyle={DEMO_TEXT}
+              text="initWallet"
+              onPress={this.props.dataStore.lnd.initWallet}
+            />
+            <Button
+              style={DEMO}
+              textStyle={DEMO_TEXT}
+              text={`unlock. status: ${this.props.dataStore.lnd.walletUnlocked ? "true": "false"}`}
+              onPress={this.props.dataStore.lnd.unlockWallet}
+            />
+            <Button
+              style={DEMO}
+              textStyle={DEMO_TEXT}
+              text="send pubKey"
+              onPress={this.props.dataStore.lnd.sendPubKey}
+            />
+            <Button
+              style={DEMO}
+              textStyle={DEMO_TEXT}
+              text="updateBlockchainStatus"
+              onPress={this.props.dataStore.lnd.updateBlockchainStatus}
+            />
+            <Button
+              style={DEMO}
+              textStyle={DEMO_TEXT}
+              text="connect Peer"
+              onPress={this.props.dataStore.lnd.connectGaloyPeer}
+            />
+            <Button
+              style={DEMO}
+              textStyle={DEMO_TEXT}
+              text="open channel"
+              onPress={this.props.dataStore.lnd.openChannel}
+            />
+            <Button
+              style={DEMO}
+              textStyle={DEMO_TEXT}
               text="Quote Buy BTC"
               onPress={() => this.props.dataStore.exchange.quoteBTC("buy")}
             />
@@ -187,24 +229,6 @@ export class debugScreen extends React.Component<debugScreenProps, {}> {
               textStyle={DEMO_TEXT}
               text="Sell BTC"
               onPress={this.props.dataStore.exchange.sellBTC}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              text="Gen Seed"
-              onPress={this.props.dataStore.lnd.genSeed}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              text="initWallet"
-              onPress={this.props.dataStore.lnd.initWallet}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              text={`unlock. status: ${this.props.dataStore.lnd.walletUnlocked ? "true": "false"}`}
-              onPress={this.props.dataStore.lnd.unlockWallet}
             />
             <Button
               style={DEMO}
