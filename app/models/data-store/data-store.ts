@@ -216,6 +216,7 @@ export const LndModel = BaseAccountModel
         onChainAddress: "",
         type: AccountType.Bitcoin,
         pubkey: "",
+        network: "",
         syncedToChain: false,
         blockHeight: 0,
     })
@@ -279,17 +280,59 @@ export const LndModel = BaseAccountModel
                 console.tron.error(err)
             }
         })
+        
+        // TODO: triggered this automatically after the wallet is being unlocked
+        const sendPubKey = flow(function*() {
+            // TODO error management
+            const result = yield functions().httpsCallable('onUserWalletCreation')({pubkey: self.pubkey, network: self.network})
+            console.log(result)
+        })
+
+        const connectGaloyPeer = flow(function*() {
+            let uri
+            
+            try {
+                const doc = yield firestore().doc(`global/info`).get()
+                uri = doc.data().lightning.uris[0]
+            } catch(err) {
+                console.tron.warn(err)
+            }
+
+            const [ pubkey, host ] = uri.split("@")
+            console.tron.log(`connecting to:`, { uri, pubkey, host })
+            
+            // TODO: automatically update: syncedToChain: false
+
+            let connection = yield getEnv(self).lnd.grpc.sendCommand('connectPeer', {
+                addr: { pubkey, host },
+            })
+
+            console.log(connection)
+        })
+
+        const openChannel = flow(function*() {
+            // TODO error management
+            const result = yield functions().httpsCallable('openChannel')({})
+            console.log(result)
+        })
 
         // this get triggered after the wallet is being unlocked
         const walletGotOpened = flow(function*() {
             self.walletUnlocked = true
-            const nodeinfo = yield getEnv(self).lnd.grpc.sendCommand('GetInfo')
+            const nodeinfo = yield updateBlockchainStatus()
             self.pubkey = nodeinfo.identityPubkey
-            self.blockHeight = nodeinfo.blockHeight
-            self.syncedToChain = nodeinfo.syncedToChain
+            self.network = nodeinfo.chains[0].network
             newAddress()
             update_transactions()
             update_balance()
+        })
+
+        const updateBlockchainStatus = flow(function*() {
+            const nodeinfo = yield getEnv(self).lnd.grpc.sendCommand('GetInfo')
+            self.blockHeight = nodeinfo.blockHeight
+            self.syncedToChain = nodeinfo.syncedToChain
+
+            return nodeinfo
         })
 
         const unlockWallet = flow(function*() {
@@ -370,6 +413,10 @@ export const LndModel = BaseAccountModel
             genSeed,
             initWallet, 
             unlockWallet, 
+            sendPubKey,
+            updateBlockchainStatus,
+            connectGaloyPeer,
+            openChannel,
             walletGotOpened,
             newAddress, 
             update_transactions,
