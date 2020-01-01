@@ -203,6 +203,12 @@ export class debugScreen extends React.Component<debugScreenProps, {}> {
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
+              text="list peers"
+              onPress={this.props.dataStore.lnd.listPeers}
+            />
+            <Button
+              style={DEMO}
+              textStyle={DEMO_TEXT}
               text="open channel"
               onPress={this.props.dataStore.lnd.openChannel}
             />

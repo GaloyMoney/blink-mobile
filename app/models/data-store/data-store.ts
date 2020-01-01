@@ -304,10 +304,19 @@ export const LndModel = BaseAccountModel
             // TODO: automatically update: syncedToChain: false
 
             let connection = yield getEnv(self).lnd.grpc.sendCommand('connectPeer', {
-                addr: { pubkey, host },
+                addr: { pubkey, host: "127.0.0.1" }, //FIXME
             })
 
             console.log(connection)
+        })
+
+        const listPeers = flow(function*() {
+            try {
+                const result = yield getEnv(self).lnd.grpc.sendCommand('listPeers')
+                console.tron.log(result)
+            } catch (err) {
+                console.tron.error(err)
+            }
         })
 
         const openChannel = flow(function*() {
@@ -414,6 +423,7 @@ export const LndModel = BaseAccountModel
             initWallet, 
             unlockWallet, 
             sendPubKey,
+            listPeers,
             updateBlockchainStatus,
             connectGaloyPeer,
             openChannel,
