@@ -219,6 +219,8 @@ export const LndModel = BaseAccountModel
         network: "",
         syncedToChain: false,
         blockHeight: 0,
+        startingSyncTimestamp: types.maybe(types.number),
+        percentSynced: 0
     })
     .actions(self => {
 
@@ -325,23 +327,61 @@ export const LndModel = BaseAccountModel
             console.log(result)
         })
 
+        /**
+         * An internal helper function to approximate the current progress while
+         * syncing Neutrino to the full node.
+         * @param  {Object} response The getInfo's grpc api response
+         * @return {number}          The percrentage a number between 0 and 1
+         */
+        const calcPercentSynced = (response) => {
+            const bestHeaderTimestamp = response.bestHeaderTimestamp;
+            const currTimestamp = new Date().getTime() / 1000;
+            const progressSoFar = bestHeaderTimestamp
+            ? bestHeaderTimestamp - self.startingSyncTimestamp
+            : 0;
+            const totalProgress = currTimestamp - self.startingSyncTimestamp || 0.001;
+            const percentSynced = (progressSoFar * 1.0) / totalProgress;
+            return percentSynced;
+        }
+
+        const getInfo = flow(function*() {
+            console.tron.log('get info called')
+            try {
+              const response = yield getEnv(self).lnd.grpc.sendCommand('getInfo');
+              self.pubkey = response.identityPubkey
+              self.syncedToChain = response.syncedToChain;
+              self.blockHeight = response.blockHeight;
+              self.network = response.chains[0].network;
+              if (self.startingSyncTimestamp === null) {
+                self.startingSyncTimestamp = response.bestHeaderTimestamp || 0;
+              }
+              if (!response.syncedToChain) {
+                  //     self._notification.display({
+                      //       msg: `Syncing to chain (block: ${response.blockHeight})`,
+                      //       wait: true,
+                      //     });
+                    console.tron.log(`Syncing to chain (block: ${response.blockHeight})`)
+                    self.percentSynced = calcPercentSynced(response);
+              } else {
+                // this._store.settings.restoring = false;
+                // this._notification.display({
+                //   type: 'success',
+                //   msg: 'Syncing complete',
+                // });
+                console.tron.log('Syncing complete')
+              }
+              return response.syncedToChain;
+            } catch (err) {
+              console.tron.error('Getting node info failed', err);
+            }
+          })
+
         // this get triggered after the wallet is being unlocked
         const walletGotOpened = flow(function*() {
-            self.walletUnlocked = true
-            const nodeinfo = yield updateBlockchainStatus()
-            self.pubkey = nodeinfo.identityPubkey
-            self.network = nodeinfo.chains[0].network
+            getInfo()
             newAddress()
             update_transactions()
             update_balance()
-        })
-
-        const updateBlockchainStatus = flow(function*() {
-            const nodeinfo = yield getEnv(self).lnd.grpc.sendCommand('GetInfo')
-            self.blockHeight = nodeinfo.blockHeight
-            self.syncedToChain = nodeinfo.syncedToChain
-
-            return nodeinfo
         })
 
         const unlockWallet = flow(function*() {
@@ -424,7 +464,7 @@ export const LndModel = BaseAccountModel
             unlockWallet, 
             sendPubKey,
             listPeers,
-            updateBlockchainStatus,
+            getInfo,
             connectGaloyPeer,
             openChannel,
             walletGotOpened,

@@ -22,8 +22,7 @@ const toCaps = (value = '', separator = ' ', split = '-') => {
 
 
 class GrpcAction {
-  constructor(store, NativeModules, NativeEventEmitter) {
-    this._store = store; //FIXME
+  constructor(NativeModules, NativeEventEmitter) {
     this._lnd = NativeModules.LndReactModule;
     this._lndEvent = new NativeEventEmitter(this._lnd);
     this._streamCounter = 0;
@@ -66,44 +65,8 @@ class GrpcAction {
   }
 
   //
-  // Autopilot grpc client
-  //
-
-  /**
-   * This is called to initialize the GRPC client to autopilot. Once `autopilotReady`
-   * is set to true on the store GRPC calls can be made to the client.
-   * @return {Promise<undefined>}
-   */
-  async initAutopilot() {
-    this._store.autopilotReady = true;
-    console.tron.log('GRPC autopilotReady');
-  }
-
-  /**
-   * Wrapper function to execute calls to the autopilot grpc client.
-   * @param  {string} method The autopilot GRPC api to call
-   * @param  {Object} body   The payload passed to the api
-   * @return {Promise<Object>}
-   */
-  async sendAutopilotCommand(method, body) {
-    return this._lnrpcRequest(method, body);
-  }
-
-  //
   // Lightning (lnd) grpc client
   //
-
-  /**
-   * This is called to initialize the main GRPC client to lnd. Once `lndReady`
-   * is set to true on the store GRPC calls can be made to the client.
-   * @return {Promise<undefined>}
-   */
-  async initLnd() {
-    // TODO: restart is not required on mobile
-    // await this._lnd.start();
-    console.tron.log('GRPC lndReady');
-    this._store.lndReady = true;
-  }
 
   /**
    * Closes the main GRPC client to lnd. This should only be called upon exiting

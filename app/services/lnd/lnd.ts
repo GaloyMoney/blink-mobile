@@ -4,7 +4,7 @@ import IpcAction from "./ipc"
 import LogAction from "./log"
 import { LndStore } from "../../models/data-store/data-store"
 import RNKeychain from "../../utils/keychain"
-
+import { poll } from '../../utils/poll'
 
 /**
  * You'll probably never use the service like this since we hang the Reactotron
@@ -18,34 +18,30 @@ export class Lnd {
   lndStore: LndStore
   keychain: RNKeychain
 
-
   /**
    * Create the Reactotron service.
    *
    * @param config the configuration
    */
   constructor() {
-    this.grpc = new GrpcAction({} /* FIXME */, NativeModules, NativeEventEmitter);
+    this.grpc = new GrpcAction(NativeModules, NativeEventEmitter);
     this.ipc = new IpcAction(this.grpc);
-    this.log = new LogAction({} /* FIXME */, this.ipc, false);
+    this.log = new LogAction(this.ipc, false, true);
 
     this.keychain = new RNKeychain()
-  }
-
-  /**
-   * Configure reactotron based on the the config settings passed in, then connect if we need to.
-   */
-  async setup() {
-    this.grpc.startLnd()
-    console.tron.log('lnd started')
   }
 
   /**
    * @param lndStore The lnd store
    */
   async setLndStore(lndStore: LndStore) {
-    this.lndStore = lndStore
+      this.lndStore = lndStore
 
+      // TODO, where to set this?
+      await this.start()
+    }
+
+  async setCallback() {
     const stream = this.grpc.sendStreamCommand('subscribeTransactions');
     try {
       new Promise((resolve, reject) => {
@@ -61,10 +57,18 @@ export class Lnd {
     } catch (err) {
       console.tron.error("err2: ", err)
     }
+  }
 
-    await lndStore.initState()
+  /**
+   * Configure reactotron based on the the config settings passed in, then connect if we need to.
+   */
+  async start() {
+    this.grpc.startLnd()
 
-    console.tron.log("subscribeTransactions init done", this.lndStore)
+    await this.setCallback()
 
+    await this.lndStore.initState()
+
+    poll(() => this.lndStore.getInfo());
   }
 }
