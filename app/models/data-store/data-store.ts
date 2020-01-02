@@ -452,12 +452,11 @@ export const RatesModel = types
     })
     .actions(self => {
         const update = flow(function*() {
-            const result: GetPriceResult = yield getEnv(self).api.getPrice()
-            if ("price" in result) {
-                self.BTC = result.price
-            } else {
-                console.tron.warn("issue with price API")
-                // TODO error management
+            try {
+                const doc = yield firestore().doc('global/price').get()
+                self.BTC = doc.data().BTC
+            } catch (err) {
+                console.tron.error('error getting BTC price from firestore', err)
             }
         })
         return  { update }
