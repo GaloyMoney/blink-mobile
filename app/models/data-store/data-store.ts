@@ -7,6 +7,7 @@ import { generateSecureRandom } from 'react-native-securerandom'
 
 import functions from '@react-native-firebase/functions'
 import firestore from '@react-native-firebase/firestore'
+import { toHex } from "../../utils/helper"
 
 functions().useFunctionsEmulator('http://localhost:5000') // FIXME where to define this properly?
 
@@ -30,6 +31,18 @@ export const AuthModel = types
     }
 
     return { set, setEmail }
+  })
+
+
+// FIXME merge with TransactionModel?
+export const InvoiceModel = types
+  .model("Invoice", {
+    id: types.string,
+    type: types.string,
+    amount: types.number,
+    status: types.string,
+    date: types.Date,
+    memo: types.string,
   })
 
 export const TransactionModel = types
@@ -76,14 +89,9 @@ export const ExchangeModel = types
     quote: types.optional(QuoteModel, {}),
   })
   .actions(self => {
-    const quoteBTC = flow(function * (side: "buy" | "sell") {
+    const quoteBTC = flow(function * (side: "buy" | "sell", satAmount = 1000) {
       try {
-        const req = {
-          satAmount: 1000,
-          side: side,
-        }
-
-        const result = yield functions().httpsCallable('quoteBTC')(req)
+        const result = yield functions().httpsCallable('quoteBTC')({side, satAmount})
         console.tron.log('result quoteBTC', result)
         self.quote = result.data
       } catch (err) {
@@ -215,6 +223,7 @@ export const LndModel = BaseAccountModel
     startingSyncTimestamp: types.maybe(types.number),
     percentSynced: 0,
     pendingInvoice: "",
+    invoices: types.array(InvoiceModel), // FIXME merge with transactions?
   })
   .actions(self => {
     // stateless, but must be an action instead of a view because of the async call
@@ -251,14 +260,9 @@ export const LndModel = BaseAccountModel
     })
 
     const initWallet = flow(function * () {
-      function toHexString(byteArray) {
-        return Array.from(byteArray, function(byte: any) {
-          return ('0' + (byte & 0xFF).toString(16)).slice(-2)
-        }).join('')
-      }
 
       const random_number = yield generateSecureRandom(24)
-      const wallet_password = toHexString(random_number)
+      const wallet_password = toHex(random_number)
 
       try {
         yield getEnv(self).lnd.grpc.sendUnlockerCommand('InitWallet', {
@@ -466,6 +470,37 @@ export const LndModel = BaseAccountModel
       }
     })
 
+    const update_invoices = flow(function * (invoice_updated = undefined) {
+      
+      console.tron.log("update_invoices")
+
+      try {
+        const { invoices } = yield getEnv(self).lnd.grpc.sendCommand('listInvoices');
+        self.invoices = invoices.map(invoice => ({
+          id: toHex(invoice.rHash),
+          type: 'lightning',
+          amount: invoice.value,
+          status: invoice.settled ? 'complete' : 'in-progress',
+          date: parseDate(invoice.creationDate),
+          memo: invoice.memo,
+        }))
+      } catch (err) {
+        console.tron.error('Listing invoices failed');
+        console.tron.error(err);
+      }
+
+      if (invoice_updated === undefined) return
+      if (!invoice_updated.settled) return
+      // const { computedTransactions, unitLabel } = this._store
+      // let inv = computedTransactions.find(tx => tx.id === toHex(invoice_updated.rHash))
+      // this._notification.display({
+      //   type: 'success',
+      //   msg: `Invoice success: received ${inv.amountLabel} ${unitLabel || ''}`,
+      //   handler: () => this.select({ item: inv }),
+      //   handlerLbl: 'View details',
+      // })
+    })
+
     const send_transaction = flow(function * (addr, amount) {
       return yield getEnv(self).lnd.grpc.sendCommand('sendCoins', { addr, amount })
     })
@@ -485,6 +520,7 @@ export const LndModel = BaseAccountModel
       newAddress,
       update_transactions,
       update_balance,
+      update_invoices,
       send_transaction,
     }
   })
