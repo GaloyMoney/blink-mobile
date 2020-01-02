@@ -1,5 +1,4 @@
 import { Reactotron } from "../services/reactotron"
-import { Coinbase } from "../services/coinbase"
 import { Lnd } from "../services/lnd"
 
 /**
@@ -10,14 +9,12 @@ export class Environment {
   constructor() {
     // create each service
     this.reactotron = new Reactotron()
-    this.api = new Coinbase()
     this.lnd = new Lnd()
   }
 
   async setup() {
     // allow each service to setup
     await this.reactotron.setup()
-    await this.api.setup()
     await this.lnd.setup()
   }
 
@@ -27,12 +24,7 @@ export class Environment {
   reactotron: Reactotron
 
   /**
-   * Our api.
-   */
-  api: Coinbase //TODO rename
-
-  /**
-   * Our api.
+   * lnd api.
    */
   lnd: Lnd
 }
