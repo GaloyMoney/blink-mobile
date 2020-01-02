@@ -3,7 +3,7 @@ import { View, ViewStyle, StyleSheet } from "react-native"
 import { Text } from "../text"
 import { color } from "../../theme"
 
-import currency from "currency.js" 
+import currency from "currency.js"
 import { CurrencyType } from "../../models/data-store/CurrencyType"
 
 export interface BalanceHeaderProps {
@@ -19,28 +19,28 @@ export interface BalanceHeaderProps {
 }
 
 const styles = StyleSheet.create({
+  amount: {
+    alignItems: 'center',
+    flexDirection: 'column',
+    height: 42, // FIXME should be dynamic?
+  },
+
+  balanceText: {
+    color: color.primary,
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginVertical: 20,
+  },
+
   container: {
     flex: 1,
   },
 
   header: {
     alignItems: "center",
-    marginTop: 48, 
     marginBottom: 24,
+    marginTop: 48,
   },
-
-  amount: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    height: 42, // FIXME should be dynamic?
-  },
-
-  balanceText: {
-    fontSize: 16,
-    color: color.primary,
-    marginVertical: 20,
-    fontWeight: 'bold',
-  }, 
 })
 
 /**
@@ -55,29 +55,29 @@ export function BalanceHeader(props: BalanceHeaderProps) {
 
   switch (props.currency) {
     case CurrencyType.USD:
-      var text_comp = <Text style={{fontSize: size, color: color.text,}}>
-          {currency(props.amount, { formatWithSymbol: true } ).format()}
+      var text_comp = <Text style={{ fontSize: size, color: color.text, }}>
+        {currency(props.amount, { formatWithSymbol: true }).format()}
       </Text>
-      break;
+      break
     case CurrencyType.BTC:
-      var text_comp = 
+      var text_comp =
         <View style={styles.amount}>
-          <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
-            <Text style={{fontSize: size, color: color.text,}}>
-              {currency(props.amount, { precision: 0, separator: ',' } ).format()}
+          <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
+            <Text style={{ fontSize: size, color: color.text, }}>
+              {currency(props.amount, { precision: 0, separator: ',' }).format()}
             </Text>
-            <Text style={{fontSize: size / 2, color: color.text,}}> sats</Text>
+            <Text style={{ fontSize: size / 2, color: color.text, }}> sats</Text>
           </View>
-            <Text style={{fontSize: size / 2, color: color.text,}}>
-              {currency(props.eq_dollar, { formatWithSymbol: true } ).format()}
-            </Text>
+          <Text style={{ fontSize: size / 2, color: color.text, }}>
+            {currency(props.eq_dollar, { formatWithSymbol: true }).format()}
+          </Text>
         </View>
-      break;
+      break
   }
 
   return (
     <View style={styles.header} {...rest}>
-        {text_comp}
+      {text_comp}
       <Text style={styles.balanceText}>Current Balance</Text>
     </View>
   )

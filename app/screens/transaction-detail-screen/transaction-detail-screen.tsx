@@ -2,40 +2,28 @@ import * as React from "react"
 import { Text } from "../../components/text"
 import { Screen } from "../../components/screen"
 import { NavigationScreenProps } from "react-navigation"
-import { Image, View, StyleSheet } from "react-native";
+import { Image, View, StyleSheet } from "react-native"
 import { ListItem } from 'react-native-elements'
 
 import currency from "currency.js"
-import Icon from 'react-native-vector-icons/Ionicons';
-import { color } from "../../theme";
+import Icon from 'react-native-vector-icons/Ionicons'
+import { color } from "../../theme"
 
-import MapView from 'react-native-maps';
-
+import MapView from 'react-native-maps'
 
 export interface TransactionDetailScreenProps extends NavigationScreenProps<{}> {
 }
 
 const styles = StyleSheet.create({
+  amountText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginVertical: 4,
+  },
+
   amountView: {
     alignItems: "center",
     marginVertical: 24,
-  },
-
-  amountText: {
-    fontSize:18,
-    marginVertical: 4,
-    fontWeight: "bold",
-  },
-
-  iconView: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-
-  icon: {
-    marginVertical: 16,
-    marginLeft: 24,
-    marginRight: 8,
   },
 
   description: {
@@ -44,28 +32,37 @@ const styles = StyleSheet.create({
     marginVertical: 12,
   },
 
-  valueDescription: {
-    marginLeft: 'auto'
+  icon: {
+    marginLeft: 24,
+    marginRight: 8,
+    marginVertical: 16,
+  },
+
+  iconView: {
+    alignItems: "center",
+    flexDirection: "row",
   },
 
   map: {
     height: 150,
-    width: 150,
+    marginBottom: 12,
     marginLeft: 'auto',
     marginRight: 30,
-    marginBottom: 12,
+    width: 150,
+  },
+
+  valueDescription: {
+    marginLeft: 'auto'
   },
 
 })
-
 
 export class TransactionDetailScreen extends React.Component<TransactionDetailScreenProps, {}> {
   static navigationOptions = ({ navigation }) => {
     return {
       title: navigation.getParam("name")
-    };
+    }
   };
-  
 
   list = [
     {
@@ -77,54 +74,59 @@ export class TransactionDetailScreen extends React.Component<TransactionDetailSc
       icon: 'warning'
     },
   ]
-  
-  render () {
 
+  render () {
     const date = this.props.navigation.getParam("date")
-    var options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', 
-      hour: 'numeric', minute: 'numeric'};
+    const options = {
+      weekday: 'short',
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric'
+    }
     const date_format = date.toLocaleString('en-US', options)
 
     return (
       <Screen>
-        <Image source={require("../../theme/header_example_transaction.jpg")} style={{width: "100%"}} />
-        
+        <Image source={require("../../theme/header_example_transaction.jpg")} style={{ width: "100%" }} />
+
         <View style={styles.amountView}>
-          <Text style={styles.amountText}>You spent {currency(this.props.navigation.getParam("amount"), { formatWithSymbol: true } ).format()}</Text>
-          <Text style={styles.amountText}>and earned {currency(this.props.navigation.getParam("cashback"), { precision: 0, separator: ',' } ).format()} sats</Text>
+          <Text style={styles.amountText}>You spent {currency(this.props.navigation.getParam("amount"), { formatWithSymbol: true }).format()}</Text>
+          <Text style={styles.amountText}>and earned {currency(this.props.navigation.getParam("cashback"), { precision: 0, separator: ',' }).format()} sats</Text>
         </View>
 
         <View style={styles.iconView}>
           <Icon name="ios-calendar" style={styles.icon}
-          color={color.primary} size={28} />
+            color={color.primary} size={28} />
           <Text>{date_format}</Text>
         </View>
-        
+
         <View>
-          <View style={{flexDirection: "row"}}>
+          <View style={{ flexDirection: "row" }}>
             <View>
               <View style={styles.iconView}>
                 <Icon name="ios-pin" style={styles.icon}
-                color={color.primary} size={28} />
-                <View style={{flexDirection: "column"}}>
+                  color={color.primary} size={28} />
+                <View style={{ flexDirection: "column" }}>
                   <Text>3198 16th St,</Text>
                   <Text>San Francisco,</Text>
                   <Text>CA 94103</Text>
-              </View>
+                </View>
               </View>
               <View style={styles.iconView}>
                 <Icon name="ios-call" style={styles.icon}
-                color={color.primary} size={28} />
+                  color={color.primary} size={28} />
                 <Text>(415) 829-8468</Text>
               </View>
             </View>
-            <MapView 
-                style={styles.map}
-                initialRegion={{
-                  latitude: 37.78825,
-                  longitude: -122.4324,
-                  latitudeDelta: 0.0922,
-                  longitudeDelta: 0.0421,
+            <MapView
+              style={styles.map}
+              initialRegion={{
+                latitude: 37.78825,
+                longitude: -122.4324,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
               }}
             />
 

@@ -21,7 +21,7 @@ import { BulletItem } from "../../components/bullet-item"
 import { save } from "../../utils/storage"
 import { observer, inject } from "mobx-react"
 
-import { RNCamera } from 'react-native-camera';
+import { RNCamera } from 'react-native-camera'
 import { decode } from 'bip21'
 
 const FULL: ViewStyle = { flex: 1 }
@@ -96,11 +96,11 @@ const CAMERA: ViewStyle = {
   height: 300,
 }
 
-export interface debugScreenProps extends NavigationScreenProps<{}> {}
+export interface DebugScreenProps extends NavigationScreenProps<{}> {}
 
 @inject("dataStore")
 @observer
-export class debugScreen extends React.Component<debugScreenProps, {}> {
+export class DebugScreen extends React.Component<DebugScreenProps, {}> {
   goBack = () => this.props.navigation.goBack(null)
 
   constructor(props) {
@@ -163,7 +163,7 @@ export class debugScreen extends React.Component<debugScreenProps, {}> {
           <BulletItem text="Load up Reactotron!  You can inspect your app, view the events, interact, and so much more!" />
           <BulletItem text="Integrated here, Navigation with State, TypeScript, Storybook, Solidarity, and i18n." />
           <View>
-            <Text style={TAGLINE} text={this.props.dataStore.lnd.walletExist ? "Wallet exist": "Wallet doesn't exist"} />
+            <Text style={TAGLINE} text={this.props.dataStore.lnd.walletExist ? "Wallet exist" : "Wallet doesn't exist"} />
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
@@ -179,7 +179,7 @@ export class debugScreen extends React.Component<debugScreenProps, {}> {
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
-              text={`unlock. status: ${this.props.dataStore.lnd.walletUnlocked ? "true": "false"}`}
+              text={`unlock. status: ${this.props.dataStore.lnd.walletUnlocked ? "true" : "false"}`}
               onPress={this.props.dataStore.lnd.unlockWallet}
             />
             <Button
@@ -187,12 +187,6 @@ export class debugScreen extends React.Component<debugScreenProps, {}> {
               textStyle={DEMO_TEXT}
               text="send pubKey"
               onPress={this.props.dataStore.lnd.sendPubKey}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              text="updateBlockchainStatus"
-              onPress={this.props.dataStore.lnd.updateBlockchainStatus}
             />
             <Button
               style={DEMO}
@@ -211,6 +205,12 @@ export class debugScreen extends React.Component<debugScreenProps, {}> {
               textStyle={DEMO_TEXT}
               text="open channel"
               onPress={this.props.dataStore.lnd.openChannel}
+            />
+            <Button
+              style={DEMO}
+              textStyle={DEMO_TEXT}
+              text="create invoice"
+              onPress={this.props.dataStore.lnd.addinvoice}
             />
             <Button
               style={DEMO}
@@ -248,7 +248,7 @@ export class debugScreen extends React.Component<debugScreenProps, {}> {
               textStyle={DEMO_TEXT}
               text="update_transactions"
               onPress={this.props.dataStore.lnd.update_transactions}
-            />            
+            />
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
@@ -256,15 +256,15 @@ export class debugScreen extends React.Component<debugScreenProps, {}> {
               onPress={this.props.dataStore.lnd.update_transactions}
             />
             <RNCamera style={CAMERA}
-              captureAudio={false} 
+              captureAudio={false}
               onBarCodeRead={(event) => {
                 const qr = event.data
-                this.setState({qr})
+                this.setState({ qr })
                 try {
                   const decoded = decode(qr)
-                  this.setState({addr: decoded.address})
-                  if (decoded.options.hasOwnProperty('amount')) {
-                    this.setState({amount: decoded.options.amount })
+                  this.setState({ addr: decoded.address })
+                  if (Object.prototype.hasOwnProperty.call(decoded.options, 'amount')) {
+                    this.setState({ amount: decoded.options.amount })
                   }
                 } catch (err) {
                   Alert.alert(err)
@@ -272,21 +272,21 @@ export class debugScreen extends React.Component<debugScreenProps, {}> {
               }}
             />
             <TextInput
-            style={HINT}
-            value={this.state.qr}
-            multiline={true}
+              style={HINT}
+              value={this.state.qr}
+              multiline={true}
             />
             <TextInput
-            style={HINT}
-            editable
-            onChangeText={addr => this.setState({ addr })}
-            value={this.state.addr}
+              style={HINT}
+              editable
+              onChangeText={addr => this.setState({ addr })}
+              value={this.state.addr}
             />
             <TextInput
-            style={HINT}
-            editable
-            onChangeText={amount => this.setState({ amount })}
-            value={this.state.amount.toString()}
+              style={HINT}
+              editable
+              onChangeText={amount => this.setState({ amount })}
+              value={this.state.amount.toString()}
             />
             <Button
               style={DEMO}

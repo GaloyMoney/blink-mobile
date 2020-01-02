@@ -4,28 +4,24 @@
  * from the UI but rather used within other higher level actions.
  */
 
+import { Duplex } from 'readable-stream'
 
-import { Duplex } from 'readable-stream';
-
-import base64 from 'base64-js';
-import { lnrpc } from '../../generated/rpc';
-
+import base64 from 'base64-js'
+import { lnrpc } from '../../generated/rpc'
 
 // FIXME refactor
 const toCaps = (value = '', separator = ' ', split = '-') => {
   return value
     .split(split)
     .map(v => v.charAt(0).toUpperCase() + v.substring(1))
-    .reduce((a, b) => `${a}${separator}${b}`);
-};
-
-
+    .reduce((a, b) => `${a}${separator}${b}`)
+}
 
 class GrpcAction {
   constructor(NativeModules, NativeEventEmitter) {
-    this._lnd = NativeModules.LndReactModule;
-    this._lndEvent = new NativeEventEmitter(this._lnd);
-    this._streamCounter = 0;
+    this._lnd = NativeModules.LndReactModule
+    this._lndEvent = new NativeEventEmitter(this._lnd)
+    this._streamCounter = 0
   }
 
   //
@@ -39,8 +35,8 @@ class GrpcAction {
    * @return {Promise<undefined>}
    */
   async startLnd() {
-    await this._lnd.start();
-    console.tron.log('lnd Started. GRPC unlockerReady');
+    await this._lnd.start()
+    console.tron.log('lnd Started. GRPC unlockerReady')
   }
 
   /**
@@ -51,7 +47,7 @@ class GrpcAction {
   async closeUnlocker() {
     // TODO: restart is not required on mobile
     // await this._lnd.closeUnlocker();
-    console.tron.log('GRPC unlockerClosed');
+    console.tron.log('GRPC unlockerClosed')
   }
 
   /**
@@ -61,7 +57,7 @@ class GrpcAction {
    * @return {Promise<Object>}
    */
   async sendUnlockerCommand(method, body) {
-    return this._lnrpcRequest(method, body);
+    return this._lnrpcRequest(method, body)
   }
 
   //
@@ -76,7 +72,7 @@ class GrpcAction {
   async closeLnd() {
     // TODO: add api on mobile
     // await this._lnd.close();
-    console.tron.log('GRPC lndClosed');
+    console.tron.log('GRPC lndClosed')
   }
 
   /**
@@ -85,7 +81,7 @@ class GrpcAction {
    * @return {Promise<undefined>}
    */
   async restartLnd() {
-    await this.closeLnd();
+    await this.closeLnd()
     // TODO: handle restart in native module
   }
 
@@ -96,7 +92,7 @@ class GrpcAction {
    * @return {Promise<Object>}
    */
   sendCommand(method, body) {
-    return this._lnrpcRequest(method, body);
+    return this._lnrpcRequest(method, body)
   }
 
   /**
@@ -107,29 +103,29 @@ class GrpcAction {
    * @return {Duplex}        The duplex stream object instance
    */
   sendStreamCommand(method, body) {
-    method = toCaps(method);
-    const self = this;
-    const streamId = self._generateStreamId();
+    method = toCaps(method)
+    const self = this
+    const streamId = self._generateStreamId()
     const stream = new Duplex({
       write(data) {
-        data = JSON.parse(data.toString('utf8'));
-        const req = self._serializeRequest(method, data);
-        self._lnd.sendStreamWrite(streamId, req);
+        data = JSON.parse(data.toString('utf8'))
+        const req = self._serializeRequest(method, data)
+        self._lnd.sendStreamWrite(streamId, req)
       },
       read() {},
-    });
+    })
     self._lndEvent.addListener('streamEvent', res => {
       if (res.streamId !== streamId) {
-        return;
+
       } else if (res.event === 'data') {
-        stream.emit('data', self._deserializeResponse(method, res.data));
+        stream.emit('data', self._deserializeResponse(method, res.data))
       } else {
-        stream.emit(res.event, res.error || res.data);
+        stream.emit(res.event, res.error || res.data)
       }
-    });
-    const req = self._serializeRequest(method, body);
-    self._lnd.sendStreamCommand(method, streamId, req);
-    return stream;
+    })
+    const req = self._serializeRequest(method, body)
+    self._lnd.sendStreamCommand(method, streamId, req)
+    return stream
   }
 
   //
@@ -138,42 +134,42 @@ class GrpcAction {
 
   async _lnrpcRequest(method, body) {
     try {
-      method = toCaps(method);
-      const req = this._serializeRequest(method, body);
-      const response = await this._lnd.sendCommand(method, req);
-      return this._deserializeResponse(method, response.data);
+      method = toCaps(method)
+      const req = this._serializeRequest(method, body)
+      const response = await this._lnd.sendCommand(method, req)
+      return this._deserializeResponse(method, response.data)
     } catch (err) {
       if (typeof err === 'string') {
-        throw new Error(err);
+        throw new Error(err)
       } else {
-        throw err;
+        throw err
       }
     }
   }
 
   _serializeRequest(method, body = {}) {
-    const req = lnrpc[this._getRequestName(method)];
-    const message = req.create(body);
-    const buffer = req.encode(message).finish();
-    return base64.fromByteArray(buffer);
+    const req = lnrpc[this._getRequestName(method)]
+    const message = req.create(body)
+    const buffer = req.encode(message).finish()
+    return base64.fromByteArray(buffer)
   }
 
   _deserializeResponse(method, response) {
-    const res = lnrpc[this._getResponseName(method)];
-    const buffer = base64.toByteArray(response);
-    return res.decode(buffer);
+    const res = lnrpc[this._getResponseName(method)]
+    const buffer = base64.toByteArray(response)
+    return res.decode(buffer)
   }
 
   _serializeResponse(method, body = {}) {
-    const res = lnrpc[this._getResponseName(method)];
-    const message = res.create(body);
-    const buffer = res.encode(message).finish();
-    return base64.fromByteArray(buffer);
+    const res = lnrpc[this._getResponseName(method)]
+    const message = res.create(body)
+    const buffer = res.encode(message).finish()
+    return base64.fromByteArray(buffer)
   }
 
   _generateStreamId() {
-    this._streamCounter = this._streamCounter + 1;
-    return String(this._streamCounter);
+    this._streamCounter = this._streamCounter + 1
+    return String(this._streamCounter)
   }
 
   _getRequestName(method) {
@@ -186,8 +182,8 @@ class GrpcAction {
       SubscribeInvoices: 'InvoiceSubscription',
       SubscribeChannelBackups: 'ChannelBackupSubscription',
       StopDaemon: 'StopRequest',
-    };
-    return map[method] || `${method}Request`;
+    }
+    return map[method] || `${method}Request`
   }
 
   _getResponseName(method) {
@@ -202,9 +198,9 @@ class GrpcAction {
       SubscribeInvoices: 'Invoice',
       SubscribeChannelBackups: 'ChanBackupSnapshot',
       StopDaemon: 'StopResponse',
-    };
-    return map[method] || `${method}Response`;
+    }
+    return map[method] || `${method}Response`
   }
 }
 
-export default GrpcAction;
+export default GrpcAction

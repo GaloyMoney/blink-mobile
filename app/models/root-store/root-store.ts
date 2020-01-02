@@ -19,4 +19,3 @@ export type RootStore = Instance<typeof RootStoreModel>
  * The data of an RootStore.
  */
 export type RootStoreSnapshot = SnapshotOut<typeof RootStoreModel>
-

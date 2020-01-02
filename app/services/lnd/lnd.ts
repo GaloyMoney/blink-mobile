@@ -24,9 +24,9 @@ export class Lnd {
    * @param config the configuration
    */
   constructor() {
-    this.grpc = new GrpcAction(NativeModules, NativeEventEmitter);
-    this.ipc = new IpcAction(this.grpc);
-    this.log = new LogAction(this.ipc, false, true);
+    this.grpc = new GrpcAction(NativeModules, NativeEventEmitter)
+    this.ipc = new IpcAction(this.grpc)
+    this.log = new LogAction(this.ipc, false, true)
 
     this.keychain = new RNKeychain()
   }
@@ -35,24 +35,24 @@ export class Lnd {
    * @param lndStore The lnd store
    */
   async setLndStore(lndStore: LndStore) {
-      this.lndStore = lndStore
+    this.lndStore = lndStore
 
-      // TODO, where to set this?
-      await this.start()
-    }
+    // TODO, where to set this?
+    await this.start()
+  }
 
   async setCallback() {
-    const stream = this.grpc.sendStreamCommand('subscribeTransactions');
+    const stream = this.grpc.sendStreamCommand('subscribeTransactions')
     try {
       new Promise((resolve, reject) => {
         stream.on('data', (data) => {
-          console.tron.log("onData", data);
-          this.lndStore.update_balance(); 
-          this.lndStore.update_transactions();
-        });
-        stream.on('end', resolve);
-        stream.on('error', reject);
-        stream.on('status', status => console.tron.info(`Transactions update: ${status}`));
+          console.tron.log("onData", data)
+          this.lndStore.update_balance()
+          this.lndStore.update_transactions()
+        })
+        stream.on('end', resolve)
+        stream.on('error', reject)
+        stream.on('status', status => console.tron.info(`Transactions update: ${status}`))
       }).catch(err => console.tron.error("err1: ", err))
     } catch (err) {
       console.tron.error("err2: ", err)
@@ -69,6 +69,6 @@ export class Lnd {
 
     await this.lndStore.initState()
 
-    poll(() => this.lndStore.getInfo());
+    poll(() => this.lndStore.getInfo())
   }
 }

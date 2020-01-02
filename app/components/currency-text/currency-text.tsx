@@ -19,14 +19,14 @@ export interface CurrencyTextProps {
 }
 
 const styles = StyleSheet.create({
-  text: {
-    fontSize: 18,
-    color: color.text
+  smallText: {
+    color: color.text,
+    fontSize: 12
   },
 
-  smallText: {
-    fontSize: 12,
-    color: color.text
+  text: {
+    color: color.text,
+    fontSize: 18
   }
 })
 
@@ -38,20 +38,20 @@ const styles = StyleSheet.create({
 export function CurrencyText(props: CurrencyTextProps) {
   // grab the props
   const { style, amount, ...rest } = props
-  var comp: React.Component = undefined
+  const comp: React.Component
 
-  switch(props.currency) {
+  switch (props.currency) {
     case CurrencyType.USD:
-      return (<Text>{currency(amount, { formatWithSymbol: true } ).format()}</Text>)
+      return (<Text>{currency(amount, { formatWithSymbol: true }).format()}</Text>)
     case CurrencyType.BTC:
       return (
-      <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
-        <Text style={styles.text}>
-            {currency(amount, { precision: 0, separator: ',' } ).format()}
-        </Text>
-        <Text style={styles.smallText}> sats</Text>
-      </View>
-    )
+        <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
+          <Text style={styles.text}>
+            {currency(amount, { precision: 0, separator: ',' }).format()}
+          </Text>
+          <Text style={styles.smallText}> sats</Text>
+        </View>
+      )
   }
 
   return <Text>issue: {props.currency}</Text>

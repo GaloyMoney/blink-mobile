@@ -4,7 +4,7 @@ import { StoryScreen, Story, UseCase } from "../../../storybook/views"
 import { BalanceHeader } from "./"
 import { CurrencyType } from "../../models/data-store"
 
-declare var module
+declare let module
 
 storiesOf("BalanceHeader", module)
   .addDecorator(fn => <StoryScreen>{fn()}</StoryScreen>)
