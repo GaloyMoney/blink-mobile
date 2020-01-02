@@ -12,33 +12,28 @@ export interface VerifyEmailScreenProps extends NavigationScreenProps<{}> {
 }
 
 const styles = StyleSheet.create({
-  text: {
-    fontSize: 18,
-    textAlign: "center",
-  },
-
   container: {
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
+  },
+
+  text: {
+    fontSize: 18,
+    textAlign: "center",
   }
 })
 
 @inject("dataStore")
 @observer
 export class VerifyEmailScreen extends React.Component<VerifyEmailScreenProps, {}> {
-
-  constructor(props) {
-    super(props)
-  }
-
   componentDidMount() {
-    this.timer = setInterval(() => auth().currentUser.reload(), 2000);
+    this.timer = setInterval(() => auth().currentUser.reload(), 2000)
   }
 
   componentWillUnmount() {
-    clearInterval(this.timer);
-  }  
+    clearInterval(this.timer)
+  }
 
   render () {
     return (

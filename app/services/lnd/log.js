@@ -7,9 +7,9 @@
 
 // import { MAX_LOG_LENGTH } from '../config';
 
-let _ipc;
-let _printErrObj;
-let _printLog;
+let _ipc
+let _printErrObj
+let _printLog
 
 /**
  * Log an info event e.g. when something relevant but non-critical happens.
@@ -19,8 +19,23 @@ let _printLog;
  * @return {undefined}
  */
 export function info(...args) {
-  console.tron.log(...args);
-  _ipc && _ipc.send('log', null, args);
+  console.tron.log(...args)
+  _ipc && _ipc.send('log', null, args)
+}
+
+
+const pushLogs = (message) => {
+  // FIXME add back the logic
+  // if (!_store) return;
+  // _store.logs += '\n' + message.replace(/\s+$/, '');
+  // const len = _store.logs.length;
+  // if (len > MAX_LOG_LENGTH) {
+  // _store.logs = _store.logs.substring(len - MAX_LOG_LENGTH, len);
+  // }
+
+  if (_printLog) {
+    console.tron.log('\n' + message.replace(/\s+$/, ''))
+  }
 }
 
 /**
@@ -33,9 +48,9 @@ export function info(...args) {
  * @return {undefined}
  */
 export function error(...args) {
-  console.tron.error(...args);
-  pushLogs(''); // newline
-  pushLogs(`ERROR: ${args[0]}`);
+  console.tron.error(...args)
+  pushLogs('') // newline
+  pushLogs(`ERROR: ${args[0]}`)
   for (let i = 1; i < args.length; i++) {
     pushLogs(
       JSON.stringify(
@@ -43,34 +58,20 @@ export function error(...args) {
         null,
         '    '
       )
-    );
+    )
   }
-  pushLogs(''); // newline
-  _ipc && _ipc.send('log-error', null, args);
-}
-
-function pushLogs(message) {
-  // FIXME add back the logic
-  // if (!_store) return;
-  // _store.logs += '\n' + message.replace(/\s+$/, '');
-  // const len = _store.logs.length;
-  // if (len > MAX_LOG_LENGTH) {
-    // _store.logs = _store.logs.substring(len - MAX_LOG_LENGTH, len);
-  // }
-
-  if (_printLog) {
-    console.tron.log('\n' + message.replace(/\s+$/, ''))
-  }
+  pushLogs('') // newline
+  _ipc && _ipc.send('log-error', null, args)
 }
 
 class LogAction {
   constructor(ipc, printErrObj = true, printLog = false) {
-    _ipc = ipc;
-    _printErrObj = printErrObj;
-    _printLog = printLog;
-    _ipc.listen('logs', (event, message) => pushLogs(message));
-    _ipc.send('logs-ready', null, true);
+    _ipc = ipc
+    _printErrObj = printErrObj
+    _printLog = printLog
+    _ipc.listen('logs', (event, message) => pushLogs(message))
+    _ipc.send('logs-ready', null, true)
   }
 }
 
-export default LogAction;
+export default LogAction

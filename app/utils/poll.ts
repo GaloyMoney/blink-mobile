@@ -1,6 +1,6 @@
-  
-const RETRY_DELAY = 1000;
-const LND_INIT_DELAY = 5000;
+
+const RETRY_DELAY = 1000
+const LND_INIT_DELAY = 5000
 
 /**
  * Take a nice little nap :)
@@ -8,8 +8,8 @@ const LND_INIT_DELAY = 5000;
  * @return {Promise<undefined>}
  */
 export const nap = (ms = LND_INIT_DELAY) => {
-  return new Promise(resolve => setTimeout(resolve, ms));
-};
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
 
 /**
  * A polling utility that can be used to poll apis. If the api returns
@@ -22,9 +22,9 @@ export const nap = (ms = LND_INIT_DELAY) => {
  */
 export const poll = async (api, interval = RETRY_DELAY, retries = Infinity) => {
   while (retries--) {
-    const response = await api();
-    if (response) return response;
-    await nap(interval);
+    const response = await api()
+    if (response) return response
+    await nap(interval)
   }
-  throw new Error('Maximum retries for polling reached');
-};
+  throw new Error('Maximum retries for polling reached')
+}

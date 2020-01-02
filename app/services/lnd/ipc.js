@@ -5,7 +5,7 @@
 
 class IpcAction {
   constructor(grpc) {
-    this._grpc = grpc;
+    this._grpc = grpc
   }
 
   /**
@@ -17,7 +17,7 @@ class IpcAction {
    * @return {Promise<Object>}
    */
   send() {
-    return Promise.resolve(); // not used on mobile
+    return Promise.resolve() // not used on mobile
   }
 
   /**
@@ -28,8 +28,8 @@ class IpcAction {
    * @return {undefined}
    */
   listen(event, callback) {
-    this._grpc._lndEvent.addListener(event, data => callback(event, data));
+    this._grpc._lndEvent.addListener(event, data => callback(event, data))
   }
 }
 
-export default IpcAction;
+export default IpcAction

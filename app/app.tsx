@@ -2,9 +2,7 @@
 //
 // In this file, we'll be kicking off our app or storybook.
 
-
-import 'node-libs-react-native/globals'; // needed for Buffer?
-
+import 'node-libs-react-native/globals' // needed for Buffer?
 
 import "./i18n"
 import * as React from "react"
@@ -16,7 +14,6 @@ import { Provider } from "mobx-react"
 import { BackButtonHandler } from "./navigation/back-button-handler"
 import { contains } from "ramda"
 import { DEFAULT_NAVIGATION_CONFIG } from "./navigation/navigation-config"
-
 
 /**
  * Ignore some yellowbox warnings. Some of these are for deprecated functions
