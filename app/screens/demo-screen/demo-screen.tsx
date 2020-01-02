@@ -108,7 +108,8 @@ export class DebugScreen extends React.Component<DebugScreenProps, {}> {
 
     this.state = {
       addr: 'tb1',
-      amount: 1000
+      amount: 1000,
+      invoice: 'ln'
     }
   }
 
@@ -217,6 +218,24 @@ export class DebugScreen extends React.Component<DebugScreenProps, {}> {
               textStyle={DEMO_TEXT}
               text="update invoice"
               onPress={this.props.dataStore.lnd.update_invoices}
+            />
+            <TextInput
+              style={HINT}
+              editable
+              onChangeText={invoice => this.setState({ invoice })}
+              value={this.state.invoice}
+            />
+            <Button
+              style={DEMO}
+              textStyle={DEMO_TEXT}
+              text="pay invoice"
+              onPress={() => this.props.dataStore.lnd.pay_invoice(this.state.invoice)}
+            />
+            <Button
+              style={DEMO}
+              textStyle={DEMO_TEXT}
+              text="list payments"
+              onPress={this.props.dataStore.lnd.list_payments}
             />
             <Button
               style={DEMO}

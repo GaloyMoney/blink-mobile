@@ -35,6 +35,20 @@ export const AuthModel = types
 
 
 // FIXME merge with TransactionModel?
+export const PaymentModel = types
+  .model("Payment", {
+    id: types.string,
+    type: types.string,
+    amount: types.number,
+    status: types.string,
+    date: types.Date,
+    fee: types.number,
+    preimage: types.string, // or number?
+    paymentRequest: types.string
+    // no memo?
+  })
+
+// FIXME merge with TransactionModel?
 export const InvoiceModel = types
   .model("Invoice", {
     id: types.string,
@@ -224,6 +238,7 @@ export const LndModel = BaseAccountModel
     percentSynced: 0,
     pendingInvoice: "",
     invoices: types.array(InvoiceModel), // FIXME merge with transactions?
+    payments: types.array(PaymentModel), // FIXME merge with transactions?
   })
   .actions(self => {
     // stateless, but must be an action instead of a view because of the async call
@@ -505,6 +520,68 @@ export const LndModel = BaseAccountModel
       return yield getEnv(self).lnd.grpc.sendCommand('sendCoins', { addr, amount })
     })
 
+
+    // doesn't update the store, should this be here?
+    const pay_invoice = flow(function * (payreq) {
+
+      const PAYMENT_TIMEOUT = 10000
+
+      let failed = false;
+      const timeout = setTimeout(() => {
+        failed = true;
+        // TODO: do something to show payment failed
+      }, PAYMENT_TIMEOUT);
+      
+      try {
+
+        const stream = getEnv(self).lnd.grpc.sendStreamCommand('sendPayment');
+
+        yield new Promise((resolve, reject) => {
+          stream.on('data', data => {
+            if (data.paymentError) {
+              reject(new Error(`Lightning payment error: ${data.paymentError}`));
+            } else {
+              resolve();
+            }
+          });
+          stream.on('error', reject);
+          stream.write(JSON.stringify({ paymentRequest: payreq }), 'utf8');
+        });
+
+        if (failed) return;
+      } catch (err) {
+        if (failed) return;
+
+        // this._nav.goPayLightningConfirm();
+        // this._notification.display({ msg: 'Lightning payment failed!', err });
+
+      } finally {
+        clearTimeout(timeout);
+      }
+
+    })
+
+    const list_payments = flow(function * () {
+      try {
+        const { payments } = yield getEnv(self).lnd.grpc.sendCommand('listPayments')
+
+        console.tron.log(payments)
+
+        self.payments = payments.map(payment => ({
+          id: payment.paymentHash,
+          type: 'lightning',
+          amount: -1 * payment.value,
+          fee: payment.fee,
+          status: 'complete',
+          date: parseDate(payment.creationDate),
+          preimage: payment.paymentPreimage,
+          paymentRequest: payment.paymentRequest,
+        }));
+      } catch (err) {
+        console.tron.error('Listing payments failed', err);
+      }
+    })
+
     return {
       initState,
       genSeed,
@@ -521,6 +598,8 @@ export const LndModel = BaseAccountModel
       update_transactions,
       update_balance,
       update_invoices,
+      pay_invoice,
+      list_payments,
       send_transaction,
     }
   })
