@@ -23,7 +23,6 @@ export function info(...args) {
   _ipc && _ipc.send('log', null, args)
 }
 
-
 const pushLogs = (message) => {
   // FIXME add back the logic
   // if (!_store) return;
