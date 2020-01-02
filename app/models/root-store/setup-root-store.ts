@@ -2,7 +2,6 @@ import { onSnapshot } from "mobx-state-tree"
 import { RootStoreModel, RootStore } from "./root-store"
 import { Environment } from "../environment"
 import * as storage from "../../utils/storage"
-import { defaultStoreState } from "./default-state"
 
 /**
  * The key we'll be saving our state as within async storage.

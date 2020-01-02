@@ -33,7 +33,6 @@ export const AuthModel = types
     return { set, setEmail }
   })
 
-
 // FIXME merge with TransactionModel?
 export const PaymentModel = types
   .model("Payment", {
@@ -105,7 +104,7 @@ export const ExchangeModel = types
   .actions(self => {
     const quoteBTC = flow(function * (side: "buy" | "sell", satAmount = 1000) {
       try {
-        const result = yield functions().httpsCallable('quoteBTC')({side, satAmount})
+        const result = yield functions().httpsCallable('quoteBTC')({ side, satAmount })
         console.tron.log('result quoteBTC', result)
         self.quote = result.data
       } catch (err) {
@@ -275,7 +274,6 @@ export const LndModel = BaseAccountModel
     })
 
     const initWallet = flow(function * () {
-
       const random_number = yield generateSecureRandom(24)
       const wallet_password = toHex(random_number)
 
@@ -314,16 +312,16 @@ export const LndModel = BaseAccountModel
         uri = doc.data().lightning.uris[0]
       } catch (err) {
         console.tron.err(`can't get Galoy node uris`, err)
-        return 
+        return
       }
 
       let [pubkey, host] = uri.split("@")
-      host = "127.0.0.1" //FIXME 
+      host = "127.0.0.1" // FIXME
       console.tron.log(`connecting to:`, { uri, pubkey, host })
 
       try {
         const connection = yield getEnv(self).lnd.grpc.sendCommand('connectPeer', {
-          addr: { pubkey, host }, 
+          addr: { pubkey, host },
         })
 
         console.log(connection)
@@ -432,8 +430,8 @@ export const LndModel = BaseAccountModel
         expiry: 172800, // 48 hours
         private: true,
       })
-      
-      const invoice = response.paymentRequest;
+
+      const invoice = response.paymentRequest
       console.tron.log('invoice: ', invoice),
       self.pendingInvoice = invoice
     })
@@ -486,11 +484,10 @@ export const LndModel = BaseAccountModel
     })
 
     const update_invoices = flow(function * (invoice_updated = undefined) {
-      
       console.tron.log("update_invoices")
 
       try {
-        const { invoices } = yield getEnv(self).lnd.grpc.sendCommand('listInvoices');
+        const { invoices } = yield getEnv(self).lnd.grpc.sendCommand('listInvoices')
         self.invoices = invoices.map(invoice => ({
           id: toHex(invoice.rHash),
           type: 'lightning',
@@ -500,8 +497,8 @@ export const LndModel = BaseAccountModel
           memo: invoice.memo,
         }))
       } catch (err) {
-        console.tron.error('Listing invoices failed');
-        console.tron.error(err);
+        console.tron.error('Listing invoices failed')
+        console.tron.error(err)
       }
 
       if (invoice_updated === undefined) return
@@ -520,45 +517,40 @@ export const LndModel = BaseAccountModel
       return yield getEnv(self).lnd.grpc.sendCommand('sendCoins', { addr, amount })
     })
 
-
     // doesn't update the store, should this be here?
     const pay_invoice = flow(function * (payreq) {
-
       const PAYMENT_TIMEOUT = 10000
 
-      let failed = false;
+      let failed = false
       const timeout = setTimeout(() => {
-        failed = true;
+        failed = true
         // TODO: do something to show payment failed
-      }, PAYMENT_TIMEOUT);
-      
-      try {
+      }, PAYMENT_TIMEOUT)
 
-        const stream = getEnv(self).lnd.grpc.sendStreamCommand('sendPayment');
+      try {
+        const stream = getEnv(self).lnd.grpc.sendStreamCommand('sendPayment')
 
         yield new Promise((resolve, reject) => {
           stream.on('data', data => {
             if (data.paymentError) {
-              reject(new Error(`Lightning payment error: ${data.paymentError}`));
+              reject(new Error(`Lightning payment error: ${data.paymentError}`))
             } else {
-              resolve();
+              resolve()
             }
-          });
-          stream.on('error', reject);
-          stream.write(JSON.stringify({ paymentRequest: payreq }), 'utf8');
-        });
+          })
+          stream.on('error', reject)
+          stream.write(JSON.stringify({ paymentRequest: payreq }), 'utf8')
+        })
 
-        if (failed) return;
+        if (failed) return
       } catch (err) {
-        if (failed) return;
+        if (failed) return
 
         // this._nav.goPayLightningConfirm();
         // this._notification.display({ msg: 'Lightning payment failed!', err });
-
       } finally {
-        clearTimeout(timeout);
+        clearTimeout(timeout)
       }
-
     })
 
     const list_payments = flow(function * () {
@@ -576,9 +568,9 @@ export const LndModel = BaseAccountModel
           date: parseDate(payment.creationDate),
           preimage: payment.paymentPreimage,
           paymentRequest: payment.paymentRequest,
-        }));
+        }))
       } catch (err) {
-        console.tron.error('Listing payments failed', err);
+        console.tron.error('Listing payments failed', err)
       }
     })
 

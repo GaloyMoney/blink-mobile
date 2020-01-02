@@ -6,7 +6,6 @@ import { LndStore } from "../../models/data-store/data-store"
 import RNKeychain from "../../utils/keychain"
 import { poll } from '../../utils/poll'
 
-
 export class Lnd {
   grpc: GrpcAction
   ipc: IpcAction
@@ -51,7 +50,7 @@ export class Lnd {
       streamOnChainTransactions.on('error', reject)
       streamOnChainTransactions.on('status', status => console.tron.info(`Transactions update: ${status}`))
     }).catch(err => console.tron.error("err with streamOnChainTransactions", err))
-    
+
     new Promise((resolve, reject) => {
       streamInvoices.on('data', (data) => {
         console.tron.log("onData", data)
