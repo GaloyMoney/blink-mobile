@@ -209,8 +209,8 @@ export class DebugScreen extends React.Component<DebugScreenProps, {}> {
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
-              text="create invoice"
-              onPress={this.props.dataStore.lnd.addinvoice}
+              text="add invoice"
+              onPress={this.props.dataStore.lnd.addInvoice}
             />
             <Button
               style={DEMO}

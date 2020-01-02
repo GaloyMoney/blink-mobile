@@ -213,7 +213,8 @@ export const LndModel = BaseAccountModel
     syncedToChain: false,
     blockHeight: 0,
     startingSyncTimestamp: types.maybe(types.number),
-    percentSynced: 0
+    percentSynced: 0,
+    pendingInvoice: "",
   })
   .actions(self => {
     // stateless, but must be an action instead of a view because of the async call
@@ -284,23 +285,32 @@ export const LndModel = BaseAccountModel
     const connectGaloyPeer = flow(function * () {
       let uri
 
+      if (!self.syncedToChain) {
+        console.tron.warn('needs to be synced to chain before opening a channel')
+        return
+      }
+
       try {
         const doc = yield firestore().doc(`global/info`).get()
         uri = doc.data().lightning.uris[0]
       } catch (err) {
-        console.tron.warn(err)
+        console.tron.err(`can't get Galoy node uris`, err)
+        return 
       }
 
-      const [pubkey, host] = uri.split("@")
+      let [pubkey, host] = uri.split("@")
+      host = "127.0.0.1" //FIXME 
       console.tron.log(`connecting to:`, { uri, pubkey, host })
 
-      // TODO: automatically update: syncedToChain: false
+      try {
+        const connection = yield getEnv(self).lnd.grpc.sendCommand('connectPeer', {
+          addr: { pubkey, host }, 
+        })
 
-      const connection = yield getEnv(self).lnd.grpc.sendCommand('connectPeer', {
-        addr: { pubkey, host: "127.0.0.1" }, // FIXME
-      })
-
-      console.log(connection)
+        console.log(connection)
+      } catch (err) {
+        console.tron.warn(`can't connect to peer`, err)
+      }
     })
 
     const listPeers = flow(function * () {
@@ -397,9 +407,16 @@ export const LndModel = BaseAccountModel
     })
 
     const addInvoice = flow(function * () {
-      const { address } = yield getEnv(self).lnd.grpc.sendCommand('NewAddress', { type: 0 })
-      self.onChainAddress = address
-      console.tron.log(address)
+      const response = yield getEnv(self).lnd.grpc.sendCommand('addInvoice', {
+        value: 10000,
+        memo: "this is a memo",
+        expiry: 172800, // 48 hours
+        private: true,
+      })
+      
+      const invoice = response.paymentRequest;
+      console.tron.log('invoice: ', invoice),
+      self.pendingInvoice = invoice
     })
 
     const update_transactions = flow(function * () {
