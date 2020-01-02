@@ -15,7 +15,6 @@ export class Environment {
   async setup() {
     // allow each service to setup
     await this.reactotron.setup()
-    await this.lnd.setup()
   }
 
   /**

@@ -7,9 +7,9 @@
 
 // import { MAX_LOG_LENGTH } from '../config';
 
-let _store;
 let _ipc;
 let _printErrObj;
+let _printLog;
 
 /**
  * Log an info event e.g. when something relevant but non-critical happens.
@@ -19,7 +19,7 @@ let _printErrObj;
  * @return {undefined}
  */
 export function info(...args) {
-  console.log(...args);
+  console.tron.log(...args);
   _ipc && _ipc.send('log', null, args);
 }
 
@@ -33,7 +33,7 @@ export function info(...args) {
  * @return {undefined}
  */
 export function error(...args) {
-  console.error(...args);
+  console.tron.error(...args);
   pushLogs(''); // newline
   pushLogs(`ERROR: ${args[0]}`);
   for (let i = 1; i < args.length; i++) {
@@ -58,14 +58,16 @@ function pushLogs(message) {
     // _store.logs = _store.logs.substring(len - MAX_LOG_LENGTH, len);
   // }
 
-  // console.tron.log('\n' + message.replace(/\s+$/, ''))
+  if (_printLog) {
+    console.tron.log('\n' + message.replace(/\s+$/, ''))
+  }
 }
 
 class LogAction {
-  constructor(store, ipc, printErrObj = true) {
-    _store = store;
+  constructor(ipc, printErrObj = true, printLog = false) {
     _ipc = ipc;
     _printErrObj = printErrObj;
+    _printLog = printLog;
     _ipc.listen('logs', (event, message) => pushLogs(message));
     _ipc.send('logs-ready', null, true);
   }
