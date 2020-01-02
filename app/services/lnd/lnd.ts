@@ -6,11 +6,7 @@ import { LndStore } from "../../models/data-store/data-store"
 import RNKeychain from "../../utils/keychain"
 import { poll } from '../../utils/poll'
 
-/**
- * You'll probably never use the service like this since we hang the Reactotron
- * instance off of `console.tron`. This is only to be consistent with the other
- * services.
- */
+
 export class Lnd {
   grpc: GrpcAction
   ipc: IpcAction
@@ -42,21 +38,29 @@ export class Lnd {
   }
 
   async setCallback() {
-    const stream = this.grpc.sendStreamCommand('subscribeTransactions')
-    try {
-      new Promise((resolve, reject) => {
-        stream.on('data', (data) => {
-          console.tron.log("onData", data)
-          this.lndStore.update_balance()
-          this.lndStore.update_transactions()
-        })
-        stream.on('end', resolve)
-        stream.on('error', reject)
-        stream.on('status', status => console.tron.info(`Transactions update: ${status}`))
-      }).catch(err => console.tron.error("err1: ", err))
-    } catch (err) {
-      console.tron.error("err2: ", err)
-    }
+    const streamOnChainTransactions = this.grpc.sendStreamCommand('subscribeTransactions')
+    const streamInvoices = this.grpc.sendStreamCommand('subscribeInvoices')
+
+    new Promise((resolve, reject) => {
+      streamOnChainTransactions.on('data', (data) => {
+        console.tron.log("onData", data)
+        this.lndStore.update_balance()
+        this.lndStore.update_transactions()
+      })
+      streamOnChainTransactions.on('end', resolve)
+      streamOnChainTransactions.on('error', reject)
+      streamOnChainTransactions.on('status', status => console.tron.info(`Transactions update: ${status}`))
+    }).catch(err => console.tron.error("err with streamOnChainTransactions", err))
+    
+    new Promise((resolve, reject) => {
+      streamInvoices.on('data', (data) => {
+        console.tron.log("onData", data)
+        this.lndStore.update_invoices()
+      })
+      streamInvoices.on('end', resolve)
+      streamInvoices.on('error', reject)
+      streamInvoices.on('status', status => console.tron.info(`Transactions update: ${status}`))
+    }).catch(err => console.tron.error("err with streamInvoices", err))
   }
 
   /**
