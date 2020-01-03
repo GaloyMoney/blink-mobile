@@ -3,7 +3,7 @@ import { observer, inject } from "mobx-react"
 import { StyleSheet, TouchableHighlight, View, Alert, Button } from "react-native"
 import { Text } from "../../components/text"
 import { Screen } from "../../components/screen"
-import { NavigationScreenProps, FlatList, withNavigation } from "react-navigation"
+import { NavigationScreenProp, FlatList, withNavigation } from "react-navigation"
 import { color } from "../../theme/color"
 import Icon from 'react-native-vector-icons/Ionicons'
 import currency from 'currency.js'
@@ -13,7 +13,7 @@ import { AccountType } from "./AccountType"
 import { CurrencyType } from "../../models/data-store/CurrencyType"
 import auth from "@react-native-firebase/auth"
 
-export interface AccountsScreenProps extends NavigationScreenProps<{}> {
+export interface AccountsScreenProps extends NavigationScreenProp<{}> {
   dataStore: DataStore
 }
 
