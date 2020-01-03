@@ -40,29 +40,55 @@ export const AuthModel = types
     return { set, setEmail }
   })
 
-// FIXME merge with TransactionModel?
-export const PaymentModel = types
-  .model("Payment", {
-    id: types.string,
-    type: types.string,
+export const OnChainTransactionModel = types
+  .model("OnChainTransaction", {
+    txHash: types.string,
     amount: types.number,
-    status: types.string,
-    date: types.Date,
-    fee: types.number,
-    preimage: types.string, // or number?
-    paymentRequest: types.string
-    // no memo?
+    numConfirmations: types.maybe(types.number),  // not sure why it's only set for some of them
+    blockHash: types.maybe(types.string),         // some mined transactions are not
+    blockHeight: types.maybe(types.number),       // included here
+    timeStamp: types.number,
+    destAddresses: types.array(types.string),
+    totalFees: types.maybe(types.string), //only set for sending transaction
+    rawTxHex: types.string,
   })
 
-// FIXME merge with TransactionModel?
+export const PaymentModel = types
+  .model("Payment", {
+    paymentHash: types.string,
+    valueSat: types.number,
+    feeSat: types.maybe(types.number),
+    creationDate: types.number,
+    path: types.array(types.string),
+    status: types.number, // FIXME should be number
+    paymentRequest: types.string,
+    paymentPreimage: types.string, 
+  })
+
 export const InvoiceModel = types
   .model("Invoice", {
-    id: types.string,
-    type: types.string,
-    amount: types.number,
-    status: types.string,
-    date: types.Date,
     memo: types.string,
+    receipt: types.maybe(types.string),
+    rPreimage: types.string,
+    rHash: types.string,
+    value: types.number,
+    settled: types.boolean,
+    state: types.number, //XXX FIXME
+    creationDate: types.number,
+    settleDate: types.number,
+    paymentRequest: types.string,
+    private: types.boolean,
+    amtPaidSat: types.number,
+    // many other fields are not copied 
+  })
+
+export const FiatTransactionModel = types
+  .model("Transaction", {
+    name: types.string,
+    icon: types.string,
+    amount: types.number,
+    date: types.Date,
+    cashback: types.maybe(types.number),
   })
 
 export const TransactionModel = types
@@ -72,13 +98,10 @@ export const TransactionModel = types
     amount: types.number,
     date: types.Date,
     cashback: types.maybe(types.number),
-    addr: types.maybe(types.string), // TODO derived 2 types of transactions for fiat/crytpo?
-    // TODO add status
   })
 
 export const BaseAccountModel = types
   .model("Account", {
-    transactions: types.array(TransactionModel),
     confirmedBalance: 0,
     unconfirmedBalance: 0,
     type: types.enumeration<AccountType>("Account Type", Object.values(AccountType))
@@ -87,6 +110,9 @@ export const BaseAccountModel = types
     get balance() {
       return self.confirmedBalance + self.unconfirmedBalance
     },
+    get transactions(): Array<typeof TransactionModel> {
+      throw new Error('this is an abstract method, need to be implemented in subclass')
+    }
   }))
 
 export const QuoteModel = types
@@ -112,8 +138,8 @@ export const ExchangeModel = types
     const quoteBTC = flow(function * (side: "buy" | "sell", satAmount = 1000) {
       try {
         const result = yield functions().httpsCallable('quoteBTC')({ side, satAmount })
-        console.tron.log('result quoteBTC', result)
-        self.quote = result.data
+        console.tron.log('quoteBTC: ', result)
+        self.quote = result.data()
       } catch (err) {
         console.tron.error('quoteBTC: ', err)
         throw err
@@ -169,7 +195,7 @@ export const ExchangeModel = types
 
         // TODO : make sure to manage error here,
         // eg: if the the on chain transaction is send by sellBTC
-        // is never called.
+        // is never called from the mobile application
         // this could be done in the backend
 
         const result = yield functions().httpsCallable('sellBTC')({
@@ -191,15 +217,17 @@ export const ExchangeModel = types
 export const FiatAccountModel = BaseAccountModel
   .props({
     type: AccountType.Checking,
+    _transactions: types.array(FiatTransactionModel),
   })
   .actions(self => {
     const update_transactions = flow(function * () {
       const uid = getParentOfType(self, DataStoreModel).auth.uid
       try {
-        const doc = yield firestore().collection('users').doc(uid).get()
-        self.transactions = doc.data().transactions // TODO better error management
+        // TODO: automatic fetch update if collected is being updated.
+        const doc = yield firestore().doc(`users/${uid}`).get()
+        self._transactions = doc.data().transactions
       } catch (err) {
-        console.tron.warn(err)
+        console.tron.error('not able to update transaction', err)
       }
     })
 
@@ -212,12 +240,12 @@ export const FiatAccountModel = BaseAccountModel
           // TODO: add unconfirmed balance
         }
       } catch (err) {
-        console.tron.log(err)
+        console.tron.error(`can't fetch the balance`, err)
       }
     })
 
     const reset = () => { // TODO test
-      self.transactions.length = 0,
+      self._transactions.length = 0,
       self.confirmedBalance = 0
     }
 
@@ -227,6 +255,9 @@ export const FiatAccountModel = BaseAccountModel
     get currency() {
       return CurrencyType.USD
     },
+    get transactions() {
+      return self._transactions
+    }
   }))
 
 export const LndModel = BaseAccountModel
@@ -243,8 +274,10 @@ export const LndModel = BaseAccountModel
     startingSyncTimestamp: types.maybe(types.number),
     percentSynced: 0,
     pendingInvoice: "",
-    invoices: types.array(InvoiceModel), // FIXME merge with transactions?
-    payments: types.array(PaymentModel), // FIXME merge with transactions?
+
+    onchain_transactions: types.array(OnChainTransactionModel),
+    invoices: types.array(InvoiceModel),
+    payments: types.array(PaymentModel),
   })
   .actions(self => {
     // stateless, but must be an action instead of a view because of the async call
@@ -292,8 +325,8 @@ export const LndModel = BaseAccountModel
 
         yield new KeychainAction().setItem('password', wallet_password)
 
-        self.walletUnlocked = true
         self.walletExist = true
+        yield walletGotOpened()
       } catch (err) {
         console.tron.error(err)
       }
@@ -301,9 +334,12 @@ export const LndModel = BaseAccountModel
 
     // TODO: triggered this automatically after the wallet is being unlocked
     const sendPubKey = flow(function * () {
-      // TODO error management
-      const result = yield functions().httpsCallable('onUserWalletCreation')({ pubkey: self.pubkey, network: self.network })
-      console.log(result)
+      try {
+        const result = yield functions().httpsCallable('onUserWalletCreation')({ pubkey: self.pubkey, network: self.network })
+        console.tron.log('sendpubKey', result)
+      } catch (err) {
+        console.tron.err(`can't send pubKey`, err)
+      }
     })
 
     const connectGaloyPeer = flow(function * () {
@@ -323,8 +359,8 @@ export const LndModel = BaseAccountModel
       }
 
       let [pubkey, host] = uri.split("@")
-      host = "127.0.0.1" // FIXME
-      console.tron.log(`connecting to:`, { uri, pubkey, host })
+      if (isSimulator()) { host = "127.0.0.1" }
+      console.tron.log(`connecting to:`, { pubkey, host })
 
       try {
         const connection = yield getEnv(self).lnd.grpc.sendCommand('connectPeer', {
@@ -340,16 +376,19 @@ export const LndModel = BaseAccountModel
     const listPeers = flow(function * () {
       try {
         const result = yield getEnv(self).lnd.grpc.sendCommand('listPeers')
-        console.tron.log(result)
+        console.log('listPeers:', result)
       } catch (err) {
         console.tron.error(err)
       }
     })
 
     const openChannel = flow(function * () {
-      // TODO error management
-      const result = yield functions().httpsCallable('openChannel')({})
-      console.log(result)
+      try {
+        const result = yield functions().httpsCallable('openChannel')({})
+        console.log('open channel with Galoy node', result)
+      } catch (err) {
+        console.tron.error('impossible to open a channel', err)
+      }
     })
 
     /**
@@ -370,7 +409,6 @@ export const LndModel = BaseAccountModel
     }
 
     const getInfo = flow(function * () {
-      console.tron.log('get info called')
       try {
         const response = yield getEnv(self).lnd.grpc.sendCommand('getInfo')
         self.pubkey = response.identityPubkey
@@ -403,10 +441,13 @@ export const LndModel = BaseAccountModel
 
     // this get triggered after the wallet is being unlocked
     const walletGotOpened = flow(function * () {
-      getInfo()
-      newAddress()
-      update_transactions()
-      update_balance()
+      self.walletUnlocked = true
+      yield getInfo()
+      yield update_balance()
+      yield newAddress()
+      yield update_transactions()
+      yield update_invoices()
+      yield list_payments()
     })
 
     const unlockWallet = flow(function * () {
@@ -436,48 +477,11 @@ export const LndModel = BaseAccountModel
         memo: "this is a memo",
         expiry: 172800, // 48 hours
         private: true,
-      })
+      }) 
 
       const invoice = response.paymentRequest
       console.tron.log('invoice: ', invoice),
       self.pendingInvoice = invoice
-    })
-
-    const update_transactions = flow(function * () {
-      try {
-        const { transactions } = yield getEnv(self).lnd.grpc.sendCommand('getTransactions')
-        console.tron.log('raw tx: ', transactions)
-
-        const txs = transactions.map(transaction => ({
-          id: transaction.txHash,
-          type: 'bitcoin',
-          amount: transaction.amount,
-          fee: transaction.totalFees,
-          confirmations: transaction.numConfirmations,
-          status: transaction.numConfirmations < 3 ? 'unconfirmed' : 'confirmed',
-          date: parseDate(transaction.timeStamp),
-          moneyIn: transaction.amount > 0, // FIXME verify is this works like this for lnd
-        }))
-        console.tron.log('tx: ', txs)
-
-        self.transactions = txs.map(tx => ({
-          name: tx.moneyIn ? "Received" : "Sent",
-          icon: tx.moneyIn ? "ios-download" : "ios-exit",
-          amount: tx.amount,
-          date: tx.date,
-
-          //   tx.moneyIn ?
-          //   tx.addr = tx.inputs[0].prev_out.addr : // show input (the other address) if money comes in
-          //   tx.addr = tx.out[0].addr
-          //   tx.addr_fmt = `${tx.addr.slice(0, 11)}...${tx.addr.slice(-10)}`
-          //   tx.addr = tx.addr_fmt // TODO FIXME better naming
-
-          // FIXME: this is tx hash, use address instead
-          addr: `${tx.id.slice(0, 11)}...${tx.id.slice(-10)}`,
-        }))
-      } catch (err) {
-        console.tron.error('Listing transactions failed', err)
-      }
     })
 
     const update_balance = flow(function * () {
@@ -486,26 +490,66 @@ export const LndModel = BaseAccountModel
         self.confirmedBalance = r.confirmedBalance
         self.unconfirmedBalance = r.unconfirmedBalance
       } catch (err) {
-        console.tron.error('Getting wallet balance failed', err)
+        console.tron.error(`Getting wallet balance failed ${err}`)
+        throw err
+      }
+    })
+
+    const update_transactions = flow(function * () {
+      try {
+        const { transactions } = yield getEnv(self).lnd.grpc.sendCommand('getTransactions')
+
+        // for some reason, amount and timestamp arrives as String
+        // going this map fixes the issue, 
+        // XXX FIXME: find the root cause of this typing issue
+        const transaction_good_types = transactions.map(tx => ({
+          txHash: tx.txHash, 
+          numConfirmations: tx.numConfirmations,
+          amount: tx.amount,
+          blockHash: tx.blockHash,
+          blockHeight: tx.blockHeight,
+          timeStamp: tx.timeStamp,
+          rawTxHex: tx.rawTxHex,
+          destAddresses: tx.destAddresses,
+        }))
+
+        console.tron.log('onchain_transactions', transactions, transaction_good_types)
+
+        self.onchain_transactions = transaction_good_types
+      } catch (err) {
+        console.tron.error(`Listing transactions failed ${err}`)
+        throw err
       }
     })
 
     const update_invoices = flow(function * (invoice_updated = undefined) {
-      console.tron.log("update_invoices")
-
       try {
         const { invoices } = yield getEnv(self).lnd.grpc.sendCommand('listInvoices')
-        self.invoices = invoices.map(invoice => ({
-          id: toHex(invoice.rHash),
-          type: 'lightning',
-          amount: invoice.value,
-          status: invoice.settled ? 'complete' : 'in-progress',
-          date: parseDate(invoice.creationDate),
-          memo: invoice.memo,
+
+        // for some reason, amount and timestamp arrives as String
+        // going this map fixes the issue, 
+        // XXX FIXME: find the root cause of this typing issue
+        const invoice_good_types = invoices.map(tx => ({
+          memo: tx.memo,
+          receipt: toHex(tx.receipt), // do we want this? receipt are empty
+          rPreimage: toHex(tx.rPreimage),
+          rHash: toHex(tx.rHash),
+          value: tx.value,
+          settled: tx.settled,
+          state: tx.state, // XXX FIXME is converted to number?
+          creationDate: tx.creationDate,
+          settleDate: tx.settleDate,
+          paymentRequest: tx.paymentRequest,
+          private: tx.private,
+          amtPaidSat: tx.amtPaidSat,
         }))
+
+        console.tron.log('invoices', invoices, invoice_good_types)
+
+        self.invoices = invoice_good_types
       } catch (err) {
-        console.tron.error('Listing invoices failed')
-        console.tron.error(err)
+        console.tron.error(`Listing invoices failed ${err}`)
+        // throw err
       }
 
       if (invoice_updated === undefined) return
@@ -518,6 +562,29 @@ export const LndModel = BaseAccountModel
       //   handler: () => this.select({ item: inv }),
       //   handlerLbl: 'View details',
       // })
+    })
+
+    const list_payments = flow(function * () {
+      try {
+        const { payments } = yield getEnv(self).lnd.grpc.sendCommand('listPayments')
+
+        const payments_good_types = payments.map(tx => ({
+          paymentHash: tx.paymentHash,
+          creationDate: tx.creationDate,
+          path: tx.path,
+          paymentPreimage: tx.paymentPreimage,
+          valueSat: tx.valueSat,
+          paymentRequest: tx.paymentRequest,
+          status: tx.status, // XXX FIXME status is being converted from "Succeed" to 2?
+        }))
+
+        console.tron.log('payments', payments, payments_good_types)
+
+        self.payments = payments_good_types
+      } catch (err) {
+        console.tron.error(`Listing payments failed ${err}`)
+        // throw err
+      }
     })
 
     const send_transaction = flow(function * (addr, amount) {
@@ -560,26 +627,6 @@ export const LndModel = BaseAccountModel
       }
     })
 
-    const list_payments = flow(function * () {
-      try {
-        const { payments } = yield getEnv(self).lnd.grpc.sendCommand('listPayments')
-
-        console.tron.log(payments)
-
-        self.payments = payments.map(payment => ({
-          id: payment.paymentHash,
-          type: 'lightning',
-          amount: -1 * payment.value,
-          fee: payment.fee,
-          status: 'complete',
-          date: parseDate(payment.creationDate),
-          preimage: payment.paymentPreimage,
-          paymentRequest: payment.paymentRequest,
-        }))
-      } catch (err) {
-        console.tron.error('Listing payments failed', err)
-      }
-    })
 
     return {
       initState,
@@ -605,6 +652,41 @@ export const LndModel = BaseAccountModel
   .views(self => ({
     get currency() {
       return CurrencyType.BTC
+    },
+
+    get transactions() {
+      // TODO, optimize with some form of caching
+
+      const onchainTxs = self.onchain_transactions.map(transaction => ({
+        id: transaction.txHash,
+        name: transaction.amount > 0 ? "Received" : "Sent",
+        icon: transaction.amount > 0 ? "ios-download" : "ios-exit",
+        amount: transaction.amount,
+        date: parseDate(transaction.timeStamp),
+        status: transaction.numConfirmations < 3 ? 'unconfirmed' : 'confirmed',
+      }))
+
+      const invoicesTxs = self.invoices.map(invoice => ({
+        id: invoice.rHash,
+        icon: "ios-thunderstorm",
+        name: invoice.settled ? `waiting to receive payment` : `payment received`,
+        amount: invoice.value,
+        status: invoice.settled ? 'complete' : 'in-progress',
+        date: parseDate(invoice.creationDate),
+        memo: invoice.memo,
+      }))
+
+      const paymentTxs = self.payments.map(payment => ({
+        id: payment.paymentHash,
+        icon: "ios-thunderstorm",
+        name: `Paid invoice ${payment.paymentHash.slice(0, 7)}...${payment.paymentHash.slice(-8)}`,
+        amount: payment.valueSat,
+        date: parseDate(payment.creationDate),
+        status: 'complete', //filter for succeed on ?
+      }))
+
+      const all_txs = [...onchainTxs, ...invoicesTxs, ...paymentTxs].sort((a, b) => (a.date > b.date) ? 1 : -1)
+      return all_txs
     }
   }))
 
@@ -638,16 +720,15 @@ export const DataStoreModel = types
   .actions(self => {
     const update_transactions = flow(function * () {
       // TODO parrallel call?
-      self.fiat.update_transactions()
-      self.lnd.update_transactions()
-      self.lnd.update_balance()
+      yield self.fiat.update_transactions()
+      yield self.lnd.update_transactions()
     })
 
     const update_balance = flow(function * () {
       // TODO parrallel call?
-      self.rates.update()
-      self.fiat.update_balance()
-      self.lnd.update_balance()
+      yield self.rates.update()
+      yield self.fiat.update_balance()
+      yield self.lnd.update_balance()
     })
 
     return { update_transactions, update_balance }
