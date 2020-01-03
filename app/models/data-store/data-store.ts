@@ -9,7 +9,14 @@ import functions from '@react-native-firebase/functions'
 import firestore from '@react-native-firebase/firestore'
 import { toHex } from "../../utils/helper"
 
-functions().useFunctionsEmulator('http://localhost:5000') // FIXME where to define this properly?
+import DeviceInfo from 'react-native-device-info'
+
+// FIXME add as a global var
+const isSimulator = () => DeviceInfo.isEmulatorSync()
+
+if (isSimulator()) {
+  functions().useFunctionsEmulator('http://localhost:5000')
+}
 
 export const AuthModel = types
   .model("Auth", {
