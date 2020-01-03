@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Text } from "../../components/text"
 import { Screen } from "../../components/screen"
-import { NavigationScreenProps } from "react-navigation"
+import { NavigationScreenProp } from "react-navigation"
 import { Image, View, StyleSheet } from "react-native"
 import { ListItem } from 'react-native-elements'
 
@@ -11,7 +11,7 @@ import { color } from "../../theme"
 
 import MapView from 'react-native-maps'
 
-export interface TransactionDetailScreenProps extends NavigationScreenProps<{}> {
+export interface TransactionDetailScreenProps extends NavigationScreenProp<{}> {
 }
 
 const styles = StyleSheet.create({

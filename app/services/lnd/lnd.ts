@@ -10,7 +10,7 @@ export class Lnd {
   grpc: GrpcAction
   ipc: IpcAction
   log: LogAction
-  lndStore: LndStore
+  lndStore: LndStore | undefined
   keychain: RNKeychain
 
   /**
