@@ -1,6 +1,5 @@
 import * as React from "react"
 import {
-  Image,
   ImageStyle,
   TextStyle,
   View,
@@ -17,7 +16,6 @@ import { Wallpaper } from "../../components/wallpaper"
 import { Header } from "../../components/header"
 import { QRCode } from "../../components/qrcode"
 import { color, spacing } from "../../theme"
-import { logoIgnite, heart } from "./"
 import { BulletItem } from "../../components/bullet-item"
 import { save } from "../../utils/storage"
 import { observer, inject } from "mobx-react"
