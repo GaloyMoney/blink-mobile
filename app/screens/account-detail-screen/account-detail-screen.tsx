@@ -6,7 +6,7 @@ import { View, SectionList, StyleSheet } from "react-native"
 import { Text } from "../../components/text"
 import { Screen } from "../../components/screen"
 import { color } from "../../theme"
-import { NavigationScreenProps, withNavigation } from "react-navigation"
+import { NavigationScreenProp, withNavigation } from "react-navigation"
 import Icon from 'react-native-vector-icons/Ionicons'
 
 import { BalanceHeader } from "../../components/balance-header"
@@ -16,7 +16,7 @@ import { AccountType } from "../accounts-screen/AccountType"
 import { CurrencyText } from "../../components/currency-text"
 import { TouchableHighlight } from "react-native-gesture-handler"
 
-export interface AccountDetailScreenProps extends NavigationScreenProps<{}> {
+export interface AccountDetailScreenProps extends NavigationScreenProp<{}> {
   account: AccountType,
   dataStore: DataStore,
 }

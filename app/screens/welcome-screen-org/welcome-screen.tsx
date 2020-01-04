@@ -1,13 +1,13 @@
 import * as React from "react"
 import { View, Image, ViewStyle, TextStyle, ImageStyle, SafeAreaView } from "react-native"
-import { NavigationScreenProps } from "react-navigation"
+import { NavigationScreenProp } from "react-navigation"
 import { Text } from "../../components/text"
 import { Button } from "../../components/button"
 import { Screen } from "../../components/screen"
 import { Wallpaper } from "../../components/wallpaper"
 import { Header } from "../../components/header"
 import { color, spacing } from "../../theme"
-import { bowserLogo } from "./"
+import { bowserLogo } from "."
 
 const FULL: ViewStyle = { flex: 1 }
 const CONTAINER: ViewStyle = {
@@ -78,7 +78,7 @@ const FOOTER_CONTENT: ViewStyle = {
   paddingHorizontal: spacing[4],
 }
 
-export interface WelcomeScreenProps extends NavigationScreenProps<{}> {}
+export interface WelcomeScreenProps extends NavigationScreenProp<{}> {}
 
 export class WelcomeScreen extends React.Component<WelcomeScreenProps, {}> {
   nextScreen = () => this.props.navigation.navigate("demo")

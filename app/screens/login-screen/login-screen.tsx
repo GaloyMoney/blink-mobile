@@ -1,7 +1,7 @@
 import * as React from "react"
 import { observer, inject } from "mobx-react"
 import { Screen } from "../../components/screen"
-import { NavigationScreenProps, withNavigation } from "react-navigation"
+import { NavigationScreenProp, withNavigation } from "react-navigation"
 import { Text, Alert, StyleSheet, View } from "react-native"
 import { Input, Button } from 'react-native-elements'
 
@@ -9,7 +9,7 @@ import auth from '@react-native-firebase/auth'
 import { DataStore } from "../../models/data-store"
 import { color } from "../../theme"
 
-export interface LoginScreenProps extends NavigationScreenProps<{}> {
+export interface LoginScreenProps extends NavigationScreenProp<{}> {
   dataStore: DataStore
 }
 
