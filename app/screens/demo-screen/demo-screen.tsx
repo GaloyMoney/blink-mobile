@@ -7,8 +7,9 @@ import {
   ViewStyle,
   TextInput,
   Alert,
+  Clipboard,
 } from "react-native"
-import { NavigationScreenProps } from "react-navigation"
+import { NavigationScreenProp } from "react-navigation"
 import { Screen } from "../../components/screen"
 import { Text } from "../../components/text"
 import { Button } from "../../components/button"
@@ -96,7 +97,7 @@ const CAMERA: ViewStyle = {
   height: 300,
 }
 
-export interface DebugScreenProps extends NavigationScreenProps<{}> {}
+export interface DebugScreenProps extends NavigationScreenProp<{}> {}
 
 @inject("dataStore")
 @observer
@@ -213,6 +214,7 @@ export class DebugScreen extends React.Component<DebugScreenProps, {}> {
               text="add invoice"
               onPress={this.props.dataStore.lnd.addInvoice}
             />
+            <Text onPress={Clipboard.setString(this.props.dataStore.lnd.lastAddInvoice)}>{this.props.dataStore.lnd.lastAddInvoice}</Text>
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
@@ -274,12 +276,7 @@ export class DebugScreen extends React.Component<DebugScreenProps, {}> {
               text="update_transactions"
               onPress={this.props.dataStore.lnd.update_transactions}
             />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              text="scan_QRCode"
-              onPress={this.props.dataStore.lnd.update_transactions}
-            />
+
             <RNCamera style={CAMERA}
               captureAudio={false}
               onBarCodeRead={(event) => {
@@ -319,12 +316,6 @@ export class DebugScreen extends React.Component<DebugScreenProps, {}> {
               text="sendCoins"
               onPress={() => this.props.dataStore.lnd.send_transaction(this.state.addr, this.state.amount)}
             />
-          </View>
-          <Image source={logoIgnite} style={IGNITE} />
-          <View style={LOVE_WRAPPER}>
-            <Text style={LOVE} text="Made with" />
-            <Image source={heart} style={HEART} />
-            <Text style={LOVE} text="by Infinite Red" />
           </View>
         </Screen>
       </View>
