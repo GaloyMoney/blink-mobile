@@ -1,12 +1,12 @@
 import * as React from "react"
 import { Screen } from "../../components/screen"
-import { Phone } from "../../components/phone"
+import { PhoneInit, PhoneVerif } from "../../components/phone"
 
 export class WelcomePhoneInputScreen extends React.Component<{}, {}> {
   render () {
     return (
       <Screen>
-        <Phone 
+        <PhoneInit 
         header="To receive your sats, first we need to activate your Bitcoin wallet." 
         text="This will take a little while, but we’ll send you a text you when it’s ready!" 
         next="welcomePhoneValidation" 
@@ -20,9 +20,9 @@ export class WelcomePhoneValidationScreen extends React.Component<{}, {}> {
   render () {
     return (
       <Screen>
-        <Phone 
+        <PhoneVerif
         text="To confirm your phone number, enter the code we just sent you." 
-        next="welcomeBitcoin" 
+        next="welcomeRequest" 
         />
       </Screen>
     )

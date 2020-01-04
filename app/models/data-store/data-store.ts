@@ -15,6 +15,7 @@ import DeviceInfo from 'react-native-device-info'
 const isSimulator = () => DeviceInfo.isEmulatorSync()
 
 if (isSimulator()) {
+  // FIXME import from a local file
   functions().useFunctionsEmulator('http://localhost:5000')
 }
 

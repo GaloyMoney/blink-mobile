@@ -5,6 +5,7 @@ import {
   WelcomeBankScreen, 
   WelcomeEarnScreen,
   WelcomeFirstSatsScreen,
+  WelcomeRequestScreen,
  } from "../screens/welcome-screens"
 import { DebugScreen } from "../screens/demo-screen"
 import { AccountsScreen } from "../screens/accounts-screen"
@@ -21,6 +22,7 @@ export const PrimaryNavigator = createStackNavigator(
     welcomeFirstSats: { screen: WelcomeFirstSatsScreen },
     welcomePhoneInput: { screen: WelcomePhoneInputScreen },
     welcomePhoneValidation: { screen: WelcomePhoneValidationScreen },
+    welcomeRequest: { screen: WelcomeRequestScreen },
     accounts: { screen: AccountsScreen },
     demo: { screen: DebugScreen },
     accountDetail: { screen: AccountDetailScreen },
