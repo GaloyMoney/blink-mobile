@@ -343,24 +343,20 @@ export const LndModel = BaseAccountModel
     })
 
     const connectGaloyPeer = flow(function * () {
-      let uri
-
       if (!self.syncedToChain) {
         console.tron.warn('needs to be synced to chain before opening a channel')
         return
       }
 
       try {
-        const doc = yield firestore().doc(`global/info`).get()
-        uri = doc.data().lightning.uris[0]
+        var doc = yield firestore().doc(`global/info`).get();        
       } catch (err) {
-        console.tron.err(`can't get Galoy node uris`, err)
+        console.tron.err(`can't get Galoy node info`, err)
         return
       }
 
-      let [pubkey, host] = uri.split("@")
+      let {pubkey, host} = doc.data().lightning;
       if (isSimulator()) { host = "127.0.0.1" }
-      host = "243.159.223.35.bc.googleusercontent.com" // FIXME
       console.tron.log(`connecting to:`, { pubkey, host })
 
       try {
