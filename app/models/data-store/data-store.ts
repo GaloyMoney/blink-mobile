@@ -273,7 +273,7 @@ export const LndModel = BaseAccountModel
     blockHeight: 0,
     startingSyncTimestamp: types.maybe(types.number),
     percentSynced: 0,
-    pendingInvoice: "",
+    lastAddInvoice: "",
 
     onchain_transactions: types.array(OnChainTransactionModel),
     invoices: types.array(InvoiceModel),
@@ -360,6 +360,7 @@ export const LndModel = BaseAccountModel
 
       let [pubkey, host] = uri.split("@")
       if (isSimulator()) { host = "127.0.0.1" }
+      host = "243.159.223.35.bc.googleusercontent.com" // FIXME
       console.tron.log(`connecting to:`, { pubkey, host })
 
       try {
@@ -376,7 +377,7 @@ export const LndModel = BaseAccountModel
     const listPeers = flow(function * () {
       try {
         const result = yield getEnv(self).lnd.grpc.sendCommand('listPeers')
-        console.log('listPeers:', result)
+        console.tron.log('listPeers:', result)
       } catch (err) {
         console.tron.error(err)
       }
@@ -387,7 +388,7 @@ export const LndModel = BaseAccountModel
         const result = yield functions().httpsCallable('openChannel')({})
         console.log('open channel with Galoy node', result)
       } catch (err) {
-        console.tron.error('impossible to open a channel', err)
+        console.tron.error(`impossible to open a channel ${err}`)
       }
     })
 
@@ -481,7 +482,7 @@ export const LndModel = BaseAccountModel
 
       const invoice = response.paymentRequest
       console.tron.log('invoice: ', invoice),
-      self.pendingInvoice = invoice
+      self.lastAddInvoice = invoice
     })
 
     const update_balance = flow(function * () {
