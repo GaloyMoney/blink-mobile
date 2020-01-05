@@ -304,6 +304,9 @@ PODS:
     - Folly (= 2018.10.22.00)
     - RCTRequired (= 0.61.5)
     - React-Core (= 0.61.5)
+  - RCTYouTube (2.0.0):
+    - React
+    - YoutubePlayer-in-WKWebView (~> 0.3.1)
   - React (0.61.5):
     - React-Core (= 0.61.5)
     - React-Core/DevSupport (= 0.61.5)
@@ -539,7 +542,9 @@ PODS:
     - React
   - RNVectorIcons (6.6.0):
     - React
+  - XCDYouTubeKit (2.8.2)
   - Yoga (1.14.0)
+  - YoutubePlayer-in-WKWebView (0.3.4)
 
 DEPENDENCIES:
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
@@ -549,6 +554,7 @@ DEPENDENCIES:
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
+  - RCTYouTube (from `../node_modules/react-native-youtube`)
   - React (from `../node_modules/react-native/`)
   - React-Core (from `../node_modules/react-native/`)
   - React-Core/DevSupport (from `../node_modules/react-native/`)
@@ -582,6 +588,7 @@ DEPENDENCIES:
   - RNLocalize (from `../node_modules/react-native-localize`)
   - RNSecureRandom (from `../node_modules/react-native-securerandom`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
+  - XCDYouTubeKit (~> 2.8)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -608,6 +615,8 @@ SPEC REPOS:
     - GTMSessionFetcher
     - leveldb-library
     - nanopb
+    - XCDYouTubeKit
+    - YoutubePlayer-in-WKWebView
 
 EXTERNAL SOURCES:
   DoubleConversion:
@@ -624,6 +633,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/Libraries/RCTRequired"
   RCTTypeSafety:
     :path: "../node_modules/react-native/Libraries/TypeSafety"
+  RCTYouTube:
+    :path: "../node_modules/react-native-youtube"
   React:
     :path: "../node_modules/react-native/"
   React-Core:
@@ -719,6 +730,7 @@ SPEC CHECKSUMS:
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   RCTRequired: b153add4da6e7dbc44aebf93f3cf4fcae392ddf1
   RCTTypeSafety: 9aa1b91d7f9310fc6eadc3cf95126ffe818af320
+  RCTYouTube: 57458fe8653bb696b7d7585326d735d01b871af8
   React: b6a59ef847b2b40bb6e0180a97d0ca716969ac78
   React-Core: 688b451f7d616cc1134ac95295b593d1b5158a04
   React-CoreModules: d04f8494c1a328b69ec11db9d1137d667f916dcb
@@ -750,8 +762,10 @@ SPEC CHECKSUMS:
   RNLocalize: 07eb7a91d10021cdf59d80061ebf3adb8a5b5688
   RNSecureRandom: 1f19ad1492f7ed416b8fc79e92216a1f73f13a4c
   RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
+  XCDYouTubeKit: 79baadb0560673a67c771eba45f83e353fd12c1f
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
+  YoutubePlayer-in-WKWebView: af2f5929fc78882d94bfdfeea999b661b78d9717
 
-PODFILE CHECKSUM: 5b18ea0ac19c07806f9b3bf0ab36a4f8551b7bad
+PODFILE CHECKSUM: 197b4ceaca58f3ea0d43f328ebc345e6e26fc85c
 
 COCOAPODS: 1.8.4
