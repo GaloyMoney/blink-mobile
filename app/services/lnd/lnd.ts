@@ -72,6 +72,13 @@ export class Lnd {
 
     await this.lndStore.initState()
 
+    if (this.lndStore?.walletExist) {
+      await this.lndStore.unlockWallet()
+    } else {
+      await this.lndStore.genSeed()
+      await this.lndStore.initWallet()
+    }
+
     poll(() => this.lndStore.getInfo())
   }
 }

@@ -12,9 +12,11 @@ import { AccountsScreen } from "../screens/accounts-screen"
 import { AccountDetailScreen } from "../screens/account-detail-screen/account-detail-screen"
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
 import { WelcomePhoneInputScreen, WelcomePhoneValidationScreen } from "../screens/welcome-phone"
+import { WelcomeSyncScreen } from "../screens/welcome-sync"
 
 export const PrimaryNavigator = createStackNavigator(
   {
+    welcomeSync: { screen: WelcomeSyncScreen },
     welcomeGaloy: { screen: WelcomeGaloyScreen },
     welcomeBitcoin: { screen: WelcomeBitcoinScreen },
     welcomeBank: { screen: WelcomeBankScreen },

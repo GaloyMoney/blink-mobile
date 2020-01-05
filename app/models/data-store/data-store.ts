@@ -272,7 +272,12 @@ export const LndModel = BaseAccountModel
     network: "",
     syncedToChain: false,
     blockHeight: 0,
+    
     startingSyncTimestamp: types.maybe(types.number),
+
+    bestBlockHeight: types.maybe(types.number),
+    startBlockHeight: types.maybe(types.number),
+
     percentSynced: 0,
     lastAddInvoice: "",
 
@@ -305,6 +310,12 @@ export const LndModel = BaseAccountModel
     })
 
     const genSeed = flow(function * () {
+      if (self.walletExist) {
+        // TODO be able to recreate the wallet
+        console.tron.warning(`genSeed: can't create a new wallet when one already exist`)
+        return
+      }
+
       try {
         const seed = yield getEnv(self).lnd.grpc.sendUnlockerCommand('GenSeed')
         console.tron.log("seed", seed.cipherSeedMnemonic)
@@ -315,6 +326,12 @@ export const LndModel = BaseAccountModel
     })
 
     const initWallet = flow(function * () {
+      if (self.walletExist) {
+        // TODO be able to recreate the wallet
+        console.tron.warning(`initWallet: can't create a new wallet when one already exist`)
+        return
+      }
+
       const random_number = yield generateSecureRandom(24)
       const wallet_password = toHex(random_number)
 
@@ -390,20 +407,31 @@ export const LndModel = BaseAccountModel
     })
 
     /**
-         * An internal helper function to approximate the current progress while
-         * syncing Neutrino to the full node.
-         * @param  {Object} response The getInfo's grpc api response
-         * @return {number}          The percrentage a number between 0 and 1
-         */
+     * An internal helper function to approximate the current progress while
+     * syncing Neutrino to the full node.
+     * @param  {Object} response The getInfo's grpc api response
+     * @return {number}          The percrentage a number between 0 and 1
+     */
     const calcPercentSynced = (response) => {
-      const bestHeaderTimestamp = response.bestHeaderTimestamp
-      const currTimestamp = new Date().getTime() / 1000
-      const progressSoFar = bestHeaderTimestamp
-        ? bestHeaderTimestamp - self.startingSyncTimestamp
-        : 0
-      const totalProgress = currTimestamp - self.startingSyncTimestamp || 0.001
-      const percentSynced = (progressSoFar * 1.0) / totalProgress
-      return percentSynced
+        // const bestHeaderTimestamp = response.bestHeaderTimestamp;
+        // const currTimestamp = new Date().getTime() / 1000;
+        // const progressSoFar = bestHeaderTimestamp
+        //   ? bestHeaderTimestamp - self.startingSyncTimestamp!
+        //   : 0;
+        // const totalProgress = currTimestamp - self.startingSyncTimestamp! || 0.001;
+        // const percentSynced = (progressSoFar * 1.0) / totalProgress;
+        // return percentSynced;
+
+        if (self.bestBlockHeight === undefined || self.startBlockHeight == undefined) {
+          return 0
+        }
+
+        if (self.bestBlockHeight! == self.startBlockHeight!) {
+          return 1
+        }
+
+        const percentSync = (response.blockHeight - self.startBlockHeight!) / (self.bestBlockHeight! - self.startBlockHeight!)
+        return +percentSync.toFixed(3)
     }
 
     const getInfo = flow(function * () {
@@ -413,8 +441,22 @@ export const LndModel = BaseAccountModel
         self.syncedToChain = response.syncedToChain
         self.blockHeight = response.blockHeight
         self.network = response.chains[0].network
-        if (self.startingSyncTimestamp === null) {
-          self.startingSyncTimestamp = response.bestHeaderTimestamp || 0
+
+        if (self.startBlockHeight === undefined) {
+          self.startBlockHeight = response.blockHeight
+          
+          try {
+            const response = yield fetch('http://api.blockcypher.com/v1/btc/test3') // FIXME find a better solution
+            const {height} = yield response.json()
+            console.tron.warn(height)
+            self.bestBlockHeight = height
+          } catch (err) {
+            console.warn(`can't fetch blockcypher`, err)
+          }
+        }
+
+        if (self.startingSyncTimestamp === undefined) {
+          self.startingSyncTimestamp = response.bestHeaderTimestamp || 0;
         }
         if (!response.syncedToChain) {
           //     self._notification.display({
@@ -422,18 +464,20 @@ export const LndModel = BaseAccountModel
           //       wait: true,
           //     });
           console.tron.log(`Syncing to chain (block: ${response.blockHeight})`)
-          self.percentSynced = calcPercentSynced(response)
         } else {
           // this._store.settings.restoring = false;
           // this._notification.display({
-          //   type: 'success',
-          //   msg: 'Syncing complete',
-          // });
-          console.tron.log('Syncing complete')
-        }
+            //   type: 'success',
+            //   msg: 'Syncing complete',
+            // });
+            console.tron.log('Syncing complete')
+          }
+
+        self.percentSynced = calcPercentSynced(response)
         return response.syncedToChain
       } catch (err) {
-        console.tron.error('Getting node info failed', err)
+        console.tron.error(`Getting node info failed, ${err}`)
+        throw err
       }
     })
 
@@ -498,8 +542,8 @@ export const LndModel = BaseAccountModel
         const { transactions } = yield getEnv(self).lnd.grpc.sendCommand('getTransactions')
 
         // for some reason, amount and timestamp arrives as String
-        // going this map fixes the issue, 
-        // XXX FIXME: find the root cause of this typing issue
+        // doing this map fixes the issue, 
+        // XXX FIXME: find the root cause of this type issue
         const transaction_good_types = transactions.map(tx => ({
           txHash: tx.txHash, 
           numConfirmations: tx.numConfirmations,
@@ -525,8 +569,8 @@ export const LndModel = BaseAccountModel
         const { invoices } = yield getEnv(self).lnd.grpc.sendCommand('listInvoices')
 
         // for some reason, amount and timestamp arrives as String
-        // going this map fixes the issue, 
-        // XXX FIXME: find the root cause of this typing issue
+        // doing this map fixes the issue, 
+        // XXX FIXME: find the root cause of this type issue
         const invoice_good_types = invoices.map(tx => ({
           memo: tx.memo,
           receipt: toHex(tx.receipt), // do we want this? receipt are empty
@@ -564,8 +608,11 @@ export const LndModel = BaseAccountModel
 
     const list_payments = flow(function * () {
       try {
-        const { payments } = yield getEnv(self).lnd.grpc.sendCommand('listPayments')
+        const { payments } = yield getEnv(self).lnd.grpc.sendCommand('listPayments')!
 
+        // for some reason, amount and timestamp arrives as String
+        // doing this map fixes the issue, 
+        // XXX FIXME: find the root cause of this type issue
         const payments_good_types = payments.map(tx => ({
           paymentHash: tx.paymentHash,
           creationDate: tx.creationDate,
