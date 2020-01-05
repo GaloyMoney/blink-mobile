@@ -54,3 +54,15 @@ export class WelcomeFirstSatsScreen extends React.Component<{}, {}> {
     )
   }
 }
+
+export class WelcomeRequestScreen extends React.Component<{}, {}> {
+  render () {
+    return (
+      <Screen>
+        <Onboarding text="Now send us a payment request so we can send your sats when your wallet is ready."
+         next="welcomeSync"
+         />
+      </Screen>
+    )
+  }
+}
