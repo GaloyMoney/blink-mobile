@@ -11,6 +11,8 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 
+#import <AVFoundation/AVFoundation.h>
+
 @import Firebase;
 
 @implementation AppDelegate
@@ -33,6 +35,10 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+
+  // for audio on vibrate mode with YouTubeStandaloneIOS
+  [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error: nil];
+
   return YES;
 }
 
