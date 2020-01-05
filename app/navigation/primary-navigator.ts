@@ -16,7 +16,6 @@ import { WelcomeSyncScreen } from "../screens/welcome-sync"
 
 export const PrimaryNavigator = createStackNavigator(
   {
-    welcomeSync: { screen: WelcomeSyncScreen },
     welcomeGaloy: { screen: WelcomeGaloyScreen },
     welcomeBitcoin: { screen: WelcomeBitcoinScreen },
     welcomeBank: { screen: WelcomeBankScreen },
@@ -25,6 +24,7 @@ export const PrimaryNavigator = createStackNavigator(
     welcomePhoneInput: { screen: WelcomePhoneInputScreen },
     welcomePhoneValidation: { screen: WelcomePhoneValidationScreen },
     welcomeRequest: { screen: WelcomeRequestScreen },
+    welcomeSync: { screen: WelcomeSyncScreen },
     accounts: { screen: AccountsScreen },
     demo: { screen: DebugScreen },
     accountDetail: { screen: AccountDetailScreen },

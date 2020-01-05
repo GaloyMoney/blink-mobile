@@ -6,7 +6,7 @@ import { Button } from 'react-native-elements'
 import { bowserLogo } from "."
 import { withNavigation } from 'react-navigation';
 import { TextInput } from "react-native-gesture-handler"
-import { firebase } from "@react-native-firebase/auth"
+import functions from "@react-native-firebase/functions"
 
 const styles = StyleSheet.create({
   container: {
@@ -26,8 +26,7 @@ const _PhoneInit = ({ text, next, navigation, header = "" }) => {
   
   const send = async () => {
     console.tron.log('initPhoneNumber')
-    firebase.functions().useFunctionsEmulator('http://localhost:5000')
-    const result = await firebase.functions().httpsCallable('initPhoneNumber')({phone})
+    const result = await functions().httpsCallable('initPhoneNumber')({phone})
     console.tron.log(result)
     navigation.navigate(next, {phone})
   };
@@ -50,8 +49,7 @@ const _PhoneVerif = ({ text, next, navigation, header = "" }) => {
   const sendVerif = async () => {
     const data = {code, phone}
     console.tron.log('verifyPhoneNumber', data)
-    firebase.functions().useFunctionsEmulator('http://localhost:5000')
-    const result = await firebase.functions().httpsCallable('verifyPhoneNumber')(data)
+    const result = await functions().httpsCallable('verifyPhoneNumber')(data)
     console.tron.log(result)
     navigation.navigate(next)
   };

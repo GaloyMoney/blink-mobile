@@ -35,5 +35,7 @@ target 'GaloyApp' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
+  pod 'XCDYouTubeKit', '~> 2.8' # for YouTubeStandaloneIOS
+
   use_native_modules!
 end
