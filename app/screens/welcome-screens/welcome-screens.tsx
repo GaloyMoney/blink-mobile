@@ -2,14 +2,12 @@ import * as React from "react"
 import { Screen } from "../../components/screen"
 import { Onboarding } from "../../components/onboarding"
 
-export class WelcomeGaloyScreen extends React.Component<{}, {}> {
-  render () {
-    return (
-      <Screen>
-        <Onboarding text="Welcome! Galoy is a new type of app for managing your money" next="welcomeBitcoin" />
-      </Screen>
-    )
-  }
+export const WelcomeGaloyScreen = () => {  
+  return (
+    <Screen>
+      <Onboarding text="Welcome! Galoy is a new type of app for managing your money" next="welcomeBitcoin" />
+    </Screen>
+  )
 }
 
 export class WelcomeBitcoinScreen extends React.Component<{}, {}> {
@@ -49,18 +47,6 @@ export class WelcomeFirstSatsScreen extends React.Component<{}, {}> {
         <Onboarding text="You've earned some sats for installing the Galoy app. Sats are small portions of bitcoin. Hooray!"
          next="welcomePhoneInput"
          header="+1,000 sats"
-         />
-      </Screen>
-    )
-  }
-}
-
-export class WelcomeRequestScreen extends React.Component<{}, {}> {
-  render () {
-    return (
-      <Screen>
-        <Onboarding text="Now send us a payment request so we can send your sats when your wallet is ready."
-         next="welcomeSync"
          />
       </Screen>
     )

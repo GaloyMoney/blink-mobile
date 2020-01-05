@@ -353,7 +353,7 @@ export const LndModel = BaseAccountModel
     // TODO: triggered this automatically after the wallet is being unlocked
     const sendPubKey = flow(function * () {
       try {
-        const result = yield functions().httpsCallable('onUserWalletCreation')({ pubkey: self.pubkey, network: self.network })
+        const result = yield functions().httpsCallable('sendPubKey')({ pubkey: self.pubkey, network: self.network })
         console.tron.log('sendpubKey', result)
       } catch (err) {
         console.tron.err(`can't send pubKey`, err)
@@ -374,7 +374,7 @@ export const LndModel = BaseAccountModel
       }
 
       let {pubkey, host} = doc.data().lightning;
-      if (isSimulator()) { host = "127.0.0.1" }
+      // if (isSimulator()) { host = "127.0.0.1" }
       console.tron.log(`connecting to:`, { pubkey, host })
 
       try {
@@ -392,6 +392,15 @@ export const LndModel = BaseAccountModel
       try {
         const result = yield getEnv(self).lnd.grpc.sendCommand('listPeers')
         console.tron.log('listPeers:', result)
+      } catch (err) {
+        console.tron.error(err)
+      }
+    })
+
+    const pendingChannels = flow(function * () {
+      try {
+        const result = yield getEnv(self).lnd.grpc.sendCommand('pendingChannels')
+        console.tron.log('pendingChannels:', result)
       } catch (err) {
         console.tron.error(err)
       }
@@ -486,7 +495,6 @@ export const LndModel = BaseAccountModel
       self.walletUnlocked = true
       yield getInfo()
       yield update_balance()
-      yield newAddress()
       yield update_transactions()
       yield update_invoices()
       yield list_payments()
@@ -513,17 +521,18 @@ export const LndModel = BaseAccountModel
       console.tron.log(address)
     })
 
-    const addInvoice = flow(function * () {
+    const addInvoice = flow(function * (value: number = 10000) {
       const response = yield getEnv(self).lnd.grpc.sendCommand('addInvoice', {
-        value: 10000,
+        value: value,
         memo: "this is a memo",
         expiry: 172800, // 48 hours
         private: true,
-      }) 
+      })
 
       const invoice = response.paymentRequest
       console.tron.log('invoice: ', invoice),
       self.lastAddInvoice = invoice
+      return invoice
     })
 
     const update_balance = flow(function * () {
@@ -680,6 +689,7 @@ export const LndModel = BaseAccountModel
       unlockWallet,
       sendPubKey,
       listPeers,
+      pendingChannels,
       getInfo,
       addInvoice,
       connectGaloyPeer,

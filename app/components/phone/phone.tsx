@@ -1,7 +1,7 @@
 import * as React from "react"
 import { useState } from "react"
 import { Text } from "../text"
-import { StyleSheet, View, Image } from "react-native"
+import { StyleSheet, View, Image, Alert } from "react-native"
 import { Button } from 'react-native-elements'
 import { bowserLogo } from "."
 import { withNavigation } from 'react-navigation';
@@ -26,6 +26,12 @@ const _PhoneInit = ({ text, next, navigation, header = "" }) => {
   
   const send = async () => {
     console.tron.log('initPhoneNumber')
+
+    if (phone === "") {
+      Alert.alert('need a phone number')
+      return
+    }
+
     const result = await functions().httpsCallable('initPhoneNumber')({phone})
     console.tron.log(result)
     navigation.navigate(next, {phone})
@@ -49,9 +55,20 @@ const _PhoneVerif = ({ text, next, navigation, header = "" }) => {
   const sendVerif = async () => {
     const data = {code, phone}
     console.tron.log('verifyPhoneNumber', data)
+
+    if (code === "") {
+      Alert.alert('need a code')
+      return
+    }
+
     const result = await functions().httpsCallable('verifyPhoneNumber')(data)
-    console.tron.log(result)
-    navigation.navigate(next)
+    if (result.data.success) {
+      navigation.navigate(next)
+    } else {
+      let message = 'error'
+      message += result.data.reason
+      Alert.alert(message)
+    }
   };
 
   return (

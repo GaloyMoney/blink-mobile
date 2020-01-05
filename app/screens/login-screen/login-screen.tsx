@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
 
 @inject("dataStore")
 @observer
-class LoginScreen extends React.Component<LoginScreenProps, State> {
+class _LoginScreen extends React.Component<LoginScreenProps, State> {
   constructor(props) {
     super(props)
 
@@ -166,4 +166,4 @@ class LoginScreen extends React.Component<LoginScreenProps, State> {
   }
 }
 
-export const WrappedLoginScreen = withNavigation(LoginScreen)
+export const LoginScreen = withNavigation(_LoginScreen)
