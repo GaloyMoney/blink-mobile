@@ -22,7 +22,7 @@ export class WelcomePhoneValidationScreen extends React.Component<{}, {}> {
       <Screen>
         <PhoneVerif
         text="To confirm your phone number, enter the code we just sent you." 
-        next="welcomeRequest" 
+        next="welcomeSyncing" 
         />
       </Screen>
     )

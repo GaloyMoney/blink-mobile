@@ -82,7 +82,7 @@ export class AccountsScreen extends React.Component<AccountsScreenProps, {}> {
   signOut() {
     auth().signOut()
       .then(() => {
-        this.props.navigation.navigate('loginStack')
+        this.props.navigation.navigate('authStack')
       })
       .catch(err => {
         console.tron.log(err)
