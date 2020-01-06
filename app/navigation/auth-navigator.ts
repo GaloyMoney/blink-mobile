@@ -9,13 +9,15 @@ import {
   WelcomeFirstSatsScreen,
  } from "../screens/welcome-screens"
 
- import { WelcomePhoneInputScreen, WelcomePhoneValidationScreen } from "../screens/welcome-phone"
- import { WelcomeSyncingScreen, WelcomeSyncCompletedScreen, WelcomeGeneratingWallet } from "../screens/welcome-sync" 
+import { WelcomePhoneInputScreen, WelcomePhoneValidationScreen } from "../screens/welcome-phone"
+import { WelcomeSyncingScreen, WelcomeSyncCompletedScreen, WelcomeGeneratingWallet } from "../screens/welcome-sync" 
+import { DebugScreen } from "../screens/demo-screen"
 
 export const AuthNavigator = createStackNavigator(
   {
     getStarted: { screen: GetStartedScreen },
     login: { screen: LoginScreen },
+    demo: { screen: DebugScreen },
     welcomeGaloy: { screen: WelcomeGaloyScreen },
     welcomeSyncing: { screen: WelcomeSyncingScreen },
     welcomeBitcoin: { screen: WelcomeBitcoinScreen },

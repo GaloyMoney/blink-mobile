@@ -116,6 +116,7 @@ const TemplateLoginScreen = ({dataStore, navigation, screen}) => {
 const SubGetStarted = (({dataStore, navigation}) => {
   return (
     <>
+      <Button title="debugScreen" onPress={() => navigation.navigate('demo')}></Button>
       <View style={styles.bottom}>
         <Button title="Log in" titleStyle={styles.signUp}
           onPress={() => navigation.navigate('login')} type="clear" containerStyle={styles.buttonContainer} />
