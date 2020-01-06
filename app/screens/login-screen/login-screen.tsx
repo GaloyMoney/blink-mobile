@@ -8,6 +8,7 @@ import { Input, Button } from 'react-native-elements'
 import auth from '@react-native-firebase/auth'
 import { DataStore } from "../../models/data-store"
 import { color } from "../../theme"
+import { getEnv } from "mobx-state-tree"
 
 export interface LoginScreenProps extends NavigationScreenProp<{}> {
   dataStore: DataStore
@@ -89,17 +90,13 @@ class _LoginScreen extends React.Component<LoginScreenProps, State> {
 
   onUserChanged(user: any) { // TODO : User type
     console.tron.log(user)
-    if (user === null) {
-      this.props.dataStore.auth.set("", false, true, "")
-    } else {
-      this.props.dataStore.auth.set(user.email, user.emailVerified, user.isAnonymous, user.uid)
-
-      // FIXME this initialized logic should probably not be here
-      if (this.props.dataStore.auth.emailVerified === true) {
-        this.props.navigation.navigate('primaryStack') // we are logged in and email verified
-      } else {
-        this.props.navigation.navigate('verifyEmail')
-      }
+    this.props.dataStore.auth.set(user.email, user.emailVerified, user.isAnonymous, user.uid)
+      
+    // FIXME this initialized logic should probably not be here
+    if (this.props.dataStore.auth.emailVerified === true) {
+      this.props.navigation.navigate('primaryStack') // we are logged in and email verified
+    } else if (this.props.dataStore.auth.email) {
+      this.props.navigation.navigate('verifyEmail')
     }
   }
 
@@ -123,6 +120,9 @@ class _LoginScreen extends React.Component<LoginScreenProps, State> {
 
   componentDidMount() {
     // this._bootstrapAsync();
+
+    getEnv(this.props.dataStore).lnd.start()
+
     this.unsubscribeHandle = auth().onUserChanged(this.onUserChanged)
   }
 
