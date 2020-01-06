@@ -346,7 +346,7 @@ export const LndModel = BaseAccountModel
 
     const connectGaloyPeer = flow(function * () {
       if (!self.syncedToChain) {
-        console.tron.warn('needs to be synced to chain before opening a channel')
+        console.tron.warn('needs to be synced to chain before connecting to a peer')
         return
       }
 
@@ -385,9 +385,40 @@ export const LndModel = BaseAccountModel
       try {
         const result = yield getEnv(self).lnd.grpc.sendCommand('pendingChannels')
         console.tron.log('pendingChannels:', result)
+        return result
       } catch (err) {
         console.tron.error(err)
+        throw err
       }
+    })
+
+    const listChannels = flow(function * () {
+      try {
+        const result = yield getEnv(self).lnd.grpc.sendCommand('listChannels')
+        console.tron.log('listChannels:', result)
+        return result
+      } catch (err) {
+        console.tron.error(err)
+        throw err
+      }
+    })
+
+    const statusFirstChannelOpen = flow(function * () {
+      const { pendingOpenChannels } = yield pendingChannels()
+      const { channels } = yield listChannels()
+
+      let result 
+      // TODO be more throrough, eg check that the other pub key
+      if (pendingOpenChannels.length > 0) {
+        result = 'pending'
+      } else if (channels.length > 0) {
+        result = 'opened'
+      } else {
+        result = 'no-channel'
+      }
+
+      console.tron.log('statusFirstChannelOpen', result)
+      return result
     })
 
     const openChannel = flow(function * () {
@@ -671,7 +702,9 @@ export const LndModel = BaseAccountModel
       unlockWallet,
       sendPubKey,
       listPeers,
+      listChannels,
       pendingChannels,
+      statusFirstChannelOpen,
       getInfo,
       addInvoice,
       connectGaloyPeer,
