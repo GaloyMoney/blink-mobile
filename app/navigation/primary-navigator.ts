@@ -15,8 +15,8 @@ import { WelcomeSyncingScreen, WelcomeSyncCompletedScreen, WelcomeGeneratingWall
 
 export const PrimaryNavigator = createStackNavigator(
   {
-    welcomeSyncing: { screen: WelcomeSyncingScreen },
     welcomeGaloy: { screen: WelcomeGaloyScreen },
+    welcomeSyncing: { screen: WelcomeSyncingScreen },
     welcomeBitcoin: { screen: WelcomeBitcoinScreen },
     welcomeBank: { screen: WelcomeBankScreen },
     welcomeEarn: { screen: WelcomeEarnScreen },

@@ -2,8 +2,8 @@ import * as React from "react"
 import { Text } from "../../components/text"
 import { StyleSheet, View, Image } from "react-native"
 import { Button } from 'react-native-elements'
-import { bowserLogo } from "."
-import { withNavigation } from 'react-navigation';
+import { withNavigation } from 'react-navigation'
+import { color } from "../../theme"
 
 const styles = StyleSheet.create({
   container: {
@@ -12,20 +12,48 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
-  text: {
-    fontSize: 18,
+  image: {
+    alignSelf: 'center',
+    margin: 20,
+  },
+
+  header: {
+    fontSize: 20,
+    fontWeight: "bold",
     textAlign: "center",
+    marginTop: 40,
+  },
+
+  text: {
+    fontSize: 20,
+    textAlign: "center",
+    paddingHorizontal: 40,
+  },
+
+  buttonContainer: {
+    paddingHorizontal: 80,
+    paddingBottom: 60
+  },
+
+  buttonStyle: {
+    backgroundColor: color.primary
   }
 })
 
-const _Onboarding = ({ text, next, navigation, header = "" }) => {
+const _Onboarding = ({ text, next, image, navigation, header = "" }) => {
   return (
-    <View style={styles.container}>
-        <Text style={styles.text}>{header}</Text>
-        <Image source={bowserLogo} />
+    <>
+      <Text style={styles.header}>{header}</Text>
+      <View style={styles.container}>
+        <Image source={image} style={styles.image} />
         <Text style={styles.text}>{text}</Text>
-        <Button title="Next" onPress={() => navigation.navigate(next)} containerStyle={styles.buttonContainer}/>
-  </View>
+      </View>
+      <Button title="Next" 
+              onPress={() => navigation.navigate(next)}
+              containerStyle={styles.buttonContainer}
+              buttonStyle={styles.buttonStyle}
+              />
+    </>
   )
 }
 

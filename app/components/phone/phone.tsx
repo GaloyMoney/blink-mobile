@@ -7,6 +7,7 @@ import { bowserLogo } from "."
 import { withNavigation } from 'react-navigation';
 import { TextInput } from "react-native-gesture-handler"
 import functions from "@react-native-firebase/functions"
+import { color } from "../../theme"
 
 const styles = StyleSheet.create({
   container: {
@@ -15,9 +16,36 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
+  image: {
+    alignSelf: 'center',
+    padding: 20,
+  },
+
   text: {
-    fontSize: 18,
+    fontSize: 20,
     textAlign: "center",
+    paddingHorizontal: 40,
+    paddingBottom: 10,
+  },
+
+  textEntry: {
+    fontSize: 20,
+    textAlign: "center",
+    marginHorizontal: 60,
+    padding: 12,
+    borderColor: color.palette.darkGrey,
+    borderWidth: 1,
+    borderRadius: 5,
+    marginTop: 10,
+  },
+
+  buttonContainer: {
+    paddingHorizontal: 80,
+    marginBottom: 60,
+  },
+
+  buttonStyle: {
+    backgroundColor: color.primary
   }
 })
 
@@ -38,13 +66,27 @@ const _PhoneInit = ({ text, next, navigation, header = "" }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <>
+      <View style={styles.container}>
         <Text style={styles.text}>{header}</Text>
         <Image source={bowserLogo} />
         <Text style={styles.text}>{text}</Text>
-        <TextInput style={styles.text} onChangeText={input => (setPhone(input))}>{phone}</TextInput>
-        <Button title="Next" onPress={() => send()} containerStyle={styles.buttonContainer}/>
-  </View>
+        <TextInput  style={styles.textEntry} 
+                    onChangeText={input => (setPhone(input))}
+                    keyboardType="number-pad"
+                    textContentType="telephoneNumber"
+                    placeholder="Phone Number"
+                    maxLength={12}
+                    >
+                      {phone}
+        </TextInput>
+      </View>
+      <Button title="Next" 
+                onPress={() => send()} 
+                containerStyle={styles.buttonContainer}
+                buttonStyle={styles.buttonStyle}
+                />
+    </>
   )
 }
 
@@ -72,13 +114,26 @@ const _PhoneVerif = ({ text, next, navigation, header = "" }) => {
   };
 
   return (
-    <View style={styles.container}>
-        <Text style={styles.text}>{header}</Text>
-        <Image source={bowserLogo} />
-        <Text style={styles.text}>{text}</Text>
-        <TextInput style={styles.text} onChangeText={input => (setCode(input))}>{code}</TextInput>
-        <Button title="Next" onPress={() => sendVerif()} containerStyle={styles.buttonContainer}/>
-  </View>
+   <>
+   <View style={styles.container}>
+    <Text style={styles.text}>{header}</Text>
+    <Image source={bowserLogo} />
+    <Text style={styles.text}>{text}</Text>
+    <TextInput  style={styles.textEntry} 
+                onChangeText={input => (setCode(input))}
+                keyboardType="number-pad"
+                textContentType="oneTimeCode"
+                placeholder="6 Digits Code"
+                >
+                  {code}
+    </TextInput>
+    </View>
+      <Button title="Next" 
+              onPress={() => sendVerif()} 
+              containerStyle={styles.buttonContainer}
+              buttonStyle={styles.buttonStyle}
+              />
+    </>
   )
 }
 

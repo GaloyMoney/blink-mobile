@@ -2,16 +2,59 @@ import * as React from "react"
 import { Screen } from "../../components/screen"
 import { Text } from "../../components/text"
 import { observer, inject } from 'mobx-react'
-import  {bowserLogo } from "./"
 
 import * as Progress from 'react-native-progress'
 
 import { YouTubeStandaloneIOS } from 'react-native-youtube';
 import { Button } from "react-native-elements"
-import { Image } from "react-native"
+import { Image, StyleSheet, View } from "react-native"
 import { withNavigation } from "react-navigation"
 
 import auth from '@react-native-firebase/auth'
+import { color } from "../../theme"
+
+export const lightningBolt = require("../welcome-screens/LightningBolt.png")
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+
+  image: {
+    alignSelf: 'center',
+    padding: 20,
+  },
+
+  text: {
+    fontSize: 20,
+    textAlign: "center",
+    paddingHorizontal: 30,
+    paddingVertical: 20,
+  },
+
+  buttonContainerVideo: {
+    paddingHorizontal: 80,
+  },
+  
+  buttonContainer: {
+    marginBottom: 60, 
+    paddingHorizontal: 80,
+  },
+  
+  buttonStyle: {
+    backgroundColor: color.primary
+  },
+  
+  buttonVideo: {
+  },
+
+  progressBar: {
+    alignSelf: "center",
+  }
+  
+})
 
 const playVideo = (videoId) => {
   YouTubeStandaloneIOS.playVideo(videoId)
@@ -23,10 +66,25 @@ export const WelcomeSyncingScreen = withNavigation(inject("dataStore")(observer(
 
   return (
     <Screen>
-      <Text>syncing data... {dataStore.lnd.percentSynced}</Text>
-      <Progress.Bar progress={dataStore.lnd.percentSynced} width={200} />
-      <Button title="What is a sat" onPress={() => playVideo('SfeUQWHA3Dc')} />
-      <Button title="Next" 
+      <View style={{alignContent: 'center', width: "100%"}}>
+        <Text style={[styles.text, {fontWeight: "bold"}]}>syncing data... {dataStore.lnd.percentSynced}</Text>
+        <Progress.Bar style={styles.progressBar} 
+                      color={color.primary}
+                      progress={dataStore.lnd.percentSynced} />
+      </View>
+      <View style={styles.container}>
+        <Image source={lightningBolt} style={styles.image} />
+        <Text style={styles.text}>Almost ready to launch your wallet! This could take a minute.
+        {"\n"}{"\n"}Earn another reward{"\n"}while you wait:</Text>
+        <Button title="What is a sat? +1,000 sats" 
+                containerStyle={styles.buttonContainerVideo}
+                buttonStyle={styles.buttonVideo}
+                type="outline"
+                onPress={() => playVideo('SfeUQWHA3Dc')} />
+      </View>
+      <Button title="Create Wallet"
+              containerStyle={styles.buttonContainer}
+              buttonStyle={styles.buttonStyle}
               onPress={() => navigation.navigate('welcomeSyncCompleted')}
               disabled={!dataStore.lnd.syncedToChain} />
     </Screen>
@@ -50,12 +108,21 @@ export const WelcomeSyncCompletedScreen = inject("dataStore")(observer(({dataSto
 
   return (
     <Screen>
-      {/* TODO make a component for sync */}
-      <Text>Sync complete</Text>
-      <Progress.Bar progress={dataStore.lnd.percentSynced} width={200} />
-      <Image source={bowserLogo} />
-      <Text>We are ready to launch your wallet</Text>
-      <Button title="Create Wallet" onPress={() => openChannel()} />
+      <View style={{alignContent: 'center', width: "100%"}}>
+        <Text style={[styles.text, {fontWeight: "bold"}]}>Sync complete</Text>
+        <Progress.Bar style={styles.progressBar} 
+                      color={color.primary}
+                      progress={dataStore.lnd.percentSynced} />
+      </View>
+      <View style={styles.container}>
+        <Image source={lightningBolt} style={styles.image} />
+        <Text style={styles.text}>We are ready to launch your wallet</Text>
+      </View>
+      <Button title="Create Wallet"
+              containerStyle={styles.buttonContainer}
+              buttonStyle={styles.buttonStyle}
+              onPress={() => openChannel()}
+              />
     </Screen>
   )
 }))
@@ -64,12 +131,24 @@ export const WelcomeGeneratingWallet = inject("dataStore")(observer(({dataStore,
 
   return (
     <Screen>
-      <Text>Generating wallet...</Text>
-      <Image source={bowserLogo} />
-      <Text>Sit back and relax, we’ll let you know when your wallet is ready. This may take a day or so.</Text>
-      <Button title="What is a sat" onPress={() => playVideo('XNu5ppFZbHo')} />
-      <Text>Funding tx: TODO</Text>
-      <Text>When should the wallet be ready?: ETA</Text>
+      <View style={{alignContent: 'center', width: "100%"}}>
+        <Text style={[styles.text, {fontWeight: "bold"}]}>
+          Generating wallet...
+        </Text>
+      </View>
+      <View style={styles.container}>
+        <Image source={lightningBolt} style={styles.image} />
+        <Text style={styles.text}>Sit back and relax, 
+        we’ll let you know when your wallet is ready. 
+        This may take a day or so.</Text>
+        <Button title="What is money?" 
+                containerStyle={styles.buttonContainerVideo}
+                buttonStyle={styles.buttonVideo}
+                type="outline"
+                onPress={() => playVideo('XNu5ppFZbHo')} />
+      </View>
+      <Text style={styles.text}>Funding tx: TODO{"\n"}
+            When should your wallet be ready?</Text>
     </Screen>
   )
 }))
