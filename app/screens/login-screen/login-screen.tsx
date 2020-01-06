@@ -1,22 +1,14 @@
 import * as React from "react"
+import { useEffect } from "react"
 import { observer, inject } from "mobx-react"
 import { Screen } from "../../components/screen"
-import { NavigationScreenProp, withNavigation } from "react-navigation"
+import { withNavigation } from "react-navigation"
 import { Text, Alert, StyleSheet, View } from "react-native"
 import { Input, Button } from 'react-native-elements'
 
 import auth from '@react-native-firebase/auth'
-import { DataStore } from "../../models/data-store"
 import { color } from "../../theme"
 import { getEnv } from "mobx-state-tree"
-
-export interface LoginScreenProps extends NavigationScreenProp<{}> {
-  dataStore: DataStore
-}
-
-interface State {
-  password: string
-}
 
 const styles = StyleSheet.create({
   bottom: {
@@ -67,103 +59,100 @@ const styles = StyleSheet.create({
 
 })
 
-@inject("dataStore")
-@observer
-class _LoginScreen extends React.Component<LoginScreenProps, State> {
-  constructor(props) {
-    super(props)
+// TODO move to utils
+const validateEmail = (email) => {
+  const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  return re.test(email)
+}
 
-    this.state = {
-      password: ''
+export const GetStartedScreen = withNavigation(inject("dataStore")(observer(({dataStore, navigation}) => {
+  getEnv(dataStore).lnd.start()
+  
+  return (
+    TemplateLoginScreen({dataStore, navigation, screen: "getStarted"})
+  )
+})))
+
+export const LoginScreen = withNavigation(inject("dataStore")(observer(({dataStore, navigation}) => {
+  return (
+    TemplateLoginScreen({dataStore, navigation, screen: "subLogin"})
+  )
+})))
+
+
+const TemplateLoginScreen = ({dataStore, navigation, screen}) => {
+  const onAuthStateChanged = (user) => { // TODO : User type
+    console.tron.warn(user)
+    if (user === null) {
+      return
     }
 
-    this.unsubscribeHandle = null
-
-    this.signUp = this.signUp.bind(this)
-    this.onUserChanged = this.onUserChanged.bind(this)
-
-    if (auth().currentUser) {
-      auth().currentUser.reload()
-        .catch(err => console.tron.warn(err))
+    if (user.emailVerified === true) {
+      navigation.navigate('primaryStack') // we are logged in and email verified
     }
   }
 
-  onUserChanged(user: any) { // TODO : User type
-    console.tron.log(user)
-    this.props.dataStore.auth.set(user.email, user.emailVerified, user.isAnonymous, user.uid)
-      
-    // FIXME this initialized logic should probably not be here
-    if (this.props.dataStore.auth.emailVerified === true) {
-      this.props.navigation.navigate('primaryStack') // we are logged in and email verified
-    } else if (this.props.dataStore.auth.email) {
-      this.props.navigation.navigate('verifyEmail')
-    }
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged)
+    return subscriber; // unsubscribe on unmount
+    }, [])
+
+  let subScreen
+  if (screen === 'getStarted') {
+    subScreen = <SubGetStarted dataStore={dataStore} navigation={navigation} />
+  } else if (screen === 'subLogin') {
+    subScreen = <SubLogin dataStore={dataStore} navigation={navigation}  />
   }
 
-  signUp() {
-    auth().createUserWithEmailAndPassword(this.props.dataStore.auth.email, this.state.password)
-      .then(userCredential => {
-        userCredential.user.sendEmailVerification()
-      })
-      .catch(err => { console.tron.log(err); Alert.alert(err.code) })
-  }
+  return (
+    <Screen style={styles.container}>
+    <Text style={styles.title}>Galoy</Text>
+    <Text style={styles.sub}>The bank built for crypto</Text>
+      {subScreen}
+  </Screen>
+  )
+}
 
-  signIn() {
-    auth().signInWithEmailAndPassword(this.props.dataStore.auth.email, this.state.password)
+const SubGetStarted = (({dataStore, navigation}) => {
+  return (
+    <>
+      <View style={styles.bottom}>
+        <Button title="Log in" titleStyle={styles.signUp}
+          onPress={() => navigation.navigate('login')} type="clear" containerStyle={styles.buttonContainer} />
+        <Button title="Get Started" buttonStyle={styles.signIn}
+          onPress={() => navigation.navigate('welcomeGaloy')} containerStyle={styles.buttonContainer}/>
+      </View>
+    </>
+  )
+})
+
+const SubLogin = ({dataStore, navigation}) => {
+
+  const [password, setPassword] = React.useState("")
+  const [email, setEmail] = React.useState("")
+
+  const signIn = () => {
+    console.tron.warn(`sign in with ${email} and ${password}`)
+    auth().signInWithEmailAndPassword(email, password)
       .catch(err => Alert.alert(err.code))
   }
 
-  validateEmail(email) {
-    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    return re.test(email)
-  }
-
-  componentDidMount() {
-    // this._bootstrapAsync();
-
-    getEnv(this.props.dataStore).lnd.start()
-
-    this.unsubscribeHandle = auth().onUserChanged(this.onUserChanged)
-  }
-
-  componentWillUnmount() {
-    if (this.unsubscribeHandle) this.unsubscribeHandle()
-  }
-
-  _bootstrapAsync = async () => {
-    // const userToken = await AsyncStorage.getItem('userToken');
-    // this.props.navigation.navigate(userToken ? 'App' : 'Auth');
-
-  };
-
-  render () {
-    const { password } = this.state
-
-    return (
-
-      <Screen style={styles.container}>
-        <Text style={styles.title}>Galoy</Text>
-        <Text style={styles.sub}>The bank built for crypto</Text>
-        <Input placeholder="email" value={this.props.dataStore.auth.email}
-          onChangeText={email => this.props.dataStore.auth.setEmail(email)}
+  return (
+      <>
+        <Input placeholder="email" 
+          value={email}
+          onChangeText={email => setEmail(email)}
           inputContainerStyle={styles.form}
         />
         <Input placeholder="password" value={password}
-          onChangeText={password => this.setState({ password })}
+          onChangeText={input => setPassword(input)}
           inputContainerStyle={styles.form}
           textContentType="newPassword" // TODO(check how to integrate with iCloud keychain)
           secureTextEntry={true}
         />
-
         <View style={styles.bottom}>
-          <Button title="Create an account" titleStyle={styles.signUp}
-            onPress={() => this.signUp()} type="clear" containerStyle={styles.buttonContainer} />
           <Button title="Sign in" buttonStyle={styles.signIn}
-            onPress={() => this.signIn()} containerStyle={styles.buttonContainer}/>
+            onPress={() => signIn()} containerStyle={styles.buttonContainer}/>
         </View>
-      </Screen>
-    )
-  }
-}
-
-export const LoginScreen = withNavigation(_LoginScreen)
+      </>
+)}

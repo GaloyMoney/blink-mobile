@@ -1,5 +1,5 @@
 import { createStackNavigator } from "react-navigation-stack"
-import { LoginScreen } from "../screens/login-screen"
+import { GetStartedScreen, LoginScreen } from "../screens/login-screen"
 import { VerifyEmailScreen } from "../screens/verify-email-screen"
 import { 
   WelcomeGaloyScreen, 
@@ -14,6 +14,7 @@ import {
 
 export const AuthNavigator = createStackNavigator(
   {
+    getStarted: { screen: GetStartedScreen },
     login: { screen: LoginScreen },
     welcomeGaloy: { screen: WelcomeGaloyScreen },
     welcomeSyncing: { screen: WelcomeSyncingScreen },
@@ -28,6 +29,6 @@ export const AuthNavigator = createStackNavigator(
     verifyEmail: { screen: VerifyEmailScreen },
   },
   {
-    headerMode: "none",
+    headerMode: "float",
   },
 )

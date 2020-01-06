@@ -5,6 +5,7 @@ import { parseDate } from "../../utils/date"
 import KeychainAction from "../../utils/keychain"
 import { generateSecureRandom } from 'react-native-securerandom'
 
+import auth from '@react-native-firebase/auth'
 import functions from '@react-native-firebase/functions'
 import firestore from '@react-native-firebase/firestore'
 import { toHex } from "../../utils/helper"
@@ -18,28 +19,6 @@ if (isSimulator()) {
   // FIXME import from a local file
   functions().useFunctionsEmulator('http://localhost:5000')
 }
-
-export const AuthModel = types
-  .model("Auth", {
-    email: types.maybeNull(types.string),
-    isAnonymous: false,
-    uid: types.maybeNull(types.string),
-    emailVerified: false
-  })
-  .actions(self => {
-    const set = (email: string | null, emailVerified: boolean, isAnonymous: boolean, uid: string | null) => {
-      self.email = email
-      self.emailVerified = emailVerified
-      self.isAnonymous = isAnonymous
-      self.uid = uid
-    }
-
-    const setEmail = (email: string) => {
-      self.email = email
-    }
-
-    return { set, setEmail }
-  })
 
 export const OnChainTransactionModel = types
   .model("OnChainTransaction", {
@@ -222,13 +201,18 @@ export const FiatAccountModel = BaseAccountModel
   })
   .actions(self => {
     const update_transactions = flow(function * () {
-      const uid = getParentOfType(self, DataStoreModel).auth.uid
+      let uid
+      try {
+        uid = auth().currentUser.uid
+      } catch (err) {
+        console.tron.log("can't get auth().currentUser.uid", err)
+      }
       try {
         // TODO: automatic fetch update if collected is being updated.
         const doc = yield firestore().doc(`users/${uid}`).get()
         self._transactions = doc.data().transactions
       } catch (err) {
-        console.tron.error('not able to update transaction', err)
+        console.tron.error(`not able to update transaction ${err}`)
       }
     })
 
@@ -457,7 +441,6 @@ export const LndModel = BaseAccountModel
           try {
             const response = yield fetch('http://api.blockcypher.com/v1/btc/test3') // FIXME find a better solution
             const {height} = yield response.json()
-            console.tron.warn(height)
             self.bestBlockHeight = height
           } catch (err) {
             console.warn(`can't fetch blockcypher`, err)
@@ -472,7 +455,6 @@ export const LndModel = BaseAccountModel
           //       msg: `Syncing to chain (block: ${response.blockHeight})`,
           //       wait: true,
           //     });
-          console.tron.log(`Syncing to chain (block: ${response.blockHeight})`)
         } else {
           // this._store.settings.restoring = false;
           // this._notification.display({
@@ -766,7 +748,6 @@ export const RatesModel = types
 
 export const DataStoreModel = types
   .model("DataStore", {
-    auth: types.optional(AuthModel, {}),
     fiat: types.optional(FiatAccountModel, {}),
     rates: types.optional(RatesModel, {}),
     exchange: types.optional(ExchangeModel, {}),
