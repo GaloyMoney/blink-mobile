@@ -8,7 +8,8 @@ import auth from "@react-native-firebase/auth"
 import { StyleSheet, View } from "react-native"
 
 export interface VerifyEmailScreenProps extends NavigationScreenProp<{}> {
-  dataStore: DataStore
+  dataStore: DataStore,
+  email: string,
 }
 
 const styles = StyleSheet.create({
@@ -29,7 +30,7 @@ const styles = StyleSheet.create({
 export class VerifyEmailScreen extends React.Component<VerifyEmailScreenProps, {}> {
   timer: NodeJS.Timeout
   
-  componentDidMount() {
+  componentDidMount() { // TODO auth().currentUser will probably no longer navigate correctly 
     this.timer = setInterval(() => auth().currentUser.reload(), 2000)
   }
 
@@ -42,7 +43,7 @@ export class VerifyEmailScreen extends React.Component<VerifyEmailScreenProps, {
       <Screen>
         <View style={styles.container}>
           <Text style={styles.text}>Verify your email</Text>
-          <Text style={styles.text}>{this.props.dataStore.auth.email}</Text>
+          <Text style={styles.text}>{this.props.email}</Text>
           <Text style={styles.text}>to continue</Text>
         </View>
       </Screen>
