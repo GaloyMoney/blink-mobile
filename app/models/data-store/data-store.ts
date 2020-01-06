@@ -21,13 +21,13 @@ if (isSimulator()) {
 
 export const AuthModel = types
   .model("Auth", {
-    email: "nicolas.burtey+default@gmail.com",
+    email: types.maybeNull(types.string),
     isAnonymous: false,
-    uid: "",
+    uid: types.maybeNull(types.string),
     emailVerified: false
   })
   .actions(self => {
-    const set = (email: string, emailVerified: boolean, isAnonymous: boolean, uid: string) => {
+    const set = (email: string | null, emailVerified: boolean, isAnonymous: boolean, uid: string | null) => {
       self.email = email
       self.emailVerified = emailVerified
       self.isAnonymous = isAnonymous

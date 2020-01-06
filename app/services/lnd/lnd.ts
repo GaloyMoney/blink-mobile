@@ -31,9 +31,6 @@ export class Lnd {
    */
   async setLndStore(lndStore: LndStore) {
     this.lndStore = lndStore
-
-    // TODO, where to set this?
-    await this.start()
   }
 
   async setCallback() {
@@ -66,6 +63,8 @@ export class Lnd {
    * Configure reactotron based on the the config settings passed in, then connect if we need to.
    */
   async start() {
+    console.trace()
+
     this.grpc.startLnd()
 
     await this.setCallback()

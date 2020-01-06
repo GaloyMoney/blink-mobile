@@ -4,7 +4,7 @@ import { AuthNavigator } from "./auth-navigator"
 
 export const RootNavigator = createSwitchNavigator(
   {
-    primaryStack: { screen: PrimaryNavigator },
     authStack: { screen: AuthNavigator },
+    primaryStack: { screen: PrimaryNavigator },
   },
 )
