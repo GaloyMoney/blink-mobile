@@ -1,4 +1,4 @@
-import { createStackNavigator } from "react-navigation-stack"
+import { createStackNavigator, HeaderBackButton } from "react-navigation-stack"
 import { GetStartedScreen, LoginScreen } from "../screens/login-screen"
 import { VerifyEmailScreen } from "../screens/verify-email-screen"
 import { 
@@ -15,6 +15,7 @@ import { WelcomePhoneInputScreen, WelcomePhoneValidationScreen } from "../screen
 import { WelcomeSyncingScreen, WelcomeSyncCompletedScreen, WelcomeGeneratingWalletScreen  } from "../screens/welcome-sync" 
 import { DebugScreen } from "../screens/demo-screen"
 
+
 export const AuthNavigator = createStackNavigator(
   {
     getStarted: { screen: GetStartedScreen },
@@ -25,12 +26,13 @@ export const AuthNavigator = createStackNavigator(
     welcomeBank: { screen: WelcomeBankScreen },
     welcomeEarn: { screen: WelcomeEarnScreen },
     welcomeFirstSats: { screen: WelcomeFirstSatsScreen },
-    welcomePhoneInput: { screen: WelcomePhoneInputScreen },
+    welcomePhoneInput: { screen: WelcomePhoneInputScreen, },
     welcomePhoneValidation: { screen: WelcomePhoneValidationScreen },
     verifyEmail: { screen: VerifyEmailScreen },
   },
   {
-    headerMode: "float",
+    headerMode: "screen",
+    defaultNavigationOptions: {title: ''}
   },
 )
 
@@ -38,6 +40,10 @@ export const SyncingNavigator = createStackNavigator(
   {
     welcomeSyncing: { screen: WelcomeSyncingScreen },
     welcomeSyncCompleted: { screen: WelcomeSyncCompletedScreen },
+    welcomeGeneratingWallet: { screen: WelcomeGeneratingWalletScreen }, // TODO
+  },
+  {
+    headerMode: "none"
   },
 )
 
@@ -45,5 +51,8 @@ export const WalletCompletedNavigator = createStackNavigator(
   {
     welcomebackCompleted: { screen: WelcomeBackScreen },
     firstReward: { screen: FirstRewardScreen },
+  },
+  {
+    headerMode: "none"
   },
 )
