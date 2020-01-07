@@ -9,6 +9,8 @@ import { Input, Button } from 'react-native-elements'
 import auth from '@react-native-firebase/auth'
 import { color } from "../../theme"
 import { getEnv } from "mobx-state-tree"
+import { loadString } from "../../utils/storage"
+import { PendingOpenChannelsStatus } from "../../models/data-store"
 
 const styles = StyleSheet.create({
   bottom: {
@@ -65,9 +67,47 @@ const validateEmail = (email) => {
   return re.test(email)
 }
 
+export enum OnboardingSteps {
+  phoneValidated = "phoneValidated", // TODO use firebase auth instead of twilio
+  channelCreated = "channelCreated",
+  channelOpened = "channelOpened",
+  rewardGiven = "rewardGiven",
+}
+
 export const GetStartedScreen = withNavigation(inject("dataStore")(observer(({dataStore, navigation}) => {
+  // this should always get executed
+
   getEnv(dataStore).lnd.start()
-  
+
+  useEffect(() => {
+    const getCurrentOnboardingStep = async () => {
+      const onboard = await loadString('onboarding')
+      switch(onboard) {
+        case OnboardingSteps.phoneValidated: {
+          navigation.navigate('welcomeGenerating')
+          break
+        }
+        case OnboardingSteps.channelCreated: {
+          const statusChannel = await dataStore.lnd.statusFirstChannelOpen()
+          switch (statusChannel) {
+            case PendingOpenChannelsStatus.pending: {
+              navigation.navigate('welcomeGenerating')
+              break
+            }
+            case PendingOpenChannelsStatus.opened: {
+              navigation.navigate('welcomebackCompleted')
+              break
+            }
+            default:
+              console.tron.error('statusChannel state management error')
+          }
+        }
+      }
+    }
+
+    getCurrentOnboardingStep()
+  }, [])
+
   return (
     TemplateLoginScreen({dataStore, navigation, screen: "getStarted"})
   )
@@ -78,7 +118,6 @@ export const LoginScreen = withNavigation(inject("dataStore")(observer(({dataSto
     TemplateLoginScreen({dataStore, navigation, screen: "subLogin"})
   )
 })))
-
 
 const TemplateLoginScreen = ({dataStore, navigation, screen}) => {
   const onAuthStateChanged = (user) => { // TODO : User type
@@ -95,7 +134,7 @@ const TemplateLoginScreen = ({dataStore, navigation, screen}) => {
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged)
     return subscriber; // unsubscribe on unmount
-    }, [])
+  }, [])
 
   let subScreen
   if (screen === 'getStarted') {
@@ -106,10 +145,10 @@ const TemplateLoginScreen = ({dataStore, navigation, screen}) => {
 
   return (
     <Screen style={styles.container}>
-    <Text style={styles.title}>Galoy</Text>
-    <Text style={styles.sub}>The bank built for crypto</Text>
-      {subScreen}
-  </Screen>
+      <Text style={styles.title}>Galoy</Text>
+      <Text style={styles.sub}>The bank built for crypto</Text>
+        {subScreen}
+    </Screen>
   )
 }
 
@@ -139,21 +178,21 @@ const SubLogin = ({dataStore, navigation}) => {
   }
 
   return (
-      <>
-        <Input placeholder="email" 
-          value={email}
-          onChangeText={email => setEmail(email)}
-          inputContainerStyle={styles.form}
-        />
-        <Input placeholder="password" value={password}
-          onChangeText={input => setPassword(input)}
-          inputContainerStyle={styles.form}
-          textContentType="newPassword" // TODO(check how to integrate with iCloud keychain)
-          secureTextEntry={true}
-        />
-        <View style={styles.bottom}>
-          <Button title="Sign in" buttonStyle={styles.signIn}
-            onPress={() => signIn()} containerStyle={styles.buttonContainer}/>
-        </View>
-      </>
+    <>
+      <Input placeholder="email" 
+        value={email}
+        onChangeText={email => setEmail(email)}
+        inputContainerStyle={styles.form}
+      />
+      <Input placeholder="password" value={password}
+        onChangeText={input => setPassword(input)}
+        inputContainerStyle={styles.form}
+        textContentType="newPassword" // TODO(check how to integrate with iCloud keychain)
+        secureTextEntry={true}
+      />
+      <View style={styles.bottom}>
+        <Button title="Sign in" buttonStyle={styles.signIn}
+          onPress={() => signIn()} containerStyle={styles.buttonContainer}/>
+      </View>
+    </>
 )}
