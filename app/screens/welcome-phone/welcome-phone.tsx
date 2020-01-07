@@ -3,7 +3,7 @@ import { Screen } from "../../components/screen"
 import * as React from "react"
 import { useState } from "react"
 import { Text } from "../../components/text"
-import { StyleSheet, View, Image, Alert, KeyboardAvoidingView, Platform } from "react-native"
+import { StyleSheet, View, Image, Alert, KeyboardAvoidingView, Platform, Modal, ActivityIndicator } from "react-native"
 import { Button } from 'react-native-elements'
 import { bowserLogo } from "."
 import { withNavigation } from 'react-navigation';
@@ -12,6 +12,7 @@ import functions from "@react-native-firebase/functions"
 import { color } from "../../theme"
 import { saveString } from "../../utils/storage"
 import { OnboardingSteps } from "../../screens/login-screen"
+import { Loader } from "../../components/loader"
 
 const styles = StyleSheet.create({
   container: {
@@ -51,24 +52,50 @@ const styles = StyleSheet.create({
 
   buttonStyle: {
     backgroundColor: color.primary
+  },
+
+  modalBackground: {
+    flex: 1,
+    alignItems: 'center',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    backgroundColor: '#00000040'
+  },
+  activityIndicatorWrapper: {
+    backgroundColor: '#FFFFFF',
+    height: 100,
+    width: 100,
+    borderRadius: 10,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-around'
   }
 })
 
 
 export const WelcomePhoneInputScreen = withNavigation(({ text, next, navigation, header = "" }) => {
   const [phone, setPhone] = useState("");
+  const [loading, setLoading] = useState(false);
+
   
   const send = async () => {
+    setLoading(true)
     console.tron.log('initPhoneNumber')
 
-    if (phone === "") {
-      Alert.alert('need a phone number')
-      return
-    }
+    try {
+      if (phone === "") {
+        Alert.alert('need a phone number')
+        return
+      }
 
-    const result = await functions().httpsCallable('initPhoneNumber')({phone})
-    console.tron.log(result)
-    navigation.navigate(next, {phone})
+      const result = await functions().httpsCallable('initPhoneNumber')({phone})
+      console.tron.log(result)
+      navigation.navigate(next, {phone})
+    } catch (err) {
+      console.tron.err('error with initPhoneNumber')
+    } finally {
+      setLoading(false)
+    }
   };
 
   header="To receive your sats, first we need to activate your Bitcoin wallet." 
@@ -77,6 +104,7 @@ export const WelcomePhoneInputScreen = withNavigation(({ text, next, navigation,
 
   return (
     <Screen>
+      <Loader loading={loading} />
       <KeyboardAvoidingView
         keyboardVerticalOffset={-110}
         behavior={(Platform.OS === 'ios')? "padding" : undefined}
@@ -109,25 +137,33 @@ export const WelcomePhoneInputScreen = withNavigation(({ text, next, navigation,
 
 export const WelcomePhoneValidationScreen = withNavigation(({ text, next, navigation, header = "" }) => {
   const [code, setCode] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const phone = navigation.getParam('phone');
 
   const sendVerif = async () => {
-    const data = {code, phone}
-    console.tron.log('verifyPhoneNumber', data)
+    setLoading(true)
 
-    if (code === "") {
-      Alert.alert('need a code')
-      return
-    }
-
-    const result = await functions().httpsCallable('verifyPhoneNumber')(data)
-    if (result.data.success) {
-      saveString('onboarding', OnboardingSteps.phoneValidated)
-      navigation.navigate(next)
-    } else {
-      let message = 'error'
-      message += result.data.reason
-      Alert.alert(message)
+    try {
+      const data = {code, phone}
+      console.tron.log('verifyPhoneNumber', data)
+  
+      if (code === "") {
+        Alert.alert('need a code')
+        return
+      }
+  
+      const result = await functions().httpsCallable('verifyPhoneNumber')(data)
+      if (result.data.success) {
+        saveString('onboarding', OnboardingSteps.phoneValidated)
+        navigation.navigate(next)
+      } else {
+        let message = 'error'
+        message += result.data.reason
+        Alert.alert(message)
+      }
+    } finally {
+      setLoading(false)
     }
   };
 
@@ -136,6 +172,7 @@ export const WelcomePhoneValidationScreen = withNavigation(({ text, next, naviga
 
   return (
     <Screen>
+      <Loader loading={loading} />
       <KeyboardAvoidingView
         keyboardVerticalOffset={-110}
         behavior={(Platform.OS === 'ios')? "padding" : undefined}

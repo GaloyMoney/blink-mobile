@@ -15,6 +15,7 @@ import { color } from "../../theme"
 import { saveString } from "../../utils/storage"
 import { OnboardingSteps } from "../login-screen"
 import { PendingOpenChannelsStatus } from "../../models/data-store"
+import { Loader } from "../../components/loader"
 
 export const lightningBolt = require("../welcome-screens/LightningBolt.png")
 
@@ -95,24 +96,32 @@ export const WelcomeSyncingScreen = withNavigation(inject("dataStore")(observer(
 })))
 
 export const WelcomeSyncCompletedScreen = inject("dataStore")(observer(({dataStore, navigation}) => {
+  const [loading, setLoading] = useState(false);
 
   const openChannel = async () => {
-    const lnd = dataStore.lnd
-    const result = await auth().signInAnonymously()
-    console.tron.log('auth', result)
-    await lnd.sendPubKey()
-    await lnd.connectGaloyPeer()
-    await lnd.openChannel()
+    setLoading(true)
 
-    saveString('onboarding', OnboardingSteps.channelCreated)
-    
-    // await lnd.pendingChannels()
-    // https://blockstream.info/testnet/api/tx/${tx}
-    navigation.navigate('welcomeGeneratingWallet')
+    try {
+      const lnd = dataStore.lnd
+      const result = await auth().signInAnonymously()
+      console.tron.log('auth', result)
+      await lnd.sendPubKey()
+      await lnd.connectGaloyPeer()
+      await lnd.openChannel()
+  
+      saveString('onboarding', OnboardingSteps.channelCreated)
+      
+      // await lnd.pendingChannels()
+      // https://blockstream.info/testnet/api/tx/${tx}
+      navigation.navigate('welcomeGeneratingWallet')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
     <Screen>
+      <Loader loading={loading} />
       <View style={{alignContent: 'center', width: "100%"}}>
         <Text style={[styles.text, {fontWeight: "bold"}]}>Sync complete</Text>
         <Progress.Bar style={styles.progressBar} 
