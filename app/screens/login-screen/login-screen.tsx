@@ -113,6 +113,10 @@ export const GetStartedScreen = withNavigation(inject("dataStore")(observer(({da
   )
 })))
 
+GetStartedScreen.navigationOptions = () => ({
+  headerShown: false
+});
+
 export const LoginScreen = withNavigation(inject("dataStore")(observer(({dataStore, navigation}) => {
   return (
     TemplateLoginScreen({dataStore, navigation, screen: "subLogin"})
