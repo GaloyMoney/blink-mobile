@@ -21,20 +21,29 @@ export const AuthNavigator = createStackNavigator(
     login: { screen: LoginScreen },
     demo: { screen: DebugScreen },
     welcomeGaloy: { screen: WelcomeGaloyScreen },
-    welcomeSyncing: { screen: WelcomeSyncingScreen },
     welcomeBitcoin: { screen: WelcomeBitcoinScreen },
     welcomeBank: { screen: WelcomeBankScreen },
     welcomeEarn: { screen: WelcomeEarnScreen },
     welcomeFirstSats: { screen: WelcomeFirstSatsScreen },
     welcomePhoneInput: { screen: WelcomePhoneInputScreen },
     welcomePhoneValidation: { screen: WelcomePhoneValidationScreen },
-    welcomeSyncCompleted: { screen: WelcomeSyncCompletedScreen },
-    welcomeGenerating: { screen: WelcomeGeneratingWalletScreen },
-    welcomebackCompleted: { screen: WelcomeBackScreen },
-    firstReward: { screen: FirstRewardScreen },
     verifyEmail: { screen: VerifyEmailScreen },
   },
   {
     headerMode: "float",
+  },
+)
+
+export const SyncingNavigator = createStackNavigator(
+  {
+    welcomeSyncing: { screen: WelcomeSyncingScreen },
+    welcomeSyncCompleted: { screen: WelcomeSyncCompletedScreen },
+  },
+)
+
+export const WalletCompletedNavigator = createStackNavigator(
+  {
+    welcomebackCompleted: { screen: WelcomeBackScreen },
+    firstReward: { screen: FirstRewardScreen },
   },
 )
