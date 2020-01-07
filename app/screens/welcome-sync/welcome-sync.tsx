@@ -108,7 +108,7 @@ export const WelcomeSyncCompletedScreen = inject("dataStore")(observer(({dataSto
     
     // await lnd.pendingChannels()
     // https://blockstream.info/testnet/api/tx/${tx}
-    navigation.navigate('welcomeGenerating')
+    navigation.navigate('welcomeGeneratingWallet')
   }
 
   return (
