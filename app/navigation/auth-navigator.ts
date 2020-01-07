@@ -14,6 +14,7 @@ import {
 import { WelcomePhoneInputScreen, WelcomePhoneValidationScreen } from "../screens/welcome-phone"
 import { WelcomeSyncingScreen, WelcomeSyncCompletedScreen, WelcomeGeneratingWalletScreen  } from "../screens/welcome-sync" 
 import { DebugScreen } from "../screens/demo-screen"
+import { color } from "../theme"
 
 
 export const AuthNavigator = createStackNavigator(
@@ -32,7 +33,10 @@ export const AuthNavigator = createStackNavigator(
   },
   {
     headerMode: "screen",
-    defaultNavigationOptions: {title: ''}
+    defaultNavigationOptions: {
+      title: '',
+      headerTintColor: color.primary
+    }
   },
 )
 
