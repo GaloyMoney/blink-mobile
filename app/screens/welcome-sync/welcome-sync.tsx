@@ -12,6 +12,9 @@ import { withNavigation } from "react-navigation"
 
 import auth from '@react-native-firebase/auth'
 import { color } from "../../theme"
+import { saveString } from "../../utils/storage"
+import { OnboardingSteps } from "../login-screen"
+import { PendingOpenChannelsStatus } from "../../models/data-store"
 
 export const lightningBolt = require("../welcome-screens/LightningBolt.png")
 
@@ -58,8 +61,8 @@ const styles = StyleSheet.create({
 
 const playVideo = (videoId) => {
   YouTubeStandaloneIOS.playVideo(videoId)
-  .then(message => console.log(message))
-  .catch(errorMessage => console.error(errorMessage));
+  .then(message => console.tron.log(message))
+  .catch(errorMessage => console.tron.error(errorMessage));
 }
 
 export const WelcomeSyncingScreen = withNavigation(inject("dataStore")(observer(({dataStore, navigation}) => {
@@ -101,6 +104,8 @@ export const WelcomeSyncCompletedScreen = inject("dataStore")(observer(({dataSto
     await lnd.connectGaloyPeer()
     await lnd.openChannel()
 
+    saveString('onboarding', OnboardingSteps.channelCreated)
+    
     // await lnd.pendingChannels()
     // https://blockstream.info/testnet/api/tx/${tx}
     navigation.navigate('welcomeGenerating')
@@ -127,7 +132,20 @@ export const WelcomeSyncCompletedScreen = inject("dataStore")(observer(({dataSto
   )
 }))
 
-export const WelcomeGeneratingWallet = inject("dataStore")(observer(({dataStore, navigation}) => {
+export const WelcomeGeneratingWalletScreen = inject("dataStore")(observer(({dataStore, navigation}) => {
+
+  const checkChannel = async () => {
+    console.tron.log('check channel looping')
+    const statusChannel = await dataStore.lnd.statusFirstChannelOpen()
+    if (statusChannel == PendingOpenChannelsStatus.opened) {
+      navigation.navigate('welcomebackCompleted')
+    }
+  }
+
+  React.useEffect(() => {
+    const timer = setInterval(checkChannel, 3000);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <Screen>

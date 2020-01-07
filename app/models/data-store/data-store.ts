@@ -245,6 +245,12 @@ export const FiatAccountModel = BaseAccountModel
     }
   }))
 
+export enum PendingOpenChannelsStatus {
+  pending = 'pending',
+  opened = 'opened',
+  noChannel = 'noChannel',
+}
+
 export const LndModel = BaseAccountModel
   .named("Lnd")
   .props({
@@ -409,12 +415,12 @@ export const LndModel = BaseAccountModel
 
       let result 
       // TODO be more throrough, eg check that the other pub key
-      if (pendingOpenChannels.length > 0) {
-        result = 'pending'
-      } else if (channels.length > 0) {
-        result = 'opened'
+      if (channels.length > 0) {
+        result = PendingOpenChannelsStatus.opened
+      } else if (pendingOpenChannels.length > 0) {
+        result = PendingOpenChannelsStatus.pending
       } else {
-        result = 'no-channel'
+        result = PendingOpenChannelsStatus.noChannel
       }
 
       console.tron.log('statusFirstChannelOpen', result)

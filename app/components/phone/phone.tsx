@@ -8,6 +8,8 @@ import { withNavigation } from 'react-navigation';
 import { TextInput } from "react-native-gesture-handler"
 import functions from "@react-native-firebase/functions"
 import { color } from "../../theme"
+import { saveString } from "../../utils/storage"
+import { OnboardingSteps } from "../../screens/login-screen"
 
 const styles = StyleSheet.create({
   container: {
@@ -105,6 +107,7 @@ const _PhoneVerif = ({ text, next, navigation, header = "" }) => {
 
     const result = await functions().httpsCallable('verifyPhoneNumber')(data)
     if (result.data.success) {
+      saveString('onboarding', OnboardingSteps.phoneValidated)
       navigation.navigate(next)
     } else {
       let message = 'error'

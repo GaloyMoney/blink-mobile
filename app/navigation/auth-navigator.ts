@@ -7,10 +7,12 @@ import {
   WelcomeBankScreen, 
   WelcomeEarnScreen,
   WelcomeFirstSatsScreen,
+  WelcomeBackScreen,
+  FirstRewardScreen,
  } from "../screens/welcome-screens"
 
 import { WelcomePhoneInputScreen, WelcomePhoneValidationScreen } from "../screens/welcome-phone"
-import { WelcomeSyncingScreen, WelcomeSyncCompletedScreen, WelcomeGeneratingWallet } from "../screens/welcome-sync" 
+import { WelcomeSyncingScreen, WelcomeSyncCompletedScreen, WelcomeGeneratingWalletScreen  } from "../screens/welcome-sync" 
 import { DebugScreen } from "../screens/demo-screen"
 
 export const AuthNavigator = createStackNavigator(
@@ -27,7 +29,9 @@ export const AuthNavigator = createStackNavigator(
     welcomePhoneInput: { screen: WelcomePhoneInputScreen },
     welcomePhoneValidation: { screen: WelcomePhoneValidationScreen },
     welcomeSyncCompleted: { screen: WelcomeSyncCompletedScreen },
-    welcomeGenerating: { screen: WelcomeGeneratingWallet },
+    welcomeGenerating: { screen: WelcomeGeneratingWalletScreen },
+    welcomebackCompleted: { screen: WelcomeBackScreen },
+    firstReward: { screen: FirstRewardScreen },
     verifyEmail: { screen: VerifyEmailScreen },
   },
   {
