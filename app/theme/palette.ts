@@ -6,6 +6,6 @@ export const palette = {
   lighterGrey: "#CDD4DA",
   darkGrey: "#686B6F",
   angry: "#dd3333",
-  green: "#77C901",
+  green: "#27AB5F",
   greenDarker: "64AA00",
 }
