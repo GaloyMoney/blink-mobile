@@ -3,11 +3,11 @@ import { Screen } from "../../components/screen"
 import * as React from "react"
 import { useState } from "react"
 import { Text } from "../../components/text"
-import { StyleSheet, View, Image, Alert, KeyboardAvoidingView, Platform, Modal, ActivityIndicator } from "react-native"
+import { StyleSheet, View, Image, Alert, KeyboardAvoidingView, Platform } from "react-native"
 import { Button } from 'react-native-elements'
 import { bowserLogo } from "."
 import { withNavigation } from 'react-navigation';
-import { TextInput } from "react-native-gesture-handler"
+import { TextInput, ScrollView } from "react-native-gesture-handler"
 import functions from "@react-native-firebase/functions"
 import { color } from "../../theme"
 import { saveString } from "../../utils/storage"
@@ -174,27 +174,29 @@ export const WelcomePhoneValidationScreen = withNavigation(({ text, next, naviga
     <Screen>
       <Loader loading={loading} />
       <KeyboardAvoidingView
-        keyboardVerticalOffset={-110}
+        keyboardVerticalOffset={-80}
         behavior={(Platform.OS === 'ios')? "padding" : undefined}
           style={styles.container} >
-        <View style={{ flex : 1 }} />
-        <Text style={styles.text}>{header}</Text>
-        <Image source={bowserLogo} />
-        <Text style={styles.text}>{text}</Text>
-        <TextInput  style={styles.textEntry} 
-                    onChangeText={input => (setCode(input))}
-                    keyboardType="number-pad"
-                    textContentType="oneTimeCode"
-                    placeholder="6 Digits Code"
-                    >
-                      {code}
-        </TextInput>
-        <View style={{ flex : 1 }} />
-        <Button title="Next" 
-                  onPress={() => sendVerif()} 
-                  containerStyle={styles.buttonContainer}
-                  buttonStyle={styles.buttonStyle}
-                  />
+        <ScrollView>
+          <View style={{ flex : 1 }} />
+          <Text style={styles.text}>{header}</Text>
+          <Image source={bowserLogo} />
+          <Text style={styles.text}>{text}</Text>
+          <TextInput  style={styles.textEntry} 
+                      onChangeText={input => (setCode(input))}
+                      keyboardType="number-pad"
+                      textContentType="oneTimeCode"
+                      placeholder="6 Digits Code"
+                      >
+                        {code}
+          </TextInput>
+          <View style={{ flex : 1 }} />
+          <Button title="Next" 
+                    onPress={() => sendVerif()} 
+                    containerStyle={styles.buttonContainer}
+                    buttonStyle={styles.buttonStyle}
+                    />
+        </ScrollView>
       </KeyboardAvoidingView>
     </Screen>
   )
