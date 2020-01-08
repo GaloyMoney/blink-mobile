@@ -7,8 +7,10 @@ import {
   WelcomeBankScreen, 
   WelcomeEarnScreen,
   WelcomeFirstSatsScreen,
-  WelcomeBackScreen,
+  WelcomeBackCompletedScreen,
   FirstRewardScreen,
+  EnableNotificationsScreen,
+  AllDoneScreen,
  } from "../screens/welcome-screens"
 
 import { WelcomePhoneInputScreen, WelcomePhoneValidationScreen } from "../screens/welcome-phone"
@@ -53,8 +55,10 @@ export const SyncingNavigator = createStackNavigator(
 
 export const WalletCompletedNavigator = createStackNavigator(
   {
-    welcomebackCompleted: { screen: WelcomeBackScreen },
+    welcomebackCompleted: { screen: WelcomeBackCompletedScreen },
     firstReward: { screen: FirstRewardScreen },
+    enableNotifications: { screen: EnableNotificationsScreen },
+    allDone: { screen: AllDoneScreen },
   },
   {
     headerMode: "none"
