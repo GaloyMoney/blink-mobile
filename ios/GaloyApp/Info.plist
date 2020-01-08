@@ -21,9 +21,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>34</string>
-	<key>NSCameraUsageDescription</key>
-	<string>Activate your camera to scan QR codes</string>
+	<string>41</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -39,8 +37,10 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Activate your camera to scan QR codes</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<string></string>
 	<key>NSMainNibFile</key>
 	<string>LaunchScreen</string>
 	<key>UIAppFonts</key>
