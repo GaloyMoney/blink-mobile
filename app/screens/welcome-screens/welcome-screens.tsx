@@ -8,6 +8,8 @@ import { inject, observer } from "mobx-react"
 import functions from '@react-native-firebase/functions'
 import { Loader } from "../../components/loader"
 import { withNavigation } from "react-navigation"
+import { saveString } from "../../utils/storage"
+import { OnboardingSteps } from "../login-screen"
 
 export const lightningBolt = require("./LightningBolt.png")
 
@@ -66,14 +68,17 @@ export const WelcomeFirstSatsScreen = () => {
          header="+1,000 sats"
          image={lightningBolt}
          >
-         <Text style={styles.text}>You've earned some sats for installing the Galoy app. 
-           Sats are small portions of bitcoin. Hooray!</Text>
+         <Text style={styles.text}>
+           You've earned some sats for installing the Galoy app. 
+           Sats are small portions of bitcoin. Hooray!
+          </Text>
         </Onboarding>
       </Screen>
     )
 }
 
-export const WelcomeBackCompletedScreen = withNavigation(inject("dataStore")(observer(({dataStore, navigation}) => {
+export const WelcomeBackCompletedScreen = withNavigation(inject("dataStore")(observer(
+  ({dataStore, navigation}) => {
   
   const [loading, setLoading] = useState(false);
 
@@ -99,26 +104,27 @@ export const WelcomeBackCompletedScreen = withNavigation(inject("dataStore")(obs
       <Loader loading={loading} />
       <Onboarding 
         action={action}
-        header="+1,000 sats"
+        header="+1,000 sats pending"
         image={lightningBolt}
         >
           <Text style={styles.text}>Your wallet is ready.{'\n'}
-Now send us a payment request so we can send your sats."</Text>
+Now send us a payment request so we can send your sats.</Text>
         </Onboarding>
     </Screen>
   )
 })))
 
-export const FirstRewardScreen = inject("dataStore")(observer(({dataStore, navigation}) => {
+export const FirstRewardScreen = inject("dataStore")(observer(
+  ({dataStore}) => {
   return (
     <Screen>
       <Onboarding
         next="enableNotifications"
-        header={+`${dataStore.lnd.balance} sats`}
+        header={`+ ${dataStore.lnd.balance} sats`}
         image={lightningBolt}
         >
-        <Text style={styles.text}>Success!{'\n'}
-You’ve been paid your first reward."</Text>
+        <Text style={styles.text}>Success!{'\n'}{'\n'}
+You’ve been paid{'\n'}your first reward.</Text>
       </Onboarding>
     </Screen>
   )
@@ -133,22 +139,33 @@ export const EnableNotificationsScreen = () => {
         next="allDone"
         image={lightningBolt}
         >
-        <Text style={styles.text}>Enable notifications to get alerts when you receive payments in the future.</Text>
+        <Text style={styles.text}>
+        Enable notifications to get alerts when you receive payments in the future.
+        </Text>
       </Onboarding>
     </Screen>
   )
 }
 
-export const AllDoneScreen = () => {
+export const AllDoneScreen = withNavigation(inject("dataStore")(observer(
+  ({navigation, dataStore}) => {
+
+    const action = async () => {
+      await saveString('onboarding', OnboardingSteps.fullyOnboarded)
+      navigation.navigate('accounts')
+    }
+
     return (
       <Screen>
         <Onboarding
-         next="firstReward"
-         header="+1,000 sats"
+         action={action}
+         header={`+ ${dataStore.lnd.balance} sats`}
          image={lightningBolt}
          >
-         <Text style={styles.text}>All done here, you're finished setting up a wallet</Text>
+         <Text style={styles.text}>
+          All done here, you're finished setting up a wallet
+          </Text>
        </Onboarding>
       </Screen>
     )
-}
+})))
