@@ -25,6 +25,7 @@
 		A49AE09CF484C8803F0BD694 /* libPods-GaloyApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4132DF240C5252BDEF5B6652 /* libPods-GaloyApp.a */; };
 		B20F99DABBCC49818406703B /* Montserrat-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F9D5B0455A3041D394F75C3B /* Montserrat-MediumItalic.ttf */; };
 		BF22DC1D52B040179D9A80EA /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D34878A3A0924E9F8CF52148 /* Montserrat-Bold.ttf */; };
+		C61EE0AD23C530E30054100C /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C61EE0AC23C530E30054100C /* AuthenticationServices.framework */; };
 		C62C708523A81C08007124C4 /* LndReactModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C62C708423A81C07007124C4 /* LndReactModule.m */; };
 		C62C708823A81C40007124C4 /* lnd.conf in Resources */ = {isa = PBXBuildFile; fileRef = C62C708723A81C40007124C4 /* lnd.conf */; };
 		C6591BB023A70E5300CB508E /* Lndmobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6591BAF23A70E5300CB508E /* Lndmobile.framework */; };
@@ -75,6 +76,8 @@
 		B27D78CEEDEB42648A9E24DC /* Montserrat-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-ExtraBold.ttf"; path = "../app/theme/fonts/Montserrat-ExtraBold.ttf"; sourceTree = "<group>"; };
 		B32B7D09D5FF45EB8C3689F2 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		B5173FE621CC41AB828DE6C0 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
+		C61EE0AB23C52FBA0054100C /* GaloyApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = GaloyApp.entitlements; path = GaloyApp/GaloyApp.entitlements; sourceTree = "<group>"; };
+		C61EE0AC23C530E30054100C /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
 		C62C708323A81C07007124C4 /* LndReactModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LndReactModule.h; path = lightning/LndReactModule.h; sourceTree = "<group>"; };
 		C62C708423A81C07007124C4 /* LndReactModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LndReactModule.m; path = lightning/LndReactModule.m; sourceTree = "<group>"; };
 		C62C708723A81C40007124C4 /* lnd.conf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = lnd.conf; path = lightning/lnd.conf; sourceTree = "<group>"; };
@@ -113,6 +116,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C61EE0AD23C530E30054100C /* AuthenticationServices.framework in Frameworks */,
 				A49AE09CF484C8803F0BD694 /* libPods-GaloyApp.a in Frameworks */,
 				C6591BB023A70E5300CB508E /* Lndmobile.framework in Frameworks */,
 			);
@@ -124,6 +128,7 @@
 		13B07FAE1A68108700A75B9A /* GaloyApp */ = {
 			isa = PBXGroup;
 			children = (
+				C61EE0AB23C52FBA0054100C /* GaloyApp.entitlements */,
 				C6591BAF23A70E5300CB508E /* Lndmobile.framework */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				C62C708723A81C40007124C4 /* lnd.conf */,
@@ -142,6 +147,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C61EE0AC23C530E30054100C /* AuthenticationServices.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				4132DF240C5252BDEF5B6652 /* libPods-GaloyApp.a */,
@@ -497,9 +503,10 @@
 			baseConfigurationReference = EBD61B2C93AC0EB26258A04C /* Pods-GaloyApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = GaloyApp/GaloyApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 34;
+				CURRENT_PROJECT_VERSION = 41;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 39Q9AL82ZL;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -526,9 +533,10 @@
 			baseConfigurationReference = 0947F8D8CDB2697A51DB5C93 /* Pods-GaloyApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = GaloyApp/GaloyApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 34;
+				CURRENT_PROJECT_VERSION = 41;
 				DEVELOPMENT_TEAM = 39Q9AL82ZL;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
