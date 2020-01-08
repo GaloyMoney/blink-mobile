@@ -67,20 +67,23 @@ const playVideo = (videoId) => {
   .catch(errorMessage => console.tron.error(errorMessage));
 }
 
-export const WelcomeSyncingScreen = withNavigation(inject("dataStore")(observer(({dataStore, navigation}) => {
+export const WelcomeSyncingScreen = withNavigation(inject("dataStore")(observer(
+  ({dataStore, navigation}) => {
 
   return (
     <Screen>
       <View style={{alignContent: 'center', width: "100%"}}>
-        <Text style={[styles.text, {fontWeight: "bold"}]}>syncing data... {dataStore.lnd.percentSynced}</Text>
+        <Text style={[styles.text, {fontWeight: "bold"}]}>
+        syncing data... {dataStore.lnd.percentSynced}</Text>
         <Progress.Bar style={styles.progressBar} 
                       color={color.primary}
                       progress={dataStore.lnd.percentSynced} />
       </View>
       <View style={styles.container}>
         <Image source={lightningBolt} style={styles.image} />
-        <Text style={styles.text}>Almost ready to launch your wallet! This could take a minute.
-        {"\n"}{"\n"}Earn another reward{"\n"}while you wait:</Text>
+        <Text style={styles.text}>Almost ready to launch your wallet!
+        This could take a minute.{"\n"}{"\n"}
+        Earn another reward{"\n"}while you wait:</Text>
         <Button title="What is a sat? +1,000 sats" 
                 containerStyle={styles.buttonContainerVideo}
                 buttonStyle={styles.buttonVideo}
@@ -96,7 +99,8 @@ export const WelcomeSyncingScreen = withNavigation(inject("dataStore")(observer(
   )
 })))
 
-export const WelcomeSyncCompletedScreen = inject("dataStore")(observer(({dataStore, navigation}) => {
+export const WelcomeSyncCompletedScreen = inject("dataStore")(observer(
+  ({dataStore, navigation}) => {
   const [loading, setLoading] = useState(false);
 
   const openChannel = async () => {
@@ -142,7 +146,8 @@ export const WelcomeSyncCompletedScreen = inject("dataStore")(observer(({dataSto
   )
 }))
 
-export const WelcomeGeneratingWalletScreen = inject("dataStore")(observer(({dataStore, navigation}) => {
+export const WelcomeGeneratingWalletScreen = inject("dataStore")(observer(
+  ({dataStore, navigation}) => {
 
   const checkChannel = async () => {
     console.tron.log('check channel looping')

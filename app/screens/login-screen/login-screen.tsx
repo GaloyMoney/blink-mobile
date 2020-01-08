@@ -61,20 +61,14 @@ const styles = StyleSheet.create({
 
 })
 
-// TODO move to utils
-const validateEmail = (email) => {
-  const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-  return re.test(email)
-}
-
 export enum OnboardingSteps {
   phoneValidated = "phoneValidated", // TODO use firebase auth instead of twilio
   channelCreated = "channelCreated",
-  channelOpened = "channelOpened",
-  rewardGiven = "rewardGiven",
+  fullyOnboarded = "rewardGiven",
 }
 
-export const GetStartedScreen = withNavigation(inject("dataStore")(observer(({dataStore, navigation}) => {
+export const GetStartedScreen = withNavigation(inject("dataStore")(observer(
+  ({dataStore, navigation}) => {
   // this should always get executed
 
   getEnv(dataStore).lnd.start()
@@ -84,7 +78,8 @@ export const GetStartedScreen = withNavigation(inject("dataStore")(observer(({da
 
     //  await saveString('onboarding', '') // for debug FIXME
 
-      const onboard = await loadString('onboarding')
+      const onboard = await loadString('onboarding') // TODO: move this to mst
+      console.tron.log(`onboard ${onboard}`)
       switch(onboard) {
         case OnboardingSteps.phoneValidated: {
           navigation.navigate('welcomeGenerating')
@@ -93,6 +88,7 @@ export const GetStartedScreen = withNavigation(inject("dataStore")(observer(({da
         case OnboardingSteps.channelCreated: {
           // TODO: as it takes time to load the status, have an intermediary screen
           const statusChannel = await dataStore.lnd.statusFirstChannelOpen()
+          console.tron.log(`statusChannel : ${statusChannel}`)
           switch (statusChannel) {
             case PendingOpenChannelsStatus.pending: {
               navigation.navigate('welcomeGenerating')
@@ -104,8 +100,16 @@ export const GetStartedScreen = withNavigation(inject("dataStore")(observer(({da
             }
             default:
               console.tron.error('statusChannel state management error')
+              break
           }
+          break
         }
+        case OnboardingSteps.fullyOnboarded: {
+          navigation.navigate('accounts')
+          break
+        }
+        default:
+          console.tron.log('no onboarding string')
       }
     }
 
@@ -121,7 +125,8 @@ GetStartedScreen.navigationOptions = () => ({
   headerShown: false
 });
 
-export const LoginScreen = withNavigation(inject("dataStore")(observer(({dataStore, navigation}) => {
+export const LoginScreen = withNavigation(inject("dataStore")(observer(
+  ({dataStore, navigation}) => {
   return (
     TemplateLoginScreen({dataStore, navigation, screen: "subLogin"})
   )
