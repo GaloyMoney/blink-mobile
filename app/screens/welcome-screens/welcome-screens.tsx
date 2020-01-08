@@ -152,7 +152,7 @@ export const AllDoneScreen = withNavigation(inject("dataStore")(observer(
 
     const action = async () => {
       await saveString('onboarding', OnboardingSteps.fullyOnboarded)
-      navigation.navigate('accounts')
+      navigation.navigate('primaryStack')
     }
 
     return (

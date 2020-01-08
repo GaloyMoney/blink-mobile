@@ -3,19 +3,14 @@ import { observer, inject } from "mobx-react"
 import { StyleSheet, TouchableHighlight, View, Alert, Button } from "react-native"
 import { Text } from "../../components/text"
 import { Screen } from "../../components/screen"
-import { NavigationScreenProp, FlatList, withNavigation } from "react-navigation"
+import { FlatList, withNavigation } from "react-navigation"
 import { color } from "../../theme/color"
 import Icon from 'react-native-vector-icons/Ionicons'
 import currency from 'currency.js'
 import { BalanceHeader } from "../../components/balance-header"
-import { DataStore } from "../../models/data-store"
 import { AccountType } from "./AccountType"
 import { CurrencyType } from "../../models/data-store/CurrencyType"
 import auth from "@react-native-firebase/auth"
-
-export interface AccountsScreenProps extends NavigationScreenProp<{}> {
-  dataStore: DataStore
-}
 
 const accountBasic = {
   color: color.text,
@@ -45,7 +40,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const AccountItem = inject("dataStore")(observer((props) => {
+const AccountItem = withNavigation(inject("dataStore")(observer((props) => {
   return (
     <TouchableHighlight
       underlayColor="white"
@@ -63,26 +58,22 @@ const AccountItem = inject("dataStore")(observer((props) => {
       </View>
     </TouchableHighlight>
   )
-}))
+})))
 
-const WithNavigationAccountItem = withNavigation(AccountItem)
+export const AccountsScreen = withNavigation(inject("dataStore")(observer(
+  ({dataStore, navigation}) => {
 
-@inject("dataStore")
-@observer
-export class AccountsScreen extends React.Component<AccountsScreenProps, {}> {
-  menu: Array<Record<string, any>> = [
+  const accountTypes: Array<Record<string, any>> = [ //FIXME type any
     { key: "Checking", account: AccountType.Checking, icon: 'ios-cash' },
     { key: "Bitcoin", account: AccountType.Bitcoin, icon: 'logo-bitcoin' },
   ]
 
-  componentDidMount() {
-    this.props.dataStore.updateBalance() // TODO should be fetch also at regular interval and if user refresh it intentionnaly
-  }
+  dataStore.updateBalance() // TODO should be fetch also at regular interval and if user refresh it intentionnaly
 
-  signOut() {
+  const signOut = () => {
     auth().signOut()
       .then(() => {
-        this.props.navigation.navigate('authStack')
+        navigation.navigate('authStack')
       })
       .catch(err => {
         console.tron.log(err)
@@ -90,22 +81,20 @@ export class AccountsScreen extends React.Component<AccountsScreenProps, {}> {
       })
   }
 
-  render () {
-    return (
-      <Screen>
-        <BalanceHeader amount={this.props.dataStore.total_usd_balance} currency={CurrencyType.USD} />
-        <FlatList
-          data={this.menu}
-          renderItem={({ item }) => (
-            <WithNavigationAccountItem {...item} />
-          )} />
-        <Button title="debugScreen" onPress={() => this.props.navigation.navigate('demo')}></Button>
-        <Button title="Log out" onPress={() => this.signOut()}></Button>
-      </Screen>
-    )
-  }
-}
+  return (
+    <Screen>
+      <BalanceHeader amount={dataStore.total_usd_balance} currency={CurrencyType.USD} />
+      <FlatList
+        data={accountTypes}
+        renderItem={({ item }) => (
+          <AccountItem {...item} />
+        )} />
+      <Button title="debugScreen" onPress={() => navigation.navigate('demo')}></Button>
+      <Button title="Log out" onPress={() => signOut()}></Button>
+    </Screen>
+  )
+})))
 
-// AccountsScreen.navigationOptions = {
-// title: 'Accounts',
-// };
+AccountsScreen.navigationOptions = {
+  title: 'Accounts'
+}

@@ -105,7 +105,7 @@ export const GetStartedScreen = withNavigation(inject("dataStore")(observer(
           break
         }
         case OnboardingSteps.fullyOnboarded: {
-          navigation.navigate('accounts')
+          navigation.navigate('primaryStack')
           break
         }
         default:
