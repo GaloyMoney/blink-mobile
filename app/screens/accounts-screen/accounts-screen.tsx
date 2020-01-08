@@ -76,7 +76,7 @@ export class AccountsScreen extends React.Component<AccountsScreenProps, {}> {
   ]
 
   componentDidMount() {
-    this.props.dataStore.update_balance() // TODO should be fetch also at regular interval and if user refresh it intentionnaly
+    this.props.dataStore.updateBalance() // TODO should be fetch also at regular interval and if user refresh it intentionnaly
   }
 
   signOut() {
