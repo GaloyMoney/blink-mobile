@@ -110,7 +110,7 @@ export const WelcomeSyncCompletedScreen = inject("dataStore")(observer(({dataSto
       await lnd.connectGaloyPeer()
       await lnd.openChannel()
   
-      saveString('onboarding', OnboardingSteps.channelCreated)
+      await saveString('onboarding', OnboardingSteps.channelCreated)
       
       // await lnd.pendingChannels()
       // https://blockstream.info/testnet/api/tx/${tx}

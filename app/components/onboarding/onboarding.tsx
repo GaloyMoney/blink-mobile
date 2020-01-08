@@ -24,12 +24,6 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
 
-  text: {
-    fontSize: 20,
-    textAlign: "center",
-    paddingHorizontal: 40,
-  },
-
   buttonContainer: {
     paddingHorizontal: 80,
     paddingBottom: 60
@@ -40,21 +34,22 @@ const styles = StyleSheet.create({
   }
 })
 
-const _Onboarding = ({ text, next, image, navigation, header = "" }) => {
+export const Onboarding = withNavigation(({ children, next, action, image, navigation, header = "" }) => {
   return (
     <>
       <Text style={styles.header}>{header}</Text>
       <View style={styles.container}>
         <Image source={image} style={styles.image} />
-        <Text style={styles.text}>{text}</Text>
+          {children}
       </View>
       <Button title="Next" 
-              onPress={() => navigation.navigate(next)}
+              onPress={next ?
+                () => navigation.navigate(next) : 
+                () => action()
+              }
               containerStyle={styles.buttonContainer}
               buttonStyle={styles.buttonStyle}
               />
     </>
   )
-}
-
-export const Onboarding = withNavigation(_Onboarding)
+})

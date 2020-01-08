@@ -9,7 +9,7 @@ import { Input, Button } from 'react-native-elements'
 import auth from '@react-native-firebase/auth'
 import { color } from "../../theme"
 import { getEnv } from "mobx-state-tree"
-import { loadString } from "../../utils/storage"
+import { loadString, saveString } from "../../utils/storage"
 import { PendingOpenChannelsStatus } from "../../models/data-store"
 
 const styles = StyleSheet.create({
@@ -81,6 +81,9 @@ export const GetStartedScreen = withNavigation(inject("dataStore")(observer(({da
 
   useEffect(() => {
     const getCurrentOnboardingStep = async () => {
+
+    //  await saveString('onboarding', '') // for debug FIXME
+
       const onboard = await loadString('onboarding')
       switch(onboard) {
         case OnboardingSteps.phoneValidated: {
@@ -88,6 +91,7 @@ export const GetStartedScreen = withNavigation(inject("dataStore")(observer(({da
           break
         }
         case OnboardingSteps.channelCreated: {
+          // TODO: as it takes time to load the status, have an intermediary screen
           const statusChannel = await dataStore.lnd.statusFirstChannelOpen()
           switch (statusChannel) {
             case PendingOpenChannelsStatus.pending: {

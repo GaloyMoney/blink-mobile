@@ -216,7 +216,7 @@ export const FiatAccountModel = BaseAccountModel
       }
     })
 
-    const update_balance = flow(function * () {
+    const updateBalance = flow(function * () {
       try {
         const result = yield functions().httpsCallable('getFiatBalances')({})
         console.tron.log('balance', result)
@@ -234,7 +234,7 @@ export const FiatAccountModel = BaseAccountModel
       self.confirmedBalance = 0
     }
 
-    return { update_balance, reset, update_transactions }
+    return { updateBalance, reset, update_transactions }
   })
   .views(self => ({
     get currency() {
@@ -513,7 +513,7 @@ export const LndModel = BaseAccountModel
     const walletGotOpened = flow(function * () {
       self.walletUnlocked = true
       yield getInfo()
-      yield update_balance()
+      yield updateBalance()
       yield update_transactions()
       yield update_invoices()
       yield list_payments()
@@ -540,9 +540,9 @@ export const LndModel = BaseAccountModel
       console.tron.log(address)
     })
 
-    const addInvoice = flow(function * (value: number = 10000) {
+    const addInvoice = flow(function * ({value}) {
       const response = yield getEnv(self).lnd.grpc.sendCommand('addInvoice', {
-        value: value,
+        value,
         memo: "this is a memo",
         expiry: 172800, // 48 hours
         private: true,
@@ -554,11 +554,14 @@ export const LndModel = BaseAccountModel
       return invoice
     })
 
-    const update_balance = flow(function * () {
+    const updateBalance = flow(function * () {
       try {
-        const r = yield getEnv(self).lnd.grpc.sendCommand('WalletBalance')
-        self.confirmedBalance = r.confirmedBalance
-        self.unconfirmedBalance = r.unconfirmedBalance
+        const onChainBalance = yield getEnv(self).lnd.grpc.sendCommand('WalletBalance')
+        const channelBalance = yield getEnv(self).lnd.grpc.sendCommand('ChannelBalance')
+        self.confirmedBalance = onChainBalance.confirmedBalance + channelBalance.balance
+        self.unconfirmedBalance = onChainBalance.unconfirmedBalance + channelBalance.pendingOpenBalance
+
+        return self.balance
       } catch (err) {
         console.tron.error(`Getting wallet balance failed ${err}`)
         throw err
@@ -718,7 +721,7 @@ export const LndModel = BaseAccountModel
       walletGotOpened,
       newAddress,
       update_transactions,
-      update_balance,
+      updateBalance,
       update_invoices,
       pay_invoice,
       list_payments,
@@ -799,14 +802,14 @@ export const DataStoreModel = types
       yield self.lnd.update_transactions()
     })
 
-    const update_balance = flow(function * () {
+    const updateBalance = flow(function * () {
       // TODO parrallel call?
       yield self.rates.update()
-      yield self.fiat.update_balance()
-      yield self.lnd.update_balance()
+      yield self.fiat.updateBalance()
+      yield self.lnd.updateBalance()
     })
 
-    return { update_transactions, update_balance }
+    return { update_transactions, updateBalance }
   })
   .views(self => ({
     get total_usd_balance() { // in USD

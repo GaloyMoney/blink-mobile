@@ -155,7 +155,7 @@ export const WelcomePhoneValidationScreen = withNavigation(({ text, next, naviga
   
       const result = await functions().httpsCallable('verifyPhoneNumber')(data)
       if (result.data.success) {
-        saveString('onboarding', OnboardingSteps.phoneValidated)
+        await saveString('onboarding', OnboardingSteps.phoneValidated)
         navigation.navigate(next)
       } else {
         let message = 'error'
