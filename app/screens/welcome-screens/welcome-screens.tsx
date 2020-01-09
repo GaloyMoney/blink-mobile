@@ -10,6 +10,8 @@ import { Loader } from "../../components/loader"
 import { withNavigation } from "react-navigation"
 import { saveString } from "../../utils/storage"
 import { OnboardingSteps } from "../login-screen"
+import { CurrencyType } from "../../models/data-store/CurrencyType"
+import { AccountType } from "../accounts-screen/AccountType"
 
 export const lightningBolt = require("./LightningBolt.png")
 
@@ -25,7 +27,9 @@ export const WelcomeGaloyScreen = () => {
   return (
     <Screen>
       <Onboarding next="welcomeBitcoin" image={lightningBolt}>
-        <Text style={styles.text}>Welcome! Galoy is a new type of app for managing your money</Text>
+        <Text style={styles.text}>
+          Welcome! Galoy is a new type of app for managing your money
+          </Text>
         </Onboarding>
     </Screen>
   )
@@ -77,7 +81,8 @@ export const WelcomeFirstSatsScreen = () => {
     )
 }
 
-export const WelcomeBackCompletedScreen = withNavigation(inject("dataStore")(observer(
+export const WelcomeBackCompletedScreen = 
+  withNavigation(inject("dataStore")(observer(
   ({dataStore, navigation}) => {
   
   const [loading, setLoading] = useState(false);
@@ -85,7 +90,8 @@ export const WelcomeBackCompletedScreen = withNavigation(inject("dataStore")(obs
   const action = async () => {
     setLoading(true)
     try {
-      const invoice = await dataStore.lnd.addInvoice({value: 100})
+      const invoice = await dataStore.lnd.addInvoice(
+        {value: 100, memo: "Claimed Rewards"})
       const result = await functions().httpsCallable('payInvoice')({ invoice })
       console.tron.log(invoice, result)
       await dataStore.lnd.updateBalance()
@@ -116,11 +122,17 @@ Now send us a payment request so we can send your sats.</Text>
 
 export const FirstRewardScreen = inject("dataStore")(observer(
   ({dataStore}) => {
+
+  const balance = dataStore.balances({
+    currency: CurrencyType.BTC, 
+    account: AccountType.Bitcoin,
+  })
+
   return (
     <Screen>
       <Onboarding
         next="enableNotifications"
-        header={`+ ${dataStore.lnd.balance} sats`}
+        header={`+ ${balance} sats`}
         image={lightningBolt}
         >
         <Text style={styles.text}>Success!{'\n'}{'\n'}
@@ -155,11 +167,16 @@ export const AllDoneScreen = withNavigation(inject("dataStore")(observer(
       navigation.navigate('primaryStack')
     }
 
+    const balance = dataStore.balances({
+      currency: CurrencyType.BTC, 
+      account: AccountType.Bitcoin,
+    })
+
     return (
       <Screen>
         <Onboarding
          action={action}
-         header={`+ ${dataStore.lnd.balance} sats`}
+         header={`+ ${balance} sats`}
          image={lightningBolt}
          >
          <Text style={styles.text}>
