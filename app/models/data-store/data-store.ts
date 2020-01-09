@@ -456,7 +456,7 @@ export const LndModel = BaseAccountModel
           return 0
         }
 
-        if (self.bestBlockHeight! == self.startBlockHeight!) {
+        if (self.bestBlockHeight! < self.startBlockHeight!) {
           return 1
         }
 
@@ -540,10 +540,10 @@ export const LndModel = BaseAccountModel
       console.tron.log(address)
     })
 
-    const addInvoice = flow(function * ({value}) {
+    const addInvoice = flow(function * ({value, memo}) {
       const response = yield getEnv(self).lnd.grpc.sendCommand('addInvoice', {
         value,
-        memo: "this is a memo",
+        memo,
         expiry: 172800, // 48 hours
         private: true,
       })
