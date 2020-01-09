@@ -82,7 +82,7 @@ export const GetStartedScreen = withNavigation(inject("dataStore")(observer(
       console.tron.log(`onboard ${onboard}`)
       switch(onboard) {
         case OnboardingSteps.phoneValidated: {
-          navigation.navigate('welcomeGenerating')
+          navigation.navigate('welcomeSyncing')
           break
         }
         case OnboardingSteps.channelCreated: {
