@@ -1,7 +1,7 @@
 import { Screen } from "../../components/screen"
 
 import * as React from "react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Text } from "../../components/text"
 import { StyleSheet, View, Image, Alert, KeyboardAvoidingView, Platform } from "react-native"
 import { Button } from 'react-native-elements'
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
 export const WelcomePhoneInputScreen = withNavigation(({ text, next, navigation, header = "" }) => {
   const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const [completed, setCompleted] = useState(false);
   
   const send = async () => {
     setLoading(true)
@@ -90,13 +90,20 @@ export const WelcomePhoneInputScreen = withNavigation(({ text, next, navigation,
 
       const result = await functions().httpsCallable('initPhoneNumber')({phone})
       console.tron.log(result)
-      navigation.navigate(next, {phone})
+      setCompleted(true)
+      console.tron.log('succesfully completed')
     } catch (err) {
       console.tron.err('error with initPhoneNumber')
     } finally {
       setLoading(false)
     }
   };
+
+  useEffect(() => {
+    if(completed) {
+      navigation.navigate(next, {phone})
+    }
+  }, [completed]);
 
   header="To receive your sats, first we need to activate your Bitcoin wallet." 
   text="This will take a little while, but we’ll send you a text you when it’s ready!" 
@@ -138,6 +145,7 @@ export const WelcomePhoneInputScreen = withNavigation(({ text, next, navigation,
 export const WelcomePhoneValidationScreen = withNavigation(({ text, next, navigation, header = "" }) => {
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
+  const [completed, setCompleted] = useState(false);
 
   const phone = navigation.getParam('phone');
 
@@ -156,7 +164,7 @@ export const WelcomePhoneValidationScreen = withNavigation(({ text, next, naviga
       const result = await functions().httpsCallable('verifyPhoneNumber')(data)
       if (result.data.success) {
         await saveString('onboarding', OnboardingSteps.phoneValidated)
-        navigation.navigate(next)
+        setCompleted(true)
       } else {
         let message = 'error'
         message += result.data.reason
@@ -166,6 +174,12 @@ export const WelcomePhoneValidationScreen = withNavigation(({ text, next, naviga
       setLoading(false)
     }
   };
+
+  useEffect(() => {
+    if(completed) {
+      navigation.navigate(next)
+    }
+  }, [completed]);
 
   text="To confirm your phone number, enter the code we just sent you." 
   next="welcomeSyncing" 
