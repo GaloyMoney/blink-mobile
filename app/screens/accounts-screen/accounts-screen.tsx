@@ -1,4 +1,5 @@
 import * as React from "react"
+import { useEffect } from "react"
 import { observer, inject } from "mobx-react"
 import { StyleSheet, TouchableHighlight, View, Alert, Button } from "react-native"
 import { Text } from "../../components/text"
@@ -40,20 +41,23 @@ const styles = StyleSheet.create({
   },
 })
 
-const AccountItem = withNavigation(inject("dataStore")(observer((props) => {
+const AccountItem = withNavigation(inject("dataStore")(observer(
+  ({dataStore, account, icon, navigation}) => {
+
   return (
     <TouchableHighlight
       underlayColor="white"
-      onPress={() => props.navigation.navigate('accountDetail', {
-        account: props.account,
+      onPress={() => navigation.navigate('accountDetail', {
+        account: account,
       })}
     >
       <View style={styles.accountView} >
-        <Icon name={props.icon} color={color.primary} size={28} />
-        <Text style={styles.accountTypeStyle}>{props.account}</Text>
+        <Icon name={icon} color={color.primary} size={28} />
+        <Text style={styles.accountTypeStyle}>{account}</Text>
         <Text style={styles.accountAmount}>
-          {currency(props.dataStore.usd_balances[props.account],
-            { formatWithSymbol: true }).format()}
+          { currency(dataStore.balances(
+            { account, currency: CurrencyType.USD }),
+            { formatWithSymbol: true }).format() }
         </Text>
       </View>
     </TouchableHighlight>
@@ -68,7 +72,14 @@ export const AccountsScreen = withNavigation(inject("dataStore")(observer(
     { key: "Bitcoin", account: AccountType.Bitcoin, icon: 'logo-bitcoin' },
   ]
 
-  dataStore.updateBalance() // TODO should be fetch also at regular interval and if user refresh it intentionnaly
+  dataStore.updateBalance()
+
+  // TODO smart refresh --> listen to database and lnd log
+  useEffect(() => {
+    const timer = setInterval(dataStore.updateBalance, 10000);
+    return () => clearTimeout(timer);
+  }, []);
+
 
   const signOut = () => {
     auth().signOut()
@@ -83,7 +94,7 @@ export const AccountsScreen = withNavigation(inject("dataStore")(observer(
 
   return (
     <Screen>
-      <BalanceHeader amount={dataStore.total_usd_balance} currency={CurrencyType.USD} />
+      <BalanceHeader headingCurrency={CurrencyType.BTC} accountsToAdd={AccountType.All} />
       <FlatList
         data={accountTypes}
         renderItem={({ item }) => (

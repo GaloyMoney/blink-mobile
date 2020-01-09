@@ -787,6 +787,24 @@ export const RatesModel = types
     })
     return { update }
   })
+  .views(self => ({
+
+    // workaround on the fact key can't be enum
+    rate(currency: CurrencyType) {
+      if (currency === CurrencyType.USD) {
+        return self.USD
+      } else if (currency === CurrencyType.BTC) {
+        return self.BTC
+      }
+    }
+}))
+
+
+interface BalanceRequest {
+  currency: CurrencyType,
+  account: AccountType
+}
+
 
 export const DataStoreModel = types
   .model("DataStore", {
@@ -812,16 +830,20 @@ export const DataStoreModel = types
     return { update_transactions, updateBalance }
   })
   .views(self => ({
-    get total_usd_balance() { // in USD
-      return self.fiat.balance + self.lnd.balance * self.rates[self.lnd.currency]
-    },
 
-    get usd_balances() { // return an Object mapping account to USD balance
-      const balances = {} // TODO refactor? AccountType.Bitcoin can't be used as key in constructor?
-      balances[AccountType.Bitcoin] = self.lnd.balance * self.rates[self.lnd.currency]
+    // TODO using: BalanceRequest type, how to set it?
+    balances({currency, account}) {
+      const balances = {} 
+
+      balances[AccountType.Bitcoin] = self.lnd.balance 
+        * self.rates.rate(self.lnd.currency)
+        / self.rates.rate(currency)
       balances[AccountType.Checking] = self.fiat.balance
-      return balances
-    },
+        / self.rates.rate(currency)
+      balances[AccountType.All] = Object.values(balances).reduce((a, b) => a + b, 0)
+
+      return balances[account]
+    }
 
   }))
 
