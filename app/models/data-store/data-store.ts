@@ -430,9 +430,11 @@ export const LndModel = BaseAccountModel
     const openChannel = flow(function * () {
       try {
         const result = yield functions().httpsCallable('openChannel')({})
-        console.log('open channel with Galoy node', result)
+        console.tron.log('opening a channel with Galoy node', result)
+        return result
       } catch (err) {
         console.tron.error(`impossible to open a channel ${err}`)
+        throw err
       }
     })
 

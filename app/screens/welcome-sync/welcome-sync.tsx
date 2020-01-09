@@ -8,7 +8,7 @@ import * as Progress from 'react-native-progress'
 
 import { YouTubeStandaloneIOS } from 'react-native-youtube';
 import { Button } from "react-native-elements"
-import { Image, StyleSheet, View } from "react-native"
+import { Image, StyleSheet, View, Alert } from "react-native"
 import { withNavigation } from "react-navigation"
 
 import auth from '@react-native-firebase/auth'
@@ -107,13 +107,19 @@ export const WelcomeSyncCompletedScreen = inject("dataStore")(observer(
     setLoading(true)
 
     try {
-      const lnd = dataStore.lnd
-      const result = await auth().signInAnonymously()
+      let result = await auth().signInAnonymously()
       console.tron.log('auth', result)
-      await lnd.sendPubKey()
-      await lnd.connectGaloyPeer()
-      await lnd.openChannel()
-  
+
+      await dataStore.lnd.sendPubKey()
+      await dataStore.lnd.connectGaloyPeer()
+      
+      try {
+        const funding_tx = await dataStore.lnd.openChannel()
+      } catch(err) {
+        Alert.alert(`${err}`)
+        return
+      }
+
       await saveString('onboarding', OnboardingSteps.channelCreated)
       
       // await lnd.pendingChannels()
