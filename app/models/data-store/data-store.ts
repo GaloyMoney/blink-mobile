@@ -747,10 +747,22 @@ export const LndModel = BaseAccountModel
         status: transaction.numConfirmations < 3 ? 'unconfirmed' : 'confirmed',
       }))
 
+      const formatName = (invoice) => {
+        if (invoice.settled) {
+          if (invoice.memo) {
+            return invoice.memo
+          } else {
+            return `payment received`
+          }
+        } else {
+          return `waiting to receive payment`
+        }
+      } 
+
       const invoicesTxs = self.invoices.map(invoice => ({
         id: invoice.rHash,
         icon: "ios-thunderstorm",
-        name: invoice.settled ? `waiting to receive payment` : `payment received`,
+        name: formatName(invoice),
         amount: invoice.value,
         status: invoice.settled ? 'complete' : 'in-progress',
         date: parseDate(invoice.creationDate),
