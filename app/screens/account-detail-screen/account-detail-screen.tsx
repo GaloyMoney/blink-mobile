@@ -173,11 +173,8 @@ export class AccountDetailScreen extends React.Component<AccountDetailScreenProp
 
     return (
       <Screen>
-        <BalanceHeader
-          amount={accountStore.balance}
-          eq_dollar={dataStore.usd_balances[accountType]}
-          currency={currency}
-        />
+        <BalanceHeader headingCurrency={currency} 
+          accountsToAdd={this.getAccountType()} />
         <SectionList
           renderItem={({ item, index, section }) => (
             <WithNavigationAccountDetailItem

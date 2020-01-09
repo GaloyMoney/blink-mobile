@@ -1,4 +1,5 @@
 export enum AccountType {
   Checking = "Checking",
-  Bitcoin = "Bitcoin"
+  Bitcoin = "Bitcoin",
+  All = "All",
 }

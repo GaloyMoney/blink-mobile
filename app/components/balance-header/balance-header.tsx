@@ -1,22 +1,12 @@
 import * as React from "react"
-import { View, ViewStyle, StyleSheet } from "react-native"
+import { View, StyleSheet } from "react-native"
 import { Text } from "../text"
 import { color } from "../../theme"
 
-import currency from "currency.js"
+import currency from "currency.js";
 import { CurrencyType } from "../../models/data-store/CurrencyType"
-
-export interface BalanceHeaderProps {
-  /**
-   * An optional style override useful for padding & margin.
-   */
-  style?: ViewStyle
-
-  amount: number
-  currency: CurrencyType
-
-  eq_dollar?: number
-}
+import { inject, observer } from "mobx-react";
+import { AccountType } from "../../screens/accounts-screen/AccountType";
 
 const styles = StyleSheet.create({
   amount: {
@@ -43,42 +33,65 @@ const styles = StyleSheet.create({
   },
 })
 
-/**
- * Stateless functional component for your needs
- *
- * Component description here for TypeScript tips.
- */
-export function BalanceHeader(props: BalanceHeaderProps) {
-  const { style, ...rest } = props
+const TextCurrency = ({amount, currencyUsed, fontSize}) => {
 
-  const size = 32
-
-  switch (props.currency) {
-    case CurrencyType.USD:
-      var text_comp = <Text style={{ fontSize: size, color: color.text, }}>
-        {currency(props.amount, { formatWithSymbol: true }).format()}
+  if (currencyUsed === CurrencyType.USD) {
+    return (
+    <Text style={{ fontSize, color: color.text, }}>
+      {currency(amount, { formatWithSymbol: true }).format()}
+    </Text>
+    )
+  } else /* if (currency === CurrencyType.BTC) */ {
+    return (
+    <>
+      <Text style={{ fontSize, color: color.text, }}>
+      {currency(amount, { precision: 0, separator: ',' }).format()}
       </Text>
-      break
-    case CurrencyType.BTC:
-      var text_comp =
-        <View style={styles.amount}>
-          <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
-            <Text style={{ fontSize: size, color: color.text, }}>
-              {currency(props.amount, { precision: 0, separator: ',' }).format()}
-            </Text>
-            <Text style={{ fontSize: size / 2, color: color.text, }}> sats</Text>
-          </View>
-          <Text style={{ fontSize: size / 2, color: color.text, }}>
-            {currency(props.eq_dollar, { formatWithSymbol: true }).format()}
-          </Text>
-        </View>
-      break
+      <Text style={{ fontSize: fontSize / 2, color: color.text, }}> sats</Text>
+    </>
+    )
+  }
+}
+
+export interface BalanceHeaderProps {
+  headingCurrency: CurrencyType,
+  accountsToAdd: AccountType,
+  dataStore?: any
+}
+
+export const BalanceHeader: React.FunctionComponent<BalanceHeaderProps> = 
+  inject("dataStore")(observer(
+  ({headingCurrency, dataStore, accountsToAdd}) => {
+
+  let subCurrency
+  if (headingCurrency === CurrencyType.BTC) {
+
+    subCurrency = <TextCurrency 
+      amount={dataStore.balances({
+        currency: CurrencyType.USD,
+        account: accountsToAdd,
+      })}
+      currencyUsed={CurrencyType.USD}
+      fontSize={16}
+    />
   }
 
   return (
-    <View style={styles.header} {...rest}>
-      {text_comp}
+    <View style={styles.header}>
+        <View style={styles.amount}>
+          <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
+            <TextCurrency 
+              amount={dataStore.balances({
+                currency: headingCurrency,
+                account: accountsToAdd,
+              })}
+              currencyUsed={headingCurrency}
+              fontSize={32}
+            />
+          </View>
+          {subCurrency}
+        </View>
       <Text style={styles.balanceText}>Current Balance</Text>
     </View>
   )
-}
+}))
