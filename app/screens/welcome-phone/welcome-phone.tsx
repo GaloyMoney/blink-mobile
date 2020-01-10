@@ -11,8 +11,11 @@ import { TextInput, ScrollView } from "react-native-gesture-handler"
 import functions from "@react-native-firebase/functions"
 import { color } from "../../theme"
 import { saveString } from "../../utils/storage"
-import { OnboardingSteps } from "../../screens/login-screen"
 import { Loader } from "../../components/loader"
+
+import auth from '@react-native-firebase/auth';
+import { OnboardingSteps } from "../loading-screen"
+ 
 
 const styles = StyleSheet.create({
   container: {
@@ -77,6 +80,7 @@ export const WelcomePhoneInputScreen = withNavigation(({ text, next, navigation,
   const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
   const [completed, setCompleted] = useState(false);
+  const [confirmation, setConfirmation] = useState({});
   
   const send = async () => {
     setLoading(true)
@@ -88,20 +92,29 @@ export const WelcomePhoneInputScreen = withNavigation(({ text, next, navigation,
         return
       }
 
-      const result = await functions().httpsCallable('initPhoneNumber')({phone})
-      console.tron.log(result)
+      const conf = await auth().signInWithPhoneNumber(phone)
+      setConfirmation(conf);
+      console.tron.log(`confirmation`, conf)
+      console.log(`confirmation`, conf)
+
+      // const result = await functions().httpsCallable('initPhoneNumber')({phone})
+      // console.tron.log(result)
       setCompleted(true)
-      console.tron.log('succesfully completed')
+      console.tron.log('WelcomePhoneInputScreen succesfully completed')
     } catch (err) {
-      console.tron.err('error with initPhoneNumber')
+      // TODO find a way to easily log in Reactotron and Xcode
+      console.tron.error('error with initPhoneNumber')
+      console.tron.error(err)
+      console.error('error with initPhoneNumber')
+      console.error(err)
     } finally {
       setLoading(false)
     }
-  };
+  }
 
   useEffect(() => {
-    if(completed) {
-      navigation.navigate(next, {phone})
+    if(completed) { // FIXME: race condition possible between completed and confirmation?
+      navigation.navigate(next, {phone, confirmation})
     }
   }, [completed]);
 
@@ -119,11 +132,11 @@ export const WelcomePhoneInputScreen = withNavigation(({ text, next, navigation,
           <View style={{flex: 1, justifyContent: "flex-end" }}>
           <View style={{ flex : 1 }} />
           <Text style={styles.text}>{header}</Text>
-          <Image source={bowserLogo} />
+          <Image source={bowserLogo} height={100} />
           <Text style={styles.text}>{text}</Text>
           <TextInput  style={styles.textEntry} 
                       onChangeText={input => (setPhone(input))}
-                      keyboardType="number-pad"
+                      keyboardType="phone-pad"
                       textContentType="telephoneNumber"
                       placeholder="Phone Number"
                       maxLength={12}
@@ -147,7 +160,25 @@ export const WelcomePhoneValidationScreen = withNavigation(({ text, next, naviga
   const [loading, setLoading] = useState(false);
   const [completed, setCompleted] = useState(false);
 
-  const phone = navigation.getParam('phone');
+  const phone = navigation.getParam('phone')
+
+  const onAuthStateChanged = async (user) => { // TODO : User type
+    console.tron.log(`onAuthStateChanged`, user)
+    console.log(`onAuthStateChanged`, user)
+    if (user === null) {
+      return
+    }
+
+    if (user.phoneNumber) {
+      await saveString('onboarding', OnboardingSteps.phoneVerified)
+      setCompleted(true)
+    }
+  }
+
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged)
+    return subscriber; // unsubscribe on unmount
+  }, [])
 
   const sendVerif = async () => {
     setLoading(true)
@@ -161,15 +192,14 @@ export const WelcomePhoneValidationScreen = withNavigation(({ text, next, naviga
         return
       }
   
-      const result = await functions().httpsCallable('verifyPhoneNumber')(data)
-      if (result.data.success) {
-        await saveString('onboarding', OnboardingSteps.phoneValidated)
-        setCompleted(true)
-      } else {
-        let message = 'error'
-        message += result.data.reason
-        Alert.alert(message)
+      try {
+        let confirmation = navigation.getParam('confirmation');
+        confirmation.confirm(code);
+      } catch (err) {
+        Alert.alert(err)
+        console.tron.error(err); // Invalid code
       }
+
     } finally {
       setLoading(false)
     }
@@ -177,12 +207,12 @@ export const WelcomePhoneValidationScreen = withNavigation(({ text, next, naviga
 
   useEffect(() => {
     if(completed) {
-      navigation.navigate(next)
+      console.tron.log('navigation to welcome')
+      navigation.navigate("welcomeSyncing")
     }
   }, [completed]);
 
   text="To confirm your phone number, enter the code we just sent you." 
-  next="welcomeSyncing" 
 
   return (
     <Screen>
@@ -206,10 +236,10 @@ export const WelcomePhoneValidationScreen = withNavigation(({ text, next, naviga
           </TextInput>
           <View style={{ flex : 1 }} />
           <Button title="Next" 
-                    onPress={() => sendVerif()} 
-                    containerStyle={styles.buttonContainer}
-                    buttonStyle={styles.buttonStyle}
-                    />
+                  onPress={() => sendVerif()} 
+                  containerStyle={styles.buttonContainer}
+                  buttonStyle={styles.buttonStyle}
+                  />
         </ScrollView>
       </KeyboardAvoidingView>
     </Screen>

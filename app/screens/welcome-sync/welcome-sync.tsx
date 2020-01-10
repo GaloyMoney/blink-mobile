@@ -11,10 +11,9 @@ import { Button } from "react-native-elements"
 import { Image, StyleSheet, View, Alert } from "react-native"
 import { withNavigation } from "react-navigation"
 
-import auth from '@react-native-firebase/auth'
 import { color } from "../../theme"
 import { saveString } from "../../utils/storage"
-import { OnboardingSteps } from "../login-screen"
+import { OnboardingSteps } from "../loading-screen"
 import { PendingOpenChannelsStatus } from "../../models/data-store"
 import { Loader } from "../../components/loader"
 
@@ -107,9 +106,6 @@ export const WelcomeSyncCompletedScreen = inject("dataStore")(observer(
     setLoading(true)
 
     try {
-      let result = await auth().signInAnonymously()
-      console.tron.log('auth', result)
-
       await dataStore.lnd.sendPubKey()
       await dataStore.lnd.connectGaloyPeer()
       
