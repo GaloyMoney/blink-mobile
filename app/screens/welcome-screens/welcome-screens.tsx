@@ -9,9 +9,9 @@ import functions from '@react-native-firebase/functions'
 import { Loader } from "../../components/loader"
 import { withNavigation } from "react-navigation"
 import { saveString } from "../../utils/storage"
-import { OnboardingSteps } from "../login-screen"
 import { CurrencyType } from "../../models/data-store/CurrencyType"
 import { AccountType } from "../accounts-screen/AccountType"
+import { OnboardingSteps } from "../loading-screen"
 
 export const lightningBolt = require("./LightningBolt.png")
 
@@ -163,7 +163,7 @@ export const AllDoneScreen = withNavigation(inject("dataStore")(observer(
   ({navigation, dataStore}) => {
 
     const action = async () => {
-      await saveString('onboarding', OnboardingSteps.fullyOnboarded)
+      await saveString('onboarding', OnboardingSteps.onboarded)
       navigation.navigate('primaryStack')
     }
 
