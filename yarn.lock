@@ -1347,6 +1347,13 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/masked-view/-/masked-view-0.1.5.tgz#25421be6cd943a4b1660b62cfbcd45be8891462c"
   integrity sha512-Lj1DzfCmW0f4HnmHtEuX8Yy2f7cnUA8r5KGGUuDDGtQt1so6QJkKeUmsnLo2zYDtsF8due6hvIL06Vdo5xxuLQ==
 
+"@react-native-community/push-notification-ios@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@react-native-community/push-notification-ios/-/push-notification-ios-1.0.4.tgz#eaa43196c4d76b0dc8616724dca555ab64c63a77"
+  integrity sha512-a1Gdrnsk2bLdAiH/3iZEKlZLouEjBToVgphaOpAhhX6GhF/8cVTrwZ6Rxyg4j23n3br1rDpvE1l4VDdDwU9Aow==
+  dependencies:
+    invariant "^2.2.4"
+
 "@react-native-firebase/app-types@6.2.0":
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/app-types/-/app-types-6.2.0.tgz#4d3c0e7fa4e4f00061c52b1a32d76e85e5db9f2c"
