@@ -9,8 +9,7 @@ import functions from "@react-native-firebase/functions"
 import { Loader } from "../../components/loader"
 import { withNavigation } from "react-navigation"
 import { saveString } from "../../utils/storage"
-import { CurrencyType } from "../../models/data-store/CurrencyType"
-import { AccountType } from "../accounts-screen/AccountType"
+import { AccountType, CurrencyType } from "../../utils/enum"
 import { OnboardingSteps } from "../loading-screen"
 
 export const lightningLogo = require("./LightningBolt.png")

@@ -1,4 +1,4 @@
-import { AccountType } from "../../screens/accounts-screen/AccountType"
+import { AccountType } from "../../utils/enum"
 
 export const defaultDataStore = {
   accounts: [

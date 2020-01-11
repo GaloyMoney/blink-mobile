@@ -9,9 +9,8 @@ import { color } from "../../theme/color"
 import Icon from "react-native-vector-icons/Ionicons"
 import currency from "currency.js"
 import { BalanceHeader } from "../../components/balance-header"
-import { AccountType } from "./AccountType"
-import { CurrencyType } from "../../models/data-store/CurrencyType"
 import auth from "@react-native-firebase/auth"
+import { AccountType, CurrencyType } from "../../utils/enum"
 
 const accountBasic = {
   color: color.text,

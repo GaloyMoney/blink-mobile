@@ -9,8 +9,7 @@ import {
   LndModel,
 } from "./data-store"
 import { defaultDataStore } from "../root-store/default-state"
-import { AccountType } from "../../screens/accounts-screen/AccountType"
-import { CurrencyType } from "./CurrencyType"
+import { AccountType, CurrencyType } from "../../utils/enum"
 
 test("can be created", () => {
   const instance: DataStore = DataStoreModel.create({})
