@@ -174,7 +174,7 @@ export const WelcomeGeneratingWalletScreen = inject("dataStore")(observer(
   }, []);
 
   useEffect(() => {
-    const fn = async () => {
+    const _ = async () => {
       const { pendingOpenChannels } = await dataStore.lnd.pendingChannels()
       const channelPoint = pendingOpenChannels[0].channel.channelPoint
       const funding = channelPoint.split(':')[0]
@@ -182,7 +182,7 @@ export const WelcomeGeneratingWalletScreen = inject("dataStore")(observer(
       setFundingTx(funding)
     }
 
-    fn()
+    _()
   }, []);
 
   const showFundingTx = () => {
