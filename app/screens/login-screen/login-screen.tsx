@@ -87,7 +87,7 @@ const TemplateLoginScreen = ({dataStore, navigation, screen}) => {
 
   return (
     <Screen style={styles.container}>
-      <Text style={styles.title}>Galoy</Text>
+      <Text style={styles.title} onPress={() => navigation.navigate('demo')}>Galoy</Text>
       <Text style={styles.sub}>The bank built for crypto</Text>
         {subScreen}
     </Screen>
@@ -97,7 +97,6 @@ const TemplateLoginScreen = ({dataStore, navigation, screen}) => {
 const GetStartedComponent = (({dataStore, navigation}) => {
   return (
     <>
-      <Button title="debugScreen" onPress={() => navigation.navigate('demo')}></Button>
       <View style={styles.bottom}>
         <Button title="Log in" titleStyle={styles.signUp}
           onPress={() => navigation.navigate('login')} type="clear" containerStyle={styles.buttonContainer} />

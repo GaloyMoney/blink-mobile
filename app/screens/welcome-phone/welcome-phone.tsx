@@ -5,7 +5,6 @@ import { useState, useEffect, useRef } from "react"
 import { Text } from "../../components/text"
 import { StyleSheet, View, Image, Alert, KeyboardAvoidingView, Platform } from "react-native"
 import { Button } from 'react-native-elements'
-import { bowserLogo } from "."
 import { withNavigation } from 'react-navigation';
 import { TextInput, ScrollView } from "react-native-gesture-handler"
 import { color } from "../../theme"
@@ -17,6 +16,8 @@ import { OnboardingSteps } from "../loading-screen"
 import { isEmpty } from "ramda"
 import { useNavigation, useNavigationParam } from 'react-navigation-hooks' 
 
+export const phoneLogo = require("./PhoneLogo.png")
+export const phoneWithArrowLogo = require("./PhoneWithArrowLogo.png")
 
 const styles = StyleSheet.create({
   container: {
@@ -80,6 +81,7 @@ const styles = StyleSheet.create({
 export const WelcomePhoneInputScreen = withNavigation(({ text, navigation, header = "" }) => {
   const [loading, setLoading] = useState(false);
   const [confirmation, setConfirmation] = useState({});
+  const [err, setErr] = useState("");
   
   const inputRef = useRef()
 
@@ -87,7 +89,6 @@ export const WelcomePhoneInputScreen = withNavigation(({ text, navigation, heade
     console.tron.log(`initPhoneNumber ${inputRef.current.getValue()}`)
     setLoading(true)
     
-    try {
       if (!inputRef.current.isValidNumber()) {
         Alert.alert(`${inputRef.current.getValue()} is not a valid phone number`)
         return
@@ -127,7 +128,7 @@ export const WelcomePhoneInputScreen = withNavigation(({ text, navigation, heade
           <View style={{flex: 1, justifyContent: "flex-end" }}>
           <View style={{ flex : 1 }} />
           <Text style={styles.text}>{header}</Text>
-          <Image source={bowserLogo} height={100} />
+          <Image source={phoneLogo}  style={styles.image} />
           <Text style={styles.text}>{text}</Text>
           <PhoneInput ref={inputRef} style={styles.textEntry} />
           <View style={{ flex : 1 }} />
@@ -204,7 +205,7 @@ export const WelcomePhoneValidationScreen = (() => {
           style={styles.container} >
         <ScrollView>
           <View style={{ flex : 1 }} />
-          <Image source={bowserLogo} />
+          <Image source={phoneWithArrowLogo} style={styles.image} />
           <Text style={styles.text}>{text}</Text>
           <TextInput  style={styles.textEntry} 
                       onChangeText={input => (setCode(input))}
