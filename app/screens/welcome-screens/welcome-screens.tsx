@@ -188,9 +188,9 @@ export const AllDoneScreen = withNavigation(inject("dataStore")(observer(
          header={`+ ${balance} sats`}
          image={galoyLogo}
          >
-         <Text style={styles.text}>
+        <Text style={styles.text}>
           All done here, you're finished setting up a wallet
-          </Text>
+        </Text>
        </Onboarding>
       </Screen>
     )
