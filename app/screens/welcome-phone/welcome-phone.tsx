@@ -38,15 +38,18 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
 
-  textEntry: {
-    fontSize: 20,
-    textAlign: "center",
-    marginHorizontal: 60,
-    padding: 12,
+  phoneEntryContainer: {
     borderColor: color.palette.darkGrey,
     borderWidth: 1,
     borderRadius: 5,
     marginTop: 10,
+    marginHorizontal: 60,
+    paddingVertical: 12,
+    paddingHorizontal: 18,
+  },
+
+  textEntry: {
+    fontSize: 20,
     color: color.palette.darkGrey,
   },
 
@@ -87,27 +90,36 @@ export const WelcomePhoneInputScreen = withNavigation(({ text, navigation, heade
 
   const send = async () => {
     console.tron.log(`initPhoneNumber ${inputRef.current.getValue()}`)
-    setLoading(true)
     
-      if (!inputRef.current.isValidNumber()) {
-        Alert.alert(`${inputRef.current.getValue()} is not a valid phone number`)
-        return
-      }
+    if (!inputRef.current.isValidNumber()) {
+      Alert.alert(`${inputRef.current.getValue()} is not a valid phone number`)
+      return
+    }
 
+    try {
+      setLoading(true)
       const conf = await auth().signInWithPhoneNumber(inputRef.current.getValue())
       console.tron.log(`confirmation`, conf)
       console.log(`confirmation`, conf)
       setConfirmation(conf);
-    } catch (err) {
-      // TODO find a way to easily log in Reactotron and Xcode
-      console.tron.error(err)
-      console.tron.error('error with initPhoneNumber', err)
-      console.error('error with initPhoneNumber')
-      console.error(err)
-    } finally {
       setLoading(false)
-    }
+    } catch (err) {
+      console.tron.error(err)
+      setErr(err.toString())
+    } 
   }
+
+  // workaround of https://github.com/facebook/react-native/issues/10471 
+  useEffect(() => {
+    if(err !== "") { 
+      setErr("")
+      Alert.alert('error', err.toString(), [
+        {
+          text: 'OK', 
+          onPress: () => {setLoading(false)},
+        }
+      ])
+    }}, [err])
 
   useEffect(() => {
     if(!isEmpty(confirmation)) { 
@@ -130,7 +142,10 @@ export const WelcomePhoneInputScreen = withNavigation(({ text, navigation, heade
           <Text style={styles.text}>{header}</Text>
           <Image source={phoneLogo}  style={styles.image} />
           <Text style={styles.text}>{text}</Text>
-          <PhoneInput ref={inputRef} style={styles.textEntry} />
+          <PhoneInput ref={inputRef} 
+            style={styles.phoneEntryContainer}
+            textStyle={styles.textEntry}
+            />
           <View style={{ flex : 1 }} />
           <Button title="Next" 
                     onPress={() => send()} 
@@ -145,10 +160,11 @@ export const WelcomePhoneInputScreen = withNavigation(({ text, navigation, heade
 
 
 export const WelcomePhoneValidationScreen = (() => {
-
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
   const [completed, setCompleted] = useState(false);
+  const [err, setErr] = useState("");
+
 
   const confirmation = useNavigationParam('confirmation')
   const { navigate } = useNavigation()
@@ -179,12 +195,11 @@ export const WelcomePhoneValidationScreen = (() => {
     }
     try {
       setLoading(true)
-      confirmation.confirm(code);
-    } catch (err) {
-      Alert.alert(err)
-      console.tron.error(err); // Invalid code
-    } finally {
+      await confirmation.confirm(code);
       setLoading(false)
+    } catch (err) {
+      console.tron.error(err); // Invalid code
+      setErr(err.toString())
     }
   };
 
@@ -193,6 +208,17 @@ export const WelcomePhoneValidationScreen = (() => {
       navigate("welcomeSyncing")
     }
   }, [completed]);
+
+  useEffect(() => {
+    if(err !== "") { 
+      setErr("")
+      Alert.alert('error', err.toString(), [
+        {
+          text: 'OK', 
+          onPress: () => {setLoading(false)},
+        }
+      ])
+    }}, [err])
 
   const text="To confirm your phone number, enter the code we just sent you." 
 
@@ -207,7 +233,7 @@ export const WelcomePhoneValidationScreen = (() => {
           <View style={{ flex : 1 }} />
           <Image source={phoneWithArrowLogo} style={styles.image} />
           <Text style={styles.text}>{text}</Text>
-          <TextInput  style={styles.textEntry} 
+          <TextInput  style={[styles.textEntry, styles.phoneEntryContainer]} 
                       onChangeText={input => (setCode(input))}
                       keyboardType="number-pad"
                       textContentType="oneTimeCode"
