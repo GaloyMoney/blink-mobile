@@ -13,7 +13,13 @@ import { CurrencyType } from "../../models/data-store/CurrencyType"
 import { AccountType } from "../accounts-screen/AccountType"
 import { OnboardingSteps } from "../loading-screen"
 
-export const lightningBolt = require("./LightningBolt.png")
+export const lightningLogo = require("./LightningBolt.png")
+export const galoyLogo = require("./GaloyLogo.png")
+export const bitcoinAndLockLogo = require("./BitcoinLockLogo.png")
+export const dollarCardATMLogo = require("./DollarCardATMLogo.png")
+export const presentLogo = require("./PresentLogo.png")
+export const partyPopperLogo = require("./PartyPopperLogo.png")
+export const bellLogo = require("./BellLogo.png")
 
 const styles = StyleSheet.create({
 text: {
@@ -26,7 +32,7 @@ text: {
 export const WelcomeGaloyScreen = () => {  
   return (
     <Screen>
-      <Onboarding next="welcomeBitcoin" image={lightningBolt}>
+      <Onboarding next="welcomeBitcoin" image={galoyLogo}>
         <Text style={styles.text}>
           Welcome! Galoy is a new type of app for managing your money
           </Text>
@@ -36,29 +42,29 @@ export const WelcomeGaloyScreen = () => {
 }
 
 export const WelcomeBitcoinScreen = () => {
-    return (
-      <Screen>
-        <Onboarding next="welcomeBank" image={lightningBolt}>
-          <Text style={styles.text}>It's a simple, secure Bitcoin wallet</Text>
-         </Onboarding>
-      </Screen>
-    )
+  return (
+    <Screen>
+      <Onboarding next="welcomeBank" image={bitcoinAndLockLogo}>
+        <Text style={styles.text}>It's a simple, secure Bitcoin wallet</Text>
+        </Onboarding>
+    </Screen>
+  )
 }
 
 export const WelcomeBankScreen = () => {
-    return (
-      <Screen>
-        <Onboarding next="welcomeEarn" image={lightningBolt}>
-          <Text style={styles.text}>And a digital bank account too</Text>
-         </Onboarding>
-      </Screen>
-    )
+  return (
+    <Screen>
+      <Onboarding next="welcomeEarn" image={dollarCardATMLogo}>
+        <Text style={styles.text}>And a digital bank account too</Text>
+        </Onboarding>
+    </Screen>
+  )
 }
 
 export const WelcomeEarnScreen = () => {
     return (
       <Screen>
-        <Onboarding next="welcomeFirstSats" image={lightningBolt}>
+        <Onboarding next="welcomeFirstSats" image={presentLogo}>
            <Text style={styles.text}>By using Galoy you earn Bitcoin</Text>
          </Onboarding>
       </Screen>
@@ -70,7 +76,7 @@ export const WelcomeFirstSatsScreen = () => {
       <Screen>
         <Onboarding next="welcomePhoneInput"
          header="+1,000 sats"
-         image={lightningBolt}
+         image={partyPopperLogo}
          >
          <Text style={styles.text}>
            You've earned some sats for installing the Galoy app. 
@@ -112,7 +118,7 @@ export const WelcomeBackCompletedScreen =
       <Onboarding 
         action={action}
         header="+1,000 sats pending"
-        image={lightningBolt}
+        image={partyPopperLogo}
         >
           <Text style={styles.text}>Your wallet is ready.{'\n'}
 Now send us a payment request so we can send your sats.</Text>
@@ -136,7 +142,7 @@ export const FirstRewardScreen = inject("dataStore")(observer(
       <Onboarding
         next="enableNotifications"
         header={`+ ${balance} sats`}
-        image={lightningBolt}
+        image={lightningLogo}
         >
         <Text style={styles.text}>Success!{'\n'}{'\n'}
 You’ve been paid{'\n'}your first reward.</Text>
@@ -152,7 +158,7 @@ export const EnableNotificationsScreen = () => {
     <Screen>
       <Onboarding
         next="allDone"
-        image={lightningBolt}
+        image={bellLogo}
         >
         <Text style={styles.text}>
         Enable notifications to get alerts when you receive payments in the future.
@@ -180,7 +186,7 @@ export const AllDoneScreen = withNavigation(inject("dataStore")(observer(
         <Onboarding
          action={action}
          header={`+ ${balance} sats`}
-         image={lightningBolt}
+         image={galoyLogo}
          >
          <Text style={styles.text}>
           All done here, you're finished setting up a wallet

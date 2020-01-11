@@ -17,7 +17,8 @@ import { OnboardingSteps } from "../loading-screen"
 import { PendingOpenChannelsStatus } from "../../models/data-store"
 import { Loader } from "../../components/loader"
 
-export const lightningBolt = require("../welcome-screens/LightningBolt.png")
+export const popcornLogo = require("./PopcornLogo.png")
+export const rocketLogo = require("./RocketLogo.png")
 
 const styles = StyleSheet.create({
   container: {
@@ -87,7 +88,7 @@ export const WelcomeSyncingScreen = withNavigation(inject("dataStore")(observer(
                       progress={dataStore.lnd.percentSynced} />
       </View>
       <View style={styles.container}>
-        <Image source={lightningBolt} style={styles.image} />
+        <Image source={popcornLogo} style={styles.image} />
         <Text style={styles.text}>Almost ready to launch your wallet!
         This could take a minute.{"\n"}{"\n"}
         Earn another reward{"\n"}while you wait:</Text>
@@ -142,7 +143,7 @@ export const WelcomeSyncCompletedScreen = inject("dataStore")(observer(
                       progress={dataStore.lnd.percentSynced} />
       </View>
       <View style={styles.container}>
-        <Image source={lightningBolt} style={styles.image} />
+        <Image source={popcornLogo} style={styles.image} />
         <Text style={styles.text}>We are ready to launch your wallet</Text>
       </View>
       <Button title="Create Wallet"
@@ -199,7 +200,7 @@ export const WelcomeGeneratingWalletScreen = inject("dataStore")(observer(
         </Text>
       </View>
       <View style={styles.container}>
-        <Image source={lightningBolt} style={styles.image} />
+        <Image source={rocketLogo} style={styles.image} />
         <Text style={styles.text}>Sit back and relax, 
         we’ll let you know when your wallet is ready. 
         This may take a day or so.</Text>
