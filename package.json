@@ -62,6 +62,7 @@
     "react-native-vector-icons": "^6.6.0",
     "react-native-youtube": "^2.0.0",
     "react-navigation": "4.0.10",
+    "react-navigation-hooks": "^1.1.0",
     "react-navigation-stack": "^2.0.10",
     "reactotron-mst": "^3.1.1",
     "reactotron-react-native": "^4.0.0-beta.1",

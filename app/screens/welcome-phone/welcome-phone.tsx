@@ -15,7 +15,8 @@ import PhoneInput from 'react-native-phone-input'
 import auth from '@react-native-firebase/auth';
 import { OnboardingSteps } from "../loading-screen"
 import { isEmpty } from "ramda"
- 
+import { useNavigation, useNavigationParam } from 'react-navigation-hooks' 
+
 
 const styles = StyleSheet.create({
   container: {
@@ -76,7 +77,7 @@ const styles = StyleSheet.create({
 })
 
 
-export const WelcomePhoneInputScreen = withNavigation(({ text, next, navigation, header = "" }) => {
+export const WelcomePhoneInputScreen = withNavigation(({ text, navigation, header = "" }) => {
   const [loading, setLoading] = useState(false);
   const [confirmation, setConfirmation] = useState({});
   
@@ -141,10 +142,15 @@ export const WelcomePhoneInputScreen = withNavigation(({ text, next, navigation,
   )
 })
 
-export const WelcomePhoneValidationScreen = withNavigation(({ navigation }) => {
+
+export const WelcomePhoneValidationScreen = (() => {
+
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
   const [completed, setCompleted] = useState(false);
+
+  const confirmation = useNavigationParam('confirmation')
+  const { navigate } = useNavigation()
 
   const onAuthStateChanged = async (user) => { // TODO : User type
     console.tron.log(`onAuthStateChanged`, user)
@@ -172,7 +178,6 @@ export const WelcomePhoneValidationScreen = withNavigation(({ navigation }) => {
     }
     try {
       setLoading(true)
-      let confirmation = navigation.getParam('confirmation');
       confirmation.confirm(code);
     } catch (err) {
       Alert.alert(err)
@@ -184,7 +189,7 @@ export const WelcomePhoneValidationScreen = withNavigation(({ navigation }) => {
 
   useEffect(() => {
     if(completed) {
-      navigation.navigate("welcomeSyncing")
+      navigate("welcomeSyncing")
     }
   }, [completed]);
 
