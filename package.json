@@ -20,7 +20,8 @@
     "postinstall": "echo 'TODO add back solidarity' && jetify && if which pod >/dev/null; then (cd ios; pod install); fi",
     "prepare": "npm-run-all patch hack:*",
     "storybook": "storybook start -p 9001 --skip-packager",
-    "adb": "adb reverse tcp:9090 tcp:9090 && adb reverse tcp:3000 tcp:3000 && adb reverse tcp:9001 tcp:9001 && adb reverse tcp:8081 tcp:8081"
+    "adb": "adb reverse tcp:9090 tcp:9090 && adb reverse tcp:3000 tcp:3000 && adb reverse tcp:9001 tcp:9001 && adb reverse tcp:8081 tcp:8081",
+    "protobuf": "pbjs app/services/lnd/rpc.proto -t static-module -w es6 -o app/services/lnd/generated/rpc.js"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.5.1",

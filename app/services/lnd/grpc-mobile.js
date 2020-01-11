@@ -7,7 +7,7 @@
 import { Duplex } from 'readable-stream'
 
 import base64 from 'base64-js'
-import { lnrpc } from '../../generated/rpc'
+import { lnrpc } from './generated/rpc'
 
 // FIXME refactor
 const toCaps = (value = '', separator = ' ', split = '-') => {
