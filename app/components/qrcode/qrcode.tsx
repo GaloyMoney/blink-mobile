@@ -1,8 +1,8 @@
-import React from 'react'
-import { StyleSheet, View, Image, ViewPropTypes, TouchableHighlightComponent } from 'react-native'
-import PropTypes from 'prop-types'
-import QRImage from 'qr-image'
-import { color } from '../../theme/color'
+import React from "react"
+import { StyleSheet, View, Image, ViewPropTypes, TouchableHighlightComponent } from "react-native"
+import PropTypes from "prop-types"
+import QRImage from "qr-image"
+import { color } from "../../theme/color"
 
 const styles = StyleSheet.create({
   base: {
@@ -12,12 +12,12 @@ const styles = StyleSheet.create({
   },
 })
 
-export const QRCode = ({ children = '', size = 180, style }) => {
+export const QRCode = ({ children = "", size = 180, style }) => {
   const uri = `data:image/png;base64,${QRImage.imageSync(children, {
-    type: 'png',
+    type: "png",
     size: 10,
     margin: 0,
-  }).toString('base64')}`
+  }).toString("base64")}`
   return (
     <View style={[styles.base, style]}>
       <Image source={{ uri }} style={{ width: size, height: size }} />

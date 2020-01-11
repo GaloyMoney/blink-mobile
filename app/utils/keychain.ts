@@ -2,10 +2,10 @@
  * @fileOverview action to handle secure key storage to platform apis.
  */
 
-import * as RNKeychain from 'react-native-keychain'
+import * as RNKeychain from "react-native-keychain"
 
-const VERSION = '0'
-const USER = 'lightning'
+const VERSION = "0"
+const USER = "lightning"
 
 class KeychainAction {
   /**

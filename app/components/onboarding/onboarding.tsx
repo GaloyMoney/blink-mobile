@@ -1,19 +1,19 @@
 import * as React from "react"
 import { Text } from "../../components/text"
 import { StyleSheet, View, Image } from "react-native"
-import { Button } from 'react-native-elements'
-import { withNavigation } from 'react-navigation'
+import { Button } from "react-native-elements"
+import { withNavigation } from "react-navigation"
 import { color } from "../../theme"
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
+    flexDirection: "column",
+    justifyContent: "center",
   },
 
   image: {
-    alignSelf: 'center',
+    alignSelf: "center",
     margin: 20,
   },
 
@@ -26,30 +26,30 @@ const styles = StyleSheet.create({
 
   buttonContainer: {
     paddingHorizontal: 80,
-    paddingBottom: 60
+    paddingBottom: 60,
   },
 
   buttonStyle: {
-    backgroundColor: color.primary
-  }
+    backgroundColor: color.primary,
+  },
 })
 
-export const Onboarding = withNavigation(({ children, next, action, image, navigation, header = "" }) => {
-  return (
-    <>
-      <Text style={styles.header}>{header}</Text>
-      <View style={styles.container}>
-        <Image source={image} style={styles.image} />
+export const Onboarding = withNavigation(
+  ({ children, next, action, image, navigation, header = "" }) => {
+    return (
+      <>
+        <Text style={styles.header}>{header}</Text>
+        <View style={styles.container}>
+          <Image source={image} style={styles.image} />
           {children}
-      </View>
-      <Button title="Next" 
-              onPress={next ?
-                () => navigation.navigate(next) : 
-                () => action()
-              }
-              containerStyle={styles.buttonContainer}
-              buttonStyle={styles.buttonStyle}
-              />
-    </>
-  )
-})
+        </View>
+        <Button
+          title="Next"
+          onPress={next ? () => navigation.navigate(next) : () => action()}
+          containerStyle={styles.buttonContainer}
+          buttonStyle={styles.buttonStyle}
+        />
+      </>
+    )
+  },
+)

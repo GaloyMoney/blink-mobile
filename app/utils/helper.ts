@@ -5,7 +5,7 @@
  */
 export const toHex = buf => {
   if (!Buffer.isBuffer(buf) && !(buf instanceof Uint8Array)) {
-    throw new Error('Invalid input!')
+    throw new Error("Invalid input!")
   }
-  return Buffer.from(buf).toString('hex')
+  return Buffer.from(buf).toString("hex")
 }

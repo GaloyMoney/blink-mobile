@@ -1,1 +1,1 @@
-export * from './loading-screen'
+export * from "./loading-screen"

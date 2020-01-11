@@ -7,7 +7,7 @@ import { Text } from "../../components/text"
 import { Screen } from "../../components/screen"
 import { color } from "../../theme"
 import { NavigationScreenProp, withNavigation } from "react-navigation"
-import Icon from 'react-native-vector-icons/Ionicons'
+import Icon from "react-native-vector-icons/Ionicons"
 
 import { BalanceHeader } from "../../components/balance-header"
 import { DataStore } from "../../models/data-store"
@@ -17,8 +17,8 @@ import { CurrencyText } from "../../components/currency-text"
 import { TouchableHighlight } from "react-native-gesture-handler"
 
 export interface AccountDetailScreenProps extends NavigationScreenProp<{}> {
-  account: AccountType,
-  dataStore: DataStore,
+  account: AccountType
+  dataStore: DataStore
 }
 
 const styles = StyleSheet.create({
@@ -27,62 +27,57 @@ const styles = StyleSheet.create({
   },
 
   flex: {
-    flex: 1
+    flex: 1,
   },
 
   headerSection: {
     color: color.text,
-    margin: 22
+    margin: 22,
   },
 
   icon: {
     marginRight: 24,
     textAlign: "center",
-    width: 32
+    width: 32,
   },
 
   itemContainer: {
     alignItems: "center",
     flexDirection: "row",
     marginHorizontal: 24,
-    marginVertical: 12
+    marginVertical: 12,
   },
 
   itemText: {
     color: color.text,
-    fontSize: 18
+    fontSize: 18,
   },
 
   vertical: {
-    flexDirection: "column"
-  }
+    flexDirection: "column",
+  },
 })
 
 function AccountDetailItem(props) {
   return (
     <TouchableHighlight
       underlayColor="white"
-      onPress={() => props.navigation.navigate('transactionDetail', {
-        name: props.name,
-        amount: props.amount,
-        cashback: props.cashback,
-        currency: props.currency,
-        date: props.date,
-      })} >
+      onPress={() =>
+        props.navigation.navigate("transactionDetail", {
+          name: props.name,
+          amount: props.amount,
+          cashback: props.cashback,
+          currency: props.currency,
+          date: props.date,
+        })
+      }
+    >
       <View key={props.index} style={styles.itemContainer}>
-        <Icon
-          name={props.icon}
-          style={styles.icon}
-          color={color.primary}
-          size={28}
-        />
+        <Icon name={props.icon} style={styles.icon} color={color.primary} size={28} />
         <View style={styles.flex}>
           <Text style={styles.itemText}>{props.name}</Text>
-          {props.cashback != null &&
-            <Text style={styles.cashback}>{props.cashback} sats</Text> ||
-          props.addr != null &&
-            <Text style={styles.cashback}>{props.addr}</Text>
-          }
+          {(props.cashback != null && <Text style={styles.cashback}>{props.cashback} sats</Text>) ||
+            (props.addr != null && <Text style={styles.cashback}>{props.addr}</Text>)}
         </View>
         <CurrencyText amount={props.amount} currency={props.currency} />
       </View>
@@ -97,16 +92,18 @@ const WithNavigationAccountDetailItem = withNavigation(AccountDetailItem)
 export class AccountDetailScreen extends React.Component<AccountDetailScreenProps, {}> {
   static navigationOptions = ({ navigation }) => {
     return {
-      title: navigation.getParam("account")
+      title: navigation.getParam("account"),
     }
-  };
+  }
 
   getAccountType() {
     return this.props.navigation.getParam("account") // FIXME how to pass this properly?
   }
 
   getAccountStore() {
-    return this.getAccountType() === AccountType.Checking ? this.props.dataStore.fiat : this.props.dataStore.lnd
+    return this.getAccountType() === AccountType.Checking
+      ? this.props.dataStore.fiat
+      : this.props.dataStore.lnd
   }
 
   componentDidMount() {
@@ -136,21 +133,18 @@ export class AccountDetailScreen extends React.Component<AccountDetailScreenProp
     const today = transactions.filter(tx => sameDay(tx.date, new Date()))
 
     const yesterday = transactions.filter(tx =>
-      sameDay(tx.date, new Date().setDate(new Date().getDate() - 1))
+      sameDay(tx.date, new Date().setDate(new Date().getDate() - 1)),
     )
 
     let transactions_included = new Set([...today, ...yesterday])
     let not_yet_included_set = new Set(
-      [...transactions_set].filter(x => !transactions_included.has(x))
+      [...transactions_set].filter(x => !transactions_included.has(x)),
     )
 
-    const this_month = Array.from(not_yet_included_set).filter(
-      tx => sameMonth(tx.date, new Date())) // FIXME wrong if first day of the month
+    const this_month = Array.from(not_yet_included_set).filter(tx => sameMonth(tx.date, new Date())) // FIXME wrong if first day of the month
 
     transactions_included = new Set([...today, ...yesterday, ...this_month]) // FIXME DRY
-    not_yet_included_set = new Set(
-      [...transactions_set].filter(x => !transactions_included.has(x))
-    )
+    not_yet_included_set = new Set([...transactions_set].filter(x => !transactions_included.has(x)))
 
     const before = Array.from(not_yet_included_set)
 
@@ -173,12 +167,10 @@ export class AccountDetailScreen extends React.Component<AccountDetailScreenProp
 
     return (
       <Screen>
-        <BalanceHeader headingCurrency={currency} 
-          accountsToAdd={this.getAccountType()} />
+        <BalanceHeader headingCurrency={currency} accountsToAdd={this.getAccountType()} />
         <SectionList
           renderItem={({ item, index, section }) => (
-            <WithNavigationAccountDetailItem
-              account={accountType} currency={currency} {...item} />
+            <WithNavigationAccountDetailItem account={accountType} currency={currency} {...item} />
           )}
           renderSectionHeader={({ section: { title } }) => (
             <Text style={styles.headerSection}>{title}</Text>
