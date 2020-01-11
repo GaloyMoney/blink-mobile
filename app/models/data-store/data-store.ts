@@ -441,29 +441,37 @@ export const LndModel = BaseAccountModel
     /**
      * An internal helper function to approximate the current progress while
      * syncing Neutrino to the full node.
-     * @param  {Object} response The getInfo's grpc api response
+     * @param  {Object} grpcInput The getInfo's grpc api response
      * @return {number}          The percrentage a number between 0 and 1
      */
-    const calcPercentSynced = (response) => {
-        // const bestHeaderTimestamp = response.bestHeaderTimestamp;
-        // const currTimestamp = new Date().getTime() / 1000;
-        // const progressSoFar = bestHeaderTimestamp
-        //   ? bestHeaderTimestamp - self.startingSyncTimestamp!
-        //   : 0;
-        // const totalProgress = currTimestamp - self.startingSyncTimestamp! || 0.001;
-        // const percentSynced = (progressSoFar * 1.0) / totalProgress;
-        // return percentSynced;
+    const calcPercentSynced = (grpcInput) => {
+      let response
 
-        if (self.bestBlockHeight === undefined || self.startBlockHeight == undefined) {
-          return 0
-        }
+      if (self.bestBlockHeight === undefined || self.startBlockHeight == undefined) {
+        response = 0
+      } else if (self.bestBlockHeight! <= self.startBlockHeight!) {
+        response = 1
+      } else {
+        const percentSync = (grpcInput.blockHeight - self.startBlockHeight!) / (self.bestBlockHeight! - self.startBlockHeight!)
+        response = +percentSync.toFixed(3)
+      }
 
-        if (self.bestBlockHeight! < self.startBlockHeight!) {
-          return 1
-        }
+      if (response > 1) {
+        response = 1
+      }
+      if (response < 0) {
+        response = 0
+      }
+      if(isNaN(response)) {
+        console.tron.log(`reponse is NaN, 
+          self.bestBlockHeight ${self.bestBlockHeight}
+          self.startBlockHeight ${self.startBlockHeight}
+          grpc_input.blockHeight ${grpcInput.blockHeight}          
+          `)
+        response = 0
+      }
 
-        const percentSync = (response.blockHeight - self.startBlockHeight!) / (self.bestBlockHeight! - self.startBlockHeight!)
-        return +percentSync.toFixed(3)
+      return response
     }
 
     const getInfo = flow(function * () {
