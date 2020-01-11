@@ -90,11 +90,11 @@ export const WelcomeBackCompletedScreen =
   const action = async () => {
     setLoading(true)
     try {
-      const invoice = await dataStore.lnd.addInvoice(
-        {value: 100, memo: "Claimed Rewards"})
+      const invoice = await dataStore.lnd.addInvoice({
+        value: 100, memo: "Claimed Rewards"
+      })
       const result = await functions().httpsCallable('payInvoice')({ invoice })
       console.tron.log(invoice, result)
-      await dataStore.lnd.updateBalance()
       navigation.navigate('firstReward')
     } catch(err) {
       const error = `error paying invoice + ${err}`
@@ -104,6 +104,7 @@ export const WelcomeBackCompletedScreen =
       setLoading(false)
     }
   }
+
 
   return (
     <Screen>
@@ -122,6 +123,8 @@ Now send us a payment request so we can send your sats.</Text>
 
 export const FirstRewardScreen = inject("dataStore")(observer(
   ({dataStore}) => {
+
+  dataStore.lnd.updateBalance()
 
   const balance = dataStore.balances({
     currency: CurrencyType.BTC, 
