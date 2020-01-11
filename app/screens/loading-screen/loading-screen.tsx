@@ -58,6 +58,10 @@ const onAuthStateChanged = async (user) => { // TODO : User type
     const onboard = await loadString('onboarding') // TODO: move this to mst
     console.tron.log(`onboard ${onboard}`)
     switch(onboard) {
+        case OnboardingSteps.phoneVerified: {
+            navigation.navigate('welcomeSyncing')
+            break
+        }
         case OnboardingSteps.channelCreated: {
             const statusChannel = await dataStore.lnd.statusFirstChannelOpen()
             console.tron.log(`statusChannel : ${statusChannel}`)
@@ -81,7 +85,7 @@ const onAuthStateChanged = async (user) => { // TODO : User type
             break
         }
         default:
-            console.tron.warn('no onboarding string')
+            console.tron.warn('no path for onboarding, state onboarding issue')
             navigation.navigate('authStack')
     }
     } else {
