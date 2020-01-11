@@ -57,6 +57,7 @@
     "react-native-maps": "0.26.1",
     "react-native-phone-input": "^0.2.4",
     "react-native-progress": "^4.0.3",
+    "react-native-reanimated": "^1.4.0",
     "react-native-safe-area-context": "^0.6.2",
     "react-native-securerandom": "^1.0.0-rc.0",
     "react-native-splash-screen": "3.2.0",
