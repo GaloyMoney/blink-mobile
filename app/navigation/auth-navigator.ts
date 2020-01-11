@@ -1,6 +1,5 @@
 import { createStackNavigator } from "react-navigation-stack"
 import { GetStartedScreen, LoginScreen } from "../screens/login-screen"
-import { VerifyEmailScreen } from "../screens/verify-email-screen"
 import { 
   WelcomeGaloyScreen, 
   WelcomeBitcoinScreen, 
@@ -31,7 +30,6 @@ export const AuthNavigator = createStackNavigator(
     welcomeFirstSats: { screen: WelcomeFirstSatsScreen },
     welcomePhoneInput: { screen: WelcomePhoneInputScreen, },
     welcomePhoneValidation: { screen: WelcomePhoneValidationScreen },
-    verifyEmail: { screen: VerifyEmailScreen },
   },
   {
     headerMode: "screen",
