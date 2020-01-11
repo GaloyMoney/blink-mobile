@@ -8,7 +8,7 @@ import * as Progress from 'react-native-progress'
 
 import { YouTubeStandaloneIOS } from 'react-native-youtube';
 import { Button } from "react-native-elements"
-import { Image, StyleSheet, View, Alert } from "react-native"
+import { Image, StyleSheet, View, Alert, Linking } from "react-native"
 import { withNavigation } from "react-navigation"
 
 import { color } from "../../theme"
@@ -56,6 +56,14 @@ const styles = StyleSheet.create({
 
   progressBar: {
     alignSelf: "center",
+  },
+
+  fundingText: {
+    fontSize: 16,
+    textAlign: "center",
+    color: color.primary,
+    paddingVertical: 20,
+    textDecorationLine: 'underline'
   }
   
 })
@@ -118,8 +126,6 @@ export const WelcomeSyncCompletedScreen = inject("dataStore")(observer(
 
       await saveString('onboarding', OnboardingSteps.channelCreated)
       
-      // await lnd.pendingChannels()
-      // https://blockstream.info/testnet/api/tx/${tx}
       navigation.navigate('welcomeGeneratingWallet')
     } finally {
       setLoading(false)
@@ -149,7 +155,9 @@ export const WelcomeSyncCompletedScreen = inject("dataStore")(observer(
 }))
 
 export const WelcomeGeneratingWalletScreen = inject("dataStore")(observer(
-  ({dataStore, navigation}) => {
+  ({dataStore, navigation}) => {  
+
+  const [fundingTx, setFundingTx] = useState("");
 
   const checkChannel = async () => {
     console.tron.log('check channel looping')
@@ -163,6 +171,25 @@ export const WelcomeGeneratingWalletScreen = inject("dataStore")(observer(
     const timer = setInterval(checkChannel, 3000);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    const fn = async () => {
+      const { pendingOpenChannels } = await dataStore.lnd.pendingChannels()
+      const channelPoint = pendingOpenChannels[0].channel.channelPoint
+      const funding = channelPoint.split(':')[0]
+      console.tron.log('funding: ', funding)
+      setFundingTx(funding)
+    }
+
+    fn()
+  }, []);
+
+  const showFundingTx = () => {
+    Linking.openURL(`https://blockstream.info/testnet/tx/${fundingTx}`)
+      .catch(err => console.error("Couldn't load page", err));
+  }
+
+  console.tron.warn(typeof fundingTx, fundingTx)
 
   return (
     <Screen>
@@ -182,8 +209,10 @@ export const WelcomeGeneratingWalletScreen = inject("dataStore")(observer(
                 type="outline"
                 onPress={() => playVideo('XNu5ppFZbHo')} />
       </View>
-      <Text style={styles.text}>Funding tx: TODO{"\n"}
-            When should your wallet be ready?</Text>
+      <Text style={styles.fundingText} 
+        onPress={showFundingTx}>
+        funding tx: {fundingTx.substring(0, 6)}...{fundingTx.substring(fundingTx.length -6)}
+      </Text>
     </Screen>
   )
 }))

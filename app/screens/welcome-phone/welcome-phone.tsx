@@ -8,7 +8,6 @@ import { Button } from 'react-native-elements'
 import { bowserLogo } from "."
 import { withNavigation } from 'react-navigation';
 import { TextInput, ScrollView } from "react-native-gesture-handler"
-import functions from "@react-native-firebase/functions"
 import { color } from "../../theme"
 import { saveString } from "../../utils/storage"
 import { Loader } from "../../components/loader"
@@ -207,7 +206,6 @@ export const WelcomePhoneValidationScreen = withNavigation(({ text, next, naviga
 
   useEffect(() => {
     if(completed) {
-      console.tron.log('navigation to welcome')
       navigation.navigate("welcomeSyncing")
     }
   }, [completed]);
