@@ -6,7 +6,6 @@ import { View, SectionList, StyleSheet } from "react-native"
 import { Text } from "../../components/text"
 import { Screen } from "../../components/screen"
 import { color } from "../../theme"
-import { NavigationScreenProp, withNavigation } from "react-navigation"
 import Icon from "react-native-vector-icons/Ionicons"
 
 import { BalanceHeader } from "../../components/balance-header"
@@ -15,10 +14,23 @@ import { sameDay, sameMonth } from "../../utils/date"
 import { CurrencyText } from "../../components/currency-text"
 import { TouchableHighlight } from "react-native-gesture-handler"
 import { AccountType } from "../../utils/enum"
+import { useNavigation, useNavigationParam } from "react-navigation-hooks"
 
-export interface AccountDetailScreenProps extends NavigationScreenProp<{}> {
+export interface AccountDetailScreenProps {
   account: AccountType
   dataStore: DataStore
+}
+
+export interface AccountDetailItemProps {
+  // TODO check validity of this interface
+  name: string,
+  amount: number,
+  cashback?: number,
+  currency: CurrencyType,
+  date: Date,
+  addr?: string,
+  index: number,
+  icon: string
 }
 
 const styles = StyleSheet.create({
@@ -58,12 +70,14 @@ const styles = StyleSheet.create({
   },
 })
 
-function AccountDetailItem(props) {
+const AccountDetailItem: React.FC<AccountDetailItemProps> = (props) => {
+  const { navigate } = useNavigation()
+
   return (
     <TouchableHighlight
       underlayColor="white"
       onPress={() =>
-        props.navigation.navigate("transactionDetail", {
+        navigate("transactionDetail", {
           name: props.name,
           amount: props.amount,
           cashback: props.cashback,
@@ -85,41 +99,20 @@ function AccountDetailItem(props) {
   )
 }
 
-const WithNavigationAccountDetailItem = withNavigation(AccountDetailItem)
+export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
+  = inject("dataStore")(
+    observer(({ dataStore }) => {
 
-@inject("dataStore")
-@observer
-export class AccountDetailScreen extends React.Component<AccountDetailScreenProps, {}> {
-  static navigationOptions = ({ navigation }) => {
-    return {
-      title: navigation.getParam("account"),
-    }
-  }
+    const account = useNavigationParam("account")
 
-  getAccountType() {
-    return this.props.navigation.getParam("account") // FIXME how to pass this properly?
-  }
-
-  getAccountStore() {
-    return this.getAccountType() === AccountType.Checking
-      ? this.props.dataStore.fiat
-      : this.props.dataStore.lnd
-  }
-
-  componentDidMount() {
-    this.getAccountStore().update_transactions()
-  }
-
-  render() {
-    const dataStore = this.props.dataStore
-
-    const accountType = this.getAccountType()
-    const accountStore = this.getAccountStore()
+    const accountStore = account === AccountType.Checking ?
+        dataStore.fiat
+      : dataStore.lnd
 
     let transactions = accountStore.transactions
 
     if (transactions.length === 0) {
-      return <Text>It's empty in here</Text>
+      return <Text>No transaction to show</Text>
     }
 
     const currency = accountStore.currency
@@ -128,8 +121,9 @@ export class AccountDetailScreen extends React.Component<AccountDetailScreenProp
 
     const transactions_set = new Set(transactions)
 
-    // FIXME: clean up logic. transactions were not ordered before.
-    // probably no need to use Set.
+    // XXX FIXME TODO: clean up logic. 
+    // transactions were not ordered before.
+    // no need to use Set.
     const today = transactions.filter(tx => sameDay(tx.date, new Date()))
 
     const yesterday = transactions.filter(tx =>
@@ -167,10 +161,10 @@ export class AccountDetailScreen extends React.Component<AccountDetailScreenProp
 
     return (
       <Screen>
-        <BalanceHeader headingCurrency={currency} accountsToAdd={this.getAccountType()} />
+        <BalanceHeader headingCurrency={currency} accountsToAdd={account} />
         <SectionList
           renderItem={({ item, index, section }) => (
-            <WithNavigationAccountDetailItem account={accountType} currency={currency} {...item} />
+            <AccountDetailItem account={account} currency={currency} {...item} />
           )}
           renderSectionHeader={({ section: { title } }) => (
             <Text style={styles.headerSection}>{title}</Text>
@@ -180,5 +174,8 @@ export class AccountDetailScreen extends React.Component<AccountDetailScreenProp
         />
       </Screen>
     )
-  }
-}
+}))
+
+AccountDetailScreen.navigationOptions = screenProps => ({
+  title: screenProps.navigation.getParam("account")
+})
