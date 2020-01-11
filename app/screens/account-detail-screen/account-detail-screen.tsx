@@ -12,9 +12,9 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { BalanceHeader } from "../../components/balance-header"
 import { DataStore } from "../../models/data-store"
 import { sameDay, sameMonth } from "../../utils/date"
-import { AccountType } from "../accounts-screen/AccountType"
 import { CurrencyText } from "../../components/currency-text"
 import { TouchableHighlight } from "react-native-gesture-handler"
+import { AccountType } from "../../utils/enum"
 
 export interface AccountDetailScreenProps extends NavigationScreenProp<{}> {
   account: AccountType

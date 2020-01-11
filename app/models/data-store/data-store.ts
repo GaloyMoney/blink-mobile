@@ -1,6 +1,5 @@
 import { Instance, SnapshotOut, types, flow, getParentOfType, getEnv } from "mobx-state-tree"
-import { CurrencyType } from "./CurrencyType"
-import { AccountType } from "../../screens/accounts-screen/AccountType"
+import { AccountType, CurrencyType } from "../../utils/enum"
 import { parseDate } from "../../utils/date"
 import KeychainAction from "../../utils/keychain"
 import { generateSecureRandom } from "react-native-securerandom"

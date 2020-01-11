@@ -4,9 +4,8 @@ import { Text } from "../text"
 import { color } from "../../theme"
 
 import currency from "currency.js"
-import { CurrencyType } from "../../models/data-store/CurrencyType"
 import { inject, observer } from "mobx-react"
-import { AccountType } from "../../screens/accounts-screen/AccountType"
+import { AccountType, CurrencyType } from "../../utils/enum"
 
 const styles = StyleSheet.create({
   amount: {
