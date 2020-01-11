@@ -54,6 +54,7 @@
     "react-native-keychain": "^4.0.5",
     "react-native-localize": "^1.3.2",
     "react-native-maps": "0.26.1",
+    "react-native-phone-input": "^0.2.4",
     "react-native-progress": "^4.0.3",
     "react-native-safe-area-context": "^0.6.2",
     "react-native-securerandom": "^1.0.0-rc.0",

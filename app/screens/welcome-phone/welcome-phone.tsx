@@ -1,7 +1,7 @@
 import { Screen } from "../../components/screen"
 
 import * as React from "react"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Text } from "../../components/text"
 import { StyleSheet, View, Image, Alert, KeyboardAvoidingView, Platform } from "react-native"
 import { Button } from 'react-native-elements'
@@ -11,9 +11,10 @@ import { TextInput, ScrollView } from "react-native-gesture-handler"
 import { color } from "../../theme"
 import { saveString } from "../../utils/storage"
 import { Loader } from "../../components/loader"
-
+import PhoneInput from 'react-native-phone-input'
 import auth from '@react-native-firebase/auth';
 import { OnboardingSteps } from "../loading-screen"
+import { isEmpty } from "ramda"
  
 
 const styles = StyleSheet.create({
@@ -76,34 +77,29 @@ const styles = StyleSheet.create({
 
 
 export const WelcomePhoneInputScreen = withNavigation(({ text, next, navigation, header = "" }) => {
-  const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
-  const [completed, setCompleted] = useState(false);
   const [confirmation, setConfirmation] = useState({});
   
-  const send = async () => {
-    setLoading(true)
-    console.tron.log('initPhoneNumber')
+  const inputRef = useRef()
 
+  const send = async () => {
+    console.tron.log(`initPhoneNumber ${inputRef.current.getValue()}`)
+    setLoading(true)
+    
     try {
-      if (phone === "") {
-        Alert.alert('need a phone number')
+      if (!inputRef.current.isValidNumber()) {
+        Alert.alert(`${inputRef.current.getValue()} is not a valid phone number`)
         return
       }
 
-      const conf = await auth().signInWithPhoneNumber(phone)
-      setConfirmation(conf);
+      const conf = await auth().signInWithPhoneNumber(inputRef.current.getValue())
       console.tron.log(`confirmation`, conf)
       console.log(`confirmation`, conf)
-
-      // const result = await functions().httpsCallable('initPhoneNumber')({phone})
-      // console.tron.log(result)
-      setCompleted(true)
-      console.tron.log('WelcomePhoneInputScreen succesfully completed')
+      setConfirmation(conf);
     } catch (err) {
       // TODO find a way to easily log in Reactotron and Xcode
-      console.tron.error('error with initPhoneNumber')
       console.tron.error(err)
+      console.tron.error('error with initPhoneNumber', err)
       console.error('error with initPhoneNumber')
       console.error(err)
     } finally {
@@ -112,14 +108,13 @@ export const WelcomePhoneInputScreen = withNavigation(({ text, next, navigation,
   }
 
   useEffect(() => {
-    if(completed) { // FIXME: race condition possible between completed and confirmation?
-      navigation.navigate(next, {phone, confirmation})
+    if(!isEmpty(confirmation)) { 
+      navigation.navigate("welcomePhoneValidation", {confirmation})
     }
-  }, [completed]);
+  }, [confirmation]);
 
   header="To receive your sats, first we need to activate your Bitcoin wallet." 
   text="This will take a little while, but we’ll send you a text you when it’s ready!" 
-  next="welcomePhoneValidation" 
 
   return (
     <Screen>
@@ -133,15 +128,7 @@ export const WelcomePhoneInputScreen = withNavigation(({ text, next, navigation,
           <Text style={styles.text}>{header}</Text>
           <Image source={bowserLogo} height={100} />
           <Text style={styles.text}>{text}</Text>
-          <TextInput  style={styles.textEntry} 
-                      onChangeText={input => (setPhone(input))}
-                      keyboardType="phone-pad"
-                      textContentType="telephoneNumber"
-                      placeholder="Phone Number"
-                      maxLength={12}
-                      >
-                        {phone}
-          </TextInput>
+          <PhoneInput ref={inputRef} style={styles.textEntry} />
           <View style={{ flex : 1 }} />
           <Button title="Next" 
                     onPress={() => send()} 
@@ -154,12 +141,10 @@ export const WelcomePhoneInputScreen = withNavigation(({ text, next, navigation,
   )
 })
 
-export const WelcomePhoneValidationScreen = withNavigation(({ text, next, navigation, header = "" }) => {
+export const WelcomePhoneValidationScreen = withNavigation(({ navigation }) => {
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
   const [completed, setCompleted] = useState(false);
-
-  const phone = navigation.getParam('phone')
 
   const onAuthStateChanged = async (user) => { // TODO : User type
     console.tron.log(`onAuthStateChanged`, user)
@@ -180,25 +165,18 @@ export const WelcomePhoneValidationScreen = withNavigation(({ text, next, naviga
   }, [])
 
   const sendVerif = async () => {
-    setLoading(true)
-
+    console.tron.log(`verifyPhoneNumber with code ${code}`)
+    if (code.length !== 6) {
+      Alert.alert(`code have 6 digits number`)
+      return
+    }
     try {
-      const data = {code, phone}
-      console.tron.log('verifyPhoneNumber', data)
-  
-      if (code === "") {
-        Alert.alert('need a code')
-        return
-      }
-  
-      try {
-        let confirmation = navigation.getParam('confirmation');
-        confirmation.confirm(code);
-      } catch (err) {
-        Alert.alert(err)
-        console.tron.error(err); // Invalid code
-      }
-
+      setLoading(true)
+      let confirmation = navigation.getParam('confirmation');
+      confirmation.confirm(code);
+    } catch (err) {
+      Alert.alert(err)
+      console.tron.error(err); // Invalid code
     } finally {
       setLoading(false)
     }
@@ -210,7 +188,7 @@ export const WelcomePhoneValidationScreen = withNavigation(({ text, next, naviga
     }
   }, [completed]);
 
-  text="To confirm your phone number, enter the code we just sent you." 
+  const text="To confirm your phone number, enter the code we just sent you." 
 
   return (
     <Screen>
@@ -221,7 +199,6 @@ export const WelcomePhoneValidationScreen = withNavigation(({ text, next, naviga
           style={styles.container} >
         <ScrollView>
           <View style={{ flex : 1 }} />
-          <Text style={styles.text}>{header}</Text>
           <Image source={bowserLogo} />
           <Text style={styles.text}>{text}</Text>
           <TextInput  style={styles.textEntry} 

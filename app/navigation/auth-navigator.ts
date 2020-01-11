@@ -1,4 +1,4 @@
-import { createStackNavigator, HeaderBackButton } from "react-navigation-stack"
+import { createStackNavigator } from "react-navigation-stack"
 import { GetStartedScreen, LoginScreen } from "../screens/login-screen"
 import { VerifyEmailScreen } from "../screens/verify-email-screen"
 import { 
