@@ -1,8 +1,12 @@
 import {
-  DataStoreModel, DataStore,
-  FiatAccount, FiatAccountModel,
-  Rates, RatesModel,
-  LndStore, LndModel
+  DataStoreModel,
+  DataStore,
+  FiatAccount,
+  FiatAccountModel,
+  Rates,
+  RatesModel,
+  LndStore,
+  LndModel,
 } from "./data-store"
 import { defaultDataStore } from "../root-store/default-state"
 import { AccountType } from "../../screens/accounts-screen/AccountType"
@@ -56,9 +60,7 @@ test("default state can be instanciate", () => {
 
   expect(instance.accounts).toHaveLength(3)
   expect(instance.total_usd_balance).toBe(1854.5674)
-  expect(instance.usd_balances).toEqual(
-    { Checking: 1245.12, Bitcoin: 609.4474 }
-  )
+  expect(instance.usd_balances).toEqual({ Checking: 1245.12, Bitcoin: 609.4474 })
 })
 
 test("I can get every account from using account[] view", () => {

@@ -4,17 +4,17 @@ import * as React from "react"
 import { useState, useEffect, useRef } from "react"
 import { Text } from "../../components/text"
 import { StyleSheet, View, Image, Alert, KeyboardAvoidingView, Platform } from "react-native"
-import { Button } from 'react-native-elements'
-import { withNavigation } from 'react-navigation';
+import { Button } from "react-native-elements"
+import { withNavigation } from "react-navigation"
 import { TextInput, ScrollView } from "react-native-gesture-handler"
 import { color } from "../../theme"
 import { saveString } from "../../utils/storage"
 import { Loader } from "../../components/loader"
-import PhoneInput from 'react-native-phone-input'
-import auth from '@react-native-firebase/auth';
+import PhoneInput from "react-native-phone-input"
+import auth from "@react-native-firebase/auth"
 import { OnboardingSteps } from "../loading-screen"
 import { isEmpty } from "ramda"
-import { useNavigation, useNavigationParam } from 'react-navigation-hooks' 
+import { useNavigation, useNavigationParam } from "react-navigation-hooks"
 
 export const phoneLogo = require("./PhoneLogo.png")
 export const phoneWithArrowLogo = require("./PhoneWithArrowLogo.png")
@@ -22,12 +22,12 @@ export const phoneWithArrowLogo = require("./PhoneWithArrowLogo.png")
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
+    flexDirection: "column",
+    justifyContent: "center",
   },
 
   image: {
-    alignSelf: 'center',
+    alignSelf: "center",
     padding: 20,
   },
 
@@ -59,38 +59,37 @@ const styles = StyleSheet.create({
   },
 
   buttonStyle: {
-    backgroundColor: color.primary
+    backgroundColor: color.primary,
   },
 
   modalBackground: {
     flex: 1,
-    alignItems: 'center',
-    flexDirection: 'column',
-    justifyContent: 'space-around',
-    backgroundColor: '#00000040'
+    alignItems: "center",
+    flexDirection: "column",
+    justifyContent: "space-around",
+    backgroundColor: "#00000040",
   },
   activityIndicatorWrapper: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
     height: 100,
     width: 100,
     borderRadius: 10,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-around'
-  }
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-around",
+  },
 })
 
-
 export const WelcomePhoneInputScreen = withNavigation(({ text, navigation, header = "" }) => {
-  const [loading, setLoading] = useState(false);
-  const [confirmation, setConfirmation] = useState({});
-  const [err, setErr] = useState("");
-  
+  const [loading, setLoading] = useState(false)
+  const [confirmation, setConfirmation] = useState({})
+  const [err, setErr] = useState("")
+
   const inputRef = useRef()
 
   const send = async () => {
     console.tron.log(`initPhoneNumber ${inputRef.current.getValue()}`)
-    
+
     if (!inputRef.current.isValidNumber()) {
       Alert.alert(`${inputRef.current.getValue()} is not a valid phone number`)
       return
@@ -101,75 +100,80 @@ export const WelcomePhoneInputScreen = withNavigation(({ text, navigation, heade
       const conf = await auth().signInWithPhoneNumber(inputRef.current.getValue())
       console.tron.log(`confirmation`, conf)
       console.log(`confirmation`, conf)
-      setConfirmation(conf);
+      setConfirmation(conf)
       setLoading(false)
     } catch (err) {
       console.tron.error(err)
       setErr(err.toString())
-    } 
+    }
   }
 
-  // workaround of https://github.com/facebook/react-native/issues/10471 
+  // workaround of https://github.com/facebook/react-native/issues/10471
   useEffect(() => {
-    if(err !== "") { 
+    if (err !== "") {
       setErr("")
-      Alert.alert('error', err.toString(), [
+      Alert.alert("error", err.toString(), [
         {
-          text: 'OK', 
-          onPress: () => {setLoading(false)},
-        }
+          text: "OK",
+          onPress: () => {
+            setLoading(false)
+          },
+        },
       ])
-    }}, [err])
+    }
+  }, [err])
 
   useEffect(() => {
-    if(!isEmpty(confirmation)) { 
-      navigation.navigate("welcomePhoneValidation", {confirmation})
+    if (!isEmpty(confirmation)) {
+      navigation.navigate("welcomePhoneValidation", { confirmation })
     }
-  }, [confirmation]);
+  }, [confirmation])
 
-  header="To receive your sats, first we need to activate your Bitcoin wallet." 
-  text="This will take a little while, but we’ll send you a text you when it’s ready!" 
+  header = "To receive your sats, first we need to activate your Bitcoin wallet."
+  text = "This will take a little while, but we’ll send you a text you when it’s ready!"
 
   return (
     <Screen>
       <Loader loading={loading} />
       <KeyboardAvoidingView
         keyboardVerticalOffset={-110}
-        behavior={(Platform.OS === 'ios')? "padding" : undefined}
-        style={{ flex: 1}} >
-          <View style={{flex: 1, justifyContent: "flex-end" }}>
-          <View style={{ flex : 1 }} />
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        style={{ flex: 1 }}
+      >
+        <View style={{ flex: 1, justifyContent: "flex-end" }}>
+          <View style={{ flex: 1 }} />
           <Text style={styles.text}>{header}</Text>
-          <Image source={phoneLogo}  style={styles.image} />
+          <Image source={phoneLogo} style={styles.image} />
           <Text style={styles.text}>{text}</Text>
-          <PhoneInput ref={inputRef} 
+          <PhoneInput
+            ref={inputRef}
             style={styles.phoneEntryContainer}
             textStyle={styles.textEntry}
-            />
-          <View style={{ flex : 1 }} />
-          <Button title="Next" 
-                    onPress={() => send()} 
-                    containerStyle={styles.buttonContainer}
-                    buttonStyle={styles.buttonStyle}
-                    />
-          </View>
+          />
+          <View style={{ flex: 1 }} />
+          <Button
+            title="Next"
+            onPress={() => send()}
+            containerStyle={styles.buttonContainer}
+            buttonStyle={styles.buttonStyle}
+          />
+        </View>
       </KeyboardAvoidingView>
     </Screen>
   )
 })
 
+export const WelcomePhoneValidationScreen = () => {
+  const [code, setCode] = useState("")
+  const [loading, setLoading] = useState(false)
+  const [completed, setCompleted] = useState(false)
+  const [err, setErr] = useState("")
 
-export const WelcomePhoneValidationScreen = (() => {
-  const [code, setCode] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [completed, setCompleted] = useState(false);
-  const [err, setErr] = useState("");
-
-
-  const confirmation = useNavigationParam('confirmation')
+  const confirmation = useNavigationParam("confirmation")
   const { navigate } = useNavigation()
 
-  const onAuthStateChanged = async (user) => { // TODO : User type
+  const onAuthStateChanged = async user => {
+    // TODO : User type
     console.tron.log(`onAuthStateChanged`, user)
     console.log(`onAuthStateChanged`, user)
     if (user === null) {
@@ -177,14 +181,14 @@ export const WelcomePhoneValidationScreen = (() => {
     }
 
     if (user.phoneNumber) {
-      await saveString('onboarding', OnboardingSteps.phoneVerified)
+      await saveString("onboarding", OnboardingSteps.phoneVerified)
       setCompleted(true)
     }
   }
 
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged)
-    return subscriber; // unsubscribe on unmount
+    return subscriber // unsubscribe on unmount
   }, [])
 
   const sendVerif = async () => {
@@ -195,60 +199,66 @@ export const WelcomePhoneValidationScreen = (() => {
     }
     try {
       setLoading(true)
-      await confirmation.confirm(code);
+      await confirmation.confirm(code)
       setLoading(false)
     } catch (err) {
-      console.tron.error(err); // Invalid code
+      console.tron.error(err) // Invalid code
       setErr(err.toString())
     }
-  };
+  }
 
   useEffect(() => {
-    if(completed) {
+    if (completed) {
       navigate("welcomeSyncing")
     }
-  }, [completed]);
+  }, [completed])
 
   useEffect(() => {
-    if(err !== "") { 
+    if (err !== "") {
       setErr("")
-      Alert.alert('error', err.toString(), [
+      Alert.alert("error", err.toString(), [
         {
-          text: 'OK', 
-          onPress: () => {setLoading(false)},
-        }
+          text: "OK",
+          onPress: () => {
+            setLoading(false)
+          },
+        },
       ])
-    }}, [err])
+    }
+  }, [err])
 
-  const text="To confirm your phone number, enter the code we just sent you." 
+  const text = "To confirm your phone number, enter the code we just sent you."
 
   return (
     <Screen>
       <Loader loading={loading} />
       <KeyboardAvoidingView
         keyboardVerticalOffset={-80}
-        behavior={(Platform.OS === 'ios')? "padding" : undefined}
-          style={styles.container} >
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        style={styles.container}
+      >
         <ScrollView>
-          <View style={{ flex : 1 }} />
+          <View style={{ flex: 1 }} />
           <Image source={phoneWithArrowLogo} style={styles.image} />
           <Text style={styles.text}>{text}</Text>
-          <TextInput  style={[styles.textEntry, styles.phoneEntryContainer]} 
-                      onChangeText={input => (setCode(input))}
-                      keyboardType="number-pad"
-                      textContentType="oneTimeCode"
-                      placeholder="6 Digits Code"
-                      >
-                        {code}
+          <TextInput
+            style={[styles.textEntry, styles.phoneEntryContainer]}
+            onChangeText={input => setCode(input)}
+            keyboardType="number-pad"
+            textContentType="oneTimeCode"
+            placeholder="6 Digits Code"
+          >
+            {code}
           </TextInput>
-          <View style={{ flex : 1 }} />
-          <Button title="Next" 
-                  onPress={() => sendVerif()} 
-                  containerStyle={styles.buttonContainer}
-                  buttonStyle={styles.buttonStyle}
-                  />
+          <View style={{ flex: 1 }} />
+          <Button
+            title="Next"
+            onPress={() => sendVerif()}
+            containerStyle={styles.buttonContainer}
+            buttonStyle={styles.buttonStyle}
+          />
         </ScrollView>
       </KeyboardAvoidingView>
     </Screen>
   )
-})
+}

@@ -1,10 +1,10 @@
-import { NativeModules, NativeEventEmitter } from 'react-native'
+import { NativeModules, NativeEventEmitter } from "react-native"
 import GrpcAction from "./grpc-mobile"
 import IpcAction from "./ipc"
 import LogAction from "./log"
 import { LndStore } from "../../models/data-store/data-store"
 import RNKeychain from "../../utils/keychain"
-import { poll } from '../../utils/poll'
+import { poll } from "../../utils/poll"
 
 export class Lnd {
   grpc: GrpcAction
@@ -34,28 +34,30 @@ export class Lnd {
   }
 
   async setCallback() {
-    const streamOnChainTransactions = this.grpc.sendStreamCommand('subscribeTransactions')
-    const streamInvoices = this.grpc.sendStreamCommand('subscribeInvoices')
+    const streamOnChainTransactions = this.grpc.sendStreamCommand("subscribeTransactions")
+    const streamInvoices = this.grpc.sendStreamCommand("subscribeInvoices")
 
     new Promise((resolve, reject) => {
-      streamOnChainTransactions.on('data', (data) => {
+      streamOnChainTransactions.on("data", data => {
         console.tron.log("onData", data)
         this.lndStore.update_balance()
         this.lndStore.update_transactions()
       })
-      streamOnChainTransactions.on('end', resolve)
-      streamOnChainTransactions.on('error', reject)
-      streamOnChainTransactions.on('status', status => console.tron.info(`Transactions update: ${status}`))
+      streamOnChainTransactions.on("end", resolve)
+      streamOnChainTransactions.on("error", reject)
+      streamOnChainTransactions.on("status", status =>
+        console.tron.info(`Transactions update: ${status}`),
+      )
     }).catch(err => console.tron.error("err with streamOnChainTransactions", err))
 
     new Promise((resolve, reject) => {
-      streamInvoices.on('data', (data) => {
+      streamInvoices.on("data", data => {
         console.tron.log("onData", data)
         this.lndStore.update_invoices()
       })
-      streamInvoices.on('end', resolve)
-      streamInvoices.on('error', reject)
-      streamInvoices.on('status', status => console.tron.info(`Transactions update: ${status}`))
+      streamInvoices.on("end", resolve)
+      streamInvoices.on("error", reject)
+      streamInvoices.on("status", status => console.tron.info(`Transactions update: ${status}`))
     }).catch(err => console.tron.error("err with streamInvoices", err))
   }
 

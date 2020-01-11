@@ -3,7 +3,7 @@ import { View, ViewStyle, StyleSheet } from "react-native"
 import { Text } from "../text"
 import { CurrencyType } from "../../models/data-store/CurrencyType"
 
-import currency from 'currency.js'
+import currency from "currency.js"
 import { color } from "../../theme"
 
 export interface CurrencyTextProps {
@@ -21,13 +21,13 @@ export interface CurrencyTextProps {
 const styles = StyleSheet.create({
   smallText: {
     color: color.text,
-    fontSize: 12
+    fontSize: 12,
   },
 
   text: {
     color: color.text,
-    fontSize: 18
-  }
+    fontSize: 18,
+  },
 })
 
 /**
@@ -42,12 +42,12 @@ export function CurrencyText(props: CurrencyTextProps) {
 
   switch (props.currency) {
     case CurrencyType.USD:
-      return (<Text>{currency(amount, { formatWithSymbol: true }).format()}</Text>)
+      return <Text>{currency(amount, { formatWithSymbol: true }).format()}</Text>
     case CurrencyType.BTC:
       return (
-        <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
+        <View style={{ flexDirection: "row", alignItems: "flex-end" }}>
           <Text style={styles.text}>
-            {currency(amount, { precision: 0, separator: ',' }).format()}
+            {currency(amount, { precision: 0, separator: "," }).format()}
           </Text>
           <Text style={styles.smallText}> sats</Text>
         </View>

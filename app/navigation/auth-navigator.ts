@@ -1,22 +1,25 @@
 import { createStackNavigator } from "react-navigation-stack"
 import { GetStartedScreen, LoginScreen } from "../screens/login-screen"
-import { 
-  WelcomeGaloyScreen, 
-  WelcomeBitcoinScreen, 
-  WelcomeBankScreen, 
+import {
+  WelcomeGaloyScreen,
+  WelcomeBitcoinScreen,
+  WelcomeBankScreen,
   WelcomeEarnScreen,
   WelcomeFirstSatsScreen,
   WelcomeBackCompletedScreen,
   FirstRewardScreen,
   EnableNotificationsScreen,
   AllDoneScreen,
- } from "../screens/welcome-screens"
+} from "../screens/welcome-screens"
 
 import { WelcomePhoneInputScreen, WelcomePhoneValidationScreen } from "../screens/welcome-phone"
-import { WelcomeSyncingScreen, WelcomeSyncCompletedScreen, WelcomeGeneratingWalletScreen  } from "../screens/welcome-sync" 
+import {
+  WelcomeSyncingScreen,
+  WelcomeSyncCompletedScreen,
+  WelcomeGeneratingWalletScreen,
+} from "../screens/welcome-sync"
 import { DebugScreen } from "../screens/demo-screen"
 import { color } from "../theme"
-
 
 export const AuthNavigator = createStackNavigator(
   {
@@ -28,15 +31,15 @@ export const AuthNavigator = createStackNavigator(
     welcomeBank: { screen: WelcomeBankScreen },
     welcomeEarn: { screen: WelcomeEarnScreen },
     welcomeFirstSats: { screen: WelcomeFirstSatsScreen },
-    welcomePhoneInput: { screen: WelcomePhoneInputScreen, },
+    welcomePhoneInput: { screen: WelcomePhoneInputScreen },
     welcomePhoneValidation: { screen: WelcomePhoneValidationScreen },
   },
   {
     headerMode: "screen",
     defaultNavigationOptions: {
-      title: '',
-      headerTintColor: color.primary
-    }
+      title: "",
+      headerTintColor: color.primary,
+    },
   },
 )
 
@@ -47,7 +50,7 @@ export const SyncingNavigator = createStackNavigator(
     welcomeGeneratingWallet: { screen: WelcomeGeneratingWalletScreen }, // TODO
   },
   {
-    headerMode: "none"
+    headerMode: "none",
   },
 )
 
@@ -59,6 +62,6 @@ export const WalletCompletedNavigator = createStackNavigator(
     allDone: { screen: AllDoneScreen },
   },
   {
-    headerMode: "none"
+    headerMode: "none",
   },
 )

@@ -1,13 +1,5 @@
 import * as React from "react"
-import {
-  ImageStyle,
-  TextStyle,
-  View,
-  ViewStyle,
-  TextInput,
-  Alert,
-  Clipboard,
-} from "react-native"
+import { ImageStyle, TextStyle, View, ViewStyle, TextInput, Alert, Clipboard } from "react-native"
 import { NavigationScreenProp } from "react-navigation"
 import { Screen } from "../../components/screen"
 import { Text } from "../../components/text"
@@ -20,11 +12,10 @@ import { BulletItem } from "../../components/bullet-item"
 import { save } from "../../utils/storage"
 import { observer, inject } from "mobx-react"
 
-import { RNCamera } from 'react-native-camera'
-import { decode } from 'bip21'
+import { RNCamera } from "react-native-camera"
+import { decode } from "bip21"
 
-import auth from '@react-native-firebase/auth';
-
+import auth from "@react-native-firebase/auth"
 
 const FULL: ViewStyle = { flex: 1 }
 const CONTAINER: ViewStyle = {
@@ -109,9 +100,9 @@ export class DebugScreen extends React.Component<DebugScreenProps, {}> {
     super(props)
 
     this.state = {
-      addr: 'tb1',
+      addr: "tb1",
       amount: 1000,
-      invoice: 'ln'
+      invoice: "ln",
     }
   }
 
@@ -149,10 +140,7 @@ export class DebugScreen extends React.Component<DebugScreenProps, {}> {
     return (
       <View style={FULL}>
         <Wallpaper />
-        <Screen
-          style={CONTAINER}
-          preset="scroll"
-          backgroundColor={color.transparent}>
+        <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
           <Header
             headerTx="debugScreen.howTo"
             leftIcon="back"
@@ -172,7 +160,10 @@ export class DebugScreen extends React.Component<DebugScreenProps, {}> {
               text="Log out"
               onPress={() => auth().signOut()}
             />
-            <Text style={TAGLINE} text={this.props.dataStore.lnd.walletExist ? "Wallet exist" : "Wallet doesn't exist"} />
+            <Text
+              style={TAGLINE}
+              text={this.props.dataStore.lnd.walletExist ? "Wallet exist" : "Wallet doesn't exist"}
+            />
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
@@ -237,19 +228,18 @@ export class DebugScreen extends React.Component<DebugScreenProps, {}> {
               style={DEMO}
               textStyle={DEMO_TEXT}
               text="add invoice"
-              onPress={() => this.props.dataStore.lnd.addInvoice({value: 1000})}
+              onPress={() => this.props.dataStore.lnd.addInvoice({ value: 1000 })}
             />
-            <Text onPress={Clipboard.setString(this.props.dataStore.lnd.lastAddInvoice)}>{this.props.dataStore.lnd.lastAddInvoice}</Text>
+            <Text onPress={Clipboard.setString(this.props.dataStore.lnd.lastAddInvoice)}>
+              {this.props.dataStore.lnd.lastAddInvoice}
+            </Text>
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
               text="update balance"
               onPress={this.props.dataStore.lnd.updateBalance}
             />
-            <TextInput
-              style={HINT}
-              value={`balance: ${this.props.dataStore.lnd.balance}`}
-            />
+            <TextInput style={HINT} value={`balance: ${this.props.dataStore.lnd.balance}`} />
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
@@ -312,15 +302,16 @@ export class DebugScreen extends React.Component<DebugScreenProps, {}> {
               onPress={this.props.dataStore.lnd.update_transactions}
             />
 
-            <RNCamera style={CAMERA}
+            <RNCamera
+              style={CAMERA}
               captureAudio={false}
-              onBarCodeRead={(event) => {
+              onBarCodeRead={event => {
                 const qr = event.data
                 this.setState({ qr })
                 try {
                   const decoded = decode(qr)
                   this.setState({ addr: decoded.address })
-                  if (Object.prototype.hasOwnProperty.call(decoded.options, 'amount')) {
+                  if (Object.prototype.hasOwnProperty.call(decoded.options, "amount")) {
                     this.setState({ amount: decoded.options.amount })
                   }
                 } catch (err) {
@@ -328,11 +319,7 @@ export class DebugScreen extends React.Component<DebugScreenProps, {}> {
                 }
               }}
             />
-            <TextInput
-              style={HINT}
-              value={this.state.qr}
-              multiline={true}
-            />
+            <TextInput style={HINT} value={this.state.qr} multiline={true} />
             <TextInput
               style={HINT}
               editable
@@ -349,7 +336,9 @@ export class DebugScreen extends React.Component<DebugScreenProps, {}> {
               style={DEMO}
               textStyle={DEMO_TEXT}
               text="sendCoins"
-              onPress={() => this.props.dataStore.lnd.send_transaction(this.state.addr, this.state.amount)}
+              onPress={() =>
+                this.props.dataStore.lnd.send_transaction(this.state.addr, this.state.amount)
+              }
             />
           </View>
         </Screen>

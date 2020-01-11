@@ -1,4 +1,3 @@
-
 const RETRY_DELAY = 1000
 const LND_INIT_DELAY = 5000
 
@@ -26,5 +25,5 @@ export const poll = async (api, interval = RETRY_DELAY, retries = Infinity) => {
     if (response) return response
     await nap(interval)
   }
-  throw new Error('Maximum retries for polling reached')
+  throw new Error("Maximum retries for polling reached")
 }

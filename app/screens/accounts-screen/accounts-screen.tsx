@@ -6,8 +6,8 @@ import { Text } from "../../components/text"
 import { Screen } from "../../components/screen"
 import { FlatList, withNavigation } from "react-navigation"
 import { color } from "../../theme/color"
-import Icon from 'react-native-vector-icons/Ionicons'
-import currency from 'currency.js'
+import Icon from "react-native-vector-icons/Ionicons"
+import currency from "currency.js"
 import { BalanceHeader } from "../../components/balance-header"
 import { AccountType } from "./AccountType"
 import { CurrencyType } from "../../models/data-store/CurrencyType"
@@ -16,96 +16,99 @@ import auth from "@react-native-firebase/auth"
 const accountBasic = {
   color: color.text,
   fontSize: 18,
-  paddingHorizontal: 12
+  paddingHorizontal: 12,
 }
 
 const styles = StyleSheet.create({
   accountAmount: {
-    ...accountBasic
+    ...accountBasic,
   },
 
   accountTypeStyle: {
     ...accountBasic,
-    flex: 1
+    flex: 1,
   },
 
   accountView: {
-    alignItems: 'center',
+    alignItems: "center",
     borderColor: color.line,
     borderRadius: 4,
 
     borderWidth: 0.5,
-    flexDirection: 'row',
+    flexDirection: "row",
     margin: 8,
-    padding: 16
+    padding: 16,
   },
 })
 
-const AccountItem = withNavigation(inject("dataStore")(observer(
-  ({dataStore, account, icon, navigation}) => {
+const AccountItem = withNavigation(
+  inject("dataStore")(
+    observer(({ dataStore, account, icon, navigation }) => {
+      return (
+        <TouchableHighlight
+          underlayColor="white"
+          onPress={() =>
+            navigation.navigate("accountDetail", {
+              account: account,
+            })
+          }
+        >
+          <View style={styles.accountView}>
+            <Icon name={icon} color={color.primary} size={28} />
+            <Text style={styles.accountTypeStyle}>{account}</Text>
+            <Text style={styles.accountAmount}>
+              {currency(dataStore.balances({ account, currency: CurrencyType.USD }), {
+                formatWithSymbol: true,
+              }).format()}
+            </Text>
+          </View>
+        </TouchableHighlight>
+      )
+    }),
+  ),
+)
 
-  return (
-    <TouchableHighlight
-      underlayColor="white"
-      onPress={() => navigation.navigate('accountDetail', {
-        account: account,
-      })}
-    >
-      <View style={styles.accountView} >
-        <Icon name={icon} color={color.primary} size={28} />
-        <Text style={styles.accountTypeStyle}>{account}</Text>
-        <Text style={styles.accountAmount}>
-          { currency(dataStore.balances(
-            { account, currency: CurrencyType.USD }),
-            { formatWithSymbol: true }).format() }
-        </Text>
-      </View>
-    </TouchableHighlight>
-  )
-})))
+export const AccountsScreen = withNavigation(
+  inject("dataStore")(
+    observer(({ dataStore, navigation }) => {
+      const accountTypes: Array<Record<string, any>> = [
+        //FIXME type any
+        { key: "Checking", account: AccountType.Checking, icon: "ios-cash" },
+        { key: "Bitcoin", account: AccountType.Bitcoin, icon: "logo-bitcoin" },
+      ]
 
-export const AccountsScreen = withNavigation(inject("dataStore")(observer(
-  ({dataStore, navigation}) => {
+      dataStore.updateBalance()
 
-  const accountTypes: Array<Record<string, any>> = [ //FIXME type any
-    { key: "Checking", account: AccountType.Checking, icon: 'ios-cash' },
-    { key: "Bitcoin", account: AccountType.Bitcoin, icon: 'logo-bitcoin' },
-  ]
+      // TODO smart refresh --> listen to database and lnd log
+      useEffect(() => {
+        const timer = setInterval(dataStore.updateBalance, 10000)
+        return () => clearTimeout(timer)
+      }, [])
 
-  dataStore.updateBalance()
+      const signOut = () => {
+        auth()
+          .signOut()
+          .then(() => {
+            navigation.navigate("authStack")
+          })
+          .catch(err => {
+            console.tron.log(err)
+            Alert.alert(err.code)
+          })
+      }
 
-  // TODO smart refresh --> listen to database and lnd log
-  useEffect(() => {
-    const timer = setInterval(dataStore.updateBalance, 10000);
-    return () => clearTimeout(timer);
-  }, []);
-
-
-  const signOut = () => {
-    auth().signOut()
-      .then(() => {
-        navigation.navigate('authStack')
-      })
-      .catch(err => {
-        console.tron.log(err)
-        Alert.alert(err.code)
-      })
-  }
-
-  return (
-    <Screen>
-      <BalanceHeader headingCurrency={CurrencyType.BTC} accountsToAdd={AccountType.All} />
-      <FlatList
-        data={accountTypes}
-        renderItem={({ item }) => (
-          <AccountItem {...item} />
-        )} />
-      <Button title="debugScreen" onPress={() => navigation.navigate('demo')}></Button>
-      <Button title="Log out" onPress={() => signOut()}></Button>
-    </Screen>
-  )
-})))
+      return (
+        <Screen>
+          <BalanceHeader headingCurrency={CurrencyType.BTC} accountsToAdd={AccountType.All} />
+          <FlatList data={accountTypes} renderItem={({ item }) => <AccountItem {...item} />} />
+          <Button title="debugScreen" onPress={() => navigation.navigate("demo")}></Button>
+          <Button title="Log out" onPress={() => signOut()}></Button>
+        </Screen>
+      )
+    }),
+  ),
+)
 
 AccountsScreen.navigationOptions = {
-  title: 'Accounts'
+  title: "Accounts",
 }
