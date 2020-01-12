@@ -559,6 +559,11 @@ export const LndModel = BaseAccountModel.named("Lnd")
       console.tron.log(address)
     })
 
+    const decodePayReq = flow(function*(payReq) {
+      return yield getEnv(self).lnd.grpc.sendCommand("decodePayReq", { 
+        payReq,
+    })})
+
     const addInvoice = flow(function*({ value, memo }) {
       const response = yield getEnv(self).lnd.grpc.sendCommand("addInvoice", {
         value,
@@ -687,12 +692,12 @@ export const LndModel = BaseAccountModel.named("Lnd")
     })
 
     // doesn't update the store, should this be here?
-    const pay_invoice = flow(function*(payreq) {
-      const PAYMENT_TIMEOUT = 10000
+    const payInvoice = flow(function*(payreq) {
+      const PAYMENT_TIMEOUT = 10000 // how long is this?
 
-      let failed = false
+      let success = true
       const timeout = setTimeout(() => {
-        failed = true
+        success = false
         // TODO: do something to show payment failed
       }, PAYMENT_TIMEOUT)
 
@@ -711,9 +716,10 @@ export const LndModel = BaseAccountModel.named("Lnd")
           stream.write(JSON.stringify({ paymentRequest: payreq }), "utf8")
         })
 
-        if (failed) return
+        return success
       } catch (err) {
-        if (failed) return
+        console.tron.error(err)
+        return err
 
         // this._nav.goPayLightningConfirm();
         // this._notification.display({ msg: 'Lightning payment failed!', err });
@@ -733,6 +739,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
       pendingChannels,
       statusFirstChannelOpen,
       getInfo,
+      decodePayReq,
       addInvoice,
       connectGaloyPeer,
       openChannel,
@@ -741,7 +748,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
       update_transactions,
       updateBalance,
       update_invoices,
-      pay_invoice,
+      payInvoice,
       list_payments,
       send_transaction,
     }
