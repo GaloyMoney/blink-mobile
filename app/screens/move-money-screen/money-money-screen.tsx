@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     },
 })
 
-export const MoveMoney = () => {
+export const MoveMoneyScreen = () => {
 
     const { navigate } = useNavigation()
 
@@ -100,6 +100,6 @@ export const MoveMoney = () => {
     )
 }
 
-MoveMoney.navigationOptions = () => ({
+MoveMoneyScreen.navigationOptions = () => ({
     title: "Move Money"
 })
