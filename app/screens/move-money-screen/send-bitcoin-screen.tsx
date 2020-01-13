@@ -1,7 +1,7 @@
 import * as React from "react"
 import { useState }from "react"
 import { inject, observer } from "mobx-react"
-import { Text, View, ViewStyle, Alert } from "react-native"
+import { Text, View, ViewStyle, Alert, Clipboard } from "react-native"
 import { Screen } from "../../components/screen"
 import { Input, Button } from 'react-native-elements';
 import Icon from "react-native-vector-icons/Ionicons"
@@ -39,7 +39,7 @@ export const FailurePayInvoiceScreen = withNavigation(
     return(
         <Screen>
             <Text>Payment failed!</Text>
-            <Text>{error}</Text>
+            <Text>{error.toString()}</Text>
             <Button onPress={goBack}>Go back</Button>
         </Screen>
     )
@@ -74,18 +74,17 @@ export const SendBitcoinScreen: React.FC
 = inject("dataStore")(
   observer(({ dataStore }) => {
 
-    const [qr, setQr] = useState("")
     const [invoice, setInvoice] = useState("")
     const [addr, setAddr] = useState("")
     const [amount, setAmount] = useState(0)
+
     const [loading, setLoading] = useState(false)
 
     const { navigate } = useNavigation()
 
     const callbackQRCode = async (data) => {
         try {
-            setQr(data)
-            const [protocol, request] = qr.split(":")
+            const [protocol, request] = data.split(":")
             if (protocol === "bitcoin") {
                 Alert.alert("We're integrating Loop in. Use Lightning for now")
                 return
@@ -114,6 +113,10 @@ export const SendBitcoinScreen: React.FC
 
     const openingCamera = () => {
         navigate('scanningQRCode', {callbackQRCode})
+    }
+
+    const pasteInvoice = async () => {
+        setInvoice(await Clipboard.getString())
     }
 
     type payInvoiceResult = boolean | Error
@@ -146,6 +149,13 @@ export const SendBitcoinScreen: React.FC
                     value={invoice}
                 />
                 <Button icon={<Icon
+                    name="ios-copy"
+                    size={48}
+                    color={color.palette.white} />}
+                buttonStyle={{backgroundColor: color.primary}}
+                onPress={pasteInvoice}
+                />
+                <Button icon={<Icon
                     name="ios-camera"
                     size={48}
                     color={color.palette.white} />}
@@ -159,7 +169,6 @@ export const SendBitcoinScreen: React.FC
                 buttonStyle={{backgroundColor: color.primary}}
                 title="Send" onPress={payInvoice}
                 />
-            <Input value={invoice} onChangeText={value => {setInvoice(value)}} />
             <Button title="Decode Invoice" onPress={decodeInvoice} />
         </Screen>
     )
