@@ -1,5 +1,5 @@
 import React from "react"
-import { StyleSheet, View, Image, ViewPropTypes, TouchableHighlightComponent } from "react-native"
+import { StyleSheet, View, Image, ViewPropTypes } from "react-native"
 import PropTypes from "prop-types"
 import QRImage from "qr-image"
 import { color } from "../../theme/color"
