@@ -3,7 +3,7 @@ import { useState, useEffect } from "react"
 import { Screen } from "../../components/screen"
 import { Onboarding } from "../../components/onboarding"
 import { Text } from "../../components/text"
-import { StyleSheet, Alert } from "react-native"
+import { StyleSheet, Alert, Button } from "react-native"
 import { inject, observer } from "mobx-react"
 import functions from "@react-native-firebase/functions"
 import { Loader } from "../../components/loader"
@@ -11,6 +11,7 @@ import { withNavigation } from "react-navigation"
 import { saveString } from "../../utils/storage"
 import { AccountType, CurrencyType } from "../../utils/enum"
 import { OnboardingSteps } from "../loading-screen"
+import PushNotificationIOS from "@react-native-community/push-notification-ios"
 
 export const lightningLogo = require("./LightningBolt.png")
 export const galoyLogo = require("./GaloyLogo.png")
@@ -92,7 +93,7 @@ export const WelcomeBackCompletedScreen = withNavigation(
         setLoading(true)
         try {
           const invoice = await dataStore.lnd.addInvoice({
-            value: 10000,
+            value: 100,
             memo: "Claimed Rewards",
           })
           const result = await functions().httpsCallable("payInvoice")({ invoice })
@@ -160,6 +161,25 @@ export const FirstRewardScreen = inject("dataStore")(
 
 export const EnableNotificationsScreen = () => {
   // TODO
+  
+  const onRegistered = async (deviceToken) => {
+    Alert.alert("Registered For Remote Push", `Device Token: ${deviceToken}`)
+    console.log(`Device Token: ${deviceToken}`)
+
+    try {
+      await functions().httpsCallable("sendDeviceToken")({deviceToken})
+    } catch (err) {
+      console.tron.log(err.toString())
+      Alert.alert(err.toString())
+    }
+  }
+
+  const onRegistrationError = (error) => {
+    Alert.alert("Failed To Register For Remote Push", `Error (${error.code}): ${error.message}`)
+  }
+
+  PushNotificationIOS.addEventListener("register", onRegistered)
+  PushNotificationIOS.addEventListener("registrationError", onRegistrationError)
 
   return (
     <Screen>
@@ -168,6 +188,7 @@ export const EnableNotificationsScreen = () => {
           Enable notifications to get alerts when you receive payments in the future.
         </Text>
       </Onboarding>
+      <Button title="enable" onPress={() => PushNotificationIOS.requestPermissions()} />
     </Screen>
   )
 }
