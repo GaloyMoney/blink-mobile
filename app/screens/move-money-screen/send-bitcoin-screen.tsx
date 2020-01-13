@@ -124,7 +124,7 @@ export const SendBitcoinScreen: React.FC
             const result:payInvoiceResult = await dataStore.lnd.payInvoice(invoice)
             console.tron.log(result)
             // TODO FIXME: error is not managed correctly
-            if (result) {
+            if (result === true) {
                 navigate('successPayInvoice')
             } else {
                 navigate('failurePayInvoice', {error: result})
@@ -139,11 +139,11 @@ export const SendBitcoinScreen: React.FC
             <Loader loading={loading} />
             <Text>To</Text>
             <View>
-                <Input placeholder='Address or Invoice' 
+                <Input placeholder='Invoice' 
                     leftIcon={  <Icon   name='ios-log-out'
                                 size={24}
                                 color={color.primary} />} 
-                    value={addr}
+                    value={invoice}
                 />
                 <Button icon={<Icon
                     name="ios-camera"
@@ -161,7 +161,6 @@ export const SendBitcoinScreen: React.FC
                 />
             <Input value={invoice} onChangeText={value => {setInvoice(value)}} />
             <Button title="Decode Invoice" onPress={decodeInvoice} />
-            <Text>{qr}</Text>
         </Screen>
     )
 }))
