@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Screen } from "../../components/screen"
 import { Onboarding } from "../../components/onboarding"
 import { Text } from "../../components/text"
@@ -84,26 +84,41 @@ export const WelcomeFirstSatsScreen = () => {
 export const WelcomeBackCompletedScreen = withNavigation(
   inject("dataStore")(
     observer(({ dataStore, navigation }) => {
+
       const [loading, setLoading] = useState(false)
+      const [err, setErr] = useState("")
 
       const action = async () => {
         setLoading(true)
         try {
           const invoice = await dataStore.lnd.addInvoice({
-            value: 100,
+            value: 10000,
             memo: "Claimed Rewards",
           })
           const result = await functions().httpsCallable("payInvoice")({ invoice })
           console.tron.log(invoice, result)
+          setLoading(false)
           navigation.navigate("firstReward")
         } catch (err) {
-          const error = `error paying invoice + ${err}`
-          console.tron.error(error)
-          Alert.alert(error)
-        } finally {
-          setLoading(false)
-        }
+          console.tron.debug(typeof err['message'])
+          console.tron.debug(String(err) + String(err[2]))
+          setErr(err.toString())
+        } 
       }
+
+      useEffect(() => {
+        if (err !== "") {
+          Alert.alert("error", err, [
+            {
+              text: "OK",
+              onPress: () => {
+                setLoading(false)
+              },
+            },
+          ])
+          setErr("")
+        }
+      }, [err])
 
       return (
         <Screen>
