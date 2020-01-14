@@ -14,8 +14,8 @@ import { withNavigation } from "react-navigation"
 import { color } from "../../theme"
 import { saveString } from "../../utils/storage"
 import { OnboardingSteps } from "../loading-screen"
-import { PendingOpenChannelsStatus } from "../../models/data-store"
 import { Loader } from "../../components/loader"
+import { PendingOpenChannelsStatus } from "../../utils/enum"
 
 export const popcornLogo = require("./PopcornLogo.png")
 export const rocketLogo = require("./RocketLogo.png")
@@ -76,12 +76,56 @@ const playVideo = videoId => {
 export const WelcomeSyncingScreen = withNavigation(
   inject("dataStore")(
     observer(({ dataStore, navigation }) => {
+
+      const [loading, setLoading] = useState(false)
+      const [err, setErr] = useState("")
+
+      const openChannel = async () => {
+        setLoading(true)
+  
+        try {
+          await dataStore.lnd.sendPubKey()
+          await dataStore.lnd.connectGaloyPeer()
+  
+          const funding_tx = await dataStore.lnd.openChannel()
+  
+          await saveString("onboarding", OnboardingSteps.channelCreated)
+  
+          setLoading(false)
+          navigation.navigate("welcomeGeneratingWallet")
+        } catch (err) {
+          setErr(err.toString())
+        }
+      }
+    
+      useEffect(() => {
+        if (err !== "") {
+          setErr("")
+          Alert.alert("error", err, [
+            {
+              text: "OK",
+              onPress: () => {
+                setLoading(false)
+              },
+            },
+          ])
+        }
+      }, [err])
+
       return (
         <Screen>
+          <Loader loading={loading} />
           <View style={{ alignContent: "center", width: "100%" }}>
-            <Text style={[styles.text, { fontWeight: "bold" }]}>
-              syncing data... {dataStore.lnd.percentSynced}
-            </Text>
+              { !dataStore.lnd.syncedToChain &&
+              <Text style={[styles.text, { fontWeight: "bold" }]}>
+                  Syncing data... {dataStore.lnd.percentSynced * 100}%
+              </Text>
+              }
+              { dataStore.lnd.syncedToChain && 
+                <Text style={[styles.text, { fontWeight: "bold" }]}>
+                  Sync complete
+                </Text>
+              }
             <Progress.Bar
               style={styles.progressBar}
               color={color.primary}
@@ -89,25 +133,31 @@ export const WelcomeSyncingScreen = withNavigation(
             />
           </View>
           <View style={styles.container}>
-            <Image source={popcornLogo} style={styles.image} />
-            <Text style={styles.text}>
-              Almost ready to launch your wallet! This could take a minute.{"\n"}
-              {"\n"}
-              Earn another reward{"\n"}while you wait:
-            </Text>
-            <Button
-              title="What is a sat? +1,000 sats"
-              containerStyle={styles.buttonContainerVideo}
-              buttonStyle={styles.buttonVideo}
-              type="outline"
-              onPress={() => playVideo("SfeUQWHA3Dc")}
-            />
+          { !dataStore.lnd.syncedToChain &&
+            <>
+              <Image source={popcornLogo} style={styles.image} />
+              <Text style={styles.text}>
+                Almost ready to launch your wallet! This could take a minute.{"\n"}
+                {"\n"}
+                Earn another reward{"\n"}while you wait:
+              </Text>
+              <Button
+                title="What is a sat? +1,000 sats"
+                containerStyle={styles.buttonContainerVideo}
+                buttonStyle={styles.buttonVideo}
+                type="outline"
+                onPress={() => playVideo("SfeUQWHA3Dc")}
+              />
+            </>}
+            { dataStore.lnd.syncedToChain &&
+              <Text style={styles.text}>We are ready to launch your wallet</Text>
+            }
           </View>
           <Button
             title="Create Wallet"
             containerStyle={styles.buttonContainer}
             buttonStyle={styles.buttonStyle}
-            onPress={() => navigation.navigate("welcomeSyncCompleted")}
+            onPress={() => openChannel()}
             disabled={!dataStore.lnd.syncedToChain}
           />
         </Screen>
@@ -116,57 +166,6 @@ export const WelcomeSyncingScreen = withNavigation(
   ),
 )
 
-export const WelcomeSyncCompletedScreen = inject("dataStore")(
-  observer(({ dataStore, navigation }) => {
-    const [loading, setLoading] = useState(false)
-
-    const openChannel = async () => {
-      setLoading(true)
-
-      try {
-        await dataStore.lnd.sendPubKey()
-        await dataStore.lnd.connectGaloyPeer()
-
-        try {
-          const funding_tx = await dataStore.lnd.openChannel()
-        } catch (err) {
-          Alert.alert(`${err}`)
-          return
-        }
-
-        await saveString("onboarding", OnboardingSteps.channelCreated)
-
-        navigation.navigate("welcomeGeneratingWallet")
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    return (
-      <Screen>
-        <Loader loading={loading} />
-        <View style={{ alignContent: "center", width: "100%" }}>
-          <Text style={[styles.text, { fontWeight: "bold" }]}>Sync complete</Text>
-          <Progress.Bar
-            style={styles.progressBar}
-            color={color.primary}
-            progress={dataStore.lnd.percentSynced}
-          />
-        </View>
-        <View style={styles.container}>
-          <Image source={popcornLogo} style={styles.image} />
-          <Text style={styles.text}>We are ready to launch your wallet</Text>
-        </View>
-        <Button
-          title="Create Wallet"
-          containerStyle={styles.buttonContainer}
-          buttonStyle={styles.buttonStyle}
-          onPress={() => openChannel()}
-        />
-      </Screen>
-    )
-  }),
-)
 
 export const WelcomeGeneratingWalletScreen = inject("dataStore")(
   observer(({ dataStore, navigation }) => {

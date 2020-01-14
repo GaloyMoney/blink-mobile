@@ -5,9 +5,9 @@ import * as React from "react"
 import { useEffect } from "react"
 import { ActivityIndicator, StyleSheet, View } from "react-native"
 import { withNavigation } from "react-navigation"
-import { PendingOpenChannelsStatus } from "../../models/data-store"
 import { color } from "../../theme"
 import { loadString } from "../../utils/storage"
+import { PendingOpenChannelsStatus } from "../../utils/enum"
 
 const styles = StyleSheet.create({
   centerBackground: {
@@ -37,6 +37,7 @@ export enum OnboardingSteps {
 export const LoadingScreen = withNavigation(
   inject("dataStore")(
     observer(({ dataStore, navigation }) => {
+      
       useEffect(() => {
         const startLnd = async () => {
           getEnv(dataStore).lnd.start()
@@ -54,8 +55,6 @@ export const LoadingScreen = withNavigation(
         if (user === null) {
           // new install or no data yet
           navigation.navigate("authStack")
-        } else if (user.emailVerified === true) {
-          navigation.navigate("authStack") // we are logged in and email verified
         } else if (user.phoneNumber) {
           // we may be onboarding
           const onboard = await loadString("onboarding") // TODO: move this to mst
@@ -75,6 +74,11 @@ export const LoadingScreen = withNavigation(
                 }
                 case PendingOpenChannelsStatus.opened: {
                   navigation.navigate("welcomebackCompleted")
+                  break
+                }
+                case PendingOpenChannelsStatus.noChannel: {
+                  console.tron.warn("no Channel but phone verified. Because of app reinstall?") 
+                  navigation.navigate("authStack")
                   break
                 }
                 default:
