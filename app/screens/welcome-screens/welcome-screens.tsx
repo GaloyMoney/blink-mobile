@@ -93,7 +93,7 @@ export const WelcomeBackCompletedScreen = withNavigation(
         setLoading(true)
         try {
           const invoice = await dataStore.lnd.addInvoice({
-            value: 100,
+            value: 6000,
             memo: "Claimed Rewards",
           })
           const result = await functions().httpsCallable("payInvoice")({ invoice })

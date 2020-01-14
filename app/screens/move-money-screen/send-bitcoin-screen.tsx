@@ -1,7 +1,7 @@
 import * as React from "react"
-import { useState }from "react"
+import { useState, useEffect }from "react"
 import { inject, observer } from "mobx-react"
-import { Text, View, ViewStyle, Alert, Clipboard, StyleSheet } from "react-native"
+import { Text, View, ViewStyle, Alert, Clipboard, StyleSheet, Vibration } from "react-native"
 import { Screen } from "../../components/screen"
 import { Input, Button } from 'react-native-elements';
 import Icon from "react-native-vector-icons/Ionicons"
@@ -10,6 +10,7 @@ import { RNCamera } from "react-native-camera";
 import { withNavigation } from "react-navigation";
 import { useNavigation, useNavigationParam } from "react-navigation-hooks";
 import { Loader } from "../../components/loader"
+import { palette } from "../../theme/palette"
 
 
 const CAMERA: ViewStyle = {
@@ -19,39 +20,53 @@ const CAMERA: ViewStyle = {
 
 const styles = StyleSheet.create({
     squareButton: {
-      width: 80,
-      height: 80,
-      backgroundColor: color.primary
+      width: 70,
+      height: 70,
+      backgroundColor: color.primary,
     },
+
+    smallText: {
+        fontSize: 18,
+        color: palette.darkGrey,
+        textAlign: 'left',
+        marginBottom: 10,
+    },
+
+    note: {
+        fontSize: 18,
+        color: palette.darkGrey,
+        textAlign: 'left',
+        marginLeft: 10,
+    },
+
+    horizontalContainer: {
+        // flex: 1,
+        flexDirection: "row",
+    },
+
+    icon: {
+        marginRight: 15,
+        color: palette.darkGrey
+    },
+
+    invoiceContainer: {
+        flex: 1, alignSelf: "flex-end" 
+    },
+
+    buttonStyle: {
+        backgroundColor: color.primary,
+        marginHorizontal: 20,
+        marginVertical: 10,
+    },
+
+    section: {
+        paddingTop: 30,
+        paddingBottom: 20,
+        paddingHorizontal: 20,
+    }
+
 })
 
-export const SuccessPayInvoiceScreen = withNavigation(
-    ({ navigation }) => {
-
-    const goBack = () => navigation.goBack()
-
-    return(
-        <Screen>
-            <Text>Payment succesfull!</Text>
-            <Button onPress={goBack}>Go back</Button>
-        </Screen>
-    )
-})
-
-export const FailurePayInvoiceScreen = withNavigation(
-    ({ navigation }) => {
-
-    const goBack = () => navigation.goBack()
-    const error = useNavigationParam('error')
-
-    return(
-        <Screen>
-            <Text>Payment failed!</Text>
-            <Text>{error.toString()}</Text>
-            <Button onPress={goBack}>Go back</Button>
-        </Screen>
-    )
-})
 
 export const ScanningQRCodeScreen = withNavigation(
     ({ navigation }) => {
@@ -83,9 +98,12 @@ export const SendBitcoinScreen: React.FC
   observer(({ dataStore }) => {
 
     const [invoice, setInvoice] = useState("")
+
     const [addr, setAddr] = useState("")
     const [amount, setAmount] = useState(0)
-
+    const [amountless, setAmountless] = useState(false)
+    const [message, setMessage] = useState("")
+    const [note, setNote] = useState(" ")
     const [loading, setLoading] = useState(false)
 
     const { navigate } = useNavigation()
@@ -110,7 +128,7 @@ export const SendBitcoinScreen: React.FC
 
             } else if (protocol !== "lightning") {
                 Alert.alert(
-                    `Only lightning procotol is accepted for now. scanned ${protocol} protocol`)
+                    `Only lightning procotol is accepted for now. got: ${protocol}`)
                 return
             }
 
@@ -118,7 +136,20 @@ export const SendBitcoinScreen: React.FC
             console.tron.log(payReq)
             setInvoice(request)
             setAddr(payReq.destination)
-            setAmount(payReq.numSatoshis)
+
+            if (payReq.numSatoshis) {
+                setAmount(payReq.numSatoshis)
+                setAmountless(false)
+            } else {
+                setAmount(0)
+                setAmountless(true)
+            }
+
+            if (payReq.description) {
+                setNote(payReq.description)
+            } else {
+                setNote(`invoice has no description`)
+            }
 
         } catch (err) {
             Alert.alert(err.toString())
@@ -131,58 +162,107 @@ export const SendBitcoinScreen: React.FC
 
     type payInvoiceResult = boolean | Error
 
+    const vibrate_failure = () => {
+        Vibration.vibrate([500, 500, 500])
+    }
+
     const payInvoice = async () => {
+        const payreq = { paymentRequest: invoice }
+
+        if (invoice === "") {
+            Alert.alert(`You need to paste an invoice or scan a QR Code`)
+            return
+        }
+
+        if (amountless) {
+            if (amount === 0) {
+                Alert.alert(`This invoice doesn't have an amount, `
+                + `so you need to manually specify an amount`)
+                return
+            }
+
+            payreq['amt'] = amount
+        }
+
+        console.tron.log('payreq', payreq)
+
         setLoading(true)
         try {
-            const result:payInvoiceResult = await dataStore.lnd.payInvoice(invoice)
+            const result:payInvoiceResult = await dataStore.lnd.payInvoice(payreq)
+
             console.tron.log(result)
-            // TODO FIXME: error is not managed correctly
             if (result === true) {
-                navigate('successPayInvoice')
+                Vibration.vibrate(500);
+                setMessage('Payment succesfull')
+                setInvoice("")
             } else {
-                navigate('failurePayInvoice', {error: result})
+                vibrate_failure()
+                setMessage(result.toString())
             }
-        } finally {
-            setLoading(false)
+        } catch(err) {
+            vibrate_failure()
+            setMessage(err.toString())
         }
     }
+
+    useEffect(() => {
+        if (message !== "") {
+          Alert.alert("error", message, [
+            {
+              text: "OK",
+              onPress: () => {
+                setLoading(false)
+              },
+            },
+          ])
+          setMessage("")
+        }
+      }, [message])
 
     return (
         <Screen>
             <Loader loading={loading} />
-            <Text>Amount</Text>
-            <Input leftIcon={<Text>sats</Text>} 
-                onChangeText={input => setAmount(parseInt(input))}
-                value={amount.toString()}
-                />
-            <Text>To</Text>
-            <View>
-                <Input placeholder='Invoice' 
-                    leftIcon={  <Icon   name='ios-log-out'
-                                size={24}
-                                color={color.primary} />} 
-                    value={invoice}
-                />
-                <Button icon={<Icon
-                    name="ios-copy"
-                    size={48}
-                    color={color.palette.white} />}
-                buttonStyle={styles.squareButton}
-                onPress={pasteInvoice}
-                />
-                <Button icon={<Icon
-                    name="ios-camera"
-                    size={48}
-                    color={color.palette.white} />}
-                    buttonStyle={styles.squareButton}
-                onPress={openingCamera}
-                />
+            <View style={styles.section}>
+                <Text style={styles.smallText}>To</Text>
+                <View style={styles.horizontalContainer}>
+                    <Input placeholder='Invoice' 
+                        leftIcon={  <Icon   name='ios-log-out'
+                                    size={24}
+                                    color={color.primary}
+                                    style={styles.icon}
+                                    />} 
+                        value={invoice}
+                        containerStyle={styles.invoiceContainer}
+                    />
+                    <Button icon={<Icon
+                        name="ios-camera"
+                        size={48}
+                        color={color.palette.white}/>}
+                        buttonStyle={styles.squareButton}
+                        onPress={openingCamera}
+                    />
+                </View>
+            </View>
+            <View style={styles.section}>
+                <Text style={styles.smallText}>Amount</Text>
+                <Input leftIcon={<Text style={styles.icon}>sats</Text>} 
+                    onChangeText={input => setAmount(parseInt(input))}
+                    disabled={!amountless}
+                    value={amount.toString()}
+                    />
+            </View>
+            <View style={styles.section}>
+                <Text style={styles.smallText}>Note</Text>
+                <Text style={styles.note}>{note}</Text>
             </View>
             <Button 
-                buttonStyle={{backgroundColor: color.primary}}
+                buttonStyle={styles.buttonStyle}
+                title="Paste" onPress={pasteInvoice}
+                />
+            <Button 
+                buttonStyle={styles.buttonStyle}
                 title="Send" onPress={payInvoice}
                 />
-            {/* <Button title="Decode Invoice" onPress={decodeInvoice} /> */}
         </Screen>
     )
 }))

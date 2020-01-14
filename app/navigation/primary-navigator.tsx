@@ -8,7 +8,7 @@ import { createBottomTabNavigator } from "react-navigation-tabs"
 import Icon from "react-native-vector-icons/Ionicons"
 import { color } from "../theme"
 import { RewardsScreen } from "../screens/rewards-screen"
-import { MoveMoneyScreen, SendBitcoinScreen, ScanningQRCodeScreen, FailurePayInvoiceScreen, SuccessPayInvoiceScreen, ReceiveBitcoinScreen } from "../screens/move-money-screen"
+import { MoveMoneyScreen, SendBitcoinScreen, ScanningQRCodeScreen, ReceiveBitcoinScreen } from "../screens/move-money-screen"
 
 export const AccountNavigator = createStackNavigator(
   {
@@ -27,8 +27,6 @@ export const MoveMoneyNavigator = createStackNavigator(
     moveMoney: { screen: MoveMoneyScreen },
     sendBitcoin: { screen: SendBitcoinScreen },
     scanningQRCode: { screen: ScanningQRCodeScreen },
-    failurePayInvoice: { screen: FailurePayInvoiceScreen },
-    successPayInvoice: { screen: SuccessPayInvoiceScreen },
     receiveBitcoin: { screen : ReceiveBitcoinScreen }
   },
   {

@@ -684,7 +684,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
     })
 
     // doesn't update the store, should this be here?
-    const payInvoice = flow(function*(payreq) {
+    const payInvoice = flow(function*(paymentRequest) {
       const PAYMENT_TIMEOUT = 10000 // how long is this?
 
       let success = true
@@ -705,7 +705,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
             }
           })
           stream.on("error", reject)
-          stream.write(JSON.stringify({ paymentRequest: payreq }), "utf8")
+          stream.write(JSON.stringify(paymentRequest), "utf8")
         })
 
         return success
