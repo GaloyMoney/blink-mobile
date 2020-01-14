@@ -11,13 +11,11 @@ import { toHex } from "../../utils/helper"
 
 import DeviceInfo from "react-native-device-info"
 
-// FIXME add as a global var
-const isSimulator = () => DeviceInfo.isEmulatorSync()
-
-if (isSimulator()) {
-  // FIXME import from a local file
-  functions().useFunctionsEmulator("http://localhost:5000")
-}
+// // FIXME add as a global var
+DeviceInfo.isEmulator().then(isEmulator => {
+  if (isEmulator) {
+    functions().useFunctionsEmulator("http://localhost:5000")
+}})
 
 export const OnChainTransactionModel = types.model("OnChainTransaction", {
   txHash: types.string,
