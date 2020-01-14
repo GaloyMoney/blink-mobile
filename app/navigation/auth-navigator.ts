@@ -15,8 +15,8 @@ import {
 import { WelcomePhoneInputScreen, WelcomePhoneValidationScreen } from "../screens/welcome-phone"
 import {
   WelcomeSyncingScreen,
-  WelcomeSyncCompletedScreen,
   WelcomeGeneratingWalletScreen,
+
 } from "../screens/welcome-sync"
 import { DebugScreen } from "../screens/demo-screen"
 import { color } from "../theme"
@@ -46,8 +46,8 @@ export const AuthNavigator = createStackNavigator(
 export const SyncingNavigator = createStackNavigator(
   {
     welcomeSyncing: { screen: WelcomeSyncingScreen },
-    welcomeSyncCompleted: { screen: WelcomeSyncCompletedScreen },
-    welcomeGeneratingWallet: { screen: WelcomeGeneratingWalletScreen }, // TODO
+    welcomeGeneratingWallet: { screen: WelcomeGeneratingWalletScreen },
+
   },
   {
     headerMode: "none",

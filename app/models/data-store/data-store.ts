@@ -1,5 +1,5 @@
 import { Instance, SnapshotOut, types, flow, getParentOfType, getEnv } from "mobx-state-tree"
-import { AccountType, CurrencyType } from "../../utils/enum"
+import { AccountType, CurrencyType, PendingOpenChannelsStatus } from "../../utils/enum"
 import { parseDate } from "../../utils/date"
 import KeychainAction from "../../utils/keychain"
 import { generateSecureRandom } from "react-native-securerandom"
@@ -247,12 +247,6 @@ export const FiatAccountModel = BaseAccountModel.props({
       return self._transactions
     },
   }))
-
-export enum PendingOpenChannelsStatus {
-  pending = "pending",
-  opened = "opened",
-  noChannel = "noChannel",
-}
 
 export const LndModel = BaseAccountModel.named("Lnd")
   .props({

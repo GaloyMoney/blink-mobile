@@ -124,7 +124,7 @@ export const WelcomeBackCompletedScreen = withNavigation(
       return (
         <Screen>
           <Loader loading={loading} />
-          <Onboarding action={action} header="+1,000 sats pending" image={partyPopperLogo}>
+          <Onboarding action={action} header="Welcome back!" image={partyPopperLogo}>
             <Text style={styles.text}>
               Your wallet is ready.{"\n"}
               Now send us a payment request so we can send your sats.
@@ -138,12 +138,23 @@ export const WelcomeBackCompletedScreen = withNavigation(
 
 export const FirstRewardScreen = inject("dataStore")(
   observer(({ dataStore }) => {
-    dataStore.lnd.updateBalance()
 
-    const balance = dataStore.balances({
-      currency: CurrencyType.BTC,
-      account: AccountType.Bitcoin,
-    })
+    const [balance, setBalance] = useState(0)
+
+    useEffect(() => {
+      const updateBalance = async () => {
+        await dataStore.lnd.updateBalance()
+        const result = dataStore.balances({
+          currency: CurrencyType.BTC,
+          account: AccountType.Bitcoin,
+        })
+        setBalance(result)
+      }
+      
+      updateBalance()
+      const timer = setInterval(updateBalance, 1000)
+      return () => clearTimeout(timer)
+    }, [])
 
     return (
       <Screen>
@@ -156,8 +167,7 @@ export const FirstRewardScreen = inject("dataStore")(
         </Onboarding>
       </Screen>
     )
-  }),
-)
+}))
 
 export const EnableNotificationsScreen = () => {
   // TODO
@@ -194,25 +204,18 @@ export const EnableNotificationsScreen = () => {
 }
 
 export const AllDoneScreen = withNavigation(
-  inject("dataStore")(
-    observer(({ navigation, dataStore }) => {
+  (({ navigation }) => {
       const action = async () => {
         await saveString("onboarding", OnboardingSteps.onboarded)
         navigation.navigate("primaryStack")
       }
 
-      const balance = dataStore.balances({
-        currency: CurrencyType.BTC,
-        account: AccountType.Bitcoin,
-      })
-
       return (
         <Screen>
-          <Onboarding action={action} header={`+ ${balance} sats`} image={galoyLogo}>
+          <Onboarding action={action} image={galoyLogo}>
             <Text style={styles.text}>All done here, you're finished setting up a wallet</Text>
           </Onboarding>
         </Screen>
       )
-    }),
-  ),
+  }),
 )

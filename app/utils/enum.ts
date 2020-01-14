@@ -8,3 +8,9 @@ export enum CurrencyType {
     USD = "USD",
     BTC = "BTC",
 }
+
+export enum PendingOpenChannelsStatus {
+  pending = "pending",
+  opened = "opened",
+  noChannel = "noChannel",
+}
