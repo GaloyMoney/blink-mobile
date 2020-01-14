@@ -213,8 +213,8 @@ export const WelcomeGeneratingWalletScreen = inject("dataStore")(
         <View style={styles.container}>
           <Image source={rocketLogo} style={styles.image} />
           <Text style={styles.text}>
-            Sit back and relax, we’ll let you know when your wallet is ready. This may take a day or
-            so.
+            Sit back and relax, we’ll let you know when your wallet is ready. 
+            This may take a day or so.
           </Text>
           <Button
             title="What is money?"
