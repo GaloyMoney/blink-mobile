@@ -1,7 +1,7 @@
 import * as React from "react"
 import { useState }from "react"
 import { inject, observer } from "mobx-react"
-import { Text, View, ViewStyle, Alert, Clipboard } from "react-native"
+import { Text, View, ViewStyle, Alert, Clipboard, StyleSheet } from "react-native"
 import { Screen } from "../../components/screen"
 import { Input, Button } from 'react-native-elements';
 import Icon from "react-native-vector-icons/Ionicons"
@@ -16,6 +16,14 @@ const CAMERA: ViewStyle = {
     width: "100%",
     height: "100%",
 }
+
+const styles = StyleSheet.create({
+    squareButton: {
+      width: 80,
+      height: 80,
+      backgroundColor: color.primary
+    },
+})
 
 export const SuccessPayInvoiceScreen = withNavigation(
     ({ navigation }) => {
@@ -83,40 +91,42 @@ export const SendBitcoinScreen: React.FC
     const { navigate } = useNavigation()
 
     const callbackQRCode = async (data) => {
+        decodeInvoice(data)
+    }
+
+    const pasteInvoice = async () => {
+        decodeInvoice(await Clipboard.getString())
+    }
+
+    const decodeInvoice = async (data) => {
         try {
-            const [protocol, request] = data.split(":")
+            let [protocol, request] = data.split(":")
+            console.tron.log(protocol, request)
             if (protocol === "bitcoin") {
                 Alert.alert("We're integrating Loop in. Use Lightning for now")
                 return
+            } else if (protocol.startsWith("ln") && request === undefined) { // it might start with 'lightning:'
+                request = protocol
+
             } else if (protocol !== "lightning") {
                 Alert.alert(
-                    `Only QR code procol are accepted for now. scanned ${protocol}`)
+                    `Only lightning procotol is accepted for now. scanned ${protocol} protocol`)
                 return
             }
-            setInvoice(request)
-            await decodeInvoice()
-        } catch (err) {
-            Alert.alert(err)
-        }
-    }
 
-    const decodeInvoice = async () => {
-        try {
-            const payReq = await dataStore.lnd.decodePayReq(invoice)
+            const payReq = await dataStore.lnd.decodePayReq(request)
             console.tron.log(payReq)
+            setInvoice(request)
             setAddr(payReq.destination)
             setAmount(payReq.numSatoshis)
+
         } catch (err) {
-            Alert.alert(err)
-        }
+            Alert.alert(err.toString())
+        }        
     }
 
     const openingCamera = () => {
         navigate('scanningQRCode', {callbackQRCode})
-    }
-
-    const pasteInvoice = async () => {
-        setInvoice(await Clipboard.getString())
     }
 
     type payInvoiceResult = boolean | Error
@@ -140,6 +150,11 @@ export const SendBitcoinScreen: React.FC
     return (
         <Screen>
             <Loader loading={loading} />
+            <Text>Amount</Text>
+            <Input leftIcon={<Text>sats</Text>} 
+                onChangeText={input => setAmount(parseInt(input))}
+                value={amount.toString()}
+                />
             <Text>To</Text>
             <View>
                 <Input placeholder='Invoice' 
@@ -152,24 +167,26 @@ export const SendBitcoinScreen: React.FC
                     name="ios-copy"
                     size={48}
                     color={color.palette.white} />}
-                buttonStyle={{backgroundColor: color.primary}}
+                buttonStyle={styles.squareButton}
                 onPress={pasteInvoice}
                 />
                 <Button icon={<Icon
                     name="ios-camera"
                     size={48}
                     color={color.palette.white} />}
-                buttonStyle={{backgroundColor: color.primary}}
+                    buttonStyle={styles.squareButton}
                 onPress={openingCamera}
                 />
             </View>
-            <Text>{amount}</Text>
-            <Input leftIcon={<Text>sats</Text>} />
             <Button 
                 buttonStyle={{backgroundColor: color.primary}}
                 title="Send" onPress={payInvoice}
                 />
-            <Button title="Decode Invoice" onPress={decodeInvoice} />
+            {/* <Button title="Decode Invoice" onPress={decodeInvoice} /> */}
         </Screen>
     )
 }))
+
+SendBitcoinScreen.navigationOptions = () => ({
+    title: "Send Bitcoin"
+})

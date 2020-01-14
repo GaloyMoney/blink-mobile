@@ -5,7 +5,7 @@ import { Text, View, Alert, Share, Clipboard, StyleSheet } from "react-native"
 import { Screen } from "../../components/screen"
 import { Input, Button, ButtonGroup } from 'react-native-elements';
 import { color } from "../../theme";
-import { useNavigation, useNavigationParam } from "react-navigation-hooks";
+import { useNavigation } from "react-navigation-hooks";
 import { QRCode } from "../../components/qrcode"
 
 
@@ -101,3 +101,8 @@ export const ReceiveBitcoinScreen: React.FC
         </Screen>
     )
 }))
+
+ReceiveBitcoinScreen.navigationOptions = () => ({
+  title: "Receive Bitcoin"
+})
+

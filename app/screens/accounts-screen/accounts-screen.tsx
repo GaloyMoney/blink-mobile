@@ -79,10 +79,10 @@ export const AccountsScreen = withNavigation(
       dataStore.updateBalance()
 
       // TODO smart refresh --> listen to database and lnd log
-      useEffect(() => {
-        const timer = setInterval(dataStore.updateBalance, 10000)
-        return () => clearTimeout(timer)
-      }, [])
+      // useEffect(() => {
+      //   const timer = setInterval(dataStore.updateBalance, 10000)
+      //   return () => clearTimeout(timer)
+      // }, [])
 
       const signOut = () => {
         auth()

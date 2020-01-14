@@ -7,10 +7,8 @@ import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
 import { createBottomTabNavigator } from "react-navigation-tabs"
 import Icon from "react-native-vector-icons/Ionicons"
 import { color } from "../theme"
-import { MoveMoneyScreen } from "../screens/move-money-screen"
-import { SendBitcoinScreen, ScanningQRCodeScreen, 
-  FailurePayInvoiceScreen, SuccessPayInvoiceScreen } from "../screens/move-money-screen"
-import { ReceiveBitcoinScreen } from "../screens/move-money-screen"
+import { RewardsScreen } from "../screens/rewards-screen"
+import { MoveMoneyScreen, SendBitcoinScreen, ScanningQRCodeScreen, FailurePayInvoiceScreen, SuccessPayInvoiceScreen, ReceiveBitcoinScreen } from "../screens/move-money-screen"
 
 export const AccountNavigator = createStackNavigator(
   {
@@ -40,7 +38,7 @@ export const MoveMoneyNavigator = createStackNavigator(
 
 export const RewardsNavigator = createStackNavigator(
   {
-    moveMoney: { screen: DebugScreen },
+    rewards: { screen: RewardsScreen },
   },
   {
     headerMode: "float",
