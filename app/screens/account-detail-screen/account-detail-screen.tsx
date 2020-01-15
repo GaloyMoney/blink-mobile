@@ -1,7 +1,8 @@
 import * as React from "react"
+import { useState } from "react"
 import { observer, inject } from "mobx-react"
 
-import { View, SectionList, StyleSheet } from "react-native"
+import { View, SectionList, StyleSheet, RefreshControl } from "react-native"
 
 import { Text } from "../../components/text"
 import { Screen } from "../../components/screen"
@@ -103,66 +104,95 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
   = inject("dataStore")(
     observer(({ dataStore }) => {
 
+    const [refreshing, setRefreshing] = useState(false);
+    const [sections, setSections] = useState([]);
+
     const account = useNavigationParam("account")
 
     const accountStore = account === AccountType.Checking ?
         dataStore.fiat
       : dataStore.lnd
 
-    let transactions = accountStore.transactions
-
-    if (transactions.length === 0) {
-      return <Text>No transaction to show</Text>
-    }
-
     const currency = accountStore.currency
 
-    transactions = transactions.slice().sort((a, b) => (a.date > b.date ? -1 : 1)) // warning without slice?
+    const onRefresh = React.useCallback(async () => {
+      setRefreshing(true);
+      await updateTransactions()
+      setRefreshing(false);
+    }, [refreshing]);
 
-    const transactions_set = new Set(transactions)
+    const updateTransactions = async () => {
+      await accountStore.update()
 
-    // XXX FIXME TODO: clean up logic. 
-    // transactions were not ordered before.
-    // no need to use Set.
-    const today = transactions.filter(tx => sameDay(tx.date, new Date()))
+      let transactions = accountStore.transactions
+      
+      const _sections = []
+      const today = []
+      const yesterday = []
+      const thisMonth = []
+      const before = []
 
-    const yesterday = transactions.filter(tx =>
-      sameDay(tx.date, new Date().setDate(new Date().getDate() - 1)),
-    )
+      if (transactions.length === 0) {
+        return <Text>No transaction to show</Text>
+      }
+    
+      transactions = transactions.slice().sort((a, b) => (a.date > b.date ? -1 : 1)) // warning without slice?
+  
+      const isToday = (tx) => {
+        return sameDay(tx.date, new Date())
+      }
 
-    let transactions_included = new Set([...today, ...yesterday])
-    let not_yet_included_set = new Set(
-      [...transactions_set].filter(x => !transactions_included.has(x)),
-    )
+      const isYesterday = (tx) => {
+        return sameDay(tx.date, new Date().setDate(new Date().getDate() - 1))
+      }
 
-    const this_month = Array.from(not_yet_included_set).filter(tx => sameMonth(tx.date, new Date())) // FIXME wrong if first day of the month
+      const isThisMonth = (tx) => {
+        return sameMonth(tx.date, new Date())
+      }
 
-    transactions_included = new Set([...today, ...yesterday, ...this_month]) // FIXME DRY
-    not_yet_included_set = new Set([...transactions_set].filter(x => !transactions_included.has(x)))
+      while(transactions.length) { // this could be optimized
+        let tx = transactions.shift()
+        if (isToday(tx)) {
+          today.push(tx)
+        } else if (isYesterday(tx)) {
+          yesterday.push(tx)
+        } else if (isThisMonth(tx)) {
+          thisMonth.push(tx)
+        } else {
+          before.push(tx)
+        }
+      }
+      
+      if (today.length > 0) {
+        _sections.push({ title: "Today", data: today })
+      }
+  
+      if (yesterday.length > 0) {
+        _sections.push({ title: "Yesterday", data: yesterday })
+      }
+  
+      if (thisMonth.length > 0) {
+        _sections.push({ title: "This month", data: thisMonth })
+      }
+  
+      if (before.length > 0) {
+        _sections.push({ title: "Previous months", data: before })
+      }
 
-    const before = Array.from(not_yet_included_set)
-
-    const sections = []
-    if (today.length > 0) {
-      sections.push({ title: "Today", data: today })
+      setSections(_sections)
     }
 
-    if (yesterday.length > 0) {
-      sections.push({ title: "Yesterday", data: yesterday })
-    }
-
-    if (this_month.length > 0) {
-      sections.push({ title: "This month", data: this_month })
-    }
-
-    if (before.length > 0) {
-      sections.push({ title: "Previous months", data: before })
-    }
+    React.useEffect(() => {
+      updateTransactions()
+    }, [])
 
     return (
       <Screen>
         <BalanceHeader headingCurrency={currency} accountsToAdd={account} />
         <SectionList
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
           renderItem={({ item, index, section }) => (
             <AccountDetailItem account={account} currency={currency} {...item} />
           )}

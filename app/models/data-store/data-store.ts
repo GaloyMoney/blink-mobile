@@ -199,7 +199,7 @@ export const FiatAccountModel = BaseAccountModel.props({
   _transactions: types.array(FiatTransactionModel),
 })
   .actions(self => {
-    const update_transactions = flow(function*() {
+    const updateTransactions = flow(function*() {
       let uid
       try {
         uid = auth().currentUser.uid
@@ -229,13 +229,12 @@ export const FiatAccountModel = BaseAccountModel.props({
         console.tron.error(`can't fetch the balance`, err)
       }
     })
+    const update = flow(function*() {
+      yield updateBalance()
+      yield updateTransactions()
+    })
 
-    const reset = () => {
-      // TODO test
-      ;(self._transactions.length = 0), (self.confirmedBalance = 0)
-    }
-
-    return { updateBalance, reset, update_transactions }
+    return { updateBalance, updateTransactions }
   })
   .views(self => ({
     get currency() {
@@ -520,15 +519,20 @@ export const LndModel = BaseAccountModel.named("Lnd")
       }
     })
 
+    const update = flow(function*() {
+      yield updateBalance()
+      yield updateTransactions()
+      yield updateInvoices()
+      yield listPayments()
+    })
+
     // this get triggered after the wallet is being unlocked
     const walletGotOpened = flow(function*() {
       self.walletUnlocked = true
       yield getInfo()
-      yield updateBalance()
-      yield update_transactions()
-      yield update_invoices()
-      yield list_payments()
+      yield update()
     })
+
 
     const unlockWallet = flow(function*() {
       // TODO: auth with biometrics/passcode
@@ -584,7 +588,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
       }
     })
 
-    const update_transactions = flow(function*() {
+    const updateTransactions = flow(function*() {
       try {
         const { transactions } = yield getEnv(self).lnd.grpc.sendCommand("getTransactions")
 
@@ -611,7 +615,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
       }
     })
 
-    const update_invoices = flow(function*(invoice_updated = undefined) {
+    const updateInvoices = flow(function*(invoice_updated = undefined) {
       try {
         const { invoices } = yield getEnv(self).lnd.grpc.sendCommand("listInvoices")
 
@@ -653,7 +657,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
       // })
     })
 
-    const list_payments = flow(function*() {
+    const listPayments = flow(function*() {
       try {
         const { payments } = yield getEnv(self).lnd.grpc.sendCommand("listPayments")!
 
@@ -737,11 +741,12 @@ export const LndModel = BaseAccountModel.named("Lnd")
       openChannel,
       walletGotOpened,
       newAddress,
-      update_transactions,
+      updateTransactions,
       updateBalance,
-      update_invoices,
+      updateInvoices,
+      update,
       payInvoice,
-      list_payments,
+      listPayments,
       send_transaction,
     }
   })
@@ -844,10 +849,10 @@ export const DataStoreModel = types
     lnd: types.optional(LndModel, {}), // TODO should it be optional?
   })
   .actions(self => {
-    const update_transactions = flow(function*() {
+    const updateTransactions = flow(function*() {
       // TODO parrallel call?
-      yield self.fiat.update_transactions()
-      yield self.lnd.update_transactions()
+      yield self.fiat.updateTransactions()
+      yield self.lnd.updateTransactions()
     })
 
     const updateBalance = flow(function*() {
@@ -857,7 +862,7 @@ export const DataStoreModel = types
       yield self.lnd.updateBalance()
     })
 
-    return { update_transactions, updateBalance }
+    return { updateTransactions, updateBalance }
   })
   .views(self => ({
     // TODO using: BalanceRequest type, how to set it?
