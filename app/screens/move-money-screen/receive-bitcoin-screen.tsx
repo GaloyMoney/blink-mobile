@@ -7,12 +7,18 @@ import { Input, Button, ButtonGroup } from 'react-native-elements';
 import { color } from "../../theme";
 import { useNavigation } from "react-navigation-hooks";
 import { QRCode } from "../../components/qrcode"
+import { ScrollView } from "react-native-gesture-handler"
 
 
 const styles = StyleSheet.create({
   qr: {
-    alignItems: "center"
+    alignItems: "center",
+    flex: 1,
   },
+
+  buttonStyle: {
+    backgroundColor: color.primary, flex: 1, width: 120, margin: 5
+  }
 })
 
 
@@ -64,6 +70,7 @@ export const ReceiveBitcoinScreen: React.FC
 
     return (
         <Screen>
+          <ScrollView style={{flex: 1}}>
             <ButtonGroup
             onPress={updateIndex}
             buttons={buttons}
@@ -84,20 +91,21 @@ export const ReceiveBitcoinScreen: React.FC
                     keyboardType="numeric"
                     />
             </View>
-            <View>
-                <Button 
-                    buttonStyle={{backgroundColor: color.primary}}
-                    title="Share" onPress={shareInvoice}
-                    />
-                <Button 
-                    buttonStyle={{backgroundColor: color.primary}}
-                    title="Copy" onPress={copyInvoice}
-                    />
-                <Button 
-                    buttonStyle={{backgroundColor: color.primary}}
-                    title="Create Invoice" onPress={createInvoice}
-                    />
+            <View style={{flexDirection: "row", margin: 10}}>
+              <Button 
+                  buttonStyle={styles.buttonStyle}
+                  title="Create" onPress={createInvoice}
+                  />
+              <Button 
+                  buttonStyle={styles.buttonStyle}
+                  title="Share" onPress={shareInvoice}
+                  />
+              <Button 
+                  buttonStyle={styles.buttonStyle}
+                  title="Copy" onPress={copyInvoice}
+                  />
             </View>
+          </ScrollView>
         </Screen>
     )
 }))
