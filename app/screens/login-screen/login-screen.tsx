@@ -42,9 +42,6 @@ const styles = StyleSheet.create({
     backgroundColor: color.primary,
   },
 
-  signUp: {
-    color: color.text,
-  },
 
   sub: {
     fontSize: 18,
@@ -114,13 +111,6 @@ const GetStartedComponent = ({ dataStore, navigation }) => {
   return (
     <>
       <View style={styles.bottom}>
-        <Button
-          title="Log in"
-          titleStyle={styles.signUp}
-          onPress={() => navigation.navigate("login")}
-          type="clear"
-          containerStyle={styles.buttonContainer}
-        />
         <Button
           title="Get Started"
           buttonStyle={styles.signIn}
