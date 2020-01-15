@@ -149,6 +149,9 @@ export const WelcomePhoneInputScreen = withNavigation(({ text, navigation, heade
             ref={inputRef}
             style={styles.phoneEntryContainer}
             textStyle={styles.textEntry}
+            textProps={{returnKeyType: 'done',
+              onSubmitEditing: () => send(),
+            }}
           />
           <View style={{ flex: 1 }} />
           <Button
@@ -247,6 +250,8 @@ export const WelcomePhoneValidationScreen = () => {
             keyboardType="number-pad"
             textContentType="oneTimeCode"
             placeholder="6 Digits Code"
+            returnKeyType='done'
+            onSubmitEditing={() => sendVerif()}
           >
             {code}
           </TextInput>
