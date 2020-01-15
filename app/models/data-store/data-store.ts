@@ -234,7 +234,7 @@ export const FiatAccountModel = BaseAccountModel.props({
       yield updateTransactions()
     })
 
-    return { updateBalance, updateTransactions }
+    return { updateBalance, updateTransactions, update }
   })
   .views(self => ({
     get currency() {
