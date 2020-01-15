@@ -53,7 +53,7 @@ export class Lnd {
     new Promise((resolve, reject) => {
       streamInvoices.on("data", data => {
         console.tron.log("onData", data)
-        this.lndStore.update_invoices()
+        this.lndStore.updateInvoices()
       })
       streamInvoices.on("end", resolve)
       streamInvoices.on("error", reject)

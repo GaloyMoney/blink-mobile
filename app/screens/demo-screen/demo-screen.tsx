@@ -244,7 +244,7 @@ export class DebugScreen extends React.Component<DebugScreenProps, {}> {
               style={DEMO}
               textStyle={DEMO_TEXT}
               text="update invoice"
-              onPress={this.props.dataStore.lnd.update_invoices}
+              onPress={this.props.dataStore.lnd.updateInvoices}
             />
             <TextInput
               style={HINT}
