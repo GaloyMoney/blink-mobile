@@ -8,6 +8,10 @@ import { withNavigation } from "react-navigation"
 import { Screen } from "../../components/screen"
 import { color } from "../../theme"
 
+import VersionNumber from 'react-native-version-number';
+import Config from "react-native-config";
+import { palette } from "../../theme/palette"
+
 const styles = StyleSheet.create({
   bottom: {
     alignItems: "center",
@@ -54,6 +58,13 @@ const styles = StyleSheet.create({
     marginBottom: 24,
     marginTop: 128,
   },
+
+  version: {
+    fontSize: 18,
+    marginTop: 100,
+    color: palette.lightGrey,
+    textAlign: 'center',
+  }
 })
 
 export const GetStartedScreen = withNavigation(
@@ -90,6 +101,10 @@ const TemplateLoginScreen = ({ dataStore, navigation, screen }) => {
         Galoy
       </Text>
       <Text style={styles.sub}>The bank built for crypto</Text>
+      <Text style={styles.version}>
+        v{VersionNumber.appVersion} build {VersionNumber.buildVersion}{'\n'}
+        network: {Config.BITCOIN_NETWORK}
+        </Text>
       {subScreen}
     </Screen>
   )
