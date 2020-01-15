@@ -210,7 +210,7 @@ export const SendBitcoinScreen: React.FC
             ignoreAndroidSystemSettings: false
           };
 
-          const haptic_feedback = err ? "notificationError" : "notificationSuccess"
+          const haptic_feedback = err !== "" ? "notificationError" : "notificationSuccess"
           ReactNativeHapticFeedback.trigger(haptic_feedback, options)
           
           Alert.alert(header, message || err, [
@@ -253,9 +253,11 @@ export const SendBitcoinScreen: React.FC
             <View style={styles.section}>
                 <Text style={styles.smallText}>Amount</Text>
                 <Input leftIcon={<Text style={styles.icon}>sats</Text>} 
-                    onChangeText={input => setAmount(parseInt(input))}
-                    disabled={!amountless}
+                    onChangeText={input => setAmount(+input)}
                     value={amount.toString()}
+                    disabled={!amountless}
+                    returnKeyType='done'
+                    keyboardType="number-pad"
                     />
             </View>
             <View style={styles.section}>

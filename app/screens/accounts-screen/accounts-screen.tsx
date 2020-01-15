@@ -111,7 +111,7 @@ export const AccountsScreen = withNavigation(
 
 AccountsScreen.navigationOptions = screenProps => ({
   title: "Accounts",
-  headerRight: <Icon name={"ios-person"} 
+  headerRight: () => <Icon name={"ios-person"} 
       size={32}
       color={palette.darkGrey} 
       style={styles.person}
