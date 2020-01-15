@@ -1,6 +1,7 @@
 import * as React from "react"
+import { useState, useEffect } from "react"
 import { observer, inject } from "mobx-react"
-import { StyleSheet, TouchableHighlight, View, Alert, Button } from "react-native"
+import { StyleSheet, TouchableHighlight, View, RefreshControl } from "react-native"
 import { Text } from "../../components/text"
 import { Screen } from "../../components/screen"
 import { FlatList, withNavigation } from "react-navigation"
@@ -8,7 +9,6 @@ import { color } from "../../theme/color"
 import Icon from "react-native-vector-icons/Ionicons"
 import currency from "currency.js"
 import { BalanceHeader } from "../../components/balance-header"
-import auth from "@react-native-firebase/auth"
 import { AccountType, CurrencyType } from "../../utils/enum"
 import { palette } from "../../theme/palette"
 
@@ -75,36 +75,34 @@ const AccountItem = withNavigation(
 export const AccountsScreen = withNavigation(
   inject("dataStore")(
     observer(({ dataStore, navigation }) => {
+
+      const [refreshing, setRefreshing] = useState(false);
+
       const accountTypes: Array<Record<string, any>> = [
         //FIXME type any
         { key: "Checking", account: AccountType.Checking, icon: "ios-cash" },
         { key: "Bitcoin", account: AccountType.Bitcoin, icon: "logo-bitcoin" },
       ]
 
-      dataStore.updateBalance()
+      const onRefresh = React.useCallback(async () => {
+        setRefreshing(true);
+        await dataStore.updateBalance()
+        setRefreshing(false);
+      }, [refreshing]);
 
-      // TODO smart refresh --> listen to database and lnd log
-      // useEffect(() => {
-      //   const timer = setInterval(dataStore.updateBalance, 10000)
-      //   return () => clearTimeout(timer)
-      // }, [])
-
-      const signOut = () => {
-        auth()
-          .signOut()
-          .then(() => {
-            navigation.navigate("authStack")
-          })
-          .catch(err => {
-            console.tron.log(err)
-            Alert.alert(err.code)
-          })
-      }
+      useEffect(() => {
+        dataStore.updateBalance()
+      }, [])
 
       return (
         <Screen>
           <BalanceHeader headingCurrency={CurrencyType.BTC} accountsToAdd={AccountType.All} />
-          <FlatList data={accountTypes} renderItem={({ item }) => <AccountItem {...item} />} />
+          <FlatList 
+            data={accountTypes} 
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+            renderItem={({ item }) => <AccountItem {...item} />} />
         </Screen>
       )
     }),
