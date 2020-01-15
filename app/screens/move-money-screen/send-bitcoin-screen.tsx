@@ -103,6 +103,7 @@ export const SendBitcoinScreen: React.FC
     const [amount, setAmount] = useState(0)
     const [amountless, setAmountless] = useState(false)
     const [message, setMessage] = useState("")
+    const [err, setErr] = useState("")
     const [note, setNote] = useState(" ")
     const [loading, setLoading] = useState(false)
 
@@ -162,10 +163,6 @@ export const SendBitcoinScreen: React.FC
 
     type payInvoiceResult = boolean | Error
 
-    const vibrate_failure = () => {
-        Vibration.vibrate([500, 500, 500])
-    }
-
     const payInvoice = async () => {
         const payreq = { paymentRequest: invoice }
 
@@ -192,22 +189,23 @@ export const SendBitcoinScreen: React.FC
 
             console.tron.log(result)
             if (result === true) {
-                Vibration.vibrate(500);
                 setMessage('Payment succesfull')
                 setInvoice("")
             } else {
-                vibrate_failure()
-                setMessage(result.toString())
+                setErr(result.toString())
             }
         } catch(err) {
-            vibrate_failure()
-            setMessage(err.toString())
+            setErr(err.toString())
         }
     }
 
     useEffect(() => {
-        if (message !== "") {
-          Alert.alert("error", message, [
+        if (message !== "" || err !== "") {
+
+          const header = err ? "error" : "success"
+          message == "" ? Vibration.vibrate([1000, 1000]) : Vibration.vibrate(1000)
+          
+          Alert.alert(header, message || err, [
             {
               text: "OK",
               onPress: () => {
@@ -216,8 +214,9 @@ export const SendBitcoinScreen: React.FC
             },
           ])
           setMessage("")
+          setErr("")
         }
-      }, [message])
+      }, [message, err])
 
     return (
         <Screen>

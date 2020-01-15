@@ -1,6 +1,6 @@
 import * as React from "react"
 import { Screen } from "../../components/screen"
-import { StyleSheet, Alert, Image } from "react-native"
+import { StyleSheet, Alert, Image, ScrollView } from "react-native"
 import { Text } from "../../components/text"
 import { color } from "../../theme"
 import { ListItem, Badge } from 'react-native-elements'
@@ -80,22 +80,24 @@ export const RewardsScreen = () => {
 
     return (
         <Screen>
-            <Image source={trophyLogo} style={styles.image} />
-            <Text style={styles.smallText}>Complete the task below to earn more bitcoin rewards!</Text>
-            {
-                bank.map((item, i) => (
-                <ListItem
-                    titleStyle={styles.textButton}
-                    style={styles.button}
-                    key={i}
-                    title={item.title}
-                    leftIcon={<Icon name={item.icon} style={styles.icon} size={32} color={color.primary} />}
-                    onPress={() => Alert.alert('TODO')}
-                    badge={{value:item.badge, badgeStyle: {backgroundColor: color.primary}}}
-                    chevron
-                />
-                ))
-            }
+            <ScrollView>
+                <Image source={trophyLogo} style={styles.image} />
+                <Text style={styles.smallText}>Complete the task below to earn more bitcoin rewards!</Text>
+                {
+                    bank.map((item, i) => (
+                    <ListItem
+                        titleStyle={styles.textButton}
+                        style={styles.button}
+                        key={i}
+                        title={item.title}
+                        leftIcon={<Icon name={item.icon} style={styles.icon} size={32} color={color.primary} />}
+                        onPress={() => Alert.alert('TODO')}
+                        badge={{value:item.badge, badgeStyle: {backgroundColor: color.primary}}}
+                        chevron
+                    />
+                    ))
+                }
+            </ScrollView>
         </Screen>
     )
 }
