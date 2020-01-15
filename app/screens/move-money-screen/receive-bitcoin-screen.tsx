@@ -86,9 +86,10 @@ export const ReceiveBitcoinScreen: React.FC
             <View>
                 <Text>Amount</Text>
                 <Input placeholder="0" 
-                    value={isNaN(amount) ? '0' : amount.toString()} 
-                    onChangeText={text => setAmount(parseFloat(text))}
-                    keyboardType="numeric"
+                    value={amount.toString()}
+                    onChangeText={input => setAmount(+input)}
+                    returnKeyType='done'
+                    keyboardType="number-pad"
                     />
             </View>
             <View style={{flexDirection: "row", margin: 10}}>
