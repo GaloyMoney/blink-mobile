@@ -1,5 +1,4 @@
 import * as React from "react"
-import { useEffect } from "react"
 import { observer, inject } from "mobx-react"
 import { StyleSheet, TouchableHighlight, View, Alert, Button } from "react-native"
 import { Text } from "../../components/text"
@@ -11,6 +10,8 @@ import currency from "currency.js"
 import { BalanceHeader } from "../../components/balance-header"
 import auth from "@react-native-firebase/auth"
 import { AccountType, CurrencyType } from "../../utils/enum"
+import { palette } from "../../theme/palette"
+
 
 const accountBasic = {
   color: color.text,
@@ -26,6 +27,10 @@ const styles = StyleSheet.create({
   accountTypeStyle: {
     ...accountBasic,
     flex: 1,
+  },
+
+  person: {
+    paddingRight: 15
   },
 
   accountView: {
@@ -100,13 +105,18 @@ export const AccountsScreen = withNavigation(
         <Screen>
           <BalanceHeader headingCurrency={CurrencyType.BTC} accountsToAdd={AccountType.All} />
           <FlatList data={accountTypes} renderItem={({ item }) => <AccountItem {...item} />} />
-          <Button title="debugScreen" onPress={() => navigation.navigate("demo")}></Button>
         </Screen>
       )
     }),
   ),
 )
 
-AccountsScreen.navigationOptions = {
+AccountsScreen.navigationOptions = screenProps => ({
   title: "Accounts",
-}
+  headerRight: <Icon name={"ios-person"} 
+      size={32}
+      color={palette.darkGrey} 
+      style={styles.person}
+      onPress={() => screenProps.navigation.navigate("demo")}
+    />
+})
