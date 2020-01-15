@@ -101,7 +101,6 @@ export const AccountsScreen = withNavigation(
           <BalanceHeader headingCurrency={CurrencyType.BTC} accountsToAdd={AccountType.All} />
           <FlatList data={accountTypes} renderItem={({ item }) => <AccountItem {...item} />} />
           <Button title="debugScreen" onPress={() => navigation.navigate("demo")}></Button>
-          <Button title="Log out" onPress={() => signOut()}></Button>
         </Screen>
       )
     }),
