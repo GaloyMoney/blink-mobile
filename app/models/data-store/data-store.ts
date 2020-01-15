@@ -49,6 +49,7 @@ export const InvoiceModel = types.model("Invoice", {
   settled: types.boolean,
   state: types.number, //XXX FIXME
   creationDate: types.number,
+  expiry: types.number,
   settleDate: types.number,
   paymentRequest: types.string,
   private: types.boolean,
@@ -635,6 +636,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
           paymentRequest: tx.paymentRequest,
           private: tx.private,
           amtPaidSat: tx.amtPaidSat,
+          expiry: tx.expiry,
         }))
 
         console.tron.log("invoices", invoices, invoice_good_types)
@@ -772,14 +774,26 @@ export const LndModel = BaseAccountModel.named("Lnd")
           if (invoice.memo) {
             return invoice.memo
           } else {
-            return `payment received`
+            return `Payment received`
           }
         } else {
-          return `waiting to receive payment`
+          return `Waiting for payment`
         }
       }
 
-      const invoicesTxs = self.invoices.map(invoice => ({
+      const filterExpiredInvoice = (invoice => {
+        if (invoice.settled === true) {
+          return true
+        }
+        if (new Date().getTime() / 1000 > invoice.creationDate + invoice.expiry) {
+          return false
+        } 
+        return true
+      })
+
+      const invoicesTxs = self.invoices
+          .filter(filterExpiredInvoice)
+          .map(invoice => ({
         id: invoice.rHash,
         icon: "ios-thunderstorm",
         name: formatName(invoice),
