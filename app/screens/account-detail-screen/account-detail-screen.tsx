@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { observer, inject } from "mobx-react"
 
 import { View, SectionList, StyleSheet, RefreshControl } from "react-native"
@@ -182,7 +182,7 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
       setSections(_sections)
     }
 
-    React.useEffect(() => {
+    useEffect(() => {
       updateTransactions()
     }, [])
 
