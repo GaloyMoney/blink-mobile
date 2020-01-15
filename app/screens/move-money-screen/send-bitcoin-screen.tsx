@@ -1,7 +1,7 @@
 import * as React from "react"
 import { useState, useEffect }from "react"
 import { inject, observer } from "mobx-react"
-import { Text, View, ViewStyle, Alert, Clipboard, StyleSheet, Vibration } from "react-native"
+import { Text, View, ViewStyle, Alert, Clipboard, StyleSheet } from "react-native"
 import { Screen } from "../../components/screen"
 import { Input, Button } from 'react-native-elements';
 import Icon from "react-native-vector-icons/Ionicons"
@@ -11,6 +11,7 @@ import { withNavigation } from "react-navigation";
 import { useNavigation, useNavigationParam } from "react-navigation-hooks";
 import { Loader } from "../../components/loader"
 import { palette } from "../../theme/palette"
+import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 
 
 const CAMERA: ViewStyle = {
@@ -203,7 +204,14 @@ export const SendBitcoinScreen: React.FC
         if (message !== "" || err !== "") {
 
           const header = err ? "error" : "success"
-          message == "" ? Vibration.vibrate([1000, 1000]) : Vibration.vibrate(1000)
+
+          const options = {
+            enableVibrateFallback: true,
+            ignoreAndroidSystemSettings: false
+          };
+
+          const haptic_feedback = err ? "notificationError" : "notificationSuccess"
+          ReactNativeHapticFeedback.trigger(haptic_feedback, options)
           
           Alert.alert(header, message || err, [
             {
