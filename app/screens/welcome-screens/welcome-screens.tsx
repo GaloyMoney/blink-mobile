@@ -92,10 +92,11 @@ export const WelcomeBackCompletedScreen = withNavigation(
       const action = async () => {
         setLoading(true)
         try {
-          const invoice = await dataStore.lnd.addInvoice({
+          const response = await dataStore.lnd.addInvoice({
             value: 6000,
             memo: "Claimed Rewards",
           })
+          const invoice = response.paymentRequest
           const result = await functions().httpsCallable("payInvoice")({ invoice })
           console.tron.log(invoice, result)
           setLoading(false)
