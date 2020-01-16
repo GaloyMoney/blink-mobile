@@ -4,14 +4,15 @@ import { observer, inject } from "mobx-react"
 import { StyleSheet, TouchableHighlight, View, RefreshControl } from "react-native"
 import { Text } from "../../components/text"
 import { Screen } from "../../components/screen"
-import { FlatList, withNavigation } from "react-navigation"
+import { FlatList } from "react-navigation"
 import { color } from "../../theme/color"
 import Icon from "react-native-vector-icons/Ionicons"
 import currency from "currency.js"
 import { BalanceHeader } from "../../components/balance-header"
 import { AccountType, CurrencyType } from "../../utils/enum"
 import { palette } from "../../theme/palette"
-
+import { useNavigation } from "react-navigation-hooks"
+import auth from '@react-native-firebase/auth';
 
 const accountBasic = {
   color: color.text,
@@ -45,69 +46,72 @@ const styles = StyleSheet.create({
   },
 })
 
-const AccountItem = withNavigation(
-  inject("dataStore")(
-    observer(({ dataStore, account, icon, navigation }) => {
-      return (
-        <TouchableHighlight
-          underlayColor="white"
-          onPress={() =>
-            navigation.navigate("accountDetail", {
-              account: account,
-            })
-          }
-        >
-          <View style={styles.accountView}>
-            <Icon name={icon} color={color.primary} size={28} />
-            <Text style={styles.accountTypeStyle}>{account}</Text>
-            <Text style={styles.accountAmount}>
-              {currency(dataStore.balances({ account, currency: CurrencyType.USD }), {
-                formatWithSymbol: true,
-              }).format()}
-            </Text>
-          </View>
-        </TouchableHighlight>
-      )
-    }),
-  ),
-)
+const AccountItem = inject("dataStore")(observer(
+  ({ dataStore, account, icon, action }) => {
 
-export const AccountsScreen = withNavigation(
-  inject("dataStore")(
-    observer(({ dataStore, navigation }) => {
+  const { navigate } = useNavigation()
 
-      const [refreshing, setRefreshing] = useState(false);
+  return (
+    <TouchableHighlight
+      underlayColor="white"
+      onPress={
+        action || (() => navigate("accountDetail", { account }))
+      }
+    >
+      <View style={styles.accountView}>
+        <Icon name={icon} color={color.primary} size={28} />
+        <Text style={styles.accountTypeStyle}>{account}</Text>
+        <Text style={styles.accountAmount}>
+          {currency(dataStore.balances({ account, currency: CurrencyType.USD }), {
+            formatWithSymbol: true,
+          }).format()}
+        </Text>
+      </View>
+    </TouchableHighlight>
+  )
+}))
 
-      const accountTypes: Array<Record<string, any>> = [
-        //FIXME type any
-        { key: "Checking", account: AccountType.Checking, icon: "ios-cash" },
-        { key: "Bitcoin", account: AccountType.Bitcoin, icon: "logo-bitcoin" },
-      ]
+export const AccountsScreen = inject("dataStore")(observer(
+  ({ dataStore }) => {
 
-      const onRefresh = React.useCallback(async () => {
-        setRefreshing(true);
-        await dataStore.updateBalance()
-        setRefreshing(false);
-      }, [refreshing]);
+  const [refreshing, setRefreshing] = useState(false);
+  const { navigate } = useNavigation()
 
-      useEffect(() => {
-        dataStore.updateBalance()
-      }, [])
+  //FIXME type any
+  const accountTypes: Array<Record<string, any>> = [
+    { key: "Checking", account: AccountType.Checking, icon: "ios-cash" },
+    { key: "Bitcoin", account: AccountType.Bitcoin, icon: "logo-bitcoin" },
+  ]
 
-      return (
-        <Screen>
-          <BalanceHeader headingCurrency={CurrencyType.BTC} accountsToAdd={AccountType.All} />
-          <FlatList 
-            data={accountTypes} 
-            refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-            renderItem={({ item }) => <AccountItem {...item} />} />
-        </Screen>
-      )
-    }),
-  ),
-)
+  // TODO right way to know if the user has an account
+  const user = auth().currentUser;
+  if (!user?.emailVerified) {
+    accountTypes[0]['action'] = () => navigate('openBankAccount')
+  }
+
+
+  const onRefresh = React.useCallback(async () => {
+    setRefreshing(true);
+    await dataStore.updateBalance()
+    setRefreshing(false);
+  }, [refreshing]);
+
+  useEffect(() => {
+    dataStore.updateBalance()
+  }, [])
+
+  return (
+    <Screen>
+      <BalanceHeader headingCurrency={CurrencyType.BTC} accountsToAdd={AccountType.All} />
+      <FlatList 
+        data={accountTypes} 
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+        renderItem={({ item }) => <AccountItem {...item} />} />
+    </Screen>
+  )
+}))
 
 AccountsScreen.navigationOptions = screenProps => ({
   title: "Accounts",

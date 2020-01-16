@@ -9,6 +9,7 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { color } from "../theme"
 import { RewardsScreen } from "../screens/rewards-screen"
 import { MoveMoneyScreen, SendBitcoinScreen, ScanningQRCodeScreen, ReceiveBitcoinScreen } from "../screens/move-money-screen"
+import { OpenBankAccountScreen, BankRewardsScreen, PersonalInformationScreen } from "../screens/bank-onboarding"
 
 export const AccountNavigator = createStackNavigator(
   {
@@ -16,6 +17,7 @@ export const AccountNavigator = createStackNavigator(
     demo: { screen: DebugScreen },
     accountDetail: { screen: AccountDetailScreen },
     transactionDetail: { screen: TransactionDetailScreen },
+    openBankAccount: { screen : OpenBankAccountScreen }
   },
   {
     headerMode: "float",
@@ -37,6 +39,8 @@ export const MoveMoneyNavigator = createStackNavigator(
 export const RewardsNavigator = createStackNavigator(
   {
     rewards: { screen: RewardsScreen },
+    bankRewards: { screen: BankRewardsScreen },
+    personalInformation: { screen: PersonalInformationScreen },
   },
   {
     headerMode: "float",
