@@ -77,8 +77,8 @@ GetStartedScreen.navigationOptions = () => ({
 })
 
 export const LoginScreen = withNavigation(
-  inject("dataStore")(
-    observer(({ dataStore, navigation }) => {
+  inject("dataStore")(observer(
+      ({ dataStore, navigation }) => {
       return TemplateLoginScreen({ dataStore, navigation, screen: "subLogin" })
     }),
   ),
@@ -97,11 +97,13 @@ const TemplateLoginScreen = ({ dataStore, navigation, screen }) => {
       <Text style={styles.title} onPress={() => navigation.navigate("demo")}>
         Galoy
       </Text>
-      <Text style={styles.sub}>The bank built for crypto</Text>
+      <Text style={styles.sub}>The Bank with Bitcoin Rewards</Text>
+      
       <Text style={styles.version}>
         v{VersionNumber.appVersion} build {VersionNumber.buildVersion}{'\n'}
-        network: {Config.BITCOIN_NETWORK}
-        </Text>
+        network: {Config.BITCOIN_NETWORK}{'\n'}
+        lnd: {dataStore.lnd.version}
+      </Text>
       {subScreen}
     </Screen>
   )

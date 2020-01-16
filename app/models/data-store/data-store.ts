@@ -250,6 +250,7 @@ export const FiatAccountModel = BaseAccountModel.props({
 export const LndModel = BaseAccountModel.named("Lnd")
   .props({
     type: AccountType.Bitcoin,
+    version: "...loading...",
     
     walletExist: false,
     walletUnlocked: false,
@@ -479,6 +480,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
     const getInfo = flow(function*() {
       try {
         const response = yield getEnv(self).lnd.grpc.sendCommand("getInfo")
+        self.version = response.version.split(" ")[0]
         self.pubkey = response.identityPubkey
         self.syncedToChain = response.syncedToChain
         self.blockHeight = response.blockHeight
