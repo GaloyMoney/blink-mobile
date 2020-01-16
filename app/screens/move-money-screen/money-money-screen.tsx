@@ -77,7 +77,7 @@ export const MoveMoneyScreen = () => {
                     key={i}
                     title={item.title}
                     leftIcon={<Icon name={item.icon} style={styles.icon} size={32} color={color.primary} />}
-                    onPress={() => Alert.alert('bank account available soon')}
+                    onPress={() => navigate('openBankAccount')}
                     chevron
                 />
                 ))

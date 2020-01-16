@@ -3,7 +3,7 @@ import { Screen } from "../../components/screen"
 import { StyleSheet, Alert, Image, ScrollView } from "react-native"
 import { Text } from "../../components/text"
 import { color } from "../../theme"
-import { ListItem, Badge } from 'react-native-elements'
+import { ListItem } from 'react-native-elements'
 import Icon from "react-native-vector-icons/Ionicons"
 import { useNavigation } from "react-navigation-hooks"
 import { palette } from "../../theme/palette"
