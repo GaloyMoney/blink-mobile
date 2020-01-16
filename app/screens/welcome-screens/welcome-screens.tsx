@@ -39,25 +39,26 @@ export const WelcomeGaloyScreen = () => {
   )
 }
 
-export const WelcomeBitcoinScreen = () => {
+export const WelcomeBankScreen = () => {
   return (
     <Screen>
-      <Onboarding next="welcomeBank" image={bitcoinAndLockLogo}>
-        <Text style={styles.text}>It's a simple, secure Bitcoin wallet</Text>
+      <Onboarding next="welcomeBank" image={dollarCardATMLogo}>
+        <Text style={styles.text}>It's a digital bank account</Text>
       </Onboarding>
     </Screen>
   )
 }
 
-export const WelcomeBankScreen = () => {
+export const WelcomeBitcoinScreen = () => {
   return (
     <Screen>
-      <Onboarding next="welcomeEarn" image={dollarCardATMLogo}>
-        <Text style={styles.text}>And a digital bank account too</Text>
+      <Onboarding next="welcomeEarn" image={bitcoinAndLockLogo}>
+        <Text style={styles.text}>And a secure Bitcoin wallet too!</Text>
       </Onboarding>
     </Screen>
   )
 }
+
 
 export const WelcomeEarnScreen = () => {
   return (
@@ -159,7 +160,7 @@ export const FirstRewardScreen = inject("dataStore")(
 
     return (
       <Screen>
-        <Onboarding next="enableNotifications" header={`+ ${balance} sats`} image={lightningLogo}>
+        <Onboarding next="allDone" header={`+ ${balance} sats`} image={lightningLogo}>
           <Text style={styles.text}>
             Success!{"\n"}
             {"\n"}
