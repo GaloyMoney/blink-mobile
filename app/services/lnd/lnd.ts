@@ -3,7 +3,6 @@ import GrpcAction from "./grpc-mobile"
 import IpcAction from "./ipc"
 import LogAction from "./log"
 import { LndStore } from "../../models/data-store/data-store"
-import RNKeychain from "../../utils/keychain"
 import { poll } from "../../utils/poll"
 
 export class Lnd {
@@ -11,7 +10,6 @@ export class Lnd {
   ipc: IpcAction
   log: LogAction
   lndStore: LndStore | undefined
-  keychain: RNKeychain
 
   /**
    * Create the Reactotron service.
@@ -21,9 +19,7 @@ export class Lnd {
   constructor() {
     this.grpc = new GrpcAction(NativeModules, NativeEventEmitter)
     this.ipc = new IpcAction(this.grpc)
-    this.log = new LogAction(this.ipc, false, true)
-
-    this.keychain = new RNKeychain()
+    this.log = new LogAction(this.ipc, false, false)
   }
 
   /**
