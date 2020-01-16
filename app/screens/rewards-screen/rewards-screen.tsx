@@ -60,21 +60,25 @@ export const RewardsScreen = () => {
             title: 'Backup wallet',
             icon: 'ios-lock',
             badge: "+1,000 sats",
+            action: () => Alert.alert('TODO'),
         },
         {
             title: "Make a payment",
             icon: 'ios-exit',
             badge: "+1,000 sats",
+            action: () => Alert.alert('TODO'),
         },
         {
             title: 'Learn about Bitcoin',
             icon: 'ios-school',
             badge: "+1,000 sats",
+            action: () => Alert.alert('TODO'),
         },
         {
             title: "Open a Galoy bank account",
             icon: 'ios-gift',
             badge: "+100,000 sats",
+            action: () => navigate('bankRewards'),
         }
       ]
 
@@ -91,7 +95,7 @@ export const RewardsScreen = () => {
                         key={i}
                         title={item.title}
                         leftIcon={<Icon name={item.icon} style={styles.icon} size={32} color={color.primary} />}
-                        onPress={() => Alert.alert('TODO')}
+                        onPress={item.action}
                         badge={{value:item.badge, badgeStyle: {backgroundColor: color.primary}}}
                         chevron
                     />
