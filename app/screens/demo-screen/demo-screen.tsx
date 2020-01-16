@@ -337,7 +337,7 @@ export class DebugScreen extends React.Component<DebugScreenProps, {}> {
               textStyle={DEMO_TEXT}
               text="sendCoins"
               onPress={() =>
-                this.props.dataStore.lnd.send_transaction(this.state.addr, this.state.amount)
+                this.props.dataStore.lnd.sendTransaction(this.state.addr, this.state.amount)
               }
             />
           </View>
