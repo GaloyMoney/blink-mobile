@@ -196,7 +196,7 @@ export const EnableNotificationsScreen = () => {
           Enable notifications to get alerts when you receive payments in the future.
         </Text>
       </Onboarding>
-      <Button title="enable" onPress={() => Notifications.requestPermissions()} />
+      <Button title="enable" onPress={() => Notifications.registerRemoteNotifications()} />
     </Screen>
   )
 }
