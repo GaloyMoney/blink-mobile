@@ -11,7 +11,7 @@ import { withNavigation } from "react-navigation"
 import { saveString } from "../../utils/storage"
 import { AccountType, CurrencyType } from "../../utils/enum"
 import { OnboardingSteps } from "../loading-screen"
-import PushNotificationIOS from "@react-native-community/push-notification-ios"
+import {Notifications, Registered, RegistrationError} from 'react-native-notifications'
 
 export const lightningLogo = require("./LightningBolt.png")
 export const galoyLogo = require("./GaloyLogo.png")
@@ -171,25 +171,22 @@ export const FirstRewardScreen = inject("dataStore")(
 
 export const EnableNotificationsScreen = () => {
   // TODO
-  
-  const onRegistered = async (deviceToken) => {
-    Alert.alert("Registered For Remote Push", `Device Token: ${deviceToken}`)
-    console.log(`Device Token: ${deviceToken}`)
+
+  Notifications.events().registerRemoteNotificationsRegistered(async (event: Registered) => {
+    Alert.alert("Registered For Remote Push", `Device Token: ${event.deviceToken}`)
 
     try {
-      await functions().httpsCallable("sendDeviceToken")({deviceToken})
+      await functions().httpsCallable("sendDeviceToken")({deviceToken: event.deviceToken})
     } catch (err) {
       console.tron.log(err.toString())
       Alert.alert(err.toString())
     }
-  }
 
-  const onRegistrationError = (error) => {
-    Alert.alert("Failed To Register For Remote Push", `Error (${error.code}): ${error.message}`)
-  }
+  })
 
-  PushNotificationIOS.addEventListener("register", onRegistered)
-  PushNotificationIOS.addEventListener("registrationError", onRegistrationError)
+  Notifications.events().registerRemoteNotificationsRegistrationFailed((event: RegistrationError) => {
+    Alert.alert("Failed To Register For Remote Push", `Error (${event})`)
+  })
 
   return (
     <Screen>
@@ -198,7 +195,7 @@ export const EnableNotificationsScreen = () => {
           Enable notifications to get alerts when you receive payments in the future.
         </Text>
       </Onboarding>
-      <Button title="enable" onPress={() => PushNotificationIOS.requestPermissions()} />
+      <Button title="enable" onPress={() => Notifications.requestPermissions()} />
     </Screen>
   )
 }

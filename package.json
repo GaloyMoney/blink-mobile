@@ -26,7 +26,6 @@
   "dependencies": {
     "@react-native-community/async-storage": "^1.5.1",
     "@react-native-community/masked-view": "^0.1.5",
-    "@react-native-community/push-notification-ios": "^1.0.4",
     "@react-native-firebase/app": "^6.2.0",
     "@react-native-firebase/auth": "^6.2.0",
     "@react-native-firebase/firestore": "^6.2.0",
@@ -57,6 +56,7 @@
     "react-native-keychain": "^4.0.5",
     "react-native-localize": "^1.3.2",
     "react-native-maps": "0.26.1",
+    "react-native-notifications": "^3.0.0",
     "react-native-phone-input": "^0.2.4",
     "react-native-progress": "^4.0.3",
     "react-native-reanimated": "^1.4.0",
