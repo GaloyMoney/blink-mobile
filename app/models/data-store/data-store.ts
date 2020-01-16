@@ -167,7 +167,7 @@ export const ExchangeModel = types
         // TODO: may be relevant to check signature
         // to make sure address is from Galoy?
 
-        const { txid } = yield getParentOfType(self, DataStoreModel).lnd.send_transaction(
+        const { txid } = yield getParentOfType(self, DataStoreModel).lnd.sendTransaction(
           self.quote.address,
           self.quote.satAmount,
         )
@@ -685,7 +685,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
       }
     })
 
-    const send_transaction = flow(function*(addr, amount) {
+    const sendTransaction = flow(function*(addr, amount) {
       return yield getEnv(self).lnd.grpc.sendCommand("sendCoins", { addr, amount })
     })
 
@@ -749,7 +749,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
       update,
       payInvoice,
       listPayments,
-      send_transaction,
+      sendTransaction,
     }
   })
   .views(self => ({
