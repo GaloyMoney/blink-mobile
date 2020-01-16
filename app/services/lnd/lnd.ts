@@ -36,8 +36,8 @@ export class Lnd {
     new Promise((resolve, reject) => {
       streamOnChainTransactions.on("data", data => {
         console.tron.log("onData", data)
-        this.lndStore.update_balance()
-        this.lndStore.update_transactions()
+        this.lndStore.updateBalance()
+        this.lndStore.updateTransactions()
       })
       streamOnChainTransactions.on("end", resolve)
       streamOnChainTransactions.on("error", reject)
