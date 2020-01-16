@@ -1347,13 +1347,6 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/masked-view/-/masked-view-0.1.5.tgz#25421be6cd943a4b1660b62cfbcd45be8891462c"
   integrity sha512-Lj1DzfCmW0f4HnmHtEuX8Yy2f7cnUA8r5KGGUuDDGtQt1so6QJkKeUmsnLo2zYDtsF8due6hvIL06Vdo5xxuLQ==
 
-"@react-native-community/push-notification-ios@^1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@react-native-community/push-notification-ios/-/push-notification-ios-1.0.4.tgz#eaa43196c4d76b0dc8616724dca555ab64c63a77"
-  integrity sha512-a1Gdrnsk2bLdAiH/3iZEKlZLouEjBToVgphaOpAhhX6GhF/8cVTrwZ6Rxyg4j23n3br1rDpvE1l4VDdDwU9Aow==
-  dependencies:
-    invariant "^2.2.4"
-
 "@react-native-firebase/app-types@6.2.0":
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/app-types/-/app-types-6.2.0.tgz#4d3c0e7fa4e4f00061c52b1a32d76e85e5db9f2c"
@@ -10522,6 +10515,11 @@ react-native-maps@0.26.1:
   version "0.26.1"
   resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-0.26.1.tgz#6ec316259b38d259c8974448d894bd7a23101da4"
   integrity sha512-p4VTB8YB5ZmOmDRCUpoHZkm05amZwhIo04AJMBbB9+JAR2PNNfpo0vceoWX0Mag4wnePkdzPomeWMplr/wimTg==
+
+react-native-notifications@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-notifications/-/react-native-notifications-3.0.0.tgz#6b331cafb3fc844fa1ffd571cb599a59639ae077"
+  integrity sha512-nwN2zS8Um+dcnlEurNJLhP3JVZAJN7vVDce0DFel9p+kicDVdW9UoUxjA0Efi2UA3inM4CGb0wZe1pSAMSY6HQ==
 
 react-native-phone-input@^0.2.4:
   version "0.2.4"
