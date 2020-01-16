@@ -13,6 +13,7 @@ import { AccountType, CurrencyType } from "../../utils/enum"
 import { palette } from "../../theme/palette"
 import { useNavigation } from "react-navigation-hooks"
 import auth from '@react-native-firebase/auth';
+import { Notifications } from "react-native-notifications"
 
 const accountBasic = {
   color: color.text,
@@ -88,6 +89,32 @@ export const AccountsScreen = inject("dataStore")(observer(
   if (!user?.emailVerified) {
     accountTypes[0]['action'] = () => navigate('openBankAccount')
   }
+
+
+
+  
+  Notifications.events().registerNotificationReceived((notification, completion) => {
+    console.tron.log(notification)
+    // completion({alert: notification.payload.showAlert, sound: false, badge: false});
+    completion({alert: true, sound: false, badge: false});
+  });
+
+  useEffect(() => {
+
+    setTimeout(() => Notifications.postLocalNotification({
+
+      body: 'Local notificiation!',
+      title: 'Local Notification Title',
+      // sound: 'chime.aiff',
+      category: 'SOME_CATEGORY',
+      link: 'localNotificationLink',
+    }),
+    5000)
+
+  }, [])
+
+
+
 
 
   const onRefresh = React.useCallback(async () => {
