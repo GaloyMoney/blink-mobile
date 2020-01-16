@@ -3,7 +3,7 @@ import { inject, observer } from "mobx-react"
 import { getEnv } from "mobx-state-tree"
 import * as React from "react"
 import { useEffect } from "react"
-import { ActivityIndicator, StyleSheet, View } from "react-native"
+import { ActivityIndicator, StyleSheet, View, Alert, TouchableHighlight } from "react-native"
 import { withNavigation } from "react-navigation"
 import { color } from "../../theme"
 import { loadString } from "../../utils/storage"
@@ -92,24 +92,30 @@ export const LoadingScreen = withNavigation(
               break
             }
             default:
-              console.tron.warn("no path for onboarding, state onboarding issue")
+              const err = "no path for onboarding, state onboarding issue"
+              Alert.alert(err)
               navigation.navigate("authStack")
           }
         } else {
-          throw new Error("this state should not happen")
+          const err = "this state should not happen"
+          Alert.alert(err)
+          throw new Error(err)
         }
       }
 
-      useEffect(() => {
-        const subscriber = auth().onAuthStateChanged(onAuthStateChanged)
-        return subscriber // unsubscribe on unmount
-      }, [])
+useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged)
+    return subscriber; // unsubscribe on unmount
+}, [])
 
       return (
         <View style={styles.centerBackground}>
-          <View style={styles.activityIndicatorWrapper}>
+          <TouchableHighlight 
+            style={styles.activityIndicatorWrapper}
+            onPress={() => Alert.alert(auth().currentUser)}
+            >
             <ActivityIndicator size="large" color={color.primary} />
-          </View>
+          </TouchableHighlight>
         </View>
       )
     }),

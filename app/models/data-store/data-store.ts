@@ -898,7 +898,7 @@ export const DataStoreModel = types
       const balances = {}
 
       balances[AccountType.Bitcoin] =
-        (self.lnd.balance * self.rates.rate(self.lnd.currency)) / self.rates.rate(currency)
+        (self.lnd.balance * (self.rates.rate(self.lnd.currency)) / self.rates.rate(currency))
       balances[AccountType.Checking] = self.fiat.balance / self.rates.rate(currency)
       balances[AccountType.All] = Object.values(balances).reduce((a, b) => a + b, 0)
 

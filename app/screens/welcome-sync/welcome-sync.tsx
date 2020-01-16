@@ -142,11 +142,11 @@ export const WelcomeSyncingScreen = withNavigation(
                 Earn another reward{"\n"}while you wait:
               </Text>
               <Button
-                title="What is a sat? +1,000 sats"
+                title="What is money?"
                 containerStyle={styles.buttonContainerVideo}
                 buttonStyle={styles.buttonVideo}
                 type="outline"
-                onPress={() => playVideo("SfeUQWHA3Dc")}
+                onPress={() => playVideo("XNu5ppFZbHo")}
               />
             </>}
             { dataStore.lnd.syncedToChain &&
@@ -207,21 +207,16 @@ export const WelcomeGeneratingWalletScreen = inject("dataStore")(
     return (
       <Screen>
         <View style={{ alignContent: "center", width: "100%" }}>
-          <Text style={[styles.text, { fontWeight: "bold" }]}>Generating wallet...</Text>
+          <Text style={[styles.text, { fontWeight: "bold" }]}>Launching wallet...</Text>
         </View>
         <View style={styles.container}>
+          <Text style={styles.text}>
+            This may take 24 hours.
+          </Text>
           <Image source={rocketLogo} style={styles.image} />
           <Text style={styles.text}>
-            Sit back and relax, we’ll let you know when your wallet is ready. 
-            This may take a day or so.
+            You can close the app, we’ll send you a text when your wallet is ready. 
           </Text>
-          <Button
-            title="What is money?"
-            containerStyle={styles.buttonContainerVideo}
-            buttonStyle={styles.buttonVideo}
-            type="outline"
-            onPress={() => playVideo("XNu5ppFZbHo")}
-          />
         </View>
         <Text style={styles.fundingText} onPress={showFundingTx}>
           funding tx: {fundingTx.substring(0, 6)}...{fundingTx.substring(fundingTx.length - 6)}
