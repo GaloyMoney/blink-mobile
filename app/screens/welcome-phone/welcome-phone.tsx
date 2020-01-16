@@ -145,11 +145,14 @@ export const WelcomePhoneInputScreen = withNavigation(({ text, navigation, heade
           <Text style={styles.text}>{header}</Text>
           <Image source={phoneLogo} style={styles.image} />
           <Text style={styles.text}>{text}</Text>
-          <PhoneInput
+          <PhoneInput 
             ref={inputRef}
             style={styles.phoneEntryContainer}
             textStyle={styles.textEntry}
-            textProps={{returnKeyType: 'done',
+            textProps={{
+              autoFocus: true,
+              placeholder: "Phone number",
+              returnKeyType: 'done',
               onSubmitEditing: () => send(),
             }}
           />
@@ -245,6 +248,7 @@ export const WelcomePhoneValidationScreen = () => {
           <Image source={phoneWithArrowLogo} style={styles.image} />
           <Text style={styles.text}>{text}</Text>
           <TextInput
+            autoFocus={true}
             style={[styles.textEntry, styles.phoneEntryContainer]}
             onChangeText={input => setCode(input)}
             keyboardType="number-pad"

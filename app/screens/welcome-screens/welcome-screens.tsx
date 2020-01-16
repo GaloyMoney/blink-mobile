@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
 export const WelcomeGaloyScreen = () => {
   return (
     <Screen>
-      <Onboarding next="welcomeBitcoin" image={galoyLogo}>
+      <Onboarding next="welcomeBank" image={galoyLogo}>
         <Text style={styles.text}>Welcome! Galoy is a new type of app for managing your money</Text>
       </Onboarding>
     </Screen>
@@ -42,7 +42,7 @@ export const WelcomeGaloyScreen = () => {
 export const WelcomeBankScreen = () => {
   return (
     <Screen>
-      <Onboarding next="welcomeBank" image={dollarCardATMLogo}>
+      <Onboarding next="welcomeBitcoin" image={dollarCardATMLogo}>
         <Text style={styles.text}>It's a digital bank account</Text>
       </Onboarding>
     </Screen>

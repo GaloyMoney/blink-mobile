@@ -83,6 +83,7 @@ export const LoadingScreen = withNavigation(
                 }
                 default:
                   console.tron.error("statusChannel state management error")
+                  navigation.navigate("authStack")
                   break
               }
               break
@@ -99,7 +100,7 @@ export const LoadingScreen = withNavigation(
         } else {
           const err = "this state should not happen"
           Alert.alert(err)
-          throw new Error(err)
+          navigation.navigate("authStack")
         }
       }
 
@@ -110,12 +111,9 @@ useEffect(() => {
 
       return (
         <View style={styles.centerBackground}>
-          <TouchableHighlight 
-            style={styles.activityIndicatorWrapper}
-            onPress={() => Alert.alert(auth().currentUser)}
-            >
+          <View style={styles.activityIndicatorWrapper}>
             <ActivityIndicator size="large" color={color.primary} />
-          </TouchableHighlight>
+          </View>
         </View>
       )
     }),
