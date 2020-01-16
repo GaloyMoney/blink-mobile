@@ -10,6 +10,7 @@ import firestore from "@react-native-firebase/firestore"
 import { toHex } from "../../utils/helper"
 
 import DeviceInfo from "react-native-device-info"
+import Config from "react-native-config"
 
 // // FIXME add as a global var
 DeviceInfo.isEmulator().then(isEmulator => {
@@ -248,22 +249,22 @@ export const FiatAccountModel = BaseAccountModel.props({
 
 export const LndModel = BaseAccountModel.named("Lnd")
   .props({
+    type: AccountType.Bitcoin,
+    
     walletExist: false,
     walletUnlocked: false,
+    syncedToChain: false,
+
     onChainAddress: "",
-    type: AccountType.Bitcoin,
     pubkey: "",
     network: "",
-    syncedToChain: false,
     blockHeight: 0,
 
-    startingSyncTimestamp: types.maybe(types.number),
+    lastSettleInvoiceHash: "",
 
     bestBlockHeight: types.maybe(types.number),
     startBlockHeight: types.maybe(types.number),
-
     percentSynced: 0,
-    lastAddInvoice: "",
 
     onchain_transactions: types.array(OnChainTransactionModel),
     invoices: types.array(InvoiceModel),
@@ -487,7 +488,18 @@ export const LndModel = BaseAccountModel.named("Lnd")
           self.startBlockHeight = response.blockHeight
 
           try {
-            const response = yield fetch("http://api.blockcypher.com/v1/btc/test3") // FIXME find a better solution
+
+            let url
+
+            if (Config.BITCOIN_NETWORK === "testnet") {
+              url = "http://api.blockcypher.com/v1/btc/test3"
+            } else if (Config.BITCOIN_NETWORK === "mainnet") {
+              url = "https://api.blockcypher.com/v1/btc/main"
+            } else {
+              throw new Error('config issue')
+            }
+
+            const response = yield fetch(url) // FIXME find a better solution
             const { height } = yield response.json()
             self.bestBlockHeight = height
           } catch (err) {
@@ -495,9 +507,6 @@ export const LndModel = BaseAccountModel.named("Lnd")
           }
         }
 
-        if (self.startingSyncTimestamp === undefined) {
-          self.startingSyncTimestamp = response.bestHeaderTimestamp || 0
-        }
         if (!response.syncedToChain) {
           //     self._notification.display({
           //       msg: `Syncing to chain (block: ${response.blockHeight})`,
@@ -569,9 +578,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
         private: true,
       })
 
-      const invoice = response.paymentRequest
-      console.tron.log("invoice: ", invoice), (self.lastAddInvoice = invoice)
-      return invoice
+      return response
     })
 
     const updateBalance = flow(function*() {
@@ -616,14 +623,31 @@ export const LndModel = BaseAccountModel.named("Lnd")
       }
     })
 
-    const updateInvoices = flow(function*(invoice_updated = undefined) {
+    const updateInvoice = flow(function*(invoice) {
+      if (invoice === undefined) return
+      if (!invoice.settled) return
+
+      console.tron.warn(invoice)
+
+      self.lastSettleInvoiceHash = toHex(invoice.rHash)
+      // const { computedTransactions, unitLabel } = this._store
+      // let inv = computedTransactions.find(tx => tx.id === toHex(invoice.rHash))
+      // this._notification.display({
+      //   type: 'success',
+      //   msg: `Invoice success: received ${inv.amountLabel} ${unitLabel || ''}`,
+      //   handler: () => this.select({ item: inv }),
+      //   handlerLbl: 'View details',
+      // })
+    })
+
+    const updateInvoices = flow(function*() {
       try {
         const { invoices } = yield getEnv(self).lnd.grpc.sendCommand("listInvoices")
 
         // for some reason, amount and timestamp arrives as String
         // doing this map fixes the issue,
         // XXX FIXME: find the root cause of this type issue
-        const invoice_good_types = invoices.map(tx => ({
+        const invoices_good_types = invoices.map(tx => ({
           memo: tx.memo,
           receipt: toHex(tx.receipt), // do we want this? receipt are empty
           rPreimage: toHex(tx.rPreimage),
@@ -639,24 +663,13 @@ export const LndModel = BaseAccountModel.named("Lnd")
           expiry: tx.expiry,
         }))
 
-        console.tron.log("invoices", invoices, invoice_good_types)
+        console.tron.log("invoices", invoices, invoices_good_types)
 
-        self.invoices = invoice_good_types
+        self.invoices = invoices_good_types
       } catch (err) {
         console.tron.error(`Listing invoices failed ${err}`)
         // throw err
       }
-
-      if (invoice_updated === undefined) return
-      if (!invoice_updated.settled) return
-      // const { computedTransactions, unitLabel } = this._store
-      // let inv = computedTransactions.find(tx => tx.id === toHex(invoice_updated.rHash))
-      // this._notification.display({
-      //   type: 'success',
-      //   msg: `Invoice success: received ${inv.amountLabel} ${unitLabel || ''}`,
-      //   handler: () => this.select({ item: inv }),
-      //   handlerLbl: 'View details',
-      // })
     })
 
     const listPayments = flow(function*() {
@@ -745,6 +758,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
       newAddress,
       updateTransactions,
       updateBalance,
+      updateInvoice,
       updateInvoices,
       update,
       payInvoice,

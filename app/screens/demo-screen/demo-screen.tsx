@@ -228,11 +228,8 @@ export class DebugScreen extends React.Component<DebugScreenProps, {}> {
               style={DEMO}
               textStyle={DEMO_TEXT}
               text="add invoice"
-              onPress={() => this.props.dataStore.lnd.addInvoice({ value: 1000 })}
+              onPress={() => Clipboard.setString(this.props.dataStore.lnd.addInvoice({ value: 1000 }))}
             />
-            <Text onPress={Clipboard.setString(this.props.dataStore.lnd.lastAddInvoice)}>
-              {this.props.dataStore.lnd.lastAddInvoice}
-            </Text>
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
