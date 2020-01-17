@@ -3,7 +3,7 @@ import { useState, useEffect } from "react"
 import { Screen } from "../../components/screen"
 import { Onboarding } from "../../components/onboarding"
 import { Text } from "../../components/text"
-import { StyleSheet, Alert, Button } from "react-native"
+import { StyleSheet, Alert } from "react-native"
 import { inject, observer } from "mobx-react"
 import functions from "@react-native-firebase/functions"
 import { Loader } from "../../components/loader"
@@ -11,7 +11,6 @@ import { withNavigation } from "react-navigation"
 import { saveString } from "../../utils/storage"
 import { AccountType, CurrencyType } from "../../utils/enum"
 import { OnboardingSteps } from "../loading-screen"
-import {Notifications, Registered, RegistrationError} from 'react-native-notifications'
 
 export const lightningLogo = require("./LightningBolt.png")
 export const galoyLogo = require("./GaloyLogo.png")
@@ -19,7 +18,6 @@ export const bitcoinAndLockLogo = require("./BitcoinLockLogo.png")
 export const dollarCardATMLogo = require("./DollarCardATMLogo.png")
 export const presentLogo = require("./PresentLogo.png")
 export const partyPopperLogo = require("./PartyPopperLogo.png")
-export const bellLogo = require("./BellLogo.png")
 
 const styles = StyleSheet.create({
   text: {
@@ -171,36 +169,6 @@ export const FirstRewardScreen = inject("dataStore")(
     )
 }))
 
-export const EnableNotificationsScreen = () => {
-  // TODO
-
-  Notifications.events().registerRemoteNotificationsRegistered(async (event: Registered) => {
-    Alert.alert("Registered For Remote Push", `Device Token: ${event.deviceToken}`)
-
-    try {
-      await functions().httpsCallable("sendDeviceToken")({deviceToken: event.deviceToken})
-    } catch (err) {
-      console.tron.log(err.toString())
-      Alert.alert(err.toString())
-    }
-
-  })
-
-  Notifications.events().registerRemoteNotificationsRegistrationFailed((event: RegistrationError) => {
-    Alert.alert("Failed To Register For Remote Push", `Error (${event})`)
-  })
-
-  return (
-    <Screen>
-      <Onboarding next="allDone" image={bellLogo}>
-        <Text style={styles.text}>
-          Enable notifications to get alerts when you receive payments in the future.
-        </Text>
-      </Onboarding>
-      <Button title="enable" onPress={() => Notifications.registerRemoteNotifications()} />
-    </Screen>
-  )
-}
 
 export const AllDoneScreen = withNavigation(
   (({ navigation }) => {

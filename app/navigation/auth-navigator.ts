@@ -8,7 +8,6 @@ import {
   WelcomeFirstSatsScreen,
   WelcomeBackCompletedScreen,
   FirstRewardScreen,
-  EnableNotificationsScreen,
   AllDoneScreen,
 } from "../screens/welcome-screens"
 
@@ -58,7 +57,6 @@ export const WalletCompletedNavigator = createStackNavigator(
   {
     welcomebackCompleted: { screen: WelcomeBackCompletedScreen },
     firstReward: { screen: FirstRewardScreen },
-    enableNotifications: { screen: EnableNotificationsScreen },
     allDone: { screen: AllDoneScreen },
   },
   {

@@ -160,6 +160,12 @@ export class DebugScreen extends React.Component<DebugScreenProps, {}> {
               text="Log out"
               onPress={() => auth().signOut()}
             />
+            <Button
+              style={DEMO}
+              textStyle={DEMO_TEXT}
+              text="Go to notifications"
+              onPress={() => this.props.navigation.navigate('enableNotifications')}
+            />
             <Text
               style={TAGLINE}
               text={this.props.dataStore.lnd.walletExist ? "Wallet exist" : "Wallet doesn't exist"}

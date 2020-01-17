@@ -10,14 +10,17 @@ import { color } from "../theme"
 import { RewardsScreen } from "../screens/rewards-screen"
 import { MoveMoneyScreen, SendBitcoinScreen, ScanningQRCodeScreen, ReceiveBitcoinScreen } from "../screens/move-money-screen"
 import { OpenBankAccountScreen, BankRewardsScreen, PersonalInformationScreen } from "../screens/bank-onboarding"
+import { EnableNotificationsScreen } from "../screens/enable-notifications"
 
 export const AccountNavigator = createStackNavigator(
   {
     accounts: { screen: AccountsScreen },
-    demo: { screen: DebugScreen },
     accountDetail: { screen: AccountDetailScreen },
     transactionDetail: { screen: TransactionDetailScreen },
-    openBankAccount: { screen : OpenBankAccountScreen }
+    openBankAccount: { screen : OpenBankAccountScreen },
+
+    demo: { screen: DebugScreen },
+    enableNotifications: { screen: EnableNotificationsScreen },
   },
   {
     headerMode: "float",

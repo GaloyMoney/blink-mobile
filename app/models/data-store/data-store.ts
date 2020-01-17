@@ -11,6 +11,7 @@ import { toHex } from "../../utils/helper"
 
 import DeviceInfo from "react-native-device-info"
 import Config from "react-native-config"
+import { Notifications } from "react-native-notifications"
 
 // // FIXME add as a global var
 DeviceInfo.isEmulator().then(isEmulator => {
@@ -262,6 +263,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
     blockHeight: 0,
 
     lastSettleInvoiceHash: "",
+    lastAddInvoiceHash: "",
 
     bestBlockHeight: types.maybe(types.number),
     startBlockHeight: types.maybe(types.number),
@@ -580,7 +582,13 @@ export const LndModel = BaseAccountModel.named("Lnd")
         private: true,
       })
 
+      self.lastAddInvoiceHash = toHex(response.rHash)
+
       return response
+    })
+
+    const clearLastInvoice = flow(function*() {
+      self.lastAddInvoiceHash = ""
     })
 
     const updateBalance = flow(function*() {
@@ -632,14 +640,14 @@ export const LndModel = BaseAccountModel.named("Lnd")
       console.tron.warn(invoice)
 
       self.lastSettleInvoiceHash = toHex(invoice.rHash)
-      // const { computedTransactions, unitLabel } = this._store
-      // let inv = computedTransactions.find(tx => tx.id === toHex(invoice.rHash))
-      // this._notification.display({
-      //   type: 'success',
-      //   msg: `Invoice success: received ${inv.amountLabel} ${unitLabel || ''}`,
-      //   handler: () => this.select({ item: inv }),
-      //   handlerLbl: 'View details',
-      // })
+
+      // FIXME first alert doesn't show up?
+      Notifications.postLocalNotification({
+        body: `You just received ${invoice.value} sats`,
+        title: 'Payment received',
+        category: 'SOME_CATEGORY',
+        link: 'localNotificationLink',
+      })
     })
 
     const updateInvoices = flow(function*() {
@@ -754,6 +762,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
       getInfo,
       decodePayReq,
       addInvoice,
+      clearLastInvoice,
       connectGaloyPeer,
       openChannel,
       walletGotOpened,
@@ -900,7 +909,7 @@ export const DataStoreModel = types
       const balances = {}
 
       balances[AccountType.Bitcoin] =
-        (self.lnd.balance * (self.rates.rate(self.lnd.currency)) / self.rates.rate(currency))
+        (self.lnd.balance * (self.rates.rate(self.lnd.currency) / self.rates.rate(currency)))
       balances[AccountType.Checking] = self.fiat.balance / self.rates.rate(currency)
       balances[AccountType.All] = Object.values(balances).reduce((a, b) => a + b, 0)
 
