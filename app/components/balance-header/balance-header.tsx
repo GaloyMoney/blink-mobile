@@ -7,6 +7,8 @@ import currency from "currency.js"
 import { inject, observer } from "mobx-react"
 import { AccountType, CurrencyType } from "../../utils/enum"
 
+import ContentLoader, { Rect } from "react-content-loader/native"
+
 const styles = StyleSheet.create({
   amount: {
     alignItems: "center",
@@ -55,10 +57,24 @@ export interface BalanceHeaderProps {
   headingCurrency: CurrencyType
   accountsToAdd: AccountType
   dataStore?: any
+  initialLoading: boolean
 }
 
+const Loader = () => (
+  <ContentLoader 
+    height={50}
+    width={120}
+    speed={2}
+    primaryColor="#f3f3f3"
+    secondaryColor="#ecebeb"
+  >
+    <Rect x="0" y="0" rx="4" ry="4" width="120" height="20" /> 
+    <Rect x="30" y="35" rx="4" ry="4" width="60" height="10" /> 
+  </ContentLoader>
+)
+
 export const BalanceHeader: React.FunctionComponent<BalanceHeaderProps> = inject("dataStore")(
-  observer(({ headingCurrency, dataStore, accountsToAdd }) => {
+  observer(({ headingCurrency, dataStore, accountsToAdd, initialLoading }) => {
     let subCurrency
     if (headingCurrency === CurrencyType.BTC) {
       subCurrency = (
@@ -77,16 +93,23 @@ export const BalanceHeader: React.FunctionComponent<BalanceHeaderProps> = inject
       <View style={styles.header}>
         <View style={styles.amount}>
           <View style={{ flexDirection: "row", alignItems: "flex-end" }}>
-            <TextCurrency
-              amount={dataStore.balances({
-                currency: headingCurrency,
-                account: accountsToAdd,
-              })}
-              currencyUsed={headingCurrency}
-              fontSize={32}
-            />
+            {initialLoading && 
+              <Loader />
+            }
+            {!initialLoading && 
+              <TextCurrency
+                amount={dataStore.balances({
+                  currency: headingCurrency,
+                  account: accountsToAdd,
+                })}
+                currencyUsed={headingCurrency}
+                fontSize={32}
+              />
+            }
           </View>
-          {subCurrency}
+          {!initialLoading && 
+            subCurrency
+          }
         </View>
         <Text style={styles.balanceText}>Current Balance</Text>
       </View>
