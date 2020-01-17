@@ -51,35 +51,35 @@ const styles = StyleSheet.create({
     },
 })
 
-const bank = 
-[
-    {
-        title: 'Backup wallet',
-        icon: 'ios-lock',
-        badge: "+1,000 sats",
-        action: () => Alert.alert('TODO'),
-    },
-    {
-        title: "Make a payment",
-        icon: 'ios-exit',
-        badge: "+1,000 sats",
-        action: () => Alert.alert('TODO'),
-    },
-    {
-        title: 'Learn about Bitcoin',
-        icon: 'ios-school',
-        badge: "+1,000 sats",
-        action: () => Alert.alert('TODO'),
-    },
-    {
-        title: "Open a Galoy bank account",
-        icon: 'ios-gift',
-        badge: "+100,000 sats",
-        action: () => navigate('bankRewards'),
-    }
-]
-
 export const RewardsScreen = () => {
+
+    const bank = 
+    [
+        {
+            title: 'Backup wallet',
+            icon: 'ios-lock',
+            badge: "+1,000 sats",
+            action: () => Alert.alert('TODO'),
+        },
+        {
+            title: "Make a payment",
+            icon: 'ios-exit',
+            badge: "+1,000 sats",
+            action: () => Alert.alert('TODO'),
+        },
+        {
+            title: 'Learn about Bitcoin',
+            icon: 'ios-school',
+            badge: "+1,000 sats",
+            action: () => Alert.alert('TODO'),
+        },
+        {
+            title: "Open a Galoy bank account",
+            icon: 'ios-gift',
+            badge: "+100,000 sats",
+            action: () => navigate('bankRewards'),
+        }
+    ]
 
     const { navigate } = useNavigation()
 
