@@ -12,6 +12,7 @@ import { toHex } from "../../utils/helper"
 import DeviceInfo from "react-native-device-info"
 import Config from "react-native-config"
 import { Notifications } from "react-native-notifications"
+import { RootStoreModel } from "../root-store"
 
 // // FIXME add as a global var
 DeviceInfo.isEmulator().then(isEmulator => {
@@ -262,8 +263,9 @@ export const LndModel = BaseAccountModel.named("Lnd")
     network: "",
     blockHeight: 0,
 
-    lastSettleInvoiceHash: "",
-    lastAddInvoiceHash: "",
+    lastSettleInvoice: "",
+    lastAddInvoice: "",
+    receiveBitcoinScreenAlert: false,
 
     bestBlockHeight: types.maybe(types.number),
     startBlockHeight: types.maybe(types.number),
@@ -495,6 +497,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
 
             let url
 
+            // FIXME see when this is fixed: https://github.com/lightningnetwork/lnd/issues/3270
             if (Config.BITCOIN_NETWORK === "testnet") {
               url = "http://api.blockcypher.com/v1/btc/test3"
             } else if (Config.BITCOIN_NETWORK === "mainnet") {
@@ -582,13 +585,17 @@ export const LndModel = BaseAccountModel.named("Lnd")
         private: true,
       })
 
-      self.lastAddInvoiceHash = toHex(response.rHash)
+      self.lastAddInvoice = response.paymentRequest
 
       return response
     })
 
     const clearLastInvoice = flow(function*() {
-      self.lastAddInvoiceHash = ""
+      self.lastAddInvoice = ""
+    })
+
+    const resetReceiveBitcoinScreenAlert = flow(function*() {
+      self.receiveBitcoinScreenAlert = false
     })
 
     const updateBalance = flow(function*() {
@@ -638,16 +645,41 @@ export const LndModel = BaseAccountModel.named("Lnd")
       if (!invoice.settled) return
 
       console.tron.warn(invoice)
+            
+      const currentScreen = (obj) => {
+        if(obj['index']) {
+          return currentScreen(obj['routes'][obj['index']])
+        } else {
+          return obj['routeName']
+        }
+      }
 
-      self.lastSettleInvoiceHash = toHex(invoice.rHash)
+      console.tron.log('current screen', currentScreen(getParentOfType(self, RootStoreModel).navigationStore.state))
 
-      // FIXME first alert doesn't show up?
-      Notifications.postLocalNotification({
-        body: `You just received ${invoice.value} sats`,
-        title: 'Payment received',
-        category: 'SOME_CATEGORY',
-        link: 'localNotificationLink',
-      })
+      let localIOSNotif 
+
+      if (invoice.paymentRequest === self.lastAddInvoice) {
+        if (currentScreen(getParentOfType(self, RootStoreModel).navigationStore.state) === "receiveBitcoin") {
+          self.receiveBitcoinScreenAlert = true
+          localIOSNotif = false
+        } else {
+          localIOSNotif = true
+        }
+
+        self.lastAddInvoice = ""
+      } else {
+        localIOSNotif = true
+      }
+
+      if (localIOSNotif) {
+        Notifications.postLocalNotification({
+          body: `You just received ${invoice.value} sats`,
+          title: 'Payment received',
+          category: 'SOME_CATEGORY',
+          link: 'localNotificationLink',
+        })
+      }
+
     })
 
     const updateInvoices = flow(function*() {
@@ -763,6 +795,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
       decodePayReq,
       addInvoice,
       clearLastInvoice,
+      resetReceiveBitcoinScreenAlert,
       connectGaloyPeer,
       openChannel,
       walletGotOpened,

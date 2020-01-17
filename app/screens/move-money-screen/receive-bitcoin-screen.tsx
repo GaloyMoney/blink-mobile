@@ -8,9 +8,6 @@ import { color } from "../../theme";
 import { QRCode } from "../../components/qrcode"
 import { ScrollView } from "react-native-gesture-handler"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
-import { when } from "mobx"
-import { useNavigation } from "react-navigation-hooks"
-
 
 const styles = StyleSheet.create({
   qr: {
@@ -28,11 +25,8 @@ export const ReceiveBitcoinScreen: React.FC
 = inject("dataStore")(
   observer(({ dataStore }) => {
 
-    const { goBack, isFocused } = useNavigation()
-
     const [note, setNote] = useState("")
     const [amount, setAmount] = useState(0)
-    const [invoice, setInvoice] = useState("")
 
     const buttons = ['Lightning', 'On-chain']
 
@@ -46,7 +40,7 @@ export const ReceiveBitcoinScreen: React.FC
     const shareInvoice = async () => {
         try {
           const result = await Share.share({
-            message: invoice,
+            message: dataStore.lnd.lastAddInvoice,
           });
     
           if (result.action === Share.sharedAction) {
@@ -64,17 +58,27 @@ export const ReceiveBitcoinScreen: React.FC
       };
 
     const copyInvoice = () => {
-        Clipboard.setString(invoice)
+        Clipboard.setString(dataStore.lnd.lastAddInvoice)
     }
 
     const createInvoice = async () => {
-      const response = await dataStore.lnd.addInvoice({value: amount, memo: note})
-      setInvoice(response.paymentRequest)
+      await dataStore.lnd.addInvoice({value: amount, memo: note})
     }
 
+    // Note: we could not remove the invoice here, and 
+    // fetch back the amount detail as we are remounting the 
+    // invoice based on decodepayreq 
+    useEffect(() => { // unmount
+      return () => {
+        dataStore.lnd.clearLastInvoice()
+      }
+    }, []);
 
-    const invoicePaid = () => {
-
+    useEffect(() => { // new invoice, is it ours?
+      if (dataStore.lnd.receiveBitcoinScreenAlert === false) {
+        return
+      }
+      
       const options = {
         enableVibrateFallback: true,
         ignoreAndroidSystemSettings: false
@@ -83,28 +87,14 @@ export const ReceiveBitcoinScreen: React.FC
       // TODO refactor
       ReactNativeHapticFeedback.trigger("notificationSuccess", options)
       
-      Alert.alert("success", "this invoice has been paid",
-      [{
-          text: "OK",
-          onPress: () => {
-            goBack()    
-          },
-        },
-      ])
+      Alert.alert("success", "this invoice has been paid")
 
-    }
+      setNote("")
+      setAmount(0)
 
-    when(() => 
-      dataStore.lnd.lastAddInvoiceHash !== "" &&
-      dataStore.lnd.lastAddInvoiceHash == dataStore.lnd.lastSettleInvoiceHash &&
-      isFocused(),
-      invoicePaid)
-
-    useEffect(() => { // unmount
-      return () => {
-        dataStore.lnd.clearLastInvoice()
-      }
-    }, []);
+      dataStore.lnd.resetReceiveBitcoinScreenAlert()
+  
+    }, [dataStore.lnd.receiveBitcoinScreenAlert]);
 
     return (
         <Screen>
@@ -114,8 +104,8 @@ export const ReceiveBitcoinScreen: React.FC
             buttons={buttons}
             containerStyle={{height: 50}}
             />
-            {(invoice !== "") &&
-              <QRCode style={styles.qr} size={300}>{invoice}</QRCode>
+            {(dataStore.lnd.lastAddInvoice !== "") &&
+              <QRCode style={styles.qr} size={300}>{dataStore.lnd.lastAddInvoice}</QRCode>
             }
             <View>
                 <Text>Note</Text>
