@@ -196,7 +196,8 @@ RCT_EXPORT_METHOD(start: (RCTPromiseResolveBlock)resolve
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         RCTLogInfo(@"Starting lnd");
         NativeCallback* cb = [[NativeCallback alloc] initWithResolver:resolve rejecter:reject];
-        LndmobileStart(args, cb, nil); // FIXME handle the third argument
+        LndmobileStart(args, cb);
+        // LndmobileStart(args, cb, nil); // FIXME handle the third argument
     });
 
 }
