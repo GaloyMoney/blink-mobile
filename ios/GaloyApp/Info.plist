@@ -32,9 +32,27 @@
 				<string>com.googleusercontent.apps.72279297366-feuhvvmtop8ba5j0sgjbu4pubqa6cnfh</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>CFBundleURLName</key>
+			<string>io.galoy</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>galoy</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>lightning</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>47</string>
+	<string>62</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
