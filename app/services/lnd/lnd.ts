@@ -34,10 +34,10 @@ export class Lnd {
     const streamInvoices = this.grpc.sendStreamCommand("subscribeInvoices")
 
     new Promise((resolve, reject) => {
-      streamOnChainTransactions.on("data", data => {
-        console.tron.log("onData", data)
-        this.lndStore.updateBalance()
-        this.lndStore.updateTransactions()
+      streamOnChainTransactions.on("data", async data => {
+        console.tron.log("onData streamOnChainTransactions", data)
+        await this.lndStore.updateBalance()
+        await this.lndStore.updateTransactions()
       })
       streamOnChainTransactions.on("end", resolve)
       streamOnChainTransactions.on("error", reject)
@@ -47,9 +47,9 @@ export class Lnd {
     }).catch(err => console.tron.error("err with streamOnChainTransactions", err))
 
     new Promise((resolve, reject) => {
-      streamInvoices.on("data", data => {
-        console.tron.log("onData", data)
-        this.lndStore.updateInvoices()
+      streamInvoices.on("data", async invoice => {
+        console.tron.log("onData streamInvoices", invoice)
+        await this.lndStore.updateInvoice(invoice)
       })
       streamInvoices.on("end", resolve)
       streamInvoices.on("error", reject)
