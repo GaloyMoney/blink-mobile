@@ -58,23 +58,7 @@ export class App extends React.Component<{}, AppState> {
     // FIXME there might be a better way to manage this notification
     Notifications.events().registerNotificationReceived((notification, completion) => {
       console.tron.log(notification)
-
-      const currentScreen = (obj) => {
-        if(obj['index']) {
-          return currentScreen(obj['routes'][obj['index']])
-        } else {
-          return obj['routeName']
-        }
-      }
-
-      console.tron.log('current screen', currentScreen(this.state.rootStore?.navigationStore.state))
-
-      const showAlert = !(
-        currentScreen(this.state.rootStore?.navigationStore.state) === "receiveBitcoin"
-        &&  this.state.rootStore?.dataStore.lnd.lastSettleInvoiceHash == 
-            this.state.rootStore?.dataStore.lnd.lastAddInvoiceHash)
-
-      completion({alert: showAlert, sound: false, badge: false})
+      completion({alert: true, sound: false, badge: false})
     })
   }
 
