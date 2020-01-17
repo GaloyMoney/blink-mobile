@@ -14,6 +14,7 @@ import { Provider } from "mobx-react"
 import { BackButtonHandler } from "./navigation/back-button-handler"
 import { contains } from "ramda"
 import { DEFAULT_NAVIGATION_CONFIG } from "./navigation/navigation-config"
+import { Notifications } from "react-native-notifications"
 
 /**
  * Ignore some yellowbox warnings. Some of these are for deprecated functions
@@ -52,6 +53,28 @@ export class App extends React.Component<{}, AppState> {
   async componentDidMount() {
     this.setState({
       rootStore: await setupRootStore(),
+    })
+
+    // FIXME there might be a better way to manage this notification
+    Notifications.events().registerNotificationReceived((notification, completion) => {
+      console.tron.log(notification)
+
+      const currentScreen = (obj) => {
+        if(obj['index']) {
+          return currentScreen(obj['routes'][obj['index']])
+        } else {
+          return obj['routeName']
+        }
+      }
+
+      console.tron.log('current screen', currentScreen(this.state.rootStore?.navigationStore.state))
+
+      const showAlert = !(
+        currentScreen(this.state.rootStore?.navigationStore.state) === "receiveBitcoin"
+        &&  this.state.rootStore?.dataStore.lnd.lastSettleInvoiceHash == 
+            this.state.rootStore?.dataStore.lnd.lastAddInvoiceHash)
+
+      completion({alert: showAlert, sound: false, badge: false})
     })
   }
 

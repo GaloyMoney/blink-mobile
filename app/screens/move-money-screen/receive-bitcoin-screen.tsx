@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { inject, observer } from "mobx-react"
 import { Text, View, Alert, Share, Clipboard, StyleSheet } from "react-native"
 import { Screen } from "../../components/screen"
@@ -9,7 +9,6 @@ import { QRCode } from "../../components/qrcode"
 import { ScrollView } from "react-native-gesture-handler"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import { when } from "mobx"
-import { toHex } from "../../utils/helper"
 import { useNavigation } from "react-navigation-hooks"
 
 
@@ -29,12 +28,11 @@ export const ReceiveBitcoinScreen: React.FC
 = inject("dataStore")(
   observer(({ dataStore }) => {
 
-    const { navigate } = useNavigation()
+    const { goBack, isFocused } = useNavigation()
 
     const [note, setNote] = useState("")
     const [amount, setAmount] = useState(0)
     const [invoice, setInvoice] = useState("")
-    const [hash, setHash] = useState("")
 
     const buttons = ['Lightning', 'On-chain']
 
@@ -72,10 +70,11 @@ export const ReceiveBitcoinScreen: React.FC
     const createInvoice = async () => {
       const response = await dataStore.lnd.addInvoice({value: amount, memo: note})
       setInvoice(response.paymentRequest)
-      setHash(toHex(response.rHash))
     }
 
+
     const invoicePaid = () => {
+
       const options = {
         enableVibrateFallback: true,
         ignoreAndroidSystemSettings: false
@@ -88,14 +87,24 @@ export const ReceiveBitcoinScreen: React.FC
       [{
           text: "OK",
           onPress: () => {
-            navigate('moveMoney')    
+            goBack()    
           },
         },
       ])
+
     }
 
-    when(() => hash !== "" && hash == dataStore.lnd.lastSettleInvoiceHash,
+    when(() => 
+      dataStore.lnd.lastAddInvoiceHash !== "" &&
+      dataStore.lnd.lastAddInvoiceHash == dataStore.lnd.lastSettleInvoiceHash &&
+      isFocused(),
       invoicePaid)
+
+    useEffect(() => { // unmount
+      return () => {
+        dataStore.lnd.clearLastInvoice()
+      }
+    }, []);
 
     return (
         <Screen>
