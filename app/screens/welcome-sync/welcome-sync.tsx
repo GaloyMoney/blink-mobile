@@ -7,7 +7,7 @@ import { observer, inject } from "mobx-react"
 import * as Progress from "react-native-progress"
 
 import { YouTubeStandaloneIOS } from "react-native-youtube"
-import { Button } from "react-native-elements"
+import { Button, ListItem } from "react-native-elements"
 import { Image, StyleSheet, View, Alert, Linking } from "react-native"
 import { withNavigation } from "react-navigation"
 
@@ -16,6 +16,9 @@ import { saveString } from "../../utils/storage"
 import { OnboardingSteps } from "../loading-screen"
 import { Loader } from "../../components/loader"
 import { PendingOpenChannelsStatus } from "../../utils/enum"
+import Icon from "react-native-vector-icons/Ionicons"
+import { palette } from "../../theme/palette"
+
 
 export const popcornLogo = require("./PopcornLogo.png")
 export const rocketLogo = require("./RocketLogo.png")
@@ -65,6 +68,20 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     textDecorationLine: "underline",
   },
+
+  textButton: {
+    fontSize: 18,
+    color: palette.darkGrey
+  },
+
+  button: {
+      marginHorizontal: 40,
+      paddingVertical: 6,
+      borderWidth: 1,
+      borderRadius: 10,
+      borderColor: color.primary
+  },
+
 })
 
 const playVideo = videoId => {
@@ -141,12 +158,15 @@ export const WelcomeSyncingScreen = withNavigation(
                 {"\n"}
                 Earn another reward{"\n"}while you wait:
               </Text>
-              <Button
+              <ListItem
+                titleStyle={styles.textButton}
+                style={styles.button}
+                key={0}
                 title="What is money?"
-                containerStyle={styles.buttonContainerVideo}
-                buttonStyle={styles.buttonVideo}
-                type="outline"
+                // leftIcon={<Icon name={item.icon} style={styles.icon} size={32} color={color.primary} />}
                 onPress={() => playVideo("XNu5ppFZbHo")}
+                badge={{value: "+1,000 sats", badgeStyle: {backgroundColor: color.primary}}}
+                chevron
               />
             </>}
             { dataStore.lnd.syncedToChain &&
