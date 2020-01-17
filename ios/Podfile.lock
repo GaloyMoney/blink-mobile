@@ -554,6 +554,8 @@ PODS:
     - React
   - RNSecureRandom (1.0.0-rc.0):
     - React
+  - RNSVG (10.1.0):
+    - React
   - RNVectorIcons (6.6.0):
     - React
   - XCDYouTubeKit (2.8.2)
@@ -608,6 +610,7 @@ DEPENDENCIES:
   - RNReactNativeHapticFeedback (from `../node_modules/react-native-haptic-feedback`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNSecureRandom (from `../node_modules/react-native-securerandom`)
+  - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - XCDYouTubeKit (~> 2.8)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -730,6 +733,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNSecureRandom:
     :path: "../node_modules/react-native-securerandom"
+  RNSVG:
+    :path: "../node_modules/react-native-svg"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
   Yoga:
@@ -803,6 +808,7 @@ SPEC CHECKSUMS:
   RNReactNativeHapticFeedback: e11a4da0ce174e9f88b03cbaf5d76d94633cdee2
   RNReanimated: b2ab0b693dddd2339bd2f300e770f6302d2e960c
   RNSecureRandom: 1f19ad1492f7ed416b8fc79e92216a1f73f13a4c
+  RNSVG: 069864be08c9fe065a2cf7e63656a34c78653c99
   RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
   XCDYouTubeKit: 79baadb0560673a67c771eba45f83e353fd12c1f
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b

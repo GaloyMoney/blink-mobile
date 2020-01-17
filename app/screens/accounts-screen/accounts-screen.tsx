@@ -13,7 +13,8 @@ import { AccountType, CurrencyType } from "../../utils/enum"
 import { palette } from "../../theme/palette"
 import { useNavigation } from "react-navigation-hooks"
 import auth from '@react-native-firebase/auth';
-import { Notifications } from "react-native-notifications"
+
+import ContentLoader, { Rect } from "react-content-loader/native"
 
 const accountBasic = {
   color: color.text,
@@ -48,9 +49,21 @@ const styles = StyleSheet.create({
 })
 
 const AccountItem = inject("dataStore")(observer(
-  ({ dataStore, account, icon, action }) => {
+  ({ dataStore, account, icon, action, initialLoading }) => {
 
   const { navigate } = useNavigation()
+
+  const Loader = () => (
+    <ContentLoader 
+      height={20}
+      width={70}
+      speed={2}
+      primaryColor="#f3f3f3"
+      secondaryColor="#ecebeb"
+    >
+      <Rect x="0" y="0" rx="4" ry="4" width="60" height="20" /> 
+    </ContentLoader>
+  )
 
   return (
     <TouchableHighlight
@@ -62,20 +75,28 @@ const AccountItem = inject("dataStore")(observer(
       <View style={styles.accountView}>
         <Icon name={icon} color={color.primary} size={28} />
         <Text style={styles.accountTypeStyle}>{account}</Text>
-        <Text style={styles.accountAmount}>
-          {currency(dataStore.balances({ account, currency: CurrencyType.USD }), {
-            formatWithSymbol: true,
-          }).format()}
-        </Text>
+        { initialLoading &&
+          <Loader />
+        }
+        { !initialLoading &&
+          <Text style={styles.accountAmount}>
+            {currency(dataStore.balances({ account, currency: CurrencyType.USD }), {
+              formatWithSymbol: true,
+            }).format()}
+          </Text>
+        }
+          
       </View>
     </TouchableHighlight>
   )
 }))
 
+
 export const AccountsScreen = inject("dataStore")(observer(
   ({ dataStore }) => {
 
-  const [refreshing, setRefreshing] = useState(false);
+  const [ initialLoading, setInitialLoading] = useState(true);
+  const [ refreshing, setRefreshing] = useState(false);
   const { navigate } = useNavigation()
 
   //FIXME type any
@@ -91,10 +112,11 @@ export const AccountsScreen = inject("dataStore")(observer(
   }
 
   const onRefresh = React.useCallback(async () => {
-    setRefreshing(true);
+    setRefreshing(true)
     await dataStore.updateBalance()
-    setRefreshing(false);
-  }, [refreshing]);
+    setRefreshing(false)
+    setInitialLoading(false)
+  }, [refreshing])
 
   useEffect(() => {
     onRefresh()
@@ -102,13 +124,15 @@ export const AccountsScreen = inject("dataStore")(observer(
 
   return (
     <Screen>
-      <BalanceHeader headingCurrency={CurrencyType.BTC} accountsToAdd={AccountType.All} />
+      <BalanceHeader headingCurrency={CurrencyType.BTC} 
+          accountsToAdd={AccountType.All}
+          initialLoading={initialLoading} />
       <FlatList 
         data={accountTypes} 
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
-        renderItem={({ item }) => <AccountItem {...item} />} />
+        renderItem={({ item }) => <AccountItem {...item} initialLoading={initialLoading} />} />
     </Screen>
   )
 }))
