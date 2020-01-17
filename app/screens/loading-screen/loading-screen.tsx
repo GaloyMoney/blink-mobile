@@ -109,12 +109,12 @@ useEffect(() => {
     return subscriber; // unsubscribe on unmount
 }, [])
 
-      return (
-        <View style={styles.centerBackground}>
-          <View style={styles.activityIndicatorWrapper}>
-            <ActivityIndicator size="large" color={color.primary} />
-          </View>
+    return (
+      <View style={styles.centerBackground}>
+        <View style={styles.activityIndicatorWrapper}>
+          <ActivityIndicator size="large" color={color.primary} />
         </View>
+      </View>
       )
     }),
   ),

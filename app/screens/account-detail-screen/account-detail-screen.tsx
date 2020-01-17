@@ -100,6 +100,69 @@ const AccountDetailItem: React.FC<AccountDetailItemProps> = (props) => {
   )
 }
 
+
+const updateTransactions = async (accountStore) => {
+  await accountStore.update()
+
+  let transactions = accountStore.transactions
+  
+  const sections = []
+  const today = []
+  const yesterday = []
+  const thisMonth = []
+  const before = []
+
+  if (transactions.length === 0) {
+    return <Text>No transaction to show</Text>
+  }
+
+  transactions = transactions.slice().sort((a, b) => (a.date > b.date ? -1 : 1)) // warning without slice?
+
+  const isToday = (tx) => {
+    return sameDay(tx.date, new Date())
+  }
+
+  const isYesterday = (tx) => {
+    return sameDay(tx.date, new Date().setDate(new Date().getDate() - 1))
+  }
+
+  const isThisMonth = (tx) => {
+    return sameMonth(tx.date, new Date())
+  }
+
+  while(transactions.length) { // this could be optimized
+    let tx = transactions.shift()
+    if (isToday(tx)) {
+      today.push(tx)
+    } else if (isYesterday(tx)) {
+      yesterday.push(tx)
+    } else if (isThisMonth(tx)) {
+      thisMonth.push(tx)
+    } else {
+      before.push(tx)
+    }
+  }
+  
+  if (today.length > 0) {
+    sections.push({ title: "Today", data: today })
+  }
+
+  if (yesterday.length > 0) {
+    sections.push({ title: "Yesterday", data: yesterday })
+  }
+
+  if (thisMonth.length > 0) {
+    sections.push({ title: "This month", data: thisMonth })
+  }
+
+  if (before.length > 0) {
+    sections.push({ title: "Previous months", data: before })
+  }
+
+  return sections
+}
+
+
 export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
   = inject("dataStore")(
     observer(({ dataStore }) => {
@@ -117,73 +180,12 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
 
     const onRefresh = React.useCallback(async () => {
       setRefreshing(true);
-      await updateTransactions()
+      setSections(await updateTransactions(accountStore))
       setRefreshing(false);
     }, [refreshing]);
 
-    const updateTransactions = async () => {
-      await accountStore.update()
-
-      let transactions = accountStore.transactions
-      
-      const _sections = []
-      const today = []
-      const yesterday = []
-      const thisMonth = []
-      const before = []
-
-      if (transactions.length === 0) {
-        return <Text>No transaction to show</Text>
-      }
-    
-      transactions = transactions.slice().sort((a, b) => (a.date > b.date ? -1 : 1)) // warning without slice?
-  
-      const isToday = (tx) => {
-        return sameDay(tx.date, new Date())
-      }
-
-      const isYesterday = (tx) => {
-        return sameDay(tx.date, new Date().setDate(new Date().getDate() - 1))
-      }
-
-      const isThisMonth = (tx) => {
-        return sameMonth(tx.date, new Date())
-      }
-
-      while(transactions.length) { // this could be optimized
-        let tx = transactions.shift()
-        if (isToday(tx)) {
-          today.push(tx)
-        } else if (isYesterday(tx)) {
-          yesterday.push(tx)
-        } else if (isThisMonth(tx)) {
-          thisMonth.push(tx)
-        } else {
-          before.push(tx)
-        }
-      }
-      
-      if (today.length > 0) {
-        _sections.push({ title: "Today", data: today })
-      }
-  
-      if (yesterday.length > 0) {
-        _sections.push({ title: "Yesterday", data: yesterday })
-      }
-  
-      if (thisMonth.length > 0) {
-        _sections.push({ title: "This month", data: thisMonth })
-      }
-  
-      if (before.length > 0) {
-        _sections.push({ title: "Previous months", data: before })
-      }
-
-      setSections(_sections)
-    }
-
     useEffect(() => {
-      updateTransactions()
+      onRefresh()
     }, [])
 
     return (
