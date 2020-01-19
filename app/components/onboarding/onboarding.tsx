@@ -45,7 +45,7 @@ export const OnboardingScreen = withNavigation(
         </View>
         <Button
           title="Next"
-          onPress={next ? () => navigation.navigate(next) : () => action()}
+          onPress={next ? () => navigation.navigate(next) : action}
           containerStyle={styles.buttonContainer}
           buttonStyle={styles.buttonStyle}
         />

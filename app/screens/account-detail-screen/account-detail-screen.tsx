@@ -2,7 +2,9 @@ import * as React from "react"
 import { useState, useEffect } from "react"
 import { observer, inject } from "mobx-react"
 
-import { View, SectionList, StyleSheet, RefreshControl } from "react-native"
+import { View, SectionList, StyleSheet, RefreshControl, TouchableWithoutFeedback } from "react-native"
+
+import Modal from "react-native-modal";
 
 import { Text } from "../../components/text"
 import { Screen } from "../../components/screen"
@@ -14,8 +16,10 @@ import { DataStore } from "../../models/data-store"
 import { sameDay, sameMonth } from "../../utils/date"
 import { CurrencyText } from "../../components/currency-text"
 import { TouchableHighlight } from "react-native-gesture-handler"
-import { AccountType } from "../../utils/enum"
+import { AccountType, CurrencyType } from "../../utils/enum"
 import { useNavigation, useNavigationParam } from "react-navigation-hooks"
+import { Button } from "react-native-elements"
+import { palette } from "../../theme/palette";
 
 export interface AccountDetailScreenProps {
   account: AccountType
@@ -68,6 +72,26 @@ const styles = StyleSheet.create({
 
   vertical: {
     flexDirection: "column",
+  },
+
+  horizontal: {
+    flexDirection: "row",
+  },
+
+  button: {
+    backgroundColor: color.primary
+  },
+
+  buttonContainer: {
+    paddingHorizontal: 15,
+    flex: 1
+  },
+
+  viewModal: {
+    justifyContent: 'flex-end',
+    margin: 0,
+    height: 200,
+    backgroundColor: palette.white,
   },
 })
 
@@ -164,7 +188,10 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
     observer(({ dataStore }) => {
 
     const [refreshing, setRefreshing] = useState(false);
+    const [modalVisible, setModalVisible] = useState(false);
     const [sections, setSections] = useState([]);
+
+    const { navigate } = useNavigation()
 
     const account = useNavigationParam("account")
 
@@ -173,6 +200,9 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
       : dataStore.lnd
 
     const currency = accountStore.currency
+
+    const onBuyInit = () => setModalVisible(true)
+    const onSellInit = () => setModalVisible(true)
 
     const onRefresh = React.useCallback(async () => {
       setRefreshing(true);
@@ -186,7 +216,41 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
 
     return (
       <Screen>
+        <Modal 
+          isVisible={modalVisible} 
+          swipeDirection={modalVisible ? ['down'] : ['up']}
+          onSwipeComplete={() => setModalVisible(false)}
+          // onBackdropPress={() => setModalVisible(false)}
+          // onBackButtonPress={() => setModalVisible(false)}
+          swipeThreshold={50}
+          >
+          <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+            <View style={styles.flex} />
+          </TouchableWithoutFeedback>
+          <View style={styles.viewModal}>
+            <Text style={styles.itemText}>Open a Galoy bank account</Text>
+            <Text style={styles.itemText}>To buy bitcoin you will need a Galoy bank account,
+            so you can transfer US dollar</Text>
+            <Button title="Open account" 
+              onPress={() => {setModalVisible(false); navigate('bankRewards')}}  
+            />
+          </View>
+        </Modal>
         <BalanceHeader headingCurrency={currency} accountsToAdd={account} />
+        { account == AccountType.Bitcoin && 
+          <View style={styles.horizontal}>
+            <Button title="Buy" 
+              buttonStyle={styles.button}
+              containerStyle={styles.buttonContainer}
+              onPress={onBuyInit}  
+              />
+            <Button title="Sell"
+              buttonStyle={styles.button}
+              containerStyle={styles.buttonContainer}
+              onPress={onSellInit}  
+              />  
+          </View>
+        }
         { sections.length === 0 && 
           <Text>No transaction to show</Text>
         }
