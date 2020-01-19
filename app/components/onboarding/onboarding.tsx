@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   },
 })
 
-export const Onboarding = withNavigation(
+export const OnboardingScreen = withNavigation(
   ({ children, next, action, image, navigation, header = "" }) => {
     return (
       <>

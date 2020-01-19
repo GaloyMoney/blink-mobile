@@ -13,9 +13,8 @@ import { withNavigation } from "react-navigation"
 
 import { color } from "../../theme"
 import { saveString } from "../../utils/storage"
-import { OnboardingSteps } from "../loading-screen"
 import { Loader } from "../../components/loader"
-import { PendingOpenChannelsStatus } from "../../utils/enum"
+import { PendingOpenChannelsStatus, Onboarding } from "../../utils/enum"
 import Icon from "react-native-vector-icons/Ionicons"
 import { palette } from "../../theme/palette"
 
@@ -106,8 +105,8 @@ export const WelcomeSyncingScreen = withNavigation(
   
           const funding_tx = await dataStore.lnd.openChannel()
   
-          await saveString("onboarding", OnboardingSteps.channelCreated)
-  
+          await dataStore.onboarding.set(Onboarding.channelCreated)
+
           setLoading(false)
           navigation.navigate("welcomeGeneratingWallet")
         } catch (err) {
@@ -231,7 +230,7 @@ export const WelcomeGeneratingWalletScreen = inject("dataStore")(
         </View>
         <View style={styles.container}>
           <Text style={styles.text}>
-            This may take 24 hours.
+            This may take a few hours.
           </Text>
           <Image source={rocketLogo} style={styles.image} />
           <Text style={styles.text}>

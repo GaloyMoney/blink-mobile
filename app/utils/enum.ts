@@ -14,3 +14,11 @@ export enum PendingOpenChannelsStatus {
   opened = "opened",
   noChannel = "noChannel",
 }
+
+
+export enum Onboarding {
+  phoneVerified = "phoneVerified",
+  channelCreated = "channelCreated",
+  walletOnboarded = "walletOnboarded",
+  bankOnboarded = "bankOnboarded",
+}

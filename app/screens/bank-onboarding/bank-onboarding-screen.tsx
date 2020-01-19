@@ -1,17 +1,18 @@
 import * as React from "react"
 import { useState, useRef } from "react"
 import { Screen } from "../../components/screen"
-import { Onboarding } from "../../components/onboarding"
+import { OnboardingScreen } from "../../components/onboarding"
 import { Text } from "../../components/text"
 import { StyleSheet, Image, Alert } from "react-native"
 import { BalanceHeader } from "../../components/balance-header"
-import { CurrencyType, AccountType } from "../../utils/enum"
+import { CurrencyType, AccountType, Onboarding } from "../../utils/enum"
 import { useNavigation } from "react-navigation-hooks"
 import { Button } from "react-native"
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Input } from "react-native-elements"
 import { withNavigation } from "react-navigation"
 import functions from "@react-native-firebase/functions"
+import { inject } from "mobx-react"
 
 
 export const bankLogo = require("./BankLogo.png")
@@ -48,9 +49,9 @@ export const OpenBankAccountScreen = () => {
 export const BankRewardsScreen = () => {
   return (
     <Screen>
-      <Onboarding next="personalInformation" image={bankLogo}>
+      <OnboardingScreen next="personalInformation" image={bankLogo}>
         <Text style={styles.text}>You’re just a few minutes away from own Galoy bank account! Order a debit card to receive 1% bitcoin rewards on all spending.</Text>
-      </Onboarding>
+      </OnboardingScreen>
     </Screen>
   )
 }
@@ -107,8 +108,8 @@ export const PersonalInformationScreen = () => {
 }
 
 
-export const DateOfBirthScreen = withNavigation(
-  ({ navigation }) => {
+export const DateOfBirthScreen = withNavigation(inject("dataStore")(
+  ({ navigation, dataStore }) => {
 
   const [dateOfBirth, setDateOfBirth] = useState(new Date(2000, 1, 1))
 
@@ -123,6 +124,8 @@ export const DateOfBirthScreen = withNavigation(
       Alert.alert(err.toString())
       return // TODO : properly show error message
     }
+
+    await dataStore.onboarding.set(Onboarding.bankOnboarded)
 
     navigation.navigate('bankAccountReady')
   }
@@ -144,15 +147,18 @@ export const DateOfBirthScreen = withNavigation(
       <Button title="Confirm" onPress={onValidate} />
     </Screen>
   )
-})
+}))
 
 
 export const BankAccountReadyScreen = () => {
+
+  const { navigate } = useNavigation()
+
   return (
     <Screen>
       <Image source={popcornLogo} />
       <Text style={styles.text}>Your Galoy bank account is ready</Text>
-      <Button title="Continue" />
+      <Button title="Continue" onPress={() => navigate('accounts')} />
     </Screen>
   )
 }

@@ -8,13 +8,13 @@ import { Button } from "react-native-elements"
 import { withNavigation } from "react-navigation"
 import { TextInput, ScrollView } from "react-native-gesture-handler"
 import { color } from "../../theme"
-import { saveString } from "../../utils/storage"
 import { Loader } from "../../components/loader"
 import PhoneInput from "react-native-phone-input"
 import auth from "@react-native-firebase/auth"
-import { OnboardingSteps } from "../loading-screen"
 import { isEmpty } from "ramda"
 import { useNavigation, useNavigationParam } from "react-navigation-hooks"
+import { Onboarding } from "../../utils/enum"
+import { inject } from "mobx-react"
 
 export const phoneLogo = require("./PhoneLogo.png")
 export const phoneWithArrowLogo = require("./PhoneWithArrowLogo.png")
@@ -169,7 +169,9 @@ export const WelcomePhoneInputScreen = withNavigation(({ text, navigation, heade
   )
 })
 
-export const WelcomePhoneValidationScreen = () => {
+export const WelcomePhoneValidationScreen = inject("dataStore")(
+  ({ dataStore }) => {
+    
   const [code, setCode] = useState("")
   const [loading, setLoading] = useState(false)
   const [completed, setCompleted] = useState(false)
@@ -187,7 +189,7 @@ export const WelcomePhoneValidationScreen = () => {
     }
 
     if (user.phoneNumber) {
-      await saveString("onboarding", OnboardingSteps.phoneVerified)
+      await dataStore.onboarding.set(Onboarding.phoneVerified)
       setCompleted(true)
     }
   }
@@ -270,4 +272,4 @@ export const WelcomePhoneValidationScreen = () => {
       </KeyboardAvoidingView>
     </Screen>
   )
-}
+})

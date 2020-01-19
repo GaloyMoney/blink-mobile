@@ -3,11 +3,10 @@ import { inject, observer } from "mobx-react"
 import { getEnv } from "mobx-state-tree"
 import * as React from "react"
 import { useEffect } from "react"
-import { ActivityIndicator, StyleSheet, View, Alert, TouchableHighlight } from "react-native"
+import { ActivityIndicator, StyleSheet, View, Alert } from "react-native"
 import { withNavigation } from "react-navigation"
 import { color } from "../../theme"
-import { loadString } from "../../utils/storage"
-import { PendingOpenChannelsStatus } from "../../utils/enum"
+import { PendingOpenChannelsStatus, Onboarding } from "../../utils/enum"
 
 const styles = StyleSheet.create({
   centerBackground: {
@@ -27,12 +26,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
 })
-
-export enum OnboardingSteps {
-  phoneVerified = "phoneVerified",
-  channelCreated = "channelCreated",
-  onboarded = "onboarded",
-}
 
 export const LoadingScreen = withNavigation(
   inject("dataStore")(
@@ -55,54 +48,41 @@ export const LoadingScreen = withNavigation(
         if (user === null) {
           // new install or no data yet
           navigation.navigate("authStack")
-        } else if (user.phoneNumber) {
-          // we may be onboarding
-          const onboard = await loadString("onboarding") // TODO: move this to mst
-          console.tron.log(`onboard ${onboard}`)
-          switch (onboard) {
-            case OnboardingSteps.phoneVerified: {
+        } else {
+          switch (dataStore.onboarding.stage) {
+            case Onboarding.phoneVerified:
               navigation.navigate("welcomeSyncing")
               break
-            }
-            case OnboardingSteps.channelCreated: {
+            case Onboarding.channelCreated: 
               const statusChannel = await dataStore.lnd.statusFirstChannelOpen()
               console.tron.log(`statusChannel : ${statusChannel}`)
               switch (statusChannel) {
-                case PendingOpenChannelsStatus.pending: {
+                case PendingOpenChannelsStatus.pending:
                   navigation.navigate("welcomeGenerating")
                   break
-                }
-                case PendingOpenChannelsStatus.opened: {
+                case PendingOpenChannelsStatus.opened:
                   navigation.navigate("welcomebackCompleted")
                   break
-                }
-                case PendingOpenChannelsStatus.noChannel: {
-                  console.tron.warn("no Channel but phone verified. Because of app reinstall?") 
+                case PendingOpenChannelsStatus.noChannel:
+                  console.tron.warn("no Channel but user is verified. Because of app reinstall?") 
                   navigation.navigate("authStack")
                   break
-                }
                 default:
                   console.tron.error("statusChannel state management error")
                   navigation.navigate("authStack")
                   break
               }
-              break
-            }
-            case OnboardingSteps.onboarded: {
+            case Onboarding.walletOnboarded: 
+            case Onboarding.bankOnboarded:
               navigation.navigate("primaryStack")
               break
-            }
             default:
               const err = "no path for onboarding, state onboarding issue"
               Alert.alert(err)
               navigation.navigate("authStack")
-          }
-        } else {
-          const err = "this state should not happen"
-          Alert.alert(err)
-          navigation.navigate("authStack")
+              break
         }
-      }
+      }}
 
 useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged)
