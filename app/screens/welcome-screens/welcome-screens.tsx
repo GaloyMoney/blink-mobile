@@ -97,12 +97,13 @@ export const WelcomeBackCompletedScreen = withNavigation(
           const result = await functions().httpsCallable("payInvoice")({ invoice })
           console.tron.log(invoice, result)
           setLoading(false)
+          await dataStore.onboarding.set(Onboarding.walletOnboarded)
           navigation.navigate("firstReward")
         } catch (err) {
           console.tron.debug(typeof err['message'])
           console.tron.debug(String(err) + String(err[2]))
           setErr(err.toString())
-        } 
+        }
       }
 
       useEffect(() => {
@@ -168,18 +169,11 @@ export const FirstRewardScreen = inject("dataStore")(
 }))
 
 
-export const AllDoneScreen = withNavigation(inject("dataStore")(
-  ({ navigation, dataStore }) => {
-      const action = async () => {
-        await dataStore.onboarding.set(Onboarding.walletOnboarded)
-        navigation.navigate("primaryStack")
-      }
-
-      return (
-        <Screen>
-          <OnboardingScreen action={action} image={galoyLogo}>
-            <Text style={styles.text}>All done here, you're finished setting up a wallet</Text>
-          </OnboardingScreen>
-        </Screen>
-      )
-}))
+export const AllDoneScreen = () => {
+  return (
+    <Screen>
+      <OnboardingScreen next="primaryStack" image={galoyLogo}>
+        <Text style={styles.text}>All done here, you're finished setting up a wallet</Text>
+      </OnboardingScreen>
+    </Screen>
+)}

@@ -220,8 +220,6 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
           isVisible={modalVisible} 
           swipeDirection={modalVisible ? ['down'] : ['up']}
           onSwipeComplete={() => setModalVisible(false)}
-          // onBackdropPress={() => setModalVisible(false)}
-          // onBackButtonPress={() => setModalVisible(false)}
           swipeThreshold={50}
           >
           <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
