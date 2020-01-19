@@ -1,5 +1,5 @@
 import { Instance, SnapshotOut, types, flow, getParentOfType, getEnv } from "mobx-state-tree"
-import { AccountType, CurrencyType, PendingOpenChannelsStatus } from "../../utils/enum"
+import { AccountType, CurrencyType, PendingOpenChannelsStatus, Onboarding } from "../../utils/enum"
 import { parseDate } from "../../utils/date"
 import KeychainAction from "../../utils/keychain"
 import { generateSecureRandom } from "react-native-securerandom"
@@ -913,8 +913,21 @@ interface BalanceRequest {
   account: AccountType
 }
 
+export const OnboardingModel = types
+  .model("Onboarding", {
+    stage: types.maybe(types.enumeration<Onboarding>("Onboarding", Object.values(Onboarding))),
+  })
+  .actions(self => {
+    const set = flow(function*(stage) {
+      self.stage = stage
+    })
+    
+    return { set }
+  })
+
 export const DataStoreModel = types
   .model("DataStore", {
+    onboarding: types.optional(OnboardingModel, {}),
     fiat: types.optional(FiatAccountModel, {}),
     rates: types.optional(RatesModel, {}),
     exchange: types.optional(ExchangeModel, {}),

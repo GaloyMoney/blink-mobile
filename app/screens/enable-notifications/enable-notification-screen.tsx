@@ -3,7 +3,7 @@ import {Notifications, Registered, RegistrationError} from 'react-native-notific
 import { Alert, Text, Button } from "react-native"
 import functions from "@react-native-firebase/functions"
 import { Screen } from "../../components/screen"
-import { Onboarding } from "../../components/onboarding"
+import { OnboardingScreen } from "../../components/onboarding"
 
 export const bellLogo = require("./BellLogo.png")
 
@@ -30,11 +30,11 @@ export const EnableNotificationsScreen = () => {
     return (
         <Screen>
             <Button title="enable" onPress={() => Notifications.registerRemoteNotifications()} />
-            <Onboarding next="allDone" image={bellLogo}>
+            <OnboardingScreen next="allDone" image={bellLogo}>
                 <Text>
                 Enable notifications to get alerts when you receive payments in the future.
                 </Text>
-            </Onboarding>
+            </OnboardingScreen>
         </Screen>
 )}
   

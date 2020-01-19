@@ -1,16 +1,14 @@
 import * as React from "react"
 import { useState, useEffect } from "react"
 import { Screen } from "../../components/screen"
-import { Onboarding } from "../../components/onboarding"
+import { OnboardingScreen } from "../../components/onboarding"
 import { Text } from "../../components/text"
 import { StyleSheet, Alert } from "react-native"
 import { inject, observer } from "mobx-react"
 import functions from "@react-native-firebase/functions"
 import { Loader } from "../../components/loader"
 import { withNavigation } from "react-navigation"
-import { saveString } from "../../utils/storage"
-import { AccountType, CurrencyType } from "../../utils/enum"
-import { OnboardingSteps } from "../loading-screen"
+import { AccountType, CurrencyType, Onboarding } from "../../utils/enum"
 
 export const lightningLogo = require("./LightningBolt.png")
 export const galoyLogo = require("./GaloyLogo.png")
@@ -30,9 +28,9 @@ const styles = StyleSheet.create({
 export const WelcomeGaloyScreen = () => {
   return (
     <Screen>
-      <Onboarding next="welcomeBank" image={galoyLogo}>
+      <OnboardingScreen next="welcomeBank" image={galoyLogo}>
         <Text style={styles.text}>Welcome! Galoy is a new type of app for managing your money</Text>
-      </Onboarding>
+      </OnboardingScreen>
     </Screen>
   )
 }
@@ -40,9 +38,9 @@ export const WelcomeGaloyScreen = () => {
 export const WelcomeBankScreen = () => {
   return (
     <Screen>
-      <Onboarding next="welcomeBitcoin" image={dollarCardATMLogo}>
+      <OnboardingScreen next="welcomeBitcoin" image={dollarCardATMLogo}>
         <Text style={styles.text}>It's a digital bank account</Text>
-      </Onboarding>
+      </OnboardingScreen>
     </Screen>
   )
 }
@@ -50,9 +48,9 @@ export const WelcomeBankScreen = () => {
 export const WelcomeBitcoinScreen = () => {
   return (
     <Screen>
-      <Onboarding next="welcomeEarn" image={bitcoinAndLockLogo}>
+      <OnboardingScreen next="welcomeEarn" image={bitcoinAndLockLogo}>
         <Text style={styles.text}>And a secure Bitcoin wallet too!</Text>
-      </Onboarding>
+      </OnboardingScreen>
     </Screen>
   )
 }
@@ -61,9 +59,9 @@ export const WelcomeBitcoinScreen = () => {
 export const WelcomeEarnScreen = () => {
   return (
     <Screen>
-      <Onboarding next="welcomeFirstSats" image={presentLogo}>
+      <OnboardingScreen next="welcomeFirstSats" image={presentLogo}>
         <Text style={styles.text}>By using Galoy you earn Bitcoin</Text>
-      </Onboarding>
+      </OnboardingScreen>
     </Screen>
   )
 }
@@ -71,12 +69,12 @@ export const WelcomeEarnScreen = () => {
 export const WelcomeFirstSatsScreen = () => {
   return (
     <Screen>
-      <Onboarding next="welcomePhoneInput" header="+1,000 sats" image={partyPopperLogo}>
+      <OnboardingScreen next="welcomePhoneInput" header="+1,000 sats" image={partyPopperLogo}>
         <Text style={styles.text}>
           You've earned some sats for installing the Galoy app. Sats are small portions of bitcoin.
           Hooray!
         </Text>
-      </Onboarding>
+      </OnboardingScreen>
     </Screen>
   )
 }
@@ -124,12 +122,12 @@ export const WelcomeBackCompletedScreen = withNavigation(
       return (
         <Screen>
           <Loader loading={loading} />
-          <Onboarding action={action} header="Welcome back!" image={partyPopperLogo}>
+          <OnboardingScreen action={action} header="Welcome back!" image={partyPopperLogo}>
             <Text style={styles.text}>
               Your wallet is ready.{"\n"}
               Now send us a payment request so we can send your sats.
             </Text>
-          </Onboarding>
+          </OnboardingScreen>
         </Screen>
       )
     }),
@@ -158,31 +156,30 @@ export const FirstRewardScreen = inject("dataStore")(
 
     return (
       <Screen>
-        <Onboarding next="allDone" header={`+ ${balance} sats`} image={lightningLogo}>
+        <OnboardingScreen next="allDone" header={`+ ${balance} sats`} image={lightningLogo}>
           <Text style={styles.text}>
             Success!{"\n"}
             {"\n"}
             You’ve been paid{"\n"}your first reward.
           </Text>
-        </Onboarding>
+        </OnboardingScreen>
       </Screen>
     )
 }))
 
 
-export const AllDoneScreen = withNavigation(
-  (({ navigation }) => {
+export const AllDoneScreen = withNavigation(inject("dataStore")(
+  ({ navigation, dataStore }) => {
       const action = async () => {
-        await saveString("onboarding", OnboardingSteps.onboarded)
+        await dataStore.onboarding.set(Onboarding.walletOnboarded)
         navigation.navigate("primaryStack")
       }
 
       return (
         <Screen>
-          <Onboarding action={action} image={galoyLogo}>
+          <OnboardingScreen action={action} image={galoyLogo}>
             <Text style={styles.text}>All done here, you're finished setting up a wallet</Text>
-          </Onboarding>
+          </OnboardingScreen>
         </Screen>
       )
-  }),
-)
+}))

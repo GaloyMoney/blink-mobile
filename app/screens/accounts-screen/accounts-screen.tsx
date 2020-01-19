@@ -9,10 +9,9 @@ import { color } from "../../theme/color"
 import Icon from "react-native-vector-icons/Ionicons"
 import currency from "currency.js"
 import { BalanceHeader } from "../../components/balance-header"
-import { AccountType, CurrencyType } from "../../utils/enum"
+import { AccountType, CurrencyType, Onboarding } from "../../utils/enum"
 import { palette } from "../../theme/palette"
 import { useNavigation } from "react-navigation-hooks"
-import auth from '@react-native-firebase/auth';
 
 import ContentLoader, { Rect } from "react-content-loader/native"
 
@@ -105,9 +104,7 @@ export const AccountsScreen = inject("dataStore")(observer(
     { key: "Bitcoin", account: AccountType.Bitcoin, icon: "logo-bitcoin" },
   ]
 
-  // TODO right way to know if the user has an account
-  const user = auth().currentUser;
-  if (!user?.emailVerified) {
+  if (dataStore.onboarding.stage == Onboarding.walletOnboarded) {
     accountTypes[0]['action'] = () => navigate('openBankAccount')
   }
 
