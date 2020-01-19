@@ -1,4 +1,4 @@
-import { Instance, SnapshotOut, types, flow, getParentOfType, getEnv } from "mobx-state-tree"
+import { Instance, SnapshotOut, types, flow, getParentOfType, getEnv, onSnapshot } from "mobx-state-tree"
 import { AccountType, CurrencyType, PendingOpenChannelsStatus, Onboarding } from "../../utils/enum"
 import { parseDate } from "../../utils/date"
 import KeychainAction from "../../utils/keychain"
@@ -211,7 +211,6 @@ export const FiatAccountModel = BaseAccountModel.props({
         console.tron.log("can't get auth().currentUser.uid", err)
       }
       try {
-        // TODO: automatic fetch update if collected is being updated.
         const doc = yield firestore()
           .doc(`users/${uid}`)
           .get()
@@ -351,6 +350,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
         console.tron.log("sendpubKey", result)
       } catch (err) {
         console.tron.error(`can't send pubKey`, err)
+        throw err
       }
     }),
 
@@ -887,13 +887,27 @@ export const OnboardingModel = types
   .model("Onboarding", {
     stage: types.maybe(types.enumeration<Onboarding>("Onboarding", Object.values(Onboarding))),
   })
-  .actions(self => {
-    const set = flow(function*(stage) {
+  .actions(self => ({
+    set: flow(function*(stage) {
       self.stage = stage
-    })
-    
-    return { set }
-  })
+    }),
+
+    save: flow(function*() {
+      // TODO functions instead?
+      try {
+        yield firestore().doc(`users/${auth().currentUser.uid}`).set(
+          {stage: self.stage}, 
+          {merge: true}
+        )
+      } catch (err) {
+        console.tron.error(err)
+      }
+    }),
+
+    afterCreate() {
+      onSnapshot(self, self.save)
+    }
+  }))
 
 export const DataStoreModel = types
   .model("DataStore", {

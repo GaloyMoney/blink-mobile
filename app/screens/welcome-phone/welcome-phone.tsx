@@ -82,7 +82,6 @@ const styles = StyleSheet.create({
 
 export const WelcomePhoneInputScreen = withNavigation(({ text, navigation, header = "" }) => {
   const [loading, setLoading] = useState(false)
-  const [confirmation, setConfirmation] = useState({})
   const [err, setErr] = useState("")
 
   const inputRef = useRef()
@@ -97,11 +96,15 @@ export const WelcomePhoneInputScreen = withNavigation(({ text, navigation, heade
 
     try {
       setLoading(true)
-      const conf = await auth().signInWithPhoneNumber(inputRef.current.getValue())
-      console.tron.log(`confirmation`, conf)
-      console.log(`confirmation`, conf)
-      setConfirmation(conf)
-      setLoading(false)
+      const confirmation = await auth().signInWithPhoneNumber(inputRef.current.getValue())
+      console.tron.log(`confirmation`, confirmation)
+      console.log(`confirmation`, confirmation)
+      if (!isEmpty(confirmation)) {
+        setLoading(false)
+        navigation.navigate("welcomePhoneValidation", { confirmation })
+      } else {
+        setErr(`confirmation object is empty? ${confirmation}`)
+      }
     } catch (err) {
       console.tron.error(err)
       setErr(err.toString())
@@ -122,12 +125,6 @@ export const WelcomePhoneInputScreen = withNavigation(({ text, navigation, heade
       ])
     }
   }, [err])
-
-  useEffect(() => {
-    if (!isEmpty(confirmation)) {
-      navigation.navigate("welcomePhoneValidation", { confirmation })
-    }
-  }, [confirmation])
 
   header = "To receive your sats, first we need to activate your Bitcoin wallet."
   text = "This will take a little while, but we’ll send you a text you when it’s ready!"
