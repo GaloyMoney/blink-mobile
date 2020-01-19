@@ -112,10 +112,6 @@ const updateTransactions = async (accountStore) => {
   const thisMonth = []
   const before = []
 
-  if (transactions.length === 0) {
-    return <Text>No transaction to show</Text>
-  }
-
   transactions = transactions.slice().sort((a, b) => (a.date > b.date ? -1 : 1)) // warning without slice?
 
   const isToday = (tx) => {
@@ -191,7 +187,11 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
     return (
       <Screen>
         <BalanceHeader headingCurrency={currency} accountsToAdd={account} />
-        <SectionList
+        { sections.length === 0 && 
+          <Text>No transaction to show</Text>
+        }
+        { sections.length > 0 && 
+          <SectionList
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
@@ -204,6 +204,7 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
           sections={sections}
           keyExtractor={(item, index) => item + index}
         />
+        }
       </Screen>
     )
 }))
