@@ -263,7 +263,6 @@ export const LndModel = BaseAccountModel.named("Lnd")
     network: "",
     blockHeight: 0,
 
-    lastSettleInvoice: "",
     lastAddInvoice: "",
     receiveBitcoinScreenAlert: false,
 
@@ -276,8 +275,10 @@ export const LndModel = BaseAccountModel.named("Lnd")
     payments: types.array(PaymentModel),
   })
   .actions(self => {
+  
+    return {
     // stateless, but must be an action instead of a view because of the async call
-    const initState = flow(function*() {
+    initState: flow(function*() {
       const WALLET_EXIST = "rpc error: code = Unknown desc = wallet already exists"
       const CLOSED = "Closed"
       let walletExist = false
@@ -292,14 +293,14 @@ export const LndModel = BaseAccountModel.named("Lnd")
           // We assumed that if sendUnlockerCommand is locked, the node is already launched.
           // FIXME validate this assumption
           walletExist = true
-          walletGotOpened()
+          self.walletGotOpened()
         }
       }
 
       self.walletExist = walletExist
-    })
+    }),
 
-    const genSeed = flow(function*() {
+    genSeed: flow(function*() {
       if (self.walletExist) {
         // TODO be able to recreate the wallet
         console.tron.warning(`genSeed: can't create a new wallet when one already exist`)
@@ -313,9 +314,9 @@ export const LndModel = BaseAccountModel.named("Lnd")
       } catch (err) {
         console.tron.error(err)
       }
-    })
+    }),
 
-    const initWallet = flow(function*() {
+    initWallet: flow(function*() {
       if (self.walletExist) {
         // TODO be able to recreate the wallet
         console.tron.warning(`initWallet: can't create a new wallet when one already exist`)
@@ -334,14 +335,14 @@ export const LndModel = BaseAccountModel.named("Lnd")
         yield new KeychainAction().setItem("password", wallet_password)
 
         self.walletExist = true
-        yield walletGotOpened()
+        yield self.walletGotOpened()
       } catch (err) {
         console.tron.error(err)
       }
-    })
+    }),
 
     // TODO: triggered this automatically after the wallet is being unlocked
-    const sendPubKey = flow(function*() {
+    sendPubKey: flow(function*() {
       try {
         const result = yield functions().httpsCallable("sendPubKey")({
           pubkey: self.pubkey,
@@ -349,11 +350,11 @@ export const LndModel = BaseAccountModel.named("Lnd")
         })
         console.tron.log("sendpubKey", result)
       } catch (err) {
-        console.tron.err(`can't send pubKey`, err)
+        console.tron.error(`can't send pubKey`, err)
       }
-    })
+    }),
 
-    const connectGaloyPeer = flow(function*() {
+    connectGaloyPeer: flow(function*() {
       if (!self.syncedToChain) {
         console.tron.warn("needs to be synced to chain before connecting to a peer")
         return
@@ -364,7 +365,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
           .doc(`global/info`)
           .get()
       } catch (err) {
-        console.tron.err(`can't get Galoy node info`, err)
+        console.tron.error(`can't get Galoy node info`, err)
         return
       }
 
@@ -381,18 +382,18 @@ export const LndModel = BaseAccountModel.named("Lnd")
       } catch (err) {
         console.tron.warn(`can't connect to peer`, err)
       }
-    })
+    }),
 
-    const listPeers = flow(function*() {
+    listPeers: flow(function*() {
       try {
         const result = yield getEnv(self).lnd.grpc.sendCommand("listPeers")
         console.tron.log("listPeers:", result)
       } catch (err) {
         console.tron.error(err)
       }
-    })
+    }),
 
-    const pendingChannels = flow(function*() {
+    pendingChannels: flow(function*() {
       try {
         const result = yield getEnv(self).lnd.grpc.sendCommand("pendingChannels")
         console.tron.log("pendingChannels:", result)
@@ -401,9 +402,9 @@ export const LndModel = BaseAccountModel.named("Lnd")
         console.tron.error(err)
         throw err
       }
-    })
+    }),
 
-    const listChannels = flow(function*() {
+    listChannels: flow(function*() {
       try {
         const result = yield getEnv(self).lnd.grpc.sendCommand("listChannels")
         console.tron.log("listChannels:", result)
@@ -412,11 +413,11 @@ export const LndModel = BaseAccountModel.named("Lnd")
         console.tron.error(err)
         throw err
       }
-    })
+    }),
 
-    const statusFirstChannelOpen = flow(function*() {
-      const { pendingOpenChannels } = yield pendingChannels()
-      const { channels } = yield listChannels()
+    statusFirstChannelOpen: flow(function*() {
+      const { pendingOpenChannels } = yield self.pendingChannels()
+      const { channels } = yield self.listChannels()
 
       let result
       // TODO be more throrough, eg check that the other pub key
@@ -430,9 +431,9 @@ export const LndModel = BaseAccountModel.named("Lnd")
 
       console.tron.log("statusFirstChannelOpen", result)
       return result
-    })
+    }),
 
-    const openChannel = flow(function*() {
+    openChannel: flow(function*() {
       try {
         const result = yield functions().httpsCallable("openChannel")({})
         console.tron.log("opening a channel with Galoy node", result)
@@ -441,47 +442,47 @@ export const LndModel = BaseAccountModel.named("Lnd")
         console.tron.error(`impossible to open a channel ${err}`)
         throw err
       }
-    })
+    }),
 
-    /**
-     * An internal helper function to approximate the current progress while
-     * syncing Neutrino to the full node.
-     * @param  {Object} grpcInput The getInfo's grpc api response
-     * @return {number}          The percrentage a number between 0 and 1
-     */
-    const calcPercentSynced = grpcInput => {
-      let response
+    getInfo: flow(function*() {
+      /**
+       * An internal helper function to approximate the current progress while
+       * syncing Neutrino to the full node.
+       * @param  {Object} grpcInput The getInfo's grpc api response
+       * @return {number}          The percrentage a number between 0 and 1
+       */
+      const calcPercentSynced = grpcInput => {
+        let response
 
-      if (self.bestBlockHeight === undefined || self.startBlockHeight == undefined) {
-        response = 0
-      } else if (self.bestBlockHeight! <= self.startBlockHeight!) {
-        response = 1
-      } else {
-        const percentSync =
-          (grpcInput.blockHeight - self.startBlockHeight!) /
-          (self.bestBlockHeight! - self.startBlockHeight!)
-        response = +percentSync.toFixed(3)
+        if (self.bestBlockHeight === undefined || self.startBlockHeight == undefined) {
+          response = 0
+        } else if (self.bestBlockHeight! <= self.startBlockHeight!) {
+          response = 1
+        } else {
+          const percentSync =
+            (grpcInput.blockHeight - self.startBlockHeight!) /
+            (self.bestBlockHeight! - self.startBlockHeight!)
+          response = +percentSync.toFixed(3)
+        }
+
+        if (response > 1) {
+          response = 1
+        }
+        if (response < 0) {
+          response = 0
+        }
+        if (isNaN(response)) {
+          console.tron.log(`reponse is NaN, 
+            self.bestBlockHeight ${self.bestBlockHeight}
+            self.startBlockHeight ${self.startBlockHeight}
+            grpc_input.blockHeight ${grpcInput.blockHeight}          
+            `)
+          response = 0
+        }
+
+        return response
       }
 
-      if (response > 1) {
-        response = 1
-      }
-      if (response < 0) {
-        response = 0
-      }
-      if (isNaN(response)) {
-        console.tron.log(`reponse is NaN, 
-          self.bestBlockHeight ${self.bestBlockHeight}
-          self.startBlockHeight ${self.startBlockHeight}
-          grpc_input.blockHeight ${grpcInput.blockHeight}          
-          `)
-        response = 0
-      }
-
-      return response
-    }
-
-    const getInfo = flow(function*() {
       try {
         const response = yield getEnv(self).lnd.grpc.sendCommand("getInfo")
         self.version = response.version.split(" ")[0]
@@ -534,24 +535,23 @@ export const LndModel = BaseAccountModel.named("Lnd")
         console.tron.error(`Getting node info failed, ${err}`)
         throw err
       }
-    })
+    }),
 
-    const update = flow(function*() {
-      yield updateBalance()
-      yield updateTransactions()
-      yield updateInvoices()
-      yield listPayments()
-    })
+    update: flow(function*() {
+      yield self.updateBalance()
+      yield self.updateTransactions()
+      yield self.updateInvoices()
+      yield self.listPayments()
+    }),
 
     // this get triggered after the wallet is being unlocked
-    const walletGotOpened = flow(function*() {
+    walletGotOpened: flow(function*() {
       self.walletUnlocked = true
-      yield getInfo()
-      yield update()
-    })
+      yield self.getInfo()
+      yield self.update()
+    }),
 
-
-    const unlockWallet = flow(function*() {
+    unlockWallet: flow(function*() {
       // TODO: auth with biometrics/passcode
       const wallet_password = yield new KeychainAction().getItem("password")
 
@@ -560,24 +560,24 @@ export const LndModel = BaseAccountModel.named("Lnd")
           walletPassword: Buffer.from(wallet_password, "hex"),
         })
 
-        yield walletGotOpened()
+        yield self.walletGotOpened()
       } catch (err) {
         console.tron.error(err)
       }
-    })
+    }),
 
-    const newAddress = flow(function*() {
+    newAddress: flow(function*() {
       const { address } = yield getEnv(self).lnd.grpc.sendCommand("NewAddress", { type: 0 })
       self.onChainAddress = address
       console.tron.log(address)
-    })
+    }),
 
-    const decodePayReq = flow(function*(payReq) {
+    decodePayReq: flow(function*(payReq) {
       return yield getEnv(self).lnd.grpc.sendCommand("decodePayReq", { 
         payReq,
-    })})
+    })}),
 
-    const addInvoice = flow(function*({ value, memo }) {
+    addInvoice: flow(function*({ value, memo }) {
       const response = yield getEnv(self).lnd.grpc.sendCommand("addInvoice", {
         value,
         memo,
@@ -588,17 +588,17 @@ export const LndModel = BaseAccountModel.named("Lnd")
       self.lastAddInvoice = response.paymentRequest
 
       return response
-    })
+    }),
 
-    const clearLastInvoice = flow(function*() {
+    clearLastInvoice: flow(function*() {
       self.lastAddInvoice = ""
-    })
+    }),
 
-    const resetReceiveBitcoinScreenAlert = flow(function*() {
+    resetReceiveBitcoinScreenAlert: flow(function*() {
       self.receiveBitcoinScreenAlert = false
-    })
+    }),
 
-    const updateBalance = flow(function*() {
+    updateBalance: flow(function*() {
       try {
         const onChainBalance = yield getEnv(self).lnd.grpc.sendCommand("WalletBalance")
         const channelBalance = yield getEnv(self).lnd.grpc.sendCommand("ChannelBalance")
@@ -611,9 +611,9 @@ export const LndModel = BaseAccountModel.named("Lnd")
         console.tron.error(`Getting wallet balance failed ${err}`)
         throw err
       }
-    })
+    }),
 
-    const updateTransactions = flow(function*() {
+    updateTransactions: flow(function*() {
       try {
         const { transactions } = yield getEnv(self).lnd.grpc.sendCommand("getTransactions")
 
@@ -638,9 +638,9 @@ export const LndModel = BaseAccountModel.named("Lnd")
         console.tron.error(`Listing transactions failed ${err}`)
         throw err
       }
-    })
+    }),
 
-    const updateInvoice = flow(function*(invoice) {
+    updateInvoice: flow(function*(invoice) {
       if (invoice === undefined) return
       if (!invoice.settled) return
 
@@ -679,10 +679,9 @@ export const LndModel = BaseAccountModel.named("Lnd")
           link: 'localNotificationLink',
         })
       }
+    }),
 
-    })
-
-    const updateInvoices = flow(function*() {
+    updateInvoices: flow(function*() {
       try {
         const { invoices } = yield getEnv(self).lnd.grpc.sendCommand("listInvoices")
 
@@ -712,9 +711,9 @@ export const LndModel = BaseAccountModel.named("Lnd")
         console.tron.error(`Listing invoices failed ${err}`)
         // throw err
       }
-    })
+    }),
 
-    const listPayments = flow(function*() {
+    listPayments: flow(function*() {
       try {
         const { payments } = yield getEnv(self).lnd.grpc.sendCommand("listPayments")!
 
@@ -738,14 +737,14 @@ export const LndModel = BaseAccountModel.named("Lnd")
         console.tron.error(`Listing payments failed ${err}`)
         // throw err
       }
-    })
+    }),
 
-    const sendTransaction = flow(function*(addr, amount) {
+    sendTransaction: flow(function*(addr, amount) {
       return yield getEnv(self).lnd.grpc.sendCommand("sendCoins", { addr, amount })
-    })
+    }),
 
     // doesn't update the store, should this be here?
-    const payInvoice = flow(function*(paymentRequest) {
+    payInvoice: flow(function*(paymentRequest) {
       const PAYMENT_TIMEOUT = 10000 // how long is this?
 
       let success = true
@@ -780,36 +779,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
         clearTimeout(timeout)
       }
     })
-
-    return {
-      initState,
-      genSeed,
-      initWallet,
-      unlockWallet,
-      sendPubKey,
-      listPeers,
-      listChannels,
-      pendingChannels,
-      statusFirstChannelOpen,
-      getInfo,
-      decodePayReq,
-      addInvoice,
-      clearLastInvoice,
-      resetReceiveBitcoinScreenAlert,
-      connectGaloyPeer,
-      openChannel,
-      walletGotOpened,
-      newAddress,
-      updateTransactions,
-      updateBalance,
-      updateInvoice,
-      updateInvoices,
-      update,
-      payInvoice,
-      listPayments,
-      sendTransaction,
-    }
-  })
+  }})
   .views(self => ({
     get currency() {
       return CurrencyType.BTC

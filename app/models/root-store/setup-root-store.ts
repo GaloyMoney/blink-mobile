@@ -39,8 +39,14 @@ export async function setupRootStore() {
     // rootStore = RootStoreModel.create(data, env)
 
     // rootStore = RootStoreModel.create(defaultStoreState, env)
-    rootStore = RootStoreModel.create({}, env)
-    rootStore.dataStore.onboarding.set(stage) // FIXME there should be a better way to set this up
+    rootStore = RootStoreModel.create({
+      dataStore: {
+        onboarding: {
+          stage
+        }
+      }
+    }, env)
+
   } catch (e) {
     // if there's any problems loading, then let's at least fallback to an empty state
     // instead of crashing.
