@@ -13,6 +13,7 @@ import { Input } from "react-native-elements"
 import { withNavigation } from "react-navigation"
 import functions from "@react-native-firebase/functions"
 import { inject } from "mobx-react"
+import { GetReward } from "../../components/rewards"
 
 
 export const bankLogo = require("./BankLogo.png")
@@ -112,26 +113,34 @@ export const DateOfBirthScreen = withNavigation(inject("dataStore")(
   ({ navigation, dataStore }) => {
 
   const [dateOfBirth, setDateOfBirth] = useState(new Date(2000, 1, 1))
+  const [loading, setLoading] = useState(false)
 
   const onValidate = async () => {
 
     try {
       const result = await functions().httpsCallable("onBankAccountOpening")
         ({...navigation.state.params, dateOfBirth: dateOfBirth.toISOString()})
-      console.tron.log(result)
+      setLoading(true) // FIXME setLoading should be done at the previous line?
+                       // but is currently managed by GetRewards
     } catch (err) {
       console.tron.error(err)
       Alert.alert(err.toString())
       return // TODO : properly show error message
     }
-
-    await dataStore.onboarding.set(Onboarding.bankOnboarded)
-
-    navigation.navigate('bankAccountReady')
   }
 
   return (
     <Screen>
+      <GetReward
+        value={100000}
+        memo={"Bank account opening"}
+        lnd={dataStore.lnd}
+        next={() => {
+          dataStore.onboarding.set(Onboarding.bankOnboarded)
+          navigation.navigate('bankAccountReady')      
+        }}
+        loading={loading}
+      />
       <Text style={styles.text}>Date of Birth</Text>
       <DateTimePicker 
                     mode="date"

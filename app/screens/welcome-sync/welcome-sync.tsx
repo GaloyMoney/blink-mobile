@@ -12,10 +12,8 @@ import { Image, StyleSheet, View, Alert, Linking } from "react-native"
 import { withNavigation } from "react-navigation"
 
 import { color } from "../../theme"
-import { saveString } from "../../utils/storage"
 import { Loader } from "../../components/loader"
 import { PendingOpenChannelsStatus, Onboarding } from "../../utils/enum"
-import Icon from "react-native-vector-icons/Ionicons"
 import { palette } from "../../theme/palette"
 
 
@@ -208,7 +206,6 @@ export const WelcomeGeneratingWalletScreen = inject("dataStore")(
         const { pendingOpenChannels } = await dataStore.lnd.pendingChannels()
         const channelPoint = pendingOpenChannels[0].channel.channelPoint
         const funding = channelPoint.split(":")[0]
-        console.tron.log("funding: ", funding)
         setFundingTx(funding)
       }
 
