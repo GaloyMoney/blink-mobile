@@ -22,3 +22,5 @@ export enum Onboarding {
   walletOnboarded = "walletOnboarded",
   bankOnboarded = "bankOnboarded",
 }
+
+export type Side = "buy" | "sell"
