@@ -3,12 +3,11 @@ import { useState, useEffect } from "react"
 import { Screen } from "../../components/screen"
 import { OnboardingScreen } from "../../components/onboarding"
 import { Text } from "../../components/text"
-import { StyleSheet, Alert } from "react-native"
+import { StyleSheet } from "react-native"
 import { inject, observer } from "mobx-react"
-import functions from "@react-native-firebase/functions"
-import { Loader } from "../../components/loader"
 import { withNavigation } from "react-navigation"
 import { AccountType, CurrencyType, Onboarding } from "../../utils/enum"
+import { GetReward } from "../../components/rewards"
 
 export const lightningLogo = require("./LightningBolt.png")
 export const galoyLogo = require("./GaloyLogo.png")
@@ -69,7 +68,7 @@ export const WelcomeEarnScreen = () => {
 export const WelcomeFirstSatsScreen = () => {
   return (
     <Screen>
-      <OnboardingScreen next="welcomePhoneInput" header="+1,000 sats" image={partyPopperLogo}>
+      <OnboardingScreen next="welcomePhoneInput" header="+5,000 sats" image={partyPopperLogo}>
         <Text style={styles.text}>
           You've earned some sats for installing the Galoy app. Sats are small portions of bitcoin.
           Hooray!
@@ -79,61 +78,33 @@ export const WelcomeFirstSatsScreen = () => {
   )
 }
 
-export const WelcomeBackCompletedScreen = withNavigation(
-  inject("dataStore")(
-    observer(({ dataStore, navigation }) => {
 
-      const [loading, setLoading] = useState(false)
-      const [err, setErr] = useState("")
+export const WelcomeBackCompletedScreen = withNavigation(inject("dataStore")(observer(
+  ({ dataStore, navigation }) => {
 
-      const action = async () => {
-        setLoading(true)
-        try {
-          const response = await dataStore.lnd.addInvoice({
-            value: 6000,
-            memo: "Claimed Rewards",
-          })
-          const invoice = response.paymentRequest
-          const result = await functions().httpsCallable("payInvoice")({ invoice })
-          console.tron.log(invoice, result)
-          setLoading(false)
-          await dataStore.onboarding.set(Onboarding.walletOnboarded)
+  const [loading, setLoading] = useState(false)
+
+  return (
+    <Screen>
+      <GetReward
+        value={5000}
+        memo={"App download rewards"}
+        lnd={dataStore.lnd}
+        next={() => {
+          dataStore.onboarding.set(Onboarding.walletOnboarded)
           navigation.navigate("firstReward")
-        } catch (err) {
-          console.tron.debug(typeof err['message'])
-          console.tron.debug(String(err) + String(err[2]))
-          setErr(err.toString())
-        }
-      }
-
-      useEffect(() => {
-        if (err !== "") {
-          Alert.alert("error", err, [
-            {
-              text: "OK",
-              onPress: () => {
-                setLoading(false)
-              },
-            },
-          ])
-          setErr("")
-        }
-      }, [err])
-
-      return (
-        <Screen>
-          <Loader loading={loading} />
-          <OnboardingScreen action={action} header="Welcome back!" image={partyPopperLogo}>
-            <Text style={styles.text}>
-              Your wallet is ready.{"\n"}
-              Now send us a payment request so we can send your sats.
-            </Text>
-          </OnboardingScreen>
-        </Screen>
-      )
-    }),
-  ),
-)
+        }}
+        loading={loading}
+      />
+      <OnboardingScreen action={() => setLoading(true)} header="Welcome back!" image={partyPopperLogo}>
+        <Text style={styles.text}>
+          Your wallet is ready.{"\n"}
+          Now send us a payment request so we can send your sats.
+        </Text>
+      </OnboardingScreen>
+    </Screen>
+  )
+})))
 
 export const FirstRewardScreen = inject("dataStore")(
   observer(({ dataStore }) => {
