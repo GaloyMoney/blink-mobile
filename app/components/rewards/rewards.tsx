@@ -9,10 +9,12 @@ export const GetReward = ({value, memo, next, lnd, loading}) => {
     const [err, setErr] = useState("")
     const [loader, showLoader] = useState(false)
   
-    useEffect(() => {
+    useEffect(() => {    
       if (!loading) {
         return
       }
+
+      showLoader(loading)
   
       const _ = async () => {
         try {
@@ -47,11 +49,7 @@ export const GetReward = ({value, memo, next, lnd, loading}) => {
         setErr("")
       }
     }, [err])
-  
-    useEffect(() => {
-      showLoader(loading)
-    }, [loading])
-  
+    
     return (
       <Loader loading={loader} />
     )
