@@ -2,7 +2,7 @@ import * as React from "react"
 import { useState, useEffect } from "react"
 import { observer, inject } from "mobx-react"
 
-import { View, SectionList, StyleSheet, RefreshControl, TouchableWithoutFeedback } from "react-native"
+import { View, SectionList, StyleSheet, RefreshControl, TouchableWithoutFeedback, Alert } from "react-native"
 
 import Modal from "react-native-modal";
 
@@ -16,7 +16,7 @@ import { DataStore } from "../../models/data-store"
 import { sameDay, sameMonth } from "../../utils/date"
 import { CurrencyText } from "../../components/currency-text"
 import { TouchableHighlight } from "react-native-gesture-handler"
-import { AccountType, CurrencyType } from "../../utils/enum"
+import { AccountType, CurrencyType, Onboarding, Side } from "../../utils/enum"
 import { useNavigation, useNavigationParam } from "react-navigation-hooks"
 import { Button } from "react-native-elements"
 import { palette } from "../../theme/palette";
@@ -182,7 +182,6 @@ const updateTransactions = async (accountStore) => {
   return sections
 }
 
-
 export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
   = inject("dataStore")(
     observer(({ dataStore }) => {
@@ -190,6 +189,7 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
     const [refreshing, setRefreshing] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
     const [sections, setSections] = useState([]);
+    const [side, setSide] = useState<Side>("buy");
 
     const { navigate } = useNavigation()
 
@@ -201,8 +201,26 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
 
     const currency = accountStore.currency
 
-    const onBuyInit = () => setModalVisible(true)
-    const onSellInit = () => setModalVisible(true)
+    const onBuyInit = () => {
+      setSide("buy")
+      setModalVisible(true)
+    }
+
+    const onSellInit = () => {
+      setSide("sell")
+      setModalVisible(true)
+    }
+
+    const getQuote = () => {
+      dataStore.exchange.quoteLNDBTC(side)
+    }
+    const executeTrade = () => {
+      if (side === "buy") {
+        dataStore.exchange.buyBTC()
+      } else if (side === "sell") {
+        dataStore.exchange.sellBTC()
+      }
+    }
 
     const onRefresh = React.useCallback(async () => {
       setRefreshing(true);
@@ -210,7 +228,7 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
       setRefreshing(false);
     }, [refreshing]);
 
-    useEffect(() => {
+    useEffect(() => {  // do we need this or onRefresh will get trigger anyway?
       onRefresh()
     }, [])
 
@@ -225,14 +243,27 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
           <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
             <View style={styles.flex} />
           </TouchableWithoutFeedback>
-          <View style={styles.viewModal}>
-            <Text style={styles.itemText}>Open a Galoy bank account</Text>
-            <Text style={styles.itemText}>To buy bitcoin you will need a Galoy bank account,
-            so you can transfer US dollar</Text>
-            <Button title="Open account" 
-              onPress={() => {setModalVisible(false); navigate('bankRewards')}}  
-            />
-          </View>
+          { dataStore.onboarding.stage === Onboarding.walletOnboarded &&
+            <View style={styles.viewModal}>
+              <Text style={styles.itemText}>Open a Galoy bank account</Text>
+              <Text style={styles.itemText}>To {side} bitcoin you will need a Galoy bank account,
+              so you can transfer US dollar</Text>
+              <Button title="Open account" 
+                onPress={() => {setModalVisible(false); navigate('bankRewards')}}  
+              />
+            </View>
+          }
+          { dataStore.onboarding.stage === Onboarding.bankOnboarded &&
+            <View style={styles.viewModal}>
+              <Text style={styles.itemText}>Get Quote to {side} 1000 sats</Text>
+              <Button title={`Get Quote`} onPress={getQuote} />
+              <Text>Side: {dataStore.exchange.quote.side}</Text>
+              <Text>SatPrice: {dataStore.exchange.quote.satPrice}</Text>
+              <Text>Valid until: {dataStore.exchange.quote.validUntil}</Text>
+              <Text>Sat amount: {dataStore.exchange.quote.satAmount}</Text>
+              <Button title={`Validate Quote`} onPress={executeTrade} />
+            </View>
+          }
         </Modal>
         <BalanceHeader headingCurrency={currency} accountsToAdd={account} />
         { account == AccountType.Bitcoin && 

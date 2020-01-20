@@ -1,5 +1,5 @@
 import { Instance, SnapshotOut, types, flow, getParentOfType, getEnv, onSnapshot } from "mobx-state-tree"
-import { AccountType, CurrencyType, PendingOpenChannelsStatus, Onboarding } from "../../utils/enum"
+import { AccountType, CurrencyType, PendingOpenChannelsStatus, Onboarding, Side } from "../../utils/enum"
 import { parseDate } from "../../utils/date"
 import KeychainAction from "../../utils/keychain"
 import { generateSecureRandom } from "react-native-securerandom"
@@ -113,16 +113,6 @@ export const ExchangeModel = types
     quote: types.optional(QuoteModel, {}),
   })
   .actions(self => {
-    const quoteBTC = flow(function*(side: "buy" | "sell", satAmount = 1000) {
-      try {
-        const result = yield functions().httpsCallable("quoteBTC")({ side, satAmount })
-        console.tron.log("quoteBTC: ", result)
-        self.quote = result.data()
-      } catch (err) {
-        console.tron.error("quoteBTC: ", err)
-        throw err
-      }
-    })
 
     const commonBuySell = (side: string): boolean /* success */ => {
       if (self.quote.side !== side) {
@@ -139,8 +129,31 @@ export const ExchangeModel = types
 
       return true
     }
+    
+    return {
+    quoteBTC: flow(function*(side: Side, satAmount = 1000) {
+      try {
+        const result = yield functions().httpsCallable("quoteBTC")({ side, satAmount })
+        console.tron.log("quoteBTC: ", result)
+        self.quote = result.data
+      } catch (err) {
+        console.tron.error("quoteBTC: ", err)
+        throw err
+      }
+    }),
 
-    const buyBTC = flow(function*() {
+    quoteLNDBTC: flow(function*(side: Side, satAmount = 1000) {
+      try {
+        const result = yield functions().httpsCallable("quoteLNDBTC")({ side, satAmount })
+        console.tron.log("quoteBTC: ", result)
+        self.quote = result.data
+      } catch (err) {
+        console.tron.error("quoteBTC: ", err)
+        throw err
+      }
+    }),
+
+    buyBTC: flow(function*() {
       try {
         if (!commonBuySell("buy")) {
           return
@@ -159,9 +172,9 @@ export const ExchangeModel = types
       }
 
       self.quote.reset()
-    })
+    }),
 
-    const sellBTC = flow(function*() {
+    sellBTC: flow(function*() {
       try {
         if (!commonBuySell("sell")) {
           return
@@ -194,9 +207,7 @@ export const ExchangeModel = types
 
       self.quote.reset()
     })
-
-    return { quoteBTC, buyBTC, sellBTC }
-  })
+}})
 
 export const FiatAccountModel = BaseAccountModel.props({
   type: AccountType.Checking,
