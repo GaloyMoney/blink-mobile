@@ -144,7 +144,7 @@ export const AllDoneScreen = () => {
   return (
     <Screen>
       <OnboardingScreen next="primaryStack" image={galoyLogo}>
-        <Text style={styles.text}>All done here, you're finished setting up a wallet</Text>
+        <Text style={styles.text}>All done here, you've finished setting up a wallet</Text>
       </OnboardingScreen>
     </Screen>
 )}
