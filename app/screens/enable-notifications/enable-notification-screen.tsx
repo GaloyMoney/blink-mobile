@@ -8,24 +8,22 @@ import { OnboardingScreen } from "../../components/onboarding"
 export const bellLogo = require("./BellLogo.png")
 
 
-Notifications.events().registerRemoteNotificationsRegistered(async (event: Registered) => {
-    Alert.alert("Registered For Remote Push", `Device Token: ${event.deviceToken}`)
-  
-    try {
-      await functions().httpsCallable("sendDeviceToken")({deviceToken: event.deviceToken})
-    } catch (err) {
-      console.tron.log(err.toString())
-      Alert.alert(err.toString())
-    }
-})
-  
-
-Notifications.events().registerRemoteNotificationsRegistrationFailed((event: RegistrationError) => {
-    Alert.alert("Failed To Register For Remote Push", `Error (${event})`)
-})
-
-
 export const EnableNotificationsScreen = () => {
+
+    Notifications.events().registerRemoteNotificationsRegistered(async (event: Registered) => {
+        Alert.alert("Registered For Remote Push", `Device Token: ${event.deviceToken}`)
+      
+        try {
+          await functions().httpsCallable("sendDeviceToken")({deviceToken: event.deviceToken})
+        } catch (err) {
+          console.tron.log(err.toString())
+          Alert.alert(err.toString())
+        }
+    })
+    
+    Notifications.events().registerRemoteNotificationsRegistrationFailed((event: RegistrationError) => {
+        Alert.alert("Failed To Register For Remote Push", `Error (${event})`)
+    })
 
     return (
         <Screen>
