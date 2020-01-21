@@ -29,6 +29,8 @@ const styles = StyleSheet.create({
   image: {
     alignSelf: "center",
     padding: 20,
+    height: 90,
+    resizeMode: 'center',
   },
 
   text: {
