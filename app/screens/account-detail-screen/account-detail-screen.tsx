@@ -16,10 +16,11 @@ import { DataStore } from "../../models/data-store"
 import { sameDay, sameMonth } from "../../utils/date"
 import { CurrencyText } from "../../components/currency-text"
 import { TouchableHighlight } from "react-native-gesture-handler"
-import { AccountType, CurrencyType, Onboarding, Side } from "../../utils/enum"
+import { AccountType, CurrencyType, Onboarding } from "../../utils/enum"
 import { useNavigation, useNavigationParam } from "react-navigation-hooks"
 import { Button } from "react-native-elements"
 import { palette } from "../../theme/palette";
+import { Side } from "../../../../common/type"
 
 export interface AccountDetailScreenProps {
   account: AccountType
@@ -211,14 +212,23 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
       setModalVisible(true)
     }
 
-    const getQuote = () => {
-      dataStore.exchange.quoteLNDBTC(side)
+    const getQuote = async () => {
+      try {
+        await dataStore.exchange.quoteLNDBTC(side)
+      } catch (err) {
+        Alert.alert(err.toString())
+      }
     }
-    const executeTrade = () => {
-      if (side === "buy") {
-        dataStore.exchange.buyBTC()
-      } else if (side === "sell") {
-        dataStore.exchange.sellBTC()
+    
+    const executeTrade = async () => {
+      try {
+        if (side === "buy") {
+          await dataStore.exchange.buyLNDBTC()
+        } else if (side === "sell") {
+          await dataStore.exchange.sellLNDBTC()
+        }
+      } catch (err) {
+        Alert.alert(err.toString())
       }
     }
 
