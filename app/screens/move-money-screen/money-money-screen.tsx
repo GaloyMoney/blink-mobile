@@ -1,12 +1,14 @@
 import * as React from "react"
 import { Screen } from "../../components/screen"
-import { StyleSheet, Alert } from "react-native"
+import { StyleSheet } from "react-native"
 import { Text } from "../../components/text"
 import { color } from "../../theme"
 import { ListItem } from 'react-native-elements'
 import Icon from "react-native-vector-icons/Ionicons"
 import { useNavigation } from "react-navigation-hooks"
 import { palette } from "../../theme/palette"
+import { Onboarding } from "../../utils/enum"
+import { inject } from "mobx-react"
 
 const styles = StyleSheet.create({
     headerSection: {
@@ -31,26 +33,31 @@ const styles = StyleSheet.create({
     },
 })
 
-export const MoveMoneyScreen = () => {
+export const MoveMoneyScreen = inject("dataStore")(
+    ({ dataStore }) => {
 
     const { navigate } = useNavigation()
 
     const bank = [
         {
             title: 'Bank Transfer',
-            icon: 'ios-exit'
+            icon: 'ios-exit',
+            target: 'bankTransfer',
         },
         {
             title: "Direct Deposit",
-            icon: 'ios-download'
+            icon: 'ios-download',
+            target: 'directDeposit',
         },
         {
             title: 'Find an ATM',
-            icon: 'ios-pin'
+            icon: 'ios-pin',
+            target: 'findATM',
         },
         {
             title: "Deposit Cash",
-            icon: 'ios-cash'
+            icon: 'ios-cash',
+            target: 'depositCash',
         }
       ]
     const bitcoin = [
@@ -66,6 +73,14 @@ export const MoveMoneyScreen = () => {
         }
       ]
 
+    const onBankClick = ({target, title}) => {
+        if (dataStore.onboarding.stage == Onboarding.walletOnboarded) {
+            navigate('openBankAccount') 
+        } else {
+            navigate(target, {title})
+        }
+    }
+
     return (
         <Screen>
             <Text style={styles.headerSection}>Bank</Text>
@@ -77,7 +92,7 @@ export const MoveMoneyScreen = () => {
                     key={i}
                     title={item.title}
                     leftIcon={<Icon name={item.icon} style={styles.icon} size={32} color={color.primary} />}
-                    onPress={() => navigate('openBankAccount')}
+                    onPress={() => onBankClick(item)}
                     chevron
                 />
                 ))
@@ -98,7 +113,7 @@ export const MoveMoneyScreen = () => {
             }
         </Screen>
     )
-}
+})
 
 MoveMoneyScreen.navigationOptions = () => ({
     title: "Move Money"
