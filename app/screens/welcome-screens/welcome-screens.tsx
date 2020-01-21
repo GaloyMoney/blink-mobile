@@ -8,6 +8,7 @@ import { inject, observer } from "mobx-react"
 import { withNavigation } from "react-navigation"
 import { AccountType, CurrencyType, Onboarding } from "../../utils/enum"
 import { GetReward } from "../../components/rewards"
+import { trophyLogo } from "../rewards-screen"
 
 export const lightningLogo = require("./LightningBolt.png")
 export const galoyLogo = require("./GaloyLogo.png")
@@ -28,7 +29,7 @@ export const WelcomeGaloyScreen = () => {
   return (
     <Screen>
       <OnboardingScreen next="welcomeBank" image={galoyLogo}>
-        <Text style={styles.text}>Welcome! Galoy is a new type of app for managing your money</Text>
+        <Text style={styles.text}>Welcome!{'\n'}{'\n'}Galoy is a new type of financial app</Text>
       </OnboardingScreen>
     </Screen>
   )
@@ -59,7 +60,7 @@ export const WelcomeEarnScreen = () => {
   return (
     <Screen>
       <OnboardingScreen next="welcomeFirstSats" image={presentLogo}>
-        <Text style={styles.text}>By using Galoy you earn Bitcoin</Text>
+        <Text style={styles.text}>By using Galoy, you earn bitcoin.</Text>
       </OnboardingScreen>
     </Screen>
   )
@@ -68,10 +69,11 @@ export const WelcomeEarnScreen = () => {
 export const WelcomeFirstSatsScreen = () => {
   return (
     <Screen>
-      <OnboardingScreen next="welcomePhoneInput" header="+5,000 sats" image={partyPopperLogo}>
+      <OnboardingScreen next="welcomePhoneInput" header="+5,000 sats" image={trophyLogo}>
         <Text style={styles.text}>
-          You've earned some sats for installing the Galoy app. Sats are small portions of bitcoin.
-          Hooray!
+          Hooray!{'\n'}{'\n'}
+          You've earned some sats for installing the Galoy app.
+          {'\n'}{'\n'}Sats are small portions of bitcoin.
         </Text>
       </OnboardingScreen>
     </Screen>
