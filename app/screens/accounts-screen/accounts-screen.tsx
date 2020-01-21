@@ -1,7 +1,7 @@
 import * as React from "react"
 import { useState, useEffect } from "react"
 import { observer, inject } from "mobx-react"
-import { StyleSheet, TouchableHighlight, View, RefreshControl } from "react-native"
+import { StyleSheet, View, RefreshControl } from "react-native"
 import { Text } from "../../components/text"
 import { Screen } from "../../components/screen"
 import { FlatList } from "react-navigation"
@@ -14,6 +14,7 @@ import { palette } from "../../theme/palette"
 import { useNavigation } from "react-navigation-hooks"
 
 import ContentLoader, { Rect } from "react-content-loader/native"
+import { ListItem } from "react-native-elements"
 
 const accountBasic = {
   color: color.text,
@@ -36,15 +37,20 @@ const styles = StyleSheet.create({
   },
 
   accountView: {
-    alignItems: "center",
     borderColor: color.line,
     borderRadius: 4,
-
-    borderWidth: 0.5,
-    flexDirection: "row",
-    margin: 8,
-    padding: 16,
+    borderWidth: 1,
+    marginBottom: 15,
+    marginHorizontal: 15,
+    padding: 6,
   },
+
+  icon: {
+    width: 32,
+    alignContent: 'center',
+    alignSelf: 'center',
+    alignItems: 'center',
+  }
 })
 
 const AccountItem = inject("dataStore")(observer(
@@ -65,28 +71,27 @@ const AccountItem = inject("dataStore")(observer(
   )
 
   return (
-    <TouchableHighlight
-      underlayColor="white"
-      onPress={
-        action || (() => navigate("accountDetail", { account }))
+    <ListItem
+      style={styles.accountView}
+      chevron
+      title={account}
+      onPress={action || (() => navigate("accountDetail", { account }))}
+      leftAvatar={<Icon name={icon} color={color.primary} size={28} style={styles.icon}/>}
+      rightAvatar={
+        <>
+          { initialLoading &&
+            <Loader />
+          }
+          { !initialLoading &&
+            <Text style={styles.accountAmount}>
+              {currency(dataStore.balances({ account, currency: CurrencyType.USD }), {
+                formatWithSymbol: true,
+              }).format()}
+            </Text>
+          }
+        </>
       }
-    >
-      <View style={styles.accountView}>
-        <Icon name={icon} color={color.primary} size={28} />
-        <Text style={styles.accountTypeStyle}>{account}</Text>
-        { initialLoading &&
-          <Loader />
-        }
-        { !initialLoading &&
-          <Text style={styles.accountAmount}>
-            {currency(dataStore.balances({ account, currency: CurrencyType.USD }), {
-              formatWithSymbol: true,
-            }).format()}
-          </Text>
-        }
-          
-      </View>
-    </TouchableHighlight>
+    />
   )
 }))
 
@@ -130,6 +135,14 @@ export const AccountsScreen = inject("dataStore")(observer(
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
         renderItem={({ item }) => <AccountItem {...item} initialLoading={initialLoading} />} />
+      <View style={{flex: 1}}></View>
+      <ListItem
+      title={"Earn bitcoin rewards!"}
+      style={[styles.accountView, {borderColor: color.primary}]}
+      onPress={() => navigate("rewards")}
+      leftAvatar={<Icon name="ios-gift" color={color.primary} size={28}  style={styles.icon} />}
+      chevron
+    />
     </Screen>
   )
 }))
