@@ -34,9 +34,6 @@ const styles = StyleSheet.create({
     button: {
         marginHorizontal: 20,
         paddingVertical: 6,
-        // borderColor: color.primary,
-        // borderWidth: 1,
-        // borderRadius: 6,
     },
 
     icon: {
@@ -62,6 +59,12 @@ export const RewardsScreen = () => {
             action: () => Alert.alert('TODO'),
         },
         {
+            title: 'Activate notifications',
+            icon: 'ios-lock',
+            badge: "+1,000 sats",
+            action: () => Alert.alert('TODO'),
+        },
+        {
             title: "Make a payment",
             icon: 'ios-exit',
             badge: "+1,000 sats",
@@ -74,10 +77,28 @@ export const RewardsScreen = () => {
             action: () => Alert.alert('TODO'),
         },
         {
-            title: "Open a Galoy bank account",
+            title: "Open a bank account",
             icon: 'ios-gift',
-            badge: "+100,000 sats",
+            badge: "+50,000 sats",
             action: () => navigate('bankRewards'),
+        },
+        {
+            title: "Activate debit card",
+            icon: 'ios-power',
+            badge: "+50,000 sats",
+            action: () => Alert.alert('TODO'),
+        },
+        {
+            title: "Use your debit card",
+            icon: 'ios-cart',
+            badge: "0.25% card rewards!",
+            action: () => Alert.alert('TODO'),
+        },
+        {
+            title: "Set up direct deposit",
+            icon: 'ios-download',
+            badge: "1% card rewards!",
+            action: () => Alert.alert('TODO'),
         }
     ]
 
