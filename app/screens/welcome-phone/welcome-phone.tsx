@@ -127,7 +127,7 @@ export const WelcomePhoneInputScreen = withNavigation(({ text, navigation, heade
   }, [err])
 
   header = "To receive your sats, first we need to activate your Bitcoin wallet."
-  text = "This will take a little while, but we’ll send you a text you when it’s ready!"
+  text = "This will take a little while, but we’ll send you a text when it’s ready!"
 
   return (
     <Screen>
