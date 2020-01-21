@@ -1,5 +1,6 @@
 import { Instance, SnapshotOut, types, flow, getParentOfType, getEnv, onSnapshot } from "mobx-state-tree"
-import { AccountType, CurrencyType, PendingOpenChannelsStatus, Onboarding, Side } from "../../utils/enum"
+import { AccountType, CurrencyType, PendingOpenChannelsStatus, Onboarding } from "../../utils/enum"
+import { Side, IQuoteResponse, IQuoteRequest, IBuyRequest, ISellRequest } from "../../../../common/type"
 import { parseDate } from "../../utils/date"
 import KeychainAction from "../../utils/keychain"
 import { generateSecureRandom } from "react-native-securerandom"
@@ -93,120 +94,109 @@ export const BaseAccountModel = types
 
 export const QuoteModel = types
   .model("Quote", {
-    satAmount: 0,
-    satPrice: 0,
-    validUntil: Date.now(),
-    signature: "",
-    side: "", // enum "buy", "sell"
-    address: "", // only for sell, when wallet needs to send funds
+    side: types.union(types.literal("buy"), types.literal("sell")), // Side,
+    satPrice: types.maybe(types.number),
+    validUntil: types.maybe(types.number),
+    satAmount: types.maybe(types.number),
+    signature: types.maybe(types.string),
+    invoice: types.maybe(types.string),
   })
   .actions(self => ({
     reset() {
       // TODO there must be better way to do this
-      self.satAmount = self.satPrice = self.validUntil = 0
-      self.signature = self.side = self.address = ""
+      self.satAmount = self.satPrice = self.validUntil = NaN
+      self.signature = self.invoice = undefined
     },
   }))
 
 export const ExchangeModel = types
   .model("Exchange", {
-    quote: types.optional(QuoteModel, {}),
+    quote: types.optional(QuoteModel, {side: "buy"}),
   })
   .actions(self => {
 
-    const commonBuySell = (side: string): boolean /* success */ => {
+    const assertTrade = (side: Side): void /* success */ => {
       if (self.quote.side !== side) {
-        console.tron.log(`not a quote to ${side}`)
-        return false
+        throw new Error(`trying to ${side} but quote is for ${self.quote.side}`)
       }
 
-      const now = Date.now()
+      const now = Date.now() / 1000
       if (now > self.quote.validUntil) {
-        // TODO ask back for a new quote
-        console.tron.log(`quote ${self.quote.validUntil} has expired, now is ${now}`)
-        return false
+        throw new Error(`quote ${self.quote.validUntil} has expired, now is ${now}`)
       }
-
-      return true
     }
     
     return {
-    quoteBTC: flow(function*(side: Side, satAmount = 1000) {
-      try {
-        const result = yield functions().httpsCallable("quoteBTC")({ side, satAmount })
-        console.tron.log("quoteBTC: ", result)
-        self.quote = result.data
-      } catch (err) {
-        console.tron.error("quoteBTC: ", err)
-        throw err
-      }
-    }),
 
-    quoteLNDBTC: flow(function*(side: Side, satAmount = 1000) {
-      try {
-        const result = yield functions().httpsCallable("quoteLNDBTC")({ side, satAmount })
-        console.tron.log("quoteBTC: ", result)
-        self.quote = result.data
-      } catch (err) {
-        console.tron.error("quoteBTC: ", err)
-        throw err
-      }
-    }),
+      quoteLNDBTC: flow(function*(side: Side, satAmount = 1000) {
+        try {
+          let request: IQuoteRequest = {side}
 
-    buyBTC: flow(function*() {
-      try {
-        if (!commonBuySell("buy")) {
-          return
+          if (side === "sell") {
+            request['satAmount'] = satAmount
+          } else if (side === "buy") {
+            const invoice = yield getParentOfType(self, DataStoreModel).lnd.addInvoice({
+              value: satAmount,
+              memo: "Buy BTC",
+              expiry: 30, // 30 seconds
+            })
+            request['invoice'] = invoice.paymentRequest
+          }
+
+          const result = yield functions().httpsCallable("quoteLNDBTC")(request)
+          console.tron.log("quoteBTC: ", result)
+          self.quote = result.data as IQuoteResponse
+          
+          const invoiceJson = yield getParentOfType(self, DataStoreModel).lnd.decodePayReq(self.quote.invoice)
+          console.tron.log(invoiceJson)
+          
+          if (side === "sell") {
+            self.quote.satPrice = parseFloat(invoiceJson.description.split(":")[1])
+          } 
+          self.quote.satAmount = invoiceJson.numSatoshis
+          self.quote.validUntil = invoiceJson.timestamp + invoiceJson.expiry
+
+        } catch (err) {
+          console.tron.error("quoteBTC: ", err)
+          throw err
+        }
+      }),
+
+      buyLNDBTC: flow(function*() {
+        try {
+          assertTrade("buy")
+
+          const request: IBuyRequest = {
+            side: self.quote.side!,
+            invoice: self.quote.invoice!,
+            satPrice: self.quote.satPrice!,
+            signature: self.quote.signature!,
+          }
+
+          const result = yield functions().httpsCallable("buyLNDBTC")(request)
+          console.tron.log("result BuyLNDBTC", result)
+        } catch (err) {
+          console.tron.error(err.toString())
+          throw err
         }
 
-        const result = yield functions().httpsCallable("buyBTC")({
-          quote: { ...self.quote },
+        self.quote.reset()
+      }),
 
-          // TODO: wallet should be opened
-          btcAddress: getParentOfType(self, DataStoreModel).lnd.onChainAddress,
-        })
-        console.tron.log("result BuyBTC", result)
-      } catch (err) {
-        console.tron.error(err)
-        throw err
-      }
+      sellLNDBTC: flow(function*() {
+        try {
+          assertTrade("sell")
+          console.tron.log(self.quote.invoice)
 
-      self.quote.reset()
-    }),
-
-    sellBTC: flow(function*() {
-      try {
-        if (!commonBuySell("sell")) {
-          return
+          const result = yield getParentOfType(self, DataStoreModel).lnd.payInvoice({ paymentRequest: self.quote.invoice })
+          console.tron.log("result SellLNDBTC", result)
+        } catch (err) {
+          console.tron.error(err)
+          throw err
         }
 
-        // TODO: may be relevant to check signature
-        // to make sure address is from Galoy?
-
-        const { txid } = yield getParentOfType(self, DataStoreModel).lnd.sendTransaction(
-          self.quote.address,
-          self.quote.satAmount,
-        )
-
-        console.tron.log(txid)
-
-        // TODO : make sure to manage error here,
-        // eg: if the the on chain transaction is send by sellBTC
-        // is never called from the mobile application
-        // this could be done in the backend
-
-        const result = yield functions().httpsCallable("sellBTC")({
-          quote: { ...self.quote },
-          onchain_tx: txid,
-        })
-        console.tron.log("result SellBTC", result)
-      } catch (err) {
-        console.tron.error(err)
-        throw err
-      }
-
-      self.quote.reset()
-    })
+        self.quote.reset()
+      }),
 }})
 
 export const FiatAccountModel = BaseAccountModel.props({
@@ -588,11 +578,11 @@ export const LndModel = BaseAccountModel.named("Lnd")
         payReq,
     })}),
 
-    addInvoice: flow(function*({ value, memo }) {
+    addInvoice: flow(function*({ value, memo, expiry = 172800 /* 48h */ }) {
       const response = yield getEnv(self).lnd.grpc.sendCommand("addInvoice", {
         value,
         memo,
-        expiry: 172800, // 48 hours
+        expiry,
         private: true,
       })
 
@@ -782,7 +772,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
         return success
       } catch (err) {
         console.tron.error(err)
-        return err
+        throw err
 
         // this._nav.goPayLightningConfirm();
         // this._notification.display({ msg: 'Lightning payment failed!', err });
