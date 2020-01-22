@@ -7,6 +7,8 @@ import { ListItem } from 'react-native-elements'
 import Icon from "react-native-vector-icons/Ionicons"
 import { useNavigation } from "react-navigation-hooks"
 import { palette } from "../../theme/palette"
+import { observer, inject } from "mobx-react"
+import { Onboarding } from "../../utils/enum"
 
 export const trophyLogo = require("./TrophyLogo.png")
 
@@ -46,9 +48,18 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         marginVertical: 50,
     },
+
+    badgeDefault: {
+        backgroundColor: color.primary
+    },
+
+    badgeFullfilled: {
+        backgroundColor: color.secondary
+    }
 })
 
-export const RewardsScreen = () => {
+export const RewardsScreen = inject("dataStore")(
+    observer(({ dataStore }) => {
 
     const bank = 
     [
@@ -56,48 +67,63 @@ export const RewardsScreen = () => {
             title: 'Backup wallet',
             icon: 'ios-lock',
             badge: "+1,000 sats",
+            fullfilled: false,
             action: () => Alert.alert('TODO'),
         },
         {
             title: 'Activate notifications',
             icon: 'ios-lock',
             badge: "+1,000 sats",
-            action: () => Alert.alert('TODO'),
+            fullfilled: false,
+            action: () => navigate('enableNotifications'),
         },
         {
             title: "Make a payment",
             icon: 'ios-exit',
             badge: "+1,000 sats",
+            fullfilled: false,
+            action: () => Alert.alert('TODO'),
+        },
+        {
+            title: "Buy your first sats",
+            icon: 'ios-exit',
+            badge: "+1,000 sats",
+            fullfilled: false,
             action: () => Alert.alert('TODO'),
         },
         {
             title: 'Learn about Bitcoin',
             icon: 'ios-school',
             badge: "+1,000 sats",
+            fullfilled: false,
             action: () => Alert.alert('TODO'),
         },
         {
-            title: "Open a bank account",
+            title: "Open bank account",
             icon: 'ios-gift',
             badge: "+50,000 sats",
+            fullfilled: dataStore.onboarding.stage === Onboarding.bankOnboarded,
             action: () => navigate('bankRewards'),
         },
         {
             title: "Activate debit card",
             icon: 'ios-power',
             badge: "+50,000 sats",
+            fullfilled: false,
             action: () => Alert.alert('TODO'),
         },
         {
-            title: "Use your debit card",
+            title: "Use your card",
             icon: 'ios-cart',
-            badge: "0.25% card rewards!",
+            badge: "0.25% rewards!",
+            fullfilled: false,
             action: () => Alert.alert('TODO'),
         },
         {
-            title: "Set up direct deposit",
+            title: "Direct deposit",
             icon: 'ios-download',
             badge: "1% card rewards!",
+            fullfilled: false,
             action: () => Alert.alert('TODO'),
         }
     ]
@@ -118,7 +144,12 @@ export const RewardsScreen = () => {
                         title={item.title}
                         leftIcon={<Icon name={item.icon} style={styles.icon} size={32} color={color.primary} />}
                         onPress={item.action}
-                        badge={{value:item.badge, badgeStyle: {backgroundColor: color.primary}}}
+                        badge={{value:item.badge, 
+                                badgeStyle: item.fullfilled? 
+                                    styles.badgeFullfilled :
+                                    styles.badgeDefault
+                                }}
+                        disabled={item.fullfilled}
                         chevron
                     />
                     ))
@@ -126,7 +157,7 @@ export const RewardsScreen = () => {
             </ScrollView>
         </Screen>
     )
-}
+}))
 
 RewardsScreen.navigationOptions = () => ({
     title: "Rewards"

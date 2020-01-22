@@ -20,7 +20,6 @@ export const AccountNavigator = createStackNavigator(
     openBankAccount: { screen : OpenBankAccountScreen },
 
     demo: { screen: DebugScreen },
-    enableNotifications: { screen: EnableNotificationsScreen },
   },
   {
     headerMode: "float",
@@ -46,6 +45,7 @@ export const MoveMoneyNavigator = createStackNavigator(
 export const RewardsNavigator = createStackNavigator(
   {
     rewards: { screen: RewardsScreen },
+    enableNotifications: { screen: EnableNotificationsScreen },
     bankRewards: { screen: BankRewardsScreen },
     personalInformation: { screen: PersonalInformationScreen },
     dateOfBirth: { screen: DateOfBirthScreen },
