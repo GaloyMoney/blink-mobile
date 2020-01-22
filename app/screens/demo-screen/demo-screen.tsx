@@ -1,6 +1,6 @@
 import * as React from "react"
-import { ImageStyle, TextStyle, View, ViewStyle, TextInput, Alert, Clipboard } from "react-native"
-import { NavigationScreenProp } from "react-navigation"
+import { useState } from "react"
+import { ImageStyle, TextStyle, View, ViewStyle, TextInput, Clipboard } from "react-native"
 import { Screen } from "../../components/screen"
 import { Text } from "../../components/text"
 import { Button } from "../../components/button"
@@ -8,14 +8,14 @@ import { Wallpaper } from "../../components/wallpaper"
 import { Header } from "../../components/header"
 import { QRCode } from "../../components/qrcode"
 import { color, spacing } from "../../theme"
-import { BulletItem } from "../../components/bullet-item"
 import { save } from "../../utils/storage"
 import { observer, inject } from "mobx-react"
 
-import { RNCamera } from "react-native-camera"
-import { decode } from "bip21"
-
 import auth from "@react-native-firebase/auth"
+import { getSnapshot } from "mobx-state-tree"
+import JSONTree from 'react-native-json-tree'
+import { useNavigation } from "react-navigation-hooks"
+
 
 const FULL: ViewStyle = { flex: 1 }
 const CONTAINER: ViewStyle = {
@@ -89,24 +89,17 @@ const CAMERA: ViewStyle = {
   height: 300,
 }
 
-export interface DebugScreenProps extends NavigationScreenProp<{}> {}
+export const DebugScreen = inject("dataStore")(observer(
+  ({dataStore}) => {
 
-@inject("dataStore")
-@observer
-export class DebugScreen extends React.Component<DebugScreenProps, {}> {
-  goBack = () => this.props.navigation.goBack(null)
+  const [addr, setAddr] = useState("tb1")
+  const [amount, setAmount] = useState(1000)
+  const [invoice, setInvoice] = useState("ln")
+  const [json, setJson] = useState(getSnapshot(dataStore))
 
-  constructor(props) {
-    super(props)
+  const { navigate }  = useNavigation()
 
-    this.state = {
-      addr: "tb1",
-      amount: 1000,
-      invoice: "ln",
-    }
-  }
-
-  demoReactotron = async () => {
+  const demoReactotron = async () => {
     console.tron.logImportant("I am important")
     console.tron.display({
       name: "DISPLAY",
@@ -136,216 +129,191 @@ export class DebugScreen extends React.Component<DebugScreenProps, {}> {
     await save("Cool Name", "Boaty McBoatface")
   }
 
-  render() {
-    return (
-      <View style={FULL}>
-        <Wallpaper />
-        <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
-          <Header
-            headerTx="debugScreen.howTo"
-            leftIcon="back"
-            onLeftPress={this.goBack}
-            style={HEADER}
-            titleStyle={HEADER_TITLE}
+  return (
+    <View style={FULL}>
+      <Wallpaper />
+      <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
+        <Header
+          headerTx="debugScreen.howTo"
+          leftIcon="back"
+          style={HEADER}
+          titleStyle={HEADER_TITLE}
+        />
+        <JSONTree data={json} />
+        <Text>price: {dataStore.rates.BTC}</Text>
+        <View>
+          <Button
+            style={DEMO}
+            textStyle={DEMO_TEXT}
+            text="Log out"
+            onPress={() => auth().signOut()}
           />
-          <Text style={TITLE} preset="header" tx="debugScreen.title" />
-          <Text style={TAGLINE} tx="debugScreen.tagLine" />
-          <Text>price: {this.props.dataStore.rates.BTC}</Text>
-          <BulletItem text="Load up Reactotron!  You can inspect your app, view the events, interact, and so much more!" />
-          <BulletItem text="Integrated here, Navigation with State, TypeScript, Storybook, Solidarity, and i18n." />
-          <View>
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              text="Log out"
-              onPress={() => auth().signOut()}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              text="Go to notifications"
-              onPress={() => this.props.navigation.navigate('enableNotifications')}
-            />
-            <Text
-              style={TAGLINE}
-              text={this.props.dataStore.lnd.walletExist ? "Wallet exist" : "Wallet doesn't exist"}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              text="Gen Seed"
-              onPress={this.props.dataStore.lnd.genSeed}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              text="initWallet"
-              onPress={this.props.dataStore.lnd.initWallet}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              text={`unlock. status: ${this.props.dataStore.lnd.walletUnlocked ? "true" : "false"}`}
-              onPress={this.props.dataStore.lnd.unlockWallet}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              text="send pubKey"
-              onPress={this.props.dataStore.lnd.sendPubKey}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              text="connect Peer"
-              onPress={this.props.dataStore.lnd.connectGaloyPeer}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              text="list peers"
-              onPress={this.props.dataStore.lnd.listPeers}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              text="open channel"
-              onPress={this.props.dataStore.lnd.openChannel}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              text="listChannels"
-              onPress={this.props.dataStore.lnd.listChannels}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              text="pendingChannels"
-              onPress={this.props.dataStore.lnd.pendingChannels}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              text="statusFirstChannelOpen"
-              onPress={this.props.dataStore.lnd.statusFirstChannelOpen}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              text="add invoice"
-              onPress={() => Clipboard.setString(this.props.dataStore.lnd.addInvoice({ value: 1000 }))}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              text="update balance"
-              onPress={this.props.dataStore.lnd.updateBalance}
-            />
-            <TextInput style={HINT} value={`balance: ${this.props.dataStore.lnd.balance}`} />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              text="update invoice"
-              onPress={this.props.dataStore.lnd.updateInvoices}
-            />
-            <TextInput
-              style={HINT}
-              editable
-              onChangeText={invoice => this.setState({ invoice })}
-              value={this.state.invoice}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              text="pay invoice"
-              onPress={() => this.props.dataStore.lnd.payInvoice(this.state.invoice)}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              text="list payments"
-              onPress={this.props.dataStore.lnd.list_payments}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              text="Quote Buy BTC"
-              onPress={() => this.props.dataStore.exchange.quoteBTC("buy")}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              text="Quote Sell BTC"
-              onPress={() => this.props.dataStore.exchange.quoteBTC("sell")}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              text="Buy BTC"
-              onPress={this.props.dataStore.exchange.buyBTC}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              text="Sell BTC"
-              onPress={this.props.dataStore.exchange.sellBTC}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              text="newAddress"
-              onPress={this.props.dataStore.lnd.newAddress}
-            />
-            <QRCode>{this.props.dataStore.lnd.onChainAddress}</QRCode>
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              text="update_transactions"
-              onPress={this.props.dataStore.lnd.update_transactions}
-            />
-
-            <RNCamera
-              style={CAMERA}
-              captureAudio={false}
-              onBarCodeRead={event => {
-                const qr = event.data
-                this.setState({ qr })
-                try {
-                  const decoded = decode(qr)
-                  this.setState({ addr: decoded.address })
-                  if (Object.prototype.hasOwnProperty.call(decoded.options, "amount")) {
-                    this.setState({ amount: decoded.options.amount })
-                  }
-                } catch (err) {
-                  Alert.alert(err)
-                }
-              }}
-            />
-            <TextInput style={HINT} value={this.state.qr} multiline={true} />
-            <TextInput
-              style={HINT}
-              editable
-              onChangeText={addr => this.setState({ addr })}
-              value={this.state.addr}
-            />
-            <TextInput
-              style={HINT}
-              editable
-              onChangeText={amount => this.setState({ amount })}
-              value={this.state.amount.toString()}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              text="sendCoins"
-              onPress={() =>
-                this.props.dataStore.lnd.sendTransaction(this.state.addr, this.state.amount)
-              }
-            />
-          </View>
-        </Screen>
-      </View>
-    )
-  }
-}
+          <Button
+            style={DEMO}
+            textStyle={DEMO_TEXT}
+            text="Go to notifications"
+            onPress={() => navigate('enableNotifications')}
+          />
+          <Text
+            style={TAGLINE}
+            text={dataStore.lnd.walletExist ? "Wallet exist" : "Wallet doesn't exist"}
+          />
+          <Button
+            style={DEMO}
+            textStyle={DEMO_TEXT}
+            text="Gen Seed"
+            onPress={dataStore.lnd.genSeed}
+          />
+          <Button
+            style={DEMO}
+            textStyle={DEMO_TEXT}
+            text="initWallet"
+            onPress={dataStore.lnd.initWallet}
+          />
+          <Button
+            style={DEMO}
+            textStyle={DEMO_TEXT}
+            text={`unlock. status: ${dataStore.lnd.walletUnlocked ? "true" : "false"}`}
+            onPress={dataStore.lnd.unlockWallet}
+          />
+          <Button
+            style={DEMO}
+            textStyle={DEMO_TEXT}
+            text="send pubKey"
+            onPress={dataStore.lnd.sendPubKey}
+          />
+          <Button
+            style={DEMO}
+            textStyle={DEMO_TEXT}
+            text="connect Peer"
+            onPress={dataStore.lnd.connectGaloyPeer}
+          />
+          <Button
+            style={DEMO}
+            textStyle={DEMO_TEXT}
+            text="list peers"
+            onPress={dataStore.lnd.listPeers}
+          />
+          <Button
+            style={DEMO}
+            textStyle={DEMO_TEXT}
+            text="open channel"
+            onPress={dataStore.lnd.openChannel}
+          />
+          <Button
+            style={DEMO}
+            textStyle={DEMO_TEXT}
+            text="listChannels"
+            onPress={dataStore.lnd.listChannels}
+          />
+          <Button
+            style={DEMO}
+            textStyle={DEMO_TEXT}
+            text="pendingChannels"
+            onPress={dataStore.lnd.pendingChannels}
+          />
+          <Button
+            style={DEMO}
+            textStyle={DEMO_TEXT}
+            text="statusFirstChannelOpen"
+            onPress={dataStore.lnd.statusFirstChannelOpen}
+          />
+          <Button
+            style={DEMO}
+            textStyle={DEMO_TEXT}
+            text="add invoice"
+            onPress={() => Clipboard.setString(dataStore.lnd.addInvoice({ value: 1000 }))}
+          />
+          <Button
+            style={DEMO}
+            textStyle={DEMO_TEXT}
+            text="update balance"
+            onPress={dataStore.lnd.updateBalance}
+          />
+          <TextInput style={HINT} value={`balance: ${dataStore.lnd.balance}`} />
+          <Button
+            style={DEMO}
+            textStyle={DEMO_TEXT}
+            text="update invoice"
+            onPress={dataStore.lnd.updateInvoices}
+          />
+          <TextInput
+            style={HINT}
+            editable
+            onChangeText={invoice => setInvoice(invoice)}
+            value={invoice}
+          />
+          <Button
+            style={DEMO}
+            textStyle={DEMO_TEXT}
+            text="pay invoice"
+            onPress={() => dataStore.lnd.payInvoice(invoice)}
+          />
+          <Button
+            style={DEMO}
+            textStyle={DEMO_TEXT}
+            text="list payments"
+            onPress={dataStore.lnd.list_payments}
+          />
+          <Button
+            style={DEMO}
+            textStyle={DEMO_TEXT}
+            text="Quote Buy BTC"
+            onPress={() => dataStore.exchange.quoteBTC("buy")}
+          />
+          <Button
+            style={DEMO}
+            textStyle={DEMO_TEXT}
+            text="Quote Sell BTC"
+            onPress={() => dataStore.exchange.quoteBTC("sell")}
+          />
+          <Button
+            style={DEMO}
+            textStyle={DEMO_TEXT}
+            text="Buy BTC"
+            onPress={dataStore.exchange.buyBTC}
+          />
+          <Button
+            style={DEMO}
+            textStyle={DEMO_TEXT}
+            text="Sell BTC"
+            onPress={dataStore.exchange.sellBTC}
+          />
+          <Button
+            style={DEMO}
+            textStyle={DEMO_TEXT}
+            text="newAddress"
+            onPress={dataStore.lnd.newAddress}
+          />
+          <QRCode>{dataStore.lnd.onChainAddress}</QRCode>
+          <Button
+            style={DEMO}
+            textStyle={DEMO_TEXT}
+            text="update_transactions"
+            onPress={dataStore.lnd.update_transactions}
+          />
+          <TextInput
+            style={HINT}
+            editable
+            onChangeText={addr => setAddr(addr)}
+            value={addr}
+          />
+          <TextInput
+            style={HINT}
+            editable
+            onChangeText={amount => setAmount(amount)}
+            value={amount.toString()}
+          />
+          <Button
+            style={DEMO}
+            textStyle={DEMO_TEXT}
+            text="sendCoins"
+            onPress={() =>
+              dataStore.lnd.sendTransaction(addr, amount)
+            }
+          />
+        </View>
+      </Screen>
+    </View>
+  )
+}))
