@@ -135,7 +135,7 @@ const VisualExpiration = ({validUntil}) => {
 
     Animated.timing(fadeAnim, {
         toValue: 1,
-        duration,
+        duration, // ms
     }).start()
   }, [validUntil])
 
@@ -387,8 +387,7 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
         />
         }
       </Screen>
-    )
-}))
+)}))
 
 AccountDetailScreen.navigationOptions = screenProps => ({
   title: screenProps.navigation.getParam("account")
