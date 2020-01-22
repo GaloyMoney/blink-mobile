@@ -21,6 +21,7 @@ import { useNavigation, useNavigationParam } from "react-navigation-hooks"
 import { Button } from "react-native-elements"
 import { palette } from "../../theme/palette";
 import { Side } from "../../../../common/type"
+import { Loader } from "../../components/loader";
 
 export interface AccountDetailScreenProps {
   account: AccountType
@@ -191,6 +192,9 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
     const [modalVisible, setModalVisible] = useState(false);
     const [sections, setSections] = useState([]);
     const [side, setSide] = useState<Side>("buy");
+    const [loading, setLoading] = useState(false)
+    const [message, setMessage] = useState("")
+  
 
     const { navigate } = useNavigation()
 
@@ -202,6 +206,9 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
 
     const currency = accountStore.currency
 
+
+    // trading 
+
     const onBuyInit = () => {
       setSide("buy")
       setModalVisible(true)
@@ -210,6 +217,10 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
     const onSellInit = () => {
       setSide("sell")
       setModalVisible(true)
+    }
+
+    const onModalHide = () => {
+      dataStore.exchange.quote.reset()
     }
 
     const getQuote = async () => {
@@ -222,34 +233,69 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
     
     const executeTrade = async () => {
       try {
+        let fn
         if (side === "buy") {
-          await dataStore.exchange.buyLNDBTC()
+          fn = ["buyLNDBTC"]
         } else if (side === "sell") {
-          await dataStore.exchange.sellLNDBTC()
+          fn = ["sellLNDBTC"]
+        }
+
+        setLoading(true)
+
+        const success = await dataStore.exchange[fn]()
+
+        if (success) {
+          refresh()
+          setMessage("Success!")
+        } else {
+          setMessage("There was an error. Please try again later")
         }
       } catch (err) {
-        Alert.alert(err.toString())
+        setMessage(err.toString())
       }
     }
 
-    const onRefresh = React.useCallback(async () => {
-      setRefreshing(true);
+    // workaround of https://github.com/facebook/react-native/issues/10471
+    useEffect(() => {
+      if (message !== "") {
+        setMessage("")
+        Alert.alert(message, "", [
+          {
+            text: "OK",
+            onPress: () => {
+              setModalVisible(false)
+              setLoading(false)
+            },
+          },
+        ])
+      }
+    }, [message])
+
+
+    const refresh = async () => {
       setSections(await updateTransactions(accountStore))
-      setRefreshing(false);
+    }
+
+    const onRefresh = React.useCallback(async () => {
+      setRefreshing(true)
+      refresh()
+      setRefreshing(false)
     }, [refreshing]);
 
-    useEffect(() => {  // do we need this or onRefresh will get trigger anyway?
-      onRefresh()
+    useEffect(() => {
+      refresh()
     }, [])
 
     return (
       <Screen>
         <Modal 
+          onModalHide={onModalHide}
           isVisible={modalVisible} 
           swipeDirection={modalVisible ? ['down'] : ['up']}
           onSwipeComplete={() => setModalVisible(false)}
           swipeThreshold={50}
           >
+          <Loader loading={loading} />
           <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
             <View style={styles.flex} />
           </TouchableWithoutFeedback>
@@ -271,7 +317,8 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
               <Text>SatPrice: {dataStore.exchange.quote.satPrice}</Text>
               <Text>Valid until: {dataStore.exchange.quote.validUntil}</Text>
               <Text>Sat amount: {dataStore.exchange.quote.satAmount}</Text>
-              <Button title={`Validate Quote`} onPress={executeTrade} />
+              <Button title={`Validate Quote`} onPress={executeTrade} 
+                disabled={isNaN(dataStore.exchange.quote.satPrice)}/>
             </View>
           }
         </Modal>
