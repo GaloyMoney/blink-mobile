@@ -3,13 +3,13 @@ import { useState, useRef, useEffect } from "react"
 import { Screen } from "../../components/screen"
 import { OnboardingScreen } from "../../components/onboarding"
 import { Text } from "../../components/text"
-import { StyleSheet, Image, Alert } from "react-native"
+import { StyleSheet, Alert } from "react-native"
 import { BalanceHeader } from "../../components/balance-header"
 import { CurrencyType, AccountType, Onboarding } from "../../utils/enum"
 import { useNavigation } from "react-navigation-hooks"
-import { Button } from "react-native"
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { Input } from "react-native-elements"
+import { Input, Button } from "react-native-elements"
+import { Button as ButtonNative } from "react-native"
 import { withNavigation } from "react-navigation"
 import functions from "@react-native-firebase/functions"
 import { inject } from "mobx-react"
@@ -60,13 +60,22 @@ export const BankRewardsScreen = inject('dataStore')(
       }
       { dataStore.onboarding.stage == Onboarding.bankOnboarded &&
         <>
-          <Text>You already have a bank account</Text>
-          <Text>(And this screen should not be accessible, this is a bug)</Text>
+          <Text style={styles.text}>You already have a bank account</Text>
+          <Text style={styles.text}>(And this screen should not be accessible, this is a bug)</Text>
         </>
       }
     </Screen>
   )
 })
+
+
+BankRewardsScreen.navigationOptions = screenProps => ({
+  title: "Bank rewards",
+  headerLeft: (
+    <ButtonNative title="< Back" onPress={() => screenProps.navigation.goBack(null)} />
+  ), // FIXME
+})
+
 
 export const PersonalInformationScreen = () => {
   const [firstName, setFirstName] = useState("")
@@ -185,13 +194,16 @@ export const DateOfBirthScreen = withNavigation(inject("dataStore")(
 
 export const BankAccountReadyScreen = () => {
 
-  const { navigate } = useNavigation()
-
   return (
     <Screen>
-      <Image source={popcornLogo} />
-      <Text style={styles.text}>Your Galoy bank account is ready</Text>
-      <Button title="Continue" onPress={() => navigate('accounts')} />
+      <OnboardingScreen next="accounts" nextTitle="Okay" image={popcornLogo}>
+        <Text style={styles.text}>Your Galoy bank account is ready!!</Text>
+      </OnboardingScreen>
     </Screen>
   )
 }
+
+BankAccountReadyScreen.navigationOptions = screenProps => ({
+  title: "Bank Account",
+  header: false,
+})

@@ -98,7 +98,7 @@ export const WelcomeBackCompletedScreen = withNavigation(inject("dataStore")(obs
         lnd: dataStore.lnd,
         setErr,
       })
-      dataStore.onboarding.set(Onboarding.walletOnboarded)
+      await dataStore.onboarding.set(Onboarding.walletOnboarded)
       navigation.navigate("firstReward")
       setLoading(false)
     } catch (err) {
