@@ -122,7 +122,6 @@ export const ExchangeModel = types
 
       const now = Date.now() / 1000
       if (now > self.quote.validUntil) {
-        self.quote.reset()
         throw new Error(`quote ${self.quote.validUntil} has expired, now is ${now}. ` +
         `Ask for for a new quote`)
       }
