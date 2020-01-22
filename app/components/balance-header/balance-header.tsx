@@ -3,11 +3,11 @@ import { View, StyleSheet } from "react-native"
 import { Text } from "../text"
 import { color } from "../../theme"
 
-import currency from "currency.js"
 import { inject, observer } from "mobx-react"
 import { AccountType, CurrencyType } from "../../utils/enum"
 
 import ContentLoader, { Rect } from "react-content-loader/native"
+import { TextCurrency } from "../text-currency/text-currency"
 
 const styles = StyleSheet.create({
   amount: {
@@ -33,25 +33,6 @@ const styles = StyleSheet.create({
     marginTop: 48,
   },
 })
-
-const TextCurrency = ({ amount, currencyUsed, fontSize }) => {
-  if (currencyUsed === CurrencyType.USD) {
-    return (
-      <Text style={{ fontSize, color: color.text }}>
-        {currency(amount, { formatWithSymbol: true }).format()}
-      </Text>
-    )
-  } /* if (currency === CurrencyType.BTC) */ else {
-    return (
-      <>
-        <Text style={{ fontSize, color: color.text }}>
-          {currency(amount, { precision: 0, separator: "," }).format()}
-        </Text>
-        <Text style={{ fontSize: fontSize / 2, color: color.text }}> sats</Text>
-      </>
-    )
-  }
-}
 
 export interface BalanceHeaderProps {
   headingCurrency: CurrencyType

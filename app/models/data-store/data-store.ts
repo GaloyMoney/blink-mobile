@@ -65,15 +65,7 @@ export const FiatTransactionModel = types.model("Transaction", {
   name: types.string,
   icon: types.string,
   amount: types.number,
-  date: types.Date,
-  cashback: types.maybe(types.number),
-})
-
-export const TransactionModel = types.model("Transaction", {
-  name: types.string,
-  icon: types.string,
-  amount: types.number,
-  date: types.Date,
+  date: types.number, // TODO: move to timestamp
   cashback: types.maybe(types.number),
 })
 
@@ -244,7 +236,13 @@ export const FiatAccountModel = BaseAccountModel.props({
       return CurrencyType.USD
     },
     get transactions() {
-      return self._transactions
+      return self._transactions.map(tx => ({
+        name: tx.name, 
+        icon: tx.icon,
+        amount: tx.amount,
+        date: parseDate(tx.date), // FIXME timestamp
+        cashback: tx.cashback,
+      }))
     },
   }))
 
