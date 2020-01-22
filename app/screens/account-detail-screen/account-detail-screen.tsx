@@ -2,7 +2,7 @@ import * as React from "react"
 import { useState, useEffect } from "react"
 import { observer, inject } from "mobx-react"
 
-import { View, SectionList, StyleSheet, RefreshControl, TouchableWithoutFeedback, Alert } from "react-native"
+import { View, SectionList, StyleSheet, RefreshControl, TouchableWithoutFeedback, Alert, Easing, Animated } from "react-native"
 
 import Modal from "react-native-modal";
 
@@ -19,9 +19,9 @@ import { TouchableHighlight } from "react-native-gesture-handler"
 import { AccountType, CurrencyType, Onboarding } from "../../utils/enum"
 import { useNavigation, useNavigationParam } from "react-navigation-hooks"
 import { Button } from "react-native-elements"
-import { palette } from "../../theme/palette";
+import { palette } from "../../theme/palette"
 import { Side } from "../../../../common/type"
-import { Loader } from "../../components/loader";
+import { Loader } from "../../components/loader"
 
 export interface AccountDetailScreenProps {
   account: AccountType
@@ -124,6 +124,34 @@ const AccountDetailItem: React.FC<AccountDetailItemProps> = (props) => {
       </View>
     </TouchableHighlight>
   )
+}
+
+const VisualExpiration = ({validUntil}) => {
+  const [fadeAnim] = useState(new Animated.Value(0))
+
+  React.useEffect(() => {
+    fadeAnim.setValue(0)
+    const duration = validUntil * 1000 - Date.now() // ms
+
+    Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration,
+    }).start()
+  }, [validUntil])
+
+  return (
+    <Animated.View
+      style={{
+        // ...style,
+        width: fadeAnim.interpolate({
+          inputRange: [0, 1],
+          outputRange: ['100%', '0%'],
+        }),
+        height: 5,
+        backgroundColor: color.primary,
+      }}
+    />
+  );
 }
 
 
@@ -295,7 +323,6 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
           onSwipeComplete={() => setModalVisible(false)}
           swipeThreshold={50}
           >
-          <Loader loading={loading} />
           <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
             <View style={styles.flex} />
           </TouchableWithoutFeedback>
@@ -310,16 +337,20 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
             </View>
           }
           { dataStore.onboarding.stage === Onboarding.bankOnboarded &&
-            <View style={styles.viewModal}>
-              <Text style={styles.itemText}>Get Quote to {side} 1000 sats</Text>
-              <Button title={`Get Quote`} onPress={getQuote} />
-              <Text>Side: {dataStore.exchange.quote.side}</Text>
-              <Text>SatPrice: {dataStore.exchange.quote.satPrice}</Text>
-              <Text>Valid until: {dataStore.exchange.quote.validUntil}</Text>
-              <Text>Sat amount: {dataStore.exchange.quote.satAmount}</Text>
-              <Button title={`Validate Quote`} onPress={executeTrade} 
-                disabled={isNaN(dataStore.exchange.quote.satPrice)}/>
-            </View>
+            <>
+              <Loader loading={loading} />
+              <View style={styles.viewModal}>
+                <Text style={styles.itemText}>Get Quote to {side} 1000 sats</Text>
+                <Button title={`Get Quote`} onPress={getQuote} />
+                <Text>Side: {dataStore.exchange.quote.side}</Text>
+                <Text>SatPrice: {dataStore.exchange.quote.satPrice}</Text>
+                {/* <Text>ValidUntil: {dataStore.exchange.quote.validUntil}</Text> */}
+                {/* <Text>Sat amount: {dataStore.exchange.quote.satAmount}</Text> */}
+                <VisualExpiration validUntil={dataStore.exchange.quote.validUntil} />
+                <Button title={`Validate Quote`} onPress={executeTrade} 
+                  disabled={isNaN(dataStore.exchange.quote.satPrice)}/>
+              </View>
+            </>
           }
         </Modal>
         <BalanceHeader headingCurrency={currency} accountsToAdd={account} />
