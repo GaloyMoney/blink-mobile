@@ -47,6 +47,10 @@ export const color = {
   /**
    * Error messages and icons.
    */
+  secondary: palette.orange,
+  /**
+   * Error messages and icons.
+   */
   error: palette.angry,
 
   /**
