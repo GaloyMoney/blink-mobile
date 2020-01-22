@@ -110,6 +110,8 @@ const AccountDetailItem: React.FC<AccountDetailItemProps> = (props) => {
           cashback: props.cashback,
           currency: props.currency,
           date: props.date,
+          id: props.id,
+          preimage: props.preimage,
         })
       }
     >

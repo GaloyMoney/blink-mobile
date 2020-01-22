@@ -826,6 +826,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
         amount: invoice.value,
         status: invoice.settled ? "complete" : "in-progress",
         date: parseDate(invoice.creationDate),
+        preimage: invoice.rPreimage,
         memo: invoice.memo,
       }))
 
@@ -835,6 +836,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
         name: `Paid invoice ${payment.paymentHash.slice(0, 7)}...${payment.paymentHash.slice(-8)}`,
         amount: payment.valueSat,
         date: parseDate(payment.creationDate),
+        preimage: payment.paymentPreimage,
         status: "complete", //filter for succeed on ?
       }))
 
