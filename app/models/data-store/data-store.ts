@@ -1,6 +1,6 @@
 import { Instance, SnapshotOut, types, flow, getParentOfType, getEnv, onSnapshot } from "mobx-state-tree"
 import { AccountType, CurrencyType, PendingOpenChannelsStatus, Onboarding } from "../../utils/enum"
-import { Side, IQuoteResponse, IQuoteRequest, IBuyRequest, ISellRequest } from "../../../../common/type"
+import { Side, IQuoteResponse, IQuoteRequest, IBuyRequest } from "../../../../common/type"
 import { parseDate } from "../../utils/date"
 import KeychainAction from "../../utils/keychain"
 import { generateSecureRandom } from "react-native-securerandom"
@@ -96,8 +96,8 @@ export const QuoteModel = types
   .model("Quote", {
     side: types.union(types.literal("buy"), types.literal("sell")), // Side,
     satPrice: types.maybe(types.number),
-    validUntil: types.maybe(types.number),
-    satAmount: types.maybe(types.number),
+    validUntil: types.maybe(types.number), // probably not needed (could be a state in component)
+    satAmount: types.maybe(types.number), // probably not needed (could be a state in component)
     signature: types.maybe(types.string),
     invoice: types.maybe(types.string),
   })
@@ -122,7 +122,9 @@ export const ExchangeModel = types
 
       const now = Date.now() / 1000
       if (now > self.quote.validUntil) {
-        throw new Error(`quote ${self.quote.validUntil} has expired, now is ${now}`)
+        self.quote.reset()
+        throw new Error(`quote ${self.quote.validUntil} has expired, now is ${now}. ` +
+        `Ask for for a new quote`)
       }
     }
     
@@ -138,7 +140,7 @@ export const ExchangeModel = types
             const invoice = yield getParentOfType(self, DataStoreModel).lnd.addInvoice({
               value: satAmount,
               memo: "Buy BTC",
-              expiry: 30, // 30 seconds
+              expiry: 30, // seconds
             })
             request['invoice'] = invoice.paymentRequest
           }
@@ -175,12 +177,11 @@ export const ExchangeModel = types
 
           const result = yield functions().httpsCallable("buyLNDBTC")(request)
           console.tron.log("result BuyLNDBTC", result)
+          return result?.data?.success ?? false
         } catch (err) {
           console.tron.error(err.toString())
           throw err
         }
-
-        self.quote.reset()
       }),
 
       sellLNDBTC: flow(function*() {
@@ -190,12 +191,11 @@ export const ExchangeModel = types
 
           const result = yield getParentOfType(self, DataStoreModel).lnd.payInvoice({ paymentRequest: self.quote.invoice })
           console.tron.log("result SellLNDBTC", result)
+          return result
         } catch (err) {
           console.tron.error(err)
           throw err
         }
-
-        self.quote.reset()
       }),
 }})
 
