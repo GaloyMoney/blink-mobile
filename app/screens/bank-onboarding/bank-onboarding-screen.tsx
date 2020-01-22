@@ -47,15 +47,25 @@ export const OpenBankAccountScreen = () => {
 }
 
 
-export const BankRewardsScreen = () => {
+export const BankRewardsScreen = inject('dataStore')(
+  ({ dataStore }) => {
+
   return (
     <Screen>
+      { dataStore.onboarding.stage == Onboarding.walletOnboarded &&
       <OnboardingScreen next="personalInformation" image={bankLogo}>
         <Text style={styles.text}>You’re just a few minutes away from own Galoy bank account! Order a debit card to receive 1% bitcoin rewards on all spending.</Text>
       </OnboardingScreen>
+      }
+      { dataStore.onboarding.stage == Onboarding.bankOnboarded &&
+        <>
+          <Text>You already have a bank account</Text>
+          <Text>(And this screen should not be accessible, this is a bug)</Text>
+        </>
+      }
     </Screen>
   )
-}
+})
 
 export const PersonalInformationScreen = () => {
   const [firstName, setFirstName] = useState("")
