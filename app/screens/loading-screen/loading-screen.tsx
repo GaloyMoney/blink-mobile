@@ -50,10 +50,11 @@ export const LoadingScreen = withNavigation(
           navigation.navigate("authStack")
         } else {
           switch (dataStore.onboarding.stage) {
-            case Onboarding.phoneVerified:
-              navigation.navigate("welcomeSyncing")
+            case Onboarding.walletOnboarded: 
+            case Onboarding.bankOnboarded:
+              navigation.navigate("primaryStack")
               break
-            case Onboarding.channelCreated: 
+            default:
               const statusChannel = await dataStore.lnd.statusFirstChannelOpen()
               console.tron.log(`statusChannel : ${statusChannel}`)
               switch (statusChannel) {
@@ -64,22 +65,8 @@ export const LoadingScreen = withNavigation(
                   navigation.navigate("welcomebackCompleted")
                   break
                 case PendingOpenChannelsStatus.noChannel:
-                  console.tron.warn("no Channel but user is verified. Because of app reinstall?") 
-                  navigation.navigate("authStack")
-                  break
-                default:
-                  console.tron.error("statusChannel state management error")
-                  navigation.navigate("authStack")
-                  break
-              }
-            case Onboarding.walletOnboarded: 
-            case Onboarding.bankOnboarded:
-              navigation.navigate("primaryStack")
-              break
-            default:
-              const err = "no path for onboarding, state onboarding issue"
-              Alert.alert(err)
-              navigation.navigate("authStack")
+                  navigation.navigate("welcomeSyncing")
+                }
               break
         }
       }}

@@ -3,12 +3,13 @@ import { useState, useEffect } from "react"
 import { Screen } from "../../components/screen"
 import { OnboardingScreen } from "../../components/onboarding"
 import { Text } from "../../components/text"
-import { StyleSheet } from "react-native"
+import { StyleSheet, Alert } from "react-native"
 import { inject, observer } from "mobx-react"
 import { withNavigation } from "react-navigation"
 import { AccountType, CurrencyType, Onboarding } from "../../utils/enum"
 import { GetReward } from "../../components/rewards"
 import { trophyLogo } from "../rewards-screen"
+import { Loader } from "../../components/loader"
 
 export const lightningLogo = require("./LightningBolt.png")
 export const galoyLogo = require("./GaloyLogo.png")
@@ -85,20 +86,45 @@ export const WelcomeBackCompletedScreen = withNavigation(inject("dataStore")(obs
   ({ dataStore, navigation }) => {
 
   const [loading, setLoading] = useState(false)
+  const [err, setErr] = useState("")
+
+  const onGetReward = async () => {
+
+    try {
+      setLoading(true)
+      await GetReward({
+        value: 5000,
+        memo: "App download rewards",
+        lnd: dataStore.lnd,
+        setErr,
+      })
+      dataStore.onboarding.set(Onboarding.walletOnboarded)
+      navigation.navigate("firstReward")
+      setLoading(false)
+    } catch (err) {
+      console.tron.error(err)
+      setErr(err.toString())
+    }
+  }
+
+  useEffect(() => {
+    if (err !== "") {
+      Alert.alert("error", err, [
+        {
+          text: "OK",
+          onPress: () => {
+            setLoading(false)
+          },
+        },
+      ])
+      setErr("")
+    }
+  }, [err])
 
   return (
     <Screen>
-      <GetReward
-        value={5000}
-        memo={"App download rewards"}
-        lnd={dataStore.lnd}
-        next={() => {
-          dataStore.onboarding.set(Onboarding.walletOnboarded)
-          navigation.navigate("firstReward")
-        }}
-        loading={loading}
-      />
-      <OnboardingScreen action={() => setLoading(true)} header="Welcome back!" image={partyPopperLogo}>
+      <Loader loading={loading} />
+      <OnboardingScreen action={onGetReward} header="Welcome back!" image={partyPopperLogo}>
         <Text style={styles.text}>
           Your wallet is ready.{"\n"}
           Now send us a payment request so we can send your sats.

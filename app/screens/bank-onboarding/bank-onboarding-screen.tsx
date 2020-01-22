@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { Screen } from "../../components/screen"
 import { OnboardingScreen } from "../../components/onboarding"
 import { Text } from "../../components/text"
@@ -14,6 +14,7 @@ import { withNavigation } from "react-navigation"
 import functions from "@react-native-firebase/functions"
 import { inject } from "mobx-react"
 import { GetReward } from "../../components/rewards"
+import { Loader } from "../../components/loader"
 
 
 export const bankLogo = require("./BankLogo.png")
@@ -124,33 +125,46 @@ export const DateOfBirthScreen = withNavigation(inject("dataStore")(
 
   const [dateOfBirth, setDateOfBirth] = useState(new Date(2000, 1, 1))
   const [loading, setLoading] = useState(false)
+  const [err, setErr] = useState("")
 
   const onValidate = async () => {
 
     try {
-      const result = await functions().httpsCallable("onBankAccountOpening")
+      setLoading(true)
+      await functions().httpsCallable("onBankAccountOpening")
         ({...navigation.state.params, dateOfBirth: dateOfBirth.toISOString()})
-      setLoading(true) // FIXME setLoading should be done at the previous line?
-                       // but is currently managed by GetRewards
+      await GetReward({
+        value: 100000,
+        memo: "Bank account opening",
+        lnd: dataStore.lnd,
+        setErr
+      })
+      dataStore.onboarding.set(Onboarding.bankOnboarded)
+      navigation.navigate('bankAccountReady')
+      setLoading(false)
     } catch (err) {
       console.tron.error(err)
-      Alert.alert(err.toString())
-      return // TODO : properly show error message
+      setErr(err.toString())
     }
   }
 
+  useEffect(() => {
+    if (err !== "") {
+      Alert.alert("error", err, [
+        {
+          text: "OK",
+          onPress: () => {
+            setLoading(false)
+          },
+        },
+      ])
+      setErr("")
+    }
+  }, [err])
+
   return (
     <Screen>
-      <GetReward
-        value={100000}
-        memo={"Bank account opening"}
-        lnd={dataStore.lnd}
-        next={() => {
-          dataStore.onboarding.set(Onboarding.bankOnboarded)
-          navigation.navigate('bankAccountReady')      
-        }}
-        loading={loading}
-      />
+      <Loader loading={loading} />
       <Text style={styles.text}>Date of Birth</Text>
       <DateTimePicker 
                     mode="date"

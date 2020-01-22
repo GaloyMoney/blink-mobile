@@ -417,18 +417,15 @@ export const LndModel = BaseAccountModel.named("Lnd")
       const { pendingOpenChannels } = yield self.pendingChannels()
       const { channels } = yield self.listChannels()
 
-      let result
-      // TODO be more throrough, eg check that the other pub key
       if (channels.length > 0) {
-        result = PendingOpenChannelsStatus.opened
-      } else if (pendingOpenChannels.length > 0) {
-        result = PendingOpenChannelsStatus.pending
-      } else {
-        result = PendingOpenChannelsStatus.noChannel
+        return PendingOpenChannelsStatus.opened
+      }
+      
+      if (pendingOpenChannels.length > 0) {
+        return PendingOpenChannelsStatus.pending
       }
 
-      console.tron.log("statusFirstChannelOpen", result)
-      return result
+      return PendingOpenChannelsStatus.noChannel
     }),
 
     openChannel: flow(function*() {

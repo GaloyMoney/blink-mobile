@@ -1,4 +1,5 @@
 import * as React from "react"
+import { useState, useEffect } from "react"
 import { Screen } from "../../components/screen"
 import { StyleSheet, Alert, Image, ScrollView } from "react-native"
 import { Text } from "../../components/text"
@@ -9,6 +10,7 @@ import { useNavigation } from "react-navigation-hooks"
 import { palette } from "../../theme/palette"
 import { observer, inject } from "mobx-react"
 import { Onboarding } from "../../utils/enum"
+import { Notifications } from "react-native-notifications"
 
 export const trophyLogo = require("./TrophyLogo.png")
 
@@ -61,6 +63,17 @@ const styles = StyleSheet.create({
 export const RewardsScreen = inject("dataStore")(
     observer(({ dataStore }) => {
 
+    const [hasPermissions, setHasPermissions] = useState(false);
+
+    useEffect(() => {
+        const _ = async () => {
+            setHasPermissions(await Notifications.isRegisteredForRemoteNotifications())
+        }
+
+        _()
+      }, [])
+
+
     const bank = 
     [
         {
@@ -74,18 +87,11 @@ export const RewardsScreen = inject("dataStore")(
             title: 'Activate notifications',
             icon: 'ios-lock',
             badge: "+1,000 sats",
-            fullfilled: false,
+            fullfilled: hasPermissions,
             action: () => navigate('enableNotifications'),
         },
         {
             title: "Make a payment",
-            icon: 'ios-exit',
-            badge: "+1,000 sats",
-            fullfilled: false,
-            action: () => Alert.alert('TODO'),
-        },
-        {
-            title: "Buy your first sats",
             icon: 'ios-exit',
             badge: "+1,000 sats",
             fullfilled: false,
@@ -104,6 +110,13 @@ export const RewardsScreen = inject("dataStore")(
             badge: "+50,000 sats",
             fullfilled: dataStore.onboarding.stage === Onboarding.bankOnboarded,
             action: () => navigate('bankRewards'),
+        },
+        {
+            title: "Buy your first sats",
+            icon: 'ios-exit',
+            badge: "+10,000 sats",
+            fullfilled: false,
+            action: () => Alert.alert('TODO'),
         },
         {
             title: "Activate debit card",

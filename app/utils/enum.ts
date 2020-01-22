@@ -16,7 +16,6 @@ export enum PendingOpenChannelsStatus {
 }
 
 export enum Onboarding {
-  phoneVerified = "phoneVerified",
   channelCreated = "channelCreated",
   walletOnboarded = "walletOnboarded",
   bankOnboarded = "bankOnboarded",
