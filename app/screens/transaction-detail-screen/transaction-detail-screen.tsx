@@ -4,7 +4,6 @@ import { Screen } from "../../components/screen"
 import { Image, View, StyleSheet } from "react-native"
 import { ListItem } from "react-native-elements"
 
-import currency from "currency.js"
 import Icon from "react-native-vector-icons/Ionicons"
 import { color } from "../../theme"
 
@@ -55,6 +54,15 @@ const styles = StyleSheet.create({
   },
 })
 
+const Row = ({input, value}) => {
+  return (
+    <View style={styles.description}>
+      <Text>{input}</Text>
+      <Text style={styles.valueDescription}>{value}</Text>
+    </View>
+  )
+}
+
 export const TransactionDetailScreen: React.FC<> = () => {
   const list = [
     {
@@ -67,12 +75,13 @@ export const TransactionDetailScreen: React.FC<> = () => {
     },
   ]
 
-  
   const date = useNavigationParam("date")
-  console.tron.log('date', date)
   const amount = useNavigationParam("amount")
   const cashback = useNavigationParam("cashback")
   const name = useNavigationParam("name")
+  const currency = useNavigationParam("currency")
+  const id = useNavigationParam("id")
+  const preimage = useNavigationParam("preimage")
 
   const spendOrReceive = amount < 0 ? "spent" : "receive"
 
@@ -94,9 +103,9 @@ export const TransactionDetailScreen: React.FC<> = () => {
       />
 
       <View style={styles.amountView}>
-        <Text style={styles.amountText}>You {spendOrReceive}</Text>
-        <TextCurrency amount={amount} currencyUsed={CurrencyType.USD} fontSize={18} />
-        
+        <Text style={styles.amountText}>You {spendOrReceive}{" "}
+        <TextCurrency amount={amount} currencyUsed={currency} fontSize={18} />
+        </Text>
         {cashback !== undefined && 
           <Text style={styles.amountText}>
             and earned{" "}
@@ -115,56 +124,63 @@ export const TransactionDetailScreen: React.FC<> = () => {
       </View>
 
       <View>
-        <View style={{ flexDirection: "row" }}>
-          <View>
-            <View style={styles.iconView}>
-              <Icon name="ios-pin" style={styles.icon} color={color.primary} size={28} />
-              <View style={{ flexDirection: "column" }}>
-                <Text>3198 16th St,</Text>
-                <Text>San Francisco,</Text>
-                <Text>CA 94103</Text>
+        { currency == CurrencyType.USD && 
+          <View style={{ flexDirection: "row" }}>
+            <View>
+              <View style={styles.iconView}>
+                <Icon name="ios-pin" style={styles.icon} color={color.primary} size={28} />
+                <View style={{ flexDirection: "column" }}>
+                  <Text>3198 16th St,</Text>
+                  <Text>San Francisco,</Text>
+                  <Text>CA 94103</Text>
+                </View>
+              </View>
+              <View style={styles.iconView}>
+                <Icon name="ios-call" style={styles.icon} color={color.primary} size={28} />
+                <Text>(415) 829-8468</Text>
               </View>
             </View>
-            <View style={styles.iconView}>
-              <Icon name="ios-call" style={styles.icon} color={color.primary} size={28} />
-              <Text>(415) 829-8468</Text>
-            </View>
+            <MapView
+              style={styles.map}
+              initialRegion={{
+                latitude: 37.78825,
+                longitude: -122.4324,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+              }}
+            />
           </View>
-          <MapView
-            style={styles.map}
-            initialRegion={{
-              latitude: 37.78825,
-              longitude: -122.4324,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
-            }}
-          />
-        </View>
+        }
       </View>
-      <View style={styles.description}>
-        <Text>Description</Text>
-        <Text style={styles.valueDescription}>{name}</Text>
-      </View>
-      <View style={styles.description}>
-        <Text>Method</Text>
-        <Text style={styles.valueDescription}>In person</Text>
-      </View>
-      <View style={styles.description}>
-        <Text>Category</Text>
-        <Text style={styles.valueDescription}>Food & drinks</Text>
-      </View>
+      <Row input="Description" value={name} />
+      { currency === CurrencyType.USD &&
+        <>
+          <Row input="Method" value="In person" />
+          <Row input="Category" value={"Food & drinks"} />
+        </>
+      }
+      { currency === CurrencyType.BTC &&
+        <>
+          <Row input="Hash" value={id} />
+          { preimage && 
+            <Row input="Preimage" value={preimage} />
+          }
+        </>
+      }
 
-      <View>
-        {list.map((item, i) => (
-          <ListItem
-            key={i}
-            title={item.title}
-            leftIcon={{ name: item.icon }}
-            bottomDivider
-            chevron
-          />
-        ))}
-      </View>
+      { currency === CurrencyType.USD &&      
+        <View>
+          {list.map((item, i) => (
+            <ListItem
+              key={i}
+              title={item.title}
+              leftIcon={{ name: item.icon }}
+              bottomDivider
+              chevron
+            />
+          ))}
+        </View>
+      }
     </Screen>
   )
 }
