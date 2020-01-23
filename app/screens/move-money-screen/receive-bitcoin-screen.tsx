@@ -8,6 +8,7 @@ import { color } from "../../theme";
 import { QRCode } from "../../components/qrcode"
 import { ScrollView } from "react-native-gesture-handler"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
+import { palette } from "../../theme/palette"
 
 const styles = StyleSheet.create({
   qr: {
@@ -17,13 +18,26 @@ const styles = StyleSheet.create({
 
   buttonStyle: {
     backgroundColor: color.primary, flex: 1, width: 120, margin: 5
+  },
+
+  smallText: {
+    fontSize: 18,
+    color: palette.darkGrey,
+    textAlign: 'left',
+    marginBottom: 10,
+  },
+
+  section: {
+    paddingTop: 8,
+    paddingBottom: 8,
+    paddingHorizontal: 20,
   }
+
 })
 
 
-export const ReceiveBitcoinScreen: React.FC
-= inject("dataStore")(
-  observer(({ dataStore }) => {
+export const ReceiveBitcoinScreen: React.FC = inject("dataStore")(observer(
+    ({ dataStore }) => {
 
     const [note, setNote] = useState("")
     const [amount, setAmount] = useState(0)
@@ -33,7 +47,7 @@ export const ReceiveBitcoinScreen: React.FC
     const updateIndex = (index) => {
         console.tron.log('index: ', index)
         if (index ==! 0) {
-            Alert.alert('Only lightning transaction for now')
+            Alert.alert('On-chain provided in future version')
         } 
     }
 
@@ -87,7 +101,7 @@ export const ReceiveBitcoinScreen: React.FC
       // TODO refactor
       ReactNativeHapticFeedback.trigger("notificationSuccess", options)
       
-      Alert.alert("success", "this invoice has been paid")
+      Alert.alert("success", "This invoice has been paid")
 
       setNote("")
       setAmount(0)
@@ -100,21 +114,22 @@ export const ReceiveBitcoinScreen: React.FC
         <Screen>
           <ScrollView style={{flex: 1}}>
             <ButtonGroup
+            selectedIndex={0}
             onPress={updateIndex}
             buttons={buttons}
-            containerStyle={{height: 50}}
+            selectedButtonStyle={{backgroundColor: color.primary}}
             />
             {(dataStore.lnd.lastAddInvoice !== "") &&
               <QRCode style={styles.qr} size={300}>{dataStore.lnd.lastAddInvoice}</QRCode>
             }
-            <View>
-                <Text>Note</Text>
+            <View style={styles.section}>
+                <Text  style={styles.smallText}>Note</Text>
                 <Input placeholder='Optional' 
                     value={note} onChangeText={text => setNote(text)}
                     />
             </View>
-            <View>
-                <Text>Amount</Text>
+            <View style={styles.section}>
+                <Text style={styles.smallText}>Amount</Text>
                 <Input placeholder="0" 
                     value={amount.toString()}
                     onChangeText={input => setAmount(+input)}

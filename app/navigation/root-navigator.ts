@@ -9,7 +9,7 @@ export const RootNavigator = createSwitchNavigator({
   loadingScreen: { screen: LoadingScreen },
   authStack: { screen: AuthNavigator },
   primaryStack: { screen: PrimaryNavigator },
-  bankRewards: { screen: BankAccountOnboardingNavigator },
+  openBankAccount: { screen: BankAccountOnboardingNavigator },
   syncingNavigator: { screen: SyncingNavigator },
   welcomeGenerating: { screen: WelcomeGeneratingWalletScreen },
   walletCompleted: { screen: WalletCompletedNavigator },

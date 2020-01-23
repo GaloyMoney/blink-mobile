@@ -110,7 +110,7 @@ export const AccountsScreen = inject("dataStore")(observer(
   ]
 
   if (dataStore.onboarding.stage == Onboarding.walletOnboarded) {
-    accountTypes[0]['action'] = () => navigate('openBankAccount')
+    accountTypes[0]['action'] = () => navigate('bankAccountRewards')
   }
 
   const onRefresh = React.useCallback(async () => {
@@ -149,7 +149,7 @@ export const AccountsScreen = inject("dataStore")(observer(
 
 AccountsScreen.navigationOptions = screenProps => ({
   title: "Accounts",
-  headerRight: () => <Icon name={"ios-person"} 
+  headerRight: () => <Icon name={"ios-person"}
       size={32}
       color={palette.darkGrey} 
       style={styles.person}

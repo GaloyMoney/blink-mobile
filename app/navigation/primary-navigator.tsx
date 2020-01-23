@@ -9,12 +9,12 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { color } from "../theme"
 import { RewardsScreen } from "../screens/rewards-screen"
 import { MoveMoneyScreen, SendBitcoinScreen, ScanningQRCodeScreen, ReceiveBitcoinScreen, BankTransferScreen, DirectDepositScreen, FindATMScreen } from "../screens/move-money-screen"
-import { OpenBankAccountScreen, PersonalInformationScreen, BankRewardsScreen, DateOfBirthScreen, BankAccountReadyScreen } from "../screens/bank-onboarding"
+import { BankAccountRewardsScreen, PersonalInformationScreen, openBankScreen, DateOfBirthScreen, BankAccountReadyScreen } from "../screens/bank-onboarding"
 import { EnableNotificationsScreen } from "../screens/enable-notifications"
 
 
 export const BankAccountOnboardingNavigator = createStackNavigator({
-  bankRewardsStart: { screen: BankRewardsScreen },
+  openBankStart: { screen: openBankScreen },
   personalInformation: { screen: PersonalInformationScreen },
   dateOfBirth: { screen: DateOfBirthScreen },
   bankAccountReady: { screen: BankAccountReadyScreen },
@@ -29,7 +29,7 @@ export const AccountNavigator = createStackNavigator(
     accounts: { screen: AccountsScreen },
     accountDetail: { screen: AccountDetailScreen },
     transactionDetail: { screen: TransactionDetailScreen },
-    openBankAccount: { screen : OpenBankAccountScreen },
+    bankAccountRewards: { screen : BankAccountRewardsScreen },
 
     demo: { screen: DebugScreen },
   },

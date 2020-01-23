@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from "react"
 import { Screen } from "../../components/screen"
 import { OnboardingScreen } from "../../components/onboarding"
 import { Text } from "../../components/text"
-import { StyleSheet, Alert } from "react-native"
+import { StyleSheet, Alert, View } from "react-native"
 import { BalanceHeader } from "../../components/balance-header"
 import { CurrencyType, AccountType, Onboarding } from "../../utils/enum"
 import { useNavigation } from "react-navigation-hooks"
@@ -15,6 +15,7 @@ import functions from "@react-native-firebase/functions"
 import { inject } from "mobx-react"
 import { GetReward } from "../../components/rewards"
 import { Loader } from "../../components/loader"
+import { color } from "../../theme"
 
 
 export const bankLogo = require("./BankLogo.png")
@@ -23,32 +24,61 @@ export const popcornLogo = require("../welcome-sync/PopcornLogo.png")
 const styles = StyleSheet.create({
   title: {
     fontSize: 20,
+    paddingTop: 60,
     paddingHorizontal: 40,
+    textAlign: "center",
     fontWeight: 'bold'
   },
 
   text: {
+    paddingTop: 100,
     fontSize: 18,
     textAlign: "center",
     paddingHorizontal: 40,
   },
 
+  textInfos: {
+    paddingVertical: 20,
+    fontSize: 18,
+    textAlign: "center",
+    paddingHorizontal: 40,
+  },
+
+  buttonContainer: {
+    paddingTop: 20,
+    paddingHorizontal: 80,
+    paddingBottom: 60,
+  },
+
+  buttonStyle: {
+    backgroundColor: color.primary,
+  },
 })
 
-export const OpenBankAccountScreen = () => {
+export const BankAccountRewardsScreen = () => {
   const { navigate } = useNavigation()
   return (
     <Screen>
       <BalanceHeader headingCurrency={CurrencyType.USD} accountsToAdd={AccountType.Checking} />
       <Text style={styles.title}>Open a Galoy bank account</Text>
       <Text style={styles.text}>Hold US dollars in your account! Order a debit card to earn 1%+ cashback in bitcoin on your spending! And easily buy & sell bitcoin in-app.</Text>
-      <Button title="Open account" onPress={() => navigate('bankRewards')} />
+      <View style={{flex: 1}} />
+      <Button title="Open account" 
+        onPress={() => navigate('openBankAccount')}
+        containerStyle={styles.buttonContainer}
+        buttonStyle={styles.buttonStyle}
+      />
     </Screen>
   )
 }
 
 
-export const BankRewardsScreen = inject('dataStore')(
+BankAccountRewardsScreen.navigationOptions = screenProps => ({
+  title: "Bank Account Rewards",
+})
+
+
+export const openBankScreen = inject('dataStore')(
   ({ dataStore }) => {
 
   return (
@@ -69,12 +99,12 @@ export const BankRewardsScreen = inject('dataStore')(
 })
 
 
-BankRewardsScreen.navigationOptions = screenProps => ({
+openBankScreen.navigationOptions = screenProps => ({
   title: "Bank rewards",
-  headerLeft: (
-    <ButtonNative title="< Back" onPress={() => screenProps.navigation.goBack(null)} />
-  ), // FIXME
+  headerLeft: () =>
+    (<ButtonNative title="< Back" onPress={() => screenProps.navigation.navigate('primaryStack')} />)
 })
+
 
 
 export const PersonalInformationScreen = () => {
@@ -93,7 +123,7 @@ export const PersonalInformationScreen = () => {
 
   return (
     <Screen>
-      <Text style={styles.text}>To get started, tell us about yourself.</Text>
+      <Text style={styles.textInfos}>To get started, tell us about yourself.</Text>
       <Input 
         placeholder='First Name'
         onChangeText={input => setFirstName(input)} 
@@ -121,12 +151,18 @@ export const PersonalInformationScreen = () => {
         blurOnSubmit={true}
         onSubmitEditing={onValidate}
       />
-
-      <Text style={styles.text}>Your information is encrypted and securely transmit using SSL</Text>
-      <Button title="Confirm" onPress={onValidate} />
+      <Text style={styles.textInfos}>Your information is encrypted and securely transmit using SSL</Text>
+      <Button title="Confirm" onPress={onValidate}
+              containerStyle={styles.buttonContainer}
+              buttonStyle={styles.buttonStyle} />
     </Screen>
   )
 }
+
+
+PersonalInformationScreen.navigationOptions = screenProps => ({
+  title: "Personnal informations",
+})
 
 
 export const DateOfBirthScreen = withNavigation(inject("dataStore")(
@@ -174,8 +210,8 @@ export const DateOfBirthScreen = withNavigation(inject("dataStore")(
   return (
     <Screen>
       <Loader loading={loading} />
-      <Text style={styles.text}>Date of Birth</Text>
       <DateTimePicker 
+                    style={{paddingTop: 30}}
                     mode="date"
                     display="default"
                     value={dateOfBirth}
@@ -183,13 +219,18 @@ export const DateOfBirthScreen = withNavigation(inject("dataStore")(
                       setDateOfBirth(input);
                     }} /> 
                     {/* FIXME could timezone be an issue?  */}
-      <Text style={styles.text}>
-        Your information is encrypted and securely transmit using SSL
-      </Text>
-      <Button title="Confirm" onPress={onValidate} />
+      <Text style={styles.textInfos}>Your information is encrypted and securely transmit using SSL</Text>
+      <Button title="Confirm" onPress={onValidate}
+                    containerStyle={styles.buttonContainer}
+                    buttonStyle={styles.buttonStyle} />
     </Screen>
   )
 }))
+
+
+DateOfBirthScreen.navigationOptions = screenProps => ({
+  title: "Date of Birth",
+})
 
 
 export const BankAccountReadyScreen = () => {

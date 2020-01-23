@@ -109,7 +109,7 @@ export const RewardsScreen = inject("dataStore")(
             icon: 'ios-gift',
             badge: "+50,000 sats",
             fullfilled: dataStore.onboarding.stage === Onboarding.bankOnboarded,
-            action: () => navigate('bankRewards'),
+            action: () => navigate('openBankAccount'),
         },
         {
             title: "Buy your first sats",
