@@ -17,14 +17,16 @@ const styles = StyleSheet.create({
   },
 
   buttonStyle: {
-    backgroundColor: color.primary, flex: 1, width: 120, margin: 5
+    backgroundColor: color.primary, 
+    width: 105,
+    margin: 5
   },
 
   smallText: {
     fontSize: 18,
     color: palette.darkGrey,
     textAlign: 'left',
-    marginBottom: 10,
+    // marginBottom: 10,
   },
 
   section: {
@@ -69,10 +71,11 @@ export const ReceiveBitcoinScreen: React.FC = inject("dataStore")(observer(
         } catch (error) {
           Alert.alert(error.message);
         }
-      };
+      }
 
     const copyInvoice = () => {
         Clipboard.setString(dataStore.lnd.lastAddInvoice)
+        Alert.alert("Invoice has been copied in the clipboard")
     }
 
     const createInvoice = async () => {
@@ -120,7 +123,7 @@ export const ReceiveBitcoinScreen: React.FC = inject("dataStore")(observer(
             selectedButtonStyle={{backgroundColor: color.primary}}
             />
             {(dataStore.lnd.lastAddInvoice !== "") &&
-              <QRCode style={styles.qr} size={300}>{dataStore.lnd.lastAddInvoice}</QRCode>
+              <QRCode style={styles.qr} size={280}>{dataStore.lnd.lastAddInvoice}</QRCode>
             }
             <View style={styles.section}>
                 <Text  style={styles.smallText}>Note</Text>
@@ -137,7 +140,7 @@ export const ReceiveBitcoinScreen: React.FC = inject("dataStore")(observer(
                     keyboardType="number-pad"
                     />
             </View>
-            <View style={{flexDirection: "row", margin: 10}}>
+            <View style={{flexDirection: "row", margin: 10, alignContent: "space-between"}}>
               <Button 
                   buttonStyle={styles.buttonStyle}
                   title="Create" onPress={createInvoice}

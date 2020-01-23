@@ -14,7 +14,7 @@ import DeviceInfo from "react-native-device-info"
 import Config from "react-native-config"
 import { Notifications } from "react-native-notifications"
 import { RootStoreModel } from "../root-store"
-import { Alert } from "react-native"
+import { shortenHash } from "../../screens/welcome-sync"
 
 // // FIXME add as a global var
 DeviceInfo.isEmulator().then(isEmulator => {
@@ -826,7 +826,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
       const paymentTxs = self.payments.map(payment => ({
         id: payment.paymentHash,
         icon: "ios-thunderstorm",
-        name: `Paid invoice ${payment.paymentHash.slice(0, 7)}...${payment.paymentHash.slice(-8)}`,
+        name: `Paid invoice ${shortenHash(payment.paymentHash, 2)}`,
         amount: payment.valueSat,
         date: parseDate(payment.creationDate),
         preimage: payment.paymentPreimage,

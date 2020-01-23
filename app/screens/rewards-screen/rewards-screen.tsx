@@ -11,6 +11,7 @@ import { palette } from "../../theme/palette"
 import { observer, inject } from "mobx-react"
 import { Onboarding } from "../../utils/enum"
 import { Notifications } from "react-native-notifications"
+import { playVideo } from "../welcome-sync"
 
 export const trophyLogo = require("./TrophyLogo.png")
 
@@ -70,6 +71,10 @@ export const RewardsScreen = inject("dataStore")(
             setHasPermissions(await Notifications.isRegisteredForRemoteNotifications())
         }
 
+        Notifications.events().registerRemoteNotificationsRegistered(async (event) => {
+            setHasPermissions(true)
+        })
+
         _()
       }, [])
 
@@ -102,7 +107,7 @@ export const RewardsScreen = inject("dataStore")(
             icon: 'ios-school',
             badge: "+1,000 sats",
             fullfilled: false,
-            action: () => Alert.alert('TODO'),
+            action: () => playVideo("XNu5ppFZbHo"),
         },
         {
             title: "Open bank account",

@@ -238,7 +238,7 @@ export const BankAccountReadyScreen = () => {
   return (
     <Screen>
       <OnboardingScreen next="accounts" nextTitle="Okay" image={popcornLogo}>
-        <Text style={styles.text}>Your Galoy bank account is ready!!</Text>
+        <Text style={styles.text}>Your Galoy bank account is ready!</Text>
       </OnboardingScreen>
     </Screen>
   )
@@ -246,5 +246,5 @@ export const BankAccountReadyScreen = () => {
 
 BankAccountReadyScreen.navigationOptions = screenProps => ({
   title: "Bank Account",
-  header: false,
+  header: () => false,
 })

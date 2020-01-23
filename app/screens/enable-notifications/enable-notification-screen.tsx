@@ -34,7 +34,7 @@ export const EnableNotificationsScreen = inject("dataStore")(
             await functions().httpsCallable("sendDeviceToken")({deviceToken: event.deviceToken})
             await GetReward({
                 value: 1000,
-                memo: "Notifications Reward",
+                memo: "Notifications reward",
                 lnd: dataStore.lnd,
                 setErr
             })
