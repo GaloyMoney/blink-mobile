@@ -15,7 +15,7 @@ import { BalanceHeader } from "../../components/balance-header"
 import { DataStore } from "../../models/data-store"
 import { sameDay, sameMonth } from "../../utils/date"
 import { CurrencyText } from "../../components/currency-text"
-import { TouchableHighlight } from "react-native-gesture-handler"
+import { TouchableHighlight, TextInput } from "react-native-gesture-handler"
 import { AccountType, CurrencyType, Onboarding } from "../../utils/enum"
 import { useNavigation, useNavigationParam } from "react-navigation-hooks"
 import { Button } from "react-native-elements"
@@ -91,9 +91,10 @@ const styles = StyleSheet.create({
 
   viewModal: {
     justifyContent: 'flex-end',
-    margin: 0,
-    height: 200,
+    padding: 20,
+    height: 240,
     backgroundColor: palette.white,
+    alignItems: "center",
   },
 })
 
@@ -150,7 +151,7 @@ const VisualExpiration = ({validUntil}) => {
           outputRange: ['100%', '0%'],
         }),
         height: 5,
-        backgroundColor: color.primary,
+        backgroundColor: color.primaryDarker,
       }}
     />
   );
@@ -221,9 +222,11 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
     const [refreshing, setRefreshing] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
     const [sections, setSections] = useState([]);
+  
     const [side, setSide] = useState<Side>("buy");
     const [loading, setLoading] = useState(false)
     const [message, setMessage] = useState("")
+    const [amount, setAmount] = useState(1000)
   
 
     const { navigate } = useNavigation()
@@ -255,7 +258,8 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
 
     const getQuote = async () => {
       try {
-        await dataStore.exchange.quoteLNDBTC(side)
+        // Alert.alert(side)
+        await dataStore.exchange.quoteLNDBTC({side, satAmount: amount})
       } catch (err) {
         Alert.alert(err.toString())
       }
@@ -310,7 +314,7 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
       setRefreshing(true)
       refresh()
       setRefreshing(false)
-    }, [refreshing]);
+    }, [refreshing])
 
     useEffect(() => {
       refresh()
@@ -319,42 +323,56 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
     return (
       <Screen>
         <Modal 
+          style={{marginHorizontal: 0, marginBottom: 0}}
           onModalHide={onModalHide}
           isVisible={modalVisible} 
           swipeDirection={modalVisible ? ['down'] : ['up']}
           onSwipeComplete={() => setModalVisible(false)}
           swipeThreshold={50}
           >
-          <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
-            <View style={styles.flex} />
-          </TouchableWithoutFeedback>
-          { dataStore.onboarding.stage === Onboarding.walletOnboarded &&
+            <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+              <View style={styles.flex} />
+            </TouchableWithoutFeedback>
             <View style={styles.viewModal}>
-              <Text style={styles.itemText}>Open a Galoy bank account</Text>
-              <Text style={styles.itemText}>To {side} bitcoin you will need a Galoy bank account,
-              so you can transfer US dollar</Text>
-              <Button title="Open account" 
-                onPress={() => {setModalVisible(false); navigate('bankRewards')}}  
-              />
+            { dataStore.onboarding.stage === Onboarding.walletOnboarded &&
+                <>
+                  <Text style={styles.itemText}>Open a Galoy bank account</Text>
+                  <Text style={styles.itemText}>To {side} bitcoin you will need a Galoy bank account,
+                  so you can transfer US dollar</Text>
+                  <Button title="Open account" 
+                    onPress={() => {setModalVisible(false); navigate('bankRewards')}}  
+                  />
+                </>
+            }
+            { dataStore.onboarding.stage === Onboarding.bankOnboarded &&
+              <>
+                <Loader loading={loading} />
+                  <View style={{flexDirection: "row", alignContent: "center"}}>
+                    <Text style={[styles.itemText, {paddingVertical: 12}]}>How many sats to {side}:{" "}</Text>
+                    <TextInput value={amount.toString()} onChangeText={text => setAmount(Number.parseInt(text))} 
+                          style={styles.itemText} />
+                  </View>
+                  <Button title={`Get Quote`} onPress={getQuote} 
+                          buttonStyle={styles.button}
+                          containerStyle={[styles.buttonContainer, {width: "100%"}]}
+                    />
+                    <Text style={[styles.itemText, {paddingVertical: 12}]}>
+                      { !isNaN(dataStore.exchange.quote.satPrice) &&
+                        `Price: USD ${(dataStore.exchange.quote.satPrice * 100000000).toFixed(2)}`
+                        || " "
+                      } 
+                    </Text>
+                  <View style={[styles.buttonContainer, {width: "100%"}]}>
+                    <VisualExpiration validUntil={dataStore.exchange.quote.validUntil} />
+                    <Button title={`Validate Quote`} onPress={executeTrade} 
+                      disabled={isNaN(dataStore.exchange.quote.satPrice)}
+                      buttonStyle={styles.button}
+                      />  
+                  </View>
+                </>
+              }
             </View>
-          }
-          { dataStore.onboarding.stage === Onboarding.bankOnboarded &&
-            <>
-              <Loader loading={loading} />
-              <View style={styles.viewModal}>
-                <Text style={styles.itemText}>Get Quote to {side} 1000 sats</Text>
-                <Button title={`Get Quote`} onPress={getQuote} />
-                <Text>Side: {dataStore.exchange.quote.side}</Text>
-                <Text>SatPrice: {dataStore.exchange.quote.satPrice}</Text>
-                {/* <Text>ValidUntil: {dataStore.exchange.quote.validUntil}</Text> */}
-                {/* <Text>Sat amount: {dataStore.exchange.quote.satAmount}</Text> */}
-                <VisualExpiration validUntil={dataStore.exchange.quote.validUntil} />
-                <Button title={`Validate Quote`} onPress={executeTrade} 
-                  disabled={isNaN(dataStore.exchange.quote.satPrice)}/>
-              </View>
-            </>
-          }
-        </Modal>
+          </Modal>
         <BalanceHeader headingCurrency={currency} accountsToAdd={account} />
         { account == AccountType.Bitcoin && 
           <View style={styles.horizontal}>
@@ -375,17 +393,17 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
         }
         { sections.length > 0 && 
           <SectionList
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-          renderItem={({ item, index, section }) => (
-            <AccountDetailItem account={account} currency={currency} {...item} />
-          )}
-          renderSectionHeader={({ section: { title } }) => (
-            <Text style={styles.headerSection}>{title}</Text>
-          )}
-          sections={sections}
-          keyExtractor={(item, index) => item + index}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+            renderItem={({ item, index, section }) => (
+              <AccountDetailItem account={account} currency={currency} {...item} />
+            )}
+            renderSectionHeader={({ section: { title } }) => (
+              <Text style={styles.headerSection}>{title}</Text>
+            )}
+            sections={sections}
+            keyExtractor={(item, index) => item + index}
         />
         }
       </Screen>

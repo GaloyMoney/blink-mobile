@@ -14,6 +14,7 @@ import DeviceInfo from "react-native-device-info"
 import Config from "react-native-config"
 import { Notifications } from "react-native-notifications"
 import { RootStoreModel } from "../root-store"
+import { Alert } from "react-native"
 
 // // FIXME add as a global var
 DeviceInfo.isEmulator().then(isEmulator => {
@@ -121,8 +122,7 @@ export const ExchangeModel = types
     
     return {
 
-      quoteLNDBTC: flow(function*(side: Side, satAmount = 1000) {
-        try {
+      quoteLNDBTC: flow(function*({side, satAmount}) {
           let request: IQuoteRequest = {side}
 
           if (side === "sell") {
@@ -146,13 +146,9 @@ export const ExchangeModel = types
           if (side === "sell") {
             self.quote.satPrice = parseFloat(invoiceJson.description.split(":")[1])
           } 
+
           self.quote.satAmount = invoiceJson.numSatoshis
           self.quote.validUntil = invoiceJson.timestamp + invoiceJson.expiry
-
-        } catch (err) {
-          console.tron.error("quoteBTC: ", err)
-          throw err
-        }
       }),
 
       buyLNDBTC: flow(function*() {

@@ -145,10 +145,12 @@ export const ReceiveBitcoinScreen: React.FC = inject("dataStore")(observer(
               <Button 
                   buttonStyle={styles.buttonStyle}
                   title="Share" onPress={shareInvoice}
+                  disabled={dataStore.lnd.lastAddInvoice === ""}
                   />
               <Button 
                   buttonStyle={styles.buttonStyle}
                   title="Copy" onPress={copyInvoice}
+                  disabled={dataStore.lnd.lastAddInvoice === ""}
                   />
             </View>
           </ScrollView>
