@@ -336,11 +336,13 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
             <View style={styles.viewModal}>
             { dataStore.onboarding.stage === Onboarding.walletOnboarded &&
                 <>
-                  <Text style={styles.itemText}>Open a Galoy bank account</Text>
-                  <Text style={styles.itemText}>To {side} bitcoin you will need a Galoy bank account,
-                  so you can transfer US dollar</Text>
+                  <Text style={[styles.itemText, {marginVertical: 12}]}>Open a Galoy bank account</Text>
+                  <Text style={[styles.itemText, {marginVertical: 12}]}>To {side} bitcoin you will need a Galoy bank account,
+                  so you can transfer US Dollar</Text>
                   <Button title="Open account" 
                     onPress={() => {setModalVisible(false); navigate('bankRewards')}}  
+                    buttonStyle={styles.button}
+                    containerStyle={[styles.buttonContainer, {width: "100%"}]}
                   />
                 </>
             }
@@ -349,7 +351,9 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
                 <Loader loading={loading} />
                   <View style={{flexDirection: "row", alignContent: "center"}}>
                     <Text style={[styles.itemText, {paddingVertical: 12}]}>How many sats to {side}:{" "}</Text>
-                    <TextInput value={amount.toString()} onChangeText={text => setAmount(Number.parseInt(text))} 
+                    <TextInput value={amount.toString()} onChangeText={text => 
+                        setAmount(isNaN(Number.parseInt(text)) ? 0 : Number.parseInt(text) )
+                      } 
                           style={styles.itemText} />
                   </View>
                   <Button title={`Get Quote`} onPress={getQuote} 

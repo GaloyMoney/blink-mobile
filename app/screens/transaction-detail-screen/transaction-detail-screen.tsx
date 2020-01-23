@@ -11,6 +11,7 @@ import MapView from "react-native-maps"
 import { useNavigationParam } from "react-navigation-hooks"
 import { TextCurrency } from "../../components/text-currency"
 import { CurrencyType } from "../../utils/enum"
+import { shortenHash } from "../welcome-sync"
 
 const styles = StyleSheet.create({
   amountText: {
@@ -130,9 +131,9 @@ export const TransactionDetailScreen: React.FC<> = () => {
               <View style={styles.iconView}>
                 <Icon name="ios-pin" style={styles.icon} color={color.primary} size={28} />
                 <View style={{ flexDirection: "column" }}>
-                  <Text>3198 16th St,</Text>
-                  <Text>San Francisco,</Text>
-                  <Text>CA 94103</Text>
+                  <Text>Galoy</Text>
+                  <Text>Silicon Valley</Text>
+                  <Text>CA 94086</Text>
                 </View>
               </View>
               <View style={styles.iconView}>
@@ -155,15 +156,15 @@ export const TransactionDetailScreen: React.FC<> = () => {
       <Row input="Description" value={name} />
       { currency === CurrencyType.USD &&
         <>
-          <Row input="Method" value="In person" />
-          <Row input="Category" value={"Food & drinks"} />
+          <Row input="Method" value="On mobile" />
+          <Row input="Category" value={"BTC Exchange"} />
         </>
       }
       { currency === CurrencyType.BTC &&
         <>
-          <Row input="Hash" value={id} />
+          <Row input="Hash" value={shortenHash(id, 12)} />
           { preimage && 
-            <Row input="Preimage" value={preimage} />
+            <Row input="Preimage" value={shortenHash(preimage, 12)} />
           }
         </>
       }

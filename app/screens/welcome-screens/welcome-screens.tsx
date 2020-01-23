@@ -94,7 +94,7 @@ export const WelcomeBackCompletedScreen = withNavigation(inject("dataStore")(obs
       setLoading(true)
       await GetReward({
         value: 5000,
-        memo: "App download rewards",
+        memo: "App install reward",
         lnd: dataStore.lnd,
         setErr,
       })

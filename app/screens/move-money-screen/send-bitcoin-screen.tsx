@@ -57,12 +57,12 @@ const styles = StyleSheet.create({
     buttonStyle: {
         backgroundColor: color.primary,
         marginHorizontal: 20,
-        marginVertical: 10,
+        marginVertical: 8,
     },
 
     section: {
-        paddingTop: 30,
-        paddingBottom: 20,
+        paddingTop: 12,
+        paddingBottom: 8,
         paddingHorizontal: 20,
     }
 
@@ -257,7 +257,7 @@ export const SendBitcoinScreen: React.FC
                     value={amount.toString()}
                     disabled={!amountless}
                     returnKeyType='done'
-                    keyboardType="number-pad"
+                    keyboardType="number-pad" // TODO, there should be no keyboard here
                     />
             </View>
             <View style={styles.section}>
@@ -271,6 +271,7 @@ export const SendBitcoinScreen: React.FC
             <Button 
                 buttonStyle={styles.buttonStyle}
                 title="Send" onPress={payInvoice}
+                disabled={invoice === ""}
                 />
         </Screen>
     )

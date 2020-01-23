@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
 
 })
 
-const playVideo = videoId => {
+export const playVideo = videoId => {
   YouTubeStandaloneIOS.playVideo(videoId)
     .then(message => console.tron.log(message))
     .catch(errorMessage => console.tron.error(errorMessage))
@@ -184,6 +184,11 @@ export const WelcomeSyncingScreen = withNavigation(
 )
 
 
+// TODO move to utils
+export const shortenHash = (hash: string, length = 4) => {
+  return `${hash.substring(0, length)}...${hash.substring(hash.length - length)}`
+}
+
 export const WelcomeGeneratingWalletScreen = inject("dataStore")(
   observer(({ dataStore, navigation }) => {
     const [fundingTx, setFundingTx] = useState("")
@@ -227,7 +232,7 @@ export const WelcomeGeneratingWalletScreen = inject("dataStore")(
         </View>
         <View style={styles.container}>
           <Text style={styles.text}>
-            This may take a few hours.
+            This may take an hour.
           </Text>
           <Image source={rocketLogo} style={styles.image} />
           <Text style={styles.text}>
@@ -235,7 +240,7 @@ export const WelcomeGeneratingWalletScreen = inject("dataStore")(
           </Text>
         </View>
         <Text style={styles.fundingText} onPress={showFundingTx}>
-          funding tx: {fundingTx.substring(0, 6)}...{fundingTx.substring(fundingTx.length - 6)}
+          funding tx: {shortenHash(fundingTx)}
         </Text>
       </Screen>
     )
