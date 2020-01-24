@@ -52,6 +52,7 @@ export const LoadingScreen = withNavigation(
           switch (dataStore.onboarding.stage) {
             case Onboarding.walletOnboarded: 
             case Onboarding.bankOnboarded:
+              // TODO: manage the case if user and no channels
               navigation.navigate("primaryStack")
               break
             default:

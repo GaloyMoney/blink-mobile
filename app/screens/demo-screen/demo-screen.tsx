@@ -246,12 +246,6 @@ export const DebugScreen = inject("dataStore")(observer(
           <Button
             style={DEMO}
             textStyle={DEMO_TEXT}
-            text="pay invoice"
-            onPress={() => dataStore.lnd.payInvoice(invoice)}
-          />
-          <Button
-            style={DEMO}
-            textStyle={DEMO_TEXT}
             text="list payments"
             onPress={dataStore.lnd.list_payments}
           />

@@ -179,7 +179,7 @@ export const DateOfBirthScreen = withNavigation(inject("dataStore")(
       await functions().httpsCallable("onBankAccountOpening")
         ({...navigation.state.params, dateOfBirth: dateOfBirth.toISOString()})
       await GetReward({
-        value: 100000,
+        value: 10000,
         memo: "Bank account opening",
         lnd: dataStore.lnd,
         setErr
