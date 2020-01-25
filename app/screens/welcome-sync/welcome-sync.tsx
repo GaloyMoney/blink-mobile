@@ -174,7 +174,7 @@ export const WelcomeSyncingScreen = withNavigation(
             title="Create Wallet"
             containerStyle={styles.buttonContainer}
             buttonStyle={styles.buttonStyle}
-            onPress={() => openChannel()}
+            onPress={openChannel}
             disabled={!dataStore.lnd.syncedToChain}
           />
         </Screen>
@@ -208,8 +208,8 @@ export const WelcomeGeneratingWalletScreen = inject("dataStore")(
 
     useEffect(() => {
       const _ = async () => {
-        const { pendingOpenChannels } = await dataStore.lnd.pendingChannels()
-        const channelPoint = pendingOpenChannels[0].channel.channelPoint
+        const { pendingOpenChannels } = await dataStore.lnd.updatePendingChannels()
+        const channelPoint = pendingOpenChannels[0]?.channel.channelPoint
         const funding = channelPoint.split(":")[0]
         setFundingTx(funding)
       }
