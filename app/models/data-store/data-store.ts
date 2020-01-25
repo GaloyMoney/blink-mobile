@@ -236,7 +236,7 @@ export const ExchangeModel = types
 }})
 
 export const FiatAccountModel = BaseAccountModel.props({
-  type: AccountType.Checking,
+  type: AccountType.Bank,
   _transactions: types.array(FiatTransactionModel),
 })
   .actions(self => {
@@ -989,7 +989,7 @@ export const DataStoreModel = types
 
       balances[AccountType.Bitcoin] =
         (self.lnd.balance * (self.rates.rate(self.lnd.currency) / self.rates.rate(currency)))
-      balances[AccountType.Checking] = self.fiat.balance / self.rates.rate(currency)
+      balances[AccountType.Bank] = self.fiat.balance / self.rates.rate(currency)
       balances[AccountType.All] = Object.values(balances).reduce((a, b) => a + b, 0)
 
       return balances[account]

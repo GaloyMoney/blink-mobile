@@ -59,7 +59,7 @@ export const BankAccountRewardsScreen = () => {
   const { navigate } = useNavigation()
   return (
     <Screen>
-      <BalanceHeader headingCurrency={CurrencyType.USD} accountsToAdd={AccountType.Checking} />
+      <BalanceHeader headingCurrency={CurrencyType.USD} accountsToAdd={AccountType.Bank} />
       <Text style={styles.title}>Open a Galoy bank account</Text>
       <Text style={styles.text}>Hold US dollars in your account! Order a debit card to earn 1%+ cashback in bitcoin on your spending! And easily buy & sell bitcoin in-app.</Text>
       <View style={{flex: 1}} />
