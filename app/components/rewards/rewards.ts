@@ -11,7 +11,7 @@ export const GetReward = async ({value, memo, lnd, setErr}) => {
     const result = await functions().httpsCallable("payInvoice")({ invoice })
     console.tron.log(invoice, result)
   } catch (err) {
-      console.tron.debug(String(err) + String(err[2]))
+      console.tron.log(String(err) + String(err[2]))
       setErr(err.toString())
   }
 }
