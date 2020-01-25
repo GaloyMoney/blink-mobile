@@ -27,7 +27,7 @@ export const EnableNotificationsScreen = inject("dataStore")(
     const [err, setErr] = useState("")
 
     Notifications.events().registerRemoteNotificationsRegistered(async (event: Registered) => {
-        Alert.alert("Registered For Remote Push", `Device Token: ${event.deviceToken}`)
+        console.tron.log("Registered For Remote Push", `Device Token: ${event.deviceToken}`)
 
         try {
             setLoading(true)
