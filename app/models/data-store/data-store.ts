@@ -62,6 +62,55 @@ export const InvoiceModel = types.model("Invoice", {
   // many other fields are not copied
 })
 
+export const PendingChannelModel = types.model("Channel", {
+  // [
+  //   "pendingChannels:",
+  //   {
+  //     "pendingOpenChannels": [
+  //       {
+  //         "channel": {
+  //           "remoteNodePub": "029fd0834277b92b6ae1b4afd771f74a2f0e9bbdfc13edcf3e7e3da1590c6fc6d6",
+  //           "channelPoint": "65ccfc3bf905c8c139e9c6fdf887e4c1bc53624cf13ce266ce2f1704b7a37732:1",
+  //           "capacity": "120000",
+  //           "remoteBalance": "119817",
+  //           "localChanReserveSat": "1200",
+  //           "remoteChanReserveSat": "1200"
+  //         },
+  //         "commitFee": "183",
+  //         "commitWeight": "552",
+  //         "feePerKw": "253"
+  //       }
+  //     ]
+  //   }
+  // ]
+  remoteNodePub: types.string,
+  channelPoint: types.string,
+  capacity: types.number,
+  remoteBalance: types.number,
+  localChanReserveSat: types.number,
+  remoteChanReserveSat: types.number,
+})
+
+export const ChannelModel = types.model("Channel", ({
+  active: types.boolean,
+  remotePubkey: types.string,
+  channelPoint: types.string,
+  chanId: types.number,
+  capacity: types.number,
+  remoteBalance: types.number,
+  localBalance: types.optional(types.number, 0),
+  commitFee: types.number,
+  commitWeight: types.number,
+  feePerKw: types.number,
+  totalSatoshisReceived: types.optional(types.number, 0),
+  numUpdates: types.optional(types.number, 0),
+  csvDelay: types.number,
+  private: types.boolean,
+  chanStatusFlags: types.string,
+  localChanReserveSat: types.number,
+  remoteChanReserveSat: types.number
+}))
+
 export const FiatTransactionModel = types.model("Transaction", {
   name: types.string,
   icon: types.string,
@@ -263,6 +312,9 @@ export const LndModel = BaseAccountModel.named("Lnd")
     startBlockHeight: types.maybe(types.number),
     percentSynced: 0,
 
+    pendingChannels: types.array(PendingChannelModel),
+    channels: types.array(ChannelModel),
+
     onchain_transactions: types.array(OnChainTransactionModel),
     invoices: types.array(InvoiceModel),
     payments: types.array(PaymentModel),
@@ -391,6 +443,9 @@ export const LndModel = BaseAccountModel.named("Lnd")
       try {
         const result = yield getEnv(self).lnd.grpc.sendCommand("pendingChannels")
         console.tron.log("pendingChannels:", result)
+        self.pendingChannels = result[0]?.pendingChannels.pendingOpenChannels.map(
+          (item) => item.channel
+        )
         return result
       } catch (err) {
         console.tron.error(err)
@@ -402,6 +457,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
       try {
         const result = yield getEnv(self).lnd.grpc.sendCommand("listChannels")
         console.tron.log("listChannels:", result)
+        self.channels = result.channels.map(input => ({...input})) 
         return result
       } catch (err) {
         console.tron.error(err)

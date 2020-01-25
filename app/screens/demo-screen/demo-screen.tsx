@@ -15,6 +15,7 @@ import auth from "@react-native-firebase/auth"
 import { getSnapshot } from "mobx-state-tree"
 import JSONTree from 'react-native-json-tree'
 import { useNavigation } from "react-navigation-hooks"
+import { palette } from "../../theme/palette"
 
 
 const FULL: ViewStyle = { flex: 1 }
@@ -89,6 +90,26 @@ const CAMERA: ViewStyle = {
   height: 300,
 }
 
+const ChannelLiquidityView = ({chanId, remoteBalance, localBalance}) => { 
+  
+  const balanceInbound = localBalance / ( localBalance + remoteBalance)
+  const balanceWidth = `${balanceInbound * 100}%`
+
+  return (
+    <View style={{
+        borderColor: palette.angry,
+        borderWidth: 1,
+
+      }}>
+      <Text>chanId: {chanId}</Text>
+      <Text>localBalance: {localBalance}</Text>
+      <Text>remoteBalance: {remoteBalance}</Text>
+      <View style={{backgroundColor: palette.darkGrey}}>
+        <View style={{width: balanceWidth, height: 10, backgroundColor: palette.white}} />
+      </View>
+    </View>
+)}
+
 export const DebugScreen = inject("dataStore")(observer(
   ({dataStore}) => {
 
@@ -98,6 +119,10 @@ export const DebugScreen = inject("dataStore")(observer(
   const [json, setJson] = useState(getSnapshot(dataStore))
 
   const { navigate }  = useNavigation()
+  
+  React.useEffect(() => {
+    dataStore.lnd.listChannels()
+  }, [])
 
   const demoReactotron = async () => {
     console.tron.logImportant("I am important")
@@ -140,7 +165,16 @@ export const DebugScreen = inject("dataStore")(observer(
           titleStyle={HEADER_TITLE}
         />
         <JSONTree data={json} />
-        <Text>price: {dataStore.rates.BTC}</Text>
+        <View>
+          <Text>Liquidity</Text>
+          {dataStore.lnd.channels.map((item) => (
+            <ChannelLiquidityView 
+              chanId={item.chanId}
+              remoteBalance={item.remoteBalance}
+              localBalance={item.localBalance}
+             />
+          ))}
+        </View>
         <View>
           <Button
             style={DEMO}
@@ -148,12 +182,7 @@ export const DebugScreen = inject("dataStore")(observer(
             text="Log out"
             onPress={() => auth().signOut()}
           />
-          <Button
-            style={DEMO}
-            textStyle={DEMO_TEXT}
-            text="Go to notifications"
-            onPress={() => navigate('enableNotifications')}
-          />
+          <Text>BTC price: {dataStore.rates.BTC}</Text>
           <Text
             style={TAGLINE}
             text={dataStore.lnd.walletExist ? "Wallet exist" : "Wallet doesn't exist"}
