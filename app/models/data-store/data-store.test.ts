@@ -26,7 +26,7 @@ test("can be created bis - test for duplicated account creation", () => {
 test("fiat accounts have balance and currency", () => {
   const instance: FiatAccount = FiatAccountModel.create({ balance: 100 })
 
-  expect(instance.type).toBe(AccountType.Checking)
+  expect(instance.type).toBe(AccountType.Bank)
   expect(instance.currency).toBe(CurrencyType.USD)
   expect(instance.balance).toBe(100)
 })
@@ -65,9 +65,9 @@ test("default state can be instanciate", () => {
 test("I can get every account from using account[] view", () => {
   const instance: DataStore = DataStoreModel.create({})
 
-  console.log(instance.account(AccountType.Checking))
+  console.log(instance.account(AccountType.Bank))
 
-  expect(instance.account(AccountType.Checking).type).toBe(AccountType.Checking)
+  expect(instance.account(AccountType.Bank).type).toBe(AccountType.Bank)
   expect(instance.account(AccountType.Bitcoin).type).toBe(AccountType.Bitcoin)
 })
 
@@ -76,5 +76,5 @@ test("I can get my balances updated", async () => {
 
   await instance.update_transactions()
 
-  expect(instance.account(AccountType.Checking).balance).toBe(1245.12)
+  expect(instance.account(AccountType.Bank).balance).toBe(1245.12)
 })

@@ -233,7 +233,7 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
 
     const account = useNavigationParam("account")
 
-    const accountStore = account === AccountType.Checking ?
+    const accountStore = account === AccountType.Bank ?
         dataStore.fiat
       : dataStore.lnd
 

@@ -138,7 +138,7 @@ export const defaultDataStore = {
         },
       ],
       balance: 1245.12,
-      type: AccountType.Checking,
+      type: AccountType.Bank,
     },
     {
       transactions: [

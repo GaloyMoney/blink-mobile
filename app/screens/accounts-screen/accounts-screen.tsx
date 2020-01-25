@@ -105,7 +105,7 @@ export const AccountsScreen = inject("dataStore")(observer(
 
   //FIXME type any
   const accountTypes: Array<Record<string, any>> = [
-    { key: "Checking", account: AccountType.Checking, icon: "ios-cash" },
+    { key: "Bank Account", account: AccountType.Bank, icon: "ios-cash" },
     { key: "Bitcoin", account: AccountType.Bitcoin, icon: "logo-bitcoin" },
   ]
 
