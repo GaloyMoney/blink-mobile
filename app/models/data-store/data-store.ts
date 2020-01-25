@@ -108,7 +108,7 @@ export const ChannelModel = types.model("Channel", ({
   private: types.boolean,
   chanStatusFlags: types.string,
   localChanReserveSat: types.number,
-  remoteChanReserveSat: types.number
+  remoteChanReserveSat: types.number,
 }))
 
 export const FiatTransactionModel = types.model("Transaction", {
@@ -439,7 +439,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
       }
     }),
 
-    pendingChannels: flow(function*() {
+    updatePendingChannels: flow(function*() {
       try {
         const result = yield getEnv(self).lnd.grpc.sendCommand("pendingChannels")
         console.tron.log("pendingChannels:", result)
@@ -466,14 +466,14 @@ export const LndModel = BaseAccountModel.named("Lnd")
     }),
 
     statusFirstChannelOpen: flow(function*() {
-      const { pendingOpenChannels } = yield self.pendingChannels()
-      const { channels } = yield self.listChannels()
+      yield self.updatePendingChannels()
+      yield self.listChannels()
 
-      if (channels.length > 0) {
+      if (self.channels.length > 0) {
         return PendingOpenChannelsStatus.opened
       }
       
-      if (pendingOpenChannels.length > 0) {
+      if (self.pendingChannels.length > 0) {
         return PendingOpenChannelsStatus.pending
       }
 

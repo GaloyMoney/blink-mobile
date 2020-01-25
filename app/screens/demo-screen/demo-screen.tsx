@@ -232,24 +232,6 @@ export const DebugScreen = inject("dataStore")(observer(
           <Button
             style={DEMO}
             textStyle={DEMO_TEXT}
-            text="listChannels"
-            onPress={dataStore.lnd.listChannels}
-          />
-          <Button
-            style={DEMO}
-            textStyle={DEMO_TEXT}
-            text="pendingChannels"
-            onPress={dataStore.lnd.pendingChannels}
-          />
-          <Button
-            style={DEMO}
-            textStyle={DEMO_TEXT}
-            text="statusFirstChannelOpen"
-            onPress={dataStore.lnd.statusFirstChannelOpen}
-          />
-          <Button
-            style={DEMO}
-            textStyle={DEMO_TEXT}
             text="add invoice"
             onPress={() => Clipboard.setString(dataStore.lnd.addInvoice({ value: 1000 }))}
           />
