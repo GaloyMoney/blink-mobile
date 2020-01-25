@@ -122,6 +122,7 @@ export const DebugScreen = inject("dataStore")(observer(
   
   React.useEffect(() => {
     dataStore.lnd.listChannels()
+    setJson(getSnapshot(dataStore))
   }, [])
 
   const demoReactotron = async () => {
@@ -166,7 +167,7 @@ export const DebugScreen = inject("dataStore")(observer(
         />
         <JSONTree data={json} />
         <View>
-          <Text>Liquidity</Text>
+          <Text>Open channels</Text>
           {dataStore.lnd.channels.map((item) => (
             <ChannelLiquidityView 
               chanId={item.chanId}
@@ -175,6 +176,10 @@ export const DebugScreen = inject("dataStore")(observer(
              />
           ))}
         </View>
+        <Text>Pending channel opening</Text>
+        <Text>TODO</Text>
+        <Text>Closing channels</Text>
+        <Text>TODO</Text>
         <View>
           <Button
             style={DEMO}

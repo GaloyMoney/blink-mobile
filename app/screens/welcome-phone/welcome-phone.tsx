@@ -8,7 +8,6 @@ import { Button } from "react-native-elements"
 import { withNavigation } from "react-navigation"
 import { TextInput, ScrollView } from "react-native-gesture-handler"
 import { color } from "../../theme"
-import { Loader } from "../../components/loader"
 import PhoneInput from "react-native-phone-input"
 import auth from "@react-native-firebase/auth"
 import { isEmpty } from "ramda"
@@ -133,7 +132,6 @@ export const WelcomePhoneInputScreen = withNavigation(({ text, navigation, heade
 
   return (
     <Screen>
-      <Loader loading={loading} />
       <KeyboardAvoidingView
         keyboardVerticalOffset={-110}
         behavior={Platform.OS === "ios" ? "padding" : undefined}
@@ -161,7 +159,9 @@ export const WelcomePhoneInputScreen = withNavigation(({ text, navigation, heade
             onPress={() => send()}
             containerStyle={styles.buttonContainer}
             buttonStyle={styles.buttonStyle}
-          />
+            loading={loading}
+            disabled={loading}
+            />
         </View>
       </KeyboardAvoidingView>
     </Screen>
@@ -238,7 +238,6 @@ export const WelcomePhoneValidationScreen = inject("dataStore")(
 
   return (
     <Screen>
-      <Loader loading={loading} />
       <KeyboardAvoidingView
         keyboardVerticalOffset={-80}
         behavior={Platform.OS === "ios" ? "padding" : undefined}
@@ -266,6 +265,8 @@ export const WelcomePhoneValidationScreen = inject("dataStore")(
             onPress={() => sendVerif()}
             containerStyle={styles.buttonContainer}
             buttonStyle={styles.buttonStyle}
+            loading={loading}
+            disabled={loading}
           />
         </ScrollView>
       </KeyboardAvoidingView>

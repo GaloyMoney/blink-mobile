@@ -9,7 +9,6 @@ import { color } from "../../theme";
 import { RNCamera } from "react-native-camera";
 import { withNavigation } from "react-navigation";
 import { useNavigation, useNavigationParam } from "react-navigation-hooks";
-import { Loader } from "../../components/loader"
 import { palette } from "../../theme/palette"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 
@@ -228,7 +227,6 @@ export const SendBitcoinScreen: React.FC
 
     return (
         <Screen>
-            <Loader loading={loading} />
             <View style={styles.section}>
                 <Text style={styles.smallText}>To</Text>
                 <View style={styles.horizontalContainer}>
@@ -272,6 +270,7 @@ export const SendBitcoinScreen: React.FC
                 buttonStyle={styles.buttonStyle}
                 title="Send" onPress={payInvoice}
                 disabled={invoice === ""}
+                loading={loading}
                 />
         </Screen>
     )

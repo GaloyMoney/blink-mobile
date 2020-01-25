@@ -91,6 +91,11 @@ export const PendingChannelModel = types.model("Channel", {
   remoteChanReserveSat: types.number,
 })
 
+export const PendingHTLCModel = types.model("PendingHTLC", ({
+  // TODO
+}))
+
+
 export const ChannelModel = types.model("Channel", ({
   active: types.boolean,
   remotePubkey: types.string,
@@ -104,6 +109,7 @@ export const ChannelModel = types.model("Channel", ({
   feePerKw: types.number,
   totalSatoshisReceived: types.optional(types.number, 0),
   numUpdates: types.optional(types.number, 0),
+  pendingHtlcs: types.optional(types.array(types.undefined), []),
   csvDelay: types.number,
   private: types.boolean,
   chanStatusFlags: types.string,

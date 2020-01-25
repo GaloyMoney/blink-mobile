@@ -35,7 +35,9 @@ const styles = StyleSheet.create({
 })
 
 export const OnboardingScreen = withNavigation(
-  ({ children, next /* screen */, nextTitle, action, image, navigation, header = "" }) => {
+  ({ children, next /* screen */, nextTitle, action, 
+    image, navigation, header = "" , loading = false
+  }) => {
     return (
       <>
         <Text style={styles.header}>{header}</Text>
@@ -48,6 +50,8 @@ export const OnboardingScreen = withNavigation(
           onPress={next ? () => navigation.navigate(next) : action}
           containerStyle={styles.buttonContainer}
           buttonStyle={styles.buttonStyle}
+          loading={loading}
+          disabled={loading}
         />
       </>
     )
