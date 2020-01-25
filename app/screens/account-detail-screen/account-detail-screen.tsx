@@ -158,10 +158,7 @@ const VisualExpiration = ({validUntil}) => {
 }
 
 
-const updateTransactions = async (accountStore) => {
-  await accountStore.update()
-
-  let transactions = accountStore.transactions
+const formatFiatTransactions = (transactions) => {
   
   const sections = []
   const today = []
@@ -219,9 +216,15 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
   = inject("dataStore")(
     observer(({ dataStore }) => {
 
+    const account = useNavigationParam("account")
+
+    const accountStore = account === AccountType.Bank ?
+      dataStore.fiat
+    : dataStore.lnd
+
     const [refreshing, setRefreshing] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
-    const [sections, setSections] = useState([]);
+    const [sections, setSections] = useState(formatFiatTransactions(accountStore.transactions));
   
     const [side, setSide] = useState<Side>("buy");
     const [loading, setLoading] = useState(false)
@@ -230,12 +233,6 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
   
 
     const { navigate } = useNavigation()
-
-    const account = useNavigationParam("account")
-
-    const accountStore = account === AccountType.Bank ?
-        dataStore.fiat
-      : dataStore.lnd
 
     const currency = accountStore.currency
 
@@ -307,7 +304,8 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
 
 
     const refresh = async () => {
-      setSections(await updateTransactions(accountStore))
+      await accountStore.update()
+      setSections(formatFiatTransactions(accountStore.transactions))
     }
 
     const onRefresh = React.useCallback(async () => {
