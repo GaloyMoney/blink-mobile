@@ -2,7 +2,7 @@ import * as React from "react"
 import { useState, useEffect } from "react"
 import { observer, inject } from "mobx-react"
 
-import { View, SectionList, StyleSheet, RefreshControl, TouchableWithoutFeedback, Alert, Easing, Animated } from "react-native"
+import { View, SectionList, StyleSheet, RefreshControl, TouchableWithoutFeedback, Alert, Easing, Animated, ActivityIndicator } from "react-native"
 
 import Modal from "react-native-modal";
 
@@ -151,7 +151,7 @@ const VisualExpiration = ({validUntil}) => {
           outputRange: ['100%', '0%'],
         }),
         height: 5,
-        backgroundColor: color.primaryDarker,
+        backgroundColor: fadeAnim.__getValue() === 0 ? color.primaryDarker : color.transparent,
       }}
     />
   );
@@ -230,6 +230,7 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
     const [loading, setLoading] = useState(false)
     const [message, setMessage] = useState("")
     const [amount, setAmount] = useState(1000)
+    const [loadingQuote, setLoadingQuote] = useState(false)
   
 
     const { navigate } = useNavigation()
@@ -255,10 +256,12 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
 
     const getQuote = async () => {
       try {
-        // Alert.alert(side)
+        setLoadingQuote(true)
         await dataStore.exchange.quoteLNDBTC({side, satAmount: amount})
       } catch (err) {
         Alert.alert(err.toString())
+      } finally {
+        setLoadingQuote(false)
       }
     }
     
@@ -356,14 +359,19 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
                   </View>
                   <Button title={`Get Quote`} onPress={getQuote} 
                           buttonStyle={styles.button}
+                          disabled={loadingQuote}
                           containerStyle={[styles.buttonContainer, {width: "100%"}]}
                     />
-                    <Text style={[styles.itemText, {paddingVertical: 12}]}>
-                      { !isNaN(dataStore.exchange.quote.satPrice) &&
-                        `Price: USD ${(dataStore.exchange.quote.satPrice * 100000000).toFixed(2)}`
-                        || " "
-                      } 
-                    </Text>
+                    { loadingQuote && <ActivityIndicator size="small" color={color.primary} style={{height: 46}} />}
+                    { !loadingQuote &&
+                      <Text style={[styles.itemText, {paddingVertical: 12}]}>
+                        {
+                          !isNaN(dataStore.exchange.quote.satPrice) &&
+                          `Price: USD ${(dataStore.exchange.quote.satPrice * 100000000).toFixed(2)}`
+                          || " "
+                        } 
+                      </Text>
+                    }
                   <View style={[styles.buttonContainer, {width: "100%"}]}>
                     <VisualExpiration validUntil={dataStore.exchange.quote.validUntil} />
                     <Button title={`Validate Quote`} onPress={executeTrade} 
