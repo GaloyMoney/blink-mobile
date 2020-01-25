@@ -14,7 +14,6 @@ import { withNavigation } from "react-navigation"
 import functions from "@react-native-firebase/functions"
 import { inject } from "mobx-react"
 import { GetReward } from "../../components/rewards"
-import { Loader } from "../../components/loader"
 import { color } from "../../theme"
 
 
@@ -209,7 +208,6 @@ export const DateOfBirthScreen = withNavigation(inject("dataStore")(
 
   return (
     <Screen>
-      <Loader loading={loading} />
       <DateTimePicker 
                     style={{paddingTop: 30}}
                     mode="date"
@@ -222,7 +220,10 @@ export const DateOfBirthScreen = withNavigation(inject("dataStore")(
       <Text style={styles.textInfos}>Your information is encrypted and securely transmit using SSL</Text>
       <Button title="Confirm" onPress={onValidate}
                     containerStyle={styles.buttonContainer}
-                    buttonStyle={styles.buttonStyle} />
+                    buttonStyle={styles.buttonStyle}
+                    loading={loading}
+                    disabled={loading}
+                    />
     </Screen>
   )
 }))

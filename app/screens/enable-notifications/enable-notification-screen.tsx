@@ -7,7 +7,7 @@ import { Screen } from "../../components/screen"
 import { OnboardingScreen } from "../../components/onboarding"
 import { inject } from "mobx-react"
 import { GetReward } from "../../components/rewards"
-import { Loader } from "../../components/loader"
+import { useNavigation } from "react-navigation-hooks"
 
 export const bellLogo = require("./BellLogo.png")
 
@@ -26,6 +26,8 @@ export const EnableNotificationsScreen = inject("dataStore")(
     const [loading, setLoading] = useState(false)
     const [err, setErr] = useState("")
 
+    const { goBack } = useNavigation()
+
     Notifications.events().registerRemoteNotificationsRegistered(async (event: Registered) => {
         console.tron.log("Registered For Remote Push", `Device Token: ${event.deviceToken}`)
 
@@ -39,6 +41,7 @@ export const EnableNotificationsScreen = inject("dataStore")(
                 setErr
             })
             setLoading(false)
+            goBack(null)
         } catch (err) {
             console.tron.log(err.toString())
             setErr(err.toString())
@@ -65,15 +68,14 @@ export const EnableNotificationsScreen = inject("dataStore")(
 
     return (
         <Screen>
-            <Loader loading={loading} />
-            <OnboardingScreen nextTitle="Activate" 
-                action={() => Notifications.registerRemoteNotifications()} image={bellLogo}>
-                <Text style={styles.text}>
-                Enable notifications to get alerts when you receive payments in the future.
-                {'\n'}{'\n'}
-                Get +1,000 sats
-                </Text>
-            </OnboardingScreen>
+          <OnboardingScreen nextTitle="Activate" loading={loading}
+              action={Notifications.registerRemoteNotifications} image={bellLogo}>
+              <Text style={styles.text}>
+              Enable notifications to get alerts when you receive payments in the future.
+              {'\n'}{'\n'}
+              Get +1,000 sats
+              </Text>
+          </OnboardingScreen>
         </Screen>
 )})
 

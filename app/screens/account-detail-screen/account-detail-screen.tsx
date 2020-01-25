@@ -21,7 +21,6 @@ import { useNavigation, useNavigationParam } from "react-navigation-hooks"
 import { Button } from "react-native-elements"
 import { palette } from "../../theme/palette"
 import { Side } from "../../../../common/type"
-import { Loader } from "../../components/loader"
 
 export interface AccountDetailScreenProps {
   account: AccountType
@@ -341,7 +340,7 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
                   <Text style={[styles.itemText, {marginVertical: 12}]}>To {side} bitcoin you will need a Galoy bank account,
                   so you can transfer US Dollar</Text>
                   <Button title="Open account" 
-                    onPress={() => {setModalVisible(false); navigate('bankRewards')}}  
+                    onPress={() => {setModalVisible(false); navigate('openBankAccount')}}  
                     buttonStyle={styles.button}
                     containerStyle={[styles.buttonContainer, {width: "100%"}]}
                   />
@@ -349,38 +348,38 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
             }
             { dataStore.onboarding.stage === Onboarding.bankOnboarded &&
               <>
-                <Loader loading={loading} />
-                  <View style={{flexDirection: "row", alignContent: "center"}}>
-                    <Text style={[styles.itemText, {paddingVertical: 12}]}>How many sats to {side}:{" "}</Text>
-                    <TextInput value={amount.toString()} onChangeText={text => 
-                        setAmount(isNaN(Number.parseInt(text)) ? 0 : Number.parseInt(text) )
+                <View style={{flexDirection: "row", alignContent: "center"}}>
+                  <Text style={[styles.itemText, {paddingVertical: 12}]}>How many sats to {side}:{" "}</Text>
+                  <TextInput value={amount.toString()} onChangeText={text => 
+                      setAmount(isNaN(Number.parseInt(text)) ? 0 : Number.parseInt(text) )
+                    } 
+                        style={styles.itemText} />
+                </View>
+                <Button title={`Get Quote`} onPress={getQuote} 
+                        buttonStyle={styles.button}
+                        disabled={loadingQuote}
+                        containerStyle={[styles.buttonContainer, {width: "100%"}]}
+                  />
+                  { loadingQuote && <ActivityIndicator size="small" color={color.primary} style={{height: 46}} />}
+                  { !loadingQuote &&
+                    <Text style={[styles.itemText, {paddingVertical: 12}]}>
+                      {
+                        !isNaN(dataStore.exchange.quote.satPrice) &&
+                        `Price: USD ${(dataStore.exchange.quote.satPrice * 100000000).toFixed(2)}`
+                        || " "
                       } 
-                          style={styles.itemText} />
-                  </View>
-                  <Button title={`Get Quote`} onPress={getQuote} 
-                          buttonStyle={styles.button}
-                          disabled={loadingQuote}
-                          containerStyle={[styles.buttonContainer, {width: "100%"}]}
-                    />
-                    { loadingQuote && <ActivityIndicator size="small" color={color.primary} style={{height: 46}} />}
-                    { !loadingQuote &&
-                      <Text style={[styles.itemText, {paddingVertical: 12}]}>
-                        {
-                          !isNaN(dataStore.exchange.quote.satPrice) &&
-                          `Price: USD ${(dataStore.exchange.quote.satPrice * 100000000).toFixed(2)}`
-                          || " "
-                        } 
-                      </Text>
-                    }
-                  <View style={[styles.buttonContainer, {width: "100%"}]}>
-                    <VisualExpiration validUntil={dataStore.exchange.quote.validUntil} />
-                    <Button title={`Validate Quote`} onPress={executeTrade} 
-                      disabled={isNaN(dataStore.exchange.quote.satPrice)}
-                      buttonStyle={styles.button}
-                      />  
-                  </View>
-                </>
-              }
+                    </Text>
+                  }
+                <View style={[styles.buttonContainer, {width: "100%"}]}>
+                  <VisualExpiration validUntil={dataStore.exchange.quote.validUntil} />
+                  <Button title={`Validate Quote`} onPress={executeTrade} 
+                    disabled={loading || isNaN(dataStore.exchange.quote.satPrice)}
+                    loading={loading}
+                    buttonStyle={styles.button}
+                    />  
+                </View>
+              </>
+            }
             </View>
           </Modal>
         <BalanceHeader headingCurrency={currency} accountsToAdd={account} />

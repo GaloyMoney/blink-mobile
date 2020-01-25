@@ -9,7 +9,6 @@ import { withNavigation } from "react-navigation"
 import { AccountType, CurrencyType, Onboarding } from "../../utils/enum"
 import { GetReward } from "../../components/rewards"
 import { trophyLogo } from "../rewards-screen"
-import { Loader } from "../../components/loader"
 
 export const lightningLogo = require("./LightningBolt.png")
 export const galoyLogo = require("./GaloyLogo.png")
@@ -123,8 +122,12 @@ export const WelcomeBackCompletedScreen = withNavigation(inject("dataStore")(obs
 
   return (
     <Screen>
-      <Loader loading={loading} />
-      <OnboardingScreen action={onGetReward} header="Welcome back!" image={partyPopperLogo}>
+      <OnboardingScreen 
+        action={onGetReward}
+        header="Welcome back!"
+        image={partyPopperLogo}
+        loading={loading}
+      >
         <Text style={styles.text}>
           Your wallet is ready.{"\n"}
           Now send us a payment request so we can send your sats.

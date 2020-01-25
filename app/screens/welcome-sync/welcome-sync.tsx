@@ -12,7 +12,6 @@ import { Image, StyleSheet, View, Alert, Linking } from "react-native"
 import { withNavigation } from "react-navigation"
 
 import { color } from "../../theme"
-import { Loader } from "../../components/loader"
 import { PendingOpenChannelsStatus, Onboarding } from "../../utils/enum"
 import { palette } from "../../theme/palette"
 
@@ -128,7 +127,6 @@ export const WelcomeSyncingScreen = withNavigation(
 
       return (
         <Screen>
-          <Loader loading={loading} />
           <View style={{ alignContent: "center", width: "100%" }}>
               { !dataStore.lnd.syncedToChain &&
               <Text style={[styles.text, { fontWeight: "bold" }]}>
@@ -176,6 +174,7 @@ export const WelcomeSyncingScreen = withNavigation(
             buttonStyle={styles.buttonStyle}
             onPress={openChannel}
             disabled={!dataStore.lnd.syncedToChain}
+            loading={loading}
           />
         </Screen>
       )
