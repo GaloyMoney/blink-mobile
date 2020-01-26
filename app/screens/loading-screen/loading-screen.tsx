@@ -6,7 +6,7 @@ import { useEffect } from "react"
 import { ActivityIndicator, StyleSheet, View, Alert } from "react-native"
 import { withNavigation } from "react-navigation"
 import { color } from "../../theme"
-import { PendingOpenChannelsStatus, Onboarding } from "../../utils/enum"
+import { PendingFirstChannelsStatus, Onboarding } from "../../utils/enum"
 
 const styles = StyleSheet.create({
   centerBackground: {
@@ -17,11 +17,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#00000040",
   },
   activityIndicatorWrapper: {
-    backgroundColor: "#FFFFFF",
-    height: 100,
-    width: 100,
-    borderRadius: 10,
-    display: "flex",
+    // backgroundColor: "#FFFFFF",
+    // height: 100,
+    // width: 100,
+    // borderRadius: 10,
+    // display: "flex",
     alignItems: "center",
     justifyContent: "space-around",
   },
@@ -49,6 +49,7 @@ export const LoadingScreen = withNavigation(
           // new install or no data yet
           navigation.navigate("authStack")
         } else {
+          const statusChannel = await dataStore.lnd.statusFirstChannelOpen()
           switch (dataStore.onboarding.stage) {
             case Onboarding.walletOnboarded: 
             case Onboarding.bankOnboarded:
@@ -56,16 +57,15 @@ export const LoadingScreen = withNavigation(
               navigation.navigate("primaryStack")
               break
             default:
-              const statusChannel = await dataStore.lnd.statusFirstChannelOpen()
               console.tron.log(`statusChannel : ${statusChannel}`)
               switch (statusChannel) {
-                case PendingOpenChannelsStatus.pending:
+                case PendingFirstChannelsStatus.pending:
                   navigation.navigate("welcomeGenerating")
                   break
-                case PendingOpenChannelsStatus.opened:
+                case PendingFirstChannelsStatus.opened:
                   navigation.navigate("welcomebackCompleted")
                   break
-                case PendingOpenChannelsStatus.noChannel:
+                case PendingFirstChannelsStatus.noChannel:
                   navigation.navigate("welcomeSyncing")
                 }
               break

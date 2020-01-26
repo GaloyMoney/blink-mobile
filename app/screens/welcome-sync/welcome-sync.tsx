@@ -12,7 +12,7 @@ import { Image, StyleSheet, View, Alert, Linking } from "react-native"
 import { withNavigation } from "react-navigation"
 
 import { color } from "../../theme"
-import { PendingOpenChannelsStatus, Onboarding } from "../../utils/enum"
+import { PendingFirstChannelsStatus, Onboarding } from "../../utils/enum"
 import { palette } from "../../theme/palette"
 
 
@@ -195,7 +195,7 @@ export const WelcomeGeneratingWalletScreen = inject("dataStore")(
     const checkChannel = async () => {
       console.tron.log("check channel looping")
       const statusChannel = await dataStore.lnd.statusFirstChannelOpen()
-      if (statusChannel == PendingOpenChannelsStatus.opened) {
+      if (statusChannel == PendingFirstChannelsStatus.opened) {
         navigation.navigate("welcomebackCompleted")
       }
     }
@@ -207,9 +207,8 @@ export const WelcomeGeneratingWalletScreen = inject("dataStore")(
 
     useEffect(() => {
       const _ = async () => {
-        const { pendingOpenChannels } = await dataStore.lnd.updatePendingChannels()
-        const channelPoint = pendingOpenChannels[0]?.channel.channelPoint
-        const funding = channelPoint.split(":")[0]
+        await dataStore.lnd.updatePendingChannels()
+        const funding = dataStore.lnd.pendingChannels[0]?.channelPoint.split(":")[0]
         setFundingTx(funding)
       }
 
@@ -221,8 +220,6 @@ export const WelcomeGeneratingWalletScreen = inject("dataStore")(
         console.error("Couldn't load page", err),
       )
     }
-
-    console.tron.warn(typeof fundingTx, fundingTx)
 
     return (
       <Screen>

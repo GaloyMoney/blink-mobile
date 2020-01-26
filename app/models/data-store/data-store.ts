@@ -1,5 +1,5 @@
 import { Instance, SnapshotOut, types, flow, getParentOfType, getEnv, onSnapshot } from "mobx-state-tree"
-import { AccountType, CurrencyType, PendingOpenChannelsStatus, Onboarding } from "../../utils/enum"
+import { AccountType, CurrencyType, PendingFirstChannelsStatus as PendingFirstChannelsStatus, Onboarding } from "../../utils/enum"
 import { Side, IQuoteResponse, IQuoteRequest, IBuyRequest } from "../../../../common/type"
 import { parseDate } from "../../utils/date"
 import KeychainAction from "../../utils/keychain"
@@ -83,13 +83,20 @@ export const PendingChannelModel = types.model("Channel", {
   //     ]
   //   }
   // ]
-  remoteNodePub: types.string,
-  channelPoint: types.string,
-  capacity: types.number,
-  remoteBalance: types.number,
-  localChanReserveSat: types.number,
-  remoteChanReserveSat: types.number,
-})
+
+  // channel: types.model({
+      remoteNodePub: types.string,
+      channelPoint: types.string,
+      capacity: types.number,
+      remoteBalance: types.number,
+      localChanReserveSat: types.number,
+      remoteChanReserveSat: types.number,
+    // }),
+    // commitFee: types.number,
+    // commitWeight: types.number,
+    // feePerKw: types.number
+  })
+
 
 export const PendingHTLCModel = types.model("PendingHTLC", ({
   // TODO
@@ -97,7 +104,7 @@ export const PendingHTLCModel = types.model("PendingHTLC", ({
 
 
 export const ChannelModel = types.model("Channel", ({
-  active: types.boolean,
+  active: types.maybe(types.boolean),
   remotePubkey: types.string,
   channelPoint: types.string,
   chanId: types.number,
@@ -448,11 +455,10 @@ export const LndModel = BaseAccountModel.named("Lnd")
     updatePendingChannels: flow(function*() {
       try {
         const result = yield getEnv(self).lnd.grpc.sendCommand("pendingChannels")
-        console.tron.log("pendingChannels:", result)
-        self.pendingChannels = result[0]?.pendingChannels.pendingOpenChannels.map(
-          (item) => item.channel
-        )
-        return result
+        console.tron.log('pendingChannels', result)
+        const pendingChannels = result.pendingOpenChannels?.map(input => ({...input.channel}))
+        console.tron.log("pendingChannels:", pendingChannels)
+        self.pendingChannels = pendingChannels
       } catch (err) {
         console.tron.error(err)
         throw err
@@ -462,10 +468,11 @@ export const LndModel = BaseAccountModel.named("Lnd")
     listChannels: flow(function*() {
       try {
         const result = yield getEnv(self).lnd.grpc.sendCommand("listChannels")
-        console.tron.log("listChannels:", result)
-        self.channels = result.channels.map(input => ({...input})) 
-        return result
+        const channels = result.channels.map(input => ({...input})) 
+        console.tron.log("listChannels:", channels)
+        self.channels = channels
       } catch (err) {
+        console.tron.error('list channels issue')
         console.tron.error(err)
         throw err
       }
@@ -476,14 +483,14 @@ export const LndModel = BaseAccountModel.named("Lnd")
       yield self.listChannels()
 
       if (self.channels.length > 0) {
-        return PendingOpenChannelsStatus.opened
+        return PendingFirstChannelsStatus.opened
       }
       
       if (self.pendingChannels.length > 0) {
-        return PendingOpenChannelsStatus.pending
+        return PendingFirstChannelsStatus.pending
       }
 
-      return PendingOpenChannelsStatus.noChannel
+      return PendingFirstChannelsStatus.noChannel
     }),
 
     openChannel: flow(function*() {

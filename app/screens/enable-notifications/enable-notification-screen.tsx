@@ -69,7 +69,7 @@ export const EnableNotificationsScreen = inject("dataStore")(
     return (
         <Screen>
           <OnboardingScreen nextTitle="Activate" loading={loading}
-              action={Notifications.registerRemoteNotifications} image={bellLogo}>
+              action={() => Notifications.registerRemoteNotifications()} image={bellLogo}>
               <Text style={styles.text}>
               Enable notifications to get alerts when you receive payments in the future.
               {'\n'}{'\n'}
