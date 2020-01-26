@@ -7,7 +7,7 @@ import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
 import { createBottomTabNavigator } from "react-navigation-tabs"
 import Icon from "react-native-vector-icons/Ionicons"
 import { color } from "../theme"
-import { RewardsScreen } from "../screens/rewards-screen"
+import { RewardsScreen, WalletBackupScreen } from "../screens/rewards-screen"
 import { MoveMoneyScreen, SendBitcoinScreen, ScanningQRCodeScreen, ReceiveBitcoinScreen, BankTransferScreen, DirectDepositScreen, FindATMScreen } from "../screens/move-money-screen"
 import { BankAccountRewardsScreen, PersonalInformationScreen, openBankScreen, DateOfBirthScreen, BankAccountReadyScreen } from "../screens/bank-onboarding"
 import { EnableNotificationsScreen } from "../screens/enable-notifications"
@@ -58,6 +58,7 @@ export const RewardsNavigator = createStackNavigator(
   {
     rewards: { screen: RewardsScreen },
     enableNotifications: { screen: EnableNotificationsScreen },
+    walletBackup: { screen: WalletBackupScreen },
   },
   {
     headerMode: "float",
