@@ -86,7 +86,7 @@ export const RewardsScreen = inject("dataStore")(
             icon: 'ios-lock',
             badge: "+1,000 sats",
             fullfilled: false,
-            action: () => Alert.alert('TODO'),
+            action: () => navigate('walletBackup'),
         },
         {
             title: 'Activate notifications',

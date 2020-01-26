@@ -559,6 +559,8 @@ PODS:
     - RNFBApp
   - RNGestureHandler (1.5.3):
     - React
+  - RNICloudStore (0.1.0):
+    - React
   - RNKeychain (4.0.5):
     - React
   - RNLocalize (1.3.2):
@@ -623,6 +625,7 @@ DEPENDENCIES:
   - "RNFBFirestore (from `../node_modules/@react-native-firebase/firestore`)"
   - "RNFBFunctions (from `../node_modules/@react-native-firebase/functions`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - RNICloudStore (from `../node_modules/react-native-icloudstore`)
   - RNKeychain (from `../node_modules/react-native-keychain`)
   - RNLocalize (from `../node_modules/react-native-localize`)
   - RNReactNativeHapticFeedback (from `../node_modules/react-native-haptic-feedback`)
@@ -749,6 +752,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/functions"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
+  RNICloudStore:
+    :path: "../node_modules/react-native-icloudstore"
   RNKeychain:
     :path: "../node_modules/react-native-keychain"
   RNLocalize:
@@ -834,6 +839,7 @@ SPEC CHECKSUMS:
   RNFBFirestore: 5de4ae898df51a3ecc16a45db15019836c5cec87
   RNFBFunctions: 04ab4f777106d8a20ed1c9c2116f24014c23d61a
   RNGestureHandler: 02905abe54e1f6e59c081a10b4bd689721e17aa6
+  RNICloudStore: bc6e225811637c09bd1eb055d6cd7448e61cd451
   RNKeychain: 840f8e6f13be0576202aefcdffd26a4f54bfe7b5
   RNLocalize: 08eb68476e1f2d8cacd75fa919bf5e219fb03b19
   RNReactNativeHapticFeedback: e11a4da0ce174e9f88b03cbaf5d76d94633cdee2
