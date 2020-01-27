@@ -6,9 +6,9 @@ import { Text } from "../../components/text"
 import { StyleSheet, Alert } from "react-native"
 import { inject, observer } from "mobx-react"
 import { withNavigation } from "react-navigation"
-import { AccountType, CurrencyType, Onboarding } from "../../utils/enum"
-import { GetReward } from "../../components/rewards"
+import { AccountType, CurrencyType } from "../../utils/enum"
 import { trophyLogo } from "../rewards-screen"
+import { Onboarding } from "../../../../common/types"
 
 export const lightningLogo = require("./LightningBolt.png")
 export const galoyLogo = require("./GaloyLogo.png")

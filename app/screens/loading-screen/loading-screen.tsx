@@ -6,7 +6,6 @@ import { useEffect } from "react"
 import { ActivityIndicator, StyleSheet, View, Alert } from "react-native"
 import { withNavigation } from "react-navigation"
 import { color } from "../../theme"
-import { PendingFirstChannelsStatus, Onboarding } from "../../utils/enum"
 
 const styles = StyleSheet.create({
   centerBackground: {
@@ -39,8 +38,6 @@ export const LoadingScreen = withNavigation(
         startLnd()
       }, [])
 
-      //  await saveString('onboarding', '') // for debug FIXME
-
       const onAuthStateChanged = async user => {
         // TODO : User type
         console.tron.log(`onAuthStateChanged`, user)
@@ -49,6 +46,9 @@ export const LoadingScreen = withNavigation(
           // new install or no data yet
           navigation.navigate("authStack")
         } else {
+          navigation.navigate("primaryStack")
+
+          /*
           const statusChannel = await dataStore.lnd.statusFirstChannelOpen()
           switch (dataStore.onboarding.stage) {
             case Onboarding.walletOnboarded: 
@@ -69,7 +69,8 @@ export const LoadingScreen = withNavigation(
                   navigation.navigate("welcomeSyncing")
                 }
               break
-        }
+          */
+        
       }}
 
 useEffect(() => {

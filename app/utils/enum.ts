@@ -14,9 +14,3 @@ export enum PendingFirstChannelsStatus {
   opened = "opened",
   noChannel = "noChannel",
 }
-
-export enum Onboarding {
-  channelCreated = "channelCreated",
-  walletOnboarded = "walletOnboarded",
-  bankOnboarded = "bankOnboarded",
-}

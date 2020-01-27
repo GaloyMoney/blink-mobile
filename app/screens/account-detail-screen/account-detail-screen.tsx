@@ -16,11 +16,11 @@ import { DataStore } from "../../models/data-store"
 import { sameDay, sameMonth } from "../../utils/date"
 import { CurrencyText } from "../../components/currency-text"
 import { TouchableHighlight, TextInput } from "react-native-gesture-handler"
-import { AccountType, CurrencyType, Onboarding } from "../../utils/enum"
+import { AccountType, CurrencyType } from "../../utils/enum"
 import { useNavigation, useNavigationParam } from "react-navigation-hooks"
 import { Button } from "react-native-elements"
 import { palette } from "../../theme/palette"
-import { Side } from "../../../../common/type"
+import { Side, Onboarding } from "types"
 
 export interface AccountDetailScreenProps {
   account: AccountType
@@ -334,7 +334,7 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
               <View style={styles.flex} />
             </TouchableWithoutFeedback>
             <View style={styles.viewModal}>
-            { dataStore.onboarding.stage === Onboarding.walletOnboarded &&
+            { !dataStore.onboarding.has(Onboarding.bankOnboarded) &&
                 <>
                   <Text style={[styles.itemText, {marginVertical: 12}]}>Open a Galoy bank account</Text>
                   <Text style={[styles.itemText, {marginVertical: 12}]}>To {side} bitcoin you will need a Galoy bank account,
@@ -346,7 +346,7 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
                   />
                 </>
             }
-            { dataStore.onboarding.stage === Onboarding.bankOnboarded &&
+            { dataStore.onboarding.has(Onboarding.bankOnboarded) &&
               <>
                 <View style={{flexDirection: "row", alignContent: "center"}}>
                   <Text style={[styles.itemText, {paddingVertical: 12}]}>How many sats to {side}:{" "}</Text>

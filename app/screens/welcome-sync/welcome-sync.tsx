@@ -6,14 +6,16 @@ import { observer, inject } from "mobx-react"
 
 import * as Progress from "react-native-progress"
 
-import { YouTubeStandaloneIOS } from "react-native-youtube"
-import { Button, ListItem } from "react-native-elements"
+import { Button } from "react-native-elements"
 import { Image, StyleSheet, View, Alert, Linking } from "react-native"
 import { withNavigation } from "react-navigation"
 
 import { color } from "../../theme"
-import { PendingFirstChannelsStatus, Onboarding } from "../../utils/enum"
+import { PendingFirstChannelsStatus } from "../../utils/enum"
 import { palette } from "../../theme/palette"
+import { shortenHash } from "../../utils/helper"
+import { useNavigation } from "react-navigation-hooks"
+import { Onboarding } from "../../../../common/types"
 
 
 export const popcornLogo = require("./PopcornLogo.png")
@@ -80,11 +82,6 @@ const styles = StyleSheet.create({
 
 })
 
-export const playVideo = videoId => {
-  YouTubeStandaloneIOS.playVideo(videoId)
-    .then(message => console.tron.log(message))
-    .catch(errorMessage => console.tron.error(errorMessage))
-}
 
 export const WelcomeSyncingScreen = withNavigation(
   inject("dataStore")(
@@ -102,7 +99,7 @@ export const WelcomeSyncingScreen = withNavigation(
   
           const funding_tx = await dataStore.lnd.openChannel()
   
-          await dataStore.onboarding.set(Onboarding.channelCreated)
+          await dataStore.onboarding.add(Onboarding.channelCreated)
 
           setLoading(false)
           navigation.navigate("welcomeGeneratingWallet")
@@ -149,21 +146,10 @@ export const WelcomeSyncingScreen = withNavigation(
             <>
               <Image source={popcornLogo} style={styles.image} />
               <Text style={styles.text}>
-                Almost ready to launch your wallet! This could take a minute.{"\n"}
-                {"\n"}
-                Earn another reward{"\n"}while you wait:
+                Almost ready to launch your wallet! This could take a minute.
               </Text>
-              <ListItem
-                titleStyle={styles.textButton}
-                style={styles.button}
-                key={0}
-                title="What is money?"
-                // leftIcon={<Icon name={item.icon} style={styles.icon} size={32} color={color.primary} />}
-                onPress={() => playVideo("XNu5ppFZbHo")}
-                badge={{value: "+1,000 sats", badgeStyle: {backgroundColor: color.primary}}}
-                chevron
-              />
-            </>}
+            </>
+            }
             { dataStore.lnd.syncedToChain &&
               <Text style={styles.text}>We are ready to launch your wallet</Text>
             }
@@ -182,21 +168,17 @@ export const WelcomeSyncingScreen = withNavigation(
   ),
 )
 
-
-// TODO move to utils
-export const shortenHash = (hash: string, length = 4) => {
-  return `${hash.substring(0, length)}...${hash.substring(hash.length - length)}`
-}
-
 export const WelcomeGeneratingWalletScreen = inject("dataStore")(
-  observer(({ dataStore, navigation }) => {
+  observer(({ dataStore }) => {
     const [fundingTx, setFundingTx] = useState("")
+
+    const { navigate } = useNavigation()
 
     const checkChannel = async () => {
       console.tron.log("check channel looping")
       const statusChannel = await dataStore.lnd.statusFirstChannelOpen()
       if (statusChannel == PendingFirstChannelsStatus.opened) {
-        navigation.navigate("welcomebackCompleted")
+        navigate("welcomebackCompleted")
       }
     }
 

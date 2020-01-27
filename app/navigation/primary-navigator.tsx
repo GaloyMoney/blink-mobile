@@ -7,10 +7,11 @@ import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
 import { createBottomTabNavigator } from "react-navigation-tabs"
 import Icon from "react-native-vector-icons/Ionicons"
 import { color } from "../theme"
-import { RewardsScreen, WalletBackupScreen } from "../screens/rewards-screen"
+import { RewardsScreen, WalletBackupScreen, RewardsVideoScreen } from "../screens/rewards-screen"
 import { MoveMoneyScreen, SendBitcoinScreen, ScanningQRCodeScreen, ReceiveBitcoinScreen, BankTransferScreen, DirectDepositScreen, FindATMScreen } from "../screens/move-money-screen"
 import { BankAccountRewardsScreen, PersonalInformationScreen, openBankScreen, DateOfBirthScreen, BankAccountReadyScreen } from "../screens/bank-onboarding"
 import { EnableNotificationsScreen } from "../screens/enable-notifications"
+import { WelcomeSyncingScreen, WelcomeGeneratingWalletScreen } from "../screens/welcome-sync"
 
 
 export const BankAccountOnboardingNavigator = createStackNavigator({
@@ -59,6 +60,14 @@ export const RewardsNavigator = createStackNavigator(
     rewards: { screen: RewardsScreen },
     enableNotifications: { screen: EnableNotificationsScreen },
     walletBackup: { screen: WalletBackupScreen },
+    welcomeSyncing: { screen: WelcomeSyncingScreen },
+    welcomeGeneratingWallet: { screen: WelcomeGeneratingWalletScreen },
+    rewardsVideo : { screen: RewardsVideoScreen },
+
+//  syncingNavigator: { screen: SyncingNavigator },
+// welcomeGenerating: { screen: WelcomeGeneratingWalletScreen },
+// walletCompleted: { screen: WalletCompletedNavigator },
+
   },
   {
     headerMode: "float",

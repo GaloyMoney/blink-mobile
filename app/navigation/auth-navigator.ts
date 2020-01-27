@@ -6,17 +6,9 @@ import {
   WelcomeBankScreen,
   WelcomeEarnScreen,
   WelcomeFirstSatsScreen,
-  WelcomeBackCompletedScreen,
-  FirstRewardScreen,
-  AllDoneScreen,
 } from "../screens/welcome-screens"
 
 import { WelcomePhoneInputScreen, WelcomePhoneValidationScreen } from "../screens/welcome-phone"
-import {
-  WelcomeSyncingScreen,
-  WelcomeGeneratingWalletScreen,
-
-} from "../screens/welcome-sync"
 import { DebugScreen } from "../screens/demo-screen"
 import { color } from "../theme"
 
@@ -42,24 +34,13 @@ export const AuthNavigator = createStackNavigator(
   },
 )
 
-export const SyncingNavigator = createStackNavigator(
-  {
-    welcomeSyncing: { screen: WelcomeSyncingScreen },
-    welcomeGeneratingWallet: { screen: WelcomeGeneratingWalletScreen },
-
-  },
-  {
-    headerMode: "none",
-  },
-)
-
-export const WalletCompletedNavigator = createStackNavigator(
-  {
-    welcomebackCompleted: { screen: WelcomeBackCompletedScreen },
-    firstReward: { screen: FirstRewardScreen },
-    allDone: { screen: AllDoneScreen },
-  },
-  {
-    headerMode: "none",
-  },
-)
+// export const WalletCompletedNavigator = createStackNavigator(
+//   {
+//     welcomebackCompleted: { screen: WelcomeBackCompletedScreen },
+//     firstReward: { screen: FirstRewardScreen },
+//     allDone: { screen: AllDoneScreen },
+//   },
+//   {
+//     headerMode: "none",
+//   },
+// )
