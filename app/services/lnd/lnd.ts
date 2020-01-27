@@ -119,7 +119,7 @@ export class Lnd {
   async start() {
     console.trace()
 
-    this.grpc.startLnd()
+    await this.grpc.startLnd()
 
     await this.setCallback()
 
