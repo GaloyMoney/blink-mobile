@@ -1,6 +1,6 @@
 import { Instance, SnapshotOut, types, flow, getParentOfType, getEnv, onSnapshot } from "mobx-state-tree"
 import { AccountType, CurrencyType, PendingFirstChannelsStatus as PendingFirstChannelsStatus } from "../../utils/enum"
-import { Side, IQuoteResponse, IQuoteRequest, IBuyRequest, Onboarding } from "types"
+import { Side, IQuoteResponse, IQuoteRequest, IBuyRequest, Onboarding, OnboardingRewards } from "types"
 import { parseDate } from "../../utils/date"
 import KeychainAction from "../../utils/keychain"
 import { generateSecureRandom } from "react-native-securerandom"
@@ -940,12 +940,14 @@ export const RatesModel = types
   }))
 
 interface BalanceRequest {
-  currency: CurrencyType
-  account: AccountType
+  currency: CurrencyType,
+  account: AccountType,
 }
 
 export const OnboardingModel = types
   .model("Onboarding", {
+    type: AccountType.VirtualBitcoin,
+    currency: CurrencyType.BTC,
     stage: types.array(types.enumeration<Onboarding>("Onboarding", Object.values(Onboarding))),
   })
   .actions(self => ({
@@ -967,6 +969,8 @@ export const OnboardingModel = types
       }
     }),
 
+    update: flow(function*() {}),
+
     afterCreate() {
       onSnapshot(self, self.save)
     }
@@ -975,6 +979,24 @@ export const OnboardingModel = types
     // TODO using: BalanceRequest type, how to set it?
     has(step: Onboarding) {
       return self.stage.findIndex(item => (item == step)) !== -1
+    },
+
+    get balance() {
+      const rewards = self.stage.map(item => OnboardingRewards[item])
+      return rewards.reduce((acc, curr) => (acc + curr))
+    },
+
+    get transactions() {
+      const r = self.stage.map(item => ({
+        // TODO: interface for those pending transactions
+        name: item,
+        icon: "ios-exit",
+        amount: OnboardingRewards[item],
+        date: Date.now(),
+      }))
+
+      console.tron.log(r)
+      return r
     }
   }))
 
@@ -1005,8 +1027,10 @@ export const DataStoreModel = types
     balances({ currency, account }) {
       const balances = {}
 
-      balances[AccountType.Bitcoin] =
-        (self.lnd.balance * (self.rates.rate(self.lnd.currency) / self.rates.rate(currency)))
+      const btc_conversion = (self.rates.rate(self.lnd.currency) / self.rates.rate(currency))
+
+      balances[AccountType.Bitcoin] = (self.lnd.balance * btc_conversion)
+      balances[AccountType.VirtualBitcoin] = (self.onboarding.balance * btc_conversion)
       balances[AccountType.Bank] = self.fiat.balance / self.rates.rate(currency)
       balances[AccountType.All] = Object.values(balances).reduce((a, b) => a + b, 0)
 

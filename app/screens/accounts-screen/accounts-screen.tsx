@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
 })
 
 const AccountItem = inject("dataStore")(observer(
-  ({ dataStore, account, icon, action, initialLoading }) => {
+  ({ dataStore, account, icon, action, initialLoading, title }) => {
 
   const { navigate } = useNavigation()
 
@@ -112,6 +112,10 @@ export const AccountsScreen = inject("dataStore")(observer(
 
   if (!dataStore.onboarding.has(Onboarding.bankOnboarded)) {
     accountTypes[0]['action'] = () => navigate('bankAccountRewards')
+  }
+
+  if (!dataStore.onboarding.has(Onboarding.channelCreated)) {
+    accountTypes[1]['account'] = AccountType.VirtualBitcoin
   }
 
   const onRefresh = React.useCallback(async () => {
