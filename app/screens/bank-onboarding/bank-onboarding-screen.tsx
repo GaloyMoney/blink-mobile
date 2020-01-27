@@ -5,7 +5,7 @@ import { OnboardingScreen } from "../../components/onboarding"
 import { Text } from "../../components/text"
 import { StyleSheet, Alert, View } from "react-native"
 import { BalanceHeader } from "../../components/balance-header"
-import { CurrencyType, AccountType, Onboarding } from "../../utils/enum"
+import { CurrencyType, AccountType } from "../../utils/enum"
 import { useNavigation } from "react-navigation-hooks"
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Input, Button } from "react-native-elements"
@@ -13,8 +13,8 @@ import { Button as ButtonNative } from "react-native"
 import { withNavigation } from "react-navigation"
 import functions from "@react-native-firebase/functions"
 import { inject } from "mobx-react"
-import { GetReward } from "../../components/rewards"
 import { color } from "../../theme"
+import { Onboarding } from "types"
 
 
 export const bankLogo = require("./BankLogo.png")
@@ -82,12 +82,12 @@ export const openBankScreen = inject('dataStore')(
 
   return (
     <Screen>
-      { dataStore.onboarding.stage == Onboarding.walletOnboarded &&
+      { !dataStore.onboarding.has(Onboarding.bankOnboarded) &&
       <OnboardingScreen next="personalInformation" image={bankLogo}>
         <Text style={styles.text}>You’re just a few minutes away from own Galoy bank account! Order a debit card to receive 1% bitcoin rewards on all spending.</Text>
       </OnboardingScreen>
       }
-      { dataStore.onboarding.stage == Onboarding.bankOnboarded &&
+      { dataStore.onboarding.has(Onboarding.bankOnboarded) &&
         <>
           <Text style={styles.text}>You already have a bank account</Text>
           <Text style={styles.text}>(And this screen should not be accessible, this is a bug)</Text>
@@ -177,13 +177,7 @@ export const DateOfBirthScreen = withNavigation(inject("dataStore")(
       setLoading(true)
       await functions().httpsCallable("onBankAccountOpening")
         ({...navigation.state.params, dateOfBirth: dateOfBirth.toISOString()})
-      await GetReward({
-        value: 10000,
-        memo: "Bank account opening",
-        lnd: dataStore.lnd,
-        setErr
-      })
-      dataStore.onboarding.set(Onboarding.bankOnboarded)
+      dataStore.onboarding.add(Onboarding.bankOnboarded)
       navigation.navigate('bankAccountReady')
       setLoading(false)
     } catch (err) {

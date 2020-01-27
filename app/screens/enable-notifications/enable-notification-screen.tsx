@@ -6,8 +6,8 @@ import functions from "@react-native-firebase/functions"
 import { Screen } from "../../components/screen"
 import { OnboardingScreen } from "../../components/onboarding"
 import { inject } from "mobx-react"
-import { GetReward } from "../../components/rewards"
 import { useNavigation } from "react-navigation-hooks"
+import { Onboarding } from "../../../../common/types"
 
 export const bellLogo = require("./BellLogo.png")
 
@@ -34,12 +34,7 @@ export const EnableNotificationsScreen = inject("dataStore")(
         try {
             setLoading(true)
             await functions().httpsCallable("sendDeviceToken")({deviceToken: event.deviceToken})
-            await GetReward({
-                value: 1000,
-                memo: "Notifications reward",
-                lnd: dataStore.lnd,
-                setErr
-            })
+            await dataStore.onboarding.add(Onboarding.activateNotifications)
             setLoading(false)
             goBack(null)
         } catch (err) {

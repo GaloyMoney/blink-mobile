@@ -9,9 +9,8 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { useNavigation } from "react-navigation-hooks"
 import { palette } from "../../theme/palette"
 import { observer, inject } from "mobx-react"
-import { Onboarding } from "../../utils/enum"
+import { Onboarding } from "types"
 import { Notifications } from "react-native-notifications"
-import { playVideo } from "../welcome-sync"
 
 export const trophyLogo = require("./TrophyLogo.png")
 
@@ -82,38 +81,52 @@ export const RewardsScreen = inject("dataStore")(
     const bank = 
     [
         {
+            title: 'Download the app',
+            icon: 'ios-exit',
+            badge: "+1,000 sats",
+            fullfilled: true,
+            action: null,
+        },
+        {
             title: 'Backup wallet',
             icon: 'ios-lock',
             badge: "+1,000 sats",
-            fullfilled: false,
+            fullfilled: dataStore.onboarding.has(Onboarding.backupWallet),
             action: () => navigate('walletBackup'),
         },
         {
             title: 'Activate notifications',
             icon: 'ios-lock',
             badge: "+1,000 sats",
-            fullfilled: hasPermissions,
+            fullfilled: dataStore.onboarding.has(Onboarding.activateNotifications),
             action: () => navigate('enableNotifications'),
         },
         {
-            title: "Make a payment",
-            icon: 'ios-exit',
-            badge: "+1,000 sats",
-            fullfilled: false,
-            action: () => Alert.alert('TODO'),
-        },
-        {
-            title: 'Learn about Bitcoin',
+            title: 'Learn about Bitcoin and Lightning',
             icon: 'ios-school',
             badge: "+1,000 sats",
-            fullfilled: false,
-            action: () => playVideo("XNu5ppFZbHo"),
+            fullfilled: dataStore.onboarding.has(Onboarding.rewardsVideo),
+            action: () => navigate('rewardsVideo'),
+        },
+        {
+            title: 'Open your first channel',
+            icon: 'ios-school',
+            badge: "+5,000 sats",
+            fullfilled: dataStore.onboarding.has(Onboarding.channelCreated),
+            action: () => navigate('welcomeSyncing'),
+        },
+        {
+            title: "Make your first micro payment for a NYT article",
+            icon: 'ios-exit',
+            badge: "+5,000 sats",
+            fullfilled: dataStore.onboarding.has(Onboarding.firstPayment),
+            action: () => navigate('sendBitcoin'),
         },
         {
             title: "Open bank account",
             icon: 'ios-gift',
             badge: "+10,000 sats",
-            fullfilled: dataStore.onboarding.stage === Onboarding.bankOnboarded,
+            fullfilled: dataStore.onboarding.has(Onboarding.bankOnboarded),
             action: () => navigate('openBankAccount'),
         },
         {

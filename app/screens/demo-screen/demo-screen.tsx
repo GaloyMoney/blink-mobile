@@ -121,8 +121,14 @@ export const DebugScreen = inject("dataStore")(observer(
   const { navigate }  = useNavigation()
   
   React.useEffect(() => {
-    dataStore.lnd.listChannels()
-    setJson(getSnapshot(dataStore))
+    const _ = async () => {
+      await dataStore.lnd.listChannels()
+      await dataStore.lnd.updatePendingChannels()
+      setJson(getSnapshot(dataStore))
+      console.tron.log('json updated')
+    }
+
+    _()
   }, [])
 
   const demoReactotron = async () => {

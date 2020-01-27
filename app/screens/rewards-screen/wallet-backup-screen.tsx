@@ -5,9 +5,9 @@ import { Screen } from "../../components/screen"
 import { StyleSheet, Alert } from "react-native"
 import { Text } from "../../components/text"
 import { OnboardingScreen } from "../../components/onboarding"
-import { GetReward } from "../../components/rewards"
 import { useNavigation } from "react-navigation-hooks"
 import { inject } from "mobx-react"
+import { Onboarding } from "../../../../common/types"
 
 export const cloudLogo = require("./CloudLogo.png")
 
@@ -30,20 +30,13 @@ export const WalletBackupScreen = inject("dataStore")(
     const { goBack } = useNavigation()
 
     const onPress = async () => {
-        try {
-            setLoading(true)
-            await GetReward({
-                value: 1000,
-                memo: "Wallet backup rewards",
-                lnd: dataStore.lnd,
-                setErr
-            })
-            setLoading(false)
-            goBack(null)
-        } catch (err) {
-            console.tron.log(err.toString())
-            setErr(err.toString())
-        }
+      try {
+        await dataStore.onboarding.add(Onboarding.backupWallet)
+        goBack(null)
+      } catch (err) {
+        console.tron.log(err.toString())
+        setErr(err.toString())
+      }
     }
 
     useEffect(() => {

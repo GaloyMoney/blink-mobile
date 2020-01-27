@@ -11,7 +11,7 @@ import MapView from "react-native-maps"
 import { useNavigationParam } from "react-navigation-hooks"
 import { TextCurrency } from "../../components/text-currency"
 import { CurrencyType } from "../../utils/enum"
-import { shortenHash } from "../welcome-sync"
+import { shortenHash } from "../../utils/helper"
 
 const styles = StyleSheet.create({
   amountText: {

@@ -17,10 +17,16 @@ module.exports = {
       },
     }),
   },
+  projectRoot: path.resolve(__dirname),
+  watchFolders: [
+    __dirname,
+    path.resolve(__dirname, "../common/"),
+  ],
   resolver: {
     extraNodeModules: {
       stream: path.resolve(__dirname, 'node_modules/readable-stream'),
       zlib: path.resolve(__dirname, 'node_modules/browserify-zlib'),
+      types: path.resolve(__dirname, "../common/types"),
     }
  },
 }

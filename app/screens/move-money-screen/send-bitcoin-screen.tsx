@@ -11,6 +11,7 @@ import { withNavigation } from "react-navigation";
 import { useNavigation, useNavigationParam } from "react-navigation-hooks";
 import { palette } from "../../theme/palette"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
+import { Onboarding } from "../../../../common/types"
 
 
 const CAMERA: ViewStyle = {
@@ -190,6 +191,7 @@ export const SendBitcoinScreen: React.FC
             console.tron.log(result)
             if (result === true) {
                 setMessage('Payment succesfull')
+                await dataStore.onboarding.add(Onboarding.firstPayment)
                 setInvoice("")
             } else {
                 setErr(result.toString())

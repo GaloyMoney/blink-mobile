@@ -9,7 +9,8 @@ import { color } from "../../theme/color"
 import Icon from "react-native-vector-icons/Ionicons"
 import currency from "currency.js"
 import { BalanceHeader } from "../../components/balance-header"
-import { AccountType, CurrencyType, Onboarding } from "../../utils/enum"
+import { AccountType, CurrencyType } from "../../utils/enum"
+import { Onboarding } from "../../../../common/types"
 import { palette } from "../../theme/palette"
 import { useNavigation } from "react-navigation-hooks"
 
@@ -109,7 +110,7 @@ export const AccountsScreen = inject("dataStore")(observer(
     { key: "Bitcoin", account: AccountType.Bitcoin, icon: "logo-bitcoin" },
   ]
 
-  if (dataStore.onboarding.stage == Onboarding.walletOnboarded) {
+  if (!dataStore.onboarding.has(Onboarding.bankOnboarded)) {
     accountTypes[0]['action'] = () => navigate('bankAccountRewards')
   }
 

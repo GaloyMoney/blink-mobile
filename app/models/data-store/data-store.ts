@@ -1,6 +1,6 @@
 import { Instance, SnapshotOut, types, flow, getParentOfType, getEnv, onSnapshot } from "mobx-state-tree"
-import { AccountType, CurrencyType, PendingFirstChannelsStatus as PendingFirstChannelsStatus, Onboarding } from "../../utils/enum"
-import { Side, IQuoteResponse, IQuoteRequest, IBuyRequest } from "../../../../common/type"
+import { AccountType, CurrencyType, PendingFirstChannelsStatus as PendingFirstChannelsStatus } from "../../utils/enum"
+import { Side, IQuoteResponse, IQuoteRequest, IBuyRequest, Onboarding } from "types"
 import { parseDate } from "../../utils/date"
 import KeychainAction from "../../utils/keychain"
 import { generateSecureRandom } from "react-native-securerandom"
@@ -8,13 +8,12 @@ import { generateSecureRandom } from "react-native-securerandom"
 import auth from "@react-native-firebase/auth"
 import functions from "@react-native-firebase/functions"
 import firestore from "@react-native-firebase/firestore"
-import { toHex } from "../../utils/helper"
+import { toHex, shortenHash } from "../../utils/helper"
 
 import DeviceInfo from "react-native-device-info"
 import Config from "react-native-config"
 import { Notifications } from "react-native-notifications"
 import { RootStoreModel } from "../root-store"
-import { shortenHash } from "../../screens/welcome-sync"
 
 // // FIXME add as a global var
 DeviceInfo.isEmulator().then(isEmulator => {
@@ -947,11 +946,13 @@ interface BalanceRequest {
 
 export const OnboardingModel = types
   .model("Onboarding", {
-    stage: types.maybe(types.enumeration<Onboarding>("Onboarding", Object.values(Onboarding))),
+    stage: types.array(types.enumeration<Onboarding>("Onboarding", Object.values(Onboarding))),
   })
   .actions(self => ({
-    set: flow(function*(stage) {
-      self.stage = stage
+    add: flow(function*(step) {
+      if (self.stage.findIndex(item => (item == step)) === -1) {
+        self.stage.push(step)
+      }
     }),
 
     save: flow(function*() {
@@ -970,6 +971,12 @@ export const OnboardingModel = types
       onSnapshot(self, self.save)
     }
   }))
+  .views(self => ({
+    // TODO using: BalanceRequest type, how to set it?
+    has(step: Onboarding) {
+      return self.stage.findIndex(item => (item == step)) !== -1
+    }
+  }))
 
 export const DataStoreModel = types
   .model("DataStore", {
@@ -979,22 +986,20 @@ export const DataStoreModel = types
     exchange: types.optional(ExchangeModel, {}),
     lnd: types.optional(LndModel, {}), // TODO should it be optional?
   })
-  .actions(self => {
-    const updateTransactions = flow(function*() {
+  .actions(self => ({
+    updateTransactions: flow(function*() {
       // TODO parrallel call?
       yield self.fiat.updateTransactions()
       yield self.lnd.updateTransactions()
-    })
+    }),
 
-    const updateBalance = flow(function*() {
+    updateBalance: flow(function*() {
       // TODO parrallel call?
       yield self.rates.update()
       yield self.fiat.updateBalance()
       yield self.lnd.updateBalance()
     })
-
-    return { updateTransactions, updateBalance }
-  })
+  }))
   .views(self => ({
     // TODO using: BalanceRequest type, how to set it?
     balances({ currency, account }) {

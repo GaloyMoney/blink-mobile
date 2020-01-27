@@ -12,8 +12,8 @@ import PhoneInput from "react-native-phone-input"
 import auth from "@react-native-firebase/auth"
 import { isEmpty } from "ramda"
 import { useNavigation, useNavigationParam } from "react-navigation-hooks"
-import { Onboarding } from "../../utils/enum"
 import { inject } from "mobx-react"
+import { Onboarding } from "types"
 
 export const phoneLogo = require("./PhoneLogo.png")
 export const phoneWithArrowLogo = require("./PhoneWithArrowLogo.png")
@@ -188,7 +188,7 @@ export const WelcomePhoneValidationScreen = inject("dataStore")(
     }
 
     if (user.phoneNumber) {
-      await dataStore.onboarding.set(Onboarding.phoneVerified)
+      await dataStore.onboarding.add(Onboarding.walletDownloaded)
       setCompleted(true)
     }
   }
@@ -216,7 +216,7 @@ export const WelcomePhoneValidationScreen = inject("dataStore")(
 
   useEffect(() => {
     if (completed) {
-      navigate("welcomeSyncing")
+      navigate("primaryStack")
     }
   }, [completed])
 
