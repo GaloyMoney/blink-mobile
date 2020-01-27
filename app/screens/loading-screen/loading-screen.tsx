@@ -6,6 +6,7 @@ import { useEffect } from "react"
 import { ActivityIndicator, StyleSheet, View, Alert } from "react-native"
 import { withNavigation } from "react-navigation"
 import { color } from "../../theme"
+import { when } from "mobx"
 
 const styles = StyleSheet.create({
   centerBackground: {
@@ -36,12 +37,20 @@ export const LoadingScreen = withNavigation(
         }
 
         startLnd()
+
+        setTimeout(async function(){ 
+          await getEnv(dataStore).lnd.openWallet()
+        }, 2000)
+
       }, [])
 
       const onAuthStateChanged = async user => {
         // TODO : User type
         console.tron.log(`onAuthStateChanged`, user)
         console.log(`onAuthStateChanged`, user)
+
+        await when(() => dataStore.lnd.lndReady === true)
+
         if (user === null) {
           // new install or no data yet
           navigation.navigate("authStack")

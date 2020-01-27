@@ -308,8 +308,8 @@ export const LndModel = BaseAccountModel.named("Lnd")
     type: AccountType.Bitcoin,
     version: "...loading...",
     
+    lndReady: false,
     walletExist: false,
-    walletUnlocked: false,
     syncedToChain: false,
 
     onChainAddress: "",
@@ -334,24 +334,29 @@ export const LndModel = BaseAccountModel.named("Lnd")
   .actions(self => {
   
     return {
+    setLndReady: flow(function*() {
+        self.lndReady = true
+        yield self.getInfo()
+        yield self.update()
+    }),
+
     // stateless, but must be an action instead of a view because of the async call
     initState: flow(function*() {
-      const WALLET_EXIST = "rpc error: code = Unknown desc = wallet already exists"
-      const CLOSED = "Closed"
-      let walletExist = false
+      const WALLET_NOT_FOUND = "rpc error: code = Unknown desc = wallet not found"
+      // const CLOSED = "Closed"
+      let walletExist = true
       try {
-        yield getEnv(self).lnd.grpc.sendUnlockerCommand("GenSeed")
+        yield getEnv(self).lnd.grpc.sendUnlockerCommand("UnlockWallet")
       } catch (err) {
         console.tron.log("wallet exist", err)
-        if (err.message === WALLET_EXIST) {
-          walletExist = true
+        if (err.message === WALLET_NOT_FOUND) {
+          walletExist = false
         }
-        if (err.message === CLOSED) {
-          // We assumed that if sendUnlockerCommand is locked, the node is already launched.
-          // FIXME validate this assumption
-          walletExist = true
-          self.walletGotOpened()
-        }
+        // if (err.message === CLOSED) {
+        //   // We assumed that if sendUnlockerCommand is locked, the node is already launched.
+        //   // FIXME validate this assumption
+        //   walletExist = true
+        // }
       }
 
       self.walletExist = walletExist
@@ -392,7 +397,6 @@ export const LndModel = BaseAccountModel.named("Lnd")
         yield new KeychainAction().setItem("password", wallet_password)
 
         self.walletExist = true
-        yield self.walletGotOpened()
       } catch (err) {
         console.tron.error(err)
       }
@@ -601,13 +605,6 @@ export const LndModel = BaseAccountModel.named("Lnd")
       yield self.updateTransactions()
       yield self.updateInvoices()
       yield self.listPayments()
-    }),
-
-    // this get triggered after the wallet is being unlocked
-    walletGotOpened: flow(function*() {
-      self.walletUnlocked = true
-      yield self.getInfo()
-      yield self.update()
     }),
 
     unlockWallet: flow(function*() {

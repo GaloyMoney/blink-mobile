@@ -113,16 +113,12 @@ export class Lnd {
 
   }
 
-  /**
-   * Configure reactotron based on the the config settings passed in, then connect if we need to.
-   */
-  async start() {
-    console.trace()
+  sleep = async (ms) => {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 
-    await this.grpc.startLnd()
-
-    await this.setCallback()
-
+  async openWallet() {
+    console.tron.log('open Wallet', this.lndStore)
     await this.lndStore.initState()
 
     if (this.lndStore?.walletExist) {
@@ -131,6 +127,18 @@ export class Lnd {
       await this.lndStore.genSeed()
       await this.lndStore.initWallet()
     }
+  }
+
+  /**
+   * Configure reactotron based on the the config settings passed in, then connect if we need to.
+   */
+  async start() {
+    console.trace()
+
+    await this.grpc.startLnd()
+    this.lndStore.setLndReady()
+
+    await this.setCallback()
 
     poll(() => this.lndStore.getInfo())
   }

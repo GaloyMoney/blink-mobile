@@ -201,6 +201,12 @@ export const DebugScreen = inject("dataStore")(observer(
           <Button
             style={DEMO}
             textStyle={DEMO_TEXT}
+            text="InitState"
+            onPress={dataStore.lnd.initState}
+          />
+          <Button
+            style={DEMO}
+            textStyle={DEMO_TEXT}
             text="Gen Seed"
             onPress={dataStore.lnd.genSeed}
           />
@@ -213,7 +219,7 @@ export const DebugScreen = inject("dataStore")(observer(
           <Button
             style={DEMO}
             textStyle={DEMO_TEXT}
-            text={`unlock. status: ${dataStore.lnd.walletUnlocked ? "true" : "false"}`}
+            text={`lndReady. status: ${dataStore.lnd.lndReady ? "true" : "false"}`}
             onPress={dataStore.lnd.unlockWallet}
           />
           <Button
