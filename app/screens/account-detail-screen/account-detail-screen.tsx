@@ -156,6 +156,159 @@ const VisualExpiration = ({validUntil}) => {
   );
 }
 
+const BitcoinHeader = ({currency, account, dataStore, refresh}) => {
+
+  const [side, setSide] = useState<Side>("buy");
+
+  const [loading, setLoading] = useState(false)
+  const [amount, setAmount] = useState(1000)
+  const [loadingQuote, setLoadingQuote] = useState(false)
+
+  const onModalHide = () => {
+    dataStore.exchange.quote.reset()
+  }
+
+  const getQuote = async () => {
+    try {
+      setLoadingQuote(true)
+      await dataStore.exchange.quoteLNDBTC({side, satAmount: amount})
+    } catch (err) {
+      Alert.alert(err.toString())
+    } finally {
+      setLoadingQuote(false)
+    }
+  }
+  
+  const executeTrade = async () => {
+    try {
+      let fn
+      if (side === "buy") {
+        fn = ["buyLNDBTC"]
+      } else if (side === "sell") {
+        fn = ["sellLNDBTC"]
+      }
+
+      setLoading(true)
+
+      const success = await dataStore.exchange[fn]()
+
+      if (success) {
+        refresh()
+        setMessage("Success!")
+      } else {
+        setMessage("There was an error. Please try again later")
+      }
+    } catch (err) {
+      setMessage(err.toString())
+    }
+  }
+
+  const onBuyInit = () => {
+    setSide("buy")
+    setModalVisible(true)
+  }
+
+  const onSellInit = () => {
+    setSide("sell")
+    setModalVisible(true)
+  }
+
+  const [message, setMessage] = useState("")
+  const [modalVisible, setModalVisible] = useState(false);
+  // workaround of https://github.com/facebook/react-native/issues/10471
+
+  useEffect(() => {
+    if (message !== "") {
+      setMessage("")
+      Alert.alert(message, "", [
+        {
+          text: "OK",
+          onPress: () => {
+            setModalVisible(false)
+            setLoading(false)
+          },
+        },
+      ])
+    }
+  }, [message])
+
+  return (
+  <>
+    <Modal 
+      style={{marginHorizontal: 0, marginBottom: 0}}
+      onModalHide={onModalHide}
+      isVisible={modalVisible} 
+      swipeDirection={modalVisible ? ['down'] : ['up']}
+      onSwipeComplete={() => setModalVisible(false)}
+      swipeThreshold={50}
+    >
+    <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+      <View style={styles.flex} />
+    </TouchableWithoutFeedback>
+      <View style={styles.viewModal}>
+      { !dataStore.onboarding.has(Onboarding.bankOnboarded) &&
+          <>
+            <Text style={[styles.itemText, {marginVertical: 12}]}>Open a Galoy bank account</Text>
+            <Text style={[styles.itemText, {marginVertical: 12}]}>To {side} bitcoin you will need a Galoy bank account,
+            so you can transfer US Dollar</Text>
+            <Button title="Open account" 
+              onPress={() => {setModalVisible(false); navigate('openBankAccount')}}  
+              buttonStyle={styles.button}
+              containerStyle={[styles.buttonContainer, {width: "100%"}]}
+            />
+          </>
+      }
+      { dataStore.onboarding.has(Onboarding.bankOnboarded) &&
+        <>
+          <View style={{flexDirection: "row", alignContent: "center"}}>
+            <Text style={[styles.itemText, {paddingVertical: 12}]}>How many sats to {side}:{" "}</Text>
+            <TextInput value={amount.toString()} onChangeText={text => 
+                setAmount(isNaN(Number.parseInt(text)) ? 0 : Number.parseInt(text) )
+              } 
+                  style={styles.itemText} />
+          </View>
+          <Button title={`Get Quote`} onPress={getQuote} 
+                  buttonStyle={styles.button}
+                  disabled={loadingQuote}
+                  containerStyle={[styles.buttonContainer, {width: "100%"}]}
+            />
+            { loadingQuote && <ActivityIndicator size="small" color={color.primary} style={{height: 46}} />}
+            { !loadingQuote &&
+              <Text style={[styles.itemText, {paddingVertical: 12}]}>
+                {
+                  !isNaN(dataStore.exchange.quote.satPrice) &&
+                  `Price: USD ${(dataStore.exchange.quote.satPrice * 100000000).toFixed(2)}`
+                  || " "
+                } 
+              </Text>
+            }
+          <View style={[styles.buttonContainer, {width: "100%"}]}>
+            <VisualExpiration validUntil={dataStore.exchange.quote.validUntil} />
+            <Button title={`Validate Quote`} onPress={executeTrade} 
+              disabled={loading || isNaN(dataStore.exchange.quote.satPrice)}
+              loading={loading}
+              buttonStyle={styles.button}
+              />  
+          </View>
+        </>
+      }
+      </View>
+    </Modal>
+    <BalanceHeader headingCurrency={currency} accountsToAdd={account} />
+    <View style={styles.horizontal}>
+      <Button title="Buy" 
+        buttonStyle={styles.button}
+        containerStyle={styles.buttonContainer}
+        onPress={onBuyInit}  
+        />
+      <Button title="Sell"
+        buttonStyle={styles.button}
+        containerStyle={styles.buttonContainer}
+        onPress={onSellInit}  
+        />  
+    </View>
+  </>
+)}
 
 const formatFiatTransactions = (transactions) => {
   
@@ -222,88 +375,9 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
     : dataStore.lnd
 
     const [refreshing, setRefreshing] = useState(false);
-    const [modalVisible, setModalVisible] = useState(false);
     const [sections, setSections] = useState(formatFiatTransactions(accountStore.transactions));
-  
-    const [side, setSide] = useState<Side>("buy");
-    const [loading, setLoading] = useState(false)
-    const [message, setMessage] = useState("")
-    const [amount, setAmount] = useState(1000)
-    const [loadingQuote, setLoadingQuote] = useState(false)
-  
-
-    const { navigate } = useNavigation()
-
+        
     const currency = accountStore.currency
-
-
-    // trading 
-
-    const onBuyInit = () => {
-      setSide("buy")
-      setModalVisible(true)
-    }
-
-    const onSellInit = () => {
-      setSide("sell")
-      setModalVisible(true)
-    }
-
-    const onModalHide = () => {
-      dataStore.exchange.quote.reset()
-    }
-
-    const getQuote = async () => {
-      try {
-        setLoadingQuote(true)
-        await dataStore.exchange.quoteLNDBTC({side, satAmount: amount})
-      } catch (err) {
-        Alert.alert(err.toString())
-      } finally {
-        setLoadingQuote(false)
-      }
-    }
-    
-    const executeTrade = async () => {
-      try {
-        let fn
-        if (side === "buy") {
-          fn = ["buyLNDBTC"]
-        } else if (side === "sell") {
-          fn = ["sellLNDBTC"]
-        }
-
-        setLoading(true)
-
-        const success = await dataStore.exchange[fn]()
-
-        if (success) {
-          refresh()
-          setMessage("Success!")
-        } else {
-          setMessage("There was an error. Please try again later")
-        }
-      } catch (err) {
-        setMessage(err.toString())
-      }
-    }
-
-    // workaround of https://github.com/facebook/react-native/issues/10471
-    useEffect(() => {
-      if (message !== "") {
-        setMessage("")
-        Alert.alert(message, "", [
-          {
-            text: "OK",
-            onPress: () => {
-              setModalVisible(false)
-              setLoading(false)
-            },
-          },
-        ])
-      }
-    }, [message])
-
 
     const refresh = async () => {
       await accountStore.update()
@@ -322,80 +396,12 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
 
     return (
       <Screen>
-        <Modal 
-          style={{marginHorizontal: 0, marginBottom: 0}}
-          onModalHide={onModalHide}
-          isVisible={modalVisible} 
-          swipeDirection={modalVisible ? ['down'] : ['up']}
-          onSwipeComplete={() => setModalVisible(false)}
-          swipeThreshold={50}
-          >
-            <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
-              <View style={styles.flex} />
-            </TouchableWithoutFeedback>
-            <View style={styles.viewModal}>
-            { !dataStore.onboarding.has(Onboarding.bankOnboarded) &&
-                <>
-                  <Text style={[styles.itemText, {marginVertical: 12}]}>Open a Galoy bank account</Text>
-                  <Text style={[styles.itemText, {marginVertical: 12}]}>To {side} bitcoin you will need a Galoy bank account,
-                  so you can transfer US Dollar</Text>
-                  <Button title="Open account" 
-                    onPress={() => {setModalVisible(false); navigate('openBankAccount')}}  
-                    buttonStyle={styles.button}
-                    containerStyle={[styles.buttonContainer, {width: "100%"}]}
-                  />
-                </>
-            }
-            { dataStore.onboarding.has(Onboarding.bankOnboarded) &&
-              <>
-                <View style={{flexDirection: "row", alignContent: "center"}}>
-                  <Text style={[styles.itemText, {paddingVertical: 12}]}>How many sats to {side}:{" "}</Text>
-                  <TextInput value={amount.toString()} onChangeText={text => 
-                      setAmount(isNaN(Number.parseInt(text)) ? 0 : Number.parseInt(text) )
-                    } 
-                        style={styles.itemText} />
-                </View>
-                <Button title={`Get Quote`} onPress={getQuote} 
-                        buttonStyle={styles.button}
-                        disabled={loadingQuote}
-                        containerStyle={[styles.buttonContainer, {width: "100%"}]}
-                  />
-                  { loadingQuote && <ActivityIndicator size="small" color={color.primary} style={{height: 46}} />}
-                  { !loadingQuote &&
-                    <Text style={[styles.itemText, {paddingVertical: 12}]}>
-                      {
-                        !isNaN(dataStore.exchange.quote.satPrice) &&
-                        `Price: USD ${(dataStore.exchange.quote.satPrice * 100000000).toFixed(2)}`
-                        || " "
-                      } 
-                    </Text>
-                  }
-                <View style={[styles.buttonContainer, {width: "100%"}]}>
-                  <VisualExpiration validUntil={dataStore.exchange.quote.validUntil} />
-                  <Button title={`Validate Quote`} onPress={executeTrade} 
-                    disabled={loading || isNaN(dataStore.exchange.quote.satPrice)}
-                    loading={loading}
-                    buttonStyle={styles.button}
-                    />  
-                </View>
-              </>
-            }
-            </View>
-          </Modal>
-        <BalanceHeader headingCurrency={currency} accountsToAdd={account} />
         { account == AccountType.Bitcoin && 
-          <View style={styles.horizontal}>
-            <Button title="Buy" 
-              buttonStyle={styles.button}
-              containerStyle={styles.buttonContainer}
-              onPress={onBuyInit}  
-              />
-            <Button title="Sell"
-              buttonStyle={styles.button}
-              containerStyle={styles.buttonContainer}
-              onPress={onSellInit}  
-              />  
-          </View>
+          <BitcoinHeader currency={currency} account={account}
+            dataStore={dataStore} refresh={refresh} />
+        }
+        { account != AccountType.Bitcoin && 
+          <BalanceHeader headingCurrency={currency} accountsToAdd={account} />
         }
         { sections.length === 0 && 
           <Text>No transaction to show</Text>
