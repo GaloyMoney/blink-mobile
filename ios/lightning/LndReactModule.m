@@ -191,13 +191,13 @@ RCT_EXPORT_METHOD(start: (RCTPromiseResolveBlock)resolve
         [fileHandle readInBackgroundAndNotify];
     });
 
+    // NSString *args = [NSString stringWithFormat:@"--lnddir=%@ --noseedbackup", self.appDir];
     NSString *args = [NSString stringWithFormat:@"--lnddir=%@", self.appDir];
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         RCTLogInfo(@"Starting lnd");
         NativeCallback* cb = [[NativeCallback alloc] initWithResolver:resolve rejecter:reject];
-        LndmobileStart(args, cb);
-        // LndmobileStart(args, cb, nil); // FIXME handle the third argument
+        LndmobileStart(args, nil, cb); // FIXME handle the third argument
     });
 
 }

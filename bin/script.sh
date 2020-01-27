@@ -3,6 +3,6 @@
 
 # script only handle iOS for now
 
-rm -rf ../ios/lightning/Lndmobile.framework
+mv ../ios/lightning/Lndmobile.framework ../ios/lightning/Lndmobile.framework.save
 mkdir ../ios/lightning/Lndmobile.framework
 cp -R $GOPATH/src/github.com/lightningnetwork/lnd/mobile/build/ios/Lndmobile.framework/ ../ios/lightning/Lndmobile.framework
