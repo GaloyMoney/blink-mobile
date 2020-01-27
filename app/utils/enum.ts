@@ -1,6 +1,7 @@
 export enum AccountType {
     Bank = "Bank Account",
     Bitcoin = "Bitcoin Wallet",
+    VirtualBitcoin = "Virtual Bitcoin",
     All = "All",
   }
   

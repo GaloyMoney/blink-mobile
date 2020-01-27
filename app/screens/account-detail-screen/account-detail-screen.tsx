@@ -288,7 +288,7 @@ const BitcoinHeader = ({currency, account, dataStore, refresh}) => {
               disabled={loading || isNaN(dataStore.exchange.quote.satPrice)}
               loading={loading}
               buttonStyle={styles.button}
-              />  
+              />
           </View>
         </>
       }
@@ -310,7 +310,7 @@ const BitcoinHeader = ({currency, account, dataStore, refresh}) => {
   </>
 )}
 
-const formatFiatTransactions = (transactions) => {
+const formatTransactions = (transactions) => {
   
   const sections = []
   const today = []
@@ -370,18 +370,28 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
 
     const account = useNavigationParam("account")
 
-    const accountStore = account === AccountType.Bank ?
-      dataStore.fiat
-    : dataStore.lnd
+    let accountStore
+
+    switch (account) {
+      case AccountType.Bank: 
+        accountStore = dataStore.fiat
+        break
+      case AccountType.Bitcoin:
+        accountStore = dataStore.lnd
+        break
+      case AccountType.VirtualBitcoin:
+        accountStore = dataStore.onboarding
+        break
+    }
 
     const [refreshing, setRefreshing] = useState(false);
-    const [sections, setSections] = useState(formatFiatTransactions(accountStore.transactions));
+    const [sections, setSections] = useState(formatTransactions(accountStore.transactions));
         
     const currency = accountStore.currency
 
     const refresh = async () => {
       await accountStore.update()
-      setSections(formatFiatTransactions(accountStore.transactions))
+      setSections(formatTransactions(accountStore.transactions))
     }
 
     const onRefresh = React.useCallback(async () => {
