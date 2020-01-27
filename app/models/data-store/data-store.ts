@@ -983,7 +983,12 @@ export const OnboardingModel = types
 
     get balance() {
       const rewards = self.stage.map(item => OnboardingRewards[item])
-      return rewards.reduce((acc, curr) => (acc + curr))
+      if (rewards.length > 0) {
+        return rewards.reduce((acc, curr) => (acc + curr))
+      } else {
+        return 0
+      }
+
     },
 
     get transactions() {
