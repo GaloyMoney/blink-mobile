@@ -12,8 +12,8 @@ import { Onboarding } from "../../../../common/types"
 
 export const lightningLogo = require("./LightningBolt.png")
 export const galoyLogo = require("./GaloyLogo.png")
-export const bitcoinAndLockLogo = require("./BitcoinLockLogo.png")
-export const dollarCardATMLogo = require("./DollarCardATMLogo.png")
+export const bitcoinLogo = require("./BitcoinLogo.png")
+export const dollarLogo = require("./DollarLogo.png")
 export const presentLogo = require("./PresentLogo.png")
 export const partyPopperLogo = require("./PartyPopperLogo.png")
 
@@ -25,11 +25,12 @@ const styles = StyleSheet.create({
   },
 })
 
-export const WelcomeGaloyScreen = () => {
+
+export const WelcomeEarnScreen = () => {
   return (
     <Screen>
-      <OnboardingScreen next="welcomeBank" image={galoyLogo}>
-        <Text style={styles.text}>Welcome!{'\n'}{'\n'}Galoy is a new type of financial app</Text>
+      <OnboardingScreen next="welcomeBank" image={presentLogo}>
+        <Text style={styles.text}>By using Galoy, you earn bitcoin.</Text>
       </OnboardingScreen>
     </Screen>
   )
@@ -38,8 +39,8 @@ export const WelcomeGaloyScreen = () => {
 export const WelcomeBankScreen = () => {
   return (
     <Screen>
-      <OnboardingScreen next="welcomeBitcoin" image={dollarCardATMLogo}>
-        <Text style={styles.text}>It's a digital bank account</Text>
+      <OnboardingScreen next="welcomeBitcoin" image={dollarLogo}>
+        <Text style={styles.text}>Galoy is a digital bank account</Text>
       </OnboardingScreen>
     </Screen>
   )
@@ -48,19 +49,8 @@ export const WelcomeBankScreen = () => {
 export const WelcomeBitcoinScreen = () => {
   return (
     <Screen>
-      <OnboardingScreen next="welcomeEarn" image={bitcoinAndLockLogo}>
+      <OnboardingScreen next="welcomeFirstSats" image={bitcoinLogo}>
         <Text style={styles.text}>And a secure Bitcoin wallet too!</Text>
-      </OnboardingScreen>
-    </Screen>
-  )
-}
-
-
-export const WelcomeEarnScreen = () => {
-  return (
-    <Screen>
-      <OnboardingScreen next="welcomeFirstSats" image={presentLogo}>
-        <Text style={styles.text}>By using Galoy, you earn bitcoin.</Text>
       </OnboardingScreen>
     </Screen>
   )
@@ -69,11 +59,10 @@ export const WelcomeEarnScreen = () => {
 export const WelcomeFirstSatsScreen = () => {
   return (
     <Screen>
-      <OnboardingScreen next="welcomePhoneInput" header="+5,000 sats" image={trophyLogo}>
+      <OnboardingScreen next="welcomePhoneInput" header="+1,000 sats" image={trophyLogo}>
         <Text style={styles.text}>
-          Hooray!{'\n'}{'\n'}
-          You've earned some sats for installing the Galoy app.
-          {'\n'}{'\n'}Sats are small portions of bitcoin.
+          You've earned some sats for installing this app.{'\n'}{'\n'}
+          Continue to earn more bitcoin rewards
         </Text>
       </OnboardingScreen>
     </Screen>
