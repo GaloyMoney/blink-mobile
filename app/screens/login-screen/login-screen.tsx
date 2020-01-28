@@ -116,7 +116,7 @@ const GetStartedComponent = ({ dataStore, navigation }) => {
         <Button
           title="Get Started"
           buttonStyle={styles.signIn}
-          onPress={() => navigation.navigate("welcomeGaloy")}
+          onPress={() => navigation.navigate("welcomeEarn")}
           containerStyle={styles.buttonContainer}
         />
       </View>
