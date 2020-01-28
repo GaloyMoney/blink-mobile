@@ -15,7 +15,7 @@ import { PendingFirstChannelsStatus } from "../../utils/enum"
 import { palette } from "../../theme/palette"
 import { shortenHash } from "../../utils/helper"
 import { useNavigation } from "react-navigation-hooks"
-import { Onboarding } from "../../../../common/types"
+import { Onboarding } from "types"
 
 
 export const popcornLogo = require("./PopcornLogo.png")

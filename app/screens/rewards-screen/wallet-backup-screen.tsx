@@ -7,7 +7,7 @@ import { Text } from "../../components/text"
 import { OnboardingScreen } from "../../components/onboarding"
 import { useNavigation } from "react-navigation-hooks"
 import { inject } from "mobx-react"
-import { Onboarding } from "../../../../common/types"
+import { Onboarding } from "types"
 
 export const cloudLogo = require("./CloudLogo.png")
 

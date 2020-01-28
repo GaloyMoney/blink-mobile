@@ -3,6 +3,9 @@ import { RootStoreModel, RootStore } from "./root-store"
 import { Environment } from "../environment"
 import * as storage from "../../utils/storage"
 
+import auth from "@react-native-firebase/auth"
+import firestore from "@react-native-firebase/firestore"
+
 /**
  * The key we'll be saving our state as within async storage.
  */
@@ -35,7 +38,7 @@ export async function setupRootStore() {
     // load data from storage
 
     // data = (await storage.load(ROOT_STATE_STORAGE_KEY)) || {}  // TODO: get back to this when store is dynamic
-    const { stage } = (await storage.load(ONBOARDING_STORAGE_KEY)) || undefined  // TODO: get back to this when store is dynamic
+    const stage = (await storage.load(ONBOARDING_STORAGE_KEY)) || undefined  // TODO: get back to this when store is dynamic
     // rootStore = RootStoreModel.create(data, env)
 
     // rootStore = RootStoreModel.create(defaultStoreState, env)
@@ -63,7 +66,28 @@ export async function setupRootStore() {
 
   // track changes & save to storage
   // onSnapshot(rootStore, snapshot => storage.save(ROOT_STATE_STORAGE_KEY, snapshot))
-  onSnapshot(rootStore.dataStore.onboarding, snapshot => storage.save(ONBOARDING_STORAGE_KEY, snapshot))
+  onSnapshot(rootStore.dataStore.onboarding.stage, async snapshot => {
+    console.tron.log('snapshot', snapshot)
+
+    storage.save(ONBOARDING_STORAGE_KEY, snapshot)
+    
+    try {
+      const uid = auth().currentUser?.uid
+      
+      if (!uid) {
+        console.tron.warn('no uid')
+        return
+      }
+      
+      await firestore().doc(`users/${uid}/collection/stage`).set(
+        { stage: snapshot }, 
+        { merge: true }
+      )
+    } catch (err) {
+      console.tron.error(err)
+    }
+
+  })
 
   await env.lnd.setLndStore(rootStore.dataStore.lnd)
 

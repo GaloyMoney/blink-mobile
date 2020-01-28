@@ -3,7 +3,7 @@ import { inject, observer } from "mobx-react"
 import { getEnv } from "mobx-state-tree"
 import * as React from "react"
 import { useEffect } from "react"
-import { ActivityIndicator, StyleSheet, View, Alert } from "react-native"
+import { ActivityIndicator, StyleSheet, View } from "react-native"
 import { withNavigation } from "react-navigation"
 import { color } from "../../theme"
 import { when } from "mobx"
@@ -13,16 +13,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     flexDirection: "column",
-    justifyContent: "space-around",
-    backgroundColor: "#00000040",
-  },
-  activityIndicatorWrapper: {
-    // backgroundColor: "#FFFFFF",
-    // height: 100,
-    // width: 100,
-    // borderRadius: 10,
-    // display: "flex",
-    alignItems: "center",
     justifyContent: "space-around",
   },
 })
@@ -40,7 +30,7 @@ export const LoadingScreen = withNavigation(
 
         setTimeout(async function(){ 
           await getEnv(dataStore).lnd.openWallet()
-        }, 2000)
+        }, 500) // FIXME properly use the right callback function
 
       }, [])
 
@@ -89,9 +79,7 @@ useEffect(() => {
 
     return (
       <View style={styles.centerBackground}>
-        <View style={styles.activityIndicatorWrapper}>
-          <ActivityIndicator size="large" color={color.primary} />
-        </View>
+        <ActivityIndicator size="large" color={color.primary} />
       </View>
       )
     }),

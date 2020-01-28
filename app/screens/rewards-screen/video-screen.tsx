@@ -9,7 +9,7 @@ import { Image, StyleSheet, View, Alert } from "react-native"
 
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-import { Onboarding } from "../../../../common/types"
+import { Onboarding } from "types"
 
 
 export const popcornLogo = require("../welcome-sync/PopcornLogo.png")

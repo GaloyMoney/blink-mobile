@@ -1,4 +1,4 @@
-import { Instance, SnapshotOut, types, flow, getParentOfType, getEnv, onSnapshot } from "mobx-state-tree"
+import { Instance, SnapshotOut, types, flow, getParentOfType, getEnv } from "mobx-state-tree"
 import { AccountType, CurrencyType, PendingFirstChannelsStatus as PendingFirstChannelsStatus } from "../../utils/enum"
 import { Side, IQuoteResponse, IQuoteRequest, IBuyRequest, Onboarding, OnboardingRewards } from "types"
 import { parseDate } from "../../utils/date"
@@ -343,7 +343,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
     // stateless, but must be an action instead of a view because of the async call
     initState: flow(function*() {
       const WALLET_NOT_FOUND = "rpc error: code = Unknown desc = wallet not found"
-      // const CLOSED = "Closed"
+      const CLOSED = "closed"
       let walletExist = true
       try {
         yield getEnv(self).lnd.grpc.sendUnlockerCommand("UnlockWallet")
@@ -352,11 +352,12 @@ export const LndModel = BaseAccountModel.named("Lnd")
         if (err.message === WALLET_NOT_FOUND) {
           walletExist = false
         }
-        // if (err.message === CLOSED) {
-        //   // We assumed that if sendUnlockerCommand is locked, the node is already launched.
-        //   // FIXME validate this assumption
-        //   walletExist = true
-        // }
+        if (err.message === CLOSED) {
+          // We assumed that if sendUnlockerCommand is locked, the node is already launched.
+          // this is useful for hot reloading
+          // FIXME validate this assumption
+          self.setLndReady()
+        }
       }
 
       self.walletExist = walletExist
@@ -954,23 +955,8 @@ export const OnboardingModel = types
       }
     }),
 
-    save: flow(function*() {
-      // TODO functions instead?
-      try {
-        yield firestore().doc(`users/${auth().currentUser.uid}`).set(
-          {stage: self.stage}, 
-          {merge: true}
-        )
-      } catch (err) {
-        console.tron.error(err)
-      }
-    }),
-
+    // dummy function to have same interface with bitcoin wallet and bank account 
     update: flow(function*() {}),
-
-    afterCreate() {
-      onSnapshot(self, self.save)
-    }
   }))
   .views(self => ({
     // TODO using: BalanceRequest type, how to set it?

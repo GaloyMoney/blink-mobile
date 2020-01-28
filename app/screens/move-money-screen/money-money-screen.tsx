@@ -8,7 +8,7 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { useNavigation } from "react-navigation-hooks"
 import { palette } from "../../theme/palette"
 import { inject } from "mobx-react"
-import { Onboarding } from "../../../../common/types"
+import { Onboarding } from "types"
 
 const styles = StyleSheet.create({
     headerSection: {

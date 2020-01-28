@@ -10,7 +10,7 @@ import Icon from "react-native-vector-icons/Ionicons"
 import currency from "currency.js"
 import { BalanceHeader } from "../../components/balance-header"
 import { AccountType, CurrencyType } from "../../utils/enum"
-import { Onboarding } from "../../../../common/types"
+import { Onboarding } from "types"
 import { palette } from "../../theme/palette"
 import { useNavigation } from "react-navigation-hooks"
 
