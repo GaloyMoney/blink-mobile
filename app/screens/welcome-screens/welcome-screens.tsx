@@ -8,7 +8,7 @@ import { inject, observer } from "mobx-react"
 import { withNavigation } from "react-navigation"
 import { AccountType, CurrencyType } from "../../utils/enum"
 import { trophyLogo } from "../rewards-screen"
-import { Onboarding } from "../../../../common/types"
+import { Onboarding } from "types"
 
 export const lightningLogo = require("./LightningBolt.png")
 export const galoyLogo = require("./GaloyLogo.png")

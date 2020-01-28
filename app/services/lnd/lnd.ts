@@ -136,7 +136,7 @@ export class Lnd {
     console.trace()
 
     await this.grpc.startLnd()
-    this.lndStore.setLndReady()
+    await this.lndStore.setLndReady()
 
     await this.setCallback()
 

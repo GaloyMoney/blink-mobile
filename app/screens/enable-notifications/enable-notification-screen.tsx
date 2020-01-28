@@ -7,7 +7,7 @@ import { Screen } from "../../components/screen"
 import { OnboardingScreen } from "../../components/onboarding"
 import { inject } from "mobx-react"
 import { useNavigation } from "react-navigation-hooks"
-import { Onboarding } from "../../../../common/types"
+import { Onboarding } from "types"
 
 export const bellLogo = require("./BellLogo.png")
 

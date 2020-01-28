@@ -11,7 +11,7 @@ import { withNavigation } from "react-navigation";
 import { useNavigation, useNavigationParam } from "react-navigation-hooks";
 import { palette } from "../../theme/palette"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
-import { Onboarding } from "../../../../common/types"
+import { Onboarding } from "types"
 
 
 const CAMERA: ViewStyle = {
