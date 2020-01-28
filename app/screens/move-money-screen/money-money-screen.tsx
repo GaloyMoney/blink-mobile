@@ -7,8 +7,8 @@ import { ListItem } from 'react-native-elements'
 import Icon from "react-native-vector-icons/Ionicons"
 import { useNavigation } from "react-navigation-hooks"
 import { palette } from "../../theme/palette"
-import { Onboarding } from "../../utils/enum"
 import { inject } from "mobx-react"
+import { Onboarding } from "../../../../common/types"
 
 const styles = StyleSheet.create({
     headerSection: {
@@ -74,7 +74,7 @@ export const MoveMoneyScreen = inject("dataStore")(
       ]
 
     const onBankClick = ({target, title}) => {
-        if (dataStore.onboarding.stage == Onboarding.walletOnboarded) {
+        if (!dataStore.onboarding.has(Onboarding.bankOnboarded)) {
             navigate('openBankAccount') 
         } else {
             navigate(target, {title})
