@@ -4,13 +4,12 @@ import { Screen } from "../../components/screen"
 import { StyleSheet, Alert, Image, ScrollView } from "react-native"
 import { Text } from "../../components/text"
 import { color } from "../../theme"
-import { ListItem } from 'react-native-elements'
+import { ListItem, Card, Button } from 'react-native-elements'
 import Icon from "react-native-vector-icons/Ionicons"
 import { useNavigation } from "react-navigation-hooks"
 import { palette } from "../../theme/palette"
 import { observer, inject } from "mobx-react"
 import { Onboarding } from "types"
-import { Notifications } from "react-native-notifications"
 
 export const trophyLogo = require("./TrophyLogo.png")
 
@@ -63,36 +62,22 @@ const styles = StyleSheet.create({
 export const RewardsScreen = inject("dataStore")(
     observer(({ dataStore }) => {
 
-    const [hasPermissions, setHasPermissions] = useState(false);
-
-    useEffect(() => {
-        const _ = async () => {
-            setHasPermissions(await Notifications.isRegisteredForRemoteNotifications())
-        }
-
-        Notifications.events().registerRemoteNotificationsRegistered(async (event) => {
-            setHasPermissions(true)
-        })
-
-        _()
-      }, [])
-
-
-    const bank = 
+    const rewards = 
     [
-        {
-            title: 'Download the app',
-            icon: 'ios-exit',
-            badge: "+1,000 sats",
-            fullfilled: true,
-            action: null,
-        },
+        // {
+        //     title: 'Download the app',
+        //     icon: 'ios-exit',
+        //     badge: "+1,000 sats",
+        //     fullfilled: true,
+        //     action: null,
+        // },
         {
             title: 'Backup wallet',
             icon: 'ios-lock',
             badge: "+1,000 sats",
             fullfilled: dataStore.onboarding.has(Onboarding.backupWallet),
             action: () => navigate('walletBackup'),
+            text: "Now that you have some sats, you need to back up your wallet to iCloud so you never loose access to your bitcoin."
         },
         {
             title: 'Activate notifications',
@@ -160,14 +145,28 @@ export const RewardsScreen = inject("dataStore")(
     ]
 
     const { navigate } = useNavigation()
+    
+    const index_fullfilled = rewards.findIndex(item => item.fullfilled === false)
+    const card = rewards[index_fullfilled]
+    const list = rewards.slice(index_fullfilled + 1)
 
     return (
         <Screen>
             <ScrollView>
-                <Image source={trophyLogo} style={styles.image} />
-                <Text style={styles.smallText}>Complete the task below to earn more bitcoin rewards!</Text>
+                <Card
+                    title={card.title}
+                    image={trophyLogo}>
+                    <Text style={{marginBottom: 10}}>
+                        {card.text}
+                    </Text>
+                    <Button
+                        // icon={<Icon name='code' color='#ffffff' />}
+                        onPress={card.action}
+                        buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0, backgroundColor: palette.green}}
+                        title={card.badge} />
+                </Card>
                 {
-                    bank.map((item, i) => (
+                    list.map((item, i) => (
                     <ListItem
                         titleStyle={styles.textButton}
                         style={styles.button}
