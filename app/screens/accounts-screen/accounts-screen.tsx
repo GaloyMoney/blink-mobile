@@ -132,10 +132,12 @@ export const AccountsScreen = inject("dataStore")(observer(
   return (
     <Screen>
       <BalanceHeader headingCurrency={CurrencyType.BTC} 
-          accountsToAdd={AccountType.All}
+          accountsToAdd={dataStore.onboarding.has(Onboarding.channelCreated) ?
+              AccountType.All : AccountType.AllVirtual
+            }
           initialLoading={initialLoading} />
       <FlatList 
-        data={accountTypes} 
+        data={accountTypes}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
