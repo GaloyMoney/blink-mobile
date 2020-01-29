@@ -1,6 +1,6 @@
 import * as React from "react"
 import { useState } from "react"
-import { ImageStyle, TextStyle, View, ViewStyle, TextInput, Clipboard } from "react-native"
+import { ImageStyle, TextStyle, View, ViewStyle, TextInput, Clipboard, StyleSheet } from "react-native"
 import { Screen } from "../../components/screen"
 import { Text } from "../../components/text"
 import { Button } from "../../components/button"
@@ -90,17 +90,20 @@ const CAMERA: ViewStyle = {
   height: 300,
 }
 
+const styles = StyleSheet.create({
+  separator: {
+    borderColor: palette.angry,
+    borderWidth: 1,
+  }  
+})
+
 const ChannelLiquidityView = ({chanId, remoteBalance, localBalance}) => { 
   
   const balanceInbound = localBalance / ( localBalance + remoteBalance)
   const balanceWidth = `${balanceInbound * 100}%`
 
   return (
-    <View style={{
-        borderColor: palette.angry,
-        borderWidth: 1,
-
-      }}>
+    <View style={styles.separator}>
       <Text>chanId: {chanId}</Text>
       <Text>localBalance: {localBalance}</Text>
       <Text>remoteBalance: {remoteBalance}</Text>
@@ -182,7 +185,19 @@ export const DebugScreen = inject("dataStore")(observer(
              />
           ))}
         </View>
-        <Text>Pending channel opening</Text>
+        <Text>Channel opening</Text>
+        {dataStore.lnd.pendingChannels.map((item) => (
+            <View style={styles.separator}>
+              <Text>remoteNodePub</Text>
+              <Text>{item.remoteNodePub}</Text>
+              <Text>channelPoint</Text>
+              <Text>{item.channelPoint}</Text>
+              <Text>capacity</Text>
+              <Text>{item.capacity}</Text>
+              <Text>remoteBalance</Text>
+              <Text>{item.remoteBalance}</Text>
+            </View>
+          ))}
         <Text>TODO</Text>
         <Text>Closing channels</Text>
         <Text>TODO</Text>
