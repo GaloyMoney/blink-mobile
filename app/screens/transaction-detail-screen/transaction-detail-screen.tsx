@@ -84,7 +84,7 @@ export const TransactionDetailScreen: React.FC<> = () => {
   const id = useNavigationParam("id")
   const preimage = useNavigationParam("preimage")
 
-  const spendOrReceive = amount < 0 ? "spent" : "receive"
+  const spendOrReceive = amount < 0 ? "spent" : "received"
 
   const options = {
     weekday: "short",
@@ -105,7 +105,7 @@ export const TransactionDetailScreen: React.FC<> = () => {
 
       <View style={styles.amountView}>
         <Text style={styles.amountText}>You {spendOrReceive}{" "}
-        <TextCurrency amount={amount} currencyUsed={currency} fontSize={18} />
+        <TextCurrency amount={Math.abs(amount)} currencyUsed={currency} fontSize={18} />
         </Text>
         {cashback !== undefined && 
           <Text style={styles.amountText}>

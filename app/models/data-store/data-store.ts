@@ -858,7 +858,8 @@ export const LndModel = BaseAccountModel.named("Lnd")
         id: payment.paymentHash,
         icon: "ios-thunderstorm",
         name: `Paid invoice ${shortenHash(payment.paymentHash, 2)}`,
-        amount: payment.valueSat,
+        // amount should be negative so that it's shown as "spent"
+        amount: - payment.valueSat, 
         date: parseDate(payment.creationDate),
         preimage: payment.paymentPreimage,
         status: "complete", //filter for succeed on ?
