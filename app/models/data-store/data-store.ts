@@ -750,9 +750,6 @@ export const LndModel = BaseAccountModel.named("Lnd")
       try {
         const { payments } = yield getEnv(self).lnd.grpc.sendCommand("listPayments")!
 
-        // for some reason, amount and timestamp arrives as String
-        // doing this map fixes the issue,
-        // XXX FIXME: find the root cause of this type issue
         const payments_good_types = payments.map(input => ({...input})) 
 
         console.tron.log("payments", payments, payments_good_types)
