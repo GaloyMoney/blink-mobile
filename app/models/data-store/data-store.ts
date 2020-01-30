@@ -45,19 +45,19 @@ export const PaymentModel = types.model("Payment", {
 })
 
 export const InvoiceModel = types.model("Invoice", {
-  memo: types.string,
+  memo: types.maybe(types.string),
   receipt: types.maybe(types.string),
   rPreimage: types.string,
   rHash: types.string,
   value: types.number,
-  settled: types.boolean,
+  settled: types.maybe(types.boolean),
   state: types.number, //XXX FIXME
   creationDate: types.number,
-  expiry: types.number,
-  settleDate: types.number,
-  paymentRequest: types.string,
-  private: types.boolean,
-  amtPaidSat: types.number,
+  expiry: types.maybe(types.number),
+  settleDate: types.maybe(types.number),
+  paymentRequest: types.maybe(types.string),
+  private: types.maybe(types.boolean),
+  amtPaidSat: types.maybe(types.number),
   // many other fields are not copied
 })
 
@@ -674,19 +674,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
       try {
         const { transactions } = yield getEnv(self).lnd.grpc.sendCommand("getTransactions")
 
-        // for some reason, amount and timestamp arrives as String
-        // doing this map fixes the issue,
-        // XXX FIXME: find the root cause of this type issue
-        const transaction_good_types = transactions.map(tx => ({
-          txHash: tx.txHash,
-          numConfirmations: tx.numConfirmations,
-          amount: tx.amount,
-          blockHash: tx.blockHash,
-          blockHeight: tx.blockHeight,
-          timeStamp: tx.timeStamp,
-          rawTxHex: tx.rawTxHex,
-          destAddresses: tx.destAddresses,
-        }))
+        const transaction_good_types = transactions.map(input => ({...input})) 
 
         console.tron.log("onchain_transactions", transactions, transaction_good_types)
 
@@ -742,24 +730,12 @@ export const LndModel = BaseAccountModel.named("Lnd")
       try {
         const { invoices } = yield getEnv(self).lnd.grpc.sendCommand("listInvoices")
 
-        // for some reason, amount and timestamp arrives as String
-        // doing this map fixes the issue,
-        // XXX FIXME: find the root cause of this type issue
-        const invoices_good_types = invoices.map(tx => ({
-          memo: tx.memo,
-          receipt: toHex(tx.receipt), // do we want this? receipt are empty
-          rPreimage: toHex(tx.rPreimage),
-          rHash: toHex(tx.rHash),
-          value: tx.value,
-          settled: tx.settled,
-          state: tx.state, // XXX FIXME is converted to number?
-          creationDate: tx.creationDate,
-          settleDate: tx.settleDate,
-          paymentRequest: tx.paymentRequest,
-          private: tx.private,
-          amtPaidSat: tx.amtPaidSat,
-          expiry: tx.expiry,
-        }))
+        const invoices_good_types = invoices.map(input => ({
+          ...input,
+          //   receipt: toHex(tx.receipt), // do we want this? receipt are empty
+          rPreimage: toHex(input.rPreimage),
+          rHash: toHex(input.rHash),
+        })) 
 
         console.tron.log("invoices", invoices, invoices_good_types)
 
@@ -777,15 +753,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
         // for some reason, amount and timestamp arrives as String
         // doing this map fixes the issue,
         // XXX FIXME: find the root cause of this type issue
-        const payments_good_types = payments.map(tx => ({
-          paymentHash: tx.paymentHash,
-          creationDate: tx.creationDate,
-          path: tx.path,
-          paymentPreimage: tx.paymentPreimage,
-          valueSat: tx.valueSat,
-          paymentRequest: tx.paymentRequest,
-          status: tx.status, // XXX FIXME status is being converted from "Succeed" to 2?
-        }))
+        const payments_good_types = payments.map(input => ({...input})) 
 
         console.tron.log("payments", payments, payments_good_types)
 
@@ -879,14 +847,14 @@ export const LndModel = BaseAccountModel.named("Lnd")
       const invoicesTxs = self.invoices
           .filter(filterExpiredInvoice)
           .map(invoice => ({
-        id: invoice.rHash,
-        icon: "ios-thunderstorm",
-        name: formatName(invoice),
-        amount: invoice.value,
-        status: invoice.settled ? "complete" : "in-progress",
-        date: parseDate(invoice.creationDate),
-        preimage: invoice.rPreimage,
-        memo: invoice.memo,
+            id: invoice.rHash,
+            icon: "ios-thunderstorm",
+            name: formatName(invoice),
+            amount: invoice.value,
+            status: invoice.settled ? "complete" : "in-progress",
+            date: parseDate(invoice.creationDate),
+            preimage: invoice.rPreimage,
+            memo: invoice.memo,
       }))
 
       const paymentTxs = self.payments.map(payment => ({
