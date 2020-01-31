@@ -127,8 +127,7 @@ export const WelcomePhoneInputScreen = withNavigation(({ text, navigation, heade
     }
   }, [err])
 
-  header = "To receive your sats, first we need to activate your Bitcoin wallet."
-  text = "This will take a little while, but we’ll send you a text when it’s ready!"
+  text = "Before we send you your first portion of Bitcoin, we need to verify you are a real person"
 
   return (
     <Screen>
@@ -139,7 +138,6 @@ export const WelcomePhoneInputScreen = withNavigation(({ text, navigation, heade
       >
         <View style={{ flex: 1, justifyContent: "flex-end" }}>
           <View style={{ flex: 1 }} />
-          <Text style={styles.text}>{header}</Text>
           <Image source={phoneLogo} style={styles.image} />
           <Text style={styles.text}>{text}</Text>
           <PhoneInput 
@@ -201,7 +199,7 @@ export const WelcomePhoneValidationScreen = inject("dataStore")(
   const sendVerif = async () => {
     console.tron.log(`verifyPhoneNumber with code ${code}`)
     if (code.length !== 6) {
-      Alert.alert(`code have 6 digits number`)
+      Alert.alert(`code need to have 6 digits`)
       return
     }
     try {

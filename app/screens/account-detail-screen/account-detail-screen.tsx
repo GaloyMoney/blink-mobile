@@ -378,6 +378,7 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
 
     let accountStore
 
+    // should have a generic mapping here, could use mst for it?
     switch (account) {
       case AccountType.Bank: 
         accountStore = dataStore.fiat
