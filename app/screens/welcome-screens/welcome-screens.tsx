@@ -10,6 +10,8 @@ import { AccountType, CurrencyType } from "../../utils/enum"
 import { trophyLogo } from "../rewards-screen"
 import { Onboarding } from "types"
 
+import Swiper from 'react-native-swiper'
+
 export const lightningLogo = require("./LightningBolt.png")
 export const galoyLogo = require("./GaloyLogo.png")
 export const bitcoinLogo = require("./BitcoinLogo.png")
@@ -25,34 +27,25 @@ const styles = StyleSheet.create({
   },
 })
 
-
-export const WelcomeEarnScreen = () => {
+export const WelcomeFirstScreen = () => {
   return (
-    <Screen>
-      <OnboardingScreen next="welcomeBank" image={presentLogo}>
-        <Text style={styles.text}>By using Galoy, you earn bitcoin.</Text>
-      </OnboardingScreen>
-    </Screen>
-  )
-}
-
-export const WelcomeBankScreen = () => {
-  return (
-    <Screen>
-      <OnboardingScreen next="welcomeBitcoin" image={dollarLogo}>
-        <Text style={styles.text}>Galoy is a digital bank account</Text>
-      </OnboardingScreen>
-    </Screen>
-  )
-}
-
-export const WelcomeBitcoinScreen = () => {
-  return (
-    <Screen>
-      <OnboardingScreen next="welcomeFirstSats" image={bitcoinLogo}>
-        <Text style={styles.text}>And a secure Bitcoin wallet too!</Text>
-      </OnboardingScreen>
-    </Screen>
+    <Swiper loop={false}>
+      <Screen>
+        <OnboardingScreen image={presentLogo}>
+          <Text style={styles.text}>By using Galoy, you earn bitcoin.</Text>
+        </OnboardingScreen>
+      </Screen>
+      <Screen>
+        <OnboardingScreen image={dollarLogo}>
+          <Text style={styles.text}>Galoy is a digital bank account</Text>
+        </OnboardingScreen>
+      </Screen>
+      <Screen>
+        <OnboardingScreen next="welcomeFirstSats" image={bitcoinLogo}>
+          <Text style={styles.text}>And a secure Bitcoin wallet too!</Text>
+        </OnboardingScreen>
+      </Screen>
+    </Swiper>
   )
 }
 

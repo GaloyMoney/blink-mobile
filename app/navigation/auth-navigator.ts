@@ -1,12 +1,10 @@
 import { createStackNavigator } from "react-navigation-stack"
 import { GetStartedScreen, LoginScreen } from "../screens/login-screen"
 import {
-  WelcomeBitcoinScreen,
-  WelcomeBankScreen,
-  WelcomeEarnScreen,
   WelcomeFirstSatsScreen,
   WelcomePhoneInputScreen,
   WelcomePhoneValidationScreen,
+  WelcomeFirstScreen,
 } from "../screens/welcome-screens"
 
 import { DebugScreen } from "../screens/demo-screen"
@@ -17,9 +15,7 @@ export const AuthNavigator = createStackNavigator(
     getStarted: { screen: GetStartedScreen },
     login: { screen: LoginScreen },
     demo: { screen: DebugScreen },
-    welcomeEarn: { screen: WelcomeEarnScreen },
-    welcomeBitcoin: { screen: WelcomeBitcoinScreen },
-    welcomeBank: { screen: WelcomeBankScreen },
+    welcomeFirst: { screen: WelcomeFirstScreen },
     welcomeFirstSats: { screen: WelcomeFirstSatsScreen },
     welcomePhoneInput: { screen: WelcomePhoneInputScreen },
     welcomePhoneValidation: { screen: WelcomePhoneValidationScreen },
