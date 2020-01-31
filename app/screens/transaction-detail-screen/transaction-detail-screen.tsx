@@ -10,7 +10,7 @@ import { color } from "../../theme"
 import MapView from "react-native-maps"
 import { useNavigationParam } from "react-navigation-hooks"
 import { TextCurrency } from "../../components/text-currency"
-import { CurrencyType } from "../../utils/enum"
+import { CurrencyType, AccountType } from "../../utils/enum"
 import { shortenHash } from "../../utils/helper"
 
 const styles = StyleSheet.create({
@@ -76,6 +76,7 @@ export const TransactionDetailScreen: React.FC<> = () => {
     },
   ]
 
+  const account = useNavigationParam("account")
   const date = useNavigationParam("date")
   const amount = useNavigationParam("amount")
   const cashback = useNavigationParam("cashback")
@@ -160,12 +161,17 @@ export const TransactionDetailScreen: React.FC<> = () => {
           <Row input="Category" value={"BTC Exchange"} />
         </>
       }
-      { currency === CurrencyType.BTC &&
+      { account === AccountType.Bitcoin &&
         <>
           <Row input="Hash" value={shortenHash(id, 12)} />
           { preimage && 
             <Row input="Preimage" value={shortenHash(preimage, 12)} />
           }
+        </>
+      }
+      { account === AccountType.VirtualBitcoin  &&
+        <>
+          <Row input="Status" value="Pending" />
         </>
       }
 

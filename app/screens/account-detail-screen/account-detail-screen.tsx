@@ -112,6 +112,7 @@ const AccountDetailItem: React.FC<AccountDetailItemProps> = (props) => {
           date: props.date,
           id: props.id,
           preimage: props.preimage,
+          account: props.account,
         })
       }
     >
