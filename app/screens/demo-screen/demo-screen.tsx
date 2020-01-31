@@ -11,6 +11,8 @@ import { color, spacing } from "../../theme"
 import { save } from "../../utils/storage"
 import { observer, inject } from "mobx-react"
 
+import crashlytics from '@react-native-firebase/crashlytics';
+
 import auth from "@react-native-firebase/auth"
 import { getSnapshot } from "mobx-state-tree"
 import JSONTree from 'react-native-json-tree'
@@ -347,6 +349,15 @@ export const DebugScreen = inject("dataStore")(observer(
             onPress={() =>
               dataStore.lnd.sendTransaction(addr, amount)
             }
+          />
+          <Button
+            style={DEMO}
+            textStyle={DEMO_TEXT}
+            text="Crash"
+            onPress={() => {
+              crashlytics().log('Testing crash');
+              crashlytics().crash();
+            }}
           />
         </View>
       </Screen>
