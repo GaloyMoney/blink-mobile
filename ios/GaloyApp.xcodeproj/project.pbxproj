@@ -461,6 +461,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
 			);
 			outputFileListPaths = (
 			);
@@ -535,7 +536,7 @@
 				CODE_SIGN_ENTITLEMENTS = GaloyApp/GaloyApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 76;
+				CURRENT_PROJECT_VERSION = 79;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 39Q9AL82ZL;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -565,7 +566,7 @@
 				CODE_SIGN_ENTITLEMENTS = GaloyApp/GaloyApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 76;
+				CURRENT_PROJECT_VERSION = 79;
 				DEVELOPMENT_TEAM = 39Q9AL82ZL;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
