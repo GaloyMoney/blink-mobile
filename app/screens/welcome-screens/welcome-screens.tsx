@@ -52,10 +52,9 @@ export const WelcomeFirstScreen = () => {
 export const WelcomeFirstSatsScreen = () => {
   return (
     <Screen>
-      <OnboardingScreen next="welcomePhoneInput" header="+1,000 sats" image={trophyLogo}>
+      <OnboardingScreen next="welcomePhoneInput" header={"You've earned some bitcoin for installing this app. +1,000 sats"} image={trophyLogo}>
         <Text style={styles.text}>
-          You've earned some sats for installing this app.{'\n'}{'\n'}
-          Continue to earn more bitcoin rewards
+          Continue to earn more rewards
         </Text>
       </OnboardingScreen>
     </Screen>

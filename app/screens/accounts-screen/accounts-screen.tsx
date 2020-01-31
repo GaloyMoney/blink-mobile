@@ -138,7 +138,7 @@ export const AccountsScreen = inject("dataStore")(observer(
 
   return (
     <Screen>
-      <BalanceHeader headingCurrency={CurrencyType.BTC} 
+      <BalanceHeader headingCurrency={CurrencyType.USD}
           accountsToAdd={dataStore.onboarding.has(Onboarding.channelCreated) ?
               AccountType.All : AccountType.AllVirtual
             }
