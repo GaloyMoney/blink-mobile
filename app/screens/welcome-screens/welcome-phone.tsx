@@ -97,7 +97,7 @@ export const WelcomePhoneInputScreen = withNavigation(({ text, navigation, heade
 
     try {
       setLoading(true)
-      const confirmation = await h().signInWithPhoneNumber(inputRef.current.getValue())
+      const confirmation = await auth().signInWithPhoneNumber(inputRef.current.getValue())
       console.tron.log(`confirmation`, confirmation)
       console.log(`confirmation`, confirmation)
       if (!isEmpty(confirmation)) {

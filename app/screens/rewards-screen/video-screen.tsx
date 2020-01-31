@@ -12,7 +12,7 @@ import { palette } from "../../theme/palette"
 import { Onboarding } from "types"
 
 
-export const popcornLogo = require("./PopcornLogo.png")
+const popcornLogo = require("./PopcornLogo.png")
 
 const styles = StyleSheet.create({
   container: {
