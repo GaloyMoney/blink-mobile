@@ -11,7 +11,7 @@ import { RewardsScreen, WalletBackupScreen, RewardsVideoScreen } from "../screen
 import { MoveMoneyScreen, SendBitcoinScreen, ScanningQRCodeScreen, ReceiveBitcoinScreen, BankTransferScreen, DirectDepositScreen, FindATMScreen } from "../screens/move-money-screen"
 import { BankAccountRewardsScreen, PersonalInformationScreen, openBankScreen, DateOfBirthScreen, BankAccountReadyScreen } from "../screens/bank-onboarding"
 import { EnableNotificationsScreen } from "../screens/enable-notifications"
-import { ChannelSyncScreen, ChannelCreateScreen } from "../screens/rewards-screen/welcome-sync"
+import { ChannelSyncScreen, ChannelCreateScreen } from "../screens/rewards-screen"
 
 
 export const BankAccountOnboardingNavigator = createStackNavigator({

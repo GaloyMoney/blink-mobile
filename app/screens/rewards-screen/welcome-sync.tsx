@@ -18,8 +18,8 @@ import { useNavigation } from "react-navigation-hooks"
 import { Onboarding } from "types"
 
 
-export const popcornLogo = require("./PopcornLogo.png")
-export const rocketLogo = require("./RocketLogo.png")
+const popcornLogo = require("./PopcornLogo.png")
+const rocketLogo = require("./RocketLogo.png")
 
 const styles = StyleSheet.create({
   container: {
