@@ -17,7 +17,7 @@ import { color } from "../../theme"
 import { Onboarding } from "types"
 
 
-export const bankLogo = require("./BankLogo.png")
+const bankLogo = require("./BankLogo.png")
 const popcornLogo = require("../rewards-screen/PopcornLogo.png")
 
 const styles = StyleSheet.create({

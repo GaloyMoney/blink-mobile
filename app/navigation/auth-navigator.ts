@@ -1,5 +1,5 @@
 import { createStackNavigator } from "react-navigation-stack"
-import { GetStartedScreen, LoginScreen } from "../screens/login-screen"
+import { GetStartedScreen } from "../screens/login-screen"
 import {
   WelcomeFirstSatsScreen,
   WelcomePhoneInputScreen,
@@ -13,7 +13,6 @@ import { color } from "../theme"
 export const AuthNavigator = createStackNavigator(
   {
     getStarted: { screen: GetStartedScreen },
-    login: { screen: LoginScreen },
     demo: { screen: DebugScreen },
     welcomeFirst: { screen: WelcomeFirstScreen },
     welcomeFirstSats: { screen: WelcomeFirstSatsScreen },
