@@ -5,9 +5,10 @@ import {
   WelcomeBankScreen,
   WelcomeEarnScreen,
   WelcomeFirstSatsScreen,
+  WelcomePhoneInputScreen,
+  WelcomePhoneValidationScreen,
 } from "../screens/welcome-screens"
 
-import { WelcomePhoneInputScreen, WelcomePhoneValidationScreen } from "../screens/welcome-phone"
 import { DebugScreen } from "../screens/demo-screen"
 import { color } from "../theme"
 
@@ -31,14 +32,3 @@ export const AuthNavigator = createStackNavigator(
     },
   },
 )
-
-// export const WalletCompletedNavigator = createStackNavigator(
-//   {
-//     welcomebackCompleted: { screen: WelcomeBackCompletedScreen },
-//     firstReward: { screen: FirstRewardScreen },
-//     allDone: { screen: AllDoneScreen },
-//   },
-//   {
-//     headerMode: "none",
-//   },
-// )
