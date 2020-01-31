@@ -45,14 +45,16 @@ export const OnboardingScreen = withNavigation(
           <Image source={image} style={styles.image} />
           {children}
         </View>
-        <Button
-          title={nextTitle || "Next"}
-          onPress={next ? () => navigation.navigate(next) : action}
-          containerStyle={styles.buttonContainer}
-          buttonStyle={styles.buttonStyle}
-          loading={loading}
-          disabled={loading}
-        />
+        {(next || action) &&
+          <Button
+            title={nextTitle || "Next"}
+            onPress={next ? () => navigation.navigate(next) : action}
+            containerStyle={styles.buttonContainer}
+            buttonStyle={styles.buttonStyle}
+            loading={loading}
+            disabled={loading}
+            />
+          }
       </>
     )
   },

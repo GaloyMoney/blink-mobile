@@ -72,6 +72,7 @@
     "react-native-securerandom": "^1.0.0-rc.0",
     "react-native-splash-screen": "3.2.0",
     "react-native-svg": "^10.1.0",
+    "react-native-swiper": "^1.5.14",
     "react-native-vector-icons": "^6.6.0",
     "react-native-version-number": "^0.3.6",
     "react-native-youtube": "^2.0.0",
