@@ -1,6 +1,6 @@
 import { Instance, SnapshotOut, types, flow, getParentOfType, getEnv } from "mobx-state-tree"
 import { AccountType, CurrencyType, PendingFirstChannelsStatus as PendingFirstChannelsStatus } from "../../utils/enum"
-import { Side, IQuoteResponse, IQuoteRequest, IBuyRequest, Onboarding, OnboardingRewards } from "types"
+import { Side, IQuoteResponse, IQuoteRequest, IBuyRequest, Onboarding, OnboardingRewards, OnboardingString } from "types"
 import { parseDate } from "../../utils/date"
 import KeychainAction from "../../utils/keychain"
 import { generateSecureRandom } from "react-native-securerandom"
@@ -42,6 +42,21 @@ export const PaymentModel = types.model("Payment", {
   status: types.number, // FIXME should be number
   paymentRequest: types.string,
   paymentPreimage: types.string,
+  description: types.maybe(types.string),
+})
+
+export const HTLCModel = types.model("HTLC", {
+  chanId: types.union(types.string, types.undefined, types.number, types.null),
+  // htlcIndex: types.maybe(types.union(types.string, types.undefined, types.number)),
+  amtMsat: types.union(types.string, types.undefined, types.number, types.null),
+  acceptHeight: types.union(types.string, types.undefined, types.number, types.null),
+  acceptTime: types.union(types.string, types.undefined, types.number, types.null),
+  resolveTime: types.union(types.string, types.undefined, types.number, types.null),
+  expiryHeight: types.union(types.string, types.undefined, types.number, types.null),
+  state: types.union(types.string, types.undefined, types.number, types.null),
+  mppTotalAmtMsat: types.union(types.string, types.undefined, types.number, types.null),
+  // mppTotalAmtMsat: types.maybe(types.string),
+  customRecords: types.maybe(types.string)
 })
 
 export const InvoiceModel = types.model("Invoice", {
@@ -51,15 +66,19 @@ export const InvoiceModel = types.model("Invoice", {
   rHash: types.string,
   value: types.number,
   settled: types.maybe(types.boolean),
-  state: types.number, //XXX FIXME
+  state: types.maybe(types.number), //XXX FIXME
   creationDate: types.number,
   expiry: types.maybe(types.number),
   settleDate: types.maybe(types.number),
   paymentRequest: types.maybe(types.string),
   private: types.maybe(types.boolean),
   amtPaidSat: types.maybe(types.number),
+  htlcs: types.array(HTLCModel),
+    // under htlcs but not in array: mppTotalAmtMsat: types.maybe(types.string),
+
   // many other fields are not copied
 })
+
 
 export const PendingChannelModel = types.model("Channel", {
   // [
@@ -205,7 +224,7 @@ export const ExchangeModel = types
           console.tron.log(invoiceJson)
           
           if (side === "sell") {
-            self.quote.satPrice = parseFloat(invoiceJson.description.split(":")[1])
+            self.quote.satPrice = parseFloat(JSON.parse(invoiceJson.description)['satPrice'])
           } 
 
           self.quote.satAmount = invoiceJson.numSatoshis
@@ -728,16 +747,39 @@ export const LndModel = BaseAccountModel.named("Lnd")
 
     updateInvoices: flow(function*() {
       try {
+
         const { invoices } = yield getEnv(self).lnd.grpc.sendCommand("listInvoices")
+
+        function formatingRecords<T>(source: T) {
+          const result = {}
+          Object.keys(source).forEach((key) => {
+            if (key == '123123') {
+              const value = source[key]
+              result[key] = Buffer.from(Object.values(value), 'hex').toString()
+              // todo manage conversion properly depending of type 
+            }
+          }, {})
+          // XXX FIXME
+          return result['123123'] ? result['123123'] : undefined
+          return result as T
+         }
 
         const invoices_good_types = invoices.map(input => ({
           ...input,
           //   receipt: toHex(tx.receipt), // do we want this? receipt are empty
           rPreimage: toHex(input.rPreimage),
           rHash: toHex(input.rHash),
-        })) 
-
+          htlcs: input.htlcs.map(htlc => ({
+            ...htlc,
+            customRecords: formatingRecords(htlc.customRecords),
+          }))
+        }))
+        
         console.tron.log("invoices", invoices, invoices_good_types)
+
+        // const htlc = invoices_good_types[0].htlcs[0]
+        // const result = HTLCModel.create({...htlc})
+        // console.tron.log(result)
 
         self.invoices = invoices_good_types
       } catch (err) {
@@ -750,7 +792,14 @@ export const LndModel = BaseAccountModel.named("Lnd")
       try {
         const { payments } = yield getEnv(self).lnd.grpc.sendCommand("listPayments")!
 
-        const payments_good_types = payments.map(input => ({...input})) 
+        var lightningPayReq = require('bolt11')
+
+        // FIXME bolt11 package duplicate with decodePayReq function
+        const payments_good_types = payments.map(input => ({
+          ...input,
+          description: lightningPayReq.decode(input.paymentRequest)
+            .tags.filter(item => item.tagName == "description")[0]?.data
+        }))
 
         console.tron.log("payments", payments, payments_good_types)
 
@@ -819,15 +868,30 @@ export const LndModel = BaseAccountModel.named("Lnd")
         status: transaction.numConfirmations < 3 ? "unconfirmed" : "confirmed",
       }))
 
-      const formatName = invoice => {
+      const formatInvoice = invoice => {
         if (invoice.settled) {
           if (invoice.memo) {
             return invoice.memo
+          } else if (invoice.htlcs[0].customRecords) {
+            return OnboardingString[invoice.htlcs[0].customRecords]
           } else {
             return `Payment received`
           }
         } else {
           return `Waiting for payment`
+        }
+      }
+
+      const formatPayment = payment => {
+        if (payment.description) {
+          try {
+            const decode = JSON.parse(payment.description)
+            return decode.memo
+          } catch (e) {
+            return payment.description;
+          }
+        } else {
+          return `Paid invoice ${shortenHash(payment.paymentHash, 2)}`
         }
       }
 
@@ -837,7 +901,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
         }
         if (new Date().getTime() / 1000 > invoice.creationDate + invoice.expiry) {
           return false
-        } 
+        }
         return true
       })
 
@@ -846,7 +910,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
           .map(invoice => ({
             id: invoice.rHash,
             icon: "ios-thunderstorm",
-            name: formatName(invoice),
+            name: formatInvoice(invoice),
             amount: invoice.value,
             status: invoice.settled ? "complete" : "in-progress",
             date: parseDate(invoice.creationDate),
@@ -857,7 +921,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
       const paymentTxs = self.payments.map(payment => ({
         id: payment.paymentHash,
         icon: "ios-thunderstorm",
-        name: `Paid invoice ${shortenHash(payment.paymentHash, 2)}`,
+        name: formatPayment(payment),
         // amount should be negative so that it's shown as "spent"
         amount: - payment.valueSat, 
         date: parseDate(payment.creationDate),
@@ -943,7 +1007,7 @@ export const OnboardingModel = types
     get transactions() {
       const r = self.stage.map(item => ({
         // TODO: interface for those pending transactions
-        name: item,
+        name: OnboardingString[item],
         icon: "ios-exit",
         amount: OnboardingRewards[item],
         date: Date.now(),

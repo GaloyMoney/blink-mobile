@@ -164,6 +164,8 @@ const BitcoinHeader = ({currency, account, dataStore, refresh}) => {
   const [amount, setAmount] = useState(1000)
   const [loadingQuote, setLoadingQuote] = useState(false)
 
+  const { navigate } = useNavigation()
+
   const onModalHide = () => {
     dataStore.exchange.quote.reset()
   }
@@ -194,6 +196,9 @@ const BitcoinHeader = ({currency, account, dataStore, refresh}) => {
 
       if (success) {
         refresh()
+        if (side === "buy") {
+          await dataStore.onboarding.add(Onboarding.buyFirstSats)
+        }
         setMessage("Success!")
       } else {
         setMessage("There was an error. Please try again later")
