@@ -128,9 +128,10 @@ export const SendBitcoinScreen: React.FC
             } else if (protocol.startsWith("ln") && request === undefined) { // it might start with 'lightning:'
                 request = protocol
 
-            } else if (protocol !== "lightning") {
-                Alert.alert(
-                    `Only lightning procotol is accepted for now. got: ${protocol}`)
+            } else if (protocol.toLowerCase() !== "lightning") {
+                let message = `Only lightning procotol is accepted for now.`
+                message += message === "" ? "" : `got: ${protocol}`
+                Alert.alert(message)
                 return
             }
 

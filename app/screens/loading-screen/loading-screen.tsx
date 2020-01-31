@@ -46,29 +46,6 @@ export const LoadingScreen = withNavigation(
           navigation.navigate("authStack")
         } else {
           navigation.navigate("primaryStack")
-
-          /*
-          const statusChannel = await dataStore.lnd.statusFirstChannelOpen()
-          switch (dataStore.onboarding.stage) {
-            case Onboarding.walletOnboarded: 
-            case Onboarding.bankOnboarded:
-              // TODO: manage the case if user and no channels
-              navigation.navigate("primaryStack")
-              break
-            default:
-              console.tron.log(`statusChannel : ${statusChannel}`)
-              switch (statusChannel) {
-                case PendingFirstChannelsStatus.pending:
-                  navigation.navigate("welcomeGenerating")
-                  break
-                case PendingFirstChannelsStatus.opened:
-                  navigation.navigate("welcomebackCompleted")
-                  break
-                case PendingFirstChannelsStatus.noChannel:
-                  navigation.navigate("welcomeSyncing")
-                }
-              break
-          */
         
       }}
 

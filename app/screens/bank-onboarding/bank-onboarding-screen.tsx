@@ -84,7 +84,7 @@ export const openBankScreen = inject('dataStore')(
     <Screen>
       { !dataStore.onboarding.has(Onboarding.bankOnboarded) &&
       <OnboardingScreen next="personalInformation" image={bankLogo}>
-        <Text style={styles.text}>You’re just a few minutes away from own Galoy bank account! Order a debit card to receive 1% bitcoin rewards on all spending.</Text>
+        <Text style={styles.text}>You’re just a few minutes away from owning a Galoy bank account! Order a debit card to receive 1% bitcoin rewards on all spending.</Text>
       </OnboardingScreen>
       }
       { dataStore.onboarding.has(Onboarding.bankOnboarded) &&
