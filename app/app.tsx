@@ -2,6 +2,8 @@
 //
 // In this file, we'll be kicking off our app or storybook.
 
+import '@react-native-firebase/crashlytics'
+
 import "node-libs-react-native/globals" // needed for Buffer?
 
 import "./i18n"

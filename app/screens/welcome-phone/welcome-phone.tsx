@@ -216,7 +216,7 @@ export const WelcomePhoneValidationScreen = inject("dataStore")(
 
   useEffect(() => {
     if (completed) {
-      navigate("primaryStack")
+      navigate("rewards")
     }
   }, [completed])
 
@@ -255,6 +255,7 @@ export const WelcomePhoneValidationScreen = inject("dataStore")(
             textContentType="oneTimeCode"
             placeholder="6 Digits Code"
             returnKeyType='done'
+            maxLength = {6}
             onSubmitEditing={() => sendVerif()}
           >
             {code}
