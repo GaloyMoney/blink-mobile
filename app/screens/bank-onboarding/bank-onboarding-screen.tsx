@@ -18,7 +18,7 @@ import { Onboarding } from "types"
 
 
 export const bankLogo = require("./BankLogo.png")
-export const popcornLogo = require("../welcome-sync/PopcornLogo.png")
+export const popcornLogo = require("../rewards-screen/PopcornLogo.png")
 
 const styles = StyleSheet.create({
   title: {

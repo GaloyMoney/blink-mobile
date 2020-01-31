@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
 })
 
 
-export const WelcomeSyncingScreen = withNavigation(
+export const ChannelSyncScreen = withNavigation(
   inject("dataStore")(
     observer(({ dataStore, navigation }) => {
 
@@ -168,7 +168,7 @@ export const WelcomeSyncingScreen = withNavigation(
   ),
 )
 
-export const WelcomeGeneratingWalletScreen = inject("dataStore")(
+export const ChannelCreateScreen = inject("dataStore")(
   observer(({ dataStore }) => {
     const [fundingTx, setFundingTx] = useState("")
 
