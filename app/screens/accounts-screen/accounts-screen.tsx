@@ -9,7 +9,7 @@ import { color } from "../../theme/color"
 import Icon from "react-native-vector-icons/Ionicons"
 import currency from "currency.js"
 import { BalanceHeader } from "../../components/balance-header"
-import { AccountType, CurrencyType } from "../../utils/enum"
+import { AccountType, CurrencyType, PendingFirstChannelsStatus } from "../../utils/enum"
 import { Onboarding } from "types"
 import { palette } from "../../theme/palette"
 import { useNavigation } from "react-navigation-hooks"
@@ -100,27 +100,34 @@ const AccountItem = inject("dataStore")(observer(
 export const AccountsScreen = inject("dataStore")(observer(
   ({ dataStore }) => {
 
-  const [ initialLoading, setInitialLoading] = useState(true);
-  const [ refreshing, setRefreshing] = useState(false);
+  const [ initialLoading, setInitialLoading] = useState(true)
+  const [ refreshing, setRefreshing] = useState(false)
+  const [ bitcoinType, setBitcoinType ] = useState(AccountType.Bitcoin)
   const { navigate } = useNavigation()
 
   //FIXME type any
   const accountTypes: Array<Record<string, any>> = [
     { key: "Bank Account", account: AccountType.Bank, icon: "ios-cash" },
-    { key: "Bitcoin", account: AccountType.Bitcoin, icon: "logo-bitcoin" },
+    { key: "Bitcoin", account: bitcoinType, icon: "logo-bitcoin" },
   ]
 
   if (!dataStore.onboarding.has(Onboarding.bankOnboarded)) {
     accountTypes[0]['action'] = () => navigate('bankAccountRewards')
   }
 
-  if (!dataStore.onboarding.has(Onboarding.channelCreated)) {
-    accountTypes[1]['account'] = AccountType.VirtualBitcoin
-  }
-
   const onRefresh = React.useCallback(async () => {
     setRefreshing(true)
     await dataStore.updateBalance()
+
+    // TODO: refresh to update the wallet after
+    // first channel is opened?
+    const channelStatus = await dataStore.lnd.statusFirstChannelOpen()
+    if ( channelStatus == PendingFirstChannelsStatus.opened) {
+      setBitcoinType(AccountType.Bitcoin)
+    } else {
+      setBitcoinType(AccountType.VirtualBitcoin)
+    }
+    
     setRefreshing(false)
     setInitialLoading(false)
   }, [refreshing])

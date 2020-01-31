@@ -36,6 +36,7 @@
     "@types/react-native-keychain": "^3.1.0",
     "apisauce": "1.1.1",
     "bip21": "^2.0.2",
+    "bolt11": "^1.2.7",
     "buffer": "^5.4.3",
     "currency.js": "^1.2.2",
     "i18n-js": "^3.5.1",
