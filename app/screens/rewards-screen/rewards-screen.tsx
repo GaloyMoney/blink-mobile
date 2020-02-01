@@ -1,7 +1,6 @@
 import * as React from "react"
-import { useState, useEffect } from "react"
 import { Screen } from "../../components/screen"
-import { StyleSheet, Alert, Image, ScrollView } from "react-native"
+import { StyleSheet, Alert, ScrollView } from "react-native"
 import { Text } from "../../components/text"
 import { color } from "../../theme"
 import { ListItem, Card, Button } from 'react-native-elements'

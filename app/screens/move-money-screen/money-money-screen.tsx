@@ -1,6 +1,6 @@
 import * as React from "react"
 import { Screen } from "../../components/screen"
-import { StyleSheet } from "react-native"
+import { StyleSheet, ScrollView } from "react-native"
 import { Text } from "../../components/text"
 import { color } from "../../theme"
 import { ListItem } from 'react-native-elements'
@@ -83,34 +83,36 @@ export const MoveMoneyScreen = inject("dataStore")(
 
     return (
         <Screen>
-            <Text style={styles.headerSection}>Bank</Text>
-            {
-                bank.map((item, i) => (
-                <ListItem
-                    titleStyle={styles.text}
-                    style={styles.button}
-                    key={i}
-                    title={item.title}
-                    leftIcon={<Icon name={item.icon} style={styles.icon} size={32} color={color.primary} />}
-                    onPress={() => onBankClick(item)}
-                    chevron
-                />
-                ))
-            }
-            <Text style={styles.headerSection}>Bitcoin</Text>
-            {
-                bitcoin.map((item, i) => (
-                <ListItem
-                    titleStyle={styles.text}
-                    style={styles.button}
-                    key={i}
-                    title={item.title}
-                    leftIcon={<Icon name={item.icon} style={styles.icon} size={32} color={color.primary} />}
-                    onPress={() => navigate(item.target)}
-                    chevron
-                />
-                ))
-            }
+            <ScrollView>
+                <Text style={styles.headerSection}>Bank</Text>
+                {
+                    bank.map((item, i) => (
+                    <ListItem
+                        titleStyle={styles.text}
+                        style={styles.button}
+                        key={i}
+                        title={item.title}
+                        leftIcon={<Icon name={item.icon} style={styles.icon} size={32} color={color.primary} />}
+                        onPress={() => onBankClick(item)}
+                        chevron
+                    />
+                    ))
+                }
+                <Text style={styles.headerSection}>Bitcoin</Text>
+                {
+                    bitcoin.map((item, i) => (
+                    <ListItem
+                        titleStyle={styles.text}
+                        style={styles.button}
+                        key={i}
+                        title={item.title}
+                        leftIcon={<Icon name={item.icon} style={styles.icon} size={32} color={color.primary} />}
+                        onPress={() => navigate(item.target)}
+                        chevron
+                    />
+                    ))
+                }
+            </ScrollView>
         </Screen>
     )
 })
