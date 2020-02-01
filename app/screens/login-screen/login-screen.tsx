@@ -9,6 +9,7 @@ import { color } from "../../theme"
 import VersionNumber from 'react-native-version-number';
 import Config from "react-native-config";
 import { palette } from "../../theme/palette"
+import { translate } from "../../i18n"
 
 const styles = StyleSheet.create({
   bottom: {
@@ -62,10 +63,8 @@ const styles = StyleSheet.create({
   }
 })
 
-// translate(headerTx))
 
-export const GetStartedScreen = withNavigation(
-  inject("dataStore")(
+export const GetStartedScreen = withNavigation(inject("dataStore")(
     observer(({ dataStore, navigation }) => {
 
       return (
@@ -73,14 +72,21 @@ export const GetStartedScreen = withNavigation(
           <Text style={styles.title} onPress={() => navigation.navigate("demo")}>
             Galoy
           </Text>
-          <Text style={styles.sub}>The Bank with Bitcoin Rewards</Text>
+          <Text style={styles.sub}>{translate("GetStartedScreen.headline")}</Text>
           
           <Text style={styles.version}>
             v{VersionNumber.appVersion} build {VersionNumber.buildVersion}{'\n'}
             network: {Config.BITCOIN_NETWORK}{'\n'}
             lnd: {dataStore.lnd.version}
           </Text>
-          <GetStartedComponent dataStore={dataStore} navigation={navigation} />
+          <View style={styles.bottom}>
+            <Button
+              title={translate("GetStartedScreen.getStarted")}
+              buttonStyle={styles.signIn}
+              onPress={() => navigation.navigate("welcomeFirst")}
+              containerStyle={styles.buttonContainer}
+            />
+          </View>
         </Screen>
       )
 
@@ -91,16 +97,3 @@ export const GetStartedScreen = withNavigation(
 GetStartedScreen.navigationOptions = () => ({
   headerShown: false,
 })
-
-const GetStartedComponent = ({ dataStore, navigation }) => {
-  return (
-      <View style={styles.bottom}>
-        <Button
-          title="Get Started"
-          buttonStyle={styles.signIn}
-          onPress={() => navigation.navigate("welcomeFirst")}
-          containerStyle={styles.buttonContainer}
-        />
-      </View>
-  )
-}

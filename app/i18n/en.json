@@ -2,23 +2,33 @@
   "common": {
     "ok": "OK!",
     "cancel": "Cancel",
-    "back": "Back"
+    "back": "Back",
+    "next": "Next"
   },
   "errors": {
-    "invalidEmail": "Invalid email address."
+    "invalidEmail": "Invalid email address.",
+    "invalidPhoneNumber": "is not a valid phone number"
   },
-  "welcomeScreen": {
-    "poweredBy": "POWERED BY BOWSER",
-    "readyForLaunch": "Ready for launch.",
-    "continue": "CONTINUE"
+  "GetStartedScreen": {
+    "headline": "The Bank with Bitcoin Rewards",
+    "getStarted": "Get Started"
   },
-  "debugScreen": {
-    "howTo": "HOW TO",
-    "title": "What’s In This Stack?",
-    "tagLine": "Congratulations, you’ve got a very advanced React Native app template here.  Take advantage of this boilerplate!",
-    "reactotron": "Demo Reactotron",
-    "androidReactotronHint": "If this doesn't work, ensure the Reactotron desktop app is running, run adb reverse tcp:9090 tcp:9090 from your terminal, and reload the app.",
-    "iosReactotronHint": "If this doesn't work, ensure the Reactotron desktop app is running and reload app."
+  "WelcomeFirstScreen": {
+    "earn": "By using Galoy, you earn bitcoin.",
+    "bank": "Galoy is a digital bank account",
+    "wallet": "And a secure Bitcoin wallet too!",
+  },
+  "WelcomeFirstSats": {
+    "header": "You've earned some bitcoin for installing this app. +1,000 sats",
+    "text": "Continue to earn more rewards",
+  },
+  "WelcomePhoneInputScreen": {
+    "header": "Before we send you your first portion of Bitcoin, we need to verify you are a real person",
+    "placeholder": "Phone Number"
+  },
+  "WelcomePhoneValidationScreen": {
+    "header": "To confirm your phone number, enter the code we just sent you",
+    "placeholder": "6 Digits Code"
   },
   "storybook": {
     "placeholder": "Placeholder",
