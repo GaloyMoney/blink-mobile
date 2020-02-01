@@ -16,22 +16,73 @@
   "WelcomeFirstScreen": {
     "earn": "By using Galoy, you earn bitcoin.",
     "bank": "Galoy is a digital bank account",
-    "wallet": "And a secure Bitcoin wallet too!",
+    "wallet": "And a secure Bitcoin wallet too!"
   },
   "WelcomeFirstSats": {
     "header": "You've earned some bitcoin for installing this app. +1,000 sats",
-    "text": "Continue to earn more rewards",
+    "text": "Continue to earn more rewards"
   },
   "WelcomePhoneInputScreen": {
-    "header": "Before we send you your first portion of Bitcoin, we need to verify you are a real person",
+    "header": "Enter your phone number to prove you’re a real person.",
     "placeholder": "Phone Number"
   },
   "WelcomePhoneValidationScreen": {
     "header": "To confirm your phone number, enter the code we just sent you",
     "placeholder": "6 Digits Code"
   },
-  "storybook": {
-    "placeholder": "Placeholder",
-    "field": "Field"
+  "RewardsScreen": {
+    "header": "Number of rewards unlocked: ",
+    "walletDownloaded": {
+      "title": "Download the app",
+      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+    },
+    "backupWallet": {
+      "title": "Backup wallet",
+      "text": "Now that you have some sats, you need to back up your wallet to iCloud so you never loose access to your bitcoin."
+    },
+    "activateNotifications": {
+      "title": "Activate notifications",
+      "text": "Enable notifications to get alerts when you receive payments in the future."
+    },
+    "rewardsVideo": {
+      "title": "Learn about Bitcoin and Lightning",
+      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+    },
+    "channelCreated": {
+      "title": "Open your first channel",
+      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+    },
+    "firstPayment": {
+      "title": "",
+      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+    },
+    "bankOnboarded": {
+      "title": "Register for your bank account",
+      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+    },
+    "buyFirstSats": {
+      "title": "Buy your first sats",
+      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+    },
+    "activateDebitCard": {
+      "title": "Active your debit card",
+      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+    },
+    "firstCardSpending": {
+      "title": "Buy something with your debit card",
+      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+    },
+    "firstSurvey": {
+      "title": "Tell us what you think about the product",
+      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+    },
+    "activateDirectDeposit": {
+      "title": "",
+      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+    },
+    "inviteAFriend": {
+      "title": "Make your first micro payment for a NYT article",
+      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+    },
   }
 }
