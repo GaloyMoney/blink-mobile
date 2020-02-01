@@ -64,7 +64,7 @@ export const InvoiceModel = types.model("Invoice", {
   receipt: types.maybe(types.string),
   rPreimage: types.string,
   rHash: types.string,
-  value: types.number,
+  value: types.maybe(types.number), // for amountless invoices
   settled: types.maybe(types.boolean),
   state: types.maybe(types.number), //XXX FIXME
   creationDate: types.number,

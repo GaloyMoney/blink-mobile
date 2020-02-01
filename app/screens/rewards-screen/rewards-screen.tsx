@@ -1,14 +1,16 @@
 import * as React from "react"
 import { Screen } from "../../components/screen"
-import { StyleSheet, Alert, ScrollView } from "react-native"
+import { StyleSheet, Alert, View, Image } from "react-native"
 import { Text } from "../../components/text"
 import { color } from "../../theme"
-import { ListItem, Card, Button } from 'react-native-elements'
-import Icon from "react-native-vector-icons/Ionicons"
 import { useNavigation } from "react-navigation-hooks"
 import { palette } from "../../theme/palette"
 import { observer, inject } from "mobx-react"
-import { Onboarding } from "types"
+import { Onboarding, OnboardingRewards } from "types"
+import Carousel from 'react-native-snap-carousel';
+import { TouchableHighlight } from "react-native-gesture-handler"
+import { translate } from "../../i18n"
+
 
 export const trophyLogo = require("./TrophyLogo.png")
 
@@ -61,129 +63,114 @@ const styles = StyleSheet.create({
 export const RewardsScreen = inject("dataStore")(
     observer(({ dataStore }) => {
 
+    const { navigate } = useNavigation()
+
     const rewards = 
     [
-        // {
-        //     title: 'Download the app',
-        //     icon: 'ios-exit',
-        //     badge: "+1,000 sats",
-        //     fullfilled: true,
-        //     action: null,
-        // },
         {
-            title: 'Backup wallet',
-            icon: 'ios-lock',
-            badge: "+1,000 sats",
-            fullfilled: dataStore.onboarding.has(Onboarding.backupWallet),
-            action: () => navigate('walletBackup'),
-            text: "Now that you have some sats, you need to back up your wallet to iCloud so you never loose access to your bitcoin."
+            id: "walletDownloaded",
+            icon: 'ios-exit',
+            action: null,
         },
         {
-            title: 'Activate notifications',
+            id: "backupWallet",
             icon: 'ios-lock',
-            badge: "+1,000 sats",
-            fullfilled: dataStore.onboarding.has(Onboarding.activateNotifications),
+            action: () => navigate('walletBackup'),
+        },
+        {
+            id: "activateNotifications",
+            icon: 'ios-lock',
             action: () => navigate('enableNotifications'),
         },
         {
-            title: 'Learn about Bitcoin and Lightning',
+            id: 'rewardsVideo',
             icon: 'ios-school',
-            badge: "+1,000 sats",
-            fullfilled: dataStore.onboarding.has(Onboarding.rewardsVideo),
             action: () => navigate('rewardsVideo'),
         },
         {
-            title: 'Open your first channel',
+            id: 'channelCreated',
             icon: 'ios-school',
-            badge: "+5,000 sats",
-            fullfilled: dataStore.onboarding.has(Onboarding.channelCreated),
             action: () => navigate('welcomeSyncing'),
         },
         {
-            title: "Make your first micro payment for a NYT article",
+            id: 'firstLightningPayment',
             icon: 'ios-exit',
-            badge: "+5,000 sats",
-            fullfilled: dataStore.onboarding.has(Onboarding.firstPayment),
             action: () => navigate('sendBitcoin'),
         },
         {
-            title: "Open bank account",
+            id: 'bankOnboarded',
             icon: 'ios-gift',
-            badge: "+10,000 sats",
-            fullfilled: dataStore.onboarding.has(Onboarding.bankOnboarded),
             action: () => navigate('openBankAccount'),
         },
         {
-            title: "Buy your first sats",
+            id: "debitCardActivation",
             icon: 'ios-exit',
-            badge: "+10,000 sats",
-            fullfilled: false,
             action: () => Alert.alert('TODO'),
         },
         {
-            title: "Activate debit card",
+            id: "firstCardSpending",
             icon: 'ios-power',
-            badge: "+50,000 sats",
-            fullfilled: false,
             action: () => Alert.alert('TODO'),
         },
         {
-            title: "Use your card",
+            id: "activateDirectDeposit",
             icon: 'ios-cart',
-            badge: "0.25% rewards!",
-            fullfilled: false,
+            rewards: "0.25% rewards!",
             action: () => Alert.alert('TODO'),
         },
         {
-            title: "Direct deposit",
+            id: "inviteAFriend",
             icon: 'ios-download',
-            badge: "1% card rewards!",
-            fullfilled: false,
+            rewards: "1% card rewards!",
             action: () => Alert.alert('TODO'),
         }
     ]
-
-    const { navigate } = useNavigation()
     
-    const index_fullfilled = rewards.findIndex(item => item.fullfilled === false)
-    const card = rewards[index_fullfilled]
-    const list = rewards.slice(index_fullfilled + 1)
+    rewards.forEach(item => item['fullfilled'] = dataStore.onboarding.has(Onboarding[item.id]))
+
+    const first_non_fullfilled_item = rewards.findIndex(item => !item.fullfilled)
+
+    const total_rewards = rewards.length
+    const rewards_unlocked = rewards.reduce((acc, item) => (
+        item.fullfilled ? acc + 1 : acc
+    ), 0)
+
+    const renderItem = ({item, index}) => {
+        return (
+            <View style={styles.textButton}>
+                <Image source={trophyLogo} />
+                <TouchableHighlight onPress={ item.action } disabled={item.fullfilled}>
+                    <View>
+                        <Text style={styles.textButton}>
+                            { translate(`RewardsScreen\.${item.id}.title`) }
+                        </Text>
+                        <Text style={styles.textButton}>
+                            { translate(`RewardsScreen\.${item.id}.text`) }
+                        </Text>
+                        <Text style={styles.textButton}>
+                            { item.rewards 
+                            || OnboardingRewards[item.id] && 
+                                `+${OnboardingRewards[item.id]} sats`
+                            }
+                        </Text>
+                        <Text>fullfilled: { item.fullfilled ? 'true' : 'false' }</Text>
+                    </View>
+                </TouchableHighlight>
+            </View>
+        )
+    }
 
     return (
         <Screen>
-            <ScrollView>
-                <Card
-                    title={card.title}
-                    image={trophyLogo}>
-                    <Text style={{marginBottom: 10}}>
-                        {card.text}
-                    </Text>
-                    <Button
-                        // icon={<Icon name='code' color='#ffffff' />}
-                        onPress={card.action}
-                        buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0, backgroundColor: palette.green}}
-                        title={card.badge} />
-                </Card>
-                {
-                    list.map((item, i) => (
-                    <ListItem
-                        titleStyle={styles.textButton}
-                        style={styles.button}
-                        key={i}
-                        title={item.title}
-                        leftIcon={<Icon name={item.icon} style={styles.icon} size={32} color={color.primary} />}
-                        onPress={item.action}
-                        badge={{value:item.badge, 
-                                badgeStyle: item.fullfilled? 
-                                    styles.badgeFullfilled :
-                                    styles.badgeDefault
-                                }}
-                        disabled={item.fullfilled}
-                        chevron
-                    />
-                    ))
-                }
-            </ScrollView>
+            <Text>{translate('RewardsScreen.header')} {rewards_unlocked} / {total_rewards}</Text>
+            <Carousel
+            //   ref={(c) => { this._carousel = c; }}
+              data={rewards}
+              renderItem={renderItem}
+              sliderWidth={500}
+              itemWidth={250}
+              firstItem={first_non_fullfilled_item}
+            />
         </Screen>
     )
 }))
