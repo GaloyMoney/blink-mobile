@@ -7,7 +7,7 @@ import { Input, Button } from 'react-native-elements';
 import Icon from "react-native-vector-icons/Ionicons"
 import { color } from "../../theme";
 import { RNCamera } from "react-native-camera";
-import { withNavigation } from "react-navigation";
+import { withNavigation, ScrollView } from "react-navigation";
 import { useNavigation, useNavigationParam } from "react-navigation-hooks";
 import { palette } from "../../theme/palette"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
@@ -192,7 +192,7 @@ export const SendBitcoinScreen: React.FC
             console.tron.log(result)
             if (result === true) {
                 setMessage('Payment succesfull')
-                await dataStore.onboarding.add(Onboarding.firstPayment)
+                await dataStore.onboarding.add(Onboarding.firstLightningPayment)
                 setInvoice("")
             } else {
                 setErr(result.toString())
@@ -230,51 +230,53 @@ export const SendBitcoinScreen: React.FC
 
     return (
         <Screen>
-            <View style={styles.section}>
-                <Text style={styles.smallText}>To</Text>
-                <View style={styles.horizontalContainer}>
-                    <Input placeholder='Invoice' 
-                        leftIcon={  <Icon   name='ios-log-out'
-                                    size={24}
-                                    color={color.primary}
-                                    style={styles.icon}
-                                    />} 
-                        value={invoice}
-                        containerStyle={styles.invoiceContainer}
-                    />
-                    <Button icon={<Icon
-                        name="ios-camera"
-                        size={48}
-                        color={color.palette.white}/>}
-                        buttonStyle={styles.squareButton}
-                        onPress={openingCamera}
-                    />
+            <ScrollView>
+                <View style={styles.section}>
+                    <Text style={styles.smallText}>To</Text>
+                    <View style={styles.horizontalContainer}>
+                        <Input placeholder='Invoice' 
+                            leftIcon={  <Icon   name='ios-log-out'
+                                        size={24}
+                                        color={color.primary}
+                                        style={styles.icon}
+                                        />} 
+                            value={invoice}
+                            containerStyle={styles.invoiceContainer}
+                        />
+                        <Button icon={<Icon
+                            name="ios-camera"
+                            size={48}
+                            color={color.palette.white}/>}
+                            buttonStyle={styles.squareButton}
+                            onPress={openingCamera}
+                        />
+                    </View>
                 </View>
-            </View>
-            <View style={styles.section}>
-                <Text style={styles.smallText}>Amount</Text>
-                <Input leftIcon={<Text style={styles.icon}>sats</Text>} 
-                    onChangeText={input => setAmount(+input)}
-                    value={amount.toString()}
-                    disabled={!amountless}
-                    returnKeyType='done'
-                    keyboardType="number-pad" // TODO, there should be no keyboard here
+                <View style={styles.section}>
+                    <Text style={styles.smallText}>Amount</Text>
+                    <Input leftIcon={<Text style={styles.icon}>sats</Text>}
+                        onChangeText={input => setAmount(+input)}
+                        value={amount.toString()}
+                        disabled={!amountless}
+                        returnKeyType='done'
+                        keyboardType="number-pad" // TODO, there should be no keyboard here
+                        />
+                </View>
+                <View style={styles.section}>
+                    <Text style={styles.smallText}>Note</Text>
+                    <Text style={styles.note}>{note}</Text>
+                </View>
+                <Button 
+                    buttonStyle={styles.buttonStyle}
+                    title="Paste" onPress={pasteInvoice}
                     />
-            </View>
-            <View style={styles.section}>
-                <Text style={styles.smallText}>Note</Text>
-                <Text style={styles.note}>{note}</Text>
-            </View>
-            <Button 
-                buttonStyle={styles.buttonStyle}
-                title="Paste" onPress={pasteInvoice}
-                />
-            <Button 
-                buttonStyle={styles.buttonStyle}
-                title="Send" onPress={payInvoice}
-                disabled={invoice === ""}
-                loading={loading}
-                />
+                <Button 
+                    buttonStyle={styles.buttonStyle}
+                    title="Send" onPress={payInvoice}
+                    disabled={invoice === ""}
+                    loading={loading}
+                    />
+            </ScrollView>
         </Screen>
     )
 }))
