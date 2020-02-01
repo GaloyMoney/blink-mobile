@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Text, View, Alert, StyleSheet } from "react-native"
+import { Text, View, Alert, StyleSheet, ScrollView } from "react-native"
 import { Screen } from "../../components/screen"
 import { Button } from 'react-native-elements';
 import { color } from "../../theme";
@@ -57,18 +57,20 @@ export const DirectDepositScreen: React.FC = () => {
 
     return (
         <Screen>
-            <View style={styles.screenMargin}>
-                <Text style={styles.title}>Set up direct deposit</Text>
-                <Text style={styles.text}>Generate a direct deposit form for your employer or payroll provider.</Text>
-                <Text style={styles.subtitle}>Galoy Checking</Text>
-                <Row type="Routing" value="137284391" />
-                <Row type="Account" value="3849120438" />
-                <Row type="Bank name" value="Partner Bank & Trust" />
-                <Button 
-                    buttonStyle={styles.buttonStyle}
-                    title="Move My Paycheck!" onPress={() => Alert.alert("We're still implementing direct deposit")}
-                    />
-            </View>
+            <ScrollView>
+                <View style={styles.screenMargin}>
+                    <Text style={styles.title}>Set up direct deposit</Text>
+                    <Text style={styles.text}>Generate a direct deposit form for your employer or payroll provider.</Text>
+                    <Text style={styles.subtitle}>Galoy Checking</Text>
+                    <Row type="Routing" value="137284391" />
+                    <Row type="Account" value="3849120438" />
+                    <Row type="Bank name" value="Partner Bank & Trust" />
+                    <Button 
+                        buttonStyle={styles.buttonStyle}
+                        title="Move My Paycheck!" onPress={() => Alert.alert("We're still implementing direct deposit")}
+                        />
+                </View>
+            </ScrollView>
         </Screen>
     )
 }
