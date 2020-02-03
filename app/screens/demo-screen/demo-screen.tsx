@@ -1,6 +1,6 @@
 import * as React from "react"
 import { useState } from "react"
-import { ImageStyle, TextStyle, View, ViewStyle, TextInput, Clipboard, StyleSheet } from "react-native"
+import { ImageStyle, TextStyle, View, ViewStyle, TextInput, Clipboard, StyleSheet, Alert } from "react-native"
 import { Screen } from "../../components/screen"
 import { Text } from "../../components/text"
 import { Button } from "../../components/button"
@@ -18,6 +18,8 @@ import { getSnapshot } from "mobx-state-tree"
 import JSONTree from 'react-native-json-tree'
 import { useNavigation } from "react-navigation-hooks"
 import { palette } from "../../theme/palette"
+import functions from "@react-native-firebase/functions"
+
 
 
 const FULL: ViewStyle = { flex: 1 }
@@ -161,9 +163,6 @@ export const DebugScreen = inject("dataStore")(observer(
           "https://avatars2.githubusercontent.com/u/3902527?s=200&u=a0d16b13ed719f35d95ca0f4440f5d07c32c349a&v=4",
       },
     })
-
-    // Let's do some async storage stuff
-    await save("Cool Name", "Boaty McBoatface")
   }
 
   return (
@@ -206,9 +205,15 @@ export const DebugScreen = inject("dataStore")(observer(
           <Button
             style={DEMO}
             textStyle={DEMO_TEXT}
-            text="Log out"
-            onPress={() => auth().signOut()}
+            text="Delete account and log out"
+            onPress={async () => {
+              await functions().httpsCallable("deleteCurrentUser")({})
+              await dataStore.onboarding._reset()
+              await auth().signOut()
+              Alert.alert("user succesfully deleted. Delete your app to start from a clean state")
+            }}
           />
+          <Text>UID: {auth().currentUser?.uid}</Text>
           <Text>BTC price: {dataStore.rates.BTC}</Text>
           <Text
             style={TAGLINE}

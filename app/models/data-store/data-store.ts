@@ -987,6 +987,12 @@ export const OnboardingModel = types
 
     // dummy function to have same interface with bitcoin wallet and bank account 
     update: flow(function*() {}),
+    
+    // for debug when resetting account
+    _reset: flow(function*() {
+      while(self.stage.length > 0) {
+        self.stage.pop();
+    }}),
   }))
   .views(self => ({
     // TODO using: BalanceRequest type, how to set it?
