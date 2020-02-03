@@ -6,10 +6,8 @@ import { withNavigation } from "react-navigation"
 import { Screen } from "../../components/screen"
 import { color } from "../../theme"
 
-import VersionNumber from 'react-native-version-number';
-import Config from "react-native-config";
-import { palette } from "../../theme/palette"
 import { translate } from "../../i18n"
+import { VersionComponent } from "../../components/version/version"
 
 const styles = StyleSheet.create({
   bottom: {
@@ -54,13 +52,6 @@ const styles = StyleSheet.create({
     marginBottom: 24,
     marginTop: 128,
   },
-
-  version: {
-    fontSize: 18,
-    marginTop: 100,
-    color: palette.lightGrey,
-    textAlign: 'center',
-  }
 })
 
 
@@ -69,16 +60,11 @@ export const GetStartedScreen = withNavigation(inject("dataStore")(
 
       return (
         <Screen style={styles.container}>
-          <Text style={styles.title} onPress={() => navigation.navigate("demo")}>
+          <Text style={styles.title} onPress={() => navigation.navigate("debug")}>
             Galoy
           </Text>
           <Text style={styles.sub}>{translate("GetStartedScreen.headline")}</Text>
-          
-          <Text style={styles.version}>
-            v{VersionNumber.appVersion} build {VersionNumber.buildVersion}{'\n'}
-            network: {Config.BITCOIN_NETWORK}{'\n'}
-            lnd: {dataStore.lnd.version}
-          </Text>
+          <VersionComponent />
           <View style={styles.bottom}>
             <Button
               title={translate("GetStartedScreen.getStarted")}

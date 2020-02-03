@@ -7,13 +7,13 @@ import {
   WelcomeFirstScreen,
 } from "../screens/welcome-screens"
 
-import { DebugScreen } from "../screens/demo-screen"
+import { DebugScreen } from "../screens/debug-screen"
 import { color } from "../theme"
 
 export const AuthNavigator = createStackNavigator(
   {
     getStarted: { screen: GetStartedScreen },
-    demo: { screen: DebugScreen },
+    debug: { screen: DebugScreen },
     welcomeFirst: { screen: WelcomeFirstScreen },
     welcomeFirstSats: { screen: WelcomeFirstSatsScreen },
     welcomePhoneInput: { screen: WelcomePhoneInputScreen },

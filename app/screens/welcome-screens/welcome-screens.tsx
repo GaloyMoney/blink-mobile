@@ -6,7 +6,6 @@ import { Text } from "../../components/text"
 import { inject } from "mobx-react"
 import { withNavigation } from "react-navigation"
 import { useNavigation, useNavigationParam } from "react-navigation-hooks"
-import { trophyLogo } from "../rewards-screen"
 import { Onboarding } from "types"
 import { StyleSheet, View, Image, Alert, KeyboardAvoidingView, Platform } from "react-native"
 import { Button } from "react-native-elements"
@@ -27,6 +26,8 @@ const dollarLogo = require("./DollarLogo.png")
 const presentLogo = require("./PresentLogo.png")
 const phoneLogo = require("./PhoneLogo.png")
 const phoneWithArrowLogo = require("./PhoneWithArrowLogo.png")
+const trophyLogo = require("../rewards-screen/TrophyLogo.png")
+
 
 
 const styles = StyleSheet.create({
@@ -130,7 +131,7 @@ export const WelcomeFirstSatsScreen = () => {
 
 
 
-export const WelcomePhoneInputScreen = withNavigation(({ text, navigation, header = "" }) => {
+export const WelcomePhoneInputScreen = withNavigation(({ navigation }) => {
   const [loading, setLoading] = useState(false)
   const [err, setErr] = useState("")
 
