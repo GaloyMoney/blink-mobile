@@ -1,25 +1,47 @@
 import * as React from "react"
 import { Screen } from "../../components/screen"
-import { StyleSheet, Alert, View, Image } from "react-native"
+import { StyleSheet, Alert, View, Dimensions, Platform } from "react-native"
 import { Text } from "../../components/text"
 import { color } from "../../theme"
 import { useNavigation } from "react-navigation-hooks"
 import { palette } from "../../theme/palette"
 import { observer, inject } from "mobx-react"
 import { Onboarding, OnboardingRewards } from "types"
-import Carousel from 'react-native-snap-carousel';
+import Carousel, { ParallaxImage } from 'react-native-snap-carousel'
 import { TouchableHighlight } from "react-native-gesture-handler"
 import { translate } from "../../i18n"
 
 
-export const trophyLogo = require("./TrophyLogo.png")
+export const safeBank = require("./SafeBank.jpg")
+export const globalCommunications = require("./GlobalCommunications.jpg")
+export const greenPhone = require("./GreenPhone.jpg")
 
+const { width: screenWidth } = Dimensions.get('window')
 
 const styles = StyleSheet.create({
-    headerSection: {
+    item: {
+        width: screenWidth - 60,
+        height: screenWidth - 60,
+    },
+    
+    imageContainer: {
+        flex: 1,
+        marginBottom: Platform.select({ ios: 0, android: 1 }), // Prevent a random Android rendering issue
+        backgroundColor: 'white',
+        borderRadius: 8,
+    },
+
+    image: {
+        ...StyleSheet.absoluteFillObject,
+        resizeMode: 'cover',
+    },
+
+    title: {
+        fontSize: 24,
         fontWeight: 'bold',
-        fontSize: 20,
-        margin: 22,
+        marginHorizontal: 40,
+        textAlign: 'center',
+        marginTop: 100,
     },
 
     textButton: {
@@ -35,29 +57,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
 
-    button: {
-        marginHorizontal: 20,
-        paddingVertical: 6,
-    },
-
-    icon: {
-        marginRight: 12,
-        textAlign: "center",
-        width: 32,
-    },
-
-    image: {
-        alignSelf: "center",
-        marginVertical: 50,
-    },
-
-    badgeDefault: {
-        backgroundColor: color.primary
-    },
-
-    badgeFullfilled: {
-        backgroundColor: color.secondary
-    }
 })
 
 export const RewardsScreen = inject("dataStore")(
@@ -76,11 +75,13 @@ export const RewardsScreen = inject("dataStore")(
             id: "backupWallet",
             icon: 'ios-lock',
             action: () => navigate('walletBackup'),
+            image: safeBank,
         },
         {
             id: "activateNotifications",
             icon: 'ios-lock',
             action: () => navigate('enableNotifications'),
+            image: globalCommunications,
         },
         {
             id: 'rewardsVideo',
@@ -128,17 +129,19 @@ export const RewardsScreen = inject("dataStore")(
     
     rewards.forEach(item => item['fullfilled'] = dataStore.onboarding.has(Onboarding[item.id]))
 
-    const first_non_fullfilled_item = rewards.findIndex(item => !item.fullfilled)
-
     const total_rewards = rewards.length
     const rewards_unlocked = rewards.reduce((acc, item) => (
         item.fullfilled ? acc + 1 : acc
     ), 0)
 
-    const renderItem = ({item, index}) => {
+    const renderItem = ({item, index}, parallaxProps) => {
         return (
-            <View style={styles.textButton}>
-                <Image source={trophyLogo} />
+            <View style={styles.item}>
+                <ParallaxImage 
+                    source={item.image || greenPhone}
+                    containerStyle={styles.imageContainer} 
+                    {...parallaxProps}
+                />
                 <TouchableHighlight onPress={ item.action } disabled={item.fullfilled}>
                     <View>
                         <Text style={styles.textButton}>
@@ -162,14 +165,19 @@ export const RewardsScreen = inject("dataStore")(
 
     return (
         <Screen>
-            <Text>{translate('RewardsScreen.header')} {rewards_unlocked} / {total_rewards}</Text>
+            <Text style={styles.title}>
+                {translate('RewardsScreen.header')} {rewards_unlocked} / {total_rewards}
+            </Text>
+            <View style={{flex: 1}} />
             <Carousel
             //   ref={(c) => { this._carousel = c; }}
               data={rewards}
               renderItem={renderItem}
-              sliderWidth={500}
-              itemWidth={250}
-              firstItem={first_non_fullfilled_item}
+              sliderWidth={screenWidth}
+              sliderHeight={screenWidth}
+              itemWidth={screenWidth - 60}
+              hasParallaxImages={true}
+              firstItem={rewards.findIndex(item => !item.fullfilled)}
             />
         </Screen>
     )
