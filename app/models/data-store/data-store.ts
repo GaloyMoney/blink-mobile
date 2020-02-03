@@ -1027,17 +1027,12 @@ export const DataStoreModel = types
     lnd: types.optional(LndModel, {}), // TODO should it be optional?
   })
   .actions(self => ({
-    updateTransactions: flow(function*() {
-      // TODO parrallel call?
-      yield self.fiat.updateTransactions()
-      yield self.lnd.updateTransactions()
-    }),
-
     updateBalance: flow(function*() {
-      // TODO parrallel call?
-      yield self.rates.update()
-      yield self.fiat.updateBalance()
-      yield self.lnd.updateBalance()
+      yield Promise.all([
+        yield self.rates.update(),
+        yield self.fiat.updateBalance(),
+        yield self.lnd.updateBalance(),
+      ])
     })
   }))
   .views(self => ({
