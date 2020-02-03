@@ -1,6 +1,6 @@
 import * as React from "react"
 import { createStackNavigator } from "react-navigation-stack"
-import { DebugScreen } from "../screens/demo-screen"
+import { DebugScreen } from "../screens/debug-screen"
 import { AccountsScreen } from "../screens/accounts-screen"
 import { AccountDetailScreen } from "../screens/account-detail-screen/account-detail-screen"
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
@@ -32,7 +32,7 @@ export const AccountNavigator = createStackNavigator(
     transactionDetail: { screen: TransactionDetailScreen },
     bankAccountRewards: { screen : BankAccountRewardsScreen },
 
-    demo: { screen: DebugScreen },
+    debug: { screen: DebugScreen },
   },
   {
     headerMode: "float",

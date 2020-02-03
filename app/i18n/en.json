@@ -1,6 +1,6 @@
 {
   "common": {
-    "ok": "OK!",
+    "ok": "OK",
     "cancel": "Cancel",
     "back": "Back",
     "next": "Next"
@@ -45,20 +45,20 @@
       "text": "Enable notifications to get alerts when you receive payments in the future."
     },
     "rewardsVideo": {
-      "title": "Learn about Bitcoin and Lightning",
-      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      "title": "Learn about Galoy",
+      "text": "Get to know why and how Galoy is doing Banking differently"
     },
     "channelCreated": {
       "title": "Open your first channel",
-      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      "text": "In future version of the application, we'll abstract the concept of a channel, but for now you need to create your first channel on the lightning network"
     },
     "firstLightningPayment": {
-      "title": "",
-      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      "title": "Do you first lightning ⚡ payment",
+      "text": "Lightning is the revolutionary payment. Give it a try!"
     },
     "bankOnboarded": {
       "title": "Register for your bank account",
-      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      "text": "Send us your personnal information and we'll provide you a full bank account"
     },
     "buyFirstSats": {
       "title": "Buy your first sats",
@@ -83,6 +83,19 @@
     "inviteAFriend": {
       "title": "Make your first micro payment for a NYT article",
       "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-    },
+    }
+  },
+  "AccountDetailScreen": {
+    "openAccount": "Open a Galoy bank account",
+    "openAccountReason": "To {{side}} bitcoin you will need a Galoy bank account, so you can transfer US Dollar",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "thisMonth": "This month",
+    "prevMonths": "Previous months",
+    "quote": "How many sats to {{side}}: ",
+  },
+  "AccountsScreen": {
+    "title": "Accounts",
+    "bitcoinRewards": "Earn bitcoin rewards!",
   }
 }

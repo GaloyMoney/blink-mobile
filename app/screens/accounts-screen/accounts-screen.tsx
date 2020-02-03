@@ -16,6 +16,7 @@ import { useNavigation } from "react-navigation-hooks"
 
 import ContentLoader, { Rect } from "react-content-loader/native"
 import { ListItem } from "react-native-elements"
+import { translate } from "../../i18n"
 
 const accountBasic = {
   color: color.text,
@@ -111,6 +112,7 @@ export const AccountsScreen = inject("dataStore")(observer(
     { key: "Bitcoin", account: bitcoinType, icon: "logo-bitcoin" },
   ]
 
+  // TODO refactor ==> bank should also have a virtual screen
   if (!dataStore.onboarding.has(Onboarding.bankOnboarded)) {
     accountTypes[0]['action'] = () => navigate('bankAccountRewards')
   }
@@ -151,22 +153,22 @@ export const AccountsScreen = inject("dataStore")(observer(
         renderItem={({ item }) => <AccountItem {...item} initialLoading={initialLoading} />} />
       <View style={{flex: 1}}></View>
       <ListItem
-      title={"Earn bitcoin rewards!"}
-      style={[styles.accountView, {borderColor: color.primary}]}
-      onPress={() => navigate("rewards")}
-      leftAvatar={<Icon name="ios-gift" color={color.primary} size={28}  style={styles.icon} />}
-      chevron
-    />
+        title={translate("AccountsScreen.bitcoinRewards")}
+        style={[styles.accountView, {borderColor: color.primary}]}
+        onPress={() => navigate("rewards")}
+        leftAvatar={<Icon name="ios-gift" color={color.primary} size={28}  style={styles.icon} />}
+        chevron
+      />
     </Screen>
   )
 }))
 
 AccountsScreen.navigationOptions = screenProps => ({
-  title: "Accounts",
+  title: translate("AccountsScreen.title"),
   headerRight: () => <Icon name={"ios-person"}
       size={32}
       color={palette.darkGrey} 
       style={styles.person}
-      onPress={() => screenProps.navigation.navigate("demo")}
+      onPress={() => screenProps.navigation.navigate("debug")}
     />
 })

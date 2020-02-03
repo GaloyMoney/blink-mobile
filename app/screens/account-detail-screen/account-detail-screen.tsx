@@ -21,6 +21,7 @@ import { useNavigation, useNavigationParam } from "react-navigation-hooks"
 import { Button } from "react-native-elements"
 import { palette } from "../../theme/palette"
 import { Side, Onboarding } from "types"
+import { translate } from "../../i18n";
 
 export interface AccountDetailScreenProps {
   account: AccountType
@@ -228,7 +229,7 @@ const BitcoinHeader = ({currency, account, dataStore, refresh}) => {
       setMessage("")
       Alert.alert(message, "", [
         {
-          text: "OK",
+          text: translate("common.ok"),
           onPress: () => {
             setModalVisible(false)
             setLoading(false)
@@ -254,9 +255,8 @@ const BitcoinHeader = ({currency, account, dataStore, refresh}) => {
       <View style={styles.viewModal}>
       { !dataStore.onboarding.has(Onboarding.bankOnboarded) &&
           <>
-            <Text style={[styles.itemText, {marginVertical: 12}]}>Open a Galoy bank account</Text>
-            <Text style={[styles.itemText, {marginVertical: 12}]}>To {side} bitcoin you will need a Galoy bank account,
-            so you can transfer US Dollar</Text>
+            <Text style={[styles.itemText, {marginVertical: 12}]}>{translate("AccountDetailScreen.openAccount")}</Text>
+            <Text style={[styles.itemText, {marginVertical: 12}]}>{translate("AccountDetailScreen.openAccountReason", {side})}</Text>
             <Button title="Open account" 
               onPress={() => {setModalVisible(false); navigate('openBankAccount')}}  
               buttonStyle={styles.button}
@@ -267,7 +267,7 @@ const BitcoinHeader = ({currency, account, dataStore, refresh}) => {
       { dataStore.onboarding.has(Onboarding.bankOnboarded) &&
         <>
           <View style={{flexDirection: "row", alignContent: "center"}}>
-            <Text style={[styles.itemText, {paddingVertical: 12}]}>How many sats to {side}:{" "}</Text>
+            <Text style={[styles.itemText, {paddingVertical: 12}]}>{translate("AccountDetailScreen.quote", {side})}</Text>
             <TextInput value={amount.toString()} onChangeText={text => 
                 setAmount(isNaN(Number.parseInt(text)) ? 0 : Number.parseInt(text) )
               } 
@@ -352,19 +352,19 @@ const formatTransactions = (transactions) => {
   }
   
   if (today.length > 0) {
-    sections.push({ title: "Today", data: today })
+    sections.push({ title: translate("AccountDetailScreen.today"), data: today })
   }
 
   if (yesterday.length > 0) {
-    sections.push({ title: "Yesterday", data: yesterday })
+    sections.push({ title: translate("AccountDetailScreen.yesterday"), data: yesterday })
   }
 
   if (thisMonth.length > 0) {
-    sections.push({ title: "This month", data: thisMonth })
+    sections.push({ title: translate("AccountDetailScreen.thisMonth"), data: thisMonth })
   }
 
   if (before.length > 0) {
-    sections.push({ title: "Previous months", data: before })
+    sections.push({ title: translate("AccountDetailScreen.prevMonths"), data: before })
   }
 
   return sections

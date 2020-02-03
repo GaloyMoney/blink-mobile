@@ -8,7 +8,6 @@ import { Wallpaper } from "../../components/wallpaper"
 import { Header } from "../../components/header"
 import { QRCode } from "../../components/qrcode"
 import { color, spacing } from "../../theme"
-import { save } from "../../utils/storage"
 import { observer, inject } from "mobx-react"
 
 import crashlytics from '@react-native-firebase/crashlytics';
@@ -19,6 +18,7 @@ import JSONTree from 'react-native-json-tree'
 import { useNavigation } from "react-navigation-hooks"
 import { palette } from "../../theme/palette"
 import functions from "@react-native-firebase/functions"
+import { VersionComponent } from "../../components/version/version"
 
 
 
@@ -201,6 +201,7 @@ export const DebugScreen = inject("dataStore")(observer(
           ))}
         <Text>Closing channels</Text>
         <Text>TODO</Text>
+        <VersionComponent />
         <View>
           <Button
             style={DEMO}
