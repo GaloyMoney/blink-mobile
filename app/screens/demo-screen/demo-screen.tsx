@@ -207,8 +207,14 @@ export const DebugScreen = inject("dataStore")(observer(
             textStyle={DEMO_TEXT}
             text="Delete account and log out"
             onPress={async () => {
-              await functions().httpsCallable("deleteCurrentUser")({})
               await dataStore.onboarding._reset()
+              if (auth().currentUser) {
+                try {
+                  await functions().httpsCallable("deleteCurrentUser")({})
+                } catch (err) {
+                  console.tron.error(err)
+                }
+              }
               await auth().signOut()
               Alert.alert("user succesfully deleted. Delete your app to start from a clean state")
             }}
