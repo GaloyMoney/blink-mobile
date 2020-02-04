@@ -31,7 +31,8 @@
     "placeholder": "6 Digits Code"
   },
   "RewardsScreen": {
-    "header": "Number of rewards unlocked: ",
+    "title": "Rewards",
+    "header": "Sats accumulated",
     "walletDownloaded": {
       "title": "Download the app",
       "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
@@ -53,11 +54,11 @@
       "text": "In future version of the application, we'll abstract the concept of a channel, but for now you need to create your first channel on the lightning network"
     },
     "firstLightningPayment": {
-      "title": "Do you first lightning ⚡ payment",
+      "title": "First payment ⚡ ⚡ ⚡ ",
       "text": "Lightning is the revolutionary payment. Give it a try!"
     },
     "bankOnboarded": {
-      "title": "Register for your bank account",
+      "title": "Open your bank account",
       "text": "Send us your personnal information and we'll provide you a full bank account"
     },
     "buyFirstSats": {
@@ -69,19 +70,19 @@
       "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
     },
     "firstCardSpending": {
-      "title": "Buy something with your debit card",
+      "title": "First card payment",
       "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
     },
     "firstSurvey": {
       "title": "Tell us what you think about the product",
       "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
     },
-    "activateDirectDeposit": {
-      "title": "",
+    "inviteAFriend": {
+      "title": "Invite a friend",
       "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
     },
-    "inviteAFriend": {
-      "title": "Make your first micro payment for a NYT article",
+    "activateDirectDeposit": {
+      "title": "Activate Direct Deposit",
       "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
     }
   },
