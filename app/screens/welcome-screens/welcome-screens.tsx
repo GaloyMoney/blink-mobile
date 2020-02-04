@@ -103,7 +103,7 @@ export const WelcomeFirstScreen = () => {
       </Screen>
       <Screen>
         <OnboardingScreen image={dollarLogo}>
-          <Text style={styles.text}>{translate("WelcomeFirstScreen.earn")}</Text>
+          <Text style={styles.text}>{translate("WelcomeFirstScreen.bank")}</Text>
         </OnboardingScreen>
       </Screen>
       <Screen>

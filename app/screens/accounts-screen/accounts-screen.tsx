@@ -142,7 +142,7 @@ export const AccountsScreen = inject("dataStore")(observer(
     <Screen>
       <BalanceHeader headingCurrency={CurrencyType.USD}
           accountsToAdd={dataStore.onboarding.has(Onboarding.channelCreated) ?
-              AccountType.All : AccountType.AllVirtual
+              AccountType.AllReal : AccountType.AllVirtual
             }
           initialLoading={initialLoading} />
       <FlatList 
