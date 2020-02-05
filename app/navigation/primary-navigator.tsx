@@ -11,7 +11,6 @@ import { color } from "../theme"
 import { RewardsScreen, RewardsVideoScreen } from "../screens/rewards-screen"
 import { MoveMoneyScreen, SendBitcoinScreen, ScanningQRCodeScreen, ReceiveBitcoinScreen, BankTransferScreen, DirectDepositScreen, FindATMScreen } from "../screens/move-money-screen"
 import { BankAccountRewardsScreen, PersonalInformationScreen, openBankScreen, DateOfBirthScreen, BankAccountReadyScreen } from "../screens/bank-onboarding"
-import { EnableNotificationsScreen } from "../screens/enable-notifications"
 import { ChannelSyncScreen, ChannelCreateScreen } from "../screens/rewards-screen"
 import { Badge } from 'react-native-elements'
 import { inject, observer } from "mobx-react"
@@ -62,7 +61,6 @@ export const MoveMoneyNavigator = createStackNavigator(
 export const RewardsNavigator = createStackNavigator(
   {
     rewards: { screen: RewardsScreen },
-    enableNotifications: { screen: EnableNotificationsScreen },
     welcomeSyncing: { screen: ChannelSyncScreen },
     welcomeGeneratingWallet: { screen: ChannelCreateScreen },
     rewardsVideo : { screen: RewardsVideoScreen },

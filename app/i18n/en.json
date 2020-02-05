@@ -39,7 +39,7 @@
     },
     "backupWallet": {
       "title": "Backup wallet",
-      "text": "Now that you have some sats, you need to back up your wallet to iCloud so you never loose access to your bitcoin."
+      "text": "Now that you have some sats, you need to back up your wallet to iCloud so you never loose access to your bitcoin. \n\n Unlike traditional dollar, you own your bitcoin with keys store in your mobile phone, which is why taking care of saving your keys is critical"
     },
     "activateNotifications": {
       "title": "Activate notifications",
