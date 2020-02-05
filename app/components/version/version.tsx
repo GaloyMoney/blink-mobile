@@ -4,7 +4,7 @@ import { Text, StyleSheet } from "react-native"
 import VersionNumber from 'react-native-version-number';
 import Config from "react-native-config";
 import { palette } from "../../theme/palette"
-import { inject } from "mobx-react";
+import { inject, observer } from "mobx-react";
 
 const styles = StyleSheet.create({
 version: {
@@ -15,10 +15,10 @@ version: {
   }
 })
 
-export const VersionComponent = inject("dataStore")(({dataStore}) => (
+export const VersionComponent = inject("dataStore")(observer(({dataStore}) => (
     <Text style={styles.version}>
         v{VersionNumber.appVersion} build {VersionNumber.buildVersion}{'\n'}
         network: {Config.BITCOIN_NETWORK}{'\n'}
         lnd: {dataStore.lnd.version}
     </Text>
-))
+)))
