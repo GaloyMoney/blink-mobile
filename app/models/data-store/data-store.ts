@@ -14,8 +14,10 @@ import DeviceInfo from "react-native-device-info"
 import Config from "react-native-config"
 import { Notifications } from "react-native-notifications"
 import { RootStoreModel } from "../root-store"
+import { difference } from 'lodash'
 
-// // FIXME add as a global var
+
+// FIXME add as a global var
 DeviceInfo.isEmulator().then(isEmulator => {
   if (isEmulator) {
     functions().useFunctionsEmulator("http://localhost:5000")
@@ -1007,7 +1009,10 @@ export const OnboardingModel = types
       } else {
         return 0
       }
+    },
 
+    get rewardsAvailable() {
+      return difference(Object.values(Onboarding), self.stage).length
     },
 
     get transactions() {

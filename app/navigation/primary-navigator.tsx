@@ -1,4 +1,5 @@
 import * as React from "react"
+import { useState } from "react"
 import { createStackNavigator } from "react-navigation-stack"
 import { DebugScreen } from "../screens/debug-screen"
 import { AccountsScreen } from "../screens/accounts-screen"
@@ -7,11 +8,14 @@ import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
 import { createBottomTabNavigator } from "react-navigation-tabs"
 import Icon from "react-native-vector-icons/Ionicons"
 import { color } from "../theme"
-import { RewardsScreen, WalletBackupScreen, RewardsVideoScreen } from "../screens/rewards-screen"
+import { RewardsScreen, RewardsVideoScreen } from "../screens/rewards-screen"
 import { MoveMoneyScreen, SendBitcoinScreen, ScanningQRCodeScreen, ReceiveBitcoinScreen, BankTransferScreen, DirectDepositScreen, FindATMScreen } from "../screens/move-money-screen"
 import { BankAccountRewardsScreen, PersonalInformationScreen, openBankScreen, DateOfBirthScreen, BankAccountReadyScreen } from "../screens/bank-onboarding"
 import { EnableNotificationsScreen } from "../screens/enable-notifications"
 import { ChannelSyncScreen, ChannelCreateScreen } from "../screens/rewards-screen"
+import { Badge } from 'react-native-elements'
+import { inject, observer } from "mobx-react"
+import { Animated } from "react-native"
 
 
 export const BankAccountOnboardingNavigator = createStackNavigator({
@@ -59,7 +63,6 @@ export const RewardsNavigator = createStackNavigator(
   {
     rewards: { screen: RewardsScreen },
     enableNotifications: { screen: EnableNotificationsScreen },
-    walletBackup: { screen: WalletBackupScreen },
     welcomeSyncing: { screen: ChannelSyncScreen },
     welcomeGeneratingWallet: { screen: ChannelCreateScreen },
     rewardsVideo : { screen: RewardsVideoScreen },
@@ -71,8 +74,54 @@ export const RewardsNavigator = createStackNavigator(
 
 const size = 32
 
-export const PrimaryNavigator = createBottomTabNavigator(
-  {
+const InteractiveBadge = inject("dataStore")(inject("navigationStore")(observer(
+  ({ navigationStore, dataStore, focused, tintColor, routeName }) => {
+
+  const [rotateAnim] = useState(new Animated.Value(0))
+
+  const primaryStack = navigationStore.state.routes.filter(item => item.key === "primaryStack")[0]
+  const rewardsActive = primaryStack.routes[primaryStack.index].key === "Rewards" ?? false
+
+  React.useEffect(() => {
+    if (rewardsActive) {
+      return
+    }
+
+    const animate = () => {
+      rotateAnim.setValue(0)
+  
+      Animated.timing(rotateAnim, {
+          toValue: 1,
+          duration: 500, // ms
+      }).start()
+    }
+
+    const timer = setInterval(animate, 5000)
+
+    return () => clearTimeout(timer)
+  }, [rewardsActive])
+
+  return (
+    <>
+      <Animated.View style={{
+        transform: [{ rotate: rotateAnim.interpolate({
+          inputRange: [0, .2, .8, 1],
+          outputRange: ['0deg', '10deg', '-10deg', "0deg"],
+        }) }]
+       }}>
+        <Icon name={"ios-rocket"} size={size} color={tintColor} />
+      </Animated.View>
+      <Badge
+        status="success"
+        value={dataStore.onboarding.rewardsAvailable}
+        containerStyle={{ position: 'absolute', top: 5, right: 35 }}
+        badgeStyle={{backgroundColor: color.primary}}
+      />
+    </>
+)})))
+
+export const PrimaryNavigator = 
+  createBottomTabNavigator({
     Accounts: {
       screen: AccountNavigator,
       navigationOptions: {
@@ -93,7 +142,7 @@ export const PrimaryNavigator = createBottomTabNavigator(
       screen: RewardsNavigator,
       navigationOptions: {
         tabBarIcon: ({ focused, tintColor }) => {
-          return <Icon name={"ios-rocket"} size={size} color={tintColor} />
+         return <InteractiveBadge focused={focused} tintColor={tintColor} />
         },
       },
     },

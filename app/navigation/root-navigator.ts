@@ -9,5 +9,4 @@ export const RootNavigator = createSwitchNavigator({
   authStack: { screen: AuthNavigator },
   primaryStack: { screen: PrimaryNavigator },
   openBankAccount: { screen: BankAccountOnboardingNavigator },
-  // bank: { screen: WalletCompletedNavigator },
 })
