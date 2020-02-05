@@ -199,8 +199,6 @@ export const DebugScreen = inject("dataStore")(observer(
               <Text>{item.remoteBalance}</Text>
             </View>
           ))}
-        <Text>Closing channels</Text>
-        <Text>TODO</Text>
         <VersionComponent />
         <View>
           <Button

@@ -2,7 +2,7 @@ import * as React from "react"
 import { useState, useEffect } from "react"
 import { observer, inject } from "mobx-react"
 
-import { View, SectionList, StyleSheet, RefreshControl, TouchableWithoutFeedback, Alert, Easing, Animated, ActivityIndicator } from "react-native"
+import { View, SectionList, StyleSheet, RefreshControl, TouchableWithoutFeedback, Alert, Animated, ActivityIndicator } from "react-native"
 
 import Modal from "react-native-modal";
 
@@ -21,7 +21,7 @@ import { useNavigation, useNavigationParam } from "react-navigation-hooks"
 import { Button } from "react-native-elements"
 import { palette } from "../../theme/palette"
 import { Side, Onboarding } from "types"
-import { translate } from "../../i18n";
+import { translate } from "../../i18n"
 
 export interface AccountDetailScreenProps {
   account: AccountType
