@@ -1,7 +1,7 @@
 import * as React from "react"
 import { useState, useEffect } from "react"
 import { Screen } from "../../components/screen"
-import { StyleSheet, Alert, View, Dimensions, Platform, Animated } from "react-native"
+import { StyleSheet, Alert, View, Dimensions, Platform, Animated, Linking } from "react-native"
 import { Text } from "../../components/text"
 import { color } from "../../theme"
 import { useNavigation } from "react-navigation-hooks"
@@ -17,6 +17,8 @@ import { sleep } from "../../utils/sleep"
 import { Notifications, RegistrationError } from "react-native-notifications"
 import functions from "@react-native-firebase/functions"
 import { YouTubeStandaloneIOS } from "react-native-youtube"
+import { shortenHash } from "../../utils/helper"
+import * as Progress from "react-native-progress"
 
 
 export const safeBank = require("./SafeBank.jpg")
@@ -125,6 +127,18 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
 
+    fundingText: {
+        fontSize: 16,
+        textAlign: "center",
+        color: color.primary,
+        paddingVertical: 20,
+        textDecorationLine: "underline",
+    },
+
+    progressBar: {
+        alignSelf: "center",
+    },
+
 })
 
 export const RewardsScreen = inject("dataStore")(
@@ -134,7 +148,8 @@ export const RewardsScreen = inject("dataStore")(
     const [ openReward, setOpenReward ] = useState(0)
     const [ currReward, setCurrReward ] = useState("")
     const [ loading, setLoading ] = useState(false)
-    const [err, setErr] = useState("")
+    const [ err, setErr ] = useState("")
+    const [ fundingTx, setFundingTx ] = useState("")
 
     const [animation] = useState(new Animated.Value(0))
 
@@ -173,6 +188,13 @@ export const RewardsScreen = inject("dataStore")(
           ])
         }
       }, [err])
+
+    // TODO move down the stack
+    const showFundingTx = () => {
+        Linking.openURL(`https://blockstream.info/testnet/tx/${fundingTx}`).catch(err =>
+          console.error("Couldn't load page", err),
+        )
+    }
 
     const rewards = 
     [
@@ -240,7 +262,49 @@ export const RewardsScreen = inject("dataStore")(
         {
             id: 'channelCreated',
             icon: 'ios-school',
-            action: () => navigate('welcomeSyncing'),
+            action: async () => {
+
+                const openChannel = async () => {
+                    setLoading(true)
+              
+                    try {
+                      await dataStore.lnd.sendPubKey()
+                      await dataStore.lnd.connectGaloyPeer()
+                      await dataStore.lnd.openChannel()
+                      await dataStore.lnd.updatePendingChannels()
+                      setFundingTx(dataStore.lnd.pendingChannels[0]?.channelPoint.split(":")[0])
+                      await dataStore.onboarding.add(Onboarding.channelCreated)
+                      setLoading(false)
+                    } catch (err) {
+                      setErr(err.toString())
+                    }
+                  }
+
+                await openChannel()
+            },
+            component: (
+                !dataStore.onboarding.has(Onboarding.channelCreated) &&
+                <View style={{ alignContent: "center", width: "100%" }}>
+                    { !dataStore.lnd.syncedToChain &&
+                    <Text style={[styles.text, { fontWeight: "bold" }]}>
+                        Syncing data... {dataStore.lnd.percentSynced * 100}%
+                    </Text>
+                    }
+                    { dataStore.lnd.syncedToChain && 
+                    <Text style={[styles.text, { fontWeight: "bold" }]}>
+                        Sync complete
+                    </Text>
+                    }
+                    <Progress.Bar
+                        style={styles.progressBar}
+                        color={color.primary}
+                        progress={dataStore.lnd.percentSynced}
+                    />
+                </View> || 
+                <Text style={styles.fundingText} onPress={showFundingTx}>
+                    funding tx: {shortenHash(fundingTx)}
+                </Text>
+            ),
             image: littleDipper,
             enabled: true,
         },
@@ -250,7 +314,7 @@ export const RewardsScreen = inject("dataStore")(
             action: () => navigate('sendBitcoin'),
             image: lightningPayment,
             enabled: dataStore.onboarding.has(Onboarding["channelCreated"]),
-            enabledMessage: 'Open your channel first'
+            enabledMessage: 'Open channel first'
         },
         {
             id: "inviteAFriend",
@@ -258,7 +322,7 @@ export const RewardsScreen = inject("dataStore")(
             action: () => Alert.alert('TODO'),
             image: inviteFriends,
             enabled: dataStore.onboarding.has(Onboarding["channelCreated"]),
-            enabledMessage: 'Open your channel first'
+            enabledMessage: 'Open channel first'
         },
         {
             id: 'bankOnboarded',
@@ -322,10 +386,12 @@ export const RewardsScreen = inject("dataStore")(
                         }),
                             opacity: animation,
                         }]}>
-                        <Animated.Text 
-                            style={[ styles.text, ]}>
-                            { translate(`RewardsScreen\.${item.id}.text`) }
-                        </Animated.Text>
+                        { item.component ||
+                            <Animated.Text 
+                                style={[ styles.text, ]}>
+                                { translate(`RewardsScreen\.${item.id}.text`) }
+                            </Animated.Text>
+                        }
                     </Animated.ScrollView>
                     <Animated.Text style={[styles.satsButton, {opacity: inverse}]}>
                         { item.rewards 
