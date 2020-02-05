@@ -113,10 +113,6 @@ export class Lnd {
 
   }
 
-  sleep = async (ms) => {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
   async openWallet() {
     console.tron.log('open Wallet', this.lndStore)
     await this.lndStore.initState()

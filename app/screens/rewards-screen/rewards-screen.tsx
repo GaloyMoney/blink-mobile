@@ -1,6 +1,7 @@
 import * as React from "react"
+import { useState, useEffect } from "react"
 import { Screen } from "../../components/screen"
-import { StyleSheet, Alert, View, Dimensions, Platform, Image } from "react-native"
+import { StyleSheet, Alert, View, Dimensions, Platform, Animated } from "react-native"
 import { Text } from "../../components/text"
 import { color } from "../../theme"
 import { useNavigation } from "react-navigation-hooks"
@@ -12,6 +13,10 @@ import { translate } from "../../i18n"
 import I18n from 'i18n-js'
 import { AccountType, CurrencyType } from "../../utils/enum"
 import { Button } from "react-native-elements"
+import { sleep } from "../../utils/sleep"
+import { Notifications, RegistrationError } from "react-native-notifications"
+import functions from "@react-native-firebase/functions"
+import { YouTubeStandaloneIOS } from "react-native-youtube"
 
 
 export const safeBank = require("./SafeBank.jpg")
@@ -31,7 +36,7 @@ const { width: screenWidth } = Dimensions.get('window')
 const styles = StyleSheet.create({
     item: {
         width: screenWidth - 60,
-        height: screenWidth - 90,
+        // height: screenWidth - 90,
         borderRadius: 32,
     },
 
@@ -46,7 +51,7 @@ const styles = StyleSheet.create({
     },
     
     imageContainer: {
-        flex: 1,
+        height: 200,
         marginBottom: Platform.select({ ios: 0, android: 1 }), // Prevent a random Android rendering issue
         backgroundColor: 'white',
         borderTopLeftRadius: 32,
@@ -64,27 +69,38 @@ const styles = StyleSheet.create({
     },
 
     title: {
-        fontSize: 24,
         fontWeight: 'bold',
         marginHorizontal: 40,
         textAlign: 'center',
+        color: palette.darkGrey
+    },
+
+    text: {
+        marginHorizontal: 20,
+        textAlign: 'center',
+        fontSize: 22,
+        color: palette.darkGrey
     },
 
     titleSats: {
-        fontSize: 48,
         fontWeight: 'bold',
+        fontSize: 32,
         marginHorizontal: 40,
         textAlign: 'center',
         color: color.primary
     },
 
     textButton: {
-        fontSize: 18,
-        color: palette.darkGrey,
         backgroundColor: color.primary,
         marginHorizontal: 60,
         borderRadius: 24,
         bottom: -18,
+    },
+
+    textButtonClose: {
+        backgroundColor: palette.darkGrey,
+        paddingHorizontal: 60,
+        marginTop: 10,
     },
 
     satsButton: {
@@ -94,7 +110,7 @@ const styles = StyleSheet.create({
     },
 
     itemTitle: {
-        fontSize: 24,
+        fontSize: 20,
         fontWeight: "bold",
         textAlign: "center",
         marginVertical: 12,
@@ -115,6 +131,48 @@ export const RewardsScreen = inject("dataStore")(
     observer(({ dataStore }) => {
 
     const { navigate } = useNavigation()
+    const [ openReward, setOpenReward ] = useState(0)
+    const [ currReward, setCurrReward ] = useState("")
+    const [ loading, setLoading ] = useState(false)
+    const [err, setErr] = useState("")
+
+    const [animation] = useState(new Animated.Value(0))
+
+    const open = (index) => {
+        setCurrReward(rewards[index].id)
+        setOpenReward(openReward === 1 ? 0 : 1)
+    }
+
+    const close = (msg = "") => {
+        setOpenReward(0)
+        setLoading(false)
+        if (msg !== "") {
+            Alert.alert(msg)
+        }
+    }
+
+    React.useEffect(() => {
+        Animated.timing(animation, {
+            toValue: openReward,
+            duration: 500,
+            useNativeDriver: false,
+        }).start()
+
+    }, [openReward])
+
+    useEffect(() => {
+        if (err !== "") {
+          setErr("")
+          Alert.alert("error", err, [
+            {
+              text: "OK",
+              onPress: () => {
+                setLoading(false)
+              },
+            },
+          ])
+        }
+      }, [err])
 
     const rewards = 
     [
@@ -126,21 +184,56 @@ export const RewardsScreen = inject("dataStore")(
         {
             id: "backupWallet",
             icon: 'ios-lock',
-            action: () => navigate('walletBackup'),
+            action: async () => {
+                setLoading(true)
+                await sleep(2000)
+                await dataStore.onboarding.add(Onboarding.backupWallet)
+                close("Backup keys saved to iCloud")
+            },
             image: safeBank,
             enabled: true,
         },
         {
             id: "activateNotifications",
             icon: 'ios-lock',
-            action: () => navigate('enableNotifications'),
+            action: () => {
+
+                Notifications.events().registerRemoteNotificationsRegistered(async (event: Registered) => {
+                    console.tron.log("Registered For Remote Push", `Device Token: ${event.deviceToken}`)
+            
+                    try {
+                        setLoading(true)
+                        await functions().httpsCallable("sendDeviceToken")({deviceToken: event.deviceToken})
+                        await dataStore.onboarding.add(Onboarding.activateNotifications)
+                        close("Notification succesfully activated")
+                    } catch (err) {
+                        console.tron.log(err.toString())
+                        setErr(err.toString())
+                    }
+                })
+                
+                Notifications.events().registerRemoteNotificationsRegistrationFailed((event: RegistrationError) => {
+                    Alert.alert("Failed To Register For Remote Push", `Error (${event})`)
+                })
+
+                Notifications.registerRemoteNotifications()
+                
+            },
             image: globalCommunications,
             enabled: true,
         },
         {
             id: 'rewardsVideo',
             icon: 'ios-school',
-            action: () => navigate('rewardsVideo'),
+            action: async () => {
+                try {
+                    await YouTubeStandaloneIOS.playVideo("XNu5ppFZbHo")
+                    await dataStore.onboarding.add(Onboarding.rewardsVideo)
+                } catch (err) {
+                    console.tron.error(err)
+                    Alert.alert(err.toString())
+                }
+            },
             image: asterix,
             enabled: true,
         },
@@ -202,9 +295,16 @@ export const RewardsScreen = inject("dataStore")(
     
     rewards.forEach(item => item['fullfilled'] = dataStore.onboarding.has(Onboarding[item.id]))
 
+    const inverse = animation.interpolate({
+        inputRange: [0, 1],
+        outputRange: [1, 0],
+    })
+
+    const sats = (id) => `+${I18n.toNumber(OnboardingRewards[id], {precision: 0})} sats`
+
     const renderItem = ({item, index}, parallaxProps) => {
         return (
-            <View style={styles.item}>
+            <Animated.View style={styles.item}>
                 <ParallaxImage 
                     source={item.image || greenPhone}
                     containerStyle={styles.imageContainer} 
@@ -214,54 +314,105 @@ export const RewardsScreen = inject("dataStore")(
                     <Text style={styles.itemTitle}>
                         { translate(`RewardsScreen\.${item.id}.title`) }
                     </Text>
-                    {/* <Text>
-                        { translate(`RewardsScreen\.${item.id}.text`) }
-                    </Text> */}
-                    <Text style={styles.satsButton}>
+                    <Animated.ScrollView
+                        style={[{
+                            height: animation.interpolate({
+                                inputRange: [0, 1],
+                                outputRange: [0, 140],
+                        }),
+                            opacity: animation,
+                        }]}>
+                        <Animated.Text 
+                            style={[ styles.text, ]}>
+                            { translate(`RewardsScreen\.${item.id}.text`) }
+                        </Animated.Text>
+                    </Animated.ScrollView>
+                    <Animated.Text style={[styles.satsButton, {opacity: inverse}]}>
                         { item.rewards 
                         || OnboardingRewards[item.id] && 
-                        `+${I18n.toNumber(OnboardingRewards[item.id], {precision: 0})} sats`
+                          sats(item.id)
                         }
-                    </Text>
+                    </Animated.Text>
                     <Button 
-                        onPress={ item.action } disabled={item.fullfilled || !item.enabled}
+                        onPress={ () => {
+                            openReward ?
+                                item.action() :
+                                open(index)
+                        }} 
+                        disabled={item.fullfilled || !item.enabled}
                         buttonStyle={styles.textButton}
                         // containerStyle={styles.}
                         title={item.fullfilled ? 
                             'Rewards received' :
-                            item.enabled ? 'Get Rewards now!' : item.enabledMessage}
+                            item.enabled ? 
+                                openReward ?
+                                    'Get Rewards Now!' :
+                                    'Learn More' :
+                                item.enabledMessage
+                            }
+                        loading={loading}
                         />
                 </View>
-            </View>
+            </Animated.View>
         )
     }
 
     return (
-        <Screen>
-            <View style={styles.header}>
-                <Image source={rewardsHeader} style={{width: 120, height: 120, resizeMode: "contain"}} />
-                <Text style={styles.title}>
-                    {translate('RewardsScreen.header')}
-                </Text>
-                <Text style={styles.titleSats}>
-                    {I18n.toNumber(dataStore.balances({ 
-                        currency: CurrencyType.BTC, 
-                        account: AccountType.BitcoinRealOrVirtual
-                    }), {precision: 0})}
-                </Text>
-            </View>
-            <View style={{flex: 1}} />
-            <Carousel
-            //   ref={(c) => { this._carousel = c; }}
-              data={rewards}
-              renderItem={renderItem}
-              sliderWidth={screenWidth}
-            //   sliderHeight={screenWidth}
-              itemWidth={screenWidth - 60}
-              hasParallaxImages={true}
-              firstItem={rewards.findIndex(item => !item.fullfilled)}
-            />
-            <View style={{flex: 1}} />
+        <Screen style={{
+            justifyContent: 'flex-end', flex: 1,
+            }}>
+                <Animated.View 
+                    style={[styles.header]}
+                    >
+                    <Animated.Image source={rewardsHeader} 
+                        style={[
+                            {
+                                height: animation.interpolate({
+                                    inputRange: [0, 1],
+                                    outputRange: [120, 0],
+                                }),
+                            }
+                        ]
+                        } />
+                    <Animated.Text style={[styles.title,
+                        {
+                            fontSize: animation.interpolate({
+                                inputRange: [0, 1],
+                                outputRange: [28, 0.1],
+                            }),
+                        }]}>
+                        {translate('RewardsScreen.header')}
+                    </Animated.Text>
+                    <Animated.Text style={[
+                        styles.titleSats,
+                    ]}>
+                        {openReward ? 
+                            `${sats(currReward)}` :
+                            I18n.toNumber(dataStore.balances({ 
+                                currency: CurrencyType.BTC, 
+                                account: AccountType.BitcoinRealOrVirtual
+                            }), {precision: 0})
+                        }
+                    </Animated.Text>
+                    { openReward === 1 &&
+                        <Button 
+                            title="Close" 
+                            buttonStyle={styles.textButtonClose}
+                            onPress={() => close()}
+                        />
+                    }
+                </Animated.View>
+                <View style={{flex: 1}} />
+                <Carousel
+                //   ref={(c) => { this._carousel = c; }}
+                data={rewards}
+                renderItem={renderItem}
+                sliderWidth={screenWidth}
+                //   sliderHeight={screenWidth}
+                itemWidth={screenWidth - 60}
+                hasParallaxImages={true}
+                firstItem={rewards.findIndex(item => !item.fullfilled)}
+                />
         </Screen>
     )
 }))
