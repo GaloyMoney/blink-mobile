@@ -217,7 +217,6 @@ export const WelcomePhoneValidationScreen = inject("dataStore")(
     
   const [code, setCode] = useState("")
   const [loading, setLoading] = useState(false)
-  const [completed, setCompleted] = useState(false)
   const [err, setErr] = useState("")
 
   const confirmation = useNavigationParam("confirmation")
@@ -232,8 +231,15 @@ export const WelcomePhoneValidationScreen = inject("dataStore")(
     }
 
     if (user.phoneNumber) {
+      setLoading(true)
       await dataStore.onboarding.add(Onboarding.walletDownloaded)
-      setCompleted(true)
+      try {
+        await dataStore.lnd.openFirstChannel()
+      } catch (err) {
+        console.tron.error(err.toString())
+      }
+      setLoading(false)
+      navigate("rewards")
     }
   }
 
@@ -251,18 +257,13 @@ export const WelcomePhoneValidationScreen = inject("dataStore")(
     try {
       setLoading(true)
       await confirmation.confirm(code)
-      setLoading(false)
     } catch (err) {
       console.tron.error(err) // Invalid code
       setErr(err.toString())
+    } finally {
+      setLoading(false)
     }
   }
-
-  useEffect(() => {
-    if (completed) {
-      navigate("rewards")
-    }
-  }, [completed])
 
   useEffect(() => {
     if (err !== "") {

@@ -9,7 +9,7 @@ import { color } from "../../theme/color"
 import Icon from "react-native-vector-icons/Ionicons"
 import currency from "currency.js"
 import { BalanceHeader } from "../../components/balance-header"
-import { AccountType, CurrencyType, PendingFirstChannelsStatus } from "../../utils/enum"
+import { AccountType, CurrencyType, FirstChannelStatus } from "../../utils/enum"
 import { Onboarding } from "types"
 import { palette } from "../../theme/palette"
 import { useNavigation } from "react-navigation-hooks"
@@ -103,13 +103,16 @@ export const AccountsScreen = inject("dataStore")(observer(
 
   const [ initialLoading, setInitialLoading] = useState(true)
   const [ refreshing, setRefreshing] = useState(false)
-  const [ bitcoinType, setBitcoinType ] = useState(AccountType.Bitcoin)
   const { navigate } = useNavigation()
 
   //FIXME type any
   const accountTypes: Array<Record<string, any>> = [
-    { key: "Bank Account", account: AccountType.Bank, icon: "ios-cash" },
-    { key: "Bitcoin", account: bitcoinType, icon: "logo-bitcoin" },
+    { key: "Bank Account",
+      account: AccountType.Bank,
+      icon: "ios-cash" },
+    { key: "Bitcoin", 
+      account: dataStore.lnd.statusFirstChannel == FirstChannelStatus.opened ? AccountType.Bitcoin : AccountType.VirtualBitcoin,
+      icon: "logo-bitcoin" },
   ]
 
   // TODO refactor ==> bank should also have a virtual screen
@@ -121,15 +124,6 @@ export const AccountsScreen = inject("dataStore")(observer(
     setRefreshing(true)
     await dataStore.updateBalance()
 
-    // TODO: refresh to update the wallet after
-    // first channel is opened?
-    const channelStatus = await dataStore.lnd.statusFirstChannelOpen()
-    if ( channelStatus == PendingFirstChannelsStatus.opened) {
-      setBitcoinType(AccountType.Bitcoin)
-    } else {
-      setBitcoinType(AccountType.VirtualBitcoin)
-    }
-    
     setRefreshing(false)
     setInitialLoading(false)
   }, [refreshing])
@@ -141,8 +135,10 @@ export const AccountsScreen = inject("dataStore")(observer(
   return (
     <Screen>
       <BalanceHeader headingCurrency={CurrencyType.USD}
-          accountsToAdd={dataStore.onboarding.has(Onboarding.channelCreated) ?
-              AccountType.AllReal : AccountType.AllVirtual
+          accountsToAdd={   
+              dataStore.lnd.statusFirstChannel == FirstChannelStatus.opened ?
+                AccountType.AllReal :
+                AccountType.AllVirtual
             }
           initialLoading={initialLoading} />
       <FlatList 

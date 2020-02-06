@@ -4,18 +4,16 @@ import { Screen } from "../../components/screen"
 import { Text } from "../../components/text"
 import { observer, inject } from "mobx-react"
 
-import * as Progress from "react-native-progress"
 
 import { Button } from "react-native-elements"
 import { Image, StyleSheet, View, Alert, Linking } from "react-native"
 import { withNavigation } from "react-navigation"
 
 import { color } from "../../theme"
-import { PendingFirstChannelsStatus } from "../../utils/enum"
+import { FirstChannelStatus } from "../../utils/enum"
 import { palette } from "../../theme/palette"
 import { shortenHash } from "../../utils/helper"
 import { useNavigation } from "react-navigation-hooks"
-import { Onboarding } from "types"
 
 
 const popcornLogo = require("./PopcornLogo.png")
@@ -90,23 +88,7 @@ export const ChannelSyncScreen = withNavigation(
       const [loading, setLoading] = useState(false)
       const [err, setErr] = useState("")
 
-      const openChannel = async () => {
-        setLoading(true)
-  
-        try {
-          await dataStore.lnd.sendPubKey()
-          await dataStore.lnd.connectGaloyPeer()
-  
-          const funding_tx = await dataStore.lnd.openChannel()
-  
-          await dataStore.onboarding.add(Onboarding.channelCreated)
 
-          setLoading(false)
-          navigation.navigate("welcomeGeneratingWallet")
-        } catch (err) {
-          setErr(err.toString())
-        }
-      }
     
       useEffect(() => {
         if (err !== "") {
@@ -124,23 +106,7 @@ export const ChannelSyncScreen = withNavigation(
 
       return (
         <Screen>
-          <View style={{ alignContent: "center", width: "100%" }}>
-              { !dataStore.lnd.syncedToChain &&
-              <Text style={[styles.text, { fontWeight: "bold" }]}>
-                  Syncing data... {dataStore.lnd.percentSynced * 100}%
-              </Text>
-              }
-              { dataStore.lnd.syncedToChain && 
-                <Text style={[styles.text, { fontWeight: "bold" }]}>
-                  Sync complete
-                </Text>
-              }
-            <Progress.Bar
-              style={styles.progressBar}
-              color={color.primary}
-              progress={dataStore.lnd.percentSynced}
-            />
-          </View>
+
           <View style={styles.container}>
           { !dataStore.lnd.syncedToChain &&
             <>
@@ -176,8 +142,8 @@ export const ChannelCreateScreen = inject("dataStore")(
 
     const checkChannel = async () => {
       console.tron.log("check channel looping")
-      const statusChannel = await dataStore.lnd.statusFirstChannelOpen()
-      if (statusChannel == PendingFirstChannelsStatus.opened) {
+      const statusChannel = await dataStore.lnd.statusFirstChannel()
+      if (statusChannel == FirstChannelStatus.opened) {
         navigate("welcomebackCompleted")
       }
     }
@@ -197,11 +163,7 @@ export const ChannelCreateScreen = inject("dataStore")(
       _()
     }, [])
 
-    const showFundingTx = () => {
-      Linking.openURL(`https://blockstream.info/testnet/tx/${fundingTx}`).catch(err =>
-        console.error("Couldn't load page", err),
-      )
-    }
+
 
     return (
       <Screen>

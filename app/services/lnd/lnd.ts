@@ -81,6 +81,7 @@ export class Lnd {
     const streamOnChainTransactions = this.grpc.sendStreamCommand("subscribeTransactions")
     const streamInvoices = this.grpc.sendStreamCommand("subscribeInvoices")
     const streamChannelBackup = this.grpc.sendStreamCommand('subscribeChannelBackups');
+    const streamChannelEvents = this.grpc.sendStreamCommand('subscribeChannelEvents');
 
     new Promise((resolve, reject) => {
       streamOnChainTransactions.on("data", async data => {
@@ -109,6 +110,16 @@ export class Lnd {
       streamChannelBackup.on('data', (data) => this.pushChannelBackup(data));
       streamChannelBackup.on('error', err => console.tron.error('Channel backup error:', err));
       streamChannelBackup.on('status', status => console.tron.info(`Channel backup status: ${status}`));
+    }).catch(err => console.tron.error("err with streamChannelBackup", err))
+
+    new Promise((resolve, reject) => {
+      streamChannelEvents.on('data', async (data) => {
+        console.tron.log('streamChannelEvents', data)
+        await this.lndStore.updatePendingChannels()
+        await this.lndStore.listChannels()
+      })
+      streamChannelEvents.on('error', err => console.tron.error('streamChannelEvents error:', err));
+      streamChannelEvents.on('status', status => console.tron.info(`streamChannelEvents status: ${status}`));
     }).catch(err => console.tron.error("err with streamChannelBackup", err))
 
   }
