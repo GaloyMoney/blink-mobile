@@ -11,7 +11,7 @@ import { Onboarding, OnboardingRewards } from "types"
 import Carousel, { ParallaxImage } from 'react-native-snap-carousel'
 import { translate } from "../../i18n"
 import I18n from 'i18n-js'
-import { AccountType, CurrencyType } from "../../utils/enum"
+import { AccountType, CurrencyType, FirstChannelStatus } from "../../utils/enum"
 import { Button } from "react-native-elements"
 import { sleep } from "../../utils/sleep"
 import { Notifications, RegistrationError } from "react-native-notifications"
@@ -145,13 +145,13 @@ export const RewardsScreen = inject("dataStore")(
     observer(({ dataStore }) => {
 
     const { navigate } = useNavigation()
+
     const [ openReward, setOpenReward ] = useState(0)
     const [ currReward, setCurrReward ] = useState("")
     const [ loading, setLoading ] = useState(false)
     const [ err, setErr ] = useState("")
     const [ fundingTx, setFundingTx ] = useState("")
-
-    const [animation] = useState(new Animated.Value(0))
+    const [ animation ] = useState(new Animated.Value(0))
 
     const open = (index) => {
         setCurrReward(rewards[index].id)
@@ -264,35 +264,21 @@ export const RewardsScreen = inject("dataStore")(
             icon: 'ios-school',
             action: async () => {
 
-                const openChannel = async () => {
-                    setLoading(true)
-              
-                    try {
-                      await dataStore.lnd.sendPubKey()
-                      await dataStore.lnd.connectGaloyPeer()
-                      await dataStore.lnd.openChannel()
-                      await dataStore.lnd.updatePendingChannels()
-                      setFundingTx(dataStore.lnd.pendingChannels[0]?.channelPoint.split(":")[0])
-                      await dataStore.onboarding.add(Onboarding.channelCreated)
-                      setLoading(false)
-                    } catch (err) {
-                      setErr(err.toString())
-                    }
-                  }
+                // TODO move in data store as a view
+                setFundingTx(dataStore.lnd.pendingChannels[0]?.channelPoint.split(":")[0])
 
-                await openChannel()
             },
             component: (
-                !dataStore.onboarding.has(Onboarding.channelCreated) &&
+                dataStore.lnd.statusFirstChannel == FirstChannelStatus.noChannel &&
                 <View style={{ alignContent: "center", width: "100%" }}>
                     { !dataStore.lnd.syncedToChain &&
                     <Text style={[styles.text, { fontWeight: "bold" }]}>
-                        Syncing data... {dataStore.lnd.percentSynced * 100}%
+                        { translate(`RewardsScreen.channelCreated.syncing`) }{" "}{dataStore.lnd.percentSynced * 100}%
                     </Text>
                     }
                     { dataStore.lnd.syncedToChain && 
                     <Text style={[styles.text, { fontWeight: "bold" }]}>
-                        Sync complete
+                        { translate(`RewardsScreen.channelCreated.synced`) }
                     </Text>
                     }
                     <Progress.Bar
@@ -301,8 +287,13 @@ export const RewardsScreen = inject("dataStore")(
                         progress={dataStore.lnd.percentSynced}
                     />
                 </View> || 
+                dataStore.lnd.statusFirstChannel == FirstChannelStatus.pending &&
                 <Text style={styles.fundingText} onPress={showFundingTx}>
-                    funding tx: {shortenHash(fundingTx)}
+                    { translate(`RewardsScreen.channelCreated.fundingTx`, {tx: shortenHash(fundingTx)}) }
+                </Text> || 
+                dataStore.lnd.statusFirstChannel == FirstChannelStatus.opened &&
+                <Text style={styles.fundingText} onPress={showFundingTx}>
+                    { translate(`RewardsScreen.channelCreated.channelOpened`) }
                 </Text>
             ),
             image: littleDipper,
@@ -313,7 +304,7 @@ export const RewardsScreen = inject("dataStore")(
             icon: 'ios-exit',
             action: () => navigate('sendBitcoin'),
             image: lightningPayment,
-            enabled: dataStore.onboarding.has(Onboarding["channelCreated"]),
+            enabled: dataStore.lnd.statusFirstChannel == FirstChannelStatus.opened,
             enabledMessage: 'Open channel first'
         },
         {
@@ -321,7 +312,7 @@ export const RewardsScreen = inject("dataStore")(
             icon: 'ios-download',
             action: () => Alert.alert('TODO'),
             image: inviteFriends,
-            enabled: dataStore.onboarding.has(Onboarding["channelCreated"]),
+            enabled: dataStore.lnd.statusFirstChannel == FirstChannelStatus.opened,
             enabledMessage: 'Open channel first'
         },
         {
@@ -358,6 +349,7 @@ export const RewardsScreen = inject("dataStore")(
     ]
     
     rewards.forEach(item => item['fullfilled'] = dataStore.onboarding.has(Onboarding[item.id]))
+    const [ firstItem ] = useState(rewards.findIndex(item => !item.fullfilled))
 
     const inverse = animation.interpolate({
         inputRange: [0, 1],
@@ -477,7 +469,7 @@ export const RewardsScreen = inject("dataStore")(
                 //   sliderHeight={screenWidth}
                 itemWidth={screenWidth - 60}
                 hasParallaxImages={true}
-                firstItem={rewards.findIndex(item => !item.fullfilled)}
+                firstItem={firstItem}
                 />
         </Screen>
     )

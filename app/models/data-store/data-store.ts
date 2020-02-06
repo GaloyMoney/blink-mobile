@@ -1,5 +1,5 @@
 import { Instance, SnapshotOut, types, flow, getParentOfType, getEnv } from "mobx-state-tree"
-import { AccountType, CurrencyType, PendingFirstChannelsStatus } from "../../utils/enum"
+import { AccountType, CurrencyType, FirstChannelStatus } from "../../utils/enum"
 import { Side, IQuoteResponse, IQuoteRequest, IBuyRequest, Onboarding, OnboardingRewards, OnboardingString } from "types"
 import { parseDate } from "../../utils/date"
 import KeychainAction from "../../utils/keychain"
@@ -15,6 +15,8 @@ import Config from "react-native-config"
 import { Notifications } from "react-native-notifications"
 import { RootStoreModel } from "../root-store"
 import { difference } from 'lodash'
+import { sleep } from "../../utils/sleep"
+
 
 
 // FIXME add as a global var
@@ -359,6 +361,9 @@ export const LndModel = BaseAccountModel.named("Lnd")
         self.lndReady = true
         yield self.getInfo()
         yield self.update()
+
+        yield self.updatePendingChannels()
+        yield self.listChannels()
     }),
 
     // stateless, but must be an action instead of a view because of the async call
@@ -457,6 +462,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
       // if (isSimulator()) { host = "127.0.0.1" }
       console.tron.log(`connecting to:`, { pubkey, host })
 
+      // TODO: managed the already connected case?
       try {
         const connection = yield getEnv(self).lnd.grpc.sendCommand("connectPeer", {
           addr: { pubkey, host },
@@ -464,7 +470,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
 
         console.log(connection)
       } catch (err) {
-        console.tron.warn(`can't connect to peer`, err)
+        console.tron.warn(`can't connect to peer`, err.toString())
       }
     }),
 
@@ -503,20 +509,6 @@ export const LndModel = BaseAccountModel.named("Lnd")
       }
     }),
 
-    statusFirstChannelOpen: flow(function*() {
-      yield self.updatePendingChannels()
-      yield self.listChannels()
-
-      if (self.channels.length > 0) {
-        return PendingFirstChannelsStatus.opened
-      }
-      
-      if (self.pendingChannels.length > 0) {
-        return PendingFirstChannelsStatus.pending
-      }
-
-      return PendingFirstChannelsStatus.noChannel
-    }),
 
     openChannel: flow(function*() {
       try {
@@ -560,7 +552,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
           console.tron.log(`reponse is NaN, 
             self.bestBlockHeight ${self.bestBlockHeight}
             self.startBlockHeight ${self.startBlockHeight}
-            grpc_input.blockHeight ${grpcInput.blockHeight}          
+            grpcInput.blockHeight ${grpcInput.blockHeight}          
             `)
           response = 0
         }
@@ -600,18 +592,9 @@ export const LndModel = BaseAccountModel.named("Lnd")
           }
         }
 
-        if (!response.syncedToChain) {
-          //     self._notification.display({
-          //       msg: `Syncing to chain (block: ${response.blockHeight})`,
-          //       wait: true,
-          //     });
-        } else {
-          // this._store.settings.restoring = false;
-          // this._notification.display({
-          //   type: 'success',
-          //   msg: 'Syncing complete',
-          // });
+        if (response.syncedToChain) {
           console.tron.log("Syncing complete")
+          yield self.openFirstChannel()
         }
 
         self.percentSynced = calcPercentSynced(response)
@@ -619,6 +602,21 @@ export const LndModel = BaseAccountModel.named("Lnd")
       } catch (err) {
         console.tron.error(`Getting node info failed, ${err}`)
         throw err
+      }
+    }),
+
+    openFirstChannel: flow(function*() {
+      if (!!auth().currentUser && self.statusFirstChannel === FirstChannelStatus.noChannel) {
+        try {
+          yield self.sendPubKey()
+          yield sleep(3000) // FIXME do I need this?  (error might be because already connected to peer)
+          yield self.connectGaloyPeer()
+          yield self.openChannel()
+          yield sleep(1000) // FIXME
+          yield self.updatePendingChannels()
+        } catch (err) {
+          console.tron.error(err)
+        }
       }
     }),
 
@@ -856,6 +854,18 @@ export const LndModel = BaseAccountModel.named("Lnd")
   .views(self => ({
     get currency() {
       return CurrencyType.BTC
+    },
+
+    get statusFirstChannel() {
+      if (self.channels.length > 0) {
+        return FirstChannelStatus.opened
+      }
+      
+      if (self.pendingChannels.length > 0) {
+        return FirstChannelStatus.pending
+      }
+
+      return FirstChannelStatus.noChannel
     },
 
     get transactions() {

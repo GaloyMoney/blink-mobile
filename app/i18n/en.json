@@ -51,6 +51,10 @@
     },
     "channelCreated": {
       "title": "Open your first channel",
+      "syncing": "Syncing data...",
+      "synced": "Sync complete",
+      "fundingTx": "Funding tx: {{tx}}",
+      "channelOpened": "Congrats! your channel is now opened",
       "text": "In future version of the application, we'll abstract the concept of a channel, but for now you need to create your first channel on the lightning network"
     },
     "firstLightningPayment": {

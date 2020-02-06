@@ -150,6 +150,7 @@ RCT_EXPORT_METHOD(start: (RCTPromiseResolveBlock)resolve
                            @"SubscribeTransactions" : ^(NSData* req, RecvStream* cb) { return LndmobileSubscribeTransactions(req, cb); },
                            @"SubscribeInvoices" : ^(NSData* req, RecvStream* cb) { return LndmobileSubscribeInvoices(req, cb); },
                            @"SubscribeChannelBackups" : ^(NSData* req, RecvStream* cb) { return LndmobileSubscribeChannelBackups(req, cb); },
+                           @"SubscribeChannelEvents" : ^(NSData* req, RecvStream* cb) { return LndmobileSubscribeChannelEvents(req, cb); },
                            };
 
   self.biStreamMethods = @{
