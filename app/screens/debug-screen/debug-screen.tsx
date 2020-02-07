@@ -10,7 +10,7 @@ import { QRCode } from "../../components/qrcode"
 import { color, spacing } from "../../theme"
 import { observer, inject } from "mobx-react"
 
-import crashlytics from '@react-native-firebase/crashlytics';
+import crashlytics from '@react-native-firebase/crashlytics'
 
 import auth from "@react-native-firebase/auth"
 import { getSnapshot } from "mobx-state-tree"
@@ -19,6 +19,7 @@ import { useNavigation } from "react-navigation-hooks"
 import { palette } from "../../theme/palette"
 import functions from "@react-native-firebase/functions"
 import { VersionComponent } from "../../components/version/version"
+import FileAction from "../../services/lnd/file"
 
 
 
@@ -165,6 +166,8 @@ export const DebugScreen = inject("dataStore")(observer(
     })
   }
 
+  const fileAction = new FileAction(dataStore)
+
   return (
     <View style={FULL}>
       <Wallpaper />
@@ -215,6 +218,7 @@ export const DebugScreen = inject("dataStore")(observer(
                 }
               }
               await auth().signOut()
+              await fileAction.deleteAllLndData()
               Alert.alert("user succesfully deleted. Delete your app to start from a clean state")
             }}
           />
@@ -223,6 +227,12 @@ export const DebugScreen = inject("dataStore")(observer(
           <Text
             style={TAGLINE}
             text={dataStore.lnd.walletExist ? "Wallet exist" : "Wallet doesn't exist"}
+          />
+          <Button
+            style={DEMO}
+            textStyle={DEMO_TEXT}
+            text="Delete lnd data"
+            onPress={() => fileAction.deleteAllLndData()}
           />
           <Button
             style={DEMO}

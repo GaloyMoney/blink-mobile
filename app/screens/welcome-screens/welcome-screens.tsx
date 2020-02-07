@@ -231,14 +231,8 @@ export const WelcomePhoneValidationScreen = inject("dataStore")(
     }
 
     if (user.phoneNumber) {
-      setLoading(true)
       await dataStore.onboarding.add(Onboarding.walletDownloaded)
-      try {
-        await dataStore.lnd.openFirstChannel()
-      } catch (err) {
-        console.tron.error(err.toString())
-      }
-      setLoading(false)
+      dataStore.lnd.openFirstChannel() // fire and forget is ok?
       navigate("rewards")
     }
   }

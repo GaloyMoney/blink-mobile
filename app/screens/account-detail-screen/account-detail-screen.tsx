@@ -2,7 +2,7 @@ import * as React from "react"
 import { useState, useEffect } from "react"
 import { observer, inject } from "mobx-react"
 
-import { View, SectionList, StyleSheet, RefreshControl, TouchableWithoutFeedback, Alert, Animated, ActivityIndicator } from "react-native"
+import { View, SectionList, StyleSheet, RefreshControl, TouchableWithoutFeedback, Alert, Animated, ActivityIndicator, Linking } from "react-native"
 
 import Modal from "react-native-modal";
 
@@ -16,12 +16,16 @@ import { DataStore } from "../../models/data-store"
 import { sameDay, sameMonth } from "../../utils/date"
 import { CurrencyText } from "../../components/currency-text"
 import { TouchableHighlight, TextInput } from "react-native-gesture-handler"
-import { AccountType, CurrencyType } from "../../utils/enum"
+import { AccountType, CurrencyType, FirstChannelStatus } from "../../utils/enum"
 import { useNavigation, useNavigationParam } from "react-navigation-hooks"
 import { Button } from "react-native-elements"
 import { palette } from "../../theme/palette"
 import { Side, Onboarding } from "types"
 import { translate } from "../../i18n"
+import * as Progress from "react-native-progress"
+
+import { shortenHash } from "../../utils/helper"
+
 
 export interface AccountDetailScreenProps {
   account: AccountType
@@ -96,6 +100,27 @@ const styles = StyleSheet.create({
     backgroundColor: palette.white,
     alignItems: "center",
   },
+
+  progressBar: {
+    alignSelf: "center",
+  },
+
+  text: {
+    marginHorizontal: 20,
+    marginBottom: 10,
+    textAlign: 'center',
+    fontSize: 16,
+    color: palette.darkGrey
+  },
+
+  fundingText: {
+    fontSize: 16,
+    textAlign: "center",
+    color: color.primary,
+    paddingVertical: 20,
+    textDecorationLine: "underline",
+  },
+
 })
 
 const AccountDetailItem: React.FC<AccountDetailItemProps> = (props) => {
@@ -411,6 +436,12 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
       refresh()
     }, [])
 
+    const showFundingTx = () => {
+      Linking.openURL(`https://blockstream.info/testnet/tx/${dataStore.lnd.fundingTx}`).catch(err =>
+        console.error("Couldn't load page", err),
+      )
+  }
+
     return (
       <Screen>
         { account == AccountType.Bitcoin && 
@@ -419,6 +450,22 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
         }
         { account != AccountType.Bitcoin && 
           <BalanceHeader headingCurrency={currency} accountsToAdd={account} />
+        }
+        { account == AccountType.VirtualBitcoin && dataStore.lnd.statusFirstChannel == FirstChannelStatus.noChannel &&
+          <View style={{ alignContent: "center", width: "100%" }}>
+            <Text style={[styles.text]}>
+              { translate(`RewardsScreen.channelCreated.syncing`) }{" "}{dataStore.lnd.percentSynced * 100}%
+            </Text>
+            <Progress.Bar
+                style={styles.progressBar}
+                color={color.primary}
+                progress={dataStore.lnd.percentSynced}
+            />
+        </View> || 
+        account == AccountType.VirtualBitcoin && dataStore.lnd.statusFirstChannel == FirstChannelStatus.pending &&
+        <Text style={styles.fundingText} onPress={showFundingTx}>
+          { translate(`RewardsScreen.channelCreated.fundingTx`, {tx: shortenHash(dataStore.lnd.fundingTx)}) }
+        </Text>        
         }
         { sections.length === 0 && 
           <Text>No transaction to show</Text>

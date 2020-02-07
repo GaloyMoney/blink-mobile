@@ -606,13 +606,15 @@ export const LndModel = BaseAccountModel.named("Lnd")
     }),
 
     openFirstChannel: flow(function*() {
+      yield self.updatePendingChannels()
       if (!!auth().currentUser && self.statusFirstChannel === FirstChannelStatus.noChannel) {
         try {
           yield self.sendPubKey()
           yield sleep(3000) // FIXME do I need this?  (error might be because already connected to peer)
           yield self.connectGaloyPeer()
+          yield sleep(3000) // FIXME
           yield self.openChannel()
-          yield sleep(1000) // FIXME
+          yield sleep(3000) // FIXME
           yield self.updatePendingChannels()
         } catch (err) {
           console.tron.error(err)
@@ -854,6 +856,10 @@ export const LndModel = BaseAccountModel.named("Lnd")
   .views(self => ({
     get currency() {
       return CurrencyType.BTC
+    },
+
+    get fundingTx() {
+      return self.pendingChannels[0]?.channelPoint.split(":")[0]
     },
 
     get statusFirstChannel() {

@@ -557,6 +557,8 @@ PODS:
     - Firebase/Functions (~> 6.13.0)
     - React
     - RNFBApp
+  - RNFS (2.16.4):
+    - React
   - RNGestureHandler (1.5.3):
     - React
   - RNICloudStore (0.1.0):
@@ -624,6 +626,7 @@ DEPENDENCIES:
   - "RNFBCrashlytics (from `../node_modules/@react-native-firebase/crashlytics`)"
   - "RNFBFirestore (from `../node_modules/@react-native-firebase/firestore`)"
   - "RNFBFunctions (from `../node_modules/@react-native-firebase/functions`)"
+  - RNFS (from `../node_modules/react-native-fs`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNICloudStore (from `../node_modules/react-native-icloudstore`)
   - RNKeychain (from `../node_modules/react-native-keychain`)
@@ -750,6 +753,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/firestore"
   RNFBFunctions:
     :path: "../node_modules/@react-native-firebase/functions"
+  RNFS:
+    :path: "../node_modules/react-native-fs"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNICloudStore:
@@ -838,6 +843,7 @@ SPEC CHECKSUMS:
   RNFBCrashlytics: 0469cb96b00904e0c9604b9636d8eeab31115b08
   RNFBFirestore: 5de4ae898df51a3ecc16a45db15019836c5cec87
   RNFBFunctions: 04ab4f777106d8a20ed1c9c2116f24014c23d61a
+  RNFS: 90d1a32d3bc8f75cc7fc3dd2f67506049664346b
   RNGestureHandler: 02905abe54e1f6e59c081a10b4bd689721e17aa6
   RNICloudStore: bc6e225811637c09bd1eb055d6cd7448e61cd451
   RNKeychain: 840f8e6f13be0576202aefcdffd26a4f54bfe7b5
