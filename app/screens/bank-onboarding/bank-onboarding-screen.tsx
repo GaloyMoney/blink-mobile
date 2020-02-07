@@ -15,6 +15,7 @@ import functions from "@react-native-firebase/functions"
 import { inject } from "mobx-react"
 import { color } from "../../theme"
 import { Onboarding } from "types"
+import { translate } from "../../i18n"
 
 
 const bankLogo = require("./BankLogo.png")
@@ -59,8 +60,8 @@ export const BankAccountRewardsScreen = () => {
   return (
     <Screen>
       <BalanceHeader headingCurrency={CurrencyType.USD} accountsToAdd={AccountType.Bank} />
-      <Text style={styles.title}>Open a Galoy bank account</Text>
-      <Text style={styles.text}>Hold US dollars in your account! Order a debit card to earn 1%+ cashback in bitcoin on your spending! And easily buy & sell bitcoin in-app.</Text>
+      <Text style={styles.title}>{translate("BankAccountRewardsScreen.openAccount")}</Text>
+      <Text style={styles.text}>{translate("BankAccountRewardsScreen.accountsBenefits")}</Text>
       <View style={{flex: 1}} />
       <Button title="Open account" 
         onPress={() => navigate('openBankAccount')}
@@ -71,38 +72,26 @@ export const BankAccountRewardsScreen = () => {
   )
 }
 
-
 BankAccountRewardsScreen.navigationOptions = screenProps => ({
-  title: "Bank Account Rewards",
+  title: translate("BankAccountRewardsScreen.title"),
 })
 
 
-export const openBankScreen = inject('dataStore')(
-  ({ dataStore }) => {
-
+export const OpenBankScreen = () => {
   return (
     <Screen>
-      { !dataStore.onboarding.has(Onboarding.bankOnboarded) &&
       <OnboardingScreen next="personalInformation" image={bankLogo}>
-        <Text style={styles.text}>You’re just a few minutes away from owning a Galoy bank account! Order a debit card to receive 1% bitcoin rewards on all spending.</Text>
+        <Text style={styles.text}>{translate("OpenBankScreen.accountsBenefits")}</Text>
       </OnboardingScreen>
-      }
-      { dataStore.onboarding.has(Onboarding.bankOnboarded) &&
-        <>
-          <Text style={styles.text}>You already have a bank account</Text>
-          <Text style={styles.text}>(And this screen should not be accessible, this is a bug)</Text>
-        </>
-      }
     </Screen>
   )
-})
+}
 
-
-openBankScreen.navigationOptions = screenProps => ({
-  title: "Bank rewards",
+OpenBankScreen.navigationOptions = screenProps => ({
+  title: translate("OpenBankScreen.title"),
   headerLeft: () =>
     (<ButtonNative title="< Back" onPress={() => screenProps.navigation.navigate('primaryStack')} />)
-})
+}) // FIXME < back button
 
 
 
@@ -122,9 +111,9 @@ export const PersonalInformationScreen = () => {
 
   return (
     <Screen>
-      <Text style={styles.textInfos}>To get started, tell us about yourself.</Text>
+      <Text style={styles.textInfos}>{translate("PersonalInformationScreen.getStarted")}</Text>
       <Input 
-        placeholder='First Name'
+        placeholder={translate("common.firstName")}
         onChangeText={input => setFirstName(input)} 
         autoFocus={true}     
         returnKeyType = { "next" }
@@ -133,7 +122,7 @@ export const PersonalInformationScreen = () => {
         onSubmitEditing={() => { secondTextInput.current.focus() }}
         />
       <Input
-        placeholder='Last Name'
+        placeholder={translate("common.lastName")}
         onChangeText={input => setLastName(input)}
         ref={secondTextInput}
         returnKeyType = { "next" }
@@ -142,7 +131,7 @@ export const PersonalInformationScreen = () => {
         onSubmitEditing={() => { thirdTextInput.current.focus() }}
           />
       <Input 
-        placeholder='Email'
+        placeholder={translate("common.email")}
         onChangeText={input => setEmail(input)}
         ref={thirdTextInput}
         returnKeyType = { "done" }
@@ -150,17 +139,16 @@ export const PersonalInformationScreen = () => {
         blurOnSubmit={true}
         onSubmitEditing={onValidate}
       />
-      <Text style={styles.textInfos}>Your information is encrypted and securely transmit using SSL</Text>
-      <Button title="Confirm" onPress={onValidate}
+<Text style={styles.textInfos}>{translate("common.SSL")}</Text>
+      <Button title={translate("common.confirm")} onPress={onValidate}
               containerStyle={styles.buttonContainer}
               buttonStyle={styles.buttonStyle} />
     </Screen>
   )
 }
 
-
 PersonalInformationScreen.navigationOptions = screenProps => ({
-  title: "Personnal informations",
+  title: translate("PersonalInformationScreen.title"),
 })
 
 
@@ -188,9 +176,9 @@ export const DateOfBirthScreen = withNavigation(inject("dataStore")(
 
   useEffect(() => {
     if (err !== "") {
-      Alert.alert("error", err, [
+      Alert.alert(translate("common.error"), err, [
         {
-          text: "OK",
+          text: translate("common.ok"),
           onPress: () => {
             setLoading(false)
           },
@@ -211,8 +199,8 @@ export const DateOfBirthScreen = withNavigation(inject("dataStore")(
                       setDateOfBirth(input);
                     }} /> 
                     {/* FIXME could timezone be an issue?  */}
-      <Text style={styles.textInfos}>Your information is encrypted and securely transmit using SSL</Text>
-      <Button title="Confirm" onPress={onValidate}
+      <Text style={styles.textInfos}>{translate("common.SSL")}</Text>
+      <Button title={translate("common.confirm")} onPress={onValidate}
                     containerStyle={styles.buttonContainer}
                     buttonStyle={styles.buttonStyle}
                     loading={loading}
@@ -224,7 +212,7 @@ export const DateOfBirthScreen = withNavigation(inject("dataStore")(
 
 
 DateOfBirthScreen.navigationOptions = screenProps => ({
-  title: "Date of Birth",
+  title: translate("DateOfBirthScreen.title"),
 })
 
 
@@ -233,13 +221,13 @@ export const BankAccountReadyScreen = () => {
   return (
     <Screen>
       <OnboardingScreen next="accounts" nextTitle="Okay" image={popcornLogo}>
-        <Text style={styles.text}>Your Galoy bank account is ready!</Text>
+        <Text style={styles.text}>{translate("BankAccountReadyScreen.accountReady")}</Text>
       </OnboardingScreen>
     </Screen>
   )
 }
 
 BankAccountReadyScreen.navigationOptions = screenProps => ({
-  title: "Bank Account",
+  title: translate("common.bankAccount"),
   header: () => false,
 })

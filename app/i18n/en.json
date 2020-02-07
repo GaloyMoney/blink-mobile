@@ -1,9 +1,16 @@
 {
   "common": {
     "ok": "OK",
+    "confirm": "Confirm",
     "cancel": "Cancel",
     "back": "Back",
-    "next": "Next"
+    "next": "Next",
+    "error": "Error",
+    "bankAccount": "Cash Account",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "SSL": "Your information is encrypted and securely transmit using SSL",
   },
   "errors": {
     "invalidEmail": "Invalid email address.",
@@ -102,5 +109,24 @@
   "AccountsScreen": {
     "title": "Accounts",
     "bitcoinRewards": "Earn bitcoin rewards!",
+  },
+  "BankAccountReadyScreen": {
+    "accountReady": "Your Galoy bank account is ready!"
+  },
+  "BankAccountRewardsScreen": {
+    "title": "Bank Account Rewards",
+    "openAccount": "Open a Galoy bank account",
+    "accountsBenefits": "Hold US dollars in your account! Order a debit card to earn 1%+ cashback in bitcoin on your spending! And easily buy & sell bitcoin in-app.",
+  },
+  "OpenBankScreen": {
+    "title": "Bank rewards",
+    "accountsBenefits": "You’re just a few minutes away from owning a Galoy bank account! Order a debit card to receive 1% bitcoin rewards on all spending.",
+  },
+  "PersonalInformationScreen": {
+    "title": "Personnal informations",
+    "getStarted": "To get started, tell us about yourself.",
+  },
+  "DateOfBirthScreen": {
+    "title": "Date of Birth"
   }
 }
