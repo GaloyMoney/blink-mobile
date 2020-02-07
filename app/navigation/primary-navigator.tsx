@@ -10,14 +10,14 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { color } from "../theme"
 import { RewardsScreen } from "../screens/rewards-screen"
 import { MoveMoneyScreen, SendBitcoinScreen, ScanningQRCodeScreen, ReceiveBitcoinScreen, BankTransferScreen, DirectDepositScreen, FindATMScreen } from "../screens/move-money-screen"
-import { BankAccountRewardsScreen, PersonalInformationScreen, openBankScreen, DateOfBirthScreen, BankAccountReadyScreen } from "../screens/bank-onboarding"
+import { BankAccountRewardsScreen, PersonalInformationScreen, OpenBankScreen, DateOfBirthScreen, BankAccountReadyScreen } from "../screens/bank-onboarding"
 import { Badge } from 'react-native-elements'
 import { inject, observer } from "mobx-react"
 import { Animated } from "react-native"
 
 
 export const BankAccountOnboardingNavigator = createStackNavigator({
-  openBankStart: { screen: openBankScreen },
+  openBankStart: { screen: OpenBankScreen },
   personalInformation: { screen: PersonalInformationScreen },
   dateOfBirth: { screen: DateOfBirthScreen },
   bankAccountReady: { screen: BankAccountReadyScreen },

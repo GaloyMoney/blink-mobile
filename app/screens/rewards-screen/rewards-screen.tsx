@@ -1,7 +1,7 @@
 import * as React from "react"
 import { useState, useEffect } from "react"
 import { Screen } from "../../components/screen"
-import { StyleSheet, Alert, View, Dimensions, Platform, Animated, Linking } from "react-native"
+import { StyleSheet, Alert, View, Dimensions, Platform, Animated } from "react-native"
 import { Text } from "../../components/text"
 import { color } from "../../theme"
 import { useNavigation } from "react-navigation-hooks"
@@ -17,8 +17,6 @@ import { sleep } from "../../utils/sleep"
 import { Notifications, RegistrationError } from "react-native-notifications"
 import functions from "@react-native-firebase/functions"
 import { YouTubeStandaloneIOS } from "react-native-youtube"
-import { shortenHash } from "../../utils/helper"
-import * as Progress from "react-native-progress"
 
 
 export const safeBank = require("./SafeBank.jpg")
@@ -126,19 +124,6 @@ const styles = StyleSheet.create({
         marginBottom: 40,
         textAlign: 'center',
     },
-
-    fundingText: {
-        fontSize: 16,
-        textAlign: "center",
-        color: color.primary,
-        paddingVertical: 20,
-        textDecorationLine: "underline",
-    },
-
-    progressBar: {
-        alignSelf: "center",
-    },
-
 })
 
 export const RewardsScreen = inject("dataStore")(
@@ -150,7 +135,6 @@ export const RewardsScreen = inject("dataStore")(
     const [ currReward, setCurrReward ] = useState("")
     const [ loading, setLoading ] = useState(false)
     const [ err, setErr ] = useState("")
-    const [ fundingTx, setFundingTx ] = useState("")
     const [ animation ] = useState(new Animated.Value(0))
 
     const open = (index) => {
@@ -188,13 +172,6 @@ export const RewardsScreen = inject("dataStore")(
           ])
         }
       }, [err])
-
-    // TODO move down the stack
-    const showFundingTx = () => {
-        Linking.openURL(`https://blockstream.info/testnet/tx/${fundingTx}`).catch(err =>
-          console.error("Couldn't load page", err),
-        )
-    }
 
     const rewards = 
     [
@@ -259,46 +236,8 @@ export const RewardsScreen = inject("dataStore")(
             image: asterix,
             enabled: true,
         },
-        {
-            id: 'channelCreated',
-            icon: 'ios-school',
-            action: async () => {
-
-                // TODO move in data store as a view
-                setFundingTx(dataStore.lnd.pendingChannels[0]?.channelPoint.split(":")[0])
-
-            },
-            component: (
-                dataStore.lnd.statusFirstChannel == FirstChannelStatus.noChannel &&
-                <View style={{ alignContent: "center", width: "100%" }}>
-                    { !dataStore.lnd.syncedToChain &&
-                    <Text style={[styles.text, { fontWeight: "bold" }]}>
-                        { translate(`RewardsScreen.channelCreated.syncing`) }{" "}{dataStore.lnd.percentSynced * 100}%
-                    </Text>
-                    }
-                    { dataStore.lnd.syncedToChain && 
-                    <Text style={[styles.text, { fontWeight: "bold" }]}>
-                        { translate(`RewardsScreen.channelCreated.synced`) }
-                    </Text>
-                    }
-                    <Progress.Bar
-                        style={styles.progressBar}
-                        color={color.primary}
-                        progress={dataStore.lnd.percentSynced}
-                    />
-                </View> || 
-                dataStore.lnd.statusFirstChannel == FirstChannelStatus.pending &&
-                <Text style={styles.fundingText} onPress={showFundingTx}>
-                    { translate(`RewardsScreen.channelCreated.fundingTx`, {tx: shortenHash(fundingTx)}) }
-                </Text> || 
-                dataStore.lnd.statusFirstChannel == FirstChannelStatus.opened &&
-                <Text style={styles.fundingText} onPress={showFundingTx}>
-                    { translate(`RewardsScreen.channelCreated.channelOpened`) }
-                </Text>
-            ),
-            image: littleDipper,
-            enabled: true,
-        },
+        // setFundingTx(dataStore.lnd.pendingChannels[0]?.channelPoint.split(":")[0])
+        //
         {
             id: 'firstLightningPayment',
             icon: 'ios-exit',
