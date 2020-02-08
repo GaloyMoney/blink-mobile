@@ -369,25 +369,33 @@ export const LndModel = BaseAccountModel.named("Lnd")
     // stateless, but must be an action instead of a view because of the async call
     initState: flow(function*() {
       const WALLET_EXIST = "rpc error: code = Unknown desc = wallet already exists"
+      const GRPC_INSECURE = "grpc: no transport security set (use grpc.WithInsecure() explicitly or set credentials)"
       const CLOSED = "closed"
       let walletExist = false
-      try {
-        yield getEnv(self).lnd.grpc.sendUnlockerCommand("GenSeed")
-      } catch (err) {
-        console.tron.log("initState, err:", err)
-        if (err.message === WALLET_EXIST) {
-          walletExist = true
-        } else if (err.message === CLOSED) {
-          // We assumed that if sendUnlockerCommand is locked, the node is already launched.
-          // this is useful for hot reloading
-          // FIXME validate this assumption
-          self.setLndReady()
-        } else {
-          console.tron.error(`unhandled error message ${err.message}`)
+      
+      for (const i of [0, 1, 2, 3, 4, 5]) {
+        try {
+          yield getEnv(self).lnd.grpc.sendUnlockerCommand("GenSeed")
+        } catch (err) {
+          console.tron.log("initState, err:", err)
+          if (err.message === WALLET_EXIST) {
+            walletExist = true
+          } else if (err.message === GRPC_INSECURE) {
+            // not sure why we fall in this case but retry seems to work
+            yield sleep(250)
+            continue
+          } else if (err.message === CLOSED) {
+            // We assumed that if sendUnlockerCommand is locked, the node is already launched.
+            // this is useful for hot reloading
+            self.setLndReady()
+          } else {
+            console.tron.error(`unhandled error message ${err.message}`)
+          }
         }
+  
+        self.walletExist = walletExist
+        break
       }
-
-      self.walletExist = walletExist
     }),
 
     genSeed: flow(function*() {
@@ -1075,10 +1083,10 @@ export const DataStoreModel = types
     balances({ currency, account }) {
       const balances = {}
 
-      const btc_conversion = (self.rates.rate(self.lnd.currency) / self.rates.rate(currency))
+      const btcConversion = (self.rates.rate(self.lnd.currency) / self.rates.rate(currency))
 
-      balances[AccountType.Bitcoin] = (self.lnd.balance * btc_conversion)
-      balances[AccountType.VirtualBitcoin] = (self.onboarding.balance * btc_conversion)
+      balances[AccountType.Bitcoin] = (self.lnd.balance * btcConversion)
+      balances[AccountType.VirtualBitcoin] = (self.onboarding.balance * btcConversion)
       balances[AccountType.BitcoinRealOrVirtual] = balances[AccountType.VirtualBitcoin] + balances[AccountType.Bitcoin]
       balances[AccountType.Bank] = self.fiat.balance / self.rates.rate(currency)
       balances[AccountType.AllReal] = balances[AccountType.Bank] + balances[AccountType.Bitcoin]
