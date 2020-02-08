@@ -20,6 +20,7 @@ import { palette } from "../../theme/palette"
 import functions from "@react-native-firebase/functions"
 import { VersionComponent } from "../../components/version"
 import FileAction from "../../services/lnd/file"
+import RNFS from 'react-native-fs'
 
 
 
@@ -233,6 +234,12 @@ export const DebugScreen = inject("dataStore")(observer(
             textStyle={DEMO_TEXT}
             text="Delete lnd data"
             onPress={() => fileAction.deleteAllLndData()}
+          />
+          <Button
+            style={DEMO}
+            textStyle={DEMO_TEXT}
+            text="directory"
+            onPress={() => console.tron.log(RNFS.DocumentDirectoryPath)}
           />
           <Button
             style={DEMO}

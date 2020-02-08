@@ -1,7 +1,6 @@
 import { sleep } from "./sleep"
 
 const RETRY_DELAY = 1000
-const LND_INIT_DELAY = 5000
 
 /**
  * A polling utility that can be used to poll apis. If the api returns
