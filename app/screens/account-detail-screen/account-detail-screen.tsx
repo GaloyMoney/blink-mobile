@@ -18,7 +18,7 @@ import { CurrencyText } from "../../components/currency-text"
 import { TouchableHighlight, TextInput } from "react-native-gesture-handler"
 import { AccountType, CurrencyType, FirstChannelStatus } from "../../utils/enum"
 import { useNavigation, useNavigationParam } from "react-navigation-hooks"
-import { Button } from "react-native-elements"
+import { Button, ListItem } from "react-native-elements"
 import { palette } from "../../theme/palette"
 import { Side, Onboarding } from "types"
 import { translate } from "../../i18n"
@@ -451,22 +451,6 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
         { account != AccountType.Bitcoin && 
           <BalanceHeader headingCurrency={currency} accountsToAdd={account} />
         }
-        { account == AccountType.VirtualBitcoin && dataStore.lnd.statusFirstChannel == FirstChannelStatus.noChannel &&
-          <View style={{ alignContent: "center", width: "100%" }}>
-            <Text style={[styles.text]}>
-              { translate(`RewardsScreen.channelCreated.syncing`) }{" "}{dataStore.lnd.percentSynced * 100}%
-            </Text>
-            <Progress.Bar
-                style={styles.progressBar}
-                color={color.primary}
-                progress={dataStore.lnd.percentSynced}
-            />
-        </View> || 
-        account == AccountType.VirtualBitcoin && dataStore.lnd.statusFirstChannel == FirstChannelStatus.pending &&
-        <Text style={styles.fundingText} onPress={showFundingTx}>
-          { translate(`RewardsScreen.channelCreated.fundingTx`, {tx: shortenHash(dataStore.lnd.fundingTx)}) }
-        </Text>        
-        }
         { sections.length === 0 && 
           <Text>No transaction to show</Text>
         }
@@ -484,6 +468,28 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
             sections={sections}
             keyExtractor={(item, index) => item + index}
         />
+        }
+        {/* <ListItem
+          title={translate("AccountsScreen.bitcoinRewards")}
+          style={[styles.accountView, {borderColor: color.primary}]}
+          onPress={() => navigate("rewards")}
+          leftAvatar={<Icon name="ios-gift" color={color.primary} size={28}  style={styles.icon} />}
+        /> */}
+        { account == AccountType.VirtualBitcoin && dataStore.lnd.statusFirstChannel == FirstChannelStatus.noChannel &&
+          <View style={{ alignContent: "center", width: "100%" }}>
+            <Text style={[styles.text]}>
+              { translate(`RewardsScreen.channelCreated.syncing`) }{" "}{(dataStore.lnd.percentSynced * 100).toFixed(2)}%
+            </Text>
+            <Progress.Bar
+                style={styles.progressBar}
+                color={color.primary}
+                progress={dataStore.lnd.percentSynced}
+            />
+        </View> || 
+        account == AccountType.VirtualBitcoin && dataStore.lnd.statusFirstChannel == FirstChannelStatus.pending &&
+        <Text style={styles.fundingText} onPress={showFundingTx}>
+          { translate(`RewardsScreen.channelCreated.fundingTx`, {tx: shortenHash(dataStore.lnd.fundingTx)}) }
+        </Text>        
         }
       </Screen>
 )}))

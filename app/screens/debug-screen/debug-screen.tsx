@@ -238,8 +238,14 @@ export const DebugScreen = inject("dataStore")(observer(
           <Button
             style={DEMO}
             textStyle={DEMO_TEXT}
-            text="directory"
+            text="print directory"
             onPress={() => console.tron.log(RNFS.DocumentDirectoryPath)}
+          />
+          <Button
+            style={DEMO}
+            textStyle={DEMO_TEXT}
+            text="test functions"
+            onPress={() => functions().httpsCallable("test")({})}
           />
           <Button
             style={DEMO}

@@ -16,6 +16,22 @@
     "invalidEmail": "Invalid email address.",
     "invalidPhoneNumber": "is not a valid phone number"
   },
+  "rewards": {
+    "walletDownloaded": "Wallet Downloaded",
+    "backupWallet": "Backup Wallet",
+    "activateNotifications": "Activate Notifications",
+    "rewardsVideo": "Rewards Video",
+    "phoneVerification": "First Payment",
+    "lightningNetworkConnection": "Connect your wallet",
+    "firstLightningPayment": "First Payment",
+    "inviteAFriend": "Invite a friend",
+    "bankOnboarded": "Bank Onboarded",
+    "buyFirstSats": "Your first Buy BTC",
+    "debitCardActivation": "Activate debit card",
+    "firstCardSpending": "First purchase",
+    "firstSurvey": "Survey",
+    "activateDirectDeposit": "Direct deposit",
+  },
   "GetStartedScreen": {
     "headline": "The Bank with Bitcoin Rewards",
     "getStarted": "Get Started"
@@ -63,6 +79,14 @@
       "fundingTx": "Funding tx: {{tx}}",
       "channelOpened": "Congrats! your channel is now opened",
       "text": "In future version of the application, we'll abstract the concept of a channel, but for now you need to create your first channel on the lightning network"
+    },
+    "phoneVerification": {
+      "title": "Phone Verification",
+      "text": "Let us know your phone before we send you your rewards"
+    },
+    "lightningNetworkConnection": {
+      "title": "Connect your wallet",
+      "text": "It's a little bit like the internet. You need connect first before you can talk to the rest of the world. With our technology, it means you need to open a channel on lightning :)"
     },
     "firstLightningPayment": {
       "title": "First payment ⚡ ⚡ ⚡ ",
