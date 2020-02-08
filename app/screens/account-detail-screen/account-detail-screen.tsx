@@ -121,6 +121,12 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
   },
 
+  sync: {
+    alignContent: "center",
+    width: "100%",
+    marginVertical: 30,
+  }
+
 })
 
 const AccountDetailItem: React.FC<AccountDetailItemProps> = (props) => {
@@ -469,14 +475,14 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
             keyExtractor={(item, index) => item + index}
         />
         }
-        {/* <ListItem
-          title={translate("AccountsScreen.bitcoinRewards")}
-          style={[styles.accountView, {borderColor: color.primary}]}
-          onPress={() => navigate("rewards")}
-          leftAvatar={<Icon name="ios-gift" color={color.primary} size={28}  style={styles.icon} />}
-        /> */}
-        { account == AccountType.VirtualBitcoin && dataStore.lnd.statusFirstChannel == FirstChannelStatus.noChannel &&
-          <View style={{ alignContent: "center", width: "100%" }}>
+        { (account == AccountType.VirtualBitcoin && dataStore.lnd.statusFirstChannel == FirstChannelStatus.pending) &&
+          <View style={styles.sync}>
+            <Text style={styles.fundingText} onPress={showFundingTx}>
+              { translate(`RewardsScreen.channelCreated.fundingTx`, {tx: shortenHash(dataStore.lnd.fundingTx)}) }
+            </Text>
+          </View>
+          || !dataStore.lnd.syncedToChain &&
+          <View style={styles.sync}>
             <Text style={[styles.text]}>
               { translate(`RewardsScreen.channelCreated.syncing`) }{" "}{(dataStore.lnd.percentSynced * 100).toFixed(2)}%
             </Text>
@@ -485,11 +491,7 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
                 color={color.primary}
                 progress={dataStore.lnd.percentSynced}
             />
-        </View> || 
-        account == AccountType.VirtualBitcoin && dataStore.lnd.statusFirstChannel == FirstChannelStatus.pending &&
-        <Text style={styles.fundingText} onPress={showFundingTx}>
-          { translate(`RewardsScreen.channelCreated.fundingTx`, {tx: shortenHash(dataStore.lnd.fundingTx)}) }
-        </Text>        
+          </View> 
         }
       </Screen>
 )}))
