@@ -16,9 +16,7 @@ export const TextCurrency = ({ amount, currencyUsed, fontSize }) => {
       return (
         <>
           <Text style={{ fontSize, color: color.text }}>
-            {currency(amount, { precision: 0, separator: "," }).format()}
-          </Text>
-          <Text style={{ fontSize: fontSize / 2, color: color.text }}> sats</Text>
+            {currency(amount, { precision: 0, separator: "," }).format()} sats</Text>
         </>
       )
     }
