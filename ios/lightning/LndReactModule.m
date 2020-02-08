@@ -193,7 +193,7 @@ RCT_EXPORT_METHOD(start: (RCTPromiseResolveBlock)resolve
     });
 
     // NSString *args = [NSString stringWithFormat:@"--lnddir=%@ --noseedbackup", self.appDir];
-    NSString *args = [NSString stringWithFormat:@"--lnddir=%@ --accept-keysend", self.appDir];
+    NSString *args = [NSString stringWithFormat:@"--lnddir=%@ --accept-keysend --bitcoin.node=neutrino", self.appDir];
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         RCTLogInfo(@"Starting lnd");
