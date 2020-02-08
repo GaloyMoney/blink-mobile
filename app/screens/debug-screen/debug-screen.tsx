@@ -18,7 +18,7 @@ import JSONTree from 'react-native-json-tree'
 import { useNavigation } from "react-navigation-hooks"
 import { palette } from "../../theme/palette"
 import functions from "@react-native-firebase/functions"
-import { VersionComponent } from "../../components/version/version"
+import { VersionComponent } from "../../components/version"
 import FileAction from "../../services/lnd/file"
 
 

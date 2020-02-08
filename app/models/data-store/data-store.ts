@@ -368,21 +368,22 @@ export const LndModel = BaseAccountModel.named("Lnd")
 
     // stateless, but must be an action instead of a view because of the async call
     initState: flow(function*() {
-      const WALLET_NOT_FOUND = "rpc error: code = Unknown desc = wallet not found"
+      const WALLET_EXIST = "rpc error: code = Unknown desc = wallet already exists"
       const CLOSED = "closed"
-      let walletExist = true
+      let walletExist = false
       try {
-        yield getEnv(self).lnd.grpc.sendUnlockerCommand("UnlockWallet")
+        yield getEnv(self).lnd.grpc.sendUnlockerCommand("GenSeed")
       } catch (err) {
-        console.tron.log("wallet exist", err)
-        if (err.message === WALLET_NOT_FOUND) {
-          walletExist = false
-        }
-        if (err.message === CLOSED) {
+        console.tron.log("initState, err:", err)
+        if (err.message === WALLET_EXIST) {
+          walletExist = true
+        } else if (err.message === CLOSED) {
           // We assumed that if sendUnlockerCommand is locked, the node is already launched.
           // this is useful for hot reloading
           // FIXME validate this assumption
           self.setLndReady()
+        } else {
+          console.tron.error(`unhandled error message ${err.message}`)
         }
       }
 
@@ -595,6 +596,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
         if (response.syncedToChain) {
           console.tron.log("Syncing complete")
           yield self.openFirstChannel()
+          yield functions().httpsCallable("requestRewards")({}) // TODO: move on channel active instead on the server side?
         }
 
         self.percentSynced = calcPercentSynced(response)
@@ -755,7 +757,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
         function formatingRecords<T>(source: T) {
           const result = {}
           Object.keys(source).forEach((key) => {
-            if (key == '123123') {
+            if (key == '123123') { // FIXME 123123 as a env variable
               const value = source[key]
               result[key] = Buffer.from(Object.values(value), 'hex').toString()
               // todo manage conversion properly depending of type 

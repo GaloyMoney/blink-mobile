@@ -7,6 +7,7 @@ import { ActivityIndicator, StyleSheet, View } from "react-native"
 import { withNavigation } from "react-navigation"
 import { color } from "../../theme"
 import { when } from "mobx"
+import { VersionComponent } from "../../components/version"
 
 const styles = StyleSheet.create({
   centerBackground: {
@@ -16,6 +17,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
 })
+
+// FIXME properly use the right callback function
+const INIT_DELAY_LND = 500
 
 export const LoadingScreen = withNavigation(
   inject("dataStore")(
@@ -30,7 +34,7 @@ export const LoadingScreen = withNavigation(
 
         setTimeout(async function(){ 
           await getEnv(dataStore).lnd.openWallet()
-        }, 500) // FIXME properly use the right callback function
+        }, INIT_DELAY_LND) 
 
       }, [])
 
@@ -56,7 +60,8 @@ useEffect(() => {
 
     return (
       <View style={styles.centerBackground}>
-        <ActivityIndicator size="large" color={color.primary} />
+        <ActivityIndicator style={{flex: 1}} size="large" color={color.primary} />
+        <VersionComponent style={{paddingVertical: 30}} />
       </View>
       )
     }),
