@@ -2,12 +2,14 @@ import auth from "@react-native-firebase/auth"
 import { inject, observer } from "mobx-react"
 import { getEnv } from "mobx-state-tree"
 import * as React from "react"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { ActivityIndicator, StyleSheet, View } from "react-native"
-import { withNavigation } from "react-navigation"
 import { color } from "../../theme"
 import { when } from "mobx"
 import { VersionComponent } from "../../components/version"
+import { Onboarding } from "types"
+import { useNavigation } from "react-navigation-hooks"
+
 
 const styles = StyleSheet.create({
   centerBackground: {
@@ -19,44 +21,59 @@ const styles = StyleSheet.create({
 })
 
 // FIXME properly use the right callback function
-const INIT_DELAY_LND = 500
+const INIT_DELAY_LND = 100
 
-export const LoadingScreen = withNavigation(
-  inject("dataStore")(
-    observer(({ dataStore, navigation }) => {
-      
-      useEffect(() => {
-        const startLnd = async () => {
-          getEnv(dataStore).lnd.start()
-        }
+export const LoadingScreen = inject("dataStore")(observer(
+  ({ dataStore }) => {
+  
+  const [ authReady, setAuthReady ] = useState(false)
 
-        startLnd()
+  const { navigate } = useNavigation()
 
-        setTimeout(async function(){ 
-          await getEnv(dataStore).lnd.openWallet()
-        }, INIT_DELAY_LND) 
+  useEffect(() => {
+    const startLnd = async () => {
+      getEnv(dataStore).lnd.start()
+    }
 
-      }, [])
+    startLnd()
 
-      const onAuthStateChanged = async user => {
-        // TODO : User type
-        console.tron.log(`onAuthStateChanged`, user)
-        console.log(`onAuthStateChanged`, user)
+    setTimeout(async function(){ 
+      await getEnv(dataStore).lnd.openWallet()
+    }, INIT_DELAY_LND) 
 
-        await when(() => dataStore.lnd.lndReady === true)
+  }, [])
 
-        if (user === null) {
-          // new install or no data yet
-          navigation.navigate("authStack")
-        } else {
-          navigation.navigate("primaryStack")
-        
-      }}
+  const onAuthStateChanged = async user => {
+    console.tron.log(`onAuthStateChanged`, user)
+    console.log(`onAuthStateChanged`, user)
 
-useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged)
-    return subscriber; // unsubscribe on unmount
-}, [])
+    if (user == null) {
+      await auth().signInAnonymously()
+    } else (
+      setAuthReady(true)
+    )
+  }
+
+  useEffect(() => {
+      const subscriber = auth().onAuthStateChanged(onAuthStateChanged)
+      return subscriber; // unsubscribe on unmount
+  }, [])
+
+  useEffect(() => {
+    const _ = async () => {
+      await when(() => dataStore.lnd.lndReady === true)
+      when(() => authReady)
+
+      if (dataStore.onboarding.has(Onboarding.walletDownloaded)) {
+        navigate("primaryStack")
+      } else {
+        // new install
+        navigate("authStack")        
+      }
+    }
+
+    _()
+    }, [])
 
     return (
       <View style={styles.centerBackground}>
@@ -64,6 +81,4 @@ useEffect(() => {
         <VersionComponent style={{paddingVertical: 30}} />
       </View>
       )
-    }),
-  ),
-)
+}))

@@ -19,17 +19,22 @@ import functions from "@react-native-firebase/functions"
 import { YouTubeStandaloneIOS } from "react-native-youtube"
 
 
-export const safeBank = require("./SafeBank.jpg")
-export const globalCommunications = require("./GlobalCommunications.jpg")
-export const greenPhone = require("./GreenPhone.jpg")
-export const rewardsHeader = require("./RewardsHeader.png")
-export const asterix = require("./Asterix.jpeg")
-export const littleDipper = require("./LittleDipper.jpg")
-export const bankAccount = require("./BankAccount.jpg")
-export const password1234 = require("./Password1234.jpg")
-export const pointOfSale = require("./PointOfSale.jpg")
-export const inviteFriends = require("./InviteFriends.jpg")
-export const lightningPayment = require("./LightningPayment.jpg")
+const walletDownloadedImage = require("./GreenPhone.jpg")
+const backupWalletImage = require("./SafeBank.jpg")
+const activateNotificationsImage = require("./GlobalCommunications.jpg")
+const rewardsVideoImage = require("./Asterix.jpeg")
+const phoneVerificationImage = require("./PhoneLogo.png")
+const lightningNetworkConnectionImage = require("./LittleDipper.jpg")
+const firstLightningPaymentImage = require("./LightningPayment.jpg")
+const inviteAFriendImage = require("./InviteFriends.jpg")
+const bankOnboardedImage = require("./BankAccount.jpg")
+const debitCardActivationImage = require("./Password1234.jpg")
+const firstCardSpendingImage = require("./PointOfSale.jpg")
+const activateDirectDepositImage = require("./GreenPhone.jpg")
+
+
+const rewardsHeader = require("./RewardsHeader.png")
+
 
 const { width: screenWidth } = Dimensions.get('window')
 
@@ -177,24 +182,20 @@ export const RewardsScreen = inject("dataStore")(
     [
         {
             id: "walletDownloaded",
-            icon: 'ios-exit',
             action: null,
         },
         {
             id: "backupWallet",
-            icon: 'ios-lock',
             action: async () => {
                 setLoading(true)
                 await sleep(2000)
                 await dataStore.onboarding.add(Onboarding.backupWallet)
                 close("Backup keys saved to iCloud")
             },
-            image: safeBank,
             enabled: true,
         },
         {
             id: "activateNotifications",
-            icon: 'ios-lock',
             action: () => {
 
                 Notifications.events().registerRemoteNotificationsRegistered(async (event: Registered) => {
@@ -218,12 +219,10 @@ export const RewardsScreen = inject("dataStore")(
                 Notifications.registerRemoteNotifications()
                 
             },
-            image: globalCommunications,
             enabled: true,
         },
         {
             id: 'rewardsVideo',
-            icon: 'ios-school',
             action: async () => {
                 try {
                     await YouTubeStandaloneIOS.playVideo("XNu5ppFZbHo")
@@ -233,53 +232,50 @@ export const RewardsScreen = inject("dataStore")(
                     Alert.alert(err.toString())
                 }
             },
-            image: asterix,
             enabled: true,
         },
-        // setFundingTx(dataStore.lnd.pendingChannels[0]?.channelPoint.split(":")[0])
-        //
+        {
+            id: 'phoneVerification',
+            action: () => navigate('welcomePhoneInput'),
+            enabled: true,
+        },
+        {
+            id: 'lightningNetworkConnection',
+            action: () => navigate('sendBitcoin'),
+            enabled: dataStore.lnd.statusFirstChannel == FirstChannelStatus.opened,
+            enabledMessage: 'Open channel first'
+        },
         {
             id: 'firstLightningPayment',
-            icon: 'ios-exit',
             action: () => navigate('sendBitcoin'),
-            image: lightningPayment,
             enabled: dataStore.lnd.statusFirstChannel == FirstChannelStatus.opened,
             enabledMessage: 'Open channel first'
         },
         {
             id: "inviteAFriend",
-            icon: 'ios-download',
             action: () => Alert.alert('TODO'),
-            image: inviteFriends,
             enabled: dataStore.lnd.statusFirstChannel == FirstChannelStatus.opened,
             enabledMessage: 'Open channel first'
         },
         {
             id: 'bankOnboarded',
-            icon: 'ios-gift',
             action: () => navigate('openBankAccount'),
-            image: bankAccount,
             enabled: true,
         },
         {
             id: "debitCardActivation",
-            icon: 'ios-exit',
             action: () => Alert.alert('TODO'),
-            image: password1234,
             enabled: dataStore.onboarding.has(Onboarding["bankOnboarded"]),
             enabledMessage: 'Banking is needed'
         },
         {
             id: "firstCardSpending",
-            icon: 'ios-power',
             action: () => Alert.alert('TODO'),
-            image: pointOfSale,
             enabled: dataStore.onboarding.has(Onboarding["bankOnboarded"]),
             enabledMessage: 'Banking is needed'
         },
         {
             id: "activateDirectDeposit",
-            icon: 'ios-cart',
             rewards: "1% card rewards!",
             action: () => Alert.alert('TODO'),
             enabled: dataStore.onboarding.has(Onboarding["bankOnboarded"]),
@@ -301,7 +297,7 @@ export const RewardsScreen = inject("dataStore")(
         return (
             <Animated.View style={styles.item}>
                 <ParallaxImage 
-                    source={item.image || greenPhone}
+                    source={eval(`${item.id}Image`)} // FIXME security issue?
                     containerStyle={styles.imageContainer} 
                     {...parallaxProps}
                 />

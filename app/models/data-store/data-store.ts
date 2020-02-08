@@ -1,6 +1,6 @@
 import { Instance, SnapshotOut, types, flow, getParentOfType, getEnv } from "mobx-state-tree"
 import { AccountType, CurrencyType, FirstChannelStatus } from "../../utils/enum"
-import { Side, IQuoteResponse, IQuoteRequest, IBuyRequest, Onboarding, OnboardingRewards, OnboardingString } from "types"
+import { Side, IQuoteResponse, IQuoteRequest, IBuyRequest, Onboarding, OnboardingRewards } from "types"
 import { parseDate } from "../../utils/date"
 import KeychainAction from "../../utils/keychain"
 import { generateSecureRandom } from "react-native-securerandom"
@@ -16,6 +16,7 @@ import { Notifications } from "react-native-notifications"
 import { RootStoreModel } from "../root-store"
 import { difference } from 'lodash'
 import { sleep } from "../../utils/sleep"
+import { translate } from "../../i18n"
 
 
 
@@ -907,7 +908,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
           if (invoice.memo) {
             return invoice.memo
           } else if (invoice.htlcs[0].customRecords) {
-            return OnboardingString[invoice.htlcs[0].customRecords]
+            return translate(`rewards\.${invoice.htlcs[0].customRecords}`)
           } else {
             return `Payment received`
           }
@@ -1050,7 +1051,7 @@ export const OnboardingModel = types
     get transactions() {
       const r = self.stage.map(item => ({
         // TODO: interface for those pending transactions
-        name: OnboardingString[item],
+        name: translate(`rewards\.${[item]}`),
         icon: "ios-exit",
         amount: OnboardingRewards[item],
         date: Date.now(),
