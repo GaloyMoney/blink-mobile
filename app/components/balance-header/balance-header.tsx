@@ -56,19 +56,19 @@ const Loader = () => (
 
 export const BalanceHeader: React.FunctionComponent<BalanceHeaderProps> = inject("dataStore")(
   observer(({ headingCurrency, dataStore, accountsToAdd, initialLoading }) => {
-    let subCurrency
-    if (headingCurrency === CurrencyType.BTC) {
-      subCurrency = (
+    
+    const otherCurrency = headingCurrency === CurrencyType.BTC ? CurrencyType.USD: CurrencyType.BTC
+
+    const subHeader = (
         <TextCurrency
           amount={dataStore.balances({
-            currency: CurrencyType.USD,
+            currency: otherCurrency,
             account: accountsToAdd,
           })}
-          currencyUsed={CurrencyType.USD}
+          currencyUsed={otherCurrency}
           fontSize={16}
         />
       )
-    }
 
     return (
       <View style={styles.header}>
@@ -89,7 +89,7 @@ export const BalanceHeader: React.FunctionComponent<BalanceHeaderProps> = inject
             }
           </View>
           {!initialLoading && 
-            subCurrency
+            subHeader
           }
         </View>
         <Text style={styles.balanceText}>Current Balance</Text>
