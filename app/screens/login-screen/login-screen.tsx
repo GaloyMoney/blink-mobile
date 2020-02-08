@@ -7,7 +7,7 @@ import { Screen } from "../../components/screen"
 import { color } from "../../theme"
 
 import { translate } from "../../i18n"
-import { VersionComponent } from "../../components/version/version"
+import { VersionComponent } from "../../components/version"
 
 const styles = StyleSheet.create({
   bottom: {

@@ -36,7 +36,7 @@ class GrpcAction {
    */
   async startLnd() {
     await this._lnd.start()
-    console.tron.log('lnd Started. GRPC unlockerReady')
+    console.tron.log('lnd Started. main GRPC started')
   }
 
   /**

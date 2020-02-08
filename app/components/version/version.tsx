@@ -15,8 +15,8 @@ version: {
   }
 })
 
-export const VersionComponent = inject("dataStore")(observer(({dataStore}) => (
-    <Text style={styles.version}>
+export const VersionComponent = inject("dataStore")(observer(({dataStore, style}) => (
+    <Text style={[style, styles.version]}>
         v{VersionNumber.appVersion} build {VersionNumber.buildVersion}{'\n'}
         network: {Config.BITCOIN_NETWORK}{'\n'}
         lnd: {dataStore.lnd.version}
