@@ -6,7 +6,6 @@ import RNFS from 'react-native-fs'
 
 class FileAction {
   constructor(dataStore) {
-    this._FS = RNFS
     this.dataStore = dataStore
   }
 
@@ -15,7 +14,7 @@ class FileAction {
    * @return {string}
    */
   get lndDir() {
-    return this._FS.DocumentDirectoryPath;
+    return RNFS.DocumentDirectoryPath;
   }
 
   /**
@@ -23,7 +22,7 @@ class FileAction {
    * @return {string}
    */
   get externalStorageDir() {
-    return this._FS.ExternalStorageDirectoryPath;
+    return RNFS.ExternalStorageDirectoryPath;
   }
 
   //
@@ -65,7 +64,7 @@ class FileAction {
   async deleteWalletDB() {
     const path = `${this.lndDir}/data/chain/bitcoin/${this.dataStore.lnd.network}/wallet.db`;
     try {
-      await this._FS.unlink(path);
+      await RNFS.unlink(path);
     } catch (err) {
       log.info(`No ${this.dataStore.lnd.network} wallet to delete.`);
     }
@@ -82,7 +81,7 @@ class FileAction {
     for (const file of files) {
         try {
             console.log(`deleting ${this.lndDir}/${file}`)
-            await this._FS.unlink(`${this.lndDir}/${file}`);
+            await RNFS.unlink(`${this.lndDir}/${file}`);
         } catch (err) {
             log.info(`No ${this.dataStore.lnd.network} wallet to delete.`);
         }
@@ -105,20 +104,20 @@ class FileAction {
   }
 
   async readSCB() {
-    return this._FS.readFile(this.scbPath, 'base64');
+    return RNFS.readFile(this.scbPath, 'base64');
   }
 
   async copySCBToExternalStorage() {
-    const exists = await this._FS.exists(this.scbPath);
+    const exists = await RNFS.exists(this.scbPath);
     if (!exists) return;
-    await this._FS.mkdir(this.scbExternalDir);
-    await this._FS.copyFile(this.scbPath, this.scbExternalPath);
+    await RNFS.mkdir(this.scbExternalDir);
+    await RNFS.copyFile(this.scbPath, this.scbExternalPath);
   }
 
   async readSCBFromExternalStorage() {
-    const exists = await this._FS.exists(this.scbExternalPath);
+    const exists = await RNFS.exists(this.scbExternalPath);
     if (!exists) return;
-    return this._FS.readFile(this.scbExternalPath, 'base64');
+    return RNFS.readFile(this.scbExternalPath, 'base64');
   }
 }
 

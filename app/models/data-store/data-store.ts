@@ -561,50 +561,56 @@ export const LndModel = BaseAccountModel.named("Lnd")
         return response
       }
 
+      let response
+
       try {
-        const response = yield getEnv(self).lnd.grpc.sendCommand("getInfo")
-        self.version = response.version.split(" ")[0]
-        self.pubkey = response.identityPubkey
-        self.syncedToChain = response.syncedToChain
-        self.blockHeight = response.blockHeight
-        self.network = response.chains[0].network
-
-        if (self.startBlockHeight === undefined) {
-          self.startBlockHeight = response.blockHeight
-
-          try {
-
-            let url
-
-            // FIXME see when this is fixed: https://github.com/lightningnetwork/lnd/issues/3270
-            if (Config.BITCOIN_NETWORK === "testnet") {
-              url = "http://api.blockcypher.com/v1/btc/test3"
-            } else if (Config.BITCOIN_NETWORK === "mainnet") {
-              url = "https://api.blockcypher.com/v1/btc/main"
-            } else {
-              throw new Error('config issue')
-            }
-
-            const response = yield fetch(url) // FIXME find a better solution
-            const { height } = yield response.json()
-            self.bestBlockHeight = height
-          } catch (err) {
-            console.warn(`can't fetch blockcypher`, err)
-          }
-        }
-
-        if (response.syncedToChain) {
-          console.tron.log("Syncing complete")
-          yield self.openFirstChannel()
-          yield functions().httpsCallable("requestRewards")({}) // TODO: move on channel active instead on the server side?
-        }
-
-        self.percentSynced = calcPercentSynced(response)
-        return response.syncedToChain
+        response = yield getEnv(self).lnd.grpc.sendCommand("getInfo")
       } catch (err) {
         console.tron.error(`Getting node info failed, ${err}`)
         throw err
       }
+      self.version = response.version.split(" ")[0]
+      self.pubkey = response.identityPubkey
+      self.syncedToChain = response.syncedToChain
+      self.blockHeight = response.blockHeight
+      self.network = response.chains[0].network
+
+      if (self.startBlockHeight === undefined) {
+        self.startBlockHeight = response.blockHeight
+
+        let url
+
+        // FIXME see when this is fixed: https://github.com/lightningnetwork/lnd/issues/3270
+        if (Config.BITCOIN_NETWORK === "testnet") {
+          url = "http://api.blockcypher.com/v1/btc/test3"
+        } else if (Config.BITCOIN_NETWORK === "mainnet") {
+          url = "https://api.blockcypher.com/v1/btc/main"
+        } else {
+          throw new Error('config issue')
+        }
+
+        try {
+          const response = yield fetch(url) // FIXME find a better solution
+          const { height } = yield response.json()
+          self.bestBlockHeight = height
+        } catch (err) {
+          console.warn(`can't fetch blockcypher`, err)
+        }
+      }
+
+      if (response.syncedToChain) {
+        console.tron.log("Syncing complete")
+
+        try {
+          yield self.openFirstChannel()
+          yield functions().httpsCallable("requestRewards")({}) // TODO: move on channel active instead on the server side?  
+        } catch (err) {
+          console.tron.error(err.toString())
+        }
+      }
+
+      self.percentSynced = calcPercentSynced(response)
+      return response.syncedToChain
     }),
 
     openFirstChannel: flow(function*() {
