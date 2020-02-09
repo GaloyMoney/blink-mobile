@@ -210,7 +210,6 @@ export const DebugScreen = inject("dataStore")(observer(
             textStyle={DEMO_TEXT}
             text="Delete account and log out"
             onPress={async () => {
-              await dataStore.onboarding._reset()
               if (auth().currentUser) {
                 try {
                   await functions().httpsCallable("deleteCurrentUser")({})
@@ -219,12 +218,14 @@ export const DebugScreen = inject("dataStore")(observer(
                 }
               }
               await auth().signOut()
+              await dataStore.onboarding._reset() // do not synchronize state update
               await fileAction.deleteAllLndData()
               Alert.alert("user succesfully deleted. Delete your app to start from a clean state")
             }}
           />
           <Text>UID: {auth().currentUser?.uid}</Text>
           <Text>BTC price: {dataStore.rates.BTC}</Text>
+          <Text>lnd error: {dataStore.lnd.error}</Text>
           <Text
             style={TAGLINE}
             text={dataStore.lnd.walletExist ? "Wallet exist" : "Wallet doesn't exist"}

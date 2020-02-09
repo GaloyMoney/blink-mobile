@@ -23,7 +23,7 @@ const walletDownloadedImage = require("./GreenPhone.jpg")
 const backupWalletImage = require("./SafeBank.jpg")
 const activateNotificationsImage = require("./GlobalCommunications.jpg")
 const rewardsVideoImage = require("./Asterix.jpeg")
-const phoneVerificationImage = require("./PhoneLogo.png")
+const phoneVerificationImage = require("./GreenPhone.jpg")
 const lightningNetworkConnectionImage = require("./LittleDipper.jpg")
 const firstLightningPaymentImage = require("./LightningPayment.jpg")
 const inviteAFriendImage = require("./InviteFriends.jpg")
@@ -241,9 +241,9 @@ export const RewardsScreen = inject("dataStore")(
         },
         {
             id: 'lightningNetworkConnection',
-            action: () => navigate('sendBitcoin'),
-            enabled: dataStore.lnd.statusFirstChannel == FirstChannelStatus.opened,
-            enabledMessage: 'Open channel first'
+            action: () => navigate('sendBitcoin'), // TODO
+            enabled: dataStore.onboarding.has(Onboarding.phoneVerification),
+            enabledMessage: 'Verify phone'
         },
         {
             id: 'firstLightningPayment',

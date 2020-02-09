@@ -340,6 +340,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
     pubkey: "",
     network: "",
     blockHeight: 0,
+    error: "",
 
     lastAddInvoice: "",
     receiveBitcoinScreenAlert: false,
@@ -374,7 +375,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
       const CLOSED = "closed"
       let walletExist = false
       
-      for (const i of [0, 1, 2, 3, 4, 5]) {
+      for (const _ of [0, 1, 2, 3, 4, 5]) {
         try {
           yield getEnv(self).lnd.grpc.sendUnlockerCommand("GenSeed")
         } catch (err) {
@@ -388,6 +389,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
           } else if (err.message === CLOSED) {
             // We assumed that if sendUnlockerCommand is locked, the node is already launched.
             // this is useful for hot reloading
+            walletExist = true
             self.setLndReady()
           } else {
             console.tron.error(`unhandled error message ${err.message}`)
@@ -527,6 +529,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
         return result
       } catch (err) {
         console.tron.error(`impossible to open a channel ${err}`)
+        self.error = `${err}`
         throw err
       }
     }),
@@ -611,8 +614,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
         console.tron.log("Syncing complete")
 
         try {
-          yield self.openFirstChannel()
-          yield functions().httpsCallable("requestRewards")({}) // TODO: move on channel active instead on the server side?  
+          yield self.openFirstChannelAndAskRewards()
         } catch (err) {
           console.tron.error(err.toString())
         }
@@ -622,20 +624,27 @@ export const LndModel = BaseAccountModel.named("Lnd")
       return response.syncedToChain
     }),
 
-    openFirstChannel: flow(function*() {
+    openFirstChannelAndAskRewards: flow(function*() {
+      if (auth().currentUser?.isAnonymous) {
+        return
+      }
+      
       yield self.updatePendingChannels()
-      if (!!auth().currentUser && self.statusFirstChannel === FirstChannelStatus.noChannel) {
+
+      if (self.statusFirstChannel === FirstChannelStatus.noChannel) {
         try {
           yield self.sendPubKey()
           yield sleep(3000) // FIXME do I need this?  (error might be because already connected to peer)
           yield self.connectGaloyPeer()
           yield sleep(3000) // FIXME
           yield self.openChannel()
-          yield sleep(3000) // FIXME
+          yield sleep(100) // FIXME
           yield self.updatePendingChannels()
         } catch (err) {
           console.tron.error(err)
         }
+      } else {
+        yield functions().httpsCallable("requestRewards")({}) // TODO: move on channel active instead on the server side?  
       }
     }),
 
@@ -1032,6 +1041,11 @@ export const OnboardingModel = types
   .views(self => ({
     // TODO using: BalanceRequest type, how to set it?
     has(step: Onboarding) {
+      // TODO exception 
+      // --> notifications
+      // --> phoneAuth
+
+
       return self.stage.findIndex(item => (item == step)) !== -1
     },
 
