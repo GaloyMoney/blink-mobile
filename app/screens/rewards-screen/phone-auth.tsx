@@ -184,9 +184,13 @@ export const WelcomePhoneInputScreen = withNavigation(({ navigation }) => {
       console.log(`onAuthStateChanged`, user)
   
       if (user.phoneNumber) {
+        setLoading(true)
+
         // FIXME duplicate with user.Phonenumber
         await dataStore.onboarding.add(Onboarding.phoneVerification) 
-        
+        await dataStore.lnd.openFirstChannelAndAskRewards()
+
+        setLoading(false)
         navigate("rewards") // TODO navigate back instead
       }
     }
