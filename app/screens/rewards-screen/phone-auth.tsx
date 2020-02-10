@@ -176,7 +176,7 @@ export const WelcomePhoneInputScreen = withNavigation(({ navigation }) => {
     const [err, setErr] = useState("")
   
     const confirmation = useNavigationParam("confirmation")
-    const { navigate } = useNavigation()
+    const { popToTop } = useNavigation()
   
     const onAuthStateChanged = async user => {
       // TODO : User type
@@ -191,7 +191,7 @@ export const WelcomePhoneInputScreen = withNavigation(({ navigation }) => {
         await dataStore.lnd.openFirstChannelAndAskRewards()
 
         setLoading(false)
-        navigate("rewards") // TODO navigate back instead
+        popToTop()
       }
     }
   
