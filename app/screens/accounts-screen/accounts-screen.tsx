@@ -14,9 +14,11 @@ import { Onboarding } from "types"
 import { palette } from "../../theme/palette"
 import { useNavigation } from "react-navigation-hooks"
 
+
 import ContentLoader, { Rect } from "react-content-loader/native"
 import { ListItem } from "react-native-elements"
 import { translate } from "../../i18n"
+import { Overlay } from "../../components/overlay"
 
 const accountBasic = {
   color: color.text,
@@ -52,7 +54,8 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     alignSelf: 'center',
     alignItems: 'center',
-  }
+  },
+
 })
 
 const AccountItem = inject("dataStore")(observer(
@@ -97,11 +100,11 @@ const AccountItem = inject("dataStore")(observer(
   )
 }))
 
-
 export const AccountsScreen = inject("dataStore")(observer(
   ({ dataStore }) => {
 
   const [ initialLoading, setInitialLoading] = useState(true)
+  const [ isModalVisible, setModalVisible ] = useState(false)
   const [ refreshing, setRefreshing] = useState(false)
   const { navigate } = useNavigation()
 
@@ -130,10 +133,21 @@ export const AccountsScreen = inject("dataStore")(observer(
 
   useEffect(() => {
     onRefresh()
+
+    if (dataStore.onboarding.stage.length === 1) {
+      setModalVisible(true)
+    }  
   }, [])
+
+  console.tron.log(`isModalVisible: ${isModalVisible}`)
 
   return (
     <Screen>
+      <Overlay 
+        isModalVisible={isModalVisible}
+        setModalVisible={setModalVisible}
+        screen="accounts"
+      /> 
       <BalanceHeader headingCurrency={CurrencyType.USD}
           accountsToAdd={   
               dataStore.lnd.statusFirstChannel == FirstChannelStatus.opened ?

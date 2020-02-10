@@ -17,6 +17,7 @@ import { sleep } from "../../utils/sleep"
 import { Notifications, RegistrationError } from "react-native-notifications"
 import functions from "@react-native-firebase/functions"
 import { YouTubeStandaloneIOS } from "react-native-youtube"
+import { Overlay } from "../../components/overlay"
 
 
 const walletDownloadedImage = require("./GreenPhone.jpg")
@@ -136,7 +137,8 @@ export const RewardsScreen = inject("dataStore")(
 
     const { navigate } = useNavigation()
 
-    const [ openReward, setOpenReward ] = useState(0)
+    const [ isModalVisible, setModalVisible ] = useState(false)
+    const [ openReward, setOpenReward ] = useState(false)
     const [ currReward, setCurrReward ] = useState("")
     const [ loading, setLoading ] = useState(false)
     const [ err, setErr ] = useState("")
@@ -144,11 +146,11 @@ export const RewardsScreen = inject("dataStore")(
 
     const open = (index) => {
         setCurrReward(rewards[index].id)
-        setOpenReward(openReward === 1 ? 0 : 1)
+        setOpenReward(!openReward)
     }
 
     const close = (msg = "") => {
-        setOpenReward(0)
+        setOpenReward(false)
         setLoading(false)
         if (msg !== "") {
             Alert.alert(msg)
@@ -176,7 +178,18 @@ export const RewardsScreen = inject("dataStore")(
             },
           ])
         }
-      }, [err])
+    }, [err])
+
+    useEffect(() => {
+        if (dataStore.onboarding.stage.length === 1) {
+          setModalVisible(true)
+        } 
+    }, [])
+
+    const actionWrapper = async (fn, msg = "") => {
+        await fn()
+        close(msg)
+    }
 
     const rewards = 
     [
@@ -190,8 +203,8 @@ export const RewardsScreen = inject("dataStore")(
                 setLoading(true)
                 await sleep(2000)
                 await dataStore.onboarding.add(Onboarding.backupWallet)
-                close("Backup keys saved to iCloud")
             },
+            closingMsg: "Backup keys saved to iCloud",
             enabled: true,
         },
         {
@@ -329,7 +342,7 @@ export const RewardsScreen = inject("dataStore")(
                     <Button 
                         onPress={ () => {
                             openReward ?
-                                item.action() :
+                                actionWrapper(item.action, item.closingMsg) :
                                 open(index)
                         }} 
                         disabled={item.fullfilled || !item.enabled}
@@ -354,58 +367,63 @@ export const RewardsScreen = inject("dataStore")(
         <Screen style={{
             justifyContent: 'flex-end', flex: 1,
             }}>
-                <Animated.View 
-                    style={[styles.header]}
-                    >
-                    <Animated.Image source={rewardsHeader} 
-                        style={[
-                            {
-                                height: animation.interpolate({
-                                    inputRange: [0, 1],
-                                    outputRange: [120, 0],
-                                }),
-                            }
-                        ]
-                        } />
-                    <Animated.Text style={[styles.title,
+            <Overlay 
+                isModalVisible={isModalVisible}
+                setModalVisible={setModalVisible}
+                screen="rewards"
+            /> 
+            <Animated.View 
+                style={[styles.header]}
+                >
+                <Animated.Image source={rewardsHeader} 
+                    style={[
                         {
-                            fontSize: animation.interpolate({
+                            height: animation.interpolate({
                                 inputRange: [0, 1],
-                                outputRange: [28, 0.1],
+                                outputRange: [120, 0],
                             }),
-                        }]}>
-                        {translate('RewardsScreen.header')}
-                    </Animated.Text>
-                    <Animated.Text style={[
-                        styles.titleSats,
-                    ]}>
-                        {openReward ? 
-                            `${sats(currReward)}` :
-                            I18n.toNumber(dataStore.balances({ 
-                                currency: CurrencyType.BTC, 
-                                account: AccountType.BitcoinRealOrVirtual
-                            }), {precision: 0})
                         }
-                    </Animated.Text>
-                    { openReward === 1 &&
-                        <Button 
-                            title="Close" 
-                            buttonStyle={styles.textButtonClose}
-                            onPress={() => close()}
-                        />
+                    ]
+                    } />
+                <Animated.Text style={[styles.title,
+                    {
+                        fontSize: animation.interpolate({
+                            inputRange: [0, 1],
+                            outputRange: [28, 0.1],
+                        }),
+                    }]}>
+                    {translate('RewardsScreen.header')}
+                </Animated.Text>
+                <Animated.Text style={[
+                    styles.titleSats,
+                ]}>
+                    {openReward ? 
+                        `${sats(currReward)}` :
+                        I18n.toNumber(dataStore.balances({ 
+                            currency: CurrencyType.BTC, 
+                            account: AccountType.BitcoinRealOrVirtual
+                        }), {precision: 0})
                     }
-                </Animated.View>
-                <View style={{flex: 1}} />
-                <Carousel
-                //   ref={(c) => { this._carousel = c; }}
-                data={rewards}
-                renderItem={renderItem}
-                sliderWidth={screenWidth}
-                //   sliderHeight={screenWidth}
-                itemWidth={screenWidth - 60}
-                hasParallaxImages={true}
-                firstItem={firstItem}
-                />
+                </Animated.Text>
+                { openReward &&
+                    <Button 
+                        title="Close" 
+                        buttonStyle={styles.textButtonClose}
+                        onPress={() => close()}
+                    />
+                }
+            </Animated.View>
+            <View style={{flex: 1}} />
+            <Carousel
+            //   ref={(c) => { this._carousel = c; }}
+            data={rewards}
+            renderItem={renderItem}
+            sliderWidth={screenWidth}
+            //   sliderHeight={screenWidth}
+            itemWidth={screenWidth - 60}
+            hasParallaxImages={true}
+            firstItem={firstItem}
+            />
         </Screen>
     )
 }))

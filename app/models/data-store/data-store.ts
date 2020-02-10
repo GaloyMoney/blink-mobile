@@ -1063,7 +1063,7 @@ export const OnboardingModel = types
     },
 
     get transactions() {
-      const r = self.stage.map(item => ({
+      const txs = self.stage.map(item => ({
         // TODO: interface for those pending transactions
         name: translate(`rewards\.${[item]}`),
         icon: "ios-exit",
@@ -1071,8 +1071,8 @@ export const OnboardingModel = types
         date: Date.now(),
       }))
 
-      console.tron.log(r)
-      return r
+      console.tron.log(txs)
+      return txs
     }
   }))
 

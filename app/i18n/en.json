@@ -32,6 +32,10 @@
     "firstSurvey": "Survey",
     "activateDirectDeposit": "Direct deposit",
   },
+  "Overlay": {
+    "accounts": "Start by getting\nsome rewards!",
+    "rewards": "Navigate through the different rewards and start accumulate sats"
+  },
   "GetStartedScreen": {
     "headline": "The Bank with Bitcoin Rewards",
     "getStarted": "Get Started"
