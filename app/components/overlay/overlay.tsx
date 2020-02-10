@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         flexDirection: "column",
         justifyContent: "space-around",
-        backgroundColor: "#00000080",
+        backgroundColor: "#000000B0",
     },
 })
 
@@ -59,7 +59,9 @@ export const Overlay = ({isModalVisible, setModalVisible, screen}) => {
                     }
                     { screen == "rewards" && 
                     <>
+                        <View style={{flex: 1}}></View>
                         <Text style={styles.modalText}>{translate('Overlay.rewards')}</Text> 
+                        <View style={{flex: 1}}></View>
                     </>
                     }
                 </SafeAreaView>

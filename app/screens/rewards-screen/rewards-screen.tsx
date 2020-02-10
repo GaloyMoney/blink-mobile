@@ -254,7 +254,7 @@ export const RewardsScreen = inject("dataStore")(
         },
         {
             id: 'lightningNetworkConnection',
-            action: () => navigate('sendBitcoin'), // TODO
+            action: () => Alert.alert('TODO'),
             enabled: dataStore.onboarding.has(Onboarding.phoneVerification),
             enabledMessage: 'Verify phone'
         },
