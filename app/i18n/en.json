@@ -34,7 +34,7 @@
   },
   "Overlay": {
     "accounts": "Start by getting\nsome rewards!",
-    "rewards": "Swipe through our rewards and start accumulate sats\n\nYou already gots 500 sats for downloading the app! 🎁"
+    "rewards": "You gots 500 sats for downloading the app! 🎁\n\nSwipe through our rewards to earn more sats"
   },
   "GetStartedScreen": {
     "headline": "The Bank with Bitcoin Rewards",
@@ -44,10 +44,6 @@
     "earn": "By using Galoy, you earn bitcoin.",
     "bank": "Galoy is a digital bank account",
     "wallet": "And a secure Bitcoin wallet too!"
-  },
-  "WelcomeFirstSats": {
-    "header": "You've earned some bitcoin for installing this app. +1,000 sats",
-    "text": "Continue to earn more rewards"
   },
   "WelcomePhoneInputScreen": {
     "header": "Enter your phone number to prove you’re a real person.",
@@ -60,13 +56,17 @@
   "RewardsScreen": {
     "title": "Rewards",
     "header": "Sats accumulated",
+    "bankingNeeded": "Banking is needed",
+    "channelNeeded": "Open channel first",
+    "phoneNumberNeeded": "Phone number requiered",
+    "": "",
     "walletDownloaded": {
       "title": "Download the app",
       "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
     },
     "backupWallet": {
       "title": "Backup wallet",
-      "text": "Now that you have some sats, you need to back up your wallet to iCloud so you never loose access to your bitcoin. \n\n Unlike traditional dollar, you own your bitcoin with keys store in your mobile phone, which is why taking care of saving your keys is critical"
+      "text": "Now that you have some sats, you need to back up your wallet to iCloud so you never lose access to your bitcoin. \n\n Unlike traditional dollar, you own your bitcoin with keys stored in your mobile phone, which is why taking care of saving your keys is essential"
     },
     "activateNotifications": {
       "title": "Activate notifications",
@@ -82,15 +82,15 @@
       "synced": "Sync complete",
       "fundingTx": "Funding tx: {{tx}}",
       "channelOpened": "Congrats! your channel is now opened",
-      "text": "In future version of the application, we'll abstract the concept of a channel, but for now you need to create your first channel on the lightning network"
+      "text": "In future version of the application, we'll abstract the concept of a channel, but for now you need to create your first channel on the Lightning network"
     },
     "phoneVerification": {
-      "title": "Phone Verification",
-      "text": "Let us know your phone before we send you your rewards"
+      "title": "Phone Number",
+      "text": "Let us know your phone number before we send you your rewards"
     },
     "lightningNetworkConnection": {
       "title": "Connect your wallet",
-      "text": "It's a little bit like the internet. You need connect first before you can talk to the rest of the world. With our technology, it means you need to open a channel on lightning :)"
+      "text": "It's a little bit like the internet. You need to connect first before you can talk to the rest of the world. With our technology, it means you need to open a channel on lightning :)"
     },
     "firstLightningPayment": {
       "title": "First payment ⚡ ⚡ ⚡ ",
@@ -98,7 +98,7 @@
     },
     "bankOnboarded": {
       "title": "Open your bank account",
-      "text": "Send us your personnal information and we'll provide you a full bank account"
+      "text": "Send us your detailed information and we'll provide you a full bank account"
     },
     "buyFirstSats": {
       "title": "Buy your first sats",

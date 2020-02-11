@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 40,
         marginBottom: 40,
         textAlign: 'center',
-    },
+    }
 })
 
 export const RewardsScreen = inject("dataStore")(
@@ -138,7 +138,7 @@ export const RewardsScreen = inject("dataStore")(
     const { navigate } = useNavigation()
 
     const [ isModalVisible, setModalVisible ] = useState(false)
-    const [ openReward, setOpenReward ] = useState(false)
+    const [ isRewardOpen, setRewardOpen ] = useState(false)
     const [ currReward, setCurrReward ] = useState("")
     const [ loading, setLoading ] = useState(false)
     const [ err, setErr ] = useState("")
@@ -146,11 +146,11 @@ export const RewardsScreen = inject("dataStore")(
 
     const open = (index) => {
         setCurrReward(rewards[index].id)
-        setOpenReward(!openReward)
+        setRewardOpen(!isRewardOpen)
     }
 
     const close = (msg = "") => {
-        setOpenReward(false)
+        setRewardOpen(false)
         setLoading(false)
         if (msg !== "") {
             Alert.alert(msg)
@@ -159,12 +159,12 @@ export const RewardsScreen = inject("dataStore")(
 
     React.useEffect(() => {
         Animated.timing(animation, {
-            toValue: openReward,
+            toValue: isRewardOpen,
             duration: 500,
             useNativeDriver: false,
         }).start()
 
-    }, [openReward])
+    }, [isRewardOpen])
 
     useEffect(() => {
         if (err !== "") {
@@ -256,19 +256,19 @@ export const RewardsScreen = inject("dataStore")(
             id: 'lightningNetworkConnection',
             action: () => Alert.alert('TODO'),
             enabled: dataStore.onboarding.has(Onboarding.phoneVerification),
-            enabledMessage: 'Verify phone'
+            enabledMessage: translate(`RewardsScreen.phoneNumberNeeded`)
         },
         {
             id: 'firstLightningPayment',
             action: () => navigate('sendBitcoin'),
             enabled: dataStore.lnd.statusFirstChannel == FirstChannelStatus.opened,
-            enabledMessage: 'Open channel first'
+            enabledMessage: translate(`RewardsScreen.channelNeeded`)
         },
         {
             id: "inviteAFriend",
             action: () => Alert.alert('TODO'),
             enabled: dataStore.lnd.statusFirstChannel == FirstChannelStatus.opened,
-            enabledMessage: 'Open channel first'
+            enabledMessage: translate(`RewardsScreen.channelNeeded`)
         },
         {
             id: 'bankOnboarded',
@@ -279,20 +279,20 @@ export const RewardsScreen = inject("dataStore")(
             id: "debitCardActivation",
             action: () => Alert.alert('TODO'),
             enabled: dataStore.onboarding.has(Onboarding["bankOnboarded"]),
-            enabledMessage: 'Banking is needed'
+            enabledMessage: translate(`RewardsScreen.bankingNeeded`)
         },
         {
             id: "firstCardSpending",
             action: () => Alert.alert('TODO'),
             enabled: dataStore.onboarding.has(Onboarding["bankOnboarded"]),
-            enabledMessage: 'Banking is needed'
+            enabledMessage: translate(`RewardsScreen.bankingNeeded`)
         },
         {
             id: "activateDirectDeposit",
             rewards: "1% card rewards!",
             action: () => Alert.alert('TODO'),
             enabled: dataStore.onboarding.has(Onboarding["bankOnboarded"]),
-            enabledMessage: 'Banking is needed'
+            enabledMessage: translate(`RewardsScreen.bankingNeeded`)
         },
     ]
     
@@ -341,7 +341,7 @@ export const RewardsScreen = inject("dataStore")(
                     </Animated.Text>
                     <Button 
                         onPress={ () => {
-                            openReward ?
+                            isRewardOpen ?
                                 actionWrapper(item.action, item.closingMsg) :
                                 open(index)
                         }} 
@@ -351,7 +351,7 @@ export const RewardsScreen = inject("dataStore")(
                         title={item.fullfilled ? 
                             'Rewards received' :
                             item.enabled ? 
-                                openReward ?
+                                isRewardOpen ?
                                     'Get Rewards Now!' :
                                     'Learn More' :
                                 item.enabledMessage
@@ -364,9 +364,7 @@ export const RewardsScreen = inject("dataStore")(
     }
 
     return (
-        <Screen style={{
-            justifyContent: 'flex-end', flex: 1,
-            }}>
+        <Screen>
             <Overlay 
                 isModalVisible={isModalVisible}
                 setModalVisible={setModalVisible}
@@ -397,7 +395,7 @@ export const RewardsScreen = inject("dataStore")(
                 <Animated.Text style={[
                     styles.titleSats,
                 ]}>
-                    {openReward ? 
+                    {isRewardOpen ? 
                         `${sats(currReward)}` :
                         I18n.toNumber(dataStore.balances({ 
                             currency: CurrencyType.BTC, 
@@ -405,7 +403,7 @@ export const RewardsScreen = inject("dataStore")(
                         }), {precision: 0})
                     }
                 </Animated.Text>
-                { openReward &&
+                { isRewardOpen &&
                     <Button 
                         title="Close" 
                         buttonStyle={styles.textButtonClose}
@@ -419,7 +417,7 @@ export const RewardsScreen = inject("dataStore")(
             data={rewards}
             renderItem={renderItem}
             sliderWidth={screenWidth}
-            //   sliderHeight={screenWidth}
+            scrollEnabled={!isRewardOpen}
             itemWidth={screenWidth - 60}
             hasParallaxImages={true}
             firstItem={firstItem}
