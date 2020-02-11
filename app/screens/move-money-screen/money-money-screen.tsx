@@ -9,6 +9,7 @@ import { useNavigation } from "react-navigation-hooks"
 import { palette } from "../../theme/palette"
 import { inject } from "mobx-react"
 import { Onboarding } from "types"
+import { translate } from "../../i18n"
 
 const styles = StyleSheet.create({
     headerSection: {
@@ -40,34 +41,28 @@ export const MoveMoneyScreen = inject("dataStore")(
 
     const bank = [
         {
-            title: 'Bank Transfer',
             icon: 'ios-exit',
             target: 'bankTransfer',
         },
         {
-            title: "Direct Deposit",
             icon: 'ios-download',
             target: 'directDeposit',
         },
         {
-            title: 'Find an ATM',
             icon: 'ios-pin',
             target: 'findATM',
         },
         {
-            title: "Deposit Cash",
             icon: 'ios-cash',
             target: 'depositCash',
         }
       ]
     const bitcoin = [
         {
-            title: 'Send Bitcoin',
             icon: 'ios-exit',
             target: 'sendBitcoin',
         },
         {
-            title: "Receive Bitcoin",
             icon: 'ios-download',
             target: 'receiveBitcoin',
         }
@@ -91,7 +86,7 @@ export const MoveMoneyScreen = inject("dataStore")(
                         titleStyle={styles.text}
                         style={styles.button}
                         key={i}
-                        title={item.title}
+                        title={translate(`MoneyMoneyScreen\.${item.target}`)}
                         leftIcon={<Icon name={item.icon} style={styles.icon} size={32} color={color.primary} />}
                         onPress={() => onBankClick(item)}
                         chevron
@@ -105,7 +100,7 @@ export const MoveMoneyScreen = inject("dataStore")(
                         titleStyle={styles.text}
                         style={styles.button}
                         key={i}
-                        title={item.title}
+                        title={translate(`MoneyMoneyScreen\.${item.target}`)}
                         leftIcon={<Icon name={item.icon} style={styles.icon} size={32} color={color.primary} />}
                         onPress={() => navigate(item.target)}
                         chevron
@@ -118,5 +113,5 @@ export const MoveMoneyScreen = inject("dataStore")(
 })
 
 MoveMoneyScreen.navigationOptions = () => ({
-    title: "Move Money"
+    title: translate("MoneyMoneyScreen.title")
 })

@@ -21,6 +21,7 @@ import { Overlay } from "../../components/overlay"
 
 
 const walletDownloadedImage = require("./GreenPhone.jpg")
+const satImage = require("./GreenPhone.jpg")
 const backupWalletImage = require("./SafeBank.jpg")
 const activateNotificationsImage = require("./GlobalCommunications.jpg")
 const rewardsVideoImage = require("./Asterix.jpeg")
@@ -198,6 +199,12 @@ export const RewardsScreen = inject("dataStore")(
             action: null,
         },
         {
+            id: 'sat',
+            action: () => dataStore.onboarding.add(Onboarding.sat),
+            closingMsg: "You earn 1 sat, the small unit of Bitcoin. Congrats!",
+            enabled: true,
+        },
+        {
             id: "backupWallet",
             action: async () => {
                 setLoading(true)
@@ -370,19 +377,14 @@ export const RewardsScreen = inject("dataStore")(
                 setModalVisible={setModalVisible}
                 screen="rewards"
             /> 
-            <Animated.View 
-                style={[styles.header]}
-                >
+            <Animated.View style={[styles.header]} >
                 <Animated.Image source={rewardsHeader} 
-                    style={[
-                        {
+                    style={[{
                             height: animation.interpolate({
                                 inputRange: [0, 1],
                                 outputRange: [120, 0],
                             }),
-                        }
-                    ]
-                    } />
+                        }]} />
                 <Animated.Text style={[styles.title,
                     {
                         fontSize: animation.interpolate({

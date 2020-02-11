@@ -14,6 +14,7 @@ import { BankAccountRewardsScreen, PersonalInformationScreen, OpenBankScreen, Da
 import { Badge } from 'react-native-elements'
 import { inject, observer } from "mobx-react"
 import { Animated } from "react-native"
+import { translate } from "../i18n"
 
 
 export const BankAccountOnboardingNavigator = createStackNavigator({
@@ -124,6 +125,7 @@ export const PrimaryNavigator =
         tabBarIcon: ({ focused, tintColor }) => {
           return <Icon name={"ios-wallet"} size={size} color={tintColor} />
         },
+        title: translate("AccountsScreen.title")
       },
     },
     MoveMoney: {
@@ -132,6 +134,7 @@ export const PrimaryNavigator =
         tabBarIcon: ({ focused, tintColor }) => {
           return <Icon name={"ios-swap"} size={size} color={tintColor} />
         },
+        title: translate("MoneyMoneyScreen.title")
       },
     },
     Rewards: {
@@ -140,6 +143,7 @@ export const PrimaryNavigator =
         tabBarIcon: ({ focused, tintColor }) => {
          return <InteractiveBadge focused={focused} tintColor={tintColor} />
         },
+        title: translate("RewardsScreen.title")
       },
     },
   },

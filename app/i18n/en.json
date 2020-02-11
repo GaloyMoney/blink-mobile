@@ -34,7 +34,7 @@
   },
   "Overlay": {
     "accounts": "Start by getting\nsome rewards!",
-    "rewards": "You gots 500 sats for downloading the app! 🎁\n\nSwipe through our rewards to earn more sats"
+    "rewards": "You got 500 sats for downloading the app! 🎁\n\nSwipe through our rewards to earn more sats"
   },
   "GetStartedScreen": {
     "headline": "The Bank with Bitcoin Rewards",
@@ -54,15 +54,18 @@
     "placeholder": "6 Digits Code"
   },
   "RewardsScreen": {
-    "title": "Rewards",
+    "title": "Earn",
     "header": "Sats accumulated",
     "bankingNeeded": "Banking is needed",
     "channelNeeded": "Open channel first",
-    "phoneNumberNeeded": "Phone number requiered",
-    "": "",
+    "phoneNumberNeeded": "Phone number required",
     "walletDownloaded": {
       "title": "Download the app",
       "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+    },
+    "sat": {
+      "title": "What is a sat?",
+      "text": "Sat is a small portion of a Bitcoin. The same way a dollar can be divided in 100 cts, a bitcoin can be divided in 100,000,000 sats!\n\nWhy is that important? As we'll learn down the road, divisbility is an important part of money. But for now, let's just remember that sats are a small part of a bitcoin :)"
     },
     "backupWallet": {
       "title": "Backup wallet",
@@ -156,5 +159,14 @@
   },
   "DateOfBirthScreen": {
     "title": "Date of Birth"
+  }, 
+  "MoneyMoneyScreen": {
+    "title": "Move Money",
+    "bankTransfer": "Bank Transfer",
+    "directDeposit": "Direct Deposit",
+    "findATM": "Find an ATM",
+    "depositCash": "Deposit Cash",
+    "sendBitcoin": "Send Bitcoin",
+    "receiveBitcoin": "Receive Bitcoin",
   }
 }
