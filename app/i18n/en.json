@@ -16,23 +16,6 @@
     "invalidEmail": "Invalid email address.",
     "invalidPhoneNumber": "is not a valid phone number"
   },
-  "rewards": {
-    "walletDownloaded": "Wallet Downloaded",
-    "sat": "What is a Satoshi?",
-    "backupWallet": "Backup Wallet",
-    "activateNotifications": "Activate Notifications",
-    "rewardsVideo": "Rewards Video",
-    "phoneVerification": "Phone Verification",
-    "lightningNetworkConnection": "Connect your wallet",
-    "firstLightningPayment": "First Payment",
-    "inviteAFriend": "Invite a friend",
-    "bankOnboarded": "Bank Onboarded",
-    "buyFirstSats": "Your first Buy BTC",
-    "debitCardActivation": "Activate debit card",
-    "firstCardSpending": "First purchase",
-    "firstSurvey": "Survey",
-    "activateDirectDeposit": "Direct deposit",
-  },
   "Overlay": {
     "accounts": "Start by getting\nsome rewards!",
     "rewards": "You got 500 sats for downloading the app! 🎁\n\nSwipe through our rewards to earn more sats"
