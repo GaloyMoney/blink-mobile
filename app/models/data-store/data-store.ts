@@ -498,9 +498,9 @@ export const LndModel = BaseAccountModel.named("Lnd")
     updatePendingChannels: flow(function*() {
       try {
         const result = yield getEnv(self).lnd.grpc.sendCommand("pendingChannels")
-        console.tron.log('pendingChannels', result)
+        console.tron.log('pendingChannels raw:', result)
         const pendingChannels = result.pendingOpenChannels?.map(input => ({...input.channel}))
-        console.tron.log("pendingChannels:", pendingChannels)
+        console.tron.log("pendingChannels parsed:", pendingChannels)
         self.pendingChannels = pendingChannels
       } catch (err) {
         console.tron.error(err)
@@ -613,38 +613,38 @@ export const LndModel = BaseAccountModel.named("Lnd")
       if (response.syncedToChain) {
         console.tron.log("Syncing complete")
 
-        try {
-          yield self.openFirstChannelAndAskRewards()
-        } catch (err) {
-          console.tron.error(err.toString())
+        // TODO verify if undefined, show not be === to false?
+        if (auth().currentUser?.isAnonymous === false) { 
+          try {
+            yield self.updatePendingChannels()
+      
+            if (self.statusFirstChannel === FirstChannelStatus.noChannel) {
+              console.tron.warn('opening a channel, uncommon scenario (not in sync while doing phone verification)')
+              yield self.openFirstChannel()
+            } else {
+              yield functions().httpsCallable("requestRewards")({}) // TODO: move on channel active instead on the server side?  
+            }
+          } catch (err) {
+            console.tron.error(err.toString())
+          }
         }
+        
       }
 
       self.percentSynced = calcPercentSynced(response)
       return response.syncedToChain
     }),
 
-    openFirstChannelAndAskRewards: flow(function*() {
-      if (auth().currentUser?.isAnonymous) {
-        return
-      }
-      
-      yield self.updatePendingChannels()
-
-      if (self.statusFirstChannel === FirstChannelStatus.noChannel) {
-        try {
-          yield self.sendPubKey()
-          yield sleep(3000) // FIXME do I need this?  (error might be because already connected to peer)
-          yield self.connectGaloyPeer()
-          yield sleep(3000) // FIXME
-          yield self.openChannel()
-          yield sleep(100) // FIXME
-          yield self.updatePendingChannels()
-        } catch (err) {
-          console.tron.error(err)
-        }
-      } else {
-        yield functions().httpsCallable("requestRewards")({}) // TODO: move on channel active instead on the server side?  
+    openFirstChannel: flow(function*() {
+      try {
+        yield self.sendPubKey()
+        yield self.connectGaloyPeer()
+        yield self.openChannel()
+        yield self.updatePendingChannels()
+        return true
+      } catch (err) {
+        console.tron.error('open First Channel issue: ', err.toString())
+        return err
       }
     }),
 

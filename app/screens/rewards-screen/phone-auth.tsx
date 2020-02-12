@@ -184,14 +184,17 @@ export const WelcomePhoneInputScreen = withNavigation(({ navigation }) => {
       console.log(`onAuthStateChanged`, user)
   
       if (user.phoneNumber) {
-        setLoading(true)
-
         // FIXME duplicate with user.Phonenumber
         await dataStore.onboarding.add(Onboarding.phoneVerification) 
-        await dataStore.lnd.openFirstChannelAndAskRewards()
+        const result = await dataStore.lnd.openFirstChannel()
 
-        setLoading(false)
-        popToTop()
+        if (result === true) {
+          setLoading(false)
+          popToTop()
+        } else {
+          setErr(result.toString())
+        }
+
       }
     }
   
@@ -212,8 +215,6 @@ export const WelcomePhoneInputScreen = withNavigation(({ navigation }) => {
       } catch (err) {
         console.tron.error(err) // Invalid code
         setErr(err.toString())
-      } finally {
-        setLoading(false)
       }
     }
   
