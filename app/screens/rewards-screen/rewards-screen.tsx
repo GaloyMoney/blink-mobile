@@ -22,6 +22,7 @@ import { Overlay } from "../../components/overlay"
 
 const walletDownloadedImage = require("./GreenPhone.jpg")
 const satImage = require("./GreenPhone.jpg")
+const custodyImage = require("./GreenPhone.jpg")
 const backupWalletImage = require("./SafeBank.jpg")
 const activateNotificationsImage = require("./GlobalCommunications.jpg")
 const rewardsVideoImage = require("./Asterix.jpeg")
@@ -202,6 +203,12 @@ export const RewardsScreen = inject("dataStore")(
             id: 'sat',
             action: () => dataStore.onboarding.add(Onboarding.sat),
             closingMsg: "You earn 1 sat, the small unit of Bitcoin. Congrats!",
+            enabled: true,
+        },
+        {
+            id: 'custody',
+            action: () => dataStore.onboarding.add(Onboarding.custody),
+            closingMsg: "You've learn one of the important property of Bitcoin, it can be self custodied!",
             enabled: true,
         },
         {

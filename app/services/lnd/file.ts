@@ -48,7 +48,7 @@ class FileAction {
     //     type: 'text/plain',
     //   });
     } catch (err) {
-      log.error('Exporting logs failed', err);
+      console.tron.error('Exporting logs failed', err);
     }
   }
 
@@ -61,12 +61,15 @@ class FileAction {
    * (including channel state) from the seed if they've forgotten the pin.
    * @return {Promise<undefined>}
    */
-  async deleteWalletDB() {
-    const path = `${this.lndDir}/data/chain/bitcoin/${this.dataStore.lnd.network}/wallet.db`;
-    try {
-      await RNFS.unlink(path);
-    } catch (err) {
-      log.info(`No ${this.dataStore.lnd.network} wallet to delete.`);
+  async deleteWalletDBAndChannelBackup() {
+    const prefix = `${this.lndDir}/data/chain/bitcoin/${this.dataStore.lnd.network}/`;
+    const files = [`wallet.db`, `channel.backup`]
+    for (const file of files) {
+      try {
+        await RNFS.unlink(prefix + file);
+      } catch (err) {
+        console.tron.error(`issue deleting ${file}`);
+      }
     }
   }
 
@@ -79,12 +82,12 @@ class FileAction {
     const files = ['tls.cert', 'tls.key', 'logs', 'data']
 
     for (const file of files) {
-        try {
-            console.log(`deleting ${this.lndDir}/${file}`)
-            await RNFS.unlink(`${this.lndDir}/${file}`);
-        } catch (err) {
-            log.info(`No ${this.dataStore.lnd.network} wallet to delete.`);
-        }
+      try {
+          console.log(`deleting ${this.lndDir}/${file}`)
+          await RNFS.unlink(`${this.lndDir}/${file}`);
+      } catch (err) {
+        console.tron.error(`issue deleting ${file}`);
+      }
     }}
 
   //
