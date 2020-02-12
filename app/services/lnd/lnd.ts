@@ -128,6 +128,7 @@ export class Lnd {
     console.tron.log('open Wallet', this.lndStore)
     await this.lndStore.initState()
 
+    console.tron.log('walletExist: ', this.lndStore?.walletExist)
     if (this.lndStore?.walletExist) {
       await this.lndStore.unlockWallet()
     } else {

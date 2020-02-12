@@ -18,6 +18,7 @@
   },
   "rewards": {
     "walletDownloaded": "Wallet Downloaded",
+    "sat": "What is a Satoshi?",
     "backupWallet": "Backup Wallet",
     "activateNotifications": "Activate Notifications",
     "rewardsVideo": "Rewards Video",
@@ -66,6 +67,10 @@
     "sat": {
       "title": "What is a sat?",
       "text": "Sat is a small portion of a Bitcoin. The same way a dollar can be divided in 100 cts, a bitcoin can be divided in 100,000,000 sats!\n\nWhy is that important? As we'll learn down the road, divisbility is an important part of money. But for now, let's just remember that sats are a small part of a bitcoin :)"
+    },
+    "custody": {
+      "title": "what is custody?",
+      "text": "Literally, custody means `the protective care or guardianship of someone or something`.\n\nOk, that’s a boring definition, what does it mean for bitcoin or banking?\n\nWhen you give your money at your bank, they are taking custody. It basically means they are taking care of it.\n\nWith bitcoin, you can also give custody to someone else, like you would do for your bank, but you can also take self custody of your assets!\n\nIn that sense, this would be a little bit like cash. The money is in your wallet, if you lose it you’re out of luck.\n\nGaloy is what we call a “non custodial” wallet. It means money is in your pocket, right on your phone!"
     },
     "backupWallet": {
       "title": "Backup wallet",

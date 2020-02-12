@@ -233,7 +233,13 @@ export const DebugScreen = inject("dataStore")(observer(
           <Button
             style={DEMO}
             textStyle={DEMO_TEXT}
-            text="Delete lnd data"
+            text="Delete lnd wallet"
+            onPress={() => fileAction.deleteWalletDBAndChannelBackup()}
+          />
+          <Button
+            style={DEMO}
+            textStyle={DEMO_TEXT}
+            text="Delete all lnd data"
             onPress={() => fileAction.deleteAllLndData()}
           />
           <Button
