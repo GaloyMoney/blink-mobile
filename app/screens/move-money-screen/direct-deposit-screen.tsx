@@ -4,6 +4,7 @@ import { Screen } from "../../components/screen"
 import { Button } from 'react-native-elements';
 import { color } from "../../theme";
 import { palette } from "../../theme/palette"
+import { translate } from "../../i18n";
 
 
 const styles = StyleSheet.create({
@@ -76,5 +77,5 @@ export const DirectDepositScreen: React.FC = () => {
 }
 
 DirectDepositScreen.navigationOptions = () => ({
-    title: "Direct Deposit"
+    title: translate("DirectDepositScreen.title")
 })
