@@ -175,6 +175,13 @@
     "title": "Deposit Cash"
   },
   "DirectDepositScreen": {
-    "title": "Direct Deposit"
+    "title": "Direct Deposit",
+    "setup": "Set up direct deposit",
+    "generate": "Generate a direct deposit form for your employer or payroll provider.",
+    "bank": "Galoy Checking",
+    "routing": "Routing",
+    "account": "Account",
+    "bankName": "Partner Bank & Trust",
+    "action": "Move My Paycheck!"
   }
 }
