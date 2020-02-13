@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
         bottom: -18,
     },
 
-    textButtonDisabled: {
+    buttonStyleDisabled: {
         backgroundColor: palette.offWhite,
         marginHorizontal: 60,
         borderRadius: 24,
@@ -122,6 +122,10 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: palette.darkGrey,
         textAlign: "center",
+    },
+
+    titleStyleDisabled: {
+        color: palette.lightGrey,
     },
 
     itemTitle: {
@@ -198,6 +202,7 @@ export const RewardsScreen = inject("dataStore")(
         {
             id: "walletDownloaded",
             action: null,
+            enabled: true,
         },
         {
             id: 'sat',
@@ -351,19 +356,24 @@ export const RewardsScreen = inject("dataStore")(
                     <Button 
                         onPress={ () => {
                             isRewardOpen ?
-                                actionWrapper(item.action, item.closingMsg) :
+                                item.fullfilled ?
+                                    close() :
+                                    actionWrapper(item.action, item.closingMsg) :
                                 open(index)
                         }} 
-                        disabled={(isRewardOpen && item.fullfilled) || !item.enabled}
-                        buttonStyle={item.fullfilled ? styles.textButtonDisabled : styles.textButton}
+                        disabled={!item.enabled}
+                        buttonStyle={item.fullfilled ? styles.buttonStyleDisabled : styles.textButton}
+                        titleStyle={item.fullfilled ? styles.titleStyleDisabled : null}
                         // containerStyle={styles.}
-                        title={item.fullfilled ? 
-                            'Reward earned' :
-                            item.enabled ? 
-                                isRewardOpen ?
-                                    'Get Rewards Now!' :
-                                    'Learn More' :
-                                item.enabledMessage
+                        title={ isRewardOpen ?
+                                    item.fullfilled ?
+                                        "Close" :
+                                        'Get Rewards Now!' :
+                                    item.enabled ?
+                                        item.fullfilled ?
+                                            'Reward earned' :
+                                            'Learn More' :
+                                        item.enabledMessage
                             }
                         loading={loading}
                         />

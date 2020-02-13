@@ -176,7 +176,7 @@ export const WelcomePhoneInputScreen = withNavigation(({ navigation }) => {
     const [err, setErr] = useState("")
   
     const confirmation = useNavigationParam("confirmation")
-    const { popToTop } = useNavigation()
+    const { goBack } = useNavigation()
   
     const onAuthStateChanged = async user => {
       // TODO : User type
@@ -186,15 +186,22 @@ export const WelcomePhoneInputScreen = withNavigation(({ navigation }) => {
       if (user.phoneNumber) {
         // FIXME duplicate with user.Phonenumber
         await dataStore.onboarding.add(Onboarding.phoneVerification) 
-        const result = await dataStore.lnd.openFirstChannel()
+
+        let result
+
+        if (dataStore.lnd.syncedToChain) {
+          result = await dataStore.lnd.openFirstChannel()
+        } else {
+          // just go back, we'll open the channel once sync is done
+          result = true
+        }
 
         if (result === true) {
           setLoading(false)
-          popToTop()
+          goBack('rewards')
         } else {
           setErr(result.toString())
         }
-
       }
     }
   
