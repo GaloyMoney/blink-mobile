@@ -113,7 +113,8 @@ export const AccountsScreen = inject("dataStore")(observer(
       account: AccountType.Bank,
       icon: "ios-cash" },
     { key: "Bitcoin", 
-      account: dataStore.lnd.statusFirstChannel == FirstChannelStatus.opened ? AccountType.Bitcoin : AccountType.VirtualBitcoin,
+      account: dataStore.lnd.statusFirstChannel === FirstChannelStatus.opened ? 
+        AccountType.Bitcoin : AccountType.VirtualBitcoin,
       icon: "logo-bitcoin" },
   ]
 

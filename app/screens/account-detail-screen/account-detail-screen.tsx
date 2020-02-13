@@ -4,7 +4,7 @@ import { observer, inject } from "mobx-react"
 
 import { View, SectionList, StyleSheet, RefreshControl, TouchableWithoutFeedback, Alert, Animated, ActivityIndicator, Linking } from "react-native"
 
-import Modal from "react-native-modal";
+import Modal from "react-native-modal"
 
 import { Text } from "../../components/text"
 import { Screen } from "../../components/screen"
@@ -18,7 +18,7 @@ import { CurrencyText } from "../../components/currency-text"
 import { TouchableHighlight, TextInput } from "react-native-gesture-handler"
 import { AccountType, CurrencyType, FirstChannelStatus } from "../../utils/enum"
 import { useNavigation, useNavigationParam } from "react-navigation-hooks"
-import { Button, ListItem } from "react-native-elements"
+import { Button } from "react-native-elements"
 import { palette } from "../../theme/palette"
 import { Side, Onboarding } from "types"
 import { translate } from "../../i18n"
@@ -189,7 +189,7 @@ const VisualExpiration = ({validUntil}) => {
   );
 }
 
-const BitcoinHeader = ({currency, account, dataStore, refresh}) => {
+const HeaderWithBuySell = ({currency, account, dataStore, refresh}) => {
 
   const [side, setSide] = useState<Side>("buy");
 
@@ -252,9 +252,9 @@ const BitcoinHeader = ({currency, account, dataStore, refresh}) => {
   }
 
   const [message, setMessage] = useState("")
-  const [modalVisible, setModalVisible] = useState(false);
-  // workaround of https://github.com/facebook/react-native/issues/10471
+  const [modalVisible, setModalVisible] = useState(false)
 
+  // workaround of https://github.com/facebook/react-native/issues/10471
   useEffect(() => {
     if (message !== "") {
       setMessage("")
@@ -334,10 +334,10 @@ const BitcoinHeader = ({currency, account, dataStore, refresh}) => {
     </Modal>
     <BalanceHeader headingCurrency={currency} accountsToAdd={account} />
     <View style={styles.horizontal}>
-      <Button title="Buy" 
+      <Button title="Buy"
         buttonStyle={styles.button}
         containerStyle={styles.buttonContainer}
-        onPress={onBuyInit}  
+        onPress={onBuyInit}
         />
       <Button title="Sell"
         buttonStyle={styles.button}
@@ -452,7 +452,7 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
     return (
       <Screen>
         { account == AccountType.Bitcoin && 
-          <BitcoinHeader currency={currency} account={account}
+          <HeaderWithBuySell currency={currency} account={account}
             dataStore={dataStore} refresh={refresh} />
         }
         { account != AccountType.Bitcoin && 

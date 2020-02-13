@@ -134,7 +134,7 @@ export const PrimaryNavigator =
         tabBarIcon: ({ focused, tintColor }) => {
           return <Icon name={"ios-swap"} size={size} color={tintColor} />
         },
-        title: translate("MoneyMoneyScreen.title")
+        title: translate("MoveMoneyScreen.title")
       },
     },
     Rewards: {
