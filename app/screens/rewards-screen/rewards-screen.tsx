@@ -105,6 +105,13 @@ const styles = StyleSheet.create({
         bottom: -18,
     },
 
+    textButtonDisabled: {
+        backgroundColor: palette.offWhite,
+        marginHorizontal: 60,
+        borderRadius: 24,
+        bottom: -18,
+    },
+
     textButtonClose: {
         backgroundColor: palette.darkGrey,
         paddingHorizontal: 60,
@@ -201,7 +208,7 @@ export const RewardsScreen = inject("dataStore")(
         {
             id: 'custody',
             action: () => dataStore.onboarding.add(Onboarding.custody),
-            closingMsg: "You've learn one of the important property of Bitcoin, it can be self custodied!",
+            closingMsg: "You've learnt one of the important property of Bitcoin, it can be self custodied!",
             enabled: true,
         },
         {
@@ -261,7 +268,7 @@ export const RewardsScreen = inject("dataStore")(
         },
         {
             id: 'firstLightningPayment',
-            action: () => navigate('sendBitcoin'),
+            action: () => navigate('scanningQRCode'),
             enabled: dataStore.lnd.statusFirstChannel == FirstChannelStatus.opened,
             enabledMessage: translate(`RewardsScreen.channelNeeded`)
         },
@@ -347,11 +354,11 @@ export const RewardsScreen = inject("dataStore")(
                                 actionWrapper(item.action, item.closingMsg) :
                                 open(index)
                         }} 
-                        disabled={item.fullfilled || !item.enabled}
-                        buttonStyle={styles.textButton}
+                        disabled={(isRewardOpen && item.fullfilled) || !item.enabled}
+                        buttonStyle={item.fullfilled ? styles.textButtonDisabled : styles.textButton}
                         // containerStyle={styles.}
                         title={item.fullfilled ? 
-                            'Rewards received' :
+                            'Reward earned' :
                             item.enabled ? 
                                 isRewardOpen ?
                                     'Get Rewards Now!' :

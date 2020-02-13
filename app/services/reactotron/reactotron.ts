@@ -5,6 +5,9 @@ import { onSnapshot } from "mobx-state-tree"
 import { ReactotronConfig, DEFAULT_REACTOTRON_CONFIG } from "./reactotron-config"
 import { mst } from "reactotron-mst"
 import { clear } from "../../utils/storage"
+import { NativeModules } from "react-native"
+import DeviceInfo from "react-native-device-info"
+
 
 // Teach TypeScript about the bad things we want to do.
 declare global {
@@ -63,9 +66,20 @@ export class Reactotron {
    * @param config the configuration
    */
   constructor(config: ReactotronConfig = DEFAULT_REACTOTRON_CONFIG) {
+    
+    // DeviceInfo.isEmulator().then(isEmulator => {
+    //   if (isEmulator) {
+    //     functions().useFunctionsEmulator("http://localhost:5000")
+    // }})
+
+    // const scriptURL = NativeModules.SourceCode.scriptURL;
+    // const scriptHostname = scriptURL.split('://')[1].split(':')[0];
+    // console.log(scriptHostname)
+
     // merge the passed in config with some defaults
     this.config = {
       host: "localhost",
+      // host: scriptHostname,
       useAsyncStorage: true,
       ...config,
       state: {
