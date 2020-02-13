@@ -195,7 +195,7 @@ export const RewardsScreen = inject("dataStore")(
         {
             id: 'sat',
             action: () => dataStore.onboarding.add(Onboarding.sat),
-            closingMsg: "You earn 1 sat, the small unit of Bitcoin. Congrats!",
+            closingMsg: "You earn 1 sat, the smallest unit of Bitcoin. Congrats!",
             enabled: true,
         },
         {
@@ -258,12 +258,6 @@ export const RewardsScreen = inject("dataStore")(
             id: 'phoneVerification',
             action: () => navigate('welcomePhoneInput'),
             enabled: true,
-        },
-        {
-            id: 'lightningNetworkConnection',
-            action: () => Alert.alert('TODO'),
-            enabled: dataStore.onboarding.has(Onboarding.phoneVerification),
-            enabledMessage: translate(`RewardsScreen.phoneNumberNeeded`)
         },
         {
             id: 'firstLightningPayment',
