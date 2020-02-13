@@ -60,15 +60,15 @@ export const DirectDepositScreen: React.FC = () => {
         <Screen>
             <ScrollView>
                 <View style={styles.screenMargin}>
-                    <Text style={styles.title}>Set up direct deposit</Text>
-                    <Text style={styles.text}>Generate a direct deposit form for your employer or payroll provider.</Text>
-                    <Text style={styles.subtitle}>Galoy Checking</Text>
-                    <Row type="Routing" value="137284391" />
-                    <Row type="Account" value="3849120438" />
-                    <Row type="Bank name" value="Partner Bank & Trust" />
+                    <Text style={styles.title}>{translate("DirectDepositScreen.setup")}</Text>
+                    <Text style={styles.text}>{translate("DirectDepositScreen.generate")}</Text>
+                    <Text style={styles.subtitle}>{translate("DirectDepositScreen.bank")}</Text>
+                    <Row type={translate("DirectDepositScreen.routing")} value="137284391" />
+                    <Row type={translate("DirectDepositScreen.account")} value="3849120438" />
+                    <Row type={translate("DirectDepositScreen.bankName")} value="Partner Bank & Trust" />
                     <Button 
                         buttonStyle={styles.buttonStyle}
-                        title="Move My Paycheck!" onPress={() => Alert.alert("We're still implementing direct deposit")}
+                        title={translate("DirectDepositScreen.action")} onPress={() => Alert.alert("We're still implementing direct deposit")}
                         />
                 </View>
             </ScrollView>
