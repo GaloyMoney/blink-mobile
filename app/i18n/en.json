@@ -15,6 +15,7 @@
     "SSL": "Your information is encrypted and securely transmit using SSL",
   },
   "errors": {
+    "generic": "There was an error. Please try again later",
     "invalidEmail": "Invalid email address.",
     "invalidPhoneNumber": "is not a valid phone number"
   },
@@ -157,7 +158,8 @@
     "title": "Send Bitcoin",
     "amount": "Amount",
     "note": "Note",
-    "payFromUSD": "Pay from USD"
+    "payFromUSD": "Pay from USD",
+    "cost": "Cost",
   },
   "ScanningQRCodeScreen": {
     "title": "Send Bitcoin"

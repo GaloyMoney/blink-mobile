@@ -1,20 +1,19 @@
 import * as React from "react"
 import { useState, useEffect }from "react"
 import { inject, observer } from "mobx-react"
-import { Text, View, ViewStyle, Alert, Clipboard, StyleSheet } from "react-native"
+import { Text, View, ViewStyle, Alert, Clipboard, StyleSheet, ActivityIndicator } from "react-native"
 import { Screen } from "../../components/screen"
 import { Input, Button } from 'react-native-elements';
 import Icon from "react-native-vector-icons/Ionicons"
 import { color } from "../../theme";
 import { RNCamera } from "react-native-camera";
-import { withNavigation, ScrollView } from "react-navigation";
+import { ScrollView } from "react-navigation";
 import { useNavigation, useNavigationParam } from "react-navigation-hooks";
 import { palette } from "../../theme/palette"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import { Onboarding } from "types"
 import { Switch } from "react-native-gesture-handler"
 import { translate } from "../../i18n"
-import { NavigationEvents } from "../../navigation/navigation-events"
 
 
 const CAMERA: ViewStyle = {
@@ -187,6 +186,16 @@ export const SendBitcoinScreen: React.FC
 
     type payInvoiceResult = boolean | Error
 
+    const onUseUSDChange = async (input) => {
+        setUseUSD(input)
+
+        if (input) {
+            await dataStore.exchange.quoteLNDBTC({side: "buy", satAmount: amount})
+        } else {
+            dataStore.exchange.quote.reset()
+        }
+    }
+
     const payInvoice = async () => {
         const payreq = { paymentRequest: invoice }
 
@@ -209,6 +218,16 @@ export const SendBitcoinScreen: React.FC
 
         setLoading(true)
         try {
+
+            if (useUSD) {
+                const success = await dataStore.exchange["buyLNDBTC"]()
+
+                if (!success) {
+                    setErr(translate('errors.generic'))
+                    return
+                }
+            }
+
             const result:payInvoiceResult = await dataStore.lnd.payInvoice(payreq)
 
             console.tron.log(result)
@@ -231,7 +250,7 @@ export const SendBitcoinScreen: React.FC
           const options = {
             enableVibrateFallback: true,
             ignoreAndroidSystemSettings: false
-          };
+          }
 
           const haptic_feedback = err !== "" ? "notificationError" : "notificationSuccess"
           ReactNativeHapticFeedback.trigger(haptic_feedback, options)
@@ -281,14 +300,28 @@ export const SendBitcoinScreen: React.FC
                     <Text style={styles.smallText}>{translate('SendBitcoinScreen.note')}</Text>
                     <Text style={styles.note}>{note}</Text>
                 </View>
-                <View style={[styles.horizontalContainer, {marginVertical: 8}]}>
+                <View style={[styles.horizontalContainer, {marginTop: 8}]}>
                     <Text style={[styles.smallText, {paddingTop: 5}]}>{translate('SendBitcoinScreen.payFromUSD')}</Text>
                     <View style={{flex: 1}} />
                     <Switch 
                         value={useUSD}
-                        onValueChange={input => setUseUSD(input)}
+                        onValueChange={input => onUseUSDChange(input)}
                     />
                 </View>
+                { useUSD &&
+                <View style={[styles.horizontalContainer, {marginTop: 8}]}>
+                    <Text style={[styles.smallText]}>{translate('SendBitcoinScreen.cost')}</Text>
+                    <View style={{flex: 1}} />
+                    {
+                    isNaN(dataStore.exchange.quote.satPrice) &&
+                        <ActivityIndicator />
+                        ||
+                        <Text style={[styles.smallText]}>
+                            ${(dataStore.exchange.quote.satPrice * dataStore.exchange.quote.satAmount).toFixed(3)}
+                        </Text>
+                    }
+                </View>
+                }
                 <Button 
                     buttonStyle={styles.buttonStyle}
                     title="Send" onPress={payInvoice}
