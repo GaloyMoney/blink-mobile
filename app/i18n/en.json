@@ -58,7 +58,7 @@
     },
     "custody": {
       "title": "what is custody?",
-      "text": "Literally, custody means `the protective care or guardianship of someone or something`.\n\nOk, that’s a boring definition, what does it mean for bitcoin or banking?\n\nWhen you give your money at your bank, they are taking custody. It basically means they are taking care of it.\n\nWith bitcoin, you can also give custody to someone else, like you would do for your bank, but you can also take self custody of your assets!\n\nIn that sense, this would be a little bit like cash. The money is in your wallet, if you lose it you’re out of luck.\n\nGaloy is what we call a “non custodial” wallet. It means money is in your pocket, right on your phone!"
+      "text": "Literally, custody means \"the protective care or guardianship of someone or something\".\n\nOk, that’s a boring definition, what does it mean for bitcoin or banking?\n\nWhen you give your money at your bank, they are taking custody. It basically means they are taking care of it.\n\nWith bitcoin, you can also give custody to someone else, like you would do for your bank, but you can also take self custody of your assets!\n\nIn that sense, this would be a little bit like cash. The money is in your wallet, if you lose it you’re out of luck.\n\nGaloy is what we call a “non custodial” wallet. It means money is in your pocket, right on your phone!"
     },
     "backupWallet": {
       "title": "Backup wallet",
@@ -97,7 +97,7 @@
       "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
     },
     "debitCardActivation": {
-      "title": "Active your debit card",
+      "title": "Activate your debit card",
       "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
     },
     "firstCardSpending": {

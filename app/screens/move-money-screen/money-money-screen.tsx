@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     viewModal: {
         justifyContent: 'flex-end',
         padding: 20,
-        height: 150,
+        height: 180,
         backgroundColor: palette.white,
         alignItems: "center",
     },
@@ -146,7 +146,7 @@ export const MoveMoneyScreen = inject("dataStore")(
                 }
                 { accountType == AccountType.Bitcoin &&
                 <>
-                    <Text style={styles.text}>You have to continue the rewards and open your wallet</Text>
+                    <Text style={styles.text}>You have to get more rewards and open your wallet</Text>
                     <Button title="Open Wallet" onPress={() => navigate('rewards')}
                         buttonStyle={styles.button}
                         containerStyle={[styles.buttonContainer, {width: "100%"}]}
