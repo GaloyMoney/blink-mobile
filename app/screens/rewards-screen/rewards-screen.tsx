@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     },
 
     header: {
-        marginVertical: 20,
+        marginVertical: 10,
         alignItems: "center"
     },
 
@@ -342,6 +342,7 @@ export const RewardsScreen = inject("dataStore")(
                         }]}>
                         { item.component ||
                             <Animated.Text 
+                                persistentScrollbar={true}
                                 style={[ styles.text, ]}>
                                 { translate(`RewardsScreen\.${item.id}.text`) }
                             </Animated.Text>
@@ -399,7 +400,7 @@ export const RewardsScreen = inject("dataStore")(
                             outputRange: [28, 0.1],
                         }),
                     }]}>
-                    {translate('RewardsScreen.header')}
+                    {translate('RewardsScreen.satAccumulated')}
                 </Animated.Text>
                 <Animated.Text style={[
                     styles.titleSats,
@@ -408,7 +409,7 @@ export const RewardsScreen = inject("dataStore")(
                         `${sats(currReward)}` :
                         I18n.toNumber(dataStore.balances({ 
                             currency: CurrencyType.BTC, 
-                            account: AccountType.BitcoinRealOrVirtual
+                            account: AccountType.VirtualBitcoin
                         }), {precision: 0})
                     }
                 </Animated.Text>
