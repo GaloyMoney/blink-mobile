@@ -104,7 +104,6 @@ export const AccountsScreen = inject("dataStore")(observer(
   ({ dataStore }) => {
 
   const [ initialLoading, setInitialLoading] = useState(true)
-  const [ isModalVisible, setModalVisible ] = useState(false)
   const [ refreshing, setRefreshing] = useState(false)
   const { navigate } = useNavigation()
 
@@ -133,21 +132,14 @@ export const AccountsScreen = inject("dataStore")(observer(
 
   useEffect(() => {
     onRefresh()
-
-    if (dataStore.onboarding.stage.length === 1) {
-      setModalVisible(true)
-    }  
   }, [])
-
-  console.tron.log(`isModalVisible: ${isModalVisible}`)
 
   return (
     <Screen>
-      <Overlay 
-        isModalVisible={isModalVisible}
-        setModalVisible={setModalVisible}
-        screen="accounts"
-      /> 
+      {
+        (dataStore.onboarding.stage.length === 1) &&
+        <Overlay screen="accounts" />
+      }
       <BalanceHeader headingCurrency={CurrencyType.USD}
           accountsToAdd={   
               dataStore.lnd.statusFirstChannel == FirstChannelStatus.opened ?

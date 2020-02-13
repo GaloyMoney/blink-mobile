@@ -1,4 +1,5 @@
 import * as React from "react"
+import { useState } from "react"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import { StyleSheet, View, Modal, SafeAreaView, Text } from "react-native"
 import Svg, { Path } from "react-native-svg"
@@ -39,7 +40,9 @@ const SvgComponent = (props) => {
     )
 }
 
-export const Overlay = ({isModalVisible, setModalVisible, screen}) => {
+export const Overlay = ({screen}) => {
+
+    const [ isModalVisible, setModalVisible ] = useState(true)
 
     return (
         <Modal

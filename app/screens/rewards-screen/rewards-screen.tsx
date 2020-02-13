@@ -139,7 +139,6 @@ export const RewardsScreen = inject("dataStore")(
 
     const { navigate } = useNavigation()
 
-    const [ isModalVisible, setModalVisible ] = useState(false)
     const [ isRewardOpen, setRewardOpen ] = useState(false)
     const [ currReward, setCurrReward ] = useState("")
     const [ loading, setLoading ] = useState(false)
@@ -181,12 +180,6 @@ export const RewardsScreen = inject("dataStore")(
           ])
         }
     }, [err])
-
-    useEffect(() => {
-        if (dataStore.onboarding.stage.length === 1) {
-          setModalVisible(true)
-        } 
-    }, [])
 
     const actionWrapper = async (fn, msg = "") => {
         await fn()
@@ -380,11 +373,10 @@ export const RewardsScreen = inject("dataStore")(
 
     return (
         <Screen>
-            <Overlay 
-                isModalVisible={isModalVisible}
-                setModalVisible={setModalVisible}
-                screen="rewards"
-            /> 
+            {
+                (dataStore.onboarding.stage.length === 1) &&
+                <Overlay screen="rewards" />
+            }
             <Animated.View style={[styles.header]} >
                 <Animated.Image source={rewardsHeader} 
                     style={[{

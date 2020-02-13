@@ -150,7 +150,7 @@
   "DateOfBirthScreen": {
     "title": "Date of Birth"
   }, 
-  "MoneyMoneyScreen": { // this could be refactored with title from following screen
+  "MoneyMoneyScreen": {
     "title": "Move Money",
   },
   "SendBitcoinScreen": {
