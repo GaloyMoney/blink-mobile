@@ -10,6 +10,8 @@
     "firstName": "First Name",
     "lastName": "Last Name",
     "email": "Email",
+    "sats": "sats",
+    "to": "To",
     "SSL": "Your information is encrypted and securely transmit using SSL",
   },
   "errors": {
@@ -39,7 +41,7 @@
   },
   "RewardsScreen": {
     "title": "Earn",
-    "header": "Sats accumulated",
+    "satAccumulated": "Sats accumulated",
     "bankingNeeded": "Banking is needed",
     "channelNeeded": "Open channel first",
     "phoneNumberNeeded": "Phone number required",
@@ -148,13 +150,31 @@
   "DateOfBirthScreen": {
     "title": "Date of Birth"
   }, 
-  "MoneyMoneyScreen": {
+  "MoneyMoneyScreen": { // this could be refactored with title from following screen
     "title": "Move Money",
-    "bankTransfer": "Bank Transfer",
-    "directDeposit": "Direct Deposit",
-    "findATM": "Find an ATM",
-    "depositCash": "Deposit Cash",
-    "sendBitcoin": "Send Bitcoin",
-    "receiveBitcoin": "Receive Bitcoin",
+  },
+  "SendBitcoinScreen": {
+    "title": "Send Bitcoin",
+    "amount": "Amount",
+    "note": "Note",
+    "payFromUSD": "Pay from USD"
+  },
+  "ScanningQRCodeScreen": {
+    "title": "Send Bitcoin"
+  },
+  "ReceiveBitcoinScreen": {
+    "title": "Receive Bitcoin"
+  },
+  "BankTransferScreen": {
+    "title": "Bank Transfer"
+  },
+  "FindATMScreen": {
+    "title": "Find ATM"
+  },
+  "DepositCashScreen": {
+    "title": "Deposit Cash"
+  },
+  "DirectDepositScreen": {
+    "title": "Direct Deposit"
   }
 }

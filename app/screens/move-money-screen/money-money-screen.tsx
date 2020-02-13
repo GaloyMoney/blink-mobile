@@ -60,7 +60,7 @@ export const MoveMoneyScreen = inject("dataStore")(
     const bitcoin = [
         {
             icon: 'ios-exit',
-            target: 'sendBitcoin',
+            target: 'scanningQRCode',
         },
         {
             icon: 'ios-download',
@@ -76,6 +76,12 @@ export const MoveMoneyScreen = inject("dataStore")(
         }
     }
 
+    // FIXME refactor to utils
+    const capitalize = (s) => {
+        if (typeof s !== 'string') return ''
+        return s.charAt(0).toUpperCase() + s.slice(1)
+    }
+
     return (
         <Screen>
             <ScrollView>
@@ -86,7 +92,7 @@ export const MoveMoneyScreen = inject("dataStore")(
                         titleStyle={styles.text}
                         style={styles.button}
                         key={i}
-                        title={translate(`MoneyMoneyScreen\.${item.target}`)}
+                        title={translate(`${capitalize(item.target)}Screen.title`)}
                         leftIcon={<Icon name={item.icon} style={styles.icon} size={32} color={color.primary} />}
                         onPress={() => onBankClick(item)}
                         chevron
@@ -100,7 +106,7 @@ export const MoveMoneyScreen = inject("dataStore")(
                         titleStyle={styles.text}
                         style={styles.button}
                         key={i}
-                        title={translate(`MoneyMoneyScreen\.${item.target}`)}
+                        title={translate(`${capitalize(item.target)}Screen.title`)}
                         leftIcon={<Icon name={item.icon} style={styles.icon} size={32} color={color.primary} />}
                         onPress={() => navigate(item.target)}
                         chevron

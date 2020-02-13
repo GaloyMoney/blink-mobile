@@ -8,6 +8,7 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { color } from "../../theme";
 import { useNavigation } from "react-navigation-hooks";
 import { palette } from "../../theme/palette"
+import { translate } from "../../i18n"
 
 
 const styles = StyleSheet.create({
@@ -103,5 +104,5 @@ export const BankTransferScreen: React.FC
 }))
 
 BankTransferScreen.navigationOptions = () => ({
-    title: "Bank Transfer"
+    title: translate("BankTransferScreen.title")
 })

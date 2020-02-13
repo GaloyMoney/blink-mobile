@@ -53,6 +53,4 @@ export function CurrencyText(props: CurrencyTextProps) {
         </View>
       )
   }
-
-  return <Text>issue: {props.currency}</Text>
 }

@@ -9,6 +9,7 @@ import { QRCode } from "../../components/qrcode"
 import { ScrollView } from "react-native-gesture-handler"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import { palette } from "../../theme/palette"
+import { translate } from "../../i18n"
 
 const styles = StyleSheet.create({
   qr: {
@@ -43,15 +44,6 @@ export const ReceiveBitcoinScreen: React.FC = inject("dataStore")(observer(
 
     const [note, setNote] = useState("")
     const [amount, setAmount] = useState(0)
-
-    const buttons = ['Lightning', 'On-chain']
-
-    const updateIndex = (index) => {
-        console.tron.log('index: ', index)
-        if (index ==! 0) {
-            Alert.alert('On-chain provided in future version')
-        } 
-    }
 
     const shareInvoice = async () => {
         try {
@@ -116,12 +108,6 @@ export const ReceiveBitcoinScreen: React.FC = inject("dataStore")(observer(
     return (
         <Screen>
           <ScrollView style={{flex: 1}}>
-            <ButtonGroup
-            selectedIndex={0}
-            onPress={updateIndex}
-            buttons={buttons}
-            selectedButtonStyle={{backgroundColor: color.primary}}
-            />
             {(dataStore.lnd.lastAddInvoice !== "") &&
               <QRCode style={styles.qr} size={280}>{dataStore.lnd.lastAddInvoice}</QRCode>
             }
@@ -162,6 +148,6 @@ export const ReceiveBitcoinScreen: React.FC = inject("dataStore")(observer(
 }))
 
 ReceiveBitcoinScreen.navigationOptions = () => ({
-  title: "Receive Bitcoin"
+  title: translate("ReceiveBitcoinScreen.title")
 })
 
