@@ -234,7 +234,7 @@ const BitcoinHeader = ({currency, account, dataStore, refresh}) => {
         }
         setMessage("Success!")
       } else {
-        setMessage("There was an error. Please try again later")
+        setMessage(translate('errors.generic'))
       }
     } catch (err) {
       setMessage(err.toString())
@@ -313,6 +313,7 @@ const BitcoinHeader = ({currency, account, dataStore, refresh}) => {
             { !loadingQuote &&
               <Text style={[styles.itemText, {paddingVertical: 12}]}>
                 {
+                  // TODO: make a component out of it
                   !isNaN(dataStore.exchange.quote.satPrice) &&
                   `Price: USD ${(dataStore.exchange.quote.satPrice * 100000000).toFixed(2)}`
                   || " "

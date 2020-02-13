@@ -329,7 +329,7 @@ export const RewardsScreen = inject("dataStore")(
                         style={[{
                             height: animation.interpolate({
                                 inputRange: [0, 1],
-                                outputRange: [0, 140],
+                                outputRange: [0, 156],
                         }),
                             opacity: animation,
                         }]}>
