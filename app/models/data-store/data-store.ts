@@ -361,11 +361,12 @@ export const LndModel = BaseAccountModel.named("Lnd")
     return {
     setLndReady: flow(function*() {
         self.lndReady = true
-        yield self.getInfo()
-        yield self.update()
 
         yield self.updatePendingChannels()
         yield self.listChannels()
+
+        yield self.getInfo()
+        yield self.update()
     }),
 
     // stateless, but must be an action instead of a view because of the async call
