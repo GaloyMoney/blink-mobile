@@ -12,14 +12,23 @@ import { useNavigation, useNavigationParam } from "react-navigation-hooks";
 import { palette } from "../../theme/palette"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import { Onboarding } from "types"
+import { Switch } from "react-native-gesture-handler"
+import { translate } from "../../i18n"
+import { NavigationEvents } from "../../navigation/navigation-events"
 
 
 const CAMERA: ViewStyle = {
     width: "100%",
     height: "100%",
+    position: 'absolute',
 }
 
 const styles = StyleSheet.create({
+
+    mainView: {
+        paddingHorizontal: 20,
+    },
+
     squareButton: {
       width: 70,
       height: 70,
@@ -56,57 +65,29 @@ const styles = StyleSheet.create({
 
     buttonStyle: {
         backgroundColor: color.primary,
-        marginHorizontal: 20,
         marginVertical: 8,
     },
 
     section: {
         paddingTop: 12,
         paddingBottom: 8,
-        paddingHorizontal: 20,
-    }
+    },
+
+    overlay: {
+        position: 'absolute',
+        right: 0,
+        left: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0,0,0,0.4)',
+        flexDirection: 'row',
+        justifyContent: 'center',
+    },
 
 })
 
 
-export const ScanningQRCodeScreen = withNavigation(
-    ({ navigation }) => {
-
-    const goBack = () => navigation.goBack()
-    const callback = useNavigationParam('callbackQRCode')    
-
-    return(
-        <Screen>
-            <RNCamera
-                style={CAMERA}
-                captureAudio={false}
-                onBarCodeRead={event => {
-                    const qr = event.data
-                    callback(qr)
-                    goBack()
-                }}
-            />
-        </Screen>
-    )
-})
-
-ScanningQRCodeScreen.navigationOptions = () => ({
-    title: "Scan QR Code"
-})
-
-export const SendBitcoinScreen: React.FC
-= inject("dataStore")(
-  observer(({ dataStore }) => {
-
-    const [invoice, setInvoice] = useState("")
-
-    const [addr, setAddr] = useState("")
-    const [amount, setAmount] = useState(0)
-    const [amountless, setAmountless] = useState(false)
-    const [message, setMessage] = useState("")
-    const [err, setErr] = useState("")
-    const [note, setNote] = useState(" ")
-    const [loading, setLoading] = useState(false)
+export const ScanningQRCodeScreen = inject("dataStore")(observer(
+    ({ dataStore }) => {
 
     const { navigate } = useNavigation()
 
@@ -130,38 +111,79 @@ export const SendBitcoinScreen: React.FC
 
             } else if (protocol.toLowerCase() !== "lightning") {
                 let message = `Only lightning procotol is accepted for now.`
-                message += message === "" ? "" : `got: ${protocol}`
+                message += message === "" ? "" : `got following invoice: "${protocol}"`
                 Alert.alert(message)
                 return
             }
 
             const payReq = await dataStore.lnd.decodePayReq(request)
             console.tron.log(payReq)
-            setInvoice(request)
-            setAddr(payReq.destination)
+            const invoice = request
+
+            let amount, amountless, note
 
             if (payReq.numSatoshis) {
-                setAmount(payReq.numSatoshis)
-                setAmountless(false)
+                amount = payReq.numSatoshis
+                amountless = false
             } else {
-                setAmount(0)
-                setAmountless(true)
+                amount = 0
+                amountless = true
             }
 
             if (payReq.description) {
-                setNote(payReq.description)
+                note = payReq.description
             } else {
-                setNote(`invoice has no description`)
+                note = `invoice has no description`
             }
+
+            navigate('sendBitcoin', {invoice, amount, amountless, note})
 
         } catch (err) {
             Alert.alert(err.toString())
         }        
     }
 
-    const openingCamera = () => {
-        navigate('scanningQRCode', {callbackQRCode})
-    }
+    return(
+        <Screen>
+            <RNCamera
+                style={CAMERA}
+                captureAudio={false}
+                onBarCodeRead={event => {
+                    const qr = event.data
+                    decodeInvoice(qr)
+                }}
+            />
+            <View style={styles.overlay}>
+                <Button 
+                    buttonStyle={[styles.buttonStyle, {width: 180}]}
+                    title="Paste" onPress={pasteInvoice}
+                    />
+            </View>
+        </Screen>
+    )
+}))
+
+ScanningQRCodeScreen.navigationOptions = () => ({
+    title: translate("ScanningQRCodeScreen.title")
+})
+
+export const SendBitcoinScreen: React.FC
+= inject("dataStore")(observer(
+      ({ dataStore }) => {
+
+    const invoice = useNavigationParam('invoice')
+    const amountless = useNavigationParam('amountless')
+    const note = useNavigationParam('note')
+    const amount = useNavigationParam('amount')
+
+    const [manualAmount, setManualAmount] = useState(false)
+
+    const { goBack } = useNavigation()
+
+    const [useUSD, setUseUSD] = useState(false)
+    const [message, setMessage] = useState("")
+    const [err, setErr] = useState("")
+    const [loading, setLoading] = useState(false)
 
     type payInvoiceResult = boolean | Error
 
@@ -193,7 +215,6 @@ export const SendBitcoinScreen: React.FC
             if (result === true) {
                 setMessage('Payment succesfull')
                 await dataStore.onboarding.add(Onboarding.firstLightningPayment)
-                setInvoice("")
             } else {
                 setErr(result.toString())
             }
@@ -217,8 +238,9 @@ export const SendBitcoinScreen: React.FC
           
           Alert.alert(header, message || err, [
             {
-              text: "OK",
+              text: translate("common.ok"),
               onPress: () => {
+                goBack('moveMoney')
                 setLoading(false)
               },
             },
@@ -230,9 +252,9 @@ export const SendBitcoinScreen: React.FC
 
     return (
         <Screen>
-            <ScrollView>
+            <ScrollView style={styles.mainView}>
                 <View style={styles.section}>
-                    <Text style={styles.smallText}>To</Text>
+                    <Text style={styles.smallText}>{translate("common.to")}</Text>
                     <View style={styles.horizontalContainer}>
                         <Input placeholder='Invoice' 
                             leftIcon={  <Icon   name='ios-log-out'
@@ -243,33 +265,30 @@ export const SendBitcoinScreen: React.FC
                             value={invoice}
                             containerStyle={styles.invoiceContainer}
                         />
-                        <Button icon={<Icon
-                            name="ios-camera"
-                            size={48}
-                            color={color.palette.white}/>}
-                            buttonStyle={styles.squareButton}
-                            onPress={openingCamera}
-                        />
                     </View>
                 </View>
                 <View style={styles.section}>
-                    <Text style={styles.smallText}>Amount</Text>
-                    <Input leftIcon={<Text style={styles.icon}>sats</Text>}
-                        onChangeText={input => setAmount(+input)}
-                        value={amount.toString()}
+                    <Text style={styles.smallText}>{translate('SendBitcoinScreen.amount')}</Text>
+                    <Input leftIcon={<Text style={styles.icon}>{translate("common.sats")}</Text>}
+                        onChangeText={input => setManualAmount(+input)}
+                        value={amountless ? manualAmount.toString() : amount.toString()}
                         disabled={!amountless}
                         returnKeyType='done'
                         keyboardType="number-pad" // TODO, there should be no keyboard here
                         />
                 </View>
                 <View style={styles.section}>
-                    <Text style={styles.smallText}>Note</Text>
+                    <Text style={styles.smallText}>{translate('SendBitcoinScreen.note')}</Text>
                     <Text style={styles.note}>{note}</Text>
                 </View>
-                <Button 
-                    buttonStyle={styles.buttonStyle}
-                    title="Paste" onPress={pasteInvoice}
+                <View style={[styles.horizontalContainer, {marginVertical: 8}]}>
+                    <Text style={[styles.smallText, {paddingTop: 5}]}>{translate('SendBitcoinScreen.payFromUSD')}</Text>
+                    <View style={{flex: 1}} />
+                    <Switch 
+                        value={useUSD}
+                        onValueChange={input => setUseUSD(input)}
                     />
+                </View>
                 <Button 
                     buttonStyle={styles.buttonStyle}
                     title="Send" onPress={payInvoice}
@@ -282,5 +301,5 @@ export const SendBitcoinScreen: React.FC
 }))
 
 SendBitcoinScreen.navigationOptions = () => ({
-    title: "Send Bitcoin"
+    title: translate("SendBitcoinScreen.title")
 })
