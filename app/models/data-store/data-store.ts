@@ -521,7 +521,6 @@ export const LndModel = BaseAccountModel.named("Lnd")
       }
     }),
 
-
     openChannel: flow(function*() {
       try {
         const result = yield functions().httpsCallable("openChannel")({})
@@ -617,7 +616,8 @@ export const LndModel = BaseAccountModel.named("Lnd")
         if (auth().currentUser?.isAnonymous === false) { 
           try {
             yield self.updatePendingChannels()
-      
+            yield self.listChannels()
+
             if (self.statusFirstChannel === FirstChannelStatus.noChannel) {
               console.tron.warn('opening a channel, uncommon scenario (not in sync while doing phone verification)')
               yield self.openFirstChannel()
@@ -636,6 +636,8 @@ export const LndModel = BaseAccountModel.named("Lnd")
     }),
 
     openFirstChannel: flow(function*() {
+      console.tron.log('openFirstChannel')
+
       try {
         yield self.sendPubKey()
         yield self.connectGaloyPeer()
@@ -1102,7 +1104,6 @@ export const DataStoreModel = types
 
       balances[AccountType.Bitcoin] = (self.lnd.balance * btcConversion)
       balances[AccountType.VirtualBitcoin] = (self.onboarding.balance * btcConversion)
-      balances[AccountType.BitcoinRealOrVirtual] = balances[AccountType.VirtualBitcoin] + balances[AccountType.Bitcoin]
       balances[AccountType.Bank] = self.fiat.balance / self.rates.rate(currency)
       balances[AccountType.AllReal] = balances[AccountType.Bank] + balances[AccountType.Bitcoin]
       balances[AccountType.AllVirtual] = balances[AccountType.Bank] + balances[AccountType.VirtualBitcoin]
