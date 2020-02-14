@@ -5,7 +5,7 @@ import { Text } from "../../components/text"
 import { inject } from "mobx-react"
 import { useNavigation } from "react-navigation-hooks"
 import { Onboarding } from "types"
-import { StyleSheet } from "react-native"
+import { StyleSheet, View } from "react-native"
 
 import { color } from "../../theme"
 
@@ -87,16 +87,20 @@ export const WelcomeFirstScreen = inject("dataStore")(
   const { navigate } = useNavigation()
 
   return (
-    <Swiper loop={false}>
+    <Swiper loop={false} 
+      activeDot={<View style={{backgroundColor: color.primary, width: 8, height: 8, borderRadius: 4, marginLeft: 3, marginRight: 3, marginTop: 3, marginBottom: 3,}} />}
+      >
       <Screen>
         <OnboardingScreen image={presentLogo}>
           <Text style={styles.text}>{translate("WelcomeFirstScreen.earn")}</Text>
         </OnboardingScreen>
+        <Text style={styles.text}>{"\n\n\n"}</Text>
       </Screen>
       <Screen>
         <OnboardingScreen image={dollarLogo}>
           <Text style={styles.text}>{translate("WelcomeFirstScreen.bank")}</Text>
         </OnboardingScreen>
+        <Text style={styles.text}>{"\n\n\n"}</Text>
       </Screen>
       <Screen>
         <OnboardingScreen action={async () => {

@@ -30,9 +30,9 @@
     "getStarted": "Get Started"
   },
   "WelcomeFirstScreen": {
-    "earn": "By using Galoy, you earn bitcoin.",
-    "bank": "Galoy is a digital bank account",
-    "wallet": "And a secure Bitcoin wallet too!"
+    "earn": "By using Galoy,\nyou earn bitcoin.",
+    "bank": "Galoy is a digital\nbank account",
+    "wallet": "And a secure\nBitcoin wallet too!"
   },
   "WelcomePhoneInputScreen": {
     "header": "Enter your phone number to prove you’re a real person.",
