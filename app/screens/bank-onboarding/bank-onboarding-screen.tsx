@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from "react"
 import { Screen } from "../../components/screen"
 import { OnboardingScreen } from "../../components/onboarding"
 import { Text } from "../../components/text"
-import { StyleSheet, Alert, View } from "react-native"
+import { StyleSheet, Alert, View, TextInput } from "react-native"
 import { BalanceHeader } from "../../components/balance-header"
 import { CurrencyType, AccountType } from "../../utils/enum"
 import { useNavigation } from "react-navigation-hooks"
@@ -16,6 +16,8 @@ import { inject } from "mobx-react"
 import { color } from "../../theme"
 import { Onboarding } from "types"
 import { translate } from "../../i18n"
+import { palette } from "../../theme/palette"
+import { emailIsValid } from "../../utils/helper"
 
 
 const bankLogo = require("./BankLogo.png")
@@ -95,6 +97,11 @@ OpenBankScreen.navigationOptions = screenProps => ({
 
 
 
+const TextInputLightMode = (props) => (
+  <TextInput placeholderTextColor={palette.lightGrey} {...props} />
+)
+
+
 export const PersonalInformationScreen = () => {
   const [firstName, setFirstName] = useState("")
   const [lastName, setLastName] = useState("")
@@ -106,6 +113,11 @@ export const PersonalInformationScreen = () => {
   const { navigate } = useNavigation()
 
   const onValidate = () => {
+    if (!emailIsValid(email)) {
+      Alert.alert(translate('errors.invalidEmail'))
+      return
+    }
+
     navigate('dateOfBirth', {firstName, lastName, email})
   } 
 
@@ -114,11 +126,12 @@ export const PersonalInformationScreen = () => {
       <Text style={styles.textInfos}>{translate("PersonalInformationScreen.getStarted")}</Text>
       <Input 
         placeholder={translate("common.firstName")}
-        onChangeText={input => setFirstName(input)} 
-        autoFocus={true}     
+        onChangeText={input => setFirstName(input)}
+        autoFocus={true}
         returnKeyType = { "next" }
         blurOnSubmit={false}
         textContentType="givenName"
+        inputComponent={TextInputLightMode}
         onSubmitEditing={() => { secondTextInput.current.focus() }}
         />
       <Input
@@ -128,6 +141,7 @@ export const PersonalInformationScreen = () => {
         returnKeyType = { "next" }
         blurOnSubmit={false}
         textContentType="familyName"
+        inputComponent={TextInputLightMode}
         onSubmitEditing={() => { thirdTextInput.current.focus() }}
           />
       <Input 
@@ -137,9 +151,10 @@ export const PersonalInformationScreen = () => {
         returnKeyType = { "done" }
         textContentType="emailAddress"
         blurOnSubmit={true}
+        inputComponent={TextInputLightMode}
         onSubmitEditing={onValidate}
       />
-<Text style={styles.textInfos}>{translate("common.SSL")}</Text>
+      <Text style={styles.textInfos}>{translate("common.SSL")}</Text>
       <Button title={translate("common.confirm")} onPress={onValidate}
               containerStyle={styles.buttonContainer}
               buttonStyle={styles.buttonStyle} />
@@ -191,14 +206,14 @@ export const DateOfBirthScreen = withNavigation(inject("dataStore")(
   return (
     <Screen>
       <DateTimePicker 
-                    style={{paddingTop: 30}}
-                    mode="date"
-                    display="default"
-                    value={dateOfBirth}
-                    onChange={(_, input) => {
-                      setDateOfBirth(input);
-                    }} /> 
-                    {/* FIXME could timezone be an issue?  */}
+        style={{paddingTop: 30}}
+        mode="date"
+        display="default"
+        value={dateOfBirth}
+        onChange={(_, input) => {
+          setDateOfBirth(input);
+        }} /> 
+        {/* FIXME could timezone be an issue?  */}
       <Text style={styles.textInfos}>{translate("common.SSL")}</Text>
       <Button title={translate("common.confirm")} onPress={onValidate}
                     containerStyle={styles.buttonContainer}
