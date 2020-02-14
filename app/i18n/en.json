@@ -151,6 +151,8 @@
   }, 
   "MoveMoneyScreen": {
     "title": "Move Money",
+    "needBankAccount": "This features require a bank account",
+    "needWallet": "This features require a wallet",
   },
   "SendBitcoinScreen": {
     "title": "Send Bitcoin",

@@ -137,8 +137,8 @@ export const MoveMoneyScreen = inject("dataStore")(
                 <View style={styles.viewModal}>
                 { accountType == AccountType.Bank &&
                 <>
-                    <Text style={styles.text}>You have to open an account</Text>
-                    <Button title="Open Account" onPress={() => navigate('openBankAccount')}
+                    <Text style={styles.text}>{translate("MoveMoneyScreen.needBankAccount")}</Text>
+                    <Button title="Open Account" onPress={() => {setModalVisible(false); navigate('openBankAccount')}}
                         buttonStyle={styles.button}
                         containerStyle={[styles.buttonContainer, {width: "100%"}]}
                     />
@@ -146,8 +146,8 @@ export const MoveMoneyScreen = inject("dataStore")(
                 }
                 { accountType == AccountType.Bitcoin &&
                 <>
-                    <Text style={styles.text}>You have to get more rewards and open your wallet</Text>
-                    <Button title="Open Wallet" onPress={() => navigate('rewards')}
+                    <Text style={styles.text}>{translate("MoveMoneyScreen.needWallet")}</Text>
+                    <Button title="Open Wallet" onPress={() => {setModalVisible(false); navigate('rewards')}}
                         buttonStyle={styles.button}
                         containerStyle={[styles.buttonContainer, {width: "100%"}]}
                     />
