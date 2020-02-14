@@ -20,6 +20,9 @@
 	<string>0.1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<!-- to disabled for enabled dark mode -->
+	<key>UIUserInterfaceStyle</key>
+	<string>Light</string> 
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>

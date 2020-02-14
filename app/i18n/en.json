@@ -18,7 +18,7 @@
   },
   "errors": {
     "generic": "There was an error. Please try again later",
-    "invalidEmail": "Invalid email address.",
+    "invalidEmail": "Invalid email",
     "invalidPhoneNumber": "is not a valid phone number"
   },
   "Overlay": {
