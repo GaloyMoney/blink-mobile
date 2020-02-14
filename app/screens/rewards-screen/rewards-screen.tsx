@@ -56,7 +56,15 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: 32,
     },
     
-    imageContainer: {
+    imageContainerRewardsOpen: {
+        height: 120,
+        marginBottom: Platform.select({ ios: 0, android: 1 }), // Prevent a random Android rendering issue
+        backgroundColor: 'white',
+        borderTopLeftRadius: 32,
+        borderTopRightRadius: 32,
+    },
+
+    imageContainerRewardsClosed: {
         height: 200,
         marginBottom: Platform.select({ ios: 0, android: 1 }), // Prevent a random Android rendering issue
         backgroundColor: 'white',
@@ -154,7 +162,7 @@ const RewardsHeader = (props) => (
 export const RewardsScreen = inject("dataStore")(
     observer(({ dataStore }) => {
 
-    const { navigate } = useNavigation()
+    const { navigate, setParams } = useNavigation()
 
     const [ isRewardOpen, setRewardOpen ] = useState(false)
     const [ currReward, setCurrReward ] = useState("")
@@ -164,18 +172,20 @@ export const RewardsScreen = inject("dataStore")(
 
     const open = (index) => {
         setCurrReward(rewards[index].id)
+        setParams({title: translate(`RewardsScreen\.${rewards[index].id}.title`)})
         setRewardOpen(!isRewardOpen)
     }
-
+    
     const close = (msg = "") => {
         setRewardOpen(false)
+        setParams({title: null})
         setLoading(false)
         if (msg !== "") {
             Alert.alert(msg)
         }
     }
 
-    React.useEffect(() => {
+    useEffect(() => {
         Animated.timing(animation, {
             toValue: isRewardOpen,
             duration: 500,
@@ -330,18 +340,22 @@ export const RewardsScreen = inject("dataStore")(
             <Animated.View style={styles.item}>
                 <ParallaxImage 
                     source={eval(`${item.id}Image`)} // FIXME security issue?
-                    containerStyle={styles.imageContainer} 
+                    containerStyle={isRewardOpen ? 
+                        styles.imageContainerRewardsOpen: styles.imageContainerRewardsClosed
+                    }
                     {...parallaxProps}
-                />
+                    />
                 <View style={styles.bottomItem}>
-                    <Text style={styles.itemTitle}>
-                        { translate(`RewardsScreen\.${item.id}.title`) }
-                    </Text>
+                    {   !isRewardOpen &&
+                        <Text style={styles.itemTitle}>
+                            { translate(`RewardsScreen\.${item.id}.title`) }
+                        </Text>
+                    }
                     <Animated.ScrollView
                         style={[{
                             height: animation.interpolate({
                                 inputRange: [0, 1],
-                                outputRange: [0, 156],
+                                outputRange: ["0%", "50%"],
                         }),
                             opacity: animation,
                         }]}>
@@ -407,9 +421,9 @@ export const RewardsScreen = inject("dataStore")(
                     }]}>
                     {translate('RewardsScreen.satAccumulated')}
                 </Animated.Text>
-                <Animated.Text style={[
-                    styles.titleSats,
-                ]}>
+                    <Animated.Text style={[
+                        styles.titleSats,
+                    ]}>
                     {isRewardOpen ? 
                         `${sats(currReward)}` :
                         I18n.toNumber(dataStore.balances({ 
@@ -420,27 +434,29 @@ export const RewardsScreen = inject("dataStore")(
                 </Animated.Text>
                 { isRewardOpen &&
                     <Button 
-                        title="Close" 
-                        buttonStyle={styles.textButtonClose}
-                        onPress={() => close()}
+                    title="Close" 
+                    buttonStyle={styles.textButtonClose}
+                    onPress={() => close()}
                     />
                 }
             </Animated.View>
             <View style={{flex: 1}} />
             <Carousel
-            //   ref={(c) => { this._carousel = c; }}
-            data={rewards}
-            renderItem={renderItem}
-            sliderWidth={screenWidth}
-            scrollEnabled={!isRewardOpen}
-            itemWidth={screenWidth - 60}
-            hasParallaxImages={true}
-            firstItem={firstItem}
+                //   ref={(c) => { this._carousel = c; }}
+                data={rewards}
+                renderItem={renderItem}
+                sliderWidth={screenWidth}
+                scrollEnabled={!isRewardOpen}
+                itemWidth={screenWidth - 60}
+                hasParallaxImages={true}
+                firstItem={firstItem}
+                inactiveSlideOpacity={isRewardOpen ? 0 : 0.7}
             />
         </Screen>
     )
 }))
 
-RewardsScreen.navigationOptions = () => ({
-    title: translate("RewardsScreen.title")
-})
+RewardsScreen.navigationOptions = screenProps => {
+    const title = screenProps.navigation.getParam("title") ?? translate("RewardsScreen.title")
+    return { title }
+}

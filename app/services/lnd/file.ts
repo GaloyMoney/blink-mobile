@@ -74,8 +74,7 @@ class FileAction {
   }
 
   /**
-   * Delete the wallet.db file. This allows the user to restore their wallet
-   * (including channel state) from the seed if they've forgotten the pin.
+   * Delete all lnd related files
    * @return {Promise<undefined>}
    */
   async deleteAllLndData() {

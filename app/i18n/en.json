@@ -82,7 +82,7 @@
     },
     "phoneVerification": {
       "title": "Phone Number",
-      "text": "Let us know your phone number before we send you your rewards"
+      "text": "We need to validate your phone number before we send you your rewards"
     },
     "firstLightningPayment": {
       "title": "⚡ First payment ⚡",
