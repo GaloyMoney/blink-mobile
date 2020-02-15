@@ -6,6 +6,8 @@
     "back": "Back",
     "next": "Next",
     "error": "Error",
+    "close": "Close",
+    "learnMore": "Learn More",
     "bankAccount": "Cash Account",
     "firstName": "First Name",
     "lastName": "Last Name",
@@ -14,7 +16,13 @@
     "to": "To",
     "bank": "Bank",
     "bitcoin": "Bitcoin",
+    "soon": "Coming soon!",
     "SSL": "Your information is encrypted and securely transmit using SSL",
+  },
+  "sat": {
+    "one": "1 sat",
+    "other": "{{formatted_number}} sats",
+    "zero": "0 sat"
   },
   "errors": {
     "generic": "There was an error. Please try again later",
@@ -47,6 +55,8 @@
     "satAccumulated": "Sats accumulated",
     "bankingNeeded": "Banking is needed",
     "channelNeeded": "Open channel first",
+    "getRewardNow": "Get Reward Now!",
+    "rewardEarned": "Reward earned",
     "phoneNumberNeeded": "Phone number required",
     "walletDownloaded": {
       "title": "Download the app",
@@ -54,21 +64,28 @@
     },
     "sat": {
       "title": "What is a sat?",
-      "text": "Sat is a small portion of a Bitcoin. The same way a dollar can be divided in 100 cts, a bitcoin can be divided in 100,000,000 sats!\n\nWhy is that important?\n\nDivisibility is an important part of money. \n\nmaking bitcoin extremely divisible will allow many billion of people use and own bitcoin one day. You don't need to own a full bitcoin, you can just have a fraction of it. But for now, let's just remember that sats are a small part of a bitcoin :)",
+      "text": "Sat is a small portion of a Bitcoin. The same way a dollar can be divided in 100 cents, a bitcoin can be divided in 100,000,000 sats!\n\nWhy is that important?\n\nDivisibility is an important part of money. \n\nMaking bitcoin extremely divisible will allow many billion of people use and own bitcoin one day. You don't need to own a full bitcoin, you can just have a fraction of it. But for now, let's just remember that sats are a small part of a bitcoin :)",
       "closingMsg": "You just earned 1 sat, the smallest unit of Bitcoin. Congrats!",
       "question": "What is a sat?",
       "answers": ["An alternative crypto currency", "A small satellite", "The smallest unit of Bitcoin"]
     },
+    "freeMoney": {
+      "title": "Galoy gives me free bitcoin?",
+      "text": "Wait! What's the catch?\n\nThat's correct, we are giving you micro rewards so you can try bitcoin and spend some time educating yourself.\n\nThe way we think we will benefit from it is because you may consider to open an account with us if you understand more what is bitcoin and why you should care about it.",
+      "closingMsg": "You just earned another 50 sats. We hope those micros rewards will attire your curiosity on Bitcoin",
+      "question": "Why does Galoy gives free bitcoin?",
+      "answers": ["By educating yourself about bitcoin, we think you may want to get more and open an account with us", "We print new bitcoin to give it away", "By monetizing your data with third party"]
+    },
     "custody": {
       "title": "What is custody?",
-      "text": "Literally, custody means \"the protective care or guardianship of someone or something\".\n\nOk, that’s a boring definition, what does it mean for bitcoin or banking?\n\nWhen you give your money at your bank, they are taking custody. It basically means they are taking care of it.\n\nWith bitcoin, you can also give custody to someone else, like a bank, but you can also take self custody of your assets!\n\nIn that sense, this would be a little bit like cash. The money is in your wallet, if you lose it you’re out of luck.\n\nGaloy is what we call a “non custodial” wallet. It means money is in your pocket, right on your phone!",
+      "text": "Literally, custody means \"the protective care or guardianship of someone or something\".\n\nOk, that’s a boring definition, what does it mean for bitcoin or banking?\n\nWhen you give your money to your bank, they are taking custody. It basically means they are taking care of it.\n\nRegarding USD, Galoy as a bank account is no different in that regard\n\nBut with bitcoin, it's different.\n\nYou can give custody of your bitcoin to someone else, like a bank, or an exchange, but you can also take self custody of your bitcoin!\n\nIn that sense, this would be a little bit like cash. The money is in your wallet, if you lose it you’re out of luck.\n\nFor your BTC, Galoy doesn't take custody of your BTC. It is right in your phone!\n\nGaloy is what we call a “non-custodial” wallet. It means the money is in your pocket, stored with some special keys on your phone!",
       "question": "Which one is true?",
       "answers": ["Bitcoin is like digital dollar, it has to be managed by a bank or a third party custodian", "Bitcoin can be self custodied", "Digital dollar can be self custodied"],
       "closingMsg": "You've learnt one of the important property of Bitcoin, it can be self custodied!",
     },
-    "nonCustodial": {
-      "title": "Self custody and keys",
-      "text": "A easy way to think about self custody is to think about cash. If you have a $20 bill in your pocket and you loose your wallet, you're out of luck! Similarly for bitcoin, but instead of a piece of paper, you have a digital key, that only you know\n\nThis key allows you to spend your bitcoin, which is why making sure this key is in a safe place is important!\n\nA digital key is just a very, very long number (about 80 digits long!). It's very long that it's impossible to find it other you have it",
+    "digitalKeys": {
+      "title": "Digital keys",
+      "text": "You can compared self custodied Bitcoin with cash.\n\nIf you have a $20 bill in your pocket and you lose your wallet, you're out of luck!\n\nSimilarly for bitcoin, but instead of a piece of paper, you have digital keys\n\nThose keys allows you to spend your bitcoin, which is why making sure those keys are stored in a safe place is important!\n\nA digital key is just a very, very long number (about 80 digits long!). It's astronomicaly long, so it's impossible for anyone to find it.\n\nAs a comparison, it would be easier to find a single grain of sands on earth than it would be to find a digitial key. This is the power of large number and cryptography!\n\nThis key is currently stored in a secure part of your phone.",
       "question": "Which one is true?",
       "answers": ["Keys allows you to recover your email and password", "Keys should be shared with as many people as possible so that it won't be lost", "Your keys should be kept secretly as anybody who have access to them will be able to spend your bitcoin"],
       "closingMsg": "Galoy is what we call a non custodial for your bitcoin. So you should take care of your keys!",
@@ -87,22 +104,22 @@
     },
     "bitcoinUnique": {
       "title": "What makes bitcoin unique?",
-      "text": "There is a long list, and we'll go through it one by one:\n\nIt has predictible money supply\nHis creator is no longer around\nIt can be sent instantly around the world\nIt can't be forged",
+      "text": "There is a long list, and we'll go through it one by one:\n\n- It has predictible money supply\n- His creator is no longer around\n- It can be sent instantly around the world\n- It can't be forged",
       "closingMsg": "Allright, let's dive into it!",
     },
     "moneySupply": {
       "title": "Bitcoin money supply",
-      "text": "How many bitcoin will be created and how?\n\nThere will be 21 millions bitcoin in existance.\n\nThe reason there won't be more is because this number is hard coded in the bitcoin software, and everybody running the bitcoin software all over the world will be very unlikely to see this number be changed.\n\nAnd as bitcoin is decentralized and there is no one is charged, it's very difficult to try to change something like this.\n\nHow is bitcoin being created?\n\nEvery day, there are miners who looking for new bitcoin, solving a compute-intensive math problem. Every time they find a solution to this math problem, there are new bitcoin in existance.\n\nIt's a little bit like mining gold, but the difference for bitcoin is that we know the total number of bitcoin there will be in existance",
+      "text": "How many bitcoin will be created and how?\n\nThere will be 21 millions bitcoin in existance.\n\nThe reason there won't be more is because this number is defined in the bitcoin software, and because this is one of the reason it makes bitcoin valuable, it's unlikely every person around the world will be willing to update their software and change this number.\n\nAs bitcoin is decentralized and there is no one is charged, it's very difficult to try to change something like this.\n\nHow is bitcoin being created?\n\nEvery day, there are miners who are looking for new bitcoin, solving a compute-intensive math problem. Every time they find a solution to this math problem, there are new bitcoin in existance.\n\nIt's a little bit like mining gold, where real ressources needs to be invest to find new gold, but the difference for bitcoin is that we already know the total number of bitcoin there will be in existance",
       "question": "How many bitcoin will be created?",
       "answers": ["21,000,000", "There is no maximum", "It's up to the central bank of Bitcoin"],
       "closingMsg": "21 millions, that's it!",
     },
-    "creator": {
-      "title": "Who created Bitcoin",
-      "text": "Bitcoin has a pretty unique story. On Decemberish 2008, a pseudonym under the name of Satoshi Nakamoto has share a paper called a 'Whitepaper' to a online group related to online money. After open sourcing the code couple of months later, and seeing other person had started contributing to the project, Natoshi Nakamo disappeared.\n\nIs it a good thing or a bad thing?\n\nEverybody will have their answer, but as a result of this, bitcoin is 'decentralized'. No one has really any control over it, and this is one of the strength of bitcoin, as no one is particularly in charge, it can't really be stopped.",
-      "question": "Who is Satoshi Nakamoto?",
-      "answers": ["A japanese developer", "The undercover name of Craig Wrigth", "We don't really know"],
-      "closingMsg": "The goal of Galoy is to educate you about Bitcoin, but unfortunately, we won't be able to tell you who is Satoshi Nakamoto!",
+    "volatility": {
+      "title": "Bitcoin volatility",
+      "text": "THIS IS NOT INVESTMENT ADVICE\n\nIs bitcoin volatile?\n\nYes, it is, but why is it not a bad thing?\n\n. Pretty much every assets, the price move when there is an imbalance between buyer and seller of an assets\n\n ...TODO...",
+      "question": "What could drive the value of Bitcoin?",
+      "answers": ["It is scarse", "It is a digital", "It is controlled by the goverement"],
+      "closingMsg": "21 millions bitcoin, that's it!",
     },
     "activateNotifications": {
       "title": "Activate notifications",
@@ -123,6 +140,41 @@
     "firstLnPayment": {
       "title": "⚡ First payment ⚡",
       "text": "Lightning is the revolutionary payment. Give it a try!"
+    },
+    "transaction": {
+      "title": "Transaction with bitcoin",
+      "text": "bitcoin... and lightning",
+      "question": "TODO",
+      "answers": ["", "", ""],
+      "closingMsg": "Hourray, you now know how transactions are being made!",
+    },
+    "paymentProcessing": {
+      "title": "Payment processing",
+      "text": "TODO",
+      "question": "",
+      "answers": ["", "", ""],
+      "closingMsg": "",
+    },
+    "privacy": {
+      "title": "Is bitcoin private?",
+      "text": "TODO",
+      "question": "",
+      "answers": ["", "", ""],
+      "closingMsg": "",
+    },
+    "creator": {
+      "title": "Who created Bitcoin",
+      "text": "Bitcoin has a pretty unique story. On Decemberish 2008, a pseudonym under the name of Satoshi Nakamoto has share a paper called a 'Whitepaper' to a online group related to online money. After open sourcing the code couple of months later, and seeing other person had started contributing to the project, Natoshi Nakamo disappeared.\n\nIs it a good thing or a bad thing?\n\nEverybody will have their answer, but as a result of this, bitcoin is 'decentralized'. No one has really any control over it, and this is one of the strength of bitcoin, as no one is particularly in charge, it can't really be stopped.",
+      "question": "Who is Satoshi Nakamoto?",
+      "answers": ["A japanese developer", "The undercover name of Craig Wrigth", "We don't really know"],
+      "closingMsg": "The goal of Galoy is to educate you about Bitcoin, but unfortunately, we won't be able to tell you who is Satoshi Nakamoto!",
+    },
+    "decentralization": {
+      "title": "Bitcoin is decentralized",
+      "text": "TODO",
+      "question": "What is a benefit of decentralization?",
+      "answers": ["It's harder to change, as no one party is 100% in charge. Therefore we can trust this will still be around for some time, which is a good thing for money", "Protocol development happens faster than if it was centralized", "It is faster to validate transactions as more computing power is involved all around the world"],
+      "closingMsg": "The goal of Galoy is to educate you about Bitcoin, but unfortunately, we won't be able to tell you who is Satoshi Nakamoto!",
     },
     "bankOnboarded": {
       "title": "Open your bank account",
@@ -151,7 +203,18 @@
     "activateDirectDeposit": {
       "title": "Activate Direct Deposit",
       "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-    }
+    },
+    "energy": {
+      "title": "Bitcoin energy consumption?",
+      "text": "",
+    },
+    "moneyLaundering": {
+      "title": "Bitcoin & Money Laundering?",
+      "text": "TODO",
+      "question": "",
+      "answers": ["", "", ""],
+      "closingMsg": "",
+    },
   },
   "AccountDetailScreen": {
     "openAccount": "Open a Galoy bank account",
