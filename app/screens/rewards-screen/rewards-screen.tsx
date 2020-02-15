@@ -19,17 +19,23 @@ import functions from "@react-native-firebase/functions"
 import { YouTubeStandaloneIOS } from "react-native-youtube"
 import { Overlay } from "../../components/overlay"
 import Svg, { Path } from "react-native-svg"
+import { Quizz } from "../../components/quizz"
 
 
+const defaultImage = require("./GreenPhone.jpg")
 const walletDownloadedImage = require("./GreenPhone.jpg")
-const satImage = require("./GreenPhone.jpg")
-const custodyImage = require("./GreenPhone.jpg")
-const backupWalletImage = require("./SafeBank.jpg")
+const satImage = require("./Sat.png")
+const custodyImage = require("./SafeBank.jpg")
+const nonCustodialImage = require("./GreenPhone.jpg")
+const backupWalletImage = require("./backupWallet.jpg")
+const fiatMoneyImage = require("./fiatMoney.jpeg")
+const bitcoinUniqueImage = require("./GreenPhone.jpg")
+const moneySupplyImage = require("./MoneySupply.png")
+const creatorImage = require("./Creator.jpg")
 const activateNotificationsImage = require("./GlobalCommunications.jpg")
-const rewardsVideoImage = require("./Asterix.jpeg")
 const phoneVerificationImage = require("./GreenPhone.jpg")
 const lightningNetworkConnectionImage = require("./LittleDipper.jpg")
-const firstLightningPaymentImage = require("./LightningPayment.jpg")
+const firstLnPaymentImage = require("./LightningPayment.jpg")
 const inviteAFriendImage = require("./InviteFriends.jpg")
 const bankOnboardedImage = require("./BankAccount.jpg")
 const debitCardActivationImage = require("./Password1234.jpg")
@@ -165,13 +171,15 @@ export const RewardsScreen = inject("dataStore")(
     const { navigate, setParams } = useNavigation()
 
     const [ isRewardOpen, setRewardOpen ] = useState(false)
+    const [ quizzVisible, setQuizzVisible ] = useState(false)
+    const [ quizzData, setQuizzData ] = useState({})
     const [ currReward, setCurrReward ] = useState("")
     const [ loading, setLoading ] = useState(false)
     const [ err, setErr ] = useState("")
     const [ animation ] = useState(new Animated.Value(0))
 
     const open = (index) => {
-        setCurrReward(rewards[index].id)
+        setCurrReward(index)
         setParams({title: translate(`RewardsScreen\.${rewards[index].id}.title`)})
         setRewardOpen(!isRewardOpen)
     }
@@ -208,9 +216,26 @@ export const RewardsScreen = inject("dataStore")(
         }
     }, [err])
 
-    const actionWrapper = async (fn, msg = "") => {
-        await fn()
-        close(msg)
+    const action = async () => {
+        const closingMsg = translate(`RewardsScreen\.${rewards[currReward].id}.closingMsg`)
+
+        if (rewards[currReward].correct) {
+            setQuizzData({
+                closingMsg,
+                question: translate(`RewardsScreen\.${rewards[currReward].id}.question`),
+                answers: translate(`RewardsScreen\.${rewards[currReward].id}.answers`),
+                correct: rewards[currReward].correct,
+                action: rewards[currReward].action,
+            })
+            setQuizzVisible(true)
+        } else {
+            await rewards[currReward].action()
+            close(closingMsg)
+        }
+    }
+
+    const quizzClosing = () => {
+        setQuizzVisible(false)
     }
 
     const rewards = 
@@ -222,15 +247,21 @@ export const RewardsScreen = inject("dataStore")(
         },
         {
             id: 'sat',
-            action: () => dataStore.onboarding.add(Onboarding.sat),
-            closingMsg: "You earn 1 sat, the smallest unit of Bitcoin. Congrats!",
+            action: async () => dataStore.onboarding.add(Onboarding.sat),
             enabled: true,
+            correct: 2,
         },
         {
             id: 'custody',
-            action: () => dataStore.onboarding.add(Onboarding.custody),
-            closingMsg: "You've learnt one of the important property of Bitcoin, it can be self custodied!",
+            action: async () => dataStore.onboarding.add(Onboarding.custody),
             enabled: true,
+            correct: 1,
+        },
+        {
+            id: 'nonCustodial',
+            action: async () => dataStore.onboarding.add(Onboarding.nonCustodial),
+            enabled: true,
+            correct: 2,
         },
         {
             id: "backupWallet",
@@ -239,12 +270,42 @@ export const RewardsScreen = inject("dataStore")(
                 await sleep(2000)
                 await dataStore.onboarding.add(Onboarding.backupWallet)
             },
-            closingMsg: "Backup keys saved to iCloud",
             enabled: true,
         },
         {
+            id: 'fiatMoney',
+            action: async () => {
+                try {
+                    await YouTubeStandaloneIOS.playVideo("XNu5ppFZbHo")
+                    await dataStore.onboarding.add(Onboarding.fiatMoney)
+                } catch (err) {
+                    console.tron.error(err)
+                    Alert.alert(err.toString())
+                }
+            },
+            enabled: true,
+            correct: 2,
+        },
+        {
+            id: 'bitcoinUnique',
+            action: async () => dataStore.onboarding.add(Onboarding.bitcoinUnique),
+            enabled: true,
+        },
+        {
+            id: 'moneySupply',
+            action: async () => dataStore.onboarding.add(Onboarding.moneySupply),
+            enabled: true,
+            correct: 0,
+        },
+        {
+            id: 'creator',
+            action: async () => dataStore.onboarding.add(Onboarding.creator),
+            enabled: true,
+            correct: 2,
+        },
+        {
             id: "activateNotifications",
-            action: () => {
+            action: async () => {
 
                 Notifications.events().registerRemoteNotificationsRegistered(async (event: Registered) => {
                     console.tron.log("Registered For Remote Push", `Device Token: ${event.deviceToken}`)
@@ -270,29 +331,16 @@ export const RewardsScreen = inject("dataStore")(
             enabled: true,
         },
         {
-            id: 'rewardsVideo',
-            action: async () => {
-                try {
-                    await YouTubeStandaloneIOS.playVideo("XNu5ppFZbHo")
-                    await dataStore.onboarding.add(Onboarding.rewardsVideo)
-                } catch (err) {
-                    console.tron.error(err)
-                    Alert.alert(err.toString())
-                }
-            },
-            enabled: true,
-        },
-        {
             id: 'phoneVerification',
             action: () => navigate('welcomePhoneInput'),
             enabled: true,
         },
-        {
-            id: 'firstLightningPayment',
-            action: () => navigate('scanningQRCode'),
-            enabled: dataStore.lnd.statusFirstChannel == FirstChannelStatus.opened,
-            enabledMessage: translate(`RewardsScreen.channelNeeded`)
-        },
+        // {
+        //     id: 'firstLnPayment',
+        //     action: () => navigate('scanningQRCode'),
+        //     enabled: dataStore.lnd.statusFirstChannel == FirstChannelStatus.opened,
+        //     enabledMessage: translate(`RewardsScreen.channelNeeded`)
+        // },
         {
             id: "inviteAFriend",
             action: () => Alert.alert('TODO'),
@@ -339,7 +387,7 @@ export const RewardsScreen = inject("dataStore")(
         return (
             <Animated.View style={styles.item}>
                 <ParallaxImage 
-                    source={eval(`${item.id}Image`)} // FIXME security issue?
+                    source={eval(`${item.id}Image`)} 
                     containerStyle={isRewardOpen ? 
                         styles.imageContainerRewardsOpen: styles.imageContainerRewardsClosed
                     }
@@ -355,7 +403,7 @@ export const RewardsScreen = inject("dataStore")(
                         style={[{
                             height: animation.interpolate({
                                 inputRange: [0, 1],
-                                outputRange: ["0%", "50%"],
+                                outputRange: ["0%", "60%"],
                         }),
                             opacity: animation,
                         }]}>
@@ -378,7 +426,7 @@ export const RewardsScreen = inject("dataStore")(
                             isRewardOpen ?
                                 item.fullfilled ?
                                     close() :
-                                    actionWrapper(item.action, item.closingMsg) :
+                                    action() :
                                 open(index)
                         }} 
                         disabled={!item.enabled}
@@ -408,6 +456,12 @@ export const RewardsScreen = inject("dataStore")(
                 (dataStore.onboarding.stage.length === 1) &&
                 <Overlay screen="rewards" />
             }
+            <Quizz 
+                quizzVisible={quizzVisible}
+                quizzClosing={quizzClosing}
+                quizzData={quizzData}
+            />
+            <View style={{flex: 1}} />
             <Animated.View style={[styles.header]} >
                 { !isRewardOpen &&
                   <RewardsHeader /> 
@@ -425,7 +479,7 @@ export const RewardsScreen = inject("dataStore")(
                         styles.titleSats,
                     ]}>
                     {isRewardOpen ? 
-                        `${sats(currReward)}` :
+                        `${sats(rewards[currReward].id)}` :
                         I18n.toNumber(dataStore.balances({ 
                             currency: CurrencyType.BTC, 
                             account: AccountType.VirtualBitcoin
