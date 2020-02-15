@@ -233,7 +233,7 @@ export const SendBitcoinScreen: React.FC
             console.tron.log(result)
             if (result === true) {
                 setMessage('Payment succesfull')
-                await dataStore.onboarding.add(Onboarding.firstLightningPayment)
+                await dataStore.onboarding.add(Onboarding.firstLnPayment)
             } else {
                 setErr(result.toString())
             }

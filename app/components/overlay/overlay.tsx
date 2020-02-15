@@ -14,6 +14,13 @@ const styles = StyleSheet.create({
         margin: 30,
     },
 
+    modalTextCenter: {
+        color: palette.white,
+        textAlign: "center",
+        fontSize: 24,
+        margin: 30,
+    },
+
     modalBackground: {
         flex: 1,
         alignItems: "center",
@@ -42,11 +49,11 @@ const SvgComponent = (props) => {
 
 export const Overlay = ({screen}) => {
 
-    const [ isModalVisible, setModalVisible ] = useState(true)
+    const [ modalVisible, setModalVisible ] = useState(true)
 
     return (
         <Modal
-            visible={isModalVisible}
+            visible={modalVisible}
             transparent={true}
             animationType={"fade"}
             >
@@ -63,7 +70,7 @@ export const Overlay = ({screen}) => {
                     { screen == "rewards" && 
                     <>
                         <View style={{flex: 1}}></View>
-                        <Text style={styles.modalText}>{translate('Overlay.rewards')}</Text> 
+                        <Text style={styles.modalTextCenter}>{translate('Overlay.rewards')}</Text> 
                         <View style={{flex: 1}}></View>
                     </>
                     }

@@ -23,7 +23,7 @@
   },
   "Overlay": {
     "accounts": "Start by getting\nsome rewards!",
-    "rewards": "You got 500 sats for downloading the app! 🎁\n\nSwipe through our rewards to earn more sats"
+    "rewards": "You got 500 sats\nfor downloading the app!\n\n🎁 🎁 🎁\n\nSwipe through our rewards\nto earn more sats"
   },
   "GetStartedScreen": {
     "headline": "The Bank with Bitcoin Rewards",
@@ -54,23 +54,59 @@
     },
     "sat": {
       "title": "What is a sat?",
-      "text": "Sat is a small portion of a Bitcoin. The same way a dollar can be divided in 100 cts, a bitcoin can be divided in 100,000,000 sats!\n\nWhy is that important? As we'll learn down the road, divisbility is an important part of money. But for now, let's just remember that sats are a small part of a bitcoin :)"
+      "text": "Sat is a small portion of a Bitcoin. The same way a dollar can be divided in 100 cts, a bitcoin can be divided in 100,000,000 sats!\n\nWhy is that important?\n\nDivisibility is an important part of money. \n\nmaking bitcoin extremely divisible will allow many billion of people use and own bitcoin one day. You don't need to own a full bitcoin, you can just have a fraction of it. But for now, let's just remember that sats are a small part of a bitcoin :)",
+      "closingMsg": "You just earned 1 sat, the smallest unit of Bitcoin. Congrats!",
+      "question": "What is a sat?",
+      "answers": ["An alternative crypto currency", "A small satellite", "The smallest unit of Bitcoin"]
     },
     "custody": {
-      "title": "what is custody?",
-      "text": "Literally, custody means \"the protective care or guardianship of someone or something\".\n\nOk, that’s a boring definition, what does it mean for bitcoin or banking?\n\nWhen you give your money at your bank, they are taking custody. It basically means they are taking care of it.\n\nWith bitcoin, you can also give custody to someone else, like you would do for your bank, but you can also take self custody of your assets!\n\nIn that sense, this would be a little bit like cash. The money is in your wallet, if you lose it you’re out of luck.\n\nGaloy is what we call a “non custodial” wallet. It means money is in your pocket, right on your phone!"
+      "title": "What is custody?",
+      "text": "Literally, custody means \"the protective care or guardianship of someone or something\".\n\nOk, that’s a boring definition, what does it mean for bitcoin or banking?\n\nWhen you give your money at your bank, they are taking custody. It basically means they are taking care of it.\n\nWith bitcoin, you can also give custody to someone else, like a bank, but you can also take self custody of your assets!\n\nIn that sense, this would be a little bit like cash. The money is in your wallet, if you lose it you’re out of luck.\n\nGaloy is what we call a “non custodial” wallet. It means money is in your pocket, right on your phone!",
+      "question": "Which one is true?",
+      "answers": ["Bitcoin is like digital dollar, it has to be managed by a bank or a third party custodian", "Bitcoin can be self custodied", "Digital dollar can be self custodied"],
+      "closingMsg": "You've learnt one of the important property of Bitcoin, it can be self custodied!",
+    },
+    "nonCustodial": {
+      "title": "Self custody and keys",
+      "text": "A easy way to think about self custody is to think about cash. If you have a $20 bill in your pocket and you loose your wallet, you're out of luck! Similarly for bitcoin, but instead of a piece of paper, you have a digital key, that only you know\n\nThis key allows you to spend your bitcoin, which is why making sure this key is in a safe place is important!\n\nA digital key is just a very, very long number (about 80 digits long!). It's very long that it's impossible to find it other you have it",
+      "question": "Which one is true?",
+      "answers": ["Keys allows you to recover your email and password", "Keys should be shared with as many people as possible so that it won't be lost", "Your keys should be kept secretly as anybody who have access to them will be able to spend your bitcoin"],
+      "closingMsg": "Galoy is what we call a non custodial for your bitcoin. So you should take care of your keys!",
     },
     "backupWallet": {
       "title": "Backup wallet",
-      "text": "Now that you have some sats, you need to back up your wallet to iCloud so you never lose access to your bitcoin. \n\n Unlike traditional dollar, you own your bitcoin with keys stored in your mobile phone, which is why taking care of saving your keys is essential"
+      "text": "Now that you have some sats, and you know what is a digital key, you can back up your wallet to iCloud so you never lose access to your bitcoin. \n\nUnlike traditional dollar, you own your bitcoin with keys stored in your mobile phone, which is why taking care of saving your keys is essential",
+      "closingMsg": "Backup keys saved to iCloud",
+    },
+    "fiatMoney": {
+      "title": "What is fiat money?",
+      "text": "This video will give you some insights about what is behind fiat money, the money principle behind dollar, euros and today's every governement currency",
+      "question": "What is backing US dollar?",
+      "answers": ["Gold", "Silver", "Ability of governement to collect taxes and repay debt"],
+      "closingMsg": "That's correct, the dollar is not backed by Gold any longer since 1971!",
+    },
+    "bitcoinUnique": {
+      "title": "What makes bitcoin unique?",
+      "text": "There is a long list, and we'll go through it one by one:\n\nIt has predictible money supply\nHis creator is no longer around\nIt can be sent instantly around the world\nIt can't be forged",
+      "closingMsg": "Allright, let's dive into it!",
+    },
+    "moneySupply": {
+      "title": "Bitcoin money supply",
+      "text": "How many bitcoin will be created and how?\n\nThere will be 21 millions bitcoin in existance.\n\nThe reason there won't be more is because this number is hard coded in the bitcoin software, and everybody running the bitcoin software all over the world will be very unlikely to see this number be changed.\n\nAnd as bitcoin is decentralized and there is no one is charged, it's very difficult to try to change something like this.\n\nHow is bitcoin being created?\n\nEvery day, there are miners who looking for new bitcoin, solving a compute-intensive math problem. Every time they find a solution to this math problem, there are new bitcoin in existance.\n\nIt's a little bit like mining gold, but the difference for bitcoin is that we know the total number of bitcoin there will be in existance",
+      "question": "How many bitcoin will be created?",
+      "answers": ["21,000,000", "There is no maximum", "It's up to the central bank of Bitcoin"],
+      "closingMsg": "21 millions, that's it!",
+    },
+    "creator": {
+      "title": "Who created Bitcoin",
+      "text": "Bitcoin has a pretty unique story. On Decemberish 2008, a pseudonym under the name of Satoshi Nakamoto has share a paper called a 'Whitepaper' to a online group related to online money. After open sourcing the code couple of months later, and seeing other person had started contributing to the project, Natoshi Nakamo disappeared.\n\nIs it a good thing or a bad thing?\n\nEverybody will have their answer, but as a result of this, bitcoin is 'decentralized'. No one has really any control over it, and this is one of the strength of bitcoin, as no one is particularly in charge, it can't really be stopped.",
+      "question": "Who is Satoshi Nakamoto?",
+      "answers": ["A japanese developer", "The undercover name of Craig Wrigth", "We don't really know"],
+      "closingMsg": "The goal of Galoy is to educate you about Bitcoin, but unfortunately, we won't be able to tell you who is Satoshi Nakamoto!",
     },
     "activateNotifications": {
       "title": "Activate notifications",
       "text": "Enable notifications to get alerts when you receive payments in the future."
-    },
-    "rewardsVideo": {
-      "title": "Learn about Galoy",
-      "text": "Get to know why and how Galoy is doing Banking differently"
     },
     "channelCreated": {
       "title": "Open your first channel",
@@ -84,7 +120,7 @@
       "title": "Phone Number",
       "text": "We need to validate your phone number before we send you your rewards"
     },
-    "firstLightningPayment": {
+    "firstLnPayment": {
       "title": "⚡ First payment ⚡",
       "text": "Lightning is the revolutionary payment. Give it a try!"
     },
@@ -153,6 +189,8 @@
     "title": "Move Money",
     "needBankAccount": "This features require a bank account",
     "needWallet": "This features require a wallet",
+    "openAccount": "Open Account",
+    "openWallet": "Open Wallet",
   },
   "SendBitcoinScreen": {
     "title": "Send Bitcoin",
