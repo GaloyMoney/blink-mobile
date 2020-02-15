@@ -20,28 +20,35 @@ import { YouTubeStandaloneIOS } from "react-native-youtube"
 import { Overlay } from "../../components/overlay"
 import Svg, { Path } from "react-native-svg"
 import { Quizz } from "../../components/quizz"
+import { TouchableOpacity } from "react-native-gesture-handler"
 
 
-const defaultImage = require("./GreenPhone.jpg")
 const walletDownloadedImage = require("./GreenPhone.jpg")
 const satImage = require("./Sat.png")
+const freeMoneyImage = require("./freeMoney.jpg")
 const custodyImage = require("./SafeBank.jpg")
-const nonCustodialImage = require("./GreenPhone.jpg")
+const digitalKeysImage = require("./digitalKeys.jpg")
 const backupWalletImage = require("./backupWallet.jpg")
 const fiatMoneyImage = require("./fiatMoney.jpeg")
 const bitcoinUniqueImage = require("./GreenPhone.jpg")
 const moneySupplyImage = require("./MoneySupply.png")
-const creatorImage = require("./Creator.jpg")
+const volatilityImage = require("./volatility.jpeg")
 const activateNotificationsImage = require("./GlobalCommunications.jpg")
 const phoneVerificationImage = require("./GreenPhone.jpg")
 const lightningNetworkConnectionImage = require("./LittleDipper.jpg")
 const firstLnPaymentImage = require("./LightningPayment.jpg")
-const inviteAFriendImage = require("./InviteFriends.jpg")
+const transactionImage = require("./transaction.png")
+const paymentProcessingImage = require("./paymentProcessing.jpg")
+const privacyImage = require("./privacy.png")
+const creatorImage = require("./Creator.jpg")
+const decentralizationImage = require("./decentralization.jpeg")
 const bankOnboardedImage = require("./BankAccount.jpg")
 const debitCardActivationImage = require("./Password1234.jpg")
 const firstCardSpendingImage = require("./PointOfSale.jpg")
+const inviteAFriendImage = require("./InviteFriends.jpg")
 const activateDirectDepositImage = require("./GreenPhone.jpg")
-
+const energyImage = require("./energy.jpeg")
+const moneyLaunderingImage = require("./moneyLaundering.jpeg")
 
 const { width: screenWidth } = Dimensions.get('window')
 
@@ -252,14 +259,20 @@ export const RewardsScreen = inject("dataStore")(
             correct: 2,
         },
         {
+            id: 'freeMoney',
+            action: async () => dataStore.onboarding.add(Onboarding.freeMoney),
+            enabled: true,
+            correct: 0,
+        },
+        {
             id: 'custody',
             action: async () => dataStore.onboarding.add(Onboarding.custody),
             enabled: true,
             correct: 1,
         },
         {
-            id: 'nonCustodial',
-            action: async () => dataStore.onboarding.add(Onboarding.nonCustodial),
+            id: 'digitalKeys',
+            action: async () => dataStore.onboarding.add(Onboarding.digitalKeys),
             enabled: true,
             correct: 2,
         },
@@ -298,8 +311,8 @@ export const RewardsScreen = inject("dataStore")(
             correct: 0,
         },
         {
-            id: 'creator',
-            action: async () => dataStore.onboarding.add(Onboarding.creator),
+            id: 'volatility',
+            action: async () => dataStore.onboarding.add(Onboarding.volatility),
             enabled: true,
             correct: 2,
         },
@@ -342,6 +355,36 @@ export const RewardsScreen = inject("dataStore")(
         //     enabledMessage: translate(`RewardsScreen.channelNeeded`)
         // },
         {
+            id: 'transaction',
+            action: () => {},
+            enabled: false,
+            enabledMessage: translate(`common.soon`)
+        },
+        {
+            id: 'paymentProcessing',
+            action: () => {},
+            enabled: false,
+            enabledMessage: translate(`common.soon`)
+        },
+        {
+            id: 'privacy',
+            action: () => {},
+            enabled: false,
+            enabledMessage: translate(`common.soon`)
+        },
+        {
+            id: 'creator',
+            action: async () => dataStore.onboarding.add(Onboarding.creator),
+            enabled: true,
+            correct: 2,
+        },
+        {
+            id: 'decentralization',
+            action: () => {},
+            enabled: false,
+            enabledMessage: translate(`common.soon`)
+        },
+        {
             id: "inviteAFriend",
             action: () => Alert.alert('TODO'),
             enabled: dataStore.lnd.statusFirstChannel == FirstChannelStatus.opened,
@@ -371,6 +414,18 @@ export const RewardsScreen = inject("dataStore")(
             enabled: dataStore.onboarding.has(Onboarding["bankOnboarded"]),
             enabledMessage: translate(`RewardsScreen.bankingNeeded`)
         },
+        {
+            id: 'energy',
+            action: async () => {},
+            enabled: false,
+            enabledMessage: translate(`common.soon`)
+        },
+        {
+            id: 'moneyLaundering',
+            action: () => {},
+            enabled: false,
+            enabledMessage: translate(`common.soon`)
+        },
     ]
     
     rewards.forEach(item => item['fullfilled'] = dataStore.onboarding.has(Onboarding[item.id]))
@@ -381,18 +436,28 @@ export const RewardsScreen = inject("dataStore")(
         outputRange: [1, 0],
     })
 
-    const sats = (id) => `+${I18n.toNumber(OnboardingRewards[id], {precision: 0})} sats`
+    const plusSats = (id) => (
+         `+${I18n.t('sat', 
+            { count: OnboardingRewards[id], 
+              formatted_number: I18n.toNumber(OnboardingRewards[id], {precision: 0})
+        })}`)
 
     const renderItem = ({item, index}, parallaxProps) => {
         return (
             <Animated.View style={styles.item}>
-                <ParallaxImage 
-                    source={eval(`${item.id}Image`)} 
-                    containerStyle={isRewardOpen ? 
-                        styles.imageContainerRewardsOpen: styles.imageContainerRewardsClosed
-                    }
-                    {...parallaxProps}
-                    />
+                <TouchableOpacity 
+                    onPress={() => open(index)}
+                    disabled={isRewardOpen}
+                    activeOpacity={0.9}
+                    >
+                    <ParallaxImage 
+                        source={eval(`${item.id}Image`)} 
+                        containerStyle={isRewardOpen ? 
+                            styles.imageContainerRewardsOpen: styles.imageContainerRewardsClosed
+                        }
+                        {...parallaxProps}
+                        />
+                </TouchableOpacity>
                 <View style={styles.bottomItem}>
                     {   !isRewardOpen &&
                         <Text style={styles.itemTitle}>
@@ -400,6 +465,7 @@ export const RewardsScreen = inject("dataStore")(
                         </Text>
                     }
                     <Animated.ScrollView
+                        contentContainerStyle={{flexGrow: 1}}
                         style={[{
                             height: animation.interpolate({
                                 inputRange: [0, 1],
@@ -407,40 +473,44 @@ export const RewardsScreen = inject("dataStore")(
                         }),
                             opacity: animation,
                         }]}>
+                        <View style={{flex: 1}} />
                         { item.component ||
+                        <Animated.View style={{
+                            alignSelf: "center"}}
+                          >
                             <Animated.Text 
-                                persistentScrollbar={true}
-                                style={[ styles.text, ]}>
+                            persistentScrollbar={true}
+                            style={[ styles.text]}>
                                 { translate(`RewardsScreen\.${item.id}.text`) }
                             </Animated.Text>
+                        </Animated.View>
                         }
+                        <View style={{flex: 1}} />
                     </Animated.ScrollView>
                     <Animated.Text style={[styles.satsButton, {opacity: inverse}]}>
                         { item.rewards 
                         || OnboardingRewards[item.id] && 
-                          sats(item.id)
+                          plusSats(item.id)
                         }
                     </Animated.Text>
                     <Button 
-                        onPress={ () => {
-                            isRewardOpen ?
-                                item.fullfilled ?
-                                    close() :
-                                    action() :
-                                open(index)
-                        }} 
+                        onPress={() => {isRewardOpen ?
+                            item.fullfilled ?
+                                close() :
+                                action() :
+                            open(index)}} 
                         disabled={!item.enabled}
                         buttonStyle={item.fullfilled ? styles.buttonStyleDisabled : styles.textButton}
                         titleStyle={item.fullfilled ? styles.titleStyleDisabled : null}
                         // containerStyle={styles.}
                         title={ isRewardOpen ?
                                     item.fullfilled ?
-                                        "Close" :
-                                        'Get Rewards Now!' :
+                                        translate("common.close") :
+                                        translate("RewardsScreen.getRewardNow") :
                                     item.enabled ?
                                         item.fullfilled ?
-                                            'Reward earned' :
-                                            'Learn More' :
+                                            translate("RewardsScreen.rewardEarned") :
+                                            translate("common.learnMore") :
                                         item.enabledMessage
                             }
                         loading={loading}
@@ -479,7 +549,7 @@ export const RewardsScreen = inject("dataStore")(
                         styles.titleSats,
                     ]}>
                     {isRewardOpen ? 
-                        `${sats(rewards[currReward].id)}` :
+                        `${plusSats(rewards[currReward].id)}` :
                         I18n.toNumber(dataStore.balances({ 
                             currency: CurrencyType.BTC, 
                             account: AccountType.VirtualBitcoin
@@ -488,7 +558,7 @@ export const RewardsScreen = inject("dataStore")(
                 </Animated.Text>
                 { isRewardOpen &&
                     <Button 
-                    title="Close" 
+                    title={translate("common.close")} 
                     buttonStyle={styles.textButtonClose}
                     onPress={() => close()}
                     />

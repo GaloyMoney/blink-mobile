@@ -69,7 +69,7 @@ export const Quizz = ({quizzVisible, quizzClosing, quizzData }) => {
                                 onPress={() => {
                                     quizzData.correct === i ? 
                                         successAnswer() :
-                                        Alert.alert("Nope. try again")
+                                        Alert.alert("Nope. Try again")
                                 }}
                                 key={i}
                             />
