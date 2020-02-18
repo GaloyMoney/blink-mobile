@@ -40,12 +40,8 @@ export const Quizz = ({quizzVisible, quizzClosing, quizzData }) => {
         await quizzData.action()
         quizzClosing()
         await sleep(500) // FIXME
-        Alert.alert(quizzData.closingMsg)
+        Alert.alert(quizzData.feedback[quizzData.correct])
     }
-
-    console.tron.log(typeof quizzData.action)
-    console.tron.log(quizzData.action)
-    console.tron.log(quizzData)
 
     return (
         <Modal 
@@ -69,7 +65,7 @@ export const Quizz = ({quizzVisible, quizzClosing, quizzData }) => {
                                 onPress={() => {
                                     quizzData.correct === i ? 
                                         successAnswer() :
-                                        Alert.alert("Nope. Try again")
+                                        Alert.alert(quizzData.feedback[i])
                                 }}
                                 key={i}
                             />

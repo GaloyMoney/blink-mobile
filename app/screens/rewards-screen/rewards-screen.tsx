@@ -217,28 +217,48 @@ export const RewardsScreen = inject("dataStore")(
               text: "OK",
               onPress: () => {
                 setLoading(false)
+                setRewardOpen(false)
               },
             },
           ])
         }
     }, [err])
 
-    const action = async () => {
-        const closingMsg = translate(`RewardsScreen\.${rewards[currReward].id}.closingMsg`)
+    enum RewardType {
+        Text = "Text",
+        Video = "Video",
+        Action = "Action",
+    }
 
-        if (rewards[currReward].correct) {
-            setQuizzData({
-                closingMsg,
-                question: translate(`RewardsScreen\.${rewards[currReward].id}.question`),
-                answers: translate(`RewardsScreen\.${rewards[currReward].id}.answers`),
-                correct: rewards[currReward].correct,
-                action: rewards[currReward].action,
-            })
-            setQuizzVisible(true)
-        } else {
-            await rewards[currReward].action()
-            close(closingMsg)
+    const action = async () => {
+        const type = translate(`RewardsScreen\.${rewards[currReward].id}.type`) as RewardType
+
+        const feedback = translate(`RewardsScreen\.${rewards[currReward].id}.feedback`)
+        const correct = translate(`RewardsScreen\.${rewards[currReward].id}.correct`, {defaultValue: false})
+        const action = rewards[currReward].action
+
+        setQuizzData({
+            feedback,
+            correct,
+            action,
+            question: translate(`RewardsScreen\.${rewards[currReward].id}.question`),
+            answers: translate(`RewardsScreen\.${rewards[currReward].id}.answers`),
+        })
+
+        switch (RewardType[type]) {
+            case RewardType.Text:
+                setQuizzVisible(true)
+                break
+            case RewardType.Video:
+                await YouTubeStandaloneIOS.playVideo(translate(`RewardsScreen\.${rewards[currReward].id}.videoid`))
+                setQuizzVisible(true)
+                break
+            case RewardType.Action: 
+                await action()
+                close(feedback)
+                break
         }
+
     }
 
     const quizzClosing = () => {
@@ -256,25 +276,21 @@ export const RewardsScreen = inject("dataStore")(
             id: 'sat',
             action: async () => dataStore.onboarding.add(Onboarding.sat),
             enabled: true,
-            correct: 2,
         },
         {
             id: 'freeMoney',
             action: async () => dataStore.onboarding.add(Onboarding.freeMoney),
             enabled: true,
-            correct: 0,
         },
         {
             id: 'custody',
             action: async () => dataStore.onboarding.add(Onboarding.custody),
             enabled: true,
-            correct: 1,
         },
         {
             id: 'digitalKeys',
             action: async () => dataStore.onboarding.add(Onboarding.digitalKeys),
             enabled: true,
-            correct: 2,
         },
         {
             id: "backupWallet",
@@ -289,7 +305,6 @@ export const RewardsScreen = inject("dataStore")(
             id: 'fiatMoney',
             action: async () => {
                 try {
-                    await YouTubeStandaloneIOS.playVideo("XNu5ppFZbHo")
                     await dataStore.onboarding.add(Onboarding.fiatMoney)
                 } catch (err) {
                     console.tron.error(err)
@@ -297,7 +312,6 @@ export const RewardsScreen = inject("dataStore")(
                 }
             },
             enabled: true,
-            correct: 2,
         },
         {
             id: 'bitcoinUnique',
@@ -308,13 +322,11 @@ export const RewardsScreen = inject("dataStore")(
             id: 'moneySupply',
             action: async () => dataStore.onboarding.add(Onboarding.moneySupply),
             enabled: true,
-            correct: 0,
         },
         {
             id: 'volatility',
             action: async () => dataStore.onboarding.add(Onboarding.volatility),
             enabled: true,
-            correct: 2,
         },
         {
             id: "activateNotifications",
@@ -376,7 +388,6 @@ export const RewardsScreen = inject("dataStore")(
             id: 'creator',
             action: async () => dataStore.onboarding.add(Onboarding.creator),
             enabled: true,
-            correct: 2,
         },
         {
             id: 'decentralization',
