@@ -288,8 +288,8 @@
   }, 
   "MoveMoneyScreen": {
     "title": "Move Money",
-    "needBankAccount": "This features require a bank account",
-    "needWallet": "This features require a wallet",
+    "needBankAccount": "This feature require a bank account",
+    "needWallet": "This feature require a wallet",
     "openAccount": "Open Account",
     "openWallet": "Open Wallet",
   },
