@@ -1,7 +1,7 @@
 import * as React from "react"
 import { useState, useEffect } from "react"
 import { Screen } from "../../components/screen"
-import { StyleSheet, Alert, View, Dimensions, Platform, Animated, Image } from "react-native"
+import { StyleSheet, Alert, View, Dimensions, Platform, Animated } from "react-native"
 import { Text } from "../../components/text"
 import { color } from "../../theme"
 import { useNavigation } from "react-navigation-hooks"
@@ -238,13 +238,15 @@ export const RewardsScreen = inject("dataStore")(
         const correct = translate(`RewardsScreen\.${rewards[currReward].id}.correct`, {defaultValue: false})
         const action = rewards[currReward].action
 
-        setQuizzData({
-            feedback,
-            correct,
-            action,
-            question: translate(`RewardsScreen\.${rewards[currReward].id}.question`),
-            answers: translate(`RewardsScreen\.${rewards[currReward].id}.answers`),
-        })
+        if ([RewardType.Text, RewardType.Video].includes(RewardType[type])) {
+            setQuizzData({
+                feedback,
+                correct,
+                action,
+                question: translate(`RewardsScreen\.${rewards[currReward].id}.question`),
+                answers: translate(`RewardsScreen\.${rewards[currReward].id}.answers`),
+            })
+        }
 
         switch (RewardType[type]) {
             case RewardType.Text:
