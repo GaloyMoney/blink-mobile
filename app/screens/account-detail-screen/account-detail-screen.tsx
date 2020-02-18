@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
 
   viewModal: {
     justifyContent: 'flex-end',
-    padding: 20,
+    paddingHorizontal: 20,
     height: 240,
     backgroundColor: palette.white,
     alignItems: "center",
@@ -284,6 +284,7 @@ const HeaderWithBuySell = ({currency, account, dataStore, refresh}) => {
       <View style={styles.flex} />
     </TouchableWithoutFeedback>
       <View style={styles.viewModal}>
+      <Icon name={"ios-remove"} size={64} color={palette.lightGrey} style={{height: 34, top: -22}} />
       { !dataStore.onboarding.has(Onboarding.bankOnboarded) &&
           <>
             <Text style={[styles.itemText, {marginVertical: 12}]}>{translate("AccountDetailScreen.openAccount")}</Text>

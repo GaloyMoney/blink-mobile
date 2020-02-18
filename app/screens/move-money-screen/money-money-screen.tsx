@@ -11,7 +11,6 @@ import { palette } from "../../theme/palette"
 import { inject } from "mobx-react"
 import { Onboarding } from "types"
 import { translate } from "../../i18n"
-import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
 import { AccountType, FirstChannelStatus } from "../../utils/enum"
 
@@ -45,8 +44,8 @@ const styles = StyleSheet.create({
 
     viewModal: {
         justifyContent: 'flex-end',
-        padding: 20,
-        height: 180,
+        paddingHorizontal: 20,
+        height: 200,
         backgroundColor: palette.white,
         alignItems: "center",
     },
@@ -65,7 +64,7 @@ export const MoveMoneyScreen = inject("dataStore")(
     const { navigate } = useNavigation()
 
     const [ modalVisible, setModalVisible ] = useState(false);
-    const [ accountType, setAccountType ] = useState("") // FIXME enum account type
+    const [ feature, setFeature ] = useState(["", ""])
 
     const bank = [
         {
@@ -100,7 +99,7 @@ export const MoveMoneyScreen = inject("dataStore")(
         if (dataStore.onboarding.has(Onboarding.bankOnboarded)) {
             navigate(target, {title})
         } else {
-            setAccountType(AccountType.Bank)
+            setFeature([AccountType.Bank, target])
             setModalVisible(true)
         }
     }
@@ -109,7 +108,7 @@ export const MoveMoneyScreen = inject("dataStore")(
         if (dataStore.lnd.statusFirstChannel === FirstChannelStatus.opened) {
             navigate(target)
         } else {
-            setAccountType(AccountType.Bitcoin)
+            setFeature([AccountType.Bitcoin, target])
             setModalVisible(true)
         }
     }
@@ -129,24 +128,24 @@ export const MoveMoneyScreen = inject("dataStore")(
                 onSwipeComplete={() => setModalVisible(false)}
                 swipeThreshold={50}
             >
-                <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+                {/* <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
                     <View style={styles.flex} /> 
-                    {/* FIXME issue here?? */}
-                </TouchableWithoutFeedback>
+                </TouchableWithoutFeedback> */}
                 <View style={styles.flex} />
                 <View style={styles.viewModal}>
-                { accountType == AccountType.Bank &&
+                <Icon name={"ios-remove"} size={64} color={palette.lightGrey} style={{height: 34, top: -22}} />
+                { feature[0] == AccountType.Bank &&
                 <>
-                    <Text style={styles.text}>{translate("MoveMoneyScreen.needBankAccount")}</Text>
+                    <Text style={styles.text}>{translate("MoveMoneyScreen.needBankAccount", {feature: feature[1]})}</Text>
                     <Button title={translate("MoveMoneyScreen.openAccount")} onPress={() => {setModalVisible(false); navigate('openBankAccount')}}
                         buttonStyle={styles.button}
                         containerStyle={[styles.buttonContainer, {width: "100%"}]}
                     />
                 </>
                 }
-                { accountType == AccountType.Bitcoin &&
+                { feature[0] == AccountType.Bitcoin &&
                 <>
-                    <Text style={styles.text}>{translate("MoveMoneyScreen.needWallet")}</Text>
+                    <Text style={styles.text}>{translate("MoveMoneyScreen.needWallet", {feature: feature[1]})}</Text>
                     <Button title={translate("MoveMoneyScreen.openWallet")} onPress={() => {setModalVisible(false); navigate('rewards')}}
                         buttonStyle={styles.button}
                         containerStyle={[styles.buttonContainer, {width: "100%"}]}

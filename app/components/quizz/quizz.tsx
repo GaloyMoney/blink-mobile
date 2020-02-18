@@ -6,6 +6,7 @@ import Modal from "react-native-modal"
 import { Button } from "react-native-elements"
 import { color } from "../../theme"
 import { sleep } from "../../utils/sleep"
+import Icon from "react-native-vector-icons/Ionicons"
 
 
 const styles = StyleSheet.create({
@@ -16,7 +17,7 @@ const styles = StyleSheet.create({
 
     modalBackground: {
         justifyContent: 'flex-end',
-        padding: 20,
+        paddingHorizontal: 20,
         height: 400,
         backgroundColor: palette.white,
         alignItems: "center",
@@ -55,9 +56,10 @@ export const Quizz = ({quizzVisible, quizzClosing, quizzData }) => {
                 {/* <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
                     <View style={{flex: 1}}></View>
                 </TouchableWithoutFeedback> */}
-            </View> 
+            </View>
             { quizzData.question !== undefined &&
                 <View style={styles.modalBackground}>
+                    <Icon name={"ios-remove"} size={64} color={palette.lightGrey} style={{height: 34, top: -22}} />
                     <SafeAreaView style={{flex: 1}}> 
                         <Text style={styles.modalText}>{quizzData.question}</Text>
                         {quizzData.answers.map((l, i) => (
