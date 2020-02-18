@@ -51,6 +51,7 @@ const energyImage = require("./energy.jpeg")
 const moneyLaunderingImage = require("./moneyLaundering.jpeg")
 
 const { width: screenWidth } = Dimensions.get('window')
+const { height: screenHeight } = Dimensions.get('window')
 
 const styles = StyleSheet.create({
     item: {
@@ -480,8 +481,8 @@ export const RewardsScreen = inject("dataStore")(
                         style={[{
                             height: animation.interpolate({
                                 inputRange: [0, 1],
-                                outputRange: ["0%", "60%"],
-                        }),
+                                outputRange: ["0%", (screenHeight < 850) ? "52%": "65%"],
+                        }), // FIXME hack for iphone 8?
                             opacity: animation,
                         }]}>
                         <View style={{flex: 1}} />
