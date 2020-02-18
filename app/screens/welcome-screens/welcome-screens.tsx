@@ -94,7 +94,8 @@ export const WelcomeFirstScreen = inject("dataStore")(
         <OnboardingScreen image={presentLogo}>
           <Text style={styles.text}>{translate("WelcomeFirstScreen.earn")}</Text>
         </OnboardingScreen>
-        <Text style={styles.text}>{"\n\n\n"}</Text>
+        {/* FIXME */}
+        <Text style={styles.text}>{"\n\n"}</Text> 
       </Screen>
       <Screen>
         <OnboardingScreen image={dollarLogo}>
