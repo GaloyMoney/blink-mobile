@@ -191,6 +191,7 @@ export const WelcomePhoneInputScreen = withNavigation(({ navigation }) => {
 
         if (dataStore.lnd.syncedToChain) {
           result = await dataStore.lnd.openFirstChannel()
+          console.tron.log('Success opening channel', result)
         } else {
           // just go back, we'll open the channel once sync is done
           result = true
@@ -198,7 +199,9 @@ export const WelcomePhoneInputScreen = withNavigation(({ navigation }) => {
 
         if (result === true) {
           setLoading(false)
-          goBack('rewards')
+          // FIXME
+          goBack(null)
+          goBack(null)
         } else {
           setErr(result.toString())
         }

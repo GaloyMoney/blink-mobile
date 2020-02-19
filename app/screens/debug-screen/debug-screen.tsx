@@ -5,10 +5,10 @@ import { Screen } from "../../components/screen"
 import { Text } from "../../components/text"
 import { Button } from "../../components/button"
 import { Wallpaper } from "../../components/wallpaper"
-import { Header } from "../../components/header"
 import { QRCode } from "../../components/qrcode"
 import { color, spacing } from "../../theme"
 import { observer, inject } from "mobx-react"
+import firestore from "@react-native-firebase/firestore"
 
 import crashlytics from '@react-native-firebase/crashlytics'
 
@@ -173,13 +173,25 @@ export const DebugScreen = inject("dataStore")(observer(
     <View style={FULL}>
       <Wallpaper />
       <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
-        <Header
-          headerTx="debugScreen.howTo"
-          leftIcon="back"
-          style={HEADER}
-          titleStyle={HEADER_TITLE}
-        />
         <JSONTree data={json} />
+        <Button
+            style={DEMO}
+            textStyle={DEMO_TEXT}
+            text="Delete account and log out"
+            onPress={async () => {
+              if (auth().currentUser) {
+                try {
+                  await functions().httpsCallable("deleteCurrentUser")({})
+                } catch (err) {
+                  console.tron.error(err)
+                }
+              }
+              await auth().signOut()
+              await dataStore.onboarding._reset() // do not synchronize state update
+              await fileAction.deleteAllLndData()
+              Alert.alert("user succesfully deleted. Delete your app to start from a clean state")
+            }}
+          />
         <View>
           <Text>Open channels</Text>
           {dataStore.lnd.channels.map((item) => (
@@ -205,30 +217,27 @@ export const DebugScreen = inject("dataStore")(observer(
           ))}
         <VersionComponent />
         <View>
-          <Button
-            style={DEMO}
-            textStyle={DEMO_TEXT}
-            text="Delete account and log out"
-            onPress={async () => {
-              if (auth().currentUser) {
-                try {
-                  await functions().httpsCallable("deleteCurrentUser")({})
-                } catch (err) {
-                  console.tron.error(err)
-                }
-              }
-              await auth().signOut()
-              await dataStore.onboarding._reset() // do not synchronize state update
-              await fileAction.deleteAllLndData()
-              Alert.alert("user succesfully deleted. Delete your app to start from a clean state")
-            }}
-          />
           <Text>UID: {auth().currentUser?.uid}</Text>
           <Text>BTC price: {dataStore.rates.BTC}</Text>
           <Text>lnd error: {dataStore.lnd.error}</Text>
           <Text
             style={TAGLINE}
             text={dataStore.lnd.walletExist ? "Wallet exist" : "Wallet doesn't exist"}
+          />
+          <Button
+            style={DEMO}
+            textStyle={DEMO_TEXT}
+            text="Print $1,000"
+            onPress={() => functions().httpsCallable("dollarFaucet")({amount: 1000})}
+          />          
+          <Button
+            style={DEMO}
+            textStyle={DEMO_TEXT}
+            text="Delete onboarding state"
+            onPress={async () => {
+              await dataStore.onboarding._reset()
+              await firestore().doc(`users/${auth().currentUser?.uid}/collection/paid`).delete()
+            }}
           />
           <Button
             style={DEMO}
@@ -300,7 +309,7 @@ export const DebugScreen = inject("dataStore")(observer(
             style={DEMO}
             textStyle={DEMO_TEXT}
             text="open channel"
-            onPress={dataStore.lnd.openChannel}
+            onPress={dataStore.lnd.openFirstChannel}
           />
           <Button
             style={DEMO}
@@ -393,7 +402,7 @@ export const DebugScreen = inject("dataStore")(observer(
           <Button
             style={DEMO}
             textStyle={DEMO_TEXT}
-            text="Crash"
+            text="Crash test"
             onPress={() => {
               crashlytics().log('Testing crash');
               crashlytics().crash();
