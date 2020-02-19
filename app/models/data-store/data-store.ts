@@ -524,18 +524,6 @@ export const LndModel = BaseAccountModel.named("Lnd")
       }
     }),
 
-    openFirstChannel: flow(function*() {
-      try {
-        const result = yield functions().httpsCallable("openFirstChannel")({})
-        console.tron.log("opening a channel with Galoy node", result)
-        return result
-      } catch (err) {
-        console.tron.error(`impossible to open a channel ${err}`)
-        self.error = `${err}`
-        throw err
-      }
-    }),
-
     getInfo: flow(function*() {
       /**
        * An internal helper function to approximate the current progress while
@@ -644,7 +632,10 @@ export const LndModel = BaseAccountModel.named("Lnd")
       try {
         yield self.sendPubKey()
         yield self.connectGaloyPeer()
-        yield self.openFirstChannel()
+
+        const result = yield functions().httpsCallable("openFirstChannel")({})
+        console.tron.log("opening a channel with Galoy node", result)
+
         yield self.updatePendingChannels()
         return true
       } catch (err) {
