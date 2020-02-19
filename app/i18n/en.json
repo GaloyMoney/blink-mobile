@@ -95,7 +95,7 @@
       "text": "You can compared self custodied Bitcoin with cash.\n\nIf you have a $20 bill in your pocket and you lose your wallet, you're out of luck!\n\nFor bitcoin, instead of carrying a piece of paper, you have digital keys\n\nThose keys allows you to spend your bitcoin, which is why making sure those keys are in a safe place is important!\n\nA digital key is just a very, very long number (about 80 digits long!). It's astronomicaly long, so it's impossible for anyone to find it.\n\nAs a comparison, it would be easier to find a single grain of sands on earth than it would be to find a digitial key. This is the power of large number and cryptography!\n\nThis key is currently stored in a secure part of your phone.",
       "question": "Which one is true?",
       "answers": ["Keys allows you to recover your email and password", "Keys should be shared with as many people as possible so that it won't be lost", "Your keys should be kept secretly as anybody who have access to them will be able to spend your bitcoin"],
-      "feedback": ["Unlike with most existing website, there is no way to recover your keys using your email or phone number", "Digital keys to spend your bitcoin are private, anyone who has access to it will be able to spend your bitcoin", "Galoy is what we call a non custodial for your bitcoin. So you should take care of your keys!"],
+      "feedback": ["Unlike with most existing website, there is no way to recover your keys using your email or phone number", "Digital keys to spend your bitcoin are private, anyone who has access to it will be able to spend your bitcoin", "Galoy is what we call a non-custodial wallet for your bitcoin. So you should take care of your keys!"],
       "correct": 2,
     },
     "backupWallet": {
@@ -111,7 +111,7 @@
       "text": "This video will give you some insights about what is fiat money, the term used to describe today's dollar, euros other governements currency",
       "question": "What is backing US dollar?",
       "answers": ["Gold", "Fed", "Ability of governement to collect taxes and repay debt"],
-      "feedback": ["Not since the US governement end convertability of the dollar to golad in 1971", "The Fed is managing the USD currency, but is not backing it up", "That's correct, the dollar is not backed by Gold any longer since 1971!"],
+      "feedback": ["Not since the US governement end convertability of the dollar to golad in 1971", "The Fed is managing the USD currency, but is not backing it up", "That's correct, the dollar is not backed by gold anymore since 1971!"],
       "correct": 2,
     },
     "bitcoinUnique": {
@@ -119,8 +119,8 @@
       "title": "What makes bitcoin unique?",
       "text": "There is a long list, and we'll go through it one by one:\n\n- It has predictible money supply\n- The money supply is capped\n- It is highly divisible\n- It is borderless\n- Small transactions are settled in seconds, large transation takes about 1h\n- It can't be forged\n- His creator is no longer around",
       "question": "What does Bitcoin and the dollar have in common?",
-      "answers": ["They are (mostly) digital money", "They are both borderless", "They have both dynamic money supply aims at stabilizing the economy"],
-      "feedback": ["Correct! The dollar is already mostly digitized. Except cash, every transaction is pretty much already done in a digital form", "Being borderless is one of the strong differention of Bitcoin", "The supply of bitcoin can't be changed by central banks"],
+      "answers": ["They are (mostly) digital money", "They are both borderless", "They have both dynamic money supply aimed at stabilizing the economy"],
+      "feedback": ["Correct! The dollar is already mostly digitized. Except cash, every transaction is already done in a digital form", "Being borderless is one of the strong differention of Bitcoin", "Unlike the dollar, the supply of bitcoin can't be changed by central banks"],
       "correct": 0,
     },
     "moneySupply": {
@@ -265,7 +265,7 @@
   },
   "AccountDetailScreen": {
     "openAccount": "Open a Galoy bank account",
-    "openAccountReason": "To {{side}} bitcoin you will need a Galoy bank account, so you can transfer US Dollar",
+    "openAccountReason": "To {{side}} bitcoin, you need a Galoy bank account, so you can transfer US Dollar",
     "today": "Today",
     "yesterday": "Yesterday",
     "thisMonth": "This month",
@@ -282,11 +282,11 @@
   "BankAccountRewardsScreen": {
     "title": "Bank Account Rewards",
     "openAccount": "Open a Galoy bank account",
-    "accountsBenefits": "Hold US dollars in your account! Order a debit card to earn 1%+ cashback in bitcoin on your spending! And easily buy & sell bitcoin in-app.",
+    "accountsBenefits": "Hold US dollars in your account!\n\nOrder a debit card to earn 1%+ cashback in bitcoin on your dollar spending!\n\nAnd easily buy & sell bitcoin in-app.",
   },
   "OpenBankScreen": {
     "title": "Bank rewards",
-    "accountsBenefits": "You’re just a few minutes away from owning a Galoy bank account! Order a debit card to receive 1% bitcoin rewards on all spending.",
+    "accountsBenefits": "You’re just a few minutes away from owning a Galoy bank account!\n\nOrder a debit card to receive 1% bitcoin rewards on all spending!",
   },
   "PersonalInformationScreen": {
     "title": "Personnal informations",
@@ -298,7 +298,7 @@
   "MoveMoneyScreen": {
     "title": "Move Money",
     "needBankAccount": "Open a bank account to activate {{feature}}",
-    "needWallet": "This feature require a wallet",
+    "needWallet": "Validate your phone to open your wallet",
     "openAccount": "Open Account",
     "openWallet": "Open Wallet",
   },
