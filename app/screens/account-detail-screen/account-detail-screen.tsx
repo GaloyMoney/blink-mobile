@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
   viewModal: {
     justifyContent: 'flex-end',
     paddingHorizontal: 20,
-    height: 240,
+    height: 250,
     backgroundColor: palette.white,
     alignItems: "center",
   },
