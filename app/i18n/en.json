@@ -186,7 +186,7 @@
     },
     "privacy": {
       "title": "Is bitcoin private?",
-      "text": "TODO",
+      "text": "It's... complicated 🙂\n\nTransactions on the bitcoin are pseudonymous. It's like B5A35019 is sending money to 162BD1C0. It's not very indicative of who is sending money to who. But the difference between this and traditional payment network is that, every transaction in the protocol is public. This means everyone is the world, with an internet connection, can see that B5A35019 has sent money to 162BD1C0. For ever.\n\nIt's typically not like this in the ",
       "question": "",
       "answers": ["", "", ""],
       "feedback": "",
@@ -194,9 +194,9 @@
     "creator": {
       "type": "Text",
       "title": "Who created Bitcoin",
-      "text": "Bitcoin has a pretty unique story. On Decemberish 2008, a pseudonym under the name of Satoshi Nakamoto has share a paper called a 'Whitepaper' to a online group related to online money. After open sourcing the code couple of months later, and seeing other person had started contributing to the project, Natoshi Nakamo disappeared.\n\nIs it a good thing or a bad thing?\n\nEverybody will have their answer, but as a result of this, bitcoin is 'decentralized'. No one has really any control over it, and this is one of the strength of bitcoin, as no one is particularly in charge, it can't really be stopped.",
+      "text": "Bitcoin has a unique inception story. On Decemberish 2008, a pseudonym under the name of Satoshi Nakamoto has share a paper called a 'Whitepaper' to a online group related to online money. After open sourcing the code couple of months later, and seeing other person had started contributing to the project, Natoshi Nakamo disappeared.\n\nIs it a good thing or a bad thing?\n\nEverybody will have their answer, but as a result of this, bitcoin is 'decentralized'. No one has really any control over it, and this is one of the strength of bitcoin, as no one is particularly in charge, it can't really be stopped.",
       "question": "Who is Satoshi Nakamoto?",
-      "answers": ["A japanese developer", "The undercover name of Craig Wrigth", "We don't really know"],
+      "answers": ["A japanese developer", "The undercover name of Craig Wright", "We don't really know"],
       "feedback": ["Although Satoshi Nakamoto is clearly a Japanese pseudonym, we don't really who he is", "Oh, really 😮", "The goal of Galoy is to educate you about Bitcoin, but unfortunately, we won't be able to tell you who is Satoshi Nakamoto!"],
       "correct": 2,
     },
@@ -208,7 +208,7 @@
       "feedback": "The goal of Galoy is to educate you about Bitcoin, but unfortunately, we won't be able to tell you who is Satoshi Nakamoto!",
     },
     "scalability": {
-      "title": "Bitcoin will scale",
+      "title": "Does Bitcoin scale?\n\nA common critize to Bitcoin is that this doesn't scale. The network can currently process about 7 transactions/second.\n\nVisa, on the other side, can process 40,000 transactions/second\nIt's a big gap!!\n\nBut comparing visa and bitcoin is probably not that relevant. Visa aims to process transaction ",
       "text": "TODO",
       "question": "",
       "answers": ["", "", ""],
@@ -288,7 +288,7 @@
   }, 
   "MoveMoneyScreen": {
     "title": "Move Money",
-    "needBankAccount": "This feature require a bank account",
+    "needBankAccount": "Open a bank account to activate {{feature}}",
     "needWallet": "This feature require a wallet",
     "openAccount": "Open Account",
     "openWallet": "Open Wallet",

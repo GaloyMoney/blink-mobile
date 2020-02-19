@@ -462,8 +462,9 @@ export const LndModel = BaseAccountModel.named("Lnd")
         return
       }
 
+      let doc
       try {
-        var doc = yield firestore()
+        doc = yield firestore()
           .doc(`global/info`)
           .get()
       } catch (err) {
@@ -484,6 +485,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
         console.log(connection)
       } catch (err) {
         console.tron.warn(`can't connect to peer`, err.toString())
+        throw err
       }
     }),
 
@@ -522,9 +524,9 @@ export const LndModel = BaseAccountModel.named("Lnd")
       }
     }),
 
-    openChannel: flow(function*() {
+    openFirstChannel: flow(function*() {
       try {
-        const result = yield functions().httpsCallable("openChannel")({})
+        const result = yield functions().httpsCallable("openFirstChannel")({})
         console.tron.log("opening a channel with Galoy node", result)
         return result
       } catch (err) {
@@ -642,7 +644,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
       try {
         yield self.sendPubKey()
         yield self.connectGaloyPeer()
-        yield self.openChannel()
+        yield self.openFirstChannel()
         yield self.updatePendingChannels()
         return true
       } catch (err) {

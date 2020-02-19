@@ -234,7 +234,7 @@ export const RewardsScreen = inject("dataStore")(
     const action = async () => {
         const type = translate(`RewardsScreen\.${rewards[currReward].id}.type`) as RewardType
 
-        const feedback = translate(`RewardsScreen\.${rewards[currReward].id}.feedback`)
+        const feedback = translate(`RewardsScreen\.${rewards[currReward].id}.feedback`, {defaultValue: ""})
         const correct = translate(`RewardsScreen\.${rewards[currReward].id}.correct`, {defaultValue: false})
         const action = rewards[currReward].action
 

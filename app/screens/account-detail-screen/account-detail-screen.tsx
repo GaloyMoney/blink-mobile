@@ -54,8 +54,10 @@ const styles = StyleSheet.create({
   },
 
   headerSection: {
+    fontSize: 18,
     color: color.text,
-    margin: 22,
+    padding: 22,
+    backgroundColor: palette.white
   },
 
   icon: {
