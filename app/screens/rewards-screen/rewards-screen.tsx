@@ -548,7 +548,7 @@ export const RewardsScreen = inject("dataStore")(
             }
             <Quizz 
                 quizzVisible={quizzVisible}
-                quizzClosing={quizzClosing}
+                setQuizzVisible={setQuizzVisible}
                 quizzData={quizzData}
             />
             <View style={{flex: 1}} />
