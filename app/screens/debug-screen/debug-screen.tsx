@@ -173,6 +173,7 @@ export const DebugScreen = inject("dataStore")(observer(
         <VersionComponent />
         <View>
           <Text>UID: {auth().currentUser?.uid}</Text>
+          <Text>phone: {auth().currentUser?.phoneNumber}</Text>
           <Text>BTC price: {dataStore.rates.BTC}</Text>
           <Text>lnd error: {dataStore.lnd.error}</Text>
           <Text
