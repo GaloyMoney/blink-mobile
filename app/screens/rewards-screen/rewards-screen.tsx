@@ -32,6 +32,7 @@ const backupWalletImage = require("./backupWallet.jpg")
 const fiatMoneyImage = require("./fiatMoney.jpeg")
 const bitcoinUniqueImage = require("./GreenPhone.jpg")
 const moneySupplyImage = require("./MoneySupply.png")
+const newBitcoinImage = require("./newBitcoin.jpg")
 const volatilityImage = require("./volatility.jpeg")
 const activateNotificationsImage = require("./GlobalCommunications.jpg")
 const phoneVerificationImage = require("./GreenPhone.jpg")
@@ -236,13 +237,13 @@ export const RewardsScreen = inject("dataStore")(
 
         const feedback = translate(`RewardsScreen\.${rewards[currReward].id}.feedback`, {defaultValue: ""})
         const correct = translate(`RewardsScreen\.${rewards[currReward].id}.correct`, {defaultValue: false})
-        const action = rewards[currReward].action
+        const onComplete = rewards[currReward].onComplete
 
         if ([RewardType.Text, RewardType.Video].includes(RewardType[type])) {
             setQuizzData({
                 feedback,
                 correct,
-                action,
+                onComplete,
                 question: translate(`RewardsScreen\.${rewards[currReward].id}.question`),
                 answers: translate(`RewardsScreen\.${rewards[currReward].id}.answers`),
             })
@@ -253,11 +254,17 @@ export const RewardsScreen = inject("dataStore")(
                 setQuizzVisible(true)
                 break
             case RewardType.Video:
-                await YouTubeStandaloneIOS.playVideo(translate(`RewardsScreen\.${rewards[currReward].id}.videoid`))
-                setQuizzVisible(true)
+                try {
+                    await YouTubeStandaloneIOS.playVideo(translate(`RewardsScreen\.${rewards[currReward].id}.videoid`))
+                    console.tron.log("finish video")
+                    setQuizzVisible(true)
+                } catch (err) {
+                    console.tron.log("error video", err.toString())
+                    setQuizzVisible(false)
+                }
                 break
             case RewardType.Action: 
-                await action()
+                await onComplete()
                 close(feedback)
                 break
         }
@@ -272,32 +279,32 @@ export const RewardsScreen = inject("dataStore")(
     [
         {
             id: "walletDownloaded",
-            action: null,
+            onComplete: null,
             enabled: true,
         },
         {
             id: 'sat',
-            action: async () => dataStore.onboarding.add(Onboarding.sat),
+            onComplete: async () => dataStore.onboarding.add(Onboarding.sat),
             enabled: true,
         },
         {
             id: 'freeMoney',
-            action: async () => dataStore.onboarding.add(Onboarding.freeMoney),
+            onComplete: async () => dataStore.onboarding.add(Onboarding.freeMoney),
             enabled: true,
         },
         {
             id: 'custody',
-            action: async () => dataStore.onboarding.add(Onboarding.custody),
+            onComplete: async () => dataStore.onboarding.add(Onboarding.custody),
             enabled: true,
         },
         {
             id: 'digitalKeys',
-            action: async () => dataStore.onboarding.add(Onboarding.digitalKeys),
+            onComplete: async () => dataStore.onboarding.add(Onboarding.digitalKeys),
             enabled: true,
         },
         {
             id: "backupWallet",
-            action: async () => {
+            onComplete: async () => {
                 setLoading(true)
                 await sleep(2000)
                 await dataStore.onboarding.add(Onboarding.backupWallet)
@@ -306,34 +313,33 @@ export const RewardsScreen = inject("dataStore")(
         },
         {
             id: 'fiatMoney',
-            action: async () => {
-                try {
-                    await dataStore.onboarding.add(Onboarding.fiatMoney)
-                } catch (err) {
-                    console.tron.error(err)
-                    Alert.alert(err.toString())
-                }
-            },
+            onComplete: async () => dataStore.onboarding.add(Onboarding.fiatMoney),
             enabled: true,
         },
         {
             id: 'bitcoinUnique',
-            action: async () => dataStore.onboarding.add(Onboarding.bitcoinUnique),
+            onComplete: async () => dataStore.onboarding.add(Onboarding.bitcoinUnique),
             enabled: true,
         },
         {
             id: 'moneySupply',
-            action: async () => dataStore.onboarding.add(Onboarding.moneySupply),
+            onComplete: async () => dataStore.onboarding.add(Onboarding.moneySupply),
             enabled: true,
         },
         {
+            id: 'newBitcoin',
+            onComplete: () => {},
+            enabled: false,
+            enabledMessage: translate(`common.soon`),
+        },
+        {
             id: 'volatility',
-            action: async () => dataStore.onboarding.add(Onboarding.volatility),
+            onComplete: async () => dataStore.onboarding.add(Onboarding.volatility),
             enabled: true,
         },
         {
             id: "activateNotifications",
-            action: async () => {
+            onComplete: async () => {
 
                 Notifications.events().registerRemoteNotificationsRegistered(async (event: Registered) => {
                     console.tron.log("Registered For Remote Push", `Device Token: ${event.deviceToken}`)
@@ -360,83 +366,83 @@ export const RewardsScreen = inject("dataStore")(
         },
         {
             id: 'phoneVerification',
-            action: () => navigate('welcomePhoneInput'),
+            onComplete: () => navigate('welcomePhoneInput'),
             enabled: true,
         },
         // {
         //     id: 'firstLnPayment',
-        //     action: () => navigate('scanningQRCode'),
+        //     onComplete: () => navigate('scanningQRCode'),
         //     enabled: dataStore.lnd.statusFirstChannel == FirstChannelStatus.opened,
         //     enabledMessage: translate(`RewardsScreen.channelNeeded`)
         // },
         {
             id: 'transaction',
-            action: () => {},
+            onComplete: () => {},
             enabled: false,
             enabledMessage: translate(`common.soon`)
         },
         {
             id: 'paymentProcessing',
-            action: () => {},
+            onComplete: () => {},
             enabled: false,
             enabledMessage: translate(`common.soon`)
         },
         {
             id: 'privacy',
-            action: () => {},
+            onComplete: () => {},
             enabled: false,
             enabledMessage: translate(`common.soon`)
         },
         {
             id: 'creator',
-            action: async () => dataStore.onboarding.add(Onboarding.creator),
+            onComplete: async () => dataStore.onboarding.add(Onboarding.creator),
             enabled: true,
         },
         {
             id: 'decentralization',
-            action: () => {},
+            onComplete: () => {},
             enabled: false,
             enabledMessage: translate(`common.soon`)
         },
         {
             id: "inviteAFriend",
-            action: () => Alert.alert('TODO'),
+            onComplete: () => Alert.alert('TODO'),
             enabled: dataStore.lnd.statusFirstChannel == FirstChannelStatus.opened,
             enabledMessage: translate(`RewardsScreen.channelNeeded`)
         },
         {
             id: 'bankOnboarded',
-            action: () => navigate('openBankAccount'),
+            onComplete: () => navigate('openBankAccount'),
             enabled: true,
         },
         {
             id: "debitCardActivation",
-            action: () => Alert.alert('TODO'),
+            onComplete: () => Alert.alert('TODO'),
             enabled: dataStore.onboarding.has(Onboarding["bankOnboarded"]),
             enabledMessage: translate(`RewardsScreen.bankingNeeded`)
         },
         {
             id: "firstCardSpending",
-            action: () => Alert.alert('TODO'),
+            onComplete: () => Alert.alert('TODO'),
             enabled: dataStore.onboarding.has(Onboarding["bankOnboarded"]),
             enabledMessage: translate(`RewardsScreen.bankingNeeded`)
         },
         {
             id: "activateDirectDeposit",
             rewards: "1% card rewards!",
-            action: () => Alert.alert('TODO'),
+            onComplete: () => Alert.alert('TODO'),
             enabled: dataStore.onboarding.has(Onboarding["bankOnboarded"]),
             enabledMessage: translate(`RewardsScreen.bankingNeeded`)
         },
         {
             id: 'energy',
-            action: async () => {},
+            onComplete: async () => {},
             enabled: false,
             enabledMessage: translate(`common.soon`)
         },
         {
             id: 'moneyLaundering',
-            action: () => {},
+            onComplete: () => {},
             enabled: false,
             enabledMessage: translate(`common.soon`)
         },
