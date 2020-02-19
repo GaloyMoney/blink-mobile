@@ -29,17 +29,11 @@ const styles = StyleSheet.create({
     }
 })
 
-export const Quizz = ({quizzVisible, quizzClosing, quizzData }) => {
-
-    const [ modalVisible, setModalVisible ] = useState(false)
-
-    useEffect(() => {
-        setModalVisible(quizzVisible)
-    }, [quizzVisible]) 
+export const Quizz = ({quizzVisible, setQuizzVisible, quizzData }) => {
 
     const successAnswer = async () => {
         await quizzData.onComplete()
-        quizzClosing()
+        setQuizzVisible(false)
         await sleep(500) // FIXME
         Alert.alert(quizzData.feedback[quizzData.correct])
     }
@@ -47,9 +41,9 @@ export const Quizz = ({quizzVisible, quizzClosing, quizzData }) => {
     return (
         <Modal 
             style={{marginHorizontal: 0, marginBottom: 0}}
-            isVisible={modalVisible} 
-            swipeDirection={modalVisible ? ['down'] : ['up']}
-            onSwipeComplete={() => quizzClosing()}
+            isVisible={quizzVisible} 
+            swipeDirection={quizzVisible ? ['down'] : ['up']}
+            onSwipeComplete={() => setQuizzVisible(false)}
             swipeThreshold={50}
         >
             <View style={{flex: 1}}>
