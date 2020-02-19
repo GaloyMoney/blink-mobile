@@ -38,7 +38,7 @@ export const Quizz = ({quizzVisible, quizzClosing, quizzData }) => {
     }, [quizzVisible]) 
 
     const successAnswer = async () => {
-        await quizzData.action()
+        await quizzData.onComplete()
         quizzClosing()
         await sleep(500) // FIXME
         Alert.alert(quizzData.feedback[quizzData.correct])
