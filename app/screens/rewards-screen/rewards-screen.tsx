@@ -194,6 +194,7 @@ export const RewardsScreen = inject("dataStore")(
     }
     
     const close = (msg = "") => {
+        setQuizzVisible(false)
         setRewardOpen(false)
         setParams({title: null})
         setLoading(false)
@@ -256,6 +257,7 @@ export const RewardsScreen = inject("dataStore")(
             case RewardType.Video:
                 try {
                     await YouTubeStandaloneIOS.playVideo(translate(`RewardsScreen\.${rewards[currReward].id}.videoid`))
+                    await sleep(500) // FIXME why await for playVideo doesn't work?
                     console.tron.log("finish video")
                     setQuizzVisible(true)
                 } catch (err) {
@@ -269,10 +271,6 @@ export const RewardsScreen = inject("dataStore")(
                 break
         }
 
-    }
-
-    const quizzClosing = () => {
-        setQuizzVisible(false)
     }
 
     const rewards = 
@@ -514,10 +512,10 @@ export const RewardsScreen = inject("dataStore")(
                         }
                     </Animated.Text>
                     <Button 
-                        onPress={() => {isRewardOpen ?
+                        onPress={async () => {isRewardOpen ?
                             item.fullfilled ?
                                 close() :
-                                action() :
+                                await action() :
                             open(index)}} 
                         disabled={!item.enabled}
                         buttonStyle={item.fullfilled ? styles.buttonStyleDisabled : styles.textButton}
