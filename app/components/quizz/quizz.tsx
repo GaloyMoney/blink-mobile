@@ -28,10 +28,11 @@ const styles = StyleSheet.create({
   },
 })
 
-export const Quizz = ({ quizzVisible, setQuizzVisible, quizzData }) => {
+export const Quizz = ({ quizzVisible, setQuizzVisible, quizzData, setRewardOpen }) => {
   const successAnswer = async () => {
     await quizzData.onComplete()
     setQuizzVisible(false)
+    setRewardOpen(false)
     await sleep(500) // FIXME
     Alert.alert(quizzData.feedback[quizzData.correct])
   }
