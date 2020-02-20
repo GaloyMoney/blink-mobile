@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const Row = ({input, value}) => {
+const Row = ({ input, value }) => {
   return (
     <View style={styles.description}>
       <Text>{input}</Text>
@@ -105,10 +105,11 @@ export const TransactionDetailScreen: React.FC<> = () => {
       />
 
       <View style={styles.amountView}>
-        <Text style={styles.amountText}>You {spendOrReceive}{" "}
-        <TextCurrency amount={Math.abs(amount)} currencyUsed={currency} fontSize={18} />
+        <Text style={styles.amountText}>
+          You {spendOrReceive}{" "}
+          <TextCurrency amount={Math.abs(amount)} currencyUsed={currency} fontSize={18} />
         </Text>
-        {cashback !== undefined && 
+        {cashback !== undefined && (
           <Text style={styles.amountText}>
             and earned{" "}
             {currency(cashback, {
@@ -117,7 +118,7 @@ export const TransactionDetailScreen: React.FC<> = () => {
             }).format()}{" "}
             sats
           </Text>
-        }
+        )}
       </View>
 
       <View style={styles.iconView}>
@@ -126,7 +127,7 @@ export const TransactionDetailScreen: React.FC<> = () => {
       </View>
 
       <View>
-        { currency == CurrencyType.USD && 
+        {currency == CurrencyType.USD && (
           <View style={{ flexDirection: "row" }}>
             <View>
               <View style={styles.iconView}>
@@ -152,30 +153,28 @@ export const TransactionDetailScreen: React.FC<> = () => {
               }}
             />
           </View>
-        }
+        )}
       </View>
       <Row input="Description" value={name} />
-      { currency === CurrencyType.USD &&
+      {currency === CurrencyType.USD && (
         <>
           <Row input="Method" value="On mobile" />
           <Row input="Category" value={"BTC Exchange"} />
         </>
-      }
-      { account === AccountType.Bitcoin &&
+      )}
+      {account === AccountType.Bitcoin && (
         <>
           <Row input="Hash" value={shortenHash(id, 12)} />
-          { preimage && 
-            <Row input="Preimage" value={shortenHash(preimage, 12)} />
-          }
+          {preimage && <Row input="Preimage" value={shortenHash(preimage, 12)} />}
         </>
-      }
-      { account === AccountType.VirtualBitcoin  &&
+      )}
+      {account === AccountType.VirtualBitcoin && (
         <>
           <Row input="Status" value="Pending" />
         </>
-      }
+      )}
 
-      { currency === CurrencyType.USD &&      
+      {currency === CurrencyType.USD && (
         <View>
           {list.map((item, i) => (
             <ListItem
@@ -187,11 +186,11 @@ export const TransactionDetailScreen: React.FC<> = () => {
             />
           ))}
         </View>
-      }
+      )}
     </Screen>
   )
 }
 
 TransactionDetailScreen.navigationOptions = screenProps => ({
-  title: screenProps.navigation.getParam("name")
+  title: screenProps.navigation.getParam("name"),
 })

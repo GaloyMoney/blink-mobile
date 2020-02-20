@@ -1,5 +1,5 @@
-jest.mock('react-native-keychain', () => ({
-    setGenericPassword: jest.fn(),
-    getGenericPassword: jest.fn(),
-    resetGenericPassword: jest.fn()
-  }));
+jest.mock("react-native-keychain", () => ({
+  setGenericPassword: jest.fn(),
+  getGenericPassword: jest.fn(),
+  resetGenericPassword: jest.fn(),
+}))

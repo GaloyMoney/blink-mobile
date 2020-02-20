@@ -9,14 +9,12 @@ import { StyleSheet, View } from "react-native"
 
 import { color } from "../../theme"
 
-
-import Swiper from 'react-native-swiper'
+import Swiper from "react-native-swiper"
 import { translate } from "../../i18n"
 
 const bitcoinLogo = require("./BitcoinLogo.png")
 const dollarLogo = require("./DollarLogo.png")
 const presentLogo = require("./PresentLogo.png")
-
 
 const styles = StyleSheet.create({
   container: {
@@ -29,7 +27,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     padding: 20,
     height: 90,
-    resizeMode: 'center',
+    resizeMode: "center",
   },
 
   text: {
@@ -81,21 +79,33 @@ const styles = StyleSheet.create({
   },
 })
 
-export const WelcomeFirstScreen = inject("dataStore")(
-  ({ dataStore }) => {
-
+export const WelcomeFirstScreen = inject("dataStore")(({ dataStore }) => {
   const { navigate } = useNavigation()
 
   return (
-    <Swiper loop={false} 
-      activeDot={<View style={{backgroundColor: color.primary, width: 8, height: 8, borderRadius: 4, marginLeft: 3, marginRight: 3, marginTop: 3, marginBottom: 3,}} />}
-      >
+    <Swiper
+      loop={false}
+      activeDot={
+        <View
+          style={{
+            backgroundColor: color.primary,
+            width: 8,
+            height: 8,
+            borderRadius: 4,
+            marginLeft: 3,
+            marginRight: 3,
+            marginTop: 3,
+            marginBottom: 3,
+          }}
+        />
+      }
+    >
       <Screen>
         <OnboardingScreen image={presentLogo}>
           <Text style={styles.text}>{translate("WelcomeFirstScreen.earn")}</Text>
         </OnboardingScreen>
         {/* FIXME */}
-        <Text style={styles.text}>{"\n\n"}</Text> 
+        <Text style={styles.text}>{"\n\n"}</Text>
       </Screen>
       <Screen>
         <OnboardingScreen image={dollarLogo}>
@@ -104,10 +114,13 @@ export const WelcomeFirstScreen = inject("dataStore")(
         <Text style={styles.text}>{"\n\n\n"}</Text>
       </Screen>
       <Screen>
-        <OnboardingScreen action={async () => {
-          dataStore.onboarding.add(Onboarding.walletDownloaded)
-          navigate("primaryStack")
-        }} image={bitcoinLogo}>
+        <OnboardingScreen
+          action={async () => {
+            dataStore.onboarding.add(Onboarding.walletDownloaded)
+            navigate("primaryStack")
+          }}
+          image={bitcoinLogo}
+        >
           <Text style={styles.text}>{translate("WelcomeFirstScreen.wallet")}</Text>
         </OnboardingScreen>
       </Screen>

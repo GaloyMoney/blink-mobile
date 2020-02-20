@@ -2,7 +2,17 @@ import * as React from "react"
 import { useState, useEffect } from "react"
 import { observer, inject } from "mobx-react"
 
-import { View, SectionList, StyleSheet, RefreshControl, TouchableWithoutFeedback, Alert, Animated, ActivityIndicator, Linking } from "react-native"
+import {
+  View,
+  SectionList,
+  StyleSheet,
+  RefreshControl,
+  TouchableWithoutFeedback,
+  Alert,
+  Animated,
+  ActivityIndicator,
+  Linking,
+} from "react-native"
 
 import Modal from "react-native-modal"
 
@@ -26,7 +36,6 @@ import * as Progress from "react-native-progress"
 
 import { shortenHash } from "../../utils/helper"
 
-
 export interface AccountDetailScreenProps {
   account: AccountType
   dataStore: DataStore
@@ -34,13 +43,13 @@ export interface AccountDetailScreenProps {
 
 export interface AccountDetailItemProps {
   // TODO check validity of this interface
-  name: string,
-  amount: number,
-  cashback?: number,
-  currency: CurrencyType,
-  date: Date,
-  addr?: string,
-  index: number,
+  name: string
+  amount: number
+  cashback?: number
+  currency: CurrencyType
+  date: Date
+  addr?: string
+  index: number
   icon: string
 }
 
@@ -57,7 +66,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: color.text,
     padding: 22,
-    backgroundColor: palette.white
+    backgroundColor: palette.white,
   },
 
   icon: {
@@ -87,16 +96,16 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: color.primary
+    backgroundColor: color.primary,
   },
 
   buttonContainer: {
     paddingHorizontal: 15,
-    flex: 1
+    flex: 1,
   },
 
   viewModal: {
-    justifyContent: 'flex-end',
+    justifyContent: "flex-end",
     paddingHorizontal: 20,
     height: 250,
     backgroundColor: palette.white,
@@ -110,9 +119,9 @@ const styles = StyleSheet.create({
   text: {
     marginHorizontal: 20,
     marginBottom: 10,
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 16,
-    color: palette.darkGrey
+    color: palette.darkGrey,
   },
 
   fundingText: {
@@ -127,11 +136,10 @@ const styles = StyleSheet.create({
     alignContent: "center",
     width: "100%",
     marginVertical: 30,
-  }
-
+  },
 })
 
-const AccountDetailItem: React.FC<AccountDetailItemProps> = (props) => {
+const AccountDetailItem: React.FC<AccountDetailItemProps> = props => {
   const { navigate } = useNavigation()
 
   return (
@@ -163,7 +171,7 @@ const AccountDetailItem: React.FC<AccountDetailItemProps> = (props) => {
   )
 }
 
-const VisualExpiration = ({validUntil}) => {
+const VisualExpiration = ({ validUntil }) => {
   const [fadeAnim] = useState(new Animated.Value(0))
 
   React.useEffect(() => {
@@ -171,8 +179,8 @@ const VisualExpiration = ({validUntil}) => {
     const duration = validUntil * 1000 - Date.now() // ms
 
     Animated.timing(fadeAnim, {
-        toValue: 1,
-        duration, // ms
+      toValue: 1,
+      duration, // ms
     }).start()
   }, [validUntil])
 
@@ -182,18 +190,17 @@ const VisualExpiration = ({validUntil}) => {
         // ...style,
         width: fadeAnim.interpolate({
           inputRange: [0, 1],
-          outputRange: ['100%', '0%'],
+          outputRange: ["100%", "0%"],
         }),
         height: 5,
         backgroundColor: fadeAnim.__getValue() === 0 ? color.primaryDarker : color.transparent,
       }}
     />
-  );
+  )
 }
 
-const HeaderWithBuySell = ({currency, account, dataStore, refresh}) => {
-
-  const [side, setSide] = useState<Side>("buy");
+const HeaderWithBuySell = ({ currency, account, dataStore, refresh }) => {
+  const [side, setSide] = useState<Side>("buy")
 
   const [loading, setLoading] = useState(false)
   const [amount, setAmount] = useState(1000)
@@ -208,14 +215,14 @@ const HeaderWithBuySell = ({currency, account, dataStore, refresh}) => {
   const getQuote = async () => {
     try {
       setLoadingQuote(true)
-      await dataStore.exchange.quoteLNDBTC({side, satAmount: amount})
+      await dataStore.exchange.quoteLNDBTC({ side, satAmount: amount })
     } catch (err) {
       Alert.alert(err.toString())
     } finally {
       setLoadingQuote(false)
     }
   }
-  
+
   const executeTrade = async () => {
     try {
       let fn
@@ -236,7 +243,7 @@ const HeaderWithBuySell = ({currency, account, dataStore, refresh}) => {
         }
         setMessage("Success!")
       } else {
-        setMessage(translate('errors.generic'))
+        setMessage(translate("errors.generic"))
       }
     } catch (err) {
       setMessage(err.toString())
@@ -273,86 +280,110 @@ const HeaderWithBuySell = ({currency, account, dataStore, refresh}) => {
   }, [message])
 
   return (
-  <>
-    <Modal 
-      style={{marginHorizontal: 0, marginBottom: 0}}
-      onModalHide={onModalHide}
-      isVisible={modalVisible} 
-      swipeDirection={modalVisible ? ['down'] : ['up']}
-      onSwipeComplete={() => setModalVisible(false)}
-      swipeThreshold={50}
-    >
-    <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
-      <View style={styles.flex} />
-    </TouchableWithoutFeedback>
-      <View style={styles.viewModal}>
-      <Icon name={"ios-remove"} size={64} color={palette.lightGrey} style={{height: 34, top: -22}} />
-      { !dataStore.onboarding.has(Onboarding.bankOnboarded) &&
-          <>
-            <Text style={[styles.itemText, {marginVertical: 12}]}>{translate("AccountDetailScreen.openAccount")}</Text>
-            <Text style={[styles.itemText, {marginVertical: 12}]}>{translate("AccountDetailScreen.openAccountReason", {side})}</Text>
-            <Button title="Open account" 
-              onPress={() => {setModalVisible(false); navigate('openBankAccount')}}  
-              buttonStyle={styles.button}
-              containerStyle={[styles.buttonContainer, {width: "100%"}]}
-            />
-          </>
-      }
-      { dataStore.onboarding.has(Onboarding.bankOnboarded) &&
-        <>
-          <View style={{flexDirection: "row", alignContent: "center"}}>
-            <Text style={[styles.itemText, {paddingVertical: 12}]}>{translate("AccountDetailScreen.quote", {side})}</Text>
-            <TextInput value={amount.toString()} onChangeText={text => 
-                setAmount(isNaN(Number.parseInt(text)) ? 0 : Number.parseInt(text) )
-              } 
-                  style={styles.itemText} />
-          </View>
-          <Button title={`Get Quote`} onPress={getQuote} 
-                  buttonStyle={styles.button}
-                  disabled={loadingQuote}
-                  containerStyle={[styles.buttonContainer, {width: "100%"}]}
-            />
-            { loadingQuote && <ActivityIndicator size="small" color={color.primary} style={{height: 46}} />}
-            { !loadingQuote &&
-              <Text style={[styles.itemText, {paddingVertical: 12}]}>
-                {
-                  // TODO: make a component out of it
-                  !isNaN(dataStore.exchange.quote.satPrice) &&
-                  `Price: USD ${(dataStore.exchange.quote.satPrice * 100000000).toFixed(2)}`
-                  || " "
-                } 
+    <>
+      <Modal
+        style={{ marginHorizontal: 0, marginBottom: 0 }}
+        onModalHide={onModalHide}
+        isVisible={modalVisible}
+        swipeDirection={modalVisible ? ["down"] : ["up"]}
+        onSwipeComplete={() => setModalVisible(false)}
+        swipeThreshold={50}
+      >
+        <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+          <View style={styles.flex} />
+        </TouchableWithoutFeedback>
+        <View style={styles.viewModal}>
+          <Icon
+            name={"ios-remove"}
+            size={64}
+            color={palette.lightGrey}
+            style={{ height: 34, top: -22 }}
+          />
+          {!dataStore.onboarding.has(Onboarding.bankOnboarded) && (
+            <>
+              <Text style={[styles.itemText, { marginVertical: 12 }]}>
+                {translate("AccountDetailScreen.openAccount")}
               </Text>
-            }
-          <View style={[styles.buttonContainer, {width: "100%"}]}>
-            <VisualExpiration validUntil={dataStore.exchange.quote.validUntil} />
-            <Button title={`Validate Quote`} onPress={executeTrade} 
-              disabled={loading || isNaN(dataStore.exchange.quote.satPrice)}
-              loading={loading}
-              buttonStyle={styles.button}
+              <Text style={[styles.itemText, { marginVertical: 12 }]}>
+                {translate("AccountDetailScreen.openAccountReason", { side })}
+              </Text>
+              <Button
+                title="Open account"
+                onPress={() => {
+                  setModalVisible(false)
+                  navigate("openBankAccount")
+                }}
+                buttonStyle={styles.button}
+                containerStyle={[styles.buttonContainer, { width: "100%" }]}
               />
-          </View>
-        </>
-      }
-      </View>
-    </Modal>
-    <BalanceHeader headingCurrency={currency} accountsToAdd={account} />
-    <View style={styles.horizontal}>
-      <Button title="Buy"
-        buttonStyle={styles.button}
-        containerStyle={styles.buttonContainer}
-        onPress={onBuyInit}
+            </>
+          )}
+          {dataStore.onboarding.has(Onboarding.bankOnboarded) && (
+            <>
+              <View style={{ flexDirection: "row", alignContent: "center" }}>
+                <Text style={[styles.itemText, { paddingVertical: 12 }]}>
+                  {translate("AccountDetailScreen.quote", { side })}
+                </Text>
+                <TextInput
+                  value={amount.toString()}
+                  onChangeText={text =>
+                    setAmount(isNaN(Number.parseInt(text)) ? 0 : Number.parseInt(text))
+                  }
+                  style={styles.itemText}
+                />
+              </View>
+              <Button
+                title={`Get Quote`}
+                onPress={getQuote}
+                buttonStyle={styles.button}
+                disabled={loadingQuote}
+                containerStyle={[styles.buttonContainer, { width: "100%" }]}
+              />
+              {loadingQuote && (
+                <ActivityIndicator size="small" color={color.primary} style={{ height: 46 }} />
+              )}
+              {!loadingQuote && (
+                <Text style={[styles.itemText, { paddingVertical: 12 }]}>
+                  {// TODO: make a component out of it
+                  (!isNaN(dataStore.exchange.quote.satPrice) &&
+                    `Price: USD ${(dataStore.exchange.quote.satPrice * 100000000).toFixed(2)}`) ||
+                    " "}
+                </Text>
+              )}
+              <View style={[styles.buttonContainer, { width: "100%" }]}>
+                <VisualExpiration validUntil={dataStore.exchange.quote.validUntil} />
+                <Button
+                  title={`Validate Quote`}
+                  onPress={executeTrade}
+                  disabled={loading || isNaN(dataStore.exchange.quote.satPrice)}
+                  loading={loading}
+                  buttonStyle={styles.button}
+                />
+              </View>
+            </>
+          )}
+        </View>
+      </Modal>
+      <BalanceHeader headingCurrency={currency} accountsToAdd={account} />
+      <View style={styles.horizontal}>
+        <Button
+          title="Buy"
+          buttonStyle={styles.button}
+          containerStyle={styles.buttonContainer}
+          onPress={onBuyInit}
         />
-      <Button title="Sell"
-        buttonStyle={styles.button}
-        containerStyle={styles.buttonContainer}
-        onPress={onSellInit}  
-        />  
-    </View>
-  </>
-)}
+        <Button
+          title="Sell"
+          buttonStyle={styles.button}
+          containerStyle={styles.buttonContainer}
+          onPress={onSellInit}
+        />
+      </View>
+    </>
+  )
+}
 
-const formatTransactions = (transactions) => {
-  
+const formatTransactions = transactions => {
   const sections = []
   const today = []
   const yesterday = []
@@ -361,19 +392,20 @@ const formatTransactions = (transactions) => {
 
   transactions = transactions.slice().sort((a, b) => (a.date > b.date ? -1 : 1)) // warning without slice?
 
-  const isToday = (tx) => {
+  const isToday = tx => {
     return sameDay(tx.date, new Date())
   }
 
-  const isYesterday = (tx) => {
+  const isYesterday = tx => {
     return sameDay(tx.date, new Date().setDate(new Date().getDate() - 1))
   }
 
-  const isThisMonth = (tx) => {
+  const isThisMonth = tx => {
     return sameMonth(tx.date, new Date())
   }
 
-  while(transactions.length) { // this could be optimized
+  while (transactions.length) {
+    // this could be optimized
     let tx = transactions.shift()
     if (isToday(tx)) {
       today.push(tx)
@@ -385,7 +417,7 @@ const formatTransactions = (transactions) => {
       before.push(tx)
     }
   }
-  
+
   if (today.length > 0) {
     sections.push({ title: translate("AccountDetailScreen.today"), data: today })
   }
@@ -405,17 +437,15 @@ const formatTransactions = (transactions) => {
   return sections
 }
 
-export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
-  = inject("dataStore")(
-    observer(({ dataStore }) => {
-
+export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = inject("dataStore")(
+  observer(({ dataStore }) => {
     const account = useNavigationParam("account")
 
     let accountStore
 
     // should have a generic mapping here, could use mst for it?
     switch (account) {
-      case AccountType.Bank: 
+      case AccountType.Bank:
         accountStore = dataStore.fiat
         break
       case AccountType.Bitcoin:
@@ -426,9 +456,9 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
         break
     }
 
-    const [refreshing, setRefreshing] = useState(false);
-    const [sections, setSections] = useState(formatTransactions(accountStore.transactions));
-        
+    const [refreshing, setRefreshing] = useState(false)
+    const [sections, setSections] = useState(formatTransactions(accountStore.transactions))
+
     const currency = accountStore.currency
 
     const refresh = async () => {
@@ -450,25 +480,25 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
       Linking.openURL(`https://blockstream.info/testnet/tx/${dataStore.lnd.fundingTx}`).catch(err =>
         console.error("Couldn't load page", err),
       )
-  }
+    }
 
     return (
       <Screen>
-        { account == AccountType.Bitcoin && 
-          <HeaderWithBuySell currency={currency} account={account}
-            dataStore={dataStore} refresh={refresh} />
-        }
-        { account != AccountType.Bitcoin && 
+        {account == AccountType.Bitcoin && (
+          <HeaderWithBuySell
+            currency={currency}
+            account={account}
+            dataStore={dataStore}
+            refresh={refresh}
+          />
+        )}
+        {account != AccountType.Bitcoin && (
           <BalanceHeader headingCurrency={currency} accountsToAdd={account} />
-        }
-        { sections.length === 0 && 
-          <Text>No transaction to show</Text>
-        }
-        { sections.length > 0 && 
+        )}
+        {sections.length === 0 && <Text>No transaction to show</Text>}
+        {sections.length > 0 && (
           <SectionList
-            refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
+            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
             renderItem={({ item, index, section }) => (
               <AccountDetailItem account={account} currency={currency} {...item} />
             )}
@@ -477,29 +507,36 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps>
             )}
             sections={sections}
             keyExtractor={(item, index) => item + index}
-        />
-        }
-        { (account == AccountType.VirtualBitcoin && dataStore.lnd.statusFirstChannel == FirstChannelStatus.pending) &&
-          <View style={styles.sync}>
-            <Text style={styles.fundingText} onPress={showFundingTx}>
-              { translate(`RewardsScreen.channelCreated.fundingTx`, {tx: shortenHash(dataStore.lnd.fundingTx)}) }
-            </Text>
-          </View>
-          || !dataStore.lnd.syncedToChain &&
-          <View style={styles.sync}>
-            <Text style={[styles.text]}>
-              { translate(`RewardsScreen.channelCreated.syncing`) }{" "}{(dataStore.lnd.percentSynced * 100).toFixed(2)}%
-            </Text>
-            <Progress.Bar
+          />
+        )}
+        {(account == AccountType.VirtualBitcoin &&
+          dataStore.lnd.statusFirstChannel == FirstChannelStatus.pending && (
+            <View style={styles.sync}>
+              <Text style={styles.fundingText} onPress={showFundingTx}>
+                {translate(`RewardsScreen.channelCreated.fundingTx`, {
+                  tx: shortenHash(dataStore.lnd.fundingTx),
+                })}
+              </Text>
+            </View>
+          )) ||
+          (!dataStore.lnd.syncedToChain && (
+            <View style={styles.sync}>
+              <Text style={[styles.text]}>
+                {translate(`RewardsScreen.channelCreated.syncing`)}{" "}
+                {(dataStore.lnd.percentSynced * 100).toFixed(2)}%
+              </Text>
+              <Progress.Bar
                 style={styles.progressBar}
                 color={color.primary}
                 progress={dataStore.lnd.percentSynced}
-            />
-          </View> 
-        }
+              />
+            </View>
+          ))}
       </Screen>
-)}))
+    )
+  }),
+)
 
 AccountDetailScreen.navigationOptions = screenProps => ({
-  title: screenProps.navigation.getParam("account")
+  title: screenProps.navigation.getParam("account"),
 })

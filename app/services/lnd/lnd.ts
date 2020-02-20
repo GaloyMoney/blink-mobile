@@ -4,12 +4,10 @@ import IpcAction from "./ipc"
 import LogAction from "./log"
 import { LndStore } from "../../models/data-store/data-store"
 import { poll } from "../../utils/poll"
-import RNDeviceInfo from 'react-native-device-info';
-import RNiCloudStorage from 'react-native-icloudstore';
+import RNDeviceInfo from "react-native-device-info"
+import RNiCloudStorage from "react-native-icloudstore"
 
-
-const SCB_KEY = 'channel.backup';
-
+const SCB_KEY = "channel.backup"
 
 export class Lnd {
   grpc: GrpcAction
@@ -36,19 +34,18 @@ export class Lnd {
   }
 
   get itemKey() {
-    return `${this.shortId}_${SCB_KEY}`;
+    return `${this.shortId}_${SCB_KEY}`
   }
 
   get shortId() {
-    return RNDeviceInfo
-      .getUniqueId()
-      .replace(/-/g, '')
+    return RNDeviceInfo.getUniqueId()
+      .replace(/-/g, "")
       .slice(0, 7)
-      .toLowerCase();
+      .toLowerCase()
   }
 
   async pushChannelBackup(data) {
-    console.tron.log('pushChannelBackup', data)
+    console.tron.log("pushChannelBackup", data)
     this.pushToICloud(data)
     // if (this._Platform.OS === 'ios') {
     //   await this.pushToICloud();
@@ -57,31 +54,31 @@ export class Lnd {
     // }
   }
 
-  async pushToICloud({multiChanBackup}) {
+  async pushToICloud({ multiChanBackup }) {
     try {
-      await RNiCloudStorage.setItem(this.itemKey, JSON.stringify(multiChanBackup));
+      await RNiCloudStorage.setItem(this.itemKey, JSON.stringify(multiChanBackup))
     } catch (err) {
       // FIXME probably needs to be registered on iCloud?
-      Alert.alert('Syncing data to iCloud failed', err);
-      console.tron.error('Uploading channel backup to iCloud failed', err);
+      Alert.alert("Syncing data to iCloud failed", err)
+      console.tron.error("Uploading channel backup to iCloud failed", err)
     }
   }
 
   async getBackup() {
     try {
-      const backup = await RNiCloudStorage.getItem(this.itemKey);
-      console.tron.log('backup: ', backup)
-      console.log('backup: ', backup)
+      const backup = await RNiCloudStorage.getItem(this.itemKey)
+      console.tron.log("backup: ", backup)
+      console.log("backup: ", backup)
     } catch (err) {
-      console.tron.error('Error fetching channel backup from iCloud', err);
+      console.tron.error("Error fetching channel backup from iCloud", err)
     }
   }
 
   async setCallback() {
     const streamOnChainTransactions = this.grpc.sendStreamCommand("subscribeTransactions")
     const streamInvoices = this.grpc.sendStreamCommand("subscribeInvoices")
-    const streamChannelBackup = this.grpc.sendStreamCommand('subscribeChannelBackups');
-    const streamChannelEvents = this.grpc.sendStreamCommand('subscribeChannelEvents');
+    const streamChannelBackup = this.grpc.sendStreamCommand("subscribeChannelBackups")
+    const streamChannelEvents = this.grpc.sendStreamCommand("subscribeChannelEvents")
 
     new Promise((resolve, reject) => {
       streamOnChainTransactions.on("data", async data => {
@@ -107,28 +104,31 @@ export class Lnd {
     }).catch(err => console.tron.error("err with streamInvoices", err))
 
     new Promise((resolve, reject) => {
-      streamChannelBackup.on('data', (data) => this.pushChannelBackup(data));
-      streamChannelBackup.on('error', err => console.tron.error('Channel backup error:', err));
-      streamChannelBackup.on('status', status => console.tron.info(`Channel backup status: ${status}`));
+      streamChannelBackup.on("data", data => this.pushChannelBackup(data))
+      streamChannelBackup.on("error", err => console.tron.error("Channel backup error:", err))
+      streamChannelBackup.on("status", status =>
+        console.tron.info(`Channel backup status: ${status}`),
+      )
     }).catch(err => console.tron.error("err with streamChannelBackup", err))
 
     new Promise((resolve, reject) => {
-      streamChannelEvents.on('data', async (data) => {
-        console.tron.log('streamChannelEvents', data)
+      streamChannelEvents.on("data", async data => {
+        console.tron.log("streamChannelEvents", data)
         await this.lndStore.updatePendingChannels()
         await this.lndStore.listChannels()
       })
-      streamChannelEvents.on('error', err => console.tron.error('streamChannelEvents error:', err));
-      streamChannelEvents.on('status', status => console.tron.info(`streamChannelEvents status: ${status}`));
+      streamChannelEvents.on("error", err => console.tron.error("streamChannelEvents error:", err))
+      streamChannelEvents.on("status", status =>
+        console.tron.info(`streamChannelEvents status: ${status}`),
+      )
     }).catch(err => console.tron.error("err with streamChannelBackup", err))
-
   }
 
   async openWallet() {
-    console.tron.log('open Wallet', this.lndStore)
+    console.tron.log("open Wallet", this.lndStore)
     await this.lndStore.initState()
 
-    console.tron.log('walletExist: ', this.lndStore?.walletExist)
+    console.tron.log("walletExist: ", this.lndStore?.walletExist)
     if (this.lndStore?.walletExist) {
       await this.lndStore.unlockWallet()
     } else {

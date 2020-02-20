@@ -8,7 +8,6 @@ import { clear } from "../../utils/storage"
 import { NativeModules } from "react-native"
 import DeviceInfo from "react-native-device-info"
 
-
 // Teach TypeScript about the bad things we want to do.
 declare global {
   interface Console {
@@ -66,7 +65,6 @@ export class Reactotron {
    * @param config the configuration
    */
   constructor(config: ReactotronConfig = DEFAULT_REACTOTRON_CONFIG) {
-    
     // DeviceInfo.isEmulator().then(isEmulator => {
     //   if (isEmulator) {
     //     functions().useFunctionsEmulator("http://localhost:5000")

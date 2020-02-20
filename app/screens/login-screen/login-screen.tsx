@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
     backgroundColor: color.primary,
   },
 
-
   sub: {
     fontSize: 18,
     marginBottom: 48,
@@ -54,10 +53,9 @@ const styles = StyleSheet.create({
   },
 })
 
-
-export const GetStartedScreen = withNavigation(inject("dataStore")(
+export const GetStartedScreen = withNavigation(
+  inject("dataStore")(
     observer(({ dataStore, navigation }) => {
-
       return (
         <Screen style={styles.container}>
           <Text style={styles.title} onPress={() => navigation.navigate("debug")}>
@@ -75,7 +73,6 @@ export const GetStartedScreen = withNavigation(inject("dataStore")(
           </View>
         </Screen>
       )
-
     }),
   ),
 )
