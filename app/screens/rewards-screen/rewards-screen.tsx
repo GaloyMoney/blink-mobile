@@ -542,6 +542,7 @@ export const RewardsScreen = inject("dataStore")(
           quizzVisible={quizzVisible}
           setQuizzVisible={setQuizzVisible}
           quizzData={quizzData}
+          setRewardOpen={setRewardOpen}
         />
         <View style={{ flex: 1 }} />
         <Animated.View style={[styles.header]}>
