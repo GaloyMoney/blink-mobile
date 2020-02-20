@@ -77,7 +77,7 @@
       "text": "Wait! What's the catch?\n\nThat's correct, we are giving you micro rewards so you can try bitcoin and spend some time educating yourself.\n\nThe way we think we will benefit from it is because you may consider to open an account with us if you understand more what is bitcoin and why you should care about it.",
       "question": "Why does Galoy gives free bitcoin?",
       "answers": ["By educating yourself about bitcoin, we think you may want to get more and open an account with us", "We print new bitcoin for every new customer we have to give it away", "By monetizing your data with third party"],
-      "feedback": ["You just earned another 50 sats. We hope those micros rewards will attire your curiosity on Bitcoin", "No one can print new bitcoin at will", "One of the funding principle of Galoy is to respect individual privacy, so we are not looking to monetize any of your data"],
+      "feedback": ["You just earned another 50 sats. We hope those micro rewards will get your attention on Bitcoin", "No one can print new bitcoin at will", "One of the founding principle of Galoy is to respect individual privacy, so we are not looking to monetize any of your data"],
       "correct": 0
     },
     "custody": {
@@ -92,10 +92,10 @@
     "digitalKeys": {
       "type": "Text",
       "title": "Digital keys",
-      "text": "You can compared self custodied Bitcoin with cash.\n\nIf you have a $20 bill in your pocket and you lose your wallet, you're out of luck!\n\nFor bitcoin, instead of carrying a piece of paper, you have digital keys\n\nThose keys allows you to spend your bitcoin, which is why making sure those keys are in a safe place is important!\n\nA digital key is just a very, very long number (about 80 digits long!). It's astronomicaly long, so it's impossible for anyone to find it.\n\nAs a comparison, it would be easier to find a single grain of sands on earth than it would be to find a digitial key. This is the power of large number and cryptography!\n\nThis key is currently stored in a secure part of your phone.",
+      "text": "You can compared self custodied Bitcoin with cash.\n\nIf you have a $20 bill in your pocket and you lose your wallet, you're out of luck!\n\nFor bitcoin, instead of carrying a piece of paper, you have digital keys.\n\nThose keys allow you to spend your bitcoin, which is why making sure those keys are in a safe place is important!\n\nA digital key is just a very, very long number (about 80 digits long!). It's astronomicaly long, so it's impossible for anyone to find it.\n\nAs a comparison, it would be easier to find a single grain of sands on earth than it would be to find a digitial key. This is the power of large number and cryptography!\n\nThis key is currently stored in a secure part of your phone.",
       "question": "Which one is true?",
-      "answers": ["Keys allows you to recover your email and password", "Keys should be shared with as many people as possible so that it won't be lost", "Your keys should be kept secretly as anybody who have access to them will be able to spend your bitcoin"],
-      "feedback": ["Unlike with most existing website, there is no way to recover your keys using your email or phone number", "Digital keys to spend your bitcoin are private, anyone who has access to it will be able to spend your bitcoin", "Galoy is what we call a non-custodial wallet for your bitcoin. So you should take care of your keys!"],
+      "answers": ["Keys allow you to recover your email and password", "Keys should be shared with as many people as possible so that it won't be lost", "Your keys should be kept secretly as anybody who have access to them will be able to spend your bitcoin"],
+      "feedback": ["Unlike most existing websites, there is no way to recover your keys using your email or phone number", "Digital keys are private, anyone who has access to it will be able to spend your bitcoin", "Galoy is what we call a non-custodial wallet for your bitcoin. So you should take care of your keys!"],
       "correct": 2,
     },
     "backupWallet": {
@@ -108,16 +108,16 @@
       "type": "Video",
       "videoid": "XNu5ppFZbHo",
       "title": "What is fiat money?",
-      "text": "This video will give you some insights about what is fiat money, the term used to describe today's dollar, euros other governements currency",
+      "text": "This video will give you some insights about what is fiat money, that describe governements currency like dollars and euros",
       "question": "What is backing US dollar?",
       "answers": ["Gold", "Fed", "Ability of governement to collect taxes and repay debt"],
-      "feedback": ["Not since the US governement end convertability of the dollar to golad in 1971", "The Fed is managing the USD currency, but is not backing it up", "That's correct, the dollar is not backed by gold anymore since 1971!"],
+      "feedback": ["Not since the US governement ended convertability of the dollar to gold in 1971", "The Fed is managing the USD currency, but is not backing it up", "That's correct, the dollar is not backed by gold anymore since 1971!"],
       "correct": 2,
     },
     "bitcoinUnique": {
       "type": "Text",
-      "title": "What makes bitcoin unique?",
-      "text": "There is a long list, and we'll go through it one by one:\n\n- It has predictible money supply\n- The money supply is capped\n- It is highly divisible\n- It is borderless\n- Small transactions are settled in seconds, large transation takes about 1h\n- It can't be forged\n- His creator is no longer around",
+      "title": "What makes bitcoin special?",
+      "text": "There is a long list, and we'll go through it one by one:\n\n- It has predictible money supply\n- The money supply is capped\n- It is highly divisible\n- It is borderless\n- Small transactions are settled in seconds, large transations take about 1h\n- It can't be forged\n- His creator is no longer around",
       "question": "What does Bitcoin and the dollar have in common?",
       "answers": ["They are (mostly) digital money", "They are both borderless", "They have both dynamic money supply aimed at stabilizing the economy"],
       "feedback": ["Correct! The dollar is already mostly digitized. Except cash, every transaction is already done in a digital form", "Being borderless is one of the strong differention of Bitcoin", "Unlike the dollar, the supply of bitcoin can't be changed by central banks"],
@@ -126,7 +126,7 @@
     "moneySupply": {
       "type": "Text",
       "title": "Bitcoin money supply",
-      "text": "How many bitcoin will be created and how?\n\nThere will be 21 millions bitcoin in existance.\n\nThe reason there won't be more is because this number is defined in the bitcoin software, and because this is a key reason it makes bitcoin valuable, it's unlikely every person around the world running the bitcoin software will want to update their software and change this number.\n\nAs bitcoin is decentralized and there is no one is charged, it's unlike anyone would be able to change this parameter.",
+      "text": "How many bitcoin will be created and how?\n\n21 millions bitcoin total will be created.\n\nThe reason is because this number is defined in the bitcoin software.\n\nAs it's a key reason it makes bitcoin valuable, it's unlikely each person around the world running the bitcoin software would want to update their software and change this number.\n\nAs bitcoin is decentralized and there is no one in charged, it's unlikely anyone would be able to change this parameter.",
       "question": "How many bitcoin will be created?",
       "answers": ["21,000,000", "There is no maximum", "It's up to the central bank of Bitcoin"],
       "feedback": ["21 millions, that's it!", "Bitcoin money supply is capped", "There is no central bank in the bitcoin protocol"],
