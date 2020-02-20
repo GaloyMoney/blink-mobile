@@ -331,11 +331,6 @@ export const RewardsScreen = inject("dataStore")(
             enabledMessage: translate(`common.soon`),
         },
         {
-            id: 'volatility',
-            onComplete: async () => dataStore.onboarding.add(Onboarding.volatility),
-            enabled: true,
-        },
-        {
             id: "activateNotifications",
             onComplete: async () => {
 
@@ -443,6 +438,11 @@ export const RewardsScreen = inject("dataStore")(
             onComplete: () => {},
             enabled: false,
             enabledMessage: translate(`common.soon`)
+        },
+        {
+            id: 'volatility',
+            onComplete: async () => dataStore.onboarding.add(Onboarding.volatility),
+            enabled: true,
         },
     ]
     
