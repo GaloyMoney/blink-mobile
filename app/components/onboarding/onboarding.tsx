@@ -35,8 +35,15 @@ const styles = StyleSheet.create({
 })
 
 export const OnboardingScreen = withNavigation(
-  ({ children, next /* screen */, nextTitle, action, 
-    image, navigation, header = "" , loading = false
+  ({
+    children,
+    next /* screen */,
+    nextTitle,
+    action,
+    image,
+    navigation,
+    header = "",
+    loading = false,
   }) => {
     return (
       <>
@@ -45,7 +52,7 @@ export const OnboardingScreen = withNavigation(
           <Image source={image} style={styles.image} />
           {children}
         </View>
-        {(next || action) &&
+        {(next || action) && (
           <Button
             title={nextTitle || "Next"}
             onPress={next ? () => navigation.navigate(next) : action}
@@ -53,8 +60,8 @@ export const OnboardingScreen = withNavigation(
             buttonStyle={styles.buttonStyle}
             loading={loading}
             disabled={loading}
-            />
-          }
+          />
+        )}
       </>
     )
   },

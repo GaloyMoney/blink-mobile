@@ -2,7 +2,7 @@
 //
 // In this file, we'll be kicking off our app or storybook.
 
-import '@react-native-firebase/crashlytics'
+import "@react-native-firebase/crashlytics"
 
 import "node-libs-react-native/globals" // needed for Buffer?
 
@@ -60,7 +60,7 @@ export class App extends React.Component<{}, AppState> {
     // FIXME there might be a better way to manage this notification
     Notifications.events().registerNotificationReceived((notification, completion) => {
       console.tron.log(notification)
-      completion({alert: true, sound: false, badge: false})
+      completion({ alert: true, sound: false, badge: false })
     })
   }
 

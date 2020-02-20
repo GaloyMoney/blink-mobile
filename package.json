@@ -11,7 +11,7 @@
     "format:js": "prettier --write {.,**}/*.js",
     "format:json": "prettier --write {.,**}/*.json",
     "format:md": "prettier --write {.,**}/*.md",
-    "format:ts": "prettier --write {.,**}/*.{ts,tsx}",
+    "format:ts": "prettier --write  app/{**,**/**}/*.{ts,tsx}",
     "coverage": "jest --runInBand --coverage",
     "hack:types-react-navigation": "rimraf node_modules/@types/react-navigation/node_modules/@types",
     "hack:types-react-native": "rimraf node_modules/@types/react-native/node_modules/@types",

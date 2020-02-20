@@ -2,7 +2,7 @@
  * @fileOverview actions wrapping file I/O operations on mobile.
  */
 
-import RNFS from 'react-native-fs'
+import RNFS from "react-native-fs"
 
 class FileAction {
   constructor(dataStore) {
@@ -14,7 +14,7 @@ class FileAction {
    * @return {string}
    */
   get lndDir() {
-    return RNFS.DocumentDirectoryPath;
+    return RNFS.DocumentDirectoryPath
   }
 
   /**
@@ -22,7 +22,7 @@ class FileAction {
    * @return {string}
    */
   get externalStorageDir() {
-    return RNFS.ExternalStorageDirectoryPath;
+    return RNFS.ExternalStorageDirectoryPath
   }
 
   //
@@ -34,7 +34,7 @@ class FileAction {
    * @return {string}
    */
   get logsPath() {
-    return `${this.lndDir}/logs/bitcoin/${this.dataStore.lnd.network}/lnd.log`;
+    return `${this.lndDir}/logs/bitcoin/${this.dataStore.lnd.network}/lnd.log`
   }
 
   /**
@@ -43,12 +43,12 @@ class FileAction {
    */
   async shareLogs() {
     try {
-    //   await this._Share.open({
-    //     url: `file://${this.logsPath}`,
-    //     type: 'text/plain',
-    //   });
+      //   await this._Share.open({
+      //     url: `file://${this.logsPath}`,
+      //     type: 'text/plain',
+      //   });
     } catch (err) {
-      console.tron.error('Exporting logs failed', err);
+      console.tron.error("Exporting logs failed", err)
     }
   }
 
@@ -62,13 +62,13 @@ class FileAction {
    * @return {Promise<undefined>}
    */
   async deleteWalletDBAndChannelBackup() {
-    const prefix = `${this.lndDir}/data/chain/bitcoin/${this.dataStore.lnd.network}/`;
+    const prefix = `${this.lndDir}/data/chain/bitcoin/${this.dataStore.lnd.network}/`
     const files = [`wallet.db`, `channel.backup`]
     for (const file of files) {
       try {
-        await RNFS.unlink(prefix + file);
+        await RNFS.unlink(prefix + file)
       } catch (err) {
-        console.tron.error(`issue deleting ${file}`);
+        console.tron.error(`issue deleting ${file}`)
       }
     }
   }
@@ -78,49 +78,50 @@ class FileAction {
    * @return {Promise<undefined>}
    */
   async deleteAllLndData() {
-    const files = ['tls.cert', 'tls.key', 'logs', 'data']
+    const files = ["tls.cert", "tls.key", "logs", "data"]
 
     for (const file of files) {
       try {
-          console.log(`deleting ${this.lndDir}/${file}`)
-          await RNFS.unlink(`${this.lndDir}/${file}`);
+        console.log(`deleting ${this.lndDir}/${file}`)
+        await RNFS.unlink(`${this.lndDir}/${file}`)
       } catch (err) {
-        console.tron.error(`issue deleting ${file}`);
+        console.tron.error(`issue deleting ${file}`)
       }
-    }}
+    }
+  }
 
   //
   // Static Channel Backup (SCB) actions
   //
 
   get scbPath() {
-    return `${this.lndDir}/data/chain/bitcoin/${this.dataStore.lnd.network}/channel.backup`;
+    return `${this.lndDir}/data/chain/bitcoin/${this.dataStore.lnd.network}/channel.backup`
   }
 
   get scbExternalDir() {
-    return `${this.externalStorageDir}/Lightning/${this.dataStore.lnd.network}`;
+    return `${this.externalStorageDir}/Lightning/${this.dataStore.lnd.network}`
   }
 
   get scbExternalPath() {
-    return `${this.scbExternalDir}/channel.backup`;
+    return `${this.scbExternalDir}/channel.backup`
   }
 
   async readSCB() {
-    return RNFS.readFile(this.scbPath, 'base64');
+    return RNFS.readFile(this.scbPath, "base64")
   }
 
   async copySCBToExternalStorage() {
-    const exists = await RNFS.exists(this.scbPath);
-    if (!exists) return;
-    await RNFS.mkdir(this.scbExternalDir);
-    await RNFS.copyFile(this.scbPath, this.scbExternalPath);
+    const exists = await RNFS.exists(this.scbPath)
+    if (!exists) return
+    await RNFS.mkdir(this.scbExternalDir)
+    await RNFS.copyFile(this.scbPath, this.scbExternalPath)
   }
 
   async readSCBFromExternalStorage() {
-    const exists = await RNFS.exists(this.scbExternalPath);
-    if (!exists) return;
-    return RNFS.readFile(this.scbExternalPath, 'base64');
+    const exists = await RNFS.exists(this.scbExternalPath)
+    if (!exists) return
+    return RNFS.readFile(this.scbExternalPath, "base64")
   }
 }
 
-export default FileAction;
+export default FileAction

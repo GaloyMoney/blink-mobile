@@ -4,13 +4,13 @@
  * from the UI but rather used within other higher level actions.
  */
 
-import { Duplex } from 'readable-stream'
+import { Duplex } from "readable-stream"
 
-import base64 from 'base64-js'
-import { lnrpc } from './generated/rpc'
+import base64 from "base64-js"
+import { lnrpc } from "./generated/rpc"
 
 // FIXME refactor
-const toCaps = (value = '', separator = ' ', split = '-') => {
+const toCaps = (value = "", separator = " ", split = "-") => {
   return value
     .split(split)
     .map(v => v.charAt(0).toUpperCase() + v.substring(1))
@@ -36,7 +36,7 @@ class GrpcAction {
    */
   async startLnd() {
     await this._lnd.start()
-    console.tron.log('lnd Started. main GRPC started')
+    console.tron.log("lnd Started. main GRPC started")
   }
 
   /**
@@ -47,7 +47,7 @@ class GrpcAction {
   async closeUnlocker() {
     // TODO: restart is not required on mobile
     // await this._lnd.closeUnlocker();
-    console.tron.log('GRPC unlockerClosed')
+    console.tron.log("GRPC unlockerClosed")
   }
 
   /**
@@ -72,7 +72,7 @@ class GrpcAction {
   async closeLnd() {
     // TODO: add api on mobile
     // await this._lnd.close();
-    console.tron.log('GRPC lndClosed')
+    console.tron.log("GRPC lndClosed")
   }
 
   /**
@@ -108,17 +108,16 @@ class GrpcAction {
     const streamId = self._generateStreamId()
     const stream = new Duplex({
       write(data) {
-        data = JSON.parse(data.toString('utf8'))
+        data = JSON.parse(data.toString("utf8"))
         const req = self._serializeRequest(method, data)
         self._lnd.sendStreamWrite(streamId, req)
       },
       read() {},
     })
-    self._lndEvent.addListener('streamEvent', res => {
+    self._lndEvent.addListener("streamEvent", res => {
       if (res.streamId !== streamId) {
-
-      } else if (res.event === 'data') {
-        stream.emit('data', self._deserializeResponse(method, res.data))
+      } else if (res.event === "data") {
+        stream.emit("data", self._deserializeResponse(method, res.data))
       } else {
         stream.emit(res.event, res.error || res.data)
       }
@@ -139,7 +138,7 @@ class GrpcAction {
       const response = await this._lnd.sendCommand(method, req)
       return this._deserializeResponse(method, response.data)
     } catch (err) {
-      if (typeof err === 'string') {
+      if (typeof err === "string") {
         throw new Error(err)
       } else {
         throw err
@@ -174,32 +173,32 @@ class GrpcAction {
 
   _getRequestName(method) {
     const map = {
-      AddInvoice: 'Invoice',
-      DecodePayReq: 'PayReqString',
-      ListInvoices: 'ListInvoiceRequest',
-      SendPayment: 'SendRequest',
-      SubscribeTransactions: 'GetTransactionsRequest',
-      SubscribeInvoices: 'InvoiceSubscription',
-      SubscribeChannelBackups: 'ChannelBackupSubscription',
-      SubscribeChannelEvents: 'ChannelEventSubscription',
-      StopDaemon: 'StopRequest',
+      AddInvoice: "Invoice",
+      DecodePayReq: "PayReqString",
+      ListInvoices: "ListInvoiceRequest",
+      SendPayment: "SendRequest",
+      SubscribeTransactions: "GetTransactionsRequest",
+      SubscribeInvoices: "InvoiceSubscription",
+      SubscribeChannelBackups: "ChannelBackupSubscription",
+      SubscribeChannelEvents: "ChannelEventSubscription",
+      StopDaemon: "StopRequest",
     }
     return map[method] || `${method}Request`
   }
 
   _getResponseName(method) {
     const map = {
-      DecodePayReq: 'PayReq',
-      GetTransactions: 'TransactionDetails',
-      ListInvoices: 'ListInvoiceResponse',
-      SendPayment: 'SendResponse',
-      OpenChannel: 'OpenStatusUpdate',
-      CloseChannel: 'CloseStatusUpdate',
-      SubscribeTransactions: 'Transaction',
-      SubscribeInvoices: 'Invoice',
-      SubscribeChannelBackups: 'ChanBackupSnapshot',
-      SubscribeChannelEvents: 'ChannelEventUpdate',
-      StopDaemon: 'StopResponse',
+      DecodePayReq: "PayReq",
+      GetTransactions: "TransactionDetails",
+      ListInvoices: "ListInvoiceResponse",
+      SendPayment: "SendResponse",
+      OpenChannel: "OpenStatusUpdate",
+      CloseChannel: "CloseStatusUpdate",
+      SubscribeTransactions: "Transaction",
+      SubscribeInvoices: "Invoice",
+      SubscribeChannelBackups: "ChanBackupSnapshot",
+      SubscribeChannelEvents: "ChannelEventUpdate",
+      StopDaemon: "StopResponse",
     }
     return map[method] || `${method}Response`
   }

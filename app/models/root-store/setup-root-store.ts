@@ -38,18 +38,20 @@ export async function setupRootStore() {
     // load data from storage
 
     // data = (await storage.load(ROOT_STATE_STORAGE_KEY)) || {}  // TODO: get back to this when store is dynamic
-    const stage = (await storage.load(ONBOARDING_STORAGE_KEY)) || undefined  // TODO: get back to this when store is dynamic
+    const stage = (await storage.load(ONBOARDING_STORAGE_KEY)) || undefined // TODO: get back to this when store is dynamic
     // rootStore = RootStoreModel.create(data, env)
 
     // rootStore = RootStoreModel.create(defaultStoreState, env)
-    rootStore = RootStoreModel.create({
-      dataStore: {
-        onboarding: {
-          stage
-        }
-      }
-    }, env)
-
+    rootStore = RootStoreModel.create(
+      {
+        dataStore: {
+          onboarding: {
+            stage,
+          },
+        },
+      },
+      env,
+    )
   } catch (e) {
     // if there's any problems loading, then let's at least fallback to an empty state
     // instead of crashing.
@@ -67,26 +69,24 @@ export async function setupRootStore() {
   // track changes & save to storage
   // onSnapshot(rootStore, snapshot => storage.save(ROOT_STATE_STORAGE_KEY, snapshot))
   onSnapshot(rootStore.dataStore.onboarding.stage, async snapshot => {
-    console.tron.log('snapshot', snapshot)
+    console.tron.log("snapshot", snapshot)
 
     storage.save(ONBOARDING_STORAGE_KEY, snapshot)
-    
+
     try {
       const uid = auth().currentUser?.uid
-      
+
       if (!uid) {
-        console.tron.warn('no uid')
+        console.tron.warn("no uid")
         return
       }
-      
-      await firestore().doc(`users/${uid}/collection/stage`).set(
-        { stage: snapshot }, 
-        { merge: true }
-      )
+
+      await firestore()
+        .doc(`users/${uid}/collection/stage`)
+        .set({ stage: snapshot }, { merge: true })
     } catch (err) {
       console.tron.error(err)
     }
-
   })
 
   await env.lnd.setLndStore(rootStore.dataStore.lnd)

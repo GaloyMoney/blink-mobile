@@ -1,8 +1,6 @@
 import { createStackNavigator } from "react-navigation-stack"
 import { GetStartedScreen } from "../screens/login-screen"
-import {
-  WelcomeFirstScreen,
-} from "../screens/welcome-screens"
+import { WelcomeFirstScreen } from "../screens/welcome-screens"
 
 import { DebugScreen } from "../screens/debug-screen"
 import { color } from "../theme"

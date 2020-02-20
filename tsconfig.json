@@ -14,7 +14,7 @@
     "target": "es2015",
     "lib": ["es2017"],
     "skipLibCheck": true,
-    "strict": true,
+    "strict": true
   },
   "exclude": ["node_modules"],
   "include": ["app", "test", "storybook"]

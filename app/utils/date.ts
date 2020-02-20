@@ -1,6 +1,6 @@
 export const sameDay = (d1, d2) => {
   d1 = new Date(d1) // XXX FIXME
-  
+
   if (typeof d2 === "number") {
     d2 = new Date(d2)
   }

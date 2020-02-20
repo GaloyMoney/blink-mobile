@@ -20,10 +20,10 @@ let _printLog
  */
 export function info(...args) {
   console.tron.log(...args)
-  _ipc && _ipc.send('log', null, args)
+  _ipc && _ipc.send("log", null, args)
 }
 
-const pushLogs = (message) => {
+const pushLogs = message => {
   // FIXME add back the logic
   // if (!_store) return;
   // _store.logs += '\n' + message.replace(/\s+$/, '');
@@ -33,7 +33,7 @@ const pushLogs = (message) => {
   // }
 
   if (_printLog) {
-    console.tron.log('\n' + message.replace(/\s+$/, ''))
+    console.tron.log("\n" + message.replace(/\s+$/, ""))
   }
 }
 
@@ -48,19 +48,13 @@ const pushLogs = (message) => {
  */
 export function error(...args) {
   console.tron.error(...args)
-  pushLogs('') // newline
+  pushLogs("") // newline
   pushLogs(`ERROR: ${args[0]}`)
   for (let i = 1; i < args.length; i++) {
-    pushLogs(
-      JSON.stringify(
-        _printErrObj ? args[i] : { message: args[i].message },
-        null,
-        '    '
-      )
-    )
+    pushLogs(JSON.stringify(_printErrObj ? args[i] : { message: args[i].message }, null, "    "))
   }
-  pushLogs('') // newline
-  _ipc && _ipc.send('log-error', null, args)
+  pushLogs("") // newline
+  _ipc && _ipc.send("log-error", null, args)
 }
 
 class LogAction {
@@ -68,8 +62,8 @@ class LogAction {
     _ipc = ipc
     _printErrObj = printErrObj
     _printLog = printLog
-    _ipc.listen('logs', (event, message) => pushLogs(message))
-    _ipc.send('logs-ready', null, true)
+    _ipc.listen("logs", (event, message) => pushLogs(message))
+    _ipc.send("logs-ready", null, true)
   }
 }
 

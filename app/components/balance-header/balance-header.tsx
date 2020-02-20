@@ -42,42 +42,33 @@ export interface BalanceHeaderProps {
 }
 
 const Loader = () => (
-  <ContentLoader 
-    height={50}
-    width={120}
-    speed={2}
-    primaryColor="#f3f3f3"
-    secondaryColor="#ecebeb"
-  >
-    <Rect x="0" y="0" rx="4" ry="4" width="120" height="20" /> 
-    <Rect x="30" y="35" rx="4" ry="4" width="60" height="10" /> 
+  <ContentLoader height={50} width={120} speed={2} primaryColor="#f3f3f3" secondaryColor="#ecebeb">
+    <Rect x="0" y="0" rx="4" ry="4" width="120" height="20" />
+    <Rect x="30" y="35" rx="4" ry="4" width="60" height="10" />
   </ContentLoader>
 )
 
 export const BalanceHeader: React.FunctionComponent<BalanceHeaderProps> = inject("dataStore")(
   observer(({ headingCurrency, dataStore, accountsToAdd, initialLoading }) => {
-    
-    const otherCurrency = headingCurrency === CurrencyType.BTC ? CurrencyType.USD: CurrencyType.BTC
+    const otherCurrency = headingCurrency === CurrencyType.BTC ? CurrencyType.USD : CurrencyType.BTC
 
     const subHeader = (
-        <TextCurrency
-          amount={dataStore.balances({
-            currency: otherCurrency,
-            account: accountsToAdd,
-          })}
-          currencyUsed={otherCurrency}
-          fontSize={16}
-        />
-      )
+      <TextCurrency
+        amount={dataStore.balances({
+          currency: otherCurrency,
+          account: accountsToAdd,
+        })}
+        currencyUsed={otherCurrency}
+        fontSize={16}
+      />
+    )
 
     return (
       <View style={styles.header}>
         <View style={styles.amount}>
           <View style={{ flexDirection: "row", alignItems: "flex-end" }}>
-            {initialLoading && 
-              <Loader />
-            }
-            {!initialLoading && 
+            {initialLoading && <Loader />}
+            {!initialLoading && (
               <TextCurrency
                 amount={dataStore.balances({
                   currency: headingCurrency,
@@ -86,11 +77,9 @@ export const BalanceHeader: React.FunctionComponent<BalanceHeaderProps> = inject
                 currencyUsed={headingCurrency}
                 fontSize={32}
               />
-            }
+            )}
           </View>
-          {!initialLoading && 
-            subHeader
-          }
+          {!initialLoading && subHeader}
         </View>
         <Text style={styles.balanceText}>Current Balance</Text>
       </View>

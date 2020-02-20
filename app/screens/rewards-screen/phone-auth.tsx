@@ -13,14 +13,11 @@ import PhoneInput from "react-native-phone-input"
 import auth from "@react-native-firebase/auth"
 import { isEmpty } from "ramda"
 
-
 import { translate } from "../../i18n"
 import { color } from "../../theme"
 
-
 const phoneLogo = require("./PhoneLogo.png")
 const phoneWithArrowLogo = require("./PhoneWithArrowLogo.png")
-
 
 const styles = StyleSheet.create({
   container: {
@@ -33,7 +30,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     padding: 20,
     height: 90,
-    resizeMode: 'center',
+    resizeMode: "center",
   },
 
   text: {
@@ -85,199 +82,194 @@ const styles = StyleSheet.create({
   },
 })
 
-
-
 export const WelcomePhoneInputScreen = withNavigation(({ navigation }) => {
-    const [loading, setLoading] = useState(false)
-    const [err, setErr] = useState("")
-  
-    const inputRef = useRef()
-  
-    const send = async () => {
-      console.tron.log(`initPhoneNumber ${inputRef.current.getValue()}`)
-  
-      if (!inputRef.current.isValidNumber()) {
-        Alert.alert(`${inputRef.current.getValue()} ${translate("errors.invalidPhoneNumber")}`)
-        return
-      }
-  
-      try {
-        setLoading(true)
-        const confirmation = await auth().signInWithPhoneNumber(inputRef.current.getValue())
-        if (!isEmpty(confirmation)) {
-          setLoading(false)
-          navigation.navigate("welcomePhoneValidation", { confirmation })
-        } else {
-          setErr(`confirmation object is empty? ${confirmation}`)
-        }
-      } catch (err) {
-        console.tron.error(err)
-        setErr(err.toString())
-      }
+  const [loading, setLoading] = useState(false)
+  const [err, setErr] = useState("")
+
+  const inputRef = useRef()
+
+  const send = async () => {
+    console.tron.log(`initPhoneNumber ${inputRef.current.getValue()}`)
+
+    if (!inputRef.current.isValidNumber()) {
+      Alert.alert(`${inputRef.current.getValue()} ${translate("errors.invalidPhoneNumber")}`)
+      return
     }
-  
-    // workaround of https://github.com/facebook/react-native/issues/10471
-    useEffect(() => {
-      if (err !== "") {
-        setErr("")
-        Alert.alert("error", err.toString(), [
-          {
-            text: "OK",
-            onPress: () => {
-              setLoading(false)
-            },
+
+    try {
+      setLoading(true)
+      const confirmation = await auth().signInWithPhoneNumber(inputRef.current.getValue())
+      if (!isEmpty(confirmation)) {
+        setLoading(false)
+        navigation.navigate("welcomePhoneValidation", { confirmation })
+      } else {
+        setErr(`confirmation object is empty? ${confirmation}`)
+      }
+    } catch (err) {
+      console.tron.error(err)
+      setErr(err.toString())
+    }
+  }
+
+  // workaround of https://github.com/facebook/react-native/issues/10471
+  useEffect(() => {
+    if (err !== "") {
+      setErr("")
+      Alert.alert("error", err.toString(), [
+        {
+          text: "OK",
+          onPress: () => {
+            setLoading(false)
           },
-        ])
+        },
+      ])
+    }
+  }, [err])
+
+  return (
+    <Screen>
+      <KeyboardAvoidingView
+        keyboardVerticalOffset={-110}
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        style={{ flex: 1 }}
+      >
+        <View style={{ flex: 1, justifyContent: "flex-end" }}>
+          <View style={{ flex: 1 }} />
+          <Image source={phoneLogo} style={styles.image} />
+          <Text style={styles.text}>{translate("WelcomePhoneInputScreen.header")}</Text>
+          <PhoneInput
+            ref={inputRef}
+            style={styles.phoneEntryContainer}
+            textStyle={styles.textEntry}
+            textProps={{
+              autoFocus: true,
+              placeholder: translate("WelcomePhoneInputScreen.placeholder"),
+              returnKeyType: "done",
+              onSubmitEditing: () => send(),
+            }}
+          />
+          <View style={{ flex: 1 }} />
+          <Button
+            title={translate("common.next")}
+            onPress={() => send()}
+            containerStyle={styles.buttonContainer}
+            buttonStyle={styles.buttonStyle}
+            loading={loading}
+            disabled={loading}
+          />
+        </View>
+      </KeyboardAvoidingView>
+    </Screen>
+  )
+})
+
+export const WelcomePhoneValidationScreen = inject("dataStore")(({ dataStore }) => {
+  const [code, setCode] = useState("")
+  const [loading, setLoading] = useState(false)
+  const [err, setErr] = useState("")
+
+  const confirmation = useNavigationParam("confirmation")
+  const { goBack } = useNavigation()
+
+  const onAuthStateChanged = async user => {
+    // TODO : User type
+    console.tron.log(`onAuthStateChanged`, user)
+    console.log(`onAuthStateChanged`, user)
+
+    if (user.phoneNumber) {
+      // FIXME duplicate with user.Phonenumber
+      await dataStore.onboarding.add(Onboarding.phoneVerification)
+
+      let result
+
+      if (dataStore.lnd.syncedToChain) {
+        result = await dataStore.lnd.openFirstChannel()
+        console.tron.log("Success opening channel", result)
+      } else {
+        // just go back, we'll open the channel once sync is done
+        result = true
       }
-    }, [err])
-  
-    return (
-      <Screen>
-        <KeyboardAvoidingView
-          keyboardVerticalOffset={-110}
-          behavior={Platform.OS === "ios" ? "padding" : undefined}
-          style={{ flex: 1 }}
-        >
-          <View style={{ flex: 1, justifyContent: "flex-end" }}>
-            <View style={{ flex: 1 }} />
-            <Image source={phoneLogo} style={styles.image} />
-            <Text style={styles.text}>{translate("WelcomePhoneInputScreen.header")}</Text>
-            <PhoneInput 
-              ref={inputRef}
-              style={styles.phoneEntryContainer}
-              textStyle={styles.textEntry}
-              textProps={{
-                autoFocus: true,
-                placeholder: translate("WelcomePhoneInputScreen.placeholder"),
-                returnKeyType: 'done',
-                onSubmitEditing: () => send(),
-              }}
-            />
-            <View style={{ flex: 1 }} />
-            <Button
-              title={translate("common.next")}
-              onPress={() => send()}
-              containerStyle={styles.buttonContainer}
-              buttonStyle={styles.buttonStyle}
-              loading={loading}
-              disabled={loading}
-              />
-          </View>
-        </KeyboardAvoidingView>
-      </Screen>
-    )
-  })
-  
-  export const WelcomePhoneValidationScreen = inject("dataStore")(
-    ({ dataStore }) => {
-      
-    const [code, setCode] = useState("")
-    const [loading, setLoading] = useState(false)
-    const [err, setErr] = useState("")
-  
-    const confirmation = useNavigationParam("confirmation")
-    const { goBack } = useNavigation()
-  
-    const onAuthStateChanged = async user => {
-      // TODO : User type
-      console.tron.log(`onAuthStateChanged`, user)
-      console.log(`onAuthStateChanged`, user)
-  
-      if (user.phoneNumber) {
-        // FIXME duplicate with user.Phonenumber
-        await dataStore.onboarding.add(Onboarding.phoneVerification) 
 
-        let result
-
-        if (dataStore.lnd.syncedToChain) {
-          result = await dataStore.lnd.openFirstChannel()
-          console.tron.log('Success opening channel', result)
-        } else {
-          // just go back, we'll open the channel once sync is done
-          result = true
-        }
-
-        if (result === true) {
-          setLoading(false)
-          // FIXME
-          goBack(null)
-          goBack(null)
-        } else {
-          setErr(result.toString())
-        }
+      if (result === true) {
+        setLoading(false)
+        // FIXME
+        goBack(null)
+        goBack(null)
+      } else {
+        setErr(result.toString())
       }
     }
-  
-    useEffect(() => {
-      const subscriber = auth().onAuthStateChanged(onAuthStateChanged)
-      return subscriber // unsubscribe on unmount
-    }, [])
-  
-    const sendVerif = async () => {
-      console.tron.log(`verifyPhoneNumber with code ${code}`)
-      if (code.length !== 6) {
-        Alert.alert(`code need to have 6 digits`)
-        return
-      }
-      try {
-        setLoading(true)
-        await confirmation.confirm(code)
-      } catch (err) {
-        console.tron.error(err) // Invalid code
-        setErr(err.toString())
-      }
+  }
+
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged)
+    return subscriber // unsubscribe on unmount
+  }, [])
+
+  const sendVerif = async () => {
+    console.tron.log(`verifyPhoneNumber with code ${code}`)
+    if (code.length !== 6) {
+      Alert.alert(`code need to have 6 digits`)
+      return
     }
-  
-    useEffect(() => {
-      if (err !== "") {
-        setErr("")
-        Alert.alert("error", err.toString(), [
-          {
-            text: "OK",
-            onPress: () => {
-              setLoading(false)
-            },
+    try {
+      setLoading(true)
+      await confirmation.confirm(code)
+    } catch (err) {
+      console.tron.error(err) // Invalid code
+      setErr(err.toString())
+    }
+  }
+
+  useEffect(() => {
+    if (err !== "") {
+      setErr("")
+      Alert.alert("error", err.toString(), [
+        {
+          text: "OK",
+          onPress: () => {
+            setLoading(false)
           },
-        ])
-      }
-    }, [err])
-  
-    return (
-      <Screen>
-        <KeyboardAvoidingView
-          keyboardVerticalOffset={-80}
-          behavior={Platform.OS === "ios" ? "padding" : undefined}
-          style={styles.container}
-        >
-          <ScrollView>
-            <View style={{ flex: 1 }} />
-            <Image source={phoneWithArrowLogo} style={styles.image} />
-            <Text style={styles.text}>{translate("WelcomePhoneInputScreen.header")}</Text>
-            <TextInput
-              autoFocus={true}
-              style={[styles.textEntry, styles.phoneEntryContainer]}
-              onChangeText={input => setCode(input)}
-              keyboardType="number-pad"
-              textContentType="oneTimeCode"
-              placeholder={translate("WelcomePhoneValidationScreen.placeholder")}
-              returnKeyType='done'
-              maxLength = {6}
-              onSubmitEditing={() => sendVerif()}
-            >
-              {code}
-            </TextInput>
-            <View style={{ flex: 1 }} />
-            <Button
-              title={translate("common.next")}
-              onPress={() => sendVerif()}
-              containerStyle={styles.buttonContainer}
-              buttonStyle={styles.buttonStyle}
-              loading={loading}
-              disabled={loading}
-            />
-          </ScrollView>
-        </KeyboardAvoidingView>
-      </Screen>
-    )
-  })
-  
+        },
+      ])
+    }
+  }, [err])
+
+  return (
+    <Screen>
+      <KeyboardAvoidingView
+        keyboardVerticalOffset={-80}
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        style={styles.container}
+      >
+        <ScrollView>
+          <View style={{ flex: 1 }} />
+          <Image source={phoneWithArrowLogo} style={styles.image} />
+          <Text style={styles.text}>{translate("WelcomePhoneInputScreen.header")}</Text>
+          <TextInput
+            autoFocus={true}
+            style={[styles.textEntry, styles.phoneEntryContainer]}
+            onChangeText={input => setCode(input)}
+            keyboardType="number-pad"
+            textContentType="oneTimeCode"
+            placeholder={translate("WelcomePhoneValidationScreen.placeholder")}
+            returnKeyType="done"
+            maxLength={6}
+            onSubmitEditing={() => sendVerif()}
+          >
+            {code}
+          </TextInput>
+          <View style={{ flex: 1 }} />
+          <Button
+            title={translate("common.next")}
+            onPress={() => sendVerif()}
+            containerStyle={styles.buttonContainer}
+            buttonStyle={styles.buttonStyle}
+            loading={loading}
+            disabled={loading}
+          />
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </Screen>
+  )
+})

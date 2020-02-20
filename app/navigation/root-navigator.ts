@@ -3,7 +3,6 @@ import { PrimaryNavigator, BankAccountOnboardingNavigator } from "./primary-navi
 import { AuthNavigator } from "./auth-navigator"
 import { LoadingScreen } from "../screens/loading-screen"
 
-
 export const RootNavigator = createSwitchNavigator({
   loadingScreen: { screen: LoadingScreen },
   authStack: { screen: AuthNavigator },
