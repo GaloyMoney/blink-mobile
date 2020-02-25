@@ -118,10 +118,10 @@
       "type": "Text",
       "title": "What makes bitcoin special?",
       "text": "There is a long list, and we'll go through it one by one:\n\n- It has predictible money supply\n- The money supply is capped\n- It is highly divisible\n- It is borderless\n- Small transactions are settled in seconds, large transations take about 1h\n- It can't be forged\n- His creator is no longer around",
-      "question": "What does Bitcoin and the dollar have in common?",
-      "answers": ["They are (mostly) digital money", "They are both borderless", "They have both dynamic money supply aimed at stabilizing the economy"],
-      "feedback": ["Correct! The dollar is already mostly digitized. Except cash, every transaction is already done in a digital form", "Being borderless is one of the strong differention of Bitcoin", "Unlike the dollar, the supply of bitcoin can't be changed by central banks"],
-      "correct": 0,
+      "question": "What are some property of bitcoin that are not present in fiat currency?",
+      "answers": ["It's digital money", "It's the most widely accept currency across the world", "It can't be forged"],
+      "feedback": ["The dollar is already mostly digitized. Except cash, every transaction is already done in a digital form", "Not yet, but maybe one day it will!", "Correct. Unlike for dollar where fake bills can be make and send in circulation, it's not possible to create fake bitcoin"],
+      "correct": 2,
     },
     "moneySupply": {
       "type": "Text",
@@ -254,6 +254,10 @@
     "energy": {
       "title": "Bitcoin energy consumption?",
       "text": "",
+    },
+    "difficultyAdjustment": {
+      "title": "Difficulty adjustment",
+      "text": "Lightning is the revolutionary payment. Give it a try!"
     },
     "moneyLaundering": {
       "title": "Bitcoin & Money Laundering?",

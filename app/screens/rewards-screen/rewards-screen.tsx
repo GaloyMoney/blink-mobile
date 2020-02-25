@@ -49,6 +49,7 @@ const inviteAFriendImage = require("./InviteFriends.jpg")
 const activateDirectDepositImage = require("./GreenPhone.jpg")
 const energyImage = require("./energy.jpeg")
 const moneyLaunderingImage = require("./moneyLaundering.jpeg")
+const difficultyAdjustmentImage = require("./difficultyAdjustment.png")
 
 const { width: screenWidth } = Dimensions.get("window")
 const { height: screenHeight } = Dimensions.get("window")
@@ -444,6 +445,12 @@ export const RewardsScreen = inject("dataStore")(
         enabledMessage: translate(`common.soon`),
       },
       {
+        id: "difficultyAdjustment",
+        onComplete: () => {},
+        enabled: false,
+        enabledMessage: translate(`common.soon`),
+      },
+      {
         id: "volatility",
         onComplete: async () => dataStore.onboarding.add(Onboarding.volatility),
         enabled: true,
@@ -491,6 +498,10 @@ export const RewardsScreen = inject("dataStore")(
                   opacity: animation,
                 },
               ]}
+              persistentScrollbar={true}
+              bouncesZoom={true}
+              showsVerticalScrollIndicator={true}
+              bounces={false}
             >
               <View style={{ flex: 1 }} />
               {item.component || (
