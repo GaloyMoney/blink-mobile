@@ -15,6 +15,7 @@ import { isEmpty } from "ramda"
 
 import { translate } from "../../i18n"
 import { color } from "../../theme"
+import { currentScreen } from "../../utils/navigation"
 
 const phoneLogo = require("./PhoneLogo.png")
 const phoneWithArrowLogo = require("./PhoneWithArrowLogo.png")
@@ -82,11 +83,15 @@ const styles = StyleSheet.create({
   },
 })
 
-export const WelcomePhoneInputScreen = withNavigation(({ navigation }) => {
+export const WelcomePhoneInputScreen = inject("navigationStore")(({ navigationStore }) => {
   const [loading, setLoading] = useState(false)
   const [err, setErr] = useState("")
 
+  const { navigate } = useNavigation()
+
   const inputRef = useRef()
+
+  console.tron.log(navigationStore)
 
   const send = async () => {
     console.tron.log(`initPhoneNumber ${inputRef.current.getValue()}`)
@@ -101,7 +106,9 @@ export const WelcomePhoneInputScreen = withNavigation(({ navigation }) => {
       const confirmation = await auth().signInWithPhoneNumber(inputRef.current.getValue())
       if (!isEmpty(confirmation)) {
         setLoading(false)
-        navigation.navigate("welcomePhoneValidation", { confirmation })
+        const screen = currentScreen(navigationStore.state) === "welcomePhoneInputBanking" ?
+        "welcomePhoneValidationBanking" : "welcomePhoneValidation" // FIXME
+        navigate(screen, { confirmation })
       } else {
         setErr(`confirmation object is empty? ${confirmation}`)
       }
@@ -163,13 +170,14 @@ export const WelcomePhoneInputScreen = withNavigation(({ navigation }) => {
   )
 })
 
-export const WelcomePhoneValidationScreen = inject("dataStore")(({ dataStore }) => {
+export const WelcomePhoneValidationScreen = inject("navigationStore")(inject("dataStore")(
+  ({ navigationStore, dataStore }) => {
   const [code, setCode] = useState("")
   const [loading, setLoading] = useState(false)
   const [err, setErr] = useState("")
 
   const confirmation = useNavigationParam("confirmation")
-  const { goBack } = useNavigation()
+  const { goBack, navigate } = useNavigation()
 
   const onAuthStateChanged = async user => {
     // TODO : User type
@@ -192,9 +200,16 @@ export const WelcomePhoneValidationScreen = inject("dataStore")(({ dataStore }) 
 
       if (result === true) {
         setLoading(false)
+        
+        if (currentScreen(navigationStore.state) === "welcomePhoneValidationBanking") {
+          navigate("personalInformation")
+        } else {
+          goBack(null)
+          goBack(null)
+        }
         // FIXME
-        goBack(null)
-        goBack(null)
+
+
       } else {
         setErr(result.toString())
       }
@@ -272,4 +287,4 @@ export const WelcomePhoneValidationScreen = inject("dataStore")(({ dataStore }) 
       </KeyboardAvoidingView>
     </Screen>
   )
-})
+}))

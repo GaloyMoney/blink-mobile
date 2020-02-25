@@ -18,6 +18,8 @@ import { Onboarding } from "types"
 import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
 import { emailIsValid } from "../../utils/helper"
+import auth from "@react-native-firebase/auth"
+
 
 const bankLogo = require("./BankLogo.png")
 const popcornLogo = require("../rewards-screen/PopcornLogo.png")
@@ -74,14 +76,21 @@ export const BankAccountRewardsScreen = () => {
   )
 }
 
-BankAccountRewardsScreen.navigationOptions = screenProps => ({
+BankAccountRewardsScreen.navigationOptions = () => ({
   title: translate("BankAccountRewardsScreen.title"),
 })
 
 export const OpenBankScreen = () => {
+  const { navigate } = useNavigation()
   return (
     <Screen>
-      <OnboardingScreen next="personalInformation" image={bankLogo}>
+      <OnboardingScreen image={bankLogo}
+        action={() => {
+          auth().currentUser?.isAnonymous ?
+            navigate("welcomePhoneInputBanking"): // FIXME should be welcomePhoneInput
+            navigate("personalInformation")
+        }}
+      >
         <Text style={styles.text}>{translate("OpenBankScreen.accountsBenefits")}</Text>
       </OnboardingScreen>
     </Screen>

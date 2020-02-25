@@ -37,6 +37,8 @@ import { translate } from "../i18n"
 export const BankAccountOnboardingNavigator = createStackNavigator(
   {
     openBankStart: { screen: OpenBankScreen },
+    welcomePhoneInputBanking: { screen: WelcomePhoneInputScreen },
+    welcomePhoneValidationBanking: { screen: WelcomePhoneValidationScreen },
     personalInformation: { screen: PersonalInformationScreen },
     dateOfBirth: { screen: DateOfBirthScreen },
     bankAccountReady: { screen: BankAccountReadyScreen },
