@@ -29,6 +29,12 @@
     "invalidEmail": "Invalid email",
     "invalidPhoneNumber": "is not a valid phone number"
   },
+  "notifications": {
+    "payment": {
+      "body": "You just received ${{value}} sats",
+      "title": "Payment received"
+    }
+  },
   "Overlay": {
     "accounts": "Start by getting\nsome rewards!",
     "rewards": "You got 500 sats\nfor downloading the app!\n\n🎁 🎁 🎁\n\nSwipe through our rewards\nto earn more sats"

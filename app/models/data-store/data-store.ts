@@ -24,6 +24,7 @@ import { RootStoreModel } from "../root-store"
 import { difference } from "lodash"
 import { sleep } from "../../utils/sleep"
 import { translate } from "../../i18n"
+import { currentScreen } from "../../utils/navigation"
 
 // FIXME add as a global var
 DeviceInfo.isEmulator().then(isEmulator => {
@@ -741,21 +742,6 @@ export const LndModel = BaseAccountModel.named("Lnd")
         if (invoice === undefined) return
         if (!invoice.settled) return
 
-        console.tron.warn(invoice)
-
-        const currentScreen = obj => {
-          if (obj["index"]) {
-            return currentScreen(obj["routes"][obj["index"]])
-          } else {
-            return obj["routeName"]
-          }
-        }
-
-        console.tron.log(
-          "current screen",
-          currentScreen(getParentOfType(self, RootStoreModel).navigationStore.state),
-        )
-
         let localIOSNotif
 
         if (invoice.paymentRequest === self.lastAddInvoice) {
@@ -776,8 +762,8 @@ export const LndModel = BaseAccountModel.named("Lnd")
 
         if (localIOSNotif) {
           Notifications.postLocalNotification({
-            body: `You just received ${invoice.value} sats`,
-            title: "Payment received",
+            body: translate("notifications.payment.body", {value: invoice.value}),
+            title: translate("notifications.payment.title"),
             category: "SOME_CATEGORY",
             link: "localNotificationLink",
           })
