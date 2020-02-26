@@ -469,7 +469,7 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = inject("d
 
     return (
       <Screen>
-        {account == AccountType.Bitcoin && (
+        {(account === AccountType.Bitcoin || account === AccountType.VirtualBitcoin) && (
           <HeaderWithBuySell
             currency={currency}
             account={account}
@@ -477,7 +477,7 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = inject("d
             refresh={refresh}
           />
         )}
-        {account != AccountType.Bitcoin && (
+        {account === AccountType.Bank && (
           <BalanceHeader headingCurrency={currency} accountsToAdd={account} />
         )}
         {sections.length === 0 && <Text>No transaction to show</Text>}
