@@ -3,11 +3,9 @@ import { useState, useEffect, useRef } from "react"
 import { Screen } from "../../components/screen"
 import { Text } from "../../components/text"
 import { inject } from "mobx-react"
-import { withNavigation } from "react-navigation"
 import { useNavigation, useNavigationParam } from "react-navigation-hooks"
 import { Onboarding } from "types"
-import { StyleSheet, View, Image, Alert, KeyboardAvoidingView, Platform } from "react-native"
-import { Button } from "react-native-elements"
+import { StyleSheet, View, Image, Alert, KeyboardAvoidingView, Platform, ActivityIndicator } from "react-native"
 import { TextInput, ScrollView } from "react-native-gesture-handler"
 import PhoneInput from "react-native-phone-input"
 import auth from "@react-native-firebase/auth"
@@ -151,19 +149,13 @@ export const WelcomePhoneInputScreen = inject("navigationStore")(({ navigationSt
             textProps={{
               autoFocus: true,
               placeholder: translate("WelcomePhoneInputScreen.placeholder"),
-              returnKeyType: "done",
+              returnKeyType: loading ? "default" : "done",
               onSubmitEditing: () => send(),
             }}
           />
           <View style={{ flex: 1 }} />
-          <Button
-            title={translate("common.next")}
-            onPress={() => send()}
-            containerStyle={styles.buttonContainer}
-            buttonStyle={styles.buttonStyle}
-            loading={loading}
-            disabled={loading}
-          />
+          <ActivityIndicator animating={loading} size="large" color={color.primary} />
+          <View style={{ flex: 1 }} />
         </View>
       </KeyboardAvoidingView>
     </Screen>
@@ -268,21 +260,15 @@ export const WelcomePhoneValidationScreen = inject("navigationStore")(inject("da
             keyboardType="number-pad"
             textContentType="oneTimeCode"
             placeholder={translate("WelcomePhoneValidationScreen.placeholder")}
-            returnKeyType="done"
+            returnKeyType={loading ? "default" : "done"}
             maxLength={6}
             onSubmitEditing={() => sendVerif()}
           >
             {code}
           </TextInput>
           <View style={{ flex: 1 }} />
-          <Button
-            title={translate("common.next")}
-            onPress={() => sendVerif()}
-            containerStyle={styles.buttonContainer}
-            buttonStyle={styles.buttonStyle}
-            loading={loading}
-            disabled={loading}
-          />
+          <ActivityIndicator animating={loading} size="large" color={color.primary} />
+          <View style={{ flex: 1 }} />
         </ScrollView>
       </KeyboardAvoidingView>
     </Screen>
