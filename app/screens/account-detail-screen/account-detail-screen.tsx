@@ -11,7 +11,6 @@ import {
   Alert,
   Animated,
   ActivityIndicator,
-  Linking,
 } from "react-native"
 
 import Modal from "react-native-modal"
@@ -32,9 +31,9 @@ import { Button } from "react-native-elements"
 import { palette } from "../../theme/palette"
 import { Side, Onboarding } from "types"
 import { translate } from "../../i18n"
-import * as Progress from "react-native-progress"
 
-import { shortenHash } from "../../utils/helper"
+import { shortenHash, showFundingTx } from "../../utils/helper"
+import { SyncingComponent } from "../../components/syncing"
 
 export interface AccountDetailScreenProps {
   account: AccountType
@@ -112,10 +111,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  progressBar: {
-    alignSelf: "center",
-  },
-
   text: {
     marginHorizontal: 20,
     marginBottom: 10,
@@ -132,11 +127,7 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
   },
 
-  sync: {
-    alignContent: "center",
-    width: "100%",
-    marginVertical: 30,
-  },
+
 })
 
 const AccountDetailItem: React.FC<AccountDetailItemProps> = props => {
@@ -476,12 +467,6 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = inject("d
       refresh()
     }, [])
 
-    const showFundingTx = () => {
-      Linking.openURL(`https://blockstream.info/testnet/tx/${dataStore.lnd.fundingTx}`).catch(err =>
-        console.error("Couldn't load page", err),
-      )
-    }
-
     return (
       <Screen>
         {account == AccountType.Bitcoin && (
@@ -512,7 +497,7 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = inject("d
         {(account == AccountType.VirtualBitcoin &&
           dataStore.lnd.statusFirstChannel == FirstChannelStatus.pending && (
             <View style={styles.sync}>
-              <Text style={styles.fundingText} onPress={showFundingTx}>
+              <Text style={styles.fundingText} onPress={() => showFundingTx(dataStore.lnd.fundingTx)}>
                 {translate(`RewardsScreen.channelCreated.fundingTx`, {
                   tx: shortenHash(dataStore.lnd.fundingTx),
                 })}
@@ -520,17 +505,7 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = inject("d
             </View>
           )) ||
           (!dataStore.lnd.syncedToChain && (
-            <View style={styles.sync}>
-              <Text style={[styles.text]}>
-                {translate(`RewardsScreen.channelCreated.syncing`)}{" "}
-                {(dataStore.lnd.percentSynced * 100).toFixed(2)}%
-              </Text>
-              <Progress.Bar
-                style={styles.progressBar}
-                color={color.primary}
-                progress={dataStore.lnd.percentSynced}
-              />
-            </View>
+            <SyncingComponent />
           ))}
       </Screen>
     )
