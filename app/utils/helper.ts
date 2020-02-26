@@ -17,3 +17,8 @@ export const shortenHash = (hash: string, length = 4) => {
 export const emailIsValid = email => {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
 }
+
+export const capitalize = s => {
+  if (typeof s !== "string") return ""
+  return s.charAt(0).toUpperCase() + s.slice(1)
+}

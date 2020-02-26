@@ -13,6 +13,7 @@ import { Onboarding } from "types"
 import { translate } from "../../i18n"
 import Modal from "react-native-modal"
 import { AccountType, FirstChannelStatus } from "../../utils/enum"
+import { capitalize } from "../../utils/helper"
 
 const styles = StyleSheet.create({
   headerSection: {
@@ -107,12 +108,6 @@ export const MoveMoneyScreen = inject("dataStore")(({ dataStore }) => {
       setFeature([AccountType.Bitcoin, target])
       setModalVisible(true)
     }
-  }
-
-  // FIXME refactor to utils
-  const capitalize = s => {
-    if (typeof s !== "string") return ""
-    return s.charAt(0).toUpperCase() + s.slice(1)
   }
 
   return (
