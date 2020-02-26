@@ -1,10 +1,10 @@
 import * as React from "react"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Screen } from "../../components/screen"
 import { StyleSheet, Alert, View, Dimensions, Platform, Animated } from "react-native"
 import { Text } from "../../components/text"
 import { color } from "../../theme"
-import { useNavigation } from "react-navigation-hooks"
+import { useNavigation, useNavigationParam } from "react-navigation-hooks"
 import { palette } from "../../theme/palette"
 import { observer, inject } from "mobx-react"
 import { Onboarding, OnboardingRewards } from "types"
@@ -458,7 +458,6 @@ export const RewardsScreen = inject("dataStore")(
     ]
 
     rewards.forEach(item => (item["fullfilled"] = dataStore.onboarding.has(Onboarding[item.id])))
-    const [firstItem] = useState(rewards.findIndex(item => !item.fullfilled))
 
     const inverse = animation.interpolate({
       inputRange: [0, 1],
@@ -546,6 +545,19 @@ export const RewardsScreen = inject("dataStore")(
       )
     }
 
+    const carouselRef = useRef(null)
+    const card = useNavigationParam("card")
+
+    const itemIndex = card ? 
+      rewards.findIndex(item => item.id === card) : 
+      rewards.findIndex(item => !item.fullfilled)
+
+    const [firstItem] = useState(itemIndex) 
+
+    if (card && carouselRef.current) {
+      carouselRef.current.snapToItem(itemIndex, false)
+    }
+
     return (
       <Screen>
         {dataStore.onboarding.stage.length === 1 && <Overlay screen="rewards" />}
@@ -592,7 +604,7 @@ export const RewardsScreen = inject("dataStore")(
         </Animated.View>
         <View style={{ flex: 1 }} />
         <Carousel
-          //   ref={(c) => { this._carousel = c; }}
+          ref={carouselRef}
           data={rewards}
           renderItem={renderItem}
           sliderWidth={screenWidth}
