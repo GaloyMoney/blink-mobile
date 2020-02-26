@@ -160,7 +160,7 @@ export const MoveMoneyScreen = inject("dataStore")(({ dataStore }) => {
                 title={translate("MoveMoneyScreen.openWallet")}
                 onPress={() => {
                   setModalVisible(false)
-                  navigate("rewards")
+                  navigate("rewards", {card: "phoneVerification"})
                 }}
                 buttonStyle={styles.button}
                 containerStyle={[styles.buttonContainer, { width: "100%" }]}
