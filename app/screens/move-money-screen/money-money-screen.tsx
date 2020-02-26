@@ -12,8 +12,11 @@ import { inject } from "mobx-react"
 import { Onboarding } from "types"
 import { translate } from "../../i18n"
 import Modal from "react-native-modal"
-import { AccountType, FirstChannelStatus } from "../../utils/enum"
-import { capitalize } from "../../utils/helper"
+import { FirstChannelStatus } from "../../utils/enum"
+import { capitalize, showFundingTx } from "../../utils/helper"
+import { SyncingComponent } from "../../components/syncing"
+import auth from "@react-native-firebase/auth"
+
 
 const styles = StyleSheet.create({
   headerSection: {
@@ -61,7 +64,10 @@ export const MoveMoneyScreen = inject("dataStore")(({ dataStore }) => {
   const { navigate } = useNavigation()
 
   const [modalVisible, setModalVisible] = useState(false)
-  const [feature, setFeature] = useState(["", ""])
+  const [message, setMessage] = useState("")
+  const [buttonTitle, setButtonTitle] = useState("")
+  const [buttonAction, setButtonAction] = useState(() => () => {})
+  const [syncing, setSyncing] = useState(false)
 
   const bank = [
     {
@@ -96,18 +102,41 @@ export const MoveMoneyScreen = inject("dataStore")(({ dataStore }) => {
     if (dataStore.onboarding.has(Onboarding.bankOnboarded)) {
       navigate(target, { title })
     } else {
-      setFeature([AccountType.Bank, target])
+      setMessage(translate("MoveMoneyScreen.needBankAccount", {feature: target}))
       setModalVisible(true)
+      setButtonTitle(translate("MoveMoneyScreen.openAccount"))
+      setButtonAction(() => () => {
+        setModalVisible(false)
+        navigate("openBankAccount")
+      })
+      setSyncing(false)
     }
   }
 
   const onBitcoinClick = ({ target }) => {
     if (dataStore.lnd.statusFirstChannel === FirstChannelStatus.opened) {
       navigate(target)
-    } else {
-      setFeature([AccountType.Bitcoin, target])
+    } else if (auth().currentUser?.isAnonymous) {
+      setMessage(translate("MoveMoneyScreen.needWallet"))
       setModalVisible(true)
-    }
+      setButtonTitle(translate("MoveMoneyScreen.openWallet"))
+      setButtonAction(() => () => {
+        setModalVisible(false)
+        navigate("rewards", {card: "phoneVerification"})
+      })
+      setSyncing(false)
+    } else { // wallet is being created
+      setMessage(translate("MoveMoneyScreen.walletInCreation"))
+      setModalVisible(true)
+      if (dataStore.lnd.statusFirstChannel === FirstChannelStatus.pending) {
+        setButtonAction(() => () => showFundingTx(dataStore.lnd.fundingTx))
+        setButtonTitle(translate("MoveMoneyScreen.seeTransaction"))
+        setSyncing(false) 
+      // need to sync the chain?
+      } else {
+        setSyncing(true) 
+      }
+    } 
   }
 
   return (
@@ -130,38 +159,21 @@ export const MoveMoneyScreen = inject("dataStore")(({ dataStore }) => {
             color={palette.lightGrey}
             style={{ height: 34, top: -22 }}
           />
-          {feature[0] == AccountType.Bank && (
-            <>
-              <Text style={styles.text}>
-                {translate("MoveMoneyScreen.needBankAccount", { feature: feature[1] })}
-              </Text>
-              <Button
-                title={translate("MoveMoneyScreen.openAccount")}
-                onPress={() => {
-                  setModalVisible(false)
-                  navigate("openBankAccount")
-                }}
-                buttonStyle={styles.button}
-                containerStyle={[styles.buttonContainer, { width: "100%" }]}
-              />
-            </>
-          )}
-          {feature[0] == AccountType.Bitcoin && (
-            <>
-              <Text style={styles.text}>
-                {translate("MoveMoneyScreen.needWallet", { feature: feature[1] })}
-              </Text>
-              <Button
-                title={translate("MoveMoneyScreen.openWallet")}
-                onPress={() => {
-                  setModalVisible(false)
-                  navigate("rewards", {card: "phoneVerification"})
-                }}
-                buttonStyle={styles.button}
-                containerStyle={[styles.buttonContainer, { width: "100%" }]}
-              />
-            </>
-          )}
+          <Text style={styles.text}>
+            {message}
+          </Text>
+          { syncing &&
+            <View style={styles.buttonContainer}>
+              <SyncingComponent />
+            </View>
+            || 
+            <Button
+              title={buttonTitle}
+              onPress={() => buttonAction()}
+              buttonStyle={styles.button}
+              containerStyle={[styles.buttonContainer, { width: "100%" }]}
+            />
+          }
         </View>
       </Modal>
       <ScrollView>

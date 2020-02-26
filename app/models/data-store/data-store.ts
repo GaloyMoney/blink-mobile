@@ -601,7 +601,10 @@ export const LndModel = BaseAccountModel.named("Lnd")
 
           try {
             const response = yield fetch(url) // FIXME find a better solution
-            const { height } = yield response.json()
+            const json = yield response.json()
+            const { height } = json
+            console.tron.log(json)
+            console.tron.log(`blockcypher height... ${height}`)
             self.bestBlockHeight = height
           } catch (err) {
             console.warn(`can't fetch blockcypher`, err)

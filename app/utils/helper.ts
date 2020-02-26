@@ -1,3 +1,7 @@
+import {
+  Linking,
+} from "react-native"
+
 /**
  * Convert bytes to a hex encoded string
  * @param  {Buffer|Uint8Array} buf The input as bytes or base64 string
@@ -21,4 +25,11 @@ export const emailIsValid = email => {
 export const capitalize = s => {
   if (typeof s !== "string") return ""
   return s.charAt(0).toUpperCase() + s.slice(1)
+}
+
+// TODO fix link for mainnet
+export const showFundingTx = (fundingTx) => {
+  Linking.openURL(`https://blockstream.info/testnet/tx/${fundingTx}`).catch(err =>
+    console.error("Couldn't load page", err),
+  )
 }

@@ -309,6 +309,8 @@
     "title": "Move Money",
     "needBankAccount": "Open a bank account to activate {{feature}}",
     "needWallet": "Validate your phone to open your wallet",
+    "walletInCreation": "Your wallet is being created",
+    "seeTransaction": "See you transaction",
     "openAccount": "Open Account",
     "openWallet": "Open Wallet",
   },
