@@ -61,7 +61,7 @@
     "satAccumulated": "Sats accumulated",
     "bankingNeeded": "Banking is needed",
     "channelNeeded": "Open channel first",
-    "getRewardNow": "Get Reward Now!",
+    "getRewardNow": "Answer quizz",
     "rewardEarned": "Reward earned",
     "phoneNumberNeeded": "Phone number required",
     "walletDownloaded": {
@@ -310,7 +310,7 @@
     "needBankAccount": "Open a bank account to activate {{feature}}",
     "needWallet": "Validate your phone to open your wallet",
     "walletInCreation": "Your wallet is being created",
-    "seeTransaction": "See you transaction",
+    "seeTransaction": "Monitor opening transaction",
     "openAccount": "Open Account",
     "openWallet": "Open Wallet",
   },
