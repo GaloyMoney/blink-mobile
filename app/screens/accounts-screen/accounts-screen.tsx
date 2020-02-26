@@ -19,6 +19,10 @@ import { ListItem } from "react-native-elements"
 import { translate } from "../../i18n"
 import { Overlay } from "../../components/overlay"
 
+import functions from "@react-native-firebase/functions"
+import auth from "@react-native-firebase/auth"
+
+
 const accountBasic = {
   color: color.text,
   fontSize: 18,
@@ -122,6 +126,13 @@ export const AccountsScreen = inject("dataStore")(
 
     const onRefresh = React.useCallback(async () => {
       setRefreshing(true)
+
+      if (dataStore.lnd.statusFirstChannel === FirstChannelStatus.opened) {
+        // FIXME quick fix for now, work on state management so this is not necessary
+        // one case: if the app went on sleep and the function is not triggered
+        await functions().httpsCallable("requestRewards")({}) 
+      }
+
       await dataStore.updateBalance()
 
       setRefreshing(false)

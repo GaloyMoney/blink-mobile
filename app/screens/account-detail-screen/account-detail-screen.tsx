@@ -35,6 +35,9 @@ import { translate } from "../../i18n"
 import { shortenHash, showFundingTx } from "../../utils/helper"
 import { SyncingComponent } from "../../components/syncing"
 
+import functions from "@react-native-firebase/functions"
+
+
 export interface AccountDetailScreenProps {
   account: AccountType
   dataStore: DataStore
@@ -455,6 +458,11 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = inject("d
     const refresh = async () => {
       await accountStore.update()
       setSections(formatTransactions(accountStore.transactions))
+
+      if (account === AccountType.Bitcoin) {
+        // FIXME
+        await functions().httpsCallable("requestRewards")({}) 
+      }
     }
 
     const onRefresh = React.useCallback(async () => {
