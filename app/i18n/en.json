@@ -230,6 +230,7 @@
       "feedback": "",
     },
     "bankOnboarded": {
+      "type": "Action",
       "title": "Open your bank account",
       "text": "Send us your detailed information and we'll provide you a full bank account"
     },
