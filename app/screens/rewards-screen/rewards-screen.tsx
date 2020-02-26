@@ -185,7 +185,7 @@ export const RewardsScreen = inject("dataStore")(
     const [err, setErr] = useState("")
     const [animation] = useState(new Animated.Value(0))
 
-    const open = index => {
+    const open = async index => {
       setCurrReward(index)
       setParams({ title: translate(`RewardsScreen\.${rewards[index].id}.title`) })
       setRewardOpen(!isRewardOpen)
@@ -492,7 +492,7 @@ export const RewardsScreen = inject("dataStore")(
                 {
                   height: animation.interpolate({
                     inputRange: [0, 1],
-                    outputRange: ["0%", screenHeight < 850 ? "52%" : "65%"],
+                    outputRange: ["0%", screenHeight < 800 ? "52%" : "65%"],
                   }), // FIXME hack for iphone 8?
                   opacity: animation,
                 },
@@ -502,23 +502,25 @@ export const RewardsScreen = inject("dataStore")(
               showsVerticalScrollIndicator={true}
               bounces={false}
             >
-              <View style={{ flex: 1 }} />
+              <View style={{ flex: 1, minHeight: 15 }} />
               {item.component || (
                 <Animated.View
                   style={{
                     alignSelf: "center",
                   }}
                 >
-                  <Animated.Text persistentScrollbar={true} style={[styles.text]}>
+                  <Animated.Text style={[styles.text]} >
                     {translate(`RewardsScreen\.${item.id}.text`)}
                   </Animated.Text>
                 </Animated.View>
               )}
               <View style={{ flex: 1 }} />
             </Animated.ScrollView>
-            <Animated.Text style={[styles.satsButton, { opacity: inverse }]}>
-              {item.rewards || (OnboardingRewards[item.id] && plusSats(item.id))}
-            </Animated.Text>
+            {!isRewardOpen && (
+              <Animated.Text style={[styles.satsButton]}>
+                {item.rewards || (OnboardingRewards[item.id] && plusSats(item.id))}
+              </Animated.Text>
+            )}
             <Button
               onPress={async () => {
                 isRewardOpen ? (item.fullfilled ? close() : await action()) : open(index)
