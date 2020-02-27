@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
   sub: {
     fontSize: 18,
     marginBottom: 48,
+    textAlign: "center"
   },
 
   title: {
