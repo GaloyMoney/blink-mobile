@@ -32,7 +32,7 @@ const fiatMoneyImage = require("./fiatMoney.jpeg")
 const bitcoinUniqueImage = require("./GreenPhone.jpg")
 const moneySupplyImage = require("./MoneySupply.jpg")
 const newBitcoinImage = require("./newBitcoin.jpg")
-const volatilityImage = require("./volatility.jpeg")
+const volatilityImage = require("./volatility.jpg")
 const activateNotificationsImage = require("./GlobalCommunications.jpg")
 const phoneVerificationImage = require("./GreenPhone.jpg")
 const lightningNetworkConnectionImage = require("./LittleDipper.jpg")
@@ -65,8 +65,8 @@ const styles = StyleSheet.create({
 
   bottomItem: {
     backgroundColor: palette.white,
-    shadowOpacity: 0.3,
-    shadowRadius: 3,
+    // shadowOpacity: 0.3,
+    // shadowRadius: 3,
     borderColor: palette.lightGrey,
     borderWidth: 0.25,
     borderBottomLeftRadius: 32,
