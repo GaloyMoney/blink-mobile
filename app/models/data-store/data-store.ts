@@ -457,9 +457,9 @@ export const LndModel = BaseAccountModel.named("Lnd")
             pubkey: self.pubkey,
             network: self.network,
           })
-          console.tron.log("sendpubKey", result)
+          console.tron.log("sendpubkey", result)
         } catch (err) {
-          console.tron.error(`can't send pubKey`, err)
+          console.tron.error(`can't send pubkey`, err)
           throw err
         }
       }),
