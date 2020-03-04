@@ -506,7 +506,7 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = inject("d
           dataStore.lnd.statusFirstChannel == FirstChannelStatus.pending && (
             <View style={styles.sync}>
               <Text style={styles.fundingText} onPress={() => showFundingTx(dataStore.lnd.fundingTx)}>
-                {translate(`RewardsScreen.channelCreated.fundingTx`, {
+                {translate(`common.fundingTx`, {
                   tx: shortenHash(dataStore.lnd.fundingTx),
                 })}
               </Text>

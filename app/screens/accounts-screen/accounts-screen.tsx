@@ -20,7 +20,6 @@ import { translate } from "../../i18n"
 import { Overlay } from "../../components/overlay"
 
 import functions from "@react-native-firebase/functions"
-import auth from "@react-native-firebase/auth"
 
 
 const accountBasic = {
