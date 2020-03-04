@@ -356,12 +356,12 @@ export const RewardsScreen = inject("dataStore")(
         id: "phoneVerification",
         onComplete: () => navigate("welcomePhoneInput"),
       },
-      {
-          id: 'firstLnPayment',
-          onComplete: () => navigate('scanningQRCode'),
-          enabled: dataStore.lnd.statusFirstChannel == FirstChannelStatus.opened,
-          enabledMessage: translate(`RewardsScreen.channelNeeded`)
-      },
+      // {
+      //     id: 'firstLnPayment',
+      //     onComplete: () => navigate('scanningQRCode'),
+      //     enabled: dataStore.lnd.statusFirstChannel == FirstChannelStatus.opened,
+      //     enabledMessage: translate(`RewardsScreen.channelNeeded`)
+      // },
       {
         id: "transaction",
         onComplete: async () => dataStore.onboarding.add(Onboarding.transaction),
