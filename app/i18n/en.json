@@ -18,6 +18,9 @@
     "bitcoin": "Bitcoin",
     "soon": "Coming soon!",
     "SSL": "Your information is encrypted and securely transmit using SSL",
+    "syncing": "Syncing data...",
+    "fundingTx": "Funding tx: {{tx}}",
+
   },
   "sat": {
     "one": "1 sat",
@@ -161,15 +164,6 @@
         "type": "Action",
         "title": "Activate notifications",
         "text": "Enable notifications to get alerts when you receive payments in the future."
-      },
-      "channelCreated": {
-        "type": "Text",
-        "title": "Open your first channel",
-        "syncing": "Syncing data...",
-        "synced": "Sync complete",
-        "fundingTx": "Funding tx: {{tx}}",
-        "channelOpened": "Congrats! your channel is now opened",
-        "text": "In future version of the application, we'll abstract the concept of a channel, but for now you need to create your first channel on the Lightning network"
       },
       "phoneVerification": {
         "type": "Action",

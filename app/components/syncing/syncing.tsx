@@ -32,7 +32,7 @@ export const SyncingComponent = inject("dataStore")(observer(
         
     return (<View style={styles.sync}>
         <Text style={styles.text}>
-            {translate(`RewardsScreen.channelCreated.syncing`)}{" "}
+            {translate(`common.syncing`)}{" "}
             {(dataStore.lnd.percentSynced * 100).toFixed(2)}%
         </Text>
         <Progress.Bar
