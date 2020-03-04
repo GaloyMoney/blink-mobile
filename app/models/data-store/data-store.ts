@@ -919,7 +919,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
           if (invoice.memo) {
             return invoice.memo
           } else if (invoice.htlcs[0].customRecords) {
-            return translate(`RewardsScreen\.${invoice.htlcs[0].customRecords}.title`)
+            return translate(`RewardsScreen.rewards\.${invoice.htlcs[0].customRecords}.title`)
           } else {
             return `Payment received`
           }
@@ -1065,7 +1065,7 @@ export const OnboardingModel = types
     get transactions() {
       const txs = self.stage.map(item => ({
         // TODO: interface for those pending transactions
-        name: translate(`RewardsScreen\.${[item]}.title`),
+        name: translate(`RewardsScreen.rewards\.${[item]}.title`),
         icon: "ios-exit",
         amount: OnboardingRewards[item],
         date: Date.now(),
