@@ -12,6 +12,7 @@ import {
   RewardsScreen,
   WelcomePhoneInputScreen,
   WelcomePhoneValidationScreen,
+  RewardsHome,
 } from "../screens/rewards-screen"
 import {
   MoveMoneyScreen,
@@ -80,7 +81,8 @@ export const MoveMoneyNavigator = createStackNavigator(
 
 export const RewardsNavigator = createStackNavigator(
   {
-    rewards: { screen: RewardsScreen },
+    rewards: { screen: RewardsHome },
+    rewardsDetail: { screen: RewardsScreen },
     welcomePhoneInput: { screen: WelcomePhoneInputScreen },
     welcomePhoneValidation: { screen: WelcomePhoneValidationScreen },
   },

@@ -4,6 +4,7 @@ import { Screen } from "../../components/screen"
 import { StyleSheet, Alert, View, Dimensions, Platform, Animated } from "react-native"
 import { Text } from "../../components/text"
 import { color } from "../../theme"
+import Icon from "react-native-vector-icons/Ionicons"
 import { useNavigation, useNavigationParam } from "react-navigation-hooks"
 import { palette } from "../../theme/palette"
 import { observer, inject } from "mobx-react"
@@ -12,7 +13,7 @@ import Carousel, { ParallaxImage } from "react-native-snap-carousel"
 import { translate } from "../../i18n"
 import I18n from "i18n-js"
 import { AccountType, CurrencyType, FirstChannelStatus } from "../../utils/enum"
-import { Button } from "react-native-elements"
+import { Button, ListItem } from "react-native-elements"
 import { sleep } from "../../utils/sleep"
 import { Notifications, RegistrationError } from "react-native-notifications"
 import functions from "@react-native-firebase/functions"
@@ -20,9 +21,15 @@ import { YouTubeStandaloneIOS } from "react-native-youtube"
 import { Overlay } from "../../components/overlay"
 import Svg, { Path } from "react-native-svg"
 import { Quizz } from "../../components/quizz"
-import { TouchableOpacity } from "react-native-gesture-handler"
+import { TouchableOpacity, FlatList } from "react-native-gesture-handler"
 
 const walletDownloadedImage = require("./GreenPhone.jpg")
+const firstSurveyImage = require("./GreenPhone.jpg")
+const scalabilityImage = require("./GreenPhone.jpg")
+const lightningImage = require("./GreenPhone.jpg")
+const buyFirstSatsImage = require("./GreenPhone.jpg")
+const dollarCostAveragingImage = require("./GreenPhone.jpg")
+
 const satImage = require("./Sat.png")
 const freeMoneyImage = require("./freeMoney.jpg")
 const custodyImage = require("./SafeBank.jpg")
@@ -166,6 +173,15 @@ const styles = StyleSheet.create({
     marginBottom: 40,
     textAlign: "center",
   },
+
+  accountView: {
+    borderColor: color.line,
+    borderRadius: 4,
+    borderWidth: 1,
+    marginBottom: 15,
+    marginHorizontal: 15,
+    padding: 6,
+  },
 })
 
 const RewardsHeader = props => (
@@ -177,19 +193,30 @@ const RewardsHeader = props => (
 
 export const RewardsScreen = inject("dataStore")(
   observer(({ dataStore }) => {
-    const { navigate, setParams } = useNavigation()
+    const { navigate, setParams, getParam } = useNavigation()
 
     const [isRewardOpen, setRewardOpen] = useState(false)
     const [quizzVisible, setQuizzVisible] = useState(false)
     const [quizzData, setQuizzData] = useState({})
-    const [currReward, setCurrReward] = useState("")
+    const [currRewardIndex, setCurrRewardIndex] = useState(0)
     const [loading, setLoading] = useState(false)
     const [err, setErr] = useState("")
     const [animation] = useState(new Animated.Value(0))
 
+    const section = getParam('section')
+
+    const rewards_obj = translate(`RewardsScreen.rewards\.${section}`)
+    
+    // we are cloning because we are modifing the object shared with translate()
+    const rewards_obj_copy = {...rewards_obj}
+    delete rewards_obj_copy.title
+
+    const rewards = Object.entries(rewards_obj_copy)
+    const [rewardId, rewardInfo] = rewards[currRewardIndex]
+
     const open = async index => {
-      setCurrReward(index)
-      setParams({ title: translate(`RewardsScreen.rewards\.${rewards[index].id}.title`) })
+      setCurrRewardIndex(index)
+      setParams({ title: translate(`RewardsScreen.rewards\.${section}\.${rewardId}.title`) })
       setRewardOpen(!isRewardOpen)
     }
 
@@ -233,23 +260,19 @@ export const RewardsScreen = inject("dataStore")(
     }
 
     const action = async () => {
-      const type = translate(`RewardsScreen.rewards\.${rewards[currReward].id}.type`) as RewardType
+      const type = rewardInfo.type as RewardType
 
-      const feedback = translate(`RewardsScreen.rewards\.${rewards[currReward].id}.feedback`, {
-        defaultValue: "",
-      })
-      const correct = translate(`RewardsScreen.rewards\.${rewards[currReward].id}.correct`, {
-        defaultValue: false,
-      })
-      const onComplete = rewards[currReward].onComplete
+      const feedback = rewardInfo.feedback ?? ""
+      const correct = rewardInfo.correct ?? false
+      const onComplete = rewardInfo.onComplete
 
       if ([RewardType.Text, RewardType.Video].includes(RewardType[type])) {
         setQuizzData({
           feedback,
           correct,
           onComplete,
-          question: translate(`RewardsScreen.rewards\.${rewards[currReward].id}.question`),
-          answers: translate(`RewardsScreen.rewards\.${rewards[currReward].id}.answers`),
+          question: rewardInfo.question,
+          answers: rewardInfo.answers,
         })
       }
 
@@ -260,7 +283,7 @@ export const RewardsScreen = inject("dataStore")(
         case RewardType.Video:
           try {
             await YouTubeStandaloneIOS.playVideo(
-              translate(`RewardsScreen.rewards\.${rewards[currReward].id}.videoid`),
+              rewardInfo.videoid,
             )
             await sleep(500) // FIXME why await for playVideo doesn't work?
             console.tron.log("finish video")
@@ -277,53 +300,42 @@ export const RewardsScreen = inject("dataStore")(
       }
     }
 
-    const rewards = [
-      {
-        id: "walletDownloaded",
+    const rewardsMeta = {
+      "walletDownloaded": {
         onComplete: null,
       },
-      {
-        id: "sat",
+      "sat": {
         onComplete: async () => dataStore.onboarding.add(Onboarding.sat),
       },
-      {
-        id: "freeMoney",
+      "freeMoney": {
         onComplete: async () => dataStore.onboarding.add(Onboarding.freeMoney),
       },
-      {
-        id: "custody",
+      "custody": {
         onComplete: async () => dataStore.onboarding.add(Onboarding.custody),
       },
-      {
-        id: "digitalKeys",
+      "digitalKeys": {
         onComplete: async () => dataStore.onboarding.add(Onboarding.digitalKeys),
       },
-      {
-        id: "backupWallet",
+      "backupWallet": {
         onComplete: async () => {
           setLoading(true)
           await sleep(2000)
           await dataStore.onboarding.add(Onboarding.backupWallet)
         },
       },
-      {
-        id: "fiatMoney",
+      "fiatMoney": {
         onComplete: async () => dataStore.onboarding.add(Onboarding.fiatMoney),
       },
-      {
-        id: "bitcoinUnique",
+      "bitcoinUnique": {
         onComplete: async () => dataStore.onboarding.add(Onboarding.bitcoinUnique),
       },
-      {
-        id: "moneySupply",
+      "moneySupply": {
         onComplete: async () => dataStore.onboarding.add(Onboarding.moneySupply),
       },
-      {
-        id: "newBitcoin",
+      "newBitcoin": {
         onComplete: async () => dataStore.onboarding.add(Onboarding.newBitcoin),
       },
-      {
-        id: "activateNotifications",
+      "activateNotifications": {
         onComplete: async () => {
           Notifications.events().registerRemoteNotificationsRegistered(
             async (event: Registered) => {
@@ -352,107 +364,92 @@ export const RewardsScreen = inject("dataStore")(
           Notifications.registerRemoteNotifications()
         },
       },
-      {
-        id: "phoneVerification",
+      "phoneVerification": {
         onComplete: () => navigate("welcomePhoneInput"),
       },
-      // {
-      //     id: 'firstLnPayment',
-      //     onComplete: () => navigate('scanningQRCode'),
-      //     enabled: dataStore.lnd.statusFirstChannel == FirstChannelStatus.opened,
-      //     enabledMessage: translate(`RewardsScreen.channelNeeded`)
-      // },
-      {
-        id: "transaction",
+      'firstLnPayment': {
+          onComplete: () => navigate('scanningQRCode'),
+          enabled: dataStore.lnd.statusFirstChannel == FirstChannelStatus.opened,
+          enabledMessage: translate(`RewardsScreen.channelNeeded`)
+      },
+      "transaction": {
         onComplete: async () => dataStore.onboarding.add(Onboarding.transaction),
       },
-      {
-        id: "paymentProcessing",
+      "paymentProcessing": {
         onComplete: async () => dataStore.onboarding.add(Onboarding.paymentProcessing),
       },
-      {
-        id: "creator",
+      "creator": {
         onComplete: async () => dataStore.onboarding.add(Onboarding.creator),
       },
-      {
-        id: "decentralization",
+      "decentralization": {
         onComplete: () => {},
         enabled: false,
-        enabledMessage: translate(`common.soon`),
       },
-      {
-        id: "inviteAFriend",
+      "inviteAFriend": {
         onComplete: () => Alert.alert("TODO"),
         enabled: dataStore.lnd.statusFirstChannel == FirstChannelStatus.opened,
         enabledMessage: translate(`RewardsScreen.channelNeeded`),
       },
-      {
-        id: "bankOnboarded",
+      "bankOnboarded": {
         onComplete: () => navigate("openBankAccount"),
       },
-      {
-        id: "debitCardActivation",
+      "debitCardActivation": {
         onComplete: () => Alert.alert("TODO"),
         enabled: dataStore.onboarding.has(Onboarding["bankOnboarded"]),
         enabledMessage: translate(`RewardsScreen.bankingNeeded`),
       },
-      {
-        id: "firstCardSpending",
+      "firstCardSpending": {
         onComplete: () => Alert.alert("TODO"),
         enabled: dataStore.onboarding.has(Onboarding["bankOnboarded"]),
         enabledMessage: translate(`RewardsScreen.bankingNeeded`),
       },
-      {
-        id: "activateDirectDeposit",
+      "activateDirectDeposit": {
         rewards: "1% card rewards!",
         onComplete: () => Alert.alert("TODO"),
         enabled: dataStore.onboarding.has(Onboarding["bankOnboarded"]),
         enabledMessage: translate(`RewardsScreen.bankingNeeded`),
       },
-      {
-        id: "energy",
+      "energy": {
         onComplete: async () => {},
         enabled: false,
-        enabledMessage: translate(`common.soon`),
       },
-      {
-        id: "doubleSpend",
+      "doubleSpend": {
         onComplete: () => {},
         enabled: false,
-        enabledMessage: translate(`common.soon`),
       },
-      {
-        id: "exchangeHack",
+      "exchangeHack": {
         onComplete: () => {},
         enabled: false,
-        enabledMessage: translate(`common.soon`),
       },
-      {
-        id: "moneyLaundering",
+      "moneyLaundering": {
         onComplete: () => {},
         enabled: false,
-        enabledMessage: translate(`common.soon`),
       },
-      {
-        id: "privacy",
+      "privacy": {
         onComplete: () => {},
         enabled: false,
-        enabledMessage: translate(`common.soon`),
       },
-      {
-        id: "difficultyAdjustment",
+      "difficultyAdjustment": {
         onComplete: () => {},
         enabled: false,
-        enabledMessage: translate(`common.soon`),
       },
-      {
-        id: "volatility",
+      "volatility": {
         onComplete: async () => dataStore.onboarding.add(Onboarding.volatility),
       },
-    ]
+      "buyFirstSats": {
+        onComplete: async () => dataStore.onboarding.add(Onboarding.buyFirstSats),
+      },
+      "dollarCostAveragingImage": {
+        onComplete: async () => dataStore.onboarding.add(Onboarding.dollarCostAveragingImage),
+      },
+    }
 
-    rewards.forEach(item => (item["fullfilled"] = dataStore.onboarding.has(Onboarding[item.id])))
-    rewards.forEach(item => (item["enabled"] = item["enabled"] ?? true ))
+    rewards.forEach(item => (item[1]["onComplete"] = rewardsMeta[rewardId].onComplete))
+    rewards.forEach(item => (item[1]["fullfilled"] = dataStore.onboarding.has(Onboarding[item[0]])))
+    rewards.forEach(item => (item[1]["enabled"] = rewardsMeta[rewardId].enabled ?? true ))
+    rewards.forEach(item => (item[1]["enabledMessage"] = rewardsMeta[rewardId].enabledMessage ?? translate(`common.soon`) ))
+
+    console.tron.log({rewards})
 
     const inverse = animation.interpolate({
       inputRange: [0, 1],
@@ -466,11 +463,14 @@ export const RewardsScreen = inject("dataStore")(
       })}`
 
     const renderItem = ({ item, index }, parallaxProps) => {
+      const itemId = item[0]
+      const itemInfo = item[1]
+
       return (
         <Animated.View style={styles.item}>
           <TouchableOpacity onPress={() => open(index)} disabled={isRewardOpen} activeOpacity={0.9}>
             <ParallaxImage
-              source={eval(`${item.id}Image`)}
+              source={eval(`${itemId}Image`)}
               containerStyle={
                 isRewardOpen ? styles.imageContainerRewardsOpen : styles.imageContainerRewardsClosed
               }
@@ -479,7 +479,7 @@ export const RewardsScreen = inject("dataStore")(
           </TouchableOpacity>
           <View style={styles.bottomItem}>
             {!isRewardOpen && (
-              <Text style={styles.itemTitle}>{translate(`RewardsScreen.rewards\.${item.id}.title`)}</Text>
+              <Text style={styles.itemTitle}>{itemInfo.title}</Text>
             )}
             <Animated.ScrollView
               contentContainerStyle={{ flexGrow: 1 }}
@@ -504,36 +504,34 @@ export const RewardsScreen = inject("dataStore")(
                     alignSelf: "center",
                   }}
                 >
-                  <Animated.Text style={[styles.text]} >
-                    {translate(`RewardsScreen.rewards\.${item.id}.text`)}
-                  </Animated.Text>
+                  <Animated.Text style={[styles.text]} >{itemInfo.text}</Animated.Text>
                 </Animated.View>
               )}
               <View style={{ flex: 1 }} />
             </Animated.ScrollView>
             {!isRewardOpen && (
               <Animated.Text style={[styles.satsButton]}>
-                {item.rewards || (OnboardingRewards[item.id] && plusSats(item.id))}
+                {itemInfo.rewards || (OnboardingRewards[itemId] && plusSats(itemId))}
               </Animated.Text>
             )}
             <Button
               onPress={async () => {
-                isRewardOpen ? (item.fullfilled ? close() : await action()) : open(index)
+                isRewardOpen ? (itemInfo.fullfilled ? close() : await action()) : open(index)
               }}
-              disabled={!item.enabled}
-              buttonStyle={item.fullfilled ? styles.buttonStyleDisabled : styles.textButton}
-              titleStyle={item.fullfilled ? styles.titleStyleDisabled : null}
+              disabled={!itemInfo.enabled}
+              buttonStyle={itemInfo.fullfilled ? styles.buttonStyleDisabled : styles.textButton}
+              titleStyle={itemInfo.fullfilled ? styles.titleStyleDisabled : null}
               // containerStyle={styles.}
               title={
                 isRewardOpen
-                  ? item.fullfilled
+                  ? itemInfo.fullfilled
                     ? translate("common.close")
                     : translate("RewardsScreen.getRewardNow")
-                  : item.enabled
-                  ? item.fullfilled
+                  : itemInfo.enabled
+                  ? itemInfo.fullfilled
                     ? translate("RewardsScreen.rewardEarned")
                     : translate("common.learnMore")
-                  : item.enabledMessage
+                  : itemInfo.enabledMessage
               }
               loading={loading}
             />
@@ -546,8 +544,8 @@ export const RewardsScreen = inject("dataStore")(
     const card = useNavigationParam("card")
 
     const itemIndex = card ? 
-      rewards.findIndex(item => item.id === card) : 
-      rewards.findIndex(item => !item.fullfilled)
+      rewards.findIndex(item => item[0] === card) : 
+      rewards.findIndex(item => !item[1].fullfilled)
 
     const [firstItem] = useState(itemIndex) 
 
@@ -557,7 +555,6 @@ export const RewardsScreen = inject("dataStore")(
 
     return (
       <Screen>
-        {dataStore.onboarding.stage.length === 1 && <Overlay screen="rewards" />}
         <Quizz
           quizzVisible={quizzVisible}
           setQuizzVisible={setQuizzVisible}
@@ -565,7 +562,7 @@ export const RewardsScreen = inject("dataStore")(
           setRewardOpen={setRewardOpen}
         />
         <View style={{ flex: 1 }} />
-        <Animated.View style={[styles.header]}>
+        <Animated.View style={styles.header}>
           {!isRewardOpen && <RewardsHeader />}
           <Animated.Text
             style={[
@@ -582,7 +579,7 @@ export const RewardsScreen = inject("dataStore")(
           </Animated.Text>
           <Animated.Text style={[styles.titleSats]}>
             {isRewardOpen
-              ? `${plusSats(rewards[currReward].id)}`
+              ? `${plusSats(rewardId)}`
               : I18n.toNumber(
                   dataStore.balances({
                     currency: CurrencyType.BTC,
@@ -617,6 +614,35 @@ export const RewardsScreen = inject("dataStore")(
 )
 
 RewardsScreen.navigationOptions = screenProps => {
-  const title = screenProps.navigation.getParam("title") ?? translate("RewardsScreen.title")
+  const section = screenProps.navigation.getParam("section")
+  const title = screenProps.navigation.getParam("title") ?? translate(`RewardsScreen.rewards\.${section}.title`)
+  return { title }
+}
+
+export const RewardsHome = inject("dataStore")(
+  observer(({ dataStore }) => {
+
+  const { navigate } = useNavigation()
+
+  return (
+  <Screen>
+    {dataStore.onboarding.stage.length === 1 && <Overlay screen="rewards" />}
+    <View style={{ flex: 1 }} />
+    <FlatList
+      data={Object.keys(translate("RewardsScreen.rewards"))}
+      renderItem={({ item }) => 
+        <ListItem
+          style={styles.accountView}
+          chevron
+          title={translate(`RewardsScreen.rewards\.${item}.title`)}
+          onPress={() => navigate("rewardsDetail", {section: item})}
+          leftAvatar={<Icon name={"logo-bitcoin"} color={color.primary} size={28} style={styles.icon} />}
+        />}
+    />
+  </Screen>
+)}))
+
+RewardsHome.navigationOptions = screenProps => {
+  const title = translate("RewardsScreen.title")
   return { title }
 }

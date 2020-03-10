@@ -130,6 +130,7 @@
       "useBitcoin": {
         "title": "Use Bitcoin",
         "firstLnPayment": {
+          "type": "Action",
           "title": "⚡ First payment ⚡",
           "text": "Lightning is the revolutionary payment. Give it a try!"
         },
@@ -184,6 +185,10 @@
         "title": "Buy Bitcoin",
         "buyFirstSats": {
           "title": "Buy your first sats",
+          "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+        },
+        "dollarCostAveraging": {
+          "title": "What is dollar cost averaging?",
           "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
         },
       },
@@ -268,8 +273,8 @@
           "feedback": "The goal of Galoy is to educate you about Bitcoin, but unfortunately, we won't be able to tell you who is Satoshi Nakamoto!",
         },
         "scalability": {
-          "title": "Does Bitcoin scale?\n\nA common critize to Bitcoin is that this doesn't scale. The network can currently process about 7 transactions/second.\n\nVisa, on the other side, can process 40,000 transactions/second\nIt's a big gap!!\n\nBut comparing visa and bitcoin is probably not that relevant. Visa aims to process transaction ",
-          "text": "TODO",
+          "title": "Does Bitcoin scale?",
+          "text": "A common critize to Bitcoin is that this doesn't scale. The network can currently process about 7 transactions/second.\n\nVisa, on the other side, can process 40,000 transactions/second\nIt's a big gap!!\n\nBut comparing visa and bitcoin is probably not that relevant. Visa aims to process transaction",
           "question": "",
           "answers": ["", "", ""],
           "feedback": "",
