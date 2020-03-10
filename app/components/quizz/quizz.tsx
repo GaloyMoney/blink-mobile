@@ -1,5 +1,4 @@
 import * as React from "react"
-import { useState, useEffect } from "react"
 import { StyleSheet, View, SafeAreaView, Text, Alert } from "react-native"
 import { palette } from "../../theme/palette"
 import Modal from "react-native-modal"
