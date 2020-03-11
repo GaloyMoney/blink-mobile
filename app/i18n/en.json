@@ -201,7 +201,7 @@
           "question": "How are new bitcoin being created?",
           "answers": ["By converting dollar to bitcoin on exchanges", "By solving a compute-intensive math problem", "By staking bitcoin to a stacking company"],
           "feedback": ["You can buy bitcoin from exchanges, but this is not how bitcoin is being created", "Correct! On average, every 10 mins, new bitcoin are being created", "There is no concept of stacking in bitcoin"],
-          "correct": 0,
+          "correct": 1,
         },
         "volatility": {
           "type": "Text",
