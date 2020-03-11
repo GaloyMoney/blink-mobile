@@ -919,7 +919,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
           if (invoice.memo) {
             return invoice.memo
           } else if (invoice.htlcs[0].customRecords) {
-            return translate(`RewardsScreen.rewards\.${invoice.htlcs[0].customRecords}.title`)
+            return translateTitleFromItem(invoice.htlcs[0].customRecords)
           } else {
             return `Payment received`
           }
@@ -1016,6 +1016,21 @@ interface BalanceRequest {
   account: AccountType
 }
 
+
+// TODO move to utils?
+const translateTitleFromItem = (item) => {
+  console.tron.log({item})
+  const object = translate(`RewardsScreen.rewards`)
+  for (const property in object) {
+    for (const property2 in object[property]) {
+      if (property2 === item) {
+        return object[property][property2].title
+      }
+    }
+  }
+  return "Translation not found"
+}
+
 export const OnboardingModel = types
   .model("Onboarding", {
     type: AccountType.VirtualBitcoin,
@@ -1065,13 +1080,13 @@ export const OnboardingModel = types
     get transactions() {
       const txs = self.stage.map(item => ({
         // TODO: interface for those pending transactions
-        name: translate(`RewardsScreen.rewards\.${[item]}.title`),
+        name: translateTitleFromItem(item),
         icon: "ios-exit",
         amount: OnboardingRewards[item],
         date: Date.now(),
       }))
 
-      console.tron.log(txs)
+      console.tron.log({txs})
       return txs
     },
   }))
