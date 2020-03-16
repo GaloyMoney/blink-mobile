@@ -451,9 +451,9 @@ export const LndModel = BaseAccountModel.named("Lnd")
       }),
 
       // TODO: triggered this automatically after the wallet is being unlocked
-      sendPubKey: flow(function*() {
+      sendPubkey: flow(function*() {
         try {
-          const result = yield functions().httpsCallable("sendPubKey")({
+          const result = yield functions().httpsCallable("sendPubkey")({
             pubkey: self.pubkey,
             network: self.network,
           })
@@ -642,7 +642,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
         console.tron.log("openFirstChannel")
 
         try {
-          yield self.sendPubKey()
+          yield self.sendPubkey()
           yield self.connectGaloyPeer()
 
           const result = yield functions().httpsCallable("openFirstChannel")({})

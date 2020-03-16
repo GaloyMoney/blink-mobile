@@ -255,7 +255,7 @@ export const DebugScreen = inject("dataStore")(
               style={DEMO}
               textStyle={DEMO_TEXT}
               text="send pubkey"
-              onPress={dataStore.lnd.sendPubKey}
+              onPress={dataStore.lnd.sendPubkey}
             />
             <Button
               style={DEMO}
