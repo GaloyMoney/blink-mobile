@@ -3,7 +3,6 @@ import { View, Animated, StyleSheet } from "react-native"
 import { color } from "../../theme"
 import { translate } from "../../i18n"
 import I18n from "i18n-js"
-import { AccountType, CurrencyType } from "../../utils/enum"
 import { Button } from "react-native-elements"
 import Svg, { Path } from "react-native-svg"
 import { palette } from "../../theme/palette"
@@ -47,7 +46,6 @@ const styles = StyleSheet.create({
 export const RewardsHeader = ({isRewardOpen, balance,
     animation = null, plusSats = (a) => {}, rewardId = 0, close = () => {}}) => (
   <>
-    <View style={{ flex: 1 }} />
     <Animated.View style={styles.header}>
       {!isRewardOpen && <RewardsGraphic />}
       <Animated.Text
@@ -78,7 +76,5 @@ export const RewardsHeader = ({isRewardOpen, balance,
         />
       )}
     </Animated.View>
-    <View style={{ flex: 1 }} />
-    {/* <View style={{ flex: 1, minHeight: 20 }} /> */}
   </>
 )

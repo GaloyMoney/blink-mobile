@@ -2,16 +2,13 @@ import * as React from "react"
 import { View, ViewStyle, StyleSheet } from "react-native"
 import { Text } from "../text"
 
-import currency from "currency.js"
+import currency_fmt from "currency.js"
 import { color } from "../../theme"
 import { CurrencyType } from "../../utils/enum"
 
 export interface CurrencyTextProps {
   amount: number
   currency: CurrencyType
-
-  eq_dollar?: number
-
   /**
    * An optional style override useful for padding & margin.
    */
@@ -30,24 +27,18 @@ const styles = StyleSheet.create({
   },
 })
 
-/**
- * Stateless functional component for your needs
- *
- * Component description here for TypeScript tips.
- */
 export function CurrencyText(props: CurrencyTextProps) {
   // grab the props
-  const { style, amount, ...rest } = props
-  const comp: React.Component
+  const { amount, currency } = props
 
-  switch (props.currency) {
+  switch (currency) {
     case CurrencyType.USD:
-      return <Text>{currency(amount, { formatWithSymbol: true }).format()}</Text>
+      return <Text>{currency_fmt(amount, { formatWithSymbol: true }).format()}</Text>
     case CurrencyType.BTC:
       return (
         <View style={{ flexDirection: "row", alignItems: "flex-end" }}>
           <Text style={styles.text}>
-            {currency(amount, { precision: 0, separator: "," }).format()}
+            {currency_fmt(amount, { precision: 0, separator: "," }).format()}
           </Text>
           <Text style={styles.smallText}> sats</Text>
         </View>
