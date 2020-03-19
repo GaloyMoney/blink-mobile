@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     },
 })
 
-export const RewardsHeader = ({isRewardOpen, dataStore,
+export const RewardsHeader = ({isRewardOpen, balance,
     animation = null, plusSats = (a) => {}, rewardId = 0, close = () => {}}) => (
   <>
     <View style={{ flex: 1 }} />
@@ -66,11 +66,7 @@ export const RewardsHeader = ({isRewardOpen, dataStore,
       <Animated.Text style={[styles.titleSats]}>
         {isRewardOpen
           ? `${plusSats(rewardId)}`
-          : I18n.toNumber(
-              dataStore.balances({
-                currency: CurrencyType.BTC,
-                account: AccountType.VirtualBitcoin,
-              }),
+          : I18n.toNumber(balance,
               { precision: 0 },
             )}
       </Animated.Text>

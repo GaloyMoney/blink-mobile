@@ -4,7 +4,6 @@ import { palette } from "../../theme/palette"
 import Modal from "react-native-modal"
 import { Button } from "react-native-elements"
 import { color } from "../../theme"
-import { sleep } from "../../utils/sleep"
 import Icon from "react-native-vector-icons/Ionicons"
 
 const styles = StyleSheet.create({
@@ -27,15 +26,19 @@ const styles = StyleSheet.create({
   },
 })
 
-export const Quizz = ({ quizzVisible, setQuizzVisible, quizzData, setRewardOpen }) => {
-  const successAnswer = async () => {
-    await quizzData.onComplete()
-    setQuizzVisible(false)
-    setRewardOpen(false)
-    await sleep(500) // FIXME
-    Alert.alert(quizzData.feedback[quizzData.correct])
-  }
+interface IQuizz {
+  quizzVisible: boolean,
+  setQuizzVisible(boolean): void,
+  quizzData: {
+    question: string,
+    answers: string[],
+    feedback: string[],
+    correct: number,
+  }, 
+  close(msg): void,
+}
 
+export const Quizz = ({ quizzVisible, setQuizzVisible, quizzData, close }: IQuizz) => {
   return (
     <Modal
       style={{ marginHorizontal: 0, marginBottom: 0 }}
@@ -64,7 +67,7 @@ export const Quizz = ({ quizzVisible, setQuizzVisible, quizzData, setRewardOpen 
                 title={l}
                 buttonStyle={styles.textButton}
                 onPress={() => {
-                  quizzData.correct === i ? successAnswer() : Alert.alert(quizzData.feedback[i])
+                  quizzData.correct === i ? close(quizzData.feedback[quizzData.correct]) : Alert.alert(quizzData.feedback[i])
                 }}
                 key={i}
               />
