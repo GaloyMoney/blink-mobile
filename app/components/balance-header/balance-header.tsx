@@ -48,7 +48,7 @@ const Loader = () => (
   </ContentLoader>
 )
 
-export const BalanceHeader: React.FunctionComponent<BalanceHeaderProps> = inject("dataStore")(
+export const BalanceHeader: React.FC<BalanceHeaderProps> = inject("dataStore")(
   observer(({ headingCurrency, dataStore, accountsToAdd, initialLoading }) => {
     const otherCurrency = headingCurrency === CurrencyType.BTC ? CurrencyType.USD : CurrencyType.BTC
 
