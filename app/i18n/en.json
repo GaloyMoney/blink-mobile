@@ -40,7 +40,10 @@
   },
   "Overlay": {
     "accounts": "Start by getting\nsome rewards!",
-    "rewards": "You got 500 sats\nfor downloading the app!\n\n🎁 🎁 🎁\n\nSwipe through our rewards\nto earn more sats"
+    "rewards": {
+      "download": "We gave you 1 sat a gift to download the app.",
+      "getMore": "There are many more ways to earn sats with Galoy. The basics with Bitcoin 101 is a good start!"
+    }
   },
   "GetStartedScreen": {
     "headline": "The Bank with sound money\n\n🔥 $ ⇄ ₿ ⚡",
@@ -142,10 +145,6 @@
       },
       "galoy": {
         "title": "Galoy",
-        "walletDownloaded": {
-          "title": "Download the app",
-          "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-        },
         "freeMoney": {
           "type": "Text",
           "title": "Galoy gives me free bitcoin?",

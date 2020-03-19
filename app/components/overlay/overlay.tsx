@@ -29,7 +29,19 @@ const styles = StyleSheet.create({
   },
 })
 
-const SvgComponent = props => {
+const UpArrow = (props) => {
+  return (
+    <Svg viewBox="0 0 155.139 155.139" height={150} width={320} {...props}>
+      <Path
+        d="M40.56 45.42H12.384L57.804 0l45.408 45.42h-28.51c4.046 53.517 31.917 96.753 68.052 107.266-5.513 1.599-11.224 2.452-17.077 2.452-44.143.001-80.475-48.027-85.117-109.718z"
+        fill="#010002"
+      />
+    </Svg>
+  )
+}
+
+
+const DownArrow = props => {
   return (
     <Svg viewBox="0 0 776.092 693.665" height={150} width={320} {...props}>
       <Path
@@ -53,14 +65,15 @@ export const Overlay = ({ screen }) => {
               <>
                 <View style={{ flex: 1 }}></View>
                 <Text style={styles.modalText}>{translate("Overlay.accounts")}</Text>
-                <SvgComponent style={{ marginVertical: 0, marginLeft: 50 }} />
+                <DownArrow style={{ marginVertical: 0, marginLeft: 50 }} />
               </>
             )}
             {screen == "rewards" && (
               <>
-                <View style={{ flex: 1 }}></View>
-                <Text style={styles.modalTextCenter}>{translate("Overlay.rewards")}</Text>
-                <View style={{ flex: 1 }}></View>
+                <Text style={styles.modalTextCenter}>{translate("Overlay.rewards.download")}</Text>
+                <View style={{ height: 170 }}></View>
+                <UpArrow style={{ marginLeft: 0 }} />
+                <Text style={styles.modalTextCenter}>{translate("Overlay.rewards.getMore")}</Text>
               </>
             )}
           </SafeAreaView>
