@@ -6,6 +6,7 @@ import I18n from "i18n-js"
 import { Button } from "react-native-elements"
 import Svg, { Path } from "react-native-svg"
 import { palette } from "../../theme/palette"
+import { plusSats } from "../../utils/helper"
 
 
 const RewardsGraphic = props => (
@@ -44,7 +45,7 @@ const styles = StyleSheet.create({
 })
 
 export const RewardsHeader = ({isRewardOpen, balance,
-    animation = null, plusSats = (a) => {}, rewardId = 0, close = () => {}}) => (
+    animation = null, rewardId = 0, close = () => {}}) => (
   <>
     <Animated.View style={styles.header}>
       {!isRewardOpen && <RewardsGraphic />}

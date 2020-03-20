@@ -1,3 +1,7 @@
+import I18n from "i18n-js"
+import { OnboardingRewards } from "types"
+
+
 import {
   Linking,
 } from "react-native"
@@ -33,3 +37,9 @@ export const showFundingTx = (fundingTx) => {
     console.error("Couldn't load page", err),
   )
 }
+
+export const plusSats = id =>
+`+${I18n.t("sat", {
+  count: OnboardingRewards[id],
+  formatted_number: I18n.toNumber(OnboardingRewards[id], { precision: 0 }),
+})}`
