@@ -38,8 +38,8 @@ export const showFundingTx = (fundingTx) => {
   )
 }
 
-export const plusSats = id =>
+export const plusSats = balance =>
 `+${I18n.t("sat", {
-  count: OnboardingRewards[id],
-  formatted_number: I18n.toNumber(OnboardingRewards[id], { precision: 0 }),
+  count: balance,
+  formatted_number: I18n.toNumber(balance, { precision: 0 }),
 })}`

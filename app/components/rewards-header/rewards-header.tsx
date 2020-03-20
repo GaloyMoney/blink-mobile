@@ -1,12 +1,12 @@
 import * as React from "react"
-import { View, Animated, StyleSheet } from "react-native"
+import { useEffect, useState } from "react"
+import { Animated, StyleSheet } from "react-native"
 import { color } from "../../theme"
 import { translate } from "../../i18n"
 import I18n from "i18n-js"
 import { Button } from "react-native-elements"
 import Svg, { Path } from "react-native-svg"
 import { palette } from "../../theme/palette"
-import { plusSats } from "../../utils/helper"
 
 
 const RewardsGraphic = props => (
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
 
     titleSats: {
         fontWeight: "bold",
-        fontSize: 32,
+        height: 40,
         marginHorizontal: 40,
         textAlign: "center",
         color: color.primary,
@@ -44,8 +44,32 @@ const styles = StyleSheet.create({
     },
 })
 
-export const RewardsHeader = ({isRewardOpen, balance,
-    animation = null, rewardId = 0, close = () => {}}) => (
+export const RewardsHeader = ({isRewardOpen, balance, close = () => {}}) => {
+
+    const [animationRewardOpening] = useState(new Animated.Value(0))
+    const [animationSats] = useState(new Animated.Value(0))
+
+    useEffect(() => {
+      Animated.timing(animationRewardOpening, {
+        toValue: isRewardOpen,
+        duration: 500,
+        useNativeDriver: false,
+      }).start()
+    }, [isRewardOpen])
+
+    useEffect(() => {
+      if (!isRewardOpen) {
+        animationSats.setValue(0)
+
+        Animated.timing(animationSats, {
+          toValue: 1,
+          duration: 250,
+          useNativeDriver: false,
+        }).start()
+      }
+    }, [balance])
+
+    return (
   <>
     <Animated.View style={styles.header}>
       {!isRewardOpen && <RewardsGraphic />}
@@ -53,21 +77,30 @@ export const RewardsHeader = ({isRewardOpen, balance,
         style={[
           styles.title,
           {
-            fontSize: animation?.interpolate({
+            fontSize: animationRewardOpening.interpolate({
               inputRange: [0, 1],
-              outputRange: [28, 0.1],
-            }) ?? 28,
+              outputRange: [28, 0.01],
+            }),
           },
         ]}
       >
         {translate("RewardsScreen.satAccumulated")}
       </Animated.Text>
-      <Animated.Text style={[styles.titleSats]}>
+      <Animated.Text style={[styles.titleSats,
+        {
+          fontSize: animationSats.interpolate({
+            inputRange: [0, 0.3, 1],
+            outputRange: [32, 38, 32],
+          }),
+        },
+      ]}>
         {isRewardOpen
-          ? `${plusSats(rewardId)}`
-          : I18n.toNumber(balance,
-              { precision: 0 },
-            )}
+          ? `+${I18n.t("sat", {
+            count: balance,
+            formatted_number: I18n.toNumber(balance, { precision: 0 }),
+          })}`
+          : I18n.toNumber(balance, { precision: 0 })
+        }
       </Animated.Text>
       {isRewardOpen && (
         <Button
@@ -78,4 +111,4 @@ export const RewardsHeader = ({isRewardOpen, balance,
       )}
     </Animated.View>
   </>
-)
+)}

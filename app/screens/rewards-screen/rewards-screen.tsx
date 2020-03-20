@@ -196,12 +196,14 @@ export const RewardsScreen = inject("dataStore")(
     const [err, setErr] = useState("")
     const [animation] = useState(new Animated.Value(0))
 
-    const section = getParam('section')
 
+    const section = getParam('section')
     const rewards_obj = translate(`RewardsScreen.rewards\.${section}`)
     
     // we are cloning because we are modifing the object shared with translate()
     const rewards_obj_copy = {...rewards_obj}
+
+    // except title, all the other one are "cards" that are actionable items
     delete rewards_obj_copy.title
 
     const rewards = Object.entries(rewards_obj_copy)
@@ -267,13 +269,11 @@ export const RewardsScreen = inject("dataStore")(
 
       const feedback = rewardInfo.feedback ?? ""
       const correct = rewardInfo.correct ?? false
-      const onComplete = rewardInfo.onComplete
 
       if ([RewardType.Text, RewardType.Video].includes(RewardType[type])) {
         setQuizzData({
           feedback,
           correct,
-          onComplete,
           question: rewardInfo.question,
           answers: rewardInfo.answers,
         })
@@ -297,7 +297,7 @@ export const RewardsScreen = inject("dataStore")(
           }
           break
         case RewardType.Action:
-          await onComplete()
+          await rewardInfo.onComplete()
           close(feedback)
           break
       }
@@ -454,7 +454,7 @@ export const RewardsScreen = inject("dataStore")(
 
     console.tron.log({rewards})
 
-    const renderItem = ({ item, index }, parallaxProps) => {
+    const CardItem = ({ item, index }, parallaxProps) => {
       const itemId = item[0]
       const itemInfo = item[1]
 
@@ -503,7 +503,7 @@ export const RewardsScreen = inject("dataStore")(
             </Animated.ScrollView>
             {!isRewardOpen && (
               <Animated.Text style={[styles.satsButton]}>
-                {itemInfo.rewards || (OnboardingRewards[itemId] && plusSats(itemId))}
+                {itemInfo.rewards || (OnboardingRewards[itemId] && plusSats(OnboardingRewards[itemId]))}
               </Animated.Text>
             )}
             <Button
@@ -555,18 +555,18 @@ export const RewardsScreen = inject("dataStore")(
         />
         <RewardsHeader 
           isRewardOpen={isRewardOpen} 
-          balance={dataStore.balances({
+          balance={isRewardOpen ? 
+            OnboardingRewards[rewardId]
+            : dataStore.balances({
             currency: CurrencyType.BTC,
             account: AccountType.VirtualBitcoin,
           })}
-          animation={animation}
-          rewardId={rewardId}
           close={close}
         />
         <Carousel
           ref={carouselRef}
           data={rewards}
-          renderItem={renderItem}
+          renderItem={CardItem}
           sliderWidth={screenWidth}
           scrollEnabled={!isRewardOpen}
           itemWidth={screenWidth - 60}
