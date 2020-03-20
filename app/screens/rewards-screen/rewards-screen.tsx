@@ -11,7 +11,6 @@ import { observer, inject } from "mobx-react"
 import { Onboarding, OnboardingRewards } from "types"
 import Carousel, { ParallaxImage } from "react-native-snap-carousel"
 import { translate } from "../../i18n"
-import I18n from "i18n-js"
 import { AccountType, CurrencyType, FirstChannelStatus } from "../../utils/enum"
 import { Button, ListItem } from "react-native-elements"
 import { sleep } from "../../utils/sleep"
@@ -22,6 +21,7 @@ import { Overlay } from "../../components/overlay"
 import { Quizz } from "../../components/quizz"
 import { TouchableOpacity, FlatList } from "react-native-gesture-handler"
 import { RewardsHeader } from "../../components/rewards-header"
+import { plusSats } from "../../utils/helper"
 
 const walletDownloadedImage = require("./GreenPhone.jpg")
 const firstSurveyImage = require("./GreenPhone.jpg")
@@ -454,12 +454,6 @@ export const RewardsScreen = inject("dataStore")(
 
     console.tron.log({rewards})
 
-    const plusSats = id =>
-      `+${I18n.t("sat", {
-        count: OnboardingRewards[id],
-        formatted_number: I18n.toNumber(OnboardingRewards[id], { precision: 0 }),
-      })}`
-
     const renderItem = ({ item, index }, parallaxProps) => {
       const itemId = item[0]
       const itemInfo = item[1]
@@ -566,7 +560,6 @@ export const RewardsScreen = inject("dataStore")(
             account: AccountType.VirtualBitcoin,
           })}
           animation={animation}
-          plusSats={plusSats}
           rewardId={rewardId}
           close={close}
         />

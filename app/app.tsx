@@ -27,18 +27,9 @@ YellowBox.ignoreWarnings([
   "componentWillReceiveProps is deprecated",
 ])
 
-/**
- * Storybook still wants to use ReactNative's AsyncStorage instead of the
- * react-native-community package; this causes a YellowBox warning. This hack
- * points RN's AsyncStorage at the community one, fixing the warning. Here's the
- * Storybook issue about this: https://github.com/storybookjs/storybook/issues/6078
- */
-const ReactNative = require("react-native")
-Object.defineProperty(ReactNative, "AsyncStorage", {
-  get(): any {
-    return require("@react-native-community/async-storage").default
-  },
-})
+// FIXME
+// console.disableYellowBox = false
+
 
 interface AppState {
   rootStore?: RootStore
@@ -112,7 +103,7 @@ const APP_NAME = "GaloyApp"
 // Should we show storybook instead of our app?
 //
 // ⚠️ Leave this as `false` when checking into git.
-const SHOW_STORYBOOK = false
+const SHOW_STORYBOOK = true
 
 const RootComponent = SHOW_STORYBOOK && __DEV__ ? StorybookUIRoot : App
 AppRegistry.registerComponent(APP_NAME, () => RootComponent)
