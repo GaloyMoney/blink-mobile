@@ -4,6 +4,8 @@ import SplashScreen from "react-native-splash-screen"
 
 declare var module
 
+import './rn-addons'
+
 configure(() => {
   require("./storybook-registry")
 }, module)
