@@ -2,7 +2,9 @@ import * as React from "react"
 import { storiesOf } from "@storybook/react-native"
 import { StoryScreen, Story, UseCase } from "../../../storybook/views"
 import { RewardsHeader } from "./"
-import { Animated, Button } from "react-native"
+import { Animated } from "react-native"
+
+import { withKnobs, text, boolean, number } from "@storybook/addon-knobs";
 
 // import { action } from '@storybook/addon-actions'
 
@@ -17,9 +19,9 @@ storiesOf("RewardsHeader", module)
   .add("Style Presets", () => (
     <Story>
       <UseCase text="Dollar" usage="The primary.">
-        <RewardsHeader isRewardOpen={false} balance={150} />
+        <RewardsHeader isRewardOpen={false} balance={number("Age", 35)} />
       </UseCase>
-      <UseCase text="Sat" usage="isRewardOpen={true} animation0">
+      {/* <UseCase text="Sat" usage="isRewardOpen={true} animation0">
         <RewardsHeader isRewardOpen={true} balance={150} animation={animation0} />
       </UseCase>
       <UseCase text="Sat" usage="isRewardOpen={true} animation05">
@@ -27,6 +29,11 @@ storiesOf("RewardsHeader", module)
       </UseCase>
       <UseCase text="Sat" usage="isRewardOpen={true} animation1">
         <RewardsHeader isRewardOpen={true} balance={150} animation={animation1} />
-      </UseCase>
+      </UseCase> */}
     </Story>
   ))
+
+export default {
+    title: "Storybook Knobs",
+    decorators: [withKnobs]
+};
