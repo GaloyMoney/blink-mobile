@@ -1,12 +1,14 @@
 import * as React from "react"
 import { useState } from "react"
-import { createStackNavigator } from "react-navigation-stack"
+import { createStackNavigator } from '@react-navigation/stack'
 import { DebugScreen } from "../screens/debug-screen"
 import { AccountsScreen } from "../screens/accounts-screen"
 import { AccountDetailScreen } from "../screens/account-detail-screen/account-detail-screen"
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
-import { createBottomTabNavigator } from "react-navigation-tabs"
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from "react-native-vector-icons/Ionicons"
+import { Button as ButtonNative } from "react-native"
+
 import { color } from "../theme"
 import {
   RewardsScreen,
@@ -32,76 +34,33 @@ import {
 } from "../screens/bank-onboarding"
 import { Badge } from "react-native-elements"
 import { inject, observer } from "mobx-react"
-import { Animated } from "react-native"
+import { Animated, StyleSheet } from "react-native"
 import { translate } from "../i18n"
+import { palette } from "../theme/palette"
 
-export const BankAccountOnboardingNavigator = createStackNavigator(
-  {
-    openBankStart: { screen: OpenBankScreen },
-    welcomePhoneInputBanking: { screen: WelcomePhoneInputScreen },
-    welcomePhoneValidationBanking: { screen: WelcomePhoneValidationScreen },
-    personalInformation: { screen: PersonalInformationScreen },
-    dateOfBirth: { screen: DateOfBirthScreen },
-    bankAccountReady: { screen: BankAccountReadyScreen },
-  },
-  {
-    headerMode: "float",
-  },
-)
 
-export const AccountNavigator = createStackNavigator(
-  {
-    accounts: { screen: AccountsScreen },
-    accountDetail: { screen: AccountDetailScreen },
-    transactionDetail: { screen: TransactionDetailScreen },
-    bankAccountRewards: { screen: BankAccountRewardsScreen },
-
-    debug: { screen: DebugScreen },
+const styles = StyleSheet.create({
+  person: {
+    paddingRight: 15,
   },
-  {
-    headerMode: "float",
-  },
-)
-
-export const MoveMoneyNavigator = createStackNavigator(
-  {
-    moveMoney: { screen: MoveMoneyScreen },
-    sendBitcoin: { screen: SendBitcoinScreen },
-    scanningQRCode: { screen: ScanningQRCodeScreen },
-    receiveBitcoin: { screen: ReceiveBitcoinScreen },
-    bankTransfer: { screen: BankTransferScreen },
-    directDeposit: { screen: DirectDepositScreen },
-    findATM: { screen: FindATMScreen },
-    depositCash: { screen: FindATMScreen },
-  },
-  {
-    headerMode: "float",
-  },
-)
-
-export const RewardsNavigator = createStackNavigator(
-  {
-    rewards: { screen: RewardsHome },
-    rewardsDetail: { screen: RewardsScreen },
-    welcomePhoneInput: { screen: WelcomePhoneInputScreen },
-    welcomePhoneValidation: { screen: WelcomePhoneValidationScreen },
-  },
-  {
-    headerMode: "float",
-  },
-)
+})
 
 const size = 32
 
-const InteractiveBadge = inject("dataStore")(
-  inject("navigationStore")(
-    observer(({ navigationStore, dataStore, focused, tintColor, routeName }) => {
+const InteractiveBadge = 
+  inject("dataStore")(
+  // inject("navigationStore")(
+    observer(({ dataStore, focused, color, routeName }) => {
       const [rotateAnim] = useState(new Animated.Value(0))
 
-      const primaryStack = navigationStore.state.routes.filter(
-        item => item.key === "primaryStack",
-      )[0]
-      const rewardsActive = primaryStack.routes[primaryStack.index].key === "Rewards" ?? false
+      // const primaryStack = navigationStore.state.routes.filter(
+      //   item => item.key === "primaryStack",
+      // )[0]
+      // const rewardsActive = primaryStack.routes[primaryStack.index].key === "Rewards" ?? false
+
+      const rewardsActive = true
+      // FIXME
+      // use focus?
 
       React.useEffect(() => {
         if (rewardsActive) {
@@ -136,7 +95,7 @@ const InteractiveBadge = inject("dataStore")(
               ],
             }}
           >
-            <Icon name={"ios-rocket"} size={size} color={tintColor} />
+            <Icon name={"ios-rocket"} size={size} color={color} />
           </Animated.View>
           <Badge
             status="success"
@@ -147,44 +106,218 @@ const InteractiveBadge = inject("dataStore")(
         </>
       )
     }),
-  ),
 )
 
-export const PrimaryNavigator = createBottomTabNavigator(
-  {
-    Accounts: {
-      screen: AccountNavigator,
-      navigationOptions: {
-        tabBarIcon: ({ focused, tintColor }) => {
-          return <Icon name={"ios-wallet"} size={size} color={tintColor} />
+
+const StackBankOpening = createStackNavigator()
+
+export const BankAccountOnboardingNavigator = () => {
+  return (
+    <StackBankOpening.Navigator
+      initialRouteName="accounts"
+      // headerMode: "float",
+    >
+      <StackBankOpening.Screen
+        name="openBankStart"
+        component={OpenBankScreen}
+        options={({navigation}) => ({
+          title: translate("OpenBankScreen.title"),
+          headerLeft: () => (
+            <ButtonNative title="< Back" onPress={() => navigation.navigate("primaryStack")} />
+          ),
+          // FIXME < back button
+        })}
+      />
+      <StackBankOpening.Screen
+        name="welcomePhoneInputBanking"
+        component={WelcomePhoneInputScreen}
+      />
+      <StackBankOpening.Screen
+        name="welcomePhoneValidationBanking"
+        component={WelcomePhoneValidationScreen}
+      />
+      <StackBankOpening.Screen
+        name="personalInformation"
+        component={PersonalInformationScreen}
+        options={{title: translate("PersonalInformationScreen.title")}}
+        />
+      <StackBankOpening.Screen
+        name="dateOfBirth"
+        component={DateOfBirthScreen}
+        options={{title: translate("DateOfBirthScreen.title")}}
+      />
+      <StackBankOpening.Screen
+        name="bankAccountReady"
+        component={BankAccountReadyScreen}
+        options={{headerShown: false}}
+
+      />
+    </StackBankOpening.Navigator>
+)}
+
+
+const StackAccounts = createStackNavigator()
+
+export const AccountNavigator = () => {
+  return (
+    <StackAccounts.Navigator
+      initialRouteName="accounts"
+      // headerMode: "float",
+    >
+      <StackAccounts.Screen
+        name="accounts"
+        component={AccountsScreen}
+        options={({navigation}) => ({ 
+          title: translate("AccountsScreen.title"),
+          headerRight: () => (
+            <Icon
+              name={"ios-person"}
+              size={32}
+              color={palette.darkGrey}
+              style={styles.person}
+              onPress={() => navigation.navigate("debug")}
+            />
+        ),
+        })}
+      />
+      <StackAccounts.Screen
+        name="accountDetail"
+        component={AccountDetailScreen}
+      />
+      <StackAccounts.Screen
+        name="transactionDetail"
+        component={TransactionDetailScreen}
+      />
+      <StackAccounts.Screen
+        name="bankAccountRewards"
+        component={BankAccountRewardsScreen}
+        options={{ title: translate("BankAccountRewardsScreen.title") }}
+      />
+      <StackAccounts.Screen
+        name="debug"
+        component={DebugScreen}
+      />
+    </StackAccounts.Navigator>
+)}
+
+const StackMoveMoney = createStackNavigator()
+
+export const MoveMoneyNavigator = () => {
+  return (
+    <StackMoveMoney.Navigator
+      initialRouteName="accounts"
+      // headerMode: "float",
+    >
+      <StackMoveMoney.Screen
+        name="moveMoney"
+        component={MoveMoneyScreen}
+        options={{ title: translate("MoveMoneyScreen.title") }}
+      />
+      <StackMoveMoney.Screen
+        name="sendBitcoin"
+        component={SendBitcoinScreen}
+        options={{ title: translate("SendBitcoinScreen.title") }}
+        />
+      <StackMoveMoney.Screen
+        name="scanningQRCode"
+        component={ScanningQRCodeScreen}
+        options={{ title: translate("ScanningQRCodeScreen.title") }}
+        />
+      <StackMoveMoney.Screen
+        name="receiveBitcoin"
+        component={ReceiveBitcoinScreen}
+        options={{ title: translate("ReceiveBitcoinScreen.title") }}
+        />
+      <StackMoveMoney.Screen
+        name="bankTransfer"
+        component={BankTransferScreen}
+        options={{ title: translate("BankTransferScreen.title") }}
+        />
+      <StackMoveMoney.Screen
+        name="directDeposit"
+        component={DirectDepositScreen}
+        options={{ title: translate("DirectDepositScreen.title") }}
+      />
+      <StackMoveMoney.Screen
+        name="findATM"
+        component={FindATMScreen}
+      />
+      <StackMoveMoney.Screen
+        name="depositCash"
+        component={FindATMScreen}
+      />
+    </StackMoveMoney.Navigator>
+)}
+
+const StackRewards = createStackNavigator()
+
+export const RewardsNavigator = () => {
+  return (
+    <StackRewards.Navigator
+      initialRouteName="accounts"
+      // headerMode: "float",
+    >
+      <StackRewards.Screen
+        name="rewards"
+        component={RewardsHome}
+        options={{ title: translate("RewardsScreen.title") }}
+      />
+      <StackRewards.Screen
+        name="rewardsDetail"
+        component={RewardsScreen}
+      />
+      <StackRewards.Screen
+        name="welcomePhoneInput"
+        component={WelcomePhoneInputScreen}
+      />
+      <StackRewards.Screen
+        name="welcomePhoneValidation"
+        component={WelcomePhoneValidationScreen}
+      />
+    </StackRewards.Navigator>
+)}
+
+
+const Tab = createBottomTabNavigator();
+
+export const PrimaryNavigator =  () => {
+
+  return (
+    <Tab.Navigator
+      initialRouteName="Accounts"
+      tabBarOptions={{
+        activeTintColor: color.primary,
+        inactiveTintColor: color.text,
+        style: { height: 100 },
+      }}
+      >
+      <Tab.Screen 
+        name="Accounts"
+        component={AccountNavigator}
+        options={{
+          // title: translate("AccountsScreen.title"),
+          tabBarIcon: ({ focused, color }) => {
+            return <Icon name={"ios-wallet"} size={size} color={color} />
+          },
+        }}/>
+      <Tab.Screen 
+        name="MoveMoney"
+        component={MoveMoneyNavigator}
+        options={{
+          title: translate("MoveMoneyScreen.title"),
+          tabBarIcon: ({ focused, color }) => {
+            return <Icon name={"ios-swap"} size={size} color={color} />
+          },
+        }}
+        />
+      <Tab.Screen 
+        name="Rewards"
+        component={RewardsNavigator}
+        options={{title: translate("RewardsScreen.title"),
+        tabBarIcon: ({ focused, color }) => {
+          return <InteractiveBadge focused={focused} color={color} />
         },
-        title: translate("AccountsScreen.title"),
-      },
-    },
-    MoveMoney: {
-      screen: MoveMoneyNavigator,
-      navigationOptions: {
-        tabBarIcon: ({ focused, tintColor }) => {
-          return <Icon name={"ios-swap"} size={size} color={tintColor} />
-        },
-        title: translate("MoveMoneyScreen.title"),
-      },
-    },
-    Rewards: {
-      screen: RewardsNavigator,
-      navigationOptions: {
-        tabBarIcon: ({ focused, tintColor }) => {
-          return <InteractiveBadge focused={focused} tintColor={tintColor} />
-        },
-        title: translate("RewardsScreen.title"),
-      },
-    },
-  },
-  {
-    tabBarOptions: {
-      activeTintColor: color.primary,
-      inactiveTintColor: color.text,
-      style: { height: 64 },
-    },
-  },
-)
+      }}
+        />
+    </Tab.Navigator>
+)}

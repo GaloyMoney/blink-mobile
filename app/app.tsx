@@ -2,6 +2,8 @@
 //
 // In this file, we'll be kicking off our app or storybook.
 
+import 'react-native-gesture-handler'
+
 import "@react-native-firebase/crashlytics"
 
 import "node-libs-react-native/globals" // needed for Buffer?
@@ -9,7 +11,6 @@ import "node-libs-react-native/globals" // needed for Buffer?
 import "./i18n"
 import * as React from "react"
 import { AppRegistry, YellowBox } from "react-native"
-import { StatefulNavigator } from "./navigation"
 import { StorybookUIRoot } from "../storybook"
 import { RootStore, setupRootStore } from "./models/root-store"
 import { Provider } from "mobx-react"
@@ -17,6 +18,10 @@ import { BackButtonHandler } from "./navigation/back-button-handler"
 import { contains } from "ramda"
 import { DEFAULT_NAVIGATION_CONFIG } from "./navigation/navigation-config"
 import { Notifications } from "react-native-notifications"
+import { NavigationContainer } from '@react-navigation/native'
+import { StatefulNavigator } from './navigation'
+import { RootStack } from './navigation/root-navigator'
+
 
 /**
  * Ignore some yellowbox warnings. Some of these are for deprecated functions
@@ -88,7 +93,10 @@ export class App extends React.Component<{}, AppState> {
     return (
       <Provider rootStore={rootStore} navigationStore={navigationStore} {...otherStores}>
         <BackButtonHandler canExit={this.canExit}>
-          <StatefulNavigator />
+          <NavigationContainer>
+            <RootStack />
+            {/* <StatefulNavigator /> */}
+          </NavigationContainer>
         </BackButtonHandler>
       </Provider>
     )

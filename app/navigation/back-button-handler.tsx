@@ -1,7 +1,7 @@
 import * as React from "react"
 import { BackHandler } from "react-native"
 import { inject, observer } from "mobx-react"
-import { NavigationActions } from "react-navigation"
+import { CommonActions } from "@react-navigation/native"
 import { NavigationStore } from "../navigation/navigation-store"
 
 interface BackButtonHandlerProps {
@@ -42,7 +42,7 @@ export class BackButtonHandler extends React.Component<BackButtonHandlerProps, {
       return false
     } else {
       // we can't exit, so let's turn this into a back action
-      this.props.navigationStore.dispatch(NavigationActions.back())
+      this.props.navigationStore.dispatch(CommonActions.back())
       // let the system know we've handled this event
       return true
     }

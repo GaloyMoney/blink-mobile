@@ -6,11 +6,8 @@ import { Text } from "../../components/text"
 import { StyleSheet, Alert, View, TextInput } from "react-native"
 import { BalanceHeader } from "../../components/balance-header"
 import { CurrencyType, AccountType } from "../../utils/enum"
-import { useNavigation } from "react-navigation-hooks"
 import DateTimePicker from "@react-native-community/datetimepicker"
 import { Input, Button } from "react-native-elements"
-import { Button as ButtonNative } from "react-native"
-import { withNavigation } from "react-navigation"
 import functions from "@react-native-firebase/functions"
 import { inject } from "mobx-react"
 import { color } from "../../theme"
@@ -19,6 +16,7 @@ import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
 import { emailIsValid } from "../../utils/helper"
 import auth from "@react-native-firebase/auth"
+import { useNavigation } from '@react-navigation/native'
 
 
 const bankLogo = require("./BankLogo.png")
@@ -76,10 +74,6 @@ export const BankAccountRewardsScreen = () => {
   )
 }
 
-BankAccountRewardsScreen.navigationOptions = () => ({
-  title: translate("BankAccountRewardsScreen.title"),
-})
-
 export const OpenBankScreen = () => {
   const { navigate } = useNavigation()
   return (
@@ -96,13 +90,6 @@ export const OpenBankScreen = () => {
     </Screen>
   )
 }
-
-OpenBankScreen.navigationOptions = screenProps => ({
-  title: translate("OpenBankScreen.title"),
-  headerLeft: () => (
-    <ButtonNative title="< Back" onPress={() => screenProps.navigation.navigate("primaryStack")} />
-  ),
-}) // FIXME < back button
 
 const TextInputLightMode = props => (
   <TextInput placeholderTextColor={palette.lightGrey} {...props} />
@@ -175,74 +162,66 @@ export const PersonalInformationScreen = () => {
   )
 }
 
-PersonalInformationScreen.navigationOptions = screenProps => ({
-  title: translate("PersonalInformationScreen.title"),
-})
 
-export const DateOfBirthScreen = withNavigation(
-  inject("dataStore")(({ navigation, dataStore }) => {
-    const [dateOfBirth, setDateOfBirth] = useState(new Date(2000, 1, 1))
-    const [loading, setLoading] = useState(false)
-    const [err, setErr] = useState("")
+export const DateOfBirthScreen = inject("dataStore")(({ dataStore }) => {
+  const navigation = useNavigation()
+  const [dateOfBirth, setDateOfBirth] = useState(new Date(2000, 1, 1))
+  const [loading, setLoading] = useState(false)
+  const [err, setErr] = useState("")
 
-    const onValidate = async () => {
-      try {
-        setLoading(true)
-        await functions().httpsCallable("onBankAccountOpening")({
-          ...navigation.state.params,
-          dateOfBirth: dateOfBirth.toISOString(),
-        })
-        dataStore.onboarding.add(Onboarding.bankOnboarded)
-        navigation.navigate("bankAccountReady")
-        setLoading(false)
-      } catch (err) {
-        console.tron.error(err)
-        setErr(err.toString())
-      }
+  const onValidate = async () => {
+    try {
+      setLoading(true)
+      await functions().httpsCallable("onBankAccountOpening")({
+        ...navigation.state.params,
+        dateOfBirth: dateOfBirth.toISOString(),
+      })
+      dataStore.onboarding.add(Onboarding.bankOnboarded)
+      navigation.navigate("bankAccountReady")
+      setLoading(false)
+    } catch (err) {
+      console.tron.error(err)
+      setErr(err.toString())
     }
+  }
 
-    useEffect(() => {
-      if (err !== "") {
-        Alert.alert(translate("common.error"), err, [
-          {
-            text: translate("common.ok"),
-            onPress: () => {
-              setLoading(false)
-            },
+  useEffect(() => {
+    if (err !== "") {
+      Alert.alert(translate("common.error"), err, [
+        {
+          text: translate("common.ok"),
+          onPress: () => {
+            setLoading(false)
           },
-        ])
-        setErr("")
-      }
-    }, [err])
+        },
+      ])
+      setErr("")
+    }
+  }, [err])
 
-    return (
-      <Screen>
-        <DateTimePicker
-          style={{ paddingTop: 30 }}
-          mode="date"
-          display="default"
-          value={dateOfBirth}
-          onChange={(_, input) => {
-            setDateOfBirth(input)
-          }}
-        />
-        {/* FIXME could timezone be an issue?  */}
-        <Text style={styles.textInfos}>{translate("common.SSL")}</Text>
-        <Button
-          title={translate("common.confirm")}
-          onPress={onValidate}
-          containerStyle={styles.buttonContainer}
-          buttonStyle={styles.buttonStyle}
-          loading={loading}
-          disabled={loading}
-        />
-      </Screen>
-    )
-  }),
-)
-
-DateOfBirthScreen.navigationOptions = screenProps => ({
-  title: translate("DateOfBirthScreen.title"),
+  return (
+    <Screen>
+      <DateTimePicker
+        style={{ paddingTop: 30 }}
+        mode="date"
+        display="default"
+        value={dateOfBirth}
+        onChange={(_, input) => {
+          setDateOfBirth(input)
+        }}
+      />
+      {/* FIXME could timezone be an issue?  */}
+      <Text style={styles.textInfos}>{translate("common.SSL")}</Text>
+      <Button
+        title={translate("common.confirm")}
+        onPress={onValidate}
+        containerStyle={styles.buttonContainer}
+        buttonStyle={styles.buttonStyle}
+        loading={loading}
+        disabled={loading}
+      />
+    </Screen>
+  )
 })
 
 export const BankAccountReadyScreen = () => {
@@ -254,8 +233,3 @@ export const BankAccountReadyScreen = () => {
     </Screen>
   )
 }
-
-BankAccountReadyScreen.navigationOptions = screenProps => ({
-  title: translate("common.bankAccount"),
-  header: () => false,
-})

@@ -6,9 +6,8 @@ import { Screen } from "../../components/screen"
 import { Input, Button } from "react-native-elements"
 import Icon from "react-native-vector-icons/Ionicons"
 import { color } from "../../theme"
-import { useNavigation } from "react-navigation-hooks"
+import { useNavigation } from '@react-navigation/native';
 import { palette } from "../../theme/palette"
-import { translate } from "../../i18n"
 
 const styles = StyleSheet.create({
   squareButton: {
@@ -105,7 +104,3 @@ export const BankTransferScreen: React.FC = inject("dataStore")(
     )
   }),
 )
-
-BankTransferScreen.navigationOptions = () => ({
-  title: translate("BankTransferScreen.title"),
-})

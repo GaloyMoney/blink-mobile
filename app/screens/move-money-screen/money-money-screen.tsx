@@ -6,7 +6,7 @@ import { Text } from "../../components/text"
 import { color } from "../../theme"
 import { ListItem, Button } from "react-native-elements"
 import Icon from "react-native-vector-icons/Ionicons"
-import { useNavigation } from "react-navigation-hooks"
+import { useNavigation } from '@react-navigation/native';
 import { palette } from "../../theme/palette"
 import { inject } from "mobx-react"
 import { Onboarding } from "types"
@@ -204,8 +204,4 @@ export const MoveMoneyScreen = inject("dataStore")(({ dataStore }) => {
       </ScrollView>
     </Screen>
   )
-})
-
-MoveMoneyScreen.navigationOptions = () => ({
-  title: translate("MoveMoneyScreen.title"),
 })

@@ -2,7 +2,6 @@ import * as React from "react"
 import { Text } from "../../components/text"
 import { StyleSheet, View, Image } from "react-native"
 import { Button } from "react-native-elements"
-import { withNavigation } from "react-navigation"
 import { color } from "../../theme"
 
 const styles = StyleSheet.create({
@@ -34,35 +33,34 @@ const styles = StyleSheet.create({
   },
 })
 
-export const OnboardingScreen = withNavigation(
-  ({
-    children,
-    next /* screen */,
-    nextTitle,
-    action,
-    image,
-    navigation,
-    header = "",
-    loading = false,
-  }) => {
-    return (
-      <>
-        <Text style={styles.header}>{header}</Text>
-        <View style={styles.container}>
-          <Image source={image} style={styles.image} />
-          {children}
-        </View>
-        {(next || action) && (
-          <Button
-            title={nextTitle || "Next"}
-            onPress={next ? () => navigation.navigate(next) : action}
-            containerStyle={styles.buttonContainer}
-            buttonStyle={styles.buttonStyle}
-            loading={loading}
-            disabled={loading}
-          />
-        )}
-      </>
-    )
-  },
-)
+export const OnboardingScreen = 
+({
+  children,
+  next /* screen */,
+  nextTitle,
+  action,
+  image,
+  navigation,
+  header = "",
+  loading = false,
+}) => {
+  return (
+    <>
+      <Text style={styles.header}>{header}</Text>
+      <View style={styles.container}>
+        <Image source={image} style={styles.image} />
+        {children}
+      </View>
+      {(next || action) && (
+        <Button
+          title={nextTitle || "Next"}
+          onPress={next ? () => navigation.navigate(next) : action}
+          containerStyle={styles.buttonContainer}
+          buttonStyle={styles.buttonStyle}
+          loading={loading}
+          disabled={loading}
+        />
+      )}
+    </>
+  )
+}

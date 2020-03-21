@@ -481,7 +481,7 @@ PODS:
     - React
   - react-native-notifications (3.0.0):
     - React
-  - react-native-safe-area-context (0.6.2):
+  - react-native-safe-area-context (0.7.3):
     - React
   - react-native-splash-screen (3.2.0):
     - React
@@ -524,7 +524,7 @@ PODS:
     - ReactCommon/jscallinvoker (= 0.61.5)
   - RNCAsyncStorage (1.7.1):
     - React
-  - RNCMaskedView (0.1.5):
+  - RNCMaskedView (0.1.7):
     - React
   - RNDateTimePicker (2.2.1):
     - React
@@ -559,7 +559,7 @@ PODS:
     - RNFBApp
   - RNFS (2.16.4):
     - React
-  - RNGestureHandler (1.5.3):
+  - RNGestureHandler (1.6.1):
     - React
   - RNICloudStore (0.1.0):
     - React
@@ -569,7 +569,9 @@ PODS:
     - React
   - RNReactNativeHapticFeedback (1.8.2):
     - React
-  - RNReanimated (1.4.0):
+  - RNReanimated (1.7.0):
+    - React
+  - RNScreens (2.4.0):
     - React
   - RNSecureRandom (1.0.0-rc.0):
     - React
@@ -633,6 +635,7 @@ DEPENDENCIES:
   - RNLocalize (from `../node_modules/react-native-localize`)
   - RNReactNativeHapticFeedback (from `../node_modules/react-native-haptic-feedback`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
+  - RNScreens (from `../node_modules/react-native-screens`)
   - RNSecureRandom (from `../node_modules/react-native-securerandom`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
@@ -767,6 +770,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-haptic-feedback"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
+  RNScreens:
+    :path: "../node_modules/react-native-screens"
   RNSecureRandom:
     :path: "../node_modules/react-native-securerandom"
   RNSVG:
@@ -820,7 +825,7 @@ SPEC CHECKSUMS:
   react-native-config: f2c2ae45625a068c35681a16b9bfb1ca58b0adc7
   react-native-maps: 6e499eee4eabf422ba8b6f94e993cc768bf35153
   react-native-notifications: babab4bcceb9feaced4184cdf8c02db6a4b6c5aa
-  react-native-safe-area-context: 25260c5d0b9c53fd7aa88e569e2edae72af1f6a3
+  react-native-safe-area-context: e200d4433aba6b7e60b52da5f37af11f7a0b0392
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   react-native-version-number: b415bbec6a13f2df62bf978e85bc0d699462f37f
   React-RCTActionSheet: 600b4d10e3aea0913b5a92256d2719c0cdd26d76
@@ -834,7 +839,7 @@ SPEC CHECKSUMS:
   React-RCTVibration: a49a1f42bf8f5acf1c3e297097517c6b3af377ad
   ReactCommon: 198c7c8d3591f975e5431bec1b0b3b581aa1c5dd
   RNCAsyncStorage: 44395cb9c7c1523104c2b499eb426ef7aff82bca
-  RNCMaskedView: dd13f9f7b146a9ad82f9b7eb6c9b5548fcf6e990
+  RNCMaskedView: 76c40a1d41c3e2535df09246a2b5487f04de0814
   RNDateTimePicker: 1a251f8b276abda796d8119a96bcd1763a76f6b0
   RNDeviceInfo: c7b1dc457611b9231bb780a882102e2c93edc7af
   RNFBAnalytics: 57dc0bfad4e40f68779757653676699072651218
@@ -844,12 +849,13 @@ SPEC CHECKSUMS:
   RNFBFirestore: 5de4ae898df51a3ecc16a45db15019836c5cec87
   RNFBFunctions: 04ab4f777106d8a20ed1c9c2116f24014c23d61a
   RNFS: 90d1a32d3bc8f75cc7fc3dd2f67506049664346b
-  RNGestureHandler: 02905abe54e1f6e59c081a10b4bd689721e17aa6
+  RNGestureHandler: 8f09cd560f8d533eb36da5a6c5a843af9f056b38
   RNICloudStore: bc6e225811637c09bd1eb055d6cd7448e61cd451
   RNKeychain: 840f8e6f13be0576202aefcdffd26a4f54bfe7b5
   RNLocalize: 08eb68476e1f2d8cacd75fa919bf5e219fb03b19
   RNReactNativeHapticFeedback: e11a4da0ce174e9f88b03cbaf5d76d94633cdee2
-  RNReanimated: b2ab0b693dddd2339bd2f300e770f6302d2e960c
+  RNReanimated: 031fe8d9ea93c2bd689a40f05320ef9d96f74d7f
+  RNScreens: b5c0e1b2b04512919e78bd3898e144a157ce2363
   RNSecureRandom: 1f19ad1492f7ed416b8fc79e92216a1f73f13a4c
   RNSVG: 069864be08c9fe065a2cf7e63656a34c78653c99
   RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4

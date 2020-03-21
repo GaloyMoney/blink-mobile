@@ -26,7 +26,7 @@ import { sameDay, sameMonth } from "../../utils/date"
 import { CurrencyText } from "../../components/currency-text"
 import { TouchableHighlight, TextInput } from "react-native-gesture-handler"
 import { AccountType, CurrencyType, FirstChannelStatus } from "../../utils/enum"
-import { useNavigation, useNavigationParam } from "react-navigation-hooks"
+import { useNavigation } from '@react-navigation/native'
 import { Button } from "react-native-elements"
 import { palette } from "../../theme/palette"
 import { Side, Onboarding } from "types"
@@ -431,9 +431,16 @@ const formatTransactions = transactions => {
   return sections
 }
 
-export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = inject("dataStore")(
-  observer(({ dataStore }) => {
-    const account = useNavigationParam("account")
+export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = 
+  inject("dataStore")(observer(
+    ({ dataStore, route, navigation }) => {
+    const account = route.params.account
+
+    React.useLayoutEffect(() => {
+      navigation.setOptions({
+        title: account
+      })
+    }, []);
 
     let accountStore
 
@@ -519,7 +526,3 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = inject("d
     )
   }),
 )
-
-AccountDetailScreen.navigationOptions = screenProps => ({
-  title: screenProps.navigation.getParam("account"),
-})

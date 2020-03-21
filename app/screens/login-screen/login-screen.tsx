@@ -2,9 +2,10 @@ import { inject, observer } from "mobx-react"
 import * as React from "react"
 import { StyleSheet, Text, View } from "react-native"
 import { Button } from "react-native-elements"
-import { withNavigation } from "react-navigation"
 import { Screen } from "../../components/screen"
 import { color } from "../../theme"
+import { useNavigation } from '@react-navigation/native';
+
 
 import { translate } from "../../i18n"
 import { VersionComponent } from "../../components/version"
@@ -54,30 +55,26 @@ const styles = StyleSheet.create({
   },
 })
 
-export const GetStartedScreen = withNavigation(
-  inject("dataStore")(
-    observer(({ dataStore, navigation }) => {
-      return (
-        <Screen style={styles.container}>
-          <Text style={styles.title} onPress={() => navigation.navigate("debug")}>
-            Galoy
-          </Text>
-          <Text style={styles.sub}>{translate("GetStartedScreen.headline")}</Text>
-          <VersionComponent />
-          <View style={styles.bottom}>
-            <Button
-              title={translate("GetStartedScreen.getStarted")}
-              buttonStyle={styles.signIn}
-              onPress={() => navigation.navigate("welcomeFirst")}
-              containerStyle={styles.buttonContainer}
-            />
-          </View>
-        </Screen>
-      )
-    }),
-  ),
-)
+export const GetStartedScreen = inject("dataStore")(observer(
+({ dataStore }) => {
+  const { navigate } = useNavigation();
 
-GetStartedScreen.navigationOptions = () => ({
-  headerShown: false,
-})
+    return (
+      <Screen style={styles.container}>
+        <Text style={styles.title} onPress={() => navigate("debug")}>
+          Galoy
+        </Text>
+        <Text style={styles.sub}>{translate("GetStartedScreen.headline")}</Text>
+        <VersionComponent />
+        <View style={styles.bottom}>
+          <Button
+            title={translate("GetStartedScreen.getStarted")}
+            buttonStyle={styles.signIn}
+            onPress={() => navigate("welcomeFirst")}
+            containerStyle={styles.buttonContainer}
+          />
+        </View>
+      </Screen>
+    )
+  }),
+)

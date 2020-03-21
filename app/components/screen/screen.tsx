@@ -1,6 +1,6 @@
 import * as React from "react"
 import { KeyboardAvoidingView, Platform, ScrollView, StatusBar, View } from "react-native"
-import { SafeAreaView } from "react-navigation"
+import { SafeAreaView } from 'react-native-safe-area-context'
 import { ScreenProps } from "./screen.props"
 import { isNonScrolling, offsets, presets } from "./screen.presets"
 

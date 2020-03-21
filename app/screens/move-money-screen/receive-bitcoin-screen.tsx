@@ -3,13 +3,12 @@ import { useState, useEffect } from "react"
 import { inject, observer } from "mobx-react"
 import { Text, View, Alert, Share, Clipboard, StyleSheet } from "react-native"
 import { Screen } from "../../components/screen"
-import { Input, Button, ButtonGroup } from "react-native-elements"
+import { Input, Button } from "react-native-elements"
 import { color } from "../../theme"
 import { QRCode } from "../../components/qrcode"
 import { ScrollView } from "react-native-gesture-handler"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import { palette } from "../../theme/palette"
-import { translate } from "../../i18n"
 
 const styles = StyleSheet.create({
   qr: {
@@ -145,7 +144,3 @@ export const ReceiveBitcoinScreen: React.FC = inject("dataStore")(
     )
   }),
 )
-
-ReceiveBitcoinScreen.navigationOptions = () => ({
-  title: translate("ReceiveBitcoinScreen.title"),
-})

@@ -8,7 +8,6 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { color } from "../../theme"
 
 import MapView from "react-native-maps"
-import { useNavigationParam } from "react-navigation-hooks"
 import { TextCurrency } from "../../components/text-currency"
 import { CurrencyType, AccountType } from "../../utils/enum"
 import { shortenHash } from "../../utils/helper"
@@ -64,7 +63,7 @@ const Row = ({ input, value }) => {
   )
 }
 
-export const TransactionDetailScreen: React.FC<> = () => {
+export const TransactionDetailScreen: React.FC<> = ({ route, navigation }) => {
   const list = [
     {
       title: "See recent transactions",
@@ -76,14 +75,18 @@ export const TransactionDetailScreen: React.FC<> = () => {
     },
   ]
 
-  const account = useNavigationParam("account")
-  const date = useNavigationParam("date")
-  const amount = useNavigationParam("amount")
-  const cashback = useNavigationParam("cashback")
-  const name = useNavigationParam("name")
-  const currency = useNavigationParam("currency")
-  const id = useNavigationParam("id")
-  const preimage = useNavigationParam("preimage")
+  React.useLayoutEffect(() => {
+    navigation.setOptions({title: route.params.name});
+  }, [])
+
+  const account = route.params.account
+  const date = route.params.date
+  const amount = route.params.amount
+  const cashback = route.params.cashback
+  const name = route.params.name
+  const currency = route.params.currency
+  const id = route.params.id
+  const preimage = route.params.preimage
 
   const spendOrReceive = amount < 0 ? "spent" : "received"
 
@@ -190,7 +193,3 @@ export const TransactionDetailScreen: React.FC<> = () => {
     </Screen>
   )
 }
-
-TransactionDetailScreen.navigationOptions = screenProps => ({
-  title: screenProps.navigation.getParam("name"),
-})
