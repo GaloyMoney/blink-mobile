@@ -127,6 +127,22 @@
           "correct": 0,
         }
       },
+      "whyNow": {
+        "meta": {
+          "title": "Why Now",
+          "icon": "ios-cash"
+        },
+        "fiatMoney": {
+          "type": "Video",
+          "videoid": "XNu5ppFZbHo",
+          "title": "First, what is fiat money?",
+          "text": "This video will give you some insights about what is fiat money, that describe governements currency like dollars and euros",
+          "question": "What is NOT backing the US dollar?",
+          "answers": ["Gold", "Trust in the people that dollar will maintain its value", "Ability of governement to collect taxes and repay debt"],
+          "feedback": ["Correct. Since 1071, the US governement ended convertability of the dollar to gold", "A key element of a currency is the trust of the people in this currency. Countries like the Venezuela gets in hyperinflation once their people have lost trust in their currency.", "Governement received tax in currency they issue. It's one of the way countries ensure their people use their currency"],
+          "correct": 0,
+        },
+      },
       "galoy": {
         "meta": {
           "title": "Galoy",
@@ -186,22 +202,6 @@
           "type": "Action",
           "title": "Activate notifications",
           "text": "Enable notifications to get alerts when you receive payments in the future."
-        },
-      },
-      "fiat": {
-        "meta": {
-          "title": "Fiat Money",
-          "icon": "ios-cash"
-        },
-        "fiatMoney": {
-          "type": "Video",
-          "videoid": "XNu5ppFZbHo",
-          "title": "What is fiat money?",
-          "text": "This video will give you some insights about what is fiat money, that describe governements currency like dollars and euros",
-          "question": "What is NOT backing the US dollar?",
-          "answers": ["Gold", "Trust in the people that dollar will maintain its value", "Ability of governement to collect taxes and repay debt"],
-          "feedback": ["Correct. Since 1071, the US governement ended convertability of the dollar to gold", "A key element of a currency is the trust of the people in this currency. Countries like the Venezuela gets in hyperinflation once their people have lost trust in their currency.", "Governement received tax in currency they issue. It's one of the way countries ensure their people use their currency"],
-          "correct": 0,
         },
       },
       "buyBitcoin": {
