@@ -184,116 +184,30 @@ const styles = StyleSheet.create({
   },
 })
 
+const getRewards = ({ dataStore, section, rewardsMeta = undefined }) => {
+  const rewards_obj = translate(`RewardsScreen.rewards\.${section}`)
+  const rewards = Object.entries(rewards_obj).filter(id => id[0] !== "meta")
+
+  rewards.forEach(item => (item[1]["fullfilled"] = dataStore.onboarding.has(Onboarding[item[0]])))
+
+  if (rewardsMeta) { // FIXME
+    rewards.forEach(item => (item[1]["enabled"] = rewardsMeta[item[0]]?.enabled ?? true ))
+    rewards.forEach(item => (item[1]["enabledMessage"] = rewardsMeta[item[0]]?.enabledMessage ?? translate(`common.soon`) ))
+  }
+
+  return rewards
+}
+
+const getRemainingRewards = ({section, dataStore}) => {
+  const rewards = getRewards({section, dataStore})
+  const fullfilled = rewards.filter(item => item[1].fullfilled).length
+  const total = rewards.length
+  return total - fullfilled
+}
+
 export const RewardsScreen = inject("dataStore")(
   observer(({ dataStore }) => {
     const { navigate, setParams, getParam } = useNavigation()
-
-    const [isRewardOpen, setRewardOpen] = useState(false)
-    const [quizzVisible, setQuizzVisible] = useState(false)
-    const [quizzData, setQuizzData] = useState({})
-    const [currRewardIndex, setCurrRewardIndex] = useState(0)
-    const [loading, setLoading] = useState(false)
-    const [err, setErr] = useState("")
-    const [animation] = useState(new Animated.Value(0))
-
-    const section = getParam('section')
-    const rewards_obj = translate(`RewardsScreen.rewards\.${section}`)
-    const rewards = Object.entries(rewards_obj).filter(id => id[0] !== "meta")
-
-    // helper
-    const [rewardId, rewardInfo] = rewards[currRewardIndex]
-
-    const open = async index => {
-      setCurrRewardIndex(index)
-      setParams({ title: translate(`RewardsScreen.rewards\.${section}\.${rewardId}.title`) })
-      setRewardOpen(!isRewardOpen)
-    }
-
-    const close = async (msg = "") => {
-      setQuizzVisible(false)
-      setRewardOpen(false)
-      setParams({ title: null })
-      setLoading(false)
-      if (msg !== "") {
-        await sleep(500)
-        Alert.alert(msg, "", [
-          {
-            text: translate("common.ok"),
-            onPress: async () => {
-              await rewardsMeta[rewardId].onComplete()
-            },
-          },
-        ])
-      }
-    }
-
-    useEffect(() => {
-      Animated.timing(animation, {
-        toValue: isRewardOpen,
-        duration: 500,
-        useNativeDriver: false,
-      }).start()
-    }, [isRewardOpen])
-
-    useEffect(() => {
-      if (err !== "") {
-        setErr("")
-        Alert.alert("error", err, [
-          {
-            text: "OK",
-            onPress: () => {
-              setLoading(false)
-              setRewardOpen(false)
-            },
-          },
-        ])
-      }
-    }, [err])
-
-    enum RewardType {
-      Text = "Text",
-      Video = "Video",
-      Action = "Action",
-    }
-
-    const action = async () => {
-      const type = rewardInfo.type as RewardType
-
-      const feedback = rewardInfo.feedback ?? ""
-      const correct = rewardInfo.correct ?? false
-
-      if ([RewardType.Text, RewardType.Video].includes(RewardType[type])) {
-        setQuizzData({
-          feedback,
-          correct,
-          question: rewardInfo.question,
-          answers: rewardInfo.answers,
-        })
-      }
-
-      switch (RewardType[type]) {
-        case RewardType.Text:
-          setQuizzVisible(true)
-          break
-        case RewardType.Video:
-          try {
-            await YouTubeStandaloneIOS.playVideo(
-              rewardInfo.videoid,
-            )
-            await sleep(500) // FIXME why await for playVideo doesn't work?
-            console.tron.log("finish video")
-            setQuizzVisible(true)
-          } catch (err) {
-            console.tron.log("error video", err.toString())
-            setQuizzVisible(false)
-          }
-          break
-        case RewardType.Action:
-          await rewardsMeta[rewardId].onComplete()
-          close(feedback)
-          break
-      }
-    }
 
     const rewardsMeta = {
       "walletDownloaded": {
@@ -439,11 +353,112 @@ export const RewardsScreen = inject("dataStore")(
       },
     }
 
-    rewards.forEach(item => (item[1]["fullfilled"] = dataStore.onboarding.has(Onboarding[item[0]])))
-    rewards.forEach(item => (item[1]["enabled"] = rewardsMeta[rewardId].enabled ?? true ))
-    rewards.forEach(item => (item[1]["enabledMessage"] = rewardsMeta[rewardId].enabledMessage ?? translate(`common.soon`) ))
+    const [isRewardOpen, setRewardOpen] = useState(false)
+    const [quizzVisible, setQuizzVisible] = useState(false)
+    const [quizzData, setQuizzData] = useState({})
+    const [currRewardIndex, setCurrRewardIndex] = useState(0)
+    const [loading, setLoading] = useState(false)
+    const [err, setErr] = useState("")
+    const [animation] = useState(new Animated.Value(0))
 
-    console.tron.log({rewards, rewardId})
+    const section = getParam('section')
+    const rewards = getRewards({ section, rewardsMeta, dataStore})
+
+    // helper
+    const [currRewardId, currRewardInfo] = rewards[currRewardIndex]
+
+    const open = async index => {
+      setCurrRewardIndex(index)
+      setParams({ title: translate(`RewardsScreen.rewards\.${section}\.${currRewardId}.title`) })
+      setRewardOpen(!isRewardOpen)
+    }
+
+    const close = async (msg = "") => {
+      setQuizzVisible(false)
+      setRewardOpen(false)
+      setParams({ title: null })
+      setLoading(false)
+      if (msg !== "") {
+        await sleep(500)
+        Alert.alert(msg, "", [
+          {
+            text: translate("common.ok"),
+            onPress: async () => {
+              await rewardsMeta[currRewardId].onComplete()
+            },
+          },
+        ])
+      }
+    }
+
+    useEffect(() => {
+      Animated.timing(animation, {
+        toValue: isRewardOpen,
+        duration: 500,
+        useNativeDriver: false,
+      }).start()
+    }, [isRewardOpen])
+
+    useEffect(() => {
+      if (err !== "") {
+        setErr("")
+        Alert.alert("error", err, [
+          {
+            text: "OK",
+            onPress: () => {
+              setLoading(false)
+              setRewardOpen(false)
+            },
+          },
+        ])
+      }
+    }, [err])
+
+    enum RewardType {
+      Text = "Text",
+      Video = "Video",
+      Action = "Action",
+    }
+
+    const action = async () => {
+      const type = currRewardInfo.type as RewardType
+
+      const feedback = currRewardInfo.feedback ?? ""
+      const correct = currRewardInfo.correct ?? false
+
+      if ([RewardType.Text, RewardType.Video].includes(RewardType[type])) {
+        setQuizzData({
+          feedback,
+          correct,
+          question: currRewardInfo.question,
+          answers: currRewardInfo.answers,
+        })
+      }
+
+      switch (RewardType[type]) {
+        case RewardType.Text:
+          setQuizzVisible(true)
+          break
+        case RewardType.Video:
+          try {
+            console.tron.log({videoid: currRewardInfo.videoid})
+            await YouTubeStandaloneIOS.playVideo(
+              currRewardInfo.videoid,
+            )
+            await sleep(500) // FIXME why await for playVideo doesn't work?
+            console.tron.log("finish video")
+            setQuizzVisible(true)
+          } catch (err) {
+            console.tron.log("error video", err.toString())
+            setQuizzVisible(false)
+          }
+          break
+        case RewardType.Action:
+          await rewardsMeta[currRewardId].onComplete()
+          close(feedback)
+          break
+      }
+    }
 
     const CardItem = ({ item, index }, parallaxProps) => {
       const itemId = item[0]
@@ -547,7 +562,7 @@ export const RewardsScreen = inject("dataStore")(
         <RewardsHeader 
           isRewardOpen={isRewardOpen} 
           balance={isRewardOpen ? 
-            OnboardingRewards[rewardId]
+            OnboardingRewards[currRewardId]
             : dataStore.balances({
             currency: CurrencyType.BTC,
             account: AccountType.VirtualBitcoin,
@@ -592,6 +607,16 @@ export const RewardsHome = inject("dataStore")(
         key={item}
         rightElement={enabled ? undefined : <Icon name={"ios-lock"} color={palette.lightGrey} size={28} />}
         disabled={!enabled}
+        badge={enabled ? { 
+            value: getRemainingRewards({dataStore, section: item}), 
+            textStyle: { fontSize: 14 },
+            // containerStyle: { marginTop: -20 }
+            badgeStyle: { backgroundColor: palette.lightGrey, 
+              width: 24,
+              height: 24,
+              borderRadius: 15
+            }
+         } : undefined}
         title={translate(`RewardsScreen.rewards\.${item}.meta.title`)}
         onPress={() => navigate("rewardsDetail", {section: item})}
         leftAvatar={<Icon name={translate(`RewardsScreen.rewards\.${item}.meta.icon`)} color={color.primary} size={28} />}

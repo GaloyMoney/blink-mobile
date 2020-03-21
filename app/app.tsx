@@ -103,7 +103,7 @@ const APP_NAME = "GaloyApp"
 // Should we show storybook instead of our app?
 //
 // ⚠️ Leave this as `false` when checking into git.
-const SHOW_STORYBOOK = true
+const SHOW_STORYBOOK = false
 
 const RootComponent = SHOW_STORYBOOK && __DEV__ ? StorybookUIRoot : App
 AppRegistry.registerComponent(APP_NAME, () => RootComponent)
