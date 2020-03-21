@@ -18,15 +18,15 @@ const RewardsGraphic = props => (
 
 const styles = StyleSheet.create({
     header: {
-        marginVertical: 10,
+        marginVertical: 40,
         alignItems: "center",
     },
 
     title: {
-    fontWeight: "bold",
-    marginHorizontal: 40,
-    textAlign: "center",
-    color: palette.darkGrey,
+      fontWeight: "bold",
+      marginHorizontal: 40,
+      textAlign: "center",
+      color: palette.darkGrey,
     },
 
     titleSats: {

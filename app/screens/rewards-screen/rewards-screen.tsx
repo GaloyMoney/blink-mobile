@@ -196,17 +196,9 @@ export const RewardsScreen = inject("dataStore")(
     const [err, setErr] = useState("")
     const [animation] = useState(new Animated.Value(0))
 
-
     const section = getParam('section')
     const rewards_obj = translate(`RewardsScreen.rewards\.${section}`)
-    
-    // we are cloning because we are modifing the object shared with translate()
-    const rewards_obj_copy = {...rewards_obj}
-
-    // except title, all the other one are "cards" that are actionable items
-    delete rewards_obj_copy.title
-
-    const rewards = Object.entries(rewards_obj_copy)
+    const rewards = Object.entries(rewards_obj).filter(id => id[0] !== "meta")
 
     // helper
     const [rewardId, rewardInfo] = rewards[currRewardIndex]
@@ -228,7 +220,7 @@ export const RewardsScreen = inject("dataStore")(
           {
             text: translate("common.ok"),
             onPress: async () => {
-              await rewardInfo.onComplete()
+              await rewardsMeta[rewardId].onComplete()
             },
           },
         ])
@@ -297,7 +289,7 @@ export const RewardsScreen = inject("dataStore")(
           }
           break
         case RewardType.Action:
-          await rewardInfo.onComplete()
+          await rewardsMeta[rewardId].onComplete()
           close(feedback)
           break
       }
@@ -447,12 +439,11 @@ export const RewardsScreen = inject("dataStore")(
       },
     }
 
-    rewards.forEach(item => (item[1]["onComplete"] = rewardsMeta[rewardId].onComplete))
     rewards.forEach(item => (item[1]["fullfilled"] = dataStore.onboarding.has(Onboarding[item[0]])))
     rewards.forEach(item => (item[1]["enabled"] = rewardsMeta[rewardId].enabled ?? true ))
     rewards.forEach(item => (item[1]["enabledMessage"] = rewardsMeta[rewardId].enabledMessage ?? translate(`common.soon`) ))
 
-    console.tron.log({rewards})
+    console.tron.log({rewards, rewardId})
 
     const CardItem = ({ item, index }, parallaxProps) => {
       const itemId = item[0]
@@ -563,6 +554,7 @@ export const RewardsScreen = inject("dataStore")(
           })}
           close={close}
         />
+        <View style={{ flex: 1 }} />
         <Carousel
           ref={carouselRef}
           data={rewards}
@@ -574,6 +566,7 @@ export const RewardsScreen = inject("dataStore")(
           firstItem={firstItem}
           inactiveSlideOpacity={isRewardOpen ? 0 : 0.7}
         />
+        <View style={{ flex: 1 }} />
       </Screen>
     )
   }),
@@ -581,7 +574,7 @@ export const RewardsScreen = inject("dataStore")(
 
 RewardsScreen.navigationOptions = screenProps => {
   const section = screenProps.navigation.getParam("section")
-  const title = screenProps.navigation.getParam("title") ?? translate(`RewardsScreen.rewards\.${section}.title`)
+  const title = screenProps.navigation.getParam("title") ?? translate(`RewardsScreen.rewards\.${section}.meta.title`)
   return { title }
 }
 
@@ -589,6 +582,21 @@ export const RewardsHome = inject("dataStore")(
   observer(({ dataStore }) => {
 
   const { navigate } = useNavigation()
+
+  const CategoryItem = ({ item }) => {
+    const enabled = !(translate(`RewardsScreen.rewards\.${item}.meta.enabled`) === false)
+    return (
+      <ListItem
+        style={styles.accountView}
+        chevron={enabled}
+        key={item}
+        rightElement={enabled ? undefined : <Icon name={"ios-lock"} color={palette.lightGrey} size={28} />}
+        disabled={!enabled}
+        title={translate(`RewardsScreen.rewards\.${item}.meta.title`)}
+        onPress={() => navigate("rewardsDetail", {section: item})}
+        leftAvatar={<Icon name={translate(`RewardsScreen.rewards\.${item}.meta.icon`)} color={color.primary} size={28} />}
+      />
+  )}
 
   return (
   <Screen>
@@ -600,17 +608,9 @@ export const RewardsHome = inject("dataStore")(
         account: AccountType.VirtualBitcoin,
       })}
     />
-    <View style={{ flex: 1 }} />
     <FlatList
       data={Object.keys(translate("RewardsScreen.rewards"))}
-      renderItem={({ item }) => 
-        <ListItem
-          style={styles.accountView}
-          chevron
-          title={translate(`RewardsScreen.rewards\.${item}.title`)}
-          onPress={() => navigate("rewardsDetail", {section: item})}
-          leftAvatar={<Icon name={"logo-bitcoin"} color={color.primary} size={28} style={styles.icon} />}
-        />}
+      renderItem={CategoryItem}
     />
   </Screen>
 )}))
