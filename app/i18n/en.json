@@ -20,7 +20,6 @@
     "SSL": "Your information is encrypted and securely transmitted using SSL",
     "syncing": "Syncing data...",
     "fundingTx": "Funding tx: {{tx}}",
-
   },
   "sat": {
     "one": "1 sat",
@@ -72,7 +71,10 @@
     "phoneNumberNeeded": "Phone number required",
     "rewards": {
       "bitcoin101": {
-        "title": "Bitcoin 101",
+        "meta": {
+          "title": "Bitcoin 101",
+          "icon": "ios-school",
+        },
         "sat": {
           "type": "Text",
           "title": "What is a sat?",
@@ -123,28 +125,13 @@
           "answers": ["21,000,000", "There is no maximum", "It's up to the central bank of Bitcoin"],
           "feedback": ["21 millions, that's it!", "Bitcoin money supply is capped", "There is no central bank in the bitcoin protocol"],
           "correct": 0,
-        },
-        "phoneVerification": {
-          "type": "Action",
-          "title": "Phone Number",
-          "text": "We need to validate your phone number before we send you your rewards"
-        },
-      },
-      "useBitcoin": {
-        "title": "Use Bitcoin",
-        "firstLnPayment": {
-          "type": "Action",
-          "title": "⚡ First payment ⚡",
-          "text": "Lightning is the revolutionary payment. Give it a try!"
-        },
-        "activateNotifications": {
-          "type": "Action",
-          "title": "Activate notifications",
-          "text": "Enable notifications to get alerts when you receive payments in the future."
-        },
+        }
       },
       "galoy": {
-        "title": "Galoy",
+        "meta": {
+          "title": "Galoy",
+          "icon": "ios-person"
+        },
         "freeMoney": {
           "type": "Text",
           "title": "Galoy gives me free bitcoin?",
@@ -153,6 +140,11 @@
           "answers": ["By educating yourself about bitcoin, we believe you will want to engage more and open an account with Galoy", "We print new bitcoin for every new customer, and have to give it away", "By monetizing your data with a third party"],
           "feedback": ["You just earned another 50 sats. We hope these micro rewards will encourage you to learn more about  bitcoin", "No one can print new bitcoin at will", "One of the founding principles of Galoy is to respect individual privacyWe do not sell any of your data to a third party"],
           "correct": 0
+        },
+        "phoneVerification": {
+          "type": "Action",
+          "title": "Phone Number",
+          "text": "We need to validate your phone number before we send you your rewards"
         },
         "bankOnboarded": {
           "type": "Action",
@@ -180,8 +172,44 @@
           "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
         },
       },
+      "useBitcoin": {
+        "meta": {
+          "title": "Use Bitcoin",
+          "icon": "logo-bitcoin"
+        },
+        "firstLnPayment": {
+          "type": "Action",
+          "title": "⚡ First payment ⚡",
+          "text": "Lightning is the revolutionary payment. Give it a try!"
+        },
+        "activateNotifications": {
+          "type": "Action",
+          "title": "Activate notifications",
+          "text": "Enable notifications to get alerts when you receive payments in the future."
+        },
+      },
+      "fiat": {
+        "meta": {
+          "title": "Fiat Money",
+          "icon": "ios-cash"
+        },
+        "fiatMoney": {
+          "type": "Video",
+          "videoid": "XNu5ppFZbHo",
+          "title": "What is fiat money?",
+          "text": "This video will give you some insights about what is fiat money, that describe governements currency like dollars and euros",
+          "question": "What is NOT backing the US dollar?",
+          "answers": ["Gold", "Trust in the people that dollar will maintain its value", "Ability of governement to collect taxes and repay debt"],
+          "feedback": ["Correct. Since 1071, the US governement ended convertability of the dollar to gold", "A key element of a currency is the trust of the people in this currency. Countries like the Venezuela gets in hyperinflation once their people have lost trust in their currency.", "Governement received tax in currency they issue. It's one of the way countries ensure their people use their currency"],
+          "correct": 0,
+        },
+      },
       "buyBitcoin": {
-        "title": "Buy Bitcoin",
+        "meta": {
+          "title": "Buy Bitcoin",
+          "icon": "logo-bitcoin",
+          "enabled": false,
+        },
         "buyFirstSats": {
           "title": "Buy your first sats",
           "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
@@ -192,7 +220,11 @@
         },
       },
       "intermediate": {
-        "title": "Intermediate Bitcoin",
+        "meta": {
+          "title": "Intermediate Bitcoin",
+          "icon": "ios-school",
+          "enabled": false,
+        },
         "newBitcoin": {
           "type": "Text",
           "title": "How new bitcoin are created",
@@ -233,21 +265,12 @@
           "correct": 2,
         },
       },
-      "fiat": {
-        "title": "Fiat Money",
-        "fiatMoney": {
-          "type": "Video",
-          "videoid": "XNu5ppFZbHo",
-          "title": "What is fiat money?",
-          "text": "This video will give you some insights about what is fiat money, that describe governements currency like dollars and euros",
-          "question": "What is NOT backing the US dollar?",
-          "answers": ["Gold", "Trust in the people that dollar will maintain its value", "Ability of governement to collect taxes and repay debt"],
-          "feedback": ["Correct. Since 1071, the US governement ended convertability of the dollar to gold", "A key element of a currency is the trust of the people in this currency. Countries like the Venezuela gets in hyperinflation once their people have lost trust in their currency.", "Governement received tax in currency they issue. It's one of the way countries ensure their people use their currency"],
-          "correct": 0,
-        },
-      },
       "advanced": {
-        "title": "Advanced Bitcoin",
+        "meta": {
+          "title": "Advanced Bitcoin",
+          "icon": "ios-school",
+          "enabled": false,
+        },
         "privacy": {
           "title": "Is bitcoin private?",
           "text": "It's... complicated 🙂\n\nTransactions on the bitcoin are pseudonymous. It's like B5A35019 is sending money to 162BD1C0. It's not very indicative of who is sending money to who. But the difference between this and traditional payment network is that, every transaction in the protocol is public. This means everyone is the world, with an internet connection, can see that B5A35019 has sent money to 162BD1C0. For ever.\n\nIt's typically not like this in the ",
