@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const getRewards = ({ dataStore, section, rewardsMeta = undefined }) => {
+const getRewardsFromSection = ({ dataStore, section, rewardsMeta = undefined }) => {
   const rewards_obj = translate(`RewardsScreen.rewards\.${section}`)
   const rewards = Object.entries(rewards_obj).filter(id => id[0] !== "meta")
 
@@ -198,12 +198,11 @@ const getRewards = ({ dataStore, section, rewardsMeta = undefined }) => {
   return rewards
 }
 
-const getRemainingRewards = ({section, dataStore}) => {
-  const rewards = getRewards({section, dataStore})
-  const fullfilled = rewards.filter(item => item[1].fullfilled).length
-  const total = rewards.length
-  return total - fullfilled
-}
+const getRemainingRewards = ({section, dataStore}) => (
+  getRewardsFromSection({section, dataStore})
+  .filter(item => !item[1].fullfilled)
+  .reduce((acc, item) => OnboardingRewards[item[0]] + acc, 0)
+)
 
 export const RewardsScreen = inject("dataStore")(
   observer(({ dataStore }) => {
@@ -362,7 +361,7 @@ export const RewardsScreen = inject("dataStore")(
     const [animation] = useState(new Animated.Value(0))
 
     const section = getParam('section')
-    const rewards = getRewards({ section, rewardsMeta, dataStore})
+    const rewards = getRewardsFromSection({ section, rewardsMeta, dataStore})
 
     // helper
     const [currRewardId, currRewardInfo] = rewards[currRewardIndex]
@@ -600,26 +599,36 @@ export const RewardsHome = inject("dataStore")(
 
   const CategoryItem = ({ item }) => {
     const enabled = !(translate(`RewardsScreen.rewards\.${item}.meta.enabled`) === false)
+    const remainingRewards = getRemainingRewards({dataStore, section: item})
+
     return (
       <ListItem
         style={styles.accountView}
-        chevron={enabled}
         key={item}
-        rightElement={enabled ? undefined : <Icon name={"ios-lock"} color={palette.lightGrey} size={28} />}
+        rightElement={enabled ? 
+          remainingRewards == 0 ?
+            <Icon name={"ios-checkmark-circle-outline"} color={color.primary} size={28} /> :
+            undefined :
+          <Icon name={"ios-lock"} color={palette.lightGrey} size={28} />
+        }
         disabled={!enabled}
-        badge={enabled ? { 
-            value: getRemainingRewards({dataStore, section: item}), 
+        badge={enabled && remainingRewards != 0 ? { 
+            value: `+${remainingRewards} sats`, 
             textStyle: { fontSize: 14 },
             // containerStyle: { marginTop: -20 }
-            badgeStyle: { backgroundColor: palette.lightGrey, 
-              width: 24,
+            badgeStyle: { backgroundColor: color.primary, 
+              minWidth: 24,
               height: 24,
               borderRadius: 15
             }
          } : undefined}
         title={translate(`RewardsScreen.rewards\.${item}.meta.title`)}
         onPress={() => navigate("rewardsDetail", {section: item})}
-        leftAvatar={<Icon name={translate(`RewardsScreen.rewards\.${item}.meta.icon`)} color={color.primary} size={28} />}
+        leftAvatar={<Icon 
+          name={translate(`RewardsScreen.rewards\.${item}.meta.icon`)} 
+          color={enabled ? color.primary : palette.lightGrey}
+          size={28}
+          />}
       />
   )}
 
