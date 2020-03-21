@@ -3,7 +3,6 @@ import { Screen } from "../../components/screen"
 import { OnboardingScreen } from "../../components/onboarding"
 import { Text } from "../../components/text"
 import { inject } from "mobx-react"
-import { useNavigation } from "react-navigation-hooks"
 import { Onboarding } from "types"
 import { StyleSheet, View } from "react-native"
 
@@ -79,8 +78,7 @@ const styles = StyleSheet.create({
   },
 })
 
-export const WelcomeFirstScreen = inject("dataStore")(({ dataStore }) => {
-  const { navigate } = useNavigation()
+export const WelcomeFirstScreen = inject("dataStore")(({ dataStore, navigation }) => {
 
   return (
     <Swiper
@@ -117,7 +115,7 @@ export const WelcomeFirstScreen = inject("dataStore")(({ dataStore }) => {
         <OnboardingScreen
           action={async () => {
             dataStore.onboarding.add(Onboarding.walletDownloaded)
-            navigate("primaryStack")
+            navigation.navigate("primaryStack")
           }}
           image={bitcoinLogo}
         >

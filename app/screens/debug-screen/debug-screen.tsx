@@ -23,7 +23,7 @@ import crashlytics from "@react-native-firebase/crashlytics"
 import auth from "@react-native-firebase/auth"
 import { getSnapshot } from "mobx-state-tree"
 import JSONTree from "react-native-json-tree"
-import { useNavigation } from "react-navigation-hooks"
+import { useNavigation } from '@react-navigation/native';
 import { palette } from "../../theme/palette"
 import functions from "@react-native-firebase/functions"
 import { VersionComponent } from "../../components/version"

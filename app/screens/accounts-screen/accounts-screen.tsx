@@ -1,18 +1,16 @@
 import * as React from "react"
 import { useState, useEffect } from "react"
 import { observer, inject } from "mobx-react"
-import { StyleSheet, View, RefreshControl } from "react-native"
+import { StyleSheet, View, RefreshControl, FlatList } from "react-native"
 import { Text } from "../../components/text"
 import { Screen } from "../../components/screen"
-import { FlatList } from "react-navigation"
 import { color } from "../../theme/color"
 import Icon from "react-native-vector-icons/Ionicons"
 import currency from "currency.js"
 import { BalanceHeader } from "../../components/balance-header"
 import { AccountType, CurrencyType, FirstChannelStatus } from "../../utils/enum"
 import { Onboarding } from "types"
-import { palette } from "../../theme/palette"
-import { useNavigation } from "react-navigation-hooks"
+import { useNavigation } from '@react-navigation/native';
 
 import ContentLoader, { Rect } from "react-content-loader/native"
 import { ListItem } from "react-native-elements"
@@ -36,10 +34,6 @@ const styles = StyleSheet.create({
   accountTypeStyle: {
     ...accountBasic,
     flex: 1,
-  },
-
-  person: {
-    paddingRight: 15,
   },
 
   accountView: {
@@ -171,16 +165,3 @@ export const AccountsScreen = inject("dataStore")(
     )
   }),
 )
-
-AccountsScreen.navigationOptions = screenProps => ({
-  title: translate("AccountsScreen.title"),
-  headerRight: () => (
-    <Icon
-      name={"ios-person"}
-      size={32}
-      color={palette.darkGrey}
-      style={styles.person}
-      onPress={() => screenProps.navigation.navigate("debug")}
-    />
-  ),
-})

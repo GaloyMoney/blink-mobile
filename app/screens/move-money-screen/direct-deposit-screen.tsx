@@ -71,7 +71,3 @@ export const DirectDepositScreen: React.FC = () => {
     </Screen>
   )
 }
-
-DirectDepositScreen.navigationOptions = () => ({
-  title: translate("DirectDepositScreen.title"),
-})

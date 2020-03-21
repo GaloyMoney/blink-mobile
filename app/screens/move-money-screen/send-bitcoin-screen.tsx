@@ -9,14 +9,14 @@ import {
   Clipboard,
   StyleSheet,
   ActivityIndicator,
+  ScrollView,
 } from "react-native"
 import { Screen } from "../../components/screen"
 import { Input, Button } from "react-native-elements"
 import Icon from "react-native-vector-icons/Ionicons"
 import { color } from "../../theme"
 import { RNCamera } from "react-native-camera"
-import { ScrollView } from "react-navigation"
-import { useNavigation, useNavigationParam } from "react-navigation-hooks"
+import { useNavigation } from '@react-navigation/native'
 import { palette } from "../../theme/palette"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import { Onboarding } from "types"
@@ -167,16 +167,13 @@ export const ScanningQRCodeScreen = inject("dataStore")(
   }),
 )
 
-ScanningQRCodeScreen.navigationOptions = () => ({
-  title: translate("ScanningQRCodeScreen.title"),
-})
-
 export const SendBitcoinScreen: React.FC = inject("dataStore")(
-  observer(({ dataStore }) => {
-    const invoice = useNavigationParam("invoice")
-    const amountless = useNavigationParam("amountless")
-    const note = useNavigationParam("note")
-    const amount = useNavigationParam("amount")
+  observer(({ dataStore, route }) => {
+    
+    const invoice = route.params.invoice
+    const amountless = route.params.amountless
+    const note = route.params.note
+    const amount = route.params.amount
 
     const [manualAmount, setManualAmount] = useState(false)
 
@@ -335,7 +332,3 @@ export const SendBitcoinScreen: React.FC = inject("dataStore")(
     )
   }),
 )
-
-SendBitcoinScreen.navigationOptions = () => ({
-  title: translate("SendBitcoinScreen.title"),
-})

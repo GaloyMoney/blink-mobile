@@ -10,7 +10,14 @@ const styles = StyleSheet.create({
   },
 })
 
-export const FindATMScreen: React.FC = () => {
+export const FindATMScreen: React.FC = ({route, navigation}) => {
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      title: route.params.title
+    }, [])
+  })
+  
   const markers = [
     {
       title: "ATM AllPoint",
@@ -67,7 +74,3 @@ export const FindATMScreen: React.FC = () => {
     </Screen>
   )
 }
-
-FindATMScreen.navigationOptions = screenProps => ({
-  title: screenProps.navigation.getParam("title"),
-})

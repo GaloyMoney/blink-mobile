@@ -750,7 +750,13 @@ export const LndModel = BaseAccountModel.named("Lnd")
         if (invoice.paymentRequest === self.lastAddInvoice) {
           if (
             currentScreen(getParentOfType(self, RootStoreModel).navigationStore.state) ===
-            "receiveBitcoin"
+            "receiveBitcoin" 
+            
+            // FIXME
+            ?? false
+            // FIXME break after v5 upgrade of react-navigation
+            // could use this instead: https://reactnavigation.org/docs/navigating-without-navigation-prop/
+
           ) {
             self.receiveBitcoinScreenAlert = true
             localIOSNotif = false

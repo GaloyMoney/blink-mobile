@@ -3,17 +3,16 @@ import { useState, useEffect, useRef } from "react"
 import { Screen } from "../../components/screen"
 import { Text } from "../../components/text"
 import { inject } from "mobx-react"
-import { useNavigation, useNavigationParam } from "react-navigation-hooks"
 import { Onboarding } from "types"
 import { StyleSheet, View, Image, Alert, KeyboardAvoidingView, Platform, ActivityIndicator } from "react-native"
 import { TextInput, ScrollView } from "react-native-gesture-handler"
 import PhoneInput from "react-native-phone-input"
 import auth from "@react-native-firebase/auth"
 import { isEmpty } from "ramda"
+import { useNavigation, useRoute } from '@react-navigation/native'
 
 import { translate } from "../../i18n"
 import { color } from "../../theme"
-import { currentScreen } from "../../utils/navigation"
 
 const phoneLogo = require("./PhoneLogo.png")
 const phoneWithArrowLogo = require("./PhoneWithArrowLogo.png")
@@ -81,7 +80,7 @@ const styles = StyleSheet.create({
   },
 })
 
-export const WelcomePhoneInputScreen = inject("navigationStore")(({ navigationStore }) => {
+export const WelcomePhoneInputScreen = () => {
   const [loading, setLoading] = useState(false)
   const [err, setErr] = useState("")
 
@@ -89,7 +88,8 @@ export const WelcomePhoneInputScreen = inject("navigationStore")(({ navigationSt
 
   const inputRef = useRef()
 
-  console.tron.log(navigationStore)
+  const route = useRoute()
+  console.tron.log({route})
 
   const send = async () => {
     console.tron.log(`initPhoneNumber ${inputRef.current.getValue()}`)
@@ -104,8 +104,8 @@ export const WelcomePhoneInputScreen = inject("navigationStore")(({ navigationSt
       const confirmation = await auth().signInWithPhoneNumber(inputRef.current.getValue())
       if (!isEmpty(confirmation)) {
         setLoading(false)
-        const screen = currentScreen(navigationStore.state) === "welcomePhoneInputBanking" ?
-        "welcomePhoneValidationBanking" : "welcomePhoneValidation" // FIXME
+        const screen = route.name === "welcomePhoneInputBanking" ?
+        "welcomePhoneValidationBanking" : "welcomePhoneValidation"
         navigate(screen, { confirmation })
       } else {
         setErr(`confirmation object is empty? ${confirmation}`)
@@ -160,15 +160,15 @@ export const WelcomePhoneInputScreen = inject("navigationStore")(({ navigationSt
       </KeyboardAvoidingView>
     </Screen>
   )
-})
+}
 
-export const WelcomePhoneValidationScreen = inject("navigationStore")(inject("dataStore")(
-  ({ navigationStore, dataStore }) => {
+export const WelcomePhoneValidationScreen = (inject("dataStore")(
+  ({ dataStore, route }) => {
   const [code, setCode] = useState("")
   const [loading, setLoading] = useState(false)
   const [err, setErr] = useState("")
 
-  const confirmation = useNavigationParam("confirmation")
+  const confirmation = route.params.confirmation
   const { goBack, navigate } = useNavigation()
 
   const onAuthStateChanged = async user => {
@@ -193,7 +193,7 @@ export const WelcomePhoneValidationScreen = inject("navigationStore")(inject("da
       if (result === true) {
         setLoading(false)
         
-        if (currentScreen(navigationStore.state) === "welcomePhoneValidationBanking") {
+        if (route.name === "welcomePhoneValidationBanking") {
           navigate("personalInformation")
         } else {
           goBack(null)

@@ -5,7 +5,6 @@ import { StyleSheet, Alert, View, Dimensions, Platform, Animated } from "react-n
 import { Text } from "../../components/text"
 import { color } from "../../theme"
 import Icon from "react-native-vector-icons/Ionicons"
-import { useNavigation, useNavigationParam } from "react-navigation-hooks"
 import { palette } from "../../theme/palette"
 import { observer, inject } from "mobx-react"
 import { Onboarding, OnboardingRewards } from "types"
@@ -22,6 +21,8 @@ import { Quizz } from "../../components/quizz"
 import { TouchableOpacity, FlatList } from "react-native-gesture-handler"
 import { RewardsHeader } from "../../components/rewards-header"
 import { plusSats } from "../../utils/helper"
+import { useNavigation } from '@react-navigation/native';
+
 
 const walletDownloadedImage = require("./GreenPhone.jpg")
 const firstSurveyImage = require("./GreenPhone.jpg")
@@ -205,8 +206,14 @@ const getRemainingRewards = ({section, dataStore}) => (
 )
 
 export const RewardsScreen = inject("dataStore")(
-  observer(({ dataStore }) => {
-    const { navigate, setParams, getParam } = useNavigation()
+  observer(({ dataStore, route, navigation }) => {
+    const { navigate, setParams } = useNavigation()
+
+    React.useLayoutEffect(() => {
+      const section = route.params.section
+      const title = route.params.title ?? translate(`RewardsScreen.rewards\.${section}.meta.title`)
+      navigation.setOptions({title});
+    }, [route]);
 
     const rewardsMeta = {
       "walletDownloaded": {
@@ -360,7 +367,7 @@ export const RewardsScreen = inject("dataStore")(
     const [err, setErr] = useState("")
     const [animation] = useState(new Animated.Value(0))
 
-    const section = getParam('section')
+    const section = route.params.section
     const rewards = getRewardsFromSection({ section, rewardsMeta, dataStore})
 
     // helper
@@ -538,7 +545,7 @@ export const RewardsScreen = inject("dataStore")(
     }
 
     const carouselRef = useRef(null)
-    const card = useNavigationParam("card")
+    const card = route.params.card
 
     const itemIndex = card ? 
       rewards.findIndex(item => item[0] === card) : 
@@ -585,12 +592,6 @@ export const RewardsScreen = inject("dataStore")(
     )
   }),
 )
-
-RewardsScreen.navigationOptions = screenProps => {
-  const section = screenProps.navigation.getParam("section")
-  const title = screenProps.navigation.getParam("title") ?? translate(`RewardsScreen.rewards\.${section}.meta.title`)
-  return { title }
-}
 
 export const RewardsHome = inject("dataStore")(
   observer(({ dataStore }) => {
@@ -648,8 +649,3 @@ export const RewardsHome = inject("dataStore")(
     />
   </Screen>
 )}))
-
-RewardsHome.navigationOptions = screenProps => {
-  const title = translate("RewardsScreen.title")
-  return { title }
-}

@@ -1,8 +1,8 @@
 import * as React from "react"
 import { inject, observer } from "mobx-react"
 // @ts-ignore: until they update @type/react-navigation
-import { getNavigation, NavigationScreenProp, NavigationState } from "react-navigation"
-import { RootNavigator } from "./root-navigator"
+import { getNavigation, NavigationScreenProp, NavigationState } from "@react-navigation/native"
+import { RootStack } from "./root-navigator"
 import { NavigationStore } from "./navigation-store"
 
 interface StatefulNavigatorProps {
@@ -32,6 +32,6 @@ export class StatefulNavigator extends React.Component<StatefulNavigatorProps, {
       this.getCurrentNavigation,
     )
 
-    return <RootNavigator navigation={this.currentNavProp} />
+    return <RootStack />
   }
 }

@@ -1,9 +1,9 @@
 import { Instance, types } from "mobx-state-tree"
-import { RootNavigator } from "./root-navigator"
-import { NavigationActions, NavigationAction } from "react-navigation"
+import { RootStack } from "./root-navigator"
+import { CommonActions, NavigationAction } from "@react-navigation/native"
 import { NavigationEvents } from "./navigation-events"
 
-const DEFAULT_STATE = RootNavigator.router.getStateForAction(NavigationActions.init(), null)
+const DEFAULT_STATE = RootStack.router.getStateForAction(CommonActions.init(), null)
 
 /**
  * Finds the current route.
@@ -34,7 +34,7 @@ export const NavigationStoreModel = NavigationEvents.named("NavigationStore")
 
     try {
       // make sure react-navigation can handle our state
-      RootNavigator.router.getPathAndParamsForState(snapshot.state)
+      RootStack.router.getPathAndParamsForState(snapshot.state)
       return snapshot
     } catch (e) {
       // otherwise restore default state
@@ -59,7 +59,7 @@ export const NavigationStoreModel = NavigationEvents.named("NavigationStore")
      */
     dispatch(action: NavigationAction, shouldPush = true) {
       const previousNavState = shouldPush ? self.state : null
-      self.state = RootNavigator.router.getStateForAction(action, previousNavState) || self.state
+      self.state = RootStack.router.getStateForAction(action, previousNavState) || self.state
       self.fireSubscribers(action, previousNavState, self.state)
       return true
     },
@@ -85,7 +85,7 @@ export const NavigationStoreModel = NavigationEvents.named("NavigationStore")
      * @param routeName The route name.
      */
     navigateTo(routeName: string) {
-      self.dispatch(NavigationActions.navigate({ routeName }))
+      self.dispatch(CommonActions.navigate({ routeName }))
     },
   }))
 
