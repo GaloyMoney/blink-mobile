@@ -42,23 +42,29 @@ interface AppState {
   rootStore?: RootStore
 }
 
-// Gets the current screen from navigation state
-const getActiveRouteName = state => {
-  const route = state.routes[state.index];
-
-  if (route.state) {
-    // Dive into nested navigators
-    return getActiveRouteName(route.state);
-  }
-
-  return route.name;
-};
   
 /**
  * This is the root component of our app.
  */
-export const App = () => {
+export const App = () => {  
   const [rootStore, setRootStore] = useState(null)
+
+  const routeNameRef = useRef();
+  const navigationRef = useRef();
+
+  // Gets the current screen from navigation state
+  const getActiveRouteName = state => {
+    // console.tron.log({state})
+
+    const route = state.routes[state.index];
+
+    if (route.state) {
+      // Dive into nested navigators
+      return getActiveRouteName(route.state);
+    }
+
+    return route.name;
+  };
 
   useEffect(() => {
     // FIXME there might be a better way to manage this notification
@@ -85,7 +91,22 @@ export const App = () => {
       setRootStore(await setupRootStore())
     }
     fn()
-  }, []) 
+  }, [])
+
+  React.useEffect(() => {
+    if (rootStore != null || navigationRef.current == undefined) {
+      return
+    }
+
+    console.tron.log({navigationRef})
+
+    // this is only accessible after this has been assigned, which is when we have 
+    const state = navigationRef.current.getRootState();
+
+    // Save the initial route name
+    routeNameRef.current = getActiveRouteName(state);
+  }, [rootStore]);
+
 
   /**
    * Are we allowed to exit the app?  This is called when the back button
@@ -111,13 +132,22 @@ export const App = () => {
 
   const { navigationStore, ...otherStores } = rootStore
 
-  // otherwise, we're ready to render the app
-  // wire stores defined in root-store.ts file
-
   return (
     <Provider rootStore={rootStore} navigationStore={navigationStore} {...otherStores}>
       <BackButtonHandler canExit={canExit}>
-        <NavigationContainer>
+        <NavigationContainer
+          ref={navigationRef}
+          onStateChange={state => {
+            const previousRouteName = routeNameRef.current;
+            const currentRouteName = getActiveRouteName(state);
+    
+            if (previousRouteName !== currentRouteName) {
+              analytics().setCurrentScreen(currentRouteName, currentRouteName);
+            }
+    
+            // Save the current route name for later comparision
+            routeNameRef.current = currentRouteName;
+          }}>
           {/* <StatefulNavigator> */}
             <RootStack />
           {/* <StatefulNavigator /> */}
