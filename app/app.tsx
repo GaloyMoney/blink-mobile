@@ -54,8 +54,15 @@ export class App extends React.Component<{}, AppState> {
     })
 
     // FIXME there might be a better way to manage this notification
-    Notifications.events().registerNotificationReceived((notification, completion) => {
-      console.tron.log(notification)
+    Notifications.events().registerNotificationReceivedBackground((notification, completion) => {
+      console.tron.log("Background")
+      console.tron.log({notification})
+      completion({ alert: true, sound: false, badge: false })
+    })
+    
+    Notifications.events().registerNotificationReceivedForeground((notification, completion) => {
+      console.tron.log("Foregound")
+      console.tron.log({notification})
       completion({ alert: true, sound: false, badge: false })
     })
   }
