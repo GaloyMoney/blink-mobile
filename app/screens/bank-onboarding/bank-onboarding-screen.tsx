@@ -16,7 +16,7 @@ import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
 import { emailIsValid } from "../../utils/helper"
 import auth from "@react-native-firebase/auth"
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 
 
 const bankLogo = require("./BankLogo.png")
@@ -165,6 +165,7 @@ export const PersonalInformationScreen = () => {
 
 export const DateOfBirthScreen = inject("dataStore")(({ dataStore }) => {
   const navigation = useNavigation()
+  const route = useRoute()
   const [dateOfBirth, setDateOfBirth] = useState(new Date(2000, 1, 1))
   const [loading, setLoading] = useState(false)
   const [err, setErr] = useState("")
@@ -173,7 +174,7 @@ export const DateOfBirthScreen = inject("dataStore")(({ dataStore }) => {
     try {
       setLoading(true)
       await functions().httpsCallable("onBankAccountOpening")({
-        ...navigation.state.params,
+        ...route.params,
         dateOfBirth: dateOfBirth.toISOString(),
       })
       dataStore.onboarding.add(Onboarding.bankOnboarded)

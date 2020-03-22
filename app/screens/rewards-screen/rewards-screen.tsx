@@ -232,9 +232,12 @@ export const RewardsScreen = inject("dataStore")(
         onComplete: async () => dataStore.onboarding.add(Onboarding.digitalKeys),
       },
       "backupWallet": {
-        onComplete: async () => {
+        onAction: async () => {
           setLoading(true)
           await sleep(2000)
+          // TODO
+        },
+        onComplete: async () => {
           await dataStore.onboarding.add(Onboarding.backupWallet)
         },
       },
@@ -385,7 +388,7 @@ export const RewardsScreen = inject("dataStore")(
       setParams({ title: null })
       setLoading(false)
       if (msg !== "") {
-        await sleep(500)
+        await sleep(800)
         Alert.alert(msg, "", [
           {
             text: translate("common.ok"),
@@ -460,7 +463,7 @@ export const RewardsScreen = inject("dataStore")(
           }
           break
         case RewardType.Action:
-          await rewardsMeta[currRewardId].onComplete()
+          await rewardsMeta[currRewardId].onAction()
           close(feedback)
           break
       }

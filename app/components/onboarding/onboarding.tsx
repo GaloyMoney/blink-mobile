@@ -3,6 +3,7 @@ import { Text } from "../../components/text"
 import { StyleSheet, View, Image } from "react-native"
 import { Button } from "react-native-elements"
 import { color } from "../../theme"
+import { useNavigation } from '@react-navigation/native'
 
 const styles = StyleSheet.create({
   container: {
@@ -40,10 +41,10 @@ export const OnboardingScreen =
   nextTitle,
   action,
   image,
-  navigation,
   header = "",
   loading = false,
 }) => {
+  const navigation = useNavigation()
   return (
     <>
       <Text style={styles.header}>{header}</Text>
