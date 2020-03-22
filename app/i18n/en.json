@@ -19,23 +19,16 @@
     "soon": "Coming soon!",
     "SSL": "Your information is encrypted and securely transmitted using SSL",
     "syncing": "Syncing data...",
-    "fundingTx": "Funding tx: {{tx}}",
+    "fundingTx": "Funding tx: {{tx}}"
   },
-  "sat": {
-    "one": "1 sat",
-    "other": "{{formatted_number}} sats",
-    "zero": "0 sats"
-  },
+  "sat": { "one": "1 sat", "other": "{{formatted_number}} sats", "zero": "0 sats" },
   "errors": {
     "generic": "There was an error. Please try again later",
     "invalidEmail": "Invalid email",
     "invalidPhoneNumber": "is not a valid phone number"
   },
   "notifications": {
-    "payment": {
-      "body": "You just received ${{value}} sats",
-      "title": "Payment received"
-    }
+    "payment": { "body": "You just received ${{value}} sats", "title": "Payment received" }
   },
   "Overlay": {
     "accounts": "Start by getting\nsome rewards!",
@@ -71,128 +64,172 @@
     "phoneNumberNeeded": "Phone number required",
     "rewards": {
       "bitcoin101": {
-        "meta": {
-          "title": "Bitcoin 101",
-          "icon": "ios-school",
-        },
+        "meta": { "title": "Bitcoin 101", "icon": "ios-school" },
         "sat": {
           "type": "Text",
           "title": "What is a sat?",
-          "text": "Sat is a small portion of a bitcoin. The same way a dollar can be divided into 100 cents, a bitcoin can be divided into 100,000,000 sats!\n\nWhy is that important?\n\nDivisibility is an important part of money. \n\nMaking bitcoin easily divisible will allow many billions of people to own and use bitcoin. You do not  need to own one full bitcoin You can simply  have a fraction of a bitcoin. or now, let's remember that sats are a small part of a bitcoin :)",
+          "text": "One sat is a small portion of a bitcoin. The same way a dollar can be divided into 100 cents, a bitcoin can be divided into 100,000,000 sats! In fact, a sat is the smallest unit of bitcoin. \n\nWhy is that important?\n\n Divisibility is an important part of money. \n\nMaking bitcoin easily divisible allows many billions of people to own and use bitcoin. You do not need to own one full bitcoin. You can simply have a fraction of a bitcoin. ",
           "question": "What is a sat?",
-          "answers": ["An alternative crypto currency", "A small satellite", "The smallest unit of Bitcoin"],
-          "feedback": ["Nope, it is not another altcoin", "Maybe... but that's not the right answer in this context 😂", "You just earned 1 sat, the smallest unit of Bitcoin. Congrats!"],
+          "answers": [
+            "An alternative crypto currency",
+            "A small satellite",
+            "The smallest unit of Bitcoin"
+          ],
+          "feedback": [
+            "Nope, it is not analtcoin",
+            "Maybe... but that's not the correct answer in this context 😂",
+            "You just earned 1 sat, the smallest unit of Bitcoin. Congrats!"
+          ],
           "correct": 2
         },
         "custody": {
           "type": "Text",
           "title": "What is custody?",
-          "text": "Custody means \"the protective care or guardianship of someone or something\".\n\nOK, that is a boring definition, what does it mean for bitcoin or banking?\n\nWhen you give your money to your bank, they are taking custody of your funds. It basically means the bank is responsible for taking care of your US Dollars (USD), and returning funds to you, upon your request.\n\nRegarding USD, a Galoy bank account is no different in that regard\n\nBut with bitcoin (BTC), it is different.\n\nGenerally speaking, you can give custody of your BTC to someone else, like a bank or a  cryptocurrency exchange. On the other hand, you can also take self custody of your BTC!\n\nIn that sense, this would be similar   cash. The money is in your bitcoin wallet, and if you lose it, you are out of luck.\n\nFor BTC, Galoy does not take custody of your bitcoin. The funds remain right in your phone!\n\nGaloy is what we call a “non-custodial” wallet. It means the money is in your pocket, stored with some special security keys, directly on your phone!",
+          "text": "Custody means \"the protective care or guardianship of someone or something\".\n\nOK, that is a boring definition, what does it mean for bitcoin or banking?\n\nWhen you give money to your bank, they are taking custody of your funds. It basically means the bank is responsible for taking care of your US Dollars (USD), and returning funds to you, upon your request.\n\nRegarding USD, a Galoy bank account is no different in that regard\n\nBut with bitcoin (BTC), it is different.\n\nGenerally speaking, you can give custody of your BTC to someone else, like a bank or a cryptocurrency exchange. On the other hand, you can also take self custody of your BTC!\n\nIn that sense, this would be similar to cash. The money is in your bitcoin wallet, and if you lose it, you are out of luck.\n\nFor BTC, Galoy does not take custody of your bitcoin. The funds remain right in your phone!\n\nGaloy is what we call a “non-custodial” wallet. It means the money is in your pocket, stored with some special security keys, directly on your phone!",
           "question": "Which one is true?",
-          "answers": ["Bitcoin is like a digital dollar, and  must be managed by a bank or a third party custodian", "Bitcoin can be self custodied", "Digital dollars can be self custodied"],
-          "feedback": ["Unlike a digital dollar, you can self custody bitcoin", "Yo have learned one of the important properties of bitcoin, it can be self custodied!", "You can't keep your digital dollar in your wallet. It's only possible with cash"],
-          "correct": 1,
+          "answers": [
+            "Bitcoin is like a digital dollar, and must be managed by a bank or a third-party custodian",
+            "Bitcoin can be self-custodied",
+            "Digital US dollars can be self-custodied"
+          ],
+          "feedback": [
+            "Incorrect.  You can indeed self custody bitcoin",
+            "You have learned one of the important properties of bitcoin, it can be self custodied!",
+            "You ca not keep US dollars in a digital wallet. It's only possible with cash"
+          ],
+          "correct": 1
         },
         "digitalKeys": {
           "type": "Text",
           "title": "Digital keys",
-          "text": "You can compared self custodied Bitcoin with cash.\n\nIf you have a $20 bill in your pocket and you lose your wallet, you're out of luck!\n\nFor bitcoin, instead of carrying a piece of paper, you have digital keys.\n\nThose keys allow you to spend your bitcoin, which is why making sure those keys are in a safe place is important!\n\nA digital key is just a very, very long number (about 80 digits long!). It's astronomicaly long, so it's impossible for anyone to find it.\n\nAs a comparison, it would be easier to find a single grain of sands on earth than it would be to find a digitial key. This is the power of large number and cryptography!\n\nThis key is currently stored in a secure part of your phone.",
+          "text": "You can compare self-custodied Bitcoin with cash.\n\nIf you have a $20 bill in your pocket and you lose it, you're out of luck!\n\nFor bitcoin, instead of carrying a piece of paper, you have digital private keys.\n\nThose private keys allow you, and only you, to spend your bitcoin. Which is why making sure those keys are in a safe place is important!\n\nA digital key is just a very, very long number (about 80 digits long!). It's astronomically long, so it's impossible for anyone to guess it.\n\nAs a comparison, it would be easier to find a single grain of sand on earth than it would be to guess the correct sequence of digitals for a digital key. This is the power of large numbers and cryptography!\n\nWith your private key is currently stored in a secure part of your phone.",
           "question": "Which one is true?",
-          "answers": ["Keys allow you to recover your email and password", "Keys should be shared with as many people as possible so that it won't be lost", "Your keys should be kept secretly as anybody who have access to them will be able to spend your bitcoin"],
-          "feedback": ["Unlike most existing websites, there is no way to recover your keys using your email or phone number", "Digital keys are private, anyone who has access to it will be able to spend your bitcoin", "Galoy is what we call a non-custodial wallet for your bitcoin. So you should take care of your keys!"],
-          "correct": 2,
+          "answers": [
+            "Keys allow you to recover your email and password",
+            "Keys should be shared with as many people as possible, so that they won't be lost",
+            "Your keys should be kept secret, as anybody who has access to them will be able to spend your bitcoin"
+          ],
+          "feedback": [
+            "Incorrect. Unlike most websites, there is no way to recover your keys using your email or phone number",
+            "No. A digital key is private, and anyone who has access to it will be able to spend your bitcoin",
+            "Galoy is what we call a non-custodial wallet for your bitcoin. So you should take care of your keys!"
+          ],
+          "correct": 2
         },
         "backupWallet": {
           "type": "Action",
           "title": "Backup wallet",
-          "text": "Now that you have some sats, and you know what is a digital key, you can back up your wallet to iCloud so you never lose access to your bitcoin. \n\nUnlike traditional dollar, you own your bitcoin with keys stored in your mobile phone, which is why taking care of saving your keys is essential",
-          "feedback": "Backup keys saved to iCloud",
+          "text": "Now that you have some sats, and you know what a digital key is, you can back up your wallet to iCloud. This will ensure  you never lose access to your bitcoin. \n\nUnlike traditional dollars, you own your bitcoin with private keys stored in your mobile phone, which is why taking care to backup your keys is essential",
+          "feedback": "Backup keys saved to iCloud"
         },
         "bitcoinUnique": {
           "type": "Text",
           "title": "What makes bitcoin special?",
-          "text": "There is a long list, and we'll go through it one by one:\n\n- It has predictible money supply\n- The money supply is capped\n- It is highly divisible\n- It is borderless\n- Small transactions are settled in seconds, large transations take about 1h\n- It can't be forged\n- His creator is no longer around",
-          "question": "What are some property of bitcoin that are not present in fiat currency?",
-          "answers": ["It's digital money", "It's the most widely accept currency across the world", "It can't be forged"],
-          "feedback": ["The dollar is already mostly digitized. Except cash, every transaction is already done in a digital form", "Not yet, but maybe one day it will!", "Correct. Unlike for dollar where fake bills can be make and send in circulation, it's not possible to create fake bitcoin"],
-          "correct": 2,
+          "text": "Bitcoin has many special and unique properties. In subsequent quizzes, these following special properties will be individually explained in detail: , :\n\n- Bitcoin has a predictable issuance of  supply\n- The maximum total supply of Bitcoin is permanently capped\n- It is highly divisible\n- It is borderless\n- Small transactions are settled in seconds, large transactions take less than one hour \n- Bitcoin can never be forged, nor copied \n- The  creator of Bitcoin remains unknown to this very day",
+          "question": "What are some properties of bitcoin that are not present in fiat currency, such as US Dollars?",
+          "answers": [
+            "Bitcoin alone is digital money",
+            "It is the most widely accepted currency across the world",
+            "Bitcoin ca not be forged"
+          ],
+          "feedback": [
+            "Wrong.  92% of dollars already exist in  digital form; only 8% of dollars are circulated as cash.",
+            "Not yet, but maybe one day it will be!",
+            "Correct. Unlike dollars, where counterfeit bills can be made, spent and circulated, , it is  not possible for anyone to create fake bitcoin"
+          ],
+          "correct": 2
         },
         "moneySupply": {
           "type": "Text",
           "title": "Bitcoin money supply",
-          "text": "How many bitcoin will be created and how?\n\n21 millions bitcoin total will be created.\n\nThe reason is because this number is defined in the bitcoin software.\n\nAs it's a key reason it makes bitcoin valuable, it's unlikely each person around the world running the bitcoin software would want to update their software and change this number.\n\nAs bitcoin is decentralized and there is no one in charged, it's unlikely anyone would be able to change this parameter.",
-          "question": "How many bitcoin will be created?",
-          "answers": ["21,000,000", "There is no maximum", "It's up to the central bank of Bitcoin"],
-          "feedback": ["21 millions, that's it!", "Bitcoin money supply is capped", "There is no central bank in the bitcoin protocol"],
-          "correct": 0,
+          "text": "How many bitcoin will ever be created?\n\nNo more than 21 million bitcoin can ever  be created.\n\nThis maximum value  is defined in the original bitcoin software, and can never be changed.\n\nThis limit on maximum supply is a critical attribute  that makes bitcoin valuable. Unlike governments and central banks, who can create additional currency at will, no single person or organization can decide to create additional bitcoin.",
+          "question": "How many bitcoin can ever be created?",
+          "answers": [
+            "21,000,000",
+            "There is no maximum",
+            "It is up to the central bank of Bitcoin"
+          ],
+          "feedback": [
+            "21 million, that= is correct!",
+            "Incorrect. The Bitcoin money supply is capped",
+            "Wrong. There is no central bank in the bitcoin protocol"
+          ],
+          "correct": 0
         }
       },
       "whyNow": {
-        "meta": {
-          "title": "Why Now",
-          "icon": "ios-cash"
-        },
+        "meta": { "title": "Why Now", "icon": "ios-cash" },
         "fiatMoney": {
           "type": "Video",
           "videoid": "XNu5ppFZbHo",
           "title": "First, what is fiat money?",
-          "text": "This video will give you some insights about what is fiat money, that describe governements currency like dollars and euros",
+          "text": "This brief 3 minute video will give you some insight  regarding  fiat money, which is  government-issued currency -- such as US dollars, Japanese Yen, Swiss Francs and Euros",
           "question": "What is NOT backing the US dollar?",
-          "answers": ["Gold", "Trust in the people that dollar will maintain its value", "Ability of governement to collect taxes and repay debt"],
-          "feedback": ["Correct. Since 1071, the US governement ended convertability of the dollar to gold", "A key element of a currency is the trust of the people in this currency. Countries like the Venezuela gets in hyperinflation once their people have lost trust in their currency.", "Governement received tax in currency they issue. It's one of the way countries ensure their people use their currency"],
-          "correct": 0,
-        },
+          "answers": [
+            "Gold",
+            "Trust of the people that dollar will maintain its value",
+            "Ability of government to collect taxes and repay debt"
+          ],
+          "feedback": [
+            "Correct. Since 1971, the US government ended the convertibility of the dollar to gold",
+            "No. A key element for any currency to have value is the trust of the people in this currency. Countries like the Venezuela experiened  hyperinflation, once their people lost trust in the value of local currency.",
+            "Correct. The confidence people have in a government’s ability to repay  debt is one of the primary means to ensure the fiat currency maintains value. "
+          ],
+          "correct": 0
+        }
       },
       "galoy": {
-        "meta": {
-          "title": "Galoy",
-          "icon": "ios-person"
-        },
+        "meta": { "title": "Galoy", "icon": "ios-person" },
         "freeMoney": {
           "type": "Text",
-          "title": "Galoy gives me free bitcoin?",
-          "text": "Wait! What's the catch?\n\nThat's correct, we are giving you micro rewards, so you can try bitcoin and spend some time educating yourself.\n\nGaloy  ultimately benefits, as more users will  consider opening an account with us if you understand what bitcoin is, and why you should care about it.",
+          "title": "Why does Galoy give free bitcoin?",
+          "text": "There is no catch! \n\nGaloy gives you bitcoin rewards, to encourage you to use bitcoin and spend time educating yourself.\n\nIn the end, Galoy ultimately benefits  from more users wi understanding bitcoin , and sharing their discoveries with friends, family and co-workers..",
           "question": "Why does Galoy gives free bitcoin?",
-          "answers": ["By educating yourself about bitcoin, we believe you will want to engage more and open an account with Galoy", "We print new bitcoin for every new customer, and have to give it away", "By monetizing your data with a third party"],
-          "feedback": ["You just earned another 50 sats. We hope these micro rewards will encourage you to learn more about  bitcoin", "No one can print new bitcoin at will", "One of the founding principles of Galoy is to respect individual privacyWe do not sell any of your data to a third party"],
+          "answers": [
+            "By educating yourself about bitcoin, we believe you will want to engage more and open an account with Galoy",
+            "We print new bitcoin for every customer, and have to give it away",
+            "In order to monetize your data with a third party"
+          ],
+          "feedback": [
+            "Correct. You just earned another 50 sats. We hope these rewards will encourage you to learn more about bitcoin",
+            "No one can print new bitcoin at will",
+            "No. One of the founding principles of Galoy is to respect individual privacy. We do not sell any of your data to a third party"
+          ],
           "correct": 0
         },
         "phoneVerification": {
           "type": "Action",
           "title": "Phone Number",
-          "text": "We need to validate your phone number before we send you your rewards"
+          "text": "We need to validate your phone number, before we send you additional rewards"
         },
         "bankOnboarded": {
           "type": "Action",
           "title": "Open your bank account",
-          "text": "Send us your detailed information and we'll provide you a full bank account"
+          "text": "Confirm your name, address and other personal  information, and we willl provide you a full bank account"
         },
         "debitCardActivation": {
           "title": "Activate your debit card",
-          "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+          "text": "Earn additional rewards for activating your free Visa debit card. ."
         },
         "firstCardSpending": {
-          "title": "First card payment",
-          "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+          "title": "First debit card transaction",
+          "text": "Earn a bitcoin reward for completing the first transaction with your Visa debit card. ."
         },
         "activateDirectDeposit": {
           "title": "Activate Direct Deposit",
-          "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+          "text": "Activate a recurring Direct Deposit on your account, and earn the biggest reward available from Galoy. ."
         },
         "firstSurvey": {
           "title": "Tell us what you think about the product",
-          "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+          "text": "We value your candid feedback. Let us know what you thnik about Galoy! ."
         },
         "inviteAFriend": {
           "title": "Invite a friend",
-          "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-        },
+          "text": "Earn [xx] sats for each friend who downloads the Galoy app!."
+        }
       },
       "useBitcoin": {
-        "meta": {
-          "title": "Use Bitcoin",
-          "icon": "logo-bitcoin"
-        },
+        "meta": { "title": "Use Bitcoin", "icon": "logo-bitcoin" },
         "firstLnPayment": {
           "type": "Action",
           "title": "⚡ First payment ⚡",
@@ -202,14 +239,10 @@
           "type": "Action",
           "title": "Activate notifications",
           "text": "Enable notifications to get alerts when you receive payments in the future."
-        },
+        }
       },
       "buyBitcoin": {
-        "meta": {
-          "title": "Buy Bitcoin",
-          "icon": "logo-bitcoin",
-          "enabled": false,
-        },
+        "meta": { "title": "Buy Bitcoin", "icon": "logo-bitcoin", "enabled": false },
         "buyFirstSats": {
           "title": "Buy your first sats",
           "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
@@ -217,22 +250,26 @@
         "dollarCostAveraging": {
           "title": "What is dollar cost averaging?",
           "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-        },
+        }
       },
       "intermediate": {
-        "meta": {
-          "title": "Intermediate Bitcoin",
-          "icon": "ios-school",
-          "enabled": false,
-        },
+        "meta": { "title": "Intermediate Bitcoin", "icon": "ios-school", "enabled": false },
         "newBitcoin": {
           "type": "Text",
           "title": "How new bitcoin are created",
-          "text": "\n\nHow is bitcoin being created?\n\nEvery day, there are miners all over the world who are looking for new bitcoin, solving a compute-intensive math problem.\n\nEvery time a miner find a solution to this math problem, there are new bitcoin in existance.\n\nIt's a little bit like mining gold, where real ressources needs to be invested to find new gold, but the difference for bitcoin is that we already know the total number of bitcoin there will be in existance",
+          "text": "\n\nHow are bitcoin created, or issued for the first time?\n\nEvery day, there are computers all over the world  looking for new bitcoin. These computers contribute their power to the bitcoin network,  continually solving -intensive math equations that keep the network running. P. These computers that dedicate power to the bitcoin network are called “miners”. \n\nEvery time a miner finds a solution to a math problem,  new bitcoins are issued. .\n\nIt isa bit like mining for physical gold, where real ressources need to be invested to discover and extract the commodity.  new gold, but the difference for bitcoin is that we already know the total number of bitcoin there will be in existence",
           "question": "How are new bitcoin being created?",
-          "answers": ["By converting dollar to bitcoin on exchanges", "By solving a compute-intensive math problem", "By staking bitcoin to a stacking company"],
-          "feedback": ["You can buy bitcoin from exchanges, but this is not how bitcoin is being created", "Correct! On average, every 10 mins, new bitcoin are being created", "There is no concept of stacking in bitcoin"],
-          "correct": 1,
+          "answers": [
+            "By converting dollar to bitcoin on exchanges",
+            "By solving a compute-intensive math problem",
+            "By staking bitcoin to a stacking company"
+          ],
+          "feedback": [
+            "You can buy bitcoin from exchanges, but this is not how bitcoin is being created",
+            "Correct! On average, every 10 mins, new bitcoin are being created",
+            "There is no concept of stacking in bitcoin"
+          ],
+          "correct": 1
         },
         "volatility": {
           "type": "Text",
@@ -240,15 +277,23 @@
           "text": "THIS IS NOT INVESTMENT ADVICE\n\nIs bitcoin volatile?\n\nYes, it is, but why is it not a bad thing?\n\n. Pretty much every assets, the price move when there is an imbalance between buyer and seller of an assets\n\n ...TODO...",
           "question": "What could drive the value of Bitcoin?",
           "answers": ["It is scarse", "It is a digital", "It is controlled by the goverement"],
-          "feedback": ["21 millions bitcoin, that's it!", "Bitcoin is digital, but pretty much any currency today exist in some form of digital", "Bitcoin is not controlled by any government"],
-          "correct": 0,
+          "feedback": [
+            "21 millions bitcoin, that's it!",
+            "Bitcoin is digital, but pretty much any currency today exist in some form of digital",
+            "Bitcoin is not controlled by any government"
+          ],
+          "correct": 0
         },
         "paymentProcessing": {
           "title": "Payment processing",
           "text": "We saw that for a transaction to be valid, it needs to be signed. But what happen next in the journey of a payment?\n\nAfter Alice has created the transaction and signed it, she'll send it to the bitcoin miners.\n\nMiners are the one that will confirm the transaction. Miners want to confirm transactions because they earn some fees every time they mine transactions. This fees miners get for validating a transaction is in addition to the rewards they earn by finding new blocks\n\nFinally, once a miner found a block and has included transactions in it, they are relayed by full-nodes\n\nThis last part is important because full node make sure only valid transactions are part of the network. If they detect false transaction, they'll drop the block\n\nThis last ensure that miners, who are the one creating block, are not trying to abuse the system and create money to themselves",
           "question": "Who participate in the journey of a transaction?",
           "answers": ["Alice, Miners, Full-nodes", "Alice, Full-nodes", "Miners, Full-nodes"],
-          "feedback": ["Correct! the journey of a transaction on the bitcoin network goes to multiple actor, which ensures security of the network", "Alice created the transaction, and Full-nodes ensures blocks and transaction are valid, but most importantly we need miners to create the blocks", "Although Miners are creating the blocks with transactions inside it, and Full-nodes are validating them, Alice still needs to create the transaction initially"],
+          "feedback": [
+            "Correct! the journey of a transaction on the bitcoin network goes to multiple actor, which ensures security of the network",
+            "Alice created the transaction, and Full-nodes ensures blocks and transaction are valid, but most importantly we need miners to create the blocks",
+            "Although Miners are creating the blocks with transactions inside it, and Full-nodes are validating them, Alice still needs to create the transaction initially"
+          ],
           "correct": 0
         },
         "transaction": {
@@ -258,62 +303,78 @@
           "answers": [
             "The approval of the transaction by local gouvernements",
             "A signature on a paper receipt, like for card transactions",
-            "The correct cryptographic signature"],
-          "feedback": ["Transactions are not approved by third party or gouvernments. They just needs to confirm to the bitcoin protocol",
+            "The correct cryptographic signature"
+          ],
+          "feedback": [
+            "Transactions are not approved by third party or gouvernments. They just needs to confirm to the bitcoin protocol",
             "😂",
-            "That's correct, digital signature is one part of what bitcoin secure, and how transactions are being constructed!"],
-          "correct": 2,
-        },
+            "That's correct, digital signature is one part of what bitcoin secure, and how transactions are being constructed!"
+          ],
+          "correct": 2
+        }
       },
       "advanced": {
-        "meta": {
-          "title": "Advanced Bitcoin",
-          "icon": "ios-school",
-          "enabled": false,
-        },
+        "meta": { "title": "Advanced Bitcoin", "icon": "ios-school", "enabled": false },
         "privacy": {
           "title": "Is bitcoin private?",
           "text": "It's... complicated 🙂\n\nTransactions on the bitcoin are pseudonymous. It's like B5A35019 is sending money to 162BD1C0. It's not very indicative of who is sending money to who. But the difference between this and traditional payment network is that, every transaction in the protocol is public. This means everyone is the world, with an internet connection, can see that B5A35019 has sent money to 162BD1C0. For ever.\n\nIt's typically not like this in the ",
           "question": "",
           "answers": ["", "", ""],
-          "feedback": "",
+          "feedback": ""
         },
         "creator": {
           "type": "Text",
           "title": "Who created Bitcoin",
           "text": "Bitcoin has a unique inception story. On Decemberish 2008, a pseudonym under the name of Satoshi Nakamoto has share a paper called a 'Whitepaper' to a online group related to online money. After open sourcing the code couple of months later, and seeing other person had started contributing to the project, Natoshi Nakamo disappeared.\n\nIs it a good thing or a bad thing?\n\nEverybody will have their answer, but as a result of this, bitcoin is 'decentralized'. No one has really any control over it, and this is one of the strength of bitcoin, as no one is particularly in charge, it can't really be stopped.",
           "question": "Who is Satoshi Nakamoto?",
-          "answers": ["A japanese developer", "The undercover name of Craig Wright", "We don't really know"],
-          "feedback": ["Although Satoshi Nakamoto is Japan-inspired name, it is really a pseudonym", "Oh, really 😮", "The goal of Galoy is to educate you about Bitcoin, but unfortunately, we won't be able to tell you who is Satoshi Nakamoto!"],
-          "correct": 2,
+          "answers": [
+            "A japanese developer",
+            "The undercover name of Craig Wright",
+            "We don't really know"
+          ],
+          "feedback": [
+            "Although Satoshi Nakamoto is Japan-inspired name, it is really a pseudonym",
+            "Oh, really 😮",
+            "The goal of Galoy is to educate you about Bitcoin, but unfortunately, we won't be able to tell you who is Satoshi Nakamoto!"
+          ],
+          "correct": 2
         },
         "decentralization": {
           "title": "Bitcoin is decentralized",
           "text": "TODO",
           "question": "What is a benefit of decentralization?",
-          "answers": ["It's harder to change, as no one party is 100% in charge. Therefore we can trust this will still be around for some time, which is a good thing for money", "Protocol development happens faster than if it was centralized", "It is faster to validate transactions as more computing power is involved all around the world"],
-          "feedback": "The goal of Galoy is to educate you about Bitcoin, but unfortunately, we won't be able to tell you who is Satoshi Nakamoto!",
+          "answers": [
+            "It's harder to change, as no one party is 100% in charge. Therefore we can trust this will still be around for some time, which is a good thing for money",
+            "Protocol development happens faster than if it was centralized",
+            "It is faster to validate transactions as more computing power is involved all around the world"
+          ],
+          "feedback": "The goal of Galoy is to educate you about Bitcoin, but unfortunately, we won't be able to tell you who is Satoshi Nakamoto!"
         },
         "scalability": {
           "title": "Does Bitcoin scale?",
           "text": "A common critize to Bitcoin is that this doesn't scale. The network can currently process about 7 transactions/second.\n\nVisa, on the other side, can process 40,000 transactions/second\nIt's a big gap!!\n\nBut comparing visa and bitcoin is probably not that relevant. Visa aims to process transaction",
           "question": "",
           "answers": ["", "", ""],
-          "feedback": "",
+          "feedback": ""
         },
         "lightning": {
           "type": "Text",
           "title": "Who created Bitcoin",
           "text": "Bitcoin has a unique inception story. On Decemberish 2008, a pseudonym under the name of Satoshi Nakamoto has share a paper called a 'Whitepaper' to a online group related to online money. After open sourcing the code couple of months later, and seeing other person had started contributing to the project, Natoshi Nakamo disappeared.\n\nIs it a good thing or a bad thing?\n\nEverybody will have their answer, but as a result of this, bitcoin is 'decentralized'. No one has really any control over it, and this is one of the strength of bitcoin, as no one is particularly in charge, it can't really be stopped.",
           "question": "Who is Satoshi Nakamoto?",
-          "answers": ["A japanese developer", "The undercover name of Craig Wright", "We don't really know"],
-          "feedback": ["Although Satoshi Nakamoto is Japan-inspired name, it is really a pseudonym", "Oh, really 😮", "The goal of Galoy is to educate you about Bitcoin, but unfortunately, we won't be able to tell you who is Satoshi Nakamoto!"],
-          "correct": 2,
+          "answers": [
+            "A japanese developer",
+            "The undercover name of Craig Wright",
+            "We don't really know"
+          ],
+          "feedback": [
+            "Although Satoshi Nakamoto is Japan-inspired name, it is really a pseudonym",
+            "Oh, really 😮",
+            "The goal of Galoy is to educate you about Bitcoin, but unfortunately, we won't be able to tell you who is Satoshi Nakamoto!"
+          ],
+          "correct": 2
         },
-        "energy": {
-          "title": "Bitcoin energy consumption?",
-          "text": "",
-        },
+        "energy": { "title": "Bitcoin energy consumption?", "text": "" },
         "difficultyAdjustment": {
           "title": "Difficulty adjustment",
           "text": "Lightning is the revolutionary payment. Give it a try!"
@@ -331,10 +392,10 @@
           "text": "TODO",
           "question": "",
           "answers": ["", "", ""],
-          "feedback": "",
+          "feedback": ""
         }
-      },
-    },
+      }
+    }
   },
   "AccountDetailScreen": {
     "openAccount": "Open a Galoy bank account",
@@ -343,31 +404,24 @@
     "yesterday": "Yesterday",
     "thisMonth": "This month",
     "prevMonths": "Previous months",
-    "quote": "How many sats to {{side}}: ",
+    "quote": "How many sats to {{side}}: "
   },
-  "AccountsScreen": {
-    "title": "Accounts",
-    "bitcoinRewards": "Earn bitcoin rewards!",
-  },
-  "BankAccountReadyScreen": {
-    "accountReady": "Your Galoy bank account is ready!"
-  },
+  "AccountsScreen": { "title": "Accounts", "bitcoinRewards": "Earn bitcoin rewards!" },
+  "BankAccountReadyScreen": { "accountReady": "Your Galoy bank account is ready!" },
   "BankAccountRewardsScreen": {
     "title": "Bank Account Rewards",
     "openAccount": "Open a Galoy bank account",
-    "accountsBenefits": "Hold US dollars in your account!\n\nOrder a debit card to earn 1%+ cashback in bitcoin on your dollar spending!\n\nAnd easily buy & sell bitcoin in-app.",
+    "accountsBenefits": "Hold US dollars in your account!\n\nOrder a debit card to earn 1%+ cashback in bitcoin on your dollar spending!\n\nAnd easily buy & sell bitcoin in-app."
   },
   "OpenBankScreen": {
     "title": "Bank rewards",
-    "accountsBenefits": "You’re just a few minutes away from owning a Galoy bank account!\n\nOrder a debit card to receive 1% bitcoin rewards on all spending!",
+    "accountsBenefits": "You’re just a few minutes away from owning a Galoy bank account!\n\nOrder a debit card to receive 1% bitcoin rewards on all spending!"
   },
   "PersonalInformationScreen": {
     "title": "Personal informations",
-    "getStarted": "To get started, tell us about yourself.",
+    "getStarted": "To get started, tell us about yourself."
   },
-  "DateOfBirthScreen": {
-    "title": "Date of Birth"
-  }, 
+  "DateOfBirthScreen": { "title": "Date of Birth" },
   "MoveMoneyScreen": {
     "title": "Move Money",
     "needBankAccount": "Open a bank account to activate {{feature}}",
@@ -375,30 +429,20 @@
     "walletInCreation": "Your wallet is being created",
     "seeTransaction": "Monitor opening transaction",
     "openAccount": "Open Account",
-    "openWallet": "Open Wallet",
+    "openWallet": "Open Wallet"
   },
   "SendBitcoinScreen": {
     "title": "Send Bitcoin",
     "amount": "Amount",
     "note": "Note",
     "payFromUSD": "Pay from USD",
-    "cost": "Cost",
+    "cost": "Cost"
   },
-  "ScanningQRCodeScreen": {
-    "title": "Send Bitcoin"
-  },
-  "ReceiveBitcoinScreen": {
-    "title": "Receive Bitcoin"
-  },
-  "BankTransferScreen": {
-    "title": "Bank Transfer"
-  },
-  "FindATMScreen": {
-    "title": "Find ATM"
-  },
-  "DepositCashScreen": {
-    "title": "Deposit Cash"
-  },
+  "ScanningQRCodeScreen": { "title": "Send Bitcoin" },
+  "ReceiveBitcoinScreen": { "title": "Receive Bitcoin" },
+  "BankTransferScreen": { "title": "Bank Transfer" },
+  "FindATMScreen": { "title": "Find ATM" },
+  "DepositCashScreen": { "title": "Deposit Cash" },
   "DirectDepositScreen": {
     "title": "Direct Deposit",
     "setup": "Set up direct deposit",
