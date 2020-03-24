@@ -12,7 +12,6 @@ import {
 } from "react-native"
 import { Screen } from "../../components/screen"
 import { Text } from "../../components/text"
-import { Button } from "../../components/button"
 import { QRCode } from "../../components/qrcode"
 import { color, spacing } from "../../theme"
 import { observer, inject } from "mobx-react"
@@ -23,12 +22,12 @@ import crashlytics from "@react-native-firebase/crashlytics"
 import auth from "@react-native-firebase/auth"
 import { getSnapshot } from "mobx-state-tree"
 import JSONTree from "react-native-json-tree"
-import { useNavigation } from '@react-navigation/native';
 import { palette } from "../../theme/palette"
 import functions from "@react-native-firebase/functions"
 import { VersionComponent } from "../../components/version"
 import FileAction from "../../services/lnd/file"
 import RNFS from "react-native-fs"
+import { Button } from "react-native-elements"
 
 const FULL: ViewStyle = { flex: 1 }
 const CONTAINER: ViewStyle = {
@@ -89,8 +88,6 @@ export const DebugScreen = inject("dataStore")(
     const [invoice, setInvoice] = useState("ln")
     const [json, setJson] = useState(getSnapshot(dataStore))
 
-    const { navigate } = useNavigation()
-
     React.useEffect(() => {
       const _ = async () => {
         await dataStore.lnd.listChannels()
@@ -138,7 +135,7 @@ export const DebugScreen = inject("dataStore")(
           <Button
             style={DEMO}
             textStyle={DEMO_TEXT}
-            text="Delete account and log out"
+            title="Delete account and log out"
             onPress={async () => {
               if (auth().currentUser) {
                 try {
@@ -184,18 +181,18 @@ export const DebugScreen = inject("dataStore")(
             <Text>lnd error: {dataStore.lnd.error}</Text>
             <Text
               style={TAGLINE}
-              text={dataStore.lnd.walletExist ? "Wallet exist" : "Wallet doesn't exist"}
+              title={dataStore.lnd.walletExist ? "Wallet exist" : "Wallet doesn't exist"}
             />
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
-              text="Print $1,000"
+              title="Print $1,000"
               onPress={() => functions().httpsCallable("dollarFaucet")({ amount: 1000 })}
             />
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
-              text="Delete onboarding state"
+              title="Delete onboarding state"
               onPress={async () => {
                 await dataStore.onboarding._reset()
                 await firestore()
@@ -206,92 +203,92 @@ export const DebugScreen = inject("dataStore")(
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
-              text="Delete lnd wallet"
+              title="Delete lnd wallet"
               onPress={() => fileAction.deleteWalletDBAndChannelBackup()}
             />
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
-              text="Delete all lnd data"
+              title="Delete all lnd data"
               onPress={() => fileAction.deleteAllLndData()}
             />
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
-              text="print directory"
+              title="print directory"
               onPress={() => console.tron.log(RNFS.DocumentDirectoryPath)}
             />
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
-              text="test functions"
+              title="test functions"
               onPress={() => functions().httpsCallable("test")({})}
             />
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
-              text="InitState"
+              title="InitState"
               onPress={dataStore.lnd.initState}
             />
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
-              text="Gen Seed"
+              title="Gen Seed"
               onPress={dataStore.lnd.genSeed}
             />
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
-              text="initWallet"
+              title="initWallet"
               onPress={dataStore.lnd.initWallet}
             />
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
-              text={`lndReady. status: ${dataStore.lnd.lndReady ? "true" : "false"}`}
+              title={`lndReady. status: ${dataStore.lnd.lndReady ? "true" : "false"}`}
               onPress={dataStore.lnd.unlockWallet}
             />
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
-              text="send pubkey"
+              title="send pubkey"
               onPress={dataStore.lnd.sendPubkey}
             />
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
-              text="connect Peer"
+              title="connect Peer"
               onPress={dataStore.lnd.connectGaloyPeer}
             />
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
-              text="list peers"
+              title="list peers"
               onPress={dataStore.lnd.listPeers}
             />
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
-              text="open channel"
+              title="open channel"
               onPress={dataStore.lnd.openFirstChannel}
             />
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
-              text="add invoice"
+              title="add invoice"
               onPress={() => Clipboard.setString(dataStore.lnd.addInvoice({ value: 1000 }))}
             />
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
-              text="update balance"
+              title="update balance"
               onPress={dataStore.lnd.updateBalance}
             />
             <TextInput style={HINT} value={`balance: ${dataStore.lnd.balance}`} />
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
-              text="update invoice"
+              title="update invoice"
               onPress={dataStore.lnd.updateInvoices}
             />
             <TextInput
@@ -303,44 +300,44 @@ export const DebugScreen = inject("dataStore")(
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
-              text="list payments"
+              title="list payments"
               onPress={dataStore.lnd.list_payments}
             />
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
-              text="Quote Buy BTC"
+              title="Quote Buy BTC"
               onPress={() => dataStore.exchange.quoteBTC("buy")}
             />
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
-              text="Quote Sell BTC"
+              title="Quote Sell BTC"
               onPress={() => dataStore.exchange.quoteBTC("sell")}
             />
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
-              text="Buy BTC"
+              title="Buy BTC"
               onPress={dataStore.exchange.buyBTC}
             />
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
-              text="Sell BTC"
+              title="Sell BTC"
               onPress={dataStore.exchange.sellBTC}
             />
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
-              text="newAddress"
+              title="newAddress"
               onPress={dataStore.lnd.newAddress}
             />
             <QRCode>{dataStore.lnd.onChainAddress}</QRCode>
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
-              text="update_transactions"
+              title="update_transactions"
               onPress={dataStore.lnd.update_transactions}
             />
             <TextInput style={HINT} editable onChangeText={addr => setAddr(addr)} value={addr} />
@@ -353,13 +350,13 @@ export const DebugScreen = inject("dataStore")(
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
-              text="sendCoins"
+              title="sendCoins"
               onPress={() => dataStore.lnd.sendTransaction(addr, amount)}
             />
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
-              text="Crash test"
+              title="Crash test"
               onPress={() => {
                 crashlytics().log("Testing crash")
                 crashlytics().crash()
