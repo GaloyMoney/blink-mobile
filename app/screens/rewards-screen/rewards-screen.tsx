@@ -467,12 +467,10 @@ export const RewardsScreen = inject("dataStore")(
       const type = currRewardInfo.type as RewardType
 
       const feedback = currRewardInfo.feedback ?? ""
-      const correct = currRewardInfo.correct ?? false
 
       if ([RewardType.Text, RewardType.Video].includes(RewardType[type])) {
         setQuizzData({
           feedback,
-          correct,
           question: currRewardInfo.question,
           answers: currRewardInfo.answers,
         })
