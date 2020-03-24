@@ -586,8 +586,11 @@ export const RewardsScreen = inject("dataStore")(
       rewards.findIndex(item => item[0] === card) : 
       rewards.findIndex(item => !item[1].fullfilled)
 
+    console.tron.log({itemIndex})
+
     const [firstItem] = useState(itemIndex) 
 
+    // this is used for when calling the card from another view
     if (card && carouselRef.current) {
       carouselRef.current.snapToItem(itemIndex, false)
     }
@@ -622,6 +625,7 @@ export const RewardsScreen = inject("dataStore")(
           hasParallaxImages={true}
           firstItem={firstItem}
           inactiveSlideOpacity={isRewardOpen ? 0 : 0.7}
+          removeClippedSubviews={false}
         />
         <View style={{ flex: 1 }} />
       </Screen>
@@ -641,7 +645,6 @@ export const RewardsHome = inject("dataStore")(
     return (
       <ListItem
         style={styles.accountView}
-        key={item}
         rightElement={enabled ? 
           remainingRewards == 0 ?
             <Icon name={"ios-checkmark-circle-outline"} color={color.primary} size={28} /> :
@@ -683,6 +686,7 @@ export const RewardsHome = inject("dataStore")(
     <FlatList
       data={Object.keys(translate("RewardsScreen.rewards"))}
       renderItem={CategoryItem}
+      keyExtractor={(item, index) => `${item}_${index}`}
     />
   </Screen>
 )}))
