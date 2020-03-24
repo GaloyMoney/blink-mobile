@@ -38,7 +38,48 @@ interface IQuizz {
   close(msg): void,
 }
 
+// https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+const shuffle = (array) => {
+  var currentIndex = array.length, temporaryValue, randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+
 export const Quizz = ({ quizzVisible, setQuizzVisible, quizzData, close }: IQuizz) => {
+
+  if (quizzData.question == undefined) {
+    return null
+  }
+
+  const permutation = shuffle([0, 1, 2])
+  const answers = []
+
+  permutation.forEach((i) => {
+    answers.push(<Button
+      title={quizzData.answers[i]}
+      buttonStyle={styles.textButton}
+      onPress={() => {
+        0 === i ? close(quizzData.feedback[0]) : Alert.alert(quizzData.feedback[i])
+      }}
+      key={i}
+    />)
+  })
+
+  // console.tron.log({answers})
+
   return (
     <Modal
       style={{ marginHorizontal: 0, marginBottom: 0 }}
@@ -52,7 +93,6 @@ export const Quizz = ({ quizzVisible, setQuizzVisible, quizzData, close }: IQuiz
                     <View style={{flex: 1}}></View>
                 </TouchableWithoutFeedback> */}
       </View>
-      {quizzData.question !== undefined && (
         <View style={styles.modalBackground}>
           <Icon
             name={"ios-remove"}
@@ -62,19 +102,9 @@ export const Quizz = ({ quizzVisible, setQuizzVisible, quizzData, close }: IQuiz
           />
           <SafeAreaView style={{ flex: 1 }}>
             <Text style={styles.modalText}>{quizzData.question}</Text>
-            {quizzData.answers.map((l, i) => (
-              <Button
-                title={l}
-                buttonStyle={styles.textButton}
-                onPress={() => {
-                  quizzData.correct === i ? close(quizzData.feedback[quizzData.correct]) : Alert.alert(quizzData.feedback[i])
-                }}
-                key={i}
-              />
-            ))}
+            {answers}
           </SafeAreaView>
         </View>
-      )}
     </Modal>
   )
 }

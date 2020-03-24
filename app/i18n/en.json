@@ -71,16 +71,15 @@
           "text": "One sat is a small portion of a bitcoin. The same way a dollar can be divided into 100 cents, a bitcoin can be divided into 100,000,000 sats! In fact, a sat is the smallest unit of bitcoin. \n\nWhy is that important?\n\n Divisibility is an important part of money. \n\nMaking bitcoin easily divisible allows many billions of people to own and use bitcoin. You do not need to own one full bitcoin. You can simply have a fraction of a bitcoin. ",
           "question": "What is a sat?",
           "answers": [
+            "The smallest unit of Bitcoin",
             "An alternative crypto currency",
-            "A small satellite",
-            "The smallest unit of Bitcoin"
+            "A small satellite"
           ],
           "feedback": [
+            "You just earned 1 sat, the smallest unit of Bitcoin. Congrats!",
             "Nope, it is not analtcoin",
-            "Maybe... but that's not the correct answer in this context 😂",
-            "You just earned 1 sat, the smallest unit of Bitcoin. Congrats!"
-          ],
-          "correct": 2
+            "Maybe... but that's not the correct answer in this context 😂"
+          ]
         },
         "custody": {
           "type": "Text",
@@ -88,16 +87,15 @@
           "text": "Custody means \"the protective care or guardianship of someone or something\".\n\nOK, that is a boring definition, what does it mean for bitcoin or banking?\n\nWhen you give money to your bank, they are taking custody of your funds. It basically means the bank is responsible for taking care of your US Dollars (USD), and returning funds to you, upon your request.\n\nRegarding USD, a Galoy bank account is no different in that regard\n\nBut with bitcoin (BTC), it is different.\n\nGenerally speaking, you can give custody of your BTC to someone else, like a bank or a cryptocurrency exchange. On the other hand, you can also take self custody of your BTC!\n\nIn that sense, this would be similar to cash. The money is in your bitcoin wallet, and if you lose it, you are out of luck.\n\nFor BTC, Galoy does not take custody of your bitcoin. The funds remain right in your phone!\n\nGaloy is what we call a “non-custodial” wallet. It means the money is in your pocket, stored with some special security keys, directly on your phone!",
           "question": "Which one is true?",
           "answers": [
-            "Bitcoin is like a digital dollar, and must be managed by a bank or a third-party custodian",
             "Bitcoin can be self-custodied",
+            "Bitcoin is like a digital dollar, and must be managed by a bank or a third-party custodian",
             "Digital US dollars can be self-custodied"
           ],
           "feedback": [
-            "Incorrect.  You can indeed self custody bitcoin",
             "You have learned one of the important properties of bitcoin, it can be self custodied!",
-            "You ca not keep US dollars in a digital wallet. It's only possible with cash"
-          ],
-          "correct": 1
+            "Incorrect.  You can indeed self custody bitcoin",
+            "You can not keep US dollars in a digital wallet. It's only possible with cash"
+          ]
         },
         "digitalKeys": {
           "type": "Text",
@@ -105,16 +103,15 @@
           "text": "You can compare self-custodied Bitcoin with cash.\n\nIf you have a $20 bill in your pocket and you lose it, you're out of luck!\n\nFor bitcoin, instead of carrying a piece of paper, you have digital private keys.\n\nThose private keys allow you, and only you, to spend your bitcoin. Which is why making sure those keys are in a safe place is important!\n\nA digital key is just a very, very long number (about 80 digits long!). It's astronomically long, so it's impossible for anyone to guess it.\n\nAs a comparison, it would be easier to find a single grain of sand on earth than it would be to guess the correct sequence of digitals for a digital key. This is the power of large numbers and cryptography!\n\nWith your private key is currently stored in a secure part of your phone.",
           "question": "Which one is true?",
           "answers": [
+            "Your keys should be kept secret, as anybody who has access to them will be able to spend your bitcoin",
             "Keys allow you to recover your email and password",
-            "Keys should be shared with as many people as possible, so that they won't be lost",
-            "Your keys should be kept secret, as anybody who has access to them will be able to spend your bitcoin"
+            "Keys should be shared with as many people as possible, so that they won't be lost"
           ],
           "feedback": [
+            "Galoy is what we call a non-custodial wallet for your bitcoin. So you should take care of your keys!",
             "Incorrect. Unlike most websites, there is no way to recover your keys using your email or phone number",
             "No. A digital key is private, and anyone who has access to it will be able to spend your bitcoin",
-            "Galoy is what we call a non-custodial wallet for your bitcoin. So you should take care of your keys!"
-          ],
-          "correct": 2
+          ]
         },
         "backupWallet": {
           "type": "Action",
@@ -128,16 +125,15 @@
           "text": "Bitcoin has many special and unique properties. In subsequent quizzes, these following special properties will be individually explained in detail: , :\n\n- Bitcoin has a predictable issuance of  supply\n- The maximum total supply of Bitcoin is permanently capped\n- It is highly divisible\n- It is borderless\n- Small transactions are settled in seconds, large transactions take less than one hour \n- Bitcoin can never be forged, nor copied \n- The  creator of Bitcoin remains unknown to this very day",
           "question": "What are some properties of bitcoin that are not present in fiat currency, such as US Dollars?",
           "answers": [
+            "Bitcoin can not be forged",
             "Bitcoin alone is digital money",
-            "It is the most widely accepted currency across the world",
-            "Bitcoin ca not be forged"
+            "It is the most widely accepted currency across the world"
           ],
           "feedback": [
-            "Wrong.  92% of dollars already exist in  digital form; only 8% of dollars are circulated as cash.",
+            "Correct. Unlike dollars, where counterfeit bills can be made, spent and circulated, , it is  not possible for anyone to create fake bitcoin",
+            "Wrong. 92% of dollars already exist in  digital form; only 8% of dollars are circulated as cash.",
             "Not yet, but maybe one day it will be!",
-            "Correct. Unlike dollars, where counterfeit bills can be made, spent and circulated, , it is  not possible for anyone to create fake bitcoin"
-          ],
-          "correct": 2
+          ]
         },
         "moneySupply": {
           "type": "Text",
@@ -150,11 +146,10 @@
             "It is up to the central bank of Bitcoin"
           ],
           "feedback": [
-            "21 million, that= is correct!",
+            "21 million, that is correct!",
             "Incorrect. The Bitcoin money supply is capped",
             "Wrong. There is no central bank in the bitcoin protocol"
-          ],
-          "correct": 0
+          ]
         }
       },
       "whyNow": {
@@ -166,16 +161,15 @@
           "text": "This brief 3 minute video will give you some insight  regarding  fiat money, which is  government-issued currency -- such as US dollars, Japanese Yen, Swiss Francs and Euros",
           "question": "What is NOT backing the US dollar?",
           "answers": [
+            "Ability of government to collect taxes and repay debt",
             "Gold",
-            "Trust of the people that dollar will maintain its value",
-            "Ability of government to collect taxes and repay debt"
+            "Trust of the people that dollar will maintain its value"
           ],
           "feedback": [
-            "Correct. Since 1971, the US government ended the convertibility of the dollar to gold",
+            "Correct. The confidence people have in a government’s ability to repay  debt is one of the primary means to ensure the fiat currency maintains value.",
+            "Incorrect. Since 1971, the US government ended the convertibility of the dollar to gold",
             "No. A key element for any currency to have value is the trust of the people in this currency. Countries like the Venezuela experiened  hyperinflation, once their people lost trust in the value of local currency.",
-            "Correct. The confidence people have in a government’s ability to repay  debt is one of the primary means to ensure the fiat currency maintains value. "
-          ],
-          "correct": 0
+          ]
         }
       },
       "galoy": {
@@ -194,8 +188,7 @@
             "Correct. You just earned another 50 sats. We hope these rewards will encourage you to learn more about bitcoin",
             "No one can print new bitcoin at will",
             "No. One of the founding principles of Galoy is to respect individual privacy. We do not sell any of your data to a third party"
-          ],
-          "correct": 0
+          ]
         },
         "phoneVerification": {
           "type": "Action",
@@ -260,16 +253,15 @@
           "text": "\n\nHow are bitcoin created, or issued for the first time?\n\nEvery day, there are computers all over the world  looking for new bitcoin. These computers contribute their power to the bitcoin network,  continually solving -intensive math equations that keep the network running. P. These computers that dedicate power to the bitcoin network are called “miners”. \n\nEvery time a miner finds a solution to a math problem,  new bitcoins are issued. .\n\nIt isa bit like mining for physical gold, where real ressources need to be invested to discover and extract the commodity.  new gold, but the difference for bitcoin is that we already know the total number of bitcoin there will be in existence",
           "question": "How are new bitcoin being created?",
           "answers": [
-            "By converting dollar to bitcoin on exchanges",
             "By solving a compute-intensive math problem",
+            "By converting dollar to bitcoin on exchanges",
             "By staking bitcoin to a stacking company"
           ],
           "feedback": [
-            "You can buy bitcoin from exchanges, but this is not how bitcoin is being created",
             "Correct! On average, every 10 mins, new bitcoin are being created",
+            "You can buy bitcoin from exchanges, but this is not how bitcoin is being created",
             "There is no concept of stacking in bitcoin"
-          ],
-          "correct": 1
+          ]
         },
         "volatility": {
           "type": "Text",
@@ -281,8 +273,7 @@
             "21 millions bitcoin, that's it!",
             "Bitcoin is digital, but pretty much any currency today exist in some form of digital",
             "Bitcoin is not controlled by any government"
-          ],
-          "correct": 0
+          ]
         },
         "paymentProcessing": {
           "title": "Payment processing",
@@ -293,24 +284,22 @@
             "Correct! the journey of a transaction on the bitcoin network goes to multiple actor, which ensures security of the network",
             "Alice created the transaction, and Full-nodes ensures blocks and transaction are valid, but most importantly we need miners to create the blocks",
             "Although Miners are creating the blocks with transactions inside it, and Full-nodes are validating them, Alice still needs to create the transaction initially"
-          ],
-          "correct": 0
+          ]
         },
         "transaction": {
           "title": "Transaction with bitcoin",
           "text": "To have an idea of how a bitcoin transaction work, we can think of a check.\n\nIf Alice wants to send $100 to Bob, Alice would write on a check $100, put Bob name as the payee, and sign. Bob doesn't really know if the money is present, but because Alice and Bob knows each other, this is fine. For a bitcoin transaction, it will be pretty much the same. Alice would sign a transaction to Bob to send some bitcoin.\n\nThe difference is that there are some cryptography involved.\n\nInstead of signing with pen and paper, Alice will use a app, like the Galoy app, to cryptographically sign a message saying she's sending some bitcoin to Bob. and it's more secure because cryptographic are pretty much impossible to forge, unlike traditional signature. If the signature is not valid, the bitcoin network not accept the transaction",
           "question": "What makes a bitcoin transaction valid?",
           "answers": [
+            "The correct cryptographic signature",
             "The approval of the transaction by local gouvernements",
-            "A signature on a paper receipt, like for card transactions",
-            "The correct cryptographic signature"
+            "A signature on a paper receipt, like for card transactions"
           ],
           "feedback": [
+            "That's correct, digital signature is one part of what bitcoin secure, and how transactions are being constructed!",
             "Transactions are not approved by third party or gouvernments. They just needs to confirm to the bitcoin protocol",
-            "😂",
-            "That's correct, digital signature is one part of what bitcoin secure, and how transactions are being constructed!"
-          ],
-          "correct": 2
+            "😂"
+          ]
         }
       },
       "advanced": {
@@ -328,16 +317,15 @@
           "text": "Bitcoin has a unique inception story. On Decemberish 2008, a pseudonym under the name of Satoshi Nakamoto has share a paper called a 'Whitepaper' to a online group related to online money. After open sourcing the code couple of months later, and seeing other person had started contributing to the project, Natoshi Nakamo disappeared.\n\nIs it a good thing or a bad thing?\n\nEverybody will have their answer, but as a result of this, bitcoin is 'decentralized'. No one has really any control over it, and this is one of the strength of bitcoin, as no one is particularly in charge, it can't really be stopped.",
           "question": "Who is Satoshi Nakamoto?",
           "answers": [
+            "We don't really know",
             "A japanese developer",
-            "The undercover name of Craig Wright",
-            "We don't really know"
+            "The undercover name of Craig Wright"
           ],
           "feedback": [
+            "The goal of Galoy is to educate you about Bitcoin, but unfortunately, we won't be able to tell you who is Satoshi Nakamoto!",
             "Although Satoshi Nakamoto is Japan-inspired name, it is really a pseudonym",
             "Oh, really 😮",
-            "The goal of Galoy is to educate you about Bitcoin, but unfortunately, we won't be able to tell you who is Satoshi Nakamoto!"
-          ],
-          "correct": 2
+          ]
         },
         "decentralization": {
           "title": "Bitcoin is decentralized",
@@ -359,20 +347,11 @@
         },
         "lightning": {
           "type": "Text",
-          "title": "Who created Bitcoin",
-          "text": "Bitcoin has a unique inception story. On Decemberish 2008, a pseudonym under the name of Satoshi Nakamoto has share a paper called a 'Whitepaper' to a online group related to online money. After open sourcing the code couple of months later, and seeing other person had started contributing to the project, Natoshi Nakamo disappeared.\n\nIs it a good thing or a bad thing?\n\nEverybody will have their answer, but as a result of this, bitcoin is 'decentralized'. No one has really any control over it, and this is one of the strength of bitcoin, as no one is particularly in charge, it can't really be stopped.",
-          "question": "Who is Satoshi Nakamoto?",
-          "answers": [
-            "A japanese developer",
-            "The undercover name of Craig Wright",
-            "We don't really know"
-          ],
-          "feedback": [
-            "Although Satoshi Nakamoto is Japan-inspired name, it is really a pseudonym",
-            "Oh, really 😮",
-            "The goal of Galoy is to educate you about Bitcoin, but unfortunately, we won't be able to tell you who is Satoshi Nakamoto!"
-          ],
-          "correct": 2
+          "title": "Lightning",
+          "text": "Lightning",
+          "question": "",
+          "answers": ["", "", ""],
+          "feedback": ""
         },
         "energy": { "title": "Bitcoin energy consumption?", "text": "" },
         "difficultyAdjustment": {
