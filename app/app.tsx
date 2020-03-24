@@ -21,9 +21,8 @@ import { DEFAULT_NAVIGATION_CONFIG } from "./navigation/navigation-config"
 import { Notifications } from "react-native-notifications"
 import { NavigationContainer } from '@react-navigation/native'
 import analytics from '@react-native-firebase/analytics'
-import { StatefulNavigator } from './navigation'
 import { RootStack } from './navigation/root-navigator'
-
+import { getActiveRouteName } from "./utils/navigation"
 
 /**
  * Ignore some yellowbox warnings. Some of these are for deprecated functions
@@ -51,20 +50,6 @@ export const App = () => {
 
   const routeNameRef = useRef();
   const navigationRef = useRef();
-
-  // Gets the current screen from navigation state
-  const getActiveRouteName = state => {
-    // console.tron.log({state})
-
-    const route = state.routes[state.index];
-
-    if (route.state) {
-      // Dive into nested navigators
-      return getActiveRouteName(route.state);
-    }
-
-    return route.name;
-  };
 
   useEffect(() => {
     // FIXME there might be a better way to manage this notification
@@ -130,11 +115,13 @@ export const App = () => {
     return null
   }
 
-  const { navigationStore, ...otherStores } = rootStore
+  const { ...otherStores } = rootStore
 
   return (
-    <Provider rootStore={rootStore} navigationStore={navigationStore} {...otherStores}>
-      <BackButtonHandler canExit={canExit}>
+    // TODO replace with React.createContext
+    // https://mobx.js.org/refguide/inject.html
+    <Provider rootStore={rootStore} {...otherStores} routeNameRef={routeNameRef}>
+      {/* <BackButtonHandler canExit={canExit}> */}
         <NavigationContainer
           ref={navigationRef}
           onStateChange={state => {
@@ -152,7 +139,7 @@ export const App = () => {
             <RootStack />
           {/* <StatefulNavigator /> */}
         </NavigationContainer>
-      </BackButtonHandler>
+      {/* </BackButtonHandler> */}
     </Provider>
   )
 }
