@@ -1,11 +1,11 @@
 import * as React from "react"
 import { View, ViewStyle, TextStyle } from "react-native"
 import { HeaderProps } from "./header.props"
-import { Button } from "../button"
 import { Icon } from "../icon"
 import { Text } from "../text"
 import { spacing } from "../../theme"
 import { translate } from "../../i18n/"
+import { Button } from "react-native-elements"
 
 // static styles
 const ROOT: ViewStyle = {
