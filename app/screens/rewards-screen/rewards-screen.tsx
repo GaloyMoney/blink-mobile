@@ -205,6 +205,25 @@ const getRemainingRewards = ({section, dataStore}) => (
   .reduce((acc, item) => OnboardingRewards[item[0]] + acc, 0)
 )
 
+const getSections = () => {
+  const all_rewards_obj = translate(`RewardsScreen.rewards`)
+  const sections = Object.keys(all_rewards_obj)
+  return sections
+}
+
+// TODO optimize
+const getCompletedSection = ({ dataStore }) => {
+  let count = 0
+  const sections = getSections()
+  for (let section of sections) {
+    if (getRemainingRewards({dataStore, section}) === 0) {
+      count++
+    }
+  }
+  return count
+}
+
+
 export const RewardsScreen = inject("dataStore")(
   observer(({ dataStore, route, navigation }) => {
     const { navigate, setParams } = useNavigation()
@@ -373,6 +392,20 @@ export const RewardsScreen = inject("dataStore")(
     const section = route.params.section
     const rewards = getRewardsFromSection({ section, rewardsMeta, dataStore})
 
+    const [initialRemainingRewards] = useState(getRemainingRewards({section, dataStore}))
+    const currentRemainingRewards = getRemainingRewards({section, dataStore})
+
+    if (initialRemainingRewards !== 0 && currentRemainingRewards === 0) {
+      Alert.alert("You have succesfully completed this section!", "", [
+        {
+          text: translate("common.ok"),
+          onPress: () => {
+            navigation.goBack()
+          },
+        },
+      ])
+    }
+
     // helper
     const [currRewardId, currRewardInfo] = rewards[currRewardIndex]
 
@@ -388,7 +421,8 @@ export const RewardsScreen = inject("dataStore")(
       setParams({ title: null })
       setLoading(false)
       if (msg !== "") {
-        await sleep(800)
+        // FIXME msg set is not the best way to handle the callback 
+        await sleep(800) // FIXME may bug on slow decive
         Alert.alert(msg, "", [
           {
             text: translate("common.ok"),
@@ -577,6 +611,7 @@ export const RewardsScreen = inject("dataStore")(
             account: AccountType.VirtualBitcoin,
           })}
           close={close}
+          numTrophee={getCompletedSection({dataStore})}
         />
         <View style={{ flex: 1 }} />
         <Carousel
@@ -645,6 +680,7 @@ export const RewardsHome = inject("dataStore")(
         currency: CurrencyType.BTC,
         account: AccountType.VirtualBitcoin,
       })}
+      numTrophee={getCompletedSection({dataStore})}
     />
     <FlatList
       data={Object.keys(translate("RewardsScreen.rewards"))}

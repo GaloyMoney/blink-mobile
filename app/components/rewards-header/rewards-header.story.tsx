@@ -15,13 +15,13 @@ storiesOf("RewardsHeader", module)
   .add("Style Presets", () => (
     <Story>
       <UseCase text="Dollar" usage="The primary.">
-        <RewardsHeader isRewardOpen={false} balance={number("Amount", 35)} />
+        <RewardsHeader isRewardOpen={false} numTrophee={number("numTrophee", 0)} balance={number("Amount", 35)} />
       </UseCase>
       <UseCase text="Dollar" usage="The primary.">
-        <RewardsHeader isRewardOpen={false} balance={number("Amount", 35)} />
+        <RewardsHeader isRewardOpen={false} numTrophee={1} balance={number("Amount", 35)} />
       </UseCase>
       <UseCase text="Sat" usage="isRewardOpen true">
-        <RewardsHeader isRewardOpen={boolean("isRewardOpen", false)} balance={number("Amount", 35)} />
+        <RewardsHeader isRewardOpen={boolean("isRewardOpen", false)} numTrophee={0} balance={number("Amount", 35)} />
       </UseCase>
     </Story>
   ))
