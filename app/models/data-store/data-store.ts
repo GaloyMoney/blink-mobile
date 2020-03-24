@@ -20,11 +20,10 @@ import { toHex, shortenHash } from "../../utils/helper"
 import DeviceInfo from "react-native-device-info"
 import Config from "react-native-config"
 import { Notifications } from "react-native-notifications"
-import { RootStoreModel } from "../root-store"
 import { difference } from "lodash"
 import { sleep } from "../../utils/sleep"
 import { translate } from "../../i18n"
-import { currentScreen } from "../../utils/navigation"
+import { inject } from "mobx-react"
 
 // FIXME add as a global var
 DeviceInfo.isEmulator().then(isEmulator => {
@@ -748,16 +747,9 @@ export const LndModel = BaseAccountModel.named("Lnd")
         let localIOSNotif
 
         if (invoice.paymentRequest === self.lastAddInvoice) {
-          if (
-            currentScreen(getParentOfType(self, RootStoreModel).navigationStore.state) ===
-            "receiveBitcoin" 
-            
-            // FIXME
-            ?? false
-            // FIXME break after v5 upgrade of react-navigation
-            // could use this instead: https://reactnavigation.org/docs/navigating-without-navigation-prop/
-
-          ) {
+          // if (getActiveRouteName(routeNameRef) === "receiveBitcoin") {
+          // FIXME
+          if(false) {
             self.receiveBitcoinScreenAlert = true
             localIOSNotif = false
           } else {
@@ -984,7 +976,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
       )
       return all_txs
     },
-  }))
+}))
 
 export const AccountModel = types.union(FiatAccountModel, LndModel)
 
