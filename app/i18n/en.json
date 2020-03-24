@@ -235,7 +235,7 @@
         }
       },
       "buyBitcoin": {
-        "meta": { "title": "Buy Bitcoin", "icon": "logo-bitcoin", "enabled": false },
+        "meta": { "title": "Buy Bitcoin", "icon": "logo-bitcoin", "enabled": true },
         "buyFirstSats": {
           "title": "Buy your first sats",
           "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
@@ -246,7 +246,7 @@
         }
       },
       "intermediate": {
-        "meta": { "title": "Intermediate Bitcoin", "icon": "ios-school", "enabled": false },
+        "meta": { "title": "Intermediate Bitcoin", "icon": "ios-school", "enabled": true },
         "newBitcoin": {
           "type": "Text",
           "title": "How new bitcoin are created",
@@ -303,7 +303,7 @@
         }
       },
       "advanced": {
-        "meta": { "title": "Advanced Bitcoin", "icon": "ios-school", "enabled": false },
+        "meta": { "title": "Advanced Bitcoin", "icon": "ios-school", "enabled": true },
         "privacy": {
           "title": "Is bitcoin private?",
           "text": "It's... complicated 🙂\n\nTransactions on the bitcoin are pseudonymous. It's like B5A35019 is sending money to 162BD1C0. It's not very indicative of who is sending money to who. But the difference between this and traditional payment network is that, every transaction in the protocol is public. This means everyone is the world, with an internet connection, can see that B5A35019 has sent money to 162BD1C0. For ever.\n\nIt's typically not like this in the ",
