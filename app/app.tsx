@@ -41,6 +41,7 @@ interface AppState {
   rootStore?: RootStore
 }
 
+export const APP_EDUCATION = true
   
 /**
  * This is the root component of our app.
