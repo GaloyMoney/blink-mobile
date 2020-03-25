@@ -22,7 +22,7 @@ import { Notifications } from "react-native-notifications"
 import { NavigationContainer } from '@react-navigation/native'
 import analytics from '@react-native-firebase/analytics'
 import { RootStack } from './navigation/root-navigator'
-import { getActiveRouteName } from "./utils/navigation"
+import { getActiveRouteName, getActiveRouteParams } from "./utils/navigation"
 
 /**
  * Ignore some yellowbox warnings. Some of these are for deprecated functions
@@ -129,7 +129,13 @@ export const App = () => {
             const currentRouteName = getActiveRouteName(state);
     
             if (previousRouteName !== currentRouteName) {
-              analytics().setCurrentScreen(currentRouteName, currentRouteName);
+              if (currentRouteName == "rewardsDetail") {
+                const routeAndSection = `${currentRouteName}_${getActiveRouteParams(state).section}`
+                console.tron.log({routeAndSection})
+                analytics().setCurrentScreen(routeAndSection, currentRouteName);
+              } else {
+                analytics().setCurrentScreen(currentRouteName, currentRouteName);
+              }
             }
     
             // Save the current route name for later comparision
