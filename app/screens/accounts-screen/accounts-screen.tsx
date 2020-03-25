@@ -102,14 +102,7 @@ export const AccountsScreen = inject("dataStore")(
     //FIXME type any
     const accountTypes: Array<Record<string, any>> = [
       { key: "Bank Account", account: AccountType.Bank, icon: "ios-cash" },
-      {
-        key: "Bitcoin",
-        account:
-          dataStore.lnd.statusFirstChannel === FirstChannelStatus.opened
-            ? AccountType.Bitcoin
-            : AccountType.VirtualBitcoin,
-        icon: "logo-bitcoin",
-      },
+      { key: "Bitcoin", account: AccountType.Bitcoin, icon: "logo-bitcoin" }
     ]
 
     // TODO refactor ==> bank should also have a virtual screen
@@ -143,8 +136,8 @@ export const AccountsScreen = inject("dataStore")(
           headingCurrency={CurrencyType.USD}
           accountsToAdd={
             dataStore.lnd.statusFirstChannel == FirstChannelStatus.opened
-              ? AccountType.AllReal
-              : AccountType.AllVirtual
+              ? AccountType.BankAndVirtualBitcoin
+              : AccountType.BankAndBitcoin
           }
           initialLoading={initialLoading}
         />

@@ -1116,8 +1116,8 @@ export const DataStoreModel = types
       balances[AccountType.Bitcoin] = self.lnd.balance * btcConversion
       balances[AccountType.VirtualBitcoin] = self.onboarding.balance * btcConversion
       balances[AccountType.Bank] = self.fiat.balance / self.rates.rate(currency)
-      balances[AccountType.AllReal] = balances[AccountType.Bank] + balances[AccountType.Bitcoin]
-      balances[AccountType.AllVirtual] =
+      balances[AccountType.BankAndVirtualBitcoin] = balances[AccountType.Bank] + balances[AccountType.Bitcoin]
+      balances[AccountType.BankAndBitcoin] =
         balances[AccountType.Bank] + balances[AccountType.VirtualBitcoin]
 
       return balances[account]

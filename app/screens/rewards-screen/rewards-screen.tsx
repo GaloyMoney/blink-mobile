@@ -585,8 +585,6 @@ export const RewardsScreen = inject("dataStore")(
       rewards.findIndex(item => item[0] === card) : 
       rewards.findIndex(item => !item[1].fullfilled)
 
-    console.tron.log({itemIndex})
-
     const [firstItem] = useState(itemIndex) 
 
     // this is used for when calling the card from another view

@@ -129,8 +129,6 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     textDecorationLine: "underline",
   },
-
-
 })
 
 const AccountDetailItem: React.FC<AccountDetailItemProps> = props => {
@@ -434,15 +432,23 @@ const formatTransactions = transactions => {
 export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = 
   inject("dataStore")(observer(
     ({ dataStore, route, navigation }) => {
-    const account = route.params.account
+
+    const account = route.params.account == AccountType.Bitcoin ? 
+        dataStore.lnd.statusFirstChannel === FirstChannelStatus.opened ?
+          AccountType.Bitcoin
+        : AccountType.VirtualBitcoin
+      : route.params.account
+    
+      let accountStore
+
+    // TODO: react on dataStore.lnd.statusFirstChannel
+    // need a state for that ?
 
     React.useLayoutEffect(() => {
       navigation.setOptions({
         title: account
       })
-    }, []);
-
-    let accountStore
+    }, [])
 
     // should have a generic mapping here, could use mst for it?
     switch (account) {

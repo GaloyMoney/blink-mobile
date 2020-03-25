@@ -8,14 +8,11 @@ import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from "react-native-vector-icons/Ionicons"
 import { Button as ButtonNative } from "react-native"
+import { AccountType } from "../utils/enum"
+
 
 import { color } from "../theme"
-import {
-  RewardsScreen,
-  WelcomePhoneInputScreen,
-  WelcomePhoneValidationScreen,
-  RewardsHome,
-} from "../screens/rewards-screen"
+
 import {
   MoveMoneyScreen,
   SendBitcoinScreen,
@@ -25,6 +22,12 @@ import {
   DirectDepositScreen,
   FindATMScreen,
 } from "../screens/move-money-screen"
+import {
+  RewardsScreen,
+  WelcomePhoneInputScreen,
+  WelcomePhoneValidationScreen,
+  RewardsHome,
+} from "../screens/rewards-screen"
 import {
   BankAccountRewardsScreen,
   PersonalInformationScreen,
@@ -37,6 +40,7 @@ import { inject, observer } from "mobx-react"
 import { Animated, StyleSheet } from "react-native"
 import { translate } from "../i18n"
 import { palette } from "../theme/palette"
+import { APP_EDUCATION } from "../app"
 
 
 const styles = StyleSheet.create({
@@ -58,7 +62,7 @@ const InteractiveBadge =
       // )[0]
       // const rewardsActive = primaryStack.routes[primaryStack.index].key === "Rewards" ?? false
 
-      const rewardsActive = true
+      const rewardsActive = false
       // FIXME
       // use focus?
 
@@ -161,7 +165,7 @@ const StackAccounts = createStackNavigator()
 export const AccountNavigator = () => {
   return (
     <StackAccounts.Navigator
-      initialRouteName="accounts"
+      initialRouteName={APP_EDUCATION ? "accountDetail" : "accounts"} 
       // headerMode: "float",
     >
       <StackAccounts.Screen
@@ -183,6 +187,7 @@ export const AccountNavigator = () => {
       <StackAccounts.Screen
         name="accountDetail"
         component={AccountDetailScreen}
+        initialParams={{ account: AccountType.Bitcoin }}
       />
       <StackAccounts.Screen
         name="transactionDetail"
@@ -205,7 +210,6 @@ const StackMoveMoney = createStackNavigator()
 export const MoveMoneyNavigator = () => {
   return (
     <StackMoveMoney.Navigator
-      initialRouteName="accounts"
       // headerMode: "float",
     >
       <StackMoveMoney.Screen
@@ -254,7 +258,6 @@ const StackRewards = createStackNavigator()
 export const RewardsNavigator = () => {
   return (
     <StackRewards.Navigator
-      initialRouteName="accounts"
       // headerMode: "float",
     >
       <StackRewards.Screen
@@ -300,6 +303,7 @@ export const PrimaryNavigator =  () => {
             return <Icon name={"ios-wallet"} size={size} color={color} />
           },
         }}/>
+      {!APP_EDUCATION && 
       <Tab.Screen 
         name="MoveMoney"
         component={MoveMoneyNavigator}
@@ -310,6 +314,7 @@ export const PrimaryNavigator =  () => {
           },
         }}
         />
+      }
       <Tab.Screen 
         name="Rewards"
         component={RewardsNavigator}
