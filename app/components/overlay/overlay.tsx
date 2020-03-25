@@ -1,10 +1,12 @@
 import * as React from "react"
 import { useState } from "react"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
-import { StyleSheet, View, Modal, SafeAreaView, Text } from "react-native"
-import Svg, { Path } from "react-native-svg"
+import { StyleSheet, View, Modal, SafeAreaView, Text, Dimensions } from "react-native"
+import Svg, { Path, Defs, ClipPath, G, Rect, Circle } from "react-native-svg"
 import { palette } from "../../theme/palette"
 import { translate } from "../../i18n"
+
+const OPACITY = "#202020D0"
 
 const styles = StyleSheet.create({
   modalText: {
@@ -25,21 +27,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "column",
     justifyContent: "space-around",
-    backgroundColor: "#000000B0",
+    backgroundColor: OPACITY,
   },
 })
-
-const UpArrow = (props) => {
-  return (
-    <Svg viewBox="0 0 155.139 155.139" height={150} width={320} {...props}>
-      <Path
-        d="M40.56 45.42H12.384L57.804 0l45.408 45.42h-28.51c4.046 53.517 31.917 96.753 68.052 107.266-5.513 1.599-11.224 2.452-17.077 2.452-44.143.001-80.475-48.027-85.117-109.718z"
-        fill="#010002"
-      />
-    </Svg>
-  )
-}
-
 
 const DownArrow = props => {
   return (
@@ -54,32 +44,56 @@ const DownArrow = props => {
   )
 }
 
+const CY = 200
+const R = 135
+
 export const Overlay = ({ screen }) => {
   const [modalVisible, setModalVisible] = useState(true)
 
   return (
     <Modal visible={modalVisible} transparent={true} animationType={"fade"}>
+      {screen == "accounts" && (
       <View style={styles.modalBackground}>
-        <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
-          <SafeAreaView style={{ flex: 1 }}>
-            {screen == "accounts" && (
-              <>
-                <View style={{ flex: 1 }}></View>
-                <Text style={styles.modalText}>{translate("Overlay.accounts")}</Text>
-                <DownArrow style={{ marginVertical: 0, marginLeft: 50 }} />
-              </>
-            )}
-            {screen == "rewards" && (
-              <>
-                <Text style={styles.modalTextCenter}>{translate("Overlay.rewards.download")}</Text>
-                <View style={{ height: 170 }}></View>
-                <UpArrow style={{ marginLeft: 0 }} />
-                <Text style={styles.modalTextCenter}>{translate("Overlay.rewards.getMore")}</Text>
-              </>
-            )}
-          </SafeAreaView>
+      <TouchableWithoutFeedback onPress={() => {console.tron.log("onPress"); setModalVisible(false)}}>
+        <SafeAreaView style={{ flex: 1 }}>
+          <View style={{flex: 1}}>
+            <View style={{ flex: 1 }}></View>
+            <Text style={styles.modalText}>{translate("Overlay.accounts")}</Text>
+            <DownArrow style={{ marginVertical: 0, marginLeft: 50 }} />
+          </View>
+        </SafeAreaView>
         </TouchableWithoutFeedback>
+    </View>
+        )}
+      {screen == "rewards" && (
+        <View style={{position: "absolute", zIndex: 2}}>
+          <TouchableWithoutFeedback onPress={() => {console.tron.log("onPress"); setModalVisible(false)}}>
+            <View>
+            <Svg width={Dimensions.get("window").width} height={Dimensions.get("window").height}>
+              <Defs>
+                <ClipPath id="clip">
+                  <G>
+                    <Rect width="100%" height="100%" />
+                    <Circle cx={Dimensions.get("window").width/2} cy={CY} r={R} />
+                  </G>
+                </ClipPath>
+              </Defs>
+              <Rect
+                width="100%"
+                height="100%"
+                fill={OPACITY}
+                clipPath="url(#clip)"
+                clipRule="evenodd"
+              />
+            </Svg>
+            <View style={{position: "absolute", top: CY + R, alignSelf: "center"}}>
+              <Text style={[styles.modalText, {textAlign: "center"}]}>{translate("Overlay.rewards.download")}</Text>
+              <Text style={[styles.modalText, {textAlign: "center"}]}>{translate("Overlay.rewards.getMore")}</Text>
+            </View>
+          </View>
+        </TouchableWithoutFeedback> 
       </View>
-    </Modal>
+      )}
+  </Modal> 
   )
 }

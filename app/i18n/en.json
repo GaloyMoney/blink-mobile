@@ -33,8 +33,8 @@
   "Overlay": {
     "accounts": "Start by getting\nsome rewards!",
     "rewards": {
-      "download": "We gave you 1 sat a gift to download the app.",
-      "getMore": "There are many more ways to earn sats with Galoy. The basics with Bitcoin 101 is a good start!"
+      "download": "We gave you 1 sat as a gift\nto download the app.",
+      "getMore": "Explore, learn and earn more!"
     }
   },
   "GetStartedScreen": {
