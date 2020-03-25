@@ -410,7 +410,6 @@ export const RewardsScreen = inject("dataStore")(
     const [currRewardId, currRewardInfo] = rewards[currRewardIndex]
 
     const open = async index => {
-      setCurrRewardIndex(index)
       setParams({ title: translate(`RewardsScreen.rewards\.${section}\.${currRewardId}.title`) })
       setRewardOpen(!isRewardOpen)
     }
@@ -509,7 +508,7 @@ export const RewardsScreen = inject("dataStore")(
         <Animated.View style={styles.item}>
           <TouchableOpacity onPress={() => open(index)} disabled={isRewardOpen} activeOpacity={0.9}>
             <ParallaxImage
-              source={eval(`${itemId}Image`)}
+              source={eval(`${itemId}Image`)} // FIXME
               containerStyle={
                 isRewardOpen ? styles.imageContainerRewardsOpen : styles.imageContainerRewardsClosed
               }
@@ -626,6 +625,7 @@ export const RewardsScreen = inject("dataStore")(
           firstItem={firstItem}
           inactiveSlideOpacity={isRewardOpen ? 0 : 0.7}
           removeClippedSubviews={false}
+          onBeforeSnapToItem={(index) => setCurrRewardIndex(index)}
         />
         <View style={{ flex: 1 }} />
       </Screen>
