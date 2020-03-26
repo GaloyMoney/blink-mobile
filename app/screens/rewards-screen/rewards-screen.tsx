@@ -30,6 +30,7 @@ const scalabilityImage = require("./GreenPhone.jpg")
 const lightningImage = require("./GreenPhone.jpg")
 const buyFirstSatsImage = require("./GreenPhone.jpg")
 const dollarCostAveragingImage = require("./GreenPhone.jpg")
+const tweetImage = require("./GreenPhone.jpg")
 
 const satImage = require("./Sat.png")
 const freeMoneyImage = require("./freeMoney.jpg")
@@ -302,12 +303,12 @@ export const RewardsScreen = inject("dataStore")(
         },
       },
       "phoneVerification": {
-        onComplete: () => navigate("welcomePhoneInput"),
+        onAction: () => navigate("welcomePhoneInput"),
       },
       'firstLnPayment': {
-          onComplete: () => navigate('scanningQRCode'),
-          enabled: dataStore.lnd.statusFirstChannel == FirstChannelStatus.opened,
-          enabledMessage: translate(`RewardsScreen.channelNeeded`)
+        onAction: () => navigate('scanningQRCode'),
+        enabled: dataStore.lnd.statusFirstChannel == FirstChannelStatus.opened,
+        enabledMessage: translate(`RewardsScreen.channelNeeded`)
       },
       "transaction": {
         onComplete: async () => dataStore.onboarding.add(Onboarding.transaction),
