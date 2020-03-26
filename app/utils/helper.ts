@@ -32,6 +32,7 @@ export const capitalize = s => {
 }
 
 // TODO fix link for mainnet
+// TODO replace with a modal + webview
 export const showFundingTx = (fundingTx) => {
   Linking.openURL(`https://blockstream.info/testnet/tx/${fundingTx}`).catch(err =>
     console.error("Couldn't load page", err),
