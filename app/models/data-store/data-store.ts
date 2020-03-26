@@ -23,7 +23,6 @@ import { Notifications } from "react-native-notifications"
 import { difference } from "lodash"
 import { sleep } from "../../utils/sleep"
 import { translate } from "../../i18n"
-import { inject } from "mobx-react"
 
 // FIXME add as a global var
 DeviceInfo.isEmulator().then(isEmulator => {
