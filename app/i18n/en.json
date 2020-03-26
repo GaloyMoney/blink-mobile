@@ -34,7 +34,7 @@
     "accounts": "Start by getting\nsome rewards!",
     "rewards": {
       "download": "We gave you 1 sat as a gift\nto download the app.",
-      "getMore": "Explore, learn and earn more!"
+      "getMore": "Learn about #bitcoin and earn more!"
     }
   },
   "GetStartedScreen": {
@@ -65,6 +65,11 @@
     "rewards": {
       "bitcoin101": {
         "meta": { "title": "Bitcoin 101", "icon": "ios-school" },
+        "walletDownloaded": {
+          "type": "Text",
+          "title": "Wallet downloaded",
+          "text": "We give 1 sat because for people to download the app because we want to incentive more people to understand what bitcoin is about",
+        },
         "sat": {
           "type": "Text",
           "title": "What is a sat?",
@@ -189,6 +194,11 @@
             "No one can print new bitcoin at will",
             "No. One of the founding principles of Galoy is to respect individual privacy. We do not sell any of your data to a third party"
           ]
+        },
+        "tweet": {
+          "type": "Action",
+          "title": "Tweet about #bitcoin and Galoy",
+          "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
         },
         "phoneVerification": {
           "type": "Action",
