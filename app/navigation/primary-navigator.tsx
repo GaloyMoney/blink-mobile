@@ -1,13 +1,13 @@
 import * as React from "react"
 import { useState } from "react"
-import { createStackNavigator } from '@react-navigation/stack'
+import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack'
 import { DebugScreen } from "../screens/debug-screen"
 import { AccountsScreen } from "../screens/accounts-screen"
 import { AccountDetailScreen } from "../screens/account-detail-screen/account-detail-screen"
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from "react-native-vector-icons/Ionicons"
-import { Button as ButtonNative } from "react-native"
+import { Button as ButtonNative, View, Text, Button } from "react-native"
 import { AccountType } from "../utils/enum"
 
 
@@ -127,7 +127,7 @@ export const BankAccountOnboardingNavigator = () => {
         options={({navigation}) => ({
           title: translate("OpenBankScreen.title"),
           headerLeft: () => (
-            <ButtonNative title="< Back" onPress={() => navigation.navigate("primaryStack")} />
+            <ButtonNative title="< Back" onPress={() => navigation.goBack()} />
           ),
           // FIXME < back button
         })}
@@ -171,8 +171,14 @@ export const AccountNavigator = () => {
       <StackAccounts.Screen
         name="accounts"
         component={AccountsScreen}
-        options={({navigation}) => ({ 
+        options={() => ({ 
           title: translate("AccountsScreen.title"),
+        })}
+      />
+      <StackAccounts.Screen
+        name="accountDetail"
+        component={AccountDetailScreen}
+        options={({navigation}) => ({ 
           headerRight: () => (
             <Icon
               name={"ios-person"}
@@ -183,10 +189,6 @@ export const AccountNavigator = () => {
             />
         ),
         })}
-      />
-      <StackAccounts.Screen
-        name="accountDetail"
-        component={AccountDetailScreen}
         initialParams={{ account: AccountType.Bitcoin }}
       />
       <StackAccounts.Screen
@@ -202,6 +204,25 @@ export const AccountNavigator = () => {
         name="debug"
         component={DebugScreen}
       />
+      {APP_EDUCATION && 
+      <>
+      <StackMoveMoney.Screen
+        name="sendBitcoin"
+        component={SendBitcoinScreen}
+        options={{ title: translate("SendBitcoinScreen.title") }}
+        />
+      <StackMoveMoney.Screen
+        name="scanningQRCode"
+        component={ScanningQRCodeScreen}
+        options={{ title: translate("ScanningQRCodeScreen.title") }}
+        />
+      <StackMoveMoney.Screen
+        name="receiveBitcoin"
+        component={ReceiveBitcoinScreen}
+        options={{ title: translate("ReceiveBitcoinScreen.title") }}
+        />
+      </>
+      }
     </StackAccounts.Navigator>
 )}
 
@@ -326,3 +347,43 @@ export const PrimaryNavigator =  () => {
         />
     </Tab.Navigator>
 )}
+
+
+// TODO use this for webview.
+function ModalScreen({ navigation }) {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text style={{ fontSize: 30 }}>This is a modal!</Text>
+      <Button onPress={() => navigation.goBack()} title="Dismiss" />
+    </View>
+  );
+}
+
+const RootStack = createStackNavigator();
+
+export const RootStackScreen = () => {
+  return (
+    <RootStack.Navigator 
+      mode="modal"
+      headerMode="none"
+      >
+      <RootStack.Screen
+        name="Primary"
+        component={PrimaryNavigator}
+        options={{ headerShown: false }}
+      />
+      <RootStack.Screen 
+        name="MyModal"
+        component={ModalScreen}
+        options={{
+          cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
+        }}
+      />
+      <RootStack.Screen
+        name="openBankAccount"
+        component={BankAccountOnboardingNavigator}
+        options={{ headerShown: false }}
+      />
+    </RootStack.Navigator>
+  );
+}

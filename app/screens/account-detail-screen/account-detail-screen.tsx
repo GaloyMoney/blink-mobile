@@ -36,6 +36,7 @@ import { shortenHash, showFundingTx } from "../../utils/helper"
 import { SyncingComponent } from "../../components/syncing"
 
 import functions from "@react-native-firebase/functions"
+import { APP_EDUCATION } from "../../app"
 
 
 export interface AccountDetailScreenProps {
@@ -358,18 +359,38 @@ const HeaderWithBuySell = ({ currency, account, dataStore, refresh }) => {
       </Modal>
       <BalanceHeader headingCurrency={currency} accountsToAdd={account} />
       <View style={styles.horizontal}>
-        <Button
+        {APP_EDUCATION && 
+        <>
+          <Button
+          title="Send"
+          buttonStyle={styles.button}
+          containerStyle={styles.buttonContainer}
+          onPress={() => navigate('scanningQRCode')}
+          />
+          <Button
+          title="Receive"
+          buttonStyle={styles.button}
+          containerStyle={styles.buttonContainer}
+          onPress={() => navigate('receiveBitcoin')}
+          />
+        </>
+        }
+        {!APP_EDUCATION && 
+        <>
+          <Button
           title="Buy"
           buttonStyle={styles.button}
           containerStyle={styles.buttonContainer}
           onPress={onBuyInit}
-        />
-        <Button
+          />
+          <Button
           title="Sell"
           buttonStyle={styles.button}
           containerStyle={styles.buttonContainer}
           onPress={onSellInit}
-        />
+          />
+        </>
+        }
       </View>
     </>
   )
@@ -441,14 +462,11 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> =
     
       let accountStore
 
-    // TODO: react on dataStore.lnd.statusFirstChannel
-    // need a state for that ?
-
     React.useLayoutEffect(() => {
       navigation.setOptions({
         title: account
       })
-    }, [])
+    }, [dataStore.lnd.statusFirstChannel])
 
     // should have a generic mapping here, could use mst for it?
     switch (account) {
