@@ -464,13 +464,12 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> =
     }
 
     const [refreshing, setRefreshing] = useState(false)
-    const [sections, setSections] = useState(formatTransactions(accountStore.transactions))
 
+    const sections = formatTransactions(accountStore.transactions)
     const currency = accountStore.currency
 
     const refresh = async () => {
       await accountStore.update()
-      setSections(formatTransactions(accountStore.transactions))
 
       if (account === AccountType.Bitcoin) {
         // FIXME
