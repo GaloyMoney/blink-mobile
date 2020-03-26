@@ -1,5 +1,5 @@
 import * as React from "react"
-import { PrimaryNavigator, BankAccountOnboardingNavigator } from "./primary-navigator"
+import { PrimaryNavigator, BankAccountOnboardingNavigator, RootStackScreen } from "./primary-navigator"
 import { createStackNavigator } from '@react-navigation/stack';
 import { GetStartedScreen } from "../screens/login-screen";
 import { DebugScreen } from "../screens/debug-screen";
@@ -34,7 +34,7 @@ const SplashScreen = () => (
   </View>
 )
 
-const Stack = createStackNavigator()
+const Loading = createStackNavigator()
 
 export const RootStack = inject("dataStore")(
   observer(({ dataStore }) => {
@@ -89,34 +89,29 @@ export const RootStack = inject("dataStore")(
   }
 
   return (
-    <Stack.Navigator
+    <Loading.Navigator
       initialRouteName={initialRouteName}
       screenOptions={{ gestureEnabled: false }}
     >
-      <Stack.Screen
+      <Loading.Screen
         name="getStarted"
         component={GetStartedScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
+      <Loading.Screen
         name="debug"
         component={DebugScreen}
       />
-      <Stack.Screen
+      <Loading.Screen
         name="welcomeFirst"
         component={WelcomeFirstScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
+      <Loading.Screen
         name="primaryStack"
-        component={PrimaryNavigator}
+        component={RootStackScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
-        name="openBankAccount"
-        component={BankAccountOnboardingNavigator}
-        options={{ headerShown: false }}
-      />
-    </Stack.Navigator>
+    </Loading.Navigator>
   )
 }))

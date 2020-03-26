@@ -9,6 +9,7 @@ import { QRCode } from "../../components/qrcode"
 import { ScrollView } from "react-native-gesture-handler"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import { palette } from "../../theme/palette"
+import { translate } from "../../i18n"
 
 const styles = StyleSheet.create({
   qr: {
@@ -33,6 +34,11 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     paddingBottom: 8,
     paddingHorizontal: 20,
+  },
+
+  icon: {
+    marginRight: 15,
+    color: palette.darkGrey,
   },
 })
 
@@ -81,7 +87,7 @@ export const ReceiveBitcoinScreen: React.FC = inject("dataStore")(
     }, [])
 
     useEffect(() => {
-      // new invoice, is it ours?
+      // new invoice, is it the one currency shown?
       if (dataStore.lnd.receiveBitcoinScreenAlert === false) {
         return
       }
@@ -117,6 +123,7 @@ export const ReceiveBitcoinScreen: React.FC = inject("dataStore")(
           <View style={styles.section}>
             <Text style={styles.smallText}>Amount</Text>
             <Input
+              leftIcon={<Text style={styles.icon}>{translate("common.sats")}</Text>}
               placeholder="0"
               value={amount.toString()}
               onChangeText={input => setAmount(+input)}
