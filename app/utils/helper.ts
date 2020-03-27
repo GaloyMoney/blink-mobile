@@ -1,9 +1,8 @@
 import I18n from "i18n-js"
 import { OnboardingRewards } from "types"
-
-
+import InAppBrowser from 'react-native-inappbrowser-reborn'
 import {
-  Linking,
+  Linking, Alert,
 } from "react-native"
 
 /**
@@ -31,12 +30,47 @@ export const capitalize = s => {
   return s.charAt(0).toUpperCase() + s.slice(1)
 }
 
-// TODO fix link for mainnet
-// TODO replace with a modal + webview
-export const showFundingTx = (fundingTx) => {
-  Linking.openURL(`https://blockstream.info/testnet/tx/${fundingTx}`).catch(err =>
-    console.error("Couldn't load page", err),
-  )
+export const showFundingTx = async (fundingTx) => {
+  const url = `https://blockstream.info/testnet/tx/${fundingTx}`
+
+  try {
+    if (await InAppBrowser.isAvailable()) {
+      const result = await InAppBrowser.open(url, {
+        // iOS Properties
+        dismissButtonStyle: 'close',
+        // preferredBarTintColor: '#453AA4',
+        // preferredControlTintColor: 'white',
+        readerMode: false,
+        // animated: true,
+        modalPresentationStyle: 'fullScreen',
+        // modalTransitionStyle: 'partialCurl',
+        modalEnabled: true,
+        enableBarCollapsing: false,
+        // Android Properties
+        showTitle: true,
+        // toolbarColor: '#6200EE',
+        secondaryToolbarColor: 'black',
+        enableUrlBarHiding: true,
+        enableDefaultShare: true,
+        forceCloseOnRedirection: false,
+        // Specify full animation resource identifier(package:anim/name)
+        // or only resource name(in case of animation bundled with app).
+        // animations: {
+        //   startEnter: 'slide_in_right',
+        //   startExit: 'slide_out_left',
+        //   endEnter: 'slide_in_left',
+        //   endExit: 'slide_out_right'
+        // },
+        headers: {
+          'my-custom-header': 'my custom header value'
+        }
+      })
+      // Alert.alert(JSON.stringify(result))
+    }
+    else Linking.openURL(url)
+  } catch (error) {
+    Alert.alert(error.message)
+  }
 }
 
 export const plusSats = balance =>
