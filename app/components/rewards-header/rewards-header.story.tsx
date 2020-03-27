@@ -21,7 +21,10 @@ storiesOf("RewardsHeader", module)
         <RewardsHeader isRewardOpen={false} numTrophee={1} balance={number("Amount", 35)} />
       </UseCase>
       <UseCase text="Sat" usage="isRewardOpen true">
-        <RewardsHeader isRewardOpen={boolean("isRewardOpen", false)} numTrophee={0} balance={number("Amount", 35)} />
+        <RewardsHeader 
+          isRewardOpen={boolean("isRewardOpen", false)} 
+          title={"What is a sat"}
+          balance={number("Amount", 35)} />
       </UseCase>
     </Story>
   ))

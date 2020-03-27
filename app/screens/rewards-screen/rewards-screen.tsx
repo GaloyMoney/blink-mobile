@@ -24,6 +24,12 @@ import { plusSats } from "../../utils/helper"
 import { useNavigation } from '@react-navigation/native';
 
 
+// TODO do something like this to avoid loading everything upfront
+// const EXAMPLES = [
+//   makeExample('Hamburger Arrow', () => require('./animations/HamburgerArrow.json')),
+// ]
+
+
 const walletDownloadedImage = require("./GreenPhone.jpg")
 const firstSurveyImage = require("./GreenPhone.jpg")
 const scalabilityImage = require("./GreenPhone.jpg")
@@ -229,12 +235,6 @@ export const RewardsScreen = inject("dataStore")(
   observer(({ dataStore, route, navigation }) => {
     const { navigate, setParams } = useNavigation()
 
-    React.useLayoutEffect(() => {
-      const section = route.params.section
-      const title = route.params.title ?? translate(`RewardsScreen.rewards\.${section}.meta.title`)
-      navigation.setOptions({title});
-    }, [route]);
-
     const rewardsMeta = {
       "walletDownloaded": {
         onComplete: null,
@@ -411,14 +411,12 @@ export const RewardsScreen = inject("dataStore")(
     const [currRewardId, currRewardInfo] = rewards[currRewardIndex]
 
     const open = async index => {
-      setParams({ title: translate(`RewardsScreen.rewards\.${section}\.${currRewardId}.title`) })
       setRewardOpen(!isRewardOpen)
     }
 
     const close = async (msg = "") => {
       setQuizzVisible(false)
       setRewardOpen(false)
-      setParams({ title: null })
       setLoading(false)
       if (msg !== "") {
         // FIXME msg set is not the best way to handle the callback 
@@ -609,6 +607,7 @@ export const RewardsScreen = inject("dataStore")(
             currency: CurrencyType.BTC,
             account: AccountType.VirtualBitcoin,
           })}
+          title={translate(`RewardsScreen.rewards\.${section}\.${currRewardId}.title`)}
           close={close}
           numTrophee={getCompletedSection({dataStore})}
         />

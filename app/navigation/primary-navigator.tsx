@@ -167,6 +167,7 @@ export const AccountNavigator = () => {
     <StackAccounts.Navigator
       initialRouteName={APP_EDUCATION ? "accountDetail" : "accounts"} 
       // headerMode: "float",
+      headerMode="none"
     >
       <StackAccounts.Screen
         name="accounts"
@@ -279,7 +280,7 @@ const StackRewards = createStackNavigator()
 export const RewardsNavigator = () => {
   return (
     <StackRewards.Navigator
-      // headerMode: "float",
+      headerMode="none"
     >
       <StackRewards.Screen
         name="rewards"

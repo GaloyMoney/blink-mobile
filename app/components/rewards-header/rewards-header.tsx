@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
       marginHorizontal: 40,
       textAlign: "center",
       color: palette.darkGrey,
+      fontSize: 28,
     },
 
     titleSats: {
@@ -49,7 +50,7 @@ const styles = StyleSheet.create({
     }
 })
 
-export const RewardsHeader = ({isRewardOpen, balance, numTrophee, close = () => {}}) => {
+export const RewardsHeader = ({isRewardOpen, balance, numTrophee, title, close = () => {}}) => {
 
     const [animationRewardOpening] = useState(new Animated.Value(0))
     const [animationSats] = useState(new Animated.Value(0))
@@ -84,7 +85,6 @@ export const RewardsHeader = ({isRewardOpen, balance, numTrophee, close = () => 
       }
     }
 
-
     return (
   <>
     <Animated.View style={styles.header}>
@@ -92,17 +92,9 @@ export const RewardsHeader = ({isRewardOpen, balance, numTrophee, close = () => 
         {trophees}
       </View>}
       <Animated.Text
-        style={[
-          styles.title,
-          {
-            fontSize: animationRewardOpening.interpolate({
-              inputRange: [0, 1],
-              outputRange: [28, 0.01],
-            }),
-          },
-        ]}
+        style={styles.title}
       >
-        {translate("RewardsScreen.satAccumulated")}
+        {isRewardOpen ? title : translate("RewardsScreen.satAccumulated")}
       </Animated.Text>
       <Animated.Text style={[styles.titleSats,
         {
