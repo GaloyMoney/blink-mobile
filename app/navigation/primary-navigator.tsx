@@ -7,7 +7,7 @@ import { AccountDetailScreen } from "../screens/account-detail-screen/account-de
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from "react-native-vector-icons/Ionicons"
-import { Button as ButtonNative, View, Text, Button } from "react-native"
+import { Button, View } from "react-native"
 import { AccountType } from "../utils/enum"
 
 
@@ -127,7 +127,7 @@ export const BankAccountOnboardingNavigator = () => {
         options={({navigation}) => ({
           title: translate("OpenBankScreen.title"),
           headerLeft: () => (
-            <ButtonNative title="< Back" onPress={() => navigation.goBack()} />
+            <Button title="< Back" onPress={() => navigation.goBack()} />
           ),
           // FIXME < back button
         })}
@@ -354,7 +354,6 @@ export const PrimaryNavigator =  () => {
 function ModalScreen({ navigation }) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text style={{ fontSize: 30 }}>This is a modal!</Text>
       <Button onPress={() => navigation.goBack()} title="Dismiss" />
     </View>
   );
