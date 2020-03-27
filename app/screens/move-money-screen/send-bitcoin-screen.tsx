@@ -94,10 +94,6 @@ export const ScanningQRCodeScreen = inject("dataStore")(
   observer(({ dataStore }) => {
     const { navigate } = useNavigation()
 
-    const callbackQRCode = async data => {
-      decodeInvoice(data)
-    }
-
     const pasteInvoice = async () => {
       decodeInvoice(await Clipboard.getString())
     }
@@ -105,7 +101,7 @@ export const ScanningQRCodeScreen = inject("dataStore")(
     const decodeInvoice = async data => {
       try {
         let [protocol, request] = data.split(":")
-        console.tron.log(protocol, request)
+        console.tron.log({protocol, request})
         if (protocol === "bitcoin") {
           Alert.alert("We're integrating Loop in. Use Lightning for now")
           return
@@ -120,7 +116,7 @@ export const ScanningQRCodeScreen = inject("dataStore")(
         }
 
         const payReq = await dataStore.lnd.decodePayReq(request)
-        console.tron.log(payReq)
+        console.tron.log({payReq})
         const invoice = request
 
         let amount, amountless, note
