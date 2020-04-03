@@ -35,6 +35,9 @@ import {
   DateOfBirthScreen,
   BankAccountReadyScreen,
 } from "../screens/bank-onboarding"
+import {
+  ChannelScreen
+} from "../screens/channels-screen"
 import { Badge } from "react-native-elements"
 import { inject, observer } from "mobx-react"
 import { Animated, StyleSheet } from "react-native"
@@ -343,6 +346,15 @@ export const PrimaryNavigator =  () => {
         options={{title: translate("RewardsScreen.title"),
         tabBarIcon: ({ focused, color }) => {
           return <InteractiveBadge focused={focused} color={color} />
+        },
+      }}
+        />
+      <Tab.Screen 
+        name="Profile"
+        component={ChannelScreen}
+        options={{title: "Profile", // FIXME
+        tabBarIcon: ({ focused, color }) => {
+          return <Icon name={"ios-settings"} size={size} color={color} />
         },
       }}
         />
