@@ -65,7 +65,7 @@ export const GetStartedScreen = inject("dataStore")(observer(
           Galoy
         </Text>
         <Text style={styles.sub}>{translate("GetStartedScreen.headline")}</Text>
-        <VersionComponent />
+        <VersionComponent lndVersion={dataStore.lnd.version} />
         <View style={styles.bottom}>
           <Button
             title={translate("GetStartedScreen.getStarted")}
