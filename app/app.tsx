@@ -63,7 +63,11 @@ export const App = () => {
     Notifications.events().registerNotificationReceivedForeground((notification, completion) => {
       console.tron.log("Foregound")
       console.tron.log({notification})
-      completion({ alert: true, sound: false, badge: false })
+
+      if (getActiveRouteName(routeNameRef) !== "receiveBitcoin") {
+        // if (invoice.paymentRequest === self.lastAddInvoice) {
+        completion({ alert: true, sound: false, badge: false })
+      }
     })
   }, [])
 

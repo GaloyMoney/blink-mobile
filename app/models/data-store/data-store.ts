@@ -743,31 +743,12 @@ export const LndModel = BaseAccountModel.named("Lnd")
         if (invoice === undefined) return
         if (!invoice.settled) return
 
-        let localIOSNotif
-
-        if (invoice.paymentRequest === self.lastAddInvoice) {
-          // if (getActiveRouteName(routeNameRef) === "receiveBitcoin") {
-          // FIXME
-          if(false) {
-            self.receiveBitcoinScreenAlert = true
-            localIOSNotif = false
-          } else {
-            localIOSNotif = true
-          }
-
-          self.lastAddInvoice = ""
-        } else {
-          localIOSNotif = true
-        }
-
-        if (localIOSNotif) {
-          Notifications.postLocalNotification({
-            body: translate("notifications.payment.body", {value: invoice.value}),
-            title: translate("notifications.payment.title"),
-            category: "SOME_CATEGORY",
-            link: "localNotificationLink",
-          })
-        }
+        Notifications.postLocalNotification({
+          body: translate("notifications.payment.body", {value: invoice.value}),
+          title: translate("notifications.payment.title"),
+          category: "SOME_CATEGORY",
+          link: "localNotificationLink",
+        })
       }),
 
       updateInvoices: flow(function*() {
