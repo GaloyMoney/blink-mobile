@@ -24,6 +24,7 @@ export const color = {
    * The screen background.
    */
   background: palette.blue,
+  backgroundLighter: palette.lightBlue,
   /**
    * The main tinting color.
    */
