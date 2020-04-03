@@ -1,5 +1,6 @@
 import * as React from "react"
 import { View, Text, TextStyle, ViewStyle } from "react-native"
+import { color } from "../../app/theme"
 
 const ROOT: ViewStyle = { backgroundColor: "#eee" }
 const TITLE: TextStyle = { fontWeight: "600", color: "#3d3d3d" }
@@ -27,7 +28,7 @@ const HEADER: ViewStyle = {
   borderBottomColor: "#e6e6e6",
   borderBottomWidth: 1,
 }
-const COMPONENT: ViewStyle = { backgroundColor: "#fff" }
+const COMPONENT: ViewStyle = { backgroundColor: color.background }
 
 export interface UseCaseProps {
   /** The title. */
