@@ -1,38 +1,20 @@
 import * as React from "react"
-import { PrimaryNavigator, BankAccountOnboardingNavigator, RootStackScreen } from "./primary-navigator"
+import { RootStackScreen } from "./primary-navigator"
 import { createStackNavigator } from '@react-navigation/stack';
 import { GetStartedScreen } from "../screens/login-screen";
 import { DebugScreen } from "../screens/debug-screen";
 import { WelcomeFirstScreen } from "../screens/welcome-screens";
-import { View, ActivityIndicator } from "react-native";
-import { VersionComponent } from "../components/version";
-import { color } from "../theme";
+
 import { inject, observer } from "mobx-react";
 
 import auth from "@react-native-firebase/auth"
 import { getEnv } from "mobx-state-tree"
 import { useEffect, useState } from "react"
-import { StyleSheet } from "react-native"
 import { when } from "mobx"
 import { Onboarding } from "types"
+import { SplashScreen } from "../screens/splash-screen";
 
 const INIT_DELAY_LND = 100
-
-const styles = StyleSheet.create({
-  centerBackground: {
-    flex: 1,
-    alignItems: "center",
-    flexDirection: "column",
-    justifyContent: "space-around",
-  },
-})
-
-const SplashScreen = () => (
-  <View style={styles.centerBackground}>
-    <ActivityIndicator style={{ flex: 1 }} size="large" color={color.primary} />
-    <VersionComponent style={{ paddingVertical: 30 }} />
-  </View>
-)
 
 const Loading = createStackNavigator()
 
@@ -85,7 +67,7 @@ export const RootStack = inject("dataStore")(
     }, [])
 
   if (initialRouteName === "") {
-    return <SplashScreen />
+    return <SplashScreen lndVersion={dataStore.lnd.version} />
   }
 
   return (

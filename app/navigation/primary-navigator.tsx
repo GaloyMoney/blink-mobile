@@ -351,7 +351,7 @@ export const PrimaryNavigator =  () => {
         />
       <Tab.Screen 
         name="Profile"
-        component={ChannelScreen}
+        component={DebugScreen}
         options={{title: "Profile", // FIXME
         tabBarIcon: ({ focused, color }) => {
           return <Icon name={"ios-settings"} size={size} color={color} />

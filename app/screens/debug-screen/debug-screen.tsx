@@ -173,7 +173,7 @@ export const DebugScreen = inject("dataStore")(
               <Text>{item.remoteBalance}</Text>
             </View>
           ))}
-          <VersionComponent />
+          <VersionComponent lndVersion={dataStore.lnd.version} />
           <View>
             <Text>UID: {auth().currentUser?.uid}</Text>
             <Text>phone: {auth().currentUser?.phoneNumber}</Text>
