@@ -28,7 +28,7 @@ export const color = {
   /**
    * The main tinting color.
    */
-  primary: palette.green,
+  primary: palette.blue,
   /**
    * The main tinting color, but darker.
    */

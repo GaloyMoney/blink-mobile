@@ -159,7 +159,7 @@ export const FiatTransactionModel = types.model("Transaction", {
 
 export const BaseAccountModel = types
   .model("Account", {
-    confirmedBalance: 0,
+    confirmedBalance: NaN,
     unconfirmedBalance: 0,
     type: types.enumeration<AccountType>("Account Type", Object.values(AccountType)),
   })
@@ -308,7 +308,7 @@ export const FiatAccountModel = BaseAccountModel.props({
           // TODO: add unconfirmed balance
         }
       } catch (err) {
-        console.tron.error(`can't fetch the balance`, err)
+        console.tron.error(`can't fetch the balance ${err}`)
       }
     })
     const update = flow(function*() {

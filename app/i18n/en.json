@@ -37,6 +37,9 @@
       "getMore": "Learn about #bitcoin and earn more!"
     }
   },
+  "BalanceHeader" : {
+    "currentBalance": "Current Balance"
+  },
   "GetStartedScreen": {
     "headline": "The Bank with sound money\n\n🔥 $ ⇄ ₿ ⚡",
     "getStarted": "Get Started"

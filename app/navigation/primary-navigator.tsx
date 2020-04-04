@@ -104,12 +104,12 @@ const InteractiveBadge =
           >
             <Icon name={"ios-rocket"} size={size} color={color} />
           </Animated.View>
-          <Badge
+          {/* <Badge
             status="success"
             value={dataStore.onboarding.rewardsAvailable}
             containerStyle={{ position: "absolute", top: 5, right: 35 }}
             badgeStyle={{ backgroundColor: color.primary }}
-          />
+          /> */}
         </>
       )
     }),
@@ -315,7 +315,7 @@ export const PrimaryNavigator =  () => {
       initialRouteName="Accounts"
       tabBarOptions={{
         activeTintColor: color.primary,
-        inactiveTintColor: color.text,
+        inactiveTintColor: palette.lightGrey,
         style: { height: 100 },
       }}
       >

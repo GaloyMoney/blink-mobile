@@ -3,11 +3,11 @@ import { View, StyleSheet } from "react-native"
 import { Text } from "../text"
 import { color } from "../../theme"
 
-import { inject, observer } from "mobx-react"
-import { AccountType, CurrencyType } from "../../utils/enum"
+import { CurrencyType } from "../../utils/enum"
 
 import ContentLoader, { Rect } from "react-content-loader/native"
 import { TextCurrency } from "../text-currency/text-currency"
+import { translate } from "../../i18n"
 
 const styles = StyleSheet.create({
   amount: {
@@ -17,10 +17,9 @@ const styles = StyleSheet.create({
   },
 
   balanceText: {
-    color: color.primary,
+    color: color.text,
     fontSize: 16,
-    fontWeight: "bold",
-    marginVertical: 20,
+    marginBottom: 8,
   },
 
   container: {
@@ -29,16 +28,16 @@ const styles = StyleSheet.create({
 
   header: {
     alignItems: "center",
-    marginBottom: 24,
-    marginTop: 48,
+    marginTop: 32,
+    marginBottom: 64,
   },
 })
 
 export interface BalanceHeaderProps {
-  headingCurrency: CurrencyType
-  accountsToAdd: AccountType
-  dataStore?: any
-  initialLoading: boolean
+  currency: CurrencyType
+  amount: number
+  amountOtherCurrency?: number
+  initialLoading?: boolean
 }
 
 const Loader = () => (
@@ -48,41 +47,36 @@ const Loader = () => (
   </ContentLoader>
 )
 
-export const BalanceHeader: React.FC<BalanceHeaderProps> = inject("dataStore")(
-  observer(({ headingCurrency, dataStore, accountsToAdd, initialLoading }) => {
-    const otherCurrency = headingCurrency === CurrencyType.BTC ? CurrencyType.USD : CurrencyType.BTC
+export const BalanceHeader: React.FC<BalanceHeaderProps> = 
+({ currency, amount, amountOtherCurrency = null}) => {
+  const initialLoading = isNaN(amount)
+  const otherCurrency = currency === CurrencyType.BTC ? CurrencyType.USD : CurrencyType.BTC
 
-    const subHeader = (
-      <TextCurrency
-        amount={dataStore.balances({
-          currency: otherCurrency,
-          account: accountsToAdd,
-        })}
-        currencyUsed={otherCurrency}
-        fontSize={16}
-      />
-    )
+  const subHeader = amountOtherCurrency !== null ? (
+    <TextCurrency
+      amount={amountOtherCurrency}
+      currencyUsed={otherCurrency}
+      fontSize={16}
+    />
+  ) : null
 
-    return (
-      <View style={styles.header}>
-        <View style={styles.amount}>
-          <View style={{ flexDirection: "row", alignItems: "flex-end" }}>
-            {initialLoading && <Loader />}
-            {!initialLoading && (
-              <TextCurrency
-                amount={dataStore.balances({
-                  currency: headingCurrency,
-                  account: accountsToAdd,
-                })}
-                currencyUsed={headingCurrency}
-                fontSize={32}
-              />
-            )}
-          </View>
-          {!initialLoading && subHeader}
+  return (
+    <View style={styles.header}>
+      <Text style={styles.balanceText}>{translate("BalanceHeader.currentBalance")}</Text>
+      <View style={styles.amount}>
+        <View style={{ flexDirection: "row", alignItems: "flex-end" }}>
+          {initialLoading && <Loader />}
+          {!initialLoading && (
+            <TextCurrency
+              amount={amount}
+              currencyUsed={currency}
+              fontSize={32}
+            />
+          )}
         </View>
-        <Text style={styles.balanceText}>Current Balance</Text>
+        {!initialLoading && subHeader}
       </View>
-    )
-  }),
-)
+    </View>
+  )
+}
+

@@ -192,6 +192,14 @@ const VisualExpiration = ({ validUntil }) => {
   )
 }
 
+const BalanceHeaderProxy = ({currency, dataStore, account}) => {
+  return (<BalanceHeader 
+    currency={currency} 
+    amount={dataStore.balances({currency, account})}
+/>)
+}
+
+
 const HeaderWithBuySell = ({ currency, account, dataStore, refresh }) => {
   const [side, setSide] = useState<Side>("buy")
 
@@ -357,7 +365,10 @@ const HeaderWithBuySell = ({ currency, account, dataStore, refresh }) => {
           )}
         </View>
       </Modal>
-      <BalanceHeader headingCurrency={currency} accountsToAdd={account} />
+      <BalanceHeaderProxy 
+        currency={currency} 
+        account={account} 
+        dataStore={dataStore} />
       <View style={styles.horizontal}>
         {APP_EDUCATION && 
         <>
@@ -516,7 +527,11 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> =
           />
         )}
         {account === AccountType.Bank && (
-          <BalanceHeader headingCurrency={currency} accountsToAdd={account} />
+          <BalanceHeaderProxy 
+            currency={currency} 
+            account={account} 
+            dataStore={dataStore}
+          />
         )}
         {sections.length === 0 && <Text>No transaction to show</Text>}
         {sections.length > 0 && (
