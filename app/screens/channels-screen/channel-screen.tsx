@@ -1,42 +1,21 @@
 import * as React from "react"
-import { useState, useEffect } from "react"
-import { observer, inject } from "mobx-react"
 
 import {
   View,
-  SectionList,
   StyleSheet,
-  RefreshControl,
-  TouchableWithoutFeedback,
-  Alert,
-  Animated,
-  ActivityIndicator,
 } from "react-native"
 
-import Modal from "react-native-modal"
 
 import { Text } from "../../components/text"
 import { Screen } from "../../components/screen"
 import { color } from "../../theme"
 import Icon from "react-native-vector-icons/Ionicons"
 
-import { BalanceHeader } from "../../components/balance-header"
 import { DataStore } from "../../models/data-store"
-import { sameDay, sameMonth } from "../../utils/date"
-import { CurrencyText } from "../../components/currency-text"
-import { TouchableHighlight, TextInput } from "react-native-gesture-handler"
-import { AccountType, CurrencyType, FirstChannelStatus } from "../../utils/enum"
-import { useNavigation } from '@react-navigation/native'
-import { Button } from "react-native-elements"
+import { AccountType, CurrencyType } from "../../utils/enum"
 import { palette } from "../../theme/palette"
-import { Side, Onboarding } from "types"
-import { translate } from "../../i18n"
 
-import { shortenHash, showFundingTx } from "../../utils/helper"
-import { SyncingComponent } from "../../components/syncing"
 
-import functions from "@react-native-firebase/functions"
-import { APP_EDUCATION } from "../../app"
 
 
 export interface AccountDetailScreenProps {
