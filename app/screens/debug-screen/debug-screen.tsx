@@ -1,7 +1,6 @@
 import * as React from "react"
 import { useState } from "react"
 import {
-  ImageStyle,
   TextStyle,
   View,
   ViewStyle,
@@ -31,7 +30,7 @@ import { Button } from "react-native-elements"
 
 const FULL: ViewStyle = { flex: 1 }
 const CONTAINER: ViewStyle = {
-  backgroundColor: color.transparent,
+  backgroundColor: color.background,
   paddingHorizontal: spacing[4],
 }
 const DEMO: ViewStyle = {

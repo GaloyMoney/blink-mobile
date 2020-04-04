@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
 
   accountView: {
     marginBottom: 15,
-    marginHorizontal: 15,
+    marginHorizontal: 30,
   },
 
   accountViewContainer: {
@@ -61,7 +61,8 @@ const styles = StyleSheet.create({
 })
 
 export const AccountItem = 
-  ({ account, icon, action, initialLoading, balance, navigate }) => {
+  ({ account, icon, action, amount, navigate }) => {
+  const initialLoading = isNaN(amount)
 
   const Loader = () => (
     <ContentLoader
@@ -89,7 +90,7 @@ export const AccountItem =
           {initialLoading && <Loader />}
           {!initialLoading && (
             <Text style={styles.accountAmount}>
-              {currency(balance, {formatWithSymbol: true}).format()}
+              {currency(amount, {formatWithSymbol: true}).format()}
             </Text>
           )}
         </>
@@ -100,7 +101,6 @@ export const AccountItem =
 
 export const AccountsScreen = inject("dataStore")(
   observer(({ dataStore }) => {
-    const [initialLoading, setInitialLoading] = useState(true)
     const [refreshing, setRefreshing] = useState(false)
     const { navigate } = useNavigation()
 
@@ -115,6 +115,15 @@ export const AccountsScreen = inject("dataStore")(
       accountTypes[0]["action"] = () => navigate("bankAccountRewards")
     }
 
+    // FIXME
+    if (dataStore.lnd.statusFirstChannel !== FirstChannelStatus.opened) {
+      accountTypes[1]["account"] = AccountType.VirtualBitcoin
+    }
+    
+    const accountToAdd = dataStore.lnd.statusFirstChannel == FirstChannelStatus.opened
+    ? AccountType.BankAndVirtualBitcoin
+    : AccountType.BankAndBitcoin
+
     const onRefresh = React.useCallback(async () => {
       setRefreshing(true)
 
@@ -127,7 +136,6 @@ export const AccountsScreen = inject("dataStore")(
       await dataStore.updateBalance()
 
       setRefreshing(false)
-      setInitialLoading(false)
     }, [refreshing])
 
     useEffect(() => {
@@ -137,22 +145,17 @@ export const AccountsScreen = inject("dataStore")(
     return (
       <Screen>
         {dataStore.onboarding.stage.length === 1 && <Overlay screen="accounts" />}
-        <BalanceHeader
-          headingCurrency={CurrencyType.USD}
-          accountsToAdd={
-            dataStore.lnd.statusFirstChannel == FirstChannelStatus.opened
-              ? AccountType.BankAndVirtualBitcoin
-              : AccountType.BankAndBitcoin
-          }
-          initialLoading={initialLoading}
+        <BalanceHeader 
+          currency={CurrencyType.USD} 
+          amount={dataStore.balances({currency: CurrencyType.USD, account: accountToAdd})}
+          amountOtherCurrency={dataStore.balances({currency: CurrencyType.BTC, account: accountToAdd})}
         />
         <FlatList
           data={accountTypes}
           refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
           renderItem={({ item }) => <AccountItem 
             {...item} 
-            initialLoading={initialLoading}
-            balance={dataStore.balances({ item: item.account, currency: CurrencyType.USD })}
+            amount={dataStore.balances({ currency: CurrencyType.USD, account: item.account })}
             navigate={navigate}
             />}
         />
@@ -161,7 +164,7 @@ export const AccountsScreen = inject("dataStore")(
           title={translate("AccountsScreen.bitcoinRewards")}
           style={styles.accountView}
           titleStyle={{color: palette.white}}
-          containerStyle={{ backgroundColor: color.background }}
+          containerStyle={{ backgroundColor: color.primary }}
           onPress={() => navigate("rewards")}
           leftAvatar={<Icon name="ios-gift" color={palette.white} size={28} style={styles.icon} />}
         />

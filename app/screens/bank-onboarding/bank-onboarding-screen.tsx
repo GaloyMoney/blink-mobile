@@ -4,8 +4,6 @@ import { Screen } from "../../components/screen"
 import { OnboardingScreen } from "../../components/onboarding"
 import { Text } from "../../components/text"
 import { StyleSheet, Alert, View, TextInput } from "react-native"
-import { BalanceHeader } from "../../components/balance-header"
-import { CurrencyType, AccountType } from "../../utils/enum"
 import DateTimePicker from "@react-native-community/datetimepicker"
 import { Input, Button } from "react-native-elements"
 import functions from "@react-native-firebase/functions"
@@ -60,7 +58,6 @@ export const BankAccountRewardsScreen = () => {
   const { navigate } = useNavigation()
   return (
     <Screen>
-      <BalanceHeader headingCurrency={CurrencyType.USD} accountsToAdd={AccountType.Bank} />
       <Text style={styles.title}>{translate("BankAccountRewardsScreen.openAccount")}</Text>
       <Text style={styles.text}>{translate("BankAccountRewardsScreen.accountsBenefits")}</Text>
       <View style={{ flex: 1 }} />
