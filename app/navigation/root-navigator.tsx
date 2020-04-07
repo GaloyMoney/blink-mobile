@@ -1,7 +1,7 @@
 import * as React from "react"
 import { RootStackScreen } from "./primary-navigator"
 import { createStackNavigator } from '@react-navigation/stack';
-import { GetStartedScreen } from "../screens/login-screen";
+import { GetStartedScreen } from "../screens/get-started-screen";
 import { DebugScreen } from "../screens/debug-screen";
 import { WelcomeFirstScreen } from "../screens/welcome-screens";
 
