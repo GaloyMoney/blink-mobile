@@ -12,10 +12,6 @@ import Swiper from "react-native-swiper"
 import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
 
-const bitcoinLogo = require("./BitcoinLogo.png")
-const dollarLogo = require("./DollarLogo.png")
-const presentLogo = require("./PresentLogo.png")
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -71,6 +67,12 @@ const styles = StyleSheet.create({
   },
 })
 
+import MascotDollarBitcoin from './honey-badger-money-bitcoin-01.svg'
+import BitcoinBitcoin from './bitcoin-bitcoin-01.svg'
+import BankShop from './cc-bank-shop-01.svg'
+import HoneyBadgerShovel from './honey-badger-shovel-01.svg'
+
+
 export const WelcomeFirstScreen = inject("dataStore")(({ dataStore, navigation }) => {
 
   return (
@@ -92,20 +94,20 @@ export const WelcomeFirstScreen = inject("dataStore")(({ dataStore, navigation }
       }
     >
       <Screen>
-        <OnboardingScreen image={presentLogo}>
+        <OnboardingScreen Svg={MascotDollarBitcoin}>
           <Text style={styles.text}>{translate("WelcomeFirstScreen.care")}</Text>
         </OnboardingScreen>
         {/* FIXME */}
         <Text style={styles.text}>{"\n\n"}</Text>
       </Screen>
       <Screen>
-        <OnboardingScreen image={dollarLogo}>
+        <OnboardingScreen Svg={BitcoinBitcoin}>
           <Text style={styles.text}>{translate("WelcomeFirstScreen.bank")}</Text>
         </OnboardingScreen>
         <Text style={styles.text}>{"\n\n\n"}</Text>
       </Screen>
       <Screen>
-        <OnboardingScreen image={dollarLogo}>
+        <OnboardingScreen Svg={BankShop}>
           <Text style={styles.text}>{translate("WelcomeFirstScreen.before")}</Text>
         </OnboardingScreen>
         <Text style={styles.text}>{"\n\n\n"}</Text>
@@ -116,7 +118,7 @@ export const WelcomeFirstScreen = inject("dataStore")(({ dataStore, navigation }
             dataStore.onboarding.add(Onboarding.walletDownloaded)
             navigation.navigate("primaryStack")
           }}
-          image={bitcoinLogo}
+          Svg={HoneyBadgerShovel}
           nextTitle="Learn to Earn"
         >
           <Text style={styles.text}>{translate("WelcomeFirstScreen.learn")}</Text>
