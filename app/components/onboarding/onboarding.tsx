@@ -4,6 +4,7 @@ import { StyleSheet, View, Image } from "react-native"
 import { Button } from "react-native-elements"
 import { color } from "../../theme"
 import { useNavigation } from '@react-navigation/native'
+import { palette } from "../../theme/palette"
 
 const styles = StyleSheet.create({
   container: {
@@ -25,13 +26,23 @@ const styles = StyleSheet.create({
   },
 
   buttonContainer: {
-    paddingHorizontal: 80,
-    paddingBottom: 60,
+    marginVertical: 12,
+    width: "60%",
+    alignSelf: "center",
+    paddingBottom: 48,
   },
 
   buttonStyle: {
-    backgroundColor: color.primary,
+    backgroundColor: palette.white,
+    borderRadius: 24,
   },
+
+  buttonTitle: {
+    color: color.primary,
+    fontWeight: "bold",
+  },
+
+
 })
 
 export const OnboardingScreen = 
@@ -60,6 +71,7 @@ export const OnboardingScreen =
           buttonStyle={styles.buttonStyle}
           loading={loading}
           disabled={loading}
+          titleStyle={styles.buttonTitle}
         />
       )}
     </>

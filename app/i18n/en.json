@@ -41,13 +41,14 @@
     "currentBalance": "Current Balance"
   },
   "GetStartedScreen": {
-    "headline": "The Bank with sound money\n\n🔥 $ ⇄ ₿ ⚡",
+    "headline": "The Bank with sound money",
     "getStarted": "Get Started"
   },
   "WelcomeFirstScreen": {
-    "earn": "By using Galoy,\nyou earn bitcoin.",
-    "bank": "Galoy is a digital\nbank account",
-    "wallet": "And a secure\nBitcoin wallet too!"
+    "care": "Bitcoin: Why should I care?",
+    "bank": "Bitcoin is designed to let you store, send and receive money, without relying on a bank or credit card",
+    "before": "Before Bitcoin, people had to rely on banks or credit card providers, to spend, send and receive money.",
+    "learn": "I don't mean to badger you but there's lot more to learn, dig in..."
   },
   "WelcomePhoneInputScreen": {
     "header": "Enter your phone number to prove you are a real person.",
