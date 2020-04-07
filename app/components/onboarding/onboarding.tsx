@@ -51,7 +51,7 @@ export const OnboardingScreen =
   next /* screen */,
   nextTitle,
   action,
-  image,
+  Svg,
   header = "",
   loading = false,
 }) => {
@@ -60,7 +60,7 @@ export const OnboardingScreen =
     <>
       <Text style={styles.header}>{header}</Text>
       <View style={styles.container}>
-        <Image source={image} style={styles.image} />
+        <Svg style={styles.image} />
         {children}
       </View>
       {(next || action) && (
