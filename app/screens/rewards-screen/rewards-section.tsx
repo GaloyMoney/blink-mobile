@@ -1,22 +1,20 @@
 import { useNavigation } from "@react-navigation/native"
+import I18n from "i18n-js"
 import { inject, observer } from "mobx-react"
 import * as React from "react"
-import { useEffect, useRef, useState } from "react"
-import { Alert, Animated, Dimensions, Platform, StyleSheet, View, Image } from "react-native"
+import { useState } from "react"
+import { Alert, Dimensions, Image, Platform, StyleSheet, View } from "react-native"
 import { Button } from "react-native-elements"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import Carousel, { Pagination } from "react-native-snap-carousel"
-import { YouTubeStandaloneIOS } from "react-native-youtube"
 import { OnboardingRewards } from "types"
-import { Quizz } from "../../components/quizz"
 import { Screen } from "../../components/screen"
 import { Text } from "../../components/text"
 import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-import { plusSats } from "../../utils/helper"
-import { sleep } from "../../utils/sleep"
 import { getRemainingRewards, getRewardsFromSection, rewardsMeta } from "./rewards-utils"
+
 
 // TODO do something like this to avoid loading everything upfront
 // const EXAMPLES = [
@@ -74,23 +72,6 @@ const styles = StyleSheet.create({
     padding: 6,
   },
 
-  bottomItem: {
-    backgroundColor: palette.white,
-    // shadowOpacity: 0.3,
-    // shadowRadius: 3,
-    borderColor: palette.lightGrey,
-    borderWidth: 0.25,
-    borderBottomLeftRadius: 32,
-    borderBottomRightRadius: 32,
-  },
-
-  buttonStyleDisabled: {
-    backgroundColor: palette.offWhite,
-    borderRadius: 24,
-    bottom: -18,
-    marginHorizontal: 60,
-  },
-
   header: {
     alignItems: "center",
     marginVertical: 10,
@@ -120,11 +101,12 @@ const styles = StyleSheet.create({
   item: {
     width: screenWidth - 60,
     // height: screenWidth - 90,
-    borderRadius: 32,
+    borderRadius: 16,
+    backgroundColor: palette.lightBlue
   },
 
   itemTitle: {
-    color: palette.darkGrey,
+    color: palette.white,
     fontSize: 20,
     fontWeight: "bold",
     marginVertical: 12,
@@ -132,13 +114,13 @@ const styles = StyleSheet.create({
   },
 
   satsButton: {
-    color: palette.darkGrey,
+    color: palette.white,
     fontSize: 18,
     textAlign: "center",
   },
 
   smallText: {
-    color: palette.darkGrey,
+    color: palette.white,
     fontSize: 18,
     marginBottom: 40,
     marginHorizontal: 40,
@@ -146,7 +128,7 @@ const styles = StyleSheet.create({
   },
 
   text: {
-    color: palette.darkGrey,
+    color: palette.white,
     fontSize: 22,
     marginHorizontal: 20,
     textAlign: "center",
@@ -155,8 +137,15 @@ const styles = StyleSheet.create({
   textButton: {
     backgroundColor: color.primary,
     borderRadius: 24,
-    bottom: -18,
     marginHorizontal: 60,
+    marginVertical: 32,
+  },
+
+  buttonStyleDisabled: {
+    backgroundColor: palette.offWhite,
+    borderRadius: 24,
+    marginHorizontal: 60,
+    marginVertical: 32,
   },
 
   textButtonClose: {
@@ -185,20 +174,17 @@ const styles = StyleSheet.create({
   },
 })
 
-export const RewardsDetail = inject("dataStore")(
+export const RewardsSection = inject("dataStore")(
   observer(({ dataStore, route, navigation }) => {
-    const { navigate, setParams } = useNavigation()
-
-    const [isRewardOpen, setRewardOpen] = useState(false)
-    const [quizzVisible, setQuizzVisible] = useState(false)
-    const [quizzData, setQuizzData] = useState({})
-    const [currRewardIndex, setCurrRewardIndex] = useState(0)
-    const [loading, setLoading] = useState(false)
-    const [err, setErr] = useState("")
-    const [animation] = useState(new Animated.Value(0))
+    const { navigate } = useNavigation()
 
     const section = route.params.section
     const rewards = getRewardsFromSection({ section, rewardsMeta, dataStore })
+
+    const itemIndex = rewards.findIndex((item) => !item[1].fullfilled)
+    const [firstItem] = useState(itemIndex)
+
+    const [currRewardIndex, setCurrRewardIndex] = useState(0)
 
     const [initialRemainingRewards] = useState(getRemainingRewards({ section, dataStore }))
     const currentRemainingRewards = getRemainingRewards({ section, dataStore })
@@ -220,200 +206,117 @@ export const RewardsDetail = inject("dataStore")(
     navigation.setOptions({ title: translate(`RewardsScreen.rewards\.${section}\.meta.title`) })
 
     const open = async (index) => {
-      setRewardOpen(!isRewardOpen)
+      // TODO use index
+
+      navigate('rewardsQuizz', { 
+        title: currRewardInfo.title, 
+        text: currRewardInfo.text, 
+        amount: OnboardingRewards[currRewardId],
+        question: currRewardInfo.question,
+        answers: currRewardInfo.answers, 
+        feedback: currRewardInfo.feedback
+      })
     }
 
     const close = async (msg = "") => {
-      setQuizzVisible(false)
-      setRewardOpen(false)
-      setLoading(false)
-      if (msg !== "") {
-        // FIXME msg set is not the best way to handle the callback
-        await sleep(800) // FIXME may bug on slow decive
-        Alert.alert(msg, "", [
-          {
-            text: translate("common.ok"),
-            onPress: async () => {
-              await rewardsMeta[currRewardId].onComplete({ dataStore })
-            },
-          },
-        ])
-      }
+      await rewardsMeta[currRewardId].onComplete({ dataStore })
     }
 
-    useEffect(() => {
-      Animated.timing(animation, {
-        toValue: isRewardOpen,
-        duration: 500,
-        useNativeDriver: false,
-      }).start()
-    }, [isRewardOpen])
+    // enum RewardType {
+    //   Text = "Text",
+    //   Video = "Video",
+    //   Action = "Action",
+    // }
 
-    useEffect(() => {
-      if (err !== "") {
-        setErr("")
-        Alert.alert("error", err, [
-          {
-            text: "OK",
-            onPress: () => {
-              setLoading(false)
-              setRewardOpen(false)
-            },
-          },
-        ])
-      }
-    }, [err])
+    // const action = async () => {
+    //   const type = currRewardInfo.type as RewardType
 
-    enum RewardType {
-      Text = "Text",
-      Video = "Video",
-      Action = "Action",
-    }
+    //   const feedback = currRewardInfo.feedback ?? ""
 
-    const action = async () => {
-      const type = currRewardInfo.type as RewardType
+    //   if ([RewardType.Text, RewardType.Video].includes(RewardType[type])) {
+    //     setQuizzData({
+    //       feedback,
+    //       question: currRewardInfo.question,
+    //       answers: currRewardInfo.answers,
+    //     })
+    //   }
 
-      const feedback = currRewardInfo.feedback ?? ""
-
-      if ([RewardType.Text, RewardType.Video].includes(RewardType[type])) {
-        setQuizzData({
-          feedback,
-          question: currRewardInfo.question,
-          answers: currRewardInfo.answers,
-        })
-      }
-
-      switch (RewardType[type]) {
-        case RewardType.Text:
-          setQuizzVisible(true)
-          break
-        case RewardType.Video:
-          try {
-            console.tron.log({ videoid: currRewardInfo.videoid })
-            await YouTubeStandaloneIOS.playVideo(currRewardInfo.videoid)
-            await sleep(500) // FIXME why await for playVideo doesn't work?
-            console.tron.log("finish video")
-            setQuizzVisible(true)
-          } catch (err) {
-            console.tron.log("error video", err.toString())
-            setQuizzVisible(false)
-          }
-          break
-        case RewardType.Action:
-          await rewardsMeta[currRewardId].onAction({ dataStore, setLoading, navigate })
-          close(feedback)
-          break
-      }
-    }
+    //   switch (RewardType[type]) {
+    //     case RewardType.Text:
+    //       setQuizzVisible(true)
+    //       break
+    //     case RewardType.Video:
+    //       try {
+    //         console.tron.log({ videoid: currRewardInfo.videoid })
+    //         await YouTubeStandaloneIOS.playVideo(currRewardInfo.videoid)
+    //         await sleep(500) // FIXME why await for playVideo doesn't work?
+    //         console.tron.log("finish video")
+    //         setQuizzVisible(true)
+    //       } catch (err) {
+    //         console.tron.log("error video", err.toString())
+    //         setQuizzVisible(false)
+    //       }
+    //       break
+    //     case RewardType.Action:
+    //       await rewardsMeta[currRewardId].onAction({ dataStore, setLoading, navigate })
+    //       close(feedback)
+    //       break
+    //   }
+    // }
 
     const CardItem = ({ item, index }) => {
       const itemId = item[0]
       const itemInfo = item[1]
 
       return (
-        <Animated.View style={styles.item}>
-          <TouchableOpacity onPress={() => open(index)} disabled={isRewardOpen} activeOpacity={0.9}>
+        <View style={styles.item}>
+          <TouchableOpacity onPress={() => open(index)} activeOpacity={0.9}>
             <Image
               source={eval(`${itemId}Image`)} // FIXME
               style={{width: screenWidth - 60, height: 300, resizeMode: 'contain',}}
-              containerStyle={
-                isRewardOpen ? styles.imageContainerRewardsOpen : styles.imageContainerRewardsClosed
-              }
+              containerStyle={styles.imageContainerRewardsClosed}
             />
           </TouchableOpacity>
-          <View style={styles.bottomItem}>
-            {!isRewardOpen && <Text style={styles.itemTitle}>{itemInfo.title}</Text>}
-            <Animated.ScrollView
-              contentContainerStyle={{ flexGrow: 1 }}
-              style={{
-                height: animation.interpolate({
-                  inputRange: [0, 1],
-                  outputRange: ["0%", screenHeight < 800 ? "56%" : "65%"],
-                }), // FIXME hack for iphone 8?
-                opacity: animation,
-              }}
-              persistentScrollbar={true}
-              bouncesZoom={true}
-              showsVerticalScrollIndicator={true}
-              bounces={false}
-            >
-              <View style={{ flex: 1, minHeight: 15 }} />
-              {item.component || (
-                <Animated.View
-                  style={{
-                    alignSelf: "center",
-                  }}
-                >
-                  <Animated.Text style={styles.text}>{itemInfo.text}</Animated.Text>
-                </Animated.View>
-              )}
-              <View style={{ flex: 1 }} />
-            </Animated.ScrollView>
-            {!isRewardOpen && (
-              <Animated.Text style={styles.satsButton}>
-                {itemInfo.rewards ||
-                  (OnboardingRewards[itemId] && plusSats(OnboardingRewards[itemId]))}
-              </Animated.Text>
-            )}
+          <View>
+            <Text style={styles.itemTitle}>{itemInfo.title}</Text>
             <Button
-              onPress={async () => {
-                isRewardOpen ? (itemInfo.fullfilled ? close() : await action()) : open(index)
-              }}
+              onPress={async () => open(index)}
               disabled={!itemInfo.enabled}
               buttonStyle={itemInfo.fullfilled ? styles.buttonStyleDisabled : styles.textButton}
               titleStyle={itemInfo.fullfilled ? styles.titleStyleDisabled : null}
               // containerStyle={styles.}
               title={
-                isRewardOpen
+                  itemInfo.enabled
                   ? itemInfo.fullfilled
-                    ? translate("common.close")
-                    : translate("RewardsScreen.getRewardNow")
-                  : itemInfo.enabled
-                  ? itemInfo.fullfilled
-                    ? translate("RewardsScreen.rewardEarned")
-                    : translate("common.learnMore")
+                    ? I18n.t("RewardsScreen.rewardEarned", {
+                      count: OnboardingRewards[itemId],
+                      formatted_number: I18n.toNumber(OnboardingRewards[itemId], { precision: 0 }),
+                    })
+                    : I18n.t("RewardsScreen.earnSats", {
+                        count: OnboardingRewards[itemId],
+                        formatted_number: I18n.toNumber(OnboardingRewards[itemId], { precision: 0 }),
+                      })
+                    // : translate("common.learnMore")
                   : itemInfo.enabledMessage
               }
-              loading={loading}
             />
           </View>
-        </Animated.View>
+        </View>
       )
-    }
-
-    const carouselRef = useRef(null)
-    const card = route.params.card
-
-    const itemIndex = card
-      ? rewards.findIndex((item) => item[0] === card)
-      : rewards.findIndex((item) => !item[1].fullfilled)
-
-    const [firstItem] = useState(itemIndex)
-
-    // this is used for when calling the card from another view
-    if (card && carouselRef.current) {
-      carouselRef.current.snapToItem(itemIndex, false)
     }
 
     return (
       <Screen>
-        <Quizz
-          quizzVisible={quizzVisible}
-          setQuizzVisible={setQuizzVisible}
-          quizzData={quizzData}
-          close={close}
-        />
         <View style={{ flex: 1 }} />
         <Carousel
-          ref={carouselRef}
           data={rewards}
           renderItem={CardItem}
           sliderWidth={screenWidth}
-          scrollEnabled={!isRewardOpen}
+          // scrollEnabled={!isRewardOpen}
           itemWidth={screenWidth - 60}
           hasParallaxImages={true}
           firstItem={firstItem}
-          inactiveSlideOpacity={isRewardOpen ? 0 : 0.7}
+          // inactiveSlideOpacity={isRewardOpen ? 0 : 0.7}
           removeClippedSubviews={false}
           onBeforeSnapToItem={(index) => setCurrRewardIndex(index)}
         />

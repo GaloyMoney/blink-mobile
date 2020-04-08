@@ -1,4 +1,5 @@
-export * from "./rewards-home"
-export * from "./rewards-detail"
+export * from "./rewards-map"
+export * from "./rewards-section"
 export * from "./rewards-utils"
+export * from "./rewards-quizz"
 export * from "./phone-auth"

@@ -7,7 +7,6 @@
     "next": "Next",
     "error": "Error",
     "close": "Close",
-    "learnMore": "Learn More",
     "bankAccount": "Cash Account",
     "firstName": "First Name",
     "lastName": "Last Name",
@@ -60,11 +59,12 @@
   },
   "RewardsScreen": {
     "title": "Earn",
+    "earnSats": { "one": "Earn 1 sat", "other": "Earn {{formatted_number}} sats" },
     "satAccumulated": "Sats accumulated",
     "bankingNeeded": "Banking is needed",
     "channelNeeded": "Open channel first",
     "getRewardNow": "Answer quiz",
-    "rewardEarned": "Reward earned",
+    "rewardEarned": { "one": "1 sat earned", "other": "{{formatted_number}} sats earned" },
     "phoneNumberNeeded": "Phone number required",
     "rewards": {
       "bitcoinWhatIsIt": {

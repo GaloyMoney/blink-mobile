@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { CardStyleInterpolators, createStackNavigator } from "@react-navigation/stack"
 import * as React from "react"
-import { Button, StyleSheet, View } from "react-native"
+import { Button, StyleSheet } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
 import { translate } from "../i18n"
 import { AccountDetailScreen } from "../screens/account-detail-screen/account-detail-screen"
@@ -9,7 +9,7 @@ import { AccountsScreen } from "../screens/accounts-screen"
 import { BankAccountReadyScreen, BankAccountRewardsScreen, DateOfBirthScreen, OpenBankScreen, PersonalInformationScreen } from "../screens/bank-onboarding"
 import { DebugScreen } from "../screens/debug-screen"
 import { BankTransferScreen, DirectDepositScreen, FindATMScreen, MoveMoneyScreen, ReceiveBitcoinScreen, ScanningQRCodeScreen, SendBitcoinScreen } from "../screens/move-money-screen"
-import { RewardsDetail, RewardsHome, WelcomePhoneInputScreen, WelcomePhoneValidationScreen } from "../screens/rewards-screen"
+import { RewardsMap, RewardsQuizz, RewardsSection, WelcomePhoneInputScreen, WelcomePhoneValidationScreen } from "../screens/rewards-screen"
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
 import { color } from "../theme"
 import { palette } from "../theme/palette"
@@ -153,27 +153,6 @@ export const MoveMoneyNavigator = () => {
   )
 }
 
-const StackRewards = createStackNavigator()
-
-export const RewardsNavigator = () => {
-  return (
-    <StackRewards.Navigator headerMode="screen">
-      <StackRewards.Screen
-        name="rewards"
-        component={RewardsHome}
-        options={{
-          header: () => {
-            return null
-          },
-        }}
-      />
-      <StackRewards.Screen name="rewardsDetail" component={RewardsDetail} />
-      <StackRewards.Screen name="welcomePhoneInput" component={WelcomePhoneInputScreen} />
-      <StackRewards.Screen name="welcomePhoneValidation" component={WelcomePhoneValidationScreen} />
-    </StackRewards.Navigator>
-  )
-}
-
 const Tab = createBottomTabNavigator()
 
 export const PrimaryNavigator = () => {
@@ -208,7 +187,7 @@ export const PrimaryNavigator = () => {
       />
       <Tab.Screen
         name="Rewards"
-        component={RewardsNavigator}
+        component={RewardsMap}
         options={{
           title: translate("RewardsScreen.title"),
           tabBarIcon: ({ focused, color }) => {
@@ -230,30 +209,29 @@ export const PrimaryNavigator = () => {
   )
 }
 
-// TODO use this for webview.
-function ModalScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Button onPress={() => navigation.goBack()} title="Dismiss" />
-    </View>
-  )
-}
-
 const RootStack = createStackNavigator()
 
 export const RootStackScreen = () => {
   return (
-    <RootStack.Navigator mode="modal" headerMode="none">
+    <RootStack.Navigator mode="modal" headerMode="screen">
       <RootStack.Screen
         name="Primary"
         component={PrimaryNavigator}
         options={{ headerShown: false }}
       />
       <RootStack.Screen
-        name="MyModal"
-        component={ModalScreen}
+        name="rewardsSection"
+        component={RewardsSection}
         options={{
-          cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        }}
+      />
+      <RootStack.Screen
+        name="rewardsQuizz"
+        component={RewardsQuizz}
+        options={{ 
+          headerShown: false,
+          cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
         }}
       />
       <RootStack.Screen
