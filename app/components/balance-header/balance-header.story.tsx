@@ -7,7 +7,7 @@ import { CurrencyType } from "../../utils/enum"
 declare let module
 
 storiesOf("BalanceHeader", module)
-  .addDecorator(fn => <StoryScreen>{fn()}</StoryScreen>)
+  .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
   .add("Style Presets", () => (
     <Story>
       <UseCase text="Dollar" usage="Loading">

@@ -1,14 +1,6 @@
 import * as React from "react"
 import { useState } from "react"
-import {
-  TextStyle,
-  View,
-  ViewStyle,
-  TextInput,
-  Clipboard,
-  StyleSheet,
-  Alert,
-} from "react-native"
+import { TextStyle, View, ViewStyle, TextInput, Clipboard, StyleSheet, Alert } from "react-native"
 import { Screen } from "../../components/screen"
 import { Text } from "../../components/text"
 import { QRCode } from "../../components/qrcode"
@@ -151,7 +143,7 @@ export const DebugScreen = inject("dataStore")(
           />
           <View>
             <Text>Open channels</Text>
-            {dataStore.lnd.channels.map(item => (
+            {dataStore.lnd.channels.map((item) => (
               <ChannelLiquidityView
                 chanId={item.chanId}
                 remoteBalance={item.remoteBalance}
@@ -160,7 +152,7 @@ export const DebugScreen = inject("dataStore")(
             ))}
           </View>
           <Text>Channel opening</Text>
-          {dataStore.lnd.pendingChannels.map(item => (
+          {dataStore.lnd.pendingChannels.map((item) => (
             <View style={styles.separator}>
               <Text>remoteNodePub</Text>
               <Text>{item.remoteNodePub}</Text>
@@ -194,9 +186,7 @@ export const DebugScreen = inject("dataStore")(
               title="Delete onboarding state"
               onPress={async () => {
                 await dataStore.onboarding._reset()
-                await firestore()
-                  .doc(`users/${auth().currentUser?.uid}/collection/paid`)
-                  .delete()
+                await firestore().doc(`users/${auth().currentUser?.uid}/collection/paid`).delete()
               }}
             />
             <Button
@@ -293,7 +283,7 @@ export const DebugScreen = inject("dataStore")(
             <TextInput
               style={HINT}
               editable
-              onChangeText={invoice => setInvoice(invoice)}
+              onChangeText={(invoice) => setInvoice(invoice)}
               value={invoice}
             />
             <Button
@@ -339,11 +329,11 @@ export const DebugScreen = inject("dataStore")(
               title="update_transactions"
               onPress={dataStore.lnd.update_transactions}
             />
-            <TextInput style={HINT} editable onChangeText={addr => setAddr(addr)} value={addr} />
+            <TextInput style={HINT} editable onChangeText={(addr) => setAddr(addr)} value={addr} />
             <TextInput
               style={HINT}
               editable
-              onChangeText={amount => setAmount(amount)}
+              onChangeText={(amount) => setAmount(amount)}
               value={amount.toString()}
             />
             <Button

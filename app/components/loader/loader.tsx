@@ -22,20 +22,20 @@ export const Loader = ({ loading }) => {
 }
 
 const styles = StyleSheet.create({
-  modalBackground: {
-    flex: 1,
-    alignItems: "center",
-    flexDirection: "column",
-    justifyContent: "space-around",
-    backgroundColor: "#00000040",
-  },
   activityIndicatorWrapper: {
+    alignItems: "center",
     backgroundColor: "#FFFFFF",
-    height: 100,
-    width: 100,
     borderRadius: 10,
     display: "flex",
+    height: 100,
+    justifyContent: "space-around",
+    width: 100,
+  },
+  modalBackground: {
     alignItems: "center",
+    backgroundColor: "#00000040",
+    flex: 1,
+    flexDirection: "column",
     justifyContent: "space-around",
   },
 })

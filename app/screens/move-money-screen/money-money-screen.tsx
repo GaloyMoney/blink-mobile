@@ -6,7 +6,7 @@ import { Text } from "../../components/text"
 import { color } from "../../theme"
 import { ListItem, Button } from "react-native-elements"
 import Icon from "react-native-vector-icons/Ionicons"
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native"
 import { palette } from "../../theme/palette"
 import { inject } from "mobx-react"
 import { Onboarding } from "types"
@@ -17,22 +17,26 @@ import { capitalize, showFundingTx } from "../../utils/helper"
 import { SyncingComponent } from "../../components/syncing"
 import auth from "@react-native-firebase/auth"
 
-
 const styles = StyleSheet.create({
-  headerSection: {
-    fontWeight: "bold",
-    fontSize: 20,
-    margin: 22,
-  },
-
-  text: {
-    fontSize: 22,
-    color: palette.darkGrey,
-  },
-
   button: {
-    marginLeft: 20,
     backgroundColor: color.primary,
+    marginLeft: 20,
+  },
+
+  buttonContainer: {
+    flex: 1,
+    marginTop: 24,
+    paddingHorizontal: 15,
+  },
+
+  flex: {
+    flex: 1,
+  },
+
+  headerSection: {
+    fontSize: 20,
+    fontWeight: "bold",
+    margin: 22,
   },
 
   icon: {
@@ -41,22 +45,17 @@ const styles = StyleSheet.create({
     width: 32,
   },
 
-  flex: {
-    flex: 1,
+  text: {
+    color: palette.darkGrey,
+    fontSize: 22,
   },
 
   viewModal: {
+    alignItems: "center",
+    backgroundColor: palette.white,
+    height: 200,
     justifyContent: "flex-end",
     paddingHorizontal: 20,
-    height: 200,
-    backgroundColor: palette.white,
-    alignItems: "center",
-  },
-
-  buttonContainer: {
-    marginTop: 24,
-    paddingHorizontal: 15,
-    flex: 1,
   },
 })
 
@@ -102,7 +101,7 @@ export const MoveMoneyScreen = inject("dataStore")(({ dataStore }) => {
     if (dataStore.onboarding.has(Onboarding.bankOnboarded)) {
       navigate(target, { title })
     } else {
-      setMessage(translate("MoveMoneyScreen.needBankAccount", {feature: target}))
+      setMessage(translate("MoveMoneyScreen.needBankAccount", { feature: target }))
       setModalVisible(true)
       setButtonTitle(translate("MoveMoneyScreen.openAccount"))
       setButtonAction(() => () => {
@@ -122,21 +121,22 @@ export const MoveMoneyScreen = inject("dataStore")(({ dataStore }) => {
       setButtonTitle(translate("MoveMoneyScreen.openWallet"))
       setButtonAction(() => () => {
         setModalVisible(false)
-        navigate("rewards", {card: "phoneVerification"})
+        navigate("rewards", { card: "phoneVerification" })
       })
       setSyncing(false)
-    } else { // wallet is being created
+    } else {
+      // wallet is being created
       setMessage(translate("MoveMoneyScreen.walletInCreation"))
       setModalVisible(true)
       if (dataStore.lnd.statusFirstChannel === FirstChannelStatus.pending) {
         setButtonAction(() => () => showFundingTx(dataStore.lnd.fundingTx))
         setButtonTitle(translate("MoveMoneyScreen.seeTransaction"))
-        setSyncing(false) 
-      // need to sync the chain?
+        setSyncing(false)
+        // need to sync the chain?
       } else {
-        setSyncing(true) 
+        setSyncing(true)
       }
-    } 
+    }
   }
 
   return (
@@ -149,7 +149,7 @@ export const MoveMoneyScreen = inject("dataStore")(({ dataStore }) => {
         swipeThreshold={50}
       >
         {/* <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
-                    <View style={styles.flex} /> 
+                    <View style={styles.flex} />
                 </TouchableWithoutFeedback> */}
         <View style={styles.flex} />
         <View style={styles.viewModal}>
@@ -159,21 +159,19 @@ export const MoveMoneyScreen = inject("dataStore")(({ dataStore }) => {
             color={palette.lightGrey}
             style={{ height: 34, top: -22 }}
           />
-          <Text style={styles.text}>
-            {message}
-          </Text>
-          { syncing &&
+          <Text style={styles.text}>{message}</Text>
+          {(syncing && (
             <View style={styles.buttonContainer}>
               <SyncingComponent />
             </View>
-            || 
+          )) || (
             <Button
               title={buttonTitle}
               onPress={() => buttonAction()}
               buttonStyle={styles.button}
               containerStyle={[styles.buttonContainer, { width: "100%" }]}
             />
-          }
+          )}
         </View>
       </Modal>
       <ScrollView>

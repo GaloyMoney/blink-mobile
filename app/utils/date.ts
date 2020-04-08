@@ -27,7 +27,7 @@ export const sameMonth = (d1, d2) => {
  * @param  {number} timeStamp The unix time stamp in seconds
  * @return {Date}             The date object
  */
-export const parseDate = timeStamp => {
+export const parseDate = (timeStamp) => {
   if (!Number.isInteger(timeStamp)) {
     throw new Error("Invalid input!")
   }

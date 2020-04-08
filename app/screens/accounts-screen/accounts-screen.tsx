@@ -10,7 +10,7 @@ import currency from "currency.js"
 import { BalanceHeader } from "../../components/balance-header"
 import { AccountType, CurrencyType, FirstChannelStatus } from "../../utils/enum"
 import { Onboarding } from "types"
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native"
 
 import ContentLoader, { Rect } from "react-content-loader/native"
 import { translate } from "../../i18n"
@@ -19,7 +19,6 @@ import { Overlay } from "../../components/overlay"
 import functions from "@react-native-firebase/functions"
 import { ListItem } from "react-native-elements"
 import { palette } from "../../theme/palette"
-
 
 const accountBasic = {
   color: color.text,
@@ -33,8 +32,8 @@ const styles = StyleSheet.create({
 
   accountTypeStyle: {
     ...accountBasic,
-    paddingHorizontal: 12,
     flex: 1,
+    paddingHorizontal: 12,
   },
 
   accountView: {
@@ -43,35 +42,28 @@ const styles = StyleSheet.create({
   },
 
   accountViewContainer: {
-    borderRadius: 8,
     backgroundColor: color.backgroundLighter,
+    borderRadius: 8,
   },
 
   accountViewTitle: {
-    color: 'white',
-    fontWeight: 'bold'
+    color: "white",
+    fontWeight: "bold",
   },
 
   icon: {
-    width: 72,
     alignContent: "center",
-    alignSelf: "center",
     alignItems: "center",
+    alignSelf: "center",
+    width: 72,
   },
 })
 
-export const AccountItem = 
-  ({ account, icon, action, amount, navigate }) => {
+export const AccountItem = ({ account, icon, action, amount, navigate }) => {
   const initialLoading = isNaN(amount)
 
   const Loader = () => (
-    <ContentLoader
-      height={20}
-      width={70}
-      speed={2}
-      primaryColor="#f3f3f3"
-      secondaryColor="#ecebeb"
-    >
+    <ContentLoader height={20} width={70} speed={2} primaryColor="#f3f3f3" secondaryColor="#ecebeb">
       <Rect x="0" y="0" rx="4" ry="4" width="60" height="20" />
     </ContentLoader>
   )
@@ -90,7 +82,7 @@ export const AccountItem =
           {initialLoading && <Loader />}
           {!initialLoading && (
             <Text style={styles.accountAmount}>
-              {currency(amount, {formatWithSymbol: true}).format()}
+              {currency(amount, { formatWithSymbol: true }).format()}
             </Text>
           )}
         </>
@@ -104,25 +96,26 @@ export const AccountsScreen = inject("dataStore")(
     const [refreshing, setRefreshing] = useState(false)
     const { navigate } = useNavigation()
 
-    //FIXME type any
+    // FIXME type any
     const accountTypes: Array<Record<string, any>> = [
       { key: "Bank Account", account: AccountType.Bank, icon: "ios-cash" },
-      { key: "Bitcoin", account: AccountType.Bitcoin, icon: "logo-bitcoin" }
+      { key: "Bitcoin", account: AccountType.Bitcoin, icon: "logo-bitcoin" },
     ]
 
     // TODO refactor ==> bank should also have a virtual screen
     if (!dataStore.onboarding.has(Onboarding.bankOnboarded)) {
-      accountTypes[0]["action"] = () => navigate("bankAccountRewards")
+      accountTypes[0].action = () => navigate("bankAccountRewards")
     }
 
     // FIXME
     if (dataStore.lnd.statusFirstChannel !== FirstChannelStatus.opened) {
-      accountTypes[1]["account"] = AccountType.VirtualBitcoin
+      accountTypes[1].account = AccountType.VirtualBitcoin
     }
-    
-    const accountToAdd = dataStore.lnd.statusFirstChannel == FirstChannelStatus.opened
-    ? AccountType.BankAndVirtualBitcoin
-    : AccountType.BankAndBitcoin
+
+    const accountToAdd =
+      dataStore.lnd.statusFirstChannel == FirstChannelStatus.opened
+        ? AccountType.BankAndVirtualBitcoin
+        : AccountType.BankAndBitcoin
 
     const onRefresh = React.useCallback(async () => {
       setRefreshing(true)
@@ -130,7 +123,7 @@ export const AccountsScreen = inject("dataStore")(
       if (dataStore.lnd.statusFirstChannel === FirstChannelStatus.opened) {
         // FIXME quick fix for now, work on state management so this is not necessary
         // one case: if the app went on sleep and the function is not triggered
-        await functions().httpsCallable("requestRewards")({}) 
+        await functions().httpsCallable("requestRewards")({})
       }
 
       await dataStore.updateBalance()
@@ -145,25 +138,30 @@ export const AccountsScreen = inject("dataStore")(
     return (
       <Screen>
         {dataStore.onboarding.stage.length === 1 && <Overlay screen="accounts" />}
-        <BalanceHeader 
-          currency={CurrencyType.USD} 
-          amount={dataStore.balances({currency: CurrencyType.USD, account: accountToAdd})}
-          amountOtherCurrency={dataStore.balances({currency: CurrencyType.BTC, account: accountToAdd})}
+        <BalanceHeader
+          currency={CurrencyType.USD}
+          amount={dataStore.balances({ currency: CurrencyType.USD, account: accountToAdd })}
+          amountOtherCurrency={dataStore.balances({
+            currency: CurrencyType.BTC,
+            account: accountToAdd,
+          })}
         />
         <FlatList
           data={accountTypes}
           refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-          renderItem={({ item }) => <AccountItem 
-            {...item} 
-            amount={dataStore.balances({ currency: CurrencyType.USD, account: item.account })}
-            navigate={navigate}
-            />}
+          renderItem={({ item }) => (
+            <AccountItem
+              {...item}
+              amount={dataStore.balances({ currency: CurrencyType.USD, account: item.account })}
+              navigate={navigate}
+            />
+          )}
         />
         <View style={{ flex: 1 }}></View>
         <ListItem
           title={translate("AccountsScreen.bitcoinRewards")}
           style={styles.accountView}
-          titleStyle={{color: palette.white}}
+          titleStyle={{ color: palette.white }}
           containerStyle={{ backgroundColor: color.primary }}
           onPress={() => navigate("rewards")}
           leftAvatar={<Icon name="ios-gift" color={palette.white} size={28} style={styles.icon} />}

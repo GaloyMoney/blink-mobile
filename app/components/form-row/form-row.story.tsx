@@ -17,7 +17,7 @@ const TEXT_STYLE_OVERRIDE = {
 const arrayStyle: ViewStyle[] = [{ borderWidth: 5 }, { borderColor: "#32cd32" }]
 
 storiesOf("FormRow", module)
-  .addDecorator(fn => <StoryScreen>{fn()}</StoryScreen>)
+  .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
   .add("Assembled", () => (
     <Story>
       <UseCase

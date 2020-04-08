@@ -36,33 +36,32 @@ YellowBox.ignoreWarnings([
 // FIXME
 console.disableYellowBox = true
 
-
 interface AppState {
   rootStore?: RootStore
 }
 
 export const APP_EDUCATION = false
-  
+
 /**
  * This is the root component of our app.
  */
-export const App = () => {  
+export const App = () => {
   const [rootStore, setRootStore] = useState(null)
 
-  const routeNameRef = useRef();
-  const navigationRef = useRef();
+  const routeNameRef = useRef()
+  const navigationRef = useRef()
 
   useEffect(() => {
     // FIXME there might be a better way to manage this notification
     Notifications.events().registerNotificationReceivedBackground((notification, completion) => {
       console.tron.log("Background")
-      console.tron.log({notification})
+      console.tron.log({ notification })
       completion({ alert: true, sound: false, badge: false })
     })
-    
+
     Notifications.events().registerNotificationReceivedForeground((notification, completion) => {
       console.tron.log("Foregound")
-      console.tron.log({notification})
+      console.tron.log({ notification })
 
       if (getActiveRouteName(routeNameRef) !== "receiveBitcoin") {
         // if (invoice.paymentRequest === self.lastAddInvoice) {
@@ -75,7 +74,7 @@ export const App = () => {
     // this is necessary for hot reloading?
     if (rootStore != null) {
       return
-    } 
+    }
 
     const fn = async () => {
       setRootStore(await setupRootStore())
@@ -88,15 +87,14 @@ export const App = () => {
       return
     }
 
-    console.tron.log({navigationRef})
+    console.tron.log({ navigationRef })
 
-    // this is only accessible after this has been assigned, which is when we have 
-    const state = navigationRef.current.getRootState();
+    // this is only accessible after this has been assigned, which is when we have
+    const state = navigationRef.current.getRootState()
 
     // Save the initial route name
-    routeNameRef.current = getActiveRouteName(state);
-  }, [rootStore]);
-
+    routeNameRef.current = getActiveRouteName(state)
+  }, [rootStore])
 
   /**
    * Are we allowed to exit the app?  This is called when the back button
@@ -127,29 +125,29 @@ export const App = () => {
     // https://mobx.js.org/refguide/inject.html
     <Provider rootStore={rootStore} {...otherStores} routeNameRef={routeNameRef}>
       {/* <BackButtonHandler canExit={canExit}> */}
-        <NavigationContainer
-          ref={navigationRef}
-          onStateChange={state => {
-            const previousRouteName = routeNameRef.current;
-            const currentRouteName = getActiveRouteName(state);
-    
-            if (previousRouteName !== currentRouteName) {
-              if (currentRouteName == "rewardsDetail") {
-                const routeAndSection = `${currentRouteName}_${getActiveRouteParams(state).section}`
-                console.tron.log({routeAndSection})
-                analytics().setCurrentScreen(routeAndSection, currentRouteName);
-              } else {
-                analytics().setCurrentScreen(currentRouteName, currentRouteName);
-              }
+      <NavigationContainer
+        ref={navigationRef}
+        onStateChange={state => {
+          const previousRouteName = routeNameRef.current
+          const currentRouteName = getActiveRouteName(state)
+
+          if (previousRouteName !== currentRouteName) {
+            if (currentRouteName == "rewardsDetail") {
+              const routeAndSection = `${currentRouteName}_${getActiveRouteParams(state).section}`
+              console.tron.log({ routeAndSection })
+              analytics().setCurrentScreen(routeAndSection, currentRouteName)
+            } else {
+              analytics().setCurrentScreen(currentRouteName, currentRouteName)
             }
-    
-            // Save the current route name for later comparision
-            routeNameRef.current = currentRouteName;
-          }}>
-          {/* <StatefulNavigator> */}
-            <RootStack />
-          {/* <StatefulNavigator /> */}
-        </NavigationContainer>
+          }
+
+          // Save the current route name for later comparision
+          routeNameRef.current = currentRouteName
+        }}>
+        {/* <StatefulNavigator> */}
+        <RootStack />
+        {/* <StatefulNavigator /> */}
+      </NavigationContainer>
       {/* </BackButtonHandler> */}
     </Provider>
   )

@@ -6,28 +6,14 @@ import { Screen } from "../../components/screen"
 import { Input, Button } from "react-native-elements"
 import Icon from "react-native-vector-icons/Ionicons"
 import { color } from "../../theme"
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native"
 import { palette } from "../../theme/palette"
 
 const styles = StyleSheet.create({
-  squareButton: {
-    width: 70,
-    height: 70,
+  buttonStyle: {
     backgroundColor: color.primary,
-  },
-
-  smallText: {
-    fontSize: 18,
-    color: palette.darkGrey,
-    textAlign: "left",
-    marginBottom: 10,
-  },
-
-  note: {
-    fontSize: 18,
-    color: palette.darkGrey,
-    textAlign: "left",
-    marginLeft: 10,
+    marginHorizontal: 20,
+    marginVertical: 10,
   },
 
   horizontalContainer: {
@@ -36,25 +22,39 @@ const styles = StyleSheet.create({
   },
 
   icon: {
-    marginRight: 15,
     color: palette.darkGrey,
+    marginRight: 15,
   },
 
   invoiceContainer: {
-    flex: 1,
     alignSelf: "flex-end",
+    flex: 1,
   },
 
-  buttonStyle: {
-    backgroundColor: color.primary,
-    marginHorizontal: 20,
-    marginVertical: 10,
+  note: {
+    color: palette.darkGrey,
+    fontSize: 18,
+    marginLeft: 10,
+    textAlign: "left",
   },
 
   section: {
-    paddingTop: 30,
     paddingBottom: 20,
     paddingHorizontal: 20,
+    paddingTop: 30,
+  },
+
+  smallText: {
+    color: palette.darkGrey,
+    fontSize: 18,
+    marginBottom: 10,
+    textAlign: "left",
+  },
+
+  squareButton: {
+    backgroundColor: color.primary,
+    height: 70,
+    width: 70,
   },
 })
 

@@ -6,11 +6,11 @@ import { SplashScreen } from "./splash-screen"
 declare let module
 
 storiesOf("SplashScreen", module)
-  .addDecorator(fn => <StoryScreen>{fn()}</StoryScreen>)
+  .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
   .add("Style Presets", () => (
     <Story>
       <UseCase text="Dollar" usage="The primary.">
         <SplashScreen lndVersion={"0.9.0"} />
       </UseCase>
     </Story>
-))
+  ))

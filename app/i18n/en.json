@@ -67,8 +67,8 @@
     "rewardEarned": "Reward earned",
     "phoneNumberNeeded": "Phone number required",
     "rewards": {
-      "bitcoin101": {
-        "meta": { "title": "Bitcoin 101", "icon": "ios-school" },
+      "bitcoinWhatIsIt": {
+        "meta": { "title": "Bitcoin: What is it?", "icon": "ios-school" },
         "walletDownloaded": {
           "type": "Text",
           "title": "Wallet downloaded",

@@ -13,7 +13,7 @@ import { lnrpc } from "./generated/rpc"
 const toCaps = (value = "", separator = " ", split = "-") => {
   return value
     .split(split)
-    .map(v => v.charAt(0).toUpperCase() + v.substring(1))
+    .map((v) => v.charAt(0).toUpperCase() + v.substring(1))
     .reduce((a, b) => `${a}${separator}${b}`)
 }
 
@@ -114,7 +114,7 @@ class GrpcAction {
       },
       read() {},
     })
-    self._lndEvent.addListener("streamEvent", res => {
+    self._lndEvent.addListener("streamEvent", (res) => {
       if (res.streamId !== streamId) {
       } else if (res.event === "data") {
         stream.emit("data", self._deserializeResponse(method, res.data))
