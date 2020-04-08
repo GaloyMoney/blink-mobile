@@ -10,6 +10,8 @@ export const getRewardsFromSection = ({ dataStore, section, rewardsMeta = undefi
   const rewards_obj = translate(`RewardsScreen.rewards\.${section}`)
   const rewards = Object.entries(rewards_obj).filter((id) => id[0] !== "meta")
 
+  console.tron.log({rewards})
+
   rewards.forEach((item) => (item[1].fullfilled = dataStore.onboarding.has(Onboarding[item[0]])))
 
   if (rewardsMeta) {

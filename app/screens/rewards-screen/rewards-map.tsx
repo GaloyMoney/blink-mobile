@@ -5,12 +5,12 @@ import { Platform, StyleSheet } from "react-native"
 import { ListItem } from "react-native-elements"
 import { FlatList } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
-import { Onboarding, OnboardingRewards } from "types"
 import { Overlay } from "../../components/overlay"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
+import { getRemainingRewards } from "./rewards-utils"
 
 const styles = StyleSheet.create({
   accountView: {
@@ -127,48 +127,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const getRewardsFromSection = ({ dataStore, section, rewardsMeta = undefined }) => {
-  const rewards_obj = translate(`RewardsScreen.rewards\.${section}`)
-  const rewards = Object.entries(rewards_obj).filter((id) => id[0] !== "meta")
-
-  rewards.forEach((item) => (item[1].fullfilled = dataStore.onboarding.has(Onboarding[item[0]])))
-
-  if (rewardsMeta) {
-    // FIXME
-    rewards.forEach((item) => (item[1].enabled = rewardsMeta[item[0]]?.enabled ?? true))
-    rewards.forEach(
-      (item) =>
-        (item[1].enabledMessage = rewardsMeta[item[0]]?.enabledMessage ?? translate(`common.soon`)),
-    )
-  }
-
-  return rewards
-}
-
-const getRemainingRewards = ({ section, dataStore }) =>
-  getRewardsFromSection({ section, dataStore })
-    .filter((item) => !item[1].fullfilled)
-    .reduce((acc, item) => OnboardingRewards[item[0]] + acc, 0)
-
-const getSections = () => {
-  const all_rewards_obj = translate(`RewardsScreen.rewards`)
-  const sections = Object.keys(all_rewards_obj)
-  return sections
-}
-
-// TODO optimize
-const getCompletedSection = ({ dataStore }) => {
-  let count = 0
-  const sections = getSections()
-  for (const section of sections) {
-    if (getRemainingRewards({ dataStore, section }) === 0) {
-      count++
-    }
-  }
-  return count
-}
-
-export const RewardsHome = inject("dataStore")(
+export const RewardsMap = inject("dataStore")(
   observer(({ dataStore }) => {
     const { navigate } = useNavigation()
 
@@ -205,7 +164,7 @@ export const RewardsHome = inject("dataStore")(
               : undefined
           }
           title={translate(`RewardsScreen.rewards\.${item}.meta.title`)}
-          onPress={() => navigate("rewardsDetail", { section: item })}
+          onPress={() => navigate("rewardsSection", { section: item })}
           leftAvatar={
             <Icon
               name={translate(`RewardsScreen.rewards\.${item}.meta.icon`)}

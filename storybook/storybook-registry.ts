@@ -7,5 +7,6 @@ require("../app/components/checkbox/checkbox.story")
 require("../app/components/icon/icon.story")
 require("../app/components/header/header.story")
 
+require("../app/screens/rewards-screen/rewards-quizz.story")
 require("../app/screens/splash-screen/splash-screen.story")
 require("../app/screens/accounts-screen/accounts-screen.story")
