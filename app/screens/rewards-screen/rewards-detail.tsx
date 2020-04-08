@@ -2,28 +2,21 @@ import { useNavigation } from "@react-navigation/native"
 import { inject, observer } from "mobx-react"
 import * as React from "react"
 import { useEffect, useRef, useState } from "react"
-import { Alert, Animated, Dimensions, Platform, StyleSheet, View } from "react-native"
+import { Alert, Animated, Dimensions, Platform, StyleSheet, View, Image } from "react-native"
 import { Button } from "react-native-elements"
 import { TouchableOpacity } from "react-native-gesture-handler"
-import Carousel, { ParallaxImage } from "react-native-snap-carousel"
+import Carousel, { Pagination } from "react-native-snap-carousel"
 import { YouTubeStandaloneIOS } from "react-native-youtube"
 import { OnboardingRewards } from "types"
 import { Quizz } from "../../components/quizz"
-import { RewardsHeader } from "../../components/rewards-header"
 import { Screen } from "../../components/screen"
 import { Text } from "../../components/text"
 import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-import { AccountType, CurrencyType } from "../../utils/enum"
 import { plusSats } from "../../utils/helper"
 import { sleep } from "../../utils/sleep"
-import {
-  getCompletedSection,
-  getRemainingRewards,
-  getRewardsFromSection,
-  rewardsMeta,
-} from "./rewards-utils"
+import { getRemainingRewards, getRewardsFromSection, rewardsMeta } from "./rewards-utils"
 
 // TODO do something like this to avoid loading everything upfront
 // const EXAMPLES = [
@@ -220,9 +213,11 @@ export const RewardsDetail = inject("dataStore")(
         },
       ])
     }
-
+    
     // helper
     const [currRewardId, currRewardInfo] = rewards[currRewardIndex]
+
+    navigation.setOptions({ title: translate(`RewardsScreen.rewards\.${section}\.meta.title`) })
 
     const open = async (index) => {
       setRewardOpen(!isRewardOpen)
@@ -311,19 +306,19 @@ export const RewardsDetail = inject("dataStore")(
       }
     }
 
-    const CardItem = ({ item, index }, parallaxProps) => {
+    const CardItem = ({ item, index }) => {
       const itemId = item[0]
       const itemInfo = item[1]
 
       return (
         <Animated.View style={styles.item}>
           <TouchableOpacity onPress={() => open(index)} disabled={isRewardOpen} activeOpacity={0.9}>
-            <ParallaxImage
+            <Image
               source={eval(`${itemId}Image`)} // FIXME
+              style={{width: screenWidth - 60, height: 300, resizeMode: 'contain',}}
               containerStyle={
                 isRewardOpen ? styles.imageContainerRewardsOpen : styles.imageContainerRewardsClosed
               }
-              {...parallaxProps}
             />
           </TouchableOpacity>
           <View style={styles.bottomItem}>
@@ -408,20 +403,6 @@ export const RewardsDetail = inject("dataStore")(
           quizzData={quizzData}
           close={close}
         />
-        <RewardsHeader
-          isRewardOpen={isRewardOpen}
-          balance={
-            isRewardOpen
-              ? OnboardingRewards[currRewardId]
-              : dataStore.balances({
-                  currency: CurrencyType.BTC,
-                  account: AccountType.VirtualBitcoin,
-                })
-          }
-          title={translate(`RewardsScreen.rewards\.${section}\.${currRewardId}.title`)}
-          close={close}
-          numTrophee={getCompletedSection({ dataStore })}
-        />
         <View style={{ flex: 1 }} />
         <Carousel
           ref={carouselRef}
@@ -437,6 +418,22 @@ export const RewardsDetail = inject("dataStore")(
           onBeforeSnapToItem={(index) => setCurrRewardIndex(index)}
         />
         <View style={{ flex: 1 }} />
+        <Pagination
+          dotsLength={rewards.length}
+          activeDotIndex={currRewardIndex}
+          dotStyle={{
+              width: 10,
+              height: 10,
+              borderRadius: 5,
+              marginHorizontal: 0,
+              backgroundColor: 'rgba(255, 255, 255, 0.92)'
+          }}
+          inactiveDotStyle={{
+              // Define styles for inactive dots here
+          }}
+          inactiveDotOpacity={0.4}
+          inactiveDotScale={0.6}
+        />
       </Screen>
     )
   }),

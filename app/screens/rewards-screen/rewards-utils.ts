@@ -1,10 +1,10 @@
+import functions from "@react-native-firebase/functions"
+import { Alert } from "react-native"
+import { Notifications, RegistrationError } from "react-native-notifications"
+import { Onboarding, OnboardingRewards } from "types"
 import { translate } from "../../i18n"
 import { sleep } from "../../utils/sleep"
 
-import { Notifications, RegistrationError } from "react-native-notifications"
-import { Onboarding, OnboardingRewards } from "types"
-import functions from "@react-native-firebase/functions"
-import { Alert } from "react-native"
 
 export const getRewardsFromSection = ({ dataStore, section, rewardsMeta = undefined }) => {
   const rewards_obj = translate(`RewardsScreen.rewards\.${section}`)
@@ -87,6 +87,7 @@ export const rewardsMeta = {
   },
   activateNotifications: {
     onAction: async ({ dataStore, setLoading }) => {
+      // FIXME
       Notifications.events().registerRemoteNotificationsRegistered(async (event: Registered) => {
         console.tron.log("Registered For Remote Push", `Device Token: ${event.deviceToken}`)
 

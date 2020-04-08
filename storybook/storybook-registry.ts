@@ -1,5 +1,4 @@
 require("../app/components/currency-text/currency-text.story")
-require("../app/components/rewards-header/rewards-header.story")
 require("../app/components/balance-header/balance-header.story")
 require("../app/components/text/text.story")
 require("../app/components/form-row/form-row.story")

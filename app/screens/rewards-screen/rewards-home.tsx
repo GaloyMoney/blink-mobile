@@ -7,12 +7,10 @@ import { FlatList } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Onboarding, OnboardingRewards } from "types"
 import { Overlay } from "../../components/overlay"
-import { RewardsHeader } from "../../components/rewards-header"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-import { AccountType, CurrencyType } from "../../utils/enum"
 
 const styles = StyleSheet.create({
   accountView: {
@@ -222,14 +220,6 @@ export const RewardsHome = inject("dataStore")(
     return (
       <Screen>
         {dataStore.onboarding.stage.length === 1 && <Overlay screen="rewards" />}
-        <RewardsHeader
-          isRewardOpen={false}
-          balance={dataStore.balances({
-            currency: CurrencyType.BTC,
-            account: AccountType.VirtualBitcoin,
-          })}
-          numTrophee={getCompletedSection({ dataStore })}
-        />
         <FlatList
           data={Object.keys(translate("RewardsScreen.rewards"))}
           renderItem={CategoryItem}
