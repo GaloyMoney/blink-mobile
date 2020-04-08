@@ -3,8 +3,8 @@ import { StyleSheet, Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import { Screen } from "../../components/screen"
 import { color } from "../../theme"
-import { useNavigation } from '@react-navigation/native'
-import MascotBitcoin from './honey-badger-01.svg'
+import { useNavigation } from "@react-navigation/native"
+import MascotBitcoin from "./honey-badger-01.svg"
 
 import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
@@ -19,6 +19,21 @@ const styles = StyleSheet.create({
     width: "70%",
   },
 
+  button: {
+    backgroundColor: palette.white,
+    borderRadius: 24,
+  },
+
+  buttonContainer: {
+    marginVertical: 12,
+    width: "80%",
+  },
+
+  buttonTitle: {
+    color: color.primary,
+    fontWeight: "bold",
+  },
+
   container: {
     alignItems: "center",
     flex: 1,
@@ -30,26 +45,11 @@ const styles = StyleSheet.create({
     marginVertical: 12,
   },
 
-  button: {
-    backgroundColor: palette.white,
-    borderRadius: 24,
-  },
-
-  buttonTitle: {
-    color: color.primary,
-    fontWeight: "bold",
-  },
-
-  buttonContainer: {
-    marginVertical: 12,
-    width: "80%",
-  },
-
   sub: {
+    color: palette.white,
     fontSize: 18,
     marginTop: 32,
     textAlign: "center",
-    color: palette.white,
   },
 
   title: {
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
 })
 
 export const GetStartedScreen = () => {
-  const { navigate } = useNavigation();
+  const { navigate } = useNavigation()
 
   return (
     <Screen style={styles.container}>

@@ -68,7 +68,7 @@ export async function setupRootStore() {
 
   // track changes & save to storage
   // onSnapshot(rootStore, snapshot => storage.save(ROOT_STATE_STORAGE_KEY, snapshot))
-  onSnapshot(rootStore.dataStore.onboarding.stage, async snapshot => {
+  onSnapshot(rootStore.dataStore.onboarding.stage, async (snapshot) => {
     console.tron.log("snapshot", snapshot)
 
     storage.save(ONBOARDING_STORAGE_KEY, snapshot)

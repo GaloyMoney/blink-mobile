@@ -76,7 +76,7 @@ export const TransactionDetailScreen: React.FC<> = ({ route, navigation }) => {
   ]
 
   React.useLayoutEffect(() => {
-    navigation.setOptions({title: route.params.name});
+    navigation.setOptions({ title: route.params.name })
   }, [])
 
   const account = route.params.account

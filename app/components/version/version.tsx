@@ -7,9 +7,9 @@ import { color } from "../../theme"
 
 const styles = StyleSheet.create({
   version: {
+    color: color.text,
     fontSize: 18,
     marginTop: 100,
-    color: color.text,
     textAlign: "center",
   },
 })

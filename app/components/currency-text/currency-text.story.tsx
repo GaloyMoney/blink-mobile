@@ -4,11 +4,10 @@ import { StoryScreen, Story, UseCase } from "../../../storybook/views"
 import { CurrencyText } from "./"
 import { CurrencyType } from "../../utils/enum"
 
-
 declare let module
 
 storiesOf("CurrencyText", module)
-  .addDecorator(fn => <StoryScreen>{fn()}</StoryScreen>)
+  .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
   .add("Style Presets", () => (
     <Story>
       <UseCase text="BTC" usage="The primary.">

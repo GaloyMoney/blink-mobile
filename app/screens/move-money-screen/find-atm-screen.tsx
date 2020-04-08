@@ -10,14 +10,16 @@ const styles = StyleSheet.create({
   },
 })
 
-export const FindATMScreen: React.FC = ({route, navigation}) => {
-
+export const FindATMScreen: React.FC = ({ route, navigation }) => {
   React.useLayoutEffect(() => {
-    navigation.setOptions({
-      title: route.params.title
-    }, [])
+    navigation.setOptions(
+      {
+        title: route.params.title,
+      },
+      [],
+    )
   })
-  
+
   const markers = [
     {
       title: "ATM AllPoint",
@@ -67,7 +69,7 @@ export const FindATMScreen: React.FC = ({route, navigation}) => {
           longitudeDelta: 0.02,
         }}
       >
-        {markers.map(item => (
+        {markers.map((item) => (
           <Marker coordinate={item.coordinate} title={item.title} key={item.title} />
         ))}
       </MapView>

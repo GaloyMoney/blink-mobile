@@ -14,43 +14,42 @@ import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
 import { emailIsValid } from "../../utils/helper"
 import auth from "@react-native-firebase/auth"
-import { useNavigation, useRoute } from '@react-navigation/native'
-
+import { useNavigation, useRoute } from "@react-navigation/native"
 
 const bankLogo = require("./BankLogo.png")
 const popcornLogo = require("../rewards-screen/PopcornLogo.png")
 
 const styles = StyleSheet.create({
-  title: {
-    fontSize: 20,
-    paddingTop: 60,
-    paddingHorizontal: 40,
-    textAlign: "center",
-    fontWeight: "bold",
-  },
-
-  text: {
-    paddingTop: 100,
-    fontSize: 18,
-    textAlign: "center",
-    paddingHorizontal: 40,
-  },
-
-  textInfos: {
-    paddingVertical: 20,
-    fontSize: 18,
-    textAlign: "center",
-    paddingHorizontal: 40,
-  },
-
   buttonContainer: {
-    paddingTop: 20,
-    paddingHorizontal: 80,
     paddingBottom: 60,
+    paddingHorizontal: 80,
+    paddingTop: 20,
   },
 
   buttonStyle: {
     backgroundColor: color.primary,
+  },
+
+  text: {
+    fontSize: 18,
+    paddingHorizontal: 40,
+    paddingTop: 100,
+    textAlign: "center",
+  },
+
+  textInfos: {
+    fontSize: 18,
+    paddingHorizontal: 40,
+    paddingVertical: 20,
+    textAlign: "center",
+  },
+
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
+    paddingHorizontal: 40,
+    paddingTop: 60,
+    textAlign: "center",
   },
 })
 
@@ -75,11 +74,12 @@ export const OpenBankScreen = () => {
   const { navigate } = useNavigation()
   return (
     <Screen>
-      <OnboardingScreen image={bankLogo}
+      <OnboardingScreen
+        image={bankLogo}
         action={() => {
-          auth().currentUser?.isAnonymous ?
-            navigate("welcomePhoneInputBanking"): // FIXME should be welcomePhoneInput
-            navigate("personalInformation")
+          auth().currentUser?.isAnonymous
+            ? navigate("welcomePhoneInputBanking") // FIXME should be welcomePhoneInput
+            : navigate("personalInformation")
         }}
       >
         <Text style={styles.text}>{translate("OpenBankScreen.accountsBenefits")}</Text>
@@ -88,7 +88,7 @@ export const OpenBankScreen = () => {
   )
 }
 
-const TextInputLightMode = props => (
+const TextInputLightMode = (props) => (
   <TextInput placeholderTextColor={palette.lightGrey} {...props} />
 )
 
@@ -116,7 +116,7 @@ export const PersonalInformationScreen = () => {
       <Text style={styles.textInfos}>{translate("PersonalInformationScreen.getStarted")}</Text>
       <Input
         placeholder={translate("common.firstName")}
-        onChangeText={input => setFirstName(input)}
+        onChangeText={(input) => setFirstName(input)}
         autoFocus={true}
         returnKeyType={"next"}
         blurOnSubmit={false}
@@ -128,7 +128,7 @@ export const PersonalInformationScreen = () => {
       />
       <Input
         placeholder={translate("common.lastName")}
-        onChangeText={input => setLastName(input)}
+        onChangeText={(input) => setLastName(input)}
         ref={secondTextInput}
         returnKeyType={"next"}
         blurOnSubmit={false}
@@ -140,7 +140,7 @@ export const PersonalInformationScreen = () => {
       />
       <Input
         placeholder={translate("common.email")}
-        onChangeText={input => setEmail(input)}
+        onChangeText={(input) => setEmail(input)}
         ref={thirdTextInput}
         returnKeyType={"done"}
         textContentType="emailAddress"
@@ -158,7 +158,6 @@ export const PersonalInformationScreen = () => {
     </Screen>
   )
 }
-
 
 export const DateOfBirthScreen = inject("dataStore")(({ dataStore }) => {
   const navigation = useNavigation()

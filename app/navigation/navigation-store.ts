@@ -29,7 +29,7 @@ export const NavigationStoreModel = NavigationEvents.named("NavigationStore")
      */
     state: types.optional(types.frozen(), DEFAULT_STATE),
   })
-  .preProcessSnapshot(snapshot => {
+  .preProcessSnapshot((snapshot) => {
     if (!snapshot || !snapshot.state) return snapshot
 
     try {
@@ -41,7 +41,7 @@ export const NavigationStoreModel = NavigationEvents.named("NavigationStore")
       return { ...snapshot, state: DEFAULT_STATE }
     }
   })
-  .actions(self => ({
+  .actions((self) => ({
     /**
      * Return all subscribers
      */
@@ -78,7 +78,7 @@ export const NavigationStoreModel = NavigationEvents.named("NavigationStore")
       return findCurrentRoute(self.state)
     },
   }))
-  .actions(self => ({
+  .actions((self) => ({
     /**
      * Navigate to another place.
      *

@@ -107,7 +107,7 @@ export class Reactotron {
       }
       // log state changes?
       if (snapshots) {
-        onSnapshot(rootStore, snapshot => {
+        onSnapshot(rootStore, (snapshot) => {
           console.tron.display({ name, value: snapshot, preview: "New State" })
         })
       }
@@ -143,7 +143,7 @@ export class Reactotron {
       // hookup mobx-state-tree middleware
       Tron.use(
         mst({
-          filter: event => RX.test(event.name) === false,
+          filter: (event) => RX.test(event.name) === false,
         }),
       )
 

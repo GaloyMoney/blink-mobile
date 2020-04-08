@@ -13,7 +13,7 @@ const VIEWSTYLE = {
 }
 
 storiesOf("Header", module)
-  .addDecorator(fn => <StoryScreen>{fn()}</StoryScreen>)
+  .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
   .add("Behavior", () => (
     <Story>
       <UseCase noPad text="default" usage="The default usage">

@@ -6,13 +6,12 @@
  */
 
 const path = require("path")
-const { getDefaultConfig } = require('metro-config')
-
+const { getDefaultConfig } = require("metro-config")
 
 module.exports = (async () => {
   const {
     resolver: { sourceExts, assetExts },
-  } = await getDefaultConfig();
+  } = await getDefaultConfig()
   return {
     transformer: {
       getTransformOptions: async () => ({
@@ -21,18 +20,18 @@ module.exports = (async () => {
           inlineRequires: false,
         },
       }),
-      babelTransformerPath: require.resolve('react-native-svg-transformer'),
+      babelTransformerPath: require.resolve("react-native-svg-transformer"),
     },
     projectRoot: path.resolve(__dirname),
-    watchFolders: [__dirname, path.resolve(__dirname, "../common/")],  
+    watchFolders: [__dirname, path.resolve(__dirname, "../common/")],
     resolver: {
-      assetExts: assetExts.filter(ext => ext !== 'svg'),
-      sourceExts: [...sourceExts, 'svg'],
+      assetExts: assetExts.filter((ext) => ext !== "svg"),
+      sourceExts: [...sourceExts, "svg"],
       extraNodeModules: {
         stream: path.resolve(__dirname, "node_modules/readable-stream"),
         zlib: path.resolve(__dirname, "node_modules/browserify-zlib"),
         types: path.resolve(__dirname, "../common/types"),
-      },  
+      },
     },
-  };
-})();
+  }
+})()

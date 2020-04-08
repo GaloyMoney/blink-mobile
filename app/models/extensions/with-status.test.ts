@@ -9,7 +9,7 @@ const ThingModel = types
     age: 1000,
   })
   .extend(withStatus)
-  .actions(self => ({
+  .actions((self) => ({
     switchToError() {
       self.status = "error"
     },
@@ -36,7 +36,7 @@ it("can be synchronously observed", () => {
   let changed: string
   reaction(
     () => thing.status,
-    value => {
+    (value) => {
       changed = value
     },
   )

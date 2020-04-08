@@ -15,7 +15,7 @@ const arrayOutlineStyle: ViewStyle[] = [{ borderColor: "#b443c9" }, { borderWidt
 const arrayFillStyle: ViewStyle[] = [{ backgroundColor: "#55e0ff" }]
 
 storiesOf("Checkbox", module)
-  .addDecorator(fn => <StoryScreen>{fn()}</StoryScreen>)
+  .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
   .add("Behaviour", () => (
     <Story>
       <UseCase text="The Checkbox" usage="Use the checkbox to represent on/off states.">

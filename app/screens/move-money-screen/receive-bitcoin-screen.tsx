@@ -12,33 +12,33 @@ import { palette } from "../../theme/palette"
 import { translate } from "../../i18n"
 
 const styles = StyleSheet.create({
+  buttonStyle: {
+    backgroundColor: color.primary,
+    margin: 5,
+    width: 105,
+  },
+
+  icon: {
+    color: palette.darkGrey,
+    marginRight: 15,
+  },
+
   qr: {
     alignItems: "center",
     flex: 1,
   },
 
-  buttonStyle: {
-    backgroundColor: color.primary,
-    width: 105,
-    margin: 5,
+  section: {
+    paddingBottom: 8,
+    paddingHorizontal: 20,
+    paddingTop: 8,
   },
 
   smallText: {
-    fontSize: 18,
     color: palette.darkGrey,
+    fontSize: 18,
     textAlign: "left",
     // marginBottom: 10,
-  },
-
-  section: {
-    paddingTop: 8,
-    paddingBottom: 8,
-    paddingHorizontal: 20,
-  },
-
-  icon: {
-    marginRight: 15,
-    color: palette.darkGrey,
   },
 })
 
@@ -118,7 +118,7 @@ export const ReceiveBitcoinScreen: React.FC = inject("dataStore")(
           )}
           <View style={styles.section}>
             <Text style={styles.smallText}>Note</Text>
-            <Input placeholder="Optional" value={note} onChangeText={text => setNote(text)} />
+            <Input placeholder="Optional" value={note} onChangeText={(text) => setNote(text)} />
           </View>
           <View style={styles.section}>
             <Text style={styles.smallText}>Amount</Text>
@@ -126,7 +126,7 @@ export const ReceiveBitcoinScreen: React.FC = inject("dataStore")(
               leftIcon={<Text style={styles.icon}>{translate("common.sats")}</Text>}
               placeholder="0"
               value={amount.toString()}
-              onChangeText={input => setAmount(+input)}
+              onChangeText={(input) => setAmount(+input)}
               returnKeyType="done"
               keyboardType="number-pad"
             />
