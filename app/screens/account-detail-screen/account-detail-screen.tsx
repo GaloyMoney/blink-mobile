@@ -36,7 +36,6 @@ import { shortenHash, showFundingTx } from "../../utils/helper"
 import { SyncingComponent } from "../../components/syncing"
 
 import functions from "@react-native-firebase/functions"
-import { APP_EDUCATION } from "../../app"
 
 export interface AccountDetailScreenProps {
   account: AccountType
@@ -362,38 +361,18 @@ const HeaderWithBuySell = ({ currency, account, dataStore, refresh }) => {
       </Modal>
       <BalanceHeaderProxy currency={currency} account={account} dataStore={dataStore} />
       <View style={styles.horizontal}>
-        {APP_EDUCATION && (
-          <>
-            <Button
-              title="Send"
-              buttonStyle={styles.button}
-              containerStyle={styles.buttonContainer}
-              onPress={() => navigate("scanningQRCode")}
-            />
-            <Button
-              title="Receive"
-              buttonStyle={styles.button}
-              containerStyle={styles.buttonContainer}
-              onPress={() => navigate("receiveBitcoin")}
-            />
-          </>
-        )}
-        {!APP_EDUCATION && (
-          <>
-            <Button
-              title="Buy"
-              buttonStyle={styles.button}
-              containerStyle={styles.buttonContainer}
-              onPress={onBuyInit}
-            />
-            <Button
-              title="Sell"
-              buttonStyle={styles.button}
-              containerStyle={styles.buttonContainer}
-              onPress={onSellInit}
-            />
-          </>
-        )}
+        <Button
+          title="Buy"
+          buttonStyle={styles.button}
+          containerStyle={styles.buttonContainer}
+          onPress={onBuyInit}
+        />
+        <Button
+          title="Sell"
+          buttonStyle={styles.button}
+          containerStyle={styles.buttonContainer}
+          onPress={onSellInit}
+        />
       </View>
     </>
   )
