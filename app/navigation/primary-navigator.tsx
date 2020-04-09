@@ -115,7 +115,7 @@ const StackMoveMoney = createStackNavigator()
 export const MoveMoneyNavigator = () => {
   return (
     <StackMoveMoney.Navigator
-    // headerMode: "float",
+      headerMode="none"
     >
       <StackMoveMoney.Screen
         name="moveMoney"

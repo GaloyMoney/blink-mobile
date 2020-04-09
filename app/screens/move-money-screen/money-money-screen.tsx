@@ -1,26 +1,33 @@
+import auth from "@react-native-firebase/auth"
+import { useNavigation } from "@react-navigation/native"
+import { inject } from "mobx-react"
 import * as React from "react"
 import { useState } from "react"
-import { Screen } from "../../components/screen"
-import { StyleSheet, ScrollView, View } from "react-native"
-import { Text } from "../../components/text"
-import { color } from "../../theme"
-import { ListItem, Button } from "react-native-elements"
-import Icon from "react-native-vector-icons/Ionicons"
-import { useNavigation } from "@react-navigation/native"
-import { palette } from "../../theme/palette"
-import { inject } from "mobx-react"
-import { Onboarding } from "types"
-import { translate } from "../../i18n"
+import { ScrollView, StyleSheet, View } from "react-native"
+import { Button, ListItem } from "react-native-elements"
+import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
+import Icon from "react-native-vector-icons/Ionicons"
+import { Onboarding } from "types"
+import { Screen } from "../../components/screen"
+import { SyncingComponent } from "../../components/syncing"
+import { Text } from "../../components/text"
+import { translate } from "../../i18n"
+import { color } from "../../theme"
+import { palette } from "../../theme/palette"
 import { FirstChannelStatus } from "../../utils/enum"
 import { capitalize, showFundingTx } from "../../utils/helper"
-import { SyncingComponent } from "../../components/syncing"
-import auth from "@react-native-firebase/auth"
 
 const styles = StyleSheet.create({
   button: {
     backgroundColor: color.primary,
     marginLeft: 20,
+  },
+
+  listItem: {
+    backgroundColor: palette.lightGrey,
+    marginVertical: 12,
+    marginHorizontal: 24,
   },
 
   buttonContainer: {
@@ -53,7 +60,7 @@ const styles = StyleSheet.create({
   viewModal: {
     alignItems: "center",
     backgroundColor: palette.white,
-    height: 200,
+    height: "25%",
     justifyContent: "flex-end",
     paddingHorizontal: 20,
   },
@@ -148,10 +155,11 @@ export const MoveMoneyScreen = inject("dataStore")(({ dataStore }) => {
         onSwipeComplete={() => setModalVisible(false)}
         swipeThreshold={50}
       >
-        {/* <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
-                    <View style={styles.flex} />
-                </TouchableWithoutFeedback> */}
-        <View style={styles.flex} />
+        <View style={styles.flex}>
+          <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+            <View style={{width: "100%", height: "100%"}} />
+          </TouchableWithoutFeedback>
+        </View>
         <View style={styles.viewModal}>
           <Icon
             name={"ios-remove"}
@@ -179,11 +187,11 @@ export const MoveMoneyScreen = inject("dataStore")(({ dataStore }) => {
         {bank.map((item, i) => (
           <ListItem
             titleStyle={styles.text}
-            style={styles.button}
+            style={styles.listItem}
             key={i}
             title={translate(`${capitalize(item.target)}Screen.title`)}
             leftIcon={<Icon name={item.icon} style={styles.icon} size={32} color={color.primary} />}
-            onPress={() => onBankClick(item)}
+            onPress={(item) => onBankClick(item)}
             chevron
           />
         ))}
@@ -191,7 +199,7 @@ export const MoveMoneyScreen = inject("dataStore")(({ dataStore }) => {
         {bitcoin.map((item, i) => (
           <ListItem
             titleStyle={styles.text}
-            style={styles.button}
+            style={styles.listItem}
             key={i}
             title={translate(`${capitalize(item.target)}Screen.title`)}
             leftIcon={<Icon name={item.icon} style={styles.icon} size={32} color={color.primary} />}
