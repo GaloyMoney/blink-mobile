@@ -1,9 +1,8 @@
+import { useNavigation } from "@react-navigation/native"
 import * as React from "react"
-import { Text } from "../../components/text"
-import { StyleSheet, View, Image } from "react-native"
+import { StyleSheet, Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import { color } from "../../theme"
-import { useNavigation } from "@react-navigation/native"
 import { palette } from "../../theme/palette"
 
 const styles = StyleSheet.create({

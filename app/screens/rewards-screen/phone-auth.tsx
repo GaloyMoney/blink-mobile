@@ -1,26 +1,17 @@
-import * as React from "react"
-import { useState, useEffect, useRef } from "react"
-import { Screen } from "../../components/screen"
-import { Text } from "../../components/text"
-import { inject } from "mobx-react"
-import { Onboarding } from "types"
-import {
-  StyleSheet,
-  View,
-  Image,
-  Alert,
-  KeyboardAvoidingView,
-  Platform,
-  ActivityIndicator,
-} from "react-native"
-import { TextInput, ScrollView } from "react-native-gesture-handler"
-import PhoneInput from "react-native-phone-input"
 import auth from "@react-native-firebase/auth"
-import { isEmpty } from "ramda"
 import { useNavigation, useRoute } from "@react-navigation/native"
-
+import { inject } from "mobx-react"
+import { isEmpty } from "ramda"
+import * as React from "react"
+import { useEffect, useRef, useState } from "react"
+import { ActivityIndicator, Alert, Image, KeyboardAvoidingView, Platform, StyleSheet, Text, View } from "react-native"
+import { ScrollView, TextInput } from "react-native-gesture-handler"
+import PhoneInput from "react-native-phone-input"
+import { Onboarding } from "types"
+import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
 import { color } from "../../theme"
+
 
 const phoneLogo = require("./PhoneLogo.png")
 const phoneWithArrowLogo = require("./PhoneWithArrowLogo.png")

@@ -1,11 +1,5 @@
 require("../app/components/currency-text/currency-text.story")
 require("../app/components/balance-header/balance-header.story")
-require("../app/components/text/text.story")
-require("../app/components/form-row/form-row.story")
-require("../app/components/text-field/text-field.story")
-require("../app/components/checkbox/checkbox.story")
-require("../app/components/icon/icon.story")
-require("../app/components/header/header.story")
 
 require("../app/screens/rewards-screen/rewards-quizz.story")
 require("../app/screens/splash-screen/splash-screen.story")

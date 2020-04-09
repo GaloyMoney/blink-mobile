@@ -1,6 +1,5 @@
 import * as React from "react"
-import { View, StyleSheet } from "react-native"
-import { Text } from "../text"
+import { View, StyleSheet, Text } from "react-native"
 import { color } from "../../theme"
 
 import { CurrencyType } from "../../utils/enum"
