@@ -11,7 +11,6 @@ import { contains } from "ramda"
 import * as React from "react"
 import { useEffect, useRef, useState } from "react"
 import { AppRegistry, YellowBox } from "react-native"
-import 'react-native-gesture-handler'
 import { Notifications } from "react-native-notifications"
 import { StorybookUIRoot } from "../storybook"
 import "./i18n"

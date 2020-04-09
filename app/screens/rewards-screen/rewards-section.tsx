@@ -7,6 +7,7 @@ import { Alert, Dimensions, Image, Platform, StyleSheet, View } from "react-nati
 import { Button } from "react-native-elements"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import Carousel, { Pagination } from "react-native-snap-carousel"
+import Icon from "react-native-vector-icons/Ionicons"
 import { OnboardingRewards } from "types"
 import { Screen } from "../../components/screen"
 import { Text } from "../../components/text"
@@ -82,16 +83,8 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
   },
 
-  imageContainerRewardsClosed: {
+  imageContainerRewards: {
     height: 200,
-    marginBottom: Platform.select({ ios: 0, android: 1 }), // Prevent a random Android rendering issue
-    backgroundColor: "white",
-    borderTopLeftRadius: 32,
-    borderTopRightRadius: 32,
-  },
-
-  imageContainerRewardsOpen: {
-    height: 120,
     marginBottom: Platform.select({ ios: 0, android: 1 }), // Prevent a random Android rendering issue
     backgroundColor: "white",
     borderTopLeftRadius: 32,
@@ -141,8 +134,8 @@ const styles = StyleSheet.create({
     marginVertical: 32,
   },
 
-  buttonStyleDisabled: {
-    backgroundColor: palette.offWhite,
+  buttonStyleFullfilled: {
+    // backgroundColor: palette.offWhite,
     borderRadius: 24,
     marginHorizontal: 60,
     marginVertical: 32,
@@ -169,8 +162,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 
-  titleStyleDisabled: {
-    color: palette.lightGrey,
+  titleStyleFullfilled: {
+    color: palette.white,
   },
 })
 
@@ -184,7 +177,7 @@ export const RewardsSection = inject("dataStore")(
     const itemIndex = rewards.findIndex((item) => !item[1].fullfilled)
     const [firstItem] = useState(itemIndex)
 
-    const [currRewardIndex, setCurrRewardIndex] = useState(0)
+    const [currRewardIndex, setCurrRewardIndex] = useState(firstItem)
 
     const [initialRemainingRewards] = useState(getRemainingRewards({ section, dataStore }))
     const currentRemainingRewards = getRemainingRewards({ section, dataStore })
@@ -214,12 +207,9 @@ export const RewardsSection = inject("dataStore")(
         amount: OnboardingRewards[currRewardId],
         question: currRewardInfo.question,
         answers: currRewardInfo.answers, 
-        feedback: currRewardInfo.feedback
+        feedback: currRewardInfo.feedback,
+        onComplete: () => rewardsMeta[currRewardId].onComplete({ dataStore }),
       })
-    }
-
-    const close = async (msg = "") => {
-      await rewardsMeta[currRewardId].onComplete({ dataStore })
     }
 
     // enum RewardType {
@@ -274,7 +264,7 @@ export const RewardsSection = inject("dataStore")(
             <Image
               source={eval(`${itemId}Image`)} // FIXME
               style={{width: screenWidth - 60, height: 300, resizeMode: 'contain',}}
-              containerStyle={styles.imageContainerRewardsClosed}
+              containerStyle={styles.imageContainerRewards}
             />
           </TouchableOpacity>
           <View>
@@ -282,8 +272,9 @@ export const RewardsSection = inject("dataStore")(
             <Button
               onPress={async () => open(index)}
               disabled={!itemInfo.enabled}
-              buttonStyle={itemInfo.fullfilled ? styles.buttonStyleDisabled : styles.textButton}
-              titleStyle={itemInfo.fullfilled ? styles.titleStyleDisabled : null}
+              type={itemInfo.fullfilled ? "clear" : "solid"}
+              buttonStyle={itemInfo.fullfilled ? styles.buttonStyleFullfilled : styles.textButton}
+              titleStyle={itemInfo.fullfilled ? styles.titleStyleFullfilled : null}
               // containerStyle={styles.}
               title={
                   itemInfo.enabled
@@ -299,6 +290,13 @@ export const RewardsSection = inject("dataStore")(
                     // : translate("common.learnMore")
                   : itemInfo.enabledMessage
               }
+              icon={itemInfo.fullfilled ? <Icon 
+                name={"ios-checkmark-circle-outline"}
+                size={36}
+                color={palette.white}
+                style={{paddingRight: 12, paddingTop: 3}}
+                />
+                : undefined}
             />
           </View>
         </View>

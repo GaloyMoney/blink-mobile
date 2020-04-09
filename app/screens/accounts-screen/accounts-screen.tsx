@@ -1,24 +1,23 @@
-import * as React from "react"
-import { useState, useEffect } from "react"
-import { observer, inject } from "mobx-react"
-import { StyleSheet, View, RefreshControl, FlatList } from "react-native"
-import { Text } from "../../components/text"
-import { Screen } from "../../components/screen"
-import { color } from "../../theme/color"
-import Icon from "react-native-vector-icons/Ionicons"
-import currency from "currency.js"
-import { BalanceHeader } from "../../components/balance-header"
-import { AccountType, CurrencyType, FirstChannelStatus } from "../../utils/enum"
-import { Onboarding } from "types"
-import { useNavigation } from "@react-navigation/native"
-
-import ContentLoader, { Rect } from "react-content-loader/native"
-import { translate } from "../../i18n"
-import { Overlay } from "../../components/overlay"
-
 import functions from "@react-native-firebase/functions"
+import { useNavigation } from "@react-navigation/native"
+import currency from "currency.js"
+import { inject, observer } from "mobx-react"
+import * as React from "react"
+import { useEffect, useState } from "react"
+import ContentLoader, { Rect } from "react-content-loader/native"
+import { FlatList, RefreshControl, StyleSheet, View } from "react-native"
 import { ListItem } from "react-native-elements"
+import Icon from "react-native-vector-icons/Ionicons"
+import { Onboarding } from "types"
+import { BalanceHeader } from "../../components/balance-header"
+import { Screen } from "../../components/screen"
+import { Text } from "../../components/text"
+import { translate } from "../../i18n"
+import { color } from "../../theme/color"
 import { palette } from "../../theme/palette"
+import { AccountType, CurrencyType, FirstChannelStatus } from "../../utils/enum"
+
+
 
 const accountBasic = {
   color: color.text,
@@ -137,7 +136,7 @@ export const AccountsScreen = inject("dataStore")(
 
     return (
       <Screen>
-        {dataStore.onboarding.stage.length === 1 && <Overlay screen="accounts" />}
+        {/* {dataStore.onboarding.stage.length === 1 && <Overlay screen="accounts" />} */}
         <BalanceHeader
           currency={CurrencyType.USD}
           amount={dataStore.balances({ currency: CurrencyType.USD, account: accountToAdd })}
