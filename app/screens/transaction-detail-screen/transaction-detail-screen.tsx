@@ -1,16 +1,15 @@
 import * as React from "react"
-import { Text } from "../../components/text"
-import { Screen } from "../../components/screen"
-import { Image, View, StyleSheet } from "react-native"
+import { Image, StyleSheet, Text, View } from "react-native"
 import { ListItem } from "react-native-elements"
-
-import Icon from "react-native-vector-icons/Ionicons"
-import { color } from "../../theme"
-
 import MapView from "react-native-maps"
+import Icon from "react-native-vector-icons/Ionicons"
+import { Screen } from "../../components/screen"
 import { TextCurrency } from "../../components/text-currency"
-import { CurrencyType, AccountType } from "../../utils/enum"
+import { color } from "../../theme"
+import { AccountType, CurrencyType } from "../../utils/enum"
 import { shortenHash } from "../../utils/helper"
+
+
 
 const styles = StyleSheet.create({
   amountText: {

@@ -1,41 +1,31 @@
-import * as React from "react"
-import { useState, useEffect } from "react"
-import { observer, inject } from "mobx-react"
-
-import {
-  View,
-  SectionList,
-  StyleSheet,
-  RefreshControl,
-  TouchableWithoutFeedback,
-  Alert,
-  Animated,
-  ActivityIndicator,
-} from "react-native"
-
-import Modal from "react-native-modal"
-
-import { Text } from "../../components/text"
-import { Screen } from "../../components/screen"
-import { color } from "../../theme"
-import Icon from "react-native-vector-icons/Ionicons"
-
-import { BalanceHeader } from "../../components/balance-header"
-import { DataStore } from "../../models/data-store"
-import { sameDay, sameMonth } from "../../utils/date"
-import { CurrencyText } from "../../components/currency-text"
-import { TouchableHighlight, TextInput } from "react-native-gesture-handler"
-import { AccountType, CurrencyType, FirstChannelStatus } from "../../utils/enum"
-import { useNavigation } from "@react-navigation/native"
-import { Button } from "react-native-elements"
-import { palette } from "../../theme/palette"
-import { Side, Onboarding } from "types"
-import { translate } from "../../i18n"
-
-import { shortenHash, showFundingTx } from "../../utils/helper"
-import { SyncingComponent } from "../../components/syncing"
-
 import functions from "@react-native-firebase/functions"
+import { useNavigation } from "@react-navigation/native"
+import { inject, observer } from "mobx-react"
+import * as React from "react"
+import { useEffect, useState } from "react"
+import { ActivityIndicator, Alert, Animated, RefreshControl, SectionList, StyleSheet, Text, TouchableWithoutFeedback, View } from "react-native"
+import { Button } from "react-native-elements"
+import { TextInput, TouchableHighlight } from "react-native-gesture-handler"
+import Modal from "react-native-modal"
+import Icon from "react-native-vector-icons/Ionicons"
+import { Onboarding, Side } from "types"
+import { BalanceHeader } from "../../components/balance-header"
+import { CurrencyText } from "../../components/currency-text"
+import { Screen } from "../../components/screen"
+import { SyncingComponent } from "../../components/syncing"
+import { translate } from "../../i18n"
+import { DataStore } from "../../models/data-store"
+import { color } from "../../theme"
+import { palette } from "../../theme/palette"
+import { sameDay, sameMonth } from "../../utils/date"
+import { AccountType, CurrencyType, FirstChannelStatus } from "../../utils/enum"
+import { shortenHash, showFundingTx } from "../../utils/helper"
+
+
+
+
+
+
 
 export interface AccountDetailScreenProps {
   account: AccountType

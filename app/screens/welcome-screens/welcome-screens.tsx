@@ -1,21 +1,20 @@
-import * as React from "react"
-import { Screen } from "../../components/screen"
-import { OnboardingScreen } from "../../components/onboarding"
-import { Text } from "../../components/text"
 import { inject } from "mobx-react"
-import { Onboarding } from "types"
-import { StyleSheet, View } from "react-native"
-
-import { color } from "../../theme"
-
+import * as React from "react"
+import { StyleSheet, View, Text } from "react-native"
 import Swiper from "react-native-swiper"
+import { Onboarding } from "types"
+import { OnboardingScreen } from "../../components/onboarding"
+import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
+import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-
-import MascotDollarBitcoin from "./honey-badger-money-bitcoin-01.svg"
 import BitcoinBitcoin from "./bitcoin-bitcoin-01.svg"
 import BankShop from "./cc-bank-shop-01.svg"
+import MascotDollarBitcoin from "./honey-badger-money-bitcoin-01.svg"
 import HoneyBadgerShovel from "./honey-badger-shovel-01.svg"
+
+
+
 
 const styles = StyleSheet.create({
   activityIndicatorWrapper: {
