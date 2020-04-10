@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   },
 })
 
-export const AccountItem = ({ account, icon, action, amount, navigate }) => {
+export const AccountItem = ({ account, icon, amount, navigate, title=undefined, action=undefined}) => {
   const initialLoading = isNaN(amount)
 
   const Loader = () => (
@@ -72,10 +72,10 @@ export const AccountItem = ({ account, icon, action, amount, navigate }) => {
       containerStyle={styles.accountViewContainer}
       titleStyle={styles.accountViewTitle}
       chevron
-      title={account}
+      title={title ?? account}
       onPress={action || (() => navigate("accountDetail", { account }))}
       leftAvatar={<Icon name={icon} color={color.primary} size={64} style={styles.icon} />}
-      subtitle={
+      subtitle={!title &&
         <>
           {initialLoading && <Loader />}
           {!initialLoading && (
@@ -103,6 +103,7 @@ export const AccountsScreen = inject("dataStore")(
     // TODO refactor ==> bank should also have a virtual screen
     if (!dataStore.onboarding.has(Onboarding.bankOnboarded)) {
       accountTypes[0].action = () => navigate("bankAccountRewards")
+      accountTypes[0].title = "Open Bank Account"
     }
 
     // FIXME

@@ -9,7 +9,7 @@ import { AccountsScreen } from "../screens/accounts-screen"
 import { BankAccountReadyScreen, BankAccountRewardsScreen, DateOfBirthScreen, OpenBankScreen, PersonalInformationScreen } from "../screens/bank-onboarding"
 import { DebugScreen } from "../screens/debug-screen"
 import { BankTransferScreen, DirectDepositScreen, FindATMScreen, MoveMoneyScreen, ReceiveBitcoinScreen, ScanningQRCodeScreen, SendBitcoinScreen } from "../screens/move-money-screen"
-import { RewardsMap, RewardsQuizz, RewardsSection, WelcomePhoneInputScreen, WelcomePhoneValidationScreen } from "../screens/rewards-screen"
+import { RewardsMap, RewardsQuiz, RewardsSection, WelcomePhoneInputScreen, WelcomePhoneValidationScreen } from "../screens/rewards-screen"
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
 import { color } from "../theme"
 import { palette } from "../theme/palette"
@@ -227,8 +227,8 @@ export const RootStackScreen = () => {
         }}
       />
       <RootStack.Screen
-        name="rewardsQuizz"
-        component={RewardsQuizz}
+        name="rewardsQuiz"
+        component={RewardsQuiz}
         options={{ 
           headerShown: false,
           cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,

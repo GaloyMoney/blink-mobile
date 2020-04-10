@@ -1,7 +1,7 @@
 import { storiesOf } from "@storybook/react-native";
 import * as React from "react";
 import { Story, StoryScreen } from "../../../storybook/views";
-import { RewardsQuizz } from "./rewards-quizz";
+import { RewardsQuiz } from "./rewards-quiz";
 
 
 declare let module
@@ -24,10 +24,10 @@ const route = { params: {
   onComplete: () => {}
 }}
 
-storiesOf("Quizz", module)
+storiesOf("Quiz", module)
   .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
   .add("Style Presets", () => (
     <Story>
-      <RewardsQuizz route={route} />  
+      <RewardsQuiz route={route} />  
     </Story>
   ))

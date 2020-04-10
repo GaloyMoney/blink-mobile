@@ -131,7 +131,7 @@
         "bitcoinUnique": {
           "type": "Text",
           "title": "What makes bitcoin special?",
-          "text": "Bitcoin has many special and unique properties. In subsequent quizzes, these following special properties will be individually explained in detail: , :\n\n- Bitcoin has a predictable issuance of  supply\n- The maximum total supply of Bitcoin is permanently capped\n- It is highly divisible\n- It is borderless\n- Small transactions are settled in seconds, large transactions take less than one hour \n- Bitcoin can never be forged, nor copied \n- The  creator of Bitcoin remains unknown to this very day",
+          "text": "Bitcoin has many special and unique properties. In subsequent quizes, these following special properties will be individually explained in detail: , :\n\n- Bitcoin has a predictable issuance of  supply\n- The maximum total supply of Bitcoin is permanently capped\n- It is highly divisible\n- It is borderless\n- Small transactions are settled in seconds, large transactions take less than one hour \n- Bitcoin can never be forged, nor copied \n- The  creator of Bitcoin remains unknown to this very day",
           "question": "What are some properties of bitcoin that are not present in fiat currency, such as US Dollars?",
           "answers": [
             "Bitcoin can not be forged",
@@ -404,7 +404,9 @@
   "BankAccountRewardsScreen": {
     "title": "Bank Account Rewards",
     "openAccount": "Open a Galoy bank account",
-    "accountsBenefits": "Hold US dollars in your account!\n\nOrder a debit card to earn 1%+ cashback in bitcoin on your dollar spending!\n\nAnd easily buy & sell bitcoin in-app."
+    "holdUSDollar": "Hold US dollars in your account!",
+    "debitCard": "Order a debit card to earn 1%+ cashback in bitcoin on your dollar spending!",
+    "buySell": "And easily buy & sell bitcoin in-app.",
   },
   "OpenBankScreen": {
     "title": "Bank rewards",
