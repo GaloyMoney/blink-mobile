@@ -7,6 +7,7 @@ import * as React from "react"
 import { useEffect, useRef, useState } from "react"
 import { Alert, StyleSheet, Text, TextInput, View } from "react-native"
 import { Button, Input } from "react-native-elements"
+import Icon from "react-native-vector-icons/Ionicons"
 import { Onboarding } from "types"
 import { OnboardingScreen } from "../../components/onboarding"
 import { Screen } from "../../components/screen"
@@ -14,19 +15,23 @@ import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { emailIsValid } from "../../utils/helper"
+import { CloseCross } from "../rewards-screen/rewards-quiz"
+import Svg from "../welcome-screens/honey-badger-shovel-01.svg"
+
 
 const bankLogo = require("./BankLogo.png")
 const popcornLogo = require("../rewards-screen/PopcornLogo.png")
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    paddingBottom: 60,
+    paddingBottom: 40,
     paddingHorizontal: 80,
     paddingTop: 20,
   },
 
   buttonStyle: {
     backgroundColor: color.primary,
+    borderRadius: 32,
   },
 
   text: {
@@ -34,6 +39,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 40,
     paddingTop: 100,
     textAlign: "center",
+  },
+
+  argumentText: {
+    fontSize: 18,
+    paddingHorizontal: 40,
+    textAlign: "left",
   },
 
   textInfos: {
@@ -48,37 +59,58 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     paddingHorizontal: 40,
     paddingTop: 60,
+    paddingBottom: 20,
     textAlign: "center",
   },
 })
 
-export const BankAccountRewardsScreen = () => {
-  const { navigate } = useNavigation()
+const Argument = ({text}) => (
+  <View style={{flexDirection: "row", paddingBottom: 20, paddingHorizontal: 20}}>
+    <Icon
+      name={"logo-bitcoin"}
+      size={32}
+      color={palette.darkGrey}
+    />
+    <Text style={styles.argumentText}>{text}</Text>
+  </View>
+)
+
+export const BankAccountRewardsScreen = ({ navigation }) => {
+  
   return (
-    <Screen>
-      <Text style={styles.title}>{translate("BankAccountRewardsScreen.openAccount")}</Text>
-      <Text style={styles.text}>{translate("BankAccountRewardsScreen.accountsBenefits")}</Text>
-      <View style={{ flex: 1 }} />
-      <Button
-        title="Open account"
-        onPress={() => navigate("openBankAccount")}
-        containerStyle={styles.buttonContainer}
-        buttonStyle={styles.buttonStyle}
-      />
+    <Screen preset="scroll">
+      <View style={{margin: 24, backgroundColor: palette.white, borderRadius: 32}}>
+        <View style={{alignSelf: "center", marginTop: 24}}>
+          <Svg />
+        </View>
+        <Text style={styles.title}>{translate("BankAccountRewardsScreen.openAccount")}</Text>
+        <Argument text={translate("BankAccountRewardsScreen.holdUSDollar")} />
+        <Argument text={translate("BankAccountRewardsScreen.debitCard")} />
+        <Argument text={translate("BankAccountRewardsScreen.buySell")} />
+        <View style={{ flex: 1 }} />
+        <Button
+          title="Join waiting list"
+          type="solid"
+          onPress={() => navigation.navigate("openBankAccount")}
+          containerStyle={styles.buttonContainer}
+          buttonStyle={styles.buttonStyle}
+          titleStyle={{fontWeight: "bold"}}
+        />
+      <CloseCross navigation={navigation} />
+      </View>
     </Screen>
   )
 }
 
-export const OpenBankScreen = () => {
-  const { navigate } = useNavigation()
+export const OpenBankScreen = ({ navigation }) => {
   return (
     <Screen>
       <OnboardingScreen
         image={bankLogo}
         action={() => {
           auth().currentUser?.isAnonymous
-            ? navigate("welcomePhoneInputBanking") // FIXME should be welcomePhoneInput
-            : navigate("personalInformation")
+            ? navigation.navigate("welcomePhoneInputBanking") // FIXME should be welcomePhoneInput
+            : navigation.navigate("personalInformation")
         }}
       >
         <Text style={styles.text}>{translate("OpenBankScreen.accountsBenefits")}</Text>

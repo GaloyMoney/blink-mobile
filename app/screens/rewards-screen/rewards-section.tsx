@@ -3,7 +3,7 @@ import I18n from "i18n-js"
 import { inject, observer } from "mobx-react"
 import * as React from "react"
 import { useState } from "react"
-import { Alert, Dimensions, Image, Platform, StyleSheet, View, Text } from "react-native"
+import { Alert, Dimensions, Image, Platform, StyleSheet, Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import Carousel, { Pagination } from "react-native-snap-carousel"
@@ -200,7 +200,7 @@ export const RewardsSection = inject("dataStore")(
     const open = async (index) => {
       // TODO use index
 
-      navigate('rewardsQuizz', { 
+      navigate('rewardsQuiz', { 
         title: currRewardInfo.title, 
         text: currRewardInfo.text, 
         amount: OnboardingRewards[currRewardId],
@@ -223,7 +223,7 @@ export const RewardsSection = inject("dataStore")(
     //   const feedback = currRewardInfo.feedback ?? ""
 
     //   if ([RewardType.Text, RewardType.Video].includes(RewardType[type])) {
-    //     setQuizzData({
+    //     setQuizData({
     //       feedback,
     //       question: currRewardInfo.question,
     //       answers: currRewardInfo.answers,
@@ -232,7 +232,7 @@ export const RewardsSection = inject("dataStore")(
 
     //   switch (RewardType[type]) {
     //     case RewardType.Text:
-    //       setQuizzVisible(true)
+    //       setQuizVisible(true)
     //       break
     //     case RewardType.Video:
     //       try {
@@ -240,10 +240,10 @@ export const RewardsSection = inject("dataStore")(
     //         await YouTubeStandaloneIOS.playVideo(currRewardInfo.videoid)
     //         await sleep(500) // FIXME why await for playVideo doesn't work?
     //         console.tron.log("finish video")
-    //         setQuizzVisible(true)
+    //         setQuizVisible(true)
     //       } catch (err) {
     //         console.tron.log("error video", err.toString())
-    //         setQuizzVisible(false)
+    //         setQuizVisible(false)
     //       }
     //       break
     //     case RewardType.Action:

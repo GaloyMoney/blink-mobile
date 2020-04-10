@@ -14,8 +14,11 @@ import Svg from "../welcome-screens/honey-badger-shovel-01.svg"
 
 const styles = StyleSheet.create({
   iconContainer: {
+    position: "absolute",
+    right: 20,
+    top: 20,
     alignItems: "flex-end",
-    paddingRight: 12,
+    padding: 6,
   },
 
   svgContainer: {
@@ -56,32 +59,32 @@ const styles = StyleSheet.create({
     width: "100%"
   },
 
-  quizzButtonStyle: {
+  quizButtonStyle: {
     backgroundColor: color.primary,
     borderRadius: 32,
     width: "100%",
     padding: 12
   },
 
-  quizzWrongButtonStyle: {
+  quizWrongButtonStyle: {
     backgroundColor: palette.angry,
     borderRadius: 32,
     width: "100%",
     padding: 12
   },
 
-  quizzCorrectButtonStyle: {
+  quizCorrectButtonStyle: {
     backgroundColor: palette.green,
     borderRadius: 32,
     width: "100%",
     padding: 12
   },
 
-  quizzButtonTitleStyle: {
+  quizButtonTitleStyle: {
     fontWeight: "bold"
   },
 
-  quizzButtonContainerStyle: {
+  quizButtonContainerStyle: {
     marginVertical: 12,
     width: 48
   },
@@ -114,7 +117,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 
-  quizzTextAnswer: {
+  quizTextAnswer: {
     color: palette.black,
     textAlign: "left"
     // fontWeight: "bold"
@@ -129,10 +132,16 @@ const styles = StyleSheet.create({
 
 const mappingLetter = {0: "A", 1: "B", 2: "C"}
 
-export const RewardsQuizz = ({ route, navigation }) => {
+export const CloseCross = ({navigation}) => (
+  <View style={styles.iconContainer}>
+    <Icon name="ios-close" size={96} color={palette.darkGrey} onPress={() => navigation.goBack()}/>
+  </View>
+)
+
+export const RewardsQuiz = ({ route, navigation }) => {
   const { title, text, amount, answers, feedback, question, onComplete } = route.params
   
-  const [quizzVisible, setQuizzVisible] = useState(false)
+  const [quizVisible, setQuizVisible] = useState(false)
   const [recordedAnswer, setRecordedAnswer] = useState([])
   const [permutation] = useState(shuffle([0, 1, 2]))
 
@@ -149,7 +158,7 @@ export const RewardsQuizz = ({ route, navigation }) => {
   }, [recordedAnswer])
   
   const close = async () => {
-    setQuizzVisible(false)
+    setQuizVisible(false)
     await sleep(100)
     navigation.goBack()
   }
@@ -162,17 +171,17 @@ export const RewardsQuizz = ({ route, navigation }) => {
           <Button 
             title={mappingLetter[j]}
             buttonStyle={recordedAnswer.indexOf(i) === -1 ? 
-                styles.quizzButtonStyle
+                styles.quizButtonStyle
               : i === 0 ? 
-                  styles.quizzCorrectButtonStyle
-                : styles.quizzWrongButtonStyle}
-            titleStyle={styles.quizzButtonTitleStyle}
-            containerStyle={styles.quizzButtonContainerStyle}
+                  styles.quizCorrectButtonStyle
+                : styles.quizWrongButtonStyle}
+            titleStyle={styles.quizButtonTitleStyle}
+            containerStyle={styles.quizButtonContainerStyle}
             onPress={() => addRecordedAnswer(i)}
           />
           <Button
             title={answers[i]}
-            titleStyle={styles.quizzTextAnswer}
+            titleStyle={styles.quizTextAnswer}
             containerStyle={{alignItems: "flex-start", marginLeft: 12, marginRight: 36}}
             type="clear"
             onPress={() => addRecordedAnswer(i)}
@@ -191,14 +200,14 @@ export const RewardsQuizz = ({ route, navigation }) => {
     <Screen style={{backgroundColor: palette.offWhite}}>
       <Modal
         style={{ marginHorizontal: 0, marginBottom: 0 }}
-        isVisible={quizzVisible}
-        swipeDirection={quizzVisible ? ["down"] : ["up"]}
-        onSwipeComplete={() => setQuizzVisible(false)}
+        isVisible={quizVisible}
+        swipeDirection={quizVisible ? ["down"] : ["up"]}
+        onSwipeComplete={() => setQuizVisible(false)}
         swipeThreshold={50}
       >
         {/* TODO: expand automatically */}
         <View style={{ flex: 1 }}>
-          <TouchableWithoutFeedback onPress={() => setQuizzVisible(false)}>
+          <TouchableWithoutFeedback onPress={() => setQuizVisible(false)}>
             <View style={{height: "100%", width: "100%"}} />
           </TouchableWithoutFeedback>
         </View>
@@ -222,13 +231,6 @@ export const RewardsQuizz = ({ route, navigation }) => {
           </View>
         </View>
       </Modal>
-      <View style={styles.iconContainer}>
-        <Icon name="ios-close" size={96} color={palette.darkGrey} onPress={() => navigation.goBack()}/>
-      </View>
-      <View style={styles.svgContainer}>
-        <Svg />
-      </View>
-      {/* animate scroll view https://medium.com/appandflow/react-native-scrollview-animated-header-10a18cb9469e */}
       <ScrollView 
           contentContainerStyle={{ flexGrow: 1 }}
           persistentScrollbar={true}
@@ -236,17 +238,21 @@ export const RewardsQuizz = ({ route, navigation }) => {
           showsVerticalScrollIndicator={true}
           bounces={false}
         >
+      <View style={styles.svgContainer}>
+        <Svg />
+      </View>
         <View style={styles.textContainer}>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.text}>{text}</Text>
         </View>
       </ScrollView>
+      <CloseCross navigation={navigation} />
       <View style={styles.bottomContainer}>
         <Text style={styles.textEarn}>Earn {amount} sat</Text>
-        <Button title={"Answer Quizz"} type="outline"
+        <Button title={"Answer Quiz"} type="outline"
           buttonStyle={styles.buttonStyle}
           titleStyle={styles.titleStyle}
-          onPress={() => setQuizzVisible(true)}
+          onPress={() => setQuizVisible(true)}
         />
       </View>
     </Screen>
