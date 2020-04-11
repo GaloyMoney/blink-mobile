@@ -4,24 +4,23 @@
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="375px" height="170px" viewBox="0 0 375 170" enable-background="new 0 0 375 170" xml:space="preserve">
 <g>
-	<rect fill="#3654FF" width="374.999" height="170"/>
-	<ellipse opacity="0.3" fill="#232323" cx="105" cy="163.854" rx="38.078" ry="6.146"/>
+	<ellipse opacity="0.3" fill="#232323" enable-background="new    " cx="105" cy="163.854" rx="38.078" ry="6.146"/>
 	
-		<path opacity="0.3" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" stroke-dasharray="4,6" d="
-		M269.999,5v69c0,5.521-4.477,10-10,10H198c-5.522,0-10,4.477-10,10v59c0,5.521-4.478,10-10,10h-28"/>
+		<path opacity="0.3" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" stroke-dasharray="4,6" enable-background="new    " d="
+		M269.999,5v69c0,5.521-4.478,10-10,10H198c-5.521,0-10,4.477-10,10v59c0,5.521-4.478,10-10,10h-28"/>
 	<g opacity="0.2">
 		<path stroke="#000000" stroke-width="2" stroke-linejoin="round" stroke-miterlimit="10" d="M311.245,80.404
-			c4.555,6.514,7.506,16.943,7.506,28.699h6.471C325.222,95.279,319.279,83.668,311.245,80.404z"/>
+			c4.555,6.514,7.506,16.944,7.506,28.7h6.472C325.223,95.279,319.279,83.668,311.245,80.404z"/>
 		<path stroke="#000000" stroke-width="2" stroke-linejoin="round" stroke-miterlimit="10" d="M310.188,92.584
-			c2.621,3.748,4.32,9.752,4.32,16.52h3.725C318.233,101.146,314.813,94.463,310.188,92.584z"/>
-		<path stroke="#000000" stroke-width="2" stroke-linejoin="round" stroke-miterlimit="10" d="M324.96,109.104h4.57
-			c0-7.346,1.631-13.959,4.234-18.57C328.64,93.207,324.96,100.51,324.96,109.104z"/>
-		<path stroke="#000000" stroke-width="2" stroke-linejoin="round" stroke-miterlimit="10" d="M329.737,108.939
-			c3.238-5.338,7.338-9.799,11.262-12.605c-4.148,0.736-8.998,4.102-12.69,8.9c0.546,1.133,1.009,2.369,1.382,3.691L329.737,108.939
-			z"/>
-		<path stroke="#000000" stroke-width="2" stroke-linejoin="round" stroke-miterlimit="10" d="M314.215,109.088
-			c0.374-1.32,0.835-2.559,1.382-3.691c-3.691-4.797-8.543-8.164-12.69-8.9c3.925,2.807,8.023,7.27,11.263,12.605L314.215,109.088z"
+			c2.621,3.748,4.32,9.752,4.32,16.52h3.725C318.232,101.146,314.812,94.463,310.188,92.584z"/>
+		<path stroke="#000000" stroke-width="2" stroke-linejoin="round" stroke-miterlimit="10" d="M324.96,109.104h4.569
+			c0-7.346,1.632-13.959,4.234-18.569C328.641,93.207,324.96,100.51,324.96,109.104z"/>
+		<path stroke="#000000" stroke-width="2" stroke-linejoin="round" stroke-miterlimit="10" d="M329.736,108.939
+			c3.238-5.338,7.339-9.799,11.263-12.605c-4.147,0.736-8.998,4.102-12.69,8.9c0.547,1.133,1.01,2.369,1.383,3.69L329.736,108.939z"
 			/>
+		<path stroke="#000000" stroke-width="2" stroke-linejoin="round" stroke-miterlimit="10" d="M314.215,109.088
+			c0.374-1.32,0.835-2.559,1.383-3.691c-3.691-4.797-8.543-8.164-12.69-8.899c3.925,2.808,8.022,7.271,11.263,12.604
+			L314.215,109.088z"/>
 	</g>
 </g>
 </svg>

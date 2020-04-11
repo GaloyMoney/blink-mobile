@@ -12,6 +12,6 @@ storiesOf("Map", module)
   .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
   .add("Style Presets", () => (
     <Story>
-      <RewardsMapScreen currSection={number("section", 0)} />
+      <RewardsMapScreen currSection={number("section", 0)} progress={number("progress", 1)} />
     </Story>
 ))
