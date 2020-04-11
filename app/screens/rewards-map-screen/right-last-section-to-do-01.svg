@@ -4,7 +4,6 @@
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="375px" height="170px" viewBox="0 0 375 170" enable-background="new 0 0 375 170" xml:space="preserve">
 <g>
-	<rect fill="#3654FF" width="374.999" height="170"/>
 	<g opacity="0.2">
 		<path stroke="#000000" stroke-width="1.3496" stroke-linejoin="round" stroke-miterlimit="10" d="M50.577,50.875h4.367
 			c0-7.934,1.99-14.971,5.064-19.367C54.587,33.711,50.577,41.547,50.577,50.875z"/>
@@ -17,6 +16,6 @@
 		<path stroke="#000000" stroke-width="1.3496" stroke-linejoin="round" stroke-miterlimit="10" d="M58.036,50.873
 			c2.186-3.602,4.951-6.611,7.6-8.506c-2.799,0.496-6.072,2.77-8.563,6.006c0.369,0.766,0.68,1.6,0.933,2.49L58.036,50.873z"/>
 	</g>
-	<ellipse opacity="0.3" fill="#232323" cx="269.999" cy="163.854" rx="38.078" ry="6.146"/>
+	<ellipse opacity="0.3" fill="#232323" enable-background="new    " cx="269.999" cy="163.854" rx="38.078" ry="6.146"/>
 </g>
 </svg>

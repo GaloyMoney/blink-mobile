@@ -4,15 +4,14 @@
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="375px" height="170px" viewBox="0 0 375 170" enable-background="new 0 0 375 170" xml:space="preserve">
 <g>
-	<rect fill="#3654FF" width="375" height="170"/>
 	<g>
 		<g>
-			<path fill="#232323" d="M317.984,164c-3.3,0-4.65-2.338-3-5.196l11.32-19.607c1.65-2.858,4.35-2.858,6,0l11.32,19.607
-				c1.65,2.858,0.3,5.196-3,5.196H317.984z"/>
+			<path fill="#232323" d="M317.984,164c-3.301,0-4.65-2.338-3-5.195l11.32-19.607c1.649-2.858,4.35-2.858,6,0l11.319,19.607
+				c1.649,2.857,0.3,5.195-3,5.195H317.984z"/>
 		</g>
 		<g>
-			<path fill="#232323" d="M333.95,164c-2.311,0-3.255-1.637-2.101-3.637l7.926-13.726c1.154-2,3.045-2,4.199,0l7.926,13.726
-				c1.154,2,0.21,3.637-2.101,3.637H333.95z"/>
+			<path fill="#232323" d="M333.95,164c-2.312,0-3.255-1.637-2.101-3.637l7.926-13.727c1.154-2,3.045-2,4.199,0l7.926,13.727
+				c1.154,2,0.209,3.637-2.102,3.637H333.95z"/>
 		</g>
 	</g>
 	<g opacity="0.2">
@@ -29,7 +28,7 @@
 	</g>
 	<ellipse fill="#232323" cx="270" cy="163.854" rx="38.079" ry="6.146"/>
 	
-		<path opacity="0.3" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" stroke-dasharray="4,6" d="
+		<path opacity="0.3" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" stroke-dasharray="4,6" enable-background="new    " d="
 		M105,5v69c0,5.523,4.477,10,10,10h62c5.522,0,10,4.477,10,10v59c0,5.523,4.477,10,10,10h28"/>
 </g>
 </svg>
