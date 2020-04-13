@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native"
 import I18n from "i18n-js"
 import { inject, observer } from "mobx-react"
 import * as React from "react"
