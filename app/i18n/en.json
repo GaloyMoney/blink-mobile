@@ -122,12 +122,6 @@
             "No. A digital key is private, and anyone who has access to it will be able to spend your bitcoin",
           ]
         },
-        "backupWallet": {
-          "type": "Action",
-          "title": "Backup wallet",
-          "text": "Now that you have some sats, and you know what a digital key is, you can back up your wallet to iCloud. This will ensure  you never lose access to your bitcoin. \n\nUnlike traditional dollars, you own your bitcoin with private keys stored in your mobile phone, which is why taking care to backup your keys is essential",
-          "feedback": "Backup keys saved to iCloud"
-        },
         "bitcoinUnique": {
           "type": "Text",
           "title": "What makes bitcoin special?",
@@ -233,7 +227,13 @@
         "inviteAFriend": {
           "title": "Invite a friend",
           "text": "Earn [xx] sats for each friend who downloads the Galoy app!."
-        }
+        },
+        "backupWallet": {
+          "type": "Action",
+          "title": "Backup wallet",
+          "text": "Now that you have some sats, and you know what a digital key is, you can back up your wallet to iCloud. This will ensure  you never lose access to your bitcoin. \n\nUnlike traditional dollars, you own your bitcoin with private keys stored in your mobile phone, which is why taking care to backup your keys is essential",
+          "feedback": "Backup keys saved to iCloud"
+        },
       },
       "useBitcoin": {
         "meta": { "title": "Use Bitcoin", "icon": "logo-bitcoin" },
