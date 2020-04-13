@@ -13,7 +13,7 @@ import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-import { getRemainingRewards, getRewardsFromSection, rewardsMeta } from "./rewards-utils"
+import { getRemainingRewardsSats, getRewardsFromSection, rewardsMeta } from "./rewards-utils"
 
 
 // TODO do something like this to avoid loading everything upfront
@@ -178,8 +178,8 @@ export const RewardsSection = inject("dataStore")(
 
     const [currRewardIndex, setCurrRewardIndex] = useState(firstItem)
 
-    const [initialRemainingRewards] = useState(getRemainingRewards({ section, dataStore }))
-    const currentRemainingRewards = getRemainingRewards({ section, dataStore })
+    const [initialRemainingRewards] = useState(getRemainingRewardsSats({ section, dataStore }))
+    const currentRemainingRewards = getRemainingRewardsSats({ section, dataStore })
 
     if (initialRemainingRewards !== 0 && currentRemainingRewards === 0) {
       Alert.alert("You have succesfully completed this section!", "", [
