@@ -63,6 +63,10 @@ const { width: screenWidth } = Dimensions.get("window")
 const { height: screenHeight } = Dimensions.get("window")
 
 const styles = StyleSheet.create({
+  screenStyle: {
+    backgroundColor: palette.blue
+  },
+
   accountView: {
     borderColor: color.line,
     borderRadius: 4,
@@ -85,7 +89,7 @@ const styles = StyleSheet.create({
   imageContainerRewards: {
     height: 200,
     marginBottom: Platform.select({ ios: 0, android: 1 }), // Prevent a random Android rendering issue
-    backgroundColor: "white",
+    backgroundColor: palette.white,
     borderTopLeftRadius: 32,
     borderTopRightRadius: 32,
   },
@@ -168,13 +172,12 @@ const styles = StyleSheet.create({
 
 export const RewardsSection = inject("dataStore")(
   observer(({ dataStore, route, navigation }) => {
-    const { navigate } = useNavigation()
 
     const section = route.params.section
     const rewards = getRewardsFromSection({ section, rewardsMeta, dataStore })
 
     const itemIndex = rewards.findIndex((item) => !item[1].fullfilled)
-    const [firstItem] = useState(itemIndex)
+    const [firstItem] = useState(itemIndex >= 0 ? itemIndex : 0)
 
     const [currRewardIndex, setCurrRewardIndex] = useState(firstItem)
 
@@ -197,61 +200,46 @@ export const RewardsSection = inject("dataStore")(
 
     navigation.setOptions({ title: translate(`RewardsScreen.rewards\.${section}\.meta.title`) })
 
-    const open = async (index) => {
-      // TODO use index
-
-      navigate('rewardsQuiz', { 
-        title: currRewardInfo.title, 
-        text: currRewardInfo.text, 
-        amount: OnboardingRewards[currRewardId],
-        question: currRewardInfo.question,
-        answers: currRewardInfo.answers, 
-        feedback: currRewardInfo.feedback,
-        onComplete: () => rewardsMeta[currRewardId].onComplete({ dataStore }),
-      })
+    enum RewardType {
+      Text = "Text",
+      Video = "Video",
+      Action = "Action",
     }
 
-    // enum RewardType {
-    //   Text = "Text",
-    //   Video = "Video",
-    //   Action = "Action",
-    // }
+    const open = async () => {
 
-    // const action = async () => {
-    //   const type = currRewardInfo.type as RewardType
+      const type = currRewardInfo.type as RewardType
 
-    //   const feedback = currRewardInfo.feedback ?? ""
-
-    //   if ([RewardType.Text, RewardType.Video].includes(RewardType[type])) {
-    //     setQuizData({
-    //       feedback,
-    //       question: currRewardInfo.question,
-    //       answers: currRewardInfo.answers,
-    //     })
-    //   }
-
-    //   switch (RewardType[type]) {
-    //     case RewardType.Text:
-    //       setQuizVisible(true)
-    //       break
-    //     case RewardType.Video:
-    //       try {
-    //         console.tron.log({ videoid: currRewardInfo.videoid })
-    //         await YouTubeStandaloneIOS.playVideo(currRewardInfo.videoid)
-    //         await sleep(500) // FIXME why await for playVideo doesn't work?
-    //         console.tron.log("finish video")
-    //         setQuizVisible(true)
-    //       } catch (err) {
-    //         console.tron.log("error video", err.toString())
-    //         setQuizVisible(false)
-    //       }
-    //       break
-    //     case RewardType.Action:
-    //       await rewardsMeta[currRewardId].onAction({ dataStore, setLoading, navigate })
-    //       close(feedback)
-    //       break
-    //   }
-    // }
+      switch (RewardType[type]) {
+        case RewardType.Text:
+          navigation.navigate('rewardsQuiz', { 
+            title: currRewardInfo.title, 
+            text: currRewardInfo.text, 
+            amount: OnboardingRewards[currRewardId],
+            question: currRewardInfo.question,
+            answers: currRewardInfo.answers, 
+            feedback: currRewardInfo.feedback,
+            onComplete: () => rewardsMeta[currRewardId].onComplete({ dataStore }),
+          })
+          break
+        //     case RewardType.Video:
+        //       try {
+        //         console.tron.log({ videoid: currRewardInfo.videoid })
+        //         await YouTubeStandaloneIOS.playVideo(currRewardInfo.videoid)
+        //         await sleep(500) // FIXME why await for playVideo doesn't work?
+        //         console.tron.log("finish video")
+        //         setQuizVisible(true)
+        //       } catch (err) {
+        //         console.tron.log("error video", err.toString())
+        //         setQuizVisible(false)
+        //       }
+        //       break
+        case RewardType.Action:
+          // TODO
+          // await rewardsMeta[currRewardId].onAction({ dataStore, navigate })
+          break
+      }
+    }
 
     const CardItem = ({ item, index }) => {
       const itemId = item[0]
@@ -259,7 +247,7 @@ export const RewardsSection = inject("dataStore")(
 
       return (
         <View style={styles.item}>
-          <TouchableOpacity onPress={() => open(index)} activeOpacity={0.9}>
+          <TouchableOpacity onPress={open} activeOpacity={0.9}>
             <Image
               source={eval(`${itemId}Image`)} // FIXME
               style={{width: screenWidth - 60, height: 300, resizeMode: 'contain',}}
@@ -269,7 +257,7 @@ export const RewardsSection = inject("dataStore")(
           <View>
             <Text style={styles.itemTitle}>{itemInfo.title}</Text>
             <Button
-              onPress={async () => open(index)}
+              onPress={open}
               disabled={!itemInfo.enabled}
               type={itemInfo.fullfilled ? "clear" : "solid"}
               buttonStyle={itemInfo.fullfilled ? styles.buttonStyleFullfilled : styles.textButton}
@@ -303,7 +291,7 @@ export const RewardsSection = inject("dataStore")(
     }
 
     return (
-      <Screen>
+      <Screen style={styles.screenStyle}>
         <View style={{ flex: 1 }} />
         <Carousel
           data={rewards}

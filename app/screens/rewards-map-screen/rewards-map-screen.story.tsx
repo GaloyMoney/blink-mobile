@@ -7,17 +7,16 @@ import { RewardsMapScreen } from "./rewards-map-screen";
 
 
 const sectionsData = [
-  {text: "Bitcoin:\nwhat is it?", icon: BitcoinCircle},
-  {text: "Bitcoin v traditional Money", icon: BitcoinCircle},
-  {text: "Bitcoin:\nwhy is it special?", icon: BitcoinCircle},
-  {text: "Bitcoin:\nwhat is it?", icon: BitcoinCircle},
-  {text: "Bitcoin v traditional Money", icon: BitcoinCircle},
-  {text: "Bitcoin:\nwhy is it special?", icon: BitcoinCircle},
-  {text: "Bitcoin:\nwhat is it?", icon: BitcoinCircle},
-  {text: "Bitcoin v traditional Money", icon: BitcoinCircle},
+  {text: "Bitcoin:\nwhat is it?", icon: BitcoinCircle, id:"bitcoinWhatIsIt"},
+  {text: "Bitcoin v traditional Money", icon: BitcoinCircle, id:"bitcoinWhatIsIt"},
+  {text: "Bitcoin:\nwhy is it special?", icon: BitcoinCircle, id:"bitcoinWhatIsIt"},
+  {text: "Bitcoin:\nwhat is it?", icon: BitcoinCircle, id:"bitcoinWhatIsIt"},
+  {text: "Bitcoin v traditional Money", icon: BitcoinCircle, id:"bitcoinWhatIsIt"},
+  {text: "Bitcoin:\nwhy is it special?", icon: BitcoinCircle, id:"bitcoinWhatIsIt"},
+  {text: "Bitcoin:\nwhat is it?", icon: BitcoinCircle, id:"bitcoinWhatIsIt"},
+  {text: "Bitcoin v traditional Money", icon: BitcoinCircle, id:"bitcoinWhatIsIt"},
   {text: "Bitcoin:\nwhy is it special?", icon: BitcoinCircle, id:"bitcoinWhatIsIt"},
 ]
-
 
 declare let module
 
