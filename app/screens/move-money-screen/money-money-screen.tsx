@@ -1,5 +1,4 @@
 import auth from "@react-native-firebase/auth"
-import { useNavigation } from "@react-navigation/native"
 import { inject } from "mobx-react"
 import * as React from "react"
 import { useState } from "react"
@@ -18,19 +17,30 @@ import { FirstChannelStatus } from "../../utils/enum"
 import { capitalize, showFundingTx } from "../../utils/helper"
 
 const styles = StyleSheet.create({
-  button: {
-    backgroundColor: color.primary,
-    marginLeft: 20,
+  screenStyle: {
+    backgroundColor: palette.lighterGrey
+  },
+
+  buttonStyle: {
+    borderColor: color.primary,
+    borderRadius: 32,
+    borderWidth: 2,
+    width: "100%"
+  },
+
+  titleStyle: {
+    color: color.primary,
+    fontWeight: "bold",
+    fontSize: 24,
   },
 
   listItem: {
-    backgroundColor: palette.lightGrey,
     marginVertical: 12,
     marginHorizontal: 24,
+    borderRadius: 8,
   },
 
   buttonContainer: {
-    flex: 1,
     marginTop: 24,
     paddingHorizontal: 15,
   },
@@ -43,6 +53,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     margin: 22,
+    color: palette.blue,
   },
 
   icon: {
@@ -65,8 +76,7 @@ const styles = StyleSheet.create({
   },
 })
 
-export const MoveMoneyScreen = inject("dataStore")(({ dataStore }) => {
-  const { navigate } = useNavigation()
+export const MoveMoneyScreen = inject("dataStore")(({ dataStore, navigation }) => {
 
   const [modalVisible, setModalVisible] = useState(false)
   const [message, setMessage] = useState("")
@@ -105,14 +115,14 @@ export const MoveMoneyScreen = inject("dataStore")(({ dataStore }) => {
 
   const onBankClick = ({ target, title }) => {
     if (dataStore.onboarding.has(Onboarding.bankOnboarded)) {
-      navigate(target, { title })
+      navigation.navigate(target, { title })
     } else {
       setMessage(translate("MoveMoneyScreen.needBankAccount", { feature: target }))
       setModalVisible(true)
       setButtonTitle(translate("MoveMoneyScreen.openAccount"))
       setButtonAction(() => () => {
         setModalVisible(false)
-        navigate("openBankAccount")
+        navigation.navigate("openBankAccount")
       })
       setSyncing(false)
     }
@@ -120,14 +130,14 @@ export const MoveMoneyScreen = inject("dataStore")(({ dataStore }) => {
 
   const onBitcoinClick = ({ target }) => {
     if (dataStore.lnd.statusFirstChannel === FirstChannelStatus.opened) {
-      navigate(target)
+      navigation.navigate(target)
     } else if (auth().currentUser?.isAnonymous) {
       setMessage(translate("MoveMoneyScreen.needWallet"))
       setModalVisible(true)
       setButtonTitle(translate("MoveMoneyScreen.openWallet"))
       setButtonAction(() => () => {
         setModalVisible(false)
-        navigate("rewards", { card: "phoneVerification" })
+        navigation.navigate("rewards", { card: "phoneVerification" })
       })
       setSyncing(false)
     } else {
@@ -146,7 +156,7 @@ export const MoveMoneyScreen = inject("dataStore")(({ dataStore }) => {
   }
 
   return (
-    <Screen>
+    <Screen style={styles.screenStyle}>
       <Modal
         style={{ marginHorizontal: 0, marginBottom: 0 }}
         isVisible={modalVisible}
@@ -175,10 +185,13 @@ export const MoveMoneyScreen = inject("dataStore")(({ dataStore }) => {
             <Button
               title={buttonTitle}
               onPress={() => buttonAction()}
-              buttonStyle={styles.button}
-              containerStyle={[styles.buttonContainer, { width: "100%" }]}
+              type="outline"
+              buttonStyle={styles.buttonStyle}
+              titleStyle={styles.titleStyle}
+              containerStyle={{marginTop: 24}}
             />
           )}
+          <View style={{flex: 1}} />
         </View>
       </Modal>
       <ScrollView>
@@ -186,7 +199,7 @@ export const MoveMoneyScreen = inject("dataStore")(({ dataStore }) => {
         {bank.map((item, i) => (
           <ListItem
             titleStyle={styles.text}
-            style={styles.listItem}
+            containerStyle={styles.listItem}
             key={i}
             title={translate(`${capitalize(item.target)}Screen.title`)}
             leftIcon={<Icon name={item.icon} style={styles.icon} size={32} color={color.primary} />}
@@ -198,7 +211,7 @@ export const MoveMoneyScreen = inject("dataStore")(({ dataStore }) => {
         {bitcoin.map((item, i) => (
           <ListItem
             titleStyle={styles.text}
-            style={styles.listItem}
+            containerStyle={styles.listItem}
             key={i}
             title={translate(`${capitalize(item.target)}Screen.title`)}
             leftIcon={<Icon name={item.icon} style={styles.icon} size={32} color={color.primary} />}

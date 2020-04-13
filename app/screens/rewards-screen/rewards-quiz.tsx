@@ -193,8 +193,7 @@ export const RewardsQuiz = ({ route, navigation }) => {
       </View>
     )
     j++
-  }
-  )
+  })
 
   return (
     <Screen style={{backgroundColor: palette.lighterGrey}}>

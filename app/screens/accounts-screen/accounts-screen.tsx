@@ -6,7 +6,7 @@ import * as React from "react"
 import { useEffect, useState } from "react"
 import ContentLoader, { Rect } from "react-content-loader/native"
 import { FlatList, RefreshControl, StyleSheet, Text, View } from "react-native"
-import { ListItem } from "react-native-elements"
+import { ListItem, Button } from "react-native-elements"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Onboarding } from "types"
 import { BalanceHeader } from "../../components/balance-header"
@@ -26,6 +26,7 @@ const accountBasic = {
 const styles = StyleSheet.create({
   accountAmount: {
     ...accountBasic,
+    color: color.primaryDarker
   },
 
   accountTypeStyle: {
@@ -40,17 +41,13 @@ const styles = StyleSheet.create({
   },
 
   accountViewContainer: {
-    backgroundColor: palette.lighterGrey,
+    backgroundColor: palette.white,
     borderRadius: 8,
   },
 
   accountViewTitle: {
     color: palette.darkGrey,
     fontWeight: "bold",
-  },
-
-  accountViewSubtitle: {
-    color: palette.red,
   },
 
   icon: {
@@ -75,7 +72,6 @@ export const AccountItem = ({ account, icon, amount, navigate, title=undefined, 
       style={styles.accountView}
       containerStyle={styles.accountViewContainer}
       titleStyle={styles.accountViewTitle}
-      subtitleStyle={styles.accountViewSubtitle}
       chevron
       title={title ?? account}
       onPress={action || (() => navigate("accountDetail", { account }))}
@@ -140,7 +136,7 @@ export const AccountsScreen = inject("dataStore")(
     }, [])
 
     return (
-      <Screen style={{backgroundColor: palette.white}}>
+      <Screen style={{backgroundColor: palette.lighterGrey}}>
         {/* {dataStore.onboarding.stage.length === 1 && <Overlay screen="accounts" />} */}
         <BalanceHeader
           currency={CurrencyType.USD}
@@ -162,13 +158,14 @@ export const AccountsScreen = inject("dataStore")(
           )}
         />
         <View style={{ flex: 1 }}></View>
-        <ListItem
+        <Button
           title={translate("AccountsScreen.bitcoinRewards")}
           style={styles.accountView}
-          titleStyle={{ color: palette.white }}
-          containerStyle={{ backgroundColor: color.primary }}
+          titleStyle={{ color: palette.blue }}
+          type="clear"
+          // containerStyle={{ backgroundColor: color.primary }}
           onPress={() => navigate("rewards")}
-          leftAvatar={<Icon name="ios-gift" color={palette.white} size={28} style={styles.icon} />}
+          icon={<Icon name="ios-gift" color={palette.blue} size={28} style={styles.icon} />}
         />
       </Screen>
     )
