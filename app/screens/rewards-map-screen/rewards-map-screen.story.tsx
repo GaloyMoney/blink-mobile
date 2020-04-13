@@ -2,7 +2,21 @@ import { number, withKnobs } from "@storybook/addon-knobs";
 import { storiesOf } from "@storybook/react-native";
 import * as React from "react";
 import { Story, StoryScreen } from "../../../storybook/views";
+import BitcoinCircle from "./bitcoin-circle-01.svg";
 import { RewardsMapScreen } from "./rewards-map-screen";
+
+
+const sectionsData = [
+  {text: "Bitcoin:\nwhat is it?", icon: BitcoinCircle},
+  {text: "Bitcoin v traditional Money", icon: BitcoinCircle},
+  {text: "Bitcoin:\nwhy is it special?", icon: BitcoinCircle},
+  {text: "Bitcoin:\nwhat is it?", icon: BitcoinCircle},
+  {text: "Bitcoin v traditional Money", icon: BitcoinCircle},
+  {text: "Bitcoin:\nwhy is it special?", icon: BitcoinCircle},
+  {text: "Bitcoin:\nwhat is it?", icon: BitcoinCircle},
+  {text: "Bitcoin v traditional Money", icon: BitcoinCircle},
+  {text: "Bitcoin:\nwhy is it special?", icon: BitcoinCircle, id:"bitcoinWhatIsIt"},
+]
 
 
 declare let module
@@ -12,6 +26,10 @@ storiesOf("Map", module)
   .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
   .add("Style Presets", () => (
     <Story>
-      <RewardsMapScreen currSection={number("section", 0)} progress={number("progress", 1)} />
+      <RewardsMapScreen 
+        currSection={number("section", 0)}
+        progress={number("progress", 1)}
+        sectionsData={sectionsData}
+        />
     </Story>
 ))

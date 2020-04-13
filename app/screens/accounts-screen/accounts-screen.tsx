@@ -40,13 +40,17 @@ const styles = StyleSheet.create({
   },
 
   accountViewContainer: {
-    backgroundColor: color.backgroundLighter,
+    backgroundColor: palette.lighterGrey,
     borderRadius: 8,
   },
 
   accountViewTitle: {
-    color: "white",
+    color: palette.darkGrey,
     fontWeight: "bold",
+  },
+
+  accountViewSubtitle: {
+    color: palette.red,
   },
 
   icon: {
@@ -71,6 +75,7 @@ export const AccountItem = ({ account, icon, amount, navigate, title=undefined, 
       style={styles.accountView}
       containerStyle={styles.accountViewContainer}
       titleStyle={styles.accountViewTitle}
+      subtitleStyle={styles.accountViewSubtitle}
       chevron
       title={title ?? account}
       onPress={action || (() => navigate("accountDetail", { account }))}
@@ -96,14 +101,14 @@ export const AccountsScreen = inject("dataStore")(
 
     // FIXME type any
     const accountTypes: Array<Record<string, any>> = [
-      { key: "Bank Account", account: AccountType.Bank, icon: "ios-cash" },
+      { key: "Cash Account", account: AccountType.Bank, icon: "ios-cash" },
       { key: "Bitcoin", account: AccountType.Bitcoin, icon: "logo-bitcoin" },
     ]
 
     // TODO refactor ==> bank should also have a virtual screen
     if (!dataStore.onboarding.has(Onboarding.bankOnboarded)) {
       accountTypes[0].action = () => navigate("bankAccountRewards")
-      accountTypes[0].title = "Open Bank Account"
+      accountTypes[0].title = "Open Cash Account"
     }
 
     // FIXME
@@ -135,7 +140,7 @@ export const AccountsScreen = inject("dataStore")(
     }, [])
 
     return (
-      <Screen>
+      <Screen style={{backgroundColor: palette.white}}>
         {/* {dataStore.onboarding.stage.length === 1 && <Overlay screen="accounts" />} */}
         <BalanceHeader
           currency={CurrencyType.USD}

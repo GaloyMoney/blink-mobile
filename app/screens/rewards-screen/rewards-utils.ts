@@ -10,8 +10,6 @@ export const getRewardsFromSection = ({ dataStore, section, rewardsMeta = undefi
   const rewards_obj = translate(`RewardsScreen.rewards\.${section}`)
   const rewards = Object.entries(rewards_obj).filter((id) => id[0] !== "meta")
 
-  console.tron.log({rewards})
-
   rewards.forEach((item) => (item[1].fullfilled = dataStore.onboarding.has(Onboarding[item[0]])))
 
   if (rewardsMeta) {
@@ -26,7 +24,15 @@ export const getRewardsFromSection = ({ dataStore, section, rewardsMeta = undefi
   return rewards
 }
 
-export const getRemainingRewards = ({ section, dataStore }) =>
+export const isSectionComplete = ({section, dataStore}) => 
+  getRemainingRewardsSats({section, dataStore}) === 0
+
+export const getRemainingRewardsItems = ({ section, dataStore }) => {
+  const rewards = getRewardsFromSection({ section, dataStore })
+  return rewards.filter((item) => item[1].fullfilled).length / rewards.length
+}
+  
+export const getRemainingRewardsSats = ({ section, dataStore }) =>
   getRewardsFromSection({ section, dataStore })
     .filter((item) => !item[1].fullfilled)
     .reduce((acc, item) => OnboardingRewards[item[0]] + acc, 0)
@@ -42,7 +48,7 @@ export const getCompletedSection = ({ dataStore }) => {
   let count = 0
   const sections = getSections()
   for (const section of sections) {
-    if (getRemainingRewards({ dataStore, section }) === 0) {
+    if (getRemainingRewardsSats({ dataStore, section }) === 0) {
       count++
     }
   }

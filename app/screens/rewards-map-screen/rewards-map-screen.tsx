@@ -1,8 +1,11 @@
+import { inject, observer } from "mobx-react"
 import * as React from "react"
 import { Dimensions, StyleSheet, Text, View } from "react-native"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import { Screen } from "../../components/screen"
+import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
+import { getRemainingRewardsItems, isSectionComplete } from "../rewards-screen"
 import BitcoinCircle from "./bitcoin-circle-01.svg"
 import BottomOngoing from "./bottom-ongoing-01.svg"
 import BottomStart from "./bottom-start-01.svg"
@@ -54,6 +57,19 @@ interface IBoxAdding {
   position: number 
 }
 
+interface ISectionData {
+  text: string
+  id: string
+  icon: React.Component
+}
+
+interface IRewardsMapScreen {
+  navigation: object //FIXME
+  currSection: number
+  progress: number
+  sectionsData: ISectionData[]
+}
+
 export const ProgressBar = ({progress}) => {
   const balanceWidth = `${progress * 100}%`
 
@@ -63,19 +79,41 @@ export const ProgressBar = ({progress}) => {
   </View>
 )}
 
-const sectionsData = [
-  {text: "Bitcoin:\nwhat is it?", icon: BitcoinCircle, id:"bitcoinWhatIsIt"},
-  {text: "Bitcoin v traditional Money", icon: BitcoinCircle},
-  {text: "Bitcoin:\nwhy is it special?", icon: BitcoinCircle},
-  {text: "Bitcoin:\nwhat is it?", icon: BitcoinCircle},
-  {text: "Bitcoin v traditional Money", icon: BitcoinCircle},
-  {text: "Bitcoin:\nwhy is it special?", icon: BitcoinCircle},
-  {text: "Bitcoin:\nwhat is it?", icon: BitcoinCircle},
-  {text: "Bitcoin v traditional Money", icon: BitcoinCircle},
-  {text: "Bitcoin:\nwhy is it special?", icon: BitcoinCircle},
-]
 
-export const RewardsMapScreen = ({ navigation, currSection, progress }) => {
+export const RewardsMapDataInjected = inject("dataStore")(
+  observer(({ dataStore, navigation }) => {
+
+  const sectionId = Object.keys(translate("RewardsScreen.rewards"))
+  let sectionsData = []
+  let currSection = 0
+  let progress = NaN
+
+  for (let section of sectionId) {
+    sectionsData.push({
+      id: section,
+      text: translate(`RewardsScreen.rewards\.${section}.meta.title`),
+      // Icon: translate(`RewardsScreen.rewards\.${item}.meta.icon`
+      icon: BitcoinCircle,
+    })
+
+    if (isSectionComplete({section, dataStore})) {
+      currSection += 1
+    } else if (isNaN(progress)) { // only do it once for the first uncompleted section
+      progress = getRemainingRewardsItems({section, dataStore})
+    }
+  }
+
+  return <RewardsMapScreen 
+    navigation={navigation}
+    sectionsData={sectionsData}
+    currSection={currSection}
+    progress={progress}
+  />
+
+}))
+
+export const RewardsMapScreen: React.FC<IRewardsMapScreen> = 
+  ({ navigation, sectionsData, currSection, progress}) => {
 
   const InBetweenTile: React.FC<IInBetweenTile> = ({ side, position }) => {
     if (currSection < position) {      
@@ -128,13 +166,11 @@ export const RewardsMapScreen = ({ navigation, currSection, progress }) => {
   let sectionsComp = []
 
   sectionsData.forEach((item, index) => {
-    const pos = sectionsData.length - index - 1
-
-    sectionsComp.push(
+    sectionsComp.unshift(
     <BoxAdding  text={item.text}
                 Icon={item.icon} 
-                side={pos % 2 ? "left":"right"} 
-                position={pos}
+                side={index % 2 ? "left":"right"} 
+                position={index}
                 section={item.id} />
   )})
 

@@ -402,7 +402,7 @@
   "AccountsScreen": { "title": "Accounts", "bitcoinRewards": "Earn bitcoin rewards!" },
   "BankAccountReadyScreen": { "accountReady": "Your Galoy bank account is ready!" },
   "BankAccountRewardsScreen": {
-    "title": "Bank Account Rewards",
+    "title": "Cash Account Rewards",
     "openAccount": "Open a Galoy bank account",
     "holdUSDollar": "Hold US dollars in your account!",
     "debitCard": "Order a debit card to earn 1%+ cashback in bitcoin on your dollar spending!",
