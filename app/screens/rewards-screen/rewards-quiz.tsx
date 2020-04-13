@@ -237,9 +237,9 @@ export const RewardsQuiz = ({ route, navigation }) => {
           showsVerticalScrollIndicator={true}
           bounces={false}
         >
-      <View style={styles.svgContainer}>
-        <Svg />
-      </View>
+        <View style={styles.svgContainer}>
+          <Svg />
+        </View>
         <View style={styles.textContainer}>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.text}>{text}</Text>

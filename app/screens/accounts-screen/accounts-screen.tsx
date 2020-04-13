@@ -1,12 +1,11 @@
 import functions from "@react-native-firebase/functions"
-import { useNavigation } from "@react-navigation/native"
 import currency from "currency.js"
 import { inject, observer } from "mobx-react"
 import * as React from "react"
 import { useEffect, useState } from "react"
 import ContentLoader, { Rect } from "react-content-loader/native"
 import { FlatList, RefreshControl, StyleSheet, Text, View } from "react-native"
-import { ListItem, Button } from "react-native-elements"
+import { Button, ListItem } from "react-native-elements"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Onboarding } from "types"
 import { BalanceHeader } from "../../components/balance-header"
@@ -58,7 +57,7 @@ const styles = StyleSheet.create({
   },
 })
 
-export const AccountItem = ({ account, icon, amount, navigate, title=undefined, action=undefined}) => {
+export const AccountItem = ({ account, icon, amount, navigation, title=undefined, action=undefined}) => {
   const initialLoading = isNaN(amount)
 
   const Loader = () => (
@@ -74,7 +73,7 @@ export const AccountItem = ({ account, icon, amount, navigate, title=undefined, 
       titleStyle={styles.accountViewTitle}
       chevron
       title={title ?? account}
-      onPress={action || (() => navigate("accountDetail", { account }))}
+      onPress={action || (() => navigation.navigate("accountDetail", { account }))}
       leftAvatar={<Icon name={icon} color={color.primary} size={64} style={styles.icon} />}
       subtitle={!title &&
         <>
@@ -91,9 +90,17 @@ export const AccountItem = ({ account, icon, amount, navigate, title=undefined, 
 }
 
 export const AccountsScreen = inject("dataStore")(
-  observer(({ dataStore }) => {
+  observer(({ dataStore, route, navigation }) => {
     const [refreshing, setRefreshing] = useState(false)
-    const { navigate } = useNavigation()
+
+    console.tron.log({forceRefresh: route.params?.forceRefresh})
+
+    useEffect(() => {
+      if (route.params?.forceRefresh === true) {
+        navigation.setOptions({ forceRefresh: false })
+        onRefresh()
+      }
+    }, [route.params?.forceRefresh]);
 
     // FIXME type any
     const accountTypes: Array<Record<string, any>> = [
@@ -103,7 +110,7 @@ export const AccountsScreen = inject("dataStore")(
 
     // TODO refactor ==> bank should also have a virtual screen
     if (!dataStore.onboarding.has(Onboarding.bankOnboarded)) {
-      accountTypes[0].action = () => navigate("bankAccountRewards")
+      accountTypes[0].action = () => navigation.navigate("bankAccountRewards")
       accountTypes[0].title = "Open Cash Account"
     }
 
@@ -124,6 +131,8 @@ export const AccountsScreen = inject("dataStore")(
         // FIXME quick fix for now, work on state management so this is not necessary
         // one case: if the app went on sleep and the function is not triggered
         await functions().httpsCallable("requestRewards")({})
+      } else {
+        await dataStore.lnd.openFirstChannel()
       }
 
       await dataStore.updateBalance()
@@ -134,7 +143,6 @@ export const AccountsScreen = inject("dataStore")(
     useEffect(() => {
       onRefresh()
     }, [])
-
     return (
       <Screen style={{backgroundColor: palette.lighterGrey}}>
         {/* {dataStore.onboarding.stage.length === 1 && <Overlay screen="accounts" />} */}
@@ -153,7 +161,7 @@ export const AccountsScreen = inject("dataStore")(
             <AccountItem
               {...item}
               amount={dataStore.balances({ currency: CurrencyType.USD, account: item.account })}
-              navigate={navigate}
+              navigation={navigation}
             />
           )}
         />
@@ -164,7 +172,7 @@ export const AccountsScreen = inject("dataStore")(
           titleStyle={{ color: palette.blue }}
           type="clear"
           // containerStyle={{ backgroundColor: color.primary }}
-          onPress={() => navigate("rewards")}
+          onPress={() => navigation.navigate("rewards")}
           icon={<Icon name="ios-gift" color={palette.blue} size={28} style={styles.icon} />}
         />
       </Screen>
