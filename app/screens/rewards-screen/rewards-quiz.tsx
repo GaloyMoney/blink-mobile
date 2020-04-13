@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
 
   bottomContainer: {
     borderTopWidth: 1,
-    borderTopColor: palette.lighterGrey,
+    borderTopColor: palette.lightGrey,
     alignItems: "center",
   },
 
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
   },
 
   quizWrongButtonStyle: {
-    backgroundColor: palette.angry,
+    backgroundColor: palette.red,
     borderRadius: 32,
     width: "100%",
     padding: 12
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
   },
 
   incorrectAnswerText: {
-    color: palette.angry,
+    color: palette.red,
     fontSize: 16,
   },
 
@@ -197,7 +197,7 @@ export const RewardsQuiz = ({ route, navigation }) => {
   )
 
   return (
-    <Screen style={{backgroundColor: palette.offWhite}}>
+    <Screen style={{backgroundColor: palette.lighterGrey}}>
       <Modal
         style={{ marginHorizontal: 0, marginBottom: 0 }}
         isVisible={quizVisible}
