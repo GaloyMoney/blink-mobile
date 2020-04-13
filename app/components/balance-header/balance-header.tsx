@@ -1,12 +1,12 @@
 import * as React from "react"
-import { View, StyleSheet, Text } from "react-native"
-import { color } from "../../theme"
-
-import { CurrencyType } from "../../utils/enum"
-
 import ContentLoader, { Rect } from "react-content-loader/native"
-import { TextCurrency } from "../text-currency/text-currency"
+import { StyleSheet, Text, View } from "react-native"
 import { translate } from "../../i18n"
+import { palette } from "../../theme/palette"
+import { CurrencyType } from "../../utils/enum"
+import { TextCurrency } from "../text-currency/text-currency"
+
+
 
 const styles = StyleSheet.create({
   amount: {
@@ -16,8 +16,9 @@ const styles = StyleSheet.create({
   },
 
   balanceText: {
-    color: color.text,
+    color: palette.darkGrey,
     fontSize: 16,
+    fontWeight: "bold",
     marginBottom: 8,
   },
 
@@ -36,7 +37,6 @@ export interface BalanceHeaderProps {
   currency: CurrencyType
   amount: number
   amountOtherCurrency?: number
-  initialLoading?: boolean
 }
 
 const Loader = () => (

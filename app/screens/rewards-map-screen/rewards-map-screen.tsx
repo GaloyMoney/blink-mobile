@@ -1,7 +1,7 @@
 import { inject, observer } from "mobx-react"
 import * as React from "react"
 import { Dimensions, StyleSheet, Text, View } from "react-native"
-import { TouchableOpacity } from "react-native-gesture-handler"
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
@@ -174,19 +174,32 @@ export const RewardsMapScreen: React.FC<IRewardsMapScreen> =
                 section={item.id} />
   )})
 
+  const scrollViewRef = React.createRef()
+
+  React.useEffect(() => {
+    scrollViewRef.current.scrollToEnd()
+  }, [])
+
   return (
-    <Screen preset="scroll" unsafe={true} >
-      <Top width={screenWidth} scale={1.5} height={110} />
-      <View style={styles.mainView}>
-        { currSection === 10 ? <LeftLastComplete /> : null }
-        { sectionsComp }
-        { currSection === 0 ?
-            progress === 0 ?
-                <BottomStart />
-              : <BottomOngoing /> 
-            : null
-        }
-      </View>
+    <Screen unsafe={true} >
+      <ScrollView 
+        ref={scrollViewRef}
+        onContentSizeChange={() => {
+          scrollViewRef.current.scrollToEnd()
+        }}
+        >
+        <Top width={screenWidth} scale={1.5} height={110} />
+        <View style={styles.mainView}>
+          { currSection === 10 ? <LeftLastComplete /> : null }
+          { sectionsComp }
+          { currSection === 0 ?
+              progress === 0 ?
+                  <BottomStart />
+                : <BottomOngoing /> 
+              : null
+          }
+        </View>
+      </ScrollView>
     </Screen>
   )
 }

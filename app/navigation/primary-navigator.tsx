@@ -74,14 +74,15 @@ export const AccountNavigator = () => {
   return (
     <StackAccounts.Navigator
       initialRouteName={"accounts"}
-      // headerMode: "float",
-      headerMode="none"
+      headerMode="float"
+      // headerMode="none"
     >
       <StackAccounts.Screen
         name="accounts"
         component={AccountsScreen}
         options={() => ({
           title: translate("AccountsScreen.title"),
+          headerShown: false
         })}
       />
       <StackAccounts.Screen
@@ -104,7 +105,10 @@ export const AccountNavigator = () => {
       <StackAccounts.Screen
         name="bankAccountRewards"
         component={BankAccountRewardsScreen}
-        options={{ title: translate("BankAccountRewardsScreen.title") }}
+        options={{ 
+          title: translate("BankAccountRewardsScreen.title"),
+          headerShown: false
+        }}
       />
       <StackAccounts.Screen name="debug" component={DebugScreen} />
     </StackAccounts.Navigator>
@@ -153,6 +157,20 @@ export const MoveMoneyNavigator = () => {
     </StackMoveMoney.Navigator>
   )
 }
+
+const StackPhoneValidation = createStackNavigator()
+
+export const PhoneValidationNavigator = () => {
+  return (
+    <StackPhoneValidation.Navigator
+      // headerMode="none"
+    >
+      <StackPhoneValidation.Screen name="welcomePhoneInput" component={WelcomePhoneInputScreen} />
+      <StackPhoneValidation.Screen name="welcomePhoneValidation" component={WelcomePhoneValidationScreen} />
+    </StackPhoneValidation.Navigator>
+  )
+}
+
 
 const Tab = createBottomTabNavigator()
 
@@ -239,6 +257,14 @@ export const RootStackScreen = () => {
         name="openBankAccount"
         component={BankAccountOnboardingNavigator}
         options={{ headerShown: false }}
+      />
+      <RootStack.Screen
+        name="phoneValidation"
+        component={PhoneValidationNavigator}
+        options={{ 
+          headerShown: false,
+          cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS
+        }}
       />
     </RootStack.Navigator>
   )

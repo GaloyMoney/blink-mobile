@@ -137,7 +137,7 @@ export const MoveMoneyScreen = inject("dataStore")(({ dataStore, navigation }) =
       setButtonTitle(translate("MoveMoneyScreen.openWallet"))
       setButtonAction(() => () => {
         setModalVisible(false)
-        navigation.navigate("rewards", { card: "phoneVerification" })
+        navigation.navigate("phoneValidation")
       })
       setSyncing(false)
     } else {

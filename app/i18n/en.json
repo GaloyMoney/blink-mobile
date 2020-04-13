@@ -69,11 +69,6 @@
     "rewards": {
       "bitcoinWhatIsIt": {
         "meta": { "title": "Bitcoin: What is it?", "icon": "ios-school" },
-        "walletDownloaded": {
-          "type": "Text",
-          "title": "Wallet downloaded",
-          "text": "We give 1 sat because for people to download the app because we want to incentive more people to understand what bitcoin is about",
-        },
         "sat": {
           "type": "Text",
           "title": "What is a sat?",
@@ -192,6 +187,11 @@
             "No one can print new bitcoin at will",
             "No. One of the founding principles of Galoy is to respect individual privacy. We do not sell any of your data to a third party"
           ]
+        },
+        "walletDownloaded": {
+          "type": "Text",
+          "title": "Wallet downloaded",
+          "text": "We give 1 sat because for people to download the app because we want to incentive more people to understand what bitcoin is about",
         },
         "tweet": {
           "type": "Action",

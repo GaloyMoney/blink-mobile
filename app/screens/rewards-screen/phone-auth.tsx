@@ -1,5 +1,4 @@
 import auth from "@react-native-firebase/auth"
-import { useNavigation, useRoute } from "@react-navigation/native"
 import { inject } from "mobx-react"
 import { isEmpty } from "ramda"
 import * as React from "react"
@@ -79,16 +78,11 @@ const styles = StyleSheet.create({
   },
 })
 
-export const WelcomePhoneInputScreen = () => {
+export const WelcomePhoneInputScreen = ({ navigation, route }) => {
   const [loading, setLoading] = useState(false)
   const [err, setErr] = useState("")
 
-  const { navigate } = useNavigation()
-
   const inputRef = useRef()
-
-  const route = useRoute()
-  console.tron.log({ route })
 
   const send = async () => {
     console.tron.log(`initPhoneNumber ${inputRef.current.getValue()}`)
@@ -103,11 +97,8 @@ export const WelcomePhoneInputScreen = () => {
       const confirmation = await auth().signInWithPhoneNumber(inputRef.current.getValue())
       if (!isEmpty(confirmation)) {
         setLoading(false)
-        const screen =
-          route.name === "welcomePhoneInputBanking"
-            ? "welcomePhoneValidationBanking"
-            : "welcomePhoneValidation"
-        navigate(screen, { confirmation })
+        const screen = "welcomePhoneValidation"
+        navigation.navigate(screen, { confirmation })
       } else {
         setErr(`confirmation object is empty? ${confirmation}`)
       }
@@ -163,13 +154,12 @@ export const WelcomePhoneInputScreen = () => {
   )
 }
 
-export const WelcomePhoneValidationScreen = inject("dataStore")(({ dataStore, route }) => {
+export const WelcomePhoneValidationScreen = inject("dataStore")(({ dataStore, route, navigation }) => {
   const [code, setCode] = useState("")
   const [loading, setLoading] = useState(false)
   const [err, setErr] = useState("")
 
   const confirmation = route.params.confirmation
-  const { goBack, navigate } = useNavigation()
 
   const onAuthStateChanged = async (user) => {
     // TODO : User type
@@ -177,32 +167,9 @@ export const WelcomePhoneValidationScreen = inject("dataStore")(({ dataStore, ro
     console.log(`onAuthStateChanged`, user)
 
     if (user.phoneNumber) {
-      // FIXME duplicate with user.Phonenumber
       await dataStore.onboarding.add(Onboarding.phoneVerification)
-
-      let result
-
-      if (dataStore.lnd.syncedToChain) {
-        result = await dataStore.lnd.openFirstChannel()
-        console.tron.log("Success opening channel", result)
-      } else {
-        // just go back, we'll open the channel once sync is done
-        result = true
-      }
-
-      if (result === true) {
-        setLoading(false)
-
-        if (route.name === "welcomePhoneValidationBanking") {
-          navigate("personalInformation")
-        } else {
-          goBack(null)
-          goBack(null)
-        }
-        // FIXME
-      } else {
-        setErr(result.toString())
-      }
+      navigation.navigate("Accounts", {forceRefresh: true})
+      // FIXME forceRefresh doesn't seem to be passed by
     }
   }
 
