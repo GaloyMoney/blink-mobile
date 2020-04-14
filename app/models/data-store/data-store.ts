@@ -1,28 +1,21 @@
-import { Instance, SnapshotOut, types, flow, getParentOfType, getEnv } from "mobx-state-tree"
-import { AccountType, CurrencyType, FirstChannelStatus } from "../../utils/enum"
-import {
-  Side,
-  IQuoteResponse,
-  IQuoteRequest,
-  IBuyRequest,
-  Onboarding,
-  OnboardingRewards,
-} from "types"
-import { parseDate } from "../../utils/date"
-import KeychainAction from "../../utils/keychain"
-import { generateSecureRandom } from "react-native-securerandom"
-
 import auth from "@react-native-firebase/auth"
-import functions from "@react-native-firebase/functions"
 import firestore from "@react-native-firebase/firestore"
-import { toHex, shortenHash } from "../../utils/helper"
-
-import DeviceInfo from "react-native-device-info"
-import Config from "react-native-config"
-import { Notifications } from "react-native-notifications"
+import functions from "@react-native-firebase/functions"
 import { difference } from "lodash"
-import { sleep } from "../../utils/sleep"
+import { flow, getEnv, getParentOfType, Instance, SnapshotOut, types } from "mobx-state-tree"
+import Config from "react-native-config"
+import DeviceInfo from "react-native-device-info"
+import { Notifications } from "react-native-notifications"
+import { generateSecureRandom } from "react-native-securerandom"
+import { IBuyRequest, IQuoteRequest, IQuoteResponse, Onboarding, OnboardingRewards, Side } from "types"
 import { translate } from "../../i18n"
+import { parseDate } from "../../utils/date"
+import { AccountType, CurrencyType, FirstChannelStatus } from "../../utils/enum"
+import { shortenHash, toHex } from "../../utils/helper"
+import KeychainAction from "../../utils/keychain"
+import { sleep } from "../../utils/sleep"
+
+
 
 // FIXME add as a global var
 DeviceInfo.isEmulator().then((isEmulator) => {
@@ -298,15 +291,19 @@ export const FiatAccountModel = BaseAccountModel.props({
     })
 
     const updateBalance = flow(function* () {
-      try {
-        const result = yield functions().httpsCallable("getFiatBalances")({})
-        console.tron.log("balance", result)
-        if ("data" in result) {
-          self.confirmedBalance = result.data
-          // TODO: add unconfirmed balance
+      if (getParentOfType(self, DataStoreModel).onboarding.has(Onboarding.bankOnboarded)) {
+        try {
+          const result = yield functions().httpsCallable("getFiatBalances")({})
+          console.tron.log("balance", result)
+          if ("data" in result) {
+            self.confirmedBalance = result.data
+            // TODO: add unconfirmed balance
+          }
+        } catch (err) {
+          console.tron.error(`can't fetch the balance ${err}`)
         }
-      } catch (err) {
-        console.tron.error(`can't fetch the balance ${err}`)
+      } else {
+        self.confirmedBalance = 0
       }
     })
     const update = flow(function* () {
