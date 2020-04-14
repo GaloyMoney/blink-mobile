@@ -117,14 +117,17 @@ export const MoveMoneyScreen = inject("dataStore")(({ dataStore, navigation }) =
     if (dataStore.onboarding.has(Onboarding.bankOnboarded)) {
       navigation.navigate(target, { title })
     } else {
-      setMessage(translate("MoveMoneyScreen.needBankAccount", { feature: target }))
-      setModalVisible(true)
-      setButtonTitle(translate("MoveMoneyScreen.openAccount"))
-      setButtonAction(() => () => {
-        setModalVisible(false)
-        navigation.navigate("openBankAccount")
-      })
-      setSyncing(false)
+      navigation.navigate("bankAccountRewards")
+
+      // bankAccountRewards
+      // setMessage(translate("MoveMoneyScreen.needBankAccount", { feature: target }))
+      // setModalVisible(true)
+      // setButtonTitle(translate("MoveMoneyScreen.openAccount"))
+      // setButtonAction(() => () => {
+      //   setModalVisible(false)
+      //   navigation.navigate("openBankAccount")
+      // })
+      // setSyncing(false)
     }
   }
 

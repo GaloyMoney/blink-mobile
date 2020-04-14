@@ -102,14 +102,6 @@ export const AccountNavigator = () => {
         initialParams={{ account: AccountType.Bitcoin }}
       />
       <StackAccounts.Screen name="transactionDetail" component={TransactionDetailScreen} />
-      <StackAccounts.Screen
-        name="bankAccountRewards"
-        component={BankAccountRewardsScreen}
-        options={{ 
-          title: translate("BankAccountRewardsScreen.title"),
-          headerShown: false
-        }}
-      />
       <StackAccounts.Screen name="debug" component={DebugScreen} />
     </StackAccounts.Navigator>
   )
@@ -257,6 +249,14 @@ export const RootStackScreen = () => {
         name="openBankAccount"
         component={BankAccountOnboardingNavigator}
         options={{ headerShown: false }}
+      />
+      <StackAccounts.Screen
+        name="bankAccountRewards"
+        component={BankAccountRewardsScreen}
+        options={{ 
+          headerShown: false,
+          cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
+        }}
       />
       <RootStack.Screen
         name="phoneValidation"
