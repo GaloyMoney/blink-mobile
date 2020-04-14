@@ -217,8 +217,8 @@ export const RewardsQuiz = ({ route, navigation }) => {
               color={palette.lightGrey}
               style={{ height: 44, top: -26 }}
             />
-          <View style={{ flex: 1, marginHorizontal: 24 }}>
-            <Text style={styles.title} >{question}</Text>
+          <ScrollView style={{ flex: 1, marginHorizontal: 24 }}>
+            <Text style={styles.title} >{question ?? title}</Text>
             {answers_shuffled}
             { recordedAnswer.indexOf(0) !== -1 ?
               <Button title={"Keep digging!"} 
@@ -227,7 +227,7 @@ export const RewardsQuiz = ({ route, navigation }) => {
                       buttonStyle={styles.buttonStyle}
                       titleStyle={styles.titleStyle} />
             : null }
-          </View>
+          </ScrollView>
         </View>
       </Modal>
       <ScrollView 
