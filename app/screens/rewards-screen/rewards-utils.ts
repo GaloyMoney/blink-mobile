@@ -59,17 +59,20 @@ export const rewardsMeta = {
   walletDownloaded: {
     onComplete: null,
   },
+  whatIsBitcoin: {
+    onComplete: async ({ dataStore }) => dataStore.onboarding.add(Onboarding.whatIsBitcoin),
+  },
   sat: {
     onComplete: async ({ dataStore }) => dataStore.onboarding.add(Onboarding.sat),
   },
-  freeMoney: {
-    onComplete: async ({ dataStore }) => dataStore.onboarding.add(Onboarding.freeMoney),
+  whereBitcoinExist: {
+    onComplete: async ({ dataStore }) => dataStore.onboarding.add(Onboarding.whereBitcoinExist),
   },
-  custody: {
-    onComplete: async ({ dataStore }) => dataStore.onboarding.add(Onboarding.custody),
+  whoControlsBitcoin: {
+    onComplete: async ({ dataStore }) => dataStore.onboarding.add(Onboarding.whoControlsBitcoin),
   },
-  digitalKeys: {
-    onComplete: async ({ dataStore }) => dataStore.onboarding.add(Onboarding.digitalKeys),
+  copyDigitalMoney: {
+    onComplete: async ({ dataStore }) => dataStore.onboarding.add(Onboarding.copyDigitalMoney),
   },
   backupWallet: {
     onAction: async ({ setLoading }) => {
