@@ -118,7 +118,6 @@ export const DebugScreen = inject("dataStore")(
               }
               await auth().signOut()
               await dataStore.onboarding._reset() // do not synchronize state update
-              await fileAction.deleteAllLndData()
               Alert.alert("user succesfully deleted. Delete your app to start from a clean state")
             }}
           />

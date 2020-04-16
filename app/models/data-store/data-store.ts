@@ -374,8 +374,9 @@ export const LndModel = BaseAccountModel.named("Lnd")
         })
       }),
 
-      addInvoice: flow(function* ({ value, memo, expiry = 172800 /* 48h */ }) {
-
+      addInvoice: flow(function* ({ value, memo }) {
+        const { data } = yield functions().httpsCallable("addInvoice")({ value, memo })
+        self.lastAddInvoice = data.request
       }),
 
       clearLastInvoice: flow(function* () {
