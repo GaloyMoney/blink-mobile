@@ -1,6 +1,5 @@
 import auth from "@react-native-firebase/auth"
 import crashlytics from "@react-native-firebase/crashlytics"
-import firestore from "@react-native-firebase/firestore"
 import functions from "@react-native-firebase/functions"
 import { inject, observer } from "mobx-react"
 import * as React from "react"
@@ -166,7 +165,6 @@ export const DebugScreen = inject("dataStore")(
               title="Delete onboarding state"
               onPress={async () => {
                 await dataStore.onboarding._reset()
-                await firestore().doc(`users/${auth().currentUser?.uid}/collection/paid`).delete()
               }}
             />
             <Button

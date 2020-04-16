@@ -1600,11 +1600,6 @@
   dependencies:
     stacktrace-js "^2.0.0"
 
-"@react-native-firebase/firestore@^6.3.4":
-  version "6.3.4"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/firestore/-/firestore-6.3.4.tgz#5c42c3c35548824db90543330fc2ffde20aa3d52"
-  integrity sha512-n/u5p5DeBwAQ61YJ8r6wFfh77ivLbqEclc6FRPAJvLizJ+5777E2/XTFDi0fP/3l0lv5cForvNAySXJfdg2Zcw==
-
 "@react-native-firebase/functions@^6.3.4":
   version "6.3.4"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/functions/-/functions-6.3.4.tgz#e5ac9d9793375f2247d709a838e3954fcb9a872b"
