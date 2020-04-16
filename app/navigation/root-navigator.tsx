@@ -8,13 +8,10 @@ import { WelcomeFirstScreen } from "../screens/welcome-screens"
 import { inject, observer } from "mobx-react"
 
 import auth from "@react-native-firebase/auth"
-import { getEnv } from "mobx-state-tree"
 import { useEffect, useState } from "react"
 import { when } from "mobx"
 import { Onboarding } from "types"
 import { SplashScreen } from "../screens/splash-screen"
-
-const INIT_DELAY_LND = 100
 
 const Loading = createStackNavigator()
 
@@ -22,18 +19,6 @@ export const RootStack = inject("dataStore")(
   observer(({ dataStore }) => {
     const [initialRouteName, setInitialRouteName] = useState("")
     const [authReady, setAuthReady] = useState(false)
-
-    useEffect(() => {
-      const startLnd = async () => {
-        getEnv(dataStore).lnd.start()
-      }
-
-      startLnd()
-
-      setTimeout(async function () {
-        await getEnv(dataStore).lnd.openWallet()
-      }, INIT_DELAY_LND)
-    }, [])
 
     const onAuthStateChanged = async (user) => {
       console.tron.log(`onAuthStateChanged`, user)
@@ -51,7 +36,6 @@ export const RootStack = inject("dataStore")(
 
     useEffect(() => {
       const _ = async () => {
-        await when(() => dataStore.lnd.lndReady === true)
         when(() => authReady)
 
         if (dataStore.onboarding.has(Onboarding.walletDownloaded)) {

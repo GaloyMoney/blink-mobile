@@ -575,8 +575,6 @@ PODS:
     - React
   - RNScreens (2.4.0):
     - React
-  - RNSecureRandom (1.0.0-rc.0):
-    - React
   - RNSVG (12.0.3):
     - React
   - RNVectorIcons (6.6.0):
@@ -639,7 +637,6 @@ DEPENDENCIES:
   - RNReactNativeHapticFeedback (from `../node_modules/react-native-haptic-feedback`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
-  - RNSecureRandom (from `../node_modules/react-native-securerandom`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - XCDYouTubeKit (~> 2.8)
@@ -777,8 +774,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
-  RNSecureRandom:
-    :path: "../node_modules/react-native-securerandom"
   RNSVG:
     :path: "../node_modules/react-native-svg"
   RNVectorIcons:
@@ -862,7 +857,6 @@ SPEC CHECKSUMS:
   RNReactNativeHapticFeedback: 2566b468cc8d0e7bb2f84b23adc0f4614594d071
   RNReanimated: 031fe8d9ea93c2bd689a40f05320ef9d96f74d7f
   RNScreens: b5c0e1b2b04512919e78bd3898e144a157ce2363
-  RNSecureRandom: 1f19ad1492f7ed416b8fc79e92216a1f73f13a4c
   RNSVG: 7e16ddfc6e00d5aa69c9eb83e699bcce5dcb85d4
   RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
   XCDYouTubeKit: cdad9e696f991aac2739c5b25586c81f1301ba30

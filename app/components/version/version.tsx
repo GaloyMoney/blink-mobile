@@ -1,9 +1,9 @@
 import * as React from "react"
-import { Text, StyleSheet } from "react-native"
-
-import VersionNumber from "react-native-version-number"
+import { StyleSheet, Text } from "react-native"
 import Config from "react-native-config"
+import VersionNumber from "react-native-version-number"
 import { color } from "../../theme"
+
 
 const styles = StyleSheet.create({
   version: {
@@ -14,12 +14,11 @@ const styles = StyleSheet.create({
   },
 })
 
-export const VersionComponent = ({ style, lndVersion }) => (
+export const VersionComponent = ({ style }) => (
   <Text style={[style, styles.version]}>
     v{VersionNumber.appVersion} build {VersionNumber.buildVersion}
     {"\n"}
-    network: {Config.BITCOIN_NETWORK}
-    {"\n"}
-    lnd: {lndVersion}
+    network: {Config.BITCOIN_NETWORK} 
+    {/* FIXME should be a props */}
   </Text>
 )
