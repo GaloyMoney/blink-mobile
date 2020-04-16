@@ -8,37 +8,38 @@ import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 
 const styles = StyleSheet.create({
-    text: {
-        marginHorizontal: 20,
-        marginBottom: 10,
-        textAlign: "center",
-        fontSize: 16,
-        color: palette.darkGrey,
-    },
+  progressBar: {
+    alignSelf: "center",
+  },
 
-    sync: {
-        alignContent: "center",
-        width: "100%",
-        marginVertical: 30,
-      },
-    
-    progressBar: {
-        alignSelf: "center",
-    },
+  sync: {
+    alignContent: "center",
+    marginVertical: 30,
+    width: "100%",
+  },
+
+  text: {
+    color: palette.darkGrey,
+    fontSize: 16,
+    marginBottom: 10,
+    marginHorizontal: 20,
+    textAlign: "center",
+  },
 })
 
-export const SyncingComponent = inject("dataStore")(observer(
-    ({ dataStore }) => {
-        
-    return (<View style={styles.sync}>
+export const SyncingComponent = inject("dataStore")(
+  observer(({ dataStore }) => {
+    return (
+      <View style={styles.sync}>
         <Text style={styles.text}>
-            {translate(`common.syncing`)}{" "}
-            {(dataStore.lnd.percentSynced * 100).toFixed(2)}%
+          {translate(`common.syncing`)} {(dataStore.lnd.percentSynced * 100).toFixed(2)}%
         </Text>
         <Progress.Bar
-        style={styles.progressBar}
-        color={color.primary}
-        progress={dataStore.lnd.percentSynced}
+          style={styles.progressBar}
+          color={color.primary}
+          progress={dataStore.lnd.percentSynced}
         />
-    </View>
-)}))
+      </View>
+    )
+  }),
+)

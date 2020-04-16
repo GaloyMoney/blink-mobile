@@ -1,42 +1,30 @@
-import * as React from "react"
-import { useState, useEffect } from "react"
-import { observer, inject } from "mobx-react"
-
-import {
-  View,
-  SectionList,
-  StyleSheet,
-  RefreshControl,
-  TouchableWithoutFeedback,
-  Alert,
-  Animated,
-  ActivityIndicator,
-} from "react-native"
-
-import Modal from "react-native-modal"
-
-import { Text } from "../../components/text"
-import { Screen } from "../../components/screen"
-import { color } from "../../theme"
-import Icon from "react-native-vector-icons/Ionicons"
-
-import { BalanceHeader } from "../../components/balance-header"
-import { DataStore } from "../../models/data-store"
-import { sameDay, sameMonth } from "../../utils/date"
-import { CurrencyText } from "../../components/currency-text"
-import { TouchableHighlight, TextInput } from "react-native-gesture-handler"
-import { AccountType, CurrencyType, FirstChannelStatus } from "../../utils/enum"
-import { useNavigation } from '@react-navigation/native'
-import { Button } from "react-native-elements"
-import { palette } from "../../theme/palette"
-import { Side, Onboarding } from "types"
-import { translate } from "../../i18n"
-
-import { shortenHash, showFundingTx } from "../../utils/helper"
-import { SyncingComponent } from "../../components/syncing"
-
 import functions from "@react-native-firebase/functions"
-import { APP_EDUCATION } from "../../app"
+import { useNavigation } from "@react-navigation/native"
+import { inject, observer } from "mobx-react"
+import * as React from "react"
+import { useEffect, useState } from "react"
+import { ActivityIndicator, Alert, Animated, RefreshControl, SectionList, StyleSheet, Text, TouchableWithoutFeedback, View } from "react-native"
+import { Button } from "react-native-elements"
+import { TextInput, TouchableHighlight } from "react-native-gesture-handler"
+import Modal from "react-native-modal"
+import Icon from "react-native-vector-icons/Ionicons"
+import { Onboarding, Side } from "types"
+import { BalanceHeader } from "../../components/balance-header"
+import { CurrencyText } from "../../components/currency-text"
+import { Screen } from "../../components/screen"
+import { SyncingComponent } from "../../components/syncing"
+import { translate } from "../../i18n"
+import { DataStore } from "../../models/data-store"
+import { color } from "../../theme"
+import { palette } from "../../theme/palette"
+import { sameDay, sameMonth } from "../../utils/date"
+import { AccountType, CurrencyType, FirstChannelStatus } from "../../utils/enum"
+import { shortenHash, showFundingTx } from "../../utils/helper"
+
+
+
+
+
 
 
 export interface AccountDetailScreenProps {
@@ -57,6 +45,15 @@ export interface AccountDetailItemProps {
 }
 
 const styles = StyleSheet.create({
+  button: {
+    backgroundColor: color.primary,
+  },
+
+  buttonContainer: {
+    flex: 1,
+    paddingHorizontal: 15,
+  },
+
   cashback: {
     fontSize: 12,
   },
@@ -65,11 +62,23 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
+  fundingText: {
+    color: color.primary,
+    fontSize: 16,
+    paddingVertical: 20,
+    textAlign: "center",
+    textDecorationLine: "underline",
+  },
+
   headerSection: {
-    fontSize: 18,
-    color: color.text,
-    padding: 22,
     backgroundColor: palette.white,
+    color: color.text,
+    fontSize: 18,
+    padding: 22,
+  },
+
+  horizontal: {
+    flexDirection: "row",
   },
 
   icon: {
@@ -90,49 +99,28 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
 
+  text: {
+    color: palette.darkGrey,
+    fontSize: 16,
+    marginBottom: 10,
+    marginHorizontal: 20,
+    textAlign: "center",
+  },
+
   vertical: {
     flexDirection: "column",
   },
 
-  horizontal: {
-    flexDirection: "row",
-  },
-
-  button: {
-    backgroundColor: color.primary,
-  },
-
-  buttonContainer: {
-    paddingHorizontal: 15,
-    flex: 1,
-  },
-
   viewModal: {
+    alignItems: "center",
+    backgroundColor: palette.white,
+    height: 250,
     justifyContent: "flex-end",
     paddingHorizontal: 20,
-    height: 250,
-    backgroundColor: palette.white,
-    alignItems: "center",
-  },
-
-  text: {
-    marginHorizontal: 20,
-    marginBottom: 10,
-    textAlign: "center",
-    fontSize: 16,
-    color: palette.darkGrey,
-  },
-
-  fundingText: {
-    fontSize: 16,
-    textAlign: "center",
-    color: color.primary,
-    paddingVertical: 20,
-    textDecorationLine: "underline",
   },
 })
 
-const AccountDetailItem: React.FC<AccountDetailItemProps> = props => {
+const AccountDetailItem: React.FC<AccountDetailItemProps> = (props) => {
   const { navigate } = useNavigation()
 
   return (
@@ -192,13 +180,9 @@ const VisualExpiration = ({ validUntil }) => {
   )
 }
 
-const BalanceHeaderProxy = ({currency, dataStore, account}) => {
-  return (<BalanceHeader 
-    currency={currency} 
-    amount={dataStore.balances({currency, account})}
-/>)
+const BalanceHeaderProxy = ({ currency, dataStore, account }) => {
+  return <BalanceHeader currency={currency} amount={dataStore.balances({ currency, account })} />
 }
-
 
 const HeaderWithBuySell = ({ currency, account, dataStore, refresh }) => {
   const [side, setSide] = useState<Side>("buy")
@@ -327,7 +311,7 @@ const HeaderWithBuySell = ({ currency, account, dataStore, refresh }) => {
                 </Text>
                 <TextInput
                   value={amount.toString()}
-                  onChangeText={text =>
+                  onChangeText={(text) =>
                     setAmount(isNaN(Number.parseInt(text)) ? 0 : Number.parseInt(text))
                   }
                   style={styles.itemText}
@@ -365,49 +349,26 @@ const HeaderWithBuySell = ({ currency, account, dataStore, refresh }) => {
           )}
         </View>
       </Modal>
-      <BalanceHeaderProxy 
-        currency={currency} 
-        account={account} 
-        dataStore={dataStore} />
+      <BalanceHeaderProxy currency={currency} account={account} dataStore={dataStore} />
       <View style={styles.horizontal}>
-        {APP_EDUCATION && 
-        <>
-          <Button
-          title="Send"
-          buttonStyle={styles.button}
-          containerStyle={styles.buttonContainer}
-          onPress={() => navigate('scanningQRCode')}
-          />
-          <Button
-          title="Receive"
-          buttonStyle={styles.button}
-          containerStyle={styles.buttonContainer}
-          onPress={() => navigate('receiveBitcoin')}
-          />
-        </>
-        }
-        {!APP_EDUCATION && 
-        <>
-          <Button
+        <Button
           title="Buy"
           buttonStyle={styles.button}
           containerStyle={styles.buttonContainer}
           onPress={onBuyInit}
-          />
-          <Button
+        />
+        <Button
           title="Sell"
           buttonStyle={styles.button}
           containerStyle={styles.buttonContainer}
           onPress={onSellInit}
-          />
-        </>
-        }
+        />
       </View>
     </>
   )
 }
 
-const formatTransactions = transactions => {
+const formatTransactions = (transactions) => {
   const sections = []
   const today = []
   const yesterday = []
@@ -416,21 +377,21 @@ const formatTransactions = transactions => {
 
   transactions = transactions.slice().sort((a, b) => (a.date > b.date ? -1 : 1)) // warning without slice?
 
-  const isToday = tx => {
+  const isToday = (tx) => {
     return sameDay(tx.date, new Date())
   }
 
-  const isYesterday = tx => {
+  const isYesterday = (tx) => {
     return sameDay(tx.date, new Date().setDate(new Date().getDate() - 1))
   }
 
-  const isThisMonth = tx => {
+  const isThisMonth = (tx) => {
     return sameMonth(tx.date, new Date())
   }
 
   while (transactions.length) {
     // this could be optimized
-    let tx = transactions.shift()
+    const tx = transactions.shift()
     if (isToday(tx)) {
       today.push(tx)
     } else if (isYesterday(tx)) {
@@ -461,21 +422,20 @@ const formatTransactions = transactions => {
   return sections
 }
 
-export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = 
-  inject("dataStore")(observer(
-    ({ dataStore, route, navigation }) => {
+export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = inject("dataStore")(
+  observer(({ dataStore, route, navigation }) => {
+    const account =
+      route.params.account == AccountType.Bitcoin
+        ? dataStore.lnd.statusFirstChannel === FirstChannelStatus.opened
+          ? AccountType.Bitcoin
+          : AccountType.VirtualBitcoin
+        : route.params.account
 
-    const account = route.params.account == AccountType.Bitcoin ? 
-        dataStore.lnd.statusFirstChannel === FirstChannelStatus.opened ?
-          AccountType.Bitcoin
-        : AccountType.VirtualBitcoin
-      : route.params.account
-    
-      let accountStore
+    let accountStore
 
     React.useLayoutEffect(() => {
       navigation.setOptions({
-        title: account
+        title: account,
       })
     }, [dataStore.lnd.statusFirstChannel])
 
@@ -502,7 +462,7 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> =
 
       if (account === AccountType.Bitcoin) {
         // FIXME
-        await functions().httpsCallable("requestRewards")({}) 
+        await functions().httpsCallable("requestRewards")({})
       }
     }
 
@@ -527,11 +487,7 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> =
           />
         )}
         {account === AccountType.Bank && (
-          <BalanceHeaderProxy 
-            currency={currency} 
-            account={account} 
-            dataStore={dataStore}
-          />
+          <BalanceHeaderProxy currency={currency} account={account} dataStore={dataStore} />
         )}
         {sections.length === 0 && <Text>No transaction to show</Text>}
         {sections.length > 0 && (
@@ -550,16 +506,17 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> =
         {(account == AccountType.VirtualBitcoin &&
           dataStore.lnd.statusFirstChannel == FirstChannelStatus.pending && (
             <View style={styles.sync}>
-              <Text style={styles.fundingText} onPress={() => showFundingTx(dataStore.lnd.fundingTx)}>
+              <Text
+                style={styles.fundingText}
+                onPress={() => showFundingTx(dataStore.lnd.fundingTx)}
+              >
                 {translate(`common.fundingTx`, {
                   tx: shortenHash(dataStore.lnd.fundingTx),
                 })}
               </Text>
             </View>
           )) ||
-          (!dataStore.lnd.syncedToChain && (
-            <SyncingComponent />
-          ))}
+          (!dataStore.lnd.syncedToChain && <SyncingComponent />)}
       </Screen>
     )
   }),

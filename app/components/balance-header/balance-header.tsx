@@ -1,13 +1,12 @@
 import * as React from "react"
-import { View, StyleSheet } from "react-native"
-import { Text } from "../text"
-import { color } from "../../theme"
-
-import { CurrencyType } from "../../utils/enum"
-
 import ContentLoader, { Rect } from "react-content-loader/native"
-import { TextCurrency } from "../text-currency/text-currency"
+import { StyleSheet, Text, View } from "react-native"
 import { translate } from "../../i18n"
+import { palette } from "../../theme/palette"
+import { CurrencyType } from "../../utils/enum"
+import { TextCurrency } from "../text-currency/text-currency"
+
+
 
 const styles = StyleSheet.create({
   amount: {
@@ -17,8 +16,9 @@ const styles = StyleSheet.create({
   },
 
   balanceText: {
-    color: color.text,
+    color: palette.darkGrey,
     fontSize: 16,
+    fontWeight: "bold",
     marginBottom: 8,
   },
 
@@ -28,8 +28,8 @@ const styles = StyleSheet.create({
 
   header: {
     alignItems: "center",
-    marginTop: 32,
     marginBottom: 64,
+    marginTop: 32,
   },
 })
 
@@ -37,7 +37,6 @@ export interface BalanceHeaderProps {
   currency: CurrencyType
   amount: number
   amountOtherCurrency?: number
-  initialLoading?: boolean
 }
 
 const Loader = () => (
@@ -47,18 +46,18 @@ const Loader = () => (
   </ContentLoader>
 )
 
-export const BalanceHeader: React.FC<BalanceHeaderProps> = 
-({ currency, amount, amountOtherCurrency = null}) => {
+export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
+  currency,
+  amount,
+  amountOtherCurrency = null,
+}) => {
   const initialLoading = isNaN(amount)
   const otherCurrency = currency === CurrencyType.BTC ? CurrencyType.USD : CurrencyType.BTC
 
-  const subHeader = amountOtherCurrency !== null ? (
-    <TextCurrency
-      amount={amountOtherCurrency}
-      currencyUsed={otherCurrency}
-      fontSize={16}
-    />
-  ) : null
+  const subHeader =
+    amountOtherCurrency !== null ? (
+      <TextCurrency amount={amountOtherCurrency} currencyUsed={otherCurrency} fontSize={16} />
+    ) : null
 
   return (
     <View style={styles.header}>
@@ -67,11 +66,7 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> =
         <View style={{ flexDirection: "row", alignItems: "flex-end" }}>
           {initialLoading && <Loader />}
           {!initialLoading && (
-            <TextCurrency
-              amount={amount}
-              currencyUsed={currency}
-              fontSize={32}
-            />
+            <TextCurrency amount={amount} currencyUsed={currency} fontSize={32} />
           )}
         </View>
         {!initialLoading && subHeader}
@@ -79,4 +74,3 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> =
     </View>
   )
 }
-

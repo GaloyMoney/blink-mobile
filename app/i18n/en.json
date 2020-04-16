@@ -7,7 +7,6 @@
     "next": "Next",
     "error": "Error",
     "close": "Close",
-    "learnMore": "Learn More",
     "bankAccount": "Cash Account",
     "firstName": "First Name",
     "lastName": "Last Name",
@@ -45,7 +44,7 @@
     "getStarted": "Get Started"
   },
   "WelcomeFirstScreen": {
-    "care": "Bitcoin: Why should I care?",
+    "care": "Bitcoin:\n\nWhy should I care?",
     "bank": "Bitcoin is designed to let you store, send and receive money, without relying on a bank or credit card",
     "before": "Before Bitcoin, people had to rely on banks or credit card providers, to spend, send and receive money.",
     "learn": "I don't mean to badger you but there's lot more to learn, dig in..."
@@ -60,25 +59,36 @@
   },
   "RewardsScreen": {
     "title": "Earn",
+    "earnSats": { "one": "Earn 1 sat", "other": "Earn {{formatted_number}} sats" },
     "satAccumulated": "Sats accumulated",
     "bankingNeeded": "Banking is needed",
     "channelNeeded": "Open channel first",
     "getRewardNow": "Answer quiz",
-    "rewardEarned": "Reward earned",
+    "rewardEarned": { "one": "1 sat earned", "other": "{{formatted_number}} sats earned" },
     "phoneNumberNeeded": "Phone number required",
     "rewards": {
-      "bitcoin101": {
-        "meta": { "title": "Bitcoin 101", "icon": "ios-school" },
-        "walletDownloaded": {
+      "bitcoinWhatIsIt": {
+        "meta": { "title": "Bitcoin: What is it?", "icon": "ios-school" },
+        // FIXME should be in a content: []
+        "whatIsBitcoin": {
           "type": "Text",
-          "title": "Wallet downloaded",
-          "text": "We give 1 sat because for people to download the app because we want to incentive more people to understand what bitcoin is about",
+          "title": "So what exactly is Bitcoin?",
+          "text": "Bitcoin is digital money.\n\nIt can be transferred swiftly and securely between any two people in the world — without the need for a bank or any other financial company in the middle.",
+          "answers": [
+            "Digital money",
+            "A video game",
+            "A new cartoon character"
+          ],
+          "feedback": [
+            "Correct. You just earned 1 “sat” !",
+            "Incorrect, please try again.",
+            "Nope. You know that is not the right answer"
+          ]
         },
         "sat": {
           "type": "Text",
           "title": "What is a sat?",
           "text": "One sat is a small portion of a bitcoin. The same way a dollar can be divided into 100 cents, a bitcoin can be divided into 100,000,000 sats! In fact, a sat is the smallest unit of bitcoin. \n\nWhy is that important?\n\n Divisibility is an important part of money. \n\nMaking bitcoin easily divisible allows many billions of people to own and use bitcoin. You do not need to own one full bitcoin. You can simply have a fraction of a bitcoin. ",
-          "question": "What is a sat?",
           "answers": [
             "The smallest unit of Bitcoin",
             "An alternative crypto currency",
@@ -86,78 +96,56 @@
           ],
           "feedback": [
             "You just earned 1 sat, the smallest unit of Bitcoin. Congrats!",
-            "Nope, it is not analtcoin",
+            "Nope, it is not alttcoin",
             "Maybe... but that's not the correct answer in this context 😂"
           ]
         },
-        "custody": {
+        "whereBitcoinExist": {
           "type": "Text",
-          "title": "What is custody?",
-          "text": "Custody means \"the protective care or guardianship of someone or something\".\n\nOK, that is a boring definition, what does it mean for bitcoin or banking?\n\nWhen you give money to your bank, they are taking custody of your funds. It basically means the bank is responsible for taking care of your US Dollars (USD), and returning funds to you, upon your request.\n\nRegarding USD, a Galoy bank account is no different in that regard\n\nBut with bitcoin (BTC), it is different.\n\nGenerally speaking, you can give custody of your BTC to someone else, like a bank or a cryptocurrency exchange. On the other hand, you can also take self custody of your BTC!\n\nIn that sense, this would be similar to cash. The money is in your bitcoin wallet, and if you lose it, you are out of luck.\n\nFor BTC, Galoy does not take custody of your bitcoin. The funds remain right in your phone!\n\nGaloy is what we call a “non-custodial” wallet. It means the money is in your pocket, stored with some special security keys, directly on your phone!",
+          "title": "Where do the bitcoins exist?",
+          "text": "Bitcoin is a new form of money. It can be used by anyone, anytime — anywhere in the world.\n\nIt is not tied to a specific government or region (like US Dollars). There are also no paper bills, metal coins or plastic cards.\n\nEverything is 100% digital. Bitcoin is a network of computers running on the internet.\n\nYour bitcoin is easily managed with software on your smartphone or computer!",
           "question": "Which one is true?",
           "answers": [
-            "Bitcoin can be self-custodied",
-            "Bitcoin is like a digital dollar, and must be managed by a bank or a third-party custodian",
-            "Digital US dollars can be self-custodied"
+            "On the Internet",
+            "On the moon",
+            "In a Federal bank account"
           ],
           "feedback": [
-            "You have learned one of the important properties of bitcoin, it can be self custodied!",
-            "Incorrect.  You can indeed self custody bitcoin",
-            "You can not keep US dollars in a digital wallet. It's only possible with cash"
+            "Correct.",
+            "Incorrect. Well… at least not yet.",
+            "Wrong. Please try again.",
           ]
         },
-        "digitalKeys": {
+        "whoControlsBitcoin": {
           "type": "Text",
-          "title": "Digital keys",
-          "text": "You can compare self-custodied Bitcoin with cash.\n\nIf you have a $20 bill in your pocket and you lose it, you're out of luck!\n\nFor bitcoin, instead of carrying a piece of paper, you have digital private keys.\n\nThose private keys allow you, and only you, to spend your bitcoin. Which is why making sure those keys are in a safe place is important!\n\nA digital key is just a very, very long number (about 80 digits long!). It's astronomically long, so it's impossible for anyone to guess it.\n\nAs a comparison, it would be easier to find a single grain of sand on earth than it would be to guess the correct sequence of digitals for a digital key. This is the power of large numbers and cryptography!\n\nWith your private key is currently stored in a secure part of your phone.",
+          "title": "Who controls Bitcoin?",
+          "text": "Bitcoin is not controlled by any person, company or government.\n\nIt is run by the community of users — people and companies all around the world -- voluntarily running bitcoin software on their computers and smartphones.",
+          "answers": [
+            "A voluntary community of users around the world",
+            "Mr Burns from The Simpsons",
+            "The government of France"
+          ],
+          "feedback": [
+            "That is right. Bitcoin is made possible by people all around the world running bitcoin software on their computers and smartphones.",
+            "An amusing thought — but not correct !",
+            "Wrong. There is no company nor government that controls Bitcoin.",
+          ]
+        },
+        "copyDigitalMoney": {
+          "type": "Text",
+          "title": "If Bitcoin is digital, can’t it be copied, to create free money?",
+          "text": "The value of a bitcoin can never be copied. This is the very reason why Bitcoin is such a powerful new invention !!\n\nMost digital files — such as an iPhone photo, an MP3 song, or a Microsoft Word document — can easily be duplicated and shared.\n\nThe Bitcoin software uniquely prevents the duplication — or “double spending” — of digital money. We will share exactly how this works later on !",
           "question": "Which one is true?",
+
           "answers": [
-            "Your keys should be kept secret, as anybody who has access to them will be able to spend your bitcoin",
-            "Keys allow you to recover your email and password",
-            "Keys should be shared with as many people as possible, so that they won't be lost"
+            "No — it is impossible to copy, duplicate or counterfeit bitcoin",
+            "Yes, you can copy bitcoins just as easily as copying a digital photo",
+            "Yes, but copying bitcoin requires very specialized computers",
           ],
           "feedback": [
-            "Galoy is what we call a non-custodial wallet for your bitcoin. So you should take care of your keys!",
-            "Incorrect. Unlike most websites, there is no way to recover your keys using your email or phone number",
-            "No. A digital key is private, and anyone who has access to it will be able to spend your bitcoin",
-          ]
-        },
-        "backupWallet": {
-          "type": "Action",
-          "title": "Backup wallet",
-          "text": "Now that you have some sats, and you know what a digital key is, you can back up your wallet to iCloud. This will ensure  you never lose access to your bitcoin. \n\nUnlike traditional dollars, you own your bitcoin with private keys stored in your mobile phone, which is why taking care to backup your keys is essential",
-          "feedback": "Backup keys saved to iCloud"
-        },
-        "bitcoinUnique": {
-          "type": "Text",
-          "title": "What makes bitcoin special?",
-          "text": "Bitcoin has many special and unique properties. In subsequent quizzes, these following special properties will be individually explained in detail: , :\n\n- Bitcoin has a predictable issuance of  supply\n- The maximum total supply of Bitcoin is permanently capped\n- It is highly divisible\n- It is borderless\n- Small transactions are settled in seconds, large transactions take less than one hour \n- Bitcoin can never be forged, nor copied \n- The  creator of Bitcoin remains unknown to this very day",
-          "question": "What are some properties of bitcoin that are not present in fiat currency, such as US Dollars?",
-          "answers": [
-            "Bitcoin can not be forged",
-            "Bitcoin alone is digital money",
-            "It is the most widely accepted currency across the world"
-          ],
-          "feedback": [
-            "Correct. Unlike dollars, where counterfeit bills can be made, spent and circulated, , it is  not possible for anyone to create fake bitcoin",
-            "Wrong. 92% of dollars already exist in  digital form; only 8% of dollars are circulated as cash.",
-            "Not yet, but maybe one day it will be!",
-          ]
-        },
-        "moneySupply": {
-          "type": "Text",
-          "title": "Bitcoin money supply",
-          "text": "How many bitcoin will ever be created?\n\nNo more than 21 million bitcoin can ever  be created.\n\nThis maximum value  is defined in the original bitcoin software, and can never be changed.\n\nThis limit on maximum supply is a critical attribute  that makes bitcoin valuable. Unlike governments and central banks, who can create additional currency at will, no single person or organization can decide to create additional bitcoin.",
-          "question": "How many bitcoin can ever be created?",
-          "answers": [
-            "21,000,000",
-            "There is no maximum",
-            "It is up to the central bank of Bitcoin"
-          ],
-          "feedback": [
-            "21 million, that is correct!",
-            "Incorrect. The Bitcoin money supply is capped",
-            "Wrong. There is no central bank in the bitcoin protocol"
+            "That is absolutely correct !",
+            "You know that it is not true. Try again.",
+            "Incorrect. There is no way for anyone to copy, or create a duplicate, of bitcoin"
           ]
         }
       },
@@ -199,6 +187,11 @@
             "No. One of the founding principles of Galoy is to respect individual privacy. We do not sell any of your data to a third party"
           ]
         },
+        "walletDownloaded": {
+          "type": "Text",
+          "title": "Wallet downloaded",
+          "text": "We give 1 sat because for people to download the app because we want to incentive more people to understand what bitcoin is about",
+        },
         "tweet": {
           "type": "Action",
           "title": "Tweet about #bitcoin and Galoy",
@@ -233,7 +226,13 @@
         "inviteAFriend": {
           "title": "Invite a friend",
           "text": "Earn [xx] sats for each friend who downloads the Galoy app!."
-        }
+        },
+        "backupWallet": {
+          "type": "Action",
+          "title": "Backup wallet",
+          "text": "Now that you have some sats, and you know what a digital key is, you can back up your wallet to iCloud. This will ensure  you never lose access to your bitcoin. \n\nUnlike traditional dollars, you own your bitcoin with private keys stored in your mobile phone, which is why taking care to backup your keys is essential",
+          "feedback": "Backup keys saved to iCloud"
+        },
       },
       "useBitcoin": {
         "meta": { "title": "Use Bitcoin", "icon": "logo-bitcoin" },
@@ -402,9 +401,11 @@
   "AccountsScreen": { "title": "Accounts", "bitcoinRewards": "Earn bitcoin rewards!" },
   "BankAccountReadyScreen": { "accountReady": "Your Galoy bank account is ready!" },
   "BankAccountRewardsScreen": {
-    "title": "Bank Account Rewards",
+    "title": "Cash Account Rewards",
     "openAccount": "Open a Galoy bank account",
-    "accountsBenefits": "Hold US dollars in your account!\n\nOrder a debit card to earn 1%+ cashback in bitcoin on your dollar spending!\n\nAnd easily buy & sell bitcoin in-app."
+    "holdUSDollar": "Hold US dollars in your account!",
+    "debitCard": "Order a debit card to earn 1%+ cashback in bitcoin on your dollar spending!",
+    "buySell": "And easily buy & sell bitcoin in-app.",
   },
   "OpenBankScreen": {
     "title": "Bank rewards",

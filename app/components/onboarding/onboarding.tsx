@@ -1,35 +1,16 @@
+import { useNavigation } from "@react-navigation/native"
 import * as React from "react"
-import { Text } from "../../components/text"
-import { StyleSheet, View, Image } from "react-native"
+import { StyleSheet, Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import { color } from "../../theme"
-import { useNavigation } from '@react-navigation/native'
 import { palette } from "../../theme/palette"
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: "column",
-    justifyContent: "center",
-  },
-
-  image: {
-    alignSelf: "center",
-    margin: 20,
-  },
-
-  header: {
-    fontSize: 20,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginTop: 40,
-  },
-
   buttonContainer: {
-    marginVertical: 12,
-    width: "60%",
     alignSelf: "center",
+    marginVertical: 12,
     paddingBottom: 48,
+    width: "60%",
   },
 
   buttonStyle: {
@@ -42,16 +23,31 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 
+  container: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "center",
+  },
 
+  header: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginTop: 40,
+    textAlign: "center",
+  },
+
+  image: {
+    alignSelf: "center",
+    margin: 20,
+  },
 })
 
-export const OnboardingScreen = 
-({
+export const OnboardingScreen = ({
   children,
   next /* screen */,
   nextTitle,
   action,
-  image,
+  Svg,
   header = "",
   loading = false,
 }) => {
@@ -60,7 +56,7 @@ export const OnboardingScreen =
     <>
       <Text style={styles.header}>{header}</Text>
       <View style={styles.container}>
-        <Image source={image} style={styles.image} />
+        <Svg style={styles.image} />
         {children}
       </View>
       {(next || action) && (

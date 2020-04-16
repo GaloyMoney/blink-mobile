@@ -1,32 +1,23 @@
+import auth from "@react-native-firebase/auth"
+import crashlytics from "@react-native-firebase/crashlytics"
+import firestore from "@react-native-firebase/firestore"
+import functions from "@react-native-firebase/functions"
+import { inject, observer } from "mobx-react"
+import { getSnapshot } from "mobx-state-tree"
 import * as React from "react"
 import { useState } from "react"
-import {
-  TextStyle,
-  View,
-  ViewStyle,
-  TextInput,
-  Clipboard,
-  StyleSheet,
-  Alert,
-} from "react-native"
-import { Screen } from "../../components/screen"
-import { Text } from "../../components/text"
-import { QRCode } from "../../components/qrcode"
-import { color, spacing } from "../../theme"
-import { observer, inject } from "mobx-react"
-import firestore from "@react-native-firebase/firestore"
-
-import crashlytics from "@react-native-firebase/crashlytics"
-
-import auth from "@react-native-firebase/auth"
-import { getSnapshot } from "mobx-state-tree"
+import { Alert, Clipboard, StyleSheet, Text, TextInput, TextStyle, View, ViewStyle } from "react-native"
+import { Button } from "react-native-elements"
+import RNFS from "react-native-fs"
 import JSONTree from "react-native-json-tree"
-import { palette } from "../../theme/palette"
-import functions from "@react-native-firebase/functions"
+import { QRCode } from "../../components/qrcode"
+import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
 import FileAction from "../../services/lnd/file"
-import RNFS from "react-native-fs"
-import { Button } from "react-native-elements"
+import { color, spacing } from "../../theme"
+import { palette } from "../../theme/palette"
+
+
 
 const FULL: ViewStyle = { flex: 1 }
 const CONTAINER: ViewStyle = {
@@ -151,7 +142,7 @@ export const DebugScreen = inject("dataStore")(
           />
           <View>
             <Text>Open channels</Text>
-            {dataStore.lnd.channels.map(item => (
+            {dataStore.lnd.channels.map((item) => (
               <ChannelLiquidityView
                 chanId={item.chanId}
                 remoteBalance={item.remoteBalance}
@@ -160,7 +151,7 @@ export const DebugScreen = inject("dataStore")(
             ))}
           </View>
           <Text>Channel opening</Text>
-          {dataStore.lnd.pendingChannels.map(item => (
+          {dataStore.lnd.pendingChannels.map((item) => (
             <View style={styles.separator}>
               <Text>remoteNodePub</Text>
               <Text>{item.remoteNodePub}</Text>
@@ -194,9 +185,7 @@ export const DebugScreen = inject("dataStore")(
               title="Delete onboarding state"
               onPress={async () => {
                 await dataStore.onboarding._reset()
-                await firestore()
-                  .doc(`users/${auth().currentUser?.uid}/collection/paid`)
-                  .delete()
+                await firestore().doc(`users/${auth().currentUser?.uid}/collection/paid`).delete()
               }}
             />
             <Button
@@ -293,7 +282,7 @@ export const DebugScreen = inject("dataStore")(
             <TextInput
               style={HINT}
               editable
-              onChangeText={invoice => setInvoice(invoice)}
+              onChangeText={(invoice) => setInvoice(invoice)}
               value={invoice}
             />
             <Button
@@ -339,11 +328,11 @@ export const DebugScreen = inject("dataStore")(
               title="update_transactions"
               onPress={dataStore.lnd.update_transactions}
             />
-            <TextInput style={HINT} editable onChangeText={addr => setAddr(addr)} value={addr} />
+            <TextInput style={HINT} editable onChangeText={(addr) => setAddr(addr)} value={addr} />
             <TextInput
               style={HINT}
               editable
-              onChangeText={amount => setAmount(amount)}
+              onChangeText={(amount) => setAmount(amount)}
               value={amount.toString()}
             />
             <Button

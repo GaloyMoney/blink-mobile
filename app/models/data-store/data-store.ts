@@ -1,31 +1,24 @@
-import { Instance, SnapshotOut, types, flow, getParentOfType, getEnv } from "mobx-state-tree"
-import { AccountType, CurrencyType, FirstChannelStatus } from "../../utils/enum"
-import {
-  Side,
-  IQuoteResponse,
-  IQuoteRequest,
-  IBuyRequest,
-  Onboarding,
-  OnboardingRewards,
-} from "types"
-import { parseDate } from "../../utils/date"
-import KeychainAction from "../../utils/keychain"
-import { generateSecureRandom } from "react-native-securerandom"
-
 import auth from "@react-native-firebase/auth"
-import functions from "@react-native-firebase/functions"
 import firestore from "@react-native-firebase/firestore"
-import { toHex, shortenHash } from "../../utils/helper"
-
-import DeviceInfo from "react-native-device-info"
-import Config from "react-native-config"
-import { Notifications } from "react-native-notifications"
+import functions from "@react-native-firebase/functions"
 import { difference } from "lodash"
-import { sleep } from "../../utils/sleep"
+import { flow, getEnv, getParentOfType, Instance, SnapshotOut, types } from "mobx-state-tree"
+import Config from "react-native-config"
+import DeviceInfo from "react-native-device-info"
+import { Notifications } from "react-native-notifications"
+import { generateSecureRandom } from "react-native-securerandom"
+import { IBuyRequest, IQuoteRequest, IQuoteResponse, Onboarding, OnboardingRewards, Side } from "types"
 import { translate } from "../../i18n"
+import { parseDate } from "../../utils/date"
+import { AccountType, CurrencyType, FirstChannelStatus } from "../../utils/enum"
+import { shortenHash, toHex } from "../../utils/helper"
+import KeychainAction from "../../utils/keychain"
+import { sleep } from "../../utils/sleep"
+
+
 
 // FIXME add as a global var
-DeviceInfo.isEmulator().then(isEmulator => {
+DeviceInfo.isEmulator().then((isEmulator) => {
   if (isEmulator) {
     functions().useFunctionsEmulator("http://localhost:5000")
   }
@@ -39,7 +32,7 @@ export const OnChainTransactionModel = types.model("OnChainTransaction", {
   blockHeight: types.maybe(types.number), // included here
   timeStamp: types.number,
   destAddresses: types.array(types.string),
-  totalFees: types.maybe(types.string), //only set for sending transaction
+  totalFees: types.maybe(types.string), // only set for sending transaction
   rawTxHex: types.string,
 })
 
@@ -76,7 +69,7 @@ export const InvoiceModel = types.model("Invoice", {
   rHash: types.string,
   value: types.maybe(types.number), // for amountless invoices
   settled: types.maybe(types.boolean),
-  state: types.maybe(types.number), //XXX FIXME
+  state: types.maybe(types.number), // XXX FIXME
   creationDate: types.number,
   expiry: types.maybe(types.number),
   settleDate: types.maybe(types.number),
@@ -163,7 +156,7 @@ export const BaseAccountModel = types
     unconfirmedBalance: 0,
     type: types.enumeration<AccountType>("Account Type", Object.values(AccountType)),
   })
-  .views(self => ({
+  .views((self) => ({
     get balance() {
       return self.confirmedBalance + self.unconfirmedBalance
     },
@@ -181,7 +174,7 @@ export const QuoteModel = types
     signature: types.maybe(types.string),
     invoice: types.maybe(types.string),
   })
-  .actions(self => ({
+  .actions((self) => ({
     reset() {
       // TODO there must be better way to do this
       self.satAmount = self.satPrice = self.validUntil = NaN
@@ -193,7 +186,7 @@ export const ExchangeModel = types
   .model("Exchange", {
     quote: types.optional(QuoteModel, { side: "buy" }),
   })
-  .actions(self => {
+  .actions((self) => {
     const assertTrade = (side: Side): void /* success */ => {
       if (self.quote.side !== side) {
         throw new Error(`trying to ${side} but quote is for ${self.quote.side}`)
@@ -208,18 +201,18 @@ export const ExchangeModel = types
     }
 
     return {
-      quoteLNDBTC: flow(function*({ side, satAmount }) {
-        let request: IQuoteRequest = { side }
+      quoteLNDBTC: flow(function* ({ side, satAmount }) {
+        const request: IQuoteRequest = { side }
 
         if (side === "sell") {
-          request["satAmount"] = satAmount
+          request.satAmount = satAmount
         } else if (side === "buy") {
           const invoice = yield getParentOfType(self, DataStoreModel).lnd.addInvoice({
             value: satAmount,
             memo: "Buy BTC",
             expiry: 30, // seconds
           })
-          request["invoice"] = invoice.paymentRequest
+          request.invoice = invoice.paymentRequest
         }
 
         const result = yield functions().httpsCallable("quoteLNDBTC")(request)
@@ -232,14 +225,14 @@ export const ExchangeModel = types
         console.tron.log(invoiceJson)
 
         if (side === "sell") {
-          self.quote.satPrice = parseFloat(JSON.parse(invoiceJson.description)["satPrice"])
+          self.quote.satPrice = parseFloat(JSON.parse(invoiceJson.description).satPrice)
         }
 
         self.quote.satAmount = invoiceJson.numSatoshis
         self.quote.validUntil = invoiceJson.timestamp + invoiceJson.expiry
       }),
 
-      buyLNDBTC: flow(function*() {
+      buyLNDBTC: flow(function* () {
         try {
           assertTrade("buy")
 
@@ -259,7 +252,7 @@ export const ExchangeModel = types
         }
       }),
 
-      sellLNDBTC: flow(function*() {
+      sellLNDBTC: flow(function* () {
         try {
           assertTrade("sell")
           console.tron.log(self.quote.invoice)
@@ -281,8 +274,8 @@ export const FiatAccountModel = BaseAccountModel.props({
   type: AccountType.Bank,
   _transactions: types.array(FiatTransactionModel),
 })
-  .actions(self => {
-    const updateTransactions = flow(function*() {
+  .actions((self) => {
+    const updateTransactions = flow(function* () {
       let uid
       try {
         uid = auth().currentUser.uid
@@ -290,40 +283,42 @@ export const FiatAccountModel = BaseAccountModel.props({
         console.tron.log("can't get auth().currentUser.uid", err)
       }
       try {
-        const doc = yield firestore()
-          .doc(`users/${uid}`)
-          .get()
+        const doc = yield firestore().doc(`users/${uid}`).get()
         self._transactions = doc.data().transactions
       } catch (err) {
         console.tron.error(`not able to update transaction ${err}`)
       }
     })
 
-    const updateBalance = flow(function*() {
-      try {
-        const result = yield functions().httpsCallable("getFiatBalances")({})
-        console.tron.log("balance", result)
-        if ("data" in result) {
-          self.confirmedBalance = result.data
-          // TODO: add unconfirmed balance
+    const updateBalance = flow(function* () {
+      if (getParentOfType(self, DataStoreModel).onboarding.has(Onboarding.bankOnboarded)) {
+        try {
+          const result = yield functions().httpsCallable("getFiatBalances")({})
+          console.tron.log("balance", result)
+          if ("data" in result) {
+            self.confirmedBalance = result.data
+            // TODO: add unconfirmed balance
+          }
+        } catch (err) {
+          console.tron.error(`can't fetch the balance ${err}`)
         }
-      } catch (err) {
-        console.tron.error(`can't fetch the balance ${err}`)
+      } else {
+        self.confirmedBalance = 0
       }
     })
-    const update = flow(function*() {
+    const update = flow(function* () {
       yield updateBalance()
       yield updateTransactions()
     })
 
     return { updateBalance, updateTransactions, update }
   })
-  .views(self => ({
+  .views((self) => ({
     get currency() {
       return CurrencyType.USD
     },
     get transactions() {
-      return self._transactions.map(tx => ({
+      return self._transactions.map((tx) => ({
         name: tx.name,
         icon: tx.icon,
         amount: tx.amount,
@@ -362,9 +357,9 @@ export const LndModel = BaseAccountModel.named("Lnd")
     invoices: types.array(InvoiceModel),
     payments: types.array(PaymentModel),
   })
-  .actions(self => {
+  .actions((self) => {
     return {
-      setLndReady: flow(function*() {
+      setLndReady: flow(function* () {
         self.lndReady = true
 
         yield self.updatePendingChannels()
@@ -375,7 +370,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
       }),
 
       // stateless, but must be an action instead of a view because of the async call
-      initState: flow(function*() {
+      initState: flow(function* () {
         const WALLET_EXIST = "rpc error: code = Unknown desc = wallet already exists"
         const GRPC_INSECURE =
           "grpc: no transport security set (use grpc.WithInsecure() explicitly or set credentials)"
@@ -408,7 +403,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
         }
       }),
 
-      genSeed: flow(function*() {
+      genSeed: flow(function* () {
         if (self.walletExist) {
           // TODO be able to recreate the wallet
           console.tron.warning(`genSeed: can't create a new wallet when one already exist`)
@@ -424,7 +419,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
         }
       }),
 
-      initWallet: flow(function*() {
+      initWallet: flow(function* () {
         if (self.walletExist) {
           // TODO be able to recreate the wallet
           console.tron.warning(`initWallet: can't create a new wallet when one already exist`)
@@ -449,7 +444,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
       }),
 
       // TODO: triggered this automatically after the wallet is being unlocked
-      sendPubkey: flow(function*() {
+      sendPubkey: flow(function* () {
         try {
           const result = yield functions().httpsCallable("sendPubkey")({
             pubkey: self.pubkey,
@@ -462,7 +457,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
         }
       }),
 
-      connectGaloyPeer: flow(function*() {
+      connectGaloyPeer: flow(function* () {
         if (!self.syncedToChain) {
           console.tron.warn("needs to be synced to chain before connecting to a peer")
           return
@@ -470,15 +465,13 @@ export const LndModel = BaseAccountModel.named("Lnd")
 
         let doc
         try {
-          doc = yield firestore()
-            .doc(`global/info`)
-            .get()
+          doc = yield firestore().doc(`global/info`).get()
         } catch (err) {
           console.tron.error(`can't get Galoy node info`, err)
           return
         }
 
-        let { pubkey, host } = doc.data().lightning
+        const { pubkey, host } = doc.data().lightning
         // if (isSimulator()) { host = "127.0.0.1" }
         console.tron.log(`connecting to:`, { pubkey, host })
 
@@ -495,7 +488,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
         }
       }),
 
-      listPeers: flow(function*() {
+      listPeers: flow(function* () {
         try {
           const result = yield getEnv(self).lnd.grpc.sendCommand("listPeers")
           console.tron.log("listPeers:", result)
@@ -504,11 +497,11 @@ export const LndModel = BaseAccountModel.named("Lnd")
         }
       }),
 
-      updatePendingChannels: flow(function*() {
+      updatePendingChannels: flow(function* () {
         try {
           const result = yield getEnv(self).lnd.grpc.sendCommand("pendingChannels")
           console.tron.log("pendingChannels raw:", result)
-          const pendingChannels = result.pendingOpenChannels?.map(input => ({ ...input.channel }))
+          const pendingChannels = result.pendingOpenChannels?.map((input) => ({ ...input.channel }))
           console.tron.log("pendingChannels parsed:", pendingChannels)
           self.pendingChannels = pendingChannels
         } catch (err) {
@@ -517,10 +510,10 @@ export const LndModel = BaseAccountModel.named("Lnd")
         }
       }),
 
-      listChannels: flow(function*() {
+      listChannels: flow(function* () {
         try {
           const result = yield getEnv(self).lnd.grpc.sendCommand("listChannels")
-          const channels = result.channels.map(input => ({ ...input }))
+          const channels = result.channels.map((input) => ({ ...input }))
           console.tron.log("listChannels:", channels)
           self.channels = channels
         } catch (err) {
@@ -530,14 +523,14 @@ export const LndModel = BaseAccountModel.named("Lnd")
         }
       }),
 
-      getInfo: flow(function*() {
+      getInfo: flow(function* () {
         /**
          * An internal helper function to approximate the current progress while
          * syncing Neutrino to the full node.
          * @param  {Object} grpcInput The getInfo's grpc api response
          * @return {number}          The percrentage a number between 0 and 1
          */
-        const calcPercentSynced = grpcInput => {
+        const calcPercentSynced = (grpcInput) => {
           let response
 
           if (self.bestBlockHeight === undefined || self.startBlockHeight == undefined) {
@@ -636,7 +629,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
         return response.syncedToChain
       }),
 
-      openFirstChannel: flow(function*() {
+      openFirstChannel: flow(function* () {
         console.tron.log("openFirstChannel")
 
         try {
@@ -654,14 +647,14 @@ export const LndModel = BaseAccountModel.named("Lnd")
         }
       }),
 
-      update: flow(function*() {
+      update: flow(function* () {
         yield self.updateBalance()
         yield self.updateTransactions()
         yield self.updateInvoices()
         yield self.listPayments()
       }),
 
-      unlockWallet: flow(function*() {
+      unlockWallet: flow(function* () {
         // TODO: auth with biometrics/passcode
         const wallet_password = yield new KeychainAction().getItem("password")
 
@@ -676,19 +669,19 @@ export const LndModel = BaseAccountModel.named("Lnd")
         }
       }),
 
-      newAddress: flow(function*() {
+      newAddress: flow(function* () {
         const { address } = yield getEnv(self).lnd.grpc.sendCommand("NewAddress", { type: 0 })
         self.onChainAddress = address
         console.tron.log(address)
       }),
 
-      decodePayReq: flow(function*(payReq) {
+      decodePayReq: flow(function* (payReq) {
         return yield getEnv(self).lnd.grpc.sendCommand("decodePayReq", {
           payReq,
         })
       }),
 
-      addInvoice: flow(function*({ value, memo, expiry = 172800 /* 48h */ }) {
+      addInvoice: flow(function* ({ value, memo, expiry = 172800 /* 48h */ }) {
         const response = yield getEnv(self).lnd.grpc.sendCommand("addInvoice", {
           value,
           memo,
@@ -701,15 +694,15 @@ export const LndModel = BaseAccountModel.named("Lnd")
         return response
       }),
 
-      clearLastInvoice: flow(function*() {
+      clearLastInvoice: flow(function* () {
         self.lastAddInvoice = ""
       }),
 
-      resetReceiveBitcoinScreenAlert: flow(function*() {
+      resetReceiveBitcoinScreenAlert: flow(function* () {
         self.receiveBitcoinScreenAlert = false
       }),
 
-      updateBalance: flow(function*() {
+      updateBalance: flow(function* () {
         try {
           const onChainBalance = yield getEnv(self).lnd.grpc.sendCommand("WalletBalance")
           const channelBalance = yield getEnv(self).lnd.grpc.sendCommand("ChannelBalance")
@@ -724,11 +717,11 @@ export const LndModel = BaseAccountModel.named("Lnd")
         }
       }),
 
-      updateTransactions: flow(function*() {
+      updateTransactions: flow(function* () {
         try {
           const { transactions } = yield getEnv(self).lnd.grpc.sendCommand("getTransactions")
 
-          const transaction_good_types = transactions.map(input => ({ ...input }))
+          const transaction_good_types = transactions.map((input) => ({ ...input }))
 
           console.tron.log("onchain_transactions", transactions, transaction_good_types)
 
@@ -739,25 +732,25 @@ export const LndModel = BaseAccountModel.named("Lnd")
         }
       }),
 
-      updateInvoice: flow(function*(invoice) {
+      updateInvoice: flow(function* (invoice) {
         if (invoice === undefined) return
         if (!invoice.settled) return
 
         Notifications.postLocalNotification({
-          body: translate("notifications.payment.body", {value: invoice.value}),
+          body: translate("notifications.payment.body", { value: invoice.value }),
           title: translate("notifications.payment.title"),
           category: "SOME_CATEGORY",
           link: "localNotificationLink",
         })
       }),
 
-      updateInvoices: flow(function*() {
+      updateInvoices: flow(function* () {
         try {
           const { invoices } = yield getEnv(self).lnd.grpc.sendCommand("listInvoices")
 
           function formatingRecords<T>(source: T) {
             const result = {}
-            Object.keys(source).forEach(key => {
+            Object.keys(source).forEach((key) => {
               if (key == "123123") {
                 // FIXME 123123 as a env variable
                 const value = source[key]
@@ -770,12 +763,12 @@ export const LndModel = BaseAccountModel.named("Lnd")
             return result as T
           }
 
-          const invoices_good_types = invoices.map(input => ({
+          const invoices_good_types = invoices.map((input) => ({
             ...input,
             //   receipt: toHex(tx.receipt), // do we want this? receipt are empty
             rPreimage: toHex(input.rPreimage),
             rHash: toHex(input.rHash),
-            htlcs: input.htlcs.map(htlc => ({
+            htlcs: input.htlcs.map((htlc) => ({
               ...htlc,
               customRecords: formatingRecords(htlc.customRecords),
             })),
@@ -794,18 +787,18 @@ export const LndModel = BaseAccountModel.named("Lnd")
         }
       }),
 
-      listPayments: flow(function*() {
+      listPayments: flow(function* () {
         try {
           const { payments } = yield getEnv(self).lnd.grpc.sendCommand("listPayments")!
 
-          var lightningPayReq = require("bolt11")
+          const lightningPayReq = require("bolt11")
 
           // FIXME bolt11 package duplicate with decodePayReq function
-          const payments_good_types = payments.map(input => ({
+          const payments_good_types = payments.map((input) => ({
             ...input,
             description: lightningPayReq
               .decode(input.paymentRequest)
-              .tags.filter(item => item.tagName == "description")[0]?.data,
+              .tags.filter((item) => item.tagName == "description")[0]?.data,
           }))
 
           console.tron.log("payments", payments, payments_good_types)
@@ -817,12 +810,12 @@ export const LndModel = BaseAccountModel.named("Lnd")
         }
       }),
 
-      sendTransaction: flow(function*(addr, amount) {
+      sendTransaction: flow(function* (addr, amount) {
         return yield getEnv(self).lnd.grpc.sendCommand("sendCoins", { addr, amount })
       }),
 
       // doesn't update the store, should this be here?
-      payInvoice: flow(function*(paymentRequest) {
+      payInvoice: flow(function* (paymentRequest) {
         const PAYMENT_TIMEOUT = 10000 // how long is this?
 
         let success = true
@@ -835,7 +828,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
           const stream = getEnv(self).lnd.grpc.sendStreamCommand("sendPayment")
 
           yield new Promise((resolve, reject) => {
-            stream.on("data", data => {
+            stream.on("data", (data) => {
               if (data.paymentError) {
                 reject(new Error(`Lightning payment error: ${data.paymentError}`))
               } else {
@@ -859,7 +852,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
       }),
     }
   })
-  .views(self => ({
+  .views((self) => ({
     get currency() {
       return CurrencyType.BTC
     },
@@ -883,7 +876,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
     get transactions() {
       // TODO, optimize with some form of caching
 
-      const onchainTxs = self.onchain_transactions.map(transaction => ({
+      const onchainTxs = self.onchain_transactions.map((transaction) => ({
         id: transaction.txHash,
         name: transaction.amount > 0 ? "Received" : "Sent",
         icon: transaction.amount > 0 ? "ios-download" : "ios-exit",
@@ -892,7 +885,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
         status: transaction.numConfirmations < 3 ? "unconfirmed" : "confirmed",
       }))
 
-      const formatInvoice = invoice => {
+      const formatInvoice = (invoice) => {
         if (invoice.settled) {
           if (invoice.memo) {
             return invoice.memo
@@ -906,7 +899,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
         }
       }
 
-      const formatPayment = payment => {
+      const formatPayment = (payment) => {
         if (payment.description) {
           try {
             const decode = JSON.parse(payment.description)
@@ -919,7 +912,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
         }
       }
 
-      const filterExpiredInvoice = invoice => {
+      const filterExpiredInvoice = (invoice) => {
         if (invoice.settled === true) {
           return true
         }
@@ -929,7 +922,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
         return true
       }
 
-      const invoicesTxs = self.invoices.filter(filterExpiredInvoice).map(invoice => ({
+      const invoicesTxs = self.invoices.filter(filterExpiredInvoice).map((invoice) => ({
         id: invoice.rHash,
         icon: "ios-thunderstorm",
         name: formatInvoice(invoice),
@@ -940,7 +933,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
         memo: invoice.memo,
       }))
 
-      const paymentTxs = self.payments.map(payment => ({
+      const paymentTxs = self.payments.map((payment) => ({
         id: payment.paymentHash,
         icon: "ios-thunderstorm",
         name: formatPayment(payment),
@@ -948,7 +941,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
         amount: -payment.valueSat,
         date: parseDate(payment.creationDate),
         preimage: payment.paymentPreimage,
-        status: "complete", //filter for succeed on ?
+        status: "complete", // filter for succeed on ?
       }))
 
       const all_txs = [...onchainTxs, ...invoicesTxs, ...paymentTxs].sort((a, b) =>
@@ -956,7 +949,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
       )
       return all_txs
     },
-}))
+  }))
 
 export const AccountModel = types.union(FiatAccountModel, LndModel)
 
@@ -965,12 +958,10 @@ export const RatesModel = types
     USD: 1, // TODO is there a way to have enum as parameter?
     BTC: 0.0001, // Satoshi to USD default value
   })
-  .actions(self => {
-    const update = flow(function*() {
+  .actions((self) => {
+    const update = flow(function* () {
       try {
-        const doc = yield firestore()
-          .doc("global/price")
-          .get()
+        const doc = yield firestore().doc("global/price").get()
         self.BTC = doc.data().BTC
       } catch (err) {
         console.tron.error("error getting BTC price from firestore", err)
@@ -978,7 +969,7 @@ export const RatesModel = types
     })
     return { update }
   })
-  .views(self => ({
+  .views((self) => ({
     // workaround on the fact key can't be enum
     rate(currency: CurrencyType) {
       if (currency === CurrencyType.USD) {
@@ -994,10 +985,9 @@ interface BalanceRequest {
   account: AccountType
 }
 
-
 // TODO move to utils?
 const translateTitleFromItem = (item) => {
-  console.tron.log({item})
+  console.tron.log({ item })
   const object = translate(`RewardsScreen.rewards`)
   for (const property in object) {
     for (const property2 in object[property]) {
@@ -1015,35 +1005,35 @@ export const OnboardingModel = types
     currency: CurrencyType.BTC,
     stage: types.array(types.enumeration<Onboarding>("Onboarding", Object.values(Onboarding))),
   })
-  .actions(self => ({
-    add: flow(function*(step) {
-      if (self.stage.findIndex(item => item == step) === -1) {
+  .actions((self) => ({
+    add: flow(function* (step) {
+      if (self.stage.findIndex((item) => item == step) === -1) {
         self.stage.push(step)
       }
     }),
 
     // dummy function to have same interface with bitcoin wallet and bank account
-    update: flow(function*() {}),
+    update: flow(function* () {}),
 
     // for debug when resetting account
-    _reset: flow(function*() {
+    _reset: flow(function* () {
       while (self.stage.length > 0) {
         self.stage.pop()
       }
     }),
   }))
-  .views(self => ({
+  .views((self) => ({
     // TODO using: BalanceRequest type, how to set it?
     has(step: Onboarding) {
       // TODO exception
       // --> notifications
       // --> phoneAuth
 
-      return self.stage.findIndex(item => item == step) !== -1
+      return self.stage.findIndex((item) => item == step) !== -1
     },
 
     get balance() {
-      const rewards = self.stage.map(item => OnboardingRewards[item])
+      const rewards = self.stage.map((item) => OnboardingRewards[item])
       if (rewards.length > 0) {
         return rewards.reduce((acc, curr) => acc + curr)
       } else {
@@ -1056,7 +1046,7 @@ export const OnboardingModel = types
     },
 
     get transactions() {
-      const txs = self.stage.map(item => ({
+      const txs = self.stage.map((item) => ({
         // TODO: interface for those pending transactions
         name: translateTitleFromItem(item),
         icon: "ios-exit",
@@ -1064,7 +1054,7 @@ export const OnboardingModel = types
         date: Date.now(),
       }))
 
-      console.tron.log({txs})
+      console.tron.log({ txs })
       return txs
     },
   }))
@@ -1077,8 +1067,8 @@ export const DataStoreModel = types
     exchange: types.optional(ExchangeModel, {}),
     lnd: types.optional(LndModel, {}), // TODO should it be optional?
   })
-  .actions(self => ({
-    updateBalance: flow(function*() {
+  .actions((self) => ({
+    updateBalance: flow(function* () {
       yield Promise.all([
         yield self.rates.update(),
         yield self.fiat.updateBalance(),
@@ -1086,7 +1076,7 @@ export const DataStoreModel = types
       ])
     }),
   }))
-  .views(self => ({
+  .views((self) => ({
     // TODO using: BalanceRequest type, how to set it?
     balances({ currency, account }) {
       const balances = {}
@@ -1096,7 +1086,8 @@ export const DataStoreModel = types
       balances[AccountType.Bitcoin] = self.lnd.balance * btcConversion
       balances[AccountType.VirtualBitcoin] = self.onboarding.balance * btcConversion
       balances[AccountType.Bank] = self.fiat.balance / self.rates.rate(currency)
-      balances[AccountType.BankAndVirtualBitcoin] = balances[AccountType.Bank] + balances[AccountType.Bitcoin]
+      balances[AccountType.BankAndVirtualBitcoin] =
+        balances[AccountType.Bank] + balances[AccountType.Bitcoin]
       balances[AccountType.BankAndBitcoin] =
         balances[AccountType.Bank] + balances[AccountType.VirtualBitcoin]
 

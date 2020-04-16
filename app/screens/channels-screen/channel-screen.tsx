@@ -1,10 +1,6 @@
 import * as React from "react"
 
-import {
-  View,
-  StyleSheet,
-} from "react-native"
-
+import { View, StyleSheet } from "react-native"
 
 import { Text } from "../../components/text"
 import { Screen } from "../../components/screen"
@@ -14,9 +10,6 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { DataStore } from "../../models/data-store"
 import { AccountType, CurrencyType } from "../../utils/enum"
 import { palette } from "../../theme/palette"
-
-
-
 
 export interface AccountDetailScreenProps {
   account: AccountType
@@ -36,6 +29,15 @@ export interface AccountDetailItemProps {
 }
 
 const styles = StyleSheet.create({
+  button: {
+    backgroundColor: color.primary,
+  },
+
+  buttonContainer: {
+    flex: 1,
+    paddingHorizontal: 15,
+  },
+
   cashback: {
     fontSize: 12,
   },
@@ -44,11 +46,23 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
+  fundingText: {
+    color: color.primary,
+    fontSize: 16,
+    paddingVertical: 20,
+    textAlign: "center",
+    textDecorationLine: "underline",
+  },
+
   headerSection: {
-    fontSize: 18,
-    color: color.text,
-    padding: 22,
     backgroundColor: palette.white,
+    color: color.text,
+    fontSize: 18,
+    padding: 22,
+  },
+
+  horizontal: {
+    flexDirection: "row",
   },
 
   icon: {
@@ -69,57 +83,34 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
 
+  text: {
+    color: palette.darkGrey,
+    fontSize: 16,
+    marginBottom: 10,
+    marginHorizontal: 20,
+    textAlign: "center",
+  },
+
   vertical: {
     flexDirection: "column",
   },
 
-  horizontal: {
-    flexDirection: "row",
-  },
-
-  button: {
-    backgroundColor: color.primary,
-  },
-
-  buttonContainer: {
-    paddingHorizontal: 15,
-    flex: 1,
-  },
-
   viewModal: {
+    alignItems: "center",
+    backgroundColor: palette.white,
+    height: 250,
     justifyContent: "flex-end",
     paddingHorizontal: 20,
-    height: 250,
-    backgroundColor: palette.white,
-    alignItems: "center",
-  },
-
-  text: {
-    marginHorizontal: 20,
-    marginBottom: 10,
-    textAlign: "center",
-    fontSize: 16,
-    color: palette.darkGrey,
-  },
-
-  fundingText: {
-    fontSize: 16,
-    textAlign: "center",
-    color: color.primary,
-    paddingVertical: 20,
-    textDecorationLine: "underline",
   },
 })
 
-export const ChannelScreen: React.FC<AccountDetailItemProps> = props => {
-
+export const ChannelScreen: React.FC<AccountDetailItemProps> = (props) => {
   return (
     <Screen>
       <View key={props.index} style={styles.itemContainer}>
         <Icon name={props.icon} style={styles.icon} color={color.primary} size={28} />
         <View style={styles.flex}>
           <Text style={styles.itemText}>Titi</Text>
-            
         </View>
       </View>
     </Screen>

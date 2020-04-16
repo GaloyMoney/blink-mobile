@@ -1,5 +1,5 @@
 export enum AccountType {
-  Bank = "Bank Account",
+  Bank = "Cash Account",
   Bitcoin = "Bitcoin Wallet",
   VirtualBitcoin = "Bitcoin Rewards",
   BankAndBitcoin = "BankAndBitcoin",

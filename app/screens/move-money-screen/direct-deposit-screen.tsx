@@ -7,38 +7,38 @@ import { palette } from "../../theme/palette"
 import { translate } from "../../i18n"
 
 const styles = StyleSheet.create({
-  title: {
-    fontSize: 24,
-    color: palette.darkGrey,
-    fontWeight: "bold",
+  buttonStyle: {
+    backgroundColor: color.primary,
     marginVertical: 10,
-  },
-
-  subtitle: {
-    fontSize: 18,
-    color: palette.darkGrey,
-    fontWeight: "bold",
-    marginVertical: 10,
-  },
-
-  text: {
-    fontSize: 16,
-    color: palette.darkGrey,
-    marginVertical: 15,
   },
 
   horizontalContainer: {
     flexDirection: "row",
   },
 
-  buttonStyle: {
-    backgroundColor: color.primary,
-    marginVertical: 10,
-  },
-
   screenMargin: {
     marginHorizontal: 30,
     marginVertical: 30,
+  },
+
+  subtitle: {
+    color: palette.darkGrey,
+    fontSize: 18,
+    fontWeight: "bold",
+    marginVertical: 10,
+  },
+
+  text: {
+    color: palette.darkGrey,
+    fontSize: 16,
+    marginVertical: 15,
+  },
+
+  title: {
+    color: palette.darkGrey,
+    fontSize: 24,
+    fontWeight: "bold",
+    marginVertical: 10,
   },
 })
 
