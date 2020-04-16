@@ -13,8 +13,7 @@ import { SyncingComponent } from "../../components/syncing"
 import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-import { FirstChannelStatus } from "../../utils/enum"
-import { capitalize, showFundingTx } from "../../utils/helper"
+import { capitalize } from "../../utils/helper"
 
 const styles = StyleSheet.create({
   screenStyle: {
@@ -132,9 +131,7 @@ export const MoveMoneyScreen = inject("dataStore")(({ dataStore, navigation }) =
   }
 
   const onBitcoinClick = ({ target }) => {
-    if (dataStore.lnd.statusFirstChannel === FirstChannelStatus.opened) {
-      navigation.navigate(target)
-    } else if (auth().currentUser?.isAnonymous) {
+    if (auth().currentUser?.isAnonymous) {
       setMessage(translate("MoveMoneyScreen.needWallet"))
       setModalVisible(true)
       setButtonTitle(translate("MoveMoneyScreen.openWallet"))
@@ -144,17 +141,7 @@ export const MoveMoneyScreen = inject("dataStore")(({ dataStore, navigation }) =
       })
       setSyncing(false)
     } else {
-      // wallet is being created
-      setMessage(translate("MoveMoneyScreen.walletInCreation"))
-      setModalVisible(true)
-      if (dataStore.lnd.statusFirstChannel === FirstChannelStatus.pending) {
-        setButtonAction(() => () => showFundingTx(dataStore.lnd.fundingTx))
-        setButtonTitle(translate("MoveMoneyScreen.seeTransaction"))
-        setSyncing(false)
-        // need to sync the chain?
-      } else {
-        setSyncing(true)
-      }
+      navigation.navigate(target)
     }
   }
 
