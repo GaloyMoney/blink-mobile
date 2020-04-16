@@ -1,5 +1,4 @@
 import auth from "@react-native-firebase/auth"
-import firestore from "@react-native-firebase/firestore"
 import functions from "@react-native-firebase/functions"
 import { difference } from "lodash"
 import { flow, getEnv, getParentOfType, Instance, SnapshotOut, types } from "mobx-state-tree"
@@ -278,8 +277,10 @@ export const FiatAccountModel = BaseAccountModel.props({
         console.tron.log("can't get auth().currentUser.uid", err)
       }
       try {
-        const doc = yield firestore().doc(`users/${uid}`).get()
-        self._transactions = doc.data().transactions
+        // TODO show transaction
+        // const doc = yield firestore().doc(`users/${uid}`).get()
+        // self._transactions = doc.data().transactions
+        self._transactions = []
       } catch (err) {
         console.tron.error(`not able to update transaction ${err}`)
       }
@@ -509,8 +510,10 @@ export const RatesModel = types
   .actions((self) => {
     const update = flow(function* () {
       try {
-        const doc = yield firestore().doc("global/price").get()
-        self.BTC = doc.data().BTC
+        // TODO: BTC price
+        // const doc = yield firestore().doc("global/price").get()
+        // self.BTC = doc.data().BTC
+        self.BTC = 0.00001
       } catch (err) {
         console.tron.error("error getting BTC price from firestore", err)
       }
