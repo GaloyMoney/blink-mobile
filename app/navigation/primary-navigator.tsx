@@ -88,17 +88,17 @@ export const AccountNavigator = () => {
       <StackAccounts.Screen
         name="accountDetail"
         component={AccountDetailScreen}
-        options={({ navigation }) => ({
-          headerRight: () => (
-            <Icon
-              name={"ios-person"}
-              size={32}
-              color={palette.darkGrey}
-              style={styles.person}
-              onPress={() => navigation.navigate("debug")}
-            />
-          ),
-        })}
+        // options={({ navigation }) => ({
+        //   headerRight: () => (
+        //     <Icon
+        //       name={"ios-person"}
+        //       size={32}
+        //       color={palette.darkGrey}
+        //       style={styles.person}
+        //       onPress={() => navigation.navigate("debug")}
+        //     />
+        //   ),
+        // })}
         initialParams={{ account: AccountType.Bitcoin }}
       />
       <StackAccounts.Screen name="transactionDetail" component={TransactionDetailScreen} />
