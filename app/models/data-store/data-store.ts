@@ -370,6 +370,8 @@ export const LndModel = BaseAccountModel.named("Lnd")
       }),
 
       decodePayReq: flow(function* (payReq) {
+        // TODO use require('bolt11')
+        // but check if same format as lnd
         return yield getEnv(self).lnd.grpc.sendCommand("decodePayReq", {
           payReq,
         })
