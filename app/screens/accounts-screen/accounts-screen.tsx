@@ -1,4 +1,3 @@
-import functions from "@react-native-firebase/functions"
 import currency from "currency.js"
 import { inject, observer } from "mobx-react"
 import * as React from "react"
@@ -13,7 +12,7 @@ import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
 import { color } from "../../theme/color"
 import { palette } from "../../theme/palette"
-import { AccountType, CurrencyType, FirstChannelStatus } from "../../utils/enum"
+import { AccountType, CurrencyType } from "../../utils/enum"
 
 
 
@@ -114,26 +113,10 @@ export const AccountsScreen = inject("dataStore")(
       accountTypes[0].title = "Open Cash Account"
     }
 
-    // FIXME
-    if (dataStore.lnd.statusFirstChannel !== FirstChannelStatus.opened) {
-      accountTypes[1].account = AccountType.VirtualBitcoin
-    }
-
-    const accountToAdd =
-      dataStore.lnd.statusFirstChannel == FirstChannelStatus.opened
-        ? AccountType.BankAndVirtualBitcoin
-        : AccountType.BankAndBitcoin
+    const accountToAdd = AccountType.BankAndBitcoin
 
     const onRefresh = React.useCallback(async () => {
       setRefreshing(true)
-
-      if (dataStore.lnd.statusFirstChannel === FirstChannelStatus.opened) {
-        // FIXME quick fix for now, work on state management so this is not necessary
-        // one case: if the app went on sleep and the function is not triggered
-        await functions().httpsCallable("requestRewards")({})
-      } else {
-        await dataStore.lnd.openFirstChannel()
-      }
 
       await dataStore.updateBalance()
 
@@ -172,7 +155,7 @@ export const AccountsScreen = inject("dataStore")(
           titleStyle={{ color: palette.blue }}
           type="clear"
           // containerStyle={{ backgroundColor: color.primary }}
-          onPress={() => navigation.navigate("rewards")}
+          onPress={() => navigation.navigate("Rewards")}
           icon={<Icon name="ios-gift" color={palette.blue} size={28} style={styles.icon} />}
         />
       </Screen>
