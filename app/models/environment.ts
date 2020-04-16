@@ -1,5 +1,4 @@
 import { Reactotron } from "../services/reactotron"
-import { Lnd } from "../services/lnd"
 
 /**
  * The environment is a place where services and shared dependencies between
@@ -9,7 +8,6 @@ export class Environment {
   constructor() {
     // create each service
     this.reactotron = new Reactotron()
-    this.lnd = new Lnd()
   }
 
   async setup() {
@@ -21,9 +19,4 @@ export class Environment {
    * Reactotron is only available in dev.
    */
   reactotron: Reactotron
-
-  /**
-   * lnd api.
-   */
-  lnd: Lnd
 }
