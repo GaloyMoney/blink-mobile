@@ -16,7 +16,7 @@ import { Input, Button } from "react-native-elements"
 import Icon from "react-native-vector-icons/Ionicons"
 import { color } from "../../theme"
 import { RNCamera } from "react-native-camera"
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation } from "@react-navigation/native"
 import { palette } from "../../theme/palette"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import { Onboarding } from "types"
@@ -30,28 +30,9 @@ const CAMERA: ViewStyle = {
 }
 
 const styles = StyleSheet.create({
-  mainView: {
-    paddingHorizontal: 20,
-  },
-
-  squareButton: {
-    width: 70,
-    height: 70,
+  buttonStyle: {
     backgroundColor: color.primary,
-  },
-
-  smallText: {
-    fontSize: 18,
-    color: palette.darkGrey,
-    textAlign: "left",
-    marginBottom: 10,
-  },
-
-  note: {
-    fontSize: 18,
-    color: palette.darkGrey,
-    textAlign: "left",
-    marginLeft: 10,
+    marginVertical: 8,
   },
 
   horizontalContainer: {
@@ -60,33 +41,52 @@ const styles = StyleSheet.create({
   },
 
   icon: {
-    marginRight: 15,
     color: palette.darkGrey,
+    marginRight: 15,
   },
 
   invoiceContainer: {
-    flex: 1,
     alignSelf: "flex-end",
+    flex: 1,
   },
 
-  buttonStyle: {
-    backgroundColor: color.primary,
-    marginVertical: 8,
+  mainView: {
+    paddingHorizontal: 20,
   },
 
-  section: {
-    paddingTop: 12,
-    paddingBottom: 8,
+  note: {
+    color: palette.darkGrey,
+    fontSize: 18,
+    marginLeft: 10,
+    textAlign: "left",
   },
 
   overlay: {
-    position: "absolute",
-    right: 0,
-    left: 0,
-    bottom: 0,
     backgroundColor: "rgba(0,0,0,0.4)",
+    bottom: 0,
     flexDirection: "row",
     justifyContent: "center",
+    left: 0,
+    position: "absolute",
+    right: 0,
+  },
+
+  section: {
+    paddingBottom: 8,
+    paddingTop: 12,
+  },
+
+  smallText: {
+    color: palette.darkGrey,
+    fontSize: 18,
+    marginBottom: 10,
+    textAlign: "left",
+  },
+
+  squareButton: {
+    backgroundColor: color.primary,
+    height: 70,
+    width: 70,
   },
 })
 
@@ -98,10 +98,10 @@ export const ScanningQRCodeScreen = inject("dataStore")(
       decodeInvoice(await Clipboard.getString())
     }
 
-    const decodeInvoice = async data => {
+    const decodeInvoice = async (data) => {
       try {
         let [protocol, request] = data.split(":")
-        console.tron.log({protocol, request})
+        console.tron.log({ protocol, request })
         if (protocol === "bitcoin") {
           Alert.alert("We're integrating Loop in. Use Lightning for now")
           return
@@ -116,7 +116,7 @@ export const ScanningQRCodeScreen = inject("dataStore")(
         }
 
         const payReq = await dataStore.lnd.decodePayReq(request)
-        console.tron.log({payReq})
+        console.tron.log({ payReq })
         const invoice = request
 
         let amount, amountless, note
@@ -146,7 +146,7 @@ export const ScanningQRCodeScreen = inject("dataStore")(
         <RNCamera
           style={CAMERA}
           captureAudio={false}
-          onBarCodeRead={event => {
+          onBarCodeRead={(event) => {
             const qr = event.data
             decodeInvoice(qr)
           }}
@@ -165,7 +165,6 @@ export const ScanningQRCodeScreen = inject("dataStore")(
 
 export const SendBitcoinScreen: React.FC = inject("dataStore")(
   observer(({ dataStore, route }) => {
-    
     const invoice = route.params.invoice
     const amountless = route.params.amountless
     const note = route.params.note
@@ -182,7 +181,7 @@ export const SendBitcoinScreen: React.FC = inject("dataStore")(
 
     type payInvoiceResult = boolean | Error
 
-    const onUseUSDChange = async input => {
+    const onUseUSDChange = async (input) => {
       setUseUSD(input)
 
       if (input) {
@@ -208,7 +207,7 @@ export const SendBitcoinScreen: React.FC = inject("dataStore")(
           return
         }
 
-        payreq["amt"] = amount
+        payreq.amt = amount
       }
 
       console.tron.log("payreq", payreq)
@@ -216,7 +215,7 @@ export const SendBitcoinScreen: React.FC = inject("dataStore")(
       setLoading(true)
       try {
         if (useUSD) {
-          const success = await dataStore.exchange["buyLNDBTC"]()
+          const success = await dataStore.exchange.buyLNDBTC()
 
           if (!success) {
             setErr(translate("errors.generic"))
@@ -284,7 +283,7 @@ export const SendBitcoinScreen: React.FC = inject("dataStore")(
             <Text style={styles.smallText}>{translate("SendBitcoinScreen.amount")}</Text>
             <Input
               leftIcon={<Text style={styles.icon}>{translate("common.sats")}</Text>}
-              onChangeText={input => setManualAmount(+input)}
+              onChangeText={(input) => setManualAmount(+input)}
               value={amountless ? manualAmount.toString() : amount.toString()}
               disabled={!amountless}
               returnKeyType="done"
@@ -300,14 +299,14 @@ export const SendBitcoinScreen: React.FC = inject("dataStore")(
               {translate("SendBitcoinScreen.payFromUSD")}
             </Text>
             <View style={{ flex: 1 }} />
-            <Switch value={useUSD} onValueChange={input => onUseUSDChange(input)} />
+            <Switch value={useUSD} onValueChange={(input) => onUseUSDChange(input)} />
           </View>
           {useUSD && (
             <View style={[styles.horizontalContainer, { marginTop: 8 }]}>
-              <Text style={[styles.smallText]}>{translate("SendBitcoinScreen.cost")}</Text>
+              <Text style={styles.smallText}>{translate("SendBitcoinScreen.cost")}</Text>
               <View style={{ flex: 1 }} />
               {(isNaN(dataStore.exchange.quote.satPrice) && <ActivityIndicator />) || (
-                <Text style={[styles.smallText]}>
+                <Text style={styles.smallText}>
                   $
                   {(dataStore.exchange.quote.satPrice * dataStore.exchange.quote.satAmount).toFixed(
                     3,

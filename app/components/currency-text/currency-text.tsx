@@ -1,10 +1,9 @@
-import * as React from "react"
-import { View, ViewStyle, StyleSheet } from "react-native"
-import { Text } from "../text"
-
 import currency_fmt from "currency.js"
+import * as React from "react"
+import { StyleSheet, Text, View, ViewStyle } from "react-native"
 import { color } from "../../theme"
 import { CurrencyType } from "../../utils/enum"
+
 
 export interface CurrencyTextProps {
   amount: number

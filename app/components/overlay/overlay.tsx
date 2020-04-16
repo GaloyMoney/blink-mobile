@@ -9,6 +9,14 @@ import { translate } from "../../i18n"
 const OPACITY = "#202020D0"
 
 const styles = StyleSheet.create({
+  modalBackground: {
+    alignItems: "center",
+    backgroundColor: OPACITY,
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "space-around",
+  },
+
   modalText: {
     color: palette.white,
     fontSize: 24,
@@ -17,21 +25,13 @@ const styles = StyleSheet.create({
 
   modalTextCenter: {
     color: palette.white,
-    textAlign: "center",
     fontSize: 24,
     margin: 30,
-  },
-
-  modalBackground: {
-    flex: 1,
-    alignItems: "center",
-    flexDirection: "column",
-    justifyContent: "space-around",
-    backgroundColor: OPACITY,
+    textAlign: "center",
   },
 })
 
-const DownArrow = props => {
+const DownArrow = (props) => {
   return (
     <Svg viewBox="0 0 776.092 693.665" height={150} width={320} {...props}>
       <Path
@@ -53,47 +53,61 @@ export const Overlay = ({ screen }) => {
   return (
     <Modal visible={modalVisible} transparent={true} animationType={"fade"}>
       {screen == "accounts" && (
-      <View style={styles.modalBackground}>
-      <TouchableWithoutFeedback onPress={() => {console.tron.log("onPress"); setModalVisible(false)}}>
-        <SafeAreaView style={{ flex: 1 }}>
-          <View style={{flex: 1}}>
-            <View style={{ flex: 1 }}></View>
-            <Text style={styles.modalText}>{translate("Overlay.accounts")}</Text>
-            <DownArrow style={{ marginVertical: 0, marginLeft: 50 }} />
-          </View>
-        </SafeAreaView>
-        </TouchableWithoutFeedback>
-    </View>
-        )}
-      {screen == "rewards" && (
-        <View style={{position: "absolute", zIndex: 2}}>
-          <TouchableWithoutFeedback onPress={() => {console.tron.log("onPress"); setModalVisible(false)}}>
-            <View>
-            <Svg width={Dimensions.get("window").width} height={Dimensions.get("window").height}>
-              <Defs>
-                <ClipPath id="clip">
-                  <G>
-                    <Rect width="100%" height="100%" />
-                    <Circle cx={Dimensions.get("window").width/2} cy={CY} r={R} />
-                  </G>
-                </ClipPath>
-              </Defs>
-              <Rect
-                width="100%"
-                height="100%"
-                fill={OPACITY}
-                clipPath="url(#clip)"
-                clipRule="evenodd"
-              />
-            </Svg>
-            <View style={{position: "absolute", top: CY + R, alignSelf: "center"}}>
-              <Text style={[styles.modalText, {textAlign: "center"}]}>{translate("Overlay.rewards.download")}</Text>
-              <Text style={[styles.modalText, {textAlign: "center"}]}>{translate("Overlay.rewards.getMore")}</Text>
-            </View>
-          </View>
-        </TouchableWithoutFeedback> 
-      </View>
+        <View style={styles.modalBackground}>
+          <TouchableWithoutFeedback
+            onPress={() => {
+              console.tron.log("onPress")
+              setModalVisible(false)
+            }}
+          >
+            <SafeAreaView style={{ flex: 1 }}>
+              <View style={{ flex: 1 }}>
+                <View style={{ flex: 1 }}></View>
+                <Text style={styles.modalText}>{translate("Overlay.accounts")}</Text>
+                <DownArrow style={{ marginVertical: 0, marginLeft: 50 }} />
+              </View>
+            </SafeAreaView>
+          </TouchableWithoutFeedback>
+        </View>
       )}
-  </Modal> 
+      {screen == "rewards" && (
+        <View style={{ position: "absolute", zIndex: 2 }}>
+          <TouchableWithoutFeedback
+            onPress={() => {
+              console.tron.log("onPress")
+              setModalVisible(false)
+            }}
+          >
+            <View>
+              <Svg width={Dimensions.get("window").width} height={Dimensions.get("window").height}>
+                <Defs>
+                  <ClipPath id="clip">
+                    <G>
+                      <Rect width="100%" height="100%" />
+                      <Circle cx={Dimensions.get("window").width / 2} cy={CY} r={R} />
+                    </G>
+                  </ClipPath>
+                </Defs>
+                <Rect
+                  width="100%"
+                  height="100%"
+                  fill={OPACITY}
+                  clipPath="url(#clip)"
+                  clipRule="evenodd"
+                />
+              </Svg>
+              <View style={{ position: "absolute", top: CY + R, alignSelf: "center" }}>
+                <Text style={[styles.modalText, { textAlign: "center" }]}>
+                  {translate("Overlay.rewards.download")}
+                </Text>
+                <Text style={[styles.modalText, { textAlign: "center" }]}>
+                  {translate("Overlay.rewards.getMore")}
+                </Text>
+              </View>
+            </View>
+          </TouchableWithoutFeedback>
+        </View>
+      )}
+    </Modal>
   )
 }

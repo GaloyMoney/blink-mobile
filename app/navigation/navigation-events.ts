@@ -21,7 +21,7 @@ export const NavigationEvents = types.model("NavigationEvents").volatile(() => {
    */
   const fireSubscribers = (action: any, oldState: any, newState: any) => {
     // tell each subscriber out this
-    subs.forEach(subscriber => {
+    subs.forEach((subscriber) => {
       subscriber({
         type: "action",
         action,

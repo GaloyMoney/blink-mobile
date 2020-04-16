@@ -1,56 +1,29 @@
-import * as React from "react"
-import { useState, useEffect, useRef } from "react"
-import { Screen } from "../../components/screen"
-import { Text } from "../../components/text"
-import { inject } from "mobx-react"
-import { Onboarding } from "types"
-import { StyleSheet, View, Image, Alert, KeyboardAvoidingView, Platform, ActivityIndicator } from "react-native"
-import { TextInput, ScrollView } from "react-native-gesture-handler"
-import PhoneInput from "react-native-phone-input"
 import auth from "@react-native-firebase/auth"
+import { inject } from "mobx-react"
 import { isEmpty } from "ramda"
-import { useNavigation, useRoute } from '@react-navigation/native'
-
+import * as React from "react"
+import { useEffect, useRef, useState } from "react"
+import { ActivityIndicator, Alert, Image, KeyboardAvoidingView, Platform, StyleSheet, Text, View } from "react-native"
+import { ScrollView, TextInput } from "react-native-gesture-handler"
+import PhoneInput from "react-native-phone-input"
+import { Onboarding } from "types"
+import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
 import { color } from "../../theme"
+
 
 const phoneLogo = require("./PhoneLogo.png")
 const phoneWithArrowLogo = require("./PhoneWithArrowLogo.png")
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: "column",
-    justifyContent: "center",
-  },
-
-  image: {
-    alignSelf: "center",
-    padding: 20,
-    height: 90,
-    resizeMode: "center",
-  },
-
-  text: {
-    fontSize: 20,
-    textAlign: "center",
-    paddingHorizontal: 40,
-    paddingBottom: 10,
-  },
-
-  phoneEntryContainer: {
-    borderColor: color.palette.darkGrey,
-    borderWidth: 1,
-    borderRadius: 5,
-    marginTop: 10,
-    marginHorizontal: 60,
-    paddingVertical: 12,
-    paddingHorizontal: 18,
-  },
-
-  textEntry: {
-    fontSize: 20,
-    color: color.palette.darkGrey,
+  activityIndicatorWrapper: {
+    alignItems: "center",
+    backgroundColor: "#FFFFFF",
+    borderRadius: 10,
+    display: "flex",
+    height: 100,
+    justifyContent: "space-around",
+    width: 100,
   },
 
   buttonContainer: {
@@ -62,34 +35,54 @@ const styles = StyleSheet.create({
     backgroundColor: color.primary,
   },
 
-  modalBackground: {
+  container: {
     flex: 1,
+    flexDirection: "column",
+    justifyContent: "center",
+  },
+
+  image: {
+    alignSelf: "center",
+    height: 90,
+    padding: 20,
+    resizeMode: "center",
+  },
+
+  modalBackground: {
     alignItems: "center",
+    backgroundColor: "#00000040",
+    flex: 1,
     flexDirection: "column",
     justifyContent: "space-around",
-    backgroundColor: "#00000040",
   },
-  activityIndicatorWrapper: {
-    backgroundColor: "#FFFFFF",
-    height: 100,
-    width: 100,
-    borderRadius: 10,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-around",
+
+  phoneEntryContainer: {
+    borderColor: color.palette.darkGrey,
+    borderRadius: 5,
+    borderWidth: 1,
+    marginHorizontal: 60,
+    marginTop: 10,
+    paddingHorizontal: 18,
+    paddingVertical: 12,
+  },
+
+  text: {
+    fontSize: 20,
+    paddingBottom: 10,
+    paddingHorizontal: 40,
+    textAlign: "center",
+  },
+  textEntry: {
+    color: color.palette.darkGrey,
+    fontSize: 20,
   },
 })
 
-export const WelcomePhoneInputScreen = () => {
+export const WelcomePhoneInputScreen = ({ navigation, route }) => {
   const [loading, setLoading] = useState(false)
   const [err, setErr] = useState("")
 
-  const { navigate } = useNavigation()
-
   const inputRef = useRef()
-
-  const route = useRoute()
-  console.tron.log({route})
 
   const send = async () => {
     console.tron.log(`initPhoneNumber ${inputRef.current.getValue()}`)
@@ -104,9 +97,8 @@ export const WelcomePhoneInputScreen = () => {
       const confirmation = await auth().signInWithPhoneNumber(inputRef.current.getValue())
       if (!isEmpty(confirmation)) {
         setLoading(false)
-        const screen = route.name === "welcomePhoneInputBanking" ?
-        "welcomePhoneValidationBanking" : "welcomePhoneValidation"
-        navigate(screen, { confirmation })
+        const screen = "welcomePhoneValidation"
+        navigation.navigate(screen, { confirmation })
       } else {
         setErr(`confirmation object is empty? ${confirmation}`)
       }
@@ -162,49 +154,22 @@ export const WelcomePhoneInputScreen = () => {
   )
 }
 
-export const WelcomePhoneValidationScreen = (inject("dataStore")(
-  ({ dataStore, route }) => {
+export const WelcomePhoneValidationScreen = inject("dataStore")(({ dataStore, route, navigation }) => {
   const [code, setCode] = useState("")
   const [loading, setLoading] = useState(false)
   const [err, setErr] = useState("")
 
   const confirmation = route.params.confirmation
-  const { goBack, navigate } = useNavigation()
 
-  const onAuthStateChanged = async user => {
+  const onAuthStateChanged = async (user) => {
     // TODO : User type
     console.tron.log(`onAuthStateChanged`, user)
     console.log(`onAuthStateChanged`, user)
 
     if (user.phoneNumber) {
-      // FIXME duplicate with user.Phonenumber
       await dataStore.onboarding.add(Onboarding.phoneVerification)
-
-      let result
-
-      if (dataStore.lnd.syncedToChain) {
-        result = await dataStore.lnd.openFirstChannel()
-        console.tron.log("Success opening channel", result)
-      } else {
-        // just go back, we'll open the channel once sync is done
-        result = true
-      }
-
-      if (result === true) {
-        setLoading(false)
-        
-        if (route.name === "welcomePhoneValidationBanking") {
-          navigate("personalInformation")
-        } else {
-          goBack(null)
-          goBack(null)
-        }
-        // FIXME
-
-
-      } else {
-        setErr(result.toString())
-      }
+      navigation.navigate("Accounts", {forceRefresh: true})
+      // FIXME forceRefresh doesn't seem to be passed by
     }
   }
 
@@ -256,7 +221,7 @@ export const WelcomePhoneValidationScreen = (inject("dataStore")(
           <TextInput
             autoFocus={true}
             style={[styles.textEntry, styles.phoneEntryContainer]}
-            onChangeText={input => setCode(input)}
+            onChangeText={(input) => setCode(input)}
             keyboardType="number-pad"
             textContentType="oneTimeCode"
             placeholder={translate("WelcomePhoneValidationScreen.placeholder")}
@@ -273,4 +238,4 @@ export const WelcomePhoneValidationScreen = (inject("dataStore")(
       </KeyboardAvoidingView>
     </Screen>
   )
-}))
+})

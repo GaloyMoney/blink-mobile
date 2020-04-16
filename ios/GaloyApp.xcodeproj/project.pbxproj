@@ -536,7 +536,7 @@
 				CODE_SIGN_ENTITLEMENTS = GaloyApp/GaloyApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 109;
+				CURRENT_PROJECT_VERSION = 118;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 39Q9AL82ZL;
 				ENABLE_BITCODE = NO;
@@ -547,6 +547,7 @@
 				INFOPLIST_FILE = GaloyApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 0.2.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -567,7 +568,7 @@
 				CODE_SIGN_ENTITLEMENTS = GaloyApp/GaloyApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 109;
+				CURRENT_PROJECT_VERSION = 118;
 				DEVELOPMENT_TEAM = 39Q9AL82ZL;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -577,6 +578,7 @@
 				INFOPLIST_FILE = GaloyApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 0.2.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

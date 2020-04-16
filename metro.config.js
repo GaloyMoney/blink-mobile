@@ -6,23 +6,32 @@
  */
 
 const path = require("path")
+const { getDefaultConfig } = require("metro-config")
 
-module.exports = {
-  transformer: {
-    getTransformOptions: async () => ({
-      transform: {
-        experimentalImportSupport: false,
-        inlineRequires: false,
-      },
-    }),
-  },
-  projectRoot: path.resolve(__dirname),
-  watchFolders: [__dirname, path.resolve(__dirname, "../common/")],
-  resolver: {
-    extraNodeModules: {
-      stream: path.resolve(__dirname, "node_modules/readable-stream"),
-      zlib: path.resolve(__dirname, "node_modules/browserify-zlib"),
-      types: path.resolve(__dirname, "../common/types"),
+module.exports = (async () => {
+  const {
+    resolver: { sourceExts, assetExts },
+  } = await getDefaultConfig()
+  return {
+    transformer: {
+      getTransformOptions: async () => ({
+        transform: {
+          experimentalImportSupport: false,
+          inlineRequires: false,
+        },
+      }),
+      babelTransformerPath: require.resolve("react-native-svg-transformer"),
     },
-  },
-}
+    projectRoot: path.resolve(__dirname),
+    watchFolders: [__dirname, path.resolve(__dirname, "../common/")],
+    resolver: {
+      assetExts: assetExts.filter((ext) => ext !== "svg"),
+      sourceExts: [...sourceExts, "svg"],
+      extraNodeModules: {
+        stream: path.resolve(__dirname, "node_modules/readable-stream"),
+        zlib: path.resolve(__dirname, "node_modules/browserify-zlib"),
+        types: path.resolve(__dirname, "../common/types"),
+      },
+    },
+  }
+})()

@@ -1,18 +1,18 @@
 import * as React from "react"
 import { RootStackScreen } from "./primary-navigator"
-import { createStackNavigator } from '@react-navigation/stack';
-import { GetStartedScreen } from "../screens/get-started-screen";
-import { DebugScreen } from "../screens/debug-screen";
-import { WelcomeFirstScreen } from "../screens/welcome-screens";
+import { createStackNavigator } from "@react-navigation/stack"
+import { GetStartedScreen } from "../screens/get-started-screen"
+import { DebugScreen } from "../screens/debug-screen"
+import { WelcomeFirstScreen } from "../screens/welcome-screens"
 
-import { inject, observer } from "mobx-react";
+import { inject, observer } from "mobx-react"
 
 import auth from "@react-native-firebase/auth"
 import { getEnv } from "mobx-state-tree"
 import { useEffect, useState } from "react"
 import { when } from "mobx"
 import { Onboarding } from "types"
-import { SplashScreen } from "../screens/splash-screen";
+import { SplashScreen } from "../screens/splash-screen"
 
 const INIT_DELAY_LND = 100
 
@@ -20,7 +20,6 @@ const Loading = createStackNavigator()
 
 export const RootStack = inject("dataStore")(
   observer(({ dataStore }) => {
-
     const [initialRouteName, setInitialRouteName] = useState("")
     const [authReady, setAuthReady] = useState(false)
 
@@ -31,12 +30,12 @@ export const RootStack = inject("dataStore")(
 
       startLnd()
 
-      setTimeout(async function() {
+      setTimeout(async function () {
         await getEnv(dataStore).lnd.openWallet()
       }, INIT_DELAY_LND)
     }, [])
 
-    const onAuthStateChanged = async user => {
+    const onAuthStateChanged = async (user) => {
       console.tron.log(`onAuthStateChanged`, user)
       console.log(`onAuthStateChanged`, user)
 
@@ -66,34 +65,32 @@ export const RootStack = inject("dataStore")(
       _()
     }, [])
 
-  if (initialRouteName === "") {
-    return <SplashScreen lndVersion={dataStore.lnd.version} />
-  }
+    if (initialRouteName === "") {
+      return <SplashScreen lndVersion={dataStore.lnd.version} />
+    }
 
-  return (
-    <Loading.Navigator
-      initialRouteName={initialRouteName}
-      screenOptions={{ gestureEnabled: false }}
-    >
-      <Loading.Screen
-        name="getStarted"
-        component={GetStartedScreen}
-        options={{ headerShown: false }}
-      />
-      <Loading.Screen
-        name="debug"
-        component={DebugScreen}
-      />
-      <Loading.Screen
-        name="welcomeFirst"
-        component={WelcomeFirstScreen}
-        options={{ headerShown: false }}
-      />
-      <Loading.Screen
-        name="primaryStack"
-        component={RootStackScreen}
-        options={{ headerShown: false }}
-      />
-    </Loading.Navigator>
-  )
-}))
+    return (
+      <Loading.Navigator
+        initialRouteName={initialRouteName}
+        screenOptions={{ gestureEnabled: false }}
+      >
+        <Loading.Screen
+          name="getStarted"
+          component={GetStartedScreen}
+          options={{ headerShown: false }}
+        />
+        <Loading.Screen name="debug" component={DebugScreen} />
+        <Loading.Screen
+          name="welcomeFirst"
+          component={WelcomeFirstScreen}
+          options={{ headerShown: false }}
+        />
+        <Loading.Screen
+          name="primaryStack"
+          component={RootStackScreen}
+          options={{ headerShown: false }}
+        />
+      </Loading.Navigator>
+    )
+  }),
+)

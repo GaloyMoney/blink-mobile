@@ -1,22 +1,32 @@
-import * as React from "react"
-import { Screen } from "../../components/screen"
-import { OnboardingScreen } from "../../components/onboarding"
-import { Text } from "../../components/text"
 import { inject } from "mobx-react"
-import { Onboarding } from "types"
-import { StyleSheet, View } from "react-native"
-
-import { color } from "../../theme"
-
+import * as React from "react"
+import { StyleSheet, View, Text } from "react-native"
 import Swiper from "react-native-swiper"
+import { Onboarding } from "types"
+import { OnboardingScreen } from "../../components/onboarding"
+import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
+import { color } from "../../theme"
 import { palette } from "../../theme/palette"
+import BitcoinBitcoin from "./bitcoin-bitcoin-01.svg"
+import BankShop from "./cc-bank-shop-01.svg"
+import MascotDollarBitcoin from "./honey-badger-money-bitcoin-01.svg"
+import HoneyBadgerShovel from "./honey-badger-shovel-01.svg"
 
-const bitcoinLogo = require("./BitcoinLogo.png")
-const dollarLogo = require("./DollarLogo.png")
-const presentLogo = require("./PresentLogo.png")
+
+
 
 const styles = StyleSheet.create({
+  activityIndicatorWrapper: {
+    alignItems: "center",
+    backgroundColor: "#FFFFFF",
+    borderRadius: 10,
+    display: "flex",
+    height: 100,
+    justifyContent: "space-around",
+    width: 100,
+  },
+
   container: {
     flex: 1,
     flexDirection: "column",
@@ -25,54 +35,43 @@ const styles = StyleSheet.create({
 
   image: {
     alignSelf: "center",
-    padding: 20,
     height: 90,
+    padding: 20,
     resizeMode: "center",
   },
 
-  text: {
-    fontSize: 20,
-    textAlign: "center",
-    paddingHorizontal: 40,
-    paddingBottom: 10,
+  modalBackground: {
+    alignItems: "center",
+    backgroundColor: "#00000040",
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "space-around",
   },
 
   phoneEntryContainer: {
     borderColor: color.palette.darkGrey,
-    borderWidth: 1,
     borderRadius: 5,
-    marginTop: 10,
+    borderWidth: 1,
     marginHorizontal: 60,
-    paddingVertical: 12,
+    marginTop: 10,
     paddingHorizontal: 18,
+    paddingVertical: 12,
+  },
+
+  text: {
+    fontSize: 20,
+    paddingBottom: 10,
+    paddingHorizontal: 40,
+    textAlign: "center",
   },
 
   textEntry: {
-    fontSize: 20,
     color: color.palette.darkGrey,
-  },
-
-  modalBackground: {
-    flex: 1,
-    alignItems: "center",
-    flexDirection: "column",
-    justifyContent: "space-around",
-    backgroundColor: "#00000040",
-  },
-  
-  activityIndicatorWrapper: {
-    backgroundColor: "#FFFFFF",
-    height: 100,
-    width: 100,
-    borderRadius: 10,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-around",
+    fontSize: 20,
   },
 })
 
 export const WelcomeFirstScreen = inject("dataStore")(({ dataStore, navigation }) => {
-
   return (
     <Swiper
       loop={false}
@@ -92,20 +91,20 @@ export const WelcomeFirstScreen = inject("dataStore")(({ dataStore, navigation }
       }
     >
       <Screen>
-        <OnboardingScreen image={presentLogo}>
+        <OnboardingScreen Svg={MascotDollarBitcoin}>
           <Text style={styles.text}>{translate("WelcomeFirstScreen.care")}</Text>
         </OnboardingScreen>
         {/* FIXME */}
         <Text style={styles.text}>{"\n\n"}</Text>
       </Screen>
       <Screen>
-        <OnboardingScreen image={dollarLogo}>
+        <OnboardingScreen Svg={BitcoinBitcoin}>
           <Text style={styles.text}>{translate("WelcomeFirstScreen.bank")}</Text>
         </OnboardingScreen>
         <Text style={styles.text}>{"\n\n\n"}</Text>
       </Screen>
       <Screen>
-        <OnboardingScreen image={dollarLogo}>
+        <OnboardingScreen Svg={BankShop}>
           <Text style={styles.text}>{translate("WelcomeFirstScreen.before")}</Text>
         </OnboardingScreen>
         <Text style={styles.text}>{"\n\n\n"}</Text>
@@ -116,7 +115,7 @@ export const WelcomeFirstScreen = inject("dataStore")(({ dataStore, navigation }
             dataStore.onboarding.add(Onboarding.walletDownloaded)
             navigation.navigate("primaryStack")
           }}
-          image={bitcoinLogo}
+          Svg={HoneyBadgerShovel}
           nextTitle="Learn to Earn"
         >
           <Text style={styles.text}>{translate("WelcomeFirstScreen.learn")}</Text>
