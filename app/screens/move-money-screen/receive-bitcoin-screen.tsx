@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   },
 })
 
-export const ReceiveBitcoinScreen: React.FC = inject("dataStore")(
+export const ReceiveBitcoinScreen = inject("dataStore")(
   observer(({ dataStore }) => {
     const [note, setNote] = useState("")
     const [amount, setAmount] = useState(0)

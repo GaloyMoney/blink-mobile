@@ -1,19 +1,15 @@
 import auth from "@react-native-firebase/auth"
 import crashlytics from "@react-native-firebase/crashlytics"
-import firestore from "@react-native-firebase/firestore"
 import functions from "@react-native-firebase/functions"
 import { inject, observer } from "mobx-react"
-import { getSnapshot } from "mobx-state-tree"
 import * as React from "react"
 import { useState } from "react"
 import { Alert, Clipboard, StyleSheet, Text, TextInput, TextStyle, View, ViewStyle } from "react-native"
 import { Button } from "react-native-elements"
 import RNFS from "react-native-fs"
-import JSONTree from "react-native-json-tree"
 import { QRCode } from "../../components/qrcode"
 import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
-import FileAction from "../../services/lnd/file"
 import { color, spacing } from "../../theme"
 import { palette } from "../../theme/palette"
 
@@ -76,18 +72,6 @@ export const DebugScreen = inject("dataStore")(
     const [addr, setAddr] = useState("tb1")
     const [amount, setAmount] = useState(1000)
     const [invoice, setInvoice] = useState("ln")
-    const [json, setJson] = useState(getSnapshot(dataStore))
-
-    React.useEffect(() => {
-      const _ = async () => {
-        await dataStore.lnd.listChannels()
-        await dataStore.lnd.updatePendingChannels()
-        setJson(getSnapshot(dataStore))
-        console.tron.log("json updated")
-      }
-
-      _()
-    }, [])
 
     const demoReactotron = async () => {
       console.tron.logImportant("I am important")
@@ -116,12 +100,9 @@ export const DebugScreen = inject("dataStore")(
       })
     }
 
-    const fileAction = new FileAction(dataStore)
-
     return (
       <View style={FULL}>
         <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
-          <JSONTree data={json} />
           <Button
             style={DEMO}
             textStyle={DEMO_TEXT}
@@ -136,7 +117,6 @@ export const DebugScreen = inject("dataStore")(
               }
               await auth().signOut()
               await dataStore.onboarding._reset() // do not synchronize state update
-              await fileAction.deleteAllLndData()
               Alert.alert("user succesfully deleted. Delete your app to start from a clean state")
             }}
           />
@@ -185,7 +165,6 @@ export const DebugScreen = inject("dataStore")(
               title="Delete onboarding state"
               onPress={async () => {
                 await dataStore.onboarding._reset()
-                await firestore().doc(`users/${auth().currentUser?.uid}/collection/paid`).delete()
               }}
             />
             <Button
