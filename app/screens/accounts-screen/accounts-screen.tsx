@@ -172,7 +172,7 @@ export const AccountsScreen = inject("dataStore")(
           titleStyle={{ color: palette.blue }}
           type="clear"
           // containerStyle={{ backgroundColor: color.primary }}
-          onPress={() => navigation.navigate("rewards")}
+          onPress={() => navigation.navigate("Rewards")}
           icon={<Icon name="ios-gift" color={palette.blue} size={28} style={styles.icon} />}
         />
       </Screen>

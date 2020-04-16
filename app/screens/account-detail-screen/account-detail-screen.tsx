@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   },
 
   headerSection: {
-    backgroundColor: palette.white,
+    // backgroundColor: palette.white,
     color: color.text,
     fontSize: 18,
     padding: 22,
