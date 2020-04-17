@@ -10,7 +10,8 @@ import "node-libs-react-native/globals" // needed for Buffer?
 import { contains } from "ramda"
 import * as React from "react"
 import { useEffect, useRef, useState } from "react"
-import { AppRegistry, YellowBox } from "react-native"
+import { AppRegistry, Dimensions, YellowBox } from "react-native"
+import EStyleSheet from 'react-native-extended-stylesheet'
 import { Notifications } from "react-native-notifications"
 import { StorybookUIRoot } from "../storybook"
 import "./i18n"
@@ -20,6 +21,11 @@ import { RootStack } from './navigation/root-navigator'
 import { getActiveRouteName, getActiveRouteParams } from "./utils/navigation"
 
 
+const entireScreenWidth = Dimensions.get('window').width;
+EStyleSheet.build({
+  $rem: entireScreenWidth / 380,
+  // $textColor: '#0275d8'
+});
 
 
 /**
