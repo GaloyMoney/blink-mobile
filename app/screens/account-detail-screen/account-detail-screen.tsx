@@ -12,14 +12,12 @@ import { Onboarding, Side } from "types"
 import { BalanceHeader } from "../../components/balance-header"
 import { CurrencyText } from "../../components/currency-text"
 import { Screen } from "../../components/screen"
-import { SyncingComponent } from "../../components/syncing"
 import { translate } from "../../i18n"
 import { DataStore } from "../../models/data-store"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { sameDay, sameMonth } from "../../utils/date"
 import { AccountType, CurrencyType, FirstChannelStatus } from "../../utils/enum"
-import { shortenHash, showFundingTx } from "../../utils/helper"
 
 
 
@@ -503,20 +501,6 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = inject("d
             keyExtractor={(item, index) => item + index}
           />
         )}
-        {(account == AccountType.VirtualBitcoin &&
-          dataStore.lnd.statusFirstChannel == FirstChannelStatus.pending && (
-            <View style={styles.sync}>
-              <Text
-                style={styles.fundingText}
-                onPress={() => showFundingTx(dataStore.lnd.fundingTx)}
-              >
-                {translate(`common.fundingTx`, {
-                  tx: shortenHash(dataStore.lnd.fundingTx),
-                })}
-              </Text>
-            </View>
-          )) ||
-          (!dataStore.lnd.syncedToChain && <SyncingComponent />)}
       </Screen>
     )
   }),

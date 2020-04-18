@@ -20,6 +20,12 @@ const styles = StyleSheet.create({
   person: {
     paddingRight: 15,
   },
+
+  bottomNavigatorStyle: {
+    height: '12%'
+    // height: '12rem%'
+    // height: 100
+  }
 })
 
 const size = 32
@@ -173,7 +179,7 @@ export const PrimaryNavigator = () => {
       tabBarOptions={{
         activeTintColor: color.primary,
         inactiveTintColor: palette.lightGrey,
-        style: { height: 100 },
+        style: styles.bottomNavigatorStyle,
       }}
     >
       <Tab.Screen

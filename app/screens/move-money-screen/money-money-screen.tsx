@@ -2,20 +2,21 @@ import auth from "@react-native-firebase/auth"
 import { inject } from "mobx-react"
 import * as React from "react"
 import { useState } from "react"
-import { ScrollView, StyleSheet, Text, View } from "react-native"
+import { ScrollView, Text, View } from "react-native"
 import { Button, ListItem } from "react-native-elements"
+import EStyleSheet from 'react-native-extended-stylesheet'
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Onboarding } from "types"
 import { Screen } from "../../components/screen"
-import { SyncingComponent } from "../../components/syncing"
 import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { capitalize } from "../../utils/helper"
 
-const styles = StyleSheet.create({
+
+const styles = EStyleSheet.create({
   screenStyle: {
     backgroundColor: palette.lighterGrey
   },
@@ -24,24 +25,24 @@ const styles = StyleSheet.create({
     borderColor: color.primary,
     borderRadius: 32,
     borderWidth: 2,
-    width: "100%"
   },
 
   titleStyle: {
     color: color.primary,
     fontWeight: "bold",
-    fontSize: 24,
+    fontSize: "18rem",
   },
 
   listItem: {
-    marginVertical: 12,
-    marginHorizontal: 24,
+    marginVertical: "8rem",
+    marginHorizontal: "12rem",
     borderRadius: 8,
   },
 
-  buttonContainer: {
-    marginTop: 24,
-    paddingHorizontal: 15,
+
+  buttonContainerStyle: {
+    marginTop: "16rem",
+    width: "80%",
   },
 
   flex: {
@@ -49,21 +50,24 @@ const styles = StyleSheet.create({
   },
 
   headerSection: {
-    fontSize: 20,
+    fontSize: "20rem",
     fontWeight: "bold",
-    margin: 22,
+    marginHorizontal: "20rem",
+    marginTop: "12rem",
+    marginBottom: "8rem",
     color: palette.blue,
   },
 
   icon: {
-    marginRight: 12,
+    marginRight: "12rem",
     textAlign: "center",
     width: 32,
   },
 
   text: {
     color: palette.darkGrey,
-    fontSize: 22,
+    fontSize: "20rem",
+    // fontWeight: "bold",
   },
 
   viewModal: {
@@ -81,7 +85,6 @@ export const MoveMoneyScreen = inject("dataStore")(({ dataStore, navigation }) =
   const [message, setMessage] = useState("")
   const [buttonTitle, setButtonTitle] = useState("")
   const [buttonAction, setButtonAction] = useState(() => () => {})
-  const [syncing, setSyncing] = useState(false)
 
   const bank = [
     {
@@ -139,7 +142,6 @@ export const MoveMoneyScreen = inject("dataStore")(({ dataStore, navigation }) =
         setModalVisible(false)
         navigation.navigate("phoneValidation")
       })
-      setSyncing(false)
     } else {
       navigation.navigate(target)
     }
@@ -167,20 +169,14 @@ export const MoveMoneyScreen = inject("dataStore")(({ dataStore, navigation }) =
             style={{ height: 34, top: -22 }}
           />
           <Text style={styles.text}>{message}</Text>
-          {(syncing && (
-            <View style={styles.buttonContainer}>
-              <SyncingComponent />
-            </View>
-          )) || (
-            <Button
-              title={buttonTitle}
-              onPress={() => buttonAction()}
-              type="outline"
-              buttonStyle={styles.buttonStyle}
-              titleStyle={styles.titleStyle}
-              containerStyle={{marginTop: 24}}
-            />
-          )}
+          <Button
+            title={buttonTitle}
+            onPress={() => buttonAction()}
+            type="outline"
+            buttonStyle={styles.buttonStyle}
+            titleStyle={styles.titleStyle}
+            containerStyle={styles.buttonContainerStyle}
+          />
           <View style={{flex: 1}} />
         </View>
       </Modal>
