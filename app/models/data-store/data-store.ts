@@ -3,7 +3,7 @@ import functions from "@react-native-firebase/functions"
 import { difference } from "lodash"
 import { flow, getEnv, getParentOfType, Instance, SnapshotOut, types } from "mobx-state-tree"
 import DeviceInfo from "react-native-device-info"
-import { IBuyRequest, IQuoteRequest, IQuoteResponse, Onboarding, OnboardingRewards, Side } from "types"
+import { IBuyRequest, IQuoteRequest, IQuoteResponse, Onboarding, OnboardingRewards, Side, IAddInvoiceRequest } from "types"
 import { translate } from "../../i18n"
 import { parseDate } from "../../utils/date"
 import { AccountType, CurrencyType } from "../../utils/enum"
@@ -377,9 +377,14 @@ export const LndModel = BaseAccountModel.named("Lnd")
         })
       }),
 
-      addInvoice: flow(function* ({ value, memo }) {
-        const { data } = yield functions().httpsCallable("addInvoice")({ value, memo })
+      addInvoice: flow(function* (request: IAddInvoiceRequest) {
+        const { data } = yield functions().httpsCallable("addInvoice")(request)
         self.lastAddInvoice = data.request
+      }),
+
+      // doesn't update the store, should this be here?
+      payInvoice: flow(function* ({ invoice }: IPayInvoice) {
+        const { invoicePayment } = yield functions().httpsCallable("payInvoice")({ invoice })
       }),
 
       clearLastInvoice: flow(function* () {
@@ -414,9 +419,6 @@ export const LndModel = BaseAccountModel.named("Lnd")
         return yield getEnv(self).lnd.grpc.sendCommand("sendCoins", { addr, amount })
       }),
 
-      // doesn't update the store, should this be here?
-      payInvoice: flow(function* (paymentRequest) {
-      }),
     }
   })
   .views((self) => ({
