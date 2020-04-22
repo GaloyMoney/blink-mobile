@@ -3,7 +3,8 @@ import functions from "@react-native-firebase/functions"
 import { difference } from "lodash"
 import { flow, getEnv, getParentOfType, Instance, SnapshotOut, types } from "mobx-state-tree"
 import DeviceInfo from "react-native-device-info"
-import { IBuyRequest, IQuoteRequest, IQuoteResponse, Onboarding, OnboardingRewards, Side, IAddInvoiceRequest } from "types"
+import { IBuyRequest, IQuoteRequest, IQuoteResponse, Onboarding, 
+  OnboardingRewards, Side, IAddInvoiceRequest, IPayInvoice } from "../../../../common/types"
 import { translate } from "../../i18n"
 import { parseDate } from "../../utils/date"
 import { AccountType, CurrencyType } from "../../utils/enum"
@@ -52,7 +53,7 @@ export const BaseAccountModel = types
     get balance() {
       return self.confirmedBalance + self.unconfirmedBalance
     },
-    get transactions(): Array<typeof TransactionModel> {
+    get transactions() {
       throw new Error("this is an abstract method, need to be implemented in subclass")
     },
   }))
@@ -107,9 +108,10 @@ export const ExchangeModel = types
           request.invoice = invoice.paymentRequest
         }
 
-        const result = yield functions().httpsCallable("quoteLNDBTC")(request)
-        console.tron.log("quoteBTC: ", result)
-        self.quote = result.data as IQuoteResponse
+        const {data} = yield functions().httpsCallable("quoteLNDBTC")(request)
+
+        // @ts-ignore FIXME not sure why but it seems necessary. it seems typescript doesn't get maybe?
+        self.quote = data as IQuoteResponse
 
         const invoiceJson = yield getParentOfType(self, DataStoreModel).lnd.decodePayReq(
           self.quote.invoice,
@@ -129,17 +131,18 @@ export const ExchangeModel = types
           assertTrade("buy")
 
           const request: IBuyRequest = {
-            side: self.quote.side!,
-            invoice: self.quote.invoice!,
-            satPrice: self.quote.satPrice!,
-            signature: self.quote.signature!,
+            //@ts-ignore
+            side: self.quote.side,
+            invoice: self.quote.invoice,
+            satPrice: self.quote.satPrice,
+            signature: self.quote.signature,
           }
 
           const result = yield functions().httpsCallable("buyLNDBTC")(request)
           console.tron.log("result BuyLNDBTC", result)
           return result?.data?.success ?? false
         } catch (err) {
-          console.tron.error(err.toString())
+          console.tron.error(err.toString(), Error.captureStackTrace(err))
           throw err
         }
       }),
@@ -155,7 +158,7 @@ export const ExchangeModel = types
           console.tron.log("result SellLNDBTC", result)
           return result
         } catch (err) {
-          console.tron.error(err)
+          console.tron.error(err.toString(), Error.captureStackTrace(err))
           throw err
         }
       }),
@@ -178,9 +181,8 @@ export const FiatAccountModel = BaseAccountModel.props({
         // TODO show transaction
         // const doc = yield firestore().doc(`users/${uid}`).get()
         // self._transactions = doc.data().transactions
-        self._transactions = []
       } catch (err) {
-        console.tron.error(`not able to update transaction ${err}`)
+        console.tron.error(`not able to update transaction ${err}`, Error.captureStackTrace(err))
       }
     })
 
@@ -194,7 +196,7 @@ export const FiatAccountModel = BaseAccountModel.props({
             // TODO: add unconfirmed balance
           }
         } catch (err) {
-          console.tron.error(`can't fetch the balance ${err}`)
+          console.tron.error(`can't fetch the balance ${err}`, Error.captureStackTrace(err))
         }
       } else {
         self.confirmedBalance = 0
@@ -254,7 +256,9 @@ export const LndModel = BaseAccountModel.named("Lnd")
       }),
 
       update: flow(function* () {
+        //@ts-ignore not sure why that is
         yield self.updateBalance()
+        //@ts-ignore not sure why that is
         yield self.updateTransactions()
       }),
 
@@ -399,6 +403,8 @@ export const RatesModel = types
         return self.USD
       } else if (currency === CurrencyType.BTC) {
         return self.BTC
+      } else {
+        throw Error(`currency don't exist`)
       }
     },
   }))
