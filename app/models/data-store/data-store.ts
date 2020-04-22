@@ -7,7 +7,6 @@ import { IBuyRequest, IQuoteRequest, IQuoteResponse, Onboarding, OnboardingRewar
 import { translate } from "../../i18n"
 import { parseDate } from "../../utils/date"
 import { AccountType, CurrencyType } from "../../utils/enum"
-import { shortenHash } from "../../utils/helper"
 
 
 
@@ -18,130 +17,36 @@ DeviceInfo.isEmulator().then((isEmulator) => {
   }
 })
 
-export const OnChainTransactionModel = types.model("OnChainTransaction", {
-  txHash: types.string,
-  amount: types.number,
-  numConfirmations: types.maybe(types.number), // not sure why it's only set for some of them
-  blockHash: types.maybe(types.string), // some mined transactions are not
-  blockHeight: types.maybe(types.number), // included here
-  timeStamp: types.number,
-  destAddresses: types.array(types.string),
-  totalFees: types.maybe(types.string), // only set for sending transaction
-  rawTxHex: types.string,
-})
-
-export const PaymentModel = types.model("Payment", {
-  paymentHash: types.string,
-  valueSat: types.number,
-  feeSat: types.maybe(types.number),
-  creationDate: types.number,
-  path: types.array(types.string),
-  status: types.number, // FIXME should be number
-  paymentRequest: types.string,
-  paymentPreimage: types.string,
-  description: types.maybe(types.string),
-})
-
-export const HTLCModel = types.model("HTLC", {
-  chanId: types.union(types.string, types.undefined, types.number, types.null),
-  // htlcIndex: types.maybe(types.union(types.string, types.undefined, types.number)),
-  amtMsat: types.union(types.string, types.undefined, types.number, types.null),
-  acceptHeight: types.union(types.string, types.undefined, types.number, types.null),
-  acceptTime: types.union(types.string, types.undefined, types.number, types.null),
-  resolveTime: types.union(types.string, types.undefined, types.number, types.null),
-  expiryHeight: types.union(types.string, types.undefined, types.number, types.null),
-  state: types.union(types.string, types.undefined, types.number, types.null),
-  mppTotalAmtMsat: types.union(types.string, types.undefined, types.number, types.null),
-  // mppTotalAmtMsat: types.maybe(types.string),
-  customRecords: types.maybe(types.string),
-})
-
-export const InvoiceModel = types.model("Invoice", {
-  memo: types.maybe(types.string),
-  receipt: types.maybe(types.string),
-  rPreimage: types.string,
-  rHash: types.string,
-  value: types.maybe(types.number), // for amountless invoices
-  settled: types.maybe(types.boolean),
-  state: types.maybe(types.number), // XXX FIXME
-  creationDate: types.number,
-  expiry: types.maybe(types.number),
-  settleDate: types.maybe(types.number),
-  paymentRequest: types.maybe(types.string),
-  private: types.maybe(types.boolean),
-  amtPaidSat: types.maybe(types.number),
-  htlcs: types.array(HTLCModel),
-  // under htlcs but not in array: mppTotalAmtMsat: types.maybe(types.string),
-
-  // many other fields are not copied
-})
-
-export const PendingChannelModel = types.model("Channel", {
-  // [
-  //   "pendingChannels:",
-  //   {
-  //     "pendingOpenChannels": [
-  //       {
-  //         "channel": {
-  //           "remoteNodePub": "029fd0834277b92b6ae1b4afd771f74a2f0e9bbdfc13edcf3e7e3da1590c6fc6d6",
-  //           "channelPoint": "65ccfc3bf905c8c139e9c6fdf887e4c1bc53624cf13ce266ce2f1704b7a37732:1",
-  //           "capacity": "120000",
-  //           "remoteBalance": "119817",
-  //           "localChanReserveSat": "1200",
-  //           "remoteChanReserveSat": "1200"
-  //         },
-  //         "commitFee": "183",
-  //         "commitWeight": "552",
-  //         "feePerKw": "253"
-  //       }
-  //     ]
-  //   }
-  // ]
-
-  // channel: types.model({
-  remoteNodePub: types.string,
-  channelPoint: types.string,
-  capacity: types.number,
-  remoteBalance: types.number,
-  localChanReserveSat: types.number,
-  remoteChanReserveSat: types.number,
-  // }),
-  // commitFee: types.number,
-  // commitWeight: types.number,
-  // feePerKw: types.number
-})
-
-export const PendingHTLCModel = types.model("PendingHTLC", {
-  // TODO
-})
-
-export const ChannelModel = types.model("Channel", {
-  active: types.maybe(types.boolean),
-  remotePubkey: types.string,
-  channelPoint: types.string,
-  chanId: types.number,
-  capacity: types.number,
-  remoteBalance: types.number,
-  localBalance: types.optional(types.number, 0),
-  commitFee: types.number,
-  commitWeight: types.number,
-  feePerKw: types.number,
-  totalSatoshisReceived: types.optional(types.number, 0),
-  numUpdates: types.optional(types.number, 0),
-  pendingHtlcs: types.optional(types.array(types.undefined), []),
-  csvDelay: types.number,
-  private: types.boolean,
-  chanStatusFlags: types.string,
-  localChanReserveSat: types.number,
-  remoteChanReserveSat: types.number,
-})
-
 export const FiatTransactionModel = types.model("Transaction", {
   name: types.string,
   icon: types.string,
   amount: types.number,
   date: types.number, // TODO: move to timestamp
   cashback: types.maybe(types.number),
+})
+
+
+// { "amount": 1000,
+// "description": "tx 1",
+// "hash": "4aad597da3d11a37d920763dedf02f71c49a8eabed6135316d6b5c79037d1ee2",
+// "created_at": "2020-04-22T01:56:45.000Z",
+// "confirmed": false }
+
+// should map ILightningTransaction
+export const LightningInvoiceModel = types.model("LightningTransaction", {
+  amount: types.number,
+  description: types.maybe(types.union(types.string, types.null)),
+
+  created_at: types.string, // FIXME
+  // date: types.number, // TODO: move to timestamp
+
+  confirmed: types.boolean,
+  hash: types.string,
+  preimage: types.maybe(types.string),
+  destination: types.maybe(types.string),
+
+  // name: types.string,
+  // icon: types.string,
 })
 
 export const BaseAccountModel = types
@@ -346,12 +251,8 @@ export const LndModel = BaseAccountModel.named("Lnd")
     startBlockHeight: types.maybe(types.number),
     percentSynced: 0,
 
-    pendingChannels: types.array(PendingChannelModel),
-    channels: types.array(ChannelModel),
+    _transactions: types.array(LightningInvoiceModel),
 
-    onchain_transactions: types.array(OnChainTransactionModel),
-    invoices: types.array(InvoiceModel),
-    payments: types.array(PaymentModel),
   })
   .actions((self) => {
     return {
@@ -362,8 +263,6 @@ export const LndModel = BaseAccountModel.named("Lnd")
       update: flow(function* () {
         yield self.updateBalance()
         yield self.updateTransactions()
-        yield self.updateInvoices()
-        yield self.listPayments()
       }),
 
       newAddress: flow(function* () {
@@ -372,9 +271,6 @@ export const LndModel = BaseAccountModel.named("Lnd")
       decodePayReq: flow(function* (payReq) {
         // TODO use require('bolt11')
         // but check if same format as lnd
-        return yield getEnv(self).lnd.grpc.sendCommand("decodePayReq", {
-          payReq,
-        })
       }),
 
       addInvoice: flow(function* (request: IAddInvoiceRequest) {
@@ -396,27 +292,15 @@ export const LndModel = BaseAccountModel.named("Lnd")
       }),
 
       updateBalance: flow(function* () {
-          // self.confirmedBalance = onChainBalance.confirmedBalance + channelBalance.balance
-          // self.unconfirmedBalance =
-          //   onChainBalance.unconfirmedBalance + channelBalance.pendingOpenBalance
+        const { data } = yield functions().httpsCallable("getLightningBalance")({})
+        self.confirmedBalance = data.response
       }),
 
       updateTransactions: flow(function* () {
-
-      }),
-
-      updateInvoice: flow(function* (invoice) {
-
-      }),
-
-      updateInvoices: flow(function* () {
-      }),
-
-      listPayments: flow(function* () {
-      }),
-
-      sendTransaction: flow(function* (addr, amount) {
-        return yield getEnv(self).lnd.grpc.sendCommand("sendCoins", { addr, amount })
+        const { data } = yield functions().httpsCallable("getLightningTransactions")({})
+        console.tron.log(typeof data.response)
+        console.tron.log(data.response)
+        self._transactions = data.response
       }),
 
     }
@@ -427,80 +311,71 @@ export const LndModel = BaseAccountModel.named("Lnd")
     },
 
     get transactions() {
-      // TODO, optimize with some form of caching
 
-      const onchainTxs = self.onchain_transactions.map((transaction) => ({
-        id: transaction.txHash,
-        name: transaction.amount > 0 ? "Received" : "Sent",
-        icon: transaction.amount > 0 ? "ios-download" : "ios-exit",
-        amount: transaction.amount,
-        date: parseDate(transaction.timeStamp),
-        status: transaction.numConfirmations < 3 ? "unconfirmed" : "confirmed",
-      }))
 
-      const formatInvoice = (invoice) => {
-        if (invoice.settled) {
-          if (invoice.memo) {
-            return invoice.memo
-          } else if (invoice.htlcs[0].customRecords) {
-            return translateTitleFromItem(invoice.htlcs[0].customRecords)
-          } else {
-            return `Payment received`
-          }
-        } else {
-          return `Waiting for payment`
-        }
-      }
+      // const formatInvoice = (invoice) => {
+      //   if (invoice.settled) {
+      //     if (invoice.memo) {
+      //       return invoice.memo
+      //     } else if (invoice.htlcs[0].customRecords) {
+      //       return translateTitleFromItem(invoice.htlcs[0].customRecords)
+      //     } else {
+      //       return `Payment received`
+      //     }
+      //   } else {
+      //     return `Waiting for payment`
+      //   }
+      // }
 
-      const formatPayment = (payment) => {
-        if (payment.description) {
-          try {
-            const decode = JSON.parse(payment.description)
-            return decode.memo
-          } catch (e) {
-            return payment.description
-          }
-        } else {
-          return `Paid invoice ${shortenHash(payment.paymentHash, 2)}`
-        }
-      }
+      // const formatPayment = (payment) => {
+      //   if (payment.description) {
+      //     try {
+      //       const decode = JSON.parse(payment.description)
+      //       return decode.memo
+      //     } catch (e) {
+      //       return payment.description
+      //     }
+      //   } else {
+      //     return `Paid invoice ${shortenHash(payment.paymentHash, 2)}`
+      //   }
+      // }
 
-      const filterExpiredInvoice = (invoice) => {
-        if (invoice.settled === true) {
-          return true
-        }
-        if (new Date().getTime() / 1000 > invoice.creationDate + invoice.expiry) {
-          return false
-        }
-        return true
-      }
+      // const filterExpiredInvoice = (invoice) => {
+      //   if (invoice.settled === true) {
+      //     return true
+      //   }
+      //   if (new Date().getTime() / 1000 > invoice.creationDate + invoice.expiry) {
+      //     return false
+      //   }
+      //   return true
+      // }
 
-      const invoicesTxs = self.invoices.filter(filterExpiredInvoice).map((invoice) => ({
-        id: invoice.rHash,
-        icon: "ios-thunderstorm",
-        name: formatInvoice(invoice),
-        amount: invoice.value,
-        status: invoice.settled ? "complete" : "in-progress",
-        date: parseDate(invoice.creationDate),
-        preimage: invoice.rPreimage,
-        memo: invoice.memo,
-      }))
+      // const invoicesTxs = self.invoices.filter(filterExpiredInvoice).map((invoice) => ({
+      //   id: invoice.rHash,
+      //   icon: "ios-thunderstorm",
+      //   name: formatInvoice(invoice),
+      //   amount: invoice.value,
+      //   status: invoice.settled ? "complete" : "in-progress",
+      //   date: parseDate(invoice.creationDate),
+      //   preimage: invoice.rPreimage,
+      //   memo: invoice.memo,
+      // }))
 
-      const paymentTxs = self.payments.map((payment) => ({
-        id: payment.paymentHash,
-        icon: "ios-thunderstorm",
-        name: formatPayment(payment),
-        // amount should be negative so that it's shown as "spent"
-        amount: -payment.valueSat,
-        date: parseDate(payment.creationDate),
-        preimage: payment.paymentPreimage,
-        status: "complete", // filter for succeed on ?
-      }))
+      // const paymentTxs = self.payments.map((payment) => ({
+      //   id: payment.paymentHash,
+      //   icon: "ios-thunderstorm",
+      //   name: formatPayment(payment),
+      //   // amount should be negative so that it's shown as "spent"
+      //   amount: -payment.valueSat,
+      //   date: parseDate(payment.creationDate),
+      //   preimage: payment.paymentPreimage,
+      //   status: "complete", // filter for succeed on ?
+      // }))
 
-      const all_txs = [...onchainTxs, ...invoicesTxs, ...paymentTxs].sort((a, b) =>
-        a.date > b.date ? 1 : -1,
-      )
-      return all_txs
+      // const all_txs = [...onchainTxs, ...invoicesTxs, ...paymentTxs].sort((a, b) =>
+      //   a.date > b.date ? 1 : -1,
+      // )
+      return self._transactions
     },
   }))
 
@@ -568,7 +443,7 @@ export const OnboardingModel = types
     }),
 
     // dummy function to have same interface with bitcoin wallet and bank account
-    update: flow(function* () {}),
+    update: flow(function* () { }),
 
     // for debug when resetting account
     _reset: flow(function* () {
@@ -659,18 +534,18 @@ export const DataStoreModel = types
   */
 
 type DataStoreType = Instance<typeof DataStoreModel>
-export interface DataStore extends DataStoreType {}
+export interface DataStore extends DataStoreType { }
 
 type DataStoreSnapshotType = SnapshotOut<typeof DataStoreModel>
-export interface DataStoreSnapshot extends DataStoreSnapshotType {}
+export interface DataStoreSnapshot extends DataStoreSnapshotType { }
 
 export type LndStore = Instance<typeof LndModel>
 
 type FiatAccountType = Instance<typeof FiatAccountModel>
-export interface FiatAccount extends FiatAccountType {}
+export interface FiatAccount extends FiatAccountType { }
 
 // type CryptoAccountType = Instance<typeof LndModel> // FIXME is that still accurate?
 // export interface CryptoAccount extends CryptoAccountType {}
 
 type RatesType = Instance<typeof RatesModel>
-export interface Rates extends RatesType {}
+export interface Rates extends RatesType { }

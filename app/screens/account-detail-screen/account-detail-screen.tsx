@@ -20,11 +20,6 @@ import { sameDay, sameMonth } from "../../utils/date"
 import { AccountType, CurrencyType, FirstChannelStatus } from "../../utils/enum"
 
 
-
-
-
-
-
 export interface AccountDetailScreenProps {
   account: AccountType
   dataStore: DataStore
@@ -422,12 +417,7 @@ const formatTransactions = (transactions) => {
 
 export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = inject("dataStore")(
   observer(({ dataStore, route, navigation }) => {
-    const account =
-      route.params.account == AccountType.Bitcoin
-        ? dataStore.lnd.statusFirstChannel === FirstChannelStatus.opened
-          ? AccountType.Bitcoin
-          : AccountType.VirtualBitcoin
-        : route.params.account
+    const account = route.params.account
 
     let accountStore
 
@@ -445,9 +435,6 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = inject("d
       case AccountType.Bitcoin:
         accountStore = dataStore.lnd
         break
-      case AccountType.VirtualBitcoin:
-        accountStore = dataStore.onboarding
-        break
     }
 
     const [refreshing, setRefreshing] = useState(false)
@@ -457,11 +444,6 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = inject("d
 
     const refresh = async () => {
       await accountStore.update()
-
-      if (account === AccountType.Bitcoin) {
-        // FIXME
-        await functions().httpsCallable("requestRewards")({})
-      }
     }
 
     const onRefresh = React.useCallback(async () => {
