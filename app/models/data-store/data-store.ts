@@ -270,7 +270,8 @@ export const LndModel = BaseAccountModel.named("Lnd")
 
       // doesn't update the store, should this be here?
       payInvoice: flow(function* ({ invoice }: IPayInvoice) {
-        const { invoicePayment } = yield functions().httpsCallable("payInvoice")({ invoice })
+        const result = yield functions().httpsCallable("payInvoice")({ invoice })
+        console.tron.log({resultPayInvoice: result})
       }),
 
       clearLastInvoice: flow(function* () {
@@ -294,8 +295,6 @@ export const LndModel = BaseAccountModel.named("Lnd")
       updateTransactions: flow(function* () {
         try {
           const { data } = yield functions().httpsCallable("getLightningTransactions")({})
-          console.tron.log(typeof data.response)
-          console.tron.log(data.response)
           self._transactions = data.response
         } catch (err) {
           // TODO show visual indication of internet connection failure
@@ -367,7 +366,6 @@ interface BalanceRequest {
 
 export const OnboardingModel = types
   .model("Onboarding", {
-    currency: CurrencyType.BTC,
     stage: types.array(types.enumeration<Onboarding>("Onboarding", Object.values(Onboarding))),
   })
   .actions((self) => ({
@@ -376,51 +374,10 @@ export const OnboardingModel = types
         self.stage.push(step)
       }
     }),
-
-    // dummy function to have same interface with bitcoin wallet and bank account
-    update: flow(function* () { }),
-
-    // for debug when resetting account
-    _reset: flow(function* () {
-      while (self.stage.length > 0) {
-        self.stage.pop()
-      }
-    }),
   }))
   .views((self) => ({
-    // TODO using: BalanceRequest type, how to set it?
     has(step: Onboarding) {
-      // TODO exception
-      // --> notifications
-      // --> phoneAuth
-
       return self.stage.findIndex((item) => item == step) !== -1
-    },
-
-    get balance() {
-      const rewards = self.stage.map((item) => OnboardingRewards[item])
-      if (rewards.length > 0) {
-        return rewards.reduce((acc, curr) => acc + curr)
-      } else {
-        return 0
-      }
-    },
-
-    get rewardsAvailable() {
-      return difference(Object.values(Onboarding), self.stage).length
-    },
-
-    get transactions() {
-      const txs = self.stage.map((item) => ({
-        // TODO: interface for those pending transactions
-        name: translateTitleFromItem(item),
-        icon: "ios-exit",
-        amount: OnboardingRewards[item],
-        date: Date.now(),
-      }))
-
-      console.tron.log({ txs })
-      return txs
     },
   }))
 
