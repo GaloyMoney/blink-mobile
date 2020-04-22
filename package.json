@@ -16,11 +16,10 @@
     "hack:types-react-native": "rimraf node_modules/@types/react-native/node_modules/@types",
     "hack:types-react-test-renderer": "rimraf node_modules/@types/react-test-renderer/node_modules/@types",
     "patch": "patch-package",
-    "postinstall": "echo 'TODO add back solidarity' && jetify && if which pod >/dev/null; then (cd ios; pod install); fi",
+    "postinstall": "jetify && if which pod >/dev/null; then (cd ios; pod install); fi",
     "prepare": "npm-run-all patch hack:*",
     "storybook": "storybook start -p 9001 --skip-packager",
-    "adb": "adb reverse tcp:9090 tcp:9090 && adb reverse tcp:3000 tcp:3000 && adb reverse tcp:9001 tcp:9001 && adb reverse tcp:8081 tcp:8081",
-    "protobuf": "pbjs app/services/lnd/rpc.proto -t static-module -w es6 -o app/services/lnd/generated/rpc.js"
+    "adb": "adb reverse tcp:9090 tcp:9090 && adb reverse tcp:3000 tcp:3000 && adb reverse tcp:9001 tcp:9001 && adb reverse tcp:8081 tcp:8081"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.8.1",
@@ -79,13 +78,13 @@
     "react-native-youtube": "^2.0.0",
     "reactotron-mst": "^3.1.1",
     "reactotron-react-native": "^4.0.3",
-    "tempy": "^0.5.0",
-    "ts-jest": "^25.2.1"
+    "tempy": "^0.5.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@babel/plugin-proposal-decorators": "^7.8.3",
     "@babel/plugin-proposal-optional-catch-binding": "^7.8.3",
+    "@babel/preset-typescript": "^7.9.0",
     "@babel/runtime": "^7.9.2",
     "@emotion/core": "^10.0.28",
     "@storybook/addon-knobs": "^5.3.17",
@@ -93,15 +92,15 @@
     "@storybook/addon-storyshots": "^5.3.17",
     "@storybook/react-native": "^5.3.17",
     "@storybook/react-native-server": "^5.3.17",
-    "@types/jest": "^25.1.4",
+    "@types/jest": "^25.2.1",
+    "@types/lodash": "^4.14.150",
     "@types/ramda": "0.26.44",
-    "@types/react": "16.9.25",
-    "@types/react-native": "0.61.23",
-    "@types/react-test-renderer": "16.9.2",
+    "@types/react": "^16.9.34",
+    "@types/react-native": "^0.62.2",
+    "@types/react-test-renderer": "^16.9.2",
     "@typescript-eslint/eslint-plugin": "^2.24.0",
     "@typescript-eslint/parser": "^2.24.0",
     "babel-core": "7.0.0-bridge.0",
-    "babel-jest": "^25.1.0",
     "babel-loader": "^8.1.0",
     "emotion-theming": "^10.0.27",
     "eslint": "^6.8.0",
@@ -127,27 +126,11 @@
     "react-test-renderer": "16.13.1",
     "rimraf": "3.0.2",
     "solidarity": "^3.0.0",
+    "ts-jest": "^25.4.0",
     "typescript": "^3.8.3"
   },
   "peerDependencies": {
     "solidarity": "^2.3.1"
-  },
-  "jest": {
-    "preset": "react-native",
-    "testPathIgnorePatterns": [
-      "/node_modules",
-      "/boilerplate"
-    ],
-    "testEnvironment": "node",
-    "transform": {
-      "^.+\\.ts$": "ts-jest"
-    },
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx"
-    ]
   },
   "prettier": {
     "printWidth": 100,

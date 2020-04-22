@@ -9,12 +9,14 @@
     "noImplicitAny": false,
     "noImplicitReturns": true,
     "noImplicitThis": true,
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "sourceMap": true,
     "target": "es2015",
     "lib": ["es2017"],
     "skipLibCheck": true,
-    "strict": true
+    "strict": false,
+    "esModuleInterop": true,
+    "isolatedModules": true,
   },
   "exclude": ["node_modules"],
   "include": ["app", "test", "storybook"]
