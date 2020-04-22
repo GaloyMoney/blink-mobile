@@ -170,12 +170,6 @@ export const TransactionDetailScreen: React.FC<> = ({ route, navigation }) => {
           {preimage && <Row input="Preimage" value={shortenHash(preimage, 12)} />}
         </>
       )}
-      {account === AccountType.VirtualBitcoin && (
-        <>
-          <Row input="Status" value="Pending" />
-        </>
-      )}
-
       {currency === CurrencyType.USD && (
         <View>
           {list.map((item, i) => (

@@ -458,7 +458,7 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = inject("d
 
     return (
       <Screen>
-        {(account === AccountType.Bitcoin || account === AccountType.VirtualBitcoin) && (
+        {(account === AccountType.Bitcoin) && (
           <HeaderWithBuySell
             currency={currency}
             account={account}

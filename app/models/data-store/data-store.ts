@@ -430,7 +430,6 @@ const translateTitleFromItem = (item) => {
 
 export const OnboardingModel = types
   .model("Onboarding", {
-    type: AccountType.VirtualBitcoin,
     currency: CurrencyType.BTC,
     stage: types.array(types.enumeration<Onboarding>("Onboarding", Object.values(Onboarding))),
   })
@@ -515,7 +514,7 @@ export const DataStoreModel = types
       balances[AccountType.Bitcoin] = self.lnd.balance * btcConversion
       balances[AccountType.Bank] = self.fiat.balance / self.rates.rate(currency)
       balances[AccountType.BankAndBitcoin] =
-        balances[AccountType.Bank] + balances[AccountType.VirtualBitcoin]
+        balances[AccountType.Bank] + balances[AccountType.Bitcoin]
 
       return balances[account]
     },
