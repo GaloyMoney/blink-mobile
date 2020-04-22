@@ -1,29 +1,21 @@
-import * as React from "react"
-import { useState, useEffect } from "react"
-import { inject, observer } from "mobx-react"
-import {
-  Text,
-  View,
-  ViewStyle,
-  Alert,
-  Clipboard,
-  StyleSheet,
-  ActivityIndicator,
-  ScrollView,
-} from "react-native"
-import { Screen } from "../../components/screen"
-import { Input, Button } from "react-native-elements"
-import Icon from "react-native-vector-icons/Ionicons"
-import { color } from "../../theme"
-import { RNCamera } from "react-native-camera"
 import { useNavigation } from "@react-navigation/native"
-import { palette } from "../../theme/palette"
-import ReactNativeHapticFeedback from "react-native-haptic-feedback"
-import { Onboarding } from "types"
-import { Switch } from "react-native-gesture-handler"
-import { translate } from "../../i18n"
 import * as lightningPayReq from 'bolt11'
+import { inject, observer } from "mobx-react"
+import * as React from "react"
+import { useEffect, useState } from "react"
+import { ActivityIndicator, Alert, Clipboard, ScrollView, StyleSheet, Text, View, ViewStyle } from "react-native"
+import { RNCamera } from "react-native-camera"
+import { Button, Input } from "react-native-elements"
+import { Switch } from "react-native-gesture-handler"
+import ReactNativeHapticFeedback from "react-native-haptic-feedback"
+import Icon from "react-native-vector-icons/Ionicons"
+import { Onboarding } from "types"
+import { Screen } from "../../components/screen"
+import { translate } from "../../i18n"
+import { color } from "../../theme"
+import { palette } from "../../theme/palette"
 import { getDescription } from "../../utils/lightning"
+import functions from "@react-native-firebase/functions"
 
 const CAMERA: ViewStyle = {
   width: "100%",
@@ -102,14 +94,14 @@ export const ScanningQRCodeScreen = inject("dataStore")(
 
     const decodeInvoice = async (data) => {
       try {
-        let [protocol, request] = data.split(":")
-        console.tron.log({ protocol, request })
+        let [protocol, invoice] = data.split(":")
+        console.tron.log({ protocol, invoice })
         if (protocol === "bitcoin") {
           Alert.alert("We're integrating Loop in. Use Lightning for now")
           return
-        } else if (protocol.startsWith("ln") && request === undefined) {
+        } else if (protocol.startsWith("ln") && invoice === undefined) {
           // it might start with 'lightning:'
-          request = protocol
+          invoice = protocol
         } else if (protocol.toLowerCase() !== "lightning") {
           let message = `Only lightning procotol is accepted for now.`
           message += message === "" ? "" : `\n\ngot following invoice: "${protocol}"`
@@ -117,9 +109,8 @@ export const ScanningQRCodeScreen = inject("dataStore")(
           return
         }
 
-        const payReq = lightningPayReq.decode(request)
+        const payReq = lightningPayReq.decode(invoice)
         console.tron.log({ payReq })
-        const invoice = request
 
         let amount, amountless, note
 
@@ -131,7 +122,7 @@ export const ScanningQRCodeScreen = inject("dataStore")(
           amountless = true
         }
 
-        note = getDescription(payReq) ? getDescription(payReq) : `this invoice doesn't include a note`
+        note = getDescription(payReq) ?? `this invoice doesn't include a note`
 
         navigate("sendBitcoin", { invoice, amount, amountless, note })
       } catch (err) {
@@ -190,8 +181,6 @@ export const SendBitcoinScreen: React.FC = inject("dataStore")(
     }
 
     const payInvoice = async () => {
-      const payreq = { paymentRequest: invoice }
-
       if (invoice === "") {
         Alert.alert(`You need to paste an invoice or scan a QR Code`)
         return
@@ -200,15 +189,16 @@ export const SendBitcoinScreen: React.FC = inject("dataStore")(
       if (amountless) {
         if (amount === 0) {
           Alert.alert(
-            `This invoice doesn't have an amount, ` + `so you need to manually specify an amount`,
+            `This invoice doesn't have an amount, so you need to manually specify an amount`,
           )
           return
         }
 
-        payreq.amt = amount
+        // FIXME what is it for?
+        // payreq.amt = amount
       }
 
-      console.tron.log("payreq", payreq)
+      console.tron.log("payreq", invoice)
 
       setLoading(true)
       try {
@@ -221,9 +211,10 @@ export const SendBitcoinScreen: React.FC = inject("dataStore")(
           }
         }
 
-        const result: payInvoiceResult = await dataStore.lnd.payInvoice(payreq)
+        const result: payInvoiceResult = await functions().httpsCallable("payInvoice")({invoice})
 
-        console.tron.log(result)
+        console.tron.log({result})
+
         if (result === true) {
           setMessage("Payment succesfull")
           await dataStore.onboarding.add(Onboarding.firstLnPayment)

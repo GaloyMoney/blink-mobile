@@ -235,12 +235,6 @@ export const LndModel = BaseAccountModel.named("Lnd")
         }
       }),
 
-      payInvoice: flow(function* ({ invoice }: IPayInvoice) {
-        // TODO doesn't update the store, should this be here?
-        const result = yield functions().httpsCallable("payInvoice")({ invoice })
-        console.tron.log({resultPayInvoice: result})
-      }),
-
       clearLastInvoice: flow(function* () {
         self.lastAddInvoice = ""
       }),
