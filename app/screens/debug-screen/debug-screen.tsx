@@ -120,39 +120,11 @@ export const DebugScreen = inject("dataStore")(
               Alert.alert("user succesfully deleted. Delete your app to start from a clean state")
             }}
           />
-          <View>
-            <Text>Open channels</Text>
-            {dataStore.lnd.channels.map((item) => (
-              <ChannelLiquidityView
-                chanId={item.chanId}
-                remoteBalance={item.remoteBalance}
-                localBalance={item.localBalance}
-              />
-            ))}
-          </View>
-          <Text>Channel opening</Text>
-          {dataStore.lnd.pendingChannels.map((item) => (
-            <View style={styles.separator}>
-              <Text>remoteNodePub</Text>
-              <Text>{item.remoteNodePub}</Text>
-              <Text>channelPoint</Text>
-              <Text>{item.channelPoint}</Text>
-              <Text>capacity</Text>
-              <Text>{item.capacity}</Text>
-              <Text>remoteBalance</Text>
-              <Text>{item.remoteBalance}</Text>
-            </View>
-          ))}
-          <VersionComponent lndVersion={dataStore.lnd.version} />
+          <VersionComponent />
           <View>
             <Text>UID: {auth().currentUser?.uid}</Text>
             <Text>phone: {auth().currentUser?.phoneNumber}</Text>
             <Text>BTC price: {dataStore.rates.BTC}</Text>
-            <Text>lnd error: {dataStore.lnd.error}</Text>
-            <Text
-              style={TAGLINE}
-              title={dataStore.lnd.walletExist ? "Wallet exist" : "Wallet doesn't exist"}
-            />
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
@@ -170,74 +142,8 @@ export const DebugScreen = inject("dataStore")(
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
-              title="Delete lnd wallet"
-              onPress={() => fileAction.deleteWalletDBAndChannelBackup()}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              title="Delete all lnd data"
-              onPress={() => fileAction.deleteAllLndData()}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              title="print directory"
-              onPress={() => console.tron.log(RNFS.DocumentDirectoryPath)}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
               title="test functions"
               onPress={() => functions().httpsCallable("test")({})}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              title="InitState"
-              onPress={dataStore.lnd.initState}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              title="Gen Seed"
-              onPress={dataStore.lnd.genSeed}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              title="initWallet"
-              onPress={dataStore.lnd.initWallet}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              title={`lndReady. status: ${dataStore.lnd.lndReady ? "true" : "false"}`}
-              onPress={dataStore.lnd.unlockWallet}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              title="send pubkey"
-              onPress={dataStore.lnd.sendPubkey}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              title="connect Peer"
-              onPress={dataStore.lnd.connectGaloyPeer}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              title="list peers"
-              onPress={dataStore.lnd.listPeers}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              title="open channel"
-              onPress={dataStore.lnd.openFirstChannel}
             />
             <Button
               style={DEMO}
@@ -245,30 +151,11 @@ export const DebugScreen = inject("dataStore")(
               title="add invoice"
               onPress={() => Clipboard.setString(dataStore.lnd.addInvoice({ value: 1000 }))}
             />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              title="update balance"
-              onPress={dataStore.lnd.updateBalance}
-            />
-            <TextInput style={HINT} value={`balance: ${dataStore.lnd.balance}`} />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              title="update invoice"
-              onPress={dataStore.lnd.updateInvoices}
-            />
             <TextInput
               style={HINT}
               editable
               onChangeText={(invoice) => setInvoice(invoice)}
               value={invoice}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              title="list payments"
-              onPress={dataStore.lnd.list_payments}
             />
             <Button
               style={DEMO}
@@ -293,32 +180,6 @@ export const DebugScreen = inject("dataStore")(
               textStyle={DEMO_TEXT}
               title="Sell BTC"
               onPress={dataStore.exchange.sellBTC}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              title="newAddress"
-              onPress={dataStore.lnd.newAddress}
-            />
-            <QRCode>{dataStore.lnd.onChainAddress}</QRCode>
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              title="update_transactions"
-              onPress={dataStore.lnd.update_transactions}
-            />
-            <TextInput style={HINT} editable onChangeText={(addr) => setAddr(addr)} value={addr} />
-            <TextInput
-              style={HINT}
-              editable
-              onChangeText={(amount) => setAmount(amount)}
-              value={amount.toString()}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              title="sendCoins"
-              onPress={() => dataStore.lnd.sendTransaction(addr, amount)}
             />
             <Button
               style={DEMO}
