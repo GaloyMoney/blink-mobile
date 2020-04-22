@@ -25,13 +25,6 @@ export const FiatTransactionModel = types.model("Transaction", {
   cashback: types.maybe(types.number),
 })
 
-
-// { "amount": 1000,
-// "description": "tx 1",
-// "hash": "4aad597da3d11a37d920763dedf02f71c49a8eabed6135316d6b5c79037d1ee2",
-// "created_at": "2020-04-22T01:56:45.000Z",
-// "confirmed": false }
-
 // should map ILightningTransaction
 export const LightningInvoiceModel = types.model("LightningTransaction", {
   amount: types.number,
@@ -514,10 +507,7 @@ export const DataStoreModel = types
       const btcConversion = self.rates.rate(self.lnd.currency) / self.rates.rate(currency)
 
       balances[AccountType.Bitcoin] = self.lnd.balance * btcConversion
-      balances[AccountType.VirtualBitcoin] = self.onboarding.balance * btcConversion
       balances[AccountType.Bank] = self.fiat.balance / self.rates.rate(currency)
-      balances[AccountType.BankAndVirtualBitcoin] =
-        balances[AccountType.Bank] + balances[AccountType.Bitcoin]
       balances[AccountType.BankAndBitcoin] =
         balances[AccountType.Bank] + balances[AccountType.VirtualBitcoin]
 
