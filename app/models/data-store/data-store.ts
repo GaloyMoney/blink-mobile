@@ -1,10 +1,10 @@
 import auth from "@react-native-firebase/auth"
 import functions from "@react-native-firebase/functions"
-import { difference } from "lodash"
 import { flow, getParentOfType, Instance, SnapshotOut, types } from "mobx-state-tree"
 import { IAddInvoiceRequest, IBuyRequest, IPayInvoice, IQuoteRequest, IQuoteResponse, Onboarding, OnboardingRewards, Side } from "../../../../common/types"
 import { parseDate } from "../../utils/date"
 import { AccountType, CurrencyType } from "../../utils/enum"
+import * as lightningPayReq from 'bolt11'
 
 export const FiatTransactionModel = types.model("Transaction", {
   name: types.string,
@@ -18,17 +18,11 @@ export const FiatTransactionModel = types.model("Transaction", {
 export const LightningInvoiceModel = types.model("LightningTransaction", {
   amount: types.number,
   description: types.maybe(types.union(types.string, types.null)),
-
   created_at: types.string, // FIXME
-  // date: types.number, // TODO: move to timestamp
-
   hash: types.string,
   preimage: types.maybe(types.string),
   destination: types.maybe(types.string),
   type: types.string
-
-  // name: types.string,
-  // icon: types.string,
 })
 
 export const BaseAccountModel = types
@@ -101,17 +95,16 @@ export const ExchangeModel = types
         // @ts-ignore FIXME not sure why but it seems necessary. it seems typescript doesn't get maybe?
         self.quote = data as IQuoteResponse
 
-        const invoiceJson = yield getParentOfType(self, DataStoreModel).lnd.decodePayReq(
-          self.quote.invoice,
-        )
-        console.tron.log(invoiceJson)
+        const invoiceJson = lightningPayReq.decode(self.quote.invoice)
+        console.tron.log({invoiceJson})
 
-        if (side === "sell") {
-          self.quote.satPrice = parseFloat(JSON.parse(invoiceJson.description).satPrice)
-        }
+        // TODO/FIXME
+        // if (side === "sell") {
+        //   self.quote.satPrice = parseFloat(JSON.parse(invoiceJson.).satPrice)
+        // }
 
-        self.quote.satAmount = invoiceJson.numSatoshis
-        self.quote.validUntil = invoiceJson.timestamp + invoiceJson.expiry
+        self.quote.satAmount = invoiceJson.satoshis // FIXME if millisats is used
+        self.quote.validUntil = invoiceJson.timeExpireDate // FIXME: test if this works
       }),
 
       buyLNDBTC: flow(function* () {
@@ -215,34 +208,13 @@ export const FiatAccountModel = BaseAccountModel.props({
 export const LndModel = BaseAccountModel.named("Lnd")
   .props({
     type: AccountType.Bitcoin,
-    version: "...loading...",
-
-    lndReady: false,
-    walletExist: false,
-    syncedToChain: false,
-
-    onChainAddress: "",
-    pubkey: "",
-    network: "",
-    blockHeight: 0,
-    error: "",
-
     lastAddInvoice: "",
     receiveBitcoinScreenAlert: false,
-
-    bestBlockHeight: types.maybe(types.number),
-    startBlockHeight: types.maybe(types.number),
-    percentSynced: 0,
-
     _transactions: types.array(LightningInvoiceModel),
 
   })
   .actions((self) => {
     return {
-      setLndReady: flow(function* () {
-        self.lndReady = true
-      }),
-
       update: flow(function* () {
         //@ts-ignore not sure why that is
         yield self.updateTransactions()
@@ -251,11 +223,6 @@ export const LndModel = BaseAccountModel.named("Lnd")
       }),
 
       newAddress: flow(function* () {
-      }),
-
-      decodePayReq: flow(function* (payReq) {
-        // TODO use require('bolt11')
-        // but check if same format as lnd
       }),
 
       addInvoice: flow(function* (request: IAddInvoiceRequest) {
@@ -268,8 +235,8 @@ export const LndModel = BaseAccountModel.named("Lnd")
         }
       }),
 
-      // doesn't update the store, should this be here?
       payInvoice: flow(function* ({ invoice }: IPayInvoice) {
+        // TODO doesn't update the store, should this be here?
         const result = yield functions().httpsCallable("payInvoice")({ invoice })
         console.tron.log({resultPayInvoice: result})
       }),
@@ -340,7 +307,7 @@ export const RatesModel = types
       } else if (currency === CurrencyType.BTC) {
         return self.BTC
       } else {
-        throw Error(`currency don't exist`)
+        throw Error(`currency ${currency} doesnt't exist`)
       }
     },
   }))
