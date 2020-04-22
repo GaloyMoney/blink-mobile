@@ -28,8 +28,6 @@ module.exports = (async () => {
       assetExts: assetExts.filter((ext) => ext !== "svg"),
       sourceExts: [...sourceExts, "svg"],
       extraNodeModules: {
-        stream: path.resolve(__dirname, "node_modules/readable-stream"),
-        zlib: path.resolve(__dirname, "node_modules/browserify-zlib"),
         types: path.resolve(__dirname, "../common/types"),
       },
     },
