@@ -1,22 +1,10 @@
 import auth from "@react-native-firebase/auth"
 import functions from "@react-native-firebase/functions"
 import { difference } from "lodash"
-import { flow, getEnv, getParentOfType, Instance, SnapshotOut, types } from "mobx-state-tree"
-import DeviceInfo from "react-native-device-info"
-import { IBuyRequest, IQuoteRequest, IQuoteResponse, Onboarding, 
-  OnboardingRewards, Side, IAddInvoiceRequest, IPayInvoice } from "../../../../common/types"
-import { translate } from "../../i18n"
+import { flow, getParentOfType, Instance, SnapshotOut, types } from "mobx-state-tree"
+import { IAddInvoiceRequest, IBuyRequest, IPayInvoice, IQuoteRequest, IQuoteResponse, Onboarding, OnboardingRewards, Side } from "../../../../common/types"
 import { parseDate } from "../../utils/date"
 import { AccountType, CurrencyType } from "../../utils/enum"
-
-
-
-// FIXME add as a global var
-DeviceInfo.isEmulator().then((isEmulator) => {
-  if (isEmulator) {
-    functions().useFunctionsEmulator("http://localhost:5000")
-  }
-})
 
 export const FiatTransactionModel = types.model("Transaction", {
   name: types.string,
@@ -34,10 +22,10 @@ export const LightningInvoiceModel = types.model("LightningTransaction", {
   created_at: types.string, // FIXME
   // date: types.number, // TODO: move to timestamp
 
-  confirmed: types.boolean,
   hash: types.string,
   preimage: types.maybe(types.string),
   destination: types.maybe(types.string),
+  type: types.string
 
   // name: types.string,
   // icon: types.string,
@@ -257,9 +245,9 @@ export const LndModel = BaseAccountModel.named("Lnd")
 
       update: flow(function* () {
         //@ts-ignore not sure why that is
-        yield self.updateBalance()
-        //@ts-ignore not sure why that is
         yield self.updateTransactions()
+        //@ts-ignore not sure why that is
+        yield self.updateBalance()
       }),
 
       newAddress: flow(function* () {
@@ -271,8 +259,13 @@ export const LndModel = BaseAccountModel.named("Lnd")
       }),
 
       addInvoice: flow(function* (request: IAddInvoiceRequest) {
-        const { data } = yield functions().httpsCallable("addInvoice")(request)
-        self.lastAddInvoice = data.request
+        try {
+          const { data } = yield functions().httpsCallable("addInvoice")(request)
+          self.lastAddInvoice = data.request
+        } catch (err) {
+          console.log("error with AddInvoice")
+          throw err
+        }
       }),
 
       // doesn't update the store, should this be here?
@@ -289,15 +282,25 @@ export const LndModel = BaseAccountModel.named("Lnd")
       }),
 
       updateBalance: flow(function* () {
-        const { data } = yield functions().httpsCallable("getLightningBalance")({})
-        self.confirmedBalance = data.response
+        try {
+          const { data } = yield functions().httpsCallable("getLightningBalance")({})
+          self.confirmedBalance = data.response
+        } catch (err) {
+          // TODO show visual indication of internet connection failure
+          console.tron.log(err.toString())
+        }
       }),
 
       updateTransactions: flow(function* () {
-        const { data } = yield functions().httpsCallable("getLightningTransactions")({})
-        console.tron.log(typeof data.response)
-        console.tron.log(data.response)
-        self._transactions = data.response
+        try {
+          const { data } = yield functions().httpsCallable("getLightningTransactions")({})
+          console.tron.log(typeof data.response)
+          console.tron.log(data.response)
+          self._transactions = data.response
+        } catch (err) {
+          // TODO show visual indication of internet connection failure
+          console.tron.log(err.toString())
+        }
       }),
 
     }
@@ -308,70 +311,6 @@ export const LndModel = BaseAccountModel.named("Lnd")
     },
 
     get transactions() {
-
-
-      // const formatInvoice = (invoice) => {
-      //   if (invoice.settled) {
-      //     if (invoice.memo) {
-      //       return invoice.memo
-      //     } else if (invoice.htlcs[0].customRecords) {
-      //       return translateTitleFromItem(invoice.htlcs[0].customRecords)
-      //     } else {
-      //       return `Payment received`
-      //     }
-      //   } else {
-      //     return `Waiting for payment`
-      //   }
-      // }
-
-      // const formatPayment = (payment) => {
-      //   if (payment.description) {
-      //     try {
-      //       const decode = JSON.parse(payment.description)
-      //       return decode.memo
-      //     } catch (e) {
-      //       return payment.description
-      //     }
-      //   } else {
-      //     return `Paid invoice ${shortenHash(payment.paymentHash, 2)}`
-      //   }
-      // }
-
-      // const filterExpiredInvoice = (invoice) => {
-      //   if (invoice.settled === true) {
-      //     return true
-      //   }
-      //   if (new Date().getTime() / 1000 > invoice.creationDate + invoice.expiry) {
-      //     return false
-      //   }
-      //   return true
-      // }
-
-      // const invoicesTxs = self.invoices.filter(filterExpiredInvoice).map((invoice) => ({
-      //   id: invoice.rHash,
-      //   icon: "ios-thunderstorm",
-      //   name: formatInvoice(invoice),
-      //   amount: invoice.value,
-      //   status: invoice.settled ? "complete" : "in-progress",
-      //   date: parseDate(invoice.creationDate),
-      //   preimage: invoice.rPreimage,
-      //   memo: invoice.memo,
-      // }))
-
-      // const paymentTxs = self.payments.map((payment) => ({
-      //   id: payment.paymentHash,
-      //   icon: "ios-thunderstorm",
-      //   name: formatPayment(payment),
-      //   // amount should be negative so that it's shown as "spent"
-      //   amount: -payment.valueSat,
-      //   date: parseDate(payment.creationDate),
-      //   preimage: payment.paymentPreimage,
-      //   status: "complete", // filter for succeed on ?
-      // }))
-
-      // const all_txs = [...onchainTxs, ...invoicesTxs, ...paymentTxs].sort((a, b) =>
-      //   a.date > b.date ? 1 : -1,
-      // )
       return self._transactions
     },
   }))
@@ -387,8 +326,6 @@ export const RatesModel = types
     const update = flow(function* () {
       try {
         // TODO: BTC price
-        // const doc = yield firestore().doc("global/price").get()
-        // self.BTC = doc.data().BTC
         self.BTC = 0.00001
       } catch (err) {
         console.tron.error("error getting BTC price from firestore", err)
@@ -414,19 +351,19 @@ interface BalanceRequest {
   account: AccountType
 }
 
-// TODO move to utils?
-const translateTitleFromItem = (item) => {
-  console.tron.log({ item })
-  const object = translate(`RewardsScreen.rewards`)
-  for (const property in object) {
-    for (const property2 in object[property]) {
-      if (property2 === item) {
-        return object[property][property2].title
-      }
-    }
-  }
-  return "Translation not found"
-}
+// // TODO move to utils?
+// const translateTitleFromItem = (item) => {
+//   console.tron.log({ item })
+//   const object = translate(`RewardsScreen.rewards`)
+//   for (const property in object) {
+//     for (const property2 in object[property]) {
+//       if (property2 === item) {
+//         return object[property][property2].title
+//       }
+//     }
+//   }
+//   return "Translation not found"
+// }
 
 export const OnboardingModel = types
   .model("Onboarding", {

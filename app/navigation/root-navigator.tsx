@@ -50,7 +50,7 @@ export const RootStack = inject("dataStore")(
     }, [])
 
     if (initialRouteName === "") {
-      return <SplashScreen lndVersion={dataStore.lnd.version} />
+      return <SplashScreen />
     }
 
     return (

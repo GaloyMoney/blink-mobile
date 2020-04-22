@@ -7,8 +7,8 @@ import { Screen } from "../../components/screen"
 import { TextCurrency } from "../../components/text-currency"
 import { color } from "../../theme"
 import { AccountType, CurrencyType } from "../../utils/enum"
-import { shortenHash } from "../../utils/helper"
-
+import { shortenHash } from "../../../../common/utils"
+import { AccountDetailItemProps } from "../account-detail-screen"
 
 
 const styles = StyleSheet.create({
@@ -62,30 +62,14 @@ const Row = ({ input, value }) => {
   )
 }
 
-export const TransactionDetailScreen: React.FC<> = ({ route, navigation }) => {
-  const list = [
-    {
-      title: "See recent transactions",
-      icon: "search",
-    },
-    {
-      title: "Report an issue",
-      icon: "warning",
-    },
-  ]
+export const TransactionDetailScreen = ({ route, navigation }) => {
+  
+  const { currency, account, amount, created_at, hash, type, description, 
+    destination, preimage } = route.params as AccountDetailItemProps
 
   React.useLayoutEffect(() => {
-    navigation.setOptions({ title: route.params.name })
-  }, [])
-
-  const account = route.params.account
-  const date = route.params.date
-  const amount = route.params.amount
-  const cashback = route.params.cashback
-  const name = route.params.name
-  const currency = route.params.currency
-  const id = route.params.id
-  const preimage = route.params.preimage
+    navigation.setOptions({ title: description })
+  }, [])    
 
   const spendOrReceive = amount < 0 ? "spent" : "received"
 
@@ -97,7 +81,7 @@ export const TransactionDetailScreen: React.FC<> = ({ route, navigation }) => {
     hour: "numeric",
     minute: "numeric",
   }
-  const date_format = date.toLocaleString("en-US", options)
+  const date_format = created_at.toLocaleString("en-US", options)
 
   return (
     <Screen>
@@ -111,16 +95,6 @@ export const TransactionDetailScreen: React.FC<> = ({ route, navigation }) => {
           You {spendOrReceive}{" "}
           <TextCurrency amount={Math.abs(amount)} currencyUsed={currency} fontSize={18} />
         </Text>
-        {cashback !== undefined && (
-          <Text style={styles.amountText}>
-            and earned{" "}
-            {currency(cashback, {
-              precision: 0,
-              separator: ",",
-            }).format()}{" "}
-            sats
-          </Text>
-        )}
       </View>
 
       <View style={styles.iconView}>
@@ -157,7 +131,7 @@ export const TransactionDetailScreen: React.FC<> = ({ route, navigation }) => {
           </View>
         )}
       </View>
-      <Row input="Description" value={name} />
+      <Row input="Description" value={description} />
       {currency === CurrencyType.USD && (
         <>
           <Row input="Method" value="On mobile" />
@@ -166,22 +140,9 @@ export const TransactionDetailScreen: React.FC<> = ({ route, navigation }) => {
       )}
       {account === AccountType.Bitcoin && (
         <>
-          <Row input="Hash" value={shortenHash(id, 12)} />
+          <Row input="Hash" value={shortenHash(hash, 12)} />
           {preimage && <Row input="Preimage" value={shortenHash(preimage, 12)} />}
         </>
-      )}
-      {currency === CurrencyType.USD && (
-        <View>
-          {list.map((item, i) => (
-            <ListItem
-              key={i}
-              title={item.title}
-              leftIcon={{ name: item.icon }}
-              bottomDivider
-              chevron
-            />
-          ))}
-        </View>
       )}
     </Screen>
   )
