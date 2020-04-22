@@ -8,9 +8,3 @@ export enum CurrencyType {
   USD = "USD",
   BTC = "BTC",
 }
-
-export enum FirstChannelStatus {
-  pending = "pending",
-  opened = "opened",
-  noChannel = "noChannel",
-}

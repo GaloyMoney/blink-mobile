@@ -1,10 +1,11 @@
 import functions from "@react-native-firebase/functions"
 import { useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from '@react-navigation/stack';
 import { inject, observer } from "mobx-react"
 import * as React from "react"
 import { useEffect, useState } from "react"
 import { ActivityIndicator, Alert, Animated, RefreshControl, SectionList, StyleSheet, Text, TouchableWithoutFeedback, View } from "react-native"
-import { Button } from "react-native-elements"
+import { Button, ListItem } from "react-native-elements"
 import { TextInput, TouchableHighlight } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
 import Icon from "react-native-vector-icons/Ionicons"
@@ -17,24 +18,20 @@ import { DataStore } from "../../models/data-store"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { sameDay, sameMonth } from "../../utils/date"
-import { AccountType, CurrencyType, FirstChannelStatus } from "../../utils/enum"
+import { AccountType, CurrencyType } from "../../utils/enum"
+import { ILightningTransaction } from "../../../../common/types"
 
 
 export interface AccountDetailScreenProps {
   account: AccountType
   dataStore: DataStore
+  navigation: StackNavigationProp<any,any>
 }
 
-export interface AccountDetailItemProps {
-  // TODO check validity of this interface
-  name: string
-  amount: number
-  cashback?: number
-  currency: CurrencyType
-  date: Date
-  addr?: string
-  index: number
-  icon: string
+export interface AccountDetailItemProps extends ILightningTransaction {
+  account: AccountType,
+  currency: CurrencyType,
+  navigation: StackNavigationProp<any,any>,
 }
 
 const styles = StyleSheet.create({
@@ -113,37 +110,18 @@ const styles = StyleSheet.create({
   },
 })
 
-const AccountDetailItem: React.FC<AccountDetailItemProps> = (props) => {
-  const { navigate } = useNavigation()
-
-  return (
-    <TouchableHighlight
-      underlayColor="white"
-      onPress={() =>
-        navigate("transactionDetail", {
-          name: props.name,
-          amount: props.amount,
-          cashback: props.cashback,
-          currency: props.currency,
-          date: props.date,
-          id: props.id,
-          preimage: props.preimage,
-          account: props.account,
-        })
-      }
-    >
-      <View key={props.index} style={styles.itemContainer}>
-        <Icon name={props.icon} style={styles.icon} color={color.primary} size={28} />
-        <View style={styles.flex}>
-          <Text style={styles.itemText}>{props.name}</Text>
-          {(props.cashback != null && <Text style={styles.cashback}>{props.cashback} sats</Text>) ||
-            (props.addr != null && <Text style={styles.cashback}>{props.addr}</Text>)}
-        </View>
-        <CurrencyText amount={props.amount} currency={props.currency} />
-      </View>
-    </TouchableHighlight>
-  )
-}
+const AccountDetailItem: React.FC<AccountDetailItemProps> = (props) => (
+  <ListItem
+  key={props.hash}
+  title={props.description}
+  leftIcon={
+    <Icon name="ios-thunderstorm" size={24} color={color.primary} style={styles.icon} />
+  }
+  // rightTitle={<CurrencyText amount={props.amount} currency={props.currency} />}
+  rightTitle={String(props.amount)}
+  onPress={() => props.navigation.navigate("transactionDetail", props)}
+  />
+)
 
 const VisualExpiration = ({ validUntil }) => {
   const [fadeAnim] = useState(new Animated.Value(0))
@@ -419,13 +397,11 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = inject("d
   observer(({ dataStore, route, navigation }) => {
     const account = route.params.account
 
-    let accountStore
+    React.useEffect(() => {
+      navigation.setOptions({ title: account})
+    }, [account])
 
-    React.useLayoutEffect(() => {
-      navigation.setOptions({
-        title: account,
-      })
-    }, [dataStore.lnd.statusFirstChannel])
+    let accountStore
 
     // should have a generic mapping here, could use mst for it?
     switch (account) {
@@ -469,12 +445,14 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = inject("d
         {account === AccountType.Bank && (
           <BalanceHeaderProxy currency={currency} account={account} dataStore={dataStore} />
         )}
-        {sections.length === 0 && <Text>No transaction to show</Text>}
+        {sections.length === 0 && <Text>No transaction to show :(</Text>}
         {sections.length > 0 && (
           <SectionList
             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
             renderItem={({ item, index, section }) => (
-              <AccountDetailItem account={account} currency={currency} {...item} />
+              <AccountDetailItem account={account} currency={currency} 
+                navigation={navigation} {...item} 
+              />
             )}
             renderSectionHeader={({ section: { title } }) => (
               <Text style={styles.headerSection}>{title}</Text>
