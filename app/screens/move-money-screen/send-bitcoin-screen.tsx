@@ -22,6 +22,8 @@ import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import { Onboarding } from "types"
 import { Switch } from "react-native-gesture-handler"
 import { translate } from "../../i18n"
+import * as lightningPayReq from 'bolt11'
+import { getDescription } from "../../utils/lightning"
 
 const CAMERA: ViewStyle = {
   width: "100%",
@@ -110,30 +112,26 @@ export const ScanningQRCodeScreen = inject("dataStore")(
           request = protocol
         } else if (protocol.toLowerCase() !== "lightning") {
           let message = `Only lightning procotol is accepted for now.`
-          message += message === "" ? "" : `got following invoice: "${protocol}"`
+          message += message === "" ? "" : `\n\ngot following invoice: "${protocol}"`
           Alert.alert(message)
           return
         }
 
-        const payReq = await dataStore.lnd.decodePayReq(request)
+        const payReq = lightningPayReq.decode(request)
         console.tron.log({ payReq })
         const invoice = request
 
         let amount, amountless, note
 
-        if (payReq.numSatoshis) {
-          amount = payReq.numSatoshis
+        if (payReq.satoshis || payReq.millisatoshis) {
+          amount = payReq.satoshis ?? Number(payReq.millisatoshis) * 1000
           amountless = false
         } else {
           amount = 0
           amountless = true
         }
 
-        if (payReq.description) {
-          note = payReq.description
-        } else {
-          note = `invoice has no description`
-        }
+        note = getDescription(payReq) ? getDescription(payReq) : `this invoice doesn't include a note`
 
         navigate("sendBitcoin", { invoice, amount, amountless, note })
       } catch (err) {
