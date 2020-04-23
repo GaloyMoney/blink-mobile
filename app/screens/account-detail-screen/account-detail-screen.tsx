@@ -1,25 +1,23 @@
-import functions from "@react-native-firebase/functions"
-import { useNavigation } from "@react-navigation/native"
+import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from '@react-navigation/stack';
-import { inject, observer } from "mobx-react"
-import * as React from "react"
-import { useEffect, useState } from "react"
-import { ActivityIndicator, Alert, Animated, RefreshControl, SectionList, StyleSheet, Text, TouchableWithoutFeedback, View } from "react-native"
-import { Button, ListItem } from "react-native-elements"
-import { TextInput, TouchableHighlight } from "react-native-gesture-handler"
-import Modal from "react-native-modal"
-import Icon from "react-native-vector-icons/Ionicons"
-import { Onboarding, Side } from "types"
-import { BalanceHeader } from "../../components/balance-header"
-import { CurrencyText } from "../../components/currency-text"
-import { Screen } from "../../components/screen"
-import { translate } from "../../i18n"
-import { DataStore } from "../../models/data-store"
-import { color } from "../../theme"
-import { palette } from "../../theme/palette"
-import { sameDay, sameMonth } from "../../utils/date"
-import { AccountType, CurrencyType } from "../../utils/enum"
-import { ILightningTransaction } from "../../../../common/types"
+import { inject, observer } from "mobx-react";
+import * as React from "react";
+import { useEffect, useState } from "react";
+import { ActivityIndicator, Alert, Animated, RefreshControl, SectionList, StyleSheet, Text, TouchableWithoutFeedback, View } from "react-native";
+import { Button, ListItem } from "react-native-elements";
+import { TextInput } from "react-native-gesture-handler";
+import Modal from "react-native-modal";
+import Icon from "react-native-vector-icons/Ionicons";
+import { Onboarding, Side } from "types";
+import { ILightningTransaction } from "../../../../common/types";
+import { BalanceHeader } from "../../components/balance-header";
+import { Screen } from "../../components/screen";
+import { translate } from "../../i18n";
+import { DataStore } from "../../models/data-store";
+import { color } from "../../theme";
+import { palette } from "../../theme/palette";
+import { sameDay, sameMonth } from "../../utils/date";
+import { AccountType, CurrencyType } from "../../utils/enum";
 
 
 export interface AccountDetailScreenProps {
