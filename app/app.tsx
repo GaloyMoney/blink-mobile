@@ -19,6 +19,8 @@ import { RootStore, setupRootStore } from "./models/root-store"
 import { DEFAULT_NAVIGATION_CONFIG } from "./navigation/navigation-config"
 import { RootStack } from './navigation/root-navigator'
 import { getActiveRouteName, getActiveRouteParams } from "./utils/navigation"
+import DeviceInfo from "react-native-device-info"
+import functions from "@react-native-firebase/functions"
 
 
 const entireScreenWidth = Dimensions.get('window').width;
@@ -27,6 +29,11 @@ EStyleSheet.build({
   // $textColor: '#0275d8'
 });
 
+DeviceInfo.isEmulator().then((isEmulator) => {
+  if (isEmulator) {
+    functions().useFunctionsEmulator("http://localhost:5000")
+  }
+})
 
 /**
  * Ignore some yellowbox warnings. Some of these are for deprecated functions

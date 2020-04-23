@@ -16,9 +16,9 @@ const styles = StyleSheet.create({
   },
 })
 
-export const SplashScreen = ({ lndVersion }) => (
+export const SplashScreen = ({}) => (
   <View style={styles.centerBackground}>
     <ActivityIndicator style={{ flex: 1 }} size="large" color={palette.lightGrey} />
-    <VersionComponent style={{ paddingVertical: 30 }} lndVersion={lndVersion} />
+    <VersionComponent style={{ paddingVertical: 30 }} />
   </View>
 )

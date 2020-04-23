@@ -1,140 +1,10 @@
 import auth from "@react-native-firebase/auth"
 import functions from "@react-native-firebase/functions"
-import { difference } from "lodash"
-import { flow, getEnv, getParentOfType, Instance, SnapshotOut, types } from "mobx-state-tree"
-import DeviceInfo from "react-native-device-info"
-import { IBuyRequest, IQuoteRequest, IQuoteResponse, Onboarding, OnboardingRewards, Side } from "types"
-import { translate } from "../../i18n"
+import { flow, getParentOfType, Instance, SnapshotOut, types } from "mobx-state-tree"
+import { IAddInvoiceRequest, IBuyRequest, IPayInvoice, IQuoteRequest, IQuoteResponse, Onboarding, OnboardingRewards, Side } from "../../../../common/types"
 import { parseDate } from "../../utils/date"
 import { AccountType, CurrencyType } from "../../utils/enum"
-import { shortenHash } from "../../utils/helper"
-
-
-
-// FIXME add as a global var
-DeviceInfo.isEmulator().then((isEmulator) => {
-  if (isEmulator) {
-    functions().useFunctionsEmulator("http://localhost:5000")
-  }
-})
-
-export const OnChainTransactionModel = types.model("OnChainTransaction", {
-  txHash: types.string,
-  amount: types.number,
-  numConfirmations: types.maybe(types.number), // not sure why it's only set for some of them
-  blockHash: types.maybe(types.string), // some mined transactions are not
-  blockHeight: types.maybe(types.number), // included here
-  timeStamp: types.number,
-  destAddresses: types.array(types.string),
-  totalFees: types.maybe(types.string), // only set for sending transaction
-  rawTxHex: types.string,
-})
-
-export const PaymentModel = types.model("Payment", {
-  paymentHash: types.string,
-  valueSat: types.number,
-  feeSat: types.maybe(types.number),
-  creationDate: types.number,
-  path: types.array(types.string),
-  status: types.number, // FIXME should be number
-  paymentRequest: types.string,
-  paymentPreimage: types.string,
-  description: types.maybe(types.string),
-})
-
-export const HTLCModel = types.model("HTLC", {
-  chanId: types.union(types.string, types.undefined, types.number, types.null),
-  // htlcIndex: types.maybe(types.union(types.string, types.undefined, types.number)),
-  amtMsat: types.union(types.string, types.undefined, types.number, types.null),
-  acceptHeight: types.union(types.string, types.undefined, types.number, types.null),
-  acceptTime: types.union(types.string, types.undefined, types.number, types.null),
-  resolveTime: types.union(types.string, types.undefined, types.number, types.null),
-  expiryHeight: types.union(types.string, types.undefined, types.number, types.null),
-  state: types.union(types.string, types.undefined, types.number, types.null),
-  mppTotalAmtMsat: types.union(types.string, types.undefined, types.number, types.null),
-  // mppTotalAmtMsat: types.maybe(types.string),
-  customRecords: types.maybe(types.string),
-})
-
-export const InvoiceModel = types.model("Invoice", {
-  memo: types.maybe(types.string),
-  receipt: types.maybe(types.string),
-  rPreimage: types.string,
-  rHash: types.string,
-  value: types.maybe(types.number), // for amountless invoices
-  settled: types.maybe(types.boolean),
-  state: types.maybe(types.number), // XXX FIXME
-  creationDate: types.number,
-  expiry: types.maybe(types.number),
-  settleDate: types.maybe(types.number),
-  paymentRequest: types.maybe(types.string),
-  private: types.maybe(types.boolean),
-  amtPaidSat: types.maybe(types.number),
-  htlcs: types.array(HTLCModel),
-  // under htlcs but not in array: mppTotalAmtMsat: types.maybe(types.string),
-
-  // many other fields are not copied
-})
-
-export const PendingChannelModel = types.model("Channel", {
-  // [
-  //   "pendingChannels:",
-  //   {
-  //     "pendingOpenChannels": [
-  //       {
-  //         "channel": {
-  //           "remoteNodePub": "029fd0834277b92b6ae1b4afd771f74a2f0e9bbdfc13edcf3e7e3da1590c6fc6d6",
-  //           "channelPoint": "65ccfc3bf905c8c139e9c6fdf887e4c1bc53624cf13ce266ce2f1704b7a37732:1",
-  //           "capacity": "120000",
-  //           "remoteBalance": "119817",
-  //           "localChanReserveSat": "1200",
-  //           "remoteChanReserveSat": "1200"
-  //         },
-  //         "commitFee": "183",
-  //         "commitWeight": "552",
-  //         "feePerKw": "253"
-  //       }
-  //     ]
-  //   }
-  // ]
-
-  // channel: types.model({
-  remoteNodePub: types.string,
-  channelPoint: types.string,
-  capacity: types.number,
-  remoteBalance: types.number,
-  localChanReserveSat: types.number,
-  remoteChanReserveSat: types.number,
-  // }),
-  // commitFee: types.number,
-  // commitWeight: types.number,
-  // feePerKw: types.number
-})
-
-export const PendingHTLCModel = types.model("PendingHTLC", {
-  // TODO
-})
-
-export const ChannelModel = types.model("Channel", {
-  active: types.maybe(types.boolean),
-  remotePubkey: types.string,
-  channelPoint: types.string,
-  chanId: types.number,
-  capacity: types.number,
-  remoteBalance: types.number,
-  localBalance: types.optional(types.number, 0),
-  commitFee: types.number,
-  commitWeight: types.number,
-  feePerKw: types.number,
-  totalSatoshisReceived: types.optional(types.number, 0),
-  numUpdates: types.optional(types.number, 0),
-  pendingHtlcs: types.optional(types.array(types.undefined), []),
-  csvDelay: types.number,
-  private: types.boolean,
-  chanStatusFlags: types.string,
-  localChanReserveSat: types.number,
-  remoteChanReserveSat: types.number,
-})
+import * as lightningPayReq from 'bolt11'
 
 export const FiatTransactionModel = types.model("Transaction", {
   name: types.string,
@@ -142,6 +12,17 @@ export const FiatTransactionModel = types.model("Transaction", {
   amount: types.number,
   date: types.number, // TODO: move to timestamp
   cashback: types.maybe(types.number),
+})
+
+// should map ILightningTransaction
+export const LightningInvoiceModel = types.model("LightningTransaction", {
+  amount: types.number,
+  description: types.maybe(types.union(types.string, types.null)),
+  created_at: types.string, // FIXME
+  hash: types.string,
+  preimage: types.maybe(types.string),
+  destination: types.maybe(types.string),
+  type: types.string
 })
 
 export const BaseAccountModel = types
@@ -154,7 +35,7 @@ export const BaseAccountModel = types
     get balance() {
       return self.confirmedBalance + self.unconfirmedBalance
     },
-    get transactions(): Array<typeof TransactionModel> {
+    get transactions() {
       throw new Error("this is an abstract method, need to be implemented in subclass")
     },
   }))
@@ -209,21 +90,21 @@ export const ExchangeModel = types
           request.invoice = invoice.paymentRequest
         }
 
-        const result = yield functions().httpsCallable("quoteLNDBTC")(request)
-        console.tron.log("quoteBTC: ", result)
-        self.quote = result.data as IQuoteResponse
+        const {data} = yield functions().httpsCallable("quoteLNDBTC")(request)
 
-        const invoiceJson = yield getParentOfType(self, DataStoreModel).lnd.decodePayReq(
-          self.quote.invoice,
-        )
-        console.tron.log(invoiceJson)
+        // @ts-ignore FIXME not sure why but it seems necessary. it seems typescript doesn't get maybe?
+        self.quote = data as IQuoteResponse
 
-        if (side === "sell") {
-          self.quote.satPrice = parseFloat(JSON.parse(invoiceJson.description).satPrice)
-        }
+        const invoiceJson = lightningPayReq.decode(self.quote.invoice)
+        console.tron.log({invoiceJson})
 
-        self.quote.satAmount = invoiceJson.numSatoshis
-        self.quote.validUntil = invoiceJson.timestamp + invoiceJson.expiry
+        // TODO/FIXME
+        // if (side === "sell") {
+        //   self.quote.satPrice = parseFloat(JSON.parse(invoiceJson.).satPrice)
+        // }
+
+        self.quote.satAmount = invoiceJson.satoshis // FIXME if millisats is used
+        self.quote.validUntil = invoiceJson.timeExpireDate // FIXME: test if this works
       }),
 
       buyLNDBTC: flow(function* () {
@@ -231,17 +112,18 @@ export const ExchangeModel = types
           assertTrade("buy")
 
           const request: IBuyRequest = {
-            side: self.quote.side!,
-            invoice: self.quote.invoice!,
-            satPrice: self.quote.satPrice!,
-            signature: self.quote.signature!,
+            //@ts-ignore
+            side: self.quote.side,
+            invoice: self.quote.invoice,
+            satPrice: self.quote.satPrice,
+            signature: self.quote.signature,
           }
 
           const result = yield functions().httpsCallable("buyLNDBTC")(request)
           console.tron.log("result BuyLNDBTC", result)
           return result?.data?.success ?? false
         } catch (err) {
-          console.tron.error(err.toString())
+          console.tron.error(err.toString(), Error.captureStackTrace(err))
           throw err
         }
       }),
@@ -257,7 +139,7 @@ export const ExchangeModel = types
           console.tron.log("result SellLNDBTC", result)
           return result
         } catch (err) {
-          console.tron.error(err)
+          console.tron.error(err.toString(), Error.captureStackTrace(err))
           throw err
         }
       }),
@@ -280,9 +162,8 @@ export const FiatAccountModel = BaseAccountModel.props({
         // TODO show transaction
         // const doc = yield firestore().doc(`users/${uid}`).get()
         // self._transactions = doc.data().transactions
-        self._transactions = []
       } catch (err) {
-        console.tron.error(`not able to update transaction ${err}`)
+        console.tron.error(`not able to update transaction ${err}`, Error.captureStackTrace(err))
       }
     })
 
@@ -296,7 +177,7 @@ export const FiatAccountModel = BaseAccountModel.props({
             // TODO: add unconfirmed balance
           }
         } catch (err) {
-          console.tron.error(`can't fetch the balance ${err}`)
+          console.tron.error(`can't fetch the balance ${err}`, Error.captureStackTrace(err))
         }
       } else {
         self.confirmedBalance = 0
@@ -327,59 +208,31 @@ export const FiatAccountModel = BaseAccountModel.props({
 export const LndModel = BaseAccountModel.named("Lnd")
   .props({
     type: AccountType.Bitcoin,
-    version: "...loading...",
-
-    lndReady: false,
-    walletExist: false,
-    syncedToChain: false,
-
-    onChainAddress: "",
-    pubkey: "",
-    network: "",
-    blockHeight: 0,
-    error: "",
-
     lastAddInvoice: "",
     receiveBitcoinScreenAlert: false,
+    _transactions: types.array(LightningInvoiceModel),
 
-    bestBlockHeight: types.maybe(types.number),
-    startBlockHeight: types.maybe(types.number),
-    percentSynced: 0,
-
-    pendingChannels: types.array(PendingChannelModel),
-    channels: types.array(ChannelModel),
-
-    onchain_transactions: types.array(OnChainTransactionModel),
-    invoices: types.array(InvoiceModel),
-    payments: types.array(PaymentModel),
   })
   .actions((self) => {
     return {
-      setLndReady: flow(function* () {
-        self.lndReady = true
-      }),
-
       update: flow(function* () {
-        yield self.updateBalance()
+        //@ts-ignore not sure why that is
         yield self.updateTransactions()
-        yield self.updateInvoices()
-        yield self.listPayments()
+        //@ts-ignore not sure why that is
+        yield self.updateBalance()
       }),
 
       newAddress: flow(function* () {
       }),
 
-      decodePayReq: flow(function* (payReq) {
-        // TODO use require('bolt11')
-        // but check if same format as lnd
-        return yield getEnv(self).lnd.grpc.sendCommand("decodePayReq", {
-          payReq,
-        })
-      }),
-
-      addInvoice: flow(function* ({ value, memo }) {
-        const { data } = yield functions().httpsCallable("addInvoice")({ value, memo })
-        self.lastAddInvoice = data.request
+      addInvoice: flow(function* (request: IAddInvoiceRequest) {
+        try {
+          const { data } = yield functions().httpsCallable("addInvoice")(request)
+          self.lastAddInvoice = data.request
+        } catch (err) {
+          console.log("error with AddInvoice")
+          throw err
+        }
       }),
 
       clearLastInvoice: flow(function* () {
@@ -391,32 +244,25 @@ export const LndModel = BaseAccountModel.named("Lnd")
       }),
 
       updateBalance: flow(function* () {
-          // self.confirmedBalance = onChainBalance.confirmedBalance + channelBalance.balance
-          // self.unconfirmedBalance =
-          //   onChainBalance.unconfirmedBalance + channelBalance.pendingOpenBalance
+        try {
+          const { data } = yield functions().httpsCallable("getLightningBalance")({})
+          self.confirmedBalance = data.response
+        } catch (err) {
+          // TODO show visual indication of internet connection failure
+          console.tron.log(err.toString())
+        }
       }),
 
       updateTransactions: flow(function* () {
-
+        try {
+          const { data } = yield functions().httpsCallable("getLightningTransactions")({})
+          self._transactions = data.response
+        } catch (err) {
+          // TODO show visual indication of internet connection failure
+          console.tron.log(err.toString())
+        }
       }),
 
-      updateInvoice: flow(function* (invoice) {
-
-      }),
-
-      updateInvoices: flow(function* () {
-      }),
-
-      listPayments: flow(function* () {
-      }),
-
-      sendTransaction: flow(function* (addr, amount) {
-        return yield getEnv(self).lnd.grpc.sendCommand("sendCoins", { addr, amount })
-      }),
-
-      // doesn't update the store, should this be here?
-      payInvoice: flow(function* (paymentRequest) {
-      }),
     }
   })
   .views((self) => ({
@@ -425,80 +271,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
     },
 
     get transactions() {
-      // TODO, optimize with some form of caching
-
-      const onchainTxs = self.onchain_transactions.map((transaction) => ({
-        id: transaction.txHash,
-        name: transaction.amount > 0 ? "Received" : "Sent",
-        icon: transaction.amount > 0 ? "ios-download" : "ios-exit",
-        amount: transaction.amount,
-        date: parseDate(transaction.timeStamp),
-        status: transaction.numConfirmations < 3 ? "unconfirmed" : "confirmed",
-      }))
-
-      const formatInvoice = (invoice) => {
-        if (invoice.settled) {
-          if (invoice.memo) {
-            return invoice.memo
-          } else if (invoice.htlcs[0].customRecords) {
-            return translateTitleFromItem(invoice.htlcs[0].customRecords)
-          } else {
-            return `Payment received`
-          }
-        } else {
-          return `Waiting for payment`
-        }
-      }
-
-      const formatPayment = (payment) => {
-        if (payment.description) {
-          try {
-            const decode = JSON.parse(payment.description)
-            return decode.memo
-          } catch (e) {
-            return payment.description
-          }
-        } else {
-          return `Paid invoice ${shortenHash(payment.paymentHash, 2)}`
-        }
-      }
-
-      const filterExpiredInvoice = (invoice) => {
-        if (invoice.settled === true) {
-          return true
-        }
-        if (new Date().getTime() / 1000 > invoice.creationDate + invoice.expiry) {
-          return false
-        }
-        return true
-      }
-
-      const invoicesTxs = self.invoices.filter(filterExpiredInvoice).map((invoice) => ({
-        id: invoice.rHash,
-        icon: "ios-thunderstorm",
-        name: formatInvoice(invoice),
-        amount: invoice.value,
-        status: invoice.settled ? "complete" : "in-progress",
-        date: parseDate(invoice.creationDate),
-        preimage: invoice.rPreimage,
-        memo: invoice.memo,
-      }))
-
-      const paymentTxs = self.payments.map((payment) => ({
-        id: payment.paymentHash,
-        icon: "ios-thunderstorm",
-        name: formatPayment(payment),
-        // amount should be negative so that it's shown as "spent"
-        amount: -payment.valueSat,
-        date: parseDate(payment.creationDate),
-        preimage: payment.paymentPreimage,
-        status: "complete", // filter for succeed on ?
-      }))
-
-      const all_txs = [...onchainTxs, ...invoicesTxs, ...paymentTxs].sort((a, b) =>
-        a.date > b.date ? 1 : -1,
-      )
-      return all_txs
+      return self._transactions
     },
   }))
 
@@ -512,10 +285,8 @@ export const RatesModel = types
   .actions((self) => {
     const update = flow(function* () {
       try {
-        // TODO: BTC price
-        // const doc = yield firestore().doc("global/price").get()
-        // self.BTC = doc.data().BTC
-        self.BTC = 0.00001
+        const {data} = yield functions().httpsCallable("getPrice")({})
+        self.BTC = data
       } catch (err) {
         console.tron.error("error getting BTC price from firestore", err)
       }
@@ -529,6 +300,8 @@ export const RatesModel = types
         return self.USD
       } else if (currency === CurrencyType.BTC) {
         return self.BTC
+      } else {
+        throw Error(`currency ${currency} doesnt't exist`)
       }
     },
   }))
@@ -538,24 +311,22 @@ interface BalanceRequest {
   account: AccountType
 }
 
-// TODO move to utils?
-const translateTitleFromItem = (item) => {
-  console.tron.log({ item })
-  const object = translate(`RewardsScreen.rewards`)
-  for (const property in object) {
-    for (const property2 in object[property]) {
-      if (property2 === item) {
-        return object[property][property2].title
-      }
-    }
-  }
-  return "Translation not found"
-}
+// // TODO move to utils?
+// const translateTitleFromItem = (item) => {
+//   console.tron.log({ item })
+//   const object = translate(`RewardsScreen.rewards`)
+//   for (const property in object) {
+//     for (const property2 in object[property]) {
+//       if (property2 === item) {
+//         return object[property][property2].title
+//       }
+//     }
+//   }
+//   return "Translation not found"
+// }
 
 export const OnboardingModel = types
   .model("Onboarding", {
-    type: AccountType.VirtualBitcoin,
-    currency: CurrencyType.BTC,
     stage: types.array(types.enumeration<Onboarding>("Onboarding", Object.values(Onboarding))),
   })
   .actions((self) => ({
@@ -564,51 +335,10 @@ export const OnboardingModel = types
         self.stage.push(step)
       }
     }),
-
-    // dummy function to have same interface with bitcoin wallet and bank account
-    update: flow(function* () {}),
-
-    // for debug when resetting account
-    _reset: flow(function* () {
-      while (self.stage.length > 0) {
-        self.stage.pop()
-      }
-    }),
   }))
   .views((self) => ({
-    // TODO using: BalanceRequest type, how to set it?
     has(step: Onboarding) {
-      // TODO exception
-      // --> notifications
-      // --> phoneAuth
-
       return self.stage.findIndex((item) => item == step) !== -1
-    },
-
-    get balance() {
-      const rewards = self.stage.map((item) => OnboardingRewards[item])
-      if (rewards.length > 0) {
-        return rewards.reduce((acc, curr) => acc + curr)
-      } else {
-        return 0
-      }
-    },
-
-    get rewardsAvailable() {
-      return difference(Object.values(Onboarding), self.stage).length
-    },
-
-    get transactions() {
-      const txs = self.stage.map((item) => ({
-        // TODO: interface for those pending transactions
-        name: translateTitleFromItem(item),
-        icon: "ios-exit",
-        amount: OnboardingRewards[item],
-        date: Date.now(),
-      }))
-
-      console.tron.log({ txs })
-      return txs
     },
   }))
 
@@ -637,12 +367,9 @@ export const DataStoreModel = types
       const btcConversion = self.rates.rate(self.lnd.currency) / self.rates.rate(currency)
 
       balances[AccountType.Bitcoin] = self.lnd.balance * btcConversion
-      balances[AccountType.VirtualBitcoin] = self.onboarding.balance * btcConversion
       balances[AccountType.Bank] = self.fiat.balance / self.rates.rate(currency)
-      balances[AccountType.BankAndVirtualBitcoin] =
-        balances[AccountType.Bank] + balances[AccountType.Bitcoin]
       balances[AccountType.BankAndBitcoin] =
-        balances[AccountType.Bank] + balances[AccountType.VirtualBitcoin]
+        balances[AccountType.Bank] + balances[AccountType.Bitcoin]
 
       return balances[account]
     },
@@ -657,18 +384,18 @@ export const DataStoreModel = types
   */
 
 type DataStoreType = Instance<typeof DataStoreModel>
-export interface DataStore extends DataStoreType {}
+export interface DataStore extends DataStoreType { }
 
 type DataStoreSnapshotType = SnapshotOut<typeof DataStoreModel>
-export interface DataStoreSnapshot extends DataStoreSnapshotType {}
+export interface DataStoreSnapshot extends DataStoreSnapshotType { }
 
 export type LndStore = Instance<typeof LndModel>
 
 type FiatAccountType = Instance<typeof FiatAccountModel>
-export interface FiatAccount extends FiatAccountType {}
+export interface FiatAccount extends FiatAccountType { }
 
 // type CryptoAccountType = Instance<typeof LndModel> // FIXME is that still accurate?
 // export interface CryptoAccount extends CryptoAccountType {}
 
 type RatesType = Instance<typeof RatesModel>
-export interface Rates extends RatesType {}
+export interface Rates extends RatesType { }
