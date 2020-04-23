@@ -107,7 +107,6 @@ export const AccountNavigator = () => {
         // })}
         initialParams={{ account: AccountType.Bitcoin }}
       />
-      <StackAccounts.Screen name="transactionDetail" component={TransactionDetailScreen} />
       <StackAccounts.Screen name="debug" component={DebugScreen} />
     </StackAccounts.Navigator>
   )
@@ -271,6 +270,14 @@ export const RootStackScreen = () => {
           headerShown: false,
           cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS
         }}
+      />
+      <RootStack.Screen 
+        name="transactionDetail"
+        component={TransactionDetailScreen}
+        options={{ 
+          headerShown: false,
+          cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
+        }}  
       />
     </RootStack.Navigator>
   )

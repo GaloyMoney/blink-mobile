@@ -56,7 +56,8 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
 
   const subHeader =
     amountOtherCurrency !== null ? (
-      <TextCurrency amount={amountOtherCurrency} currencyUsed={otherCurrency} fontSize={16} />
+      <TextCurrency amount={amountOtherCurrency} currency={otherCurrency} 
+        style={{fontSize: 16, color: palette.darkGrey}} />
     ) : null
 
   return (
@@ -66,7 +67,8 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
         <View style={{ flexDirection: "row", alignItems: "flex-end" }}>
           {initialLoading && <Loader />}
           {!initialLoading && (
-            <TextCurrency amount={amount} currencyUsed={currency} fontSize={32} />
+            <TextCurrency amount={amount} currency={currency}
+              style={{fontSize: 32, color: palette.darkGrey}} />
           )}
         </View>
         {!initialLoading && subHeader}

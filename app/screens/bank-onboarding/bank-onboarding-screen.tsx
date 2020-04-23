@@ -15,8 +15,8 @@ import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { emailIsValid } from "../../utils/helper"
-import { CloseCross } from "../rewards-screen/rewards-quiz"
-import Svg from "../welcome-screens/honey-badger-shovel-01.svg"
+import HoneyBadgerShovel from "../welcome-screens/honey-badger-shovel-01.svg"
+import { CloseCross } from "../../components/close-cross"
 
 
 const bankLogo = require("./BankLogo.png")
@@ -81,7 +81,7 @@ export const BankAccountRewardsScreen = ({ navigation }) => {
     <Screen preset="scroll">
       <View style={{margin: 24, backgroundColor: palette.white, borderRadius: 32}}>
         <View style={{alignSelf: "center", marginTop: 24}}>
-          <Svg />
+          <HoneyBadgerShovel />
         </View>
         <Text style={styles.title}>{translate("BankAccountRewardsScreen.openAccount")}</Text>
         <Argument text={translate("BankAccountRewardsScreen.holdUSDollar")} />
@@ -96,7 +96,7 @@ export const BankAccountRewardsScreen = ({ navigation }) => {
           buttonStyle={styles.buttonStyle}
           titleStyle={{fontWeight: "bold"}}
         />
-      <CloseCross navigation={navigation} />
+      <CloseCross color={palette.darkGrey} navigation={navigation} />
       </View>
     </Screen>
   )

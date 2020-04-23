@@ -11,15 +11,9 @@ import { palette } from "../../theme/palette"
 import { shuffle } from "../../utils/helper"
 import { sleep } from "../../utils/sleep"
 import Svg from "../welcome-screens/honey-badger-shovel-01.svg"
+import { CloseCross } from "../../components/close-cross"
 
 const styles = StyleSheet.create({
-  iconContainer: {
-    position: "absolute",
-    right: 20,
-    top: 20,
-    alignItems: "flex-end",
-    padding: 6,
-  },
 
   svgContainer: {
     alignItems: "center",
@@ -118,7 +112,7 @@ const styles = StyleSheet.create({
   },
 
   quizTextAnswer: {
-    color: palette.black,
+    color: palette.darkGrey,
     textAlign: "left"
     // fontWeight: "bold"
     // fontSize: 18,
@@ -131,12 +125,6 @@ const styles = StyleSheet.create({
 })
 
 const mappingLetter = {0: "A", 1: "B", 2: "C"}
-
-export const CloseCross = ({navigation}) => (
-  <View style={styles.iconContainer}>
-    <Icon name="ios-close" size={96} color={palette.darkGrey} onPress={() => navigation.goBack()}/>
-  </View>
-)
 
 export const RewardsQuiz = ({ route, navigation }) => {
   const { title, text, amount, answers, feedback, question, onComplete } = route.params
@@ -245,7 +233,7 @@ export const RewardsQuiz = ({ route, navigation }) => {
           <Text style={styles.text}>{text}</Text>
         </View>
       </ScrollView>
-      <CloseCross navigation={navigation} />
+      <CloseCross navigation={navigation} color={palette.darkGrey} />
       <View style={styles.bottomContainer}>
         <Text style={styles.textEarn}>Earn {amount} sat</Text>
         <Button title={"Answer Quiz"} type="outline"

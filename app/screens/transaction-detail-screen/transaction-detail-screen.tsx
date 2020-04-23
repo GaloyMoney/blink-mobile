@@ -1,43 +1,41 @@
 import * as React from "react"
-import { Image, StyleSheet, Text, View } from "react-native"
-import { ListItem } from "react-native-elements"
-import MapView from "react-native-maps"
-import Icon from "react-native-vector-icons/Ionicons"
+import { Text, View } from "react-native"
+import EStyleSheet from "react-native-extended-stylesheet"
 import { Screen } from "../../components/screen"
 import { TextCurrency } from "../../components/text-currency"
-import { color } from "../../theme"
-import { AccountType, CurrencyType } from "../../utils/enum"
-import { shortenHash } from "../../../../common/utils"
+import { palette } from "../../theme/palette"
 import { AccountDetailItemProps } from "../account-detail-screen"
+import { Divider } from "react-native-elements"
+import { CloseCross } from "../../components/close-cross"
+import TransactionReceived from "./transaction-received-01.svg"
+import TransactionSent from "./transaction-sent-01.svg"
 
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
+  screen: {
+    backgroundColor: palette.white
+  },
+
   amountText: {
-    fontSize: 18,
+    fontSize: "18rem",
+    marginVertical: "6rem",
+    color: palette.white,
+  },
+
+  amount: {
+    fontSize: "32rem",
+    color: palette.white,
     fontWeight: "bold",
-    marginVertical: 4,
   },
 
   amountView: {
     alignItems: "center",
-    marginVertical: 24,
+    paddingVertical: "48rem",
+    backgroundColor: palette.orange,
   },
 
   description: {
-    flexDirection: "row",
-    marginHorizontal: 30,
     marginVertical: 12,
-  },
-
-  icon: {
-    marginLeft: 24,
-    marginRight: 8,
-    marginVertical: 16,
-  },
-
-  iconView: {
-    alignItems: "center",
-    flexDirection: "row",
   },
 
   map: {
@@ -48,28 +46,45 @@ const styles = StyleSheet.create({
     width: 150,
   },
 
-  valueDescription: {
-    marginLeft: "auto",
+  entry: {
+    color: palette.midGrey,
+    marginBottom: "6rem",
   },
+
+  value: {
+    color: palette.darkGrey,
+    fontSize: "14rem",
+    fontWeight: "bold",
+  },
+
+  transactionDetailText: {
+    color: palette.darkGrey,
+    fontSize: "18rem",
+    fontWeight: "bold",
+  },
+
+  transactionDetailView: {
+    marginHorizontal: "24rem",
+    marginVertical: "24rem",
+  },
+
+  divider: {
+    backgroundColor: palette.midGrey,
+    marginVertical: "12rem",
+  }
 })
 
-const Row = ({ input, value }) => {
-  return (
-    <View style={styles.description}>
-      <Text>{input}</Text>
-      <Text style={styles.valueDescription}>{value}</Text>
-    </View>
-  )
-}
+const Row = ({ entry, value }) => (
+  <View style={styles.description}>
+    <Text style={styles.entry}>{entry}</Text>
+    <Text style={styles.value}>{value}</Text>
+  </View>
+)
 
 export const TransactionDetailScreen = ({ route, navigation }) => {
   
   const { currency, account, amount, created_at, hash, type, description, 
     destination, preimage } = route.params as AccountDetailItemProps
-
-  React.useLayoutEffect(() => {
-    navigation.setOptions({ title: description })
-  }, [])    
 
   const spendOrReceive = amount < 0 ? "spent" : "received"
 
@@ -84,66 +99,28 @@ export const TransactionDetailScreen = ({ route, navigation }) => {
   const date_format = created_at.toLocaleString("en-US", options)
 
   return (
-    <Screen>
-      <Image
-        source={require("../../theme/header_example_transaction.jpg")}
-        style={{ width: "100%" }}
-      />
-
+    <Screen style={styles.screen}>
       <View style={styles.amountView}>
-        <Text style={styles.amountText}>
-          You {spendOrReceive}{" "}
-          <TextCurrency amount={Math.abs(amount)} currencyUsed={currency} fontSize={18} />
-        </Text>
+        {type.includes("invoice") ? 
+          <TransactionReceived />
+        : <TransactionSent />
+      }
+      <Text style={styles.amountText}>You {spendOrReceive}</Text>
+        <TextCurrency amount={Math.abs(amount)} currency={currency} 
+          style={styles.amount} />
       </View>
 
-      <View style={styles.iconView}>
-        <Icon name="ios-calendar" style={styles.icon} color={color.primary} size={28} />
-        <Text>{date_format}</Text>
+      <View style={styles.transactionDetailView}>
+        <Text style={styles.transactionDetailText}>Transaction Details</Text>
+        <Divider style={styles.divider} />
+        <Row entry={"Date"} value={date_format}></Row>
+        <Row entry={"Description"} value={description} />
+        <Row entry={"Hash"} value={hash} />
+        {preimage && 
+          <Row entry={"Preimage"} value={preimage} />
+        }
       </View>
-
-      <View>
-        {currency == CurrencyType.USD && (
-          <View style={{ flexDirection: "row" }}>
-            <View>
-              <View style={styles.iconView}>
-                <Icon name="ios-pin" style={styles.icon} color={color.primary} size={28} />
-                <View style={{ flexDirection: "column" }}>
-                  <Text>Galoy</Text>
-                  <Text>Silicon Valley</Text>
-                  <Text>CA 94086</Text>
-                </View>
-              </View>
-              <View style={styles.iconView}>
-                <Icon name="ios-call" style={styles.icon} color={color.primary} size={28} />
-                <Text>(415) 829-8468</Text>
-              </View>
-            </View>
-            <MapView
-              style={styles.map}
-              initialRegion={{
-                latitude: 37.78825,
-                longitude: -122.4324,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
-              }}
-            />
-          </View>
-        )}
-      </View>
-      <Row input="Description" value={description} />
-      {currency === CurrencyType.USD && (
-        <>
-          <Row input="Method" value="On mobile" />
-          <Row input="Category" value={"BTC Exchange"} />
-        </>
-      )}
-      {account === AccountType.Bitcoin && (
-        <>
-          <Row input="Hash" value={shortenHash(hash, 12)} />
-          {preimage && <Row input="Preimage" value={shortenHash(preimage, 12)} />}
-        </>
-      )}
+      <CloseCross color={palette.white} navigation={navigation} />
     </Screen>
   )
 }
