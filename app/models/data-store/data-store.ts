@@ -335,6 +335,11 @@ export const OnboardingModel = types
         self.stage.push(step)
       }
     }),
+    _reset: flow(function* () {
+      while(self.stage.length > 0) {
+        self.stage.pop();
+      }
+    }),
   }))
   .views((self) => ({
     has(step: Onboarding) {
