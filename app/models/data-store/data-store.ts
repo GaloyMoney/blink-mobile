@@ -285,8 +285,8 @@ export const RatesModel = types
   .actions((self) => {
     const update = flow(function* () {
       try {
-        // TODO: BTC price
-        self.BTC = 0.00001
+        const {data} = yield functions().httpsCallable("getPrice")({})
+        self.BTC = data
       } catch (err) {
         console.tron.error("error getting BTC price from firestore", err)
       }
