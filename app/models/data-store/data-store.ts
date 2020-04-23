@@ -288,7 +288,7 @@ export const RatesModel = types
         const {data} = yield functions().httpsCallable("getPrice")({})
         self.BTC = data
       } catch (err) {
-        console.tron.error("error getting BTC price from firestore", err)
+        console.tron.error("error getting BTC price", err)
       }
     })
     return { update }

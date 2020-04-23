@@ -1,6 +1,6 @@
 import { inject } from "mobx-react"
 import * as React from "react"
-import { StyleSheet, View, Text } from "react-native"
+import { View, Text } from "react-native"
 import Swiper from "react-native-swiper"
 import { Onboarding } from "types"
 import { OnboardingScreen } from "../../components/onboarding"
@@ -12,62 +12,30 @@ import BitcoinBitcoin from "./bitcoin-bitcoin-01.svg"
 import BankShop from "./cc-bank-shop-01.svg"
 import MascotDollarBitcoin from "./honey-badger-money-bitcoin-01.svg"
 import HoneyBadgerShovel from "./honey-badger-shovel-01.svg"
+import EStyleSheet from "react-native-extended-stylesheet"
 
 
-
-
-const styles = StyleSheet.create({
-  activityIndicatorWrapper: {
-    alignItems: "center",
-    backgroundColor: "#FFFFFF",
-    borderRadius: 10,
-    display: "flex",
-    height: 100,
-    justifyContent: "space-around",
-    width: 100,
-  },
-
-  container: {
-    flex: 1,
-    flexDirection: "column",
-    justifyContent: "center",
-  },
-
-  image: {
-    alignSelf: "center",
-    height: 90,
-    padding: 20,
-    resizeMode: "center",
-  },
-
-  modalBackground: {
-    alignItems: "center",
-    backgroundColor: "#00000040",
-    flex: 1,
-    flexDirection: "column",
-    justifyContent: "space-around",
-  },
-
-  phoneEntryContainer: {
-    borderColor: color.palette.darkGrey,
-    borderRadius: 5,
-    borderWidth: 1,
-    marginHorizontal: 60,
-    marginTop: 10,
-    paddingHorizontal: 18,
-    paddingVertical: 12,
-  },
+const styles = EStyleSheet.create({
+  $paddingHorizontal: "40rem",
+  $color: palette.white,
+  $fontWeight: "bold",
+  $textAlign: "center",
 
   text: {
-    fontSize: 20,
-    paddingBottom: 10,
-    paddingHorizontal: 40,
-    textAlign: "center",
+    fontSize: "20rem",
+    textAlign: "$textAlign",
+    // fontWeight: "$fontWeight",
+    paddingTop: "24rem",
+    color: "$color",
+    paddingHorizontal: '$paddingHorizontal',
   },
 
-  textEntry: {
-    color: color.palette.darkGrey,
-    fontSize: 20,
+  title: {
+    fontSize: "30rem",
+    textAlign: "$textAlign",
+    fontWeight: "$fontWeight",
+    color: "$color",
+    paddingTop: "24rem",
   },
 })
 
@@ -92,22 +60,19 @@ export const WelcomeFirstScreen = inject("dataStore")(({ dataStore, navigation }
     >
       <Screen>
         <OnboardingScreen Svg={MascotDollarBitcoin}>
+          <Text style={styles.title}>Bitcoin:</Text>
           <Text style={styles.text}>{translate("WelcomeFirstScreen.care")}</Text>
         </OnboardingScreen>
-        {/* FIXME */}
-        <Text style={styles.text}>{"\n\n"}</Text>
       </Screen>
       <Screen>
         <OnboardingScreen Svg={BitcoinBitcoin}>
           <Text style={styles.text}>{translate("WelcomeFirstScreen.bank")}</Text>
         </OnboardingScreen>
-        <Text style={styles.text}>{"\n\n\n"}</Text>
       </Screen>
       <Screen>
         <OnboardingScreen Svg={BankShop}>
           <Text style={styles.text}>{translate("WelcomeFirstScreen.before")}</Text>
         </OnboardingScreen>
-        <Text style={styles.text}>{"\n\n\n"}</Text>
       </Screen>
       <Screen>
         <OnboardingScreen
