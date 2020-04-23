@@ -5,26 +5,31 @@ import {
   FiatAccountModel,
   Rates,
   RatesModel,
-  LndStore,
-  LndModel,
+  // LndStore,
+  // LndModel,
 } from "./data-store"
-import { defaultDataStore } from "../root-store/default-state"
 import { AccountType, CurrencyType } from "../../utils/enum"
 
 test("can be created", () => {
   const instance: DataStore = DataStoreModel.create({})
-
   expect(instance).toBeTruthy()
 })
 
 test("can be created bis - test for duplicated account creation", () => {
   const instance: DataStore = DataStoreModel.create({})
-
   expect(instance).toBeTruthy()
 })
 
 test("fiat accounts have balance and currency", () => {
-  const instance: FiatAccount = FiatAccountModel.create({ balance: 100 })
+  const instance: FiatAccount = FiatAccountModel.create({ 
+    type: AccountType.Bank,
+    _transactions: [{
+      name: "abc",
+      icon: "icon",
+      amount: 123,
+      date: 1234,
+    }]  
+  })
 
   expect(instance.type).toBe(AccountType.Bank)
   expect(instance.currency).toBe(CurrencyType.USD)
@@ -32,34 +37,31 @@ test("fiat accounts have balance and currency", () => {
 })
 
 test("fiat updates correctly from server", async () => {
-  const instance: FiatAccount = FiatAccountModel.create({})
+
+  // TODO find a way to just be able to pass {}
+  const instance: FiatAccount = FiatAccountModel.create({
+    type: AccountType.Bank,
+    _transactions: [],
+  })
 
   await instance.update()
 
   expect(instance.transactions).toHaveLength(20)
 })
 
-test("btc accounts have balance and currency", () => {
-  const instance: LndStore = LndModel.create({ confirmedBalance: 100 })
+// test("btc accounts have balance and currency", () => {
+//   const instance: LndStore = LndModel.create({})
 
-  expect(instance.type).toBe(AccountType.Bitcoin)
-  expect(instance.currency).toBe(CurrencyType.BTC)
-  expect(instance.balance).toBe(100)
-})
+//   expect(instance.type).toBe(AccountType.Bitcoin)
+//   expect(instance.currency).toBe(CurrencyType.BTC)
+//   expect(instance.balance).toBe(100)
+// })
 
 test("rates returns value with last_price", () => {
   const instance: Rates = RatesModel.create({})
 
   expect(instance[CurrencyType.USD]).toBe(1)
   expect(instance[CurrencyType.BTC]).toBe(0.0001)
-})
-
-test("default state can be instanciate", () => {
-  const instance: DataStore = DataStoreModel.create(defaultDataStore)
-
-  expect(instance.accounts).toHaveLength(3)
-  expect(instance.total_usd_balance).toBe(1854.5674)
-  expect(instance.usd_balances).toEqual({ Checking: 1245.12, Bitcoin: 609.4474 })
 })
 
 test("I can get every account from using account[] view", () => {

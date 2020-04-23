@@ -38,6 +38,8 @@ export async function setupRootStore() {
     rootStore = RootStoreModel.create(data, env)
 
   } catch (e) {
+    console.tron.warning(`catch setupRootStore ${e}`)
+
     // if there's any problems loading, then let's at least fallback to an empty state
     // instead of crashing.
     rootStore = RootStoreModel.create({}, env)

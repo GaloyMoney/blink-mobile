@@ -10,7 +10,7 @@ storiesOf("SplashScreen", module)
   .add("Style Presets", () => (
     <Story>
       <UseCase text="Dollar" usage="The primary.">
-        <SplashScreen lndVersion={"0.9.0"} />
+        <SplashScreen />
       </UseCase>
     </Story>
   ))

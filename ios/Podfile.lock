@@ -12,6 +12,8 @@ PODS:
     - React-Core (= 0.61.5)
     - React-jsi (= 0.61.5)
     - ReactCommon/turbomodule/core (= 0.61.5)
+  - Firebase/Analytics (6.13.0):
+    - Firebase/Core
   - Firebase/Auth (6.13.0):
     - Firebase/CoreOnly
     - FirebaseAuth (~> 6.4.0)
@@ -109,7 +111,7 @@ PODS:
     - Folly (= 2018.10.22.00)
     - RCTRequired (= 0.61.5)
     - React-Core (= 0.61.5)
-  - RCTYouTube (2.0.0):
+  - RCTYouTube (2.0.1):
     - React
     - YoutubePlayer-in-WKWebView (~> 0.3.1)
   - React (0.61.5):
@@ -269,19 +271,19 @@ PODS:
     - React-cxxreact (= 0.61.5)
     - React-jsi (= 0.61.5)
   - React-jsinspector (0.61.5)
-  - react-native-camera (3.21.0):
+  - react-native-camera (3.23.1):
     - React
-    - react-native-camera/RCT (= 3.21.0)
-    - react-native-camera/RN (= 3.21.0)
-  - react-native-camera/RCT (3.21.0):
+    - react-native-camera/RCT (= 3.23.1)
+    - react-native-camera/RN (= 3.23.1)
+  - react-native-camera/RCT (3.23.1):
     - React
-  - react-native-camera/RN (3.21.0):
+  - react-native-camera/RN (3.23.1):
     - React
   - react-native-config (1.0.0):
     - React
   - react-native-maps (0.27.1):
     - React
-  - react-native-notifications (3.1.2):
+  - react-native-notifications (3.1.4):
     - React
   - react-native-safe-area-context (0.7.3):
     - React
@@ -324,33 +326,35 @@ PODS:
     - React-cxxreact (= 0.61.5)
     - React-jsi (= 0.61.5)
     - ReactCommon/jscallinvoker (= 0.61.5)
-  - RNCAsyncStorage (1.8.1):
+  - RNCAsyncStorage (1.9.0):
     - React
-  - RNCMaskedView (0.1.7):
+  - RNCMaskedView (0.1.10):
     - React
-  - RNDateTimePicker (2.3.0):
+  - RNDateTimePicker (2.3.2):
     - React
-  - RNDeviceInfo (5.5.3):
+  - RNDeviceInfo (5.5.5):
     - React
-  - RNFBAnalytics (6.3.4):
+  - RNFBAnalytics (6.7.1):
+    - Firebase/Analytics (~> 6.13.0)
     - Firebase/Core (~> 6.13.0)
     - React
     - RNFBApp
-  - RNFBApp (6.3.4):
+  - RNFBApp (6.7.1):
     - Firebase/Core (~> 6.13.0)
     - React
-  - RNFBAuth (6.3.4):
+  - RNFBAuth (6.7.1):
     - Firebase/Auth (~> 6.13.0)
     - Firebase/Core (~> 6.13.0)
     - React
     - RNFBApp
-  - RNFBCrashlytics (6.3.4):
+  - RNFBCrashlytics (6.7.1):
     - Crashlytics (~> 3.14.0)
     - Fabric (~> 1.10.2)
     - Firebase/Core (~> 6.13.0)
     - React
     - RNFBApp
-  - RNFBFunctions (6.3.4):
+  - RNFBFunctions (6.7.1):
+    - Firebase/Core (~> 6.13.0)
     - Firebase/Functions (~> 6.13.0)
     - React
     - RNFBApp
@@ -360,19 +364,19 @@ PODS:
     - React
   - RNICloudStore (0.1.0):
     - React
-  - RNInAppBrowser (3.3.4):
+  - RNInAppBrowser (3.4.0):
     - React
   - RNKeychain (5.0.1):
     - React
-  - RNLocalize (1.3.4):
+  - RNLocalize (1.4.0):
     - React
   - RNReactNativeHapticFeedback (1.9.0):
     - React
-  - RNReanimated (1.7.0):
+  - RNReanimated (1.8.0):
     - React
-  - RNScreens (2.4.0):
+  - RNScreens (2.5.0):
     - React
-  - RNSVG (12.0.3):
+  - RNSVG (12.1.0):
     - React
   - RNVectorIcons (6.6.0):
     - React
@@ -595,7 +599,7 @@ SPEC CHECKSUMS:
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   RCTRequired: b153add4da6e7dbc44aebf93f3cf4fcae392ddf1
   RCTTypeSafety: 9aa1b91d7f9310fc6eadc3cf95126ffe818af320
-  RCTYouTube: 57458fe8653bb696b7d7585326d735d01b871af8
+  RCTYouTube: 4509d59a7de050dd0c7c6cb1f427d37678d63b5c
   React: b6a59ef847b2b40bb6e0180a97d0ca716969ac78
   React-Core: 688b451f7d616cc1134ac95295b593d1b5158a04
   React-CoreModules: d04f8494c1a328b69ec11db9d1137d667f916dcb
@@ -603,10 +607,10 @@ SPEC CHECKSUMS:
   React-jsi: cb2cd74d7ccf4cffb071a46833613edc79cdf8f7
   React-jsiexecutor: d5525f9ed5f782fdbacb64b9b01a43a9323d2386
   React-jsinspector: fa0ecc501688c3c4c34f28834a76302233e29dc0
-  react-native-camera: 4e12e877b8fef60b0914a49c942a0f32479e5b50
+  react-native-camera: 1b52abea404d04e040edb3e74b7c5523c01a3089
   react-native-config: 7db9b96479164dfd7b2be68eb9079e08279511c4
   react-native-maps: f4b89da81626ad7f151a8bfcb79733295d31ce5c
-  react-native-notifications: f56a12d741eeb2fd4d7a418a4689111c50f7cd72
+  react-native-notifications: 36929512507417ba0021659bd2f9e0184dda2489
   react-native-safe-area-context: e200d4433aba6b7e60b52da5f37af11f7a0b0392
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   react-native-version-number: b415bbec6a13f2df62bf978e85bc0d699462f37f
@@ -620,25 +624,25 @@ SPEC CHECKSUMS:
   React-RCTText: 9ccc88273e9a3aacff5094d2175a605efa854dbe
   React-RCTVibration: a49a1f42bf8f5acf1c3e297097517c6b3af377ad
   ReactCommon: 198c7c8d3591f975e5431bec1b0b3b581aa1c5dd
-  RNCAsyncStorage: e0dd7c8a36543b4ef84969acd9f8aceba3a92dc2
-  RNCMaskedView: 76c40a1d41c3e2535df09246a2b5487f04de0814
-  RNDateTimePicker: 63e79b1e0dc6da8806ed8cf76e8528f7f88bcbc3
-  RNDeviceInfo: 310c1f43d418d950a193c7650de2f9559c906048
-  RNFBAnalytics: b8bad44e6653af73219b1a7af24bf3452cb02c1b
-  RNFBApp: 7d4006751de8bb5cafa2e8d2e7d94ee250df81db
-  RNFBAuth: ed8b865db45f7ded9dbf535e390cba2ba672aede
-  RNFBCrashlytics: 93e1cc09a93aa4bb1e9b5a07af0efb2702db5a39
-  RNFBFunctions: 6975565f0abcc68d9731d05b78778f003db0eca5
+  RNCAsyncStorage: 453cd7c335ec9ba3b877e27d02238956b76f3268
+  RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
+  RNDateTimePicker: 4bd49e09f91ca73d69119a9e1173b0d43b82f5e5
+  RNDeviceInfo: d2ca97023bb1c2a49cd7adb3f956e14c048ea028
+  RNFBAnalytics: 7d56f7af0a1147e649df33e64372aea8923fdd01
+  RNFBApp: 7b539bb25520fa73d6a240f5c6ea569e27683645
+  RNFBAuth: c292603069a09065a1b4d3336148beff83e4c897
+  RNFBCrashlytics: b34063b906dd0c57a5d286dd743a40c90c8326c7
+  RNFBFunctions: 4b85785e03e9d0ef7ba039b398d8c3a79deaed33
   RNFS: 2bd9eb49dc82fa9676382f0585b992c424cd59df
   RNGestureHandler: 8f09cd560f8d533eb36da5a6c5a843af9f056b38
   RNICloudStore: bc6e225811637c09bd1eb055d6cd7448e61cd451
-  RNInAppBrowser: 9936b2e23ab7ed9b6ac938eb1c4a656b95292e11
+  RNInAppBrowser: c1a0dad2734458d79bcb6c8f4297ba8658a1da9f
   RNKeychain: a5623de13ec5378bfb8035422e3dee4fa538660d
-  RNLocalize: 215c419a17d7585eb7a63c748ebfd042e0cb2c3d
+  RNLocalize: b6df30cc25ae736d37874f9bce13351db2f56796
   RNReactNativeHapticFeedback: 2566b468cc8d0e7bb2f84b23adc0f4614594d071
-  RNReanimated: 031fe8d9ea93c2bd689a40f05320ef9d96f74d7f
-  RNScreens: b5c0e1b2b04512919e78bd3898e144a157ce2363
-  RNSVG: 7e16ddfc6e00d5aa69c9eb83e699bcce5dcb85d4
+  RNReanimated: 955cf4068714003d2f1a6e2bae3fb1118f359aff
+  RNScreens: ac02d0e4529f08ced69f5580d416f968a6ec3a1d
+  RNSVG: ce9d996113475209013317e48b05c21ee988d42e
   RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
   XCDYouTubeKit: cdad9e696f991aac2739c5b25586c81f1301ba30
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
