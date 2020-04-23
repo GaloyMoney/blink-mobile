@@ -13,22 +13,19 @@ import { translate } from "../../i18n"
 import { color } from "../../theme/color"
 import { palette } from "../../theme/palette"
 import { AccountType, CurrencyType } from "../../utils/enum"
+import MoneyCircle from "./money-circle-02.svg"
+import BitcoinCircle from "./bitcoin-circle-01.svg"
+import EStyleSheet from "react-native-extended-stylesheet"
 
 
-
-const accountBasic = {
-  color: color.text,
-  fontSize: 18,
-}
-
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
   accountAmount: {
-    ...accountBasic,
+    fontSize: "18rem",
     color: color.primaryDarker
   },
 
   accountTypeStyle: {
-    ...accountBasic,
+    color: color.text,
     flex: 1,
     paddingHorizontal: 12,
   },
@@ -46,17 +43,11 @@ const styles = StyleSheet.create({
   accountViewTitle: {
     color: palette.darkGrey,
     fontWeight: "bold",
-  },
-
-  icon: {
-    alignContent: "center",
-    alignItems: "center",
-    alignSelf: "center",
-    width: 72,
+    fontSize: "18rem",
   },
 })
 
-export const AccountItem = ({ account, icon, amount, navigation, title=undefined, action=undefined}) => {
+export const AccountItem = ({ account, amount, navigation, title=undefined, action=undefined}) => {
   const initialLoading = isNaN(amount)
 
   const Loader = () => (
@@ -73,7 +64,10 @@ export const AccountItem = ({ account, icon, amount, navigation, title=undefined
       chevron
       title={title ?? account}
       onPress={action || (() => navigation.navigate("accountDetail", { account }))}
-      leftAvatar={<Icon name={icon} color={color.primary} size={64} style={styles.icon} />}
+      leftAvatar={account === AccountType.Bank &&
+            <MoneyCircle width={75} height={78} />
+        ||  <BitcoinCircle width={75} height={78} />
+      }
       subtitle={!title &&
         <>
           {initialLoading && <Loader />}
@@ -103,8 +97,8 @@ export const AccountsScreen = inject("dataStore")(
 
     // FIXME type any
     const accountTypes: Array<Record<string, any>> = [
-      { key: "Cash Account", account: AccountType.Bank, icon: "ios-cash" },
-      { key: "Bitcoin", account: AccountType.Bitcoin, icon: "logo-bitcoin" },
+      { key: "Cash Account", account: AccountType.Bank },
+      { key: "Bitcoin", account: AccountType.Bitcoin },
     ]
 
     // TODO refactor ==> bank should also have a virtual screen
