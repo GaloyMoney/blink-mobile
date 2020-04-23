@@ -8,7 +8,6 @@ import {
   // LndStore,
   // LndModel,
 } from "./data-store"
-import { defaultDataStore } from "../root-store/default-state"
 import { AccountType, CurrencyType } from "../../utils/enum"
 
 test("can be created", () => {
@@ -63,14 +62,6 @@ test("rates returns value with last_price", () => {
 
   expect(instance[CurrencyType.USD]).toBe(1)
   expect(instance[CurrencyType.BTC]).toBe(0.0001)
-})
-
-test("default state can be instanciate", () => {
-  const instance: DataStore = DataStoreModel.create(defaultDataStore)
-
-  expect(instance.accounts).toHaveLength(3)
-  expect(instance.total_usd_balance).toBe(1854.5674)
-  expect(instance.usd_balances).toEqual({ Checking: 1245.12, Bitcoin: 609.4474 })
 })
 
 test("I can get every account from using account[] view", () => {
