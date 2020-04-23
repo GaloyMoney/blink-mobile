@@ -153,7 +153,7 @@ const BalanceHeaderProxy = ({ currency, dataStore, account }) => {
   return <BalanceHeader currency={currency} amount={dataStore.balances({ currency, account })} />
 }
 
-const HeaderWithBuySell = ({ currency, account, dataStore, refresh }) => {
+const BuyAndSellComp = ({ currency, account, dataStore, refresh }) => {
   const [side, setSide] = useState<Side>("buy")
 
   const [loading, setLoading] = useState(false)
@@ -318,7 +318,6 @@ const HeaderWithBuySell = ({ currency, account, dataStore, refresh }) => {
           )}
         </View>
       </Modal>
-      <BalanceHeaderProxy currency={currency} account={account} dataStore={dataStore} />
       <View style={styles.horizontal}>
         <Button
           title="Buy"
@@ -431,17 +430,15 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = inject("d
     }, [])
 
     return (
-      <Screen>
+      <Screen style={{backgroundColor: palette.white}}>
+        <BalanceHeaderProxy currency={currency} account={account} dataStore={dataStore} />
         {(account === AccountType.Bitcoin) && (
-          <HeaderWithBuySell
+          <BuyAndSellComp
             currency={currency}
             account={account}
             dataStore={dataStore}
             refresh={refresh}
           />
-        )}
-        {account === AccountType.Bank && (
-          <BalanceHeaderProxy currency={currency} account={account} dataStore={dataStore} />
         )}
         {sections.length === 0 && <Text>No transaction to show :(</Text>}
         {sections.length > 0 && (
