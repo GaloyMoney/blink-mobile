@@ -3,8 +3,9 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { inject, observer } from "mobx-react";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Alert, Animated, RefreshControl, SectionList, StyleSheet, Text, TouchableWithoutFeedback, View } from "react-native";
+import { ActivityIndicator, Alert, Animated, RefreshControl, SectionList, Text, TouchableWithoutFeedback, View } from "react-native";
 import { Button, ListItem } from "react-native-elements";
+import EStyleSheet from "react-native-extended-stylesheet";
 import { TextInput } from "react-native-gesture-handler";
 import Modal from "react-native-modal";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -18,6 +19,10 @@ import { color } from "../../theme";
 import { palette } from "../../theme/palette";
 import { sameDay, sameMonth } from "../../utils/date";
 import { AccountType, CurrencyType } from "../../utils/enum";
+import auth from "@react-native-firebase/auth"
+import { CurrencyText } from "../../components/currency-text";
+import { IconTransaction } from "../../components/icon-transactions";
+
 
 
 export interface AccountDetailScreenProps {
@@ -32,7 +37,7 @@ export interface AccountDetailItemProps extends ILightningTransaction {
   navigation: StackNavigationProp<any,any>,
 }
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
   button: {
     backgroundColor: color.primary,
   },
@@ -59,8 +64,8 @@ const styles = StyleSheet.create({
   },
 
   headerSection: {
-    // backgroundColor: palette.white,
-    color: color.text,
+    backgroundColor: palette.white,
+    color: palette.darkGrey,
     fontSize: 18,
     padding: 22,
   },
@@ -106,17 +111,25 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     paddingHorizontal: 20,
   },
+
+  noTransactionView: {
+    alignItems: "center",
+    flex: 1,
+    marginVertical: "48rem"
+  },
+  
+  NoTransactionText: {
+    fontSize: "24rem"
+  },
+
 })
 
 const AccountDetailItem: React.FC<AccountDetailItemProps> = (props) => (
   <ListItem
   key={props.hash}
   title={props.description}
-  leftIcon={
-    <Icon name="ios-thunderstorm" size={24} color={color.primary} style={styles.icon} />
-  }
-  // rightTitle={<CurrencyText amount={props.amount} currency={props.currency} />}
-  rightTitle={String(props.amount)}
+  leftIcon={<IconTransaction type={props.type} size={24} color={palette.orange} />}
+  rightTitle={<CurrencyText amount={props.amount} currency={props.currency} textColor={palette.darkGrey} />}
   onPress={() => props.navigation.navigate("transactionDetail", props)}
   />
 )
@@ -149,11 +162,11 @@ const VisualExpiration = ({ validUntil }) => {
   )
 }
 
-const BalanceHeaderProxy = ({ currency, dataStore, account }) => {
+const BalanceHeaderDataInjection = ({ currency, dataStore, account }) => {
   return <BalanceHeader currency={currency} amount={dataStore.balances({ currency, account })} />
 }
 
-const BuyAndSellComp = ({ currency, account, dataStore, refresh }) => {
+const BuyAndSellComp = ({ dataStore, refresh }) => {
   const [side, setSide] = useState<Side>("buy")
 
   const [loading, setLoading] = useState(false)
@@ -430,17 +443,18 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = inject("d
     }, [])
 
     return (
-      <Screen style={{backgroundColor: palette.white}}>
-        <BalanceHeaderProxy currency={currency} account={account} dataStore={dataStore} />
-        {(account === AccountType.Bitcoin) && (
+      <Screen backgroundColor={palette.white} preset="scroll">
+        <BalanceHeaderDataInjection currency={currency} account={account} dataStore={dataStore} />
+        {(account === AccountType.Bitcoin && auth().currentUser?.isAnonymous === false) && (
           <BuyAndSellComp
-            currency={currency}
-            account={account}
             dataStore={dataStore}
             refresh={refresh}
           />
         )}
-        {sections.length === 0 && <Text>No transaction to show :(</Text>}
+        {sections.length === 0 && 
+        <View style={styles.noTransactionView}>
+          <Text style={styles.NoTransactionText}>No transaction to show :(</Text>
+        </View>}
         {sections.length > 0 && (
           <SectionList
             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}

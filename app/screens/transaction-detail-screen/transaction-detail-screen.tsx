@@ -7,8 +7,7 @@ import { palette } from "../../theme/palette"
 import { AccountDetailItemProps } from "../account-detail-screen"
 import { Divider } from "react-native-elements"
 import { CloseCross } from "../../components/close-cross"
-import TransactionReceived from "./transaction-received-01.svg"
-import TransactionSent from "./transaction-sent-01.svg"
+import { IconTransaction } from "../../components/icon-transactions"
 
 
 const styles = EStyleSheet.create({
@@ -101,10 +100,7 @@ export const TransactionDetailScreen = ({ route, navigation }) => {
   return (
     <Screen style={styles.screen}>
       <View style={styles.amountView}>
-        {type.includes("invoice") ? 
-          <TransactionReceived />
-        : <TransactionSent />
-      }
+      <IconTransaction type={type} size={100} />
       <Text style={styles.amountText}>You {spendOrReceive}</Text>
         <TextCurrency amount={Math.abs(amount)} currency={currency} 
           style={styles.amount} />
