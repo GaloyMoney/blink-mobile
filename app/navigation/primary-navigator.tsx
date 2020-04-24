@@ -8,14 +8,14 @@ import { AccountDetailScreen } from "../screens/account-detail-screen/account-de
 import { AccountsScreen } from "../screens/accounts-screen"
 import { BankAccountReadyScreen, BankAccountRewardsScreen, DateOfBirthScreen, OpenBankScreen, PersonalInformationScreen } from "../screens/bank-onboarding"
 import { DebugScreen } from "../screens/debug-screen"
-import { BankTransferScreen, DirectDepositScreen, FindATMScreen, MoveMoneyScreen, ReceiveBitcoinScreen, ScanningQRCodeScreen, SendBitcoinScreen } from "../screens/move-money-screen"
+import { BankTransferScreen, DirectDepositScreen, FindATMScreen, MoveMoneyScreenDataInjected, ReceiveBitcoinScreen, ScanningQRCodeScreen, SendBitcoinScreen } from "../screens/move-money-screen"
+import { WelcomePhoneInputScreen, WelcomePhoneValidationScreen } from "../screens/phone-screen/phone-auth"
 import { RewardsMapDataInjected } from "../screens/rewards-map-screen"
 import { RewardsQuiz, RewardsSection } from "../screens/rewards-screen"
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
 import { color } from "../theme"
 import { palette } from "../theme/palette"
 import { AccountType } from "../utils/enum"
-import { WelcomePhoneInputScreen, WelcomePhoneValidationScreen } from "../screens/phone-screen/phone-auth"
 
 const styles = StyleSheet.create({
   person: {
@@ -122,7 +122,7 @@ export const MoveMoneyNavigator = () => {
     >
       <StackMoveMoney.Screen
         name="moveMoney"
-        component={MoveMoneyScreen}
+        component={MoveMoneyScreenDataInjected}
         options={{ title: translate("MoveMoneyScreen.title") }}
       />
       <StackMoveMoney.Screen

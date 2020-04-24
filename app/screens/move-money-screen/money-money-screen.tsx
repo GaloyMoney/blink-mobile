@@ -1,9 +1,9 @@
 import auth from "@react-native-firebase/auth"
-import { inject } from "mobx-react"
+import { inject, observer } from "mobx-react"
 import * as React from "react"
 import { useState } from "react"
 import { ScrollView, Text, View } from "react-native"
-import { Button, ListItem } from "react-native-elements"
+import { Button, ListItem, ButtonGroup } from "react-native-elements"
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
@@ -14,6 +14,8 @@ import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { capitalize } from "../../utils/helper"
+import { BalanceHeader } from "../../components/balance-header"
+import { CurrencyType } from "../../utils/enum"
 
 
 const styles = EStyleSheet.create({
@@ -79,12 +81,26 @@ const styles = EStyleSheet.create({
   },
 })
 
-export const MoveMoneyScreen = inject("dataStore")(({ dataStore, navigation }) => {
+export const MoveMoneyScreenDataInjected = inject("dataStore")(observer(
+  ({ dataStore, navigation }) => {
+    const bankOnboarded = dataStore.onboarding.has(Onboarding.bankOnboarded)
+    const walletOnboarded = dataStore.onboarding.has(Onboarding.walletOnboarded)
+
+    return <MoveMoneyScreen 
+      bankOnboarded={bankOnboarded}
+      navigation={navigation}
+      walletOnboarded={walletOnboarded}  
+    />
+}))
+
+export const MoveMoneyScreen = (
+  ({ bankOnboarded, walletOnboarded, navigation, amount }) => {
 
   const [modalVisible, setModalVisible] = useState(false)
   const [message, setMessage] = useState("")
   const [buttonTitle, setButtonTitle] = useState("")
   const [buttonAction, setButtonAction] = useState(() => () => {})
+  const [selectedIndex, setSelectedIndex] = useState(0)
 
   const bank = [
     {
@@ -116,7 +132,7 @@ export const MoveMoneyScreen = inject("dataStore")(({ dataStore, navigation }) =
   ]
 
   const onBankClick = ({ target, title }) => {
-    if (dataStore.onboarding.has(Onboarding.bankOnboarded)) {
+    if (bankOnboarded) {
       navigation.navigate(target, { title })
     } else {
       navigation.navigate("bankAccountRewards")
@@ -181,30 +197,43 @@ export const MoveMoneyScreen = inject("dataStore")(({ dataStore, navigation }) =
         </View>
       </Modal>
       <ScrollView>
-        <Text style={styles.headerSection}>{translate("common.bank")}</Text>
-        {bank.map((item, i) => (
-          <ListItem
-            titleStyle={styles.text}
-            containerStyle={styles.listItem}
-            key={i}
-            title={translate(`${capitalize(item.target)}Screen.title`)}
-            leftIcon={<Icon name={item.icon} style={styles.icon} size={32} color={color.primary} />}
-            onPress={(item) => onBankClick(item)}
-            chevron
-          />
-        ))}
-        <Text style={styles.headerSection}>{translate("common.bitcoin")}</Text>
-        {bitcoin.map((item, i) => (
-          <ListItem
-            titleStyle={styles.text}
-            containerStyle={styles.listItem}
-            key={i}
-            title={translate(`${capitalize(item.target)}Screen.title`)}
-            leftIcon={<Icon name={item.icon} style={styles.icon} size={32} color={color.primary} />}
-            onPress={() => onBitcoinClick(item)}
-            chevron
-          />
-        ))}
+        <ButtonGroup
+          onPress={index => setSelectedIndex(index)}
+          selectedIndex={selectedIndex}
+          buttons={["Bitcoin", "Bank"]}
+          // selectedButtonStyle={{}}
+          // containerStyle={{height: 100}}
+        />
+        {selectedIndex === 0 &&
+          <>
+            <BalanceHeader currency={CurrencyType.BTC} amount={amount} />
+            {bitcoin.map((item, i) => (
+              <ListItem
+                titleStyle={styles.text}
+                containerStyle={styles.listItem}
+                key={i}
+                title={translate(`${capitalize(item.target)}Screen.title`)}
+                leftIcon={<Icon name={item.icon} style={styles.icon} size={32} color={color.primary} />}
+                onPress={() => onBitcoinClick(item)}
+                chevron
+              />
+            ))}
+            <Text>{`We use the Lightning Network.\nLearn More`}</Text>
+          </>
+        }
+        {selectedIndex === 1 &&
+          bank.map((item, i) => (
+            <ListItem
+              titleStyle={styles.text}
+              containerStyle={styles.listItem}
+              key={i}
+              title={translate(`${capitalize(item.target)}Screen.title`)}
+              leftIcon={<Icon name={item.icon} style={styles.icon} size={32} color={color.primary} />}
+              onPress={(item) => onBankClick(item)}
+              chevron
+            />
+          ))
+        }
       </ScrollView>
     </Screen>
   )
