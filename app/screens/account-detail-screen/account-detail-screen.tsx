@@ -22,6 +22,7 @@ import { AccountType, CurrencyType } from "../../utils/enum";
 import auth from "@react-native-firebase/auth"
 import { CurrencyText } from "../../components/currency-text";
 import { IconTransaction } from "../../components/icon-transactions";
+import { Price } from "../../components/price";
 
 
 
@@ -442,13 +443,32 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = inject("d
       refresh()
     }, [])
 
+    const data = [
+      { x: 0, y: 0 },
+      { x: 1, y: 2 },
+      { x: 2, y: 1 },
+      { x: 3, y: 4 },
+      { x: 4, y: 3 },
+      { x: 5, y: 5 }
+    ];
+
     return (
       <Screen backgroundColor={palette.white} preset="scroll">
         <BalanceHeaderDataInjection currency={currency} account={account} dataStore={dataStore} />
+        <Price data={data} price={dataStore.rates.getInBTC} delta={0.70} /> 
+        {/* FIXME */}
         {(account === AccountType.Bitcoin && auth().currentUser?.isAnonymous === false) && (
           <BuyAndSellComp
             dataStore={dataStore}
             refresh={refresh}
+          />
+        )}
+        {(account === AccountType.Bitcoin && auth().currentUser?.isAnonymous) && (
+          // TODO update when isAnonymous changes
+          <Button title={"Activate Wallet"} 
+            buttonStyle={{backgroundColor: palette.blue, borderRadius: 32}} 
+            style={{width: "50%", alignSelf: "center"}}
+            onPress={() => navigation.navigate("phoneValidation")}
           />
         )}
         {sections.length === 0 && 

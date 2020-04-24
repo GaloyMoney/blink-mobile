@@ -304,6 +304,10 @@ export const RatesModel = types
         throw Error(`currency ${currency} doesnt't exist`)
       }
     },
+    // return in BTC instead of SAT
+    get getInBTC() {
+      return (self.BTC * Math.pow(10, 8))
+    }
   }))
 
 interface BalanceRequest {
