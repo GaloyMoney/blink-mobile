@@ -425,11 +425,13 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = inject("d
     }
 
     const [refreshing, setRefreshing] = useState(false)
+    const [isAnonymous, setIsAnonymous] = useState(false)
 
     const sections = formatTransactions(accountStore.transactions)
     const currency = accountStore.currency
 
     const refresh = async () => {
+      setIsAnonymous(auth().currentUser?.isAnonymous)
       await accountStore.update()
     }
 
@@ -441,6 +443,11 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = inject("d
 
     useEffect(() => {
       refresh()
+    }, [])
+
+    useEffect(() => {
+      const subscriber = auth().onAuthStateChanged(refresh)
+      return subscriber // unsubscribe on unmount
     }, [])
 
     const data = [
@@ -457,13 +464,13 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = inject("d
         <BalanceHeaderDataInjection currency={currency} account={account} dataStore={dataStore} />
         <Price data={data} price={dataStore.rates.getInBTC} delta={0.70} /> 
         {/* FIXME */}
-        {(account === AccountType.Bitcoin && auth().currentUser?.isAnonymous === false) && (
+        {(account === AccountType.Bitcoin && !isAnonymous) && (
           <BuyAndSellComp
             dataStore={dataStore}
             refresh={refresh}
           />
         )}
-        {(account === AccountType.Bitcoin && auth().currentUser?.isAnonymous) && (
+        {(account === AccountType.Bitcoin && isAnonymous) && (
           // TODO update when isAnonymous changes
           <Button title={"Activate Wallet"} 
             buttonStyle={{backgroundColor: palette.lightBlue, borderRadius: 32}} 

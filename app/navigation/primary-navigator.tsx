@@ -285,7 +285,7 @@ export const RootStackScreen = () => {
         component={PhoneValidationNavigator}
         options={{ 
           headerShown: false,
-          cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS
+          cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS
         }}
       />
       <RootStack.Screen 
