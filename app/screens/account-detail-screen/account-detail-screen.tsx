@@ -360,15 +360,15 @@ const formatTransactions = (transactions) => {
   transactions = transactions.slice().sort((a, b) => (a.date > b.date ? -1 : 1)) // warning without slice?
 
   const isToday = (tx) => {
-    return sameDay(tx.date, new Date())
+    return sameDay(tx.created_at, new Date())
   }
 
   const isYesterday = (tx) => {
-    return sameDay(tx.date, new Date().setDate(new Date().getDate() - 1))
+    return sameDay(tx.created_at, new Date().setDate(new Date().getDate() - 1))
   }
 
   const isThisMonth = (tx) => {
-    return sameMonth(tx.date, new Date())
+    return sameMonth(tx.created_at, new Date())
   }
 
   while (transactions.length) {
