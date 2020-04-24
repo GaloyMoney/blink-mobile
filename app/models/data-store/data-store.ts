@@ -18,7 +18,7 @@ export const FiatTransactionModel = types.model("Transaction", {
 export const LightningInvoiceModel = types.model("LightningTransaction", {
   amount: types.number,
   description: types.maybe(types.union(types.string, types.null)),
-  created_at: types.string, // FIXME
+  created_at: types.Date,
   hash: types.string,
   preimage: types.maybe(types.string),
   destination: types.maybe(types.string),
@@ -211,7 +211,6 @@ export const LndModel = BaseAccountModel.named("Lnd")
     lastAddInvoice: "",
     receiveBitcoinScreenAlert: false,
     _transactions: types.array(LightningInvoiceModel),
-
   })
   .actions((self) => {
     return {
@@ -256,7 +255,15 @@ export const LndModel = BaseAccountModel.named("Lnd")
       updateTransactions: flow(function* () {
         try {
           const { data } = yield functions().httpsCallable("getLightningTransactions")({})
-          self._transactions = data.response
+          self._transactions = data.response.map((index) => ({
+            amount: index.amount,
+            description: index.description,
+            created_at: new Date(index.created_at),
+            hash: index.hash,
+            preimage: index.preimage,
+            destination: index.destination,
+            type: index.type
+          }))
         } catch (err) {
           // TODO show visual indication of internet connection failure
           console.tron.log(err.toString())
@@ -281,6 +288,7 @@ export const RatesModel = types
   .model("Rates", {
     USD: 1, // TODO is there a way to have enum as parameter?
     BTC: 0.0001, // Satoshi to USD default value
+    // TODO add "last update". refresh only needed if more than 1 or 10 min?
   })
   .actions((self) => {
     const update = flow(function* () {
