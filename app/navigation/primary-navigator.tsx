@@ -161,10 +161,26 @@ const StackPhoneValidation = createStackNavigator()
 export const PhoneValidationNavigator = () => {
   return (
     <StackPhoneValidation.Navigator
+    // options={{ 
+    //   headerShown: false,
+    //   cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS
+    // }}
       // headerMode="none"
     >
-      <StackPhoneValidation.Screen name="welcomePhoneInput" component={WelcomePhoneInputScreen} />
-      <StackPhoneValidation.Screen name="welcomePhoneValidation" component={WelcomePhoneValidationScreen} />
+      <StackPhoneValidation.Screen
+        name="welcomePhoneInput" 
+        options={{ 
+          headerShown: false,
+          title: "Phone Number"
+        }}
+        component={WelcomePhoneInputScreen} />
+      <StackPhoneValidation.Screen 
+        name="welcomePhoneValidation" 
+        component={WelcomePhoneValidationScreen}
+        options={{ 
+          title: "",
+        }}
+      />
     </StackPhoneValidation.Navigator>
   )
 }
@@ -269,7 +285,7 @@ export const RootStackScreen = () => {
         component={PhoneValidationNavigator}
         options={{ 
           headerShown: false,
-          cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS
+          cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS
         }}
       />
       <RootStack.Screen 

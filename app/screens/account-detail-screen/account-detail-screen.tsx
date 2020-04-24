@@ -466,7 +466,7 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = inject("d
         {(account === AccountType.Bitcoin && auth().currentUser?.isAnonymous) && (
           // TODO update when isAnonymous changes
           <Button title={"Activate Wallet"} 
-            buttonStyle={{backgroundColor: palette.blue, borderRadius: 32}} 
+            buttonStyle={{backgroundColor: palette.lightBlue, borderRadius: 32}} 
             style={{width: "50%", alignSelf: "center"}}
             onPress={() => navigation.navigate("phoneValidation")}
           />
