@@ -10,11 +10,12 @@ import { BankAccountReadyScreen, BankAccountRewardsScreen, DateOfBirthScreen, Op
 import { DebugScreen } from "../screens/debug-screen"
 import { BankTransferScreen, DirectDepositScreen, FindATMScreen, MoveMoneyScreen, ReceiveBitcoinScreen, ScanningQRCodeScreen, SendBitcoinScreen } from "../screens/move-money-screen"
 import { RewardsMapDataInjected } from "../screens/rewards-map-screen"
-import { RewardsQuiz, RewardsSection, WelcomePhoneInputScreen, WelcomePhoneValidationScreen } from "../screens/rewards-screen"
+import { RewardsQuiz, RewardsSection } from "../screens/rewards-screen"
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
 import { color } from "../theme"
 import { palette } from "../theme/palette"
 import { AccountType } from "../utils/enum"
+import { WelcomePhoneInputScreen, WelcomePhoneValidationScreen } from "../screens/phone-screen/phone-auth"
 
 const styles = StyleSheet.create({
   person: {
