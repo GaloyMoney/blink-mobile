@@ -3,19 +3,19 @@ import { inject } from "mobx-react"
 import { isEmpty } from "ramda"
 import * as React from "react"
 import { useEffect, useRef, useState } from "react"
-import { ActivityIndicator, Alert, Image, KeyboardAvoidingView, Platform, StyleSheet, Text, View } from "react-native"
+import { ActivityIndicator, Alert, KeyboardAvoidingView, Platform, Text, View } from "react-native"
+import EStyleSheet from "react-native-extended-stylesheet"
 import { ScrollView, TextInput } from "react-native-gesture-handler"
 import PhoneInput from "react-native-phone-input"
 import { Onboarding } from "types"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
 import { color } from "../../theme"
+import { palette } from "../../theme/palette"
+import BadgerPhone from "./badger-phone-01.svg"
+import { CloseCross } from "../../components/close-cross"
 
-
-const phoneLogo = require("./PhoneLogo.png")
-const phoneWithArrowLogo = require("./PhoneWithArrowLogo.png")
-
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
   activityIndicatorWrapper: {
     alignItems: "center",
     backgroundColor: "#FFFFFF",
@@ -43,17 +43,8 @@ const styles = StyleSheet.create({
 
   image: {
     alignSelf: "center",
-    height: 90,
-    padding: 20,
+    marginBottom: "30rem",
     resizeMode: "center",
-  },
-
-  modalBackground: {
-    alignItems: "center",
-    backgroundColor: "#00000040",
-    flex: 1,
-    flexDirection: "column",
-    justifyContent: "space-around",
   },
 
   phoneEntryContainer: {
@@ -67,14 +58,15 @@ const styles = StyleSheet.create({
   },
 
   text: {
-    fontSize: 20,
-    paddingBottom: 10,
-    paddingHorizontal: 40,
+    fontSize: "20rem",
+    paddingBottom: "10rem",
+    paddingHorizontal: "40rem",
     textAlign: "center",
   },
+
   textEntry: {
     color: color.palette.darkGrey,
-    fontSize: 20,
+    fontSize: "20rem",
   },
 })
 
@@ -124,16 +116,15 @@ export const WelcomePhoneInputScreen = ({ navigation, route }) => {
   }, [err])
 
   return (
-    <Screen>
-      <KeyboardAvoidingView
-        keyboardVerticalOffset={-110}
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
-        style={{ flex: 1 }}
-      >
-        <View style={{ flex: 1, justifyContent: "flex-end" }}>
-          <View style={{ flex: 1 }} />
-          <Image source={phoneLogo} style={styles.image} />
-          <Text style={styles.text}>{translate("WelcomePhoneInputScreen.header")}</Text>
+    <Screen backgroundColor={palette.lighterGrey}>
+      <View style={{ flex: 1, justifyContent: "flex-end" }}>
+        <View style={{ flex: 1 }} />
+        <BadgerPhone style={styles.image} />
+        <Text style={styles.text}>{translate("WelcomePhoneInputScreen.header")}</Text>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : undefined}
+          style={{ flex: 1 }}
+        >
           <PhoneInput
             ref={inputRef}
             style={styles.phoneEntryContainer}
@@ -145,14 +136,14 @@ export const WelcomePhoneInputScreen = ({ navigation, route }) => {
               onSubmitEditing: () => send(),
             }}
           />
-          <View style={{ flex: 1 }} />
-          <ActivityIndicator animating={loading} size="large" color={color.primary} />
-          <View style={{ flex: 1 }} />
-        </View>
-      </KeyboardAvoidingView>
+        </KeyboardAvoidingView>
+        <View style={{ flex: 1 }} />
+        <ActivityIndicator animating={loading} size="large" color={color.primary} />
+        <View style={{ flex: 1 }} />
+      </View>
+      <CloseCross color={palette.darkGrey} navigation={navigation} />
     </Screen>
-  )
-}
+)}
 
 export const WelcomePhoneValidationScreen = inject("dataStore")(({ dataStore, route, navigation }) => {
   const [code, setCode] = useState("")
@@ -208,16 +199,16 @@ export const WelcomePhoneValidationScreen = inject("dataStore")(({ dataStore, ro
   }, [err])
 
   return (
-    <Screen>
-      <KeyboardAvoidingView
-        keyboardVerticalOffset={-80}
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
-        style={styles.container}
-      >
-        <ScrollView>
-          <View style={{ flex: 1 }} />
-          <Image source={phoneWithArrowLogo} style={styles.image} />
-          <Text style={styles.text}>{translate("WelcomePhoneInputScreen.header")}</Text>
+    <Screen backgroundColor={palette.lighterGrey}>
+      <View style={{flex: 1}}>
+        <View style={{ flex: 1 }} />
+        <BadgerPhone style={styles.image} />
+        <Text style={styles.text}>{translate("WelcomePhoneValidationScreen.header")}</Text>
+        <KeyboardAvoidingView
+          keyboardVerticalOffset={-110}
+          behavior={Platform.OS === "ios" ? "padding" : undefined}
+          style={{ flex: 1 }}
+        >
           <TextInput
             autoFocus={true}
             style={[styles.textEntry, styles.phoneEntryContainer]}
@@ -228,14 +219,14 @@ export const WelcomePhoneValidationScreen = inject("dataStore")(({ dataStore, ro
             returnKeyType={loading ? "default" : "done"}
             maxLength={6}
             onSubmitEditing={() => sendVerif()}
-          >
+            >
             {code}
           </TextInput>
-          <View style={{ flex: 1 }} />
-          <ActivityIndicator animating={loading} size="large" color={color.primary} />
-          <View style={{ flex: 1 }} />
-        </ScrollView>
-      </KeyboardAvoidingView>
+        </KeyboardAvoidingView>
+        <View style={{ flex: 1 }} />
+        <ActivityIndicator animating={loading} size="large" color={color.primary} />
+        <View style={{ flex: 1 }} />
+      </View>
     </Screen>
   )
 })

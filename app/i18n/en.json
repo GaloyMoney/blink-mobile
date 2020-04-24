@@ -50,7 +50,7 @@
     "learn": "I don't mean to badger you but there's lot more to learn, dig in..."
   },
   "WelcomePhoneInputScreen": {
-    "header": "Enter your phone number to prove you are a real person.",
+    "header": "Enter your phone number and we'll text you an access code.",
     "placeholder": "Phone Number"
   },
   "WelcomePhoneValidationScreen": {
