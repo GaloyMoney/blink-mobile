@@ -5,32 +5,33 @@ import { useNavigation, useRoute } from "@react-navigation/native"
 import { inject } from "mobx-react"
 import * as React from "react"
 import { useEffect, useRef, useState } from "react"
-import { Alert, StyleSheet, Text, TextInput, View } from "react-native"
+import { Alert, Text, TextInput, View } from "react-native"
 import { Button, Input } from "react-native-elements"
+import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Onboarding } from "types"
+import { CloseCross } from "../../components/close-cross"
 import { OnboardingScreen } from "../../components/onboarding"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
-import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { emailIsValid } from "../../utils/helper"
-import HoneyBadgerShovel from "../welcome-screens/honey-badger-shovel-01.svg"
-import { CloseCross } from "../../components/close-cross"
+import HoneyBadgerHello from "./badger-wave-01.svg"
 
 
 const bankLogo = require("./BankLogo.png")
 const popcornLogo = require("../rewards-screen/PopcornLogo.png")
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
   buttonContainer: {
     paddingBottom: 40,
-    paddingHorizontal: 80,
+    minWidth: "100rem", // TODO check if this works as intended
+    marginHorizontal: "40rem", 
     paddingTop: 20,
   },
 
   buttonStyle: {
-    backgroundColor: color.primary,
+    backgroundColor: palette.lightBlue,
     borderRadius: 32,
   },
 
@@ -78,10 +79,10 @@ const Argument = ({text}) => (
 export const BankAccountRewardsScreen = ({ navigation }) => {
   
   return (
-    <Screen preset="scroll">
+    <Screen preset="scroll" backgroundColor={palette.lightGrey}>
       <View style={{margin: 24, backgroundColor: palette.white, borderRadius: 32}}>
         <View style={{alignSelf: "center", marginTop: 24}}>
-          <HoneyBadgerShovel />
+          <HoneyBadgerHello />
         </View>
         <Text style={styles.title}>{translate("BankAccountRewardsScreen.openAccount")}</Text>
         <Argument text={translate("BankAccountRewardsScreen.holdUSDollar")} />
@@ -89,7 +90,7 @@ export const BankAccountRewardsScreen = ({ navigation }) => {
         <Argument text={translate("BankAccountRewardsScreen.buySell")} />
         <View style={{ flex: 1 }} />
         <Button
-          title="Join waiting list"
+          title="Join the waiting list"
           type="solid"
           onPress={() => navigation.navigate("openBankAccount")}
           containerStyle={styles.buttonContainer}
