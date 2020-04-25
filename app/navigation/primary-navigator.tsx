@@ -193,7 +193,7 @@ export const PrimaryNavigator = () => {
     <Tab.Navigator
       initialRouteName="Accounts"
       tabBarOptions={{
-        activeTintColor: color.primary,
+        activeTintColor: palette.lightBlue,
         inactiveTintColor: palette.lightGrey,
         style: styles.bottomNavigatorStyle,
       }}
