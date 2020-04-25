@@ -53,15 +53,6 @@ const styles = EStyleSheet.create({
     flex: 1,
   },
 
-  headerSection: {
-    fontSize: "20rem",
-    fontWeight: "bold",
-    marginHorizontal: "20rem",
-    marginTop: "12rem",
-    marginBottom: "8rem",
-    color: palette.blue,
-  },
-
   icon: {
     marginRight: "12rem",
     textAlign: "center",
@@ -85,6 +76,12 @@ const styles = EStyleSheet.create({
   lightningText: {
     textAlign: "center",
     fontSize: "16rem",
+  },
+
+  headerView: {
+    marginHorizontal: "20rem",
+    marginTop: "12rem",
+    marginBottom: "6rem",
   }
 })
 
@@ -159,6 +156,8 @@ export const MoveMoneyScreen = (
 
   const onBitcoinClick = ({ target }) => {
     if (walletActivated) {
+      navigation.navigate(target)
+    } else {
       setMessage(translate("MoveMoneyScreen.needWallet"))
       setModalVisible(true)
       setButtonTitle(translate("MoveMoneyScreen.openWallet"))
@@ -166,8 +165,6 @@ export const MoveMoneyScreen = (
         setModalVisible(false)
         navigation.navigate("phoneValidation")
       })
-    } else {
-      navigation.navigate(target)
     }
   }
 
@@ -204,19 +201,19 @@ export const MoveMoneyScreen = (
           <View style={{flex: 1}} />
         </View>
       </Modal>
-      <ScrollView>
-        <View style={{marginHorizontal: 24, marginVertical: 24}}>
-          <ButtonGroup
-            onPress={index => setSelectedIndex(index)}
-            selectedIndex={selectedIndex}
-            buttons={["Bitcoin", "Bank"]}
-            // selectedButtonStyle={{}}
-            selectedTextStyle={{fontWeight: "bold", fontSize: 18}}
-            disabledTextStyle={{fontWeight: "bold"}}
-            containerStyle={{borderRadius: 50}}
-            selectedButtonStyle={{backgroundColor: palette.lightBlue}}
-          />
-        </View>
+      <View style={styles.headerView}>
+        <ButtonGroup
+          onPress={index => setSelectedIndex(index)}
+          selectedIndex={selectedIndex}
+          buttons={["Bitcoin", "Bank"]}
+          // selectedButtonStyle={{}}
+          selectedTextStyle={{fontWeight: "bold", fontSize: 18}}
+          disabledTextStyle={{fontWeight: "bold"}}
+          containerStyle={{borderRadius: 50}}
+          selectedButtonStyle={{backgroundColor: palette.lightBlue}}
+        />
+      </View>
+      <ScrollView style={{flex: 1}}>
         {selectedIndex === 0 &&
           <>
             <BalanceHeader currency={CurrencyType.BTC} amount={amount} />
@@ -227,8 +224,7 @@ export const MoveMoneyScreen = (
                 onPress={() => onBitcoinClick(item)}
               />
             ))}
-            <View style={{flex: 1}}></View>
-            <View style={{marginBottom: 32, alignItems: "center"}}>
+            <View style={{marginBottom: 32, alignItems: "center", marginTop: 32}}>
               <Icon name={"ios-thunderstorm"} size={32} />
               <Text style={styles.lightningText}>{`We use the Lightning Network.\nLearn More`}</Text>
             </View>

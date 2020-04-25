@@ -10,4 +10,5 @@ require("../app/screens/bank-onboarding/bank-onboarding.story")
 require("../app/screens/rewards-map-screen/rewards-map-screen.story")
 require("../app/screens/transaction-detail-screen/transaction-detail-screen.story")
 require("../app/screens/move-money-screen/move-money-screen.story")
+require("../app/screens/phone-auth-screen/phone-auth.story")
 

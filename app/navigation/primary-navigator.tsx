@@ -9,7 +9,7 @@ import { AccountsScreen } from "../screens/accounts-screen"
 import { BankAccountReadyScreen, BankAccountRewardsScreen, DateOfBirthScreen, OpenBankScreen, PersonalInformationScreen } from "../screens/bank-onboarding"
 import { DebugScreen } from "../screens/debug-screen"
 import { BankTransferScreen, DirectDepositScreen, FindATMScreen, MoveMoneyScreenDataInjected, ReceiveBitcoinScreen, ScanningQRCodeScreen, SendBitcoinScreen } from "../screens/move-money-screen"
-import { WelcomePhoneInputScreen, WelcomePhoneValidationScreen } from "../screens/phone-screen/phone-auth"
+import { WelcomePhoneInputScreen, WelcomePhoneValidationScreenDataInjected } from "../screens/phone-auth-screen"
 import { RewardsMapDataInjected } from "../screens/rewards-map-screen"
 import { RewardsQuiz, RewardsSection } from "../screens/rewards-screen"
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
@@ -54,7 +54,7 @@ export const BankAccountOnboardingNavigator = () => {
       />
       <StackBankOpening.Screen
         name="welcomePhoneValidationBanking"
-        component={WelcomePhoneValidationScreen}
+        component={WelcomePhoneValidationScreenDataInjected}
       />
       <StackBankOpening.Screen
         name="personalInformation"
@@ -176,7 +176,7 @@ export const PhoneValidationNavigator = () => {
         component={WelcomePhoneInputScreen} />
       <StackPhoneValidation.Screen 
         name="welcomePhoneValidation" 
-        component={WelcomePhoneValidationScreen}
+        component={WelcomePhoneValidationScreenDataInjected}
         options={{ 
           title: "",
         }}
