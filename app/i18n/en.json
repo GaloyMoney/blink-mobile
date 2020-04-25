@@ -154,6 +154,110 @@
             ]
           }
         ]
+      },
+      {
+        "meta": {
+          "id": "WhatIsMoney",
+          "title": "C. What is Money? "
+        },
+        "content": [
+          {
+            "id": "moneySocialAggrement",
+            "type": "Text",
+            "title": "\nMoney is a social agreement.\n",
+            "text": "Money requires people to trust. \n\nPeople trust the paper dollar bills in their pocket. They trust the digits in their online bank account. They trust the balance on a store gift card will be redeemable. \n\nHaving money allows people to easy trade it immediately for a good, or a service.",
+            "answers": [
+              "Because people trust that other people will value money similarly ",
+              "Because your mother told you so ",
+              "Because a dollar bill is worth its weight in gold"
+            ],
+            "feedback": [
+              "Correct. This is what allows money to work!",
+              "She may well have -- but that is not the correct answer here!",
+              "Nope. In the past you could exchange US dollars for gold. But this is no longer the case. "
+            ]
+          },
+          {
+            "id": "coincidenceOfWants",
+            "type": "Text",
+            "title": "Money solves the “coincidence of wants”...  What is that??",
+            "text": "Centuries ago, before people had money, they would barter -- or haggle over how to trade one unique item, in exchange for another item or service. \n\nLet’s say you wanted to have a meal at the local restaurant, and offered the owner a broom. The owner might say “no” -- but I will accept three hats instead, if you happen to have them. \n\nYou can imagine how difficult and inefficient a “barter economy” would be !  \n\nBy contrast, with money, you can simply present a $20 bill. And you know that the restaurant owner will readily accept it. ",
+            "answers": [
+              "Coincidence of wants",
+              "Coincidence of day and night",
+              "Coincidence of the moon blocking the sun"
+            ],
+            "feedback": [
+              "That is right. Money allows you to easily purchase something, without haggling about the form of payment",
+              "No silly, you know that is not the answer.",
+              "Not quite. We call that a solar eclipse :)"
+            ]
+          },
+          {
+            "id": "moneyEvolution",
+            "type": "Text",
+            "title": "\nMoney has evolved, since almost the beginning of time. ",
+            "text": "Thousands of years ago, society in Micronesia used very large and scarce stones as a form of agreed currency. \n\nStarting in the 1500’s, rare Cowrie shells (found in the ocean) became commonly used in many nations as a form of money.\n\nAnd for millenia, gold has been used as a form of money for countries around the world -- including the United States (until 1971). \n",
+            "answers": [
+              "Stones, seashells and gold ",
+              "Tiny plastic Monopoly board game houses ",
+              "Coins made of chocolate"
+            ],
+            "feedback": [
+              "Correct. Items that are rare and difficult to copy have often been used as money.",
+              "Wrong. They may have value when playing a game -- but not in the real word! ",
+              "Nope. They may be tasty. But they are not useful as money."
+            ]
+          },
+          {
+            "id": "whyStonesShellGold",
+            "type": "Text",
+            "title": "Why were stones, shells and gold commonly used as money in the past? ",
+            "text": "Well, these items all had some -- but not all -- of the characteristics of good money. \n\nSo what characteristics make for “good” money? \nScarce: not abundant, nor easy to reproduce or copy \nAccepted: relatively easy for people to verify its authenticity \nDurable: easy to maintain, and does not perish or fall apart\nUniform: readily interchangeable with another item of the same form\nPortable: easy to transport\nDivisible: can be split and shared in smaller pieces",
+            "answers": [
+              "Because they have key characteristics -- such as being durable, uniform and divisible. ",
+              "Because they are pretty and shiny.",
+              "Because they fit inside of your pocket "
+            ],
+            "feedback": [
+              "Correct. More key characteristics include being scarce and portable.",
+              "Incorrect. That may be true, but alone are not great characteristics of money. ",
+              "Not quite. Although these items were surely portable, that alone was not the reason to be used as money. "
+            ]
+          },
+          {
+            "id": "moneyIsImportant",
+            "type": "Text",
+            "title": "\nMoney is important to individuals \n",
+            "text": "Everybody knows that money matters.\n\nMost people exchange their time and energy -- in the form of work -- to obtain money. People do so, to be able to buy goods and services today -- and in the future. \n",
+            "answers": [
+              "Money allows people to buy goods and services today -- and tomorrow. ",
+              "Money allows you to go to the moon.",
+              "Money is the solution to all problems. "
+            ],
+            "feedback": [
+              "That is right!",
+              "Incorrect. Although that may change in the future ;) ",
+              "Not quite. Although some people may believe such, this answer does not address the primary purpose of money. "
+            ]
+          },
+          {
+            "id": "moneyImportantGovernement",
+            "type": "Text",
+            "title": "Money is also important to governments ",
+            "text": "Modern-day economies are organized by nation-states: USA, Japan, Switzerland, Brazil, Norway, China, etc. \n\nAccordingly, in most every nation, the government holds the power to issue and control money. \n\nIn the United States, the Central Bank (known as the Federal Reserve, or “Fed”) can print, or create, more US Dollars at any time it wants. \n\nThe “Fed” does not need permission from the President, nor Congress, and certainly not from US citizens.  \n\nImagine if you had the ability to print US Dollars anytime you wanted to -- what would you do ??\n",
+            "answers": [
+              "The US Central Bank (The Federal Reserve)  ",
+              "Mr Burns from The Simpsons",
+              "A guy with a printing press in his basement "
+            ],
+            "feedback": [
+              "Correct. The US Government can print as much money as they want at any time.",
+              "Incorrect. Although it did seem like he always had a lot of money.",
+              "No. Whilst some people do create fake dollar bills, it is definitely not legal!  "
+            ]
+          }
+        ]
       }
     ]
   },

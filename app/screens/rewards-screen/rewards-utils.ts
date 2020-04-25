@@ -74,8 +74,26 @@ export const rewardsMeta = {
   whoControlsBitcoin: {
     onComplete: async ({ dataStore }) => dataStore.onboarding.add(Onboarding.whoControlsBitcoin),
   },
-  copyDigitalMoney: {
-    onComplete: async ({ dataStore }) => dataStore.onboarding.add(Onboarding.copyDigitalMoney),
+  copyBitcoin: {
+    onComplete: async ({ dataStore }) => dataStore.onboarding.add(Onboarding.copyBitcoin),
+  },
+  moneySocialAggrement: {
+    onComplete: async ({ dataStore }) => dataStore.onboarding.add(Onboarding.moneySocialAggrement),
+  },
+  coincidenceOfWants: {
+    onComplete: async ({ dataStore }) => dataStore.onboarding.add(Onboarding.coincidenceOfWants),
+  },
+  moneyEvolution: {
+    onComplete: async ({ dataStore }) => dataStore.onboarding.add(Onboarding.moneyEvolution),
+  },
+  whyStonesShellGold: {
+    onComplete: async ({ dataStore }) => dataStore.onboarding.add(Onboarding.whyStonesShellGold),
+  },
+  moneyIsImportant: {
+    onComplete: async ({ dataStore }) => dataStore.onboarding.add(Onboarding.moneyIsImportant),
+  },
+  moneyImportantGovernement: {
+    onComplete: async ({ dataStore }) => dataStore.onboarding.add(Onboarding.moneyImportantGovernement),
   },
   backupWallet: {
     onAction: async ({ setLoading }) => {

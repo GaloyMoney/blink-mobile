@@ -83,16 +83,17 @@ export const ProgressBar = ({progress}) => {
 export const RewardsMapDataInjected = inject("dataStore")(
   observer(({ dataStore, navigation }) => {
 
+  // FIXME sectionId rely on array index. use id instead
   const sectionId = Object.keys(translate("RewardsScreen.rewards"))
   let sectionsData = []
   let currSection = 0
   let progress = NaN
 
+  
   for (let section of sectionId) {
     sectionsData.push({
       id: section,
       text: translate(`RewardsScreen.rewards\.${section}.meta.title`),
-      // Icon: translate(`RewardsScreen.rewards\.${item}.meta.icon`
       icon: BitcoinCircle,
     })
 
