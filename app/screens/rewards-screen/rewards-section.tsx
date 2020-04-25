@@ -13,54 +13,9 @@ import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { getRemainingRewardsSats, getRewardsFromSection, rewardsMeta } from "./rewards-utils"
+import { SVGs } from "./earn-svg-factory"
+import { CurrencyType } from "../../utils/enum"
 
-
-// TODO do something like this to avoid loading everything upfront
-// const EXAMPLES = [
-//   makeExample('Hamburger Arrow', () => require('./animations/HamburgerArrow.json')),
-// ]
-
-const walletDownloadedImage = require("./GreenPhone.jpg")
-const firstSurveyImage = require("./GreenPhone.jpg")
-const scalabilityImage = require("./GreenPhone.jpg")
-const lightningImage = require("./GreenPhone.jpg")
-const buyFirstSatsImage = require("./GreenPhone.jpg")
-const dollarCostAveragingImage = require("./GreenPhone.jpg")
-const tweetImage = require("./GreenPhone.jpg")
-
-const sat2Image = require("./Sat.png")
-const satImage = require("./Sat.png")
-const freeMoneyImage = require("./freeMoney.jpg")
-const whatIsBitcoinImage = require("./SafeBank.jpg")
-const whereBitcoinExistImage = require("./SafeBank.jpg")
-const whoControlsBitcoinImage = require("./digitalKeys.jpg")
-const digitalKeysImage = require("./digitalKeys.jpg")
-const backupWalletImage = require("./backupWallet.jpg")
-const fiatMoneyImage = require("./fiatMoney.jpeg")
-const moneySupplyImage = require("./fiatMoney.jpeg")
-const bitcoinUniqueImage = require("./GreenPhone.jpg")
-const copyDigitalMoneyImage = require("./MoneySupply.jpg")
-const newBitcoinImage = require("./newBitcoin.jpg")
-const volatilityImage = require("./volatility.jpg")
-const activateNotificationsImage = require("./GlobalCommunications.jpg")
-const phoneVerificationImage = require("./GreenPhone.jpg")
-const lightningNetworkConnectionImage = require("./LittleDipper.jpg")
-const firstLnPaymentImage = require("./LightningPayment.jpg")
-const transactionImage = require("./transaction.png")
-const paymentProcessingImage = require("./paymentProcessing.jpg")
-const privacyImage = require("./privacy.png")
-const creatorImage = require("./Creator.jpg")
-const decentralizationImage = require("./decentralization.jpeg")
-const bankOnboardedImage = require("./BankAccount.jpg")
-const debitCardActivationImage = require("./Password1234.jpg")
-const firstCardSpendingImage = require("./PointOfSale.jpg")
-const inviteAFriendImage = require("./InviteFriends.jpg")
-const activateDirectDepositImage = require("./GreenPhone.jpg")
-const energyImage = require("./energy.jpeg")
-const doubleSpendImage = require("./doubleSpend.jpg")
-const exchangeHackImage = require("./exchangeHack.jpg")
-const moneyLaunderingImage = require("./moneyLaundering.jpeg")
-const difficultyAdjustmentImage = require("./difficultyAdjustment.png")
 
 const { width: screenWidth } = Dimensions.get("window")
 const { height: screenHeight } = Dimensions.get("window")
@@ -223,6 +178,7 @@ export const RewardsSection = inject("dataStore")(
             answers: currReward.answers, 
             feedback: currReward.feedback,
             onComplete: () => rewardsMeta[currReward.id].onComplete({ dataStore }),
+            id: currReward.id,
           })
           break
         //     case RewardType.Video:
@@ -250,11 +206,12 @@ export const RewardsSection = inject("dataStore")(
       return (
         <View style={styles.item}>
           <TouchableOpacity onPress={open} activeOpacity={0.9}>
-            <Image
+            {SVGs(item.id)}
+            {/* <Image
               source={eval(`${item.id}Image`)} // FIXME
               style={{width: screenWidth - 60, height: 300, resizeMode: 'contain'}}
               containerStyle={styles.imageContainerRewards}
-            />
+            /> */}
           </TouchableOpacity>
           <View>
             <Text style={styles.itemTitle}>{item.title}</Text>

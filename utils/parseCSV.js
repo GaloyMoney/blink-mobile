@@ -1,6 +1,7 @@
 const parse = require('csv-parse/lib/sync')
 var fs = require('fs');
 const { title } = require('process');
+const util = require('util')
 
 const input = fs.readFileSync(__dirname + "/Galoy Illustrations Progress - Sheet1.csv", 
   { encoding: 'utf8' }
@@ -18,7 +19,7 @@ const records = parse(input, {
 
 const records2 = records.filter(index => index.ID_Section.includes("bitcoinWhatIsIt"))
 
-console.log(records2[0])
+// console.log(records2[0])
 
 const formatArray = input => input.map(index => {
   return {
@@ -47,4 +48,6 @@ const section = (input) => ({
   "content": formatArray(input)
 })
 
-console.log(section(records2))
+const output = section(records2)
+
+console.log(JSON.stringify(output, null, 2))

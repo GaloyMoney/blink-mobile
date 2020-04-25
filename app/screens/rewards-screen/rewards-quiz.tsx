@@ -10,8 +10,8 @@ import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { shuffle } from "../../utils/helper"
 import { sleep } from "../../utils/sleep"
-import Svg from "../welcome-screens/honey-badger-shovel-01.svg"
 import { CloseCross } from "../../components/close-cross"
+import { SVGs } from "./earn-svg-factory"
 
 const styles = StyleSheet.create({
 
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
 const mappingLetter = {0: "A", 1: "B", 2: "C"}
 
 export const RewardsQuiz = ({ route, navigation }) => {
-  const { title, text, amount, answers, feedback, question, onComplete } = route.params
+  const { title, text, amount, answers, feedback, question, onComplete, id } = route.params
   
   const [quizVisible, setQuizVisible] = useState(false)
   const [recordedAnswer, setRecordedAnswer] = useState([])
@@ -226,7 +226,7 @@ export const RewardsQuiz = ({ route, navigation }) => {
           bounces={false}
         >
         <View style={styles.svgContainer}>
-          <Svg />
+          {SVGs(id)}
         </View>
         <View style={styles.textContainer}>
           <Text style={styles.title}>{title}</Text>

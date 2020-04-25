@@ -68,38 +68,89 @@
     "phoneNumberNeeded": "Phone number required",
     "rewards": [
       {
-        "meta": { "title": "Bitcoin: What is it?", "icon": "ios-school", "id": "bitcoinWhatIsIt" },
+        "meta": {
+          "id": "bitcoinWhatIsIt",
+          "title": "Bitcoin: What is it?"
+        },
         "content": [
           {
-            "id": "whereBitcoinExist",
+            "id": "whatIsBitcoin",
             "type": "Text",
             "title": "So what exactly is Bitcoin?",
-            "text": "Bitcoin is digital money.\n\nIt can be transferred swiftly and securely between any two people in the world — without the need for a bank or any other financial company in the middle.",
+            "text": "Bitcoin is digital money. \n\nIt can be transferred instantly and securely between any two people in the world — without the need for a bank or any other financial company in the middle.",
             "answers": [
               "Digital money",
               "A video game",
-              "A new cartoon character"
+              "A new cartoon character\n"
             ],
             "feedback": [
-              "Correct. You just earned 1 “sat” !",
+              "Correct. You just earned 1 “sat”!\n",
               "Incorrect, please try again.",
-              "Nope. You know that is not the right answer"
+              "A new cartoon character "
             ]
           },
           {
             "id": "sat",
             "type": "Text",
-            "title": "What is a sat?",
-            "text": "One sat is a small portion of a bitcoin. The same way a dollar can be divided into 100 cents, a bitcoin can be divided into 100,000,000 sats! In fact, a sat is the smallest unit of bitcoin. \n\nWhy is that important?\n\n Divisibility is an important part of money. \n\nMaking bitcoin easily divisible allows many billions of people to own and use bitcoin. You do not need to own one full bitcoin. You can simply have a fraction of a bitcoin. ",
+            "title": "I just earned a “Sat\" — what is that?",
+            "text": "One “Sat” is the smallest unit of a bitcoin. \n\nWe all know that one US Dollar can be divided into 100 cents. Similarly, one Bitcoin can be divided into 100,000,000 sats. \n\nIn fact, you do not need to own one whole bitcoin in order to use it. You can use bitcoin whether you have 20 sats, 3000 sats — or 100,000,000 sats (which you now know is equal to one bitcoin).\n",
             "answers": [
               "The smallest unit of Bitcoin",
-              "An alternative crypto currency",
-              "A small satellite"
+              "A small satellite",
+              "A space cat"
             ],
             "feedback": [
-              "You just earned 1 sat, the smallest unit of Bitcoin. Congrats!",
-              "Nope, it is not alttcoin",
-              "Maybe... but that's not the correct answer in this context 😂"
+              "Correct. You just earned another two sats!! ",
+              "Maybe… but that is not the correct answer in this context 🙂",
+              "Ummm.... not quite!"
+            ]
+          },
+          {
+            "id": "whereBitcoinExist",
+            "type": "Text",
+            "title": "Where do the bitcoins exist?",
+            "text": "Bitcoin is a new form of money. It can be used by anyone, anytime — anywhere in the world. \n\nIt is not tied to a specific government or region (like US Dollars). There are also no paper bills, metal coins or plastic cards. \n\nEverything is 100% digital. Bitcoin is a network of computers running on the internet. \n\nYour bitcoin is easily managed with software on your smartphone or computer! ",
+            "answers": [
+              "On the Internet",
+              "On the moon",
+              "In a Federal bank account "
+            ],
+            "feedback": [
+              "Correct. You just earned another 5 sats.",
+              "Incorrect. Well… at least not yet ;) ",
+              "Wrong. Please try again."
+            ]
+          },
+          {
+            "id": "whoControlsBitcoin",
+            "type": "Text",
+            "title": "Who controls Bitcoin?",
+            "text": "Bitcoin is not controlled by any person, company or government. \n\nIt is run by the community of users — people and companies all around the world -- voluntarily running bitcoin software on their computers and smartphones. ",
+            "answers": [
+              "A voluntary community of users around the world ",
+              "Mr Burns from The Simpsons ",
+              "The government of France "
+            ],
+            "feedback": [
+              "That is right. Bitcoin is made possible by people all around the world running bitcoin software on their computers and smartphones. ",
+              "An amusing thought — but not correct! ",
+              "Wrong. There is no company nor government that controls Bitcoin."
+            ]
+          },
+          {
+            "id": "copyBitcoin",
+            "type": "Text",
+            "title": "If Bitcoin is digital money, can’t someone just copy it — and create free money?",
+            "text": "The value of a bitcoin can never be copied. This is the very reason why Bitcoin is such a powerful new invention !!\n\nMost digital files — such as an iPhone photo, an MP3 song, or a Microsoft Word document — can easily be duplicated and shared. \n\nThe Bitcoin software uniquely prevents the duplication — or “double spending” — of digital money. We will share exactly how this works later on !",
+            "answers": [
+              "No — it is impossible to copy or duplicate the value of bitcoin",
+              "Yes, you can copy bitcoins just as easily as copying a digital photo",
+              "Yes, but copying bitcoin requires very specialized computers"
+            ],
+            "feedback": [
+              "That is absolutely correct ! ",
+              "You know that it is not true. Try again.",
+              "Incorrect. There is no way for anyone to copy, or create a duplicate, of bitcoin"
             ]
           }
         ]
