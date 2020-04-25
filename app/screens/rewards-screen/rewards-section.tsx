@@ -179,7 +179,7 @@ export const RewardsSection = inject("dataStore")(
     const section = route.params.section
     const rewards = getRewardsFromSection({ section, rewardsMeta, dataStore })
 
-    const itemIndex = rewards.findIndex((item) => !item[1].fullfilled)
+    const itemIndex = rewards.findIndex(item => !item.fullfilled)
     const [firstItem] = useState(itemIndex >= 0 ? itemIndex : 0)
 
     const [currRewardIndex, setCurrRewardIndex] = useState(firstItem)
@@ -198,10 +198,10 @@ export const RewardsSection = inject("dataStore")(
       ])
     }
     
-    // helper
-    const [currRewardId, currRewardInfo] = rewards[currRewardIndex]
+    const currReward = rewards[currRewardIndex]
 
-    navigation.setOptions({ title: translate(`RewardsScreen.rewards\.${section}\.meta.title`) })
+    // TODO
+    // navigation.setOptions({ title: translate(`RewardsScreen.rewards\.${section}\.meta.title`) })
 
     enum RewardType {
       Text = "Text",
@@ -211,24 +211,24 @@ export const RewardsSection = inject("dataStore")(
 
     const open = async () => {
 
-      const type = currRewardInfo.type as RewardType
+      const type = currReward.type as RewardType
 
       switch (RewardType[type]) {
         case RewardType.Text:
           navigation.navigate('rewardsQuiz', { 
-            title: currRewardInfo.title, 
-            text: currRewardInfo.text, 
-            amount: OnboardingRewards[currRewardId],
-            question: currRewardInfo.question,
-            answers: currRewardInfo.answers, 
-            feedback: currRewardInfo.feedback,
-            onComplete: () => rewardsMeta[currRewardId].onComplete({ dataStore }),
+            title: currReward.title, 
+            text: currReward.text, 
+            amount: OnboardingRewards[currReward.id],
+            question: currReward.question,
+            answers: currReward.answers, 
+            feedback: currReward.feedback,
+            onComplete: () => rewardsMeta[currReward.id].onComplete({ dataStore }),
           })
           break
         //     case RewardType.Video:
         //       try {
-        //         console.tron.log({ videoid: currRewardInfo.videoid })
-        //         await YouTubeStandaloneIOS.playVideo(currRewardInfo.videoid)
+        //         console.tron.log({ videoid: currReward.videoid })
+        //         await YouTubeStandaloneIOS.playVideo(currReward.videoid)
         //         await sleep(500) // FIXME why await for playVideo doesn't work?
         //         console.tron.log("finish video")
         //         setQuizVisible(true)
@@ -239,48 +239,47 @@ export const RewardsSection = inject("dataStore")(
         //       break
         case RewardType.Action:
           // TODO
-          // await rewardsMeta[currRewardId].onAction({ dataStore, navigate })
+          // await rewardsMeta[currReward.id].onAction({ dataStore, navigate })
           break
       }
     }
 
     const CardItem = ({ item, index }) => {
-      const itemId = item[0]
-      const itemInfo = item[1]
+      console.tron.log({item})
 
       return (
         <View style={styles.item}>
           <TouchableOpacity onPress={open} activeOpacity={0.9}>
             <Image
-              source={eval(`${itemId}Image`)} // FIXME
-              style={{width: screenWidth - 60, height: 300, resizeMode: 'contain',}}
+              source={eval(`${item.id}Image`)} // FIXME
+              style={{width: screenWidth - 60, height: 300, resizeMode: 'contain'}}
               containerStyle={styles.imageContainerRewards}
             />
           </TouchableOpacity>
           <View>
-            <Text style={styles.itemTitle}>{itemInfo.title}</Text>
+            <Text style={styles.itemTitle}>{item.title}</Text>
             <Button
               onPress={open}
-              disabled={!itemInfo.enabled}
-              type={itemInfo.fullfilled ? "clear" : "solid"}
-              buttonStyle={itemInfo.fullfilled ? styles.buttonStyleFullfilled : styles.textButton}
-              titleStyle={itemInfo.fullfilled ? styles.titleStyleFullfilled : null}
+              disabled={!item.enabled}
+              type={item.fullfilled ? "clear" : "solid"}
+              buttonStyle={item.fullfilled ? styles.buttonStyleFullfilled : styles.textButton}
+              titleStyle={item.fullfilled ? styles.titleStyleFullfilled : null}
               // containerStyle={styles.}
               title={
-                  itemInfo.enabled
-                  ? itemInfo.fullfilled
+                  item.enabled
+                  ? item.fullfilled
                     ? I18n.t("RewardsScreen.rewardEarned", {
-                      count: OnboardingRewards[itemId],
-                      formatted_number: I18n.toNumber(OnboardingRewards[itemId], { precision: 0 }),
+                      count: OnboardingRewards[item.id],
+                      formatted_number: I18n.toNumber(OnboardingRewards[item.id], { precision: 0 }),
                     })
                     : I18n.t("RewardsScreen.earnSats", {
-                        count: OnboardingRewards[itemId],
-                        formatted_number: I18n.toNumber(OnboardingRewards[itemId], { precision: 0 }),
+                        count: OnboardingRewards[item.id],
+                        formatted_number: I18n.toNumber(OnboardingRewards[item.id], { precision: 0 }),
                       })
                     // : translate("common.learnMore")
-                  : itemInfo.enabledMessage
+                  : item.enabledMessage
               }
-              icon={itemInfo.fullfilled ? <Icon 
+              icon={item.fullfilled ? <Icon 
                 name={"ios-checkmark-circle-outline"}
                 size={36}
                 color={palette.white}
