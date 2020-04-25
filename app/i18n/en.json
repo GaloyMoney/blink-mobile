@@ -390,8 +390,8 @@
     }
   },
   "AccountDetailScreen": {
-    "openAccount": "Open a Galoy bank account",
-    "openAccountReason": "To {{side}} bitcoin, you need a Galoy bank account, so you can transfer US Dollar",
+    "openAccount": "Open a Galoy cash account",
+    "openAccountReason": "To {{side}} bitcoin, you need a Galoy cash account, so you can transfer US Dollar",
     "today": "Today",
     "yesterday": "Yesterday",
     "thisMonth": "This month",
@@ -399,17 +399,17 @@
     "quote": "How many sats to {{side}}: "
   },
   "AccountsScreen": { "title": "Accounts", "bitcoinRewards": "Earn bitcoin rewards!" },
-  "BankAccountReadyScreen": { "accountReady": "Your Galoy bank account is ready!" },
+  "BankAccountReadyScreen": { "accountReady": "Your Galoy cash account is ready!" },
   "BankAccountRewardsScreen": {
     "title": "Cash Account Rewards",
-    "openAccount": "Open a Galoy bank account",
+    "openAccount": "Open a Galoy cash account",
     "holdUSDollar": "Hold US dollars in your account!",
     "debitCard": "Order a debit card to earn 1%+ cashback in bitcoin on your dollar spending!",
     "buySell": "And easily buy & sell bitcoin in-app.",
   },
   "OpenBankScreen": {
     "title": "Bank rewards",
-    "accountsBenefits": "You’re just a few minutes away from owning a Galoy bank account!\n\nOrder a debit card to receive 1% bitcoin rewards on all spending!"
+    "accountsBenefits": "You’re just a few minutes away from owning a Galoy cash account!\n\nOrder a debit card to receive 1% bitcoin rewards on all spending!"
   },
   "PersonalInformationScreen": {
     "title": "Personal informations",
@@ -418,7 +418,7 @@
   "DateOfBirthScreen": { "title": "Date of Birth" },
   "MoveMoneyScreen": {
     "title": "Move Money",
-    "needBankAccount": "Open a bank account to activate {{feature}}",
+    "needBankAccount": "Open a cash account to activate {{feature}}",
     "needWallet": "Validate your phone to open your wallet",
     "walletInCreation": "Your wallet is being created",
     "seeTransaction": "Monitor opening transaction",

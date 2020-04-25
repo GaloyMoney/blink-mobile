@@ -8,7 +8,6 @@ import { useEffect, useRef, useState } from "react"
 import { Alert, Text, TextInput, View } from "react-native"
 import { Button, Input } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
-import Icon from "react-native-vector-icons/Ionicons"
 import { Onboarding } from "types"
 import { CloseCross } from "../../components/close-cross"
 import { OnboardingScreen } from "../../components/onboarding"
@@ -18,7 +17,9 @@ import { palette } from "../../theme/palette"
 import { emailIsValid } from "../../utils/helper"
 import HoneyBadgerHello from "./badger-wave-01.svg"
 import { BrightButton } from "../../components/bright-button"
-
+import CreditCard from "./credit-card-01.svg"
+import BitcoinPhone from "./bitcoin-phone-01.svg"
+import MoneyCircle from "../accounts-screen/money-circle-02.svg"
 
 const bankLogo = require("./BankLogo.png")
 const popcornLogo = require("../rewards-screen/PopcornLogo.png")
@@ -66,13 +67,11 @@ const styles = EStyleSheet.create({
   },
 })
 
-const Argument = ({text}) => (
-  <View style={{flexDirection: "row", paddingBottom: 20, paddingHorizontal: 20}}>
-    <Icon
-      name={"logo-bitcoin"}
-      size={32}
-      color={palette.darkGrey}
-    />
+const Argument = ({text, Icon}) => (
+  <View style={{flexDirection: "row", marginBottom: 20, marginHorizontal: 18, alignItems: 'center'}}>
+    <View style={{alignItems: "center", width: 32, marginLeft: 12}}>
+      <Icon />
+    </View>
     <Text style={styles.argumentText}>{text}</Text>
   </View>
 )
@@ -81,14 +80,20 @@ export const BankAccountRewardsScreen = ({ navigation }) => {
   
   return (
     <Screen preset="scroll" backgroundColor={palette.lightGrey}>
-      <View style={{margin: 24, backgroundColor: palette.white, borderRadius: 32}}>
-        <View style={{alignSelf: "center", marginTop: 24}}>
+      <View style={{margin: 40, backgroundColor: palette.white, borderRadius: 24}}>
+        <View style={{alignSelf: "center", marginTop: 60}}>
           <HoneyBadgerHello />
         </View>
         <Text style={styles.title}>{translate("BankAccountRewardsScreen.openAccount")}</Text>
-        <Argument text={translate("BankAccountRewardsScreen.holdUSDollar")} />
-        <Argument text={translate("BankAccountRewardsScreen.debitCard")} />
-        <Argument text={translate("BankAccountRewardsScreen.buySell")} />
+        <Argument 
+          text={translate("BankAccountRewardsScreen.holdUSDollar")} 
+          Icon={() => <MoneyCircle width={40}/>} />
+        <Argument 
+          text={translate("BankAccountRewardsScreen.debitCard")} 
+          Icon={() => <CreditCard />} />
+        <Argument 
+          text={translate("BankAccountRewardsScreen.buySell")} 
+          Icon={() => <BitcoinPhone />} />
         <View style={{ flex: 1 }} />
         <BrightButton
           title="Join the waiting list"
