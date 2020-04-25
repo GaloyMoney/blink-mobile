@@ -5,10 +5,11 @@ import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
 import { CurrencyType } from "../../utils/enum"
 import { TextCurrency } from "../text-currency/text-currency"
+import EStyleSheet from "react-native-extended-stylesheet"
 
 
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
   amount: {
     alignItems: "center",
     flexDirection: "column",
@@ -28,9 +29,14 @@ const styles = StyleSheet.create({
 
   header: {
     alignItems: "center",
-    marginBottom: 64,
-    marginTop: 32,
+    marginBottom: "32rem",
+    marginTop: "32rem",
   },
+
+  subCurrencyText: {
+    fontSize: "16rem",
+    color: palette.darkGrey
+  }
 })
 
 export interface BalanceHeaderProps {
@@ -57,7 +63,7 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
   const subHeader =
     amountOtherCurrency !== null ? (
       <TextCurrency amount={amountOtherCurrency} currency={otherCurrency} 
-        style={{fontSize: 16, color: palette.darkGrey}} />
+        style={styles.subCurrencyText} />
     ) : null
 
   return (

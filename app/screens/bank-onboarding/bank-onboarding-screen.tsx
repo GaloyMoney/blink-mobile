@@ -97,7 +97,7 @@ export const BankAccountRewardsScreen = ({ navigation }) => {
         <View style={{ flex: 1 }} />
         <BrightButton
           title="Join the waiting list"
-          onPress={() => navigation.navigate("openBankAccount")}
+          // onPress={() => navigation.navigate("openBankAccount")}
         />
       <CloseCross color={palette.darkGrey} navigation={navigation} />
       </View>

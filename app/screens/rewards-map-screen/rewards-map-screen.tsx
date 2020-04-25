@@ -182,25 +182,29 @@ export const RewardsMapScreen: React.FC<IRewardsMapScreen> =
   }, [])
 
   return (
-    <Screen unsafe={true} >
-      <ScrollView 
-        ref={scrollViewRef}
-        onContentSizeChange={() => {
-          scrollViewRef.current.scrollToEnd()
-        }}
-        >
-        <Top width={screenWidth} scale={1.5} height={110} />
-        <View style={styles.mainView}>
-          { currSection === 10 ? <LeftLastComplete /> : null }
-          { sectionsComp }
-          { currSection === 0 ?
-              progress === 0 ?
-                  <BottomStart />
-                : <BottomOngoing /> 
-              : null
-          }
-        </View>
-      </ScrollView>
+    <Screen unsafe={true} backgroundColor={palette.sky} >
+        <View style={{backgroundColor: palette.sky, flex: 0.1}}/>
+          <ScrollView 
+            removeClippedSubviews={true}
+            contentContainerStyle={{backgroundColor: palette.lightBlue, flex: 10}}
+            ref={scrollViewRef}
+            onContentSizeChange={() => {
+              scrollViewRef.current.scrollToEnd()
+            }}
+          >
+          <Top width={screenWidth} scale={1.5} height={110} />
+          <View style={styles.mainView}>
+            { currSection === 10 ? <LeftLastComplete /> : null }
+            { sectionsComp }
+            { currSection === 0 ?
+                progress === 0 ?
+                    <BottomStart />
+                  : <BottomOngoing /> 
+                : null
+            }
+          </View>
+          <View style={{backgroundColor: palette.lightBlue, flex: 0.1}}/>
+        </ScrollView>
     </Screen>
   )
 }

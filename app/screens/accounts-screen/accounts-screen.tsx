@@ -2,21 +2,19 @@ import currency from "currency.js"
 import { inject, observer } from "mobx-react"
 import * as React from "react"
 import { useEffect, useState } from "react"
-import ContentLoader, { Rect } from "react-content-loader/native"
-import { FlatList, RefreshControl, StyleSheet, Text, View } from "react-native"
-import { Button, ListItem } from "react-native-elements"
+import { FlatList, RefreshControl, View } from "react-native"
+import { Button } from "react-native-elements"
+import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Onboarding } from "types"
 import { BalanceHeader } from "../../components/balance-header"
+import { LargeButton } from "../../components/large-button"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
-import { color } from "../../theme/color"
 import { palette } from "../../theme/palette"
 import { AccountType, CurrencyType } from "../../utils/enum"
-import MoneyCircle from "./money-circle-02.svg"
 import BitcoinCircle from "./bitcoin-circle-01.svg"
-import EStyleSheet from "react-native-extended-stylesheet"
-import { LargeButton } from "../../components/large-button"
+import MoneyCircle from "./money-circle-02.svg"
 
 
 const styles = EStyleSheet.create({
@@ -27,6 +25,10 @@ const styles = EStyleSheet.create({
 
   icon: {
     width: 48
+  },
+
+  listContainer: {
+    marginTop: "32rem"
   }
 })
 
@@ -109,6 +111,7 @@ export const AccountsScreen = inject("dataStore")(
         />
         <FlatList
           data={accountTypes}
+          style={styles.listContainer}
           refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
           renderItem={({ item }) => (
             <AccountItem
