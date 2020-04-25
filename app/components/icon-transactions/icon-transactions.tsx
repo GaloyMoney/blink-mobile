@@ -43,8 +43,11 @@ const xml_transaction_received = `
 </svg>
 `
 
-export const IconTransaction = ({type, size, color = palette.white}) => {
-  const raw_xml = type.includes("invoice") ? xml_transaction_received : xml_transaction_sent
+type IconType = "send" | "receive"
+
+export const IconTransaction = 
+	({type, size, color = palette.white}: {type: IconType, size: number, color?: string}) => {
+	const raw_xml = type === "send" ? xml_transaction_sent : xml_transaction_received
   const parse_xml = raw_xml.replace("{color}", color)
   return (<SvgXml xml={parse_xml} width={size} height={size} />)
 }

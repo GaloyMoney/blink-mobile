@@ -16,67 +16,34 @@ import { AccountType, CurrencyType } from "../../utils/enum"
 import MoneyCircle from "./money-circle-02.svg"
 import BitcoinCircle from "./bitcoin-circle-01.svg"
 import EStyleSheet from "react-native-extended-stylesheet"
+import { LargeButton } from "../../components/large-button"
 
 
 const styles = EStyleSheet.create({
-  accountAmount: {
-    fontSize: "18rem",
-    color: color.primaryDarker
-  },
-
-  accountTypeStyle: {
-    color: color.text,
-    flex: 1,
-    paddingHorizontal: 12,
-  },
-
   accountView: {
-    marginBottom: 15,
-    marginHorizontal: 30,
-  },
-
-  accountViewContainer: {
-    backgroundColor: palette.white,
-    borderRadius: 8,
-  },
-
-  accountViewTitle: {
-    color: palette.darkGrey,
-    fontWeight: "bold",
-    fontSize: "18rem",
+    marginBottom: "15rem",
+    marginHorizontal: "30rem",
   },
 })
 
-export const AccountItem = ({ account, amount, navigation, title=undefined, action=undefined}) => {
+export const AccountItem = 
+  ({ account, amount, navigation, title, action=undefined, subtitle=true }) => {
   const initialLoading = isNaN(amount)
 
-  const Loader = () => (
-    <ContentLoader height={20} width={70} speed={2} primaryColor="#f3f3f3" secondaryColor="#ecebeb">
-      <Rect x="0" y="0" rx="4" ry="4" width="60" height="20" />
-    </ContentLoader>
-  )
+  console.tron.log({subtitle, account})
 
   return (
-    <ListItem
-      style={styles.accountView}
-      containerStyle={styles.accountViewContainer}
-      titleStyle={styles.accountViewTitle}
-      chevron
-      title={title ?? account}
+    <LargeButton
+      title={title}
       onPress={action || (() => navigation.navigate("accountDetail", { account }))}
-      leftAvatar={account === AccountType.Bank &&
+      icon={account === AccountType.Bank &&
             <MoneyCircle width={75} height={78} />
         ||  <BitcoinCircle width={75} height={78} />
       }
-      subtitle={!title &&
-        <>
-          {initialLoading && <Loader />}
-          {!initialLoading && (
-            <Text style={styles.accountAmount}>
-              {currency(amount, { formatWithSymbol: true }).format()}
-            </Text>
-          )}
-        </>
+      loading={initialLoading}
+      subtitle={subtitle ? 
+        currency(amount, { formatWithSymbol: true }).format() :
+        null
       }
     />
   )
@@ -97,14 +64,19 @@ export const AccountsScreen = inject("dataStore")(
 
     // FIXME type any
     const accountTypes: Array<Record<string, any>> = [
-      { key: "Cash Account", account: AccountType.Bank },
-      { key: "Bitcoin", account: AccountType.Bitcoin },
+      { key: "Cash Account", account: AccountType.Bank, title: AccountType.Bank },
+      { key: "Bitcoin", account: AccountType.Bitcoin, title: AccountType.Bitcoin },
     ]
 
     // TODO refactor ==> bank should also have a virtual screen
     if (!dataStore.onboarding.has(Onboarding.bankOnboarded)) {
       accountTypes[0].action = () => navigation.navigate("bankAccountRewards")
       accountTypes[0].title = "Open Cash Account"
+      accountTypes[0].subtitle = false
+    }
+
+    if (!dataStore.onboarding.has(Onboarding.walletActivated)) {
+      accountTypes[1].subtitle = false
     }
 
     const accountToAdd = AccountType.BankAndBitcoin

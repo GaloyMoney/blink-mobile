@@ -100,7 +100,7 @@ export const TransactionDetailScreen = ({ route, navigation }) => {
   return (
     <Screen style={styles.screen}>
       <View style={styles.amountView}>
-      <IconTransaction type={type} size={100} />
+      <IconTransaction type={type.includes("invoice") ? "receive" : "send"} size={100} />
       <Text style={styles.amountText}>You {spendOrReceive}</Text>
         <TextCurrency amount={Math.abs(amount)} currency={currency} 
           style={styles.amount} />

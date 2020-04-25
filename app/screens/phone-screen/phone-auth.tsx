@@ -159,6 +159,7 @@ export const WelcomePhoneValidationScreen = inject("dataStore")(({ dataStore, ro
 
     if (user.phoneNumber) {
       await dataStore.onboarding.add(Onboarding.phoneVerification)
+      await dataStore.onboarding.add(Onboarding.walletActivated)
       navigation.navigate("Accounts", {forceRefresh: true})
       // FIXME forceRefresh doesn't seem to be passed by
     }

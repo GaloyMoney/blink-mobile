@@ -1,4 +1,3 @@
-import auth from "@react-native-firebase/auth"
 import { inject, observer } from "mobx-react"
 import * as React from "react"
 import { useState } from "react"
@@ -16,6 +15,9 @@ import { palette } from "../../theme/palette"
 import { capitalize } from "../../utils/helper"
 import { BalanceHeader } from "../../components/balance-header"
 import { CurrencyType } from "../../utils/enum"
+import { LargeButton } from "../../components/large-button"
+import { IconTransaction } from "../../components/icon-transactions"
+import { BrightButton } from "../../components/bright-button"
 
 
 const styles = EStyleSheet.create({
@@ -79,22 +81,28 @@ const styles = EStyleSheet.create({
     justifyContent: "flex-end",
     paddingHorizontal: 20,
   },
+
+  lightningText: {
+    textAlign: "center",
+    fontSize: "16rem",
+  }
 })
 
 export const MoveMoneyScreenDataInjected = inject("dataStore")(observer(
   ({ dataStore, navigation }) => {
     const bankOnboarded = dataStore.onboarding.has(Onboarding.bankOnboarded)
-    const walletOnboarded = dataStore.onboarding.has(Onboarding.walletOnboarded)
+    const walletActivated = dataStore.onboarding.has(Onboarding.walletActivated)
 
     return <MoveMoneyScreen 
       bankOnboarded={bankOnboarded}
       navigation={navigation}
-      walletOnboarded={walletOnboarded}  
+      walletActivated={walletActivated}
+      amount={dataStore.lnd.balance} // FIXME add USD as well
     />
 }))
 
 export const MoveMoneyScreen = (
-  ({ bankOnboarded, walletOnboarded, navigation, amount }) => {
+  ({ bankOnboarded, walletActivated, navigation, amount }) => {
 
   const [modalVisible, setModalVisible] = useState(false)
   const [message, setMessage] = useState("")
@@ -122,11 +130,11 @@ export const MoveMoneyScreen = (
   ]
   const bitcoin = [
     {
-      icon: "ios-exit",
+      icon: <IconTransaction type={"send"} size={75} color={palette.orange} />,
       target: "scanningQRCode",
     },
     {
-      icon: "ios-download",
+      icon: <IconTransaction type={"receive"} size={75} color={palette.orange} />,
       target: "receiveBitcoin",
     },
   ]
@@ -150,7 +158,7 @@ export const MoveMoneyScreen = (
   }
 
   const onBitcoinClick = ({ target }) => {
-    if (auth().currentUser?.isAnonymous) {
+    if (walletActivated) {
       setMessage(translate("MoveMoneyScreen.needWallet"))
       setModalVisible(true)
       setButtonTitle(translate("MoveMoneyScreen.openWallet"))
@@ -197,42 +205,54 @@ export const MoveMoneyScreen = (
         </View>
       </Modal>
       <ScrollView>
-        <ButtonGroup
-          onPress={index => setSelectedIndex(index)}
-          selectedIndex={selectedIndex}
-          buttons={["Bitcoin", "Bank"]}
-          // selectedButtonStyle={{}}
-          // containerStyle={{height: 100}}
-        />
+        <View style={{marginHorizontal: 24, marginVertical: 24}}>
+          <ButtonGroup
+            onPress={index => setSelectedIndex(index)}
+            selectedIndex={selectedIndex}
+            buttons={["Bitcoin", "Bank"]}
+            // selectedButtonStyle={{}}
+            selectedTextStyle={{fontWeight: "bold", fontSize: 18}}
+            disabledTextStyle={{fontWeight: "bold"}}
+            containerStyle={{borderRadius: 50}}
+            selectedButtonStyle={{backgroundColor: palette.lightBlue}}
+          />
+        </View>
         {selectedIndex === 0 &&
           <>
             <BalanceHeader currency={CurrencyType.BTC} amount={amount} />
             {bitcoin.map((item, i) => (
-              <ListItem
-                titleStyle={styles.text}
-                containerStyle={styles.listItem}
-                key={i}
+              <LargeButton
                 title={translate(`${capitalize(item.target)}Screen.title`)}
-                leftIcon={<Icon name={item.icon} style={styles.icon} size={32} color={color.primary} />}
+                icon={item.icon}
                 onPress={() => onBitcoinClick(item)}
-                chevron
               />
             ))}
-            <Text>{`We use the Lightning Network.\nLearn More`}</Text>
+            <View style={{flex: 1}}></View>
+            <View style={{marginBottom: 32, alignItems: "center"}}>
+              <Icon name={"ios-thunderstorm"} size={32} />
+              <Text style={styles.lightningText}>{`We use the Lightning Network.\nLearn More`}</Text>
+            </View>
           </>
         }
         {selectedIndex === 1 &&
-          bank.map((item, i) => (
-            <ListItem
-              titleStyle={styles.text}
-              containerStyle={styles.listItem}
-              key={i}
+        <>
+          <View style={{marginVertical: 32, alignItems: "center"}}>
+            <Text style={{color: palette.blue, fontSize: 18, fontWeight: "bold"}}>Coming Soon!</Text>
+            <BrightButton title={"Join the waiting list"} />
+          </View>
+          {bank.map((item, i) => (
+            <LargeButton
               title={translate(`${capitalize(item.target)}Screen.title`)}
-              leftIcon={<Icon name={item.icon} style={styles.icon} size={32} color={color.primary} />}
+              icon={<Icon name={item.icon} style={styles.icon} size={48} color={palette.lightGrey} />}
               onPress={(item) => onBankClick(item)}
-              chevron
+              titleStyle={{
+                color: palette.midGrey,
+                fontWeight: "bold",
+                fontSize: 18,
+              }}
             />
-          ))
+          ))}
+        </>
         }
       </ScrollView>
     </Screen>

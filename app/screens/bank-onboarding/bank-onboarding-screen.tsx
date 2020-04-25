@@ -17,6 +17,7 @@ import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
 import { emailIsValid } from "../../utils/helper"
 import HoneyBadgerHello from "./badger-wave-01.svg"
+import { BrightButton } from "../../components/bright-button"
 
 
 const bankLogo = require("./BankLogo.png")
@@ -89,13 +90,9 @@ export const BankAccountRewardsScreen = ({ navigation }) => {
         <Argument text={translate("BankAccountRewardsScreen.debitCard")} />
         <Argument text={translate("BankAccountRewardsScreen.buySell")} />
         <View style={{ flex: 1 }} />
-        <Button
+        <BrightButton
           title="Join the waiting list"
-          type="solid"
           onPress={() => navigation.navigate("openBankAccount")}
-          containerStyle={styles.buttonContainer}
-          buttonStyle={styles.buttonStyle}
-          titleStyle={{fontWeight: "bold"}}
         />
       <CloseCross color={palette.darkGrey} navigation={navigation} />
       </View>
