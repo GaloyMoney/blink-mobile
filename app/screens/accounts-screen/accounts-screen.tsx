@@ -24,6 +24,10 @@ const styles = EStyleSheet.create({
     marginBottom: "15rem",
     marginHorizontal: "30rem",
   },
+
+  icon: {
+    width: 48
+  }
 })
 
 export const AccountItem = 
@@ -122,7 +126,7 @@ export const AccountsScreen = inject("dataStore")(
           type="clear"
           // containerStyle={{ backgroundColor: color.primary }}
           onPress={() => navigation.navigate("Rewards")}
-          icon={<Icon name="ios-gift" color={palette.blue} size={28} style={styles.icon} />}
+          icon={<Icon name="ios-gift" color={palette.lightBlue} size={28} style={styles.icon} />}
         />
       </Screen>
     )
