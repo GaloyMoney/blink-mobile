@@ -106,6 +106,7 @@
     "@typescript-eslint/parser": "^2.24.0",
     "babel-core": "7.0.0-bridge.0",
     "babel-loader": "^8.1.0",
+    "csv-parse": "^4.8.9",
     "emotion-theming": "^10.0.27",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.0",
