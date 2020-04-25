@@ -1,6 +1,7 @@
 require("../app/components/currency-text/currency-text.story")
 require("../app/components/balance-header/balance-header.story")
 require("../app/components/price/price.story")
+require("../app/components/large-button/large-button.story")
 
 require("../app/screens/rewards-screen/rewards-quiz.story")
 require("../app/screens/splash-screen/splash-screen.story")

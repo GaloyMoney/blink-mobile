@@ -129,7 +129,7 @@ const AccountDetailItem: React.FC<AccountDetailItemProps> = (props) => (
   <ListItem
   key={props.hash}
   title={props.description}
-  leftIcon={<IconTransaction type={props.type} size={24} color={palette.orange} />}
+  leftIcon={<IconTransaction type={props.type.includes("invoice") ? "receive" : "send"} size={24} color={palette.orange} />}
   rightTitle={<CurrencyText amount={props.amount} currency={props.currency} textColor={palette.darkGrey} />}
   onPress={() => props.navigation.navigate("transactionDetail", props)}
   />

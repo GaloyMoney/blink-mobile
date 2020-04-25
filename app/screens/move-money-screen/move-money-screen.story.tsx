@@ -4,7 +4,6 @@ import { Story, StoryScreen, UseCase } from "../../../storybook/views";
 import { MoveMoneyScreen } from "./money-money-screen";
 import { boolean, withKnobs } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
-import { Button } from "react-native-elements";
 
 
 declare let module
@@ -18,7 +17,7 @@ storiesOf("MoveMoney Screen", module)
         <MoveMoneyScreen 
           bankOnboarded={boolean('bankOnboarded', false)}
           navigation={{navigate: action('navigate')}}
-          walletOnboarded={boolean('walletOnboarded', false)}
+          walletActivated={boolean('walletActivated', false)}
           amount={12345} 
         />
       </UseCase>
