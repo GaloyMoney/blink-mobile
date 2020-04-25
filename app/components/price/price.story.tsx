@@ -6,12 +6,18 @@ import { Price } from "./price"
 declare let module
 
 const data = [
-  { x: 0, y: 0 },
-  { x: 1, y: 2 },
-  { x: 2, y: 1 },
-  { x: 3, y: 4 },
-  { x: 4, y: 3 },
-  { x: 5, y: 5 }
+  { x: 0, y: 6000 },
+  { x: 1, y: 7000 },
+  { x: 2, y: 7500 },
+  { x: 3, y: 6500 },
+  { x: 4, y: 7000 },
+  { x: 5, y: 7500 },
+  { x: 6, y: 6000 },
+  { x: 7, y: 7000 },
+  { x: 8, y: 7500 },
+  { x: 9, y: 6500 },
+  { x: 10, y: 7000 },
+  { x: 11, y: 7500 },
 ];
 
 storiesOf("Price Component", module)

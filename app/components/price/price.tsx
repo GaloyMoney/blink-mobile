@@ -20,7 +20,7 @@ const styles = EStyleSheet.create({
   price: {
     fontSize: "16rem",
     fontWeight: "bold",
-    color: palette.blue
+    color: palette.lightBlue,
   },
 
   delta: {
@@ -41,16 +41,19 @@ export const Price = ({price, delta, data}) => {
   <>
     <View style={styles.textView}>
       <Text style={styles.neutral}>Bitcoin Price </Text>
-      <Text style={styles.price}>{price}</Text>
+      <Text style={styles.price}>${price}</Text>
     </View>
     <View style={styles.textView}>
       <Text style={[styles.delta, color]}>{delta}% </Text>
       <Text style={styles.neutral}>Today</Text>
     </View>
     <View style={styles.chart}>
-      <VictoryChart width={350} >
-        <VictoryLine data={data} interpolation="natural" style={{data: { stroke: palette.blue }}} />
-      </VictoryChart>
+      {/* <VictoryChart width={350} > */}
+        <VictoryLine 
+          data={data}
+          interpolation="basis" 
+          style={{data: { stroke: palette.lightBlue, strokeWidth: 4 }}} />
+      {/* </VictoryChart> */}
     </View>
   </>
 )}
