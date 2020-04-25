@@ -12,13 +12,6 @@ const records = parse(input, {
   skip_empty_lines: true
 })
 
-// records
-
-
-//TODO: get list of Sets and loop over it.
-
-const records2 = records.filter(index => index.ID_Section.includes("bitcoinWhatIsIt"))
-
 // console.log(records2[0])
 
 const formatArray = input => input.map(index => {
@@ -48,6 +41,21 @@ const section = (input) => ({
   "content": formatArray(input)
 })
 
-const output = section(records2)
 
+collections = new Set()
+records.forEach((index) => collections.add(index.ID_Section))
+collections.delete("")
+
+const output = []
+
+collections.forEach(collection => {
+  const sectionArray = records.filter(index => index.ID_Section.includes(collection))
+
+  output.push(
+    section(sectionArray)
+  )
+})
+
+// console.log({collections})
+// const output = section(records2)
 console.log(JSON.stringify(output, null, 2))
