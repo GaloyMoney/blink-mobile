@@ -15,12 +15,13 @@ import { palette } from "../../theme/palette"
 import { getRemainingRewardsSats, getRewardsFromSection, rewardsMeta } from "./rewards-utils"
 import { SVGs } from "./earn-svg-factory"
 import { CurrencyType } from "../../utils/enum"
+import EStyleSheet from "react-native-extended-stylesheet"
 
 
 const { width: screenWidth } = Dimensions.get("window")
 const { height: screenHeight } = Dimensions.get("window")
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
   screenStyle: {
     backgroundColor: palette.blue
   },
@@ -65,6 +66,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginVertical: 12,
     textAlign: "center",
+    marginHorizontal: "24rem"
   },
 
   satsButton: {
@@ -132,9 +134,9 @@ export const RewardsSection = inject("dataStore")(
   observer(({ dataStore, route, navigation }) => {
 
     const section = route.params.section
-    const rewards = getRewardsFromSection({ section, rewardsMeta, dataStore })
+    const reward = getRewardsFromSection({ section, rewardsMeta, dataStore })
 
-    const itemIndex = rewards.findIndex(item => !item.fullfilled)
+    const itemIndex = reward.findIndex(item => !item.fullfilled)
     const [firstItem] = useState(itemIndex >= 0 ? itemIndex : 0)
 
     const [currRewardIndex, setCurrRewardIndex] = useState(firstItem)
@@ -153,10 +155,9 @@ export const RewardsSection = inject("dataStore")(
       ])
     }
     
-    const currReward = rewards[currRewardIndex]
-
     // TODO
     // navigation.setOptions({ title: translate(`RewardsScreen.rewards\.${section}\.meta.title`) })
+    navigation.setOptions({ title: "" })
 
     enum RewardType {
       Text = "Text",
@@ -164,27 +165,25 @@ export const RewardsSection = inject("dataStore")(
       Action = "Action",
     }
 
-    const open = async () => {
+    const open = async (reward) => {
 
-      const type = currReward.type as RewardType
-
-      switch (RewardType[type]) {
+      switch (RewardType[reward.type]) {
         case RewardType.Text:
           navigation.navigate('rewardsQuiz', { 
-            title: currReward.title, 
-            text: currReward.text, 
-            amount: OnboardingRewards[currReward.id],
-            question: currReward.question,
-            answers: currReward.answers, 
-            feedback: currReward.feedback,
-            onComplete: () => rewardsMeta[currReward.id].onComplete({ dataStore }),
-            id: currReward.id,
+            title: reward.title, 
+            text: reward.text, 
+            amount: OnboardingRewards[reward.id],
+            question: reward.question,
+            answers: reward.answers, 
+            feedback: reward.feedback,
+            onComplete: () => rewardsMeta[reward.id].onComplete({ dataStore }),
+            id: reward.id,
           })
           break
         //     case RewardType.Video:
         //       try {
-        //         console.tron.log({ videoid: currReward.videoid })
-        //         await YouTubeStandaloneIOS.playVideo(currReward.videoid)
+        //         console.tron.log({ videoid: rewards.videoid })
+        //         await YouTubeStandaloneIOS.playVideo(rewards.videoid)
         //         await sleep(500) // FIXME why await for playVideo doesn't work?
         //         console.tron.log("finish video")
         //         setQuizVisible(true)
@@ -195,7 +194,7 @@ export const RewardsSection = inject("dataStore")(
         //       break
         case RewardType.Action:
           // TODO
-          // await rewardsMeta[currReward.id].onAction({ dataStore, navigate })
+          // await rewardsMeta[rewards.id].onAction({ dataStore, navigate })
           break
       }
     }
@@ -206,7 +205,7 @@ export const RewardsSection = inject("dataStore")(
       return (
         <View style={styles.item}>
           <TouchableOpacity onPress={open} activeOpacity={0.9}>
-            {SVGs(item.id)}
+            {SVGs({name: item.id})}
             {/* <Image
               source={eval(`${item.id}Image`)} // FIXME
               style={{width: screenWidth - 60, height: 300, resizeMode: 'contain'}}
@@ -216,7 +215,7 @@ export const RewardsSection = inject("dataStore")(
           <View>
             <Text style={styles.itemTitle}>{item.title}</Text>
             <Button
-              onPress={open}
+              onPress={() => open(item)}
               disabled={!item.enabled}
               type={item.fullfilled ? "clear" : "solid"}
               buttonStyle={item.fullfilled ? styles.buttonStyleFullfilled : styles.textButton}
@@ -253,7 +252,7 @@ export const RewardsSection = inject("dataStore")(
       <Screen style={styles.screenStyle}>
         <View style={{ flex: 1 }} />
         <Carousel
-          data={rewards}
+          data={reward}
           renderItem={CardItem}
           sliderWidth={screenWidth}
           // scrollEnabled={!isRewardOpen}
@@ -266,7 +265,7 @@ export const RewardsSection = inject("dataStore")(
         />
         <View style={{ flex: 1 }} />
         <Pagination
-          dotsLength={rewards.length}
+          dotsLength={reward.length}
           activeDotIndex={currRewardIndex}
           dotStyle={{
               width: 10,
