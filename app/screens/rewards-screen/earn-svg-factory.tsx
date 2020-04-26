@@ -13,22 +13,22 @@ import WhyStonesShellGold from "./04-why-used-as-money-01.svg"
 import MoneyIsImportant from "./05-money-is-important-01.svg"
 import MoneyImportantGovernement from "./06-important-to-governments-01.svg"
 
-export const SVGs = (name: string) => {
+export const SVGs = ({name}: {name: string}) => {
   console.tron.log({name})
 
   switch (name) {
-    case "whatIsBitcoin": return <WhatIsBitcoinSVG /> 
-    case "sat": return <SatSVG />
-    case "whereBitcoinExist": return <WhereBitcoinExistSVG />
-    case "whoControlsBitcoin": return <WhoControlsBitcoinSVG />
-    case "copyBitcoin": return <CopyBitcoinSVG />
+    case "whatIsBitcoin": return <WhatIsBitcoinSVG width="100%" /> 
+    case "sat": return <SatSVG width="100%" />
+    case "whereBitcoinExist": return <WhereBitcoinExistSVG width="100%" />
+    case "whoControlsBitcoin": return <WhoControlsBitcoinSVG width="100%" />
+    case "copyBitcoin": return <CopyBitcoinSVG width="100%" />
 
-    case "moneySocialAggrement": return <MoneySocialAggrement /> 
-    case "coincidenceOfWants": return <CoincidenceOfWants /> 
-    case "moneyEvolution": return <MoneyEvolution />
-    case "whyStonesShellGold": return <WhyStonesShellGold />
-    case "moneyIsImportant": return <MoneyIsImportant />
-    case "moneyImportantGovernement": return <MoneyImportantGovernement />
+    case "moneySocialAggrement": return <MoneySocialAggrement width="100%" /> 
+    case "coincidenceOfWants": return <CoincidenceOfWants width="100%" /> 
+    case "moneyEvolution": return <MoneyEvolution width="100%" />
+    case "whyStonesShellGold": return <WhyStonesShellGold width="100%" />
+    case "moneyIsImportant": return <MoneyIsImportant width="100%" />
+    case "moneyImportantGovernement": return <MoneyImportantGovernement width="100%" />
 
     default: return <Text>{name} does not exist</Text>
   }

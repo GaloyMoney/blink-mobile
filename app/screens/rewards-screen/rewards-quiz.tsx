@@ -226,7 +226,7 @@ export const RewardsQuiz = ({ route, navigation }) => {
           bounces={false}
         >
         <View style={styles.svgContainer}>
-          {SVGs(id)}
+          {SVGs({name: id})}
         </View>
         <View style={styles.textContainer}>
           <Text style={styles.title}>{title}</Text>
