@@ -1,48 +1,48 @@
 import functions from "@react-native-firebase/functions"
 import { Alert } from "react-native"
 import { Notifications, RegistrationError } from "react-native-notifications"
-import { Onboarding, OnboardingRewards } from "types"
+import { Onboarding, OnboardingEarn } from "types"
 import { translate } from "../../i18n"
 import { sleep } from "../../utils/sleep"
 
 
-export const getRewardsFromSection = ({ dataStore, section, rewardsMeta = undefined }) => {
-  const rewards_all = translate(`RewardsScreen.rewards`)
-  const rewards = rewards_all[section].content
-  // const rewards = rewards_all.filter((index) => index.meta.id === section)
+export const getEarnFromSection = ({ dataStore, section, earnsMeta = undefined }) => {
+  const earns_all = translate(`EarnScreen.earns`)
+  const earns = earns_all[section].content
+  // const earns = earns_all.filter((index) => index.meta.id === section)
 
-  rewards.forEach(item => item.fullfilled = dataStore.onboarding.has(Onboarding[item.id]))
+  earns.forEach(item => item.fullfilled = dataStore.onboarding.has(Onboarding[item.id]))
   
-  console.tron.log({rewards, rewards_all, section})
+  console.tron.log({earns, earns_all, section})
 
-  if (rewardsMeta) {
+  if (earnsMeta) {
     // FIXME
-    rewards.forEach(item => item.enabled = rewardsMeta[item.id]?.enabled ?? true)
-    rewards.forEach(
+    earns.forEach(item => item.enabled = earnsMeta[item.id]?.enabled ?? true)
+    earns.forEach(
       (item) =>
-        (item.enabledMessage = rewardsMeta[item.id]?.enabledMessage ?? translate(`common.soon`)),
+        (item.enabledMessage = earnsMeta[item.id]?.enabledMessage ?? translate(`common.soon`)),
     )
   }
 
-  return rewards
+  return earns
 }
 
 export const isSectionComplete = ({section, dataStore}) => 
-  getRemainingRewardsSats({section, dataStore}) === 0
+  getRemainingEarnSats({section, dataStore}) === 0
 
-export const getRemainingRewardsItems = ({ section, dataStore }) => {
-  const rewards = getRewardsFromSection({ section, dataStore })
-  return rewards.filter((item) => item.fullfilled).length / rewards.length
+export const getRemainingEarnItems = ({ section, dataStore }) => {
+  const earns = getEarnFromSection({ section, dataStore })
+  return earns.filter((item) => item.fullfilled).length / earns.length
 }
   
-export const getRemainingRewardsSats = ({ section, dataStore }) =>
-  getRewardsFromSection({ section, dataStore })
+export const getRemainingEarnSats = ({ section, dataStore }) =>
+  getEarnFromSection({ section, dataStore })
     .filter((item) => !item.fullfilled)
-    .reduce((acc, item) => OnboardingRewards[item.id] + acc, 0)
+    .reduce((acc, item) => OnboardingEarn[item.id] + acc, 0)
 
 export const getSections = () => {
-  const all_rewards_obj = translate(`RewardsScreen.rewards`)
-  const sections = Object.keys(all_rewards_obj)
+  const all_earns_obj = translate(`EarnScreen.earns`)
+  const sections = Object.keys(all_earns_obj)
   return sections
 }
 
@@ -51,14 +51,14 @@ export const getCompletedSection = ({ dataStore }) => {
   let count = 0
   const sections = getSections()
   for (const section of sections) {
-    if (getRemainingRewardsSats({ dataStore, section }) === 0) {
+    if (getRemainingEarnSats({ dataStore, section }) === 0) {
       count++
     }
   }
   return count
 }
 
-export const rewardsMeta = {
+export const earnsMeta = {
   walletDownloaded: {
     onComplete: null,
   },
@@ -153,7 +153,7 @@ export const rewardsMeta = {
     enabled: true,
     // FIXME
     // enabled: dataStore.lnd.statusFirstChannel == FirstChannelStatus.opened,
-    enabledMessage: translate(`RewardsScreen.channelNeeded`),
+    enabledMessage: translate(`EarnScreen.channelNeeded`),
   },
   transaction: {
     onComplete: async ({ dataStore }) => dataStore.onboarding.add(Onboarding.transaction),
@@ -172,7 +172,7 @@ export const rewardsMeta = {
     onComplete: () => Alert.alert("TODO"),
     enabled: false,
     //   enabled: dataStore.lnd.statusFirstChannel == FirstChannelStatus.opened,
-    enabledMessage: translate(`RewardsScreen.channelNeeded`),
+    enabledMessage: translate(`EarnScreen.channelNeeded`),
   },
   bankOnboarded: {
     onComplete: () => navigate("openBankAccount"),
@@ -181,20 +181,20 @@ export const rewardsMeta = {
     onComplete: () => Alert.alert("TODO"),
     enabled: false,
     //   enabled: dataStore.onboarding.has(Onboarding["bankOnboarded"]),
-    enabledMessage: translate(`RewardsScreen.bankingNeeded`),
+    enabledMessage: translate(`EarnScreen.bankingNeeded`),
   },
   firstCardSpending: {
     onComplete: () => Alert.alert("TODO"),
     enabled: false,
     //   enabled: dataStore.onboarding.has(Onboarding["bankOnboarded"]),
-    enabledMessage: translate(`RewardsScreen.bankingNeeded`),
+    enabledMessage: translate(`EarnScreen.bankingNeeded`),
   },
   activateDirectDeposit: {
-    rewards: "1% card rewards!",
+    earns: "1% card earns!",
     onComplete: () => Alert.alert("TODO"),
     enabled: false,
     //   enabled: dataStore.onboarding.has(Onboarding["bankOnboarded"]),
-    enabledMessage: translate(`RewardsScreen.bankingNeeded`),
+    enabledMessage: translate(`EarnScreen.bankingNeeded`),
   },
   energy: {
     onComplete: async ({ dataStore }) => {},

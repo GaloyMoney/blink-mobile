@@ -3,7 +3,7 @@ import { storiesOf } from "@storybook/react-native";
 import * as React from "react";
 import { Story, StoryScreen } from "../../../storybook/views";
 import BitcoinCircle from "./bitcoin-circle-01.svg";
-import { RewardsMapScreen } from "./rewards-map-screen";
+import { EarnMapScreen } from "./earns-map-screen";
 
 
 const sectionsData = [
@@ -25,7 +25,7 @@ storiesOf("Map", module)
   .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
   .add("Style Presets", () => (
     <Story>
-      <RewardsMapScreen 
+      <EarnMapScreen 
         currSection={number("section", 0)}
         progress={number("progress", 1)}
         sectionsData={sectionsData}

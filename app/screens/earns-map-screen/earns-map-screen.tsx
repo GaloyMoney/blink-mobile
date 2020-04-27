@@ -5,7 +5,7 @@ import { ScrollView, TouchableOpacity } from "react-native-gesture-handler"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
-import { getRemainingRewardsItems, isSectionComplete } from "../rewards-screen"
+import { getRemainingEarnItems, isSectionComplete } from "../earns-screen"
 import BitcoinCircle from "./bitcoin-circle-01.svg"
 import BottomOngoing from "./bottom-ongoing-01.svg"
 import BottomStart from "./bottom-start-01.svg"
@@ -63,7 +63,7 @@ interface ISectionData {
   icon: React.Component
 }
 
-interface IRewardsMapScreen {
+interface IEarnMapScreen {
   navigation: object //FIXME
   currSection: number
   progress: number
@@ -80,11 +80,11 @@ export const ProgressBar = ({progress}) => {
 )}
 
 
-export const RewardsMapDataInjected = inject("dataStore")(
+export const EarnMapDataInjected = inject("dataStore")(
   observer(({ dataStore, navigation }) => {
 
   // FIXME sectionId rely on array index. use id instead
-  const sectionId = Object.keys(translate("RewardsScreen.rewards"))
+  const sectionId = Object.keys(translate("EarnScreen.earns"))
   let sectionsData = []
   let currSection = 0
   let progress = NaN
@@ -93,18 +93,18 @@ export const RewardsMapDataInjected = inject("dataStore")(
   for (let section of sectionId) {
     sectionsData.push({
       id: section,
-      text: translate(`RewardsScreen.rewards\.${section}.meta.title`),
+      text: translate(`EarnScreen.earns\.${section}.meta.title`),
       icon: BitcoinCircle,
     })
 
     if (isSectionComplete({section, dataStore})) {
       currSection += 1
     } else if (isNaN(progress)) { // only do it once for the first uncompleted section
-      progress = getRemainingRewardsItems({section, dataStore})
+      progress = getRemainingEarnItems({section, dataStore})
     }
   }
 
-  return <RewardsMapScreen 
+  return <EarnMapScreen 
     navigation={navigation}
     sectionsData={sectionsData}
     currSection={currSection}
@@ -113,7 +113,7 @@ export const RewardsMapDataInjected = inject("dataStore")(
 
 }))
 
-export const RewardsMapScreen: React.FC<IRewardsMapScreen> = 
+export const EarnMapScreen: React.FC<IEarnMapScreen> = 
   ({ navigation, sectionsData, currSection, progress}) => {
 
   const InBetweenTile: React.FC<IInBetweenTile> = ({ side, position }) => {
@@ -151,7 +151,7 @@ export const RewardsMapScreen: React.FC<IRewardsMapScreen> =
         }}>
         <View>
           <TouchableOpacity disabled={disabled} 
-            onPress={() => navigation.navigate("rewardsSection", { section })}>
+            onPress={() => navigation.navigate("earnsSection", { section })}>
             <TextBlock />
             <View style={{position: "absolute", width: "100%"}}>
               <ProgressBar progress={progressSection} />

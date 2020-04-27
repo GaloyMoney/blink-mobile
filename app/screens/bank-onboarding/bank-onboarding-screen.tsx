@@ -22,7 +22,7 @@ import BitcoinPhone from "./bitcoin-phone-01.svg"
 import MoneyCircle from "../accounts-screen/money-circle-02.svg"
 
 const bankLogo = require("./BankLogo.png")
-const popcornLogo = require("../rewards-screen/PopcornLogo.png")
+const popcornLogo = require("../earns-screen/PopcornLogo.png")
 
 const styles = EStyleSheet.create({
   buttonContainer: {
@@ -76,7 +76,7 @@ const Argument = ({text, Icon}) => (
   </View>
 )
 
-export const BankAccountRewardsScreen = ({ navigation }) => {
+export const BankAccountEarnScreen = ({ navigation }) => {
   
   return (
     <Screen preset="scroll" backgroundColor={palette.lightGrey}>
@@ -84,15 +84,15 @@ export const BankAccountRewardsScreen = ({ navigation }) => {
         <View style={{alignSelf: "center", marginTop: 60}}>
           <HoneyBadgerHello />
         </View>
-        <Text style={styles.title}>{translate("BankAccountRewardsScreen.openAccount")}</Text>
+        <Text style={styles.title}>{translate("BankAccountEarnScreen.openAccount")}</Text>
         <Argument 
-          text={translate("BankAccountRewardsScreen.holdUSDollar")} 
+          text={translate("BankAccountEarnScreen.holdUSDollar")} 
           Icon={() => <MoneyCircle width={40}/>} />
         <Argument 
-          text={translate("BankAccountRewardsScreen.debitCard")} 
+          text={translate("BankAccountEarnScreen.debitCard")} 
           Icon={() => <CreditCard />} />
         <Argument 
-          text={translate("BankAccountRewardsScreen.buySell")} 
+          text={translate("BankAccountEarnScreen.buySell")} 
           Icon={() => <BitcoinPhone />} />
         <View style={{ flex: 1 }} />
         <BrightButton

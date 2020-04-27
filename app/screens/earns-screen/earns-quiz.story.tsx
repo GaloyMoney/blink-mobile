@@ -1,7 +1,7 @@
 import { storiesOf } from "@storybook/react-native";
 import * as React from "react";
 import { Story, StoryScreen, UseCase } from "../../../storybook/views";
-import { RewardsQuiz } from "./rewards-quiz";
+import { EarnQuiz } from "./earns-quiz";
 import { cloneDeep } from "lodash"
 import { Text } from "react-native";
 
@@ -34,10 +34,10 @@ storiesOf("Quiz", module)
   .add("Style Presets", () => (
     <Story >
     <UseCase text="not earned">
-        <RewardsQuiz route={route} />  
+        <EarnQuiz route={route} />  
       </UseCase>
       <UseCase text="earned">
-        <RewardsQuiz route={route_completed} />
+        <EarnQuiz route={route_completed} />
       </UseCase>
     </Story>
   ))
