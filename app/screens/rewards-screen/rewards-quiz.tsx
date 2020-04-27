@@ -1,19 +1,21 @@
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { StyleSheet, Text, View } from "react-native"
+import { Text, View } from "react-native"
 import { Button } from "react-native-elements"
+import EStyleSheet from "react-native-extended-stylesheet"
 import { ScrollView, TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
 import Icon from "react-native-vector-icons/Ionicons"
+import { CloseCross } from "../../components/close-cross"
 import { Screen } from "../../components/screen"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { shuffle } from "../../utils/helper"
 import { sleep } from "../../utils/sleep"
-import { CloseCross } from "../../components/close-cross"
 import { SVGs } from "./earn-svg-factory"
+import { SafeAreaView } from "react-native-safe-area-context"
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
 
   svgContainer: {
     alignItems: "center",
@@ -34,27 +36,29 @@ const styles = StyleSheet.create({
   },
 
   textEarn: {
-    fontSize: 24,
-    color: color.primary,
-    paddingVertical: 12,
+    fontSize: "16rem",
+    color: palette.darkGrey,
     fontWeight: "bold",
   },
 
   bottomContainer: {
-    borderTopWidth: 1,
-    borderTopColor: palette.lightGrey,
+    backgroundColor: palette.white,
+    borderTopLeftRadius: "24rem",
+    borderTopRightRadius: "24rem",
+    shadowColor: palette.midGrey,
+    shadowOpacity: 5,
+    shadowRadius: 8,
     alignItems: "center",
   },
 
   buttonStyle: {
-    borderColor: color.primary,
+    backgroundColor: palette.lightBlue,
     borderRadius: 32,
-    borderWidth: 2,
     width: "100%"
   },
 
   quizButtonStyle: {
-    backgroundColor: color.primary,
+    backgroundColor: palette.lightBlue,
     borderRadius: 32,
     width: "100%",
     padding: 12
@@ -84,9 +88,15 @@ const styles = StyleSheet.create({
   },
 
   titleStyle: {
-    color: color.primary,
+    color: palette.white,
     fontWeight: "bold",
-    fontSize: 24,
+    fontSize: "18rem",
+  },
+
+  completedTitleStyle: {
+    color: palette.lightBlue,
+    fontWeight: "bold",
+    fontSize: "18rem",
   },
 
   modalBackground: {
@@ -127,7 +137,8 @@ const styles = StyleSheet.create({
 const mappingLetter = {0: "A", 1: "B", 2: "C"}
 
 export const RewardsQuiz = ({ route, navigation }) => {
-  const { title, text, amount, answers, feedback, question, onComplete, id } = route.params
+  const { title, text, amount, answers, feedback, 
+    question, onComplete, id, completed } = route.params
   
   const [quizVisible, setQuizVisible] = useState(false)
   const [recordedAnswer, setRecordedAnswer] = useState([])
@@ -184,7 +195,7 @@ export const RewardsQuiz = ({ route, navigation }) => {
   })
 
   return (
-    <Screen style={{backgroundColor: palette.lighterGrey}}>
+    <Screen style={{backgroundColor: palette.lighterGrey}} unsafe={true}>
       <Modal
         style={{ marginHorizontal: 0, marginBottom: 0 }}
         isVisible={quizVisible}
@@ -218,30 +229,40 @@ export const RewardsQuiz = ({ route, navigation }) => {
           </View>
         </View>
       </Modal>
-      <ScrollView 
-          contentContainerStyle={{ flexGrow: 1 }}
-          persistentScrollbar={true}
-          bouncesZoom={true}
-          showsVerticalScrollIndicator={true}
-          bounces={false}
-        >
-        <View style={styles.svgContainer}>
-          {SVGs({name: id})}
-        </View>
-        <View style={styles.textContainer}>
-          <Text style={styles.title}>{title}</Text>
-          <Text style={styles.text}>{text}</Text>
-        </View>
-      </ScrollView>
+      <SafeAreaView style={{flex: 1}}>
+        <ScrollView 
+            contentContainerStyle={{ paddingVertical: 48 }}
+            persistentScrollbar={true}
+            showsVerticalScrollIndicator={true}
+            bounces={true}
+            >
+          <View style={styles.svgContainer}>
+            {SVGs({name: id})}
+          </View>
+          <View style={styles.textContainer}>
+            <Text style={styles.title}>{title}</Text>
+            <Text style={styles.text}>{text}</Text>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
       <CloseCross navigation={navigation} color={palette.darkGrey} />
-      <View style={styles.bottomContainer}>
-        <Text style={styles.textEarn}>Earn {amount} sat</Text>
-        <Button title={"Answer Quiz"} type="outline"
+      <SafeAreaView style={styles.bottomContainer}>
+        {completed &&
+          <View>
+            <Text style={styles.textEarn}>Quiz completed and {amount} sats earned</Text>
+            <Button title="Review quiz" type="clear"
+              titleStyle={styles.completedTitleStyle}
+            onPress={() => setQuizVisible(true)}
+            />
+          </View>
+        || 
+        <Button title={`Earn ${amount} sat`} 
           buttonStyle={styles.buttonStyle}
           titleStyle={styles.titleStyle}
+          containerStyle={{paddingBottom: 12}}
           onPress={() => setQuizVisible(true)}
-        />
-      </View>
+        />}
+      </SafeAreaView>
     </Screen>
   )
 }

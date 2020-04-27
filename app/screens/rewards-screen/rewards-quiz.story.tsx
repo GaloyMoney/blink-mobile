@@ -1,8 +1,9 @@
 import { storiesOf } from "@storybook/react-native";
 import * as React from "react";
-import { Story, StoryScreen } from "../../../storybook/views";
+import { Story, StoryScreen, UseCase } from "../../../storybook/views";
 import { RewardsQuiz } from "./rewards-quiz";
-
+import { cloneDeep } from "lodash"
+import { Text } from "react-native";
 
 declare let module
 
@@ -21,13 +22,22 @@ const route = { params: {
     "Nope, it is not analtcoin",
     "Maybe... but that's not the correct answer in this context 😂"
   ],
-  onComplete: () => {}
+  onComplete: () => {},
+  completed: false,
 }}
+
+let route_completed = cloneDeep(route)
+route_completed.params.completed = true
 
 storiesOf("Quiz", module)
   .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
   .add("Style Presets", () => (
-    <Story>
-      <RewardsQuiz route={route} />  
+    <Story >
+    <UseCase text="not earned">
+        <RewardsQuiz route={route} />  
+      </UseCase>
+      <UseCase text="earned">
+        <RewardsQuiz route={route_completed} />
+      </UseCase>
     </Story>
   ))

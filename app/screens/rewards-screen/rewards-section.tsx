@@ -178,6 +178,7 @@ export const RewardsSection = inject("dataStore")(
             feedback: reward.feedback,
             onComplete: () => rewardsMeta[reward.id].onComplete({ dataStore }),
             id: reward.id,
+            completed: dataStore.onboarding.has(reward.id)
           })
           break
         //     case RewardType.Video:
