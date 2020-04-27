@@ -155,10 +155,8 @@ export const RewardsSection = inject("dataStore")(
       ])
     }
     
-    // TODO
-    // navigation.setOptions({ title: translate(`RewardsScreen.rewards\.${section}\.meta.title`) })
-    navigation.setOptions({ title: "" })
-
+    navigation.setOptions({ title: translate(`RewardsScreen.rewards\.${section}\.meta.title`) })
+    
     enum RewardType {
       Text = "Text",
       Video = "Video",
@@ -205,7 +203,10 @@ export const RewardsSection = inject("dataStore")(
 
       return (
         <View style={styles.item}>
-          <TouchableOpacity onPress={open} activeOpacity={0.9}>
+          <TouchableOpacity 
+            onPress={() => open(item)}
+            activeOpacity={0.9}
+            >
             {SVGs({name: item.id})}
             {/* <Image
               source={eval(`${item.id}Image`)} // FIXME
