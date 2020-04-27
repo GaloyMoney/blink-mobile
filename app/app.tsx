@@ -73,7 +73,6 @@ export const App = () => {
       console.tron.log({ notification })
 
       if (getActiveRouteName(routeNameRef) !== "receiveBitcoin") {
-        // if (invoice.paymentRequest === self.lastAddInvoice) {
         completion({ alert: true, sound: false, badge: false })
       }
     })
