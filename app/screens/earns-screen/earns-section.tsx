@@ -7,12 +7,12 @@ import { Button } from "react-native-elements"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import Carousel, { Pagination } from "react-native-snap-carousel"
 import Icon from "react-native-vector-icons/Ionicons"
-import { OnboardingRewards } from "types"
+import { OnboardingEarn } from "types"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-import { getRemainingRewardsSats, getRewardsFromSection, rewardsMeta } from "./rewards-utils"
+import { getRemainingEarnSats, getEarnFromSection, earnsMeta } from "./earns-utils"
 import { SVGs } from "./earn-svg-factory"
 import { CurrencyType } from "../../utils/enum"
 import EStyleSheet from "react-native-extended-stylesheet"
@@ -45,7 +45,7 @@ const styles = EStyleSheet.create({
     resizeMode: "cover",
   },
 
-  imageContainerRewards: {
+  imageContainerEarn: {
     height: 200,
     marginBottom: Platform.select({ ios: 0, android: 1 }), // Prevent a random Android rendering issue
     backgroundColor: palette.white,
@@ -130,21 +130,21 @@ const styles = EStyleSheet.create({
   },
 })
 
-export const RewardsSection = inject("dataStore")(
+export const EarnSection = inject("dataStore")(
   observer(({ dataStore, route, navigation }) => {
 
     const section = route.params.section
-    const reward = getRewardsFromSection({ section, rewardsMeta, dataStore })
+    const earn = getEarnFromSection({ section, earnsMeta, dataStore })
 
-    const itemIndex = reward.findIndex(item => !item.fullfilled)
+    const itemIndex = earn.findIndex(item => !item.fullfilled)
     const [firstItem] = useState(itemIndex >= 0 ? itemIndex : 0)
 
     const [currRewardIndex, setCurrRewardIndex] = useState(firstItem)
 
-    const [initialRemainingRewards] = useState(getRemainingRewardsSats({ section, dataStore }))
-    const currentRemainingRewards = getRemainingRewardsSats({ section, dataStore })
+    const [initialRemainingEarn] = useState(getRemainingEarnSats({ section, dataStore }))
+    const currentRemainingEarn = getRemainingEarnSats({ section, dataStore })
 
-    if (initialRemainingRewards !== 0 && currentRemainingRewards === 0) {
+    if (initialRemainingEarn !== 0 && currentRemainingEarn === 0) {
       Alert.alert("You have succesfully completed this section!", "", [
         {
           text: translate("common.ok"),
@@ -155,7 +155,7 @@ export const RewardsSection = inject("dataStore")(
       ])
     }
     
-    navigation.setOptions({ title: translate(`RewardsScreen.rewards\.${section}\.meta.title`) })
+    navigation.setOptions({ title: translate(`EarnScreen.earns\.${section}\.meta.title`) })
     
     enum RewardType {
       Text = "Text",
@@ -163,26 +163,26 @@ export const RewardsSection = inject("dataStore")(
       Action = "Action",
     }
 
-    const open = async (reward) => {
+    const open = async (earn) => {
 
-      switch (RewardType[reward.type]) {
+      switch (RewardType[earn.type]) {
         case RewardType.Text:
-          navigation.navigate('rewardsQuiz', { 
-            title: reward.title, 
-            text: reward.text, 
-            amount: OnboardingRewards[reward.id],
-            question: reward.question,
-            answers: reward.answers, 
-            feedback: reward.feedback,
-            onComplete: () => rewardsMeta[reward.id].onComplete({ dataStore }),
-            id: reward.id,
-            completed: dataStore.onboarding.has(reward.id)
+          navigation.navigate('earnsQuiz', { 
+            title: earn.title, 
+            text: earn.text, 
+            amount: OnboardingEarn[earn.id],
+            question: earn.question,
+            answers: earn.answers, 
+            feedback: earn.feedback,
+            onComplete: () => earnsMeta[earn.id].onComplete({ dataStore }),
+            id: earn.id,
+            completed: dataStore.onboarding.has(earn.id)
           })
           break
         //     case RewardType.Video:
         //       try {
-        //         console.tron.log({ videoid: rewards.videoid })
-        //         await YouTubeStandaloneIOS.playVideo(rewards.videoid)
+        //         console.tron.log({ videoid: earns.videoid })
+        //         await YouTubeStandaloneIOS.playVideo(earns.videoid)
         //         await sleep(500) // FIXME why await for playVideo doesn't work?
         //         console.tron.log("finish video")
         //         setQuizVisible(true)
@@ -193,7 +193,7 @@ export const RewardsSection = inject("dataStore")(
         //       break
         case RewardType.Action:
           // TODO
-          // await rewardsMeta[rewards.id].onAction({ dataStore, navigate })
+          // await earnsMeta[earns.id].onAction({ dataStore, navigate })
           break
       }
     }
@@ -211,7 +211,7 @@ export const RewardsSection = inject("dataStore")(
             {/* <Image
               source={eval(`${item.id}Image`)} // FIXME
               style={{width: screenWidth - 60, height: 300, resizeMode: 'contain'}}
-              containerStyle={styles.imageContainerRewards}
+              containerStyle={styles.imageContainerEarn}
             /> */}
           </TouchableOpacity>
           <View>
@@ -226,13 +226,13 @@ export const RewardsSection = inject("dataStore")(
               title={
                   item.enabled
                   ? item.fullfilled
-                    ? I18n.t("RewardsScreen.rewardEarned", {
-                      count: OnboardingRewards[item.id],
-                      formatted_number: I18n.toNumber(OnboardingRewards[item.id], { precision: 0 }),
+                    ? I18n.t("EarnScreen.satsEarned", {
+                      count: OnboardingEarn[item.id],
+                      formatted_number: I18n.toNumber(OnboardingEarn[item.id], { precision: 0 }),
                     })
-                    : I18n.t("RewardsScreen.earnSats", {
-                        count: OnboardingRewards[item.id],
-                        formatted_number: I18n.toNumber(OnboardingRewards[item.id], { precision: 0 }),
+                    : I18n.t("EarnScreen.earnSats", {
+                        count: OnboardingEarn[item.id],
+                        formatted_number: I18n.toNumber(OnboardingEarn[item.id], { precision: 0 }),
                       })
                     // : translate("common.learnMore")
                   : item.enabledMessage
@@ -254,7 +254,7 @@ export const RewardsSection = inject("dataStore")(
       <Screen style={styles.screenStyle}>
         <View style={{ flex: 1 }} />
         <Carousel
-          data={reward}
+          data={earn}
           renderItem={CardItem}
           sliderWidth={screenWidth}
           // scrollEnabled={!isRewardOpen}
@@ -267,7 +267,7 @@ export const RewardsSection = inject("dataStore")(
         />
         <View style={{ flex: 1 }} />
         <Pagination
-          dotsLength={reward.length}
+          dotsLength={earn.length}
           activeDotIndex={currRewardIndex}
           dotStyle={{
               width: 10,

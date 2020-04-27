@@ -136,7 +136,7 @@ const styles = EStyleSheet.create({
 
 const mappingLetter = {0: "A", 1: "B", 2: "C"}
 
-export const RewardsQuiz = ({ route, navigation }) => {
+export const EarnQuiz = ({ route, navigation }) => {
   const { title, text, amount, answers, feedback, 
     question, onComplete, id, completed } = route.params
   

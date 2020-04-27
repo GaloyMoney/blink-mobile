@@ -57,16 +57,16 @@
     "header": "To confirm your phone number, enter the code we just sent you",
     "placeholder": "6 Digits Code"
   },
-  "RewardsScreen": {
+  "EarnScreen": {
     "title": "Earn",
     "earnSats": { "one": "Earn 1 sat", "other": "Earn {{formatted_number}} sats" },
+    "satsEarned": { "one": "1 sat earned", "other": "{{formatted_number}} sats earned" },
     "satAccumulated": "Sats accumulated",
     "bankingNeeded": "Banking is needed",
     "channelNeeded": "Open channel first",
     "getRewardNow": "Answer quiz",
-    "rewardEarned": { "one": "1 sat earned", "other": "{{formatted_number}} sats earned" },
     "phoneNumberNeeded": "Phone number required",
-    "rewards": [
+    "earns": [
       {
         "meta": {
           "id": "bitcoinWhatIsIt",
@@ -270,9 +270,9 @@
     "prevMonths": "Previous months",
     "quote": "How many sats to {{side}}: "
   },
-  "AccountsScreen": { "title": "Accounts", "bitcoinRewards": "Earn bitcoin rewards!" },
+  "AccountsScreen": { "title": "Accounts", "bitcoinEarn": "Earn bitcoin rewards!" },
   "BankAccountReadyScreen": { "accountReady": "Your Galoy cash account is ready!" },
-  "BankAccountRewardsScreen": {
+  "BankAccountEarnScreen": {
     "title": "Cash Account Rewards",
     "openAccount": "Open a Galoy cash account",
     "holdUSDollar": "Hold US dollars in your account!",

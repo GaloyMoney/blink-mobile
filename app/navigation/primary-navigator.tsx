@@ -6,12 +6,12 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { translate } from "../i18n"
 import { AccountDetailScreen } from "../screens/account-detail-screen/account-detail-screen"
 import { AccountsScreen } from "../screens/accounts-screen"
-import { BankAccountReadyScreen, BankAccountRewardsScreen, DateOfBirthScreen, OpenBankScreen, PersonalInformationScreen } from "../screens/bank-onboarding"
+import { BankAccountReadyScreen, BankAccountEarnScreen, DateOfBirthScreen, OpenBankScreen, PersonalInformationScreen } from "../screens/bank-onboarding"
 import { DebugScreen } from "../screens/debug-screen"
 import { BankTransferScreen, DirectDepositScreen, FindATMScreen, MoveMoneyScreenDataInjected, ReceiveBitcoinScreen, ScanningQRCodeScreen, SendBitcoinScreen } from "../screens/move-money-screen"
 import { WelcomePhoneInputScreen, WelcomePhoneValidationScreenDataInjected } from "../screens/phone-auth-screen"
-import { RewardsMapDataInjected } from "../screens/rewards-map-screen"
-import { RewardsQuiz, RewardsSection } from "../screens/rewards-screen"
+import { EarnMapDataInjected } from "../screens/earns-map-screen"
+import { EarnQuiz, EarnSection } from "../screens/earns-screen"
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
 import { color } from "../theme"
 import { palette } from "../theme/palette"
@@ -219,10 +219,10 @@ export const PrimaryNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Rewards"
-        component={RewardsMapDataInjected}
+        name="Earn"
+        component={EarnMapDataInjected}
         options={{
-          title: translate("RewardsScreen.title"),
+          title: translate("EarnScreen.title"),
           tabBarIcon: ({ focused, color }) => {
             return <Icon name={"ios-rocket"} size={size} color={color} />
           },
@@ -253,15 +253,15 @@ export const RootStackScreen = () => {
         options={{ headerShown: false }}
       />
       <RootStack.Screen
-        name="rewardsSection"
-        component={RewardsSection}
+        name="earnsSection"
+        component={EarnSection}
         options={{
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}
       />
       <RootStack.Screen
-        name="rewardsQuiz"
-        component={RewardsQuiz}
+        name="earnsQuiz"
+        component={EarnQuiz}
         options={{ 
           headerShown: false,
           cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
@@ -273,8 +273,8 @@ export const RootStackScreen = () => {
         options={{ headerShown: false }}
       />
       <StackAccounts.Screen
-        name="bankAccountRewards"
-        component={BankAccountRewardsScreen}
+        name="bankAccountEarn"
+        component={BankAccountEarnScreen}
         options={{ 
           headerShown: false,
           cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,

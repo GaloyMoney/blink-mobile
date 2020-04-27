@@ -140,9 +140,9 @@ export const MoveMoneyScreen = (
     if (bankOnboarded) {
       navigation.navigate(target, { title })
     } else {
-      navigation.navigate("bankAccountRewards")
+      navigation.navigate("bankAccountEarn")
 
-      // bankAccountRewards
+      // bankAccountEarn
       // setMessage(translate("MoveMoneyScreen.needBankAccount", { feature: target }))
       // setModalVisible(true)
       // setButtonTitle(translate("MoveMoneyScreen.openAccount"))

@@ -76,7 +76,7 @@ export const AccountsScreen = inject("dataStore")(
 
     // TODO refactor ==> bank should also have a virtual screen
     if (!dataStore.onboarding.has(Onboarding.bankOnboarded)) {
-      accountTypes[0].action = () => navigation.navigate("bankAccountRewards")
+      accountTypes[0].action = () => navigation.navigate("bankAccountEarn")
       accountTypes[0].title = "Open Cash Account"
       accountTypes[0].subtitle = false
     }
@@ -123,12 +123,12 @@ export const AccountsScreen = inject("dataStore")(
         />
         <View style={{ flex: 1 }}></View>
         <Button
-          title={translate("AccountsScreen.bitcoinRewards")}
+          title={translate("AccountsScreen.bitcoinEarn")}
           style={styles.accountView}
           titleStyle={{ color: palette.blue }}
           type="clear"
           // containerStyle={{ backgroundColor: color.primary }}
-          onPress={() => navigation.navigate("Rewards")}
+          onPress={() => navigation.navigate("Earn")}
           icon={<Icon name="ios-gift" color={palette.lightBlue} size={28} style={styles.icon} />}
         />
       </Screen>

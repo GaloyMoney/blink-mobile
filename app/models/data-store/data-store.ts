@@ -1,7 +1,7 @@
 import auth from "@react-native-firebase/auth"
 import functions from "@react-native-firebase/functions"
 import { flow, getParentOfType, Instance, SnapshotOut, types } from "mobx-state-tree"
-import { IAddInvoiceRequest, IBuyRequest, IPayInvoice, IQuoteRequest, IQuoteResponse, Onboarding, OnboardingRewards, Side } from "../../../../common/types"
+import { IAddInvoiceRequest, IBuyRequest, IPayInvoice, IQuoteRequest, IQuoteResponse, Onboarding, OnboardingEarn, Side } from "../../../../common/types"
 import { parseDate } from "../../utils/date"
 import { AccountType, CurrencyType } from "../../utils/enum"
 import * as lightningPayReq from 'bolt11'
@@ -326,7 +326,7 @@ interface BalanceRequest {
 // // TODO move to utils?
 // const translateTitleFromItem = (item) => {
 //   console.tron.log({ item })
-//   const object = translate(`RewardsScreen.rewards`)
+//   const object = translate(`EarnScreen.earns`)
 //   for (const property in object) {
 //     for (const property2 in object[property]) {
 //       if (property2 === item) {
