@@ -71,7 +71,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Activate your camera to scan QR codes</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>NSMainNibFile</key>
 	<string>LaunchScreen</string>
 	<key>UIAppFonts</key>
@@ -91,25 +91,13 @@
 		<string>SimpleLineIcons.ttf</string>
 		<string>Octicons.ttf</string>
 		<string>Zocial.ttf</string>
-		<string>Montserrat-Black.ttf</string>
-		<string>Montserrat-BlackItalic.ttf</string>
-		<string>Montserrat-Bold.ttf</string>
-		<string>Montserrat-BoldItalic.ttf</string>
-		<string>Montserrat-ExtraBold.ttf</string>
-		<string>Montserrat-ExtraBoldItalic.ttf</string>
-		<string>Montserrat-ExtraLight.ttf</string>
-		<string>Montserrat-ExtraLightItalic.ttf</string>
-		<string>Montserrat-Italic.ttf</string>
-		<string>Montserrat-Light.ttf</string>
-		<string>Montserrat-LightItalic.ttf</string>
-		<string>Montserrat-Medium.ttf</string>
-		<string>Montserrat-MediumItalic.ttf</string>
-		<string>Montserrat-Regular.ttf</string>
-		<string>Montserrat-SemiBold.ttf</string>
-		<string>Montserrat-SemiBoldItalic.ttf</string>
-		<string>Montserrat-Thin.ttf</string>
-		<string>Montserrat-ThinItalic.ttf</string>
 		<string>Fontisto.ttf</string>
+		<string>DMSans-Bold.ttf</string>
+		<string>DMSans-BoldItalic.ttf</string>
+		<string>DMSans-Italic.ttf</string>
+		<string>DMSans-Medium.ttf</string>
+		<string>DMSans-MediumItalic.ttf</string>
+		<string>DMSans-Regular.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
