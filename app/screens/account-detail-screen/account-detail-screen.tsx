@@ -470,12 +470,14 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = inject("d
         <BalanceHeaderDataInjection currency={currency} account={account} dataStore={dataStore} />
         <Price data={data} price={dataStore.rates.getInBTC} delta={0.70} /> 
         {/* FIXME */}
-        {(account === AccountType.Bitcoin && !isAnonymous) && (
-          <BuyAndSellComp
-            dataStore={dataStore}
-            refresh={refresh}
-          />
-        )}
+        {//(account === AccountType.Bitcoin && !isAnonymous) && (
+          // TODO integrate back BUY/SELL BTC, 
+          //  but there is work to do on the backend first
+          // <BuyAndSellComp
+          //   dataStore={dataStore}
+          //   refresh={refresh}
+          // />)
+         }
         {(account === AccountType.Bitcoin && isAnonymous) && (
           // TODO update when isAnonymous changes
           <Button title={"Activate Wallet"} 
