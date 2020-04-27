@@ -208,7 +208,6 @@ export const FiatAccountModel = BaseAccountModel.props({
 export const LndModel = BaseAccountModel.named("Lnd")
   .props({
     type: AccountType.Bitcoin,
-    lastAddInvoice: "",
     receiveBitcoinScreenAlert: false,
     _transactions: types.array(LightningInvoiceModel),
   })
@@ -227,15 +226,11 @@ export const LndModel = BaseAccountModel.named("Lnd")
       addInvoice: flow(function* (request: IAddInvoiceRequest) {
         try {
           const { data } = yield functions().httpsCallable("addInvoice")(request)
-          self.lastAddInvoice = data.request
+          return data.request
         } catch (err) {
           console.log("error with AddInvoice")
           throw err
         }
-      }),
-
-      clearLastInvoice: flow(function* () {
-        self.lastAddInvoice = ""
       }),
 
       resetReceiveBitcoinScreenAlert: flow(function* () {

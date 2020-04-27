@@ -3,7 +3,8 @@ import * as React from "react";
 import { Story, StoryScreen, UseCase } from "../../../storybook/views";
 import { EarnQuiz } from "./earns-quiz";
 import { cloneDeep } from "lodash"
-import { Text } from "react-native";
+import { Text, SafeAreaView } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 declare let module
 
@@ -32,12 +33,14 @@ route_completed.params.completed = true
 storiesOf("Quiz", module)
   .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
   .add("Style Presets", () => (
-    <Story >
-    <UseCase text="not earned">
-        <EarnQuiz route={route} />  
-      </UseCase>
-      <UseCase text="earned">
-        <EarnQuiz route={route_completed} />
-      </UseCase>
-    </Story>
+    <SafeAreaProvider>
+      <Story>
+        <UseCase text="not earned">
+          <EarnQuiz route={route} />  
+        </UseCase>
+        <UseCase text="earned">
+          <EarnQuiz route={route_completed} />
+        </UseCase>
+      </Story>
+    </SafeAreaProvider>
   ))

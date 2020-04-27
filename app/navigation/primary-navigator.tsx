@@ -8,7 +8,7 @@ import { AccountDetailScreen } from "../screens/account-detail-screen/account-de
 import { AccountsScreen } from "../screens/accounts-screen"
 import { BankAccountReadyScreen, BankAccountEarnScreen, DateOfBirthScreen, OpenBankScreen, PersonalInformationScreen } from "../screens/bank-onboarding"
 import { DebugScreen } from "../screens/debug-screen"
-import { BankTransferScreen, DirectDepositScreen, FindATMScreen, MoveMoneyScreenDataInjected, ReceiveBitcoinScreen, ScanningQRCodeScreen, SendBitcoinScreen } from "../screens/move-money-screen"
+import { BankTransferScreen, DirectDepositScreen, FindATMScreen, MoveMoneyScreenDataInjected, ReceiveBitcoinScreen, ScanningQRCodeScreen, SendBitcoinScreen, ShowQRCode } from "../screens/move-money-screen"
 import { WelcomePhoneInputScreen, WelcomePhoneValidationScreenDataInjected } from "../screens/phone-auth-screen"
 import { EarnMapDataInjected } from "../screens/earns-map-screen"
 import { EarnQuiz, EarnSection } from "../screens/earns-screen"
@@ -118,12 +118,16 @@ const StackMoveMoney = createStackNavigator()
 export const MoveMoneyNavigator = () => {
   return (
     <StackMoveMoney.Navigator
-      headerMode="none"
+      // headerMode="none"
     >
       <StackMoveMoney.Screen
         name="moveMoney"
         component={MoveMoneyScreenDataInjected}
-        options={{ title: translate("MoveMoneyScreen.title") }}
+        // options={{ title: translate("MoveMoneyScreen.title") }}
+        options={{ 
+          headerShown: false,
+          title: "Move Money",
+        }}
       />
       <StackMoveMoney.Screen
         name="sendBitcoin"
@@ -138,6 +142,11 @@ export const MoveMoneyNavigator = () => {
       <StackMoveMoney.Screen
         name="receiveBitcoin"
         component={ReceiveBitcoinScreen}
+        options={{ title: translate("ReceiveBitcoinScreen.title") }}
+      />
+      <StackMoveMoney.Screen
+        name="showQRCode"
+        component={ShowQRCode}
         options={{ title: translate("ReceiveBitcoinScreen.title") }}
       />
       <StackMoveMoney.Screen
