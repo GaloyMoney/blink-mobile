@@ -23,6 +23,7 @@ const styles = EStyleSheet.create({
 
   textContainer: {
     marginHorizontal: 24,
+    paddingVertical: 48,
   },
 
   title: {
@@ -229,9 +230,8 @@ export const EarnQuiz = ({ route, navigation }) => {
           </View>
         </View>
       </Modal>
-      <SafeAreaView style={{flex: 1}}>
+      <SafeAreaView style={{flex: 1, paddingBottom: 0}}>
         <ScrollView 
-            contentContainerStyle={{ paddingVertical: 48 }}
             persistentScrollbar={true}
             showsVerticalScrollIndicator={true}
             bounces={true}
