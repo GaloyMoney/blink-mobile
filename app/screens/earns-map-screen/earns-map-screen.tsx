@@ -1,6 +1,6 @@
 import { inject, observer } from "mobx-react"
 import * as React from "react"
-import { Dimensions, StyleSheet, Text, View } from "react-native"
+import { Dimensions, StyleSheet, Text, View, SafeAreaView } from "react-native"
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
@@ -182,29 +182,34 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> =
   }, [])
 
   return (
-    <Screen unsafe={true} backgroundColor={palette.sky} >
-        <View style={{backgroundColor: palette.sky, flex: 0.1}}/>
-          <ScrollView 
-            removeClippedSubviews={true}
-            contentContainerStyle={{backgroundColor: palette.lightBlue, flex: 10}}
-            ref={scrollViewRef}
-            onContentSizeChange={() => {
-              scrollViewRef.current.scrollToEnd()
-            }}
-          >
-          <Top width={screenWidth} scale={1.5} height={110} />
-          <View style={styles.mainView}>
-            { currSection === 10 ? <LeftLastComplete /> : null }
-            { sectionsComp }
-            { currSection === 0 ?
-                progress === 0 ?
-                    <BottomStart />
-                  : <BottomOngoing /> 
-                : null
-            }
-          </View>
-          <View style={{backgroundColor: palette.lightBlue, flex: 0.1}}/>
-        </ScrollView>
+    <Screen unsafe={true} >
+        <SafeAreaView style={{backgroundColor: palette.sky, minHeight: "6%"}} />
+        <ScrollView 
+          // removeClippedSubviews={true}
+          style={{backgroundColor: palette.sky}}
+          contentContainerStyle={{
+            backgroundColor: palette.lightBlue, 
+            flexGrow: 1,
+          }}
+          ref={scrollViewRef}
+          onContentSizeChange={() => {
+            scrollViewRef.current.scrollToEnd()
+          }}
+        >
+        <View style={{backgroundColor: palette.sky}}>
+          <Top width={screenWidth} />
+        </View>
+        <View style={styles.mainView}>
+          { currSection === 10 ? <LeftLastComplete /> : null }
+          { sectionsComp }
+          { currSection === 0 ?
+              progress === 0 ?
+                  <BottomStart />
+                : <BottomOngoing /> 
+              : null
+          }
+        </View>
+      </ScrollView>
     </Screen>
   )
 }
