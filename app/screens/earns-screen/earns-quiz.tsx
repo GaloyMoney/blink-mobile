@@ -50,12 +50,13 @@ const styles = EStyleSheet.create({
     shadowOpacity: 5,
     shadowRadius: 8,
     alignItems: "center",
+    paddingTop: 0,
   },
 
   buttonStyle: {
     backgroundColor: palette.lightBlue,
     borderRadius: 32,
-    width: "100%"
+    width: "224rem",
   },
 
   quizButtonStyle: {
@@ -259,7 +260,7 @@ export const EarnQuiz = ({ route, navigation }) => {
         <Button title={`Earn ${amount} sat`} 
           buttonStyle={styles.buttonStyle}
           titleStyle={styles.titleStyle}
-          containerStyle={{paddingBottom: 12}}
+          containerStyle={{paddingVertical: 12}}
           onPress={() => setQuizVisible(true)}
         />}
       </SafeAreaView>
