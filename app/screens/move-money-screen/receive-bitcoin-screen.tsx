@@ -55,7 +55,7 @@ export const ReceiveBitcoinScreen = inject("dataStore")(
       try {
         setLoading(true)
         const invoice = await dataStore.lnd.addInvoice({ value: amount, memo: note })
-        navigation.navigate("", { invoice, amount })
+        navigation.navigate("showQRCode", { invoice, amount })
       } catch (err) {
         Alert.alert(err.toString())
       } finally {
