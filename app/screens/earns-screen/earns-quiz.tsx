@@ -104,7 +104,7 @@ const styles = EStyleSheet.create({
   modalBackground: {
     alignItems: "center",
     backgroundColor: palette.white,
-    minHeight: "80%",
+    minHeight: "620rem",
     // maxHeight: "100%",
     // flexGrow: 1,
     justifyContent: "flex-end",
@@ -144,6 +144,7 @@ export const EarnQuiz = ({ route, navigation }) => {
   const { title, text, amount, answers, feedback, 
     question, onComplete, id, completed } = route.params
   
+  const [isCompleted, setIsCompleted] = useState(completed)
   const [quizVisible, setQuizVisible] = useState(false)
   const [recordedAnswer, setRecordedAnswer] = useState([])
   const [permutation] = useState(shuffle([0, 1, 2]))
@@ -156,6 +157,7 @@ export const EarnQuiz = ({ route, navigation }) => {
 
   useEffect(() => {
     if (recordedAnswer.indexOf(0) !== -1) {
+      setIsCompleted(true)
       onComplete()
     }
   }, [recordedAnswer])
@@ -256,21 +258,22 @@ export const EarnQuiz = ({ route, navigation }) => {
       </SafeAreaView>
       <CloseCross navigation={navigation} color={palette.darkGrey} />
       <SafeAreaView style={styles.bottomContainer}>
-        {completed &&
-          <View>
-            <Text style={styles.textEarn}>Quiz completed and {amount} sats earned</Text>
-            <Button title="Review quiz" type="clear"
-              titleStyle={styles.completedTitleStyle}
-            onPress={() => setQuizVisible(true)}
-            />
+          <View style={{paddingVertical: 12}}>
+          {isCompleted &&
+            <>
+              <Text style={styles.textEarn}>Quiz completed and {amount} sats earned</Text>
+              <Button title="Review quiz" type="clear"
+                titleStyle={styles.completedTitleStyle}
+              onPress={() => setQuizVisible(true)}
+              />
+            </>
+          || 
+            <Button title={`Earn ${amount} sat`} 
+              buttonStyle={styles.buttonStyle}
+              titleStyle={styles.titleStyle}
+              onPress={() => setQuizVisible(true)}
+            />}
           </View>
-        || 
-        <Button title={`Earn ${amount} sat`} 
-          buttonStyle={styles.buttonStyle}
-          titleStyle={styles.titleStyle}
-          containerStyle={{paddingVertical: 12}}
-          onPress={() => setQuizVisible(true)}
-        />}
       </SafeAreaView>
     </Screen>
   )
