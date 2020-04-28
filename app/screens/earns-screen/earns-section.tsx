@@ -2,8 +2,9 @@ import I18n from "i18n-js"
 import { inject, observer } from "mobx-react"
 import * as React from "react"
 import { useState } from "react"
-import { Alert, Dimensions, Image, Platform, StyleSheet, Text, View } from "react-native"
+import { Alert, Dimensions, Platform, StyleSheet, Text, View } from "react-native"
 import { Button } from "react-native-elements"
+import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import Carousel, { Pagination } from "react-native-snap-carousel"
 import Icon from "react-native-vector-icons/Ionicons"
@@ -12,14 +13,14 @@ import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-import { getRemainingEarnSats, getEarnFromSection, earnsMeta } from "./earns-utils"
 import { SVGs } from "./earn-svg-factory"
-import { CurrencyType } from "../../utils/enum"
-import EStyleSheet from "react-native-extended-stylesheet"
+import { earnsMeta, getEarnFromSection, getRemainingEarnSats } from "./earns-utils"
 
 
 const { width: screenWidth } = Dimensions.get("window")
 const { height: screenHeight } = Dimensions.get("window")
+
+const svgWidth = screenWidth - 60
 
 const styles = EStyleSheet.create({
   screenStyle: {
@@ -54,19 +55,19 @@ const styles = EStyleSheet.create({
   },
 
   item: {
-    width: screenWidth - 60,
-    // height: screenWidth - 90,
+    width: svgWidth,
     borderRadius: 16,
     backgroundColor: palette.lightBlue
   },
 
   itemTitle: {
+    $fontSize: 20,
     color: palette.white,
-    fontSize: 20,
+    fontSize: '$fontSize',
     fontWeight: "bold",
-    marginVertical: 12,
     textAlign: "center",
-    marginHorizontal: "24rem"
+    marginHorizontal: "24rem",
+    height: '3.6 * $fontSize',
   },
 
   satsButton: {
@@ -207,15 +208,13 @@ export const EarnSection = inject("dataStore")(
             onPress={() => open(item)}
             activeOpacity={0.9}
             >
-            {SVGs({name: item.id})}
-            {/* <Image
-              source={eval(`${item.id}Image`)} // FIXME
-              style={{width: screenWidth - 60, height: 300, resizeMode: 'contain'}}
-              containerStyle={styles.imageContainerEarn}
-            /> */}
+            {SVGs({name: item.id, width: svgWidth, height: svgWidth})}
           </TouchableOpacity>
           <View>
-            <Text style={styles.itemTitle}>{item.title}</Text>
+            <Text 
+              style={styles.itemTitle}
+              numberOfLines={3}  
+            >{item.title}</Text>
             <Button
               onPress={() => open(item)}
               disabled={!item.enabled}
