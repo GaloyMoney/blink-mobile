@@ -5,26 +5,43 @@ import { Onboarding, OnboardingEarn } from "types"
 import { translate } from "../../i18n"
 import { sleep } from "../../utils/sleep"
 
-
 export const getEarnFromSection = ({ dataStore, section, earnsMeta = undefined }) => {
   const earns_all = translate(`EarnScreen.earns`)
-  const earns = earns_all[section].content
-  // const earns = earns_all.filter((index) => index.meta.id === section)
+  const cards = JSON.parse(JSON.stringify(earns_all[section].content))
 
-  earns.forEach(item => item.fullfilled = dataStore.onboarding.has(Onboarding[item.id]))
+  cards.forEach(item => item.fullfilled = dataStore.onboarding.has(Onboarding[item.id]))
   
-  console.tron.log({earns, earns_all, section})
+  let allPreviousFullfilled = true
+  let enabledMessage = ""
+  
+  cards.forEach(item => {
+    console.tron.log({enabledMessage, id: item.id})
+    
+    item.enabled = true
+    
+    if (allPreviousFullfilled === false) {
+      item.enabled = false
+      item.enabledMessage = enabledMessage
+    }
+    
+    if (!item.fullfilled && allPreviousFullfilled) {
+      allPreviousFullfilled = false
+      enabledMessage = item.title
+    }
+  })
 
   if (earnsMeta) {
     // FIXME
-    earns.forEach(item => item.enabled = earnsMeta[item.id]?.enabled ?? true)
-    earns.forEach(
-      (item) =>
-        (item.enabledMessage = earnsMeta[item.id]?.enabledMessage ?? translate(`common.soon`)),
-    )
+    // earns.forEach(item => item.enabled = earnsMeta[item.id]?.enabled ?? true)
+    // earns.forEach(
+    //   (item) =>
+    //     (item.enabledMessage = earnsMeta[item.id]?.enabledMessage ?? translate(`common.soon`)),
+    // )
   }
 
-  return earns
+  console.tron.log({earns: cards})
+
+  return cards
 }
 
 export const isSectionComplete = ({section, dataStore}) => 
