@@ -92,14 +92,22 @@ const styles = EStyleSheet.create({
   },
 
   textButton: {
-    backgroundColor: color.primary,
+    backgroundColor: palette.white,
+    borderRadius: 24,
+    marginHorizontal: 60,
+    marginVertical: 32,
+  },
+
+  buttonStyleDisabled: {
+    opacity: .5,
+    backgroundColor: palette.white,
     borderRadius: 24,
     marginHorizontal: 60,
     marginVertical: 32,
   },
 
   buttonStyleFullfilled: {
-    // backgroundColor: palette.offWhite,
+    backgroundColor: color.transparent,
     borderRadius: 24,
     marginHorizontal: 60,
     marginVertical: 32,
@@ -129,15 +137,38 @@ const styles = EStyleSheet.create({
   titleStyleFullfilled: {
     color: palette.white,
   },
+
+  titleStyleDisabled: {
+    color: palette.lightBlue,
+  },
+
+  titleStyle: {
+    color: palette.lightBlue,
+    fontWeight: "bold"
+  },
+
+  unlockQuestion: {
+    paddingTop: "18rem",
+    color: palette.white,
+    fontSize: "16rem",
+    alignSelf: "center"
+  },
+
+  unlock: {
+    color: palette.white,
+    fontSize: "16rem",
+    fontWeight: "bold",
+    alignSelf: "center"
+  },
 })
 
 export const EarnSection = inject("dataStore")(
   observer(({ dataStore, route, navigation }) => {
 
     const section = route.params.section
-    const earn = getEarnFromSection({ section, earnsMeta, dataStore })
+    const cards = getEarnFromSection({ section, earnsMeta, dataStore })
 
-    const itemIndex = earn.findIndex(item => !item.fullfilled)
+    const itemIndex = cards.findIndex(item => !item.fullfilled)
     const [firstItem] = useState(itemIndex >= 0 ? itemIndex : 0)
 
     const [currRewardIndex, setCurrRewardIndex] = useState(firstItem)
@@ -203,49 +234,59 @@ export const EarnSection = inject("dataStore")(
       console.tron.log({item})
 
       return (
-        <View style={styles.item}>
-          <TouchableOpacity 
-            onPress={() => open(item)}
-            activeOpacity={0.9}
-            >
-            {SVGs({name: item.id, width: svgWidth, height: svgWidth})}
-          </TouchableOpacity>
-          <View>
-            <Text 
-              style={styles.itemTitle}
-              numberOfLines={3}  
-            >{item.title}</Text>
-            <Button
+        <>
+          <View style={styles.item}>
+            <TouchableOpacity 
               onPress={() => open(item)}
+              activeOpacity={0.9}
               disabled={!item.enabled}
-              type={item.fullfilled ? "clear" : "solid"}
-              buttonStyle={item.fullfilled ? styles.buttonStyleFullfilled : styles.textButton}
-              titleStyle={item.fullfilled ? styles.titleStyleFullfilled : null}
-              // containerStyle={styles.}
-              title={
-                  item.enabled
-                  ? item.fullfilled
-                    ? I18n.t("EarnScreen.satsEarned", {
-                      count: OnboardingEarn[item.id],
-                      formatted_number: I18n.toNumber(OnboardingEarn[item.id], { precision: 0 }),
-                    })
-                    : I18n.t("EarnScreen.earnSats", {
-                        count: OnboardingEarn[item.id],
-                        formatted_number: I18n.toNumber(OnboardingEarn[item.id], { precision: 0 }),
-                      })
-                    // : translate("common.learnMore")
-                  : item.enabledMessage
-              }
-              icon={item.fullfilled ? <Icon 
-                name={"ios-checkmark-circle-outline"}
-                size={36}
-                color={palette.white}
-                style={{paddingRight: 12, paddingTop: 3}}
-                />
-                : undefined}
-            />
+              >
+              {SVGs({name: item.id, width: svgWidth, height: svgWidth})}
+            </TouchableOpacity>
+            <View>
+              <Text 
+                style={styles.itemTitle}
+                numberOfLines={3}  
+              >{item.title}</Text>
+              <Button
+                onPress={() => open(item)}
+                disabled={!item.enabled}
+                disabledStyle={styles.buttonStyleDisabled}
+                disabledTitleStyle={styles.titleStyleDisabled}
+                buttonStyle={item.fullfilled ? styles.buttonStyleFullfilled : styles.textButton}
+                titleStyle={item.fullfilled ? styles.titleStyleFullfilled : styles.titleStyle}
+                title={
+                    // item.enabled
+                    // ?
+                    item.fullfilled
+                      ? I18n.t("EarnScreen.satsEarned", {
+                          count: OnboardingEarn[item.id],
+                          formatted_number: I18n.toNumber(OnboardingEarn[item.id], { precision: 0 }),
+                        })
+                      : I18n.t("EarnScreen.earnSats", {
+                          count: OnboardingEarn[item.id],
+                          formatted_number: I18n.toNumber(OnboardingEarn[item.id], { precision: 0 }),
+                        })
+                      // : translate("common.learnMore")
+                    // : 
+                }
+                icon={item.fullfilled ? <Icon 
+                  name={"ios-checkmark-circle-outline"}
+                  size={36}
+                  color={palette.white}
+                  style={{paddingRight: 12, paddingTop: 3}}
+                  />
+                  : undefined}
+              />
+            </View>
           </View>
-        </View>
+          {!item.enabled &&
+            <>
+              <Text style={styles.unlockQuestion}>To unlock answer the question:</Text>
+              <Text style={styles.unlock}>{item.enabledMessage}</Text>
+            </>
+          }
+        </>
       )
     }
 
@@ -253,7 +294,7 @@ export const EarnSection = inject("dataStore")(
       <Screen style={styles.screenStyle}>
         <View style={{ flex: 1 }} />
         <Carousel
-          data={earn}
+          data={cards}
           renderItem={CardItem}
           sliderWidth={screenWidth}
           // scrollEnabled={!isRewardOpen}
@@ -266,7 +307,7 @@ export const EarnSection = inject("dataStore")(
         />
         <View style={{ flex: 1 }} />
         <Pagination
-          dotsLength={earn.length}
+          dotsLength={cards.length}
           activeDotIndex={currRewardIndex}
           dotStyle={{
               width: 10,
