@@ -226,7 +226,11 @@ export const MoveMoneyScreen = (
             ))}
             <View style={{marginBottom: 32, alignItems: "center", marginTop: 32}}>
               <Icon name={"ios-thunderstorm"} size={32} />
-              <Text style={styles.lightningText}>{`We use the Lightning Network.\nLearn More`}</Text>
+              <Text 
+                onPress={() => navigation.navigate("Profile")} 
+                style={styles.lightningText}>
+                  {`We use the Lightning Network.`}
+                </Text>
             </View>
           </>
         }
