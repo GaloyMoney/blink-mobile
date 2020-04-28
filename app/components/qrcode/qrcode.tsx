@@ -6,7 +6,6 @@ import { color } from "../../theme/color"
 
 const styles = StyleSheet.create({
   base: {
-    backgroundColor: color.background,
     borderRadius: 13,
     padding: 30,
   },
