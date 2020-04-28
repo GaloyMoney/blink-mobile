@@ -237,7 +237,7 @@ export const PrimaryNavigator = () => {
           },
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Profile"
         component={DebugScreen}
         options={{
@@ -246,7 +246,7 @@ export const PrimaryNavigator = () => {
             return <Icon name={"ios-settings"} size={size} color={color} />
           },
         }}
-      />
+      /> */}
     </Tab.Navigator>
   )
 }
@@ -276,6 +276,10 @@ export const RootStackScreen = () => {
           headerShown: false,
           cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
         }}
+      />
+      <RootStack.Screen
+        name="Profile"
+        component={DebugScreen}
       />
       <RootStack.Screen
         name="openBankAccount"
