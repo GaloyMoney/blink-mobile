@@ -70,18 +70,18 @@ const styles = EStyleSheet.create({
     backgroundColor: palette.red,
     borderRadius: 32,
     width: "100%",
-    padding: 12
+    padding: 12,
   },
 
   quizCorrectButtonStyle: {
     backgroundColor: palette.green,
     borderRadius: 32,
     width: "100%",
-    padding: 12
+    padding: 12,
   },
 
   quizButtonTitleStyle: {
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
 
   quizButtonContainerStyle: {
@@ -104,11 +104,10 @@ const styles = EStyleSheet.create({
   modalBackground: {
     alignItems: "center",
     backgroundColor: palette.white,
-    // minHeight: "70%",
+    minHeight: "80%",
     // maxHeight: "100%",
-    flexGrow: 3,
+    // flexGrow: 1,
     justifyContent: "flex-end",
-    paddingHorizontal: 24,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
   },
@@ -133,6 +132,9 @@ const styles = EStyleSheet.create({
   keepDiggingContainerStyle: {
     marginTop: 18,
     flex: 1,
+    alignItems: "center",
+    minHeight: "18rem",
+    marginBottom: "24rem"
   },
 })
 
@@ -199,14 +201,15 @@ export const EarnQuiz = ({ route, navigation }) => {
   return (
     <Screen style={{backgroundColor: palette.lighterGrey}} unsafe={true}>
       <Modal
-        style={{ marginHorizontal: 0, marginBottom: 0 }}
+        style={{ marginHorizontal: 0, marginBottom: 0, flexGrow: 1 }}
         isVisible={quizVisible}
         swipeDirection={quizVisible ? ["down"] : ["up"]}
         onSwipeComplete={() => setQuizVisible(false)}
         swipeThreshold={50}
+        propagateSwipe={true}
       >
         {/* TODO: expand automatically */}
-        <View style={{ flex: 1 }}>
+        <View style={{ flexShrink: 1 }}>
           <TouchableWithoutFeedback onPress={() => setQuizVisible(false)}>
             <View style={{height: "100%", width: "100%"}} />
           </TouchableWithoutFeedback>
@@ -218,16 +221,21 @@ export const EarnQuiz = ({ route, navigation }) => {
               color={palette.lightGrey}
               style={{ height: 44, top: -26 }}
             />
-          <View style={{ flex: 1, marginHorizontal: 24 }}>
-            <Text style={styles.title} >{question ?? title}</Text>
-            {answers_shuffled}
-            { recordedAnswer.indexOf(0) !== -1 ?
-              <Button title={"Keep digging!"} 
-                      type="outline" onPress={async () => await close()}
-                      containerStyle={styles.keepDiggingContainerStyle}
-                      buttonStyle={styles.buttonStyle}
-                      titleStyle={styles.titleStyle} />
-            : null }
+          <View style={{ flex: 1 }}>
+            <ScrollView
+              contentContainerStyle={{ paddingHorizontal: 24, marginHorizontal: 12 }}>
+              <Text style={styles.title} >{question ?? title}</Text>
+              {answers_shuffled}
+              <SafeAreaView>
+                { recordedAnswer.indexOf(0) !== -1 ?
+                  <Button title={"Keep digging!"} 
+                  type="outline" onPress={async () => await close()}
+                  containerStyle={styles.keepDiggingContainerStyle}
+                  buttonStyle={styles.buttonStyle}
+                  titleStyle={styles.titleStyle} />
+                  : null }
+              </SafeAreaView>
+            </ScrollView>
           </View>
         </View>
       </Modal>
