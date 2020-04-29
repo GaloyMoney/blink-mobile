@@ -8,8 +8,9 @@ import MascotBitcoin from "./honey-badger-01.svg"
 
 import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
+import EStyleSheet from "react-native-extended-stylesheet"
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
   bottom: {
     alignItems: "center",
     flex: 1,
@@ -56,8 +57,8 @@ const styles = StyleSheet.create({
     color: palette.white,
     fontSize: 72,
     fontWeight: "bold",
-    marginBottom: 24,
-    marginTop: 128,
+    flex: 1,
+    paddingBottom: "24rem",
   },
 })
 
@@ -66,6 +67,7 @@ export const GetStartedScreen = () => {
 
   return (
     <Screen style={styles.container} backgroundColor={palette.lightBlue}>
+      <View style={{flex: 1}} />
       <Text style={styles.title} onPress={() => navigate("debug")}>
         Galoy
       </Text>
