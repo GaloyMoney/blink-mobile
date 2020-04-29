@@ -13,6 +13,9 @@ import WhyStonesShellGold from "./04-why-used-as-money-01.svg"
 import MoneyIsImportant from "./05-money-is-important-01.svg"
 import MoneyImportantGovernement from "./06-important-to-governments-01.svg"
 
+import LottieView from 'lottie-react-native'
+const lottieTest = require('./02-i-trust-my-government-01.json')
+
 interface ISVGs {
   name: string, 
   width?: number,
@@ -26,7 +29,11 @@ export const SVGs = ({name, width, height}: ISVGs) => {
   const rHeight = height ?? screenWidth
 
   switch (name) {
-    case "whatIsBitcoin": return <WhatIsBitcoinSVG width={rWidth} height={rHeight} /> 
+    // case "whatIsBitcoin": return <WhatIsBitcoinSVG width={rWidth} height={rHeight} /> 
+    
+    case "whatIsBitcoin": return <LottieView source={lottieTest} 
+      style={{width: screenWidth, height: screenWidth, alignSelf: "center"}} autoPlay loop />
+
     case "sat": return <SatSVG width={rWidth} height={rHeight} />
     case "whereBitcoinExist": return <WhereBitcoinExistSVG width={rWidth} height={rHeight} />
     case "whoControlsBitcoin": return <WhoControlsBitcoinSVG width={rWidth} height={rHeight} />
