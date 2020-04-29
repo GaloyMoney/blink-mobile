@@ -29,11 +29,7 @@ export const SVGs = ({name, width, height}: ISVGs) => {
   const rHeight = height ?? screenWidth
 
   switch (name) {
-    // case "whatIsBitcoin": return <WhatIsBitcoinSVG width={rWidth} height={rHeight} /> 
-    
-    case "whatIsBitcoin": return <LottieView source={lottieTest} 
-      style={{width: screenWidth, height: screenWidth, alignSelf: "center"}} autoPlay loop />
-
+    case "whatIsBitcoin": return <WhatIsBitcoinSVG width={rWidth} height={rHeight} />     
     case "sat": return <SatSVG width={rWidth} height={rHeight} />
     case "whereBitcoinExist": return <WhereBitcoinExistSVG width={rWidth} height={rHeight} />
     case "whoControlsBitcoin": return <WhoControlsBitcoinSVG width={rWidth} height={rHeight} />
@@ -46,6 +42,8 @@ export const SVGs = ({name, width, height}: ISVGs) => {
     case "moneyIsImportant": return <MoneyIsImportant width={rWidth} height={rHeight} />
     case "moneyImportantGovernement": return <MoneyImportantGovernement width={rWidth} height={rHeight} />
 
-    default: return <Text>{name} does not exist</Text>
+    default: return <LottieView source={lottieTest} 
+      style={{width: screenWidth, height: screenWidth, alignSelf: "center"}} autoPlay loop />
+    // default: return <Text>{name} does not exist</Text>
   }
 }

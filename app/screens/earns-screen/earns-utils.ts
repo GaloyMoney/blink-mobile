@@ -76,42 +76,9 @@ export const getCompletedSection = ({ dataStore }) => {
   return count
 }
 
-export const earnsMeta = {
+const _earnsMeta = {
   walletDownloaded: {
     onComplete: null,
-  },
-  whatIsBitcoin: {
-    onComplete: async ({ dataStore }) => dataStore.onboarding.add(Onboarding.whatIsBitcoin),
-  },
-  sat: {
-    onComplete: async ({ dataStore }) => dataStore.onboarding.add(Onboarding.sat),
-  },
-  whereBitcoinExist: {
-    onComplete: async ({ dataStore }) => dataStore.onboarding.add(Onboarding.whereBitcoinExist),
-  },
-  whoControlsBitcoin: {
-    onComplete: async ({ dataStore }) => dataStore.onboarding.add(Onboarding.whoControlsBitcoin),
-  },
-  copyBitcoin: {
-    onComplete: async ({ dataStore }) => dataStore.onboarding.add(Onboarding.copyBitcoin),
-  },
-  moneySocialAggrement: {
-    onComplete: async ({ dataStore }) => dataStore.onboarding.add(Onboarding.moneySocialAggrement),
-  },
-  coincidenceOfWants: {
-    onComplete: async ({ dataStore }) => dataStore.onboarding.add(Onboarding.coincidenceOfWants),
-  },
-  moneyEvolution: {
-    onComplete: async ({ dataStore }) => dataStore.onboarding.add(Onboarding.moneyEvolution),
-  },
-  whyStonesShellGold: {
-    onComplete: async ({ dataStore }) => dataStore.onboarding.add(Onboarding.whyStonesShellGold),
-  },
-  moneyIsImportant: {
-    onComplete: async ({ dataStore }) => dataStore.onboarding.add(Onboarding.moneyIsImportant),
-  },
-  moneyImportantGovernement: {
-    onComplete: async ({ dataStore }) => dataStore.onboarding.add(Onboarding.moneyImportantGovernement),
   },
   backupWallet: {
     onAction: async ({ setLoading }) => {
@@ -122,18 +89,6 @@ export const earnsMeta = {
     onComplete: async ({ dataStore }) => {
       await dataStore.onboarding.add(Onboarding.backupWallet)
     },
-  },
-  fiatMoney: {
-    onComplete: async ({ dataStore }) => dataStore.onboarding.add(Onboarding.fiatMoney),
-  },
-  bitcoinUnique: {
-    onComplete: async ({ dataStore }) => dataStore.onboarding.add(Onboarding.bitcoinUnique),
-  },
-  moneySupply: {
-    onComplete: async ({ dataStore }) => dataStore.onboarding.add(Onboarding.moneySupply),
-  },
-  newBitcoin: {
-    onComplete: async ({ dataStore }) => dataStore.onboarding.add(Onboarding.newBitcoin),
   },
   activateNotifications: {
     onAction: async ({ dataStore, setLoading }) => {
@@ -172,15 +127,6 @@ export const earnsMeta = {
     // FIXME
     // enabled: dataStore.lnd.statusFirstChannel == FirstChannelStatus.opened,
     enabledMessage: translate(`EarnScreen.channelNeeded`),
-  },
-  transaction: {
-    onComplete: async ({ dataStore }) => dataStore.onboarding.add(Onboarding.transaction),
-  },
-  paymentProcessing: {
-    onComplete: async ({ dataStore }) => dataStore.onboarding.add(Onboarding.paymentProcessing),
-  },
-  creator: {
-    onComplete: async ({ dataStore }) => dataStore.onboarding.add(Onboarding.creator),
   },
   decentralization: {
     onComplete: () => {},
@@ -238,14 +184,21 @@ export const earnsMeta = {
     onComplete: () => {},
     enabled: false,
   },
-  volatility: {
-    onComplete: async ({ dataStore }) => dataStore.onboarding.add(Onboarding.volatility),
-  },
-  buyFirstSats: {
-    onComplete: async ({ dataStore }) => dataStore.onboarding.add(Onboarding.buyFirstSats),
-  },
+
   dollarCostAveragingImage: {
     onComplete: async ({ dataStore }) =>
       dataStore.onboarding.add(Onboarding.dollarCostAveragingImage),
   },
 }
+
+const handler = {
+  get: function(obj, prop) {
+    return prop in obj ?
+      obj[prop] : {
+        onComplete: async ({ dataStore }) => dataStore.onboarding.add(Onboarding[prop])
+      }
+  }
+};
+
+export const earnsMeta = new Proxy(_earnsMeta, handler);
+
