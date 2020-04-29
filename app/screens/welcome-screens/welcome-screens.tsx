@@ -58,23 +58,23 @@ export const WelcomeFirstScreen = inject("dataStore")(({ dataStore, navigation }
         />
       }
     >
-      <Screen>
+      <Screen backgroundColor={palette.lightBlue}>
         <OnboardingScreen Svg={MascotDollarBitcoin}>
           <Text style={styles.title}>Bitcoin:</Text>
           <Text style={styles.text}>{translate("WelcomeFirstScreen.care")}</Text>
         </OnboardingScreen>
       </Screen>
-      <Screen>
+      <Screen backgroundColor={palette.lightBlue}>
         <OnboardingScreen Svg={BitcoinBitcoin}>
           <Text style={styles.text}>{translate("WelcomeFirstScreen.bank")}</Text>
         </OnboardingScreen>
       </Screen>
-      <Screen>
+      <Screen backgroundColor={palette.lightBlue}>
         <OnboardingScreen Svg={BankShop}>
           <Text style={styles.text}>{translate("WelcomeFirstScreen.before")}</Text>
         </OnboardingScreen>
       </Screen>
-      <Screen>
+      <Screen backgroundColor={palette.lightBlue}>
         <OnboardingScreen
           action={async () => {
             dataStore.onboarding.add(Onboarding.walletDownloaded)
