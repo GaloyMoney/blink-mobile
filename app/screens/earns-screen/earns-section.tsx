@@ -14,7 +14,8 @@ import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { SVGs } from "./earn-svg-factory"
-import { earnsMeta, getEarnFromSection, getRemainingEarnSats } from "./earns-utils"
+import { earnsMeta, getEarnFromSection, getRemainingSatsOnSection } from "./earns-utils"
+import { useIsFocused } from '@react-navigation/native';
 
 
 const { width: screenWidth } = Dimensions.get("window")
@@ -174,15 +175,19 @@ export const EarnSection = inject("dataStore")(
 
     const [currRewardIndex, setCurrRewardIndex] = useState(firstItem)
 
-    const [initialRemainingEarn] = useState(getRemainingEarnSats({ sectionIndex, dataStore }))
-    const currentRemainingEarn = getRemainingEarnSats({ sectionIndex, dataStore })
+    const [initialRemainingSats] = useState(getRemainingSatsOnSection({ sectionIndex, dataStore }))
+    const currentRemainingEarn = getRemainingSatsOnSection({ sectionIndex, dataStore })
     
     const sectionTitle = translate(`EarnScreen.earns\.${sectionIndex}\.meta.title`)
 
-    if (initialRemainingEarn !== 0 && currentRemainingEarn === 0 && navigation.isFocused()) {
+    const isFocused = useIsFocused()
+    console.tron.log({isFocused, initialRemainingSats, currentRemainingEarn})
+
+    if (initialRemainingSats !== 0 && currentRemainingEarn === 0 && isFocused) {
+      console.tron.warn("section Completed!")
       navigation.navigate("sectionCompleted", {
-        amount: cards.reduce((acc, item) => OnboardingEarn[item.id] + acc), 
-        section: sectionTitle
+        amount: cards.reduce((acc, item) => OnboardingEarn[item.id] + acc, 0),
+        sectionTitle
     })}
 
     navigation.setOptions({ title: sectionTitle })

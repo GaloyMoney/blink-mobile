@@ -116,7 +116,7 @@ export const TransactionDetailScreen = ({ route, navigation }) => {
           <Row entry={"Preimage"} value={preimage} />
         }
       </View>
-      <CloseCross color={palette.white} navigation={navigation} />
+      <CloseCross color={palette.white} onPress={() => navigation.goBack()} />
     </Screen>
   )
 }

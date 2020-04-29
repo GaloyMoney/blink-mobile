@@ -12,7 +12,7 @@ storiesOf("Section Completed", module)
     <SafeAreaProvider>
       <Story>
         <UseCase text="not earned">
-          <SectionCompleted section={"Bitcoin: What is it?"} amount={5000} />  
+          <SectionCompleted sectionTitle={"Bitcoin: What is it?"} amount={5000} />  
         </UseCase>
       </Story>
     </SafeAreaProvider>

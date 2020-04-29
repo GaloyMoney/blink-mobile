@@ -147,7 +147,7 @@ export const WelcomePhoneInputScreen = ({ navigation }) => {
         <ActivityIndicator animating={loading} size="large" color={color.primary} />
         <View style={{ flex: 1 }} />
       </View>
-      <CloseCross color={palette.darkGrey} navigation={navigation} />
+      <CloseCross color={palette.darkGrey} onPress={() => navigation.goBack()} />
     </Screen>
 )}
 
