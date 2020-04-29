@@ -165,29 +165,27 @@ const styles = EStyleSheet.create({
 export const EarnSection = inject("dataStore")(
   observer(({ dataStore, route, navigation }) => {
 
-    const section = route.params.section
-    const cards = getEarnFromSection({ section, earnsMeta, dataStore })
+    const sectionIndex = route.params.section
+    console.tron.log({earnSection: sectionIndex})
+    const cards = getEarnFromSection({ sectionIndex, earnsMeta, dataStore })
 
     const itemIndex = cards.findIndex(item => !item.fullfilled)
     const [firstItem] = useState(itemIndex >= 0 ? itemIndex : 0)
 
     const [currRewardIndex, setCurrRewardIndex] = useState(firstItem)
 
-    const [initialRemainingEarn] = useState(getRemainingEarnSats({ section, dataStore }))
-    const currentRemainingEarn = getRemainingEarnSats({ section, dataStore })
-
-    if (initialRemainingEarn !== 0 && currentRemainingEarn === 0) {
-      Alert.alert("You have succesfully completed this section!", "", [
-        {
-          text: translate("common.ok"),
-          onPress: () => {
-            navigation.goBack()
-          },
-        },
-      ])
-    }
+    const [initialRemainingEarn] = useState(getRemainingEarnSats({ sectionIndex, dataStore }))
+    const currentRemainingEarn = getRemainingEarnSats({ sectionIndex, dataStore })
     
-    navigation.setOptions({ title: translate(`EarnScreen.earns\.${section}\.meta.title`) })
+    const sectionTitle = translate(`EarnScreen.earns\.${sectionIndex}\.meta.title`)
+
+    if (initialRemainingEarn !== 0 && currentRemainingEarn === 0 && navigation.isFocused()) {
+      navigation.navigate("sectionCompleted", {
+        amount: cards.reduce((acc, item) => OnboardingEarn[item.id] + acc), 
+        section: sectionTitle
+    })}
+
+    navigation.setOptions({ title: sectionTitle })
     
     enum RewardType {
       Text = "Text",
@@ -195,20 +193,20 @@ export const EarnSection = inject("dataStore")(
       Action = "Action",
     }
 
-    const open = async (earn) => {
+    const open = async (card) => {
 
-      switch (RewardType[earn.type]) {
+      switch (RewardType[card.type]) {
         case RewardType.Text:
           navigation.navigate('earnsQuiz', { 
-            title: earn.title, 
-            text: earn.text, 
-            amount: OnboardingEarn[earn.id],
-            question: earn.question,
-            answers: earn.answers, 
-            feedback: earn.feedback,
-            onComplete: () => earnsMeta[earn.id].onComplete({ dataStore }),
-            id: earn.id,
-            completed: dataStore.onboarding.has(earn.id)
+            title: card.title, 
+            text: card.text, 
+            amount: OnboardingEarn[card.id],
+            question: card.question,
+            answers: card.answers, 
+            feedback: card.feedback,
+            onComplete: () => earnsMeta[card.id].onComplete({ dataStore }),
+            id: card.id,
+            completed: dataStore.onboarding.has(card.id)
           })
           break
         //     case RewardType.Video:
