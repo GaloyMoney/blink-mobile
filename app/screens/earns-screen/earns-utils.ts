@@ -46,14 +46,14 @@ export const getEarnFromSection = ({ dataStore, sectionIndex, earnsMeta = undefi
 }
 
 export const isSectionComplete = ({sectionIndex, dataStore}) => 
-  getRemainingEarnSats({sectionIndex, dataStore}) === 0
+  getRemainingSatsOnSection({sectionIndex, dataStore}) === 0
 
 export const getRemainingEarnItems = ({ sectionIndex, dataStore }) => {
   const earns = getEarnFromSection({ sectionIndex, dataStore })
   return earns.filter((item) => item.fullfilled).length / earns.length
 }
   
-export const getRemainingEarnSats = ({ sectionIndex, dataStore }) =>
+export const getRemainingSatsOnSection = ({ sectionIndex, dataStore }) =>
   getEarnFromSection({ sectionIndex, dataStore })
     .filter((item) => !item.fullfilled)
     .reduce((acc, item) => OnboardingEarn[item.id] + acc, 0)
@@ -69,7 +69,7 @@ export const getCompletedSection = ({ dataStore }) => {
   let count = 0
   const sections = getSections()
   for (const sectionIndex of sections) {
-    if (getRemainingEarnSats({ dataStore, sectionIndex }) === 0) {
+    if (getRemainingSatsOnSection({ dataStore, sectionIndex }) === 0) {
       count++
     }
   }

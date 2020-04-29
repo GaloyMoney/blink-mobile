@@ -99,7 +99,7 @@ export const BankAccountEarnScreen = ({ navigation }) => {
           title="Join the waiting list"
           // onPress={() => navigation.navigate("openBankAccount")}
         />
-      <CloseCross color={palette.darkGrey} navigation={navigation} />
+      <CloseCross color={palette.darkGrey} onPress={() => navigation.goBack()} />
       </View>
     </Screen>
   )

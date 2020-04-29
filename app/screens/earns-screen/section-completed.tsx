@@ -47,7 +47,9 @@ const styles = EStyleSheet.create({
   }
 })
 
-export const SectionCompleted = ({ section, amount, navigation }) => {
+export const SectionCompleted = ({ navigation, route }) => {
+  const { amount, sectionTitle } = route.params
+
   return (
     <Screen backgroundColor={palette.orange} unsafe={true}>
       <View style={styles.topView}>
@@ -69,15 +71,15 @@ export const SectionCompleted = ({ section, amount, navigation }) => {
         <View style={{ flex: .1, minHeight: 30 }}></View>
         <BadgerShovelBitcoin />
         <Text style={styles.headerSection}>You've completed</Text>
-        <Text style={styles.titleSection}>{section}</Text>
+        <Text style={styles.titleSection}>{sectionTitle}</Text>
         <Button title="Keep Digging" type="solid" 
           buttonStyle={styles.buttonStyle}
           titleStyle={styles.titleStyle}
-          onPress={navigation.navigate("Earn")}
+          onPress={() => navigation.navigate("Earn")}
           />
       </View>
       <View style={styles.bottomView}></View>
-      <CloseCross color={palette.white} navigation={navigation} />
+      <CloseCross color={palette.white} onPress={() => navigation.navigate("Earn")} />
     </Screen>
   )
 }

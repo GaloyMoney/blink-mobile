@@ -256,7 +256,7 @@ export const EarnQuiz = ({ route, navigation }) => {
           </View>
         </ScrollView>
       </SafeAreaView>
-      <CloseCross navigation={navigation} color={palette.darkGrey} />
+      <CloseCross onPress={() => navigation.goBack()} color={palette.darkGrey} />
       <SafeAreaView style={styles.bottomContainer}>
           <View style={{paddingVertical: 12}}>
           {isCompleted &&

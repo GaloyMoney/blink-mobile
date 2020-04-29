@@ -17,11 +17,11 @@ const styles = EStyleSheet.create({
   }
 })
 
-export const CloseCross = ({navigation, color}) => (
+export const CloseCross = ({onPress, color}) => (
   <View style={styles.iconContainer}>
     <Icon name="ios-close"
       size={styles._icon.fontSize}
-      onPress={() => navigation.goBack()}
+      onPress={onPress}
       color={color}
     />
   </View>

@@ -286,6 +286,7 @@ export const RootStackScreen = () => {
         component={SectionCompleted}
         options={{ 
           headerShown: false,
+          cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS
         }}
       />
       <RootStack.Screen
