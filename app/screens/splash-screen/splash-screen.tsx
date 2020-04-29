@@ -9,7 +9,7 @@ import { palette } from "../../theme/palette"
 const styles = StyleSheet.create({
   centerBackground: {
     alignItems: "center",
-    backgroundColor: color.background,
+    backgroundColor: palette.lightBlue,
     flex: 1,
     flexDirection: "column",
     justifyContent: "space-around",
