@@ -20,6 +20,7 @@ const formatArray = input => input.map(index => {
     type: "Text",
     title: index["Screen Name"],
     text: index.Content,
+    question: index.Question,
     answers: [
       index["Answer A"],
       index["Answer B"],
