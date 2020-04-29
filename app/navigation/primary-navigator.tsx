@@ -16,15 +16,16 @@ import { WelcomePhoneInputScreen, WelcomePhoneValidationScreenDataInjected } fro
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
 import { palette } from "../theme/palette"
 import { AccountType } from "../utils/enum"
+import EStyleSheet from "react-native-extended-stylesheet"
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
   person: {
     paddingRight: 15,
   },
 
   bottomNavigatorStyle: {
-    height: '12%'
-    // height: '12rem%'
+    height: '10%'
+    // height: '60rem'
     // height: 100
   }
 })
