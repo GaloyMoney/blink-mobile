@@ -5,9 +5,10 @@ import { Onboarding, OnboardingEarn } from "types"
 import { translate } from "../../i18n"
 import { sleep } from "../../utils/sleep"
 
-export const getEarnFromSection = ({ dataStore, section, earnsMeta = undefined }) => {
+export const getEarnFromSection = ({ dataStore, sectionIndex, earnsMeta = undefined }) => {
   const earns_all = translate(`EarnScreen.earns`)
-  const cards = JSON.parse(JSON.stringify(earns_all[section].content))
+  console.tron.log({sectionIndex})
+  const cards = earns_all[sectionIndex].content
 
   cards.forEach(item => item.fullfilled = dataStore.onboarding.has(Onboarding[item.id]))
   
@@ -44,16 +45,16 @@ export const getEarnFromSection = ({ dataStore, section, earnsMeta = undefined }
   return cards
 }
 
-export const isSectionComplete = ({section, dataStore}) => 
-  getRemainingEarnSats({section, dataStore}) === 0
+export const isSectionComplete = ({sectionIndex, dataStore}) => 
+  getRemainingEarnSats({sectionIndex, dataStore}) === 0
 
-export const getRemainingEarnItems = ({ section, dataStore }) => {
-  const earns = getEarnFromSection({ section, dataStore })
+export const getRemainingEarnItems = ({ sectionIndex, dataStore }) => {
+  const earns = getEarnFromSection({ sectionIndex, dataStore })
   return earns.filter((item) => item.fullfilled).length / earns.length
 }
   
-export const getRemainingEarnSats = ({ section, dataStore }) =>
-  getEarnFromSection({ section, dataStore })
+export const getRemainingEarnSats = ({ sectionIndex, dataStore }) =>
+  getEarnFromSection({ sectionIndex, dataStore })
     .filter((item) => !item.fullfilled)
     .reduce((acc, item) => OnboardingEarn[item.id] + acc, 0)
 
@@ -67,8 +68,8 @@ export const getSections = () => {
 export const getCompletedSection = ({ dataStore }) => {
   let count = 0
   const sections = getSections()
-  for (const section of sections) {
-    if (getRemainingEarnSats({ dataStore, section }) === 0) {
+  for (const sectionIndex of sections) {
+    if (getRemainingEarnSats({ dataStore, sectionIndex }) === 0) {
       count++
     }
   }

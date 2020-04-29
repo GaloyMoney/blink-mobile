@@ -6,14 +6,14 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { translate } from "../i18n"
 import { AccountDetailScreen } from "../screens/account-detail-screen/account-detail-screen"
 import { AccountsScreen } from "../screens/accounts-screen"
-import { BankAccountReadyScreen, BankAccountEarnScreen, DateOfBirthScreen, OpenBankScreen, PersonalInformationScreen } from "../screens/bank-onboarding"
+import { BankAccountEarnScreen, BankAccountReadyScreen, DateOfBirthScreen, OpenBankScreen, PersonalInformationScreen } from "../screens/bank-onboarding"
 import { DebugScreen } from "../screens/debug-screen"
-import { BankTransferScreen, DirectDepositScreen, FindATMScreen, MoveMoneyScreenDataInjected, ReceiveBitcoinScreen, ScanningQRCodeScreen, SendBitcoinScreen, ShowQRCode } from "../screens/move-money-screen"
-import { WelcomePhoneInputScreen, WelcomePhoneValidationScreenDataInjected } from "../screens/phone-auth-screen"
 import { EarnMapDataInjected } from "../screens/earns-map-screen"
 import { EarnQuiz, EarnSection } from "../screens/earns-screen"
+import { SectionCompleted } from "../screens/earns-screen/section-completed"
+import { BankTransferScreen, DirectDepositScreen, FindATMScreen, MoveMoneyScreenDataInjected, ReceiveBitcoinScreen, ScanningQRCodeScreen, SendBitcoinScreen, ShowQRCode } from "../screens/move-money-screen"
+import { WelcomePhoneInputScreen, WelcomePhoneValidationScreenDataInjected } from "../screens/phone-auth-screen"
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
-import { color } from "../theme"
 import { palette } from "../theme/palette"
 import { AccountType } from "../utils/enum"
 
@@ -258,7 +258,7 @@ export const RootStackScreen = () => {
     <RootStack.Navigator mode="modal" headerMode="screen">
       <RootStack.Screen
         // name="Primary" // FIXME quick fixe
-        name="Earn"
+        name="Earn "
         component={PrimaryNavigator}
         options={{ headerShown: false }}
       />
@@ -280,6 +280,13 @@ export const RootStackScreen = () => {
       <RootStack.Screen
         name="Profile"
         component={DebugScreen}
+      />
+      <RootStack.Screen
+        name="sectionCompleted"
+        component={SectionCompleted}
+        options={{ 
+          headerShown: false,
+        }}
       />
       <RootStack.Screen
         name="openBankAccount"

@@ -90,17 +90,17 @@ export const EarnMapDataInjected = inject("dataStore")(
   let progress = NaN
 
   
-  for (let section of sectionId) {
+  for (let sectionIndex of sectionId) {
     sectionsData.push({
-      id: section,
-      text: translate(`EarnScreen.earns\.${section}.meta.title`),
+      id: sectionIndex,
+      text: translate(`EarnScreen.earns\.${sectionIndex}.meta.title`),
       icon: BitcoinCircle,
     })
 
-    if (isSectionComplete({section, dataStore})) {
+    if (isSectionComplete({sectionIndex, dataStore})) {
       currSection += 1
     } else if (isNaN(progress)) { // only do it once for the first uncompleted section
-      progress = getRemainingEarnItems({section, dataStore})
+      progress = getRemainingEarnItems({sectionIndex, dataStore})
     }
   }
 
