@@ -10,6 +10,7 @@ import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
 import { color, spacing } from "../../theme"
 import { palette } from "../../theme/palette"
+import { resetDataStore } from "../../models/root-store"
 
 
 
@@ -106,6 +107,7 @@ export const DebugScreen = inject("dataStore")(
             textStyle={DEMO_TEXT}
             title="Delete account and log out"
             onPress={async () => {
+              resetDataStore()
               if (auth().currentUser) {
                 try {
                   await functions().httpsCallable("deleteCurrentUser")({})
@@ -114,7 +116,6 @@ export const DebugScreen = inject("dataStore")(
                 }
               }
               await auth().signOut()
-              await dataStore.onboarding._reset() // do not synchronize state update
               Alert.alert("user succesfully deleted. Delete your app to start from a clean state")
             }}
           />
