@@ -5,32 +5,35 @@ import { useNavigation, useRoute } from "@react-navigation/native"
 import { inject } from "mobx-react"
 import * as React from "react"
 import { useEffect, useRef, useState } from "react"
-import { Alert, StyleSheet, Text, TextInput, View } from "react-native"
+import { Alert, Text, TextInput, View } from "react-native"
 import { Button, Input } from "react-native-elements"
-import Icon from "react-native-vector-icons/Ionicons"
+import EStyleSheet from "react-native-extended-stylesheet"
 import { Onboarding } from "types"
+import { CloseCross } from "../../components/close-cross"
 import { OnboardingScreen } from "../../components/onboarding"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
-import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { emailIsValid } from "../../utils/helper"
-import { CloseCross } from "../rewards-screen/rewards-quiz"
-import Svg from "../welcome-screens/honey-badger-shovel-01.svg"
-
+import HoneyBadgerHello from "./badger-wave-01.svg"
+import { BrightButton } from "../../components/bright-button"
+import CreditCard from "./credit-card-01.svg"
+import BitcoinPhone from "./bitcoin-phone-01.svg"
+import MoneyCircle from "../accounts-screen/money-circle-02.svg"
 
 const bankLogo = require("./BankLogo.png")
-const popcornLogo = require("../rewards-screen/PopcornLogo.png")
+const popcornLogo = require("../earns-screen/PopcornLogo.png")
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
   buttonContainer: {
     paddingBottom: 40,
-    paddingHorizontal: 80,
+    minWidth: "100rem", // TODO check if this works as intended
+    marginHorizontal: "40rem", 
     paddingTop: 20,
   },
 
   buttonStyle: {
-    backgroundColor: color.primary,
+    backgroundColor: palette.lightBlue,
     borderRadius: 32,
   },
 
@@ -64,39 +67,39 @@ const styles = StyleSheet.create({
   },
 })
 
-const Argument = ({text}) => (
-  <View style={{flexDirection: "row", paddingBottom: 20, paddingHorizontal: 20}}>
-    <Icon
-      name={"logo-bitcoin"}
-      size={32}
-      color={palette.darkGrey}
-    />
+const Argument = ({text, Icon}) => (
+  <View style={{flexDirection: "row", marginBottom: 20, marginHorizontal: 18, alignItems: 'center'}}>
+    <View style={{alignItems: "center", width: 32, marginLeft: 12}}>
+      <Icon />
+    </View>
     <Text style={styles.argumentText}>{text}</Text>
   </View>
 )
 
-export const BankAccountRewardsScreen = ({ navigation }) => {
+export const BankAccountEarnScreen = ({ navigation }) => {
   
   return (
-    <Screen preset="scroll">
-      <View style={{margin: 24, backgroundColor: palette.white, borderRadius: 32}}>
-        <View style={{alignSelf: "center", marginTop: 24}}>
-          <Svg />
+    <Screen preset="scroll" backgroundColor={palette.lightGrey}>
+      <View style={{margin: 40, backgroundColor: palette.white, borderRadius: 24}}>
+        <View style={{alignSelf: "center", marginTop: 60}}>
+          <HoneyBadgerHello />
         </View>
-        <Text style={styles.title}>{translate("BankAccountRewardsScreen.openAccount")}</Text>
-        <Argument text={translate("BankAccountRewardsScreen.holdUSDollar")} />
-        <Argument text={translate("BankAccountRewardsScreen.debitCard")} />
-        <Argument text={translate("BankAccountRewardsScreen.buySell")} />
+        <Text style={styles.title}>{translate("BankAccountEarnScreen.openAccount")}</Text>
+        <Argument 
+          text={translate("BankAccountEarnScreen.holdUSDollar")} 
+          Icon={() => <MoneyCircle width={40}/>} />
+        <Argument 
+          text={translate("BankAccountEarnScreen.debitCard")} 
+          Icon={() => <CreditCard />} />
+        <Argument 
+          text={translate("BankAccountEarnScreen.buySell")} 
+          Icon={() => <BitcoinPhone />} />
         <View style={{ flex: 1 }} />
-        <Button
-          title="Join waiting list"
-          type="solid"
-          onPress={() => navigation.navigate("openBankAccount")}
-          containerStyle={styles.buttonContainer}
-          buttonStyle={styles.buttonStyle}
-          titleStyle={{fontWeight: "bold"}}
+        <BrightButton
+          title="Join the waiting list"
+          // onPress={() => navigation.navigate("openBankAccount")}
         />
-      <CloseCross navigation={navigation} />
+      <CloseCross color={palette.darkGrey} onPress={() => navigation.goBack()} />
       </View>
     </Screen>
   )

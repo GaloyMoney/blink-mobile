@@ -8,10 +8,7 @@ import { CurrencyType } from "../../utils/enum"
 export interface CurrencyTextProps {
   amount: number
   currency: CurrencyType
-  /**
-   * An optional style override useful for padding & margin.
-   */
-  style?: ViewStyle
+  textColor?: string
 }
 
 const styles = StyleSheet.create({
@@ -26,9 +23,8 @@ const styles = StyleSheet.create({
   },
 })
 
-export function CurrencyText(props: CurrencyTextProps) {
-  // grab the props
-  const { amount, currency } = props
+export function CurrencyText({ amount, currency, textColor }: CurrencyTextProps) {
+  const color = textColor ? {color: textColor} : undefined
 
   switch (currency) {
     case CurrencyType.USD:
@@ -36,10 +32,10 @@ export function CurrencyText(props: CurrencyTextProps) {
     case CurrencyType.BTC:
       return (
         <View style={{ flexDirection: "row", alignItems: "flex-end" }}>
-          <Text style={styles.text}>
+          <Text style={[styles.text, color]}>
             {currency_fmt(amount, { precision: 0, separator: "," }).format()}
           </Text>
-          <Text style={styles.smallText}> sats</Text>
+          <Text style={[styles.smallText, color]}> sats</Text>
         </View>
       )
   }

@@ -1,21 +1,22 @@
-import * as React from "react"
-import { useState, useEffect } from "react"
 import { inject, observer } from "mobx-react"
-import { Text, View, Alert, Share, Clipboard, StyleSheet } from "react-native"
-import { Screen } from "../../components/screen"
-import { Input, Button } from "react-native-elements"
-import { color } from "../../theme"
-import { QRCode } from "../../components/qrcode"
+import * as React from "react"
+import { useEffect, useState } from "react"
+import { Alert, Clipboard, Share, StyleSheet, Text, View } from "react-native"
+import { Button, Input } from "react-native-elements"
 import { ScrollView } from "react-native-gesture-handler"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
-import { palette } from "../../theme/palette"
+import { IconTransaction } from "../../components/icon-transactions"
+import { QRCode } from "../../components/qrcode"
+import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
+import { palette } from "../../theme/palette"
 
 const styles = StyleSheet.create({
   buttonStyle: {
-    backgroundColor: color.primary,
-    margin: 5,
-    width: 105,
+    backgroundColor: palette.lightBlue,
+    marginTop: 18,
+    width: "100%",
+    borderRadius: 32,
   },
 
   icon: {
@@ -43,48 +44,22 @@ const styles = StyleSheet.create({
 })
 
 export const ReceiveBitcoinScreen = inject("dataStore")(
-  observer(({ dataStore }) => {
+  observer(({ dataStore, navigation }) => {
     const [note, setNote] = useState("")
     const [amount, setAmount] = useState(0)
-
-    const shareInvoice = async () => {
-      try {
-        const result = await Share.share({
-          message: dataStore.lnd.lastAddInvoice,
-        })
-
-        if (result.action === Share.sharedAction) {
-          if (result.activityType) {
-            // shared with activity type of result.activityType
-          } else {
-            // shared
-          }
-        } else if (result.action === Share.dismissedAction) {
-          // dismissed
-        }
-      } catch (error) {
-        Alert.alert(error.message)
-      }
-    }
-
-    const copyInvoice = () => {
-      Clipboard.setString(dataStore.lnd.lastAddInvoice)
-      Alert.alert("Invoice has been copied in the clipboard")
-    }
+    const [loading, setLoading] = useState(false)
 
     const createInvoice = async () => {
-      await dataStore.lnd.addInvoice({ value: amount, memo: note })
-    }
-
-    // Note: we could not remove the invoice here, and
-    // fetch back the amount detail as we are remounting the
-    // invoice based on decodepayreq
-    useEffect(() => {
-      // unmount
-      return () => {
-        dataStore.lnd.clearLastInvoice()
+      try {
+        setLoading(true)
+        const invoice = await dataStore.lnd.addInvoice({ value: amount, memo: note })
+        navigation.navigate("showQRCode", { invoice, amount })
+      } catch (err) {
+        Alert.alert(err.toString())
+      } finally {
+        setLoading(false)
       }
-    }, [])
+    }
 
     useEffect(() => {
       // new invoice, is it the one currency shown?
@@ -109,13 +84,11 @@ export const ReceiveBitcoinScreen = inject("dataStore")(
     }, [dataStore.lnd.receiveBitcoinScreenAlert])
 
     return (
-      <Screen>
-        <ScrollView style={{ flex: 1 }}>
-          {dataStore.lnd.lastAddInvoice !== "" && (
-            <QRCode style={styles.qr} size={280}>
-              {dataStore.lnd.lastAddInvoice}
-            </QRCode>
-          )}
+      <Screen backgroundColor={palette.lighterGrey}>
+        <ScrollView style={{ flex: 1, paddingTop: 32 }}>
+          <View style={{ alignItems: "center" }}>
+            <IconTransaction type={"receive"} size={75} color={palette.orange} />
+          </View>
           <View style={styles.section}>
             <Text style={styles.smallText}>Note</Text>
             <Input placeholder="Optional" value={note} onChangeText={(text) => setNote(text)} />
@@ -125,25 +98,25 @@ export const ReceiveBitcoinScreen = inject("dataStore")(
             <Input
               leftIcon={<Text style={styles.icon}>{translate("common.sats")}</Text>}
               placeholder="0"
+              autoFocus={true}
               value={amount.toString()}
-              onChangeText={(input) => setAmount(+input)}
+              onChangeText={(input) => {
+                isNaN(+input) ? setAmount(0) : setAmount(+input)
+              }}
               returnKeyType="done"
               keyboardType="number-pad"
+              onSubmitEditing={createInvoice}
             />
           </View>
-          <View style={{ flexDirection: "row", margin: 10, alignContent: "space-between" }}>
-            <Button buttonStyle={styles.buttonStyle} title="Create" onPress={createInvoice} />
+          <View style={{ alignContent: "center", alignItems: "center" }}>
             <Button
               buttonStyle={styles.buttonStyle}
-              title="Share"
-              onPress={shareInvoice}
-              disabled={dataStore.lnd.lastAddInvoice === ""}
-            />
-            <Button
-              buttonStyle={styles.buttonStyle}
-              title="Copy"
-              onPress={copyInvoice}
-              disabled={dataStore.lnd.lastAddInvoice === ""}
+              disabledStyle={styles.buttonStyle}
+              title="Create"
+              onPress={createInvoice}
+              titleStyle={{ fontWeight: "bold" }}
+              loading={loading}
+              disabled={loading}
             />
           </View>
         </ScrollView>
@@ -151,3 +124,63 @@ export const ReceiveBitcoinScreen = inject("dataStore")(
     )
   }),
 )
+
+export const ShowQRCode = ({ route }) => {
+  const invoice = route.params.invoice
+  const amount = route.params.amount
+
+  const shareInvoice = async () => {
+    try {
+      const result = await Share.share({
+        message: invoice,
+      })
+
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      Alert.alert(error.message)
+    }
+  }
+
+  const copyInvoice = () => {
+    Clipboard.setString(invoice)
+    Alert.alert("Invoice has been copied in the clipboard")
+  }
+
+  return (
+    <Screen backgroundColor={palette.lighterGrey}>
+      <ScrollView style={{ flex: 1, paddingTop: 32 }}>
+        <View style={{ alignItems: "center" }}>
+          <IconTransaction type={"receive"} size={75} color={palette.orange} />
+        </View>
+        <QRCode style={styles.qr} size={280}>
+          {invoice}
+        </QRCode>
+        <View style={{marginHorizontal: 32}}>
+          <Text style={{fontSize: 16, alignSelf: "center"}}>Receive {amount} sats</Text>
+          <Button
+            buttonStyle={styles.buttonStyle}
+            disabledStyle={styles.buttonStyle}
+            title="Share"
+            onPress={shareInvoice}
+            titleStyle={{ fontWeight: "bold" }}
+          />
+          <Button
+            buttonStyle={styles.buttonStyle}
+            disabledStyle={styles.buttonStyle}
+            title="Copy"
+            onPress={copyInvoice}
+            titleStyle={{ fontWeight: "bold" }}
+          />
+        </View>
+      </ScrollView>
+    </Screen>
+  )
+}
