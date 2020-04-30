@@ -466,7 +466,7 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = inject("d
     ];
 
     return (
-      <Screen backgroundColor={palette.white} preset="scroll">
+      <Screen backgroundColor={palette.white} >
         <BalanceHeaderDataInjection currency={currency} account={account} dataStore={dataStore} />
         <Price data={data} price={dataStore.rates.getInBTC} delta={0.70} /> 
         {/* FIXME */}
@@ -487,6 +487,7 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = inject("d
           />
         )}
         {sections.length === 0 && 
+        // FIXME there is no way to refresh is no transaction is already here
         <View style={styles.noTransactionView}>
           <Text style={styles.NoTransactionText}>No transaction to show :(</Text>
         </View>}
