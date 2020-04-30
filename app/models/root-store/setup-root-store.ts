@@ -22,6 +22,10 @@ export async function createEnvironment() {
   return env
 }
 
+export function resetDataStore () {
+  storage.save(ROOT_STATE_STORAGE_KEY, {})
+} 
+
 /**
  * Setup the root state.
  */
