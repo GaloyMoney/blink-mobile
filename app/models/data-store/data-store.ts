@@ -1,7 +1,7 @@
 import auth from "@react-native-firebase/auth"
 import functions from "@react-native-firebase/functions"
 import { flow, getParentOfType, Instance, SnapshotOut, types } from "mobx-state-tree"
-import { IAddInvoiceRequest, IBuyRequest, IPayInvoice, IQuoteRequest, IQuoteResponse, Onboarding, OnboardingRewards, Side } from "../../../../common/types"
+import { IAddInvoiceRequest, IBuyRequest, IPayInvoice, IQuoteRequest, IQuoteResponse, Onboarding, OnboardingEarn, Side } from "../../../../common/types"
 import { parseDate } from "../../utils/date"
 import { AccountType, CurrencyType } from "../../utils/enum"
 import * as lightningPayReq from 'bolt11'
@@ -18,7 +18,7 @@ export const FiatTransactionModel = types.model("Transaction", {
 export const LightningInvoiceModel = types.model("LightningTransaction", {
   amount: types.number,
   description: types.maybe(types.union(types.string, types.null)),
-  created_at: types.string, // FIXME
+  created_at: types.Date,
   hash: types.string,
   preimage: types.maybe(types.string),
   destination: types.maybe(types.string),
@@ -208,10 +208,8 @@ export const FiatAccountModel = BaseAccountModel.props({
 export const LndModel = BaseAccountModel.named("Lnd")
   .props({
     type: AccountType.Bitcoin,
-    lastAddInvoice: "",
     receiveBitcoinScreenAlert: false,
     _transactions: types.array(LightningInvoiceModel),
-
   })
   .actions((self) => {
     return {
@@ -228,15 +226,11 @@ export const LndModel = BaseAccountModel.named("Lnd")
       addInvoice: flow(function* (request: IAddInvoiceRequest) {
         try {
           const { data } = yield functions().httpsCallable("addInvoice")(request)
-          self.lastAddInvoice = data.request
+          return data.request
         } catch (err) {
           console.log("error with AddInvoice")
           throw err
         }
-      }),
-
-      clearLastInvoice: flow(function* () {
-        self.lastAddInvoice = ""
       }),
 
       resetReceiveBitcoinScreenAlert: flow(function* () {
@@ -256,7 +250,15 @@ export const LndModel = BaseAccountModel.named("Lnd")
       updateTransactions: flow(function* () {
         try {
           const { data } = yield functions().httpsCallable("getLightningTransactions")({})
-          self._transactions = data.response
+          self._transactions = data.response.map((index) => ({
+            amount: index.amount,
+            description: index.description,
+            created_at: new Date(index.created_at),
+            hash: index.hash,
+            preimage: index.preimage,
+            destination: index.destination,
+            type: index.type
+          }))
         } catch (err) {
           // TODO show visual indication of internet connection failure
           console.tron.log(err.toString())
@@ -281,6 +283,7 @@ export const RatesModel = types
   .model("Rates", {
     USD: 1, // TODO is there a way to have enum as parameter?
     BTC: 0.0001, // Satoshi to USD default value
+    // TODO add "last update". refresh only needed if more than 1 or 10 min?
   })
   .actions((self) => {
     const update = flow(function* () {
@@ -288,7 +291,7 @@ export const RatesModel = types
         const {data} = yield functions().httpsCallable("getPrice")({})
         self.BTC = data
       } catch (err) {
-        console.tron.error("error getting BTC price from firestore", err)
+        console.tron.error("error getting BTC price", err)
       }
     })
     return { update }
@@ -304,6 +307,10 @@ export const RatesModel = types
         throw Error(`currency ${currency} doesnt't exist`)
       }
     },
+    // return in BTC instead of SAT
+    get getInBTC() {
+      return (self.BTC * Math.pow(10, 8))
+    }
   }))
 
 interface BalanceRequest {
@@ -314,7 +321,7 @@ interface BalanceRequest {
 // // TODO move to utils?
 // const translateTitleFromItem = (item) => {
 //   console.tron.log({ item })
-//   const object = translate(`RewardsScreen.rewards`)
+//   const object = translate(`EarnScreen.earns`)
 //   for (const property in object) {
 //     for (const property2 in object[property]) {
 //       if (property2 === item) {
@@ -333,6 +340,11 @@ export const OnboardingModel = types
     add: flow(function* (step) {
       if (self.stage.findIndex((item) => item == step) === -1) {
         self.stage.push(step)
+      }
+    }),
+    _reset: flow(function* () {
+      while(self.stage.length > 0) {
+        self.stage.pop();
       }
     }),
   }))

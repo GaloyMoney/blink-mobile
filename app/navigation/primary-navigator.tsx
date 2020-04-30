@@ -6,24 +6,26 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { translate } from "../i18n"
 import { AccountDetailScreen } from "../screens/account-detail-screen/account-detail-screen"
 import { AccountsScreen } from "../screens/accounts-screen"
-import { BankAccountReadyScreen, BankAccountRewardsScreen, DateOfBirthScreen, OpenBankScreen, PersonalInformationScreen } from "../screens/bank-onboarding"
+import { BankAccountEarnScreen, BankAccountReadyScreen, DateOfBirthScreen, OpenBankScreen, PersonalInformationScreen } from "../screens/bank-onboarding"
 import { DebugScreen } from "../screens/debug-screen"
-import { BankTransferScreen, DirectDepositScreen, FindATMScreen, MoveMoneyScreen, ReceiveBitcoinScreen, ScanningQRCodeScreen, SendBitcoinScreen } from "../screens/move-money-screen"
-import { RewardsMapDataInjected } from "../screens/rewards-map-screen"
-import { RewardsQuiz, RewardsSection, WelcomePhoneInputScreen, WelcomePhoneValidationScreen } from "../screens/rewards-screen"
+import { EarnMapDataInjected } from "../screens/earns-map-screen"
+import { EarnQuiz, EarnSection } from "../screens/earns-screen"
+import { SectionCompleted } from "../screens/earns-screen/section-completed"
+import { BankTransferScreen, DirectDepositScreen, FindATMScreen, MoveMoneyScreenDataInjected, ReceiveBitcoinScreen, ScanningQRCodeScreen, SendBitcoinScreen, ShowQRCode } from "../screens/move-money-screen"
+import { WelcomePhoneInputScreen, WelcomePhoneValidationScreenDataInjected } from "../screens/phone-auth-screen"
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
-import { color } from "../theme"
 import { palette } from "../theme/palette"
 import { AccountType } from "../utils/enum"
+import EStyleSheet from "react-native-extended-stylesheet"
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
   person: {
     paddingRight: 15,
   },
 
   bottomNavigatorStyle: {
-    height: '12%'
-    // height: '12rem%'
+    height: '10%'
+    // height: '60rem'
     // height: 100
   }
 })
@@ -53,7 +55,7 @@ export const BankAccountOnboardingNavigator = () => {
       />
       <StackBankOpening.Screen
         name="welcomePhoneValidationBanking"
-        component={WelcomePhoneValidationScreen}
+        component={WelcomePhoneValidationScreenDataInjected}
       />
       <StackBankOpening.Screen
         name="personalInformation"
@@ -107,7 +109,6 @@ export const AccountNavigator = () => {
         // })}
         initialParams={{ account: AccountType.Bitcoin }}
       />
-      <StackAccounts.Screen name="transactionDetail" component={TransactionDetailScreen} />
       <StackAccounts.Screen name="debug" component={DebugScreen} />
     </StackAccounts.Navigator>
   )
@@ -118,12 +119,16 @@ const StackMoveMoney = createStackNavigator()
 export const MoveMoneyNavigator = () => {
   return (
     <StackMoveMoney.Navigator
-      headerMode="none"
+      // headerMode="none"
     >
       <StackMoveMoney.Screen
         name="moveMoney"
-        component={MoveMoneyScreen}
-        options={{ title: translate("MoveMoneyScreen.title") }}
+        component={MoveMoneyScreenDataInjected}
+        // options={{ title: translate("MoveMoneyScreen.title") }}
+        options={{ 
+          headerShown: false,
+          title: "Move Money",
+        }}
       />
       <StackMoveMoney.Screen
         name="sendBitcoin"
@@ -138,6 +143,11 @@ export const MoveMoneyNavigator = () => {
       <StackMoveMoney.Screen
         name="receiveBitcoin"
         component={ReceiveBitcoinScreen}
+        options={{ title: translate("ReceiveBitcoinScreen.title") }}
+      />
+      <StackMoveMoney.Screen
+        name="showQRCode"
+        component={ShowQRCode}
         options={{ title: translate("ReceiveBitcoinScreen.title") }}
       />
       <StackMoveMoney.Screen
@@ -161,10 +171,26 @@ const StackPhoneValidation = createStackNavigator()
 export const PhoneValidationNavigator = () => {
   return (
     <StackPhoneValidation.Navigator
+    // options={{ 
+    //   headerShown: false,
+    //   cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS
+    // }}
       // headerMode="none"
     >
-      <StackPhoneValidation.Screen name="welcomePhoneInput" component={WelcomePhoneInputScreen} />
-      <StackPhoneValidation.Screen name="welcomePhoneValidation" component={WelcomePhoneValidationScreen} />
+      <StackPhoneValidation.Screen
+        name="welcomePhoneInput" 
+        options={{ 
+          headerShown: false,
+          title: "Phone Number"
+        }}
+        component={WelcomePhoneInputScreen} />
+      <StackPhoneValidation.Screen 
+        name="welcomePhoneValidation" 
+        component={WelcomePhoneValidationScreenDataInjected}
+        options={{ 
+          title: "",
+        }}
+      />
     </StackPhoneValidation.Navigator>
   )
 }
@@ -177,7 +203,7 @@ export const PrimaryNavigator = () => {
     <Tab.Navigator
       initialRouteName="Accounts"
       tabBarOptions={{
-        activeTintColor: color.primary,
+        activeTintColor: palette.lightBlue,
         inactiveTintColor: palette.lightGrey,
         style: styles.bottomNavigatorStyle,
       }}
@@ -203,16 +229,16 @@ export const PrimaryNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Rewards"
-        component={RewardsMapDataInjected}
+        name="Earn"
+        component={EarnMapDataInjected}
         options={{
-          title: translate("RewardsScreen.title"),
+          title: translate("EarnScreen.title"),
           tabBarIcon: ({ focused, color }) => {
             return <Icon name={"ios-rocket"} size={size} color={color} />
           },
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Profile"
         component={DebugScreen}
         options={{
@@ -221,7 +247,7 @@ export const PrimaryNavigator = () => {
             return <Icon name={"ios-settings"} size={size} color={color} />
           },
         }}
-      />
+      /> */}
     </Tab.Navigator>
   )
 }
@@ -232,23 +258,36 @@ export const RootStackScreen = () => {
   return (
     <RootStack.Navigator mode="modal" headerMode="screen">
       <RootStack.Screen
-        name="Primary"
+        // name="Primary" // FIXME quick fixe
+        name="Earn "
         component={PrimaryNavigator}
         options={{ headerShown: false }}
       />
       <RootStack.Screen
-        name="rewardsSection"
-        component={RewardsSection}
+        name="earnsSection"
+        component={EarnSection}
         options={{
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}
       />
       <RootStack.Screen
-        name="rewardsQuiz"
-        component={RewardsQuiz}
+        name="earnsQuiz"
+        component={EarnQuiz}
         options={{ 
           headerShown: false,
           cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
+        }}
+      />
+      <RootStack.Screen
+        name="Profile"
+        component={DebugScreen}
+      />
+      <RootStack.Screen
+        name="sectionCompleted"
+        component={SectionCompleted}
+        options={{ 
+          headerShown: false,
+          cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS
         }}
       />
       <RootStack.Screen
@@ -257,8 +296,8 @@ export const RootStackScreen = () => {
         options={{ headerShown: false }}
       />
       <StackAccounts.Screen
-        name="bankAccountRewards"
-        component={BankAccountRewardsScreen}
+        name="bankAccountEarn"
+        component={BankAccountEarnScreen}
         options={{ 
           headerShown: false,
           cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
@@ -271,6 +310,14 @@ export const RootStackScreen = () => {
           headerShown: false,
           cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS
         }}
+      />
+      <RootStack.Screen 
+        name="transactionDetail"
+        component={TransactionDetailScreen}
+        options={{ 
+          headerShown: false,
+          cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
+        }}  
       />
     </RootStack.Navigator>
   )

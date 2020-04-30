@@ -73,7 +73,6 @@ export const App = () => {
       console.tron.log({ notification })
 
       if (getActiveRouteName(routeNameRef) !== "receiveBitcoin") {
-        // if (invoice.paymentRequest === self.lastAddInvoice) {
         completion({ alert: true, sound: false, badge: false })
       }
     })
@@ -141,7 +140,7 @@ export const App = () => {
           const currentRouteName = getActiveRouteName(state)
 
           if (previousRouteName !== currentRouteName) {
-            if (currentRouteName == "rewardsSection") {
+            if (currentRouteName == "earnsSection") {
               const routeAndSection = `${currentRouteName}_${getActiveRouteParams(state).section}`
               console.tron.log({ routeAndSection })
               analytics().setCurrentScreen(routeAndSection, currentRouteName)

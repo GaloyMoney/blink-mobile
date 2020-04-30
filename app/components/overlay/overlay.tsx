@@ -70,7 +70,7 @@ export const Overlay = ({ screen }) => {
           </TouchableWithoutFeedback>
         </View>
       )}
-      {screen == "rewards" && (
+      {screen == "earns" && (
         <View style={{ position: "absolute", zIndex: 2 }}>
           <TouchableWithoutFeedback
             onPress={() => {
@@ -98,10 +98,10 @@ export const Overlay = ({ screen }) => {
               </Svg>
               <View style={{ position: "absolute", top: CY + R, alignSelf: "center" }}>
                 <Text style={[styles.modalText, { textAlign: "center" }]}>
-                  {translate("Overlay.rewards.download")}
+                  {translate("Overlay.earns.download")}
                 </Text>
                 <Text style={[styles.modalText, { textAlign: "center" }]}>
-                  {translate("Overlay.rewards.getMore")}
+                  {translate("Overlay.earns.getMore")}
                 </Text>
               </View>
             </View>
