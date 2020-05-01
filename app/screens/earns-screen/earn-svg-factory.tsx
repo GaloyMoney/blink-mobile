@@ -13,6 +13,20 @@ import WhyStonesShellGold from "./04-why-used-as-money-01.svg"
 import MoneyIsImportant from "./05-money-is-important-01.svg"
 import MoneyImportantGovernement from "./06-important-to-governments-01.svg"
 
+import WhatIsFiat from "./01-fiat-currency-01.svg"
+import WhyCareAboutFiatMoney from "./02-i-trust-my-government-01.svg"
+import GovernementCanPrintMoney from "./03-print-unlimited-money-01.svg"
+import FiatLosesValueOverTime from "./04-fiat-money-loses-value-01.svg"
+import OtherIssues from "./05-are-there-other-issues-01.svg"
+
+import LimitedSupply from "./01-money-is-a-social-agreement-01.svg"
+import Decentralized from "./02-coincidence-of-wants-01.svg"
+import NoCounterfeitMoney from "./03-money-has-evolved-01.svg"
+import HighlyDivisible from "./04-why-used-as-money-01.svg"
+import SecurePartOne from "./05-money-is-important-01.svg"
+import SecurePartTwo from "./05-money-is-important-01.svg"
+
+
 import LottieView from 'lottie-react-native'
 const lottieTest = require('./02-i-trust-my-government-01.json')
 
@@ -41,6 +55,19 @@ export const SVGs = ({name, width, height}: ISVGs) => {
     case "whyStonesShellGold": return <WhyStonesShellGold width={rWidth} height={rHeight} />
     case "moneyIsImportant": return <MoneyIsImportant width={rWidth} height={rHeight} />
     case "moneyImportantGovernement": return <MoneyImportantGovernement width={rWidth} height={rHeight} />
+
+    case "WhatIsFiat": return <WhatIsFiat width={rWidth} height={rHeight} /> 
+    // case "whyCareAboutFiatMoney": return <WhyCareAboutFiatMoney width={rWidth} height={rHeight} />
+    case "GovernementCanPrintMoney": return <GovernementCanPrintMoney width={rWidth} height={rHeight} />
+    case "FiatLosesValueOverTime": return <FiatLosesValueOverTime width={rWidth} height={rHeight} />
+    case "OtherIssues": return <OtherIssues width={rWidth} height={rHeight} />
+
+    case "LimitedSupply": return <LimitedSupply width={rWidth} height={rHeight} /> 
+    case "Decentralized": return <Decentralized width={rWidth} height={rHeight} />
+    case "NoCounterfeitMoney": return <NoCounterfeitMoney width={rWidth} height={rHeight} />
+    case "HighlyDivisible": return <HighlyDivisible width={rWidth} height={rHeight} />
+    case "securePartOne": return <SecurePartOne width={rWidth} height={rHeight} />
+    case "securePartTwo": return <SecurePartTwo width={rWidth} height={rHeight} />
 
     default: return <LottieView source={lottieTest} 
       style={{width: screenWidth, height: screenWidth, alignSelf: "center"}} autoPlay loop />
