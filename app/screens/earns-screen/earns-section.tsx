@@ -244,7 +244,7 @@ export const EarnSection = inject("dataStore")(
               activeOpacity={0.9}
               disabled={!item.enabled}
               >
-              {SVGs({name: item.id, width: svgWidth, height: svgWidth})}
+              {SVGs({name: item.id, width: svgWidth})}
             </TouchableOpacity>
             <View>
               <Text 
