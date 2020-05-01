@@ -261,7 +261,7 @@ export const EarnQuiz = ({ route, navigation }) => {
             bounces={true}
             >
           <View style={styles.svgContainer}>
-            {SVGs({name: id})}
+            {SVGs({name: id, theme: "dark"})}
           </View>
           <View style={styles.textContainer}>
             <Text style={styles.title}>{title}</Text>
