@@ -206,7 +206,7 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> =
               progress === 0 ?
                   <BottomStart />
                 : <BottomOngoing /> 
-              : null
+              : <View style={{height: 40}} />
           }
         </View>
       </ScrollView>
