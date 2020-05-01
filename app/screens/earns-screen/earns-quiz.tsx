@@ -23,13 +23,13 @@ const styles = EStyleSheet.create({
 
   textContainer: {
     marginHorizontal: 24,
-    paddingVertical: 48,
+    paddingBottom: 48,
   },
 
   title: {
     fontSize: 32,
     fontWeight: "bold",
-    paddingVertical: 12,
+    paddingBottom: 12,
   },
 
   text: {
