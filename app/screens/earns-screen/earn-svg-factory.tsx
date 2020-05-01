@@ -19,12 +19,12 @@ import GovernementCanPrintMoney from "./03-print-unlimited-money-01.svg"
 import FiatLosesValueOverTime from "./04-fiat-money-loses-value-01.svg"
 import OtherIssues from "./05-are-there-other-issues-01.svg"
 
-import LimitedSupply from "./01-money-is-a-social-agreement-01.svg"
-import Decentralized from "./02-coincidence-of-wants-01.svg"
-import NoCounterfeitMoney from "./03-money-has-evolved-01.svg"
-import HighlyDivisible from "./04-why-used-as-money-01.svg"
-import SecurePartOne from "./05-money-is-important-01.svg"
-import SecurePartTwo from "./05-money-is-important-01.svg"
+import LimitedSupply from "./01-limited-supply-01.svg"
+import Decentralized from "./02-decentralized-01.svg"
+import NoCounterfeitMoney from "./03-no-counterfeit-money-01.svg"
+import HighlyDivisible from "./04-highly-divisible-01.svg"
+import SecurePartOne from "./05-secure-part-i-01.svg"
+import SecurePartTwo from "./06-secure-part-ii-01.svg"
 
 
 import LottieView from 'lottie-react-native'
