@@ -62,26 +62,24 @@ const styles = EStyleSheet.create({
   quizButtonStyle: {
     backgroundColor: palette.lightBlue,
     borderRadius: 32,
-    width: "100%",
     padding: 12
   },
 
   quizWrongButtonStyle: {
     backgroundColor: palette.red,
     borderRadius: 32,
-    width: "100%",
     padding: 12,
   },
 
   quizCorrectButtonStyle: {
     backgroundColor: palette.green,
     borderRadius: 32,
-    width: "100%",
     padding: 12,
   },
 
   quizButtonTitleStyle: {
     fontWeight: "bold",
+    color: palette.white,
   },
 
   quizButtonContainerStyle: {
@@ -104,8 +102,7 @@ const styles = EStyleSheet.create({
   modalBackground: {
     alignItems: "center",
     backgroundColor: palette.white,
-    minHeight: "620rem",
-    // maxHeight: "100%",
+    minHeight: "630rem",
     // flexGrow: 1,
     justifyContent: "flex-end",
     borderTopLeftRadius: 24,
@@ -131,11 +128,16 @@ const styles = EStyleSheet.create({
 
   keepDiggingContainerStyle: {
     marginTop: 18,
-    flex: 1,
     alignItems: "center",
     minHeight: "18rem",
     marginBottom: "24rem"
   },
+
+  quizTextContainerStyle: {
+    alignItems: "flex-start",
+    marginLeft: 12,
+    marginRight: 36
+  }
 })
 
 const mappingLetter = {0: "A", 1: "B", 2: "C"}
@@ -168,6 +170,13 @@ export const EarnQuiz = ({ route, navigation }) => {
     navigation.goBack()
   }
 
+  const buttonStyleHelper = (i) => 
+  recordedAnswer.indexOf(i) === -1 ? 
+    styles.quizButtonStyle
+  : i === 0 ? 
+      styles.quizCorrectButtonStyle
+    : styles.quizWrongButtonStyle
+
   let j = 0
   permutation.forEach((i) => {
     answers_shuffled.push(
@@ -175,24 +184,26 @@ export const EarnQuiz = ({ route, navigation }) => {
         <View style={{flexDirection: "row", alignItems: "center"}}>
           <Button 
             title={mappingLetter[j]}
-            buttonStyle={recordedAnswer.indexOf(i) === -1 ? 
-                styles.quizButtonStyle
-              : i === 0 ? 
-                  styles.quizCorrectButtonStyle
-                : styles.quizWrongButtonStyle}
+            buttonStyle={buttonStyleHelper(i)}
+            disabledStyle={buttonStyleHelper(i)}
             titleStyle={styles.quizButtonTitleStyle}
+            disabledTitleStyle={styles.quizButtonTitleStyle}
             containerStyle={styles.quizButtonContainerStyle}
             onPress={() => addRecordedAnswer(i)}
-          />
+            disabled={recordedAnswer.indexOf(0) !== -1}
+            />
           <Button
             title={answers[i]}
             titleStyle={styles.quizTextAnswer}
-            containerStyle={{alignItems: "flex-start", marginLeft: 12, marginRight: 36}}
+            disabledTitleStyle={styles.quizTextAnswer}
+            containerStyle={styles.quizTextContainerStyle}
+            // disabledStyle={styles.quizTextContainerStyle}
             type="clear"
             onPress={() => addRecordedAnswer(i)}
+            disabled={recordedAnswer.indexOf(0) !== -1}
           />
         </View>
-        { recordedAnswer.indexOf(i) !== -1 ?
+        { recordedAnswer.length > 0 && recordedAnswer.indexOf(i) === recordedAnswer.length - 1 ?
           <Text style={i === 0 ? styles.correctAnswerText : styles.incorrectAnswerText}>{feedback[i]}</Text>
         : null }
       </View>
@@ -217,27 +228,29 @@ export const EarnQuiz = ({ route, navigation }) => {
           </TouchableWithoutFeedback>
         </View>
         <View style={styles.modalBackground}>
-          <Icon
-              name={"ios-remove"}
-              size={72}
-              color={palette.lightGrey}
-              style={{ height: 44, top: -26 }}
-            />
+          <View style={{height: 14}}>
+            <Icon
+                name={"ios-remove"}
+                size={72}
+                color={palette.lightGrey}
+                style={{ height: 40, top: -30 }}
+              />
+          </View>
           <View style={{ flex: 1 }}>
-            <ScrollView
-              contentContainerStyle={{ paddingHorizontal: 24, marginHorizontal: 12 }}>
+            <View
+              style={{ paddingHorizontal: 24, marginHorizontal: 12, flex: 1 }}>
               <Text style={styles.title} >{question ?? title}</Text>
               {answers_shuffled}
-              <SafeAreaView>
-                { recordedAnswer.indexOf(0) !== -1 ?
-                  <Button title={"Keep digging!"} 
-                  type="outline" onPress={async () => await close()}
-                  containerStyle={styles.keepDiggingContainerStyle}
-                  buttonStyle={styles.buttonStyle}
-                  titleStyle={styles.titleStyle} />
-                  : null }
+            </View>
+            <SafeAreaView>
+              { recordedAnswer.indexOf(0) !== -1 ?
+                <Button title={"Keep digging!"} 
+                type="outline" onPress={async () => await close()}
+                containerStyle={styles.keepDiggingContainerStyle}
+                buttonStyle={styles.buttonStyle}
+                titleStyle={styles.titleStyle} />
+                : null }
               </SafeAreaView>
-            </ScrollView>
           </View>
         </View>
       </Modal>
