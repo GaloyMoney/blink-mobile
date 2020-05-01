@@ -137,6 +137,12 @@ const styles = EStyleSheet.create({
     alignItems: "flex-start",
     marginLeft: 12,
     marginRight: 36
+  },
+
+  answersView: { 
+    marginHorizontal: "48rem",
+    marginTop: "6rem",
+    flex: 1
   }
 })
 
@@ -238,7 +244,7 @@ export const EarnQuiz = ({ route, navigation }) => {
           </View>
           <View style={{ flex: 1 }}>
             <View
-              style={{ paddingHorizontal: 24, marginHorizontal: 12, flex: 1 }}>
+              style={styles.answersView}>
               <Text style={styles.title} >{question ?? title}</Text>
               {answers_shuffled}
             </View>
