@@ -42,60 +42,58 @@ const lottieTest = require('./02-i-trust-my-government-01.json')
 interface ISVGs {
   name: string, 
   width?: number,
-  height?: number,
   theme?: "dark" | "light"
 }
 
-export const SVGs = ({name, width, height, theme}: ISVGs) => {
+export const SVGs = ({name, width, theme}: ISVGs) => {
   const { width: screenWidth } = Dimensions.get("window")
 
   const rWidth = width ?? screenWidth
-  const rHeight = height ?? screenWidth
 
   switch (name) {
-    case "whatIsBitcoin": return <WhatIsBitcoinSVG width={rWidth} height={rHeight} />     
-    case "sat": return <SatSVG width={rWidth} height={rHeight} />
-    case "whereBitcoinExist": return <WhereBitcoinExistSVG width={rWidth} height={rHeight} />
-    case "whoControlsBitcoin": return <WhoControlsBitcoinSVG width={rWidth} height={rHeight} />
-    case "copyBitcoin": return <CopyBitcoinSVG width={rWidth} height={rHeight} />
+    case "whatIsBitcoin": return <WhatIsBitcoinSVG width={rWidth} />     
+    case "sat": return <SatSVG width={rWidth} />
+    case "whereBitcoinExist": return <WhereBitcoinExistSVG width={rWidth} />
+    case "whoControlsBitcoin": return <WhoControlsBitcoinSVG width={rWidth} />
+    case "copyBitcoin": return <CopyBitcoinSVG width={rWidth} />
 
     case "moneySocialAggrement": return theme === "dark" ?
-      <MoneySocialAggrementDark width={rWidth} height={rHeight} />
-      : <MoneySocialAggrement width={rWidth} height={rHeight} /> 
-    case "coincidenceOfWants": return <CoincidenceOfWants width={rWidth} height={rHeight} /> 
-    case "moneyEvolution": return <MoneyEvolution width={rWidth} height={rHeight} />
+      <MoneySocialAggrementDark width={rWidth} />
+      : <MoneySocialAggrement width={rWidth} /> 
+    case "coincidenceOfWants": return <CoincidenceOfWants width={rWidth} /> 
+    case "moneyEvolution": return <MoneyEvolution width={rWidth} />
     case "whyStonesShellGold": return theme === "dark" ?
-        <WhyStonesShellGoldDark width={rWidth} height={rHeight} />
-      : <WhyStonesShellGold width={rWidth} height={rHeight} />
-    case "moneyIsImportant": return <MoneyIsImportant width={rWidth} height={rHeight} />
-    case "moneyImportantGovernement": return <MoneyImportantGovernement width={rWidth} height={rHeight} />
+        <WhyStonesShellGoldDark width={rWidth} />
+      : <WhyStonesShellGold width={rWidth} />
+    case "moneyIsImportant": return <MoneyIsImportant width={rWidth} />
+    case "moneyImportantGovernement": return <MoneyImportantGovernement width={rWidth} />
 
-    case "WhatIsFiat": return <WhatIsFiat width={rWidth} height={rHeight} /> 
-    // case "whyCareAboutFiatMoney": return <WhyCareAboutFiatMoney width={rWidth} height={rHeight} />
+    case "WhatIsFiat": return <WhatIsFiat width={rWidth} /> 
+    // case "whyCareAboutFiatMoney": return <WhyCareAboutFiatMoney width={rWidth} />
     case "GovernementCanPrintMoney": return theme === "dark" ?
-        <GovernementCanPrintMoneyDark width={rWidth} height={rHeight} />
-      : <GovernementCanPrintMoney width={rWidth} height={rHeight} />
+        <GovernementCanPrintMoneyDark width={rWidth} />
+      : <GovernementCanPrintMoney width={rWidth} />
     case "FiatLosesValueOverTime": return theme === "dark" ?
-        <FiatLosesValueOverTimeDark width={rWidth} height={rHeight} />
-      : <FiatLosesValueOverTime width={rWidth} height={rHeight} />
+        <FiatLosesValueOverTimeDark width={rWidth} />
+      : <FiatLosesValueOverTime width={rWidth} />
     case "OtherIssues": return theme === "dark" ?
-        <OtherIssuesDark width={rWidth} height={rHeight} />
-      : <OtherIssues width={rWidth} height={rHeight} />
+        <OtherIssuesDark width={rWidth} />
+      : <OtherIssues width={rWidth} />
 
-    case "LimitedSupply": return <LimitedSupply width={rWidth} height={rHeight} /> 
+    case "LimitedSupply": return <LimitedSupply width={rWidth} /> 
     case "Decentralized": return theme === "dark" ?
-        <DecentralizedDark width={rWidth} height={rHeight} />
-      : <Decentralized width={rWidth} height={rHeight} />
+        <DecentralizedDark width={rWidth} />
+      : <Decentralized width={rWidth} />
     case "NoCounterfeitMoney": theme === "dark" ?
-        <NoCounterfeitMoneyDark width={rWidth} height={rHeight} />
-      : <NoCounterfeitMoney width={rWidth} height={rHeight} />
-    case "HighlyDivisible": return <HighlyDivisible width={rWidth} height={rHeight} />
+        <NoCounterfeitMoneyDark width={rWidth} />
+      : <NoCounterfeitMoney width={rWidth} />
+    case "HighlyDivisible": return <HighlyDivisible width={rWidth} />
     case "securePartOne": return theme === "dark" ?
-        <SecurePartOneDark width={rWidth} height={rHeight} />
-      : <SecurePartOne width={rWidth} height={rHeight} />
+        <SecurePartOneDark width={rWidth} />
+      : <SecurePartOne width={rWidth} />
     case "securePartTwo": return theme === "dark" ?
-        <SecurePartTwoDark width={rWidth} height={rHeight} />
-      : <SecurePartTwo width={rWidth} height={rHeight} />
+        <SecurePartTwoDark width={rWidth} />
+      : <SecurePartTwo width={rWidth} />
 
     default: return <LottieView source={lottieTest} 
       style={{width: screenWidth, height: screenWidth, alignSelf: "center"}} autoPlay loop />
