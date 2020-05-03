@@ -20,7 +20,6 @@ export const LightningInvoiceModel = types.model("LightningTransaction", {
   description: types.maybe(types.union(types.string, types.null)),
   created_at: types.Date,
   hash: types.string,
-  preimage: types.maybe(types.string),
   destination: types.maybe(types.string),
   type: types.string
 })
@@ -255,7 +254,6 @@ export const LndModel = BaseAccountModel.named("Lnd")
             description: index.description,
             created_at: new Date(index.created_at),
             hash: index.hash,
-            preimage: index.preimage,
             destination: index.destination,
             type: index.type
           }))
