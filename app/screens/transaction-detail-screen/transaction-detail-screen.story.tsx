@@ -15,7 +15,6 @@ const route = { params: {
   "type" : "invoice",
   "description" : "This is my description",
   "destination" : "0d1ea4c256cd50a2a7ccbfd22b3d9959f6fd30bd840b9ff3c7c65ee4e21df06d",
-  "preimage" : "3cc849279ba298b587a34cabaeffc5ecb3a044bbf97c516fab7ede9d1af77cfa",
 }}
 
 storiesOf("Transaction Detail", module)
