@@ -335,11 +335,11 @@ export const OnboardingModel = types
     stage: types.array(types.enumeration<Onboarding>("Onboarding", Object.values(Onboarding))),
   })
   .actions((self) => ({
-    add: flow(function* (step) {
+    add: function (step) {
       if (self.stage.findIndex((item) => item == step) === -1) {
         self.stage.push(step)
       }
-    })
+    }
   }))
   .views((self) => ({
     has(step: Onboarding) {
