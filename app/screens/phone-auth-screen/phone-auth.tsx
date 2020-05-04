@@ -151,21 +151,25 @@ export const WelcomePhoneInputScreen = ({ navigation }) => {
     </Screen>
 )}
 
+export const onLoggedinSuccess = async ({ dataStore }) => {
+  dataStore.onboarding.add(Onboarding.phoneVerification)
+  dataStore.onboarding.add(Onboarding.walletActivated)
+  console.log("onLoggedinSuccess complete")
+  // FIXME forceRefresh doesn't seem to be passed by
+}
+
 export const WelcomePhoneValidationScreenDataInjected = inject("dataStore")(
   ({ dataStore, route, navigation }) => {
-    const onSuccess = async () => {
-      await dataStore.onboarding.add(Onboarding.phoneVerification)
-      await dataStore.onboarding.add(Onboarding.walletActivated)
-      console.log("onSuccess complete")
-      navigation.navigate("Accounts", {forceRefresh: true})
-      // FIXME forceRefresh doesn't seem to be passed by
-    }
 
-    return <WelcomePhoneValidationScreen onSuccess={onSuccess} route={route}/>
+  const onSuccess = () => {
+    onLoggedinSuccess({ dataStore })
+  }
+
+  return <WelcomePhoneValidationScreen onSuccess={onSuccess} route={route} navigation={navigation} />
 })
 
 
-export const WelcomePhoneValidationScreen = ({ onSuccess, route }) => {
+export const WelcomePhoneValidationScreen = ({ onSuccess, route, navigation }) => {
   const [code, setCode] = useState("")
   const [loading, setLoading] = useState(false)
   const [err, setErr] = useState("")
@@ -179,6 +183,7 @@ export const WelcomePhoneValidationScreen = ({ onSuccess, route }) => {
 
     if (user.phoneNumber) {
       await onSuccess()
+      navigation.navigate("Accounts", {forceRefresh: true})
     }
   }
 
