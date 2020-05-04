@@ -104,7 +104,6 @@ export const DebugScreen = inject("dataStore")(
         <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
           <Button
             style={DEMO}
-            textStyle={DEMO_TEXT}
             title="Delete account and log out"
             onPress={async () => {
               resetDataStore()
@@ -116,7 +115,23 @@ export const DebugScreen = inject("dataStore")(
                 }
               }
               await auth().signOut()
-              Alert.alert("user succesfully deleted. Delete your app to start from a clean state")
+              Alert.alert("user succesfully deleted. Restart your app")
+            }}
+            />
+          <Button
+            style={DEMO}
+            title="Delete dataStore state"
+            onPress={async () => {
+              resetDataStore()
+              Alert.alert("state succesfully deleted. Restart your app")
+            }}
+          />
+          <Button
+            style={DEMO}
+            title="Log out"
+            onPress={async () => {
+              await auth().signOut()
+              Alert.alert("log out completed. Restart your app")
             }}
           />
           <VersionComponent />
@@ -129,14 +144,6 @@ export const DebugScreen = inject("dataStore")(
               textStyle={DEMO_TEXT}
               title="Print $1,000"
               onPress={() => functions().httpsCallable("dollarFaucet")({ amount: 1000 })}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              title="Delete onboarding state"
-              onPress={async () => {
-                await dataStore.onboarding._reset()
-              }}
             />
             <Button
               style={DEMO}
