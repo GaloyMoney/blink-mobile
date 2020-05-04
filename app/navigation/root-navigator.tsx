@@ -12,6 +12,7 @@ import { useEffect, useState } from "react"
 import { when } from "mobx"
 import { Onboarding } from "types"
 import { SplashScreen } from "../screens/splash-screen"
+import { onLoggedinSuccess } from "../screens/phone-auth-screen"
 
 const Loading = createStackNavigator()
 
@@ -26,7 +27,10 @@ export const RootStack = inject("dataStore")(
 
       if (user == null) {
         await auth().signInAnonymously()
-      } else setAuthReady(true)
+      } else { 
+        onLoggedinSuccess({ dataStore })
+        setAuthReady(true)
+      }
     }
 
     useEffect(() => {
