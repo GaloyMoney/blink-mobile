@@ -19,7 +19,7 @@ export const LightningInvoiceModel = types.model("LightningTransaction", {
   amount: types.number,
   description: types.maybe(types.union(types.string, types.null)),
   created_at: types.Date,
-  hash: types.string,
+  hash: types.maybe(types.union(types.string, types.null)),
   destination: types.maybe(types.string),
   type: types.string
 })
