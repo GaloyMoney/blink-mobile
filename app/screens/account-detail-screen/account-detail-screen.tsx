@@ -127,7 +127,7 @@ const styles = EStyleSheet.create({
 
 const AccountDetailItem: React.FC<AccountDetailItemProps> = (props) => (
   <ListItem
-  key={props.hash}
+  // key={props.hash}
   title={props.description}
   leftIcon={<IconTransaction type={props.type.includes("invoice") ? "receive" : "send"} size={24} color={palette.orange} />}
   rightTitle={<CurrencyText amount={props.amount} currency={props.currency} textColor={palette.darkGrey} />}

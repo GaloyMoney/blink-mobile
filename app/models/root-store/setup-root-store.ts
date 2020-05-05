@@ -2,7 +2,7 @@ import { onSnapshot } from "mobx-state-tree"
 import * as storage from "../../utils/storage"
 import { Environment } from "../environment"
 import { RootStore, RootStoreModel } from "./root-store"
-
+import functions from "@react-native-firebase/functions"
 
 /**
  * The key we'll be saving our state as within async storage.
@@ -60,10 +60,15 @@ export async function setupRootStore() {
   // track changes & save to storage
   onSnapshot(rootStore, snapshot => storage.save(ROOT_STATE_STORAGE_KEY, snapshot))
 
-  // onSnapshot(rootStore.dataStore.onboarding.stage, async (snapshot) => {
-  //   console.tron.log("snapshot", snapshot)
-
-  //   storage.save(ONBOARDING_STORAGE_KEY, snapshot)
+  onSnapshot(rootStore.dataStore.onboarding.stage, async (snapshot) => {
+    console.tron.log("snapshot", snapshot)
+    try {
+      await functions().httpsCallable("addEarn")(snapshot)
+    } catch (err) {
+      console.tron.warn(err.toString())
+    }
+  })
+    // storage.save(ONBOARDING_STORAGE_KEY, snapshot)
 
   //   try {
   //     const uid = auth().currentUser?.uid
