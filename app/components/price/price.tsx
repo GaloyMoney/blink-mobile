@@ -34,23 +34,25 @@ const styles = EStyleSheet.create({
 })
 
 
-export const Price = ({price, delta, data}) => {
+export const Price = ({data}) => {
+  const price = data[24].o
+  const delta = ( price - data[0].o ) / price
   const color = delta > 0 ? {color: palette.green} : {color: palette.red}
 
   return (
   <>
     <View style={styles.textView}>
-      <Text style={styles.neutral}>Bitcoin Price </Text>
+      <Text style={styles.neutral}>Sats Price </Text>
       <Text style={styles.price}>${price}</Text>
     </View>
     <View style={styles.textView}>
-      <Text style={[styles.delta, color]}>{delta}% </Text>
+      <Text style={[styles.delta, color]}>{(delta * 100).toFixed(2)}% </Text>
       <Text style={styles.neutral}>Today</Text>
     </View>
     <View style={styles.chart}>
       {/* <VictoryChart width={350} > */}
         <VictoryLine 
-          data={data}
+          data={data.map(index => index.o)}
           interpolation="basis" 
           style={{data: { stroke: palette.lightBlue, strokeWidth: 4 }}} />
       {/* </VictoryChart> */}
