@@ -19,6 +19,7 @@ const styles = EStyleSheet.create({
 
   svgContainer: {
     alignItems: "center",
+    paddingVertical: "16rem"
   },
 
   textContainer: {
