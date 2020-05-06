@@ -268,6 +268,12 @@ export const RootStackScreen = () => {
         component={EarnSection}
         options={{
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+          headerStyle: {backgroundColor: palette.blue},
+          headerTintColor: palette.white,
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 18
+          },
         }}
       />
       <RootStack.Screen
