@@ -37,7 +37,7 @@ import SecurePartTwoDark from "./06-secure-part-ii-02.svg"
 
 
 import LottieView from 'lottie-react-native'
-const lottieTest = require('./02-i-trust-my-government-01.json')
+const lottieTest = require('./02-i-trust-my-government-02.json')
 
 interface ISVGs {
   name: string, 
