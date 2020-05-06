@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Text, View } from "react-native"
+import { Text, View, ActivityIndicator } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { palette } from "../../theme/palette"
 
@@ -35,9 +35,16 @@ const styles = EStyleSheet.create({
 
 
 export const Price = ({data}) => {
-  const price = data[24].o
-  const delta = ( price - data[0].o ) / price
-  const color = delta > 0 ? {color: palette.green} : {color: palette.red}
+  let price, delta, color
+
+  try {
+    price = data[24].o
+    delta = ( price - data[0].o ) / price
+    color = delta > 0 ? {color: palette.green} : {color: palette.red}
+  } catch (err) {
+    // FIXME proper Loader
+    return <ActivityIndicator animating={true} size="large" color={palette.lightBlue} />
+  }
 
   return (
   <>
@@ -52,7 +59,7 @@ export const Price = ({data}) => {
     <View style={styles.chart}>
       {/* <VictoryChart width={350} > */}
         <VictoryLine 
-          data={data.map(index => index.o)}
+          data={data.map(index => ({x: index.t, y: index.o}))}
           interpolation="basis" 
           style={{data: { stroke: palette.lightBlue, strokeWidth: 4 }}} />
       {/* </VictoryChart> */}
