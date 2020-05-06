@@ -280,16 +280,26 @@ export const AccountModel = types.union(FiatAccountModel, LndModel)
 export const RatesModel = types
   .model("Rates", {
     USD: 1, // TODO is there a way to have enum as parameter?
-    BTC: 0.0001, // Satoshi to USD default value
+    BTC: types.array(
+      types.model({
+        t: types.Date,
+        o: types.number,
+      })
+    ), // Satoshi to USD default value
+    // FIXME should be a Pair, not a currency
+
     // TODO add "last update". refresh only needed if more than 1 or 10 min?
   })
   .actions((self) => {
     const update = flow(function* () {
       try {
         const {data} = yield functions().httpsCallable("getPrice")({})
-        self.BTC = data
+        self.BTC = data.map(value => ({
+          t: new Date(value.t),
+          o: value.o,
+        }))
       } catch (err) {
-        console.tron.error("error getting BTC price", err)
+        console.tron.error(`error getting BTC price: ${err}`)
       }
     })
     return { update }

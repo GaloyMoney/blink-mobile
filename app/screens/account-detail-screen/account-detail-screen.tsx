@@ -450,25 +450,10 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = inject("d
       return subscriber // unsubscribe on unmount
     }, [])
 
-    const data = [
-      { x: 0, y: 6000 },
-      { x: 1, y: 7000 },
-      { x: 2, y: 7500 },
-      { x: 3, y: 6500 },
-      { x: 4, y: 7000 },
-      { x: 5, y: 7500 },
-      { x: 6, y: 6000 },
-      { x: 7, y: 7000 },
-      { x: 8, y: 7500 },
-      { x: 9, y: 6500 },
-      { x: 10, y: 7000 },
-      { x: 11, y: 7500 },
-    ];
-
     return (
       <Screen backgroundColor={palette.white} >
         <BalanceHeaderDataInjection currency={currency} account={account} dataStore={dataStore} />
-        <Price data={data} price={dataStore.rates.getInBTC} delta={0.70} /> 
+        <Price data={dataStore.rates.BTC} /> 
         {/* FIXME */}
         {//(account === AccountType.Bitcoin && !isAnonymous) && (
           // TODO integrate back BUY/SELL BTC, 

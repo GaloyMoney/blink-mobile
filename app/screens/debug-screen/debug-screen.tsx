@@ -138,7 +138,7 @@ export const DebugScreen = inject("dataStore")(
           <View>
             <Text>UID: {auth().currentUser?.uid}</Text>
             <Text>phone: {auth().currentUser?.phoneNumber}</Text>
-            <Text>BTC price: {dataStore.rates.BTC}</Text>
+            <Text>BTC price: {dataStore.rates.BTC[24].o}</Text>
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
@@ -148,14 +148,14 @@ export const DebugScreen = inject("dataStore")(
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
-              title="test functions"
-              onPress={() => functions().httpsCallable("test")({})}
+              title="update Price"
+              onPress={() => dataStore.rates.update()}
             />
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
-              title="add invoice"
-              onPress={() => Clipboard.setString(dataStore.lnd.addInvoice({ value: 1000 }))}
+              title="test functions"
+              onPress={() => functions().httpsCallable("test")({})}
             />
             <TextInput
               style={HINT}
