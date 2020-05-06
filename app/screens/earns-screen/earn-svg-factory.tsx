@@ -96,7 +96,7 @@ export const SVGs = ({name, width, theme}: ISVGs) => {
       : <SecurePartTwo width={rWidth} />
 
     default: return <LottieView source={lottieTest} 
-      style={{width: screenWidth, height: screenWidth, alignSelf: "center"}} autoPlay loop />
+      style={{width: rWidth, alignSelf: "center"}} autoPlay loop />
     // default: return <Text>{name} does not exist</Text>
   }
 }
