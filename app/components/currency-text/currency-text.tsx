@@ -38,5 +38,6 @@ export function CurrencyText({ amount, currency, textColor }: CurrencyTextProps)
           <Text style={[styles.smallText, color]}> sats</Text>
         </View>
       )
+    default: return <Text>Missing currency variable</Text>
   }
 }

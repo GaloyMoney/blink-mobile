@@ -249,8 +249,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
       updateTransactions: flow(function* () {
         try {
           const { data } = yield functions().httpsCallable("getLightningTransactions")({})
-
-          self._transactions = data.map((index) => ({
+          const txs = data.map((index) => ({
             amount: index.amount,
             description: index.description,
             created_at: new Date(index.created_at),
@@ -258,6 +257,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
             destination: index.destination,
             type: index.type
           }))
+          self._transactions = txs
         } catch (err) {
           // TODO show visual indication of internet connection failure
           console.tron.log(err.toString())
