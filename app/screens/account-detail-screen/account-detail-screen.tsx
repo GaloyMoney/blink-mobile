@@ -127,7 +127,7 @@ const styles = EStyleSheet.create({
 
 const AccountDetailItem: React.FC<AccountDetailItemProps> = (props) => (
   <ListItem
-  key={props.hash}
+  // key={props.hash}
   title={props.description}
   leftIcon={<IconTransaction type={props.type.includes("invoice") ? "receive" : "send"} size={24} color={palette.orange} />}
   rightTitle={<CurrencyText amount={props.amount} currency={props.currency} textColor={palette.darkGrey} />}
@@ -450,25 +450,10 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = inject("d
       return subscriber // unsubscribe on unmount
     }, [])
 
-    const data = [
-      { x: 0, y: 6000 },
-      { x: 1, y: 7000 },
-      { x: 2, y: 7500 },
-      { x: 3, y: 6500 },
-      { x: 4, y: 7000 },
-      { x: 5, y: 7500 },
-      { x: 6, y: 6000 },
-      { x: 7, y: 7000 },
-      { x: 8, y: 7500 },
-      { x: 9, y: 6500 },
-      { x: 10, y: 7000 },
-      { x: 11, y: 7500 },
-    ];
-
     return (
-      <Screen backgroundColor={palette.white} preset="scroll">
+      <Screen backgroundColor={palette.white} >
         <BalanceHeaderDataInjection currency={currency} account={account} dataStore={dataStore} />
-        <Price data={data} price={dataStore.rates.getInBTC} delta={0.70} /> 
+        <Price data={dataStore.rates.BTC} /> 
         {/* FIXME */}
         {//(account === AccountType.Bitcoin && !isAnonymous) && (
           // TODO integrate back BUY/SELL BTC, 
@@ -487,6 +472,7 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = inject("d
           />
         )}
         {sections.length === 0 && 
+        // FIXME there is no way to refresh is no transaction is already here
         <View style={styles.noTransactionView}>
           <Text style={styles.NoTransactionText}>No transaction to show :(</Text>
         </View>}

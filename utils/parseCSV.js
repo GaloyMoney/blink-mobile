@@ -18,18 +18,18 @@ const formatArray = input => input.map(index => {
   return {
     id: index.ID_Screen,
     type: "Text",
-    title: index["Screen Name"],
-    text: index.Content,
-    question: index.Question,
+    title: index["Screen Name"].trim(),
+    text: index.Content.trim(),
+    question: index.Question.trim(),
     answers: [
-      index["Answer A"],
-      index["Answer B"],
-      index["Answer C"],
+      index["Answer A"].trim(),
+      index["Answer B"].trim(),
+      index["Answer C"].trim(),
     ],
     feedback: [
-      index["Answer A Feedback"],
-      index["Answer B Feedback"],
-      index["Answer C Feedback"],
+      index["Answer A Feedback"].trim(),
+      index["Answer B Feedback"].trim(),
+      index["Answer C Feedback"].trim(),
     ]
   }
 })
@@ -42,21 +42,24 @@ const section = (input) => ({
   "content": formatArray(input)
 })
 
-
 collections = new Set()
 records.forEach((index) => collections.add(index.ID_Section))
 collections.delete("")
 
-const output = []
+const outputEarn = []
 
 collections.forEach(collection => {
   const sectionArray = records.filter(index => index.ID_Section.includes(collection))
 
-  output.push(
+  outputEarn.push(
     section(sectionArray)
   )
 })
 
-// console.log({collections})
-// const output = section(records2)
-console.log(JSON.stringify(output, null, 2))
+const outputFilePath = __dirname + "/../app/i18n/en.json"
+const outputFile = fs.readFileSync(outputFilePath, { encoding: 'utf8' })
+
+let finalJSON = JSON.parse(outputFile)
+finalJSON.EarnScreen.earns = outputEarn
+
+fs.writeFileSync(outputFilePath, JSON.stringify(finalJSON, null, 2))

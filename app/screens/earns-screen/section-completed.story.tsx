@@ -6,13 +6,18 @@ import { SectionCompleted } from "./section-completed";
 
 declare let module
 
+const route = { params : {
+  sectionTitle: "Bitcoin: What is it?", 
+  amount: 5000,
+}}
+
 storiesOf("Section Completed", module)
   .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
   .add("Style Presets", () => (
     <SafeAreaProvider>
       <Story>
         <UseCase text="not earned">
-          <SectionCompleted sectionTitle={"Bitcoin: What is it?"} amount={5000} />  
+          <SectionCompleted route={route} />  
         </UseCase>
       </Story>
     </SafeAreaProvider>

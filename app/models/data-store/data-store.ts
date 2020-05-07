@@ -19,8 +19,7 @@ export const LightningInvoiceModel = types.model("LightningTransaction", {
   amount: types.number,
   description: types.maybe(types.union(types.string, types.null)),
   created_at: types.Date,
-  hash: types.string,
-  preimage: types.maybe(types.string),
+  hash: types.maybe(types.union(types.string, types.null)),
   destination: types.maybe(types.string),
   type: types.string
 })
@@ -255,7 +254,6 @@ export const LndModel = BaseAccountModel.named("Lnd")
             description: index.description,
             created_at: new Date(index.created_at),
             hash: index.hash,
-            preimage: index.preimage,
             destination: index.destination,
             type: index.type
           }))
@@ -282,16 +280,26 @@ export const AccountModel = types.union(FiatAccountModel, LndModel)
 export const RatesModel = types
   .model("Rates", {
     USD: 1, // TODO is there a way to have enum as parameter?
-    BTC: 0.0001, // Satoshi to USD default value
+    BTC: types.array(
+      types.model({
+        t: types.Date,
+        o: types.number,
+      })
+    ), // Satoshi to USD default value
+    // FIXME should be a Pair, not a currency
+
     // TODO add "last update". refresh only needed if more than 1 or 10 min?
   })
   .actions((self) => {
     const update = flow(function* () {
       try {
         const {data} = yield functions().httpsCallable("getPrice")({})
-        self.BTC = data
+        self.BTC = data.map(value => ({
+          t: new Date(value.t),
+          o: value.o,
+        }))
       } catch (err) {
-        console.tron.error("error getting BTC price", err)
+        console.tron.error(`error getting BTC price: ${err}`)
       }
     })
     return { update }
@@ -337,16 +345,11 @@ export const OnboardingModel = types
     stage: types.array(types.enumeration<Onboarding>("Onboarding", Object.values(Onboarding))),
   })
   .actions((self) => ({
-    add: flow(function* (step) {
+    add: function (step) {
       if (self.stage.findIndex((item) => item == step) === -1) {
         self.stage.push(step)
       }
-    }),
-    _reset: flow(function* () {
-      while(self.stage.length > 0) {
-        self.stage.pop();
-      }
-    }),
+    }
   }))
   .views((self) => ({
     has(step: Onboarding) {
