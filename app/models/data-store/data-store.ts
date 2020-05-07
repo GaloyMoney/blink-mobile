@@ -207,7 +207,6 @@ export const FiatAccountModel = BaseAccountModel.props({
 export const LndModel = BaseAccountModel.named("Lnd")
   .props({
     type: AccountType.Bitcoin,
-    receiveBitcoinScreenAlert: false,
     _transactions: types.array(LightningInvoiceModel),
   })
   .actions((self) => {
@@ -230,10 +229,6 @@ export const LndModel = BaseAccountModel.named("Lnd")
           console.log("error with AddInvoice")
           throw err
         }
-      }),
-
-      resetReceiveBitcoinScreenAlert: flow(function* () {
-        self.receiveBitcoinScreenAlert = false
       }),
 
       updateBalance: flow(function* () {
