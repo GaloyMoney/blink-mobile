@@ -225,7 +225,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
       addInvoice: flow(function* (request: IAddInvoiceRequest) {
         try {
           const { data } = yield functions().httpsCallable("addInvoice")(request)
-          return data.request
+          return data
         } catch (err) {
           console.log("error with AddInvoice")
           throw err
@@ -239,7 +239,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
       updateBalance: flow(function* () {
         try {
           const { data } = yield functions().httpsCallable("getLightningBalance")({})
-          self.confirmedBalance = data.response
+          self.confirmedBalance = data
         } catch (err) {
           // TODO show visual indication of internet connection failure
           console.tron.log(err.toString())
@@ -249,7 +249,8 @@ export const LndModel = BaseAccountModel.named("Lnd")
       updateTransactions: flow(function* () {
         try {
           const { data } = yield functions().httpsCallable("getLightningTransactions")({})
-          self._transactions = data.response.map((index) => ({
+
+          self._transactions = data.map((index) => ({
             amount: index.amount,
             description: index.description,
             created_at: new Date(index.created_at),
