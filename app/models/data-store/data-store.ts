@@ -252,7 +252,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
           const txs = data.map((index) => ({
             amount: index.amount,
             description: index.description,
-            created_at: new Date(index.created_at),
+            created_at: index.created_at,
             hash: index.hash,
             destination: index.destination,
             type: index.type
