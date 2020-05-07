@@ -1,12 +1,12 @@
+import functions from "@react-native-firebase/functions"
 import { useNavigation } from "@react-navigation/native"
 import * as lightningPayReq from 'bolt11'
 import { inject, observer } from "mobx-react"
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { ActivityIndicator, Alert, Clipboard, ScrollView, StyleSheet, Text, View, ViewStyle } from "react-native"
+import { Alert, Clipboard, ScrollView, StyleSheet, Text, View, ViewStyle } from "react-native"
 import { RNCamera } from "react-native-camera"
 import { Button, Input } from "react-native-elements"
-import { Switch } from "react-native-gesture-handler"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Onboarding } from "types"
@@ -15,7 +15,6 @@ import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { getDescription } from "../../utils/lightning"
-import functions from "@react-native-firebase/functions"
 
 const CAMERA: ViewStyle = {
   width: "100%",

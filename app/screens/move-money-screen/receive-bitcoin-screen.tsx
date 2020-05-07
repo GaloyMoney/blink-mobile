@@ -1,4 +1,5 @@
 import { inject, observer } from "mobx-react"
+import * as lightningPayReq from 'bolt11'
 import * as React from "react"
 import { useEffect, useState } from "react"
 import { Alert, Clipboard, Share, StyleSheet, Text, View } from "react-native"
@@ -10,6 +11,9 @@ import { QRCode } from "../../components/qrcode"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
+import functions from "@react-native-firebase/functions"
+import { getHash } from "../../utils/lightning"
+
 
 const styles = StyleSheet.create({
   buttonStyle: {
@@ -53,35 +57,17 @@ export const ReceiveBitcoinScreen = inject("dataStore")(
       try {
         setLoading(true)
         const invoice = await dataStore.lnd.addInvoice({ value: amount, memo: note })
-        navigation.navigate("showQRCode", { invoice, amount })
+
+        const invoiceDecoded = lightningPayReq.decode(invoice)
+        const hash = getHash(invoiceDecoded)
+
+        navigation.navigate("showQRCode", { invoice, amount, hash })
       } catch (err) {
         Alert.alert(err.toString())
       } finally {
         setLoading(false)
       }
     }
-
-    useEffect(() => {
-      // new invoice, is it the one currency shown?
-      if (dataStore.lnd.receiveBitcoinScreenAlert === false) {
-        return
-      }
-
-      const options = {
-        enableVibrateFallback: true,
-        ignoreAndroidSystemSettings: false,
-      }
-
-      // TODO refactor
-      ReactNativeHapticFeedback.trigger("notificationSuccess", options)
-
-      Alert.alert("success", "This invoice has been paid")
-
-      setNote("")
-      setAmount(0)
-
-      dataStore.lnd.resetReceiveBitcoinScreenAlert()
-    }, [dataStore.lnd.receiveBitcoinScreenAlert])
 
     return (
       <Screen backgroundColor={palette.lighterGrey}>
@@ -125,8 +111,9 @@ export const ReceiveBitcoinScreen = inject("dataStore")(
   }),
 )
 
-export const ShowQRCode = ({ route }) => {
+export const ShowQRCode = ({ route, navigation }) => {
   const invoice = route.params.invoice
+  const hash = route.params.hash
   const amount = route.params.amount
 
   const shareInvoice = async () => {
@@ -152,6 +139,33 @@ export const ShowQRCode = ({ route }) => {
   const copyInvoice = () => {
     Clipboard.setString(invoice)
     Alert.alert("Invoice has been copied in the clipboard")
+  }
+
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      const {data} = await functions().httpsCallable("updatePendingInvoice")(hash)
+      if (data === true) {
+        success()
+      }
+    }, 2000)
+    return () => clearInterval(interval)
+  }, [])
+
+  const success = () => {
+    const options = {
+      enableVibrateFallback: true,
+      ignoreAndroidSystemSettings: false,
+    }
+
+    ReactNativeHapticFeedback.trigger("notificationSuccess", options)
+    Alert.alert("success", "This invoice has been paid", [
+      {
+        text: translate("common.ok"),
+        onPress: () => {
+          navigation.goBack(false)
+        },
+      },
+    ])
   }
 
   return (
