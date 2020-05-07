@@ -168,8 +168,6 @@ export const SendBitcoinScreen: React.FC = inject("dataStore")(
     const [err, setErr] = useState("")
     const [loading, setLoading] = useState(false)
 
-    type payInvoiceResult = boolean | Error
-
     const onUseUSDChange = async (input) => {
       setUseUSD(input)
 
@@ -189,7 +187,7 @@ export const SendBitcoinScreen: React.FC = inject("dataStore")(
       if (amountless) {
         if (amount === 0) {
           Alert.alert(
-            `This invoice doesn't have an amount, so you need to manually specify an amount`,
+            `This invoice doesn't have an amount, so you need to manually specify how much money you want to send`,
           )
           return
         }
@@ -198,7 +196,7 @@ export const SendBitcoinScreen: React.FC = inject("dataStore")(
         // payreq.amt = amount
       }
 
-      console.tron.log("payreq", invoice)
+      console.tron.log({invoice})
 
       setLoading(true)
       try {
@@ -211,13 +209,15 @@ export const SendBitcoinScreen: React.FC = inject("dataStore")(
           }
         }
 
-        const result: payInvoiceResult = await functions().httpsCallable("payInvoice")({invoice})
+        const {data} = await functions().httpsCallable("payInvoice")({invoice})
 
-        console.tron.log({result})
+        console.tron.log({data})
 
-        if (result === true) {
+        if (data.result === true) {
           setMessage("Payment succesfull")
           await dataStore.onboarding.add(Onboarding.firstLnPayment)
+        } else if (data.result === "pending") {
+          setMessage("Payment has been sent but is not confirmed yet")
         } else {
           setErr(result.toString())
         }
@@ -283,7 +283,7 @@ export const SendBitcoinScreen: React.FC = inject("dataStore")(
             <Text style={styles.smallText}>{translate("SendBitcoinScreen.note")}</Text>
             <Text style={styles.note}>{note}</Text>
           </View>
-          <View style={[styles.horizontalContainer, { marginTop: 8 }]}>
+          {/* <View style={[styles.horizontalContainer, { marginTop: 8 }]}>
             <Text style={[styles.smallText, { paddingTop: 5 }]}>
               {translate("SendBitcoinScreen.payFromUSD")}
             </Text>
@@ -303,7 +303,7 @@ export const SendBitcoinScreen: React.FC = inject("dataStore")(
                 </Text>
               )}
             </View>
-          )}
+          )} */}
           <Button
             buttonStyle={styles.buttonStyle}
             title="Send"
