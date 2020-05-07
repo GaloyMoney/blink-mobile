@@ -10,6 +10,7 @@ import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
 import { color, spacing } from "../../theme"
 import { palette } from "../../theme/palette"
+import { resetDataStore } from "../../models/root-store"
 
 
 
@@ -103,9 +104,9 @@ export const DebugScreen = inject("dataStore")(
         <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
           <Button
             style={DEMO}
-            textStyle={DEMO_TEXT}
             title="Delete account and log out"
             onPress={async () => {
+              resetDataStore()
               if (auth().currentUser) {
                 try {
                   await functions().httpsCallable("deleteCurrentUser")({})
@@ -114,15 +115,30 @@ export const DebugScreen = inject("dataStore")(
                 }
               }
               await auth().signOut()
-              await dataStore.onboarding._reset() // do not synchronize state update
-              Alert.alert("user succesfully deleted. Delete your app to start from a clean state")
+              Alert.alert("user succesfully deleted. Restart your app")
+            }}
+            />
+          <Button
+            style={DEMO}
+            title="Delete dataStore state"
+            onPress={async () => {
+              resetDataStore()
+              Alert.alert("state succesfully deleted. Restart your app")
+            }}
+          />
+          <Button
+            style={DEMO}
+            title="Log out"
+            onPress={async () => {
+              await auth().signOut()
+              Alert.alert("log out completed. Restart your app")
             }}
           />
           <VersionComponent />
           <View>
             <Text>UID: {auth().currentUser?.uid}</Text>
             <Text>phone: {auth().currentUser?.phoneNumber}</Text>
-            <Text>BTC price: {dataStore.rates.BTC}</Text>
+            <Text>BTC price: {dataStore.rates.BTC[24].o}</Text>
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
@@ -132,22 +148,14 @@ export const DebugScreen = inject("dataStore")(
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
-              title="Delete onboarding state"
-              onPress={async () => {
-                await dataStore.onboarding._reset()
-              }}
+              title="update Price"
+              onPress={() => dataStore.rates.update()}
             />
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
               title="test functions"
               onPress={() => functions().httpsCallable("test")({})}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              title="add invoice"
-              onPress={() => Clipboard.setString(dataStore.lnd.addInvoice({ value: 1000 }))}
             />
             <TextInput
               style={HINT}

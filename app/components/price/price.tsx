@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Text, View } from "react-native"
+import { Text, View, ActivityIndicator } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { palette } from "../../theme/palette"
 
@@ -34,23 +34,32 @@ const styles = EStyleSheet.create({
 })
 
 
-export const Price = ({price, delta, data}) => {
-  const color = delta > 0 ? {color: palette.green} : {color: palette.red}
+export const Price = ({data}) => {
+  let price, delta, color
+
+  try {
+    price = data[24].o
+    delta = ( price - data[0].o ) / price
+    color = delta > 0 ? {color: palette.green} : {color: palette.red}
+  } catch (err) {
+    // FIXME proper Loader
+    return <ActivityIndicator animating={true} size="large" color={palette.lightBlue} />
+  }
 
   return (
   <>
     <View style={styles.textView}>
-      <Text style={styles.neutral}>Bitcoin Price </Text>
+      <Text style={styles.neutral}>Sats Price </Text>
       <Text style={styles.price}>${price}</Text>
     </View>
     <View style={styles.textView}>
-      <Text style={[styles.delta, color]}>{delta}% </Text>
+      <Text style={[styles.delta, color]}>{(delta * 100).toFixed(2)}% </Text>
       <Text style={styles.neutral}>Today</Text>
     </View>
     <View style={styles.chart}>
       {/* <VictoryChart width={350} > */}
         <VictoryLine 
-          data={data}
+          data={data.map(index => ({x: index.t, y: index.o}))}
           interpolation="basis" 
           style={{data: { stroke: palette.lightBlue, strokeWidth: 4 }}} />
       {/* </VictoryChart> */}

@@ -152,14 +152,15 @@ const styles = EStyleSheet.create({
     paddingTop: "18rem",
     color: palette.white,
     fontSize: "16rem",
-    alignSelf: "center"
+    alignSelf: "center",
   },
 
   unlock: {
     color: palette.white,
     fontSize: "16rem",
     fontWeight: "bold",
-    alignSelf: "center"
+    alignSelf: "center",
+    textAlign: "center",
   },
 })
 
@@ -244,7 +245,9 @@ export const EarnSection = inject("dataStore")(
               activeOpacity={0.9}
               disabled={!item.enabled}
               >
-              {SVGs({name: item.id, width: svgWidth, height: svgWidth})}
+              <View style={{paddingVertical: 12}}>
+                {SVGs({name: item.id, width: svgWidth})}
+              </View>
             </TouchableOpacity>
             <View>
               <Text 
@@ -285,7 +288,7 @@ export const EarnSection = inject("dataStore")(
           </View>
           {!item.enabled &&
             <>
-              <Text style={styles.unlockQuestion}>To unlock answer the question:</Text>
+              <Text style={styles.unlockQuestion}>To unlock, answer the question:</Text>
               <Text style={styles.unlock}>{item.enabledMessage}</Text>
             </>
           }

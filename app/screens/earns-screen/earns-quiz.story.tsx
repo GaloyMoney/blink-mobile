@@ -8,6 +8,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 
 declare let module
 
+
 const route = { params: {
   title: "So what exactly is Bitcoin?",
   text: "Bitcoin is digital money.\n\nIt can be transferred swiftly and securely between any two people in the world — without the need for a bank or any other financial company in the middle.",
@@ -30,17 +31,36 @@ const route = { params: {
 let route_completed = cloneDeep(route)
 route_completed.params.completed = true
 
+let route_long = cloneDeep(route)
+route_long.params.answers[0] = "a \n b \n c \n d \n e \n f \n g \n h"
+route_long.params.feedback[1] = "a \n b \n c \n d \n e \n f \n g \n h"
+
 storiesOf("Quiz", module)
   .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
-  .add("Style Presets", () => (
+  .add("Not earned", () => (
     <SafeAreaProvider>
       <Story>
         <UseCase text="not earned">
           <EarnQuiz route={route} />  
         </UseCase>
-        <UseCase text="earned">
-          <EarnQuiz route={route_completed} />
+      </Story>
+    </SafeAreaProvider>
+  ))
+  .add("Not earned - long text", () => (
+    <SafeAreaProvider>
+      <Story>
+        <UseCase text="Not earned - long text">
+          <EarnQuiz route={route_long} />  
         </UseCase>
       </Story>
     </SafeAreaProvider>
+  ))
+  .add("Earned", () => (
+  <SafeAreaProvider>
+    <Story>
+      <UseCase text="earned">
+        <EarnQuiz route={route_completed} />
+      </UseCase>
+    </Story>
+  </SafeAreaProvider>
   ))
