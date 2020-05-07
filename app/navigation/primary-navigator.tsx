@@ -17,6 +17,7 @@ import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
 import { palette } from "../theme/palette"
 import { AccountType } from "../utils/enum"
 import EStyleSheet from "react-native-extended-stylesheet"
+import { TransactionScreenDataInjected } from "../screens/transaction-screen/transaction-screen"
 
 const styles = EStyleSheet.create({
   person: {
@@ -91,6 +92,13 @@ export const AccountNavigator = () => {
         options={() => ({
           title: translate("AccountsScreen.title"),
           headerShown: false
+        })}
+      />
+      <StackAccounts.Screen
+        name="transactionHistory"
+        component={TransactionScreenDataInjected}
+        options={() => ({
+          title: "Transaction History",
         })}
       />
       <StackAccounts.Screen
