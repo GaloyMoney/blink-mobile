@@ -127,9 +127,10 @@ const VisualExpiration = ({ validUntil }) => {
   )
 }
 
-const BalanceHeaderDataInjection = ({ currency, dataStore, account }) => {
+const BalanceHeaderDataInjection = inject("dataStore")(observer(
+  ({ currency, dataStore, account }) => {
   return <BalanceHeader currency={currency} amount={dataStore.balances({ currency, account })} />
-}
+}))
 
 const BuyAndSellComp = ({ dataStore, refresh }) => {
   const [side, setSide] = useState<Side>("buy")
@@ -325,27 +326,11 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = inject("d
       navigation.setOptions({ title: account})
     }, [account])
 
-    const [isAnonymous, setIsAnonymous] = useState(false)
-
-    const refresh = async () => {
-      setIsAnonymous(auth().currentUser?.isAnonymous)
-    }
-
-    useEffect(() => {
-      refresh()
-    }, [])
-
-    useEffect(() => {
-      const subscriber = auth().onAuthStateChanged(refresh)
-      return subscriber // unsubscribe on unmount
-    }, [])
-
     return (
       <Screen backgroundColor={palette.white} preset="scroll" style={{flex: 1}}>
         <BalanceHeaderDataInjection 
           currency={accountStore.currency}
           account={account}
-          dataStore={dataStore}
         />
         <Price data={dataStore.rates.BTC} /> 
         {/* FIXME */}
@@ -357,7 +342,7 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = inject("d
           //   refresh={refresh}
           // />)
          }
-        {(account === AccountType.Bitcoin && isAnonymous) && (
+        {(account === AccountType.Bitcoin && !dataStore.onboarding.has(Onboarding.phoneVerification)) && (
           // TODO update when isAnonymous changes
           <Button title={"Activate Wallet"} 
             buttonStyle={{backgroundColor: palette.lightBlue, borderRadius: 32}} 
