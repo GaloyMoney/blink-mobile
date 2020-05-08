@@ -88,7 +88,7 @@ const styles = EStyleSheet.create({
 export const MoveMoneyScreenDataInjected = inject("dataStore")(observer(
   ({ dataStore, navigation }) => {
     const bankOnboarded = dataStore.onboarding.has(Onboarding.bankOnboarded)
-    const walletActivated = dataStore.onboarding.has(Onboarding.walletActivated)
+    const walletActivated = dataStore.onboarding.has(Onboarding.phoneVerification)
 
     return <MoveMoneyScreen 
       bankOnboarded={bankOnboarded}
