@@ -154,7 +154,6 @@ export const WelcomePhoneInputScreen = ({ navigation }) => {
 // TOOD make a component. shared with Account View.
 export const onLoggedinSuccess = async ({ dataStore }) => {
   dataStore.onboarding.add(Onboarding.phoneVerification)
-  dataStore.onboarding.add(Onboarding.walletActivated)
   console.log("onLoggedinSuccess complete")
   // FIXME forceRefresh doesn't seem to be passed by
 }
