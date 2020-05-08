@@ -306,14 +306,19 @@ export const RatesModel = types
       if (currency === CurrencyType.USD) {
         return self.USD
       } else if (currency === CurrencyType.BTC) {
-        return self.BTC[self.BTC.length - 1].o
+        try {
+          return self.BTC[self.BTC.length - 1].o
+        } catch (err) {
+          console.tron.warn(`don't have rates ${err}`)
+          return 0.000001
+        }
       } else {
         throw Error(`currency ${currency} doesnt't exist`)
       }
     },
     // return in BTC instead of SAT
     get getInBTC() {
-      return (self.BTC[self.BTC.length - 1].o * Math.pow(10, 8))
+      return (self.rate(BTC) * Math.pow(10, 8))
     }
   }))
 

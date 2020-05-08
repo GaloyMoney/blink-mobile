@@ -143,9 +143,13 @@ export const ShowQRCode = ({ route, navigation }) => {
 
   useEffect(() => {
     const interval = setInterval(async () => {
-      const {data} = await functions().httpsCallable("updatePendingInvoice")(hash)
-      if (data === true) {
-        success()
+      try {
+        const {data} = await functions().httpsCallable("updatePendingInvoice")(hash)
+        if (data === true) {
+          success()
+        }
+      } catch (err) {
+        console.tron.warn(`can't ferch invoice ${err}`)
       }
     }, 2000)
     return () => clearInterval(interval)
