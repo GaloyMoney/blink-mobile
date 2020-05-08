@@ -19,7 +19,6 @@ const Loading = createStackNavigator()
 export const RootStack = inject("dataStore")(
   observer(({ dataStore }) => {
     const [initialRouteName, setInitialRouteName] = useState("")
-    const [authReady, setAuthReady] = useState(false)
 
     const onAuthStateChanged = async (user) => {
       console.tron.log(`onAuthStateChanged`, user)
@@ -27,30 +26,21 @@ export const RootStack = inject("dataStore")(
 
       if (user == null) {
         await auth().signInAnonymously()
-      } else { 
+      } else if (user.phoneNumber) { 
         onLoggedinSuccess({ dataStore })
-        setAuthReady(true)
+      }
+
+      if (dataStore.onboarding.has(Onboarding.walletDownloaded)) {
+        setInitialRouteName("primaryStack")
+      } else {
+        // new install
+        setInitialRouteName("getStarted")
       }
     }
 
     useEffect(() => {
       const subscriber = auth().onAuthStateChanged(onAuthStateChanged)
       return subscriber // unsubscribe on unmount
-    }, [])
-
-    useEffect(() => {
-      const _ = async () => {
-        when(() => authReady)
-
-        if (dataStore.onboarding.has(Onboarding.walletDownloaded)) {
-          setInitialRouteName("primaryStack")
-        } else {
-          // new install
-          setInitialRouteName("getStarted")
-        }
-      }
-
-      _()
     }, [])
 
     if (initialRouteName === "") {
