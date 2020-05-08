@@ -81,7 +81,7 @@ export const AccountsScreen = inject("dataStore")(
       accountTypes[0].subtitle = false
     }
 
-    if (!dataStore.onboarding.has(Onboarding.walletActivated)) {
+    if (!dataStore.onboarding.has(Onboarding.phoneVerification)) {
       accountTypes[1].subtitle = false
     }
 
