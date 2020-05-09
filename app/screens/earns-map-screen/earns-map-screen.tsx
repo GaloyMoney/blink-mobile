@@ -82,6 +82,7 @@ interface IEarnMapScreen {
   currSection: number
   progress: number
   sectionsData: ISectionData[]
+  earned: number
 }
 
 export const ProgressBar = ({progress}) => {
@@ -123,12 +124,13 @@ export const EarnMapDataInjected = inject("dataStore")(
     sectionsData={sectionsData}
     currSection={currSection}
     progress={progress}
+    earned={dataStore.lnd.earned}
   />
 
 }))
 
 export const EarnMapScreen: React.FC<IEarnMapScreen> = 
-  ({ navigation, sectionsData, currSection, progress}) => {
+  ({ navigation, sectionsData, currSection, progress, earned}) => {
 
   const Finish = ({currSection, length}) => {
     if (currSection !== sectionsData.length) return null
@@ -222,20 +224,18 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> =
 
   return (
     <Screen unsafe={true} >
-        <SafeAreaView style={{backgroundColor, minHeight: "6%"}} />
-        <ScrollView 
-          // removeClippedSubviews={true}
-          style={{backgroundColor}}
-          contentContainerStyle={{
-            backgroundColor: palette.lightBlue, 
-            flexGrow: 1,
-          }}
-          ref={scrollViewRef}
-          onContentSizeChange={() => {
-            scrollViewRef.current.scrollToEnd()
-          }}
-        >
-        <MountainHeader amount={10} color={backgroundColor} />
+      <ScrollView 
+        // removeClippedSubviews={true}
+        style={{backgroundColor}}
+        contentContainerStyle={{
+          backgroundColor: palette.lightBlue, 
+          flexGrow: 1,
+        }}
+        ref={scrollViewRef}
+        onContentSizeChange={() => {
+          scrollViewRef.current.scrollToEnd()
+        }}>
+        <MountainHeader amount={earned} color={backgroundColor} />
         {/* <View style={{backgroundColor: palette.sky}}>
           <Top width={screenWidth} />
         </View> */}
