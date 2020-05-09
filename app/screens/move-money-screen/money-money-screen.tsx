@@ -107,6 +107,15 @@ export const MoveMoneyScreen = (
   const [buttonAction, setButtonAction] = useState(() => () => {})
   const [selectedIndex, setSelectedIndex] = useState(0)
 
+  const [secretMenuCounter, setSecretMenuCounter] = useState(0)
+
+  React.useEffect(() => {
+    if (secretMenuCounter > 2) {
+      navigation.navigate("Profile")
+      setSecretMenuCounter(0)
+    }
+  }, [secretMenuCounter])
+
   const bank = [
     {
       icon: "ios-exit",
@@ -225,9 +234,9 @@ export const MoveMoneyScreen = (
               />
             ))}
             <View style={{marginBottom: 32, alignItems: "center", marginTop: 32}}>
-              <Icon name={"ios-thunderstorm"} size={32} />
+              <Icon name={"ios-thunderstorm"} 
+                size={32} onPress={() => setSecretMenuCounter(secretMenuCounter + 1)} />
               <Text 
-                onPress={() => navigation.navigate("Profile")} 
                 style={styles.lightningText}>
                   {`We use the Lightning Network.`}
                 </Text>
