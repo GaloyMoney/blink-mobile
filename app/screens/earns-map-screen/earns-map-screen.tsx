@@ -223,7 +223,7 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> =
   const backgroundColor = currSection < sectionsData.length ? palette.sky : palette.orange
 
   return (
-    <Screen unsafe={true} >
+    <Screen unsafe={true} statusBar="light-content" >
       <ScrollView 
         // removeClippedSubviews={true}
         style={{backgroundColor}}
