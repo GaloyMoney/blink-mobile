@@ -20,7 +20,11 @@ storiesOf("Phone number auth", module)
         <WelcomePhoneInputScreen />
       </UseCase>
       <UseCase text="Dollar" usage="The primary.">
-        <WelcomePhoneValidationScreen route={route} onSuccess={() => {}} />
+        <WelcomePhoneValidationScreen 
+          route={route}
+          onSuccess={() => {}}
+          navigation={{navigate: () => {}}}  
+        />
       </UseCase>
     </Story>
   ))
