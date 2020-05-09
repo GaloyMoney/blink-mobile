@@ -297,7 +297,7 @@ export const EarnSection = inject("dataStore")(
     }
 
     return (
-      <Screen style={styles.screenStyle}>
+      <Screen style={styles.screenStyle} statusBar="light-content">
         <View style={{ flex: 1 }} />
         <Carousel
           data={cards}
