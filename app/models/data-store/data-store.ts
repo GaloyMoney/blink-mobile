@@ -265,7 +265,6 @@ export const LndModel = BaseAccountModel.named("Lnd")
           )
         }
       }),
-
     }
   })
   .views((self) => ({
@@ -276,6 +275,16 @@ export const LndModel = BaseAccountModel.named("Lnd")
     get transactions() {
       return self._transactions
     },
+
+    get earned() {
+      if (getParentOfType(self, DataStoreModel).onboarding.has(Onboarding.phoneVerification)) {
+        return self._transactions
+          .filter((value) => value.type === "earn")
+          .reduce((acc, value) => value.amount + acc, 0)
+      } else {
+        return self.confirmedBalance
+      }
+    }
   }))
 
 export const AccountModel = types.union(FiatAccountModel, LndModel)
