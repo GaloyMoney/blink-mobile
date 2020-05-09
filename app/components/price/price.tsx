@@ -50,7 +50,7 @@ export const Price = ({data}) => {
   <>
     <View style={styles.textView}>
       <Text style={styles.neutral}>Sats Price </Text>
-      <Text style={styles.price}>${price}</Text>
+      <Text style={styles.price}>${price.toFixed(8)}</Text>
     </View>
     <View style={styles.textView}>
       <Text style={[styles.delta, color]}>{(delta * 100).toFixed(2)}% </Text>

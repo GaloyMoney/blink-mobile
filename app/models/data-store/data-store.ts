@@ -122,7 +122,7 @@ export const ExchangeModel = types
           console.tron.log("result BuyLNDBTC", result)
           return result?.data?.success ?? false
         } catch (err) {
-          console.tron.error(err.toString(), Error.captureStackTrace(err))
+          console.tron.warn(err.toString())
           throw err
         }
       }),
@@ -138,7 +138,7 @@ export const ExchangeModel = types
           console.tron.log("result SellLNDBTC", result)
           return result
         } catch (err) {
-          console.tron.error(err.toString(), Error.captureStackTrace(err))
+          console.tron.warn(err.toString())
           throw err
         }
       }),
@@ -162,7 +162,7 @@ export const FiatAccountModel = BaseAccountModel.props({
         // const doc = yield firestore().doc(`users/${uid}`).get()
         // self._transactions = doc.data().transactions
       } catch (err) {
-        console.tron.error(`not able to update transaction ${err}`, Error.captureStackTrace(err))
+        console.tron.warn(`not able to update transaction ${err}`)
       }
     })
 
@@ -176,7 +176,7 @@ export const FiatAccountModel = BaseAccountModel.props({
             // TODO: add unconfirmed balance
           }
         } catch (err) {
-          console.tron.error(`can't fetch the balance ${err}`, Error.captureStackTrace(err))
+          console.tron.warn(`can't fetch the balance ${err}`)
         }
       } else {
         self.confirmedBalance = 0
@@ -207,7 +207,6 @@ export const FiatAccountModel = BaseAccountModel.props({
 export const LndModel = BaseAccountModel.named("Lnd")
   .props({
     type: AccountType.Bitcoin,
-    receiveBitcoinScreenAlert: false,
     _transactions: types.array(LightningInvoiceModel),
   })
   .actions((self) => {
@@ -225,44 +224,47 @@ export const LndModel = BaseAccountModel.named("Lnd")
       addInvoice: flow(function* (request: IAddInvoiceRequest) {
         try {
           const { data } = yield functions().httpsCallable("addInvoice")(request)
-          return data.request
+          return data
         } catch (err) {
           console.log("error with AddInvoice")
           throw err
         }
       }),
 
-      resetReceiveBitcoinScreenAlert: flow(function* () {
-        self.receiveBitcoinScreenAlert = false
-      }),
-
       updateBalance: flow(function* () {
-        try {
-          const { data } = yield functions().httpsCallable("getLightningBalance")({})
-          self.confirmedBalance = data.response
-        } catch (err) {
-          // TODO show visual indication of internet connection failure
-          console.tron.log(err.toString())
+        if (getParentOfType(self, DataStoreModel).onboarding.has(Onboarding.phoneVerification)) {
+          try {
+            const { data } = yield functions().httpsCallable("getLightningBalance")({})
+            self.confirmedBalance = data
+          } catch (err) {
+            // TODO show visual indication of internet connection failure
+            console.tron.log(err.toString())
+          }
+        } else {
+          yield self.updateTransactions()
+          self.confirmedBalance = self._transactions.reduce((acc, value) => value.amount + acc, 0)
         }
       }),
 
       updateTransactions: flow(function* () {
-        try {
-          const { data } = yield functions().httpsCallable("getLightningTransactions")({})
-          self._transactions = data.response.map((index) => ({
-            amount: index.amount,
-            description: index.description,
-            created_at: new Date(index.created_at),
-            hash: index.hash,
-            destination: index.destination,
-            type: index.type
-          }))
-        } catch (err) {
-          // TODO show visual indication of internet connection failure
-          console.tron.log(err.toString())
+        if (getParentOfType(self, DataStoreModel).onboarding.has(Onboarding.phoneVerification)) {
+          try {
+            const { data } = yield functions().httpsCallable("getLightningTransactions")({})
+            self._transactions = data
+          } catch (err) {
+            console.tron.warn(`can't fetch the lightning balance ${err}`)
+          }
+        } else {
+          self._transactions = getParentOfType(self, DataStoreModel).onboarding.stage.map(
+            value => ({
+              amount: OnboardingEarn[value],
+              description: value,
+              created_at: new Date(),
+              type: "earn",
+            })
+          )
         }
       }),
-
     }
   })
   .views((self) => ({
@@ -273,6 +275,16 @@ export const LndModel = BaseAccountModel.named("Lnd")
     get transactions() {
       return self._transactions
     },
+
+    get earned() {
+      if (getParentOfType(self, DataStoreModel).onboarding.has(Onboarding.phoneVerification)) {
+        return self._transactions
+          .filter((value) => value.type === "earn")
+          .reduce((acc, value) => value.amount + acc, 0)
+      } else {
+        return self.confirmedBalance
+      }
+    }
   }))
 
 export const AccountModel = types.union(FiatAccountModel, LndModel)
@@ -299,7 +311,7 @@ export const RatesModel = types
           o: value.o,
         }))
       } catch (err) {
-        console.tron.error(`error getting BTC price: ${err}`)
+        console.tron.warn(`error getting BTC price: ${err}`)
       }
     })
     return { update }
@@ -310,14 +322,19 @@ export const RatesModel = types
       if (currency === CurrencyType.USD) {
         return self.USD
       } else if (currency === CurrencyType.BTC) {
-        return self.BTC
+        try {
+          return self.BTC[self.BTC.length - 1].o
+        } catch (err) {
+          console.tron.warn(`don't have rates ${err}`)
+          return 0.000001
+        }
       } else {
         throw Error(`currency ${currency} doesnt't exist`)
       }
     },
     // return in BTC instead of SAT
     get getInBTC() {
-      return (self.BTC * Math.pow(10, 8))
+      return (self.rate(BTC) * Math.pow(10, 8))
     }
   }))
 

@@ -1,6 +1,6 @@
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { Text, View } from "react-native"
+import { Text, View, StatusBar } from "react-native"
 import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { ScrollView, TouchableWithoutFeedback } from "react-native-gesture-handler"
@@ -172,8 +172,11 @@ export const EarnQuiz = ({ route, navigation }) => {
   }, [recordedAnswer])
   
   const close = async () => {
-    setQuizVisible(false)
-    await sleep(100)
+    StatusBar.setBarStyle("light-content")
+    if (quizVisible) {
+      setQuizVisible(false)
+      await sleep(100)
+    }
     navigation.goBack()
   }
 
@@ -276,7 +279,7 @@ export const EarnQuiz = ({ route, navigation }) => {
           </View>
         </ScrollView>
       </SafeAreaView>
-      <CloseCross onPress={() => navigation.goBack()} color={palette.darkGrey} />
+      <CloseCross onPress={async () => await close()} color={palette.darkGrey} />
       <SafeAreaView style={styles.bottomContainer}>
           <View style={{paddingVertical: 12}}>
           {isCompleted &&

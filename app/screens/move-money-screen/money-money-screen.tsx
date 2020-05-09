@@ -88,7 +88,7 @@ const styles = EStyleSheet.create({
 export const MoveMoneyScreenDataInjected = inject("dataStore")(observer(
   ({ dataStore, navigation }) => {
     const bankOnboarded = dataStore.onboarding.has(Onboarding.bankOnboarded)
-    const walletActivated = dataStore.onboarding.has(Onboarding.walletActivated)
+    const walletActivated = dataStore.onboarding.has(Onboarding.phoneVerification)
 
     return <MoveMoneyScreen 
       bankOnboarded={bankOnboarded}
@@ -106,6 +106,15 @@ export const MoveMoneyScreen = (
   const [buttonTitle, setButtonTitle] = useState("")
   const [buttonAction, setButtonAction] = useState(() => () => {})
   const [selectedIndex, setSelectedIndex] = useState(0)
+
+  const [secretMenuCounter, setSecretMenuCounter] = useState(0)
+
+  React.useEffect(() => {
+    if (secretMenuCounter > 2) {
+      navigation.navigate("Profile")
+      setSecretMenuCounter(0)
+    }
+  }, [secretMenuCounter])
 
   const bank = [
     {
@@ -225,9 +234,9 @@ export const MoveMoneyScreen = (
               />
             ))}
             <View style={{marginBottom: 32, alignItems: "center", marginTop: 32}}>
-              <Icon name={"ios-thunderstorm"} size={32} />
+              <Icon name={"ios-thunderstorm"} 
+                size={32} onPress={() => setSecretMenuCounter(secretMenuCounter + 1)} />
               <Text 
-                onPress={() => navigation.navigate("Profile")} 
                 style={styles.lightningText}>
                   {`We use the Lightning Network.`}
                 </Text>

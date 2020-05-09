@@ -9,21 +9,23 @@ import { getRemainingEarnItems, isSectionComplete } from "../earns-screen"
 import BitcoinCircle from "./bitcoin-circle-01.svg"
 import BottomOngoing from "./bottom-ongoing-01.svg"
 import BottomStart from "./bottom-start-01.svg"
-import LeftLastComplete from "./left-finished-01.svg"
+import LeftFinish from "./left-finished-01.svg"
 import LeftComplete from "./left-section-completed-01.svg"
+import LeftLastComplete from "./left-last-section-completed-01.svg"
+import LeftLastOngoing from "./left-last-section-ongoing-01.svg"
+import LeftLastTodo from "./left-last-section-to-do-01.svg"
 import LeftOngoing from "./left-section-ongoing-01.svg"
 import LeftTodo from "./left-section-to-do-01.svg"
 import RightFirst from "./right-first-section-to-do-01.svg"
+import RightLastComplete from "./right-last-section-completed-01.svg"
 import RightLastOngoing from "./right-last-section-ongoing-01.svg"
 import RightLastTodo from "./right-last-section-to-do-01.svg"
+import RightFinish from "./right-finished-01.svg"
 import RightComplete from "./right-section-completed-01.svg"
 import RightOngoing from "./right-section-ongoing-01.svg"
 import RightTodo from "./right-section-to-do-01.svg"
 import TextBlock from "./text-block-medium.svg"
-import Top from "./top-01.svg"
-
-
-const { width: screenWidth } = Dimensions.get("window")
+import { MountainHeader } from "../../components/mountain-header"
 
 const styles = StyleSheet.create({
   mainView: {
@@ -41,12 +43,23 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginBottom: 6,
   },
+
+  finishText: {
+    position: "absolute",
+    color: palette.white,
+    width: 160,
+    fontSize: 18,
+    right: 30,
+    top: 30,
+    textAlign: "center",
+  },
 })
 
 type SideType = "left" | "right"
 interface IInBetweenTile {
   side: SideType
   position: number
+  length: number
 }
 
 interface IBoxAdding {
@@ -55,6 +68,7 @@ interface IBoxAdding {
   Icon: React.Component
   side: SideType
   position: number 
+  length: number
 }
 
 interface ISectionData {
@@ -68,6 +82,7 @@ interface IEarnMapScreen {
   currSection: number
   progress: number
   sectionsData: ISectionData[]
+  earned: number
 }
 
 export const ProgressBar = ({progress}) => {
@@ -109,23 +124,41 @@ export const EarnMapDataInjected = inject("dataStore")(
     sectionsData={sectionsData}
     currSection={currSection}
     progress={progress}
+    earned={dataStore.lnd.earned}
   />
 
 }))
 
 export const EarnMapScreen: React.FC<IEarnMapScreen> = 
-  ({ navigation, sectionsData, currSection, progress}) => {
+  ({ navigation, sectionsData, currSection, progress, earned}) => {
 
-  const InBetweenTile: React.FC<IInBetweenTile> = ({ side, position }) => {
+  const Finish = ({currSection, length}) => {
+    if (currSection !== sectionsData.length) return null
+
+    return <>
+      <Text style={styles.finishText}>
+        That's all for now, we'll let you know when there's more to unearth
+      </Text>
+      {/* TODO FIXME for even section # */}
+    {length % 2 ? 
+        <LeftFinish /> 
+      : <RightFinish />}
+    </>
+    }
+
+  const InBetweenTile: React.FC<IInBetweenTile> = ({ side, position, length }) => {
     if (currSection < position) {      
-      if (position === 9) {
-        return <RightLastTodo />
+      if (position === length - 1) {
+        return side === "left" ? <LeftLastTodo /> : <RightLastTodo />
       }
 
       return side === "left" ? <LeftTodo /> : <RightTodo />
     } else if (currSection === position) {
-      if (position === 9) {
-        return <RightLastOngoing />
+      if (position === length - 1) {
+        return <>
+          <View style={{height: 40}}/>
+          {side === "left" ? <LeftLastOngoing /> : <RightLastOngoing />}
+        </>
       }
 
       if (position === 0 && progress === 0) {
@@ -138,14 +171,18 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> =
     }
   }
 
-  const BoxAdding: React.FC<IBoxAdding> = ({ text, Icon, side, position, section }) => {
+  const BoxAdding: React.FC<IBoxAdding> = ({ text, Icon, side, position, section, length }) => {
     const disabled = currSection < position
     const progressSection = disabled ? 0 : currSection > position ? 1 : progress
     return (<View>
-      <InBetweenTile side={side} position={position}/>
+      <InBetweenTile side={side} position={position} length={length}/>
       <View style={{
         position: "absolute", 
-        bottom: currSection === position ? 80 : 30, 
+        bottom: currSection === position ? 
+          currSection === 0 && progress === 0 ?
+            30
+          : 80
+        : 30, 
         left: side === "left" ? 35 : 200,
         opacity: disabled ? .5: 1,
         }}>
@@ -172,7 +209,9 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> =
                 Icon={item.icon} 
                 side={index % 2 ? "left":"right"} 
                 position={index}
-                section={item.id} />
+                section={item.id}
+                length={sectionsData.length}
+                />
   )})
 
   const scrollViewRef = React.createRef()
@@ -181,26 +220,27 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> =
     scrollViewRef.current.scrollToEnd()
   }, [])
 
+  const backgroundColor = currSection < sectionsData.length ? palette.sky : palette.orange
+
   return (
-    <Screen unsafe={true} >
-        <SafeAreaView style={{backgroundColor: palette.sky, minHeight: "6%"}} />
-        <ScrollView 
-          // removeClippedSubviews={true}
-          style={{backgroundColor: palette.sky}}
-          contentContainerStyle={{
-            backgroundColor: palette.lightBlue, 
-            flexGrow: 1,
-          }}
-          ref={scrollViewRef}
-          onContentSizeChange={() => {
-            scrollViewRef.current.scrollToEnd()
-          }}
-        >
-        <View style={{backgroundColor: palette.sky}}>
+    <Screen unsafe={true} statusBar="light-content" >
+      <ScrollView 
+        // removeClippedSubviews={true}
+        style={{backgroundColor}}
+        contentContainerStyle={{
+          backgroundColor: palette.lightBlue, 
+          flexGrow: 1,
+        }}
+        ref={scrollViewRef}
+        onContentSizeChange={() => {
+          scrollViewRef.current.scrollToEnd()
+        }}>
+        <MountainHeader amount={earned} color={backgroundColor} />
+        {/* <View style={{backgroundColor: palette.sky}}>
           <Top width={screenWidth} />
-        </View>
+        </View> */}
         <View style={styles.mainView}>
-          { currSection === 10 ? <LeftLastComplete /> : null }
+          <Finish currSection={currSection} length={sectionsData.length} />
           { sectionsComp }
           { currSection === 0 ?
               progress === 0 ?

@@ -1,12 +1,12 @@
+import functions from "@react-native-firebase/functions"
 import { useNavigation } from "@react-navigation/native"
 import * as lightningPayReq from 'bolt11'
 import { inject, observer } from "mobx-react"
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { ActivityIndicator, Alert, Clipboard, ScrollView, StyleSheet, Text, View, ViewStyle } from "react-native"
+import { Alert, Clipboard, ScrollView, StyleSheet, Text, View, ViewStyle } from "react-native"
 import { RNCamera } from "react-native-camera"
 import { Button, Input } from "react-native-elements"
-import { Switch } from "react-native-gesture-handler"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Onboarding } from "types"
@@ -15,7 +15,6 @@ import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { getDescription } from "../../utils/lightning"
-import functions from "@react-native-firebase/functions"
 
 const CAMERA: ViewStyle = {
   width: "100%",
@@ -168,8 +167,6 @@ export const SendBitcoinScreen: React.FC = inject("dataStore")(
     const [err, setErr] = useState("")
     const [loading, setLoading] = useState(false)
 
-    type payInvoiceResult = boolean | Error
-
     const onUseUSDChange = async (input) => {
       setUseUSD(input)
 
@@ -189,7 +186,7 @@ export const SendBitcoinScreen: React.FC = inject("dataStore")(
       if (amountless) {
         if (amount === 0) {
           Alert.alert(
-            `This invoice doesn't have an amount, so you need to manually specify an amount`,
+            `This invoice doesn't have an amount, so you need to manually specify how much money you want to send`,
           )
           return
         }
@@ -198,7 +195,7 @@ export const SendBitcoinScreen: React.FC = inject("dataStore")(
         // payreq.amt = amount
       }
 
-      console.tron.log("payreq", invoice)
+      console.tron.log({invoice})
 
       setLoading(true)
       try {
@@ -211,13 +208,15 @@ export const SendBitcoinScreen: React.FC = inject("dataStore")(
           }
         }
 
-        const result: payInvoiceResult = await functions().httpsCallable("payInvoice")({invoice})
+        const {data} = await functions().httpsCallable("payInvoice")({invoice})
 
-        console.tron.log({result})
+        console.tron.log({data})
 
-        if (result === true) {
+        if (data.result === true) {
           setMessage("Payment succesfull")
           await dataStore.onboarding.add(Onboarding.firstLnPayment)
+        } else if (data.result === "pending") {
+          setMessage("Payment has been sent but is not confirmed yet")
         } else {
           setErr(result.toString())
         }
@@ -283,7 +282,7 @@ export const SendBitcoinScreen: React.FC = inject("dataStore")(
             <Text style={styles.smallText}>{translate("SendBitcoinScreen.note")}</Text>
             <Text style={styles.note}>{note}</Text>
           </View>
-          <View style={[styles.horizontalContainer, { marginTop: 8 }]}>
+          {/* <View style={[styles.horizontalContainer, { marginTop: 8 }]}>
             <Text style={[styles.smallText, { paddingTop: 5 }]}>
               {translate("SendBitcoinScreen.payFromUSD")}
             </Text>
@@ -303,7 +302,7 @@ export const SendBitcoinScreen: React.FC = inject("dataStore")(
                 </Text>
               )}
             </View>
-          )}
+          )} */}
           <Button
             buttonStyle={styles.buttonStyle}
             title="Send"
