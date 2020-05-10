@@ -138,7 +138,7 @@ export const DebugScreen = inject("dataStore")(
           <View>
             <Text>UID: {auth().currentUser?.uid}</Text>
             <Text>phone: {auth().currentUser?.phoneNumber}</Text>
-            <Text>BTC price: {dataStore.rates.BTC[24].o}</Text>
+            <Text>BTC price: {dataStore.rates.rate("BTC")}</Text>
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
