@@ -218,9 +218,6 @@ export const LndModel = BaseAccountModel.named("Lnd")
         yield self.updateBalance()
       }),
 
-      newAddress: flow(function* () {
-      }),
-
       addInvoice: flow(function* (request: IAddInvoiceRequest) {
         try {
           const { data } = yield functions().httpsCallable("addInvoice")(request)
@@ -255,7 +252,9 @@ export const LndModel = BaseAccountModel.named("Lnd")
             console.tron.warn(`can't fetch the lightning balance ${err}`)
           }
         } else {
-          self._transactions = getParentOfType(self, DataStoreModel).onboarding.stage.map(
+          self._transactions = getParentOfType(self, DataStoreModel).onboarding.stage
+          .filter(value => OnboardingEarn[value] !== 0)
+          .map(
             value => ({
               amount: OnboardingEarn[value],
               description: value,
