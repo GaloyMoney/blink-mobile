@@ -66,7 +66,7 @@ export const GetStartedScreen = () => {
   const { navigate } = useNavigation()
 
   return (
-    <Screen style={styles.container} backgroundColor={palette.lightBlue}>
+    <Screen style={styles.container} backgroundColor={palette.lightBlue} statusBar="light-content">
       <View style={{flex: 1}} />
       <Text style={styles.title} onPress={() => navigate("debug")}>
         Galoy

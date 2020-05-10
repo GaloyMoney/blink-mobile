@@ -1,6 +1,6 @@
 import { inject } from "mobx-react"
 import * as React from "react"
-import { View, Text } from "react-native"
+import { View, Text, StatusBar } from "react-native"
 import Swiper from "react-native-swiper"
 import { Onboarding } from "types"
 import { OnboardingScreen } from "../../components/onboarding"
@@ -58,7 +58,7 @@ export const WelcomeFirstScreen = inject("dataStore")(({ dataStore, navigation }
         />
       }
     >
-      <Screen backgroundColor={palette.lightBlue}>
+      <Screen backgroundColor={palette.lightBlue} statusBar="light-content">
         <OnboardingScreen Svg={MascotDollarBitcoin}>
           <Text style={styles.title}>Bitcoin:</Text>
           <Text style={styles.text}>{translate("WelcomeFirstScreen.care")}</Text>
@@ -69,12 +69,12 @@ export const WelcomeFirstScreen = inject("dataStore")(({ dataStore, navigation }
           <Text style={styles.text}>{translate("WelcomeFirstScreen.bank")}</Text>
         </OnboardingScreen>
       </Screen>
-      <Screen backgroundColor={palette.lightBlue}>
+      <Screen backgroundColor={palette.lightBlue} statusBar="light-content">
         <OnboardingScreen Svg={BankShop}>
           <Text style={styles.text}>{translate("WelcomeFirstScreen.before")}</Text>
         </OnboardingScreen>
       </Screen>
-      <Screen backgroundColor={palette.lightBlue}>
+      <Screen backgroundColor={palette.lightBlue} statusBar="light-content">
         <OnboardingScreen
           action={async () => {
             dataStore.onboarding.add(Onboarding.walletDownloaded)
