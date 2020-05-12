@@ -36,13 +36,13 @@ const styles = EStyleSheet.create({
 
   buttonStyleTime: {
     borderRadius: "40rem",
-    width: "38rem",
+    width: "42rem",
     backgroundColor: palette.lightBlue,
   },
 
   buttonStyleTimeActive: {
     borderRadius: "40rem",
-    width: "38rem",
+    width: "42rem",
     backgroundColor: color.transparent,
   },
 
