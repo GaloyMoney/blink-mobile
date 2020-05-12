@@ -17,7 +17,7 @@ const styles = EStyleSheet.create({
   },
 
   balanceText: {
-    color: palette.darkGrey,
+    color: palette.midGrey,
     fontSize: 16,
     fontWeight: "bold",
     marginBottom: 8,
