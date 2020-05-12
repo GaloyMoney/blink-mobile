@@ -98,6 +98,7 @@ export const AccountsScreen = inject("dataStore")(
     useEffect(() => {
       onRefresh()
 
+      // FIXME this should live outside of a component
       dataStore.rates.update()
     }, [])
 
