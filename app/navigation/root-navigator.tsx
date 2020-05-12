@@ -9,7 +9,6 @@ import { inject, observer } from "mobx-react"
 
 import auth from "@react-native-firebase/auth"
 import { useEffect, useState } from "react"
-import { when } from "mobx"
 import { Onboarding } from "types"
 import { SplashScreen } from "../screens/splash-screen"
 import { onLoggedinSuccess } from "../screens/phone-auth-screen"
