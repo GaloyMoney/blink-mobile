@@ -97,7 +97,10 @@ export const AccountsScreen = inject("dataStore")(
 
     useEffect(() => {
       onRefresh()
+
+      dataStore.rates.update()
     }, [])
+
     return (
       <Screen style={{backgroundColor: palette.lighterGrey}}>
         {/* {dataStore.onboarding.stage.length === 1 && <Overlay screen="accounts" />} */}
