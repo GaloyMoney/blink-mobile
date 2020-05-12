@@ -307,7 +307,7 @@ export const RootStackScreen = () => {
         component={TransactionDetailScreen}
         options={{ 
           headerShown: false,
-          cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
+          // cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
         }}  
       />
 
