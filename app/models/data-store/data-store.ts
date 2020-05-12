@@ -305,10 +305,7 @@ export const RatesModel = types
     const update = flow(function* () {
       try {
         const {data} = yield functions().httpsCallable("getPrice")({})
-        self.BTC = data.map(value => ({
-          t: new Date(value.t),
-          o: value.o,
-        }))
+        self.BTC = data
       } catch (err) {
         console.tron.warn(`error getting BTC price: ${err}`)
       }
@@ -384,7 +381,6 @@ export const DataStoreModel = types
   .actions((self) => ({
     updateBalance: flow(function* () {
       yield Promise.all([
-        yield self.rates.update(),
         yield self.fiat.updateBalance(),
         yield self.lnd.updateBalance(),
       ])
