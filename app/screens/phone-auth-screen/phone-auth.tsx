@@ -182,6 +182,9 @@ export const WelcomePhoneValidationScreen = ({ onSuccess, route, navigation }) =
     console.log(`onAuthStateChanged`, user)
 
     if (user.phoneNumber) {
+      // FIXME this should live outside of a component
+      // we should just listen to the proper dataStore object for validation
+
       await onSuccess()
       Alert.alert("Phone authentication succesful", err, [
         {

@@ -1,7 +1,7 @@
 import * as React from "react"
 import { storiesOf } from "@storybook/react-native"
 import { StoryScreen, Story, UseCase } from "../../../storybook/views"
-import { Price } from "./price"
+import { PriceGraph } from "./price-graph"
 import { data } from "./data-tst"
 
 declare let module
@@ -12,7 +12,7 @@ storiesOf("Price Component", module)
   .add("Style Presets", () => (
     <Story>
       <UseCase text="BTC" usage="The primary." noBackground={true}>
-        <Price data={data} />
+        <PriceGraph data={data} />
       </UseCase>
     </Story>
   ))
