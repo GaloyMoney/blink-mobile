@@ -5,6 +5,7 @@ import { IAddInvoiceRequest, IBuyRequest, IPayInvoice, IQuoteRequest, IQuoteResp
 import { parseDate } from "../../utils/date"
 import { AccountType, CurrencyType } from "../../utils/enum"
 import * as lightningPayReq from 'bolt11'
+import { translate } from "../../i18n"
 
 export const FiatTransactionModel = types.model("Transaction", {
   name: types.string,
@@ -244,10 +245,32 @@ export const LndModel = BaseAccountModel.named("Lnd")
       }),
 
       updateTransactions: flow(function* () {
+
+        // TODO move to utils?
+        const translateTitleFromItem = (item) => {
+          console.tron.log({ item })
+          const object = translate(`EarnScreen.earns`)
+          for (const section of object) {
+            for (const card of section.content) {
+              if (card.id === item) {
+                return card.title
+              }
+            }
+          }
+          return item
+        }
+
         if (getParentOfType(self, DataStoreModel).onboarding.has(Onboarding.phoneVerification)) {
           try {
             const { data } = yield functions().httpsCallable("getLightningTransactions")({})
-            self._transactions = data
+            self._transactions = data.map(item => ({
+              amount: item.amount,
+              description: translateTitleFromItem(item.description), // FIXME. should be done in the backend
+              created_at: item.created_at,
+              hash: item.hash,
+              destination: item.destination,
+              type: item.type
+            }))
           } catch (err) {
             console.tron.warn(`can't fetch the lightning balance ${err}`)
           }
@@ -257,7 +280,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
           .map(
             value => ({
               amount: OnboardingEarn[value],
-              description: value,
+              description: translateTitleFromItem(value),
               created_at: new Date(),
               type: "earn",
             })
@@ -339,20 +362,6 @@ interface BalanceRequest {
   currency: CurrencyType
   account: AccountType
 }
-
-// // TODO move to utils?
-// const translateTitleFromItem = (item) => {
-//   console.tron.log({ item })
-//   const object = translate(`EarnScreen.earns`)
-//   for (const property in object) {
-//     for (const property2 in object[property]) {
-//       if (property2 === item) {
-//         return object[property][property2].title
-//       }
-//     }
-//   }
-//   return "Translation not found"
-// }
 
 export const OnboardingModel = types
   .model("Onboarding", {

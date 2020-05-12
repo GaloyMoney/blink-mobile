@@ -31,7 +31,8 @@ const styles = EStyleSheet.create({
   },
 
   chart: {
-    alignSelf: "center"
+    alignSelf: "center",
+    marginLeft: "32rem"
   },
 
   buttonStyleTime: {
@@ -119,7 +120,7 @@ export const PriceGraph = ({data}) => {
         style={{
           axis: { strokeWidth: 0},
           tickLabels: {
-            fill: palette.lightBlue,
+            fill: palette.midGrey,
             fontSize: 16
           }}} />
         <VictoryLine 
