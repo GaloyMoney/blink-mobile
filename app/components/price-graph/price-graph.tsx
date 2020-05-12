@@ -78,7 +78,7 @@ const mapping = {
   },
 }
 
-export const Price = ({data}) => {
+export const PriceGraph = ({data}) => {
   const [time, setTime] = React.useState("d") // d, w, m, y
 
   let price, delta, color

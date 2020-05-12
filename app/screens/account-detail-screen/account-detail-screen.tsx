@@ -12,7 +12,7 @@ import Modal from "react-native-modal";
 import Icon from "react-native-vector-icons/Ionicons";
 import { Onboarding, Side } from "types";
 import { BalanceHeader } from "../../components/balance-header";
-import { Price } from "../../components/price";
+import { PriceGraph } from "../../components/price-graph";
 import { Screen } from "../../components/screen";
 import { translate } from "../../i18n";
 import { DataStore } from "../../models/data-store";
@@ -332,7 +332,7 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = inject("d
           currency={accountStore.currency}
           account={account}
         />
-        <Price data={dataStore.rates.BTC} /> 
+        <PriceGraph data={dataStore.rates.BTC_history} /> 
         {/* FIXME */}
         {//(account === AccountType.Bitcoin && !isAnonymous) && (
           // TODO integrate back BUY/SELL BTC, 
