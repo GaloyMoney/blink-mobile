@@ -288,24 +288,30 @@ export const LndModel = BaseAccountModel.named("Lnd")
 
 export const AccountModel = types.union(FiatAccountModel, LndModel)
 
+const DEFAULT_BTC = 0.000001
+
 export const RatesModel = types
   .model("Rates", {
     USD: 1, // TODO is there a way to have enum as parameter?
-    BTC: types.array(
-      types.model({
-        t: types.Date,
-        o: types.number,
-      })
-    ), // Satoshi to USD default value
-    // FIXME should be a Pair, not a currency
+    BTC: DEFAULT_BTC
 
+    // FIXME should be a Pair, not a currency
     // TODO add "last update". refresh only needed if more than 1 or 10 min?
   })
+  .volatile(self => ({
+    BTC_history: []
+  }))
   .actions((self) => {
     const update = flow(function* () {
       try {
         const {data} = yield functions().httpsCallable("getPrice")({})
-        self.BTC = data
+        self.BTC_history = data
+        try {
+          self.BTC = self.BTC_history[self.BTC_history.length - 1].o
+        } catch (err) {
+          console.tron.warn(`don't have rates ${err}`)
+          self.BTC = DEFAULT_BTC
+        }
       } catch (err) {
         console.tron.warn(`error getting BTC price: ${err}`)
       }
@@ -318,19 +324,14 @@ export const RatesModel = types
       if (currency === CurrencyType.USD) {
         return self.USD
       } else if (currency === CurrencyType.BTC) {
-        try {
-          return self.BTC[self.BTC.length - 1].o
-        } catch (err) {
-          console.tron.warn(`don't have rates ${err}`)
-          return 0.000001
-        }
+        return self.BTC
       } else {
         throw Error(`currency ${currency} doesnt't exist`)
       }
     },
     // return in BTC instead of SAT
     get getInBTC() {
-      return (self.rate(BTC) * Math.pow(10, 8))
+      return (self.BTC * Math.pow(10, 8))
     }
   }))
 
