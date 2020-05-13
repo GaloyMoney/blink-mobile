@@ -219,16 +219,6 @@ export const LndModel = BaseAccountModel.named("Lnd")
         yield self.updateBalance()
       }),
 
-      addInvoice: flow(function* (request: IAddInvoiceRequest) {
-        try {
-          const { data } = yield functions().httpsCallable("addInvoice")(request)
-          return data
-        } catch (err) {
-          console.log("error with AddInvoice")
-          throw err
-        }
-      }),
-
       updateBalance: flow(function* () {
         if (getParentOfType(self, DataStoreModel).onboarding.has(Onboarding.phoneVerification)) {
           try {
