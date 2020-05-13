@@ -1,5 +1,5 @@
 import { inject, observer } from "mobx-react"
-import * as lightningPayReq from 'bolt11'
+import * as lightningPayReq from "bolt11"
 import * as React from "react"
 import { useEffect, useState } from "react"
 import { Alert, Clipboard, Share, StyleSheet, Text, View } from "react-native"
@@ -13,7 +13,6 @@ import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
 import functions from "@react-native-firebase/functions"
 import { getHash } from "../../utils/lightning"
-
 
 const styles = StyleSheet.create({
   buttonStyle: {
@@ -54,10 +53,22 @@ export const ReceiveBitcoinScreen = inject("dataStore")(
     const [loading, setLoading] = useState(false)
 
     const createInvoice = async () => {
-      try {
-        setLoading(true)
-        const invoice = await dataStore.lnd.addInvoice({ value: amount, memo: note })
+      setLoading(true)
 
+      let invoice
+
+      try {
+        const { data } = await functions().httpsCallable("addInvoice")({
+          value: amount,
+          memo: note,
+        })
+        invoice = data
+      } catch (err) {
+        console.log("error with AddInvoice")
+        throw err
+      }
+
+      try {
         const invoiceDecoded = lightningPayReq.decode(invoice)
         const hash = getHash(invoiceDecoded)
 
@@ -144,7 +155,7 @@ export const ShowQRCode = ({ route, navigation }) => {
   useEffect(() => {
     const interval = setInterval(async () => {
       try {
-        const {data} = await functions().httpsCallable("updatePendingInvoice")(hash)
+        const { data } = await functions().httpsCallable("updatePendingInvoice")(hash)
         if (data === true) {
           success()
         }
@@ -181,8 +192,8 @@ export const ShowQRCode = ({ route, navigation }) => {
         <QRCode style={styles.qr} size={280}>
           {invoice}
         </QRCode>
-        <View style={{marginHorizontal: 32}}>
-          <Text style={{fontSize: 16, alignSelf: "center"}}>Receive {amount} sats</Text>
+        <View style={{ marginHorizontal: 32 }}>
+          <Text style={{ fontSize: 16, alignSelf: "center" }}>Receive {amount} sats</Text>
           <Button
             buttonStyle={styles.buttonStyle}
             disabledStyle={styles.buttonStyle}
