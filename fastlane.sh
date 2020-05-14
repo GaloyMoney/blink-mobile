@@ -1,0 +1,1 @@
+cd ios && fastlane ios beta && cd ../android && fastlane android beta
