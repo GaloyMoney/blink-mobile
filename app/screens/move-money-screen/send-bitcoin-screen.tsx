@@ -15,6 +15,7 @@ import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { getDescription } from "../../utils/lightning"
+import Config from "react-native-config"
 
 const CAMERA: ViewStyle = {
   width: "100%",
@@ -93,17 +94,27 @@ export const ScanningQRCodeScreen = inject("dataStore")(
 
     const decodeInvoice = async (data) => {
       try {
+        // invoice might start with 'lightning:', 'bitcoin:', something else, or have the invoice directly
         let [protocol, invoice] = data.split(":")
         console.tron.log({ protocol, invoice })
         if (protocol === "bitcoin") {
-          Alert.alert("We're integrating Loop in. Use Lightning for now")
+          Alert.alert("Bitcoin on-chain transactions are coming to the app but we're only accepting lightning for now.")
           return
         } else if (protocol.startsWith("ln") && invoice === undefined) {
-          // it might start with 'lightning:'
+          if(Config.BITCOIN_NETWORK === "testnet" && protocol.startsWith("lnbc")) {
+            Alert.alert(`You're trying to pay a mainnet invoice. This app is build for testnet`)
+            return
+          }
+
+          if(Config.BITCOIN_NETWORK === "mainnet" && protocol.startsWith("lntb")) {
+            Alert.alert(`You're trying to pay a testnet invoice. This app is build for mainnet`)
+            return
+          }
+
           invoice = protocol
         } else if (protocol.toLowerCase() !== "lightning") {
           let message = `Only lightning procotol is accepted for now.`
-          message += message === "" ? "" : `\n\ngot following invoice: "${protocol}"`
+          message += message === "" ? "" : `\n\ngot following: "${protocol}"`
           Alert.alert(message)
           return
         }
