@@ -103,7 +103,7 @@ export const AccountsScreen = inject("dataStore")(
     }, [])
 
     return (
-      <Screen style={{backgroundColor: palette.lighterGrey}}>
+      <Screen backgroundColor={palette.lighterGrey}>
         {/* {dataStore.onboarding.stage.length === 1 && <Overlay screen="accounts" />} */}
         <BalanceHeader
           currency={CurrencyType.USD}
