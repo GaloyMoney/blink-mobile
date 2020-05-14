@@ -345,10 +345,10 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = inject("d
         {(account === AccountType.Bitcoin && !dataStore.onboarding.has(Onboarding.phoneVerification)) && (
           // TODO update when isAnonymous changes
           <>
-            <View style={{flex: 1}} />
+            <View style={{flex: 1, minHeight: 12}} />
             <Button title={"Activate Wallet"} 
               buttonStyle={{backgroundColor: palette.lightBlue, borderRadius: 32}} 
-              style={{width: "50%", alignSelf: "center"}}
+              containerStyle={{width: "50%", alignSelf: "center"}}
               onPress={() => navigation.navigate("phoneValidation")}
             />
           </>
