@@ -1,5 +1,5 @@
 import * as React from "react"
-import { StyleSheet, Text, View } from "react-native"
+import { StyleSheet, Text, View, StatusBar } from "react-native"
 import { Button } from "react-native-elements"
 import { Screen } from "../../components/screen"
 import { color } from "../../theme"

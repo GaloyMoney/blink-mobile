@@ -122,9 +122,11 @@ const styles = EStyleSheet.create({
 
   quizTextAnswer: {
     color: palette.darkGrey,
-    textAlign: "left"
+    textAlign: "left",
     // fontWeight: "bold"
     // fontSize: 18,
+    width: "100%"
+
   },
 
   keepDiggingContainerStyle: {
@@ -137,7 +139,7 @@ const styles = EStyleSheet.create({
   quizTextContainerStyle: {
     alignItems: "flex-start",
     marginLeft: 12,
-    marginRight: 36
+    marginRight: 36,
   },
 
   answersView: { 
@@ -191,7 +193,7 @@ export const EarnQuiz = ({ route, navigation }) => {
   permutation.forEach((i) => {
     answers_shuffled.push(
       <View style={{width: "100%"}}>
-        <View style={{flexDirection: "row", alignItems: "center"}}>
+        <View style={{flexDirection: "row", alignItems: "center", width: "100%"}}>
           <Button 
             title={mappingLetter[j]}
             buttonStyle={buttonStyleHelper(i)}
@@ -222,7 +224,7 @@ export const EarnQuiz = ({ route, navigation }) => {
   })
 
   return (
-    <Screen style={{backgroundColor: palette.lighterGrey}} unsafe={true}>
+    <Screen backgroundColor={palette.lighterGrey} unsafe={true}>
       <Modal
         style={{ marginHorizontal: 0, marginBottom: 0, flexGrow: 1 }}
         isVisible={quizVisible}
