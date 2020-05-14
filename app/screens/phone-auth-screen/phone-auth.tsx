@@ -53,9 +53,10 @@ const styles = EStyleSheet.create({
     borderRadius: 5,
     borderWidth: 1,
     marginHorizontal: "50rem",
-    marginTop: "10rem",
+    marginVertical: "18rem",
     paddingHorizontal: "18rem",
     paddingVertical: "12rem",
+    // height: "52rem",
   },
 
   text: {
@@ -67,7 +68,7 @@ const styles = EStyleSheet.create({
 
   textEntry: {
     color: color.palette.darkGrey,
-    fontSize: "20rem",
+    fontSize: "18rem",
   },
 
   codeContainer: {
