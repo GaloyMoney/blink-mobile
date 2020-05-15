@@ -5,6 +5,7 @@ import { IAddInvoiceRequest, IBuyRequest, IPayInvoice, IQuoteRequest, IQuoteResp
 import { parseDate } from "../../utils/date"
 import { AccountType, CurrencyType } from "../../utils/enum"
 import * as lightningPayReq from 'bolt11'
+import { translate } from "../../i18n"
 
 export const FiatTransactionModel = types.model("Transaction", {
   name: types.string,
@@ -21,7 +22,8 @@ export const LightningInvoiceModel = types.model("LightningTransaction", {
   created_at: types.Date,
   hash: types.maybe(types.union(types.string, types.null)),
   destination: types.maybe(types.string),
-  type: types.string
+  type: types.string,
+  fee: types.maybe(types.number),
 })
 
 export const BaseAccountModel = types
@@ -218,19 +220,6 @@ export const LndModel = BaseAccountModel.named("Lnd")
         yield self.updateBalance()
       }),
 
-      newAddress: flow(function* () {
-      }),
-
-      addInvoice: flow(function* (request: IAddInvoiceRequest) {
-        try {
-          const { data } = yield functions().httpsCallable("addInvoice")(request)
-          return data
-        } catch (err) {
-          console.log("error with AddInvoice")
-          throw err
-        }
-      }),
-
       updateBalance: flow(function* () {
         if (getParentOfType(self, DataStoreModel).onboarding.has(Onboarding.phoneVerification)) {
           try {
@@ -247,18 +236,43 @@ export const LndModel = BaseAccountModel.named("Lnd")
       }),
 
       updateTransactions: flow(function* () {
+
+        // TODO move to utils?
+        const translateTitleFromItem = (item) => {
+          console.tron.log({ item })
+          const object = translate(`EarnScreen.earns`)
+          for (const section of object) {
+            for (const card of section.content) {
+              if (card.id === item) {
+                return card.title
+              }
+            }
+          }
+          return item
+        }
+
         if (getParentOfType(self, DataStoreModel).onboarding.has(Onboarding.phoneVerification)) {
           try {
             const { data } = yield functions().httpsCallable("getLightningTransactions")({})
-            self._transactions = data
+            self._transactions = data.map(item => ({
+              amount: item.amount,
+              description: translateTitleFromItem(item.description), // FIXME. should be done in the backend
+              created_at: item.created_at,
+              hash: item.hash,
+              destination: item.destination,
+              type: item.type,
+              fee: item.fee,
+            }))
           } catch (err) {
             console.tron.warn(`can't fetch the lightning balance ${err}`)
           }
         } else {
-          self._transactions = getParentOfType(self, DataStoreModel).onboarding.stage.map(
+          self._transactions = getParentOfType(self, DataStoreModel).onboarding.stage
+          .filter(value => OnboardingEarn[value] !== 0)
+          .map(
             value => ({
               amount: OnboardingEarn[value],
-              description: value,
+              description: translateTitleFromItem(value),
               created_at: new Date(),
               type: "earn",
             })
@@ -289,27 +303,30 @@ export const LndModel = BaseAccountModel.named("Lnd")
 
 export const AccountModel = types.union(FiatAccountModel, LndModel)
 
+const DEFAULT_BTC = 0.000001
+
 export const RatesModel = types
   .model("Rates", {
     USD: 1, // TODO is there a way to have enum as parameter?
-    BTC: types.array(
-      types.model({
-        t: types.Date,
-        o: types.number,
-      })
-    ), // Satoshi to USD default value
-    // FIXME should be a Pair, not a currency
+    BTC: DEFAULT_BTC
 
+    // FIXME should be a Pair, not a currency
     // TODO add "last update". refresh only needed if more than 1 or 10 min?
   })
+  .volatile(self => ({
+    BTC_history: []
+  }))
   .actions((self) => {
     const update = flow(function* () {
       try {
         const {data} = yield functions().httpsCallable("getPrice")({})
-        self.BTC = data.map(value => ({
-          t: new Date(value.t),
-          o: value.o,
-        }))
+        self.BTC_history = data
+        try {
+          self.BTC = self.BTC_history[self.BTC_history.length - 1].o
+        } catch (err) {
+          console.tron.warn(`don't have rates ${err}`)
+          self.BTC = DEFAULT_BTC
+        }
       } catch (err) {
         console.tron.warn(`error getting BTC price: ${err}`)
       }
@@ -322,19 +339,14 @@ export const RatesModel = types
       if (currency === CurrencyType.USD) {
         return self.USD
       } else if (currency === CurrencyType.BTC) {
-        try {
-          return self.BTC[self.BTC.length - 1].o
-        } catch (err) {
-          console.tron.warn(`don't have rates ${err}`)
-          return 0.000001
-        }
+        return self.BTC
       } else {
         throw Error(`currency ${currency} doesnt't exist`)
       }
     },
     // return in BTC instead of SAT
     get getInBTC() {
-      return (self.rate(BTC) * Math.pow(10, 8))
+      return (self.BTC * Math.pow(10, 8))
     }
   }))
 
@@ -342,20 +354,6 @@ interface BalanceRequest {
   currency: CurrencyType
   account: AccountType
 }
-
-// // TODO move to utils?
-// const translateTitleFromItem = (item) => {
-//   console.tron.log({ item })
-//   const object = translate(`EarnScreen.earns`)
-//   for (const property in object) {
-//     for (const property2 in object[property]) {
-//       if (property2 === item) {
-//         return object[property][property2].title
-//       }
-//     }
-//   }
-//   return "Translation not found"
-// }
 
 export const OnboardingModel = types
   .model("Onboarding", {
@@ -385,7 +383,6 @@ export const DataStoreModel = types
   .actions((self) => ({
     updateBalance: flow(function* () {
       yield Promise.all([
-        yield self.rates.update(),
         yield self.fiat.updateBalance(),
         yield self.lnd.updateBalance(),
       ])

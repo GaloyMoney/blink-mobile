@@ -32,8 +32,12 @@ platform :android do
 
   desc "Deploy a new version to the Google Play"
   lane :beta do
-    beta
+    build
     # crashlytics
-    upload_to_play_store
+    upload_to_play_store(
+      track: "internal",
+      skip_upload_changelogs: true,
+      skip_upload_images: true,
+    )
   end
 end

@@ -53,9 +53,10 @@ const styles = EStyleSheet.create({
     borderRadius: 5,
     borderWidth: 1,
     marginHorizontal: "50rem",
-    marginTop: "10rem",
+    marginVertical: "18rem",
     paddingHorizontal: "18rem",
     paddingVertical: "12rem",
+    // height: "52rem",
   },
 
   text: {
@@ -67,7 +68,7 @@ const styles = EStyleSheet.create({
 
   textEntry: {
     color: color.palette.darkGrey,
-    fontSize: "20rem",
+    fontSize: "18rem",
   },
 
   codeContainer: {
@@ -182,6 +183,9 @@ export const WelcomePhoneValidationScreen = ({ onSuccess, route, navigation }) =
     console.log(`onAuthStateChanged`, user)
 
     if (user.phoneNumber) {
+      // FIXME this should live outside of a component
+      // we should just listen to the proper dataStore object for validation
+
       await onSuccess()
       Alert.alert("Phone authentication succesful", err, [
         {
