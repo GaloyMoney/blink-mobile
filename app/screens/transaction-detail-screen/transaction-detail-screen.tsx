@@ -82,7 +82,7 @@ const Row = ({ entry, value }) => (
 
 export const TransactionDetailScreen = ({ route, navigation }) => {
   
-  const { currency, account, amount, created_at, hash, type, description, 
+  const { currency, account, amount, created_at, hash, type, description, fee,
     destination } = route.params as AccountDetailItemProps
 
   const spendOrReceive = amount < 0 ? "spent" : "received"
@@ -112,6 +112,9 @@ export const TransactionDetailScreen = ({ route, navigation }) => {
         <Row entry={"Date"} value={date_format}></Row>
         <Row entry={"Description"} value={description} />
         <Row entry={"Hash"} value={hash} />
+        {fee &&
+          <Row entry={"Fee"} value={fee} />
+        }
       </View>
       <CloseCross color={palette.white} onPress={() => navigation.goBack()} />
     </Screen>
