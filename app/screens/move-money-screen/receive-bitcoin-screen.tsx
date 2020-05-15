@@ -18,7 +18,6 @@ const styles = StyleSheet.create({
   buttonStyle: {
     backgroundColor: palette.lightBlue,
     marginTop: 18,
-    width: "100%",
     borderRadius: 32,
   },
 
@@ -105,10 +104,11 @@ export const ReceiveBitcoinScreen = inject("dataStore")(
               onSubmitEditing={createInvoice}
             />
           </View>
-          <View style={{ alignContent: "center", alignItems: "center" }}>
+          <View style={{ alignContent: "center", alignItems: "center", marginHorizontal: 48 }}>
             <Button
               buttonStyle={styles.buttonStyle}
               disabledStyle={styles.buttonStyle}
+              containerStyle={{width: "100%"}}
               title="Create"
               onPress={createInvoice}
               titleStyle={{ fontWeight: "bold" }}
@@ -192,11 +192,12 @@ export const ShowQRCode = ({ route, navigation }) => {
         <QRCode style={styles.qr} size={280}>
           {invoice}
         </QRCode>
-        <View style={{ marginHorizontal: 32 }}>
+        <View style={{ marginHorizontal: 48 }}>
           <Text style={{ fontSize: 16, alignSelf: "center" }}>Receive {amount} sats</Text>
           <Button
             buttonStyle={styles.buttonStyle}
             disabledStyle={styles.buttonStyle}
+            containerStyle={{width: "100%"}}
             title="Share"
             onPress={shareInvoice}
             titleStyle={{ fontWeight: "bold" }}
@@ -204,6 +205,7 @@ export const ShowQRCode = ({ route, navigation }) => {
           <Button
             buttonStyle={styles.buttonStyle}
             disabledStyle={styles.buttonStyle}
+            containerStyle={{width: "100%"}}
             title="Copy"
             onPress={copyInvoice}
             titleStyle={{ fontWeight: "bold" }}
