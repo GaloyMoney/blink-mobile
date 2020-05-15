@@ -22,7 +22,8 @@ export const LightningInvoiceModel = types.model("LightningTransaction", {
   created_at: types.Date,
   hash: types.maybe(types.union(types.string, types.null)),
   destination: types.maybe(types.string),
-  type: types.string
+  type: types.string,
+  fee: types.maybe(types.number),
 })
 
 export const BaseAccountModel = types
@@ -259,7 +260,8 @@ export const LndModel = BaseAccountModel.named("Lnd")
               created_at: item.created_at,
               hash: item.hash,
               destination: item.destination,
-              type: item.type
+              type: item.type,
+              fee: item.fee,
             }))
           } catch (err) {
             console.tron.warn(`can't fetch the lightning balance ${err}`)
