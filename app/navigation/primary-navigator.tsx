@@ -94,29 +94,6 @@ export const AccountNavigator = () => {
           headerShown: false
         })}
       />
-      <StackAccounts.Screen
-        name="transactionHistory"
-        component={TransactionScreenDataInjected}
-        options={() => ({
-          title: "Transaction History",
-        })}
-      />
-      <StackAccounts.Screen
-        name="accountDetail"
-        component={AccountDetailScreen}
-        // options={({ navigation }) => ({
-        //   headerRight: () => (
-        //     <Icon
-        //       name={"ios-person"}
-        //       size={32}
-        //       color={palette.darkGrey}
-        //       style={styles.person}
-        //       onPress={() => navigation.navigate("debug")}
-        //     />
-        //   ),
-        // })}
-        initialParams={{ account: AccountType.Bitcoin }}
-      />
       <StackAccounts.Screen name="debug" component={DebugScreen} />
     </StackAccounts.Navigator>
   )
@@ -330,8 +307,35 @@ export const RootStackScreen = () => {
         component={TransactionDetailScreen}
         options={{ 
           headerShown: false,
-          cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
+          // cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
         }}  
+      />
+
+      <StackAccounts.Screen
+        name="transactionHistory"
+        component={TransactionScreenDataInjected}
+        options={() => ({
+          title: "Transaction History",
+        })}
+      />
+      <StackAccounts.Screen
+        name="accountDetail"
+        component={AccountDetailScreen}
+        options={{ 
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        }}  
+        // options={({ navigation }) => ({
+        //   headerRight: () => (
+        //     <Icon
+        //       name={"ios-person"}
+        //       size={32}
+        //       color={palette.darkGrey}
+        //       style={styles.person}
+        //       onPress={() => navigation.navigate("debug")}
+        //     />
+        //   ),
+        // })}
+        initialParams={{ account: AccountType.Bitcoin }}
       />
     </RootStack.Navigator>
   )

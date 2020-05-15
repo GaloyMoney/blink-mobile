@@ -12,7 +12,7 @@ import Modal from "react-native-modal";
 import Icon from "react-native-vector-icons/Ionicons";
 import { Onboarding, Side } from "types";
 import { BalanceHeader } from "../../components/balance-header";
-import { Price } from "../../components/price";
+import { PriceGraph } from "../../components/price-graph";
 import { Screen } from "../../components/screen";
 import { translate } from "../../i18n";
 import { DataStore } from "../../models/data-store";
@@ -332,7 +332,7 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = inject("d
           currency={accountStore.currency}
           account={account}
         />
-        <Price data={dataStore.rates.BTC} /> 
+        <PriceGraph data={dataStore.rates.BTC_history} /> 
         {/* FIXME */}
         {//(account === AccountType.Bitcoin && !isAnonymous) && (
           // TODO integrate back BUY/SELL BTC, 
@@ -344,11 +344,14 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = inject("d
          }
         {(account === AccountType.Bitcoin && !dataStore.onboarding.has(Onboarding.phoneVerification)) && (
           // TODO update when isAnonymous changes
-          <Button title={"Activate Wallet"} 
-            buttonStyle={{backgroundColor: palette.lightBlue, borderRadius: 32}} 
-            style={{width: "50%", alignSelf: "center"}}
-            onPress={() => navigation.navigate("phoneValidation")}
-          />
+          <>
+            <View style={{flex: 1, minHeight: 12}} />
+            <Button title={"Activate Wallet"} 
+              buttonStyle={{backgroundColor: palette.lightBlue, borderRadius: 32}} 
+              containerStyle={{width: "50%", alignSelf: "center"}}
+              onPress={() => navigation.navigate("phoneValidation")}
+            />
+          </>
         )}
         {account === AccountType.Bitcoin && (
           <>

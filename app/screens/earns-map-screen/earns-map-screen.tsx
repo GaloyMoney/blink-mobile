@@ -1,6 +1,6 @@
 import { inject, observer } from "mobx-react"
 import * as React from "react"
-import { Dimensions, StyleSheet, Text, View, SafeAreaView } from "react-native"
+import { Dimensions, StyleSheet, Text, View, SafeAreaView, StatusBar } from "react-native"
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
@@ -26,6 +26,7 @@ import RightOngoing from "./right-section-ongoing-01.svg"
 import RightTodo from "./right-section-to-do-01.svg"
 import TextBlock from "./text-block-medium.svg"
 import { MountainHeader } from "../../components/mountain-header"
+import { color } from "../../theme"
 
 const styles = StyleSheet.create({
   mainView: {
@@ -222,8 +223,28 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> =
 
   const backgroundColor = currSection < sectionsData.length ? palette.sky : palette.orange
 
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      StatusBar.setBackgroundColor(color.transparent)
+      StatusBar.setBarStyle("light-content")
+      StatusBar.setTranslucent(true)
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener('blur', () => {
+      StatusBar.setTranslucent(false)
+      StatusBar.setBarStyle("dark-content")
+      StatusBar.setBackgroundColor(palette.lighterGrey)
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
   return (
-    <Screen unsafe={true} statusBar="light-content" >
+    <Screen unsafe={true} statusBar="light-content">
       <ScrollView 
         // removeClippedSubviews={true}
         style={{backgroundColor}}
