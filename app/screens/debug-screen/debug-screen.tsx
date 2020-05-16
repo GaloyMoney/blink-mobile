@@ -154,6 +154,18 @@ export const DebugScreen = inject("dataStore")(
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
+              title="getOnChainAddress"
+              onPress={() => functions().httpsCallable("getOnChainAddress")({})}
+            />
+            <Button
+              style={DEMO}
+              textStyle={DEMO_TEXT}
+              title="updateOnchainPayment"
+              onPress={() => functions().httpsCallable("updateOnchainPayment")({})}
+            />
+            <Button
+              style={DEMO}
+              textStyle={DEMO_TEXT}
               title="test functions"
               onPress={() => functions().httpsCallable("test")({})}
             />
