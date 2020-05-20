@@ -6,6 +6,7 @@ import { parseDate } from "../../utils/date"
 import { AccountType, CurrencyType } from "../../utils/enum"
 import * as lightningPayReq from 'bolt11'
 import { translate } from "../../i18n"
+import { Alert } from "react-native"
 
 export const FiatTransactionModel = types.model("Transaction", {
   name: types.string,
@@ -303,6 +304,21 @@ export const LndModel = BaseAccountModel.named("Lnd")
 
 export const AccountModel = types.union(FiatAccountModel, LndModel)
 
+const ModelModel = types
+  .model("Mode", {
+    bitcoin: types.optional(
+      types.union(types.literal("mainnet"), types.literal("testnet")),
+      "testnet"
+  )})
+  .actions(self => ({
+    update: flow(function* (network) {
+      yield auth().signOut()
+      getParentOfType(self, DataStoreModel).reset()
+      self.bitcoin = network
+      Alert.alert("You have succesfully change network. You need to log in again")
+    })})
+  )
+
 const DEFAULT_BTC = 0.000001
 
 export const RatesModel = types
@@ -379,6 +395,7 @@ export const DataStoreModel = types
     rates: types.optional(RatesModel, {}),
     exchange: types.optional(ExchangeModel, {}),
     lnd: types.optional(LndModel, {}), // TODO should it be optional?
+    mode: types.optional(ModelModel, {}),
   })
   .actions((self) => ({
     updateBalance: flow(function* () {
@@ -387,6 +404,14 @@ export const DataStoreModel = types
         yield self.lnd.updateBalance(),
       ])
     }),
+    reset: flow(function* () {
+      self.onboarding = {}
+      self.fiat = {}
+      self.rates = {}
+      self.exchange = {}
+      self.lnd = {}
+      self.mode = {}
+    })
   }))
   .views((self) => ({
     // TODO using: BalanceRequest type, how to set it?

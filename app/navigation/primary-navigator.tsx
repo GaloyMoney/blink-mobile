@@ -18,6 +18,7 @@ import { palette } from "../theme/palette"
 import { AccountType } from "../utils/enum"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TransactionScreenDataInjected } from "../screens/transaction-screen/transaction-screen"
+import { inject, observer } from "mobx-react"
 
 const styles = EStyleSheet.create({
   person: {
@@ -183,12 +184,14 @@ export const PhoneValidationNavigator = () => {
 
 const Tab = createBottomTabNavigator()
 
-export const PrimaryNavigator = () => {
+export const PrimaryNavigator = inject("dataStore")(
+  observer(({ dataStore }) => {
   return (
     <Tab.Navigator
       initialRouteName="Accounts"
       tabBarOptions={{
-        activeTintColor: palette.lightBlue,
+        activeTintColor: dataStore.mode.network == "mainnet" ? 
+          palette.lightBlue : palette.orange,
         inactiveTintColor: palette.lightGrey,
         style: styles.bottomNavigatorStyle,
       }}
@@ -235,7 +238,7 @@ export const PrimaryNavigator = () => {
       /> */}
     </Tab.Navigator>
   )
-}
+}))
 
 const RootStack = createStackNavigator()
 
