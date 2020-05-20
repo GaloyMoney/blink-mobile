@@ -23,10 +23,6 @@ export async function createEnvironment() {
   return env
 }
 
-export function resetDataStore () {
-  storage.save(ROOT_STATE_STORAGE_KEY, {})
-} 
-
 /**
  * Setup the root state.
  */
@@ -39,7 +35,7 @@ export async function setupRootStore() {
   try {
     // load data from storage
 
-    data = (await storage.load(ROOT_STATE_STORAGE_KEY)) || {}  // TODO: get back to this when store is dynamic
+    data = await storage.load(ROOT_STATE_STORAGE_KEY)
     rootStore = RootStoreModel.create(data, env)
 
   } catch (e) {
