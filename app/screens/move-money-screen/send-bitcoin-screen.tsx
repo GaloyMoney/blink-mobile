@@ -101,12 +101,12 @@ export const ScanningQRCodeScreen = inject("dataStore")(
           Alert.alert("Bitcoin on-chain transactions are coming to the app but we're only accepting lightning for now.")
           return
         } else if (protocol.startsWith("ln") && invoice === undefined) {
-          if(Config.BITCOIN_NETWORK === "testnet" && protocol.startsWith("lnbc")) {
+          if(dataStore.mode.bitcoin === "testnet" && protocol.startsWith("lnbc")) {
             Alert.alert(`You're trying to pay a mainnet invoice. This app is build for testnet`)
             return
           }
 
-          if(Config.BITCOIN_NETWORK === "mainnet" && protocol.startsWith("lntb")) {
+          if(dataStore.mode.bitcoin === "mainnet" && protocol.startsWith("lntb")) {
             Alert.alert(`You're trying to pay a testnet invoice. This app is build for mainnet`)
             return
           }
