@@ -63,13 +63,13 @@ export const App = () => {
   useEffect(() => {
     // FIXME there might be a better way to manage this notification
     Notifications.events().registerNotificationReceivedBackground((notification, completion) => {
-      console.tron.log("Background")
+      console.tron.log("Background notification")
       console.tron.log({ notification })
       completion({ alert: true, sound: false, badge: false })
     })
 
     Notifications.events().registerNotificationReceivedForeground((notification, completion) => {
-      console.tron.log("Foregound")
+      console.tron.log("Foregound notification")
       console.tron.log({ notification })
 
       if (getActiveRouteName(routeNameRef) !== "receiveBitcoin") {

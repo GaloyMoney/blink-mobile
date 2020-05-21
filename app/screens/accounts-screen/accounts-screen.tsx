@@ -36,8 +36,6 @@ export const AccountItem =
   ({ account, amount, navigation, title, action=undefined, subtitle=true }) => {
   const initialLoading = isNaN(amount)
 
-  console.tron.log({subtitle, account})
-
   return (
     <LargeButton
       title={title}

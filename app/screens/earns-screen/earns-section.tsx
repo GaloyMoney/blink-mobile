@@ -164,7 +164,6 @@ export const EarnSection = inject("dataStore")(
   observer(({ dataStore, route, navigation }) => {
 
     const sectionIndex = route.params.section
-    console.tron.log({earnSection: sectionIndex})
     const cards = getEarnFromSection({ sectionIndex, earnsMeta, dataStore })
 
     const itemIndex = cards.findIndex(item => !item.fullfilled)
@@ -178,7 +177,6 @@ export const EarnSection = inject("dataStore")(
     const sectionTitle = translate(`EarnScreen.earns\.${sectionIndex}\.meta.title`)
 
     const isFocused = useIsFocused()
-    console.tron.log({isFocused, initialRemainingSats, currentRemainingEarn})
 
     if (initialRemainingSats !== 0 && currentRemainingEarn === 0 && isFocused) {
       console.tron.warn("section Completed!")
@@ -231,8 +229,6 @@ export const EarnSection = inject("dataStore")(
     }
 
     const CardItem = ({ item, index }) => {
-      console.tron.log({item})
-
       return (
         <>
           <View style={styles.item}>

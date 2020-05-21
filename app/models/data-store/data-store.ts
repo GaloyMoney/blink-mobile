@@ -151,7 +151,6 @@ export const LndModel = BaseAccountModel.named("Lnd")
 
         // TODO move to utils?
         const translateTitleFromItem = (item) => {
-          console.tron.log({ item })
           const object = translate(`EarnScreen.earns`)
           for (const section of object) {
             for (const card of section.content) {
@@ -289,7 +288,6 @@ export const DataStoreModel = types
     onboarding: types.optional(OnboardingModel, {}),
     fiat: types.optional(FiatAccountModel, {}),
     rates: types.optional(RatesModel, {}),
-    exchange: types.optional(ExchangeModel, {}),
     lnd: types.optional(LndModel, {}), // TODO should it be optional?
   })
   .actions((self) => ({

@@ -7,7 +7,6 @@ import { sleep } from "../../utils/sleep"
 
 export const getEarnFromSection = ({ dataStore, sectionIndex, earnsMeta = undefined }) => {
   const earns_all = translate(`EarnScreen.earns`)
-  console.tron.log({sectionIndex})
   const cards = earns_all[sectionIndex].content
 
   cards.forEach(item => item.fullfilled = dataStore.onboarding.has(Onboarding[item.id]))
@@ -15,9 +14,7 @@ export const getEarnFromSection = ({ dataStore, sectionIndex, earnsMeta = undefi
   let allPreviousFullfilled = true
   let enabledMessage = ""
   
-  cards.forEach(item => {
-    console.tron.log({enabledMessage, id: item.id})
-    
+  cards.forEach(item => {    
     item.enabled = true
     
     if (allPreviousFullfilled === false) {
@@ -39,8 +36,6 @@ export const getEarnFromSection = ({ dataStore, sectionIndex, earnsMeta = undefi
     //     (item.enabledMessage = earnsMeta[item.id]?.enabledMessage ?? translate(`common.soon`)),
     // )
   }
-
-  console.tron.log({earns: cards})
 
   return cards
 }
