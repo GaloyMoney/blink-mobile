@@ -10,17 +10,22 @@ import "node-libs-react-native/globals" // needed for Buffer?
 import { contains } from "ramda"
 import * as React from "react"
 import { useEffect, useRef, useState } from "react"
-import { AppRegistry, Dimensions, YellowBox } from "react-native"
+import { AppRegistry, Dimensions, YellowBox, View, Text } from "react-native"
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { Notifications } from "react-native-notifications"
 import { StorybookUIRoot } from "../storybook"
 import "./i18n"
-import { RootStore, setupRootStore } from "./models/root-store"
+// import { RootStore, setupRootStore } from "./models/root-store"
 import { DEFAULT_NAVIGATION_CONFIG } from "./navigation/navigation-config"
 import { RootStack } from './navigation/root-navigator'
 import { getActiveRouteName, getActiveRouteParams } from "./utils/navigation"
 import DeviceInfo from "react-native-device-info"
-import functions from "@react-native-firebase/functions"
+import { createHttpClient } from "mst-gql"
+import { RootStore, StoreContext } from "./models"
+import { palette } from "./theme/palette"
+
+import { Error, Loading, Message } from "./"
+import { useQuery } from "../models/reactUtils"
 
 
 const entireScreenWidth = Dimensions.get('window').width;
@@ -29,10 +34,8 @@ EStyleSheet.build({
   // $textColor: '#0275d8'
 });
 
-DeviceInfo.isEmulator().then((isEmulator) => {
-  if (isEmulator) {
-    functions().useFunctionsEmulator("http://localhost:5000")
-  }
+const rootStore = RootStore.create(undefined, {
+  gqlHttpClient: createHttpClient("http://localhost:4000/graphql")
 })
 
 /**
@@ -46,10 +49,6 @@ YellowBox.ignoreWarnings([
 
 // FIXME
 console.disableYellowBox = true
-
-interface AppState {
-  rootStore?: RootStore
-}
 
 /**
  * This is the root component of our app.
@@ -85,7 +84,7 @@ export const App = () => {
     }
 
     const fn = async () => {
-      setRootStore(await setupRootStore())
+      // setRootStore(await setupRootStore())
     }
     fn()
   }, [])
@@ -95,7 +94,7 @@ export const App = () => {
       return
     }
 
-    console.tron.log({ navigationRef })
+    // console.tron.log({ navigationRef })
 
     // this is only accessible after this has been assigned, which is when we have
     const state = navigationRef.current.getRootState()
@@ -122,18 +121,22 @@ export const App = () => {
   //
   // You're welcome to swap in your own component to render if your boot up
   // sequence is too slow though.
-  if (!rootStore) {
-    return null
-  }
+  
+  // if (!rootStore) {
+  //   return null
+  // }
 
   const { ...otherStores } = rootStore
 
   return (
     // TODO replace with React.createContext
     // https://mobx.js.org/refguide/inject.html
-    <Provider rootStore={rootStore} {...otherStores} routeNameRef={routeNameRef}>
+
+
+    // <Provider rootStore={rootStore} {...otherStores} routeNameRef={routeNameRef}>
+    <StoreContext.Provider value={rootStore}>
       {/* <BackButtonHandler canExit={canExit}> */}
-      <NavigationContainer
+      {/* <NavigationContainer
         ref={navigationRef}
         onStateChange={state => {
           const previousRouteName = routeNameRef.current
@@ -142,7 +145,7 @@ export const App = () => {
           if (previousRouteName !== currentRouteName) {
             if (currentRouteName == "earnsSection") {
               const routeAndSection = `${currentRouteName}_${getActiveRouteParams(state).section}`
-              console.tron.log({ routeAndSection })
+              // console.tron.log({ routeAndSection })
               analytics().setCurrentScreen(routeAndSection, currentRouteName)
             } else {
               analytics().setCurrentScreen(currentRouteName, currentRouteName)
@@ -151,13 +154,28 @@ export const App = () => {
 
           // Save the current route name for later comparision
           routeNameRef.current = currentRouteName
-        }}>
+        }}> */}
         {/* <StatefulNavigator> */}
-        <RootStack />
+          {/* <RootStack /> */}
+          
+
+          <>
+            <View>
+              <Text style={{color: palette.orange}}>ok loaded{"\n\n"}really!</Text>
+            </View>
+
+
+
+
+
+
+          </>
+
         {/* <StatefulNavigator /> */}
-      </NavigationContainer>
+      {/* </NavigationContainer> */}
       {/* </BackButtonHandler> */}
-    </Provider>
+    {/* </Provider> */}
+    </StoreContext.Provider>
   )
 }
 
