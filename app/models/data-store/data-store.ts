@@ -5,6 +5,8 @@ import { IAddInvoiceRequest, IBuyRequest, IPayInvoice, IQuoteRequest, IQuoteResp
 import { parseDate } from "../../utils/date"
 import { AccountType, CurrencyType } from "../../utils/enum"
 import * as lightningPayReq from 'bolt11'
+import { translate } from "../../i18n"
+import { Alert } from "react-native"
 
 export const FiatTransactionModel = types.model("Transaction", {
   name: types.string,
@@ -21,7 +23,8 @@ export const LightningInvoiceModel = types.model("LightningTransaction", {
   created_at: types.Date,
   hash: types.maybe(types.union(types.string, types.null)),
   destination: types.maybe(types.string),
-  type: types.string
+  type: types.string,
+  fee: types.maybe(types.number),
 })
 
 export const BaseAccountModel = types
@@ -122,7 +125,7 @@ export const ExchangeModel = types
           console.tron.log("result BuyLNDBTC", result)
           return result?.data?.success ?? false
         } catch (err) {
-          console.tron.error(err.toString(), Error.captureStackTrace(err))
+          console.tron.warn(err.toString())
           throw err
         }
       }),
@@ -138,7 +141,7 @@ export const ExchangeModel = types
           console.tron.log("result SellLNDBTC", result)
           return result
         } catch (err) {
-          console.tron.error(err.toString(), Error.captureStackTrace(err))
+          console.tron.warn(err.toString())
           throw err
         }
       }),
@@ -162,7 +165,7 @@ export const FiatAccountModel = BaseAccountModel.props({
         // const doc = yield firestore().doc(`users/${uid}`).get()
         // self._transactions = doc.data().transactions
       } catch (err) {
-        console.tron.error(`not able to update transaction ${err}`, Error.captureStackTrace(err))
+        console.tron.warn(`not able to update transaction ${err}`)
       }
     })
 
@@ -176,7 +179,7 @@ export const FiatAccountModel = BaseAccountModel.props({
             // TODO: add unconfirmed balance
           }
         } catch (err) {
-          console.tron.error(`can't fetch the balance ${err}`, Error.captureStackTrace(err))
+          console.tron.warn(`can't fetch the balance ${err}`)
         }
       } else {
         self.confirmedBalance = 0
@@ -207,7 +210,6 @@ export const FiatAccountModel = BaseAccountModel.props({
 export const LndModel = BaseAccountModel.named("Lnd")
   .props({
     type: AccountType.Bitcoin,
-    receiveBitcoinScreenAlert: false,
     _transactions: types.array(LightningInvoiceModel),
   })
   .actions((self) => {
@@ -219,50 +221,65 @@ export const LndModel = BaseAccountModel.named("Lnd")
         yield self.updateBalance()
       }),
 
-      newAddress: flow(function* () {
-      }),
-
-      addInvoice: flow(function* (request: IAddInvoiceRequest) {
-        try {
-          const { data } = yield functions().httpsCallable("addInvoice")(request)
-          return data.request
-        } catch (err) {
-          console.log("error with AddInvoice")
-          throw err
-        }
-      }),
-
-      resetReceiveBitcoinScreenAlert: flow(function* () {
-        self.receiveBitcoinScreenAlert = false
-      }),
-
       updateBalance: flow(function* () {
-        try {
-          const { data } = yield functions().httpsCallable("getLightningBalance")({})
-          self.confirmedBalance = data.response
-        } catch (err) {
-          // TODO show visual indication of internet connection failure
-          console.tron.log(err.toString())
+        if (getParentOfType(self, DataStoreModel).onboarding.has(Onboarding.phoneVerification)) {
+          try {
+            const { data } = yield functions().httpsCallable("getLightningBalance")({})
+            self.confirmedBalance = data
+          } catch (err) {
+            // TODO show visual indication of internet connection failure
+            console.tron.log(err.toString())
+          }
+        } else {
+          yield self.updateTransactions()
+          self.confirmedBalance = self._transactions.reduce((acc, value) => value.amount + acc, 0)
         }
       }),
 
       updateTransactions: flow(function* () {
-        try {
-          const { data } = yield functions().httpsCallable("getLightningTransactions")({})
-          self._transactions = data.response.map((index) => ({
-            amount: index.amount,
-            description: index.description,
-            created_at: new Date(index.created_at),
-            hash: index.hash,
-            destination: index.destination,
-            type: index.type
-          }))
-        } catch (err) {
-          // TODO show visual indication of internet connection failure
-          console.tron.log(err.toString())
+
+        // TODO move to utils?
+        const translateTitleFromItem = (item) => {
+          console.tron.log({ item })
+          const object = translate(`EarnScreen.earns`)
+          for (const section of object) {
+            for (const card of section.content) {
+              if (card.id === item) {
+                return card.title
+              }
+            }
+          }
+          return item
+        }
+
+        if (getParentOfType(self, DataStoreModel).onboarding.has(Onboarding.phoneVerification)) {
+          try {
+            const { data } = yield functions().httpsCallable("getLightningTransactions")({})
+            self._transactions = data.map(item => ({
+              amount: item.amount,
+              description: translateTitleFromItem(item.description), // FIXME. should be done in the backend
+              created_at: item.created_at,
+              hash: item.hash,
+              destination: item.destination,
+              type: item.type,
+              fee: item.fee,
+            }))
+          } catch (err) {
+            console.tron.warn(`can't fetch the lightning balance ${err}`)
+          }
+        } else {
+          self._transactions = getParentOfType(self, DataStoreModel).onboarding.stage
+          .filter(value => OnboardingEarn[value] !== 0)
+          .map(
+            value => ({
+              amount: OnboardingEarn[value],
+              description: translateTitleFromItem(value),
+              created_at: new Date(),
+              type: "earn",
+            })
+          )
         }
       }),
-
     }
   })
   .views((self) => ({
@@ -273,33 +290,61 @@ export const LndModel = BaseAccountModel.named("Lnd")
     get transactions() {
       return self._transactions
     },
+
+    get earned() {
+      if (getParentOfType(self, DataStoreModel).onboarding.has(Onboarding.phoneVerification)) {
+        return self._transactions
+          .filter((value) => value.type === "earn")
+          .reduce((acc, value) => value.amount + acc, 0)
+      } else {
+        return self.confirmedBalance
+      }
+    }
   }))
 
 export const AccountModel = types.union(FiatAccountModel, LndModel)
 
+const ModelModel = types
+  .model("Mode", {
+    bitcoin: types.optional(
+      types.union(types.literal("mainnet"), types.literal("testnet")),
+      "testnet"
+  )})
+  .actions(self => ({
+    update: flow(function* (network) {
+      yield auth().signOut()
+      getParentOfType(self, DataStoreModel).reset()
+      self.bitcoin = network
+      Alert.alert("You have succesfully change network. You need to log in again")
+    })})
+  )
+
+const DEFAULT_BTC = 0.000001
+
 export const RatesModel = types
   .model("Rates", {
     USD: 1, // TODO is there a way to have enum as parameter?
-    BTC: types.array(
-      types.model({
-        t: types.Date,
-        o: types.number,
-      })
-    ), // Satoshi to USD default value
-    // FIXME should be a Pair, not a currency
+    BTC: DEFAULT_BTC
 
+    // FIXME should be a Pair, not a currency
     // TODO add "last update". refresh only needed if more than 1 or 10 min?
   })
+  .volatile(self => ({
+    BTC_history: []
+  }))
   .actions((self) => {
     const update = flow(function* () {
       try {
         const {data} = yield functions().httpsCallable("getPrice")({})
-        self.BTC = data.map(value => ({
-          t: new Date(value.t),
-          o: value.o,
-        }))
+        self.BTC_history = data
+        try {
+          self.BTC = self.BTC_history[self.BTC_history.length - 1].o
+        } catch (err) {
+          console.tron.warn(`don't have rates ${err}`)
+          self.BTC = DEFAULT_BTC
+        }
       } catch (err) {
-        console.tron.error(`error getting BTC price: ${err}`)
+        console.tron.warn(`error getting BTC price: ${err}`)
       }
     })
     return { update }
@@ -326,20 +371,6 @@ interface BalanceRequest {
   account: AccountType
 }
 
-// // TODO move to utils?
-// const translateTitleFromItem = (item) => {
-//   console.tron.log({ item })
-//   const object = translate(`EarnScreen.earns`)
-//   for (const property in object) {
-//     for (const property2 in object[property]) {
-//       if (property2 === item) {
-//         return object[property][property2].title
-//       }
-//     }
-//   }
-//   return "Translation not found"
-// }
-
 export const OnboardingModel = types
   .model("Onboarding", {
     stage: types.array(types.enumeration<Onboarding>("Onboarding", Object.values(Onboarding))),
@@ -364,15 +395,23 @@ export const DataStoreModel = types
     rates: types.optional(RatesModel, {}),
     exchange: types.optional(ExchangeModel, {}),
     lnd: types.optional(LndModel, {}), // TODO should it be optional?
+    mode: types.optional(ModelModel, {}),
   })
   .actions((self) => ({
     updateBalance: flow(function* () {
       yield Promise.all([
-        yield self.rates.update(),
         yield self.fiat.updateBalance(),
         yield self.lnd.updateBalance(),
       ])
     }),
+    reset: flow(function* () {
+      self.onboarding = {}
+      self.fiat = {}
+      self.rates = {}
+      self.exchange = {}
+      self.lnd = {}
+      self.mode = {}
+    })
   }))
   .views((self) => ({
     // TODO using: BalanceRequest type, how to set it?

@@ -3,6 +3,7 @@ import * as storage from "../../utils/storage"
 import { Environment } from "../environment"
 import { RootStore, RootStoreModel } from "./root-store"
 import functions from "@react-native-firebase/functions"
+import { Onboarding } from "../../../../common/types"
 
 /**
  * The key we'll be saving our state as within async storage.
@@ -22,10 +23,6 @@ export async function createEnvironment() {
   return env
 }
 
-export function resetDataStore () {
-  storage.save(ROOT_STATE_STORAGE_KEY, {})
-} 
-
 /**
  * Setup the root state.
  */
@@ -38,7 +35,7 @@ export async function setupRootStore() {
   try {
     // load data from storage
 
-    data = (await storage.load(ROOT_STATE_STORAGE_KEY)) || {}  // TODO: get back to this when store is dynamic
+    data = await storage.load(ROOT_STATE_STORAGE_KEY)
     rootStore = RootStoreModel.create(data, env)
 
   } catch (e) {
@@ -61,9 +58,16 @@ export async function setupRootStore() {
   onSnapshot(rootStore, snapshot => storage.save(ROOT_STATE_STORAGE_KEY, snapshot))
 
   onSnapshot(rootStore.dataStore.onboarding.stage, async (snapshot) => {
-    console.tron.log("snapshot", snapshot)
+    if (rootStore.dataStore.onboarding.has(Onboarding.phoneVerification)) {
+      try {
+        await functions().httpsCallable("addEarn")(snapshot)
+      } catch (err) {
+        console.tron.warn(err.toString())
+      }
+    }
+
     try {
-      await functions().httpsCallable("addEarn")(snapshot)
+      await rootStore.dataStore.lnd.update()
     } catch (err) {
       console.tron.warn(err.toString())
     }

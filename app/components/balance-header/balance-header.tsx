@@ -17,7 +17,7 @@ const styles = EStyleSheet.create({
   },
 
   balanceText: {
-    color: palette.darkGrey,
+    color: palette.midGrey,
     fontSize: 16,
     fontWeight: "bold",
     marginBottom: 8,
@@ -46,9 +46,10 @@ export interface BalanceHeaderProps {
 }
 
 const Loader = () => (
-  <ContentLoader height={50} width={120} speed={2} primaryColor="#f3f3f3" secondaryColor="#ecebeb">
-    <Rect x="0" y="0" rx="4" ry="4" width="120" height="20" />
-    <Rect x="30" y="35" rx="4" ry="4" width="60" height="10" />
+  <ContentLoader height={40} width={120} speed={1.2} 
+    backgroundColor="#f3f3f3" foregroundColor="#ecebeb">
+    <Rect x="0" y="12" rx="4" ry="4" width="120" height="28"  />
+    {/* <Rect x="30" y="35" rx="4" ry="4" width="60" height="10" /> */}
   </ContentLoader>
 )
 

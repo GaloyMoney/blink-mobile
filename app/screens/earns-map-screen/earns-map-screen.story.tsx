@@ -7,11 +7,11 @@ import { EarnMapScreen } from "./earns-map-screen";
 
 
 const sectionsData = [
-  {text: "Bitcoin:\nwhat is it?", icon: BitcoinCircle, id:"bitcoinWhatIsIt"},
-  {text: "Bitcoin v traditional Money", icon: BitcoinCircle, id:"bitcoinWhatIsIt"},
-  {text: "Bitcoin:\nwhy is it special?", icon: BitcoinCircle, id:"bitcoinWhatIsIt"},
-  {text: "Bitcoin:\nwhat is it?", icon: BitcoinCircle, id:"bitcoinWhatIsIt"},
-  {text: "Bitcoin v traditional Money", icon: BitcoinCircle, id:"bitcoinWhatIsIt"},
+  // {text: "Bitcoin:\nwhat is it?", icon: BitcoinCircle, id:"bitcoinWhatIsIt"},
+  // {text: "Bitcoin v traditional Money", icon: BitcoinCircle, id:"bitcoinWhatIsIt"},
+  // {text: "Bitcoin:\nwhy is it special?", icon: BitcoinCircle, id:"bitcoinWhatIsIt"},
+  // {text: "Bitcoin:\nwhat is it?", icon: BitcoinCircle, id:"bitcoinWhatIsIt"},
+  // {text: "Bitcoin v traditional Money", icon: BitcoinCircle, id:"bitcoinWhatIsIt"},
   {text: "Bitcoin:\nwhy is it special?", icon: BitcoinCircle, id:"bitcoinWhatIsIt"},
   {text: "Bitcoin:\nwhat is it?", icon: BitcoinCircle, id:"bitcoinWhatIsIt"},
   {text: "Bitcoin v traditional Money", icon: BitcoinCircle, id:"bitcoinWhatIsIt"},
