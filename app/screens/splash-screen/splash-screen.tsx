@@ -1,8 +1,6 @@
 import * as React from "react"
-
 import { View, ActivityIndicator, StyleSheet } from "react-native"
 import { VersionComponent } from "../../components/version"
-import { color } from "../../theme"
 
 import { palette } from "../../theme/palette"
 
