@@ -24,10 +24,6 @@ const { height: screenHeight } = Dimensions.get("window")
 const svgWidth = screenWidth - 60
 
 const styles = EStyleSheet.create({
-  screenStyle: {
-    backgroundColor: palette.blue
-  },
-
   accountView: {
     borderColor: color.line,
     borderRadius: 4,
@@ -297,7 +293,7 @@ export const EarnSection = inject("dataStore")(
     }
 
     return (
-      <Screen style={styles.screenStyle}>
+      <Screen backgroundColor={palette.blue} statusBar="light-content">
         <View style={{ flex: 1 }} />
         <Carousel
           data={cards}

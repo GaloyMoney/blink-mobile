@@ -53,9 +53,10 @@ const styles = EStyleSheet.create({
     borderRadius: 5,
     borderWidth: 1,
     marginHorizontal: "50rem",
-    marginTop: "10rem",
+    marginVertical: "18rem",
     paddingHorizontal: "18rem",
     paddingVertical: "12rem",
+    // height: "52rem",
   },
 
   text: {
@@ -67,7 +68,7 @@ const styles = EStyleSheet.create({
 
   textEntry: {
     color: color.palette.darkGrey,
-    fontSize: "20rem",
+    fontSize: "18rem",
   },
 
   codeContainer: {
@@ -151,9 +152,9 @@ export const WelcomePhoneInputScreen = ({ navigation }) => {
     </Screen>
 )}
 
+// TOOD make a component. shared with Account View.
 export const onLoggedinSuccess = async ({ dataStore }) => {
   dataStore.onboarding.add(Onboarding.phoneVerification)
-  dataStore.onboarding.add(Onboarding.walletActivated)
   console.log("onLoggedinSuccess complete")
   // FIXME forceRefresh doesn't seem to be passed by
 }
@@ -182,8 +183,18 @@ export const WelcomePhoneValidationScreen = ({ onSuccess, route, navigation }) =
     console.log(`onAuthStateChanged`, user)
 
     if (user.phoneNumber) {
+      // FIXME this should live outside of a component
+      // we should just listen to the proper dataStore object for validation
+
       await onSuccess()
-      navigation.navigate("Accounts", {forceRefresh: true})
+      Alert.alert("Phone authentication succesful", err, [
+        {
+          text: translate("common.ok"),
+          onPress: () => {
+            navigation.navigate("Accounts", {forceRefresh: true})
+          },
+        },
+      ])
     }
   }
 
