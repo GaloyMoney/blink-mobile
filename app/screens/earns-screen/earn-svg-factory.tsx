@@ -84,7 +84,7 @@ export const SVGs = ({name, width, theme}: ISVGs) => {
     case "Decentralized": return theme === "dark" ?
         <DecentralizedDark width={rWidth} />
       : <Decentralized width={rWidth} />
-    case "NoCounterfeitMoney": theme === "dark" ?
+    case "NoCounterfeitMoney": return theme === "dark" ?
         <NoCounterfeitMoneyDark width={rWidth} />
       : <NoCounterfeitMoney width={rWidth} />
     case "HighlyDivisible": return <HighlyDivisible width={rWidth} />

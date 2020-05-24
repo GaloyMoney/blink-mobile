@@ -1,5 +1,5 @@
 import * as React from "react"
-import { StyleSheet, Text, View } from "react-native"
+import { StyleSheet, Text, View, StatusBar } from "react-native"
 import { Button } from "react-native-elements"
 import { Screen } from "../../components/screen"
 import { color } from "../../theme"
@@ -66,7 +66,7 @@ export const GetStartedScreen = () => {
   const { navigate } = useNavigation()
 
   return (
-    <Screen style={styles.container} backgroundColor={palette.lightBlue}>
+    <Screen style={styles.container} backgroundColor={palette.lightBlue} statusBar="light-content">
       <View style={{flex: 1}} />
       <Text style={styles.title} onPress={() => navigate("debug")}>
         Galoy

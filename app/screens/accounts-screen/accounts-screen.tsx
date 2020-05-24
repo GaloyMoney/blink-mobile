@@ -81,7 +81,7 @@ export const AccountsScreen = inject("dataStore")(
       accountTypes[0].subtitle = false
     }
 
-    if (!dataStore.onboarding.has(Onboarding.walletActivated)) {
+    if (!dataStore.onboarding.has(Onboarding.phoneVerification)) {
       accountTypes[1].subtitle = false
     }
 
@@ -97,9 +97,13 @@ export const AccountsScreen = inject("dataStore")(
 
     useEffect(() => {
       onRefresh()
+
+      // FIXME this should live outside of a component
+      dataStore.rates.update()
     }, [])
+
     return (
-      <Screen style={{backgroundColor: palette.lighterGrey}}>
+      <Screen backgroundColor={palette.lighterGrey}>
         {/* {dataStore.onboarding.stage.length === 1 && <Overlay screen="accounts" />} */}
         <BalanceHeader
           currency={CurrencyType.USD}

@@ -17,6 +17,8 @@ import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
 import { palette } from "../theme/palette"
 import { AccountType } from "../utils/enum"
 import EStyleSheet from "react-native-extended-stylesheet"
+import { TransactionScreenDataInjected } from "../screens/transaction-screen/transaction-screen"
+import { inject, observer } from "mobx-react"
 
 const styles = EStyleSheet.create({
   person: {
@@ -92,22 +94,6 @@ export const AccountNavigator = () => {
           title: translate("AccountsScreen.title"),
           headerShown: false
         })}
-      />
-      <StackAccounts.Screen
-        name="accountDetail"
-        component={AccountDetailScreen}
-        // options={({ navigation }) => ({
-        //   headerRight: () => (
-        //     <Icon
-        //       name={"ios-person"}
-        //       size={32}
-        //       color={palette.darkGrey}
-        //       style={styles.person}
-        //       onPress={() => navigation.navigate("debug")}
-        //     />
-        //   ),
-        // })}
-        initialParams={{ account: AccountType.Bitcoin }}
       />
       <StackAccounts.Screen name="debug" component={DebugScreen} />
     </StackAccounts.Navigator>
@@ -198,12 +184,14 @@ export const PhoneValidationNavigator = () => {
 
 const Tab = createBottomTabNavigator()
 
-export const PrimaryNavigator = () => {
+export const PrimaryNavigator = inject("dataStore")(
+  observer(({ dataStore }) => {
   return (
     <Tab.Navigator
       initialRouteName="Accounts"
       tabBarOptions={{
-        activeTintColor: palette.lightBlue,
+        activeTintColor: dataStore.mode.network == "mainnet" ? 
+          palette.lightBlue : palette.orange,
         inactiveTintColor: palette.lightGrey,
         style: styles.bottomNavigatorStyle,
       }}
@@ -250,7 +238,7 @@ export const PrimaryNavigator = () => {
       /> */}
     </Tab.Navigator>
   )
-}
+}))
 
 const RootStack = createStackNavigator()
 
@@ -268,6 +256,12 @@ export const RootStackScreen = () => {
         component={EarnSection}
         options={{
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+          headerStyle: {backgroundColor: palette.blue},
+          headerTintColor: palette.white,
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 18
+          },
         }}
       />
       <RootStack.Screen
@@ -316,8 +310,35 @@ export const RootStackScreen = () => {
         component={TransactionDetailScreen}
         options={{ 
           headerShown: false,
-          cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
+          // cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
         }}  
+      />
+
+      <StackAccounts.Screen
+        name="transactionHistory"
+        component={TransactionScreenDataInjected}
+        options={() => ({
+          title: "Transaction History",
+        })}
+      />
+      <StackAccounts.Screen
+        name="accountDetail"
+        component={AccountDetailScreen}
+        options={{ 
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        }}  
+        // options={({ navigation }) => ({
+        //   headerRight: () => (
+        //     <Icon
+        //       name={"ios-person"}
+        //       size={32}
+        //       color={palette.darkGrey}
+        //       style={styles.person}
+        //       onPress={() => navigation.navigate("debug")}
+        //     />
+        //   ),
+        // })}
+        initialParams={{ account: AccountType.Bitcoin }}
       />
     </RootStack.Navigator>
   )

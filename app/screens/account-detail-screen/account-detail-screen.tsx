@@ -1,28 +1,25 @@
+import auth from "@react-native-firebase/auth";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from '@react-navigation/stack';
 import { inject, observer } from "mobx-react";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Alert, Animated, RefreshControl, SectionList, Text, TouchableWithoutFeedback, View } from "react-native";
-import { Button, ListItem } from "react-native-elements";
+import { ActivityIndicator, Alert, Animated, Text, TouchableWithoutFeedback, View } from "react-native";
+import { Button } from "react-native-elements";
 import EStyleSheet from "react-native-extended-stylesheet";
 import { TextInput } from "react-native-gesture-handler";
 import Modal from "react-native-modal";
 import Icon from "react-native-vector-icons/Ionicons";
 import { Onboarding, Side } from "types";
-import { ILightningTransaction } from "../../../../common/types";
 import { BalanceHeader } from "../../components/balance-header";
+import { PriceGraph } from "../../components/price-graph";
 import { Screen } from "../../components/screen";
 import { translate } from "../../i18n";
 import { DataStore } from "../../models/data-store";
 import { color } from "../../theme";
 import { palette } from "../../theme/palette";
-import { sameDay, sameMonth } from "../../utils/date";
-import { AccountType, CurrencyType } from "../../utils/enum";
-import auth from "@react-native-firebase/auth"
-import { CurrencyText } from "../../components/currency-text";
-import { IconTransaction } from "../../components/icon-transactions";
-import { Price } from "../../components/price";
+import { AccountType } from "../../utils/enum";
+import { AccountToAccountStore } from "../transaction-screen/transaction-screen";
 
 
 
@@ -30,12 +27,6 @@ export interface AccountDetailScreenProps {
   account: AccountType
   dataStore: DataStore
   navigation: StackNavigationProp<any,any>
-}
-
-export interface AccountDetailItemProps extends ILightningTransaction {
-  account: AccountType,
-  currency: CurrencyType,
-  navigation: StackNavigationProp<any,any>,
 }
 
 const styles = EStyleSheet.create({
@@ -62,13 +53,6 @@ const styles = EStyleSheet.create({
     paddingVertical: 20,
     textAlign: "center",
     textDecorationLine: "underline",
-  },
-
-  headerSection: {
-    backgroundColor: palette.white,
-    color: palette.darkGrey,
-    fontSize: 18,
-    padding: 22,
   },
 
   horizontal: {
@@ -112,28 +96,8 @@ const styles = EStyleSheet.create({
     justifyContent: "flex-end",
     paddingHorizontal: 20,
   },
-
-  noTransactionView: {
-    alignItems: "center",
-    flex: 1,
-    marginVertical: "48rem"
-  },
-  
-  NoTransactionText: {
-    fontSize: "24rem"
-  },
-
 })
 
-const AccountDetailItem: React.FC<AccountDetailItemProps> = (props) => (
-  <ListItem
-  // key={props.hash}
-  title={props.description}
-  leftIcon={<IconTransaction type={props.type.includes("invoice") ? "receive" : "send"} size={24} color={palette.orange} />}
-  rightTitle={<CurrencyText amount={props.amount} currency={props.currency} textColor={palette.darkGrey} />}
-  onPress={() => props.navigation.navigate("transactionDetail", props)}
-  />
-)
 
 const VisualExpiration = ({ validUntil }) => {
   const [fadeAnim] = useState(new Animated.Value(0))
@@ -163,9 +127,10 @@ const VisualExpiration = ({ validUntil }) => {
   )
 }
 
-const BalanceHeaderDataInjection = ({ currency, dataStore, account }) => {
+const BalanceHeaderDataInjection = inject("dataStore")(observer(
+  ({ currency, dataStore, account }) => {
   return <BalanceHeader currency={currency} amount={dataStore.balances({ currency, account })} />
-}
+}))
 
 const BuyAndSellComp = ({ dataStore, refresh }) => {
   const [side, setSide] = useState<Side>("buy")
@@ -350,110 +315,24 @@ const BuyAndSellComp = ({ dataStore, refresh }) => {
   )
 }
 
-const formatTransactions = (transactions) => {
-  const sections = []
-  const today = []
-  const yesterday = []
-  const thisMonth = []
-  const before = []
-
-  transactions = transactions.slice().sort((a, b) => (a.date > b.date ? -1 : 1)) // warning without slice?
-
-  const isToday = (tx) => {
-    return sameDay(tx.created_at, new Date())
-  }
-
-  const isYesterday = (tx) => {
-    return sameDay(tx.created_at, new Date().setDate(new Date().getDate() - 1))
-  }
-
-  const isThisMonth = (tx) => {
-    return sameMonth(tx.created_at, new Date())
-  }
-
-  while (transactions.length) {
-    // this could be optimized
-    const tx = transactions.shift()
-    if (isToday(tx)) {
-      today.push(tx)
-    } else if (isYesterday(tx)) {
-      yesterday.push(tx)
-    } else if (isThisMonth(tx)) {
-      thisMonth.push(tx)
-    } else {
-      before.push(tx)
-    }
-  }
-
-  if (today.length > 0) {
-    sections.push({ title: translate("AccountDetailScreen.today"), data: today })
-  }
-
-  if (yesterday.length > 0) {
-    sections.push({ title: translate("AccountDetailScreen.yesterday"), data: yesterday })
-  }
-
-  if (thisMonth.length > 0) {
-    sections.push({ title: translate("AccountDetailScreen.thisMonth"), data: thisMonth })
-  }
-
-  if (before.length > 0) {
-    sections.push({ title: translate("AccountDetailScreen.prevMonths"), data: before })
-  }
-
-  return sections
-}
 
 export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = inject("dataStore")(
   observer(({ dataStore, route, navigation }) => {
+    
     const account = route.params.account
+    let accountStore = AccountToAccountStore({account, dataStore})
 
     React.useEffect(() => {
       navigation.setOptions({ title: account})
     }, [account])
 
-    let accountStore
-
-    // should have a generic mapping here, could use mst for it?
-    switch (account) {
-      case AccountType.Bank:
-        accountStore = dataStore.fiat
-        break
-      case AccountType.Bitcoin:
-        accountStore = dataStore.lnd
-        break
-    }
-
-    const [refreshing, setRefreshing] = useState(false)
-    const [isAnonymous, setIsAnonymous] = useState(false)
-
-    const sections = formatTransactions(accountStore.transactions)
-    const currency = accountStore.currency
-
-    const refresh = async () => {
-      setIsAnonymous(auth().currentUser?.isAnonymous)
-      await accountStore.update()
-    }
-
-    const onRefresh = React.useCallback(async () => {
-      setRefreshing(true)
-      refresh()
-      setRefreshing(false)
-    }, [refreshing])
-
-    useEffect(() => {
-      refresh()
-    }, [])
-
-    useEffect(() => {
-      const subscriber = auth().onAuthStateChanged(refresh)
-      return subscriber // unsubscribe on unmount
-    }, [])
-
     return (
-      <Screen backgroundColor={palette.white} >
-        <BalanceHeaderDataInjection currency={currency} account={account} dataStore={dataStore} />
-        <Price data={dataStore.rates.BTC} /> 
+      <Screen backgroundColor={palette.white} preset="scroll" style={{flex: 1}}>
+        <BalanceHeaderDataInjection 
+          currency={accountStore.currency}
+          account={account}
+        />
+        <PriceGraph data={dataStore.rates.BTC_history} /> 
         {/* FIXME */}
         {//(account === AccountType.Bitcoin && !isAnonymous) && (
           // TODO integrate back BUY/SELL BTC, 
@@ -463,33 +342,28 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = inject("d
           //   refresh={refresh}
           // />)
          }
-        {(account === AccountType.Bitcoin && isAnonymous) && (
+        {(account === AccountType.Bitcoin && !dataStore.onboarding.has(Onboarding.phoneVerification)) && (
           // TODO update when isAnonymous changes
-          <Button title={"Activate Wallet"} 
-            buttonStyle={{backgroundColor: palette.lightBlue, borderRadius: 32}} 
-            style={{width: "50%", alignSelf: "center"}}
-            onPress={() => navigation.navigate("phoneValidation")}
-          />
+          <>
+            <View style={{flex: 1, minHeight: 12}} />
+            <Button title={"Activate Wallet"} 
+              buttonStyle={{backgroundColor: palette.lightBlue, borderRadius: 32}} 
+              containerStyle={{width: "50%", alignSelf: "center"}}
+              onPress={() => navigation.navigate("phoneValidation")}
+            />
+          </>
         )}
-        {sections.length === 0 && 
-        // FIXME there is no way to refresh is no transaction is already here
-        <View style={styles.noTransactionView}>
-          <Text style={styles.NoTransactionText}>No transaction to show :(</Text>
-        </View>}
-        {sections.length > 0 && (
-          <SectionList
-            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-            renderItem={({ item, index, section }) => (
-              <AccountDetailItem account={account} currency={currency} 
-                navigation={navigation} {...item} 
-              />
-            )}
-            renderSectionHeader={({ section: { title } }) => (
-              <Text style={styles.headerSection}>{title}</Text>
-            )}
-            sections={sections}
-            keyExtractor={(item, index) => item + index}
-          />
+        {account === AccountType.Bitcoin && (
+          <>
+            <View style={{flex: 1}} />
+            <Button title={"Transactions History"} 
+              type="clear"
+              style={{width: "50%", alignSelf: "center"}}
+              containerStyle={{paddingBottom: 24}}
+              titleStyle={{color: palette.lightBlue}}
+              onPress={() => navigation.navigate("transactionHistory", {account})}
+            />
+          </>
         )}
       </Screen>
     )
