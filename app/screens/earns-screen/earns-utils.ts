@@ -4,6 +4,7 @@ import { Notifications, RegistrationError } from "react-native-notifications"
 import { Onboarding, OnboardingEarn } from "types"
 import { translate } from "../../i18n"
 import { sleep } from "../../utils/sleep"
+import { StoreContext } from "../../models"
 
 export const getEarnFromSection = ({ dataStore, sectionIndex, earnsMeta = undefined }) => {
   const earns_all = translate(`EarnScreen.earns`)
@@ -86,21 +87,21 @@ const _earnsMeta = {
     },
   },
   activateNotifications: {
-    onAction: async ({ dataStore, setLoading }) => {
+    onAction: async ({ setLoading }) => {
+      const store = React.useContext(StoreContext)
+
       // FIXME
       Notifications.events().registerRemoteNotificationsRegistered(async (event: Registered) => {
         console.tron.log("Registered For Remote Push", `Device Token: ${event.deviceToken}`)
 
         try {
           setLoading(true)
-          await functions().httpsCallable("sendDeviceToken")({
-            deviceToken: event.deviceToken,
-          })
-          await dataStore.onboarding.add(Onboarding.activateNotifications)
-          close("Notification succesfully activated")
+          store.user.updateDeviceToken(event.deviceToken)
+
+          // close("Notification succesfully activated")
         } catch (err) {
           console.tron.log(err.toString())
-          setErr(err.toString())
+          // setErr(err.toString())
         }
       })
 

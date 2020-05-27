@@ -22,6 +22,7 @@ import { invoiceModelPrimitives, InvoiceModelSelector } from "./InvoiceModel.bas
 export type InputUser = {
   id?: string
   level?: number
+  deviceToken?: string
 }
 /* The TypeScript type that explicits the refs to other models in order to prevent a circular refs issue */
 type Refs = {

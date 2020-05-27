@@ -23,6 +23,11 @@ export const UserModel = UserModelBase
       () => {
         self.level = level
       }
-      )
+    )},
+    updateDeviceToken(deviceToken: string) {
+      self.store.mutateUpdateUser({
+        user: {id: "1234", deviceToken}
+      },
+    )},
   }
-}))
+))

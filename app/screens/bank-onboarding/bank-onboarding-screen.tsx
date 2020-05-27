@@ -20,6 +20,7 @@ import { BrightButton } from "../../components/bright-button"
 import CreditCard from "./credit-card-01.svg"
 import BitcoinPhone from "./bitcoin-phone-01.svg"
 import MoneyCircle from "../accounts-screen/money-circle-02.svg"
+import { StoreContext } from "../../models"
 
 const bankLogo = require("./BankLogo.png")
 const popcornLogo = require("../earns-screen/PopcornLogo.png")
@@ -193,7 +194,9 @@ export const PersonalInformationScreen = () => {
   )
 }
 
-export const DateOfBirthScreen = inject("dataStore")(({ dataStore }) => {
+export const DateOfBirthScreen = () => {
+  const store = React.useContext(StoreContext)
+
   const navigation = useNavigation()
   const route = useRoute()
   const [dateOfBirth, setDateOfBirth] = useState(new Date(2000, 1, 1))
@@ -203,11 +206,9 @@ export const DateOfBirthScreen = inject("dataStore")(({ dataStore }) => {
   const onValidate = async () => {
     try {
       setLoading(true)
-      await functions().httpsCallable("onBankAccountOpening")({
-        ...route.params,
-        dateOfBirth: dateOfBirth.toISOString(),
-      })
-      dataStore.onboarding.add(Onboarding.bankOnboarded)
+      const userInfo = { dateOfBirth: dateOfBirth.toISOString(), ...route.params }
+      const level = 2
+      store.user.updateLevel(level)      
       navigation.navigate("bankAccountReady")
       setLoading(false)
     } catch (err) {
@@ -253,7 +254,7 @@ export const DateOfBirthScreen = inject("dataStore")(({ dataStore }) => {
       />
     </Screen>
   )
-})
+}
 
 export const BankAccountReadyScreen = () => {
   return (
