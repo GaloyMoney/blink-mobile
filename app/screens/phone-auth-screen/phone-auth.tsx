@@ -152,13 +152,8 @@ export const WelcomePhoneInputScreen = ({ navigation }) => {
 
 // TOOD make a component. shared with Account View.
 export const onLoggedinSuccess = async ({ store }) => {
-  
   const level = 1
-
-  const result = store.user.updateLevel(level)
-  console.tron.log({result}) 
-  // FIXME level comes back to 0
-
+  store.user.updateLevel(level)
   console.tron.log("onLoggedinSuccess complete")
   // FIXME forceRefresh doesn't seem to be passed by
 }

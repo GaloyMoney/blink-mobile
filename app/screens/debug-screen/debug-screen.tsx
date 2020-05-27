@@ -11,6 +11,8 @@ import { VersionComponent } from "../../components/version"
 import { color, spacing } from "../../theme"
 import { palette } from "../../theme/palette"
 import { resetDataStore } from "../../models/root-store"
+import request from "graphql-request"
+import { GRAPHQL_SERVER_URI } from "../../app"
 
 
 
@@ -109,7 +111,11 @@ export const DebugScreen = inject("dataStore")(
               resetDataStore()
               if (auth().currentUser) {
                 try {
-                  await functions().httpsCallable("deleteCurrentUser")({})
+                  const query = `mutation deleteCurrentUser($uid: String) {
+                    deleteCurrentUser(uid: $uid) 
+                  }`
+            
+                  const result = await request(GRAPHQL_SERVER_URI, query, {uid: "1234"})
                 } catch (err) {
                   console.tron.error(err)
                 }
@@ -142,20 +148,8 @@ export const DebugScreen = inject("dataStore")(
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
-              title="Print $1,000"
-              onPress={() => functions().httpsCallable("dollarFaucet")({ amount: 1000 })}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
               title="update Price"
               onPress={() => dataStore.rates.update()}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              title="test functions"
-              onPress={() => functions().httpsCallable("test")({})}
             />
             <TextInput
               style={HINT}
