@@ -174,7 +174,6 @@ export const ShowQRCode = ({ route, navigation }) => {
           {hash, uid: "1234"}
         )
   
-        // const { data } = await functions().httpsCallable("updatePendingInvoice")(hash)
         if (result.invoice.updatePendingInvoice === true) {
           success()
         }
