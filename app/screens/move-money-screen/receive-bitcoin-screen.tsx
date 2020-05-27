@@ -164,8 +164,18 @@ export const ShowQRCode = ({ route, navigation }) => {
   useEffect(() => {
     const interval = setInterval(async () => {
       try {
-        const { data } = await functions().httpsCallable("updatePendingInvoice")(hash)
-        if (data === true) {
+        const query = `mutation updatePendingInvoice($uid: String, $hash: String) {
+          invoice(uid: $uid) {
+            updatePendingInvoice(hash: $hash)
+          }
+        }`
+  
+        const result = await request(GRAPHQL_SERVER_URI, query,
+          {hash, uid: "1234"}
+        )
+  
+        // const { data } = await functions().httpsCallable("updatePendingInvoice")(hash)
+        if (result.invoice.updatePendingInvoice === true) {
           success()
         }
       } catch (err) {
