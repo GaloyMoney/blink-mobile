@@ -1,14 +1,14 @@
+import { values } from "mobx"
+import { observer } from "mobx-react"
 import * as React from "react"
-import { Text, View, ActivityIndicator } from "react-native"
+import { ActivityIndicator, Text, View } from "react-native"
+import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
+import { VictoryAxis, VictoryChart, VictoryLine } from "victory-native"
+import { StoreContext } from "../../models"
+import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 
-import { VictoryLine, VictoryChart, VictoryAxis } from "victory-native"
-import { Button } from "react-native-elements"
-import { color } from "../../theme"
-import { useQuery, StoreContext } from "../../models"
-import { observer } from "mobx-react"
-import { values } from "mobx"
 
 const styles = EStyleSheet.create({
   neutral: {

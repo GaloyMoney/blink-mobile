@@ -27,8 +27,10 @@ EStyleSheet.build({
   // $textColor: '#0275d8'
 });
 
+export const GRAPHQL_SERVER_URI = "http://localhost:4000/graphql"
+
 const rootStore = RootStore.create(undefined, {
-  gqlHttpClient: createHttpClient("http://localhost:4000/graphql")
+  gqlHttpClient: createHttpClient(GRAPHQL_SERVER_URI)
 })
 
 /**

@@ -1,26 +1,19 @@
-import auth from "@react-native-firebase/auth";
-import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from '@react-navigation/stack';
-import { inject, observer } from "mobx-react";
+import { observer } from "mobx-react";
 import * as React from "react";
-import { useEffect, useState } from "react";
-import { ActivityIndicator, Alert, Animated, Text, TouchableWithoutFeedback, View } from "react-native";
+import { useState } from "react";
+import { Animated, View } from "react-native";
 import { Button } from "react-native-elements";
 import EStyleSheet from "react-native-extended-stylesheet";
-import { TextInput } from "react-native-gesture-handler";
-import Modal from "react-native-modal";
-import Icon from "react-native-vector-icons/Ionicons";
-import { Onboarding, Side } from "types";
 import { BalanceHeader } from "../../components/balance-header";
 import { PriceGraphDataInjected } from "../../components/price-graph";
 import { Screen } from "../../components/screen";
-import { translate } from "../../i18n";
+import { StoreContext } from "../../models";
+import { RootStore } from "../../models/root-store";
 import { color } from "../../theme";
 import { palette } from "../../theme/palette";
 import { AccountType } from "../../utils/enum";
 import { AccountToWallet } from "../transaction-screen/transaction-screen";
-import { StoreContext, useQuery } from "../../models";
-import { RootStore } from "../../models/root-store";
 
 
 
