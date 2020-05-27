@@ -155,23 +155,29 @@ const formatTransactions = (transactions) => {
 }
 
 
-export const AccountToWallet = ({account, store}) => {
-  // FIXME should have a generic mapping here, could use mst for it?
-  switch (account) {
-    case AccountType.Bank:
-      return store.wallet("USD")
-    case AccountType.Bitcoin:
-      return store.wallet("BTC")
-  }
-}
-
-
 export const TransactionScreenDataInjected = observer(({navigation, route}) => {
-  const { store, error, loading, data } = useQuery(store => store.queryWallet({uid: "1234"})) // FIXME
+  const { store, error, loading, data } = useQuery(store => store.queryWallet(
+    {uid: "1234"},
+    ` currency
+      transactions {
+        id
+        amount
+        description
+        created_at
+        hash
+        type
+      }`
+  )) // FIXME
 
+  const currency = "BTC" // FIXME
   const account = route.params.account
-  let wallet = AccountToWallet({account, store}) 
-  
+
+  let w = {}
+
+  if (data) {
+    w = data.wallet.filter(item => item.currency === currency)[0]
+  }
+
   // FIXME useCallBack??
   // const onRefresh = React.useCallback(async () => {
   //   setRefreshing(true)
@@ -185,11 +191,11 @@ export const TransactionScreenDataInjected = observer(({navigation, route}) => {
 
   return <TransactionScreen 
     navigation={navigation} 
-    currency={wallet.currency}
+    currency={currency}
     refreshing={loading}
     onRefresh={() => {}}
     // onRefresh={onRefresh} FIXME
-    transactions={wallet.transactions ?? []} // FIXME
+    transactions={w.transactions ?? []} // FIXME
   />
 })
 

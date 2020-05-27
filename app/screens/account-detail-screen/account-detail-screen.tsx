@@ -13,7 +13,6 @@ import { RootStore } from "../../models/root-store";
 import { color } from "../../theme";
 import { palette } from "../../theme/palette";
 import { AccountType } from "../../utils/enum";
-import { AccountToWallet } from "../transaction-screen/transaction-screen";
 
 
 
@@ -311,6 +310,17 @@ const BalanceHeaderDataInjection = observer(({ currency, account }) => {
 //   )
 // }
 
+
+
+export const AccountToWallet = ({account, store}) => {
+  // FIXME should have a generic mapping here, could use mst for it?
+  switch (account) {
+    case AccountType.Bank:
+      return store.wallet("USD")
+    case AccountType.Bitcoin:
+      return store.wallet("BTC")
+  }
+}
 
 export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = observer(
   ({ route, navigation }) => {
