@@ -1,16 +1,15 @@
 import currency from "currency.js"
-import { inject, observer } from "mobx-react"
+import { observer } from "mobx-react"
 import * as React from "react"
-import { useEffect, useState } from "react"
-import { FlatList, RefreshControl, View } from "react-native"
+import { FlatList, RefreshControl, Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
-import { Onboarding } from "types"
 import { BalanceHeader } from "../../components/balance-header"
 import { LargeButton } from "../../components/large-button"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
+import { useQuery } from "../../models"
 import { palette } from "../../theme/palette"
 import { AccountType, CurrencyType } from "../../utils/enum"
 import BitcoinCircle from "./bitcoin-circle-01.svg"
@@ -53,87 +52,115 @@ export const AccountItem =
   )
 }
 
-export const AccountsScreen = inject("dataStore")(
-  observer(({ dataStore, route, navigation }) => {
-    const [refreshing, setRefreshing] = useState(false)
+const gql_query = `
+query home {
+  prices {
+    __typename
+    id
+    o
+  }
+  wallet(uid: "1234") {
+    __typename
+    id
+    balance
+    currency
+  }
+  me(uid: "1234") {
+    __typename
+    id
+    level
+  }
+}
+`
 
-    console.tron.log({forceRefresh: route.params?.forceRefresh})
+export const AccountsScreen = observer(({ route, navigation }) => {
+  const { store, error, loading, data } = useQuery(gql_query)
 
-    useEffect(() => {
-      if (route.params?.forceRefresh === true) {
-        navigation.setOptions({ forceRefresh: false })
-        onRefresh()
-      }
-    }, [route.params?.forceRefresh]);
+  // console.tron.log({forceRefresh: route.params?.forceRefresh})
 
-    // FIXME type any
-    const accountTypes: Array<Record<string, any>> = [
-      { key: "Cash Account", account: AccountType.Bank, title: AccountType.Bank },
-      { key: "Bitcoin", account: AccountType.Bitcoin, title: AccountType.Bitcoin },
-    ]
+  // useEffect(() => {
+  //   if (route.params?.forceRefresh === true) {
+  //     navigation.setOptions({ forceRefresh: false })
+  //     onRefresh()
+  //   }
+  // }, [route.params?.forceRefresh]);
 
-    // TODO refactor ==> bank should also have a virtual screen
-    if (!dataStore.onboarding.has(Onboarding.bankOnboarded)) {
-      accountTypes[0].action = () => navigation.navigate("bankAccountEarn")
-      accountTypes[0].title = "Open Cash Account"
-      accountTypes[0].subtitle = false
-    }
+  if (loading) {
+    return <Text>Loading</Text>
+  }
 
-    if (!dataStore.onboarding.has(Onboarding.phoneVerification)) {
-      accountTypes[1].subtitle = false
-    }
+  if (error) {
+    return <Text>{"\n\n"}{error.message}</Text>
+  }
 
-    const accountToAdd = AccountType.BankAndBitcoin
+  // FIXME type any
+  const accountTypes: Array<Record<string, any>> = [
+    { key: "Cash Account", account: AccountType.Bank, title: AccountType.Bank},
+    { key: "Bitcoin", account: AccountType.Bitcoin, title: AccountType.Bitcoin},
+  ]
 
-    const onRefresh = React.useCallback(async () => {
-      setRefreshing(true)
+  accountTypes.forEach(item => item.amount = store.balances(
+    {currency: "USD", account: item.account}
+  ))
 
-      await dataStore.updateBalance()
+  // TODO refactor ==> bank should also have a virtual screen
+  if (data.me.level < 2) {
+    accountTypes[0].action = () => navigation.navigate("bankAccountEarn")
+    accountTypes[0].title = "Open Cash Account"
+    accountTypes[0].subtitle = false
+  }
 
-      setRefreshing(false)
-    }, [refreshing])
+  // if (data.me.level < 1) {
+  //   accountTypes[1].subtitle = false
+  // }
 
-    useEffect(() => {
-      onRefresh()
+  // const onRefresh = React.useCallback(async () => {
+  //   setRefreshing(true)
 
-      // FIXME this should live outside of a component
-      dataStore.rates.update()
-    }, [])
+  //   await dataStore.updateBalance()
 
-    return (
-      <Screen backgroundColor={palette.lighterGrey}>
-        {/* {dataStore.onboarding.stage.length === 1 && <Overlay screen="accounts" />} */}
-        <BalanceHeader
-          currency={CurrencyType.USD}
-          amount={dataStore.balances({ currency: CurrencyType.USD, account: accountToAdd })}
-          amountOtherCurrency={dataStore.balances({
-            currency: CurrencyType.BTC,
-            account: accountToAdd,
-          })}
-        />
-        <FlatList
-          data={accountTypes}
-          style={styles.listContainer}
-          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-          renderItem={({ item }) => (
-            <AccountItem
-              {...item}
-              amount={dataStore.balances({ currency: CurrencyType.USD, account: item.account })}
-              navigation={navigation}
-            />
-          )}
-        />
-        <View style={{ flex: 1 }}></View>
-        <Button
-          title={translate("AccountsScreen.bitcoinEarn")}
-          style={styles.accountView}
-          titleStyle={{ color: palette.blue }}
-          type="clear"
-          // containerStyle={{ backgroundColor: color.primary }}
-          onPress={() => navigation.navigate("Earn")}
-          icon={<Icon name="ios-gift" color={palette.lightBlue} size={28} style={styles.icon} />}
-        />
-      </Screen>
-    )
-  }),
-)
+  //   setRefreshing(false)
+  // }, [refreshing])
+
+  // useEffect(() => {
+  //   onRefresh()
+
+  //   // FIXME this should live outside of a component
+  //   dataStore.rates.update()
+  // }, [])
+
+  return (
+    <Screen backgroundColor={palette.lighterGrey}>
+      <BalanceHeader
+        currency={CurrencyType.USD}
+        amount={store.balances({currency: "USD", account: AccountType.BankAndBitcoin})}
+        amountOtherCurrency={store.balances({
+          currency: CurrencyType.BTC,
+          account: AccountType.BankAndBitcoin,
+        })}
+      />
+      <FlatList
+        data={accountTypes}
+        style={styles.listContainer}
+        // refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+        refreshControl={<RefreshControl refreshing={loading} />}
+        renderItem={({ item }) => (
+          <AccountItem
+            {...item}
+            navigation={navigation}
+          />
+        )}
+      />
+      <View style={{ flex: 1 }}></View>
+      <Button
+        title={translate("AccountsScreen.bitcoinEarn")}
+        style={styles.accountView}
+        titleStyle={{ color: palette.blue }}
+        type="clear"
+        // containerStyle={{ backgroundColor: color.primary }}
+        onPress={() => navigation.navigate("Earn")}
+        icon={<Icon name="ios-gift" color={palette.lightBlue} size={28} style={styles.icon} />}
+      />
+    </Screen>
+  )
+})

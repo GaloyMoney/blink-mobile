@@ -11,63 +11,64 @@ import auth from "@react-native-firebase/auth"
 import { useEffect, useState } from "react"
 import { Onboarding } from "types"
 import { SplashScreen } from "../screens/splash-screen"
-import { onLoggedinSuccess } from "../screens/phone-auth-screen"
+import { StoreContext } from "../models"
 
 const Loading = createStackNavigator()
 
-export const RootStack = inject("dataStore")(
-  observer(({ dataStore }) => {
-    const [initialRouteName, setInitialRouteName] = useState("")
+export const RootStack = () => {
+  const store = React.useContext(StoreContext)
+  
+  const [initialRouteName, setInitialRouteName] = useState("")
 
-    const onAuthStateChanged = async (user) => {
-      console.tron.log(`onAuthStateChanged`, user)
-      console.log(`onAuthStateChanged`, user)
+  const onAuthStateChanged = async (user) => {
+    console.tron.log(`onAuthStateChanged`, user)
 
-      if (user == null) {
-        await auth().signInAnonymously()
-      } else if (user.phoneNumber) { 
-        onLoggedinSuccess({ dataStore })
-      }
-
-      if (dataStore.onboarding.has(Onboarding.walletDownloaded)) {
-        setInitialRouteName("primaryStack")
-      } else {
-        // new install
-        setInitialRouteName("getStarted")
-      }
+    if (user == null) {
+      await auth().signInAnonymously()
+      return 
     }
 
-    useEffect(() => {
-      const subscriber = auth().onAuthStateChanged(onAuthStateChanged)
-      return subscriber // unsubscribe on unmount
-    }, [])
-
-    if (initialRouteName === "") {
-      return <SplashScreen />
+    if (user.phoneNumber) { // TODO have a private state for this (not attached to graphQL)
+      setInitialRouteName("primaryStack")
+    } else {
+      setInitialRouteName("getStarted")
     }
+  }
 
-    return (
-      <Loading.Navigator
-        initialRouteName={initialRouteName}
-        screenOptions={{ gestureEnabled: false }}
-      >
-        <Loading.Screen
-          name="getStarted"
-          component={GetStartedScreen}
-          options={{ headerShown: false }}
-        />
-        <Loading.Screen name="debug" component={DebugScreen} />
-        <Loading.Screen
-          name="welcomeFirst"
-          component={WelcomeFirstScreen}
-          options={{ headerShown: false }}
-        />
-        <Loading.Screen
-          name="primaryStack"
-          component={RootStackScreen}
-          options={{ headerShown: false }}
-        />
-      </Loading.Navigator>
-    )
-  }),
-)
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged)
+    return subscriber // unsubscribe on unmount
+  }, [])
+
+  console.tron.log({initialRouteName})
+
+  if (initialRouteName === "") {
+    return <SplashScreen />
+  }
+
+  console.tron.log({initialRouteName})
+
+  return (
+    <Loading.Navigator
+      initialRouteName={initialRouteName}
+      screenOptions={{ gestureEnabled: false }}
+    >
+      <Loading.Screen
+        name="getStarted"
+        component={GetStartedScreen}
+        options={{ headerShown: false }}
+      />
+      <Loading.Screen name="debug" component={DebugScreen} />
+      <Loading.Screen
+        name="welcomeFirst"
+        component={WelcomeFirstScreen}
+        options={{ headerShown: false }}
+      />
+      <Loading.Screen
+        name="primaryStack"
+        component={RootStackScreen}
+        options={{ headerShown: false }}
+      />
+    </Loading.Navigator>
+  )
+}

@@ -243,7 +243,7 @@ export const RootStackScreen = () => {
   return (
     <RootStack.Navigator mode="modal" headerMode="screen">
       <RootStack.Screen
-        // name="Primary" // FIXME quick fixe
+        // name="Primary" // FIXME quick fix
         name="Earn "
         component={PrimaryNavigator}
         options={{ headerShown: false }}

@@ -1,20 +1,18 @@
 import auth from "@react-native-firebase/auth"
-import { inject } from "mobx-react"
 import { isEmpty } from "ramda"
 import * as React from "react"
 import { useEffect, useRef, useState } from "react"
-import { ActivityIndicator, Alert, KeyboardAvoidingView, Platform, Text, View, ScrollView } from "react-native"
+import { ActivityIndicator, Alert, KeyboardAvoidingView, Platform, ScrollView, Text, View } from "react-native"
+import { Input } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
-import { TextInput } from "react-native-gesture-handler"
 import PhoneInput from "react-native-phone-input"
-import { Onboarding } from "types"
 import { CloseCross } from "../../components/close-cross"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
+import { StoreContext } from "../../models"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import BadgerPhone from "./badger-phone-01.svg"
-import { Input } from "react-native-elements"
 
 const styles = EStyleSheet.create({
   activityIndicatorWrapper: {
@@ -153,21 +151,27 @@ export const WelcomePhoneInputScreen = ({ navigation }) => {
 )}
 
 // TOOD make a component. shared with Account View.
-export const onLoggedinSuccess = async ({ dataStore }) => {
-  dataStore.onboarding.add(Onboarding.phoneVerification)
-  console.log("onLoggedinSuccess complete")
+export const onLoggedinSuccess = async ({ store }) => {
+  
+  const level = 1
+
+  const result = store.user.updateLevel(level)
+  console.tron.log({result}) 
+  // FIXME level comes back to 0
+
+  console.tron.log("onLoggedinSuccess complete")
   // FIXME forceRefresh doesn't seem to be passed by
 }
 
-export const WelcomePhoneValidationScreenDataInjected = inject("dataStore")(
-  ({ dataStore, route, navigation }) => {
+export const WelcomePhoneValidationScreenDataInjected = ({ route, navigation }) => {
+  const store = React.useContext(StoreContext)
 
   const onSuccess = () => {
-    onLoggedinSuccess({ dataStore })
+    onLoggedinSuccess({ store })
   }
 
   return <WelcomePhoneValidationScreen onSuccess={onSuccess} route={route} navigation={navigation} />
-})
+}
 
 
 export const WelcomePhoneValidationScreen = ({ onSuccess, route, navigation }) => {
