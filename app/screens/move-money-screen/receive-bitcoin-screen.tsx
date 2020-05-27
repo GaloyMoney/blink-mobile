@@ -13,6 +13,9 @@ import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
 import functions from "@react-native-firebase/functions"
 import { getHash } from "../../utils/lightning"
+import { StoreContext } from "../../models"
+import { request } from 'graphql-request'
+import { GRAPHQL_SERVER_URI } from "../../app"
 
 const styles = StyleSheet.create({
   buttonStyle: {
@@ -45,82 +48,88 @@ const styles = StyleSheet.create({
   },
 })
 
-export const ReceiveBitcoinScreen = inject("dataStore")(
-  observer(({ dataStore, navigation }) => {
-    const [note, setNote] = useState("")
-    const [amount, setAmount] = useState(0)
-    const [loading, setLoading] = useState(false)
+export const ReceiveBitcoinScreen = observer(({ navigation }) => {
+  const store = React.useContext(StoreContext)
 
-    const createInvoice = async () => {
-      setLoading(true)
+  const [memo, setMemo] = useState("")
+  const [amount, setAmount] = useState(0)
+  const [loading, setLoading] = useState(false)
 
-      let invoice
+  const createInvoice = async () => {
+    setLoading(true)
 
-      try {
-        const { data } = await functions().httpsCallable("addInvoice")({
-          value: amount,
-          memo: note,
-        })
-        invoice = data
-      } catch (err) {
-        console.log("error with AddInvoice")
-        throw err
-      }
+    let invoice
 
-      try {
-        const invoiceDecoded = lightningPayReq.decode(invoice)
-        const hash = getHash(invoiceDecoded)
+    try {
+      const query = `mutation addInvoice($uid: String, $amount: Int, $memo: String) {
+        invoice(uid: $uid) {
+          addInvoice(value: $amount, memo: $memo)
+        }
+      }`
 
-        navigation.navigate("showQRCode", { invoice, amount, hash })
-      } catch (err) {
-        Alert.alert(err.toString())
-      } finally {
-        setLoading(false)
-      }
+      const result = await request(GRAPHQL_SERVER_URI, query,
+        {amount, memo, uid: "1234"}
+      )
+
+      invoice = result.invoice.addInvoice
+    } catch (err) {
+      console.log("error with AddInvoice")
+      throw err
     }
 
-    return (
-      <Screen backgroundColor={palette.lighterGrey}>
-        <ScrollView style={{ flex: 1, paddingTop: 32 }}>
-          <View style={{ alignItems: "center" }}>
-            <IconTransaction type={"receive"} size={75} color={palette.orange} />
-          </View>
-          <View style={styles.section}>
-            <Text style={styles.smallText}>Note</Text>
-            <Input placeholder="Optional" value={note} onChangeText={(text) => setNote(text)} />
-          </View>
-          <View style={styles.section}>
-            <Text style={styles.smallText}>Amount</Text>
-            <Input
-              leftIcon={<Text style={styles.icon}>{translate("common.sats")}</Text>}
-              placeholder="0"
-              autoFocus={true}
-              value={amount.toString()}
-              onChangeText={(input) => {
-                isNaN(+input) ? setAmount(0) : setAmount(+input)
-              }}
-              returnKeyType="done"
-              keyboardType="number-pad"
-              onSubmitEditing={createInvoice}
-            />
-          </View>
-          <View style={{ alignContent: "center", alignItems: "center", marginHorizontal: 48 }}>
-            <Button
-              buttonStyle={styles.buttonStyle}
-              disabledStyle={styles.buttonStyle}
-              containerStyle={{width: "100%"}}
-              title="Create"
-              onPress={createInvoice}
-              titleStyle={{ fontWeight: "bold" }}
-              loading={loading}
-              disabled={loading}
-            />
-          </View>
-        </ScrollView>
-      </Screen>
-    )
-  }),
-)
+    try {
+      const invoiceDecoded = lightningPayReq.decode(invoice)
+      const hash = getHash(invoiceDecoded)
+
+      navigation.navigate("showQRCode", { invoice, amount, hash })
+    } catch (err) {
+      Alert.alert(err.toString())
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <Screen backgroundColor={palette.lighterGrey}>
+      <ScrollView style={{ flex: 1, paddingTop: 32 }}>
+        <View style={{ alignItems: "center" }}>
+          <IconTransaction type={"receive"} size={75} color={palette.orange} />
+        </View>
+        <View style={styles.section}>
+          <Text style={styles.smallText}>Note</Text>
+          <Input placeholder="Optional" value={memo} onChangeText={(text) => setMemo(text)} />
+        </View>
+        <View style={styles.section}>
+          <Text style={styles.smallText}>Amount</Text>
+          <Input
+            leftIcon={<Text style={styles.icon}>{translate("common.sats")}</Text>}
+            placeholder="0"
+            autoFocus={true}
+            value={amount.toString()}
+            onChangeText={(input) => {
+              isNaN(+input) ? setAmount(0) : setAmount(+input)
+            }}
+            returnKeyType="done"
+            keyboardType="number-pad"
+            onSubmitEditing={createInvoice}
+          />
+        </View>
+        <View style={{ alignContent: "center", alignItems: "center", marginHorizontal: 48 }}>
+          <Button
+            buttonStyle={styles.buttonStyle}
+            disabledStyle={styles.buttonStyle}
+            containerStyle={{width: "100%"}}
+            title="Create"
+            onPress={createInvoice}
+            titleStyle={{ fontWeight: "bold" }}
+            loading={loading}
+            disabled={loading}
+          />
+        </View>
+      </ScrollView>
+    </Screen>
+  )
+})
 
 export const ShowQRCode = ({ route, navigation }) => {
   const invoice = route.params.invoice
