@@ -19,7 +19,8 @@
     "postinstall": "jetify && if which pod >/dev/null; then (cd ios; pod install); fi",
     "prepare": "npm-run-all patch hack:*",
     "storybook": "storybook start -p 9001 --skip-packager",
-    "adb": "adb reverse tcp:9090 tcp:9090 && adb reverse tcp:3000 tcp:3000 && adb reverse tcp:9001 tcp:9001 && adb reverse tcp:8081 tcp:8081"
+    "adb": "adb reverse tcp:9090 tcp:9090 && adb reverse tcp:3000 tcp:3000 && adb reverse tcp:9001 tcp:9001 && adb reverse tcp:8081 tcp:8081",
+    "mst-gql": "mst-gql --format ts --outDir app/models http://localhost:4000/graphql"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.8.1",

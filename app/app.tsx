@@ -2,30 +2,23 @@
 //
 // In this file, we'll be kicking off our app or storybook.
 
-import analytics from '@react-native-firebase/analytics'
 import "@react-native-firebase/crashlytics"
 import { NavigationContainer } from '@react-navigation/native'
-import { Provider } from "mobx-react"
+import { createHttpClient } from "mst-gql"
 import "node-libs-react-native/globals" // needed for Buffer?
 import { contains } from "ramda"
 import * as React from "react"
-import { useEffect, useRef, useState } from "react"
-import { AppRegistry, Dimensions, YellowBox, View, Text } from "react-native"
+import { useEffect, useRef } from "react"
+import { AppRegistry, Dimensions, YellowBox } from "react-native"
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { Notifications } from "react-native-notifications"
 import { StorybookUIRoot } from "../storybook"
 import "./i18n"
-// import { RootStore, setupRootStore } from "./models/root-store"
-import { DEFAULT_NAVIGATION_CONFIG } from "./navigation/navigation-config"
-import { RootStack } from './navigation/root-navigator'
-import { getActiveRouteName, getActiveRouteParams } from "./utils/navigation"
-import DeviceInfo from "react-native-device-info"
-import { createHttpClient } from "mst-gql"
 import { RootStore, StoreContext } from "./models"
-import { palette } from "./theme/palette"
-
-import { Error, Loading, Message } from "./"
-import { useQuery } from "../models/reactUtils"
+import { createEnvironment } from "./models/root-store"
+import { DEFAULT_NAVIGATION_CONFIG } from "./navigation/navigation-config"
+import { RootStack } from "./navigation/root-navigator"
+import { getActiveRouteName } from "./utils/navigation"
 
 
 const entireScreenWidth = Dimensions.get('window').width;
@@ -54,7 +47,7 @@ console.disableYellowBox = true
  * This is the root component of our app.
  */
 export const App = () => {
-  const [rootStore, setRootStore] = useState(null)
+  // const [rootStore, setRootStore] = useState(null)
 
   const routeNameRef = useRef()
   const navigationRef = useRef()
@@ -79,12 +72,19 @@ export const App = () => {
 
   useEffect(() => {
     // this is necessary for hot reloading?
-    if (rootStore != null) {
-      return
-    }
+    // if (rootStore != null) {
+    //   return
+    // }
 
     const fn = async () => {
       // setRootStore(await setupRootStore())
+      const env = await createEnvironment()
+
+      console.log({env})
+      // reactotron logging
+      if (__DEV__) {
+        env.reactotron.setRootStore(rootStore, {})
+      }
     }
     fn()
   }, [])
@@ -136,43 +136,29 @@ export const App = () => {
     // <Provider rootStore={rootStore} {...otherStores} routeNameRef={routeNameRef}>
     <StoreContext.Provider value={rootStore}>
       {/* <BackButtonHandler canExit={canExit}> */}
-      {/* <NavigationContainer
+      <NavigationContainer
         ref={navigationRef}
-        onStateChange={state => {
-          const previousRouteName = routeNameRef.current
-          const currentRouteName = getActiveRouteName(state)
+      onStateChange={state => {
+          // const previousRouteName = routeNameRef.current
+          // const currentRouteName = getActiveRouteName(state)
 
-          if (previousRouteName !== currentRouteName) {
-            if (currentRouteName == "earnsSection") {
-              const routeAndSection = `${currentRouteName}_${getActiveRouteParams(state).section}`
-              // console.tron.log({ routeAndSection })
-              analytics().setCurrentScreen(routeAndSection, currentRouteName)
-            } else {
-              analytics().setCurrentScreen(currentRouteName, currentRouteName)
-            }
-          }
+          // if (previousRouteName !== currentRouteName) {
+          //   if (currentRouteName == "earnsSection") {
+          //     const routeAndSection = `${currentRouteName}_${getActiveRouteParams(state).section}`
+          //     // console.tron.log({ routeAndSection })
+          //     analytics().setCurrentScreen(routeAndSection, currentRouteName)
+          //   } else {
+          //     analytics().setCurrentScreen(currentRouteName, currentRouteName)
+          //   }
+          // }
 
-          // Save the current route name for later comparision
-          routeNameRef.current = currentRouteName
-        }}> */}
+          // // Save the current route name for later comparision
+          // routeNameRef.current = currentRouteName
+        }}>
         {/* <StatefulNavigator> */}
-          {/* <RootStack /> */}
-          
-
-          <>
-            <View>
-              <Text style={{color: palette.orange}}>ok loaded{"\n\n"}really!</Text>
-            </View>
-
-
-
-
-
-
-          </>
-
+          <RootStack />
         {/* <StatefulNavigator /> */}
-      {/* </NavigationContainer> */}
+      </NavigationContainer>
       {/* </BackButtonHandler> */}
     {/* </Provider> */}
     </StoreContext.Provider>

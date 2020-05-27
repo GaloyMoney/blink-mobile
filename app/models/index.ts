@@ -3,10 +3,10 @@
 /* tslint:disable */
 
 export * from "./PriceModel"
-export * from "./BtcWalletModel"
+export * from "./WalletModel"
 export * from "./TransactionModel"
 export * from "./EarnModel"
+export * from "./UserModel"
 export * from "./InvoiceModel"
-export * from "./EarnMutationModel"
 export * from "./RootStore"
 export * from "./reactUtils"
