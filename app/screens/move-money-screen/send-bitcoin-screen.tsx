@@ -16,6 +16,9 @@ import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { getDescription } from "../../utils/lightning"
 import Config from "react-native-config"
+import request from "graphql-request"
+import { GRAPHQL_SERVER_URI } from "../../app"
+import { StoreContext } from "../../models"
 
 const CAMERA: ViewStyle = {
   width: "100%",
@@ -84,8 +87,7 @@ const styles = StyleSheet.create({
   },
 })
 
-export const ScanningQRCodeScreen = inject("dataStore")(
-  observer(({ dataStore }) => {
+export const ScanningQRCodeScreen = () => {
     const { navigate } = useNavigation()
 
     const pasteInvoice = async () => {
@@ -159,170 +161,175 @@ export const ScanningQRCodeScreen = inject("dataStore")(
         </View>
       </Screen>
     )
-  }),
-)
+}
 
-export const SendBitcoinScreen: React.FC = inject("dataStore")(
-  observer(({ dataStore, route }) => {
-    const invoice = route.params.invoice
-    const amountless = route.params.amountless
-    const note = route.params.note
-    const amount = route.params.amount
+export const SendBitcoinScreen: React.FC = ({ route }) => {
+  const store = React.useContext(StoreContext)
 
-    const [manualAmount, setManualAmount] = useState(false)
+  const invoice = route.params.invoice
+  const amountless = route.params.amountless
+  const note = route.params.note
+  const amount = route.params.amount
 
-    const { goBack } = useNavigation()
+  const [manualAmount, setManualAmount] = useState(false)
 
-    const [useUSD, setUseUSD] = useState(false)
-    const [message, setMessage] = useState("")
-    const [err, setErr] = useState("")
-    const [loading, setLoading] = useState(false)
+  const { goBack } = useNavigation()
 
-    const onUseUSDChange = async (input) => {
-      setUseUSD(input)
+  // const [useUSD, setUseUSD] = useState(false)
+  const [message, setMessage] = useState("")
+  const [err, setErr] = useState("")
+  const [loading, setLoading] = useState(false)
 
-      if (input) {
-        await dataStore.exchange.quoteLNDBTC({ side: "buy", satAmount: amount })
-      } else {
-        dataStore.exchange.quote.reset()
-      }
+  // const onUseUSDChange = async (input) => {
+    // setUseUSD(input)
+
+    // if (input) {
+    //   await dataStore.exchange.quoteLNDBTC({ side: "buy", satAmount: amount })
+    // } else {
+      // dataStore.exchange.quote.reset()
+    // }
+  // }
+
+  const payInvoice = async () => {
+    if (invoice === "") {
+      Alert.alert(`You need to paste an invoice or scan a QR Code`)
+      return
     }
 
-    const payInvoice = async () => {
-      if (invoice === "") {
-        Alert.alert(`You need to paste an invoice or scan a QR Code`)
+    if (amountless) {
+      if (amount === 0) {
+        Alert.alert(
+          `This invoice doesn't have an amount, so you need to manually specify how much money you want to send`,
+        )
         return
       }
 
-      if (amountless) {
-        if (amount === 0) {
-          Alert.alert(
-            `This invoice doesn't have an amount, so you need to manually specify how much money you want to send`,
-          )
-          return
-        }
-
-        // FIXME what is it for?
-        // payreq.amt = amount
-      }
-
-      console.tron.log({invoice})
-
-      setLoading(true)
-      try {
-        if (useUSD) {
-          const success = await dataStore.exchange.buyLNDBTC()
-
-          if (!success) {
-            setErr(translate("errors.generic"))
-            return
-          }
-        }
-
-        const {data} = await functions().httpsCallable("payInvoice")({invoice})
-
-        console.tron.log({data})
-
-        if (data.result === true) {
-          setMessage("Payment succesfull")
-          await dataStore.onboarding.add(Onboarding.firstLnPayment)
-        } else if (data.result === "pending") {
-          setMessage("Payment has been sent but is not confirmed yet")
-        } else {
-          setErr(result.toString())
-        }
-      } catch (err) {
-        setErr(err.toString())
-      }
+      // FIXME what is it for?
+      // payreq.amt = amount
     }
 
-    useEffect(() => {
-      if (message !== "" || err !== "") {
-        const header = err ? "error" : "success"
+    console.tron.log({invoice})
 
-        const options = {
-          enableVibrateFallback: true,
-          ignoreAndroidSystemSettings: false,
+    setLoading(true)
+    // try {
+    // if (useUSD) {
+    //   const success = await dataStore.exchange.buyLNDBTC()
+
+    //   if (!success) {
+    //     setErr(translate("errors.generic"))
+    //     return
+    //   }
+    // }
+
+    try {
+      const query = `mutation payInvoice($uid: String, $invoice: String) {
+        invoice(uid: $uid) {
+          payInvoice(invoice: $invoice)
         }
+      }`
 
-        const haptic_feedback = err !== "" ? "notificationError" : "notificationSuccess"
-        ReactNativeHapticFeedback.trigger(haptic_feedback, options)
+      const result = await request(GRAPHQL_SERVER_URI, query,
+        {invoice, uid: "1234"}
+      )
 
-        Alert.alert(header, message || err, [
-          {
-            text: translate("common.ok"),
-            onPress: () => {
-              goBack("moveMoney")
-              setLoading(false)
-            },
-          },
-        ])
-        setMessage("")
-        setErr("")
+      if (result.invoice.payInvoice === "success") {
+        setMessage("Payment succesfull")
+      } else if (result.invoice.payInvoice === "pending") {
+        setMessage("Payment has been sent but is not confirmed yet")
+      } else {
+        setErr(result.toString())
       }
-    }, [message, err])
+    } catch (err) {
+      setErr(err.toString())
+    }
+  }
 
-    return (
-      <Screen>
-        <ScrollView style={styles.mainView}>
-          <View style={styles.section}>
-            <Text style={styles.smallText}>{translate("common.to")}</Text>
-            <View style={styles.horizontalContainer}>
-              <Input
-                placeholder="Invoice"
-                leftIcon={
-                  <Icon name="ios-log-out" size={24} color={color.primary} style={styles.icon} />
-                }
-                value={invoice}
-                containerStyle={styles.invoiceContainer}
-              />
-            </View>
-          </View>
-          <View style={styles.section}>
-            <Text style={styles.smallText}>{translate("SendBitcoinScreen.amount")}</Text>
+  useEffect(() => {
+    if (message !== "" || err !== "") {
+      const header = err ? "error" : "success"
+
+      const options = {
+        enableVibrateFallback: true,
+        ignoreAndroidSystemSettings: false,
+      }
+
+      const haptic_feedback = err !== "" ? "notificationError" : "notificationSuccess"
+      ReactNativeHapticFeedback.trigger(haptic_feedback, options)
+
+      Alert.alert(header, message || err, [
+        {
+          text: translate("common.ok"),
+          onPress: () => {
+            goBack("moveMoney")
+            setLoading(false)
+          },
+        },
+      ])
+      setMessage("")
+      setErr("")
+    }
+  }, [message, err])
+
+  return (
+    <Screen>
+      <ScrollView style={styles.mainView}>
+        <View style={styles.section}>
+          <Text style={styles.smallText}>{translate("common.to")}</Text>
+          <View style={styles.horizontalContainer}>
             <Input
-              leftIcon={<Text style={styles.icon}>{translate("common.sats")}</Text>}
-              onChangeText={(input) => setManualAmount(+input)}
-              value={amountless ? manualAmount.toString() : amount.toString()}
-              disabled={!amountless}
-              returnKeyType="done"
-              keyboardType="number-pad" // TODO, there should be no keyboard here
+              placeholder="Invoice"
+              leftIcon={
+                <Icon name="ios-log-out" size={24} color={color.primary} style={styles.icon} />
+              }
+              value={invoice}
+              containerStyle={styles.invoiceContainer}
             />
           </View>
-          <View style={styles.section}>
-            <Text style={styles.smallText}>{translate("SendBitcoinScreen.note")}</Text>
-            <Text style={styles.note}>{note}</Text>
-          </View>
-          {/* <View style={[styles.horizontalContainer, { marginTop: 8 }]}>
-            <Text style={[styles.smallText, { paddingTop: 5 }]}>
-              {translate("SendBitcoinScreen.payFromUSD")}
-            </Text>
-            <View style={{ flex: 1 }} />
-            <Switch value={useUSD} onValueChange={(input) => onUseUSDChange(input)} />
-          </View>
-          {useUSD && (
-            <View style={[styles.horizontalContainer, { marginTop: 8 }]}>
-              <Text style={styles.smallText}>{translate("SendBitcoinScreen.cost")}</Text>
-              <View style={{ flex: 1 }} />
-              {(isNaN(dataStore.exchange.quote.satPrice) && <ActivityIndicator />) || (
-                <Text style={styles.smallText}>
-                  $
-                  {(dataStore.exchange.quote.satPrice * dataStore.exchange.quote.satAmount).toFixed(
-                    3,
-                  )}
-                </Text>
-              )}
-            </View>
-          )} */}
-          <Button
-            buttonStyle={styles.buttonStyle}
-            title="Send"
-            onPress={payInvoice}
-            disabled={invoice === ""}
-            loading={loading}
+        </View>
+        <View style={styles.section}>
+          <Text style={styles.smallText}>{translate("SendBitcoinScreen.amount")}</Text>
+          <Input
+            leftIcon={<Text style={styles.icon}>{translate("common.sats")}</Text>}
+            onChangeText={(input) => setManualAmount(+input)}
+            value={amountless ? manualAmount.toString() : amount.toString()}
+            disabled={!amountless}
+            returnKeyType="done"
+            keyboardType="number-pad" // TODO, there should be no keyboard here
           />
-        </ScrollView>
-      </Screen>
-    )
-  }),
-)
+        </View>
+        <View style={styles.section}>
+          <Text style={styles.smallText}>{translate("SendBitcoinScreen.note")}</Text>
+          <Text style={styles.note}>{note}</Text>
+        </View>
+        {/* <View style={[styles.horizontalContainer, { marginTop: 8 }]}>
+          <Text style={[styles.smallText, { paddingTop: 5 }]}>
+            {translate("SendBitcoinScreen.payFromUSD")}
+          </Text>
+          <View style={{ flex: 1 }} />
+          <Switch value={useUSD} onValueChange={(input) => onUseUSDChange(input)} />
+        </View>
+        {useUSD && (
+          <View style={[styles.horizontalContainer, { marginTop: 8 }]}>
+            <Text style={styles.smallText}>{translate("SendBitcoinScreen.cost")}</Text>
+            <View style={{ flex: 1 }} />
+            {(isNaN(dataStore.exchange.quote.satPrice) && <ActivityIndicator />) || (
+              <Text style={styles.smallText}>
+                $
+                {(dataStore.exchange.quote.satPrice * dataStore.exchange.quote.satAmount).toFixed(
+                  3,
+                )}
+              </Text>
+            )}
+          </View>
+        )} */}
+        <Button
+          buttonStyle={styles.buttonStyle}
+          title="Send"
+          onPress={payInvoice}
+          disabled={invoice === ""}
+          loading={loading}
+        />
+      </ScrollView>
+    </Screen>
+  )
+}
