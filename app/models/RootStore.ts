@@ -41,6 +41,15 @@ export const RootStore = RootStoreBase
       // FIXME there must be a better way to do this
       return values(self.users)[0]
     },
+    get earnArray() {
+      const earnsArray = values(self.earns)
+      return earnsArray
+    },
+    get earnedSat() {
+      return self.earnArray
+        .filter(item => item.completed)
+        .reduce((acc, value) => value.amount + acc, 0)
+    },
     wallet(currency) {
       return values(self.wallets).filter(item => item.currency === currency)[0]
     },

@@ -6,11 +6,12 @@ import { translate } from "../../i18n"
 import { sleep } from "../../utils/sleep"
 import { StoreContext } from "../../models"
 
-export const getEarnFromSection = ({ dataStore, sectionIndex, earnsMeta = undefined }) => {
+export const getEarnFromSection = ({ earnsArray, sectionIndex, earnsMeta = undefined }) => {
   const earns_all = translate(`EarnScreen.earns`)
   const cards = earns_all[sectionIndex].content
 
-  cards.forEach(item => item.fullfilled = dataStore.onboarding.has(Onboarding[item.id]))
+  // FIXME O(N^2)
+  cards.filter(item => item.fullfilled = earnsArray.find(e => e.id == item.id).completed)
   
   let allPreviousFullfilled = true
   let enabledMessage = ""
@@ -41,16 +42,18 @@ export const getEarnFromSection = ({ dataStore, sectionIndex, earnsMeta = undefi
   return cards
 }
 
-export const isSectionComplete = ({sectionIndex, dataStore}) => 
-  getRemainingSatsOnSection({sectionIndex, dataStore}) === 0
 
-export const getRemainingEarnItems = ({ sectionIndex, dataStore }) => {
-  const earns = getEarnFromSection({ sectionIndex, dataStore })
+// TODO this is smelly, refactor.
+export const isSectionComplete = ({sectionIndex, earnsArray}) => 
+  getRemainingSatsOnSection({sectionIndex, earnsArray}) === 0
+
+export const getRemainingEarnItems = ({ sectionIndex, earnsArray }) => {
+  const earns = getEarnFromSection({ sectionIndex, earnsArray })
   return earns.filter((item) => item.fullfilled).length / earns.length
 }
   
-export const getRemainingSatsOnSection = ({ sectionIndex, dataStore }) =>
-  getEarnFromSection({ sectionIndex, dataStore })
+export const getRemainingSatsOnSection = ({ sectionIndex, earnsArray }) =>
+  getEarnFromSection({ sectionIndex, earnsArray })
     .filter((item) => !item.fullfilled)
     .reduce((acc, item) => OnboardingEarn[item.id] + acc, 0)
 
@@ -61,11 +64,11 @@ export const getSections = () => {
 }
 
 // TODO optimize
-export const getCompletedSection = ({ dataStore }) => {
+export const getCompletedSection = ({ earnsArray }) => {
   let count = 0
   const sections = getSections()
   for (const sectionIndex of sections) {
-    if (getRemainingSatsOnSection({ dataStore, sectionIndex }) === 0) {
+    if (getRemainingSatsOnSection({ earnsArray, sectionIndex }) === 0) {
       count++
     }
   }
