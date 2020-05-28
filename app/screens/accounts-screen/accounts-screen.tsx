@@ -59,6 +59,12 @@ query home {
     id
     o
   }
+  earnList(uid: "1234") {
+    __typename
+    id
+    value
+    completed
+  }
   wallet(uid: "1234") {
     __typename
     id

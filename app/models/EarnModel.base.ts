@@ -19,6 +19,7 @@ export const EarnModelBase = ModelBase
     /** the earn reward for the app to display their associated amount */
     id: types.identifier,
     value: types.union(types.undefined, types.null, types.integer),
+    completed: types.union(types.undefined, types.null, types.boolean),
   })
   .views(self => ({
     get store() {
@@ -29,9 +30,10 @@ export const EarnModelBase = ModelBase
 export class EarnModelSelector extends QueryBuilder {
   get id() { return this.__attr(`id`) }
   get value() { return this.__attr(`value`) }
+  get completed() { return this.__attr(`completed`) }
 }
 export function selectFromEarn() {
   return new EarnModelSelector()
 }
 
-export const earnModelPrimitives = selectFromEarn().value
+export const earnModelPrimitives = selectFromEarn().value.completed

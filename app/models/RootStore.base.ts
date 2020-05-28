@@ -45,6 +45,7 @@ queryMe="queryMe"
 }
 export enum RootStoreBaseMutations {
 mutateInvoice="mutateInvoice",
+mutateAddEarn="mutateAddEarn",
 mutateUpdateUser="mutateUpdateUser"
 }
 
@@ -72,8 +73,8 @@ export const RootStoreBase = withTypedRefs<Refs>()(MSTGQLStore
         ${typeof resultSelector === "function" ? resultSelector(new WalletModelSelector()).toString() : resultSelector}
       } }`, variables, options)
     },
-    queryEarnList(variables?: {  }, resultSelector: string | ((qb: EarnModelSelector) => EarnModelSelector) = earnModelPrimitives.toString(), options: QueryOptions = {}) {
-      return self.query<{ earnList: EarnModelType[]}>(`query earnList { earnList {
+    queryEarnList(variables: { uid?: string }, resultSelector: string | ((qb: EarnModelSelector) => EarnModelSelector) = earnModelPrimitives.toString(), options: QueryOptions = {}) {
+      return self.query<{ earnList: EarnModelType[]}>(`query earnList($uid: String) { earnList(uid: $uid) {
         ${typeof resultSelector === "function" ? resultSelector(new EarnModelSelector()).toString() : resultSelector}
       } }`, variables, options)
     },
@@ -85,6 +86,11 @@ export const RootStoreBase = withTypedRefs<Refs>()(MSTGQLStore
     mutateInvoice(variables: { uid?: string }, resultSelector: string | ((qb: InvoiceModelSelector) => InvoiceModelSelector) = invoiceModelPrimitives.toString(), optimisticUpdate?: () => void) {
       return self.mutate<{ invoice: InvoiceModelType}>(`mutation invoice($uid: String) { invoice(uid: $uid) {
         ${typeof resultSelector === "function" ? resultSelector(new InvoiceModelSelector()).toString() : resultSelector}
+      } }`, variables, optimisticUpdate)
+    },
+    mutateAddEarn(variables: { earn?: string[] }, resultSelector: string | ((qb: EarnModelSelector) => EarnModelSelector) = earnModelPrimitives.toString(), optimisticUpdate?: () => void) {
+      return self.mutate<{ addEarn: EarnModelType[]}>(`mutation addEarn($earn: [ID]) { addEarn(earn: $earn) {
+        ${typeof resultSelector === "function" ? resultSelector(new EarnModelSelector()).toString() : resultSelector}
       } }`, variables, optimisticUpdate)
     },
     mutateUpdateUser(variables: { user?: InputUser }, resultSelector: string | ((qb: UserModelSelector) => UserModelSelector) = userModelPrimitives.toString(), optimisticUpdate?: () => void) {
