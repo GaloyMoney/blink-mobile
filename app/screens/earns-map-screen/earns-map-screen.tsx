@@ -27,6 +27,7 @@ import RightTodo from "./right-section-to-do-01.svg"
 import TextBlock from "./text-block-medium.svg"
 import { MountainHeader } from "../../components/mountain-header"
 import { color } from "../../theme"
+import { StoreContext } from "../../models"
 
 const styles = StyleSheet.create({
   mainView: {
@@ -96,8 +97,10 @@ export const ProgressBar = ({progress}) => {
 )}
 
 
-export const EarnMapDataInjected = inject("dataStore")(
-  observer(({ dataStore, navigation }) => {
+export const EarnMapDataInjected = observer(({ navigation }) => {
+
+  const store = React.useContext(StoreContext)
+  const earnsArray = store.earnArray
 
   // FIXME sectionId rely on array index. use id instead
   const sectionId = Object.keys(translate("EarnScreen.earns"))
@@ -113,10 +116,10 @@ export const EarnMapDataInjected = inject("dataStore")(
       icon: BitcoinCircle,
     })
 
-    if (isSectionComplete({sectionIndex, dataStore})) {
+    if (isSectionComplete({sectionIndex, earnsArray})) {
       currSection += 1
     } else if (isNaN(progress)) { // only do it once for the first uncompleted section
-      progress = getRemainingEarnItems({sectionIndex, dataStore})
+      progress = getRemainingEarnItems({sectionIndex, earnsArray})
     }
   }
 
@@ -125,10 +128,9 @@ export const EarnMapDataInjected = inject("dataStore")(
     sectionsData={sectionsData}
     currSection={currSection}
     progress={progress}
-    earned={dataStore.lnd.earned}
+    earned={store.earnedSat}
   />
-
-}))
+})
 
 export const EarnMapScreen: React.FC<IEarnMapScreen> = 
   ({ navigation, sectionsData, currSection, progress, earned}) => {

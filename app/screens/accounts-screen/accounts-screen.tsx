@@ -99,6 +99,8 @@ export const AccountsScreen = observer(({ route, navigation }) => {
     return <Text>{"\n\n"}{error.message}</Text>
   }
 
+  console.tron.log(store.earnArray)
+
   // FIXME type any
   const accountTypes: Array<Record<string, any>> = [
     { key: "Cash Account", account: AccountType.Bank, title: AccountType.Bank},
