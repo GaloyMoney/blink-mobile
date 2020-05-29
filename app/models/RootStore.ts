@@ -45,7 +45,7 @@ export const RootStore = RootStoreBase
           return 1 // FIXME
         }
       } else {
-        throw Error(`currency ${currency} doesnt't exist`)
+        throw Error(`currency ${currency} doesn't exist`)
       }
     },
     get user() {
@@ -68,13 +68,21 @@ export const RootStore = RootStoreBase
     wallet(currency) {
       return values(self.wallets).filter(item => item.currency === currency)[0]
     },
+    balance(currency) {
+    const wallet = self.wallet(currency)
+      if (wallet) {
+        return wallet.balance
+      } else {
+        return 0
+      }
+    },
     balances({ currency, account }) {
       const balances = {}
 
       const btcConversion = self.rate("BTC") / self.rate(currency)
 
-      balances[AccountType.Bitcoin] = self.wallet("BTC").balance * btcConversion
-      balances[AccountType.Bank] = self.wallet("USD").balance / self.rate(currency)
+      balances[AccountType.Bitcoin] = self.balance("BTC") * btcConversion
+      balances[AccountType.Bank] = self.balance("USD") / self.rate(currency)
       balances[AccountType.BankAndBitcoin] =
         balances[AccountType.Bank] + balances[AccountType.Bitcoin]
 

@@ -92,7 +92,13 @@ export const AccountsScreen = observer(({ route, navigation }) => {
 
   // FIXME type any
   const accountTypes: Array<Record<string, any>> = [
-    { key: "Cash Account", account: AccountType.Bank, title: AccountType.Bank},
+    { key: "Cash Account", 
+      account: AccountType.Bank, 
+      // title: AccountType.Bank, 
+      action: () => navigation.navigate("bankAccountEarn"),
+      title: "Open Cash Account",
+      subtitle: false
+    },
     { key: "Bitcoin", account: AccountType.Bitcoin, title: AccountType.Bitcoin, loading},
   ]
 
@@ -101,10 +107,8 @@ export const AccountsScreen = observer(({ route, navigation }) => {
   ))
 
   // TODO refactor ==> bank should also have a virtual screen
-  if (data.me.level < 2) {
-    accountTypes[0].action = () => navigation.navigate("bankAccountEarn")
-    accountTypes[0].title = "Open Cash Account"
-    accountTypes[0].subtitle = false
+  if (!loading && data.me.level >= 2) {
+    //TODO
   }
 
   // if (data.me.level < 1) {
