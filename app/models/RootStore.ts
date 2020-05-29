@@ -46,9 +46,13 @@ export const RootStore = RootStoreBase
       return earnsArray
     },
     get earnedSat() {
-      return self.earnArray
+      return values(self.earns)
         .filter(item => item.completed)
-        .reduce((acc, value) => value.amount + acc, 0)
+        .reduce((acc, item) => item.value + acc, 0)
+    },
+    earnComplete(id) {
+      console.tron.log("earncomplete")
+      self.mutateEarnCompleted({id, uid:"1234"}) // TODO
     },
     wallet(currency) {
       return values(self.wallets).filter(item => item.currency === currency)[0]

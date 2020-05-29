@@ -43,7 +43,7 @@ export const getEarnFromSection = ({ earnsArray, sectionIndex, earnsMeta = undef
 }
 
 
-// TODO this is smelly, refactor.
+// TODO this is smelly, refactor
 export const isSectionComplete = ({sectionIndex, earnsArray}) => 
   getRemainingSatsOnSection({sectionIndex, earnsArray}) === 0
 

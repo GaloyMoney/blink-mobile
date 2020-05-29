@@ -16,6 +16,7 @@ import { palette } from "../../theme/palette"
 import { SVGs } from "./earn-svg-factory"
 import { earnsMeta, getEarnFromSection, getRemainingSatsOnSection } from "./earns-utils"
 import { useIsFocused } from '@react-navigation/native';
+import { StoreContext } from "../../models"
 
 
 const { width: screenWidth } = Dimensions.get("window")
@@ -160,167 +161,168 @@ const styles = EStyleSheet.create({
   },
 })
 
-export const EarnSection = inject("dataStore")(
-  observer(({ dataStore, route, navigation }) => {
+export const EarnSection = observer(({ route, navigation }) => {
 
-    const sectionIndex = route.params.section
-    const cards = getEarnFromSection({ sectionIndex, earnsMeta, dataStore })
+  const store = React.useContext(StoreContext)
+  const earnsArray = store.earnArray
 
-    const itemIndex = cards.findIndex(item => !item.fullfilled)
-    const [firstItem] = useState(itemIndex >= 0 ? itemIndex : 0)
+  const sectionIndex = route.params.section
+  const cards = getEarnFromSection({ sectionIndex, earnsMeta, earnsArray })
 
-    const [currRewardIndex, setCurrRewardIndex] = useState(firstItem)
+  const itemIndex = cards.findIndex(item => !item.fullfilled)
+  const [firstItem] = useState(itemIndex >= 0 ? itemIndex : 0)
 
-    const [initialRemainingSats] = useState(getRemainingSatsOnSection({ sectionIndex, dataStore }))
-    const currentRemainingEarn = getRemainingSatsOnSection({ sectionIndex, dataStore })
-    
-    const sectionTitle = translate(`EarnScreen.earns\.${sectionIndex}\.meta.title`)
+  const [currRewardIndex, setCurrRewardIndex] = useState(firstItem)
 
-    const isFocused = useIsFocused()
+  const [initialRemainingSats] = useState(getRemainingSatsOnSection({ sectionIndex, earnsArray }))
+  const currentRemainingEarn = getRemainingSatsOnSection({ sectionIndex, earnsArray })
+  
+  const sectionTitle = translate(`EarnScreen.earns\.${sectionIndex}\.meta.title`)
 
-    if (initialRemainingSats !== 0 && currentRemainingEarn === 0 && isFocused) {
-      console.tron.warn("section Completed!")
-      navigation.navigate("sectionCompleted", {
-        amount: cards.reduce((acc, item) => OnboardingEarn[item.id] + acc, 0),
-        sectionTitle
-    })}
+  const isFocused = useIsFocused()
 
-    navigation.setOptions({ title: sectionTitle })
-    
-    enum RewardType {
-      Text = "Text",
-      Video = "Video",
-      Action = "Action",
+  if (initialRemainingSats !== 0 && currentRemainingEarn === 0 && isFocused) {
+    console.tron.warn("section Completed!")
+    navigation.navigate("sectionCompleted", {
+      amount: cards.reduce((acc, item) => OnboardingEarn[item.id] + acc, 0),
+      sectionTitle
+  })}
+
+  navigation.setOptions({ title: sectionTitle })
+  
+  enum RewardType {
+    Text = "Text",
+    Video = "Video",
+    Action = "Action",
+  }
+
+  const open = async (card) => {
+
+    switch (RewardType[card.type]) {
+      case RewardType.Text:
+        navigation.navigate('earnsQuiz', { 
+          title: card.title, 
+          text: card.text, 
+          amount: OnboardingEarn[card.id], // FIXME
+          question: card.question,
+          answers: card.answers, 
+          feedback: card.feedback,
+          onComplete: () => store.earnComplete(card.id),
+          id: card.id,
+          completed: earnsArray.find(item => item.id == card.id).completed
+        })
+        break
+      //     case RewardType.Video:
+      //       try {
+      //         console.tron.log({ videoid: earns.videoid })
+      //         await YouTubeStandaloneIOS.playVideo(earns.videoid)
+      //         await sleep(500) // FIXME why await for playVideo doesn't work?
+      //         console.tron.log("finish video")
+      //         setQuizVisible(true)
+      //       } catch (err) {
+      //         console.tron.log("error video", err.toString())
+      //         setQuizVisible(false)
+      //       }
+      //       break
+      case RewardType.Action:
+        // TODO
+        // await earnsMeta[earns.id].onAction({ dataStore, navigate })
+        break
     }
+  }
 
-    const open = async (card) => {
-
-      switch (RewardType[card.type]) {
-        case RewardType.Text:
-          navigation.navigate('earnsQuiz', { 
-            title: card.title, 
-            text: card.text, 
-            amount: OnboardingEarn[card.id],
-            question: card.question,
-            answers: card.answers, 
-            feedback: card.feedback,
-            onComplete: () => earnsMeta[card.id].onComplete({ dataStore }),
-            id: card.id,
-            completed: dataStore.onboarding.has(card.id)
-          })
-          break
-        //     case RewardType.Video:
-        //       try {
-        //         console.tron.log({ videoid: earns.videoid })
-        //         await YouTubeStandaloneIOS.playVideo(earns.videoid)
-        //         await sleep(500) // FIXME why await for playVideo doesn't work?
-        //         console.tron.log("finish video")
-        //         setQuizVisible(true)
-        //       } catch (err) {
-        //         console.tron.log("error video", err.toString())
-        //         setQuizVisible(false)
-        //       }
-        //       break
-        case RewardType.Action:
-          // TODO
-          // await earnsMeta[earns.id].onAction({ dataStore, navigate })
-          break
-      }
-    }
-
-    const CardItem = ({ item, index }) => {
-      return (
-        <>
-          <View style={styles.item}>
-            <TouchableOpacity 
-              onPress={() => open(item)}
-              activeOpacity={0.9}
-              disabled={!item.enabled}
-              >
-              <View style={{paddingVertical: 12}}>
-                {SVGs({name: item.id, width: svgWidth})}
-              </View>
-            </TouchableOpacity>
-            <View>
-              <Text 
-                style={styles.itemTitle}
-                numberOfLines={3}  
-              >{item.title}</Text>
-              <Button
-                onPress={() => open(item)}
-                disabled={!item.enabled}
-                disabledStyle={styles.buttonStyleDisabled}
-                disabledTitleStyle={styles.titleStyleDisabled}
-                buttonStyle={item.fullfilled ? styles.buttonStyleFullfilled : styles.textButton}
-                titleStyle={item.fullfilled ? styles.titleStyleFullfilled : styles.titleStyle}
-                title={
-                    // item.enabled
-                    // ?
-                    item.fullfilled
-                      ? I18n.t("EarnScreen.satsEarned", {
-                          count: OnboardingEarn[item.id],
-                          formatted_number: I18n.toNumber(OnboardingEarn[item.id], { precision: 0 }),
-                        })
-                      : I18n.t("EarnScreen.earnSats", {
-                          count: OnboardingEarn[item.id],
-                          formatted_number: I18n.toNumber(OnboardingEarn[item.id], { precision: 0 }),
-                        })
-                      // : translate("common.learnMore")
-                    // : 
-                }
-                icon={item.fullfilled ? <Icon 
-                  name={"ios-checkmark-circle-outline"}
-                  size={36}
-                  color={palette.white}
-                  style={{paddingRight: 12, paddingTop: 3}}
-                  />
-                  : undefined}
-              />
-            </View>
-          </View>
-          {!item.enabled &&
-            <>
-              <Text style={styles.unlockQuestion}>To unlock, answer the question:</Text>
-              <Text style={styles.unlock}>{item.enabledMessage}</Text>
-            </>
-          }
-        </>
-      )
-    }
-
+  const CardItem = ({ item, index }) => {
     return (
-      <Screen backgroundColor={palette.blue} statusBar="light-content">
-        <View style={{ flex: 1 }} />
-        <Carousel
-          data={cards}
-          renderItem={CardItem}
-          sliderWidth={screenWidth}
-          // scrollEnabled={!isRewardOpen}
-          itemWidth={screenWidth - 60}
-          hasParallaxImages={true}
-          firstItem={firstItem}
-          // inactiveSlideOpacity={isRewardOpen ? 0 : 0.7}
-          removeClippedSubviews={false}
-          onBeforeSnapToItem={(index) => setCurrRewardIndex(index)}
-        />
-        <View style={{ flex: 1 }} />
-        <Pagination
-          dotsLength={cards.length}
-          activeDotIndex={currRewardIndex}
-          dotStyle={{
-              width: 10,
-              height: 10,
-              borderRadius: 5,
-              marginHorizontal: 0,
-              backgroundColor: 'rgba(255, 255, 255, 0.92)'
-          }}
-          inactiveDotStyle={{
-              // Define styles for inactive dots here
-          }}
-          inactiveDotOpacity={0.4}
-          inactiveDotScale={0.6}
-        />
-      </Screen>
+      <>
+        <View style={styles.item}>
+          <TouchableOpacity 
+            onPress={() => open(item)}
+            activeOpacity={0.9}
+            disabled={!item.enabled}
+            >
+            <View style={{paddingVertical: 12}}>
+              {SVGs({name: item.id, width: svgWidth})}
+            </View>
+          </TouchableOpacity>
+          <View>
+            <Text 
+              style={styles.itemTitle}
+              numberOfLines={3}  
+            >{item.title}</Text>
+            <Button
+              onPress={() => open(item)}
+              disabled={!item.enabled}
+              disabledStyle={styles.buttonStyleDisabled}
+              disabledTitleStyle={styles.titleStyleDisabled}
+              buttonStyle={item.fullfilled ? styles.buttonStyleFullfilled : styles.textButton}
+              titleStyle={item.fullfilled ? styles.titleStyleFullfilled : styles.titleStyle}
+              title={
+                  // item.enabled
+                  // ?
+                  item.fullfilled
+                    ? I18n.t("EarnScreen.satsEarned", {
+                        count: OnboardingEarn[item.id],
+                        formatted_number: I18n.toNumber(OnboardingEarn[item.id], { precision: 0 }),
+                      })
+                    : I18n.t("EarnScreen.earnSats", {
+                        count: OnboardingEarn[item.id],
+                        formatted_number: I18n.toNumber(OnboardingEarn[item.id], { precision: 0 }),
+                      })
+                    // : translate("common.learnMore")
+                  // : 
+              }
+              icon={item.fullfilled ? <Icon 
+                name={"ios-checkmark-circle-outline"}
+                size={36}
+                color={palette.white}
+                style={{paddingRight: 12, paddingTop: 3}}
+                />
+                : undefined}
+            />
+          </View>
+        </View>
+        {!item.enabled &&
+          <>
+            <Text style={styles.unlockQuestion}>To unlock, answer the question:</Text>
+            <Text style={styles.unlock}>{item.enabledMessage}</Text>
+          </>
+        }
+      </>
     )
-  }),
-)
+  }
+
+  return (
+    <Screen backgroundColor={palette.blue} statusBar="light-content">
+      <View style={{ flex: 1 }} />
+      <Carousel
+        data={cards}
+        renderItem={CardItem}
+        sliderWidth={screenWidth}
+        // scrollEnabled={!isRewardOpen}
+        itemWidth={screenWidth - 60}
+        hasParallaxImages={true}
+        firstItem={firstItem}
+        // inactiveSlideOpacity={isRewardOpen ? 0 : 0.7}
+        removeClippedSubviews={false}
+        onBeforeSnapToItem={(index) => setCurrRewardIndex(index)}
+      />
+      <View style={{ flex: 1 }} />
+      <Pagination
+        dotsLength={cards.length}
+        activeDotIndex={currRewardIndex}
+        dotStyle={{
+            width: 10,
+            height: 10,
+            borderRadius: 5,
+            marginHorizontal: 0,
+            backgroundColor: 'rgba(255, 255, 255, 0.92)'
+        }}
+        inactiveDotStyle={{
+            // Define styles for inactive dots here
+        }}
+        inactiveDotOpacity={0.4}
+        inactiveDotScale={0.6}
+      />
+    </Screen>
+  )
+})
