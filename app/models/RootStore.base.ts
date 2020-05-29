@@ -45,7 +45,7 @@ queryMe="queryMe"
 }
 export enum RootStoreBaseMutations {
 mutateInvoice="mutateInvoice",
-mutateAddEarn="mutateAddEarn",
+mutateEarnCompleted="mutateEarnCompleted",
 mutateUpdateUser="mutateUpdateUser"
 }
 
@@ -88,8 +88,8 @@ export const RootStoreBase = withTypedRefs<Refs>()(MSTGQLStore
         ${typeof resultSelector === "function" ? resultSelector(new InvoiceModelSelector()).toString() : resultSelector}
       } }`, variables, optimisticUpdate)
     },
-    mutateAddEarn(variables: { earn?: string[] }, resultSelector: string | ((qb: EarnModelSelector) => EarnModelSelector) = earnModelPrimitives.toString(), optimisticUpdate?: () => void) {
-      return self.mutate<{ addEarn: EarnModelType[]}>(`mutation addEarn($earn: [ID]) { addEarn(earn: $earn) {
+    mutateEarnCompleted(variables: { id?: string, uid?: string }, resultSelector: string | ((qb: EarnModelSelector) => EarnModelSelector) = earnModelPrimitives.toString(), optimisticUpdate?: () => void) {
+      return self.mutate<{ earnCompleted: EarnModelType}>(`mutation earnCompleted($id: ID, $uid: String) { earnCompleted(id: $id, uid: $uid) {
         ${typeof resultSelector === "function" ? resultSelector(new EarnModelSelector()).toString() : resultSelector}
       } }`, variables, optimisticUpdate)
     },
