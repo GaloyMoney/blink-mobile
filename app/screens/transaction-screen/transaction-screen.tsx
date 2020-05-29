@@ -156,8 +156,8 @@ const formatTransactions = (transactions) => {
 
 
 export const TransactionScreenDataInjected = observer(({navigation, route}) => {
-  const { store, error, loading, data } = useQuery(store => store.queryWallet(
-    {uid: "1234"},
+  const { store, error, loading, data, query } = useQuery(store => store.queryWallet(
+    {uid: "1234"}, //
     ` currency
       transactions {
         id
@@ -167,35 +167,26 @@ export const TransactionScreenDataInjected = observer(({navigation, route}) => {
         hash
         type
       }`
-  )) // FIXME
+  )) 
 
   const currency = "BTC" // FIXME
   const account = route.params.account
 
-  let w = {}
+  let walletBtc = {}
 
   if (data) {
-    w = data.wallet.filter(item => item.currency === currency)[0]
+    walletBtc = data.wallet.filter(item => item.currency === currency)[0]
   }
 
-  // FIXME useCallBack??
-  // const onRefresh = React.useCallback(async () => {
-  //   setRefreshing(true)
-  //   await wallet.update()
-  //   setRefreshing(false)
-  // }, [refreshing])
-
-  // React.useEffect(() => {
-  //   onRefresh()
-  // }, [])
+  console.tron.log({loading})
 
   return <TransactionScreen 
     navigation={navigation} 
     currency={currency}
     refreshing={loading}
-    onRefresh={() => {}}
+    onRefresh={() => query.refetch()}
     // onRefresh={onRefresh} FIXME
-    transactions={w.transactions ?? []} // FIXME
+    transactions={walletBtc.transactions ?? []} // FIXME
   />
 })
 
