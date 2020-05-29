@@ -32,8 +32,7 @@ const styles = EStyleSheet.create({
 })
 
 export const AccountItem = 
-  ({ account, amount, navigation, title, action=undefined, subtitle=true }) => {
-  const initialLoading = isNaN(amount)
+  ({ account, amount, navigation, loading, title, action=undefined, subtitle=true }) => {
 
   return (
     <LargeButton
@@ -43,7 +42,7 @@ export const AccountItem =
             <MoneyCircle width={75} height={78} />
         ||  <BitcoinCircle width={75} height={78} />
       }
-      loading={initialLoading}
+      loading={loading}
       subtitle={subtitle ? 
         currency(amount, { formatWithSymbol: true }).format() :
         null
@@ -91,20 +90,10 @@ export const AccountsScreen = observer(({ route, navigation }) => {
   //   }
   // }, [route.params?.forceRefresh]);
 
-  if (loading) {
-    return <Text>Loading</Text>
-  }
-
-  if (error) {
-    return <Text>{"\n\n"}{error.message}</Text>
-  }
-
-  console.tron.log(store.earnArray)
-
   // FIXME type any
   const accountTypes: Array<Record<string, any>> = [
     { key: "Cash Account", account: AccountType.Bank, title: AccountType.Bank},
-    { key: "Bitcoin", account: AccountType.Bitcoin, title: AccountType.Bitcoin},
+    { key: "Bitcoin", account: AccountType.Bitcoin, title: AccountType.Bitcoin, loading},
   ]
 
   accountTypes.forEach(item => item.amount = store.balances(
@@ -140,6 +129,7 @@ export const AccountsScreen = observer(({ route, navigation }) => {
   return (
     <Screen backgroundColor={palette.lighterGrey}>
       <BalanceHeader
+        loading={loading}
         currency={CurrencyType.USD}
         amount={store.balances({currency: "USD", account: AccountType.BankAndBitcoin})}
         amountOtherCurrency={store.balances({
@@ -160,6 +150,7 @@ export const AccountsScreen = observer(({ route, navigation }) => {
         )}
       />
       <View style={{ flex: 1 }}></View>
+      {error && <Text>{error.message}</Text>}
       <Button
         title={translate("AccountsScreen.bitcoinEarn")}
         style={styles.accountView}
