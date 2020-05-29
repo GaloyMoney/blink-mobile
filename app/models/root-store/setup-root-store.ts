@@ -2,7 +2,6 @@ import { onSnapshot } from "mobx-state-tree"
 import * as storage from "../../utils/storage"
 import { Environment } from "../environment"
 import { RootStore, RootStoreModel } from "./root-store"
-import functions from "@react-native-firebase/functions"
 import { Onboarding } from "../../../../common/types"
 
 /**

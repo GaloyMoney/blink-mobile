@@ -5,6 +5,9 @@ import { values } from "mobx"
 import { localStorageMixin } from "mst-gql"
 import AsyncStorage from "@react-native-community/async-storage"
 
+const ROOT_STATE_STORAGE_KEY = "rootAppGaloy"
+
+
 export interface RootStoreType extends Instance<typeof RootStore.Type> {}
 
 export const OnboardingModel = types.model("Onboarding", {
@@ -18,9 +21,9 @@ export const RootStore = RootStoreBase
     localStorageMixin({
       storage: AsyncStorage,
       // throttle: 1000,
-      storageKey: "appGaloy"
-    })
-  ).props({
+      storageKey: ROOT_STATE_STORAGE_KEY
+    }))
+  .props({
     onboarding: types.optional(OnboardingModel, {})
   })  
   .actions(self => ({
