@@ -64,7 +64,7 @@ export async function setupRootStore() {
   onSnapshot(rootStore.dataStore.onboarding.stage, async (snapshot) => {
     if (rootStore.dataStore.onboarding.has(Onboarding.phoneVerification)) {
       try {
-        await functions().httpsCallable("addEarn")(snapshot)
+        // await functions().httpsCallable("addEarn")(snapshot)
       } catch (err) {
         console.tron.warn(err.toString())
       }

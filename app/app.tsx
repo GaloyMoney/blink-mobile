@@ -15,11 +15,17 @@ import { Notifications } from "react-native-notifications"
 import { StorybookUIRoot } from "../storybook"
 import "./i18n"
 import { RootStore, StoreContext } from "./models"
-import { createEnvironment } from "./models/root-store"
 import { DEFAULT_NAVIGATION_CONFIG } from "./navigation/navigation-config"
 import { RootStack } from "./navigation/root-navigator"
 import { getActiveRouteName } from "./utils/navigation"
+import { Environment } from "./models/environment"
 
+
+export async function createEnvironment() {
+  const env = new Environment()
+  await env.setup()
+  return env
+}
 
 const entireScreenWidth = Dimensions.get('window').width;
 EStyleSheet.build({

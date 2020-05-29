@@ -1791,11 +1791,6 @@
   dependencies:
     stacktrace-js "^2.0.0"
 
-"@react-native-firebase/functions@^6.3.4":
-  version "6.7.1"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/functions/-/functions-6.7.1.tgz#2f3376937ee90458dc7bc6c9ff9903e4c4fd7bbd"
-  integrity sha512-2Nk42XXcghBH2QrOIycwVaNW6solBxuzGm1FEowpMn4KVm8qMolcM5lO/ZyGCdNNPwDZT20va5vyv0tEn4byIA==
-
 "@react-navigation/bottom-tabs@^5.2.2":
   version "5.2.7"
   resolved "https://registry.yarnpkg.com/@react-navigation/bottom-tabs/-/bottom-tabs-5.2.7.tgz#6f3eca9ba323cd9e80dd4ceba1f1c8e84955091f"
