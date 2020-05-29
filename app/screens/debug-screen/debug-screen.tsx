@@ -1,18 +1,17 @@
 import auth from "@react-native-firebase/auth"
 import crashlytics from "@react-native-firebase/crashlytics"
-import functions from "@react-native-firebase/functions"
+import request from "graphql-request"
 import { inject, observer } from "mobx-react"
 import * as React from "react"
 import { useState } from "react"
-import { Alert, Clipboard, StyleSheet, Text, TextInput, TextStyle, View, ViewStyle } from "react-native"
+import { Alert, Text, TextInput, TextStyle, View, ViewStyle } from "react-native"
 import { Button } from "react-native-elements"
+import { GRAPHQL_SERVER_URI } from "../../app"
 import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
 import { color, spacing } from "../../theme"
-import { palette } from "../../theme/palette"
-import { resetDataStore } from "../../models/root-store"
-import request from "graphql-request"
-import { GRAPHQL_SERVER_URI } from "../../app"
+import AsyncStorage from "@react-native-community/async-storage"
+import { StoreContext } from "../../models"
 
 
 
@@ -45,154 +44,95 @@ const HINT: TextStyle = {
   marginVertical: spacing[2],
 }
 
-const styles = StyleSheet.create({
-  separator: {
-    borderColor: palette.angry,
-    borderWidth: 1,
-  },
-})
-
-const ChannelLiquidityView = ({ chanId, remoteBalance, localBalance }) => {
-  const balanceInbound = localBalance / (localBalance + remoteBalance)
-  const balanceWidth = `${balanceInbound * 100}%`
-
-  return (
-    <View style={styles.separator}>
-      <Text>chanId: {chanId}</Text>
-      <Text>localBalance: {localBalance}</Text>
-      <Text>remoteBalance: {remoteBalance}</Text>
-      <View style={{ backgroundColor: palette.darkGrey }}>
-        <View style={{ width: balanceWidth, height: 10, backgroundColor: palette.white }} />
-      </View>
-    </View>
-  )
+export const resetDataStore = () => {
+  AsyncStorage.clear()
 }
 
-export const DebugScreen = inject("dataStore")(
-  observer(({ dataStore }) => {
-    const [addr, setAddr] = useState("tb1")
-    const [amount, setAmount] = useState(1000)
-    const [invoice, setInvoice] = useState("ln")
+export const DebugScreen = observer(({ }) => {
+  const store = React.useContext(StoreContext)
 
-    const demoReactotron = async () => {
-      console.tron.logImportant("I am important")
-      console.tron.display({
-        name: "DISPLAY",
-        value: {
-          numbers: 1,
-          strings: "strings",
-          booleans: true,
-          arrays: [1, 2, 3],
-          objects: {
+  const demoReactotron = async () => {
+    console.tron.logImportant("I am important")
+    console.tron.display({
+      name: "DISPLAY",
+      value: {
+        numbers: 1,
+        strings: "strings",
+        booleans: true,
+        arrays: [1, 2, 3],
+        objects: {
+          deeper: {
             deeper: {
-              deeper: {
-                yay: "👾",
-              },
+              yay: "👾",
             },
           },
-          functionNames: function hello() {},
         },
-        preview: "More control with display()",
-        important: true,
-        image: {
-          uri:
-            "https://avatars2.githubusercontent.com/u/3902527?s=200&u=a0d16b13ed719f35d95ca0f4440f5d07c32c349a&v=4",
-        },
-      })
-    }
+        functionNames: function hello() {},
+      },
+      preview: "More control with display()",
+      important: true,
+      image: {
+        uri:
+          "https://avatars2.githubusercontent.com/u/3902527?s=200&u=a0d16b13ed719f35d95ca0f4440f5d07c32c349a&v=4",
+      },
+    })
+  }
 
-    return (
-      <View style={FULL}>
-        <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
-          <Button
-            style={DEMO}
-            title="Delete account and log out"
-            onPress={async () => {
-              resetDataStore()
-              if (auth().currentUser) {
-                try {
-                  const query = `mutation deleteCurrentUser($uid: String) {
-                    deleteCurrentUser(uid: $uid) 
-                  }`
-            
-                  const result = await request(GRAPHQL_SERVER_URI, query, {uid: "1234"})
-                } catch (err) {
-                  console.tron.error(err)
-                }
+  return (
+    <View style={FULL}>
+      <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
+        <Button
+          style={DEMO}
+          title="Delete account and log out"
+          onPress={async () => {
+            resetDataStore()
+            if (auth().currentUser) {
+              try {
+                const query = `mutation deleteCurrentUser($uid: String) {
+                  deleteCurrentUser(uid: $uid) 
+                }`
+          
+                const result = await request(GRAPHQL_SERVER_URI, query, {uid: "1234"})
+              } catch (err) {
+                console.tron.log(`${err}`)
               }
-              await auth().signOut()
-              Alert.alert("user succesfully deleted. Restart your app")
-            }}
-            />
+            }
+            await auth().signOut()
+            Alert.alert("user succesfully deleted. Restart your app")
+          }}
+          />
+        <Button
+          style={DEMO}
+          title="Delete dataStore state"
+          onPress={async () => {
+            resetDataStore()
+            Alert.alert("state succesfully deleted. Restart your app")
+          }}
+        />
+        <Button
+          style={DEMO}
+          title="Log out"
+          onPress={async () => {
+            await auth().signOut()
+            Alert.alert("log out completed. Restart your app")
+          }}
+        />
+        <VersionComponent />
+        <View>
+          <Text>UID: {auth().currentUser?.uid}</Text>
+          <Text>phone: {auth().currentUser?.phoneNumber}</Text>
+          <Text>BTC price: {store.rate("BTC")}</Text>
           <Button
             style={DEMO}
-            title="Delete dataStore state"
-            onPress={async () => {
-              resetDataStore()
-              Alert.alert("state succesfully deleted. Restart your app")
+            textStyle={DEMO_TEXT}
+            title="Crash test"
+            onPress={() => {
+              crashlytics().log("Testing crash")
+              crashlytics().crash()
             }}
           />
-          <Button
-            style={DEMO}
-            title="Log out"
-            onPress={async () => {
-              await auth().signOut()
-              Alert.alert("log out completed. Restart your app")
-            }}
-          />
-          <VersionComponent />
-          <View>
-            <Text>UID: {auth().currentUser?.uid}</Text>
-            <Text>phone: {auth().currentUser?.phoneNumber}</Text>
-            <Text>BTC price: {dataStore.rates.rate("BTC")}</Text>
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              title="update Price"
-              onPress={() => dataStore.rates.update()}
-            />
-            <TextInput
-              style={HINT}
-              editable
-              onChangeText={(invoice) => setInvoice(invoice)}
-              value={invoice}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              title="Quote Buy BTC"
-              onPress={() => dataStore.exchange.quoteBTC("buy")}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              title="Quote Sell BTC"
-              onPress={() => dataStore.exchange.quoteBTC("sell")}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              title="Buy BTC"
-              onPress={dataStore.exchange.buyBTC}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              title="Sell BTC"
-              onPress={dataStore.exchange.sellBTC}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              title="Crash test"
-              onPress={() => {
-                crashlytics().log("Testing crash")
-                crashlytics().crash()
-              }}
-            />
-          </View>
-        </Screen>
-      </View>
-    )
-  }),
-)
+        </View>
+      </Screen>
+    </View>
+  )
+})
