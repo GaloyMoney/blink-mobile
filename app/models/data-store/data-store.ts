@@ -83,7 +83,7 @@ export const FiatAccountModel = BaseAccountModel.props({
     const updateBalance = flow(function* () {
       if (getParentOfType(self, DataStoreModel).onboarding.has(Onboarding.bankOnboarded)) {
         try {
-          const result = yield functions().httpsCallable("getFiatBalances")({})
+          // const result = yield functions().httpsCallable("getFiatBalances")({})
           console.tron.log("balance", result)
           if ("data" in result) {
             self.confirmedBalance = result.data
@@ -135,7 +135,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
       updateBalance: flow(function* () {
         if (getParentOfType(self, DataStoreModel).onboarding.has(Onboarding.phoneVerification)) {
           try {
-            const { data } = yield functions().httpsCallable("getLightningBalance")({})
+            // const { data } = yield functions().httpsCallable("getLightningBalance")({})
             self.confirmedBalance = data
           } catch (err) {
             // TODO show visual indication of internet connection failure
@@ -164,7 +164,7 @@ export const LndModel = BaseAccountModel.named("Lnd")
 
         if (getParentOfType(self, DataStoreModel).onboarding.has(Onboarding.phoneVerification)) {
           try {
-            const { data } = yield functions().httpsCallable("getLightningTransactions")({})
+            // const { data } = yield functions().httpsCallable("getLightningTransactions")({})
             self._transactions = data.map(item => ({
               amount: item.amount,
               description: translateTitleFromItem(item.description), // FIXME. should be done in the backend
@@ -230,8 +230,8 @@ export const RatesModel = types
   .actions((self) => {
     const update = flow(function* () {
       try {
-        const {data} = yield functions().httpsCallable("getPrice")({})
-        self.BTC_history = data
+        // const {data} = yield functions().httpsCallable("getPrice")({})
+        // self.BTC_history = data
         try {
           self.BTC = self.BTC_history[self.BTC_history.length - 1].o
         } catch (err) {
