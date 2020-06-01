@@ -107,7 +107,7 @@ export const AccountsScreen = observer(({ route, navigation }) => {
   ))
 
   // TODO refactor ==> bank should also have a virtual screen
-  if (!loading && data.me.level >= 2) {
+  if (!loading && data?.me.level >= 2) {
     //TODO
   }
 
@@ -153,8 +153,10 @@ export const AccountsScreen = observer(({ route, navigation }) => {
           />
         )}
       />
+      {error && <Text style={{color: palette.red, alignSelf: "center"}}>
+        {error.message}
+      </Text>}
       <View style={{ flex: 1 }}></View>
-      {error && <Text>{error.message}</Text>}
       <Button
         title={translate("AccountsScreen.bitcoinEarn")}
         style={styles.accountView}
