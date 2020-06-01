@@ -12,37 +12,14 @@ import { VersionComponent } from "../../components/version"
 import { color, spacing } from "../../theme"
 import AsyncStorage from "@react-native-community/async-storage"
 import { StoreContext } from "../../models"
+import EStyleSheet from "react-native-extended-stylesheet"
 
-
-
-const FULL: ViewStyle = { flex: 1 }
-const CONTAINER: ViewStyle = {
-  backgroundColor: color.background,
-  paddingHorizontal: spacing[4],
-}
-const DEMO: ViewStyle = {
-  paddingVertical: spacing[4],
-  paddingHorizontal: spacing[4],
-  backgroundColor: "#5D2555",
-}
-const BOLD: TextStyle = { fontWeight: "bold" }
-const DEMO_TEXT: TextStyle = {
-  ...BOLD,
-  fontSize: 13,
-  letterSpacing: 2,
-}
-const TAGLINE: TextStyle = {
-  color: "#BAB6C8",
-  fontSize: 15,
-  lineHeight: 22,
-  marginBottom: spacing[4] + spacing[1],
-}
-const HINT: TextStyle = {
-  color: "#BAB6C8",
-  fontSize: 12,
-  lineHeight: 15,
-  marginVertical: spacing[2],
-}
+const styles = EStyleSheet.create({
+  button: { 
+    marginHorizontal: "24rem",
+    marginVertical: "6rem"
+  },
+})
 
 export const resetDataStore = () => {
   AsyncStorage.clear()
@@ -79,10 +56,9 @@ export const DebugScreen = observer(({ }) => {
   }
 
   return (
-    <View style={FULL}>
-      <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
+    <View>
+      <Screen preset="scroll" backgroundColor={color.transparent}>
         <Button
-          style={DEMO}
           title="Delete account and log out"
           onPress={async () => {
             resetDataStore()
@@ -102,7 +78,6 @@ export const DebugScreen = observer(({ }) => {
           }}
           />
         <Button
-          style={DEMO}
           title="Delete dataStore state"
           onPress={async () => {
             resetDataStore()
@@ -110,7 +85,6 @@ export const DebugScreen = observer(({ }) => {
           }}
         />
         <Button
-          style={DEMO}
           title="Log out"
           onPress={async () => {
             await auth().signOut()
@@ -123,8 +97,6 @@ export const DebugScreen = observer(({ }) => {
           <Text>phone: {auth().currentUser?.phoneNumber}</Text>
           <Text>BTC price: {store.rate("BTC")}</Text>
           <Button
-            style={DEMO}
-            textStyle={DEMO_TEXT}
             title="Crash test"
             onPress={() => {
               crashlytics().log("Testing crash")
