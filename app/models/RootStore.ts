@@ -4,6 +4,7 @@ import { CurrencyType, AccountType } from "../utils/enum"
 import { values } from "mobx"
 import { localStorageMixin } from "mst-gql"
 import AsyncStorage from "@react-native-community/async-storage"
+import { UserModel } from "./UserModel"
 
 const ROOT_STATE_STORAGE_KEY = "rootAppGaloy"
 
@@ -50,7 +51,7 @@ export const RootStore = RootStoreBase
     },
     get user() {
       // FIXME there must be a better way to do this
-      return values(self.users)[0]
+      return values(self.users)[0] ?? UserModel.create({id: "dummy", level: 0})
     },
     get earnArray() {
       const earnsArray = values(self.earns)
