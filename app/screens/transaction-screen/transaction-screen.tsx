@@ -157,7 +157,7 @@ const formatTransactions = (transactions) => {
 
 export const TransactionScreenDataInjected = observer(({navigation, route}) => {
   const { store, error, loading, data, query } = useQuery(store => store.queryWallet(
-    {uid: "1234"}, //
+    {},
     ` currency
       transactions {
         id
@@ -176,6 +176,10 @@ export const TransactionScreenDataInjected = observer(({navigation, route}) => {
 
   if (data) {
     walletBtc = data.wallet.filter(item => item.currency === currency)[0]
+  }
+
+  if (error) {
+    return <Text>{error.toString()}</Text>
   }
 
   console.tron.log({loading})

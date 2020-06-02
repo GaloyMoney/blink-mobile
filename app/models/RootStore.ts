@@ -16,16 +16,17 @@ export const OnboardingModel = types.model("Onboarding", {
   }).actions(self => ({
     getStartedCompleted() { self.getStarted = true },
   }))
-
-export const RootStore = RootStoreBase
+  
+  export const RootStore = RootStoreBase
   .extend(
     localStorageMixin({
       storage: AsyncStorage,
       // throttle: 1000,
       storageKey: ROOT_STATE_STORAGE_KEY
     }))
-  .props({
-    onboarding: types.optional(OnboardingModel, {})
+    .props({
+      network: types.optional(types.string, "testnet"), // FIXME
+      onboarding: types.optional(OnboardingModel, {})
   })  
   .actions(self => ({
     // This is an auto-generated example action.

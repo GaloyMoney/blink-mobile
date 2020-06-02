@@ -337,7 +337,8 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = observer(
   return (
     <Screen backgroundColor={palette.white} preset="scroll" style={{flex: 1}}>
       <BalanceHeaderDataInjection 
-        currency={wallet.currency}
+        // currency={wallet.currency} // FIXME
+        currency={"BTC"} 
         account={account}
       />
       <PriceGraphDataInjected /> 

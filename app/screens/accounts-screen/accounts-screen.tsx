@@ -52,25 +52,25 @@ export const AccountItem =
 }
 
 const gql_query = `
-query home {
+query home($isLogged: Boolean!) {
   prices {
     __typename
     id
     o
   }
-  earnList(uid: "1234") {
+  earnList {
     __typename
     id
     value
     completed
   }
-  wallet(uid: "1234") {
+  wallet @include(if: $isLogged) {
     __typename
     id
     balance
     currency
   }
-  me(uid: "1234") {
+  me @include(if: $isLogged) {
     __typename
     id
     level
@@ -79,7 +79,7 @@ query home {
 `
 
 export const AccountsScreen = observer(({ route, navigation }) => {
-  const { store, error, loading, data } = useQuery(gql_query)
+  const { store, error, loading, data } = useQuery(gql_query, {variables: {isLogged: false}})
 
   // console.tron.log({forceRefresh: route.params?.forceRefresh})
 
@@ -107,7 +107,7 @@ export const AccountsScreen = observer(({ route, navigation }) => {
   ))
 
   // TODO refactor ==> bank should also have a virtual screen
-  if (!loading && data?.me.level >= 2) {
+  if (!loading && (data?.me?.level ?? 0) >= 2) {
     //TODO
   }
 

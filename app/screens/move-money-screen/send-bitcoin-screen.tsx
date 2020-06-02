@@ -1,7 +1,6 @@
-import functions from "@react-native-firebase/functions"
 import { useNavigation } from "@react-navigation/native"
 import * as lightningPayReq from 'bolt11'
-import { inject, observer } from "mobx-react"
+import request from "graphql-request"
 import * as React from "react"
 import { useEffect, useState } from "react"
 import { Alert, Clipboard, ScrollView, StyleSheet, Text, View, ViewStyle } from "react-native"
@@ -9,16 +8,13 @@ import { RNCamera } from "react-native-camera"
 import { Button, Input } from "react-native-elements"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import Icon from "react-native-vector-icons/Ionicons"
-import { Onboarding } from "types"
+import { GRAPHQL_SERVER_URI } from "../../app"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
+import { StoreContext } from "../../models"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { getDescription } from "../../utils/lightning"
-import Config from "react-native-config"
-import request from "graphql-request"
-import { GRAPHQL_SERVER_URI } from "../../app"
-import { StoreContext } from "../../models"
 
 const CAMERA: ViewStyle = {
   width: "100%",
