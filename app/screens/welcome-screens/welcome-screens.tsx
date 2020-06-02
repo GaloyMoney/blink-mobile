@@ -38,7 +38,7 @@ const styles = EStyleSheet.create({
 })
 
 export const WelcomeFirstScreen = ({ navigation }) => {
-  const dataStore = React.useContext(StoreContext)
+  const store = React.useContext(StoreContext)
 
   return (
     <Swiper
@@ -77,7 +77,7 @@ export const WelcomeFirstScreen = ({ navigation }) => {
       <Screen backgroundColor={palette.lightBlue} statusBar="light-content">
         <OnboardingScreen
           action={async () => {
-            dataStore.onboarding.getStartedCompleted()
+            store.onboarding.getStartedCompleted()
             navigation.navigate("primaryStack")
           }}
           Svg={HoneyBadgerShovel}

@@ -19,6 +19,7 @@ import { DEFAULT_NAVIGATION_CONFIG } from "./navigation/navigation-config"
 import { RootStack } from "./navigation/root-navigator"
 import { getActiveRouteName } from "./utils/navigation"
 import { Environment } from "./models/environment"
+import { Token } from "./utils/token"
 
 
 export async function createEnvironment() {
@@ -34,10 +35,6 @@ EStyleSheet.build({
 });
 
 export const GRAPHQL_SERVER_URI = "http://localhost:4000/graphql"
-
-const rootStore = RootStore.create(undefined, {
-  gqlHttpClient: createHttpClient(GRAPHQL_SERVER_URI)
-})
 
 /**
  * Ignore some yellowbox warnings. Some of these are for deprecated functions
@@ -55,7 +52,7 @@ console.disableYellowBox = true
  * This is the root component of our app.
  */
 export const App = () => {
-  // const [rootStore, setRootStore] = useState(null)
+  const [rootStore, setRootStore] = React.useState(null)
 
   const routeNameRef = useRef()
   const navigationRef = useRef()
@@ -85,6 +82,20 @@ export const App = () => {
     // }
 
     const fn = async () => {
+
+      const token = new Token()
+      await token.load()
+
+      const rs = RootStore.create(undefined, {
+        gqlHttpClient: createHttpClient(GRAPHQL_SERVER_URI, {
+          headers: {
+            authorization: token.has() ? `Bearer ${token.get()}` : '',
+          },
+        })
+      })
+
+      setRootStore(rs)
+
       // setRootStore(await setupRootStore())
       const env = await createEnvironment()
 
@@ -129,19 +140,15 @@ export const App = () => {
   //
   // You're welcome to swap in your own component to render if your boot up
   // sequence is too slow though.
-  
-  // if (!rootStore) {
-  //   return null
-  // }
 
-  const { ...otherStores } = rootStore
+  if (!rootStore) {
+    return null
+  }
 
   return (
     // TODO replace with React.createContext
     // https://mobx.js.org/refguide/inject.html
 
-
-    // <Provider rootStore={rootStore} {...otherStores} routeNameRef={routeNameRef}>
     <StoreContext.Provider value={rootStore}>
       {/* <BackButtonHandler canExit={canExit}> */}
       <NavigationContainer

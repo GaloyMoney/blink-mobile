@@ -11,7 +11,6 @@ import { QRCode } from "../../components/qrcode"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
-import functions from "@react-native-firebase/functions"
 import { getHash } from "../../utils/lightning"
 import { StoreContext } from "../../models"
 import { request } from 'graphql-request'

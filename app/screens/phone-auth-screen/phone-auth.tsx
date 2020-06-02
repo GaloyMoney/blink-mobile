@@ -1,4 +1,3 @@
-import auth from "@react-native-firebase/auth"
 import { isEmpty } from "ramda"
 import * as React from "react"
 import { useEffect, useRef, useState } from "react"
@@ -13,6 +12,9 @@ import { StoreContext } from "../../models"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import BadgerPhone from "./badger-phone-01.svg"
+import { GRAPHQL_SERVER_URI } from "../../app"
+import request from "graphql-request"
+import { Token } from "../../utils/token"
 
 const styles = EStyleSheet.create({
   activityIndicatorWrapper: {
@@ -91,16 +93,27 @@ export const WelcomePhoneInputScreen = ({ navigation }) => {
 
     try {
       setLoading(true)
-      const confirmation = await auth().signInWithPhoneNumber(inputRef.current.getValue())
-      if (!isEmpty(confirmation)) {
+      
+      const query = `mutation requestPhoneCode($phone: String) {
+        requestPhoneCode(phone: $phone) {
+          success
+        }
+      }`
+
+      const phone = inputRef.current.getValue()
+      const success = await request(GRAPHQL_SERVER_URI, query, {phone})
+
+      if (success) {
         setLoading(false)
         const screen = "welcomePhoneValidation"
-        navigation.navigate(screen, { confirmation })
+        navigation.navigate(screen, {phone})       
+
       } else {
-        setErr(`confirmation object is empty? ${confirmation}`)
+        setErr("Error with the request. Try again later")
       }
+
     } catch (err) {
-      console.tron.error(err)
+      console.tron.warn(err)
       setErr(err.toString())
     }
   }
@@ -150,19 +163,13 @@ export const WelcomePhoneInputScreen = ({ navigation }) => {
     </Screen>
 )}
 
-// TOOD make a component. shared with Account View.
-export const onLoggedinSuccess = async ({ store }) => {
-  const level = 1
-  store.user.updateLevel(level)
-  console.tron.log("onLoggedinSuccess complete")
-  // FIXME forceRefresh doesn't seem to be passed by
-}
-
 export const WelcomePhoneValidationScreenDataInjected = ({ route, navigation }) => {
   const store = React.useContext(StoreContext)
 
   const onSuccess = () => {
-    onLoggedinSuccess({ store })
+    const level = 1
+    store.user.updateLevel(level)
+    console.tron.log("onLoggedinSuccess complete")
   }
 
   return <WelcomePhoneValidationScreen onSuccess={onSuccess} route={route} navigation={navigation} />
@@ -174,33 +181,7 @@ export const WelcomePhoneValidationScreen = ({ onSuccess, route, navigation }) =
   const [loading, setLoading] = useState(false)
   const [err, setErr] = useState("")
 
-  const confirmation = route.params.confirmation
-
-  const onAuthStateChanged = async (user) => {
-    // TODO : User type
-    console.tron.log(`onAuthStateChanged`, user)
-    console.log(`onAuthStateChanged`, user)
-
-    if (user.phoneNumber) {
-      // FIXME this should live outside of a component
-      // we should just listen to the proper dataStore object for validation
-
-      await onSuccess()
-      Alert.alert("Phone authentication succesful", err, [
-        {
-          text: translate("common.ok"),
-          onPress: () => {
-            navigation.navigate("Accounts", {forceRefresh: true})
-          },
-        },
-      ])
-    }
-  }
-
-  useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged)
-    return subscriber // unsubscribe on unmount
-  }, [])
+  const phone = route.params.phone
 
   const sendVerif = async () => {
     console.tron.log(`verifyPhoneNumber with code ${code}`)
@@ -208,11 +189,32 @@ export const WelcomePhoneValidationScreen = ({ onSuccess, route, navigation }) =
       Alert.alert(`code need to have 6 digits`)
       return
     }
+
     try {
       setLoading(true)
-      await confirmation.confirm(code)
+      
+      const query = `mutation login($phone: String, $code: Int) {
+        login(phone: $phone, code: $code) {
+          token
+        }
+      }`
+
+      const variables = {phone, code: Number(code)}
+      console.tron.log({variables})
+      const { login } = await request(GRAPHQL_SERVER_URI, query, variables)
+      console.tron.log({login})
+
+      if (login.token) {
+        const token = new Token()
+        await token.save({token: login.token})
+        // await onSuccess() FIXME
+        navigation.navigate("Accounts")
+      } else {
+        setErr("Error logging in. Did you use the right code?")
+      }
+
     } catch (err) {
-      console.tron.error(err) // Invalid code
+      console.tron.warn(err)
       setErr(err.toString())
       setLoading(false)
     }
