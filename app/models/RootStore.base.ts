@@ -15,6 +15,10 @@ import { EarnModel, EarnModelType } from "./EarnModel"
 import { earnModelPrimitives, EarnModelSelector } from "./EarnModel.base"
 import { UserModel, UserModelType } from "./UserModel"
 import { userModelPrimitives, UserModelSelector } from "./UserModel.base"
+import { SuccessModel, SuccessModelType } from "./SuccessModel"
+import { successModelPrimitives, SuccessModelSelector } from "./SuccessModel.base"
+import { TokenModel, TokenModelType } from "./TokenModel"
+import { tokenModelPrimitives, TokenModelSelector } from "./TokenModel.base"
 import { InvoiceModel, InvoiceModelType } from "./InvoiceModel"
 import { invoiceModelPrimitives, InvoiceModelSelector } from "./InvoiceModel.base"
 
@@ -44,6 +48,8 @@ queryEarnList="queryEarnList",
 queryMe="queryMe"
 }
 export enum RootStoreBaseMutations {
+mutateRequestPhoneCode="mutateRequestPhoneCode",
+mutateLogin="mutateLogin",
 mutateInvoice="mutateInvoice",
 mutateEarnCompleted="mutateEarnCompleted",
 mutateUpdateUser="mutateUpdateUser"
@@ -54,7 +60,7 @@ mutateUpdateUser="mutateUpdateUser"
 */
 export const RootStoreBase = withTypedRefs<Refs>()(MSTGQLStore
   .named("RootStore")
-  .extend(configureStoreMixin([['Price', () => PriceModel], ['Wallet', () => WalletModel], ['Transaction', () => TransactionModel], ['Earn', () => EarnModel], ['User', () => UserModel], ['Invoice', () => InvoiceModel]], ['Price', 'Wallet', 'Transaction', 'Earn', 'User'], "js"))
+  .extend(configureStoreMixin([['Price', () => PriceModel], ['Wallet', () => WalletModel], ['Transaction', () => TransactionModel], ['Earn', () => EarnModel], ['User', () => UserModel], ['Success', () => SuccessModel], ['Token', () => TokenModel], ['Invoice', () => InvoiceModel]], ['Price', 'Wallet', 'Transaction', 'Earn', 'User'], "js"))
   .props({
     prices: types.optional(types.map(types.late((): any => PriceModel)), {}),
     wallets: types.optional(types.map(types.late((): any => WalletModel)), {}),
@@ -68,28 +74,38 @@ export const RootStoreBase = withTypedRefs<Refs>()(MSTGQLStore
         ${typeof resultSelector === "function" ? resultSelector(new PriceModelSelector()).toString() : resultSelector}
       } }`, variables, options)
     },
-    queryWallet(variables: { uid?: string }, resultSelector: string | ((qb: WalletModelSelector) => WalletModelSelector) = walletModelPrimitives.toString(), options: QueryOptions = {}) {
-      return self.query<{ wallet: WalletModelType[]}>(`query wallet($uid: String) { wallet(uid: $uid) {
+    queryWallet(variables?: {  }, resultSelector: string | ((qb: WalletModelSelector) => WalletModelSelector) = walletModelPrimitives.toString(), options: QueryOptions = {}) {
+      return self.query<{ wallet: WalletModelType[]}>(`query wallet { wallet {
         ${typeof resultSelector === "function" ? resultSelector(new WalletModelSelector()).toString() : resultSelector}
       } }`, variables, options)
     },
-    queryEarnList(variables: { uid?: string }, resultSelector: string | ((qb: EarnModelSelector) => EarnModelSelector) = earnModelPrimitives.toString(), options: QueryOptions = {}) {
-      return self.query<{ earnList: EarnModelType[]}>(`query earnList($uid: String) { earnList(uid: $uid) {
+    queryEarnList(variables?: {  }, resultSelector: string | ((qb: EarnModelSelector) => EarnModelSelector) = earnModelPrimitives.toString(), options: QueryOptions = {}) {
+      return self.query<{ earnList: EarnModelType[]}>(`query earnList { earnList {
         ${typeof resultSelector === "function" ? resultSelector(new EarnModelSelector()).toString() : resultSelector}
       } }`, variables, options)
     },
-    queryMe(variables: { uid?: string }, resultSelector: string | ((qb: UserModelSelector) => UserModelSelector) = userModelPrimitives.toString(), options: QueryOptions = {}) {
-      return self.query<{ me: UserModelType}>(`query me($uid: String) { me(uid: $uid) {
+    queryMe(variables?: {  }, resultSelector: string | ((qb: UserModelSelector) => UserModelSelector) = userModelPrimitives.toString(), options: QueryOptions = {}) {
+      return self.query<{ me: UserModelType}>(`query me { me {
         ${typeof resultSelector === "function" ? resultSelector(new UserModelSelector()).toString() : resultSelector}
       } }`, variables, options)
     },
-    mutateInvoice(variables: { uid?: string }, resultSelector: string | ((qb: InvoiceModelSelector) => InvoiceModelSelector) = invoiceModelPrimitives.toString(), optimisticUpdate?: () => void) {
-      return self.mutate<{ invoice: InvoiceModelType}>(`mutation invoice($uid: String) { invoice(uid: $uid) {
+    mutateRequestPhoneCode(variables: { phone?: string }, resultSelector: string | ((qb: SuccessModelSelector) => SuccessModelSelector) = successModelPrimitives.toString(), optimisticUpdate?: () => void) {
+      return self.mutate<{ requestPhoneCode: SuccessModelType}>(`mutation requestPhoneCode($phone: String) { requestPhoneCode(phone: $phone) {
+        ${typeof resultSelector === "function" ? resultSelector(new SuccessModelSelector()).toString() : resultSelector}
+      } }`, variables, optimisticUpdate)
+    },
+    mutateLogin(variables: { phone?: string, code?: number }, resultSelector: string | ((qb: TokenModelSelector) => TokenModelSelector) = tokenModelPrimitives.toString(), optimisticUpdate?: () => void) {
+      return self.mutate<{ login: TokenModelType}>(`mutation login($phone: String, $code: Int) { login(phone: $phone, code: $code) {
+        ${typeof resultSelector === "function" ? resultSelector(new TokenModelSelector()).toString() : resultSelector}
+      } }`, variables, optimisticUpdate)
+    },
+    mutateInvoice(variables?: {  }, resultSelector: string | ((qb: InvoiceModelSelector) => InvoiceModelSelector) = invoiceModelPrimitives.toString(), optimisticUpdate?: () => void) {
+      return self.mutate<{ invoice: InvoiceModelType}>(`mutation invoice { invoice {
         ${typeof resultSelector === "function" ? resultSelector(new InvoiceModelSelector()).toString() : resultSelector}
       } }`, variables, optimisticUpdate)
     },
-    mutateEarnCompleted(variables: { id?: string, uid?: string }, resultSelector: string | ((qb: EarnModelSelector) => EarnModelSelector) = earnModelPrimitives.toString(), optimisticUpdate?: () => void) {
-      return self.mutate<{ earnCompleted: EarnModelType}>(`mutation earnCompleted($id: ID, $uid: String) { earnCompleted(id: $id, uid: $uid) {
+    mutateEarnCompleted(variables: { id?: string }, resultSelector: string | ((qb: EarnModelSelector) => EarnModelSelector) = earnModelPrimitives.toString(), optimisticUpdate?: () => void) {
+      return self.mutate<{ earnCompleted: EarnModelType}>(`mutation earnCompleted($id: ID) { earnCompleted(id: $id) {
         ${typeof resultSelector === "function" ? resultSelector(new EarnModelSelector()).toString() : resultSelector}
       } }`, variables, optimisticUpdate)
     },
