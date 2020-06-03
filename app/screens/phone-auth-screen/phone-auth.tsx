@@ -1,8 +1,8 @@
-import { isEmpty } from "ramda"
+import request from "graphql-request"
 import * as React from "react"
 import { useEffect, useRef, useState } from "react"
 import { ActivityIndicator, Alert, KeyboardAvoidingView, Platform, ScrollView, Text, View } from "react-native"
-import { Input, ButtonGroup } from "react-native-elements"
+import { ButtonGroup, Input } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import PhoneInput from "react-native-phone-input"
 import { CloseCross } from "../../components/close-cross"
@@ -11,10 +11,9 @@ import { translate } from "../../i18n"
 import { StoreContext } from "../../models"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-import BadgerPhone from "./badger-phone-01.svg"
-import { GRAPHQL_SERVER_URI } from "../../app"
-import request from "graphql-request"
 import { Token } from "../../utils/token"
+import BadgerPhone from "./badger-phone-01.svg"
+import { getGraphQlUri } from "../../utils/api_uri"
 
 const styles = EStyleSheet.create({
   activityIndicatorWrapper: {
@@ -105,7 +104,7 @@ export const WelcomePhoneInputScreen = ({ navigation }) => {
       }`
 
       const phone = inputRef.current.getValue()
-      const success = await request(GRAPHQL_SERVER_URI, query, {phone})
+      const success = await request(getGraphQlUri(), query, {phone})
 
       if (success) {
         setLoading(false)
@@ -206,7 +205,7 @@ export const WelcomePhoneValidationScreen = ({ onSuccess, route, navigation }) =
 
       const variables = {phone, code: Number(code), network}
       console.tron.log({variables})
-      const { login } = await request(GRAPHQL_SERVER_URI, query, variables)
+      const { login } = await request(getGraphQlUri(), query, variables)
       console.tron.log({login})
 
       if (login.token) {

@@ -1,11 +1,15 @@
 import { GraphQLClient } from "graphql-request";
-import { GRAPHQL_SERVER_URI } from "../app";
 import { Token } from "./token";
+import { getGraphQlUri } from "./api_uri";
 
-export const GraphQLClientWrapper = new GraphQLClient(GRAPHQL_SERVER_URI, {
-  headers: {
-    authorization: `Bearer ${new Token().get()}`,
-  },
-})
+export const request = (...args) => {
+  const bearer_string = `Bearer ${new Token().get()}`
 
-// export const request = graphQLClient.request
+  const graphQLClient = new GraphQLClient(getGraphQlUri(), {
+    headers: {
+      authorization: bearer_string,
+    },
+  })
+    
+  return graphQLClient.request(...args)
+}

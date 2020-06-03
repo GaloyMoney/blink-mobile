@@ -6,7 +6,6 @@ import { Alert, Clipboard, Share, StyleSheet, Text, View } from "react-native"
 import { Button, Input } from "react-native-elements"
 import { ScrollView } from "react-native-gesture-handler"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
-import { GRAPHQL_SERVER_URI } from "../../app"
 import { IconTransaction } from "../../components/icon-transactions"
 import { QRCode } from "../../components/qrcode"
 import { Screen } from "../../components/screen"
@@ -14,7 +13,7 @@ import { translate } from "../../i18n"
 import { StoreContext } from "../../models"
 import { palette } from "../../theme/palette"
 import { getHash } from "../../utils/lightning"
-import { GraphQLClientWrapper } from "../../utils/request"
+import { request } from "../../utils/request"
 
 const styles = StyleSheet.create({
   buttonStyle: {
@@ -66,7 +65,7 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
         }
       }`
 
-      const result = await GraphQLClientWrapper.request(query, {amount, memo})
+      const result = await request(query, {amount, memo})
       console.tron.log({result})
 
       invoice = result.invoice.addInvoice
@@ -134,6 +133,8 @@ export const ShowQRCode = ({ route, navigation }) => {
   const hash = route.params.hash
   const amount = route.params.amount
 
+  const store = React.useContext(StoreContext)
+
   const shareInvoice = async () => {
     try {
       const result = await Share.share({
@@ -168,7 +169,7 @@ export const ShowQRCode = ({ route, navigation }) => {
           }
         }`
   
-        const result = await GraphQLClientWrapper.request(query, {hash})
+        const result = await request(query, {hash})
   
         if (result.invoice.updatePendingInvoice === true) {
           success()
@@ -185,6 +186,8 @@ export const ShowQRCode = ({ route, navigation }) => {
       enableVibrateFallback: true,
       ignoreAndroidSystemSettings: false,
     }
+
+    store.queryWallet()
 
     ReactNativeHapticFeedback.trigger("notificationSuccess", options)
     Alert.alert("success", "This invoice has been paid", [
