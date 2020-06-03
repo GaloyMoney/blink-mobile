@@ -68,7 +68,7 @@ export const OnboardingModel = types.model("Onboarding", {
     },
     earnComplete(id) {
       console.tron.log("earncomplete")
-      self.mutateEarnCompleted({id, uid:"1234"}) // TODO
+      self.mutateEarnCompleted({id}) // TODO
     },
     wallet(currency) {
       return values(self.wallets).filter(item => item.currency === currency)[0]

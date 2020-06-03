@@ -62,11 +62,12 @@ export const DebugScreen = observer(({}) => {
           resetDataStore()
           if (new Token().has()) {
             try { // FIXME
-              const query = `mutation deleteCurrentUser($uid: String) {
-                deleteCurrentUser(uid: $uid) 
+              const query = `mutation deleteCurrentUser {
+                deleteCurrentUser
               }`
         
               const result = await request(GRAPHQL_SERVER_URI, query, {uid: "1234"})
+              // FIXME
             } catch (err) {
               console.tron.log(`${err}`)
             }
