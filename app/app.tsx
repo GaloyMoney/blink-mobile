@@ -79,10 +79,12 @@ export const App = () => {
     network: "testnet",
     wallets: {
       "USD": {
-        id: "USD"
+        id: "USD",
+        balance: 0
       },
       "BTC": {
-        id: "BTC"
+        id: "BTC",
+        balance: 0
       }
     },
     users: {
