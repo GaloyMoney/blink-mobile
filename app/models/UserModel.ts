@@ -16,17 +16,9 @@ export const UserModel = UserModelBase
     log() {
       console.log(JSON.stringify(self))
     },
-    updateLevel(level: number) {
-      self.store.mutateUpdateUser(
-      {user: {id: "1234", level}}, 
-      user => user.level,
-      () => {
-        self.level = level
-      }
-    )},
     updateDeviceToken(deviceToken: string) {
       self.store.mutateUpdateUser({
-        user: {id: "1234", deviceToken}
+        user: {deviceToken}
       },
     )},
   }

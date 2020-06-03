@@ -1,20 +1,20 @@
-import { inject, observer } from "mobx-react"
 import * as lightningPayReq from "bolt11"
+import { observer } from "mobx-react"
 import * as React from "react"
 import { useEffect, useState } from "react"
 import { Alert, Clipboard, Share, StyleSheet, Text, View } from "react-native"
 import { Button, Input } from "react-native-elements"
 import { ScrollView } from "react-native-gesture-handler"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
+import { GRAPHQL_SERVER_URI } from "../../app"
 import { IconTransaction } from "../../components/icon-transactions"
 import { QRCode } from "../../components/qrcode"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
+import { StoreContext } from "../../models"
 import { palette } from "../../theme/palette"
 import { getHash } from "../../utils/lightning"
-import { StoreContext } from "../../models"
-import { request } from 'graphql-request'
-import { GRAPHQL_SERVER_URI } from "../../app"
+import { GraphQLClientWrapper } from "../../utils/request"
 
 const styles = StyleSheet.create({
   buttonStyle: {
@@ -60,19 +60,18 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
     let invoice
 
     try {
-      const query = `mutation addInvoice($uid: String, $amount: Int, $memo: String) {
-        invoice(uid: $uid) {
+      const query = `mutation addInvoice($amount: Int, $memo: String) {
+        invoice {
           addInvoice(value: $amount, memo: $memo)
         }
       }`
 
-      const result = await request(GRAPHQL_SERVER_URI, query,
-        {amount, memo, uid: "1234"}
-      )
+      const result = await GraphQLClientWrapper.request(query, {amount, memo})
+      console.tron.log({result})
 
       invoice = result.invoice.addInvoice
     } catch (err) {
-      console.log("error with AddInvoice")
+      console.tron.log(`error with AddInvoice: ${err}`)
       throw err
     }
 
@@ -163,15 +162,13 @@ export const ShowQRCode = ({ route, navigation }) => {
   useEffect(() => {
     const interval = setInterval(async () => {
       try {
-        const query = `mutation updatePendingInvoice($uid: String, $hash: String) {
-          invoice(uid: $uid) {
+        const query = `mutation updatePendingInvoice($hash: String) {
+          invoice {
             updatePendingInvoice(hash: $hash)
           }
         }`
   
-        const result = await request(GRAPHQL_SERVER_URI, query,
-          {hash, uid: "1234"}
-        )
+        const result = await GraphQLClientWrapper.request(query, {hash})
   
         if (result.invoice.updatePendingInvoice === true) {
           success()
