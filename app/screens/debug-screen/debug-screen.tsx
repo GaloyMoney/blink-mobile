@@ -6,12 +6,12 @@ import * as React from "react"
 import { Alert, Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
-import { GRAPHQL_SERVER_URI } from "../../app"
 import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
 import { StoreContext } from "../../models"
 import { color } from "../../theme"
 import { Token } from "../../utils/token"
+import { getGraphQlUri } from "../../utils/api_uri"
 
 const styles = EStyleSheet.create({
   button: { 
@@ -66,7 +66,7 @@ export const DebugScreen = observer(({}) => {
                 deleteCurrentUser
               }`
         
-              const result = await request(GRAPHQL_SERVER_URI, query, {uid: "1234"})
+              const result = await request(getGraphQlUri(), query, {uid: "1234"})
               // FIXME
             } catch (err) {
               console.tron.log(`${err}`)

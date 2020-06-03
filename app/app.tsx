@@ -15,10 +15,11 @@ import { Notifications } from "react-native-notifications"
 import { StorybookUIRoot } from "../storybook"
 import "./i18n"
 import { RootStore, StoreContext } from "./models"
+import { Environment } from "./models/environment"
 import { DEFAULT_NAVIGATION_CONFIG } from "./navigation/navigation-config"
 import { RootStack } from "./navigation/root-navigator"
+import { getGraphQlUri } from "./utils/api_uri"
 import { getActiveRouteName } from "./utils/navigation"
-import { Environment } from "./models/environment"
 import { Token } from "./utils/token"
 
 
@@ -33,8 +34,6 @@ EStyleSheet.build({
   $rem: entireScreenWidth / 380,
   // $textColor: '#0275d8'
 });
-
-export const GRAPHQL_SERVER_URI = "http://localhost:4000/graphql"
 
 /**
  * Ignore some yellowbox warnings. Some of these are for deprecated functions
@@ -107,7 +106,7 @@ export const App = () => {
       await token.load()
 
       const rs = RootStore.create(defaultStoreInstance, {
-        gqlHttpClient: createHttpClient(GRAPHQL_SERVER_URI, {
+        gqlHttpClient: createHttpClient(getGraphQlUri(), {
           headers: {
             authorization: token.has() ? `Bearer ${token.get()}` : '',
           },

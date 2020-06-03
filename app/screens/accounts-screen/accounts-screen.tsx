@@ -12,9 +12,9 @@ import { translate } from "../../i18n"
 import { useQuery } from "../../models"
 import { palette } from "../../theme/palette"
 import { AccountType, CurrencyType } from "../../utils/enum"
+import { Token } from "../../utils/token"
 import BitcoinCircle from "./bitcoin-circle-01.svg"
 import MoneyCircle from "./money-circle-02.svg"
-import { Token } from "../../utils/token"
 
 
 const styles = EStyleSheet.create({
@@ -83,16 +83,7 @@ export const AccountsScreen = observer(({ route, navigation }) => {
   const isLogged = new Token().has()
   console.tron.log({isLogged})
 
-  const { store, error, loading, data } = useQuery(gql_query, {variables: {isLogged}})
-
-  // console.tron.log({forceRefresh: route.params?.forceRefresh})
-
-  // useEffect(() => {
-  //   if (route.params?.forceRefresh === true) {
-  //     navigation.setOptions({ forceRefresh: false })
-  //     onRefresh()
-  //   }
-  // }, [route.params?.forceRefresh]);
+  const { query, store, error, loading, data } = useQuery(gql_query, {variables: {isLogged}})
 
   // FIXME type any
   const accountTypes: Array<Record<string, any>> = [
@@ -119,21 +110,6 @@ export const AccountsScreen = observer(({ route, navigation }) => {
   //   accountTypes[1].subtitle = false
   // }
 
-  // const onRefresh = React.useCallback(async () => {
-  //   setRefreshing(true)
-
-  //   await dataStore.updateBalance()
-
-  //   setRefreshing(false)
-  // }, [refreshing])
-
-  // useEffect(() => {
-  //   onRefresh()
-
-  //   // FIXME this should live outside of a component
-  //   dataStore.rates.update()
-  // }, [])
-
   return (
     <Screen backgroundColor={palette.lighterGrey}>
       <BalanceHeader
@@ -148,8 +124,7 @@ export const AccountsScreen = observer(({ route, navigation }) => {
       <FlatList
         data={accountTypes}
         style={styles.listContainer}
-        // refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-        refreshControl={<RefreshControl refreshing={loading} />}
+        refreshControl={<RefreshControl refreshing={loading} onRefresh={() => query.refetch()} />}
         renderItem={({ item }) => (
           <AccountItem
             {...item}
