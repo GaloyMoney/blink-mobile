@@ -67,19 +67,15 @@ export const OnboardingModel = types.model("Onboarding", {
         .reduce((acc, item) => item.value + acc, 0)
     },
     earnComplete(id) {
-      console.tron.log("earncomplete")
-      self.mutateEarnCompleted({id}) // TODO
+      self.mutateEarnCompleted({id})
+      self.queryWallet()
     },
     wallet(currency) {
       return values(self.wallets).filter(item => item.currency === currency)[0]
     },
     balance(currency) {
-    const wallet = self.wallet(currency)
-      if (wallet) {
-        return wallet.balance
-      } else {
-        return 0
-      }
+      const wallet = self.wallet(currency)
+      return wallet.balance
     },
     balances({ currency, account }) {
       const balances = {}
