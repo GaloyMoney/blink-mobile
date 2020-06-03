@@ -22,6 +22,7 @@ import { tokenModelPrimitives, TokenModelSelector } from "./TokenModel.base"
 import { InvoiceModel, InvoiceModelType } from "./InvoiceModel"
 import { invoiceModelPrimitives, InvoiceModelSelector } from "./InvoiceModel.base"
 
+import { Network } from "./NetworkEnum"
 
 export type InputUser = {
   id?: string
@@ -94,8 +95,8 @@ export const RootStoreBase = withTypedRefs<Refs>()(MSTGQLStore
         ${typeof resultSelector === "function" ? resultSelector(new SuccessModelSelector()).toString() : resultSelector}
       } }`, variables, optimisticUpdate)
     },
-    mutateLogin(variables: { phone?: string, code?: number }, resultSelector: string | ((qb: TokenModelSelector) => TokenModelSelector) = tokenModelPrimitives.toString(), optimisticUpdate?: () => void) {
-      return self.mutate<{ login: TokenModelType}>(`mutation login($phone: String, $code: Int) { login(phone: $phone, code: $code) {
+    mutateLogin(variables: { phone?: string, code?: number, network?: Network }, resultSelector: string | ((qb: TokenModelSelector) => TokenModelSelector) = tokenModelPrimitives.toString(), optimisticUpdate?: () => void) {
+      return self.mutate<{ login: TokenModelType}>(`mutation login($phone: String, $code: Int, $network: Network) { login(phone: $phone, code: $code, network: $network) {
         ${typeof resultSelector === "function" ? resultSelector(new TokenModelSelector()).toString() : resultSelector}
       } }`, variables, optimisticUpdate)
     },
