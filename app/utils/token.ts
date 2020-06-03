@@ -51,6 +51,17 @@ export class Token {
       return null
     }
   }
-  // todo Add network
+
+  network () {
+    try {
+      console.tron.log(this.mem_token)
+      const { network } = jwtDecode(this.mem_token)
+      console.tron.log({network})
+      return network
+    } catch (err) {
+      console.tron.log(err.toString())
+      return null
+    }
+  }
 }
 

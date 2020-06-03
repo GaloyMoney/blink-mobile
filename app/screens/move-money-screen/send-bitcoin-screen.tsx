@@ -91,6 +91,8 @@ export const ScanningQRCodeScreen = () => {
     }
 
     const decodeInvoice = async (data) => {
+      const store = React.useContext(StoreContext)
+
       try {
         // invoice might start with 'lightning:', 'bitcoin:', something else, or have the invoice directly
         let [protocol, invoice] = data.split(":")
@@ -99,12 +101,12 @@ export const ScanningQRCodeScreen = () => {
           Alert.alert("Bitcoin on-chain transactions are coming to the app but we're only accepting lightning for now.")
           return
         } else if (protocol.startsWith("ln") && invoice === undefined) {
-          if(dataStore.mode.bitcoin === "testnet" && protocol.startsWith("lnbc")) {
+          if(store.network === "testnet" && protocol.startsWith("lnbc")) {
             Alert.alert(`You're trying to pay a mainnet invoice. This app is build for testnet`)
             return
           }
 
-          if(dataStore.mode.bitcoin === "mainnet" && protocol.startsWith("lntb")) {
+          if(store.network === "mainnet" && protocol.startsWith("lntb")) {
             Alert.alert(`You're trying to pay a testnet invoice. This app is build for mainnet`)
             return
           }

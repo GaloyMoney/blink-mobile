@@ -2,7 +2,7 @@ import { isEmpty } from "ramda"
 import * as React from "react"
 import { useEffect, useRef, useState } from "react"
 import { ActivityIndicator, Alert, KeyboardAvoidingView, Platform, ScrollView, Text, View } from "react-native"
-import { Input } from "react-native-elements"
+import { Input, ButtonGroup } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import PhoneInput from "react-native-phone-input"
 import { CloseCross } from "../../components/close-cross"
@@ -34,6 +34,10 @@ const styles = EStyleSheet.create({
 
   buttonStyle: {
     backgroundColor: color.primary,
+  },
+
+  button: {
+    color: palette.lightBlue
   },
 
   container: {
@@ -167,9 +171,7 @@ export const WelcomePhoneValidationScreenDataInjected = ({ route, navigation }) 
   const store = React.useContext(StoreContext)
 
   const onSuccess = () => {
-    const level = 1
-    store.user.updateLevel(level)
-    console.tron.log("onLoggedinSuccess complete")
+    store.setNetwork(new Token().network())
   }
 
   return <WelcomePhoneValidationScreen onSuccess={onSuccess} route={route} navigation={navigation} />
@@ -180,6 +182,9 @@ export const WelcomePhoneValidationScreen = ({ onSuccess, route, navigation }) =
   const [code, setCode] = useState("")
   const [loading, setLoading] = useState(false)
   const [err, setErr] = useState("")
+
+  const networks = ["testnet", "mainnet"]
+  const [network, setNetwork] = useState(networks[0])
 
   const phone = route.params.phone
 
@@ -193,21 +198,20 @@ export const WelcomePhoneValidationScreen = ({ onSuccess, route, navigation }) =
     try {
       setLoading(true)
       
-      const query = `mutation login($phone: String, $code: Int) {
-        login(phone: $phone, code: $code) {
+      const query = `mutation login($phone: String, $code: Int, $network: Network) {
+        login(phone: $phone, code: $code, network: $network) {
           token
         }
       }`
 
-      const variables = {phone, code: Number(code)}
+      const variables = {phone, code: Number(code), network}
       console.tron.log({variables})
       const { login } = await request(GRAPHQL_SERVER_URI, query, variables)
       console.tron.log({login})
 
       if (login.token) {
-        const token = new Token()
-        await token.save({token: login.token})
-        // await onSuccess() FIXME
+        await new Token().save({token: login.token})
+        await onSuccess()
         navigation.navigate("Accounts")
       } else {
         setErr("Error logging in. Did you use the right code?")
@@ -248,6 +252,13 @@ export const WelcomePhoneValidationScreen = ({ onSuccess, route, navigation }) =
               >
               {code}
             </Input>
+            <ButtonGroup
+              onPress={index => setNetwork(networks[index])}
+              selectedIndex={networks.findIndex(value => value === network)}
+              buttons={networks}
+              buttonStyle={styles.button} // FIXME
+              containerStyle={{marginLeft: 36, marginRight: 36, marginTop: 24}}
+            />
           </KeyboardAvoidingView>
           <View style={{ flex: 1, minHeight: 16 }} />
           <ActivityIndicator animating={loading} size="large" color={color.primary} />
