@@ -14,6 +14,7 @@ import { palette } from "../../theme/palette"
 import { AccountType, CurrencyType } from "../../utils/enum"
 import BitcoinCircle from "./bitcoin-circle-01.svg"
 import MoneyCircle from "./money-circle-02.svg"
+import { Token } from "../../utils/token"
 
 
 const styles = EStyleSheet.create({
@@ -79,7 +80,10 @@ query home($isLogged: Boolean!) {
 `
 
 export const AccountsScreen = observer(({ route, navigation }) => {
-  const { store, error, loading, data } = useQuery(gql_query, {variables: {isLogged: false}})
+  const isLogged = new Token().has()
+  console.tron.log({isLogged})
+
+  const { store, error, loading, data } = useQuery(gql_query, {variables: {isLogged}})
 
   // console.tron.log({forceRefresh: route.params?.forceRefresh})
 

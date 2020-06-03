@@ -53,8 +53,9 @@ export const OnboardingModel = types.model("Onboarding", {
       }
     },
     get user() {
-      // FIXME there must be a better way to do this
-      return values(self.users)[0]
+      const users = values(self.users)
+      // FIXME dirty way to manage incognito user
+      return  users[users.length - 1]
     },
     get earnArray() {
       const earnsArray = values(self.earns)
