@@ -92,7 +92,7 @@ export const DebugScreen = observer(({}) => {
       <VersionComponent />
       <View>
         <Text>UID: {new Token().uid()}</Text>
-        {/* <Text>phone: {auth().currentUser?.phoneNumber}</Text> */}
+        <Text>network: {new Token().network()}</Text>
         <Text>BTC price: {store.rate("BTC")}</Text>
         <Button
           title="Crash test"
