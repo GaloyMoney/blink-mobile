@@ -1,10 +1,9 @@
-import { Instance, types } from "mobx-state-tree"
-import { RootStoreBase } from "./RootStore.base"
-import { CurrencyType, AccountType } from "../utils/enum"
-import { values } from "mobx"
-import { localStorageMixin } from "mst-gql"
 import AsyncStorage from "@react-native-community/async-storage"
-import { UserModel } from "./UserModel"
+import { values } from "mobx"
+import { Instance, types } from "mobx-state-tree"
+import { localStorageMixin } from "mst-gql"
+import { AccountType, CurrencyType } from "../utils/enum"
+import { RootStoreBase } from "./RootStore.base"
 
 const ROOT_STATE_STORAGE_KEY = "rootAppGaloy"
 
@@ -23,9 +22,9 @@ export const OnboardingModel = types.model("Onboarding", {
       storage: AsyncStorage,
       // throttle: 1000,
       storageKey: ROOT_STATE_STORAGE_KEY
-    }))
-    .props({
-      network: types.optional(types.string, "testnet"), // FIXME
+  }))
+  .props({
+      network: types.string,
       onboarding: types.optional(OnboardingModel, {})
   })  
   .actions(self => ({
@@ -33,6 +32,9 @@ export const OnboardingModel = types.model("Onboarding", {
     log() {
       console.log(JSON.stringify(self))
     },
+    setNetwork(network) {
+      self.network = network
+    }
   }))
   .views((self) => ({
     // workaround on the fact key can't be enum
@@ -52,7 +54,7 @@ export const OnboardingModel = types.model("Onboarding", {
     },
     get user() {
       // FIXME there must be a better way to do this
-      return values(self.users)[0] ?? UserModel.create({id: "dummy", level: 0})
+      return values(self.users)[0]
     },
     get earnArray() {
       const earnsArray = values(self.earns)

@@ -192,7 +192,7 @@ export const PrimaryNavigator = () => {
     <Tab.Navigator
       initialRouteName="Accounts"
       tabBarOptions={{
-        activeTintColor: store.network == "mainnet" ? 
+        activeTintColor: store.network === "mainnet" ? 
           palette.lightBlue : palette.orange,
         inactiveTintColor: palette.lightGrey,
         style: styles.bottomNavigatorStyle,

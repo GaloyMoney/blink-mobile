@@ -75,6 +75,24 @@ export const App = () => {
     })
   }, [])
 
+  const defaultStoreInstance = {
+    network: "testnet",
+    wallets: {
+      "USD": {
+        id: "USD"
+      },
+      "BTC": {
+        id: "BTC"
+      }
+    },
+    users: {
+      "incognito": {
+        id: "incognito",
+        level: 0
+      }
+    }
+  }
+
   useEffect(() => {
     // this is necessary for hot reloading?
     // if (rootStore != null) {
@@ -86,7 +104,7 @@ export const App = () => {
       const token = new Token()
       await token.load()
 
-      const rs = RootStore.create(undefined, {
+      const rs = RootStore.create(defaultStoreInstance, {
         gqlHttpClient: createHttpClient(GRAPHQL_SERVER_URI, {
           headers: {
             authorization: token.has() ? `Bearer ${token.get()}` : '',
@@ -102,7 +120,7 @@ export const App = () => {
       console.log({env})
       // reactotron logging
       if (__DEV__) {
-        env.reactotron.setRootStore(rootStore, {})
+        env.reactotron.setRootStore(rs, {})
       }
     }
     fn()
