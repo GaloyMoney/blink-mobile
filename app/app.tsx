@@ -79,10 +79,12 @@ export const App = () => {
     wallets: {
       "USD": {
         id: "USD",
+        currency: "USD",
         balance: 0
       },
       "BTC": {
         id: "BTC",
+        currency: "BTC",
         balance: 0
       }
     },
