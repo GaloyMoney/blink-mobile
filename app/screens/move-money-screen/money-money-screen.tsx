@@ -1,23 +1,23 @@
-import { inject, observer } from "mobx-react"
+import { observer } from "mobx-react"
 import * as React from "react"
 import { useState } from "react"
 import { ScrollView, Text, View } from "react-native"
-import { Button, ListItem, ButtonGroup } from "react-native-elements"
+import { Button, ButtonGroup } from "react-native-elements"
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
 import Icon from "react-native-vector-icons/Ionicons"
-import { Onboarding } from "types"
+import { BalanceHeader } from "../../components/balance-header"
+import { BrightButton } from "../../components/bright-button"
+import { IconTransaction } from "../../components/icon-transactions"
+import { LargeButton } from "../../components/large-button"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
+import { StoreContext } from "../../models"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
+import { AccountType, CurrencyType } from "../../utils/enum"
 import { capitalize } from "../../utils/helper"
-import { BalanceHeader } from "../../components/balance-header"
-import { CurrencyType } from "../../utils/enum"
-import { LargeButton } from "../../components/large-button"
-import { IconTransaction } from "../../components/icon-transactions"
-import { BrightButton } from "../../components/bright-button"
 
 
 const styles = EStyleSheet.create({
@@ -85,18 +85,20 @@ const styles = EStyleSheet.create({
   }
 })
 
-export const MoveMoneyScreenDataInjected = inject("dataStore")(observer(
-  ({ dataStore, navigation }) => {
-    const bankOnboarded = dataStore.onboarding.has(Onboarding.bankOnboarded)
-    const walletActivated = dataStore.onboarding.has(Onboarding.phoneVerification)
+export const MoveMoneyScreenDataInjected = observer(
+  ({ navigation }) => {
+    const store = React.useContext(StoreContext)
+
+    const walletActivated = store.user.level > 0
+    const bankOnboarded = store.user.level > 1
 
     return <MoveMoneyScreen 
       bankOnboarded={bankOnboarded}
       navigation={navigation}
       walletActivated={walletActivated}
-      amount={dataStore.lnd.balance} // FIXME add USD as well
+      amount={store.balances({currency: "BTC", account: AccountType.Bitcoin})} // FIXME add USD as well
     />
-}))
+})
 
 export const MoveMoneyScreen = (
   ({ bankOnboarded, walletActivated, navigation, amount }) => {

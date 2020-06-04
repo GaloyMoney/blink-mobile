@@ -56,7 +56,6 @@ export const Overlay = ({ screen }) => {
         <View style={styles.modalBackground}>
           <TouchableWithoutFeedback
             onPress={() => {
-              console.tron.log("onPress")
               setModalVisible(false)
             }}
           >
@@ -74,7 +73,6 @@ export const Overlay = ({ screen }) => {
         <View style={{ position: "absolute", zIndex: 2 }}>
           <TouchableWithoutFeedback
             onPress={() => {
-              console.tron.log("onPress")
               setModalVisible(false)
             }}
           >
