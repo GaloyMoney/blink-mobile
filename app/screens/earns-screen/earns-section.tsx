@@ -8,7 +8,6 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import Carousel, { Pagination } from "react-native-snap-carousel"
 import Icon from "react-native-vector-icons/Ionicons"
-import { OnboardingEarn } from "types"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
 import { color } from "../../theme"
@@ -174,8 +173,8 @@ export const EarnSection = observer(({ route, navigation }) => {
 
   const [currRewardIndex, setCurrRewardIndex] = useState(firstItem)
 
-  const [initialRemainingSats] = useState(getRemainingSatsOnSection({ sectionIndex, earnsArray }))
-  const currentRemainingEarn = getRemainingSatsOnSection({ sectionIndex, earnsArray })
+  const [initialRemainingSats] = useState(getRemainingSatsOnSection({ sectionIndex, earnsArray, store }))
+  const currentRemainingEarn = getRemainingSatsOnSection({ sectionIndex, earnsArray, store })
   
   const sectionTitle = translate(`EarnScreen.earns\.${sectionIndex}\.meta.title`)
 
@@ -184,7 +183,7 @@ export const EarnSection = observer(({ route, navigation }) => {
   if (initialRemainingSats !== 0 && currentRemainingEarn === 0 && isFocused) {
     console.tron.warn("section Completed!")
     navigation.navigate("sectionCompleted", {
-      amount: cards.reduce((acc, item) => OnboardingEarn[item.id] + acc, 0),
+      amount: cards.reduce((acc, item) => store.earnReward(item.id) + acc, 0),
       sectionTitle
   })}
 
@@ -203,7 +202,7 @@ export const EarnSection = observer(({ route, navigation }) => {
         navigation.navigate('earnsQuiz', { 
           title: card.title, 
           text: card.text, 
-          amount: OnboardingEarn[card.id], // FIXME
+          amount: store.earnReward(card.id), // FIXME
           question: card.question,
           answers: card.answers, 
           feedback: card.feedback,
@@ -261,12 +260,12 @@ export const EarnSection = observer(({ route, navigation }) => {
                   // ?
                   item.fullfilled
                     ? I18n.t("EarnScreen.satsEarned", {
-                        count: OnboardingEarn[item.id],
-                        formatted_number: I18n.toNumber(OnboardingEarn[item.id], { precision: 0 }),
+                        count: store.earnReward(item.id),
+                        formatted_number: I18n.toNumber(store.earnReward(item.id), { precision: 0 }),
                       })
                     : I18n.t("EarnScreen.earnSats", {
-                        count: OnboardingEarn[item.id],
-                        formatted_number: I18n.toNumber(OnboardingEarn[item.id], { precision: 0 }),
+                        count: store.earnReward(item.id),
+                        formatted_number: I18n.toNumber(store.earnReward(item.id), { precision: 0 }),
                       })
                     // : translate("common.learnMore")
                   // : 

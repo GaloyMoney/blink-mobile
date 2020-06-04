@@ -4,6 +4,7 @@ import { Instance, types } from "mobx-state-tree"
 import { localStorageMixin } from "mst-gql"
 import { AccountType, CurrencyType } from "../utils/enum"
 import { RootStoreBase } from "./RootStore.base"
+import { find } from "lodash"
 
 const ROOT_STATE_STORAGE_KEY = "rootAppGaloy"
 
@@ -69,6 +70,10 @@ export const OnboardingModel = types.model("Onboarding", {
     earnComplete(id) {
       self.mutateEarnCompleted({id})
       self.queryWallet()
+    },
+    earnReward(id) {
+      return find(values(self.earns), {id}).value
+      // return self.earns[id].value // FIXME do it in 0(1) instead of O(n)
     },
     wallet(currency) {
       return values(self.wallets).filter(item => item.currency === currency)[0]
