@@ -5,10 +5,13 @@ import { Token } from "./token"
 export const getGraphQlUri = () => {
   const network = new Token().network()
 
-  if (network === "testnet") { 
-    return GRAPHQL_TESTNET_URI
-  }
-  else if (network === "mainnet") {
+  if (network === "mainnet") {
     return GRAPHQL_MAINNET_URI
+  }
+  else if (network === "testnet") { 
+    return GRAPHQL_TESTNET_URI
+  } else {
+    console.tron.log("no network set. defaulting to testnet")
+    return GRAPHQL_TESTNET_URI
   }
 }
