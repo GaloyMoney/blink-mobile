@@ -1,7 +1,5 @@
-import functions from "@react-native-firebase/functions"
 import { Alert } from "react-native"
 import { Notifications, RegistrationError } from "react-native-notifications"
-import { Onboarding, OnboardingEarn } from "types"
 import { translate } from "../../i18n"
 import { sleep } from "../../utils/sleep"
 import { StoreContext } from "../../models"
@@ -44,18 +42,18 @@ export const getEarnFromSection = ({ earnsArray, sectionIndex, earnsMeta = undef
 
 
 // TODO this is smelly, refactor
-export const isSectionComplete = ({sectionIndex, earnsArray}) => 
-  getRemainingSatsOnSection({sectionIndex, earnsArray}) === 0
+export const isSectionComplete = ({sectionIndex, earnsArray, store}) => 
+  getRemainingSatsOnSection({sectionIndex, earnsArray, store}) === 0
 
 export const getRemainingEarnItems = ({ sectionIndex, earnsArray }) => {
   const earns = getEarnFromSection({ sectionIndex, earnsArray })
   return earns.filter((item) => item.fullfilled).length / earns.length
 }
   
-export const getRemainingSatsOnSection = ({ sectionIndex, earnsArray }) =>
+export const getRemainingSatsOnSection = ({ sectionIndex, earnsArray, store }) =>
   getEarnFromSection({ sectionIndex, earnsArray })
     .filter((item) => !item.fullfilled)
-    .reduce((acc, item) => OnboardingEarn[item.id] + acc, 0)
+    .reduce((acc, item) => store.earnReward(item.id) + acc, 0)
 
 export const getSections = () => {
   const all_earns_obj = translate(`EarnScreen.earns`)
@@ -64,11 +62,11 @@ export const getSections = () => {
 }
 
 // TODO optimize
-export const getCompletedSection = ({ earnsArray }) => {
+export const getCompletedSection = ({ earnsArray, store }) => {
   let count = 0
   const sections = getSections()
   for (const sectionIndex of sections) {
-    if (getRemainingSatsOnSection({ earnsArray, sectionIndex }) === 0) {
+    if (getRemainingSatsOnSection({ earnsArray, sectionIndex, store }) === 0) {
       count++
     }
   }

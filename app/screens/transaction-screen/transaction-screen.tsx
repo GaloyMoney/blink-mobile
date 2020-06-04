@@ -4,7 +4,6 @@ import * as React from "react"
 import { RefreshControl, SectionList, Text, View } from "react-native"
 import { ListItem } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
-import { ILightningTransaction } from "../../../../common/types"
 import { CurrencyText } from "../../components/currency-text"
 import { IconTransaction } from "../../components/icon-transactions"
 import { Screen } from "../../components/screen"
@@ -194,7 +193,7 @@ export const TransactionScreenDataInjected = observer(({navigation, route}) => {
   />
 })
 
-export interface AccountDetailItemProps extends ILightningTransaction {
+export interface AccountDetailItemProps {
   account: AccountType,
   currency: CurrencyType,
   navigation: StackNavigationProp<any,any>,

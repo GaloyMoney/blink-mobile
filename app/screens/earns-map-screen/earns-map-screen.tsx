@@ -116,7 +116,7 @@ export const EarnMapDataInjected = observer(({ navigation }) => {
       icon: BitcoinCircle,
     })
 
-    if (isSectionComplete({sectionIndex, earnsArray})) {
+    if (isSectionComplete({sectionIndex, earnsArray, store})) {
       currSection += 1
     } else if (isNaN(progress)) { // only do it once for the first uncompleted section
       progress = getRemainingEarnItems({sectionIndex, earnsArray})
