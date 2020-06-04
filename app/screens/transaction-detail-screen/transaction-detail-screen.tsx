@@ -83,7 +83,7 @@ const Row = ({ entry, value }) => (
 export const TransactionDetailScreen = ({ route, navigation }) => {
   
   const { currency, account, amount, created_at, hash, type, description, fee,
-    destination } = route.params as AccountDetailItemProps
+    destination, id } = route.params as AccountDetailItemProps
 
   const spendOrReceive = amount < 0 ? "spent" : "received"
 
@@ -100,8 +100,8 @@ export const TransactionDetailScreen = ({ route, navigation }) => {
   return (
     <Screen style={styles.screen}>
       <View style={styles.amountView}>
-      <IconTransaction type={type.includes("invoice") || type.includes("earn") ? "receive" : "send"} size={100} />
-      <Text style={styles.amountText}>You {spendOrReceive}</Text>
+        <IconTransaction type={type.includes("invoice") || type.includes("earn") ? "receive" : "send"} size={100} />
+        <Text style={styles.amountText}>You {spendOrReceive}</Text>
         <TextCurrency amount={Math.abs(amount)} currency={currency} 
           style={styles.amount} />
       </View>
@@ -111,7 +111,12 @@ export const TransactionDetailScreen = ({ route, navigation }) => {
         <Divider style={styles.divider} />
         <Row entry={"Date"} value={date_format}></Row>
         <Row entry={"Description"} value={description} />
-        <Row entry={"Hash"} value={hash} />
+        {hash &&
+          <Row entry={"Hash"} value={hash} />
+        }
+        {id &&
+          <Row entry={"id"} value={id} />
+        }
         {fee &&
           <Row entry={"Fee"} value={fee} />
         }

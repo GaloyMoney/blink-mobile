@@ -1,25 +1,23 @@
 import DateTimePicker from "@react-native-community/datetimepicker"
-import auth from "@react-native-firebase/auth"
-import functions from "@react-native-firebase/functions"
 import { useNavigation, useRoute } from "@react-navigation/native"
-import { inject } from "mobx-react"
 import * as React from "react"
 import { useEffect, useRef, useState } from "react"
 import { Alert, Text, TextInput, View } from "react-native"
 import { Button, Input } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
-import { Onboarding } from "types"
+import { BrightButton } from "../../components/bright-button"
 import { CloseCross } from "../../components/close-cross"
 import { OnboardingScreen } from "../../components/onboarding"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
+import { StoreContext } from "../../models"
 import { palette } from "../../theme/palette"
 import { emailIsValid } from "../../utils/helper"
-import HoneyBadgerHello from "./badger-wave-01.svg"
-import { BrightButton } from "../../components/bright-button"
-import CreditCard from "./credit-card-01.svg"
-import BitcoinPhone from "./bitcoin-phone-01.svg"
 import MoneyCircle from "../accounts-screen/money-circle-02.svg"
+import HoneyBadgerHello from "./badger-wave-01.svg"
+import BitcoinPhone from "./bitcoin-phone-01.svg"
+import CreditCard from "./credit-card-01.svg"
+import { Token } from "../../utils/token"
 
 const bankLogo = require("./BankLogo.png")
 const popcornLogo = require("../earns-screen/PopcornLogo.png")
@@ -110,8 +108,8 @@ export const OpenBankScreen = ({ navigation }) => {
     <Screen>
       <OnboardingScreen
         image={bankLogo}
-        action={() => {
-          auth().currentUser?.isAnonymous
+        action={async () => {
+          new Token().has()
             ? navigation.navigate("welcomePhoneInputBanking") // FIXME should be welcomePhoneInput
             : navigation.navigate("personalInformation")
         }}
@@ -193,7 +191,9 @@ export const PersonalInformationScreen = () => {
   )
 }
 
-export const DateOfBirthScreen = inject("dataStore")(({ dataStore }) => {
+export const DateOfBirthScreen = () => {
+  const store = React.useContext(StoreContext)
+
   const navigation = useNavigation()
   const route = useRoute()
   const [dateOfBirth, setDateOfBirth] = useState(new Date(2000, 1, 1))
@@ -203,11 +203,9 @@ export const DateOfBirthScreen = inject("dataStore")(({ dataStore }) => {
   const onValidate = async () => {
     try {
       setLoading(true)
-      await functions().httpsCallable("onBankAccountOpening")({
-        ...route.params,
-        dateOfBirth: dateOfBirth.toISOString(),
-      })
-      dataStore.onboarding.add(Onboarding.bankOnboarded)
+      const userInfo = { dateOfBirth: dateOfBirth.toISOString(), ...route.params }
+      const level = 2
+      store.user.updateLevel(level)      
       navigation.navigate("bankAccountReady")
       setLoading(false)
     } catch (err) {
@@ -253,7 +251,7 @@ export const DateOfBirthScreen = inject("dataStore")(({ dataStore }) => {
       />
     </Screen>
   )
-})
+}
 
 export const BankAccountReadyScreen = () => {
   return (

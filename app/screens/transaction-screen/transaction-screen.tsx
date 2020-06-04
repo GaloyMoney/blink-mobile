@@ -1,18 +1,18 @@
+import { StackNavigationProp } from "@react-navigation/stack"
+import { observer } from "mobx-react"
 import * as React from "react"
-import { Text, View, SectionList, RefreshControl } from "react-native"
+import { RefreshControl, SectionList, Text, View } from "react-native"
+import { ListItem } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
+import { CurrencyText } from "../../components/currency-text"
+import { IconTransaction } from "../../components/icon-transactions"
 import { Screen } from "../../components/screen"
+import { translate } from "../../i18n"
+import { useQuery } from "../../models"
 import { palette } from "../../theme/palette"
 import { sameDay, sameMonth } from "../../utils/date"
-import { translate } from "../../i18n"
-import { ListItem } from "react-native-elements"
-import { IconTransaction } from "../../components/icon-transactions"
-import { CurrencyText } from "../../components/currency-text"
-
-import { ILightningTransaction } from "../../../../common/types";
 import { AccountType, CurrencyType } from "../../utils/enum"
-import { StackNavigationProp } from "@react-navigation/stack"
-import { inject, observer } from "mobx-react"
+
 
 
 const styles = EStyleSheet.create({
@@ -154,46 +154,46 @@ const formatTransactions = (transactions) => {
 }
 
 
-export const AccountToAccountStore = ({account, dataStore}) => {
-  // FIXME should have a generic mapping here, could use mst for it?
-  switch (account) {
-    case AccountType.Bank:
-      return dataStore.fiat
-    case AccountType.Bitcoin:
-      return dataStore.lnd
-  }
-}
+export const TransactionScreenDataInjected = observer(({navigation, route}) => {
+  const { store, error, loading, data, query } = useQuery(store => store.queryWallet(
+    {},
+    ` currency
+      transactions {
+        id
+        amount
+        description
+        created_at
+        hash
+        type
+      }`
+  )) 
 
-
-export const TransactionScreenDataInjected = inject("dataStore")(observer(
-    ({dataStore, navigation, route}) => {
-
-  const [refreshing, setRefreshing] = React.useState(false)
-
+  const currency = "BTC" // FIXME
   const account = route.params.account
-  let accountStore = AccountToAccountStore({account, dataStore}) 
-  
-  // FIXME useCallBack??
-  const onRefresh = React.useCallback(async () => {
-    setRefreshing(true)
-    await accountStore.update()
-    setRefreshing(false)
-  }, [refreshing])
 
-  React.useEffect(() => {
-    onRefresh()
-  }, [])
+  let walletBtc = {}
+
+  if (data) {
+    walletBtc = data.wallet.filter(item => item.currency === currency)[0]
+  }
+
+  if (error) {
+    return <Text>{error.toString()}</Text>
+  }
+
+  console.tron.log({loading})
 
   return <TransactionScreen 
     navigation={navigation} 
-    currency={accountStore.currency}
-    refreshing={refreshing}
-    onRefresh={onRefresh}
-    transactions={accountStore.transactions}
+    currency={currency}
+    refreshing={loading}
+    onRefresh={() => query.refetch()}
+    // onRefresh={onRefresh} FIXME
+    transactions={walletBtc.transactions ?? []} // FIXME
   />
-}))
+})
 
-export interface AccountDetailItemProps extends ILightningTransaction {
+export interface AccountDetailItemProps {
   account: AccountType,
   currency: CurrencyType,
   navigation: StackNavigationProp<any,any>,

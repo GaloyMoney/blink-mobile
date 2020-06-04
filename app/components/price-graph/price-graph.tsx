@@ -1,11 +1,14 @@
+import { values } from "mobx"
+import { observer } from "mobx-react"
 import * as React from "react"
-import { Text, View, ActivityIndicator } from "react-native"
+import { ActivityIndicator, Text, View } from "react-native"
+import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
+import { VictoryAxis, VictoryChart, VictoryLine } from "victory-native"
+import { StoreContext } from "../../models"
+import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 
-import { VictoryLine, VictoryChart, VictoryAxis } from "victory-native"
-import { Button } from "react-native-elements"
-import { color } from "../../theme"
 
 const styles = EStyleSheet.create({
   neutral: {
@@ -79,12 +82,12 @@ const mapping = {
   },
 }
 
-export const PriceGraph = ({data}) => {
+export const PriceGraph = ({prices}) => {
   const [time, setTime] = React.useState("d") // d, w, m, y
 
   let price, delta, color
 
-  const currentData = data.slice(- mapping[time].last)
+  const currentData = prices.slice(- mapping[time].last)
 
   try {
     price = currentData[currentData.length - 1].o
@@ -144,3 +147,9 @@ export const PriceGraph = ({data}) => {
     </View>
   </>
 )}
+
+
+export const PriceGraphDataInjected = observer(() => {
+  const store = React.useContext(StoreContext)
+  return <PriceGraph prices={values(store.prices)} />
+})

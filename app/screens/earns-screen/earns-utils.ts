@@ -1,23 +1,20 @@
-import functions from "@react-native-firebase/functions"
 import { Alert } from "react-native"
 import { Notifications, RegistrationError } from "react-native-notifications"
-import { Onboarding, OnboardingEarn } from "types"
 import { translate } from "../../i18n"
 import { sleep } from "../../utils/sleep"
+import { StoreContext } from "../../models"
 
-export const getEarnFromSection = ({ dataStore, sectionIndex, earnsMeta = undefined }) => {
+export const getEarnFromSection = ({ earnsArray, sectionIndex, earnsMeta = undefined }) => {
   const earns_all = translate(`EarnScreen.earns`)
-  console.tron.log({sectionIndex})
   const cards = earns_all[sectionIndex].content
 
-  cards.forEach(item => item.fullfilled = dataStore.onboarding.has(Onboarding[item.id]))
+  // FIXME O(N^2)
+  cards.filter(item => item.fullfilled = earnsArray.find(e => e.id == item.id).completed)
   
   let allPreviousFullfilled = true
   let enabledMessage = ""
   
-  cards.forEach(item => {
-    console.tron.log({enabledMessage, id: item.id})
-    
+  cards.forEach(item => {    
     item.enabled = true
     
     if (allPreviousFullfilled === false) {
@@ -40,23 +37,23 @@ export const getEarnFromSection = ({ dataStore, sectionIndex, earnsMeta = undefi
     // )
   }
 
-  console.tron.log({earns: cards})
-
   return cards
 }
 
-export const isSectionComplete = ({sectionIndex, dataStore}) => 
-  getRemainingSatsOnSection({sectionIndex, dataStore}) === 0
 
-export const getRemainingEarnItems = ({ sectionIndex, dataStore }) => {
-  const earns = getEarnFromSection({ sectionIndex, dataStore })
+// TODO this is smelly, refactor
+export const isSectionComplete = ({sectionIndex, earnsArray, store}) => 
+  getRemainingSatsOnSection({sectionIndex, earnsArray, store}) === 0
+
+export const getRemainingEarnItems = ({ sectionIndex, earnsArray }) => {
+  const earns = getEarnFromSection({ sectionIndex, earnsArray })
   return earns.filter((item) => item.fullfilled).length / earns.length
 }
   
-export const getRemainingSatsOnSection = ({ sectionIndex, dataStore }) =>
-  getEarnFromSection({ sectionIndex, dataStore })
+export const getRemainingSatsOnSection = ({ sectionIndex, earnsArray, store }) =>
+  getEarnFromSection({ sectionIndex, earnsArray })
     .filter((item) => !item.fullfilled)
-    .reduce((acc, item) => OnboardingEarn[item.id] + acc, 0)
+    .reduce((acc, item) => store.earnReward(item.id) + acc, 0)
 
 export const getSections = () => {
   const all_earns_obj = translate(`EarnScreen.earns`)
@@ -65,11 +62,11 @@ export const getSections = () => {
 }
 
 // TODO optimize
-export const getCompletedSection = ({ dataStore }) => {
+export const getCompletedSection = ({ earnsArray, store }) => {
   let count = 0
   const sections = getSections()
   for (const sectionIndex of sections) {
-    if (getRemainingSatsOnSection({ dataStore, sectionIndex }) === 0) {
+    if (getRemainingSatsOnSection({ earnsArray, sectionIndex, store }) === 0) {
       count++
     }
   }
@@ -91,21 +88,21 @@ const _earnsMeta = {
     },
   },
   activateNotifications: {
-    onAction: async ({ dataStore, setLoading }) => {
+    onAction: async ({ setLoading }) => {
+      const store = React.useContext(StoreContext)
+
       // FIXME
       Notifications.events().registerRemoteNotificationsRegistered(async (event: Registered) => {
         console.tron.log("Registered For Remote Push", `Device Token: ${event.deviceToken}`)
 
         try {
           setLoading(true)
-          await functions().httpsCallable("sendDeviceToken")({
-            deviceToken: event.deviceToken,
-          })
-          await dataStore.onboarding.add(Onboarding.activateNotifications)
-          close("Notification succesfully activated")
+          store.user.updateDeviceToken(event.deviceToken)
+
+          // close("Notification succesfully activated")
         } catch (err) {
           console.tron.log(err.toString())
-          setErr(err.toString())
+          // setErr(err.toString())
         }
       })
 
