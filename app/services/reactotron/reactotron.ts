@@ -65,11 +65,6 @@ export class Reactotron {
    * @param config the configuration
    */
   constructor(config: ReactotronConfig = DEFAULT_REACTOTRON_CONFIG) {
-    // DeviceInfo.isEmulator().then(isEmulator => {
-    //   if (isEmulator) {
-    //     functions().useFunctionsEmulator("http://localhost:5000")
-    // }})
-
     // const scriptURL = NativeModules.SourceCode.scriptURL;
     // const scriptHostname = scriptURL.split('://')[1].split(':')[0];
     // console.log(scriptHostname)

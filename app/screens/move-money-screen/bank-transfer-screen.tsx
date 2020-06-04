@@ -58,49 +58,47 @@ const styles = StyleSheet.create({
   },
 })
 
-export const BankTransferScreen: React.FC = inject("dataStore")(
-  observer(({ dataStore }) => {
-    const [amount, setAmount] = useState(0)
-    const [from, setFrom] = useState("")
-    const [to, setTo] = useState("")
+export const BankTransferScreen: React.FC = () => {
+  const [amount, setAmount] = useState(0)
+  const [from, setFrom] = useState("")
+  const [to, setTo] = useState("")
 
-    const { navigate } = useNavigation()
+  const { navigate } = useNavigation()
 
-    const Section = ({ title, icon, placeholder = "" }) => {
-      return (
-        <View style={styles.section}>
-          <Text style={styles.smallText}>{title}</Text>
-          <View style={styles.horizontalContainer}>
-            <Input
-              placeholder={placeholder}
-              leftIcon={icon}
-              // value={}
-              containerStyle={styles.invoiceContainer}
-            />
-          </View>
-        </View>
-      )
-    }
-
+  const Section = ({ title, icon, placeholder = "" }) => {
     return (
-      <Screen>
-        <Section title="Amount" icon={<Text>$</Text>} />
-        <Section
-          title="From"
-          placeholder="Select an account"
-          icon={<Icon name="ios-log-out" size={24} color={color.primary} style={styles.icon} />}
-        />
-        <Section
-          title="To"
-          placeholder="Select an account"
-          icon={<Icon name="ios-log-in" size={24} color={color.primary} style={styles.icon} />}
-        />
-        <Button
-          buttonStyle={styles.buttonStyle}
-          title="Transfer"
-          onPress={() => Alert.alert("We're still implementing transfer")}
-        />
-      </Screen>
+      <View style={styles.section}>
+        <Text style={styles.smallText}>{title}</Text>
+        <View style={styles.horizontalContainer}>
+          <Input
+            placeholder={placeholder}
+            leftIcon={icon}
+            // value={}
+            containerStyle={styles.invoiceContainer}
+          />
+        </View>
+      </View>
     )
-  }),
-)
+  }
+
+  return (
+    <Screen>
+      <Section title="Amount" icon={<Text>$</Text>} />
+      <Section
+        title="From"
+        placeholder="Select an account"
+        icon={<Icon name="ios-log-out" size={24} color={color.primary} style={styles.icon} />}
+      />
+      <Section
+        title="To"
+        placeholder="Select an account"
+        icon={<Icon name="ios-log-in" size={24} color={color.primary} style={styles.icon} />}
+      />
+      <Button
+        buttonStyle={styles.buttonStyle}
+        title="Transfer"
+        onPress={() => Alert.alert("We're still implementing transfer")}
+      />
+    </Screen>
+  )
+}
