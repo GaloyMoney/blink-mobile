@@ -1,4 +1,4 @@
-export const data = [
+export const prices = [
     {
         "t": 1557608400,
         "o": 0.000069448
