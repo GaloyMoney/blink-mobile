@@ -5,7 +5,7 @@ const key = "GaloyToken"
 
 // Singleton class
 export class Token {
-  mem_token = ""
+  mem_token = null
 
   constructor() {
     const instance = this.constructor.instance;
@@ -27,7 +27,7 @@ export class Token {
   }
 
   async delete () {
-    this.mem_token = ""
+    this.mem_token = null
     remove(key)
   }
 
@@ -36,7 +36,8 @@ export class Token {
   }
 
   has () {
-    return this.mem_token !== ""
+    console.tron.log({mem_token: this.mem_token})
+    return this.mem_token !== null
     // TODO check
   }
 
