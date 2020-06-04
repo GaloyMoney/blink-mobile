@@ -13,7 +13,7 @@ import { StoreContext } from "../../models"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { getDescription } from "../../utils/lightning"
-import { GraphQLClientWrapper } from "../../utils/request"
+import { request } from "../../utils/request"
 
 const CAMERA: ViewStyle = {
   width: "100%",
@@ -83,81 +83,82 @@ const styles = StyleSheet.create({
 })
 
 export const ScanningQRCodeScreen = () => {
-    const { navigate } = useNavigation()
+  const store = React.useContext(StoreContext)
 
-    const pasteInvoice = async () => {
-      decodeInvoice(await Clipboard.getString())
-    }
+  const { navigate } = useNavigation()
 
-    const decodeInvoice = async (data) => {
-      const store = React.useContext(StoreContext)
+  const pasteInvoice = async () => {
+    decodeInvoice(await Clipboard.getString())
+  }
 
-      try {
-        // invoice might start with 'lightning:', 'bitcoin:', something else, or have the invoice directly
-        let [protocol, invoice] = data.split(":")
-        console.tron.log({ protocol, invoice })
-        if (protocol === "bitcoin") {
-          Alert.alert("Bitcoin on-chain transactions are coming to the app but we're only accepting lightning for now.")
-          return
-        } else if (protocol.startsWith("ln") && invoice === undefined) {
-          if(store.network === "testnet" && protocol.startsWith("lnbc")) {
-            Alert.alert(`You're trying to pay a mainnet invoice. This app is build for testnet`)
-            return
-          }
+  const decodeInvoice = async (data) => {
 
-          if(store.network === "mainnet" && protocol.startsWith("lntb")) {
-            Alert.alert(`You're trying to pay a testnet invoice. This app is build for mainnet`)
-            return
-          }
-
-          invoice = protocol
-        } else if (protocol.toLowerCase() !== "lightning") {
-          let message = `Only lightning procotol is accepted for now.`
-          message += message === "" ? "" : `\n\ngot following: "${protocol}"`
-          Alert.alert(message)
+    try {
+      // invoice might start with 'lightning:', 'bitcoin:', something else, or have the invoice directly
+      let [protocol, invoice] = data.split(":")
+      console.tron.log({ protocol, invoice })
+      if (protocol === "bitcoin") {
+        Alert.alert("Bitcoin on-chain transactions are coming to the app but we're only accepting lightning for now.")
+        return
+      } else if (protocol.startsWith("ln") && invoice === undefined) {
+        if(store.network === "testnet" && protocol.startsWith("lnbc")) {
+          Alert.alert(`You're trying to pay a mainnet invoice. This app is build for testnet`)
           return
         }
 
-        const payReq = lightningPayReq.decode(invoice)
-        console.tron.log({ payReq })
-
-        let amount, amountless, note
-
-        if (payReq.satoshis || payReq.millisatoshis) {
-          amount = payReq.satoshis ?? Number(payReq.millisatoshis) * 1000
-          amountless = false
-        } else {
-          amount = 0
-          amountless = true
+        if(store.network === "mainnet" && protocol.startsWith("lntb")) {
+          Alert.alert(`You're trying to pay a testnet invoice. This app is build for mainnet`)
+          return
         }
 
-        note = getDescription(payReq) ?? `this invoice doesn't include a note`
-
-        navigate("sendBitcoin", { invoice, amount, amountless, note })
-      } catch (err) {
-        Alert.alert(err.toString())
+        invoice = protocol
+      } else if (protocol.toLowerCase() !== "lightning") {
+        let message = `Only lightning procotol is accepted for now.`
+        message += message === "" ? "" : `\n\ngot following: "${protocol}"`
+        Alert.alert(message)
+        return
       }
-    }
 
-    return (
-      <Screen>
-        <RNCamera
-          style={CAMERA}
-          captureAudio={false}
-          onBarCodeRead={(event) => {
-            const qr = event.data
-            decodeInvoice(qr)
-          }}
+      const payReq = lightningPayReq.decode(invoice)
+      console.tron.log({ payReq })
+
+      let amount, amountless, note
+
+      if (payReq.satoshis || payReq.millisatoshis) {
+        amount = payReq.satoshis ?? Number(payReq.millisatoshis) * 1000
+        amountless = false
+      } else {
+        amount = 0
+        amountless = true
+      }
+
+      note = getDescription(payReq) ?? `this invoice doesn't include a note`
+
+      navigate("sendBitcoin", { invoice, amount, amountless, note })
+    } catch (err) {
+      Alert.alert(err.toString())
+    }
+  }
+
+  return (
+    <Screen>
+      <RNCamera
+        style={CAMERA}
+        captureAudio={false}
+        onBarCodeRead={(event) => {
+          const qr = event.data
+          decodeInvoice(qr)
+        }}
+      />
+      <View style={styles.overlay}>
+        <Button
+          buttonStyle={[styles.buttonStyle, { width: 180 }]}
+          title="Paste"
+          onPress={pasteInvoice}
         />
-        <View style={styles.overlay}>
-          <Button
-            buttonStyle={[styles.buttonStyle, { width: 180 }]}
-            title="Paste"
-            onPress={pasteInvoice}
-          />
-        </View>
-      </Screen>
-    )
+      </View>
+    </Screen>
+  )
 }
 
 export const SendBitcoinScreen: React.FC = ({ route }) => {
@@ -205,8 +206,6 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
       // payreq.amt = amount
     }
 
-    console.tron.log({invoice})
-
     setLoading(true)
     // try {
     // if (useUSD) {
@@ -219,15 +218,16 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
     // }
 
     try {
-      const query = `mutation payInvoice($uid: String, $invoice: String) {
-        invoice(uid: $uid) {
+      const query = `mutation payInvoice($invoice: String) {
+        invoice {
           payInvoice(invoice: $invoice)
         }
       }`
 
-      const result = await GraphQLClientWrapper.request(query, {invoice})
+      const result = await request(query, {invoice})
 
       if (result.invoice.payInvoice === "success") {
+        store.queryWallet()
         setMessage("Payment succesfull")
       } else if (result.invoice.payInvoice === "pending") {
         setMessage("Payment has been sent but is not confirmed yet")
