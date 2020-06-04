@@ -134,8 +134,6 @@ export const App = () => {
       return
     }
 
-    // console.tron.log({ navigationRef })
-
     // this is only accessible after this has been assigned, which is when we have
     const state = navigationRef.current.getRootState()
 
@@ -196,7 +194,6 @@ export const App = () => {
         {/* <StatefulNavigator /> */}
       </NavigationContainer>
       {/* </BackButtonHandler> */}
-    {/* </Provider> */}
     </StoreContext.Provider>
   )
 }
