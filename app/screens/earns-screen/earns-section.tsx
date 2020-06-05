@@ -13,7 +13,7 @@ import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { SVGs } from "./earn-svg-factory"
-import { earnsMeta, getEarnFromSection, getRemainingSatsOnSection } from "./earns-utils"
+import { getCardsFromSection, remainingSatsOnSection } from "./earns-utils"
 import { useIsFocused } from '@react-navigation/native';
 import { StoreContext } from "../../models"
 
@@ -166,15 +166,17 @@ export const EarnSection = observer(({ route, navigation }) => {
   const earnsArray = store.earnArray
 
   const sectionIndex = route.params.section
-  const cards = getEarnFromSection({ sectionIndex, earnsMeta, earnsArray })
+  const cards = getCardsFromSection({ sectionIndex, earnsArray })
 
   const itemIndex = cards.findIndex(item => !item.fullfilled)
   const [firstItem] = useState(itemIndex >= 0 ? itemIndex : 0)
 
   const [currRewardIndex, setCurrRewardIndex] = useState(firstItem)
 
-  const [initialRemainingSats] = useState(getRemainingSatsOnSection({ sectionIndex, earnsArray, store }))
-  const currentRemainingEarn = getRemainingSatsOnSection({ sectionIndex, earnsArray, store })
+  const remainingSats = remainingSatsOnSection({ sectionIndex, earnsArray, store })
+
+  const [initialRemainingSats] = useState(remainingSats)
+  const currentRemainingEarn = remainingSats
   
   const sectionTitle = translate(`EarnScreen.earns\.${sectionIndex}\.meta.title`)
 
@@ -225,7 +227,6 @@ export const EarnSection = observer(({ route, navigation }) => {
       //       break
       case RewardType.Action:
         // TODO
-        // await earnsMeta[earns.id].onAction({ dataStore, navigate })
         break
     }
   }
@@ -283,7 +284,7 @@ export const EarnSection = observer(({ route, navigation }) => {
         {!item.enabled &&
           <>
             <Text style={styles.unlockQuestion}>To unlock, answer the question:</Text>
-            <Text style={styles.unlock}>{item.enabledMessage}</Text>
+            <Text style={styles.unlock}>{item.nonEnabledMessage}</Text>
           </>
         }
       </>
