@@ -12,6 +12,7 @@ import { useQuery } from "../../models"
 import { palette } from "../../theme/palette"
 import { sameDay, sameMonth } from "../../utils/date"
 import { AccountType, CurrencyType } from "../../utils/enum"
+import moment from "moment"
 
 
 
@@ -103,17 +104,18 @@ const formatTransactions = (transactions) => {
   const before = []
 
   transactions = transactions.slice().sort((a, b) => (a.date > b.date ? -1 : 1)) // warning without slice?
+  transactions.forEach(tx => tx.date = moment.unix(tx.created_at))
 
   const isToday = (tx) => {
-    return sameDay(tx.created_at, new Date())
+    return sameDay(tx.date, new Date())
   }
 
   const isYesterday = (tx) => {
-    return sameDay(tx.created_at, new Date().setDate(new Date().getDate() - 1))
+    return sameDay(tx.date, new Date().setDate(new Date().getDate() - 1))
   }
 
   const isThisMonth = (tx) => {
-    return sameMonth(tx.created_at, new Date())
+    return sameMonth(tx.date, new Date())
   }
 
   if (transactions.length === 0) {
