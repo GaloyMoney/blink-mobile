@@ -109,7 +109,6 @@ export const EarnMapDataInjected = observer(({ navigation }) => {
 
   
   for (let sectionIndex of sectionIndexs) {
-    console.tron.log({sectionIndex})
     sectionsData.push({
       index: sectionIndex,
       text: translate(`EarnScreen.earns\.${sectionIndex}.meta.title`),

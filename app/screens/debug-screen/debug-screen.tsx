@@ -90,10 +90,6 @@ export const DebugScreen = observer(({}) => {
           Alert.alert("log out completed. Restart your app")
         }}
       />
-      <Button
-        title="earn rewards"
-        onPress={() => store.earnReward("sat")}
-      />
       <VersionComponent />
       <View>
         <Text>UID: {new Token().uid()}</Text>

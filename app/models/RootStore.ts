@@ -34,8 +34,12 @@ export const OnboardingModel = types.model("Onboarding", {
       console.log(JSON.stringify(self))
     },
     setNetwork(network) {
-      self.network = network
-    }
+      self.network = network // TODO make a view from token.
+    },
+    earnComplete(id) {
+      self.mutateEarnCompleted({id}, "__typename, id, completed")
+      self.queryWallet()
+    },
   }))
   .views((self) => ({
     // workaround on the fact key can't be enum
@@ -66,14 +70,6 @@ export const OnboardingModel = types.model("Onboarding", {
       return values(self.earns)
         .filter(item => item.completed)
         .reduce((acc, item) => item.value + acc, 0)
-    },
-    earnComplete(id) {
-      self.mutateEarnCompleted({id})
-      self.queryWallet()
-    },
-    earnReward(id) {
-      return find(values(self.earns), {id}).value
-      // return self.earns[id].value // FIXME do it in 0(1) instead of O(n)
     },
     wallet(currency) {
       return values(self.wallets).filter(item => item.currency === currency)[0]
