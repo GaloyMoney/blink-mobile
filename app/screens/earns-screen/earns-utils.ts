@@ -44,19 +44,6 @@ export const remainingSatsOnSection = ({ sectionIndex, earnsArray }) =>
   sumBy(filter(getCardsFromSection({ sectionIndex, earnsArray }), {fullfilled: false}), "value")
 
 
-// TODO optimize
-export const getCompletedSection = ({ earnsArray }) => {
-  let count = 0
-  const all_earns = translate(`EarnScreen.earns`)
-  const sectionIndexes = Object.keys(all_earns)
-  for (const sectionIndex of sectionIndexes) {
-    if (remainingSatsOnSection({ earnsArray, sectionIndex }) === 0) {
-      count++
-    }
-  }
-  return count
-}
-
 // TODO: get back a way to ask for peermission for Notification tokens
 const _earnsMeta = {
   activateNotifications: {

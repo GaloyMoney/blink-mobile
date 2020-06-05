@@ -185,7 +185,7 @@ export const EarnSection = observer(({ route, navigation }) => {
   if (initialRemainingSats !== 0 && currentRemainingEarn === 0 && isFocused) {
     console.tron.warn("section Completed!")
     navigation.navigate("sectionCompleted", {
-      amount: cards.reduce((acc, item) => store.earnReward(item.id) + acc, 0),
+      amount: cards.reduce((acc, item) => item.value + acc, 0),
       sectionTitle
   })}
 
@@ -204,7 +204,7 @@ export const EarnSection = observer(({ route, navigation }) => {
         navigation.navigate('earnsQuiz', { 
           title: card.title, 
           text: card.text, 
-          amount: store.earnReward(card.id), // FIXME
+          amount: card.value,
           question: card.question,
           answers: card.answers, 
           feedback: card.feedback,
@@ -232,6 +232,13 @@ export const EarnSection = observer(({ route, navigation }) => {
   }
 
   const CardItem = ({ item, index }) => {
+    const text =                 I18n.t(item.fullfilled ? "EarnScreen.satsEarned" : "EarnScreen.earnSats", {
+      count: item.value,
+      formatted_number: I18n.toNumber(item.value, { precision: 0 }),
+    })
+
+    console.tron.log({index, text, value: item.value})
+
     return (
       <>
         <View style={styles.item}>
@@ -257,19 +264,10 @@ export const EarnSection = observer(({ route, navigation }) => {
               buttonStyle={item.fullfilled ? styles.buttonStyleFullfilled : styles.textButton}
               titleStyle={item.fullfilled ? styles.titleStyleFullfilled : styles.titleStyle}
               title={
-                  // item.enabled
-                  // ?
-                  item.fullfilled
-                    ? I18n.t("EarnScreen.satsEarned", {
-                        count: store.earnReward(item.id),
-                        formatted_number: I18n.toNumber(store.earnReward(item.id), { precision: 0 }),
-                      })
-                    : I18n.t("EarnScreen.earnSats", {
-                        count: store.earnReward(item.id),
-                        formatted_number: I18n.toNumber(store.earnReward(item.id), { precision: 0 }),
-                      })
-                    // : translate("common.learnMore")
-                  // : 
+                I18n.t(item.fullfilled ? "EarnScreen.satsEarned" : "EarnScreen.earnSats", {
+                  count: item.value,
+                  formatted_number: I18n.toNumber(item.value, { precision: 0 }),
+                })
               }
               icon={item.fullfilled ? <Icon 
                 name={"ios-checkmark-circle-outline"}
