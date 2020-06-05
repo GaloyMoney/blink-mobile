@@ -228,7 +228,7 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> =
   const backgroundColor = currSection < sectionsData.length ? palette.sky : palette.orange
 
   React.useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
+    const unsubscribe = navigation?.addListener('focus', () => {
       StatusBar.setBackgroundColor(color.transparent)
       StatusBar.setBarStyle("light-content")
       StatusBar.setTranslucent(true)
@@ -238,7 +238,7 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> =
   }, [navigation]);
 
   React.useEffect(() => {
-    const unsubscribe = navigation.addListener('blur', () => {
+    const unsubscribe = navigation?.addListener('blur', () => {
       StatusBar.setTranslucent(false)
       StatusBar.setBarStyle("dark-content")
       StatusBar.setBackgroundColor(palette.lighterGrey)
