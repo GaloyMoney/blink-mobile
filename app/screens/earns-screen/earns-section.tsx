@@ -237,8 +237,6 @@ export const EarnSection = observer(({ route, navigation }) => {
       formatted_number: I18n.toNumber(item.value, { precision: 0 }),
     })
 
-    console.tron.log({index, text, value: item.value})
-
     return (
       <>
         <View style={styles.item}>
