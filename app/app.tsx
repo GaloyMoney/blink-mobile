@@ -21,6 +21,7 @@ import { RootStack } from "./navigation/root-navigator"
 import { getGraphQlUri } from "./utils/api_uri"
 import { getActiveRouteName } from "./utils/navigation"
 import { Token } from "./utils/token"
+import moment from "moment"
 
 
 export async function createEnvironment() {
@@ -80,12 +81,14 @@ export const App = () => {
       "USD": {
         id: "USD",
         currency: "USD",
-        balance: 0
+        balance: 0,
+        transactions: []
       },
       "BTC": {
         id: "BTC",
         currency: "BTC",
-        balance: 0
+        balance: 0,
+        transactions: []
       }
     },
     users: {

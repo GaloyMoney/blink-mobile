@@ -1,7 +1,7 @@
 import { saveString, loadString, remove } from "./storage"
 const  jwtDecode = require('jwt-decode')
 
-const key = "GaloyToken"
+export const TOKEN_KEY = "GaloyToken"
 
 // Singleton class
 export class Token {
@@ -18,17 +18,17 @@ export class Token {
 
   async save({token}) {
     this.mem_token = token
-    return await saveString(key, token)
+    return await saveString(TOKEN_KEY, token)
   }
 
   async load (){
-    this.mem_token = await loadString(key)
+    this.mem_token = await loadString(TOKEN_KEY)
     return this.mem_token
   }
 
   async delete () {
     this.mem_token = null
-    remove(key)
+    remove(TOKEN_KEY)
   }
 
   get () {
