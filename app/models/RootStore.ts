@@ -68,7 +68,7 @@ export const OnboardingModel = types.model("Onboarding", {
         self.wallet("BTC").transactions.push(id)
         self.wallet("BTC").balance += amount
       } else {
-        self.mutateEarnCompleted({id}, "__typename, id, completed")
+        self.mutateEarnCompleted({ids: [id]}, "__typename, id, completed")
         self.queryWallet()
       }
     },

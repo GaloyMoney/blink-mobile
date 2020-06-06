@@ -14,6 +14,8 @@ import { palette } from "../../theme/palette"
 import { Token } from "../../utils/token"
 import BadgerPhone from "./badger-phone-01.svg"
 import { getGraphQlUri } from "../../utils/api_uri"
+import { values } from "mobx"
+import { filter, map } from "lodash"
 
 const styles = EStyleSheet.create({
   activityIndicatorWrapper: {
@@ -170,6 +172,9 @@ export const WelcomePhoneValidationScreenDataInjected = ({ route, navigation }) 
   const store = React.useContext(StoreContext)
 
   const onSuccess = () => {
+    const ids = map(filter(values(store.earns), {completed: true}), "id")
+    store.mutateEarnCompleted({ids})
+
     store.setNetwork(new Token().network())
   }
 
