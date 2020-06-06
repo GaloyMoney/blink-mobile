@@ -7,8 +7,7 @@ export const getGraphQlUri = () => {
 
   if (network === "mainnet") {
     return GRAPHQL_MAINNET_URI
-  }
-  else if (network === "testnet") { 
+  } else if (network === "testnet") { 
     return GRAPHQL_TESTNET_URI
   } else {
     console.tron.log("no network set. defaulting to testnet")

@@ -63,7 +63,7 @@ query home($isLogged: Boolean!) {
     __typename
     id
     value
-    completed
+    completed @include(if: $isLogged)
   }
   wallet @include(if: $isLogged) {
     __typename
@@ -83,7 +83,18 @@ export const AccountsScreen = observer(({ route, navigation }) => {
   const isLogged = new Token().has()
   console.tron.log({isLogged})
 
-  const { query, store, error, loading, data } = useQuery(gql_query, {variables: {isLogged}})
+  let query, store, error, loading, data
+
+  try {
+    const result = useQuery(gql_query, {variables: {isLogged}})
+    query = result.query
+    store = result.store
+    error = result.error
+    loading = result.loading
+    data = result.data
+  } catch (err) {
+    console.tron.log({err})
+  }
 
   // FIXME type any
   const accountTypes: Array<Record<string, any>> = [

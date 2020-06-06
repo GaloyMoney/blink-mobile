@@ -101,6 +101,7 @@ export const DebugScreen = observer(({}) => {
         <Text>UID: {new Token().uid()}</Text>
         <Text>network: {new Token().network()}</Text>
         <Text>BTC price: {store.rate("BTC")}</Text>
+        <Text>endpoint: {getGraphQlUri()}</Text>
         <Button
           title="Crash test"
           onPress={() => {

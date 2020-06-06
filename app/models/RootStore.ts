@@ -4,9 +4,13 @@ import { Instance, types } from "mobx-state-tree"
 import { localStorageMixin } from "mst-gql"
 import { AccountType, CurrencyType } from "../utils/enum"
 import { RootStoreBase } from "./RootStore.base"
+import moment from "moment"
 import { find } from "lodash"
+import { TransactionModel } from "./TransactionModel"
+import { Token } from "../utils/token"
+import { EarnModel } from "./EarnModel"
 
-const ROOT_STATE_STORAGE_KEY = "rootAppGaloy"
+export const ROOT_STATE_STORAGE_KEY = "rootAppGaloy"
 
 
 export interface RootStoreType extends Instance<typeof RootStore.Type> {}
@@ -37,8 +41,36 @@ export const OnboardingModel = types.model("Onboarding", {
       self.network = network // TODO make a view from token.
     },
     earnComplete(id) {
-      self.mutateEarnCompleted({id}, "__typename, id, completed")
-      self.queryWallet()
+      const token = new Token().has()
+      const wallet = self.wallet("BTC")
+      console.tron.log({wallet})
+
+      if (!token) {
+        const earn = self.earns.get(id)
+        earn.completed = true
+        self.earns.set(id, earn)
+
+        const amount = earn.value
+
+        const tx = TransactionModel.create({
+          __typename: "Transaction",
+          id,
+          amount,
+          description: id,
+          created_at: moment().unix(),
+          hash: null,
+          type: "earn"
+        })
+
+        self.transactions.set(id, tx)
+        console.tron.log("transaction:", self.transactions)
+
+        self.wallet("BTC").transactions.push(id)
+        self.wallet("BTC").balance += amount
+      } else {
+        self.mutateEarnCompleted({id}, "__typename, id, completed")
+        self.queryWallet()
+      }
     },
   }))
   .views((self) => ({
