@@ -159,8 +159,11 @@ const formatTransactions = (transactions) => {
 export const TransactionScreenDataInjected = observer(({navigation, route}) => {
   const { store, error, loading, data, query } = useQuery(store => store.queryWallet(
     {},
-    ` currency
+    ` __typename
+      id
+      currency
       transactions {
+        __typename
         id
         amount
         description
