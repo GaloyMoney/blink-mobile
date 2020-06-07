@@ -11,7 +11,6 @@ import { VersionComponent } from "../../components/version"
 import { StoreContext } from "../../models"
 import { color } from "../../theme"
 import { Token } from "../../utils/token"
-import { getGraphQlUri } from "../../utils/api_uri"
 import { ROOT_STATE_STORAGE_KEY } from "../../models/RootStore"
 
 const styles = EStyleSheet.create({
@@ -32,6 +31,7 @@ export const resetDataStore = async () => {
 
 export const DebugScreen = observer(({}) => {
   const store = React.useContext(StoreContext)
+  const token = new Token()
 
   const demoReactotron = async () => {
     console.tron.logImportant("I am important")
@@ -66,7 +66,7 @@ export const DebugScreen = observer(({}) => {
         title="Delete account and log out (TODO)"
         onPress={async () => {
           resetDataStore()
-          if (new Token().has()) {
+          if (token.has()) {
             try { // FIXME
               const query = `mutation deleteCurrentUser {
                 deleteCurrentUser
@@ -78,7 +78,7 @@ export const DebugScreen = observer(({}) => {
               console.tron.log(`${err}`)
             }
           }
-          await new Token().delete()
+          await token.delete()
           Alert.alert("user succesfully deleted. Restart your app")
         }}
         />
@@ -92,16 +92,16 @@ export const DebugScreen = observer(({}) => {
       <Button
         title="Delete token / log out"
         onPress={async () => {
-          await new Token().delete()
+          await token.delete()
           Alert.alert("log out completed. Restart your app")
         }}
       />
       <VersionComponent />
       <View>
-        <Text>UID: {new Token().uid()}</Text>
-        <Text>network: {new Token().network()}</Text>
+        <Text>UID: {token.uid}</Text>
+        <Text>network: {token.network}</Text>
+        <Text>endpoint: {token.graphQlUri}</Text>
         <Text>BTC price: {store.rate("BTC")}</Text>
-        <Text>endpoint: {getGraphQlUri()}</Text>
         <Button
           title="Crash test"
           onPress={() => {

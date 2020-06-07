@@ -13,9 +13,10 @@ import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { Token } from "../../utils/token"
 import BadgerPhone from "./badger-phone-01.svg"
-import { getGraphQlUri } from "../../utils/api_uri"
 import { values } from "mobx"
 import { filter, map } from "lodash"
+import { getEnv } from "mobx-state-tree"
+import { wrapperCreateHttpClient } from "../../utils/request"
 
 const styles = EStyleSheet.create({
   activityIndicatorWrapper: {
@@ -106,7 +107,7 @@ export const WelcomePhoneInputScreen = ({ navigation }) => {
       }`
 
       const phone = inputRef.current.getValue()
-      const success = await request(getGraphQlUri(), query, {phone})
+      const success = await request(new Token().graphQlUri, query, {phone})
 
       if (success) {
         setLoading(false)
@@ -175,7 +176,10 @@ export const WelcomePhoneValidationScreenDataInjected = ({ route, navigation }) 
     const ids = map(filter(values(store.earns), {completed: true}), "id")
     store.mutateEarnCompleted({ids})
 
-    store.setNetwork(new Token().network())
+    const env = getEnv(store)
+    console.tron.log({env})
+    env["gqlHttpClient"] = wrapperCreateHttpClient()
+    console.tron.log({env2: getEnv(store)})
   }
 
   return <WelcomePhoneValidationScreen onSuccess={onSuccess} route={route} navigation={navigation} />
@@ -210,7 +214,7 @@ export const WelcomePhoneValidationScreen = ({ onSuccess, route, navigation }) =
 
       const variables = {phone, code: Number(code), network}
       console.tron.log({variables})
-      const { login } = await request(getGraphQlUri(), query, variables)
+      const { login } = await request(new Token().graphQlUri, query, variables)
       console.tron.log({login})
 
       if (login.token) {

@@ -1,14 +1,12 @@
 import AsyncStorage from "@react-native-community/async-storage"
 import { values } from "mobx"
 import { Instance, types } from "mobx-state-tree"
+import moment from "moment"
 import { localStorageMixin } from "mst-gql"
 import { AccountType, CurrencyType } from "../utils/enum"
-import { RootStoreBase } from "./RootStore.base"
-import moment from "moment"
-import { find } from "lodash"
-import { TransactionModel } from "./TransactionModel"
 import { Token } from "../utils/token"
-import { EarnModel } from "./EarnModel"
+import { RootStoreBase } from "./RootStore.base"
+import { TransactionModel } from "./TransactionModel"
 
 export const ROOT_STATE_STORAGE_KEY = "rootAppGaloy"
 
@@ -29,16 +27,12 @@ export const OnboardingModel = types.model("Onboarding", {
       storageKey: ROOT_STATE_STORAGE_KEY
   }))
   .props({
-      network: types.string,
-      onboarding: types.optional(OnboardingModel, {})
-  })  
+      onboarding: types.optional(OnboardingModel, {}),
+  })
   .actions(self => ({
     // This is an auto-generated example action.
     log() {
       console.log(JSON.stringify(self))
-    },
-    setNetwork(network) {
-      self.network = network // TODO make a view from token.
     },
     earnComplete(id) {
       const token = new Token().has()
