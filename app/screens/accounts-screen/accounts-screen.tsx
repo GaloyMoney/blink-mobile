@@ -80,7 +80,7 @@ query home($isLogged: Boolean!) {
 `
 
 export const AccountsScreen = observer(({ route, navigation }) => {
-  const isLogged = new Token().has()
+  const isLogged = !!(new Token().uid)
   console.tron.log({isLogged})
 
   let query, store, error, loading, data

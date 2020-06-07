@@ -1,15 +1,26 @@
 import { GraphQLClient } from "graphql-request";
 import { Token } from "./token";
-import { getGraphQlUri } from "./api_uri";
+import { createHttpClient } from "mst-gql";
 
 export const request = (...args) => {
-  const bearer_string = `Bearer ${new Token().get()}`
+  const token = new Token()
 
-  const graphQLClient = new GraphQLClient(getGraphQlUri(), {
+  const graphQLClient = new GraphQLClient(token.graphQlUri, {
     headers: {
-      authorization: bearer_string,
+      authorization: token.bearerString,
     },
   })
     
   return graphQLClient.request(...args)
+}
+
+
+export const wrapperCreateHttpClient = () => {
+  const token = new Token()
+
+  return createHttpClient(token.graphQlUri, {
+  headers: {
+    authorization: token.bearerString,
+  },
+})
 }
