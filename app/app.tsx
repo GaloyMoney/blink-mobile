@@ -4,6 +4,7 @@
 
 import "@react-native-firebase/crashlytics"
 import { NavigationContainer } from '@react-navigation/native'
+import { getEnv } from "mobx-state-tree"
 import { createHttpClient } from "mst-gql"
 import "node-libs-react-native/globals" // needed for Buffer?
 import { contains } from "ramda"
@@ -20,8 +21,6 @@ import { DEFAULT_NAVIGATION_CONFIG } from "./navigation/navigation-config"
 import { RootStack } from "./navigation/root-navigator"
 import { getActiveRouteName } from "./utils/navigation"
 import { Token } from "./utils/token"
-import { getEnv } from "mobx-state-tree"
-import { wrapperCreateHttpClient } from "./utils/request"
 
 
 export async function createEnvironment() {
@@ -111,11 +110,11 @@ export const App = () => {
       await token.load()
 
       const rs = RootStore.create(defaultStoreInstance, {
-        gqlHttpClient: wrapperCreateHttpClient()
-      })
-
-      const env1 = getEnv(rs)
-      console.tron.log({env1})
+        gqlHttpClient: createHttpClient(token.graphQlUri, {
+          headers: {
+            authorization: token.bearerString,
+          }
+      })})
 
       setRootStore(rs)
 

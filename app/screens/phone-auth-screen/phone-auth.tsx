@@ -1,4 +1,7 @@
 import request from "graphql-request"
+import { filter, map } from "lodash"
+import { values } from "mobx"
+import { getEnv } from "mobx-state-tree"
 import * as React from "react"
 import { useEffect, useRef, useState } from "react"
 import { ActivityIndicator, Alert, KeyboardAvoidingView, Platform, ScrollView, Text, View } from "react-native"
@@ -13,10 +16,6 @@ import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { Token } from "../../utils/token"
 import BadgerPhone from "./badger-phone-01.svg"
-import { values } from "mobx"
-import { filter, map } from "lodash"
-import { getEnv } from "mobx-state-tree"
-import { wrapperCreateHttpClient } from "../../utils/request"
 
 const styles = EStyleSheet.create({
   activityIndicatorWrapper: {
@@ -176,10 +175,8 @@ export const WelcomePhoneValidationScreenDataInjected = ({ route, navigation }) 
     const ids = map(filter(values(store.earns), {completed: true}), "id")
     store.mutateEarnCompleted({ids})
 
-    const env = getEnv(store)
-    console.tron.log({env})
-    env["gqlHttpClient"] = wrapperCreateHttpClient()
-    console.tron.log({env2: getEnv(store)})
+    const token = new Token()
+    getEnv(store).gqlHttpClient.setHeaders({authorization: token.bearerString})
   }
 
   return <WelcomePhoneValidationScreen onSuccess={onSuccess} route={route} navigation={navigation} />
