@@ -9,7 +9,7 @@ import { BalanceHeader } from "../../components/balance-header"
 import { LargeButton } from "../../components/large-button"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
-import { useQuery } from "../../models"
+import { useQuery, StoreContext } from "../../models"
 import { palette } from "../../theme/palette"
 import { AccountType, CurrencyType } from "../../utils/enum"
 import { Token } from "../../utils/token"
@@ -79,19 +79,27 @@ query home($isLogged: Boolean!) {
 }
 `
 
-export const AccountsScreen = observer(({ route, navigation }) => {
+export const homeQuery = (store?) => {
   const isLogged = !!(new Token().uid)
   console.tron.log({isLogged})
+  if (store) { // FIXME hacky way around react native hooks that can't be used from store
+    return store.query(gql_query, {isLogged})
+  } else {
+    return useQuery(gql_query, {variables: {isLogged}})
+  }
+}
 
-  let query, store, error, loading, data
+export const AccountsScreen = observer(({ route, navigation }) => {
+
+  const store = React.useContext(StoreContext)
+
+  let query, error, loading
 
   try {
-    const result = useQuery(gql_query, {variables: {isLogged}})
+    const result = homeQuery()
     query = result.query
-    store = result.store
     error = result.error
     loading = result.loading
-    data = result.data
   } catch (err) {
     console.tron.log({err})
   }
@@ -113,7 +121,7 @@ export const AccountsScreen = observer(({ route, navigation }) => {
   ))
 
   // TODO refactor ==> bank should also have a virtual screen
-  if (!loading && (data?.me?.level ?? 0) >= 2) {
+  if (!loading && (store.user.level) >= 2) {
     //TODO
   }
 

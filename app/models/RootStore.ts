@@ -1,12 +1,14 @@
 import AsyncStorage from "@react-native-community/async-storage"
 import { values } from "mobx"
-import { Instance, types } from "mobx-state-tree"
+import { Instance, types, flow } from "mobx-state-tree"
 import moment from "moment"
 import { localStorageMixin } from "mst-gql"
 import { AccountType, CurrencyType } from "../utils/enum"
 import { Token } from "../utils/token"
 import { RootStoreBase } from "./RootStore.base"
 import { TransactionModel } from "./TransactionModel"
+import { map, filter } from "lodash"
+import { homeQuery } from "../screens/accounts-screen"
 
 export const ROOT_STATE_STORAGE_KEY = "rootAppGaloy"
 
@@ -29,12 +31,12 @@ export const OnboardingModel = types.model("Onboarding", {
   .props({
       onboarding: types.optional(OnboardingModel, {}),
   })
-  .actions(self => ({
+  .actions(self => {
     // This is an auto-generated example action.
-    log() {
+    const log = () => {
       console.log(JSON.stringify(self))
-    },
-    earnComplete(id) {
+    }
+    const earnComplete = (id) => {
       const token = new Token().has()
       const wallet = self.wallet("BTC")
       console.tron.log({wallet})
@@ -65,8 +67,23 @@ export const OnboardingModel = types.model("Onboarding", {
         self.mutateEarnCompleted({ids: [id]}, "__typename, id, completed")
         self.queryWallet()
       }
-    },
-  }))
+    }
+    const loginSuccessful = flow(function*() {
+      self.transactions.clear()
+
+      const ids = map(filter(values(self.earns), {completed: true}), "id")
+      yield self.mutateEarnCompleted({ids})
+
+      console.tron.log("yield self.mutateEarnCompleted({ids}) done")
+      
+      // self.earns.clear()
+      yield homeQuery(self)
+      self.users.delete("incognito")
+      console.tron.log("home query done")
+    })
+  
+    return { log, earnComplete, loginSuccessful }
+  })
   .views((self) => ({
     // workaround on the fact key can't be enum
     rate(currency: CurrencyType) {

@@ -171,12 +171,11 @@ export const WelcomePhoneInputScreen = ({ navigation }) => {
 export const WelcomePhoneValidationScreenDataInjected = ({ route, navigation }) => {
   const store = React.useContext(StoreContext)
 
-  const onSuccess = () => {
-    const ids = map(filter(values(store.earns), {completed: true}), "id")
-    store.mutateEarnCompleted({ids})
-
+  const onSuccess = async () => {
     const token = new Token()
     getEnv(store).gqlHttpClient.setHeaders({authorization: token.bearerString})
+
+    await store.loginSuccessful()
   }
 
   return <WelcomePhoneValidationScreen onSuccess={onSuccess} route={route} navigation={navigation} />
