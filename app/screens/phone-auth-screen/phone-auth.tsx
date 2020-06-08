@@ -1,4 +1,7 @@
 import request from "graphql-request"
+import { filter, map } from "lodash"
+import { values } from "mobx"
+import { getEnv } from "mobx-state-tree"
 import * as React from "react"
 import { useEffect, useRef, useState } from "react"
 import { ActivityIndicator, Alert, KeyboardAvoidingView, Platform, ScrollView, Text, View } from "react-native"
@@ -13,7 +16,6 @@ import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { Token } from "../../utils/token"
 import BadgerPhone from "./badger-phone-01.svg"
-import { getGraphQlUri } from "../../utils/api_uri"
 
 const styles = EStyleSheet.create({
   activityIndicatorWrapper: {
@@ -104,7 +106,7 @@ export const WelcomePhoneInputScreen = ({ navigation }) => {
       }`
 
       const phone = inputRef.current.getValue()
-      const success = await request(getGraphQlUri(), query, {phone})
+      const success = await request(new Token().graphQlUri, query, {phone})
 
       if (success) {
         setLoading(false)
@@ -169,8 +171,11 @@ export const WelcomePhoneInputScreen = ({ navigation }) => {
 export const WelcomePhoneValidationScreenDataInjected = ({ route, navigation }) => {
   const store = React.useContext(StoreContext)
 
-  const onSuccess = () => {
-    store.setNetwork(new Token().network())
+  const onSuccess = async () => {
+    const token = new Token()
+    getEnv(store).gqlHttpClient.setHeaders({authorization: token.bearerString})
+
+    await store.loginSuccessful()
   }
 
   return <WelcomePhoneValidationScreen onSuccess={onSuccess} route={route} navigation={navigation} />
@@ -205,7 +210,7 @@ export const WelcomePhoneValidationScreen = ({ onSuccess, route, navigation }) =
 
       const variables = {phone, code: Number(code), network}
       console.tron.log({variables})
-      const { login } = await request(getGraphQlUri(), query, variables)
+      const { login } = await request(new Token().graphQlUri, query, variables)
       console.tron.log({login})
 
       if (login.token) {

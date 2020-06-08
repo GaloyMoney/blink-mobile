@@ -1,5 +1,6 @@
 import { StackNavigationProp } from "@react-navigation/stack"
 import { observer } from "mobx-react"
+import moment from "moment"
 import * as React from "react"
 import { RefreshControl, SectionList, Text, View } from "react-native"
 import { ListItem } from "react-native-elements"
@@ -8,10 +9,11 @@ import { CurrencyText } from "../../components/currency-text"
 import { IconTransaction } from "../../components/icon-transactions"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
-import { useQuery } from "../../models"
+import { StoreContext, useQuery } from "../../models"
 import { palette } from "../../theme/palette"
 import { sameDay, sameMonth } from "../../utils/date"
 import { AccountType, CurrencyType } from "../../utils/enum"
+import { Token } from "../../utils/token"
 
 
 
@@ -103,17 +105,18 @@ const formatTransactions = (transactions) => {
   const before = []
 
   transactions = transactions.slice().sort((a, b) => (a.date > b.date ? -1 : 1)) // warning without slice?
+  transactions.forEach(tx => tx.date = moment.unix(tx.created_at))
 
   const isToday = (tx) => {
-    return sameDay(tx.created_at, new Date())
+    return sameDay(tx.date, new Date())
   }
 
   const isYesterday = (tx) => {
-    return sameDay(tx.created_at, new Date().setDate(new Date().getDate() - 1))
+    return sameDay(tx.date, new Date().setDate(new Date().getDate() - 1))
   }
 
   const isThisMonth = (tx) => {
-    return sameMonth(tx.created_at, new Date())
+    return sameMonth(tx.date, new Date())
   }
 
   if (transactions.length === 0) {
@@ -155,31 +158,40 @@ const formatTransactions = (transactions) => {
 
 
 export const TransactionScreenDataInjected = observer(({navigation, route}) => {
-  const { store, error, loading, data, query } = useQuery(store => store.queryWallet(
-    {},
-    ` currency
-      transactions {
+
+  const store = React.useContext(StoreContext)
+
+  let query = { refetch: () => {}}
+  let loading = false
+  
+  if (new Token().has()) {
+    const { error, ...others } = useQuery(store => store.queryWallet(
+      {},
+      ` __typename
         id
-        amount
-        description
-        created_at
-        hash
-        type
-      }`
-  )) 
+        currency
+        transactions {
+          __typename
+          id
+          amount
+          description
+          created_at
+          hash
+          type
+        }`
+    ))   
+
+    loading = others.loading
+    query = others.query
+
+    if (error) {
+      return <Text>{error.toString()}</Text>
+    }
+  }
 
   const currency = "BTC" // FIXME
   const account = route.params.account
 
-  let walletBtc = {}
-
-  if (data) {
-    walletBtc = data.wallet.filter(item => item.currency === currency)[0]
-  }
-
-  if (error) {
-    return <Text>{error.toString()}</Text>
-  }
 
   console.tron.log({loading})
 
@@ -189,7 +201,7 @@ export const TransactionScreenDataInjected = observer(({navigation, route}) => {
     refreshing={loading}
     onRefresh={() => query.refetch()}
     // onRefresh={onRefresh} FIXME
-    transactions={walletBtc.transactions ?? []} // FIXME
+    transactions={store.wallets.get("BTC").transactions}
   />
 })
 
