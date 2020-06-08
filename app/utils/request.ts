@@ -13,14 +13,3 @@ export const request = (...args) => {
     
   return graphQLClient.request(...args)
 }
-
-
-export const wrapperCreateHttpClient = () => {
-  const token = new Token()
-
-  return createHttpClient(token.graphQlUri, {
-  headers: {
-    authorization: token.bearerString,
-  },
-})
-}
