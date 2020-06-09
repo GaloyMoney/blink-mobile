@@ -4,6 +4,7 @@
 
 import "@react-native-firebase/crashlytics"
 import { NavigationContainer } from '@react-navigation/native'
+import { getEnv } from "mobx-state-tree"
 import { createHttpClient } from "mst-gql"
 import "node-libs-react-native/globals" // needed for Buffer?
 import { contains } from "ramda"
@@ -18,7 +19,6 @@ import { RootStore, StoreContext } from "./models"
 import { Environment } from "./models/environment"
 import { DEFAULT_NAVIGATION_CONFIG } from "./navigation/navigation-config"
 import { RootStack } from "./navigation/root-navigator"
-import { getGraphQlUri } from "./utils/api_uri"
 import { getActiveRouteName } from "./utils/navigation"
 import { Token } from "./utils/token"
 
@@ -80,12 +80,14 @@ export const App = () => {
       "USD": {
         id: "USD",
         currency: "USD",
-        balance: 0
+        balance: 0,
+        transactions: []
       },
       "BTC": {
         id: "BTC",
         currency: "BTC",
-        balance: 0
+        balance: 0,
+        transactions: []
       }
     },
     users: {
@@ -108,12 +110,11 @@ export const App = () => {
       await token.load()
 
       const rs = RootStore.create(defaultStoreInstance, {
-        gqlHttpClient: createHttpClient(getGraphQlUri(), {
+        gqlHttpClient: createHttpClient(token.graphQlUri, {
           headers: {
-            authorization: token.has() ? `Bearer ${token.get()}` : '',
-          },
-        })
-      })
+            authorization: token.bearerString,
+          }
+      })})
 
       setRootStore(rs)
 

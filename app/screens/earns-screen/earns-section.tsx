@@ -13,7 +13,7 @@ import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { SVGs } from "./earn-svg-factory"
-import { earnsMeta, getEarnFromSection, getRemainingSatsOnSection } from "./earns-utils"
+import { getCardsFromSection, remainingSatsOnSection } from "./earns-utils"
 import { useIsFocused } from '@react-navigation/native';
 import { StoreContext } from "../../models"
 
@@ -166,15 +166,17 @@ export const EarnSection = observer(({ route, navigation }) => {
   const earnsArray = store.earnArray
 
   const sectionIndex = route.params.section
-  const cards = getEarnFromSection({ sectionIndex, earnsMeta, earnsArray })
+  const cards = getCardsFromSection({ sectionIndex, earnsArray })
 
   const itemIndex = cards.findIndex(item => !item.fullfilled)
   const [firstItem] = useState(itemIndex >= 0 ? itemIndex : 0)
 
   const [currRewardIndex, setCurrRewardIndex] = useState(firstItem)
 
-  const [initialRemainingSats] = useState(getRemainingSatsOnSection({ sectionIndex, earnsArray, store }))
-  const currentRemainingEarn = getRemainingSatsOnSection({ sectionIndex, earnsArray, store })
+  const remainingSats = remainingSatsOnSection({ sectionIndex, earnsArray, store })
+
+  const [initialRemainingSats] = useState(remainingSats)
+  const currentRemainingEarn = remainingSats
   
   const sectionTitle = translate(`EarnScreen.earns\.${sectionIndex}\.meta.title`)
 
@@ -183,7 +185,7 @@ export const EarnSection = observer(({ route, navigation }) => {
   if (initialRemainingSats !== 0 && currentRemainingEarn === 0 && isFocused) {
     console.tron.warn("section Completed!")
     navigation.navigate("sectionCompleted", {
-      amount: cards.reduce((acc, item) => store.earnReward(item.id) + acc, 0),
+      amount: cards.reduce((acc, item) => item.value + acc, 0),
       sectionTitle
   })}
 
@@ -202,7 +204,7 @@ export const EarnSection = observer(({ route, navigation }) => {
         navigation.navigate('earnsQuiz', { 
           title: card.title, 
           text: card.text, 
-          amount: store.earnReward(card.id), // FIXME
+          amount: card.value,
           question: card.question,
           answers: card.answers, 
           feedback: card.feedback,
@@ -225,12 +227,16 @@ export const EarnSection = observer(({ route, navigation }) => {
       //       break
       case RewardType.Action:
         // TODO
-        // await earnsMeta[earns.id].onAction({ dataStore, navigate })
         break
     }
   }
 
   const CardItem = ({ item, index }) => {
+    const text =                 I18n.t(item.fullfilled ? "EarnScreen.satsEarned" : "EarnScreen.earnSats", {
+      count: item.value,
+      formatted_number: I18n.toNumber(item.value, { precision: 0 }),
+    })
+
     return (
       <>
         <View style={styles.item}>
@@ -256,19 +262,10 @@ export const EarnSection = observer(({ route, navigation }) => {
               buttonStyle={item.fullfilled ? styles.buttonStyleFullfilled : styles.textButton}
               titleStyle={item.fullfilled ? styles.titleStyleFullfilled : styles.titleStyle}
               title={
-                  // item.enabled
-                  // ?
-                  item.fullfilled
-                    ? I18n.t("EarnScreen.satsEarned", {
-                        count: store.earnReward(item.id),
-                        formatted_number: I18n.toNumber(store.earnReward(item.id), { precision: 0 }),
-                      })
-                    : I18n.t("EarnScreen.earnSats", {
-                        count: store.earnReward(item.id),
-                        formatted_number: I18n.toNumber(store.earnReward(item.id), { precision: 0 }),
-                      })
-                    // : translate("common.learnMore")
-                  // : 
+                I18n.t(item.fullfilled ? "EarnScreen.satsEarned" : "EarnScreen.earnSats", {
+                  count: item.value,
+                  formatted_number: I18n.toNumber(item.value, { precision: 0 }),
+                })
               }
               icon={item.fullfilled ? <Icon 
                 name={"ios-checkmark-circle-outline"}
@@ -283,7 +280,7 @@ export const EarnSection = observer(({ route, navigation }) => {
         {!item.enabled &&
           <>
             <Text style={styles.unlockQuestion}>To unlock, answer the question:</Text>
-            <Text style={styles.unlock}>{item.enabledMessage}</Text>
+            <Text style={styles.unlock}>{item.nonEnabledMessage}</Text>
           </>
         }
       </>
