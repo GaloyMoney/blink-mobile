@@ -82,7 +82,7 @@ const Row = ({ entry, value }) => (
 
 export const TransactionDetailScreen = ({ route, navigation }) => {
   
-  const { currency, account, amount, created_at, hash, type, description, fee,
+  const { currency, account, amount, date, hash, type, description, fee,
     destination, id } = route.params as AccountDetailItemProps
 
   const spendOrReceive = amount < 0 ? "spent" : "received"
@@ -95,7 +95,7 @@ export const TransactionDetailScreen = ({ route, navigation }) => {
     hour: "numeric",
     minute: "numeric",
   }
-  const date_format = created_at.toLocaleString("en-US", options)
+  const date_format = date.toLocaleString("en-US", options)
 
   return (
     <Screen style={styles.screen}>

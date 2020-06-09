@@ -19,7 +19,7 @@ export const TransactionModelBase = ModelBase
     id: types.identifier,
     amount: types.union(types.undefined, types.integer),
     description: types.union(types.undefined, types.string),
-    created_at: types.union(types.undefined, types.string),
+    created_at: types.union(types.undefined, types.integer),
     hash: types.union(types.undefined, types.null, types.string),
     type: types.union(types.undefined, types.string),
   })

@@ -105,8 +105,8 @@ export const RootStoreBase = withTypedRefs<Refs>()(MSTGQLStore
         ${typeof resultSelector === "function" ? resultSelector(new InvoiceModelSelector()).toString() : resultSelector}
       } }`, variables, optimisticUpdate)
     },
-    mutateEarnCompleted(variables: { id?: string }, resultSelector: string | ((qb: EarnModelSelector) => EarnModelSelector) = earnModelPrimitives.toString(), optimisticUpdate?: () => void) {
-      return self.mutate<{ earnCompleted: EarnModelType}>(`mutation earnCompleted($id: ID) { earnCompleted(id: $id) {
+    mutateEarnCompleted(variables: { ids?: string[] }, resultSelector: string | ((qb: EarnModelSelector) => EarnModelSelector) = earnModelPrimitives.toString(), optimisticUpdate?: () => void) {
+      return self.mutate<{ earnCompleted: EarnModelType[]}>(`mutation earnCompleted($ids: [ID]) { earnCompleted(ids: $ids) {
         ${typeof resultSelector === "function" ? resultSelector(new EarnModelSelector()).toString() : resultSelector}
       } }`, variables, optimisticUpdate)
     },
