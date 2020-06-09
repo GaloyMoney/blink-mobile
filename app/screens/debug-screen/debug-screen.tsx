@@ -11,7 +11,7 @@ import { VersionComponent } from "../../components/version"
 import { StoreContext } from "../../models"
 import { color } from "../../theme"
 import { Token } from "../../utils/token"
-import { getGraphQlUri } from "../../utils/api_uri"
+import { ROOT_STATE_STORAGE_KEY } from "../../models/RootStore"
 
 const styles = EStyleSheet.create({
   button: { 
@@ -20,12 +20,18 @@ const styles = EStyleSheet.create({
   },
 })
 
-export const resetDataStore = () => {
-  AsyncStorage.clear() // use storage.ts wrapper
+export const resetDataStore = async () => {
+  try {
+    await AsyncStorage.multiRemove([ROOT_STATE_STORAGE_KEY]) // use storage.ts wrapper
+    // TOKEN_KEY is stored at a separate location
+  } catch(e) {
+    console.tron.log(`error resetting RootStore: ${e}`)
+  }
 }
 
 export const DebugScreen = observer(({}) => {
   const store = React.useContext(StoreContext)
+  const token = new Token()
 
   const demoReactotron = async () => {
     console.tron.logImportant("I am important")
@@ -57,10 +63,10 @@ export const DebugScreen = observer(({}) => {
   return (
     <Screen preset="scroll" backgroundColor={color.transparent}>
       <Button
-        title="Delete account and log out"
+        title="Delete account and log out (TODO)"
         onPress={async () => {
           resetDataStore()
-          if (new Token().has()) {
+          if (token.has()) {
             try { // FIXME
               const query = `mutation deleteCurrentUser {
                 deleteCurrentUser
@@ -72,7 +78,7 @@ export const DebugScreen = observer(({}) => {
               console.tron.log(`${err}`)
             }
           }
-          await new Token().delete()
+          await token.delete()
           Alert.alert("user succesfully deleted. Restart your app")
         }}
         />
@@ -84,20 +90,17 @@ export const DebugScreen = observer(({}) => {
         }}
       />
       <Button
-        title="Log out"
+        title="Delete token / log out"
         onPress={async () => {
-          await new Token().delete()
+          await token.delete()
           Alert.alert("log out completed. Restart your app")
         }}
       />
-      <Button
-        title="earn rewards"
-        onPress={() => store.earnReward("sat")}
-      />
       <VersionComponent />
       <View>
-        <Text>UID: {new Token().uid()}</Text>
-        <Text>network: {new Token().network()}</Text>
+        <Text>UID: {token.uid}</Text>
+        <Text>network: {token.network}</Text>
+        <Text>endpoint: {token.graphQlUri}</Text>
         <Text>BTC price: {store.rate("BTC")}</Text>
         <Button
           title="Crash test"
