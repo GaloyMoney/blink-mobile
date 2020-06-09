@@ -1,7 +1,9 @@
 import { saveString, loadString, remove } from "./storage"
 const  jwtDecode = require('jwt-decode')
+import { GRAPHQL_TESTNET_URI } from 'react-native-dotenv'
+import { GRAPHQL_MAINNET_URI } from 'react-native-dotenv'
 
-const key = "GaloyToken"
+export const TOKEN_KEY = "GaloyToken"
 
 // Singleton class
 export class Token {
@@ -18,32 +20,26 @@ export class Token {
 
   async save({token}) {
     this.mem_token = token
-    return await saveString(key, token)
+    return await saveString(TOKEN_KEY, token)
   }
 
   async load (){
-    this.mem_token = await loadString(key)
+    this.mem_token = await loadString(TOKEN_KEY)
     return this.mem_token
   }
 
   async delete () {
     this.mem_token = null
-    remove(key)
+    remove(TOKEN_KEY)
   }
 
-  get () {
-    return this.mem_token
-  }
-
-  has () {
-    console.tron.log({mem_token: this.mem_token})
+  protected has () {
     return this.mem_token !== null
     // TODO check
   }
 
-  uid () {
+  get uid () {
     try {
-      console.tron.log(this.mem_token)
       const { uid } = jwtDecode(this.mem_token)
       console.tron.log({uid})
       return uid
@@ -53,7 +49,7 @@ export class Token {
     }
   }
 
-  network () {
+  get network () {
     try {
       console.tron.log(this.mem_token)
       const { network } = jwtDecode(this.mem_token)
@@ -63,6 +59,18 @@ export class Token {
       console.tron.log(err.toString())
       return null
     }
+  }
+
+  get graphQlUri () {
+    if (this.network === "mainnet") {
+      return GRAPHQL_MAINNET_URI
+    } else {
+      return GRAPHQL_TESTNET_URI
+    }
+  }
+
+  get bearerString() {
+    return this.has() ? `Bearer ${this.mem_token}` : ''
   }
 }
 
