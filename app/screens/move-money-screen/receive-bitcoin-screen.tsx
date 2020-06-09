@@ -22,6 +22,11 @@ const styles = StyleSheet.create({
     borderRadius: 32,
   },
 
+  clearButtonStyle: {
+    marginTop: 18,
+    borderRadius: 32,
+  },
+
   icon: {
     color: palette.darkGrey,
     marginRight: 15,
@@ -47,8 +52,6 @@ const styles = StyleSheet.create({
 })
 
 export const ReceiveBitcoinScreen = observer(({ navigation }) => {
-  const store = React.useContext(StoreContext)
-
   const [memo, setMemo] = useState("")
   const [amount, setAmount] = useState(0)
   const [loading, setLoading] = useState(false)
@@ -78,7 +81,37 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
       const invoiceDecoded = lightningPayReq.decode(invoice)
       const hash = getHash(invoiceDecoded)
 
-      navigation.navigate("showQRCode", { invoice, amount, hash })
+      navigation.navigate("showQRCode", { data: invoice, amount, hash, type: "lightning" })
+    } catch (err) {
+      Alert.alert(err.toString())
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const getAddress = async () => {
+    setLoading(true)
+
+    let address
+
+    try {
+      const query = `mutation getNewAddress {
+        onchain {
+          getNewAddress
+        }
+      }`
+
+      const result = await request(query)
+      console.tron.log({result})
+
+      address = result.onchain.getNewAddress
+    } catch (err) {
+      console.tron.log(`error with getAddress: ${err}`)
+      throw err
+    }
+
+    try {
+      navigation.navigate("showQRCode", { data: address, type: "onchain" })
     } catch (err) {
       Alert.alert(err.toString())
     } finally {
@@ -122,6 +155,17 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
             loading={loading}
             disabled={loading}
           />
+          <Button
+            buttonStyle={styles.clearButtonStyle}
+            titleStyle={{color: palette.lightBlue}}
+            containerStyle={{width: "100%"}}
+            title="On chain?"
+            type="clear"
+            onPress={getAddress}
+            titleStyle={{ fontWeight: "bold" }}
+            loading={loading}
+            disabled={loading}
+          />
         </View>
       </ScrollView>
     </Screen>
@@ -129,7 +173,8 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
 })
 
 export const ShowQRCode = ({ route, navigation }) => {
-  const invoice = route.params.invoice
+  const data = route.params.data
+  const type = route.params.type
   const hash = route.params.hash
   const amount = route.params.amount
 
@@ -138,7 +183,7 @@ export const ShowQRCode = ({ route, navigation }) => {
   const shareInvoice = async () => {
     try {
       const result = await Share.share({
-        message: invoice,
+        message: data,
       })
 
       if (result.action === Share.sharedAction) {
@@ -156,24 +201,32 @@ export const ShowQRCode = ({ route, navigation }) => {
   }
 
   const copyInvoice = () => {
-    Clipboard.setString(invoice)
+    Clipboard.setString(data)
     Alert.alert("Invoice has been copied in the clipboard")
   }
 
   useEffect(() => {
     const interval = setInterval(async () => {
       try {
-        const query = `mutation updatePendingInvoice($hash: String) {
-          invoice {
-            updatePendingInvoice(hash: $hash)
+
+        if (type === "lightning") {
+          const query = `mutation updatePendingInvoice($hash: String) {
+            invoice {
+              updatePendingInvoice(hash: $hash)
+            }
+          }`
+    
+          const result = await request(query, {hash})
+    
+          if (result.invoice.updatePendingInvoice === true) {
+            success()
           }
-        }`
-  
-        const result = await request(query, {hash})
-  
-        if (result.invoice.updatePendingInvoice === true) {
-          success()
         }
+
+        if (type === "onchain") {
+          // TODO
+        }
+
       } catch (err) {
         console.tron.warn(`can't ferch invoice ${err}`)
       }
@@ -207,10 +260,12 @@ export const ShowQRCode = ({ route, navigation }) => {
           <IconTransaction type={"receive"} size={75} color={palette.orange} />
         </View>
         <QRCode style={styles.qr} size={280}>
-          {invoice}
+          {data}
         </QRCode>
         <View style={{ marginHorizontal: 48 }}>
-          <Text style={{ fontSize: 16, alignSelf: "center" }}>Receive {amount} sats</Text>
+          {type === "lightning" &&
+            <Text style={{ fontSize: 16, alignSelf: "center" }}>Receive {amount} sats</Text>
+          }
           <Button
             buttonStyle={styles.buttonStyle}
             disabledStyle={styles.buttonStyle}
