@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
   version: {
     color: palette.darkGrey,
     fontSize: 18,
-    marginTop: 100,
+    marginTop: 18,
     textAlign: "center",
   },
 })
@@ -17,7 +17,7 @@ export const VersionComponent = ({ style }) => (
   <Text style={[style, styles.version]}>
     v{VersionNumber.appVersion} build {VersionNumber.buildVersion}
     {"\n"}
-    network: {Config.BITCOIN_NETWORK} 
+    {/* network: {Config.BITCOIN_NETWORK} TODO */}
     {/* FIXME should be a props */}
   </Text>
 )

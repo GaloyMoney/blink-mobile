@@ -1,18 +1,16 @@
-import { inject } from "mobx-react"
 import * as React from "react"
-import { View, Text, StatusBar } from "react-native"
+import { Text, View } from "react-native"
+import EStyleSheet from "react-native-extended-stylesheet"
 import Swiper from "react-native-swiper"
-import { Onboarding } from "types"
 import { OnboardingScreen } from "../../components/onboarding"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
-import { color } from "../../theme"
+import { StoreContext } from "../../models"
 import { palette } from "../../theme/palette"
 import BitcoinBitcoin from "./bitcoin-bitcoin-01.svg"
 import BankShop from "./cc-bank-shop-01.svg"
 import MascotDollarBitcoin from "./honey-badger-money-bitcoin-01.svg"
 import HoneyBadgerShovel from "./honey-badger-shovel-01.svg"
-import EStyleSheet from "react-native-extended-stylesheet"
 
 
 const styles = EStyleSheet.create({
@@ -39,7 +37,9 @@ const styles = EStyleSheet.create({
   },
 })
 
-export const WelcomeFirstScreen = inject("dataStore")(({ dataStore, navigation }) => {
+export const WelcomeFirstScreen = ({ navigation }) => {
+  const store = React.useContext(StoreContext)
+
   return (
     <Swiper
       loop={false}
@@ -77,7 +77,7 @@ export const WelcomeFirstScreen = inject("dataStore")(({ dataStore, navigation }
       <Screen backgroundColor={palette.lightBlue} statusBar="light-content">
         <OnboardingScreen
           action={async () => {
-            dataStore.onboarding.add(Onboarding.walletDownloaded)
+            store.onboarding.getStartedCompleted()
             navigation.navigate("primaryStack")
           }}
           Svg={HoneyBadgerShovel}
@@ -88,4 +88,4 @@ export const WelcomeFirstScreen = inject("dataStore")(({ dataStore, navigation }
       </Screen>
     </Swiper>
   )
-})
+}
