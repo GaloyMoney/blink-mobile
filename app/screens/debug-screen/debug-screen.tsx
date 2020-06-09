@@ -1,216 +1,115 @@
-import auth from "@react-native-firebase/auth"
+import AsyncStorage from "@react-native-community/async-storage"
 import crashlytics from "@react-native-firebase/crashlytics"
-import functions from "@react-native-firebase/functions"
-import { inject, observer } from "mobx-react"
+import request from "graphql-request"
+import { observer } from "mobx-react"
 import * as React from "react"
-import { useState } from "react"
-import { Alert, Clipboard, StyleSheet, Text, TextInput, TextStyle, View, ViewStyle } from "react-native"
+import { Alert, Text, View } from "react-native"
 import { Button } from "react-native-elements"
+import EStyleSheet from "react-native-extended-stylesheet"
 import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
-import { color, spacing } from "../../theme"
-import { palette } from "../../theme/palette"
-import { resetDataStore } from "../../models/root-store"
+import { StoreContext } from "../../models"
+import { color } from "../../theme"
+import { Token } from "../../utils/token"
+import { ROOT_STATE_STORAGE_KEY } from "../../models/RootStore"
 
-
-
-const FULL: ViewStyle = { flex: 1 }
-const CONTAINER: ViewStyle = {
-  backgroundColor: color.background,
-  paddingHorizontal: spacing[4],
-}
-const DEMO: ViewStyle = {
-  paddingVertical: spacing[4],
-  paddingHorizontal: spacing[4],
-  backgroundColor: "#5D2555",
-}
-const BOLD: TextStyle = { fontWeight: "bold" }
-const DEMO_TEXT: TextStyle = {
-  ...BOLD,
-  fontSize: 13,
-  letterSpacing: 2,
-}
-const TAGLINE: TextStyle = {
-  color: "#BAB6C8",
-  fontSize: 15,
-  lineHeight: 22,
-  marginBottom: spacing[4] + spacing[1],
-}
-const HINT: TextStyle = {
-  color: "#BAB6C8",
-  fontSize: 12,
-  lineHeight: 15,
-  marginVertical: spacing[2],
-}
-
-const styles = StyleSheet.create({
-  separator: {
-    borderColor: palette.angry,
-    borderWidth: 1,
+const styles = EStyleSheet.create({
+  button: { 
+    marginHorizontal: "24rem",
+    marginVertical: "6rem"
   },
 })
 
-const ChannelLiquidityView = ({ chanId, remoteBalance, localBalance }) => {
-  const balanceInbound = localBalance / (localBalance + remoteBalance)
-  const balanceWidth = `${balanceInbound * 100}%`
-
-  return (
-    <View style={styles.separator}>
-      <Text>chanId: {chanId}</Text>
-      <Text>localBalance: {localBalance}</Text>
-      <Text>remoteBalance: {remoteBalance}</Text>
-      <View style={{ backgroundColor: palette.darkGrey }}>
-        <View style={{ width: balanceWidth, height: 10, backgroundColor: palette.white }} />
-      </View>
-    </View>
-  )
+export const resetDataStore = async () => {
+  try {
+    await AsyncStorage.multiRemove([ROOT_STATE_STORAGE_KEY]) // use storage.ts wrapper
+    // TOKEN_KEY is stored at a separate location
+  } catch(e) {
+    console.tron.log(`error resetting RootStore: ${e}`)
+  }
 }
 
-export const DebugScreen = inject("dataStore")(
-  observer(({ dataStore }) => {
-    const [addr, setAddr] = useState("tb1")
-    const [amount, setAmount] = useState(1000)
-    const [invoice, setInvoice] = useState("ln")
+export const DebugScreen = observer(({}) => {
+  const store = React.useContext(StoreContext)
+  const token = new Token()
 
-    const demoReactotron = async () => {
-      console.tron.logImportant("I am important")
-      console.tron.display({
-        name: "DISPLAY",
-        value: {
-          numbers: 1,
-          strings: "strings",
-          booleans: true,
-          arrays: [1, 2, 3],
-          objects: {
+  const demoReactotron = async () => {
+    console.tron.logImportant("I am important")
+    console.tron.display({
+      name: "DISPLAY",
+      value: {
+        numbers: 1,
+        strings: "strings",
+        booleans: true,
+        arrays: [1, 2, 3],
+        objects: {
+          deeper: {
             deeper: {
-              deeper: {
-                yay: "👾",
-              },
+              yay: "👾",
             },
           },
-          functionNames: function hello() {},
         },
-        preview: "More control with display()",
-        important: true,
-        image: {
-          uri:
-            "https://avatars2.githubusercontent.com/u/3902527?s=200&u=a0d16b13ed719f35d95ca0f4440f5d07c32c349a&v=4",
-        },
-      })
-    }
+        functionNames: function hello() {},
+      },
+      preview: "More control with display()",
+      important: true,
+      image: {
+        uri:
+          "https://avatars2.githubusercontent.com/u/3902527?s=200&u=a0d16b13ed719f35d95ca0f4440f5d07c32c349a&v=4",
+      },
+    })
+  }
 
-    return (
-      <View style={FULL}>
-        <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
-          <Button
-            style={DEMO}
-            title="Delete account and log out"
-            onPress={async () => {
-              resetDataStore()
-              if (auth().currentUser) {
-                try {
-                  await functions().httpsCallable("deleteCurrentUser")({})
-                } catch (err) {
-                  console.tron.error(err)
-                }
-              }
-              await auth().signOut()
-              Alert.alert("user succesfully deleted. Restart your app")
-            }}
-            />
-          <Button
-            style={DEMO}
-            title="Delete dataStore state"
-            onPress={async () => {
-              resetDataStore()
-              Alert.alert("state succesfully deleted. Restart your app")
-            }}
-          />
-          <Button
-            style={DEMO}
-            title="Log out"
-            onPress={async () => {
-              await auth().signOut()
-              Alert.alert("log out completed. Restart your app")
-            }}
-          />
-          <VersionComponent />
-          <View>
-            <Text>UID: {auth().currentUser?.uid}</Text>
-            <Text>phone: {auth().currentUser?.phoneNumber}</Text>
-            <Text>BTC price: {dataStore.rates.rate("BTC")}</Text>
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              title="Print $1,000"
-              onPress={() => functions().httpsCallable("dollarFaucet")({ amount: 1000 })}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              title="update Price"
-              onPress={() => dataStore.rates.update()}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              title="getOnChainAddress"
-              onPress={() => functions().httpsCallable("getOnChainAddress")({})}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              title="updateOnchainPayment"
-              onPress={() => functions().httpsCallable("updateOnchainPayment")({})}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              title="test functions"
-              onPress={() => functions().httpsCallable("test")({})}
-            />
-            <TextInput
-              style={HINT}
-              editable
-              onChangeText={(invoice) => setInvoice(invoice)}
-              value={invoice}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              title="Quote Buy BTC"
-              onPress={() => dataStore.exchange.quoteBTC("buy")}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              title="Quote Sell BTC"
-              onPress={() => dataStore.exchange.quoteBTC("sell")}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              title="Buy BTC"
-              onPress={dataStore.exchange.buyBTC}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              title="Sell BTC"
-              onPress={dataStore.exchange.sellBTC}
-            />
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              title="Crash test"
-              onPress={() => {
-                crashlytics().log("Testing crash")
-                crashlytics().crash()
-              }}
-            />
-          </View>
-        </Screen>
+  return (
+    <Screen preset="scroll" backgroundColor={color.transparent}>
+      <Button
+        title="Delete account and log out (TODO)"
+        onPress={async () => {
+          resetDataStore()
+          if (token.has()) {
+            try { // FIXME
+              const query = `mutation deleteCurrentUser {
+                deleteCurrentUser
+              }`
+        
+              const result = await request(getGraphQlUri(), query, {uid: "1234"})
+              // FIXME
+            } catch (err) {
+              console.tron.log(`${err}`)
+            }
+          }
+          await token.delete()
+          Alert.alert("user succesfully deleted. Restart your app")
+        }}
+        />
+      <Button
+        title="Delete dataStore state"
+        onPress={async () => {
+          resetDataStore()
+          Alert.alert("state succesfully deleted. Restart your app")
+        }}
+      />
+      <Button
+        title="Delete token / log out"
+        onPress={async () => {
+          await token.delete()
+          Alert.alert("log out completed. Restart your app")
+        }}
+      />
+      <VersionComponent />
+      <View>
+        <Text>UID: {token.uid}</Text>
+        <Text>network: {token.network}</Text>
+        <Text>endpoint: {token.graphQlUri}</Text>
+        <Text>BTC price: {store.rate("BTC")}</Text>
+        <Button
+          title="Crash test"
+          onPress={() => {
+            crashlytics().log("Testing crash")
+            crashlytics().crash()
+          }}
+        />
       </View>
-    )
-  }),
-)
+    </Screen>
+  )
+})

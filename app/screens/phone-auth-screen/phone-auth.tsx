@@ -1,20 +1,21 @@
-import auth from "@react-native-firebase/auth"
-import { inject } from "mobx-react"
-import { isEmpty } from "ramda"
+import request from "graphql-request"
+import { filter, map } from "lodash"
+import { values } from "mobx"
+import { getEnv } from "mobx-state-tree"
 import * as React from "react"
 import { useEffect, useRef, useState } from "react"
-import { ActivityIndicator, Alert, KeyboardAvoidingView, Platform, Text, View, ScrollView } from "react-native"
+import { ActivityIndicator, Alert, KeyboardAvoidingView, Platform, ScrollView, Text, View } from "react-native"
+import { ButtonGroup, Input } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
-import { TextInput } from "react-native-gesture-handler"
 import PhoneInput from "react-native-phone-input"
-import { Onboarding } from "types"
 import { CloseCross } from "../../components/close-cross"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
+import { StoreContext } from "../../models"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
+import { Token } from "../../utils/token"
 import BadgerPhone from "./badger-phone-01.svg"
-import { Input } from "react-native-elements"
 
 const styles = EStyleSheet.create({
   activityIndicatorWrapper: {
@@ -34,6 +35,10 @@ const styles = EStyleSheet.create({
 
   buttonStyle: {
     backgroundColor: color.primary,
+  },
+
+  button: {
+    color: palette.lightBlue
   },
 
   container: {
@@ -93,16 +98,27 @@ export const WelcomePhoneInputScreen = ({ navigation }) => {
 
     try {
       setLoading(true)
-      const confirmation = await auth().signInWithPhoneNumber(inputRef.current.getValue())
-      if (!isEmpty(confirmation)) {
+      
+      const query = `mutation requestPhoneCode($phone: String) {
+        requestPhoneCode(phone: $phone) {
+          success
+        }
+      }`
+
+      const phone = inputRef.current.getValue()
+      const success = await request(new Token().graphQlUri, query, {phone})
+
+      if (success) {
         setLoading(false)
         const screen = "welcomePhoneValidation"
-        navigation.navigate(screen, { confirmation })
+        navigation.navigate(screen, {phone})       
+
       } else {
-        setErr(`confirmation object is empty? ${confirmation}`)
+        setErr("Error with the request. Try again later")
       }
+
     } catch (err) {
-      console.tron.error(err)
+      console.tron.warn(err)
       setErr(err.toString())
     }
   }
@@ -152,22 +168,18 @@ export const WelcomePhoneInputScreen = ({ navigation }) => {
     </Screen>
 )}
 
-// TOOD make a component. shared with Account View.
-export const onLoggedinSuccess = async ({ dataStore }) => {
-  dataStore.onboarding.add(Onboarding.phoneVerification)
-  console.log("onLoggedinSuccess complete")
-  // FIXME forceRefresh doesn't seem to be passed by
-}
+export const WelcomePhoneValidationScreenDataInjected = ({ route, navigation }) => {
+  const store = React.useContext(StoreContext)
 
-export const WelcomePhoneValidationScreenDataInjected = inject("dataStore")(
-  ({ dataStore, route, navigation }) => {
+  const onSuccess = async () => {
+    const token = new Token()
+    getEnv(store).gqlHttpClient.setHeaders({authorization: token.bearerString})
 
-  const onSuccess = () => {
-    onLoggedinSuccess({ dataStore })
+    await store.loginSuccessful()
   }
 
   return <WelcomePhoneValidationScreen onSuccess={onSuccess} route={route} navigation={navigation} />
-})
+}
 
 
 export const WelcomePhoneValidationScreen = ({ onSuccess, route, navigation }) => {
@@ -175,33 +187,10 @@ export const WelcomePhoneValidationScreen = ({ onSuccess, route, navigation }) =
   const [loading, setLoading] = useState(false)
   const [err, setErr] = useState("")
 
-  const confirmation = route.params.confirmation
+  const networks = ["testnet", "mainnet"]
+  const [network, setNetwork] = useState(networks[0])
 
-  const onAuthStateChanged = async (user) => {
-    // TODO : User type
-    console.tron.log(`onAuthStateChanged`, user)
-    console.log(`onAuthStateChanged`, user)
-
-    if (user.phoneNumber) {
-      // FIXME this should live outside of a component
-      // we should just listen to the proper dataStore object for validation
-
-      await onSuccess()
-      Alert.alert("Phone authentication succesful", err, [
-        {
-          text: translate("common.ok"),
-          onPress: () => {
-            navigation.navigate("Accounts", {forceRefresh: true})
-          },
-        },
-      ])
-    }
-  }
-
-  useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged)
-    return subscriber // unsubscribe on unmount
-  }, [])
+  const phone = route.params.phone
 
   const sendVerif = async () => {
     console.tron.log(`verifyPhoneNumber with code ${code}`)
@@ -209,11 +198,31 @@ export const WelcomePhoneValidationScreen = ({ onSuccess, route, navigation }) =
       Alert.alert(`code need to have 6 digits`)
       return
     }
+
     try {
       setLoading(true)
-      await confirmation.confirm(code)
+      
+      const query = `mutation login($phone: String, $code: Int, $network: Network) {
+        login(phone: $phone, code: $code, network: $network) {
+          token
+        }
+      }`
+
+      const variables = {phone, code: Number(code), network}
+      console.tron.log({variables})
+      const { login } = await request(new Token().graphQlUri, query, variables)
+      console.tron.log({login})
+
+      if (login.token) {
+        await new Token().save({token: login.token})
+        await onSuccess()
+        navigation.navigate("Accounts")
+      } else {
+        setErr("Error logging in. Did you use the right code?")
+      }
+
     } catch (err) {
-      console.tron.error(err) // Invalid code
+      console.tron.warn(err)
       setErr(err.toString())
       setLoading(false)
     }
@@ -247,6 +256,13 @@ export const WelcomePhoneValidationScreen = ({ onSuccess, route, navigation }) =
               >
               {code}
             </Input>
+            <ButtonGroup
+              onPress={index => setNetwork(networks[index])}
+              selectedIndex={networks.findIndex(value => value === network)}
+              buttons={networks}
+              buttonStyle={styles.button} // FIXME
+              containerStyle={{marginLeft: 36, marginRight: 36, marginTop: 24}}
+            />
           </KeyboardAvoidingView>
           <View style={{ flex: 1, minHeight: 16 }} />
           <ActivityIndicator animating={loading} size="large" color={color.primary} />

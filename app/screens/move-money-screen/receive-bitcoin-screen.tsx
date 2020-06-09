@@ -1,5 +1,5 @@
-import { inject, observer } from "mobx-react"
 import * as lightningPayReq from "bolt11"
+import { observer } from "mobx-react"
 import * as React from "react"
 import { useEffect, useState } from "react"
 import { Alert, Clipboard, Share, StyleSheet, Text, View } from "react-native"
@@ -10,9 +10,10 @@ import { IconTransaction } from "../../components/icon-transactions"
 import { QRCode } from "../../components/qrcode"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
+import { StoreContext } from "../../models"
 import { palette } from "../../theme/palette"
-import functions from "@react-native-firebase/functions"
 import { getHash } from "../../utils/lightning"
+import { request } from "../../utils/request"
 
 const styles = StyleSheet.create({
   buttonStyle: {
@@ -45,87 +46,94 @@ const styles = StyleSheet.create({
   },
 })
 
-export const ReceiveBitcoinScreen = inject("dataStore")(
-  observer(({ dataStore, navigation }) => {
-    const [note, setNote] = useState("")
-    const [amount, setAmount] = useState(0)
-    const [loading, setLoading] = useState(false)
+export const ReceiveBitcoinScreen = observer(({ navigation }) => {
+  const store = React.useContext(StoreContext)
 
-    const createInvoice = async () => {
-      setLoading(true)
+  const [memo, setMemo] = useState("")
+  const [amount, setAmount] = useState(0)
+  const [loading, setLoading] = useState(false)
 
-      let invoice
+  const createInvoice = async () => {
+    setLoading(true)
 
-      try {
-        const { data } = await functions().httpsCallable("addInvoice")({
-          value: amount,
-          memo: note,
-        })
-        invoice = data
-      } catch (err) {
-        console.log("error with AddInvoice")
-        throw err
-      }
+    let invoice
 
-      try {
-        const invoiceDecoded = lightningPayReq.decode(invoice)
-        const hash = getHash(invoiceDecoded)
+    try {
+      const query = `mutation addInvoice($amount: Int, $memo: String) {
+        invoice {
+          addInvoice(value: $amount, memo: $memo)
+        }
+      }`
 
-        navigation.navigate("showQRCode", { invoice, amount, hash })
-      } catch (err) {
-        Alert.alert(err.toString())
-      } finally {
-        setLoading(false)
-      }
+      const result = await request(query, {amount, memo})
+      console.tron.log({result})
+
+      invoice = result.invoice.addInvoice
+    } catch (err) {
+      console.tron.log(`error with AddInvoice: ${err}`)
+      throw err
     }
 
-    return (
-      <Screen backgroundColor={palette.lighterGrey}>
-        <ScrollView style={{ flex: 1, paddingTop: 32 }}>
-          <View style={{ alignItems: "center" }}>
-            <IconTransaction type={"receive"} size={75} color={palette.orange} />
-          </View>
-          <View style={styles.section}>
-            <Text style={styles.smallText}>Note</Text>
-            <Input placeholder="Optional" value={note} onChangeText={(text) => setNote(text)} />
-          </View>
-          <View style={styles.section}>
-            <Text style={styles.smallText}>Amount</Text>
-            <Input
-              leftIcon={<Text style={styles.icon}>{translate("common.sats")}</Text>}
-              placeholder="0"
-              autoFocus={true}
-              value={amount.toString()}
-              onChangeText={(input) => {
-                isNaN(+input) ? setAmount(0) : setAmount(+input)
-              }}
-              returnKeyType="done"
-              keyboardType="number-pad"
-              onSubmitEditing={createInvoice}
-            />
-          </View>
-          <View style={{ alignContent: "center", alignItems: "center", marginHorizontal: 48 }}>
-            <Button
-              buttonStyle={styles.buttonStyle}
-              disabledStyle={styles.buttonStyle}
-              containerStyle={{width: "100%"}}
-              title="Create"
-              onPress={createInvoice}
-              titleStyle={{ fontWeight: "bold" }}
-              loading={loading}
-              disabled={loading}
-            />
-          </View>
-        </ScrollView>
-      </Screen>
-    )
-  }),
-)
+    try {
+      const invoiceDecoded = lightningPayReq.decode(invoice)
+      const hash = getHash(invoiceDecoded)
+
+      navigation.navigate("showQRCode", { invoice, amount, hash })
+    } catch (err) {
+      Alert.alert(err.toString())
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <Screen backgroundColor={palette.lighterGrey}>
+      <ScrollView style={{ flex: 1, paddingTop: 32 }}>
+        <View style={{ alignItems: "center" }}>
+          <IconTransaction type={"receive"} size={75} color={palette.orange} />
+        </View>
+        <View style={styles.section}>
+          <Text style={styles.smallText}>Note</Text>
+          <Input placeholder="Optional" value={memo} onChangeText={(text) => setMemo(text)} />
+        </View>
+        <View style={styles.section}>
+          <Text style={styles.smallText}>Amount</Text>
+          <Input
+            leftIcon={<Text style={styles.icon}>{translate("common.sats")}</Text>}
+            placeholder="0"
+            autoFocus={true}
+            value={amount.toString()}
+            onChangeText={(input) => {
+              isNaN(+input) ? setAmount(0) : setAmount(+input)
+            }}
+            returnKeyType="done"
+            keyboardType="number-pad"
+            onSubmitEditing={createInvoice}
+          />
+        </View>
+        <View style={{ alignContent: "center", alignItems: "center", marginHorizontal: 48 }}>
+          <Button
+            buttonStyle={styles.buttonStyle}
+            disabledStyle={styles.buttonStyle}
+            containerStyle={{width: "100%"}}
+            title="Create"
+            onPress={createInvoice}
+            titleStyle={{ fontWeight: "bold" }}
+            loading={loading}
+            disabled={loading}
+          />
+        </View>
+      </ScrollView>
+    </Screen>
+  )
+})
 
 export const ShowQRCode = ({ route, navigation }) => {
   const invoice = route.params.invoice
   const hash = route.params.hash
   const amount = route.params.amount
+
+  const store = React.useContext(StoreContext)
 
   const shareInvoice = async () => {
     try {
@@ -155,8 +163,15 @@ export const ShowQRCode = ({ route, navigation }) => {
   useEffect(() => {
     const interval = setInterval(async () => {
       try {
-        const { data } = await functions().httpsCallable("updatePendingInvoice")(hash)
-        if (data === true) {
+        const query = `mutation updatePendingInvoice($hash: String) {
+          invoice {
+            updatePendingInvoice(hash: $hash)
+          }
+        }`
+  
+        const result = await request(query, {hash})
+  
+        if (result.invoice.updatePendingInvoice === true) {
           success()
         }
       } catch (err) {
@@ -171,6 +186,8 @@ export const ShowQRCode = ({ route, navigation }) => {
       enableVibrateFallback: true,
       ignoreAndroidSystemSettings: false,
     }
+
+    store.queryWallet()
 
     ReactNativeHapticFeedback.trigger("notificationSuccess", options)
     Alert.alert("success", "This invoice has been paid", [

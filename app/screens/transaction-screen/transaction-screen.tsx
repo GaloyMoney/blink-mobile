@@ -1,18 +1,20 @@
+import { StackNavigationProp } from "@react-navigation/stack"
+import { observer } from "mobx-react"
+import moment from "moment"
 import * as React from "react"
-import { Text, View, SectionList, RefreshControl } from "react-native"
+import { RefreshControl, SectionList, Text, View } from "react-native"
+import { ListItem } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
+import { CurrencyText } from "../../components/currency-text"
+import { IconTransaction } from "../../components/icon-transactions"
 import { Screen } from "../../components/screen"
+import { translate } from "../../i18n"
+import { StoreContext, useQuery } from "../../models"
 import { palette } from "../../theme/palette"
 import { sameDay, sameMonth } from "../../utils/date"
-import { translate } from "../../i18n"
-import { ListItem } from "react-native-elements"
-import { IconTransaction } from "../../components/icon-transactions"
-import { CurrencyText } from "../../components/currency-text"
-
-import { ILightningTransaction } from "../../../../common/types";
 import { AccountType, CurrencyType } from "../../utils/enum"
-import { StackNavigationProp } from "@react-navigation/stack"
-import { inject, observer } from "mobx-react"
+import { Token } from "../../utils/token"
+
 
 
 const styles = EStyleSheet.create({
@@ -103,17 +105,18 @@ const formatTransactions = (transactions) => {
   const before = []
 
   transactions = transactions.slice().sort((a, b) => (a.date > b.date ? -1 : 1)) // warning without slice?
+  transactions.forEach(tx => tx.date = moment.unix(tx.created_at))
 
   const isToday = (tx) => {
-    return sameDay(tx.created_at, new Date())
+    return sameDay(tx.date, new Date())
   }
 
   const isYesterday = (tx) => {
-    return sameDay(tx.created_at, new Date().setDate(new Date().getDate() - 1))
+    return sameDay(tx.date, new Date().setDate(new Date().getDate() - 1))
   }
 
   const isThisMonth = (tx) => {
-    return sameMonth(tx.created_at, new Date())
+    return sameMonth(tx.date, new Date())
   }
 
   if (transactions.length === 0) {
@@ -154,46 +157,55 @@ const formatTransactions = (transactions) => {
 }
 
 
-export const AccountToAccountStore = ({account, dataStore}) => {
-  // FIXME should have a generic mapping here, could use mst for it?
-  switch (account) {
-    case AccountType.Bank:
-      return dataStore.fiat
-    case AccountType.Bitcoin:
-      return dataStore.lnd
-  }
-}
+export const TransactionScreenDataInjected = observer(({navigation, route}) => {
 
+  const store = React.useContext(StoreContext)
 
-export const TransactionScreenDataInjected = inject("dataStore")(observer(
-    ({dataStore, navigation, route}) => {
-
-  const [refreshing, setRefreshing] = React.useState(false)
-
-  const account = route.params.account
-  let accountStore = AccountToAccountStore({account, dataStore}) 
+  let query = { refetch: () => {}}
+  let loading = false
   
-  // FIXME useCallBack??
-  const onRefresh = React.useCallback(async () => {
-    setRefreshing(true)
-    await accountStore.update()
-    setRefreshing(false)
-  }, [refreshing])
+  if (new Token().has()) {
+    const { error, ...others } = useQuery(store => store.queryWallet(
+      {},
+      ` __typename
+        id
+        currency
+        transactions {
+          __typename
+          id
+          amount
+          description
+          created_at
+          hash
+          type
+        }`
+    ))   
 
-  React.useEffect(() => {
-    onRefresh()
-  }, [])
+    loading = others.loading
+    query = others.query
+
+    if (error) {
+      return <Text>{error.toString()}</Text>
+    }
+  }
+
+  const currency = "BTC" // FIXME
+  const account = route.params.account
+
+
+  console.tron.log({loading})
 
   return <TransactionScreen 
     navigation={navigation} 
-    currency={accountStore.currency}
-    refreshing={refreshing}
-    onRefresh={onRefresh}
-    transactions={accountStore.transactions}
+    currency={currency}
+    refreshing={loading}
+    onRefresh={() => query.refetch()}
+    // onRefresh={onRefresh} FIXME
+    transactions={store.wallets.get("BTC").transactions}
   />
-}))
+})
 
-export interface AccountDetailItemProps extends ILightningTransaction {
+export interface AccountDetailItemProps {
   account: AccountType,
   currency: CurrencyType,
   navigation: StackNavigationProp<any,any>,

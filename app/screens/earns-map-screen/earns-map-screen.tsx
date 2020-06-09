@@ -5,7 +5,7 @@ import { ScrollView, TouchableOpacity } from "react-native-gesture-handler"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
-import { getRemainingEarnItems, isSectionComplete } from "../earns-screen"
+import { sectionCompletedPct } from "../earns-screen"
 import BitcoinCircle from "./bitcoin-circle-01.svg"
 import BottomOngoing from "./bottom-ongoing-01.svg"
 import BottomStart from "./bottom-start-01.svg"
@@ -27,6 +27,7 @@ import RightTodo from "./right-section-to-do-01.svg"
 import TextBlock from "./text-block-medium.svg"
 import { MountainHeader } from "../../components/mountain-header"
 import { color } from "../../theme"
+import { StoreContext } from "../../models"
 
 const styles = StyleSheet.create({
   mainView: {
@@ -74,7 +75,7 @@ interface IBoxAdding {
 
 interface ISectionData {
   text: string
-  id: string
+  index: string
   icon: React.Component
 }
 
@@ -96,27 +97,30 @@ export const ProgressBar = ({progress}) => {
 )}
 
 
-export const EarnMapDataInjected = inject("dataStore")(
-  observer(({ dataStore, navigation }) => {
+export const EarnMapDataInjected = observer(({ navigation }) => {
 
-  // FIXME sectionId rely on array index. use id instead
-  const sectionId = Object.keys(translate("EarnScreen.earns"))
+  const store = React.useContext(StoreContext)
+  const earnsArray = store.earnArray
+  const sectionIndexs = Object.keys(translate("EarnScreen.earns"))
+
   let sectionsData = []
   let currSection = 0
   let progress = NaN
 
   
-  for (let sectionIndex of sectionId) {
+  for (let sectionIndex of sectionIndexs) {
     sectionsData.push({
-      id: sectionIndex,
+      index: sectionIndex,
       text: translate(`EarnScreen.earns\.${sectionIndex}.meta.title`),
       icon: BitcoinCircle,
     })
 
-    if (isSectionComplete({sectionIndex, dataStore})) {
+    const sectionCompletion = sectionCompletedPct({sectionIndex, earnsArray})
+
+    if (sectionCompletion === 1) {
       currSection += 1
     } else if (isNaN(progress)) { // only do it once for the first uncompleted section
-      progress = getRemainingEarnItems({sectionIndex, dataStore})
+      progress = sectionCompletion
     }
   }
 
@@ -125,10 +129,9 @@ export const EarnMapDataInjected = inject("dataStore")(
     sectionsData={sectionsData}
     currSection={currSection}
     progress={progress}
-    earned={dataStore.lnd.earned}
+    earned={store.earnedSat}
   />
-
-}))
+})
 
 export const EarnMapScreen: React.FC<IEarnMapScreen> = 
   ({ navigation, sectionsData, currSection, progress, earned}) => {
@@ -210,7 +213,7 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> =
                 Icon={item.icon} 
                 side={index % 2 ? "left":"right"} 
                 position={index}
-                section={item.id}
+                section={item.index}
                 length={sectionsData.length}
                 />
   )})
@@ -224,7 +227,7 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> =
   const backgroundColor = currSection < sectionsData.length ? palette.sky : palette.orange
 
   React.useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
+    const unsubscribe = navigation?.addListener('focus', () => {
       StatusBar.setBackgroundColor(color.transparent)
       StatusBar.setBarStyle("light-content")
       StatusBar.setTranslucent(true)
@@ -234,7 +237,7 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> =
   }, [navigation]);
 
   React.useEffect(() => {
-    const unsubscribe = navigation.addListener('blur', () => {
+    const unsubscribe = navigation?.addListener('blur', () => {
       StatusBar.setTranslucent(false)
       StatusBar.setBarStyle("dark-content")
       StatusBar.setBackgroundColor(palette.lighterGrey)

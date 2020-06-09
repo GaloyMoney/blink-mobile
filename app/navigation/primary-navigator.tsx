@@ -18,6 +18,8 @@ import { palette } from "../theme/palette"
 import { AccountType } from "../utils/enum"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TransactionScreenDataInjected } from "../screens/transaction-screen/transaction-screen"
+import { inject, observer } from "mobx-react"
+import { StoreContext } from "../models"
 
 const styles = EStyleSheet.create({
   person: {
@@ -184,11 +186,14 @@ export const PhoneValidationNavigator = () => {
 const Tab = createBottomTabNavigator()
 
 export const PrimaryNavigator = () => {
+  const store = React.useContext(StoreContext)
+
   return (
     <Tab.Navigator
       initialRouteName="Accounts"
       tabBarOptions={{
-        activeTintColor: palette.lightBlue,
+        activeTintColor: store.network === "mainnet" ? 
+          palette.lightBlue : palette.orange,
         inactiveTintColor: palette.lightGrey,
         style: styles.bottomNavigatorStyle,
       }}
@@ -243,7 +248,7 @@ export const RootStackScreen = () => {
   return (
     <RootStack.Navigator mode="modal" headerMode="screen">
       <RootStack.Screen
-        // name="Primary" // FIXME quick fixe
+        // name="Primary" // FIXME quick fix
         name="Earn "
         component={PrimaryNavigator}
         options={{ headerShown: false }}

@@ -2,38 +2,38 @@
 //
 // In this file, we'll be kicking off our app or storybook.
 
-import analytics from '@react-native-firebase/analytics'
 import "@react-native-firebase/crashlytics"
 import { NavigationContainer } from '@react-navigation/native'
-import { Provider } from "mobx-react"
+import { getEnv } from "mobx-state-tree"
+import { createHttpClient } from "mst-gql"
 import "node-libs-react-native/globals" // needed for Buffer?
 import { contains } from "ramda"
 import * as React from "react"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef } from "react"
 import { AppRegistry, Dimensions, YellowBox } from "react-native"
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { Notifications } from "react-native-notifications"
 import { StorybookUIRoot } from "../storybook"
 import "./i18n"
-import { RootStore, setupRootStore } from "./models/root-store"
+import { RootStore, StoreContext } from "./models"
+import { Environment } from "./models/environment"
 import { DEFAULT_NAVIGATION_CONFIG } from "./navigation/navigation-config"
-import { RootStack } from './navigation/root-navigator'
-import { getActiveRouteName, getActiveRouteParams } from "./utils/navigation"
-import DeviceInfo from "react-native-device-info"
-import functions from "@react-native-firebase/functions"
+import { RootStack } from "./navigation/root-navigator"
+import { getActiveRouteName } from "./utils/navigation"
+import { Token } from "./utils/token"
 
+
+export async function createEnvironment() {
+  const env = new Environment()
+  await env.setup()
+  return env
+}
 
 const entireScreenWidth = Dimensions.get('window').width;
 EStyleSheet.build({
   $rem: entireScreenWidth / 380,
   // $textColor: '#0275d8'
 });
-
-DeviceInfo.isEmulator().then((isEmulator) => {
-  if (isEmulator) {
-    functions().useFunctionsEmulator("http://localhost:5000")
-  }
-})
 
 /**
  * Ignore some yellowbox warnings. Some of these are for deprecated functions
@@ -47,15 +47,11 @@ YellowBox.ignoreWarnings([
 // FIXME
 console.disableYellowBox = true
 
-interface AppState {
-  rootStore?: RootStore
-}
-
 /**
  * This is the root component of our app.
  */
 export const App = () => {
-  const [rootStore, setRootStore] = useState(null)
+  const [rootStore, setRootStore] = React.useState(null)
 
   const routeNameRef = useRef()
   const navigationRef = useRef()
@@ -63,13 +59,13 @@ export const App = () => {
   useEffect(() => {
     // FIXME there might be a better way to manage this notification
     Notifications.events().registerNotificationReceivedBackground((notification, completion) => {
-      console.tron.log("Background")
+      console.tron.log("Background notification")
       console.tron.log({ notification })
       completion({ alert: true, sound: false, badge: false })
     })
 
     Notifications.events().registerNotificationReceivedForeground((notification, completion) => {
-      console.tron.log("Foregound")
+      console.tron.log("Foregound notification")
       console.tron.log({ notification })
 
       if (getActiveRouteName(routeNameRef) !== "receiveBitcoin") {
@@ -78,14 +74,58 @@ export const App = () => {
     })
   }, [])
 
+  const defaultStoreInstance = {
+    network: "testnet",
+    wallets: {
+      "USD": {
+        id: "USD",
+        currency: "USD",
+        balance: 0,
+        transactions: []
+      },
+      "BTC": {
+        id: "BTC",
+        currency: "BTC",
+        balance: 0,
+        transactions: []
+      }
+    },
+    users: {
+      "incognito": {
+        id: "incognito",
+        level: 0
+      }
+    }
+  }
+
   useEffect(() => {
     // this is necessary for hot reloading?
-    if (rootStore != null) {
-      return
-    }
+    // if (rootStore != null) {
+    //   return
+    // }
 
     const fn = async () => {
-      setRootStore(await setupRootStore())
+
+      const token = new Token()
+      await token.load()
+
+      const rs = RootStore.create(defaultStoreInstance, {
+        gqlHttpClient: createHttpClient(token.graphQlUri, {
+          headers: {
+            authorization: token.bearerString,
+          }
+      })})
+
+      setRootStore(rs)
+
+      // setRootStore(await setupRootStore())
+      const env = await createEnvironment()
+
+      console.log({env})
+      // reactotron logging
+      if (__DEV__) {
+        env.reactotron.setRootStore(rs, {})
+      }
     }
     fn()
   }, [])
@@ -94,8 +134,6 @@ export const App = () => {
     if (rootStore != null || navigationRef.current == undefined) {
       return
     }
-
-    console.tron.log({ navigationRef })
 
     // this is only accessible after this has been assigned, which is when we have
     const state = navigationRef.current.getRootState()
@@ -122,42 +160,42 @@ export const App = () => {
   //
   // You're welcome to swap in your own component to render if your boot up
   // sequence is too slow though.
+
   if (!rootStore) {
     return null
   }
 
-  const { ...otherStores } = rootStore
-
   return (
     // TODO replace with React.createContext
     // https://mobx.js.org/refguide/inject.html
-    <Provider rootStore={rootStore} {...otherStores} routeNameRef={routeNameRef}>
+
+    <StoreContext.Provider value={rootStore}>
       {/* <BackButtonHandler canExit={canExit}> */}
       <NavigationContainer
         ref={navigationRef}
-        onStateChange={state => {
-          const previousRouteName = routeNameRef.current
-          const currentRouteName = getActiveRouteName(state)
+      onStateChange={state => {
+          // const previousRouteName = routeNameRef.current
+          // const currentRouteName = getActiveRouteName(state)
 
-          if (previousRouteName !== currentRouteName) {
-            if (currentRouteName == "earnsSection") {
-              const routeAndSection = `${currentRouteName}_${getActiveRouteParams(state).section}`
-              console.tron.log({ routeAndSection })
-              analytics().setCurrentScreen(routeAndSection, currentRouteName)
-            } else {
-              analytics().setCurrentScreen(currentRouteName, currentRouteName)
-            }
-          }
+          // if (previousRouteName !== currentRouteName) {
+          //   if (currentRouteName == "earnsSection") {
+          //     const routeAndSection = `${currentRouteName}_${getActiveRouteParams(state).section}`
+          //     // console.tron.log({ routeAndSection })
+          //     analytics().setCurrentScreen(routeAndSection, currentRouteName)
+          //   } else {
+          //     analytics().setCurrentScreen(currentRouteName, currentRouteName)
+          //   }
+          // }
 
-          // Save the current route name for later comparision
-          routeNameRef.current = currentRouteName
+          // // Save the current route name for later comparision
+          // routeNameRef.current = currentRouteName
         }}>
         {/* <StatefulNavigator> */}
-        <RootStack />
+          <RootStack />
         {/* <StatefulNavigator /> */}
       </NavigationContainer>
       {/* </BackButtonHandler> */}
-    </Provider>
+    </StoreContext.Provider>
   )
 }
 
