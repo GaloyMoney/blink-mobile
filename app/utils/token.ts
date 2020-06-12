@@ -33,7 +33,7 @@ export class Token {
     remove(TOKEN_KEY)
   }
 
-  protected has () {
+  has () {
     return this.mem_token !== null
     // TODO check
   }

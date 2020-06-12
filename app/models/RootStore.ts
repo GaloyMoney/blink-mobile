@@ -69,16 +69,18 @@ export const OnboardingModel = types.model("Onboarding", {
       }
     }
     const loginSuccessful = flow(function*() {
-      self.transactions.clear()
-
+      // sync the earned quizzes
       const ids = map(filter(values(self.earns), {completed: true}), "id")
       yield self.mutateEarnCompleted({ids})
 
-      console.tron.log("yield self.mutateEarnCompleted({ids}) done")
-      
-      // self.earns.clear()
+      // fetch user data
       yield homeQuery(self)
+
+      // clean up pre-login state
+      self.transactions.clear()
       self.users.delete("incognito")
+      self.wallets.get("BTC").transactions.clear()
+      
       console.tron.log("home query done")
     })
   
