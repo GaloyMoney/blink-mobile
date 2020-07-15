@@ -28,6 +28,7 @@ import TextBlock from "./text-block-medium.svg"
 import { MountainHeader } from "../../components/mountain-header"
 import { color } from "../../theme"
 import { StoreContext } from "../../models"
+import { values } from "mobx"
 
 const styles = StyleSheet.create({
   mainView: {
@@ -100,7 +101,7 @@ export const ProgressBar = ({progress}) => {
 export const EarnMapDataInjected = observer(({ navigation }) => {
 
   const store = React.useContext(StoreContext)
-  const earnsArray = store.earnArray
+  const earnsArray = values(store.earns)
   const sectionIndexs = Object.keys(translate("EarnScreen.earns"))
 
   let sectionsData = []

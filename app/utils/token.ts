@@ -1,5 +1,6 @@
 import { saveString, loadString, remove } from "./storage"
 const  jwtDecode = require('jwt-decode')
+import { GRAPHQL_REGTEST_URI } from 'react-native-dotenv'
 import { GRAPHQL_TESTNET_URI } from 'react-native-dotenv'
 import { GRAPHQL_MAINNET_URI } from 'react-native-dotenv'
 
@@ -25,6 +26,7 @@ export class Token {
 
   async load (){
     this.mem_token = await loadString(TOKEN_KEY)
+    console.log({mem_token: this.mem_token})
     return this.mem_token
   }
 
@@ -62,10 +64,17 @@ export class Token {
   }
 
   get graphQlUri () {
-    if (this.network === "mainnet") {
-      return GRAPHQL_MAINNET_URI
-    } else {
-      return GRAPHQL_TESTNET_URI
+    console.tron.log({network: this.network})
+    switch (this.network) {
+      case "regtest": 
+        return GRAPHQL_REGTEST_URI
+      case "testnet": 
+        return GRAPHQL_TESTNET_URI
+      case "mainnet":
+        return GRAPHQL_MAINNET_URI
+      default:
+        // throw Error(`network ${this.network} does not exist`)
+        return GRAPHQL_TESTNET_URI
     }
   }
 
