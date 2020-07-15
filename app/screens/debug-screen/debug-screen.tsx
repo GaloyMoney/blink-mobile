@@ -10,7 +10,7 @@ import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
 import { StoreContext } from "../../models"
 import { color } from "../../theme"
-import { Token } from "../../utils/token"
+import { Token, getGraphQlUri } from "../../utils/token"
 import { ROOT_STATE_STORAGE_KEY } from "../../models/RootStore"
 
 const styles = EStyleSheet.create({
@@ -72,7 +72,7 @@ export const DebugScreen = observer(({}) => {
                 deleteCurrentUser
               }`
         
-              const result = await request(getGraphQlUri(), query, {uid: "1234"})
+              // const result = await request(getGraphQlUri(), query, {uid: "1234"})
               // FIXME
             } catch (err) {
               console.tron.log(`${err}`)
@@ -100,7 +100,7 @@ export const DebugScreen = observer(({}) => {
       <View>
         <Text>UID: {token.uid}</Text>
         <Text>network: {token.network}</Text>
-        <Text>endpoint: {token.graphQlUri}</Text>
+        <Text>endpoint: {getGraphQlUri(token.network)}</Text>
         <Text>BTC price: {store.rate("BTC")}</Text>
         <Button
           title="Crash test"

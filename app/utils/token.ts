@@ -63,23 +63,21 @@ export class Token {
     }
   }
 
-  get graphQlUri () {
-    console.tron.log({network: this.network})
-    switch (this.network) {
-      case "regtest": 
-        return GRAPHQL_REGTEST_URI
-      case "testnet": 
-        return GRAPHQL_TESTNET_URI
-      case "mainnet":
-        return GRAPHQL_MAINNET_URI
-      default:
-        // throw Error(`network ${this.network} does not exist`)
-        return GRAPHQL_TESTNET_URI
-    }
-  }
-
   get bearerString() {
     return this.has() ? `Bearer ${this.mem_token}` : ''
   }
 }
 
+export const getGraphQlUri = network => {
+  switch (network) {
+    case "regtest": 
+      return GRAPHQL_REGTEST_URI
+    case "testnet": 
+      return GRAPHQL_TESTNET_URI
+    case "mainnet":
+      return GRAPHQL_MAINNET_URI
+    default:
+      console.tron.log("no network test")
+      return "none"
+  }
+}
