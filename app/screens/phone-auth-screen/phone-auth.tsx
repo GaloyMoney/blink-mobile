@@ -14,7 +14,7 @@ import { translate } from "../../i18n"
 import { StoreContext } from "../../models"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-import { Token } from "../../utils/token"
+import { Token, getGraphQlUri } from "../../utils/token"
 import BadgerPhone from "./badger-phone-01.svg"
 
 const styles = EStyleSheet.create({
@@ -86,6 +86,9 @@ export const WelcomePhoneInputScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(false)
   const [err, setErr] = useState("")
 
+  const networks = ["regtest", "testnet", "mainnet"]
+  const [network, setNetwork] = useState(networks[0])
+
   const inputRef = useRef()
 
   const send = async () => {
@@ -106,7 +109,7 @@ export const WelcomePhoneInputScreen = ({ navigation }) => {
       }`
 
       const phone = inputRef.current.getValue()
-      const success = await request(new Token().graphQlUri, query, {phone})
+      const success = await request(getGraphQlUri(network), query, {phone})
 
       if (success) {
         setLoading(false)
@@ -159,6 +162,13 @@ export const WelcomePhoneInputScreen = ({ navigation }) => {
               onSubmitEditing: () => send(),
             }}
           />
+          <ButtonGroup
+            onPress={index => setNetwork(networks[index])}
+            selectedIndex={networks.findIndex(value => value === network)}
+            buttons={networks}
+            buttonStyle={styles.button} // FIXME
+            containerStyle={{marginLeft: 36, marginRight: 36, marginTop: 24}}
+          />
         </KeyboardAvoidingView>
         <View style={{ flex: 1 }} />
         <ActivityIndicator animating={loading} size="large" color={color.primary} />
@@ -187,10 +197,8 @@ export const WelcomePhoneValidationScreen = ({ onSuccess, route, navigation }) =
   const [loading, setLoading] = useState(false)
   const [err, setErr] = useState("")
 
-  const networks = ["regtest", "testnet", "mainnet"]
-  const [network, setNetwork] = useState(networks[0])
-
   const phone = route.params.phone
+  const network = route.params.network
 
   const sendVerif = async () => {
     console.tron.log(`verifyPhoneNumber with code ${code}`)
@@ -209,8 +217,7 @@ export const WelcomePhoneValidationScreen = ({ onSuccess, route, navigation }) =
       }`
 
       const variables = {phone, code: Number(code), network}
-      console.tron.log({variables})
-      const { login } = await request(new Token().graphQlUri, query, variables)
+      const { login } = await request(getGraphQlUri(network), query, variables)
       console.tron.log({login})
 
       if (login.token) {
@@ -256,13 +263,6 @@ export const WelcomePhoneValidationScreen = ({ onSuccess, route, navigation }) =
               >
               {code}
             </Input>
-            <ButtonGroup
-              onPress={index => setNetwork(networks[index])}
-              selectedIndex={networks.findIndex(value => value === network)}
-              buttons={networks}
-              buttonStyle={styles.button} // FIXME
-              containerStyle={{marginLeft: 36, marginRight: 36, marginTop: 24}}
-            />
           </KeyboardAvoidingView>
           <View style={{ flex: 1, minHeight: 16 }} />
           <ActivityIndicator animating={loading} size="large" color={color.primary} />

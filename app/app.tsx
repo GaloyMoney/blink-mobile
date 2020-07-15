@@ -20,7 +20,7 @@ import { Environment } from "./models/environment"
 import { DEFAULT_NAVIGATION_CONFIG } from "./navigation/navigation-config"
 import { RootStack } from "./navigation/root-navigator"
 import { getActiveRouteName } from "./utils/navigation"
-import { Token } from "./utils/token"
+import { Token, getGraphQlUri } from "./utils/token"
 
 
 export async function createEnvironment() {
@@ -110,7 +110,7 @@ export const App = () => {
       await token.load()
 
       const rs = RootStore.create(defaultStoreInstance, {
-        gqlHttpClient: createHttpClient(token.graphQlUri, {
+        gqlHttpClient: createHttpClient(getGraphQlUri(token.network ?? "testnet"), {
           headers: {
             authorization: token.bearerString,
           }
