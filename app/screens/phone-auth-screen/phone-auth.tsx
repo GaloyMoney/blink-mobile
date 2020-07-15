@@ -187,7 +187,7 @@ export const WelcomePhoneValidationScreen = ({ onSuccess, route, navigation }) =
   const [loading, setLoading] = useState(false)
   const [err, setErr] = useState("")
 
-  const networks = ["testnet", "mainnet"]
+  const networks = ["regtest", "testnet", "mainnet"]
   const [network, setNetwork] = useState(networks[0])
 
   const phone = route.params.phone

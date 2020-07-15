@@ -7,7 +7,7 @@ import { AccountType, CurrencyType } from "../utils/enum"
 import { Token } from "../utils/token"
 import { RootStoreBase } from "./RootStore.base"
 import { TransactionModel } from "./TransactionModel"
-import { map, filter } from "lodash"
+import { map, filter, sumBy } from "lodash"
 import { homeQuery } from "../screens/accounts-screen"
 
 export const ROOT_STATE_STORAGE_KEY = "rootAppGaloy"
@@ -37,17 +37,19 @@ export const OnboardingModel = types.model("Onboarding", {
       console.log(JSON.stringify(self))
     }
     const earnComplete = (id) => {
+      const earn = self.earns.get(id)
+      if (earn.completed) {
+        return
+      }
+
       const token = new Token().has()
-      const wallet = self.wallet("BTC")
-      console.tron.log({wallet})
 
       if (!token) {
-        const earn = self.earns.get(id)
         earn.completed = true
         self.earns.set(id, earn)
-
+        
         const amount = earn.value
-
+        
         const tx = TransactionModel.create({
           __typename: "Transaction",
           id,
@@ -57,10 +59,10 @@ export const OnboardingModel = types.model("Onboarding", {
           hash: null,
           type: "earn"
         })
-
+        
         self.transactions.set(id, tx)
         console.tron.log("transaction:", self.transactions)
-
+        
         self.wallet("BTC").transactions.push(id)
         self.wallet("BTC").balance += amount
       } else {
@@ -107,14 +109,8 @@ export const OnboardingModel = types.model("Onboarding", {
       // FIXME dirty way to manage incognito user
       return  users[users.length - 1]
     },
-    get earnArray() {
-      const earnsArray = values(self.earns)
-      return earnsArray
-    },
     get earnedSat() {
-      return values(self.earns)
-        .filter(item => item.completed)
-        .reduce((acc, item) => item.value + acc, 0)
+      return sumBy(filter(values(self.earns), {completed: true}), "value")
     },
     wallet(currency) {
       return values(self.wallets).filter(item => item.currency === currency)[0]
