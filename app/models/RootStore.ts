@@ -36,6 +36,7 @@ export const OnboardingModel = types.model("Onboarding", {
     const log = () => {
       console.log(JSON.stringify(self))
     }
+    
     const earnComplete = (id) => {
       const earn = self.earns.get(id)
       if (earn.completed) {
@@ -70,6 +71,7 @@ export const OnboardingModel = types.model("Onboarding", {
         self.queryWallet()
       }
     }
+
     const loginSuccessful = flow(function*() {
       // sync the earned quizzes
       const ids = map(filter(values(self.earns), {completed: true}), "id")
