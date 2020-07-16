@@ -1,9 +1,11 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { CardStyleInterpolators, createStackNavigator } from "@react-navigation/stack"
 import * as React from "react"
-import { Button, StyleSheet } from "react-native"
+import { Button } from "react-native"
+import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 import { translate } from "../i18n"
+import { StoreContext } from "../models"
 import { AccountDetailScreen } from "../screens/account-detail-screen/account-detail-screen"
 import { AccountsScreen } from "../screens/accounts-screen"
 import { BankAccountEarnScreen, BankAccountReadyScreen, DateOfBirthScreen, OpenBankScreen, PersonalInformationScreen } from "../screens/bank-onboarding"
@@ -14,13 +16,10 @@ import { SectionCompleted } from "../screens/earns-screen/section-completed"
 import { BankTransferScreen, DirectDepositScreen, FindATMScreen, MoveMoneyScreenDataInjected, ReceiveBitcoinScreen, ScanningQRCodeScreen, SendBitcoinScreen, ShowQRCode } from "../screens/move-money-screen"
 import { WelcomePhoneInputScreen, WelcomePhoneValidationScreenDataInjected } from "../screens/phone-auth-screen"
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
+import { TransactionScreenDataInjected } from "../screens/transaction-screen/transaction-screen"
 import { palette } from "../theme/palette"
 import { AccountType } from "../utils/enum"
-import EStyleSheet from "react-native-extended-stylesheet"
-import { TransactionScreenDataInjected } from "../screens/transaction-screen/transaction-screen"
-import { inject, observer } from "mobx-react"
-import { StoreContext } from "../models"
-import { Token } from "../utils/token"
+import { getNetwork } from "../utils/token"
 
 const styles = EStyleSheet.create({
   person: {
@@ -189,11 +188,19 @@ const Tab = createBottomTabNavigator()
 export const PrimaryNavigator = () => {
   const store = React.useContext(StoreContext)
 
+  const [network, setNetwork] = React.useState("mainnet")
+
+  React.useEffect(() => {
+    (async () => {
+      setNetwork(await getNetwork())
+    })()
+  }, [])
+
   return (
     <Tab.Navigator
       initialRouteName="Accounts"
       tabBarOptions={{
-        activeTintColor: new Token().network === "mainnet" ? 
+        activeTintColor: network === "mainnet" ? 
           palette.lightBlue : palette.orange,
         inactiveTintColor: palette.lightGrey,
         style: styles.bottomNavigatorStyle,
