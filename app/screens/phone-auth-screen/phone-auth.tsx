@@ -114,7 +114,7 @@ export const WelcomePhoneInputScreen = ({ navigation }) => {
       if (success) {
         setLoading(false)
         const screen = "welcomePhoneValidation"
-        navigation.navigate(screen, {phone})       
+        navigation.navigate(screen, {phone, network})       
 
       } else {
         setErr("Error with the request. Try again later")
