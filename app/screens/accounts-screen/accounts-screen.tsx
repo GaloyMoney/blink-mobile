@@ -80,8 +80,7 @@ query home($isLogged: Boolean!) {
 `
 
 export const homeQuery = (store?) => {
-  const isLogged = !!(new Token().uid)
-  console.tron.log({isLogged})
+  const isLogged = new Token().has()
   if (store) { // FIXME hacky way around react native hooks that can't be used from store
     return store.query(gql_query, {isLogged})
   } else {

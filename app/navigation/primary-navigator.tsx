@@ -20,6 +20,7 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import { TransactionScreenDataInjected } from "../screens/transaction-screen/transaction-screen"
 import { inject, observer } from "mobx-react"
 import { StoreContext } from "../models"
+import { Token } from "../utils/token"
 
 const styles = EStyleSheet.create({
   person: {
@@ -192,7 +193,7 @@ export const PrimaryNavigator = () => {
     <Tab.Navigator
       initialRouteName="Accounts"
       tabBarOptions={{
-        activeTintColor: store.network === "mainnet" ? 
+        activeTintColor: new Token().network === "mainnet" ? 
           palette.lightBlue : palette.orange,
         inactiveTintColor: palette.lightGrey,
         style: styles.bottomNavigatorStyle,
