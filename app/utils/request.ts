@@ -1,10 +1,10 @@
 import { GraphQLClient } from "graphql-request";
-import { Token } from "./token";
+import { Token, getGraphQlUri } from "./token";
 
 export const request = (...args) => {
   const token = new Token()
 
-  const graphQLClient = new GraphQLClient(token.graphQlUri, {
+  const graphQLClient = new GraphQLClient(getGraphQlUri(token.network), {
     headers: {
       authorization: token.bearerString,
     },
