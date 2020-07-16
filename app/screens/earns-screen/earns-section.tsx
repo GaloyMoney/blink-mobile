@@ -16,6 +16,7 @@ import { SVGs } from "./earn-svg-factory"
 import { getCardsFromSection, remainingSatsOnSection } from "./earns-utils"
 import { useIsFocused } from '@react-navigation/native';
 import { StoreContext } from "../../models"
+import { values } from "mobx"
 
 
 const { width: screenWidth } = Dimensions.get("window")
@@ -163,7 +164,7 @@ const styles = EStyleSheet.create({
 export const EarnSection = observer(({ route, navigation }) => {
 
   const store = React.useContext(StoreContext)
-  const earnsArray = store.earnArray
+  const earnsArray = values(store.earns)
 
   const sectionIndex = route.params.section
   const cards = getCardsFromSection({ sectionIndex, earnsArray })
