@@ -52,8 +52,35 @@ export const AccountItem =
   )
 }
 
-const gql_query = `
-query home($isLogged: Boolean!) {
+// const gql_query = `
+// query home($isLogged: Boolean!) {
+//   prices {
+//     __typename
+//     id
+//     o
+//   }
+//   earnList {
+//     __typename
+//     id
+//     value
+//     completed @include(if: $isLogged)
+//   }
+//   wallet @include(if: $isLogged) {
+//     __typename
+//     id
+//     balance
+//     currency
+//   }
+//   me @include(if: $isLogged) {
+//     __typename
+//     id
+//     level
+//   }
+// }
+// `
+
+const gql_query_logged = `
+query gql_query_logged {
   prices {
     __typename
     id
@@ -63,15 +90,15 @@ query home($isLogged: Boolean!) {
     __typename
     id
     value
-    completed @include(if: $isLogged)
+    completed
   }
-  wallet @include(if: $isLogged) {
+  wallet {
     __typename
     id
     balance
     currency
   }
-  me @include(if: $isLogged) {
+  me {
     __typename
     id
     level
@@ -79,28 +106,38 @@ query home($isLogged: Boolean!) {
 }
 `
 
-export const homeQuery = (store?) => {
-  const isLogged = new Token().has()
-  if (store) { // FIXME hacky way around react native hooks that can't be used from store
-    return store.query(gql_query, {isLogged})
-  } else {
-    return useQuery(gql_query, {variables: {isLogged}})
+const gql_query_anonymous = `
+query gql_query_anonymous {
+  prices {
+    __typename
+    id
+    o
+  }
+  earnList {
+    __typename
+    id
+    value
   }
 }
+`
 
 export const AccountsScreen = observer(({ route, navigation }) => {
 
+  const getQuery = () => new Token().has() ? gql_query_logged : gql_query_anonymous
+
   const store = React.useContext(StoreContext)
+  let query, error, loading, setQuery
 
-  let query, error, loading
-
-  try {
-    const result = homeQuery()
-    query = result.query
-    error = result.error
-    loading = result.loading
+  try {    
+    ({query, error, loading, setQuery} = useQuery(getQuery()))
   } catch (err) {
     console.tron.log({err})
+  }
+
+  const refreshQuery = async () => {
+    console.tron.log("refresh query")
+    setQuery(getQuery())
+    await query.refetch()
   }
 
   // FIXME type any
@@ -141,8 +178,9 @@ export const AccountsScreen = observer(({ route, navigation }) => {
       />
       <FlatList
         data={accountTypes}
+        extraData={store.accountRefresh}
         style={styles.listContainer}
-        refreshControl={<RefreshControl refreshing={loading} onRefresh={() => query.refetch()} />}
+        refreshControl={<RefreshControl refreshing={loading} onRefresh={() => refreshQuery()} />}
         renderItem={({ item }) => (
           <AccountItem
             {...item}
