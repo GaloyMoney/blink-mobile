@@ -193,16 +193,13 @@ export const WelcomePhoneValidationScreen = ({ onSuccess, route, navigation }) =
     try {
       setLoading(true)
       
-      // TODO/FIXME remove network here. the network should actually comes from the server to be useful.
-      const network = await getNetwork()
-
-      const query = `mutation login($phone: String, $code: Int, $network: Network) {
-        login(phone: $phone, code: $code, network: $network) {
+      const query = `mutation login($phone: String, $code: Int) {
+        login(phone: $phone, code: $code) {
           token
         }
       }`
 
-      const variables = {phone, code: Number(code), network}
+      const variables = {phone, code: Number(code)}
       const { login } = await request(query, variables)
       console.tron.log({login})
 
