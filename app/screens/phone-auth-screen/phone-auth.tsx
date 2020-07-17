@@ -1,11 +1,7 @@
-import request from "graphql-request"
-import { filter, map } from "lodash"
-import { values } from "mobx"
-import { getEnv } from "mobx-state-tree"
 import * as React from "react"
 import { useEffect, useRef, useState } from "react"
 import { ActivityIndicator, Alert, KeyboardAvoidingView, Platform, ScrollView, Text, View } from "react-native"
-import { ButtonGroup, Input } from "react-native-elements"
+import { Input } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import PhoneInput from "react-native-phone-input"
 import { CloseCross } from "../../components/close-cross"
@@ -14,7 +10,8 @@ import { translate } from "../../i18n"
 import { StoreContext } from "../../models"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-import { Token, getGraphQlUri } from "../../utils/token"
+import { request } from "../../utils/request"
+import { getNetwork, Token } from "../../utils/token"
 import BadgerPhone from "./badger-phone-01.svg"
 
 const styles = EStyleSheet.create({
@@ -86,9 +83,6 @@ export const WelcomePhoneInputScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(false)
   const [err, setErr] = useState("")
 
-  const networks = ["regtest", "testnet", "mainnet"]
-  const [network, setNetwork] = useState(networks[0])
-
   const inputRef = useRef()
 
   const send = async () => {
@@ -109,12 +103,12 @@ export const WelcomePhoneInputScreen = ({ navigation }) => {
       }`
 
       const phone = inputRef.current.getValue()
-      const success = await request(getGraphQlUri(network), query, {phone})
+      const success = await request(query, {phone})
 
       if (success) {
         setLoading(false)
         const screen = "welcomePhoneValidation"
-        navigation.navigate(screen, {phone, network})       
+        navigation.navigate(screen, {phone})       
 
       } else {
         setErr("Error with the request. Try again later")
@@ -162,13 +156,6 @@ export const WelcomePhoneInputScreen = ({ navigation }) => {
               onSubmitEditing: () => send(),
             }}
           />
-          <ButtonGroup
-            onPress={index => setNetwork(networks[index])}
-            selectedIndex={networks.findIndex(value => value === network)}
-            buttons={networks}
-            buttonStyle={styles.button} // FIXME
-            containerStyle={{marginLeft: 36, marginRight: 36, marginTop: 24}}
-          />
         </KeyboardAvoidingView>
         <View style={{ flex: 1 }} />
         <ActivityIndicator animating={loading} size="large" color={color.primary} />
@@ -180,11 +167,8 @@ export const WelcomePhoneInputScreen = ({ navigation }) => {
 
 export const WelcomePhoneValidationScreenDataInjected = ({ route, navigation }) => {
   const store = React.useContext(StoreContext)
-
+  
   const onSuccess = async () => {
-    const token = new Token()
-    getEnv(store).gqlHttpClient.setHeaders({authorization: token.bearerString})
-
     await store.loginSuccessful()
   }
 
@@ -198,7 +182,6 @@ export const WelcomePhoneValidationScreen = ({ onSuccess, route, navigation }) =
   const [err, setErr] = useState("")
 
   const phone = route.params.phone
-  const network = route.params.network
 
   const sendVerif = async () => {
     console.tron.log(`verifyPhoneNumber with code ${code}`)
@@ -210,14 +193,14 @@ export const WelcomePhoneValidationScreen = ({ onSuccess, route, navigation }) =
     try {
       setLoading(true)
       
-      const query = `mutation login($phone: String, $code: Int, $network: Network) {
-        login(phone: $phone, code: $code, network: $network) {
+      const query = `mutation login($phone: String, $code: Int) {
+        login(phone: $phone, code: $code) {
           token
         }
       }`
 
-      const variables = {phone, code: Number(code), network}
-      const { login } = await request(getGraphQlUri(network), query, variables)
+      const variables = {phone, code: Number(code)}
+      const { login } = await request(query, variables)
       console.tron.log({login})
 
       if (login.token) {

@@ -110,7 +110,7 @@ export const App = () => {
       await token.load()
 
       const rs = RootStore.create(defaultStoreInstance, {
-        gqlHttpClient: createHttpClient(getGraphQlUri(token.network ?? "testnet"), {
+        gqlHttpClient: createHttpClient(await getGraphQlUri(), {
           headers: {
             authorization: token.bearerString,
           }
