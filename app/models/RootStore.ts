@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-community/async-storage"
 import { values } from "mobx"
-import { Instance, types, flow } from "mobx-state-tree"
+import { Instance, types, flow, getEnv } from "mobx-state-tree"
 import moment from "moment"
 import { localStorageMixin } from "mst-gql"
 import { AccountType, CurrencyType } from "../utils/enum"
@@ -8,7 +8,6 @@ import { Token } from "../utils/token"
 import { RootStoreBase } from "./RootStore.base"
 import { TransactionModel } from "./TransactionModel"
 import { map, filter, sumBy } from "lodash"
-import { homeQuery } from "../screens/accounts-screen"
 
 export const ROOT_STATE_STORAGE_KEY = "rootAppGaloy"
 
@@ -30,12 +29,14 @@ export const OnboardingModel = types.model("Onboarding", {
   }))
   .props({
       onboarding: types.optional(OnboardingModel, {}),
+      accountRefresh: types.optional(types.boolean, false),
   })
   .actions(self => {
     // This is an auto-generated example action.
     const log = () => {
       console.log(JSON.stringify(self))
     }
+
     const earnComplete = (id) => {
       const earn = self.earns.get(id)
       if (earn.completed) {
@@ -70,19 +71,25 @@ export const OnboardingModel = types.model("Onboarding", {
         self.queryWallet()
       }
     }
+
     const loginSuccessful = flow(function*() {
+
+      getEnv(self).gqlHttpClient.setHeaders({authorization: new Token().bearerString})
+
       // sync the earned quizzes
       const ids = map(filter(values(self.earns), {completed: true}), "id")
       yield self.mutateEarnCompleted({ids})
 
-      // fetch user data
-      yield homeQuery(self)
-
-      // clean up pre-login state
+      console.tron.log("succesfully update earns id")
+      
       self.transactions.clear()
-      self.users.delete("incognito")
       self.wallets.get("BTC").transactions.clear()
       
+      console.tron.log("cleared local transactions")
+      self.accountRefresh = !self.accountRefresh
+
+      // FIXME
+      // self.users.delete("incognito")
       console.tron.log("home query done")
     })
   

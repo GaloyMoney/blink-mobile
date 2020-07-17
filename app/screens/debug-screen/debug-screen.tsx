@@ -4,7 +4,7 @@ import request from "graphql-request"
 import { observer } from "mobx-react"
 import * as React from "react"
 import { Alert, Text, View } from "react-native"
-import { Button } from "react-native-elements"
+import { Button, ButtonGroup } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
@@ -12,6 +12,7 @@ import { StoreContext } from "../../models"
 import { color } from "../../theme"
 import { Token, getGraphQlUri } from "../../utils/token"
 import { ROOT_STATE_STORAGE_KEY } from "../../models/RootStore"
+import { loadNetwork, saveNetwork, NETWORK_STRING } from "../../utils/network"
 
 const styles = EStyleSheet.create({
   button: { 
@@ -22,7 +23,7 @@ const styles = EStyleSheet.create({
 
 export const resetDataStore = async () => {
   try {
-    await AsyncStorage.multiRemove([ROOT_STATE_STORAGE_KEY]) // use storage.ts wrapper
+    await AsyncStorage.multiRemove([ROOT_STATE_STORAGE_KEY, NETWORK_STRING]) // use storage.ts wrapper
     // TOKEN_KEY is stored at a separate location
   } catch(e) {
     console.tron.log(`error resetting RootStore: ${e}`)
@@ -32,6 +33,23 @@ export const resetDataStore = async () => {
 export const DebugScreen = observer(({}) => {
   const store = React.useContext(StoreContext)
   const token = new Token()
+
+  const networks = ["regtest", "testnet", "mainnet"]
+  const [changed, setChanged] = React.useState(false)
+  const [network, setNetwork] = React.useState("")
+  const [graphQlUri, setGraphQlUri] = React.useState("")
+
+  React.useEffect(() => {
+    (async () => {
+      setNetwork(await loadNetwork())
+    })()
+  }, [])
+
+  React.useEffect(() => {
+    (async () => {
+      setGraphQlUri(await getGraphQlUri())
+    })()
+  }, [network])
 
   const demoReactotron = async () => {
     console.tron.logImportant("I am important")
@@ -99,8 +117,8 @@ export const DebugScreen = observer(({}) => {
       <VersionComponent />
       <View>
         <Text>UID: {token.uid}</Text>
-        <Text>network: {token.network}</Text>
-        <Text>endpoint: {getGraphQlUri(token.network)}</Text>
+        <Text>token network: {token.network}</Text>
+        <Text>GraphQlUri: {graphQlUri}</Text>
         <Text>BTC price: {store.rate("BTC")}</Text>
         <Button
           title="Crash test"
@@ -109,6 +127,18 @@ export const DebugScreen = observer(({}) => {
             crashlytics().crash()
           }}
         />
+        <ButtonGroup
+          onPress={index => {
+              saveNetwork(networks[index]);
+              setNetwork(networks[index]);
+              setChanged(true)
+            }}
+          selectedIndex={networks.findIndex(value => value === network)}
+          buttons={networks}
+          buttonStyle={styles.button} // FIXME
+          containerStyle={{marginLeft: 36, marginRight: 36, marginTop: 24}}
+          />
+        {changed && <Text>Restart the app to make the network change effective</Text>}
       </View>
     </Screen>
   )

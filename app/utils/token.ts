@@ -3,6 +3,7 @@ const  jwtDecode = require('jwt-decode')
 import { GRAPHQL_REGTEST_URI } from 'react-native-dotenv'
 import { GRAPHQL_TESTNET_URI } from 'react-native-dotenv'
 import { GRAPHQL_MAINNET_URI } from 'react-native-dotenv'
+import { loadNetwork } from "./network"
 
 export const TOKEN_KEY = "GaloyToken"
 
@@ -68,7 +69,16 @@ export class Token {
   }
 }
 
-export const getGraphQlUri = network => {
+export const getNetwork = async () => {
+  if (new Token().has()) {
+    return new Token().network
+  } else {
+    return await loadNetwork()
+  }
+}
+
+export const getGraphQlUri = async () => {
+  const network = await getNetwork()
   switch (network) {
     case "regtest": 
       return GRAPHQL_REGTEST_URI
