@@ -17,7 +17,7 @@ export const UserModelBase = ModelBase
   .props({
     __typename: types.optional(types.literal("User"), "User"),
     id: types.identifier,
-    name: types.union(types.undefined, types.string),
+    name: types.union(types.undefined, types.null, types.string),
     level: types.union(types.undefined, types.integer),
   })
   .views(self => ({
