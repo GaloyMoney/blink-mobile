@@ -15,14 +15,19 @@ import { EarnModel, EarnModelType } from "./EarnModel"
 import { earnModelPrimitives, EarnModelSelector } from "./EarnModel.base"
 import { UserModel, UserModelType } from "./UserModel"
 import { userModelPrimitives, UserModelSelector } from "./UserModel.base"
+import { BuildParameterModel, BuildParameterModelType } from "./BuildParameterModel"
+import { buildParameterModelPrimitives, BuildParameterModelSelector } from "./BuildParameterModel.base"
 import { SuccessModel, SuccessModelType } from "./SuccessModel"
 import { successModelPrimitives, SuccessModelSelector } from "./SuccessModel.base"
 import { TokenModel, TokenModelType } from "./TokenModel"
 import { tokenModelPrimitives, TokenModelSelector } from "./TokenModel.base"
+import { OnchainTransactionModel, OnchainTransactionModelType } from "./OnchainTransactionModel"
+import { onchainTransactionModelPrimitives, OnchainTransactionModelSelector } from "./OnchainTransactionModel.base"
+import { OnChainModel, OnChainModelType } from "./OnChainModel"
+import { onChainModelPrimitives, OnChainModelSelector } from "./OnChainModel.base"
 import { InvoiceModel, InvoiceModelType } from "./InvoiceModel"
 import { invoiceModelPrimitives, InvoiceModelSelector } from "./InvoiceModel.base"
 
-import { Network } from "./NetworkEnum"
 
 export type InputUser = {
   id?: string
@@ -46,11 +51,14 @@ export enum RootStoreBaseQueries {
 queryPrices="queryPrices",
 queryWallet="queryWallet",
 queryEarnList="queryEarnList",
-queryMe="queryMe"
+queryMe="queryMe",
+queryBuildParameters="queryBuildParameters"
 }
 export enum RootStoreBaseMutations {
 mutateRequestPhoneCode="mutateRequestPhoneCode",
 mutateLogin="mutateLogin",
+mutateOpenChannel="mutateOpenChannel",
+mutateOnchain="mutateOnchain",
 mutateInvoice="mutateInvoice",
 mutateEarnCompleted="mutateEarnCompleted",
 mutateUpdateUser="mutateUpdateUser"
@@ -61,7 +69,7 @@ mutateUpdateUser="mutateUpdateUser"
 */
 export const RootStoreBase = withTypedRefs<Refs>()(MSTGQLStore
   .named("RootStore")
-  .extend(configureStoreMixin([['Price', () => PriceModel], ['Wallet', () => WalletModel], ['Transaction', () => TransactionModel], ['Earn', () => EarnModel], ['User', () => UserModel], ['Success', () => SuccessModel], ['Token', () => TokenModel], ['Invoice', () => InvoiceModel]], ['Price', 'Wallet', 'Transaction', 'Earn', 'User'], "js"))
+  .extend(configureStoreMixin([['Price', () => PriceModel], ['Wallet', () => WalletModel], ['Transaction', () => TransactionModel], ['Earn', () => EarnModel], ['User', () => UserModel], ['BuildParameter', () => BuildParameterModel], ['Success', () => SuccessModel], ['Token', () => TokenModel], ['OnchainTransaction', () => OnchainTransactionModel], ['OnChain', () => OnChainModel], ['Invoice', () => InvoiceModel]], ['Price', 'Wallet', 'Transaction', 'Earn', 'User'], "js"))
   .props({
     prices: types.optional(types.map(types.late((): any => PriceModel)), {}),
     wallets: types.optional(types.map(types.late((): any => WalletModel)), {}),
@@ -90,14 +98,29 @@ export const RootStoreBase = withTypedRefs<Refs>()(MSTGQLStore
         ${typeof resultSelector === "function" ? resultSelector(new UserModelSelector()).toString() : resultSelector}
       } }`, variables, options)
     },
+    queryBuildParameters(variables?: {  }, resultSelector: string | ((qb: BuildParameterModelSelector) => BuildParameterModelSelector) = buildParameterModelPrimitives.toString(), options: QueryOptions = {}) {
+      return self.query<{ buildParameters: BuildParameterModelType}>(`query buildParameters { buildParameters {
+        ${typeof resultSelector === "function" ? resultSelector(new BuildParameterModelSelector()).toString() : resultSelector}
+      } }`, variables, options)
+    },
     mutateRequestPhoneCode(variables: { phone?: string }, resultSelector: string | ((qb: SuccessModelSelector) => SuccessModelSelector) = successModelPrimitives.toString(), optimisticUpdate?: () => void) {
       return self.mutate<{ requestPhoneCode: SuccessModelType}>(`mutation requestPhoneCode($phone: String) { requestPhoneCode(phone: $phone) {
         ${typeof resultSelector === "function" ? resultSelector(new SuccessModelSelector()).toString() : resultSelector}
       } }`, variables, optimisticUpdate)
     },
-    mutateLogin(variables: { phone?: string, code?: number, network?: Network }, resultSelector: string | ((qb: TokenModelSelector) => TokenModelSelector) = tokenModelPrimitives.toString(), optimisticUpdate?: () => void) {
-      return self.mutate<{ login: TokenModelType}>(`mutation login($phone: String, $code: Int, $network: Network) { login(phone: $phone, code: $code, network: $network) {
+    mutateLogin(variables: { phone?: string, code?: number }, resultSelector: string | ((qb: TokenModelSelector) => TokenModelSelector) = tokenModelPrimitives.toString(), optimisticUpdate?: () => void) {
+      return self.mutate<{ login: TokenModelType}>(`mutation login($phone: String, $code: Int) { login(phone: $phone, code: $code) {
         ${typeof resultSelector === "function" ? resultSelector(new TokenModelSelector()).toString() : resultSelector}
+      } }`, variables, optimisticUpdate)
+    },
+    mutateOpenChannel(variables: { localTokens?: number, publicKey?: string, socket?: string }, resultSelector: string | ((qb: OnchainTransactionModelSelector) => OnchainTransactionModelSelector) = onchainTransactionModelPrimitives.toString(), optimisticUpdate?: () => void) {
+      return self.mutate<{ openChannel: OnchainTransactionModelType}>(`mutation openChannel($localTokens: Int, $publicKey: String, $socket: String) { openChannel(local_tokens: $localTokens, public_key: $publicKey, socket: $socket) {
+        ${typeof resultSelector === "function" ? resultSelector(new OnchainTransactionModelSelector()).toString() : resultSelector}
+      } }`, variables, optimisticUpdate)
+    },
+    mutateOnchain(variables?: {  }, resultSelector: string | ((qb: OnChainModelSelector) => OnChainModelSelector) = onChainModelPrimitives.toString(), optimisticUpdate?: () => void) {
+      return self.mutate<{ onchain: OnChainModelType}>(`mutation onchain { onchain {
+        ${typeof resultSelector === "function" ? resultSelector(new OnChainModelSelector()).toString() : resultSelector}
       } }`, variables, optimisticUpdate)
     },
     mutateInvoice(variables?: {  }, resultSelector: string | ((qb: InvoiceModelSelector) => InvoiceModelSelector) = invoiceModelPrimitives.toString(), optimisticUpdate?: () => void) {
