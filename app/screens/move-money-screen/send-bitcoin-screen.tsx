@@ -132,7 +132,11 @@ export const ScanningQRCodeScreen = () => {
         amountless = true
       }
 
-      note = getDescription(payReq) ?? `this invoice doesn't include a note`
+      note = getDescription(payReq) 
+      if (note === "") {
+        // could be dimmed
+        note = `this invoice doesn't include a note`
+      }
 
       navigate("sendBitcoin", { invoice, amount, amountless, note })
     } catch (err) {

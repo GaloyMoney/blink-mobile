@@ -30,7 +30,7 @@ export const TextCurrency = ({ amount, currency, style }) => {
   }
 }
 
-export const InputCurrency = ({ amount, setAmount, currency, style, appendDot }) => {
+export const InputCurrency = ({ amount, setAmount, currency, style, appendDot, onSubmitEditing }) => {
   let value 
   if (amount === 0 || isNaN(amount)) {
     value = ""
@@ -45,6 +45,7 @@ export const InputCurrency = ({ amount, setAmount, currency, style, appendDot })
 
   return <Input
     placeholder={"enter amount"}
+    autoFocus={true}
     value={value}
     leftIcon={currency === CurrencyType.USD ? <Text style={style}>$</Text> : null}
     rightIcon={currency === CurrencyType.BTC ? 
@@ -56,5 +57,7 @@ export const InputCurrency = ({ amount, setAmount, currency, style, appendDot })
     inputStyle={style}
     onChangeText={setAmount}
     keyboardType="decimal-pad"
+    onSubmitEditing={onSubmitEditing}
+    returnKeyType="done"
   />
 }
