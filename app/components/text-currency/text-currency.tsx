@@ -8,7 +8,9 @@ export const TextCurrency = ({ amount, currency, style }) => {
   if (currency === CurrencyType.USD) {
     return (
       <Text style={style}>
-        {currency_fmt.default(amount, { formatWithSymbol: true, precision: amount < 0.01 ? 4 : 2 }).format()}
+        {currency_fmt.default(amount, {
+          formatWithSymbol: true, precision: (amount < 0.01 && amount !== 0) ? 4 : 2 }).format()
+        }
       </Text>
     )
   } if (currency === CurrencyType.BTC) {
