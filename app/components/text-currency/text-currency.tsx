@@ -1,6 +1,8 @@
 import * as currency_fmt from "currency.js"
+import { string } from "mobx-state-tree/dist/internal"
 import * as React from "react"
-import { Text } from "react-native"
+import { Text, View } from "react-native"
+import { Input } from "react-native-elements"
 import { CurrencyType } from "../../utils/enum"
 
 export const TextCurrency = ({ amount, currency, style }) => {
@@ -10,7 +12,14 @@ export const TextCurrency = ({ amount, currency, style }) => {
         {currency_fmt.default(amount, { formatWithSymbol: true }).format()}
       </Text>
     )
-  } /* if (currency === CurrencyType.BTC) */ else {
+  } if (currency === CurrencyType.BTC) {
+    return (
+      <View style={{ flexDirection: "row", alignItems: "flex-end"}}>
+        <Text style={style}>{currency_fmt.default(amount, { precision: 0, separator: "," }).format()} </Text>
+        <Text style={[style, {fontSize: 24}]}>BTC</Text>
+      </View>
+    )
+  } else { // if (currency === "sats") {
     return (
       <>
         <Text style={style}>
@@ -19,4 +28,33 @@ export const TextCurrency = ({ amount, currency, style }) => {
       </>
     )
   }
+}
+
+export const InputCurrency = ({ amount, setAmount, currency, style, appendDot }) => {
+  let value 
+  if (amount === 0 || isNaN(amount)) {
+    value = ""
+  } else {
+    value = String(+amount)
+  }
+
+  // only add dot for for non-sats. 
+  if ((currency === CurrencyType.USD || currency === CurrencyType.BTC) && appendDot) {
+    value += "."
+  }
+
+  return <Input
+    placeholder={"enter amount"}
+    value={value}
+    leftIcon={currency === CurrencyType.USD ? <Text style={style}>$</Text> : null}
+    rightIcon={currency === CurrencyType.BTC ? 
+      <Text style={style}>BTC</Text> :
+      currency === "sats" ?
+        <Text style={style}>sats</Text> :
+        null}
+    containerStyle={{width: 300}}
+    inputStyle={style}
+    onChangeText={setAmount}
+    keyboardType="decimal-pad"
+  />
 }

@@ -126,23 +126,24 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
           <IconTransaction type={"receive"} size={75} color={palette.orange} />
         </View>
         <View style={styles.section}>
-          <Text style={styles.smallText}>Note</Text>
-          <Input placeholder="Optional" value={memo} onChangeText={(text) => setMemo(text)} />
-        </View>
-        <View style={styles.section}>
           <Text style={styles.smallText}>Amount</Text>
           <Input
-            leftIcon={<Text style={styles.icon}>{translate("common.sats")}</Text>}
+            // leftIcon={<Text style={styles.icon}>{translate("common.sats")}</Text>}
             placeholder="0"
             autoFocus={true}
             value={amount.toString()}
             onChangeText={(input) => {
               isNaN(+input) ? setAmount(0) : setAmount(+input)
             }}
+            inputStyle={{ alignContent: "center" }}
             returnKeyType="done"
             keyboardType="number-pad"
             onSubmitEditing={createInvoice}
           />
+        </View>
+        <View style={styles.section}>
+          <Text style={styles.smallText}>Note</Text>
+          <Input placeholder="Optional" value={memo} onChangeText={(text) => setMemo(text)} />
         </View>
         <View style={{ alignContent: "center", alignItems: "center", marginHorizontal: 48 }}>
           <Button
@@ -157,12 +158,11 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
           />
           <Button
             buttonStyle={styles.clearButtonStyle}
-            titleStyle={{color: palette.lightBlue}}
+            titleStyle={{color: palette.lightBlue, fontWeight: "bold" }}
             containerStyle={{width: "100%"}}
             title="On chain?"
             type="clear"
             onPress={getAddress}
-            titleStyle={{ fontWeight: "bold" }}
             loading={loading}
             disabled={loading}
           />

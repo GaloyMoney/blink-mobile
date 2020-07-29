@@ -268,6 +268,17 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
   return (
     <Screen>
       <ScrollView style={styles.mainView}>
+      <View style={styles.section}>
+          <Text style={styles.smallText}>{translate("SendBitcoinScreen.amount")}</Text>
+          <Input
+            leftIcon={<Text style={styles.icon}>{translate("common.sats")}</Text>}
+            onChangeText={(input) => setManualAmount(+input)}
+            value={amountless ? manualAmount.toString() : amount.toString()}
+            disabled={!amountless}
+            returnKeyType="done"
+            keyboardType="number-pad" // TODO, there should be no keyboard here
+          />
+        </View>
         <View style={styles.section}>
           <Text style={styles.smallText}>{translate("common.to")}</Text>
           <View style={styles.horizontalContainer}>
@@ -280,17 +291,6 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
               containerStyle={styles.invoiceContainer}
             />
           </View>
-        </View>
-        <View style={styles.section}>
-          <Text style={styles.smallText}>{translate("SendBitcoinScreen.amount")}</Text>
-          <Input
-            leftIcon={<Text style={styles.icon}>{translate("common.sats")}</Text>}
-            onChangeText={(input) => setManualAmount(+input)}
-            value={amountless ? manualAmount.toString() : amount.toString()}
-            disabled={!amountless}
-            returnKeyType="done"
-            keyboardType="number-pad" // TODO, there should be no keyboard here
-          />
         </View>
         <View style={styles.section}>
           <Text style={styles.smallText}>{translate("SendBitcoinScreen.note")}</Text>
