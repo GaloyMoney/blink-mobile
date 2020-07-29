@@ -60,7 +60,7 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
   amountOtherCurrency = null,
   loading,
 }) => {
-  const otherCurrency = currency === CurrencyType.BTC ? CurrencyType.USD : CurrencyType.BTC
+  const otherCurrency = currency === CurrencyType.BTC ? CurrencyType.USD : "sats"
 
   const subHeader =
     amountOtherCurrency !== null ? (
@@ -75,7 +75,7 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
         <View style={{ flexDirection: "row", alignItems: "flex-end" }}>
           {loading && <Loader />}
           {!loading && (
-            <TextCurrency amount={amount} currency={currency}
+            <TextCurrency amount={amount} currency={currency === CurrencyType.BTC ? "sats": CurrencyType.USD}
               style={{fontSize: 32, color: palette.darkGrey}} />
           )}
         </View>
