@@ -1,10 +1,12 @@
-import { indexOf } from "lodash"
+import { indexOf, toInteger } from "lodash"
 import * as React from "react"
 import { View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableHighlight, TouchableOpacity } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
+import { StoreContext } from "../../models"
 import { palette } from "../../theme/palette"
+import { CurrencyType } from "../../utils/enum"
 import { InputCurrency, TextCurrency } from "../text-currency/text-currency"
 
 
@@ -13,7 +15,6 @@ const styles = EStyleSheet.create({
   amount: {
     alignItems: "center",
     flexDirection: "column",
-    height: 42, // FIXME should be dynamic?
   },
 
   balanceText: {
@@ -29,35 +30,45 @@ const styles = EStyleSheet.create({
 
   header: {
     alignItems: "center",
-    marginBottom: "32rem",
-    marginTop: "32rem",
+    marginBottom: "16rem",
+    marginTop: "16rem",
+    width: "100%",
   },
 
   subCurrencyText: {
     fontSize: "16rem",
-    color: palette.darkGrey
+    color: palette.darkGrey,
+    marginTop: 0,
+    paddingTop: 0,
   }
 })
 
 export interface InputPaymentProps {
-  price: number // sats/usd
+  onSubmitEditing(): void, 
+  onUpdateAmount(number): void
   initAmount?: number
   currencyPreference?: string // "sats" | "BTC" | "usd"
 }
 
 export const InputPayment: React.FC<InputPaymentProps> = ({
-  price, // USDSAT
+  onUpdateAmount,
+  onSubmitEditing,
   initAmount = 0, // in sats
-  currencyPreference = "sats"
+  currencyPreference = "USD"
 }) => {
 
   const [pref, setPref] = React.useState(currencyPreference)
   const [amount, setAmount] = React.useState(initAmount)
   const [appendDot, setAppendDot] = React.useState(false)
 
+  const store = React.useContext(StoreContext)
+  const price = store.rate(CurrencyType.BTC)
+
   const mapping = {
     "USD": {
       primary: "USD",
+
+      // todo refactor
       conversion: sats => (sats * price).toFixed(2),
       reverse: usd => usd / price,
       secondary: "sats",
@@ -105,9 +116,10 @@ export const InputPayment: React.FC<InputPaymentProps> = ({
               const newAmount = mapping[pref].reverse(+amount)
               if (!isNaN(newAmount)) {
                 setAmount(newAmount)
+                onUpdateAmount(toInteger(newAmount))
               }
             }}
-            // setAmount={amount => setAmount(mapping[pref].reverse(isNaN(+amount) ? 0 : +amount))}
+            onSubmitEditing={onSubmitEditing}
             style={{fontSize: 32, color: palette.darkGrey}} />
           <TextCurrency
             amount={mapping[pref].secondaryConversion(amount)} 
