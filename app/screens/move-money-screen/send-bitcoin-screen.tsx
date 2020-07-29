@@ -7,6 +7,7 @@ import { RNCamera } from "react-native-camera"
 import { Button, Input } from "react-native-elements"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import Icon from "react-native-vector-icons/Ionicons"
+import { InputPaymentDataInjected } from "../../components/input-payment"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
 import { StoreContext } from "../../models"
@@ -173,7 +174,7 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
   const note = route.params.note
   const amount = route.params.amount
 
-  const [manualAmount, setManualAmount] = useState(false)
+  const [manualAmount, setManualAmount] = useState(0)
 
   const { goBack } = useNavigation()
 
@@ -272,16 +273,12 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
   return (
     <Screen>
       <ScrollView style={styles.mainView}>
+      <InputPaymentDataInjected
+          editable={amountless}
+          initAmount={amount}
+          onUpdateAmount={input => setManualAmount(input)}
+        />
       <View style={styles.section}>
-          <Text style={styles.smallText}>{translate("SendBitcoinScreen.amount")}</Text>
-          <Input
-            leftIcon={<Text style={styles.icon}>{translate("common.sats")}</Text>}
-            onChangeText={(input) => setManualAmount(+input)}
-            value={amountless ? manualAmount.toString() : amount.toString()}
-            disabled={!amountless}
-            returnKeyType="done"
-            keyboardType="number-pad" // TODO, there should be no keyboard here
-          />
         </View>
         <View style={styles.section}>
           <Text style={styles.smallText}>{translate("common.to")}</Text>

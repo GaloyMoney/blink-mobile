@@ -32,7 +32,6 @@ const styles = EStyleSheet.create({
     alignItems: "center",
     marginBottom: "16rem",
     marginTop: "16rem",
-    width: "100%",
   },
 
   subCurrencyText: {
@@ -43,16 +42,26 @@ const styles = EStyleSheet.create({
   }
 })
 
-export interface InputPaymentProps {
-  onSubmitEditing(): void, 
+export interface InputPaymentDataInjectedProps {
+  editable: boolean,
   onUpdateAmount(number): void
+  onSubmitEditing?(): void, 
   initAmount?: number
   currencyPreference?: string // "sats" | "BTC" | "usd"
 }
 
-export const InputPayment: React.FC<InputPaymentProps> = ({
+export const InputPaymentDataInjected = (props: InputPaymentDataInjectedProps) => {
+  const store = React.useContext(StoreContext)
+  const price = store.rate(CurrencyType.BTC)
+  
+  return <InputPayment price={price} {...props} />
+}
+
+export const InputPayment = ({
+  price,
   onUpdateAmount,
-  onSubmitEditing,
+  onSubmitEditing = null,
+  editable,
   initAmount = 0, // in sats
   currencyPreference = "USD"
 }) => {
@@ -60,9 +69,6 @@ export const InputPayment: React.FC<InputPaymentProps> = ({
   const [pref, setPref] = React.useState(currencyPreference)
   const [amount, setAmount] = React.useState(initAmount)
   const [appendDot, setAppendDot] = React.useState(false)
-
-  const store = React.useContext(StoreContext)
-  const price = store.rate(CurrencyType.BTC)
 
   const mapping = {
     "USD": {
@@ -79,7 +85,7 @@ export const InputPayment: React.FC<InputPaymentProps> = ({
       conversion: sats => sats.toFixed(0),
       reverse: sats => sats,
       secondary: "USD",
-      secondaryConversion: usd => (usd * price).toFixed(2)
+      secondaryConversion: sats => sats * price
     },
     "BTC": {
       digits: 8,
@@ -87,7 +93,7 @@ export const InputPayment: React.FC<InputPaymentProps> = ({
       conversion: sats => (sats / 10 ** 8).toFixed(8), // BigNum?
       reverse: btc => btc * 10 ** 8,
       secondary: "USD",
-      secondaryConversion: usd => (usd * price).toFixed(2)
+      secondaryConversion: sats => sats * price
     }
   }
 
@@ -100,7 +106,8 @@ export const InputPayment: React.FC<InputPaymentProps> = ({
   }
 
   return (
-    <View style={{ flexDirection: "row", alignItems: "center", width: "100%" }}>
+    // FIXME style
+    <View style={{ flexDirection: "row", alignItems: "center", width: "100%", paddingLeft: 32 }}> 
       <View style={styles.header}>
         <View style={styles.amount}>
           <InputCurrency
@@ -119,6 +126,7 @@ export const InputPayment: React.FC<InputPaymentProps> = ({
                 onUpdateAmount(toInteger(newAmount))
               }
             }}
+            editable={editable}
             onSubmitEditing={onSubmitEditing}
             style={{fontSize: 32, color: palette.darkGrey}} />
           <TextCurrency
@@ -128,9 +136,7 @@ export const InputPayment: React.FC<InputPaymentProps> = ({
         </View>
       </View>
       <TouchableOpacity onPress={next}>
-        <Icon name={"ios-swap"} size={32}  style={[styles.box, {
-          transform: [{ rotate: "90deg" }]
-        }]} />
+        <Icon name={"ios-swap"} size={32} style={{transform: [{ rotate: "90deg" }]}} />
       </TouchableOpacity>
     </View>
   )

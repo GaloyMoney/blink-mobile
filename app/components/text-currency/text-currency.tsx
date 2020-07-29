@@ -1,5 +1,4 @@
 import * as currency_fmt from "currency.js"
-import { string } from "mobx-state-tree/dist/internal"
 import * as React from "react"
 import { Text, View } from "react-native"
 import { Input } from "react-native-elements"
@@ -9,7 +8,7 @@ export const TextCurrency = ({ amount, currency, style }) => {
   if (currency === CurrencyType.USD) {
     return (
       <Text style={style}>
-        {currency_fmt.default(amount, { formatWithSymbol: true }).format()}
+        {currency_fmt.default(amount, { formatWithSymbol: true, precision: amount < 0.01 ? 4 : 2 }).format()}
       </Text>
     )
   } if (currency === CurrencyType.BTC) {
@@ -30,7 +29,7 @@ export const TextCurrency = ({ amount, currency, style }) => {
   }
 }
 
-export const InputCurrency = ({ amount, setAmount, currency, style, appendDot, onSubmitEditing }) => {
+export const InputCurrency = ({ amount, setAmount, currency, style, appendDot, onSubmitEditing, editable }) => {
   let value 
   if (amount === 0 || isNaN(amount)) {
     value = ""
@@ -53,11 +52,12 @@ export const InputCurrency = ({ amount, setAmount, currency, style, appendDot, o
       currency === "sats" ?
         <Text style={style}>sats</Text> :
         null}
-    containerStyle={{width: 300}}
+    containerStyle={{width: 280}}
     inputStyle={style}
     onChangeText={setAmount}
     keyboardType="decimal-pad"
     onSubmitEditing={onSubmitEditing}
     returnKeyType="done"
+    editable={editable}
   />
 }

@@ -7,7 +7,7 @@ import { Button, Input } from "react-native-elements"
 import { ScrollView } from "react-native-gesture-handler"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import { IconTransaction } from "../../components/icon-transactions"
-import { InputPayment } from "../../components/input-payment"
+import { InputPaymentDataInjected } from "../../components/input-payment"
 import { QRCode } from "../../components/qrcode"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
@@ -131,7 +131,7 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
           <IconTransaction type={"receive"} size={75} color={palette.orange} />
         </View>
         <View style={styles.section}>
-          <InputPayment 
+          <InputPaymentDataInjected 
             onUpdateAmount={amount => setAmount(amount)}
             onSubmitEditing={createInvoice}
           />
