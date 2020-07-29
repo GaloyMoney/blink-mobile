@@ -58,7 +58,7 @@
     "react-native-camera": "^3.21.0",
     "react-native-config": "^1.0.0",
     "react-native-device-info": "^5.5.3",
-    "react-native-elements": "^1.2.0",
+    "react-native-elements": "^2.0.4",
     "react-native-extended-stylesheet": "^0.12.0",
     "react-native-fs": "^2.16.6",
     "react-native-gesture-handler": "^1.6.1",

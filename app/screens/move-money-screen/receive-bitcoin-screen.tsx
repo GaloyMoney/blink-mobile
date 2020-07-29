@@ -2,18 +2,23 @@ import * as lightningPayReq from "bolt11"
 import { observer } from "mobx-react"
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { Alert, Clipboard, Share, StyleSheet, Text, View } from "react-native"
+import { Alert, Clipboard, Dimensions, Share, StyleSheet, Text, View } from "react-native"
 import { Button, Input } from "react-native-elements"
 import { ScrollView } from "react-native-gesture-handler"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import { IconTransaction } from "../../components/icon-transactions"
+import { InputPaymentDataInjected } from "../../components/input-payment"
 import { QRCode } from "../../components/qrcode"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
 import { StoreContext } from "../../models"
 import { palette } from "../../theme/palette"
+import { CurrencyType } from "../../utils/enum"
 import { getHash } from "../../utils/lightning"
 import { request } from "../../utils/request"
+
+var width = Dimensions.get('window').width; //full width
+
 
 const styles = StyleSheet.create({
   buttonStyle: {
@@ -38,16 +43,14 @@ const styles = StyleSheet.create({
   },
 
   section: {
-    paddingBottom: 8,
+    width: width - 40, // FIXME
     paddingHorizontal: 20,
-    paddingTop: 8,
   },
 
   smallText: {
     color: palette.darkGrey,
     fontSize: 18,
     textAlign: "left",
-    // marginBottom: 10,
   },
 })
 
@@ -126,23 +129,13 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
           <IconTransaction type={"receive"} size={75} color={palette.orange} />
         </View>
         <View style={styles.section}>
-          <Text style={styles.smallText}>Note</Text>
-          <Input placeholder="Optional" value={memo} onChangeText={(text) => setMemo(text)} />
-        </View>
-        <View style={styles.section}>
-          <Text style={styles.smallText}>Amount</Text>
-          <Input
-            leftIcon={<Text style={styles.icon}>{translate("common.sats")}</Text>}
-            placeholder="0"
-            autoFocus={true}
-            value={amount.toString()}
-            onChangeText={(input) => {
-              isNaN(+input) ? setAmount(0) : setAmount(+input)
-            }}
-            returnKeyType="done"
-            keyboardType="number-pad"
+          <InputPaymentDataInjected 
+            onUpdateAmount={amount => setAmount(amount)}
             onSubmitEditing={createInvoice}
           />
+        </View>
+        <View style={styles.section}>
+          <Input placeholder="Optional note" value={memo} onChangeText={(text) => setMemo(text)} />
         </View>
         <View style={{ alignContent: "center", alignItems: "center", marginHorizontal: 48 }}>
           <Button
@@ -157,12 +150,11 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
           />
           <Button
             buttonStyle={styles.clearButtonStyle}
-            titleStyle={{color: palette.lightBlue}}
+            titleStyle={{color: palette.lightBlue, fontWeight: "bold" }}
             containerStyle={{width: "100%"}}
             title="On chain?"
             type="clear"
             onPress={getAddress}
-            titleStyle={{ fontWeight: "bold" }}
             loading={loading}
             disabled={loading}
           />
@@ -264,7 +256,9 @@ export const ShowQRCode = ({ route, navigation }) => {
         </QRCode>
         <View style={{ marginHorizontal: 48 }}>
           {type === "lightning" &&
-            <Text style={{ fontSize: 16, alignSelf: "center" }}>Receive {amount} sats</Text>
+            <Text style={{ fontSize: 16, alignSelf: "center" }}>
+              Receive {amount} sats / ${(amount * store.rate(CurrencyType.BTC)).toFixed(2)}
+            </Text>
           }
           <Button
             buttonStyle={styles.buttonStyle}
