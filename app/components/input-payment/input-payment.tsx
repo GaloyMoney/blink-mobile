@@ -73,12 +73,11 @@ export const InputPayment = ({
   const mapping = {
     "USD": {
       primary: "USD",
-
-      // todo refactor
+      // TODO refactor: other place could use those conversions
       conversion: sats => (sats * price).toFixed(2),
       reverse: usd => usd / price,
       secondary: "sats",
-      secondaryConversion: sats => sats.toFixed(0)
+      secondaryConversion: sats => sats
     },
     "sats": {
       primary: "sats",
@@ -88,7 +87,6 @@ export const InputPayment = ({
       secondaryConversion: sats => sats * price
     },
     "BTC": {
-      digits: 8,
       primary: "BTC",
       conversion: sats => (sats / 10 ** 8).toFixed(8), // BigNum?
       reverse: btc => btc * 10 ** 8,

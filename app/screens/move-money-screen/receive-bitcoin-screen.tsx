@@ -43,16 +43,14 @@ const styles = StyleSheet.create({
   },
 
   section: {
-    width: width - 40,
+    width: width - 40, // FIXME
     paddingHorizontal: 20,
-    // paddingBottom: 8,
   },
 
   smallText: {
     color: palette.darkGrey,
     fontSize: 18,
     textAlign: "left",
-    // marginBottom: 10,
   },
 })
 

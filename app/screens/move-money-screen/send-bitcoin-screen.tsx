@@ -135,7 +135,7 @@ export const ScanningQRCodeScreen = () => {
 
       note = getDescription(payReq) 
       if (note === "") {
-        // could be dimmed
+        // TODO: node could be dimmed if message below is shown
         note = `this invoice doesn't include a note`
       }
 
