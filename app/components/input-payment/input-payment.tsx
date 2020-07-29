@@ -101,8 +101,11 @@ export const InputPayment: React.FC<InputPaymentProps> = ({
                 var rgx = /^[0-9]*\.{1}$/;
                 return s.match(rgx);
               }
-              setAppendDot(endByDot(amount))
-              setAmount(mapping[pref].reverse(+amount))
+              setAppendDot(!!endByDot(amount))
+              const newAmount = mapping[pref].reverse(+amount)
+              if (!isNaN(newAmount)) {
+                setAmount(newAmount)
+              }
             }}
             // setAmount={amount => setAmount(mapping[pref].reverse(isNaN(+amount) ? 0 : +amount))}
             style={{fontSize: 32, color: palette.darkGrey}} />
