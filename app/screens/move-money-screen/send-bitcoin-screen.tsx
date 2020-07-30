@@ -98,22 +98,23 @@ export const ScanningQRCodeScreen = () => {
       // invoice might start with 'lightning:', 'bitcoin:', something else, or have the invoice directly
       let [protocol, invoice] = data.split(":")
       console.tron.log({ protocol, invoice })
+      protocol = protocol.toLowerCase()
       if (protocol === "bitcoin") {
         Alert.alert("Bitcoin on-chain transactions are coming to the app but we're only accepting lightning for now.")
         return
       } else if (protocol.startsWith("ln") && invoice === undefined) {
         if(store.network === "testnet" && protocol.startsWith("lnbc")) {
-          Alert.alert(`You're trying to pay a mainnet invoice. This app is build for testnet`)
+          Alert.alert(`You're trying to pay a mainnet invoice. The settings for the app is testnet`)
           return
         }
 
         if(store.network === "mainnet" && protocol.startsWith("lntb")) {
-          Alert.alert(`You're trying to pay a testnet invoice. This app is build for mainnet`)
+          Alert.alert(`You're trying to pay a testnet invoice. The settings for the app is mainnet`)
           return
         }
 
         invoice = protocol
-      } else if (protocol.toLowerCase() !== "lightning") {
+      } else if (protocol !== "lightning") {
         let message = `Only lightning procotol is accepted for now.`
         message += message === "" ? "" : `\n\ngot following: "${protocol}"`
         Alert.alert(message)
