@@ -3,7 +3,8 @@ import { observer } from "mobx-react"
 import * as React from "react"
 import { useEffect, useState } from "react"
 import { Alert, Clipboard, Dimensions, Share, StyleSheet, Text, View } from "react-native"
-import { Button, Input } from "react-native-elements"
+import { Button, ButtonGroup, Input } from "react-native-elements"
+import EStyleSheet from "react-native-extended-stylesheet"
 import { ScrollView } from "react-native-gesture-handler"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import { IconTransaction } from "../../components/icon-transactions"
@@ -20,7 +21,7 @@ import { request } from "../../utils/request"
 var width = Dimensions.get('window').width; //full width
 
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
   buttonStyle: {
     backgroundColor: palette.lightBlue,
     marginTop: 18,
@@ -52,12 +53,21 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: "left",
   },
+
+  headerView: {
+    marginHorizontal: "20rem",
+    marginTop: "12rem",
+    marginBottom: "6rem",
+  }
 })
 
 export const ReceiveBitcoinScreen = observer(({ navigation }) => {
   const [memo, setMemo] = useState("")
   const [amount, setAmount] = useState(0)
   const [loading, setLoading] = useState(false)
+
+  const [networkIndex, setNetworkIndex] = useState(0)
+
 
   const createInvoice = async () => {
     setLoading(true)
@@ -125,9 +135,32 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
   return (
     <Screen backgroundColor={palette.lighterGrey}>
       <ScrollView style={{ flex: 1, paddingTop: 32 }}>
-        <View style={{ alignItems: "center" }}>
+      <View style={styles.headerView}>
+        <ButtonGroup
+          onPress={getAddress}
+          // onPress={index => setNetworkIndex(index)}
+          selectedIndex={networkIndex}
+          buttons={["Lightning", "Bitcoin"]}
+          // selectedButtonStyle={{}}
+          selectedTextStyle={{fontWeight: "bold", fontSize: 18}}
+          disabledTextStyle={{fontWeight: "bold"}}
+          containerStyle={{borderRadius: 50}}
+          selectedButtonStyle={{backgroundColor: palette.lightBlue}}
+        />
+        {/* <Button
+          buttonStyle={styles.clearButtonStyle}
+          titleStyle={{color: palette.lightBlue, fontWeight: "bold" }}
+          containerStyle={{width: "100%"}}
+          title="On chain?"
+          type="clear"
+          onPress={getAddress}
+          loading={loading}
+          disabled={loading}
+        /> */}
+      </View>
+        {/* <View style={{ alignItems: "center" }}>
           <IconTransaction type={"receive"} size={75} color={palette.orange} />
-        </View>
+        </View> */}
         <View style={styles.section}>
           <InputPaymentDataInjected 
             onUpdateAmount={amount => setAmount(amount)}
@@ -145,16 +178,6 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
             title="Create"
             onPress={createInvoice}
             titleStyle={{ fontWeight: "bold" }}
-            loading={loading}
-            disabled={loading}
-          />
-          <Button
-            buttonStyle={styles.clearButtonStyle}
-            titleStyle={{color: palette.lightBlue, fontWeight: "bold" }}
-            containerStyle={{width: "100%"}}
-            title="On chain?"
-            type="clear"
-            onPress={getAddress}
             loading={loading}
             disabled={loading}
           />
