@@ -8,7 +8,6 @@ import { translate } from "../i18n"
 import { StoreContext } from "../models"
 import { AccountDetailScreen } from "../screens/account-detail-screen/account-detail-screen"
 import { AccountsScreen } from "../screens/accounts-screen"
-import { BankAccountEarnScreen, BankAccountReadyScreen, DateOfBirthScreen, OpenBankScreen, PersonalInformationScreen } from "../screens/bank-onboarding"
 import { DebugScreen } from "../screens/debug-screen"
 import { EarnMapDataInjected } from "../screens/earns-map-screen"
 import { EarnQuiz, EarnSection } from "../screens/earns-screen"
@@ -36,48 +35,6 @@ const styles = EStyleSheet.create({
 const size = 32
 
 const StackBankOpening = createStackNavigator()
-
-export const BankAccountOnboardingNavigator = () => {
-  return (
-    <StackBankOpening.Navigator
-      initialRouteName="accounts"
-      // headerMode: "float",
-    >
-      <StackBankOpening.Screen
-        name="openBankStart"
-        component={OpenBankScreen}
-        options={({ navigation }) => ({
-          title: translate("OpenBankScreen.title"),
-          headerLeft: () => <Button title="< Back" onPress={() => navigation.goBack()} />,
-          // FIXME < back button
-        })}
-      />
-      <StackBankOpening.Screen
-        name="welcomePhoneInputBanking"
-        component={WelcomePhoneInputScreen}
-      />
-      <StackBankOpening.Screen
-        name="welcomePhoneValidationBanking"
-        component={WelcomePhoneValidationScreenDataInjected}
-      />
-      <StackBankOpening.Screen
-        name="personalInformation"
-        component={PersonalInformationScreen}
-        options={{ title: translate("PersonalInformationScreen.title") }}
-      />
-      <StackBankOpening.Screen
-        name="dateOfBirth"
-        component={DateOfBirthScreen}
-        options={{ title: translate("DateOfBirthScreen.title") }}
-      />
-      <StackBankOpening.Screen
-        name="bankAccountReady"
-        component={BankAccountReadyScreen}
-        options={{ headerShown: false }}
-      />
-    </StackBankOpening.Navigator>
-  )
-}
 
 const StackAccounts = createStackNavigator()
 
@@ -236,16 +193,6 @@ export const PrimaryNavigator = () => {
           },
         }}
       />
-      {/* <Tab.Screen
-        name="Profile"
-        component={DebugScreen}
-        options={{
-          title: "Profile", // FIXME
-          tabBarIcon: ({ focused, color }) => {
-            return <Icon name={"ios-settings"} size={size} color={color} />
-          },
-        }}
-      /> */}
     </Tab.Navigator>
   )
 }
@@ -295,19 +242,6 @@ export const RootStackScreen = () => {
         }}
       />
       <RootStack.Screen
-        name="openBankAccount"
-        component={BankAccountOnboardingNavigator}
-        options={{ headerShown: false }}
-      />
-      <StackAccounts.Screen
-        name="bankAccountEarn"
-        component={BankAccountEarnScreen}
-        options={{ 
-          headerShown: false,
-          cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
-        }}
-      />
-      <RootStack.Screen
         name="phoneValidation"
         component={PhoneValidationNavigator}
         options={{ 
@@ -323,7 +257,6 @@ export const RootStackScreen = () => {
           // cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
         }}  
       />
-
       <StackAccounts.Screen
         name="transactionHistory"
         component={TransactionScreenDataInjected}
