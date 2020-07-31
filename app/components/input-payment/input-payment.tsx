@@ -134,7 +134,7 @@ export const InputPayment = ({
         </View>
       </View>
       <TouchableOpacity onPress={next}>
-        <Icon name={"ios-swap"} size={32} style={{transform: [{ rotate: "90deg" }]}} />
+        <Icon name={"ios-swap-vertical"} size={32} />
       </TouchableOpacity>
     </View>
   )

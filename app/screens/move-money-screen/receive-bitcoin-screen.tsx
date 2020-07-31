@@ -68,6 +68,9 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
 
   const [networkIndex, setNetworkIndex] = useState(0)
 
+  const createPaymentRequest = async () => {
+    networkIndex === 0 ? await createInvoice() : await getAddress()
+  }
 
   const createInvoice = async () => {
     setLoading(true)
@@ -123,8 +126,10 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
       throw err
     }
 
+    const data = amount === 0 ? address : address + `?amount=${amount * 10 ** 8}` // FIXME Bignum?
+
     try {
-      navigation.navigate("showQRCode", { data: address, type: "onchain" })
+      navigation.navigate("showQRCode", { data, amount, type: "onchain" })
     } catch (err) {
       Alert.alert(err.toString())
     } finally {
@@ -137,8 +142,8 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
       <ScrollView style={{ flex: 1, paddingTop: 32 }}>
       <View style={styles.headerView}>
         <ButtonGroup
-          onPress={getAddress}
-          // onPress={index => setNetworkIndex(index)}
+          // onPress={getAddress}
+          onPress={index => setNetworkIndex(index)}
           selectedIndex={networkIndex}
           buttons={["Lightning", "Bitcoin"]}
           // selectedButtonStyle={{}}
@@ -147,16 +152,6 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
           containerStyle={{borderRadius: 50}}
           selectedButtonStyle={{backgroundColor: palette.lightBlue}}
         />
-        {/* <Button
-          buttonStyle={styles.clearButtonStyle}
-          titleStyle={{color: palette.lightBlue, fontWeight: "bold" }}
-          containerStyle={{width: "100%"}}
-          title="On chain?"
-          type="clear"
-          onPress={getAddress}
-          loading={loading}
-          disabled={loading}
-        /> */}
       </View>
         {/* <View style={{ alignItems: "center" }}>
           <IconTransaction type={"receive"} size={75} color={palette.orange} />
@@ -164,7 +159,7 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
         <View style={styles.section}>
           <InputPaymentDataInjected 
             onUpdateAmount={amount => setAmount(amount)}
-            onSubmitEditing={createInvoice}
+            onSubmitEditing={createPaymentRequest}
           />
         </View>
         <View style={styles.section}>
@@ -176,7 +171,7 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
             disabledStyle={styles.buttonStyle}
             containerStyle={{width: "100%"}}
             title="Create"
-            onPress={createInvoice}
+            onPress={createPaymentRequest}
             titleStyle={{ fontWeight: "bold" }}
             loading={loading}
             disabled={loading}
@@ -188,10 +183,7 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
 })
 
 export const ShowQRCode = ({ route, navigation }) => {
-  const data = route.params.data
-  const type = route.params.type
-  const hash = route.params.hash
-  const amount = route.params.amount
+  const { data, type, hash, amount } = route.params
 
   const store = React.useContext(StoreContext)
 
@@ -268,6 +260,9 @@ export const ShowQRCode = ({ route, navigation }) => {
     ])
   }
 
+  const textAmount = amount !== 0 ? 
+    `Receive ${amount} sats / \$${(amount * store.rate(CurrencyType.BTC)).toFixed(2)}` : " "
+
   return (
     <Screen backgroundColor={palette.lighterGrey}>
       <ScrollView style={{ flex: 1, paddingTop: 32 }}>
@@ -278,11 +273,7 @@ export const ShowQRCode = ({ route, navigation }) => {
           {data}
         </QRCode>
         <View style={{ marginHorizontal: 48 }}>
-          {type === "lightning" &&
-            <Text style={{ fontSize: 16, alignSelf: "center" }}>
-              Receive {amount} sats / ${(amount * store.rate(CurrencyType.BTC)).toFixed(2)}
-            </Text>
-          }
+          <Text style={{ fontSize: 16, alignSelf: "center" }}>{textAmount}</Text>
           <Button
             buttonStyle={styles.buttonStyle}
             disabledStyle={styles.buttonStyle}
