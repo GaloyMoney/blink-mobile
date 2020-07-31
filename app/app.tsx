@@ -191,9 +191,7 @@ export const App = () => {
           // // Save the current route name for later comparision
           // routeNameRef.current = currentRouteName
         }}>
-        {/* <StatefulNavigator> */}
-          <RootStack />
-        {/* <StatefulNavigator /> */}
+        <RootStack />
       </NavigationContainer>
       {/* </BackButtonHandler> */}
     </StoreContext.Provider>
