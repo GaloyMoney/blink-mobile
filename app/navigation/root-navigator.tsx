@@ -5,7 +5,6 @@ import { useEffect, useState } from "react"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 import { translate } from "../i18n"
-import { StoreContext } from "../models"
 import { AccountDetailScreen } from "../screens/account-detail-screen/account-detail-screen"
 import { AccountsScreen } from "../screens/accounts-screen"
 import { DebugScreen } from "../screens/debug-screen"
@@ -263,7 +262,7 @@ export const PrimaryNavigator = () => {
 
   return (
     <Tab.Navigator
-      initialRouteName="Accounts"
+      initialRouteName="MoveMoney"
       tabBarOptions={{
         activeTintColor: network === "mainnet" ? 
           palette.lightBlue : palette.orange,
