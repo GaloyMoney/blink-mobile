@@ -78,7 +78,7 @@ export const WelcomeFirstScreen = ({ navigation }) => {
         <OnboardingScreen
           action={async () => {
             store.onboarding.getStartedCompleted()
-            navigation.navigate("Earn ") // FIXME
+            navigation.navigate("Primary")
           }}
           Svg={HoneyBadgerShovel}
           nextTitle="Learn to Earn"

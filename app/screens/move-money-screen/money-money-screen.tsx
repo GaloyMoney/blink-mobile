@@ -1,7 +1,7 @@
 import { observer } from "mobx-react"
 import * as React from "react"
 import { useState } from "react"
-import { ScrollView, Text, View } from "react-native"
+import { FlatList, RefreshControl, ScrollView, Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
@@ -12,11 +12,11 @@ import { IconTransaction } from "../../components/icon-transactions"
 import { LargeButton } from "../../components/large-button"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
-import { StoreContext } from "../../models"
+import { StoreContext, useQuery } from "../../models"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { AccountType, CurrencyType } from "../../utils/enum"
-import { capitalize } from "../../utils/helper"
+import { Token } from "../../utils/token"
 
 
 const styles = EStyleSheet.create({
@@ -76,26 +76,120 @@ const styles = EStyleSheet.create({
     textAlign: "center",
     fontSize: "16rem",
   },
+
+  listContainer: {
+    marginTop: "32rem"
+  }
 })
+
+
+// const gql_query = `
+// query home($isLogged: Boolean!) {
+//   prices {
+//     __typename
+//     id
+//     o
+//   }
+//   earnList {
+//     __typename
+//     id
+//     value
+//     completed @include(if: $isLogged)
+//   }
+//   wallet @include(if: $isLogged) {
+//     __typename
+//     id
+//     balance
+//     currency
+//   }
+//   me @include(if: $isLogged) {
+//     __typename
+//     id
+//     level
+//   }
+// }
+// `
+
+const gql_query_logged = `
+query gql_query_logged {
+  prices {
+    __typename
+    id
+    o
+  }
+  earnList {
+    __typename
+    id
+    value
+    completed
+  }
+  wallet {
+    __typename
+    id
+    balance
+    currency
+  }
+  me {
+    __typename
+    id
+    level
+  }
+}
+`
+
+const gql_query_anonymous = `
+query gql_query_anonymous {
+  prices {
+    __typename
+    id
+    o
+  }
+  earnList {
+    __typename
+    id
+    value
+  }
+}
+`
 
 export const MoveMoneyScreenDataInjected = observer(
   ({ navigation }) => {
+
+    const getQuery = () => new Token().has() ? gql_query_logged : gql_query_anonymous
+
     const store = React.useContext(StoreContext)
+    let query, error, loading, setQuery
+  
+    try {    
+      ({query, error, loading, setQuery} = useQuery(getQuery()))
+    } catch (err) {
+      // TODO manage error properly. "Unhandled promise rejection"
+      // when no network is available
+      console.tron.log({err})
+    }
+  
+    const refreshQuery = async () => {
+      console.tron.log("refresh query")
+      setQuery(getQuery())
+      await query.refetch()
+    }
 
     const walletActivated = store.user.level > 0
 
     return <MoveMoneyScreen 
       navigation={navigation}
       walletActivated={walletActivated}
-      amount={store.balances({currency: "BTC", account: AccountType.Bitcoin})} // FIXME add USD as well
+      loading={loading}
+      error={error}
+      store={store}
+      refreshQuery={refreshQuery}
     />
 })
 
 export const MoveMoneyScreen = (
-  ({ walletActivated, navigation, amount }) => {
+  ({ walletActivated, navigation, loading, error, store, refreshQuery }) => {
 
   const [modalVisible, setModalVisible] = useState(false)
-  const [buttonAction, setButtonAction] = useState(() => () => {})
 
   const [secretMenuCounter, setSecretMenuCounter] = useState(0)
   React.useEffect(() => {
@@ -113,6 +207,8 @@ export const MoveMoneyScreen = (
     setModalVisible(false)
     navigation.navigate("phoneValidation")
   }
+
+  console.tron.log({accountRefresh: store.accountRefresh})
 
   return (
     <Screen style={styles.screenStyle}>
@@ -147,27 +243,46 @@ export const MoveMoneyScreen = (
           <View style={{flex: 1}} />
         </View>
       </Modal>
-      <ScrollView style={{flex: 1}}>
-        <BalanceHeader currency={CurrencyType.BTC} amount={amount} />
-          <LargeButton
-            title={translate(`ScanningQRCodeScreen.title`)}
-            icon={<IconTransaction type={"send"} size={75} color={palette.orange} />}
-            onPress={() => onBitcoinClick("scanningQRCode")}
-          />
-          <LargeButton
-            title={translate(`ReceiveBitcoinScreen.title`)}
-            icon={<IconTransaction type={"receive"} size={75} color={palette.orange} />}
-            onPress={() => onBitcoinClick("receiveBitcoin")}
-          />
-        <View style={{marginBottom: 32, alignItems: "center", marginTop: 32}}>
-          <Icon name={"ios-thunderstorm"} 
-            size={32} onPress={() => setSecretMenuCounter(secretMenuCounter + 1)} />
-          <Text 
-            style={styles.lightningText}>
-              {`We use the Lightning Network.`}
-            </Text>
+        <BalanceHeader
+          loading={loading}
+          currency={CurrencyType.USD}
+          amount={store.balances({currency: "USD", account: AccountType.BankAndBitcoin})}
+          amountOtherCurrency={store.balances({
+            currency: CurrencyType.BTC,
+            account: AccountType.BankAndBitcoin,
+          })}
+        />
+        {/* FIXME remove relative */}
+        <View style={{position: "relative", alignItems: "flex-end", right: 64, bottom: 64}}> 
+          <Icon name={"ios-stats-chart-outline"} size={32} onPress={() => 
+            navigation.navigate("accountDetail", { account: AccountType.Bitcoin })  } />
         </View>
-      </ScrollView>
+        {error && 
+          <ScrollView style={{flex: 1}}>
+            <Text style={{color: palette.red, alignSelf: "center"}}>{error.message}</Text>
+          </ScrollView>}
+        <FlatList
+          data={[{
+            title: translate(`ScanningQRCodeScreen.title`), icon: "send", target: "scanningQRCode"
+          },{
+            title: translate(`ReceiveBitcoinScreen.title`), icon: "receive", target: "receiveBitcoin"
+          }]}
+          extraData={store.accountRefresh}
+          style={styles.listContainer}
+          refreshControl={<RefreshControl refreshing={loading} onRefresh={() => refreshQuery()} />}
+          renderItem={({ item }) => (
+            <LargeButton
+              title={item.title}
+              icon={<IconTransaction type={item.icon} size={75} color={palette.orange} />}
+              onPress={() => onBitcoinClick(item.target)}
+            />
+          )}
+        />
+        <View style={{marginBottom: 32, alignItems: "center", marginTop: 32}}>
+          <Icon name={"ios-flash"} 
+            size={32} onPress={() => setSecretMenuCounter(secretMenuCounter + 1)} />
+          <Text style={styles.lightningText}>{`We use the Lightning Network.`}</Text>
+        </View>
     </Screen>
   )
 })

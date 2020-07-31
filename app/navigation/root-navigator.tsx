@@ -6,7 +6,6 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 import { translate } from "../i18n"
 import { AccountDetailScreen } from "../screens/account-detail-screen/account-detail-screen"
-import { AccountsScreen } from "../screens/accounts-screen"
 import { DebugScreen } from "../screens/debug-screen"
 import { EarnMapDataInjected } from "../screens/earns-map-screen"
 import { EarnQuiz, EarnSection } from "../screens/earns-screen"
@@ -49,7 +48,7 @@ export const RootStack = () => {
       console.tron.log({token})
 
       if (token.has()) {
-        setInitialRouteName("Earn ")
+        setInitialRouteName("Primary")
       } else {
         setInitialRouteName("getStarted")
       }
@@ -81,8 +80,7 @@ export const RootStack = () => {
         options={{ headerShown: false }}
       />
       <RootNavigator.Screen
-        // name="Primary" // FIXME quick fix
-        name="Earn "
+        name="Primary"
         component={PrimaryNavigator}
         options={{ headerShown: false }}
       />
@@ -135,14 +133,14 @@ export const RootStack = () => {
           // cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
         }}  
       />
-      <StackAccounts.Screen
+      <RootNavigator.Screen
         name="transactionHistory"
         component={TransactionScreenDataInjected}
         options={() => ({
           title: "Transaction History",
         })}
       />
-      <StackAccounts.Screen
+      <RootNavigator.Screen
         name="accountDetail"
         component={AccountDetailScreen}
         options={{ 
@@ -271,12 +269,12 @@ export const PrimaryNavigator = () => {
       }}
     >
       <Tab.Screen
-        name="Accounts"
-        component={AccountNavigator}
+        name="Transactions"
+        component={TransactionScreenDataInjected}
         options={{
           // title: translate("AccountsScreen.title"),
           tabBarIcon: ({ focused, color }) => {
-            return <Icon name={"ios-wallet"} size={size} color={color} />
+            return <Icon name={"ios-list-outline"} size={size} color={color} />
           },
         }}
       />
@@ -286,7 +284,7 @@ export const PrimaryNavigator = () => {
         options={{
           title: translate("MoveMoneyScreen.title"),
           tabBarIcon: ({ focused, color }) => {
-            return <Icon name={"ios-swap"} size={size} color={color} />
+            return <Icon name={"ios-swap-horizontal"} size={size} color={color} />
           },
         }}
       />
@@ -303,27 +301,3 @@ export const PrimaryNavigator = () => {
     </Tab.Navigator>
   )
 }
-
-
-export const StackAccounts = createStackNavigator()
-
-export const AccountNavigator = () => {
-  return (
-    <StackAccounts.Navigator
-      initialRouteName={"accounts"}
-      headerMode="float"
-      // headerMode="none"
-    >
-      <StackAccounts.Screen
-        name="accounts"
-        component={AccountsScreen}
-        options={() => ({
-          title: translate("AccountsScreen.title"),
-          headerShown: false
-        })}
-      />
-      <StackAccounts.Screen name="debug" component={DebugScreen} />
-    </StackAccounts.Navigator>
-  )
-}
-
