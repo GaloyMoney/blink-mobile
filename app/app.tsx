@@ -57,6 +57,7 @@ export const App = () => {
   const navigationRef = useRef()
 
   useEffect(() => {
+    // TODO bring back notification outside of firebase function
     // FIXME there might be a better way to manage this notification
     Notifications.events().registerNotificationReceivedBackground((notification, completion) => {
       console.tron.log("Background notification")
