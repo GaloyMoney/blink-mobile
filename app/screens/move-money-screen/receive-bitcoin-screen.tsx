@@ -9,7 +9,6 @@ import { ScrollView } from "react-native-gesture-handler"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import { IconTransaction } from "../../components/icon-transactions"
 import { InputPaymentDataInjected } from "../../components/input-payment"
-import { QRCode } from "../../components/qrcode"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
 import { StoreContext } from "../../models"
@@ -17,6 +16,8 @@ import { palette } from "../../theme/palette"
 import { CurrencyType } from "../../utils/enum"
 import { getHash } from "../../utils/lightning"
 import { request } from "../../utils/request"
+import QRCode from 'react-native-qrcode-svg';
+import Icon from "react-native-vector-icons/Ionicons"
 
 var width = Dimensions.get('window').width; //full width
 
@@ -39,6 +40,7 @@ const styles = EStyleSheet.create({
   },
 
   qr: {
+    marginTop: "24rem",
     alignItems: "center",
     flex: 1,
   },
@@ -269,9 +271,10 @@ export const ShowQRCode = ({ route, navigation }) => {
         <View style={{ alignItems: "center" }}>
           <IconTransaction type={"receive"} size={75} color={palette.orange} />
         </View>
-        <QRCode style={styles.qr} size={280}>
-          {data}
-        </QRCode>
+        <View style={styles.qr} >
+          <QRCode size={280} value={data} logoBackgroundColor='white' ecl="M"
+          logo={Icon.getImageSourceSync(type === "onchain" ? "logo-bitcoin" : "ios-flash", 32, palette.orange)} />
+        </View>
         <View style={{ marginHorizontal: 48 }}>
           <Text style={{ fontSize: 16, alignSelf: "center" }}>{textAmount}</Text>
           <Button

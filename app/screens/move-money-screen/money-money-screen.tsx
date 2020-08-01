@@ -254,7 +254,7 @@ export const MoveMoneyScreen = (
         />
         {/* FIXME remove relative */}
         <View style={{position: "relative", alignItems: "flex-end", right: 64, bottom: 64}}> 
-          <Icon name={"ios-stats-chart-outline"} size={32} onPress={() => 
+          <Icon name={"ios-trending-up-outline"} size={32} onPress={() => 
             navigation.navigate("accountDetail", { account: AccountType.Bitcoin })  } />
         </View>
         {error && 
