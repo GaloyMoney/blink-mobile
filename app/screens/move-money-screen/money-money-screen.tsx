@@ -183,11 +183,12 @@ export const MoveMoneyScreenDataInjected = observer(
       error={error}
       store={store}
       refreshQuery={refreshQuery}
+      accountRefresh={store.accountRefresh}
     />
 })
 
 export const MoveMoneyScreen = (
-  ({ walletActivated, navigation, loading, error, store, refreshQuery }) => {
+  ({ walletActivated, navigation, loading, error, store, refreshQuery, accountRefresh }) => {
 
   const [modalVisible, setModalVisible] = useState(false)
 
@@ -207,8 +208,6 @@ export const MoveMoneyScreen = (
     setModalVisible(false)
     navigation.navigate("phoneValidation")
   }
-
-  console.tron.log({accountRefresh: store.accountRefresh})
 
   return (
     <Screen style={styles.screenStyle}>
@@ -267,7 +266,7 @@ export const MoveMoneyScreen = (
           },{
             title: translate(`ReceiveBitcoinScreen.title`), icon: "receive", target: "receiveBitcoin"
           }]}
-          extraData={store.accountRefresh}
+          extraData={accountRefresh}
           style={styles.listContainer}
           refreshControl={<RefreshControl refreshing={loading} onRefresh={() => refreshQuery()} />}
           renderItem={({ item }) => (
