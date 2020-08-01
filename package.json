@@ -23,6 +23,8 @@
     "mst-gql": "mst-gql --format ts --outDir app/models http://localhost:4000/graphql"
   },
   "dependencies": {
+    "react": "16.13.1",
+    "react-native": "0.63.2",
     "@react-native-community/async-storage": "^1.8.1",
     "@react-native-community/datetimepicker": "^2.3.0",
     "@react-native-community/masked-view": "^0.1.7",
@@ -51,10 +53,8 @@
     "mst-gql": "^0.11.3",
     "node-libs-react-native": "^1.0.3",
     "ramda": "0.27.0",
-    "react": "^16.13.1",
     "react-content-loader": "^5.0.2",
     "react-dom": "^16.13.1",
-    "react-native": "0.61.5",
     "react-native-camera": "^3.21.0",
     "react-native-config": "^1.0.0",
     "react-native-device-info": "^5.5.3",
@@ -89,11 +89,12 @@
     "victory-native": "^34.1.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.0",
+    "@babel/core": "^7.8.4",
     "@babel/plugin-proposal-decorators": "^7.8.3",
     "@babel/plugin-proposal-optional-catch-binding": "^7.8.3",
     "@babel/preset-typescript": "^7.9.0",
-    "@babel/runtime": "^7.9.2",
+    "@babel/runtime": "^7.8.4",
+    "@react-native-community/eslint-config": "^1.1.0",
     "@emotion/core": "^10.0.28",
     "@storybook/addon-actions": "^5.3.18",
     "@storybook/addon-knobs": "^5.3.17",
@@ -111,6 +112,7 @@
     "@typescript-eslint/eslint-plugin": "^2.24.0",
     "@typescript-eslint/parser": "^2.24.0",
     "babel-core": "7.0.0-bridge.0",
+    "babel-jest": "^25.1.0",
     "babel-loader": "^8.1.0",
     "csv-parse": "^4.8.9",
     "emotion-theming": "^10.0.27",
