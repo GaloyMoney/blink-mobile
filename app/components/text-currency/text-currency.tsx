@@ -1,7 +1,6 @@
 import * as currency_fmt from "currency.js"
 import * as React from "react"
 import { Text, View } from "react-native"
-import { Input } from "react-native-elements"
 import { CurrencyType } from "../../utils/enum"
 
 export const TextCurrency = ({ amount, currency, style }) => {
@@ -29,37 +28,4 @@ export const TextCurrency = ({ amount, currency, style }) => {
       </>
     )
   }
-}
-
-export const InputCurrency = ({ amount, setAmount, currency, style, appendDot, onSubmitEditing, editable }) => {
-  let value 
-  if (amount === 0 || isNaN(amount)) {
-    value = ""
-  } else {
-    value = String(+amount)
-  }
-
-  // only add dot for for non-sats. 
-  if ((currency === CurrencyType.USD || currency === CurrencyType.BTC) && appendDot) {
-    value += "."
-  }
-
-  return <Input
-    placeholder={"enter amount"}
-    autoFocus={true}
-    value={value}
-    leftIcon={currency === CurrencyType.USD ? <Text style={style}>$</Text> : null}
-    rightIcon={currency === CurrencyType.BTC ? 
-      <Text style={style}>BTC</Text> :
-      currency === "sats" ?
-        <Text style={style}>sats</Text> :
-        null}
-    containerStyle={{width: 280}}
-    inputStyle={style}
-    onChangeText={setAmount}
-    keyboardType="decimal-pad"
-    onSubmitEditing={onSubmitEditing}
-    returnKeyType="done"
-    editable={editable}
-  />
 }

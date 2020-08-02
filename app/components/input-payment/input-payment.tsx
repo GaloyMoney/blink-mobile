@@ -1,13 +1,14 @@
 import { indexOf, toInteger } from "lodash"
 import * as React from "react"
-import { View } from "react-native"
+import { Text, View } from "react-native"
+import { Input } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
-import { TouchableHighlight, TouchableOpacity } from "react-native-gesture-handler"
+import { TouchableOpacity } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
 import { StoreContext } from "../../models"
 import { palette } from "../../theme/palette"
 import { CurrencyType } from "../../utils/enum"
-import { InputCurrency, TextCurrency } from "../text-currency/text-currency"
+import { TextCurrency } from "../text-currency/text-currency"
 
 
 
@@ -39,6 +40,11 @@ const styles = EStyleSheet.create({
     color: palette.darkGrey,
     marginTop: 0,
     paddingTop: 0,
+  },
+
+  textStyle: {
+    fontSize: 28,
+    color: palette.darkGrey
   }
 })
 
@@ -56,6 +62,43 @@ export const InputPaymentDataInjected = (props: InputPaymentDataInjectedProps) =
   
   return <InputPayment price={price} {...props} />
 }
+
+
+const InputCurrency = ({ amount, setAmount, currency, appendDot, onSubmitEditing, editable }) => {
+  let value 
+  if (amount == 0 || isNaN(amount)) {
+    value = ""
+  } else {
+    value = String(+amount)
+  }
+
+  // only add dot for for non-sats. 
+  if ((currency === CurrencyType.USD || currency === CurrencyType.BTC) && appendDot) {
+    value += "."
+  }
+
+  console.tron.log({amount})
+
+  return <Input
+    placeholder={"set an amount"}
+    // autoFocus={true}
+    value={value}
+    leftIcon={currency === CurrencyType.USD ? <Text style={styles.textStyle}>$</Text> : null}
+    rightIcon={currency === CurrencyType.BTC ? 
+      <Text style={styles.textStyle}>BTC</Text> :
+      currency === "sats" ?
+        <Text style={styles.textStyle}>sats</Text> :
+        null}
+    containerStyle={{width: 240}}
+    inputStyle={[styles.textStyle, {textAlign: "center"}]}
+    onChangeText={setAmount}
+    keyboardType="decimal-pad"
+    onSubmitEditing={onSubmitEditing}
+    returnKeyType="done"
+    editable={editable}
+  />
+}
+
 
 export const InputPayment = ({
   price,
@@ -125,8 +168,7 @@ export const InputPayment = ({
               }
             }}
             editable={editable}
-            onSubmitEditing={onSubmitEditing}
-            style={{fontSize: 32, color: palette.darkGrey}} />
+            onSubmitEditing={onSubmitEditing} />
           <TextCurrency
             amount={mapping[pref].secondaryConversion(amount)} 
             currency={mapping[pref].secondary}
