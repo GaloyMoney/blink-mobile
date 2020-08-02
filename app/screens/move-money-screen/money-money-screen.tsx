@@ -129,6 +129,10 @@ query gql_query_logged {
     balance
     currency
   }
+  getLastOnChainAddress {
+    __typename
+    id
+  }
   me {
     __typename
     id

@@ -17,6 +17,8 @@ import { UserModel, UserModelType } from "./UserModel"
 import { userModelPrimitives, UserModelSelector } from "./UserModel.base"
 import { BuildParameterModel, BuildParameterModelType } from "./BuildParameterModel"
 import { buildParameterModelPrimitives, BuildParameterModelSelector } from "./BuildParameterModel.base"
+import { LastOnChainAddressModel, LastOnChainAddressModelType } from "./LastOnChainAddressModel"
+import { lastOnChainAddressModelPrimitives, LastOnChainAddressModelSelector } from "./LastOnChainAddressModel.base"
 import { SuccessModel, SuccessModelType } from "./SuccessModel"
 import { successModelPrimitives, SuccessModelSelector } from "./SuccessModel.base"
 import { TokenModel, TokenModelType } from "./TokenModel"
@@ -40,7 +42,8 @@ type Refs = {
   wallets: ObservableMap<string, WalletModelType>,
   transactions: ObservableMap<string, TransactionModelType>,
   earns: ObservableMap<string, EarnModelType>,
-  users: ObservableMap<string, UserModelType>
+  users: ObservableMap<string, UserModelType>,
+  lastOnChainAddresses: ObservableMap<string, LastOnChainAddressModelType>
 }
 
 
@@ -52,7 +55,8 @@ queryPrices="queryPrices",
 queryWallet="queryWallet",
 queryEarnList="queryEarnList",
 queryMe="queryMe",
-queryBuildParameters="queryBuildParameters"
+queryBuildParameters="queryBuildParameters",
+queryGetLastOnChainAddress="queryGetLastOnChainAddress"
 }
 export enum RootStoreBaseMutations {
 mutateRequestPhoneCode="mutateRequestPhoneCode",
@@ -69,13 +73,14 @@ mutateUpdateUser="mutateUpdateUser"
 */
 export const RootStoreBase = withTypedRefs<Refs>()(MSTGQLStore
   .named("RootStore")
-  .extend(configureStoreMixin([['Price', () => PriceModel], ['Wallet', () => WalletModel], ['Transaction', () => TransactionModel], ['Earn', () => EarnModel], ['User', () => UserModel], ['BuildParameter', () => BuildParameterModel], ['Success', () => SuccessModel], ['Token', () => TokenModel], ['OnchainTransaction', () => OnchainTransactionModel], ['OnChain', () => OnChainModel], ['Invoice', () => InvoiceModel]], ['Price', 'Wallet', 'Transaction', 'Earn', 'User'], "js"))
+  .extend(configureStoreMixin([['Price', () => PriceModel], ['Wallet', () => WalletModel], ['Transaction', () => TransactionModel], ['Earn', () => EarnModel], ['User', () => UserModel], ['BuildParameter', () => BuildParameterModel], ['LastOnChainAddress', () => LastOnChainAddressModel], ['Success', () => SuccessModel], ['Token', () => TokenModel], ['OnchainTransaction', () => OnchainTransactionModel], ['OnChain', () => OnChainModel], ['Invoice', () => InvoiceModel]], ['Price', 'Wallet', 'Transaction', 'Earn', 'User', 'LastOnChainAddress'], "js"))
   .props({
     prices: types.optional(types.map(types.late((): any => PriceModel)), {}),
     wallets: types.optional(types.map(types.late((): any => WalletModel)), {}),
     transactions: types.optional(types.map(types.late((): any => TransactionModel)), {}),
     earns: types.optional(types.map(types.late((): any => EarnModel)), {}),
-    users: types.optional(types.map(types.late((): any => UserModel)), {})
+    users: types.optional(types.map(types.late((): any => UserModel)), {}),
+    lastOnChainAddresses: types.optional(types.map(types.late((): any => LastOnChainAddressModel)), {})
   })
   .actions(self => ({
     queryPrices(variables?: {  }, resultSelector: string | ((qb: PriceModelSelector) => PriceModelSelector) = priceModelPrimitives.toString(), options: QueryOptions = {}) {
@@ -101,6 +106,11 @@ export const RootStoreBase = withTypedRefs<Refs>()(MSTGQLStore
     queryBuildParameters(variables?: {  }, resultSelector: string | ((qb: BuildParameterModelSelector) => BuildParameterModelSelector) = buildParameterModelPrimitives.toString(), options: QueryOptions = {}) {
       return self.query<{ buildParameters: BuildParameterModelType}>(`query buildParameters { buildParameters {
         ${typeof resultSelector === "function" ? resultSelector(new BuildParameterModelSelector()).toString() : resultSelector}
+      } }`, variables, options)
+    },
+    queryGetLastOnChainAddress(variables?: {  }, resultSelector: string | ((qb: LastOnChainAddressModelSelector) => LastOnChainAddressModelSelector) = lastOnChainAddressModelPrimitives.toString(), options: QueryOptions = {}) {
+      return self.query<{ getLastOnChainAddress: LastOnChainAddressModelType}>(`query getLastOnChainAddress { getLastOnChainAddress {
+        ${typeof resultSelector === "function" ? resultSelector(new LastOnChainAddressModelSelector()).toString() : resultSelector}
       } }`, variables, options)
     },
     mutateRequestPhoneCode(variables: { phone?: string }, resultSelector: string | ((qb: SuccessModelSelector) => SuccessModelSelector) = successModelPrimitives.toString(), optimisticUpdate?: () => void) {

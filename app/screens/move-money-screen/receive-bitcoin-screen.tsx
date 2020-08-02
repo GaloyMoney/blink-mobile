@@ -1,12 +1,16 @@
 import * as lightningPayReq from "bolt11"
+import { values } from "mobx"
 import { observer } from "mobx-react"
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { Alert, Clipboard, Dimensions, Share, StyleSheet, Text, View } from "react-native"
-import { Button, ButtonGroup, Input } from "react-native-elements"
+import ContentLoader, { Rect } from "react-content-loader/native"
+import { Alert, Clipboard, Dimensions, Share, Text, View } from "react-native"
+import { Button, ButtonGroup } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { ScrollView } from "react-native-gesture-handler"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
+import QRCode from 'react-native-qrcode-svg'
+import Icon from "react-native-vector-icons/Ionicons"
 import { IconTransaction } from "../../components/icon-transactions"
 import { InputPaymentDataInjected } from "../../components/input-payment"
 import { Screen } from "../../components/screen"
@@ -16,8 +20,6 @@ import { palette } from "../../theme/palette"
 import { CurrencyType } from "../../utils/enum"
 import { getHash } from "../../utils/lightning"
 import { request } from "../../utils/request"
-import QRCode from 'react-native-qrcode-svg';
-import Icon from "react-native-vector-icons/Ionicons"
 
 var width = Dimensions.get('window').width; //full width
 
@@ -64,14 +66,46 @@ const styles = EStyleSheet.create({
 })
 
 export const ReceiveBitcoinScreen = observer(({ navigation }) => {
+  const store = React.useContext(StoreContext)
+
   const [memo, setMemo] = useState("")
   const [amount, setAmount] = useState(0)
   const [loading, setLoading] = useState(false)
 
-  const [networkIndex, setNetworkIndex] = useState(0)
+  const [networkIndex, setNetworkIndex] = useState(1)
+  const [data, setData] = useState(" ")
 
-  const createPaymentRequest = async () => {
-    networkIndex === 0 ? await createInvoice() : await getAddress()
+  useEffect(() => {
+    update()
+  }, [networkIndex])
+
+  const update = async () => {
+    if (networkIndex === 0) {
+      await createInvoice()
+    } else {
+      const address = values(store.lastOnChainAddresses)[0].id
+      setData(amount === 0 ? address : address + `?amount=${amount * 10 ** 8}`)
+    }
+  }
+
+  const shareInvoice = async () => {
+    try {
+      const result = await Share.share({
+        message: data,
+      })
+
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      Alert.alert(error.message)
+    }
   }
 
   const createInvoice = async () => {
@@ -99,39 +133,7 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
       const invoiceDecoded = lightningPayReq.decode(invoice)
       const hash = getHash(invoiceDecoded)
 
-      navigation.navigate("showQRCode", { data: invoice, amount, hash, type: "lightning" })
-    } catch (err) {
-      Alert.alert(err.toString())
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const getAddress = async () => {
-    setLoading(true)
-
-    let address
-
-    try {
-      const query = `mutation getNewAddress {
-        onchain {
-          getNewAddress
-        }
-      }`
-
-      const result = await request(query)
-      console.tron.log({result})
-
-      address = result.onchain.getNewAddress
-    } catch (err) {
-      console.tron.log(`error with getAddress: ${err}`)
-      throw err
-    }
-
-    const data = amount === 0 ? address : address + `?amount=${amount * 10 ** 8}` // FIXME Bignum?
-
-    try {
-      navigation.navigate("showQRCode", { data, amount, type: "onchain" })
+      setData(invoice)
     } catch (err) {
       Alert.alert(err.toString())
     } finally {
@@ -161,14 +163,34 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
         <View style={styles.section}>
           <InputPaymentDataInjected 
             onUpdateAmount={amount => setAmount(amount)}
-            onSubmitEditing={createPaymentRequest}
+            onSubmitEditing={update}
           />
         </View>
-        <View style={styles.section}>
+        {/* <View style={styles.section}>
           <Input placeholder="Optional note" value={memo} onChangeText={(text) => setMemo(text)} />
+        </View> */}
+        <View style={styles.qr} >
+          {!loading && 
+            <QRCode size={280} value={data} logoBackgroundColor='white' ecl="M"
+            logo={Icon.getImageSourceSync(networkIndex === 0 ? "ios-flash" : "logo-bitcoin", 64, palette.orange)} />
+          }
+          {loading && 
+            <ContentLoader height={280} width={280} speed={2} primaryColor={palette.white} secondaryColor={palette.darkGrey}>
+              <Rect x="0" y="0" rx="0" ry="0" width="280" height="280" />
+              {/* <Icon name={networkIndex === 0 ? "ios-flash" : "logo-bitcoin"} size={48}  color={palette.orange} /> */}
+            </ContentLoader>
+          }
         </View>
         <View style={{ alignContent: "center", alignItems: "center", marginHorizontal: 48 }}>
           <Button
+              buttonStyle={styles.buttonStyle}
+              disabledStyle={styles.buttonStyle}
+              containerStyle={{width: "100%"}}
+              title="Share"
+              onPress={shareInvoice}
+              titleStyle={{ fontWeight: "bold" }}
+            />
+          {/* <Button
             buttonStyle={styles.buttonStyle}
             disabledStyle={styles.buttonStyle}
             containerStyle={{width: "100%"}}
@@ -177,7 +199,7 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
             titleStyle={{ fontWeight: "bold" }}
             loading={loading}
             disabled={loading}
-          />
+          /> */}
         </View>
       </ScrollView>
     </Screen>
@@ -189,25 +211,6 @@ export const ShowQRCode = ({ route, navigation }) => {
 
   const store = React.useContext(StoreContext)
 
-  const shareInvoice = async () => {
-    try {
-      const result = await Share.share({
-        message: data,
-      })
-
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-        } else {
-          // shared
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-      }
-    } catch (error) {
-      Alert.alert(error.message)
-    }
-  }
 
   const copyInvoice = () => {
     Clipboard.setString(data)
