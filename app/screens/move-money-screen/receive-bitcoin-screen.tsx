@@ -68,8 +68,8 @@ const styles = EStyleSheet.create({
 export const ReceiveBitcoinScreen = observer(({ navigation }) => {
   const store = React.useContext(StoreContext)
 
-  // const [memo, setMemo] = useState("")
-  // TODO add back a way to set a memo
+  // FIXME TODO add back a way to set a memo
+  const [memo, setMemo] = useState("")
 
   const [amount, setAmount] = useState(0)
   const [loading, setLoading] = useState(false)
