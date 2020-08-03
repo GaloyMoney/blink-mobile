@@ -3,6 +3,7 @@ require("../app/components/balance-header/balance-header.story")
 require("../app/components/input-payment/input-payment.story")
 require("../app/components/price-graph/price-graph.story")
 require("../app/components/large-button/large-button.story")
+require("../app/components/modal-clipboard/modal-clipboard.story")
 
 require("../app/screens/earns-screen/earns-quiz.story")
 require("../app/screens/splash-screen/splash-screen.story")

@@ -1,25 +1,27 @@
+import Clipboard from "@react-native-community/clipboard"
 // Welcome to the main entry point of the app.
 //
 // In this file, we'll be kicking off our app or storybook.
 
 import "@react-native-firebase/crashlytics"
 import { NavigationContainer } from '@react-navigation/native'
-import { getEnv } from "mobx-state-tree"
 import { createHttpClient } from "mst-gql"
 import "node-libs-react-native/globals" // needed for Buffer?
 import { contains } from "ramda"
 import * as React from "react"
 import { useEffect, useRef } from "react"
-import { AppRegistry, Dimensions, YellowBox } from "react-native"
+import { AppRegistry, AppState, Dimensions, YellowBox } from "react-native"
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { Notifications } from "react-native-notifications"
 import { StorybookUIRoot } from "../storybook"
+import { ModalClipboard } from "./components/modal-clipboard"
 import "./i18n"
 import { RootStore, StoreContext } from "./models"
 import { Environment } from "./models/environment"
 import { DEFAULT_NAVIGATION_CONFIG } from "./navigation/navigation-config"
 import { RootStack } from "./navigation/root-navigator"
 import { getActiveRouteName } from "./utils/navigation"
+import { validInvoice } from "./utils/parsing"
 import { Token, getGraphQlUri } from "./utils/token"
 
 
@@ -56,6 +58,15 @@ export const App = () => {
   const routeNameRef = useRef()
   const navigationRef = useRef()
 
+  const appState = useRef(AppState.currentState);
+  const [appStateVisible, setAppStateVisible] = React.useState("new");
+
+  const [modalVisible, setModalVisible] = React.useState(false)
+  const [invoice, setInvoice] = React.useState("")
+  const [amount, setAmount] = React.useState(0)
+  const [amountless, setAmountless] = React.useState(false)
+  const [note, setNote] = React.useState("")
+
   useEffect(() => {
     // TODO bring back notification outside of firebase function
     // FIXME there might be a better way to manage this notification
@@ -75,8 +86,47 @@ export const App = () => {
     })
   }, [])
 
+  useEffect(() => {
+    AppState.addEventListener("change", _handleAppStateChange);
+    checkClipboard()
+
+    return () => {
+      AppState.removeEventListener("change", _handleAppStateChange);
+    };
+  }, []);
+
+  const _handleAppStateChange = (nextAppState) => {
+    console.tron.log(nextAppState, appStateVisible, appState.current)
+
+    if (
+      appState.current.match(/inactive|background/) && nextAppState === "active"
+    ) {
+      console.tron.log("App has come to the foreground!");
+      checkClipboard()
+    }
+
+    appState.current = nextAppState;
+    setAppStateVisible(appState.current);
+  };
+
+  const checkClipboard = async () => {
+    const clipboard = await Clipboard.getString();
+
+    const [valid, _, invoice, amount, amountless, note] = validInvoice(clipboard)
+    if (!valid) {
+      return
+    }
+
+    setAmount(amount)
+    setInvoice(invoice)
+    setAmountless(amountless)
+    setNote(note)
+
+    setModalVisible(true)
+    console.tron.log("this is a valid invoice")
+  }
+
   const defaultStoreInstance = {
-    network: "testnet",
     wallets: {
       "USD": {
         id: "USD",
