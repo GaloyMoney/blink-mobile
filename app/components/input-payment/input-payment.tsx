@@ -31,19 +31,20 @@ const styles = EStyleSheet.create({
 
   header: {
     alignItems: "center",
-    marginBottom: "16rem",
-    marginTop: "16rem",
+    marginTop: "8rem",
   },
 
   subCurrencyText: {
-    fontSize: "16rem",
+    fontSize: "18rem",
     color: palette.darkGrey,
     marginTop: 0,
     paddingTop: 0,
+    position: "relative",
+    top: -18, // FIXME
   },
 
   textStyle: {
-    fontSize: 28,
+    fontSize: 24,
     color: palette.darkGrey
   }
 })
@@ -77,8 +78,6 @@ const InputCurrency = ({ amount, setAmount, currency, appendDot, onSubmitEditing
     value += "."
   }
 
-  console.tron.log({amount})
-
   return <Input
     placeholder={"set an amount"}
     // autoFocus={true}
@@ -89,7 +88,7 @@ const InputCurrency = ({ amount, setAmount, currency, appendDot, onSubmitEditing
       currency === "sats" ?
         <Text style={styles.textStyle}>sats</Text> :
         null}
-    containerStyle={{width: 240}}
+    inputContainerStyle={{width: 250}}
     inputStyle={[styles.textStyle, {textAlign: "center"}]}
     onChangeText={setAmount}
     keyboardType="decimal-pad"
@@ -150,30 +149,28 @@ export const InputPayment = ({
     // FIXME style
     <View style={{ flexDirection: "row", alignItems: "center", width: "100%", paddingLeft: 32 }}> 
       <View style={styles.header}>
-        <View style={styles.amount}>
-          <InputCurrency
-            amount={mapping[pref].conversion(amount)} 
-            currency={mapping[pref].primary}
-            appendDot={appendDot}
-            setAmount={amount => {
-              function endByDot(s) {
-                var rgx = /^[0-9]*\.{1}$/;
-                return s.match(rgx);
-              }
-              setAppendDot(!!endByDot(amount))
-              const newAmount = mapping[pref].reverse(+amount)
-              if (!isNaN(newAmount)) {
-                setAmount(newAmount)
-                onUpdateAmount(toInteger(newAmount))
-              }
-            }}
-            editable={editable}
-            onSubmitEditing={onSubmitEditing} />
-          <TextCurrency
-            amount={mapping[pref].secondaryConversion(amount)} 
-            currency={mapping[pref].secondary}
-            style={styles.subCurrencyText} />
-        </View>
+        <InputCurrency
+          amount={mapping[pref].conversion(amount)} 
+          currency={mapping[pref].primary}
+          appendDot={appendDot}
+          setAmount={amount => {
+            function endByDot(s) {
+              var rgx = /^[0-9]*\.{1}$/;
+              return s.match(rgx);
+            }
+            setAppendDot(!!endByDot(amount))
+            const newAmount = mapping[pref].reverse(+amount)
+            if (!isNaN(newAmount)) {
+              setAmount(newAmount)
+              onUpdateAmount(toInteger(newAmount))
+            }
+          }}
+          editable={editable}
+          onSubmitEditing={onSubmitEditing} />
+        <TextCurrency
+          amount={mapping[pref].secondaryConversion(amount)} 
+          currency={mapping[pref].secondary}
+          style={styles.subCurrencyText} />
       </View>
       <TouchableOpacity onPress={next}>
         <Icon name={"ios-swap-vertical"} size={32} />
