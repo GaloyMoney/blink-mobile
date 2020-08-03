@@ -1,5 +1,4 @@
 import { useNavigation } from "@react-navigation/native"
-import * as lightningPayReq from 'bolt11'
 import * as React from "react"
 import { useEffect, useState } from "react"
 import { Alert, ScrollView, StyleSheet, Text, View, ViewStyle } from "react-native"
@@ -16,6 +15,7 @@ import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { getDescription } from "../../utils/lightning"
 import { request } from "../../utils/request"
+import { validInvoice } from "../../utils/parsing"
 
 const CAMERA: ViewStyle = {
   width: "100%",
@@ -96,49 +96,10 @@ export const ScanningQRCodeScreen = () => {
   const decodeInvoice = async (data) => {
 
     try {
-      // invoice might start with 'lightning:', 'bitcoin:', something else, or have the invoice directly
-      let [protocol, invoice] = data.split(":")
-      console.tron.log({ protocol, invoice })
-      protocol = protocol.toLowerCase()
-      if (protocol === "bitcoin") {
-        Alert.alert("Bitcoin on-chain transactions are coming to the app but we're only accepting lightning for now.")
+      const [valid, errorMessage, invoice, amount, amountless, note] = validInvoice(data)
+      if (!valid) {
+        Alert.alert(errorMessage)
         return
-      } else if (protocol.startsWith("ln") && invoice === undefined) {
-        if(store.network === "testnet" && protocol.startsWith("lnbc")) {
-          Alert.alert(`You're trying to pay a mainnet invoice. The settings for the app is testnet`)
-          return
-        }
-
-        if(store.network === "mainnet" && protocol.startsWith("lntb")) {
-          Alert.alert(`You're trying to pay a testnet invoice. The settings for the app is mainnet`)
-          return
-        }
-
-        invoice = protocol
-      } else if (protocol !== "lightning") {
-        let message = `Only lightning procotol is accepted for now.`
-        message += message === "" ? "" : `\n\ngot following: "${protocol}"`
-        Alert.alert(message)
-        return
-      }
-
-      const payReq = lightningPayReq.decode(invoice)
-      console.tron.log({ payReq })
-
-      let amount, amountless, note
-
-      if (payReq.satoshis || payReq.millisatoshis) {
-        amount = payReq.satoshis ?? Number(payReq.millisatoshis) * 1000
-        amountless = false
-      } else {
-        amount = 0
-        amountless = true
-      }
-
-      note = getDescription(payReq) 
-      if (note === "") {
-        // TODO: node could be dimmed if message below is shown
-        note = `this invoice doesn't include a note`
       }
 
       navigate("sendBitcoin", { invoice, amount, amountless, note })
@@ -176,54 +137,29 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
   const note = route.params.note
   const amount = route.params.amount
 
+  // TODO add back manualAmount capability
   const [manualAmount, setManualAmount] = useState(0)
 
   const { goBack } = useNavigation()
 
-  // const [useUSD, setUseUSD] = useState(false)
   const [message, setMessage] = useState("")
   const [err, setErr] = useState("")
   const [loading, setLoading] = useState(false)
 
-  // const onUseUSDChange = async (input) => {
-    // setUseUSD(input)
-
-    // if (input) {
-    //   await dataStore.exchange.quoteLNDBTC({ side: "buy", satAmount: amount })
-    // } else {
-      // dataStore.exchange.quote.reset()
-    // }
-  // }
-
   const payInvoice = async () => {
-    if (invoice === "") {
-      Alert.alert(`You need to paste an invoice or scan a QR Code`)
+    if (amountless && amount === 0) {
+      Alert.alert(
+        `This invoice doesn't have an amount, so you need to manually specify how much money you want to send`,
+      )
       return
     }
 
-    if (amountless) {
-      if (amount === 0) {
-        Alert.alert(
-          `This invoice doesn't have an amount, so you need to manually specify how much money you want to send`,
-        )
-        return
-      }
-
-      // FIXME what is it for?
-      // payreq.amt = amount
-    }
+    // FIXME what is it for?
+    // payreq.amt = amount
 
     setLoading(true)
-    // try {
-    // if (useUSD) {
-    //   const success = await dataStore.exchange.buyLNDBTC()
 
-    //   if (!success) {
-    //     setErr(translate("errors.generic"))
-    //     return
-    //   }
-    // }
-
+    // FIXME: add the manual amount flow. 
     try {
       const query = `mutation payInvoice($invoice: String) {
         invoice {
