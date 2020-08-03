@@ -1,11 +1,11 @@
 import { saveString, loadString, remove } from "./storage"
 const  jwtDecode = require('jwt-decode')
-import { GRAPHQL_REGTEST_URI } from 'react-native-dotenv'
-import { GRAPHQL_TESTNET_URI } from 'react-native-dotenv'
-import { GRAPHQL_MAINNET_URI } from 'react-native-dotenv'
 import { loadNetwork } from "./network"
 
 export const TOKEN_KEY = "GaloyToken"
+const GRAPHQL_REGTEST_URI = "http://localhost:4000/graphql"
+const GRAPHQL_TESTNET_URI = "https://graphql.testnet.galoy.io/graphql"
+const GRAPHQL_MAINNET_URI = "https://graphql.mainnet.galoy.io/graphql"
 
 // Singleton class
 export class Token {
