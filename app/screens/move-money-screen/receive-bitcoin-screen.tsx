@@ -4,7 +4,7 @@ import { observer } from "mobx-react"
 import * as React from "react"
 import { useEffect, useState } from "react"
 import ContentLoader, { Rect } from "react-content-loader/native"
-import { Alert, Clipboard, Dimensions, Share, Text, View } from "react-native"
+import { ActivityIndicator, Alert, Clipboard, Dimensions, Share, Text, View } from "react-native"
 import { Button, ButtonGroup } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { ScrollView } from "react-native-gesture-handler"
@@ -68,7 +68,9 @@ const styles = EStyleSheet.create({
 export const ReceiveBitcoinScreen = observer(({ navigation }) => {
   const store = React.useContext(StoreContext)
 
-  const [memo, setMemo] = useState("")
+  // const [memo, setMemo] = useState("")
+  // TODO add back a way to set a memo
+
   const [amount, setAmount] = useState(0)
   const [loading, setLoading] = useState(false)
 
@@ -80,11 +82,13 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
   }, [networkIndex])
 
   const update = async () => {
+    // TODO: cancel the network call when switching from one network to the other
+
     if (networkIndex === 0) {
       await createInvoice()
     } else {
-      const address = values(store.lastOnChainAddresses)[0].id
-      setData(amount === 0 ? address : address + `?amount=${amount * 10 ** 8}`)
+      const uri = `bitcoin:${values(store.lastOnChainAddresses)[0].id}`
+      setData(amount === 0 ? uri : uri + `?amount=${amount * 10 ** 8}`)
     }
   }
 
@@ -175,10 +179,13 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
             logo={Icon.getImageSourceSync(networkIndex === 0 ? "ios-flash" : "logo-bitcoin", 64, palette.orange)} />
           }
           {loading && 
-            <ContentLoader height={280} width={280} speed={2} primaryColor={palette.white} secondaryColor={palette.darkGrey}>
-              <Rect x="0" y="0" rx="0" ry="0" width="280" height="280" />
-              {/* <Icon name={networkIndex === 0 ? "ios-flash" : "logo-bitcoin"} size={48}  color={palette.orange} /> */}
-            </ContentLoader>
+            <View style={{ width: 280, height: 280, 
+                alignItems: "center", alignContent: "center", 
+                alignSelf: "center", backgroundColor: palette.white,
+                justifyContent: 'center'
+              }}>
+              <ActivityIndicator size="large" color={palette.blue} />
+            </View>
           }
         </View>
         <View style={{ alignContent: "center", alignItems: "center", marginHorizontal: 48 }}>
@@ -190,16 +197,6 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
               onPress={shareInvoice}
               titleStyle={{ fontWeight: "bold" }}
             />
-          {/* <Button
-            buttonStyle={styles.buttonStyle}
-            disabledStyle={styles.buttonStyle}
-            containerStyle={{width: "100%"}}
-            title="Create"
-            onPress={createPaymentRequest}
-            titleStyle={{ fontWeight: "bold" }}
-            loading={loading}
-            disabled={loading}
-          /> */}
         </View>
       </ScrollView>
     </Screen>
