@@ -1,12 +1,11 @@
-import { useNavigation } from "@react-navigation/native"
+import { useNavigation, useIsFocused } from "@react-navigation/native"
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { Alert, ScrollView, StyleSheet, Text, View, ViewStyle } from "react-native"
-import Clipboard from "@react-native-community/clipboard"
+import { Alert, Dimensions, ScrollView, StyleSheet, Text, View, ViewStyle } from "react-native"
 import { RNCamera } from "react-native-camera"
 import { Button, Input } from "react-native-elements"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
-import Icon from "react-native-vector-icons/Ionicons"
+import Icon from "react-native-vector-icons/AntDesign"
 import { InputPaymentDataInjected } from "../../components/input-payment"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
@@ -15,6 +14,8 @@ import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { request } from "../../utils/request"
 import { validInvoice } from "../../utils/parsing"
+import EStyleSheet from "react-native-extended-stylesheet"
+import Svg, { Circle } from "react-native-svg"
 
 const CAMERA: ViewStyle = {
   width: "100%",
@@ -22,7 +23,9 @@ const CAMERA: ViewStyle = {
   position: "absolute",
 }
 
-const styles = StyleSheet.create({
+const { width: screenWidth } = Dimensions.get("window")
+
+const styles = EStyleSheet.create({
   buttonStyle: {
     backgroundColor: color.primary,
     marginVertical: 8,
@@ -81,16 +84,25 @@ const styles = StyleSheet.create({
     height: 70,
     width: 70,
   },
+
+  rectangleContainer: {
+		flex: 1,
+		alignItems: 'center',
+		justifyContent: 'center',
+		backgroundColor: 'transparent',
+	},
+
+	rectangle: {
+    height: screenWidth * .65,
+    width: screenWidth * .65,
+		borderWidth: 2,
+		borderColor: palette.blue,
+		backgroundColor: 'transparent',
+	},
 })
 
 export const ScanningQRCodeScreen = () => {
-  const store = React.useContext(StoreContext)
-
-  const { navigate } = useNavigation()
-
-  const pasteInvoice = async () => {
-    decodeInvoice(await Clipboard.getString())
-  }
+  const { navigate, goBack } = useNavigation()
 
   const decodeInvoice = async (data) => {
 
@@ -108,22 +120,26 @@ export const ScanningQRCodeScreen = () => {
   }
 
   return (
-    <Screen>
-      <RNCamera
+    <Screen unsafe={true}>
+      {useIsFocused() &&
+        <RNCamera
         style={CAMERA}
         captureAudio={false}
         onBarCodeRead={(event) => {
           const qr = event.data
           decodeInvoice(qr)
-        }}
-      />
-      <View style={styles.overlay}>
-        <Button
-          buttonStyle={[styles.buttonStyle, { width: 180 }]}
-          title="Paste"
-          onPress={pasteInvoice}
-        />
-      </View>
+        }}>
+        <View style={{width: 64, height: 64}}>
+          <Svg viewBox="0 0 100 100">
+            <Circle cx={50} cy={50} r={50} fill={palette.white} opacity={.5} />
+          </Svg>
+          <Icon name="ios-close" size={64} style={{position: "absolute", top: -2}} />
+        </View>
+        <View style={styles.rectangleContainer}>
+          <View style={[styles.rectangle]} />
+        </View>
+      </RNCamera>
+      }
     </Screen>
   )
 }
