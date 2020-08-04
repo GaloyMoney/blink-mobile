@@ -1975,6 +1975,11 @@
     color "^3.1.2"
     react-native-iphone-x-helper "^1.2.1"
 
+"@remobile/react-native-qrcode-local-image@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@remobile/react-native-qrcode-local-image/-/react-native-qrcode-local-image-1.0.4.tgz#471e14ca6be6852578e0ca63c2a8bf67a61b4e47"
+  integrity sha512-tM+komoSgcS+7UzdH0MP2gF0yR8Hc8Dfe3P2iIlQhXyQdHaEVn1dyO6sw+McGfEj+n2DdsP2YXb8g16gW7qcKg==
+
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@samverschueren/stream-to-observable/-/stream-to-observable-0.3.0.tgz#ecdf48d532c58ea477acfcab80348424f8d0662f"
@@ -12676,6 +12681,11 @@ react-native-icloudstore@^0.9.0:
   version "0.9.0"
   resolved "https://registry.yarnpkg.com/react-native-icloudstore/-/react-native-icloudstore-0.9.0.tgz#415cf2ca79e71eb501024079f3b76f9b82d3d587"
   integrity sha1-QVzyynnnHrUBAkB587dvm4LT1Yc=
+
+react-native-image-picker@^2.3.3:
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-2.3.3.tgz#eaacd4a1ed9e9887613be31f0765478ca2f18a51"
+  integrity sha512-i/7JDnxKkUGSbFY2i7YqFNn3ncJm1YlcrPKXrXmJ/YUElz8tHkuwknuqBd9QCJivMfHX41cmq4XvdBDwIOtO+A==
 
 react-native-inappbrowser-reborn@^3.3.4:
   version "3.4.0"

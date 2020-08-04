@@ -1,11 +1,10 @@
 import { useNavigation, useIsFocused } from "@react-navigation/native"
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { Alert, Dimensions, ScrollView, StyleSheet, Text, View, ViewStyle } from "react-native"
-import { RNCamera } from "react-native-camera"
+import { Alert, Dimensions, Platform, Pressable, ScrollView, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View, ViewStyle } from "react-native"
 import { Button, Input } from "react-native-elements"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
-import Icon from "react-native-vector-icons/AntDesign"
+import Icon from "react-native-vector-icons/Ionicons"
 import { InputPaymentDataInjected } from "../../components/input-payment"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
@@ -16,6 +15,9 @@ import { request } from "../../utils/request"
 import { validInvoice } from "../../utils/parsing"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Svg, { Circle } from "react-native-svg"
+import ImagePicker from 'react-native-image-picker';
+import { RNCamera } from "react-native-camera"
+const LocalQRCode = require('@remobile/react-native-qrcode-local-image');
 
 const CAMERA: ViewStyle = {
   width: "100%",
@@ -24,6 +26,7 @@ const CAMERA: ViewStyle = {
 }
 
 const { width: screenWidth } = Dimensions.get("window")
+const { height: screenHeight } = Dimensions.get("window")
 
 const styles = EStyleSheet.create({
   buttonStyle: {
@@ -105,7 +108,6 @@ export const ScanningQRCodeScreen = () => {
   const { navigate, goBack } = useNavigation()
 
   const decodeInvoice = async (data) => {
-
     try {
       const [valid, errorMessage, invoice, amount, amountless, note] = validInvoice(data)
       if (!valid) {
@@ -119,27 +121,54 @@ export const ScanningQRCodeScreen = () => {
     }
   }
 
+  const showImagePicker = () => {
+    ImagePicker.launchImageLibrary(
+      {
+        title: null,
+        mediaType: 'photo',
+        takePhotoButtonTitle: null,
+      },
+      response => {
+        if (response.uri) {
+          const uri = Platform.OS === 'ios' ? response.uri.toString().replace('file://', '') : response.path.toString();
+          LocalQRCode.decode(uri, (error, result) => {
+            if (!error) {
+              decodeInvoice({ data: result });
+            } else {
+              Alert.alert(error);
+            }
+          });
+        }
+      },
+  )}
+
   return (
     <Screen unsafe={true}>
       {useIsFocused() &&
-        <RNCamera
+      <RNCamera
         style={CAMERA}
         captureAudio={false}
         onBarCodeRead={(event) => {
           const qr = event.data
           decodeInvoice(qr)
         }}>
-        <View style={{width: 64, height: 64}}>
+        <View style={styles.rectangleContainer}>
+          <View style={[styles.rectangle]} />
+        </View>
+      </RNCamera>}
+      <View style={{position: "absolute", width: screenWidth, height: screenHeight, top: screenHeight - 96, left: 32}}>
+        <TouchableOpacity onPress={showImagePicker}>
+          <Icon name="image" size={64} color={palette.lightGrey} style={{opacity: .8}} />
+        </TouchableOpacity>
+      </View>
+      <TouchableHighlight onPress={goBack}>
+        <View style={{width: 64, height: 64, top: 48, right: 24, position: "absolute"}}>
           <Svg viewBox="0 0 100 100">
             <Circle cx={50} cy={50} r={50} fill={palette.white} opacity={.5} />
           </Svg>
           <Icon name="ios-close" size={64} style={{position: "absolute", top: -2}} />
         </View>
-        <View style={styles.rectangleContainer}>
-          <View style={[styles.rectangle]} />
-        </View>
-      </RNCamera>
-      }
+      </TouchableHighlight>
     </Screen>
   )
 }

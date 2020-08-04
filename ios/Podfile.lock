@@ -276,6 +276,8 @@ PODS:
     - react-native-config/App (= 1.3.3)
   - react-native-config/App (1.3.3):
     - React
+  - react-native-image-picker (2.3.3):
+    - React
   - react-native-maps (0.27.1):
     - React
   - react-native-notifications (3.3.0):
@@ -419,6 +421,7 @@ DEPENDENCIES:
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - react-native-camera (from `../node_modules/react-native-camera`)
   - react-native-config (from `../node_modules/react-native-config`)
+  - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-maps (from `../node_modules/react-native-maps`)
   - react-native-notifications (from `../node_modules/react-native-notifications`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
@@ -515,6 +518,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-camera"
   react-native-config:
     :path: "../node_modules/react-native-config"
+  react-native-image-picker:
+    :path: "../node_modules/react-native-image-picker"
   react-native-maps:
     :path: "../node_modules/react-native-maps"
   react-native-notifications:
@@ -621,6 +626,7 @@ SPEC CHECKSUMS:
   React-jsinspector: b14e62ebe7a66e9231e9581279909f2fc3db6606
   react-native-camera: d9e7b66e40420dcef111f3265a00f01eea54c52c
   react-native-config: 9a061347e0136fdb32d43a34d60999297d672361
+  react-native-image-picker: 3d3f85baabca60a00b75fb8facc1376db7bbdafa
   react-native-maps: f4b89da81626ad7f151a8bfcb79733295d31ce5c
   react-native-notifications: 471a37a23abd0d62c494720e45a74efac926130c
   react-native-safe-area-context: 344b969c45af3d8464d36e8dea264942992ef033
