@@ -129,6 +129,15 @@ export const RootStack = () => {
         component={PrimaryNavigator}
         options={{ headerShown: false }}
       />
+      <StackMoveMoney.Screen
+        name="scanningQRCode"
+        component={ScanningQRCodeScreen}
+        options={{
+          title: translate("ScanningQRCodeScreen.title"),
+          headerShown: false,
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS
+        }}
+      />
       <RootNavigator.Screen
         name="earnsSection"
         component={EarnSection}
@@ -230,11 +239,6 @@ export const MoveMoneyNavigator = () => {
         name="sendBitcoin"
         component={SendBitcoinScreen}
         options={{ title: translate("SendBitcoinScreen.title") }}
-      />
-      <StackMoveMoney.Screen
-        name="scanningQRCode"
-        component={ScanningQRCodeScreen}
-        options={{ title: translate("ScanningQRCodeScreen.title") }}
       />
       <StackMoveMoney.Screen
         name="receiveBitcoin"

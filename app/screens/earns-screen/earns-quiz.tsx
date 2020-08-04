@@ -1,19 +1,18 @@
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { Text, View, StatusBar } from "react-native"
+import { StatusBar, Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { ScrollView, TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
+import { SafeAreaView } from "react-native-safe-area-context"
 import Icon from "react-native-vector-icons/Ionicons"
 import { CloseCross } from "../../components/close-cross"
 import { Screen } from "../../components/screen"
-import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { shuffle } from "../../utils/helper"
 import { sleep } from "../../utils/sleep"
 import { SVGs } from "./earn-svg-factory"
-import { SafeAreaView } from "react-native-safe-area-context"
 
 const styles = EStyleSheet.create({
 
