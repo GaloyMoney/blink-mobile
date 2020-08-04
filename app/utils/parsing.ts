@@ -12,9 +12,9 @@ type note = string | null
 // TODO add onChain
 // look if we own the address
 
-export const validInvoice = (s: string): [valid, errorMEssage, invoice, amount, amountless, note] => {
+export const validInvoice = (s: string): [valid, errorMEssage?, invoice?, amount?, amountless?, note?] => {
   if (s === "") {
-    return [false, `string is empty`, null, null, null, null]
+    return [false, `string is empty`]
   }
 
   // invoice might start with 'lightning:', 'bitcoin:', something else, or have the invoice directly
@@ -22,20 +22,20 @@ export const validInvoice = (s: string): [valid, errorMEssage, invoice, amount, 
 
   protocol = protocol.toLowerCase()
   if (protocol === "bitcoin") {
-    return [false, "Bitcoin on-chain transactions are coming to the app but we're only accepting lightning for now.", null, null, null, null]
+    return [false, "Bitcoin on-chain transactions are coming to the app but we're only accepting lightning for now."]
   } else if (protocol.startsWith("ln") && invoice === undefined) {
     if(new Token().network === "testnet" && protocol.startsWith("lnbc")) {
-      return [false, `You're trying to pay a mainnet invoice. The settings for the app is testnet`, null, null, null, null]
+      return [false, `You're trying to pay a mainnet invoice. The settings for the app is testnet`]
     }
     if(new Token().network === "mainnet" && protocol.startsWith("lntb")) {
-      return [false, `You're trying to pay a testnet invoice. The settings for the app is mainnet`, null, null, null, null]
+      return [false, `You're trying to pay a testnet invoice. The settings for the app is mainnet`]
     }
 
     invoice = protocol
   } else if (protocol !== "lightning") {
     let message = `Only lightning procotol is accepted for now.`
     message += message === "" ? "" : `\n\ngot following: "${protocol}"`
-    return [false, message, null, null, null, null]
+    return [false, message]
   }
 
   const payReq = lightningPayReq.decode(invoice)
@@ -57,5 +57,5 @@ export const validInvoice = (s: string): [valid, errorMEssage, invoice, amount, 
     note = `this invoice doesn't include a note`
   }
 
-  return [true, "", invoice, amount, amountless, note]
+  return [true,, invoice, amount, amountless, note]
 }
