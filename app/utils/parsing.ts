@@ -12,10 +12,14 @@ type note = string | null
 // TODO add onChain
 // look if we own the address
 
-export const validInvoice = (s): [valid, errorMEssage, invoice, amount, amountless, note] => {
+export const validInvoice = (s: string): [valid, errorMEssage, invoice, amount, amountless, note] => {
+  if (s === "") {
+    return [false, `string is empty`, null, null, null, null]
+  }
+
   // invoice might start with 'lightning:', 'bitcoin:', something else, or have the invoice directly
   let [protocol, invoice] = s.split(":")
-  console.tron.log({ protocol, invoice })
+
   protocol = protocol.toLowerCase()
   if (protocol === "bitcoin") {
     return [false, "Bitcoin on-chain transactions are coming to the app but we're only accepting lightning for now.", null, null, null, null]

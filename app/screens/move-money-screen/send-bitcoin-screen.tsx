@@ -13,7 +13,6 @@ import { translate } from "../../i18n"
 import { StoreContext } from "../../models"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-import { getDescription } from "../../utils/lightning"
 import { request } from "../../utils/request"
 import { validInvoice } from "../../utils/parsing"
 

@@ -6,12 +6,10 @@ import Svg, { Path, Defs, ClipPath, G, Rect, Circle } from "react-native-svg"
 import { palette } from "../../theme/palette"
 import { translate } from "../../i18n"
 
-const OPACITY = "#202020D0"
-
 const styles = StyleSheet.create({
   modalBackground: {
     alignItems: "center",
-    backgroundColor: OPACITY,
+    backgroundColor: palette.OPACITY,
     flex: 1,
     flexDirection: "column",
     justifyContent: "space-around",

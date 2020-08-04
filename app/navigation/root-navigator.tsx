@@ -1,10 +1,13 @@
+import Clipboard from "@react-native-community/clipboard"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { CardStyleInterpolators, createStackNavigator } from "@react-navigation/stack"
 import * as React from "react"
 import { useEffect, useState } from "react"
+import { AppState } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 import { translate } from "../i18n"
+import { StoreContext } from "../models"
 import { AccountDetailScreen } from "../screens/account-detail-screen/account-detail-screen"
 import { DebugScreen } from "../screens/debug-screen"
 import { EarnMapDataInjected } from "../screens/earns-map-screen"
@@ -19,6 +22,7 @@ import { TransactionScreenDataInjected } from "../screens/transaction-screen/tra
 import { WelcomeFirstScreen } from "../screens/welcome-screens"
 import { palette } from "../theme/palette"
 import { AccountType } from "../utils/enum"
+import { validInvoice } from "../utils/parsing"
 import { getNetwork, Token } from "../utils/token"
 
 
@@ -41,6 +45,47 @@ const RootNavigator = createStackNavigator()
 
 export const RootStack = () => {
   const [initialRouteName, setInitialRouteName] = useState("")
+
+  const appState = React.useRef(AppState.currentState);
+  const [appStateVisible, setAppStateVisible] = useState("new");
+  const store = React.useContext(StoreContext)
+
+  useEffect(() => {
+    AppState.addEventListener("change", _handleAppStateChange);
+    checkClipboard()
+
+    return () => {
+      AppState.removeEventListener("change", _handleAppStateChange);
+    };
+  }, []);
+
+  const _handleAppStateChange = (nextAppState) => {
+    // console.tron.log("appStateChange", nextAppState, appStateVisible, appState.current)
+
+    if (
+      appState.current.match(/inactive|background/) && nextAppState === "active"
+    ) {
+      console.tron.log("App has come to the foreground!");
+      checkClipboard()
+    }
+
+    appState.current = nextAppState;
+    setAppStateVisible(appState.current);
+  };
+
+  const checkClipboard = async () => {
+    const clipboard = await Clipboard.getString()
+
+    const [valid, _, invoice, amount, amountless, note] = validInvoice(clipboard)
+    if (!valid) {
+      return
+    }
+    
+    console.tron.log("1", {store})
+
+    store.setModalClipboardVisible(true)
+    store.setPendingPayment(invoice)
+  }
 
   useEffect(() => {
     const _ = async () => {
