@@ -4,18 +4,20 @@ import { Text, View } from "react-native"
 import { CurrencyType } from "../../utils/enum"
 
 export const TextCurrency = ({ amount, currency, style }) => {
+  console.tron.log({currency})
+
   if (currency === CurrencyType.USD) {
     return (
       <Text style={style}>
         {currency_fmt.default(amount, {
-          formatWithSymbol: true, precision: (amount < 0.01 && amount !== 0) ? 4 : 2 }).format()
+          precision: (amount < 0.01 && amount !== 0) ? 4 : 2 }).format()
         }
       </Text>
     )
   } if (currency === CurrencyType.BTC) {
     return (
       <View style={{ flexDirection: "row", alignItems: "flex-end"}}>
-        <Text style={style}>{currency_fmt.default(amount, { precision: 0, separator: "," }).format()} </Text>
+        <Text style={style}>{currency_fmt.default(amount, { precision: 0, separator: ",", symbol: '' }).format()} </Text>
         {/* <Text style={[style, {fontSize: 24}]}>BTC</Text> */}
         <Text style={style}>BTC</Text>
       </View>
@@ -23,7 +25,7 @@ export const TextCurrency = ({ amount, currency, style }) => {
   } else { // if (currency === "sats") {
     return (
       <Text style={style}>
-        {currency_fmt.default(amount, { precision: 0, separator: "," }).format()} sats
+        {currency_fmt.default(amount, { formatWithSymbol: false, precision: 0, separator: ",", symbol: '' }).format()} sats
       </Text>
     )
   }
