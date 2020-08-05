@@ -18,7 +18,7 @@ export const EarnModelBase = ModelBase
     __typename: types.optional(types.literal("Earn"), "Earn"),
     /** the earn reward for the app to display their associated amount */
     id: types.identifier,
-    value: types.union(types.undefined, types.null, types.integer),
+    value: types.union(types.undefined, types.integer),
     completed: types.union(types.undefined, types.null, types.boolean),
   })
   .views(self => ({

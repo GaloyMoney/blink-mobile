@@ -4,12 +4,11 @@
 
 import "@react-native-firebase/crashlytics"
 import { NavigationContainer } from '@react-navigation/native'
-import { getEnv } from "mobx-state-tree"
 import { createHttpClient } from "mst-gql"
 import "node-libs-react-native/globals" // needed for Buffer?
 import { contains } from "ramda"
 import * as React from "react"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { AppRegistry, Dimensions, YellowBox } from "react-native"
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { Notifications } from "react-native-notifications"
@@ -20,7 +19,7 @@ import { Environment } from "./models/environment"
 import { DEFAULT_NAVIGATION_CONFIG } from "./navigation/navigation-config"
 import { RootStack } from "./navigation/root-navigator"
 import { getActiveRouteName } from "./utils/navigation"
-import { Token, getGraphQlUri } from "./utils/token"
+import { getGraphQlUri, Token } from "./utils/token"
 
 
 export async function createEnvironment() {
@@ -51,12 +50,13 @@ console.disableYellowBox = true
  * This is the root component of our app.
  */
 export const App = () => {
-  const [rootStore, setRootStore] = React.useState(null)
+  const [rootStore, setRootStore] = useState(null)
 
   const routeNameRef = useRef()
   const navigationRef = useRef()
 
   useEffect(() => {
+    // TODO bring back notification outside of firebase function
     // FIXME there might be a better way to manage this notification
     Notifications.events().registerNotificationReceivedBackground((notification, completion) => {
       console.tron.log("Background notification")
@@ -75,7 +75,6 @@ export const App = () => {
   }, [])
 
   const defaultStoreInstance = {
-    network: "testnet",
     wallets: {
       "USD": {
         id: "USD",
@@ -130,7 +129,7 @@ export const App = () => {
     fn()
   }, [])
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (rootStore != null || navigationRef.current == undefined) {
       return
     }
@@ -140,6 +139,7 @@ export const App = () => {
 
     // Save the initial route name
     routeNameRef.current = getActiveRouteName(state)
+
   }, [rootStore])
 
   /**
@@ -190,9 +190,7 @@ export const App = () => {
           // // Save the current route name for later comparision
           // routeNameRef.current = currentRouteName
         }}>
-        {/* <StatefulNavigator> */}
-          <RootStack />
-        {/* <StatefulNavigator /> */}
+        <RootStack />
       </NavigationContainer>
       {/* </BackButtonHandler> */}
     </StoreContext.Provider>

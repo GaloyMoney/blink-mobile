@@ -206,7 +206,7 @@ export const WelcomePhoneValidationScreen = ({ onSuccess, route, navigation }) =
       if (login.token) {
         await new Token().save({token: login.token})
         await onSuccess()
-        navigation.navigate("Accounts")
+        navigation.navigate("MoveMoney")
       } else {
         setErr("Error logging in. Did you use the right code?")
       }

@@ -342,16 +342,7 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = observer(
         account={account}
       />
       <PriceGraphDataInjected /> 
-      {/* FIXME */}
-      {//(account === AccountType.Bitcoin && !isAnonymous) && (
-        // TODO integrate back BUY/SELL BTC, 
-        //  but there is work to do on the backend first
-        // <BuyAndSellComp
-        //   dataStore={dataStore}
-        //   refresh={refresh}
-        // />)
-        }
-      {(account === AccountType.Bitcoin && store.user.level === 0) && (
+      {store.user.level === 0 && (
         // TODO update when isAnonymous changes
         <>
           <View style={{flex: 1, minHeight: 12}} />
@@ -359,18 +350,6 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = observer(
             buttonStyle={{backgroundColor: palette.lightBlue, borderRadius: 32}} 
             containerStyle={{width: "50%", alignSelf: "center"}}
             onPress={() => navigation.navigate("phoneValidation")}
-          />
-        </>
-      )}
-      {account === AccountType.Bitcoin && (
-        <>
-          <View style={{flex: 1}} />
-          <Button title={"Transactions History"} 
-            type="clear"
-            style={{width: "50%", alignSelf: "center"}}
-            containerStyle={{paddingBottom: 24}}
-            titleStyle={{color: palette.lightBlue}}
-            onPress={() => navigation.navigate("transactionHistory", {account})}
           />
         </>
       )}

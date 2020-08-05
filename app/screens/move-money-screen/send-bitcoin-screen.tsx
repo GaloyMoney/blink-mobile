@@ -1,9 +1,7 @@
-import { useNavigation } from "@react-navigation/native"
-import * as lightningPayReq from 'bolt11'
+import { useNavigation, useIsFocused } from "@react-navigation/native"
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { Alert, Clipboard, ScrollView, StyleSheet, Text, View, ViewStyle } from "react-native"
-import { RNCamera } from "react-native-camera"
+import { Alert, Dimensions, Platform, Pressable, ScrollView, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View, ViewStyle } from "react-native"
 import { Button, Input } from "react-native-elements"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import Icon from "react-native-vector-icons/Ionicons"
@@ -13,8 +11,13 @@ import { translate } from "../../i18n"
 import { StoreContext } from "../../models"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-import { getDescription } from "../../utils/lightning"
 import { request } from "../../utils/request"
+import { validInvoice } from "../../utils/parsing"
+import EStyleSheet from "react-native-extended-stylesheet"
+import Svg, { Circle } from "react-native-svg"
+import ImagePicker from 'react-native-image-picker';
+import { RNCamera } from "react-native-camera"
+const LocalQRCode = require('@remobile/react-native-qrcode-local-image');
 
 const CAMERA: ViewStyle = {
   width: "100%",
@@ -22,7 +25,10 @@ const CAMERA: ViewStyle = {
   position: "absolute",
 }
 
-const styles = StyleSheet.create({
+const { width: screenWidth } = Dimensions.get("window")
+const { height: screenHeight } = Dimensions.get("window")
+
+const styles = EStyleSheet.create({
   buttonStyle: {
     backgroundColor: color.primary,
     marginVertical: 8,
@@ -81,63 +87,32 @@ const styles = StyleSheet.create({
     height: 70,
     width: 70,
   },
+
+  rectangleContainer: {
+		flex: 1,
+		alignItems: 'center',
+		justifyContent: 'center',
+		backgroundColor: 'transparent',
+	},
+
+	rectangle: {
+    height: screenWidth * .65,
+    width: screenWidth * .65,
+		borderWidth: 2,
+		borderColor: palette.blue,
+		backgroundColor: 'transparent',
+	},
 })
 
 export const ScanningQRCodeScreen = () => {
-  const store = React.useContext(StoreContext)
-
-  const { navigate } = useNavigation()
-
-  const pasteInvoice = async () => {
-    decodeInvoice(await Clipboard.getString())
-  }
+  const { navigate, goBack } = useNavigation()
 
   const decodeInvoice = async (data) => {
-
     try {
-      // invoice might start with 'lightning:', 'bitcoin:', something else, or have the invoice directly
-      let [protocol, invoice] = data.split(":")
-      console.tron.log({ protocol, invoice })
-      protocol = protocol.toLowerCase()
-      if (protocol === "bitcoin") {
-        Alert.alert("Bitcoin on-chain transactions are coming to the app but we're only accepting lightning for now.")
+      const [valid, errorMessage, invoice, amount, amountless, note] = validInvoice(data)
+      if (!valid) {
+        Alert.alert(errorMessage)
         return
-      } else if (protocol.startsWith("ln") && invoice === undefined) {
-        if(store.network === "testnet" && protocol.startsWith("lnbc")) {
-          Alert.alert(`You're trying to pay a mainnet invoice. The settings for the app is testnet`)
-          return
-        }
-
-        if(store.network === "mainnet" && protocol.startsWith("lntb")) {
-          Alert.alert(`You're trying to pay a testnet invoice. The settings for the app is mainnet`)
-          return
-        }
-
-        invoice = protocol
-      } else if (protocol !== "lightning") {
-        let message = `Only lightning procotol is accepted for now.`
-        message += message === "" ? "" : `\n\ngot following: "${protocol}"`
-        Alert.alert(message)
-        return
-      }
-
-      const payReq = lightningPayReq.decode(invoice)
-      console.tron.log({ payReq })
-
-      let amount, amountless, note
-
-      if (payReq.satoshis || payReq.millisatoshis) {
-        amount = payReq.satoshis ?? Number(payReq.millisatoshis) * 1000
-        amountless = false
-      } else {
-        amount = 0
-        amountless = true
-      }
-
-      note = getDescription(payReq) 
-      if (note === "") {
-        // TODO: node could be dimmed if message below is shown
-        note = `this invoice doesn't include a note`
       }
 
       navigate("sendBitcoin", { invoice, amount, amountless, note })
@@ -146,23 +121,54 @@ export const ScanningQRCodeScreen = () => {
     }
   }
 
+  const showImagePicker = () => {
+    ImagePicker.launchImageLibrary(
+      {
+        title: null,
+        mediaType: 'photo',
+        takePhotoButtonTitle: null,
+      },
+      response => {
+        if (response.uri) {
+          const uri = Platform.OS === 'ios' ? response.uri.toString().replace('file://', '') : response.path.toString();
+          LocalQRCode.decode(uri, (error, result) => {
+            if (!error) {
+              decodeInvoice({ data: result });
+            } else {
+              Alert.alert(error);
+            }
+          });
+        }
+      },
+  )}
+
   return (
-    <Screen>
+    <Screen unsafe={true}>
+      {useIsFocused() &&
       <RNCamera
         style={CAMERA}
         captureAudio={false}
         onBarCodeRead={(event) => {
           const qr = event.data
           decodeInvoice(qr)
-        }}
-      />
-      <View style={styles.overlay}>
-        <Button
-          buttonStyle={[styles.buttonStyle, { width: 180 }]}
-          title="Paste"
-          onPress={pasteInvoice}
-        />
+        }}>
+        <View style={styles.rectangleContainer}>
+          <View style={[styles.rectangle]} />
+        </View>
+      </RNCamera>}
+      <View style={{position: "absolute", width: screenWidth, height: screenHeight, top: screenHeight - 96, left: 32}}>
+        <TouchableOpacity onPress={showImagePicker}>
+          <Icon name="image" size={64} color={palette.lightGrey} style={{opacity: .8}} />
+        </TouchableOpacity>
       </View>
+      <TouchableHighlight onPress={goBack}>
+        <View style={{width: 64, height: 64, top: 48, right: 24, position: "absolute"}}>
+          <Svg viewBox="0 0 100 100">
+            <Circle cx={50} cy={50} r={50} fill={palette.white} opacity={.5} />
+          </Svg>
+          <Icon name="ios-close" size={64} style={{position: "absolute", top: -2}} />
+        </View>
+      </TouchableHighlight>
     </Screen>
   )
 }
@@ -175,54 +181,29 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
   const note = route.params.note
   const amount = route.params.amount
 
+  // TODO add back manualAmount capability
   const [manualAmount, setManualAmount] = useState(0)
 
   const { goBack } = useNavigation()
 
-  // const [useUSD, setUseUSD] = useState(false)
   const [message, setMessage] = useState("")
   const [err, setErr] = useState("")
   const [loading, setLoading] = useState(false)
 
-  // const onUseUSDChange = async (input) => {
-    // setUseUSD(input)
-
-    // if (input) {
-    //   await dataStore.exchange.quoteLNDBTC({ side: "buy", satAmount: amount })
-    // } else {
-      // dataStore.exchange.quote.reset()
-    // }
-  // }
-
   const payInvoice = async () => {
-    if (invoice === "") {
-      Alert.alert(`You need to paste an invoice or scan a QR Code`)
+    if (amountless && amount === 0) {
+      Alert.alert(
+        `This invoice doesn't have an amount, so you need to manually specify how much money you want to send`,
+      )
       return
     }
 
-    if (amountless) {
-      if (amount === 0) {
-        Alert.alert(
-          `This invoice doesn't have an amount, so you need to manually specify how much money you want to send`,
-        )
-        return
-      }
-
-      // FIXME what is it for?
-      // payreq.amt = amount
-    }
+    // FIXME what is it for?
+    // payreq.amt = amount
 
     setLoading(true)
-    // try {
-    // if (useUSD) {
-    //   const success = await dataStore.exchange.buyLNDBTC()
 
-    //   if (!success) {
-    //     setErr(translate("errors.generic"))
-    //     return
-    //   }
-    // }
-
+    // FIXME: add the manual amount flow. 
     try {
       const query = `mutation payInvoice($invoice: String) {
         invoice {
