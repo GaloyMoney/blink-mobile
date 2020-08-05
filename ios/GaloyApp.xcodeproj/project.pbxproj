@@ -270,7 +270,7 @@
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = 39Q9AL82ZL;
 						LastSwiftMigration = 1140;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -481,8 +481,8 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = GaloyApp/GaloyApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 150;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 152;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 39Q9AL82ZL;
 				ENABLE_BITCODE = YES;
@@ -514,8 +514,8 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = GaloyApp/GaloyApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 150;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 152;
 				DEVELOPMENT_TEAM = 39Q9AL82ZL;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
