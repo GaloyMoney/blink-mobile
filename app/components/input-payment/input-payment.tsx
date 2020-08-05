@@ -1,13 +1,14 @@
 import { indexOf, toInteger } from "lodash"
 import * as React from "react"
-import { View } from "react-native"
+import { Text, View } from "react-native"
+import { Input } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
-import { TouchableHighlight, TouchableOpacity } from "react-native-gesture-handler"
+import { TouchableOpacity } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
 import { StoreContext } from "../../models"
 import { palette } from "../../theme/palette"
 import { CurrencyType } from "../../utils/enum"
-import { InputCurrency, TextCurrency } from "../text-currency/text-currency"
+import { TextCurrency } from "../text-currency/text-currency"
 
 
 
@@ -30,15 +31,21 @@ const styles = EStyleSheet.create({
 
   header: {
     alignItems: "center",
-    marginBottom: "16rem",
-    marginTop: "16rem",
+    marginTop: "8rem",
   },
 
   subCurrencyText: {
-    fontSize: "16rem",
+    fontSize: "18rem",
     color: palette.darkGrey,
     marginTop: 0,
     paddingTop: 0,
+    position: "relative",
+    top: -18, // FIXME
+  },
+
+  textStyle: {
+    fontSize: 24,
+    color: palette.darkGrey
   }
 })
 
@@ -56,6 +63,41 @@ export const InputPaymentDataInjected = (props: InputPaymentDataInjectedProps) =
   
   return <InputPayment price={price} {...props} />
 }
+
+
+const InputCurrency = ({ amount, setAmount, currency, appendDot, onSubmitEditing, editable }) => {
+  let value 
+  if (amount == 0 || isNaN(amount)) {
+    value = ""
+  } else {
+    value = String(+amount)
+  }
+
+  // only add dot for for non-sats. 
+  if ((currency === CurrencyType.USD || currency === CurrencyType.BTC) && appendDot) {
+    value += "."
+  }
+
+  return <Input
+    placeholder={"set an amount"}
+    // autoFocus={true}
+    value={value}
+    leftIcon={currency === CurrencyType.USD ? <Text style={styles.textStyle}>$</Text> : null}
+    rightIcon={currency === CurrencyType.BTC ? 
+      <Text style={styles.textStyle}>BTC</Text> :
+      currency === "sats" ?
+        <Text style={styles.textStyle}>sats</Text> :
+        null}
+    inputContainerStyle={{width: 250}}
+    inputStyle={[styles.textStyle, {textAlign: "center"}]}
+    onChangeText={setAmount}
+    keyboardType="decimal-pad"
+    onSubmitEditing={onSubmitEditing}
+    returnKeyType="done"
+    editable={editable}
+  />
+}
+
 
 export const InputPayment = ({
   price,
@@ -107,34 +149,31 @@ export const InputPayment = ({
     // FIXME style
     <View style={{ flexDirection: "row", alignItems: "center", width: "100%", paddingLeft: 32 }}> 
       <View style={styles.header}>
-        <View style={styles.amount}>
-          <InputCurrency
-            amount={mapping[pref].conversion(amount)} 
-            currency={mapping[pref].primary}
-            appendDot={appendDot}
-            setAmount={amount => {
-              function endByDot(s) {
-                var rgx = /^[0-9]*\.{1}$/;
-                return s.match(rgx);
-              }
-              setAppendDot(!!endByDot(amount))
-              const newAmount = mapping[pref].reverse(+amount)
-              if (!isNaN(newAmount)) {
-                setAmount(newAmount)
-                onUpdateAmount(toInteger(newAmount))
-              }
-            }}
-            editable={editable}
-            onSubmitEditing={onSubmitEditing}
-            style={{fontSize: 32, color: palette.darkGrey}} />
-          <TextCurrency
-            amount={mapping[pref].secondaryConversion(amount)} 
-            currency={mapping[pref].secondary}
-            style={styles.subCurrencyText} />
-        </View>
+        <InputCurrency
+          amount={mapping[pref].conversion(amount)} 
+          currency={mapping[pref].primary}
+          appendDot={appendDot}
+          setAmount={amount => {
+            function endByDot(s) {
+              var rgx = /^[0-9]*\.{1}$/;
+              return s.match(rgx);
+            }
+            setAppendDot(!!endByDot(amount))
+            const newAmount = mapping[pref].reverse(+amount)
+            if (!isNaN(newAmount)) {
+              setAmount(newAmount)
+              onUpdateAmount(toInteger(newAmount))
+            }
+          }}
+          editable={editable}
+          onSubmitEditing={onSubmitEditing} />
+        <TextCurrency
+          amount={mapping[pref].secondaryConversion(amount)} 
+          currency={mapping[pref].secondary}
+          style={styles.subCurrencyText} />
       </View>
       <TouchableOpacity onPress={next}>
-        <Icon name={"ios-swap"} size={32} style={{transform: [{ rotate: "90deg" }]}} />
+        <Icon name={"ios-swap-vertical"} size={32} />
       </TouchableOpacity>
     </View>
   )

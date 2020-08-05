@@ -190,7 +190,7 @@ export const TransactionScreenDataInjected = observer(({navigation, route}) => {
   }
 
   const currency = "BTC" // FIXME
-  const account = route.params.account
+  const account = CurrencyType.BTC
 
 
   console.tron.log({loading})
