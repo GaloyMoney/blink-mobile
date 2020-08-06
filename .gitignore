@@ -44,9 +44,9 @@ buck-out/
 # VS Code
 .vscode
 
-# Cocoapods
-/ios/Pods
-
+# ios
+ios/Pods
+ios/Xcode.app
 
 # Bundle artifact
 *.jsbundle
