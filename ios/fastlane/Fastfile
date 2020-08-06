@@ -21,14 +21,11 @@ platform :ios do
   end
 
   desc "Push a new beta build to TestFlight"
-  lane :build do
+  lane :beta do
     increment_build_number(xcodeproj: "GaloyApp.xcodeproj")
     match(type: "appstore", readonly: is_ci)
     xcversion(version: "~> 11.6")
     gym(scheme: "GaloyApp")
-  end
-
-  lane :beta do
     upload_to_testflight
   end
 
