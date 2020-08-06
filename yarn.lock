@@ -1975,10 +1975,9 @@
     color "^3.1.2"
     react-native-iphone-x-helper "^1.2.1"
 
-"@remobile/react-native-qrcode-local-image@^1.0.4":
+"@remobile/react-native-qrcode-local-image@nicolasburtey/react-native-qrcode-local-image.git#master":
   version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@remobile/react-native-qrcode-local-image/-/react-native-qrcode-local-image-1.0.4.tgz#471e14ca6be6852578e0ca63c2a8bf67a61b4e47"
-  integrity sha512-tM+komoSgcS+7UzdH0MP2gF0yR8Hc8Dfe3P2iIlQhXyQdHaEVn1dyO6sw+McGfEj+n2DdsP2YXb8g16gW7qcKg==
+  resolved "https://codeload.github.com/nicolasburtey/react-native-qrcode-local-image/tar.gz/295a37427e239f87c1f0c469575b94aba4dc11a2"
 
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.0"
