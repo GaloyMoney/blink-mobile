@@ -26,7 +26,8 @@ platform :ios do
     match(type: "appstore", readonly: is_ci)
     xcversion(version: "~> 11.6")
     gym(scheme: "GaloyApp")
-    upload_to_testflight
+    upload_to_testflight(changelog: "No changelog", skip_waiting_for_build_processing: true)
+    slack(message: "Successfully uploaded a new App Store build")
   end
 
 end
