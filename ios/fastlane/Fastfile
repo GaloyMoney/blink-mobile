@@ -23,10 +23,10 @@ platform :ios do
   desc "Push a new beta build to TestFlight"
   lane :beta do
     increment_build_number(xcodeproj: "GaloyApp.xcodeproj")
-#    match(type: "appstore", readonly: is_ci)
-#    xcversion(version: "~> 11.6")
-#    gym(scheme: "GaloyApp")
-#    upload_to_testflight(changelog: "No changelog", skip_waiting_for_build_processing: true)
+    match(type: "appstore", readonly: is_ci)
+    xcversion(version: "~> 11.6")
+    gym(scheme: "GaloyApp")
+    upload_to_testflight(changelog: "No changelog")
   end
 
 end
