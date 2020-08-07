@@ -133,9 +133,14 @@ export const ScanningQRCodeScreen = () => {
           const uri = Platform.OS === 'ios' ? response.uri.toString().replace('file://', '') : response.path.toString();
           LocalQRCode.decode(uri, (error, result) => {
             if (!error) {
-              decodeInvoice({ data: result });
+              decodeInvoice( result );
             } else {
-              Alert.alert(error);
+              if (error.message === "Feature size is zero!") {
+                Alert.alert("we could not find a QR code in the image");
+              } else {
+                console.tron.log({error})
+                Alert.alert(error.message);
+              }
             }
           });
         }
