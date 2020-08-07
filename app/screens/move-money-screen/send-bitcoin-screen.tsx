@@ -162,18 +162,20 @@ export const ScanningQRCodeScreen = () => {
         </View>
       </RNCamera>}
       <View style={{position: "absolute", width: screenWidth, height: screenHeight, top: screenHeight - 96, left: 32}}>
-        <TouchableOpacity onPress={showImagePicker}>
+        <Pressable onPress={showImagePicker}>
           <Icon name="image" size={64} color={palette.lightGrey} style={{opacity: .8}} />
-        </TouchableOpacity>
+        </Pressable>
       </View>
-      <TouchableHighlight onPress={goBack}>
-        <View style={{width: 64, height: 64, top: 48, right: 24, position: "absolute"}}>
-          <Svg viewBox="0 0 100 100">
-            <Circle cx={50} cy={50} r={50} fill={palette.white} opacity={.5} />
-          </Svg>
-          <Icon name="ios-close" size={64} style={{position: "absolute", top: -2}} />
+      <Pressable onPress={goBack}>
+        <View style={{top: 40, right: 16, position: "absolute", width: 96, height: 96, alignItems: "center"}}>
+          <View style={{width: 64, height: 64}}>
+            <Svg viewBox="0 0 100 100">
+              <Circle cx={50} cy={50} r={50} fill={palette.white} opacity={.5} />
+            </Svg>
+            <Icon name="ios-close" size={64} style={{position: "absolute", top: -2}} />
+          </View>
         </View>
-      </TouchableHighlight>
+      </Pressable>
     </Screen>
   )
 }
