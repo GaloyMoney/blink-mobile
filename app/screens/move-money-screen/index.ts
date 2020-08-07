@@ -1,6 +1,4 @@
 export * from "./money-money-screen"
 export * from "./receive-bitcoin-screen"
 export * from "./send-bitcoin-screen"
-export * from "./direct-deposit-screen"
-export * from "./bank-transfer-screen"
 export * from "./find-atm-screen"
