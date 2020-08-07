@@ -37,13 +37,12 @@ const styles = StyleSheet.create({
 
 export const ModalClipboard = observer(() => {
   const store = React.useContext(StoreContext)
+  const navigation = useNavigation();
 
   const [invoice, setInvoice] = React.useState("")
   const [amount, setAmount] = React.useState(0)
   const [amountless, setAmountless] = React.useState(false)
   const [note, setNote] = React.useState("")
-
-  const { navigate } = useNavigation()
 
   const onShow = () => {
     const [valid, errorMessage, _invoice, _amount, _amountless, _note] = validInvoice(store.pendingPayment)
@@ -61,7 +60,7 @@ export const ModalClipboard = observer(() => {
 
   const open = () => {
     dismiss()
-    navigate("sendBitcoin", { invoice, amount, amountless, note })
+    navigation.push("sendBitcoin", { invoice, amount, amountless, note })
   }
 
   const dismiss = () => {
