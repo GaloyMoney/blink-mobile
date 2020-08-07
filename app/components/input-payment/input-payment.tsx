@@ -80,7 +80,7 @@ const InputCurrency = ({ amount, setAmount, currency, appendDot, onSubmitEditing
 
   return <Input
     placeholder={"set an amount"}
-    // autoFocus={true}
+    autoFocus={true}
     value={value}
     leftIcon={currency === CurrencyType.USD ? <Text style={styles.textStyle}>$</Text> : null}
     rightIcon={currency === CurrencyType.BTC ? 

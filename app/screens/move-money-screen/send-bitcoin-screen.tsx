@@ -183,12 +183,7 @@ export const ScanningQRCodeScreen = () => {
 export const SendBitcoinScreen: React.FC = ({ route }) => {
   const store = React.useContext(StoreContext)
 
-  const invoice = route.params.invoice
-  const amountless = route.params.amountless
-  const note = route.params.note
-  const amount = route.params.amount
-
-  // TODO add back manualAmount capability
+  const { invoice, amountless, note, amount } = route.params
   const [manualAmount, setManualAmount] = useState(0)
 
   const { goBack } = useNavigation()
@@ -198,7 +193,7 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
   const [loading, setLoading] = useState(false)
 
   const payInvoice = async () => {
-    if (amountless && amount === 0) {
+    if (amountless && manualAmount === 0) {
       Alert.alert(
         `This invoice doesn't have an amount, so you need to manually specify how much money you want to send`,
       )
@@ -210,15 +205,14 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
 
     setLoading(true)
 
-    // FIXME: add the manual amount flow. 
-    try {
-      const query = `mutation payInvoice($invoice: String) {
-        invoice {
-          payInvoice(invoice: $invoice)
-        }
-      }`
+    const query = `mutation payInvoice($invoice: String, $amount: Int) {
+      invoice {
+        payInvoice(invoice: $invoice, amount: $amount)
+      }
+    }`
 
-      const result = await request(query, {invoice})
+    try {
+      const result = await request(query, {invoice, amount: amountless ? manualAmount : undefined})
 
       if (result.invoice.payInvoice === "success") {
         store.queryWallet()
@@ -263,9 +257,9 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
     <Screen>
       <ScrollView style={styles.mainView}>
       <InputPaymentDataInjected
-          editable={amountless}
-          initAmount={amount}
-          onUpdateAmount={input => setManualAmount(input)}
+        editable={amountless}
+        initAmount={amount}
+        onUpdateAmount={input => setManualAmount(input)}
         />
       <View style={styles.section}>
         </View>

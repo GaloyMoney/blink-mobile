@@ -76,13 +76,11 @@ export const RootStack = () => {
   const checkClipboard = async () => {
     const clipboard = await Clipboard.getString()
 
-    const [valid, _, invoice, amount, amountless, note] = validInvoice(clipboard)
+    const [valid, _, invoice] = validInvoice(clipboard)
     if (!valid) {
       return
     }
     
-    console.tron.log("1", {store})
-
     store.setModalClipboardVisible(true)
     store.setPendingPayment(invoice)
   }
