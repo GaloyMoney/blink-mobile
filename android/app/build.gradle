@@ -132,7 +132,7 @@ android {
         applicationId "com.galoyapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 150
+        versionCode 162
         versionName "1.0"
         missingDimensionStrategy 'react-native-camera', 'general' // React native camera
 
@@ -220,6 +220,7 @@ dependencies {
     // implementation 'com.google.firebase:firebase-inappmessaging:19.0.6'
     // implementation 'com.google.firebase:firebase-inappmessaging-display:19.0.6'
 
+    compile project(':react-native-qrcode-local-image')
 
     if (enableHermes) {
       def hermesPath = "../../node_modules/hermesvm/android/";
