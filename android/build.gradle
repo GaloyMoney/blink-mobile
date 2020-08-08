@@ -45,4 +45,17 @@ allprojects {
         google()
         jcenter()
     }
+
+    //add the folllowing lines to force libs to use recent buildtools
+    subprojects {
+        afterEvaluate {
+            project ->
+                if (project.hasProperty("android")) {
+                    android {
+                        compileSdkVersion = 27
+                        buildToolsVersion = "27.0.3"
+                    }
+                }
+        }
+    }
 }
