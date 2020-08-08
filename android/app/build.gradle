@@ -211,6 +211,7 @@ dependencies {
         exclude group:'com.facebook.flipper'
     }
 
+    implementation 'com.google.firebase:firebase-core:9.6.1'
     // implementation 'com.google.firebase:firebase-analytics:17.4.1'
     // implementation 'com.google.firebase:firebase-messaging:20.1.7'
     // implementation 'com.google.firebase:firebase-auth:19.3.1'
@@ -238,5 +239,5 @@ task copyDownloadableDepsToLibs(type: Copy) {
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
 
-// apply plugin: 'com.google.gms.google-services' // firebase
-// apply plugin: 'com.google.firebase.crashlytics'
+apply plugin: 'com.google.gms.google-services' // firebase
+apply plugin: 'com.google.firebase.crashlytics'
