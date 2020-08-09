@@ -52,8 +52,8 @@ allprojects {
             project ->
                 if (project.hasProperty("android")) {
                     android {
-                        compileSdkVersion = 29
-                        buildToolsVersion = "29.0.2"
+                        compileSdkVersion = 28
+                        buildToolsVersion = "28.0.3"
                     }
                 }
         }
