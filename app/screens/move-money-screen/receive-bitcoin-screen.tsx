@@ -1,23 +1,20 @@
+import Clipboard from "@react-native-community/clipboard"
 import * as lightningPayReq from "bolt11"
 import { values } from "mobx"
 import { observer } from "mobx-react"
 import * as React from "react"
 import { useEffect, useState } from "react"
-import Clipboard from "@react-native-community/clipboard"
 import { ActivityIndicator, Alert, Dimensions, Pressable, Share, Text, View } from "react-native"
 import { Button, ButtonGroup } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
-import { ScrollView } from "react-native-gesture-handler"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import QRCode from 'react-native-qrcode-svg'
 import Icon from "react-native-vector-icons/Ionicons"
-import { IconTransaction } from "../../components/icon-transactions"
 import { InputPaymentDataInjected } from "../../components/input-payment"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
 import { StoreContext } from "../../models"
 import { palette } from "../../theme/palette"
-import { CurrencyType } from "../../utils/enum"
 import { getHash } from "../../utils/lightning"
 import { request } from "../../utils/request"
 
@@ -27,13 +24,6 @@ var width = Dimensions.get('window').width; //full width
 const styles = EStyleSheet.create({
   buttonStyle: {
     backgroundColor: palette.lightBlue,
-    marginTop: 18,
-    borderRadius: 32,
-  },
-
-  clearButtonStyle: {
-    marginTop: 18,
-    borderRadius: 32,
   },
 
   icon: {
@@ -220,8 +210,7 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
   }
 
   return (
-    <Screen backgroundColor={palette.lighterGrey}>
-      <ScrollView style={{ flex: 1, paddingTop: 32 }}>
+    <Screen backgroundColor={palette.lighterGrey} preset="scroll" >
       <View style={styles.headerView}>
         <ButtonGroup
           // onPress={getAddress}
@@ -231,7 +220,7 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
           // selectedButtonStyle={{}}
           selectedTextStyle={{fontWeight: "bold", fontSize: 18}}
           disabledTextStyle={{fontWeight: "bold"}}
-          containerStyle={{borderRadius: 50}}
+          containerStyle={{borderRadius: 24}}
           selectedButtonStyle={{backgroundColor: palette.lightBlue}}
         />
       </View>
@@ -265,17 +254,14 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
           }
           {loading && <Text> </Text> || <Text>Tap QR Code to Copy</Text>}
         </View>
-        <View style={{ alignContent: "center", alignItems: "center", marginHorizontal: 48 }}>
-          <Button
-              buttonStyle={styles.buttonStyle}
-              disabledStyle={styles.buttonStyle}
-              containerStyle={{width: "100%"}}
-              title="Share"
-              onPress={shareInvoice}
-              titleStyle={{ fontWeight: "bold" }}
-            />
-        </View>
-      </ScrollView>
+        <Button
+          buttonStyle={styles.buttonStyle}
+          disabledStyle={styles.buttonStyle}
+          containerStyle={{marginHorizontal: 48, borderRadius: 24, marginTop: 18}}
+          title="Share"
+          onPress={shareInvoice}
+          titleStyle={{ fontWeight: "bold" }}
+        />
     </Screen>
   )
 })
