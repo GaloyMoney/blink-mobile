@@ -25,8 +25,17 @@ platform :android do
   lane :build do
     increment_version_code(gradle_file_path: “app/build.gradle”)
     # gradle(task: "clean assemble", build_type: "Release")
-    gradle(task: "clean assembleRelease")
-  
+    gradle(
+      task: "clean assembleRelease"
+      print_command: false,
+      properties: {
+        "android.injected.signing.store.file" => "debug.keystore", 
+        "android.injected.signing.store.password" => "android", # FIXME
+        "android.injected.signing.key.alias" => "androiddebugkey",
+        "android.injected.signing.key.password" => "android",
+      }
+    )
+
     # sh "your_script.sh"
     # You can also use other beta testing services here
   end
