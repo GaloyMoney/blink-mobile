@@ -161,11 +161,6 @@ export const ScanningQRCodeScreen = () => {
           <View style={[styles.rectangle]} />
         </View>
       </RNCamera>}
-      <View style={{position: "absolute", width: screenWidth, height: screenHeight, top: screenHeight - 96, left: 32}}>
-        <Pressable onPress={showImagePicker}>
-          <Icon name="image" size={64} color={palette.lightGrey} style={{opacity: .8}} />
-        </Pressable>
-      </View>
       <Pressable onPress={goBack}>
         <View style={{top: 40, right: 16, position: "absolute", width: 96, height: 96, alignItems: "center"}}>
           <View style={{width: 64, height: 64}}>
@@ -176,6 +171,11 @@ export const ScanningQRCodeScreen = () => {
           </View>
         </View>
       </Pressable>
+      <View style={{position: "absolute", width: screenWidth, height: 128, top: screenHeight - 96, left: 32}}>
+        <Pressable onPress={showImagePicker}>
+          <Icon name="image" size={64} color={palette.lightGrey} style={{opacity: .8}} />
+        </Pressable>
+      </View>
     </Screen>
   )
 }
