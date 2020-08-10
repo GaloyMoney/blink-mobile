@@ -26,7 +26,7 @@ platform :android do
     increment_version_code(gradle_file_path: “app/build.gradle”)
     # gradle(task: "clean assemble", build_type: "Release")
     gradle(
-      task: "clean assembleRelease"
+      task: "clean assembleRelease",
       print_command: false,
       properties: {
         "android.injected.signing.store.file" => "debug.keystore", 
