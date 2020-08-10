@@ -22,34 +22,14 @@ platform :android do
   end
 
   desc "Submit a new Beta Build to Crashlytics Beta"
-  lane :build do
+  lane :beta do
     increment_version_code(gradle_file_path: “app/build.gradle”)
     # gradle(task: "clean assemble", build_type: "Release")
-    gradle(
-      task: "clean assembleRelease",
-      print_command: false,
-      properties: {
-        "android.injected.signing.store.file" => "debug.keystore", 
-        "android.injected.signing.store.password" => "android", # FIXME
-        "android.injected.signing.key.alias" => "androiddebugkey",
-        "android.injected.signing.key.password" => "android",
-      }
-    )
-
+    
     # sh "your_script.sh"
     # You can also use other beta testing services here
   end
 
-  desc "Deploy a new version to the Google Play"
-  lane :beta do
-    build
-    # crashlytics
-    upload_to_play_store(
-      track: "alpha",
-      skip_upload_changelogs: true,
-      skip_upload_images: true,
-    )
-  end
 
 #  desc "Promote Internal to Alpha"
 #  lane :promote_internal_to_alpha do
