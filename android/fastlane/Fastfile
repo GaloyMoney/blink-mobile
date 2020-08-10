@@ -29,7 +29,7 @@ platform :android do
       task: "clean assembleRelease",
       print_command: false,
       properties: {
-        "android.injected.signing.store.file" => "debug.keystore", 
+        "android.injected.signing.store.file" => "app/debug.keystore", 
         "android.injected.signing.store.password" => "android", # FIXME
         "android.injected.signing.key.alias" => "androiddebugkey",
         "android.injected.signing.key.password" => "android",
