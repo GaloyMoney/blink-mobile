@@ -89,11 +89,8 @@ const styles = EStyleSheet.create({
   },
 
   rectangleContainer: {
-		flex: 1,
-		alignItems: 'center',
-		justifyContent: 'center',
-		backgroundColor: 'transparent',
-	},
+    position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center'
+  },
 
 	rectangle: {
     height: screenWidth * .65,
@@ -156,26 +153,26 @@ export const ScanningQRCodeScreen = () => {
         onBarCodeRead={(event) => {
           const qr = event.data
           decodeInvoice(qr)
-        }}>
+        }}
+        onTap={(r) => console.tron.log({r})}
+        >
         <View style={styles.rectangleContainer}>
           <View style={[styles.rectangle]} />
         </View>
-      </RNCamera>}
-      <View style={{position: "absolute", width: screenWidth, height: screenHeight, top: screenHeight - 96, left: 32}}>
-        <Pressable onPress={showImagePicker}>
-          <Icon name="image" size={64} color={palette.lightGrey} style={{opacity: .8}} />
-        </Pressable>
-      </View>
-      <Pressable onPress={goBack}>
-        <View style={{top: 40, right: 16, position: "absolute", width: 96, height: 96, alignItems: "center"}}>
-          <View style={{width: 64, height: 64}}>
+        <Pressable onPress={goBack}>
+          <View style={{width: 64, height: 64, alignSelf: "flex-end", marginTop: 40, marginRight: 16}}>
             <Svg viewBox="0 0 100 100">
               <Circle cx={50} cy={50} r={50} fill={palette.white} opacity={.5} />
             </Svg>
             <Icon name="ios-close" size={64} style={{position: "absolute", top: -2}} />
           </View>
+        </Pressable>
+        <View style={{position: "absolute", width: screenWidth, height: 128, top: screenHeight - 96, left: 32}}>
+          <Pressable onPress={showImagePicker}>
+            <Icon name="image" size={64} color={palette.lightGrey} style={{opacity: .8}} />
+          </Pressable>
         </View>
-      </Pressable>
+      </RNCamera>}
     </Screen>
   )
 }

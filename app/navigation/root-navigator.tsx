@@ -14,7 +14,7 @@ import { EarnMapDataInjected } from "../screens/earns-map-screen"
 import { EarnQuiz, EarnSection } from "../screens/earns-screen"
 import { SectionCompleted } from "../screens/earns-screen/section-completed"
 import { GetStartedScreen } from "../screens/get-started-screen"
-import { FindATMScreen, MoveMoneyScreenDataInjected, ReceiveBitcoinScreen, ScanningQRCodeScreen, SendBitcoinScreen, ShowQRCode } from "../screens/move-money-screen"
+import { FindATMScreen, MoveMoneyScreenDataInjected, ReceiveBitcoinScreen, ScanningQRCodeScreen, SendBitcoinScreen } from "../screens/move-money-screen"
 import { WelcomePhoneInputScreen, WelcomePhoneValidationScreenDataInjected } from "../screens/phone-auth-screen"
 import { SplashScreen } from "../screens/splash-screen"
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
@@ -241,11 +241,6 @@ export const MoveMoneyNavigator = () => {
       <StackMoveMoney.Screen
         name="receiveBitcoin"
         component={ReceiveBitcoinScreen}
-        options={{ title: translate("ReceiveBitcoinScreen.title") }}
-      />
-      <StackMoveMoney.Screen
-        name="showQRCode"
-        component={ShowQRCode}
         options={{ title: translate("ReceiveBitcoinScreen.title") }}
       />
       <StackMoveMoney.Screen name="findATM" component={FindATMScreen} />
