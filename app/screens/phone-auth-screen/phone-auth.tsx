@@ -11,7 +11,7 @@ import { StoreContext } from "../../models"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { request } from "../../utils/request"
-import { getNetwork, Token } from "../../utils/token"
+import { Token } from "../../utils/token"
 import BadgerPhone from "./badger-phone-01.svg"
 
 const styles = EStyleSheet.create({
@@ -183,10 +183,14 @@ export const WelcomePhoneValidationScreen = ({ onSuccess, route, navigation }) =
 
   const phone = route.params.phone
 
-  const sendVerif = async () => {
-    console.tron.log(`verifyPhoneNumber with code ${code}`)
+  const updateCode = async (input) => {
+    setCode(input)
+    setErr("")
+  }
+
+  const send = async () => {
     if (code.length !== 6) {
-      Alert.alert(`code need to have 6 digits`)
+      setErr(`The code need to have 6 digits`)
       return
     }
 
@@ -209,6 +213,7 @@ export const WelcomePhoneValidationScreen = ({ onSuccess, route, navigation }) =
         navigation.navigate("MoveMoney")
       } else {
         setErr("Error logging in. Did you use the right code?")
+        setLoading(false)
       }
 
     } catch (err) {
@@ -217,6 +222,12 @@ export const WelcomePhoneValidationScreen = ({ onSuccess, route, navigation }) =
       setLoading(false)
     }
   }
+
+  useEffect(() => {
+    if(code.length === 6) {
+      send()
+    }
+  }, [code])
 
   return (
     <Screen backgroundColor={palette.lighterGrey}>
@@ -236,13 +247,13 @@ export const WelcomePhoneValidationScreen = ({ onSuccess, route, navigation }) =
               autoFocus={true}
               style={styles.phoneEntryContainer}
               containerStyle={styles.codeContainer}
-              onChangeText={(input) => setCode(input)}
+              onChangeText={updateCode}
               keyboardType="number-pad"
               textContentType="oneTimeCode"
               placeholder={translate("WelcomePhoneValidationScreen.placeholder")}
               returnKeyType={loading ? "default" : "done"}
               maxLength={6}
-              onSubmitEditing={() => sendVerif()}
+              onSubmitEditing={send}
               >
               {code}
             </Input>
