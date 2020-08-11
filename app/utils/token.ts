@@ -1,6 +1,7 @@
 import { saveString, loadString, remove } from "./storage"
 const  jwtDecode = require('jwt-decode')
 import { loadNetwork } from "./network"
+import analytics from '@react-native-firebase/analytics'
 
 export const TOKEN_KEY = "GaloyToken"
 const GRAPHQL_REGTEST_URI = "http://localhost:4000/graphql"
@@ -9,7 +10,7 @@ const GRAPHQL_MAINNET_URI = "https://graphql.mainnet.galoy.io/graphql"
 
 // Singleton class
 export class Token {
-  mem_token = null
+  private mem_token = null
 
   constructor() {
     const instance = this.constructor.instance;
@@ -27,7 +28,7 @@ export class Token {
 
   async load (){
     this.mem_token = await loadString(TOKEN_KEY)
-    console.log({mem_token: this.mem_token})
+    analytics().setUserId(this.uid)
     return this.mem_token
   }
 
@@ -54,9 +55,7 @@ export class Token {
 
   get network () {
     try {
-      console.tron.log(this.mem_token)
       const { network } = jwtDecode(this.mem_token)
-      console.tron.log({network})
       return network
     } catch (err) {
       console.tron.log(err.toString())
@@ -70,11 +69,14 @@ export class Token {
 }
 
 export const getNetwork = async () => {
+  let network 
   if (new Token().has()) {
-    return new Token().network
+    network = new Token().network
   } else {
-    return await loadNetwork()
+    network = await loadNetwork()
   }
+  analytics().setUserProperties({network})
+  return network
 }
 
 export const getGraphQlUri = async () => {
