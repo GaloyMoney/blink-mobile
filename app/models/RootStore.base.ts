@@ -19,6 +19,8 @@ import { BuildParameterModel, BuildParameterModelType } from "./BuildParameterMo
 import { buildParameterModelPrimitives, BuildParameterModelSelector } from "./BuildParameterModel.base"
 import { LastOnChainAddressModel, LastOnChainAddressModelType } from "./LastOnChainAddressModel"
 import { lastOnChainAddressModelPrimitives, LastOnChainAddressModelSelector } from "./LastOnChainAddressModel.base"
+import { PendingOnchainPaymentModel, PendingOnchainPaymentModelType } from "./PendingOnchainPaymentModel"
+import { pendingOnchainPaymentModelPrimitives, PendingOnchainPaymentModelSelector } from "./PendingOnchainPaymentModel.base"
 import { SuccessModel, SuccessModelType } from "./SuccessModel"
 import { successModelPrimitives, SuccessModelSelector } from "./SuccessModel.base"
 import { TokenModel, TokenModelType } from "./TokenModel"
@@ -29,6 +31,7 @@ import { OnChainModel, OnChainModelType } from "./OnChainModel"
 import { onChainModelPrimitives, OnChainModelSelector } from "./OnChainModel.base"
 import { InvoiceModel, InvoiceModelType } from "./InvoiceModel"
 import { invoiceModelPrimitives, InvoiceModelSelector } from "./InvoiceModel.base"
+
 
 
 export type InputUser = {
@@ -56,7 +59,8 @@ queryWallet="queryWallet",
 queryEarnList="queryEarnList",
 queryMe="queryMe",
 queryBuildParameters="queryBuildParameters",
-queryGetLastOnChainAddress="queryGetLastOnChainAddress"
+queryGetLastOnChainAddress="queryGetLastOnChainAddress",
+queryPendingOnChainPayment="queryPendingOnChainPayment"
 }
 export enum RootStoreBaseMutations {
 mutateRequestPhoneCode="mutateRequestPhoneCode",
@@ -65,7 +69,8 @@ mutateOpenChannel="mutateOpenChannel",
 mutateOnchain="mutateOnchain",
 mutateInvoice="mutateInvoice",
 mutateEarnCompleted="mutateEarnCompleted",
-mutateUpdateUser="mutateUpdateUser"
+mutateUpdateUser="mutateUpdateUser",
+mutateDeleteUser="mutateDeleteUser"
 }
 
 /**
@@ -73,7 +78,7 @@ mutateUpdateUser="mutateUpdateUser"
 */
 export const RootStoreBase = withTypedRefs<Refs>()(MSTGQLStore
   .named("RootStore")
-  .extend(configureStoreMixin([['Price', () => PriceModel], ['Wallet', () => WalletModel], ['Transaction', () => TransactionModel], ['Earn', () => EarnModel], ['User', () => UserModel], ['BuildParameter', () => BuildParameterModel], ['LastOnChainAddress', () => LastOnChainAddressModel], ['Success', () => SuccessModel], ['Token', () => TokenModel], ['OnchainTransaction', () => OnchainTransactionModel], ['OnChain', () => OnChainModel], ['Invoice', () => InvoiceModel]], ['Price', 'Wallet', 'Transaction', 'Earn', 'User', 'LastOnChainAddress'], "js"))
+  .extend(configureStoreMixin([['Price', () => PriceModel], ['Wallet', () => WalletModel], ['Transaction', () => TransactionModel], ['Earn', () => EarnModel], ['User', () => UserModel], ['BuildParameter', () => BuildParameterModel], ['LastOnChainAddress', () => LastOnChainAddressModel], ['PendingOnchainPayment', () => PendingOnchainPaymentModel], ['Success', () => SuccessModel], ['Token', () => TokenModel], ['OnchainTransaction', () => OnchainTransactionModel], ['OnChain', () => OnChainModel], ['Invoice', () => InvoiceModel]], ['Price', 'Wallet', 'Transaction', 'Earn', 'User', 'LastOnChainAddress'], "js"))
   .props({
     prices: types.optional(types.map(types.late((): any => PriceModel)), {}),
     wallets: types.optional(types.map(types.late((): any => WalletModel)), {}),
@@ -113,6 +118,11 @@ export const RootStoreBase = withTypedRefs<Refs>()(MSTGQLStore
         ${typeof resultSelector === "function" ? resultSelector(new LastOnChainAddressModelSelector()).toString() : resultSelector}
       } }`, variables, options)
     },
+    queryPendingOnChainPayment(variables?: {  }, resultSelector: string | ((qb: PendingOnchainPaymentModelSelector) => PendingOnchainPaymentModelSelector) = pendingOnchainPaymentModelPrimitives.toString(), options: QueryOptions = {}) {
+      return self.query<{ pendingOnChainPayment: PendingOnchainPaymentModelType[]}>(`query pendingOnChainPayment { pendingOnChainPayment {
+        ${typeof resultSelector === "function" ? resultSelector(new PendingOnchainPaymentModelSelector()).toString() : resultSelector}
+      } }`, variables, options)
+    },
     mutateRequestPhoneCode(variables: { phone?: string }, resultSelector: string | ((qb: SuccessModelSelector) => SuccessModelSelector) = successModelPrimitives.toString(), optimisticUpdate?: () => void) {
       return self.mutate<{ requestPhoneCode: SuccessModelType}>(`mutation requestPhoneCode($phone: String) { requestPhoneCode(phone: $phone) {
         ${typeof resultSelector === "function" ? resultSelector(new SuccessModelSelector()).toString() : resultSelector}
@@ -147,5 +157,8 @@ export const RootStoreBase = withTypedRefs<Refs>()(MSTGQLStore
       return self.mutate<{ updateUser: UserModelType}>(`mutation updateUser($user: InputUser) { updateUser(user: $user) {
         ${typeof resultSelector === "function" ? resultSelector(new UserModelSelector()).toString() : resultSelector}
       } }`, variables, optimisticUpdate)
+    },
+    mutateDeleteUser(variables?: {  }, optimisticUpdate?: () => void) {
+      return self.mutate<{ deleteUser: boolean }>(`mutation deleteUser { deleteUser }`, variables, optimisticUpdate)
     },
   })))

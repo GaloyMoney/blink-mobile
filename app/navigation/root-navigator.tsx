@@ -14,7 +14,7 @@ import { EarnMapDataInjected } from "../screens/earns-map-screen"
 import { EarnQuiz, EarnSection } from "../screens/earns-screen"
 import { SectionCompleted } from "../screens/earns-screen/section-completed"
 import { GetStartedScreen } from "../screens/get-started-screen"
-import { BankTransferScreen, DirectDepositScreen, FindATMScreen, MoveMoneyScreenDataInjected, ReceiveBitcoinScreen, ScanningQRCodeScreen, SendBitcoinScreen, ShowQRCode } from "../screens/move-money-screen"
+import { FindATMScreen, MoveMoneyScreenDataInjected, ReceiveBitcoinScreen, ScanningQRCodeScreen, SendBitcoinScreen } from "../screens/move-money-screen"
 import { WelcomePhoneInputScreen, WelcomePhoneValidationScreenDataInjected } from "../screens/phone-auth-screen"
 import { SplashScreen } from "../screens/splash-screen"
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
@@ -76,13 +76,11 @@ export const RootStack = () => {
   const checkClipboard = async () => {
     const clipboard = await Clipboard.getString()
 
-    const [valid, _, invoice, amount, amountless, note] = validInvoice(clipboard)
+    const [valid, _, invoice] = validInvoice(clipboard)
     if (!valid) {
       return
     }
     
-    console.tron.log("1", {store})
-
     store.setModalClipboardVisible(true)
     store.setPendingPayment(invoice)
   }
@@ -244,21 +242,6 @@ export const MoveMoneyNavigator = () => {
         name="receiveBitcoin"
         component={ReceiveBitcoinScreen}
         options={{ title: translate("ReceiveBitcoinScreen.title") }}
-      />
-      <StackMoveMoney.Screen
-        name="showQRCode"
-        component={ShowQRCode}
-        options={{ title: translate("ReceiveBitcoinScreen.title") }}
-      />
-      <StackMoveMoney.Screen
-        name="bankTransfer"
-        component={BankTransferScreen}
-        options={{ title: translate("BankTransferScreen.title") }}
-      />
-      <StackMoveMoney.Screen
-        name="directDeposit"
-        component={DirectDepositScreen}
-        options={{ title: translate("DirectDepositScreen.title") }}
       />
       <StackMoveMoney.Screen name="findATM" component={FindATMScreen} />
       <StackMoveMoney.Screen name="depositCash" component={FindATMScreen} />
