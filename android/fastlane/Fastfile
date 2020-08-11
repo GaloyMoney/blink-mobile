@@ -24,11 +24,8 @@ platform :android do
   desc "Submit a new Beta Build to Crashlytics Beta"
   lane :build do
     increment_version_code(gradle_file_path: “app/build.gradle”)
-    # gradle(task: "clean assemble", build_type: "Release")
-    gradle(
-      task: "clean assembleRelease",
-      print_command: false,
-    )
+    # gradle(task: "clean assemble", build_type: "Release", print_command: false)
+    gradle(task: "clean assembleRelease", print_command: false)
 
     # sh "your_script.sh"
     # You can also use other beta testing services here
