@@ -13,5 +13,4 @@ require("../app/screens/accounts-screen/accounts-screen.story")
 require("../app/screens/transaction-screen/transaction-screen.story")
 require("../app/screens/move-money-screen/move-money-screen.story")
 require("../app/screens/phone-auth-screen/phone-auth.story")
-// require("../app/screens/move-money-screen/receive-bitcoin-screen.story")
 

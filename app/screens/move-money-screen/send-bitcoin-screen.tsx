@@ -89,11 +89,8 @@ const styles = EStyleSheet.create({
   },
 
   rectangleContainer: {
-		flex: 1,
-		alignItems: 'center',
-		justifyContent: 'center',
-		backgroundColor: 'transparent',
-	},
+    position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center'
+  },
 
 	rectangle: {
     height: screenWidth * .65,
@@ -133,9 +130,14 @@ export const ScanningQRCodeScreen = () => {
           const uri = Platform.OS === 'ios' ? response.uri.toString().replace('file://', '') : response.path.toString();
           LocalQRCode.decode(uri, (error, result) => {
             if (!error) {
-              decodeInvoice({ data: result });
+              decodeInvoice( result );
             } else {
-              Alert.alert(error);
+              if (error.message === "Feature size is zero!") {
+                Alert.alert("we could not find a QR code in the image");
+              } else {
+                console.tron.log({error})
+                Alert.alert(error.message);
+              }
             }
           });
         }
@@ -151,24 +153,26 @@ export const ScanningQRCodeScreen = () => {
         onBarCodeRead={(event) => {
           const qr = event.data
           decodeInvoice(qr)
-        }}>
+        }}
+        onTap={(r) => console.tron.log({r})}
+        >
         <View style={styles.rectangleContainer}>
           <View style={[styles.rectangle]} />
         </View>
-      </RNCamera>}
-      <View style={{position: "absolute", width: screenWidth, height: screenHeight, top: screenHeight - 96, left: 32}}>
-        <TouchableOpacity onPress={showImagePicker}>
-          <Icon name="image" size={64} color={palette.lightGrey} style={{opacity: .8}} />
-        </TouchableOpacity>
-      </View>
-      <TouchableHighlight onPress={goBack}>
-        <View style={{width: 64, height: 64, top: 48, right: 24, position: "absolute"}}>
-          <Svg viewBox="0 0 100 100">
-            <Circle cx={50} cy={50} r={50} fill={palette.white} opacity={.5} />
-          </Svg>
-          <Icon name="ios-close" size={64} style={{position: "absolute", top: -2}} />
+        <Pressable onPress={goBack}>
+          <View style={{width: 64, height: 64, alignSelf: "flex-end", marginTop: 40, marginRight: 16}}>
+            <Svg viewBox="0 0 100 100">
+              <Circle cx={50} cy={50} r={50} fill={palette.white} opacity={.5} />
+            </Svg>
+            <Icon name="ios-close" size={64} style={{position: "absolute", top: -2}} />
+          </View>
+        </Pressable>
+        <View style={{position: "absolute", width: screenWidth, height: 128, top: screenHeight - 96, left: 32}}>
+          <Pressable onPress={showImagePicker}>
+            <Icon name="image" size={64} color={palette.lightGrey} style={{opacity: .8}} />
+          </Pressable>
         </View>
-      </TouchableHighlight>
+      </RNCamera>}
     </Screen>
   )
 }
@@ -176,12 +180,7 @@ export const ScanningQRCodeScreen = () => {
 export const SendBitcoinScreen: React.FC = ({ route }) => {
   const store = React.useContext(StoreContext)
 
-  const invoice = route.params.invoice
-  const amountless = route.params.amountless
-  const note = route.params.note
-  const amount = route.params.amount
-
-  // TODO add back manualAmount capability
+  const { invoice, amountless, note, amount } = route.params
   const [manualAmount, setManualAmount] = useState(0)
 
   const { goBack } = useNavigation()
@@ -191,7 +190,7 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
   const [loading, setLoading] = useState(false)
 
   const payInvoice = async () => {
-    if (amountless && amount === 0) {
+    if (amountless && manualAmount === 0) {
       Alert.alert(
         `This invoice doesn't have an amount, so you need to manually specify how much money you want to send`,
       )
@@ -203,15 +202,14 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
 
     setLoading(true)
 
-    // FIXME: add the manual amount flow. 
-    try {
-      const query = `mutation payInvoice($invoice: String) {
-        invoice {
-          payInvoice(invoice: $invoice)
-        }
-      }`
+    const query = `mutation payInvoice($invoice: String, $amount: Int) {
+      invoice {
+        payInvoice(invoice: $invoice, amount: $amount)
+      }
+    }`
 
-      const result = await request(query, {invoice})
+    try {
+      const result = await request(query, {invoice, amount: amountless ? manualAmount : undefined})
 
       if (result.invoice.payInvoice === "success") {
         store.queryWallet()
@@ -256,9 +254,9 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
     <Screen>
       <ScrollView style={styles.mainView}>
       <InputPaymentDataInjected
-          editable={amountless}
-          initAmount={amount}
-          onUpdateAmount={input => setManualAmount(input)}
+        editable={amountless}
+        initAmount={amount}
+        onUpdateAmount={input => setManualAmount(input)}
         />
       <View style={styles.section}>
         </View>

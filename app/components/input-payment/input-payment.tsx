@@ -80,7 +80,7 @@ const InputCurrency = ({ amount, setAmount, currency, appendDot, onSubmitEditing
 
   return <Input
     placeholder={"set an amount"}
-    // autoFocus={true}
+    autoFocus={true}
     value={value}
     leftIcon={currency === CurrencyType.USD ? <Text style={styles.textStyle}>$</Text> : null}
     rightIcon={currency === CurrencyType.BTC ? 
@@ -108,7 +108,7 @@ export const InputPayment = ({
   currencyPreference = "USD"
 }) => {
 
-  const [pref, setPref] = React.useState(currencyPreference)
+  const [unit, setUnit] = React.useState(currencyPreference)
   const [amount, setAmount] = React.useState(initAmount)
   const [appendDot, setAppendDot] = React.useState(false)
 
@@ -116,7 +116,7 @@ export const InputPayment = ({
     "USD": {
       primary: "USD",
       // TODO refactor: other place could use those conversions
-      conversion: sats => (sats * price).toFixed(2),
+      conversion: sats => (sats * price < 0.01) ? (sats * price).toFixed(4) : (sats * price).toFixed(2),
       reverse: usd => usd / price,
       secondary: "sats",
       secondaryConversion: sats => sats
@@ -138,11 +138,10 @@ export const InputPayment = ({
   }
 
   const next = () => {
-    const loop = ["sats", "BTC", "USD"]
-    const currentIndex = indexOf(loop, pref)
-    const nextIndex = (currentIndex + 1) % 3
-    const nextCurrency = loop[nextIndex]
-    setPref(nextCurrency)
+    const units = ["sats", "BTC", "USD"]
+    const currentIndex = indexOf(units, unit)
+    const nextCurrency = units[(currentIndex + 1) % 3]
+    setUnit(nextCurrency)
   }
 
   return (
@@ -150,8 +149,8 @@ export const InputPayment = ({
     <View style={{ flexDirection: "row", alignItems: "center", width: "100%", paddingLeft: 32 }}> 
       <View style={styles.header}>
         <InputCurrency
-          amount={mapping[pref].conversion(amount)} 
-          currency={mapping[pref].primary}
+          amount={mapping[unit].conversion(amount)} 
+          currency={mapping[unit].primary}
           appendDot={appendDot}
           setAmount={amount => {
             function endByDot(s) {
@@ -159,7 +158,7 @@ export const InputPayment = ({
               return s.match(rgx);
             }
             setAppendDot(!!endByDot(amount))
-            const newAmount = mapping[pref].reverse(+amount)
+            const newAmount = mapping[unit].reverse(+amount)
             if (!isNaN(newAmount)) {
               setAmount(newAmount)
               onUpdateAmount(toInteger(newAmount))
@@ -168,8 +167,8 @@ export const InputPayment = ({
           editable={editable}
           onSubmitEditing={onSubmitEditing} />
         <TextCurrency
-          amount={mapping[pref].secondaryConversion(amount)} 
-          currency={mapping[pref].secondary}
+          amount={mapping[unit].secondaryConversion(amount)} 
+          currency={mapping[unit].secondary}
           style={styles.subCurrencyText} />
       </View>
       <TouchableOpacity onPress={next}>
