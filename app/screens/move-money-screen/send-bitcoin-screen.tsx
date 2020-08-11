@@ -1,9 +1,13 @@
-import { useNavigation, useIsFocused } from "@react-navigation/native"
+import { useIsFocused, useNavigation } from "@react-navigation/native"
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { Alert, Dimensions, Platform, Pressable, ScrollView, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View, ViewStyle } from "react-native"
+import { Alert, Dimensions, Platform, Pressable, ScrollView, Text, View, ViewStyle } from "react-native"
+import { RNCamera } from "react-native-camera"
 import { Button, Input } from "react-native-elements"
+import EStyleSheet from "react-native-extended-stylesheet"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
+import ImagePicker from 'react-native-image-picker'
+import Svg, { Circle } from "react-native-svg"
 import Icon from "react-native-vector-icons/Ionicons"
 import { InputPaymentDataInjected } from "../../components/input-payment"
 import { Screen } from "../../components/screen"
@@ -11,13 +15,10 @@ import { translate } from "../../i18n"
 import { StoreContext } from "../../models"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-import { request } from "../../utils/request"
 import { validInvoice } from "../../utils/parsing"
-import EStyleSheet from "react-native-extended-stylesheet"
-import Svg, { Circle } from "react-native-svg"
-import ImagePicker from 'react-native-image-picker';
-import { RNCamera } from "react-native-camera"
+import { request } from "../../utils/request"
 const LocalQRCode = require('@remobile/react-native-qrcode-local-image');
+import analytics from '@react-native-firebase/analytics'
 
 const CAMERA: ViewStyle = {
   width: "100%",
@@ -180,8 +181,8 @@ export const ScanningQRCodeScreen = () => {
 export const SendBitcoinScreen: React.FC = ({ route }) => {
   const store = React.useContext(StoreContext)
 
-  const { invoice, amountless, note, amount } = route.params
-  const [manualAmount, setManualAmount] = useState(0)
+  const { invoice, amountless, note } = route.params
+  const [ amount, setAmount] = useState(route.params.amount)
 
   const { goBack } = useNavigation()
 
@@ -190,7 +191,7 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
   const [loading, setLoading] = useState(false)
 
   const payInvoice = async () => {
-    if (amountless && manualAmount === 0) {
+    if (amountless && amount === 0) {
       Alert.alert(
         `This invoice doesn't have an amount, so you need to manually specify how much money you want to send`,
       )
@@ -209,11 +210,12 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
     }`
 
     try {
-      const result = await request(query, {invoice, amount: amountless ? manualAmount : undefined})
+      const result = await request(query, {invoice, amount})
 
       if (result.invoice.payInvoice === "success") {
         store.queryWallet()
         setMessage("Payment succesfull")
+        analytics().logSpendVirtualCurrency({value: amount, virtual_currency_name: "btc"})
       } else if (result.invoice.payInvoice === "pending") {
         setMessage("Payment has been sent but is not confirmed yet")
       } else {
@@ -256,7 +258,7 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
       <InputPaymentDataInjected
         editable={amountless}
         initAmount={amount}
-        onUpdateAmount={input => setManualAmount(input)}
+        onUpdateAmount={input => setAmount(input)}
         />
       <View style={styles.section}>
         </View>

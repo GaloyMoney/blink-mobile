@@ -17,6 +17,7 @@ import { StoreContext } from "../../models"
 import { palette } from "../../theme/palette"
 import { getHash } from "../../utils/lightning"
 import { request } from "../../utils/request"
+import analytics from '@react-native-firebase/analytics'
 
 var width = Dimensions.get('window').width; //full width
 
@@ -199,6 +200,12 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
     }
 
     store.queryWallet()
+
+    // FIXME (with notifications?): this is very approximative:
+    // 1 - it will only trigger if the payment is receiving while the screen is opened
+    // 2 - amount in the variable could be different than the amount receive by the payment
+    //     if the user has changed the amount and created a new invoice
+    analytics().logEarnVirtualCurrency({value: amount, virtual_currency_name: "btc"})
 
     ReactNativeHapticFeedback.trigger("notificationSuccess", options)
     Alert.alert("success", "This invoice has been paid", [{

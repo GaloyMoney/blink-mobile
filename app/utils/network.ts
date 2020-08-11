@@ -2,7 +2,10 @@ import { saveString, loadString, remove } from "./storage"
 
 export const NETWORK_STRING = "NETWORK_STRING"
 
-// This methods are being used 
+// this is stored independantly of Rootstore because 
+// the URI / server need to be set when creating the 
+// rootStore. therefore we are loading this before 
+// loading the main RootStore file
 
 export const loadNetwork = async () => {
   return (await loadString(NETWORK_STRING) ?? "mainnet")
