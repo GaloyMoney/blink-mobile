@@ -132,7 +132,7 @@ android {
         applicationId "com.galoyapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 150
+        versionCode 165
         versionName "1.0"
         missingDimensionStrategy 'react-native-camera', 'general' // React native camera
 
@@ -147,7 +147,7 @@ android {
     }
     signingConfigs {
         debug {
-            storeFile file('debug.keystore')
+            storeFile file('release.keystore')
             storePassword 'android'
             keyAlias 'androiddebugkey'
             keyPassword 'android'
@@ -211,6 +211,7 @@ dependencies {
         exclude group:'com.facebook.flipper'
     }
 
+    implementation 'com.google.firebase:firebase-core:9.6.1'
     // implementation 'com.google.firebase:firebase-analytics:17.4.1'
     // implementation 'com.google.firebase:firebase-messaging:20.1.7'
     // implementation 'com.google.firebase:firebase-auth:19.3.1'
@@ -219,6 +220,7 @@ dependencies {
     // implementation 'com.google.firebase:firebase-inappmessaging:19.0.6'
     // implementation 'com.google.firebase:firebase-inappmessaging-display:19.0.6'
 
+    compile project(':react-native-qrcode-local-image')
 
     if (enableHermes) {
       def hermesPath = "../../node_modules/hermesvm/android/";
@@ -238,5 +240,5 @@ task copyDownloadableDepsToLibs(type: Copy) {
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
 
-// apply plugin: 'com.google.gms.google-services' // firebase
-// apply plugin: 'com.google.firebase.crashlytics'
+apply plugin: 'com.google.gms.google-services' // firebase
+apply plugin: 'com.google.firebase.crashlytics'

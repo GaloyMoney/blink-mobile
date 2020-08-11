@@ -32,5 +32,6 @@ module.exports = (async () => {
         types: path.resolve(__dirname, "../common/types"),
       },
     },
+    maxWorkers: 2
   }
 })()
