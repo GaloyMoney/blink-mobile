@@ -2,13 +2,14 @@
 //
 // In this file, we'll be kicking off our app or storybook.
 
+import analytics from '@react-native-firebase/analytics'
 import "@react-native-firebase/crashlytics"
-import { NavigationContainer } from '@react-navigation/native'
+import { NavigationContainer, NavigationState, PartialState } from '@react-navigation/native'
 import { createHttpClient } from "mst-gql"
 import "node-libs-react-native/globals" // needed for Buffer?
 import { contains } from "ramda"
 import * as React from "react"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { AppRegistry, Dimensions, YellowBox } from "react-native"
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { Notifications } from "react-native-notifications"
@@ -18,7 +19,6 @@ import { RootStore, StoreContext } from "./models"
 import { Environment } from "./models/environment"
 import { DEFAULT_NAVIGATION_CONFIG } from "./navigation/navigation-config"
 import { RootStack } from "./navigation/root-navigator"
-import { getActiveRouteName } from "./utils/navigation"
 import { getGraphQlUri, Token } from "./utils/token"
 
 
@@ -51,9 +51,23 @@ console.disableYellowBox = true
  */
 export const App = () => {
   const [rootStore, setRootStore] = useState(null)
+  const [routeName, setRouteName] = useState("Unknown");
 
-  const routeNameRef = useRef()
-  const navigationRef = useRef()
+  const getActiveRouteName = (
+    state: NavigationState | PartialState<NavigationState> | undefined,
+  ): string => {
+    if (!state || typeof state.index !== "number") {
+      return "Unknown";
+    }
+  
+    const route = state.routes[state.index];
+  
+    if (route.state) {
+      return getActiveRouteName(route.state);
+    }
+  
+    return route.name;
+  };
 
   useEffect(() => {
     // TODO bring back notification outside of firebase function
@@ -129,19 +143,6 @@ export const App = () => {
     fn()
   }, [])
 
-  useEffect(() => {
-    if (rootStore != null || navigationRef.current == undefined) {
-      return
-    }
-
-    // this is only accessible after this has been assigned, which is when we have
-    const state = navigationRef.current.getRootState()
-
-    // Save the initial route name
-    routeNameRef.current = getActiveRouteName(state)
-
-  }, [rootStore])
-
   /**
    * Are we allowed to exit the app?  This is called when the back button
    * is pressed on android.
@@ -172,24 +173,14 @@ export const App = () => {
     <StoreContext.Provider value={rootStore}>
       {/* <BackButtonHandler canExit={canExit}> */}
       <NavigationContainer
-        ref={navigationRef}
-      onStateChange={state => {
-          // const previousRouteName = routeNameRef.current
-          // const currentRouteName = getActiveRouteName(state)
+        onStateChange={state => {
+        const currentRouteName = getActiveRouteName(state);
 
-          // if (previousRouteName !== currentRouteName) {
-          //   if (currentRouteName == "earnsSection") {
-          //     const routeAndSection = `${currentRouteName}_${getActiveRouteParams(state).section}`
-          //     // console.tron.log({ routeAndSection })
-          //     analytics().setCurrentScreen(routeAndSection, currentRouteName)
-          //   } else {
-          //     analytics().setCurrentScreen(currentRouteName, currentRouteName)
-          //   }
-          // }
-
-          // // Save the current route name for later comparision
-          // routeNameRef.current = currentRouteName
-        }}>
+        if (routeName !== currentRouteName) {
+          analytics().setCurrentScreen(currentRouteName);
+          setRouteName(currentRouteName);
+        }
+      }}>
         <RootStack />
       </NavigationContainer>
       {/* </BackButtonHandler> */}
