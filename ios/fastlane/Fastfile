@@ -22,12 +22,12 @@ platform :ios do
 
   desc "Push a new beta build to TestFlight"
   lane :beta do
-    update_code_signing_settings(use_automatic_signing: false, path: "GaloyApp.xcodeproj", code_sign_identity:"iPhone Distribution", team_id:"39Q9AL82ZL", bundle_identifier: "match AppStore io.galoy.app")
+    # update_code_signing_settings(use_automatic_signing: false, path: "GaloyApp.xcodeproj", code_sign_identity:"iPhone Distribution", team_id:"39Q9AL82ZL", bundle_identifier: "match AppStore io.galoy.app")
     increment_build_number(xcodeproj: "GaloyApp.xcodeproj")
     match(type: "appstore", readonly: is_ci)
     gym(scheme: "GaloyApp")
     upload_to_testflight(changelog: "No changelog")
-    update_code_signing_settings(use_automatic_signing: true, path: "GaloyApp.xcodeproj")
+    # update_code_signing_settings(use_automatic_signing: true, path: "GaloyApp.xcodeproj")
   end
 
 end
