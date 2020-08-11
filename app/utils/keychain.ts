@@ -20,6 +20,8 @@ class KeychainAction {
       // accessControl: RNKeychain.ACCESS_CONTROL.BIOMETRY_CURRENT_SET_OR_DEVICE_PASSCODE,
       // TODO figure out why this doesn't work
       // may be related to https://github.com/oblador/react-native-keychain/issues/182
+
+      // maybe we can replace react-native-keychain with https://mcodex.dev/react-native-sensitive-info/docs/protectingWithFingerprint
     }
     const vKey = `${VERSION}_${key}`
     return RNKeychain.setInternetCredentials(vKey, USER, value, options)
