@@ -2,7 +2,7 @@ import { saveString, loadString, remove } from "./storage"
 
 export const NETWORK_STRING = "NETWORK_STRING"
 
-// This methods are being used 
+// TODO: integrate in rootstore instead
 
 export const loadNetwork = async () => {
   return (await loadString(NETWORK_STRING) ?? "mainnet")
