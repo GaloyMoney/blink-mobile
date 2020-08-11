@@ -47,7 +47,6 @@ export const RootStack = () => {
   const [initialRouteName, setInitialRouteName] = useState("")
 
   const appState = React.useRef(AppState.currentState);
-  const [appStateVisible, setAppStateVisible] = useState("new");
   const store = React.useContext(StoreContext)
 
   useEffect(() => {
@@ -60,8 +59,6 @@ export const RootStack = () => {
   }, []);
 
   const _handleAppStateChange = (nextAppState) => {
-    // console.tron.log("appStateChange", nextAppState, appStateVisible, appState.current)
-
     if (
       appState.current.match(/inactive|background/) && nextAppState === "active"
     ) {
@@ -70,7 +67,6 @@ export const RootStack = () => {
     }
 
     appState.current = nextAppState;
-    setAppStateVisible(appState.current);
   };
 
   const checkClipboard = async () => {
@@ -88,7 +84,6 @@ export const RootStack = () => {
   useEffect(() => {
     const _ = async () => {
       const token = new Token()
-      console.tron.log({token})
 
       if (token.has()) {
         setInitialRouteName("Primary")

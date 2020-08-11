@@ -8,6 +8,7 @@ import { Token } from "../utils/token"
 import { RootStoreBase } from "./RootStore.base"
 import { TransactionModel } from "./TransactionModel"
 import { map, filter, sumBy } from "lodash"
+import analytics from '@react-native-firebase/analytics';
 
 export const ROOT_STATE_STORAGE_KEY = "rootAppGaloy"
 
@@ -55,6 +56,11 @@ export const RootStore = RootStoreBase
 
     const token = new Token().has()
 
+    analytics().logEvent('earn', {
+      id,
+      loggedIn: !!token // FIXME: don't know if that is already a given?
+    })
+
     if (!token) {
       earn.completed = true
       self.earns.set(id, earn)
@@ -83,6 +89,7 @@ export const RootStore = RootStoreBase
   }
 
   const loginSuccessful = flow(function*() {
+    analytics().logLogin({ method: "phone" })
 
     getEnv(self).gqlHttpClient.setHeaders({authorization: new Token().bearerString})
 
