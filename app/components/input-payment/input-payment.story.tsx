@@ -1,8 +1,7 @@
-import * as React from "react"
 import { storiesOf } from "@storybook/react-native"
-import { StoryScreen, Story, UseCase } from "../../../storybook/views"
+import * as React from "react"
 import { InputPayment } from "."
-import { CurrencyType } from "../../utils/enum"
+import { Story, StoryScreen, UseCase } from "../../../storybook/views"
 
 declare let module
 
@@ -11,10 +10,10 @@ storiesOf("InputPayment", module)
   .add("Style Presets", () => (
     <Story>
       <UseCase text="Editable" usage="Loading">
-        <InputPayment currencyPreference={"USD"} price={0.00011} onSubmitEditing={() => {}} onUpdateAmount={() => {}} editable={true}/>
+        <InputPayment currencyPreference={"USD"} price={0.00011} onUpdateAmount={() => {}} editable={true}/>
       </UseCase>
       <UseCase text="Non editable" usage="Loading">
-        <InputPayment currencyPreference={"USD"} price={0.00011} initAmount={12345} onSubmitEditing={() => {}} onUpdateAmount={() => {}} editable={false}/>
+        <InputPayment currencyPreference={"USD"} price={0.00011} initAmount={12345} onUpdateAmount={() => {}} editable={false}/>
       </UseCase>
     </Story>
   ))
