@@ -52,10 +52,5 @@ export const validInvoice = (s: string): [valid, errorMEssage?, invoice?, amount
   }
   
   note = getDescription(payReq) 
-  if (note === "") {
-    // TODO: node could be dimmed if message below is shown
-    note = `this invoice doesn't include a note`
-  }
-
   return [true,, invoice, amount, amountless, note]
 }
