@@ -3,7 +3,7 @@ import { useNavigation } from "@react-navigation/native"
 import LottieView from 'lottie-react-native'
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { Dimensions, ScrollView, Text, View, ViewStyle } from "react-native"
+import { Dimensions, ScrollView, Text, View } from "react-native"
 import { Button, Input } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
@@ -20,8 +20,6 @@ const successLottie = require('./success_lottie.json')
 const errorLottie = require('./error_lottie.json')
 const pendingLottie = require('./pending_lottie.json')
 
-
-const { width: screenWidth } = Dimensions.get("window")
 
 const styles = EStyleSheet.create({
   buttonStyle: {
@@ -85,7 +83,7 @@ const styles = EStyleSheet.create({
     height: 70,
     width: 70,
   },
-  
+
   lottie: {height: 200}
 })
 
@@ -95,6 +93,10 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
 
   const { invoice, amountless, note } = route.params
   const [ amount, setAmount] = useState(route.params.amount)
+
+  useEffect(() => {
+    setAmount(route.params.amount)
+  }, [route.params.amount])
 
   const { goBack } = useNavigation()
 
@@ -167,7 +169,8 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
         editable={amountless && (status === "idle" || status === "error")}
         initAmount={route.params.amount}
         onUpdateAmount={input => { setAmount(input); setStatus("idle")} }
-        />
+        forceKeyboard={true}
+      />
       <View style={styles.section}>
         <Text style={styles.smallText}>{translate("common.to")}</Text>
         <View style={styles.horizontalContainer}>
@@ -178,6 +181,7 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
             }
             value={invoice}
             containerStyle={styles.invoiceContainer}
+            editable={false}
           />
         </View>
       </View>
@@ -217,9 +221,9 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
       {
         <Button
           buttonStyle={styles.buttonStyle}
-          title={status === "success" ? "Close" : err ? "Try again" : amount === 0 ? "Amount is required" : "Send"} // TODO refactor
+          title={status === "success" ? "Close" : err ? "Try again" : amount == 0 ? "Amount is required" : "Send"} // TODO refactor
           onPress={() => (status === "success" || status === "pending") ? goBack() : payInvoice()}
-          disabled={amount === 0}
+          disabled={amount == 0}
           loading={status === "loading"}
         />
       }

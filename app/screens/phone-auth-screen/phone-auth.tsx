@@ -153,7 +153,7 @@ export const WelcomePhoneInputScreen = ({ navigation }) => {
               autoFocus: true,
               placeholder: translate("WelcomePhoneInputScreen.placeholder"),
               returnKeyType: loading ? "default" : "done",
-              onSubmitEditing: () => send(),
+              onSubmitEditing: send,
             }}
           />
         </KeyboardAvoidingView>

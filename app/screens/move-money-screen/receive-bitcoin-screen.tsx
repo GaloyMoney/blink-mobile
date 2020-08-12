@@ -237,7 +237,7 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
         <View style={styles.section}>
           <InputPaymentDataInjected 
             onUpdateAmount={amount => setAmount(amount)}
-            onSubmitEditing={update}
+            onBlur={update}
           />
         </View>
         {/* <View style={styles.section}>

@@ -50,7 +50,20 @@ const styles = EStyleSheet.create({
 })
 
 
-const InputCurrency = ({ amount, setAmount, currency, appendDot, onSubmitEditing, editable }) => {
+const InputCurrency = ({ amount, setAmount, currency, onBlur, forceKeyboard, appendDot, editable }) => {
+  const inputRef = React.useRef()
+
+  React.useEffect(() => {
+    keyboardFocus()
+  }, [editable, amount])
+
+  // TODO: show "an amount is needed" in red
+  function keyboardFocus() {
+    if (amount == "" || amount == "." || +amount == 0.) {
+      inputRef?.current.focus()
+    }
+  }
+
   let value 
   if (amount == 0 || isNaN(amount)) {
     value = ""
@@ -64,6 +77,7 @@ const InputCurrency = ({ amount, setAmount, currency, appendDot, onSubmitEditing
   }
 
   return <Input
+    ref={inputRef}
     placeholder={"set an amount"}
     autoFocus={true}
     value={value}
@@ -76,8 +90,10 @@ const InputCurrency = ({ amount, setAmount, currency, appendDot, onSubmitEditing
     inputContainerStyle={{width: 250}}
     inputStyle={[styles.textStyle, {textAlign: "center"}]}
     onChangeText={setAmount}
-    keyboardType="decimal-pad"
-    onSubmitEditing={onSubmitEditing}
+    keyboardType={currency === "sats" ? "number-pad": "decimal-pad"}
+    onBlur={(event) => {onBlur(event); forceKeyboard ? keyboardFocus() : null}}
+    enablesReturnKeyAutomatically={true}
+    returnKeyLabel="Update"
     returnKeyType="done"
     editable={editable}
   />
@@ -87,7 +103,8 @@ const InputCurrency = ({ amount, setAmount, currency, appendDot, onSubmitEditing
 export interface InputPaymentDataInjectedProps {
   editable: boolean,
   onUpdateAmount(number): void
-  onSubmitEditing?(): void, 
+  onBlur?(): void
+  forceKeyboard: boolean,
   initAmount?: number
   currencyPreference?: string // "sats" | "BTC" | "usd"
 }
@@ -102,8 +119,9 @@ export const InputPaymentDataInjected = (props: InputPaymentDataInjectedProps) =
 export const InputPayment = ({
   price,
   onUpdateAmount,
-  onSubmitEditing = null,
   editable,
+  onBlur = () => {},
+  forceKeyboard = false,
   initAmount = 0, // in sats
   currencyPreference = "USD"
 }) => {
@@ -169,7 +187,9 @@ export const InputPayment = ({
             }
           }}
           editable={editable}
-          onSubmitEditing={onSubmitEditing} />
+          onBlur={onBlur} 
+          forceKeyboard={forceKeyboard}
+        />
         <TextCurrency
           amount={mapping[unit].secondaryConversion(amount)} 
           currency={mapping[unit].secondary}
