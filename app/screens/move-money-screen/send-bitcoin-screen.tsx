@@ -210,7 +210,7 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
     }`
 
     try {
-      const result = await request(query, {invoice, amount})
+      const result = await request(query, {invoice, amount: amountless ? undefined : amount })
 
       if (result.invoice.payInvoice === "success") {
         store.queryWallet()
