@@ -60,7 +60,7 @@ export const ModalClipboard = observer(() => {
 
   const open = () => {
     dismiss()
-    navigation.push("sendBitcoin", { invoice, amount, amountless, note })
+    navigation.navigate("sendBitcoin", { invoice, amount, amountless, note })
   }
 
   const dismiss = () => {

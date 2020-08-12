@@ -49,21 +49,6 @@ const styles = EStyleSheet.create({
   }
 })
 
-export interface InputPaymentDataInjectedProps {
-  editable: boolean,
-  onUpdateAmount(number): void
-  onSubmitEditing?(): void, 
-  initAmount?: number
-  currencyPreference?: string // "sats" | "BTC" | "usd"
-}
-
-export const InputPaymentDataInjected = (props: InputPaymentDataInjectedProps) => {
-  const store = React.useContext(StoreContext)
-  const price = store.rate(CurrencyType.BTC)
-  
-  return <InputPayment price={price} {...props} />
-}
-
 
 const InputCurrency = ({ amount, setAmount, currency, appendDot, onSubmitEditing, editable }) => {
   let value 
@@ -99,6 +84,21 @@ const InputCurrency = ({ amount, setAmount, currency, appendDot, onSubmitEditing
 }
 
 
+export interface InputPaymentDataInjectedProps {
+  editable: boolean,
+  onUpdateAmount(number): void
+  onSubmitEditing?(): void, 
+  initAmount?: number
+  currencyPreference?: string // "sats" | "BTC" | "usd"
+}
+
+export const InputPaymentDataInjected = (props: InputPaymentDataInjectedProps) => {
+  const store = React.useContext(StoreContext)
+  const price = store.rate(CurrencyType.BTC)
+  
+  return <InputPayment price={price} {...props} />
+}
+
 export const InputPayment = ({
   price,
   onUpdateAmount,
@@ -107,6 +107,10 @@ export const InputPayment = ({
   initAmount = 0, // in sats
   currencyPreference = "USD"
 }) => {
+
+  React.useEffect(() => {
+    setAmount(initAmount)
+  }, [initAmount])
 
   const [unit, setUnit] = React.useState(currencyPreference)
   const [amount, setAmount] = React.useState(initAmount)

@@ -268,7 +268,7 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
     <Screen style={styles.mainView} preset={"scroll"}>
       <InputPaymentDataInjected
         editable={amountless && (status === "idle" || status === "error")}
-        initAmount={amount}
+        initAmount={route.params.amount}
         onUpdateAmount={input => { setAmount(input); setStatus("idle")} }
         />
       <View style={styles.section}>
