@@ -71,7 +71,7 @@ export const ModalClipboard = observer(() => {
     <Modal
       // transparent={true}
       swipeDirection={["down"]}
-      isVisible={store.modalClipboardVisible}
+      isVisible={store?.modalClipboardVisible ?? false} // store is not defined for storybook
       onShow={onShow}
       onSwipeComplete={dismiss}
       swipeThreshold={50}

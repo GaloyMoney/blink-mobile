@@ -219,7 +219,7 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> =
                 />
   )})
 
-  const scrollViewRef = React.createRef()
+  const scrollViewRef = React.useRef()
 
   React.useEffect(() => {
     scrollViewRef.current.scrollToEnd()
