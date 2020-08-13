@@ -221,7 +221,7 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
       {
         <Button
           buttonStyle={styles.buttonStyle}
-          title={status === "success" ? "Close" : err ? "Try again" : amount == 0 ? "Amount is required" : "Send"} // TODO refactor
+          title={(status === "success" || status === "pending") ? "Close" : err ? "Try again" : amount == 0 ? "Amount is required" : "Send"} // TODO refactor
           onPress={() => (status === "success" || status === "pending") ? goBack() : payInvoice()}
           disabled={amount == 0}
           loading={status === "loading"}
