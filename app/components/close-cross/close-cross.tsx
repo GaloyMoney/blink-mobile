@@ -6,8 +6,8 @@ import EStyleSheet from "react-native-extended-stylesheet";
 const styles = EStyleSheet.create({
   iconContainer: {
     position: "absolute",
-    right: "12rem",
-    top: "12rem",
+    right: "8rem",
+    top: "16rem",
     alignItems: "flex-end",
     padding: "6rem",
   },
@@ -20,7 +20,7 @@ const styles = EStyleSheet.create({
 export const CloseCross = ({onPress, color}) => (
   <View style={styles.iconContainer}>
     <Icon name="ios-close"
-      size={styles._icon.fontSize}
+      size={styles.icon.fontSize}
       onPress={onPress}
       color={color}
     />
