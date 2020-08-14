@@ -29,10 +29,10 @@ export const RootStore = RootStoreBase
     storageKey: ROOT_STATE_STORAGE_KEY
 }))
 .props({
-    onboarding: types.optional(OnboardingModel, {}),
-    accountRefresh: types.optional(types.boolean, false),
-    modalClipboardVisible: types.optional(types.boolean, false),
-    pendingPayment: types.optional(types.string, ""), // from clipboard. TODO deeplink?
+  onboarding: types.optional(OnboardingModel, {}),
+  accountRefresh: types.optional(types.boolean, false), // used to refresh the account screen
+  modalClipboardVisible: types.optional(types.boolean, false),
+  pendingPayment: types.optional(types.string, ""), // from clipboard. TODO deeplink?
 })
 .actions(self => {
   // This is an auto-generated example action.
@@ -48,7 +48,7 @@ export const RootStore = RootStoreBase
     self.pendingPayment = value
   }
 
-  const earnComplete = (id) => {
+  const earnComplete = async (id) => {
     const earn = self.earns.get(id)
     if (earn.completed) {
       return
@@ -83,8 +83,8 @@ export const RootStore = RootStoreBase
       self.wallet("BTC").transactions.push(id)
       self.wallet("BTC").balance += amount
     } else {
-      self.mutateEarnCompleted({ids: [id]}, "__typename, id, completed")
-      self.queryWallet()
+      await self.mutateEarnCompleted({ids: [id]}, "__typename, id, completed")
+      await self.queryWallet()
     }
   }
 

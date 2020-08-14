@@ -18,6 +18,7 @@ import { palette } from "../../theme/palette"
 import { getHash } from "../../utils/lightning"
 import { request } from "../../utils/request"
 import analytics from '@react-native-firebase/analytics'
+import { Notifications, Registered, RegistrationError } from "react-native-notifications"
 
 var width = Dimensions.get('window').width; //full width
 
@@ -79,6 +80,50 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
   useEffect(() => {
     update()
   }, [networkIndex])
+
+
+  Notifications.events().registerRemoteNotificationsRegistered(async (event: Registered) => {
+    console.tron.log("Registered For Remote Push", `Device Token: ${event.deviceToken}`)
+    Alert.alert("Registered For Remote Push", `Device Token: ${event.deviceToken}`)
+
+    try {
+      // store.user.updateDeviceTok
+      // TODO: upload token
+
+      store.mutateAddDeviceToken({deviceToken: event.deviceToken})
+
+      Alert.alert("Notification succesfully activated")
+    } catch (err) {
+      console.tron.log(err.toString())
+      // setErr(err.toString())
+    }
+  })
+
+  Notifications.events().registerRemoteNotificationsRegistrationFailed(
+    (event: RegistrationError) => {
+      console.tron.log(event)
+      Alert.alert("Failed To Register For Remote Push", `Error (${event})`)
+    },
+  )
+
+  useEffect(() => {
+    setTimeout(
+      () => Alert.alert(
+        "Notification", 
+        "Do you want to activate notification to be notified when the payment has arrived?", 
+      [
+        {
+          text: "Later",
+          onPress: () => console.tron.log("Cancel/Later Pressed"),
+          style: "cancel"
+        },
+        {
+          text: translate("common.ok"),
+          onPress: () => Notifications.registerRemoteNotifications()
+        },
+      ], { cancelable: true })
+    , 2500)
+  }, [])
 
   const update = async () => {
     if (networkIndex === 0) {
