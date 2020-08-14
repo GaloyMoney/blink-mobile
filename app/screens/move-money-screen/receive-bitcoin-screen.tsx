@@ -107,6 +107,21 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
   )
 
   useEffect(() => {
+
+    let hasPermissions
+
+    Notifications.ios.checkPermissions().then((currentPermissions) => {
+      console.tron.log('Badges enabled: ' + !!currentPermissions.badge);
+      console.tron.log('Sounds enabled: ' + !!currentPermissions.sound);
+      console.tron.log('Alerts enabled: ' + !!currentPermissions.alert);
+
+      hasPermissions = !!currentPermissions.alert
+    });
+
+    if (hasPermissions) {
+      return
+    }
+
     setTimeout(
       () => Alert.alert(
         "Notification", 
@@ -122,7 +137,7 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
           onPress: () => Notifications.registerRemoteNotifications()
         },
       ], { cancelable: true })
-    , 2500)
+    , 5000)
   }, [])
 
   const update = async () => {
