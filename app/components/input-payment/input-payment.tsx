@@ -94,8 +94,9 @@ const InputCurrency = ({ amount, setAmount, currency, onBlur, forceKeyboard, app
     onBlur={(event) => {onBlur(event); forceKeyboard ? keyboardFocus() : null}}
     enablesReturnKeyAutomatically={true}
     returnKeyLabel="Update"
-    returnKeyType="done"
+    returnKeyType="done" 
     editable={editable}
+    onEndEditing={onBlur}
   />
 }
 

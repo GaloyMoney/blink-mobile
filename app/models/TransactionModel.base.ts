@@ -19,6 +19,7 @@ export const TransactionModelBase = ModelBase
     id: types.identifier,
     amount: types.union(types.undefined, types.integer),
     description: types.union(types.undefined, types.string),
+    fee: types.union(types.undefined, types.null, types.integer),
     created_at: types.union(types.undefined, types.integer),
     hash: types.union(types.undefined, types.null, types.string),
     type: types.union(types.undefined, types.string),
@@ -33,6 +34,7 @@ export class TransactionModelSelector extends QueryBuilder {
   get id() { return this.__attr(`id`) }
   get amount() { return this.__attr(`amount`) }
   get description() { return this.__attr(`description`) }
+  get fee() { return this.__attr(`fee`) }
   get created_at() { return this.__attr(`created_at`) }
   get hash() { return this.__attr(`hash`) }
   get type() { return this.__attr(`type`) }
@@ -41,4 +43,4 @@ export function selectFromTransaction() {
   return new TransactionModelSelector()
 }
 
-export const transactionModelPrimitives = selectFromTransaction().amount.description.created_at.hash.type
+export const transactionModelPrimitives = selectFromTransaction().amount.description.fee.created_at.hash.type

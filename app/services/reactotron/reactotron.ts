@@ -65,14 +65,14 @@ export class Reactotron {
    * @param config the configuration
    */
   constructor(config: ReactotronConfig = DEFAULT_REACTOTRON_CONFIG) {
-    // const scriptURL = NativeModules.SourceCode.scriptURL;
-    // const scriptHostname = scriptURL.split('://')[1].split(':')[0];
-    // console.log(scriptHostname)
+    const scriptURL = NativeModules.SourceCode.scriptURL;
+    const scriptHostname = scriptURL.split('://')[1].split(':')[0];
+    console.log({scriptHostname})
 
     // merge the passed in config with some defaults
     this.config = {
-      host: "localhost",
-      // host: scriptHostname,
+      // host: "localhost",
+      host: scriptHostname, 
       useAsyncStorage: true,
       ...config,
       state: {
