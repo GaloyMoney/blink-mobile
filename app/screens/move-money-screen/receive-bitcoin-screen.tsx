@@ -4,7 +4,7 @@ import { values } from "mobx"
 import { observer } from "mobx-react"
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { ActivityIndicator, Alert, Dimensions, Pressable, Share, Text, View } from "react-native"
+import { ActivityIndicator, Alert, Dimensions, Platform, Pressable, Share, Text, View } from "react-native"
 import { Button, ButtonGroup } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
@@ -84,15 +84,11 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
 
   Notifications.events().registerRemoteNotificationsRegistered(async (event: Registered) => {
     console.tron.log("Registered For Remote Push", `Device Token: ${event.deviceToken}`)
-    Alert.alert("Registered For Remote Push", `Device Token: ${event.deviceToken}`)
+    // Alert.alert("Registered For Remote Push", `Device Token: ${event.deviceToken}`)
 
     try {
-      // store.user.updateDeviceTok
-      // TODO: upload token
-
       store.mutateAddDeviceToken({deviceToken: event.deviceToken})
-
-      Alert.alert("Notification succesfully activated")
+      console.tron.log("Notification succesfully activated")
     } catch (err) {
       console.tron.log(err.toString())
       // setErr(err.toString())
@@ -108,36 +104,43 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
 
   useEffect(() => {
 
-    let hasPermissions
+    if (Platform.OS === 'ios') {      
+      Notifications.ios.checkPermissions().then((currentPermissions) => {
+        console.tron.log('Badges enabled: ' + !!currentPermissions.badge);
+        console.tron.log('Sounds enabled: ' + !!currentPermissions.sound);
+        console.tron.log('Alerts enabled: ' + !!currentPermissions.alert);
+  
+        const hasPermissions = !!currentPermissions.alert
+        if (hasPermissions) {
+          // we already have the token
+          // TODO: look at what happen when a user change devices
+          // if permission is given automatically or a not,
+          // and whether a new token should be requested
+          return 
+        }
 
-    Notifications.ios.checkPermissions().then((currentPermissions) => {
-      console.tron.log('Badges enabled: ' + !!currentPermissions.badge);
-      console.tron.log('Sounds enabled: ' + !!currentPermissions.sound);
-      console.tron.log('Alerts enabled: ' + !!currentPermissions.alert);
+        setTimeout(
+        () => Alert.alert(
+          "Notification", 
+          "Do you want to activate notification to be notified when the payment has arrived?", 
+        [
+          {
+            text: "Later",
+            onPress: () => console.tron.log("Cancel/Later Pressed"),
+            style: "cancel"
+          },
+          {
+            text: translate("common.ok"),
+            onPress: () => Notifications.registerRemoteNotifications()
+          },
+        ], { cancelable: true })
+        , 5000)})
 
-      hasPermissions = !!currentPermissions.alert
-    });
-
-    if (hasPermissions) {
-      return
+    } else {
+      // TODO move to move money or app.tsx?
+      Notifications.registerRemoteNotifications()
     }
 
-    setTimeout(
-      () => Alert.alert(
-        "Notification", 
-        "Do you want to activate notification to be notified when the payment has arrived?", 
-      [
-        {
-          text: "Later",
-          onPress: () => console.tron.log("Cancel/Later Pressed"),
-          style: "cancel"
-        },
-        {
-          text: translate("common.ok"),
-          onPress: () => Notifications.registerRemoteNotifications()
-        },
-      ], { cancelable: true })
-    , 5000)
   }, [])
 
   const update = async () => {
