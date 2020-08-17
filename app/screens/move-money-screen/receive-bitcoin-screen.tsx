@@ -18,7 +18,7 @@ import { palette } from "../../theme/palette"
 import { getHash } from "../../utils/lightning"
 import { request } from "../../utils/request"
 import analytics from '@react-native-firebase/analytics'
-import { Notifications, Registered, RegistrationError } from "react-native-notifications"
+import messaging from '@react-native-firebase/messaging';
 
 var width = Dimensions.get('window').width; //full width
 
@@ -82,35 +82,49 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
   }, [networkIndex])
 
 
-  Notifications.events().registerRemoteNotificationsRegistered(async (event: Registered) => {
-    console.tron.log("Registered For Remote Push", `Device Token: ${event.deviceToken}`)
-    // Alert.alert("Registered For Remote Push", `Device Token: ${event.deviceToken}`)
-
-    try {
-      store.mutateAddDeviceToken({deviceToken: event.deviceToken})
-      console.tron.log("Notification succesfully activated")
-    } catch (err) {
-      console.tron.log(err.toString())
-      // setErr(err.toString())
-    }
-  })
-
-  Notifications.events().registerRemoteNotificationsRegistrationFailed(
-    (event: RegistrationError) => {
-      console.tron.log(event)
-      Alert.alert("Failed To Register For Remote Push", `Error (${event})`)
-    },
-  )
 
   useEffect(() => {
+    const requestPermission = async () => {
+      const authorizationStatus = await messaging().requestPermission()
 
-    if (Platform.OS === 'ios') {      
-      Notifications.ios.checkPermissions().then((currentPermissions) => {
-        console.tron.log('Badges enabled: ' + !!currentPermissions.badge);
-        console.tron.log('Sounds enabled: ' + !!currentPermissions.sound);
-        console.tron.log('Alerts enabled: ' + !!currentPermissions.alert);
+      const enabled = authorizationStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+                      authorizationStatus === messaging.AuthorizationStatus.PROVISIONAL;
   
-        const hasPermissions = !!currentPermissions.alert
+      Alert.alert(`enable: ${enabled ? 'true': 'false'}`)
+
+      if (!enabled) {
+        return
+      }
+
+      const token =  await messaging().getToken()
+      store.mutateAddDeviceToken({deviceToken: token})
+
+      // If using other push notification providers (ie Amazon SNS, etc)
+      // you may need to get the APNs token instead for iOS:
+      // if(Platform.OS == 'ios') { messaging().getAPNSToken().then(token => { return saveTokenToDatabase(token); }); }
+
+      // Listen to whether the token changes
+      messaging().onTokenRefresh(token => {
+        store.mutateAddDeviceToken({deviceToken: token})
+      });
+    }
+
+    const notifRequest = async () => {
+
+      if (Platform.OS === 'ios') {      
+        const authorizationStatus = await messaging().hasPermission();
+  
+        let hasPermissions = false
+  
+        if (authorizationStatus === messaging.AuthorizationStatus.AUTHORIZED) {
+          hasPermissions = true
+          console.tron.log('User has notification permissions enabled.');
+        } else if (authorizationStatus === messaging.AuthorizationStatus.PROVISIONAL) {
+          console.tron.log('User has provisional notification permissions.');
+        } else {
+          console.tron.log('User has notification permissions disabled');
+        }
+  
         if (hasPermissions) {
           // we already have the token
           // TODO: look at what happen when a user change devices
@@ -118,7 +132,7 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
           // and whether a new token should be requested
           return 
         }
-
+  
         setTimeout(
         () => Alert.alert(
           "Notification", 
@@ -131,16 +145,18 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
           },
           {
             text: translate("common.ok"),
-            onPress: () => Notifications.registerRemoteNotifications()
+            onPress: () => requestPermission()
           },
         ], { cancelable: true })
-        , 5000)})
-
-    } else {
-      // TODO move to move money or app.tsx?
-      Notifications.registerRemoteNotifications()
+        , 5000)
+  
+      } else {
+        // TODO move to move money or app.tsx?
+        requestPermission()
+      }
     }
 
+    notifRequest()
   }, [])
 
   const update = async () => {
