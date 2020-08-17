@@ -59,7 +59,7 @@ const InputCurrency = ({ amount, setAmount, currency, onBlur, forceKeyboard, app
 
   // TODO: show "an amount is needed" in red
   function keyboardFocus() {
-    if (amount == "" || amount == "." || +amount == 0.) {
+    if (forceKeyboard && (amount == "" || amount == "." || +amount == 0.)) {
       inputRef?.current.focus()
     }
   }
@@ -79,7 +79,7 @@ const InputCurrency = ({ amount, setAmount, currency, onBlur, forceKeyboard, app
   return <Input
     ref={inputRef}
     placeholder={"set an amount"}
-    autoFocus={true}
+    autoFocus={forceKeyboard}
     value={value}
     leftIcon={currency === CurrencyType.USD ? <Text style={styles.textStyle}>$</Text> : null}
     rightIcon={currency === CurrencyType.BTC ? 
@@ -91,7 +91,7 @@ const InputCurrency = ({ amount, setAmount, currency, onBlur, forceKeyboard, app
     inputStyle={[styles.textStyle, {textAlign: "center"}]}
     onChangeText={setAmount}
     keyboardType={currency === "sats" ? "number-pad": "decimal-pad"}
-    onBlur={(event) => {onBlur(event); forceKeyboard ? keyboardFocus() : null}}
+    onBlur={(event) => {onBlur(event); keyboardFocus()}}
     enablesReturnKeyAutomatically={true}
     returnKeyLabel="Update"
     returnKeyType="done" 
@@ -124,7 +124,7 @@ export const InputPayment = ({
   onBlur = () => {},
   forceKeyboard = false,
   initAmount = 0, // in sats
-  currencyPreference = "USD"
+  currencyPreference = "USD",
 }) => {
 
   React.useEffect(() => {
