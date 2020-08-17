@@ -1932,6 +1932,11 @@
   dependencies:
     stacktrace-js "^2.0.0"
 
+"@react-native-firebase/messaging@^7.7.1":
+  version "7.7.1"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/messaging/-/messaging-7.7.1.tgz#6a6c041ffe8de8e5e9306fd64560cbab07745c26"
+  integrity sha512-8ciaJC59rMHsj0D+WnIZ4ezx0hSIJ99UCkzEROlEX/kun5trlw2+h+1rqH6xzvopl8RR/8YojcmxBFJiXwCoig==
+
 "@react-navigation/bottom-tabs@^5.8.0":
   version "5.8.0"
   resolved "https://registry.yarnpkg.com/@react-navigation/bottom-tabs/-/bottom-tabs-5.8.0.tgz#d7386809bceeead0adcaacf61b6563be9cefd5cb"
@@ -12736,11 +12741,6 @@ react-native-modal@^11.0.2, react-native-modal@^11.5.6:
   dependencies:
     prop-types "^15.6.2"
     react-native-animatable "1.3.3"
-
-react-native-notifications@^3.1.2:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/react-native-notifications/-/react-native-notifications-3.3.0.tgz#b09ba3cc292b377ff5ee3d045a94a6c0c3a79700"
-  integrity sha512-D1+qBsDlMhQH7x4wah3QBrYbGR51h4HBL5Xetxa4MRFrP923hrPkMvQfUAIBS380Q0fMQg0uHC91XvzCzp+nSA==
 
 react-native-phone-input@^0.2.4:
   version "0.2.4"

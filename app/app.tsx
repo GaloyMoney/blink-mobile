@@ -13,13 +13,13 @@ import * as React from "react"
 import { useEffect, useState } from "react"
 import { Dimensions, YellowBox } from "react-native"
 import EStyleSheet from 'react-native-extended-stylesheet'
-import { Notifications } from "react-native-notifications"
 import "./i18n"
 import { RootStore, StoreContext } from "./models"
 import { Environment } from "./models/environment"
 import { RootStack } from "./navigation/root-navigator"
 import { getGraphQlUri, Token } from "./utils/token"
-
+import { Alert } from 'react-native';
+import messaging from '@react-native-firebase/messaging';
 
 export async function createEnvironment() {
   const env = new Environment()
@@ -69,24 +69,49 @@ export const App = () => {
     return route.name;
   };
 
+  // TODO: need to add isHeadless? 
+  // https://rnfirebase.io/messaging/usage
   useEffect(() => {
-    // TODO bring back notification outside of firebase function
-    // FIXME there might be a better way to manage this notification
-    Notifications.events().registerNotificationReceivedBackground((notification, completion) => {
-      console.tron.log("Background notification")
-      console.tron.log({ notification })
-      completion({ alert: true, sound: false, badge: false })
-    })
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+    });
 
-    Notifications.events().registerNotificationReceivedForeground((notification, completion) => {
-      console.tron.log("Foregound notification")
-      console.tron.log({ notification })
+    return unsubscribe;
+  }, []);
 
-      if (getActiveRouteName(routeNameRef) !== "receiveBitcoin") {
-        completion({ alert: true, sound: false, badge: false })
-      }
-    })
-  }, [])
+  useEffect(() => {
+    messaging().setBackgroundMessageHandler(async remoteMessage => {
+      console.tron.log('Message handled in the background!', remoteMessage);
+      console.log('Message handled in the background!', remoteMessage);
+    });
+  }, []);
+
+  useEffect(() => {
+
+    // onNotificationOpenedApp: When the application is running, but in the background.
+    messaging().onNotificationOpenedApp(remoteMessage => {
+      // console.log(
+      //   'Notification caused app to open from background state:',
+      //   remoteMessage.notification,
+      // );
+      // navigation.navigate(remoteMessage.data.type);
+    });
+
+    // getInitialNotification: When the application is opened from a quit state.
+    messaging()
+      .getInitialNotification()
+      .then(remoteMessage => {
+        // if (remoteMessage) {
+        //   console.log(
+        //     'Notification caused app to open from quit state:',
+        //     remoteMessage.notification,
+        //   );
+        //   setInitialRoute(remoteMessage.data.type); // e.g. "Settings"
+        // }
+        // setLoading(false);
+      });
+
+  }, []);
 
   const defaultStoreInstance = {
     wallets: {
