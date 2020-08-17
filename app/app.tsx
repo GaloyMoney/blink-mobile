@@ -2,22 +2,21 @@
 //
 // In this file, we'll be kicking off our app or storybook.
 
+
 import analytics from '@react-native-firebase/analytics'
 import "@react-native-firebase/crashlytics"
+
 import { NavigationContainer, NavigationState, PartialState } from '@react-navigation/native'
 import { createHttpClient } from "mst-gql"
 import "node-libs-react-native/globals" // needed for Buffer?
-import { contains } from "ramda"
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { AppRegistry, Dimensions, YellowBox } from "react-native"
+import { Dimensions, YellowBox } from "react-native"
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { Notifications } from "react-native-notifications"
-import { StorybookUIRoot } from "../storybook"
 import "./i18n"
 import { RootStore, StoreContext } from "./models"
 import { Environment } from "./models/environment"
-import { DEFAULT_NAVIGATION_CONFIG } from "./navigation/navigation-config"
 import { RootStack } from "./navigation/root-navigator"
 import { getGraphQlUri, Token } from "./utils/token"
 
@@ -41,6 +40,7 @@ EStyleSheet.build({
 YellowBox.ignoreWarnings([
   "componentWillMount is deprecated",
   "componentWillReceiveProps is deprecated",
+  "Require cycle:",
 ])
 
 // FIXME
@@ -112,11 +112,6 @@ export const App = () => {
   }
 
   useEffect(() => {
-    // this is necessary for hot reloading?
-    // if (rootStore != null) {
-    //   return
-    // }
-
     const fn = async () => {
 
       const token = new Token()
@@ -143,16 +138,6 @@ export const App = () => {
     fn()
   }, [])
 
-  /**
-   * Are we allowed to exit the app?  This is called when the back button
-   * is pressed on android.
-   *
-   * @param routeName The currently active route name.
-   */
-  const canExit = (routeName: string) => {
-    return contains(routeName, DEFAULT_NAVIGATION_CONFIG.exitRoutes)
-  }
-
   // Before we show the app, we have to wait for our state to be ready.
   // In the meantime, don't render anything. This will be the background
   // color set in native by rootView's background color.
@@ -171,7 +156,6 @@ export const App = () => {
     // https://mobx.js.org/refguide/inject.html
 
     <StoreContext.Provider value={rootStore}>
-      {/* <BackButtonHandler canExit={canExit}> */}
       <NavigationContainer
         onStateChange={state => {
         const currentRouteName = getActiveRouteName(state);
@@ -180,23 +164,10 @@ export const App = () => {
           analytics().setCurrentScreen(currentRouteName);
           setRouteName(currentRouteName);
         }
-      }}>
+      }}
+      >
         <RootStack />
       </NavigationContainer>
-      {/* </BackButtonHandler> */}
     </StoreContext.Provider>
   )
 }
-
-/**
- * This needs to match what's found in your app_delegate.m and MainActivity.java.
- */
-const APP_NAME = "GaloyApp"
-
-// Should we show storybook instead of our app?
-//
-// ⚠️ Leave this as `false` when checking into git.
-const SHOW_STORYBOOK = false
-
-const RootComponent = SHOW_STORYBOOK && __DEV__ ? StorybookUIRoot : App
-AppRegistry.registerComponent(APP_NAME, () => RootComponent)

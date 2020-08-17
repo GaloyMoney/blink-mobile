@@ -4,12 +4,10 @@ import { loadNetwork } from "./network"
 import analytics from '@react-native-firebase/analytics'
 import { scriptHostname } from "./helper"
 
-
+// key used to stored the token within the phone
 export const TOKEN_KEY = "GaloyToken"
 
-const metrohost = scriptHostname()
-
-const GRAPHQL_REGTEST_URI = `http://${scriptHostname}:4000/graphql`
+const GRAPHQL_REGTEST_URI = `http://${scriptHostname()}:4000/graphql`
 const GRAPHQL_TESTNET_URI = "https://graphql.testnet.galoy.io/graphql"
 const GRAPHQL_MAINNET_URI = "https://graphql.mainnet.galoy.io/graphql"
 
