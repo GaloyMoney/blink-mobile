@@ -16,7 +16,6 @@ import MoneyIsImportant from "./05-money-is-important-01.svg"
 import MoneyImportantGovernement from "./06-important-to-governments-03.svg"
 
 import WhatIsFiat from "./01-fiat-currency-01.svg"
-import WhyCareAboutFiatMoney from "./02-i-trust-my-government-01.svg"
 import GovernementCanPrintMoney from "./03-print-unlimited-money-01.svg"
 import GovernementCanPrintMoneyDark from "./03-print-unlimited-money-02.svg"
 import FiatLosesValueOverTime from "./04-fiat-money-loses-value-01.svg"

@@ -5,6 +5,8 @@ import SplashScreen from "react-native-splash-screen"
 declare var module
 
 import './rn-addons'
+import { NavigationContainer } from "@react-navigation/native"
+import { createStackNavigator } from "@react-navigation/stack"
 
 configure(() => {
   require("./storybook-registry")
@@ -17,8 +19,11 @@ const StorybookUI = getStorybookUI({
   asyncStorage: require('@react-native-community/async-storage').default
 })
 
+const Stack = createStackNavigator();
+
 // RN hot module must be in a class for HMR
 export class StorybookUIRoot extends React.Component {
+
   componentDidMount() {
     SplashScreen.hide()
     if (typeof __TEST__ === "undefined" || !__TEST__) {
@@ -28,6 +33,10 @@ export class StorybookUIRoot extends React.Component {
     }
   }
   render() {
-    return <StorybookUI />
-  }
+    return  <NavigationContainer>
+              <Stack.Navigator>
+                <Stack.Screen name="Home" component={StorybookUI} />
+              </Stack.Navigator>
+            </NavigationContainer>
+    }
 }

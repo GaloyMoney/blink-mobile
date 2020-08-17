@@ -60,7 +60,7 @@ export const ModalClipboard = observer(() => {
 
   const open = () => {
     dismiss()
-    navigation.push("sendBitcoin", { invoice, amount, amountless, note })
+    navigation.navigate("sendBitcoin", { invoice, amount, amountless, note })
   }
 
   const dismiss = () => {
@@ -71,7 +71,7 @@ export const ModalClipboard = observer(() => {
     <Modal
       // transparent={true}
       swipeDirection={["down"]}
-      isVisible={store.modalClipboardVisible}
+      isVisible={store?.modalClipboardVisible ?? false} // store is not defined for storybook
       onShow={onShow}
       onSwipeComplete={dismiss}
       swipeThreshold={50}

@@ -2,9 +2,14 @@ import { saveString, loadString, remove } from "./storage"
 const  jwtDecode = require('jwt-decode')
 import { loadNetwork } from "./network"
 import analytics from '@react-native-firebase/analytics'
+import { scriptHostname } from "./helper"
+
 
 export const TOKEN_KEY = "GaloyToken"
-const GRAPHQL_REGTEST_URI = "http://localhost:4000/graphql"
+
+const metrohost = scriptHostname()
+
+const GRAPHQL_REGTEST_URI = `http://${scriptHostname}:4000/graphql`
 const GRAPHQL_TESTNET_URI = "https://graphql.testnet.galoy.io/graphql"
 const GRAPHQL_MAINNET_URI = "https://graphql.mainnet.galoy.io/graphql"
 
@@ -27,6 +32,7 @@ export class Token {
   }
 
   async load (){
+    // TODO: replace with secure storage
     this.mem_token = await loadString(TOKEN_KEY)
     analytics().setUserId(this.uid)
     return this.mem_token
