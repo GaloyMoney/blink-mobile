@@ -283,24 +283,20 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
     <Screen backgroundColor={palette.lighterGrey} preset="scroll" >
       <View style={styles.headerView}>
         <ButtonGroup
-          // onPress={getAddress}
           onPress={index => setNetworkIndex(index)}
           selectedIndex={networkIndex}
           buttons={["Lightning", "Bitcoin"]}
-          // selectedButtonStyle={{}}
           selectedTextStyle={{fontWeight: "bold", fontSize: 18}}
           disabledTextStyle={{fontWeight: "bold"}}
           containerStyle={{borderRadius: 24}}
           selectedButtonStyle={{backgroundColor: palette.lightBlue}}
         />
       </View>
-        {/* <View style={{ alignItems: "center" }}>
-          <IconTransaction type={"receive"} size={75} color={palette.orange} />
-        </View> */}
         <View style={styles.section}>
           <InputPaymentDataInjected 
             onUpdateAmount={amount => setAmount(amount)}
             onBlur={update}
+            forceKeyboard={false}
           />
         </View>
         {/* <View style={styles.section}>
