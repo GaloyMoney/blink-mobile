@@ -5,6 +5,7 @@ import { EarnQuiz } from "./earns-quiz";
 import { cloneDeep } from "lodash"
 import { Text, SafeAreaView } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { action } from '@storybook/addon-actions';
 
 declare let module
 
@@ -41,7 +42,7 @@ storiesOf("Quiz", module)
     <SafeAreaProvider>
       <Story>
         <UseCase text="not earned">
-          <EarnQuiz route={route} />  
+          <EarnQuiz route={route} navigation={{goBack: action('goBack')}}  />  
         </UseCase>
       </Story>
     </SafeAreaProvider>
@@ -50,7 +51,7 @@ storiesOf("Quiz", module)
     <SafeAreaProvider>
       <Story>
         <UseCase text="Not earned - long text">
-          <EarnQuiz route={route_long} />  
+          <EarnQuiz route={route_long} navigation={{goBack: action('goBack')}}  />  
         </UseCase>
       </Story>
     </SafeAreaProvider>
@@ -59,7 +60,7 @@ storiesOf("Quiz", module)
   <SafeAreaProvider>
     <Story>
       <UseCase text="earned">
-        <EarnQuiz route={route_completed} />
+        <EarnQuiz route={route_completed} navigation={{goBack: action('goBack')}}  />
       </UseCase>
     </Story>
   </SafeAreaProvider>

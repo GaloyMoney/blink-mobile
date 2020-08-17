@@ -16,10 +16,5 @@ export const UserModel = UserModelBase
     log() {
       console.log(JSON.stringify(self))
     },
-    updateDeviceToken(deviceToken: string) {
-      self.store.mutateUpdateUser({
-        user: {deviceToken}
-      },
-    )},
   }
 ))

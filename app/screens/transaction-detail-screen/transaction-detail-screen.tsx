@@ -98,7 +98,7 @@ export const TransactionDetailScreen = ({ route, navigation }) => {
   const date_format = date.toLocaleString("en-US", options)
 
   return (
-    <Screen style={styles.screen}>
+    <Screen style={styles.screen} unsafe={true}>
       <View style={styles.amountView}>
         <IconTransaction type={type.includes("invoice") || type.includes("earn") ? "receive" : "send"} size={100} />
         <Text style={styles.amountText}>You {spendOrReceive}</Text>

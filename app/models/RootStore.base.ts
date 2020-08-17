@@ -37,7 +37,6 @@ import { invoiceModelPrimitives, InvoiceModelSelector } from "./InvoiceModel.bas
 export type InputUser = {
   id?: string
   level?: number
-  deviceToken?: string
 }
 /* The TypeScript type that explicits the refs to other models in order to prevent a circular refs issue */
 type Refs = {
@@ -70,7 +69,8 @@ mutateOnchain="mutateOnchain",
 mutateInvoice="mutateInvoice",
 mutateEarnCompleted="mutateEarnCompleted",
 mutateUpdateUser="mutateUpdateUser",
-mutateDeleteUser="mutateDeleteUser"
+mutateDeleteUser="mutateDeleteUser",
+mutateAddDeviceToken="mutateAddDeviceToken"
 }
 
 /**
@@ -160,5 +160,10 @@ export const RootStoreBase = withTypedRefs<Refs>()(MSTGQLStore
     },
     mutateDeleteUser(variables?: {  }, optimisticUpdate?: () => void) {
       return self.mutate<{ deleteUser: boolean }>(`mutation deleteUser { deleteUser }`, variables, optimisticUpdate)
+    },
+    mutateAddDeviceToken(variables: { deviceToken?: string }, resultSelector: string | ((qb: SuccessModelSelector) => SuccessModelSelector) = successModelPrimitives.toString(), optimisticUpdate?: () => void) {
+      return self.mutate<{ addDeviceToken: SuccessModelType}>(`mutation addDeviceToken($deviceToken: String) { addDeviceToken(deviceToken: $deviceToken) {
+        ${typeof resultSelector === "function" ? resultSelector(new SuccessModelSelector()).toString() : resultSelector}
+      } }`, variables, optimisticUpdate)
     },
   })))

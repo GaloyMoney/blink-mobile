@@ -5,9 +5,9 @@ import * as React from "react"
 import { RefreshControl, SectionList, Text, View } from "react-native"
 import { ListItem } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
-import { CurrencyText } from "../../components/currency-text"
 import { IconTransaction } from "../../components/icon-transactions"
 import { Screen } from "../../components/screen"
+import { TextCurrency } from "../../components/text-currency"
 import { translate } from "../../i18n"
 import { StoreContext, useQuery } from "../../models"
 import { palette } from "../../theme/palette"
@@ -189,7 +189,7 @@ export const TransactionScreenDataInjected = observer(({navigation, route}) => {
     }
   }
 
-  const currency = "BTC" // FIXME
+  const currency = "sat" // FIXME
   const account = CurrencyType.BTC
 
 
@@ -220,14 +220,14 @@ const AccountDetailItem: React.FC<AccountDetailItemProps> = (props) => {
       type={props.type.includes("invoice") || props.type.includes("earn") ? "receive" : "send"}
       size={24} 
       color={palette.orange} />}
-    rightTitle={<CurrencyText amount={props.amount} currency={props.currency} textColor={palette.darkGrey} />}
+    rightTitle={<TextCurrency amount={props.amount} currency={props.currency} textColor={palette.darkGrey} />}
     onPress={() => props.navigation.navigate("transactionDetail", props)}
     />)
   } else { 
     // no transaction
     return (
     <View style={styles.noTransactionView}>
-      <Text style={styles.noTransactionText}>No transaction to show :(</Text>
+      <Text style={styles.noTransactionText}>No transaction to show</Text>
     </View>)
   }
 }
@@ -241,8 +241,7 @@ export const TransactionScreen = ({ transactions, refreshing, navigation, curren
       <SectionList
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         renderItem={({ item, index, section }) => (
-          <AccountDetailItem currency={currency} navigation={navigation} {...item} 
-          />
+          <AccountDetailItem currency={currency} navigation={navigation} {...item} />
         )}
         renderSectionHeader={({ section: { title } }) => (
           <Text style={styles.headerSection}>{title}</Text>
@@ -251,5 +250,4 @@ export const TransactionScreen = ({ transactions, refreshing, navigation, curren
         keyExtractor={(item, index) => item + index}
       />
     </Screen>
-  )
-}
+)}

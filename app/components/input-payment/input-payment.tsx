@@ -49,23 +49,21 @@ const styles = EStyleSheet.create({
   }
 })
 
-export interface InputPaymentDataInjectedProps {
-  editable: boolean,
-  onUpdateAmount(number): void
-  onSubmitEditing?(): void, 
-  initAmount?: number
-  currencyPreference?: string // "sats" | "BTC" | "usd"
-}
 
-export const InputPaymentDataInjected = (props: InputPaymentDataInjectedProps) => {
-  const store = React.useContext(StoreContext)
-  const price = store.rate(CurrencyType.BTC)
-  
-  return <InputPayment price={price} {...props} />
-}
+const InputCurrency = ({ amount, setAmount, currency, onBlur, forceKeyboard, appendDot, editable }) => {
+  const inputRef = React.useRef()
 
+  React.useEffect(() => {
+    keyboardFocus()
+  }, [editable, amount])
 
-const InputCurrency = ({ amount, setAmount, currency, appendDot, onSubmitEditing, editable }) => {
+  // TODO: show "an amount is needed" in red
+  function keyboardFocus() {
+    if (amount == "" || amount == "." || +amount == 0.) {
+      inputRef?.current.focus()
+    }
+  }
+
   let value 
   if (amount == 0 || isNaN(amount)) {
     value = ""
@@ -79,6 +77,7 @@ const InputCurrency = ({ amount, setAmount, currency, appendDot, onSubmitEditing
   }
 
   return <Input
+    ref={inputRef}
     placeholder={"set an amount"}
     autoFocus={true}
     value={value}
@@ -91,22 +90,46 @@ const InputCurrency = ({ amount, setAmount, currency, appendDot, onSubmitEditing
     inputContainerStyle={{width: 250}}
     inputStyle={[styles.textStyle, {textAlign: "center"}]}
     onChangeText={setAmount}
-    keyboardType="decimal-pad"
-    onSubmitEditing={onSubmitEditing}
-    returnKeyType="done"
+    keyboardType={currency === "sats" ? "number-pad": "decimal-pad"}
+    onBlur={(event) => {onBlur(event); forceKeyboard ? keyboardFocus() : null}}
+    enablesReturnKeyAutomatically={true}
+    returnKeyLabel="Update"
+    returnKeyType="done" 
     editable={editable}
+    onEndEditing={onBlur}
   />
 }
 
 
+export interface InputPaymentDataInjectedProps {
+  editable: boolean,
+  onUpdateAmount(number): void
+  onBlur?(): void
+  forceKeyboard: boolean,
+  initAmount?: number
+  currencyPreference?: string // "sats" | "BTC" | "usd"
+}
+
+export const InputPaymentDataInjected = (props: InputPaymentDataInjectedProps) => {
+  const store = React.useContext(StoreContext)
+  const price = store.rate(CurrencyType.BTC)
+  
+  return <InputPayment price={price} {...props} />
+}
+
 export const InputPayment = ({
   price,
   onUpdateAmount,
-  onSubmitEditing = null,
   editable,
+  onBlur = () => {},
+  forceKeyboard = false,
   initAmount = 0, // in sats
   currencyPreference = "USD"
 }) => {
+
+  React.useEffect(() => {
+    setAmount(initAmount)
+  }, [initAmount])
 
   const [unit, setUnit] = React.useState(currencyPreference)
   const [amount, setAmount] = React.useState(initAmount)
@@ -165,7 +188,9 @@ export const InputPayment = ({
             }
           }}
           editable={editable}
-          onSubmitEditing={onSubmitEditing} />
+          onBlur={onBlur} 
+          forceKeyboard={forceKeyboard}
+        />
         <TextCurrency
           amount={mapping[unit].secondaryConversion(amount)} 
           currency={mapping[unit].secondary}

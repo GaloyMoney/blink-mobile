@@ -1,6 +1,5 @@
 import { filter, find, sumBy } from "lodash"
 import { Alert } from "react-native"
-import { Notifications, RegistrationError } from "react-native-notifications"
 import { translate } from "../../i18n"
 import { StoreContext } from "../../models"
 
@@ -42,36 +41,3 @@ export const sectionCompletedPct = ({ sectionIndex, earnsArray }) => {
   
 export const remainingSatsOnSection = ({ sectionIndex, earnsArray }) =>
   sumBy(filter(getCardsFromSection({ sectionIndex, earnsArray }), {fullfilled: false}), "value")
-
-
-// TODO: get back a way to ask for peermission for Notification tokens
-const _earnsMeta = {
-  activateNotifications: {
-    onAction: async ({ setLoading }) => {
-      const store = React.useContext(StoreContext)
-
-      // FIXME
-      Notifications.events().registerRemoteNotificationsRegistered(async (event: Registered) => {
-        console.tron.log("Registered For Remote Push", `Device Token: ${event.deviceToken}`)
-
-        try {
-          setLoading(true)
-          store.user.updateDeviceToken(event.deviceToken)
-
-          // close("Notification succesfully activated")
-        } catch (err) {
-          console.tron.log(err.toString())
-          // setErr(err.toString())
-        }
-      })
-
-      Notifications.events().registerRemoteNotificationsRegistrationFailed(
-        (event: RegistrationError) => {
-          Alert.alert("Failed To Register For Remote Push", `Error (${event})`)
-        },
-      )
-
-      Notifications.registerRemoteNotifications()
-    },
-  },
-}

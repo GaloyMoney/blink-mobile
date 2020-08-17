@@ -1,5 +1,4 @@
-import { Alert, Linking } from "react-native"
-import InAppBrowser from "react-native-inappbrowser-reborn"
+import { NativeModules } from "react-native"
 
 /**
  * Convert bytes to a hex encoded string
@@ -41,4 +40,11 @@ export const shuffle = (array) => {
   }
 
   return array
+}
+
+export const scriptHostname = (): string => {
+  const scriptURL = NativeModules.SourceCode.scriptURL;
+  const scriptHostname = scriptURL.split('://')[1].split(':')[0];
+  console.tron.log({scriptHostname})
+  return scriptHostname
 }

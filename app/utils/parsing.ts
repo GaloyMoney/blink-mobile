@@ -1,6 +1,7 @@
 import { getDescription } from "./lightning"
 import { Token } from "./token"
 import * as lightningPayReq from 'bolt11'
+import moment from "moment"
 
 type valid = boolean 
 type errorMEssage = string | null
@@ -50,12 +51,13 @@ export const validInvoice = (s: string): [valid, errorMEssage?, invoice?, amount
     amount = 0
     amountless = true
   }
+
+  // TODO: show that the invoice has expired in the popup
+  if (payReq?.timeExpireDate < moment().unix()) {
+    console.tron.log("invoice has expired")
+    return [false, "invoice has expired"]
+  }
   
   note = getDescription(payReq) 
-  if (note === "") {
-    // TODO: node could be dimmed if message below is shown
-    note = `this invoice doesn't include a note`
-  }
-
   return [true,, invoice, amount, amountless, note]
 }
