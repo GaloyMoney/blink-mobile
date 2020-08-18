@@ -130,7 +130,12 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
           // TODO: look at what happen when a user change devices
           // if permission is given automatically or a not,
           // and whether a new token should be requested
-          return 
+          
+      
+          // TODO: this should not be needed
+          // but there is no harm to sending the token multiple times for now
+          requestPermission() 
+          return
         }
   
         setTimeout(
