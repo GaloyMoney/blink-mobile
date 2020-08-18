@@ -112,17 +112,22 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
     }
 
     setErr("")
-
-    const query = `mutation payInvoice($invoice: String, $amount: Int) {
-      invoice {
-        payInvoice(invoice: $invoice, amount: $amount)
-      }
-    }`
-
     setStatus("loading")
 
     try {
+
+
+      const query = `mutation payInvoice($invoice: String!, $amount: Int) {
+        invoice {
+          payInvoice(invoice: $invoice, amount: $amount)
+        }
+      }`  
       const result = await request(query, {invoice, amount: amountless ? amount : undefined })
+
+      // const result = await store.mutateInvoice(
+      //   {payInvoice: {invoice, amount: amountless ? amount : undefined}},
+      //   msg => msg.payInvoice
+      // )
 
       if (result.invoice.payInvoice === "success") {
         store.queryWallet()
