@@ -79,6 +79,13 @@ export const App = () => {
     return unsubscribe;
   }, []);
 
+  // useEffect(() => {
+    // const isDeviceRegisteredForRemoteMessages = messaging().isDeviceRegisteredForRemoteMessages
+    // Alert.alert(`isDeviceRegisteredForRemoteMessages: ${isDeviceRegisteredForRemoteMessages ? true:false}`)
+    // const isAutoInitEnabled = messaging().isAutoInitEnabled
+    // Alert.alert(`isAutoInitEnabled: ${isAutoInitEnabled ? true:false}`) // true
+  // }, []);
+
   useEffect(() => {
     messaging().setBackgroundMessageHandler(async remoteMessage => {
       console.tron.log('Message handled in the background!', remoteMessage);
