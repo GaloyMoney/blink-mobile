@@ -82,7 +82,6 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
   }, [networkIndex])
 
 
-
   useEffect(() => {
     const requestPermission = async () => {
       const authorizationStatus = await messaging().requestPermission()
@@ -90,7 +89,7 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
       const enabled = authorizationStatus === messaging.AuthorizationStatus.AUTHORIZED ||
                       authorizationStatus === messaging.AuthorizationStatus.PROVISIONAL;
   
-      Alert.alert(`enable: ${enabled ? 'true': 'false'}`)
+      // Alert.alert(`enable: ${enabled ? 'true': 'false'}`)
 
       if (!enabled) {
         return
