@@ -235,7 +235,7 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
       try {
 
       // lightning
-      const query = `mutation updatePendingInvoice($hash: String) {
+      const query = `mutation updatePendingInvoice($hash: String!) {
         invoice {
           updatePendingInvoice(hash: $hash)
         }
