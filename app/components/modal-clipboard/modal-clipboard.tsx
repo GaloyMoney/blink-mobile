@@ -11,6 +11,7 @@ import { palette } from "../../theme/palette";
 import { color } from "../../theme";
 import Icon from "react-native-vector-icons/Ionicons"
 import Modal from "react-native-modal"
+import Clipboard from "@react-native-community/clipboard";
 
 
 const styles = StyleSheet.create({
@@ -44,11 +45,12 @@ export const ModalClipboard = observer(() => {
   const [amountless, setAmountless] = React.useState(false)
   const [note, setNote] = React.useState("")
 
-  const onShow = () => {
-    const [valid, errorMessage, _invoice, _amount, _amountless, _note] = validInvoice(store.pendingPayment)
+  const onShow = async () => {
+    const clipboard = await Clipboard.getString()
+    const [valid, errorMessage, _invoice, _amount, _amountless, _note] = validInvoice(clipboard)
 
     if (!valid) {
-      console.tron.error(`cant decode invoice from ModelClipboard ${errorMessage}`)
+      console.tron.warn(`cant decode invoice from ModelClipboard ${errorMessage}`)
       return
     }
 
