@@ -70,7 +70,8 @@ mutateInvoice="mutateInvoice",
 mutateEarnCompleted="mutateEarnCompleted",
 mutateUpdateUser="mutateUpdateUser",
 mutateDeleteUser="mutateDeleteUser",
-mutateAddDeviceToken="mutateAddDeviceToken"
+mutateAddDeviceToken="mutateAddDeviceToken",
+mutateTestMessage="mutateTestMessage"
 }
 
 /**
@@ -163,6 +164,11 @@ export const RootStoreBase = withTypedRefs<Refs>()(MSTGQLStore
     },
     mutateAddDeviceToken(variables: { deviceToken?: string }, resultSelector: string | ((qb: SuccessModelSelector) => SuccessModelSelector) = successModelPrimitives.toString(), optimisticUpdate?: () => void) {
       return self.mutate<{ addDeviceToken: SuccessModelType}>(`mutation addDeviceToken($deviceToken: String) { addDeviceToken(deviceToken: $deviceToken) {
+        ${typeof resultSelector === "function" ? resultSelector(new SuccessModelSelector()).toString() : resultSelector}
+      } }`, variables, optimisticUpdate)
+    },
+    mutateTestMessage(variables?: {  }, resultSelector: string | ((qb: SuccessModelSelector) => SuccessModelSelector) = successModelPrimitives.toString(), optimisticUpdate?: () => void) {
+      return self.mutate<{ testMessage: SuccessModelType}>(`mutation testMessage { testMessage {
         ${typeof resultSelector === "function" ? resultSelector(new SuccessModelSelector()).toString() : resultSelector}
       } }`, variables, optimisticUpdate)
     },

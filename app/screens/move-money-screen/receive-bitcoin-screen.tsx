@@ -205,14 +205,10 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
     let invoice
 
     try {
-      const query = `mutation addInvoice($amount: Int, $memo: String) {
-        invoice {
-          addInvoice(value: $amount, memo: $memo)
-        }
-      }`
-
-      const result = await request(query, {amount, memo})
-      console.tron.log({result})
+      const result = await store.mutateInvoice(
+        {addInvoice: {value: amount, memo}},
+        msg => msg.addInvoice
+      )
 
       invoice = result.invoice.addInvoice
     } catch (err) {
@@ -262,7 +258,6 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
       }
     }
   
-    console.tron.log({counter, hashes})
     fetchInvoice()
   },  [counter])
 
