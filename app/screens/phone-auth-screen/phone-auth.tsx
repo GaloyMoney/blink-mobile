@@ -10,7 +10,6 @@ import { translate } from "../../i18n"
 import { StoreContext } from "../../models"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-import { request } from "../../utils/request"
 import { Token } from "../../utils/token"
 import BadgerPhone from "./badger-phone-01.svg"
 

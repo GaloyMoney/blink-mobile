@@ -1,6 +1,5 @@
 import AsyncStorage from "@react-native-community/async-storage"
 import crashlytics from "@react-native-firebase/crashlytics"
-import request from "graphql-request"
 import { observer } from "mobx-react"
 import * as React from "react"
 import { Alert, Text, View } from "react-native"
