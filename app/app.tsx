@@ -6,6 +6,7 @@
 import analytics from '@react-native-firebase/analytics'
 import "@react-native-firebase/crashlytics"
 
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import { NavigationContainer, NavigationState, PartialState } from '@react-navigation/native'
 import { createHttpClient } from "mst-gql"
 import "node-libs-react-native/globals" // needed for Buffer?
@@ -51,7 +52,7 @@ console.disableYellowBox = true
  */
 export const App = () => {
   const [rootStore, setRootStore] = useState(null)
-  const [routeName, setRouteName] = useState("Unknown");
+  const [routeName, setRouteName] = useState("Initial");
 
   const getActiveRouteName = (
     state: NavigationState | PartialState<NavigationState> | undefined,
@@ -73,8 +74,15 @@ export const App = () => {
   // https://rnfirebase.io/messaging/usage
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async remoteMessage => {
-      Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+      // Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+      console.tron.log({remoteMessage})
+      PushNotificationIOS.presentLocalNotification({
+        alertBody: remoteMessage.notification.body,
+        alertTitle: remoteMessage.notification.title,
+        soundName: "default",
+      });
     });
+
 
     return unsubscribe;
   }, []);
