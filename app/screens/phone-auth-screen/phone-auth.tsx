@@ -80,6 +80,8 @@ const styles = EStyleSheet.create({
 })
 
 export const WelcomePhoneInputScreen = ({ navigation }) => {
+  const store = React.useContext(StoreContext)
+
   const [loading, setLoading] = useState(false)
   const [err, setErr] = useState("")
 
@@ -95,15 +97,8 @@ export const WelcomePhoneInputScreen = ({ navigation }) => {
 
     try {
       setLoading(true)
-      
-      const query = `mutation requestPhoneCode($phone: String) {
-        requestPhoneCode(phone: $phone) {
-          success
-        }
-      }`
-
       const phone = inputRef.current.getValue()
-      const success = await request(query, {phone})
+      const success = await store.mutateRequestPhoneCode({phone})
 
       if (success) {
         setLoading(false)
@@ -177,6 +172,9 @@ export const WelcomePhoneValidationScreenDataInjected = ({ route, navigation }) 
 
 
 export const WelcomePhoneValidationScreen = ({ onSuccess, route, navigation }) => {
+  // FIXME see what to do with store and storybook
+  const store = React.useContext(StoreContext)
+
   const [code, setCode] = useState("")
   const [loading, setLoading] = useState(false)
   const [err, setErr] = useState("")
@@ -196,15 +194,7 @@ export const WelcomePhoneValidationScreen = ({ onSuccess, route, navigation }) =
 
     try {
       setLoading(true)
-      
-      const query = `mutation login($phone: String, $code: Int) {
-        login(phone: $phone, code: $code) {
-          token
-        }
-      }`
-
-      const variables = {phone, code: Number(code)}
-      const { login } = await request(query, variables)
+      const { login } = await store.mutateLogin({phone, code: Number(code)})
       console.tron.log({login})
 
       if (login.token) {
