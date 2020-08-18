@@ -70,10 +70,10 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>Activate your camera to scan QR codes</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Import a screenshot with a QR code</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Find Bitcoin ATM</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Import a screenshot with a QR code</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>
@@ -98,6 +98,10 @@
 		<string>DMSans-Medium.ttf</string>
 		<string>DMSans-MediumItalic.ttf</string>
 		<string>DMSans-Regular.ttf</string>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

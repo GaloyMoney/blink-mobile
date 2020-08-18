@@ -80,33 +80,35 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
     update()
   }, [networkIndex])
 
+  const requestPermission = async () => {
+    const authorizationStatus = await messaging().requestPermission()
 
-  useEffect(() => {
-    const requestPermission = async () => {
-      const authorizationStatus = await messaging().requestPermission()
+    const enabled = authorizationStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+                    authorizationStatus === messaging.AuthorizationStatus.PROVISIONAL;
 
-      const enabled = authorizationStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-                      authorizationStatus === messaging.AuthorizationStatus.PROVISIONAL;
-  
-      // Alert.alert(`enable: ${enabled ? 'true': 'false'}`)
+    // Alert.alert(`enable: ${enabled ? 'true': 'false'}`)
 
-      if (!enabled) {
-        return
-      }
-
-      const token =  await messaging().getToken()
-      store.mutateAddDeviceToken({deviceToken: token})
-
-      // If using other push notification providers (ie Amazon SNS, etc)
-      // you may need to get the APNs token instead for iOS:
-      // if(Platform.OS == 'ios') { messaging().getAPNSToken().then(token => { return saveTokenToDatabase(token); }); }
-
-      // Listen to whether the token changes
-      messaging().onTokenRefresh(token => {
-        store.mutateAddDeviceToken({deviceToken: token})
-      });
+    if (!enabled) {
+      return
     }
 
+    const token =  await messaging().getToken()
+    store.mutateAddDeviceToken({deviceToken: token})
+    // Alert.alert(`token: ${token}`)
+
+
+    // If using other push notification providers (ie Amazon SNS, etc)
+    // you may need to get the APNs token instead for iOS:
+    // if(Platform.OS == 'ios') { messaging().getAPNSToken().then(token => { return saveTokenToDatabase(token); }); }
+
+    // Listen to whether the token changes
+    messaging().onTokenRefresh(token => {
+      store.mutateAddDeviceToken({deviceToken: token})
+    });
+  }
+
+
+  useEffect(() => {
     const notifRequest = async () => {
 
       if (Platform.OS === 'ios') {      
