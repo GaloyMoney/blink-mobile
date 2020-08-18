@@ -72,13 +72,12 @@ export const RootStack = () => {
   const checkClipboard = async () => {
     const clipboard = await Clipboard.getString()
 
-    const [valid, _, invoice] = validInvoice(clipboard)
+    const [valid] = validInvoice(clipboard)
     if (!valid) {
       return
     }
     
     store.setModalClipboardVisible(true)
-    store.setPendingPayment(invoice)
   }
 
   useEffect(() => {

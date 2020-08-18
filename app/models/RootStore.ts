@@ -32,7 +32,6 @@ export const RootStore = RootStoreBase
   onboarding: types.optional(OnboardingModel, {}),
   accountRefresh: types.optional(types.boolean, false), // used to refresh the account screen
   modalClipboardVisible: types.optional(types.boolean, false),
-  pendingPayment: types.optional(types.string, ""), // from clipboard. TODO deeplink?
 })
 .actions(self => {
   // This is an auto-generated example action.
@@ -42,10 +41,6 @@ export const RootStore = RootStoreBase
 
   const setModalClipboardVisible = (value) => {
     self.modalClipboardVisible = value
-  }
-
-  const setPendingPayment = (value) => {
-    self.pendingPayment = value
   }
 
   const earnComplete = async (id) => {
@@ -110,7 +105,7 @@ export const RootStore = RootStoreBase
     console.tron.log("home query done")
   })
 
-  return { log, earnComplete, loginSuccessful, setModalClipboardVisible, setPendingPayment }
+  return { log, earnComplete, loginSuccessful, setModalClipboardVisible }
 })
 .views((self) => ({
   // workaround on the fact key can't be enum
