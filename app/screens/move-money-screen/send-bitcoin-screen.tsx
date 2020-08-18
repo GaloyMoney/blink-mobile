@@ -3,7 +3,7 @@ import { useNavigation } from "@react-navigation/native"
 import LottieView from 'lottie-react-native'
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { Dimensions, ScrollView, Text, View } from "react-native"
+import { ScrollView, Text, View } from "react-native"
 import { Button, Input } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
@@ -14,7 +14,6 @@ import { translate } from "../../i18n"
 import { StoreContext } from "../../models"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-import { request } from "../../utils/request"
 
 const successLottie = require('./success_lottie.json')
 const errorLottie = require('./error_lottie.json')
@@ -115,19 +114,16 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
     setStatus("loading")
 
     try {
-
-
       const query = `mutation payInvoice($invoice: String!, $amount: Int) {
         invoice {
           payInvoice(invoice: $invoice, amount: $amount)
         }
       }`  
-      const result = await request(query, {invoice, amount: amountless ? amount : undefined })
 
-      // const result = await store.mutateInvoice(
-      //   {payInvoice: {invoice, amount: amountless ? amount : undefined}},
-      //   msg => msg.payInvoice
-      // )
+      const result = await store.mutate(
+        query,
+        {invoice, amount: amountless ? amount : undefined},
+      )
 
       if (result.invoice.payInvoice === "success") {
         store.queryWallet()

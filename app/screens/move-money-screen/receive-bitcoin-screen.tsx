@@ -1,4 +1,6 @@
 import Clipboard from "@react-native-community/clipboard"
+import analytics from '@react-native-firebase/analytics'
+import messaging from '@react-native-firebase/messaging'
 import * as lightningPayReq from "bolt11"
 import { values } from "mobx"
 import { observer } from "mobx-react"
@@ -16,9 +18,6 @@ import { translate } from "../../i18n"
 import { StoreContext } from "../../models"
 import { palette } from "../../theme/palette"
 import { getHash } from "../../utils/lightning"
-import { request } from "../../utils/request"
-import analytics from '@react-native-firebase/analytics'
-import messaging from '@react-native-firebase/messaging';
 
 var width = Dimensions.get('window').width; //full width
 
@@ -243,7 +242,7 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
       }`
 
       for (const hash of hashes) { 
-        const result = await request(query, {hash})
+        const result = await store.mutate(query, {hash})
 
         if (result.invoice.updatePendingInvoice === true) {
           success()
