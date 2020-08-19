@@ -19,7 +19,6 @@ import { RootStore, StoreContext } from "./models"
 import { Environment } from "./models/environment"
 import { RootStack } from "./navigation/root-navigator"
 import { getGraphQlUri, Token } from "./utils/token"
-import { Alert } from 'react-native';
 import messaging from '@react-native-firebase/messaging';
 
 export async function createEnvironment() {
