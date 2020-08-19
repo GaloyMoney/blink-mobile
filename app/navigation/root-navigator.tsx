@@ -72,6 +72,10 @@ export const RootStack = () => {
   const checkClipboard = async () => {
     const clipboard = await Clipboard.getString()
 
+    if (store.user.level < 1) {
+      return
+    }
+
     const [valid] = validInvoice(clipboard)
     if (!valid) {
       return

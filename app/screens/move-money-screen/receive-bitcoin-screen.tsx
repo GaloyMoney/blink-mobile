@@ -262,16 +262,6 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
     fetchInvoice()
   },  [counter])
 
-  // this is to trigger the fetchInvoice function. not sure why we need the counter.
-  // but running to issue without where hashes is not populated
-  // as if it was taking the initial context but not 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCounter(counter => counter + 1)
-    }, 2500)
-    return () => clearInterval(interval)
-  }, [])
-
   const success = () => {
     const options = {
       enableVibrateFallback: true,
