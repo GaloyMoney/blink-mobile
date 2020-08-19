@@ -169,7 +169,7 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
       await createInvoice()
     } else {
       const uri = `bitcoin:${values(store.lastOnChainAddresses)[0].id}`
-      setData(amount === 0 ? uri : uri + `?amount=${amount * 10 ** 8}`)
+      setData(amount === 0 ? uri : uri + `?amount=${amount / 10 ** 8}`)
     }
   }
 
