@@ -206,10 +206,13 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
     let invoice
 
     try {
-      const result = await store.mutateInvoice(
-        {addInvoice: {value: amount, memo}},
-        msg => msg.addInvoice
-      )
+      const query = `mutation addInvoice($value: Int!, $memo: String) {
+        invoice {
+          addInvoice(value: $value, memo: $memo)
+        }
+      }`
+
+      const result = await store.mutate(query, {value: amount, memo})
 
       invoice = result.invoice.addInvoice
     } catch (err) {
