@@ -206,7 +206,7 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
     let invoice
 
     try {
-      const query = `mutation addInvoice($value: Int!, $memo: String) {
+      const query = `mutation addInvoice($value: Int, $memo: String) {
         invoice {
           addInvoice(value: $value, memo: $memo)
         }
