@@ -65,10 +65,7 @@ export class Reactotron {
    * @param config the configuration
    */
   constructor(config: ReactotronConfig = DEFAULT_REACTOTRON_CONFIG) {
-    // merge the passed in config with some defaults
     this.config = {
-      // host: "localhost",
-      host: scriptHostname(), 
       useAsyncStorage: true,
       ...config,
       state: {
@@ -114,10 +111,13 @@ export class Reactotron {
   async setup() {
     // only run this in dev... metro bundler will ignore this block: 🎉
     if (__DEV__) {
-      // configure reactotron
+
+      const host = scriptHostname()
+      console.log({host})
+  
       Tron.configure({
         name: this.config.name || require("../../../package.json").name,
-        host: this.config.host,
+        host,
       })
 
       // hookup middleware
