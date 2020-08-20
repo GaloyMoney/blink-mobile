@@ -63,18 +63,10 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
   const [memo, setMemo] = useState("")
 
   const [amount, setAmount] = useState(0)
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   const [networkIndex, setNetworkIndex] = useState(0)
-  const [data, setData] = useState(" ")
-
-
-  // a list of the hash that has been added to the receive bitcoin tab.
-  // because we are creating a 
-  // TODO: send notification from the server would be a better architecture
-  const [hashes, setHashes] = useState([])
-  const [counter, setCounter] = useState(0)
-
+  const [data, setData] = useState("")
 
   useEffect(() => {
     update()
@@ -198,13 +190,39 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
     }
   }
 
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      if (networkIndex === 0) {
+
+        let invoiceDecoded
+
+        try {
+          invoiceDecoded = lightningPayReq.decode(data)
+        } catch (err) {
+          console.tron.log(`error decoding the invoice: ${err}`)
+        }
+        
+        if (!invoiceDecoded) {
+          return
+        }
+        
+        const hash = getHash(invoiceDecoded)  
+        if (remoteMessage.data.type === "paid-invoice" && remoteMessage.data.hash === hash) {
+          success()
+        }
+
+      } else {
+        console.tron.log("// TODO bitcoin as well")
+      }
+
+    });
+
+    return unsubscribe;
+  }, [data]); // FIXME: not sure why data need to be in scope here, but otherwise the async function will have data = null
+
   const createInvoice = async () => {
     setLoading(true)
-
     console.tron.log("createInvoice")
-
-    let invoice
-
     try {
       const query = `mutation addInvoice($value: Int, $memo: String) {
         invoice {
@@ -213,57 +231,17 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
       }`
 
       const result = await store.mutate(query, {value: amount, memo})
+      const invoice = result.invoice.addInvoice
+      setData(invoice)
+      console.tron.log("data has been set")
 
-      invoice = result.invoice.addInvoice
     } catch (err) {
       console.tron.log(`error with AddInvoice: ${err}`)
       throw err
-    }
-
-    try {
-      const invoiceDecoded = lightningPayReq.decode(invoice)
-      const hash = getHash(invoiceDecoded)
-      setHashes(array => [...array, hash])
-
-      console.tron.log({hash})
-      
-      setData(invoice)
-    } catch (err) {
-      Alert.alert(err.toString())
     } finally {
       setLoading(false)
     }
   }
-
-  useEffect(() => {
-    const fetchInvoice = async () => {
-      try {
-
-      // lightning
-      const query = `mutation updatePendingInvoice($hash: String!) {
-        invoice {
-          updatePendingInvoice(hash: $hash)
-        }
-      }`
-
-      for (const hash of hashes) { 
-        const result = await store.mutate(query, {hash})
-
-        if (result.invoice.updatePendingInvoice === true) {
-          success()
-        }
-      }
-  
-      // on-chain
-      // TODO
-
-      } catch (err) {
-        console.tron.warn(`can't fetch invoice ${err}`)
-      }
-    }
-  
-    fetchInvoice()
-  },  [counter])
 
   const success = () => {
     const options = {
