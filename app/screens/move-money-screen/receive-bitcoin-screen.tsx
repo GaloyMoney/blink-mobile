@@ -57,6 +57,8 @@ const styles = EStyleSheet.create({
 })
 
 export const ReceiveBitcoinScreen = observer(({ navigation }) => {
+  // TODO FIXME: crash if no connection
+
   const store = React.useContext(StoreContext)
 
   // FIXME TODO add back a way to set a memo
@@ -162,6 +164,7 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
     } else {
       const uri = `bitcoin:${values(store.lastOnChainAddresses)[0].id}`
       setData(amount === 0 ? uri : uri + `?amount=${amount / 10 ** 8}`)
+      setLoading(false)
     }
   }
 
