@@ -7,6 +7,7 @@ import { Screen } from "../../components/screen"
 import { palette } from "../../theme/palette"
 import BadgerShovelBitcoin from "./badger-shovel-01.svg"
 import { MountainHeader } from "../../components/mountain-header"
+import { translate } from "../../i18n"
 
 const styles = EStyleSheet.create({
   buttonStyle: {
@@ -56,7 +57,7 @@ export const SectionCompleted = ({ navigation, route }) => {
         <BadgerShovelBitcoin />
         <Text style={styles.headerSection}>You've completed</Text>
         <Text style={styles.titleSection}>{sectionTitle}</Text>
-        <Button title="Keep Digging" type="solid" 
+        <Button title={translate("EarnScreen.keepDigging")} type="solid" 
           buttonStyle={styles.buttonStyle}
           titleStyle={styles.titleStyle}
           onPress={() => navigation.navigate("Earn")}
