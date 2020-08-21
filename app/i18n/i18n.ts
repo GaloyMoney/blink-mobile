@@ -5,7 +5,7 @@ const en = require("./en")
 const es = require("./es")
 
 i18n.fallbacks = true
-i18n.translations = { en, es, fr }
+i18n.translations = { en, es }
 
 const fallback = { languageTag: "en", isRTL: false }
 const { languageTag } =
