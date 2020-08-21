@@ -38,6 +38,7 @@
     "@react-navigation/stack": "^5.9.0",
     "@remobile/react-native-qrcode-local-image": "nicolasburtey/react-native-qrcode-local-image.git#master",
     "bip21": "^2.0.2",
+    "bitcoinjs-lib": "^5.1.10",
     "bolt11": "^1.2.7",
     "buffer": "^5.5.0",
     "currency.js": "^2.0.2",

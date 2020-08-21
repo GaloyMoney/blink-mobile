@@ -4,7 +4,7 @@ import { Button } from 'react-native-elements';
 import * as React from "react"
 import { useNavigation } from "@react-navigation/native";
 import { StoreContext } from "../../models";
-import { validInvoice } from "../../utils/parsing";
+import { validPayment } from "../../utils/parsing";
 import { observer } from "mobx-react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { palette } from "../../theme/palette";
@@ -12,6 +12,7 @@ import { color } from "../../theme";
 import Icon from "react-native-vector-icons/Ionicons"
 import Modal from "react-native-modal"
 import Clipboard from "@react-native-community/clipboard";
+import { Token } from "../../utils/token";
 
 
 const styles = StyleSheet.create({
@@ -47,17 +48,21 @@ export const ModalClipboard = observer(() => {
 
   const onShow = async () => {
     const clipboard = await Clipboard.getString()
-    const [valid, errorMessage, _invoice, _amount, _amountless, _note] = validInvoice(clipboard)
 
-    if (!valid) {
-      console.tron.warn(`cant decode invoice from ModelClipboard ${errorMessage}`)
-      return
+    {
+      const {valid, errorMessage, invoice, amount, amountless, note} = validPayment(clipboard, new Token().network)
+  
+      if (!valid) {
+        console.tron.warn(`cant decode invoice from ModelClipboard ${errorMessage}`)
+        return
+      }
+  
+      setInvoice(invoice)
+      setAmount(amount)
+      setAmountless(amountless)
+      setNote(note)
     }
 
-    setInvoice(_invoice)
-    setAmount(_amount)
-    setAmountless(_amountless)
-    setNote(_note)
   }
 
   const open = () => {
