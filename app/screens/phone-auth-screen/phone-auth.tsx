@@ -105,7 +105,7 @@ export const WelcomePhoneInputScreen = ({ navigation }) => {
         navigation.navigate(screen, {phone})       
 
       } else {
-        setErr("Error with the request. Try again later")
+        setErr(translate("erros.generic"))
       }
 
     } catch (err) {
@@ -120,7 +120,7 @@ export const WelcomePhoneInputScreen = ({ navigation }) => {
       setErr("")
       Alert.alert("error", err.toString(), [
         {
-          text: "OK",
+          text: translate("common.ok"),
           onPress: () => {
             setLoading(false)
           },
@@ -187,7 +187,7 @@ export const WelcomePhoneValidationScreen = ({ onSuccess, route, navigation }) =
 
   const send = async () => {
     if (code.length !== 6) {
-      setErr(`The code need to have 6 digits`)
+      setErr(translate("WelcomePhoneValidationScreen.need6Digits"))
       return
     }
 
@@ -201,7 +201,7 @@ export const WelcomePhoneValidationScreen = ({ onSuccess, route, navigation }) =
         await onSuccess()
         navigation.navigate("MoveMoney")
       } else {
-        setErr("Error logging in. Did you use the right code?")
+        setErr(translate("WelcomePhoneValidationScreen.errorLoggingIn"))
         setLoading(false)
       }
 

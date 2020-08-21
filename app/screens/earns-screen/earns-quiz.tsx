@@ -1,4 +1,5 @@
 import * as React from "react"
+import I18n from "i18n-js"
 import { useEffect, useState } from "react"
 import { StatusBar, Text, View } from "react-native"
 import { Button } from "react-native-elements"
@@ -9,6 +10,7 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import Icon from "react-native-vector-icons/Ionicons"
 import { CloseCross } from "../../components/close-cross"
 import { Screen } from "../../components/screen"
+import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
 import { shuffle } from "../../utils/helper"
 import { sleep } from "../../utils/sleep"
@@ -255,7 +257,7 @@ export const EarnQuiz = ({ route, navigation }) => {
             </View>
             <SafeAreaView>
               { recordedAnswer.indexOf(0) !== -1 ?
-                <Button title={"Keep digging!"} 
+                <Button title={translate("EarnScreen.keepDigging")} 
                 type="outline" onPress={async () => await close()}
                 containerStyle={styles.keepDiggingContainerStyle}
                 buttonStyle={styles.buttonStyle}
@@ -286,13 +288,16 @@ export const EarnQuiz = ({ route, navigation }) => {
           {isCompleted &&
             <>
               <Text style={styles.textEarn}>Quiz completed and {amount} sats earned</Text>
-              <Button title="Review quiz" type="clear"
+              <Button title={translate("EarnScreen.reviewQuizz")} type="clear"
                 titleStyle={styles.completedTitleStyle}
               onPress={() => setQuizVisible(true)}
               />
             </>
           || 
-            <Button title={`Earn ${amount} sat`} 
+            <Button 
+              title={I18n.t("EarnScreen.earnSats", {
+                count: amount,
+                formatted_number: I18n.toNumber(amount, { precision: 0 })})}
               buttonStyle={styles.buttonStyle}
               titleStyle={styles.titleStyle}
               onPress={() => setQuizVisible(true)}

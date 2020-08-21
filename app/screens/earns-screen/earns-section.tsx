@@ -20,7 +20,6 @@ import { values } from "mobx"
 
 
 const { width: screenWidth } = Dimensions.get("window")
-const { height: screenHeight } = Dimensions.get("window")
 
 const svgWidth = screenWidth - 60
 
@@ -184,7 +183,6 @@ export const EarnSection = observer(({ route, navigation }) => {
   const isFocused = useIsFocused()
 
   if (initialRemainingSats !== 0 && currentRemainingEarn === 0 && isFocused) {
-    console.tron.warn("section Completed!")
     navigation.navigate("sectionCompleted", {
       amount: cards.reduce((acc, item) => item.value + acc, 0),
       sectionTitle

@@ -134,11 +134,12 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
   
         setTimeout(
         () => Alert.alert(
-          "Notification", 
-          "Do you want to activate notification to be notified when the payment has arrived?", 
+          translate("common.notification"), 
+          translate("ReceiveBitcoinScreen.activateNotifications"), 
         [
           {
-            text: "Later",
+            text: translate("common.later"),
+            // todo: add analytics
             onPress: () => console.tron.log("Cancel/Later Pressed"),
             style: "cancel"
           },
@@ -170,7 +171,7 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
 
   const copyInvoice = () => {
     Clipboard.setString(data)
-    Alert.alert("Invoice has been copied in the clipboard")
+    Alert.alert(translate("ReceiveBitcoinScreen.copyClipboard"))
   }
 
   const shareInvoice = async () => {
@@ -261,7 +262,7 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
     analytics().logEarnVirtualCurrency({value: amount, virtual_currency_name: "btc"})
 
     ReactNativeHapticFeedback.trigger("notificationSuccess", options)
-    Alert.alert("success", "This invoice has been paid", [{
+    Alert.alert("success", translate("ReceiveBitcoinScreen.invoicePaid"), [{
       text: translate("common.ok"),
       onPress: () => {
         navigation.goBack(false)
@@ -308,13 +309,13 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
               <ActivityIndicator size="large" color={palette.blue} />
             </View>
           }
-          {loading && <Text> </Text> || <Text>Tap QR Code to Copy</Text>}
+          {loading && <Text> </Text> || <Text>{translate("ReceiveBitcoinScreen.tapQrCodeCopy")}</Text>}
         </View>
         <Button
           buttonStyle={styles.buttonStyle}
           disabledStyle={styles.buttonStyle}
           containerStyle={{marginHorizontal: 48, borderRadius: 24, marginTop: 18}}
-          title="Share"
+          title={translate("common.share")}
           onPress={shareInvoice}
           titleStyle={{ fontWeight: "bold" }}
         />
