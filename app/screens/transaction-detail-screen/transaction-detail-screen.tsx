@@ -8,6 +8,7 @@ import { AccountDetailItemProps } from "../account-detail-screen"
 import { Divider } from "react-native-elements"
 import { CloseCross } from "../../components/close-cross"
 import { IconTransaction } from "../../components/icon-transactions"
+import { translate } from "../../i18n"
 
 
 const styles = EStyleSheet.create({
@@ -109,8 +110,8 @@ export const TransactionDetailScreen = ({ route, navigation }) => {
       <View style={styles.transactionDetailView}>
         <Text style={styles.transactionDetailText}>Transaction Details</Text>
         <Divider style={styles.divider} />
-        <Row entry={"Date"} value={date_format}></Row>
-        <Row entry={"Description"} value={description} />
+        <Row entry={translate("common.date")} value={date_format}></Row>
+        <Row entry={translate("common.description")} value={description} />
         {hash &&
           <Row entry={"Hash"} value={hash} />
         }
@@ -118,7 +119,7 @@ export const TransactionDetailScreen = ({ route, navigation }) => {
           <Row entry={"id"} value={id} />
         }
         {fee &&
-          <Row entry={"Fee"} value={fee} />
+          <Row entry={translate("common.fee")} value={fee} />
         }
       </View>
       <CloseCross color={palette.white} onPress={() => navigation.goBack()} />

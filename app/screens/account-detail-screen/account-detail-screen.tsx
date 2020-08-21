@@ -8,6 +8,7 @@ import EStyleSheet from "react-native-extended-stylesheet";
 import { BalanceHeader } from "../../components/balance-header";
 import { PriceGraphDataInjected } from "../../components/price-graph";
 import { Screen } from "../../components/screen";
+import { translate } from "../../i18n";
 import { StoreContext } from "../../models";
 import { RootStore } from "../../models/root-store";
 import { color } from "../../theme";
@@ -346,7 +347,7 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = observer(
         // TODO update when isAnonymous changes
         <>
           <View style={{flex: 1, minHeight: 12}} />
-          <Button title={"Activate Wallet"} 
+          <Button title={translate("common.activateWallet")} 
             buttonStyle={{backgroundColor: palette.lightBlue, borderRadius: 32}} 
             containerStyle={{width: "50%", alignSelf: "center"}}
             onPress={() => navigation.navigate("phoneValidation")}

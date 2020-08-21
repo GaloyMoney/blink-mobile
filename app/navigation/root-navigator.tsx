@@ -262,7 +262,7 @@ export const PhoneValidationNavigator = () => {
         name="welcomePhoneInput" 
         options={{ 
           headerShown: false,
-          title: "Phone Number"
+          title: translate("common.phoneNumber")
         }}
         component={WelcomePhoneInputScreen} />
       <StackPhoneValidation.Screen 

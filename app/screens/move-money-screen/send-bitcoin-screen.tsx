@@ -106,7 +106,7 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
   const payInvoice = async () => {
     if (amountless && amount === 0) {
       setStatus("error")
-      setErr(`This invoice doesn't have an amount, so you need to manually specify how much money you want to send`)
+      setErr(translate("SendBitcoinScreen.noAmount"))
       return
     }
 
@@ -176,7 +176,7 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
         <Text style={styles.smallText}>{translate("common.to")}</Text>
         <View style={styles.horizontalContainer}>
           <Input
-            placeholder="Invoice"
+            placeholder={translate("common.invoice")}
             leftIcon={
               <Icon name="ios-log-out" size={24} color={color.primary} style={styles.icon} />
             }
@@ -213,8 +213,7 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
           <>
             <LottieView source={pendingLottie} loop={false} autoPlay style={styles.lottie} />
             <Text style={{fontSize: 18, textAlign: "center"}}>
-              {"Payment has been sent\nbut is not confirmed yet"}
-              {"\n\nYou can check the status\nof the payment in Transactions"}
+              {translate("SendBitcoinScreen.notConfirmed")}
             </Text>
           </>
         }
@@ -222,7 +221,7 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
       {
         <Button
           buttonStyle={styles.buttonStyle}
-          title={(status === "success" || status === "pending") ? "Close" : err ? "Try again" : amount == 0 ? "Amount is required" : "Send"} // TODO refactor
+          title={(status === "success" || status === "pending") ? translate("common.close") : err ? translate("common.tryAgain") : amount == 0 ? translate("common.amountRequired") : translate("send")} // TODO refactor
           onPress={() => (status === "success" || status === "pending") ? goBack() : payInvoice()}
           disabled={amount == 0}
           loading={status === "loading"}

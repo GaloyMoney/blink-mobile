@@ -284,7 +284,7 @@ export const MoveMoneyScreen = (
         <View style={{marginBottom: 32, alignItems: "center", marginTop: 32}}>
           <Icon name={"ios-flash"} 
             size={32} onPress={() => setSecretMenuCounter(secretMenuCounter + 1)} />
-          <Text style={styles.lightningText}>{`We use the Lightning Network.`}</Text>
+          <Text style={styles.lightningText}>{translate("MoveMoneyScreen.useLightning")}</Text>
         </View>
     </Screen>
   )
