@@ -3,7 +3,6 @@ import i18n from "i18n-js"
 
 const en = require("./en")
 const es = require("./es")
-const fr = require("./fr")
 
 i18n.fallbacks = true
 i18n.translations = { en, es, fr }
