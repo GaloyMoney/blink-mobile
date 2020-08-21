@@ -1,63 +1,102 @@
 import { getDescription } from "./lightning"
-import { Token } from "./token"
 import * as lightningPayReq from 'bolt11'
 import moment from "moment"
+const bitcoin = require('bitcoinjs-lib');
 
-type valid = boolean 
-type errorMEssage = string | null
-type invoice = string | null
-type amount = number | null
-type amountless = boolean | null 
-type note = string | null
+// TODO: look if we own the address
 
-// TODO add onChain
-// look if we own the address
+type IAddressType = "lightning" | "onchain" | "onchainAndLightning" | undefined
 
-export const validInvoice = (s: string): [valid, errorMEssage?, invoice?, amount?, amountless?, note?] => {
-  if (s === "") {
-    return [false, `string is empty`]
+interface IValidPaymentReponse {
+  valid: boolean,
+  errorMessage?: string | undefined,
+  invoice?: string | undefined,
+  amount?: number | undefined,
+  amountless?: boolean | undefined,
+  note?: string | undefined,
+  addressType?: IAddressType
+}
+
+export const validPayment = (input: string, network?: string): IValidPaymentReponse => {
+  if (!input) {
+    return {valid: false, errorMessage: `string is null or empty`}
   }
 
-  // invoice might start with 'lightning:', 'bitcoin:', something else, or have the invoice directly
-  let [protocol, invoice] = s.split(":")
+  // invoice might start with 'lightning:', 'bitcoin:'
+  let [protocol, invoice] = input.split(":")
+  let addressType: IAddressType = undefined
 
-  protocol = protocol.toLowerCase()
-  if (protocol === "bitcoin") {
-    return [false, "Bitcoin on-chain transactions are coming to the app but we're only accepting lightning for now."]
-  } else if (protocol.startsWith("ln") && invoice === undefined) {
-    if(new Token().network === "testnet" && protocol.startsWith("lnbc")) {
-      return [false, `You're trying to pay a mainnet invoice. The settings for the app is testnet`]
+  if (protocol.toLowerCase() === "bitcoin") {
+    addressType = "onchain"
+    
+  // TODO manage bitcoin= case
+  
+  } else if (protocol.toLowerCase() === "lightning") {
+    addressType = "lightning"
+
+  // no protocol. let's see if this could have an address directly
+  } else if (invoice === undefined && 
+    (protocol.toLowerCase().startsWith("bc") || protocol.toLowerCase().startsWith("1") || protocol.toLowerCase().startsWith("3"))) {
+    // TODO: Verify pattern of how bitcoin address are supposed to start. ie: with old addresses?
+
+    addressType = "onchain"
+    invoice = protocol
+  } else if (protocol.toLowerCase().startsWith("ln")) {
+    // possibly a lightning address?
+
+    addressType = "lightning"
+
+    if(network === "testnet" && protocol.toLowerCase().startsWith("lnbc")) {
+      return {valid: false, errorMessage: `You're trying to pay a mainnet invoice. The settings for the app is testnet`}
     }
-    if(new Token().network === "mainnet" && protocol.startsWith("lntb")) {
-      return [false, `You're trying to pay a testnet invoice. The settings for the app is mainnet`]
+
+    if(network === "mainnet" && protocol.toLowerCase().startsWith("lntb")) {
+      return {valid: false, errorMessage: `You're trying to pay a testnet invoice. The settings for the app is mainnet`}
     }
 
     invoice = protocol
-  } else if (protocol !== "lightning") {
-    let message = `Only lightning procotol is accepted for now.`
-    message += message === "" ? "" : `\n\ngot following: "${protocol}"`
-    return [false, message]
-  }
-
-  const payReq = lightningPayReq.decode(invoice)
-  console.tron.log({ payReq })
-  
-  let amount, amountless, note
-  
-  if (payReq.satoshis || payReq.millisatoshis) {
-    amount = payReq.satoshis ?? Number(payReq.millisatoshis) * 1000
-    amountless = false
   } else {
-    amount = 0
-    amountless = true
+    return {valid: false, errorMessage: `We are unable to detect the payment address`}
   }
 
-  // TODO: show that the invoice has expired in the popup
-  if (payReq?.timeExpireDate < moment().unix()) {
-    console.tron.log("invoice has expired")
-    return [false, "invoice has expired"]
-  }
+  if (addressType === "lightning") {
+    const payReq = lightningPayReq.decode(invoice)
+    console.tron.log({ payReq })
+    
+    let amount, amountless, note
+    
+    if (payReq.satoshis || payReq.millisatoshis) {
+      amount = payReq.satoshis ?? Number(payReq.millisatoshis) * 1000
+      amountless = false
+    } else {
+      amount = 0
+      amountless = true
+    }
   
-  note = getDescription(payReq) 
-  return [true,, invoice, amount, amountless, note]
+    // TODO: show that the invoice has expired in the popup
+    // TODO: manage testnet as well
+
+    if (payReq?.timeExpireDate < moment().unix()) {
+      console.tron.log("invoice has expired")
+      return {valid: false, errorMessage: "invoice has expired", addressType}
+    }
+    
+    note = getDescription(payReq) 
+    return {valid: true, invoice, amount, amountless, note, addressType}
+
+  } else if (addressType === "onchain") {
+    invoice = invoice.split('?')[0]
+
+    try {
+      // TODO network needs mapping
+      bitcoin.address.toOutputScript(invoice);
+      return {valid: true, addressType}
+    } catch (e) {
+      return {valid: false, errorMessage: e}
+    }
+
+  } else {
+    return {valid: false, errorMessage: "unvalid path"}
+  }
+
 }

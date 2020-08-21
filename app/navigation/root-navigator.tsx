@@ -22,7 +22,7 @@ import { TransactionScreenDataInjected } from "../screens/transaction-screen/tra
 import { WelcomeFirstScreen } from "../screens/welcome-screens"
 import { palette } from "../theme/palette"
 import { AccountType } from "../utils/enum"
-import { validInvoice } from "../utils/parsing"
+import { validPayment } from "../utils/parsing"
 import { getNetwork, Token } from "../utils/token"
 
 
@@ -76,7 +76,7 @@ export const RootStack = () => {
       return
     }
 
-    const [valid] = validInvoice(clipboard)
+    const {valid} = validPayment(clipboard, new Token().network)
     if (!valid) {
       return
     }
