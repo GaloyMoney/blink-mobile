@@ -5,7 +5,6 @@ require("../app/components/large-button/large-button.story")
 
 require("../app/screens/earns-screen/earns-quiz.story")
 require("../app/screens/splash-screen/splash-screen.story")
-require("../app/screens/accounts-screen/accounts-screen.story")
 require("../app/screens/earns-screen/section-completed.story")
 require("../app/screens/earns-map-screen/earns-map-screen.story")
 require("../app/screens/transaction-detail-screen/transaction-detail-screen.story")

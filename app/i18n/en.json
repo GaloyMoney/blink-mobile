@@ -16,9 +16,18 @@
     "bank": "Bank",
     "bitcoin": "Bitcoin",
     "soon": "Coming soon!",
-    "SSL": "Your information is encrypted and securely transmitted using SSL",
-    "syncing": "Syncing data...",
-    "fundingTx": "Funding tx: {{tx}}"
+    "phoneNumber": "Phone Number",
+    "activateWallet": "Activate Wallet",
+    "later": "Later",
+    "notification": "Notification",
+    "share": "Share",
+    "invoice": "Invoice",
+    "tryAgain": "Try again",
+    "amountRequired": "Amount is required",
+    "send": "Send",
+    "date": "Date",
+    "description": "Description",
+    "fee": "fee"
   },
   "sat": {
     "one": "1 sat",
@@ -62,7 +71,9 @@
   },
   "WelcomePhoneValidationScreen": {
     "header": "To confirm your phone number, enter the code we just sent you",
-    "placeholder": "6 Digits Code"
+    "placeholder": "6 Digits Code",
+    "need6Digits": "The code need to have 6 digits",
+    "errorLoggingIn": "Error logging in. Did you use the right code?"
   },
   "EarnScreen": {
     "title": "Earn",
@@ -75,9 +86,9 @@
       "other": "{{formatted_number}} sats earned"
     },
     "satAccumulated": "Sats accumulated",
-    "bankingNeeded": "Banking is needed",
-    "channelNeeded": "Open channel first",
     "getRewardNow": "Answer quiz",
+    "keepDigging": "Keep digging!",
+    "reviewQuizz": "Review quiz",
     "phoneNumberNeeded": "Phone number required",
     "earns": [
       {
@@ -489,60 +500,35 @@
     ]
   },
   "AccountDetailScreen": {
-    "openAccount": "Open a Galoy cash account",
-    "openAccountReason": "To {{side}} bitcoin, you need a Galoy cash account, so you can transfer US Dollar",
     "today": "Today",
     "yesterday": "Yesterday",
     "thisMonth": "This month",
-    "prevMonths": "Previous months",
-    "quote": "How many sats to {{side}}: "
-  },
-  "AccountsScreen": {
-    "title": "Accounts",
-    "bitcoinEarn": "Earn bitcoin rewards!"
-  },
-  "BankAccountReadyScreen": {
-    "accountReady": "Your Galoy cash account is ready!"
-  },
-  "BankAccountEarnScreen": {
-    "title": "Cash Account Rewards",
-    "openAccount": "Open a Galoy cash account",
-    "holdUSDollar": "Hold US dollars in your account!",
-    "debitCard": "Order a debit card to earn 1%+ cashback in bitcoin on your dollar spending!",
-    "buySell": "And easily buy & sell bitcoin in-app."
-  },
-  "OpenBankScreen": {
-    "title": "Bank rewards",
-    "accountsBenefits": "You’re just a few minutes away from owning a Galoy cash account!\n\nOrder a debit card to receive 1% bitcoin rewards on all spending!"
-  },
-  "PersonalInformationScreen": {
-    "title": "Personal informations",
-    "getStarted": "To get started, tell us about yourself."
-  },
-  "DateOfBirthScreen": {
-    "title": "Date of Birth"
+    "prevMonths": "Previous months"
   },
   "MoveMoneyScreen": {
     "title": "Move Money",
-    "needBankAccount": "Open a cash account to activate {{feature}}",
     "needWallet": "Validate your phone to open your wallet",
-    "walletInCreation": "Your wallet is being created",
-    "seeTransaction": "Monitor opening transaction",
-    "openAccount": "Open Account",
-    "openWallet": "Open Wallet"
+    "openWallet": "Open Wallet",
+    "useLightning": "We use the Lightning Network."
   },
   "SendBitcoinScreen": {
     "title": "Send Bitcoin",
     "amount": "Amount",
     "note": "Note",
-    "payFromUSD": "Pay from USD",
-    "cost": "Cost"
+    "cost": "Cost",
+    "noAmount": "This invoice doesn't have an amount, so you need to manually specify how much money you want to send",
+    "notConfirmed": "Payment has been sent\nbut is not confirmed yet\n\nYou can check the status\nof the payment in Transactions"
   },
   "ScanningQRCodeScreen": {
-    "title": "Send Bitcoin"
+    "title": "Send Bitcoin",
+    "noQrCode": "We could not find a QR code in the image"
   },
   "ReceiveBitcoinScreen": {
-    "title": "Receive Bitcoin"
+    "title": "Receive Bitcoin",
+    "activateNotifications": "Do you want to activate notifications to be notified when the payment has arrived?",
+    "copyClipboard": "Invoice has been copied in the clipboard",
+    "invoicePaid": "This invoice has been paid",
+    "tapQrCodeCopy": "Tap QR Code to Copy"
   },
   "BankTransferScreen": {
     "title": "Bank Transfer"
@@ -552,15 +538,5 @@
   },
   "DepositCashScreen": {
     "title": "Deposit Cash"
-  },
-  "DirectDepositScreen": {
-    "title": "Direct Deposit",
-    "setup": "Set up direct deposit",
-    "generate": "Generate a direct deposit form for your employer or payroll provider.",
-    "bank": "Galoy Checking",
-    "routing": "Routing",
-    "account": "Account",
-    "bankName": "Bank name",
-    "action": "Move My Paycheck!"
   }
 }

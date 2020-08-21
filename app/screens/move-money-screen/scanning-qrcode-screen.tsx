@@ -7,6 +7,7 @@ import ImagePicker from 'react-native-image-picker'
 import Svg, { Circle } from "react-native-svg"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
+import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { validInvoice } from "../../utils/parsing"
@@ -74,7 +75,7 @@ export const ScanningQRCodeScreen = () => {
             decodeInvoice( result );
           } else {
             if (error.message === "Feature size is zero!") {
-              Alert.alert("we could not find a QR code in the image");
+              Alert.alert(translate("ScanningQRCodeScreen.noQrCode"));
             } else {
               console.tron.log({error})
               Alert.alert(error.message);
