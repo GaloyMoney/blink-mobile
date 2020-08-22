@@ -13,6 +13,7 @@ import Icon from "react-native-vector-icons/Ionicons"
 import Modal from "react-native-modal"
 import Clipboard from "@react-native-community/clipboard";
 import { Token } from "../../utils/token";
+import { translate } from "../../i18n";
 
 
 const styles = StyleSheet.create({
@@ -98,7 +99,7 @@ export const ModalClipboard = observer(() => {
               style={{ height: 40, top: -40 }}
             />
         </View>
-        <Text style={{fontSize: 18, marginVertical: 8}}>You have a Lightning Invoice in your clipboard</Text>
+        <Text style={{fontSize: 18, marginVertical: 8}}>{translate("ModalClipboard.pendingInvoice")}</Text>
         <View style={{ flexDirection: "row", alignItems: "center", alignContent: "stretch" }}>
           <Button title="Dismiss" onPress={dismiss} buttonStyle={styles.buttonStyle} />
           <Button title="Open"  onPress={open} buttonStyle={styles.buttonStyle} />

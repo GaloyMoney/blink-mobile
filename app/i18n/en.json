@@ -538,5 +538,8 @@
   },
   "DepositCashScreen": {
     "title": "Deposit Cash"
+  },
+  "ModalClipboard": {
+    "pendingInvoice": "You have a Lightning Invoice in your clipboard"
   }
 }
