@@ -124,22 +124,9 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
 
   const { goBack } = useNavigation()
 
-  const payOnchain = async () => {
-    console.tron.log("onchain payment trigger")
-  }
 
   const pay = async () => {
-    if(paymentType === "lightning") {
-      return payInvoice()
-    } else if (paymentType === "onchain"){
-      return payOnchain()
-    } else {
-      console.tron.log(`${paymentType} is not handled properly`)
-    }
-  }
-
-  const payInvoice = async () => {
-    if (amountless && amount === 0) {
+    if ((amountless || paymentType === "onchain") && amount === 0) {
       setStatus("error")
       setErr(translate("SendBitcoinScreen.noAmount"))
       return
@@ -148,28 +135,56 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
     setErr("")
     setStatus("loading")
 
+    let success, result
+
     try {
-      const query = `mutation payInvoice($invoice: String!, $amount: Int) {
-        invoice {
-          payInvoice(invoice: $invoice, amount: $amount)
-        }
-      }`  
 
-      const result = await store.mutate(
-        query,
-        {invoice, amount: amountless ? amount : undefined},
-      )
+      if(paymentType === "lightning") {
+  
+        const query = `mutation payInvoice($invoice: String!, $amount: Int) {
+          invoice {
+            payInvoice(invoice: $invoice, amount: $amount)
+          }
+        }`  
+  
+        result = await store.mutate(
+          query,
+          {invoice, amount: amountless ? amount : undefined},
+        )
 
-      if (result.invoice.payInvoice === "success") {
+        // FIXME merge type with onchain?
+        success = result.invoice.payInvoice === "success"
+  
+      } else if (paymentType === "onchain"){
+        const query = `mutation onchain($address: String!, $amount: Int!) {
+          onchain {
+              pay(address: $address, amount: $amount) {
+                  success
+              }
+          }
+        }`
+
+        result = await store.mutate(
+          query,
+          {address, amount},
+        )
+
+        success = result.onchain.pay.success
+
+      }
+
+      if (success) {
         store.queryWallet()
         setStatus("success")
         analytics().logSpendVirtualCurrency({value: amount, virtual_currency_name: "btc", item_name: "lightning"})
-      } else if (result.invoice.payInvoice === "pending") {
+      } else if (result?.invoice?.payInvoice === "pending") {
         setStatus("pending")
       } else {
         setStatus("error")
         setErr(result.toString())
       }
+
+
     } catch (err) {
       setStatus("error")
       setErr(err.toString())
