@@ -5,7 +5,7 @@ const bitcoin = require('bitcoinjs-lib');
 
 // TODO: look if we own the address
 
-export type IAddressType = "lightning" | "onchain" | "onchainAndLightning" | undefined
+export type IPaymentType = "lightning" | "onchain" | "onchainAndLightning" | undefined
 
 export interface IValidPaymentReponse {
   valid: boolean,
@@ -15,7 +15,7 @@ export interface IValidPaymentReponse {
   amount?: number | undefined,
   amountless?: boolean | undefined,
   note?: string | undefined,
-  paymentType?: IAddressType
+  paymentType?: IPaymentType
 }
 
 // TODO: enforce this from the backend
@@ -36,7 +36,7 @@ export const validPayment = (input: string, network: INetwork): IValidPaymentRep
 
   // invoice might start with 'lightning:', 'bitcoin:'
   let [protocol, invoice] = input.split(":")
-  let paymentType: IAddressType = undefined
+  let paymentType: IPaymentType = undefined
 
   if (protocol.toLowerCase() === "bitcoin") {
     paymentType = "onchain"
