@@ -10,7 +10,8 @@ type IAddressType = "lightning" | "onchain" | "onchainAndLightning" | undefined
 interface IValidPaymentReponse {
   valid: boolean,
   errorMessage?: string | undefined,
-  invoice?: string | undefined,
+  invoice?: string | undefined, // for lightning 
+  address?: string | undefined, // for bitcoin
   amount?: number | undefined,
   amountless?: boolean | undefined,
   note?: string | undefined,
@@ -61,7 +62,7 @@ export const validPayment = (input: string, network?: string): IValidPaymentRepo
 
   if (addressType === "lightning") {
     const payReq = lightningPayReq.decode(invoice)
-    console.tron.log({ payReq })
+    // console.log(JSON.stringify({ payReq }, null, 2))
     
     let amount, amountless, note
     
@@ -77,7 +78,6 @@ export const validPayment = (input: string, network?: string): IValidPaymentRepo
     // TODO: manage testnet as well
 
     if (payReq?.timeExpireDate < moment().unix()) {
-      console.tron.log("invoice has expired")
       return {valid: false, errorMessage: "invoice has expired", addressType}
     }
     
@@ -85,18 +85,20 @@ export const validPayment = (input: string, network?: string): IValidPaymentRepo
     return {valid: true, invoice, amount, amountless, note, addressType}
 
   } else if (addressType === "onchain") {
+    // removing metadata
+    // TODO manage amount 
     invoice = invoice.split('?')[0]
 
     try {
       // TODO network needs mapping
       bitcoin.address.toOutputScript(invoice);
-      return {valid: true, addressType}
+      return {valid: true, addressType, address: invoice}
     } catch (e) {
       return {valid: false, errorMessage: e}
     }
 
   } else {
-    return {valid: false, errorMessage: "unvalid path"}
+    return {valid: false, errorMessage: "invalid path"}
   }
 
 }
