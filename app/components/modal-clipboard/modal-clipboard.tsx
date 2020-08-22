@@ -1,19 +1,16 @@
-import { StyleSheet, TouchableWithoutFeedback, View } from "react-native"
-import { Text } from "react-native"
-import { Button } from 'react-native-elements';
-import * as React from "react"
-import { useNavigation } from "@react-navigation/native";
-import { StoreContext } from "../../models";
-import { validPayment } from "../../utils/parsing";
-import { observer } from "mobx-react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { palette } from "../../theme/palette";
-import { color } from "../../theme";
-import Icon from "react-native-vector-icons/Ionicons"
-import Modal from "react-native-modal"
 import Clipboard from "@react-native-community/clipboard";
-import { Token } from "../../utils/token";
+import { useNavigation } from "@react-navigation/native";
+import { observer } from "mobx-react";
+import * as React from "react";
+import { StyleSheet, Text, TouchableWithoutFeedback, View } from "react-native";
+import { Button } from 'react-native-elements';
+import Modal from "react-native-modal";
+import { SafeAreaView } from "react-native-safe-area-context";
+import Icon from "react-native-vector-icons/Ionicons";
 import { translate } from "../../i18n";
+import { StoreContext } from "../../models";
+import { color } from "../../theme";
+import { palette } from "../../theme/palette";
 
 
 const styles = StyleSheet.create({
