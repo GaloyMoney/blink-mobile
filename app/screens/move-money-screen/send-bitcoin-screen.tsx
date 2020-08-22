@@ -16,6 +16,7 @@ import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { validPayment } from "../../utils/parsing"
 import { Token } from "../../utils/token"
+import { IAddressType } from "../../utils/parsing"
 
 const successLottie = require('./success_lottie.json')
 const errorLottie = require('./error_lottie.json')
@@ -93,24 +94,27 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
   const store = React.useContext(StoreContext)
 
   const [err, setErr] = useState("")
-  const [amountless, setAmountless] = useState(undefined)
-  const [initAmount, setInitAmount] = useState(undefined)
-  const [amount, setAmount] = useState(undefined)
-  const [invoice, setInvoice] = useState(undefined)
-  const [note, setNote] = useState(undefined)
+  const [address, setAddress] = useState("")
+  const [paymentType, setPaymentType] = useState<IAddressType>(undefined)
+  const [amountless, setAmountless] = useState(false)
+  const [initAmount, setInitAmount] = useState(0)
+  const [amount, setAmount] = useState(0)
+  const [invoice, setInvoice] = useState("")
+  const [note, setNote] = useState("")
   
   const [status, setStatus] = useState("idle")
   // idle, loading, pending, success, error 
 
 
   useEffect(() => {
-    const {valid, invoice, amount, amountless, note} = validPayment(route.params.payment, new Token().network)
+    const {valid, invoice, amount, amountless, note, paymentType, address} = validPayment(route.params.payment, new Token().network)
     
     // this should be valid. Invoice / Address should be check before we show this screen
     // assert(valid)
-    console.tron.log({amount})
 
     setStatus("idle")
+    setAddress(address)
+    setPaymentType(paymentType)
     setInvoice(invoice)
     setNote(note)
     setAmount(amount)
@@ -119,6 +123,20 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
   }, [route.params.payment])
 
   const { goBack } = useNavigation()
+
+  const payOnchain = async () => {
+    console.tron.log("onchain payment trigger")
+  }
+
+  const pay = async () => {
+    if(paymentType === "lightning") {
+      return payInvoice()
+    } else if (paymentType === "onchain"){
+      return payOnchain()
+    } else {
+      console.tron.log(`${paymentType} is not handled properly`)
+    }
+  }
 
   const payInvoice = async () => {
     if (amountless && amount === 0) {
@@ -184,7 +202,10 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
   return (
     <Screen style={styles.mainView} preset={"scroll"}>
       <InputPaymentDataInjected
-        editable={amountless && (status === "idle" || status === "error")}
+        editable={paymentType === "lightning" ? 
+          amountless && (status === "idle" || status === "error"):
+          true // bitcoin // TODO: handle amount properly
+        }
         initAmount={initAmount}
         onUpdateAmount={input => { setAmount(input); setStatus("idle")} }
         forceKeyboard={true}
@@ -197,7 +218,7 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
             leftIcon={
               <Icon name="ios-log-out" size={24} color={color.primary} style={styles.icon} />
             }
-            value={invoice}
+            value={paymentType === "lightning" ? invoice : address}
             containerStyle={styles.invoiceContainer}
             editable={false}
           />
@@ -239,7 +260,7 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
         <Button
           buttonStyle={styles.buttonStyle}
           title={(status === "success" || status === "pending") ? translate("common.close") : err ? translate("common.tryAgain") : amount == 0 ? translate("common.amountRequired") : translate("common.send")} // TODO refactor
-          onPress={() => (status === "success" || status === "pending") ? goBack() : payInvoice()}
+          onPress={() => (status === "success" || status === "pending") ? goBack() : pay()}
           disabled={amount == 0}
           loading={status === "loading"}
         />

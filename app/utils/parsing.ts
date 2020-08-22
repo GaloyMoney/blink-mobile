@@ -5,9 +5,9 @@ const bitcoin = require('bitcoinjs-lib');
 
 // TODO: look if we own the address
 
-type IAddressType = "lightning" | "onchain" | "onchainAndLightning" | undefined
+export type IAddressType = "lightning" | "onchain" | "onchainAndLightning" | undefined
 
-interface IValidPaymentReponse {
+export interface IValidPaymentReponse {
   valid: boolean,
   errorMessage?: string | undefined,
   invoice?: string | undefined, // for lightning 
@@ -15,37 +15,48 @@ interface IValidPaymentReponse {
   amount?: number | undefined,
   amountless?: boolean | undefined,
   note?: string | undefined,
-  addressType?: IAddressType
+  paymentType?: IAddressType
 }
 
-export const validPayment = (input: string, network?: string): IValidPaymentReponse => {
+// TODO: enforce this from the backend
+type INetwork = "mainnet" | "testnet" | "regtest"
+
+const mappingToBitcoinJs = (input: INetwork) => {
+  switch (input) {
+    case "mainnet": return bitcoin.networks.mainnet
+    case "testnet": return bitcoin.networks.testnet
+    case "regtest": return bitcoin.networks.regtest
+  }
+}
+
+export const validPayment = (input: string, network: INetwork): IValidPaymentReponse => {
   if (!input) {
     return {valid: false, errorMessage: `string is null or empty`}
   }
 
   // invoice might start with 'lightning:', 'bitcoin:'
   let [protocol, invoice] = input.split(":")
-  let addressType: IAddressType = undefined
+  let paymentType: IAddressType = undefined
 
   if (protocol.toLowerCase() === "bitcoin") {
-    addressType = "onchain"
+    paymentType = "onchain"
     
   // TODO manage bitcoin= case
   
   } else if (protocol.toLowerCase() === "lightning") {
-    addressType = "lightning"
+    paymentType = "lightning"
 
   // no protocol. let's see if this could have an address directly
   } else if (invoice === undefined && 
     (protocol.toLowerCase().startsWith("bc") || protocol.toLowerCase().startsWith("1") || protocol.toLowerCase().startsWith("3"))) {
     // TODO: Verify pattern of how bitcoin address are supposed to start. ie: with old addresses?
 
-    addressType = "onchain"
+    paymentType = "onchain"
     invoice = protocol
   } else if (protocol.toLowerCase().startsWith("ln")) {
     // possibly a lightning address?
 
-    addressType = "lightning"
+    paymentType = "lightning"
 
     if(network === "testnet" && protocol.toLowerCase().startsWith("lnbc")) {
       return {valid: false, errorMessage: `You're trying to pay a mainnet invoice. The settings for the app is testnet`}
@@ -60,7 +71,7 @@ export const validPayment = (input: string, network?: string): IValidPaymentRepo
     return {valid: false, errorMessage: `We are unable to detect the payment address`}
   }
 
-  if (addressType === "lightning") {
+  if (paymentType === "lightning") {
     const payReq = lightningPayReq.decode(invoice)
     // console.log(JSON.stringify({ payReq }, null, 2))
     
@@ -78,21 +89,23 @@ export const validPayment = (input: string, network?: string): IValidPaymentRepo
     // TODO: manage testnet as well
 
     if (payReq?.timeExpireDate < moment().unix()) {
-      return {valid: false, errorMessage: "invoice has expired", addressType}
+      return {valid: false, errorMessage: "invoice has expired", paymentType}
     }
     
     note = getDescription(payReq) 
-    return {valid: true, invoice, amount, amountless, note, addressType}
+    return {valid: true, invoice, amount, amountless, note, paymentType}
 
-  } else if (addressType === "onchain") {
+  } else if (paymentType === "onchain") {
     // removing metadata
     // TODO manage amount 
     invoice = invoice.split('?')[0]
 
     try {
       // TODO network needs mapping
-      bitcoin.address.toOutputScript(invoice);
-      return {valid: true, addressType, address: invoice}
+      console.log({network: mappingToBitcoinJs(network)})
+
+      bitcoin.address.toOutputScript(invoice, mappingToBitcoinJs(network));
+      return {valid: true, paymentType, address: invoice}
     } catch (e) {
       return {valid: false, errorMessage: e}
     }
