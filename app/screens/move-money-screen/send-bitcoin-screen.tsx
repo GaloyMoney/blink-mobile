@@ -14,6 +14,8 @@ import { translate } from "../../i18n"
 import { StoreContext } from "../../models"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
+import { validPayment } from "../../utils/parsing"
+import { Token } from "../../utils/token"
 
 const successLottie = require('./success_lottie.json')
 const errorLottie = require('./error_lottie.json')
@@ -90,18 +92,33 @@ const styles = EStyleSheet.create({
 export const SendBitcoinScreen: React.FC = ({ route }) => {
   const store = React.useContext(StoreContext)
 
-  const { invoice, amountless, note } = route.params
-  const [ amount, setAmount] = useState(route.params.amount)
+  const [err, setErr] = useState("")
+  const [amountless, setAmountless] = useState(undefined)
+  const [initAmount, setInitAmount] = useState(undefined)
+  const [amount, setAmount] = useState(undefined)
+  const [invoice, setInvoice] = useState(undefined)
+  const [note, setNote] = useState(undefined)
+  
+  const [status, setStatus] = useState("idle")
+  // idle, loading, pending, success, error 
+
 
   useEffect(() => {
-    setAmount(route.params.amount)
-  }, [route.params.amount])
+    const {valid, invoice, amount, amountless, note} = validPayment(route.params.payment, new Token().network)
+    
+    // this should be valid. Invoice / Address should be check before we show this screen
+    // assert(valid)
+    console.tron.log({amount})
+
+    setStatus("idle")
+    setInvoice(invoice)
+    setNote(note)
+    setAmount(amount)
+    setInitAmount(amount)
+    setAmountless(amountless)
+  }, [route.params.payment])
 
   const { goBack } = useNavigation()
-
-  const [err, setErr] = useState("")
-  const [status, setStatus] = useState("idle") 
-  // idle, loading, pending, success, error 
 
   const payInvoice = async () => {
     if (amountless && amount === 0) {
@@ -168,7 +185,7 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
     <Screen style={styles.mainView} preset={"scroll"}>
       <InputPaymentDataInjected
         editable={amountless && (status === "idle" || status === "error")}
-        initAmount={route.params.amount}
+        initAmount={initAmount}
         onUpdateAmount={input => { setAmount(input); setStatus("idle")} }
         forceKeyboard={true}
       />
@@ -196,7 +213,7 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
         { status === "success" &&
           <>
             <LottieView source={successLottie} loop={false} autoPlay style={styles.lottie} />
-            <Text style={{fontSize: 18}}>Payment has been sent succesfully</Text>
+            <Text style={{fontSize: 18}}>{translate("SendBitcoinScreen.success")}</Text>
           </>
         }
         {
@@ -221,7 +238,7 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
       {
         <Button
           buttonStyle={styles.buttonStyle}
-          title={(status === "success" || status === "pending") ? translate("common.close") : err ? translate("common.tryAgain") : amount == 0 ? translate("common.amountRequired") : translate("send")} // TODO refactor
+          title={(status === "success" || status === "pending") ? translate("common.close") : err ? translate("common.tryAgain") : amount == 0 ? translate("common.amountRequired") : translate("common.send")} // TODO refactor
           onPress={() => (status === "success" || status === "pending") ? goBack() : payInvoice()}
           disabled={amount == 0}
           loading={status === "loading"}

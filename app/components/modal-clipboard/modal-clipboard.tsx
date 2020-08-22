@@ -42,33 +42,9 @@ export const ModalClipboard = observer(() => {
   const store = React.useContext(StoreContext)
   const navigation = useNavigation();
 
-  const [invoice, setInvoice] = React.useState("")
-  const [amount, setAmount] = React.useState(0)
-  const [amountless, setAmountless] = React.useState(false)
-  const [note, setNote] = React.useState("")
-
-  const onShow = async () => {
-    const clipboard = await Clipboard.getString()
-
-    {
-      const {valid, errorMessage, invoice, amount, amountless, note} = validPayment(clipboard, new Token().network)
-  
-      if (!valid) {
-        console.tron.warn(`cant decode invoice from ModelClipboard ${errorMessage}`)
-        return
-      }
-  
-      setInvoice(invoice)
-      setAmount(amount)
-      setAmountless(amountless)
-      setNote(note)
-    }
-
-  }
-
-  const open = () => {
+  const open = async () => {
     dismiss()
-    navigation.navigate("sendBitcoin", { invoice, amount, amountless, note })
+    navigation.navigate("sendBitcoin", { payment: await Clipboard.getString() })
   }
 
   const dismiss = () => {
@@ -80,7 +56,6 @@ export const ModalClipboard = observer(() => {
       // transparent={true}
       swipeDirection={["down"]}
       isVisible={store?.modalClipboardVisible ?? false} // store is not defined for storybook
-      onShow={onShow}
       onSwipeComplete={dismiss}
       swipeThreshold={50}
       propagateSwipe={true}

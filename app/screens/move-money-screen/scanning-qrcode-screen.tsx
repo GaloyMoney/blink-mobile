@@ -50,13 +50,13 @@ export const ScanningQRCodeScreen = () => {
 
   const decodeInvoice = async (data) => {
     try {
-      const {valid, errorMessage, invoice, amount, amountless, note} = validPayment(data, new Token().network)
+      const {valid, errorMessage} = validPayment(data, new Token().network)
       if (!valid) {
         Alert.alert(errorMessage)
         return
       }
 
-      navigate("sendBitcoin", { invoice, amount, amountless, note })
+      navigate("sendBitcoin", { payment: data })
     } catch (err) {
       Alert.alert(err.toString())
     }
