@@ -16,7 +16,7 @@ import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { validPayment } from "../../utils/parsing"
 import { Token } from "../../utils/token"
-import { IAddressType } from "../../utils/parsing"
+import { IPaymentType } from "../../utils/parsing"
 
 const successLottie = require('./success_lottie.json')
 const errorLottie = require('./error_lottie.json')
@@ -95,7 +95,7 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
 
   const [err, setErr] = useState("")
   const [address, setAddress] = useState("")
-  const [paymentType, setPaymentType] = useState<IAddressType>(undefined)
+  const [paymentType, setPaymentType] = useState<IPaymentType>(undefined)
   const [amountless, setAmountless] = useState(false)
   const [initAmount, setInitAmount] = useState(0)
   const [amount, setAmount] = useState(0)
