@@ -516,6 +516,7 @@
     "amount": "Amount",
     "note": "Note",
     "cost": "Cost",
+    "success": "Payment has been sent succesfully",
     "noAmount": "This invoice doesn't have an amount, so you need to manually specify how much money you want to send",
     "notConfirmed": "Payment has been sent\nbut is not confirmed yet\n\nYou can check the status\nof the payment in Transactions"
   },
@@ -538,5 +539,8 @@
   },
   "DepositCashScreen": {
     "title": "Deposit Cash"
+  },
+  "ModalClipboard": {
+    "pendingInvoice": "You have a Lightning Invoice in your clipboard"
   }
 }

@@ -14,6 +14,9 @@ import { translate } from "../../i18n"
 import { StoreContext } from "../../models"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
+import { validPayment } from "../../utils/parsing"
+import { Token } from "../../utils/token"
+import { IPaymentType } from "../../utils/parsing"
 
 const successLottie = require('./success_lottie.json')
 const errorLottie = require('./error_lottie.json')
@@ -90,21 +93,40 @@ const styles = EStyleSheet.create({
 export const SendBitcoinScreen: React.FC = ({ route }) => {
   const store = React.useContext(StoreContext)
 
-  const { invoice, amountless, note } = route.params
-  const [ amount, setAmount] = useState(route.params.amount)
+  const [err, setErr] = useState("")
+  const [address, setAddress] = useState("")
+  const [paymentType, setPaymentType] = useState<IPaymentType>(undefined)
+  const [amountless, setAmountless] = useState(false)
+  const [initAmount, setInitAmount] = useState(0)
+  const [amount, setAmount] = useState(0)
+  const [invoice, setInvoice] = useState("")
+  const [note, setNote] = useState("")
+  
+  const [status, setStatus] = useState("idle")
+  // idle, loading, pending, success, error 
+
 
   useEffect(() => {
-    setAmount(route.params.amount)
-  }, [route.params.amount])
+    const {valid, invoice, amount, amountless, note, paymentType, address} = validPayment(route.params.payment, new Token().network)
+    
+    // this should be valid. Invoice / Address should be check before we show this screen
+    // assert(valid)
+
+    setStatus("idle")
+    setAddress(address)
+    setPaymentType(paymentType)
+    setInvoice(invoice)
+    setNote(note)
+    setAmount(amount)
+    setInitAmount(amount)
+    setAmountless(amountless)
+  }, [route.params.payment])
 
   const { goBack } = useNavigation()
 
-  const [err, setErr] = useState("")
-  const [status, setStatus] = useState("idle") 
-  // idle, loading, pending, success, error 
 
-  const payInvoice = async () => {
-    if (amountless && amount === 0) {
+  const pay = async () => {
+    if ((amountless || paymentType === "onchain") && amount === 0) {
       setStatus("error")
       setErr(translate("SendBitcoinScreen.noAmount"))
       return
@@ -113,28 +135,56 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
     setErr("")
     setStatus("loading")
 
+    let success, result
+
     try {
-      const query = `mutation payInvoice($invoice: String!, $amount: Int) {
-        invoice {
-          payInvoice(invoice: $invoice, amount: $amount)
-        }
-      }`  
 
-      const result = await store.mutate(
-        query,
-        {invoice, amount: amountless ? amount : undefined},
-      )
+      if(paymentType === "lightning") {
+  
+        const query = `mutation payInvoice($invoice: String!, $amount: Int) {
+          invoice {
+            payInvoice(invoice: $invoice, amount: $amount)
+          }
+        }`  
+  
+        result = await store.mutate(
+          query,
+          {invoice, amount: amountless ? amount : undefined},
+        )
 
-      if (result.invoice.payInvoice === "success") {
+        // FIXME merge type with onchain?
+        success = result.invoice.payInvoice === "success"
+  
+      } else if (paymentType === "onchain"){
+        const query = `mutation onchain($address: String!, $amount: Int!) {
+          onchain {
+              pay(address: $address, amount: $amount) {
+                  success
+              }
+          }
+        }`
+
+        result = await store.mutate(
+          query,
+          {address, amount},
+        )
+
+        success = result.onchain.pay.success
+
+      }
+
+      if (success) {
         store.queryWallet()
         setStatus("success")
         analytics().logSpendVirtualCurrency({value: amount, virtual_currency_name: "btc", item_name: "lightning"})
-      } else if (result.invoice.payInvoice === "pending") {
+      } else if (result?.invoice?.payInvoice === "pending") {
         setStatus("pending")
       } else {
         setStatus("error")
         setErr(result.toString())
       }
+
+
     } catch (err) {
       setStatus("error")
       setErr(err.toString())
@@ -167,8 +217,11 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
   return (
     <Screen style={styles.mainView} preset={"scroll"}>
       <InputPaymentDataInjected
-        editable={amountless && (status === "idle" || status === "error")}
-        initAmount={route.params.amount}
+        editable={paymentType === "lightning" ? 
+          amountless && (status === "idle" || status === "error"):
+          true // bitcoin // TODO: handle amount properly
+        }
+        initAmount={initAmount}
         onUpdateAmount={input => { setAmount(input); setStatus("idle")} }
         forceKeyboard={true}
       />
@@ -180,7 +233,7 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
             leftIcon={
               <Icon name="ios-log-out" size={24} color={color.primary} style={styles.icon} />
             }
-            value={invoice}
+            value={paymentType === "lightning" ? invoice : address}
             containerStyle={styles.invoiceContainer}
             editable={false}
           />
@@ -196,7 +249,7 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
         { status === "success" &&
           <>
             <LottieView source={successLottie} loop={false} autoPlay style={styles.lottie} />
-            <Text style={{fontSize: 18}}>Payment has been sent succesfully</Text>
+            <Text style={{fontSize: 18}}>{translate("SendBitcoinScreen.success")}</Text>
           </>
         }
         {
@@ -221,8 +274,8 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
       {
         <Button
           buttonStyle={styles.buttonStyle}
-          title={(status === "success" || status === "pending") ? translate("common.close") : err ? translate("common.tryAgain") : amount == 0 ? translate("common.amountRequired") : translate("send")} // TODO refactor
-          onPress={() => (status === "success" || status === "pending") ? goBack() : payInvoice()}
+          title={(status === "success" || status === "pending") ? translate("common.close") : err ? translate("common.tryAgain") : amount == 0 ? translate("common.amountRequired") : translate("common.send")} // TODO refactor
+          onPress={() => (status === "success" || status === "pending") ? goBack() : pay()}
           disabled={amount == 0}
           loading={status === "loading"}
         />

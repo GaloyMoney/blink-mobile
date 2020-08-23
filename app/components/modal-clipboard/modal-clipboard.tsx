@@ -1,17 +1,16 @@
-import { StyleSheet, TouchableWithoutFeedback, View } from "react-native"
-import { Text } from "react-native"
-import { Button } from 'react-native-elements';
-import * as React from "react"
-import { useNavigation } from "@react-navigation/native";
-import { StoreContext } from "../../models";
-import { validInvoice } from "../../utils/parsing";
-import { observer } from "mobx-react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { palette } from "../../theme/palette";
-import { color } from "../../theme";
-import Icon from "react-native-vector-icons/Ionicons"
-import Modal from "react-native-modal"
 import Clipboard from "@react-native-community/clipboard";
+import { useNavigation } from "@react-navigation/native";
+import { observer } from "mobx-react";
+import * as React from "react";
+import { StyleSheet, Text, TouchableWithoutFeedback, View } from "react-native";
+import { Button } from 'react-native-elements';
+import Modal from "react-native-modal";
+import { SafeAreaView } from "react-native-safe-area-context";
+import Icon from "react-native-vector-icons/Ionicons";
+import { translate } from "../../i18n";
+import { StoreContext } from "../../models";
+import { color } from "../../theme";
+import { palette } from "../../theme/palette";
 
 
 const styles = StyleSheet.create({
@@ -40,29 +39,9 @@ export const ModalClipboard = observer(() => {
   const store = React.useContext(StoreContext)
   const navigation = useNavigation();
 
-  const [invoice, setInvoice] = React.useState("")
-  const [amount, setAmount] = React.useState(0)
-  const [amountless, setAmountless] = React.useState(false)
-  const [note, setNote] = React.useState("")
-
-  const onShow = async () => {
-    const clipboard = await Clipboard.getString()
-    const [valid, errorMessage, _invoice, _amount, _amountless, _note] = validInvoice(clipboard)
-
-    if (!valid) {
-      console.tron.warn(`cant decode invoice from ModelClipboard ${errorMessage}`)
-      return
-    }
-
-    setInvoice(_invoice)
-    setAmount(_amount)
-    setAmountless(_amountless)
-    setNote(_note)
-  }
-
-  const open = () => {
+  const open = async () => {
     dismiss()
-    navigation.navigate("sendBitcoin", { invoice, amount, amountless, note })
+    navigation.navigate("sendBitcoin", { payment: await Clipboard.getString() })
   }
 
   const dismiss = () => {
@@ -74,7 +53,6 @@ export const ModalClipboard = observer(() => {
       // transparent={true}
       swipeDirection={["down"]}
       isVisible={store?.modalClipboardVisible ?? false} // store is not defined for storybook
-      onShow={onShow}
       onSwipeComplete={dismiss}
       swipeThreshold={50}
       propagateSwipe={true}
@@ -93,7 +71,7 @@ export const ModalClipboard = observer(() => {
               style={{ height: 40, top: -40 }}
             />
         </View>
-        <Text style={{fontSize: 18, marginVertical: 8}}>You have a Lightning Invoice in your clipboard</Text>
+        <Text style={{fontSize: 18, marginVertical: 8}}>{translate("ModalClipboard.pendingInvoice")}</Text>
         <View style={{ flexDirection: "row", alignItems: "center", alignContent: "stretch" }}>
           <Button title="Dismiss" onPress={dismiss} buttonStyle={styles.buttonStyle} />
           <Button title="Open"  onPress={open} buttonStyle={styles.buttonStyle} />
