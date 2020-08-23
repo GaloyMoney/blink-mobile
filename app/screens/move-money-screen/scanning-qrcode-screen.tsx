@@ -10,7 +10,8 @@ import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-import { validInvoice } from "../../utils/parsing"
+import { validPayment } from "../../utils/parsing"
+import { Token } from "../../utils/token"
 const LocalQRCode = require('@remobile/react-native-qrcode-local-image');
 
 
@@ -49,13 +50,13 @@ export const ScanningQRCodeScreen = () => {
 
   const decodeInvoice = async (data) => {
     try {
-      const [valid, errorMessage, invoice, amount, amountless, note] = validInvoice(data)
+      const {valid, errorMessage} = validPayment(data, new Token().network)
       if (!valid) {
         Alert.alert(errorMessage)
         return
       }
 
-      navigate("sendBitcoin", { invoice, amount, amountless, note })
+      navigate("sendBitcoin", { payment: data })
     } catch (err) {
       Alert.alert(err.toString())
     }
