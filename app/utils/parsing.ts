@@ -47,12 +47,6 @@ export const validPayment = (input: string, network: INetwork): IValidPaymentRep
     paymentType = "lightning"
 
   // no protocol. let's see if this could have an address directly
-  } else if (invoice === undefined && 
-    (protocol.toLowerCase().startsWith("bc") || protocol.toLowerCase().startsWith("1") || protocol.toLowerCase().startsWith("3"))) {
-    // TODO: Verify pattern of how bitcoin address are supposed to start. ie: with old addresses?
-
-    paymentType = "onchain"
-    invoice = protocol
   } else if (protocol.toLowerCase().startsWith("ln")) {
     // possibly a lightning address?
 
@@ -68,10 +62,24 @@ export const validPayment = (input: string, network: INetwork): IValidPaymentRep
 
     invoice = protocol
   } else {
-    return {valid: false, errorMessage: `We are unable to detect the payment address`}
+    // no schema
+    invoice = protocol
   }
+  
+  if (paymentType === "onchain" || paymentType === undefined) {
+      // removing metadata
+      // TODO manage amount 
+      invoice = invoice.split('?')[0]
+  
+      try {
+        bitcoin.address.toOutputScript(invoice, mappingToBitcoinJs(network));
+        paymentType = "onchain"
+        return {valid: true, paymentType, address: invoice}
+      } catch (e) {
+        return {valid: false, errorMessage: e}
+      }
 
-  if (paymentType === "lightning") {
+  } else if (paymentType === "lightning") {
     const payReq = lightningPayReq.decode(invoice)
     // console.log(JSON.stringify({ payReq }, null, 2))
     
@@ -95,23 +103,8 @@ export const validPayment = (input: string, network: INetwork): IValidPaymentRep
     note = getDescription(payReq) 
     return {valid: true, invoice, amount, amountless, note, paymentType}
 
-  } else if (paymentType === "onchain") {
-    // removing metadata
-    // TODO manage amount 
-    invoice = invoice.split('?')[0]
-
-    try {
-      // TODO network needs mapping
-      console.log({network: mappingToBitcoinJs(network)})
-
-      bitcoin.address.toOutputScript(invoice, mappingToBitcoinJs(network));
-      return {valid: true, paymentType, address: invoice}
-    } catch (e) {
-      return {valid: false, errorMessage: e}
-    }
-
   } else {
-    return {valid: false, errorMessage: "invalid path"}
+    return {valid: false, errorMessage: `We are unable to detect an invoice or payment address`}
   }
 
 }
