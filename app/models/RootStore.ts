@@ -9,6 +9,7 @@ import { RootStoreBase } from "./RootStore.base"
 import { TransactionModel } from "./TransactionModel"
 import { map, filter, sumBy } from "lodash"
 import analytics from '@react-native-firebase/analytics';
+import { uploadToken } from "../utils/notifications"
 
 export const ROOT_STATE_STORAGE_KEY = "rootAppGaloy"
 
@@ -102,7 +103,12 @@ export const RootStore = RootStoreBase
 
     // FIXME
     // self.users.delete("incognito")
-    console.tron.log("home query done")
+
+    console.tron.log("sending token")
+
+    // FIXME: only for android?
+    // it seems we also have a token for iOS, without the permissions to show it though
+    yield uploadToken(self)
   })
 
   return { log, earnComplete, loginSuccessful, setModalClipboardVisible }

@@ -5,6 +5,8 @@
 import { types } from "mobx-state-tree"
 import { QueryBuilder } from "mst-gql"
 import { ModelBase } from "./ModelBase"
+import { SuccessModel, SuccessModelType } from "./SuccessModel"
+import { SuccessModelSelector } from "./SuccessModel.base"
 import { RootStoreType } from "./index"
 
 
@@ -17,6 +19,7 @@ export const OnChainModelBase = ModelBase
   .props({
     __typename: types.optional(types.literal("OnChain"), "OnChain"),
     getNewAddress: types.union(types.undefined, types.null, types.string),
+    pay: types.union(types.undefined, types.null, types.late((): any => SuccessModel)),
   })
   .views(self => ({
     get store() {
@@ -26,6 +29,7 @@ export const OnChainModelBase = ModelBase
 
 export class OnChainModelSelector extends QueryBuilder {
   get getNewAddress() { return this.__attr(`getNewAddress`) }
+  pay(builder?: string | SuccessModelSelector | ((selector: SuccessModelSelector) => SuccessModelSelector)) { return this.__child(`pay`, SuccessModelSelector, builder) }
 }
 export function selectFromOnChain() {
   return new OnChainModelSelector()

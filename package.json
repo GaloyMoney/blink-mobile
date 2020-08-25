@@ -76,6 +76,7 @@
     "react-native-modal": "^11.5.6",
     "react-native-phone-input": "^0.2.4",
     "react-native-progress": "^4.0.3",
+    "react-native-push-notification": "^5.0.1",
     "react-native-qrcode-svg": "^6.0.6",
     "react-native-reanimated": "^1.7.0",
     "react-native-safe-area-context": "^3.1.1",
