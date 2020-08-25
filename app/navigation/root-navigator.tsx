@@ -22,13 +22,10 @@ import { TransactionScreenDataInjected } from "../screens/transaction-screen/tra
 import { WelcomeFirstScreen } from "../screens/welcome-screens"
 import { palette } from "../theme/palette"
 import { AccountType } from "../utils/enum"
-import { uploadToken } from "../utils/notifications"
 import { validPayment } from "../utils/parsing"
 import { getNetwork, Token } from "../utils/token"
 import messaging from '@react-native-firebase/messaging'
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
-
-
 var PushNotification = require("react-native-push-notification");
 
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
@@ -142,8 +139,11 @@ export const RootStack = () => {
     store.setModalClipboardVisible(true)
   }
 
-    // TODO: need to add isHeadless? 
+  // TODO: need to add isHeadless? 
   // https://rnfirebase.io/messaging/usage
+
+  // TODO: check whether react-native-push-notification can give a FCM token
+  // for iOS, which would remove the need for firebase.messaging() dependancy
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async remoteMessage => {
       // Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
