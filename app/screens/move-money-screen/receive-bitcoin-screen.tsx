@@ -18,6 +18,7 @@ import { translate } from "../../i18n"
 import { StoreContext } from "../../models"
 import { palette } from "../../theme/palette"
 import { getHash } from "../../utils/lightning"
+import { requestPermission } from "../../utils/notifications"
 
 var width = Dimensions.get('window').width; //full width
 
@@ -74,36 +75,10 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
     update()
   }, [networkIndex])
 
-  const requestPermission = async () => {
-    const authorizationStatus = await messaging().requestPermission()
-
-    const enabled = authorizationStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-                    authorizationStatus === messaging.AuthorizationStatus.PROVISIONAL;
-
-    // Alert.alert(`enable: ${enabled ? 'true': 'false'}`)
-
-    if (!enabled) {
-      return
-    }
-
-    const token =  await messaging().getToken()
-    store.mutateAddDeviceToken({deviceToken: token})
-    // Alert.alert(`token: ${token}`)
-
-
-    // If using other push notification providers (ie Amazon SNS, etc)
-    // you may need to get the APNs token instead for iOS:
-    // if(Platform.OS == 'ios') { messaging().getAPNSToken().then(token => { return saveTokenToDatabase(token); }); }
-
-    // Listen to whether the token changes
-    messaging().onTokenRefresh(token => {
-      store.mutateAddDeviceToken({deviceToken: token})
-    });
-  }
-
-
   useEffect(() => {
     const notifRequest = async () => {
+
+      const waitUntilAuthorizationWindow = 5000
 
       if (Platform.OS === 'ios') {      
         const authorizationStatus = await messaging().hasPermission();
@@ -120,15 +95,6 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
         }
   
         if (hasPermissions) {
-          // we already have the token
-          // TODO: look at what happen when a user change devices
-          // if permission is given automatically or a not,
-          // and whether a new token should be requested
-          
-      
-          // TODO: this should not be needed
-          // but there is no harm to sending the token multiple times for now
-          requestPermission() 
           return
         }
   
@@ -145,15 +111,11 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
           },
           {
             text: translate("common.ok"),
-            onPress: () => requestPermission()
+            onPress: () => requestPermission(store)
           },
         ], { cancelable: true })
-        , 5000)
-  
-      } else {
-        // TODO move to move money or app.tsx?
-        requestPermission()
-      }
+        , waitUntilAuthorizationWindow)
+      } 
     }
 
     notifRequest()

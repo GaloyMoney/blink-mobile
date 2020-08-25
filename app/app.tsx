@@ -6,7 +6,6 @@
 import analytics from '@react-native-firebase/analytics'
 import "@react-native-firebase/crashlytics"
 
-import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import { NavigationContainer, NavigationState, PartialState } from '@react-navigation/native'
 import { createHttpClient } from "mst-gql"
 import "node-libs-react-native/globals" // needed for Buffer?
@@ -19,7 +18,6 @@ import { RootStore, StoreContext } from "./models"
 import { Environment } from "./models/environment"
 import { RootStack } from "./navigation/root-navigator"
 import { getGraphQlUri, Token } from "./utils/token"
-import messaging from '@react-native-firebase/messaging';
 
 export async function createEnvironment() {
   const env = new Environment()
@@ -68,64 +66,6 @@ export const App = () => {
   
     return route.name;
   };
-
-  // TODO: need to add isHeadless? 
-  // https://rnfirebase.io/messaging/usage
-  useEffect(() => {
-    const unsubscribe = messaging().onMessage(async remoteMessage => {
-      // Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
-      console.tron.log({remoteMessage})
-      PushNotificationIOS.presentLocalNotification({
-        alertBody: remoteMessage.notification.body,
-        alertTitle: remoteMessage.notification.title,
-        soundName: "default",
-      });
-    });
-
-
-    return unsubscribe;
-  }, []);
-
-  // useEffect(() => {
-    // const isDeviceRegisteredForRemoteMessages = messaging().isDeviceRegisteredForRemoteMessages
-    // Alert.alert(`isDeviceRegisteredForRemoteMessages: ${isDeviceRegisteredForRemoteMessages ? true:false}`)
-    // const isAutoInitEnabled = messaging().isAutoInitEnabled
-    // Alert.alert(`isAutoInitEnabled: ${isAutoInitEnabled ? true:false}`) // true
-  // }, []);
-
-  useEffect(() => {
-    messaging().setBackgroundMessageHandler(async remoteMessage => {
-      console.tron.log('Message handled in the background!', remoteMessage);
-      console.log('Message handled in the background!', remoteMessage);
-    });
-  }, []);
-
-  useEffect(() => {
-
-    // onNotificationOpenedApp: When the application is running, but in the background.
-    messaging().onNotificationOpenedApp(remoteMessage => {
-      // console.log(
-      //   'Notification caused app to open from background state:',
-      //   remoteMessage.notification,
-      // );
-      // navigation.navigate(remoteMessage.data.type);
-    });
-
-    // getInitialNotification: When the application is opened from a quit state.
-    messaging()
-      .getInitialNotification()
-      .then(remoteMessage => {
-        // if (remoteMessage) {
-        //   console.log(
-        //     'Notification caused app to open from quit state:',
-        //     remoteMessage.notification,
-        //   );
-        //   setInitialRoute(remoteMessage.data.type); // e.g. "Settings"
-        // }
-        // setLoading(false);
-      });
-
-  }, []);
 
   const defaultStoreInstance = {
     wallets: {
