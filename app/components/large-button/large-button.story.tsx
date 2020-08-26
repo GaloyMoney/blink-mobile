@@ -3,7 +3,7 @@ import { storiesOf } from "@storybook/react-native"
 import { Story, StoryScreen, UseCase } from "../../../storybook/views"
 import { LargeButton } from "./large-button"
 
-import MoneyCircle from "../../screens/accounts-screen/money-circle-02.svg"
+import MoneyCircle from "./money-circle-02.svg"
 
 declare let module
 
