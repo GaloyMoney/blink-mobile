@@ -1,9 +1,11 @@
 import Clipboard from "@react-native-community/clipboard"
+import PushNotificationIOS from '@react-native-community/push-notification-ios'
+import messaging from '@react-native-firebase/messaging'
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { CardStyleInterpolators, createStackNavigator } from "@react-navigation/stack"
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { AppState, Alert } from "react-native"
+import { AppState } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 import { translate } from "../i18n"
@@ -24,8 +26,6 @@ import { palette } from "../theme/palette"
 import { AccountType } from "../utils/enum"
 import { validPayment } from "../utils/parsing"
 import { getNetwork, Token } from "../utils/token"
-import messaging from '@react-native-firebase/messaging'
-import PushNotificationIOS from '@react-native-community/push-notification-ios';
 const PushNotification = require("react-native-push-notification");
 
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
@@ -114,9 +114,7 @@ export const RootStack = () => {
   }, []);
 
   const _handleAppStateChange = (nextAppState) => {
-    if (
-      appState.current.match(/inactive|background/) && nextAppState === "active"
-    ) {
+    if (appState.current.match(/background/) && nextAppState === "active") {
       console.tron.log("App has come to the foreground!");
       checkClipboard()
     }
