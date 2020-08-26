@@ -17,6 +17,7 @@ import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { AccountType, CurrencyType } from "../../utils/enum"
 import { Token } from "../../utils/token"
+import messaging from '@react-native-firebase/messaging'
 
 
 const styles = EStyleSheet.create({
@@ -180,19 +181,34 @@ export const MoveMoneyScreenDataInjected = observer(
 
     const walletActivated = store.user.level > 0
 
+    React.useEffect(() => {
+      const unsubscribe = messaging().onMessage(async remoteMessage => {
+        // TODO: fine grain query
+        // only refresh as necessary
+        refreshQuery()
+      })
+  
+      return unsubscribe;
+    }, []); 
+
     return <MoveMoneyScreen 
       navigation={navigation}
       walletActivated={walletActivated}
       loading={loading}
       error={error}
-      store={store}
+      amount={store.balances({currency: "USD", account: AccountType.BankAndBitcoin})}
+      amountOtherCurrency={store.balances({
+        currency: CurrencyType.BTC,
+        account: AccountType.BankAndBitcoin,
+      })}
       refreshQuery={refreshQuery}
       accountRefresh={store.accountRefresh}
     />
 })
 
 export const MoveMoneyScreen = (
-  ({ walletActivated, navigation, loading, error, store, refreshQuery, accountRefresh }) => {
+  ({ walletActivated, navigation, loading, error, 
+    refreshQuery, amount, amountOtherCurrency, accountRefresh }) => {
 
   const [modalVisible, setModalVisible] = useState(false)
 
@@ -249,11 +265,8 @@ export const MoveMoneyScreen = (
         <BalanceHeader
           loading={loading}
           currency={CurrencyType.USD}
-          amount={store.balances({currency: "USD", account: AccountType.BankAndBitcoin})}
-          amountOtherCurrency={store.balances({
-            currency: CurrencyType.BTC,
-            account: AccountType.BankAndBitcoin,
-          })}
+          amount={amount}
+          amountOtherCurrency={amountOtherCurrency}
         />
         {/* FIXME remove relative */}
         <View style={{position: "relative", alignItems: "flex-end", right: 64, bottom: 64}}> 
