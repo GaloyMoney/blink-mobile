@@ -166,15 +166,33 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
           invoiceDecoded = lightningPayReq.decode(data)
         } catch (err) {
           console.tron.log(`error decoding the invoice: ${err}`)
-        }
-        
-        if (!invoiceDecoded) {
           return
         }
-        
+                
         const hash = getHash(invoiceDecoded)  
         if (remoteMessage.data.type === "paid-invoice" && remoteMessage.data.hash === hash) {
-          success()
+          // success
+          console.tron.log("success")
+
+          const options = {
+            enableVibrateFallback: true,
+            ignoreAndroidSystemSettings: false,
+          }
+           
+          // FIXME (with notifications?): this is very approximative:
+          // 1 - it will only trigger if the payment is receiving while the screen is opened
+          // 2 - amount in the variable could be different than the amount receive by the payment
+          //     if the user has changed the amount and created a new invoice
+          analytics().logEarnVirtualCurrency({value: amount, virtual_currency_name: "btc"})
+      
+          ReactNativeHapticFeedback.trigger("notificationSuccess", options)
+          Alert.alert("success", translate("ReceiveBitcoinScreen.invoicePaid"), [{
+            text: translate("common.ok"),
+            onPress: () => {
+              navigation.goBack(false)
+            },
+          }])
+
         }
 
       } else {
@@ -207,29 +225,6 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
     } finally {
       setLoading(false)
     }
-  }
-
-  const success = () => {
-    const options = {
-      enableVibrateFallback: true,
-      ignoreAndroidSystemSettings: false,
-    }
-
-    store.queryWallet()
-
-    // FIXME (with notifications?): this is very approximative:
-    // 1 - it will only trigger if the payment is receiving while the screen is opened
-    // 2 - amount in the variable could be different than the amount receive by the payment
-    //     if the user has changed the amount and created a new invoice
-    analytics().logEarnVirtualCurrency({value: amount, virtual_currency_name: "btc"})
-
-    ReactNativeHapticFeedback.trigger("notificationSuccess", options)
-    Alert.alert("success", translate("ReceiveBitcoinScreen.invoicePaid"), [{
-      text: translate("common.ok"),
-      onPress: () => {
-        navigation.goBack(false)
-      },
-    }])
   }
 
   return (

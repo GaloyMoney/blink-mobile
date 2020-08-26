@@ -14,6 +14,7 @@ import { palette } from "../../theme/palette"
 import { sameDay, sameMonth } from "../../utils/date"
 import { AccountType, CurrencyType } from "../../utils/enum"
 import { Token } from "../../utils/token"
+import messaging from '@react-native-firebase/messaging'
 
 
 
@@ -190,10 +191,16 @@ export const TransactionScreenDataInjected = observer(({navigation, route}) => {
   }
 
   const currency = "sat" // FIXME
-  const account = CurrencyType.BTC
 
+  React.useEffect(() => {
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      // TODO: fine grain query
+      // only refresh as necessary
+      query.refetch()
+    })
 
-  console.tron.log({loading})
+    return unsubscribe;
+  }, []); 
 
   return <TransactionScreen 
     navigation={navigation} 
