@@ -118,7 +118,7 @@ export const DebugScreen = observer(({}) => {
         }}
       />
       <Button
-        title="send device token"
+        title="Request permission + send device token"
         style={styles.button}
         onPress={async () => {
           requestPermission(store)
