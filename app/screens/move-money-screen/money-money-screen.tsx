@@ -1,7 +1,8 @@
+import messaging from '@react-native-firebase/messaging'
 import { observer } from "mobx-react"
 import * as React from "react"
-import { useState } from "react"
-import { FlatList, RefreshControl, ScrollView, Text, View } from "react-native"
+import { useEffect, useState } from "react"
+import { AppState, FlatList, RefreshControl, ScrollView, Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
@@ -12,12 +13,11 @@ import { IconTransaction } from "../../components/icon-transactions"
 import { LargeButton } from "../../components/large-button"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
-import { StoreContext, useQuery } from "../../models"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { AccountType, CurrencyType } from "../../utils/enum"
 import { Token } from "../../utils/token"
-import messaging from '@react-native-firebase/messaging'
+import { StoreContext, useQuery } from "/../models"
 
 
 const styles = EStyleSheet.create({
@@ -157,53 +157,70 @@ query gql_query_anonymous {
 }
 `
 
-export const MoveMoneyScreenDataInjected = observer(
-  ({ navigation }) => {
+export const MoveMoneyScreenDataInjected = observer(({ navigation }) => {
 
-    const getQuery = () => new Token().has() ? gql_query_logged : gql_query_anonymous
+  const getQuery = () => new Token().has() ? gql_query_logged : gql_query_anonymous
 
-    const store = React.useContext(StoreContext)
-    let query, error, loading, setQuery
-  
-    try {    
-      ({query, error, loading, setQuery} = useQuery(getQuery()))
-    } catch (err) {
-      // TODO manage error properly. "Unhandled promise rejection"
-      // when no network is available
-      console.tron.log({err})
-    }
-  
-    const refreshQuery = async () => {
-      console.tron.log("refresh query")
-      setQuery(getQuery())
-      await query.refetch()
-    }
+  const store = React.useContext(StoreContext)
+  let query, error, loading, setQuery
 
-    const walletActivated = store.user.level > 0
+  try {    
+    ({query, error, loading, setQuery} = useQuery(getQuery()))
+  } catch (err) {
+    // TODO manage error properly. "Unhandled promise rejection"
+    // when no network is available
+    console.tron.log({err})
+  }
 
-    React.useEffect(() => {
-      const unsubscribe = messaging().onMessage(async remoteMessage => {
+  const refreshQuery = async () => {
+    console.tron.log("refresh query")
+    setQuery(getQuery())
+    await query.refetch()
+  }
+
+  const walletActivated = store.user.level > 0
+
+    // temporary fix until we have a better management of notifications:
+  // when coming back to active state. look if the invoice has been paid
+  useEffect(() => {
+    const _handleAppStateChange = async (nextAppState) => {
+      if (nextAppState === "active") {
         // TODO: fine grain query
         // only refresh as necessary
         refreshQuery()
-      })
-  
-      return unsubscribe;
-    }, []); 
+      }
+    };
 
-    return <MoveMoneyScreen 
-      navigation={navigation}
-      walletActivated={walletActivated}
-      loading={loading}
-      error={error}
-      amount={store.balances({currency: "USD", account: AccountType.BankAndBitcoin})}
-      amountOtherCurrency={store.balances({
-        currency: CurrencyType.BTC,
-        account: AccountType.BankAndBitcoin,
-      })}
-      refreshQuery={refreshQuery}
-      accountRefresh={store.accountRefresh}
-    />
+    AppState.addEventListener("change", _handleAppStateChange);
+
+    return () => {
+      AppState.removeEventListener("change", _handleAppStateChange);
+    };
+  }, []);
+
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      // TODO: fine grain query
+      // only refresh as necessary
+      refreshQuery()
+    })
+
+    return unsubscribe;
+  }, []); 
+
+  return <MoveMoneyScreen 
+    navigation={navigation}
+    walletActivated={walletActivated}
+    loading={loading}
+    error={error}
+    amount={store.balances({currency: "USD", account: AccountType.BankAndBitcoin})}
+    amountOtherCurrency={store.balances({
+      currency: CurrencyType.BTC,
+      account: AccountType.BankAndBitcoin,
+    })}
+    refreshQuery={refreshQuery}
+    accountRefresh={store.accountRefresh}
+  />
 })
 
 export const MoveMoneyScreen = (

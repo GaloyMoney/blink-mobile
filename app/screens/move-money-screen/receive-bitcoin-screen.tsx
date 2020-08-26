@@ -1,12 +1,11 @@
 import Clipboard from "@react-native-community/clipboard"
 import analytics from '@react-native-firebase/analytics'
 import messaging from '@react-native-firebase/messaging'
-import * as lightningPayReq from "bolt11"
 import { values } from "mobx"
 import { observer } from "mobx-react"
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { ActivityIndicator, Alert, Dimensions, Platform, Pressable, Share, Text, View } from "react-native"
+import { ActivityIndicator, Alert, AppState, Dimensions, Platform, Pressable, Share, Text, View } from "react-native"
 import { Button, ButtonGroup } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
@@ -17,7 +16,7 @@ import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
 import { StoreContext } from "../../models"
 import { palette } from "../../theme/palette"
-import { getHash } from "../../utils/lightning"
+import { getHashFromInvoice } from "../../utils/lightning"
 import { requestPermission } from "../../utils/notifications"
 
 var width = Dimensions.get('window').width; //full width
@@ -156,49 +155,77 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
     }
   }
 
+  const success = () => {
+    // success
+
+    const options = {
+      enableVibrateFallback: true,
+      ignoreAndroidSystemSettings: false,
+    }
+      
+    // FIXME (with notifications?): this is very approximative:
+    // 1 - it will only trigger if the payment is receiving while the screen is opened
+    // 2 - amount in the variable could be different than the amount receive by the payment
+    //     if the user has changed the amount and created a new invoice
+    analytics().logEarnVirtualCurrency({value: amount, virtual_currency_name: "btc"})
+
+    ReactNativeHapticFeedback.trigger("notificationSuccess", options)
+    Alert.alert("success", translate("ReceiveBitcoinScreen.invoicePaid"), [{
+      text: translate("common.ok"),
+      onPress: () => {
+        navigation.goBack(false)
+      },
+    }])
+  }
+
+  // temporary fix until we have a better management of notifications:
+  // when coming back to active state. look if the invoice has been paid
+  useEffect(() => {
+    const _handleAppStateChange = async (nextAppState) => {
+      if (nextAppState === "active") {
+        if (networkIndex === 0) {
+  
+          // lightning
+          const query = `mutation updatePendingInvoice($hash: String!) {
+            invoice {
+              updatePendingInvoice(hash: $hash)
+            }
+          }`
+          
+          try {
+            console.tron.log({data})
+            const hash = getHashFromInvoice(data)
+            console.tron.log({hash})
+            const result = await store.mutate(query, {hash})
+            if (result.invoice.updatePendingInvoice === true) {
+              success()
+            }
+          } catch (err) {
+            console.tron.warn(`can't fetch invoice ${err}`)
+          }
+        } else {
+          // TODO
+        }
+      }
+    };
+
+    AppState.addEventListener("change", _handleAppStateChange);
+
+    return () => {
+      AppState.removeEventListener("change", _handleAppStateChange);
+    };
+  }, [data]);
+
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async remoteMessage => {
       if (networkIndex === 0) {
-
-        let invoiceDecoded
-
-        try {
-          invoiceDecoded = lightningPayReq.decode(data)
-        } catch (err) {
-          console.tron.log(`error decoding the invoice: ${err}`)
-          return
-        }
-                
-        const hash = getHash(invoiceDecoded)  
+        const hash = getHashFromInvoice(data)
         if (remoteMessage.data.type === "paid-invoice" && remoteMessage.data.hash === hash) {
-          // success
-          console.tron.log("success")
-
-          const options = {
-            enableVibrateFallback: true,
-            ignoreAndroidSystemSettings: false,
-          }
-           
-          // FIXME (with notifications?): this is very approximative:
-          // 1 - it will only trigger if the payment is receiving while the screen is opened
-          // 2 - amount in the variable could be different than the amount receive by the payment
-          //     if the user has changed the amount and created a new invoice
-          analytics().logEarnVirtualCurrency({value: amount, virtual_currency_name: "btc"})
-      
-          ReactNativeHapticFeedback.trigger("notificationSuccess", options)
-          Alert.alert("success", translate("ReceiveBitcoinScreen.invoicePaid"), [{
-            text: translate("common.ok"),
-            onPress: () => {
-              navigation.goBack(false)
-            },
-          }])
-
+          success()
         }
-
       } else {
         console.tron.log("// TODO bitcoin as well")
       }
-
     });
 
     return unsubscribe;
