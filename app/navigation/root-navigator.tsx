@@ -26,7 +26,7 @@ import { validPayment } from "../utils/parsing"
 import { getNetwork, Token } from "../utils/token"
 import messaging from '@react-native-firebase/messaging'
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
-var PushNotification = require("react-native-push-notification");
+const PushNotification = require("react-native-push-notification");
 
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
 PushNotification.configure({
