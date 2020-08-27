@@ -1,5 +1,8 @@
 {
   "common": {
-    "cancel": "cancelar"
+    "bank": "Banco",
+    "cancel": "cancelar",
+    "email": "Email",
+    "firstName": "Nombre"
   }
 }
