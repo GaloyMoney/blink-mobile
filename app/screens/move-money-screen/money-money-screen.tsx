@@ -17,7 +17,7 @@ import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { AccountType, CurrencyType } from "../../utils/enum"
 import { Token } from "../../utils/token"
-import { StoreContext, useQuery } from "/../models"
+import { StoreContext, useQuery } from "../../models"
 
 
 const styles = EStyleSheet.create({
