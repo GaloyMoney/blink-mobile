@@ -220,8 +220,6 @@ dependencies {
     // implementation 'com.google.firebase:firebase-inappmessaging:19.0.6'
     // implementation 'com.google.firebase:firebase-inappmessaging-display:19.0.6'
 
-    compile project(':react-native-qrcode-local-image')
-
     if (enableHermes) {
       def hermesPath = "../../node_modules/hermesvm/android/";
       debugImplementation files(hermesPath + "hermes-debug.aar")
