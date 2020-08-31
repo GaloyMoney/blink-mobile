@@ -1,14 +1,15 @@
-import * as React from "react"
-import { StyleSheet, Text, View, StatusBar } from "react-native"
-import { Button } from "react-native-elements"
-import { Screen } from "../../components/screen"
-import { color } from "../../theme"
 import { useNavigation } from "@react-navigation/native"
-import MascotBitcoin from "./honey-badger-01.svg"
-
-import { translate } from "../../i18n"
-import { palette } from "../../theme/palette"
+import * as React from "react"
+import { Image, Text, View } from "react-native"
+import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
+import { Screen } from "../../components/screen"
+import { translate } from "../../i18n"
+import { color } from "../../theme"
+import { palette } from "../../theme/palette"
+
+
+const BitcoinBeachLogo = require("./bitcoinBeach3.png")
 
 const styles = EStyleSheet.create({
   bottom: {
@@ -49,7 +50,7 @@ const styles = EStyleSheet.create({
   sub: {
     color: palette.white,
     fontSize: 18,
-    marginTop: 32,
+    margin: 32,
     textAlign: "center",
   },
 
@@ -60,6 +61,11 @@ const styles = EStyleSheet.create({
     flex: 1,
     paddingBottom: "24rem",
   },
+
+  Logo: {
+    height: 300,
+    width: 310
+  }
 })
 
 export const GetStartedScreen = () => {
@@ -68,12 +74,16 @@ export const GetStartedScreen = () => {
   return (
     <Screen style={styles.container} backgroundColor={palette.lightBlue} statusBar="light-content">
       <View style={{flex: 1}} />
-      <Text style={styles.title} onPress={() => navigate("debug")}>
+      {/* <Text style={styles.title} onPress={() => navigate("debug")}>
         Galoy
-      </Text>
-      <MascotBitcoin width={200} height={200} />
-      <Text style={styles.sub}>{translate("GetStartedScreen.headline")}</Text>
+      </Text> */}
+      {/* <MascotBitcoin width={200} height={200} /> */}
+      <Image
+        style={styles.Logo}
+        source={BitcoinBeachLogo}
+      />
       <View style={styles.bottom}>
+        <Text style={styles.sub}>{translate("GetStartedScreen.headline")}</Text>
         <Button
           title={translate("GetStartedScreen.getStarted")}
           buttonStyle={styles.button}
