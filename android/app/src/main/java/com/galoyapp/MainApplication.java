@@ -12,8 +12,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 
-import com.remobile.qrcodeLocalImage.RCTQRCodeLocalImagePackage;  // <--- import
-
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost =
