@@ -1,6 +1,6 @@
 import { indexOf, toInteger } from "lodash"
 import * as React from "react"
-import { Text, View } from "react-native"
+import { Keyboard, Text, View } from "react-native"
 import { Input } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableOpacity } from "react-native-gesture-handler"
@@ -75,6 +75,19 @@ const InputCurrency = ({ amount, setAmount, currency, onBlur, forceKeyboard, app
   if ((currency === CurrencyType.USD || currency === CurrencyType.BTC) && appendDot) {
     value += "."
   }
+
+  React.useEffect(() => {
+    Keyboard.addListener("keyboardDidHide", _keyboardDidHide);
+
+    // cleanup function
+    return () => {
+      Keyboard.removeListener("keyboardDidHide", _keyboardDidHide);
+    };
+  }, []);
+
+  const _keyboardDidHide = () => {
+    onBlur()
+  };
 
   return <Input
     ref={inputRef}
