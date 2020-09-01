@@ -18,6 +18,7 @@ import { StoreContext } from "../../models"
 import { palette } from "../../theme/palette"
 import { getHashFromInvoice } from "../../utils/lightning"
 import { requestPermission } from "../../utils/notifications"
+import Toast from 'react-native-root-toast';
 
 var width = Dimensions.get('window').width; //full width
 
@@ -132,7 +133,18 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
 
   const copyInvoice = () => {
     Clipboard.setString(data)
-    Alert.alert(translate("ReceiveBitcoinScreen.copyClipboard"))
+
+    if (Platform.OS === "ios") {
+      Toast.show(translate("ReceiveBitcoinScreen.copyClipboard"), {
+        duration: Toast.durations.LONG,
+        shadow: false,
+        animation: true,
+        hideOnPress: true,
+        delay: 0,
+        position: -100,
+        opacity: 0.5,
+      })
+    }
   }
 
   const shareInvoice = async () => {
