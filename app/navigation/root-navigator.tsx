@@ -379,7 +379,7 @@ export const MoveMoneyNavigator = () => {
         // options={{ title: translate("MoveMoneyScreen.title") }}
         options={{ 
           headerShown: false,
-          title: "Move Money",
+          title: translate("MoveMoneyScreen.title"),
         }}
       />
       <StackMoveMoney.Screen
@@ -457,7 +457,7 @@ export const PrimaryNavigator = () => {
         name="Transactions"
         component={TransactionScreenDataInjected}
         options={{
-          // title: translate("AccountsScreen.title"),
+          title: translate("common.transactions"),
           tabBarIcon: ({ focused, color }) => {
             return <Icon name={"ios-list-outline"} size={size} color={color} />
           },

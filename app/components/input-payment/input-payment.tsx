@@ -5,6 +5,7 @@ import { Input } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
+import { translate } from "../../i18n"
 import { StoreContext } from "../../models"
 import { palette } from "../../theme/palette"
 import { CurrencyType } from "../../utils/enum"
@@ -97,7 +98,7 @@ const InputCurrency = ({
   return (
     <Input
       ref={inputRef}
-      placeholder={"set an amount"}
+      placeholder={translate("common.setAnAmount")}
       autoFocus={forceKeyboard}
       value={value}
       leftIcon={currency === CurrencyType.USD ? <Text style={styles.textStyle}>$</Text> : null}

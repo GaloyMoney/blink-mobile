@@ -7,7 +7,7 @@ const es = require("./es")
 i18n.fallbacks = true
 i18n.translations = { en, es }
 
-const fallback = { languageTag: "en", isRTL: false }
+const fallback = { languageTag: "es", isRTL: false }
 const { languageTag } =
   RNLocalize.findBestAvailableLanguage(Object.keys(i18n.translations)) || fallback
 i18n.locale = languageTag
