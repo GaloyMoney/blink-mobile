@@ -1,7 +1,7 @@
 {
   "AccountDetailScreen": {
-    "openAccount": "\nAbra una cuenta de efectivo en Galoy",
-    "openAccountReason": "\nPara {{side}} bitcoin, necesita una cuenta de efectivo de Galoy, por lo que puede transferir dólares estadounidenses",
+    "openAccount": "Abra una cuenta de efectivo en Galoy",
+    "openAccountReason": "Para {{side}} bitcoin, necesita una cuenta de efectivo de Galoy, por lo que puede transferir dólares estadounidenses",
     "prevMonths": "Meses  previos",
     "quote": "Cuantas Satoshis a {{side}}:",
     "thisMonth": "Este mes",
@@ -9,24 +9,24 @@
     "yesterday": "Ayer"
   },
   "AccountsScreen": {
-    "bitcoinEarn": "\nGana recompensas de Bitcoin",
+    "bitcoinEarn": "Gana recompensas de Bitcoin",
     "title": "Cuentas"
   },
   "BalanceHeader": {
     "currentBalance": "Saldo actual"
   },
   "BankAccountEarnScreen": {
-    "buySell": "\ny compre y venda bitcoins fácilmente en la aplicación\n",
-    "debitCard": "\n¡Solicite una tarjeta de débito para ganar 1% + reembolso en efectivo en bitcoin sobre su gasto en dólares!",
-    "holdUSDollar": "\nMantenga dólares estadounidenses en su cuenta",
-    "openAccount": "\nAbra una cuenta de efectivo en Galoy",
+    "buySell": "y compre y venda bitcoins fácilmente en la aplicación\n",
+    "debitCard": "¡Solicite una tarjeta de débito para ganar 1% + reembolso en efectivo en bitcoin sobre su gasto en dólares!",
+    "holdUSDollar": "Mantenga dólares estadounidenses en su cuenta",
+    "openAccount": "Abra una cuenta de efectivo en Galoy",
     "title": "Recompensas de la cuenta de efectivo"
   },
   "BankAccountReadyScreen": {
-    "accountReady": "\nSu cuenta de efectivo de Galoy está lista"
+    "accountReady": "Su cuenta de efectivo de Galoy está lista"
   },
   "BankTransferScreen": {
-    "title": "\nTransferencia bancaria"
+    "title": "Transferencia bancaria"
   },
   "common": {
     "activateWallet": "Activar billetera",
@@ -36,55 +36,55 @@
     "bankAccount": "Cuenta de efectivo",
     "bitcoin": "Bitcoin",
     "cancel": "Cancelar",
-    "close": "\nCerrar ",
+    "close": "Cerrar ",
     "confirm": "Confirmar",
     "date": "Fecha ",
-    "description": "\nDescripción",
+    "description": "Descripción",
     "email": "Correo electrónico",
-    "error": "\nError",
+    "error": "Error",
     "fee": "Cuota",
     "firstName": "Nombre",
-    "fundingTx": "\nAprenda más sobre Bitcoin y gane más",
-    "invoice": "\nFactura",
+    "fundingTx": "Aprenda más sobre Bitcoin y gane más",
+    "invoice": "Factura",
     "lastName": "Apellido",
     "later": "Más tarde",
     "next": "Próximo",
-    "notification": "\nNotificación",
+    "notification": "Notificación",
     "ok": "OK",
-    "phoneNumber": "\nNúmero de teléfono",
+    "phoneNumber": "Número de teléfono",
     "sats": "Satoshis",
-    "send": "\nEnviar",
-    "share": "\nCompartir",
+    "send": "Enviar",
+    "share": "Compartir",
     "soon": "Próximamente",
     "SSL": "Su información está encriptada y transmitida de forma segura usando SSL",
-    "syncing": "\nSincronizando datos",
+    "syncing": "Sincronizando datos",
     "to": "Para",
     "tryAgain": "Inténtalo de nuevo"
   },
   "DateOfBirthScreen": {
-    "title": "\nFecha de nacimiento"
+    "title": "Fecha de nacimiento"
   },
   "DepositCashScreen": {
     "title": "Depositar efectivo"
   },
   "DirectDepositScreen": {
     "account": "Cuenta",
-    "action": "\nMover mi cheque de pago",
+    "action": "Mover mi cheque de pago",
     "bank": "Cuenta corriente Galoy",
     "bankName": "Nobre del banco",
-    "generate": "\nGenere un formulario de depósito directo para su empleador o proveedor de nómina.",
+    "generate": "Genere un formulario de depósito directo para su empleador o proveedor de nómina.",
     "routing": "Enrutamiento",
     "setup": "Configurar deposito directo",
     "title": "Deposito directo"
   },
   "EarnScreen": {
-    "bankingNeeded": "\nSe necesita banca",
+    "bankingNeeded": "Se necesita banca",
     "channelNeeded": "Primero necesitas abrir un canal",
     "earnSats": {
       "zero": "Gana ‪{{formatted_number}}‬ Satoshi"
     },
     "getRewardNow": "Responder al cuestionario",
-    "keepDigging": "\nSigue nadando",
+    "keepDigging": "Sigue nadando",
     "phoneNumberNeeded": "Numero de telefono requerido",
     "reviewQuizz": "Cuestionario de repaso",
     "satAccumulated": "Satoshis acumulado",
@@ -96,40 +96,40 @@
   "errors": {
     "generic": "Habia un error,  Por  favor intente de nuevo mas tarde\n",
     "invalidEmail": "Correo inválido",
-    "invalidPhoneNumber": "\nEsto no es un número de teléfono válido"
+    "invalidPhoneNumber": "Esto no es un número de teléfono válido"
   },
   "FindATMScreen": {
     "title": "Encuentra cajero automático"
   },
   "GetStartedScreen": {
     "getStarted": "Empezar",
-    "headline": "\nEl banco con dinero sólido"
+    "headline": "El banco con dinero sólido"
   },
   "ModalClipboard": {
-    "pendingInvoice": "\nTienes una factura relámpago en tu portapapeles"
+    "pendingInvoice": "Tienes una factura relámpago en tu portapapeles"
   },
   "MoveMoneyScreen": {
     "needBankAccount": "Abra una cuenta de efectivo para activar",
-    "needWallet": "\nValide su teléfono para abrir su billetera",
+    "needWallet": "Valide su teléfono para abrir su billetera",
     "openAccount": "Abre una cuenta",
     "openWallet": "Abre tu billetera",
-    "seeTransaction": "\nSupervisar la transacción de apertura",
-    "title": "\nMover dinero",
+    "seeTransaction": "Supervisar la transacción de apertura",
+    "title": "Mover dinero",
     "useLightning": "Usamos la red de lightning",
-    "walletInCreation": "\nSe está creando tu billetera"
+    "walletInCreation": "Se está creando tu billetera"
   },
   "notifications": {
     "payment": {
-      "body": "\nAcabas de recibir sats $ {{value}}",
+      "body": "Acabas de recibir sats $ {{value}}",
       "title": "Pago recibido"
     }
   },
   "OpenBankScreen": {
-    "accountsBenefits": "\n¡Está a solo unos minutos de tener una cuenta de efectivo en Galoy! ¡Solicite una tarjeta de débito para recibir recompensas de bitcoin del 1% en todos los gastos!",
+    "accountsBenefits": "¡Está a solo unos minutos de tener una cuenta de efectivo en Galoy! ¡Solicite una tarjeta de débito para recibir recompensas de bitcoin del 1% en todos los gastos!",
     "title": "Recompiensas bancarias "
   },
   "Overlay": {
-    "accounts": "\n¡Empiece por conseguir algunas recompensas!",
+    "accounts": "¡Empiece por conseguir algunas recompensas!",
     "rewards": {
       "download": "Te regalamos 1 Satoshi para descargar la aplicación.",
       "getMore": "Aprende mas sobre Bitcoin y gane mas"
@@ -140,9 +140,9 @@
     "title": "Informacion personal"
   },
   "ReceiveBitcoinScreen": {
-    "activateNotifications": "\n¿Quieres activar notificaciones para que te avisen cuando haya llegado el pago?",
-    "copyClipboard": "\nIncoice se ha copiado en el portapapeles.",
-    "invoicePaid": "\nEsta factura ha sido pagada",
+    "activateNotifications": "¿Quieres activar notificaciones para que te avisen cuando haya llegado el pago?",
+    "copyClipboard": "Incoice se ha copiado en el portapapeles.",
+    "invoicePaid": "Esta factura ha sido pagada",
     "tapQrCodeCopy": "Toque Código QR para copiar",
     "title": "Recibir Bitcoin"
   },
@@ -150,33 +150,33 @@
     "zero": "‪{{formatted_number}}‬ Satoshi"
   },
   "ScanningQRCodeScreen": {
-    "noQrCode": "\nNo pudimos encontrar un código QR en la imagen",
+    "noQrCode": "No pudimos encontrar un código QR en la imagen",
     "title": "Manda Bitcoin"
   },
   "SendBitcoinScreen": {
-    "amount": "\nCantidad",
-    "cost": "\nCosto",
+    "amount": "Cantidad",
+    "cost": "Costo",
     "noAmount": "Esta factura no tiene un monto, por lo que debe especificar manualmente cuánto dinero desea enviar",
-    "notConfirmed": "\nEl pago ha sido enviado.\npero aún no está confirmado\n\nPuedes comprobar el estado\ndel pago en Transacciones",
+    "notConfirmed": "El pago ha sido enviado.\npero aún no está confirmado\n\nPuedes comprobar el estado\ndel pago en Transacciones",
     "note": "Nota ",
     "payFromUSD": "Pago desde $USD",
-    "success": "\nEl pago se ha enviado correctamente.",
+    "success": "El pago se ha enviado correctamente.",
     "title": "Enviar Bitcoin"
   },
   "WelcomeFirstScreen": {
-    "bank": "\nBitcoin está diseñado para permitirle almacenar, enviar y recibir dinero, sin depender de un banco o tarjeta de crédito.",
+    "bank": "Bitcoin está diseñado para permitirle almacenar, enviar y recibir dinero, sin depender de un banco o tarjeta de crédito.",
     "before": "Antes de Bitcoin, la gente tenía que depender de bancos o proveedores de tarjetas de crédito para gastar, enviar y recibir dinero.",
     "care": "Por qué debería importarme?",
     "learn": "No quiero molestarte, pero es hora de empezar a nadar en el océano de Bitcoin."
   },
   "WelcomePhoneInputScreen": {
     "header": "Ingrese su número de teléfono y le enviaremos un mensaje de texto con un código de acceso.",
-    "placeholder": "\nNúmero de teléfono"
+    "placeholder": "Número de teléfono"
   },
   "WelcomePhoneValidationScreen": {
-    "errorLoggingIn": "\nError al iniciar sesión. ¿Usó el código correcto?",
-    "header": "\nPara confirmar su número de teléfono, ingrese el código que le acabamos de enviar",
-    "need6Digits": "\nEl  código debe tener 6 didgits",
+    "errorLoggingIn": "Error al iniciar sesión. ¿Usó el código correcto?",
+    "header": "Para confirmar su número de teléfono, ingrese el código que le acabamos de enviar",
+    "need6Digits": "El  código debe tener 6 didgits",
     "placeholder": "Código de 6 dígitos"
   }
 }
