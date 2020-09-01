@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Text, View } from "react-native"
+import { I18nManager, Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { Screen } from "../../components/screen"
 import { TextCurrency } from "../../components/text-currency"
@@ -86,7 +86,9 @@ export const TransactionDetailScreen = ({ route, navigation }) => {
   const { currency, account, amount, date, hash, type, description, fee,
     destination, id } = route.params as AccountDetailItemProps
 
-  const spendOrReceive = amount < 0 ? "spent" : "received"
+  const spendOrReceive = amount < 0 ? 
+    translate("TransactionDetailScreen.spent") :
+    translate("TransactionDetailScreen.received")
 
   const options = {
     weekday: "short",
@@ -102,13 +104,13 @@ export const TransactionDetailScreen = ({ route, navigation }) => {
     <Screen style={styles.screen} unsafe={true}>
       <View style={styles.amountView}>
         <IconTransaction type={type.includes("invoice") || type.includes("earn") ? "receive" : "send"} size={100} />
-        <Text style={styles.amountText}>You {spendOrReceive}</Text>
+        <Text style={styles.amountText}>{spendOrReceive}</Text>
         <TextCurrency amount={Math.abs(amount)} currency={currency} 
           style={styles.amount} />
       </View>
 
       <View style={styles.transactionDetailView}>
-        <Text style={styles.transactionDetailText}>Transaction Details</Text>
+        <Text style={styles.transactionDetailText}>{translate("TransactionDetailScreen.detail")}</Text>
         <Divider style={styles.divider} />
         <Row entry={translate("common.date")} value={date_format}></Row>
         <Row entry={translate("common.description")} value={description} />

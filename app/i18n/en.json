@@ -27,7 +27,9 @@
     "send": "Send",
     "date": "Date",
     "description": "Description",
-    "fee": "fee"
+    "fee": "fee",
+    "transactions": "Transactions",
+    "setAnAmount": "set an amount"
   },
   "sat": {
     "one": "1 sat",
@@ -542,5 +544,10 @@
   },
   "ModalClipboard": {
     "pendingInvoice": "You have a Lightning Invoice in your clipboard"
+  },
+  "TransactionDetailScreen": {
+    "detail": "Transaction Details",
+    "spent": "You spent",
+    "received": "You received"
   }
 }
