@@ -106,7 +106,7 @@ export const DebugScreen = observer(({}) => {
         title="Log out"
         style={styles.button}
         onPress={async () => {
-          resetDataStore()
+          await resetDataStore()
           Alert.alert("state succesfully deleted. Restart your app")
         }}
       />

@@ -295,11 +295,11 @@ export const MoveMoneyScreen = (
           <Icon name={"ios-trending-up-outline"} size={32} onPress={() => 
             navigation.navigate("accountDetail", { account: AccountType.Bitcoin })  } />
         </View>
-        {error && 
-          <ScrollView style={{flex: 1}}>
-            <Text style={{color: palette.red, alignSelf: "center"}}>{error.message}</Text>
-          </ScrollView>}
+
         <FlatList
+          ListHeaderComponent={error && 
+            <Text style={{color: palette.red, alignSelf: "center"}} selectable={true}>{error.message}</Text>
+          }
           data={[{
             title: translate(`ScanningQRCodeScreen.title`), icon: "send", target: "scanningQRCode"
           },{
