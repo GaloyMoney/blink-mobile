@@ -48,7 +48,8 @@ const styles = EStyleSheet.create({
 
   mainView: {
     paddingHorizontal: 20,
-    flex: 1
+    flex: 1,
+    justifyContent: "space-between",
   },
 
   note: {
@@ -66,11 +67,6 @@ const styles = EStyleSheet.create({
     left: 0,
     position: "absolute",
     right: 0,
-  },
-
-  section: {
-    paddingBottom: 8,
-    paddingTop: 12,
   },
 
   smallText: {
@@ -225,7 +221,7 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
         onUpdateAmount={input => { setAmount(input); setStatus("idle")} }
         forceKeyboard={true}
       />
-      <View style={styles.section}>
+      <View>
         <Text style={styles.smallText}>{translate("common.to")}</Text>
         <View style={styles.horizontalContainer}>
           <Input
@@ -240,7 +236,7 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
         </View>
       </View>
       {!!note && 
-        <View style={styles.section}>
+        <View>
           <Text style={styles.smallText}>{translate("SendBitcoinScreen.note")}</Text>
           <Text style={styles.note}>{note}</Text>
         </View>
@@ -271,15 +267,14 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
           </>
         }
       </View>
-      {
-        <Button
-          buttonStyle={styles.buttonStyle}
-          title={(status === "success" || status === "pending") ? translate("common.close") : err ? translate("common.tryAgain") : amount == 0 ? translate("common.amountRequired") : translate("common.send")} // TODO refactor
-          onPress={() => (status === "success" || status === "pending") ? goBack() : pay()}
-          disabled={amount == 0}
-          loading={status === "loading"}
-        />
-      }
+      <Button
+        buttonStyle={styles.buttonStyle}
+        containerStyle={{flex: 1}}
+        title={(status === "success" || status === "pending") ? translate("common.close") : err ? translate("common.tryAgain") : amount == 0 ? translate("common.amountRequired") : translate("common.send")} // TODO refactor
+        onPress={() => (status === "success" || status === "pending") ? goBack() : pay()}
+        disabled={amount == 0}
+        loading={status === "loading"}
+      />
     </Screen>
   )
 }
