@@ -273,8 +273,7 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
           onPress={index => setNetworkIndex(index)}
           selectedIndex={networkIndex}
           buttons={["Lightning", "Bitcoin"]}
-          selectedTextStyle={{fontWeight: "bold", fontSize: 18}}
-          disabledTextStyle={{fontWeight: "bold"}}
+          textStyle={{fontWeight: "bold", fontSize: 18}}
           containerStyle={{borderRadius: 24}}
           selectedButtonStyle={{backgroundColor: palette.lightBlue}}
         />
