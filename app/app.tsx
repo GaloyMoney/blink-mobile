@@ -2,22 +2,22 @@
 //
 // In this file, we'll be kicking off our app or storybook.
 
-
-import analytics from '@react-native-firebase/analytics'
+import analytics from "@react-native-firebase/analytics"
 import "@react-native-firebase/crashlytics"
 
-import { NavigationContainer, NavigationState, PartialState } from '@react-navigation/native'
+import { NavigationContainer, NavigationState, PartialState } from "@react-navigation/native"
 import { createHttpClient } from "mst-gql"
 import "node-libs-react-native/globals" // needed for Buffer?
 import * as React from "react"
 import { useEffect, useState } from "react"
 import { Dimensions, YellowBox } from "react-native"
-import EStyleSheet from 'react-native-extended-stylesheet'
+import EStyleSheet from "react-native-extended-stylesheet"
 import "./i18n"
 import { RootStore, StoreContext } from "./models"
 import { Environment } from "./models/environment"
 import { RootStack } from "./navigation/root-navigator"
 import { getGraphQlUri, Token } from "./utils/token"
+import { RootSiblingParent } from "react-native-root-siblings"
 
 export async function createEnvironment() {
   const env = new Environment()
@@ -25,11 +25,11 @@ export async function createEnvironment() {
   return env
 }
 
-const entireScreenWidth = Dimensions.get('window').width;
+const entireScreenWidth = Dimensions.get("window").width
 EStyleSheet.build({
   $rem: entireScreenWidth / 380,
   // $textColor: '#0275d8'
-});
+})
 
 /**
  * Ignore some yellowbox warnings. Some of these are for deprecated functions
@@ -49,50 +49,49 @@ console.disableYellowBox = true
  */
 export const App = () => {
   const [rootStore, setRootStore] = useState(null)
-  const [routeName, setRouteName] = useState("Initial");
+  const [routeName, setRouteName] = useState("Initial")
 
   const getActiveRouteName = (
     state: NavigationState | PartialState<NavigationState> | undefined,
   ): string => {
     if (!state || typeof state.index !== "number") {
-      return "Unknown";
+      return "Unknown"
     }
-  
-    const route = state.routes[state.index];
-  
+
+    const route = state.routes[state.index]
+
     if (route.state) {
-      return getActiveRouteName(route.state);
+      return getActiveRouteName(route.state)
     }
-  
-    return route.name;
-  };
+
+    return route.name
+  }
 
   const defaultStoreInstance = {
     wallets: {
-      "USD": {
+      USD: {
         id: "USD",
         currency: "USD",
         balance: 0,
-        transactions: []
+        transactions: [],
       },
-      "BTC": {
+      BTC: {
         id: "BTC",
         currency: "BTC",
         balance: 0,
-        transactions: []
-      }
+        transactions: [],
+      },
     },
     users: {
-      "incognito": {
+      incognito: {
         id: "incognito",
-        level: 0
-      }
-    }
+        level: 0,
+      },
+    },
   }
 
   useEffect(() => {
     const fn = async () => {
-
       const token = new Token()
       await token.load()
 
@@ -100,15 +99,16 @@ export const App = () => {
         gqlHttpClient: createHttpClient(await getGraphQlUri(), {
           headers: {
             authorization: token.bearerString,
-          }
-      })})
+          },
+        }),
+      })
 
       setRootStore(rs)
 
       // setRootStore(await setupRootStore())
       const env = await createEnvironment()
 
-      console.log({env})
+      console.log({ env })
       // reactotron logging
       if (__DEV__) {
         env.reactotron.setRootStore(rs, {})
@@ -136,16 +136,18 @@ export const App = () => {
 
     <StoreContext.Provider value={rootStore}>
       <NavigationContainer
-        onStateChange={state => {
-        const currentRouteName = getActiveRouteName(state);
+        onStateChange={(state) => {
+          const currentRouteName = getActiveRouteName(state)
 
-        if (routeName !== currentRouteName) {
-          analytics().setCurrentScreen(currentRouteName);
-          setRouteName(currentRouteName);
-        }
-      }}
+          if (routeName !== currentRouteName) {
+            analytics().setCurrentScreen(currentRouteName)
+            setRouteName(currentRouteName)
+          }
+        }}
       >
-        <RootStack />
+        <RootSiblingParent>
+          <RootStack />
+        </RootSiblingParent>
       </NavigationContainer>
     </StoreContext.Provider>
   )

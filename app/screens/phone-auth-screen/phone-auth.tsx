@@ -57,7 +57,7 @@ const styles = EStyleSheet.create({
     marginVertical: "18rem",
     paddingHorizontal: "18rem",
     paddingVertical: "12rem",
-    // height: "52rem",
+    flex: 1,
   },
 
   text: {
@@ -114,6 +114,10 @@ export const WelcomePhoneInputScreen = ({ navigation }) => {
     }
   }
 
+  React.useEffect(() => {
+    inputRef?.current.focus()
+  }, [])
+
   // workaround of https://github.com/facebook/react-native/issues/10471
   useEffect(() => {
     if (err !== "") {
@@ -130,15 +134,13 @@ export const WelcomePhoneInputScreen = ({ navigation }) => {
   }, [err])
 
   return (
-    <Screen backgroundColor={palette.lighterGrey}>
-      <View style={{ flex: 1, justifyContent: "flex-end" }}>
-        <View style={{ flex: 1 }} />
-        <BadgerPhone style={styles.image} />
-        <Text style={styles.text}>{translate("WelcomePhoneInputScreen.header")}</Text>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : undefined}
-          style={{ flex: 1 }}
-        >
+    <Screen backgroundColor={palette.lighterGrey} preset="scroll">
+      <View style={{ flex: 1, justifyContent: "space-around" }}>
+        <View>
+          <BadgerPhone style={styles.image} />
+          <Text style={styles.text}>{translate("WelcomePhoneInputScreen.header")}</Text>
+        </View>
+        <KeyboardAvoidingView>
           <PhoneInput
             ref={inputRef}
             style={styles.phoneEntryContainer}
@@ -150,10 +152,8 @@ export const WelcomePhoneInputScreen = ({ navigation }) => {
               onSubmitEditing: send,
             }}
           />
+          <ActivityIndicator animating={loading} size="large" color={color.primary} style={{marginTop: 32}}/>
         </KeyboardAvoidingView>
-        <View style={{ flex: 1 }} />
-        <ActivityIndicator animating={loading} size="large" color={color.primary} />
-        <View style={{ flex: 1 }} />
       </View>
       <CloseCross color={palette.darkGrey} onPress={() => navigation.goBack()} />
     </Screen>
