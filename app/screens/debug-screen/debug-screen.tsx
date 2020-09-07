@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-community/async-storage"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { observer } from "mobx-react"
 import * as React from "react"
-import { Alert, Text, View } from "react-native"
+import { Alert, DevSettings, Text, View } from "react-native"
 import { Button, ButtonGroup } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { Screen } from "../../components/screen"
@@ -106,7 +106,7 @@ export const DebugScreen = observer(({}) => {
         title="Log out"
         style={styles.button}
         onPress={async () => {
-          resetDataStore()
+          await resetDataStore()
           Alert.alert("state succesfully deleted. Restart your app")
         }}
       />
@@ -124,6 +124,9 @@ export const DebugScreen = observer(({}) => {
           requestPermission(store)
         }}
       />
+      <Button title="Reload" 
+        style={styles.button}
+        onPress={() => DevSettings.reload()} />
       <Button
           title="Crash test"
           style={styles.button}

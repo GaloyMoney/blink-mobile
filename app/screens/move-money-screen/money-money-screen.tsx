@@ -80,6 +80,11 @@ const styles = EStyleSheet.create({
 
   listContainer: {
     marginTop: "32rem"
+  },
+
+  bottom: {
+    marginVertical: "16rem", 
+    alignItems: "center", 
   }
 })
 
@@ -286,15 +291,15 @@ export const MoveMoneyScreen = (
           amountOtherCurrency={amountOtherCurrency}
         />
         {/* FIXME remove relative */}
-        <View style={{position: "relative", alignItems: "flex-end", right: 64, bottom: 64}}> 
+        <View style={{position: "relative", alignItems: "flex-end", right: 64, bottom: 64, height: 0}}> 
           <Icon name={"ios-trending-up-outline"} size={32} onPress={() => 
             navigation.navigate("accountDetail", { account: AccountType.Bitcoin })  } />
         </View>
-        {error && 
-          <ScrollView style={{flex: 1}}>
-            <Text style={{color: palette.red, alignSelf: "center"}}>{error.message}</Text>
-          </ScrollView>}
+
         <FlatList
+          ListHeaderComponent={error && 
+            <Text style={{color: palette.red, alignSelf: "center"}} selectable={true}>{error.message}</Text>
+          }
           data={[{
             title: translate(`ScanningQRCodeScreen.title`), icon: "send", target: "scanningQRCode"
           },{
@@ -311,7 +316,7 @@ export const MoveMoneyScreen = (
             />
           )}
         />
-        <View style={{marginBottom: 32, alignItems: "center", marginTop: 32}}>
+        <View style={styles.bottom}>
           <Icon name={"ios-flash"} 
             size={32} onPress={() => setSecretMenuCounter(secretMenuCounter + 1)} />
           <Text style={styles.lightningText}>{translate("MoveMoneyScreen.useLightning")}</Text>

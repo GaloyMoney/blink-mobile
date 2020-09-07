@@ -13,12 +13,11 @@ const BitcoinBeachLogo = require("./bitcoinBeach3.png")
 
 const styles = EStyleSheet.create({
   bottom: {
-    alignItems: "center",
     flex: 1,
+    alignItems: "center",
     justifyContent: "flex-end",
-    marginBottom: 36,
-    marginLeft: 0,
-    width: "70%",
+    marginVertical: 36,
+    width: "100%",
   },
 
   button: {
@@ -50,7 +49,8 @@ const styles = EStyleSheet.create({
   sub: {
     color: palette.white,
     fontSize: 18,
-    margin: 32,
+    marginTop: 32,
+    marginBottom: 16,
     textAlign: "center",
   },
 
@@ -63,8 +63,8 @@ const styles = EStyleSheet.create({
   },
 
   Logo: {
-    height: 300,
-    width: 310
+    maxHeight: 300,
+    maxWidth: 310
   }
 })
 
