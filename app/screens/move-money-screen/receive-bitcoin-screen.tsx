@@ -82,6 +82,7 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
 
   const [networkIndex, setNetworkIndex] = useState(0)
   const [data, setData] = useState("")
+  const [err, setErr] = useState("")
 
   useEffect(() => {
     update()
@@ -275,6 +276,7 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
       console.tron.log("data has been set")
     } catch (err) {
       console.tron.log(`error with AddInvoice: ${err}`)
+      setErr(`${err}`)
       throw err
     } finally {
       setLoading(false)
@@ -282,7 +284,6 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
   }
 
   const isReady = !loading && data != ""
-
   const getIcon = (icon, name, index) => <View style={{flexDirection: 'row'}}>
     <Icon name={icon} size={18} color={palette.orange} style={{top: 2}} />
     <Text style={{ marginLeft: 6, fontWeight: "bold", fontSize: 18, 
@@ -309,7 +310,7 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
           onBlur={update}
           forceKeyboard={false}
         />
-        <Input placeholder="Optional note" value={memo} onChangeText={setMemo}
+        <Input placeholder="optional note" value={memo} onChangeText={setMemo} containerStyle={{marginTop: 12}}
           leftIcon={<Icon name={"ios-create-outline"} size={21} color={palette.darkGrey} />}
         />
       </View>
@@ -340,7 +341,12 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
               justifyContent: "center",
             }}
           >
+          {err !== "" && 
+            <Text style={{color: palette.red, alignSelf: "center"}} selectable={true}>{err}</Text>
+          }
+          {err === "" && 
             <ActivityIndicator size="large" color={palette.blue} />
+          }
           </View>
         }
         {isReady && 
