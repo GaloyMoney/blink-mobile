@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
   Alert,
   AppState,
+  Keyboard,
   Platform,
   Pressable,
   Share,
@@ -74,7 +75,6 @@ const styles = EStyleSheet.create({
 export const ReceiveBitcoinScreen = observer(({ navigation }) => {
   const store = React.useContext(StoreContext)
 
-  // FIXME TODO add back a way to set a memo
   const [memo, setMemo] = useState("")
 
   const [amount, setAmount] = useState(0)
@@ -295,6 +295,22 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
   const LightningComponent = () => getIcon("ios-flash", "Lightning", 0)
   const BitcoinComponent = () => getIcon("logo-bitcoin", "On-Chain", 1)
 
+  const inputMemoRef = React.useRef()
+
+  React.useEffect(() => {
+    Keyboard.addListener("keyboardDidHide", _keyboardDidHide)
+
+    // cleanup function
+    return () => {
+      Keyboard.removeListener("keyboardDidHide", _keyboardDidHide)
+    }
+  }, [])
+
+  const _keyboardDidHide = () => {
+    inputMemoRef?.current.blur()
+  }
+
+
   return (
     <Screen backgroundColor={palette.lighterGrey} style={styles.screen} preset="scroll">
       <ButtonGroup
@@ -312,6 +328,8 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
         />
         <Input placeholder="optional note" value={memo} onChangeText={setMemo} containerStyle={{marginTop: 12}}
           leftIcon={<Icon name={"ios-create-outline"} size={21} color={palette.darkGrey} />}
+          ref={inputMemoRef}
+          onBlur={update}
         />
       </View>
       <View style={styles.qr}>

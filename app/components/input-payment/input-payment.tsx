@@ -1,6 +1,6 @@
 import { indexOf, toInteger } from "lodash"
 import * as React from "react"
-import { Dimensions, Keyboard, Text, View } from "react-native"
+import { Keyboard, Text, View } from "react-native"
 import { Input } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableOpacity } from "react-native-gesture-handler"
