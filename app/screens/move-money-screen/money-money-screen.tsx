@@ -298,7 +298,7 @@ export const MoveMoneyScreen = (
 
         <FlatList
           ListHeaderComponent={error && 
-            <Text style={{color: palette.red, alignSelf: "center"}} selectable={true}>{error.message}</Text>
+            <Text style={{color: palette.red, alignSelf: "center", paddingBottom: 18}} selectable={true}>{error.message}</Text>
           }
           data={[{
             title: translate(`ScanningQRCodeScreen.title`), icon: "send", target: "scanningQRCode"
