@@ -193,7 +193,9 @@ export const WelcomePhoneValidationScreen = ({ onSuccess, route, navigation }) =
 
     try {
       setLoading(true)
-      const { login } = await store.mutateLogin({phone, code: Number(code)})
+
+      const currency = "BTC"
+      const { login } = await store.mutateLogin({phone, code: Number(code), currency})
       console.tron.log({login})
 
       if (login.token) {
