@@ -1,6 +1,6 @@
 import { indexOf, toInteger } from "lodash"
 import * as React from "react"
-import { Keyboard, Text, View } from "react-native"
+import { Dimensions, Keyboard, Text, View } from "react-native"
 import { Input } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableOpacity } from "react-native-gesture-handler"
@@ -17,13 +17,6 @@ const styles = EStyleSheet.create({
     flexDirection: "column",
   },
 
-  balanceText: {
-    color: palette.midGrey,
-    fontSize: 16,
-    fontWeight: "bold",
-    marginBottom: 8,
-  },
-
   container: {
     flex: 1,
   },
@@ -31,100 +24,21 @@ const styles = EStyleSheet.create({
   header: {
     alignItems: "center",
     marginTop: "8rem",
+    width: "100%"
   },
 
   subCurrencyText: {
-    fontSize: "18rem",
-    color: palette.darkGrey,
+    fontSize: "16rem",
+    color: palette.midGrey,
     marginTop: 0,
     paddingTop: 0,
-    position: "relative",
-    top: -18, // FIXME
   },
 
   textStyle: {
-    fontSize: 24,
+    fontSize: "18rem",
     color: palette.darkGrey,
   },
 })
-
-const InputCurrency = ({
-  amount,
-  setAmount,
-  currency,
-  onBlur,
-  forceKeyboard,
-  appendDot,
-  editable,
-}) => {
-  const inputRef = React.useRef()
-
-  React.useEffect(() => {
-    keyboardFocus()
-  }, [editable, amount])
-
-  // TODO: show "an amount is needed" in red
-  function keyboardFocus() {
-    if (forceKeyboard && (amount == "" || amount == "." || +amount == 0)) {
-      inputRef?.current.focus()
-    }
-  }
-
-  let value
-  if (amount == 0 || isNaN(amount)) {
-    value = ""
-  } else {
-    value = String(+amount)
-  }
-
-  // only add dot for for non-sats.
-  if ((currency === CurrencyType.USD || currency === CurrencyType.BTC) && appendDot) {
-    value += "."
-  }
-
-  React.useEffect(() => {
-    Keyboard.addListener("keyboardDidHide", _keyboardDidHide)
-
-    // cleanup function
-    return () => {
-      Keyboard.removeListener("keyboardDidHide", _keyboardDidHide)
-    }
-  }, [])
-
-  const _keyboardDidHide = () => {
-    inputRef?.current.blur()
-  }
-
-  return (
-    <Input
-      ref={inputRef}
-      placeholder={translate("common.setAnAmount")}
-      autoFocus={forceKeyboard}
-      value={value}
-      leftIcon={currency === CurrencyType.USD ? <Text style={styles.textStyle}>$</Text> : null}
-      rightIcon={
-        currency === CurrencyType.BTC ? (
-          <Text style={styles.textStyle}>BTC</Text>
-        ) : currency === "sats" ? (
-          <Text style={styles.textStyle}>sats</Text>
-        ) : null
-      }
-      inputContainerStyle={{ width: 250 }}
-      inputStyle={[styles.textStyle, { textAlign: "center" }]}
-      onChangeText={setAmount}
-      keyboardType={currency === "sats" ? "number-pad" : "decimal-pad"}
-      onBlur={(event) => {
-        onBlur(event)
-        keyboardFocus()
-      }}
-      enablesReturnKeyAutomatically={true}
-      returnKeyLabel="Update"
-      returnKeyType="done"
-      editable={editable}
-      onEndEditing={onBlur}
-    />
-  )
-}
 
 export interface InputPaymentDataInjectedProps {
   editable: boolean
@@ -144,20 +58,13 @@ export const InputPaymentDataInjected = (props: InputPaymentDataInjectedProps) =
 
 export const InputPayment = ({
   price,
-  onUpdateAmount,
   editable,
+  onUpdateAmount,
   onBlur = () => {},
   forceKeyboard = false,
   initAmount = 0, // in sats
   currencyPreference = "USD",
 }) => {
-  React.useEffect(() => {
-    setAmount(initAmount)
-  }, [initAmount])
-
-  const [unit, setUnit] = React.useState(currencyPreference)
-  const [amount, setAmount] = React.useState(initAmount)
-  const [appendDot, setAppendDot] = React.useState(false)
 
   const mapping = {
     USD: {
@@ -185,37 +92,117 @@ export const InputPayment = ({
     },
   }
 
+  const endByDot = (s: string) => s.match(/^[0-9]*\.{1}$/)
+
+  const [unit, setUnit] = React.useState(currencyPreference)
+  const [amount, setAmount] = React.useState(initAmount)
+  const [input, setInput] = React.useState("")
+  const [appendDot, setAppendDot] = React.useState(false)
+
+  React.useEffect(() => {
+    setAmount(initAmount)
+  }, [initAmount])
+
+  React.useEffect(() => {
+    setAppendDot(!!endByDot(input))
+    const newAmount = mapping[unit].reverse(+input)
+    if (!isNaN(newAmount)) {
+      setAmount(newAmount)
+      onUpdateAmount(toInteger(newAmount))
+    }
+  }, [input])
+
+  console.tron.log({amount, input})
+
+  // is Focused part
+
+  React.useEffect(() => {
+    keyboardFocus()
+  }, [editable, amount])
+
+  const inputRef = React.useRef()
+
+  const amountInput = mapping[unit].conversion(amount)
+  const currency = mapping[unit].primary
+
+
+  // TODO: show "an amount is needed" in red
+  function keyboardFocus() {
+    if (forceKeyboard && (amountInput == "" || amountInput == "." || +amountInput == 0)) {
+      inputRef?.current.focus()
+    }
+  }
+
+  React.useEffect(() => {
+    Keyboard.addListener("keyboardDidHide", _keyboardDidHide)
+
+    // cleanup function
+    return () => {
+      Keyboard.removeListener("keyboardDidHide", _keyboardDidHide)
+    }
+  }, [])
+
+  const _keyboardDidHide = () => {
+    inputRef?.current.blur()
+  }
+
+  const valueTweak = () => {
+    let value 
+
+    if (amountInput == 0 || isNaN(amountInput)) {
+      value = ""
+    } else {
+      value = String(+amountInput)
+    }
+  
+    // only add dot for for non-sats.
+    if ((currency === CurrencyType.USD || currency === CurrencyType.BTC) && appendDot) {
+      value += "."
+    }
+
+    return value
+  }
+
   const next = () => {
-    const units = ["sats", "BTC", "USD"]
+    const units = ["sats", "USD"] // "BTC"
     const currentIndex = indexOf(units, unit)
-    const nextCurrency = units[(currentIndex + 1) % 3]
+    const nextCurrency = units[(currentIndex + 1) % units.length]
     setUnit(nextCurrency)
   }
 
   return (
-    // FIXME style
-    <View style={{ flexDirection: "row", alignItems: "center", width: "100%", paddingLeft: 32 }}>
+    <View style={{ flexDirection: "row", alignItems: "center" }}>
       <View style={styles.header}>
-        <InputCurrency
-          amount={mapping[unit].conversion(amount)}
-          currency={mapping[unit].primary}
-          appendDot={appendDot}
-          setAmount={(amount) => {
-            function endByDot(s) {
-              var rgx = /^[0-9]*\.{1}$/
-              return s.match(rgx)
-            }
-            setAppendDot(!!endByDot(amount))
-            const newAmount = mapping[unit].reverse(+amount)
-            if (!isNaN(newAmount)) {
-              setAmount(newAmount)
-              onUpdateAmount(toInteger(newAmount))
-            }
-          }}
-          editable={editable}
-          onBlur={onBlur}
-          forceKeyboard={forceKeyboard}
-        />
+        <Input
+        ref={inputRef}
+        placeholder={translate("common.setAnAmount")}
+        autoFocus={forceKeyboard}
+        value={valueTweak()}
+        leftIcon={currency === CurrencyType.USD ? 
+          <Text style={[styles.textStyle, {color: valueTweak() === "" ? palette.midGrey: palette.darkGrey}]}>$</Text>
+          : null}
+        rightIcon={
+          currency === CurrencyType.BTC ? (
+            <Text style={[styles.textStyle, {color: valueTweak() === "" ? palette.midGrey: palette.darkGrey}]}>BTC</Text>
+          ) : currency === "sats" ? (
+            <Text style={[styles.textStyle, {color: valueTweak() === "" ? palette.midGrey: palette.darkGrey}]}>sats</Text>
+          ) : null
+        }
+        inputContainerStyle={{ width: "100%" }}
+        inputStyle={[styles.textStyle, { textAlign: "center" }]}
+        onChangeText={setInput}
+        keyboardType={currency === "sats" ? "number-pad" : "decimal-pad"}
+        onBlur={event => {
+          onBlur()
+          keyboardFocus()
+        }}
+        enablesReturnKeyAutomatically={true}
+        returnKeyLabel="Update"
+        returnKeyType="done"
+        editable={editable}
+        onEndEditing={onBlur}
+        renderErrorMessage={false}
+      />
         <TextCurrency
           amount={mapping[unit].secondaryConversion(amount)}
           currency={mapping[unit].secondary}
@@ -223,7 +210,7 @@ export const InputPayment = ({
         />
       </View>
       <TouchableOpacity onPress={next}>
-        <Icon name={"ios-swap-vertical"} size={32} />
+        <Icon name={"ios-swap-vertical"} size={32} style={{top: -4}} />
       </TouchableOpacity>
     </View>
   )

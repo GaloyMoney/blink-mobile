@@ -9,14 +9,13 @@ import {
   ActivityIndicator,
   Alert,
   AppState,
-  Dimensions,
   Platform,
   Pressable,
   Share,
   Text,
   View,
 } from "react-native"
-import { Button, ButtonGroup } from "react-native-elements"
+import { Button, ButtonGroup, Input } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import QRCode from "react-native-qrcode-svg"
@@ -30,11 +29,10 @@ import { getHashFromInvoice } from "../../utils/lightning"
 import { requestPermission } from "../../utils/notifications"
 import Toast from "react-native-root-toast"
 
-var width = Dimensions.get("window").width //full width
-
 const styles = EStyleSheet.create({
   buttonStyle: {
     backgroundColor: palette.lightBlue,
+    borderRadius: 32,
   },
 
   icon: {
@@ -49,9 +47,9 @@ const styles = EStyleSheet.create({
   },
 
   section: {
-    width: width - 50, // FIXME
-    paddingHorizontal: 20,
-    flex: 1
+    paddingHorizontal: 50,
+    flex: 1,
+    width: "100%"
   },
 
   smallText: {
@@ -74,8 +72,6 @@ const styles = EStyleSheet.create({
 })
 
 export const ReceiveBitcoinScreen = observer(({ navigation }) => {
-  // TODO FIXME: crash if no connection
-
   const store = React.useContext(StoreContext)
 
   // FIXME TODO add back a way to set a memo
@@ -285,28 +281,40 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
     }
   }
 
+  const isReady = !loading && data != ""
+
+  const getIcon = (icon, name, index) => <View style={{flexDirection: 'row'}}>
+    <Icon name={icon} size={18} color={palette.orange} style={{top: 2}} />
+    <Text style={{ marginLeft: 6, fontWeight: "bold", fontSize: 18, 
+      color: networkIndex === index ? palette.white : palette.darkGrey }}>
+      {name}
+    </Text>
+  </View>
+
+  const LightningComponent = () => getIcon("ios-flash", "Lightning", 0)
+  const BitcoinComponent = () => getIcon("logo-bitcoin", "On-Chain", 1)
+
   return (
     <Screen backgroundColor={palette.lighterGrey} style={styles.screen} preset="scroll">
       <ButtonGroup
-        onPress={(index) => setNetworkIndex(index)}
+        onPress={setNetworkIndex}
         selectedIndex={networkIndex}
-        buttons={["Lightning", "Bitcoin"]}
-        textStyle={{ fontWeight: "bold", fontSize: 18 }}
+        buttons={[{element: LightningComponent}, {element: BitcoinComponent}]}
         containerStyle={styles.headerView}
         selectedButtonStyle={{ backgroundColor: palette.lightBlue }}
       />
       <View style={styles.section}>
         <InputPaymentDataInjected
-          onUpdateAmount={(amount) => setAmount(amount)}
+          onUpdateAmount={setAmount}
           onBlur={update}
           forceKeyboard={false}
         />
+        <Input placeholder="Optional note" value={memo} onChangeText={setMemo}
+          leftIcon={<Icon name={"ios-create-outline"} size={21} color={palette.darkGrey} />}
+        />
       </View>
-      {/* <View style={styles.section}>
-          <Input placeholder="Optional note" value={memo} onChangeText={(text) => setMemo(text)} />
-        </View> */}
       <View style={styles.qr}>
-        {!loading && (
+        {isReady && (
           <Pressable onPress={copyInvoice}>
             <QRCode
               size={280}
@@ -320,8 +328,7 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
               )}
             />
           </Pressable>
-        )}
-        {loading && (
+        ) ||
           <View
             style={{
               width: 280,
@@ -335,17 +342,19 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
           >
             <ActivityIndicator size="large" color={palette.blue} />
           </View>
-        )}
-        {(loading && <Text> </Text>) || (
+        }
+        {isReady && 
           <Text>{translate("ReceiveBitcoinScreen.tapQrCodeCopy")}</Text>
-        )}
+          ||
+          <Text> </Text>
+        }
       </View>
       <Button
         buttonStyle={styles.buttonStyle}
-        disabledStyle={styles.buttonStyle}
-        containerStyle={{ marginHorizontal: 48, borderRadius: 24, paddingVertical: 18, flex: 1 }}
+        containerStyle={{ marginHorizontal: 48, paddingVertical: 18, flex: 1 }}
         title={translate("common.share")}
         onPress={shareInvoice}
+        disabled={!isReady}
         titleStyle={{ fontWeight: "bold" }}
       />
     </Screen>
