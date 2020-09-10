@@ -1,9 +1,11 @@
 import { useNavigation } from "@react-navigation/native"
 import * as React from "react"
-import { Image, Text, View } from "react-native"
+import ReactContentLoaderInstagram from "react-content-loader/native/native/presets/InstagramStyle"
+import { ActivityIndicator, Image, Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { Screen } from "../../components/screen"
+import { VersionComponent } from "../../components/version"
 import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
@@ -68,20 +70,19 @@ const styles = EStyleSheet.create({
   }
 })
 
-export const GetStartedScreen = () => {
+
+
+const GetStartedScreen = ({loading}) => {
   const { navigate } = useNavigation()
 
   return (
     <Screen style={styles.container} backgroundColor={palette.lightBlue} statusBar="light-content">
       <View style={{flex: 1}} />
-      {/* <Text style={styles.title} onPress={() => navigate("debug")}>
-        Galoy
-      </Text> */}
-      {/* <MascotBitcoin width={200} height={200} /> */}
       <Image
         style={styles.Logo}
         source={BitcoinBeachLogo}
       />
+      <VersionComponent style={{ paddingVertical: 30 }} />
       <View style={styles.bottom}>
         <Text style={styles.sub}>{translate("GetStartedScreen.headline")}</Text>
         <Button
@@ -90,8 +91,12 @@ export const GetStartedScreen = () => {
           titleStyle={styles.buttonTitle}
           onPress={() => navigate("welcomeFirst")}
           containerStyle={styles.buttonContainer}
+          loading={loading}
         />
       </View>
     </Screen>
   )
 }
+
+export const GetStartedScreenNoLoading = <GetStartedScreen loading={false} />
+export const GetStartedScreenLoading = <GetStartedScreen loading={true} />

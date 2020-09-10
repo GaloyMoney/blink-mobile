@@ -15,10 +15,9 @@ import { DebugScreen } from "../screens/debug-screen"
 import { EarnMapDataInjected } from "../screens/earns-map-screen"
 import { EarnQuiz, EarnSection } from "../screens/earns-screen"
 import { SectionCompleted } from "../screens/earns-screen/section-completed"
-import { GetStartedScreen } from "../screens/get-started-screen"
+import { GetStartedScreenLoading, GetStartedScreenNoLoading } from "../screens/get-started-screen"
 import { FindATMScreen, MoveMoneyScreenDataInjected, ReceiveBitcoinScreen, ScanningQRCodeScreen, SendBitcoinScreen } from "../screens/move-money-screen"
 import { WelcomePhoneInputScreen, WelcomePhoneValidationScreenDataInjected } from "../screens/phone-auth-screen"
-import { SplashScreen } from "../screens/splash-screen"
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
 import { TransactionScreenDataInjected } from "../screens/transaction-screen/transaction-screen"
 import { WelcomeFirstScreen } from "../screens/welcome-screens"
@@ -250,7 +249,7 @@ export const RootStack = () => {
   }, [])
 
   if (initialRouteName === "") {
-    return <SplashScreen />
+    return <GetStartedScreenLoading />
   }
 
   console.tron.log({initialRouteName})
@@ -262,7 +261,7 @@ export const RootStack = () => {
     >
       <RootNavigator.Screen
         name="getStarted"
-        component={GetStartedScreen}
+        component={GetStartedScreenNoLoading}
         options={{ headerShown: false }}
       />
       <RootNavigator.Screen name="debug" component={DebugScreen} />
