@@ -1,8 +1,8 @@
-app_identifier("io.galoy.app") # The bundle identifier of your app
-apple_id("nicolas.burtey@gmail.com") # Your Apple email address
+app_identifier("io.galoy.bitcoinbeach") # The bundle identifier of your app
+apple_id("ios@galoy.io") # Your Apple email address
 
-itc_team_id("120417227") # App Store Connect Team ID
-team_id("39Q9AL82ZL") # Developer Portal Team ID
+itc_team_id("122101820") # App Store Connect Team ID
+team_id("AYPCPV46WW") # Developer Portal Team ID
 
 # For more information about the Appfile, see:
 #     https://docs.fastlane.tools/advanced/#appfile
