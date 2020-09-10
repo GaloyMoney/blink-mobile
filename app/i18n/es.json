@@ -54,11 +54,13 @@
     "phoneNumber": "Número de teléfono",
     "sats": "Satoshis",
     "send": "Enviar",
+    "setAnAmount": "Establecer una cantidad",
     "share": "Compartir",
     "soon": "Próximamente",
     "SSL": "Su información está encriptada y transmitida de forma segura usando SSL",
     "syncing": "Sincronizando datos",
     "to": "Para",
+    "transactions": "\nLas transacciones",
     "tryAgain": "Inténtalo de nuevo"
   },
   "DateOfBirthScreen": {
@@ -162,6 +164,11 @@
     "payFromUSD": "Pago desde $USD",
     "success": "El pago se ha enviado correctamente.",
     "title": "Enviar Bitcoin"
+  },
+  "TransactionDetailScreen": {
+    "detail": "Detalles de la transacción",
+    "received": "Recibiste",
+    "spent": "Gastaste"
   },
   "WelcomeFirstScreen": {
     "bank": "Bitcoin está diseñado para permitirle almacenar, enviar y recibir dinero, sin depender de un banco o tarjeta de crédito.",
