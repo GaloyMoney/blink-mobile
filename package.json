@@ -15,6 +15,8 @@
     "coverage": "jest --runInBand --coverage",
     "hack:types-react-native": "rimraf node_modules/@types/react-native/node_modules/@types",
     "hack:types-react-test-renderer": "rimraf node_modules/@types/react-test-renderer/node_modules/@types",
+    "ios-session": "cd ios && fastlane spaceauth -u ios@galoy.io",
+    "fastlane-update": "cd ios && bundle update fastlane && cd ../android && bundle update fastlane && cd ..",
     "patch": "patch-package",
     "postinstall": "jetify && if which pod >/dev/null; then (cd ios; pod install); fi",
     "prepare": "npm-run-all patch hack:*",
