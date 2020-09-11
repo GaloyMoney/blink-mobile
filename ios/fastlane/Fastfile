@@ -26,6 +26,9 @@ platform :ios do
     match(type: "appstore", readonly: is_ci)
     gym(scheme: "GaloyApp")
     upload_to_testflight(changelog: "No changelog")
+ 
+    # build_app(workspace: "GaloyApp.xcworkspace", scheme: "GaloyApp")
+    # upload_to_testflight
   end
 
 end
