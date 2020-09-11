@@ -30,7 +30,8 @@ function ScreenWithoutScrolling(props: ScreenProps) {
         barStyle={props.statusBar || "dark-content"}
         backgroundColor={props.backgroundColor}
       />
-      <ModalClipboard />
+      {/* modalClipboard requires StoreContext which requiere being inside a navigator */}
+      <ModalClipboard /> 
       <Wrapper style={[preset.inner, style]}>{props.children}</Wrapper>
     </KeyboardAvoidingView>
   )

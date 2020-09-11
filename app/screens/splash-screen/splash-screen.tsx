@@ -1,6 +1,5 @@
 import * as React from "react"
-import { View, ActivityIndicator, StyleSheet } from "react-native"
-import { Image } from "react-native-svg"
+import { View, ActivityIndicator, StyleSheet, Image } from "react-native"
 import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
 const BitcoinBeachLogo = require("../get-started-screen/bitcoinBeach3.png")
@@ -20,11 +19,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flex: 1,
     width: "100%",
+    backgroundColor: palette.lightBlue,
   },
 
   Logo: {
     maxHeight: 300,
-    maxWidth: 310
+    maxWidth: 310,
+    marginTop: 32,
   },
 
   bottom: {
@@ -34,16 +35,12 @@ const styles = StyleSheet.create({
 })
 
 export const SplashScreen = ({}) => (
-  <Screen style={styles.container} backgroundColor={palette.lightBlue} statusBar="light-content">
-    <View style={styles.centerBackground}>
-      <Image
-        style={styles.Logo}
-        source={BitcoinBeachLogo}
-      />
-     <View style={styles.bottom}>
-        <ActivityIndicator style={{ flex: 1 }} size="large" color={palette.lightGrey} />
-        <VersionComponent style={{ paddingVertical: 30 }} />
-     </View>
-    </View>
-  </Screen>
+  <View style={styles.container}>
+    <Image
+      style={styles.Logo}
+      source={BitcoinBeachLogo}
+    />
+    <VersionComponent style={{ paddingVertical: 30 }} />
+    <ActivityIndicator style={{ flex: 1 }} size="large" color={palette.lightGrey} />
+  </View>
 )
