@@ -1,7 +1,6 @@
 import { useNavigation } from "@react-navigation/native"
 import * as React from "react"
-import ReactContentLoaderInstagram from "react-content-loader/native/native/presets/InstagramStyle"
-import { ActivityIndicator, Image, Text, View } from "react-native"
+import { Image, Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { Screen } from "../../components/screen"
@@ -66,18 +65,18 @@ const styles = EStyleSheet.create({
 
   Logo: {
     maxHeight: 300,
-    maxWidth: 310
+    maxWidth: 310,
+    marginTop: 32,
   }
 })
 
 
 
-const GetStartedScreen = ({loading}) => {
+export const GetStartedScreen = () => {
   const { navigate } = useNavigation()
 
   return (
     <Screen style={styles.container} backgroundColor={palette.lightBlue} statusBar="light-content">
-      <View style={{flex: 1}} />
       <Image
         style={styles.Logo}
         source={BitcoinBeachLogo}
@@ -91,12 +90,8 @@ const GetStartedScreen = ({loading}) => {
           titleStyle={styles.buttonTitle}
           onPress={() => navigate("welcomeFirst")}
           containerStyle={styles.buttonContainer}
-          loading={loading}
         />
       </View>
     </Screen>
   )
 }
-
-export const GetStartedScreenNoLoading = <GetStartedScreen loading={false} />
-export const GetStartedScreenLoading = <GetStartedScreen loading={true} />
