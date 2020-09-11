@@ -25,7 +25,7 @@ platform :ios do
     increment_build_number(xcodeproj: "GaloyApp.xcodeproj")
     match(type: "appstore", readonly: is_ci)
     gym(scheme: "GaloyApp")
-    upload_to_testflight(skip_submission: true)
+    upload_to_testflight(changelog: "No changelog")
 
     # build_app(workspace: "GaloyApp.xcworkspace", scheme: "GaloyApp")
     # upload_to_testflight
