@@ -303,7 +303,7 @@ export const MoveMoneyScreen = (
           data={[{
             title: translate(`ScanningQRCodeScreen.title`), icon: "send", target: "scanningQRCode"
           },{
-            title: translate(`ReceiveBitcoinScreen.title`), icon: "receive", target: "receiveBitcoin"
+            title: translate(`ReceiveBitcoinScreen.title`), icon: "receive", target: "receiveBitcoin", color: palette.green
           }]}
           extraData={accountRefresh}
           style={styles.listContainer}
@@ -311,7 +311,7 @@ export const MoveMoneyScreen = (
           renderItem={({ item }) => (
             <LargeButton
               title={item.title}
-              icon={<IconTransaction type={item.icon} size={75} color={palette.orange} />}
+              icon={<IconTransaction type={item.icon} size={75} />}
               onPress={() => onBitcoinClick(item.target)}
             />
           )}

@@ -218,15 +218,18 @@ export interface AccountDetailItemProps {
   navigation: StackNavigationProp<any,any>,
 }
 
+export const iconTypeFromAmount = (amount) => amount > 0 ? "receive" : "send"
+export const colorTypeFromIconType = type => type === "send" ? palette.orange : palette.green 
+
 const AccountDetailItem: React.FC<AccountDetailItemProps> = (props) => {
   if (props.description) {
     return (<ListItem
     // key={props.hash}
     title={props.description}
     leftIcon={<IconTransaction 
-      type={props.type.includes("invoice") || props.type.includes("earn") ? "receive" : "send"}
-      size={24} 
-      color={palette.orange} />}
+      type={iconTypeFromAmount(props.amount)}
+      size={24}
+    />}
     rightTitle={<TextCurrency amount={props.amount} currency={props.currency} textColor={palette.darkGrey} />}
     onPress={() => props.navigation.navigate("transactionDetail", props)}
     />)

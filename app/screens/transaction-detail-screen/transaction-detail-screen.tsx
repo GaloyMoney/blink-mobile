@@ -1,14 +1,15 @@
 import * as React from "react"
-import { I18nManager, Text, View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
-import { Screen } from "../../components/screen"
-import { TextCurrency } from "../../components/text-currency"
-import { palette } from "../../theme/palette"
-import { AccountDetailItemProps } from "../account-detail-screen"
+import { Text, View } from "react-native"
 import { Divider } from "react-native-elements"
+import EStyleSheet from "react-native-extended-stylesheet"
 import { CloseCross } from "../../components/close-cross"
 import { IconTransaction } from "../../components/icon-transactions"
+import { Screen } from "../../components/screen"
+import { TextCurrency } from "../../components/text-currency"
 import { translate } from "../../i18n"
+import { palette } from "../../theme/palette"
+import { AccountDetailItemProps } from "../account-detail-screen"
+import { colorTypeFromIconType, iconTypeFromAmount } from "../transaction-screen"
 
 
 const styles = EStyleSheet.create({
@@ -31,7 +32,6 @@ const styles = EStyleSheet.create({
   amountView: {
     alignItems: "center",
     paddingVertical: "48rem",
-    backgroundColor: palette.orange,
   },
 
   description: {
@@ -102,8 +102,8 @@ export const TransactionDetailScreen = ({ route, navigation }) => {
 
   return (
     <Screen style={styles.screen} unsafe={true}>
-      <View style={styles.amountView}>
-        <IconTransaction type={type.includes("invoice") || type.includes("earn") ? "receive" : "send"} size={100} />
+      <View style={[styles.amountView, {backgroundColor: colorTypeFromIconType(type)}]}>
+        <IconTransaction type={iconTypeFromAmount(amount)} size={100} transparent={true} />
         <Text style={styles.amountText}>{spendOrReceive}</Text>
         <TextCurrency amount={Math.abs(amount)} currency={currency} 
           style={styles.amount} />
