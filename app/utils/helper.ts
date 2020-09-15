@@ -35,3 +35,5 @@ export const scriptHostname = (): string => {
   const scriptHostname = scriptURL.split('://')[1].split(':')[0];
   return scriptHostname
 }
+
+export const isIos = Platform.OS === "ios"

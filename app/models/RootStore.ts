@@ -12,6 +12,7 @@ import analytics from '@react-native-firebase/analytics';
 import { uploadToken } from "../utils/notifications"
 import { indexOf } from "lodash"
 
+
 export const ROOT_STATE_STORAGE_KEY = "rootAppGaloy"
 
 
@@ -52,6 +53,7 @@ export const RootStore = RootStoreBase
     self.prefCurrency = units[(currentIndex + 1) % units.length]
   }
 
+  // FIXME need function* / yield instead?
   const earnComplete = async (id) => {
     const earn = self.earns.get(id)
     if (earn.completed) {

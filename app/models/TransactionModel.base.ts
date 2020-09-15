@@ -18,7 +18,7 @@ export const TransactionModelBase = ModelBase
     __typename: types.optional(types.literal("Transaction"), "Transaction"),
     id: types.identifier,
     amount: types.union(types.undefined, types.integer),
-    description: types.union(types.undefined, types.null, types.string),
+    description: types.union(types.undefined, types.string),
     fee: types.union(types.undefined, types.null, types.integer),
     created_at: types.union(types.undefined, types.integer),
     hash: types.union(types.undefined, types.null, types.string),
