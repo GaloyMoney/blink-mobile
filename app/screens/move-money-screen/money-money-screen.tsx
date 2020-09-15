@@ -2,7 +2,7 @@ import messaging from '@react-native-firebase/messaging'
 import { observer } from "mobx-react"
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { AppState, FlatList, RefreshControl, ScrollView, Text, View } from "react-native"
+import { AppState, FlatList, RefreshControl, Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
@@ -13,11 +13,11 @@ import { IconTransaction } from "../../components/icon-transactions"
 import { LargeButton } from "../../components/large-button"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
+import { StoreContext, useQuery } from "../../models"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { AccountType, CurrencyType } from "../../utils/enum"
-import { Token } from "../../utils/token"
-import { StoreContext, useQuery } from "../../models"
+import { getMainQuery } from "../../utils/mainQuery"
 
 
 const styles = EStyleSheet.create({
@@ -36,13 +36,6 @@ const styles = EStyleSheet.create({
     fontWeight: "bold",
     fontSize: "18rem",
   },
-
-  listItem: {
-    marginVertical: "8rem",
-    marginHorizontal: "12rem",
-    borderRadius: 8,
-  },
-
 
   buttonContainerStyle: {
     marginTop: "16rem",
@@ -89,103 +82,18 @@ const styles = EStyleSheet.create({
 })
 
 
-// const gql_query = `
-// query home($isLogged: Boolean!) {
-//   prices {
-//     __typename
-//     id
-//     o
-//   }
-//   earnList {
-//     __typename
-//     id
-//     value
-//     completed @include(if: $isLogged)
-//   }
-//   wallet @include(if: $isLogged) {
-//     __typename
-//     id
-//     balance
-//     currency
-//   }
-//   me @include(if: $isLogged) {
-//     __typename
-//     id
-//     level
-//   }
-// }
-// `
-
-const gql_query_logged = `
-query gql_query_logged {
-  prices {
-    __typename
-    id
-    o
-  }
-  earnList {
-    __typename
-    id
-    value
-    completed
-  }
-  wallet {
-    __typename
-    id
-    balance
-    currency
-  }
-  getLastOnChainAddress {
-    __typename
-    id
-  }
-  me {
-    __typename
-    id
-    level
-  }
-}
-`
-
-const gql_query_anonymous = `
-query gql_query_anonymous {
-  prices {
-    __typename
-    id
-    o
-  }
-  earnList {
-    __typename
-    id
-    value
-  }
-}
-`
-
 export const MoveMoneyScreenDataInjected = observer(({ navigation }) => {
-
-  const getQuery = () => new Token().has() ? gql_query_logged : gql_query_anonymous
-
   const store = React.useContext(StoreContext)
-  let query, error, loading, setQuery
 
-  try {    
-    ({query, error, loading, setQuery} = useQuery(getQuery()))
-  } catch (err) {
-    // TODO manage error properly. "Unhandled promise rejection"
-    // when no network is available
-    console.tron.log({err})
-  }
+  const { query, error, loading, setQuery } = useQuery()
 
   const refreshQuery = async () => {
     console.tron.log("refresh query")
-    setQuery(getQuery())
+    setQuery(getMainQuery())
     await query.refetch()
   }
 
-  const walletActivated = store.user.level > 0
-
-    // temporary fix until we have a better management of notifications:
+  // temporary fix until we have a better management of notifications:
   // when coming back to active state. look if the invoice has been paid
   useEffect(() => {
     const _handleAppStateChange = async (nextAppState) => {
@@ -212,6 +120,8 @@ export const MoveMoneyScreenDataInjected = observer(({ navigation }) => {
 
     return unsubscribe;
   }, []); 
+
+  const walletActivated = store.user.level > 0
 
   return <MoveMoneyScreen 
     navigation={navigation}
@@ -291,9 +201,11 @@ export const MoveMoneyScreen = (
           amountOtherCurrency={amountOtherCurrency}
         />
         {/* FIXME remove relative */}
-        <View style={{position: "relative", alignItems: "flex-end", right: 64, bottom: 64, height: 0}}> 
-          <Icon name={"ios-trending-up-outline"} size={32} onPress={() => 
-            navigation.navigate("accountDetail", { account: AccountType.Bitcoin })  } />
+        <View style={{position: "relative", alignItems: "flex-end", right: 64, bottom: 64, height: 24}}> 
+          <Icon 
+            name={"ios-trending-up-outline"} 
+            size={32} 
+            onPress={() => navigation.navigate("accountDetail", { account: AccountType.Bitcoin })  } />
         </View>
 
         <FlatList
@@ -307,7 +219,7 @@ export const MoveMoneyScreen = (
           }]}
           extraData={accountRefresh}
           style={styles.listContainer}
-          refreshControl={<RefreshControl refreshing={loading} onRefresh={() => refreshQuery()} />}
+          refreshControl={<RefreshControl refreshing={loading} onRefresh={refreshQuery} />}
           renderItem={({ item }) => (
             <LargeButton
               title={item.title}

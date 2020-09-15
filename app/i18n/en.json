@@ -549,5 +549,8 @@
     "detail": "Transaction Details",
     "spent": "You spent",
     "received": "You received"
+  },
+  "TransactionScreen": {
+    "noTransaction": "No transaction to show"
   }
 }

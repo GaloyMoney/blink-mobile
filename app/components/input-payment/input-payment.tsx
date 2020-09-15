@@ -1,4 +1,5 @@
-import { indexOf, toInteger } from "lodash"
+import { toInteger } from "lodash"
+import { observer } from "mobx-react"
 import * as React from "react"
 import { Keyboard, Text, View } from "react-native"
 import { Input } from "react-native-elements"
@@ -8,6 +9,7 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { translate } from "../../i18n"
 import { StoreContext } from "../../models"
 import { palette } from "../../theme/palette"
+import { CurrencyConversion } from "../../utils/currencyConversion"
 import { CurrencyType } from "../../utils/enum"
 import { TextCurrency } from "../text-currency/text-currency"
 
@@ -24,7 +26,7 @@ const styles = EStyleSheet.create({
   header: {
     alignItems: "center",
     marginTop: "8rem",
-    width: "100%"
+    width: "100%",
   },
 
   subCurrencyText: {
@@ -49,12 +51,16 @@ export interface InputPaymentDataInjectedProps {
   currencyPreference?: string // "sats" | "BTC" | "usd"
 }
 
-export const InputPaymentDataInjected = (props: InputPaymentDataInjectedProps) => {
+export const InputPaymentDataInjected = observer((props: InputPaymentDataInjectedProps) => {
   const store = React.useContext(StoreContext)
   const price = store.rate(CurrencyType.BTC)
 
-  return <InputPayment price={price} {...props} />
-}
+  return <InputPayment 
+    price={price} 
+    prefCurrency={store.prefCurrency}
+    nextPrefCurrency={store.nextPrefCurrency}
+    {...props} />
+})
 
 export const InputPayment = ({
   price,
@@ -62,42 +68,18 @@ export const InputPayment = ({
   onUpdateAmount,
   onBlur = () => {},
   forceKeyboard = false,
+  prefCurrency,
+  nextPrefCurrency,
   initAmount = 0, // in sats
-  currencyPreference = "USD",
 }) => {
-
-  const mapping = {
-    USD: {
-      primary: "USD",
-      // TODO refactor: other place could use those conversions
-      conversion: (sats) =>
-        sats * price < 0.01 ? (sats * price).toFixed(4) : (sats * price).toFixed(2),
-      reverse: (usd) => usd / price,
-      secondary: "sats",
-      secondaryConversion: (sats) => sats,
-    },
-    sats: {
-      primary: "sats",
-      conversion: (sats) => sats.toFixed(0),
-      reverse: (sats) => sats,
-      secondary: "USD",
-      secondaryConversion: (sats) => sats * price,
-    },
-    BTC: {
-      primary: "BTC",
-      conversion: (sats) => (sats / 10 ** 8).toFixed(8), // BigNum?
-      reverse: (btc) => btc * 10 ** 8,
-      secondary: "USD",
-      secondaryConversion: (sats) => sats * price,
-    },
-  }
 
   const endByDot = (s: string) => s.match(/^[0-9]*\.{1}$/)
 
-  const [unit, setUnit] = React.useState(currencyPreference)
   const [amount, setAmount] = React.useState(initAmount)
   const [input, setInput] = React.useState("")
   const [appendDot, setAppendDot] = React.useState(false)
+
+  const mapping = CurrencyConversion(price)
 
   React.useEffect(() => {
     setAmount(initAmount)
@@ -105,7 +87,7 @@ export const InputPayment = ({
 
   React.useEffect(() => {
     setAppendDot(!!endByDot(input))
-    const newAmount = mapping[unit].reverse(+input)
+    const newAmount = mapping[prefCurrency].reverse(+input)
     if (!isNaN(newAmount)) {
       setAmount(newAmount)
       onUpdateAmount(toInteger(newAmount))
@@ -122,8 +104,8 @@ export const InputPayment = ({
 
   const inputRef = React.useRef()
 
-  const amountInput = mapping[unit].conversion(amount)
-  const currency = mapping[unit].primary
+  const amountInput = mapping[prefCurrency].conversion(amount)
+  const currency = mapping[prefCurrency].primary
 
 
   // TODO: show "an amount is needed" in red
@@ -163,13 +145,6 @@ export const InputPayment = ({
     return value
   }
 
-  const next = () => {
-    const units = ["sats", "USD"] // "BTC"
-    const currentIndex = indexOf(units, unit)
-    const nextCurrency = units[(currentIndex + 1) % units.length]
-    setUnit(nextCurrency)
-  }
-
   return (
     <View style={{ flexDirection: "row", alignItems: "center" }}>
       <View style={styles.header}>
@@ -204,12 +179,12 @@ export const InputPayment = ({
         renderErrorMessage={false}
       />
         <TextCurrency
-          amount={mapping[unit].secondaryConversion(amount)}
-          currency={mapping[unit].secondary}
+          amount={mapping[prefCurrency].secondaryConversion(amount)}
+          currency={mapping[prefCurrency].secondary}
           style={styles.subCurrencyText}
         />
       </View>
-      <TouchableOpacity onPress={next}>
+      <TouchableOpacity onPress={nextPrefCurrency}>
         <Icon name={"ios-swap-vertical"} size={32} style={{top: -4}} />
       </TouchableOpacity>
     </View>
