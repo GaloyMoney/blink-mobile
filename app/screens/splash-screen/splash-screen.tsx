@@ -3,19 +3,15 @@ import { ActivityIndicator, Image, SafeAreaView, StyleSheet, Text, View } from "
 import { ScrollView } from "react-native-gesture-handler"
 import { VersionComponent } from "../../components/version"
 import { translate } from "../../i18n"
+import { useQuery } from "../../models"
 import { palette } from "../../theme/palette"
+import { isIos } from "../../utils/helper"
 const BitcoinBeachLogo = require("../get-started-screen/bitcoinBeach3.png")
-
+import { observer } from "mobx-react"
+import DeviceInfo from 'react-native-device-info';
+import { Token } from "../../utils/token"
 
 const styles = StyleSheet.create({
-  centerBackground: {
-    alignItems: "center",
-    backgroundColor: palette.lightBlue,
-    flex: 1,
-    flexDirection: "column",
-    justifyContent: "space-around",
-  },
-
   container: {
     alignItems: "center",
     flex: 1,
@@ -38,22 +34,46 @@ const styles = StyleSheet.create({
     color: palette.lighterGrey,
     fontSize: 18,
     textAlign: "center",
+    paddingTop: 18,
+    flex: 1,
   },
 })
 
-export const SplashScreen = ({ route, error }) => {
-  const needUpdate = route?.params?.needUpdate ?? false
+export const SplashScreen = observer(({ navigation }) => {
+
+  let needUpdate
+  const { error, loading, data } = useQuery(store => store.queryBuildParameters())
+
+  const needUpdateFn = (buildParameters) => {
+    const {minBuildNumberAndroid, minBuildNumberIos } = buildParameters
+    const minBuildNumber = isIos ? minBuildNumberIos : minBuildNumberAndroid
+    let buildNumber = DeviceInfo.getBuildNumber();
+    console.log({buildNumber, minBuildNumber})
+    return buildNumber < minBuildNumber
+  }
+
+  if (!!data) {
+    needUpdate = needUpdateFn(data.buildParameters)
+  
+    if (!needUpdate) {
+      const token = new Token()
+      if (token.has()) {
+          navigation.navigate("Primary")
+        } else {
+          navigation.navigate("getStarted")
+      }
+    }
+  }
 
   return (
   <SafeAreaView style={styles.container}>
-    <ScrollView contentContainerStyle={{alignItems: "center"}}>
+    <ScrollView contentContainerStyle={{alignItems: "center"}} style={{backgroundColor: palette.lightBlue}}>
       <Image
         style={styles.Logo}
         source={BitcoinBeachLogo}
       />
-      <VersionComponent style={{ paddingVertical: 30 }} />
-      <View style={{paddingHorizontal: 30}}>
-        {!needUpdate &&
+      <View style={{paddingHorizontal: 30, flex: 1, marginVertical: 30}}>
+        {loading &&
           <ActivityIndicator style={{ flex: 1 }} size="large" color={palette.lightGrey} />
         }
         {needUpdate && 
@@ -63,6 +83,7 @@ export const SplashScreen = ({ route, error }) => {
           <Text style={styles.text}>{error.message}</Text>
         }
       </View>
+      <VersionComponent navigation={navigation} style={{ paddingVertical: 30 }} />
     </ScrollView>
   </SafeAreaView>
-)}
+)})

@@ -27,9 +27,7 @@ import { AccountType } from "../utils/enum"
 import { validPayment } from "../utils/parsing"
 import { getNetwork, Token } from "../utils/token"
 const PushNotification = require("react-native-push-notification");
-import DeviceInfo from 'react-native-device-info';
-import { isIos } from "../utils/helper"
-import { observer } from "mobx-react"
+
 
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
 PushNotification.configure({
@@ -101,7 +99,7 @@ const size = 32
 
 const RootNavigator = createStackNavigator()
 
-export const RootStack = observer(() => {
+export const RootStack = () => {
 
   const appState = React.useRef(AppState.currentState);
   const store = React.useContext(StoreContext)
@@ -237,43 +235,15 @@ export const RootStack = observer(() => {
     });
   }, []);
 
-  const { error, loading, data } = useQuery(store => store.queryBuildParameters())
-  
-  if (loading || error) {
-    return <SplashScreen route={{}} error={error} />
-  }
-
-  const needUpdate = (buildParameters) => {
-    const {minBuildNumberAndroid, minBuildNumberIos } = buildParameters
-    const minBuildNumber = isIos ? minBuildNumberIos : minBuildNumberAndroid
-    let buildNumber = DeviceInfo.getBuildNumber();
-    console.log({buildNumber, minBuildNumber})
-    return buildNumber < minBuildNumber
-  }  
-
-  let initialRouteName
-
-  if (needUpdate(data.buildParameters)) {
-    initialRouteName = "needUpdate"
-  } else {
-    const token = new Token()
-    if (token.has()) {
-        initialRouteName = "Primary"
-      } else {
-        initialRouteName = "getStarted"
-    }
-  }
-
   return (
     <RootNavigator.Navigator
       screenOptions={{ gestureEnabled: false }}
-      initialRouteName={initialRouteName}
+      initialRouteName={"splashScreen"}
     >
       <RootNavigator.Screen
-        name="needUpdate"
+        name="splashScreen"
         component={SplashScreen}
         options={{ headerShown: false }}
-        initialParams={{ needUpdate: true }}
       />
       <RootNavigator.Screen
         name="getStarted"
@@ -377,7 +347,7 @@ export const RootStack = observer(() => {
       />
     </RootNavigator.Navigator>
   )
-})
+}
 
 
 
