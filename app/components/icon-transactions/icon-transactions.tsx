@@ -1,7 +1,6 @@
 import * as React from "react"
 import { palette } from "../../theme/palette"
 import { SvgXml } from 'react-native-svg';
-import { colorTypeFromIconType } from "../../screens/transaction-screen";
 
 const xml_transaction_sent = `
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -45,6 +44,7 @@ const xml_transaction_received = `
 `
 
 type IconType = "send" | "receive"
+export const colorTypeFromIconType = type => type === "send" ? palette.orange : palette.green 
 
 export const IconTransaction = 
 	({type, size, transparent = false}: {type: IconType, size: number, transparent?: boolean}) => {

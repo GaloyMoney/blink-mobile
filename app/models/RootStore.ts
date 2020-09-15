@@ -10,6 +10,7 @@ import { TransactionModel } from "./TransactionModel"
 import { map, filter, sumBy } from "lodash"
 import analytics from '@react-native-firebase/analytics';
 import { uploadToken } from "../utils/notifications"
+import { indexOf } from "lodash"
 
 export const ROOT_STATE_STORAGE_KEY = "rootAppGaloy"
 
@@ -32,7 +33,8 @@ export const RootStore = RootStoreBase
 .props({
   onboarding: types.optional(OnboardingModel, {}),
   accountRefresh: types.optional(types.boolean, false), // used to refresh the account screen
-  modalClipboardVisible: types.optional(types.boolean, false),
+  modalClipboardVisible: types.optional(types.boolean, false), // when switching been app, should we show modal when returning to Galoy?
+  prefCurrency: types.optional(types.string, "USD"), // which currency to show from the app
 })
 .actions(self => {
   // This is an auto-generated example action.
@@ -42,6 +44,12 @@ export const RootStore = RootStoreBase
 
   const setModalClipboardVisible = (value) => {
     self.modalClipboardVisible = value
+  }
+
+  const nextPrefCurrency = () => {    
+    const units = ["sats", "USD"] // "BTC"
+    const currentIndex = indexOf(units, self.prefCurrency)
+    self.prefCurrency = units[(currentIndex + 1) % units.length]
   }
 
   const earnComplete = async (id) => {
@@ -111,7 +119,7 @@ export const RootStore = RootStoreBase
     yield uploadToken(self)
   })
 
-  return { log, earnComplete, loginSuccessful, setModalClipboardVisible }
+  return { log, earnComplete, loginSuccessful, setModalClipboardVisible, nextPrefCurrency }
 })
 .views((self) => ({
   // workaround on the fact key can't be enum

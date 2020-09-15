@@ -1,10 +1,9 @@
 import * as React from "react"
-import { View, ActivityIndicator, StyleSheet, Image } from "react-native"
-import { Screen } from "../../components/screen"
+import { ActivityIndicator, Image, SafeAreaView, StyleSheet } from "react-native"
 import { VersionComponent } from "../../components/version"
+import { palette } from "../../theme/palette"
 const BitcoinBeachLogo = require("../get-started-screen/bitcoinBeach3.png")
 
-import { palette } from "../../theme/palette"
 
 const styles = StyleSheet.create({
   centerBackground: {
@@ -35,12 +34,12 @@ const styles = StyleSheet.create({
 })
 
 export const SplashScreen = ({}) => (
-  <View style={styles.container}>
+  <SafeAreaView style={styles.container}>
     <Image
       style={styles.Logo}
       source={BitcoinBeachLogo}
     />
     <VersionComponent style={{ paddingVertical: 30 }} />
     <ActivityIndicator style={{ flex: 1 }} size="large" color={palette.lightGrey} />
-  </View>
+  </SafeAreaView>
 )

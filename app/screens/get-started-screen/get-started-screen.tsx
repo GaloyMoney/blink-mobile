@@ -42,25 +42,12 @@ const styles = EStyleSheet.create({
     width: "100%",
   },
 
-  form: {
-    marginHorizontal: 32,
-    marginVertical: 12,
-  },
-
   sub: {
     color: palette.white,
     fontSize: 18,
     marginTop: 32,
     marginBottom: 16,
     textAlign: "center",
-  },
-
-  title: {
-    color: palette.white,
-    fontSize: 72,
-    fontWeight: "bold",
-    flex: 1,
-    paddingBottom: "24rem",
   },
 
   Logo: {
