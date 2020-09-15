@@ -11,8 +11,7 @@ import {
 import { ScreenProps } from "./screen.props"
 import { isNonScrolling, offsets, presets } from "./screen.presets"
 import { ModalClipboard } from "../modal-clipboard"
-
-const isIos = Platform.OS === "ios"
+import { isIos } from "../../utils/helper"
 
 function ScreenWithoutScrolling(props: ScreenProps) {
   const preset = presets.fixed

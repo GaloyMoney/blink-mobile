@@ -6,7 +6,7 @@ import { palette } from "../../theme/palette"
 
 const styles = StyleSheet.create({
   version: {
-    color: palette.darkGrey,
+    color: palette.lighterGrey,
     fontSize: 18,
     marginTop: 18,
     textAlign: "center",
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
 })
 
 export const VersionComponent = ({ style }) => (
-  <Text style={[style, styles.version]}>
+  <Text style={[styles.version, style]}>
     v{VersionNumber.appVersion} build {VersionNumber.buildVersion}
     {"\n"}
     {/* network: {Config.BITCOIN_NETWORK} TODO */}
