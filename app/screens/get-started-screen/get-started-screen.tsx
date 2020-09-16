@@ -4,6 +4,7 @@ import { Image, Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { Screen } from "../../components/screen"
+import { VersionComponent } from "../../components/version"
 import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
@@ -41,11 +42,6 @@ const styles = EStyleSheet.create({
     width: "100%",
   },
 
-  form: {
-    marginHorizontal: 32,
-    marginVertical: 12,
-  },
-
   sub: {
     color: palette.white,
     fontSize: 18,
@@ -54,36 +50,26 @@ const styles = EStyleSheet.create({
     textAlign: "center",
   },
 
-  title: {
-    color: palette.white,
-    fontSize: 72,
-    fontWeight: "bold",
-    flex: 1,
-    paddingBottom: "24rem",
-  },
-
   Logo: {
     maxHeight: 300,
-    maxWidth: 310
+    maxWidth: 310,
+    marginTop: 32,
   }
 })
+
+
 
 export const GetStartedScreen = () => {
   const { navigate } = useNavigation()
 
   return (
     <Screen style={styles.container} backgroundColor={palette.lightBlue} statusBar="light-content">
-      <View style={{flex: 1}} />
-      {/* <Text style={styles.title} onPress={() => navigate("debug")}>
-        Galoy
-      </Text> */}
-      {/* <MascotBitcoin width={200} height={200} /> */}
       <Image
         style={styles.Logo}
         source={BitcoinBeachLogo}
       />
+      <VersionComponent style={{ paddingVertical: 30 }} />
       <View style={styles.bottom}>
-        <Text style={styles.sub}>{translate("GetStartedScreen.headline")}</Text>
         <Button
           title={translate("GetStartedScreen.getStarted")}
           buttonStyle={styles.button}

@@ -9,7 +9,7 @@ import { AppState } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 import { translate } from "../i18n"
-import { StoreContext } from "../models"
+import { StoreContext, useQuery } from "../models"
 import { AccountDetailScreen } from "../screens/account-detail-screen/account-detail-screen"
 import { DebugScreen } from "../screens/debug-screen"
 import { EarnMapDataInjected } from "../screens/earns-map-screen"
@@ -18,7 +18,7 @@ import { SectionCompleted } from "../screens/earns-screen/section-completed"
 import { GetStartedScreen } from "../screens/get-started-screen"
 import { FindATMScreen, MoveMoneyScreenDataInjected, ReceiveBitcoinScreen, ScanningQRCodeScreen, SendBitcoinScreen } from "../screens/move-money-screen"
 import { WelcomePhoneInputScreen, WelcomePhoneValidationScreenDataInjected } from "../screens/phone-auth-screen"
-import { SplashScreen } from "../screens/splash-screen"
+import { SplashScreen } from "../screens/splash-screen/splash-screen"
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
 import { TransactionScreenDataInjected } from "../screens/transaction-screen/transaction-screen"
 import { WelcomeFirstScreen } from "../screens/welcome-screens"
@@ -27,6 +27,7 @@ import { AccountType } from "../utils/enum"
 import { validPayment } from "../utils/parsing"
 import { getNetwork, Token } from "../utils/token"
 const PushNotification = require("react-native-push-notification");
+
 
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
 PushNotification.configure({
@@ -99,7 +100,6 @@ const size = 32
 const RootNavigator = createStackNavigator()
 
 export const RootStack = () => {
-  const [initialRouteName, setInitialRouteName] = useState("")
 
   const appState = React.useRef(AppState.currentState);
   const store = React.useContext(StoreContext)
@@ -235,35 +235,23 @@ export const RootStack = () => {
     });
   }, []);
 
-  useEffect(() => {
-    const _ = async () => {
-      const token = new Token()
-
-      if (token.has()) {
-        setInitialRouteName("Primary")
-      } else {
-        setInitialRouteName("getStarted")
-      }
-    }
-
-    _()
-  }, [])
-
-  if (initialRouteName === "") {
-    return <SplashScreen />
-  }
-
-  console.tron.log({initialRouteName})
-
   return (
     <RootNavigator.Navigator
-      initialRouteName={initialRouteName}
       screenOptions={{ gestureEnabled: false }}
+      initialRouteName={"splashScreen"}
     >
+      <RootNavigator.Screen
+        name="splashScreen"
+        component={SplashScreen}
+        options={{ 
+          headerShown: false
+        }}
+      />
       <RootNavigator.Screen
         name="getStarted"
         component={GetStartedScreen}
-        options={{ headerShown: false }}
+        options={{ headerShown: false, 
+          animationEnabled: false, }}
       />
       <RootNavigator.Screen name="debug" component={DebugScreen} />
       <RootNavigator.Screen
@@ -274,7 +262,8 @@ export const RootStack = () => {
       <RootNavigator.Screen
         name="Primary"
         component={PrimaryNavigator}
-        options={{ headerShown: false }}
+        options={{ headerShown: false, 
+          animationEnabled: false, }}
       />
       <StackMoveMoney.Screen
         name="scanningQRCode"
@@ -392,6 +381,7 @@ export const MoveMoneyNavigator = () => {
         component={ReceiveBitcoinScreen}
         options={{ 
           title: translate("ReceiveBitcoinScreen.title"),
+          // headerShown: false,
         }}
       />
       <StackMoveMoney.Screen name="findATM" component={FindATMScreen} />

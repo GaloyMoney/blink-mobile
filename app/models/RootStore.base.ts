@@ -129,8 +129,8 @@ export const RootStoreBase = withTypedRefs<Refs>()(MSTGQLStore
         ${typeof resultSelector === "function" ? resultSelector(new SuccessModelSelector()).toString() : resultSelector}
       } }`, variables, optimisticUpdate)
     },
-    mutateLogin(variables: { phone?: string, code?: number }, resultSelector: string | ((qb: TokenModelSelector) => TokenModelSelector) = tokenModelPrimitives.toString(), optimisticUpdate?: () => void) {
-      return self.mutate<{ login: TokenModelType}>(`mutation login($phone: String, $code: Int) { login(phone: $phone, code: $code) {
+    mutateLogin(variables: { phone?: string, code?: number, currency?: string }, resultSelector: string | ((qb: TokenModelSelector) => TokenModelSelector) = tokenModelPrimitives.toString(), optimisticUpdate?: () => void) {
+      return self.mutate<{ login: TokenModelType}>(`mutation login($phone: String, $code: Int, $currency: String) { login(phone: $phone, code: $code, currency: $currency) {
         ${typeof resultSelector === "function" ? resultSelector(new TokenModelSelector()).toString() : resultSelector}
       } }`, variables, optimisticUpdate)
     },
