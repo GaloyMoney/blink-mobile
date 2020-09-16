@@ -381,7 +381,7 @@ export const MoveMoneyNavigator = () => {
         component={ReceiveBitcoinScreen}
         options={{ 
           title: translate("ReceiveBitcoinScreen.title"),
-          headerShown: false,
+          // headerShown: false,
         }}
       />
       <StackMoveMoney.Screen name="findATM" component={FindATMScreen} />
