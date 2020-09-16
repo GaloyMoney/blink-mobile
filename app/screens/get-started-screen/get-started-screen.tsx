@@ -70,7 +70,6 @@ export const GetStartedScreen = () => {
       />
       <VersionComponent style={{ paddingVertical: 30 }} />
       <View style={styles.bottom}>
-        <Text style={styles.sub}>{translate("GetStartedScreen.headline")}</Text>
         <Button
           title={translate("GetStartedScreen.getStarted")}
           buttonStyle={styles.button}

@@ -3,6 +3,7 @@ import * as React from "react"
 import { Pressable, StyleSheet, Text } from "react-native"
 import Config from "react-native-config"
 import VersionNumber from "react-native-version-number"
+import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
 
 const styles = StyleSheet.create({
@@ -33,6 +34,7 @@ export const VersionComponent = ({ style }) => {
         {"\n"}
         {/* network: {Config.BITCOIN_NETWORK} TODO */}
         {/* FIXME should be a props */}
+        {translate("GetStartedScreen.headline")}
       </Text>
     </Pressable>
 )}
