@@ -14,7 +14,6 @@ import { StoreContext, useQuery } from "../../models"
 import { palette } from "../../theme/palette"
 import { sameDay, sameMonth } from "../../utils/date"
 import { AccountType, CurrencyType } from "../../utils/enum"
-import { getMainQuery } from "../../utils/mainQuery"
 import Icon from "react-native-vector-icons/Ionicons"
 
 
@@ -167,11 +166,10 @@ const formatTransactions = (transactions) => {
 export const TransactionScreenDataInjected = observer(({navigation, route}) => {
 
   const store = React.useContext(StoreContext)
-  const { query, error, loading, setQuery } = useQuery()
+  const { query, error, loading } = useQuery(store => store.mainQuery())
 
   const refreshQuery = async () => {
-    console.tron.log("refresh query")
-    setQuery(getMainQuery())
+    console.tron.log("refresh query from transaction screen")
     await query.refetch()
   }
 

@@ -30,14 +30,14 @@ const styles = EStyleSheet.create({
   },
 
   subCurrencyText: {
-    fontSize: "16rem",
+    fontSize: "18rem",
     color: palette.midGrey,
     marginTop: 0,
     paddingTop: 0,
   },
 
   textStyle: {
-    fontSize: "18rem",
+    fontSize: "24rem",
     color: palette.darkGrey,
   },
 })
