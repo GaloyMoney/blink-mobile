@@ -110,7 +110,7 @@ export const TransactionDetailScreen = ({ route, navigation }) => {
       <View style={[styles.amountView, {backgroundColor: colorTypeFromIconType(sendOrReceive)}]}>
         <IconTransaction type={iconTypeFromAmount(amount)} size={100} transparent={true} />
         <Text style={styles.amountText}>{spendOrReceive}</Text>
-        {usd &&
+        {!!usd &&
           <TextCurrency amount={Math.abs(usd)} currency={"USD"} style={styles.amount} />
         }
         <TextCurrency amount={Math.abs(amount)} currency={currency} style={styles.amountSecondary} />
