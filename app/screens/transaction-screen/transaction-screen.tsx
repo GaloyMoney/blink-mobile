@@ -201,7 +201,9 @@ export const TransactionScreen = ({ transactions, refreshing, navigation, curren
   const sections = formatTransactions(transactions)
 
   const AccountDetailItem: React.FC<AccountDetailItemProps> = (props) => {
-    const amount = prefCurrency === "sats" ? props.amount : props.usd
+    const amount = prefCurrency === "sats" ? 
+      props.amount : 
+      props.amount > 0 ? props.usd : - props.usd // manage sign for usd. unlike for amount usd is not signed
     const symbol = prefCurrency === "sats" ? '' : "$"
     const precision = prefCurrency === "sats" ? 0 : amount < 0.01 ? 4 : 2
 
