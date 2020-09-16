@@ -15,6 +15,61 @@ import { indexOf } from "lodash"
 
 export const ROOT_STATE_STORAGE_KEY = "rootAppGaloy"
 
+const gql_query_logged = `
+query gql_query_logged {
+  prices {
+    __typename
+    id
+    o
+  }
+  earnList {
+    __typename
+    id
+    value
+    completed
+  }
+  wallet {
+    __typename
+    id
+    balance
+    currency
+    transactions {
+      __typename
+      id
+      amount
+      description
+      created_at
+      hash
+      type
+      usd
+    }
+  }
+  getLastOnChainAddress {
+    __typename
+    id
+  }
+  me {
+    __typename
+    id
+    level
+  }
+}
+`
+
+const gql_query_anonymous = `
+query gql_query_anonymous {
+  prices {
+    __typename
+    id
+    o
+  }
+  earnList {
+    __typename
+    id
+    value
+  }
+}
+`
 
 export interface RootStoreType extends Instance<typeof RootStore.Type> {}
 
@@ -33,7 +88,6 @@ export const RootStore = RootStoreBase
 }))
 .props({
   onboarding: types.optional(OnboardingModel, {}),
-  accountRefresh: types.optional(types.boolean, false), // used to refresh the account screen
   modalClipboardVisible: types.optional(types.boolean, false), // when switching been app, should we show modal when returning to Galoy?
   prefCurrency: types.optional(types.string, "USD"), // which currency to show from the app
 })
@@ -41,6 +95,11 @@ export const RootStore = RootStoreBase
   // This is an auto-generated example action.
   const log = () => {
     console.log(JSON.stringify(self))
+  }
+
+  const mainQuery = () => {
+    const query = new Token().has() ? gql_query_logged : gql_query_anonymous
+    return self.query(query)
   }
 
   const setModalClipboardVisible = (value) => {
@@ -109,7 +168,8 @@ export const RootStore = RootStoreBase
     self.wallets.get("BTC").transactions.clear()
     
     console.tron.log("cleared local transactions")
-    self.accountRefresh = !self.accountRefresh
+
+    yield self.queryWallet()
 
     // FIXME
     // self.users.delete("incognito")
@@ -121,7 +181,7 @@ export const RootStore = RootStoreBase
     yield uploadToken(self)
   })
 
-  return { log, earnComplete, loginSuccessful, setModalClipboardVisible, nextPrefCurrency }
+  return { log, earnComplete, loginSuccessful, setModalClipboardVisible, nextPrefCurrency, mainQuery }
 })
 .views((self) => ({
   // workaround on the fact key can't be enum

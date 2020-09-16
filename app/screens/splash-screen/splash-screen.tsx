@@ -83,7 +83,7 @@ export const SplashScreen = observer(({ navigation }) => {
           <Text style={styles.text}>{error.message}</Text>
         }
       </View>
-      <VersionComponent navigation={navigation} style={{ paddingVertical: 30 }} />
+      <VersionComponent style={{ paddingVertical: 30 }} />
     </ScrollView>
   </SafeAreaView>
 )})

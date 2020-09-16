@@ -243,12 +243,15 @@ export const RootStack = () => {
       <RootNavigator.Screen
         name="splashScreen"
         component={SplashScreen}
-        options={{ headerShown: false }}
+        options={{ 
+          headerShown: false
+        }}
       />
       <RootNavigator.Screen
         name="getStarted"
         component={GetStartedScreen}
-        options={{ headerShown: false }}
+        options={{ headerShown: false, 
+          animationEnabled: false, }}
       />
       <RootNavigator.Screen name="debug" component={DebugScreen} />
       <RootNavigator.Screen
@@ -259,7 +262,8 @@ export const RootStack = () => {
       <RootNavigator.Screen
         name="Primary"
         component={PrimaryNavigator}
-        options={{ headerShown: false }}
+        options={{ headerShown: false, 
+          animationEnabled: false, }}
       />
       <StackMoveMoney.Screen
         name="scanningQRCode"

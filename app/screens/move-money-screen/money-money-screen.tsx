@@ -17,7 +17,6 @@ import { StoreContext, useQuery } from "../../models"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { AccountType, CurrencyType } from "../../utils/enum"
-import { getMainQuery } from "../../utils/mainQuery"
 
 
 const styles = EStyleSheet.create({
@@ -85,11 +84,12 @@ const styles = EStyleSheet.create({
 export const MoveMoneyScreenDataInjected = observer(({ navigation }) => {
   const store = React.useContext(StoreContext)
 
-  const { query, error, loading, setQuery } = useQuery()
+  const updateQuery = store => store.mainQuery()
+  const { query, error, loading, setQuery } = useQuery(updateQuery)
 
   const refreshQuery = async () => {
     console.tron.log("refresh query")
-    setQuery(getMainQuery())
+    setQuery(updateQuery)
     await query.refetch()
   }
 
@@ -134,13 +134,12 @@ export const MoveMoneyScreenDataInjected = observer(({ navigation }) => {
       account: AccountType.BankAndBitcoin,
     })}
     refreshQuery={refreshQuery}
-    accountRefresh={store.accountRefresh}
   />
 })
 
 export const MoveMoneyScreen = (
   ({ walletActivated, navigation, loading, error, 
-    refreshQuery, amount, amountOtherCurrency, accountRefresh }) => {
+    refreshQuery, amount, amountOtherCurrency }) => {
 
   const [modalVisible, setModalVisible] = useState(false)
 
@@ -217,7 +216,6 @@ export const MoveMoneyScreen = (
           },{
             title: translate(`ReceiveBitcoinScreen.title`), icon: "receive", target: "receiveBitcoin", color: palette.green
           }]}
-          extraData={accountRefresh}
           style={styles.listContainer}
           refreshControl={<RefreshControl refreshing={loading} onRefresh={refreshQuery} />}
           renderItem={({ item }) => (

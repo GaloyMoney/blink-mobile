@@ -14,12 +14,14 @@ const styles = StyleSheet.create({
   },
 })
 
-export const VersionComponent = ({ style, navigation }) => {
+export const VersionComponent = ({ style }) => {
+
+  const {navigate} = useNavigation()
 
   const [secretMenuCounter, setSecretMenuCounter] = React.useState(0)
   React.useEffect(() => {
     if (secretMenuCounter > 2) {
-      navigation.navigate("Profile")
+      navigate("Profile")
       setSecretMenuCounter(0)
     }
   }, [secretMenuCounter])
