@@ -205,7 +205,7 @@ export const TransactionScreen = ({ transactions, refreshing, navigation, curren
       props.amount : 
       props.amount > 0 ? props.usd : - props.usd // manage sign for usd. unlike for amount usd is not signed
     const symbol = prefCurrency === "sats" ? '' : "$"
-    const precision = prefCurrency === "sats" ? 0 : amount < 0.01 ? 4 : 2
+    const precision = prefCurrency === "sats" ? 0 : props.usd < 0.01 ? 4 : 2
 
     return (<ListItem
       // key={props.hash}
