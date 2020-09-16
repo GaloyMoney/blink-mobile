@@ -549,5 +549,11 @@
     "detail": "Transaction Details",
     "spent": "You spent",
     "received": "You received"
+  },
+  "TransactionScreen": {
+    "noTransaction": "No transaction to show"
+  },
+  "SplashScreen": {
+    "update": "Your app is outdated. An update is needed before the app can be used.\n\nThis can be done from the PlayStore for Android and Testflight for iOS"
   }
 }

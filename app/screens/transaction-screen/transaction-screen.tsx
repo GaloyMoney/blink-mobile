@@ -1,21 +1,20 @@
 import { StackNavigationProp } from "@react-navigation/stack"
+import * as currency_fmt from "currency.js"
 import { observer } from "mobx-react"
 import moment from "moment"
 import * as React from "react"
 import { RefreshControl, SectionList, Text, View } from "react-native"
 import { ListItem } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
+import { TouchableOpacity } from "react-native-gesture-handler"
 import { IconTransaction } from "../../components/icon-transactions"
 import { Screen } from "../../components/screen"
-import { TextCurrency } from "../../components/text-currency"
 import { translate } from "../../i18n"
 import { StoreContext, useQuery } from "../../models"
 import { palette } from "../../theme/palette"
 import { sameDay, sameMonth } from "../../utils/date"
 import { AccountType, CurrencyType } from "../../utils/enum"
-import { Token } from "../../utils/token"
-import messaging from '@react-native-firebase/messaging'
-
+import Icon from "react-native-vector-icons/Ionicons"
 
 
 const styles = EStyleSheet.create({
@@ -90,11 +89,20 @@ const styles = EStyleSheet.create({
     fontSize: "24rem"
   },
 
-  headerSection: {
-    backgroundColor: palette.white,
+  sectionHeaderText: {
     color: palette.darkGrey,
     fontSize: 18,
+  },
+
+  sectionHeaderContainer: {
+    color: palette.darkGrey,
     padding: 22,
+    flexDirection: 'row',
+    justifyContent: "space-between"
+  },
+
+  row: {
+    flexDirection: 'row',
   },
 })
 
@@ -107,6 +115,7 @@ const formatTransactions = (transactions) => {
 
   transactions = transactions.slice().sort((a, b) => (a.date > b.date ? -1 : 1)) // warning without slice?
   transactions.forEach(tx => tx.date = moment.unix(tx.created_at))
+  transactions.forEach(tx => tx.sendOrReceive = iconTypeFromAmount(tx.amount))
 
   const isToday = (tx) => {
     return sameDay(tx.date, new Date())
@@ -118,10 +127,6 @@ const formatTransactions = (transactions) => {
 
   const isThisMonth = (tx) => {
     return sameMonth(tx.date, new Date())
-  }
-
-  if (transactions.length === 0) {
-    sections.push({ title: "", data: [{}] })
   }
 
   while (transactions.length) {
@@ -161,53 +166,23 @@ const formatTransactions = (transactions) => {
 export const TransactionScreenDataInjected = observer(({navigation, route}) => {
 
   const store = React.useContext(StoreContext)
+  const { query, error, loading } = useQuery(store => store.mainQuery())
 
-  let query = { refetch: () => {}}
-  let loading = false
-  
-  if (new Token().has()) {
-    const { error, ...others } = useQuery(store => store.queryWallet(
-      {},
-      ` __typename
-        id
-        currency
-        transactions {
-          __typename
-          id
-          amount
-          description
-          created_at
-          hash
-          type
-        }`
-    ))   
-
-    loading = others.loading
-    query = others.query
-
-    if (error) {
-      return <Text>{error.toString()}</Text>
-    }
+  const refreshQuery = async () => {
+    console.tron.log("refresh query from transaction screen")
+    await query.refetch()
   }
 
   const currency = "sat" // FIXME
-
-  React.useEffect(() => {
-    const unsubscribe = messaging().onMessage(async remoteMessage => {
-      // TODO: fine grain query
-      // only refresh as necessary
-      query.refetch()
-    })
-
-    return unsubscribe;
-  }, []); 
 
   return <TransactionScreen 
     navigation={navigation} 
     currency={currency}
     refreshing={loading}
-    onRefresh={() => query.refetch()}
-    // onRefresh={onRefresh} FIXME
+    error={error}
+    prefCurrency={store.prefCurrency}
+    nextPrefCurrency={store.nextPrefCurrency}
+    onRefresh={refreshQuery}
     transactions={store.wallets.get("BTC").transactions}
   />
 })
@@ -218,31 +193,34 @@ export interface AccountDetailItemProps {
   navigation: StackNavigationProp<any,any>,
 }
 
-const AccountDetailItem: React.FC<AccountDetailItemProps> = (props) => {
-  if (props.description) {
-    return (<ListItem
-    // key={props.hash}
-    title={props.description}
-    leftIcon={<IconTransaction 
-      type={props.type.includes("invoice") || props.type.includes("earn") ? "receive" : "send"}
-      size={24} 
-      color={palette.orange} />}
-    rightTitle={<TextCurrency amount={props.amount} currency={props.currency} textColor={palette.darkGrey} />}
-    onPress={() => props.navigation.navigate("transactionDetail", props)}
-    />)
-  } else { 
-    // no transaction
-    return (
-    <View style={styles.noTransactionView}>
-      <Text style={styles.noTransactionText}>No transaction to show</Text>
-    </View>)
-  }
-}
+export const iconTypeFromAmount = (amount) => amount > 0 ? "receive" : "send"
+const colorForText = type => type === "send" ? palette.darkGrey : palette.green 
 
-export const TransactionScreen = ({ transactions, refreshing, navigation, currency, onRefresh }) => {
+export const TransactionScreen = ({ transactions, refreshing, navigation, currency, onRefresh, error, prefCurrency, nextPrefCurrency }) => {
 
   const sections = formatTransactions(transactions)
-  
+
+  const AccountDetailItem: React.FC<AccountDetailItemProps> = (props) => {
+    const amount = prefCurrency === "sats" ? 
+      props.amount : 
+      props.amount > 0 ? props.usd : - props.usd // manage sign for usd. unlike for amount usd is not signed
+    const symbol = prefCurrency === "sats" ? '' : "$"
+    const precision = prefCurrency === "sats" ? 0 : props.usd < 0.01 ? 4 : 2
+
+    return (<ListItem
+      // key={props.hash}
+      title={props.description}
+      leftIcon={<IconTransaction
+        type={props.sendOrReceive}
+        size={24}
+      />}
+      rightTitle={<Text style={{color: colorForText(props.sendOrReceive)}}>
+        {currency_fmt.default(amount, { separator: ",", symbol, precision }).format()}  
+      </Text>}
+      onPress={() => props.navigation.navigate("transactionDetail", props)}
+      />
+    )}
+
   return (
     <Screen style={styles.screen}>
       <SectionList
@@ -250,9 +228,21 @@ export const TransactionScreen = ({ transactions, refreshing, navigation, curren
         renderItem={({ item, index, section }) => (
           <AccountDetailItem currency={currency} navigation={navigation} {...item} />
         )}
+        ListHeaderComponent={error && 
+          <Text style={{color: palette.red, alignSelf: "center", paddingBottom: 18}} selectable={true}>{error.message}</Text>
+        }
         renderSectionHeader={({ section: { title } }) => (
-          <Text style={styles.headerSection}>{title}</Text>
+          <View style={styles.sectionHeaderContainer}>
+            <Text style={styles.sectionHeaderText}>{title}</Text>
+            <TouchableOpacity style={styles.row} onPress={nextPrefCurrency}>
+              <Text style={styles.sectionHeaderText}>{prefCurrency} </Text>
+              <Icon name={"ios-swap-vertical"} size={32} style={{top: -4}} />
+            </TouchableOpacity>
+          </View>
         )}
+        ListEmptyComponent={<View style={styles.noTransactionView}>
+          <Text style={styles.noTransactionText}>{translate("TransactionScreen.noTransaction")}</Text>
+        </View>}
         sections={sections}
         keyExtractor={(item, index) => item + index}
       />

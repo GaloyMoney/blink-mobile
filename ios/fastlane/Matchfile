@@ -1,19 +1,1 @@
 git_url("git@github.com:nicolasburtey/signing_keys_react_native")
-
-storage_mode("git")
-
-type("development") # The default type, can be: appstore, adhoc, enterprise or development
-
-app_identifier("io.galoy.app")
-# app_identifier(["tools.fastlane.app", "tools.fastlane.app2"])
-
-
-## apple_id("nicolas.burtey@gmail.com")
-username("nicolas.burtey@gmail.com")
-# username("user@fastlane.tools") # Your Apple Developer Portal username
-
-
-# For all available options run `fastlane match --help`
-# Remove the # in the beginning of the line to enable the other options
-
-# The docs are available on https://docs.fastlane.tools/actions/match
