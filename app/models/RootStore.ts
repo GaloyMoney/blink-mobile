@@ -169,15 +169,12 @@ export const RootStore = RootStoreBase
     
     console.tron.log("cleared local transactions")
 
-    yield self.queryWallet()
-
-    // FIXME
-    // self.users.delete("incognito")
-
-    console.tron.log("sending token")
-
+    yield self.mainQuery()
+    self.users.delete("incognito")
+    
     // FIXME: only for android?
     // it seems we also have a token for iOS, without the permissions to show it though
+    console.tron.log("sending token")
     yield uploadToken(self)
   })
 
@@ -201,7 +198,6 @@ export const RootStore = RootStoreBase
   },
   get user() {
     const users = values(self.users)
-    // FIXME dirty way to manage incognito user
     return  users[users.length - 1]
   },
   get earnedSat() {
