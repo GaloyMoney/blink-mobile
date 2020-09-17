@@ -19,11 +19,7 @@ const styles = EStyleSheet.create({
     flexDirection: "column",
   },
 
-  container: {
-    flex: 1,
-  },
-
-  header: {
+  main: {
     alignItems: "center",
     marginTop: "8rem",
     width: "100%",
@@ -147,7 +143,7 @@ export const InputPayment = ({
 
   return (
     <View style={{ flexDirection: "row", alignItems: "center" }}>
-      <View style={styles.header}>
+      <View style={styles.main}>
         <Input
         ref={inputRef}
         placeholder={translate("common.setAnAmount")}
@@ -169,7 +165,7 @@ export const InputPayment = ({
         keyboardType={currency === "sats" ? "number-pad" : "decimal-pad"}
         onBlur={event => {
           onBlur()
-          keyboardFocus()
+          // keyboardFocus()
         }}
         enablesReturnKeyAutomatically={true}
         returnKeyLabel="Update"
