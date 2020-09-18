@@ -43,7 +43,8 @@ export interface BalanceHeaderProps {
   currency: CurrencyType
   amount: number
   amountOtherCurrency?: number
-  loading: boolean
+  loading: boolean,
+  style?: object
 }
 
 const Loader = () => (
@@ -59,6 +60,7 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
   amount,
   amountOtherCurrency = null,
   loading,
+  style
 }) => {
   const otherCurrency = currency === CurrencyType.BTC ? CurrencyType.USD : "sats"
 
@@ -69,7 +71,7 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
     ) : null
 
   return (
-    <View style={styles.header}>
+    <View style={[styles.header, style]}>
       <Text style={styles.balanceText}>{translate("BalanceHeader.currentBalance")}</Text>
       <View style={styles.amount}>
         <View style={{ flexDirection: "row", alignItems: "flex-end" }}>

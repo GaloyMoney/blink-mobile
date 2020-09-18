@@ -1,124 +1,19 @@
 import { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from "mobx-react";
 import * as React from "react";
-import { useState } from "react";
-import { Animated, View } from "react-native";
-import { Button } from "react-native-elements";
-import EStyleSheet from "react-native-extended-stylesheet";
 import { BalanceHeader } from "../../components/balance-header";
 import { PriceGraphDataInjected } from "../../components/price-graph";
 import { Screen } from "../../components/screen";
 import { translate } from "../../i18n";
 import { StoreContext } from "../../models";
 import { RootStore } from "../../models/root-store";
-import { color } from "../../theme";
 import { palette } from "../../theme/palette";
 import { AccountType } from "../../utils/enum";
-
-
 
 export interface AccountDetailScreenProps {
   account: AccountType
   store: RootStore
   navigation: StackNavigationProp<any,any>
-}
-
-const styles = EStyleSheet.create({
-  button: {
-    backgroundColor: color.primary,
-  },
-
-  buttonContainer: {
-    flex: 1,
-    paddingHorizontal: 15,
-  },
-
-  cashback: {
-    fontSize: 12,
-  },
-
-  flex: {
-    flex: 1,
-  },
-
-  fundingText: {
-    color: color.primary,
-    fontSize: 16,
-    paddingVertical: 20,
-    textAlign: "center",
-    textDecorationLine: "underline",
-  },
-
-  horizontal: {
-    flexDirection: "row",
-  },
-
-  icon: {
-    marginRight: 24,
-    textAlign: "center",
-    width: 32,
-  },
-
-  itemContainer: {
-    alignItems: "center",
-    flexDirection: "row",
-    marginHorizontal: 24,
-    marginVertical: 12,
-  },
-
-  itemText: {
-    color: color.text,
-    fontSize: 18,
-  },
-
-  text: {
-    color: palette.darkGrey,
-    fontSize: 16,
-    marginBottom: 10,
-    marginHorizontal: 20,
-    textAlign: "center",
-  },
-
-  vertical: {
-    flexDirection: "column",
-  },
-
-  viewModal: {
-    alignItems: "center",
-    backgroundColor: palette.white,
-    height: 250,
-    justifyContent: "flex-end",
-    paddingHorizontal: 20,
-  },
-})
-
-
-const VisualExpiration = ({ validUntil }) => {
-  const [fadeAnim] = useState(new Animated.Value(0))
-
-  React.useEffect(() => {
-    fadeAnim.setValue(0)
-    const duration = validUntil * 1000 - Date.now() // ms
-
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      duration, // ms
-    }).start()
-  }, [validUntil])
-
-  return (
-    <Animated.View
-      style={{
-        // ...style,
-        width: fadeAnim.interpolate({
-          inputRange: [0, 1],
-          outputRange: ["100%", "0%"],
-        }),
-        height: 5,
-        backgroundColor: fadeAnim.__getValue() === 0 ? color.primaryDarker : color.transparent,
-      }}
-    />
-  )
 }
 
 const BalanceHeaderDataInjection = observer(({ currency, account }) => {
@@ -127,191 +22,6 @@ const BalanceHeaderDataInjection = observer(({ currency, account }) => {
   return <BalanceHeader currency={currency} 
     amount={store.balances({currency: "BTC", account})} /> // FIXME
 })
-
-// const BuyAndSellComp = ({ dataStore, refresh }) => {
-//   const [side, setSide] = useState<Side>("buy")
-
-//   const [loading, setLoading] = useState(false)
-//   const [amount, setAmount] = useState(1000)
-//   const [loadingQuote, setLoadingQuote] = useState(false)
-
-//   const { navigate } = useNavigation()
-
-//   const onModalHide = () => {
-//     dataStore.exchange.quote.reset()
-//   }
-
-//   const getQuote = async () => {
-//     try {
-//       setLoadingQuote(true)
-//       await dataStore.exchange.quoteLNDBTC({ side, satAmount: amount })
-//     } catch (err) {
-//       Alert.alert(err.toString())
-//     } finally {
-//       setLoadingQuote(false)
-//     }
-//   }
-
-//   const executeTrade = async () => {
-//     try {
-//       let fn
-//       if (side === "buy") {
-//         fn = ["buyLNDBTC"]
-//       } else if (side === "sell") {
-//         fn = ["sellLNDBTC"]
-//       }
-
-//       setLoading(true)
-
-//       const success = await dataStore.exchange[fn]()
-
-//       if (success) {
-//         refresh()
-//         if (side === "buy") {
-//           await dataStore.onboarding.add(Onboarding.buyFirstSats)
-//         }
-//         setMessage("Success!")
-//       } else {
-//         setMessage(translate("errors.generic"))
-//       }
-//     } catch (err) {
-//       setMessage(err.toString())
-//     }
-//   }
-
-//   const onBuyInit = () => {
-//     setSide("buy")
-//     setModalVisible(true)
-//   }
-
-//   const onSellInit = () => {
-//     setSide("sell")
-//     setModalVisible(true)
-//   }
-
-//   const [message, setMessage] = useState("")
-//   const [modalVisible, setModalVisible] = useState(false)
-
-//   // workaround of https://github.com/facebook/react-native/issues/10471
-//   useEffect(() => {
-//     if (message !== "") {
-//       setMessage("")
-//       Alert.alert(message, "", [
-//         {
-//           text: translate("common.ok"),
-//           onPress: () => {
-//             setModalVisible(false)
-//             setLoading(false)
-//           },
-//         },
-//       ])
-//     }
-//   }, [message])
-
-//   return (
-//     <>
-//       <Modal
-//         style={{ marginHorizontal: 0, marginBottom: 0 }}
-//         onModalHide={onModalHide}
-//         isVisible={modalVisible}
-//         swipeDirection={modalVisible ? ["down"] : ["up"]}
-//         onSwipeComplete={() => setModalVisible(false)}
-//         swipeThreshold={50}
-//       >
-//         <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
-//           <View style={styles.flex} />
-//         </TouchableWithoutFeedback>
-//         <View style={styles.viewModal}>
-//           <Icon
-//             name={"ios-remove"}
-//             size={64}
-//             color={palette.lightGrey}
-//             style={{ height: 34, top: -22 }}
-//           />
-//           {!dataStore.onboarding.has(Onboarding.bankOnboarded) && (
-//             <>
-//               <Text style={[styles.itemText, { marginVertical: 12 }]}>
-//                 {translate("AccountDetailScreen.openAccount")}
-//               </Text>
-//               <Text style={[styles.itemText, { marginVertical: 12 }]}>
-//                 {translate("AccountDetailScreen.openAccountReason", { side })}
-//               </Text>
-//               <Button
-//                 title="Open account"
-//                 onPress={() => {
-//                   setModalVisible(false)
-//                   navigate("openBankAccount")
-//                 }}
-//                 buttonStyle={styles.button}
-//                 containerStyle={[styles.buttonContainer, { width: "100%" }]}
-//               />
-//             </>
-//           )}
-//           {dataStore.onboarding.has(Onboarding.bankOnboarded) && (
-//             <>
-//               <View style={{ flexDirection: "row", alignContent: "center" }}>
-//                 <Text style={[styles.itemText, { paddingVertical: 12 }]}>
-//                   {translate("AccountDetailScreen.quote", { side })}
-//                 </Text>
-//                 <TextInput
-//                   value={amount.toString()}
-//                   onChangeText={(text) =>
-//                     setAmount(isNaN(Number.parseInt(text)) ? 0 : Number.parseInt(text))
-//                   }
-//                   style={styles.itemText}
-//                 />
-//               </View>
-//               <Button
-//                 title={`Get Quote`}
-//                 onPress={getQuote}
-//                 buttonStyle={styles.button}
-//                 disabled={loadingQuote}
-//                 containerStyle={[styles.buttonContainer, { width: "100%" }]}
-//               />
-//               {loadingQuote && (
-//                 <ActivityIndicator size="small" color={color.primary} style={{ height: 46 }} />
-//               )}
-//               {!loadingQuote && (
-//                 <Text style={[styles.itemText, { paddingVertical: 12 }]}>
-//                   {// TODO: make a component out of it
-//                   (!isNaN(dataStore.exchange.quote.satPrice) &&
-//                     `Price: USD ${(dataStore.exchange.quote.satPrice * 100000000).toFixed(2)}`) ||
-//                     " "}
-//                 </Text>
-//               )}
-//               <View style={[styles.buttonContainer, { width: "100%" }]}>
-//                 <VisualExpiration validUntil={dataStore.exchange.quote.validUntil} />
-//                 <Button
-//                   title={`Validate Quote`}
-//                   onPress={executeTrade}
-//                   disabled={loading || isNaN(dataStore.exchange.quote.satPrice)}
-//                   loading={loading}
-//                   buttonStyle={styles.button}
-//                 />
-//               </View>
-//             </>
-//           )}
-//         </View>
-//       </Modal>
-//       <View style={styles.horizontal}>
-//         <Button
-//           title="Buy"
-//           buttonStyle={styles.button}
-//           containerStyle={styles.buttonContainer}
-//           onPress={onBuyInit}
-//         />
-//         <Button
-//           title="Sell"
-//           buttonStyle={styles.button}
-//           containerStyle={styles.buttonContainer}
-//           onPress={onSellInit}
-//         />
-//       </View>
-//     </>
-//   )
-// }
-
-
 
 export const AccountToWallet = ({account, store}) => {
   // FIXME should have a generic mapping here, could use mst for it?
@@ -332,7 +42,7 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = observer(
   let wallet = AccountToWallet({account, store})
 
   React.useEffect(() => {
-    navigation.setOptions({ title: account})
+    navigation.setOptions({ title: translate("common.bitcoinPrice") })
   }, [account])
 
   return (
@@ -343,17 +53,6 @@ export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = observer(
         account={account}
       />
       <PriceGraphDataInjected /> 
-      {store.user.level === 0 && (
-        // TODO update when isAnonymous changes
-        <>
-          <View style={{flex: 1, minHeight: 12}} />
-          <Button title={translate("common.activateWallet")} 
-            buttonStyle={{backgroundColor: palette.lightBlue, borderRadius: 32}} 
-            containerStyle={{width: "50%", alignSelf: "center"}}
-            onPress={() => navigation.navigate("phoneValidation")}
-          />
-        </>
-      )}
     </Screen>
   )
 })
