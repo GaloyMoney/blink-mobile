@@ -77,7 +77,13 @@ const styles = EStyleSheet.create({
   bottom: {
     marginVertical: "16rem", 
     alignItems: "center", 
-  }
+  },
+
+  buttonStyleTime: {
+    borderRadius: "38rem",
+    width: "50rem",
+    backgroundColor: palette.white,
+  },
 })
 
 
@@ -193,18 +199,20 @@ export const MoveMoneyScreen = (
           <View style={{flex: 1}} />
         </View>
       </Modal>
-        <BalanceHeader
-          loading={loading}
-          currency={CurrencyType.USD}
-          amount={amount}
-          amountOtherCurrency={amountOtherCurrency}
-        />
-        {/* FIXME remove relative */}
-        <View style={{position: "relative", alignItems: "flex-end", right: 64, bottom: 64, height: 24}}> 
-          <Icon 
-            name={"ios-trending-up-outline"} 
-            size={32} 
-            onPress={() => navigation.navigate("accountDetail", { account: AccountType.Bitcoin })  } />
+        <View style={{flexDirection: "row", alignItems: "center", justifyContent: "center"}}>
+          <BalanceHeader
+            loading={loading}
+            currency={CurrencyType.USD}
+            amount={amount}
+            amountOtherCurrency={amountOtherCurrency}
+            style={{marginLeft: 60}}
+          />
+          <Button
+            buttonStyle={styles.buttonStyleTime} 
+            containerStyle={{marginTop: 32, marginLeft: 16 }}
+            onPress={() => navigation.navigate("accountDetail", { account: AccountType.Bitcoin }) }
+            icon={<Icon name={"ios-trending-up-outline"} size={32} />}  
+          />
         </View>
 
         <FlatList

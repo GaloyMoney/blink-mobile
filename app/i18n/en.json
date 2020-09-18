@@ -29,7 +29,8 @@
     "description": "Description",
     "fee": "fee",
     "transactions": "Transactions",
-    "setAnAmount": "set an amount"
+    "setAnAmount": "set an amount",
+    "bitcoinPrice": "Bitcoin Price"
   },
   "sat": {
     "one": "1 sat",
