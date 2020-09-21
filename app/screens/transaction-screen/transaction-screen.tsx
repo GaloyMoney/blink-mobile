@@ -131,7 +131,7 @@ const formatTransactions = (transactions, prefCurrency) => {
 
     // FIXME why is this needed?
     // those are views and it seems are not available after some sort of serialization
-    tx = {...tx, date: tx.date, text: tx.text(prefCurrency), isReceive: tx.isReceive}
+    tx = {...tx, date: tx.date, text: tx.text(prefCurrency), isReceive: tx.isReceive, date_format: tx.date_format}
 
     // console.log(tx.toJs())
 
@@ -162,7 +162,7 @@ const formatTransactions = (transactions, prefCurrency) => {
     sections.push({ title: translate("AccountDetailScreen.prevMonths"), data: before })
   }
 
-  console.tron.log({sections})
+  // console.tron.log({sections})
   return sections
 }
 
@@ -198,7 +198,7 @@ export interface AccountDetailItemProps {
 }
 
 const AccountDetailItem: React.FC<AccountDetailItemProps> = ({tx, navigation}) => {
-  const colorForText = isReceive => isReceive ? palette.green : palette.darkGrey
+  const colorFromType = isReceive => isReceive ? palette.green : palette.darkGrey
 
   return (<ListItem
     // key={props.hash}
@@ -207,8 +207,8 @@ const AccountDetailItem: React.FC<AccountDetailItemProps> = ({tx, navigation}) =
       isReceive={tx.isReceive}
       size={24}
     />}
-    rightTitle={<Text style={{color: colorForText(tx.isReceive)}}>{tx.text}</Text>}
-    onPress={() => navigation.navigate("transactionDetail", tx)}
+    rightTitle={<Text style={{color: colorFromType(tx.isReceive)}}>{tx.text}</Text>}
+    onPress={() => navigation.navigate("transactionDetail", {tx})}
   />)
 }
 
