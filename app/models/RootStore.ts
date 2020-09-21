@@ -42,6 +42,7 @@ query gql_query_logged {
       hash
       type
       usd
+      fee
     }
   }
   getLastOnChainAddress {

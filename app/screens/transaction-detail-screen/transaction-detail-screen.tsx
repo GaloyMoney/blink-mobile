@@ -87,23 +87,11 @@ const Row = ({ entry, value }) => (
 
 export const TransactionDetailScreen = ({ route, navigation }) => {
   
-  const { currency, account, amount, date, hash, type, description, fee, isReceive,
-    destination, id, usd, feeUsd } = route.params as AccountDetailItemProps
+  const { currency, amount, hash, description, fee, isReceive, id, usd, feeUsd, date_format } = route.params.tx as AccountDetailItemProps
 
   const spendOrReceiveText = isReceive ? 
     translate("TransactionDetailScreen.received") : 
     translate("TransactionDetailScreen.spent")
-
-  const options = {
-    weekday: "short",
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-  }
-
-  const date_format = date.toLocaleString("en-US", options)
 
   return (
     <Screen style={styles.screen} unsafe={true}>
@@ -120,18 +108,18 @@ export const TransactionDetailScreen = ({ route, navigation }) => {
         <Text style={styles.transactionDetailText}>{translate("TransactionDetailScreen.detail")}</Text>
         <Divider style={styles.divider} />
         <Row entry={translate("common.date")} value={date_format} />
+        {!isReceive && 
+          <Row entry={translate("common.fee")} value={fee} />
+        }
+        {!isReceive && !!feeUsd &&
+          <Row entry={translate("common.fee")} value={feeUsd} />
+        }
         <Row entry={translate("common.description")} value={description} />
         {hash &&
           <Row entry={"Hash"} value={hash} />
         }
         {id &&
           <Row entry={"id"} value={id} />
-        }
-        {isReceive && !!fee &&
-          <Row entry={translate("common.fee")} value={fee} />
-        }
-        {isReceive && !!feeUsd &&
-          <Row entry={translate("common.fee")} value={feeUsd} />
         }
       </View>
       <CloseCross color={palette.white} onPress={() => navigation.goBack()} />
