@@ -9,7 +9,6 @@ import { TextCurrency } from "../../components/text-currency"
 import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
 import { AccountDetailItemProps } from "../account-detail-screen"
-import { iconTypeFromAmount } from "../transaction-screen"
 
 
 const styles = EStyleSheet.create({
@@ -88,12 +87,12 @@ const Row = ({ entry, value }) => (
 
 export const TransactionDetailScreen = ({ route, navigation }) => {
   
-  const { currency, account, amount, date, hash, type, description, fee, sendOrReceive,
-    destination, id, usd } = route.params as AccountDetailItemProps
+  const { currency, account, amount, date, hash, type, description, fee, isReceive,
+    destination, id, usd, feeUsd } = route.params as AccountDetailItemProps
 
-  const spendOrReceive = amount < 0 ? 
-    translate("TransactionDetailScreen.spent") :
-    translate("TransactionDetailScreen.received")
+  const spendOrReceiveText = isReceive ? 
+    translate("TransactionDetailScreen.received") : 
+    translate("TransactionDetailScreen.spent")
 
   const options = {
     weekday: "short",
@@ -103,13 +102,14 @@ export const TransactionDetailScreen = ({ route, navigation }) => {
     hour: "numeric",
     minute: "numeric",
   }
+
   const date_format = date.toLocaleString("en-US", options)
 
   return (
     <Screen style={styles.screen} unsafe={true}>
-      <View style={[styles.amountView, {backgroundColor: colorTypeFromIconType(sendOrReceive)}]}>
-        <IconTransaction type={iconTypeFromAmount(amount)} size={100} transparent={true} />
-        <Text style={styles.amountText}>{spendOrReceive}</Text>
+      <View style={[styles.amountView, {backgroundColor: colorTypeFromIconType(isReceive)}]}>
+        <IconTransaction isReceive={isReceive} size={100} transparent={true} />
+        <Text style={styles.amountText}>{spendOrReceiveText}</Text>
         {!!usd &&
           <TextCurrency amount={Math.abs(usd)} currency={"USD"} style={styles.amount} />
         }
@@ -119,7 +119,7 @@ export const TransactionDetailScreen = ({ route, navigation }) => {
       <View style={styles.transactionDetailView}>
         <Text style={styles.transactionDetailText}>{translate("TransactionDetailScreen.detail")}</Text>
         <Divider style={styles.divider} />
-        <Row entry={translate("common.date")} value={date_format}></Row>
+        <Row entry={translate("common.date")} value={date_format} />
         <Row entry={translate("common.description")} value={description} />
         {hash &&
           <Row entry={"Hash"} value={hash} />
@@ -127,8 +127,11 @@ export const TransactionDetailScreen = ({ route, navigation }) => {
         {id &&
           <Row entry={"id"} value={id} />
         }
-        {fee &&
+        {isReceive && !!fee &&
           <Row entry={translate("common.fee")} value={fee} />
+        }
+        {isReceive && !!feeUsd &&
+          <Row entry={translate("common.fee")} value={feeUsd} />
         }
       </View>
       <CloseCross color={palette.white} onPress={() => navigation.goBack()} />
