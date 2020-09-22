@@ -544,7 +544,8 @@
     "title": "Deposit Cash"
   },
   "ModalClipboard": {
-    "pendingInvoice": "You have a Lightning Invoice in your clipboard"
+    "pendingInvoice": "You have a Lightning Invoice in your clipboard",
+    "pendingBitcoin": "You have a Bitcoin address in your clipboard"
   },
   "TransactionDetailScreen": {
     "detail": "Transaction Details",
