@@ -63,11 +63,11 @@ storiesOf("Send bitcoin Screen", module)
       note={null}
       err={null}
       amount={1000} 
-      fees={textCurrencyFormatting(1234, 9.3927e-05, "USD")}
+      fee={textCurrencyFormatting(1234, 9.3927e-05, "USD")}
       {...defaultParams}
     />
     ))
-    .add("bitcoin fees loading", () => (
+    .add("bitcoin fee loading", () => (
     <SendBitcoinScreenJSX 
       status={"idle"}
       paymentType={"bitcoin"}
@@ -76,7 +76,7 @@ storiesOf("Send bitcoin Screen", module)
       note={null}
       err={null}
       amount={1000}
-      fees={undefined}
+      fee={undefined}
       {...defaultParams}
     />
   ))

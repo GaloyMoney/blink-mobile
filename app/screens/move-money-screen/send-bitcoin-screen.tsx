@@ -104,7 +104,7 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
   const [amount, setAmount] = useState(0)
   const [invoice, setInvoice] = useState("")
   const [note, setNote] = useState("")
-  const [fees, setFees] = useState(null)
+  const [fee, setFee] = useState(null)
   
   const [status, setStatus] = useState("idle")
   // idle, loading, pending, success, error 
@@ -125,24 +125,24 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
     setInitAmount(amount)
     setAmountless(amountless)
 
-    getFees()
+    getFee()
   }, [route.params.payment])
 
   useEffect(() => {
-    getFees()
+    getFee()
   }, [address])
   
-  const getFees = async () => {
+  const getFee = async () => {
     try {
       const query = `mutation onchain($address: String!){
         onchain {
-          getFees(address: $address)
+          getFee(address: $address)
         }
       }`
-      const { onchain: { getFees: fees }} = await store.mutate(query, { address })
-      setFees(fees)
+      const { onchain: { getFee: fee }} = await store.mutate(query, { address })
+      setFee(fee)
     } catch (err) {
-      setFees(null)
+      setFee(null)
     }
   }
 
@@ -238,23 +238,21 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
   }, [status])
 
   const price = store.rate(CurrencyType.BTC)
-  const feesText = fees == null ? fees : textCurrencyFormatting(fees, price, store.prefCurrency)
-
-  console.tron.log({feesText})
+  const feeText = fee == null ? fee : textCurrencyFormatting(fee, price, store.prefCurrency)
 
   return <SendBitcoinScreenJSX status={status} paymentType={paymentType} amountless={amountless}
   initAmount={initAmount} setAmount={setAmount} setStatus={setStatus} invoice={invoice} 
   address={address} note={note} err={err} amount={amount} goBack={goBack} pay={pay}
   price={price} 
   prefCurrency={store.prefCurrency} 
-  fees={feesText}
+  fee={feeText}
   nextPrefCurrency={store.nextPrefCurrency}
    />
 })
 
 
 export const SendBitcoinScreenJSX = ({
-  status, paymentType, amountless, initAmount, setAmount, setStatus, invoice, fees,
+  status, paymentType, amountless, initAmount, setAmount, setStatus, invoice, fee,
   address, note, err, amount, goBack, pay, price, prefCurrency, nextPrefCurrency }) => (
   <Screen style={styles.mainView} preset={"scroll"}>
     <View style={styles.section}>
@@ -305,14 +303,14 @@ export const SendBitcoinScreenJSX = ({
       <Input
         leftIcon={
           <View style={{flexDirection: "row"}}>
-            <Text style={styles.smallText}>{translate("common.fees")}</Text>
+            <Text style={styles.smallText}>{translate("common.fee")}</Text>
             <Icon name="ios-pricetag" size={24} color={color.primary} style={styles.icon} />
           </View>
         }
-        value={fees}
+        value={fee}
         editable={false}
         selectTextOnFocus={true}
-        InputComponent={props => fees == null ?
+        InputComponent={props => fee == null ?
           <ActivityIndicator animating={true} size="small" color={palette.orange} /> :
           <TextInput {...props} />
         }
