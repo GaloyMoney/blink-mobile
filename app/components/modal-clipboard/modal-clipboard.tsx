@@ -11,6 +11,8 @@ import { translate } from "../../i18n";
 import { StoreContext } from "../../models";
 import { color } from "../../theme";
 import { palette } from "../../theme/palette";
+import { Token } from "../../utils/token";
+import { validPayment } from "../../utils/parsing"
 
 
 const styles = StyleSheet.create({
@@ -45,14 +47,29 @@ export const ModalClipboard = observer(() => {
   }
 
   const dismiss = () => {
+    // TODO: refactor without store but using react natigation event
     store.setModalClipboardVisible(false)
   }
+  const [message, setMessage] = React.useState("")
+
+  const isVisible = store?.modalClipboardVisible ?? false // store is not defined for storybook
+
+  React.useEffect(() => {
+    const _ = async () => {
+      const clipboard = await Clipboard.getString()
+      const {paymentType} = validPayment(clipboard, new Token().network)
+      const pathString = paymentType === "lightning" ? "ModalClipboard.pendingInvoice" : "ModalClipboard.pendingBitcoin"
+      console.tron.log({paymentType, pathString, clipboard})
+      setMessage(translate(pathString))
+    }
+    _()
+  }, [isVisible])
 
   return (
     <Modal
       // transparent={true}
       swipeDirection={["down"]}
-      isVisible={store?.modalClipboardVisible ?? false} // store is not defined for storybook
+      isVisible={isVisible} 
       onSwipeComplete={dismiss}
       swipeThreshold={50}
       propagateSwipe={true}
@@ -71,7 +88,7 @@ export const ModalClipboard = observer(() => {
               style={{ height: 40, top: -40 }}
             />
         </View>
-        <Text style={{fontSize: 18, marginVertical: 8}}>{translate("ModalClipboard.pendingInvoice")}</Text>
+        <Text style={{fontSize: 18, marginVertical: 8}}>{message}</Text>
         <View style={{ flexDirection: "row", alignItems: "center", alignContent: "stretch" }}>
           <Button title="Dismiss" onPress={dismiss} buttonStyle={styles.buttonStyle} />
           <Button title="Open"  onPress={open} buttonStyle={styles.buttonStyle} />
