@@ -4,8 +4,6 @@ import { Text, View } from "react-native"
 import { CurrencyType } from "../../utils/enum"
 
 export const TextCurrency = ({ amount, currency, style }) => {
-  console.tron.log({currency})
-
   if (currency === CurrencyType.USD) {
     return (
       <Text style={style}>
