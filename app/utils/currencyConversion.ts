@@ -5,27 +5,39 @@ export const currencyFormatting = {
   BTC: btc => btc,
 } 
 
-export const CurrencyConversion = (price) => ({
+export const CurrencyConversion = (btcPrice) => ({
   USD: {
     primary: "USD",
     // TODO refactor: other place could use those conversions
-    conversion: sats => currencyFormatting["USD"](sats * price),
-    reverse: (usd) => usd / price,
+    conversion: sats => currencyFormatting["USD"](sats * btcPrice),
+    reverse: (usd) => usd / btcPrice,
     secondary: "sats",
-    secondaryConversion: (sats) => sats,
+    secondaryConversion: (sats) => currencyFormatting["sats"](sats),
   },
   sats: {
     primary: "sats",
     conversion: (sats) => currencyFormatting["sats"](sats),
     reverse: (sats) => sats,
     secondary: "USD",
-    secondaryConversion: (sats) => sats * price,
+    secondaryConversion: (sats) => currencyFormatting["USD"](sats * btcPrice),
   },
   BTC: {
     primary: "BTC",
     conversion: (sats) => (sats / 10 ** 8).toFixed(8), // BigNum?
     reverse: (btc) => btc * 10 ** 8,
     secondary: "USD",
-    secondaryConversion: (sats) => sats * price,
+    secondaryConversion: (sats) => sats * btcPrice,
   },
 })
+
+// TODO: refactor. this is probably elsewhere as well.
+export const textCurrencyFormatting = (sats, price, currency) => {
+  const cc = CurrencyConversion(price)["sats"]
+  if (currency === "sats") { 
+    return `${cc['conversion'](sats)} sats`
+  } else if (currency === "USD") {
+    return `$${cc['secondaryConversion'](sats)}`
+  } else {
+    throw Error("wrong currency")
+  }
+}

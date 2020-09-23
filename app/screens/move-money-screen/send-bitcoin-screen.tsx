@@ -4,9 +4,10 @@ import LottieView from 'lottie-react-native'
 import { observer } from "mobx-react"
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { ScrollView, Text, TextInput, View } from "react-native"
+import { ActivityIndicator, ScrollView, Text, View } from "react-native"
 import { Button, Input } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
+import { TextInput } from "react-native-gesture-handler"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import Icon from "react-native-vector-icons/Ionicons"
 import { InputPayment } from "../../components/input-payment"
@@ -15,6 +16,7 @@ import { translate } from "../../i18n"
 import { StoreContext } from "../../models"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
+import { textCurrencyFormatting } from "../../utils/currencyConversion"
 import { CurrencyType } from "../../utils/enum"
 import { IPaymentType, validPayment } from "../../utils/parsing"
 import { Token } from "../../utils/token"
@@ -33,18 +35,13 @@ const styles = EStyleSheet.create({
   },
 
   horizontalContainer: {
-    // flex: 1,
+    flex: 1,
     flexDirection: "row",
   },
 
   icon: {
     color: palette.darkGrey,
     marginRight: 15,
-  },
-
-  invoiceContainer: {
-    alignSelf: "flex-end",
-    flex: 1,
   },
 
   mainView: {
@@ -73,8 +70,8 @@ const styles = EStyleSheet.create({
   smallText: {
     color: palette.darkGrey,
     fontSize: 18,
-    marginBottom: 10,
     textAlign: "left",
+    width: "48rem",
   },
 
   squareButton: {
@@ -107,6 +104,7 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
   const [amount, setAmount] = useState(0)
   const [invoice, setInvoice] = useState("")
   const [note, setNote] = useState("")
+  const [fee, setFee] = useState(null)
   
   const [status, setStatus] = useState("idle")
   // idle, loading, pending, success, error 
@@ -126,10 +124,29 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
     setAmount(amount)
     setInitAmount(amount)
     setAmountless(amountless)
+
+    getFee()
   }, [route.params.payment])
 
-  const { goBack } = useNavigation()
+  useEffect(() => {
+    getFee()
+  }, [address])
+  
+  const getFee = async () => {
+    try {
+      const query = `mutation onchain($address: String!){
+        onchain {
+          getFee(address: $address)
+        }
+      }`
+      const { onchain: { getFee: fee }} = await store.mutate(query, { address })
+      setFee(fee)
+    } catch (err) {
+      setFee(null)
+    }
+  }
 
+  const { goBack } = useNavigation()
 
   const pay = async () => {
     if ((amountless || paymentType === "onchain") && amount === 0) {
@@ -164,9 +181,9 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
       } else if (paymentType === "onchain"){
         const query = `mutation onchain($address: String!, $amount: Int!) {
           onchain {
-              pay(address: $address, amount: $amount) {
-                  success
-              }
+            pay(address: $address, amount: $amount) {
+              success
+            }
           }
         }`
 
@@ -220,18 +237,22 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
     ReactNativeHapticFeedback.trigger(notificationType, optionsHaptic)
   }, [status])
 
+  const price = store.rate(CurrencyType.BTC)
+  const feeText = fee == null ? fee : textCurrencyFormatting(fee, price, store.prefCurrency)
+
   return <SendBitcoinScreenJSX status={status} paymentType={paymentType} amountless={amountless}
   initAmount={initAmount} setAmount={setAmount} setStatus={setStatus} invoice={invoice} 
   address={address} note={note} err={err} amount={amount} goBack={goBack} pay={pay}
-  price={store.rate(CurrencyType.BTC)} 
-  prefCurrency={store.prefCurrency}
+  price={price} 
+  prefCurrency={store.prefCurrency} 
+  fee={feeText}
   nextPrefCurrency={store.nextPrefCurrency}
    />
 })
 
 
 export const SendBitcoinScreenJSX = ({
-  status, paymentType, amountless, initAmount, setAmount, setStatus, invoice, 
+  status, paymentType, amountless, initAmount, setAmount, setStatus, invoice, fee,
   address, note, err, amount, goBack, pay, price, prefCurrency, nextPrefCurrency }) => (
   <Screen style={styles.mainView} preset={"scroll"}>
     <View style={styles.section}>
@@ -248,28 +269,54 @@ export const SendBitcoinScreenJSX = ({
         nextPrefCurrency={nextPrefCurrency}
       />
     </View>
-    <View>
-      <Text style={styles.smallText}>{translate("common.to")}</Text>
-      <View style={styles.horizontalContainer}>
-        <Input
-          placeholder={translate("common.invoice")}
-          leftIcon={
+    <View style={{marginTop: 18}}>
+      <Input
+        placeholder={translate("common.invoice")}
+        leftIcon={
+          <View style={{flexDirection: "row"}}>
+            <Text style={styles.smallText}>{translate("common.to")}</Text>
             <Icon name="ios-log-out" size={24} color={color.primary} style={styles.icon} />
-          }
-          value={paymentType === "lightning" ? invoice : address}
-          containerStyle={styles.invoiceContainer}
-          editable={false}
-          selectTextOnFocus={true}
-          // InputComponent={(props) => <Text {...props} selectable={true}>{props.value}</Text>}
-        />
-      </View>
+          </View>
+        }
+        value={paymentType === "lightning" ? invoice : address}
+        renderErrorMessage={false}
+        editable={false}
+        selectTextOnFocus={true}
+        // InputComponent={(props) => <Text {...props} selectable={true}>{props.value}</Text>}
+      />
+      {!!note && 
+      <Input
+        leftIcon={
+          <View style={{flexDirection: "row"}}>
+            <Text style={styles.smallText}>{translate("common.note")}</Text>
+            <Icon name="ios-create-outline" size={24} color={color.primary} style={styles.icon} />
+          </View>
+        }
+        value={note}
+        renderErrorMessage={false}
+        editable={false}
+        selectTextOnFocus={true}
+        // InputComponent={(props) => <Text {...props} selectable={true}>{props.value}</Text>}
+      />
+      }
+      {!!address && 
+      <Input
+        leftIcon={
+          <View style={{flexDirection: "row"}}>
+            <Text style={styles.smallText}>{translate("common.fee")}</Text>
+            <Icon name="ios-pricetag" size={24} color={color.primary} style={styles.icon} />
+          </View>
+        }
+        value={fee}
+        editable={false}
+        selectTextOnFocus={true}
+        InputComponent={props => fee == null ?
+          <ActivityIndicator animating={true} size="small" color={palette.orange} /> :
+          <TextInput {...props} />
+        }
+      />
+      }
     </View>
-    {!!note && 
-      <View>
-        <Text style={styles.smallText}>{translate("SendBitcoinScreen.note")}</Text>
-        <Text style={styles.note}>{note}</Text>
-      </View>
-    }
     <View style={{alignItems: "center"}}>
       { status === "success" &&
         <>
