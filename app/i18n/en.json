@@ -32,6 +32,8 @@
     "setAnAmount": "set an amount",
     "bitcoinPrice": "Bitcoin Price",
     "fees": "Fees",
+    "feeSats": "Fees (sats)",
+    "feesUsd": "Fees (USD)",
     "note": "Note"
   },
   "sat": {

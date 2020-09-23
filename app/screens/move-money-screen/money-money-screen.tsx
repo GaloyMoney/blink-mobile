@@ -220,16 +220,16 @@ export const MoveMoneyScreen = (
             <Text style={{color: palette.red, alignSelf: "center", paddingBottom: 18}} selectable={true}>{error.message}</Text>
           }
           data={[{
-            title: translate(`ScanningQRCodeScreen.title`), icon: "send", target: "scanningQRCode"
+            title: translate(`ScanningQRCodeScreen.title`), isReceive: false, target: "scanningQRCode"
           },{
-            title: translate(`ReceiveBitcoinScreen.title`), icon: "receive", target: "receiveBitcoin", color: palette.green
+            title: translate(`ReceiveBitcoinScreen.title`), isReceive: true, target: "receiveBitcoin"
           }]}
           style={styles.listContainer}
           refreshControl={<RefreshControl refreshing={loading} onRefresh={refreshQuery} />}
           renderItem={({ item }) => (
             <LargeButton
               title={item.title}
-              icon={<IconTransaction type={item.icon} size={75} />}
+              icon={<IconTransaction isReceive={item.isReceive} size={75} />}
               onPress={() => onBitcoinClick(item.target)}
             />
           )}
