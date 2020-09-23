@@ -133,7 +133,7 @@ const formatTransactions = (transactions, prefCurrency) => {
     // those are views and it seems are not available after some sort of serialization
     tx = {...tx, date: tx.date, text: tx.text(prefCurrency), isReceive: tx.isReceive, date_format: tx.date_format}
 
-    // console.log(tx.toJs())
+    // console.tron.log({tx})
 
     if (isToday(tx)) {
       today.push(tx)

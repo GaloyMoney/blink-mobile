@@ -43,6 +43,7 @@ query gql_query_logged {
       type
       usd
       fee
+      feeUsd
     }
   }
   getLastOnChainAddress {
