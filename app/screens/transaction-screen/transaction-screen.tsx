@@ -1,7 +1,5 @@
 import { StackNavigationProp } from "@react-navigation/stack"
-import * as currency_fmt from "currency.js"
 import { observer } from "mobx-react"
-import moment from "moment"
 import * as React from "react"
 import { RefreshControl, SectionList, Text, View } from "react-native"
 import { ListItem } from "react-native-elements"
@@ -106,7 +104,7 @@ const styles = EStyleSheet.create({
   },
 })
 
-const formatTransactions = (transactions) => {
+const formatTransactions = (transactions, prefCurrency) => {
   const sections = []
   const today = []
   const yesterday = []
@@ -114,8 +112,6 @@ const formatTransactions = (transactions) => {
   const before = []
 
   transactions = transactions.slice().sort((a, b) => (a.date > b.date ? -1 : 1)) // warning without slice?
-  transactions.forEach(tx => tx.date = moment.unix(tx.created_at))
-  transactions.forEach(tx => tx.sendOrReceive = iconTypeFromAmount(tx.amount))
 
   const isToday = (tx) => {
     return sameDay(tx.date, new Date())
@@ -131,7 +127,14 @@ const formatTransactions = (transactions) => {
 
   while (transactions.length) {
     // this could be optimized
-    const tx = transactions.shift()
+    let tx = transactions.shift()
+
+    // FIXME why is this needed?
+    // those are views and it seems are not available after some sort of serialization
+    tx = {...tx, date: tx.date, text: tx.text(prefCurrency), isReceive: tx.isReceive, date_format: tx.date_format}
+
+    // console.log(tx.toJs())
+
     if (isToday(tx)) {
       today.push(tx)
     } else if (isYesterday(tx)) {
@@ -159,6 +162,7 @@ const formatTransactions = (transactions) => {
     sections.push({ title: translate("AccountDetailScreen.prevMonths"), data: before })
   }
 
+  // console.tron.log({sections})
   return sections
 }
 
@@ -183,50 +187,40 @@ export const TransactionScreenDataInjected = observer(({navigation, route}) => {
     prefCurrency={store.prefCurrency}
     nextPrefCurrency={store.nextPrefCurrency}
     onRefresh={refreshQuery}
-    transactions={store.wallets.get("BTC").transactions}
+    transactions={store.wallets.get("BTC").transactions} 
   />
 })
 
 export interface AccountDetailItemProps {
-  account: AccountType,
   currency: CurrencyType,
   navigation: StackNavigationProp<any,any>,
+  tx: Object // TODO
 }
 
-export const iconTypeFromAmount = (amount) => amount > 0 ? "receive" : "send"
-const colorForText = type => type === "send" ? palette.darkGrey : palette.green 
+const AccountDetailItem: React.FC<AccountDetailItemProps> = ({tx, navigation}) => {
+  const colorFromType = isReceive => isReceive ? palette.green : palette.darkGrey
+
+  return (<ListItem
+    // key={props.hash}
+    title={tx.description}
+    leftIcon={<IconTransaction
+      isReceive={tx.isReceive}
+      size={24}
+    />}
+    rightTitle={<Text style={{color: colorFromType(tx.isReceive)}}>{tx.text}</Text>}
+    onPress={() => navigation.navigate("transactionDetail", {tx})}
+  />)
+}
 
 export const TransactionScreen = ({ transactions, refreshing, navigation, currency, onRefresh, error, prefCurrency, nextPrefCurrency }) => {
-
-  const sections = formatTransactions(transactions)
-
-  const AccountDetailItem: React.FC<AccountDetailItemProps> = (props) => {
-    const amount = prefCurrency === "sats" ? 
-      props.amount : 
-      props.amount > 0 ? props.usd : - props.usd // manage sign for usd. unlike for amount usd is not signed
-    const symbol = prefCurrency === "sats" ? '' : "$"
-    const precision = prefCurrency === "sats" ? 0 : props.usd < 0.01 ? 4 : 2
-
-    return (<ListItem
-      // key={props.hash}
-      title={props.description}
-      leftIcon={<IconTransaction
-        type={props.sendOrReceive}
-        size={24}
-      />}
-      rightTitle={<Text style={{color: colorForText(props.sendOrReceive)}}>
-        {currency_fmt.default(amount, { separator: ",", symbol, precision }).format()}  
-      </Text>}
-      onPress={() => props.navigation.navigate("transactionDetail", props)}
-      />
-    )}
+  const sections = formatTransactions(transactions, prefCurrency)
 
   return (
     <Screen style={styles.screen}>
       <SectionList
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         renderItem={({ item, index, section }) => (
-          <AccountDetailItem currency={currency} navigation={navigation} {...item} />
+          <AccountDetailItem currency={currency} navigation={navigation} tx={item} />
         )}
         ListHeaderComponent={error && 
           <Text style={{color: palette.red, alignSelf: "center", paddingBottom: 18}} selectable={true}>{error.message}</Text>

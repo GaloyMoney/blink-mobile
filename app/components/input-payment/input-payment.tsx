@@ -90,8 +90,6 @@ export const InputPayment = ({
     }
   }, [input])
 
-  console.tron.log({amount, input})
-
   // is Focused part
 
   React.useEffect(() => {

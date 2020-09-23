@@ -44,13 +44,13 @@ const xml_transaction_received = `
 `
 
 type IconType = "send" | "receive"
-export const colorTypeFromIconType = type => type === "send" ? palette.orange : palette.green 
+export const colorTypeFromIconType = isReceive => isReceive ? palette.green : palette.orange
 
 export const IconTransaction = 
-	({type, size, transparent = false}: {type: IconType, size: number, transparent?: boolean}) => {
-  let color = colorTypeFromIconType(type)
+	({isReceive, size, transparent = false}: {isReceive: boolean, size: number, transparent?: boolean}) => {
+  let color = colorTypeFromIconType(isReceive)
   if (transparent) color = palette.white
-	const raw_xml = type === "send" ? xml_transaction_sent : xml_transaction_received
+	const raw_xml = isReceive ? xml_transaction_received : xml_transaction_sent
   const parse_xml = raw_xml.replace("{color}", color)
   return (<SvgXml xml={parse_xml} width={size} height={size} />)
 }

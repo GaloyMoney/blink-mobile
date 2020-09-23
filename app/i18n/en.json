@@ -30,7 +30,9 @@
     "fee": "fee",
     "transactions": "Transactions",
     "setAnAmount": "set an amount",
-    "bitcoinPrice": "Bitcoin Price"
+    "bitcoinPrice": "Bitcoin Price",
+    "fees": "Fees",
+    "note": "Note"
   },
   "sat": {
     "one": "1 sat",
@@ -517,7 +519,6 @@
   "SendBitcoinScreen": {
     "title": "Send Bitcoin",
     "amount": "Amount",
-    "note": "Note",
     "cost": "Cost",
     "success": "Payment has been sent succesfully",
     "noAmount": "This invoice doesn't have an amount, so you need to manually specify how much money you want to send",
@@ -544,7 +545,8 @@
     "title": "Deposit Cash"
   },
   "ModalClipboard": {
-    "pendingInvoice": "You have a Lightning Invoice in your clipboard"
+    "pendingInvoice": "You have a Lightning Invoice in your clipboard",
+    "pendingBitcoin": "You have a Bitcoin address in your clipboard"
   },
   "TransactionDetailScreen": {
     "detail": "Transaction Details",
