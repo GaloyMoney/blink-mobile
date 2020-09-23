@@ -94,7 +94,7 @@ export const TransactionDetailScreen = ({ route, navigation }) => {
     translate("TransactionDetailScreen.spent")
 
   return (
-    <Screen style={styles.screen} unsafe={true}>
+    <Screen style={styles.screen} unsafe={true} preset="scroll">
       <View style={[styles.amountView, {backgroundColor: colorTypeFromIconType(isReceive)}]}>
         <IconTransaction isReceive={isReceive} size={100} transparent={true} />
         <Text style={styles.amountText}>{spendOrReceiveText}</Text>
@@ -109,10 +109,11 @@ export const TransactionDetailScreen = ({ route, navigation }) => {
         <Divider style={styles.divider} />
         <Row entry={translate("common.date")} value={date_format} />
         {!isReceive && 
-          <Row entry={translate("common.fee")} value={fee} />
+          <Row entry={translate("common.feeSats")} value={fee} />
         }
-        {!isReceive && !!feeUsd &&
-          <Row entry={translate("common.fee")} value={feeUsd} />
+        {!isReceive && 
+          // TODO: only 2 digits
+          <Row entry={translate("common.feesUsd")} value={feeUsd} /> 
         }
         <Row entry={translate("common.description")} value={description} />
         {hash &&
