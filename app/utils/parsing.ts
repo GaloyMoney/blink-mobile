@@ -1,4 +1,4 @@
-import { getDescription } from "./lightning"
+import { getDescription } from "./bolt11"
 import * as lightningPayReq from 'bolt11'
 import moment from "moment"
 const bitcoin = require('bitcoinjs-lib');
