@@ -26,7 +26,7 @@ import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
 import { StoreContext } from "../../models"
 import { palette } from "../../theme/palette"
-import { getHashFromInvoice } from "../../utils/lightning"
+import { getHashFromInvoice } from "../../utils/bolt11"
 import { requestPermission } from "../../utils/notifications"
 import Toast from "react-native-root-toast"
 
