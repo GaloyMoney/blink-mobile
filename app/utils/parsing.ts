@@ -15,7 +15,7 @@ export interface IValidPaymentReponse {
   address?: string | undefined, // for bitcoin
   amount?: number | undefined,
   amountless?: boolean | undefined,
-  note?: string | undefined,
+  memo?: string | undefined,
   paymentType?: IPaymentType
 }
 
@@ -112,7 +112,7 @@ export const validPayment = (input: string, network: INetwork): IValidPaymentRep
     const payReq = lightningPayReq.decode(data)
     // console.log(JSON.stringify({ payReq }, null, 2))
     
-    let amount, amountless, note
+    let amount, amountless, memo
     
     if (payReq.satoshis || payReq.millisatoshis) {
       amount = payReq.satoshis ?? Number(payReq.millisatoshis) * 1000
@@ -129,8 +129,8 @@ export const validPayment = (input: string, network: INetwork): IValidPaymentRep
       return {valid: false, errorMessage: "invoice has expired", paymentType}
     }
     
-    note = getDescription(payReq) 
-    return {valid: true, invoice: data, amount, amountless, note, paymentType}
+    memo = getDescription(payReq) 
+    return {valid: true, invoice: data, amount, amountless, memo, paymentType}
 
   } else {
     return {valid: false, errorMessage: `We are unable to detect an invoice or payment address`}

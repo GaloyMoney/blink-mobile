@@ -28,6 +28,7 @@
     "date": "Date",
     "description": "Description",
     "fee": "fee",
+    "Fee": "Fee",
     "transactions": "Transactions",
     "setAnAmount": "set an amount",
     "bitcoinPrice": "Bitcoin Price",
