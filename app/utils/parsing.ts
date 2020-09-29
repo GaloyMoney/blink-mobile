@@ -2,6 +2,7 @@ import { getDescription } from "./bolt11"
 import * as lightningPayReq from 'bolt11'
 import moment from "moment"
 const bitcoin = require('bitcoinjs-lib');
+var url = require('url');
 
 // TODO: look if we own the address
 
@@ -29,13 +30,33 @@ const mappingToBitcoinJs = (input: INetwork) => {
   }
 }
 
+// from https://github.com/bitcoin/bips/blob/master/bip-0020.mediawiki#Transfer%20amount/size
+const reAmount = /^(([\d.]+)(X(\d+))?|x([\da-f]*)(\.([\da-f]*))?(X([\da-f]+))?)$/i;
+function parseAmount(txt) {
+  var m = txt.match(reAmount);
+  return m[5] ? (
+      (
+          parseInt(m[5], 16) +
+          (m[7] ? (parseInt(m[7], 16) * Math.pow(16, -(m[7].length))) : 0)
+      ) * (
+          m[9] ? Math.pow(16, parseInt(m[9], 16)) : 0x10000
+      )
+  ) : (
+          m[2]
+      *
+          (m[4] ? Math.pow(10, m[4]) : 1e8)
+  );
+}
+
 export const validPayment = (input: string, network: INetwork): IValidPaymentReponse => {
   if (!input) {
     return {valid: false, errorMessage: `string is null or empty`}
   }
 
-  // invoice might start with 'lightning:', 'bitcoin:'
-  let [protocol, invoice] = input.split(":")
+  console.tron.log({input})
+
+  // input might start with 'lightning:', 'bitcoin:'
+  let [protocol, data] = input.split(":")
   let paymentType: IPaymentType = undefined
 
   if (protocol.toLowerCase() === "bitcoin") {
@@ -60,27 +81,35 @@ export const validPayment = (input: string, network: INetwork): IValidPaymentRep
       return {valid: false, errorMessage: `You're trying to pay a testnet invoice. The settings for the app is mainnet`}
     }
 
-    invoice = protocol
+    data = protocol
   } else {
     // no schema
-    invoice = protocol
+    data = protocol
   }
   
   if (paymentType === "onchain" || paymentType === undefined) {
-      // removing metadata
-      // TODO manage amount 
-      invoice = invoice.split('?')[0]
-  
+    try {
+      const decodedData = url.parse(data, true)
+      const address = decodedData.pathname // using url node library. the address is exposed as the "host" here
+      let amount 
+
       try {
-        bitcoin.address.toOutputScript(invoice, mappingToBitcoinJs(network));
-        paymentType = "onchain"
-        return {valid: true, paymentType, address: invoice}
-      } catch (e) {
-        return {valid: false, errorMessage: e}
+        amount = parseAmount(decodedData.query.amount)
+      } catch (err) {
+        console.tron.log(`can't decode amount ${err}`)
       }
 
+      // will throw if address is not valid
+      bitcoin.address.toOutputScript(address, mappingToBitcoinJs(network));
+      paymentType = "onchain"
+      return {valid: true, paymentType, address, amount}
+
+    } catch (e) {
+      console.tron.warn(`issue with payment ${e}`)
+      return {valid: false, errorMessage: e}
+    }
   } else if (paymentType === "lightning") {
-    const payReq = lightningPayReq.decode(invoice)
+    const payReq = lightningPayReq.decode(data)
     // console.log(JSON.stringify({ payReq }, null, 2))
     
     let amount, amountless, note
@@ -101,7 +130,7 @@ export const validPayment = (input: string, network: INetwork): IValidPaymentRep
     }
     
     note = getDescription(payReq) 
-    return {valid: true, invoice, amount, amountless, note, paymentType}
+    return {valid: true, invoice: data, amount, amountless, note, paymentType}
 
   } else {
     return {valid: false, errorMessage: `We are unable to detect an invoice or payment address`}
