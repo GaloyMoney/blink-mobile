@@ -72,7 +72,17 @@ const styles = EStyleSheet.create({
   }
 })
 
+const getIcon = (icon, name, index, networkIndex) => <View style={{flexDirection: 'row'}}>
+<Icon name={icon} size={18} color={palette.orange} style={{top: 2}} />
+<Text style={{ marginLeft: 6, fontWeight: "bold", fontSize: 18, 
+  color: networkIndex === index ? palette.white : palette.darkGrey }}>
+  {name}
+</Text>
+</View>
+
 export const ReceiveBitcoinScreen = observer(({ navigation }) => {
+  console.tron.log("render ReceiveBitcoinScreen")
+
   const store = React.useContext(StoreContext)
 
   const [memo, setMemo] = useState("")
@@ -138,11 +148,22 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
   }, [])
 
   const update = async () => {
+    // lightning
     if (networkIndex === 0) {
       await createInvoice()
+
+    // bitcoin
     } else {
-      const uri = `bitcoin:${values(store.lastOnChainAddresses)[0].id}`
-      setData(amount === 0 ? uri : uri + `?amount=${amount / 10 ** 8}`)
+      let uri = `bitcoin:${values(store.lastOnChainAddresses)[0].id}`
+      const params = new URLSearchParams()
+      if (!!amount) {
+        params.append('amount', `${amount / 10 ** 8}`)
+      }
+      if (!!memo) {
+        params.append('message', encodeURI(memo))
+      }
+      const fullUri = !!params.toString() ? `${uri}?${params.toString()}` : `${uri}`
+      setData(fullUri)
       setLoading(false)
     }
   }
@@ -284,16 +305,9 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
   }
 
   const isReady = !loading && data != ""
-  const getIcon = (icon, name, index) => <View style={{flexDirection: 'row'}}>
-    <Icon name={icon} size={18} color={palette.orange} style={{top: 2}} />
-    <Text style={{ marginLeft: 6, fontWeight: "bold", fontSize: 18, 
-      color: networkIndex === index ? palette.white : palette.darkGrey }}>
-      {name}
-    </Text>
-  </View>
 
-  const LightningComponent = () => getIcon("ios-flash", "Lightning", 0)
-  const BitcoinComponent = () => getIcon("logo-bitcoin", "On-Chain", 1)
+  const LightningComponent = () => getIcon("ios-flash", "Lightning", 0, networkIndex)
+  const BitcoinComponent = () => getIcon("logo-bitcoin", "On-Chain", 1, networkIndex)
 
   const inputMemoRef = React.useRef()
 
@@ -304,7 +318,7 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
     return () => {
       Keyboard.removeListener("keyboardDidHide", _keyboardDidHide)
     }
-  }, [])
+  })
 
   const _keyboardDidHide = () => {
     inputMemoRef?.current.blur()
