@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Text, View } from "react-native"
+import { Text, TextInput, View } from "react-native"
 import { Divider } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { CloseCross } from "../../components/close-cross"
@@ -9,7 +9,7 @@ import { TextCurrency } from "../../components/text-currency"
 import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
 import { AccountDetailItemProps } from "../account-detail-screen"
-
+import { currencyFormatting } from "../../utils/currencyConversion"
 
 const styles = EStyleSheet.create({
   screen: {
@@ -81,17 +81,19 @@ const styles = EStyleSheet.create({
 const Row = ({ entry, value }) => (
   <View style={styles.description}>
     <Text style={styles.entry}>{entry}</Text>
-    <Text style={styles.value}>{value}</Text>
+    <Text selectable style={styles.value}>{value}</Text>
   </View>
 )
 
 export const TransactionDetailScreen = ({ route, navigation }) => {
   
-  const { currency, amount, hash, description, fee, isReceive, id, usd, feeUsd, date_format } = route.params.tx as AccountDetailItemProps
+  const { currency, amount, hash, description, fee, isReceive, id, usd, feeUsd, date_format, type } = route.params.tx as AccountDetailItemProps
 
   const spendOrReceiveText = isReceive ? 
     translate("TransactionDetailScreen.received") : 
     translate("TransactionDetailScreen.spent")
+
+  let feeEntry = `${fee} sats ($${currencyFormatting["USD"](feeUsd)})`
 
   return (
     <Screen style={styles.screen} unsafe={true} preset="scroll">
@@ -109,13 +111,10 @@ export const TransactionDetailScreen = ({ route, navigation }) => {
         <Divider style={styles.divider} />
         <Row entry={translate("common.date")} value={date_format} />
         {!isReceive && 
-          <Row entry={translate("common.feeSats")} value={fee} />
-        }
-        {!isReceive && 
-          // TODO: only 2 digits
-          <Row entry={translate("common.feesUsd")} value={feeUsd} /> 
+          <Row entry={translate("common.fees")} value={feeEntry} />
         }
         <Row entry={translate("common.description")} value={description} />
+        <Row entry={translate("common.type")} value={type} />
         {hash &&
           <Row entry={"Hash"} value={hash} />
         }

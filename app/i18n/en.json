@@ -35,7 +35,8 @@
     "fees": "Fees",
     "feeSats": "Fees (sats)",
     "feesUsd": "Fees (USD)",
-    "note": "Note"
+    "note": "Note",
+    "type": "Type"
   },
   "sat": {
     "one": "1 sat",
