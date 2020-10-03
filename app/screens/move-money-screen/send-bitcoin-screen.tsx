@@ -136,6 +136,10 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
   }, [address])
   
   const getFee = async () => {
+    if (!address) {
+      return
+    }
+
     try {
       const query = `mutation onchain($address: String!){
         onchain {
