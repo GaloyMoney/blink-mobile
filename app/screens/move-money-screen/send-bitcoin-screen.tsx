@@ -262,8 +262,9 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
 
 export const SendBitcoinScreenJSX = ({
   status, paymentType, amountless, initAmount, setAmount, setStatus, invoice, fee,
-  address, memo, err, amount, goBack, pay, price, prefCurrency, nextPrefCurrency, setMemo }) => (
-  <Screen style={styles.mainView} preset={"scroll"}>
+  address, memo, err, amount, goBack, pay, price, prefCurrency, nextPrefCurrency, setMemo }) => {
+
+    return <Screen style={styles.mainView} preset={"scroll"}>
     <View style={styles.section}>
       <InputPayment
         editable={paymentType === "lightning" ? 
@@ -355,10 +356,10 @@ export const SendBitcoinScreenJSX = ({
     <Button
       buttonStyle={styles.buttonStyle}
       containerStyle={{flex: 1}}
-      title={(status === "success" || status === "pending") ? translate("common.close") : err ? translate("common.tryAgain") : amount == 0 ? translate("common.amountRequired") : translate("common.send")} // TODO refactor
+      title={(status === "success" || status === "pending") ? translate("common.close") : err ? translate("common.tryAgain") : !amount ? translate("common.amountRequired") : translate("common.send")} // TODO refactor
       onPress={() => (status === "success" || status === "pending") ? goBack() : pay()}
-      disabled={amount == 0}
+      disabled={!amount}
       loading={status === "loading"}
     />
   </Screen>
-)
+}
