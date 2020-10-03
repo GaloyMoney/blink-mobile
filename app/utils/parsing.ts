@@ -94,7 +94,7 @@ export const validPayment = (input: string, network: INetwork): IValidPaymentRep
       try {
         amount = parseAmount(decodedData.query.amount)
       } catch (err) {
-        console.tron.log(`can't decode amount ${err}`)
+        console.tron?.log(`can't decode amount ${err}`)
       }
 
       // will throw if address is not valid
@@ -103,7 +103,7 @@ export const validPayment = (input: string, network: INetwork): IValidPaymentRep
       return {valid: true, paymentType, address, amount}
 
     } catch (e) {
-      console.tron.warn(`issue with payment ${e}`)
+      console.tron?.warn(`issue with payment ${e}`)
       return {valid: false, errorMessage: e}
     }
   } else if (paymentType === "lightning") {
