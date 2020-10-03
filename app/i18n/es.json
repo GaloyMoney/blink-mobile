@@ -35,6 +35,7 @@
     "bank": "Banco",
     "bankAccount": "Cuenta de efectivo",
     "bitcoin": "Bitcoin",
+    "bitcoinPrice": "\nPrecio de Bitcoin",
     "cancel": "Cancelar",
     "close": "Cerrar ",
     "confirm": "Confirmar",
@@ -43,12 +44,16 @@
     "email": "Correo electrónico",
     "error": "Error",
     "fee": "Cuota",
+    "fees": "\nTarifa",
+    "feeSats": "Tarifas (sats)",
+    "feesUsd": "Tarifas (USD) ",
     "firstName": "Nombre",
     "fundingTx": "Aprenda más sobre Bitcoin y gane más",
     "invoice": "Factura",
     "lastName": "Apellido",
     "later": "Más tarde",
     "next": "Próximo",
+    "note": "Nota ",
     "notification": "Notificación",
     "ok": "OK",
     "phoneNumber": "Número de teléfono",
@@ -108,6 +113,7 @@
     "headline": "El banco con dinero sólido"
   },
   "ModalClipboard": {
+    "pendingBitcoin": "\nTienes una dirección de Bitcoin en tu portapapeles",
     "pendingInvoice": "Tienes una factura relámpago en tu portapapeles"
   },
   "MoveMoneyScreen": {
@@ -165,10 +171,16 @@
     "success": "El pago se ha enviado correctamente.",
     "title": "Enviar Bitcoin"
   },
+  "SplashScreen": {
+    "update": "\nTu aplicación está desactualizada. Se necesita una actualización antes de que se pueda utilizar la aplicación. Esto se puede hacer desde PlayStore para Android y Testflight para iOS."
+  },
   "TransactionDetailScreen": {
     "detail": "Detalles de la transacción",
     "received": "Recibiste",
     "spent": "Gastaste"
+  },
+  "TransactionScreen": {
+    "noTransaction": "\nNo hay transacción para mostrar"
   },
   "WelcomeFirstScreen": {
     "bank": "Bitcoin está diseñado para permitirle almacenar, enviar y recibir dinero, sin depender de un banco o tarjeta de crédito.",
