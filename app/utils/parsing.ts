@@ -53,8 +53,6 @@ export const validPayment = (input: string, network: INetwork): IValidPaymentRep
     return {valid: false, errorMessage: `string is null or empty`}
   }
 
-  console.tron.log({input})
-
   // input might start with 'lightning:', 'bitcoin:'
   let [protocol, data] = input.split(":")
   let paymentType: IPaymentType = undefined
