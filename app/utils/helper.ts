@@ -1,4 +1,4 @@
-import { NativeModules } from "react-native"
+import { NativeModules, Platform } from "react-native"
 
 export const emailIsValid = (email) => {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)

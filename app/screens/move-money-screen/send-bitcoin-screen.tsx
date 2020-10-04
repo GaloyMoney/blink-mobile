@@ -30,7 +30,7 @@ const styles = EStyleSheet.create({
   buttonStyle: {
     backgroundColor: color.primary,
     marginBottom: 32,
-    marginTop: 16,
+    marginTop: 32,
     marginHorizontal: 24,
   },
 
@@ -50,7 +50,7 @@ const styles = EStyleSheet.create({
     justifyContent: "space-between",
   },
 
-  note: {
+  memo: {
     color: palette.darkGrey,
     fontSize: 18,
     marginLeft: 10,
@@ -103,7 +103,8 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
   const [initAmount, setInitAmount] = useState(0)
   const [amount, setAmount] = useState(0)
   const [invoice, setInvoice] = useState("")
-  const [note, setNote] = useState("")
+  const [memo, setMemo] = useState("")
+  const [initialMemo, setInitialMemo] = useState("")
   const [fee, setFee] = useState(null)
   
   const [status, setStatus] = useState("idle")
@@ -111,7 +112,7 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
 
 
   useEffect(() => {
-    const {valid, invoice, amount, amountless, note, paymentType, address} = validPayment(route.params.payment, new Token().network)
+    const {valid, invoice, amount, amountless, memo, paymentType, address} = validPayment(route.params.payment, new Token().network)
     
     // this should be valid. Invoice / Address should be check before we show this screen
     // assert(valid)
@@ -120,10 +121,12 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
     setAddress(address)
     setPaymentType(paymentType)
     setInvoice(invoice)
-    setNote(note)
     setAmount(amount)
     setInitAmount(amount)
     setAmountless(amountless)
+
+    setInitialMemo(memo)
+    setMemo(memo)
 
     getFee()
   }, [route.params.payment])
@@ -133,6 +136,10 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
   }, [address])
   
   const getFee = async () => {
+    if (!address) {
+      return
+    }
+
     try {
       const query = `mutation onchain($address: String!){
         onchain {
@@ -162,26 +169,31 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
 
     try {
 
+      let optMemo = undefined
+      if (initialMemo !== memo) {
+        optMemo = memo
+      }
+
       if(paymentType === "lightning") {
   
-        const query = `mutation payInvoice($invoice: String!, $amount: Int) {
+        const query = `mutation payInvoice($invoice: String!, $amount: Int, $memo: String) {
           invoice {
-            payInvoice(invoice: $invoice, amount: $amount)
+            payInvoice(invoice: $invoice, amount: $amount, memo: $memo)
           }
         }`  
   
         result = await store.mutate(
           query,
-          {invoice, amount: amountless ? amount : undefined},
+          {invoice, amount: amountless ? amount : undefined, memo: optMemo},
         )
 
         // FIXME merge type with onchain?
         success = result.invoice.payInvoice === "success"
   
       } else if (paymentType === "onchain"){
-        const query = `mutation onchain($address: String!, $amount: Int!) {
+        const query = `mutation onchain($address: String!, $amount: Int!, $memo: String) {
           onchain {
-            pay(address: $address, amount: $amount) {
+            pay(address: $address, amount: $amount, memo: $memo) {
               success
             }
           }
@@ -189,7 +201,7 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
 
         result = await store.mutate(
           query,
-          {address, amount},
+          {address, amount, memo: optMemo},
         )
 
         success = result.onchain.pay.success
@@ -242,10 +254,11 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
 
   return <SendBitcoinScreenJSX status={status} paymentType={paymentType} amountless={amountless}
   initAmount={initAmount} setAmount={setAmount} setStatus={setStatus} invoice={invoice} 
-  address={address} note={note} err={err} amount={amount} goBack={goBack} pay={pay}
+  address={address} memo={memo} err={err} amount={amount} goBack={goBack} pay={pay}
   price={price} 
   prefCurrency={store.prefCurrency} 
   fee={feeText}
+  setMemo={setMemo}
   nextPrefCurrency={store.nextPrefCurrency}
    />
 })
@@ -253,8 +266,9 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
 
 export const SendBitcoinScreenJSX = ({
   status, paymentType, amountless, initAmount, setAmount, setStatus, invoice, fee,
-  address, note, err, amount, goBack, pay, price, prefCurrency, nextPrefCurrency }) => (
-  <Screen style={styles.mainView} preset={"scroll"}>
+  address, memo, err, amount, goBack, pay, price, prefCurrency, nextPrefCurrency, setMemo }) => {
+
+    return <Screen style={styles.mainView} preset={"scroll"}>
     <View style={styles.section}>
       <InputPayment
         editable={paymentType === "lightning" ? 
@@ -284,30 +298,16 @@ export const SendBitcoinScreenJSX = ({
         selectTextOnFocus={true}
         // InputComponent={(props) => <Text {...props} selectable={true}>{props.value}</Text>}
       />
-      {!!note && 
-      <Input
-        leftIcon={
-          <View style={{flexDirection: "row"}}>
-            <Text style={styles.smallText}>{translate("common.note")}</Text>
-            <Icon name="ios-create-outline" size={24} color={color.primary} style={styles.icon} />
-          </View>
-        }
-        value={note}
-        renderErrorMessage={false}
-        editable={false}
-        selectTextOnFocus={true}
-        // InputComponent={(props) => <Text {...props} selectable={true}>{props.value}</Text>}
-      />
-      }
       {!!address && 
       <Input
         leftIcon={
           <View style={{flexDirection: "row"}}>
-            <Text style={styles.smallText}>{translate("common.fee")}</Text>
+            <Text style={styles.smallText}>{translate("common.Fee")}</Text>
             <Icon name="ios-pricetag" size={24} color={color.primary} style={styles.icon} />
           </View>
         }
         value={fee}
+        renderErrorMessage={false}
         editable={false}
         selectTextOnFocus={true}
         InputComponent={props => fee == null ?
@@ -316,6 +316,20 @@ export const SendBitcoinScreenJSX = ({
         }
       />
       }
+      <Input
+        leftIcon={
+          <View style={{flexDirection: "row"}}>
+            <Text style={styles.smallText}>{translate("common.note")}</Text>
+            <Icon name="ios-create-outline" size={24} color={color.primary} style={styles.icon} />
+          </View>
+        }
+        value={memo}
+        onChangeText={value => setMemo(value)}
+        renderErrorMessage={false}
+        editable={true}
+        selectTextOnFocus={true}
+        // InputComponent={(props) => <Text {...props} selectable={true}>{props.value}</Text>}
+      />
     </View>
     <View style={{alignItems: "center"}}>
       { status === "success" &&
@@ -346,10 +360,10 @@ export const SendBitcoinScreenJSX = ({
     <Button
       buttonStyle={styles.buttonStyle}
       containerStyle={{flex: 1}}
-      title={(status === "success" || status === "pending") ? translate("common.close") : err ? translate("common.tryAgain") : amount == 0 ? translate("common.amountRequired") : translate("common.send")} // TODO refactor
+      title={(status === "success" || status === "pending") ? translate("common.close") : err ? translate("common.tryAgain") : !amount ? translate("common.amountRequired") : translate("common.send")} // TODO refactor
       onPress={() => (status === "success" || status === "pending") ? goBack() : pay()}
-      disabled={amount == 0}
+      disabled={!amount}
       loading={status === "loading"}
     />
   </Screen>
-)
+}
