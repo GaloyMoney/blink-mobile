@@ -26,9 +26,12 @@ import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
 import { StoreContext } from "../../models"
 import { palette } from "../../theme/palette"
-import { getHashFromInvoice } from "../../utils/lightning"
+import { getHashFromInvoice } from "../../utils/bolt11"
 import { requestPermission } from "../../utils/notifications"
 import Toast from "react-native-root-toast"
+import LottieView from 'lottie-react-native'
+
+const successLottie = require('./success_lottie.json')
 
 const styles = EStyleSheet.create({
   buttonStyle: {
@@ -69,10 +72,26 @@ const styles = EStyleSheet.create({
   screen: {
     // FIXME: doesn't work for some reason
     justifyContent: "space-around"
-  }
+  },
+
+  lottie: {
+    width: "200rem",
+    height: "200rem",
+    // backgroundColor: 'red',
+  },
 })
 
+const getIcon = (icon, name, index, networkIndex) => <View style={{flexDirection: 'row'}}>
+<Icon name={icon} size={18} color={palette.orange} style={{top: 2}} />
+<Text style={{ marginLeft: 6, fontWeight: "bold", fontSize: 18, 
+  color: networkIndex === index ? palette.white : palette.darkGrey }}>
+  {name}
+</Text>
+</View>
+
 export const ReceiveBitcoinScreen = observer(({ navigation }) => {
+  console.tron.log("render ReceiveBitcoinScreen")
+
   const store = React.useContext(StoreContext)
 
   const [memo, setMemo] = useState("")
@@ -83,6 +102,7 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
   const [networkIndex, setNetworkIndex] = useState(0)
   const [data, setData] = useState("")
   const [err, setErr] = useState("")
+  const [isSucceed, setIsSucceed] = useState(false)
 
   useEffect(() => {
     update()
@@ -138,11 +158,22 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
   }, [])
 
   const update = async () => {
+    // lightning
     if (networkIndex === 0) {
       await createInvoice()
+
+    // bitcoin
     } else {
-      const uri = `bitcoin:${values(store.lastOnChainAddresses)[0].id}`
-      setData(amount === 0 ? uri : uri + `?amount=${amount / 10 ** 8}`)
+      let uri = `bitcoin:${values(store.lastOnChainAddresses)[0].id}`
+      const params = new URLSearchParams()
+      if (!!amount) {
+        params.append('amount', `${amount / 10 ** 8}`)
+      }
+      if (!!memo) {
+        params.append('message', encodeURI(memo))
+      }
+      const fullUri = !!params.toString() ? `${uri}?${params.toString()}` : `${uri}`
+      setData(fullUri)
       setLoading(false)
     }
   }
@@ -198,14 +229,17 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
     analytics().logEarnVirtualCurrency({ value: amount, virtual_currency_name: "btc" })
 
     ReactNativeHapticFeedback.trigger("notificationSuccess", options)
-    Alert.alert("success", translate("ReceiveBitcoinScreen.invoicePaid"), [
-      {
-        text: translate("common.ok"),
-        onPress: () => {
-          navigation.goBack(false)
-        },
-      },
-    ])
+
+    setIsSucceed(true)
+
+    // Alert.alert("success", translate("ReceiveBitcoinScreen.invoicePaid"), [
+    //   {
+    //     text: translate("common.ok"),
+    //     onPress: () => {
+    //       navigation.goBack(false)
+    //     },
+    //   },
+    // ])
   }
 
   // temporary fix until we have a better management of notifications:
@@ -284,16 +318,9 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
   }
 
   const isReady = !loading && data != ""
-  const getIcon = (icon, name, index) => <View style={{flexDirection: 'row'}}>
-    <Icon name={icon} size={18} color={palette.orange} style={{top: 2}} />
-    <Text style={{ marginLeft: 6, fontWeight: "bold", fontSize: 18, 
-      color: networkIndex === index ? palette.white : palette.darkGrey }}>
-      {name}
-    </Text>
-  </View>
 
-  const LightningComponent = () => getIcon("ios-flash", "Lightning", 0)
-  const BitcoinComponent = () => getIcon("logo-bitcoin", "On-Chain", 1)
+  const LightningComponent = () => getIcon("ios-flash", "Lightning", 0, networkIndex)
+  const BitcoinComponent = () => getIcon("logo-bitcoin", "On-Chain", 1, networkIndex)
 
   const inputMemoRef = React.useRef()
 
@@ -304,7 +331,7 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
     return () => {
       Keyboard.removeListener("keyboardDidHide", _keyboardDidHide)
     }
-  }, [])
+  })
 
   const _keyboardDidHide = () => {
     inputMemoRef?.current.blur()
@@ -319,21 +346,26 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
         buttons={[{element: LightningComponent}, {element: BitcoinComponent}]}
         containerStyle={styles.headerView}
         selectedButtonStyle={{ backgroundColor: palette.lightBlue }}
+        disabled={isSucceed}
       />
       <View style={styles.section}>
         <InputPaymentDataInjected
           onUpdateAmount={setAmount}
           onBlur={update}
           forceKeyboard={false}
+          editable={!isSucceed}
         />
         <Input placeholder="optional note" value={memo} onChangeText={setMemo} containerStyle={{marginTop: 12}}
           leftIcon={<Icon name={"ios-create-outline"} size={21} color={palette.darkGrey} />}
           ref={inputMemoRef}
           onBlur={update}
+          disabled={isSucceed}
         />
       </View>
       <View style={styles.qr}>
-        {isReady && (
+        {isSucceed && 
+          <LottieView source={successLottie} loop={false} autoPlay style={styles.lottie} resizeMode='cover' />
+        || isReady && (
           <Pressable onPress={copyInvoice}>
             <QRCode
               size={280}
@@ -347,7 +379,8 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
               )}
             />
           </Pressable>
-        ) ||
+        )
+          ||
           <View
             style={{
               width: 280,
@@ -367,7 +400,9 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
           }
           </View>
         }
-        {isReady && 
+        {isSucceed && 
+          <Text>{translate("ReceiveBitcoinScreen.invoicePaid")}</Text>
+        || isReady && 
           <Text>{translate("ReceiveBitcoinScreen.tapQrCodeCopy")}</Text>
           ||
           <Text> </Text>
@@ -375,9 +410,9 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
       </View>
       <Button
         buttonStyle={styles.buttonStyle}
-        containerStyle={{ marginHorizontal: 48, paddingVertical: 18, flex: 1 }}
-        title={translate("common.share")}
-        onPress={shareInvoice}
+        containerStyle={{ marginHorizontal: 60, paddingVertical: 18, flex: 1 }}
+        title={isSucceed ? translate("common.ok") : translate("common.share")}
+        onPress={isSucceed ? () => navigation.goBack(false) : shareInvoice}
         disabled={!isReady}
         titleStyle={{ fontWeight: "bold" }}
       />

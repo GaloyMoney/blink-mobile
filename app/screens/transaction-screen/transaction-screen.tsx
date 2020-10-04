@@ -96,7 +96,8 @@ const styles = EStyleSheet.create({
     color: palette.darkGrey,
     padding: 22,
     flexDirection: 'row',
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    backgroundColor: palette.white
   },
 
   row: {
