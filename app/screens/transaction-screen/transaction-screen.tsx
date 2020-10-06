@@ -11,7 +11,7 @@ import { translate } from "../../i18n"
 import { StoreContext, useQuery } from "../../models"
 import { palette } from "../../theme/palette"
 import { sameDay, sameMonth } from "../../utils/date"
-import { AccountType, CurrencyType } from "../../utils/enum"
+import { CurrencyType } from "../../utils/enum"
 import Icon from "react-native-vector-icons/Ionicons"
 
 
@@ -207,7 +207,9 @@ const AccountDetailItem: React.FC<AccountDetailItemProps> = ({tx, navigation}) =
     leftIcon={<IconTransaction
       isReceive={tx.isReceive}
       size={24}
+      pending={tx.pending}
     />}
+    containerStyle={tx.pending ? {backgroundColor: palette.lighterGrey} : null}
     rightTitle={<Text style={{color: colorFromType(tx.isReceive)}}>{tx.text}</Text>}
     onPress={() => navigation.navigate("transactionDetail", {tx})}
   />)

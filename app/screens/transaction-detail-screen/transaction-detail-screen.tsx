@@ -87,7 +87,7 @@ const Row = ({ entry, value }) => (
 
 export const TransactionDetailScreen = ({ route, navigation }) => {
   
-  const { currency, amount, hash, description, fee, isReceive, id, usd, feeUsd, date_format, type } = route.params.tx as AccountDetailItemProps
+  const { currency, amount, hash, description, fee, isReceive, id, usd, feeUsd, date_format, type, pending } = route.params.tx as AccountDetailItemProps
 
   const spendOrReceiveText = isReceive ? 
     translate("TransactionDetailScreen.received") : 
@@ -97,7 +97,7 @@ export const TransactionDetailScreen = ({ route, navigation }) => {
 
   return (
     <Screen style={styles.screen} unsafe={true} preset="scroll">
-      <View style={[styles.amountView, {backgroundColor: colorTypeFromIconType(isReceive)}]}>
+      <View style={[styles.amountView, {backgroundColor: colorTypeFromIconType({isReceive, pending})}]}>
         <IconTransaction isReceive={isReceive} size={100} transparent={true} />
         <Text style={styles.amountText}>{spendOrReceiveText}</Text>
         {!!usd &&
