@@ -44,6 +44,7 @@ query gql_query_logged {
       usd
       fee
       feeUsd
+      pending
     }
   }
   getLastOnChainAddress {
