@@ -101,6 +101,7 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
 
   const [networkIndex, setNetworkIndex] = useState(0)
   const [data, setData] = useState("")
+  const [dataOneLiner, setDataOneLiner] = useState("")
   const [err, setErr] = useState("")
   const [isSucceed, setIsSucceed] = useState(false)
 
@@ -158,13 +159,41 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
   }, [])
 
   const update = async () => {
+    setLoading(true)
     // lightning
     if (networkIndex === 0) {
-      await createInvoice()
-
-    // bitcoin
+      console.tron.log("createInvoice")
+      try {
+        const query = `mutation addInvoice($value: Int, $memo: String) {
+          invoice {
+            addInvoice(value: $value, memo: $memo)
+          }
+        }`
+  
+        const result = await store.mutate(query, { value: amount, memo })
+        const invoice = result.invoice.addInvoice
+        setData(invoice)
+        console.tron.log("data has been set")
+      } catch (err) {
+        console.tron.log(`error with AddInvoice: ${err}`)
+        setErr(`${err}`)
+        throw err
+      } finally {
+        setLoading(false)
+      }
+      // bitcoin
     } else {
-      let uri = `bitcoin:${values(store.lastOnChainAddresses)[0].id}`
+      setData(values(store.lastOnChainAddresses)[0].id)
+      setLoading(false)
+    }
+  }
+
+  const getFullUri = (input) => {
+    if (networkIndex === 0) {
+      // TODO add lightning:
+      return input 
+    } else {
+      let uri = `bitcoin:${input}`
       const params = new URLSearchParams()
       if (!!amount) {
         params.append('amount', `${amount / 10 ** 8}`)
@@ -173,13 +202,12 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
         params.append('message', encodeURI(memo))
       }
       const fullUri = !!params.toString() ? `${uri}?${params.toString()}` : `${uri}`
-      setData(fullUri)
-      setLoading(false)
+      return fullUri
     }
   }
 
   const copyInvoice = () => {
-    Clipboard.setString(data)
+    Clipboard.setString(getFullUri(data))
 
     if (Platform.OS === "ios") {
       Toast.show(translate("ReceiveBitcoinScreen.copyClipboard"), {
@@ -197,7 +225,7 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
   const shareInvoice = async () => {
     try {
       const result = await Share.share({
-        message: data,
+        message: getFullUri(data),
       })
 
       if (result.action === Share.sharedAction) {
@@ -256,9 +284,7 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
           }`
 
           try {
-            console.tron.log({ data })
             const hash = getHashFromInvoice(data)
-            console.tron.log({ hash })
             const result = await store.mutate(query, { hash })
             if (result.invoice.updatePendingInvoice === true) {
               success()
@@ -294,29 +320,6 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
     return unsubscribe
   }, [data]) // FIXME: not sure why data need to be in scope here, but otherwise the async function will have data = null
 
-  const createInvoice = async () => {
-    setLoading(true)
-    console.tron.log("createInvoice")
-    try {
-      const query = `mutation addInvoice($value: Int, $memo: String) {
-        invoice {
-          addInvoice(value: $value, memo: $memo)
-        }
-      }`
-
-      const result = await store.mutate(query, { value: amount, memo })
-      const invoice = result.invoice.addInvoice
-      setData(invoice)
-      console.tron.log("data has been set")
-    } catch (err) {
-      console.tron.log(`error with AddInvoice: ${err}`)
-      setErr(`${err}`)
-      throw err
-    } finally {
-      setLoading(false)
-    }
-  }
-
   const isReady = !loading && data != ""
 
   const LightningComponent = () => getIcon("ios-flash", "Lightning", 0, networkIndex)
@@ -337,6 +340,13 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
     inputMemoRef?.current.blur()
   }
 
+  React.useEffect(() => {
+    if (networkIndex === 0) {
+      setDataOneLiner(`${data.substr(0, 20)}...${data.substr(-20)}`)
+    } else {
+      setDataOneLiner(data)
+    }
+  }, [data])
 
   return (
     <Screen backgroundColor={palette.lighterGrey} style={styles.screen} preset="scroll">
@@ -369,7 +379,7 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
           <Pressable onPress={copyInvoice}>
             <QRCode
               size={280}
-              value={data}
+              value={getFullUri(data)}
               logoBackgroundColor="white"
               ecl="M"
               logo={Icon.getImageSourceSync(
@@ -416,6 +426,9 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
         disabled={!isReady}
         titleStyle={{ fontWeight: "bold" }}
       />
+      <Pressable style={{marginHorizontal: 24, marginVertical: 12}} onPress={copyInvoice}>
+        <Text style={{textAlign: "center"}}>{dataOneLiner}</Text>
+      </Pressable>
     </Screen>
   )
 })

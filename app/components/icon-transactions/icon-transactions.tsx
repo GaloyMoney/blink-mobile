@@ -44,11 +44,13 @@ const xml_transaction_received = `
 `
 
 type IconType = "send" | "receive"
-export const colorTypeFromIconType = isReceive => isReceive ? palette.green : palette.orange
+export const colorTypeFromIconType = ({isReceive, pending}) => pending ? 
+  palette.midGrey : 
+  isReceive ? palette.green : palette.orange
 
 export const IconTransaction = 
-	({isReceive, size, transparent = false}: {isReceive: boolean, size: number, transparent?: boolean}) => {
-  let color = colorTypeFromIconType(isReceive)
+	({isReceive, pending, size, transparent = false}: {isReceive: boolean, size: number, transparent?: boolean, pending: boolean}) => {
+  let color = colorTypeFromIconType({isReceive, pending})
   if (transparent) color = palette.white
 	const raw_xml = isReceive ? xml_transaction_received : xml_transaction_sent
   const parse_xml = raw_xml.replace("{color}", color)
