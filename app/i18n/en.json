@@ -79,7 +79,7 @@
     "placeholder": "Phone Number"
   },
   "MapScreen": {
-    "title": "map"
+    "title": "Map"
   },
   "WelcomePhoneValidationScreen": {
     "header": "To confirm your phone number, enter the code we just sent you",
