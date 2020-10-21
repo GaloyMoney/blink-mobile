@@ -4,19 +4,19 @@ import messaging from '@react-native-firebase/messaging'
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { CardStyleInterpolators, createStackNavigator } from "@react-navigation/stack"
 import * as React from "react"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { AppState } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 import { translate } from "../i18n"
-import { StoreContext, useQuery } from "../models"
+import { StoreContext } from "../models"
 import { AccountDetailScreen } from "../screens/account-detail-screen/account-detail-screen"
 import { DebugScreen } from "../screens/debug-screen"
 import { EarnMapDataInjected } from "../screens/earns-map-screen"
 import { EarnQuiz, EarnSection } from "../screens/earns-screen"
 import { SectionCompleted } from "../screens/earns-screen/section-completed"
 import { GetStartedScreen } from "../screens/get-started-screen"
-import { FindATMScreen, MoveMoneyScreenDataInjected, ReceiveBitcoinScreen, ScanningQRCodeScreen, SendBitcoinScreen } from "../screens/move-money-screen"
+import { MapScreen, MoveMoneyScreenDataInjected, ReceiveBitcoinScreen, ScanningQRCodeScreen, SendBitcoinScreen } from "../screens/move-money-screen"
 import { WelcomePhoneInputScreen, WelcomePhoneValidationScreenDataInjected } from "../screens/phone-auth-screen"
 import { SplashScreen } from "../screens/splash-screen/splash-screen"
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
@@ -384,8 +384,6 @@ export const MoveMoneyNavigator = () => {
           // headerShown: false,
         }}
       />
-      <StackMoveMoney.Screen name="findATM" component={FindATMScreen} />
-      <StackMoveMoney.Screen name="depositCash" component={FindATMScreen} />
     </StackMoveMoney.Navigator>
   )
 }
@@ -460,6 +458,16 @@ export const PrimaryNavigator = () => {
           title: translate("MoveMoneyScreen.title"),
           tabBarIcon: ({ focused, color }) => {
             return <Icon name={"ios-swap-horizontal"} size={size} color={color} />
+          },
+        }}
+      />
+      <Tab.Screen 
+        name="Map" 
+        component={MapScreen} 
+        options={{
+          title: translate("MapScreen.title"),
+          tabBarIcon: ({ focused, color }) => {
+            return <Icon name={"ios-map-outline"} size={size} color={color} />
           },
         }}
       />
