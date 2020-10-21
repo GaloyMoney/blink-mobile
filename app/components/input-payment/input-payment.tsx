@@ -8,6 +8,7 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
 import { translate } from "../../i18n"
 import { StoreContext } from "../../models"
+import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { CurrencyConversion } from "../../utils/currencyConversion"
 import { CurrencyType } from "../../utils/enum"
@@ -22,7 +23,7 @@ const styles = EStyleSheet.create({
   main: {
     alignItems: "center",
     marginTop: "8rem",
-    width: "100%",
+    flexDirection: "row"
   },
 
   subCurrencyText: {
@@ -33,7 +34,7 @@ const styles = EStyleSheet.create({
   },
 
   textStyle: {
-    fontSize: "24rem",
+    fontSize: "22rem",
     color: palette.darkGrey,
   },
 })
@@ -67,6 +68,7 @@ export const InputPayment = ({
   prefCurrency,
   nextPrefCurrency,
   initAmount = 0, // in sats
+  maxAmount = null,
 }) => {
 
   const endByDot = (s: string) => s.match(/^[0-9]*\.{1}$/)
@@ -101,7 +103,6 @@ export const InputPayment = ({
   const amountInput = mapping[prefCurrency].conversion(amount)
   const currency = mapping[prefCurrency].primary
 
-
   // TODO: show "an amount is needed" in red
   function keyboardFocus() {
     if (forceKeyboard && (amountInput == "" || amountInput == "." || +amountInput == 0)) {
@@ -131,7 +132,7 @@ export const InputPayment = ({
       value = String(+amountInput)
     }
   
-    // only add dot for for non-sats.
+    // only potentially add dot for for non-sats.
     if ((currency === CurrencyType.USD || currency === CurrencyType.BTC) && appendDot) {
       value += "."
     }
@@ -140,46 +141,49 @@ export const InputPayment = ({
   }
 
   return (
-    <View style={{ flexDirection: "row", alignItems: "center" }}>
-      <View style={styles.main}>
+    <View style={styles.main}>
+      <TouchableOpacity onPress={nextPrefCurrency}>
+        <Icon name={"ios-swap-vertical"} size={32} style={{top: -4}} />
+      </TouchableOpacity>
+      <View style={{flex: 1, alignItems: "center", marginHorizontal: 12}}>
         <Input
-        ref={inputRef}
-        placeholder={translate("common.setAnAmount")}
-        autoFocus={forceKeyboard}
-        value={valueTweak()}
-        leftIcon={currency === CurrencyType.USD ? 
-          <Text style={[styles.textStyle, {color: valueTweak() === "" ? palette.midGrey: palette.darkGrey}]}>$</Text>
-          : null}
-        rightIcon={
-          currency === CurrencyType.BTC ? (
-            <Text style={[styles.textStyle, {color: valueTweak() === "" ? palette.midGrey: palette.darkGrey}]}>BTC</Text>
-          ) : currency === "sats" ? (
-            <Text style={[styles.textStyle, {color: valueTweak() === "" ? palette.midGrey: palette.darkGrey}]}>sats</Text>
-          ) : null
-        }
-        inputContainerStyle={{ width: "100%" }}
-        inputStyle={[styles.textStyle, { textAlign: "center" }]}
-        onChangeText={setInput}
-        keyboardType={currency === "sats" ? "number-pad" : "decimal-pad"}
-        onBlur={event => {
-          onBlur()
-          // keyboardFocus()
-        }}
-        enablesReturnKeyAutomatically={true}
-        returnKeyLabel="Update"
-        returnKeyType="done"
-        editable={editable}
-        onEndEditing={onBlur}
-        renderErrorMessage={false}
-      />
+          ref={inputRef}
+          placeholder={translate("common.setAnAmount")}
+          autoFocus={forceKeyboard}
+          value={valueTweak()}
+          leftIcon={currency === CurrencyType.USD ? 
+            <Text style={[styles.textStyle, {color: valueTweak() === "" ? palette.midGrey: palette.darkGrey}]}>$</Text>
+            : null}
+          rightIcon={
+            currency === CurrencyType.BTC ? (
+              <Text style={[styles.textStyle, {color: valueTweak() === "" ? palette.midGrey: palette.darkGrey}]}>BTC</Text>
+            ) : currency === "sats" ? (
+              <Text style={[styles.textStyle, {color: valueTweak() === "" ? palette.midGrey: palette.darkGrey}]}>sats</Text>
+            ) : null
+          }
+          inputContainerStyle={{ width: "100%" }}
+          inputStyle={[styles.textStyle, { textAlign: "center" }]}
+          onChangeText={setInput}
+          keyboardType={currency === "sats" ? "number-pad" : "decimal-pad"}
+          onBlur={event => {
+            onBlur()
+            // keyboardFocus()
+          }}
+          enablesReturnKeyAutomatically={true}
+          returnKeyLabel="Update"
+          returnKeyType="done"
+          editable={editable}
+          onEndEditing={onBlur}
+          renderErrorMessage={false}
+        />
         <TextCurrency
           amount={mapping[prefCurrency].secondaryConversion(amount)}
           currency={mapping[prefCurrency].secondary}
           style={styles.subCurrencyText}
         />
       </View>
-      <TouchableOpacity onPress={nextPrefCurrency}>
-        <Icon name={"ios-swap-vertical"} size={32} style={{top: -4}} />
+      <TouchableOpacity onPress={maxAmount ? () => setAmount(maxAmount): null} style={maxAmount ? {backgroundColor: color.primary, padding: 8}: null}>
+        <Text style={maxAmount ? {color: palette.white, fontSize: 16 }: {color: palette.lighterGrey, fontSize: 16 }}>{"Max"}</Text>
       </TouchableOpacity>
     </View>
   )

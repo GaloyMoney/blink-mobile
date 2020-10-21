@@ -1,19 +1,37 @@
 import { storiesOf } from "@storybook/react-native"
 import * as React from "react"
+import { View } from "react-native"
+import EStyleSheet from "react-native-extended-stylesheet"
 import { InputPayment } from "."
-import { Story, StoryScreen, UseCase } from "../../../storybook/views"
+import { StoryScreen } from "../../../storybook/views"
 
 declare let module
 
+const noop = () => {}
+
+const props = {
+  currencyPreference:"USD",
+  price: 0.00011,
+  prefCurrency: "sats", nextPrefCurrency: noop, 
+}
+
+const styles = EStyleSheet.create({
+  section: {
+    paddingHorizontal: 24,
+    // flex: 1,
+    // width: "100%"
+  },
+})
+
 storiesOf("InputPayment", module)
   .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
-  .add("Style Presets", () => (
-    <Story>
-      <UseCase text="Editable" usage="Loading">
-        <InputPayment currencyPreference={"USD"} price={0.00011} onUpdateAmount={() => {}} editable={true}/>
-      </UseCase>
-      <UseCase text="Non editable" usage="Loading">
-        <InputPayment currencyPreference={"USD"} price={0.00011} initAmount={12345} onUpdateAmount={() => {}} editable={false}/>
-      </UseCase>
-    </Story>
+  .add("Editable True", () => (
+    <View style={styles.section}>
+      <InputPayment {...props} onUpdateAmount={noop} editable={true}/>
+    </View>
+  )) 
+  .add("Editable False", () => (
+    <View style={styles.section}>
+      <InputPayment {...props} initAmount={12345} onUpdateAmount={noop} editable={false}/>
+    </View>
   ))
