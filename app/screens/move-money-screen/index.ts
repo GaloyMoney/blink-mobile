@@ -1,5 +1,5 @@
 export * from "./money-money-screen"
 export * from "./receive-bitcoin-screen"
 export * from "./send-bitcoin-screen"
-export * from "./find-atm-screen"
+export * from "../map-screen/find-atm-screen"
 export * from "./scanning-qrcode-screen"
