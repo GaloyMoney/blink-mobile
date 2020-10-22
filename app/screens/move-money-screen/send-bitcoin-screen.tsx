@@ -110,6 +110,7 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
   const [status, setStatus] = useState("idle")
   // idle, loading, pending, success, error 
 
+
   useEffect(() => {
     const {valid, invoice, amount, amountless, memo, paymentType, address} = validPayment(route.params.payment, new Token().network)
     
@@ -252,36 +253,36 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
   const feeText = fee == null ? fee : textCurrencyFormatting(fee, price, store.prefCurrency)
 
   return <SendBitcoinScreenJSX status={status} paymentType={paymentType} amountless={amountless}
-    initAmount={initAmount} setAmount={setAmount} setStatus={setStatus} invoice={invoice} 
-    address={address} memo={memo} err={err} amount={amount} goBack={goBack} pay={pay}
-    price={price} 
-    prefCurrency={store.prefCurrency} 
-    feeText={feeText} 
-    maxAmount={(paymentType === "onchain" && fee != null) ? store.wallet("BTC").balance - fee : null}
-    setMemo={setMemo}
-    nextPrefCurrency={store.nextPrefCurrency}
-  />
+  initAmount={initAmount} setAmount={setAmount} setStatus={setStatus} invoice={invoice} 
+  address={address} memo={memo} err={err} amount={amount} goBack={goBack} pay={pay}
+  price={price} 
+  prefCurrency={store.prefCurrency} 
+  fee={feeText}
+  setMemo={setMemo}
+  nextPrefCurrency={store.nextPrefCurrency}
+   />
 })
 
 
 export const SendBitcoinScreenJSX = ({
-  status, paymentType, amountless, initAmount, setAmount, setStatus, invoice, feeText,
-  address, memo, err, amount, goBack, pay, price, prefCurrency, nextPrefCurrency, setMemo, maxAmount }) => {
+  status, paymentType, amountless, initAmount, setAmount, setStatus, invoice, fee,
+  address, memo, err, amount, goBack, pay, price, prefCurrency, nextPrefCurrency, setMemo }) => {
 
     return <Screen style={styles.mainView} preset={"scroll"}>
-    <InputPayment
-      editable={paymentType === "lightning" ? 
-        amountless && (status === "idle" || status === "error"):
-        true // bitcoin // TODO: handle amount properly
-      }
-      initAmount={initAmount}
-      onUpdateAmount={input => { setAmount(input); setStatus("idle")} }
-      forceKeyboard={true}
-      price={price}
-      prefCurrency={prefCurrency}
-      nextPrefCurrency={nextPrefCurrency}
-      maxAmount={maxAmount}
-    />
+    <View style={styles.section}>
+      <InputPayment
+        editable={paymentType === "lightning" ? 
+          amountless && (status === "idle" || status === "error"):
+          true // bitcoin // TODO: handle amount properly
+        }
+        initAmount={initAmount}
+        onUpdateAmount={input => { setAmount(input); setStatus("idle")} }
+        forceKeyboard={true}
+        price={price}
+        prefCurrency={prefCurrency}
+        nextPrefCurrency={nextPrefCurrency}
+      />
+    </View>
     <View style={{marginTop: 18}}>
       <Input
         placeholder={translate("common.invoice")}
@@ -305,11 +306,11 @@ export const SendBitcoinScreenJSX = ({
             <Icon name="ios-pricetag" size={24} color={color.primary} style={styles.icon} />
           </View>
         }
-        value={feeText}
+        value={fee}
         renderErrorMessage={false}
         editable={false}
         selectTextOnFocus={true}
-        InputComponent={props => feeText == null ?
+        InputComponent={props => fee == null ?
           <ActivityIndicator animating={true} size="small" color={palette.orange} /> :
           <TextInput {...props} />
         }
