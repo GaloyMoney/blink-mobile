@@ -23,17 +23,18 @@ const styles = EStyleSheet.create({
     alignItems: "center",
     marginTop: "8rem",
     width: "100%",
+    flexDirection: "row",
   },
 
   subCurrencyText: {
-    fontSize: "18rem",
+    fontSize: "16rem",
     color: palette.midGrey,
     marginTop: 0,
     paddingTop: 0,
   },
 
   textStyle: {
-    fontSize: "24rem",
+    fontSize: "18rem",
     color: palette.darkGrey,
   },
 })
@@ -45,6 +46,7 @@ export interface InputPaymentDataInjectedProps {
   forceKeyboard: boolean
   initAmount?: number
   currencyPreference?: string // "sats" | "BTC" | "usd"
+  sub?: boolean
 }
 
 export const InputPaymentDataInjected = observer((props: InputPaymentDataInjectedProps) => {
@@ -66,6 +68,7 @@ export const InputPayment = ({
   forceKeyboard = false,
   prefCurrency,
   nextPrefCurrency,
+  sub = true,
   initAmount = 0, // in sats
 }) => {
 
@@ -140,47 +143,49 @@ export const InputPayment = ({
   }
 
   return (
-    <View style={{ flexDirection: "row", alignItems: "center" }}>
+    <View style={{ alignItems: "center" }}>
       <View style={styles.main}>
         <Input
-        ref={inputRef}
-        placeholder={translate("common.setAnAmount")}
-        autoFocus={forceKeyboard}
-        value={valueTweak()}
-        leftIcon={currency === CurrencyType.USD ? 
-          <Text style={[styles.textStyle, {color: valueTweak() === "" ? palette.midGrey: palette.darkGrey}]}>$</Text>
-          : null}
-        rightIcon={
-          currency === CurrencyType.BTC ? (
-            <Text style={[styles.textStyle, {color: valueTweak() === "" ? palette.midGrey: palette.darkGrey}]}>BTC</Text>
-          ) : currency === "sats" ? (
-            <Text style={[styles.textStyle, {color: valueTweak() === "" ? palette.midGrey: palette.darkGrey}]}>sats</Text>
-          ) : null
-        }
-        inputContainerStyle={{ width: "100%" }}
-        inputStyle={[styles.textStyle, { textAlign: "center" }]}
-        onChangeText={setInput}
-        keyboardType={currency === "sats" ? "number-pad" : "decimal-pad"}
-        onBlur={event => {
-          onBlur()
-          // keyboardFocus()
-        }}
-        enablesReturnKeyAutomatically={true}
-        returnKeyLabel="Update"
-        returnKeyType="done"
-        editable={editable}
-        onEndEditing={onBlur}
-        renderErrorMessage={false}
-      />
+          ref={inputRef}
+          placeholder={translate("common.setAnAmount")}
+          autoFocus={forceKeyboard}
+          value={valueTweak()}
+          leftIcon={currency === CurrencyType.USD ? 
+            <Text style={[styles.textStyle, {color: valueTweak() === "" ? palette.midGrey: palette.darkGrey}]}>$</Text>
+            : null}
+          rightIcon={
+            currency === CurrencyType.BTC ? (
+              <Text style={[styles.textStyle, {color: valueTweak() === "" ? palette.midGrey: palette.darkGrey}]}>BTC</Text>
+            ) : currency === "sats" ? (
+              <Text style={[styles.textStyle, {color: valueTweak() === "" ? palette.midGrey: palette.darkGrey}]}>sats</Text>
+            ) : null
+          }
+          inputContainerStyle={{ width: "100%" }}
+          inputStyle={[styles.textStyle, { textAlign: "center" }]}
+          onChangeText={setInput}
+          keyboardType={currency === "sats" ? "number-pad" : "decimal-pad"}
+          onBlur={event => {
+            onBlur()
+            // keyboardFocus()
+          }}
+          enablesReturnKeyAutomatically={true}
+          returnKeyLabel="Update"
+          returnKeyType="done"
+          editable={editable}
+          onEndEditing={onBlur}
+          renderErrorMessage={false}
+        />
+        <TouchableOpacity onPress={nextPrefCurrency}>
+          <Icon name={"ios-swap-vertical"} size={32} style={{paddingTop: 4}} />
+        </TouchableOpacity>
+      </View>
+      {sub && 
         <TextCurrency
           amount={mapping[prefCurrency].secondaryConversion(amount)}
           currency={mapping[prefCurrency].secondary}
           style={styles.subCurrencyText}
         />
-      </View>
-      <TouchableOpacity onPress={nextPrefCurrency}>
-        <Icon name={"ios-swap-vertical"} size={32} style={{top: -4}} />
-      </TouchableOpacity>
+        }
     </View>
   )
 }

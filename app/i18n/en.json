@@ -21,6 +21,8 @@
     "later": "Later",
     "notification": "Notification",
     "share": "Share",
+    "shareLightning": "Share Lightning Invoice",
+    "shareBitcoin": "Share Bitcoin Address",
     "invoice": "Invoice",
     "tryAgain": "Try again",
     "amountRequired": "Amount is required",
