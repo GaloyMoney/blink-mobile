@@ -216,9 +216,11 @@ export const MoveMoneyScreen = (
         </View>
 
         <FlatList
-          ListHeaderComponent={error && 
-            <Text style={{color: palette.red, alignSelf: "center", paddingBottom: 18}} selectable={true}>{error.message}</Text>
-          }
+          ListHeaderComponent={() => <>
+            {error?.response?.errors?.map(({ message }) => 
+             <Text style={{color: palette.red, alignSelf: "center", paddingBottom: 18}} selectable={true}>{message}</Text>
+          )}
+          </>}
           data={[{
             title: translate(`ScanningQRCodeScreen.title`), isReceive: false, target: "scanningQRCode"
           },{

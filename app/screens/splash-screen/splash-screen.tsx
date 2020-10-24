@@ -48,7 +48,6 @@ export const SplashScreen = observer(({ navigation }) => {
     const {minBuildNumberAndroid, minBuildNumberIos } = buildParameters
     const minBuildNumber = isIos ? minBuildNumberIos : minBuildNumberAndroid
     let buildNumber = DeviceInfo.getBuildNumber();
-    console.log({buildNumber, minBuildNumber})
     return buildNumber < minBuildNumber
   }
 
