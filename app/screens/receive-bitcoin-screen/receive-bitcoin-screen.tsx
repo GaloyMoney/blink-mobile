@@ -177,7 +177,7 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
   }
 
 
-  const success = () => {
+  const paymentSuccess = () => {
     // success
 
     const options = {
@@ -210,18 +210,12 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
   useEffect(() => {
     const _handleAppStateChange = async (nextAppState) => {
       if (nextAppState === "active") {
-        // lightning
-        const query = `mutation updatePendingInvoice($hash: String!) {
-          invoice {
-            updatePendingInvoice(hash: $hash)
-          }
-        }`
 
         try {
           const hash = getHashFromInvoice(invoice)
-          const result = await store.mutate(query, { hash })
-          if (result.invoice.updatePendingInvoice === true) {
-            success()
+          const success = await store.updatePendingInvoice(hash)
+          if (success) {
+            paymentSuccess()
           }
         } catch (err) {
           console.tron.warn(`can't fetch invoice ${err}`)
@@ -240,7 +234,7 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
     const unsubscribe = messaging().onMessage(async (remoteMessage) => {
         const hash = getHashFromInvoice(invoice)
         if (remoteMessage.data.type === "paid-invoice" && remoteMessage.data.hash === hash) {
-          success()
+          paymentSuccess()
         }
       }
     )
@@ -263,20 +257,20 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
     inputMemoRef?.current.blur()
   }
 
-  const QRView = ({index}) => {
+  const QRView = ({type}) => {
 
     let data
 
-    if (index === 0) {
+    if (type === "lightning") {
       data = invoice
     } else {
       data = values(store.lastOnChainAddresses)[0].id
     }
 
-    const isReady = index === 0 ? !loading && data != "" : true
+    const isReady = type === "lightning" ? !loading && data != "" : true
 
     const getFullUri = (input) => {
-      if (index === 0) {
+      if (type === "lightning") {
         // TODO add lightning:
         return input 
       } else {
@@ -330,7 +324,7 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
     }
 
     const dataOneLiner = () => {
-      if (index === 0) {
+      if (type === "lightning") {
         return data ? `${data.substr(0, 18)}...${data.substr(-18)}` : ''
       } else {
         return data
@@ -350,7 +344,7 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
                 logoBackgroundColor="white"
                 ecl="M"
                 logo={Icon.getImageSourceSync(
-                  index === 0 ? "ios-flash" : "logo-bitcoin",
+                  type === "lightning" ? "ios-flash" : "logo-bitcoin",
                   64,
                   palette.orange,
                 )}
@@ -393,7 +387,7 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
         <Button
           buttonStyle={styles.buttonStyle}
           containerStyle={{ marginHorizontal: 52, paddingVertical: 18 }}
-          title={isSucceed ? translate("common.ok") : translate(index === 0 ? "common.shareLightning" : "common.shareBitcoin")}
+          title={isSucceed ? translate("common.ok") : translate(type === "lightning" ? "common.shareLightning" : "common.shareBitcoin")}
           onPress={isSucceed ? () => navigation.goBack(false) : share}
           disabled={!isReady}
           titleStyle={{ fontWeight: "bold" }}
@@ -421,9 +415,10 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
           disabled={isSucceed}
         />
       </View>
-      <Swiper style={{}} height={450}> 
-        <QRView index={0} />
-        <QRView index={1} />
+      {/* FIXME: fixed height */}
+      <Swiper height={450} loop={false} >  
+        <QRView type={"lightning"} />
+        <QRView type={"bitcoind"} />
       </Swiper>
     </Screen>
   )

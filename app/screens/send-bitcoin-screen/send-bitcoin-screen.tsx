@@ -21,9 +21,9 @@ import { CurrencyType } from "../../utils/enum"
 import { IPaymentType, validPayment } from "../../utils/parsing"
 import { Token } from "../../utils/token"
 
-const successLottie = require('./success_lottie.json')
-const errorLottie = require('./error_lottie.json')
-const pendingLottie = require('./pending_lottie.json')
+const successLottie = require('../move-money-screen/success_lottie.json')
+const errorLottie = require('../move-money-screen/error_lottie.json')
+const pendingLottie = require('../move-money-screen/pending_lottie.json')
 
 
 const styles = EStyleSheet.create({
@@ -90,13 +90,18 @@ const styles = EStyleSheet.create({
     marginHorizontal: 48,
     // width: "100%"
   },
+
+  errorText: {
+    fontSize: 18,
+    color: palette.red,
+  }
 })
 
 
 export const SendBitcoinScreen: React.FC = observer(({ route }) => {
   const store = React.useContext(StoreContext)
 
-  const [err, setErr] = useState("")
+  const [errs, setErrs] = useState([])
   const [address, setAddress] = useState("")
   const [paymentType, setPaymentType] = useState<IPaymentType>(undefined)
   const [amountless, setAmountless] = useState(false)
@@ -158,14 +163,12 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
   const pay = async () => {
     if ((amountless || paymentType === "onchain") && amount === 0) {
       setStatus("error")
-      setErr(translate("SendBitcoinScreen.noAmount"))
+      setErrs([{message: translate("SendBitcoinScreen.noAmount")}])
       return
     }
 
-    setErr("")
+    setErrs([])
     setStatus("loading")
-
-    let success, result
 
     try {
 
@@ -174,55 +177,29 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
         optMemo = memo
       }
 
-      if(paymentType === "lightning") {
-  
-        const query = `mutation payInvoice($invoice: String!, $amount: Int, $memo: String) {
-          invoice {
-            payInvoice(invoice: $invoice, amount: $amount, memo: $memo)
-          }
-        }`  
-  
-        result = await store.mutate(
-          query,
-          {invoice, amount: amountless ? amount : undefined, memo: optMemo},
-        )
+      
+      console.tron.log({msg:"send payment"})
 
-        // FIXME merge type with onchain?
-        success = result.invoice.payInvoice === "success"
-  
-      } else if (paymentType === "onchain"){
-        const query = `mutation onchain($address: String!, $amount: Int!, $memo: String) {
-          onchain {
-            pay(address: $address, amount: $amount, memo: $memo) {
-              success
-            }
-          }
-        }`
-
-        result = await store.mutate(
-          query,
-          {address, amount, memo: optMemo},
-        )
-
-        success = result.onchain.pay.success
-
-      }
+      const { success, pending, errors } = await store.sendPayment({paymentType, invoice, amountless, optMemo, address, amount})
 
       if (success) {
         store.queryWallet()
         setStatus("success")
         analytics().logSpendVirtualCurrency({value: amount, virtual_currency_name: "btc", item_name: "lightning"})
-      } else if (result?.invoice?.payInvoice === "pending") {
+      } else if (pending) {
         setStatus("pending")
       } else {
         setStatus("error")
-        setErr(result.toString())
+        setErrs(errors)
       }
 
 
     } catch (err) {
+
+      console.tron.log({err, msg:"error loop"})
+
       setStatus("error")
-      setErr(err.toString())
+      setErrs([{message: `an error occured. try again later\n${err}`}])
     }
   }
   
@@ -254,7 +231,7 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
 
   return <SendBitcoinScreenJSX status={status} paymentType={paymentType} amountless={amountless}
   initAmount={initAmount} setAmount={setAmount} setStatus={setStatus} invoice={invoice} 
-  address={address} memo={memo} err={err} amount={amount} goBack={goBack} pay={pay}
+  address={address} memo={memo} err={errs} amount={amount} goBack={goBack} pay={pay}
   price={price} 
   prefCurrency={store.prefCurrency} 
   fee={feeText}
@@ -343,7 +320,7 @@ export const SendBitcoinScreenJSX = ({
         <>
           <LottieView source={errorLottie} loop={false} autoPlay style={styles.lottie} resizeMode='cover' />
           <ScrollView>
-            <Text>{err}</Text>
+            {err.map(({message}) => <Text style={styles.errorText}>{message}</Text>)}
           </ScrollView>
         </>
       }

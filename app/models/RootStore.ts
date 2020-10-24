@@ -109,6 +109,57 @@ export const RootStore = RootStoreBase
     self.modalClipboardVisible = value
   }
 
+  const updatePendingInvoice = async (hash): Promise<boolean> => {
+    // lightning
+    const query = `mutation updatePendingInvoice($hash: String!) {
+      invoice {
+        updatePendingInvoice(hash: $hash)
+      }
+    }`
+
+    const result = self.mutate(query, { hash })
+    return result.invoice.updatePendingInvoice
+  }
+
+  const sendPayment = async ({paymentType, invoice, amountless, optMemo, address, amount}) => {
+    let success, result, pending, errors
+
+    let query, variables
+
+    if(paymentType === "lightning") {
+      query = `mutation payInvoice($invoice: String!, $amount: Int, $memo: String) {
+        invoice {
+          payInvoice(invoice: $invoice, amount: $amount, memo: $memo)
+        }
+      }`  
+      variables =  {invoice, amount: amountless ? amount : undefined, memo: optMemo}
+    } else if (paymentType === "onchain"){
+      query = `mutation onchain($address: String!, $amount: Int!, $memo: String) {
+        onchain {
+          pay(address: $address, amount: $amount, memo: $memo) {
+            success
+          }
+        }
+      }`
+      variables = {address, amount, memo: optMemo}
+    }
+
+    try {
+      result = await self.mutate(query, variables)
+    } catch (err) {
+      errors = err?.response?.errors ?? [{message: `An error occured\n${err}`}]
+    }
+
+    if(paymentType === "lightning") {
+      success = result?.invoice?.payInvoice === "success" ?? false
+      pending = result?.invoice?.payInvoice === "pending" ?? false
+    } else if (paymentType === "onchain") {
+      success = result?.onchain?.pay?.success
+    }
+
+    return { success, pending, errors }
+  } 
+
   const nextPrefCurrency = () => {    
     const units = ["sats", "USD"] // "BTC"
     const currentIndex = indexOf(units, self.prefCurrency)
@@ -181,7 +232,7 @@ export const RootStore = RootStoreBase
     yield uploadToken(self)
   })
 
-  return { log, earnComplete, loginSuccessful, setModalClipboardVisible, nextPrefCurrency, mainQuery }
+  return { log, earnComplete, loginSuccessful, setModalClipboardVisible, nextPrefCurrency, mainQuery, updatePendingInvoice, sendPayment }
 })
 .views((self) => ({
   // workaround on the fact key can't be enum
