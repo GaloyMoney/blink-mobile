@@ -28,6 +28,7 @@ export const WalletModelBase = withTypedRefs<Refs>()(ModelBase
     currency: types.union(types.undefined, types.null, types.string),
     balance: types.union(types.undefined, types.null, types.integer),
     transactions: types.union(types.undefined, types.null, types.array(types.union(types.null, MSTGQLRef(types.late((): any => TransactionModel))))),
+    csv: types.union(types.undefined, types.null, types.string),
   })
   .views(self => ({
     get store() {
@@ -39,10 +40,11 @@ export class WalletModelSelector extends QueryBuilder {
   get id() { return this.__attr(`id`) }
   get currency() { return this.__attr(`currency`) }
   get balance() { return this.__attr(`balance`) }
+  get csv() { return this.__attr(`csv`) }
   transactions(builder?: string | TransactionModelSelector | ((selector: TransactionModelSelector) => TransactionModelSelector)) { return this.__child(`transactions`, TransactionModelSelector, builder) }
 }
 export function selectFromWallet() {
   return new WalletModelSelector()
 }
 
-export const walletModelPrimitives = selectFromWallet().currency.balance
+export const walletModelPrimitives = selectFromWallet().currency.balance.csv

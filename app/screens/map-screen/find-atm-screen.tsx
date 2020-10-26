@@ -2,6 +2,8 @@ import * as React from "react"
 import { StyleSheet } from "react-native"
 import { Screen } from "../../components/screen"
 import MapView, { Marker } from "react-native-maps"
+import { StoreContext } from "../../models"
+import { observer } from "mobx-react"
 
 const styles = StyleSheet.create({
   map: {
@@ -10,7 +12,10 @@ const styles = StyleSheet.create({
   },
 })
 
-export const MapScreen: React.FC = ({ }) => {
+export const MapScreen: React.FC = observer(({ }) => {
+  const store = React.useContext(StoreContext)
+
+
   // React.useLayoutEffect(() => {
   //   navigation.setOptions(
   //     {
@@ -20,15 +25,10 @@ export const MapScreen: React.FC = ({ }) => {
   //   )
   // })
 
-  const markers = [
-    {
-      title: "Bitcoin ATM - Café Cocoa",
-      coordinate: {
-        latitude: 13.496743,
-        longitude: -89.439462,
-      },
-    },
-  ]
+  const markers = []
+  const entries = store.markers.forEach((item) => {
+    markers.push(<Marker coordinate={item.coordinate} title={item.title} key={item.title} />)
+  })
 
   return (
     <Screen>
@@ -41,10 +41,8 @@ export const MapScreen: React.FC = ({ }) => {
           longitudeDelta: 0.02,
         }}
       >
-        {markers.map((item) => (
-          <Marker coordinate={item.coordinate} title={item.title} key={item.title} />
-        ))}
+        {markers}
       </MapView>
     </Screen>
   )
-}
+})
