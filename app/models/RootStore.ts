@@ -56,6 +56,16 @@ query gql_query_logged {
     id
     level
   }
+  maps {
+    __typename
+    id
+    title
+    coordinate {
+        __typename
+        latitude
+        longitude
+    }
+  }
 }
 `
 
@@ -70,6 +80,16 @@ query gql_query_anonymous {
     __typename
     id
     value
+  }
+  maps {
+    __typename
+    id
+    title
+    coordinate {
+        __typename
+        latitude
+        longitude
+    }
   }
 }
 `

@@ -15,22 +15,26 @@ import { EarnModel, EarnModelType } from "./EarnModel"
 import { earnModelPrimitives, EarnModelSelector } from "./EarnModel.base"
 import { UserModel, UserModelType } from "./UserModel"
 import { userModelPrimitives, UserModelSelector } from "./UserModel.base"
+import { MarkerModel, MarkerModelType } from "./MarkerModel"
+import { markerModelPrimitives, MarkerModelSelector } from "./MarkerModel.base"
+import { CoordinateModel, CoordinateModelType } from "./CoordinateModel"
+import { coordinateModelPrimitives, CoordinateModelSelector } from "./CoordinateModel.base"
 import { BuildParameterModel, BuildParameterModelType } from "./BuildParameterModel"
 import { buildParameterModelPrimitives, BuildParameterModelSelector } from "./BuildParameterModel.base"
+import { NodeStatsModel, NodeStatsModelType } from "./NodeStatsModel"
+import { nodeStatsModelPrimitives, NodeStatsModelSelector } from "./NodeStatsModel.base"
 import { LastOnChainAddressModel, LastOnChainAddressModelType } from "./LastOnChainAddressModel"
 import { lastOnChainAddressModelPrimitives, LastOnChainAddressModelSelector } from "./LastOnChainAddressModel.base"
-import { PendingOnchainPaymentModel, PendingOnchainPaymentModelType } from "./PendingOnchainPaymentModel"
-import { pendingOnchainPaymentModelPrimitives, PendingOnchainPaymentModelSelector } from "./PendingOnchainPaymentModel.base"
 import { SuccessModel, SuccessModelType } from "./SuccessModel"
 import { successModelPrimitives, SuccessModelSelector } from "./SuccessModel.base"
 import { TokenModel, TokenModelType } from "./TokenModel"
 import { tokenModelPrimitives, TokenModelSelector } from "./TokenModel.base"
 import { OnchainTransactionModel, OnchainTransactionModelType } from "./OnchainTransactionModel"
 import { onchainTransactionModelPrimitives, OnchainTransactionModelSelector } from "./OnchainTransactionModel.base"
-import { OnChainModel, OnChainModelType } from "./OnChainModel"
-import { onChainModelPrimitives, OnChainModelSelector } from "./OnChainModel.base"
 import { InvoiceModel, InvoiceModelType } from "./InvoiceModel"
 import { invoiceModelPrimitives, InvoiceModelSelector } from "./InvoiceModel.base"
+import { OnChainModel, OnChainModelType } from "./OnChainModel"
+import { onChainModelPrimitives, OnChainModelSelector } from "./OnChainModel.base"
 
 
 
@@ -45,6 +49,7 @@ type Refs = {
   transactions: ObservableMap<string, TransactionModelType>,
   earns: ObservableMap<string, EarnModelType>,
   users: ObservableMap<string, UserModelType>,
+  markers: ObservableMap<string, MarkerModelType>,
   lastOnChainAddresses: ObservableMap<string, LastOnChainAddressModelType>
 }
 
@@ -57,14 +62,16 @@ queryPrices="queryPrices",
 queryWallet="queryWallet",
 queryEarnList="queryEarnList",
 queryMe="queryMe",
+queryMaps="queryMaps",
 queryBuildParameters="queryBuildParameters",
-queryGetLastOnChainAddress="queryGetLastOnChainAddress",
-queryPendingOnChainPayment="queryPendingOnChainPayment"
+queryNodeStats="queryNodeStats",
+queryGetLastOnChainAddress="queryGetLastOnChainAddress"
 }
 export enum RootStoreBaseMutations {
 mutateRequestPhoneCode="mutateRequestPhoneCode",
 mutateLogin="mutateLogin",
 mutateOpenChannel="mutateOpenChannel",
+mutatePublicInvoice="mutatePublicInvoice",
 mutateOnchain="mutateOnchain",
 mutateInvoice="mutateInvoice",
 mutateEarnCompleted="mutateEarnCompleted",
@@ -79,13 +86,14 @@ mutateTestMessage="mutateTestMessage"
 */
 export const RootStoreBase = withTypedRefs<Refs>()(MSTGQLStore
   .named("RootStore")
-  .extend(configureStoreMixin([['Price', () => PriceModel], ['Wallet', () => WalletModel], ['Transaction', () => TransactionModel], ['Earn', () => EarnModel], ['User', () => UserModel], ['BuildParameter', () => BuildParameterModel], ['LastOnChainAddress', () => LastOnChainAddressModel], ['PendingOnchainPayment', () => PendingOnchainPaymentModel], ['Success', () => SuccessModel], ['Token', () => TokenModel], ['OnchainTransaction', () => OnchainTransactionModel], ['OnChain', () => OnChainModel], ['Invoice', () => InvoiceModel]], ['Price', 'Wallet', 'Transaction', 'Earn', 'User', 'LastOnChainAddress'], "js"))
+  .extend(configureStoreMixin([['Price', () => PriceModel], ['Wallet', () => WalletModel], ['Transaction', () => TransactionModel], ['Earn', () => EarnModel], ['User', () => UserModel], ['Marker', () => MarkerModel], ['Coordinate', () => CoordinateModel], ['BuildParameter', () => BuildParameterModel], ['NodeStats', () => NodeStatsModel], ['LastOnChainAddress', () => LastOnChainAddressModel], ['Success', () => SuccessModel], ['Token', () => TokenModel], ['OnchainTransaction', () => OnchainTransactionModel], ['Invoice', () => InvoiceModel], ['OnChain', () => OnChainModel]], ['Price', 'Wallet', 'Transaction', 'Earn', 'User', 'Marker', 'LastOnChainAddress'], "js"))
   .props({
     prices: types.optional(types.map(types.late((): any => PriceModel)), {}),
     wallets: types.optional(types.map(types.late((): any => WalletModel)), {}),
     transactions: types.optional(types.map(types.late((): any => TransactionModel)), {}),
     earns: types.optional(types.map(types.late((): any => EarnModel)), {}),
     users: types.optional(types.map(types.late((): any => UserModel)), {}),
+    markers: types.optional(types.map(types.late((): any => MarkerModel)), {}),
     lastOnChainAddresses: types.optional(types.map(types.late((): any => LastOnChainAddressModel)), {})
   })
   .actions(self => ({
@@ -109,19 +117,24 @@ export const RootStoreBase = withTypedRefs<Refs>()(MSTGQLStore
         ${typeof resultSelector === "function" ? resultSelector(new UserModelSelector()).toString() : resultSelector}
       } }`, variables, options)
     },
+    queryMaps(variables?: {  }, resultSelector: string | ((qb: MarkerModelSelector) => MarkerModelSelector) = markerModelPrimitives.toString(), options: QueryOptions = {}) {
+      return self.query<{ maps: MarkerModelType[]}>(`query maps { maps {
+        ${typeof resultSelector === "function" ? resultSelector(new MarkerModelSelector()).toString() : resultSelector}
+      } }`, variables, options)
+    },
     queryBuildParameters(variables?: {  }, resultSelector: string | ((qb: BuildParameterModelSelector) => BuildParameterModelSelector) = buildParameterModelPrimitives.toString(), options: QueryOptions = {}) {
       return self.query<{ buildParameters: BuildParameterModelType}>(`query buildParameters { buildParameters {
         ${typeof resultSelector === "function" ? resultSelector(new BuildParameterModelSelector()).toString() : resultSelector}
       } }`, variables, options)
     },
+    queryNodeStats(variables?: {  }, resultSelector: string | ((qb: NodeStatsModelSelector) => NodeStatsModelSelector) = nodeStatsModelPrimitives.toString(), options: QueryOptions = {}) {
+      return self.query<{ nodeStats: NodeStatsModelType}>(`query nodeStats { nodeStats {
+        ${typeof resultSelector === "function" ? resultSelector(new NodeStatsModelSelector()).toString() : resultSelector}
+      } }`, variables, options)
+    },
     queryGetLastOnChainAddress(variables?: {  }, resultSelector: string | ((qb: LastOnChainAddressModelSelector) => LastOnChainAddressModelSelector) = lastOnChainAddressModelPrimitives.toString(), options: QueryOptions = {}) {
       return self.query<{ getLastOnChainAddress: LastOnChainAddressModelType}>(`query getLastOnChainAddress { getLastOnChainAddress {
         ${typeof resultSelector === "function" ? resultSelector(new LastOnChainAddressModelSelector()).toString() : resultSelector}
-      } }`, variables, options)
-    },
-    queryPendingOnChainPayment(variables?: {  }, resultSelector: string | ((qb: PendingOnchainPaymentModelSelector) => PendingOnchainPaymentModelSelector) = pendingOnchainPaymentModelPrimitives.toString(), options: QueryOptions = {}) {
-      return self.query<{ pendingOnChainPayment: PendingOnchainPaymentModelType[]}>(`query pendingOnChainPayment { pendingOnChainPayment {
-        ${typeof resultSelector === "function" ? resultSelector(new PendingOnchainPaymentModelSelector()).toString() : resultSelector}
       } }`, variables, options)
     },
     mutateRequestPhoneCode(variables: { phone?: string }, resultSelector: string | ((qb: SuccessModelSelector) => SuccessModelSelector) = successModelPrimitives.toString(), optimisticUpdate?: () => void) {
@@ -137,6 +150,11 @@ export const RootStoreBase = withTypedRefs<Refs>()(MSTGQLStore
     mutateOpenChannel(variables: { localTokens?: number, publicKey?: string, socket?: string }, resultSelector: string | ((qb: OnchainTransactionModelSelector) => OnchainTransactionModelSelector) = onchainTransactionModelPrimitives.toString(), optimisticUpdate?: () => void) {
       return self.mutate<{ openChannel: OnchainTransactionModelType}>(`mutation openChannel($localTokens: Int, $publicKey: String, $socket: String) { openChannel(local_tokens: $localTokens, public_key: $publicKey, socket: $socket) {
         ${typeof resultSelector === "function" ? resultSelector(new OnchainTransactionModelSelector()).toString() : resultSelector}
+      } }`, variables, optimisticUpdate)
+    },
+    mutatePublicInvoice(variables: { uid?: string }, resultSelector: string | ((qb: InvoiceModelSelector) => InvoiceModelSelector) = invoiceModelPrimitives.toString(), optimisticUpdate?: () => void) {
+      return self.mutate<{ publicInvoice: InvoiceModelType}>(`mutation publicInvoice($uid: String) { publicInvoice(uid: $uid) {
+        ${typeof resultSelector === "function" ? resultSelector(new InvoiceModelSelector()).toString() : resultSelector}
       } }`, variables, optimisticUpdate)
     },
     mutateOnchain(variables?: {  }, resultSelector: string | ((qb: OnChainModelSelector) => OnChainModelSelector) = onChainModelPrimitives.toString(), optimisticUpdate?: () => void) {
