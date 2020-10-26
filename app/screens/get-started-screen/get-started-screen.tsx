@@ -76,6 +76,7 @@ export const GetStartedScreen = () => {
           titleStyle={styles.buttonTitle}
           onPress={() => navigate("welcomeFirst")}
           containerStyle={styles.buttonContainer}
+          testID={"getStarted"}
         />
       </View>
     </Screen>
