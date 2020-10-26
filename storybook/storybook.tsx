@@ -1,6 +1,5 @@
 import React from "react"
 import { getStorybookUI, configure } from "@storybook/react-native"
-import SplashScreen from "react-native-splash-screen"
 
 declare var module
 
@@ -25,7 +24,6 @@ const Stack = createStackNavigator();
 export class StorybookUIRoot extends React.Component {
 
   componentDidMount() {
-    SplashScreen.hide()
     if (typeof __TEST__ === "undefined" || !__TEST__) {
       const Reactotron = require("../app/services/reactotron")
       const reactotron = new Reactotron.Reactotron()
