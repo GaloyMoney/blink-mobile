@@ -140,12 +140,13 @@ export const MoveMoneyScreenDataInjected = observer(({ navigation }) => {
       account: AccountType.BankAndBitcoin,
     })}
     refreshQuery={refreshQuery}
+    isUpdateAvailable={store.isUpdateAvailable()}
   />
 })
 
 export const MoveMoneyScreen = (
   ({ walletActivated, navigation, loading, error, 
-    refreshQuery, amount, amountOtherCurrency }) => {
+    refreshQuery, amount, amountOtherCurrency, isUpdateAvailable }) => {
 
   const [modalVisible, setModalVisible] = useState(false)
 
@@ -237,9 +238,15 @@ export const MoveMoneyScreen = (
           )}
         />
         <View style={styles.bottom}>
-          <Icon name={"ios-flash"} 
-            size={32} onPress={() => setSecretMenuCounter(secretMenuCounter + 1)} />
-          <Text style={styles.lightningText}>{translate("MoveMoneyScreen.useLightning")}</Text>
+          {isUpdateAvailable &&
+            <Text style={styles.lightningText}>An update is available.</Text>
+          ||
+          <>
+            <Icon name={"ios-flash"} 
+              size={32} onPress={() => setSecretMenuCounter(secretMenuCounter + 1)} />
+            <Text style={styles.lightningText}>{translate("MoveMoneyScreen.useLightning")}</Text>
+          </>
+          }
         </View>
     </Screen>
   )
