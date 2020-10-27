@@ -255,7 +255,7 @@ export const RootStore = RootStoreBase
   const isUpdateRequired = () => {
     // FIXME cache issue
     const { minBuildNumberAndroid, minBuildNumberIos } = values(self.buildParameters)[self.buildParameters.size - 1]
-    const minBuildNumber = isIos ? Number(minBuildNumberIos) : Number(minBuildNumberAndroid)
+    const minBuildNumber = isIos ? minBuildNumberIos : minBuildNumberAndroid
     let buildNumber = Number(DeviceInfo.getBuildNumber())
     return buildNumber < minBuildNumber
   }
@@ -264,7 +264,7 @@ export const RootStore = RootStoreBase
     // FIXME cache issue
     const {lastBuildNumberAndroid, lastBuildNumberIos } = values(self.buildParameters)[self.buildParameters.size - 1]
     const lastBuildNumber = isIos ? lastBuildNumberIos : lastBuildNumberAndroid
-    let buildNumber = DeviceInfo.getBuildNumber();
+    let buildNumber = Number(DeviceInfo.getBuildNumber())
     return buildNumber < lastBuildNumber
   }
 
