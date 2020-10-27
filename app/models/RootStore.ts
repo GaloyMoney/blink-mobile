@@ -1,17 +1,17 @@
 import AsyncStorage from "@react-native-community/async-storage"
+import analytics from '@react-native-firebase/analytics'
+import { filter, findLast, indexOf, map, sumBy } from "lodash"
 import { values } from "mobx"
-import { Instance, types, flow, getEnv } from "mobx-state-tree"
+import { flow, getEnv, Instance, types } from "mobx-state-tree"
 import moment from "moment"
-import { localStorageMixin } from "mst-gql"
+import { localStorageMixin, Query } from "mst-gql"
+import DeviceInfo from 'react-native-device-info'
 import { AccountType, CurrencyType } from "../utils/enum"
+import { isIos } from "../utils/helper"
+import { uploadToken } from "../utils/notifications"
 import { Token } from "../utils/token"
 import { RootStoreBase } from "./RootStore.base"
 import { TransactionModel } from "./TransactionModel"
-import { map, filter, sumBy } from "lodash"
-import analytics from '@react-native-firebase/analytics';
-import { uploadToken } from "../utils/notifications"
-import { indexOf } from "lodash"
-
 
 export const ROOT_STATE_STORAGE_KEY = "rootAppGaloy"
 
@@ -120,12 +120,12 @@ export const RootStore = RootStoreBase
     console.log(JSON.stringify(self))
   }
 
-  const mainQuery = () => {
+  const mainQuery = (): Query => {
     const query = new Token().has() ? gql_query_logged : gql_query_anonymous
     return self.query(query)
   }
 
-  const setModalClipboardVisible = (value) => {
+  const setModalClipboardVisible = (value): void => {
     self.modalClipboardVisible = value
   }
 
@@ -252,7 +252,25 @@ export const RootStore = RootStoreBase
     yield uploadToken(self)
   })
 
-  return { log, earnComplete, loginSuccessful, setModalClipboardVisible, nextPrefCurrency, mainQuery, updatePendingInvoice, sendPayment }
+  const isUpdateRequired = () => {
+    // FIXME cache issue
+    const { minBuildNumberAndroid, minBuildNumberIos } = values(self.buildParameters)[self.buildParameters.size - 1]
+    const minBuildNumber = isIos ? Number(minBuildNumberIos) : Number(minBuildNumberAndroid)
+    let buildNumber = Number(DeviceInfo.getBuildNumber())
+    return buildNumber < minBuildNumber
+  }
+
+  const isUpdateAvailable = () => {
+    // FIXME cache issue
+    const {lastBuildNumberAndroid, lastBuildNumberIos } = values(self.buildParameters)[self.buildParameters.size - 1]
+    const lastBuildNumber = isIos ? lastBuildNumberIos : lastBuildNumberAndroid
+    let buildNumber = DeviceInfo.getBuildNumber();
+    return buildNumber < lastBuildNumber
+  }
+
+
+  return { log, earnComplete, loginSuccessful, setModalClipboardVisible, nextPrefCurrency, mainQuery, 
+    updatePendingInvoice, sendPayment, isUpdateRequired, isUpdateAvailable }
 })
 .views((self) => ({
   // workaround on the fact key can't be enum
