@@ -9,6 +9,7 @@ require("../app/screens/earns-map-screen/earns-map-screen.story")
 require("../app/screens/transaction-detail-screen/transaction-detail-screen.story")
 require("../app/screens/transaction-screen/transaction-screen.story")
 require("../app/screens/move-money-screen/move-money-screen.story")
+require("../app/screens/settings-screen/settings-screen.story")
 require("../app/screens/send-bitcoin-screen/send-bitcoin-screen.story")
 require("../app/screens/phone-auth-screen/phone-auth.story")
 
