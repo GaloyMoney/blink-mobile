@@ -523,7 +523,8 @@
     "title": "Move Money",
     "needWallet": "Validate your phone to open your wallet",
     "openWallet": "Open Wallet",
-    "useLightning": "We use the Lightning Network."
+    "useLightning": "We use the Lightning Network.",
+    "updateAvailable": "An update is available.\nTab to update now"
   },
   "SendBitcoinScreen": {
     "title": "Send Bitcoin",

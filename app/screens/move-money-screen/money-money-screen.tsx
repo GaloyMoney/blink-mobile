@@ -2,7 +2,7 @@ import messaging from '@react-native-firebase/messaging'
 import { observer } from "mobx-react"
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { AppState, FlatList, RefreshControl, Text, View } from "react-native"
+import { AppState, FlatList, Linking, Pressable, RefreshControl, Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
@@ -17,6 +17,7 @@ import { StoreContext, useQuery } from "../../models"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { AccountType, CurrencyType } from "../../utils/enum"
+import { isIos } from "../../utils/helper"
 
 
 const styles = EStyleSheet.create({
@@ -167,6 +168,25 @@ export const MoveMoneyScreen = (
     navigation.navigate("phoneValidation")
   }
 
+
+  // from https://github.com/FiberJW/react-native-app-link/blob/master/index.js
+  const openInStore = async ({ appName, appStoreId, appStoreLocale = 'us', playStoreId }) => {
+    if (isIos) {
+      Linking.openURL(`https://testflight.apple.com/join/9aC8MMk2`);
+      // Linking.openURL(`https://itunes.apple.com/${appStoreLocale}/app/${appName}/id${appStoreId}`);
+    } else {
+      Linking.openURL(`https://play.google.com/store/apps/details?id=${playStoreId}`);
+    }
+  };
+
+  const linkUpgrade = () => openInStore({ appName: "Bitcoin Beach Wallet", appStoreId: "", playStoreId: 'com.galoyapp' }).then(() => {
+    console.tron.log("clicked on link")
+  })
+  .catch((err) => {
+    console.tron.log("error app link on link")
+    // handle error
+  });
+
   return (
     <Screen style={styles.screenStyle}>
       <Modal
@@ -239,7 +259,9 @@ export const MoveMoneyScreen = (
         />
         <View style={styles.bottom}>
           {isUpdateAvailable &&
-            <Text style={styles.lightningText}>An update is available.</Text>
+            <Pressable onPress={linkUpgrade}>
+              <Text style={[styles.lightningText, {marginBotton: 12}]}>{translate("MoveMoneyScreen.updateAvailable")}</Text>
+            </Pressable>
           ||
           <>
             <Icon name={"ios-flash"} 
