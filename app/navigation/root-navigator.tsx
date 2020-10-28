@@ -21,7 +21,7 @@ import { MoveMoneyScreenDataInjected } from "../screens/move-money-screen"
 import { WelcomePhoneInputScreen, WelcomePhoneValidationScreenDataInjected } from "../screens/phone-auth-screen"
 import { ReceiveBitcoinScreen } from "../screens/receive-bitcoin-screen"
 import { ScanningQRCodeScreen, SendBitcoinScreen } from "../screens/send-bitcoin-screen"
-import { SettingsScreen } from "../screens/settings-screen"
+import { SettingsScreen, UsernameScreen } from "../screens/settings-screen"
 import { SplashScreen } from "../screens/splash-screen/splash-screen"
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
 import { TransactionScreenDataInjected } from "../screens/transaction-screen/transaction-screen"
@@ -302,6 +302,16 @@ export const RootStack = () => {
       <RootNavigator.Screen
         name="settings"
         component={SettingsScreen}
+        options={() => ({
+          title: "Settings",
+        })}
+      />
+      <RootNavigator.Screen
+        name="setUsernameScreen"
+        component={UsernameScreen}
+        options={() => ({
+          title: "",
+        })}
       />
       <RootNavigator.Screen
         name="Profile"
