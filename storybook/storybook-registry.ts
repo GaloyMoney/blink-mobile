@@ -10,6 +10,7 @@ require("../app/screens/transaction-detail-screen/transaction-detail-screen.stor
 require("../app/screens/transaction-screen/transaction-screen.story")
 require("../app/screens/move-money-screen/move-money-screen.story")
 require("../app/screens/settings-screen/settings-screen.story")
+require("../app/screens/settings-screen/username-screen.story")
 require("../app/screens/send-bitcoin-screen/send-bitcoin-screen.story")
 require("../app/screens/phone-auth-screen/phone-auth.story")
 

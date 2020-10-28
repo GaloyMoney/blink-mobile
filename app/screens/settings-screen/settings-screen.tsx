@@ -33,6 +33,7 @@ export const SettingsScreen = ({navigation}) => {
   return <SettingsScreenJSX 
     loggedin={store.walletIsActive}
     navigation={navigation} 
+    username={values(store.users)[0].username}
     phone={values(store.users)[0].phone}
     notifications={notificationsEnabled ? translate("SettingsScreen.activated") : translate("SettingsScreen.activate")}  
   />
@@ -56,8 +57,8 @@ export const SettingsScreenJSX = (params) => {
       icon: 'ios-person-circle',
       id: 'username',
       defaultMessage: translate("SettingsScreen.tapUserName"),
-      action: () => {},
-      enabled: !params.username,
+      action: () => params.navigation.navigate("setUsernameScreen"),
+      enabled: loggedin && (params.username ?? true),
       greyed: !loggedin,
     },
     {
@@ -71,12 +72,14 @@ export const SettingsScreenJSX = (params) => {
     },
     {
       title: translate('common.logout'), 
+      id: "logout",
       icon: 'ios-log-out', 
       action: async () => {
         await resetDataStore()
         Alert.alert(translate("SettingsScreen.logOutSuccesful"))
       },
       enabled: loggedin,
+      greyed: !loggedin,
     }
   ]
   
@@ -86,11 +89,11 @@ export const SettingsScreenJSX = (params) => {
     return (
     <>
       <ListItem key={i} onPress={action} disabled={!enabled}>
-        <Icon name={icon} type='ionicon' />
+        <Icon name={icon} type='ionicon' color={greyed ? palette.midGrey : null} />
         <ListItem.Content>
           <View>
             <ListItem.Title style={greyed ? {color: palette.midGrey} : {}}>{title}</ListItem.Title>
-            {message && <ListItem.Title>{message}</ListItem.Title>}
+            {message && <ListItem.Title style={greyed ? {color: palette.midGrey} : {}}>{message}</ListItem.Title>}
           </View>
         </ListItem.Content>
         {enabled && <ListItem.Chevron />}
