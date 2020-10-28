@@ -55,6 +55,7 @@ query gql_query_logged {
     __typename
     id
     level
+    phone
   }
   maps {
     __typename
@@ -314,6 +315,7 @@ export const RootStore = RootStoreBase
 
     return balances[account]
   },
+  get walletIsActive() { return self.user.level > 0},
 }))
   // return in BTC instead of SAT
   // get getInBTC() {

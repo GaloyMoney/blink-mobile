@@ -27,7 +27,7 @@ import { translate } from "../../i18n"
 import { StoreContext } from "../../models"
 import { palette } from "../../theme/palette"
 import { getHashFromInvoice } from "../../utils/bolt11"
-import { requestPermission } from "../../utils/notifications"
+import { hasFullPermissions, requestPermission } from "../../utils/notifications"
 import Toast from "react-native-root-toast"
 import LottieView from 'lottie-react-native'
 import Swiper from "react-native-swiper"
@@ -109,20 +109,8 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
       const waitUntilAuthorizationWindow = 5000
 
       if (Platform.OS === "ios") {
-        const authorizationStatus = await messaging().hasPermission()
 
-        let hasPermissions = false
-
-        if (authorizationStatus === messaging.AuthorizationStatus.AUTHORIZED) {
-          hasPermissions = true
-          console.tron.log("User has notification permissions enabled.")
-        } else if (authorizationStatus === messaging.AuthorizationStatus.PROVISIONAL) {
-          console.tron.log("User has provisional notification permissions.")
-        } else {
-          console.tron.log("User has notification permissions disabled")
-        }
-
-        if (hasPermissions) {
+        if (await hasFullPermissions()) {
           return
         }
 
