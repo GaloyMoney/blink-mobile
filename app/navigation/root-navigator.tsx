@@ -21,6 +21,7 @@ import { MoveMoneyScreenDataInjected } from "../screens/move-money-screen"
 import { WelcomePhoneInputScreen, WelcomePhoneValidationScreenDataInjected } from "../screens/phone-auth-screen"
 import { ReceiveBitcoinScreen } from "../screens/receive-bitcoin-screen"
 import { ScanningQRCodeScreen, SendBitcoinScreen } from "../screens/send-bitcoin-screen"
+import { SettingsScreen } from "../screens/settings-screen"
 import { SplashScreen } from "../screens/splash-screen/splash-screen"
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
 import { TransactionScreenDataInjected } from "../screens/transaction-screen/transaction-screen"
@@ -297,6 +298,10 @@ export const RootStack = () => {
           headerShown: false,
           cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
         }}
+      />
+      <RootNavigator.Screen
+        name="settings"
+        component={SettingsScreen}
       />
       <RootNavigator.Screen
         name="Profile"

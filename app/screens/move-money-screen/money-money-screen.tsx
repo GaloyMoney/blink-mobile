@@ -128,11 +128,9 @@ export const MoveMoneyScreenDataInjected = observer(({ navigation }) => {
     return unsubscribe;
   }, []); 
 
-  const walletActivated = store.user.level > 0
-
   return <MoveMoneyScreen 
     navigation={navigation}
-    walletActivated={walletActivated}
+    walletIsActive={store.walletIsActive}
     loading={loading}
     error={error}
     amount={store.balances({currency: "USD", account: AccountType.BankAndBitcoin})}
@@ -146,7 +144,7 @@ export const MoveMoneyScreenDataInjected = observer(({ navigation }) => {
 })
 
 export const MoveMoneyScreen = (
-  ({ walletActivated, navigation, loading, error, 
+  ({ walletIsActive, navigation, loading, error, 
     refreshQuery, amount, amountOtherCurrency, isUpdateAvailable }) => {
 
   const [modalVisible, setModalVisible] = useState(false)
@@ -160,7 +158,7 @@ export const MoveMoneyScreen = (
   }, [secretMenuCounter])
 
   const onBitcoinClick = (target) => {
-    walletActivated ? navigation.navigate(target) : setModalVisible(true)
+    walletIsActive ? navigation.navigate(target) : setModalVisible(true)
   }
 
   const activateWallet = () => {
@@ -220,19 +218,25 @@ export const MoveMoneyScreen = (
           <View style={{flex: 1}} />
         </View>
       </Modal>
-        <View style={{flexDirection: "row", alignItems: "center", justifyContent: "center"}}>
+        <View style={{flexDirection: "row", alignItems: "center", justifyContent: "space-around"}}>
+          <Button
+            buttonStyle={styles.buttonStyleTime} 
+            containerStyle={{marginTop: 32}}
+            onPress={() => navigation.navigate("accountDetail", { account: AccountType.Bitcoin }) }
+            icon={<Icon name={"ios-trending-up-outline"} size={32} />}  
+          />
           <BalanceHeader
             loading={loading}
             currency={CurrencyType.USD}
             amount={amount}
             amountOtherCurrency={amountOtherCurrency}
-            style={{marginLeft: 60}}
+            style={{}}
           />
           <Button
             buttonStyle={styles.buttonStyleTime} 
-            containerStyle={{marginTop: 32, marginLeft: 16 }}
-            onPress={() => navigation.navigate("accountDetail", { account: AccountType.Bitcoin }) }
-            icon={<Icon name={"ios-trending-up-outline"} size={32} />}  
+            containerStyle={{marginTop: 32 }}
+            onPress={() => navigation.navigate("settings") }
+            icon={<Icon name={"ios-settings-outline"} size={32} />}  
           />
         </View>
 

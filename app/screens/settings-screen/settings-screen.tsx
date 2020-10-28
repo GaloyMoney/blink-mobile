@@ -1,9 +1,14 @@
+import { values } from "mobx"
 import * as React from "react"
-import { Pressable, View } from "react-native"
+import { Alert, View } from "react-native"
 import { Divider, Icon, ListItem } from "react-native-elements"
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { Screen } from "../../components/screen"
+import { translate } from "../../i18n"
+import { StoreContext } from "../../models"
 import { palette } from "../../theme/palette"
+import { resetDataStore } from "../../utils/logout"
+import { hasFullPermissions, requestPermission } from "../../utils/notifications"
 
 const styles = EStyleSheet.create({
   screenStyle: {
@@ -12,9 +17,26 @@ const styles = EStyleSheet.create({
 
 })
 
-// export const SettingsScreen = ({}) => {
-//   return <SettingsScreenJSX  />
-// }
+export const SettingsScreen = ({navigation}) => {
+  const store = React.useContext(StoreContext)
+
+  const [notificationsEnabled, setNotificationsEnabled] = React.useState(false)
+
+  React.useEffect(() => {
+    const fn = async () => {
+      setNotificationsEnabled(await hasFullPermissions())
+    }
+
+    fn()
+  }, [])
+
+  return <SettingsScreenJSX 
+    loggedin={store.walletIsActive}
+    navigation={navigation} 
+    phone={values(store.users)[0].phone}
+    notifications={notificationsEnabled ? translate("SettingsScreen.activated") : translate("SettingsScreen.activate")}  
+  />
+}
 
 export const SettingsScreenJSX = (params) => {
 
@@ -22,64 +44,63 @@ export const SettingsScreenJSX = (params) => {
 
   const list = [
     {
-      title: 'Phone number',
+      title: translate("common.phoneNumber"),
       icon: 'call',
       id: 'phone',
-      needLoggedIn: false,
-      defaultMessage: "Tap to log in",
-      action: () => params.navigate.navigation("welcomePhoneInput"),
-      chevron: !loggedin,
+      defaultMessage: translate("SettingsScreen.tapLogIn"),
+      action: () => params.navigation.navigate("phoneValidation"),
+      enabled: !loggedin,
     },
     {
-      title: 'Username',
+      title: translate("common.username"),
       icon: 'ios-person-circle',
       id: 'username',
-      needLoggedIn: true,
-      defaultMessage: "Tap to set username",
+      defaultMessage: translate("SettingsScreen.tapUserName"),
       action: () => {},
-      chevron: !params.username,
+      enabled: !params.username,
+      greyed: !loggedin,
     },
     {
-      title: 'Notifications',
+      title: translate('common.notification'),
       icon: 'ios-notifications-circle',
       id: 'notifications',
-      needLoggedIn: true,
-      action: () => {},
-      chevron: loggedin,
+      action: requestPermission,
+      enabled: loggedin && params.notifications !== translate("SettingsScreen.activated"),
+      greyed: !loggedin,
+      styleDivider: { backgroundColor: palette.lighterGrey, height: 18 },
     },
+    {
+      title: translate('common.logout'), 
+      icon: 'ios-log-out', 
+      action: async () => {
+        await resetDataStore()
+        Alert.alert(translate("SettingsScreen.logOutSuccesful"))
+      },
+      enabled: loggedin,
+    }
   ]
   
-  const logOut = {
-    title: 'Log Out', 
-    icon: 'ios-log-out', 
-    needLoggedIn: true,
-    i: 99, 
-    action: () => {},
-    chevron: loggedin,
-  }
-
-  const Component = ({icon, title, id = undefined, i, needLoggedIn, defaultMessage = undefined, action, chevron}) => {
-    const enabled = (loggedin || !needLoggedIn)
+  const Component = ({icon, title, id = undefined, i, enabled, greyed, defaultMessage = undefined, action, styleDivider}) => {
+    const message = params[id] || defaultMessage
 
     return (
-    <ListItem key={i} bottomDivider onPress={action} disabled={!enabled}>
-      <Icon name={icon} type='ionicon' />
-      <ListItem.Content>
-        <View>
-          <ListItem.Title style={enabled ? {} : {color: palette.midGrey}}>{title}</ListItem.Title>
-          {id && enabled ? <ListItem.Title>{params[id] || defaultMessage}</ListItem.Title> : null}
-        </View>
-      </ListItem.Content>
-      {chevron && <ListItem.Chevron />}
-    </ListItem>
+    <>
+      <ListItem key={i} onPress={action} disabled={!enabled}>
+        <Icon name={icon} type='ionicon' />
+        <ListItem.Content>
+          <View>
+            <ListItem.Title style={greyed ? {color: palette.midGrey} : {}}>{title}</ListItem.Title>
+            {message && <ListItem.Title>{message}</ListItem.Title>}
+          </View>
+        </ListItem.Content>
+        {enabled && <ListItem.Chevron />}
+      </ListItem>
+      <Divider style={styleDivider}/>
+    </>
   )}
 
   return (
   <Screen preset="scroll">
-    <View>
-      {list.map((item, i) => <Component {...item} i={i} />)}
-    </View>
-    <Divider style={{ backgroundColor: palette.lighterGrey, height: 18 }} />
-    <Component {...logOut} />
+    {list.map((item, i) => <Component {...item} i={i} />)}
   </Screen>
 )}
