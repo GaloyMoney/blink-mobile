@@ -55,6 +55,7 @@ query gql_query_logged {
     __typename
     id
     level
+    username
     phone
   }
   maps {
