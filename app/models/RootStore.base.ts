@@ -35,6 +35,8 @@ import { InvoiceModel, InvoiceModelType } from "./InvoiceModel"
 import { invoiceModelPrimitives, InvoiceModelSelector } from "./InvoiceModel.base"
 import { OnChainModel, OnChainModelType } from "./OnChainModel"
 import { onChainModelPrimitives, OnChainModelSelector } from "./OnChainModel.base"
+import { UpdateUserModel, UpdateUserModelType } from "./UpdateUserModel"
+import { updateUserModelPrimitives, UpdateUserModelSelector } from "./UpdateUserModel.base"
 
 
 
@@ -66,7 +68,8 @@ queryMe="queryMe",
 queryMaps="queryMaps",
 queryBuildParameters="queryBuildParameters",
 queryNodeStats="queryNodeStats",
-queryGetLastOnChainAddress="queryGetLastOnChainAddress"
+queryGetLastOnChainAddress="queryGetLastOnChainAddress",
+queryUsernameExists="queryUsernameExists"
 }
 export enum RootStoreBaseMutations {
 mutateRequestPhoneCode="mutateRequestPhoneCode",
@@ -87,7 +90,7 @@ mutateTestMessage="mutateTestMessage"
 */
 export const RootStoreBase = withTypedRefs<Refs>()(MSTGQLStore
   .named("RootStore")
-  .extend(configureStoreMixin([['Price', () => PriceModel], ['Wallet', () => WalletModel], ['Transaction', () => TransactionModel], ['Earn', () => EarnModel], ['User', () => UserModel], ['Marker', () => MarkerModel], ['Coordinate', () => CoordinateModel], ['BuildParameter', () => BuildParameterModel], ['NodeStats', () => NodeStatsModel], ['LastOnChainAddress', () => LastOnChainAddressModel], ['Success', () => SuccessModel], ['Token', () => TokenModel], ['OnchainTransaction', () => OnchainTransactionModel], ['Invoice', () => InvoiceModel], ['OnChain', () => OnChainModel]], ['Price', 'Wallet', 'Transaction', 'Earn', 'User', 'Marker', 'BuildParameter', 'LastOnChainAddress'], "js"))
+  .extend(configureStoreMixin([['Price', () => PriceModel], ['Wallet', () => WalletModel], ['Transaction', () => TransactionModel], ['Earn', () => EarnModel], ['User', () => UserModel], ['Marker', () => MarkerModel], ['Coordinate', () => CoordinateModel], ['BuildParameter', () => BuildParameterModel], ['NodeStats', () => NodeStatsModel], ['LastOnChainAddress', () => LastOnChainAddressModel], ['Success', () => SuccessModel], ['Token', () => TokenModel], ['OnchainTransaction', () => OnchainTransactionModel], ['Invoice', () => InvoiceModel], ['OnChain', () => OnChainModel], ['UpdateUser', () => UpdateUserModel]], ['Price', 'Wallet', 'Transaction', 'Earn', 'User', 'Marker', 'BuildParameter', 'LastOnChainAddress'], "js"))
   .props({
     prices: types.optional(types.map(types.late((): any => PriceModel)), {}),
     wallets: types.optional(types.map(types.late((): any => WalletModel)), {}),
@@ -139,6 +142,9 @@ export const RootStoreBase = withTypedRefs<Refs>()(MSTGQLStore
         ${typeof resultSelector === "function" ? resultSelector(new LastOnChainAddressModelSelector()).toString() : resultSelector}
       } }`, variables, options)
     },
+    queryUsernameExists(variables: { username: string }, options: QueryOptions = {}) {
+      return self.query<{ usernameExists: boolean }>(`query usernameExists($username: String!) { usernameExists(username: $username) }`, variables, options)
+    },
     mutateRequestPhoneCode(variables: { phone?: string }, resultSelector: string | ((qb: SuccessModelSelector) => SuccessModelSelector) = successModelPrimitives.toString(), optimisticUpdate?: () => void) {
       return self.mutate<{ requestPhoneCode: SuccessModelType}>(`mutation requestPhoneCode($phone: String) { requestPhoneCode(phone: $phone) {
         ${typeof resultSelector === "function" ? resultSelector(new SuccessModelSelector()).toString() : resultSelector}
@@ -154,8 +160,8 @@ export const RootStoreBase = withTypedRefs<Refs>()(MSTGQLStore
         ${typeof resultSelector === "function" ? resultSelector(new OnchainTransactionModelSelector()).toString() : resultSelector}
       } }`, variables, optimisticUpdate)
     },
-    mutatePublicInvoice(variables: { uid?: string }, resultSelector: string | ((qb: InvoiceModelSelector) => InvoiceModelSelector) = invoiceModelPrimitives.toString(), optimisticUpdate?: () => void) {
-      return self.mutate<{ publicInvoice: InvoiceModelType}>(`mutation publicInvoice($uid: String) { publicInvoice(uid: $uid) {
+    mutatePublicInvoice(variables: { username: string }, resultSelector: string | ((qb: InvoiceModelSelector) => InvoiceModelSelector) = invoiceModelPrimitives.toString(), optimisticUpdate?: () => void) {
+      return self.mutate<{ publicInvoice: InvoiceModelType}>(`mutation publicInvoice($username: String!) { publicInvoice(username: $username) {
         ${typeof resultSelector === "function" ? resultSelector(new InvoiceModelSelector()).toString() : resultSelector}
       } }`, variables, optimisticUpdate)
     },
@@ -174,9 +180,9 @@ export const RootStoreBase = withTypedRefs<Refs>()(MSTGQLStore
         ${typeof resultSelector === "function" ? resultSelector(new EarnModelSelector()).toString() : resultSelector}
       } }`, variables, optimisticUpdate)
     },
-    mutateUpdateUser(variables: { user?: InputUser }, resultSelector: string | ((qb: UserModelSelector) => UserModelSelector) = userModelPrimitives.toString(), optimisticUpdate?: () => void) {
-      return self.mutate<{ updateUser: UserModelType}>(`mutation updateUser($user: InputUser) { updateUser(user: $user) {
-        ${typeof resultSelector === "function" ? resultSelector(new UserModelSelector()).toString() : resultSelector}
+    mutateUpdateUser(variables?: {  }, resultSelector: string | ((qb: UpdateUserModelSelector) => UpdateUserModelSelector) = updateUserModelPrimitives.toString(), optimisticUpdate?: () => void) {
+      return self.mutate<{ updateUser: UpdateUserModelType}>(`mutation updateUser { updateUser {
+        ${typeof resultSelector === "function" ? resultSelector(new UpdateUserModelSelector()).toString() : resultSelector}
       } }`, variables, optimisticUpdate)
     },
     mutateDeleteUser(variables?: {  }, optimisticUpdate?: () => void) {
