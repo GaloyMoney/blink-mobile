@@ -5,10 +5,8 @@ import { VersionComponent } from "../../components/version"
 import { translate } from "../../i18n"
 import { useQuery } from "../../models"
 import { palette } from "../../theme/palette"
-import { isIos } from "../../utils/helper"
 const BitcoinBeachLogo = require("../get-started-screen/bitcoinBeach3.png")
 import { observer } from "mobx-react"
-import DeviceInfo from 'react-native-device-info';
 import { Token } from "../../utils/token"
 
 const styles = StyleSheet.create({
@@ -40,20 +38,13 @@ const styles = StyleSheet.create({
 })
 
 export const SplashScreen = observer(({ navigation }) => {
-
   let needUpdate
-  const { error, loading, data } = useQuery(store => store.queryBuildParameters())
 
-  const needUpdateFn = (buildParameters) => {
-    const {minBuildNumberAndroid, minBuildNumberIos } = buildParameters
-    const minBuildNumber = isIos ? minBuildNumberIos : minBuildNumberAndroid
-    let buildNumber = DeviceInfo.getBuildNumber();
-    console.log({buildNumber, minBuildNumber})
-    return buildNumber < minBuildNumber
-  }
+  // FIXME: no cache doesn't seem to work
+  const { error, loading, data, store } = useQuery(store => store.queryBuildParameters(), {fetchPolicy: "no-cache"})
 
   if (!!data) {
-    needUpdate = needUpdateFn(data.buildParameters)
+    needUpdate = store.isUpdateRequired()
   
     if (!needUpdate) {
       const token = new Token()
