@@ -27,3 +27,20 @@ export const uploadToken = async (store) => {
   const token =  await messaging().getToken()
   await store.mutateAddDeviceToken({deviceToken: token})
 }
+
+export const hasFullPermissions = async () => {
+  const authorizationStatus = await messaging().hasPermission()
+
+  let hasPermissions = false
+
+  if (authorizationStatus === messaging.AuthorizationStatus.AUTHORIZED) {
+    hasPermissions = true
+    console.tron.log("User has notification permissions enabled.")
+  } else if (authorizationStatus === messaging.AuthorizationStatus.PROVISIONAL) {
+    console.tron.log("User has provisional notification permissions.")
+  } else {
+    console.tron.log("User has notification permissions disabled")
+  }
+
+  return hasPermissions
+}

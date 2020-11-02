@@ -2,7 +2,7 @@ import messaging from '@react-native-firebase/messaging'
 import { observer } from "mobx-react"
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { AppState, FlatList, RefreshControl, Text, View } from "react-native"
+import { AppState, FlatList, Linking, Pressable, RefreshControl, Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
@@ -17,6 +17,7 @@ import { StoreContext, useQuery } from "../../models"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { AccountType, CurrencyType } from "../../utils/enum"
+import { isIos } from "../../utils/helper"
 
 
 const styles = EStyleSheet.create({
@@ -127,11 +128,9 @@ export const MoveMoneyScreenDataInjected = observer(({ navigation }) => {
     return unsubscribe;
   }, []); 
 
-  const walletActivated = store.user.level > 0
-
   return <MoveMoneyScreen 
     navigation={navigation}
-    walletActivated={walletActivated}
+    walletIsActive={store.walletIsActive}
     loading={loading}
     error={error}
     amount={store.balances({currency: "USD", account: AccountType.BankAndBitcoin})}
@@ -140,12 +139,13 @@ export const MoveMoneyScreenDataInjected = observer(({ navigation }) => {
       account: AccountType.BankAndBitcoin,
     })}
     refreshQuery={refreshQuery}
+    isUpdateAvailable={store.isUpdateAvailable()}
   />
 })
 
 export const MoveMoneyScreen = (
-  ({ walletActivated, navigation, loading, error, 
-    refreshQuery, amount, amountOtherCurrency }) => {
+  ({ walletIsActive, navigation, loading, error, 
+    refreshQuery, amount, amountOtherCurrency, isUpdateAvailable }) => {
 
   const [modalVisible, setModalVisible] = useState(false)
 
@@ -158,13 +158,32 @@ export const MoveMoneyScreen = (
   }, [secretMenuCounter])
 
   const onBitcoinClick = (target) => {
-    walletActivated ? navigation.navigate(target) : setModalVisible(true)
+    walletIsActive ? navigation.navigate(target) : setModalVisible(true)
   }
 
   const activateWallet = () => {
     setModalVisible(false)
     navigation.navigate("phoneValidation")
   }
+
+
+  // from https://github.com/FiberJW/react-native-app-link/blob/master/index.js
+  const openInStore = async ({ appName, appStoreId, appStoreLocale = 'us', playStoreId }) => {
+    if (isIos) {
+      Linking.openURL(`https://testflight.apple.com/join/9aC8MMk2`);
+      // Linking.openURL(`https://itunes.apple.com/${appStoreLocale}/app/${appName}/id${appStoreId}`);
+    } else {
+      Linking.openURL(`https://play.google.com/store/apps/details?id=${playStoreId}`);
+    }
+  };
+
+  const linkUpgrade = () => openInStore({ appName: "Bitcoin Beach Wallet", appStoreId: "", playStoreId: 'com.galoyapp' }).then(() => {
+    console.tron.log("clicked on link")
+  })
+  .catch((err) => {
+    console.tron.log("error app link on link")
+    // handle error
+  });
 
   return (
     <Screen style={styles.screenStyle}>
@@ -199,26 +218,34 @@ export const MoveMoneyScreen = (
           <View style={{flex: 1}} />
         </View>
       </Modal>
-        <View style={{flexDirection: "row", alignItems: "center", justifyContent: "center"}}>
+        <View style={{flexDirection: "row", alignItems: "center", justifyContent: "space-around"}}>
+          <Button
+            buttonStyle={styles.buttonStyleTime} 
+            containerStyle={{marginTop: 32}}
+            onPress={() => navigation.navigate("accountDetail", { account: AccountType.Bitcoin }) }
+            icon={<Icon name={"ios-trending-up-outline"} size={32} />}  
+          />
           <BalanceHeader
             loading={loading}
             currency={CurrencyType.USD}
             amount={amount}
             amountOtherCurrency={amountOtherCurrency}
-            style={{marginLeft: 60}}
+            style={{}}
           />
           <Button
             buttonStyle={styles.buttonStyleTime} 
-            containerStyle={{marginTop: 32, marginLeft: 16 }}
-            onPress={() => navigation.navigate("accountDetail", { account: AccountType.Bitcoin }) }
-            icon={<Icon name={"ios-trending-up-outline"} size={32} />}  
+            containerStyle={{marginTop: 32 }}
+            onPress={() => navigation.navigate("settings") }
+            icon={<Icon name={"ios-settings-outline"} size={32} />}  
           />
         </View>
 
         <FlatList
-          ListHeaderComponent={error && 
-            <Text style={{color: palette.red, alignSelf: "center", paddingBottom: 18}} selectable={true}>{error.message}</Text>
-          }
+          ListHeaderComponent={() => <>
+            {error?.response?.errors?.map(({ message }) => 
+             <Text style={{color: palette.red, alignSelf: "center", paddingBottom: 18}} selectable={true}>{message}</Text>
+          )}
+          </>}
           data={[{
             title: translate(`ScanningQRCodeScreen.title`), isReceive: false, target: "scanningQRCode"
           },{
@@ -235,9 +262,17 @@ export const MoveMoneyScreen = (
           )}
         />
         <View style={styles.bottom}>
-          <Icon name={"ios-flash"} 
-            size={32} onPress={() => setSecretMenuCounter(secretMenuCounter + 1)} />
-          <Text style={styles.lightningText}>{translate("MoveMoneyScreen.useLightning")}</Text>
+          {isUpdateAvailable &&
+            <Pressable onPress={linkUpgrade}>
+              <Text style={[styles.lightningText, {marginBotton: 12}]}>{translate("MoveMoneyScreen.updateAvailable")}</Text>
+            </Pressable>
+          ||
+          <>
+            <Icon name={"ios-flash"} 
+              size={32} onPress={() => setSecretMenuCounter(secretMenuCounter + 1)} />
+            <Text style={styles.lightningText}>{translate("MoveMoneyScreen.useLightning")}</Text>
+          </>
+          }
         </View>
     </Screen>
   )

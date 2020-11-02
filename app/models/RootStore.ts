@@ -1,17 +1,17 @@
 import AsyncStorage from "@react-native-community/async-storage"
+import analytics from '@react-native-firebase/analytics'
+import { filter, findLast, indexOf, map, sumBy } from "lodash"
 import { values } from "mobx"
-import { Instance, types, flow, getEnv } from "mobx-state-tree"
+import { flow, getEnv, Instance, types } from "mobx-state-tree"
 import moment from "moment"
-import { localStorageMixin } from "mst-gql"
+import { localStorageMixin, Query } from "mst-gql"
+import DeviceInfo from 'react-native-device-info'
 import { AccountType, CurrencyType } from "../utils/enum"
+import { isIos } from "../utils/helper"
+import { uploadToken } from "../utils/notifications"
 import { Token } from "../utils/token"
 import { RootStoreBase } from "./RootStore.base"
 import { TransactionModel } from "./TransactionModel"
-import { map, filter, sumBy } from "lodash"
-import analytics from '@react-native-firebase/analytics';
-import { uploadToken } from "../utils/notifications"
-import { indexOf } from "lodash"
-
 
 export const ROOT_STATE_STORAGE_KEY = "rootAppGaloy"
 
@@ -55,6 +55,18 @@ query gql_query_logged {
     __typename
     id
     level
+    username
+    phone
+  }
+  maps {
+    __typename
+    id
+    title
+    coordinate {
+        __typename
+        latitude
+        longitude
+    }
   }
 }
 `
@@ -70,6 +82,16 @@ query gql_query_anonymous {
     __typename
     id
     value
+  }
+  maps {
+    __typename
+    id
+    title
+    coordinate {
+        __typename
+        latitude
+        longitude
+    }
   }
 }
 `
@@ -100,14 +122,65 @@ export const RootStore = RootStoreBase
     console.log(JSON.stringify(self))
   }
 
-  const mainQuery = () => {
+  const mainQuery = (): Query => {
     const query = new Token().has() ? gql_query_logged : gql_query_anonymous
     return self.query(query)
   }
 
-  const setModalClipboardVisible = (value) => {
+  const setModalClipboardVisible = (value): void => {
     self.modalClipboardVisible = value
   }
+
+  const updatePendingInvoice = async (hash): Promise<boolean> => {
+    // lightning
+    const query = `mutation updatePendingInvoice($hash: String!) {
+      invoice {
+        updatePendingInvoice(hash: $hash)
+      }
+    }`
+
+    const result = self.mutate(query, { hash })
+    return result.invoice.updatePendingInvoice
+  }
+
+  const sendPayment = async ({paymentType, invoice, amountless, optMemo, address, amount}) => {
+    let success, result, pending, errors
+
+    let query, variables
+
+    if(paymentType === "lightning") {
+      query = `mutation payInvoice($invoice: String!, $amount: Int, $memo: String) {
+        invoice {
+          payInvoice(invoice: $invoice, amount: $amount, memo: $memo)
+        }
+      }`  
+      variables =  {invoice, amount: amountless ? amount : undefined, memo: optMemo}
+    } else if (paymentType === "onchain"){
+      query = `mutation onchain($address: String!, $amount: Int!, $memo: String) {
+        onchain {
+          pay(address: $address, amount: $amount, memo: $memo) {
+            success
+          }
+        }
+      }`
+      variables = {address, amount, memo: optMemo}
+    }
+
+    try {
+      result = await self.mutate(query, variables)
+    } catch (err) {
+      errors = err?.response?.errors ?? [{message: `An error occured\n${err}`}]
+    }
+
+    if(paymentType === "lightning") {
+      success = result?.invoice?.payInvoice === "success" ?? false
+      pending = result?.invoice?.payInvoice === "pending" ?? false
+    } else if (paymentType === "onchain") {
+      success = result?.onchain?.pay?.success
+    }
+
+    return { success, pending, errors }
+  } 
 
   const nextPrefCurrency = () => {    
     const units = ["sats", "USD"] // "BTC"
@@ -181,7 +254,25 @@ export const RootStore = RootStoreBase
     yield uploadToken(self)
   })
 
-  return { log, earnComplete, loginSuccessful, setModalClipboardVisible, nextPrefCurrency, mainQuery }
+  const isUpdateRequired = () => {
+    // FIXME cache issue
+    const { minBuildNumberAndroid, minBuildNumberIos } = values(self.buildParameters)[self.buildParameters.size - 1]
+    const minBuildNumber = isIos ? minBuildNumberIos : minBuildNumberAndroid
+    let buildNumber = Number(DeviceInfo.getBuildNumber())
+    return buildNumber < minBuildNumber
+  }
+
+  const isUpdateAvailable = () => {
+    // FIXME cache issue
+    const {lastBuildNumberAndroid, lastBuildNumberIos } = values(self.buildParameters)[self.buildParameters.size - 1]
+    const lastBuildNumber = isIos ? lastBuildNumberIos : lastBuildNumberAndroid
+    let buildNumber = Number(DeviceInfo.getBuildNumber())
+    return buildNumber < lastBuildNumber
+  }
+
+
+  return { log, earnComplete, loginSuccessful, setModalClipboardVisible, nextPrefCurrency, mainQuery, 
+    updatePendingInvoice, sendPayment, isUpdateRequired, isUpdateAvailable }
 })
 .views((self) => ({
   // workaround on the fact key can't be enum
@@ -225,6 +316,7 @@ export const RootStore = RootStoreBase
 
     return balances[account]
   },
+  get walletIsActive() { return self.user.level > 0},
 }))
   // return in BTC instead of SAT
   // get getInBTC() {

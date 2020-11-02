@@ -71,7 +71,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Activate your camera to scan QR codes</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Find Bitcoin ATM</string>
+	<string>Find Merchant who accepts Lightning payments</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Import a screenshot with a QR code</string>
 	<key>UIAppFonts</key>

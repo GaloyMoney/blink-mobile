@@ -10,6 +10,8 @@
     "bankAccount": "Cash Account",
     "firstName": "First Name",
     "lastName": "Last Name",
+    "username": "Username",
+    "logout": "Log Out",
     "email": "Email",
     "sats": "sats",
     "to": "To",
@@ -21,6 +23,8 @@
     "later": "Later",
     "notification": "Notification",
     "share": "Share",
+    "shareLightning": "Share Lightning Invoice",
+    "shareBitcoin": "Share Bitcoin Address",
     "invoice": "Invoice",
     "tryAgain": "Try again",
     "amountRequired": "Amount is required",
@@ -64,6 +68,23 @@
   "BalanceHeader": {
     "currentBalance": "Current Balance"
   },
+  "SettingsScreen": {
+    "activated": "Activated",
+    "activate": "Tap to activate",
+    "tapLogIn": "Tap to log in",
+    "tapUserName": "Tap to set username",
+    "logOutSuccesful": "You have been logged out. Please restart the app to see the changes take effect"
+  },
+  "UsernameScreen": {
+    "confirmTitle": "Set %{input} as your username?",
+    "confirmSubtext": "The username is permanent and can not be changed later",
+    "3CaractersMinimum": "at least 3 caracters are necessary",
+    "notAvailable": "%{input} is not available",
+    "available": "%{input} is available",
+    "usernameToUse": "What username do you want to use?",
+    "success": "%{input} is now your username!",
+    "letterAndNumber": "Only lowercase letter, number and underscore (_) are accepted"
+  },
   "GetStartedScreen": {
     "headline": "Wallet powered by Galoy",
     "getStarted": "Get Started"
@@ -77,6 +98,9 @@
   "WelcomePhoneInputScreen": {
     "header": "Enter your phone number and we'll text you an access code.",
     "placeholder": "Phone Number"
+  },
+  "MapScreen": {
+    "title": "Map"
   },
   "WelcomePhoneValidationScreen": {
     "header": "To confirm your phone number, enter the code we just sent you",
@@ -518,7 +542,8 @@
     "title": "Move Money",
     "needWallet": "Validate your phone to open your wallet",
     "openWallet": "Open Wallet",
-    "useLightning": "We use the Lightning Network."
+    "useLightning": "We use the Lightning Network.",
+    "updateAvailable": "An update is available.\nTab to update now"
   },
   "SendBitcoinScreen": {
     "title": "Send Bitcoin",

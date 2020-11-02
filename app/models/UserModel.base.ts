@@ -17,8 +17,9 @@ export const UserModelBase = ModelBase
   .props({
     __typename: types.optional(types.literal("User"), "User"),
     id: types.identifier,
-    name: types.union(types.undefined, types.null, types.string),
+    username: types.union(types.undefined, types.null, types.string),
     level: types.union(types.undefined, types.integer),
+    phone: types.union(types.undefined, types.null, types.string),
   })
   .views(self => ({
     get store() {
@@ -28,11 +29,12 @@ export const UserModelBase = ModelBase
 
 export class UserModelSelector extends QueryBuilder {
   get id() { return this.__attr(`id`) }
-  get name() { return this.__attr(`name`) }
+  get username() { return this.__attr(`username`) }
   get level() { return this.__attr(`level`) }
+  get phone() { return this.__attr(`phone`) }
 }
 export function selectFromUser() {
   return new UserModelSelector()
 }
 
-export const userModelPrimitives = selectFromUser().name.level
+export const userModelPrimitives = selectFromUser().username.level.phone
