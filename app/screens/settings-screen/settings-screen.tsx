@@ -58,7 +58,7 @@ export const SettingsScreenJSX = (params) => {
       id: 'username',
       defaultMessage: translate("SettingsScreen.tapUserName"),
       action: () => params.navigation.navigate("setUsernameScreen"),
-      enabled: loggedin && (params.username ?? true),
+      enabled: loggedin && !params.username,
       greyed: !loggedin,
     },
     {
