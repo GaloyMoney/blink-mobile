@@ -120,6 +120,7 @@
     },
     "satAccumulated": "Sats accumulated",
     "getRewardNow": "Answer quiz",
+    "quizzComplete": "Quiz completed and {{amount}} sats earned",
     "keepDigging": "Keep digging!",
     "reviewQuizz": "Review quiz",
     "phoneNumberNeeded": "Phone number required",
