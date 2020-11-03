@@ -145,6 +145,7 @@ export const WelcomePhoneInputScreen = ({ navigation }) => {
             ref={inputRef}
             style={styles.phoneEntryContainer}
             textStyle={styles.textEntry}
+            initialCountry="sv"
             textProps={{
               autoFocus: true,
               placeholder: translate("WelcomePhoneInputScreen.placeholder"),
