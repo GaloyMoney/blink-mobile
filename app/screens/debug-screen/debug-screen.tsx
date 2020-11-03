@@ -1,4 +1,3 @@
-import AsyncStorage from "@react-native-community/async-storage"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { observer } from "mobx-react"
 import * as React from "react"
@@ -9,10 +8,10 @@ import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
 import { StoreContext } from "../../models"
 import { color } from "../../theme"
-import { Token, getGraphQlUri } from "../../utils/token"
-import { ROOT_STATE_STORAGE_KEY } from "../../models/RootStore"
-import { loadNetwork, saveNetwork, NETWORK_STRING } from "../../utils/network"
+import { resetDataStore } from "../../utils/logout"
+import { loadNetwork, saveNetwork } from "../../utils/network"
 import { requestPermission } from "../../utils/notifications"
+import { getGraphQlUri, Token } from "../../utils/token"
 
 const styles = EStyleSheet.create({
   button: { 

@@ -47,15 +47,28 @@ const styles = EStyleSheet.create({
 export const ScanningQRCodeScreen = () => {
   const { navigate, goBack } = useNavigation()
 
+  const [pendingError, setPendingError] = React.useState(false)
+
   const decodeInvoice = async (data) => {
+    if (pendingError) {
+      return
+    }
+
     try {
       const {valid, errorMessage} = validPayment(data, new Token().network)
-      if (!valid) {
-        Alert.alert(errorMessage)
-        return
+      console.tron.logImportant({valid, errorMessage, data} , "result")
+      if (valid) {
+        navigate("sendBitcoin", { payment: data })
+      } else {
+        setPendingError(true)
+        Alert.alert(
+          `Invalid QR Code`,
+          `We found:\n\n${data.toString()} \n\nThis is not a valid Bitcoin address or Lightning invoice`,
+          [{
+            text: "OK", onPress: () => setPendingError(false)
+          }]
+        )
       }
-
-      navigate("sendBitcoin", { payment: data })
     } catch (err) {
       Alert.alert(err.toString())
     }
