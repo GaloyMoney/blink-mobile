@@ -195,9 +195,7 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
 
 
     } catch (err) {
-
-      console.tron.log({err, msg:"error loop"})
-
+      console.tron.log({err}, "error loop")
       setStatus("error")
       setErrs([{message: `an error occured. try again later\n${err}`}])
     }
@@ -231,7 +229,7 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
 
   return <SendBitcoinScreenJSX status={status} paymentType={paymentType} amountless={amountless}
   initAmount={initAmount} setAmount={setAmount} setStatus={setStatus} invoice={invoice} 
-  address={address} memo={memo} err={errs} amount={amount} goBack={goBack} pay={pay}
+  address={address} memo={memo} errs={errs} amount={amount} goBack={goBack} pay={pay}
   price={price} 
   prefCurrency={store.prefCurrency} 
   fee={feeText}
@@ -243,7 +241,7 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
 
 export const SendBitcoinScreenJSX = ({
   status, paymentType, amountless, initAmount, setAmount, setStatus, invoice, fee,
-  address, memo, err, amount, goBack, pay, price, prefCurrency, nextPrefCurrency, setMemo }) => {
+  address, memo, errs, amount, goBack, pay, price, prefCurrency, nextPrefCurrency, setMemo }) => {
 
     return <Screen style={styles.mainView} preset={"scroll"}>
     <View style={styles.section}>
@@ -320,7 +318,7 @@ export const SendBitcoinScreenJSX = ({
         <>
           <LottieView source={errorLottie} loop={false} autoPlay style={styles.lottie} resizeMode='cover' />
           <ScrollView>
-            {err.map(({message}) => <Text style={styles.errorText}>{message}</Text>)}
+            {errs.map(({message}) => <Text style={styles.errorText}>{message}</Text>)}
           </ScrollView>
         </>
       }
@@ -337,7 +335,13 @@ export const SendBitcoinScreenJSX = ({
     <Button
       buttonStyle={styles.buttonStyle}
       containerStyle={{flex: 1}}
-      title={(status === "success" || status === "pending") ? translate("common.close") : err ? translate("common.tryAgain") : !amount ? translate("common.amountRequired") : translate("common.send")} // TODO refactor
+      title={(status === "success" || status === "pending") ? 
+        translate("common.close") : 
+        errs.length !== 0 ? 
+          translate("common.tryAgain") :
+          !amount ?
+            translate("common.amountRequired") :
+            translate("common.send")} // TODO refactor
       onPress={() => (status === "success" || status === "pending") ? goBack() : pay()}
       disabled={!amount}
       loading={status === "loading"}
