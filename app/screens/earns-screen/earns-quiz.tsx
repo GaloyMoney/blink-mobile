@@ -132,6 +132,7 @@ const styles = EStyleSheet.create({
 
   keepDiggingContainerStyle: {
     marginTop: 18,
+    justifyContent: "center",
     alignItems: "center",
     minHeight: "18rem",
     marginBottom: "24rem"
@@ -255,7 +256,7 @@ export const EarnQuiz = ({ route, navigation }) => {
               <Text style={styles.title} >{question ?? title}</Text>
               {answers_shuffled}
             </View>
-            <SafeAreaView>
+            <View>
               { recordedAnswer.indexOf(0) !== -1 ?
                 <Button title={translate("EarnScreen.keepDigging")} 
                 type="outline" onPress={async () => await close()}
@@ -263,7 +264,7 @@ export const EarnQuiz = ({ route, navigation }) => {
                 buttonStyle={styles.buttonStyle}
                 titleStyle={styles.titleStyle} />
                 : null }
-              </SafeAreaView>
+              </View>
           </View>
         </View>
       </Modal>
@@ -287,7 +288,7 @@ export const EarnQuiz = ({ route, navigation }) => {
           <View style={{paddingVertical: 12}}>
           {isCompleted &&
             <>
-              <Text style={styles.textEarn}>Quiz completed and {amount} sats earned</Text>
+              <Text style={styles.textEarn}>{translate("EarnScreen.quizzComplete", {amount})}</Text>
               <Button title={translate("EarnScreen.reviewQuizz")} type="clear"
                 titleStyle={styles.completedTitleStyle}
               onPress={() => setQuizVisible(true)}

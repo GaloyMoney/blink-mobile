@@ -139,7 +139,7 @@ export const RootStore = RootStoreBase
       }
     }`
 
-    const result = self.mutate(query, { hash })
+    const result = await self.mutate(query, { hash })
     return result.invoice.updatePendingInvoice
   }
 
