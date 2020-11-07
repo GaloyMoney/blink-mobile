@@ -1,9 +1,13 @@
-import * as React from "react"
-import { StyleSheet } from "react-native"
-import { Screen } from "../../components/screen"
-import MapView, { Marker } from "react-native-maps"
-import { StoreContext } from "../../models"
+import Geolocation from '@react-native-community/geolocation'
+import { useFocusEffect } from '@react-navigation/native'
 import { observer } from "mobx-react"
+import * as React from "react"
+import { useCallback, useState } from "react"
+import { StyleSheet } from "react-native"
+import MapView, { Marker } from "react-native-maps"
+import { Screen } from "../../components/screen"
+import { StoreContext } from "../../models"
+
 
 const styles = StyleSheet.create({
   map: {
@@ -15,6 +19,23 @@ const styles = StyleSheet.create({
 export const MapScreen: React.FC = observer(({ }) => {
   const store = React.useContext(StoreContext)
 
+  const [currentLocation, setCurrentLocation] = useState(null)
+
+  useFocusEffect(useCallback(() => {
+    const watchId = Geolocation.watchPosition(info => {
+      // console.tron.log(info)
+      setCurrentLocation(<Marker 
+        coordinate={{latitude: info.coords.latitude, longitude: info.coords.longitude}}
+        title={"Current location"}
+        key={"currentLocation"}
+        pinColor="blue"
+        />)
+    })
+
+    return () => {
+      Geolocation.clearWatch(watchId);
+    }
+  }, []))
 
   // React.useLayoutEffect(() => {
   //   navigation.setOptions(
@@ -42,6 +63,7 @@ export const MapScreen: React.FC = observer(({ }) => {
         }}
       >
         {markers}
+        {currentLocation}
       </MapView>
     </Screen>
   )
