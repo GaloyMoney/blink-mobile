@@ -36,7 +36,7 @@ platform :android do
     build
     # crashlytics
     upload_to_play_store(
-      track: "alpha",
+      track: "internal",
       skip_upload_changelogs: true,
       skip_upload_images: true,
     )
