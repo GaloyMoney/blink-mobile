@@ -26,6 +26,7 @@
     "shareLightning": "Share Lightning Invoice",
     "shareBitcoin": "Share Bitcoin Address",
     "invoice": "Invoice",
+    "address": "Address",
     "tryAgain": "Try again",
     "amountRequired": "Amount is required",
     "send": "Send",
@@ -79,8 +80,8 @@
     "confirmTitle": "Set %{input} as your username?",
     "confirmSubtext": "The username is permanent and can not be changed later",
     "3CaractersMinimum": "at least 3 characters are necessary",
-    "notAvailable": "%{input} is not available",
-    "available": "%{input} is available",
+    "notAvailable": "❌  %{input} is not available",
+    "available": "✅  %{input} is available",
     "usernameToUse": "What username do you want to use?",
     "success": "%{input} is now your username!",
     "letterAndNumber": "Only lowercase letter, number and underscore (_) are accepted"
@@ -541,12 +542,15 @@
   },
   "MoveMoneyScreen": {
     "title": "Move Money",
+    "send": "Send",
+    "receive": "Receive",
     "needWallet": "Validate your phone to open your wallet",
     "openWallet": "Open Wallet",
     "useLightning": "We use the Lightning Network.",
     "updateAvailable": "An update is available.\nTab to update now"
   },
   "SendBitcoinScreen": {
+    "note": "Optional note",
     "title": "Send Bitcoin",
     "amount": "Amount",
     "cost": "Cost",
@@ -555,7 +559,9 @@
     "notConfirmed": "Payment has been sent\nbut is not confirmed yet\n\nYou can check the status\nof the payment in Transactions"
   },
   "ScanningQRCodeScreen": {
-    "title": "Send Bitcoin",
+    "invalidTitle": "Invalid QR Code",
+    "invalidContent": "We found:\n\n{{ found }}\n\nThis is not a valid Bitcoin address or Lightning invoice",
+    "title": "Scan QR Code",
     "noQrCode": "We could not find a QR code in the image"
   },
   "ReceiveBitcoinScreen": {

@@ -157,7 +157,7 @@ export const MoveMoneyScreen = (
     }
   }, [secretMenuCounter])
 
-  const onBitcoinClick = (target) => {
+  const onMenuClick = (target) => {
     walletIsActive ? navigation.navigate(target) : setModalVisible(true)
   }
 
@@ -247,17 +247,27 @@ export const MoveMoneyScreen = (
           )}
           </>}
           data={[{
-            title: translate(`ScanningQRCodeScreen.title`), isReceive: false, target: "scanningQRCode"
-          },{
-            title: translate(`ReceiveBitcoinScreen.title`), isReceive: true, target: "receiveBitcoin"
+            title: translate(`ScanningQRCodeScreen.title`),
+            target: "scanningQRCode",
+            icon: <Icon name={"qr-code"} size={32} color={palette.orange} />, 
+          }, 
+          {
+            title: translate(`MoveMoneyScreen.send`), 
+            target: "sendBitcoin",
+            icon: <IconTransaction isReceive={false} size={32} />,
+          },
+          {
+            title: translate(`MoveMoneyScreen.receive`), 
+            target: "receiveBitcoin",
+            icon: <IconTransaction isReceive={true} size={32} />,
           }]}
           style={styles.listContainer}
           refreshControl={<RefreshControl refreshing={loading} onRefresh={refreshQuery} />}
           renderItem={({ item }) => (
             <LargeButton
               title={item.title}
-              icon={<IconTransaction isReceive={item.isReceive} size={75} />}
-              onPress={() => onBitcoinClick(item.target)}
+              icon={item.icon}
+              onPress={() => onMenuClick(item.target)}
             />
           )}
         />

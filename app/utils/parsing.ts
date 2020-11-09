@@ -6,7 +6,7 @@ var url = require('url');
 
 // TODO: look if we own the address
 
-export type IPaymentType = "lightning" | "onchain" | "onchainAndLightning" | undefined
+export type IPaymentType = "lightning" | "onchain" | "onchainAndLightning" | "username" | undefined
 
 export interface IValidPaymentReponse {
   valid: boolean,
