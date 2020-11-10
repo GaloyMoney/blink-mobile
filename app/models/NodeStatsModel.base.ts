@@ -16,6 +16,7 @@ export const NodeStatsModelBase = ModelBase
   .named('NodeStats')
   .props({
     __typename: types.optional(types.literal("NodeStats"), "NodeStats"),
+    id: types.identifier,
     peersCount: types.union(types.undefined, types.null, types.integer),
     channelsCount: types.union(types.undefined, types.null, types.integer),
   })
@@ -26,6 +27,7 @@ export const NodeStatsModelBase = ModelBase
   }))
 
 export class NodeStatsModelSelector extends QueryBuilder {
+  get id() { return this.__attr(`id`) }
   get peersCount() { return this.__attr(`peersCount`) }
   get channelsCount() { return this.__attr(`channelsCount`) }
 }

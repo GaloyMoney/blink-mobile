@@ -13,13 +13,11 @@ storiesOf("MoveMoney Screen", module)
   .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
   .add("Style Presets", () => (
     <Story>
-      <UseCase text="Dollar" usage="The primary.">
-        <MoveMoneyScreen 
-          bankOnboarded={boolean('bankOnboarded', false)}
-          navigation={{navigate: action('navigate')}}
-          walletActivated={boolean('walletActivated', false)}
-          amount={12345} 
-        />
-      </UseCase>
+      <MoveMoneyScreen 
+        bankOnboarded={boolean('bankOnboarded', false)}
+        navigation={{navigate: action('navigate')}}
+        walletActivated={boolean('walletActivated', false)}
+        amount={12345} 
+      />
     </Story>
   ))

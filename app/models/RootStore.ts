@@ -68,6 +68,10 @@ query gql_query_logged {
         longitude
     }
   }
+  nodeStats {
+    __typename
+    id
+  }
 }
 `
 
@@ -92,6 +96,10 @@ query gql_query_anonymous {
         latitude
         longitude
     }
+  }
+  nodeStats {
+    __typename
+    id
   }
 }
 `
@@ -143,7 +151,7 @@ export const RootStore = RootStoreBase
     return result.invoice.updatePendingInvoice
   }
 
-  const sendPayment = async ({paymentType, invoice, amountless, optMemo, address, amount}) => {
+  const sendPayment = async ({paymentType, invoice, amountless, optMemo, address, amount, username}) => {
     let success, result, pending, errors
 
     let query, variables
@@ -164,6 +172,14 @@ export const RootStore = RootStoreBase
         }
       }`
       variables = {address, amount, memo: optMemo}
+    } else if (paymentType === "username") {
+      query = `mutation payKeysendUsername($amount: Int!, $destination: String!, $username: String!, $memo: String) {
+        invoice {
+            payKeysendUsername( amount: $amount, destination: $destination, username: $username, memo: $memo)
+        }
+      }`
+      const destination = values(self.nodeStats)[0].id
+      variables = { amount, destination, username, memo: optMemo }
     }
 
     try {
@@ -177,6 +193,8 @@ export const RootStore = RootStoreBase
       pending = result?.invoice?.payInvoice === "pending" ?? false
     } else if (paymentType === "onchain") {
       success = result?.onchain?.pay?.success
+    } else if (paymentType === "username") {
+      success = result?.invoice?.payKeysendUsername === "success"
     }
 
     return { success, pending, errors }
