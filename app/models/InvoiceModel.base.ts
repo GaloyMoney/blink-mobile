@@ -19,6 +19,7 @@ export const InvoiceModelBase = ModelBase
     addInvoice: types.union(types.undefined, types.null, types.string),
     updatePendingInvoice: types.union(types.undefined, types.null, types.boolean),
     payInvoice: types.union(types.undefined, types.null, types.string),
+    payKeysendUsername: types.union(types.undefined, types.null, types.string),
   })
   .views(self => ({
     get store() {
@@ -30,9 +31,10 @@ export class InvoiceModelSelector extends QueryBuilder {
   get addInvoice() { return this.__attr(`addInvoice`) }
   get updatePendingInvoice() { return this.__attr(`updatePendingInvoice`) }
   get payInvoice() { return this.__attr(`payInvoice`) }
+  get payKeysendUsername() { return this.__attr(`payKeysendUsername`) }
 }
 export function selectFromInvoice() {
   return new InvoiceModelSelector()
 }
 
-export const invoiceModelPrimitives = selectFromInvoice().addInvoice.updatePendingInvoice.payInvoice
+export const invoiceModelPrimitives = selectFromInvoice().addInvoice.updatePendingInvoice.payInvoice.payKeysendUsername

@@ -37,7 +37,6 @@ export const UsernameScreen = ({navigation}) => {
   const { store, error: errorQuery, loading: loadingUserNameExist, data, setQuery, query } = useQuery()
 
   const exists = data?.usernameExists ?? false
-  console.tron.log({data, exists})
 
   if (errorQuery) {
     console.tron.log({errorQuery})

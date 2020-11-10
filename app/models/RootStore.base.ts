@@ -53,6 +53,7 @@ type Refs = {
   users: ObservableMap<string, UserModelType>,
   markers: ObservableMap<string, MarkerModelType>,
   buildParameters: ObservableMap<string, BuildParameterModelType>,
+  nodeStats: ObservableMap<string, NodeStatsModelType>,
   lastOnChainAddresses: ObservableMap<string, LastOnChainAddressModelType>
 }
 
@@ -90,7 +91,7 @@ mutateTestMessage="mutateTestMessage"
 */
 export const RootStoreBase = withTypedRefs<Refs>()(MSTGQLStore
   .named("RootStore")
-  .extend(configureStoreMixin([['Price', () => PriceModel], ['Wallet', () => WalletModel], ['Transaction', () => TransactionModel], ['Earn', () => EarnModel], ['User', () => UserModel], ['Marker', () => MarkerModel], ['Coordinate', () => CoordinateModel], ['BuildParameter', () => BuildParameterModel], ['NodeStats', () => NodeStatsModel], ['LastOnChainAddress', () => LastOnChainAddressModel], ['Success', () => SuccessModel], ['Token', () => TokenModel], ['OnchainTransaction', () => OnchainTransactionModel], ['Invoice', () => InvoiceModel], ['OnChain', () => OnChainModel], ['UpdateUser', () => UpdateUserModel]], ['Price', 'Wallet', 'Transaction', 'Earn', 'User', 'Marker', 'BuildParameter', 'LastOnChainAddress'], "js"))
+  .extend(configureStoreMixin([['Price', () => PriceModel], ['Wallet', () => WalletModel], ['Transaction', () => TransactionModel], ['Earn', () => EarnModel], ['User', () => UserModel], ['Marker', () => MarkerModel], ['Coordinate', () => CoordinateModel], ['BuildParameter', () => BuildParameterModel], ['NodeStats', () => NodeStatsModel], ['LastOnChainAddress', () => LastOnChainAddressModel], ['Success', () => SuccessModel], ['Token', () => TokenModel], ['OnchainTransaction', () => OnchainTransactionModel], ['Invoice', () => InvoiceModel], ['OnChain', () => OnChainModel], ['UpdateUser', () => UpdateUserModel]], ['Price', 'Wallet', 'Transaction', 'Earn', 'User', 'Marker', 'BuildParameter', 'NodeStats', 'LastOnChainAddress'], "js"))
   .props({
     prices: types.optional(types.map(types.late((): any => PriceModel)), {}),
     wallets: types.optional(types.map(types.late((): any => WalletModel)), {}),
@@ -99,6 +100,7 @@ export const RootStoreBase = withTypedRefs<Refs>()(MSTGQLStore
     users: types.optional(types.map(types.late((): any => UserModel)), {}),
     markers: types.optional(types.map(types.late((): any => MarkerModel)), {}),
     buildParameters: types.optional(types.map(types.late((): any => BuildParameterModel)), {}),
+    nodeStats: types.optional(types.map(types.late((): any => NodeStatsModel)), {}),
     lastOnChainAddresses: types.optional(types.map(types.late((): any => LastOnChainAddressModel)), {})
   })
   .actions(self => ({

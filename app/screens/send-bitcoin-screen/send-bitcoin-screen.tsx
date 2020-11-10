@@ -13,7 +13,7 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { InputPayment } from "../../components/input-payment"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
-import { StoreContext } from "../../models"
+import { StoreContext, useQuery } from "../../models"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { textCurrencyFormatting } from "../../utils/currencyConversion"
@@ -107,6 +107,7 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
   const [amountless, setAmountless] = useState(false)
   const [initAmount, setInitAmount] = useState(0)
   const [amount, setAmount] = useState(0)
+  const [username, setUsername] = useState("")
   const [invoice, setInvoice] = useState("")
   const [memo, setMemo] = useState("")
   const [initialMemo, setInitialMemo] = useState("")
@@ -115,26 +116,41 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
   const [status, setStatus] = useState("idle")
   // idle, loading, pending, success, error 
 
+  const { error: errorQuery, loading: loadingUserNameExist, data, setQuery } = useQuery()
+  const usernameExists = data?.usernameExists ?? false
 
   useEffect(() => {
-    const {valid, invoice, amount, amountless, memo, paymentType, address} = validPayment(route.params.payment, new Token().network)
+
+    const {valid, invoice, amount, amountless, memo, paymentType, address} = validPayment(route.params?.payment, new Token().network)
     
     // this should be valid. Invoice / Address should be check before we show this screen
     // assert(valid)
 
-    setStatus("idle")
-    setAddress(address)
-    setPaymentType(paymentType)
-    setInvoice(invoice)
-    setAmount(amount)
-    setInitAmount(amount)
-    setAmountless(amountless)
+    if (paymentType) {
+      setStatus("idle")
+      setAddress(address)
+      setPaymentType(paymentType)
+      setInvoice(invoice)
+      setAmount(amount)
+      setInitAmount(amount)
+      setAmountless(amountless)
+  
+      setInitialMemo(memo)
+      setMemo(memo)
+  
+      getFee()
+    } else {
+      setPaymentType("username")
+      setFee(0)
+    }
 
-    setInitialMemo(memo)
-    setMemo(memo)
+  }, [route.params?.payment])
 
-    getFee()
-  }, [route.params.payment])
+  useEffect(() => {
+    if (username !== "") {
+      setQuery((store) => store.queryUsernameExists({username}, {fetchPolicy: "cache-first"}))
+    }
+  }, [username])
 
   useEffect(() => {
     getFee()
@@ -180,7 +196,7 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
       
       console.tron.log({msg:"send payment"})
 
-      const { success, pending, errors } = await store.sendPayment({paymentType, invoice, amountless, optMemo, address, amount})
+      const { success, pending, errors } = await store.sendPayment({paymentType, invoice, amountless, optMemo, address, amount, username})
 
       if (success) {
         store.queryWallet()
@@ -228,20 +244,25 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
   const feeText = fee == null ? fee : textCurrencyFormatting(fee, price, store.prefCurrency)
 
   return <SendBitcoinScreenJSX status={status} paymentType={paymentType} amountless={amountless}
-  initAmount={initAmount} setAmount={setAmount} setStatus={setStatus} invoice={invoice} 
-  address={address} memo={memo} errs={errs} amount={amount} goBack={goBack} pay={pay}
-  price={price} 
-  prefCurrency={store.prefCurrency} 
-  fee={feeText}
-  setMemo={setMemo}
-  nextPrefCurrency={store.nextPrefCurrency}
-   />
+    initAmount={initAmount} setAmount={setAmount} setStatus={setStatus} invoice={invoice} 
+    address={address} memo={memo} errs={errs} amount={amount} goBack={goBack} pay={pay}
+    price={price} 
+    prefCurrency={store.prefCurrency} 
+    fee={feeText}
+    setMemo={setMemo}
+    nextPrefCurrency={store.nextPrefCurrency}
+    setUsername={setUsername}
+    username={username}
+    usernameExists={usernameExists}
+    loadingUserNameExist={loadingUserNameExist}
+  />
 })
 
 
 export const SendBitcoinScreenJSX = ({
   status, paymentType, amountless, initAmount, setAmount, setStatus, invoice, fee,
-  address, memo, errs, amount, goBack, pay, price, prefCurrency, nextPrefCurrency, setMemo }) => {
+  address, memo, errs, amount, goBack, pay, price, prefCurrency, nextPrefCurrency, 
+  setMemo, setUsername, username, usernameExists, loadingUserNameExist }) => {
 
     return <Screen style={styles.mainView} preset={"scroll"}>
     <View style={styles.section}>
@@ -260,20 +281,39 @@ export const SendBitcoinScreenJSX = ({
     </View>
     <View style={{marginTop: 18}}>
       <Input
-        placeholder={translate("common.invoice")}
+        placeholder={translate(`common.${paymentType}`)}
         leftIcon={
           <View style={{flexDirection: "row"}}>
             <Text style={styles.smallText}>{translate("common.to")}</Text>
             <Icon name="ios-log-out" size={24} color={color.primary} style={styles.icon} />
           </View>
         }
-        value={paymentType === "lightning" ? invoice : address}
+        onChangeText={setUsername}
+        rightIcon={paymentType === "username" && username !== "" ? loadingUserNameExist ? <ActivityIndicator size="small" /> :
+          usernameExists ? <Text>✅</Text> : <Text>⚠️</Text> :
+          null}
+        value={paymentType === "lightning" ? invoice : paymentType === "onchain" ? address : username}
         renderErrorMessage={false}
-        editable={false}
+        editable={paymentType === "username"}
         selectTextOnFocus={true}
         // InputComponent={(props) => <Text {...props} selectable={true}>{props.value}</Text>}
       />
-      {!!address && 
+      <Input
+        placeholder={translate(`SendBitcoinScreen.note`)}
+        leftIcon={
+          <View style={{flexDirection: "row"}}>
+            <Text style={styles.smallText}>{translate("common.note")}</Text>
+            <Icon name="ios-create-outline" size={24} color={color.primary} style={styles.icon} />
+          </View>
+        }
+        value={memo}
+        onChangeText={value => setMemo(value)}
+        renderErrorMessage={false}
+        editable={true}
+        selectTextOnFocus={true}
+        // InputComponent={(props) => <Text {...props} selectable={true}>{props.value}</Text>}
+      />
+      {paymentType !== "lightning" && 
       <Input
         leftIcon={
           <View style={{flexDirection: "row"}}>
@@ -291,20 +331,6 @@ export const SendBitcoinScreenJSX = ({
         }
       />
       }
-      <Input
-        leftIcon={
-          <View style={{flexDirection: "row"}}>
-            <Text style={styles.smallText}>{translate("common.note")}</Text>
-            <Icon name="ios-create-outline" size={24} color={color.primary} style={styles.icon} />
-          </View>
-        }
-        value={memo}
-        onChangeText={value => setMemo(value)}
-        renderErrorMessage={false}
-        editable={true}
-        selectTextOnFocus={true}
-        // InputComponent={(props) => <Text {...props} selectable={true}>{props.value}</Text>}
-      />
     </View>
     <View style={{alignItems: "center"}}>
       { status === "success" &&

@@ -62,10 +62,10 @@ export const ScanningQRCodeScreen = () => {
       } else {
         setPendingError(true)
         Alert.alert(
-          `Invalid QR Code`,
-          `We found:\n\n${data.toString()} \n\nThis is not a valid Bitcoin address or Lightning invoice`,
+          translate("ScanningQRCodeScreen.invalid"),
+          translate("ScanningQRCodeScreen.invalidContent", {found: data.toString()}),
           [{
-            text: "OK", onPress: () => setPendingError(false)
+            text: translate("common.ok"), onPress: () => setPendingError(false)
           }]
         )
       }
