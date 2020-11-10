@@ -42,7 +42,7 @@
     "@remobile/react-native-qrcode-local-image": "nicolasburtey/react-native-qrcode-local-image.git#master",
     "bip21": "^2.0.2",
     "bitcoinjs-lib": "^5.1.10",
-    "bolt11": "^1.2.7",
+    "bolt11": "https://github.com/nicolasburtey/bolt11#master",
     "buffer": "^5.5.0",
     "currency.js": "^2.0.2",
     "graphql-request": "^2.0.0",

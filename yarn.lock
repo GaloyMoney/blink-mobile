@@ -4648,16 +4648,14 @@ body-parser@1.19.0:
     raw-body "2.4.0"
     type-is "~1.6.17"
 
-bolt11@^1.2.7:
+"bolt11@https://github.com/nicolasburtey/bolt11#master":
   version "1.2.7"
-  resolved "https://registry.yarnpkg.com/bolt11/-/bolt11-1.2.7.tgz#75852e215aeb28d6ccd6dd7c721c09d8ccb40a88"
-  integrity sha512-og00WBenEDUeMOVLoiWIiA0i14+tslzqhk/fJIYt5L7GWFFvY88kl0J1ib5DqMXp7mQKez4E8/XI6nrG0Rek4g==
+  resolved "https://github.com/nicolasburtey/bolt11#d1a2c8ddc9f5d4f6cf50b256bfd937e94cbe3fc6"
   dependencies:
     "@types/bn.js" "^4.11.3"
     bech32 "^1.1.2"
     bitcoinjs-lib "^3.3.1"
     bn.js "^4.11.8"
-    coininfo "^4.5.0"
     create-hash "^1.2.0"
     lodash "^4.17.11"
     safe-buffer "^5.1.1"
@@ -5493,13 +5491,6 @@ code-point-at@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
   integrity sha1-DQcLTQQ6W+ozovGkDi7bPZpMz3c=
-
-coininfo@^4.5.0:
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/coininfo/-/coininfo-4.5.0.tgz#f56e7c093425d8f4f6e99454796698dd7c9246e8"
-  integrity sha512-9YnPekCDaFSJl/yG27dEkCbHF09CO3Cz38A2TMcFZRMcaCy2l38B2nQK/rdz8zLqOLVzzE/e0MpcWMxvyEncGA==
-  dependencies:
-    safe-buffer "^5.1.1"
 
 collect-v8-coverage@^1.0.0:
   version "1.0.1"
