@@ -184,7 +184,6 @@ export const RootStore = RootStoreBase
 
     try {
       result = await self.mutate(query, variables)
-      console.tron.log({result})
     } catch (err) {
       errors = err?.response?.errors ?? [{message: `An error occured\n${err}`}]
     }
