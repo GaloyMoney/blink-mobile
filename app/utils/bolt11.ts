@@ -15,6 +15,9 @@ import * as lightningPayReq from "bolt11"
 //   return parsePaymentRequest({request}).tokens
 // }
 
+export const getUsername = (decoded) => 
+  decoded.tags.find(value => value.tagName === "username")?.data
+
 export const getDescription = (decoded) => 
   decoded.tags.find(value => value.tagName === "description")?.data
 
