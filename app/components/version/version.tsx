@@ -8,7 +8,7 @@ import { palette } from "../../theme/palette"
 
 const styles = StyleSheet.create({
   version: {
-    color: palette.lighterGrey,
+    color: palette.darkGrey,
     fontSize: 18,
     marginTop: 18,
     textAlign: "center",
