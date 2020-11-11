@@ -1,4 +1,4 @@
-import { getDescription } from "./bolt11"
+import { getDescription, getDestination, getUsername } from "./bolt11"
 import * as lightningPayReq from 'bolt11'
 import moment from "moment"
 const bitcoin = require('bitcoinjs-lib');
@@ -48,7 +48,7 @@ function parseAmount(txt) {
   );
 }
 
-export const validPayment = (input: string, network: INetwork): IValidPaymentReponse => {
+export const validPayment = (input: string, network: INetwork, myPubKey: string, username: string): IValidPaymentReponse => {
   if (!input) {
     return {valid: false, errorMessage: `string is null or empty`}
   }
@@ -110,6 +110,10 @@ export const validPayment = (input: string, network: INetwork): IValidPaymentRep
     const payReq = lightningPayReq.decode(data)
     // console.log(JSON.stringify({ payReq }, null, 2))
     
+    if (myPubKey === getDestination(payReq) && username === getUsername(payReq)) {
+      return {valid: false, errorMessage: "invoice needs to be for a different user", paymentType}
+    }
+
     let amount, amountless, memo
     
     if (payReq.satoshis || payReq.millisatoshis) {

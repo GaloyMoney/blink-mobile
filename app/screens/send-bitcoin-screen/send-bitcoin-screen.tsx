@@ -121,7 +121,7 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
 
   useEffect(() => {
 
-    const {valid, invoice, amount, amountless, memo, paymentType, address} = validPayment(route.params?.payment, new Token().network)
+    const {valid, invoice, amount, amountless, memo, paymentType, address} = validPayment(route.params?.payment, new Token().network, store.myPubKey, store.username)
     
     // this should be valid. Invoice / Address should be check before we show this screen
     // assert(valid)

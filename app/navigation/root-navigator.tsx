@@ -133,7 +133,7 @@ export const RootStack = () => {
       return
     }
 
-    const {valid} = validPayment(clipboard, new Token().network)
+    const {valid} = validPayment(clipboard, new Token().network, store.myPubKey, store.username)
     if (!valid) {
       return
     }
