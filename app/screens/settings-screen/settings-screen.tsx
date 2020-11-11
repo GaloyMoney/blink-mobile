@@ -52,6 +52,7 @@ export const SettingsScreenJSX = (params) => {
       defaultMessage: translate("SettingsScreen.tapLogIn"),
       action: () => params.navigation.navigate("phoneValidation"),
       enabled: !loggedin,
+      greyed: loggedin,
     },
     {
       title: translate("common.username"),
