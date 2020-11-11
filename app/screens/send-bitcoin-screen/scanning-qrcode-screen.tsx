@@ -8,6 +8,7 @@ import Svg, { Circle } from "react-native-svg"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
+import { StoreContext } from "../../models"
 import { palette } from "../../theme/palette"
 import { validPayment } from "../../utils/parsing"
 import { Token } from "../../utils/token"
@@ -46,6 +47,7 @@ const styles = EStyleSheet.create({
 
 export const ScanningQRCodeScreen = () => {
   const { navigate, goBack } = useNavigation()
+  const store = React.useContext(StoreContext)
 
   const [pendingError, setPendingError] = React.useState(false)
 
@@ -55,7 +57,7 @@ export const ScanningQRCodeScreen = () => {
     }
 
     try {
-      const {valid, errorMessage} = validPayment(data, new Token().network)
+      const {valid, errorMessage} = validPayment(data, new Token().network, store.myPubKey, store.username)
       console.tron.logImportant({valid, errorMessage, data} , "result")
       if (valid) {
         navigate("sendBitcoin", { payment: data })

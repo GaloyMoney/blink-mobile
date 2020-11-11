@@ -10,14 +10,14 @@ beforeAll(() => {
 })
 
 const checkOnChain = (address, network) => {
-  const {valid, paymentType, errorMessage} = validPayment(address, network)
+  const {valid, paymentType, errorMessage} = validPayment(address, network, "", "")
   console.log(errorMessage)
   expect(valid).toBeTruthy()
   expect(paymentType).toBe("onchain")
 }
 
 const checkOnChainFail = (address, network) => {
-  const {valid, paymentType, errorMessage} = validPayment(address, network)
+  const {valid, paymentType, errorMessage} = validPayment(address, network, "", "")
   console.log(errorMessage)
   expect(valid).toBeFalsy()
 }
@@ -69,14 +69,14 @@ it('bitcoin lightning', () => {
   const opennode = "LNBC6864270N1P05ZVJJPP5FPEHVLV3DD2R76065R9V0L3N8QV9MFWU9RYHVPJ5XSZ3P4HY734QDZHXYSV89EQYVMZQSNFW3PXCMMRDDPX7MMDYPP8YATWVD5ZQMMWYPQH2EM4WD6ZQVESYQ5YYUN4DE3KSGZ0DEK8J2GCQZPGXQRRSS6LQA5JLLVUGLW5TPSUG4S2TMT5C8FNERR95FUH8HTCSYX52CP3WZSWJ32XJ5GEWYFN7MG293V6JLA9CZ8ZNDHWDHCNNKUL2QKF6PJLSPJ2NL3J";
 
   const checkValidLightning = (address) => {
-    const {valid, paymentType} = validPayment(address, "mainnet")
+    const {valid, paymentType} = validPayment(address, "mainnet", "", "")
     expect(valid).toBeTruthy()
     expect(paymentType).toBe("lightning")
     // console.log(errorMessage)
   }
 
   const checkInvalidLightning = (address) => {
-    const {valid, paymentType, errorMessage} = validPayment(address, "mainnet")
+    const {valid, paymentType, errorMessage} = validPayment(address, "mainnet", "", "")
     expect(valid).toBeFalsy()
     expect(paymentType).toBe("lightning")
     expect(errorMessage).toBe("invoice has expired")
@@ -84,4 +84,27 @@ it('bitcoin lightning', () => {
   
   checkInvalidLightning(opennode_expired)
   checkValidLightning(opennode)
+})
+
+it('lightning username', () => {  
+  const invoice = "lnbcrt1p06472cpp5p3gfqm90wcj9zg7kdy8arvwxwnnuem5juazdaxgpl5awygn4ackq9qy9qsqxq92fjuqdq9v93xxsp54fwkhugr4lv2r3v5jp35d3jk4emfmxske6yt7mewv4xgj2c7uklqcqzpulq2v93xxer9vcu740zxh4qwamnkvw7q056x7fypqntpkf29kqushvf22yq297vc7hl0umxnszpgkc9w5xafuefusfjhmshak8can3f08gk3rrfm4nnrsq6r04nh"
+
+  const checkValidLightning = (destination, username) => {
+    const {valid, paymentType} = validPayment(invoice, "regtest", destination, username)
+    expect(valid).toBeTruthy()
+    expect(paymentType).toBe("lightning")
+    // console.log(errorMessage)
+  }
+
+  const checkInvalidLightning = (destination, username) => {
+    const {valid, paymentType, errorMessage} = validPayment(invoice, "regtest", destination, username)
+    expect(valid).toBeFalsy()
+    expect(paymentType).toBe("lightning")
+    expect(errorMessage).toBe("invoice needs to be for a different user")
+  }
+
+  checkValidLightning("032569bb72737c1c1e50f5babf763b56e0a36046f960d67e4273bddc632607cb1f", "abc")
+  checkValidLightning("032569bb72737c1c1e50f5babf763b56e0a36046f960d67e4273bddc63260aaaaa", "abcdef")
+  checkInvalidLightning("032569bb72737c1c1e50f5babf763b56e0a36046f960d67e4273bddc632607cb1f", "abcdef")
+
 })

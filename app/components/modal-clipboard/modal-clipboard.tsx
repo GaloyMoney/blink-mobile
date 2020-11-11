@@ -57,7 +57,7 @@ export const ModalClipboard = observer(() => {
   React.useEffect(() => {
     const _ = async () => {
       const clipboard = await Clipboard.getString()
-      const {paymentType} = validPayment(clipboard, new Token().network)
+      const {paymentType} = validPayment(clipboard, new Token().network, store.myPubKey, store.username)
       const pathString = paymentType === "lightning" ? "ModalClipboard.pendingInvoice" : "ModalClipboard.pendingBitcoin"
       setMessage(translate(pathString))
     }

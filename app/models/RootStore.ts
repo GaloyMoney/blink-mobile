@@ -178,8 +178,7 @@ export const RootStore = RootStoreBase
             payKeysendUsername( amount: $amount, destination: $destination, username: $username, memo: $memo)
         }
       }`
-      const destination = values(self.nodeStats)[0].id
-      variables = { amount, destination, username, memo: optMemo }
+      variables = { amount, destination: self.myPubKey, username, memo: optMemo }
     }
 
     try {
@@ -334,7 +333,9 @@ export const RootStore = RootStoreBase
 
     return balances[account]
   },
-  get walletIsActive() { return self.user.level > 0},
+  get walletIsActive() { return self.user.level > 0 },
+  get username() { return self.user.username },
+  get myPubKey() { return values(self.nodeStats)[0].id }
 }))
   // return in BTC instead of SAT
   // get getInBTC() {

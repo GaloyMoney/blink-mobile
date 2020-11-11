@@ -21,6 +21,8 @@ export const getUsername = (decoded) =>
 export const getDescription = (decoded) => 
   decoded.tags.find(value => value.tagName === "description")?.data
 
+export const getDestination = (decoded) => decoded.payeeNodeKey
+
 export const getHashFromInvoice = (encoded) => {
   const decoded = lightningPayReq.decode(encoded)                
   return decoded.tags.find(value => value.tagName === "payment_hash")?.data
