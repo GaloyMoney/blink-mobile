@@ -9,6 +9,7 @@ import { StoreContext } from "../../models"
 import { palette } from "../../theme/palette"
 import { resetDataStore } from "../../utils/logout"
 import { hasFullPermissions, requestPermission } from "../../utils/notifications"
+import { VersionComponent } from "../../components/version"
 
 const styles = EStyleSheet.create({
   screenStyle: {
@@ -105,5 +106,6 @@ export const SettingsScreenJSX = (params) => {
   return (
   <Screen preset="scroll">
     {list.map((item, i) => <Component {...item} i={i} />)}
+    <VersionComponent />
   </Screen>
 )}
