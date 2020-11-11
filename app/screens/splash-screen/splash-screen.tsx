@@ -8,6 +8,7 @@ import { palette } from "../../theme/palette"
 const BitcoinBeachLogo = require("../get-started-screen/bitcoinBeach3.png")
 import { observer } from "mobx-react"
 import { Token } from "../../utils/token"
+import VersionNumber from "react-native-version-number"
 
 const styles = StyleSheet.create({
   container: {
@@ -41,7 +42,10 @@ export const SplashScreen = observer(({ navigation }) => {
   let needUpdate
 
   // FIXME: no cache doesn't seem to work
-  const { error, loading, data, store } = useQuery(store => store.queryBuildParameters(), {fetchPolicy: "no-cache"})
+  const { error, loading, data, store } = useQuery(store => store.queryBuildParameters({
+    appVersion: VersionNumber.appVersion,
+    buildVersion: VersionNumber.buildVersion,
+  }), {fetchPolicy: "no-cache"})
 
   if (!!data) {
     needUpdate = store.isUpdateRequired()
