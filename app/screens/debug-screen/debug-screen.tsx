@@ -5,7 +5,6 @@ import { Alert, DevSettings, Text, View } from "react-native"
 import { Button, ButtonGroup } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { Screen } from "../../components/screen"
-import { VersionComponent } from "../../components/version"
 import { StoreContext } from "../../models"
 import { color } from "../../theme"
 import { resetDataStore } from "../../utils/logout"
@@ -123,7 +122,6 @@ export const DebugScreen = observer(({}) => {
             crashlytics().crash()
           }}
         />
-      <VersionComponent />
       <View>
         <Text>UID: {token.uid}</Text>
         <Text>token network: {token.network}</Text>

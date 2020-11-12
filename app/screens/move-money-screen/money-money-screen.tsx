@@ -275,14 +275,7 @@ export const MoveMoneyScreen = (
           {isUpdateAvailable &&
             <Pressable onPress={linkUpgrade}>
               <Text style={[styles.lightningText, {marginBotton: 12}]}>{translate("MoveMoneyScreen.updateAvailable")}</Text>
-            </Pressable>
-          ||
-          <>
-            <Icon name={"ios-flash"} 
-              size={32} onPress={() => setSecretMenuCounter(secretMenuCounter + 1)} />
-            <Text style={styles.lightningText}>{translate("MoveMoneyScreen.useLightning")}</Text>
-          </>
-          }
+            </Pressable>}
         </View>
     </Screen>
   )
