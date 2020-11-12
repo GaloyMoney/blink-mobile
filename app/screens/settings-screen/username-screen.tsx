@@ -197,6 +197,8 @@ export const UsernameScreen = ({navigation}) => {
       returnKeyType={"send"}
       textContentType={"username"}
       onBlur={validate}
+      autoCompleteType="username"
+      autoCapitalize="none"
     />
     {/* <Button
       style={{marginTop: 24}}
