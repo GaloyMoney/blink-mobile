@@ -296,6 +296,8 @@ export const SendBitcoinScreenJSX = ({
         renderErrorMessage={false}
         editable={paymentType === "username"}
         selectTextOnFocus={true}
+        autoCompleteType="username"
+        autoCapitalize="none"
         // InputComponent={(props) => <Text {...props} selectable={true}>{props.value}</Text>}
       />
       <Input
