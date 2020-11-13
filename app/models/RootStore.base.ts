@@ -129,8 +129,8 @@ export const RootStoreBase = withTypedRefs<Refs>()(MSTGQLStore
         ${typeof resultSelector === "function" ? resultSelector(new MarkerModelSelector()).toString() : resultSelector}
       } }`, variables, options)
     },
-    queryBuildParameters(variables: { appVersion?: string, buildVersion?: string }, resultSelector: string | ((qb: BuildParameterModelSelector) => BuildParameterModelSelector) = buildParameterModelPrimitives.toString(), options: QueryOptions = {}) {
-      return self.query<{ buildParameters: BuildParameterModelType}>(`query buildParameters($appVersion: String, $buildVersion: String) { buildParameters(appVersion: $appVersion, buildVersion: $buildVersion) {
+    queryBuildParameters(variables: { appVersion?: string, buildVersion?: string, os?: string }, resultSelector: string | ((qb: BuildParameterModelSelector) => BuildParameterModelSelector) = buildParameterModelPrimitives.toString(), options: QueryOptions = {}) {
+      return self.query<{ buildParameters: BuildParameterModelType}>(`query buildParameters($appVersion: String, $buildVersion: String, $os: String) { buildParameters(appVersion: $appVersion, buildVersion: $buildVersion, os: $os) {
         ${typeof resultSelector === "function" ? resultSelector(new BuildParameterModelSelector()).toString() : resultSelector}
       } }`, variables, options)
     },
