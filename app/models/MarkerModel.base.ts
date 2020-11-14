@@ -21,6 +21,7 @@ export const MarkerModelBase = ModelBase
     id: types.identifier,
     title: types.union(types.undefined, types.null, types.string),
     coordinate: types.union(types.undefined, types.null, types.late((): any => CoordinateModel)),
+    username: types.union(types.undefined, types.null, types.string),
   })
   .views(self => ({
     get store() {
@@ -31,10 +32,11 @@ export const MarkerModelBase = ModelBase
 export class MarkerModelSelector extends QueryBuilder {
   get id() { return this.__attr(`id`) }
   get title() { return this.__attr(`title`) }
+  get username() { return this.__attr(`username`) }
   coordinate(builder?: string | CoordinateModelSelector | ((selector: CoordinateModelSelector) => CoordinateModelSelector)) { return this.__child(`coordinate`, CoordinateModelSelector, builder) }
 }
 export function selectFromMarker() {
   return new MarkerModelSelector()
 }
 
-export const markerModelPrimitives = selectFromMarker().title
+export const markerModelPrimitives = selectFromMarker().title.username
