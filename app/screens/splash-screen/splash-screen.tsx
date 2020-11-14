@@ -1,5 +1,5 @@
 import * as React from "react"
-import { ActivityIndicator, Image, SafeAreaView, StyleSheet, Text, View } from "react-native"
+import { ActivityIndicator, Image, Platform, SafeAreaView, StyleSheet, Text, View } from "react-native"
 import { ScrollView } from "react-native-gesture-handler"
 import { VersionComponent } from "../../components/version"
 import { translate } from "../../i18n"
@@ -43,8 +43,9 @@ export const SplashScreen = observer(({ navigation }) => {
 
   // FIXME: no cache doesn't seem to work
   const { error, loading, data, store } = useQuery(store => store.queryBuildParameters({
-    appVersion: VersionNumber.appVersion,
-    buildVersion: VersionNumber.buildVersion,
+    appVersion: String(VersionNumber.appVersion),
+    buildVersion: String(VersionNumber.buildVersion),
+    os: Platform.OS,
   }), {fetchPolicy: "no-cache"})
 
   if (!!data) {
