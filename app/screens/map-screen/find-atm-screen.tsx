@@ -9,6 +9,7 @@ import { Text } from "react-native"
 import { Screen } from "../../components/screen"
 import { StoreContext } from "../../models"
 import { isIos } from "../../utils/helper"
+import { Button } from "react-native-elements"
 
 
 const styles = StyleSheet.create({
@@ -18,8 +19,8 @@ const styles = StyleSheet.create({
   },
 
   customView: {
-    width: 140,
-    height: 140,
+    // width: 140,
+    // height: 140,
   },
 
   calloutButton: {
@@ -34,7 +35,7 @@ const styles = StyleSheet.create({
   },
 })
 
-export const MapScreen: React.FC = observer(({ }) => {
+export const MapScreen: React.FC = observer(({ navigation }) => {
   const store = React.useContext(StoreContext)
 
   const [currentLocation, setCurrentLocation] = useState(null)
@@ -45,7 +46,7 @@ export const MapScreen: React.FC = observer(({ }) => {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
         {
-          title: "Where are you on the map?",
+          title: "Locate yourself on the map",
           message:
             "Activate your location so you know where you are on the map",
           buttonNeutral: "Ask Me Later",
@@ -55,9 +56,9 @@ export const MapScreen: React.FC = observer(({ }) => {
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         setGrantedPermission(true)
-        console.tron.log("You can use the camera");
+        console.tron.log("You can use the location");
       } else {
-        console.tron.log("Camera permission denied");
+        console.tron.log("Location permission denied");
       }
     } catch (err) {
       console.tron.warn(err);
@@ -99,7 +100,9 @@ export const MapScreen: React.FC = observer(({ }) => {
   const markers = []
   const entries = store.markers.forEach((item) => {
     markers.push(
-      <Marker coordinate={item.coordinate} key={item.title} >
+      <Marker coordinate={item.coordinate} key={item.title} 
+          //  title={item.title}
+        >
         <Callout
           // alphaHitTest
           // tooltip
@@ -111,18 +114,24 @@ export const MapScreen: React.FC = observer(({ }) => {
             //   return;
             // }
 
-            Alert.alert('callout pressed main');
+            
+            // Alert.alert('callout pressed main');
           }}
            style={styles.customView}
           >
           <CalloutSubview
-            onPress={() => {
-              Alert.alert('callout pressed subview');
-            }}
+            onPress={() => item.username ? navigation.navigate("sendBitcoin", {username: item.username}) : null}  
+            // onPress={() => {
+            //   Alert.alert('callout pressed subview');
+            // }}
             // style={[styles.calloutButton]}
           >
-            <Text>{item.title}</Text>
-            <Text>{`This is a custom callout bubble view`}</Text>
+            <Text style={{fontSize: 18}}>{item.title}</Text>
+            {item.username && <Button 
+              style={{paddingTop: 12}}
+              title={"pay this business"}
+              // onPress={() => navigation.navigate("sendBitcoin", {username: item.username})}  
+            />}
           </CalloutSubview>
         </Callout>
       </Marker>

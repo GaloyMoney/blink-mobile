@@ -141,10 +141,11 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
       getFee()
     } else {
       setPaymentType("username")
+      setUsername(route.params?.username)
       setFee(0)
     }
 
-  }, [route.params?.payment])
+  }, [route.params])
 
   useEffect(() => {
     if (username !== "") {
