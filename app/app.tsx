@@ -10,7 +10,7 @@ import { createHttpClient } from "mst-gql"
 import "node-libs-react-native/globals" // needed for Buffer?
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { Dimensions, YellowBox } from "react-native"
+import { Dimensions, Text, YellowBox } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import "./i18n"
 import { RootStore, StoreContext } from "./models"
@@ -130,13 +130,22 @@ export const App = () => {
     return null
   }
 
+  const linking = {
+    prefixes: ['https://ln.bitcoinbeach.com'],
+    config: {
+      /* configuration for matching screens with paths */
+    },
+  };
+
   return (
     // TODO replace with React.createContext
     // https://mobx.js.org/refguide/inject.html
 
     <StoreContext.Provider value={rootStore}>
       <NavigationContainer
+        linking={linking} fallback={<Text>Loading...</Text>}
         onStateChange={(state) => {
+          // console.tron.log({state})
           const currentRouteName = getActiveRouteName(state)
 
           if (routeName !== currentRouteName) {
