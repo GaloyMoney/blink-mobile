@@ -130,10 +130,23 @@ export const App = () => {
     return null
   }
 
+
+
+  // "params": {
+  //   "username": "tiendamaria"
+  // }
+
+
   const linking = {
+    // TODO: finish to be able to parse QRCode
     prefixes: ['https://ln.bitcoinbeach.com'],
     config: {
-      /* configuration for matching screens with paths */
+      screens: {
+        Primary: {
+          // initialRouteName: 'Feed',
+          MoveMoney: "username/:name"
+        }
+      }
     },
   };
 
@@ -145,7 +158,7 @@ export const App = () => {
       <NavigationContainer
         linking={linking} fallback={<Text>Loading...</Text>}
         onStateChange={(state) => {
-          // console.tron.log({state})
+          console.tron.log({state})
           const currentRouteName = getActiveRouteName(state)
 
           if (routeName !== currentRouteName) {
