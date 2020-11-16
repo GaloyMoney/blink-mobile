@@ -137,26 +137,30 @@ export const App = () => {
   // }
 
 
-  const linking = {
-    // TODO: finish to be able to parse QRCode
-    prefixes: ['https://ln.bitcoinbeach.com'],
-    config: {
-      screens: {
-        Primary: {
-          // initialRouteName: 'Feed',
-          MoveMoney: "username/:name"
-        }
-      }
-    },
-  };
-
   return (
     // TODO replace with React.createContext
     // https://mobx.js.org/refguide/inject.html
 
     <StoreContext.Provider value={rootStore}>
       <NavigationContainer
-        linking={linking} fallback={<Text>Loading...</Text>}
+        linking={{
+          // TODO: finish to be able to parse QRCode
+          prefixes: ['https://ln.bitcoinbeach.com', 'bitcoinbeach://'],
+          config: {
+            screens: {
+              Primary: {
+                  screens: {
+                  MoveMoney: {
+                    screens: {
+                      sendBitcoin: "username/:username"
+                    }
+                  }
+                }
+              }
+            }
+          },
+        }} 
+        // fallback={<Text>Loading...</Text>}
         onStateChange={(state) => {
           console.tron.log({state})
           const currentRouteName = getActiveRouteName(state)
