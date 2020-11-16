@@ -57,6 +57,10 @@
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
 			<string>https://ln.bitcoinbeach.com</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>https://ln.bitcoinbeach.com</string>
+			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
