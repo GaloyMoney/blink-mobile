@@ -39,6 +39,7 @@ nodeStats {
 
 const gql_query_logged = `
 query gql_query_logged {
+  ${gql_all}
   earnList {
     __typename
     id
@@ -75,7 +76,6 @@ query gql_query_logged {
     username
     phone
   }
-  ${gql_all}
 }
 `
 
