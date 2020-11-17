@@ -3,7 +3,7 @@ import { useFocusEffect } from '@react-navigation/native'
 import { observer } from "mobx-react"
 import * as React from "react"
 import { useCallback, useState } from "react"
-import { Alert, PermissionsAndroid, StyleSheet } from "react-native"
+import { Alert, PermissionsAndroid, StyleSheet, View } from "react-native"
 import MapView, { Callout, CalloutSubview, Marker } from "react-native-maps"
 import { Text } from "react-native"
 import { Screen } from "../../components/screen"
@@ -19,20 +19,12 @@ const styles = StyleSheet.create({
   },
 
   customView: {
+    margin: 12,
+    alignItems: 'center',
     // width: 140,
     // height: 140,
   },
 
-  calloutButton: {
-    width: 'auto',
-    backgroundColor: 'rgba(255,255,255,0.7)',
-    paddingHorizontal: 6,
-    paddingVertical: 6,
-    borderRadius: 12,
-    alignItems: 'center',
-    marginHorizontal: 10,
-    marginVertical: 10,
-  },
 })
 
 export const MapScreen: React.FC = observer(({ navigation }) => {
@@ -106,33 +98,27 @@ export const MapScreen: React.FC = observer(({ navigation }) => {
         <Callout
           // alphaHitTest
           // tooltip
-          onPress={() => {
-            // if (
-            //   e.nativeEvent.action === 'marker-inside-overlay-press' ||
-            //   e.nativeEvent.action === 'callout-inside-press'
-            // ) {
-            //   return;
-            // }
-
-            
-            // Alert.alert('callout pressed main');
-          }}
-           style={styles.customView}
+            onPress={() => !!item.username && !isIos ? navigation.navigate("sendBitcoin", {username: item.username}) : null}  
           >
-          <CalloutSubview
-            onPress={() => !!item.username ? navigation.navigate("sendBitcoin", {username: item.username}) : null}  
-            // onPress={() => {
-            //   Alert.alert('callout pressed subview');
-            // }}
-            // style={[styles.calloutButton]}
-          >
-            <Text style={{fontSize: 18}}>{item.title}</Text>
-            {!!item.username && <Button 
-              style={{paddingTop: 12}}
-              title={"pay this business"}
-              // onPress={() => navigation.navigate("sendBitcoin", {username: item.username})}  
-            />}
-          </CalloutSubview>
+            <View             style={styles.customView}>
+              <Text style={{fontSize: 18}}>{item.title}</Text>
+              {!!item.username && !isIos && <Button 
+                containerStyle={{marginTop: 18}}
+                title={"pay this business"}
+                // onPress={() => navigation.navigate("sendBitcoin", {username: item.username})}  
+              />}
+              { isIos &&
+              <CalloutSubview
+                onPress={() => !!item.username ? navigation.navigate("sendBitcoin", {username: item.username}) : null}  
+              >
+              { !!item.username && <Button 
+                style={{paddingTop: 12}}
+                title={"pay this business"}
+                // onPress={() => navigation.navigate("sendBitcoin", {username: item.username})}  
+              />}
+              </CalloutSubview>
+              }
+            </View>
         </Callout>
       </Marker>
     )
