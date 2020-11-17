@@ -3,11 +3,13 @@ import { useFocusEffect } from '@react-navigation/native'
 import { observer } from "mobx-react"
 import * as React from "react"
 import { useCallback, useState } from "react"
-import { PermissionsAndroid, StyleSheet } from "react-native"
-import MapView, { Marker } from "react-native-maps"
+import { Alert, PermissionsAndroid, StyleSheet } from "react-native"
+import MapView, { Callout, CalloutSubview, Marker } from "react-native-maps"
+import { Text } from "react-native"
 import { Screen } from "../../components/screen"
 import { StoreContext } from "../../models"
 import { isIos } from "../../utils/helper"
+import { Button } from "react-native-elements"
 
 
 const styles = StyleSheet.create({
@@ -15,23 +17,38 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
   },
+
+  customView: {
+    // width: 140,
+    // height: 140,
+  },
+
+  calloutButton: {
+    width: 'auto',
+    backgroundColor: 'rgba(255,255,255,0.7)',
+    paddingHorizontal: 6,
+    paddingVertical: 6,
+    borderRadius: 12,
+    alignItems: 'center',
+    marginHorizontal: 10,
+    marginVertical: 10,
+  },
 })
 
-export const MapScreen: React.FC = observer(({ }) => {
+export const MapScreen: React.FC = observer(({ navigation }) => {
   const store = React.useContext(StoreContext)
 
   const [currentLocation, setCurrentLocation] = useState(null)
   const [grantedPermission, setGrantedPermission] = useState(isIos ? true: false)
 
-  const requestCameraPermission = async () => {
+  const requestLocationPermission = async () => {
     try {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
         {
-          title: "Cool Photo App Camera Permission",
+          title: "Locate yourself on the map",
           message:
-            "Cool Photo App needs access to your camera " +
-            "so you can take awesome pictures.",
+            "Activate your location so you know where you are on the map",
           buttonNeutral: "Ask Me Later",
           buttonNegative: "Cancel",
           buttonPositive: "OK"
@@ -39,9 +56,9 @@ export const MapScreen: React.FC = observer(({ }) => {
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         setGrantedPermission(true)
-        console.tron.log("You can use the camera");
+        console.tron.log("You can use the location");
       } else {
-        console.tron.log("Camera permission denied");
+        console.tron.log("Location permission denied");
       }
     } catch (err) {
       console.tron.warn(err);
@@ -50,7 +67,7 @@ export const MapScreen: React.FC = observer(({ }) => {
   
 
   useFocusEffect(useCallback(() => {
-    requestCameraPermission()
+    requestLocationPermission()
 
     if (!grantedPermission) {
       return
@@ -82,7 +99,43 @@ export const MapScreen: React.FC = observer(({ }) => {
 
   const markers = []
   const entries = store.markers.forEach((item) => {
-    markers.push(<Marker coordinate={item.coordinate} title={item.title} key={item.title} />)
+    markers.push(
+      <Marker coordinate={item.coordinate} key={item.title} 
+          //  title={item.title}
+        >
+        <Callout
+          // alphaHitTest
+          // tooltip
+          onPress={() => {
+            // if (
+            //   e.nativeEvent.action === 'marker-inside-overlay-press' ||
+            //   e.nativeEvent.action === 'callout-inside-press'
+            // ) {
+            //   return;
+            // }
+
+            
+            // Alert.alert('callout pressed main');
+          }}
+           style={styles.customView}
+          >
+          <CalloutSubview
+            onPress={() => item.username ? navigation.navigate("sendBitcoin", {username: item.username}) : null}  
+            // onPress={() => {
+            //   Alert.alert('callout pressed subview');
+            // }}
+            // style={[styles.calloutButton]}
+          >
+            <Text style={{fontSize: 18}}>{item.title}</Text>
+            {item.username && <Button 
+              style={{paddingTop: 12}}
+              title={"pay this business"}
+              // onPress={() => navigation.navigate("sendBitcoin", {username: item.username})}  
+            />}
+          </CalloutSubview>
+        </Callout>
+      </Marker>
+    )
   })
 
   return (
