@@ -111,9 +111,10 @@ export const DebugScreen = observer(({}) => {
           requestPermission(store)
         }}
       />
-      <Button title="Reload" 
+      {__DEV__ && <Button title="Reload" 
         style={styles.button}
         onPress={() => DevSettings.reload()} />
+      }
       {/* <Button
           title="Crash test"
           style={styles.button}
