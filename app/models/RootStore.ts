@@ -15,13 +15,30 @@ import { TransactionModel } from "./TransactionModel"
 
 export const ROOT_STATE_STORAGE_KEY = "rootAppGaloy"
 
+const gql_all = `
+prices {
+  __typename
+  id
+  o
+}
+maps {
+  __typename
+  id
+  title
+  username
+  coordinate {
+      __typename
+      latitude
+      longitude
+  }
+}
+nodeStats {
+  __typename
+  id
+}`
+
 const gql_query_logged = `
 query gql_query_logged {
-  prices {
-    __typename
-    id
-    o
-  }
   earnList {
     __typename
     id
@@ -58,48 +75,17 @@ query gql_query_logged {
     username
     phone
   }
-  maps {
-    __typename
-    id
-    title
-    coordinate {
-        __typename
-        latitude
-        longitude
-    }
-  }
-  nodeStats {
-    __typename
-    id
-  }
+  ${gql_all}
 }
 `
 
 const gql_query_anonymous = `
 query gql_query_anonymous {
-  prices {
-    __typename
-    id
-    o
-  }
+  ${gql_all}
   earnList {
     __typename
     id
     value
-  }
-  maps {
-    __typename
-    id
-    title
-    coordinate {
-        __typename
-        latitude
-        longitude
-    }
-  }
-  nodeStats {
-    __typename
-    id
   }
 }
 `
