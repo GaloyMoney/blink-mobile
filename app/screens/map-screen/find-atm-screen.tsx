@@ -120,14 +120,14 @@ export const MapScreen: React.FC = observer(({ navigation }) => {
            style={styles.customView}
           >
           <CalloutSubview
-            onPress={() => item.username ? navigation.navigate("sendBitcoin", {username: item.username}) : null}  
+            onPress={() => !!item.username ? navigation.navigate("sendBitcoin", {username: item.username}) : null}  
             // onPress={() => {
             //   Alert.alert('callout pressed subview');
             // }}
             // style={[styles.calloutButton]}
           >
             <Text style={{fontSize: 18}}>{item.title}</Text>
-            {item.username && <Button 
+            {!!item.username && <Button 
               style={{paddingTop: 12}}
               title={"pay this business"}
               // onPress={() => navigation.navigate("sendBitcoin", {username: item.username})}  
