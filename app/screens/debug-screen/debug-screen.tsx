@@ -111,17 +111,18 @@ export const DebugScreen = observer(({}) => {
           requestPermission(store)
         }}
       />
-      <Button title="Reload" 
+      {__DEV__ && <Button title="Reload" 
         style={styles.button}
         onPress={() => DevSettings.reload()} />
-      <Button
+      }
+      {/* <Button
           title="Crash test"
           style={styles.button}
           onPress={() => {
             crashlytics().log("Testing crash")
             crashlytics().crash()
           }}
-        />
+        /> */}
       <View>
         <Text>UID: {token.uid}</Text>
         <Text>token network: {token.network}</Text>

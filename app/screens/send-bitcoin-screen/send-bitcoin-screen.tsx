@@ -202,7 +202,6 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
       if (success) {
         store.queryWallet()
         setStatus("success")
-        analytics().logSpendVirtualCurrency({value: amount, virtual_currency_name: "btc", item_name: "lightning"})
       } else if (pending) {
         setStatus("pending")
       } else {
