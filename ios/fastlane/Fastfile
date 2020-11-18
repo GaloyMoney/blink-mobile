@@ -22,7 +22,7 @@ platform :ios do
 
   desc "Push a new beta build to TestFlight"
   lane :beta do
-    increment_version_number(bump_type: "patch")
+    #increment_version_number(bump_type: "patch")
     increment_build_number(xcodeproj: "GaloyApp.xcodeproj")
     match(type: "appstore", readonly: is_ci)
     gym(scheme: "GaloyApp")
