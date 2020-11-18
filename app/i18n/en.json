@@ -74,7 +74,7 @@
     "activate": "Tap to activate",
     "tapLogIn": "Tap to log in",
     "tapUserName": "Tap to set username",
-    "logOutSuccesful": "You have been logged out. Please restart the app to see the changes take effect"
+    "logOutSuccesful": "You have been logged out. Please restart the app to start fresh"
   },
   "UsernameScreen": {
     "confirmTitle": "Set %{input} as your username?",
