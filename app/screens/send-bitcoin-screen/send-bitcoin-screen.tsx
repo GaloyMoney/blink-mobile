@@ -246,7 +246,6 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
         setErrs(errors)
       }
 
-
     } catch (err) {
       console.tron.log({err}, "error loop")
       setStatus("error")
@@ -284,11 +283,13 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
   const feeText = fee == null ?
     null:
     fee > 0 && !!amount ?
-      `${feeTextFormatted}, Total: ${textCurrencyFormatting(fee + amount, price, store.prefCurrency)}`:
+      `${feeTextFormatted}, ${translate("common.Total")}: ${textCurrencyFormatting(fee + amount, price, store.prefCurrency)}`:
       feeTextFormatted
 
   const totalAmount = fee == null ? amount: amount + fee
-  const errorMessage = !!totalAmount && balance && totalAmount > balance ? `Total exceeds your balance of ${textCurrencyFormatting(balance, price, store.prefCurrency)}` : null
+  const errorMessage = !!totalAmount && balance && totalAmount > balance ?
+    translate("SendBitcoinScreen.totalExceed", {balance: textCurrencyFormatting(balance, price, store.prefCurrency)}) :
+    null
 
   return <SendBitcoinScreenJSX status={status} paymentType={paymentType} amountless={amountless}
     initAmount={initAmount} setAmount={setAmount} setStatus={setStatus} invoice={invoice} 
