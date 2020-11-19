@@ -41,7 +41,8 @@
     "feeSats": "Fees (sats)",
     "feesUsd": "Fees (USD)",
     "note": "Note",
-    "type": "Type"
+    "type": "Type",
+    "Total": "Total"
   },
   "sat": {
     "one": "1 sat",
@@ -74,7 +75,7 @@
     "activate": "Tap to activate",
     "tapLogIn": "Tap to log in",
     "tapUserName": "Tap to set username",
-    "logOutSuccesful": "You have been logged out. Please restart the app to see the changes take effect"
+    "logOutSuccesful": "You have been logged out. Please restart the app to start fresh"
   },
   "UsernameScreen": {
     "confirmTitle": "Set %{input} as your username?",
@@ -556,7 +557,9 @@
     "cost": "Cost",
     "success": "Payment has been sent successfully",
     "noAmount": "This invoice doesn't have an amount, so you need to manually specify how much money you want to send",
-    "notConfirmed": "Payment has been sent\nbut is not confirmed yet\n\nYou can check the status\nof the payment in Transactions"
+    "notConfirmed": "Payment has been sent\nbut is not confirmed yet\n\nYou can check the status\nof the payment in Transactions",
+    "input": "username or invoice",
+    "totalExceed": "Total exceeds your balance of {{ balance }}"
   },
   "ScanningQRCodeScreen": {
     "invalidTitle": "Invalid QR Code",

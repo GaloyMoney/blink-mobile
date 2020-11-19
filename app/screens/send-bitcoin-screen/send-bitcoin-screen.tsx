@@ -97,6 +97,15 @@ const styles = EStyleSheet.create({
   }
 })
 
+const regexFilter = (network) => {
+  switch (network) {
+    case "mainnet": return /^(1|3|bc1|lnbc1)/i
+    case "testnet": return /^(2|bcrt|lnbcrt)/i
+    case "regtest": return /^(2|bcrt|lnbcrt)/i
+    default: console.tron.warn("error network")
+  }
+}
+
 
 export const SendBitcoinScreen: React.FC = observer(({ route }) => {
   const store = React.useContext(StoreContext)
@@ -107,76 +116,107 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
   const [amountless, setAmountless] = useState(false)
   const [initAmount, setInitAmount] = useState(0)
   const [amount, setAmount] = useState(0)
-  const [username, setUsername] = useState("")
+  const [destination, setDestination] = useState("")
   const [invoice, setInvoice] = useState("")
   const [memo, setMemo] = useState("")
   const [initialMemo, setInitialMemo] = useState("")
   const [fee, setFee] = useState(null)
+  const [interactive, setInteractive] = useState(false)
   
   const [status, setStatus] = useState("idle")
   // idle, loading, pending, success, error 
 
   const { error: errorQuery, loading: loadingUserNameExist, data, setQuery } = useQuery()
   const usernameExists = data?.usernameExists ?? false
-
-  useEffect(() => {
-
-    const {valid, invoice, amount, amountless, memo, paymentType, address} = validPayment(route.params?.payment, new Token().network, store.myPubKey, store.username)
-    
-    // this should be valid. Invoice / Address should be check before we show this screen
-    // assert(valid)
-
-    if (paymentType) {
-      setStatus("idle")
-      setAddress(address)
-      setPaymentType(paymentType)
-      setInvoice(invoice)
-      setAmount(amount)
-      setInitAmount(amount)
-      setAmountless(amountless)
   
-      setInitialMemo(memo)
-      setMemo(memo)
-  
-      getFee()
-    } else {
-      setPaymentType("username")
-      setUsername(route.params?.username)
-      setFee(0)
-    }
+  const balance = store.balance("BTC")
 
-  }, [route.params])
-
-  useEffect(() => {
-    if (username !== "") {
-      setQuery((store) => store.queryUsernameExists({username}, {fetchPolicy: "cache-first"}))
-    }
-  }, [username])
-
-  useEffect(() => {
-    getFee()
-  }, [address])
-  
-  const getFee = async () => {
-    if (!address) {
-      return
-    }
-
-    try {
-      const query = `mutation onchain($address: String!){
-        onchain {
-          getFee(address: $address)
-        }
-      }`
-      const { onchain: { getFee: fee }} = await store.mutate(query, { address })
-      setFee(fee)
-    } catch (err) {
-      setFee(null)
-    }
-  }
+  const network = new Token().network
+  const potentialBitcoinOrLightning = regexFilter(network).test(destination)
 
   const { goBack } = useNavigation()
 
+
+  useEffect(() => {
+    const {valid} = validPayment(route.params?.payment, network, store.myPubKey, store.username)
+    if (valid || route.params?.username) {
+      setInteractive(false)
+      setDestination(route.params?.payment)
+    } else {
+      setInteractive(true)
+      setDestination(route.params?.username)
+    }
+  }, [route.params])
+
+  useEffect(() => {
+    const fn = async () => {
+      const {valid, invoice, amount, amountless, memo, paymentType, address} = validPayment(destination, network, store.myPubKey, store.username)
+      
+      if (valid) {
+        setStatus("idle")
+        setAddress(address)
+        setPaymentType(paymentType)
+        setInvoice(invoice)
+        setAmount(amount)
+        setInitAmount(amount)
+        setAmountless(amountless)
+    
+        setInitialMemo(memo)
+        setMemo(memo)
+        setInteractive(false)
+
+        switch(paymentType) {
+          case "lightning":
+            try {
+              // TODO: handle destination: String
+              const query = `mutation lightning_fees($amount: Int, $invoice: String){
+                invoice {
+                  getFee(amount: $amount, invoice: $invoice)
+                }
+              }`
+              const { invoice: { getFee: fee }} = await store.mutate(query, { invoice, amount: amountless ? amount : undefined })
+              setFee(fee)
+            } catch (err) {
+              console.tron.warn({err, message: "error getting lightning fees"})
+              setFee(undefined)
+            }
+
+            return 
+          case "onchain":
+            try {
+              const query = `mutation onchain_fees($address: String!){
+                onchain {
+                  getFee(address: $address)
+                }
+              }`
+              const { onchain: { getFee: fee }} = await store.mutate(query, { address })
+              setFee(fee)
+            } catch (err) {
+              console.tron.warn({err, message: "error getting onchains fees"})
+              setFee(undefined)
+            }
+        }
+
+      } else {
+
+        // it's kind of messy rn, but we need to check for more than just the regex, becuase we may have lightning:, bitcoin: also
+        if (potentialBitcoinOrLightning) {
+          return
+        }
+
+        setPaymentType("username")
+
+        if (destination?.length > 2) {
+          setQuery((store) => store.queryUsernameExists({username: destination}, {fetchPolicy: "cache-first"}))
+        }
+
+        setFee(0)
+      }
+    }
+
+    fn()
+  }, [destination])
+  
   const pay = async () => {
     if ((amountless || paymentType === "onchain") && amount === 0) {
       setStatus("error")
@@ -194,10 +234,7 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
         optMemo = memo
       }
 
-      
-      console.tron.log({msg:"send payment"})
-
-      const { success, pending, errors } = await store.sendPayment({paymentType, invoice, amountless, optMemo, address, amount, username})
+      const { success, pending, errors } = await store.sendPayment({paymentType, invoice, amountless, optMemo, address, amount, username: destination})
 
       if (success) {
         store.queryWallet()
@@ -208,7 +245,6 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
         setStatus("error")
         setErrs(errors)
       }
-
 
     } catch (err) {
       console.tron.log({err}, "error loop")
@@ -241,7 +277,19 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
   }, [status])
 
   const price = store.rate(CurrencyType.BTC)
-  const feeText = fee == null ? fee : textCurrencyFormatting(fee, price, store.prefCurrency)
+
+  const feeTextFormatted = textCurrencyFormatting(fee ?? 0, price, store.prefCurrency)
+
+  const feeText = fee == null ?
+    null:
+    fee > 0 && !!amount ?
+      `${feeTextFormatted}, ${translate("common.Total")}: ${textCurrencyFormatting(fee + amount, price, store.prefCurrency)}`:
+      feeTextFormatted
+
+  const totalAmount = fee == null ? amount: amount + fee
+  const errorMessage = !!totalAmount && balance && totalAmount > balance ?
+    translate("SendBitcoinScreen.totalExceed", {balance: textCurrencyFormatting(balance, price, store.prefCurrency)}) :
+    null
 
   return <SendBitcoinScreenJSX status={status} paymentType={paymentType} amountless={amountless}
     initAmount={initAmount} setAmount={setAmount} setStatus={setStatus} invoice={invoice} 
@@ -251,10 +299,15 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
     fee={feeText}
     setMemo={setMemo}
     nextPrefCurrency={store.nextPrefCurrency}
-    setUsername={setUsername}
-    username={username}
+    setDestination={setDestination}
+    destination={destination}
     usernameExists={usernameExists}
     loadingUserNameExist={loadingUserNameExist}
+    interactive={interactive}
+    potentialBitcoinOrLightning={potentialBitcoinOrLightning}
+    setInteractive={setInteractive}
+    setQuery={setQuery}
+    errorMessage={errorMessage}
   />
 })
 
@@ -262,7 +315,8 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
 export const SendBitcoinScreenJSX = ({
   status, paymentType, amountless, initAmount, setAmount, setStatus, invoice, fee,
   address, memo, errs, amount, goBack, pay, price, prefCurrency, nextPrefCurrency, 
-  setMemo, setUsername, username, usernameExists, loadingUserNameExist }) => {
+  setMemo, setDestination, destination, usernameExists, loadingUserNameExist, interactive,
+  potentialBitcoinOrLightning, setInteractive, setQuery, errorMessage }) => {
 
     return <Screen style={styles.mainView} preset={"scroll"}>
     <View style={styles.section}>
@@ -281,20 +335,37 @@ export const SendBitcoinScreenJSX = ({
     </View>
     <View style={{marginTop: 18}}>
       <Input
-        placeholder={translate(`common.${paymentType}`)}
+        placeholder={translate(`SendBitcoinScreen.input`)}
         leftIcon={
           <View style={{flexDirection: "row"}}>
             <Text style={styles.smallText}>{translate("common.to")}</Text>
             <Icon name="ios-log-out" size={24} color={color.primary} style={styles.icon} />
           </View>
         }
-        onChangeText={setUsername}
-        rightIcon={paymentType === "username" && username !== "" ? loadingUserNameExist ? <ActivityIndicator size="small" /> :
-          usernameExists ? <Text>✅</Text> : <Text>⚠️</Text> :
-          null}
-        value={paymentType === "lightning" ? invoice : paymentType === "onchain" ? address : username}
+        onChangeText={setDestination}
+        rightIcon={
+          destination?.length > 2 && !potentialBitcoinOrLightning && paymentType === "username" ?
+            loadingUserNameExist ? 
+              <ActivityIndicator size="small" /> :
+              usernameExists ?
+                <Text>✅</Text> :
+                <Text>⚠️</Text> :
+            paymentType === "lightning" || paymentType === "onchain" ?
+              <Icon name="ios-close-circle-outline"
+                // size={styles.icon.fontSize}
+                onPress={() => {
+                  setDestination("")
+                  setInteractive(true)
+                  setQuery(null)
+                }}
+                size={30}
+                // color={color}
+              />  :
+              null
+          }
+        value={paymentType === "lightning" ? invoice : paymentType === "onchain" ? address : destination}
         renderErrorMessage={false}
-        editable={paymentType === "username"}
+        editable={interactive}
         selectTextOnFocus={true}
         autoCompleteType="username"
         autoCapitalize="none"
@@ -315,7 +386,6 @@ export const SendBitcoinScreenJSX = ({
         selectTextOnFocus={true}
         // InputComponent={(props) => <Text {...props} selectable={true}>{props.value}</Text>}
       />
-      {paymentType !== "lightning" && 
       <Input
         leftIcon={
           <View style={{flexDirection: "row"}}>
@@ -324,15 +394,18 @@ export const SendBitcoinScreenJSX = ({
           </View>
         }
         value={fee}
-        renderErrorMessage={false}
+        // renderErrorMessage={false}
+        errorMessage={errorMessage}
+        errorStyle={{fontSize: 16, alignSelf: "center", height: 18}}
         editable={false}
         selectTextOnFocus={true}
-        InputComponent={props => fee == null ?
+        InputComponent={props => fee === null ?
           <ActivityIndicator animating={true} size="small" color={palette.orange} /> :
-          <TextInput {...props} />
+          fee === undefined ?
+            <Text>⚠️</Text>:
+            <TextInput {...props} />
         }
       />
-      }
     </View>
     <View style={{alignItems: "center"}}>
       { status === "success" &&
@@ -371,7 +444,7 @@ export const SendBitcoinScreenJSX = ({
             translate("common.amountRequired") :
             translate("common.send")} // TODO refactor
       onPress={() => (status === "success" || status === "pending") ? goBack() : pay()}
-      disabled={!amount}
+      disabled={!amount || !!errorMessage}
       loading={status === "loading"}
     />
   </Screen>

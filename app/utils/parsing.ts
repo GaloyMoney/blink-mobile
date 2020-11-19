@@ -107,7 +107,13 @@ export const validPayment = (input: string, network: INetwork, myPubKey: string,
       return {valid: false, errorMessage: e}
     }
   } else if (paymentType === "lightning") {
-    const payReq = lightningPayReq.decode(data)
+    let payReq
+    try {
+      payReq = lightningPayReq.decode(data)
+    } catch (err) {
+      console.tron.log(err)
+      return {valid: false}
+    }
     // console.log(JSON.stringify({ payReq }, null, 2))
     
     if (myPubKey === getDestination(payReq) && username === getUsername(payReq)) {
