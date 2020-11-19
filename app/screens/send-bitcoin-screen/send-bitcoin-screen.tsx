@@ -129,6 +129,8 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
   const { error: errorQuery, loading: loadingUserNameExist, data, setQuery } = useQuery()
   const usernameExists = data?.usernameExists ?? false
   
+  const balance = store.balance("BTC")
+
   const network = new Token().network
   const potentialBitcoinOrLightning = regexFilter(network).test(destination)
 
@@ -180,19 +182,31 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
   useEffect(() => {
     const fn = async () => {
       switch(paymentType) {
-        case "lightning":
-          // TODO
-          return 
         case "username": 
           setFee(0)
           return
+        case "lightning":
+          try {
+            // TODO: handle destination: String
+            const query = `mutation lightning_fees($amount: Int, $invoice: String){
+              invoice {
+                getFee(amount: $amount, invoice: $invoice)
+              }
+            }`
+            const { invoice: { getFee: fee }} = await store.mutate(query, { invoice, amount: amountless ? amount : undefined })
+            setFee(fee)
+          } catch (err) {
+            setFee(undefined)
+          }
+
+          return 
         case "onchain":
           if (!address) {
             return
           }
       
           try {
-            const query = `mutation onchain($address: String!){
+            const query = `mutation onchain_fees($address: String!){
               onchain {
                 getFee(address: $address)
               }
@@ -200,7 +214,7 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
             const { onchain: { getFee: fee }} = await store.mutate(query, { address })
             setFee(fee)
           } catch (err) {
-            setFee(null)
+            setFee(undefined)
           }
       }
     }
@@ -269,7 +283,17 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
   }, [status])
 
   const price = store.rate(CurrencyType.BTC)
-  const feeText = fee == null ? fee : textCurrencyFormatting(fee, price, store.prefCurrency)
+
+  const feeTextFormatted = textCurrencyFormatting(fee, price, store.prefCurrency)
+
+  const feeText = fee == null ?
+    null:
+    fee > 0 && !!amount ?
+      `${feeTextFormatted}, Total: ${textCurrencyFormatting(fee + amount, price, store.prefCurrency)}`:
+      feeTextFormatted
+
+  const totalAmount = fee == null ? amount: amount + fee
+  const errorMessage = totalAmount > balance && !!amount ? `Total exceeds your balance of ${textCurrencyFormatting(balance, price, store.prefCurrency)}` : null
 
   return <SendBitcoinScreenJSX status={status} paymentType={paymentType} amountless={amountless}
     initAmount={initAmount} setAmount={setAmount} setStatus={setStatus} invoice={invoice} 
@@ -287,6 +311,7 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
     potentialBitcoinOrLightning={potentialBitcoinOrLightning}
     setInteractive={setInteractive}
     setQuery={setQuery}
+    errorMessage={errorMessage}
   />
 })
 
@@ -295,7 +320,7 @@ export const SendBitcoinScreenJSX = ({
   status, paymentType, amountless, initAmount, setAmount, setStatus, invoice, fee,
   address, memo, errs, amount, goBack, pay, price, prefCurrency, nextPrefCurrency, 
   setMemo, setDestination, destination, usernameExists, loadingUserNameExist, interactive,
-  potentialBitcoinOrLightning, setInteractive, setQuery }) => {
+  potentialBitcoinOrLightning, setInteractive, setQuery, errorMessage }) => {
 
     return <Screen style={styles.mainView} preset={"scroll"}>
     <View style={styles.section}>
@@ -365,7 +390,6 @@ export const SendBitcoinScreenJSX = ({
         selectTextOnFocus={true}
         // InputComponent={(props) => <Text {...props} selectable={true}>{props.value}</Text>}
       />
-      {paymentType !== "lightning" && 
       <Input
         leftIcon={
           <View style={{flexDirection: "row"}}>
@@ -374,15 +398,18 @@ export const SendBitcoinScreenJSX = ({
           </View>
         }
         value={fee}
-        renderErrorMessage={false}
+        // renderErrorMessage={false}
+        errorMessage={errorMessage}
+        errorStyle={{fontSize: 16, alignSelf: "center"}}
         editable={false}
         selectTextOnFocus={true}
-        InputComponent={props => fee == null ?
+        InputComponent={props => fee === null ?
           <ActivityIndicator animating={true} size="small" color={palette.orange} /> :
-          <TextInput {...props} />
+          fee === undefined ?
+            <Text>⚠️</Text>:
+            <TextInput {...props} />
         }
       />
-      }
     </View>
     <View style={{alignItems: "center"}}>
       { status === "success" &&
@@ -421,7 +448,7 @@ export const SendBitcoinScreenJSX = ({
             translate("common.amountRequired") :
             translate("common.send")} // TODO refactor
       onPress={() => (status === "success" || status === "pending") ? goBack() : pay()}
-      disabled={!amount}
+      disabled={!amount || !!errorMessage}
       loading={status === "loading"}
     />
   </Screen>
