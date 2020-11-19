@@ -40,6 +40,15 @@ export const SettingsScreen = ({navigation}) => {
   />
 }
 
+const AlertLogout = () => Alert.alert(
+  translate("SettingsScreen.logOutSuccesful"),
+  null,
+  [
+    { text: "OK", onPress: AlertLogout }
+  ],
+  { cancelable: false }
+)
+
 export const SettingsScreenJSX = (params) => {
 
   const loggedin = params.loggedin
@@ -78,7 +87,7 @@ export const SettingsScreenJSX = (params) => {
       icon: 'ios-log-out', 
       action: async () => {
         await resetDataStore()
-        Alert.alert(translate("SettingsScreen.logOutSuccesful"))
+        AlertLogout()
       },
       enabled: loggedin,
       greyed: !loggedin,
