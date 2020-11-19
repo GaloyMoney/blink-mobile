@@ -141,6 +141,7 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
     const {valid} = validPayment(route.params?.payment, network, store.myPubKey, store.username)
     if (valid || route.params?.username) {
       setInteractive(false)
+      setDestination(route.params?.payment)
     } else {
       setInteractive(true)
       setDestination(route.params?.username)
@@ -148,80 +149,74 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
   }, [route.params])
 
   useEffect(() => {
-
-    const {valid, invoice, amount, amountless, memo, paymentType, address} = validPayment(destination, network, store.myPubKey, store.username)
+    const fn = async () => {
+      const {valid, invoice, amount, amountless, memo, paymentType, address} = validPayment(destination, network, store.myPubKey, store.username)
+      
+      if (valid) {
+        setStatus("idle")
+        setAddress(address)
+        setPaymentType(paymentType)
+        setInvoice(invoice)
+        setAmount(amount)
+        setInitAmount(amount)
+        setAmountless(amountless)
     
-    if (valid) {
-      setStatus("idle")
-      setAddress(address)
-      setPaymentType(paymentType)
-      setInvoice(invoice)
-      setAmount(amount)
-      setInitAmount(amount)
-      setAmountless(amountless)
-  
-      setInitialMemo(memo)
-      setMemo(memo)
-      setInteractive(false)
+        setInitialMemo(memo)
+        setMemo(memo)
+        setInteractive(false)
 
-    } else {
+        switch(paymentType) {
+          case "lightning":
+            try {
+              // TODO: handle destination: String
+              const query = `mutation lightning_fees($amount: Int, $invoice: String){
+                invoice {
+                  getFee(amount: $amount, invoice: $invoice)
+                }
+              }`
+              const { invoice: { getFee: fee }} = await store.mutate(query, { invoice, amount: amountless ? amount : undefined })
+              setFee(fee)
+            } catch (err) {
+              console.tron.warn({err, message: "error getting lightning fees"})
+              setFee(undefined)
+            }
 
-      // it's kind of messy rn, but we need to check for more than just the regex, becuase we may have lightning:, bitcoin: also
-      if (potentialBitcoinOrLightning) {
-        return
-      }
+            return 
+          case "onchain":
+            try {
+              const query = `mutation onchain_fees($address: String!){
+                onchain {
+                  getFee(address: $address)
+                }
+              }`
+              const { onchain: { getFee: fee }} = await store.mutate(query, { address })
+              setFee(fee)
+            } catch (err) {
+              console.tron.warn({err, message: "error getting onchains fees"})
+              setFee(undefined)
+            }
+        }
 
-      setPaymentType("username")
+      } else {
 
-      if (destination?.length > 2) {
-        setQuery((store) => store.queryUsernameExists({username: destination}, {fetchPolicy: "cache-first"}))
+        // it's kind of messy rn, but we need to check for more than just the regex, becuase we may have lightning:, bitcoin: also
+        if (potentialBitcoinOrLightning) {
+          return
+        }
+
+        setPaymentType("username")
+
+        if (destination?.length > 2) {
+          setQuery((store) => store.queryUsernameExists({username: destination}, {fetchPolicy: "cache-first"}))
+        }
+
+        setFee(0)
       }
     }
+
+    fn()
   }, [destination])
   
-  useEffect(() => {
-    const fn = async () => {
-      switch(paymentType) {
-        case "username": 
-          setFee(0)
-          return
-        case "lightning":
-          try {
-            // TODO: handle destination: String
-            const query = `mutation lightning_fees($amount: Int, $invoice: String){
-              invoice {
-                getFee(amount: $amount, invoice: $invoice)
-              }
-            }`
-            const { invoice: { getFee: fee }} = await store.mutate(query, { invoice, amount: amountless ? amount : undefined })
-            setFee(fee)
-          } catch (err) {
-            setFee(undefined)
-          }
-
-          return 
-        case "onchain":
-          if (!address) {
-            return
-          }
-      
-          try {
-            const query = `mutation onchain_fees($address: String!){
-              onchain {
-                getFee(address: $address)
-              }
-            }`
-            const { onchain: { getFee: fee }} = await store.mutate(query, { address })
-            setFee(fee)
-          } catch (err) {
-            setFee(undefined)
-          }
-      }
-    }
-    
-    fn()
-  }, [destination, paymentType])
-
   const pay = async () => {
     if ((amountless || paymentType === "onchain") && amount === 0) {
       setStatus("error")
@@ -284,7 +279,7 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
 
   const price = store.rate(CurrencyType.BTC)
 
-  const feeTextFormatted = textCurrencyFormatting(fee, price, store.prefCurrency)
+  const feeTextFormatted = textCurrencyFormatting(fee ?? 0, price, store.prefCurrency)
 
   const feeText = fee == null ?
     null:
@@ -293,7 +288,7 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
       feeTextFormatted
 
   const totalAmount = fee == null ? amount: amount + fee
-  const errorMessage = totalAmount > balance && !!amount ? `Total exceeds your balance of ${textCurrencyFormatting(balance, price, store.prefCurrency)}` : null
+  const errorMessage = !!totalAmount && balance && totalAmount > balance ? `Total exceeds your balance of ${textCurrencyFormatting(balance, price, store.prefCurrency)}` : null
 
   return <SendBitcoinScreenJSX status={status} paymentType={paymentType} amountless={amountless}
     initAmount={initAmount} setAmount={setAmount} setStatus={setStatus} invoice={invoice} 
@@ -400,7 +395,7 @@ export const SendBitcoinScreenJSX = ({
         value={fee}
         // renderErrorMessage={false}
         errorMessage={errorMessage}
-        errorStyle={{fontSize: 16, alignSelf: "center"}}
+        errorStyle={{fontSize: 16, alignSelf: "center", height: 18}}
         editable={false}
         selectTextOnFocus={true}
         InputComponent={props => fee === null ?
