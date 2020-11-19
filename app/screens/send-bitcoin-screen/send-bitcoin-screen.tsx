@@ -286,6 +286,7 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
     interactive={interactive}
     potentialBitcoinOrLightning={potentialBitcoinOrLightning}
     setInteractive={setInteractive}
+    setQuery={setQuery}
   />
 })
 
@@ -294,7 +295,7 @@ export const SendBitcoinScreenJSX = ({
   status, paymentType, amountless, initAmount, setAmount, setStatus, invoice, fee,
   address, memo, errs, amount, goBack, pay, price, prefCurrency, nextPrefCurrency, 
   setMemo, setDestination, destination, usernameExists, loadingUserNameExist, interactive,
-  potentialBitcoinOrLightning, setInteractive }) => {
+  potentialBitcoinOrLightning, setInteractive, setQuery }) => {
 
     return <Screen style={styles.mainView} preset={"scroll"}>
     <View style={styles.section}>
@@ -334,6 +335,7 @@ export const SendBitcoinScreenJSX = ({
                 onPress={() => {
                   setDestination("")
                   setInteractive(true)
+                  setQuery(null)
                 }}
                 size={30}
                 // color={color}
