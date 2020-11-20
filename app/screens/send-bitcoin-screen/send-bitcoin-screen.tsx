@@ -120,7 +120,14 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
   const [invoice, setInvoice] = useState("")
   const [memo, setMemo] = useState("")
   const [initialMemo, setInitialMemo] = useState("")
+
+
+  // if null ==> we don't know (blank fee field)
+  // if undefined ==> loading
+  // if -1, there is an error
+  // otherwise, fee in sats
   const [fee, setFee] = useState(null)
+  
   const [interactive, setInteractive] = useState(false)
   
   const [status, setStatus] = useState("idle")
@@ -148,9 +155,11 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
     }
   }, [route.params])
 
+  console.tron.log({fee})
+
   useEffect(() => {
     const fn = async () => {
-      const {valid, invoice, amount, amountless, memo, paymentType, address} = validPayment(destination, network, store.myPubKey, store.username)
+      const {valid, invoice, amount, amountless, memo, paymentType, address, sameNode} = validPayment(destination, network, store.myPubKey, store.username)
       
       if (valid) {
         setStatus("idle")
@@ -167,20 +176,31 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
 
         switch(paymentType) {
           case "lightning":
+
+            if(sameNode) { 
+              setFee(0)
+              return 
+            }
+             
+            if (amountless && amount == 0) {
+              setFee(null)
+              return
+            }
+
             try {
-              // TODO: handle destination: String
               const query = `mutation lightning_fees($amount: Int, $invoice: String){
                 invoice {
                   getFee(amount: $amount, invoice: $invoice)
                 }
               }`
+              setFee(undefined)
               const { invoice: { getFee: fee }} = await store.mutate(query, { invoice, amount: amountless ? amount : undefined })
               setFee(fee)
             } catch (err) {
               console.tron.warn({err, message: "error getting lightning fees"})
-              setFee(undefined)
+              setFee(-1)
             }
-
+            
             return 
           case "onchain":
             try {
@@ -189,12 +209,15 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
                   getFee(address: $address)
                 }
               }`
+              setFee(undefined)
               const { onchain: { getFee: fee }} = await store.mutate(query, { address })
               setFee(fee)
             } catch (err) {
               console.tron.warn({err, message: "error getting onchains fees"})
-              setFee(undefined)
+              setFee(-1)
             }
+
+          return
         }
 
       } else {
@@ -210,7 +233,7 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
           setQuery((store) => store.queryUsernameExists({username: destination}, {fetchPolicy: "cache-first"}))
         }
 
-        setFee(0)
+        setFee(null)
       }
     }
 
@@ -280,8 +303,8 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
 
   const feeTextFormatted = textCurrencyFormatting(fee ?? 0, price, store.prefCurrency)
 
-  const feeText = fee == null ?
-    null:
+  const feeText = fee === null ?
+    "" :
     fee > 0 && !!amount ?
       `${feeTextFormatted}, ${translate("common.Total")}: ${textCurrencyFormatting(fee + amount, price, store.prefCurrency)}`:
       feeTextFormatted
@@ -387,6 +410,7 @@ export const SendBitcoinScreenJSX = ({
         // InputComponent={(props) => <Text {...props} selectable={true}>{props.value}</Text>}
       />
       <Input
+        placeholder={translate(`SendBitcoinScreen.fee`)}
         leftIcon={
           <View style={{flexDirection: "row"}}>
             <Text style={styles.smallText}>{translate("common.Fee")}</Text>
@@ -399,9 +423,9 @@ export const SendBitcoinScreenJSX = ({
         errorStyle={{fontSize: 16, alignSelf: "center", height: 18}}
         editable={false}
         selectTextOnFocus={true}
-        InputComponent={props => fee === null ?
+        InputComponent={props => fee === undefined ?
           <ActivityIndicator animating={true} size="small" color={palette.orange} /> :
-          fee === undefined ?
+          fee === -1 ?
             <Text>⚠️</Text>:
             <TextInput {...props} />
         }

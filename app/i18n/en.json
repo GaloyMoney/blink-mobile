@@ -551,7 +551,8 @@
     "updateAvailable": "An update is available.\nTab to update now"
   },
   "SendBitcoinScreen": {
-    "note": "Optional note",
+    "note": "optional note",
+    "fee": "network fee",
     "title": "Send Bitcoin",
     "amount": "Amount",
     "cost": "Cost",
@@ -559,11 +560,11 @@
     "noAmount": "This invoice doesn't have an amount, so you need to manually specify how much money you want to send",
     "notConfirmed": "Payment has been sent\nbut is not confirmed yet\n\nYou can check the status\nof the payment in Transactions",
     "input": "username or invoice",
-    "totalExceed": "Total exceeds your balance of {{ balance }}"
+    "totalExceed": "Total exceeds your balance of {{balance}}"
   },
   "ScanningQRCodeScreen": {
     "invalidTitle": "Invalid QR Code",
-    "invalidContent": "We found:\n\n{{ found }}\n\nThis is not a valid Bitcoin address or Lightning invoice",
+    "invalidContent": "We found:\n\n{{found}}\n\nThis is not a valid Bitcoin address or Lightning invoice",
     "title": "Scan QR Code",
     "noQrCode": "We could not find a QR code in the image"
   },
