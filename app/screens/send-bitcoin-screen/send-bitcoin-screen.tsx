@@ -143,10 +143,9 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
 
   const { goBack } = useNavigation()
 
-
   useEffect(() => {
     const {valid} = validPayment(route.params?.payment, network, store.myPubKey, store.username)
-    if (valid || route.params?.username) {
+    if (valid) {
       setInteractive(false)
       setDestination(route.params?.payment)
     } else {
@@ -154,8 +153,6 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
       setDestination(route.params?.username)
     }
   }, [route.params])
-
-  console.tron.log({fee})
 
   useEffect(() => {
     const fn = async () => {
