@@ -148,31 +148,43 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
     if (valid) {
       setInteractive(false)
       setDestination(route.params?.payment)
+      setAmount(amount)
+      setMemo(memo)
+    } else if (route.params?.username) {
+      setInteractive(false)
+      setDestination(route.params?.username)
     } else {
       setInteractive(true)
-      setDestination(route.params?.username)
     }
   }, [route.params])
 
   useEffect(() => {
     const fn = async () => {
-      const {valid, invoice, amount, amountless, memo, paymentType, address, sameNode} = validPayment(destination, network, store.myPubKey, store.username)
+      const {valid, invoice, amount: amountInvoice, amountless, memo: memoInvoice, paymentType, address, sameNode} = validPayment(destination, network, store.myPubKey, store.username)
       
       if (valid) {
         setStatus("idle")
         setAddress(address)
         setPaymentType(paymentType)
         setInvoice(invoice)
-        setAmount(amount)
-        setInitAmount(amount)
+        setInitAmount(amountInvoice)
         setAmountless(amountless)
+
+        if (!amountless) {
+          setAmount(amountInvoice)
+        }
+
+        if (!memo) {
+          setMemo(memoInvoice)
+        }
     
         setInitialMemo(memo)
-        setMemo(memo)
         setInteractive(false)
 
         switch(paymentType) {
           case "lightning":
+
+            console.tron.log({sameNode, amountless, amount}, "in the loop function")
 
             if(sameNode) { 
               setFee(0)
@@ -235,7 +247,7 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
     }
 
     fn()
-  }, [destination])
+  }, [destination, amount])
   
   const pay = async () => {
     if ((amountless || paymentType === "onchain") && amount === 0) {
