@@ -93,7 +93,7 @@ export const getGraphQlUri = async () => {
     case "mainnet":
       return GRAPHQL_MAINNET_URI
     default:
-      console.tron.log("no network test")
+      console.tron.log("no network set")
       return "none"
   }
 }
