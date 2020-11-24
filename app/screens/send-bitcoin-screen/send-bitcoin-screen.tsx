@@ -144,6 +144,7 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
   const { goBack } = useNavigation()
 
   useEffect(() => {
+    reset()
     const {valid} = validPayment(route.params?.payment, network, store.myPubKey, store.username)
     if (valid) {
       setInteractive(false)
@@ -157,6 +158,19 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
       setInteractive(true)
     }
   }, [route.params])
+
+  const reset = () => {
+    setErrs([])
+    setAddress("")
+    setPaymentType(undefined)
+    setAmountless(false)
+    setInitAmount(0)
+    setAmount(0)
+    setDestination("")
+    setInvoice("")
+    setMemo("")
+    setInitialMemo("")
+  }
 
   useEffect(() => {
     const fn = async () => {
@@ -338,9 +352,8 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
     loadingUserNameExist={loadingUserNameExist}
     interactive={interactive}
     potentialBitcoinOrLightning={potentialBitcoinOrLightning}
-    setInteractive={setInteractive}
-    setQuery={setQuery}
     errorMessage={errorMessage}
+    reset={reset}
   />
 })
 
@@ -349,7 +362,7 @@ export const SendBitcoinScreenJSX = ({
   status, paymentType, amountless, initAmount, setAmount, setStatus, invoice, fee,
   address, memo, errs, amount, goBack, pay, price, prefCurrency, nextPrefCurrency, 
   setMemo, setDestination, destination, usernameExists, loadingUserNameExist, interactive,
-  potentialBitcoinOrLightning, setInteractive, setQuery, errorMessage }) => {
+  potentialBitcoinOrLightning, errorMessage, reset }) => {
 
     return <Screen style={styles.mainView} preset={"scroll"}>
     <View style={styles.section}>
@@ -386,11 +399,7 @@ export const SendBitcoinScreenJSX = ({
             paymentType === "lightning" || paymentType === "onchain" ?
               <Icon name="ios-close-circle-outline"
                 // size={styles.icon.fontSize}
-                onPress={() => {
-                  setDestination("")
-                  setInteractive(true)
-                  setQuery(null)
-                }}
+                onPress={reset}
                 size={30}
                 // color={color}
               />  :
