@@ -184,20 +184,19 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
         switch(paymentType) {
           case "lightning":
 
-            console.tron.log({sameNode, amountless, amount}, "in the loop function")
 
             if(sameNode) { 
               setFee(0)
               return 
             }
-             
+            
             if (amountless && amount == 0) {
               setFee(null)
               return
             }
 
             try {
-              const query = `mutation lightning_fees($amount: Int, $invoice: String){
+              const query = `mutation lightning_fees($invoice: String, $amount: Int){
                 invoice {
                   getFee(amount: $amount, invoice: $invoice)
                 }
@@ -316,7 +315,9 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
     "" :
     fee > 0 && !!amount ?
       `${feeTextFormatted}, ${translate("common.Total")}: ${textCurrencyFormatting(fee + amount, price, store.prefCurrency)}`:
-      feeTextFormatted
+      fee === -1 ?
+        fee:
+        feeTextFormatted
 
   const totalAmount = fee == null ? amount: amount + fee
   const errorMessage = !!totalAmount && balance && totalAmount > balance ?
@@ -435,7 +436,7 @@ export const SendBitcoinScreenJSX = ({
         InputComponent={props => fee === undefined ?
           <ActivityIndicator animating={true} size="small" color={palette.orange} /> :
           fee === -1 ?
-            <Text>⚠️</Text>:
+            <Text>Calculation unsuccesful ⚠️</Text>: // todo: same calculation as backend 
             <TextInput {...props} />
         }
       />
