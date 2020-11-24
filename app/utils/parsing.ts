@@ -16,7 +16,8 @@ export interface IValidPaymentReponse {
   amount?: number | undefined,
   amountless?: boolean | undefined,
   memo?: string | undefined,
-  paymentType?: IPaymentType
+  paymentType?: IPaymentType,
+  sameNode?: boolean | undefined,
 }
 
 // TODO: enforce this from the backend
@@ -116,7 +117,9 @@ export const validPayment = (input: string, network: INetwork, myPubKey: string,
     }
     // console.log(JSON.stringify({ payReq }, null, 2))
     
-    if (myPubKey === getDestination(payReq) && username === getUsername(payReq)) {
+    const sameNode = myPubKey === getDestination(payReq)
+
+    if (sameNode && username === getUsername(payReq)) {
       return {valid: false, errorMessage: "invoice needs to be for a different user", paymentType}
     }
 
@@ -138,7 +141,7 @@ export const validPayment = (input: string, network: INetwork, myPubKey: string,
     }
     
     memo = getDescription(payReq) 
-    return {valid: true, invoice: data, amount, amountless, memo, paymentType}
+    return {valid: true, invoice: data, amount, amountless, memo, paymentType, sameNode}
 
   } else {
     return {valid: false, errorMessage: `We are unable to detect an invoice or payment address`}

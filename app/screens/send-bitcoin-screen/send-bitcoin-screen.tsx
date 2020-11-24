@@ -120,7 +120,14 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
   const [invoice, setInvoice] = useState("")
   const [memo, setMemo] = useState("")
   const [initialMemo, setInitialMemo] = useState("")
+
+
+  // if null ==> we don't know (blank fee field)
+  // if undefined ==> loading
+  // if -1, there is an error
+  // otherwise, fee in sats
   const [fee, setFee] = useState(null)
+  
   const [interactive, setInteractive] = useState(false)
   
   const [status, setStatus] = useState("idle")
@@ -136,51 +143,86 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
 
   const { goBack } = useNavigation()
 
-
   useEffect(() => {
+    reset()
     const {valid} = validPayment(route.params?.payment, network, store.myPubKey, store.username)
-    if (valid || route.params?.username) {
+    if (valid) {
       setInteractive(false)
       setDestination(route.params?.payment)
+      setAmount(amount)
+      setMemo(memo)
+    } else if (route.params?.username) {
+      setInteractive(false)
+      setDestination(route.params?.username)
     } else {
       setInteractive(true)
-      setDestination(route.params?.username)
     }
   }, [route.params])
 
+  const reset = () => {
+    setErrs([])
+    setAddress("")
+    setPaymentType(undefined)
+    setAmountless(false)
+    setInitAmount(0)
+    setAmount(0)
+    setDestination("")
+    setInvoice("")
+    setMemo("")
+    setInitialMemo("")
+  }
+
   useEffect(() => {
     const fn = async () => {
-      const {valid, invoice, amount, amountless, memo, paymentType, address} = validPayment(destination, network, store.myPubKey, store.username)
+      const {valid, invoice, amount: amountInvoice, amountless, memo: memoInvoice, paymentType, address, sameNode} = validPayment(destination, network, store.myPubKey, store.username)
       
       if (valid) {
         setStatus("idle")
         setAddress(address)
         setPaymentType(paymentType)
         setInvoice(invoice)
-        setAmount(amount)
-        setInitAmount(amount)
+        setInitAmount(amountInvoice)
         setAmountless(amountless)
+
+        if (!amountless) {
+          setAmount(amountInvoice)
+        }
+
+        if (!memo) {
+          setMemo(memoInvoice)
+        }
     
         setInitialMemo(memo)
-        setMemo(memo)
         setInteractive(false)
 
         switch(paymentType) {
           case "lightning":
+
+
+            if(sameNode) { 
+              setFee(0)
+              return 
+            }
+            
+            if (amountless && amount == 0) {
+              setFee(null)
+              return
+            }
+
             try {
-              // TODO: handle destination: String
-              const query = `mutation lightning_fees($amount: Int, $invoice: String){
+              const query = `mutation lightning_fees($invoice: String, $amount: Int){
                 invoice {
                   getFee(amount: $amount, invoice: $invoice)
                 }
               }`
+              setFee(undefined)
               const { invoice: { getFee: fee }} = await store.mutate(query, { invoice, amount: amountless ? amount : undefined })
               setFee(fee)
             } catch (err) {
               console.tron.warn({err, message: "error getting lightning fees"})
-              setFee(undefined)
+              setFee(-1)
             }
-
+            
             return 
           case "onchain":
             try {
@@ -189,12 +231,15 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
                   getFee(address: $address)
                 }
               }`
+              setFee(undefined)
               const { onchain: { getFee: fee }} = await store.mutate(query, { address })
               setFee(fee)
             } catch (err) {
               console.tron.warn({err, message: "error getting onchains fees"})
-              setFee(undefined)
+              setFee(-1)
             }
+
+          return
         }
 
       } else {
@@ -210,12 +255,12 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
           setQuery((store) => store.queryUsernameExists({username: destination}, {fetchPolicy: "cache-first"}))
         }
 
-        setFee(0)
+        setFee(null)
       }
     }
 
     fn()
-  }, [destination])
+  }, [destination, amount])
   
   const pay = async () => {
     if ((amountless || paymentType === "onchain") && amount === 0) {
@@ -280,11 +325,13 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
 
   const feeTextFormatted = textCurrencyFormatting(fee ?? 0, price, store.prefCurrency)
 
-  const feeText = fee == null ?
-    null:
+  const feeText = fee === null ?
+    "" :
     fee > 0 && !!amount ?
       `${feeTextFormatted}, ${translate("common.Total")}: ${textCurrencyFormatting(fee + amount, price, store.prefCurrency)}`:
-      feeTextFormatted
+      fee === -1 || fee === undefined ?
+        fee:
+        feeTextFormatted
 
   const totalAmount = fee == null ? amount: amount + fee
   const errorMessage = !!totalAmount && balance && totalAmount > balance ?
@@ -305,9 +352,8 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
     loadingUserNameExist={loadingUserNameExist}
     interactive={interactive}
     potentialBitcoinOrLightning={potentialBitcoinOrLightning}
-    setInteractive={setInteractive}
-    setQuery={setQuery}
     errorMessage={errorMessage}
+    reset={reset}
   />
 })
 
@@ -316,7 +362,7 @@ export const SendBitcoinScreenJSX = ({
   status, paymentType, amountless, initAmount, setAmount, setStatus, invoice, fee,
   address, memo, errs, amount, goBack, pay, price, prefCurrency, nextPrefCurrency, 
   setMemo, setDestination, destination, usernameExists, loadingUserNameExist, interactive,
-  potentialBitcoinOrLightning, setInteractive, setQuery, errorMessage }) => {
+  potentialBitcoinOrLightning, errorMessage, reset }) => {
 
     return <Screen style={styles.mainView} preset={"scroll"}>
     <View style={styles.section}>
@@ -353,11 +399,7 @@ export const SendBitcoinScreenJSX = ({
             paymentType === "lightning" || paymentType === "onchain" ?
               <Icon name="ios-close-circle-outline"
                 // size={styles.icon.fontSize}
-                onPress={() => {
-                  setDestination("")
-                  setInteractive(true)
-                  setQuery(null)
-                }}
+                onPress={reset}
                 size={30}
                 // color={color}
               />  :
@@ -387,6 +429,7 @@ export const SendBitcoinScreenJSX = ({
         // InputComponent={(props) => <Text {...props} selectable={true}>{props.value}</Text>}
       />
       <Input
+        placeholder={translate(`SendBitcoinScreen.fee`)}
         leftIcon={
           <View style={{flexDirection: "row"}}>
             <Text style={styles.smallText}>{translate("common.Fee")}</Text>
@@ -399,10 +442,10 @@ export const SendBitcoinScreenJSX = ({
         errorStyle={{fontSize: 16, alignSelf: "center", height: 18}}
         editable={false}
         selectTextOnFocus={true}
-        InputComponent={props => fee === null ?
+        InputComponent={props => fee === undefined ?
           <ActivityIndicator animating={true} size="small" color={palette.orange} /> :
-          fee === undefined ?
-            <Text>⚠️</Text>:
+          fee === -1 ?
+            <Text>Calculation unsuccesful ⚠️</Text>: // todo: same calculation as backend 
             <TextInput {...props} />
         }
       />

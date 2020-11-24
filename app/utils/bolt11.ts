@@ -23,7 +23,7 @@ export const getDescription = (decoded) =>
 
 export const getDestination = (decoded) => decoded.payeeNodeKey
 
-export const getHashFromInvoice = (encoded) => {
-  const decoded = lightningPayReq.decode(encoded)                
+export const getHashFromInvoice = (invoice) => {
+  const decoded = lightningPayReq.decode(invoice)                
   return decoded.tags.find(value => value.tagName === "payment_hash")?.data
 }

@@ -90,7 +90,8 @@ export const MapScreen: React.FC = observer(({ navigation }) => {
   // })
 
   const markers = []
-  const entries = store.markers.forEach((item) => {
+  store.markers.forEach((item) => {
+    const onPress = () => store.walletIsActive ? navigation.navigate("sendBitcoin", {username: item.username}) : navigation.navigate("phoneValidation")
     markers.push(
       <Marker coordinate={item.coordinate} key={item.title} 
           //  title={item.title}
@@ -98,23 +99,21 @@ export const MapScreen: React.FC = observer(({ navigation }) => {
         <Callout
           // alphaHitTest
           // tooltip
-            onPress={() => !!item.username && !isIos ? navigation.navigate("sendBitcoin", {username: item.username}) : null}  
+            onPress={() => !!item.username && !isIos ? onPress() : null}  
           >
             <View             style={styles.customView}>
               <Text style={{fontSize: 18}}>{item.title}</Text>
               {!!item.username && !isIos && <Button 
                 containerStyle={{marginTop: 18}}
                 title={"pay this business"}
-                // onPress={() => navigation.navigate("sendBitcoin", {username: item.username})}  
               />}
               { isIos &&
               <CalloutSubview
-                onPress={() => !!item.username ? navigation.navigate("sendBitcoin", {username: item.username}) : null}  
+                onPress={() => !!item.username ? onPress() : null}  
               >
               { !!item.username && <Button 
                 style={{paddingTop: 12}}
                 title={"pay this business"}
-                // onPress={() => navigation.navigate("sendBitcoin", {username: item.username})}  
               />}
               </CalloutSubview>
               }
