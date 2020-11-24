@@ -9,6 +9,8 @@ const BitcoinBeachLogo = require("../get-started-screen/bitcoinBeach3.png")
 import { observer } from "mobx-react"
 import { Token } from "../../utils/token"
 import VersionNumber from "react-native-version-number"
+import { Button } from "react-native-elements"
+import { color } from "../../theme"
 
 const styles = StyleSheet.create({
   container: {
@@ -24,11 +26,6 @@ const styles = StyleSheet.create({
     marginTop: 32,
   },
 
-  bottom: {
-    backgroundColor: palette.white,
-    borderRadius: 24,
-  },
-
   text: {
     color: palette.lighterGrey,
     fontSize: 18,
@@ -36,17 +33,40 @@ const styles = StyleSheet.create({
     paddingTop: 18,
     flex: 1,
   },
+
+  button: {
+    backgroundColor: palette.white,
+    borderRadius: 24,
+  },
+
+  buttonContainer: {
+    marginVertical: 12,
+    width: "100%",
+  },
+
+  buttonTitle: {
+    color: color.primary,
+    fontWeight: "bold",
+    justifyContent: "center"
+  },
+
 })
 
 export const SplashScreen = observer(({ navigation }) => {
   let needUpdate
 
   // FIXME: no cache doesn't seem to work
-  const { error, loading, data, store } = useQuery(store => store.queryBuildParameters({
-    appVersion: String(VersionNumber.appVersion),
-    buildVersion: String(VersionNumber.buildVersion),
-    os: Platform.OS,
-  }), {fetchPolicy: "no-cache"})
+  const { error, loading, data, store, setQuery } = useQuery(null, {fetchPolicy: "no-cache"})
+
+  const query = () => {
+    setQuery(store => store.queryBuildParameters({
+      appVersion: String(VersionNumber.appVersion),
+      buildVersion: String(VersionNumber.buildVersion),
+      os: Platform.OS,
+    }, undefined, {fetchPolicy: "no-cache"}))
+  }
+
+  React.useEffect(() => query(), [])
 
   if (!!data) {
     needUpdate = store.isUpdateRequired()
@@ -68,6 +88,7 @@ export const SplashScreen = observer(({ navigation }) => {
         style={styles.Logo}
         source={BitcoinBeachLogo}
       />
+      <VersionComponent style={{ paddingVertical: 30 }} />
       <View style={{paddingHorizontal: 30, flex: 1, marginVertical: 30}}>
         {loading &&
           <ActivityIndicator style={{ flex: 1 }} size="large" color={palette.lightGrey} />
@@ -75,11 +96,20 @@ export const SplashScreen = observer(({ navigation }) => {
         {needUpdate && 
           <Text style={styles.text}>{translate('SplashScreen.update')}</Text>
         }
-        {error && 
-          <Text style={styles.text}>{error.message}</Text>
+        {error &&
+          <View >
+            <Text style={styles.text}>{error.message}</Text>
+            <Button
+              title={"Try again"}
+              buttonStyle={styles.button}
+              titleStyle={styles.buttonTitle}
+              onPress={query}
+              containerStyle={styles.buttonContainer}
+              testID={"getStarted"}
+            />
+          </View>
         }
       </View>
-      <VersionComponent style={{ paddingVertical: 30 }} />
     </ScrollView>
   </SafeAreaView>
 )})
