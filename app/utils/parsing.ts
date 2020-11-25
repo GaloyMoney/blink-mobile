@@ -6,7 +6,7 @@ var url = require('url');
 
 // TODO: look if we own the address
 
-export type IPaymentType = "lightning" | "onchain" | "onchainAndLightning" | "username" | undefined
+export type IPaymentType = "lightning" | "onchain" | "onchainAndLightning" | "username" | "faucet" | undefined
 
 export interface IValidPaymentReponse {
   valid: boolean,
@@ -18,6 +18,7 @@ export interface IValidPaymentReponse {
   memo?: string | undefined,
   paymentType?: IPaymentType,
   sameNode?: boolean | undefined,
+  hash?: string | undefined,
 }
 
 // TODO: enforce this from the backend
@@ -81,7 +82,12 @@ export const validPayment = (input: string, network: INetwork, myPubKey: string,
     }
 
     data = protocol
-  } else {
+  } else if (protocol.toLowerCase() === "faucet") {
+    paymentType = "faucet"
+    const hash = data
+    return {valid: true, paymentType, hash}
+  }
+    else {
     // no schema
     data = protocol
   }

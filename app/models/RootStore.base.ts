@@ -82,6 +82,7 @@ mutateInvoice="mutateInvoice",
 mutateEarnCompleted="mutateEarnCompleted",
 mutateUpdateUser="mutateUpdateUser",
 mutateDeleteUser="mutateDeleteUser",
+mutateFaucet="mutateFaucet",
 mutateAddDeviceToken="mutateAddDeviceToken",
 mutateTestMessage="mutateTestMessage"
 }
@@ -189,6 +190,11 @@ export const RootStoreBase = withTypedRefs<Refs>()(MSTGQLStore
     },
     mutateDeleteUser(variables?: {  }, optimisticUpdate?: () => void) {
       return self.mutate<{ deleteUser: boolean }>(`mutation deleteUser { deleteUser }`, variables, optimisticUpdate)
+    },
+    mutateFaucet(variables: { hash?: string }, resultSelector: string | ((qb: SuccessModelSelector) => SuccessModelSelector) = successModelPrimitives.toString(), optimisticUpdate?: () => void) {
+      return self.mutate<{ faucet: SuccessModelType}>(`mutation faucet($hash: String) { faucet(hash: $hash) {
+        ${typeof resultSelector === "function" ? resultSelector(new SuccessModelSelector()).toString() : resultSelector}
+      } }`, variables, optimisticUpdate)
     },
     mutateAddDeviceToken(variables: { deviceToken?: string }, resultSelector: string | ((qb: SuccessModelSelector) => SuccessModelSelector) = successModelPrimitives.toString(), optimisticUpdate?: () => void) {
       return self.mutate<{ addDeviceToken: SuccessModelType}>(`mutation addDeviceToken($deviceToken: String) { addDeviceToken(deviceToken: $deviceToken) {
