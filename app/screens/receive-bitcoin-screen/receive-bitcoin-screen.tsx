@@ -173,12 +173,6 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
       ignoreAndroidSystemSettings: false,
     }
 
-    // FIXME (with notifications?): this is very approximative:
-    // 1 - it will only trigger if the payment is receiving while the screen is opened
-    // 2 - amount in the variable could be different than the amount receive by the payment
-    //     if the user has changed the amount and created a new invoice
-    analytics().logEarnVirtualCurrency({ value: amount, virtual_currency_name: "btc" })
-
     ReactNativeHapticFeedback.trigger("notificationSuccess", options)
 
     setIsSucceed(true)

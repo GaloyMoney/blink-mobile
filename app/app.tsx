@@ -166,7 +166,10 @@ export const App = () => {
           const currentRouteName = getActiveRouteName(state)
 
           if (routeName !== currentRouteName) {
-            analytics().setCurrentScreen(currentRouteName)
+            analytics().logScreenView({
+              screen_name: currentRouteName,
+              screen_class: currentRouteName,
+            });
             setRouteName(currentRouteName)
           }
         }}

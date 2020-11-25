@@ -225,9 +225,11 @@ export const TransactionScreen = ({ transactions, refreshing, navigation, curren
         renderItem={({ item, index, section }) => (
           <AccountDetailItem currency={currency} navigation={navigation} tx={item} />
         )}
-        ListHeaderComponent={error && 
-          <Text style={{color: palette.red, alignSelf: "center", paddingBottom: 18}} selectable={true}>{error.message}</Text>
-        }
+        ListHeaderComponent={() => <>
+          {error?.response?.errors?.map(({ message }) => 
+           <Text style={{color: palette.red, alignSelf: "center", paddingBottom: 18}} selectable={true}>{message}</Text>
+        )}
+        </>}
         renderSectionHeader={({ section: { title } }) => (
           <View style={styles.sectionHeaderContainer}>
             <Text style={styles.sectionHeaderText}>{title}</Text>

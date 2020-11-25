@@ -44,6 +44,7 @@
     "email": "Correo electrónico",
     "error": "Error",
     "fee": "Cuota",
+    "Fee": "La Cuota",
     "fees": "\nTarifa",
     "feeSats": "Tarifas (sats)",
     "feesUsd": "Tarifas (USD) ",
@@ -52,6 +53,7 @@
     "invoice": "Factura",
     "lastName": "Apellido",
     "later": "Más tarde",
+    "logout": "cerrar sesion",
     "next": "Próximo",
     "note": "Nota ",
     "notification": "Notificación",
@@ -61,12 +63,16 @@
     "send": "Enviar",
     "setAnAmount": "Establecer una cantidad",
     "share": "Compartir",
+    "shareBitcoin": "compartir la dirección de Bitcoin",
+    "shareLightning": "compartir factura de lightning",
     "soon": "Próximamente",
     "SSL": "Su información está encriptada y transmitida de forma segura usando SSL",
     "syncing": "Sincronizando datos",
     "to": "Para",
     "transactions": "\nLas transacciones",
-    "tryAgain": "Inténtalo de nuevo"
+    "tryAgain": "Inténtalo de nuevo",
+    "type": "tipo",
+    "username": "Nombre de usuario"
   },
   "DateOfBirthScreen": {
     "title": "Fecha de nacimiento"
@@ -111,6 +117,9 @@
   "GetStartedScreen": {
     "getStarted": "Empezar",
     "headline": "El banco con dinero sólido"
+  },
+  "MapScreen": {
+    "title": "mapa"
   },
   "ModalClipboard": {
     "pendingBitcoin": "\nTienes una dirección de Bitcoin en tu portapapeles",
@@ -158,18 +167,26 @@
     "zero": "‪{{formatted_number}}‬ Satoshi"
   },
   "ScanningQRCodeScreen": {
+    "invalidContent": "nosotros encontramos",
     "noQrCode": "No pudimos encontrar un código QR en la imagen",
     "title": "Manda Bitcoin"
   },
   "SendBitcoinScreen": {
     "amount": "Cantidad",
     "cost": "Costo",
+    "input": "nombre de usario o factura",
     "noAmount": "Esta factura no tiene un monto, por lo que debe especificar manualmente cuánto dinero desea enviar",
     "notConfirmed": "El pago ha sido enviado.\npero aún no está confirmado\n\nPuedes comprobar el estado\ndel pago en Transacciones",
     "note": "Nota ",
     "payFromUSD": "Pago desde $USD",
     "success": "El pago se ha enviado correctamente.",
-    "title": "Enviar Bitcoin"
+    "title": "Enviar Bitcoin",
+    "totalExceed": "total excede su saldo"
+  },
+  "SettingsScreen": {
+    "activated": "Activada",
+    "tapLogIn": "\ntoque para iniciar sesión",
+    "tapUserName": "toque para establecer tu nombre de usario"
   },
   "SplashScreen": {
     "update": "\nTu aplicación está desactualizada. Se necesita una actualización antes de que se pueda utilizar la aplicación. Esto se puede hacer desde PlayStore para Android y Testflight para iOS."
@@ -181,6 +198,11 @@
   },
   "TransactionScreen": {
     "noTransaction": "\nNo hay transacción para mostrar"
+  },
+  "UsernameScreen": {
+    "3CaractersMinimum": "al menos de 3 letras son necesarias",
+    "confirmTitle": "establece tu nombre de usario",
+    "usernameToUse": "Que nombre de usuario quieres usar?"
   },
   "WelcomeFirstScreen": {
     "bank": "Bitcoin está diseñado para permitirle almacenar, enviar y recibir dinero, sin depender de un banco o tarjeta de crédito.",
