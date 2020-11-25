@@ -37,6 +37,8 @@ import { OnChainModel, OnChainModelType } from "./OnChainModel"
 import { onChainModelPrimitives, OnChainModelSelector } from "./OnChainModel.base"
 import { UpdateUserModel, UpdateUserModelType } from "./UpdateUserModel"
 import { updateUserModelPrimitives, UpdateUserModelSelector } from "./UpdateUserModel.base"
+import { FaucetResultModel, FaucetResultModelType } from "./FaucetResultModel"
+import { faucetResultModelPrimitives, FaucetResultModelSelector } from "./FaucetResultModel.base"
 
 
 
@@ -82,6 +84,7 @@ mutateInvoice="mutateInvoice",
 mutateEarnCompleted="mutateEarnCompleted",
 mutateUpdateUser="mutateUpdateUser",
 mutateDeleteUser="mutateDeleteUser",
+mutateFaucet="mutateFaucet",
 mutateAddDeviceToken="mutateAddDeviceToken",
 mutateTestMessage="mutateTestMessage"
 }
@@ -91,7 +94,7 @@ mutateTestMessage="mutateTestMessage"
 */
 export const RootStoreBase = withTypedRefs<Refs>()(MSTGQLStore
   .named("RootStore")
-  .extend(configureStoreMixin([['Price', () => PriceModel], ['Wallet', () => WalletModel], ['Transaction', () => TransactionModel], ['Earn', () => EarnModel], ['User', () => UserModel], ['Marker', () => MarkerModel], ['Coordinate', () => CoordinateModel], ['BuildParameter', () => BuildParameterModel], ['NodeStats', () => NodeStatsModel], ['LastOnChainAddress', () => LastOnChainAddressModel], ['Success', () => SuccessModel], ['Token', () => TokenModel], ['OnchainTransaction', () => OnchainTransactionModel], ['Invoice', () => InvoiceModel], ['OnChain', () => OnChainModel], ['UpdateUser', () => UpdateUserModel]], ['Price', 'Wallet', 'Transaction', 'Earn', 'User', 'Marker', 'BuildParameter', 'NodeStats', 'LastOnChainAddress'], "js"))
+  .extend(configureStoreMixin([['Price', () => PriceModel], ['Wallet', () => WalletModel], ['Transaction', () => TransactionModel], ['Earn', () => EarnModel], ['User', () => UserModel], ['Marker', () => MarkerModel], ['Coordinate', () => CoordinateModel], ['BuildParameter', () => BuildParameterModel], ['NodeStats', () => NodeStatsModel], ['LastOnChainAddress', () => LastOnChainAddressModel], ['Success', () => SuccessModel], ['Token', () => TokenModel], ['OnchainTransaction', () => OnchainTransactionModel], ['Invoice', () => InvoiceModel], ['OnChain', () => OnChainModel], ['UpdateUser', () => UpdateUserModel], ['FaucetResult', () => FaucetResultModel]], ['Price', 'Wallet', 'Transaction', 'Earn', 'User', 'Marker', 'BuildParameter', 'NodeStats', 'LastOnChainAddress'], "js"))
   .props({
     prices: types.optional(types.map(types.late((): any => PriceModel)), {}),
     wallets: types.optional(types.map(types.late((): any => WalletModel)), {}),
@@ -189,6 +192,11 @@ export const RootStoreBase = withTypedRefs<Refs>()(MSTGQLStore
     },
     mutateDeleteUser(variables?: {  }, optimisticUpdate?: () => void) {
       return self.mutate<{ deleteUser: boolean }>(`mutation deleteUser { deleteUser }`, variables, optimisticUpdate)
+    },
+    mutateFaucet(variables: { hash?: string }, resultSelector: string | ((qb: FaucetResultModelSelector) => FaucetResultModelSelector) = faucetResultModelPrimitives.toString(), optimisticUpdate?: () => void) {
+      return self.mutate<{ faucet: FaucetResultModelType}>(`mutation faucet($hash: String) { faucet(hash: $hash) {
+        ${typeof resultSelector === "function" ? resultSelector(new FaucetResultModelSelector()).toString() : resultSelector}
+      } }`, variables, optimisticUpdate)
     },
     mutateAddDeviceToken(variables: { deviceToken?: string }, resultSelector: string | ((qb: SuccessModelSelector) => SuccessModelSelector) = successModelPrimitives.toString(), optimisticUpdate?: () => void) {
       return self.mutate<{ addDeviceToken: SuccessModelType}>(`mutation addDeviceToken($deviceToken: String) { addDeviceToken(deviceToken: $deviceToken) {
