@@ -64,7 +64,7 @@ export const ScanningQRCodeScreen = () => {
       } else {
         setPendingError(true)
         Alert.alert(
-          translate("ScanningQRCodeScreen.invalid"),
+          translate("ScanningQRCodeScreen.invalidTitle"),
           translate("ScanningQRCodeScreen.invalidContent", {found: data.toString()}),
           [{
             text: translate("common.ok"), onPress: () => setPendingError(false)
