@@ -1,6 +1,6 @@
 import { values } from "mobx"
 import * as React from "react"
-import { Alert, View } from "react-native"
+import { Alert, Modal, Text, View } from "react-native"
 import { Divider, Icon, ListItem } from "react-native-elements"
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { Screen } from "../../components/screen"
@@ -44,6 +44,8 @@ export const SettingsScreenJSX = (params) => {
 
   const loggedin = params.loggedin
 
+  const [modalVisible, setModalVisible] = React.useState(false)
+
   const list = [
     {
       title: translate("common.phoneNumber"),
@@ -78,7 +80,7 @@ export const SettingsScreenJSX = (params) => {
       icon: 'ios-log-out', 
       action: async () => {
         await resetDataStore()
-        Alert.alert(translate("SettingsScreen.logOutSuccesful"))
+        setModalVisible(true)
       },
       enabled: loggedin,
       greyed: !loggedin,
@@ -89,7 +91,19 @@ export const SettingsScreenJSX = (params) => {
     const message = params[id] || defaultMessage
 
     return (
-    <>
+      <>
+      <Modal
+        animationType="slide"
+        transparent={false}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+        }}
+      >
+        <View style={{alignItems: "center", justifyContent: "center", flex: 1, padding: 30}} >
+          <Text>{translate("SettingsScreen.logOutSuccesful")}</Text>
+        </View>
+      </Modal>
       <ListItem key={i} onPress={action} disabled={!enabled}>
         <Icon name={icon} type='ionicon' color={greyed ? palette.midGrey : null} />
         <ListItem.Content>
