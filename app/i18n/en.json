@@ -42,7 +42,8 @@
     "feesUsd": "Fees (USD)",
     "note": "Note",
     "type": "Type",
-    "Total": "Total"
+    "Total": "Total",
+    "success": "Success!"
   },
   "sat": {
     "one": "1 sat",

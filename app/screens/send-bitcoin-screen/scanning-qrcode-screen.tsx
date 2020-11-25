@@ -49,10 +49,10 @@ export const ScanningQRCodeScreen = () => {
   const { navigate, goBack } = useNavigation()
   const store = React.useContext(StoreContext)
 
-  const [pendingError, setPendingError] = React.useState(false)
+  const [pending, setPending] = React.useState(false)
 
   const decodeInvoice = async (data) => {
-    if (pendingError) {
+    if (pending) {
       return
     }
 
@@ -60,19 +60,24 @@ export const ScanningQRCodeScreen = () => {
       const {valid, errorMessage, paymentType, hash} = validPayment(data, new Token().network, store.myPubKey, store.username)
       console.tron.logImportant({valid, errorMessage, data} , "result")
       if (valid && paymentType === "faucet") {
+        setPending(true)
         const result = await store.mutateFaucet({ hash })
-        Alert.alert(result.faucet.success ? 
-          "100 sats were added to your account":
-          "there were an issue adding the amount to your wallet. This hash may already have been used")
+        Alert.alert(
+          result.faucet.success ? translate("common.success") : translate("common.error"),
+          result.faucet.success ? result.faucet.message : "there were an error scanning this QRCode. Maybe it has already been used",
+          [{
+            text: translate("common.ok"), onPress: goBack
+          }]
+        )
       } else if (valid) {
         navigate("sendBitcoin", { payment: data })
       } else {
-        setPendingError(true)
+        setPending(true)
         Alert.alert(
           translate("ScanningQRCodeScreen.invalid"),
           translate("ScanningQRCodeScreen.invalidContent", {found: data.toString()}),
           [{
-            text: translate("common.ok"), onPress: () => setPendingError(false)
+            text: translate("common.ok"), onPress: () => setPending(false)
           }]
         )
       }
