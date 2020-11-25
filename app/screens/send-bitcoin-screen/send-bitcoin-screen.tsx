@@ -111,6 +111,8 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
   const store = React.useContext(StoreContext)
 
   const [errs, setErrs] = useState([])
+  const [invoiceError, setInvoiceError] = useState("")
+
   const [address, setAddress] = useState("")
   const [paymentType, setPaymentType] = useState<IPaymentType>(undefined)
   const [amountless, setAmountless] = useState(false)
@@ -161,6 +163,7 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
 
   const reset = () => {
     setErrs([])
+    setInvoiceError("")
     setAddress("")
     setPaymentType(undefined)
     setAmountless(false)
@@ -174,7 +177,7 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
 
   useEffect(() => {
     const fn = async () => {
-      const {valid, invoice, amount: amountInvoice, amountless, memo: memoInvoice, paymentType, address, sameNode} = validPayment(destination, network, store.myPubKey, store.username)
+      const {valid, errorMessage, invoice, amount: amountInvoice, amountless, memo: memoInvoice, paymentType, address, sameNode} = validPayment(destination, network, store.myPubKey, store.username)
       
       if (valid) {
         setStatus("idle")
@@ -241,6 +244,12 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
 
           return
         }
+
+      } else if (!!errorMessage) {
+
+        setPaymentType(paymentType)
+        setInvoiceError(errorMessage)
+        setInvoice(destination)
 
       } else {
 
@@ -334,9 +343,11 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
         feeTextFormatted
 
   const totalAmount = fee == null ? amount: amount + fee
-  const errorMessage = !!totalAmount && balance && totalAmount > balance && status !== "success" ?
-    translate("SendBitcoinScreen.totalExceed", {balance: textCurrencyFormatting(balance, price, store.prefCurrency)}) :
-    null
+  const errorMessage = !!invoiceError ? 
+    invoiceError:
+    !!totalAmount && balance && totalAmount > balance && status !== "success" ?
+      translate("SendBitcoinScreen.totalExceed", {balance: textCurrencyFormatting(balance, price, store.prefCurrency)}) :
+      null
 
   return <SendBitcoinScreenJSX status={status} paymentType={paymentType} amountless={amountless}
     initAmount={initAmount} setAmount={setAmount} setStatus={setStatus} invoice={invoice} 

@@ -51,7 +51,7 @@ function parseAmount(txt) {
 
 export const validPayment = (input: string, network: INetwork, myPubKey: string, username: string): IValidPaymentReponse => {
   if (!input) {
-    return {valid: false, errorMessage: `string is null or empty`}
+    return {valid: false}
   }
 
   // input might start with 'lightning:', 'bitcoin:'
@@ -73,11 +73,11 @@ export const validPayment = (input: string, network: INetwork, myPubKey: string,
     paymentType = "lightning"
 
     if(network === "testnet" && protocol.toLowerCase().startsWith("lnbc")) {
-      return {valid: false, errorMessage: `You're trying to pay a mainnet invoice. The settings for the app is testnet`}
+      return {valid: false, paymentType, errorMessage: `This is a mainnet invoice. The wallet is on testnet`}
     }
 
     if(network === "mainnet" && protocol.toLowerCase().startsWith("lntb")) {
-      return {valid: false, errorMessage: `You're trying to pay a testnet invoice. The settings for the app is mainnet`}
+      return {valid: false, paymentType, errorMessage: `This is a testnet invoice. The wallet is on mainnet`}
     }
 
     data = protocol
@@ -105,7 +105,7 @@ export const validPayment = (input: string, network: INetwork, myPubKey: string,
 
     } catch (e) {
       console.tron?.warn(`issue with payment ${e}`)
-      return {valid: false, errorMessage: e}
+      return {valid: false}
     }
   } else if (paymentType === "lightning") {
     let payReq
@@ -120,7 +120,7 @@ export const validPayment = (input: string, network: INetwork, myPubKey: string,
     const sameNode = myPubKey === getDestination(payReq)
 
     if (sameNode && username === getUsername(payReq)) {
-      return {valid: false, errorMessage: "invoice needs to be for a different user", paymentType}
+      return {valid: false, paymentType, errorMessage: "invoice needs to be for a different user"}
     }
 
     let amount, amountless, memo
