@@ -325,7 +325,7 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
 
   const feeTextFormatted = textCurrencyFormatting(fee ?? 0, price, store.prefCurrency)
 
-  const feeText = fee === null ?
+  const feeText = fee === null && !usernameExists ?
     "" :
     fee > 0 && !!amount ?
       `${feeTextFormatted}, ${translate("common.Total")}: ${textCurrencyFormatting(fee + amount, price, store.prefCurrency)}`:
