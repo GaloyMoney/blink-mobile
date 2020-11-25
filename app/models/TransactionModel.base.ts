@@ -27,6 +27,7 @@ export const TransactionModelBase = ModelBase
     pending: types.union(types.undefined, types.null, types.boolean),
     type: types.union(types.undefined, types.string),
     feeUsd: types.union(types.undefined, types.null, types.number),
+    addresses: types.union(types.undefined, types.null, types.array(types.union(types.null, types.string))),
   })
   .views(self => ({
     get store() {
@@ -46,9 +47,10 @@ export class TransactionModelSelector extends QueryBuilder {
   get pending() { return this.__attr(`pending`) }
   get type() { return this.__attr(`type`) }
   get feeUsd() { return this.__attr(`feeUsd`) }
+  get addresses() { return this.__attr(`addresses`) }
 }
 export function selectFromTransaction() {
   return new TransactionModelSelector()
 }
 
-export const transactionModelPrimitives = selectFromTransaction().amount.description.fee.created_at.hash.usd.sat.pending.type.feeUsd
+export const transactionModelPrimitives = selectFromTransaction().amount.description.fee.created_at.hash.usd.sat.pending.type.feeUsd.addresses
