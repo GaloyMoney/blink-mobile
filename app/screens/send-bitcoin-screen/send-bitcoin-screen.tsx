@@ -334,7 +334,7 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
         feeTextFormatted
 
   const totalAmount = fee == null ? amount: amount + fee
-  const errorMessage = !!totalAmount && balance && totalAmount > balance ?
+  const errorMessage = !!totalAmount && balance && totalAmount > balance && status !== "success" ?
     translate("SendBitcoinScreen.totalExceed", {balance: textCurrencyFormatting(balance, price, store.prefCurrency)}) :
     null
 
@@ -437,7 +437,6 @@ export const SendBitcoinScreenJSX = ({
           </View>
         }
         value={fee}
-        // renderErrorMessage={false}
         errorMessage={errorMessage}
         errorStyle={{fontSize: 16, alignSelf: "center", height: 18}}
         editable={false}
