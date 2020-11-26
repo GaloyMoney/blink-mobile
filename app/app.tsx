@@ -151,8 +151,10 @@ export const App = () => {
               Primary: {
                   screens: {
                   MoveMoney: {
+                    initialRouteName: "moveMoney",
                     screens: {
-                      sendBitcoin: "username/:username"
+                      sendBitcoin: ":username",
+                      moveMoney: "/",
                     }
                   }
                 }
