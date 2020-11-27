@@ -29,6 +29,7 @@
     "address": "Address",
     "tryAgain": "Try again",
     "amountRequired": "Amount is required",
+    "usernameRequired": "Username is required",
     "send": "Send",
     "date": "Date",
     "description": "Description",

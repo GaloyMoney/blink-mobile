@@ -495,9 +495,11 @@ export const SendBitcoinScreenJSX = ({
           translate("common.tryAgain") :
           !amount ?
             translate("common.amountRequired") :
-            translate("common.send")} // TODO refactor
+            !destination ?
+              translate("common.usernameRequired"):
+              translate("common.send")} 
       onPress={() => (status === "success" || status === "pending") ? goBack() : pay()}
-      disabled={!amount || !!errorMessage}
+      disabled={!amount || !!errorMessage || !destination}
       loading={status === "loading"}
     />
   </Screen>
