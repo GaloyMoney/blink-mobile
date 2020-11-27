@@ -45,9 +45,31 @@
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
+			<key>CFBundleURLName</key>
+			<string>lightning</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>lightning</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>https://ln.bitcoinbeach.com</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>https://ln.bitcoinbeach.com</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>bitcoinbeach</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>bitcoinbeach</string>
 			</array>
 		</dict>
 	</array>
