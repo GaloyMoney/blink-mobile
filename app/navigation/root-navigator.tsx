@@ -19,6 +19,7 @@ import { GetStartedScreen } from "../screens/get-started-screen"
 import { MapScreen } from "../screens/map-screen/find-atm-screen"
 import { MoveMoneyScreenDataInjected } from "../screens/move-money-screen"
 import { WelcomePhoneInputScreen, WelcomePhoneValidationScreenDataInjected } from "../screens/phone-auth-screen"
+import { ContactsScreen } from "../screens/contacts-screen"
 import { ReceiveBitcoinScreen } from "../screens/receive-bitcoin-screen"
 import { ScanningQRCodeScreen, SendBitcoinScreen } from "../screens/send-bitcoin-screen"
 import { SettingsScreen, UsernameScreen } from "../screens/settings-screen"
@@ -476,6 +477,16 @@ export const PrimaryNavigator = () => {
           title: translate("MoveMoneyScreen.title"),
           tabBarIcon: ({ focused, color }) => {
             return <Icon name={"ios-swap-horizontal"} size={size} color={color} />
+          },
+        }}
+      />
+      <Tab.Screen
+        name="Contacts"
+        component={ContactsScreen}
+        options={{
+          title: translate("ContactsScreen.title"),
+          tabBarIcon: ({ focused, color }) => {
+            return <Icon name={"ios-people-outline"} size={size} color={color} />
           },
         }}
       />

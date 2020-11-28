@@ -552,6 +552,9 @@
     "useLightning": "We use the Lightning Network.",
     "updateAvailable": "An update is available.\nTab to update now"
   },
+  "ContactsScreen": {
+    "title": "Contacts"
+  },
   "SendBitcoinScreen": {
     "note": "optional note",
     "fee": "network fee",
