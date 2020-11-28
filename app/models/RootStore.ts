@@ -75,6 +75,7 @@ query gql_query_logged {
     level
     username
     phone
+    contacts
   }
 }
 `
