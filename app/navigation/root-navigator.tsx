@@ -480,7 +480,7 @@ export const PrimaryNavigator = () => {
           },
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Contacts"
         component={ContactsScreen}
         options={{
@@ -489,7 +489,7 @@ export const PrimaryNavigator = () => {
             return <Icon name={"ios-people-outline"} size={size} color={color} />
           },
         }}
-      />
+      /> */}
       <Tab.Screen 
         name="Map" 
         component={MapScreen} 
