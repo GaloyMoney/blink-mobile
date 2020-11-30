@@ -75,10 +75,12 @@ query gql_query_logged {
     level
     username
     phone
-    contacts
   }
 }
 `
+
+// TODO add: me.contacts
+
 
 const gql_query_anonymous = `
 query gql_query_anonymous {
