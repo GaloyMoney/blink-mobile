@@ -13,8 +13,7 @@ const styles = EStyleSheet.create({
 
 export const ContactsScreen = observer(({ navigation }) => {
   const store = React.useContext(StoreContext)
-  console.tron.log({store})
-  return <ContactsScreenJSX list={store.user.contacts} navigation={navigation} />
+  return <ContactsScreenJSX list={store.user.contacts ?? []} navigation={navigation} />
 })
 
 export const ContactsScreenJSX = ({ list, navigation }) => {
