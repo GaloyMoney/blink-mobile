@@ -144,7 +144,6 @@ export const App = () => {
     <StoreContext.Provider value={rootStore}>
       <NavigationContainer
         linking={{
-          // TODO: finish to be able to parse QRCode
           prefixes: ['https://ln.bitcoinbeach.com', 'bitcoinbeach://'],
           config: {
             screens: {
@@ -152,19 +151,13 @@ export const App = () => {
                   screens: {
                   MoveMoney: {
                     initialRouteName: "moveMoney",
-                    screens: {
+                    screens: rootStore.walletIsActive ? {
                       sendBitcoin: ":username",
                       moveMoney: "/",
-                    }
-                  }
-                }
-              }
-            }
-          },
-        }} 
+                    } : null
+          }}}}}}}
         // fallback={<Text>Loading...</Text>}
         onStateChange={(state) => {
-          console.tron.log({state})
           const currentRouteName = getActiveRouteName(state)
 
           if (routeName !== currentRouteName) {
