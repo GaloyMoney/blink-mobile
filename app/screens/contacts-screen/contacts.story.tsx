@@ -1,7 +1,7 @@
 import * as React from "react"
 import { storiesOf } from "@storybook/react-native"
 import { StoryScreen, Story, UseCase } from "../../../storybook/views"
-import { PhoneBookScreen } from "./contacts"
+import { ContactsScreenJSX } from "./contacts"
 
 
 const list = [
@@ -24,8 +24,9 @@ storiesOf("Phone Book", module)
   .add("Style Presets", () => (
     <Story>
       <UseCase text="Dollar" usage="The primary.">
-        <PhoneBookScreen 
+        <ContactsScreenJSX 
           list={list}
+          navigation={() => {}}
         />
       </UseCase>
     </Story>
