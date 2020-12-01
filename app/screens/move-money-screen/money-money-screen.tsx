@@ -167,10 +167,13 @@ export const MoveMoneyScreen = (
   }
 
 
+  const testflight = `https://testflight.apple.com/join/9aC8MMk2`
+  const appstore = "https://apps.apple.com/app/bitcoin-beach-wallet/id1531383905"
+
   // from https://github.com/FiberJW/react-native-app-link/blob/master/index.js
   const openInStore = async ({ appName, appStoreId, appStoreLocale = 'us', playStoreId }) => {
     if (isIos) {
-      Linking.openURL(`https://testflight.apple.com/join/9aC8MMk2`);
+      Linking.openURL(appstore);
       // Linking.openURL(`https://itunes.apple.com/${appStoreLocale}/app/${appName}/id${appStoreId}`);
     } else {
       Linking.openURL(`https://play.google.com/store/apps/details?id=${playStoreId}`);
