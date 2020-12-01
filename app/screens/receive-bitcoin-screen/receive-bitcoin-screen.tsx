@@ -31,6 +31,7 @@ import { hasFullPermissions, requestPermission } from "../../utils/notifications
 import Toast from "react-native-root-toast"
 import LottieView from 'lottie-react-native'
 import Swiper from "react-native-swiper"
+import ScreenBrightness from 'react-native-screen-brightness'
 
 const successLottie = require('../move-money-screen/success_lottie.json')
 
@@ -99,9 +100,16 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
   const [invoice, setInvoice] = useState("")
   const [err, setErr] = useState("")
   const [isSucceed, setIsSucceed] = useState(false)
+  const [brightnessInitial, setBrightnessInitial] = useState(null)
 
   useEffect(() => {
     update()
+    // ScreenBrightness.getBrightness().then(brightness => {
+    //   setBrightnessInitial(brightness)
+    //   console.tron.log('brightness', brightness);
+    // });
+    ScreenBrightness.setBrightness(1); // between 0 and 1
+    // ScreenBrightness.setBrightness(1); // between 0 and 1
   }, [])
 
   useEffect(() => {
