@@ -147,15 +147,15 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
 
   useEffect(() => {
     reset()
-    const {valid} = validPayment(route.params?.payment, network, store.myPubKey, store.username)
-    if (valid) {
+    const {valid, username} = validPayment(route.params?.payment, network, store.myPubKey, store.username)
+    if (route.params?.username || username) {
+      setInteractive(false)
+      setDestination(route.params?.username || username)
+    } else if (valid) {
       setInteractive(false)
       setDestination(route.params?.payment)
       setAmount(amount)
       setMemo(memo)
-    } else if (route.params?.username) {
-      setInteractive(false)
-      setDestination(route.params?.username)
     } else {
       setInteractive(true)
     }
@@ -177,7 +177,7 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
 
   useEffect(() => {
     const fn = async () => {
-      const {valid, errorMessage, invoice, amount: amountInvoice, amountless, memo: memoInvoice, paymentType, address, sameNode} = validPayment(destination, network, store.myPubKey, store.username)
+      const {valid, errorMessage, invoice, amount: amountInvoice, amountless, memo: memoInvoice, paymentType, address, sameNode,} = validPayment(destination, network, store.myPubKey, store.username)
       
       if (valid) {
         setStatus("idle")
@@ -455,7 +455,7 @@ export const SendBitcoinScreenJSX = ({
         InputComponent={props => fee === undefined ?
           <ActivityIndicator animating={true} size="small" color={palette.orange} /> :
           fee === -1 ?
-            <Text>Calculation unsuccesful ⚠️</Text>: // todo: same calculation as backend 
+            <Text>{translate("SendBitcoinScreen.feeCalculationUnsuccesful")}</Text>: // todo: same calculation as backend 
             <TextInput {...props} />
         }
       />

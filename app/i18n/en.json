@@ -565,7 +565,8 @@
     "noAmount": "This invoice doesn't have an amount, so you need to manually specify how much money you want to send",
     "notConfirmed": "Payment has been sent\nbut is not confirmed yet\n\nYou can check the status\nof the payment in Transactions",
     "input": "username or invoice",
-    "totalExceed": "Total exceeds your balance of {{balance}}"
+    "totalExceed": "Total exceeds your balance of {{balance}}",
+    "feeCalculationUnsuccesful": "Calculation unsuccesful ⚠️"
   },
   "ScanningQRCodeScreen": {
     "invalidTitle": "Invalid QR Code",

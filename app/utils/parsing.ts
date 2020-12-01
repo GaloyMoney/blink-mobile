@@ -19,6 +19,7 @@ export interface IValidPaymentReponse {
   paymentType?: IPaymentType,
   sameNode?: boolean | undefined,
   hash?: string | undefined,
+  username?: string | undefined,
 }
 
 // TODO: enforce this from the backend
@@ -82,10 +83,17 @@ export const validPayment = (input: string, network: INetwork, myPubKey: string,
     }
 
     data = protocol
-  } else if (protocol.toLowerCase() === "faucet") {
-    paymentType = "faucet"
-    const hash = data
-    return {valid: true, paymentType, hash}
+  } else if (protocol.toLowerCase() === "https") {
+    const domain = "//ln.bitcoinbeach.com/"
+    if (data.startsWith(`${domain}faucet/`)) {
+      paymentType = "faucet"
+      // TODO
+      const hash = data
+      return {valid: true, paymentType, hash}
+    }
+    else if (data.startsWith(domain)) {
+      return {valid: true, paymentType: "username", username: data.substring(domain.length)}
+    }
   }
     else {
     // no schema
