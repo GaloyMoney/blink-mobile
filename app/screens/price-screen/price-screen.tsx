@@ -10,7 +10,7 @@ import { RootStore } from "../../models/root-store";
 import { palette } from "../../theme/palette";
 import { AccountType } from "../../utils/enum";
 
-export interface AccountDetailScreenProps {
+export interface PriceScreenProps {
   account: AccountType
   store: RootStore
   navigation: StackNavigationProp<any,any>
@@ -33,17 +33,12 @@ export const AccountToWallet = ({account, store}) => {
   }
 }
 
-export const AccountDetailScreen: React.FC<AccountDetailScreenProps> = observer(
-  ({ route, navigation }) => {
+export const PriceScreen: React.FC<PriceScreenProps> = observer(({ route, navigation }) => {
   
   const store = React.useContext(StoreContext)
 
   const account = route.params.account
   let wallet = AccountToWallet({account, store})
-
-  React.useEffect(() => {
-    navigation.setOptions({ title: translate("common.bitcoinPrice") })
-  }, [account])
 
   return (
     <Screen backgroundColor={palette.white} preset="scroll" style={{flex: 1}}>

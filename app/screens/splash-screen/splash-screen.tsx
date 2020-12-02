@@ -66,7 +66,6 @@ export const SplashScreen = observer(({ navigation }) => {
       buildVersion: String(VersionNumber.buildVersion),
       os: Platform.OS,
     }, 
-    // FIXME
     undefined, 
     {fetchPolicy: "no-cache"}
     ))
