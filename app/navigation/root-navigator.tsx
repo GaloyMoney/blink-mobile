@@ -10,7 +10,7 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 import { translate } from "../i18n"
 import { StoreContext } from "../models"
-import { AccountDetailScreen } from "../screens/account-detail-screen/account-detail-screen"
+import { PriceScreen } from "../screens/price-screen/price-screen"
 import { DebugScreen } from "../screens/debug-screen"
 import { EarnMapDataInjected } from "../screens/earns-map-screen"
 import { EarnQuiz, EarnSection } from "../screens/earns-screen"
@@ -351,9 +351,10 @@ export const RootStack = () => {
       />
       <RootNavigator.Screen
         name="accountDetail"
-        component={AccountDetailScreen}
+        component={PriceScreen}
         options={{ 
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+          title: translate("common.bitcoinPrice")
         }}  
         // options={({ navigation }) => ({
         //   headerRight: () => (

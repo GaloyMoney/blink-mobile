@@ -16,7 +16,7 @@ import { TransactionModel } from "./TransactionModel"
 export const ROOT_STATE_STORAGE_KEY = "rootAppGaloy"
 
 const gql_all = `
-prices {
+prices(length: $length) {
   __typename
   id
   o
@@ -38,7 +38,7 @@ nodeStats {
 }`
 
 const gql_query_logged = `
-query gql_query_logged {
+query gql_query_logged($length: Int) {
   ${gql_all}
   earnList {
     __typename
@@ -83,7 +83,7 @@ query gql_query_logged {
 
 
 const gql_query_anonymous = `
-query gql_query_anonymous {
+query gql_query_anonymous($length: Int) {
   ${gql_all}
   earnList {
     __typename
@@ -121,7 +121,7 @@ export const RootStore = RootStoreBase
 
   const mainQuery = (): Query => {
     const query = new Token().has() ? gql_query_logged : gql_query_anonymous
-    return self.query(query)
+    return self.query(query, {length: 1})
   }
 
   const setModalClipboardVisible = (value): void => {
