@@ -371,18 +371,18 @@ PODS:
     - React-Core
   - RNDeviceInfo (7.2.1):
     - React-Core
-  - RNFBAnalytics (10.1.0):
+  - RNFBAnalytics (10.1.1):
     - Firebase/Analytics (~> 7.1.0)
     - React-Core
     - RNFBApp
   - RNFBApp (10.1.0):
     - Firebase/CoreOnly (~> 7.1.0)
     - React-Core
-  - RNFBCrashlytics (10.1.0):
+  - RNFBCrashlytics (10.1.1):
     - Firebase/Crashlytics (~> 7.1.0)
     - React-Core
     - RNFBApp
-  - RNFBMessaging (10.1.0):
+  - RNFBMessaging (10.1.1):
     - Firebase/Messaging (~> 7.1.0)
     - React-Core
     - RNFBApp
@@ -670,10 +670,10 @@ SPEC CHECKSUMS:
   RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
   RNCPushNotificationIOS: 61a7c72bd1ebad3568025957d001e0f0e7b32191
   RNDeviceInfo: ae953cf4af2775e45597304fc9513a7931ef81ff
-  RNFBAnalytics: 0a98aff1ad9abee16de201012f03179246c2e5bb
+  RNFBAnalytics: da48ff33f20c26ee63745271ae9c0fb252422e66
   RNFBApp: 2b4e07dfca4cf780b9e2d61bcc21e34d890cd654
-  RNFBCrashlytics: cf1600bf055aabd1fefb67220f151ea6092e1a2f
-  RNFBMessaging: 483093ab71fb3de1d5b410fbf8ecdd32b84b5f78
+  RNFBCrashlytics: 9f200124ba783adc1576e9833e9f27ae633f67fe
+  RNFBMessaging: f2480f83c9dc254681ee3cdf24495f3e894f55d7
   RNFS: 2bd9eb49dc82fa9676382f0585b992c424cd59df
   RNGestureHandler: 9b7e605a741412e20e13c512738a31bd1611759b
   RNICloudStore: bc6e225811637c09bd1eb055d6cd7448e61cd451
