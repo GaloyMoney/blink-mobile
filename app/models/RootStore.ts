@@ -324,7 +324,7 @@ export const RootStore = RootStoreBase
   },
   get walletIsActive() { return self.user.level > 0 },
   get username() { return self.user.username },
-  get myPubKey() { return values(self.nodeStats)[0].id }
+  get myPubKey() { return self.nodeStats ? values(self.nodeStats)[0].id : ""}
 }))
   // return in BTC instead of SAT
   // get getInBTC() {

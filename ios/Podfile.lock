@@ -297,6 +297,8 @@ PODS:
     - React
   - react-native-safe-area-context (3.1.9):
     - React-Core
+  - react-native-screen-brightness (2.0.0-alpha):
+    - React
   - react-native-version-number (0.3.6):
     - React
   - React-RCTActionSheet (0.63.4):
@@ -439,6 +441,7 @@ DEPENDENCIES:
   - react-native-maps (from `../node_modules/react-native-maps`)
   - "react-native-qrcode-local-image (from `../node_modules/@remobile/react-native-qrcode-local-image`)"
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
+  - react-native-screen-brightness (from `../node_modules/react-native-screen-brightness`)
   - react-native-version-number (from `../node_modules/react-native-version-number`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -542,6 +545,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@remobile/react-native-qrcode-local-image"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
+  react-native-screen-brightness:
+    :path: "../node_modules/react-native-screen-brightness"
   react-native-version-number:
     :path: "../node_modules/react-native-version-number"
   React-RCTActionSheet:
@@ -648,6 +653,7 @@ SPEC CHECKSUMS:
   react-native-maps: f4b89da81626ad7f151a8bfcb79733295d31ce5c
   react-native-qrcode-local-image: a16d554baf5cf5c04da86b464d99cf658e215c52
   react-native-safe-area-context: b6e0e284002381d2ff29fa4fff42b4d8282e3c94
+  react-native-screen-brightness: 9eefe6db96a5d757e63cdfce8e48d7c9039f2af2
   react-native-version-number: b415bbec6a13f2df62bf978e85bc0d699462f37f
   React-RCTActionSheet: 89a0ca9f4a06c1f93c26067af074ccdce0f40336
   React-RCTAnimation: 1bde3ecc0c104c55df246eda516e0deb03c4e49b
