@@ -58,12 +58,18 @@ export const SplashScreen = observer(({ navigation }) => {
   // FIXME: no cache doesn't seem to work
   const { error, loading, data, store, setQuery } = useQuery(null, {fetchPolicy: "no-cache"})
 
+  // console.tron.log({loading, error, data})
+
   const query = () => {
     setQuery(store => store.queryBuildParameters({
       appVersion: String(VersionNumber.appVersion),
       buildVersion: String(VersionNumber.buildVersion),
       os: Platform.OS,
-    }, undefined, {fetchPolicy: "no-cache"}))
+    }, 
+    // FIXME
+    undefined, 
+    {fetchPolicy: "no-cache"}
+    ))
   }
 
   React.useEffect(() => query(), [])
