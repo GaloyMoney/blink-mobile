@@ -4,7 +4,7 @@ import LottieView from 'lottie-react-native'
 import { observer } from "mobx-react"
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { ActivityIndicator, ScrollView, Text, View } from "react-native"
+import { ActivityIndicator, Text, View } from "react-native"
 import { Button, Input } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TextInput } from "react-native-gesture-handler"
@@ -162,6 +162,7 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
   }, [route.params])
 
   const reset = () => {
+    setStatus("idle")
     setErrs([])
     setInvoiceError("")
     setAddress("")
@@ -375,7 +376,7 @@ export const SendBitcoinScreenJSX = ({
   setMemo, setDestination, destination, usernameExists, loadingUserNameExist, interactive,
   potentialBitcoinOrLightning, errorMessage, reset }) => {
 
-    return <Screen style={styles.mainView} preset={"scroll"}>
+    return <Screen style={styles.mainView} preset="scroll">
     <View style={styles.section}>
       <InputPayment
         editable={paymentType === "lightning" ? 
@@ -471,9 +472,7 @@ export const SendBitcoinScreenJSX = ({
         status === "error" && 
         <>
           <LottieView source={errorLottie} loop={false} autoPlay style={styles.lottie} resizeMode='cover' />
-          <ScrollView>
-            {errs.map(({message}) => <Text style={styles.errorText}>{message}</Text>)}
-          </ScrollView>
+          {errs.map(({message}) => <Text style={styles.errorText}>{message}</Text>)}
         </>
       }
       {
