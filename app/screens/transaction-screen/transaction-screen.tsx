@@ -148,19 +148,19 @@ const formatTransactions = (transactions, prefCurrency) => {
   }
 
   if (today.length > 0) {
-    sections.push({ title: translate("AccountDetailScreen.today"), data: today })
+    sections.push({ title: translate("PriceScreen.today"), data: today })
   }
 
   if (yesterday.length > 0) {
-    sections.push({ title: translate("AccountDetailScreen.yesterday"), data: yesterday })
+    sections.push({ title: translate("PriceScreen.yesterday"), data: yesterday })
   }
 
   if (thisMonth.length > 0) {
-    sections.push({ title: translate("AccountDetailScreen.thisMonth"), data: thisMonth })
+    sections.push({ title: translate("PriceScreen.thisMonth"), data: thisMonth })
   }
 
   if (before.length > 0) {
-    sections.push({ title: translate("AccountDetailScreen.prevMonths"), data: before })
+    sections.push({ title: translate("PriceScreen.prevMonths"), data: before })
   }
 
   // console.tron.log({sections})

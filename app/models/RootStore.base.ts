@@ -107,8 +107,8 @@ export const RootStoreBase = withTypedRefs<Refs>()(MSTGQLStore
     lastOnChainAddresses: types.optional(types.map(types.late((): any => LastOnChainAddressModel)), {})
   })
   .actions(self => ({
-    queryPrices(variables?: {  }, resultSelector: string | ((qb: PriceModelSelector) => PriceModelSelector) = priceModelPrimitives.toString(), options: QueryOptions = {}) {
-      return self.query<{ prices: PriceModelType[]}>(`query prices { prices {
+    queryPrices(variables: { length?: number }, resultSelector: string | ((qb: PriceModelSelector) => PriceModelSelector) = priceModelPrimitives.toString(), options: QueryOptions = {}) {
+      return self.query<{ prices: PriceModelType[]}>(`query prices($length: Int) { prices(length: $length) {
         ${typeof resultSelector === "function" ? resultSelector(new PriceModelSelector()).toString() : resultSelector}
       } }`, variables, options)
     },

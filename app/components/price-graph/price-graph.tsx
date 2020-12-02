@@ -5,7 +5,7 @@ import { ActivityIndicator, Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { VictoryAxis, VictoryChart, VictoryLine } from "victory-native"
-import { StoreContext } from "../../models"
+import { StoreContext, useQuery } from "../../models"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 
@@ -150,6 +150,11 @@ export const PriceGraph = ({prices}) => {
 
 
 export const PriceGraphDataInjected = observer(() => {
-  const store = React.useContext(StoreContext)
-  return <PriceGraph prices={values(store.prices)} />
+  const { error, loading, data } = useQuery(query => query.queryPrices({}), {fetchPolicy: "no-cache"})
+
+  if (loading || data == null) {
+    return <ActivityIndicator animating={true} size="large" color={palette.lightBlue} />
+  }
+
+  return <PriceGraph prices={data.prices} />
 })

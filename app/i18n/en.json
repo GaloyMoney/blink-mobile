@@ -537,7 +537,7 @@
       }
     ]
   },
-  "AccountDetailScreen": {
+  "PriceScreen": {
     "today": "Today",
     "yesterday": "Yesterday",
     "thisMonth": "This month",
