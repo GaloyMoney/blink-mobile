@@ -115,7 +115,7 @@ export const validPayment = (input: string, network: INetwork, myPubKey: string,
       // will throw if address is not valid
       bitcoin.address.toOutputScript(address, mappingToBitcoinJs(network));
       paymentType = "onchain"
-      return {valid: true, paymentType, address, amount}
+      return {valid: true, paymentType, address, amount, amountless: !amount}
 
     } catch (e) {
       console.tron?.warn(`issue with payment ${e}`)
