@@ -82,12 +82,6 @@ export const App = () => {
         transactions: [],
       },
     },
-    users: {
-      incognito: {
-        id: "incognito",
-        level: 0,
-      },
-    },
   }
 
   useEffect(() => {

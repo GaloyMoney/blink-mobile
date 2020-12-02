@@ -251,13 +251,17 @@ export const RootStore = RootStoreBase
     
     console.tron.log("cleared local transactions")
 
-    yield self.mainQuery()
-    self.users.delete("incognito")
-    
     // FIXME: only for android?
     // it seems we also have a token for iOS, without the permissions to show it though
-    console.tron.log("sending token")
+    console.tron.log("sending device token for notifications")
     yield uploadToken(self)
+
+    try {
+      yield self.mainQuery()
+    } catch (err) {
+      console.tron.warn({err})
+    }
+    
   })
 
   const isUpdateRequired = () => {
@@ -298,7 +302,10 @@ export const RootStore = RootStoreBase
   },
   get user() {
     const users = values(self.users)
-    return  users[users.length - 1]
+    return !!users.length ? users[0] : {
+      id: "incognito",
+      level: 0,
+    }
   },
   get earnedSat() {
     return sumBy(filter(values(self.earns), {completed: true}), "value")
