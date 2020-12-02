@@ -376,10 +376,12 @@ export const SendBitcoinScreenJSX = ({
   setMemo, setDestination, destination, usernameExists, loadingUserNameExist, interactive,
   potentialBitcoinOrLightning, errorMessage, reset }) => {
 
+    console.tron.log({amount, errorMessage, destination})
+
     return <Screen style={styles.mainView} preset="scroll">
     <View style={styles.section}>
       <InputPayment
-        editable={paymentType === "lightning" ? 
+        editable={paymentType === "lightning" || paymentType === "onchain" ? 
           amountless && (status === "idle" || status === "error"):
           true // bitcoin // TODO: handle amount properly
         }
