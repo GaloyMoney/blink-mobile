@@ -89,13 +89,10 @@ const styles = EStyleSheet.create({
 
 
 export const MoveMoneyScreenDataInjected = observer(({ navigation }) => {
-  const store = React.useContext(StoreContext)
-
-  const { query, error, loading, setQuery } = useQuery()
+  const { store, error, loading, setQuery } = useQuery()
 
   const refreshQuery = async () => {
     setQuery(store => store.mainQuery())
-    await query.refetch()
   }
 
   useEffect(() => {

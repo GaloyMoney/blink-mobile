@@ -1,17 +1,14 @@
-import { StackNavigationProp } from "@react-navigation/stack"
 import { observer } from "mobx-react"
 import * as React from "react"
 import { RefreshControl, SectionList, Text, View } from "react-native"
-import { ListItem } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableOpacity } from "react-native-gesture-handler"
-import { IconTransaction } from "../../components/icon-transactions"
+import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
+import { TransactionItem } from "../../components/transaction-item"
 import { translate } from "../../i18n"
 import { useQuery } from "../../models"
 import { palette } from "../../theme/palette"
-import { CurrencyType } from "../../utils/enum"
-import Icon from "react-native-vector-icons/Ionicons"
 
 
 const styles = EStyleSheet.create({
@@ -105,8 +102,6 @@ const styles = EStyleSheet.create({
 })
 
 
-
-
 export const TransactionScreenDataInjected = observer(({navigation, route}) => {
   const { store, error, loading, setQuery } = useQuery()
 
@@ -117,8 +112,6 @@ export const TransactionScreenDataInjected = observer(({navigation, route}) => {
 
   const currency = "sat" // FIXME
 
-  console.tron.log({sections: store.transactionsSections()})
-
   return <TransactionScreen 
     navigation={navigation} 
     currency={currency}
@@ -127,32 +120,9 @@ export const TransactionScreenDataInjected = observer(({navigation, route}) => {
     prefCurrency={store.prefCurrency}
     nextPrefCurrency={store.nextPrefCurrency}
     onRefresh={refreshQuery}
-    sections={store.transactionsSections()}
+    sections={store.transactionsSections}
   />
 })
-
-export interface AccountDetailItemProps {
-  currency: CurrencyType,
-  navigation: StackNavigationProp<any,any>,
-  tx: Object // TODO
-}
-
-const AccountDetailItem: React.FC<AccountDetailItemProps> = ({tx, navigation}) => {
-  const colorFromType = isReceive => isReceive ? palette.green : palette.darkGrey
-
-  return (<ListItem
-    // key={props.hash}
-    title={tx.description}
-    leftIcon={<IconTransaction
-      isReceive={tx.isReceive}
-      size={24}
-      pending={tx.pending}
-    />}
-    containerStyle={tx.pending ? {backgroundColor: palette.lighterGrey} : null}
-    rightTitle={<Text style={{color: colorFromType(tx.isReceive)}}>{tx.text}</Text>}
-    onPress={() => navigation.navigate("transactionDetail", {tx})}
-  />)
-}
 
 export const TransactionScreen = 
   ({ refreshing, navigation, currency, onRefresh, error, prefCurrency, nextPrefCurrency, sections }) =>
@@ -160,7 +130,7 @@ export const TransactionScreen =
     <SectionList
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
       renderItem={({ item, index, section }) => (
-        <AccountDetailItem currency={currency} navigation={navigation} tx={item} />
+        <TransactionItem navigation={navigation} tx={item} />
       )}
       ListHeaderComponent={() => <>
         {error?.response?.errors?.map(({ message }) => 
