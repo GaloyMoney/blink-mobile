@@ -104,13 +104,15 @@ export const DebugScreen = observer(({}) => {
           store.mutateTestMessage()
         }}
       />
-      <Button
-        title="Request permission + send device token"
-        style={styles.button}
-        onPress={async () => {
-          requestPermission(store)
-        }}
-      />
+      {
+        store.walletIsActive && <Button
+          title="Request permission + send device token"
+          style={styles.button}
+          onPress={async () => {
+            requestPermission(store)
+          }}
+        />
+      }
       {__DEV__ && <Button title="Reload" 
         style={styles.button}
         onPress={() => DevSettings.reload()} />

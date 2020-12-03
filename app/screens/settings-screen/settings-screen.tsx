@@ -37,6 +37,7 @@ export const SettingsScreen = ({navigation}) => {
     username={store.user.username}
     phone={store.user.phone}
     notifications={notificationsEnabled ? translate("SettingsScreen.activated") : translate("SettingsScreen.activate")}  
+    notificationsEnabled={notificationsEnabled}
   />
 }
 
@@ -70,7 +71,7 @@ export const SettingsScreenJSX = (params) => {
       icon: 'ios-notifications-circle',
       id: 'notifications',
       action: requestPermission,
-      enabled: loggedin && params.notifications !== translate("SettingsScreen.activated"),
+      enabled: loggedin && params.notificationsEnabled,
       greyed: !loggedin,
       styleDivider: { backgroundColor: palette.lighterGrey, height: 18 },
     },
