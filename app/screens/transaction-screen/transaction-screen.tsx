@@ -112,6 +112,7 @@ const formatTransactions = (transactions, prefCurrency) => {
   const thisMonth = []
   const before = []
 
+  // FIXME: probably no longer necessary?
   transactions = transactions.slice().sort((a, b) => (a.date > b.date ? -1 : 1)) // warning without slice?
 
   const isToday = (tx) => {
@@ -171,11 +172,12 @@ const formatTransactions = (transactions, prefCurrency) => {
 export const TransactionScreenDataInjected = observer(({navigation, route}) => {
 
   const store = React.useContext(StoreContext)
-  const { query, error, loading } = useQuery(store => store.mainQuery())
+  const { query, error, loading, setQuery } = useQuery()
 
   const refreshQuery = async () => {
     console.tron.log("refresh query from transaction screen")
-    await query.refetch()
+    setQuery(store => store.mainQuery())
+    // await query.refetch()
   }
 
   const currency = "sat" // FIXME
