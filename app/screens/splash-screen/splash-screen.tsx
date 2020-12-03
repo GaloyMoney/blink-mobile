@@ -58,8 +58,6 @@ export const SplashScreen = observer(({ navigation }) => {
   // FIXME: no cache doesn't seem to work
   const { error, loading, data, store, setQuery } = useQuery(null, {fetchPolicy: "no-cache"})
 
-  // console.tron.log({loading, error, data})
-
   const query = () => {
     setQuery(store => store.queryBuildParameters({
       appVersion: String(VersionNumber.appVersion),
