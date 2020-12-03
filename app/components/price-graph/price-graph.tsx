@@ -1,11 +1,10 @@
-import { values } from "mobx"
 import { observer } from "mobx-react"
 import * as React from "react"
 import { ActivityIndicator, Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { VictoryAxis, VictoryChart, VictoryLine } from "victory-native"
-import { StoreContext, useQuery } from "../../models"
+import { useQuery } from "../../models"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 
@@ -150,10 +149,14 @@ export const PriceGraph = ({prices}) => {
 
 
 export const PriceGraphDataInjected = observer(() => {
-  const { error, loading, data } = useQuery(query => query.queryPrices({}), {fetchPolicy: "no-cache"})
+  const { error, loading, data } = useQuery(store => store.queryPrices({length: 365 * 24 * 10}), {fetchPolicy: "no-cache"})
 
   if (loading || data == null) {
     return <ActivityIndicator animating={true} size="large" color={palette.lightBlue} />
+  }
+
+  if (error) {
+    return <Text>{`${error}`}</Text>
   }
 
   return <PriceGraph prices={data.prices} />

@@ -165,9 +165,9 @@ export const TransactionScreen =
       ListHeaderComponent={() => <>
         {error?.response?.errors?.map(({ message }) => 
           <Text style={{color: palette.red, alignSelf: "center", paddingBottom: 18}} selectable={true}>{message}</Text>
-      )}
+        )}
       </>}
-      initialNumToRender={12}
+      initialNumToRender={14}
       renderSectionHeader={({ section: { title } }) => (
         <View style={styles.sectionHeaderContainer}>
           <Text style={styles.sectionHeaderText}>{title}</Text>
