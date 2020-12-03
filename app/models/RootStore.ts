@@ -12,8 +12,13 @@ import { uploadToken } from "../utils/notifications"
 import { Token } from "../utils/token"
 import { RootStoreBase } from "./RootStore.base"
 import { TransactionModel } from "./TransactionModel"
+import { sameDay, sameMonth } from "../utils/date"
+import { translate } from "../i18n"
+import VersionNumber from "react-native-version-number"
+import { Platform } from "react-native"
 
 export const ROOT_STATE_STORAGE_KEY = "rootAppGaloy"
+
 
 const gql_all = `
 prices(length: $length) {
@@ -121,7 +126,9 @@ export const RootStore = RootStoreBase
 
   const mainQuery = (): Query => {
     const query = new Token().has() ? gql_query_logged : gql_query_anonymous
-    return self.query(query, {length: 1})
+    return self.query(query, {
+      length: 1
+    })
   }
 
   const setModalClipboardVisible = (value): void => {
@@ -329,8 +336,78 @@ export const RootStore = RootStoreBase
 
     return balances[account]
   },
+
+  transactionsSections() {
+    // const formatTransactions = (transactions, prefCurrency) => {
+
+      let transactions = self.wallets.get("BTC").transactions
+
+      const sections = []
+      const today = []
+      const yesterday = []
+      const thisMonth = []
+      const before = []
+    
+      // FIXME: probably no longer necessary?
+      transactions = transactions.slice().sort((a, b) => (a.date > b.date ? -1 : 1)) // warning without slice?
+    
+      const isToday = (tx) => {
+        return sameDay(tx.date, new Date())
+      }
+    
+      const isYesterday = (tx) => {
+        return sameDay(tx.date, new Date().setDate(new Date().getDate() - 1))
+      }
+    
+      const isThisMonth = (tx) => {
+        return sameMonth(tx.date, new Date())
+      }
+    
+      while (transactions.length) {
+        // this could be optimized
+        let tx = transactions.shift()
+    
+        // FIXME why is this needed?
+        // those are views and it seems are not available after some sort of serialization
+        tx = {...tx, date: tx.date, text: tx.text(self.prefCurrency), isReceive: tx.isReceive, date_format: tx.date_format}
+    
+        // console.tron.log({tx})
+    
+        if (isToday(tx)) {
+          today.push(tx)
+        } else if (isYesterday(tx)) {
+          yesterday.push(tx)
+        } else if (isThisMonth(tx)) {
+          thisMonth.push(tx)
+        } else {
+          before.push(tx)
+        }
+      }
+    
+      if (today.length > 0) {
+        sections.push({ title: translate("PriceScreen.today"), data: today })
+      }
+    
+      if (yesterday.length > 0) {
+        sections.push({ title: translate("PriceScreen.yesterday"), data: yesterday })
+      }
+    
+      if (thisMonth.length > 0) {
+        sections.push({ title: translate("PriceScreen.thisMonth"), data: thisMonth })
+      }
+    
+      if (before.length > 0) {
+        sections.push({ title: translate("PriceScreen.prevMonths"), data: before })
+      }
+    
+      // console.tron.log({sections})
+      return sections
+  },
+
   get walletIsActive() { return self.user.level > 0 },
   get username() { return self.user.username },
+
+  // FIXME why do we need a default value?
   get myPubKey() { return self.nodeStats ? values(self.nodeStats)[0].id : ""}
 }))
   // return in BTC instead of SAT

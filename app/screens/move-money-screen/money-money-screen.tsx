@@ -91,14 +91,16 @@ const styles = EStyleSheet.create({
 export const MoveMoneyScreenDataInjected = observer(({ navigation }) => {
   const store = React.useContext(StoreContext)
 
-  const updateQuery = store => store.mainQuery()
-  const { query, error, loading, setQuery } = useQuery(updateQuery)
+  const { query, error, loading, setQuery } = useQuery()
 
   const refreshQuery = async () => {
-    console.tron.log("refresh query")
-    setQuery(updateQuery)
+    setQuery(store => store.mainQuery())
     await query.refetch()
   }
+
+  useEffect(() => {
+    refreshQuery()
+  }, []); 
 
   // temporary fix until we have a better management of notifications:
   // when coming back to active state. look if the invoice has been paid
