@@ -34,8 +34,8 @@ export const SettingsScreen = ({navigation}) => {
   return <SettingsScreenJSX 
     loggedin={store.walletIsActive}
     navigation={navigation} 
-    username={values(store.users)[0].username}
-    phone={values(store.users)[0].phone}
+    username={store.user.username}
+    phone={store.user.phone}
     notifications={notificationsEnabled ? translate("SettingsScreen.activated") : translate("SettingsScreen.activate")}  
   />
 }

@@ -8,7 +8,7 @@ import { Screen } from "../../components/screen"
 import { TextCurrency } from "../../components/text-currency"
 import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
-import { AccountDetailItemProps } from "../account-detail-screen"
+import { AccountDetailItemProps } from "../price-screen"
 import { currencyFormatting } from "../../utils/currencyConversion"
 
 const styles = EStyleSheet.create({

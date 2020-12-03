@@ -56,10 +56,10 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>https://ln.bitcoinbeach.com</string>
+			<string>ln.bitcoinbeach.com</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>https://ln.bitcoinbeach.com</string>
+				<string>ln.bitcoinbeach.com</string>
 			</array>
 		</dict>
 		<dict>
@@ -74,7 +74,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>209</string>
+	<string>213</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>

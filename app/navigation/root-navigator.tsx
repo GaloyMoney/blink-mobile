@@ -10,7 +10,7 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 import { translate } from "../i18n"
 import { StoreContext } from "../models"
-import { AccountDetailScreen } from "../screens/account-detail-screen/account-detail-screen"
+import { PriceScreen } from "../screens/price-screen/price-screen"
 import { DebugScreen } from "../screens/debug-screen"
 import { EarnMapDataInjected } from "../screens/earns-map-screen"
 import { EarnQuiz, EarnSection } from "../screens/earns-screen"
@@ -19,6 +19,7 @@ import { GetStartedScreen } from "../screens/get-started-screen"
 import { MapScreen } from "../screens/map-screen/find-atm-screen"
 import { MoveMoneyScreenDataInjected } from "../screens/move-money-screen"
 import { WelcomePhoneInputScreen, WelcomePhoneValidationScreenDataInjected } from "../screens/phone-auth-screen"
+import { ContactsScreen } from "../screens/contacts-screen"
 import { ReceiveBitcoinScreen } from "../screens/receive-bitcoin-screen"
 import { ScanningQRCodeScreen, SendBitcoinScreen } from "../screens/send-bitcoin-screen"
 import { SettingsScreen, UsernameScreen } from "../screens/settings-screen"
@@ -350,9 +351,10 @@ export const RootStack = () => {
       />
       <RootNavigator.Screen
         name="accountDetail"
-        component={AccountDetailScreen}
+        component={PriceScreen}
         options={{ 
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+          title: translate("common.bitcoinPrice")
         }}  
         // options={({ navigation }) => ({
         //   headerRight: () => (
@@ -479,6 +481,16 @@ export const PrimaryNavigator = () => {
           },
         }}
       />
+      {/* <Tab.Screen
+        name="Contacts"
+        component={ContactsScreen}
+        options={{
+          title: translate("ContactsScreen.title"),
+          tabBarIcon: ({ focused, color }) => {
+            return <Icon name={"ios-people-outline"} size={size} color={color} />
+          },
+        }}
+      /> */}
       <Tab.Screen 
         name="Map" 
         component={MapScreen} 

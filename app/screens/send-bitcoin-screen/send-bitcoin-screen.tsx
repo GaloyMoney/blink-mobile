@@ -4,7 +4,7 @@ import LottieView from 'lottie-react-native'
 import { observer } from "mobx-react"
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { ActivityIndicator, ScrollView, Text, View } from "react-native"
+import { ActivityIndicator, Text, View } from "react-native"
 import { Button, Input } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TextInput } from "react-native-gesture-handler"
@@ -147,21 +147,22 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
 
   useEffect(() => {
     reset()
-    const {valid} = validPayment(route.params?.payment, network, store.myPubKey, store.username)
-    if (valid) {
+    const {valid, username} = validPayment(route.params?.payment, network, store.myPubKey, store.username)
+    if (route.params?.username || username) {
+      setInteractive(false)
+      setDestination(route.params?.username || username)
+    } else if (valid) {
       setInteractive(false)
       setDestination(route.params?.payment)
       setAmount(amount)
       setMemo(memo)
-    } else if (route.params?.username) {
-      setInteractive(false)
-      setDestination(route.params?.username)
     } else {
       setInteractive(true)
     }
   }, [route.params])
 
   const reset = () => {
+    setStatus("idle")
     setErrs([])
     setInvoiceError("")
     setAddress("")
@@ -375,10 +376,10 @@ export const SendBitcoinScreenJSX = ({
   setMemo, setDestination, destination, usernameExists, loadingUserNameExist, interactive,
   potentialBitcoinOrLightning, errorMessage, reset }) => {
 
-    return <Screen style={styles.mainView} preset={"scroll"}>
+    return <Screen style={styles.mainView} preset="scroll">
     <View style={styles.section}>
       <InputPayment
-        editable={paymentType === "lightning" ? 
+        editable={paymentType === "lightning" || paymentType === "onchain" ? 
           amountless && (status === "idle" || status === "error"):
           true // bitcoin // TODO: handle amount properly
         }
@@ -455,7 +456,7 @@ export const SendBitcoinScreenJSX = ({
         InputComponent={props => fee === undefined ?
           <ActivityIndicator animating={true} size="small" color={palette.orange} /> :
           fee === -1 ?
-            <Text>Calculation unsuccesful ⚠️</Text>: // todo: same calculation as backend 
+            <Text>{translate("SendBitcoinScreen.feeCalculationUnsuccesful")}</Text>: // todo: same calculation as backend 
             <TextInput {...props} />
         }
       />
@@ -471,9 +472,7 @@ export const SendBitcoinScreenJSX = ({
         status === "error" && 
         <>
           <LottieView source={errorLottie} loop={false} autoPlay style={styles.lottie} resizeMode='cover' />
-          <ScrollView>
-            {errs.map(({message}) => <Text style={styles.errorText}>{message}</Text>)}
-          </ScrollView>
+          {errs.map(({message}) => <Text style={styles.errorText}>{message}</Text>)}
         </>
       }
       {
@@ -495,9 +494,11 @@ export const SendBitcoinScreenJSX = ({
           translate("common.tryAgain") :
           !amount ?
             translate("common.amountRequired") :
-            translate("common.send")} // TODO refactor
+            !destination ?
+              translate("common.usernameRequired"):
+              translate("common.send")} 
       onPress={() => (status === "success" || status === "pending") ? goBack() : pay()}
-      disabled={!amount || !!errorMessage}
+      disabled={!amount || !!errorMessage || !destination}
       loading={status === "loading"}
     />
   </Screen>
