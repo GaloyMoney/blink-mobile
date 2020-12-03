@@ -1,21 +1,19 @@
 import AsyncStorage from "@react-native-community/async-storage"
 import analytics from '@react-native-firebase/analytics'
-import { filter, findLast, indexOf, map, sumBy } from "lodash"
+import { filter, indexOf, map, sumBy } from "lodash"
 import { values } from "mobx"
 import { flow, getEnv, Instance, types } from "mobx-state-tree"
 import moment from "moment"
 import { localStorageMixin, Query } from "mst-gql"
 import DeviceInfo from 'react-native-device-info'
+import { translate } from "../i18n"
+import { sameDay, sameMonth } from "../utils/date"
 import { AccountType, CurrencyType } from "../utils/enum"
 import { isIos } from "../utils/helper"
 import { uploadToken } from "../utils/notifications"
 import { Token } from "../utils/token"
 import { RootStoreBase } from "./RootStore.base"
 import { TransactionModel } from "./TransactionModel"
-import { sameDay, sameMonth } from "../utils/date"
-import { translate } from "../i18n"
-import VersionNumber from "react-native-version-number"
-import { Platform } from "react-native"
 
 export const ROOT_STATE_STORAGE_KEY = "rootAppGaloy"
 
@@ -98,6 +96,19 @@ query gql_query_anonymous($length: Int) {
 }
 `
 
+const isToday = (tx) => {
+  return sameDay(tx.date, new Date())
+}
+
+const isYesterday = (tx) => {
+  return sameDay(tx.date, new Date().setDate(new Date().getDate() - 1))
+}
+
+const isThisMonth = (tx) => {
+  return sameMonth(tx.date, new Date())
+}
+
+
 export interface RootStoreType extends Instance<typeof RootStore.Type> {}
 
 export const OnboardingModel = types.model("Onboarding", {
@@ -107,12 +118,12 @@ export const OnboardingModel = types.model("Onboarding", {
 }))
   
 export const RootStore = RootStoreBase
-.extend(
-  localStorageMixin({
-    storage: AsyncStorage,
-    // throttle: 1000,
-    storageKey: ROOT_STATE_STORAGE_KEY
-}))
+// .extend(
+//   localStorageMixin({
+//     storage: AsyncStorage,
+//     // throttle: 1000,
+//     storageKey: ROOT_STATE_STORAGE_KEY
+// }))
 .props({
   onboarding: types.optional(OnboardingModel, {}),
   modalClipboardVisible: types.optional(types.boolean, false), // when switching been app, should we show modal when returning to Galoy?
@@ -338,70 +349,47 @@ export const RootStore = RootStoreBase
   },
 
   transactionsSections() {
-    // const formatTransactions = (transactions, prefCurrency) => {
-
-      let transactions = self.wallets.get("BTC").transactions
-
-      const sections = []
-      const today = []
-      const yesterday = []
-      const thisMonth = []
-      const before = []
+    const sections = []
+    const today = []
+    const yesterday = []
+    const thisMonth = []
+    const before = []
+  
+    let transactions = values(self.wallets.get("BTC").transactions)
     
-      // FIXME: probably no longer necessary?
-      transactions = transactions.slice().sort((a, b) => (a.date > b.date ? -1 : 1)) // warning without slice?
-    
-      const isToday = (tx) => {
-        return sameDay(tx.date, new Date())
+    while (transactions.length) {
+      // this could be optimized
+      let tx = transactions.shift()
+  
+      if (isToday(tx)) {
+        today.push(tx)
+      } else if (isYesterday(tx)) {
+        yesterday.push(tx)
+      } else if (isThisMonth(tx)) {
+        thisMonth.push(tx)
+      } else {
+        before.push(tx)
       }
-    
-      const isYesterday = (tx) => {
-        return sameDay(tx.date, new Date().setDate(new Date().getDate() - 1))
-      }
-    
-      const isThisMonth = (tx) => {
-        return sameMonth(tx.date, new Date())
-      }
-    
-      while (transactions.length) {
-        // this could be optimized
-        let tx = transactions.shift()
-    
-        // FIXME why is this needed?
-        // those are views and it seems are not available after some sort of serialization
-        tx = {...tx, date: tx.date, text: tx.text(self.prefCurrency), isReceive: tx.isReceive, date_format: tx.date_format}
-    
-        // console.tron.log({tx})
-    
-        if (isToday(tx)) {
-          today.push(tx)
-        } else if (isYesterday(tx)) {
-          yesterday.push(tx)
-        } else if (isThisMonth(tx)) {
-          thisMonth.push(tx)
-        } else {
-          before.push(tx)
-        }
-      }
-    
-      if (today.length > 0) {
-        sections.push({ title: translate("PriceScreen.today"), data: today })
-      }
-    
-      if (yesterday.length > 0) {
-        sections.push({ title: translate("PriceScreen.yesterday"), data: yesterday })
-      }
-    
-      if (thisMonth.length > 0) {
-        sections.push({ title: translate("PriceScreen.thisMonth"), data: thisMonth })
-      }
-    
-      if (before.length > 0) {
-        sections.push({ title: translate("PriceScreen.prevMonths"), data: before })
-      }
-    
-      // console.tron.log({sections})
-      return sections
+    }
+  
+    if (today.length > 0) {
+      sections.push({ title: translate("PriceScreen.today"), data: today })
+    }
+  
+    if (yesterday.length > 0) {
+      sections.push({ title: translate("PriceScreen.yesterday"), data: yesterday })
+    }
+  
+    if (thisMonth.length > 0) {
+      sections.push({ title: translate("PriceScreen.thisMonth"), data: thisMonth })
+    }
+  
+    if (before.length > 0) {
+      sections.push({ title: translate("PriceScreen.prevMonths"), data: before })
+    }
+  
+    // console.tron.log({sections})
+    return sections
   },
 
   get walletIsActive() { return self.user.level > 0 },

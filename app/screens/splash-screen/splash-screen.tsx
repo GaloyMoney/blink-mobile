@@ -77,9 +77,9 @@ export const SplashScreen = observer(({ navigation }) => {
     if (!needUpdate) {
       const token = new Token()
       if (token.has()) {
-          navigation.navigate("Primary")
-        } else {
-          navigation.navigate("getStarted")
+        navigation.navigate("Primary")
+      } else {
+        navigation.navigate("getStarted")
       }
     }
   }
