@@ -19,6 +19,7 @@ export interface IValidPaymentReponse {
   paymentType?: IPaymentType,
   sameNode?: boolean | undefined,
   hash?: string | undefined,
+  username?: string | undefined,
 }
 
 // TODO: enforce this from the backend
@@ -36,7 +37,7 @@ const mappingToBitcoinJs = (input: INetwork) => {
 const reAmount = /^(([\d.]+)(X(\d+))?|x([\da-f]*)(\.([\da-f]*))?(X([\da-f]+))?)$/i;
 function parseAmount(txt) {
   var m = txt.match(reAmount);
-  return m[5] ? (
+  return Math.round(m[5] ? (
       (
           parseInt(m[5], 16) +
           (m[7] ? (parseInt(m[7], 16) * Math.pow(16, -(m[7].length))) : 0)
@@ -47,7 +48,7 @@ function parseAmount(txt) {
           m[2]
       *
           (m[4] ? Math.pow(10, m[4]) : 1e8)
-  );
+  ));
 }
 
 export const validPayment = (input: string, network: INetwork, myPubKey: string, username: string): IValidPaymentReponse => {
@@ -82,10 +83,17 @@ export const validPayment = (input: string, network: INetwork, myPubKey: string,
     }
 
     data = protocol
-  } else if (protocol.toLowerCase() === "faucet") {
-    paymentType = "faucet"
-    const hash = data
-    return {valid: true, paymentType, hash}
+  } else if (protocol.toLowerCase() === "https") {
+    const domain = "//ln.bitcoinbeach.com/"
+    if (data.startsWith(`${domain}faucet/`)) {
+      paymentType = "faucet"
+      // TODO
+      const hash = data
+      return {valid: true, paymentType, hash}
+    }
+    else if (data.startsWith(domain)) {
+      return {valid: true, paymentType: "username", username: data.substring(domain.length)}
+    }
   }
     else {
     // no schema
@@ -107,7 +115,7 @@ export const validPayment = (input: string, network: INetwork, myPubKey: string,
       // will throw if address is not valid
       bitcoin.address.toOutputScript(address, mappingToBitcoinJs(network));
       paymentType = "onchain"
-      return {valid: true, paymentType, address, amount}
+      return {valid: true, paymentType, address, amount, amountless: !amount}
 
     } catch (e) {
       console.tron?.warn(`issue with payment ${e}`)

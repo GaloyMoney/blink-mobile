@@ -29,6 +29,7 @@
     "address": "Address",
     "tryAgain": "Try again",
     "amountRequired": "Amount is required",
+    "usernameRequired": "Username is required",
     "send": "Send",
     "date": "Date",
     "description": "Description",
@@ -536,7 +537,7 @@
       }
     ]
   },
-  "AccountDetailScreen": {
+  "PriceScreen": {
     "today": "Today",
     "yesterday": "Yesterday",
     "thisMonth": "This month",
@@ -551,6 +552,9 @@
     "useLightning": "We use the Lightning Network.",
     "updateAvailable": "An update is available.\nTab to update now"
   },
+  "ContactsScreen": {
+    "title": "Contacts"
+  },
   "SendBitcoinScreen": {
     "note": "optional note",
     "fee": "network fee",
@@ -561,7 +565,8 @@
     "noAmount": "This invoice doesn't have an amount, so you need to manually specify how much money you want to send",
     "notConfirmed": "Payment has been sent\nbut is not confirmed yet\n\nYou can check the status\nof the payment in Transactions",
     "input": "username or invoice",
-    "totalExceed": "Total exceeds your balance of {{balance}}"
+    "totalExceed": "Total exceeds your balance of {{balance}}",
+    "feeCalculationUnsuccesful": "Calculation unsuccesful ⚠️"
   },
   "ScanningQRCodeScreen": {
     "invalidTitle": "Invalid QR Code",

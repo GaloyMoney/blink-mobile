@@ -63,7 +63,10 @@ export const SplashScreen = observer(({ navigation }) => {
       appVersion: String(VersionNumber.appVersion),
       buildVersion: String(VersionNumber.buildVersion),
       os: Platform.OS,
-    }, undefined, {fetchPolicy: "no-cache"}))
+    }, 
+    undefined, 
+    {fetchPolicy: "no-cache"}
+    ))
   }
 
   React.useEffect(() => query(), [])

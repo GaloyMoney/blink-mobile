@@ -4,20 +4,20 @@
 
 import analytics from "@react-native-firebase/analytics"
 import "@react-native-firebase/crashlytics"
-
 import { NavigationContainer, NavigationState, PartialState } from "@react-navigation/native"
 import { createHttpClient } from "mst-gql"
 import "node-libs-react-native/globals" // needed for Buffer?
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { Dimensions, Text, YellowBox } from "react-native"
+import { Dimensions, YellowBox } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
+import { RootSiblingParent } from "react-native-root-siblings"
 import "./i18n"
 import { RootStore, StoreContext } from "./models"
 import { Environment } from "./models/environment"
 import { RootStack } from "./navigation/root-navigator"
 import { getGraphQlUri, Token } from "./utils/token"
-import { RootSiblingParent } from "react-native-root-siblings"
+
 
 export async function createEnvironment() {
   const env = new Environment()
@@ -82,12 +82,6 @@ export const App = () => {
         transactions: [],
       },
     },
-    users: {
-      incognito: {
-        id: "incognito",
-        level: 0,
-      },
-    },
   }
 
   useEffect(() => {
@@ -130,13 +124,6 @@ export const App = () => {
     return null
   }
 
-
-
-  // "params": {
-  //   "username": "tiendamaria"
-  // }
-
-
   return (
     // TODO replace with React.createContext
     // https://mobx.js.org/refguide/inject.html
@@ -144,7 +131,6 @@ export const App = () => {
     <StoreContext.Provider value={rootStore}>
       <NavigationContainer
         linking={{
-          // TODO: finish to be able to parse QRCode
           prefixes: ['https://ln.bitcoinbeach.com', 'bitcoinbeach://'],
           config: {
             screens: {
@@ -152,19 +138,13 @@ export const App = () => {
                   screens: {
                   MoveMoney: {
                     initialRouteName: "moveMoney",
-                    screens: {
+                    screens: rootStore.walletIsActive ? {
                       sendBitcoin: ":username",
                       moveMoney: "/",
-                    }
-                  }
-                }
-              }
-            }
-          },
-        }} 
+                    } : null
+          }}}}}}}
         // fallback={<Text>Loading...</Text>}
         onStateChange={(state) => {
-          console.tron.log({state})
           const currentRouteName = getActiveRouteName(state)
 
           if (routeName !== currentRouteName) {

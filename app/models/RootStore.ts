@@ -16,7 +16,7 @@ import { TransactionModel } from "./TransactionModel"
 export const ROOT_STATE_STORAGE_KEY = "rootAppGaloy"
 
 const gql_all = `
-prices {
+prices(length: $length) {
   __typename
   id
   o
@@ -38,7 +38,7 @@ nodeStats {
 }`
 
 const gql_query_logged = `
-query gql_query_logged {
+query gql_query_logged($length: Int) {
   ${gql_all}
   earnList {
     __typename
@@ -79,8 +79,11 @@ query gql_query_logged {
 }
 `
 
+// TODO add: me.contacts
+
+
 const gql_query_anonymous = `
-query gql_query_anonymous {
+query gql_query_anonymous($length: Int) {
   ${gql_all}
   earnList {
     __typename
@@ -118,7 +121,7 @@ export const RootStore = RootStoreBase
 
   const mainQuery = (): Query => {
     const query = new Token().has() ? gql_query_logged : gql_query_anonymous
-    return self.query(query)
+    return self.query(query, {length: 1})
   }
 
   const setModalClipboardVisible = (value): void => {
@@ -248,13 +251,17 @@ export const RootStore = RootStoreBase
     
     console.tron.log("cleared local transactions")
 
-    yield self.mainQuery()
-    self.users.delete("incognito")
-    
     // FIXME: only for android?
     // it seems we also have a token for iOS, without the permissions to show it though
-    console.tron.log("sending token")
+    console.tron.log("sending device token for notifications")
     yield uploadToken(self)
+
+    try {
+      yield self.mainQuery()
+    } catch (err) {
+      console.tron.warn({err})
+    }
+    
   })
 
   const isUpdateRequired = () => {
@@ -295,7 +302,10 @@ export const RootStore = RootStoreBase
   },
   get user() {
     const users = values(self.users)
-    return  users[users.length - 1]
+    return !!users.length ? users[0] : {
+      id: "incognito",
+      level: 0,
+    }
   },
   get earnedSat() {
     return sumBy(filter(values(self.earns), {completed: true}), "value")
@@ -321,7 +331,7 @@ export const RootStore = RootStoreBase
   },
   get walletIsActive() { return self.user.level > 0 },
   get username() { return self.user.username },
-  get myPubKey() { return values(self.nodeStats)[0].id }
+  get myPubKey() { return self.nodeStats ? values(self.nodeStats)[0].id : ""}
 }))
   // return in BTC instead of SAT
   // get getInBTC() {
