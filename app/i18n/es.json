@@ -1,5 +1,5 @@
 {
-  "PriceScreen": {
+  "AccountDetailScreen": {
     "openAccount": "Abra una cuenta de efectivo en Galoy",
     "openAccountReason": "Para {{side}} bitcoin, necesita una cuenta de efectivo de Galoy, por lo que puede transferir dólares estadounidenses",
     "prevMonths": "Meses  previos",
