@@ -9,7 +9,7 @@ export const requestPermission = async (store) => {
 
   // Alert.alert(`enable: ${enabled ? 'true': 'false'}`)
 
-  if (!enabled) {
+  if (!enabled || !store.walletIsActive) {
     return
   }
 
