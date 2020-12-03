@@ -6,9 +6,9 @@ import { CloseCross } from "../../components/close-cross"
 import { colorTypeFromIconType, IconTransaction } from "../../components/icon-transactions"
 import { Screen } from "../../components/screen"
 import { TextCurrency } from "../../components/text-currency"
+import { TransactionItemProps } from "../../components/transaction-item"
 import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
-import { AccountDetailItemProps } from "../price-screen"
 import { currencyFormatting } from "../../utils/currencyConversion"
 
 const styles = EStyleSheet.create({
@@ -87,7 +87,7 @@ const Row = ({ entry, value }) => (
 
 export const TransactionDetailScreen = ({ route, navigation }) => {
   
-  const { currency, amount, hash, description, fee, isReceive, id, usd, feeUsd, date_format, type, pending } = route.params.tx as AccountDetailItemProps
+  const { currency, amount, hash, description, fee, isReceive, id, usd, feeUsd, date_format, type, pending } = route.params.tx as TransactionItemProps
 
   const spendOrReceiveText = isReceive ? 
     translate("TransactionDetailScreen.received") : 

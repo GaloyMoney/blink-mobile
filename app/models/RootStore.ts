@@ -348,7 +348,11 @@ export const RootStore = RootStoreBase
     return balances[account]
   },
 
-  transactionsSections() {
+  lastTransactions(length: 3) {
+    return values(self.wallets.get("BTC").transactions)[length]
+  },
+
+  get transactionsSections() {
     const sections = []
     const today = []
     const yesterday = []
@@ -396,6 +400,7 @@ export const RootStore = RootStoreBase
   get username() { return self.user.username },
 
   // FIXME why do we need a default value?
+  // this should not be used when not logged in
   get myPubKey() { return self.nodeStats ? values(self.nodeStats)[0].id : ""}
 }))
   // return in BTC instead of SAT
