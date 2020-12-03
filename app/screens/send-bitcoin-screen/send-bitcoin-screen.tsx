@@ -178,7 +178,7 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
 
   useEffect(() => {
     const fn = async () => {
-      const {valid, errorMessage, invoice, amount: amountInvoice, amountless, memo: memoInvoice, paymentType, address, sameNode,} = validPayment(destination, network, store.myPubKey, store.username)
+      const {valid, errorMessage, invoice, amount: amountInvoice, amountless, memo: memoInvoice, paymentType, address, sameNode} = validPayment(destination, network, store.myPubKey, store.username)
       
       if (valid) {
         setStatus("idle")
@@ -375,8 +375,6 @@ export const SendBitcoinScreenJSX = ({
   address, memo, errs, amount, goBack, pay, price, prefCurrency, nextPrefCurrency, 
   setMemo, setDestination, destination, usernameExists, loadingUserNameExist, interactive,
   potentialBitcoinOrLightning, errorMessage, reset }) => {
-
-    console.tron.log({amount, errorMessage, destination})
 
     return <Screen style={styles.mainView} preset="scroll">
     <View style={styles.section}>

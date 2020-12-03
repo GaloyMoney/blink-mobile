@@ -108,7 +108,7 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
     //   setBrightnessInitial(brightness)
     //   console.tron.log('brightness', brightness);
     // });
-    ScreenBrightness.setBrightness(1); // between 0 and 1
+    // ScreenBrightness.setBrightness(1); // between 0 and 1
     // ScreenBrightness.setBrightness(1); // between 0 and 1
   }, [])
 
