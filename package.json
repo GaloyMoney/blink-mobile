@@ -101,7 +101,7 @@
     "@babel/plugin-proposal-optional-catch-binding": "^7.8.3",
     "@babel/preset-typescript": "^7.12.7",
     "@babel/runtime": "^7.8.4",
-    "@emotion/core": "^11.0.0",
+    "@emotion/core": "^10.0.28",
     "@react-native-community/eslint-config": "^2.0.0",
     "@storybook/addon-actions": "^6.1.9",
     "@storybook/addon-knobs": "^6.1.9",
