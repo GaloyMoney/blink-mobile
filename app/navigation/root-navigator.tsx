@@ -345,9 +345,7 @@ export const RootStack = () => {
       <RootNavigator.Screen
         name="transactionHistory"
         component={TransactionScreenDataInjected}
-        options={() => ({
-          title: "Transaction History",
-        })}
+        options={{title: "Transaction History"}}
       />
       <RootNavigator.Screen
         name="accountDetail"
@@ -462,22 +460,12 @@ export const PrimaryNavigator = () => {
       }}
     >
       <Tab.Screen
-        name="Transactions"
-        component={TransactionScreenDataInjected}
-        options={{
-          title: translate("common.transactions"),
-          tabBarIcon: ({ focused, color }) => {
-            return <Icon name={"ios-list-outline"} size={size} color={color} />
-          },
-        }}
-      />
-      <Tab.Screen
         name="MoveMoney"
         component={MoveMoneyNavigator}
         options={{
           title: translate("MoveMoneyScreen.title"),
           tabBarIcon: ({ focused, color }) => {
-            return <Icon name={"ios-swap-horizontal"} size={size} color={color} />
+            return <Icon name={"ios-home"} size={size} color={color} />
           },
         }}
       />

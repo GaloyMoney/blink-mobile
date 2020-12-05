@@ -32,6 +32,7 @@ import Toast from "react-native-root-toast"
 import LottieView from 'lottie-react-native'
 import Swiper from "react-native-swiper"
 import ScreenBrightness from 'react-native-screen-brightness'
+import { isIos } from "../../utils/helper"
 
 const successLottie = require('../move-money-screen/success_lottie.json')
 
@@ -104,13 +105,47 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
 
   useEffect(() => {
     update()
-    // ScreenBrightness.getBrightness().then(brightness => {
-    //   setBrightnessInitial(brightness)
-    //   console.tron.log('brightness', brightness);
-    // });
-    // ScreenBrightness.setBrightness(1); // between 0 and 1
-    // ScreenBrightness.setBrightness(1); // between 0 and 1
   }, [])
+
+  useEffect(() => {
+    const fn = async () => {
+      
+      // android required permission, and open the settings page for it
+      // it's probably not worth the hurdle
+      //
+      // only doing the brightness for iOS for now
+      //
+      // only need     <uses-permission android:name="android.permission.WRITE_SETTINGS" tools:ignore="ProtectedPermissions"/>
+      // in the manifest
+      // see: https://github.com/robinpowered/react-native-screen-brightness/issues/38
+      //
+      if (!isIos) {
+        return
+      }
+      
+      // let hasPerm = await ScreenBrightness.hasPermission();
+  
+      // if(!hasPerm){
+      //   ScreenBrightness.requestPermission();
+      // }
+
+      // only enter this loop when brightnessInitial is not set
+      // if (!brightnessInitial && hasPerm) {
+      if (!brightnessInitial) {
+        ScreenBrightness.getBrightness().then(brightness => {
+          console.log({brightness});
+          setBrightnessInitial(brightness)
+          ScreenBrightness.setBrightness(1); // between 0 and 1
+        });
+      }
+    }
+    
+    fn()
+  }, [])
+
+  useEffect(() => {
+    return brightnessInitial ? () => ScreenBrightness.setBrightness(brightnessInitial) : () => {}
+  }, [brightnessInitial])
 
   useEffect(() => {
     const notifRequest = async () => {
@@ -332,10 +367,10 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
                 size={280}
                 value={getFullUri(data)}
                 logoBackgroundColor="white"
-                ecl="M"
+                ecl="L"
                 logo={Icon.getImageSourceSync(
                   type === "lightning" ? "ios-flash" : "logo-bitcoin",
-                  64,
+                  28,
                   palette.orange,
                 )}
               />

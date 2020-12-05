@@ -35,15 +35,19 @@ export const TransactionModel = TransactionModelBase
       get date_format() {
         return moment_date.toLocaleString("en-US", date_options)
       }, 
+      get date_nice_print() {
+        // Math.min prevent transaction "in a few seconds" if the clock is not synchronized
+        return moment.duration(Math.min(0, moment_date.diff(moment()))).humanize(true) 
+      },
       get isReceive() {
         return self.amount > 0
       },
-      text(prefCurrency) {
-        const symbol = prefCurrency === "sats" ? '' : "$"
+      get text() {
+        const symbol = self.store.prefCurrency === "sats" ? '' : "$"
         
         // manage sign for usd. unlike for amount usd is not signed
-        const signAmount = (tx) => prefCurrency === "sats" ? tx.amount : tx.amount > 0 ? tx.usd : - tx.usd
-        const getPrecision = (tx) => prefCurrency === "sats" ? 0 : tx.usd < 0.01 ? 4 : 2
+        const signAmount = (tx) => self.store.prefCurrency === "sats" ? tx.amount : tx.amount > 0 ? tx.usd : - tx.usd
+        const getPrecision = (tx) => self.store.prefCurrency === "sats" ? 0 : tx.usd < 0.01 ? 4 : 2
         return currency_fmt.default(signAmount(self), { separator: ",", symbol, precision: getPrecision(self) }).format()
       },
   })})
