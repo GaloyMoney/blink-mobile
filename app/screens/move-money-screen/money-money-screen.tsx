@@ -95,7 +95,15 @@ const styles = EStyleSheet.create({
 
 
 export const MoveMoneyScreenDataInjected = observer(({ navigation }) => {
-  const { store, error, loading, query } = useQuery(store => store.mainQuery())
+  const { store, error, loading, setQuery } = useQuery()
+
+  const refreshQuery = async () => {
+    setQuery(store => store.mainQuery())
+  }
+
+  useEffect(() => {
+    refreshQuery()
+  }, []);
 
   // temporary fix until we have a better management of notifications:
   // when coming back to active state. look if the invoice has been paid
@@ -104,7 +112,7 @@ export const MoveMoneyScreenDataInjected = observer(({ navigation }) => {
       if (nextAppState === "active") {
         // TODO: fine grain query
         // only refresh as necessary
-        query.refetch()
+        refreshQuery()
       }
     };
 
@@ -119,7 +127,7 @@ export const MoveMoneyScreenDataInjected = observer(({ navigation }) => {
     const unsubscribe = messaging().onMessage(async remoteMessage => {
       // TODO: fine grain query
       // only refresh as necessary
-      query.refetch()
+      refreshQuery()
     })
 
     return unsubscribe;
@@ -135,7 +143,7 @@ export const MoveMoneyScreenDataInjected = observer(({ navigation }) => {
       currency: CurrencyType.BTC,
       account: AccountType.BankAndBitcoin,
     })}
-    refreshQuery={query.refetch}
+    refreshQuery={refreshQuery}
     isUpdateAvailable={store.isUpdateAvailable()}
     transactions={store.lastTransactions}
   />
