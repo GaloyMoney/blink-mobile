@@ -544,7 +544,7 @@
     "prevMonths": "Previous months"
   },
   "MoveMoneyScreen": {
-    "title": "Move Money",
+    "title": "Home",
     "send": "Send",
     "receive": "Receive",
     "needWallet": "Validate your phone to open your wallet",
@@ -600,6 +600,7 @@
     "received": "You received"
   },
   "TransactionScreen": {
+    "title": "Transactions",
     "noTransaction": "No transaction to show"
   },
   "SplashScreen": {

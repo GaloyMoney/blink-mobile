@@ -35,6 +35,10 @@ export const TransactionModel = TransactionModelBase
       get date_format() {
         return moment_date.toLocaleString("en-US", date_options)
       }, 
+      get date_nice_print() {
+        // Math.min prevent transaction "in a few seconds" if the clock is not synchronized
+        return moment.duration(Math.min(0, moment_date.diff(moment()))).humanize(true) 
+      },
       get isReceive() {
         return self.amount > 0
       },

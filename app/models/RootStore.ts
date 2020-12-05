@@ -82,9 +82,7 @@ query gql_query_logged($length: Int) {
 }
 `
 
-// TODO add: me.contacts
-
-
+// TODO: add contacts
 const gql_query_anonymous = `
 query gql_query_anonymous($length: Int) {
   ${gql_all}
@@ -348,8 +346,8 @@ export const RootStore = RootStoreBase
     return balances[account]
   },
 
-  lastTransactions(length: 3) {
-    return values(self.wallets.get("BTC").transactions)[length]
+  get lastTransactions() {
+    return values(self.wallets.get("BTC").transactions).slice(undefined, 3)
   },
 
   get transactionsSections() {

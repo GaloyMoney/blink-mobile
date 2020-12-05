@@ -9,9 +9,10 @@ import { Text } from "react-native"
 export interface TransactionItemProps {
   navigation: StackNavigationProp<any,any>,
   tx: Object // TODO
+  subtitle: boolean,
 }
 
-export const TransactionItem: React.FC<TransactionItemProps> = ({tx, navigation}) => {
+export const TransactionItem: React.FC<TransactionItemProps> = ({tx, navigation, subtitle = false}) => {
   const colorFromType = isReceive => isReceive ? palette.green : palette.darkGrey
 
   return (<ListItem
@@ -22,8 +23,9 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({tx, navigation}
       size={24}
       pending={tx.pending}
     />}
-    containerStyle={tx.pending ? {backgroundColor: palette.lighterGrey} : null}
+    containerStyle={tx.pending ? {backgroundColor: palette.lighterGrey, paddingVertical: 9} : {paddingVertical: 9}}
     rightTitle={<Text style={{color: colorFromType(tx.isReceive)}}>{tx.text}</Text>}
     onPress={() => navigation.navigate("transactionDetail", {tx})}
+    subtitle={subtitle ? tx.date_nice_print : undefined}
   />)
 }
