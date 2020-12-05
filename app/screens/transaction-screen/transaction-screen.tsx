@@ -106,7 +106,6 @@ export const TransactionScreenDataInjected = observer(({navigation, route}) => {
   const { store, error, loading, setQuery } = useQuery()
 
   const refreshQuery = async () => {
-    console.tron.log("refresh query from transaction screen")
     setQuery(store => store.mainQuery())
   }
 
@@ -125,7 +124,7 @@ export const TransactionScreenDataInjected = observer(({navigation, route}) => {
 })
 
 export const TransactionScreen = 
-  ({ refreshing, navigation, currency, onRefresh, error, prefCurrency, nextPrefCurrency, sections }) =>
+  ({ refreshing, navigation, onRefresh, error, prefCurrency, nextPrefCurrency, sections }) =>
   <Screen style={styles.screen}>
     <SectionList
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
@@ -137,7 +136,7 @@ export const TransactionScreen =
           <Text style={{color: palette.red, alignSelf: "center", paddingBottom: 18}} selectable={true}>{message}</Text>
         )}
       </>}
-      initialNumToRender={14}
+      initialNumToRender={18}
       renderSectionHeader={({ section: { title } }) => (
         <View style={styles.sectionHeaderContainer}>
           <Text style={styles.sectionHeaderText}>{title}</Text>
