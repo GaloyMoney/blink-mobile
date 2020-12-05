@@ -3,7 +3,7 @@ import { observer } from "mobx-react"
 import * as React from "react"
 import { useEffect, useState } from "react"
 import { AppState, FlatList, Linking, Pressable, RefreshControl, Text, View } from "react-native"
-import { Button } from "react-native-elements"
+import { Button, Card, ListItem } from "react-native-elements"
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
@@ -12,8 +12,9 @@ import { BalanceHeader } from "../../components/balance-header"
 import { IconTransaction } from "../../components/icon-transactions"
 import { LargeButton } from "../../components/large-button"
 import { Screen } from "../../components/screen"
+import { TransactionItem } from "../../components/transaction-item"
 import { translate } from "../../i18n"
-import { StoreContext, useQuery } from "../../models"
+import { useQuery } from "../../models"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { AccountType, CurrencyType } from "../../utils/enum"
@@ -85,20 +86,24 @@ const styles = EStyleSheet.create({
     width: "50rem",
     backgroundColor: palette.white,
   },
+
+  transactionsView: {
+    marginHorizontal: "30rem",
+    flex: 1,
+  }
 })
 
 
 export const MoveMoneyScreenDataInjected = observer(({ navigation }) => {
-  const store = React.useContext(StoreContext)
-
-  const updateQuery = store => store.mainQuery()
-  const { query, error, loading, setQuery } = useQuery(updateQuery)
+  const { store, error, loading, setQuery } = useQuery()
 
   const refreshQuery = async () => {
-    console.tron.log("refresh query")
-    setQuery(updateQuery)
-    await query.refetch()
+    setQuery(store => store.mainQuery())
   }
+
+  useEffect(() => {
+    refreshQuery()
+  }, []);
 
   // temporary fix until we have a better management of notifications:
   // when coming back to active state. look if the invoice has been paid
@@ -140,11 +145,12 @@ export const MoveMoneyScreenDataInjected = observer(({ navigation }) => {
     })}
     refreshQuery={refreshQuery}
     isUpdateAvailable={store.isUpdateAvailable()}
+    transactions={store.lastTransactions}
   />
 })
 
 export const MoveMoneyScreen = (
-  ({ walletIsActive, navigation, loading, error, 
+  ({ walletIsActive, navigation, loading, error, transactions,
     refreshQuery, amount, amountOtherCurrency, isUpdateAvailable }) => {
 
   const [modalVisible, setModalVisible] = useState(false)
@@ -263,16 +269,34 @@ export const MoveMoneyScreen = (
             title: translate(`MoveMoneyScreen.receive`), 
             target: "receiveBitcoin",
             icon: <IconTransaction isReceive={true} size={32} />,
-          }]}
+          },
+          {
+            title: translate(`TransactionScreen.title`), 
+            target: "transactionHistory",
+            icon: <Icon name={"ios-list-outline"} size={32} color={color} />,
+            style: "transactionViewContainer",
+            transactions,
+          }
+        ]}
           style={styles.listContainer}
           refreshControl={<RefreshControl refreshing={loading} onRefresh={refreshQuery} />}
-          renderItem={({ item }) => (
-            <LargeButton
-              title={item.title}
-              icon={item.icon}
-              onPress={() => onMenuClick(item.target)}
-            />
-          )}
+          renderItem={({ item }) => { return (
+            <>
+              <LargeButton
+                title={item.title}
+                icon={item.icon}
+                onPress={() => onMenuClick(item.target)}
+                style={item.style}
+              />
+              { item.transactions &&
+                <View style={styles.transactionsView}>
+                  {
+                    item.transactions.map((item, i) => <TransactionItem navigation={navigation} tx={item} subtitle={true} />)
+                  }
+                </View>
+              }
+            </>
+          )}}
         />
         <View style={styles.bottom}>
           {isUpdateAvailable &&
