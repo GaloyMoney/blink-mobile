@@ -281,7 +281,7 @@ export const RootStore = RootStoreBase
   })
 
   return { log, earnComplete, loginSuccessful, setModalClipboardVisible, nextPrefCurrency, mainQuery, 
-    updatePendingInvoice, sendPayment, isUpdateRequired, isUpdateAvailable }
+    updatePendingInvoice, sendPayment }
 })
 .views((self) => ({
   // workaround on the fact key can't be enum
