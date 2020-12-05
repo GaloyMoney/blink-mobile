@@ -144,7 +144,7 @@ export const MoveMoneyScreenDataInjected = observer(({ navigation }) => {
       account: AccountType.BankAndBitcoin,
     })}
     refreshQuery={refreshQuery}
-    isUpdateAvailable={store.isUpdateAvailable()}
+    isUpdateAvailable={store.isUpdateAvailable}
     transactions={store.lastTransactions}
   />
 })

@@ -280,23 +280,6 @@ export const RootStore = RootStoreBase
     
   })
 
-  const isUpdateRequired = () => {
-    // FIXME cache issue
-    const { minBuildNumberAndroid, minBuildNumberIos } = values(self.buildParameters)[self.buildParameters.size - 1]
-    const minBuildNumber = isIos ? minBuildNumberIos : minBuildNumberAndroid
-    let buildNumber = Number(DeviceInfo.getBuildNumber())
-    return buildNumber < minBuildNumber
-  }
-
-  const isUpdateAvailable = () => {
-    // FIXME cache issue
-    const {lastBuildNumberAndroid, lastBuildNumberIos } = values(self.buildParameters)[self.buildParameters.size - 1]
-    const lastBuildNumber = isIos ? lastBuildNumberIos : lastBuildNumberAndroid
-    let buildNumber = Number(DeviceInfo.getBuildNumber())
-    return buildNumber < lastBuildNumber
-  }
-
-
   return { log, earnComplete, loginSuccessful, setModalClipboardVisible, nextPrefCurrency, mainQuery, 
     updatePendingInvoice, sendPayment, isUpdateRequired, isUpdateAvailable }
 })
@@ -399,7 +382,23 @@ export const RootStore = RootStoreBase
 
   // FIXME why do we need a default value?
   // this should not be used when not logged in
-  get myPubKey() { return self.nodeStats ? values(self.nodeStats)[0].id : ""}
+  get myPubKey() { return self.nodeStats ? values(self.nodeStats)[0].id : ""},
+
+  get isUpdateRequired() {
+    const { minBuildNumberAndroid, minBuildNumberIos } = values(self.buildParameters)[self.buildParameters.size - 1]
+    const minBuildNumber = isIos ? minBuildNumberIos : minBuildNumberAndroid
+    let buildNumber = Number(DeviceInfo.getBuildNumber())
+    return buildNumber < minBuildNumber
+  },
+
+  get isUpdateAvailable() {
+    // FIXME cache issue
+    const {lastBuildNumberAndroid, lastBuildNumberIos } = values(self.buildParameters)[self.buildParameters.size - 1]
+    const lastBuildNumber = isIos ? lastBuildNumberIos : lastBuildNumberAndroid
+    let buildNumber = Number(DeviceInfo.getBuildNumber())
+    return buildNumber < lastBuildNumber
+  }
+
 }))
   // return in BTC instead of SAT
   // get getInBTC() {
