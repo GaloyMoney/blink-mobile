@@ -72,14 +72,14 @@ export const SplashScreen = observer(({ navigation }) => {
   React.useEffect(() => query(), [])
 
   if (!!data) {
-    needUpdate = store.isUpdateRequired()
+    needUpdate = store.isUpdateRequired
   
     if (!needUpdate) {
       const token = new Token()
       if (token.has()) {
-        navigation.navigate("Primary")
+        navigation.replace("Primary")
       } else {
-        navigation.navigate("getStarted")
+        navigation.replace("getStarted")
       }
     }
   }
