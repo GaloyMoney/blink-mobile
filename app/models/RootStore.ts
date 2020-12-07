@@ -78,6 +78,7 @@ query gql_query_logged($length: Int) {
     level
     username
     phone
+    language
   }
 }
 `
