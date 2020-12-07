@@ -17,6 +17,7 @@
     "hack:types-react-test-renderer": "rimraf node_modules/@types/react-test-renderer/node_modules/@types",
     "ios-session": "cd ios && fastlane spaceauth -u ios@galoy.io",
     "fastlane-update": "cd ios && bundle update fastlane && cd ../android && bundle update fastlane && cd ..",
+    "increment": "cd ios && fastlane ios increment && cd ../android && echo 'fastlane android increment'",
     "patch": "patch-package",
     "postinstall": "jetify && if which pod >/dev/null; then (cd ios; pod install); fi",
     "prepare": "npm-run-all patch hack:*",
