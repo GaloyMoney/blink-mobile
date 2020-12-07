@@ -87,7 +87,7 @@ const Row = ({ entry, value }) => (
 
 export const TransactionDetailScreen = ({ route, navigation }) => {
   
-  const { currency, amount, hash, description, fee, isReceive, id, usd, feeUsd, date_format, type, pending } = route.params.tx as TransactionItemProps
+  const { currency, amount, hash, description, fee, isReceive, id, usd, feeUsd, date_format, type, pending, username } = route.params.tx as TransactionItemProps
 
   const spendOrReceiveText = isReceive ? 
     translate("TransactionDetailScreen.received") : 
@@ -114,6 +114,9 @@ export const TransactionDetailScreen = ({ route, navigation }) => {
           <Row entry={translate("common.fees")} value={feeEntry} />
         }
         <Row entry={translate("common.description")} value={description} />
+        {username &&
+          <Row entry={"Paid to/from"} value={username} />
+        }
         <Row entry={translate("common.type")} value={type} />
         {hash &&
           <Row entry={"Hash"} value={hash} />

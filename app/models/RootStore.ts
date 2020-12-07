@@ -66,6 +66,7 @@ query gql_query_logged($length: Int) {
       fee
       feeUsd
       pending
+      username
     }
   }
   getLastOnChainAddress {
