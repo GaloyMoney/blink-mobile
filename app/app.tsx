@@ -19,6 +19,7 @@ import { Environment } from "./models/environment"
 import { RootStack } from "./navigation/root-navigator"
 import { getGraphQlUri, Token } from "./utils/token"
 import i18n from "i18n-js"
+import * as RNLocalize from "react-native-localize"
 
 
 export async function createEnvironment() {
@@ -101,7 +102,12 @@ export const App = () => {
 
       setRootStore(store)
 
-      autorun(() => i18n.locale = store.user.langague)
+      const fallback = { languageTag: "es", isRTL: false }
+      const { languageTag } = RNLocalize.findBestAvailableLanguage(Object.keys(i18n.translations)) || fallback
+      
+      autorun(() => {
+        i18n.locale = store.user.language ? store.user.language : languageTag
+      })
 
       // setRootStore(await setupRootStore())
       const env = await createEnvironment()
