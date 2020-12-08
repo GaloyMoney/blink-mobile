@@ -31,6 +31,7 @@ import { palette } from "../theme/palette"
 import { AccountType } from "../utils/enum"
 import { validPayment } from "../utils/parsing"
 import { getNetwork, Token } from "../utils/token"
+import { LanguageScreen } from "../screens/settings-screen/language-screen"
 const PushNotification = require("react-native-push-notification");
 
 
@@ -308,10 +309,17 @@ export const RootStack = () => {
         })}
       />
       <RootNavigator.Screen
-        name="setUsernameScreen"
+        name="setUsername"
         component={UsernameScreen}
         options={() => ({
           title: "",
+        })}
+      />
+      <RootNavigator.Screen
+        name="language"
+        component={LanguageScreen}
+        options={() => ({
+          title: "Language preference",
         })}
       />
       <RootNavigator.Screen

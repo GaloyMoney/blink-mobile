@@ -1,21 +1,19 @@
-import { values } from "mobx"
 import * as React from "react"
 import { Alert, Modal, Text, View } from "react-native"
 import { Divider, Icon, ListItem } from "react-native-elements"
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { Screen } from "../../components/screen"
+import { VersionComponent } from "../../components/version"
 import { translate } from "../../i18n"
 import { StoreContext } from "../../models"
 import { palette } from "../../theme/palette"
 import { resetDataStore } from "../../utils/logout"
 import { hasFullPermissions, requestPermission } from "../../utils/notifications"
-import { VersionComponent } from "../../components/version"
 
 const styles = EStyleSheet.create({
   screenStyle: {
     backgroundColor: palette.lighterGrey
   },
-
 })
 
 export const SettingsScreen = ({navigation}) => {
@@ -48,8 +46,7 @@ export const SettingsScreenJSX = (params) => {
 
   const [modalVisible, setModalVisible] = React.useState(false)
 
-  const list = [
-    {
+  const list = [{
       category: translate("common.phoneNumber"),
       icon: 'call',
       id: 'phone',
@@ -63,17 +60,17 @@ export const SettingsScreenJSX = (params) => {
       icon: 'ios-person-circle',
       id: 'username',
       defaultValue: translate("SettingsScreen.tapUserName"),
-      action: () => params.navigation.navigate("setUsernameScreen"),
+      action: () => params.navigation.navigate("setUsername"),
       enabled: loggedin && !params.username,
       greyed: !loggedin,
     },
     {
       category: translate('common.language'),
       icon: 'ios-language',
-      id: 'notifications',
-      action: requestPermission,
-      enabled: loggedin && params.notificationsEnabled,
-      greyed: !loggedin,
+      id: 'language',
+      action: () => params.navigation.navigate("language"),
+      enabled: true,
+      greyed: false,
     },
     {
       category: translate('common.notification'),
@@ -94,8 +91,7 @@ export const SettingsScreenJSX = (params) => {
       },
       enabled: loggedin,
       greyed: !loggedin,
-    }
-  ]
+  }]
   
   const Component = ({icon, category, id = undefined, i, enabled, greyed, defaultValue = undefined, action, styleDivider}) => {
     const value = params[id] || defaultValue
