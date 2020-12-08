@@ -12,6 +12,7 @@ import {
   Keyboard,
   Platform,
   Pressable,
+  ScrollView,
   Share,
   Text,
   View,
@@ -421,30 +422,31 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
     )
   }
   
-
   return (
-    <Screen backgroundColor={palette.lighterGrey} style={styles.screen} preset="scroll">
-      <View style={styles.section}>
-        <InputPaymentDataInjected
-          onUpdateAmount={setAmount}
-          onBlur={update}
-          forceKeyboard={false}
-          editable={!isSucceed}
-          sub={false}
-        />
-        <Input placeholder="set a note" value={memo} onChangeText={setMemo} containerStyle={{marginTop: 0}}
-          inputStyle={styles.textStyle}
-          leftIcon={<Icon name={"ios-create-outline"} size={21} color={palette.darkGrey} />}
-          ref={inputMemoRef}
-          onBlur={update}
-          disabled={isSucceed}
-        />
-      </View>
-      {/* FIXME: fixed height */}
-      <Swiper height={450} loop={false} >  
-        <QRView type={"lightning"} />
-        <QRView type={"bitcoind"} />
-      </Swiper>
+    <Screen backgroundColor={palette.lighterGrey} style={styles.screen} preset="fixed">
+      <ScrollView>
+        <View style={styles.section}>
+          <InputPaymentDataInjected
+            onUpdateAmount={setAmount}
+            onBlur={update}
+            forceKeyboard={false}
+            editable={!isSucceed}
+            sub={false}
+          />
+          <Input placeholder="set a note" value={memo} onChangeText={setMemo} containerStyle={{marginTop: 0}}
+            inputStyle={styles.textStyle}
+            leftIcon={<Icon name={"ios-create-outline"} size={21} color={palette.darkGrey} />}
+            ref={inputMemoRef}
+            onBlur={update}
+            disabled={isSucceed}
+          />
+        </View>
+        {/* FIXME: fixed height */}
+        <Swiper height={450} loop={false} >  
+          <QRView type={"lightning"} />
+          <QRView type={"bitcoind"} />
+        </Swiper>
+      </ScrollView>
     </Screen>
   )
 })
