@@ -104,15 +104,11 @@ export const App = () => {
 
       const fallback = { languageTag: "es", isRTL: false }
       const { languageTag } = RNLocalize.findBestAvailableLanguage(Object.keys(i18n.translations)) || fallback
-      
-      autorun(() => {
-        i18n.locale = store.user.language ? store.user.language : languageTag
-      })
+      i18n.locale = store.user.language ? store.user.language : languageTag
 
       // setRootStore(await setupRootStore())
       const env = await createEnvironment()
 
-      console.log({ env })
       // reactotron logging
       if (__DEV__) {
         env.reactotron.setRootStore(store, {})
