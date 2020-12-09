@@ -84,6 +84,7 @@
     "react-native-safe-area-context": "^3.1.1",
     "react-native-screen-brightness": "^2.0.0-alpha",
     "react-native-screens": "^2.4.0",
+    "react-native-share": "^4.1.0",
     "react-native-snap-carousel": "^3.9.1",
     "react-native-svg": "^12.1.0",
     "react-native-swiper": "^1.6.0-rc.3",

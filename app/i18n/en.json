@@ -44,7 +44,8 @@
     "note": "Note",
     "type": "Type",
     "Total": "Total",
-    "success": "Success!"
+    "success": "Success!",
+    "csvExport": "Export transactions as CSV"
   },
   "sat": {
     "one": "1 sat",
