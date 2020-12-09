@@ -23,6 +23,7 @@ export const UpdateUserModelBase = withTypedRefs<Refs>()(ModelBase
   .named('UpdateUser')
   .props({
     __typename: types.optional(types.literal("UpdateUser"), "UpdateUser"),
+    setLanguage: types.union(types.undefined, types.null, types.boolean),
     setLevel: types.union(types.undefined, types.null, MSTGQLRef(types.late((): any => UserModel))),
     setUsername: types.union(types.undefined, types.null, types.boolean),
   })
@@ -33,6 +34,7 @@ export const UpdateUserModelBase = withTypedRefs<Refs>()(ModelBase
   })))
 
 export class UpdateUserModelSelector extends QueryBuilder {
+  get setLanguage() { return this.__attr(`setLanguage`) }
   get setUsername() { return this.__attr(`setUsername`) }
   setLevel(builder?: string | UserModelSelector | ((selector: UserModelSelector) => UserModelSelector)) { return this.__child(`setLevel`, UserModelSelector, builder) }
 }
@@ -40,4 +42,4 @@ export function selectFromUpdateUser() {
   return new UpdateUserModelSelector()
 }
 
-export const updateUserModelPrimitives = selectFromUpdateUser().setUsername
+export const updateUserModelPrimitives = selectFromUpdateUser().setLanguage.setUsername

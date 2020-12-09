@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-community/async-storage"
 import analytics from '@react-native-firebase/analytics'
 import { filter, indexOf, map, sumBy } from "lodash"
-import { values } from "mobx"
+import { get, keys, set, values } from "mobx"
 import { flow, getEnv, Instance, types } from "mobx-state-tree"
 import moment from "moment"
 import { localStorageMixin, Query } from "mst-gql"
@@ -81,6 +81,7 @@ query gql_query_logged($length: Int) {
     level
     username
     phone
+    language
   }
 }
 `
@@ -157,6 +158,20 @@ export const RootStore = RootStoreBase
 
     const result = await self.mutate(query, { hash })
     return result.invoice.updatePendingInvoice
+  }
+
+  const setLanguage = async ({language}): Promise<void> => {
+    // lightning
+    const query = `mutation setLanguage($language: String) {
+      updateUser {
+          setLanguage(language: $language)
+      }
+    }`
+
+    const result = await self.mutate(query, { language }, () => {
+        self.users.get(keys(self.users)[0]).setLanguage({language})
+      }
+    )
   }
 
   const sendPayment = async ({paymentType, invoice, amountless, optMemo, address, amount, username}) => {
@@ -307,7 +322,7 @@ export const RootStore = RootStoreBase
   })
 
   return { log, earnComplete, loginSuccessful, setModalClipboardVisible, nextPrefCurrency, mainQuery, 
-    updatePendingInvoice, sendPayment, csvExport }
+    updatePendingInvoice, sendPayment, csvExport, setLanguage }
 })
 .views((self) => ({
   // workaround on the fact key can't be enum

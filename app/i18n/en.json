@@ -45,7 +45,8 @@
     "type": "Type",
     "Total": "Total",
     "success": "Success!",
-    "csvExport": "Export transactions as CSV"
+    "csvExport": "Export transactions as CSV",
+    "language": "language"
   },
   "sat": {
     "one": "1 sat",
