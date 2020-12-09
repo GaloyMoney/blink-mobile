@@ -4,7 +4,7 @@ import LottieView from 'lottie-react-native'
 import { observer } from "mobx-react"
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { ActivityIndicator, Text, View } from "react-native"
+import { ActivityIndicator, ScrollView, Text, View } from "react-native"
 import { Button, Input } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TextInput } from "react-native-gesture-handler"
@@ -376,7 +376,8 @@ export const SendBitcoinScreenJSX = ({
   setMemo, setDestination, destination, usernameExists, loadingUserNameExist, interactive,
   potentialBitcoinOrLightning, errorMessage, reset }) => {
 
-    return <Screen style={styles.mainView} preset="scroll">
+    return <Screen style={styles.mainView} preset="fixed">
+    <ScrollView>
     <View style={styles.section}>
       <InputPayment
         editable={paymentType === "lightning" || paymentType === "onchain" ? 
@@ -501,5 +502,6 @@ export const SendBitcoinScreenJSX = ({
       disabled={!amount || !!errorMessage || !destination}
       loading={status === "loading"}
     />
+    </ScrollView>
   </Screen>
 }

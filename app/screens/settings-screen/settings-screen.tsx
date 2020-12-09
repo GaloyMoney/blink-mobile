@@ -1,21 +1,19 @@
-import { values } from "mobx"
 import * as React from "react"
 import { Alert, Modal, Text, View } from "react-native"
 import { Divider, Icon, ListItem } from "react-native-elements"
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { Screen } from "../../components/screen"
+import { VersionComponent } from "../../components/version"
 import { translate } from "../../i18n"
 import { StoreContext } from "../../models"
 import { palette } from "../../theme/palette"
 import { resetDataStore } from "../../utils/logout"
 import { hasFullPermissions, requestPermission } from "../../utils/notifications"
-import { VersionComponent } from "../../components/version"
 
 const styles = EStyleSheet.create({
   screenStyle: {
     backgroundColor: palette.lighterGrey
   },
-
 })
 
 export const SettingsScreen = ({navigation}) => {
@@ -36,6 +34,7 @@ export const SettingsScreen = ({navigation}) => {
     navigation={navigation} 
     username={store.user.username}
     phone={store.user.phone}
+    language={store.user.language}
     notifications={notificationsEnabled ? translate("SettingsScreen.activated") : translate("SettingsScreen.activate")}  
     notificationsEnabled={notificationsEnabled}
   />
@@ -47,27 +46,34 @@ export const SettingsScreenJSX = (params) => {
 
   const [modalVisible, setModalVisible] = React.useState(false)
 
-  const list = [
-    {
-      title: translate("common.phoneNumber"),
+  const list = [{
+      category: translate("common.phoneNumber"),
       icon: 'call',
       id: 'phone',
-      defaultMessage: translate("SettingsScreen.tapLogIn"),
+      defaultValue: translate("SettingsScreen.tapLogIn"),
       action: () => params.navigation.navigate("phoneValidation"),
       enabled: !loggedin,
       greyed: loggedin,
     },
     {
-      title: translate("common.username"),
+      category: translate("common.username"),
       icon: 'ios-person-circle',
       id: 'username',
-      defaultMessage: translate("SettingsScreen.tapUserName"),
-      action: () => params.navigation.navigate("setUsernameScreen"),
+      defaultValue: translate("SettingsScreen.tapUserName"),
+      action: () => params.navigation.navigate("setUsername"),
       enabled: loggedin && !params.username,
       greyed: !loggedin,
     },
     {
-      title: translate('common.notification'),
+      category: translate('common.language'),
+      icon: 'ios-language',
+      id: 'language',
+      action: () => params.navigation.navigate("language"),
+      enabled: true,
+      greyed: false,
+    },
+    {
+      category: translate('common.notification'),
       icon: 'ios-notifications-circle',
       id: 'notifications',
       action: requestPermission,
@@ -76,7 +82,7 @@ export const SettingsScreenJSX = (params) => {
       styleDivider: { backgroundColor: palette.lighterGrey, height: 18 },
     },
     {
-      title: translate('common.logout'), 
+      category: translate('common.logout'), 
       id: "logout",
       icon: 'ios-log-out', 
       action: async () => {
@@ -85,11 +91,10 @@ export const SettingsScreenJSX = (params) => {
       },
       enabled: loggedin,
       greyed: !loggedin,
-    }
-  ]
+  }]
   
-  const Component = ({icon, title, id = undefined, i, enabled, greyed, defaultMessage = undefined, action, styleDivider}) => {
-    const message = params[id] || defaultMessage
+  const Component = ({icon, category, id = undefined, i, enabled, greyed, defaultValue = undefined, action, styleDivider}) => {
+    const value = params[id] || defaultValue
 
     return (
       <>
@@ -109,8 +114,8 @@ export const SettingsScreenJSX = (params) => {
         <Icon name={icon} type='ionicon' color={greyed ? palette.midGrey : null} />
         <ListItem.Content>
           <View>
-            <ListItem.Title style={greyed ? {color: palette.midGrey} : {}}>{title}</ListItem.Title>
-            {message && <ListItem.Title style={greyed ? {color: palette.midGrey} : {}}>{message}</ListItem.Title>}
+            <ListItem.Title style={greyed ? {color: palette.midGrey} : {}}>{category}</ListItem.Title>
+            {value && <ListItem.Title style={greyed ? {color: palette.midGrey} : {}}>{value}</ListItem.Title>}
           </View>
         </ListItem.Content>
         {enabled && <ListItem.Chevron />}

@@ -5,6 +5,7 @@
 import analytics from "@react-native-firebase/analytics"
 import "@react-native-firebase/crashlytics"
 import { NavigationContainer, NavigationState, PartialState } from "@react-navigation/native"
+import { autorun } from "mobx"
 import { createHttpClient } from "mst-gql"
 import "node-libs-react-native/globals" // needed for Buffer?
 import * as React from "react"
@@ -17,6 +18,8 @@ import { RootStore, StoreContext } from "./models"
 import { Environment } from "./models/environment"
 import { RootStack } from "./navigation/root-navigator"
 import { getGraphQlUri, Token } from "./utils/token"
+import i18n from "i18n-js"
+import * as RNLocalize from "react-native-localize"
 
 
 export async function createEnvironment() {
@@ -89,7 +92,7 @@ export const App = () => {
       const token = new Token()
       await token.load()
 
-      const rs = RootStore.create(defaultStoreInstance, {
+      const store = RootStore.create(defaultStoreInstance, {
         gqlHttpClient: createHttpClient(await getGraphQlUri(), {
           headers: {
             authorization: token.bearerString,
@@ -97,15 +100,18 @@ export const App = () => {
         }),
       })
 
-      setRootStore(rs)
+      setRootStore(store)
+
+      const fallback = { languageTag: "es", isRTL: false }
+      const { languageTag } = RNLocalize.findBestAvailableLanguage(Object.keys(i18n.translations)) || fallback
+      i18n.locale = store.user.language ? store.user.language : languageTag
 
       // setRootStore(await setupRootStore())
       const env = await createEnvironment()
 
-      console.log({ env })
       // reactotron logging
       if (__DEV__) {
-        env.reactotron.setRootStore(rs, {})
+        env.reactotron.setRootStore(store, {})
       }
     }
     fn()
