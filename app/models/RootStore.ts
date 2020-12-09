@@ -14,6 +14,8 @@ import { uploadToken } from "../utils/notifications"
 import { Token } from "../utils/token"
 import { RootStoreBase } from "./RootStore.base"
 import { TransactionModel } from "./TransactionModel"
+import Share from 'react-native-share';
+
 
 export const ROOT_STATE_STORAGE_KEY = "rootAppGaloy"
 
@@ -211,6 +213,29 @@ export const RootStore = RootStoreBase
     self.prefCurrency = units[(currentIndex + 1) % units.length]
   }
 
+  const csvExport = async () => {    
+    console.tron.log("csvExport")
+    const result = await self.queryWallet({}, "csv")
+    const csvEncoded = result.wallet[0].csv
+    try {
+      console.tron.log({csvEncoded})
+      // const decoded = Buffer.from(csvEncoded, 'base64').toString('ascii')
+      // console.tron.log({decoded})
+
+      const shareResponse = await Share.open({
+        // title: "export-csv-title.csv",
+        url: `data:text/csv;base64,${csvEncoded}`,
+        type: 'text/csv',
+        // subject: 'csv export',
+        filename: 'export.csv',
+        // message: 'export message'
+      });
+
+    } catch (err) {
+      console.tron.log({err})
+    }
+  }
+
   // FIXME need function* / yield instead?
   const earnComplete = async (id) => {
     const earn = self.earns.get(id)
@@ -282,7 +307,7 @@ export const RootStore = RootStoreBase
   })
 
   return { log, earnComplete, loginSuccessful, setModalClipboardVisible, nextPrefCurrency, mainQuery, 
-    updatePendingInvoice, sendPayment }
+    updatePendingInvoice, sendPayment, csvExport }
 })
 .views((self) => ({
   // workaround on the fact key can't be enum

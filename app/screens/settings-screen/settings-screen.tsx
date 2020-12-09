@@ -38,6 +38,7 @@ export const SettingsScreen = ({navigation}) => {
     phone={store.user.phone}
     notifications={notificationsEnabled ? translate("SettingsScreen.activated") : translate("SettingsScreen.activate")}  
     notificationsEnabled={notificationsEnabled}
+    csvAction={store.csvExport}
   />
 }
 
@@ -72,6 +73,14 @@ export const SettingsScreenJSX = (params) => {
       id: 'notifications',
       action: requestPermission,
       enabled: loggedin && params.notificationsEnabled,
+      greyed: !loggedin,
+    },
+    {
+      title: translate('common.csvExport'),
+      icon: 'ios-download',
+      id: 'csv',
+      action: () => params.csvAction(),
+      enabled: loggedin,
       greyed: !loggedin,
       styleDivider: { backgroundColor: palette.lighterGrey, height: 18 },
     },
