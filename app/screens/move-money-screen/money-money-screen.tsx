@@ -231,7 +231,7 @@ export const MoveMoneyScreen = (
           <Button
             buttonStyle={styles.buttonStyleTime} 
             containerStyle={{marginTop: 32}}
-            onPress={() => navigation.navigate("accountDetail", { account: AccountType.Bitcoin }) }
+            onPress={() => navigation.navigate("priceDetail", { account: AccountType.Bitcoin }) }
             icon={<Icon name={"ios-trending-up-outline"} size={32} />}  
           />
           <BalanceHeader

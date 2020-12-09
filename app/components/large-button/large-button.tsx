@@ -22,11 +22,9 @@ const styles = EStyleSheet.create({
   },
 
   transactionViewContainer: {
-    backgroundColor: palette.white,
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
     marginTop: 18,
-    // borderColor: palette.lightGrey,
   },
 
   accountViewTitle: {
@@ -42,16 +40,10 @@ interface ILargeButton {
   title: string,
   onPress: (item: any) => void,
   loading?: boolean,
-  subtitle?: string
   style?
 }
 
-export const LargeButton = ({ style, icon, title, onPress, loading, subtitle, ...props}: ILargeButton) => {
-  const Loader = () => (
-    <ContentLoader height={20} width={70} speed={2} primaryColor="#f3f3f3" secondaryColor="#ecebeb">
-      <Rect x="0" y="0" rx="4" ry="4" width="60" height="20" />
-    </ContentLoader>
-  )
+export const LargeButton = ({ style, icon, title, onPress, loading, ...props}: ILargeButton) => {
 
   return (
     <ListItem
@@ -61,15 +53,9 @@ export const LargeButton = ({ style, icon, title, onPress, loading, subtitle, ..
       chevron
       title={title}
       onPress={onPress}
+      underlayColor={palette.lighterGrey}
+      activeOpacity={0.7}
       leftAvatar={icon}
-      subtitle=
-        {loading && <Loader />
-          ||
-          subtitle &&
-          <Text style={styles.accountAmount}>
-            {subtitle}
-          </Text>
-        }
       {...props}
     />
   )
