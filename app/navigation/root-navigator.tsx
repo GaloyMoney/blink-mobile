@@ -356,7 +356,7 @@ export const RootStack = () => {
         options={{title: "Transaction History"}}
       />
       <RootNavigator.Screen
-        name="accountDetail"
+        name="priceDetail"
         component={PriceScreen}
         options={{ 
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,

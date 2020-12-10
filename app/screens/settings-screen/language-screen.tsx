@@ -20,7 +20,7 @@ const styles = EStyleSheet.create({
   },
 })
 
-const language_mapping = {
+export const language_mapping = {
   null: 'Default (OS)',
   'en': 'English',
   'es': 'Español'

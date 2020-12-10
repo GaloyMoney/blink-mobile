@@ -9,6 +9,7 @@ import { StoreContext } from "../../models"
 import { palette } from "../../theme/palette"
 import { resetDataStore } from "../../utils/logout"
 import { hasFullPermissions, requestPermission } from "../../utils/notifications"
+import { language_mapping } from "./language-screen"
 
 const styles = EStyleSheet.create({
   screenStyle: {
@@ -34,9 +35,10 @@ export const SettingsScreen = ({navigation}) => {
     navigation={navigation} 
     username={store.user.username}
     phone={store.user.phone}
-    language={store.user.language}
+    language={language_mapping[store.user.language]}
     notifications={notificationsEnabled ? translate("SettingsScreen.activated") : translate("SettingsScreen.activate")}  
     notificationsEnabled={notificationsEnabled}
+    csvAction={store.csvExport}
   />
 }
 
@@ -49,7 +51,7 @@ export const SettingsScreenJSX = (params) => {
   const list = [{
       category: translate("common.phoneNumber"),
       icon: 'call',
-      id: 'phone',
+      key: 'phone',
       defaultValue: translate("SettingsScreen.tapLogIn"),
       action: () => params.navigation.navigate("phoneValidation"),
       enabled: !loggedin,
@@ -58,7 +60,7 @@ export const SettingsScreenJSX = (params) => {
     {
       category: translate("common.username"),
       icon: 'ios-person-circle',
-      id: 'username',
+      key: 'username',
       defaultValue: translate("SettingsScreen.tapUserName"),
       action: () => params.navigation.navigate("setUsername"),
       enabled: loggedin && !params.username,
@@ -67,23 +69,31 @@ export const SettingsScreenJSX = (params) => {
     {
       category: translate('common.language'),
       icon: 'ios-language',
-      id: 'language',
+      key: 'language',
       action: () => params.navigation.navigate("language"),
-      enabled: true,
-      greyed: false,
+      enabled: loggedin,
+      greyed: !loggedin,
     },
     {
       category: translate('common.notification'),
       icon: 'ios-notifications-circle',
-      id: 'notifications',
+      key: 'notifications',
       action: requestPermission,
       enabled: loggedin && params.notificationsEnabled,
+      greyed: !loggedin,
+    },
+    {
+      category: translate('common.csvExport'),
+      icon: 'ios-download',
+      key: 'csv',
+      action: () => params.csvAction(),
+      enabled: loggedin,
       greyed: !loggedin,
       styleDivider: { backgroundColor: palette.lighterGrey, height: 18 },
     },
     {
       category: translate('common.logout'), 
-      id: "logout",
+      key: "logout",
       icon: 'ios-log-out', 
       action: async () => {
         await resetDataStore()
@@ -93,8 +103,8 @@ export const SettingsScreenJSX = (params) => {
       greyed: !loggedin,
   }]
   
-  const Component = ({icon, category, id = undefined, i, enabled, greyed, defaultValue = undefined, action, styleDivider}) => {
-    const value = params[id] || defaultValue
+  const Component = ({icon, category, key = undefined, i, enabled, greyed, defaultValue = undefined, action, styleDivider}) => {
+    const value = params[key] || defaultValue
 
     return (
       <>
