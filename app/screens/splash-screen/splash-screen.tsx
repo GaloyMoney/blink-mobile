@@ -1,16 +1,16 @@
+import { observer } from "mobx-react"
 import * as React from "react"
-import { ActivityIndicator, Image, Platform, SafeAreaView, StyleSheet, Text, View } from "react-native"
+import { ActivityIndicator, Image, SafeAreaView, StyleSheet, Text, View } from "react-native"
 import { ScrollView } from "react-native-gesture-handler"
+import Toast from "react-native-root-toast"
 import { VersionComponent } from "../../components/version"
 import { translate } from "../../i18n"
 import { useQuery } from "../../models"
-import { palette } from "../../theme/palette"
-const BitcoinBeachLogo = require("../get-started-screen/bitcoinBeach3.png")
-import { observer } from "mobx-react"
-import { Token } from "../../utils/token"
-import VersionNumber from "react-native-version-number"
-import { Button } from "react-native-elements"
 import { color } from "../../theme"
+import { palette } from "../../theme/palette"
+import { Token } from "../../utils/token"
+import { connectionIssue } from "../move-money-screen"
+const BitcoinBeachLogo = require("../get-started-screen/bitcoinBeach3.png")
 
 const styles = StyleSheet.create({
   container: {
@@ -84,6 +84,21 @@ export const SplashScreen = observer(({ navigation }) => {
     }
   }
 
+  // TODO: refactor. use a reusable useEffect for that.
+  React.useEffect(() => {
+    if (connectionIssue(error) === true) {
+      Toast.show(translate("common.connectionIssue"), {
+        duration: Toast.durations.LONG,
+        shadow: false,
+        animation: true,
+        hideOnPress: true,
+        delay: 500,
+        position: 160,
+        opacity: 1,
+        backgroundColor: palette.red,
+      })
+    }
+  }, [connectionIssue(error)])
 
   return (
   <SafeAreaView style={styles.container}>
@@ -100,19 +115,6 @@ export const SplashScreen = observer(({ navigation }) => {
         {needUpdate && 
           <Text style={styles.text}>{translate('SplashScreen.update')}</Text>
         }
-        {/* {error &&
-          <View >
-            <Text style={styles.text}>{error.message}</Text>
-            <Button
-              title={"Try again"}
-              buttonStyle={styles.button}
-              titleStyle={styles.buttonTitle}
-              onPress={query}
-              containerStyle={styles.buttonContainer}
-              testID={"getStarted"}
-            />
-          </View>
-        } */}
       </View>
     </ScrollView>
   </SafeAreaView>

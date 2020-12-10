@@ -1,7 +1,7 @@
 import Clipboard from "@react-native-community/clipboard"
 import analytics from "@react-native-firebase/analytics"
 import messaging from "@react-native-firebase/messaging"
-import { values } from "mobx"
+import { keys, values } from "mobx"
 import { observer } from "mobx-react"
 import * as React from "react"
 import { useEffect, useState } from "react"
@@ -34,6 +34,8 @@ import LottieView from 'lottie-react-native'
 import Swiper from "react-native-swiper"
 import ScreenBrightness from 'react-native-screen-brightness'
 import { isIos } from "../../utils/helper"
+
+// FIXME: crash when no connection
 
 const successLottie = require('../move-money-screen/success_lottie.json')
 
@@ -290,7 +292,12 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
     if (type === "lightning") {
       data = invoice
     } else {
-      data = values(store.lastOnChainAddresses)[0].id
+      // manage if there are several lastOnChainAddresses in cache
+      if (keys(store.lastOnChainAddresses).length > 0) {
+        data = values(store.lastOnChainAddresses)[0].id
+      } else {
+        data = "issue with the QRcode"
+      }
     }
 
     const isReady = type === "lightning" ? !loading && data != "" : true

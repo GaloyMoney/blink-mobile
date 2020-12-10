@@ -95,6 +95,8 @@ const styles = EStyleSheet.create({
 })
 
 
+export const connectionIssue = (error) => !!error && Object.keys(error).length === 0
+
 export const MoveMoneyScreenDataInjected = observer(({ navigation }) => {
   const { store, error, loading, setQuery } = useQuery()
 
@@ -152,10 +154,8 @@ export const MoveMoneyScreen = (
 
   const [modalVisible, setModalVisible] = useState(false)
 
-  const connectionIssue = () => !!error && Object.keys(error).length === 0
-
   React.useEffect(() => {
-    if (connectionIssue() === true) {
+    if (connectionIssue(error) === true) {
       Toast.show(translate("common.connectionIssue"), {
         duration: Toast.durations.LONG,
         shadow: false,
@@ -167,7 +167,7 @@ export const MoveMoneyScreen = (
         backgroundColor: palette.red,
       })
     }
-  }, [connectionIssue()])
+  }, [connectionIssue(error)])
   
 
   const [secretMenuCounter, setSecretMenuCounter] = useState(0)
