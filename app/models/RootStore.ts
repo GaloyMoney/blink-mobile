@@ -123,12 +123,6 @@ const isThisMonth = (tx) => {
 
 
 export interface RootStoreType extends Instance<typeof RootStore.Type> {}
-
-export const OnboardingModel = types.model("Onboarding", {
-  getStarted: types.optional(types.boolean, false),
-}).actions(self => ({
-  getStartedCompleted() { self.getStarted = true },
-}))
   
 export const RootStore = RootStoreBase
 .extend(
@@ -139,7 +133,6 @@ export const RootStore = RootStoreBase
     filter: ['prices', 'wallets', 'transactions', 'earns', 'users', 'buildParameters', 'nodeStats', 'getLastOnChainAddress']
 }))
 .props({
-  onboarding: types.optional(OnboardingModel, {}),
   modalClipboardVisible: types.optional(types.boolean, false), // when switching been app, should we show modal when returning to Galoy?
   prefCurrency: types.optional(types.string, "USD"), // which currency to show from the app
 })

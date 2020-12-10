@@ -42,6 +42,9 @@ export const SettingsScreen = ({navigation}) => {
   />
 }
 
+
+// username / phone not working
+
 export const SettingsScreenJSX = (params) => {
 
   const loggedin = params.loggedin
@@ -51,7 +54,7 @@ export const SettingsScreenJSX = (params) => {
   const list = [{
       category: translate("common.phoneNumber"),
       icon: 'call',
-      key: 'phone',
+      id: 'phone',
       defaultValue: translate("SettingsScreen.tapLogIn"),
       action: () => params.navigation.navigate("phoneValidation"),
       enabled: !loggedin,
@@ -60,7 +63,7 @@ export const SettingsScreenJSX = (params) => {
     {
       category: translate("common.username"),
       icon: 'ios-person-circle',
-      key: 'username',
+      id: 'username',
       defaultValue: translate("SettingsScreen.tapUserName"),
       action: () => params.navigation.navigate("setUsername"),
       enabled: loggedin && !params.username,
@@ -69,7 +72,7 @@ export const SettingsScreenJSX = (params) => {
     {
       category: translate('common.language'),
       icon: 'ios-language',
-      key: 'language',
+      id: 'language',
       action: () => params.navigation.navigate("language"),
       enabled: loggedin,
       greyed: !loggedin,
@@ -77,7 +80,7 @@ export const SettingsScreenJSX = (params) => {
     {
       category: translate('common.notification'),
       icon: 'ios-notifications-circle',
-      key: 'notifications',
+      id: 'notifications',
       action: requestPermission,
       enabled: loggedin && params.notificationsEnabled,
       greyed: !loggedin,
@@ -85,7 +88,7 @@ export const SettingsScreenJSX = (params) => {
     {
       category: translate('common.csvExport'),
       icon: 'ios-download',
-      key: 'csv',
+      id: 'csv',
       action: () => params.csvAction(),
       enabled: loggedin,
       greyed: !loggedin,
@@ -93,7 +96,7 @@ export const SettingsScreenJSX = (params) => {
     },
     {
       category: translate('common.logout'), 
-      key: "logout",
+      id: "logout",
       icon: 'ios-log-out', 
       action: async () => {
         await resetDataStore()
@@ -103,8 +106,10 @@ export const SettingsScreenJSX = (params) => {
       greyed: !loggedin,
   }]
   
-  const Component = ({icon, category, key = undefined, i, enabled, greyed, defaultValue = undefined, action, styleDivider}) => {
-    const value = params[key] || defaultValue
+  const Component = ({icon, category, id, i, enabled, greyed, defaultValue = undefined, action, styleDivider}) => {
+    const value = params[id] || defaultValue
+
+    console.tron.log({id, value})
 
     return (
       <>
@@ -120,7 +125,7 @@ export const SettingsScreenJSX = (params) => {
           <Text>{translate("SettingsScreen.logOutSuccesful")}</Text>
         </View>
       </Modal>
-      <ListItem key={i} onPress={action} disabled={!enabled}>
+      <ListItem id={i} onPress={action} disabled={!enabled}>
         <Icon name={icon} type='ionicon' color={greyed ? palette.midGrey : null} />
         <ListItem.Content>
           <View>
