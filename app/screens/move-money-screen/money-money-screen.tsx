@@ -7,6 +7,7 @@ import { Button, Card, ListItem } from "react-native-elements"
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
+import Toast from "react-native-root-toast"
 import Icon from "react-native-vector-icons/Ionicons"
 import { BalanceHeader } from "../../components/balance-header"
 import { IconTransaction } from "../../components/icon-transactions"
@@ -94,16 +95,14 @@ const styles = EStyleSheet.create({
 })
 
 
+export const connectionIssue = (error) => !!error && Object.keys(error).length === 0
+
 export const MoveMoneyScreenDataInjected = observer(({ navigation }) => {
   const { store, error, loading, setQuery } = useQuery()
 
   const refreshQuery = async () => {
     setQuery(store => store.mainQuery())
   }
-
-  useEffect(() => {
-    refreshQuery()
-  }, []);
 
   // temporary fix until we have a better management of notifications:
   // when coming back to active state. look if the invoice has been paid
@@ -138,10 +137,10 @@ export const MoveMoneyScreenDataInjected = observer(({ navigation }) => {
     walletIsActive={store.walletIsActive}
     loading={loading}
     error={error}
-    amount={store.balances({currency: "USD", account: AccountType.BankAndBitcoin})}
+    amount={store.balances({currency: "USD", account: AccountType.Bitcoin})}
     amountOtherCurrency={store.balances({
       currency: CurrencyType.BTC,
-      account: AccountType.BankAndBitcoin,
+      account: AccountType.Bitcoin,
     })}
     refreshQuery={refreshQuery}
     isUpdateAvailable={store.isUpdateAvailable}
@@ -154,6 +153,22 @@ export const MoveMoneyScreen = (
     refreshQuery, amount, amountOtherCurrency, isUpdateAvailable }) => {
 
   const [modalVisible, setModalVisible] = useState(false)
+
+  React.useEffect(() => {
+    if (connectionIssue(error) === true) {
+      Toast.show(translate("common.connectionIssue"), {
+        duration: Toast.durations.LONG,
+        shadow: false,
+        animation: true,
+        hideOnPress: true,
+        delay: 0,
+        position: 160,
+        opacity: 1,
+        backgroundColor: palette.red,
+      })
+    }
+  }, [connectionIssue(error)])
+  
 
   const [secretMenuCounter, setSecretMenuCounter] = useState(0)
   React.useEffect(() => {
