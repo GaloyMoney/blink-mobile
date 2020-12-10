@@ -15,6 +15,8 @@ import { Token } from "../utils/token"
 import { RootStoreBase } from "./RootStore.base"
 import { TransactionModel } from "./TransactionModel"
 import Share from 'react-native-share';
+import VersionNumber from "react-native-version-number"
+import { Platform } from "react-native"
 
 
 export const ROOT_STATE_STORAGE_KEY = "rootAppGaloy"
@@ -40,10 +42,19 @@ maps {
 nodeStats {
   __typename
   id
-}`
+}
+buildParameters(appVersion: $appVersion, buildVersion: $buildVersion, os: $os) {
+  __typename
+  id
+  minBuildNumberAndroid
+  minBuildNumberIos
+  lastBuildNumberAndroid
+  lastBuildNumberIos
+}
+`
 
 const gql_query_logged = `
-query gql_query_logged($length: Int) {
+query gql_query_logged($length: Int, $appVersion: String, $buildVersion: String, $os: String) {
   ${gql_all}
   earnList {
     __typename
@@ -88,7 +99,7 @@ query gql_query_logged($length: Int) {
 
 // TODO: add contacts
 const gql_query_anonymous = `
-query gql_query_anonymous($length: Int) {
+query gql_query_anonymous($length: Int, appVersion: String, buildVersion: String, os: String) {
   ${gql_all}
   earnList {
     __typename
@@ -120,12 +131,13 @@ export const OnboardingModel = types.model("Onboarding", {
 }))
   
 export const RootStore = RootStoreBase
-// .extend(
-//   localStorageMixin({
-//     storage: AsyncStorage,
-//     // throttle: 1000,
-//     storageKey: ROOT_STATE_STORAGE_KEY
-// }))
+.extend(
+  localStorageMixin({
+    storage: AsyncStorage,
+    // throttle: 1000,
+    storageKey: ROOT_STATE_STORAGE_KEY,
+    filter: ['prices', 'wallets', 'transactions', 'earns', 'users', 'buildParameters', 'nodeStats', 'getLastOnChainAddress']
+}))
 .props({
   onboarding: types.optional(OnboardingModel, {}),
   modalClipboardVisible: types.optional(types.boolean, false), // when switching been app, should we show modal when returning to Galoy?
@@ -140,7 +152,10 @@ export const RootStore = RootStoreBase
   const mainQuery = (): Query => {
     const query = new Token().has() ? gql_query_logged : gql_query_anonymous
     return self.query(query, {
-      length: 1
+      length: 1,
+      appVersion: String(VersionNumber.appVersion),
+      buildVersion: String(VersionNumber.buildVersion),
+      os: Platform.OS,
     })
   }
 
@@ -278,7 +293,11 @@ export const RootStore = RootStoreBase
         description: id,
         created_at: moment().unix(),
         hash: null,
-        type: "earn"
+        type: "earn",
+        sat: amount,
+        usd: amount * self.rate("BTC"),
+        fee: 0,
+        feeUsd: 0,
       })
       
       self.transactions.set(id, tx)
@@ -334,7 +353,7 @@ export const RootStore = RootStoreBase
       if (p.length > 0) {
         return p[p.length - 1].o
       } else {
-        return 1 // FIXME
+        return 0.0002 // FIXME, default value
       }
     } else {
       throw Error(`currency ${currency} doesn't exist`)
@@ -359,14 +378,8 @@ export const RootStore = RootStoreBase
   },
   balances({ currency, account }) {
     const balances = {}
-
     const btcConversion = self.rate("BTC") / self.rate(currency)
-
     balances[AccountType.Bitcoin] = self.balance("BTC") * btcConversion
-    balances[AccountType.Bank] = self.balance("USD") / self.rate(currency)
-    balances[AccountType.BankAndBitcoin] =
-      balances[AccountType.Bank] + balances[AccountType.Bitcoin]
-
     return balances[account]
   },
 

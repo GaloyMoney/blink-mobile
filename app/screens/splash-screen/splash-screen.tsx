@@ -55,25 +55,25 @@ const styles = StyleSheet.create({
 export const SplashScreen = observer(({ navigation }) => {
   let needUpdate
 
-  // FIXME: no cache doesn't seem to work
-  const { error, loading, data, store, setQuery } = useQuery(null, {fetchPolicy: "no-cache"})
+  const { error, loading, data, store, setQuery } = useQuery()
+
+  const [afterFirstLoading, setAfterFirstLoading] = React.useState(false)
 
   const query = () => {
-    setQuery(store => store.queryBuildParameters({
-      appVersion: String(VersionNumber.appVersion),
-      buildVersion: String(VersionNumber.buildVersion),
-      os: Platform.OS,
-    }, 
-    undefined, 
-    {fetchPolicy: "no-cache"}
-    ))
+    setQuery(store => store.mainQuery())
   }
 
   React.useEffect(() => query(), [])
 
-  if (!!data) {
+  if(loading && !afterFirstLoading) {
+    setAfterFirstLoading(true)
+  } 
+    
+  if (!loading && afterFirstLoading) {
     needUpdate = store.isUpdateRequired
   
+    console.tron.log({needUpdate})
+
     if (!needUpdate) {
       const token = new Token()
       if (token.has()) {
@@ -83,6 +83,7 @@ export const SplashScreen = observer(({ navigation }) => {
       }
     }
   }
+
 
   return (
   <SafeAreaView style={styles.container}>
@@ -99,7 +100,7 @@ export const SplashScreen = observer(({ navigation }) => {
         {needUpdate && 
           <Text style={styles.text}>{translate('SplashScreen.update')}</Text>
         }
-        {error &&
+        {/* {error &&
           <View >
             <Text style={styles.text}>{error.message}</Text>
             <Button
@@ -111,7 +112,7 @@ export const SplashScreen = observer(({ navigation }) => {
               testID={"getStarted"}
             />
           </View>
-        }
+        } */}
       </View>
     </ScrollView>
   </SafeAreaView>
