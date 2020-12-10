@@ -135,6 +135,7 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
   const [status, setStatus] = useState("idle")
   // idle, loading, pending, success, error 
 
+  const { setQuery: setQuerySuccess } = useQuery()
   const { error: errorQuery, loading: loadingUserNameExist, data, setQuery } = useQuery()
   const usernameExists = data?.usernameExists ?? false
   
@@ -292,7 +293,9 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
       const { success, pending, errors } = await store.sendPayment({paymentType, invoice, amountless, optMemo, address, amount, username: destination})
 
       if (success) {
-        store.queryWallet()
+        // TODO: fine tune query:
+        // we only need transactions + wallet here (but not csv)
+        setQuerySuccess(store => store.mainQuery())
         setStatus("success")
       } else if (pending) {
         setStatus("pending")
@@ -382,7 +385,9 @@ export const SendBitcoinScreenJSX = ({
       <InputPayment
         editable={paymentType === "lightning" || paymentType === "onchain" ? 
           amountless && (status === "idle" || status === "error"):
-          true // bitcoin // TODO: handle amount properly
+          status === "success" ? 
+            false:
+            true // bitcoin // TODO: handle amount properly
         }
         initAmount={initAmount}
         onUpdateAmount={input => { setAmount(input); setStatus("idle")} }
@@ -420,7 +425,7 @@ export const SendBitcoinScreenJSX = ({
           }
         value={paymentType === "lightning" ? invoice : paymentType === "onchain" ? address : destination}
         renderErrorMessage={false}
-        editable={interactive}
+        editable={interactive && status !== "success"}
         selectTextOnFocus={true}
         autoCompleteType="username"
         autoCapitalize="none"
@@ -437,7 +442,7 @@ export const SendBitcoinScreenJSX = ({
         value={memo}
         onChangeText={value => setMemo(value)}
         renderErrorMessage={false}
-        editable={true}
+        editable={status !== "success"}
         selectTextOnFocus={true}
         // InputComponent={(props) => <Text {...props} selectable={true}>{props.value}</Text>}
       />
