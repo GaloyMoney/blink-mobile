@@ -140,7 +140,7 @@ export const MoveMoneyScreenDataInjected = observer(({ navigation }) => {
     amount={store.balances({currency: "USD", account: AccountType.Bitcoin})}
     amountOtherCurrency={store.balances({
       currency: CurrencyType.BTC,
-      account: AccountType.BankAndBitcoin,
+      account: AccountType.Bitcoin,
     })}
     refreshQuery={refreshQuery}
     isUpdateAvailable={store.isUpdateAvailable}
