@@ -31,11 +31,6 @@ Submit a new Beta Build to Crashlytics Beta
 fastlane android beta
 ```
 Deploy a new version to the Google Play
-### android increment
-```
-fastlane android increment
-```
-increment path version
 
 ----
 
