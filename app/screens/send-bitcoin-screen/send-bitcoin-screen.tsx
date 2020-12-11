@@ -47,7 +47,6 @@ const styles = EStyleSheet.create({
   mainView: {
     paddingHorizontal: 20,
     flex: 1,
-    justifyContent: "space-between",
   },
 
   memo: {
@@ -379,134 +378,134 @@ export const SendBitcoinScreenJSX = ({
   setMemo, setDestination, destination, usernameExists, loadingUserNameExist, interactive,
   potentialBitcoinOrLightning, errorMessage, reset }) => {
 
-    return <Screen style={styles.mainView} preset="fixed">
-    <ScrollView>
-    <View style={styles.section}>
-      <InputPayment
-        editable={paymentType === "lightning" || paymentType === "onchain" ? 
-          amountless && (status === "idle" || status === "error"):
-          status === "success" ? 
-            false:
-            true // bitcoin // TODO: handle amount properly
-        }
-        initAmount={initAmount}
-        onUpdateAmount={input => { setAmount(input); setStatus("idle")} }
-        forceKeyboard={true}
-        price={price}
-        prefCurrency={prefCurrency}
-        nextPrefCurrency={nextPrefCurrency}
-      />
-    </View>
-    <View style={{marginTop: 18}}>
-      <Input
-        placeholder={translate(`SendBitcoinScreen.input`)}
-        leftIcon={
-          <View style={{flexDirection: "row"}}>
-            <Text style={styles.smallText}>{translate("common.to")}</Text>
-            <Icon name="ios-log-out" size={24} color={color.primary} style={styles.icon} />
-          </View>
-        }
-        onChangeText={setDestination}
-        rightIcon={
-          destination?.length > 2 && !potentialBitcoinOrLightning && paymentType === "username" ?
-            loadingUserNameExist ? 
-              <ActivityIndicator size="small" /> :
-              usernameExists ?
-                <Text>✅</Text> :
-                <Text>⚠️</Text> :
-            paymentType === "lightning" || paymentType === "onchain" ?
-              <Icon name="ios-close-circle-outline"
-                // size={styles.icon.fontSize}
-                onPress={reset}
-                size={30}
-                // color={color}
-              />  :
-              null
+    return <Screen preset="fixed">
+    <ScrollView  style={styles.mainView} contentContainerStyle={{justifyContent: "space-between"}}>
+      <View style={styles.section}>
+        <InputPayment
+          editable={paymentType === "lightning" || paymentType === "onchain" ? 
+            amountless && (status === "idle" || status === "error"):
+            status === "success" ? 
+              false:
+              true // bitcoin // TODO: handle amount properly
           }
-        value={paymentType === "lightning" ? invoice : paymentType === "onchain" ? address : destination}
-        renderErrorMessage={false}
-        editable={interactive && status !== "success"}
-        selectTextOnFocus={true}
-        autoCompleteType="username"
-        autoCapitalize="none"
-        // InputComponent={(props) => <Text {...props} selectable={true}>{props.value}</Text>}
-      />
-      <Input
-        placeholder={translate(`SendBitcoinScreen.note`)}
-        leftIcon={
-          <View style={{flexDirection: "row"}}>
-            <Text style={styles.smallText}>{translate("common.note")}</Text>
-            <Icon name="ios-create-outline" size={24} color={color.primary} style={styles.icon} />
-          </View>
+          initAmount={initAmount}
+          onUpdateAmount={input => { setAmount(input); setStatus("idle")} }
+          forceKeyboard={true}
+          price={price}
+          prefCurrency={prefCurrency}
+          nextPrefCurrency={nextPrefCurrency}
+        />
+      </View>
+      <View style={{marginTop: 18}}>
+        <Input
+          placeholder={translate(`SendBitcoinScreen.input`)}
+          leftIcon={
+            <View style={{flexDirection: "row"}}>
+              <Text style={styles.smallText}>{translate("common.to")}</Text>
+              <Icon name="ios-log-out" size={24} color={color.primary} style={styles.icon} />
+            </View>
+          }
+          onChangeText={setDestination}
+          rightIcon={
+            destination?.length > 2 && !potentialBitcoinOrLightning && paymentType === "username" ?
+              loadingUserNameExist ? 
+                <ActivityIndicator size="small" /> :
+                usernameExists ?
+                  <Text>✅</Text> :
+                  <Text>⚠️</Text> :
+              paymentType === "lightning" || paymentType === "onchain" ?
+                <Icon name="ios-close-circle-outline"
+                  // size={styles.icon.fontSize}
+                  onPress={reset}
+                  size={30}
+                  // color={color}
+                />  :
+                null
+            }
+          value={paymentType === "lightning" ? invoice : paymentType === "onchain" ? address : destination}
+          renderErrorMessage={false}
+          editable={interactive && status !== "success"}
+          selectTextOnFocus={true}
+          autoCompleteType="username"
+          autoCapitalize="none"
+          // InputComponent={(props) => <Text {...props} selectable={true}>{props.value}</Text>}
+        />
+        <Input
+          placeholder={translate(`SendBitcoinScreen.note`)}
+          leftIcon={
+            <View style={{flexDirection: "row"}}>
+              <Text style={styles.smallText}>{translate("common.note")}</Text>
+              <Icon name="ios-create-outline" size={24} color={color.primary} style={styles.icon} />
+            </View>
+          }
+          value={memo}
+          onChangeText={value => setMemo(value)}
+          renderErrorMessage={false}
+          editable={status !== "success"}
+          selectTextOnFocus={true}
+          // InputComponent={(props) => <Text {...props} selectable={true}>{props.value}</Text>}
+        />
+        <Input
+          placeholder={translate(`SendBitcoinScreen.fee`)}
+          leftIcon={
+            <View style={{flexDirection: "row"}}>
+              <Text style={styles.smallText}>{translate("common.Fee")}</Text>
+              <Icon name="ios-pricetag" size={24} color={color.primary} style={styles.icon} />
+            </View>
+          }
+          value={fee}
+          errorMessage={errorMessage}
+          errorStyle={{fontSize: 16, alignSelf: "center", height: 18}}
+          editable={false}
+          selectTextOnFocus={true}
+          InputComponent={props => fee === undefined ?
+            <ActivityIndicator animating={true} size="small" color={palette.orange} /> :
+            fee === -1 ?
+              <Text>{translate("SendBitcoinScreen.feeCalculationUnsuccesful")}</Text>: // todo: same calculation as backend 
+              <TextInput {...props} />
+          }
+        />
+      </View>
+      <View style={{alignItems: "center"}}>
+        { status === "success" &&
+          <>
+            <LottieView source={successLottie} loop={false} autoPlay style={styles.lottie} resizeMode='cover' />
+            <Text style={{fontSize: 18}}>{translate("SendBitcoinScreen.success")}</Text>
+          </>
         }
-        value={memo}
-        onChangeText={value => setMemo(value)}
-        renderErrorMessage={false}
-        editable={status !== "success"}
-        selectTextOnFocus={true}
-        // InputComponent={(props) => <Text {...props} selectable={true}>{props.value}</Text>}
-      />
-      <Input
-        placeholder={translate(`SendBitcoinScreen.fee`)}
-        leftIcon={
-          <View style={{flexDirection: "row"}}>
-            <Text style={styles.smallText}>{translate("common.Fee")}</Text>
-            <Icon name="ios-pricetag" size={24} color={color.primary} style={styles.icon} />
-          </View>
+        {
+          status === "error" && 
+          <>
+            <LottieView source={errorLottie} loop={false} autoPlay style={styles.lottie} resizeMode='cover' />
+            {errs.map(({message}) => <Text style={styles.errorText}>{message}</Text>)}
+          </>
         }
-        value={fee}
-        errorMessage={errorMessage}
-        errorStyle={{fontSize: 16, alignSelf: "center", height: 18}}
-        editable={false}
-        selectTextOnFocus={true}
-        InputComponent={props => fee === undefined ?
-          <ActivityIndicator animating={true} size="small" color={palette.orange} /> :
-          fee === -1 ?
-            <Text>{translate("SendBitcoinScreen.feeCalculationUnsuccesful")}</Text>: // todo: same calculation as backend 
-            <TextInput {...props} />
+        {
+          status === "pending" && 
+          <>
+            <LottieView source={pendingLottie} loop={false} autoPlay style={styles.lottie} resizeMode='cover' />
+            <Text style={{fontSize: 18, textAlign: "center"}}>
+              {translate("SendBitcoinScreen.notConfirmed")}
+            </Text>
+          </>
         }
+      </View>
+      <Button
+        buttonStyle={styles.buttonStyle}
+        containerStyle={{flex: 1}}
+        title={(status === "success" || status === "pending") ? 
+          translate("common.close") : 
+          errs.length !== 0 ? 
+            translate("common.tryAgain") :
+            !amount ?
+              translate("common.amountRequired") :
+              !destination ?
+                translate("common.usernameRequired"):
+                translate("common.send")} 
+        onPress={() => (status === "success" || status === "pending") ? goBack() : pay()}
+        disabled={!amount || !!errorMessage || !destination}
+        loading={status === "loading"}
       />
-    </View>
-    <View style={{alignItems: "center"}}>
-      { status === "success" &&
-        <>
-          <LottieView source={successLottie} loop={false} autoPlay style={styles.lottie} resizeMode='cover' />
-          <Text style={{fontSize: 18}}>{translate("SendBitcoinScreen.success")}</Text>
-        </>
-      }
-      {
-        status === "error" && 
-        <>
-          <LottieView source={errorLottie} loop={false} autoPlay style={styles.lottie} resizeMode='cover' />
-          {errs.map(({message}) => <Text style={styles.errorText}>{message}</Text>)}
-        </>
-      }
-      {
-        status === "pending" && 
-        <>
-          <LottieView source={pendingLottie} loop={false} autoPlay style={styles.lottie} resizeMode='cover' />
-          <Text style={{fontSize: 18, textAlign: "center"}}>
-            {translate("SendBitcoinScreen.notConfirmed")}
-          </Text>
-        </>
-      }
-    </View>
-    <Button
-      buttonStyle={styles.buttonStyle}
-      containerStyle={{flex: 1}}
-      title={(status === "success" || status === "pending") ? 
-        translate("common.close") : 
-        errs.length !== 0 ? 
-          translate("common.tryAgain") :
-          !amount ?
-            translate("common.amountRequired") :
-            !destination ?
-              translate("common.usernameRequired"):
-              translate("common.send")} 
-      onPress={() => (status === "success" || status === "pending") ? goBack() : pay()}
-      disabled={!amount || !!errorMessage || !destination}
-      loading={status === "loading"}
-    />
     </ScrollView>
   </Screen>
 }
