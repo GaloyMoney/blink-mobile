@@ -99,7 +99,7 @@ query gql_query_logged($length: Int, $appVersion: String, $buildVersion: String,
 
 // TODO: add contacts
 const gql_query_anonymous = `
-query gql_query_anonymous($length: Int, appVersion: String, buildVersion: String, os: String) {
+query gql_query_anonymous($length: Int, $appVersion: String, $buildVersion: String, $os: String) {
   ${gql_all}
   earnList {
     __typename
