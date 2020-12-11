@@ -59,8 +59,7 @@ const styles = EStyleSheet.create({
 
 
 
-export const GetStartedScreen = () => {
-  const { navigate } = useNavigation()
+export const GetStartedScreen = ({ navigation }) => {
 
   return (
     <Screen style={styles.container} backgroundColor={palette.lightBlue} statusBar="light-content">
@@ -74,7 +73,7 @@ export const GetStartedScreen = () => {
           title={translate("GetStartedScreen.getStarted")}
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitle}
-          onPress={() => navigate("welcomeFirst")}
+          onPress={() => navigation.replace("welcomeFirst")}
           containerStyle={styles.buttonContainer}
           testID={"getStarted"}
         />

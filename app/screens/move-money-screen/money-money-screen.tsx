@@ -295,7 +295,7 @@ export const MoveMoneyScreen = (
         ]}
           style={styles.listContainer}
           refreshControl={<RefreshControl refreshing={loading} onRefresh={refreshQuery} />}
-          renderItem={({ item }) => { return (
+          renderItem={({ item }) => 
             <>
               <LargeButton
                 title={item.title}
@@ -311,7 +311,7 @@ export const MoveMoneyScreen = (
                 </View>
               }
             </>
-          )}}
+          }
         />
         <View style={styles.bottom}>
           {isUpdateAvailable &&

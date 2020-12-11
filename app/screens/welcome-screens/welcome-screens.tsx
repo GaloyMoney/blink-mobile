@@ -77,8 +77,7 @@ export const WelcomeFirstScreen = ({ navigation }) => {
       <Screen backgroundColor={palette.lightBlue} statusBar="light-content">
         <OnboardingScreen
           action={async () => {
-            store.onboarding.getStartedCompleted()
-            navigation.navigate("Primary")
+            navigation.replace("Primary")
           }}
           Svg={HoneyBadgerShovel}
           nextTitle="Learn to Earn"
