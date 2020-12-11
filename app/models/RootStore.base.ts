@@ -15,6 +15,8 @@ import { EarnModel, EarnModelType } from "./EarnModel"
 import { earnModelPrimitives, EarnModelSelector } from "./EarnModel.base"
 import { UserModel, UserModelType } from "./UserModel"
 import { userModelPrimitives, UserModelSelector } from "./UserModel.base"
+import { ContactModel, ContactModelType } from "./ContactModel"
+import { contactModelPrimitives, ContactModelSelector } from "./ContactModel.base"
 import { MarkerModel, MarkerModelType } from "./MarkerModel"
 import { markerModelPrimitives, MarkerModelSelector } from "./MarkerModel.base"
 import { CoordinateModel, CoordinateModelType } from "./CoordinateModel"
@@ -53,6 +55,7 @@ type Refs = {
   transactions: ObservableMap<string, TransactionModelType>,
   earns: ObservableMap<string, EarnModelType>,
   users: ObservableMap<string, UserModelType>,
+  contacts: ObservableMap<string, ContactModelType>,
   markers: ObservableMap<string, MarkerModelType>,
   buildParameters: ObservableMap<string, BuildParameterModelType>,
   nodeStats: ObservableMap<string, NodeStatsModelType>,
@@ -94,13 +97,14 @@ mutateTestMessage="mutateTestMessage"
 */
 export const RootStoreBase = withTypedRefs<Refs>()(MSTGQLStore
   .named("RootStore")
-  .extend(configureStoreMixin([['Price', () => PriceModel], ['Wallet', () => WalletModel], ['Transaction', () => TransactionModel], ['Earn', () => EarnModel], ['User', () => UserModel], ['Marker', () => MarkerModel], ['Coordinate', () => CoordinateModel], ['BuildParameter', () => BuildParameterModel], ['NodeStats', () => NodeStatsModel], ['LastOnChainAddress', () => LastOnChainAddressModel], ['Success', () => SuccessModel], ['Token', () => TokenModel], ['OnchainTransaction', () => OnchainTransactionModel], ['Invoice', () => InvoiceModel], ['OnChain', () => OnChainModel], ['UpdateUser', () => UpdateUserModel], ['FaucetResult', () => FaucetResultModel]], ['Price', 'Wallet', 'Transaction', 'Earn', 'User', 'Marker', 'BuildParameter', 'NodeStats', 'LastOnChainAddress'], "js"))
+  .extend(configureStoreMixin([['Price', () => PriceModel], ['Wallet', () => WalletModel], ['Transaction', () => TransactionModel], ['Earn', () => EarnModel], ['User', () => UserModel], ['Contact', () => ContactModel], ['Marker', () => MarkerModel], ['Coordinate', () => CoordinateModel], ['BuildParameter', () => BuildParameterModel], ['NodeStats', () => NodeStatsModel], ['LastOnChainAddress', () => LastOnChainAddressModel], ['Success', () => SuccessModel], ['Token', () => TokenModel], ['OnchainTransaction', () => OnchainTransactionModel], ['Invoice', () => InvoiceModel], ['OnChain', () => OnChainModel], ['UpdateUser', () => UpdateUserModel], ['FaucetResult', () => FaucetResultModel]], ['Price', 'Wallet', 'Transaction', 'Earn', 'User', 'Contact', 'Marker', 'BuildParameter', 'NodeStats', 'LastOnChainAddress'], "js"))
   .props({
     prices: types.optional(types.map(types.late((): any => PriceModel)), {}),
     wallets: types.optional(types.map(types.late((): any => WalletModel)), {}),
     transactions: types.optional(types.map(types.late((): any => TransactionModel)), {}),
     earns: types.optional(types.map(types.late((): any => EarnModel)), {}),
     users: types.optional(types.map(types.late((): any => UserModel)), {}),
+    contacts: types.optional(types.map(types.late((): any => ContactModel)), {}),
     markers: types.optional(types.map(types.late((): any => MarkerModel)), {}),
     buildParameters: types.optional(types.map(types.late((): any => BuildParameterModel)), {}),
     nodeStats: types.optional(types.map(types.late((): any => NodeStatsModel)), {}),
