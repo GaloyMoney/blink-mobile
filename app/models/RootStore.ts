@@ -93,6 +93,10 @@ query gql_query_logged($length: Int, $appVersion: String, $buildVersion: String,
     username
     phone
     language
+    contacts {
+      id
+      name
+    }
   }
 }
 `
