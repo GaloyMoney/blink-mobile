@@ -381,6 +381,10 @@ export const RootStore = RootStoreBase
     return balances[account]
   },
 
+  transactionsWith({username}) {
+    return values(self.wallets.get("BTC").transactions).filter(tx => tx.username === username)
+  },
+
   get lastTransactions() {
     return values(self.wallets.get("BTC").transactions).slice(undefined, 3)
   },
