@@ -17,3 +17,8 @@ export const ContactModel = ContactModelBase
       console.log(JSON.stringify(self))
     }
   }))
+  .views(self => ({
+    get prettyName() {
+      return self.name || self.id
+    }
+  }))
