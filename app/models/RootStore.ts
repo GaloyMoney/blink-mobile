@@ -139,7 +139,7 @@ export const RootStore = RootStoreBase
 .actions(self => {
   // This is an auto-generated example action.
   const log = () => {
-    console.log(JSON.stringify(self))
+    console.tron.log(JSON.stringify(self))
   }
 
   const mainQuery = (): Query => {
