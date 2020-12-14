@@ -11,6 +11,7 @@ import { resetDataStore } from "../../utils/logout"
 import { loadNetwork, saveNetwork } from "../../utils/network"
 import { requestPermission } from "../../utils/notifications"
 import { getGraphQlUri, Token } from "../../utils/token"
+import Clipboard from "@react-native-community/clipboard";
 
 const styles = EStyleSheet.create({
   button: { 
@@ -102,6 +103,14 @@ export const DebugScreen = observer(({}) => {
         style={styles.button}
         onPress={async () => {
           store.mutateTestMessage()
+        }}
+      />
+      <Button
+        title="Copy store"
+        style={styles.button}
+        onPress={() => {
+          Clipboard.setString(JSON.stringify(store))
+          Alert.alert("Store copied in clipboard. send it over whatsapp or email")
         }}
       />
       {

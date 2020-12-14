@@ -98,6 +98,7 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
 
   const store = React.useContext(StoreContext)
 
+  const [keyboardIsShown, setKeyboardIsShown] = useState(false)
   const [memo, setMemo] = useState("")
   const [amount, setAmount] = useState(0)
   const [loading, setLoading] = useState(true)
@@ -273,6 +274,15 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
   const inputMemoRef = React.useRef()
 
   React.useEffect(() => {
+    Keyboard.addListener("keyboardDidShow", _keyboardDidShow)
+
+    // cleanup function
+    return () => {
+      Keyboard.removeListener("keyboardDidShow", _keyboardDidShow)
+    }
+  })
+
+  React.useEffect(() => {
     Keyboard.addListener("keyboardDidHide", _keyboardDidHide)
 
     // cleanup function
@@ -281,8 +291,13 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
     }
   })
 
+  const _keyboardDidShow = () => {
+    setKeyboardIsShown(true)
+  }
+
   const _keyboardDidHide = () => {
     inputMemoRef?.current.blur()
+    setKeyboardIsShown(false)
   }
 
   const QRView = ({type}) => {
@@ -300,7 +315,9 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
       }
     }
 
-    const isReady = type === "lightning" ? !loading && data != "" : true
+    const isReady = 
+      type === "lightning" ? !loading && data != "" && !keyboardIsShown:
+      true
 
     const getFullUri = (input) => {
       if (type === "lightning") {
@@ -398,8 +415,9 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
             >
             {err !== "" && 
               <Text style={{color: palette.red, alignSelf: "center"}} selectable={true}>{err}</Text>
-            }
-            {err === "" && 
+              ||
+              keyboardIsShown && <Icon size={56} name="ios-flash" color={palette.orange} />
+              || 
               <ActivityIndicator size="large" color={palette.blue} />
             }
             </View>
