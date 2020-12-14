@@ -55,50 +55,16 @@ const styles = StyleSheet.create({
 export const SplashScreen = observer(({ navigation }) => {
   let needUpdate
 
-  const { error, loading, data, store, setQuery } = useQuery()
-
-  const [afterFirstLoading, setAfterFirstLoading] = React.useState(false)
-
-  const query = () => {
-    setQuery(store => store.mainQuery())
-  }
-
-  React.useEffect(() => query(), [])
-
-  if(loading && !afterFirstLoading) {
-    setAfterFirstLoading(true)
-  } 
+  const { store } = useQuery()
     
-  if (!loading && afterFirstLoading) {
-    needUpdate = store.isUpdateRequired
-  
-    console.tron.log({needUpdate})
-
-    if (!needUpdate) {
-      const token = new Token()
-      if (token.has()) {
-        navigation.replace("Primary")
-      } else {
-        navigation.replace("getStarted")
-      }
+  if (!store.isUpdateRequired) {
+    const token = new Token()
+    if (token.has()) {
+      navigation.replace("Primary")
+    } else {
+      navigation.replace("getStarted")
     }
   }
-
-  // TODO: refactor. use a reusable useEffect for that.
-  React.useEffect(() => {
-    if (connectionIssue(error) === true) {
-      Toast.show(translate("common.connectionIssue"), {
-        duration: Toast.durations.LONG,
-        shadow: false,
-        animation: true,
-        hideOnPress: true,
-        delay: 500,
-        position: 160,
-        opacity: 1,
-        backgroundColor: palette.red,
-      })
-    }
-  }, [connectionIssue(error)])
 
   return (
   <SafeAreaView style={styles.container}>
@@ -109,9 +75,9 @@ export const SplashScreen = observer(({ navigation }) => {
       />
       <VersionComponent style={{ paddingVertical: 30 }} />
       <View style={{paddingHorizontal: 30, flex: 1, marginVertical: 30}}>
-        {loading &&
+        {/* {loading &&
           <ActivityIndicator style={{ flex: 1 }} size="large" color={palette.lightGrey} />
-        }
+        } */}
         {needUpdate && 
           <Text style={styles.text}>{translate('SplashScreen.update')}</Text>
         }

@@ -135,7 +135,7 @@ export const RootStore = RootStoreBase
     storage: AsyncStorage,
     // throttle: 1000,
     storageKey: ROOT_STATE_STORAGE_KEY,
-    filter: ['prices', 'wallets', 'transactions', 'earns', 'users', 'buildParameters', 'nodeStats', 'getLastOnChainAddress']
+    filter: ['prices', 'wallets', 'transactions', 'earns', 'users', 'buildParameters', 'nodeStats', 'lastOnChainAddresses']
 }))
 .props({
   modalClipboardVisible: types.optional(types.boolean, false), // when switching been app, should we show modal when returning to Galoy?
@@ -144,7 +144,7 @@ export const RootStore = RootStoreBase
 .actions(self => {
   // This is an auto-generated example action.
   const log = () => {
-    console.log(JSON.stringify(self))
+    console.tron.log(JSON.stringify(self))
   }
 
   const mainQuery = (): Query => {

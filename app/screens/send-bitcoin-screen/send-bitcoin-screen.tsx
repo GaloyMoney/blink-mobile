@@ -117,11 +117,13 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
   const [amountless, setAmountless] = useState(false)
   const [initAmount, setInitAmount] = useState(0)
   const [amount, setAmount] = useState(0)
-  const [destination, setDestination] = useState("")
+  const [destination, setDestinationInternal] = useState("")
   const [invoice, setInvoice] = useState("")
   const [memo, setMemo] = useState("")
   const [initialMemo, setInitialMemo] = useState("")
 
+
+  const setDestination = input => setDestinationInternal(input.trim())
 
   // if null ==> we don't know (blank fee field)
   // if undefined ==> loading
