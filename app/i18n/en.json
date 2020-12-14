@@ -47,7 +47,7 @@
     "success": "Success!",
     "csvExport": "Export transactions as CSV",
     "language": "language",
-    "connectionIssue": "Connection issue"
+    "connectionIssue": "No connection"
   },
   "sat": {
     "one": "1 sat",
