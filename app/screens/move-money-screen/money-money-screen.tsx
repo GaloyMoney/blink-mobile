@@ -104,6 +104,10 @@ export const MoveMoneyScreenDataInjected = observer(({ navigation }) => {
     setQuery(store => store.mainQuery())
   }
 
+  useEffect(() => {
+    refreshQuery()
+  }, [])
+
   // temporary fix until we have a better management of notifications:
   // when coming back to active state. look if the invoice has been paid
   useEffect(() => {
