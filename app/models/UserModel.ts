@@ -26,6 +26,10 @@ export const UserModel = UserModelBase
       const fallback = { languageTag: "es", isRTL: false }
       const { languageTag } = RNLocalize.findBestAvailableLanguage(Object.keys(i18n.translations)) || fallback
       i18n.locale = language ? language : languageTag
+    },
+
+    contactSorted() {
+      return self.contacts.sort((n1,n2) => n1.transactionsCount - n2.transactionsCount)
     }
   })
 )

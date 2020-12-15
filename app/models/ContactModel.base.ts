@@ -18,6 +18,7 @@ export const ContactModelBase = ModelBase
     __typename: types.optional(types.literal("Contact"), "Contact"),
     id: types.identifier,
     name: types.union(types.undefined, types.null, types.string),
+    transactionsCount: types.union(types.undefined, types.null, types.integer),
   })
   .views(self => ({
     get store() {
@@ -28,9 +29,10 @@ export const ContactModelBase = ModelBase
 export class ContactModelSelector extends QueryBuilder {
   get id() { return this.__attr(`id`) }
   get name() { return this.__attr(`name`) }
+  get transactionsCount() { return this.__attr(`transactionsCount`) }
 }
 export function selectFromContact() {
   return new ContactModelSelector()
 }
 
-export const contactModelPrimitives = selectFromContact().name
+export const contactModelPrimitives = selectFromContact().name.transactionsCount

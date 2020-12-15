@@ -16,7 +16,7 @@ const styles = EStyleSheet.create({
 
 export const ContactsScreen = observer(({ navigation }) => {
   const store = React.useContext(StoreContext)
-  return <ContactsScreenJSX list={store.user.contacts} navigation={navigation} />
+  return <ContactsScreenJSX list={store.user.contactSorted()} navigation={navigation} />
 })
 
 export const ContactsScreenJSX = ({ list, navigation }) => {
