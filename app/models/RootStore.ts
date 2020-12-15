@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-community/async-storage"
 import analytics from '@react-native-firebase/analytics'
 import { filter, indexOf, map, sumBy } from "lodash"
 import { get, keys, set, values } from "mobx"
-import { flow, getEnv, Instance, types } from "mobx-state-tree"
+import { applySnapshot, flow, getEnv, getSnapshot, Instance, types } from "mobx-state-tree"
 import moment from "moment"
 import { localStorageMixin, Query } from "mst-gql"
 import DeviceInfo from 'react-native-device-info'
@@ -17,7 +17,6 @@ import { TransactionModel } from "./TransactionModel"
 import Share from 'react-native-share';
 import VersionNumber from "react-native-version-number"
 import { Platform } from "react-native"
-
 
 export const ROOT_STATE_STORAGE_KEY = "rootAppGaloy"
 
@@ -134,18 +133,24 @@ export const RootStore = RootStoreBase
 .extend(
   localStorageMixin({
     storage: AsyncStorage,
-    // throttle: 1000,
+    // throttle: -1,
     storageKey: ROOT_STATE_STORAGE_KEY,
-    filter: ['prices', 'wallets', 'transactions', 'earns', 'users', 'buildParameters', 'nodeStats', 'lastOnChainAddresses']
+    // filter: ['prices', 'wallets', 'transactions', 'earns', 'users', 
+    //   'buildParameters', 'nodeStats', 'lastOnChainAddresses', 'currentAppVersion']
 }))
 .props({
   modalClipboardVisible: types.optional(types.boolean, false), // when switching been app, should we show modal when returning to Galoy?
   prefCurrency: types.optional(types.string, "USD"), // which currency to show from the app
+  currentAppVersion: types.maybe(types.string), 
 })
 .actions(self => {
   // This is an auto-generated example action.
   const log = () => {
     console.tron.log(JSON.stringify(self))
+  }
+
+  const updateAppVersion = () => {
+    self.currentAppVersion = String(VersionNumber.buildVersion)
   }
 
   const mainQuery = (): Query => {
@@ -339,8 +344,9 @@ export const RootStore = RootStoreBase
     
   })
 
-  return { log, earnComplete, loginSuccessful, setModalClipboardVisible, nextPrefCurrency, mainQuery, 
-    updatePendingInvoice, sendPayment, csvExport, setLanguage }
+  return { log, earnComplete, loginSuccessful, setModalClipboardVisible, 
+    nextPrefCurrency, mainQuery, updatePendingInvoice, sendPayment, 
+    csvExport, setLanguage, updateAppVersion }
 })
 .views((self) => ({
   // workaround on the fact key can't be enum

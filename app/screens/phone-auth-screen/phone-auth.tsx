@@ -196,8 +196,12 @@ export const WelcomePhoneValidationScreen = ({ onSuccess, route, navigation }) =
       setLoading(true)
 
       const currency = "BTC"
-      const { login } = await store.mutateLogin({phone, code: Number(code), currency})
-      console.tron.log({login})
+      const { login } = await store.mutateLogin(
+        { phone, code: Number(code), currency },
+      )
+
+      // FIXME: this should be { fetchPolicy: "no-cache" }
+      // there should be no caching of the token in mst
 
       if (login.token) {
         await new Token().save({token: login.token})
