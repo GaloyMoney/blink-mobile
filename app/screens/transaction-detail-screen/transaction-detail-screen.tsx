@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Text, TextInput, View } from "react-native"
+import { Text, View } from "react-native"
 import { Divider } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { CloseCross } from "../../components/close-cross"

@@ -15,6 +15,9 @@ export const ContactModel = ContactModelBase
     // This is an auto-generated example action.
     log() {
       console.log(JSON.stringify(self))
+    },
+    updateName(newName) {
+      return self.name = newName
     }
   }))
   .views(self => ({

@@ -1,7 +1,8 @@
-import { Instance } from "mobx-state-tree"
-import { UserModelBase } from "./UserModel.base"
 import i18n from "i18n-js"
+import { values } from "mobx"
+import { Instance } from "mobx-state-tree"
 import * as RNLocalize from "react-native-localize"
+import { UserModelBase } from "./UserModel.base"
 
 /* The TypeScript type of an instance of UserModel */
 export interface UserModelType extends Instance<typeof UserModel.Type> {}
@@ -28,8 +29,10 @@ export const UserModel = UserModelBase
       i18n.locale = language ? language : languageTag
     },
 
-    contactSorted() {
-      return self.contacts.sort((n1,n2) => n1.transactionsCount - n2.transactionsCount)
+
+  }))
+  .views(self => ({
+    get contactsSorted() {
+      return self.contacts.sort((n1,n2) => n2.transactionsCount - n1.transactionsCount)
     }
-  })
-)
+  }))
