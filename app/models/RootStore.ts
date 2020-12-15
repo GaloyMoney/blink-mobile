@@ -97,6 +97,7 @@ query gql_query_logged($length: Int, $appVersion: String, $buildVersion: String,
       __typename
       id
       name
+      transactionsCount
     }
   }
 }
