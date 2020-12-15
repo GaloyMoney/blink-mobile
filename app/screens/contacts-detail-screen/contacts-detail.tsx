@@ -47,13 +47,15 @@ const styles = EStyleSheet.create({
 
 export const ContactsDetailScreen = observer(({route, navigation}) => {
   const store = React.useContext(StoreContext)
-  const { contact } = route.params
+  const { contactId } = route.params
+
+  const contact = store.contacts.get(contactId)
   const transactions = store.transactionsWith({username: contact.id})
 
   return <ContactsDetailScreenJSX navigation={navigation} contact={contact} transactions={transactions} />
 })
 
-export const ContactsDetailScreenJSX = ({ contact, navigation, transactions }) => {
+export const ContactsDetailScreenJSX = observer(({ contact, navigation, transactions }) => {
   const store = React.useContext(StoreContext)
 
   const [contactName, setContactName] = React.useState(contact.prettyName)
@@ -72,7 +74,7 @@ export const ContactsDetailScreenJSX = ({ contact, navigation, transactions }) =
       query,
       {username: contact.id, name: contactName},
       () => {
-        store.contacts.get(contact.id).name = contactName
+        store.contacts.get(contact.id).updateName(contactName)
       }
     )
   }
@@ -91,7 +93,7 @@ export const ContactsDetailScreenJSX = ({ contact, navigation, transactions }) =
             onBlur={updateName}
             returnKeyType={"done"}
           >
-            {contactName}
+            {contact.prettyName}
           </Input>
         </View>
         <Text style={styles.amountSecondary}>{`username: ${contact.id}`}</Text>
@@ -111,4 +113,4 @@ export const ContactsDetailScreenJSX = ({ contact, navigation, transactions }) =
       </View>
       <CloseCross color={palette.white} onPress={navigation.goBack} />
   </Screen>
-)}
+)})

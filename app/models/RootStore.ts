@@ -363,6 +363,7 @@ export const RootStore = RootStoreBase
     return !!users.length ? users[0] : {
       id: "incognito",
       level: 0,
+      contactsSorted: []
     }
   },
   get earnedSat() {
