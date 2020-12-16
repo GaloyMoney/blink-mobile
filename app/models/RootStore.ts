@@ -449,18 +449,25 @@ export const RootStore = RootStoreBase
   get myPubKey() { return self.nodeStats ? values(self.nodeStats)[0].id : ""},
 
   get isUpdateRequired() {
-    const { minBuildNumberAndroid, minBuildNumberIos } = values(self.buildParameters)[self.buildParameters.size - 1]
-    const minBuildNumber = isIos ? minBuildNumberIos : minBuildNumberAndroid
-    let buildNumber = Number(DeviceInfo.getBuildNumber())
-    return buildNumber < minBuildNumber
+    try {
+      const { minBuildNumberAndroid, minBuildNumberIos } = values(self.buildParameters)[self.buildParameters.size - 1]
+      const minBuildNumber = isIos ? minBuildNumberIos : minBuildNumberAndroid
+      let buildNumber = Number(DeviceInfo.getBuildNumber())
+      return buildNumber < minBuildNumber
+    } catch (err) {
+      return false
+    }
   },
 
   get isUpdateAvailable() {
-    // FIXME cache issue
-    const {lastBuildNumberAndroid, lastBuildNumberIos } = values(self.buildParameters)[self.buildParameters.size - 1]
-    const lastBuildNumber = isIos ? lastBuildNumberIos : lastBuildNumberAndroid
-    let buildNumber = Number(DeviceInfo.getBuildNumber())
-    return buildNumber < lastBuildNumber
+    try {
+      const {lastBuildNumberAndroid, lastBuildNumberIos } = values(self.buildParameters)[self.buildParameters.size - 1]
+      const lastBuildNumber = isIos ? lastBuildNumberIos : lastBuildNumberAndroid
+      let buildNumber = Number(DeviceInfo.getBuildNumber())
+      return buildNumber < lastBuildNumber
+    } catch (err) {
+      return false
+    }
   }
 
 }))
