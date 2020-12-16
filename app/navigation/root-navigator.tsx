@@ -32,6 +32,7 @@ import { AccountType } from "../utils/enum"
 import { validPayment } from "../utils/parsing"
 import { getNetwork, Token } from "../utils/token"
 import { LanguageScreen } from "../screens/settings-screen/language-screen"
+import { ContactsDetailScreen } from "../screens/contacts-detail-screen"
 const PushNotification = require("react-native-push-notification");
 
 
@@ -381,6 +382,34 @@ export const RootStack = () => {
 
 
 
+
+const StackContacts = createStackNavigator()
+
+export const ContactNavigator = () => {
+  return (
+    <StackContacts.Navigator
+      // headerMode="none"
+    >
+      <StackContacts.Screen
+        name="Contacts"
+        component={ContactsScreen}
+        options={{
+          title: translate("ContactsScreen.title"),
+          tabBarIcon: ({ focused, color }) => {
+            return <Icon name={"ios-people-outline"} size={size} color={color} />
+          },
+        }}
+      />
+      <StackContacts.Screen
+        name="contactDetail"
+        component={ContactsDetailScreen}
+        options={{headerShown: false}}
+      />
+    </StackContacts.Navigator>
+  )
+}
+
+
 const StackMoveMoney = createStackNavigator()
 
 export const MoveMoneyNavigator = () => {
@@ -477,16 +506,16 @@ export const PrimaryNavigator = () => {
           },
         }}
       />
-      {/* <Tab.Screen
+      <Tab.Screen
         name="Contacts"
-        component={ContactsScreen}
+        component={ContactNavigator}
         options={{
           title: translate("ContactsScreen.title"),
           tabBarIcon: ({ focused, color }) => {
             return <Icon name={"ios-people-outline"} size={size} color={color} />
           },
         }}
-      /> */}
+      />
       <Tab.Screen 
         name="Map" 
         component={MapScreen} 

@@ -15,6 +15,8 @@ import { EarnModel, EarnModelType } from "./EarnModel"
 import { earnModelPrimitives, EarnModelSelector } from "./EarnModel.base"
 import { UserModel, UserModelType } from "./UserModel"
 import { userModelPrimitives, UserModelSelector } from "./UserModel.base"
+import { ContactModel, ContactModelType } from "./ContactModel"
+import { contactModelPrimitives, ContactModelSelector } from "./ContactModel.base"
 import { MarkerModel, MarkerModelType } from "./MarkerModel"
 import { markerModelPrimitives, MarkerModelSelector } from "./MarkerModel.base"
 import { CoordinateModel, CoordinateModelType } from "./CoordinateModel"
@@ -37,6 +39,8 @@ import { OnChainModel, OnChainModelType } from "./OnChainModel"
 import { onChainModelPrimitives, OnChainModelSelector } from "./OnChainModel.base"
 import { UpdateUserModel, UpdateUserModelType } from "./UpdateUserModel"
 import { updateUserModelPrimitives, UpdateUserModelSelector } from "./UpdateUserModel.base"
+import { UpdateContactModel, UpdateContactModelType } from "./UpdateContactModel"
+import { updateContactModelPrimitives, UpdateContactModelSelector } from "./UpdateContactModel.base"
 import { FaucetResultModel, FaucetResultModelType } from "./FaucetResultModel"
 import { faucetResultModelPrimitives, FaucetResultModelSelector } from "./FaucetResultModel.base"
 
@@ -53,6 +57,7 @@ type Refs = {
   transactions: ObservableMap<string, TransactionModelType>,
   earns: ObservableMap<string, EarnModelType>,
   users: ObservableMap<string, UserModelType>,
+  contacts: ObservableMap<string, ContactModelType>,
   markers: ObservableMap<string, MarkerModelType>,
   buildParameters: ObservableMap<string, BuildParameterModelType>,
   nodeStats: ObservableMap<string, NodeStatsModelType>,
@@ -83,6 +88,7 @@ mutateOnchain="mutateOnchain",
 mutateInvoice="mutateInvoice",
 mutateEarnCompleted="mutateEarnCompleted",
 mutateUpdateUser="mutateUpdateUser",
+mutateUpdateContact="mutateUpdateContact",
 mutateDeleteUser="mutateDeleteUser",
 mutateFaucet="mutateFaucet",
 mutateAddDeviceToken="mutateAddDeviceToken",
@@ -94,13 +100,14 @@ mutateTestMessage="mutateTestMessage"
 */
 export const RootStoreBase = withTypedRefs<Refs>()(MSTGQLStore
   .named("RootStore")
-  .extend(configureStoreMixin([['Price', () => PriceModel], ['Wallet', () => WalletModel], ['Transaction', () => TransactionModel], ['Earn', () => EarnModel], ['User', () => UserModel], ['Marker', () => MarkerModel], ['Coordinate', () => CoordinateModel], ['BuildParameter', () => BuildParameterModel], ['NodeStats', () => NodeStatsModel], ['LastOnChainAddress', () => LastOnChainAddressModel], ['Success', () => SuccessModel], ['Token', () => TokenModel], ['OnchainTransaction', () => OnchainTransactionModel], ['Invoice', () => InvoiceModel], ['OnChain', () => OnChainModel], ['UpdateUser', () => UpdateUserModel], ['FaucetResult', () => FaucetResultModel]], ['Price', 'Wallet', 'Transaction', 'Earn', 'User', 'Marker', 'BuildParameter', 'NodeStats', 'LastOnChainAddress'], "js"))
+  .extend(configureStoreMixin([['Price', () => PriceModel], ['Wallet', () => WalletModel], ['Transaction', () => TransactionModel], ['Earn', () => EarnModel], ['User', () => UserModel], ['Contact', () => ContactModel], ['Marker', () => MarkerModel], ['Coordinate', () => CoordinateModel], ['BuildParameter', () => BuildParameterModel], ['NodeStats', () => NodeStatsModel], ['LastOnChainAddress', () => LastOnChainAddressModel], ['Success', () => SuccessModel], ['Token', () => TokenModel], ['OnchainTransaction', () => OnchainTransactionModel], ['Invoice', () => InvoiceModel], ['OnChain', () => OnChainModel], ['UpdateUser', () => UpdateUserModel], ['UpdateContact', () => UpdateContactModel], ['FaucetResult', () => FaucetResultModel]], ['Price', 'Wallet', 'Transaction', 'Earn', 'User', 'Contact', 'Marker', 'BuildParameter', 'NodeStats', 'LastOnChainAddress'], "js"))
   .props({
     prices: types.optional(types.map(types.late((): any => PriceModel)), {}),
     wallets: types.optional(types.map(types.late((): any => WalletModel)), {}),
     transactions: types.optional(types.map(types.late((): any => TransactionModel)), {}),
     earns: types.optional(types.map(types.late((): any => EarnModel)), {}),
     users: types.optional(types.map(types.late((): any => UserModel)), {}),
+    contacts: types.optional(types.map(types.late((): any => ContactModel)), {}),
     markers: types.optional(types.map(types.late((): any => MarkerModel)), {}),
     buildParameters: types.optional(types.map(types.late((): any => BuildParameterModel)), {}),
     nodeStats: types.optional(types.map(types.late((): any => NodeStatsModel)), {}),
@@ -188,6 +195,11 @@ export const RootStoreBase = withTypedRefs<Refs>()(MSTGQLStore
     mutateUpdateUser(variables?: {  }, resultSelector: string | ((qb: UpdateUserModelSelector) => UpdateUserModelSelector) = updateUserModelPrimitives.toString(), optimisticUpdate?: () => void) {
       return self.mutate<{ updateUser: UpdateUserModelType}>(`mutation updateUser { updateUser {
         ${typeof resultSelector === "function" ? resultSelector(new UpdateUserModelSelector()).toString() : resultSelector}
+      } }`, variables, optimisticUpdate)
+    },
+    mutateUpdateContact(variables?: {  }, resultSelector: string | ((qb: UpdateContactModelSelector) => UpdateContactModelSelector) = updateContactModelPrimitives.toString(), optimisticUpdate?: () => void) {
+      return self.mutate<{ updateContact: UpdateContactModelType}>(`mutation updateContact { updateContact {
+        ${typeof resultSelector === "function" ? resultSelector(new UpdateContactModelSelector()).toString() : resultSelector}
       } }`, variables, optimisticUpdate)
     },
     mutateDeleteUser(variables?: {  }, optimisticUpdate?: () => void) {

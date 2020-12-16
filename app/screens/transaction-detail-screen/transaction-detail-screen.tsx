@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Text, TextInput, View } from "react-native"
+import { Text, View } from "react-native"
 import { Divider } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { CloseCross } from "../../components/close-cross"
@@ -12,10 +12,6 @@ import { palette } from "../../theme/palette"
 import { currencyFormatting } from "../../utils/currencyConversion"
 
 const styles = EStyleSheet.create({
-  screen: {
-    backgroundColor: palette.white
-  },
-
   amountText: {
     fontSize: "18rem",
     marginVertical: "6rem",
@@ -96,7 +92,7 @@ export const TransactionDetailScreen = ({ route, navigation }) => {
   let feeEntry = `${fee} sats ($${currencyFormatting["USD"](feeUsd)})`
 
   return (
-    <Screen style={styles.screen} unsafe={true} preset="scroll">
+    <Screen backgroundColor={palette.white} unsafe={true} preset="scroll">
       <View style={[styles.amountView, {backgroundColor: colorTypeFromIconType({isReceive, pending})}]}>
         <IconTransaction isReceive={isReceive} size={100} transparent={true} />
         <Text style={styles.amountText}>{spendOrReceiveText}</Text>
