@@ -24,6 +24,10 @@ export const requestPermission = async (store) => {
 }
 
 export const uploadToken = async (store) => {
+  if (!store.walletIsActive) {
+    return
+  }
+
   const token =  await messaging().getToken()
   await store.mutateAddDeviceToken({deviceToken: token})
 }
