@@ -33,6 +33,7 @@ import { validPayment } from "../utils/parsing"
 import { getNetwork, Token } from "../utils/token"
 import { LanguageScreen } from "../screens/settings-screen/language-screen"
 import { ContactsDetailScreen } from "../screens/contacts-detail-screen"
+import { uploadToken } from "../utils/notifications"
 const PushNotification = require("react-native-push-notification");
 
 
@@ -237,9 +238,11 @@ export const RootStack = () => {
   }, []);
 
   useEffect(() => {
-    messaging().onTokenRefresh(token => {
-      store.mutateAddDeviceToken({deviceToken: token})
-    });
+    messaging().onTokenRefresh(token => {uploadToken(store)}
+      // {
+      // store.mutateAddDeviceToken({deviceToken: token})
+      // }
+      );
   }, []);
 
   return (
