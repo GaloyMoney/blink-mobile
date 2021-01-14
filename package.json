@@ -26,7 +26,7 @@
     "mst-gql": "mst-gql --format ts --outDir app/models http://localhost:4000/graphql"
   },
   "dependencies": {
-    "@react-native-community/async-storage": "^1.8.1",
+    "@react-native-async-storage/async-storage": "^1.13.2",
     "@react-native-community/clipboard": "^1.2.3",
     "@react-native-community/geolocation": "^2.0.2",
     "@react-native-community/masked-view": "^0.1.7",

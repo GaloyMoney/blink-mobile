@@ -35,8 +35,20 @@ export const getCardsFromSection = ({ earnsArray, sectionIndex }) => {
 }
 
 export const sectionCompletedPct = ({ sectionIndex, earnsArray }) => {
-  const earns = getCardsFromSection({ sectionIndex, earnsArray })
-  return earns.filter((item) => item.fullfilled).length / earns.length
+  // there is a recurring crash. from crashlytics:
+  // using try catch until this is fixed
+  //
+  // Fatal Exception: com.facebook.react.common.JavascriptException: TypeError: undefined is not an object (evaluating '(0,n.find)(o,{id:t.id}).value')
+  // <unknown>@2707:336
+  // forEach@-1
+  // l@2707:285
+  // sectionCompletedPct@2707:675
+  try {
+    const earns = getCardsFromSection({ sectionIndex, earnsArray })
+    return earns.filter((item) => item.fullfilled).length / earns.length
+  } catch (err) {
+    return 0
+  }
 }
   
 export const remainingSatsOnSection = ({ sectionIndex, earnsArray }) =>
