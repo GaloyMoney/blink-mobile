@@ -21,7 +21,7 @@ import { getGraphQlUri, Token } from "./utils/token"
 import i18n from "i18n-js"
 import * as RNLocalize from "react-native-localize"
 import VersionNumber from "react-native-version-number"
-import AsyncStorage from "@react-native-community/async-storage"
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { sleep } from "./utils/sleep"
 
 
