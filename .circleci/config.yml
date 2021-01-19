@@ -4,13 +4,13 @@ jobs:
   build_ios:
     macos:
       xcode: 11.6.0
-    working_directory: ~/
+    working_directory: ~/galoy-mobile
     environment:
       FL_OUTPUT_DIR: output
     shell: /bin/bash --login -o pipefail
     steps:
       - checkout:
-          path: ~/GaloyApp
+          path: ~/galoy-mobile
       - add_ssh_keys:
           fingerprints:
             - "f6:4b:18:f4:33:f0:8f:46:47:42:9b:16:44:15:98:67"
@@ -55,11 +55,11 @@ jobs:
       TERM: dumb
       _JAVA_OPTIONS: "-Xmx2048m -XX:+UnlockExperimentalVMOptions"
       GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m"'
-    working_directory: ~/
+    working_directory: ~/galoy-mobile
     shell: /bin/bash --login -o pipefail
     steps:
       - checkout:
-          path: ~/GaloyApp
+          path: ~/galoy-mobile
       - run: sudo apt-get update
       - run: sudo apt-get install gnupg2
       - run: curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
@@ -109,13 +109,13 @@ jobs:
       - run: git push -q https://${GITHUB_TOKEN}@github.com/GaloyMoney/galoy-mobile.git $CIRCLE_BRANCH
 
   update_locale:
-    working_directory: ~/
+    working_directory: ~/galoy-mobile
     docker:
       - image: cimg/base:2020.01    
     resource_class: small
     steps:
       - checkout:
-          path: ~/GaloyApp
+          path: ~/galoy-mobile
       - run: echo $PHRASE_CONFIG | base64 -d > .phrase.yml
       - run: wget https://github.com/phrase/phrase-cli/releases/download/2.0.13/phrase_linux_amd64
       - run: chmod +x ./phrase_linux_amd64
