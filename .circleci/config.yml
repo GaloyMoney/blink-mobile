@@ -13,7 +13,7 @@ jobs:
           path: ~/galoy-mobile
       - add_ssh_keys:
           fingerprints:
-            - "f6:4b:18:f4:33:f0:8f:46:47:42:9b:16:44:15:98:67"
+            - "19:7e:f3:6c:be:a7:17:01:7d:09:ca:39:c3:98:86:90"
       - restore_cache:
           key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
       - run: cd ios && bundle config set deployment 'true'
