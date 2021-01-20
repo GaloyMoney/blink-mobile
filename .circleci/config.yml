@@ -116,7 +116,7 @@ jobs:
     steps:
       - checkout:
           path: ~/galoy-mobile
-      - run: sed 's/__TOKEN__/$PHRASE_TOKEN/' .phrase.yml
+      - run: sed "s/__TOKEN__/$PHRASE_TOKEN/" .phrase.yml > .phrase.yml
       - run: wget https://github.com/phrase/phrase-cli/releases/download/2.0.13/phrase_linux_amd64
       - run: chmod +x ./phrase_linux_amd64
       - run: ./phrase_linux_amd64 push
