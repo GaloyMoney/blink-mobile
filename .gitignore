@@ -52,3 +52,14 @@ ios/vendor
 
 # Bundle artifact
 *.jsbundle
+
+
+ios/GaloyApp.app.dSYM.zip
+ios/AppStore_io.galoy.app.mobileprovision
+ios/fastlane/report.xml
+app/services/lnd/generated/*
+android/api-8350101450647692243-59029-b9bec84a7e5a.json
+android/fastlane/report.xml
+android/fastlane/metadata/android/en-US/
+
+galoy.code-workspace 

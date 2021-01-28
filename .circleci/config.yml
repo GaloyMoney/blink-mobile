@@ -4,16 +4,16 @@ jobs:
   build_ios:
     macos:
       xcode: 11.6.0
-    working_directory: ~/GaloyApp/mobile
+    working_directory: ~/galoy-mobile
     environment:
       FL_OUTPUT_DIR: output
     shell: /bin/bash --login -o pipefail
     steps:
       - checkout:
-          path: ~/GaloyApp
+          path: ~/galoy-mobile
       - add_ssh_keys:
           fingerprints:
-            - "f6:4b:18:f4:33:f0:8f:46:47:42:9b:16:44:15:98:67"
+            - "19:7e:f3:6c:be:a7:17:01:7d:09:ca:39:c3:98:86:90"
       - restore_cache:
           key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
       - run: cd ios && bundle config set deployment 'true'
@@ -40,9 +40,9 @@ jobs:
       - run: git config --global user.name "circleci-bot"
       - run: git config --global user.email "bot@circleci.com"
       - run: git config pull.rebase false
-      - run: git pull https://${GITHUB_TOKEN}@github.com/nicolasburtey/galoy-app.git $CIRCLE_BRANCH
+      - run: git pull https://${GITHUB_TOKEN}@github.com/GaloyMoney/galoy-mobile.git $CIRCLE_BRANCH
       - run: git commit -a -m "new ios build [ci skip]"
-      - run: git push -q https://${GITHUB_TOKEN}@github.com/nicolasburtey/galoy-app.git $CIRCLE_BRANCH
+      - run: git push -q https://${GITHUB_TOKEN}@github.com/GaloyMoney/galoy-mobile.git $CIRCLE_BRANCH
       - store_artifacts:
           path: ios/output
       - store_test_results:
@@ -55,11 +55,11 @@ jobs:
       TERM: dumb
       _JAVA_OPTIONS: "-Xmx2048m -XX:+UnlockExperimentalVMOptions"
       GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m"'
-    working_directory: ~/GaloyApp/mobile
+    working_directory: ~/galoy-mobile
     shell: /bin/bash --login -o pipefail
     steps:
       - checkout:
-          path: ~/GaloyApp
+          path: ~/galoy-mobile
       - run: sudo apt-get update
       - run: sudo apt-get install gnupg2
       - run: curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
@@ -94,7 +94,7 @@ jobs:
       # - run:
       #     name: upload latest apk to gcs
       #     command: |
-      #       cd ~/GaloyApp/mobile/android/app/build
+      #       cd ~/android/app/build
       #       VERSION_CODE=$(jq .elements[0].apkData.versionCode ./intermediates/instant_app_manifest/release/output.json)
       #       cd ./outputs/apk/release/
       #       gsutil cp ./app-release.apk gs://bitcoin-beach-wallet/"$VERSION_CODE".apk
@@ -106,17 +106,17 @@ jobs:
       - run: git config pull.rebase false
       - run: git pull origin $CIRCLE_BRANCH
       - run: git commit -a -m "new android build [ci skip]"
-      - run: git push -q https://${GITHUB_TOKEN}@github.com/nicolasburtey/galoy-app.git $CIRCLE_BRANCH
+      - run: git push -q https://${GITHUB_TOKEN}@github.com/GaloyMoney/galoy-mobile.git $CIRCLE_BRANCH
 
   update_locale:
-    working_directory: ~/GaloyApp/mobile
+    working_directory: ~/galoy-mobile
     docker:
       - image: cimg/base:2020.01    
     resource_class: small
     steps:
       - checkout:
-          path: ~/GaloyApp
-      - run: echo $PHRASE_CONFIG | base64 -d > .phrase.yml
+          path: ~/galoy-mobile
+      - run: sed -i "s/__TOKEN__/$PHRASE_TOKEN/" .phrase.yml
       - run: wget https://github.com/phrase/phrase-cli/releases/download/2.0.13/phrase_linux_amd64
       - run: chmod +x ./phrase_linux_amd64
       - run: ./phrase_linux_amd64 push
