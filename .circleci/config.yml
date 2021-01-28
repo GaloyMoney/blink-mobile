@@ -94,7 +94,7 @@ jobs:
       # - run:
       #     name: upload latest apk to gcs
       #     command: |
-      #       cd ~//android/app/build
+      #       cd ~/android/app/build
       #       VERSION_CODE=$(jq .elements[0].apkData.versionCode ./intermediates/instant_app_manifest/release/output.json)
       #       cd ./outputs/apk/release/
       #       gsutil cp ./app-release.apk gs://bitcoin-beach-wallet/"$VERSION_CODE".apk
