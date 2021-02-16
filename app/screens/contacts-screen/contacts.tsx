@@ -24,7 +24,7 @@ export const ContactsScreenJSX = observer(({ navigation }) => {
   
   // not sure why it's necessary, but component doesn't update 
   // without a reference to store.contacts
-  console.tron.log(JSON.stringify(store.contacts))
+  console.tron.log({contacts: JSON.stringify(store.contacts)})
   
   return (
   <Screen backgroundColor={palette.lighterGrey}>
