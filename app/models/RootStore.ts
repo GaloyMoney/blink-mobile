@@ -135,7 +135,7 @@ export const RootStore = RootStoreBase
     storage: AsyncStorage,
     // throttle: -1,
     storageKey: ROOT_STATE_STORAGE_KEY,
-    filter: ['prices', 'wallets', 'transactions', 'earns', 'users', 
+    filter: ['prices', 'wallets', 'transactions', 'earns', 'users', 'contacts',
       'buildParameters', 'nodeStats', 'lastOnChainAddresses', 'currentAppVersion']
 }))
 .props({
