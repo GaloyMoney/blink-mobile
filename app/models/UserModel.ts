@@ -1,5 +1,4 @@
 import i18n from "i18n-js"
-import { values } from "mobx"
 import { Instance } from "mobx-state-tree"
 import * as RNLocalize from "react-native-localize"
 import { UserModelBase } from "./UserModel.base"
