@@ -63,3 +63,5 @@ android/fastlane/report.xml
 android/fastlane/metadata/android/en-US/
 
 galoy.code-workspace 
+
+.phrase.yml
