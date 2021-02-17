@@ -11,6 +11,10 @@ import { WalletModel, WalletModelType } from "./WalletModel"
 import { walletModelPrimitives, WalletModelSelector } from "./WalletModel.base"
 import { TransactionModel, TransactionModelType } from "./TransactionModel"
 import { transactionModelPrimitives, TransactionModelSelector } from "./TransactionModel.base"
+import { Wallet2Model, Wallet2ModelType } from "./Wallet2Model"
+import { wallet2ModelPrimitives, Wallet2ModelSelector } from "./Wallet2Model.base"
+import { BalanceModel, BalanceModelType } from "./BalanceModel"
+import { balanceModelPrimitives, BalanceModelSelector } from "./BalanceModel.base"
 import { EarnModel, EarnModelType } from "./EarnModel"
 import { earnModelPrimitives, EarnModelSelector } from "./EarnModel.base"
 import { UserModel, UserModelType } from "./UserModel"
@@ -41,8 +45,6 @@ import { UpdateUserModel, UpdateUserModelType } from "./UpdateUserModel"
 import { updateUserModelPrimitives, UpdateUserModelSelector } from "./UpdateUserModel.base"
 import { UpdateContactModel, UpdateContactModelType } from "./UpdateContactModel"
 import { updateContactModelPrimitives, UpdateContactModelSelector } from "./UpdateContactModel.base"
-import { FaucetResultModel, FaucetResultModelType } from "./FaucetResultModel"
-import { faucetResultModelPrimitives, FaucetResultModelSelector } from "./FaucetResultModel.base"
 
 
 
@@ -55,6 +57,7 @@ type Refs = {
   prices: ObservableMap<string, PriceModelType>,
   wallets: ObservableMap<string, WalletModelType>,
   transactions: ObservableMap<string, TransactionModelType>,
+  balances: ObservableMap<string, BalanceModelType>,
   earns: ObservableMap<string, EarnModelType>,
   users: ObservableMap<string, UserModelType>,
   contacts: ObservableMap<string, ContactModelType>,
@@ -71,6 +74,7 @@ type Refs = {
 export enum RootStoreBaseQueries {
 queryPrices="queryPrices",
 queryWallet="queryWallet",
+queryWallet2="queryWallet2",
 queryEarnList="queryEarnList",
 queryMe="queryMe",
 queryMaps="queryMaps",
@@ -90,7 +94,6 @@ mutateEarnCompleted="mutateEarnCompleted",
 mutateUpdateUser="mutateUpdateUser",
 mutateUpdateContact="mutateUpdateContact",
 mutateDeleteUser="mutateDeleteUser",
-mutateFaucet="mutateFaucet",
 mutateAddDeviceToken="mutateAddDeviceToken",
 mutateTestMessage="mutateTestMessage"
 }
@@ -100,11 +103,12 @@ mutateTestMessage="mutateTestMessage"
 */
 export const RootStoreBase = withTypedRefs<Refs>()(MSTGQLStore
   .named("RootStore")
-  .extend(configureStoreMixin([['Price', () => PriceModel], ['Wallet', () => WalletModel], ['Transaction', () => TransactionModel], ['Earn', () => EarnModel], ['User', () => UserModel], ['Contact', () => ContactModel], ['Marker', () => MarkerModel], ['Coordinate', () => CoordinateModel], ['BuildParameter', () => BuildParameterModel], ['NodeStats', () => NodeStatsModel], ['LastOnChainAddress', () => LastOnChainAddressModel], ['Success', () => SuccessModel], ['Token', () => TokenModel], ['OnchainTransaction', () => OnchainTransactionModel], ['Invoice', () => InvoiceModel], ['OnChain', () => OnChainModel], ['UpdateUser', () => UpdateUserModel], ['UpdateContact', () => UpdateContactModel], ['FaucetResult', () => FaucetResultModel]], ['Price', 'Wallet', 'Transaction', 'Earn', 'User', 'Contact', 'Marker', 'BuildParameter', 'NodeStats', 'LastOnChainAddress'], "js"))
+  .extend(configureStoreMixin([['Price', () => PriceModel], ['Wallet', () => WalletModel], ['Transaction', () => TransactionModel], ['Wallet2', () => Wallet2Model], ['Balance', () => BalanceModel], ['Earn', () => EarnModel], ['User', () => UserModel], ['Contact', () => ContactModel], ['Marker', () => MarkerModel], ['Coordinate', () => CoordinateModel], ['BuildParameter', () => BuildParameterModel], ['NodeStats', () => NodeStatsModel], ['LastOnChainAddress', () => LastOnChainAddressModel], ['Success', () => SuccessModel], ['Token', () => TokenModel], ['OnchainTransaction', () => OnchainTransactionModel], ['Invoice', () => InvoiceModel], ['OnChain', () => OnChainModel], ['UpdateUser', () => UpdateUserModel], ['UpdateContact', () => UpdateContactModel]], ['Price', 'Wallet', 'Transaction', 'Balance', 'Earn', 'User', 'Contact', 'Marker', 'BuildParameter', 'NodeStats', 'LastOnChainAddress'], "js"))
   .props({
     prices: types.optional(types.map(types.late((): any => PriceModel)), {}),
     wallets: types.optional(types.map(types.late((): any => WalletModel)), {}),
     transactions: types.optional(types.map(types.late((): any => TransactionModel)), {}),
+    balances: types.optional(types.map(types.late((): any => BalanceModel)), {}),
     earns: types.optional(types.map(types.late((): any => EarnModel)), {}),
     users: types.optional(types.map(types.late((): any => UserModel)), {}),
     contacts: types.optional(types.map(types.late((): any => ContactModel)), {}),
@@ -122,6 +126,11 @@ export const RootStoreBase = withTypedRefs<Refs>()(MSTGQLStore
     queryWallet(variables?: {  }, resultSelector: string | ((qb: WalletModelSelector) => WalletModelSelector) = walletModelPrimitives.toString(), options: QueryOptions = {}) {
       return self.query<{ wallet: WalletModelType[]}>(`query wallet { wallet {
         ${typeof resultSelector === "function" ? resultSelector(new WalletModelSelector()).toString() : resultSelector}
+      } }`, variables, options)
+    },
+    queryWallet2(variables?: {  }, resultSelector: string | ((qb: Wallet2ModelSelector) => Wallet2ModelSelector) = wallet2ModelPrimitives.toString(), options: QueryOptions = {}) {
+      return self.query<{ wallet2: Wallet2ModelType[]}>(`query wallet2 { wallet2 {
+        ${typeof resultSelector === "function" ? resultSelector(new Wallet2ModelSelector()).toString() : resultSelector}
       } }`, variables, options)
     },
     queryEarnList(variables?: {  }, resultSelector: string | ((qb: EarnModelSelector) => EarnModelSelector) = earnModelPrimitives.toString(), options: QueryOptions = {}) {
@@ -204,11 +213,6 @@ export const RootStoreBase = withTypedRefs<Refs>()(MSTGQLStore
     },
     mutateDeleteUser(variables?: {  }, optimisticUpdate?: () => void) {
       return self.mutate<{ deleteUser: boolean }>(`mutation deleteUser { deleteUser }`, variables, optimisticUpdate)
-    },
-    mutateFaucet(variables: { hash?: string }, resultSelector: string | ((qb: FaucetResultModelSelector) => FaucetResultModelSelector) = faucetResultModelPrimitives.toString(), optimisticUpdate?: () => void) {
-      return self.mutate<{ faucet: FaucetResultModelType}>(`mutation faucet($hash: String) { faucet(hash: $hash) {
-        ${typeof resultSelector === "function" ? resultSelector(new FaucetResultModelSelector()).toString() : resultSelector}
-      } }`, variables, optimisticUpdate)
     },
     mutateAddDeviceToken(variables: { deviceToken?: string }, resultSelector: string | ((qb: SuccessModelSelector) => SuccessModelSelector) = successModelPrimitives.toString(), optimisticUpdate?: () => void) {
       return self.mutate<{ addDeviceToken: SuccessModelType}>(`mutation addDeviceToken($deviceToken: String) { addDeviceToken(deviceToken: $deviceToken) {

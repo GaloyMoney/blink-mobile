@@ -6,7 +6,7 @@ var url = require('url');
 
 // TODO: look if we own the address
 
-export type IPaymentType = "lightning" | "onchain" | "onchainAndLightning" | "username" | "faucet" | undefined
+export type IPaymentType = "lightning" | "onchain" | "onchainAndLightning" | "username" | undefined
 
 export interface IValidPaymentReponse {
   valid: boolean,
@@ -18,7 +18,6 @@ export interface IValidPaymentReponse {
   memo?: string | undefined,
   paymentType?: IPaymentType,
   sameNode?: boolean | undefined,
-  hash?: string | undefined,
   username?: string | undefined,
 }
 
@@ -85,13 +84,7 @@ export const validPayment = (input: string, network: INetwork, myPubKey: string,
     data = protocol
   } else if (protocol.toLowerCase() === "https") {
     const domain = "//ln.bitcoinbeach.com/"
-    if (data.startsWith(`${domain}faucet/`)) {
-      paymentType = "faucet"
-      // TODO
-      const hash = data
-      return {valid: true, paymentType, hash}
-    }
-    else if (data.startsWith(domain)) {
+    if (data.startsWith(domain)) {
       return {valid: true, paymentType: "username", username: data.substring(domain.length)}
     }
   }
