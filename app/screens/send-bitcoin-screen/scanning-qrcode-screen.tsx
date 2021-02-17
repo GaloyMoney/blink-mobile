@@ -59,17 +59,7 @@ export const ScanningQRCodeScreen = () => {
     try {
       const {valid, errorMessage, paymentType, hash} = validPayment(data, new Token().network, store.myPubKey, store.username)
       console.tron.logImportant({valid, errorMessage, data} , "result")
-      if (valid && paymentType === "faucet") {
-        setPending(true)
-        const result = await store.mutateFaucet({ hash })
-        Alert.alert(
-          result.faucet.success ? translate("common.success") : translate("common.error"),
-          result.faucet.success ? result.faucet.message : "there were an error scanning this QRCode. Maybe it has already been used",
-          [{
-            text: translate("common.ok"), onPress: goBack
-          }]
-        )
-      } else if (valid) {
+      if (valid) {
         navigate("sendBitcoin", { payment: data })
       } else {
         setPending(true)
