@@ -57,7 +57,7 @@ export const ScanningQRCodeScreen = () => {
     }
 
     try {
-      const {valid, errorMessage, paymentType, hash} = validPayment(data, new Token().network, store.myPubKey, store.username)
+      const {valid, errorMessage} = validPayment(data, new Token().network, store.myPubKey, store.username)
       console.tron.logImportant({valid, errorMessage, data} , "result")
       if (valid) {
         navigate("sendBitcoin", { payment: data })
