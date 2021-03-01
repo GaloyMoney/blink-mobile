@@ -1,8 +1,8 @@
 import { getDescription, getDestination, getUsername } from "./bolt11"
 import * as lightningPayReq from 'bolt11'
 import moment from "moment"
-import bitcoin from 'bitcoinjs-lib'
-import url from 'url'
+const bitcoin = require('bitcoinjs-lib');
+const url = require('url');
 
 // TODO: look if we own the address
 
