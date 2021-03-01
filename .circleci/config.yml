@@ -126,8 +126,8 @@ jobs:
       - run: git config --global user.email "bot@circleci.com"
       - run: git config pull.rebase false
       - run: |
-          if [[ $(git diff) ]]; then
-            git commit -a -m "update translation file [ci skip]"
+          if [[ $(-- . ':!.phrase.yml') ]]; then
+            git commit -a -m "update translation file [ci skip]" -- . ':!.phrase.yml'
             git push -q https://${GITHUB_TOKEN}@github.com/GaloyMoney/galoy-mobile.git $CIRCLE_BRANCH
           else
             echo "nothing to commit"
