@@ -264,7 +264,7 @@ export const SendBitcoinScreen: React.FC = observer(({ route }) => {
         setPaymentType("username")
 
         if (destination?.length > 2) {
-          setQuery((store) => store.queryUsernameExists({username: destination}, {fetchPolicy: "cache-first"}))
+          setQuery((store) => store.queryUsernameExists({username: destination}))
         }
 
         setFee(null)
