@@ -26,6 +26,7 @@
     "mst-gql": "mst-gql --format ts --outDir app/models http://localhost:4000/graphql"
   },
   "dependencies": {
+    "@apollo/client": "^3.3.13",
     "@react-native-async-storage/async-storage": "^1.13.2",
     "@react-native-community/clipboard": "^1.2.3",
     "@react-native-community/geolocation": "^2.0.2",
@@ -45,6 +46,7 @@
     "bolt11": "https://github.com/nicolasburtey/bolt11#master",
     "buffer": "^6.0.3",
     "currency.js": "^2.0.2",
+    "graphql": "^15.5.0",
     "i18n-js": "^3.5.1",
     "jwt-decode": "^3.1.2",
     "lodash": "^4.17.15",
@@ -69,7 +71,7 @@
     "react-native-gesture-handler": "^1.9.0",
     "react-native-haptic-feedback": "^1.9.0",
     "react-native-icloudstore": "^0.9.0",
-    "react-native-image-picker": "^2.3.3",
+    "react-native-image-picker": "^3.3.2",
     "react-native-inappbrowser-reborn": "^3.3.4",
     "react-native-keychain": "^6.1.1",
     "react-native-localize": "^2.0.1",

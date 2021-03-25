@@ -307,7 +307,7 @@ PODS:
     - React-Core
   - react-native-geolocation (2.0.2):
     - React
-  - react-native-image-picker (2.3.4):
+  - react-native-image-picker (3.3.2):
     - React-Core
   - react-native-maps (0.27.1):
     - React
@@ -682,7 +682,7 @@ SPEC CHECKSUMS:
   React-jsinspector: 0ae35a37b20d5e031eb020a69cc5afdbd6406301
   react-native-camera: 35854c4f764a4a6cf61c1c3525888b92f0fe4b31
   react-native-geolocation: c956aeb136625c23e0dce0467664af2c437888c9
-  react-native-image-picker: c6d75c4ab2cf46f9289f341242b219cb3c1180d3
+  react-native-image-picker: b42940647478bf106ad3c491d6f5d9d40916d865
   react-native-maps: f4b89da81626ad7f151a8bfcb79733295d31ce5c
   react-native-qrcode-local-image: a16d554baf5cf5c04da86b464d99cf658e215c52
   react-native-safe-area-context: b6e0e284002381d2ff29fa4fff42b4d8282e3c94
