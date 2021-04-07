@@ -106,7 +106,6 @@ export const EarnMapDataInjected = ({ navigation }) => {
       completed @client(if: {not: $logged})
   }}`,
     { variables: {
-        // FIXME: not very clean. could be handled by some Link?
         logged: new Token().has()
       },
       fetchPolicy: "cache-only"

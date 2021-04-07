@@ -8,7 +8,6 @@ import ImagePicker from 'react-native-image-picker'
 import Svg, { Circle } from "react-native-svg"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
-import { getPubKey, getMyUsername } from "../../graphql/query"
 import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
 import { validPayment } from "../../utils/parsing"
@@ -56,7 +55,7 @@ export const ScanningQRCodeScreen = () => {
     }
 
     try {
-      const {valid, errorMessage, paymentType, hash} = validPayment(data, new Token().network, getPubKey(client), getMyUsername(client))
+      const {valid, errorMessage, paymentType, hash} = validPayment(data, new Token().network, client)
       console.log({valid, errorMessage, data} , "result")
       if (valid) {
         navigate("sendBitcoin", { payment: data })

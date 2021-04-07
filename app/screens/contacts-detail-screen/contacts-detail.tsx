@@ -1,4 +1,4 @@
-import { useApolloClient, useMutation } from "@apollo/client"
+import { useApolloClient, useMutation, useQuery } from "@apollo/client"
 import * as React from "react"
 import { View } from "react-native"
 import { Input, Text } from "react-native-elements"
@@ -47,14 +47,12 @@ const styles = EStyleSheet.create({
 })
 
 export const ContactsDetailScreen = ({route, navigation}) => {
-  const { contact } = route.params
-  const client = useApolloClient()
-  
+  const { contact } = route.params  
   let transactions_filtered = []
+  const { data } = useQuery(QUERY_TRANSACTIONS)
 
   try {
-    const { wallet } = client.readQuery({ query: QUERY_TRANSACTIONS })
-    const { transactions } = _.find(wallet, {id: "BTC"})
+    const { transactions } = _.find(data.wallet, {id: "BTC"})
     // TODO: this query could be optimize through some graphql query
     transactions_filtered = transactions.filter(tx => tx.username === contact.id)
   } catch (err) {

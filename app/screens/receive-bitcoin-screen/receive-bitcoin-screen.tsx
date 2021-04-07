@@ -99,7 +99,7 @@ export const ReceiveBitcoinScreen = ({ navigation }) => {
     }
   }`
 
-  const [addInvoice, _] = useMutation(ADD_INVOICE)
+  const [addInvoice] = useMutation(ADD_INVOICE)
   
   const UPDATE_PENDING_INVOICE = gql`mutation updatePendingInvoice($hash: String!) {
     invoice {
@@ -107,7 +107,7 @@ export const ReceiveBitcoinScreen = ({ navigation }) => {
     }
   }`
   
-  const [updatePendingInvoice, __] = useMutation(UPDATE_PENDING_INVOICE)
+  const [updatePendingInvoice] = useMutation(UPDATE_PENDING_INVOICE)
 
   const GET_ONCHAIN_ADDRESS = gql`query getLastOnChainAddress {
     getLastOnChainAddress {

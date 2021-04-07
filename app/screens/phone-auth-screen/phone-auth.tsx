@@ -166,7 +166,7 @@ export const WelcomePhoneInputScreen = ({ navigation }) => {
 export const WelcomePhoneValidationScreenDataInjected = ({ route, navigation }) => {
   const client = useApolloClient()
 
-  const [login, { data, loading, error }] = useMutation(LOGIN, {
+  const [login, { loading, error }] = useMutation(LOGIN, {
     fetchPolicy: "no-cache"
   });
     
@@ -201,7 +201,6 @@ export const WelcomePhoneValidationScreenDataInjected = ({ route, navigation }) 
     route={route}
     navigation={navigation}
     login={login}  
-    data={data}  
     loading={loading}  
     error={error}  
   />
@@ -209,7 +208,7 @@ export const WelcomePhoneValidationScreenDataInjected = ({ route, navigation }) 
 
 
 export const WelcomePhoneValidationScreen = ({ 
-  onSuccess, route, navigation, login, data, loading, error
+  onSuccess, route, navigation, login, loading, error
   }) => {
   // FIXME see what to do with store and storybook
   const [code, setCode] = useState("")
@@ -224,8 +223,6 @@ export const WelcomePhoneValidationScreen = ({
     }
 
     try {
-      // FIXME: this should be { fetchPolicy: "no-cache" }
-      // there should be no caching of the token in mst
       const { data } = await login({
         variables: { phone, code: Number(code) },
       })
@@ -238,12 +235,11 @@ export const WelcomePhoneValidationScreen = ({
         navigation.navigate("MoveMoney")
       } else {
         toastShow(translate("WelcomePhoneValidationScreen.errorLoggingIn"))
-        // setErr(translate("WelcomePhoneValidationScreen.errorLoggingIn"))
       }
 
     } catch (err) {
       console.warn({err})
-      // setErr(err.toString())
+      toastShow(`${err}`)
     }
   }
 

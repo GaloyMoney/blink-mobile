@@ -100,7 +100,6 @@ export const MoveMoneyScreenDataInjected = ({ navigation }) => {
   const { loading: loadingMain, error, data, refetch, networkStatus } = useQuery(MAIN_QUERY,
     { variables: 
       {
-        // FIXME: not very clean. could be handled by some Link?
         logged: new Token().has()
       },
     notifyOnNetworkStatusChange: true,
@@ -147,6 +146,7 @@ export const MoveMoneyScreenDataInjected = ({ navigation }) => {
       }
     } catch (err) {
       return { 
+        // TODO: handle required upgrade
         required: false,
         available: false
       }

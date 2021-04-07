@@ -3,6 +3,7 @@ import Toast from "react-native-root-toast";
 import { translate } from "../../i18n";
 import { palette } from "../../theme/palette";
 import { useApolloNetworkStatus } from "../../app"
+import { toastShow } from "../../utils/toast";
 
 export const GlobalErrorToast = () => {
   const status = useApolloNetworkStatus();
@@ -15,16 +16,7 @@ export const GlobalErrorToast = () => {
   }
 
   if (status.queryError?.networkError || status.mutationError?.networkError) {
-    Toast.show(translate("common.connectionIssue"), {
-      duration: Toast.durations.LONG,
-      shadow: false,
-      animation: true,
-      hideOnPress: true,
-      delay: 0,
-      position: 160,
-      opacity: 1,
-      backgroundColor: palette.red,
-    })
+    toastShow(translate("common.connectionIssue"))
   }
 
   return null

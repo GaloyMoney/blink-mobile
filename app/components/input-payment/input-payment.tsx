@@ -139,8 +139,6 @@ export const InputPayment = ({
     return value
   }
 
-  console.log({prefCurrency2: prefCurrency})
-
   return (
     <View style={{ alignItems: "center" }}>
       <View style={styles.main}>
@@ -174,7 +172,7 @@ export const InputPayment = ({
           onEndEditing={onBlur}
           renderErrorMessage={false}
         />
-        <TouchableOpacity onPress={() => nextPrefCurrency()}>
+        <TouchableOpacity onPress={nextPrefCurrency}>
           <Icon name={"ios-swap-vertical"} size={32} style={{paddingTop: 4}} />
         </TouchableOpacity>
       </View>

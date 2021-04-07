@@ -2,6 +2,7 @@ import { getDescription, getDestination, getUsername } from "./bolt11"
 import * as lightningPayReq from 'bolt11'
 import moment from "moment"
 import { networks, address } from 'bitcoinjs-lib';
+import { getMyUsername, getPubKey } from "../graphql/query";
 const url = require('url');
 
 // TODO: look if we own the address
@@ -50,7 +51,10 @@ function parseAmount(txt) {
   ));
 }
 
-export const validPayment = (input: string, network: INetwork, myPubKey: string, username: string): IValidPaymentReponse => {
+export const validPayment = (input: string, network: INetwork, client: any /* apollo client */): IValidPaymentReponse => {
+  const myPubKey = getPubKey(client)
+  const username = getMyUsername(client)
+  
   if (!input) {
     return {valid: false}
   }

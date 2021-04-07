@@ -1,6 +1,5 @@
-import { gql } from '@apollo/client';
-import _ from "lodash"
-import { makeVar } from '@apollo/client';
+import { gql, makeVar } from '@apollo/client';
+import _ from "lodash";
 
 
 export const prefCurrencyVar = makeVar("USD");
@@ -8,10 +7,9 @@ export function nextPrefCurrency () {
   const units = ["sats", "USD"] // "BTC"
   const currentIndex = _.indexOf(units, prefCurrencyVar())
   prefCurrencyVar(units[(currentIndex + 1) % units.length])
-  console.log({prefCurrencyVar: prefCurrencyVar()})
 }
 
-export const modalClipboardVisible = makeVar(false)
+export const modalClipboardVisibleVar = makeVar(false)
 
 export const QUERY_PRICE = gql`
   query prices($length: Int = 1) {

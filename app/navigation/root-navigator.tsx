@@ -12,7 +12,7 @@ import { AppState } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import * as RNLocalize from "react-native-localize"
 import Icon from "react-native-vector-icons/Ionicons"
-import { getMyUsername, getPubKey, GET_LANGUAGE, modalClipboardVisible, QUERY_PRICE, walletIsActive } from "../graphql/query"
+import { GET_LANGUAGE, modalClipboardVisibleVar, QUERY_PRICE, walletIsActive } from "../graphql/query"
 import { translate } from "../i18n"
 import { ContactsDetailScreen } from "../screens/contacts-detail-screen"
 import { ContactsScreen } from "../screens/contacts-screen"
@@ -140,12 +140,12 @@ export const RootStack = () => {
       return
     }
 
-    const {valid} = validPayment(clipboard, new Token().network, getPubKey(client), getMyUsername(client))
+    const {valid} = validPayment(clipboard, new Token().network, client)
     if (!valid) {
       return
     }
     
-    modalClipboardVisible(true)
+    modalClipboardVisibleVar(true)
   }
 
   const showNotification = (remoteMessage) => {

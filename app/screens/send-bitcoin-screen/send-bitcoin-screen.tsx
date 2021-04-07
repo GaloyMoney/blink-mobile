@@ -1,5 +1,4 @@
 import { gql, useApolloClient, useLazyQuery, useMutation, useReactiveVar } from "@apollo/client"
-import analytics from '@react-native-firebase/analytics'
 import { useNavigation } from "@react-navigation/native"
 import LottieView from 'lottie-react-native'
 import * as React from "react"
@@ -12,7 +11,7 @@ import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import Icon from "react-native-vector-icons/Ionicons"
 import { InputPayment } from "../../components/input-payment"
 import { Screen } from "../../components/screen"
-import { getPubKey, balanceBtc, WALLET, btc_price, prefCurrencyVar, getMyUsername, USERNAME_EXIST, QUERY_TRANSACTIONS } from "../../graphql/query"
+import { balanceBtc, btc_price, getPubKey, prefCurrencyVar, QUERY_TRANSACTIONS, USERNAME_EXIST, WALLET } from "../../graphql/query"
 import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
@@ -218,7 +217,7 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
 
   useEffect(() => {
     reset()
-    const {valid, username} = validPayment(route.params?.payment, network, getPubKey(client), getMyUsername(client))
+    const {valid, username} = validPayment(route.params?.payment, network, client)
     if (route.params?.username || username) {
       setInteractive(false)
       setDestination(route.params?.username || username)
@@ -249,7 +248,7 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
 
   useEffect(() => {
     const fn = async () => {
-      const {valid, errorMessage, invoice, amount: amountInvoice, amountless, memo: memoInvoice, paymentType, address, sameNode} = validPayment(destination, network, getPubKey(client), getMyUsername(client))
+      const {valid, errorMessage, invoice, amount: amountInvoice, amountless, memo: memoInvoice, paymentType, address, sameNode} = validPayment(destination, network, client)
       
       if (valid) {
         setStatus("idle")

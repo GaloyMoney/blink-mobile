@@ -183,7 +183,6 @@ export const EarnSection = ({ route, navigation }) => {
       completed @client(if: {not: $logged})
   }}`,
     { variables: {
-        // FIXME: not very clean. could be handled by some Link?
         logged: new Token().has()
       },
       fetchPolicy: "cache-only"
