@@ -32,7 +32,7 @@ jobs:
             - node_modules
             - ios/Pods
       - run: yarn jest
-      - run: sed -i "s/GOOGLE_SERVICE_FIREBASE_API_KEY/$GOOGLE_SERVICE_FIREBASE_API_KEY/" ios/GoogleService-Info.plist
+      - run: sed -i'' -e "s/GOOGLE_SERVICE_FIREBASE_API_KEY/$GOOGLE_SERVICE_FIREBASE_API_KEY/" ios/GoogleService-Info.plist
       - run: 
          name: fastlane
          command: cd ios && bundle exec fastlane beta
