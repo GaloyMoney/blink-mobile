@@ -106,7 +106,7 @@ export const validPayment = (input: string, network: INetwork, client: any /* ap
       try {
         amount = parseAmount(decodedData.query.amount)
       } catch (err) {
-        console.tron?.log(`can't decode amount ${err}`)
+        console.log(`can't decode amount ${err}`)
       }
 
       // will throw if address is not valid
