@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   build_ios:
     macos:
-      xcode: 11.6.0
+      xcode: 12.4.0
     working_directory: ~/galoy-mobile
     environment:
       FL_OUTPUT_DIR: output
@@ -50,7 +50,7 @@ jobs:
 
   build_android:
     docker:
-      - image: circleci/android:api-29
+      - image: circleci/android:api-30
     environment:
       TERM: dumb
       _JAVA_OPTIONS: "-Xmx2048m -XX:+UnlockExperimentalVMOptions"
