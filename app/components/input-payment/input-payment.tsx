@@ -1,13 +1,13 @@
+import { useApolloClient, useReactiveVar } from "@apollo/client"
 import { toInteger } from "lodash"
-import { observer } from "mobx-react"
 import * as React from "react"
 import { Keyboard, Text, View } from "react-native"
 import { Input } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
+import { btc_price, nextPrefCurrency, prefCurrencyVar } from "../../graphql/query"
 import { translate } from "../../i18n"
-import { StoreContext } from "../../models"
 import { palette } from "../../theme/palette"
 import { CurrencyConversion } from "../../utils/currencyConversion"
 import { CurrencyType } from "../../utils/enum"
@@ -49,16 +49,14 @@ export interface InputPaymentDataInjectedProps {
   sub?: boolean
 }
 
-export const InputPaymentDataInjected = observer((props: InputPaymentDataInjectedProps) => {
-  const store = React.useContext(StoreContext)
-  const price = store.rate(CurrencyType.BTC)
-
+export const InputPaymentDataInjected = (props: InputPaymentDataInjectedProps) => {
+  const client = useApolloClient()
+  const price = btc_price(client)
+  
   return <InputPayment 
     price={price} 
-    prefCurrency={store.prefCurrency}
-    nextPrefCurrency={store.nextPrefCurrency}
     {...props} />
-})
+}
 
 export const InputPayment = ({
   price,
@@ -66,11 +64,11 @@ export const InputPayment = ({
   onUpdateAmount,
   onBlur = () => {},
   forceKeyboard = false,
-  prefCurrency,
-  nextPrefCurrency,
   sub = true,
   initAmount = 0, // in sats
 }) => {
+
+  const prefCurrency = useReactiveVar(prefCurrencyVar)
 
   const endByDot = (s: string) => s.match(/^[0-9]*\.{1}$/)
 
@@ -103,7 +101,6 @@ export const InputPayment = ({
 
   const amountInput = mapping[prefCurrency].conversion(amount)
   const currency = mapping[prefCurrency].primary
-
 
   // TODO: show "an amount is needed" in red
   function keyboardFocus() {
@@ -142,6 +139,8 @@ export const InputPayment = ({
     return value
   }
 
+  console.log({prefCurrency2: prefCurrency})
+
   return (
     <View style={{ alignItems: "center" }}>
       <View style={styles.main}>
@@ -175,7 +174,7 @@ export const InputPayment = ({
           onEndEditing={onBlur}
           renderErrorMessage={false}
         />
-        <TouchableOpacity onPress={nextPrefCurrency}>
+        <TouchableOpacity onPress={() => nextPrefCurrency()}>
           <Icon name={"ios-swap-vertical"} size={32} style={{paddingTop: 4}} />
         </TouchableOpacity>
       </View>

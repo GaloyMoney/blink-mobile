@@ -1,37 +1,42 @@
-import { Observer, observer } from "mobx-react"
 import * as React from "react"
 import { Text, View } from "react-native"
 import { ListItem } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { FlatList } from "react-native-gesture-handler"
 import { Screen } from "../../components/screen"
-import { StoreContext } from "../../models"
 import { palette } from "../../theme/palette"
 import Icon from "react-native-vector-icons/Ionicons"
+import { useApolloClient, useQuery } from "@apollo/client"
+import { gql } from '@apollo/client';
 
 
 const styles = EStyleSheet.create({
 
 })
 
-export const ContactsScreen = observer(({ navigation }) => {
-  const store = React.useContext(StoreContext)
-  return <ContactsScreenJSX navigation={navigation} />
-})
+export const ContactsScreen = ({ navigation }) => {
+  const client = useApolloClient()
+  
+  const { data } = useQuery(gql`
+    query contacts {
+      me {
+        contacts {
+          id
+          name
+          prettyName @client
+          transactionsCount
+        }
+      }
+    }`
+  )
 
-export const ContactsScreenJSX = observer(({ navigation }) => {
-  const store = React.useContext(StoreContext)
-  
-  // not sure why it's necessary, but component doesn't update 
-  // without a reference to store.contacts
-  console.tron.log({contacts: JSON.stringify(store.contacts)})
-  
+  const contacts = data?.me?.contacts ?? []
+
   return (
   <Screen backgroundColor={palette.lighterGrey}>
-    <Observer>{() => 
       <FlatList
       style={{paddingTop: 18}}
-      data={store.user.contactsSorted.slice()}
+      data={contacts}
       ListEmptyComponent={() => 
         <View style={{marginHorizontal: 12, marginTop: 32}}>
           <Text style={{fontSize: 18}}>{"No contact yet.\n\nSend or receive payment with a username. Usernames will automatically be added here."}</Text>
@@ -43,7 +48,7 @@ export const ContactsScreenJSX = observer(({ navigation }) => {
           activeOpacity={0.7}
           style={{ marginHorizontal: 32, marginVertical: 8 }}
           containerStyle={{borderRadius: 8}}
-          onPress={() => navigation.navigate("contactDetail", {contactId: item.id})}>
+          onPress={() => navigation.navigate("contactDetail", {contact: item})}>
           {/* <Avatar source={{uri: .avatar_url}} /> */}
           <Icon name={"ios-person-outline"} size={24} color={palette.green} />
           <ListItem.Content>
@@ -53,6 +58,5 @@ export const ContactsScreenJSX = observer(({ navigation }) => {
       )}
       keyExtractor={(item) => item.id}
       />
-    }</Observer>
   </Screen>
-)})
+)}

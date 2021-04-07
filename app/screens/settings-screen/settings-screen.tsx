@@ -1,11 +1,13 @@
+import { gql, useApolloClient, useLazyQuery, useQuery } from "@apollo/client"
 import * as React from "react"
-import { Alert, Modal, Text, View } from "react-native"
+import { Alert, View } from "react-native"
 import { Divider, Icon, ListItem } from "react-native-elements"
 import EStyleSheet from 'react-native-extended-stylesheet'
+import Share from 'react-native-share'
 import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
+import { walletIsActive } from "../../graphql/query"
 import { translate } from "../../i18n"
-import { StoreContext } from "../../models"
 import { palette } from "../../theme/palette"
 import { resetDataStore } from "../../utils/logout"
 import { hasFullPermissions, requestPermission } from "../../utils/notifications"
@@ -18,80 +20,117 @@ const styles = EStyleSheet.create({
 })
 
 export const SettingsScreen = ({navigation}) => {
-  const store = React.useContext(StoreContext)
+  const client = useApolloClient()
+
+  const { data } = useQuery(gql`
+    query me_settings {
+      me {
+        username
+        phone
+        language
+      }
+    }`, { fetchPolicy: "cache-only" }
+  )
+
+  const onGetCsvCallback = async (data) => {
+    console.log({data}, "result getCsv")
+    const csvEncoded = data.wallet[0].csv
+    try {
+      console.log({csvEncoded})
+      // const decoded = Buffer.from(csvEncoded, 'base64').toString('ascii')
+      // console.log({decoded})
+
+      const shareResponse = await Share.open({
+        // title: "export-csv-title.csv",
+        url: `data:text/csv;base64,${csvEncoded}`,
+        type: 'text/csv',
+        // subject: 'csv export',
+        filename: 'export.csv',
+        // message: 'export message'
+      });
+
+    } catch (err) {
+      console.error({err}, "export export CSV")
+    }
+  }
+
+  const [getCsv] = useLazyQuery(gql`
+    query csv {
+      wallet {
+        id
+        csv
+      }
+    }`, {onCompleted: onGetCsvCallback})
+
+  const me = data?.me || {}
 
   const [notificationsEnabled, setNotificationsEnabled] = React.useState(false)
 
   React.useEffect(() => {
-    const fn = async () => {
+    (async () => {
       setNotificationsEnabled(await hasFullPermissions())
-    }
-
-    fn()
+    })()
   }, [])
-
+  
   return <SettingsScreenJSX 
-    loggedin={store.walletIsActive}
+    client={client}
+    walletIsActive={walletIsActive(client)}
+    resetDataStore={() => resetDataStore(client)}
     navigation={navigation} 
-    username={store.user.username}
-    phone={store.user.phone}
-    language={language_mapping[store.user.language]}
+    username={me.username}
+    phone={me.phone}
+    language={language_mapping[me.language]}
     notifications={notificationsEnabled ? translate("SettingsScreen.activated") : translate("SettingsScreen.activate")}  
     notificationsEnabled={notificationsEnabled}
-    csvAction={store.csvExport}
+    csvAction={getCsv}
   />
 }
 
 
-// username / phone not working
-
 export const SettingsScreenJSX = (params) => {
-
-  const loggedin = params.loggedin
-
-  const [modalVisible, setModalVisible] = React.useState(false)
+  const { client, walletIsActive, navigation, username, notificationsEnabled, csvAction, resetDataStore } = params
 
   const list = [{
       category: translate("common.phoneNumber"),
       icon: 'call',
       id: 'phone',
       defaultValue: translate("SettingsScreen.tapLogIn"),
-      action: () => params.navigation.navigate("phoneValidation"),
-      enabled: !loggedin,
-      greyed: loggedin,
+      action: () => navigation.navigate("phoneValidation"),
+      enabled: !walletIsActive,
+      greyed: walletIsActive,
     },
     {
       category: translate("common.username"),
       icon: 'ios-person-circle',
       id: 'username',
       defaultValue: translate("SettingsScreen.tapUserName"),
-      action: () => params.navigation.navigate("setUsername"),
-      enabled: loggedin && !params.username,
-      greyed: !loggedin,
+      action: () => navigation.navigate("setUsername"),
+      enabled: walletIsActive && !username,
+      greyed: !walletIsActive,
     },
     {
       category: translate('common.language'),
       icon: 'ios-language',
       id: 'language',
-      action: () => params.navigation.navigate("language"),
-      enabled: loggedin,
-      greyed: !loggedin,
+      action: () => navigation.navigate("language"),
+      enabled: walletIsActive,
+      greyed: !walletIsActive,
     },
     {
       category: translate('common.notification'),
       icon: 'ios-notifications-circle',
       id: 'notifications',
-      action: requestPermission,
-      enabled: loggedin && params.notificationsEnabled,
-      greyed: !loggedin,
+      action: () => requestPermission(client),
+      enabled: walletIsActive && notificationsEnabled,
+      greyed: !walletIsActive,
     },
     {
       category: translate('common.csvExport'),
       icon: 'ios-download',
       id: 'csv',
-      action: () => params.csvAction(),
-      enabled: loggedin,
-      greyed: !loggedin,
+      action: () => csvAction(),
+      enabled: walletIsActive,
+      greyed: !walletIsActive,
       styleDivider: { backgroundColor: palette.lighterGrey, height: 18 },
     },
     {
@@ -100,31 +139,23 @@ export const SettingsScreenJSX = (params) => {
       icon: 'ios-log-out', 
       action: async () => {
         await resetDataStore()
-        setModalVisible(true)
+        Alert.alert("you have been logged out", "", 
+        [
+          { text: translate("common.ok"), onPress: () => {
+            navigation.goBack()
+          }}
+        ]
+        )
       },
-      enabled: loggedin,
-      greyed: !loggedin,
+      enabled: walletIsActive,
+      greyed: !walletIsActive,
   }]
   
   const Component = ({icon, category, id, i, enabled, greyed, defaultValue = undefined, action, styleDivider}) => {
     const value = params[id] || defaultValue
 
-    console.tron.log({id, value})
-
     return (
       <>
-      <Modal
-        animationType="slide"
-        transparent={false}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-        }}
-      >
-        <View style={{alignItems: "center", justifyContent: "center", flex: 1, padding: 30}} >
-          <Text>{translate("SettingsScreen.logOutSuccesful")}</Text>
-        </View>
-      </Modal>
       <ListItem id={i} onPress={action} disabled={!enabled}>
         <Icon name={icon} type='ionicon' color={greyed ? palette.midGrey : null} />
         <ListItem.Content>

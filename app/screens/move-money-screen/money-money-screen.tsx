@@ -1,26 +1,26 @@
+import { useApolloClient, useQuery } from '@apollo/client'
 import messaging from '@react-native-firebase/messaging'
-import { observer } from "mobx-react"
 import * as React from "react"
 import { useEffect, useState } from "react"
 import { AppState, FlatList, Linking, Pressable, RefreshControl, Text, View } from "react-native"
-import { Button, Card, ListItem } from "react-native-elements"
+import { Button } from "react-native-elements"
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
-import Toast from "react-native-root-toast"
 import Icon from "react-native-vector-icons/Ionicons"
 import { BalanceHeader } from "../../components/balance-header"
 import { IconTransaction } from "../../components/icon-transactions"
 import { LargeButton } from "../../components/large-button"
 import { Screen } from "../../components/screen"
 import { TransactionItem } from "../../components/transaction-item"
+import { balanceBtc, balanceUsd, lastTransactions, MAIN_QUERY, walletIsActive } from "../../graphql/query"
 import { translate } from "../../i18n"
-import { useQuery } from "../../models"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { AccountType, CurrencyType } from "../../utils/enum"
 import { isIos } from "../../utils/helper"
-
+import { Token } from "../../utils/token"
+import { getBuildNumber } from "react-native-device-info"
 
 const styles = EStyleSheet.create({
   screenStyle: {
@@ -94,19 +94,17 @@ const styles = EStyleSheet.create({
   }
 })
 
+export const MoveMoneyScreenDataInjected = ({ navigation }) => {
+  const client = useApolloClient()
 
-export const connectionIssue = (error) => !!error && Object.keys(error).length === 0
-
-export const MoveMoneyScreenDataInjected = observer(({ navigation }) => {
-  const { store, error, loading, setQuery } = useQuery()
-
-  const refreshQuery = async () => {
-    setQuery(store => store.mainQuery())
-  }
-
-  useEffect(() => {
-    refreshQuery()
-  }, [])
+  const { loading: loadingMain, error, data, refetch, networkStatus } = useQuery(MAIN_QUERY,
+    { variables: 
+      {
+        // FIXME: not very clean. could be handled by some Link?
+        logged: new Token().has()
+      },
+    notifyOnNetworkStatusChange: true,
+  })
 
   // temporary fix until we have a better management of notifications:
   // when coming back to active state. look if the invoice has been paid
@@ -115,7 +113,7 @@ export const MoveMoneyScreenDataInjected = observer(({ navigation }) => {
       if (nextAppState === "active") {
         // TODO: fine grain query
         // only refresh as necessary
-        refreshQuery()
+        refetch()
       }
     };
 
@@ -130,49 +128,49 @@ export const MoveMoneyScreenDataInjected = observer(({ navigation }) => {
     const unsubscribe = messaging().onMessage(async remoteMessage => {
       // TODO: fine grain query
       // only refresh as necessary
-      refreshQuery()
+      refetch()
     })
 
     return unsubscribe;
-  }, []); 
+  }, []);
+
+  function isUpdateAvailableOrRequired({ buildParameters }) {
+    try {
+      const { minBuildNumberAndroid, minBuildNumberIos, 
+        lastBuildNumberAndroid, lastBuildNumberIos } = buildParameters
+      const minBuildNumber = isIos ? minBuildNumberIos : minBuildNumberAndroid
+      const lastBuildNumber = isIos ? lastBuildNumberIos : lastBuildNumberAndroid
+      let buildNumber = Number(getBuildNumber())
+      return { 
+        required: buildNumber < minBuildNumber,
+        available: buildNumber < lastBuildNumber
+      }
+    } catch (err) {
+      return { 
+        required: false,
+        available: false
+      }
+    }
+  }
 
   return <MoveMoneyScreen 
     navigation={navigation}
-    walletIsActive={store.walletIsActive}
-    loading={loading}
+    walletIsActive={walletIsActive(client)}
+    loading={loadingMain}
     error={error}
-    amount={store.balances({currency: "USD", account: AccountType.Bitcoin})}
-    amountOtherCurrency={store.balances({
-      currency: CurrencyType.BTC,
-      account: AccountType.Bitcoin,
-    })}
-    refreshQuery={refreshQuery}
-    isUpdateAvailable={store.isUpdateAvailable}
-    transactions={store.lastTransactions}
+    amount={balanceUsd(client)}
+    amountOtherCurrency={balanceBtc(client)}
+    refetch={refetch}
+    isUpdateAvailable={isUpdateAvailableOrRequired({buildParameters: data?.buildParameters}).available}
+    transactions={lastTransactions(client)}
   />
-})
+}
 
 export const MoveMoneyScreen = (
   ({ walletIsActive, navigation, loading, error, transactions,
-    refreshQuery, amount, amountOtherCurrency, isUpdateAvailable }) => {
+    refetch, amount, amountOtherCurrency, isUpdateAvailable }) => {
 
   const [modalVisible, setModalVisible] = useState(false)
-
-  React.useEffect(() => {
-    if (connectionIssue(error) === true) {
-      Toast.show(translate("common.connectionIssue"), {
-        duration: Toast.durations.LONG,
-        shadow: false,
-        animation: true,
-        hideOnPress: true,
-        delay: 0,
-        position: 160,
-        opacity: 1,
-        backgroundColor: palette.red,
-      })
-    }
-  }, [connectionIssue(error)])
-  
 
   const [secretMenuCounter, setSecretMenuCounter] = useState(0)
   React.useEffect(() => {
@@ -191,7 +189,6 @@ export const MoveMoneyScreen = (
     navigation.navigate("phoneValidation")
   }
 
-
   const testflight = `https://testflight.apple.com/join/9aC8MMk2`
   const appstore = "https://apps.apple.com/app/bitcoin-beach-wallet/id1531383905"
 
@@ -206,10 +203,10 @@ export const MoveMoneyScreen = (
   };
 
   const linkUpgrade = () => openInStore({ appName: "Bitcoin Beach Wallet", appStoreId: "", playStoreId: 'com.galoyapp' }).then(() => {
-    console.tron.log("clicked on link")
+    console.log("clicked on link")
   })
   .catch((err) => {
-    console.tron.log("error app link on link")
+    console.log("error app link on link")
     // handle error
   });
 
@@ -298,7 +295,7 @@ export const MoveMoneyScreen = (
           }
         ]}
           style={styles.listContainer}
-          refreshControl={<RefreshControl refreshing={loading} onRefresh={refreshQuery} />}
+          refreshControl={<RefreshControl refreshing={loading} onRefresh={refetch} />}
           renderItem={({ item }) => 
             <>
               <LargeButton

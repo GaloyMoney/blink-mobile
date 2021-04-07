@@ -1,7 +1,7 @@
 import { getDescription, getDestination, getUsername } from "./bolt11"
 import * as lightningPayReq from 'bolt11'
 import moment from "moment"
-const bitcoin = require('bitcoinjs-lib');
+import { networks, address } from 'bitcoinjs-lib';
 const url = require('url');
 
 // TODO: look if we own the address
@@ -26,9 +26,9 @@ type INetwork = "mainnet" | "testnet" | "regtest"
 
 const mappingToBitcoinJs = (input: INetwork) => {
   switch (input) {
-    case "mainnet": return bitcoin.networks.mainnet
-    case "testnet": return bitcoin.networks.testnet
-    case "regtest": return bitcoin.networks.regtest
+    case "mainnet": return networks.bitcoin
+    case "testnet": return networks.testnet
+    case "regtest": return networks.regtest
   }
 }
 
@@ -96,7 +96,7 @@ export const validPayment = (input: string, network: INetwork, myPubKey: string,
   if (paymentType === "onchain" || paymentType === undefined) {
     try {
       const decodedData = url.parse(data, true)
-      const address = decodedData.pathname // using url node library. the address is exposed as the "host" here
+      const path = decodedData.pathname // using url node library. the address is exposed as the "host" here
       let amount 
 
       try {
@@ -106,12 +106,12 @@ export const validPayment = (input: string, network: INetwork, myPubKey: string,
       }
 
       // will throw if address is not valid
-      bitcoin.address.toOutputScript(address, mappingToBitcoinJs(network));
+      address.toOutputScript(path, mappingToBitcoinJs(network));
       paymentType = "onchain"
-      return {valid: true, paymentType, address, amount, amountless: !amount}
+      return {valid: true, paymentType, address: path, amount, amountless: !amount}
 
     } catch (e) {
-      console.tron?.warn(`issue with payment ${e}`)
+      console.warn(`issue with payment ${e}`)
       return {valid: false}
     }
   } else if (paymentType === "lightning") {
@@ -119,7 +119,7 @@ export const validPayment = (input: string, network: INetwork, myPubKey: string,
     try {
       payReq = lightningPayReq.decode(data)
     } catch (err) {
-      console.tron.log(err)
+      console.log(err)
       return {valid: false}
     }
     // console.log(JSON.stringify({ payReq }, null, 2))

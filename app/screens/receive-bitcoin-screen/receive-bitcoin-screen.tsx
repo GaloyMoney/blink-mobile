@@ -1,8 +1,7 @@
+import { gql, useApolloClient, useMutation } from "@apollo/client"
 import Clipboard from "@react-native-community/clipboard"
-import analytics from "@react-native-firebase/analytics"
 import messaging from "@react-native-firebase/messaging"
-import { keys, values } from "mobx"
-import { observer } from "mobx-react"
+import LottieView from 'lottie-react-native'
 import * as React from "react"
 import { useEffect, useState } from "react"
 import {
@@ -15,25 +14,23 @@ import {
   ScrollView,
   Share,
   Text,
-  View,
+  View
 } from "react-native"
 import { Button, Input } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import QRCode from "react-native-qrcode-svg"
+import Toast from "react-native-root-toast"
+import ScreenBrightness from 'react-native-screen-brightness'
+import Swiper from "react-native-swiper"
 import Icon from "react-native-vector-icons/Ionicons"
 import { InputPaymentDataInjected } from "../../components/input-payment"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
-import { StoreContext } from "../../models"
 import { palette } from "../../theme/palette"
 import { getHashFromInvoice } from "../../utils/bolt11"
-import { hasFullPermissions, requestPermission } from "../../utils/notifications"
-import Toast from "react-native-root-toast"
-import LottieView from 'lottie-react-native'
-import Swiper from "react-native-swiper"
-import ScreenBrightness from 'react-native-screen-brightness'
 import { isIos } from "../../utils/helper"
+import { hasFullPermissions, requestPermission } from "../../utils/notifications"
 
 // FIXME: crash when no connection
 
@@ -93,10 +90,38 @@ const styles = EStyleSheet.create({
   },
 })
 
-export const ReceiveBitcoinScreen = observer(({ navigation }) => {
-  console.tron.log("render ReceiveBitcoinScreen")
+export const ReceiveBitcoinScreen = ({ navigation }) => {
+  const client = useApolloClient()
 
-  const store = React.useContext(StoreContext)
+  const ADD_INVOICE = gql`mutation addInvoice($value: Int, $memo: String) {
+    invoice {
+      addInvoice(value: $value, memo: $memo)
+    }
+  }`
+
+  const [addInvoice, _] = useMutation(ADD_INVOICE)
+  
+  const UPDATE_PENDING_INVOICE = gql`mutation updatePendingInvoice($hash: String!) {
+    invoice {
+      updatePendingInvoice(hash: $hash)
+    }
+  }`
+  
+  const [updatePendingInvoice, __] = useMutation(UPDATE_PENDING_INVOICE)
+
+  const GET_ONCHAIN_ADDRESS = gql`query getLastOnChainAddress {
+    getLastOnChainAddress {
+      id
+    }
+  }`
+
+  let lastOnChainAddress
+  try {
+    ({ getLastOnChainAddress: { id: lastOnChainAddress }} = client.readQuery({query: GET_ONCHAIN_ADDRESS}))
+  } catch (err) {
+    // do better error handling
+    lastOnChainAddress = "issue with the QRcode"
+  }
 
   const [keyboardIsShown, setKeyboardIsShown] = useState(false)
   const [memo, setMemo] = useState("")
@@ -170,12 +195,12 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
                 {
                   text: translate("common.later"),
                   // todo: add analytics
-                  onPress: () => console.tron.log("Cancel/Later Pressed"),
+                  onPress: () => console.log("Cancel/Later Pressed"),
                   style: "cancel",
                 },
                 {
                   text: translate("common.ok"),
-                  onPress: () => requestPermission(store),
+                  onPress: () => requestPermission(client),
                 },
               ],
               { cancelable: true },
@@ -190,20 +215,14 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
 
   const update = async () => {
     setLoading(true)
-    console.tron.log("createInvoice")
+    console.log("createInvoice")
     try {
-      const query = `mutation addInvoice($value: Int, $memo: String) {
-        invoice {
-          addInvoice(value: $value, memo: $memo)
-        }
-      }`
-
-      const result = await store.mutate(query, { value: amount, memo })
-      const invoice = result.invoice.addInvoice
+      const { data } = await addInvoice({variables: { value: amount, memo }})
+      const invoice = data.invoice.addInvoice
       setInvoice(invoice)
-      console.tron.log("data has been set")
+      console.log("invoice has been updated")
     } catch (err) {
-      console.tron.log(`error with AddInvoice: ${err}`)
+      console.error(err, `error with AddInvoice`)
       setErr(`${err}`)
       throw err
     } finally {
@@ -242,12 +261,14 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
 
         try {
           const hash = getHashFromInvoice(invoice)
-          const success = await store.updatePendingInvoice(hash)
+
+          const { data } = await updatePendingInvoice({variables: { hash }})
+          const success = await data.invoice.updatePendingInvoice
           if (success) {
             paymentSuccess()
           }
         } catch (err) {
-          console.tron.warn(`can't fetch invoice ${err}`)
+          console.warn({err}, `can't fetch invoice status`)
         }
       }
     }
@@ -307,12 +328,7 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
     if (type === "lightning") {
       data = invoice
     } else {
-      // manage if there are several lastOnChainAddresses in cache
-      if (keys(store.lastOnChainAddresses).length > 0) {
-        data = values(store.lastOnChainAddresses)[0].id
-      } else {
-        data = "issue with the QRcode"
-      }
+      data = lastOnChainAddress
     }
 
     const isReady = 
@@ -393,7 +409,9 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
                 value={getFullUri(data)}
                 logoBackgroundColor="white"
                 ecl="L"
-                logo={Icon.getImageSourceSync(
+
+                // __DEV__ workaround for https://github.com/facebook/react-native/issues/26705
+                logo={!__DEV__ && Icon.getImageSourceSync(
                   type === "lightning" ? "ios-flash" : "logo-bitcoin",
                   28,
                   palette.orange,
@@ -456,7 +474,7 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
             onBlur={update}
             forceKeyboard={false}
             editable={!isSucceed}
-            sub={false}
+            sub={true}
           />
           <Input placeholder="set a note" value={memo} onChangeText={setMemo} containerStyle={{marginTop: 0}}
             inputStyle={styles.textStyle}
@@ -474,4 +492,4 @@ export const ReceiveBitcoinScreen = observer(({ navigation }) => {
       </ScrollView>
     </Screen>
   )
-})
+}
