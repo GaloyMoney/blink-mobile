@@ -119,7 +119,7 @@ export const InputPayment = ({
   }, [])
 
   const _keyboardDidHide = () => {
-    inputRef?.current.blur()
+    inputRef?.current?.blur()
   }
 
   const valueTweak = () => {

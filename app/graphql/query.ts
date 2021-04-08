@@ -56,7 +56,6 @@ export const getWallet = (client) => {
 
 export const balanceUsd = (client) => _.find(getWallet(client), {id: "BTC"}).balance * btc_price(client)
 export const balanceBtc = (client) => _.find(getWallet(client), {id: "BTC"}).balance  
-export const lastTransactions = (client) => _.find(getWallet(client), {id: "BTC"}).transactions.slice(undefined, 3)
 
 export const getPubKey = (client) => {
   const { nodeStats } = client.readQuery({query: gql`
@@ -107,18 +106,13 @@ query query_transactions {
 }`
 
 export const btc_price = (client) => {
-  // this should be used only on first run before a query is done in the backend
-  const price_default = 0.0002
+  const price_default = NaN
   try {
     const result = client.readQuery({query: QUERY_PRICE})
-    console.log({result}, "price")
     const { prices } = result
-    console.log({prices})
-    console.log({prices_0: prices[0]})
     return prices[0].o ?? price_default
   } catch (err) {
-    console.log({err})
-    //default value
+    console.warn({err}, "no price has been set")
     return price_default
   }
 }
@@ -145,6 +139,11 @@ query me {
 
 export const MAIN_QUERY = gql`
 query gql_main_query($logged: Boolean!) {
+  prices(length: 1) {
+    id
+    o
+  }
+  
   maps {
     id
     title

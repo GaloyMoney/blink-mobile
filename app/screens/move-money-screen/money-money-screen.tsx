@@ -13,7 +13,7 @@ import { IconTransaction } from "../../components/icon-transactions"
 import { LargeButton } from "../../components/large-button"
 import { Screen } from "../../components/screen"
 import { TransactionItem } from "../../components/transaction-item"
-import { balanceBtc, balanceUsd, lastTransactions, MAIN_QUERY, walletIsActive } from "../../graphql/query"
+import { balanceBtc, balanceUsd, MAIN_QUERY, walletIsActive } from "../../graphql/query"
 import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
@@ -21,6 +21,7 @@ import { AccountType, CurrencyType } from "../../utils/enum"
 import { isIos } from "../../utils/helper"
 import { Token } from "../../utils/token"
 import { getBuildNumber } from "react-native-device-info"
+import _ from "lodash";
 
 const styles = EStyleSheet.create({
   screenStyle: {
@@ -97,12 +98,13 @@ const styles = EStyleSheet.create({
 export const MoveMoneyScreenDataInjected = ({ navigation }) => {
   const client = useApolloClient()
 
-  const { loading: loadingMain, error, data, refetch, networkStatus } = useQuery(MAIN_QUERY,
+  const { loading: loadingMain, error, data, refetch } = useQuery(MAIN_QUERY,
     { variables: 
       {
         logged: new Token().has()
       },
     notifyOnNetworkStatusChange: true,
+    errorPolicy: "all"
   })
 
   // temporary fix until we have a better management of notifications:
@@ -153,6 +155,8 @@ export const MoveMoneyScreenDataInjected = ({ navigation }) => {
     }
   }
 
+  const lastTransactions = _.find(data?.wallet, {id: "BTC"})?.transactions?.slice(undefined, 3)
+
   return <MoveMoneyScreen 
     navigation={navigation}
     walletIsActive={walletIsActive(client)}
@@ -162,7 +166,7 @@ export const MoveMoneyScreenDataInjected = ({ navigation }) => {
     amountOtherCurrency={balanceBtc(client)}
     refetch={refetch}
     isUpdateAvailable={isUpdateAvailableOrRequired({buildParameters: data?.buildParameters}).available}
-    transactions={lastTransactions(client)}
+    transactions={lastTransactions}
   />
 }
 
@@ -267,7 +271,7 @@ export const MoveMoneyScreen = (
 
         <FlatList
           ListHeaderComponent={() => <>
-            {error?.response?.errors?.map(({ message }) => 
+            {error?.graphQLErrors?.map(({ message }) => 
              <Text style={{color: palette.red, alignSelf: "center", paddingBottom: 18}} selectable={true}>{message}</Text>
           )}
           </>}

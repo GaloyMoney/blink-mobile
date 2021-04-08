@@ -129,12 +129,12 @@ export const TransactionHistoryScreenDataInjected = ({navigation, route}) => {
   const thisMonth = []
   const before = []
 
-  let transactions = _.find(data.wallet, {id: "BTC"}).transactions.map(input => { return {
+  let transactions = _.find(data.wallet, {id: "BTC"}).transactions?.map(input => { return {
     date: moment.unix(input.created_at),
     ...input
   }})
 
-  while (transactions.length) {
+  while (transactions?.length) {
     // FIXME: optimization need. slow when there are a lot of txs.
     let tx = transactions.shift()
 
@@ -188,7 +188,7 @@ export const TransactionScreen =
         <TransactionItem navigation={navigation} tx={item} />
       )}
       ListHeaderComponent={() => <>
-        {error?.response?.errors?.map(({ message }) => 
+        {error?.graphQLErrors?.map(({ message }) => 
           <Text style={{color: palette.red, alignSelf: "center", paddingBottom: 18}} selectable={true}>{message}</Text>
         )}
       </>}

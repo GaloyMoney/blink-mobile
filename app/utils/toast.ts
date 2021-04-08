@@ -8,7 +8,7 @@ export const toastShow = (message) => {
     animation: true,
     hideOnPress: true,
     delay: 0,
-    position: 160,
+    position: 50,
     opacity: 1,
     backgroundColor: palette.red,
   })
