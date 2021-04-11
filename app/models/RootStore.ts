@@ -17,6 +17,7 @@ import { TransactionModel } from "./TransactionModel"
 import Share from 'react-native-share';
 import VersionNumber from "react-native-version-number"
 import { Platform } from "react-native"
+import { info } from "../utils/info"
 
 export const ROOT_STATE_STORAGE_KEY = "rootAppGaloy"
 
@@ -335,6 +336,8 @@ export const RootStore = RootStoreBase
     // it seems we also have a token for iOS, without the permissions to show it though
     console.tron.log("sending device token for notifications")
     yield uploadToken(self)
+
+    info(self.mutateAddDeviceToken)
 
     try {
       yield self.mainQuery()
