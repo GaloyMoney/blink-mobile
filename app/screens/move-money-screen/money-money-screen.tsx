@@ -20,6 +20,7 @@ import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { AccountType, CurrencyType } from "../../utils/enum"
 import { isIos } from "../../utils/helper"
+import { info } from "../../utils/info"
 
 
 const styles = EStyleSheet.create({
@@ -106,6 +107,14 @@ export const MoveMoneyScreenDataInjected = observer(({ navigation }) => {
 
   useEffect(() => {
     refreshQuery()
+  }, [])
+
+  console.tron.log({store})
+
+  useEffect(() => {
+    if (store.walletIsActive) {
+      info(store.mutateAddDeviceToken)
+    }
   }, [])
 
   // temporary fix until we have a better management of notifications:
