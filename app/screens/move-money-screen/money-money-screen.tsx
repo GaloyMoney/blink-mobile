@@ -21,6 +21,7 @@ import { palette } from "../../theme/palette"
 import { AccountType, CurrencyType } from "../../utils/enum"
 import { isIos } from "../../utils/helper"
 import { info } from "../../utils/info"
+import NetInfo from "@react-native-community/netinfo";
 
 
 const styles = EStyleSheet.create({
@@ -114,8 +115,17 @@ export const MoveMoneyScreenDataInjected = observer(({ navigation }) => {
   useEffect(() => {
     if (store.walletIsActive) {
       info(store.mutateAddDeviceToken)
+
+      const unsubscribe = NetInfo.addEventListener(state => {
+        console.log("Connection type", state.type);
+        console.log("Is connected?", state.isConnected);
+      });
+      
+      // Unsubscribe
+      return unsubscribe();
     }
-  }, [])
+  }, [store.walletIsActive])
+
 
   // temporary fix until we have a better management of notifications:
   // when coming back to active state. look if the invoice has been paid

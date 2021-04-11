@@ -337,8 +337,6 @@ export const RootStore = RootStoreBase
     console.tron.log("sending device token for notifications")
     yield uploadToken(self)
 
-    info(self.mutateAddDeviceToken)
-
     try {
       yield self.mainQuery()
     } catch (err) {
