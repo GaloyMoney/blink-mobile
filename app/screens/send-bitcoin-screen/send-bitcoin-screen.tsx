@@ -186,16 +186,16 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
   const LIGHTNING_FEES = gql`
   mutation lightning_fees($invoice: String, $amount: Int){
     invoice {
-      getFee(amount: $amount, invoice: $invoice)
+      getFee(invoice: $invoice, amount: $amount)
     }
   }`
   
   const [getLightningFees, { loading: lightningFeeLoading } ] = useMutation(LIGHTNING_FEES)
   
   const ONCHAIN_FEES = gql`
-    mutation onchain_fees($address: String!){
+    mutation onchain_fees($address: String!, $amount: Int){
       onchain {
-        getFee(address: $address)
+        getFee(address: $address, amount: $amount)
       }
   }`
 
@@ -296,7 +296,7 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
           case "onchain":
             try {
               setFee(undefined)
-              const { data: { onchain: { getFee: fee }} } = await getOnchainFees({variables: { address }})
+              const { data: { onchain: { getFee: fee }} } = await getOnchainFees({variables: { address, amount }})
               setFee(fee)
             } catch (err) {
               console.warn({err, message: "error getting onchains fees"})
