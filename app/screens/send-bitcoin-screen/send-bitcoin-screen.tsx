@@ -171,7 +171,7 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
   // }}
   
   const ONCHAIN_PAY = gql`
-    mutation onchain($address: String!, $amount: Int!, $memo: String) {
+    mutation onchain_pay($address: String!, $amount: Int!, $memo: String) {
     onchain {
       pay(address: $address, amount: $amount, memo: $memo) {
         success

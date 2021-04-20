@@ -24,8 +24,10 @@ import "./i18n"
 import { RootStack } from "./navigation/root-navigator"
 import { isIos } from "./utils/helper"
 import { getGraphQlUri, Token } from "./utils/token"
+import { RetryLink } from "@apollo/client/link/retry";
 
-export const {link, useApolloNetworkStatus} = createNetworkStatusNotifier();
+
+export const {link: linkNetworkStatusNotifier, useApolloNetworkStatus} = createNetworkStatusNotifier();
 
 const entireScreenWidth = Dimensions.get("window").width
 EStyleSheet.build({
@@ -80,6 +82,20 @@ export const App = () => {
       const LEGACY_ROOT_STATE_STORAGE_KEY = "rootAppGaloy"
       await AsyncStorage.multiRemove([LEGACY_ROOT_STATE_STORAGE_KEY])
 
+      const retryLink = new RetryLink({
+        delay: {
+          initial: 500, // default = 300
+          // max: Infinity,
+          // jitter: true
+        },
+        attempts: {
+          // max: 5, // default
+          retryIf: (error, operation) => { 
+            return !!error && !/onchain_pay|payKeysendUsername|payInvoice/.test(operation.operationName)
+          }
+        }
+      });
+
       const customFetch = async (_ /* uri not used */, options) => {
         const uri = await getGraphQlUri()
         return fetch(uri, options)
@@ -98,7 +114,7 @@ export const App = () => {
 
       const client = new ApolloClient({
         cache,
-        link: link.concat(authLink.concat(httpLink)),
+        link: linkNetworkStatusNotifier.concat(retryLink.concat(authLink.concat(httpLink))),
         name: isIos ? "iOS" : "Android",
         version: `${VersionNumber.appVersion}-${VersionNumber.buildVersion}`,
       })
