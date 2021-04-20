@@ -51,7 +51,7 @@ jobs:
 
   build_android:
     docker:
-      - image: circleci/android:api-30
+      - image: circleci/android:api-29
     environment:
       TERM: dumb
       _JAVA_OPTIONS: "-Xmx2048m -XX:+UnlockExperimentalVMOptions"
