@@ -46,6 +46,31 @@ export const WALLET = gql`
   }
 }`
 
+export const QUERY_TRANSACTIONS = gql`
+query query_transactions {
+  wallet {
+    id
+    transactions {
+      id
+      amount
+      description
+      created_at
+      hash
+      type
+      usd
+      fee
+      feeUsd
+      pending
+      username
+      date @client
+      date_format @client
+      date_nice_print @client
+      isReceive @client
+      text @client
+    }
+  }
+}`
+
 export const getWallet = (client) => {
   const { wallet } = client.readQuery({
     query: WALLET
@@ -85,25 +110,6 @@ export const USERNAME_EXIST = gql`
   }
 `
 
-export const QUERY_TRANSACTIONS = gql`
-query query_transactions {
-  wallet {
-    id
-    transactions {
-      id
-      amount
-      description
-      created_at
-      hash
-      type
-      usd
-      fee
-      feeUsd
-      pending
-      username
-    }
-  }
-}`
 
 export const btc_price = (client) => {
   const price_default = NaN

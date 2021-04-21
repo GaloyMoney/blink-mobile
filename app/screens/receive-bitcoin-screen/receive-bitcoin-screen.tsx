@@ -357,7 +357,11 @@ export const ReceiveBitcoinScreen = ({ navigation }) => {
       Clipboard.setString(getFullUri(data))
 
       if (Platform.OS === "ios") {
-        Toast.show(translate("ReceiveBitcoinScreen.copyClipboard"), {
+        const sringToShow = (type === "lightning") ? 
+          "ReceiveBitcoinScreen.copyClipboard":
+          "ReceiveBitcoinScreen.copyClipboardBitcoin"
+
+        Toast.show(translate(sringToShow), {
           duration: Toast.durations.LONG,
           shadow: false,
           animation: true,

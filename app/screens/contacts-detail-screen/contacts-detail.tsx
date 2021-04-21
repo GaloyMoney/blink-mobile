@@ -75,7 +75,7 @@ export const ContactsDetailScreenJSX = ({ contact, navigation, transactions }) =
     }
   }`
 
-  const [updateNameMutation, { data, error, loading }] = useMutation(UPDATE_NAME);
+  const [updateNameMutation] = useMutation(UPDATE_NAME);
 
   const updateName = () => {
     // TODO: need optimistic updates
