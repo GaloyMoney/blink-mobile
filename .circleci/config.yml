@@ -42,7 +42,8 @@ jobs:
       - run: git config --global user.email "bot@circleci.com"
       - run: git config pull.rebase false
       - run: git pull https://${GITHUB_TOKEN}@github.com/GaloyMoney/galoy-mobile.git $CIRCLE_BRANCH
-      - run: git commit -a -m "new ios build [ci skip]" -- . ':!ios/GoogleService-Info.plist'
+      - run: git commit -a -m "new ios build [ci skip]"
+      - run: git reset -- GoogleService-Info.plist
       - run: git push -q https://${GITHUB_TOKEN}@github.com/GaloyMoney/galoy-mobile.git $CIRCLE_BRANCH
       - store_artifacts:
           path: ios/output
