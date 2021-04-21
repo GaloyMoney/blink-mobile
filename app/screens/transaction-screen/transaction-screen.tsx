@@ -1,5 +1,7 @@
+import { useQuery, useReactiveVar } from "@apollo/client"
+import * as _ from "lodash"
 import * as React from "react"
-import { RefreshControl, SectionList, Text, View } from "react-native"
+import { SectionList, Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
@@ -8,10 +10,7 @@ import { TransactionItem } from "../../components/transaction-item"
 import { nextPrefCurrency, prefCurrencyVar, WALLET } from "../../graphql/query"
 import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
-import * as _ from "lodash"
-import { useQuery, useReactiveVar } from "@apollo/client"
 import { sameDay, sameMonth } from "../../utils/date"
-import moment from "moment"
 
 const styles = EStyleSheet.create({
   screen: {
@@ -129,10 +128,8 @@ export const TransactionHistoryScreenDataInjected = ({navigation, route}) => {
   const thisMonth = []
   const before = []
 
-  let transactions = _.find(data.wallet, {id: "BTC"}).transactions?.map(input => { return {
-    date: moment.unix(input.created_at),
-    ...input
-  }})
+  // we need a shallow copy because the array given by useQuery is otherwise immutable
+  let transactions = [... _.find(data.wallet, {id: "BTC"}).transactions]
 
   while (transactions?.length) {
     // FIXME: optimization need. slow when there are a lot of txs.
@@ -183,7 +180,7 @@ export const TransactionScreen =
   ({ refreshing, navigation, onRefresh, error, prefCurrency, nextPrefCurrency, sections }) =>
   <Screen style={styles.screen}>
     <SectionList
-      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+      // refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
       renderItem={({ item, index, section }) => (
         <TransactionItem navigation={navigation} tx={item} />
       )}

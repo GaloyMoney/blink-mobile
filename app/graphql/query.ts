@@ -180,6 +180,11 @@ query gql_main_query($logged: Boolean!) {
       feeUsd
       pending
       username
+      date @client
+      date_format @client
+      date_nice_print @client
+      isReceive @client
+      text @client
     }
   }
 
