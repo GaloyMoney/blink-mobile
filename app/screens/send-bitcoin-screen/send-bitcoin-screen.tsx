@@ -115,7 +115,11 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
   const [paymentType, setPaymentType] = useState<IPaymentType>(undefined)
   const [amountless, setAmountless] = useState(false)
   const [initAmount, setInitAmount] = useState(0)
-  const [amount, setAmount] = useState(0)
+
+  const [amount, setAmountProxy] = useState(0)
+  // forcing sending positive value from the app
+  const setAmount = (value) => setAmountProxy(value >= 0 ? value : - value)
+
   const [destination, setDestinationInternal] = useState("")
   const [invoice, setInvoice] = useState("")
   const [memo, setMemo] = useState("")

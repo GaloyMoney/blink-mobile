@@ -2,12 +2,14 @@
 //
 // In this file, we'll be kicking off our app or storybook.
 
-import { ApolloClient, ApolloProvider, HttpLink } from "@apollo/client"
+import { ApolloClient, ApolloProvider, HttpLink, NormalizedCacheObject } from "@apollo/client"
 import { setContext } from "@apollo/client/link/context"
+import { RetryLink } from "@apollo/client/link/retry"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import analytics from "@react-native-firebase/analytics"
 import "@react-native-firebase/crashlytics"
 import { NavigationContainer, NavigationState, PartialState } from "@react-navigation/native"
+import { AsyncStorageWrapper, CachePersistor } from 'apollo3-cache-persist'
 import "node-libs-react-native/globals" // needed for Buffer?
 import * as React from "react"
 import { useEffect, useState } from "react"
@@ -24,7 +26,10 @@ import "./i18n"
 import { RootStack } from "./navigation/root-navigator"
 import { isIos } from "./utils/helper"
 import { getGraphQlUri, Token } from "./utils/token"
-import { RetryLink } from "@apollo/client/link/retry";
+import { saveString, loadString } from "./utils/storage"
+
+
+export const BUILD_VERSION = "build_version"
 
 
 export const {link: linkNetworkStatusNotifier, useApolloNetworkStatus} = createNetworkStatusNotifier();
@@ -54,7 +59,8 @@ LogBox.ignoreAllLogs()
  */
 export const App = () => {
   const [routeName, setRouteName] = useState("Initial")
-  const [apolloClient, setApolloClient] = useState(null)
+  const [apolloClient, setApolloClient] = useState<ApolloClient<NormalizedCacheObject>>();
+  const [persistor, setPersistor] = useState<CachePersistor<NormalizedCacheObject>>();
 
   const getActiveRouteName = (
     state: NavigationState | PartialState<NavigationState> | undefined,
@@ -89,8 +95,9 @@ export const App = () => {
           // jitter: true
         },
         attempts: {
-          // max: 5, // default
+          max: 8,
           retryIf: (error, operation) => { 
+            console.log({error}, "retry error")
             return !!error && !/onchain_pay|payKeysendUsername|payInvoice/.test(operation.operationName)
           }
         }
@@ -112,6 +119,14 @@ export const App = () => {
         }
       })
 
+      const persistor_ = new CachePersistor({
+        cache,
+        storage: new AsyncStorageWrapper(AsyncStorage),
+        debug: __DEV__,
+      });
+
+      setPersistor(persistor_)
+
       const client = new ApolloClient({
         cache,
         link: linkNetworkStatusNotifier.concat(retryLink.concat(authLink.concat(httpLink))),
@@ -126,17 +141,26 @@ export const App = () => {
         })
       }
 
-      client.onClearStore(initDb)
+      // init the DB. will be override if a cache exists
+      await initDb()
 
-      const result = client.readQuery({ query: INITWALLET })
 
-      // init the DB on the first run
-      if (!result) {
-        await initDb()
+      // Read the current schema version from AsyncStorage.
+      const currentVersion = await loadString(BUILD_VERSION);
+      
+      // TODO: also add a schema version?
+      if (currentVersion === VersionNumber.buildVersion) {
+        // If the current version matches the latest version,
+        // we're good to go and can restore the cache.
+        await persistor_.restore();
+      } else {
+        // Otherwise, we'll want to purge the outdated persisted cache
+        // and mark ourselves as having updated to the latest version.
+        await persistor_.purge();
+        await saveString(BUILD_VERSION, VersionNumber.buildVersion);
       }
 
-      // APOLLO TODO: delete DB across version
-      // TODO: move from inMemory cache to file cache
+      client.onClearStore(initDb)
 
       setApolloClient(client)
     }
@@ -152,7 +176,7 @@ export const App = () => {
   // You're welcome to swap in your own component to render if your boot up
   // sequence is too slow though.
 
-  if (!apolloClient) {
+  if (!apolloClient || !persistor) {
     return null
   }
 

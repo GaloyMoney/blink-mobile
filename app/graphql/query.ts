@@ -195,6 +195,7 @@ query gql_main_query($logged: Boolean!) {
   }
 
   buildParameters {
+    id
     minBuildNumberAndroid
     minBuildNumberIos
     lastBuildNumberAndroid
