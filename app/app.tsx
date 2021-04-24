@@ -95,7 +95,7 @@ export const App = () => {
           // jitter: true
         },
         attempts: {
-          max: 8,
+          max: 3,
           retryIf: (error, operation) => { 
             console.log({error}, "retry error")
             return !!error && !/onchain_pay|payKeysendUsername|payInvoice/.test(operation.operationName)
