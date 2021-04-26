@@ -581,6 +581,7 @@
     "title": "Receive Bitcoin",
     "activateNotifications": "Do you want to activate notifications to be notified when the payment has arrived?",
     "copyClipboard": "Invoice has been copied in the clipboard",
+    "copyClipboardBitcoin": "Bitcoin address has been copied in the clipboard",
     "invoicePaid": "This invoice has been paid",
     "tapQrCodeCopy": "Tap QR Code to Copy"
   },

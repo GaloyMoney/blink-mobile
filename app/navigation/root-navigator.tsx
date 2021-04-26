@@ -1,39 +1,43 @@
+import { useApolloClient, useQuery } from "@apollo/client"
 import Clipboard from "@react-native-community/clipboard"
 import PushNotificationIOS from '@react-native-community/push-notification-ios'
 import messaging from '@react-native-firebase/messaging'
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { CardStyleInterpolators, createStackNavigator } from "@react-navigation/stack"
+import i18n from "i18n-js"
+import "node-libs-react-native/globals" // needed for Buffer?
 import * as React from "react"
 import { useEffect } from "react"
 import { AppState } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
+import * as RNLocalize from "react-native-localize"
 import Icon from "react-native-vector-icons/Ionicons"
+import { GET_LANGUAGE, modalClipboardVisibleVar, QUERY_PRICE, walletIsActive } from "../graphql/query"
 import { translate } from "../i18n"
-import { StoreContext } from "../models"
-import { PriceScreen } from "../screens/price-screen/price-screen"
+import { ContactsDetailScreen } from "../screens/contacts-detail-screen"
+import { ContactsScreen } from "../screens/contacts-screen"
 import { DebugScreen } from "../screens/debug-screen"
 import { EarnMapDataInjected } from "../screens/earns-map-screen"
 import { EarnQuiz, EarnSection } from "../screens/earns-screen"
 import { SectionCompleted } from "../screens/earns-screen/section-completed"
 import { GetStartedScreen } from "../screens/get-started-screen"
-import { MapScreen } from "../screens/map-screen/find-atm-screen"
+import { MapScreen } from "../screens/map-screen/map-screen"
 import { MoveMoneyScreenDataInjected } from "../screens/move-money-screen"
 import { WelcomePhoneInputScreen, WelcomePhoneValidationScreenDataInjected } from "../screens/phone-auth-screen"
-import { ContactsScreen } from "../screens/contacts-screen"
+import { PriceScreen } from "../screens/price-screen/price-screen"
 import { ReceiveBitcoinScreen } from "../screens/receive-bitcoin-screen"
 import { ScanningQRCodeScreen, SendBitcoinScreen } from "../screens/send-bitcoin-screen"
 import { SettingsScreen, UsernameScreen } from "../screens/settings-screen"
-import { SplashScreen } from "../screens/splash-screen/splash-screen"
+import { LanguageScreen } from "../screens/settings-screen/language-screen"
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
-import { TransactionScreenDataInjected } from "../screens/transaction-screen/transaction-screen"
+import { TransactionHistoryScreenDataInjected } from "../screens/transaction-screen/transaction-screen"
 import { WelcomeFirstScreen } from "../screens/welcome-screens"
 import { palette } from "../theme/palette"
 import { AccountType } from "../utils/enum"
+import { addDeviceToken } from "../utils/notifications"
 import { validPayment } from "../utils/parsing"
 import { getNetwork, Token } from "../utils/token"
-import { LanguageScreen } from "../screens/settings-screen/language-screen"
-import { ContactsDetailScreen } from "../screens/contacts-detail-screen"
-import { uploadToken } from "../utils/notifications"
+
 const PushNotification = require("react-native-push-notification");
 
 
@@ -41,12 +45,12 @@ const PushNotification = require("react-native-push-notification");
 PushNotification.configure({
   // (optional) Called when Token is generated (iOS and Android)
   onRegister: function (token) {
-    console.tron.log("TOKEN:", token);
+    console.log("TOKEN:", token);
   },
 
   // (required) Called when a remote is received or opened, or local notification is opened
   onNotification: function (notification) {
-    console.tron.log("NOTIFICATION:", notification);
+    console.log("NOTIFICATION:", notification);
 
     // process the notification
 
@@ -56,15 +60,15 @@ PushNotification.configure({
 
   // (optional) Called when Registered Action is pressed and invokeApp is false, if true onNotification will be called (Android)
   onAction: function (notification) {
-    console.tron.log("ACTION:", notification.action);
-    console.tron.log("NOTIFICATION:", notification);
+    console.log("ACTION:", notification.action);
+    console.log("NOTIFICATION:", notification);
 
     // process the action
   },
 
   // (optional) Called when the user fails to register for remote notifications. Typically occurs when APNS is having issues, or the device is a simulator. (iOS)
   onRegistrationError: function(err) {
-    console.tron.error(`onRegistration error: ${err.message}`, err);
+    console.error(`onRegistration error: ${err.message}`, err);
   },
 
   // IOS ONLY (optional): default: all - Permissions to register.
@@ -108,9 +112,8 @@ const size = 32
 const RootNavigator = createStackNavigator()
 
 export const RootStack = () => {
-
   const appState = React.useRef(AppState.currentState);
-  const store = React.useContext(StoreContext)
+  const client = useApolloClient()
 
   useEffect(() => {
     AppState.addEventListener("change", _handleAppStateChange);
@@ -123,7 +126,7 @@ export const RootStack = () => {
 
   const _handleAppStateChange = (nextAppState) => {
     if (appState.current.match(/background/) && nextAppState === "active") {
-      console.tron.log("App has come to the foreground!");
+      console.log("App has come to the foreground!");
       checkClipboard()
     }
 
@@ -133,21 +136,20 @@ export const RootStack = () => {
   const checkClipboard = async () => {
     const clipboard = await Clipboard.getString()
 
-    if (store.user.level < 1) {
+    if (walletIsActive(client)) {
       return
     }
 
-    const {valid} = validPayment(clipboard, new Token().network, store.myPubKey, store.username)
+    const {valid} = validPayment(clipboard, new Token().network, client)
     if (!valid) {
       return
     }
     
-    store.setModalClipboardVisible(true)
+    modalClipboardVisibleVar(true)
   }
 
-
   const showNotification = (remoteMessage) => {
-    console.tron.log({remoteMessage})
+    console.log({remoteMessage})
 
     const soundName = undefined
     PushNotification.localNotification({
@@ -182,6 +184,20 @@ export const RootStack = () => {
     });
   }
 
+  useQuery(QUERY_PRICE, { 
+    notifyOnNetworkStatusChange: true,
+    pollInterval: 30000
+  })
+
+  const fallback = { languageTag: "es", isRTL: false }
+  const { languageTag } =
+    RNLocalize.findBestAvailableLanguage(Object.keys(i18n.translations)) || fallback
+
+  const {data} = useQuery(GET_LANGUAGE, {fetchPolicy: "cache-only"})
+  const language = data?.me?.language ?? ''
+  i18n.locale = language || languageTag
+
+
   // TODO: need to add isHeadless? 
   // https://rnfirebase.io/messaging/usage
 
@@ -189,7 +205,7 @@ export const RootStack = () => {
   // for iOS, which would remove the need for firebase.messaging() dependancy
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async remoteMessage => {
-      console.tron.log('onMessage');
+      console.log('onMessage');
       showNotification(remoteMessage)
     });
 
@@ -205,7 +221,7 @@ export const RootStack = () => {
 
   useEffect(() => {
     messaging().setBackgroundMessageHandler(async remoteMessage => {
-      console.tron.log('background arrived from setBackgroundMessageHandler');
+      console.log('background arrived from setBackgroundMessageHandler');
       showNotification(remoteMessage)
     })
   }, []);
@@ -238,25 +254,16 @@ export const RootStack = () => {
   }, []);
 
   useEffect(() => {
-    messaging().onTokenRefresh(token => {uploadToken(store)}
-      // {
-      // store.mutateAddDeviceToken({deviceToken: token})
-      // }
-      );
+    return messaging().onTokenRefresh(token => addDeviceToken(client));
   }, []);
+
+  const token = new Token()
 
   return (
     <RootNavigator.Navigator
       screenOptions={{ gestureEnabled: false }}
-      initialRouteName={"splashScreen"}
+      initialRouteName={token.has() ? "Primary" : "getStarted"}
     >
-      <RootNavigator.Screen
-        name="splashScreen"
-        component={SplashScreen}
-        options={{ 
-          headerShown: false
-        }}
-      />
       <RootNavigator.Screen
         name="getStarted"
         component={GetStartedScreen}
@@ -356,7 +363,7 @@ export const RootStack = () => {
       />
       <RootNavigator.Screen
         name="transactionHistory"
-        component={TransactionScreenDataInjected}
+        component={TransactionHistoryScreenDataInjected}
         options={{title: "Transaction History"}}
       />
       <RootNavigator.Screen

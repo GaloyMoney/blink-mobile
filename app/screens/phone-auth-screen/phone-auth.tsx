@@ -7,11 +7,31 @@ import PhoneInput from "react-native-phone-input"
 import { CloseCross } from "../../components/close-cross"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
-import { StoreContext } from "../../models"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { Token } from "../../utils/token"
 import BadgerPhone from "./badger-phone-01.svg"
+import { gql, useApolloClient, useLazyQuery, useMutation } from '@apollo/client';
+import { toastShow } from "../../utils/toast"
+import analytics from "@react-native-firebase/analytics"
+import { MAIN_QUERY } from "../../graphql/query"
+import { addDeviceToken } from "../../utils/notifications"
+
+const REQUEST_PHONE_CODE = gql`
+  mutation requestPhoneCode ($phone: String) {
+    requestPhoneCode (phone: $phone) {
+        success
+    }
+  }
+`
+
+const LOGIN = gql`
+  mutation login ($phone: String, $code: Int) {
+      login (phone: $phone, code: $code) {
+          token
+      }
+  }
+`
 
 const styles = EStyleSheet.create({
   activityIndicatorWrapper: {
@@ -79,15 +99,14 @@ const styles = EStyleSheet.create({
 })
 
 export const WelcomePhoneInputScreen = ({ navigation }) => {
-  const store = React.useContext(StoreContext)
-
-  const [loading, setLoading] = useState(false)
-  const [err, setErr] = useState("")
+  const [requestPhoneCode, { loading }] = useMutation(REQUEST_PHONE_CODE, {
+    fetchPolicy: "no-cache"
+  });
 
   const inputRef = useRef()
 
   const send = async () => {
-    console.tron.log(`initPhoneNumber ${inputRef.current.getValue()}`)
+    console.log({initPhoneNumber: inputRef.current.getValue()})
 
     if (!inputRef.current.isValidNumber()) {
       Alert.alert(`${inputRef.current.getValue()} ${translate("errors.invalidPhoneNumber")}`)
@@ -95,43 +114,27 @@ export const WelcomePhoneInputScreen = ({ navigation }) => {
     }
 
     try {
-      setLoading(true)
       const phone = inputRef.current.getValue()
-      const success = await store.mutateRequestPhoneCode({phone})
+      const { data } = await requestPhoneCode({variables: {phone}})
 
-      if (success) {
-        setLoading(false)
+      if (data.requestPhoneCode.success) {
         const screen = "welcomePhoneValidation"
         navigation.navigate(screen, {phone})       
 
       } else {
-        setErr(translate("erros.generic"))
+        toastShow(translate("erros.generic"))
       }
 
     } catch (err) {
-      console.tron.warn(err)
-      setErr(err.toString())
+      console.warn({err})
+      // use global Toaster?
+      // setErr(err.toString())
     }
   }
 
   React.useEffect(() => {
     inputRef?.current.focus()
   }, [])
-
-  // workaround of https://github.com/facebook/react-native/issues/10471
-  useEffect(() => {
-    if (err !== "") {
-      setErr("")
-      Alert.alert("error", err.toString(), [
-        {
-          text: translate("common.ok"),
-          onPress: () => {
-            setLoading(false)
-          },
-        },
-      ])
-    }
-  }, [err])
 
   return (
     <Screen backgroundColor={palette.lighterGrey} preset="scroll">
@@ -161,61 +164,82 @@ export const WelcomePhoneInputScreen = ({ navigation }) => {
 )}
 
 export const WelcomePhoneValidationScreenDataInjected = ({ route, navigation }) => {
-  const store = React.useContext(StoreContext)
-  
-  const onSuccess = async () => {
-    await store.loginSuccessful()
+  const client = useApolloClient()
+
+  const [login, { loading, error }] = useMutation(LOGIN, {
+    fetchPolicy: "no-cache"
+  });
+    
+  const [reloadMainQuery] = useLazyQuery(MAIN_QUERY, {
+    fetchPolicy: "network-only"
+  })
+
+  const onSuccess = async ({token}) => {
+    analytics().logLogin({ method: "phone" })
+    await new Token().save({token})
+
+    // TODO refactor from mst-gql to apollo client
+    // sync the earned quizzes
+    // const ids = map(filter(values(self.earns), {completed: true}), "id")
+    // yield self.mutateEarnCompleted({ids})
+
+    // console.log("succesfully update earns id")
+    
+    // self.transactions.clear()
+    // self.wallets.get("BTC").transactions.clear()
+    
+    // console.log("cleared local transactions")
+
+    reloadMainQuery({ variables: { logged: new Token().has()} })
+
+    console.log("sending device token for notifications")
+    addDeviceToken(client)
   }
 
-  return <WelcomePhoneValidationScreen onSuccess={onSuccess} route={route} navigation={navigation} />
+  return <WelcomePhoneValidationScreen 
+    onSuccess={onSuccess} 
+    route={route}
+    navigation={navigation}
+    login={login}  
+    loading={loading}  
+    error={error}  
+  />
 }
 
 
-export const WelcomePhoneValidationScreen = ({ onSuccess, route, navigation }) => {
+export const WelcomePhoneValidationScreen = ({ 
+  onSuccess, route, navigation, login, loading, error
+  }) => {
   // FIXME see what to do with store and storybook
-  const store = React.useContext(StoreContext)
-
   const [code, setCode] = useState("")
-  const [loading, setLoading] = useState(false)
-  const [err, setErr] = useState("")
 
-  const phone = route.params.phone
-
-  const updateCode = async (input) => {
-    setCode(input)
-    setErr("")
-  }
+  const { phone } = route.params
+  const updateCode = input => setCode(input)
 
   const send = async () => {
     if (code.length !== 6) {
-      setErr(translate("WelcomePhoneValidationScreen.need6Digits"))
+      toastShow(translate("WelcomePhoneValidationScreen.need6Digits"))
       return
     }
 
     try {
-      setLoading(true)
+      const { data } = await login({
+        variables: { phone, code: Number(code) },
+      })
+      
+      // TODO: validate token
+      const token = data?.login?.token
 
-      const currency = "BTC"
-      const { login } = await store.mutateLogin(
-        { phone, code: Number(code), currency },
-      )
-
-      // FIXME: this should be { fetchPolicy: "no-cache" }
-      // there should be no caching of the token in mst
-
-      if (login.token) {
-        await new Token().save({token: login.token})
-        await onSuccess()
+      if (token) {
+        await onSuccess({token})
         navigation.navigate("MoveMoney")
       } else {
-        setErr(translate("WelcomePhoneValidationScreen.errorLoggingIn"))
-        setLoading(false)
+        toastShow(translate("WelcomePhoneValidationScreen.errorLoggingIn"))
       }
 
     } catch (err) {
-      console.tron.warn(err)
-      setErr(err.toString())
-      setLoading(false)
+      console.warn({err})
+      toastShow(`${err}`)
     }
   }
 
@@ -239,7 +263,7 @@ export const WelcomePhoneValidationScreen = ({ onSuccess, route, navigation }) =
           >
             <Input
               errorStyle={{ color: palette.red }}
-              errorMessage={err}
+              errorMessage={error}
               autoFocus={true}
               style={styles.phoneEntryContainer}
               containerStyle={styles.codeContainer}

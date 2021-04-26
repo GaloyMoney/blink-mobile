@@ -5,7 +5,6 @@ import Swiper from "react-native-swiper"
 import { OnboardingScreen } from "../../components/onboarding"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
-import { StoreContext } from "../../models"
 import { palette } from "../../theme/palette"
 import BitcoinBitcoin from "./bitcoin-bitcoin-01.svg"
 import BankShop from "./cc-bank-shop-01.svg"
@@ -38,8 +37,6 @@ const styles = EStyleSheet.create({
 })
 
 export const WelcomeFirstScreen = ({ navigation }) => {
-  const store = React.useContext(StoreContext)
-
   return (
     <Swiper
       loop={false}

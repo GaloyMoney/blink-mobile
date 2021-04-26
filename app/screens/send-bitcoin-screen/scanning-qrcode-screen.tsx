@@ -1,3 +1,4 @@
+import { useApolloClient } from "@apollo/client"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
 import * as React from "react"
 import { Alert, Dimensions, Platform, Pressable, View, ViewStyle } from "react-native"
@@ -8,7 +9,6 @@ import Svg, { Circle } from "react-native-svg"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
-import { StoreContext } from "../../models"
 import { palette } from "../../theme/palette"
 import { validPayment } from "../../utils/parsing"
 import { Token } from "../../utils/token"
@@ -44,12 +44,10 @@ const styles = EStyleSheet.create({
   },
 })
 
-
 export const ScanningQRCodeScreen = () => {
   const { navigate, goBack } = useNavigation()
-  const store = React.useContext(StoreContext)
-
   const [pending, setPending] = React.useState(false)
+  const client = useApolloClient()
 
   const decodeInvoice = async (data) => {
     if (pending) {
@@ -57,8 +55,8 @@ export const ScanningQRCodeScreen = () => {
     }
 
     try {
-      const {valid, errorMessage, paymentType, hash} = validPayment(data, new Token().network, store.myPubKey, store.username)
-      console.tron.logImportant({valid, errorMessage, data} , "result")
+      const {valid, errorMessage, paymentType, hash} = validPayment(data, new Token().network, client)
+      console.log({valid, errorMessage, data} , "result")
       if (valid) {
         navigate("sendBitcoin", { payment: data })
       } else {
@@ -92,7 +90,7 @@ export const ScanningQRCodeScreen = () => {
             if (error.message === "Feature size is zero!") {
               Alert.alert(translate("ScanningQRCodeScreen.noQrCode"));
             } else {
-              console.tron.log({error})
+              console.log({error})
               Alert.alert(error.message);
             }
           }
@@ -111,7 +109,7 @@ export const ScanningQRCodeScreen = () => {
           const qr = event.data
           decodeInvoice(qr)
         }}
-        onTap={(r) => console.tron.log({r})}
+        onTap={(r) => console.log({r})}
         >
         <View style={styles.rectangleContainer}>
           <View style={[styles.rectangle]} />

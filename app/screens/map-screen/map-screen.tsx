@@ -1,15 +1,14 @@
+import { gql, useApolloClient } from "@apollo/client"
 import Geolocation from '@react-native-community/geolocation'
 import { useFocusEffect } from '@react-navigation/native'
-import { observer } from "mobx-react"
 import * as React from "react"
 import { useCallback, useState } from "react"
-import { Alert, PermissionsAndroid, StyleSheet, View } from "react-native"
-import MapView, { Callout, CalloutSubview, Marker } from "react-native-maps"
-import { Text } from "react-native"
-import { Screen } from "../../components/screen"
-import { StoreContext } from "../../models"
-import { isIos } from "../../utils/helper"
+import { PermissionsAndroid, StyleSheet, Text, View } from "react-native"
 import { Button } from "react-native-elements"
+import MapView, { Callout, CalloutSubview, Marker } from "react-native-maps"
+import { Screen } from "../../components/screen"
+import { walletIsActive } from "../../graphql/query"
+import { isIos } from "../../utils/helper"
 
 
 const styles = StyleSheet.create({
@@ -27,8 +26,23 @@ const styles = StyleSheet.create({
 
 })
 
-export const MapScreen: React.FC = observer(({ navigation }) => {
-  const store = React.useContext(StoreContext)
+export const MapScreen: React.FC = ({ navigation }) => {
+  const client = useApolloClient()
+
+  const result = client.readQuery({ query: gql`
+    query gql_maps {
+      maps {
+        id
+        title
+        username
+        coordinate {
+          latitude
+          longitude
+        }
+      }
+  }`})
+
+  const maps = result?.maps ?? []
 
   const [currentLocation, setCurrentLocation] = useState(null)
   const [grantedPermission, setGrantedPermission] = useState(isIos ? true: false)
@@ -48,12 +62,12 @@ export const MapScreen: React.FC = observer(({ navigation }) => {
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         setGrantedPermission(true)
-        console.tron.log("You can use the location");
+        console.log("You can use the location");
       } else {
-        console.tron.log("Location permission denied");
+        console.log("Location permission denied");
       }
     } catch (err) {
-      console.tron.warn(err);
+      console.warn(err);
     }
   };
   
@@ -66,7 +80,7 @@ export const MapScreen: React.FC = observer(({ navigation }) => {
     }
 
     const watchId = Geolocation.watchPosition(info => {
-      // console.tron.log(info)
+      // console.log(info)
       setCurrentLocation(<Marker 
         coordinate={{latitude: info.coords.latitude, longitude: info.coords.longitude}}
         title={"Current location"}
@@ -90,8 +104,8 @@ export const MapScreen: React.FC = observer(({ navigation }) => {
   // })
 
   const markers = []
-  store.markers.forEach((item) => {
-    const onPress = () => store.walletIsActive ? navigation.navigate("sendBitcoin", {username: item.username}) : navigation.navigate("phoneValidation")
+  maps.forEach((item) => {
+    const onPress = () => walletIsActive(client) ? navigation.navigate("sendBitcoin", {username: item.username}) : navigation.navigate("phoneValidation")
     markers.push(
       <Marker coordinate={item.coordinate} key={item.title} 
           //  title={item.title}
@@ -139,4 +153,4 @@ export const MapScreen: React.FC = observer(({ navigation }) => {
       </MapView>
     </Screen>
   )
-})
+}

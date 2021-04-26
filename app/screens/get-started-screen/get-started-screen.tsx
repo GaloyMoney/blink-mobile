@@ -1,6 +1,5 @@
-import { useNavigation } from "@react-navigation/native"
 import * as React from "react"
-import { Image, Text, View } from "react-native"
+import { Image, View } from "react-native"
 import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { Screen } from "../../components/screen"

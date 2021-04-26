@@ -1,23 +1,22 @@
+import { gql, useLazyQuery, useMutation, useQuery } from "@apollo/client"
+import { useIsFocused } from '@react-navigation/native'
 import I18n from "i18n-js"
-import { inject, observer } from "mobx-react"
 import * as React from "react"
 import { useState } from "react"
-import { Alert, Dimensions, Platform, StyleSheet, Text, View } from "react-native"
+import { Dimensions, Platform, StyleSheet, Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import Carousel, { Pagination } from "react-native-snap-carousel"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
+import { QUERY_TRANSACTIONS } from "../../graphql/query"
 import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
+import { Token } from "../../utils/token"
 import { SVGs } from "./earn-svg-factory"
 import { getCardsFromSection, remainingSatsOnSection } from "./earns-utils"
-import { useIsFocused } from '@react-navigation/native';
-import { StoreContext } from "../../models"
-import { values } from "mobx"
-
 
 const { width: screenWidth } = Dimensions.get("window")
 
@@ -160,20 +159,50 @@ const styles = EStyleSheet.create({
   },
 })
 
-export const EarnSection = observer(({ route, navigation }) => {
+export const EarnSection = ({ route, navigation }) => {
 
-  const store = React.useContext(StoreContext)
-  const earnsArray = values(store.earns)
+  const [queryTransactions] = useLazyQuery(QUERY_TRANSACTIONS, {
+    fetchPolicy: "network-only"
+  })
+
+  const [earnCompleted] = useMutation(gql`
+    mutation earnCompleted($ids: [ID]) {
+      earnCompleted(ids: $ids) {
+        id
+        value
+        completed
+      }
+    }
+  `)
+
+  // TODO: fragment with earnList
+  const { data } = useQuery(gql`query earnList($logged: Boolean!) {
+    earnList {
+      id
+      value
+      completed @client(if: {not: $logged})
+  }}`,
+    { variables: {
+        logged: new Token().has()
+      },
+      fetchPolicy: "cache-only"
+  })
+
+  if (!data) {
+    return null
+  }
+
+  const { earnList } = data
 
   const sectionIndex = route.params.section
-  const cards = getCardsFromSection({ sectionIndex, earnsArray })
+  const cards = getCardsFromSection({ sectionIndex, earnList })
 
   const itemIndex = cards.findIndex(item => !item.fullfilled)
   const [firstItem] = useState(itemIndex >= 0 ? itemIndex : 0)
 
   const [currRewardIndex, setCurrRewardIndex] = useState(firstItem)
 
-  const remainingSats = remainingSatsOnSection({ sectionIndex, earnsArray, store })
+  const remainingSats = remainingSatsOnSection({ sectionIndex, earnList })
 
   const [initialRemainingSats] = useState(remainingSats)
   const currentRemainingEarn = remainingSats
@@ -197,6 +226,11 @@ export const EarnSection = observer(({ route, navigation }) => {
   }
 
   const open = async (card) => {
+    // FIXME quick fix for apollo client refactoring
+    if (!(new Token().has())) {
+      navigation.navigate("phoneValidation")
+      return
+    }
 
     switch (RewardType[card.type]) {
       case RewardType.Text:
@@ -207,20 +241,24 @@ export const EarnSection = observer(({ route, navigation }) => {
           question: card.question,
           answers: card.answers, 
           feedback: card.feedback,
-          onComplete: () => store.earnComplete(card.id),
+          // store.earnComplete(card.id),
+          onComplete: async () => {
+            await earnCompleted({variables: { ids: [card.id]}}),
+            queryTransactions()
+          }, 
           id: card.id,
-          completed: earnsArray.find(item => item.id == card.id).completed
+          completed: earnList.find(item => item.id == card.id).completed
         })
         break
       //     case RewardType.Video:
       //       try {
-      //         console.tron.log({ videoid: earns.videoid })
+      //         console.log({ videoid: earns.videoid })
       //         await YouTubeStandaloneIOS.playVideo(earns.videoid)
       //         await sleep(500) // FIXME why await for playVideo doesn't work?
-      //         console.tron.log("finish video")
+      //         console.log("finish video")
       //         setQuizVisible(true)
       //       } catch (err) {
-      //         console.tron.log("error video", err.toString())
+      //         console.log("error video", err.toString())
       //         setQuizVisible(false)
       //       }
       //       break
@@ -231,7 +269,7 @@ export const EarnSection = observer(({ route, navigation }) => {
   }
 
   const CardItem = ({ item, index }) => {
-    const text =                 I18n.t(item.fullfilled ? "EarnScreen.satsEarned" : "EarnScreen.earnSats", {
+    const text = I18n.t(item.fullfilled ? "EarnScreen.satsEarned" : "EarnScreen.earnSats", {
       count: item.value,
       formatted_number: I18n.toNumber(item.value, { precision: 0 }),
     })
@@ -320,4 +358,4 @@ export const EarnSection = observer(({ route, navigation }) => {
       />
     </Screen>
   )
-})
+}

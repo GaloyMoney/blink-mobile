@@ -1,17 +1,15 @@
 import { filter, find, sumBy } from "lodash"
-import { Alert } from "react-native"
 import { translate } from "../../i18n"
-import { StoreContext } from "../../models"
 
-export const getCardsFromSection = ({ earnsArray, sectionIndex }) => {
+export const getCardsFromSection = ({ earnList, sectionIndex }) => {
   const earns_all = translate(`EarnScreen.earns`)
   const cards = earns_all[sectionIndex].content
 
-  cards.forEach(card => card.value = find(earnsArray, { id: card.id }).value)
+  cards.forEach(card => card.value = find(earnList, { id: card.id }).value)
 
   // FIXME O(N^2)
   // add fullfilled property to each card 
-  cards.filter(item => item.fullfilled = earnsArray.find(e => e.id == item.id).completed)
+  cards.filter(item => item.fullfilled = earnList.find(e => e.id == item.id).completed)
   
   let allPreviousFullfilled = true
   let nonEnabledMessage = ""
@@ -34,7 +32,7 @@ export const getCardsFromSection = ({ earnsArray, sectionIndex }) => {
   return cards
 }
 
-export const sectionCompletedPct = ({ sectionIndex, earnsArray }) => {
+export const sectionCompletedPct = ({ sectionIndex, earnList }) => {
   // there is a recurring crash. from crashlytics:
   // using try catch until this is fixed
   //
@@ -44,12 +42,12 @@ export const sectionCompletedPct = ({ sectionIndex, earnsArray }) => {
   // l@2707:285
   // sectionCompletedPct@2707:675
   try {
-    const earns = getCardsFromSection({ sectionIndex, earnsArray })
+    const earns = getCardsFromSection({ sectionIndex, earnList })
     return earns.filter((item) => item.fullfilled).length / earns.length
   } catch (err) {
     return 0
   }
 }
   
-export const remainingSatsOnSection = ({ sectionIndex, earnsArray }) =>
-  sumBy(filter(getCardsFromSection({ sectionIndex, earnsArray }), {fullfilled: false}), "value")
+export const remainingSatsOnSection = ({ sectionIndex, earnList }) =>
+  sumBy(filter(getCardsFromSection({ sectionIndex, earnList }), {fullfilled: false}), "value")

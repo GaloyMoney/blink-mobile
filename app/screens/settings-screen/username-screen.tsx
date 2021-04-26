@@ -1,12 +1,13 @@
+import { gql, useLazyQuery, useMutation } from "@apollo/client"
+import { useIsFocused } from '@react-navigation/native'
 import * as React from "react"
-import { ActivityIndicator, Alert, Keyboard, Text } from "react-native"
+import { ActivityIndicator, Alert, Text } from "react-native"
 import { Input } from "react-native-elements"
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { Screen } from "../../components/screen"
+import { USERNAME_EXIST } from "../../graphql/query"
 import { translate } from "../../i18n"
-import { useQuery } from "../../models"
 import { color } from "../../theme"
-import { useIsFocused } from '@react-navigation/native';
 
 const styles = EStyleSheet.create({
   screenStyle: {
@@ -19,8 +20,6 @@ const styles = EStyleSheet.create({
     paddingVertical: "18rem",
     textAlign: "center",
   },
-
-
 })
 
 export const UsernameScreen = ({navigation}) => {
@@ -30,17 +29,25 @@ export const UsernameScreen = ({navigation}) => {
   const [message, setMessage] = React.useState("")
   const [messageIsError, setMessageIsError] = React.useState(false)
 
-
   // we don't show a error message before the user had a change to add 3 caracters
   const [init, setInit] = React.useState(true)
 
-  const { store, error: errorQuery, loading: loadingUserNameExist, data, setQuery, query } = useQuery()
+  // TODO use a debouncer to avoid flickering https://github.com/helfer/apollo-link-debounce
+  const [usernameExistsQuery, { loading: loadingUserNameExist, data }] = useLazyQuery(USERNAME_EXIST, 
+    // { fetchPolicy: "cache-first" }
+  )
 
-  const exists = data?.usernameExists ?? false
+  const usernameExists = data?.usernameExists ?? false
 
-  if (errorQuery) {
-    console.tron.log({errorQuery})
-  }
+  const [updateUsername] = useMutation(gql`
+  mutation updateUsername($username: String!) {
+    updateUser {
+      updateUsername(username: $username) {
+        id
+        username
+      }
+    }
+  }`)
 
   React.useEffect(() => {
     const isValid = assertValidInput()
@@ -49,14 +56,8 @@ export const UsernameScreen = ({navigation}) => {
       return
     }
   
-    setQuery((store) => store.queryUsernameExists({username: input}, {fetchPolicy: "cache-first"}))
+    usernameExistsQuery({ variables: {username: input}})
   }, [input])
-
-  React.useEffect(() => {
-    // console.tron.log({query}, "query")
-
-    query?.refetch()
-  }, [query])
 
   React.useEffect(() => {
     if (init && input.length <= 2) {
@@ -69,7 +70,7 @@ export const UsernameScreen = ({navigation}) => {
       return
     }
 
-    if (exists) {
+    if (usernameExists) {
       setMessage(translate("UsernameScreen.notAvailable", {input}))
       setMessageIsError(true)
     } else {
@@ -80,19 +81,14 @@ export const UsernameScreen = ({navigation}) => {
 
   const send = async () => {
     setLoading(true)
-    console.tron.log("createInvoice")
+    console.log("createInvoice")
     try {
-      const query = `mutation updateUser_setUsername($username: String!) {
-        updateUser {
-          setUsername(username: $username)
-        }
-      }`
-
-      const result = await store.mutate(query, { username: input })
-      const success = result.updateUser.setUsername
-      console.tron.log({result, success}, "username correctly set")
-
-      setQuery(store.mainQuery())
+      const { data } = await updateUsername({variables: { username: input }})
+      const success = data?.updateUser?.updateUsername
+      
+      if (!success) {
+        console.warn("issue setting up username")
+      }
 
       Alert.alert(
         translate("UsernameScreen.success", {input}),
@@ -107,7 +103,7 @@ export const UsernameScreen = ({navigation}) => {
       )
 
     } catch (err) {
-      console.tron.log(`error with setUsername: ${err}`)
+      console.error(err, `error with updateUsername`)
       setMessage(`${err}`)
       setMessageIsError(true)
     } finally {
@@ -137,7 +133,7 @@ export const UsernameScreen = ({navigation}) => {
   }
 
   const validate = async () => {
-    console.tron.log("validate")
+    console.log("validate")
 
     if (!isFocused) {
       return
@@ -150,7 +146,7 @@ export const UsernameScreen = ({navigation}) => {
       return
     }
 
-    if (exists) {
+    if (usernameExists) {
       inputForm.current.focus();
     } else {
       Alert.alert(
@@ -159,7 +155,7 @@ export const UsernameScreen = ({navigation}) => {
         [
           {
             text: translate("common.cancel"),
-            onPress: () => console.tron.log("Cancel Pressed"),
+            onPress: () => console.log("Cancel Pressed"),
             style: "cancel"
           },
           { text: translate("common.ok"), onPress: send }

@@ -1,34 +1,32 @@
-import { inject, observer } from "mobx-react"
+import { gql, useQuery } from "@apollo/client"
 import * as React from "react"
-import { Dimensions, StyleSheet, Text, View, SafeAreaView, StatusBar } from "react-native"
+import * as _ from "lodash"
+import { StatusBar, StyleSheet, Text, View } from "react-native"
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler"
+import { MountainHeader } from "../../components/mountain-header"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
+import { color } from "../../theme"
 import { palette } from "../../theme/palette"
+import { Token } from "../../utils/token"
 import { sectionCompletedPct } from "../earns-screen"
 import BitcoinCircle from "./bitcoin-circle-01.svg"
 import BottomOngoing from "./bottom-ongoing-01.svg"
 import BottomStart from "./bottom-start-01.svg"
 import LeftFinish from "./left-finished-01.svg"
-import LeftComplete from "./left-section-completed-01.svg"
-import LeftLastComplete from "./left-last-section-completed-01.svg"
 import LeftLastOngoing from "./left-last-section-ongoing-01.svg"
 import LeftLastTodo from "./left-last-section-to-do-01.svg"
+import LeftComplete from "./left-section-completed-01.svg"
 import LeftOngoing from "./left-section-ongoing-01.svg"
 import LeftTodo from "./left-section-to-do-01.svg"
+import RightFinish from "./right-finished-01.svg"
 import RightFirst from "./right-first-section-to-do-01.svg"
-import RightLastComplete from "./right-last-section-completed-01.svg"
 import RightLastOngoing from "./right-last-section-ongoing-01.svg"
 import RightLastTodo from "./right-last-section-to-do-01.svg"
-import RightFinish from "./right-finished-01.svg"
 import RightComplete from "./right-section-completed-01.svg"
 import RightOngoing from "./right-section-ongoing-01.svg"
 import RightTodo from "./right-section-to-do-01.svg"
 import TextBlock from "./text-block-medium.svg"
-import { MountainHeader } from "../../components/mountain-header"
-import { color } from "../../theme"
-import { StoreContext } from "../../models"
-import { values } from "mobx"
 
 const styles = StyleSheet.create({
   mainView: {
@@ -98,10 +96,27 @@ export const ProgressBar = ({progress}) => {
 )}
 
 
-export const EarnMapDataInjected = observer(({ navigation }) => {
+export const EarnMapDataInjected = ({ navigation }) => {
 
-  const store = React.useContext(StoreContext)
-  const earnsArray = values(store.earns)
+  // TODO: fragment with earnList
+  const { data } = useQuery(gql`query earnList($logged: Boolean!) {
+    earnList {
+      id
+      value
+      completed @client(if: {not: $logged})
+  }}`,
+    { variables: {
+        logged: new Token().has()
+      },
+      fetchPolicy: "cache-only"
+  })
+
+  if (!data) {
+    return null
+  }
+
+  const { earnList } = data
+
   const sectionIndexs = Object.keys(translate("EarnScreen.earns"))
 
   let sectionsData = []
@@ -116,7 +131,7 @@ export const EarnMapDataInjected = observer(({ navigation }) => {
       icon: BitcoinCircle,
     })
 
-    const sectionCompletion = sectionCompletedPct({sectionIndex, earnsArray})
+    const sectionCompletion = sectionCompletedPct({sectionIndex, earnList})
 
     if (sectionCompletion === 1) {
       currSection += 1
@@ -125,14 +140,16 @@ export const EarnMapDataInjected = observer(({ navigation }) => {
     }
   }
 
+  const earnedSat = _.sumBy(_.filter(earnList, {completed: true}), "value")
+
   return <EarnMapScreen 
     navigation={navigation}
     sectionsData={sectionsData}
     currSection={currSection}
     progress={progress}
-    earned={store.earnedSat}
+    earned={earnedSat}
   />
-})
+}
 
 export const EarnMapScreen: React.FC<IEarnMapScreen> = 
   ({ navigation, sectionsData, currSection, progress, earned}) => {

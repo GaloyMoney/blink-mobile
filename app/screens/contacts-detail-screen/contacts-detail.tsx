@@ -1,7 +1,7 @@
-import { observer } from "mobx-react"
+import { useApolloClient, useMutation, useQuery } from "@apollo/client"
 import * as React from "react"
 import { View } from "react-native"
-import { Button, Input, Text } from "react-native-elements"
+import { Input, Text } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { ScrollView } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
@@ -11,9 +11,10 @@ import { LargeButton } from "../../components/large-button"
 import { Screen } from "../../components/screen"
 import { TransactionItem } from "../../components/transaction-item"
 import { translate } from "../../i18n"
-import { StoreContext, useQuery } from "../../models"
+import { QUERY_TRANSACTIONS } from "../../graphql/query"
 import { palette } from "../../theme/palette"
-
+import _ from "lodash"
+import { gql } from '@apollo/client';
 
 const styles = EStyleSheet.create({
   amount: {
@@ -45,38 +46,41 @@ const styles = EStyleSheet.create({
   },
 })
 
-export const ContactsDetailScreen = observer(({route, navigation}) => {
-  const store = React.useContext(StoreContext)
-  const { contactId } = route.params
+export const ContactsDetailScreen = ({route, navigation}) => {
+  const { contact } = route.params  
+  let transactions_filtered = []
+  const { data } = useQuery(QUERY_TRANSACTIONS)
 
-  const contact = store.contacts.get(contactId)
-  const transactions = store.transactionsWith({username: contact.id})
+  try {
+    const { transactions } = _.find(data.wallet, {id: "BTC"})
+    // TODO: this query could be optimize through some graphql query
+    transactions_filtered = transactions.filter(tx => tx.username === contact.id)
+  } catch (err) {
+    // do not throw if there is a username mismatch. the value from me.contact.name is currently
+    // handled on the backend, and there could be some discrepencies, ie: if a username get manually renamed
+    // (which should not happen in a normal workflow)
+    console.error({err})
+  }
 
-  return <ContactsDetailScreenJSX navigation={navigation} contact={contact} transactions={transactions} />
-})
+  return <ContactsDetailScreenJSX navigation={navigation} contact={contact} transactions={transactions_filtered} />
+}
 
-export const ContactsDetailScreenJSX = observer(({ contact, navigation, transactions }) => {
-  const store = React.useContext(StoreContext)
-
+export const ContactsDetailScreenJSX = ({ contact, navigation, transactions }) => {
   const [contactName, setContactName] = React.useState(contact.prettyName)
 
-  // const { store, error, loading, setQuery } = useQuery()
-
-
-  const updateName = () => { 
-    const query = `mutation setName($username: String, $name: String) {
+  const UPDATE_NAME = gql`
+    mutation setName($username: String, $name: String) {
       updateContact {
-          setName(username: $username, name: $name)
-      }
-    }`
+        setName(username: $username, name: $name)
+    }
+  }`
 
-    store.mutate(
-      query,
-      {username: contact.id, name: contactName},
-      () => {
-        store.contacts.get(contact.id).updateName(contactName)
-      }
-    )
+  const [updateNameMutation] = useMutation(UPDATE_NAME);
+
+  const updateName = () => {
+    // TODO: need optimistic updates
+    // FIXME this one doesn't work
+    updateNameMutation({variables: {username: contact.id, name: contactName}})
   }
 
   return (
@@ -113,4 +117,4 @@ export const ContactsDetailScreenJSX = observer(({ contact, navigation, transact
       </View>
       <CloseCross color={palette.white} onPress={navigation.goBack} />
   </Screen>
-)})
+)}

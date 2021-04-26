@@ -1,13 +1,12 @@
-import { observer } from "mobx-react"
+import { useQuery } from "@apollo/client"
 import * as React from "react"
 import { ActivityIndicator, Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { VictoryAxis, VictoryChart, VictoryLine } from "victory-native"
-import { useQuery } from "../../models"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-
+import { QUERY_PRICE } from "../../graphql/query"
 
 const styles = EStyleSheet.create({
   neutral: {
@@ -148,8 +147,9 @@ export const PriceGraph = ({prices}) => {
 )}
 
 
-export const PriceGraphDataInjected = observer(() => {
-  const { error, loading, data } = useQuery(store => store.queryPrices({length: 365 * 24 * 10}), {fetchPolicy: "no-cache"})
+export const PriceGraphDataInjected = () => {
+  const { error, loading, data } = useQuery(QUERY_PRICE, {variables: {length: 365 * 24 * 10}})
+  //{fetchPolicy: "no-cache"})
 
   if (loading || data == null) {
     return <ActivityIndicator animating={true} size="large" color={palette.lightBlue} />
@@ -160,4 +160,4 @@ export const PriceGraphDataInjected = observer(() => {
   }
 
   return <PriceGraph prices={data.prices} />
-})
+}

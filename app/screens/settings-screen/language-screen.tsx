@@ -1,11 +1,12 @@
-import { observer } from "mobx-react"
+import { gql, useMutation, useQuery } from "@apollo/client"
 import * as React from "react"
 import { ListItem } from "react-native-elements"
 import EStyleSheet from 'react-native-extended-stylesheet'
-import { Screen } from "../../components/screen"
-import { StoreContext } from "../../models"
-import { palette } from "../../theme/palette"
 import Icon from "react-native-vector-icons/Ionicons"
+import { Screen } from "../../components/screen"
+import { GET_LANGUAGE } from "../../graphql/query"
+import { palette } from "../../theme/palette"
+import { Token } from "../../utils/token"
 
 const styles = EStyleSheet.create({
   screenStyle: {
@@ -21,25 +22,49 @@ const styles = EStyleSheet.create({
 })
 
 export const language_mapping = {
-  null: 'Default (OS)',
+  '': 'Default (OS)',
   'en': 'English',
   'es': 'Español'
 }
 
-export const LanguageScreen = observer(({navigation}) => {
-  const store = React.useContext(StoreContext)
+export const LanguageScreen = () => {
+  const {data} = useQuery(GET_LANGUAGE, {fetchPolicy: "cache-only"})
+  const language = data?.me?.language ?? ''
 
-  const list = [null, 'en', 'es']
+  const [updateLanguage] = useMutation(gql`
+  mutation updateLanguage($language: String!) {
+    updateUser {
+      updateLanguage(language: $language) {
+        id
+        language
+      }
+    }
+  }`)
+
+  const list = ['', 'en', 'es']
 
   return (
     <Screen preset="scroll" style={styles.screenStyle}>
     {
       list.map((l, i) => (
-        <ListItem key={i} bottomDivider  onPress={() => store.setLanguage({language: l})}>
+        <ListItem key={i} bottomDivider  onPress={() => updateLanguage({
+              variables: {language: l},
+              optimisticResponse: {
+                "__typename": "Mutation",
+                "updateUser": {
+                    "__typename": "UpdateUser",
+                    "updateLanguage": {
+                        "__typename": "User",
+                        "id": new Token().uid,
+                        "language": l,
+                    }
+                }
+            }
+            })}>
             <ListItem.Title>{language_mapping[l]}</ListItem.Title>
-            {store.user.language === l && <Icon name="ios-checkmark-circle" size={18} color={palette.green} />}
+            {language === l && <Icon name="ios-checkmark-circle" size={18} color={palette.green} />}
         </ListItem>
       ))
     }
     </Screen>
-)})
+)}

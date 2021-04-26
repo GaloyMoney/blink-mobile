@@ -36,7 +36,7 @@ export class Token {
     return this.mem_token
   }
 
-  async delete () {
+  async remove () {
     this.mem_token = null
     remove(TOKEN_KEY)
   }
@@ -46,13 +46,13 @@ export class Token {
     // TODO check
   }
 
-  get uid () {
+  get uid (): string | null {
     try {
       const { uid } = jwtDecode(this.mem_token)
-      console.tron.log({uid})
+      console.log({uid})
       return uid
     } catch (err) {
-      console.tron.log(err.toString())
+      console.log(err.toString())
       return null
     }
   }
@@ -62,7 +62,7 @@ export class Token {
       const { network } = jwtDecode(this.mem_token)
       return network
     } catch (err) {
-      console.tron.log(err.toString())
+      console.log(err.toString())
       return null
     }
   }
@@ -93,7 +93,7 @@ export const getGraphQlUri = async () => {
     case "mainnet":
       return GRAPHQL_MAINNET_URI
     default:
-      console.tron.log("no network set")
+      console.log("no network set")
       return "none"
   }
 }

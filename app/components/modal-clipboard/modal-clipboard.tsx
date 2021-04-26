@@ -1,18 +1,18 @@
+import { useApolloClient, useReactiveVar } from "@apollo/client";
 import Clipboard from "@react-native-community/clipboard";
 import { useNavigation } from "@react-navigation/native";
-import { observer } from "mobx-react";
 import * as React from "react";
 import { StyleSheet, Text, TouchableWithoutFeedback, View } from "react-native";
 import { Button } from 'react-native-elements';
 import Modal from "react-native-modal";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/Ionicons";
+import { modalClipboardVisibleVar } from "../../graphql/query";
 import { translate } from "../../i18n";
-import { StoreContext } from "../../models";
 import { color } from "../../theme";
 import { palette } from "../../theme/palette";
+import { validPayment } from "../../utils/parsing";
 import { Token } from "../../utils/token";
-import { validPayment } from "../../utils/parsing"
 
 
 const styles = StyleSheet.create({
@@ -37,8 +37,8 @@ const styles = StyleSheet.create({
   },
 })
 
-export const ModalClipboard = observer(() => {
-  const store = React.useContext(StoreContext)
+export const ModalClipboard = () => {
+  const client = useApolloClient()
   const navigation = useNavigation();
 
   const open = async () => {
@@ -47,17 +47,20 @@ export const ModalClipboard = observer(() => {
   }
 
   const dismiss = () => {
-    // TODO: refactor without store but using react natigation event
-    store.setModalClipboardVisible(false)
+    modalClipboardVisibleVar(false)
   }
   const [message, setMessage] = React.useState("")
 
-  const isVisible = store?.modalClipboardVisible ?? false // store is not defined for storybook
+  const isVisible = useReactiveVar(modalClipboardVisibleVar)
 
   React.useEffect(() => {
+    if (!isVisible) {
+      return
+    }
+
     const _ = async () => {
       const clipboard = await Clipboard.getString()
-      const {paymentType} = validPayment(clipboard, new Token().network, store.myPubKey, store.username)
+      const {paymentType} = validPayment(clipboard, new Token().network, client)
       const pathString = paymentType === "lightning" ? "ModalClipboard.pendingInvoice" : "ModalClipboard.pendingBitcoin"
       setMessage(translate(pathString))
     }
@@ -94,4 +97,4 @@ export const ModalClipboard = observer(() => {
         </View>
       </SafeAreaView>
     </Modal>
-)})
+)}
