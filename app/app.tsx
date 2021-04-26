@@ -147,9 +147,10 @@ export const App = () => {
 
       // Read the current schema version from AsyncStorage.
       const currentVersion = await loadString(BUILD_VERSION);
+      const buildVersion = String(VersionNumber.buildVersion)
       
       // TODO: also add a schema version?
-      if (currentVersion === VersionNumber.buildVersion) {
+      if (currentVersion === buildVersion) {
         // If the current version matches the latest version,
         // we're good to go and can restore the cache.
         await persistor_.restore();
@@ -157,7 +158,7 @@ export const App = () => {
         // Otherwise, we'll want to purge the outdated persisted cache
         // and mark ourselves as having updated to the latest version.
         await persistor_.purge();
-        await saveString(BUILD_VERSION, VersionNumber.buildVersion);
+        await saveString(BUILD_VERSION, buildVersion);
       }
 
       client.onClearStore(initDb)
