@@ -16,7 +16,7 @@ const styles = EStyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "flex-end",
-    marginVertical: 36,
+    marginBottom: 36,
     width: "100%",
   },
 
@@ -50,9 +50,9 @@ const styles = EStyleSheet.create({
   },
 
   Logo: {
-    maxHeight: 300,
-    maxWidth: 310,
-    marginTop: 32,
+    maxHeight: "50%",
+    maxWidth: "85%",
+    marginTop: 24,
   }
 })
 
@@ -65,8 +65,9 @@ export const GetStartedScreen = ({ navigation }) => {
       <Image
         style={styles.Logo}
         source={BitcoinBeachLogo}
+        resizeMode="contain"
       />
-      <VersionComponent style={{ paddingVertical: 30 }} />
+      <VersionComponent style={{ paddingTop: 18 }} />
       <View style={styles.bottom}>
         <Button
           title={translate("GetStartedScreen.getStarted")}
