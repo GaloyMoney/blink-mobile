@@ -4,7 +4,7 @@ import * as React from "react"
 import { Alert, Dimensions, Platform, Pressable, View, ViewStyle } from "react-native"
 import { RNCamera } from "react-native-camera"
 import EStyleSheet from "react-native-extended-stylesheet"
-import ImagePicker from 'react-native-image-picker'
+import { launchImageLibrary } from 'react-native-image-picker'
 import Svg, { Circle } from "react-native-svg"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
@@ -75,15 +75,14 @@ export const ScanningQRCodeScreen = () => {
   }
 
   const showImagePicker = () => {
-    ImagePicker.launchImageLibrary({
-      title: null,
+    launchImageLibrary({
       mediaType: 'photo',
-      takePhotoButtonTitle: null,
     },
     response => {
       if (response.uri) {
-        const uri = Platform.OS === 'ios' ? response.uri.toString().replace('file://', '') : response.path.toString();
+        const uri = Platform.OS === 'ios' ? response.uri.toString().replace('file://', '') : response.uri;
         LocalQRCode.decode(uri, (error, result) => {
+          console.log({error, result, uri})
           if (!error) {
             decodeInvoice( result );
           } else {
@@ -91,7 +90,7 @@ export const ScanningQRCodeScreen = () => {
               Alert.alert(translate("ScanningQRCodeScreen.noQrCode"));
             } else {
               console.log({error})
-              Alert.alert(error.message);
+              Alert.alert(`${error}`);
             }
           }
         });

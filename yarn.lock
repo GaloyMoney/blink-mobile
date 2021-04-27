@@ -12916,10 +12916,10 @@ react-native-icloudstore@^0.9.0:
   resolved "https://registry.yarnpkg.com/react-native-icloudstore/-/react-native-icloudstore-0.9.0.tgz#415cf2ca79e71eb501024079f3b76f9b82d3d587"
   integrity sha1-QVzyynnnHrUBAkB587dvm4LT1Yc=
 
-react-native-image-picker@^3.3.2:
-  version "3.3.2"
-  resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-3.3.2.tgz#dde494ce4fbb5c36a4ea56346b751b85223d6b25"
-  integrity sha512-7z902J7a7j2rUM6zzyLSGpBSDfXy/V9ssSDKV0QyoQpr7COZs3zsJye2PU1Z4TRqmuNtREIeG5m1NdwtpcXBkg==
+react-native-image-picker@^3.3.4:
+  version "3.3.4"
+  resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-3.3.4.tgz#ea32412e871da5ce77b76ea3114fa4ca5fee5184"
+  integrity sha512-XKQ1xCEKL77foV0gi4Jyv0kqekE//DX7FhoYwOTLH4T44myVBQllrVGedBYMNBfjvRfeqFz4DQ6MgvGQUqaLbg==
 
 react-native-inappbrowser-reborn@^3.3.4:
   version "3.5.1"
