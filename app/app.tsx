@@ -80,6 +80,10 @@ export const App = () => {
 
   useEffect(() => {
     const fn = async () => {
+
+      const isHermes = () => !!global.HermesInternal;
+      console.log({isHermes: isHermes()})
+
       const token = new Token()
       await token.load()
 
