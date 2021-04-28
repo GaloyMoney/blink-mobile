@@ -58,13 +58,12 @@ export const ModalClipboard = () => {
       return
     }
 
-    const _ = async () => {
+    (async () => {
       const clipboard = await Clipboard.getString()
       const {paymentType} = validPayment(clipboard, new Token().network, client)
       const pathString = paymentType === "lightning" ? "ModalClipboard.pendingInvoice" : "ModalClipboard.pendingBitcoin"
       setMessage(translate(pathString))
-    }
-    _()
+    })()
   }, [isVisible])
 
   return (
