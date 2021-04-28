@@ -136,7 +136,7 @@ export const RootStack = () => {
   const checkClipboard = async () => {
     const clipboard = await Clipboard.getString()
 
-    if (walletIsActive(client)) {
+    if (!walletIsActive(client)) {
       return
     }
 

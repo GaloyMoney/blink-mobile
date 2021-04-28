@@ -17,7 +17,6 @@ export function usePrefCurrency() {
     
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('blur', () => {
-      console.log({prefCurrency},"onblur")
       prefCurrencyVar(prefCurrency)
     });
 
