@@ -80,7 +80,7 @@ export const ScanningQRCodeScreen = () => {
     },
     response => {
       if (response.uri) {
-        const uri = Platform.OS === 'ios' ? response.uri.toString().replace('file://', '') : response.uri;
+        const uri = response.uri.toString().replace('file://', '');
         LocalQRCode.decode(uri, (error, result) => {
           console.log({error, result, uri})
           if (!error) {

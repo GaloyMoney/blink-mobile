@@ -7,6 +7,7 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
 import { btc_price, nextPrefCurrency, prefCurrencyVar } from "../../graphql/query"
+import { usePrefCurrency } from "../../hooks/usePrefCurrency"
 import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
 import { CurrencyConversion } from "../../utils/currencyConversion"
@@ -53,8 +54,12 @@ export const InputPaymentDataInjected = (props: InputPaymentDataInjectedProps) =
   const client = useApolloClient()
   const price = btc_price(client)
   
+  const [prefCurrency, nextPrefCurrency] = usePrefCurrency()
+
   return <InputPayment 
     price={price} 
+    prefCurrency={prefCurrency}
+    nextPrefCurrency={nextPrefCurrency}
     {...props} />
 }
 
@@ -66,9 +71,9 @@ export const InputPayment = ({
   forceKeyboard = false,
   sub = true,
   initAmount = 0, // in sats
+  prefCurrency,
+  nextPrefCurrency
 }) => {
-
-  const prefCurrency = useReactiveVar(prefCurrencyVar)
 
   const endByDot = (s: string) => s.match(/^[0-9]*\.{1}$/)
 

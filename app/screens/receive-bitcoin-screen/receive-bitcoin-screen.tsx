@@ -90,30 +90,32 @@ const styles = EStyleSheet.create({
   },
 })
 
+
+const ADD_INVOICE = gql`mutation addInvoice($value: Int, $memo: String) {
+  invoice {
+    addInvoice(value: $value, memo: $memo)
+  }
+}`
+
+const UPDATE_PENDING_INVOICE = gql`mutation updatePendingInvoice($hash: String!) {
+  invoice {
+    updatePendingInvoice(hash: $hash)
+  }
+}`
+
+const GET_ONCHAIN_ADDRESS = gql`query getLastOnChainAddress {
+  getLastOnChainAddress {
+    id
+  }
+}`
+
+
 export const ReceiveBitcoinScreen = ({ navigation }) => {
   const client = useApolloClient()
 
-  const ADD_INVOICE = gql`mutation addInvoice($value: Int, $memo: String) {
-    invoice {
-      addInvoice(value: $value, memo: $memo)
-    }
-  }`
-
   const [addInvoice] = useMutation(ADD_INVOICE)
-  
-  const UPDATE_PENDING_INVOICE = gql`mutation updatePendingInvoice($hash: String!) {
-    invoice {
-      updatePendingInvoice(hash: $hash)
-    }
-  }`
-  
   const [updatePendingInvoice] = useMutation(UPDATE_PENDING_INVOICE)
 
-  const GET_ONCHAIN_ADDRESS = gql`query getLastOnChainAddress {
-    getLastOnChainAddress {
-      id
-    }
-  }`
 
   let lastOnChainAddress
   try {

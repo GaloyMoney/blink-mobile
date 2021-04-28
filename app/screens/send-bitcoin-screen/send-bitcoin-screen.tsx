@@ -1,4 +1,4 @@
-import { gql, useApolloClient, useLazyQuery, useMutation, useReactiveVar } from "@apollo/client"
+import { gql, useApolloClient, useLazyQuery, useMutation } from "@apollo/client"
 import { useNavigation } from "@react-navigation/native"
 import LottieView from 'lottie-react-native'
 import * as React from "react"
@@ -11,7 +11,8 @@ import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import Icon from "react-native-vector-icons/Ionicons"
 import { InputPayment } from "../../components/input-payment"
 import { Screen } from "../../components/screen"
-import { balanceBtc, btc_price, getPubKey, prefCurrencyVar, QUERY_TRANSACTIONS, USERNAME_EXIST, WALLET } from "../../graphql/query"
+import { balanceBtc, btc_price, getPubKey, QUERY_TRANSACTIONS, USERNAME_EXIST, WALLET } from "../../graphql/query"
+import { usePrefCurrency } from "../../hooks/usePrefCurrency"
 import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
@@ -19,9 +20,52 @@ import { textCurrencyFormatting } from "../../utils/currencyConversion"
 import { IPaymentType, validPayment } from "../../utils/parsing"
 import { Token } from "../../utils/token"
 
+
 const successLottie = require('../move-money-screen/success_lottie.json')
 const errorLottie = require('../move-money-screen/error_lottie.json')
 const pendingLottie = require('../move-money-screen/pending_lottie.json')
+
+
+const LIGHTNING_PAY = gql`
+mutation payInvoice($invoice: String!, $amount: Int, $memo: String) {
+  invoice {
+    payInvoice(invoice: $invoice, amount: $amount, memo: $memo)
+  }
+}`
+
+
+const PAY_KEYSEND_USERNAME = gql`
+mutation payKeysendUsername($amount: Int!, $destination: String!, $username: String!, $memo: String) {
+  invoice {
+    payKeysendUsername( amount: $amount, destination: $destination, username: $username, memo: $memo)
+  }
+}`
+
+ 
+const ONCHAIN_PAY = gql`
+mutation onchain_pay($address: String!, $amount: Int!, $memo: String) {
+onchain {
+  pay(address: $address, amount: $amount, memo: $memo) {
+    success
+  }
+}
+}`
+
+
+const LIGHTNING_FEES = gql`
+mutation lightning_fees($invoice: String, $amount: Int){
+invoice {
+getFee(invoice: $invoice, amount: $amount)
+}
+}`
+
+
+const ONCHAIN_FEES = gql`
+mutation onchain_fees($address: String!, $amount: Int){
+onchain {
+  getFee(address: $address, amount: $amount)
+}
+}`
 
 
 const styles = EStyleSheet.create({
@@ -125,8 +169,6 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
   const [memo, setMemo] = useState("")
   const [initialMemo, setInitialMemo] = useState("")
 
-  const prefCurrency = useReactiveVar(prefCurrencyVar)
-
   const setDestination = input => setDestinationInternal(input.trim())
 
   // if null ==> we don't know (blank fee field)
@@ -143,23 +185,9 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
     fetchPolicy: "network-only"
   })
 
-  const LIGHTNING_PAY = gql`
-    mutation payInvoice($invoice: String!, $amount: Int, $memo: String) {
-      invoice {
-        payInvoice(invoice: $invoice, amount: $amount, memo: $memo)
-      }
-  }`
-
   const [lightningPay, { loading: paymentlightningLoading } ] = useMutation(LIGHTNING_PAY, 
     { update: () => queryTransactions() }
   )
-
-  const PAY_KEYSEND_USERNAME = gql`
-  mutation payKeysendUsername($amount: Int!, $destination: String!, $username: String!, $memo: String) {
-    invoice {
-      payKeysendUsername( amount: $amount, destination: $destination, username: $username, memo: $memo)
-    }
-  }`
 
   const [payKeysendUsername, { loading: paymentKeysendLoading } ] = useMutation(PAY_KEYSEND_USERNAME, 
     { update: () => queryTransactions() }
@@ -173,36 +201,13 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
   //       }
   //     })
   // }}
-  
-  const ONCHAIN_PAY = gql`
-    mutation onchain_pay($address: String!, $amount: Int!, $memo: String) {
-    onchain {
-      pay(address: $address, amount: $amount, memo: $memo) {
-        success
-      }
-    }
-  }`
-
+ 
   const [onchainPay, { loading: paymentOnchainLoading } ] = useMutation(ONCHAIN_PAY, 
     { update: () => queryTransactions() }
   )
 
-  const LIGHTNING_FEES = gql`
-  mutation lightning_fees($invoice: String, $amount: Int){
-    invoice {
-      getFee(invoice: $invoice, amount: $amount)
-    }
-  }`
-  
   const [getLightningFees, { loading: lightningFeeLoading } ] = useMutation(LIGHTNING_FEES)
   
-  const ONCHAIN_FEES = gql`
-    mutation onchain_fees($address: String!, $amount: Int){
-      onchain {
-        getFee(address: $address, amount: $amount)
-      }
-  }`
-
   const [getOnchainFees, { loading: onchainFeeLoading } ] = useMutation(ONCHAIN_FEES)
 
   const [updateWallet] = useLazyQuery(WALLET)
@@ -211,6 +216,8 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
   const [usernameExistsQuery, { loading: loadingUserNameExist, data: dataUsernameExists }] = useLazyQuery(USERNAME_EXIST, 
     { fetchPolicy: "network-only" }
   )
+
+  const [prefCurrency, nextPrefCurrency] = usePrefCurrency()
 
   const usernameExists = dataUsernameExists?.usernameExists ?? false
   
@@ -463,6 +470,8 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
     potentialBitcoinOrLightning={potentialBitcoinOrLightning}
     errorMessage={errorMessage}
     reset={reset}
+    prefCurrency={prefCurrency}
+    nextPrefCurrency={nextPrefCurrency}
   />
 }
 
@@ -471,12 +480,14 @@ export const SendBitcoinScreenJSX = ({
   status, paymentType, amountless, initAmount, setAmount, setStatus, invoice, fee,
   address, memo, errs, amount, goBack, pay, price,  
   setMemo, setDestination, destination, usernameExists, loadingUserNameExist, interactive,
-  potentialBitcoinOrLightning, errorMessage, reset }) => {
+  potentialBitcoinOrLightning, errorMessage, reset, prefCurrency, nextPrefCurrency }) => {
 
     return <Screen preset="fixed">
     <ScrollView  style={styles.mainView} contentContainerStyle={{justifyContent: "space-between"}}>
       <View style={styles.section}>
         <InputPayment
+          prefCurrency={prefCurrency}
+          nextPrefCurrency={nextPrefCurrency}
           editable={paymentType === "lightning" || paymentType === "onchain" ? 
             amountless && (status === "idle" || status === "error"):
             status === "success" ? 
