@@ -282,17 +282,15 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
 
         switch(paymentType) {
           case "lightning":
-
-
             if(sameNode) { 
               setFee(0)
               return 
             }
-            
+
             if (amountless && amount == 0) {
               setFee(null)
               return
-            }
+            }  
 
             try {
               setFee(undefined)
@@ -305,6 +303,11 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
             
             return 
           case "onchain":
+            if (amount == 0) {
+              setFee(null)
+              return
+            }
+
             try {
               setFee(undefined)
               const { data: { onchain: { getFee: fee }} } = await getOnchainFees({variables: { address, amount }})
