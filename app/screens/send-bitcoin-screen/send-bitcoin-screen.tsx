@@ -18,6 +18,7 @@ import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { textCurrencyFormatting } from "../../utils/currencyConversion"
 import { IPaymentType, validPayment } from "../../utils/parsing"
+import { sleep } from "../../utils/sleep"
 import { Token } from "../../utils/token"
 
 
