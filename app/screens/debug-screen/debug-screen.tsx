@@ -124,6 +124,7 @@ export const DebugScreen = ({}) => {
         <Text>token network: {token.network}</Text>
         <Text>GraphQlUri: {graphQlUri}</Text>
         <Text>BTC price: {btc_price(client)}</Text>
+        <Text>Hermes: {String(!!global.HermesInternal)}</Text>
 
         <ButtonGroup
           onPress={index => {
