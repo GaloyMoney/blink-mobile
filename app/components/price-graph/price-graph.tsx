@@ -148,8 +148,10 @@ export const PriceGraph = ({prices}) => {
 
 
 export const PriceGraphDataInjected = () => {
-  const { error, loading, data } = useQuery(QUERY_PRICE, {variables: {length: 365 * 24 * 10}})
-  //{fetchPolicy: "no-cache"})
+  const { error, loading, data } = useQuery(QUERY_PRICE, {
+    variables: {length: 365 * 24 * 10},
+    fetchPolicy: "network-only"
+  })
 
   if (loading || data == null) {
     return <ActivityIndicator animating={true} size="large" color={palette.lightBlue} />

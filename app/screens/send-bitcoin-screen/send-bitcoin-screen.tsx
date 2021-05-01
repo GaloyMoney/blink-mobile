@@ -18,6 +18,7 @@ import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { textCurrencyFormatting } from "../../utils/currencyConversion"
 import { IPaymentType, validPayment } from "../../utils/parsing"
+import { sleep } from "../../utils/sleep"
 import { Token } from "../../utils/token"
 
 
@@ -210,7 +211,7 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
   
   const [getOnchainFees, { loading: onchainFeeLoading } ] = useMutation(ONCHAIN_FEES)
 
-  const [updateWallet] = useLazyQuery(WALLET)
+  const [updateWallet] = useLazyQuery(WALLET, {fetchPolicy: "network-only"})
 
   // TODO use a debouncer to avoid flickering https://github.com/helfer/apollo-link-debounce
   const [usernameExistsQuery, { loading: loadingUserNameExist, data: dataUsernameExists }] = useLazyQuery(USERNAME_EXIST, 
@@ -403,6 +404,8 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
       if (success) {
         updateWallet()
         setStatus("success")
+        await sleep(1000)
+        updateWallet()
       } else if (pending) {
         setStatus("pending")
       } else {
