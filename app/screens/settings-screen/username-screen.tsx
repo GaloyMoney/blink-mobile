@@ -34,7 +34,7 @@ export const UsernameScreen = ({navigation}) => {
 
   // TODO use a debouncer to avoid flickering https://github.com/helfer/apollo-link-debounce
   const [usernameExistsQuery, { loading: loadingUserNameExist, data }] = useLazyQuery(USERNAME_EXIST, 
-    // { fetchPolicy: "cache-first" }
+    { fetchPolicy: "cache-and-network" }
   )
 
   const usernameExists = data?.usernameExists ?? false
