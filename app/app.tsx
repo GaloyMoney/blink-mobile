@@ -111,14 +111,12 @@ export const App = () => {
 
       const httpLink = new HttpLink({ fetch: customFetch })
 
-      const authLink = setContext((_, { headers }) => {
-        return {
-          headers: {
-            ...headers,
-            authorization: token.bearerString,
-          },
-        }
-      })
+      const authLink = setContext((_, { headers }) => ({
+        headers: {
+          ...headers,
+          authorization: token.bearerString,
+        },
+      }))
 
       const persistor_ = new CachePersistor({
         cache,
