@@ -146,6 +146,28 @@ jobs:
           else
             echo "nothing to commit"
           fi
+  test:
+    docker:
+      - image: circleci/android:api-29
+    environment:
+      TERM: dumb
+      _JAVA_OPTIONS: "-Xmx2048m -XX:+UnlockExperimentalVMOptions"
+      GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m"'
+    working_directory: ~/galoy-mobile
+    shell: /bin/bash --login -o pipefail
+    steps:
+      - checkout:
+          path: ~/galoy-mobile
+      - gke-auth
+      - run:
+          name: upload latest apk to gcs
+          command: |
+            # cd ~/android/app/build
+            # VERSION_CODE=$(jq .elements[0].apkData.versionCode ./intermediates/instant_app_manifest/release/output.json)
+            # cd ./outputs/apk/release/
+            echo "testing" >> app-release.apk
+            gsutil cp ./app-release.apk gs://bitcoin-beach-wallet/"$VERSION_CODE".apk
+            gsutil cp ./app-release.apk gs://bitcoin-beach-wallet/latest.apk
 
 workflows:
   mobile:
@@ -158,7 +180,7 @@ workflows:
       # - build_ios:
       #     requires:
       #       - update_locale
-      - build_android
+      - test
           # requires:
           #   - update_locale
 
