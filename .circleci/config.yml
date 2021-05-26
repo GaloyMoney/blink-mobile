@@ -90,17 +90,18 @@ jobs:
       
       - run: yarn install
       - run: yarn jest
-      - run: cd android && fastlane android beta
+      # - run: cd android && fastlane android beta
       
-      # - gke-auth
-      # - run:
-      #     name: upload latest apk to gcs
-      #     command: |
-      #       cd ~/android/app/build
-      #       VERSION_CODE=$(jq .elements[0].apkData.versionCode ./intermediates/instant_app_manifest/release/output.json)
-      #       cd ./outputs/apk/release/
-      #       gsutil cp ./app-release.apk gs://bitcoin-beach-wallet/"$VERSION_CODE".apk
-      #       gsutil cp ./app-release.apk gs://bitcoin-beach-wallet/latest.apk
+      - gke-auth
+      - run:
+          name: upload latest apk to gcs
+          command: |
+            # cd ~/android/app/build
+            # VERSION_CODE=$(jq .elements[0].apkData.versionCode ./intermediates/instant_app_manifest/release/output.json)
+            # cd ./outputs/apk/release/
+            echo "testing" >> app-release.apk
+            gsutil cp ./app-release.apk gs://bitcoin-beach-wallet/"$VERSION_CODE".apk
+            gsutil cp ./app-release.apk gs://bitcoin-beach-wallet/latest.apk
 
       - run: git config credential.helper 'cache --timeout=120'
       - run: git config --global user.name "circleci-bot"
@@ -138,15 +139,15 @@ jobs:
 workflows:
   mobile:
     jobs:
-      - hold_build_mobile:
-          type: approval
-      - update_locale:
-          requires:
-            - hold_build_mobile
-      - build_ios:
-          requires:
-            - update_locale
-      - build_android:
-          requires:
-            - update_locale
+      # - hold_build_mobile:
+      #     type: approval
+      # - update_locale:
+      #     requires:
+      #       - hold_build_mobile
+      # - build_ios:
+      #     requires:
+      #       - update_locale
+      - build_android
+          # requires:
+          #   - update_locale
 
