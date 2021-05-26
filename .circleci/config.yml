@@ -1,5 +1,16 @@
 version: 2.1
 
+commands:
+  gke-auth:
+    steps:
+      - run:
+          name: Authenticate on gcloud
+          command: |
+            echo ${GCLOUD_SERVICE_KEY} > gcloud-service-key.json
+            gcloud auth activate-service-account --key-file=gcloud-service-key.json
+            gcloud config set project ${GOOGLE_PROJECT_ID}
+            gcloud container clusters get-credentials testnet-cluster --region us-central1-a --project ${GOOGLE_PROJECT_ID}
+
 jobs:
   build_ios:
     macos:
