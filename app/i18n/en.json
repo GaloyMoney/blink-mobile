@@ -569,7 +569,7 @@
     "notConfirmed": "Payment has been sent\nbut is not confirmed yet\n\nYou can check the status\nof the payment in Transactions",
     "input": "username or invoice",
     "totalExceed": "Total exceeds your balance of {{balance}}",
-    "feeCalculationUnsuccesful": "Calculation unsuccesful ⚠️"
+    "feeCalculationUnsuccessful": "Calculation unsuccessful ⚠️"
   },
   "ScanningQRCodeScreen": {
     "invalidTitle": "Invalid QR Code",

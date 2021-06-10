@@ -571,7 +571,7 @@ export const SendBitcoinScreenJSX = ({
           InputComponent={props => fee === undefined ?
             <ActivityIndicator animating={true} size="small" color={palette.orange} /> :
             fee === -1 ?
-              <Text>{translate("SendBitcoinScreen.feeCalculationUnsuccesful")}</Text>: // todo: same calculation as backend 
+              <Text>{translate("SendBitcoinScreen.feeCalculationUnsuccessful")}</Text>: // todo: same calculation as backend 
               <TextInput {...props} />
           }
         />
