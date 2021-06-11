@@ -10,7 +10,7 @@ type `react-native run-ios` or `react-native run-android` to run locally. Follow
 
 The app is built and push on Play Store / Android Store on demand with CircleCI.
 
-To run the app fully locally, a kubernetes cluster needs to be set up. follow the instruction of https://github.com/GaloyMoney/galoy-infra.
+To run the app fully locally, a kubernetes cluster needs to be set up. follow the instruction of https://github.com/GaloyMoney/galoy.
 
 ### ./app directory
 
