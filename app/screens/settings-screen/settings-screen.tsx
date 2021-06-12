@@ -86,7 +86,6 @@ export const SettingsScreen = ({navigation}) => {
   />
 }
 
-
 export const SettingsScreenJSX = (params) => {
   const { client, walletIsActive, navigation, username, notificationsEnabled, csvAction, resetDataStore } = params
 
@@ -131,6 +130,13 @@ export const SettingsScreenJSX = (params) => {
       action: () => csvAction(),
       enabled: walletIsActive,
       greyed: !walletIsActive,
+    },
+    {
+      category: 'Contact Us on WhatsApp',
+      icon: 'ios-logo-whatsapp',
+      id: 'contact-us',
+      enabled: true,
+      greyed: false,
       styleDivider: { backgroundColor: palette.lighterGrey, height: 18 },
     },
     {
