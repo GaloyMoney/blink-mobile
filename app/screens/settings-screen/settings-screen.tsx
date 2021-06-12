@@ -135,7 +135,7 @@ export const SettingsScreenJSX = (params) => {
       greyed: !walletIsActive,
     },
     {
-      category: 'Contact Us on WhatsApp',
+      category: translate('common.contactUs'),
       icon: 'ios-logo-whatsapp',
       id: 'contact-us',
       action: () => openWhatsApp(WHATSAPP_CONTACT_NUMBER, WHATSAPP_DEFAULT_CONTACT_MESSAGE),
