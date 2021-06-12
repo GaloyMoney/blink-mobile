@@ -104,8 +104,7 @@ export const MoveMoneyScreenDataInjected = ({ navigation }) => {
         logged: new Token().has()
       },
     notifyOnNetworkStatusChange: true,
-    errorPolicy: "all",
-    fetchPolicy: "network-only"
+    errorPolicy: "all"
   })
 
   // temporary fix until we have a better management of notifications:
