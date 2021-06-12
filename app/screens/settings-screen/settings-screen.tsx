@@ -32,7 +32,11 @@ const styles = EStyleSheet.create({
   },
 })
 
-export const SettingsScreen: ScreenType = ({ navigation }) => {
+type Props = {
+  navigation: any,
+};
+
+export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
   const client = useApolloClient()
 
   const { data } = useQuery(gql`
