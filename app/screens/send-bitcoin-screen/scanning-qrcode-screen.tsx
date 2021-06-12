@@ -1,7 +1,7 @@
 import { useApolloClient } from "@apollo/client"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
 import * as React from "react"
-import { Alert, Dimensions, Platform, Pressable, View, ViewStyle } from "react-native"
+import { Alert, Dimensions, Pressable, View, ViewStyle } from "react-native"
 import { RNCamera } from "react-native-camera"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { launchImageLibrary } from 'react-native-image-picker'
@@ -75,28 +75,36 @@ export const ScanningQRCodeScreen = () => {
   }
 
   const showImagePicker = () => {
-    launchImageLibrary({
-      mediaType: 'photo',
-    },
-    response => {
-      if (response.uri) {
-        const uri = response.uri.toString().replace('file://', '');
-        LocalQRCode.decode(uri, (error, result) => {
-          console.log({error, result, uri})
-          if (!error) {
-            decodeInvoice( result );
-          } else {
-            if (error.message === "Feature size is zero!") {
-              Alert.alert(translate("ScanningQRCodeScreen.noQrCode"));
+    try {
+      launchImageLibrary({
+        mediaType: 'photo',
+      },
+      response => {
+        if (response.uri) {
+          const uri = response.uri.toString().replace('file://', '');
+          LocalQRCode.decode(uri, (error, result) => {
+            console.log({error, result, uri})
+            if (!error) {
+              decodeInvoice( result );
             } else {
-              console.log({error})
-              Alert.alert(`${error}`);
+              if (error.message === "Feature size is zero!") {
+                Alert.alert(translate("ScanningQRCodeScreen.noQrCode"));
+              } else {
+                console.log({error})
+                Alert.alert(`${error}`);
+              }
             }
-          }
-        });
-      }
-    },
-  )}
+          });
+        }
+      })
+    } catch (err) {
+      // link to issue
+      // Fatal Exception: java.lang.RuntimeException: Failure delivering result ResultInfo{who=null, request=13002, result=-1, data=Intent { dat=content://media/external/images/media/12345 flg=0x1 (has extras) }} to activity {com.galoyapp/com.galoyapp.MainActivity}: java.lang.RuntimeException: Illegal callback invocation from native module. This callback type only permits a single invocation from native code.
+      // ??
+
+      console.error(err)
+    }
+  }
 
   return (
     <Screen unsafe={true}>
