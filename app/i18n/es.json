@@ -72,7 +72,8 @@
     "transactions": "\nLas transacciones",
     "tryAgain": "Inténtalo de nuevo",
     "type": "tipo",
-    "username": "Nombre de usuario"
+    "username": "Nombre de usuario",
+    "contactUs": "¿Necesita ayuda? Llámanos por WhatsApp"
   },
   "DateOfBirthScreen": {
     "title": "Fecha de nacimiento"

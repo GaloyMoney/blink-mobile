@@ -1,17 +1,30 @@
-import { gql, useApolloClient, useLazyQuery, useQuery } from "@apollo/client"
 import * as React from "react"
 import { Alert, View } from "react-native"
+import Share from "react-native-share"
+import EStyleSheet from "react-native-extended-stylesheet"
 import { Divider, Icon, ListItem } from "react-native-elements"
-import EStyleSheet from 'react-native-extended-stylesheet'
-import Share from 'react-native-share'
+import { gql, useApolloClient, useLazyQuery, useQuery } from "@apollo/client"
+
+// Components
 import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
-import { walletIsActive } from "../../graphql/query"
-import { translate } from "../../i18n"
+
+// Constants
+import { language_mapping } from "./language-screen"
 import { palette } from "../../theme/palette"
+import { WHATSAPP_CONTACT_NUMBER, WHATSAPP_DEFAULT_CONTACT_MESSAGE } from "../../constants/support"
+
+// Functions
+import { translate } from "../../i18n"
+import { walletIsActive } from "../../graphql/query"
+
+// Utils
+import { openWhatsApp } from "../../utils/external"
 import { resetDataStore } from "../../utils/logout"
 import { hasFullPermissions, requestPermission } from "../../utils/notifications"
-import { language_mapping } from "./language-screen"
+
+// Types
+import type { ScreenType } from '../../types/screen'
 
 const styles = EStyleSheet.create({
   screenStyle: {
@@ -19,7 +32,11 @@ const styles = EStyleSheet.create({
   },
 })
 
-export const SettingsScreen = ({navigation}) => {
+type Props = {
+  navigation: any,
+};
+
+export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
   const client = useApolloClient()
 
   const { data } = useQuery(gql`
@@ -33,10 +50,10 @@ export const SettingsScreen = ({navigation}) => {
   )
 
   const onGetCsvCallback = async (data) => {
-    console.log({data}, "result getCsv")
+    console.log({ data }, "result getCsv")
     const csvEncoded = data.wallet[0].csv
     try {
-      console.log({csvEncoded})
+      console.log({ csvEncoded })
       // const decoded = Buffer.from(csvEncoded, 'base64').toString('ascii')
       // console.log({decoded})
 
@@ -47,10 +64,9 @@ export const SettingsScreen = ({navigation}) => {
         // subject: 'csv export',
         filename: 'export.csv',
         // message: 'export message'
-      });
-
+      })
     } catch (err) {
-      console.error({err}, "export export CSV")
+      console.error({ err }, "export export CSV")
     }
   }
 
@@ -60,7 +76,7 @@ export const SettingsScreen = ({navigation}) => {
         id
         csv
       }
-    }`, {onCompleted: onGetCsvCallback})
+    }`, { onCompleted: onGetCsvCallback })
 
   const me = data?.me || {}
 
@@ -71,108 +87,120 @@ export const SettingsScreen = ({navigation}) => {
       setNotificationsEnabled(await hasFullPermissions())
     })()
   }, [])
-  
-  return <SettingsScreenJSX 
+
+  return <SettingsScreenJSX
     client={client}
     walletIsActive={walletIsActive(client)}
     resetDataStore={() => resetDataStore(client)}
-    navigation={navigation} 
+    navigation={navigation}
     username={me.username}
     phone={me.phone}
     language={language_mapping[me.language]}
-    notifications={notificationsEnabled ? translate("SettingsScreen.activated") : translate("SettingsScreen.activate")}  
+    notifications={notificationsEnabled ? translate("SettingsScreen.activated") : translate("SettingsScreen.activate")}
     notificationsEnabled={notificationsEnabled}
     csvAction={getCsv}
   />
 }
 
-
 export const SettingsScreenJSX = (params) => {
   const { client, walletIsActive, navigation, username, notificationsEnabled, csvAction, resetDataStore } = params
 
   const list = [{
-      category: translate("common.phoneNumber"),
-      icon: 'call',
-      id: 'phone',
-      defaultValue: translate("SettingsScreen.tapLogIn"),
-      action: () => navigation.navigate("phoneValidation"),
-      enabled: !walletIsActive,
-      greyed: walletIsActive,
-    },
-    {
-      category: translate("common.username"),
-      icon: 'ios-person-circle',
-      id: 'username',
-      defaultValue: translate("SettingsScreen.tapUserName"),
-      action: () => navigation.navigate("setUsername"),
-      enabled: walletIsActive && !username,
-      greyed: !walletIsActive,
-    },
-    {
-      category: translate('common.language'),
-      icon: 'ios-language',
-      id: 'language',
-      action: () => navigation.navigate("language"),
-      enabled: walletIsActive,
-      greyed: !walletIsActive,
-    },
-    {
-      category: translate('common.notification'),
-      icon: 'ios-notifications-circle',
-      id: 'notifications',
-      action: () => requestPermission(client),
-      enabled: walletIsActive && notificationsEnabled,
-      greyed: !walletIsActive,
-    },
-    {
-      category: translate('common.csvExport'),
-      icon: 'ios-download',
-      id: 'csv',
-      action: () => csvAction(),
-      enabled: walletIsActive,
-      greyed: !walletIsActive,
-      styleDivider: { backgroundColor: palette.lighterGrey, height: 18 },
-    },
-    {
-      category: translate('common.logout'), 
-      id: "logout",
-      icon: 'ios-log-out', 
-      action: async () => {
-        await resetDataStore()
-        Alert.alert("you have been logged out", "", 
+    category: translate("common.phoneNumber"),
+    icon: 'call',
+    id: 'phone',
+    defaultValue: translate("SettingsScreen.tapLogIn"),
+    action: () => navigation.navigate("phoneValidation"),
+    enabled: !walletIsActive,
+    greyed: walletIsActive,
+  },
+  {
+    category: translate("common.username"),
+    icon: 'ios-person-circle',
+    id: 'username',
+    defaultValue: translate("SettingsScreen.tapUserName"),
+    action: () => navigation.navigate("setUsername"),
+    enabled: walletIsActive && !username,
+    greyed: !walletIsActive,
+  },
+  {
+    category: translate('common.language'),
+    icon: 'ios-language',
+    id: 'language',
+    action: () => navigation.navigate("language"),
+    enabled: walletIsActive,
+    greyed: !walletIsActive,
+  },
+  {
+    category: translate('common.notification'),
+    icon: 'ios-notifications-circle',
+    id: 'notifications',
+    action: () => requestPermission(client),
+    enabled: walletIsActive && notificationsEnabled,
+    greyed: !walletIsActive,
+  },
+  {
+    category: translate('common.csvExport'),
+    icon: 'ios-download',
+    id: 'csv',
+    action: () => csvAction(),
+    enabled: walletIsActive,
+    greyed: !walletIsActive,
+  },
+  {
+    category: translate('common.contactUs'),
+    icon: 'ios-logo-whatsapp',
+    id: 'contact-us',
+    action: () => openWhatsApp(WHATSAPP_CONTACT_NUMBER, WHATSAPP_DEFAULT_CONTACT_MESSAGE),
+    enabled: true,
+    greyed: false,
+    styleDivider: { backgroundColor: palette.lighterGrey, height: 18 },
+  },
+  {
+    category: translate('common.logout'),
+    id: "logout",
+    icon: 'ios-log-out',
+    action: async () => {
+      await resetDataStore()
+      Alert.alert("you have been logged out", "",
         [
-          { text: translate("common.ok"), onPress: () => {
-            navigation.goBack()
-          }}
+          {
+            text: translate("common.ok"),
+            onPress: () => {
+              navigation.goBack()
+            }
+          }
         ]
-        )
-      },
-      enabled: walletIsActive,
-      greyed: !walletIsActive,
+      )
+    },
+    enabled: walletIsActive,
+    greyed: !walletIsActive,
   }]
-  
-  const Component = ({icon, category, id, i, enabled, greyed, defaultValue = undefined, action, styleDivider}) => {
+
+  const Component = ({ icon, category, id, i, enabled, greyed, defaultValue = undefined, action, styleDivider }) => {
     const value = params[id] || defaultValue
 
     return (
       <>
-      <ListItem id={i} onPress={action} disabled={!enabled}>
-        <Icon name={icon} type='ionicon' color={greyed ? palette.midGrey : null} />
-        <ListItem.Content>
-          <View>
-            <ListItem.Title style={greyed ? {color: palette.midGrey} : {}}>{category}</ListItem.Title>
-            {value && <ListItem.Title style={greyed ? {color: palette.midGrey} : {}}>{value}</ListItem.Title>}
-          </View>
-        </ListItem.Content>
-        {enabled && <ListItem.Chevron />}
-      </ListItem>
-      <Divider style={styleDivider}/>
-    </>
-  )}
+        <ListItem key={`setting-option-${i}`} onPress={action} disabled={!enabled}>
+          <Icon name={icon} type='ionicon' color={greyed ? palette.midGrey : null} />
+          <ListItem.Content>
+            <View>
+              <ListItem.Title style={greyed ? { color: palette.midGrey } : {}}>{category}</ListItem.Title>
+              {value && <ListItem.Title style={greyed ? { color: palette.midGrey } : {}}>{value}</ListItem.Title>}
+            </View>
+          </ListItem.Content>
+          {enabled && <ListItem.Chevron />}
+        </ListItem>
+        <Divider style={styleDivider}/>
+      </>
+    )
+  }
 
   return (
-  <Screen preset="scroll">
-    {list.map((item, i) => <Component {...item} i={i} />)}
-    <VersionComponent />
-  </Screen>
-)}
+    <Screen preset="scroll">
+      {list.map((item, i) => <Component {...item} i={i} key={i} />)}
+      <VersionComponent />
+    </Screen>
+  )
+}

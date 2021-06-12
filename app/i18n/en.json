@@ -47,7 +47,8 @@
     "success": "Success!",
     "csvExport": "Export transactions as CSV",
     "language": "language",
-    "connectionIssue": "No connection"
+    "connectionIssue": "No connection",
+    "contactUs": "Need help? Talk to us on WhatsApp!"
   },
   "sat": {
     "one": "1 sat",
