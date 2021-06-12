@@ -12989,10 +12989,10 @@ react-native-progress@^4.0.3:
     "@react-native-community/art" "^1.1.2"
     prop-types "^15.7.2"
 
-react-native-push-notification@^6.1.3:
-  version "6.1.3"
-  resolved "https://registry.yarnpkg.com/react-native-push-notification/-/react-native-push-notification-6.1.3.tgz#e377e91fc931d541f23b3a156f3451bae5f441a2"
-  integrity sha512-qNbFCkObCXwSFQbK6hJyx1Bym1D7V4XM8iN2L6eL3GAdNLmeBTdLdx3mPbKJtuaDJ1+deniFTQ2rz6hU4ELOXA==
+react-native-push-notification@^7.3.1:
+  version "7.3.1"
+  resolved "https://registry.yarnpkg.com/react-native-push-notification/-/react-native-push-notification-7.3.1.tgz#1495feacd25169b998446dcf7b448a197ae5dca0"
+  integrity sha512-5kSKPvDU23uZRmzgKTsGhbwGNvB2tidu1VnInBHP53ZD0VEPSBl5fbpuTfHH98ED+Gp1SCcT2/e6bJWkIspKvg==
 
 react-native-qrcode-svg@^6.0.6:
   version "6.0.6"

@@ -53,11 +53,12 @@ onchain {
 }`
 
 
+// TODO: add back destination
 const LIGHTNING_FEES = gql`
 mutation lightning_fees($invoice: String, $amount: Int){
-invoice {
-getFee(invoice: $invoice, amount: $amount)
-}
+  invoice {
+    getFee(invoice: $invoice, amount: $amount)
+  }
 }`
 
 
