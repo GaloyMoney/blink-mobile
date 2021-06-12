@@ -13,6 +13,9 @@ import { resetDataStore } from "../../utils/logout"
 import { hasFullPermissions, requestPermission } from "../../utils/notifications"
 import { language_mapping } from "./language-screen"
 
+import { openWhatsApp } from "../../utils/external"
+import { WHATSAPP_CONTACT_NUMBER, WHATSAPP_DEFAULT_CONTACT_MESSAGE } from "../../constants/support"
+
 const styles = EStyleSheet.create({
   screenStyle: {
     backgroundColor: palette.lighterGrey
@@ -135,6 +138,7 @@ export const SettingsScreenJSX = (params) => {
       category: 'Contact Us on WhatsApp',
       icon: 'ios-logo-whatsapp',
       id: 'contact-us',
+      action: () => openWhatsApp(WHATSAPP_CONTACT_NUMBER, WHATSAPP_DEFAULT_CONTACT_MESSAGE),
       enabled: true,
       greyed: false,
       styleDivider: { backgroundColor: palette.lighterGrey, height: 18 },
