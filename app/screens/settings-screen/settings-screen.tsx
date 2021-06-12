@@ -23,6 +23,8 @@ import { openWhatsApp } from "../../utils/external"
 import { resetDataStore } from "../../utils/logout"
 import { hasFullPermissions, requestPermission } from "../../utils/notifications"
 
+// Types
+import type { ScreenType } from '../../types/screen'
 
 const styles = EStyleSheet.create({
   screenStyle: {
@@ -30,7 +32,7 @@ const styles = EStyleSheet.create({
   },
 })
 
-export const SettingsScreen: any = ({ navigation }) => {
+export const SettingsScreen: ScreenType = ({ navigation }) => {
   const client = useApolloClient()
 
   const { data } = useQuery(gql`
