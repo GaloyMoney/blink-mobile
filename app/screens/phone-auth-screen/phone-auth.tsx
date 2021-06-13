@@ -2,20 +2,30 @@ import * as React from "react"
 import { useEffect, useRef, useState } from "react"
 import { ActivityIndicator, Alert, KeyboardAvoidingView, Platform, ScrollView, Text, View } from "react-native"
 import { Input } from "react-native-elements"
+import { gql, useApolloClient, useLazyQuery, useMutation } from '@apollo/client'
 import EStyleSheet from "react-native-extended-stylesheet"
 import PhoneInput from "react-native-phone-input"
+import analytics from "@react-native-firebase/analytics"
+
+// Components
 import { CloseCross } from "../../components/close-cross"
 import { Screen } from "../../components/screen"
+
+// Functions
 import { translate } from "../../i18n"
+import { MAIN_QUERY } from "../../graphql/query"
+
+// Theme
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
+
+// Utils
 import { Token } from "../../utils/token"
-import BadgerPhone from "./badger-phone-01.svg"
-import { gql, useApolloClient, useLazyQuery, useMutation } from '@apollo/client';
 import { toastShow } from "../../utils/toast"
-import analytics from "@react-native-firebase/analytics"
-import { MAIN_QUERY } from "../../graphql/query"
 import { addDeviceToken } from "../../utils/notifications"
+
+// Assets
+import BadgerPhone from './badger-phone-01.svg'
 
 const REQUEST_PHONE_CODE = gql`
   mutation requestPhoneCode ($phone: String) {
