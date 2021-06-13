@@ -111,7 +111,7 @@
     "title": "Map"
   },
   "WelcomePhoneValidationScreen": {
-    "header": "To confirm your phone number, enter the code we just sent you",
+    "header": "To confirm your phone number, enter the code we just sent you at",
     "placeholder": "6 Digits Code",
     "need6Digits": "The code need to have 6 digits",
     "errorLoggingIn": "Error logging in. Did you use the right code?"
