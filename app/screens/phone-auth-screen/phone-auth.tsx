@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import * as React from "react"
 import { useEffect, useRef, useState } from "react"
 import { ActivityIndicator, Alert, KeyboardAvoidingView, Platform, ScrollView, Text, View } from "react-native"
@@ -23,6 +24,9 @@ import { palette } from "../../theme/palette"
 import { Token } from "../../utils/token"
 import { toastShow } from "../../utils/toast"
 import { addDeviceToken } from "../../utils/notifications"
+
+// Types
+import type { ScreenType } from '../../types/screen'
 
 // Assets
 import BadgerPhone from './badger-phone-01.svg'
@@ -108,15 +112,19 @@ const styles = EStyleSheet.create({
   }
 })
 
-export const WelcomePhoneInputScreen = ({ navigation }) => {
+type WelcomePhoneInputScreenProps = {
+  navigation: any,
+}
+
+export const WelcomePhoneInputScreen: ScreenType = ({ navigation }: WelcomePhoneInputScreenProps) => {
   const [requestPhoneCode, { loading }] = useMutation(REQUEST_PHONE_CODE, {
     fetchPolicy: "no-cache"
-  });
+  })
 
-  const inputRef = useRef()
+  const inputRef: any = useRef()
 
   const send = async () => {
-    console.log({initPhoneNumber: inputRef.current.getValue()})
+    console.log({ initPhoneNumber: inputRef.current.getValue() })
 
     if (!inputRef.current.isValidNumber()) {
       Alert.alert(`${inputRef.current.getValue()} ${translate("errors.invalidPhoneNumber")}`)
@@ -125,18 +133,16 @@ export const WelcomePhoneInputScreen = ({ navigation }) => {
 
     try {
       const phone = inputRef.current.getValue()
-      const { data } = await requestPhoneCode({variables: {phone}})
+      const { data } = await requestPhoneCode({ variables: { phone } })
 
       if (data.requestPhoneCode.success) {
         const screen = "welcomePhoneValidation"
-        navigation.navigate(screen, {phone})       
-
+        navigation.navigate(screen, { phone })
       } else {
         toastShow(translate("erros.generic"))
       }
-
     } catch (err) {
-      console.warn({err})
+      console.warn({ err })
       // use global Toaster?
       // setErr(err.toString())
     }
@@ -158,7 +164,7 @@ export const WelcomePhoneInputScreen = ({ navigation }) => {
             ref={inputRef}
             style={styles.phoneEntryContainer}
             textStyle={styles.textEntry}
-            initialCountry="sv" 
+            initialCountry="sv"
             textProps={{
               autoFocus: true,
               placeholder: translate("WelcomePhoneInputScreen.placeholder"),
@@ -166,27 +172,35 @@ export const WelcomePhoneInputScreen = ({ navigation }) => {
               onSubmitEditing: send,
             }}
           />
-          <ActivityIndicator animating={loading} size="large" color={color.primary} style={{marginTop: 32}}/>
+          <ActivityIndicator animating={loading} size="large" color={color.primary} style={{ marginTop: 32 }}/>
         </KeyboardAvoidingView>
       </View>
       <CloseCross color={palette.darkGrey} onPress={() => navigation.goBack()} />
     </Screen>
-)}
+  )
+}
 
-export const WelcomePhoneValidationScreenDataInjected = ({ route, navigation }) => {
+type WelcomePhoneValidationScreenDataInjectedProps = {
+  route: string,
+  navigation: any,
+}
+
+export const WelcomePhoneValidationScreenDataInjected: ScreenType = (
+  { route, navigation }: WelcomePhoneValidationScreenDataInjectedProps
+) => {
   const client = useApolloClient()
 
   const [login, { loading, error }] = useMutation(LOGIN, {
     fetchPolicy: "no-cache"
-  });
-    
+  })
+
   const [reloadMainQuery] = useLazyQuery(MAIN_QUERY, {
     fetchPolicy: "network-only"
   })
 
-  const onSuccess = async ({token}) => {
+  const onSuccess = async ({ token }) => {
     analytics().logLogin({ method: "phone" })
-    await new Token().save({token})
+    await new Token().save({ token })
 
     // TODO refactor from mst-gql to apollo client
     // sync the earned quizzes
@@ -194,32 +208,42 @@ export const WelcomePhoneValidationScreenDataInjected = ({ route, navigation }) 
     // yield self.mutateEarnCompleted({ids})
 
     // console.log("succesfully update earns id")
-    
+
     // self.transactions.clear()
     // self.wallets.get("BTC").transactions.clear()
-    
+
     // console.log("cleared local transactions")
 
-    reloadMainQuery({ variables: { logged: new Token().has()} })
+    reloadMainQuery({ variables: { logged: new Token().has() } })
 
     console.log("sending device token for notifications")
     addDeviceToken(client)
   }
 
-  return <WelcomePhoneValidationScreen 
-    onSuccess={onSuccess} 
-    route={route}
-    navigation={navigation}
-    login={login}  
-    loading={loading}  
-    error={error}  
-  />
+  return (
+    <WelcomePhoneValidationScreen
+      onSuccess={onSuccess}
+      route={route}
+      navigation={navigation}
+      login={login}
+      loading={loading}
+      error={error}
+    />
+  )
 }
 
+type WelcomePhoneValidationScreenProps = {
+  login: (params) => any,
+  onSuccess: (params) => void,
+  navigation: any,
+  route: Record<string, any>,
+  loading: boolean,
+  error: string,
+}
 
-export const WelcomePhoneValidationScreen = ({ 
+export const WelcomePhoneValidationScreen: ScreenType = ({
   onSuccess, route, navigation, login, loading, error
-  }) => {
+}: WelcomePhoneValidationScreenProps) => {
   // FIXME see what to do with store and storybook
   const [code, setCode] = useState("")
 
@@ -236,32 +260,31 @@ export const WelcomePhoneValidationScreen = ({
       const { data } = await login({
         variables: { phone, code: Number(code) },
       })
-      
+
       // TODO: validate token
       const token = data?.login?.token
 
       if (token) {
-        await onSuccess({token})
+        await onSuccess({ token })
         navigation.navigate("MoveMoney")
       } else {
         toastShow(translate("WelcomePhoneValidationScreen.errorLoggingIn"))
       }
-
     } catch (err) {
-      console.warn({err})
+      console.warn({ err })
       toastShow(`${err}`)
     }
   }
 
   useEffect(() => {
-    if(code.length === 6) {
+    if (code.length === 6) {
       send()
     }
   }, [code])
 
   return (
     <Screen backgroundColor={palette.lighterGrey}>
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
         <ScrollView>
           <View style={{ flex: 1, minHeight: 32 }} />
           <BadgerPhone style={styles.image} />

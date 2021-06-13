@@ -1,1 +1,1 @@
-export type ScreenType = (navigation: any) => void
+export type ScreenType = (navigation: any) => any
