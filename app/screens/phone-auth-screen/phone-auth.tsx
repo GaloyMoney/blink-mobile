@@ -255,7 +255,7 @@ export const WelcomePhoneValidationScreen = ({
         <ScrollView>
           <View style={{ flex: 1, minHeight: 32 }} />
           <BadgerPhone style={styles.image} />
-          <Text style={styles.text}>{translate("WelcomePhoneValidationScreen.header")}</Text>
+          <Text style={styles.text}>{translate("WelcomePhoneValidationScreen.header", { phone })}</Text>
           <KeyboardAvoidingView
             keyboardVerticalOffset={-110}
             behavior={Platform.OS === "ios" ? "padding" : undefined}
