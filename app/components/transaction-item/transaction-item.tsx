@@ -27,5 +27,16 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({tx, navigation,
     rightTitle={<Text style={{color: colorFromType(tx.isReceive)}}>{tx.text}</Text>}
     onPress={() => navigation.navigate("transactionDetail", {tx})}
     subtitle={subtitle ? tx.date_nice_print : undefined}
-  />)
+  >
+    <IconTransaction
+      isReceive={tx.isReceive}
+      size={24}
+      pending={tx.pending}
+    />
+    <ListItem.Content>
+      <ListItem.Title>{tx.description}</ListItem.Title>
+      <ListItem.Subtitle>{subtitle ? tx.date_nice_print : undefined}</ListItem.Subtitle>
+    </ListItem.Content>
+    <Text style={{color: colorFromType(tx.isReceive)}}>{tx.text}</Text>
+  </ListItem>)
 }
