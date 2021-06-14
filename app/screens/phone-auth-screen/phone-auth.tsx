@@ -121,7 +121,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({ navigation }: WelcomePhone
     fetchPolicy: "no-cache"
   })
 
-  const inputRef: any = useRef()
+  const inputRef = useRef<PhoneInput | null>()
 
   const send = async () => {
     console.log({ initPhoneNumber: inputRef.current.getValue() })
