@@ -60,7 +60,7 @@ export const LargeButton = ({ style, icon, title, onPress, loading, ...props}: I
     >
       <Avatar>{icon}</Avatar>
       <ListItem.Content>
-        <ListItem.Title>{title}</ListItem.Title>
+        <ListItem.Title style={styles.accountViewTitle}>{title}</ListItem.Title>
       </ListItem.Content>
     </ListItem>
   )
