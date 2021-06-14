@@ -29,7 +29,6 @@ const styles = EStyleSheet.create({
 
   accountViewTitle: {
     // fontFamily: "DMSans",
-    backgroundColor: palette.blue,
     color: palette.darkGrey,
     fontWeight: "bold",
     fontSize: "18rem",
