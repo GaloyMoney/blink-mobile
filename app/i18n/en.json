@@ -50,7 +50,8 @@
     "csvExport": "Export transactions as CSV",
     "language": "language",
     "connectionIssue": "No connection",
-    "contactUs": "Need help? Talk to us on WhatsApp!"
+    "contactUs": "Need help? Talk to us on WhatsApp!",
+    "search": "Search"
   },
   "sat": {
     "one": "1 sat",
@@ -590,7 +591,9 @@
     "updateAvailable": "An update is available.\nTab to update now"
   },
   "ContactsScreen": {
-    "title": "Contacts"
+    "title": "Contacts",
+    "noContactsYet": "No contacts yet.\n\nSend or receive a payment with a username. Usernames will automatically be added here.",
+    "noMatchingContacts": "No contacts matching your search were found."
   },
   "SendBitcoinScreen": {
     "note": "optional note",
