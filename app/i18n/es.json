@@ -217,7 +217,7 @@
   },
   "WelcomePhoneValidationScreen": {
     "errorLoggingIn": "Error al iniciar sesión. ¿Usó el código correcto?",
-    "header": "Para confirmar su número de teléfono, ingrese el código que le acabamos de enviar",
+    "header": "Para confirmar su número de teléfono, ingrese el código que le acabamos de enviar en %{phone}",
     "need6Digits": "El  código debe tener 6 didgits",
     "placeholder": "Código de 6 dígitos"
   }

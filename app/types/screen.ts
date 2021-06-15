@@ -1,1 +1,1 @@
-export type ScreenType = (navigation: any) => void
+export type ScreenType = (params: Record<string, any>) => JSX.Element
