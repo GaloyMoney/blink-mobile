@@ -118,6 +118,7 @@
   },
   "EarnScreen": {
     "title": "Earn",
+    "youEarned": "You Earned",
     "earnSats": {
       "one": "Earn 1 sat",
       "other": "Earn {{formatted_number}} sats"
@@ -129,9 +130,11 @@
     "satAccumulated": "Sats accumulated",
     "getRewardNow": "Answer quiz",
     "quizzComplete": "Quiz completed and {{amount}} sats earned",
+    "sectionsCompleted": "You've completed",
     "keepDigging": "Keep digging!",
     "reviewQuizz": "Review quiz",
     "phoneNumberNeeded": "Phone number required",
+    "finishText": "That's all for now, we'll let you know when there's more to unearth",
     "earns": [
       {
         "meta": {
