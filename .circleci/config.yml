@@ -53,10 +53,11 @@ jobs:
   build_android:
     docker:
       - image: circleci/android:api-29
+    resource_class: large
     environment:
       TERM: dumb
-      _JAVA_OPTIONS: "-Xmx2048m -XX:+UnlockExperimentalVMOptions"
-      GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m"'
+      JAVA_OPTS: -Xms512m -Xmx2g
+      GRADLE_OPTS: -Xmx3g -Dorg.gradle.daemon=false -Dorg.gradle.jvmargs="-Xmx2g -XX:+HeapDumpOnOutOfMemoryError"
     working_directory: ~/galoy-mobile
     shell: /bin/bash --login -o pipefail
     steps:
@@ -90,6 +91,8 @@ jobs:
       
       - run: yarn install
       - run: yarn jest
+      - run: echo $JAVA_OPTS
+      - run: echo $GRADLE_OPTS
       - run: cd android && fastlane android beta
       
       # - gke-auth
