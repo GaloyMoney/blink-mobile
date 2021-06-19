@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
 
   textStyleBox: {
     color: palette.white,
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
     marginHorizontal: 10,
   },
@@ -159,7 +159,7 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> =
 
     return <>
       <Text style={styles.finishText}>
-        That's all for now, we'll let you know when there's more to unearth
+        {translate("EarnScreen.finishText")}
       </Text>
       {/* TODO FIXME for even section # */}
     {length % 2 ? 

@@ -55,7 +55,7 @@ export const SectionCompleted = ({ navigation, route }) => {
       >
         <View style={{ flex: .5, minHeight: 30 }}></View>
         <BadgerShovelBitcoin />
-        <Text style={styles.headerSection}>You've completed</Text>
+        <Text style={styles.headerSection}>{translate("EarnScreen.sectionsCompleted")}</Text>
         <Text style={styles.titleSection}>{sectionTitle}</Text>
         <Button title={translate("EarnScreen.keepDigging")} type="solid" 
           buttonStyle={styles.buttonStyle}
