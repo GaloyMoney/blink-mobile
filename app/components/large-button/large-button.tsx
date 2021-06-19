@@ -1,7 +1,7 @@
 import * as React from "react"
 import ContentLoader, { Rect } from "react-content-loader/native"
 import { Text } from "react-native"
-import { ListItem } from "react-native-elements"
+import { ListItem, Avatar } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { palette } from "../../theme/palette"
 
@@ -57,6 +57,11 @@ export const LargeButton = ({ style, icon, title, onPress, loading, ...props}: I
       activeOpacity={0.7}
       leftAvatar={icon}
       {...props}
-    />
+    >
+      <Avatar>{icon}</Avatar>
+      <ListItem.Content>
+        <ListItem.Title style={styles.accountViewTitle}>{title}</ListItem.Title>
+      </ListItem.Content>
+    </ListItem>
   )
 }
