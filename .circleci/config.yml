@@ -55,8 +55,8 @@ jobs:
       - image: circleci/android:api-29
     environment:
       TERM: dumb
-      JAVA_OPTS: '-Xms512m -Xmx2g'
-      GRADLE_OPTS: '-Xmx3g -Dorg.gradle.daemon=false -Dorg.gradle.jvmargs="-Xmx2g -XX:+HeapDumpOnOutOfMemoryError"'
+      JAVA_OPTS: -Xms512m -Xmx2g
+      GRADLE_OPTS: -Xmx3g -Dorg.gradle.daemon=false -Dorg.gradle.jvmargs="-Xmx2g -XX:+HeapDumpOnOutOfMemoryError"
     working_directory: ~/galoy-mobile
     shell: /bin/bash --login -o pipefail
     steps:
