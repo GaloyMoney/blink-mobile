@@ -53,6 +53,7 @@ jobs:
   build_android:
     docker:
       - image: circleci/android:api-29
+    resource_class: large
     environment:
       TERM: dumb
       JAVA_OPTS: -Xms512m -Xmx2g
@@ -90,6 +91,8 @@ jobs:
       
       - run: yarn install
       - run: yarn jest
+      - run: echo $JAVA_OPTS
+      - run: echo $GRADLE_OPTS
       - run: cd android && fastlane android beta
       
       # - gke-auth

@@ -28,7 +28,7 @@ platform :android do
       task: "clean assemble",
       build_type: "Release",
       print_command: false,
-      flags: "--stacktrace --info --no-daemon"
+      flags: "--no-daemon --max-workers=8 --stacktrace --info"
     )
     # gradle(task: "clean assembleRelease", print_command: false)
 
