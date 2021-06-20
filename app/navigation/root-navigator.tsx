@@ -21,6 +21,7 @@ import {
   walletIsActive,
 } from "../graphql/query"
 import { translate } from "../i18n"
+import { AuthenticationScreen, BiometryCheckScreen } from "../screens/authentication-screen"
 import { ContactsDetailScreen } from "../screens/contacts-detail-screen"
 import { ContactsScreen } from "../screens/contacts-screen"
 import { DebugScreen } from "../screens/debug-screen"
@@ -260,7 +261,7 @@ export const RootStack = () => {
   return (
     <RootNavigator.Navigator
       screenOptions={{ gestureEnabled: false }}
-      initialRouteName={token.has() ? "Primary" : "getStarted"}
+      initialRouteName={token.has() ? "biometryCheck" : "getStarted"}
     >
       <RootNavigator.Screen
         name="getStarted"
@@ -275,6 +276,18 @@ export const RootStack = () => {
         name="welcomeFirst"
         component={WelcomeFirstScreen}
         options={{ headerShown: false }}
+      />
+      <RootNavigator.Screen
+        name="biometryCheck"
+        component={BiometryCheckScreen}
+        options={{ headerShown: false,
+          animationEnabled: false, }}
+      />
+      <RootNavigator.Screen
+        name="authentication"
+        component={AuthenticationScreen}
+        options={{ headerShown: false,
+          animationEnabled: false, }}
       />
       <RootNavigator.Screen
         name="Primary"

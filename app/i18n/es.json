@@ -54,6 +54,7 @@
     "lastName": "Apellido",
     "later": "Más tarde",
     "logout": "cerrar sesion",
+    "loggedOut": "Usted ha sido desconectado.",
     "next": "Próximo",
     "note": "Nota ",
     "notification": "Notificación",
@@ -513,6 +514,10 @@
   "GetStartedScreen": {
     "getStarted": "Empezar",
     "headline": "El banco con dinero sólido"
+  },
+  "AuthenticationScreen": {
+    "unlock": "Desbloquear",
+    "authenticationDescription": "Autentica para continuar"
   },
   "MapScreen": {
     "title": "mapa"

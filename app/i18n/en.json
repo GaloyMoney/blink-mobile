@@ -12,6 +12,7 @@
     "lastName": "Last Name",
     "username": "Username",
     "logout": "Log Out",
+    "loggedOut": "You have been logged out.",
     "email": "Email",
     "sats": "sats",
     "to": "To",
@@ -96,6 +97,10 @@
   "GetStartedScreen": {
     "headline": "Wallet powered by Galoy",
     "getStarted": "Get Started"
+  },
+  "AuthenticationScreen": {
+    "unlock": "Unlock",
+    "authenticationDescription": "Authenticate to continue"
   },
   "WelcomeFirstScreen": {
     "care": "Why should I care?",
