@@ -44,9 +44,9 @@ export const BiometryCheckScreen: ScreenType = ({ navigation }: Props) => {
     const biometryIsAvailable = await isSensorAvailable()
 
     if (biometryIsAvailable) {
-      navigation.navigate("authentication")
+      navigation.replace("authentication")
     } else {
-      navigation.navigate("Primary")
+      navigation.replace("Primary")
     }
   }
 
