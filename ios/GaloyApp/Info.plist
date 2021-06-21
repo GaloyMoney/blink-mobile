@@ -95,7 +95,7 @@
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Import a screenshot with a QR code</string>
 	<key>NSFaceIDUsageDescription</key>
-	<string>$(PRODUCT_NAME) requires FaceID access to allows you quick and secure access.</string>
+	<string>$(PRODUCT_NAME) requires FaceID access for quick and secure authentication.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>
