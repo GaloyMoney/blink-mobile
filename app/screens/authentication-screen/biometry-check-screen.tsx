@@ -36,18 +36,18 @@ type Props = {
 
 export const BiometryCheckScreen: ScreenType = ({ navigation }: Props) => {
 
-  React.useEffect(() => {
-    checkIfBiometryIsAvailable()
-  })
+  React.useEffect(() => isSensorAvailable(handleBiometryAvailabilitySuccess, handleBiometryAvailabilityFailure))
 
-  const checkIfBiometryIsAvailable = async () => {
-    const biometryIsAvailable = await isSensorAvailable()
-
-    if (biometryIsAvailable) {
+  const handleBiometryAvailabilitySuccess = (isBiometryAvailable: Boolean) => {
+    if (isBiometryAvailable) {
       navigation.replace("authentication")
     } else {
       navigation.replace("Primary")
     }
+  }
+
+  const handleBiometryAvailabilityFailure = () => {
+    navigation.replace("Primary")
   }
 
   return (

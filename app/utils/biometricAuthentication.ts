@@ -1,10 +1,13 @@
 import { translate } from "../i18n"
 import FingerprintScanner from 'react-native-fingerprint-scanner'
 
-
-export const isSensorAvailable = async () => {
-  const telemetryType = await FingerprintScanner.isSensorAvailable()
-  return telemetryType !== null
+export const isSensorAvailable = (handleSuccess, handleFailure) => {
+  FingerprintScanner
+    .isSensorAvailable()
+    .then(biometryType => handleSuccess(biometryType !== null))
+    .catch((error) => {
+      handleFailure()
+    })
 }
 
 export const authenticate = async (handleSuccess, handleFailure) => {
@@ -15,11 +18,12 @@ export const authenticate = async (handleSuccess, handleFailure) => {
       fallbackEnabled: true
     })
     .then(() => {
-      FingerprintScanner.release()
       handleSuccess()
     })
     .catch((error) => {
-      FingerprintScanner.release()
       handleFailure()
-    });
+    })
+    .finally(() => {
+      FingerprintScanner.release()
+    })
 }

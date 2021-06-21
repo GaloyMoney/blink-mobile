@@ -234,7 +234,6 @@ export const MoveMoneyScreen = (
     refetch, amount, amountOtherCurrency, isUpdateAvailable }) => {
   
   useEffect(() => {
-    StatusBar.setTranslucent(false)
     StatusBar.setBarStyle("dark-content")
     StatusBar.setBackgroundColor(palette.lighterGrey)
   })
