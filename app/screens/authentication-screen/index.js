@@ -1,2 +1,2 @@
 export * from "./authentication-screen"
-export * from "./biometry-check-screen"
+export * from "./authentication-check-screen"

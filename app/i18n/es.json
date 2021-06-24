@@ -61,6 +61,7 @@
     "ok": "OK",
     "phoneNumber": "Número de teléfono",
     "sats": "Satoshis",
+    "security": "Seguridad",
     "send": "Enviar",
     "setAnAmount": "Establecer una cantidad",
     "share": "Compartir",
@@ -517,7 +518,18 @@
   },
   "AuthenticationScreen": {
     "unlock": "Desbloquear",
-    "authenticationDescription": "Autentica para continuar"
+    "authenticationDescription": "Autentica para continuar",
+    "setUp": "Configurar la Autenticación Biométrica",
+    "setUpAuthenticationDescription": "Utilice datos biométricos para autenticarse",
+    "skip": "Saltar",
+    "usePin": "Usar PIN"
+  },
+  "PinScreen": {
+    "setPin": "Establezca su código PIN",
+    "verifyPin": "Verifica tu código PIN",
+    "attemptsRemaining": "PIN incorrecto. %{attemptsRemaining} intentos restantes.",
+    "oneAttemptRemaining": "PIN incorrecto. Queda 1 intento.",
+    "tooManyAttempts": "Demasiados intentos fallidos. Saliendo de tu cuenta."
   },
   "MapScreen": {
     "title": "mapa"
@@ -604,6 +616,15 @@
     "3CaractersMinimum": "al menos de 3 letras son necesarias",
     "confirmTitle": "establece tu nombre de usario",
     "usernameToUse": "Que nombre de usuario quieres usar?"
+  },
+  "SecurityScreen": {
+    "biometricTitle": "Biométrica",
+    "biometricSubtitle": "Habilitar la autenticación biométrica",
+    "biometricDescription": "Desbloqueo con huella dactilar o reconocimiento facial.",
+    "pinTitle": "Código PIN",
+    "pinSubtitle": "Habilitar PIN",
+    "pinDescription": "El PIN se utiliza como método de autenticación de respaldo para la autenticación biométrica.",
+    "setPin": "Establecer PIN"
   },
   "WelcomeFirstScreen": {
     "bank": "Bitcoin está diseñado para permitirle almacenar, enviar y recibir dinero, sin depender de un banco o tarjeta de crédito.",

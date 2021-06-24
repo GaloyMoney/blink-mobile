@@ -32,6 +32,7 @@ import { palette } from "../../theme/palette"
 import { Token } from "../../utils/token"
 import { toastShow } from "../../utils/toast"
 import { addDeviceToken } from "../../utils/notifications"
+import { isSensorAvailable } from "../../utils/biometricAuthentication"
 
 // Types
 import type { ScreenType } from "../../types/screen"
@@ -260,7 +261,10 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
 
       if (token) {
         await onSuccess({ token })
-        navigation.navigate("MoveMoney")
+        isSensorAvailable(
+          handleBiometryAvailabilitySuccess,
+          handleBiometryAvailabilityFailure,
+        )
       } else {
         toastShow(translate("WelcomePhoneValidationScreen.errorLoggingIn"))
       }
@@ -268,6 +272,18 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
       console.warn({ err })
       toastShow(`${err}`)
     }
+  }
+
+  const handleBiometryAvailabilitySuccess = (mIsBiometryAvailable: Boolean) => {
+    if (mIsBiometryAvailable) {
+      navigation.replace("authentication", { screenPurpose: "turnOnAuthentication" })
+    } else {
+      navigation.navigate("moveMoney")
+    }
+  }
+
+  const handleBiometryAvailabilityFailure = () => {
+    navigation.navigate("moveMoney")
   }
 
   useEffect(() => {

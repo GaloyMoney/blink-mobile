@@ -2,19 +2,16 @@ import { useApolloClient, useQuery } from "@apollo/client"
 import messaging from "@react-native-firebase/messaging"
 import * as React from "react"
 import { useEffect, useState } from "react"
-<<<<<<< HEAD
 import {
   AppState,
   FlatList,
   Linking,
   Pressable,
   RefreshControl,
+  StatusBar,
   Text,
   View,
 } from "react-native"
-=======
-import { AppState, FlatList, Linking, Pressable, RefreshControl, StatusBar, Text, View } from "react-native"
->>>>>>> biometric authentication
 import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
@@ -216,7 +213,6 @@ export const MoveMoneyScreenDataInjected = ({
   )
 }
 
-<<<<<<< HEAD
 type MoveMoneyScreenProps = {
   walletIsActive: boolean
   navigation: Record<string, any>
@@ -228,16 +224,6 @@ type MoveMoneyScreenProps = {
   amountOtherCurrency: number
   isUpdateAvailable: boolean
 }
-=======
-export const MoveMoneyScreen = (
-  ({ walletIsActive, navigation, loading, error, transactions,
-    refetch, amount, amountOtherCurrency, isUpdateAvailable }) => {
-  
-  useEffect(() => {
-    StatusBar.setBarStyle("dark-content")
-    StatusBar.setBackgroundColor(palette.lighterGrey)
-  })
->>>>>>> biometric authentication
 
 export const MoveMoneyScreen = ({
   walletIsActive,

@@ -4,6 +4,7 @@ import Share from "react-native-share"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { Divider, Icon, ListItem } from "react-native-elements"
 import { gql, useApolloClient, useLazyQuery, useQuery } from "@apollo/client"
+import RNSecureKeyStore from "react-native-secure-key-store"
 
 // Components
 import { Screen } from "../../components/screen"
@@ -60,6 +61,57 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
     `,
     { fetchPolicy: "cache-only" },
   )
+
+  const securityAction = () => {
+    var isBiometricsEnabled = null
+    var isPinEnabled = null
+
+    RNSecureKeyStore.get("isBiometricsEnabled").then(
+      (res) => {
+        if (isPinEnabled !== null) {
+          navigation.navigate("security", {
+            mIsBiometricsEnabled: true,
+            mIsPinEnabled: isPinEnabled,
+          })
+        } else {
+          isBiometricsEnabled = true
+        }
+      },
+      (err) => {
+        if (isPinEnabled !== null) {
+          navigation.navigate("security", {
+            mIsBiometricsEnabled: false,
+            mIsPinEnabled: isPinEnabled,
+          })
+        } else {
+          isBiometricsEnabled = false
+        }
+      },
+    )
+
+    RNSecureKeyStore.get("PIN").then(
+      (res) => {
+        if (isBiometricsEnabled !== null) {
+          navigation.navigate("security", {
+            mIsBiometricsEnabled: isBiometricsEnabled,
+            mIsPinEnabled: true,
+          })
+        } else {
+          isPinEnabled = true
+        }
+      },
+      (err) => {
+        if (isBiometricsEnabled !== null) {
+          navigation.navigate("security", {
+            mIsBiometricsEnabled: isBiometricsEnabled,
+            mIsPinEnabled: false,
+          })
+        } else {
+          isPinEnabled = false
+        }
+      },
+    )
+  }
 
   const onGetCsvCallback = async (data) => {
     console.log({ data }, "result getCsv")
@@ -120,6 +172,7 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
       }
       notificationsEnabled={notificationsEnabled}
       csvAction={getCsv}
+      securityAction={securityAction}
     />
   )
 }
@@ -132,6 +185,7 @@ export const SettingsScreenJSX = (params) => {
     username,
     notificationsEnabled,
     csvAction,
+    securityAction,
     resetDataStore,
   } = params
 
@@ -168,6 +222,14 @@ export const SettingsScreenJSX = (params) => {
       id: "notifications",
       action: () => requestPermission(client),
       enabled: walletIsActive && notificationsEnabled,
+      greyed: !walletIsActive,
+    },
+    {
+      category: translate("common.security"),
+      icon: "lock-closed-outline",
+      id: "security",
+      action: () => securityAction(),
+      enabled: walletIsActive,
       greyed: !walletIsActive,
     },
     {
