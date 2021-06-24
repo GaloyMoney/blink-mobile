@@ -217,7 +217,7 @@ export const PinScreen = ({ route, navigation }: Props) => {
 
   const returnToSetPin = () => {
     setPreviousPIN("")
-    setHelperText(translate("PinScreen.setPin"))
+    setHelperText(translate("PinScreen.setPinFailedMatch"))
     setEnteredPIN("")
   }
 

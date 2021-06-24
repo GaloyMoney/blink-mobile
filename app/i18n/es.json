@@ -526,6 +526,7 @@
   },
   "PinScreen": {
     "setPin": "Establezca su código PIN",
+    "setPinFailedMatch": "Los pines no coinciden: establezca su código PIN",
     "verifyPin": "Verifica tu código PIN",
     "attemptsRemaining": "PIN incorrecto. %{attemptsRemaining} intentos restantes.",
     "oneAttemptRemaining": "PIN incorrecto. Queda 1 intento.",

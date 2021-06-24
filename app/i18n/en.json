@@ -118,6 +118,7 @@
   },
   "PinScreen": {
     "setPin": "Set your PIN code",
+    "setPinFailedMatch": "Pins didn't match - Set your PIN code",
     "verifyPin": "Verify your PIN code",
     "attemptsRemaining": "Incorrect PIN. %{attemptsRemaining} attempts remaining.",
     "oneAttemptRemaining": "Incorrect PIN. 1 attempt remaining.",
