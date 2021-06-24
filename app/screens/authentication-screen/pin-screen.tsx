@@ -325,26 +325,20 @@ export const PinScreen = ({ route, navigation }: Props) => {
           </View>
         </View>
         <View style={styles.pinPadRow}>
-          <View style={styles.pinPadButtonContainer} />
-          <View style={styles.pinPadButtonContainer}>
-            <Button
-              buttonStyle={styles.pinPadButton}
-              titleStyle={styles.pinPadButtonTitle}
-              title="0"
-              onPress={() => addDigit("0")}
-            />
-          </View>
-          <View style={styles.pinPadButtonContainer}>
-            {/* <Icon.Button
-              name="delete"
-              size={30}
-              color="white" /> */}
-            <Button
-              buttonStyle={styles.pinPadButton}
-              icon={<Icon style={styles.pinPadButtonIcon} name="delete" />}
-              onPress={() => setEnteredPIN(enteredPIN.slice(0, -1))}
-            />
-          </View>
+        <View style={styles.pinPadButtonContainer}/ >
+        <View style={styles.pinPadButtonContainer}>
+          <Button buttonStyle={styles.pinPadButton} titleStyle={styles.pinPadButtonTitle} title="0" onPress={() => addDigit("0")} />
+        </View>
+        <View style={styles.pinPadButtonContainer}>
+          <Button 
+            buttonStyle={styles.pinPadButton}
+            icon={
+              <Icon
+                style={styles.pinPadButtonIcon}
+                name="delete" />
+            }
+            onPress={() => setEnteredPIN(enteredPIN.slice(0, -1))}
+          />
         </View>
       </View>
       <View style={styles.bottomSpacer} />

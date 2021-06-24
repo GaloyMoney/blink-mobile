@@ -12,9 +12,7 @@ import { palette } from "../../theme/palette"
 import { translate } from "../../i18n"
 import { authenticate } from "../../utils/biometricAuthentication"
 import { resetDataStore } from "../../utils/logout"
-
-// Types
-import type { ScreenType } from "../../types/screen"
+import type { ScreenType } from '../../types/screen'
 
 const BitcoinBeachLogo = require("../get-started-screen/bitcoinBeach3.png")
 
