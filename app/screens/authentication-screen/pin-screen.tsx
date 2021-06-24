@@ -214,131 +214,65 @@ export const PinScreen = ({ route, navigation }: Props) => {
     setEnteredPIN("")
   }
 
-  const authenticatePINCode = () => {}
+  const circleComponentForDigit = (digit: Number) => {
+    return (
+      <View style={styles.circleContainer}>
+        <View style={enteredPIN.length > digit ? styles.filledCircle : styles.emptyCircle} />
+      </View>
+    )
+  }
+
+  const buttonComponentForDigit = (digit: string) => {
+    return (
+      <View style={styles.pinPadButtonContainer}>
+        <Button buttonStyle={styles.pinPadButton} titleStyle={styles.pinPadButtonTitle} title={digit} onPress={() => addDigit(digit)} />
+      </View>
+    )
+  }
 
   return (
     <Screen style={styles.container} backgroundColor={palette.lightBlue}>
       <StatusBar backgroundColor={palette.lightBlue} barStyle="light-content" />
       <View style={styles.topSpacer} />
       <View style={styles.circles}>
-        <View style={styles.circleContainer}>
-          <View
-            style={enteredPIN.length > 0 ? styles.filledCircle : styles.emptyCircle}
-          />
-        </View>
-        <View style={styles.circleContainer}>
-          <View
-            style={enteredPIN.length > 1 ? styles.filledCircle : styles.emptyCircle}
-          />
-        </View>
-        <View style={styles.circleContainer}>
-          <View
-            style={enteredPIN.length > 2 ? styles.filledCircle : styles.emptyCircle}
-          />
-        </View>
-        <View style={styles.circleContainer}>
-          <View
-            style={enteredPIN.length > 3 ? styles.filledCircle : styles.emptyCircle}
-          />
-        </View>
+        { circleComponentForDigit(0) }
+        { circleComponentForDigit(1) }
+        { circleComponentForDigit(2) }
+        { circleComponentForDigit(3) }
       </View>
       <View style={styles.helperTextContainer}>
         <Text style={styles.helperText}>{helperText}</Text>
       </View>
       <View style={styles.pinPad}>
         <View style={styles.pinPadRow}>
-          <View style={styles.pinPadButtonContainer}>
-            <Button
-              buttonStyle={styles.pinPadButton}
-              titleStyle={styles.pinPadButtonTitle}
-              title="1"
-              onPress={() => addDigit("1")}
-            />
-          </View>
-          <View style={styles.pinPadButtonContainer}>
-            <Button
-              buttonStyle={styles.pinPadButton}
-              titleStyle={styles.pinPadButtonTitle}
-              title="2"
-              onPress={() => addDigit("2")}
-            />
-          </View>
-          <View style={styles.pinPadButtonContainer}>
-            <Button
-              buttonStyle={styles.pinPadButton}
-              titleStyle={styles.pinPadButtonTitle}
-              title="3"
-              onPress={() => addDigit("3")}
-            />
-          </View>
+          { buttonComponentForDigit("1") }
+          { buttonComponentForDigit("2") }
+          { buttonComponentForDigit("3") }
         </View>
         <View style={styles.pinPadRow}>
-          <View style={styles.pinPadButtonContainer}>
-            <Button
-              buttonStyle={styles.pinPadButton}
-              titleStyle={styles.pinPadButtonTitle}
-              title="4"
-              onPress={() => addDigit("4")}
-            />
-          </View>
-          <View style={styles.pinPadButtonContainer}>
-            <Button
-              buttonStyle={styles.pinPadButton}
-              titleStyle={styles.pinPadButtonTitle}
-              title="5"
-              onPress={() => addDigit("5")}
-            />
-          </View>
-          <View style={styles.pinPadButtonContainer}>
-            <Button
-              buttonStyle={styles.pinPadButton}
-              titleStyle={styles.pinPadButtonTitle}
-              title="6"
-              onPress={() => addDigit("6")}
-            />
-          </View>
+          { buttonComponentForDigit("4") }
+          { buttonComponentForDigit("5") }
+          { buttonComponentForDigit("6") }
         </View>
         <View style={styles.pinPadRow}>
-          <View style={styles.pinPadButtonContainer}>
-            <Button
-              buttonStyle={styles.pinPadButton}
-              titleStyle={styles.pinPadButtonTitle}
-              title="7"
-              onPress={() => addDigit("7")}
-            />
-          </View>
-          <View style={styles.pinPadButtonContainer}>
-            <Button
-              buttonStyle={styles.pinPadButton}
-              titleStyle={styles.pinPadButtonTitle}
-              title="8"
-              onPress={() => addDigit("8")}
-            />
-          </View>
-          <View style={styles.pinPadButtonContainer}>
-            <Button
-              buttonStyle={styles.pinPadButton}
-              titleStyle={styles.pinPadButtonTitle}
-              title="9"
-              onPress={() => addDigit("9")}
-            />
-          </View>
+          { buttonComponentForDigit("7") }
+          { buttonComponentForDigit("8") }
+          { buttonComponentForDigit("9") }
         </View>
         <View style={styles.pinPadRow}>
-        <View style={styles.pinPadButtonContainer}/ >
-        <View style={styles.pinPadButtonContainer}>
-          <Button buttonStyle={styles.pinPadButton} titleStyle={styles.pinPadButtonTitle} title="0" onPress={() => addDigit("0")} />
-        </View>
-        <View style={styles.pinPadButtonContainer}>
-          <Button 
-            buttonStyle={styles.pinPadButton}
-            icon={
-              <Icon
-                style={styles.pinPadButtonIcon}
-                name="delete" />
-            }
-            onPress={() => setEnteredPIN(enteredPIN.slice(0, -1))}
-          />
+          <View style={styles.pinPadButtonContainer} />
+          { buttonComponentForDigit("0") }
+          <View style={styles.pinPadButtonContainer}>
+            <Button 
+              buttonStyle={styles.pinPadButton}
+              icon={
+                <Icon
+                  style={styles.pinPadButtonIcon}
+                  name="delete" />
+              }
+              onPress={() => setEnteredPIN(enteredPIN.slice(0, -1))}
+            />
+          </View>
         </View>
       </View>
       <View style={styles.bottomSpacer} />
