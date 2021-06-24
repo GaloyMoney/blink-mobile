@@ -7,17 +7,10 @@ import Icon from "react-native-vector-icons/Feather"
 import { useApolloClient } from "@apollo/client"
 import RNSecureKeyStore, { ACCESSIBLE } from "react-native-secure-key-store"
 
-// Components
 import { Screen } from "../../components/screen"
-
-// Constants
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-
-// Functions
 import { translate } from "../../i18n"
-
-// Utils
 import { resetDataStore } from "../../utils/logout"
 
 const styles = EStyleSheet.create({

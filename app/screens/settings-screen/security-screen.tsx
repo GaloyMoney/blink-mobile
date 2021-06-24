@@ -6,21 +6,12 @@ import { Button, Switch } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import RNSecureKeyStore, { ACCESSIBLE } from "react-native-secure-key-store"
 
-// Components
 import { Screen } from "../../components/screen"
-
-// Constants
 import { palette } from "../../theme/palette"
-
-// Functions
 import { translate } from "../../i18n"
-
-// Utils
 import { authenticate, isSensorAvailable } from "../../utils/biometricAuthentication"
 import { toastShow } from "../../utils/toast"
-
-// Types
-import type { ScreenType } from "../../types/screen"
+import type { ScreenType } from '../../types/screen'
 
 const styles = EStyleSheet.create({
   container: {

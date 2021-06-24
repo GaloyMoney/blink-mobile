@@ -5,17 +5,10 @@ import { Image } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import RNSecureKeyStore from "react-native-secure-key-store"
 
-// Components
 import { Screen } from "../../components/screen"
-
-// Constants
 import { palette } from "../../theme/palette"
-
-// Utils
 import { isSensorAvailable } from "../../utils/biometricAuthentication"
-
-// Types
-import type { ScreenType } from "../../types/screen"
+import type { ScreenType } from '../../types/screen'
 
 const BitcoinBeachLogo = require("../get-started-screen/bitcoinBeach3.png")
 
