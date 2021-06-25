@@ -1,14 +1,13 @@
-import { storiesOf } from "@storybook/react-native";
-import * as React from "react";
-import { Story, StoryScreen, UseCase } from "../../../storybook/views";
-import { withKnobs } from "@storybook/addon-knobs";
-import { WelcomePhoneValidationScreen, WelcomePhoneInputScreen } from "./phone-auth";
-
+import { storiesOf } from "@storybook/react-native"
+import * as React from "react"
+import { withKnobs } from "@storybook/addon-knobs"
+import { Story, StoryScreen, UseCase } from "../../../storybook/views"
+import { WelcomePhoneValidationScreen, WelcomePhoneInputScreen } from "./phone-auth"
 
 declare let module
 
 const route = {
-  params: { confirmation : {}}
+  params: { confirmation: {} },
 }
 
 storiesOf("Phone number auth", module)
@@ -20,10 +19,10 @@ storiesOf("Phone number auth", module)
         <WelcomePhoneInputScreen />
       </UseCase>
       <UseCase text="Dollar" usage="The primary.">
-        <WelcomePhoneValidationScreen 
+        <WelcomePhoneValidationScreen
           route={route}
           onSuccess={() => {}}
-          navigation={{navigate: () => {}}}  
+          navigation={{ navigate: () => {} }}
         />
       </UseCase>
     </Story>

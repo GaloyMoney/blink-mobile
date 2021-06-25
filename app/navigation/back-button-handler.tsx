@@ -34,18 +34,17 @@ export class BackButtonHandler extends React.Component<BackButtonHandlerProps, {
    */
   onBackPress = () => {
     // grab the current route
-    const routeName = this.props.navigationStore.findCurrentRoute().routeName
+    const { routeName } = this.props.navigationStore.findCurrentRoute()
 
     // are we allowed to exit?
     if (this.props.canExit(routeName)) {
       // let the system know we've not handled this event
       return false
-    } else {
-      // we can't exit, so let's turn this into a back action
-      this.props.navigationStore.dispatch(CommonActions.back())
-      // let the system know we've handled this event
-      return true
     }
+    // we can't exit, so let's turn this into a back action
+    this.props.navigationStore.dispatch(CommonActions.back())
+    // let the system know we've handled this event
+    return true
   }
 
   /**

@@ -29,8 +29,23 @@ import RightTodo from "./right-section-to-do-01.svg"
 import TextBlock from "./text-block-medium.svg"
 
 const styles = StyleSheet.create({
+  finishText: {
+    color: palette.white,
+    fontSize: 18,
+    position: "absolute",
+    right: 30,
+    textAlign: "center",
+    top: 30,
+    width: 160,
+  },
+
+  icon: {
+    marginBottom: 6,
+    marginHorizontal: 10,
+  },
+
   mainView: {
-    alignSelf: "center"
+    alignSelf: "center",
   },
 
   textStyleBox: {
@@ -38,21 +53,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     marginHorizontal: 10,
-  },
-
-  icon: {
-    marginHorizontal: 10,
-    marginBottom: 6,
-  },
-
-  finishText: {
-    position: "absolute",
-    color: palette.white,
-    width: 160,
-    fontSize: 18,
-    right: 30,
-    top: 30,
-    textAlign: "center",
   },
 })
 
@@ -68,7 +68,7 @@ interface IBoxAdding {
   section: string
   Icon: React.Component
   side: SideType
-  position: number 
+  position: number
   length: number
 }
 
@@ -79,37 +79,42 @@ interface ISectionData {
 }
 
 interface IEarnMapScreen {
-  navigation: object //FIXME
+  navigation: object // FIXME
   currSection: number
   progress: number
   sectionsData: ISectionData[]
   earned: number
 }
 
-export const ProgressBar = ({progress}) => {
+export const ProgressBar = ({ progress }) => {
   const balanceWidth = `${progress * 100}%`
 
   return (
-  <View style={{ backgroundColor: palette.darkGrey, margin: 10 }}>
-    <View style={{ width: balanceWidth, height: 3, backgroundColor: palette.white }} />
-  </View>
-)}
-
+    <View style={{ backgroundColor: palette.darkGrey, margin: 10 }}>
+      <View style={{ width: balanceWidth, height: 3, backgroundColor: palette.white }} />
+    </View>
+  )
+}
 
 export const EarnMapDataInjected = ({ navigation }) => {
-
   // TODO: fragment with earnList
-  const { data } = useQuery(gql`query earnList($logged: Boolean!) {
-    earnList {
-      id
-      value
-      completed @client(if: {not: $logged})
-  }}`,
-    { variables: {
-        logged: new Token().has()
+  const { data } = useQuery(
+    gql`
+      query earnList($logged: Boolean!) {
+        earnList {
+          id
+          value
+          completed @client(if: { not: $logged })
+        }
+      }
+    `,
+    {
+      variables: {
+        logged: new Token().has(),
       },
-      fetchPolicy: "cache-only"
-  })
+      fetchPolicy: "cache-only",
+    },
+  )
 
   if (!data) {
     return null
@@ -119,68 +124,75 @@ export const EarnMapDataInjected = ({ navigation }) => {
 
   const sectionIndexs = Object.keys(translate("EarnScreen.earns"))
 
-  let sectionsData = []
+  const sectionsData = []
   let currSection = 0
   let progress = NaN
 
-  
-  for (let sectionIndex of sectionIndexs) {
+  for (const sectionIndex of sectionIndexs) {
     sectionsData.push({
       index: sectionIndex,
       text: translate(`EarnScreen.earns\.${sectionIndex}.meta.title`),
       icon: BitcoinCircle,
     })
 
-    const sectionCompletion = sectionCompletedPct({sectionIndex, earnList})
+    const sectionCompletion = sectionCompletedPct({ sectionIndex, earnList })
 
     if (sectionCompletion === 1) {
       currSection += 1
-    } else if (isNaN(progress)) { // only do it once for the first uncompleted section
+    } else if (isNaN(progress)) {
+      // only do it once for the first uncompleted section
       progress = sectionCompletion
     }
   }
 
-  const earnedSat = _.sumBy(_.filter(earnList, {completed: true}), "value")
+  const earnedSat = _.sumBy(_.filter(earnList, { completed: true }), "value")
 
-  return <EarnMapScreen 
-    navigation={navigation}
-    sectionsData={sectionsData}
-    currSection={currSection}
-    progress={progress}
-    earned={earnedSat}
-  />
+  return (
+    <EarnMapScreen
+      navigation={navigation}
+      sectionsData={sectionsData}
+      currSection={currSection}
+      progress={progress}
+      earned={earnedSat}
+    />
+  )
 }
 
-export const EarnMapScreen: React.FC<IEarnMapScreen> = 
-  ({ navigation, sectionsData, currSection, progress, earned}) => {
-
-  const Finish = ({currSection, length}) => {
+export const EarnMapScreen: React.FC<IEarnMapScreen> = ({
+  navigation,
+  sectionsData,
+  currSection,
+  progress,
+  earned,
+}) => {
+  const Finish = ({ currSection, length }) => {
     if (currSection !== sectionsData.length) return null
 
-    return <>
-      <Text style={styles.finishText}>
-        {translate("EarnScreen.finishText")}
-      </Text>
-      {/* TODO FIXME for even section # */}
-    {length % 2 ? 
-        <LeftFinish /> 
-      : <RightFinish />}
-    </>
-    }
+    return (
+      <>
+        <Text style={styles.finishText}>{translate("EarnScreen.finishText")}</Text>
+        {/* TODO FIXME for even section # */}
+        {length % 2 ? <LeftFinish /> : <RightFinish />}
+      </>
+    )
+  }
 
   const InBetweenTile: React.FC<IInBetweenTile> = ({ side, position, length }) => {
-    if (currSection < position) {      
+    if (currSection < position) {
       if (position === length - 1) {
         return side === "left" ? <LeftLastTodo /> : <RightLastTodo />
       }
 
       return side === "left" ? <LeftTodo /> : <RightTodo />
-    } else if (currSection === position) {
+    }
+    if (currSection === position) {
       if (position === length - 1) {
-        return <>
-          <View style={{height: 40}}/>
-          {side === "left" ? <LeftLastOngoing /> : <RightLastOngoing />}
-        </>
+        return (
+          <>
+            <View style={{ height: 40 }} />
+            {side === "left" ? <LeftLastOngoing /> : <RightLastOngoing />}
+          </>
+        )
       }
 
       if (position === 0 && progress === 0) {
@@ -188,53 +200,56 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> =
       }
 
       return side === "left" ? <LeftOngoing /> : <RightOngoing />
-    } else {
-      return side === "left" ? <LeftComplete /> : <RightComplete />
     }
+    return side === "left" ? <LeftComplete /> : <RightComplete />
   }
 
   const BoxAdding: React.FC<IBoxAdding> = ({ text, Icon, side, position, section, length }) => {
     const disabled = currSection < position
     const progressSection = disabled ? 0 : currSection > position ? 1 : progress
-    return (<View>
-      <InBetweenTile side={side} position={position} length={length}/>
-      <View style={{
-        position: "absolute", 
-        bottom: currSection === position ? 
-          currSection === 0 && progress === 0 ?
-            30
-          : 80
-        : 30, 
-        left: side === "left" ? 35 : 200,
-        opacity: disabled ? .5: 1,
-        }}>
-        <View>
-          <TouchableOpacity disabled={disabled} 
-            onPress={() => navigation.navigate("earnsSection", { section })}>
-            <TextBlock />
-            <View style={{position: "absolute", width: "100%"}}>
-              <ProgressBar progress={progressSection} />
-              <Icon style={styles.icon} width={50} height={50} />
-              <Text style={styles.textStyleBox}>{text}</Text>
-            </View>
-          </TouchableOpacity>
+    return (
+      <View>
+        <InBetweenTile side={side} position={position} length={length} />
+        <View
+          style={{
+            position: "absolute",
+            bottom: currSection === position ? (currSection === 0 && progress === 0 ? 30 : 80) : 30,
+            left: side === "left" ? 35 : 200,
+            opacity: disabled ? 0.5 : 1,
+          }}
+        >
+          <View>
+            <TouchableOpacity
+              disabled={disabled}
+              onPress={() => navigation.navigate("earnsSection", { section })}
+            >
+              <TextBlock />
+              <View style={{ position: "absolute", width: "100%" }}>
+                <ProgressBar progress={progressSection} />
+                <Icon style={styles.icon} width={50} height={50} />
+                <Text style={styles.textStyleBox}>{text}</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
-    </View>
-  )}
+    )
+  }
 
-  let sectionsComp = []
+  const sectionsComp = []
 
   sectionsData.forEach((item, index) => {
     sectionsComp.unshift(
-    <BoxAdding  text={item.text}
-                Icon={item.icon} 
-                side={index % 2 ? "left":"right"} 
-                position={index}
-                section={item.index}
-                length={sectionsData.length}
-                />
-  )})
+      <BoxAdding
+        text={item.text}
+        Icon={item.icon}
+        side={index % 2 ? "left" : "right"}
+        position={index}
+        section={item.index}
+        length={sectionsData.length}
+      />,
+    )
+  })
 
   const scrollViewRef = React.useRef()
 
@@ -245,51 +260,55 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> =
   const backgroundColor = currSection < sectionsData.length ? palette.sky : palette.orange
 
   React.useEffect(() => {
-    const unsubscribe = navigation?.addListener('focus', () => {
+    const unsubscribe = navigation?.addListener("focus", () => {
       StatusBar.setBackgroundColor(color.transparent)
       StatusBar.setBarStyle("light-content")
       StatusBar.setTranslucent(true)
-    });
+    })
 
-    return unsubscribe;
-  }, [navigation]);
+    return unsubscribe
+  }, [navigation])
 
   React.useEffect(() => {
-    const unsubscribe = navigation?.addListener('blur', () => {
+    const unsubscribe = navigation?.addListener("blur", () => {
       StatusBar.setTranslucent(false)
       StatusBar.setBarStyle("dark-content")
       StatusBar.setBackgroundColor(palette.lighterGrey)
-    });
+    })
 
-    return unsubscribe;
-  }, [navigation]);
+    return unsubscribe
+  }, [navigation])
 
   return (
-    <Screen unsafe={true} statusBar="light-content">
-      <ScrollView 
+    <Screen unsafe statusBar="light-content">
+      <ScrollView
         // removeClippedSubviews={true}
-        style={{backgroundColor}}
+        style={{ backgroundColor }}
         contentContainerStyle={{
-          backgroundColor: palette.lightBlue, 
+          backgroundColor: palette.lightBlue,
           flexGrow: 1,
         }}
         ref={scrollViewRef}
         onContentSizeChange={() => {
           scrollViewRef.current.scrollToEnd()
-        }}>
+        }}
+      >
         <MountainHeader amount={earned} color={backgroundColor} />
         {/* <View style={{backgroundColor: palette.sky}}>
           <Top width={screenWidth} />
         </View> */}
         <View style={styles.mainView}>
           <Finish currSection={currSection} length={sectionsData.length} />
-          { sectionsComp }
-          { currSection === 0 ?
-              progress === 0 ?
-                  <BottomStart />
-                : <BottomOngoing /> 
-              : <View style={{height: 40}} />
-          }
+          {sectionsComp}
+          {currSection === 0 ? (
+            progress === 0 ? (
+              <BottomStart />
+            ) : (
+              <BottomOngoing />
+            )
+          ) : (
+            <View style={{ height: 40 }} />
+          )}
         </View>
       </ScrollView>
     </Screen>

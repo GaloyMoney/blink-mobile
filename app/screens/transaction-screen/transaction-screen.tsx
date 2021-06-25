@@ -13,30 +13,36 @@ import { palette } from "../../theme/palette"
 import { sameDay, sameMonth } from "../../utils/date"
 
 const styles = EStyleSheet.create({
-  screen: {
-    backgroundColor: palette.white
+  amount: {
+    color: palette.white,
+    fontSize: "32rem",
+    fontWeight: "bold",
   },
 
   amountText: {
+    color: palette.white,
     fontSize: "18rem",
     marginVertical: "6rem",
-    color: palette.white,
-  },
-
-  amount: {
-    fontSize: "32rem",
-    color: palette.white,
-    fontWeight: "bold",
   },
 
   amountView: {
     alignItems: "center",
-    paddingVertical: "48rem",
     backgroundColor: palette.orange,
+    paddingVertical: "48rem",
   },
 
   description: {
     marginVertical: 12,
+  },
+
+  divider: {
+    backgroundColor: palette.midGrey,
+    marginVertical: "12rem",
+  },
+
+  entry: {
+    color: palette.midGrey,
+    marginBottom: "6rem",
   },
 
   map: {
@@ -47,15 +53,35 @@ const styles = EStyleSheet.create({
     width: 150,
   },
 
-  entry: {
-    color: palette.midGrey,
-    marginBottom: "6rem",
+  noTransactionText: {
+    fontSize: "24rem",
   },
 
-  value: {
+  noTransactionView: {
+    alignItems: "center",
+    flex: 1,
+    marginVertical: "48rem",
+  },
+
+  row: {
+    flexDirection: "row",
+  },
+
+  screen: {
+    backgroundColor: palette.white,
+  },
+
+  sectionHeaderContainer: {
+    backgroundColor: palette.white,
     color: palette.darkGrey,
-    fontSize: "14rem",
-    fontWeight: "bold",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    padding: 22,
+  },
+
+  sectionHeaderText: {
+    color: palette.darkGrey,
+    fontSize: 18,
   },
 
   transactionDetailText: {
@@ -69,55 +95,20 @@ const styles = EStyleSheet.create({
     marginVertical: "24rem",
   },
 
-  divider: {
-    backgroundColor: palette.midGrey,
-    marginVertical: "12rem",
-  },
-
-  noTransactionView: {
-    alignItems: "center",
-    flex: 1,
-    marginVertical: "48rem"
-  },
-  
-  noTransactionText: {
-    fontSize: "24rem"
-  },
-
-  sectionHeaderText: {
+  value: {
     color: palette.darkGrey,
-    fontSize: 18,
-  },
-
-  sectionHeaderContainer: {
-    color: palette.darkGrey,
-    padding: 22,
-    flexDirection: 'row',
-    justifyContent: "space-between",
-    backgroundColor: palette.white
-  },
-
-  row: {
-    flexDirection: 'row',
+    fontSize: "14rem",
+    fontWeight: "bold",
   },
 })
 
+const isToday = (tx) => sameDay(tx.date, new Date())
 
-const isToday = (tx) => {
-  return sameDay(tx.date, new Date())
-}
+const isYesterday = (tx) => sameDay(tx.date, new Date().setDate(new Date().getDate() - 1))
 
-const isYesterday = (tx) => {
-  return sameDay(tx.date, new Date().setDate(new Date().getDate() - 1))
-}
+const isThisMonth = (tx) => sameMonth(tx.date, new Date())
 
-const isThisMonth = (tx) => {
-  return sameMonth(tx.date, new Date())
-}
-
-
-
-export const TransactionHistoryScreenDataInjected = ({navigation, route}) => {
+export const TransactionHistoryScreenDataInjected = ({ navigation, route }) => {
   const currency = "sat" // FIXME
 
   const { data } = useQuery(WALLET, { fetchPolicy: "cache-only" })
@@ -129,11 +120,11 @@ export const TransactionHistoryScreenDataInjected = ({navigation, route}) => {
   const before = []
 
   // we need a shallow copy because the array given by useQuery is otherwise immutable
-  let transactions = [... _.find(data.wallet, {id: "BTC"}).transactions]
+  const transactions = [..._.find(data.wallet, { id: "BTC" }).transactions]
 
   while (transactions?.length) {
     // FIXME: optimization need. slow when there are a lot of txs.
-    let tx = transactions.shift()
+    const tx = transactions.shift()
 
     if (isToday(tx)) {
       today.push(tx)
@@ -161,48 +152,66 @@ export const TransactionHistoryScreenDataInjected = ({navigation, route}) => {
   if (before.length > 0) {
     sections.push({ title: translate("PriceScreen.prevMonths"), data: before })
   }
-  
+
   const prefCurrency = useReactiveVar(prefCurrencyVar)
 
-  return <TransactionScreen 
-    navigation={navigation} 
-    currency={currency}
-    // refreshing={loading}
-    // error={error}
-    prefCurrency={prefCurrency}
-    nextPrefCurrency={nextPrefCurrency}
-    // onRefresh={refreshQuery}
-    sections={sections}
-  />
+  return (
+    <TransactionScreen
+      navigation={navigation}
+      currency={currency}
+      // refreshing={loading}
+      // error={error}
+      prefCurrency={prefCurrency}
+      nextPrefCurrency={nextPrefCurrency}
+      // onRefresh={refreshQuery}
+      sections={sections}
+    />
+  )
 }
 
-export const TransactionScreen = 
-  ({ refreshing, navigation, onRefresh, error, prefCurrency, nextPrefCurrency, sections }) =>
+export const TransactionScreen = ({
+  refreshing,
+  navigation,
+  onRefresh,
+  error,
+  prefCurrency,
+  nextPrefCurrency,
+  sections,
+}) => (
   <Screen style={styles.screen}>
     <SectionList
       // refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
       renderItem={({ item, index, section }) => (
         <TransactionItem navigation={navigation} tx={item} />
       )}
-      ListHeaderComponent={() => <>
-        {error?.graphQLErrors?.map(({ message }) => 
-          <Text style={{color: palette.red, alignSelf: "center", paddingBottom: 18}} selectable={true}>{message}</Text>
-        )}
-      </>}
+      ListHeaderComponent={() => (
+        <>
+          {error?.graphQLErrors?.map(({ message }) => (
+            <Text style={{ color: palette.red, alignSelf: "center", paddingBottom: 18 }} selectable>
+              {message}
+            </Text>
+          ))}
+        </>
+      )}
       initialNumToRender={18}
       renderSectionHeader={({ section: { title } }) => (
         <View style={styles.sectionHeaderContainer}>
           <Text style={styles.sectionHeaderText}>{title}</Text>
           <TouchableOpacity style={styles.row} onPress={nextPrefCurrency}>
             <Text style={styles.sectionHeaderText}>{prefCurrency} </Text>
-            <Icon name={"ios-swap-vertical"} size={32} style={{top: -4}} />
+            <Icon name="ios-swap-vertical" size={32} style={{ top: -4 }} />
           </TouchableOpacity>
         </View>
       )}
-      ListEmptyComponent={<View style={styles.noTransactionView}>
-        <Text style={styles.noTransactionText}>{translate("TransactionScreen.noTransaction")}</Text>
-      </View>}
+      ListEmptyComponent={
+        <View style={styles.noTransactionView}>
+          <Text style={styles.noTransactionText}>
+            {translate("TransactionScreen.noTransaction")}
+          </Text>
+        </View>
+      }
       sections={sections}
       keyExtractor={(item, index) => item + index}
     />
   </Screen>
+)

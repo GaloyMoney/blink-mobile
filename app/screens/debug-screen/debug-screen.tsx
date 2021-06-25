@@ -3,20 +3,20 @@ import * as React from "react"
 import { Alert, DevSettings, Text, View } from "react-native"
 import { Button, ButtonGroup } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
+import Clipboard from "@react-native-community/clipboard"
+import { useApolloClient, useQuery } from "@apollo/client"
 import { Screen } from "../../components/screen"
 import { color } from "../../theme"
 import { resetDataStore } from "../../utils/logout"
 import { loadNetwork, saveNetwork } from "../../utils/network"
 import { requestPermission } from "../../utils/notifications"
 import { getGraphQlUri, Token } from "../../utils/token"
-import Clipboard from "@react-native-community/clipboard";
-import { useApolloClient, useQuery } from "@apollo/client"
 import { btc_price, QUERY_PRICE, walletIsActive } from "../../graphql/query"
 
 const styles = EStyleSheet.create({
-  button: { 
+  button: {
     marginHorizontal: "24rem",
-    marginVertical: "6rem"
+    marginVertical: "6rem",
   },
 })
 
@@ -30,15 +30,13 @@ export const DebugScreen = ({}) => {
 
   const setNetwork = async (network?) => {
     let n
-    
+
     if (token.network) {
       n = token.network
+    } else if (!network) {
+      n = await loadNetwork()
     } else {
-      if (!network) {
-        n = await loadNetwork() 
-      } else {
-        n = network
-      }
+      n = network
     }
 
     setGraphQlUri(await getGraphQlUri())
@@ -46,10 +44,9 @@ export const DebugScreen = ({}) => {
   }
 
   React.useEffect(() => {
-    (async () => {
+    ;(async () => {
       setNetwork()
-    })
-    ()
+    })()
   }, [])
 
   return (
@@ -63,7 +60,7 @@ export const DebugScreen = ({}) => {
               const query = `mutation deleteCurrentUser {
                 deleteCurrentUser
               }`
-        
+
               // const result = await request(getGraphQlUri(), query, {uid: "1234"})
               // FIXME
             } catch (err) {
@@ -98,19 +95,16 @@ export const DebugScreen = ({}) => {
           // Alert.alert("Store copied in clipboard. send it over whatsapp or email")
         }}
       />
-      {
-        <Button
-          title="Request permission + send device token"
-          style={styles.button}
-          onPress={async () => {
-            walletIsActive(client) && requestPermission(client)
-          }}
-        />
-      }
-      {__DEV__ && <Button title="Reload" 
+      <Button
+        title="Request permission + send device token"
         style={styles.button}
-        onPress={() => DevSettings.reload()} />
-      }
+        onPress={async () => {
+          walletIsActive(client) && requestPermission(client)
+        }}
+      />
+      {__DEV__ && (
+        <Button title="Reload" style={styles.button} onPress={() => DevSettings.reload()} />
+      )}
       {/* <Button
           title="Crash test"
           style={styles.button}
@@ -120,22 +114,37 @@ export const DebugScreen = ({}) => {
           }}
         /> */}
       <View>
-        <Text>UID: {token.uid}</Text>
-        <Text>token network: {token.network}</Text>
-        <Text>GraphQlUri: {graphQlUri}</Text>
-        <Text>BTC price: {btc_price(client)}</Text>
-        <Text>Hermes: {String(!!global.HermesInternal)}</Text>
+        <Text>
+          UID:
+          {token.uid}
+        </Text>
+        <Text>
+          token network:
+          {token.network}
+        </Text>
+        <Text>
+          GraphQlUri:
+          {graphQlUri}
+        </Text>
+        <Text>
+          BTC price:
+          {btc_price(client)}
+        </Text>
+        <Text>
+          Hermes:
+          {String(!!global.HermesInternal)}
+        </Text>
 
         <ButtonGroup
-          onPress={index => {
-              saveNetwork(networks[index]);
-              setNetwork(networks[index]);
-            }}
-          selectedIndex={networks.findIndex(value => value === networkState)}
+          onPress={(index) => {
+            saveNetwork(networks[index])
+            setNetwork(networks[index])
+          }}
+          selectedIndex={networks.findIndex((value) => value === networkState)}
           buttons={networks}
           buttonStyle={styles.button} // FIXME
-          containerStyle={{marginLeft: 36, marginRight: 36, marginTop: 24}}
-          />
+          containerStyle={{ marginLeft: 36, marginRight: 36, marginTop: 24 }}
+        />
       </View>
     </Screen>
   )

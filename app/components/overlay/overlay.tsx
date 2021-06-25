@@ -29,18 +29,16 @@ const styles = StyleSheet.create({
   },
 })
 
-const DownArrow = (props) => {
-  return (
-    <Svg viewBox="0 0 776.092 693.665" height={150} width={320} {...props}>
-      <Path
-        d="M28.782 10c3.059 89.23 14.349 170.15 34.519 242.15 19.59 69.929 51.246 124.84 100.094 166.82 141.441 121.543 417.022 51.435 417.022 51.435l-12.595-101.937 198.27 132.773-159.33 182.424-10.468-84.742s-272.851 57.51-445.67-108.263C48.226 392.438 5.716 229.878 10.339 12.797c.723-.767 12.855-2.819 18.443-2.797z"
-        clipRule="evenodd"
-        fillRule="evenodd"
-        fill="#010002"
-      />
-    </Svg>
-  )
-}
+const DownArrow = (props) => (
+  <Svg viewBox="0 0 776.092 693.665" height={150} width={320} {...props}>
+    <Path
+      d="M28.782 10c3.059 89.23 14.349 170.15 34.519 242.15 19.59 69.929 51.246 124.84 100.094 166.82 141.441 121.543 417.022 51.435 417.022 51.435l-12.595-101.937 198.27 132.773-159.33 182.424-10.468-84.742s-272.851 57.51-445.67-108.263C48.226 392.438 5.716 229.878 10.339 12.797c.723-.767 12.855-2.819 18.443-2.797z"
+      clipRule="evenodd"
+      fillRule="evenodd"
+      fill="#010002"
+    />
+  </Svg>
+)
 
 const CY = 200
 const R = 135
@@ -49,7 +47,7 @@ export const Overlay = ({ screen }) => {
   const [modalVisible, setModalVisible] = useState(true)
 
   return (
-    <Modal visible={modalVisible} transparent={true} animationType={"fade"}>
+    <Modal visible={modalVisible} transparent animationType="fade">
       {screen == "accounts" && (
         <View style={styles.modalBackground}>
           <TouchableWithoutFeedback
@@ -59,7 +57,7 @@ export const Overlay = ({ screen }) => {
           >
             <SafeAreaView style={{ flex: 1 }}>
               <View style={{ flex: 1 }}>
-                <View style={{ flex: 1 }}></View>
+                <View style={{ flex: 1 }} />
                 <Text style={styles.modalText}>{translate("Overlay.accounts")}</Text>
                 <DownArrow style={{ marginVertical: 0, marginLeft: 50 }} />
               </View>

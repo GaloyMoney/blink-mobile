@@ -1,25 +1,24 @@
-
 export const currencyFormatting = {
-  USD: usd => usd < 0.01 ? usd == 0 ? (usd).toFixed(2): (usd).toFixed(4) : (usd).toFixed(2),
-  sats: sats => sats.toFixed(0),
-  BTC: btc => btc,
-} 
+  USD: (usd) => (usd < 0.01 ? (usd == 0 ? usd.toFixed(2) : usd.toFixed(4)) : usd.toFixed(2)),
+  sats: (sats) => sats.toFixed(0),
+  BTC: (btc) => btc,
+}
 
 export const CurrencyConversion = (btcPrice) => ({
   USD: {
     primary: "USD",
     // TODO refactor: other place could use those conversions
-    conversion: sats => currencyFormatting["USD"](sats * btcPrice),
+    conversion: (sats) => currencyFormatting.USD(sats * btcPrice),
     reverse: (usd) => usd / btcPrice,
     secondary: "sats",
-    secondaryConversion: (sats) => currencyFormatting["sats"](sats),
+    secondaryConversion: (sats) => currencyFormatting.sats(sats),
   },
   sats: {
     primary: "sats",
-    conversion: (sats) => currencyFormatting["sats"](sats),
+    conversion: (sats) => currencyFormatting.sats(sats),
     reverse: (sats) => sats,
     secondary: "USD",
-    secondaryConversion: (sats) => currencyFormatting["USD"](sats * btcPrice),
+    secondaryConversion: (sats) => currencyFormatting.USD(sats * btcPrice),
   },
   BTC: {
     primary: "BTC",
@@ -32,12 +31,12 @@ export const CurrencyConversion = (btcPrice) => ({
 
 // TODO: refactor. this is probably elsewhere as well.
 export const textCurrencyFormatting = (sats, price, currency) => {
-  const cc = CurrencyConversion(price)["sats"]
-  if (currency === "sats") { 
-    return `${cc['conversion'](sats)} sats`
-  } else if (currency === "USD") {
-    return `$${cc['secondaryConversion'](sats)}`
-  } else {
-    throw Error("wrong currency")
+  const cc = CurrencyConversion(price).sats
+  if (currency === "sats") {
+    return `${cc.conversion(sats)} sats`
   }
+  if (currency === "USD") {
+    return `$${cc.secondaryConversion(sats)}`
+  }
+  throw Error("wrong currency")
 }

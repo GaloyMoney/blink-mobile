@@ -8,13 +8,18 @@ import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 
-
 const BitcoinBeachLogo = require("./bitcoinBeach3.png")
 
 const styles = EStyleSheet.create({
+  Logo: {
+    marginTop: 24,
+    maxHeight: "50%",
+    maxWidth: "85%",
+  },
+
   bottom: {
-    flex: 1,
     alignItems: "center",
+    flex: 1,
     justifyContent: "flex-end",
     marginBottom: 36,
     width: "100%",
@@ -44,40 +49,25 @@ const styles = EStyleSheet.create({
   sub: {
     color: palette.white,
     fontSize: 18,
-    marginTop: 32,
     marginBottom: 16,
+    marginTop: 32,
     textAlign: "center",
   },
-
-  Logo: {
-    maxHeight: "50%",
-    maxWidth: "85%",
-    marginTop: 24,
-  }
 })
 
-
-
-export const GetStartedScreen = ({ navigation }) => {
-
-  return (
-    <Screen style={styles.container} backgroundColor={palette.lightBlue} statusBar="light-content">
-      <Image
-        style={styles.Logo}
-        source={BitcoinBeachLogo}
-        resizeMode="contain"
+export const GetStartedScreen = ({ navigation }) => (
+  <Screen style={styles.container} backgroundColor={palette.lightBlue} statusBar="light-content">
+    <Image style={styles.Logo} source={BitcoinBeachLogo} resizeMode="contain" />
+    <VersionComponent style={{ paddingTop: 18 }} />
+    <View style={styles.bottom}>
+      <Button
+        title={translate("GetStartedScreen.getStarted")}
+        buttonStyle={styles.button}
+        titleStyle={styles.buttonTitle}
+        onPress={() => navigation.replace("welcomeFirst")}
+        containerStyle={styles.buttonContainer}
+        testID="getStarted"
       />
-      <VersionComponent style={{ paddingTop: 18 }} />
-      <View style={styles.bottom}>
-        <Button
-          title={translate("GetStartedScreen.getStarted")}
-          buttonStyle={styles.button}
-          titleStyle={styles.buttonTitle}
-          onPress={() => navigation.replace("welcomeFirst")}
-          containerStyle={styles.buttonContainer}
-          testID={"getStarted"}
-        />
-      </View>
-    </Screen>
-  )
-}
+    </View>
+  </Screen>
+)

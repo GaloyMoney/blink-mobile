@@ -1,6 +1,6 @@
 import * as React from "react"
+import { SvgXml } from "react-native-svg"
 import { palette } from "../../theme/palette"
-import { SvgXml } from 'react-native-svg';
 
 const xml_transaction_sent = `
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -44,15 +44,23 @@ const xml_transaction_received = `
 `
 
 type IconType = "send" | "receive"
-export const colorTypeFromIconType = ({isReceive, pending}) => pending ? 
-  palette.midGrey : 
-  isReceive ? palette.green : palette.orange
+export const colorTypeFromIconType = ({ isReceive, pending }) =>
+  pending ? palette.midGrey : isReceive ? palette.green : palette.orange
 
-export const IconTransaction = 
-	({isReceive, pending, size, transparent = false}: {isReceive: boolean, size: number, transparent?: boolean, pending: boolean}) => {
-  let color = colorTypeFromIconType({isReceive, pending})
+export const IconTransaction = ({
+  isReceive,
+  pending,
+  size,
+  transparent = false,
+}: {
+  isReceive: boolean
+  size: number
+  transparent?: boolean
+  pending: boolean
+}) => {
+  let color = colorTypeFromIconType({ isReceive, pending })
   if (transparent) color = palette.white
-	const raw_xml = isReceive ? xml_transaction_received : xml_transaction_sent
+  const raw_xml = isReceive ? xml_transaction_received : xml_transaction_sent
   const parse_xml = raw_xml.replace("{color}", color)
-  return (<SvgXml xml={parse_xml} width={size} height={size} />)
+  return <SvgXml xml={parse_xml} width={size} height={size} />
 }

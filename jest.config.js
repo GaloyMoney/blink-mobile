@@ -9,11 +9,6 @@ module.exports = {
       "tsConfig": "tsconfig.jest.json"
     }
   },
-  "moduleFileExtensions": [
-    "ts",
-    "tsx",
-    "js"
-  ],
   "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   transformIgnorePatterns: [

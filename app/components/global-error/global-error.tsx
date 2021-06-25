@@ -1,14 +1,14 @@
-import { useApolloNetworkStatus } from "../../app";
-import { translate } from "../../i18n";
-import { toastShow } from "../../utils/toast";
+import { useApolloNetworkStatus } from "../../app"
+import { translate } from "../../i18n"
+import { toastShow } from "../../utils/toast"
 
 export const GlobalErrorToast = () => {
-  const status = useApolloNetworkStatus();
+  const status = useApolloNetworkStatus()
 
-  console.log({status}, "status query")
+  console.log({ status }, "status query")
 
-  // "prices" is a polled query. 
-  // filter this to not have the error message being showed 
+  // "prices" is a polled query.
+  // filter this to not have the error message being showed
   // every 5 seconds or so in case of network disruption
   if (status.queryError?.operation?.operationName === "prices") {
     return null

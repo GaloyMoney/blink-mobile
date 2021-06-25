@@ -25,12 +25,12 @@ function ScreenWithoutScrolling(props: ScreenProps) {
       behavior={isIos ? "padding" : null}
       keyboardVerticalOffset={offsets[props.keyboardOffset || "none"]}
     >
-      <StatusBar 
+      <StatusBar
         barStyle={props.statusBar || "dark-content"}
         backgroundColor={props.backgroundColor}
       />
       {/* modalClipboard requires StoreContext which requiere being inside a navigator */}
-      <ModalClipboard /> 
+      <ModalClipboard />
       <Wrapper style={[preset.inner, style]}>{props.children}</Wrapper>
     </KeyboardAvoidingView>
   )
@@ -48,7 +48,7 @@ function ScreenWithScrolling(props: ScreenProps) {
       behavior={isIos ? "padding" : null}
       keyboardVerticalOffset={offsets[props.keyboardOffset || "none"]}
     >
-      <StatusBar 
+      <StatusBar
         barStyle={props.statusBar || "dark-content"}
         backgroundColor={props.backgroundColor}
       />
@@ -73,7 +73,6 @@ function ScreenWithScrolling(props: ScreenProps) {
 export function Screen(props: ScreenProps) {
   if (isNonScrolling(props.preset)) {
     return <ScreenWithoutScrolling {...props} />
-  } else {
-    return <ScreenWithScrolling {...props} />
   }
+  return <ScreenWithScrolling {...props} />
 }

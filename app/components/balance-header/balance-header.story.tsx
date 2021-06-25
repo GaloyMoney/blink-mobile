@@ -1,7 +1,7 @@
 import * as React from "react"
 import { storiesOf } from "@storybook/react-native"
 import { StoryScreen, Story, UseCase } from "../../../storybook/views"
-import { BalanceHeader } from "./"
+import { BalanceHeader } from "."
 import { CurrencyType } from "../../utils/enum"
 
 declare let module

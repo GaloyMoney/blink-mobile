@@ -7,24 +7,18 @@ import { palette } from "../../theme/palette"
 
 const styles = EStyleSheet.create({
   accountAmount: {
+    color: palette.darkGrey,
     fontSize: "18rem",
-    color: palette.darkGrey
   },
-  
+
   accountView: {
-    marginTop: "15rem",
     marginHorizontal: "30rem",
+    marginTop: "15rem",
   },
 
   accountViewContainer: {
     backgroundColor: palette.white,
     borderRadius: 8,
-  },
-
-  transactionViewContainer: {
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
-    marginTop: 18,
   },
 
   accountViewTitle: {
@@ -33,35 +27,38 @@ const styles = EStyleSheet.create({
     fontWeight: "bold",
     fontSize: "18rem",
   },
+
+  transactionViewContainer: {
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
+    marginTop: 18,
+  },
 })
 
 interface ILargeButton {
-  icon: React.Component,
-  title: string,
-  onPress: (item: any) => void,
-  loading?: boolean,
+  icon: React.Component
+  title: string
+  onPress: (item: any) => void
+  loading?: boolean
   style?
 }
 
-export const LargeButton = ({ style, icon, title, onPress, loading, ...props}: ILargeButton) => {
-
-  return (
-    <ListItem
-      style={styles.accountView}
-      containerStyle={style ? styles[style]: styles.accountViewContainer}
-      titleStyle={styles.accountViewTitle}
-      chevron
-      title={title}
-      onPress={onPress}
-      underlayColor={palette.lighterGrey}
-      activeOpacity={0.7}
-      leftAvatar={icon}
-      {...props}
-    >
-      <Avatar>{icon}</Avatar>
-      <ListItem.Content>
-        <ListItem.Title style={styles.accountViewTitle}>{title}</ListItem.Title>
-      </ListItem.Content>
-    </ListItem>
-  )
-}
+export const LargeButton = ({ style, icon, title, onPress, loading, ...props }: ILargeButton) => (
+  <ListItem
+    style={styles.accountView}
+    containerStyle={style ? styles[style] : styles.accountViewContainer}
+    titleStyle={styles.accountViewTitle}
+    chevron
+    title={title}
+    onPress={onPress}
+    underlayColor={palette.lighterGrey}
+    activeOpacity={0.7}
+    leftAvatar={icon}
+    {...props}
+  >
+    <Avatar>{icon}</Avatar>
+    <ListItem.Content>
+      <ListItem.Title style={styles.accountViewTitle}>{title}</ListItem.Title>
+    </ListItem.Content>
+  </ListItem>
+)

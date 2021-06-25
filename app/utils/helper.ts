@@ -1,8 +1,6 @@
 import { NativeModules, Platform } from "react-native"
 
-export const emailIsValid = (email) => {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-}
+export const emailIsValid = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
 
 export const capitalize = (s) => {
   if (typeof s !== "string") return ""
@@ -31,8 +29,8 @@ export const shuffle = (array) => {
 }
 
 export const scriptHostname = (): string => {
-  const scriptURL = NativeModules.SourceCode.scriptURL;
-  const scriptHostname = scriptURL.split('://')[1].split(':')[0];
+  const { scriptURL } = NativeModules.SourceCode
+  const scriptHostname = scriptURL.split("://")[1].split(":")[0]
   return scriptHostname
 }
 
