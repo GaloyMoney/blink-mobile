@@ -102,7 +102,9 @@
     "pinTitle": "PIN Code",
     "pinSubtitle": "Enable PIN",
     "pinDescription": "PIN is used as the backup authentication method for biometric authentication.",
-    "setPin": "Set PIN"
+    "setPin": "Set PIN",
+    "biometryNotAvailable": "Biometric sensor is not available.",
+    "biometryNotEnrolled": "Please register at least one biometric sensor in order to use biometric based authentication."
   },
   "GetStartedScreen": {
     "headline": "Wallet powered by Galoy",
@@ -120,6 +122,7 @@
     "setPin": "Set your PIN code",
     "setPinFailedMatch": "Pins didn't match - Set your PIN code",
     "verifyPin": "Verify your PIN code",
+    "storePinFailed": "Unable to store your pin.",
     "attemptsRemaining": "Incorrect PIN. %{attemptsRemaining} attempts remaining.",
     "oneAttemptRemaining": "Incorrect PIN. 1 attempt remaining.",
     "tooManyAttempts": "Too many failed attempts. Logging out."

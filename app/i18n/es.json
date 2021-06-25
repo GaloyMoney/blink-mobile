@@ -528,6 +528,7 @@
     "setPin": "Establezca su código PIN",
     "setPinFailedMatch": "Los pines no coinciden: establezca su código PIN",
     "verifyPin": "Verifica tu código PIN",
+    "storePinFailed": "No se puede guardar su pin.",
     "attemptsRemaining": "PIN incorrecto. %{attemptsRemaining} intentos restantes.",
     "oneAttemptRemaining": "PIN incorrecto. Queda 1 intento.",
     "tooManyAttempts": "Demasiados intentos fallidos. Saliendo de tu cuenta."
@@ -625,7 +626,9 @@
     "pinTitle": "Código PIN",
     "pinSubtitle": "Habilitar PIN",
     "pinDescription": "El PIN se utiliza como método de autenticación de respaldo para la autenticación biométrica.",
-    "setPin": "Establecer PIN"
+    "setPin": "Establecer PIN",
+    "biometryNotAvailable": "El sensor biométrico no está disponible.",
+    "biometryNotEnrolled": "Registre al menos un sensor biométrico para utilizar la autenticación basada en datos biométricos."
   },
   "WelcomeFirstScreen": {
     "bank": "Bitcoin está diseñado para permitirle almacenar, enviar y recibir dinero, sin depender de un banco o tarjeta de crédito.",

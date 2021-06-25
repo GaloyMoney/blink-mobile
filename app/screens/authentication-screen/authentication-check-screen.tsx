@@ -1,13 +1,20 @@
 import * as React from "react"
+<<<<<<< HEAD
 import { useState } from "react"
 import { useFocusEffect } from "@react-navigation/native"
 import { Image } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import RNSecureKeyStore from "react-native-secure-key-store"
+=======
+import { useFocusEffect } from '@react-navigation/native'
+import { Image } from "react-native"
+import EStyleSheet from 'react-native-extended-stylesheet'
+>>>>>>> Wrap SecureKeyStore and Biometric utility functions
 
 import { Screen } from "../../components/screen"
 import { palette } from "../../theme/palette"
-import { isSensorAvailable } from "../../utils/biometricAuthentication"
+import KeyStoreWrapper from "../../utils/storage/secureStorage"
+import BiometricWrapper from "../../utils/biometricAuthentication"
 import type { ScreenType } from '../../types/screen'
 
 const BitcoinBeachLogo = require("../get-started-screen/bitcoinBeach3.png")
@@ -31,55 +38,16 @@ type Props = {
 }
 
 export const AuthenticationCheckScreen: ScreenType = ({ navigation }: Props) => {
-  const [isBiometricsEnabled, setIsBiometricsEnabled] = useState(null)
-  const [isPinEnabled, setIsPinEnabled] = useState(null)
-  const [isBiometryAvailable, setIsBiometryAvailable] = useState(null)
 
   useFocusEffect(() => {
     checkForAuthentication()
   })
 
   const checkForAuthentication = async () => {
-    let isBiometricsEnabled
-    let pin
-    let isBiometryAvailable
-    let pinAttempts
-
-    try {
-      await RNSecureKeyStore.get("isBiometricsEnabled")
-      isBiometricsEnabled = true
-    } catch (error) {
-      isBiometricsEnabled = false
-    }
-
-    try {
-      pin = await RNSecureKeyStore.get("PIN")
-    } catch (error) {
-      pin = ""
-    }
-
-    const handleBiometryAvailabilitySuccess = (mIsBiometryAvailable: Boolean) => {
-      isBiometryAvailable = mIsBiometryAvailable
-    }
-
-    const handleBiometryAvailabilityFailure = () => {
-      isBiometryAvailable = false
-    }
-
-    try {
-      await isSensorAvailable(
-        handleBiometryAvailabilitySuccess,
-        handleBiometryAvailabilityFailure,
-      )
-    } catch (error) {
-      isBiometricsEnabled = false
-    }
-
-    try {
-      pinAttempts = Number(await RNSecureKeyStore.get("pinAttempts"))
-    } catch (error) {
-      pinAttempts = 0
-    }
+    let isBiometricsEnabled = await KeyStoreWrapper.getIsBiometryEnabled()
+    let pin = await KeyStoreWrapper.getPinOrEmptyString()
+    let pinAttempts = await KeyStoreWrapper.getPinAttemptsOrZero()
+    let isBiometryAvailable = await BiometricWrapper.isSensorAvailable()
 
     if (isBiometricsEnabled && isBiometryAvailable) {
       navigation.replace("authentication", {

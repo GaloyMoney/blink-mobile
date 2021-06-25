@@ -4,13 +4,17 @@ import { Alert, Image, View } from "react-native"
 import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { useApolloClient } from "@apollo/client"
+<<<<<<< HEAD
 import RNSecureKeyStore, { ACCESSIBLE } from "react-native-secure-key-store"
+=======
+>>>>>>> Wrap SecureKeyStore and Biometric utility functions
 
 import { Screen } from "../../components/screen"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { translate } from "../../i18n"
-import { authenticate } from "../../utils/biometricAuthentication"
+import KeyStoreWrapper from "../../utils/storage/secureStorage"
+import BiometricWrapper from "../../utils/biometricAuthentication"
 import { resetDataStore } from "../../utils/logout"
 import type { ScreenType } from '../../types/screen'
 
@@ -77,22 +81,15 @@ export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) =
   })
 
   const attemptAuthentication = () => {
-    let description =
-      screenPurpose === "authenticate"
-        ? translate("AuthenticationScreen.authenticationDescription")
-        : translate("AuthenticationScreen.setUpAuthenticationDescription")
-    authenticate(description, handleAuthenticationSuccess, handleAuthenticationFailure)
+    let description = (screenPurpose === "authenticate") ? translate("AuthenticationScreen.authenticationDescription") : translate("AuthenticationScreen.setUpAuthenticationDescription")
+    BiometricWrapper.authenticate(description, handleAuthenticationSuccess, handleAuthenticationFailure)
   }
 
   const handleAuthenticationSuccess = () => {
     if (screenPurpose === "authenticate") {
-      RNSecureKeyStore.set("pinAttempts", "0", {
-        accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY,
-      })
+      KeyStoreWrapper.setPinAttempts("0")
     } else if (screenPurpose === "turnOnAuthentication") {
-      RNSecureKeyStore.set("isBiometricsEnabled", "1", {
-        accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY,
-      })
+      KeyStoreWrapper.setIsBiometryEnabled()
     }
     navigation.replace("Primary")
   }

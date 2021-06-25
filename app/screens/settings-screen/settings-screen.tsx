@@ -4,7 +4,6 @@ import Share from "react-native-share"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { Divider, Icon, ListItem } from "react-native-elements"
 import { gql, useApolloClient, useLazyQuery, useQuery } from "@apollo/client"
-import RNSecureKeyStore from "react-native-secure-key-store"
 
 // Components
 import { Screen } from "../../components/screen"
@@ -26,6 +25,7 @@ import { walletIsActive } from "../../graphql/query"
 import { openWhatsApp } from "../../utils/external"
 import { resetDataStore } from "../../utils/logout"
 import { hasFullPermissions, requestPermission } from "../../utils/notifications"
+import KeyStoreWrapper from "../../utils/storage/secureStorage"
 
 // Types
 import type { ScreenType } from "../../types/screen"
@@ -62,55 +62,11 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
     { fetchPolicy: "cache-only" },
   )
 
-  const securityAction = () => {
-    var isBiometricsEnabled = null
-    var isPinEnabled = null
+  const securityAction = async () => {
+    let isBiometricsEnabled = await KeyStoreWrapper.getIsBiometryEnabled()
+    var isPinEnabled = (await KeyStoreWrapper.getPinOrEmptyString()) !== ""
 
-    RNSecureKeyStore.get("isBiometricsEnabled").then(
-      (res) => {
-        if (isPinEnabled !== null) {
-          navigation.navigate("security", {
-            mIsBiometricsEnabled: true,
-            mIsPinEnabled: isPinEnabled,
-          })
-        } else {
-          isBiometricsEnabled = true
-        }
-      },
-      (err) => {
-        if (isPinEnabled !== null) {
-          navigation.navigate("security", {
-            mIsBiometricsEnabled: false,
-            mIsPinEnabled: isPinEnabled,
-          })
-        } else {
-          isBiometricsEnabled = false
-        }
-      },
-    )
-
-    RNSecureKeyStore.get("PIN").then(
-      (res) => {
-        if (isBiometricsEnabled !== null) {
-          navigation.navigate("security", {
-            mIsBiometricsEnabled: isBiometricsEnabled,
-            mIsPinEnabled: true,
-          })
-        } else {
-          isPinEnabled = true
-        }
-      },
-      (err) => {
-        if (isBiometricsEnabled !== null) {
-          navigation.navigate("security", {
-            mIsBiometricsEnabled: isBiometricsEnabled,
-            mIsPinEnabled: false,
-          })
-        } else {
-          isPinEnabled = false
-        }
-      },
-    )
+    navigation.navigate("security", { mIsBiometricsEnabled: isBiometricsEnabled, mIsPinEnabled: isPinEnabled })
   }
 
   const onGetCsvCallback = async (data) => {

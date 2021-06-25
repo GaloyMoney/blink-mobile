@@ -5,13 +5,16 @@ import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Feather"
 import { useApolloClient } from "@apollo/client"
+<<<<<<< HEAD
 import RNSecureKeyStore, { ACCESSIBLE } from "react-native-secure-key-store"
+=======
+>>>>>>> Wrap SecureKeyStore and Biometric utility functions
 
 import { Screen } from "../../components/screen"
-import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { translate } from "../../i18n"
 import { resetDataStore } from "../../utils/logout"
+import KeyStoreWrapper from "../../utils/storage/secureStorage"
 
 const styles = EStyleSheet.create({
   container: {
@@ -125,9 +128,13 @@ export const PinScreen = ({ route, navigation }: Props) => {
 
   const handleCompletedPinForAuthenticatePin = async (newEnteredPIN: string) => {
     if (newEnteredPIN === pin) {
+<<<<<<< HEAD
       RNSecureKeyStore.set("pinAttempts", "0", {
         accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY,
       })
+=======
+      KeyStoreWrapper.setPinAttempts("0")
+>>>>>>> Wrap SecureKeyStore and Biometric utility functions
       navigation.reset({
         index: 0,
         routes: [{ name: "Primary" }],
@@ -135,9 +142,13 @@ export const PinScreen = ({ route, navigation }: Props) => {
     } else {
       if (pinAttempts < 2) {
         let newPinAttempts = pinAttempts + 1
+<<<<<<< HEAD
         RNSecureKeyStore.set("pinAttempts", newPinAttempts.toString(), {
           accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY,
         })
+=======
+        KeyStoreWrapper.setPinAttempts(newPinAttempts.toString())
+>>>>>>> Wrap SecureKeyStore and Biometric utility functions
         setPinAttempts(newPinAttempts)
         setEnteredPIN("")
         if (newPinAttempts === 2) {
@@ -187,22 +198,15 @@ export const PinScreen = ({ route, navigation }: Props) => {
     }
   }
 
-  const verifyPINCodeMathes = (newEnteredPIN: string) => {
+  const verifyPINCodeMathes = async (newEnteredPIN: string) => {
     if (previousPIN === newEnteredPIN) {
-      RNSecureKeyStore.set("PIN", previousPIN, {
-        accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY,
-      }).then(
-        (res) => {
-          RNSecureKeyStore.set("pinAttempts", "0", {
-            accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY,
-          })
-          navigation.goBack()
-        },
-        (err) => {
-          returnToSetPin()
-          Alert.alert("Unable to store your pin.")
-        },
-      )
+      if (await KeyStoreWrapper.setPin(previousPIN)) {
+        KeyStoreWrapper.setPinAttempts("0")
+        navigation.goBack()
+      } else {
+        returnToSetPin()
+        Alert.alert(translate("PinScreen.storePinFailed"))
+      }
     } else {
       returnToSetPin()
     }

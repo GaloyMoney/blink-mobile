@@ -3,15 +3,15 @@ import { useState } from "react"
 import { useFocusEffect } from "@react-navigation/native"
 import { Text, View } from "react-native"
 import { Button, Switch } from "react-native-elements"
-import EStyleSheet from "react-native-extended-stylesheet"
-import RNSecureKeyStore, { ACCESSIBLE } from "react-native-secure-key-store"
+import EStyleSheet from 'react-native-extended-stylesheet'
 
 import { Screen } from "../../components/screen"
 import { palette } from "../../theme/palette"
 import { translate } from "../../i18n"
-import { authenticate, isSensorAvailable } from "../../utils/biometricAuthentication"
+import BiometricWrapper from "../../utils/biometricAuthentication"
 import { toastShow } from "../../utils/toast"
 import type { ScreenType } from '../../types/screen'
+import KeyStoreWrapper from "../../utils/storage/secureStorage"
 
 const styles = EStyleSheet.create({
   container: {
@@ -82,6 +82,7 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
   const [isPinEnabled, setIsPinEnabled] = useState(mIsPinEnabled)
 
   useFocusEffect(() => {
+<<<<<<< HEAD
     RNSecureKeyStore.get("isBiometricsEnabled").then(
       (res) => {
         setIsBiometricsEnabled(true)
@@ -148,14 +149,51 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
         // unable to store isBiometricsEnabled
       },
     )
+=======
+    getIsBiometricsEnabled()
+    getIsPinEnabled()
+  })
+
+  const getIsBiometricsEnabled = async () => {
+    setIsBiometricsEnabled(await KeyStoreWrapper.getIsBiometryEnabled())
+  }
+
+  const getIsPinEnabled = async () => {
+    setIsPinEnabled(await KeyStoreWrapper.getPinOrEmptyString() !== "")
+  }
+
+  const onBiometricsValueChanged = async (value) => {
+    if (value) {
+      try {
+        if (await BiometricWrapper.isSensorAvailable()) {
+          BiometricWrapper.authenticate(translate("AuthenticationScreen.setUpAuthenticationDescription"), handleAuthenticationSuccess, handleAuthenticationFailure)      
+        } else {
+          toastShow(translate("SecurityScreen.biometryNotAvailable"))
+        }
+      } catch {
+        toastShow(translate("SecurityScreen.biometryNotEnrolled"))
+      }
+    } else {
+      if (await KeyStoreWrapper.removeIsBiometricsEnabled()) {
+        setIsBiometricsEnabled(false)
+      }
+    }
+  }
+
+  const handleAuthenticationSuccess = async () => {
+    if (await KeyStoreWrapper.setIsBiometryEnabled()) {
+      setIsBiometricsEnabled(true)
+    }
+>>>>>>> Wrap SecureKeyStore and Biometric utility functions
   }
 
   const handleAuthenticationFailure = () => {}
 
-  const onPinValueChanged = (value) => {
+  const onPinValueChanged = async (value) => {
     if (value) {
       navigation.navigate("pin", { screenPurpose: "setPIN" })
     } else {
+<<<<<<< HEAD
       RNSecureKeyStore.remove("PIN").then(
         (res) => {
           RNSecureKeyStore.remove("pinAttempts")
@@ -165,6 +203,16 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
           // unable to remove PIN
         },
       )
+=======
+      removePin()
+    }
+  }
+
+  const removePin = async () => {
+    if (await KeyStoreWrapper.removePin()) {
+      KeyStoreWrapper.removePinAttempts()
+      setIsPinEnabled(false)
+>>>>>>> Wrap SecureKeyStore and Biometric utility functions
     }
   }
 
