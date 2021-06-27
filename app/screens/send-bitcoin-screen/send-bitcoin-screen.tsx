@@ -98,11 +98,6 @@ const styles = EStyleSheet.create({
     fontSize: 18,
   },
 
-  horizontalContainer: {
-    flex: 1,
-    flexDirection: "row",
-  },
-
   icon: {
     color: palette.darkGrey,
     marginRight: 15,
@@ -119,23 +114,6 @@ const styles = EStyleSheet.create({
     paddingHorizontal: 20,
   },
 
-  memo: {
-    color: palette.darkGrey,
-    fontSize: 18,
-    marginLeft: 10,
-    textAlign: "left",
-  },
-
-  overlay: {
-    backgroundColor: "rgba(0,0,0,0.4)",
-    bottom: 0,
-    flexDirection: "row",
-    justifyContent: "center",
-    left: 0,
-    position: "absolute",
-    right: 0,
-  },
-
   section: {
     marginHorizontal: 48,
     // width: "100%"
@@ -146,12 +124,6 @@ const styles = EStyleSheet.create({
     fontSize: 18,
     textAlign: "left",
     width: "48rem",
-  },
-
-  squareButton: {
-    backgroundColor: color.primary,
-    height: 70,
-    width: 70,
   },
 })
 
@@ -234,8 +206,10 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
   const [updateWallet] = useLazyQuery(WALLET, { fetchPolicy: "network-only" })
 
   // TODO use a debouncer to avoid flickering https://github.com/helfer/apollo-link-debounce
-  const [usernameExistsQuery, { loading: loadingUserNameExist, data: dataUsernameExists }] =
-    useLazyQuery(USERNAME_EXIST, { fetchPolicy: "network-only" })
+  const [
+    usernameExistsQuery,
+    { loading: loadingUserNameExist, data: dataUsernameExists },
+  ] = useLazyQuery(USERNAME_EXIST, { fetchPolicy: "network-only" })
 
   const [prefCurrency, nextPrefCurrency] = usePrefCurrency()
 
