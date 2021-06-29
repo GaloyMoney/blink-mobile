@@ -68,7 +68,6 @@ const styles = EStyleSheet.create({
   },
 
   pinPad: {
-    // backgroundColor: palette.orange,
     flex: 6,
     alignItems: "center",
     flexDirection: "column",

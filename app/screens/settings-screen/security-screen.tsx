@@ -155,7 +155,7 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
   })
 
   const getIsBiometricsEnabled = async () => {
-    setIsBiometricsEnabled(await KeyStoreWrapper.getIsBiometryEnabled())
+    setIsBiometricsEnabled(await KeyStoreWrapper.getIsBiometricsEnabled())
   }
 
   const getIsPinEnabled = async () => {
@@ -181,7 +181,7 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
   }
 
   const handleAuthenticationSuccess = async () => {
-    if (await KeyStoreWrapper.setIsBiometryEnabled()) {
+    if (await KeyStoreWrapper.setIsBiometricsEnabled()) {
       setIsBiometricsEnabled(true)
     }
 >>>>>>> Wrap SecureKeyStore and Biometric utility functions

@@ -38,16 +38,15 @@ type Props = {
 }
 
 export const AuthenticationCheckScreen: ScreenType = ({ navigation }: Props) => {
-
   useFocusEffect(() => {
     checkForAuthentication()
   })
 
   const checkForAuthentication = async () => {
-    let isBiometricsEnabled = await KeyStoreWrapper.getIsBiometryEnabled()
-    let pin = await KeyStoreWrapper.getPinOrEmptyString()
-    let pinAttempts = await KeyStoreWrapper.getPinAttemptsOrZero()
-    let isBiometryAvailable = await BiometricWrapper.isSensorAvailable()
+    const isBiometricsEnabled = await KeyStoreWrapper.getIsBiometricsEnabled()
+    const pin = await KeyStoreWrapper.getPinOrEmptyString()
+    const pinAttempts = await KeyStoreWrapper.getPinAttemptsOrZero()
+    const isBiometryAvailable = await BiometricWrapper.isSensorAvailable()
 
     if (isBiometricsEnabled && isBiometryAvailable) {
       navigation.replace("authentication", {

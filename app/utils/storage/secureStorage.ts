@@ -1,46 +1,35 @@
-import RNSecureKeyStore, {ACCESSIBLE} from "react-native-secure-key-store"
+import RNSecureKeyStore, { ACCESSIBLE } from "react-native-secure-key-store"
 
 export default class KeyStoreWrapper {
-
-  private static readonly IS_BIOMETRY_ENABLED = "isBiometryEnabled"
+  private static readonly IS_BIOMETRICS_ENABLED = "isBiometricsEnabled"
   private static readonly PIN = "PIN"
   private static readonly PIN_ATTEMPTS = "pinAttempts"
 
-  // Set Key Value
-
-  public static async setIsBiometryEnabled() : Promise<Boolean> {
+  public static async getIsBiometricsEnabled() : Promise<boolean> {
     try {
-
-      await RNSecureKeyStore.set(KeyStoreWrapper.IS_BIOMETRY_ENABLED, "1", {accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY})
+      await RNSecureKeyStore.get(KeyStoreWrapper.IS_BIOMETRICS_ENABLED)
       return true
     } catch {
       return false
     }
   }
 
-  public static async setPin(pin: string) : Promise<Boolean> {
+  public static async setIsBiometricsEnabled() : Promise<boolean> {
     try {
-      await RNSecureKeyStore.set(KeyStoreWrapper.PIN, pin, {accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY})
+      await RNSecureKeyStore.set(
+        KeyStoreWrapper.IS_BIOMETRICS_ENABLED,
+        "1",
+        { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY }
+      )
       return true
     } catch {
       return false
     }
   }
 
-  public static async setPinAttempts(pinAttempts: string) : Promise<Boolean> {
+  public static async removeIsBiometricsEnabled() : Promise<boolean> {
     try {
-      await RNSecureKeyStore.set(KeyStoreWrapper.PIN_ATTEMPTS, pinAttempts, {accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY})
-      return true
-    } catch {
-      return false
-    }
-  }
-
-  // Get Key Value
-
-  public static async getIsBiometryEnabled() : Promise<Boolean> {
-    try {
-      await RNSecureKeyStore.get(KeyStoreWrapper.IS_BIOMETRY_ENABLED)
+      await RNSecureKeyStore.remove(KeyStoreWrapper.IS_BIOMETRICS_ENABLED)
       return true
     } catch {
       return false
@@ -55,26 +44,20 @@ export default class KeyStoreWrapper {
     }
   }
 
-  public static async getPinAttemptsOrZero() : Promise<Number> {
+  public static async setPin(pin: string) : Promise<boolean> {
     try {
-      return Number(await RNSecureKeyStore.get(KeyStoreWrapper.PIN_ATTEMPTS))
-    } catch {
-      return 0
-    }
-  }
-
-  // Remove Key Value
-
-  public static async removeIsBiometricsEnabled() : Promise<Boolean> {
-    try {
-      await RNSecureKeyStore.remove(KeyStoreWrapper.IS_BIOMETRY_ENABLED)
+      await RNSecureKeyStore.set(
+        KeyStoreWrapper.PIN,
+        pin,
+        { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY }
+      )
       return true
     } catch {
       return false
     }
   }
 
-  public static async removePin() : Promise<Boolean> {
+  public static async removePin() : Promise<boolean> {
     try {
       await RNSecureKeyStore.remove(KeyStoreWrapper.PIN)
       return true
@@ -83,7 +66,28 @@ export default class KeyStoreWrapper {
     }
   }
 
-  public static async removePinAttempts() : Promise<Boolean> {
+  public static async getPinAttemptsOrZero() : Promise<number> {
+    try {
+      return Number(await RNSecureKeyStore.get(KeyStoreWrapper.PIN_ATTEMPTS))
+    } catch {
+      return 0
+    }
+  }
+
+  public static async setPinAttempts(pinAttempts: string) : Promise<boolean> {
+    try {
+      await RNSecureKeyStore.set(
+        KeyStoreWrapper.PIN_ATTEMPTS,
+        pinAttempts,
+        { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY }
+      )
+      return true
+    } catch {
+      return false
+    }
+  }
+
+  public static async removePinAttempts() : Promise<boolean> {
     try {
       await RNSecureKeyStore.remove(KeyStoreWrapper.PIN_ATTEMPTS)
       return true

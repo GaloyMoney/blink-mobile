@@ -81,7 +81,12 @@ export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) =
   })
 
   const attemptAuthentication = () => {
-    let description = (screenPurpose === "authenticate") ? translate("AuthenticationScreen.authenticationDescription") : translate("AuthenticationScreen.setUpAuthenticationDescription")
+    let description
+    if (screenPurpose === "authenticate") {
+      description = translate("AuthenticationScreen.authenticationDescription")
+    } else {
+      description = translate("AuthenticationScreen.setUpAuthenticationDescription")
+    }
     BiometricWrapper.authenticate(description, handleAuthenticationSuccess, handleAuthenticationFailure)
   }
 
@@ -89,13 +94,14 @@ export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) =
     if (screenPurpose === "authenticate") {
       KeyStoreWrapper.setPinAttempts("0")
     } else if (screenPurpose === "turnOnAuthentication") {
-      KeyStoreWrapper.setIsBiometryEnabled()
+      KeyStoreWrapper.setIsBiometricsEnabled()
     }
     navigation.replace("Primary")
   }
 
   const handleAuthenticationFailure = () => {
-    // Failed to Authenticate
+    /* This is called when a user cancels or taps out of the authentication prompt,
+    so no action is necessary. */
   }
 
   const logout = async () => {
@@ -133,7 +139,7 @@ export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) =
     pinButtonContent = null
   }
 
-  if (screenPurpose == "authenticate") {
+  if (screenPurpose === "authenticate") {
     alternateContent = (
       <>
         {pinButtonContent}
@@ -146,7 +152,7 @@ export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) =
         />
       </>
     )
-  } else if (screenPurpose == "turnOnAuthentication") {
+  } else if (screenPurpose === "turnOnAuthentication") {
     alternateContent = (
       <Button
         title={translate("AuthenticationScreen.skip")}
