@@ -1,8 +1,8 @@
 import { bech32 } from "bech32"
 
-import { SUPPORTED_PROTOCOLS } from "../constants/lnurl"
-
 import { satToMsat } from "./amount"
+
+import { SUPPORTED_PROTOCOLS } from "../constants/lnurl"
 
 import type { LNUrlPay } from "../types/lnurl"
 
@@ -17,6 +17,7 @@ export const parseUrl = async (invoice: string): Promise<LNUrlPay> => {
   const { words } = bech32.decode(invoice, 2000)
 
   const url = Buffer.from(bech32.fromWords(words)).toString()
+  console.log(url)
 
   return fetch(url)
     .then((response) => response.json())
@@ -33,11 +34,7 @@ export const invoiceRequest = (callback: string, amount: number): string => {
   return request
 }
 
-export const lnUrlPay = async (
-  invoice: string,
-  amount: number,
-  callbackFn: Function,
-): Promise<void> => {
+export const lnUrlPay = async (invoice: string, amount: number): Promise<void> => {
   try {
     const request = await parseUrl(invoice)
     const { tag, minSendable, maxSendable, callback } = request
@@ -52,16 +49,14 @@ export const lnUrlPay = async (
 
     const invoiceUrl = invoiceRequest(callback, amount)
 
-    fetch(invoiceUrl)
+    return fetch(invoiceUrl)
       .then((response) => response.json())
       .then((data) => {
         if (data.status === "ERROR") {
           throw new Error("Error while requesting lnurl invoice")
         }
 
-        const memo = `LNURL payment`
-        // invoice, amount, memo
-        callbackFn({ invoice: data.pr })
+        return data.pr
       })
   } catch (error) {
     console.log(error)
