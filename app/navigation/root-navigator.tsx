@@ -35,6 +35,7 @@ import {
 import { PriceScreen } from "../screens/price-screen/price-screen"
 import { ReceiveBitcoinScreen } from "../screens/receive-bitcoin-screen"
 import { ScanningQRCodeScreen, SendBitcoinScreen } from "../screens/send-bitcoin-screen"
+import { SendLNUrlScreen } from "../screens/send-bitcoin-screen/send-lnurl-screen"
 import { SettingsScreen, UsernameScreen } from "../screens/settings-screen"
 import { LanguageScreen } from "../screens/settings-screen/language-screen"
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
@@ -386,6 +387,7 @@ export const RootStack = () => {
         // })}
         initialParams={{ account: AccountType.Bitcoin }}
       />
+      <RootNavigator.Screen name="sendLNUrl" component={SendLNUrlScreen} />
     </RootNavigator.Navigator>
   )
 }
