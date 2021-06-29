@@ -1,0 +1,42 @@
+{
+  "env": {
+    "es2021": true,
+    "react-native/react-native": true
+  },
+  "extends": [
+    "prettier",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react-native/all",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 12
+  },
+  "plugins": ["react", "react-native", "@typescript-eslint", "prettier"],
+  "rules": {
+    "prettier/prettier": "error",
+    "@typescript-eslint/no-extra-semi": "off",
+    "@typescript-eslint/prefer-for-of": "error",
+    "@typescript-eslint/unified-signatures": "error",
+    "import/prefer-default-export": "off",
+    "import/no-deprecated": "error",
+    "import/no-extraneous-dependencies": "error",
+    "import/no-unassigned-import": "error",
+    "no-duplicate-imports": "error",
+    "no-empty": ["error", { "allowEmptyCatch": true }],
+    "no-empty-function": "error",
+    "no-new-wrappers": "error",
+    "no-param-reassign": "error",
+    "no-sequences": "error",
+    "no-throw-literal": "error",
+    "no-void": "error"
+  },
+  "settings": {
+    "react-native/style-sheet-object-names": ["EStyleSheet"]
+  }
+}

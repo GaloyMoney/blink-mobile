@@ -24,7 +24,8 @@ const SHOW_STORYBOOK = false
 let RootComponent = App
 if (__DEV__ && SHOW_STORYBOOK) {
   // Only include Storybook if we're in dev mode
-  import { StorybookUIRoot } from "./storybook"
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const { StorybookUIRoot } = require("./storybook")
   RootComponent = StorybookUIRoot
 }
 
