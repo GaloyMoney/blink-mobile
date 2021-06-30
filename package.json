@@ -5,7 +5,8 @@
   "scripts": {
     "start": "react-native start",
     "test": "yarn compile && jest --runInBand && yarn lint && yarn clean",
-    "lint": "eslint app --ext .js,.ts,.tsx",
+    "eslint-check": "eslint app --ext .js,.ts,.tsx",
+    "prettier-check": "prettier 'app/**/*.{ts,tsx}' 'storybook/**/*.{ts,tsx}' --check",
     "prettier-format": "prettier 'app/**/*.{ts,tsx}' 'storybook/**/*.{ts,tsx}' --write",
     "compile": "tsc -p .",
     "format": "npm-run-all format:*",
