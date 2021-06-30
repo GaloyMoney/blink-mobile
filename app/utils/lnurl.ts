@@ -11,47 +11,33 @@ export const isLnUrl = (invoice: string): boolean => invoice.toLowerCase().start
 export const isProtocolSupported = (tag: string): boolean => !!SUPPORTED_PROTOCOLS[tag]
 
 export const isAmountValid = (amount: number, minSendable: number, maxSendable: number): boolean =>
-  minSendable < amount && amount < maxSendable
+  minSendable <= amount && amount <= maxSendable
 
 export const parseUrl = async (invoice: string): Promise<LNUrlPay> => {
   const { words } = bech32.decode(invoice, 2000)
 
   const url = Buffer.from(bech32.fromWords(words)).toString()
-  console.log(url)
 
   return fetch(url)
     .then((response) => response.json())
-    .then((json) => json as LNUrlPay)
+    .then((json) => {
+      console.log(json)
+      return json as LNUrlPay
+    })
 }
 
-export const invoiceRequest = (callback: string, amount: number): string => {
-  const nonce = Math.floor(Math.random() * 2e8)
-  const finalAmount = satToMsat(amount)
-  const separator = callback.includes("?") ? "&" : "?"
-
-  const request = `${callback}${separator}amount=${finalAmount}&nonce=${nonce}`
-
-  return request
-}
-
-export const lnUrlPay = async (invoice: string, amount: number): Promise<void> => {
+export const invoiceRequest = (callback: string, amount: number): Promise<string> => {
   try {
-    const request = await parseUrl(invoice)
-    const { tag, minSendable, maxSendable, callback } = request
+    const nonce = Math.floor(Math.random() * 2e8)
+    const finalAmount = satToMsat(amount)
+    const separator = callback.includes("?") ? "&" : "?"
 
-    if (!isProtocolSupported(tag)) {
-      throw new Error("LNURL protocol not supported")
-    }
+    const request = `${callback}${separator}amount=${finalAmount}&nonce=${nonce}&comment=${nonce}`
 
-    if (!isAmountValid(amount, minSendable, maxSendable)) {
-      throw new Error(`Amount must be between ${minSendable} and ${maxSendable}`)
-    }
-
-    const invoiceUrl = invoiceRequest(callback, amount)
-
-    return fetch(invoiceUrl)
+    return fetch(request)
       .then((response) => response.json())
       .then((data) => {
+        console.log(data)
         if (data.status === "ERROR") {
           throw new Error("Error while requesting lnurl invoice")
         }
@@ -59,6 +45,7 @@ export const lnUrlPay = async (invoice: string, amount: number): Promise<void> =
         return data.pr
       })
   } catch (error) {
-    console.log(error)
+    // TODO: treat errors
+    console.log("ERR" + error)
   }
 }

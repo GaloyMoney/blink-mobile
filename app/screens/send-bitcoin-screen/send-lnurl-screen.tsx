@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { useNavigation } from "@react-navigation/native"
 import { gql, useApolloClient, useMutation } from "@apollo/client"
-import { ScrollView, Text, View } from "react-native"
+import { Alert, ScrollView, Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import LottieView from "lottie-react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
@@ -18,7 +18,8 @@ import { palette } from "../../theme/palette"
 import { btc_price, balanceBtc } from "../../graphql/query"
 import { usePrefCurrency } from "../../hooks/usePrefCurrency"
 import { Row } from "../../components/shared/row"
-import { lnUrlPay, parseUrl } from "../../utils/lnurl"
+import { invoiceRequest, isAmountValid, isProtocolSupported, parseUrl } from "../../utils/lnurl"
+import { mSatToSat, satToMsat } from "../../utils/amount"
 
 const LIGHTNING_FEES = gql`
   mutation lightning_fees($invoice: String, $amount: Int) {
@@ -36,9 +37,6 @@ const PAY_INVOICE = gql`
   }
 `
 
-const lnurlI =
-  "LNURL1DP68GURN8GHJ7MRWW4EXCTNXD9SHG6NPVCHXXMMD9AKXUATJDSKHQCTE8AEK2UMND9HKU0TXVS6X2C3EXUUKVC35XPJKGDNXXQCNQCM9XAJRWVRXV33NJWRXVVERGERPV5UXVCEEXYEKVWF3XQEK2DFEXV6XYCF4VCENZDF4XY6NWEJ89Y7"
-
 const styles = EStyleSheet.create({
   buttonContainerStyle: {
     flex: 1,
@@ -48,6 +46,11 @@ const styles = EStyleSheet.create({
     marginBottom: 32,
     marginHorizontal: 24,
     marginTop: 32,
+  },
+  errorContainer: {
+    alignItems: "center",
+    flex: 1,
+    justifyContent: "center",
   },
   errorText: {
     color: palette.red,
@@ -72,7 +75,8 @@ const styles = EStyleSheet.create({
   },
 })
 
-export const SendLNUrlScreen = () => {
+export const SendLNUrlScreen = ({ route }) => {
+  console.log(route)
   const { goBack } = useNavigation()
   const client = useApolloClient()
   const price = btc_price(client)
@@ -84,6 +88,8 @@ export const SendLNUrlScreen = () => {
   const [invoice, setInvoice] = useState("")
   const [submitStatus, setSubmitStatus] = useState(0)
   const [callback, setCallback] = useState("")
+  const [minSendable, setMinSendable] = useState(null)
+  const [maxSendable, setMaxSendable] = useState(null)
   const [description, setDescription] = useState("")
   const [prefCurrency, nextPrefCurrency] = usePrefCurrency()
 
@@ -93,13 +99,26 @@ export const SendLNUrlScreen = () => {
   const hasEnoughBalance = balance >= amount
 
   useEffect(() => {
-    const initialInvoiceParse = async () => {
-      const lnurlInvoice = await lnUrlPay(lnurlI, 8000)
-      console.log(lnurlInvoice)
+    const parseInitialInvoice = async () => {
+      const lnurl = await parseUrl(route.params.invoice)
+      const { tag, callback, minSendable, maxSendable } = lnurl
+
+      if (!isProtocolSupported(tag)) {
+        Alert.alert("LNUrl protocol not supported")
+        throw new Error("LNURL protocol not supported")
+      }
+
+      setAmount(mSatToSat(minSendable))
+      setCallback(callback)
+      setMinSendable(mSatToSat(minSendable))
+      setMaxSendable(mSatToSat(maxSendable))
+      setDescription(translate("SendLNUrlScreen.description", { merchant: callback }))
     }
 
     const getFees = async () => {
-      const fees = await lightningFees({ variables: { invoice } })
+      const checkFeeInvoice = await invoiceRequest(callback, satToMsat(minSendable))
+      console.log("check" + checkFeeInvoice)
+      const fees = await lightningFees({ variables: { invoice: checkFeeInvoice } })
       const {
         data: {
           invoice: { getFee },
@@ -108,19 +127,23 @@ export const SendLNUrlScreen = () => {
       setFees(getFee)
     }
 
-    initialInvoiceParse()
+    parseInitialInvoice()
+    getFees()
   }, [])
 
   const submitPayment = async () => {
     setSubmitStatus(1)
 
     try {
-      const payment = await payInvoice({ variables: { invoice } })
+      const paymentInvoice = await invoiceRequest(callback, amount)
+      console.log("pay", paymentInvoice)
+      const payment = await payInvoice({ variables: { invoice: paymentInvoice } })
       const { data } = payment
+      console.log("gql", data)
 
       setSubmitStatus(0)
 
-      if (data.invoice === "success") {
+      if (data.invoice.payInvoice === "success" || data.invoice.payInvoice === "pending") {
         setStatus(PAYMENT_STATUS.Success)
       } else {
         setStatus(PAYMENT_STATUS.Error)
@@ -146,38 +169,54 @@ export const SendLNUrlScreen = () => {
             forceKeyboard
             price={price}
           />
-          {amount > balance && <Text>You cant send</Text>}
+          <View style={styles.errorContainer}>
+            {amount > balance && <Text>You don't have enough balance</Text>}
+            {!minSendable !== null && !isAmountValid(amount, minSendable, maxSendable) && (
+              <Text>
+                You must set an amount between {minSendable} and {maxSendable}
+              </Text>
+            )}
+          </View>
         </View>
         <View style={styles.transactionDetailView}>
+          <Row
+            entry="Min. amount"
+            value={minSendable === null ? "Loading" : minSendable.toString()}
+          />
+          <Row
+            entry="Max. amount"
+            value={maxSendable === null ? "Loading" : maxSendable.toString()}
+          />
           <Row entry="Fees" value={fees === null ? "Loading fees" : fees} />
-          <Row entry="Description" value="This is the invoice description" />
+          <Row entry="Description" value={description} />
         </View>
+        <View style={{ alignItems: "center" }}>
+          {status === PAYMENT_STATUS.Success && (
+            <>
+              <LottieView
+                source={successLottie}
+                loop={false}
+                autoPlay
+                style={styles.lottie}
+                resizeMode="cover"
+              />
+              <Text style={styles.successText}>{"Success"}</Text>
+            </>
+          )}
 
-        {status === PAYMENT_STATUS.Success && (
-          <>
-            <LottieView
-              source={successLottie}
-              loop={false}
-              autoPlay
-              style={styles.lottie}
-              resizeMode="cover"
-            />
-            <Text style={styles.successText}>{"Success"}</Text>
-          </>
-        )}
-
-        {status === PAYMENT_STATUS.Error && (
-          <>
-            <LottieView
-              source={errorLottie}
-              loop={false}
-              autoPlay
-              style={styles.lottie}
-              resizeMode="cover"
-            />
-            <Text style={styles.errorText}>{"Payment error"}</Text>
-          </>
-        )}
+          {status === PAYMENT_STATUS.Error && (
+            <>
+              <LottieView
+                source={errorLottie}
+                loop={false}
+                autoPlay
+                style={styles.lottie}
+                resizeMode="cover"
+              />
+              <Text style={styles.errorText}>{"Payment error"}</Text>
+            </>
+          )}
+        </View>
         <Button
           buttonStyle={styles.buttonStyle}
           containerStyle={styles.buttonContainerStyle}
