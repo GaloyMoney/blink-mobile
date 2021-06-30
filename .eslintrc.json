@@ -17,14 +17,13 @@
     },
     "ecmaVersion": 12
   },
-  "plugins": ["react", "react-native", "@typescript-eslint", "prettier"],
+  "plugins": ["react", "react-native", "@typescript-eslint", "prettier", "import"],
   "rules": {
     "prettier/prettier": "error",
     "@typescript-eslint/no-extra-semi": "off",
     "@typescript-eslint/prefer-for-of": "error",
     "@typescript-eslint/unified-signatures": "error",
     "import/prefer-default-export": "off",
-    "import/no-deprecated": "error",
     "import/no-extraneous-dependencies": "error",
     "import/no-unassigned-import": "error",
     "no-duplicate-imports": "error",
