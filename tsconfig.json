@@ -18,6 +18,7 @@
     "noEmit": true,
     "esModuleInterop": true,
     "isolatedModules": true,
+    "resolveJsonModule": true
   },
   "exclude": ["node_modules"],
   "include": ["app", "test", "storybook"]
