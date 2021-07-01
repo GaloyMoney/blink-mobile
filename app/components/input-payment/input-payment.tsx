@@ -15,9 +15,16 @@ import { CurrencyType } from "../../utils/enum"
 import { TextCurrency } from "../text-currency/text-currency"
 
 const styles = EStyleSheet.create({
-  amount: {
+  container: {
     alignItems: "center",
-    flexDirection: "column",
+  },
+
+  icon: {
+    paddingTop: 4,
+  },
+
+  inputContainer: {
+    width: "100%",
   },
 
   main: {
@@ -37,15 +44,19 @@ const styles = EStyleSheet.create({
   textStyle: {
     color: palette.darkGrey,
     fontSize: "18rem",
+    textAlign: "center",
   },
 })
 
 export interface InputPaymentDataInjectedProps {
+  price: string | number
   editable: boolean
   onUpdateAmount(number): void
   onBlur?(): void
   forceKeyboard: boolean
   initAmount?: number
+  prefCurrency: string
+  nextPrefCurrency: () => void
   currencyPreference?: string // "sats" | "BTC" | "usd"
   sub?: boolean
 }
@@ -70,13 +81,13 @@ export const InputPayment = ({
   price,
   editable,
   onUpdateAmount,
-  onBlur = () => {},
+  onBlur = () => null,
   forceKeyboard = false,
   sub = true,
   initAmount = 0, // in sats
   prefCurrency,
   nextPrefCurrency,
-}) => {
+}: InputPaymentDataInjectedProps) => {
   const endByDot = (s: string) => s.match(/^[0-9]*\.{1}$/)
 
   const [amount, setAmount] = React.useState(initAmount)
@@ -147,7 +158,7 @@ export const InputPayment = ({
   }
 
   return (
-    <View style={{ alignItems: "center" }}>
+    <View style={styles.container}>
       <View style={styles.main}>
         <Input
           ref={inputRef}
@@ -187,8 +198,8 @@ export const InputPayment = ({
               </Text>
             ) : null
           }
-          inputContainerStyle={{ width: "100%" }}
-          inputStyle={[styles.textStyle, { textAlign: "center" }]}
+          inputContainerStyle={styles.inputContainer}
+          inputStyle={[styles.textStyle]}
           onChangeText={setInput}
           keyboardType={currency === "sats" ? "number-pad" : "decimal-pad"}
           onBlur={(event) => {
@@ -203,7 +214,7 @@ export const InputPayment = ({
           renderErrorMessage={false}
         />
         <TouchableOpacity onPress={nextPrefCurrency}>
-          <Icon name="ios-swap-vertical" size={32} style={{ paddingTop: 4 }} />
+          <Icon name="ios-swap-vertical" size={32} style={styles.icon} />
         </TouchableOpacity>
       </View>
       {sub && (

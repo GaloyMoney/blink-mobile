@@ -15,11 +15,37 @@ import { validPayment } from "../../utils/parsing"
 import { Token } from "../../utils/token"
 
 const styles = StyleSheet.create({
+  buttonContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    alignContent: "stretch",
+  },
+
   buttonStyle: {
     backgroundColor: color.primary,
     marginHorizontal: 20,
     marginVertical: 10,
     width: 145,
+  },
+
+  icon: {
+    height: 40,
+    top: -40,
+  },
+
+  iconContainer: {
+    height: 14,
+  },
+
+  message: {
+    fontSize: 18,
+    marginVertical: 8,
+  },
+
+  modal: {
+    flexGrow: 1,
+    marginBottom: 0,
+    marginHorizontal: 0,
   },
 
   modalBackground: {
@@ -33,6 +59,11 @@ const styles = StyleSheet.create({
     backgroundColor: palette.white,
     paddingHorizontal: 20,
     paddingTop: 10,
+  },
+
+  touchable: {
+    height: "100%",
+    width: "100%",
   },
 })
 
@@ -76,26 +107,24 @@ export const ModalClipboard = () => {
       onSwipeComplete={dismiss}
       swipeThreshold={50}
       propagateSwipe
-      style={{ marginHorizontal: 0, marginBottom: 0, flexGrow: 1 }}
+      style={styles.modal}
     >
       <View style={styles.modalBackground}>
         <TouchableWithoutFeedback onPress={dismiss}>
-          <View style={{ height: "100%", width: "100%" }} />
+          <View style={styles.touchable} />
         </TouchableWithoutFeedback>
       </View>
       <SafeAreaView style={styles.modalForeground}>
-        <View style={{ height: 14 }}>
+        <View style={styles.iconContainer}>
           <Icon
             name="ios-remove"
             size={72}
             color={palette.lightGrey}
-            style={{ height: 40, top: -40 }}
+            style={styles.icon}
           />
         </View>
-        <Text style={{ fontSize: 18, marginVertical: 8 }}>{message}</Text>
-        <View
-          style={{ flexDirection: "row", alignItems: "center", alignContent: "stretch" }}
-        >
+        <Text style={styles.message}>{message}</Text>
+        <View style={styles.buttonContainer}>
           <Button title="Dismiss" onPress={dismiss} buttonStyle={styles.buttonStyle} />
           <Button title="Open" onPress={open} buttonStyle={styles.buttonStyle} />
         </View>

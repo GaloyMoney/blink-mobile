@@ -13,7 +13,7 @@ storiesOf("InputPayment", module)
         <InputPayment
           currencyPreference="USD"
           price={0.00011}
-          onUpdateAmount={() => {}}
+          onUpdateAmount={() => true}
           editable
         />
       </UseCase>
@@ -22,7 +22,7 @@ storiesOf("InputPayment", module)
           currencyPreference="USD"
           price={0.00011}
           initAmount={12345}
-          onUpdateAmount={() => {}}
+          onUpdateAmount={() => true}
           editable={false}
         />
       </UseCase>

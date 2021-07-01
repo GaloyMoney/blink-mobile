@@ -6,6 +6,11 @@ import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
 
 const styles = EStyleSheet.create({
+  amountContainer: {
+    alignItems: "center",
+    paddingBottom: 16,
+  },
+
   headerSection: {
     color: palette.white,
     fontSize: "16rem",
@@ -28,10 +33,15 @@ const styles = EStyleSheet.create({
   },
 })
 
-export const MountainHeader = ({ amount, color }) => (
+type Props = {
+  amount: string
+  color: string
+}
+
+export const MountainHeader = ({ amount, color }: Props) => (
   <View style={{ backgroundColor: color }}>
     <View style={styles.topView}>
-      <View style={{ alignItems: "center", paddingBottom: 16 }}>
+      <View style={styles.amountContainer}>
         <Text style={styles.headerSection}>{translate("EarnScreen.youEarned")}</Text>
         <Text style={styles.titleSection}>{amount} sats</Text>
       </View>

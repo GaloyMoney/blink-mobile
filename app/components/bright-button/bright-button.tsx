@@ -17,6 +17,10 @@ const styles = EStyleSheet.create({
     backgroundColor: palette.lightBlue,
     borderRadius: 32,
   },
+
+  titleStyle: {
+    fontWeight: "bold",
+  },
 })
 
 export const BrightButton = (props) => (
@@ -25,7 +29,7 @@ export const BrightButton = (props) => (
     type="solid"
     containerStyle={styles.buttonContainer}
     buttonStyle={styles.buttonStyle}
-    titleStyle={{ fontWeight: "bold" }}
+    titleStyle={styles.titleStyle}
     {...props}
   />
 )
