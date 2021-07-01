@@ -14,7 +14,8 @@ export const GlobalErrorToast = () => {
     return null
   }
 
-  const networkError = status.queryError?.networkError || status.mutationError?.networkError
+  const networkError =
+    status.queryError?.networkError || status.mutationError?.networkError
 
   if (!networkError) {
     return null

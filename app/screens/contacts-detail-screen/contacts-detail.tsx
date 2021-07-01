@@ -92,7 +92,12 @@ export const ContactsDetailScreenJSX = ({ contact, navigation, transactions }) =
   return (
     <Screen style={styles.screen} unsafe>
       <View style={[styles.amountView, { backgroundColor: palette.green }]}>
-        <Icon name="ios-person-outline" size={94} color={palette.white} style={{ margin: 0 }} />
+        <Icon
+          name="ios-person-outline"
+          size={94}
+          color={palette.white}
+          style={{ margin: 0 }}
+        />
         <View style={{ flexDirection: "row" }}>
           <Input
             style={styles.amount}

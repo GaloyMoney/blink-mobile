@@ -205,9 +205,12 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
     fetchPolicy: "network-only",
   })
 
-  const [lightningPay, { loading: paymentlightningLoading }] = useMutation(LIGHTNING_PAY, {
-    update: () => queryTransactions(),
-  })
+  const [lightningPay, { loading: paymentlightningLoading }] = useMutation(
+    LIGHTNING_PAY,
+    {
+      update: () => queryTransactions(),
+    },
+  )
 
   const [payKeysendUsername, { loading: paymentKeysendLoading }] = useMutation(
     PAY_KEYSEND_USERNAME,
@@ -234,8 +237,10 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
   const [updateWallet] = useLazyQuery(WALLET, { fetchPolicy: "network-only" })
 
   // TODO use a debouncer to avoid flickering https://github.com/helfer/apollo-link-debounce
-  const [usernameExistsQuery, { loading: loadingUserNameExist, data: dataUsernameExists }] =
-    useLazyQuery(USERNAME_EXIST, { fetchPolicy: "network-only" })
+  const [
+    usernameExistsQuery,
+    { loading: loadingUserNameExist, data: dataUsernameExists },
+  ] = useLazyQuery(USERNAME_EXIST, { fetchPolicy: "network-only" })
 
   const [prefCurrency, nextPrefCurrency] = usePrefCurrency()
 
@@ -570,7 +575,10 @@ export const SendBitcoinScreenJSX = ({
   nextPrefCurrency,
 }) => (
   <Screen preset="fixed">
-    <ScrollView style={styles.mainView} contentContainerStyle={{ justifyContent: "space-between" }}>
+    <ScrollView
+      style={styles.mainView}
+      contentContainerStyle={{ justifyContent: "space-between" }}
+    >
       <View style={styles.section}>
         <InputPayment
           prefCurrency={prefCurrency}
@@ -595,7 +603,12 @@ export const SendBitcoinScreenJSX = ({
           leftIcon={
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.smallText}>{translate("common.to")}</Text>
-              <Icon name="ios-log-out" size={24} color={color.primary} style={styles.icon} />
+              <Icon
+                name="ios-log-out"
+                size={24}
+                color={color.primary}
+                style={styles.icon}
+              />
             </View>
           }
           onChangeText={setDestination}
@@ -637,7 +650,12 @@ export const SendBitcoinScreenJSX = ({
           leftIcon={
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.smallText}>{translate("common.note")}</Text>
-              <Icon name="ios-create-outline" size={24} color={color.primary} style={styles.icon} />
+              <Icon
+                name="ios-create-outline"
+                size={24}
+                color={color.primary}
+                style={styles.icon}
+              />
             </View>
           }
           value={memo}
@@ -651,7 +669,12 @@ export const SendBitcoinScreenJSX = ({
           leftIcon={
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.smallText}>{translate("common.Fee")}</Text>
-              <Icon name="ios-pricetag" size={24} color={color.primary} style={styles.icon} />
+              <Icon
+                name="ios-pricetag"
+                size={24}
+                color={color.primary}
+                style={styles.icon}
+              />
             </View>
           }
           value={fee}

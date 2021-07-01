@@ -97,7 +97,11 @@ export const SVGs = ({ name, width, theme }: ISVGs) => {
         <FiatLosesValueOverTime width={rWidth} />
       )
     case "OtherIssues":
-      return theme === "dark" ? <OtherIssuesDark width={rWidth} /> : <OtherIssues width={rWidth} />
+      return theme === "dark" ? (
+        <OtherIssuesDark width={rWidth} />
+      ) : (
+        <OtherIssues width={rWidth} />
+      )
 
     case "LimitedSupply":
       return <LimitedSupply width={rWidth} />

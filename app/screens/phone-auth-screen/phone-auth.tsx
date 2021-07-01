@@ -137,7 +137,9 @@ export const WelcomePhoneInputScreen: ScreenType = ({
     console.log({ initPhoneNumber: inputRef.current.getValue() })
 
     if (!inputRef.current.isValidNumber()) {
-      Alert.alert(`${inputRef.current.getValue()} ${translate("errors.invalidPhoneNumber")}`)
+      Alert.alert(
+        `${inputRef.current.getValue()} ${translate("errors.invalidPhoneNumber")}`,
+      )
       return
     }
 

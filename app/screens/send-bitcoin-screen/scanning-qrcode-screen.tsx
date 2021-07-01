@@ -141,7 +141,11 @@ export const ScanningQRCodeScreen = () => {
               <Svg viewBox="0 0 100 100">
                 <Circle cx={50} cy={50} r={50} fill={palette.white} opacity={0.5} />
               </Svg>
-              <Icon name="ios-close" size={64} style={{ position: "absolute", top: -2 }} />
+              <Icon
+                name="ios-close"
+                size={64}
+                style={{ position: "absolute", top: -2 }}
+              />
             </View>
           </Pressable>
           <View
@@ -154,7 +158,12 @@ export const ScanningQRCodeScreen = () => {
             }}
           >
             <Pressable onPress={showImagePicker}>
-              <Icon name="image" size={64} color={palette.lightGrey} style={{ opacity: 0.8 }} />
+              <Icon
+                name="image"
+                size={64}
+                color={palette.lightGrey}
+                style={{ opacity: 0.8 }}
+              />
             </Pressable>
           </View>
         </RNCamera>

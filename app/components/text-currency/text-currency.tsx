@@ -17,7 +17,9 @@ export const TextCurrency = ({ amount, currency, style }) => {
     return (
       <View style={{ flexDirection: "row", alignItems: "flex-end" }}>
         <Text style={style}>
-          {currency_fmt.default(amount, { precision: 0, separator: ",", symbol: "" }).format()}{" "}
+          {currency_fmt
+            .default(amount, { precision: 0, separator: ",", symbol: "" })
+            .format()}{" "}
         </Text>
         {/* <Text style={[style, {fontSize: 24}]}>BTC</Text> */}
         <Text style={style}>BTC</Text>

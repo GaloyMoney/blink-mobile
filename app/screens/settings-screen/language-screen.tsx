@@ -23,8 +23,8 @@ const styles = EStyleSheet.create({
 
 export const language_mapping = {
   "": "Default (OS)",
-  en: "English",
-  es: "Español",
+  "en": "English",
+  "es": "Español",
 }
 
 export const LanguageScreen = () => {
@@ -68,7 +68,9 @@ export const LanguageScreen = () => {
           }
         >
           <ListItem.Title>{language_mapping[l]}</ListItem.Title>
-          {language === l && <Icon name="ios-checkmark-circle" size={18} color={palette.green} />}
+          {language === l && (
+            <Icon name="ios-checkmark-circle" size={18} color={palette.green} />
+          )}
         </ListItem>
       ))}
     </Screen>

@@ -2,13 +2,22 @@
 //
 // In this file, we'll be kicking off our app or storybook.
 
-import { ApolloClient, ApolloProvider, HttpLink, NormalizedCacheObject } from "@apollo/client"
+import {
+  ApolloClient,
+  ApolloProvider,
+  HttpLink,
+  NormalizedCacheObject,
+} from "@apollo/client"
 import { setContext } from "@apollo/client/link/context"
 import { RetryLink } from "@apollo/client/link/retry"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import analytics from "@react-native-firebase/analytics"
 import "@react-native-firebase/crashlytics"
-import { NavigationContainer, NavigationState, PartialState } from "@react-navigation/native"
+import {
+  NavigationContainer,
+  NavigationState,
+  PartialState,
+} from "@react-navigation/native"
 import { AsyncStorageWrapper, CachePersistor } from "apollo3-cache-persist"
 import "node-libs-react-native/globals" // needed for Buffer?
 import * as React from "react"
@@ -97,7 +106,8 @@ export const App = () => {
           retryIf: (error, operation) => {
             console.log({ error }, "retry error")
             return (
-              !!error && !/onchain_pay|payKeysendUsername|payInvoice/.test(operation.operationName)
+              !!error &&
+              !/onchain_pay|payKeysendUsername|payInvoice/.test(operation.operationName)
             )
           },
         },
@@ -127,7 +137,9 @@ export const App = () => {
 
       const client = new ApolloClient({
         cache,
-        link: linkNetworkStatusNotifier.concat(retryLink.concat(authLink.concat(httpLink))),
+        link: linkNetworkStatusNotifier.concat(
+          retryLink.concat(authLink.concat(httpLink)),
+        ),
         name: isIos ? "iOS" : "Android",
         version: `${VersionNumber.appVersion}-${VersionNumber.buildVersion}`,
       })

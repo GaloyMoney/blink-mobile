@@ -56,7 +56,11 @@ const styles = EStyleSheet.create({
 })
 
 export const GetStartedScreen = ({ navigation }) => (
-  <Screen style={styles.container} backgroundColor={palette.lightBlue} statusBar="light-content">
+  <Screen
+    style={styles.container}
+    backgroundColor={palette.lightBlue}
+    statusBar="light-content"
+  >
     <Image style={styles.Logo} source={BitcoinBeachLogo} resizeMode="contain" />
     <VersionComponent style={{ paddingTop: 18 }} />
     <View style={styles.bottom}>

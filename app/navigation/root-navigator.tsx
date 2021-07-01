@@ -490,7 +490,9 @@ export const PrimaryNavigator = () => {
         component={MoveMoneyNavigator}
         options={{
           title: translate("MoveMoneyScreen.title"),
-          tabBarIcon: ({ focused, color }) => <Icon name="ios-home" size={size} color={color} />,
+          tabBarIcon: ({ focused, color }) => (
+            <Icon name="ios-home" size={size} color={color} />
+          ),
         }}
       />
       <Tab.Screen
@@ -518,7 +520,9 @@ export const PrimaryNavigator = () => {
         component={EarnMapDataInjected}
         options={{
           title: translate("EarnScreen.title"),
-          tabBarIcon: ({ focused, color }) => <Icon name="ios-rocket" size={size} color={color} />,
+          tabBarIcon: ({ focused, color }) => (
+            <Icon name="ios-rocket" size={size} color={color} />
+          ),
         }}
       />
     </Tab.Navigator>

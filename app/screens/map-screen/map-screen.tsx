@@ -83,7 +83,10 @@ export const MapScreen: React.FC = ({ navigation }) => {
         // console.log(info)
         setCurrentLocation(
           <Marker
-            coordinate={{ latitude: info.coords.latitude, longitude: info.coords.longitude }}
+            coordinate={{
+              latitude: info.coords.latitude,
+              longitude: info.coords.longitude,
+            }}
             title="Current location"
             key="currentLocation"
             pinColor="blue"
@@ -126,7 +129,9 @@ export const MapScreen: React.FC = ({ navigation }) => {
             )}
             {isIos && (
               <CalloutSubview onPress={() => (item.username ? onPress() : null)}>
-                {!!item.username && <Button style={{ paddingTop: 12 }} title="pay this business" />}
+                {!!item.username && (
+                  <Button style={{ paddingTop: 12 }} title="pay this business" />
+                )}
               </CalloutSubview>
             )}
           </View>

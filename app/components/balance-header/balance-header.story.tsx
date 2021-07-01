@@ -26,7 +26,11 @@ storiesOf("BalanceHeader", module)
         <BalanceHeader currency={CurrencyType.BTC} amount={10000} />
       </UseCase>
       <UseCase text="Sat with dollar" usage="Bitcoin Account">
-        <BalanceHeader currency={CurrencyType.BTC} amount={10000} amountOtherCurrency={10} />
+        <BalanceHeader
+          currency={CurrencyType.BTC}
+          amount={10000}
+          amountOtherCurrency={10}
+        />
       </UseCase>
     </Story>
   ))

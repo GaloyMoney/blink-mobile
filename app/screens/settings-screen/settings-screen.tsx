@@ -12,7 +12,10 @@ import { VersionComponent } from "../../components/version"
 // Constants
 import { language_mapping } from "./language-screen"
 import { palette } from "../../theme/palette"
-import { WHATSAPP_CONTACT_NUMBER, WHATSAPP_DEFAULT_CONTACT_MESSAGE } from "../../constants/support"
+import {
+  WHATSAPP_CONTACT_NUMBER,
+  WHATSAPP_DEFAULT_CONTACT_MESSAGE,
+} from "../../constants/support"
 
 // Functions
 import { translate } from "../../i18n"
@@ -173,7 +176,8 @@ export const SettingsScreenJSX = (params) => {
       category: translate("common.contactUs"),
       icon: "ios-logo-whatsapp",
       id: "contact-us",
-      action: () => openWhatsApp(WHATSAPP_CONTACT_NUMBER, WHATSAPP_DEFAULT_CONTACT_MESSAGE),
+      action: () =>
+        openWhatsApp(WHATSAPP_CONTACT_NUMBER, WHATSAPP_DEFAULT_CONTACT_MESSAGE),
       enabled: true,
       greyed: false,
       styleDivider: { backgroundColor: palette.lighterGrey, height: 18 },

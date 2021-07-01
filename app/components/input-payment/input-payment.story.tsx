@@ -10,7 +10,12 @@ storiesOf("InputPayment", module)
   .add("Style Presets", () => (
     <Story>
       <UseCase text="Editable" usage="Loading">
-        <InputPayment currencyPreference="USD" price={0.00011} onUpdateAmount={() => {}} editable />
+        <InputPayment
+          currencyPreference="USD"
+          price={0.00011}
+          onUpdateAmount={() => {}}
+          editable
+        />
       </UseCase>
       <UseCase text="Non editable" usage="Loading">
         <InputPayment

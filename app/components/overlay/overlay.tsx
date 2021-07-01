@@ -73,7 +73,10 @@ export const Overlay = ({ screen }) => {
             }}
           >
             <View>
-              <Svg width={Dimensions.get("window").width} height={Dimensions.get("window").height}>
+              <Svg
+                width={Dimensions.get("window").width}
+                height={Dimensions.get("window").height}
+              >
                 <Defs>
                   <ClipPath id="clip">
                     <G>

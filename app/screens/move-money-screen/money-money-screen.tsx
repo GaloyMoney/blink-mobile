@@ -2,7 +2,15 @@ import { useApolloClient, useQuery } from "@apollo/client"
 import messaging from "@react-native-firebase/messaging"
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { AppState, FlatList, Linking, Pressable, RefreshControl, Text, View } from "react-native"
+import {
+  AppState,
+  FlatList,
+  Linking,
+  Pressable,
+  RefreshControl,
+  Text,
+  View,
+} from "react-native"
 import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
@@ -163,7 +171,10 @@ export const MoveMoneyScreenDataInjected = ({ navigation }) => {
     }
   }
 
-  const lastTransactions = _.find(data?.wallet, { id: "BTC" })?.transactions?.slice(undefined, 3)
+  const lastTransactions = _.find(data?.wallet, { id: "BTC" })?.transactions?.slice(
+    undefined,
+    3,
+  )
 
   return (
     <MoveMoneyScreen
@@ -216,7 +227,12 @@ export const MoveMoneyScreen = ({
   const appstore = "https://apps.apple.com/app/bitcoin-beach-wallet/id1531383905"
 
   // from https://github.com/FiberJW/react-native-app-link/blob/master/index.js
-  const openInStore = async ({ appName, appStoreId, appStoreLocale = "us", playStoreId }) => {
+  const openInStore = async ({
+    appName,
+    appStoreId,
+    appStoreLocale = "us",
+    playStoreId,
+  }) => {
     if (isIos) {
       Linking.openURL(appstore)
       // Linking.openURL(`https://itunes.apple.com/${appStoreLocale}/app/${appName}/id${appStoreId}`);
@@ -226,7 +242,11 @@ export const MoveMoneyScreen = ({
   }
 
   const linkUpgrade = () =>
-    openInStore({ appName: "Bitcoin Beach Wallet", appStoreId: "", playStoreId: "com.galoyapp" })
+    openInStore({
+      appName: "Bitcoin Beach Wallet",
+      appStoreId: "",
+      playStoreId: "com.galoyapp",
+    })
       .then(() => {
         console.log("clicked on link")
       })
@@ -268,11 +288,19 @@ export const MoveMoneyScreen = ({
           <View style={{ flex: 1 }} />
         </View>
       </Modal>
-      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-around" }}>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-around",
+        }}
+      >
         <Button
           buttonStyle={styles.buttonStyleTime}
           containerStyle={{ marginTop: 32 }}
-          onPress={() => navigation.navigate("priceDetail", { account: AccountType.Bitcoin })}
+          onPress={() =>
+            navigation.navigate("priceDetail", { account: AccountType.Bitcoin })
+          }
           icon={<Icon name="ios-trending-up-outline" size={32} />}
         />
         <BalanceHeader

@@ -43,7 +43,14 @@ interface ILargeButton {
   style?
 }
 
-export const LargeButton = ({ style, icon, title, onPress, loading, ...props }: ILargeButton) => (
+export const LargeButton = ({
+  style,
+  icon,
+  title,
+  onPress,
+  loading,
+  ...props
+}: ILargeButton) => (
   <ListItem
     style={styles.accountView}
     containerStyle={style ? styles[style] : styles.accountViewContainer}

@@ -274,16 +274,25 @@ export const EarnSection = ({ route, navigation }) => {
   }
 
   const CardItem = ({ item, index }) => {
-    const text = I18n.t(item.fullfilled ? "EarnScreen.satsEarned" : "EarnScreen.earnSats", {
-      count: item.value,
-      formatted_number: I18n.toNumber(item.value, { precision: 0 }),
-    })
+    const text = I18n.t(
+      item.fullfilled ? "EarnScreen.satsEarned" : "EarnScreen.earnSats",
+      {
+        count: item.value,
+        formatted_number: I18n.toNumber(item.value, { precision: 0 }),
+      },
+    )
 
     return (
       <>
         <View style={styles.item}>
-          <TouchableOpacity onPress={() => open(item)} activeOpacity={0.9} disabled={!item.enabled}>
-            <View style={{ paddingVertical: 12 }}>{SVGs({ name: item.id, width: svgWidth })}</View>
+          <TouchableOpacity
+            onPress={() => open(item)}
+            activeOpacity={0.9}
+            disabled={!item.enabled}
+          >
+            <View style={{ paddingVertical: 12 }}>
+              {SVGs({ name: item.id, width: svgWidth })}
+            </View>
           </TouchableOpacity>
           <View>
             <Text style={styles.itemTitle} numberOfLines={3}>
@@ -294,12 +303,19 @@ export const EarnSection = ({ route, navigation }) => {
               disabled={!item.enabled}
               disabledStyle={styles.buttonStyleDisabled}
               disabledTitleStyle={styles.titleStyleDisabled}
-              buttonStyle={item.fullfilled ? styles.buttonStyleFullfilled : styles.textButton}
-              titleStyle={item.fullfilled ? styles.titleStyleFullfilled : styles.titleStyle}
-              title={I18n.t(item.fullfilled ? "EarnScreen.satsEarned" : "EarnScreen.earnSats", {
-                count: item.value,
-                formatted_number: I18n.toNumber(item.value, { precision: 0 }),
-              })}
+              buttonStyle={
+                item.fullfilled ? styles.buttonStyleFullfilled : styles.textButton
+              }
+              titleStyle={
+                item.fullfilled ? styles.titleStyleFullfilled : styles.titleStyle
+              }
+              title={I18n.t(
+                item.fullfilled ? "EarnScreen.satsEarned" : "EarnScreen.earnSats",
+                {
+                  count: item.value,
+                  formatted_number: I18n.toNumber(item.value, { precision: 0 }),
+                },
+              )}
               icon={
                 item.fullfilled ? (
                   <Icon

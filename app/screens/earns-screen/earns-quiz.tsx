@@ -215,7 +215,8 @@ export const EarnQuiz = ({ route, navigation }) => {
             disabled={recordedAnswer.indexOf(0) !== -1}
           />
         </View>
-        {recordedAnswer.length > 0 && recordedAnswer.indexOf(i) === recordedAnswer.length - 1 ? (
+        {recordedAnswer.length > 0 &&
+        recordedAnswer.indexOf(i) === recordedAnswer.length - 1 ? (
           <Text style={i === 0 ? styles.correctAnswerText : styles.incorrectAnswerText}>
             {feedback[i]}
           </Text>

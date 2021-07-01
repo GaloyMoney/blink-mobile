@@ -16,7 +16,9 @@ import { isIos } from "../../utils/helper"
 function ScreenWithoutScrolling(props: ScreenProps) {
   const preset = presets.fixed
   const style = props.style || {}
-  const backgroundStyle = props.backgroundColor ? { backgroundColor: props.backgroundColor } : {}
+  const backgroundStyle = props.backgroundColor
+    ? { backgroundColor: props.backgroundColor }
+    : {}
   const Wrapper = props.unsafe ? View : SafeAreaView
 
   return (
@@ -39,7 +41,9 @@ function ScreenWithoutScrolling(props: ScreenProps) {
 function ScreenWithScrolling(props: ScreenProps) {
   const preset = presets.scroll
   const style = props.style || {}
-  const backgroundStyle = props.backgroundColor ? { backgroundColor: props.backgroundColor } : {}
+  const backgroundStyle = props.backgroundColor
+    ? { backgroundColor: props.backgroundColor }
+    : {}
   const Wrapper = props.unsafe ? View : SafeAreaView
 
   return (

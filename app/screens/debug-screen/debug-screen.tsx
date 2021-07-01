@@ -103,7 +103,11 @@ export const DebugScreen = ({}) => {
         }}
       />
       {__DEV__ && (
-        <Button title="Reload" style={styles.button} onPress={() => DevSettings.reload()} />
+        <Button
+          title="Reload"
+          style={styles.button}
+          onPress={() => DevSettings.reload()}
+        />
       )}
       {/* <Button
           title="Crash test"

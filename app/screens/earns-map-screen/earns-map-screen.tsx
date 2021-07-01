@@ -204,7 +204,14 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> = ({
     return side === "left" ? <LeftComplete /> : <RightComplete />
   }
 
-  const BoxAdding: React.FC<IBoxAdding> = ({ text, Icon, side, position, section, length }) => {
+  const BoxAdding: React.FC<IBoxAdding> = ({
+    text,
+    Icon,
+    side,
+    position,
+    section,
+    length,
+  }) => {
     const disabled = currSection < position
     const progressSection = disabled ? 0 : currSection > position ? 1 : progress
     return (
@@ -213,7 +220,12 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> = ({
         <View
           style={{
             position: "absolute",
-            bottom: currSection === position ? (currSection === 0 && progress === 0 ? 30 : 80) : 30,
+            bottom:
+              currSection === position
+                ? currSection === 0 && progress === 0
+                  ? 30
+                  : 80
+                : 30,
             left: side === "left" ? 35 : 200,
             opacity: disabled ? 0.5 : 1,
           }}

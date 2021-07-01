@@ -3,7 +3,10 @@ import { Text, View } from "react-native"
 import { Divider } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { CloseCross } from "../../components/close-cross"
-import { colorTypeFromIconType, IconTransaction } from "../../components/icon-transactions"
+import {
+  colorTypeFromIconType,
+  IconTransaction,
+} from "../../components/icon-transactions"
 import { Screen } from "../../components/screen"
 import { TextCurrency } from "../../components/text-currency"
 import { TransactionItemProps } from "../../components/transaction-item"
@@ -116,7 +119,9 @@ export const TransactionDetailScreen = ({ route, navigation }) => {
       >
         <IconTransaction isReceive={isReceive} size={100} transparent />
         <Text style={styles.amountText}>{spendOrReceiveText}</Text>
-        {!!usd && <TextCurrency amount={Math.abs(usd)} currency="USD" style={styles.amount} />}
+        {!!usd && (
+          <TextCurrency amount={Math.abs(usd)} currency="USD" style={styles.amount} />
+        )}
         <TextCurrency
           amount={Math.abs(amount)}
           currency={currency}

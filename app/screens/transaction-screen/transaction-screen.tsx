@@ -187,7 +187,10 @@ export const TransactionScreen = ({
       ListHeaderComponent={() => (
         <>
           {error?.graphQLErrors?.map(({ message }) => (
-            <Text style={{ color: palette.red, alignSelf: "center", paddingBottom: 18 }} selectable>
+            <Text
+              style={{ color: palette.red, alignSelf: "center", paddingBottom: 18 }}
+              selectable
+            >
               {message}
             </Text>
           ))}

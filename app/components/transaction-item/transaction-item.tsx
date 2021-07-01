@@ -22,7 +22,9 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
     <ListItem
       // key={props.hash}
       title={tx.description}
-      leftIcon={<IconTransaction isReceive={tx.isReceive} size={24} pending={tx.pending} />}
+      leftIcon={
+        <IconTransaction isReceive={tx.isReceive} size={24} pending={tx.pending} />
+      }
       containerStyle={
         tx.pending
           ? { backgroundColor: palette.lighterGrey, paddingVertical: 9 }

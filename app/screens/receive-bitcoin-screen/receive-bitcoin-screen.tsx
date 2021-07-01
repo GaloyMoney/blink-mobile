@@ -179,7 +179,10 @@ export const ReceiveBitcoinScreen = ({ navigation }) => {
   }, [])
 
   useEffect(
-    () => (brightnessInitial ? () => ScreenBrightness.setBrightness(brightnessInitial) : () => {}),
+    () =>
+      brightnessInitial
+        ? () => ScreenBrightness.setBrightness(brightnessInitial)
+        : () => {},
     [brightnessInitial],
   )
 
@@ -287,7 +290,10 @@ export const ReceiveBitcoinScreen = ({ navigation }) => {
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async (remoteMessage) => {
       const hash = getHashFromInvoice(invoice)
-      if (remoteMessage.data.type === "paid-invoice" && remoteMessage.data.hash === hash) {
+      if (
+        remoteMessage.data.type === "paid-invoice" &&
+        remoteMessage.data.hash === hash
+      ) {
         paymentSuccess()
       }
     })
@@ -333,7 +339,8 @@ export const ReceiveBitcoinScreen = ({ navigation }) => {
       data = lastOnChainAddress
     }
 
-    const isReady = type === "lightning" ? !loading && data != "" && !keyboardIsShown : true
+    const isReady =
+      type === "lightning" ? !loading && data != "" && !keyboardIsShown : true
 
     const getFullUri = (input) => {
       if (type === "lightning") {
@@ -468,7 +475,9 @@ export const ReceiveBitcoinScreen = ({ navigation }) => {
           title={
             isSucceed
               ? translate("common.ok")
-              : translate(type === "lightning" ? "common.shareLightning" : "common.shareBitcoin")
+              : translate(
+                  type === "lightning" ? "common.shareLightning" : "common.shareBitcoin",
+                )
           }
           onPress={isSucceed ? () => navigation.goBack(false) : share}
           disabled={!isReady}
@@ -495,7 +504,9 @@ export const ReceiveBitcoinScreen = ({ navigation }) => {
             onChangeText={setMemo}
             containerStyle={{ marginTop: 0 }}
             inputStyle={styles.textStyle}
-            leftIcon={<Icon name="ios-create-outline" size={21} color={palette.darkGrey} />}
+            leftIcon={
+              <Icon name="ios-create-outline" size={21} color={palette.darkGrey} />
+            }
             ref={inputMemoRef}
             onBlur={update}
             disabled={isSucceed}

@@ -93,7 +93,9 @@ export const ModalClipboard = () => {
           />
         </View>
         <Text style={{ fontSize: 18, marginVertical: 8 }}>{message}</Text>
-        <View style={{ flexDirection: "row", alignItems: "center", alignContent: "stretch" }}>
+        <View
+          style={{ flexDirection: "row", alignItems: "center", alignContent: "stretch" }}
+        >
           <Button title="Dismiss" onPress={dismiss} buttonStyle={styles.buttonStyle} />
           <Button title="Open" onPress={open} buttonStyle={styles.buttonStyle} />
         </View>

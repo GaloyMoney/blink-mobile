@@ -8,7 +8,12 @@ const url = require("url")
 
 // TODO: look if we own the address
 
-export type IPaymentType = "lightning" | "onchain" | "onchainAndLightning" | "username" | undefined
+export type IPaymentType =
+  | "lightning"
+  | "onchain"
+  | "onchainAndLightning"
+  | "username"
+  | undefined
 
 export interface IValidPaymentReponse {
   valid: boolean
@@ -43,7 +48,8 @@ function parseAmount(txt) {
   const m = txt.match(reAmount)
   return Math.round(
     m[5]
-      ? (parseInt(m[5], 16) + (m[7] ? parseInt(m[7], 16) * Math.pow(16, -m[7].length) : 0)) *
+      ? (parseInt(m[5], 16) +
+          (m[7] ? parseInt(m[7], 16) * Math.pow(16, -m[7].length) : 0)) *
           (m[9] ? Math.pow(16, parseInt(m[9], 16)) : 0x10000)
       : m[2] * (m[4] ? Math.pow(10, m[4]) : 1e8),
   )
@@ -98,7 +104,11 @@ export const validPayment = (
   } else if (protocol.toLowerCase() === "https") {
     const domain = "//ln.bitcoinbeach.com/"
     if (data.startsWith(domain)) {
-      return { valid: true, paymentType: "username", username: data.substring(domain.length) }
+      return {
+        valid: true,
+        paymentType: "username",
+        username: data.substring(domain.length),
+      }
     }
   } else {
     // no schema
@@ -144,7 +154,11 @@ export const validPayment = (
     const sameNode = myPubKey === getDestination(payReq)
 
     if (sameNode && username === getUsername(payReq)) {
-      return { valid: false, paymentType, errorMessage: "invoice needs to be for a different user" }
+      return {
+        valid: false,
+        paymentType,
+        errorMessage: "invoice needs to be for a different user",
+      }
     }
 
     let amount
@@ -177,6 +191,9 @@ export const validPayment = (
       sameNode,
     }
   } else {
-    return { valid: false, errorMessage: "We are unable to detect an invoice or payment address" }
+    return {
+      valid: false,
+      errorMessage: "We are unable to detect an invoice or payment address",
+    }
   }
 }
