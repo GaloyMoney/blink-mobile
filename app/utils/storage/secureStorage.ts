@@ -97,16 +97,7 @@ export default class KeyStoreWrapper {
   }
 
   public static async resetPinAttempts() : Promise<boolean> {
-    try {
-      await RNSecureKeyStore.set(
-        KeyStoreWrapper.PIN_ATTEMPTS,
-        "0",
-        { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY }
-      )
-      return true
-    } catch {
-      return false
-    }
+    return await KeyStoreWrapper.setPinAttempts("0")
   }
 
   public static async removePinAttempts() : Promise<boolean> {
