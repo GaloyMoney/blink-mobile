@@ -1,20 +1,18 @@
 import * as React from "react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Alert, StatusBar, Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Feather"
 import { useApolloClient } from "@apollo/client"
-<<<<<<< HEAD
-import RNSecureKeyStore, { ACCESSIBLE } from "react-native-secure-key-store"
-=======
->>>>>>> Wrap SecureKeyStore and Biometric utility functions
 
 import { Screen } from "../../components/screen"
 import { palette } from "../../theme/palette"
 import { translate } from "../../i18n"
 import { resetDataStore } from "../../utils/logout"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
+import type { ScreenType } from '../../types/screen'
+import { PinScreenPurpose } from "../../utils/enum"
 
 const styles = EStyleSheet.create({
   container: {
@@ -109,51 +107,52 @@ const styles = EStyleSheet.create({
 })
 
 type Props = {
-  route: any
-  navigation: any
+  route: {
+    params: {
+      screenPurpose: PinScreenPurpose
+    }
+  },
+  navigation: any,
 }
 
-export const PinScreen = ({ route, navigation }: Props) => {
+export const PinScreen: ScreenType = ({ route, navigation }: Props) => {
   const client = useApolloClient()
 
-  const { screenPurpose, pin, mPinAttempts } = route.params
+  const { screenPurpose } = route.params
 
   const [enteredPIN, setEnteredPIN] = useState("")
   const [helperText, setHelperText] = useState(
-    screenPurpose === "setPIN" ? translate("PinScreen.setPin") : "",
+    screenPurpose === PinScreenPurpose.SetPin ? translate("PinScreen.setPin") : ""
   )
   const [previousPIN, setPreviousPIN] = useState("")
-  const [pinAttempts, setPinAttempts] = useState(mPinAttempts)
+  const [pinAttempts, setPinAttempts] = useState(0)
+
+  const MAX_PIN_ATTEMPTS = 3
+
+  useEffect(() => {
+    (async () => {
+      setPinAttempts(await KeyStoreWrapper.getPinAttemptsOrZero())
+    })()
+  }, [])
 
   const handleCompletedPinForAuthenticatePin = async (newEnteredPIN: string) => {
-    if (newEnteredPIN === pin) {
-<<<<<<< HEAD
-      RNSecureKeyStore.set("pinAttempts", "0", {
-        accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY,
-      })
-=======
-      KeyStoreWrapper.setPinAttempts("0")
->>>>>>> Wrap SecureKeyStore and Biometric utility functions
+    KeyStoreWrapper.setPinAttempts("0")
+    if (newEnteredPIN === await KeyStoreWrapper.getPinOrEmptyString()) {
+      KeyStoreWrapper.resetPinAttempts()
       navigation.reset({
         index: 0,
         routes: [{ name: "Primary" }],
       })
     } else {
-      if (pinAttempts < 2) {
-        let newPinAttempts = pinAttempts + 1
-<<<<<<< HEAD
-        RNSecureKeyStore.set("pinAttempts", newPinAttempts.toString(), {
-          accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY,
-        })
-=======
+      if (pinAttempts < (MAX_PIN_ATTEMPTS - 1)) {
+        const newPinAttempts = pinAttempts + 1
         KeyStoreWrapper.setPinAttempts(newPinAttempts.toString())
->>>>>>> Wrap SecureKeyStore and Biometric utility functions
         setPinAttempts(newPinAttempts)
         setEnteredPIN("")
-        if (newPinAttempts === 2) {
+        if (newPinAttempts === (MAX_PIN_ATTEMPTS - 1)) {
           setHelperText(translate("PinScreen.oneAttemptRemaining"))
         } else {
-          let attemptsRemaining = 3 - newPinAttempts
+          const attemptsRemaining = MAX_PIN_ATTEMPTS - newPinAttempts
           setHelperText(translate("PinScreen.attemptsRemaining", { attemptsRemaining }))
         }
       } else {
@@ -179,19 +178,14 @@ export const PinScreen = ({ route, navigation }: Props) => {
 
   const addDigit = (digit: string) => {
     if (enteredPIN.length < 4) {
-      let newEnteredPIN = enteredPIN + digit
-
+      const newEnteredPIN = enteredPIN + digit
       setEnteredPIN(newEnteredPIN)
-      console.log(pinAttempts)
+
       if (newEnteredPIN.length === 4) {
-        switch (screenPurpose) {
-          case "authenticatePIN": {
-            handleCompletedPinForAuthenticatePin(newEnteredPIN)
-            break
-          }
-          case "setPIN": {
-            handleCompletedPinForSetPin(newEnteredPIN)
-          }
+        if (screenPurpose === PinScreenPurpose.AuthenticatePin) {
+          handleCompletedPinForAuthenticatePin(newEnteredPIN)
+        } else if (screenPurpose === PinScreenPurpose.SetPin) {
+          handleCompletedPinForSetPin(newEnteredPIN)
         }
       }
     }
@@ -200,7 +194,7 @@ export const PinScreen = ({ route, navigation }: Props) => {
   const verifyPINCodeMathes = async (newEnteredPIN: string) => {
     if (previousPIN === newEnteredPIN) {
       if (await KeyStoreWrapper.setPin(previousPIN)) {
-        KeyStoreWrapper.setPinAttempts("0")
+        KeyStoreWrapper.resetPinAttempts()
         navigation.goBack()
       } else {
         returnToSetPin()
@@ -217,7 +211,7 @@ export const PinScreen = ({ route, navigation }: Props) => {
     setEnteredPIN("")
   }
 
-  const circleComponentForDigit = (digit: Number) => {
+  const circleComponentForDigit = (digit: number) => {
     return (
       <View style={styles.circleContainer}>
         <View style={enteredPIN.length > digit ? styles.filledCircle : styles.emptyCircle} />

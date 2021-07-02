@@ -11,6 +11,7 @@ import { translate } from "../../i18n"
 import BiometricWrapper from "../../utils/biometricAuthentication"
 import { toastShow } from "../../utils/toast"
 import type { ScreenType } from '../../types/screen'
+import { PinScreenPurpose } from "../../utils/enum"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
 
 const styles = EStyleSheet.create({
@@ -159,13 +160,14 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
   }
 
   const getIsPinEnabled = async () => {
-    setIsPinEnabled(await KeyStoreWrapper.getPinOrEmptyString() !== "")
+    setIsPinEnabled(await KeyStoreWrapper.getIsPinEnabled())
   }
 
   const onBiometricsValueChanged = async (value) => {
     if (value) {
       try {
         if (await BiometricWrapper.isSensorAvailable()) {
+          // Presents the OS specific authentication prompt
           BiometricWrapper.authenticate(translate("AuthenticationScreen.setUpAuthenticationDescription"), handleAuthenticationSuccess, handleAuthenticationFailure)      
         } else {
           toastShow(translate("SecurityScreen.biometryNotAvailable"))
@@ -187,11 +189,14 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
 >>>>>>> Wrap SecureKeyStore and Biometric utility functions
   }
 
-  const handleAuthenticationFailure = () => {}
+  const handleAuthenticationFailure = () => {
+    // This is called when a user cancels or taps out of the authentication prompt,
+    // so no action is necessary.
+  }
 
   const onPinValueChanged = async (value) => {
     if (value) {
-      navigation.navigate("pin", { screenPurpose: "setPIN" })
+      navigation.navigate("pin", { screenPurpose: PinScreenPurpose.SetPin })
     } else {
 <<<<<<< HEAD
       RNSecureKeyStore.remove("PIN").then(

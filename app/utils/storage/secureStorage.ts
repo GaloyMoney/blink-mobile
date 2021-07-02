@@ -36,6 +36,15 @@ export default class KeyStoreWrapper {
     }
   }
 
+  public static async getIsPinEnabled() : Promise<boolean> {
+    try {
+      await RNSecureKeyStore.get(KeyStoreWrapper.PIN)
+      return true
+    } catch {
+      return false
+    }
+  }
+
   public static async getPinOrEmptyString() : Promise<string> {
     try {
       return await RNSecureKeyStore.get(KeyStoreWrapper.PIN)
@@ -79,6 +88,19 @@ export default class KeyStoreWrapper {
       await RNSecureKeyStore.set(
         KeyStoreWrapper.PIN_ATTEMPTS,
         pinAttempts,
+        { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY }
+      )
+      return true
+    } catch {
+      return false
+    }
+  }
+
+  public static async resetPinAttempts() : Promise<boolean> {
+    try {
+      await RNSecureKeyStore.set(
+        KeyStoreWrapper.PIN_ATTEMPTS,
+        "0",
         { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY }
       )
       return true

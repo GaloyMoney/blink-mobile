@@ -64,7 +64,7 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
 
   const securityAction = async () => {
     const isBiometricsEnabled = await KeyStoreWrapper.getIsBiometricsEnabled()
-    const isPinEnabled = (await KeyStoreWrapper.getPinOrEmptyString()) !== ""
+    const isPinEnabled = await KeyStoreWrapper.getIsPinEnabled()
 
     navigation.navigate("security", { mIsBiometricsEnabled: isBiometricsEnabled, mIsPinEnabled: isPinEnabled })
   }
@@ -134,85 +134,75 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
 }
 
 export const SettingsScreenJSX = (params) => {
-  const {
-    client,
-    walletIsActive,
-    navigation,
-    username,
-    notificationsEnabled,
-    csvAction,
-    securityAction,
-    resetDataStore,
-  } = params
+  const { client, walletIsActive, navigation, username, notificationsEnabled, csvAction, securityAction, resetDataStore } = params
 
-  const list = [
-    {
-      category: translate("common.phoneNumber"),
-      icon: "call",
-      id: "phone",
-      defaultValue: translate("SettingsScreen.tapLogIn"),
-      action: () => navigation.navigate("phoneValidation"),
-      enabled: !walletIsActive,
-      greyed: walletIsActive,
-    },
-    {
-      category: translate("common.username"),
-      icon: "ios-person-circle",
-      id: "username",
-      defaultValue: translate("SettingsScreen.tapUserName"),
-      action: () => navigation.navigate("setUsername"),
-      enabled: walletIsActive && !username,
-      greyed: !walletIsActive,
-    },
-    {
-      category: translate("common.language"),
-      icon: "ios-language",
-      id: "language",
-      action: () => navigation.navigate("language"),
-      enabled: walletIsActive,
-      greyed: !walletIsActive,
-    },
-    {
-      category: translate("common.notification"),
-      icon: "ios-notifications-circle",
-      id: "notifications",
-      action: () => requestPermission(client),
-      enabled: walletIsActive && notificationsEnabled,
-      greyed: !walletIsActive,
-    },
-    {
-      category: translate("common.security"),
-      icon: "lock-closed-outline",
-      id: "security",
-      action: () => securityAction(),
-      enabled: walletIsActive,
-      greyed: !walletIsActive,
-    },
-    {
-      category: translate("common.csvExport"),
-      icon: "ios-download",
-      id: "csv",
-      action: () => csvAction(),
-      enabled: walletIsActive,
-      greyed: !walletIsActive,
-    },
-    {
-      category: translate("common.contactUs"),
-      icon: "ios-logo-whatsapp",
-      id: "contact-us",
-      action: () =>
-        openWhatsApp(WHATSAPP_CONTACT_NUMBER, WHATSAPP_DEFAULT_CONTACT_MESSAGE),
-      enabled: true,
-      greyed: false,
-      styleDivider: { backgroundColor: palette.lighterGrey, height: 18 },
-    },
-    {
-      category: translate("common.logout"),
-      id: "logout",
-      icon: "ios-log-out",
-      action: async () => {
-        await resetDataStore()
-        Alert.alert("you have been logged out", "", [
+  const list = [{
+    category: translate("common.phoneNumber"),
+    icon: 'call',
+    id: 'phone',
+    defaultValue: translate("SettingsScreen.tapLogIn"),
+    action: () => navigation.navigate("phoneValidation"),
+    enabled: !walletIsActive,
+    greyed: walletIsActive,
+  },
+  {
+    category: translate("common.username"),
+    icon: 'ios-person-circle',
+    id: 'username',
+    defaultValue: translate("SettingsScreen.tapUserName"),
+    action: () => navigation.navigate("setUsername"),
+    enabled: walletIsActive && !username,
+    greyed: !walletIsActive,
+  },
+  {
+    category: translate('common.language'),
+    icon: 'ios-language',
+    id: 'language',
+    action: () => navigation.navigate("language"),
+    enabled: walletIsActive,
+    greyed: !walletIsActive,
+  },
+  {
+    category: translate('common.notification'),
+    icon: 'ios-notifications-circle',
+    id: 'notifications',
+    action: () => requestPermission(client),
+    enabled: walletIsActive && notificationsEnabled,
+    greyed: !walletIsActive,
+  },
+  {
+    category: translate('common.security'),
+    icon: 'lock-closed-outline',
+    id: 'security',
+    action: securityAction,
+    enabled: walletIsActive,
+    greyed: !walletIsActive,
+  },
+  {
+    category: translate('common.csvExport'),
+    icon: 'ios-download',
+    id: 'csv',
+    action: () => csvAction(),
+    enabled: walletIsActive,
+    greyed: !walletIsActive,
+  },
+  {
+    category: translate('common.contactUs'),
+    icon: 'ios-logo-whatsapp',
+    id: 'contact-us',
+    action: () => openWhatsApp(WHATSAPP_CONTACT_NUMBER, WHATSAPP_DEFAULT_CONTACT_MESSAGE),
+    enabled: true,
+    greyed: false,
+    styleDivider: { backgroundColor: palette.lighterGrey, height: 18 },
+  },
+  {
+    category: translate('common.logout'),
+    id: "logout",
+    icon: 'ios-log-out',
+    action: async () => {
+      await resetDataStore()
+      Alert.alert("you have been logged out", "",
+        [
           {
             text: translate("common.ok"),
             onPress: () => {

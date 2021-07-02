@@ -1,21 +1,17 @@
 import * as React from "react"
-<<<<<<< HEAD
-import { useState } from "react"
-import { useFocusEffect } from "@react-navigation/native"
+
 import { Image } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
-import RNSecureKeyStore from "react-native-secure-key-store"
-=======
-import { useFocusEffect } from '@react-navigation/native'
+import { useEffect } from "react"
 import { Image } from "react-native"
 import EStyleSheet from 'react-native-extended-stylesheet'
->>>>>>> Wrap SecureKeyStore and Biometric utility functions
 
 import { Screen } from "../../components/screen"
 import { palette } from "../../theme/palette"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import BiometricWrapper from "../../utils/biometricAuthentication"
 import type { ScreenType } from '../../types/screen'
+import { AuthenticationScreenPurpose, PinScreenPurpose } from "../../utils/enum"
 
 const BitcoinBeachLogo = require("../get-started-screen/bitcoinBeach3.png")
 
@@ -38,32 +34,19 @@ type Props = {
 }
 
 export const AuthenticationCheckScreen: ScreenType = ({ navigation }: Props) => {
-  useFocusEffect(() => {
-    checkForAuthentication()
-  })
+  useEffect(() => {
+    (async () => {
+      const isPinEnabled = (await KeyStoreWrapper.getIsPinEnabled())
 
-  const checkForAuthentication = async () => {
-    const isBiometricsEnabled = await KeyStoreWrapper.getIsBiometricsEnabled()
-    const pin = await KeyStoreWrapper.getPinOrEmptyString()
-    const pinAttempts = await KeyStoreWrapper.getPinAttemptsOrZero()
-    const isBiometryAvailable = await BiometricWrapper.isSensorAvailable()
-
-    if (isBiometricsEnabled && isBiometryAvailable) {
-      navigation.replace("authentication", {
-        screenPurpose: "authenticate",
-        pin: pin,
-        mPinAttempts: pinAttempts,
-      })
-    } else if (pin.length > 0) {
-      navigation.replace("pin", {
-        screenPurpose: "authenticatePIN",
-        pin: pin,
-        mPinAttempts: pinAttempts,
-      })
-    } else {
-      navigation.replace("Primary")
-    }
-  }
+      if (await BiometricWrapper.isSensorAvailable() && await KeyStoreWrapper.getIsBiometricsEnabled()) {
+        navigation.replace("authentication", { screenPurpose: AuthenticationScreenPurpose.Authenticate, isPinEnabled })
+      } else if (isPinEnabled) {
+        navigation.replace("pin", { screenPurpose: PinScreenPurpose.AuthenticatePin })
+      } else {
+        navigation.replace("Primary")
+      }
+    })()
+  }, [])
 
   return (
     <Screen

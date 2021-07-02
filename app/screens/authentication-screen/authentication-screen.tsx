@@ -17,6 +17,7 @@ import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import BiometricWrapper from "../../utils/biometricAuthentication"
 import { resetDataStore } from "../../utils/logout"
 import type { ScreenType } from '../../types/screen'
+import { AuthenticationScreenPurpose, PinScreenPurpose } from "../../utils/enum"
 
 const BitcoinBeachLogo = require("../get-started-screen/bitcoinBeach3.png")
 
@@ -67,14 +68,19 @@ const styles = EStyleSheet.create({
 })
 
 type Props = {
-  route: any
-  navigation: any
+  route: {
+    params: {
+      screenPurpose: AuthenticationScreenPurpose
+      isPinEnabled: boolean
+    }
+  },
+  navigation: any,
 }
 
 export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) => {
   const client = useApolloClient()
 
-  const { screenPurpose, pin, mPinAttempts } = route.params
+  const { screenPurpose, isPinEnabled } = route.params
 
   useFocusEffect(() => {
     attemptAuthentication()
@@ -82,26 +88,27 @@ export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) =
 
   const attemptAuthentication = () => {
     let description
-    if (screenPurpose === "authenticate") {
+    if (screenPurpose === AuthenticationScreenPurpose.Authenticate) {
       description = translate("AuthenticationScreen.authenticationDescription")
-    } else {
+    } else if (screenPurpose === AuthenticationScreenPurpose.TurnOnAuthentication) {
       description = translate("AuthenticationScreen.setUpAuthenticationDescription")
     }
+    // Presents the OS specific authentication prompt
     BiometricWrapper.authenticate(description, handleAuthenticationSuccess, handleAuthenticationFailure)
   }
 
   const handleAuthenticationSuccess = () => {
-    if (screenPurpose === "authenticate") {
-      KeyStoreWrapper.setPinAttempts("0")
-    } else if (screenPurpose === "turnOnAuthentication") {
+    if (screenPurpose === AuthenticationScreenPurpose.Authenticate) {
+      KeyStoreWrapper.resetPinAttempts()
+    } else if (screenPurpose === AuthenticationScreenPurpose.TurnOnAuthentication) {
       KeyStoreWrapper.setIsBiometricsEnabled()
     }
     navigation.replace("Primary")
   }
 
   const handleAuthenticationFailure = () => {
-    /* This is called when a user cancels or taps out of the authentication prompt,
-    so no action is necessary. */
+    // This is called when a user cancels or taps out of the authentication prompt,
+    // so no action is necessary.
   }
 
   const logout = async () => {
@@ -119,19 +126,13 @@ export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) =
   let pinButtonContent
   let alternateContent
 
-  if (pin !== undefined && pin.length > 0) {
+  if (isPinEnabled) {
     pinButtonContent = (
       <Button
         title={translate("AuthenticationScreen.usePin")}
         buttonStyle={styles.buttonAlternate}
         titleStyle={styles.buttonAlternateTitle}
-        onPress={() =>
-          navigation.navigate("pin", {
-            screenPurpose: "authenticatePIN",
-            pin: pin,
-            mPinAttempts: mPinAttempts,
-          })
-        }
+        onPress={() => navigation.navigate("pin", { screenPurpose: PinScreenPurpose.AuthenticatePin })}
         containerStyle={styles.buttonContainer}
       />
     )
@@ -139,7 +140,7 @@ export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) =
     pinButtonContent = null
   }
 
-  if (screenPurpose === "authenticate") {
+  if (screenPurpose === AuthenticationScreenPurpose.Authenticate) {
     alternateContent = (
       <>
         {pinButtonContent}
@@ -152,7 +153,7 @@ export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) =
         />
       </>
     )
-  } else if (screenPurpose === "turnOnAuthentication") {
+  } else if (screenPurpose === AuthenticationScreenPurpose.TurnOnAuthentication) {
     alternateContent = (
       <Button
         title={translate("AuthenticationScreen.skip")}
@@ -175,11 +176,15 @@ export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) =
       <Image style={styles.Logo} source={BitcoinBeachLogo} resizeMode="contain" />
       <View style={styles.bottom}>
         <Button
-          title={
-            screenPurpose === "authenticate"
-              ? translate("AuthenticationScreen.unlock")
-              : translate("AuthenticationScreen.setUp")
-          }
+          title={(() => {
+            if (screenPurpose === AuthenticationScreenPurpose.Authenticate) {
+              return translate("AuthenticationScreen.unlock")
+            } else if (screenPurpose === AuthenticationScreenPurpose.TurnOnAuthentication) {
+              return translate("AuthenticationScreen.setUp")
+            } else {
+              return ""
+            }
+          })()}
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitle}
           onPress={() => attemptAuthentication()}
