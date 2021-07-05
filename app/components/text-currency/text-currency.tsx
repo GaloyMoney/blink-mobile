@@ -1,9 +1,23 @@
 import * as currency_fmt from "currency.js"
 import * as React from "react"
 import { Text, View } from "react-native"
+import EStyleSheet from "react-native-extended-stylesheet"
 import { CurrencyType } from "../../utils/enum"
 
-export const TextCurrency = ({ amount, currency, style }) => {
+const styles = EStyleSheet.create({
+  container: {
+    alignItems: "flex-end",
+    flexDirection: "row",
+  },
+})
+
+type Props = {
+  amount: number
+  currency: string
+  style: Record<string, any>
+}
+
+export const TextCurrency = ({ amount, currency, style }: Props) => {
   if (currency === CurrencyType.USD) {
     return (
       <Text style={style}>
@@ -15,7 +29,7 @@ export const TextCurrency = ({ amount, currency, style }) => {
   }
   if (currency === CurrencyType.BTC) {
     return (
-      <View style={{ flexDirection: "row", alignItems: "flex-end" }}>
+      <View style={styles.container}>
         <Text style={style}>
           {currency_fmt
             .default(amount, { precision: 0, separator: ",", symbol: "" })

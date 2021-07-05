@@ -56,7 +56,7 @@ export const IconTransaction = ({
   isReceive: boolean
   size: number
   transparent?: boolean
-  pending: boolean
+  pending?: boolean
 }) => {
   let color = colorTypeFromIconType({ isReceive, pending })
   if (transparent) color = palette.white

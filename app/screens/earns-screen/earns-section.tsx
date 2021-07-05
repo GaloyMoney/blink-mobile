@@ -23,15 +23,6 @@ const { width: screenWidth } = Dimensions.get("window")
 const svgWidth = screenWidth - 60
 
 const styles = EStyleSheet.create({
-  accountView: {
-    borderColor: color.line,
-    borderRadius: 4,
-    borderWidth: 1,
-    marginBottom: 15,
-    marginHorizontal: 15,
-    padding: 6,
-  },
-
   buttonStyleDisabled: {
     backgroundColor: palette.white,
     borderRadius: 24,
@@ -47,23 +38,18 @@ const styles = EStyleSheet.create({
     marginVertical: 32,
   },
 
-  header: {
-    alignItems: "center",
-    marginVertical: 10,
+  divider: { flex: 1 },
+
+  // eslint-disable-next-line react-native/no-color-literals
+  dot: {
+    backgroundColor: "rgba(255, 255, 255, 0.92)",
+    borderRadius: 5,
+    height: 10,
+    marginHorizontal: 0,
+    width: 10,
   },
 
-  image: {
-    ...StyleSheet.absoluteFillObject,
-    resizeMode: "cover",
-  },
-
-  imageContainerEarn: {
-    height: 200,
-    marginBottom: Platform.select({ ios: 0, android: 1 }), // Prevent a random Android rendering issue
-    backgroundColor: palette.white,
-    borderTopLeftRadius: 32,
-    borderTopRightRadius: 32,
-  },
+  icon: { paddingRight: 12, paddingTop: 3 },
 
   item: {
     backgroundColor: palette.lightBlue,
@@ -81,53 +67,13 @@ const styles = EStyleSheet.create({
     textAlign: "center",
   },
 
-  satsButton: {
-    color: palette.white,
-    fontSize: 18,
-    textAlign: "center",
-  },
-
-  smallText: {
-    color: palette.white,
-    fontSize: 18,
-    marginBottom: 40,
-    marginHorizontal: 40,
-    textAlign: "center",
-  },
-
-  text: {
-    color: palette.white,
-    fontSize: 22,
-    marginHorizontal: 20,
-    textAlign: "center",
-  },
+  svgContainer: { paddingVertical: 12 },
 
   textButton: {
     backgroundColor: palette.white,
     borderRadius: 24,
     marginHorizontal: 60,
     marginVertical: 32,
-  },
-
-  textButtonClose: {
-    backgroundColor: palette.darkGrey,
-    marginTop: 10,
-    paddingHorizontal: 60,
-  },
-
-  title: {
-    color: palette.darkGrey,
-    fontWeight: "bold",
-    marginHorizontal: 40,
-    textAlign: "center",
-  },
-
-  titleSats: {
-    color: color.primary,
-    fontSize: 32,
-    fontWeight: "bold",
-    marginHorizontal: 40,
-    textAlign: "center",
   },
 
   titleStyle: {
@@ -159,7 +105,12 @@ const styles = EStyleSheet.create({
   },
 })
 
-export const EarnSection = ({ route, navigation }) => {
+type Props = {
+  route: Record<string, any>
+  navigation: Record<string, any>
+}
+
+export const EarnSection = ({ route, navigation }: Props) => {
   const [queryTransactions] = useLazyQuery(QUERY_TRANSACTIONS, {
     fetchPolicy: "network-only",
   })
@@ -212,7 +163,7 @@ export const EarnSection = ({ route, navigation }) => {
   const [initialRemainingSats] = useState(remainingSats)
   const currentRemainingEarn = remainingSats
 
-  const sectionTitle = translate(`EarnScreen.earns\.${sectionIndex}\.meta.title`)
+  const sectionTitle = translate(`EarnScreen.earns.${sectionIndex}.meta.title`)
 
   const isFocused = useIsFocused()
 
@@ -249,6 +200,7 @@ export const EarnSection = ({ route, navigation }) => {
           feedback: card.feedback,
           // store.earnComplete(card.id),
           onComplete: async () => {
+            // eslint-disable-next-line no-sequences
             await earnCompleted({ variables: { ids: [card.id] } }), queryTransactions()
           },
           id: card.id,
@@ -273,7 +225,7 @@ export const EarnSection = ({ route, navigation }) => {
     }
   }
 
-  const CardItem = ({ item, index }) => {
+  const CardItem = ({ item }: { item: Record<string, any> }) => {
     const text = I18n.t(
       item.fullfilled ? "EarnScreen.satsEarned" : "EarnScreen.earnSats",
       {
@@ -290,7 +242,7 @@ export const EarnSection = ({ route, navigation }) => {
             activeOpacity={0.9}
             disabled={!item.enabled}
           >
-            <View style={{ paddingVertical: 12 }}>
+            <View style={styles.svgContainer}>
               {SVGs({ name: item.id, width: svgWidth })}
             </View>
           </TouchableOpacity>
@@ -322,7 +274,7 @@ export const EarnSection = ({ route, navigation }) => {
                     name="ios-checkmark-circle-outline"
                     size={36}
                     color={palette.white}
-                    style={{ paddingRight: 12, paddingTop: 3 }}
+                    style={styles.icon}
                   />
                 ) : undefined
               }
@@ -341,7 +293,7 @@ export const EarnSection = ({ route, navigation }) => {
 
   return (
     <Screen backgroundColor={palette.blue} statusBar="light-content">
-      <View style={{ flex: 1 }} />
+      <View style={styles.divider} />
       <Carousel
         data={cards}
         renderItem={CardItem}
@@ -354,17 +306,11 @@ export const EarnSection = ({ route, navigation }) => {
         removeClippedSubviews={false}
         onBeforeSnapToItem={(index) => setCurrRewardIndex(index)}
       />
-      <View style={{ flex: 1 }} />
+      <View style={styles.divider} />
       <Pagination
         dotsLength={cards.length}
         activeDotIndex={currRewardIndex}
-        dotStyle={{
-          width: 10,
-          height: 10,
-          borderRadius: 5,
-          marginHorizontal: 0,
-          backgroundColor: "rgba(255, 255, 255, 0.92)",
-        }}
+        dotStyle={styles.dot}
         inactiveDotStyle={
           {
             // Define styles for inactive dots here

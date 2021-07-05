@@ -13,45 +13,9 @@ import { palette } from "../../theme/palette"
 import { sameDay, sameMonth } from "../../utils/date"
 
 const styles = EStyleSheet.create({
-  amount: {
-    color: palette.white,
-    fontSize: "32rem",
-    fontWeight: "bold",
-  },
+  errorText: { alignSelf: "center", color: palette.red, paddingBottom: 18 },
 
-  amountText: {
-    color: palette.white,
-    fontSize: "18rem",
-    marginVertical: "6rem",
-  },
-
-  amountView: {
-    alignItems: "center",
-    backgroundColor: palette.orange,
-    paddingVertical: "48rem",
-  },
-
-  description: {
-    marginVertical: 12,
-  },
-
-  divider: {
-    backgroundColor: palette.midGrey,
-    marginVertical: "12rem",
-  },
-
-  entry: {
-    color: palette.midGrey,
-    marginBottom: "6rem",
-  },
-
-  map: {
-    height: 150,
-    marginBottom: 12,
-    marginLeft: "auto",
-    marginRight: 30,
-    width: 150,
-  },
+  icon: { top: -4 },
 
   noTransactionText: {
     fontSize: "24rem",
@@ -83,23 +47,6 @@ const styles = EStyleSheet.create({
     color: palette.darkGrey,
     fontSize: 18,
   },
-
-  transactionDetailText: {
-    color: palette.darkGrey,
-    fontSize: "18rem",
-    fontWeight: "bold",
-  },
-
-  transactionDetailView: {
-    marginHorizontal: "24rem",
-    marginVertical: "24rem",
-  },
-
-  value: {
-    color: palette.darkGrey,
-    fontSize: "14rem",
-    fontWeight: "bold",
-  },
 })
 
 const isToday = (tx) => sameDay(tx.date, new Date())
@@ -108,7 +55,11 @@ const isYesterday = (tx) => sameDay(tx.date, new Date().setDate(new Date().getDa
 
 const isThisMonth = (tx) => sameMonth(tx.date, new Date())
 
-export const TransactionHistoryScreenDataInjected = ({ navigation, route }) => {
+type Props = {
+  navigation: Record<string, any>
+}
+
+export const TransactionHistoryScreenDataInjected = ({ navigation }: Props) => {
   const currency = "sat" // FIXME
 
   const { data } = useQuery(WALLET, { fetchPolicy: "cache-only" })
@@ -169,6 +120,16 @@ export const TransactionHistoryScreenDataInjected = ({ navigation, route }) => {
   )
 }
 
+type TransactionScreenProps = {
+  refreshing: boolean
+  navigation: Record<string, any>
+  onRefresh: () => void
+  error: Record<string, any>
+  prefCurrency: string
+  nextPrefCurrency: () => void
+  sections: []
+}
+
 export const TransactionScreen = ({
   refreshing,
   navigation,
@@ -177,20 +138,17 @@ export const TransactionScreen = ({
   prefCurrency,
   nextPrefCurrency,
   sections,
-}) => (
+}: TransactionScreenProps) => (
   <Screen style={styles.screen}>
     <SectionList
       // refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-      renderItem={({ item, index, section }) => (
-        <TransactionItem navigation={navigation} tx={item} />
+      renderItem={({ item, index }) => (
+        <TransactionItem key={`txn-${index}`} navigation={navigation} tx={item} />
       )}
       ListHeaderComponent={() => (
         <>
-          {error?.graphQLErrors?.map(({ message }) => (
-            <Text
-              style={{ color: palette.red, alignSelf: "center", paddingBottom: 18 }}
-              selectable
-            >
+          {error?.graphQLErrors?.map(({ message }, item) => (
+            <Text key={`error-${item}`} style={styles.errorText} selectable>
               {message}
             </Text>
           ))}
@@ -202,7 +160,7 @@ export const TransactionScreen = ({
           <Text style={styles.sectionHeaderText}>{title}</Text>
           <TouchableOpacity style={styles.row} onPress={nextPrefCurrency}>
             <Text style={styles.sectionHeaderText}>{prefCurrency} </Text>
-            <Icon name="ios-swap-vertical" size={32} style={{ top: -4 }} />
+            <Icon name="ios-swap-vertical" size={32} style={styles.icon} />
           </TouchableOpacity>
         </View>
       )}

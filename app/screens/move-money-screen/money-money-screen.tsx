@@ -54,18 +54,27 @@ const styles = EStyleSheet.create({
     width: "50rem",
   },
 
+  cover: { height: "100%", width: "100%" },
+
+  divider: { flex: 1 },
+
+  error: { alignSelf: "center", color: palette.red, paddingBottom: 18 },
+
   flex: {
     flex: 1,
   },
 
-  icon: {
-    marginRight: "12rem",
-    textAlign: "center",
-    width: 32,
+  header: {
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-around",
   },
+
+  icon: { height: 34, top: -22 },
 
   lightningText: {
     fontSize: "16rem",
+    marginBotton: 12,
     textAlign: "center",
   },
 
@@ -73,9 +82,13 @@ const styles = EStyleSheet.create({
     marginTop: "32rem",
   },
 
+  modal: { marginBottom: 0, marginHorizontal: 0 },
+
   screenStyle: {
     backgroundColor: palette.lighterGrey,
   },
+
+  separator: { marginTop: 32 },
 
   text: {
     color: palette.darkGrey,
@@ -103,7 +116,13 @@ const styles = EStyleSheet.create({
   },
 })
 
-export const MoveMoneyScreenDataInjected = ({ navigation }) => {
+type MoveMoneyScreenDataInjectedProps = {
+  navigation: Record<string, any>
+}
+
+export const MoveMoneyScreenDataInjected = ({
+  navigation,
+}: MoveMoneyScreenDataInjectedProps) => {
   const client = useApolloClient()
 
   const {
@@ -193,6 +212,18 @@ export const MoveMoneyScreenDataInjected = ({ navigation }) => {
   )
 }
 
+type MoveMoneyScreenProps = {
+  walletIsActive: boolean
+  navigation: Record<string, any>
+  loading: boolean
+  error: Record<string, any>
+  transactions: []
+  refetch: () => void
+  amount: number
+  amountOtherCurrency: number
+  isUpdateAvailable: boolean
+}
+
 export const MoveMoneyScreen = ({
   walletIsActive,
   navigation,
@@ -203,7 +234,7 @@ export const MoveMoneyScreen = ({
   amount,
   amountOtherCurrency,
   isUpdateAvailable,
-}) => {
+}: MoveMoneyScreenProps) => {
   const [modalVisible, setModalVisible] = useState(false)
 
   const [secretMenuCounter, setSecretMenuCounter] = useState(0)
@@ -258,7 +289,7 @@ export const MoveMoneyScreen = ({
   return (
     <Screen style={styles.screenStyle}>
       <Modal
-        style={{ marginHorizontal: 0, marginBottom: 0 }}
+        style={styles.modal}
         isVisible={modalVisible}
         swipeDirection={modalVisible ? ["down"] : ["up"]}
         onSwipeComplete={() => setModalVisible(false)}
@@ -266,7 +297,7 @@ export const MoveMoneyScreen = ({
       >
         <View style={styles.flex}>
           <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
-            <View style={{ width: "100%", height: "100%" }} />
+            <View style={styles.cover} />
           </TouchableWithoutFeedback>
         </View>
         <View style={styles.viewModal}>
@@ -274,7 +305,7 @@ export const MoveMoneyScreen = ({
             name="ios-remove"
             size={64}
             color={palette.lightGrey}
-            style={{ height: 34, top: -22 }}
+            style={styles.icon}
           />
           <Text style={styles.text}>{translate("MoveMoneyScreen.needWallet")}</Text>
           <Button
@@ -285,19 +316,13 @@ export const MoveMoneyScreen = ({
             titleStyle={styles.titleStyle}
             containerStyle={styles.buttonContainerStyle}
           />
-          <View style={{ flex: 1 }} />
+          <View style={styles.divider} />
         </View>
       </Modal>
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-around",
-        }}
-      >
+      <View style={styles.header}>
         <Button
           buttonStyle={styles.buttonStyleTime}
-          containerStyle={{ marginTop: 32 }}
+          containerStyle={styles.separator}
           onPress={() =>
             navigation.navigate("priceDetail", { account: AccountType.Bitcoin })
           }
@@ -312,7 +337,7 @@ export const MoveMoneyScreen = ({
         />
         <Button
           buttonStyle={styles.buttonStyleTime}
-          containerStyle={{ marginTop: 32 }}
+          containerStyle={styles.separator}
           onPress={() => navigation.navigate("settings")}
           icon={<Icon name="ios-settings-outline" size={32} />}
         />
@@ -321,11 +346,8 @@ export const MoveMoneyScreen = ({
       <FlatList
         ListHeaderComponent={() => (
           <>
-            {error?.graphQLErrors?.map(({ message }) => (
-              <Text
-                style={{ color: palette.red, alignSelf: "center", paddingBottom: 18 }}
-                selectable
-              >
+            {error?.graphQLErrors?.map(({ message }, item) => (
+              <Text key={`error-${item}`} style={styles.error} selectable>
                 {message}
               </Text>
             ))}
@@ -368,7 +390,12 @@ export const MoveMoneyScreen = ({
             {item.transactions && (
               <View style={styles.transactionsView}>
                 {item.transactions.map((item, i) => (
-                  <TransactionItem navigation={navigation} tx={item} subtitle />
+                  <TransactionItem
+                    key={`transaction-${i}`}
+                    navigation={navigation}
+                    tx={item}
+                    subtitle
+                  />
                 ))}
               </View>
             )}
@@ -378,7 +405,7 @@ export const MoveMoneyScreen = ({
       <View style={styles.bottom}>
         {isUpdateAvailable && (
           <Pressable onPress={linkUpgrade}>
-            <Text style={[styles.lightningText, { marginBotton: 12 }]}>
+            <Text style={styles.lightningText}>
               {translate("MoveMoneyScreen.updateAvailable")}
             </Text>
           </Pressable>

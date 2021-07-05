@@ -13,12 +13,6 @@ const styles = EStyleSheet.create({
     marginHorizontal: 48,
     // marginVertical: 24,
   },
-
-  text: {
-    fontSize: "16rem",
-    paddingVertical: "18rem",
-    textAlign: "center",
-  },
 })
 
 export const language_mapping = {

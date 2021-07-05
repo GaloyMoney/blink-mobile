@@ -13,6 +13,7 @@ import { palette } from "../../theme/palette"
 import { validPayment } from "../../utils/parsing"
 import { Token } from "../../utils/token"
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const LocalQRCode = require("@remobile/react-native-qrcode-local-image")
 
 const CAMERA: ViewStyle = {
@@ -25,6 +26,23 @@ const { width: screenWidth } = Dimensions.get("window")
 const { height: screenHeight } = Dimensions.get("window")
 
 const styles = EStyleSheet.create({
+  close: {
+    alignSelf: "flex-end",
+    height: 64,
+    marginRight: 16,
+    marginTop: 40,
+    width: 64,
+  },
+
+  openGallery: {
+    height: 128,
+    left: 32,
+    position: "absolute",
+    top: screenHeight - 96,
+    width: screenWidth,
+  },
+
+  // eslint-disable-next-line react-native/no-color-literals
   rectangle: {
     backgroundColor: "transparent",
     borderColor: palette.blue,
@@ -55,11 +73,7 @@ export const ScanningQRCodeScreen = () => {
     }
 
     try {
-      const { valid, errorMessage, paymentType, hash } = validPayment(
-        data,
-        new Token().network,
-        client,
-      )
+      const { valid, errorMessage } = validPayment(data, new Token().network, client)
       console.log({ valid, errorMessage, data }, "result")
       if (valid) {
         navigate("sendBitcoin", { payment: data })
@@ -129,39 +143,25 @@ export const ScanningQRCodeScreen = () => {
             <View style={styles.rectangle} />
           </View>
           <Pressable onPress={goBack}>
-            <View
-              style={{
-                width: 64,
-                height: 64,
-                alignSelf: "flex-end",
-                marginTop: 40,
-                marginRight: 16,
-              }}
-            >
+            <View style={styles.close}>
               <Svg viewBox="0 0 100 100">
                 <Circle cx={50} cy={50} r={50} fill={palette.white} opacity={0.5} />
               </Svg>
               <Icon
                 name="ios-close"
                 size={64}
+                // eslint-disable-next-line react-native/no-inline-styles
                 style={{ position: "absolute", top: -2 }}
               />
             </View>
           </Pressable>
-          <View
-            style={{
-              position: "absolute",
-              width: screenWidth,
-              height: 128,
-              top: screenHeight - 96,
-              left: 32,
-            }}
-          >
+          <View style={styles.openGallery}>
             <Pressable onPress={showImagePicker}>
               <Icon
                 name="image"
                 size={64}
                 color={palette.lightGrey}
+                // eslint-disable-next-line react-native/no-inline-styles
                 style={{ opacity: 0.8 }}
               />
             </Pressable>

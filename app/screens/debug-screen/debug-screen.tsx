@@ -18,9 +18,11 @@ const styles = EStyleSheet.create({
     marginHorizontal: "24rem",
     marginVertical: "6rem",
   },
+
+  container: { marginLeft: 36, marginRight: 36, marginTop: 24 },
 })
 
-export const DebugScreen = ({}) => {
+export const DebugScreen = () => {
   const client = useApolloClient()
   const token = new Token()
 
@@ -147,7 +149,7 @@ export const DebugScreen = ({}) => {
           selectedIndex={networks.findIndex((value) => value === networkState)}
           buttons={networks}
           buttonStyle={styles.button} // FIXME
-          containerStyle={{ marginLeft: 36, marginRight: 36, marginTop: 24 }}
+          containerStyle={styles.container}
         />
       </View>
     </Screen>

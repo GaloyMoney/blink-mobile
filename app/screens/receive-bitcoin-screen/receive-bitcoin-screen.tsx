@@ -34,24 +34,31 @@ import { hasFullPermissions, requestPermission } from "../../utils/notifications
 
 // FIXME: crash when no connection
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const successLottie = require("../move-money-screen/success_lottie.json")
 
 const styles = EStyleSheet.create({
+  buttonContainer: { marginHorizontal: 52, paddingVertical: 18 },
+
   buttonStyle: {
     backgroundColor: palette.lightBlue,
     borderRadius: 32,
   },
 
-  headerView: {
-    borderRadius: 24,
-    flex: 1,
-    marginHorizontal: "24rem",
-    marginTop: "12rem",
+  buttonTitle: {
+    fontWeight: "bold",
   },
 
-  icon: {
-    color: palette.darkGrey,
-    marginRight: 15,
+  copyToClipboardText: { textAlign: "center" },
+
+  errorContainer: {
+    alignContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
+    backgroundColor: palette.white,
+    height: 280,
+    justifyContent: "center",
+    width: 280,
   },
 
   lottie: {
@@ -75,12 +82,6 @@ const styles = EStyleSheet.create({
     flex: 1,
     paddingHorizontal: 50,
     width: "100%",
-  },
-
-  smallText: {
-    color: palette.darkGrey,
-    fontSize: 18,
-    textAlign: "left",
   },
 
   textStyle: {
@@ -114,7 +115,11 @@ const GET_ONCHAIN_ADDRESS = gql`
   }
 `
 
-export const ReceiveBitcoinScreen = ({ navigation }) => {
+type Props = {
+  navigation: Record<string, any>
+}
+
+export const ReceiveBitcoinScreen = ({ navigation }: Props) => {
   const client = useApolloClient()
 
   const [addInvoice] = useMutation(ADD_INVOICE)
@@ -182,7 +187,7 @@ export const ReceiveBitcoinScreen = ({ navigation }) => {
     () =>
       brightnessInitial
         ? () => ScreenBrightness.setBrightness(brightnessInitial)
-        : () => {},
+        : () => null,
     [brightnessInitial],
   )
 
@@ -330,7 +335,7 @@ export const ReceiveBitcoinScreen = ({ navigation }) => {
     setKeyboardIsShown(false)
   }
 
-  const QRView = ({ type }) => {
+  const QRView = ({ type }: { type: string }) => {
     let data
 
     if (type === "lightning") {
@@ -438,18 +443,9 @@ export const ReceiveBitcoinScreen = ({ navigation }) => {
                 />
               </Pressable>
             )) || (
-              <View
-                style={{
-                  width: 280,
-                  height: 280,
-                  alignItems: "center",
-                  alignContent: "center",
-                  alignSelf: "center",
-                  backgroundColor: palette.white,
-                  justifyContent: "center",
-                }}
-              >
+              <View style={styles.errorContainer}>
                 {(err !== "" && (
+                  // eslint-disable-next-line react-native/no-inline-styles
                   <Text style={{ color: palette.red, alignSelf: "center" }} selectable>
                     {err}
                   </Text>
@@ -460,7 +456,7 @@ export const ReceiveBitcoinScreen = ({ navigation }) => {
               </View>
             )}
           <Pressable onPress={copyToClipboard}>
-            <Text style={{ textAlign: "center" }}>{dataOneLiner()}</Text>
+            <Text style={styles.copyToClipboardText}>{dataOneLiner()}</Text>
           </Pressable>
           {(isSucceed && <Text>{translate("ReceiveBitcoinScreen.invoicePaid")}</Text>) ||
             (isReady && (
@@ -471,7 +467,7 @@ export const ReceiveBitcoinScreen = ({ navigation }) => {
         </View>
         <Button
           buttonStyle={styles.buttonStyle}
-          containerStyle={{ marginHorizontal: 52, paddingVertical: 18 }}
+          containerStyle={styles.buttonContainer}
           title={
             isSucceed
               ? translate("common.ok")
@@ -481,7 +477,7 @@ export const ReceiveBitcoinScreen = ({ navigation }) => {
           }
           onPress={isSucceed ? () => navigation.goBack(false) : share}
           disabled={!isReady}
-          titleStyle={{ fontWeight: "bold" }}
+          titleStyle={styles.buttonTitle}
         />
       </>
     )
@@ -502,6 +498,7 @@ export const ReceiveBitcoinScreen = ({ navigation }) => {
             placeholder="set a note"
             value={memo}
             onChangeText={setMemo}
+            // eslint-disable-next-line react-native/no-inline-styles
             containerStyle={{ marginTop: 0 }}
             inputStyle={styles.textStyle}
             leftIcon={

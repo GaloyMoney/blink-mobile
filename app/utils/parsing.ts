@@ -1,10 +1,9 @@
 import * as lightningPayReq from "bolt11"
 import moment from "moment"
+import url from "url"
 import { networks, address } from "bitcoinjs-lib"
 import { getDescription, getDestination, getUsername } from "./bolt11"
 import { getMyUsername, getPubKey } from "../graphql/query"
-
-const url = require("url")
 
 // TODO: look if we own the address
 
@@ -68,6 +67,7 @@ export const validPayment = (
   }
 
   // input might start with 'lightning:', 'bitcoin:'
+  // eslint-disable-next-line prefer-const
   let [protocol, data] = input.split(":")
   let paymentType: IPaymentType
 
@@ -163,7 +163,6 @@ export const validPayment = (
 
     let amount
     let amountless
-    let memo
 
     if (payReq.satoshis || payReq.millisatoshis) {
       amount = payReq.satoshis ?? Number(payReq.millisatoshis) * 1000
@@ -180,7 +179,7 @@ export const validPayment = (
       return { valid: false, errorMessage: "invoice has expired", paymentType }
     }
 
-    memo = getDescription(payReq)
+    const memo = getDescription(payReq)
     return {
       valid: true,
       invoice: data,

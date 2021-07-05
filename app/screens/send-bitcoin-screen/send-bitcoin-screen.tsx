@@ -1,3 +1,5 @@
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable @typescript-eslint/no-var-requires */
 import { gql, useApolloClient, useLazyQuery, useMutation } from "@apollo/client"
 import { useNavigation } from "@react-navigation/native"
 import LottieView from "lottie-react-native"
@@ -98,11 +100,6 @@ const styles = EStyleSheet.create({
     fontSize: 18,
   },
 
-  horizontalContainer: {
-    flex: 1,
-    flexDirection: "row",
-  },
-
   icon: {
     color: palette.darkGrey,
     marginRight: 15,
@@ -119,22 +116,7 @@ const styles = EStyleSheet.create({
     paddingHorizontal: 20,
   },
 
-  memo: {
-    color: palette.darkGrey,
-    fontSize: 18,
-    marginLeft: 10,
-    textAlign: "left",
-  },
-
-  overlay: {
-    backgroundColor: "rgba(0,0,0,0.4)",
-    bottom: 0,
-    flexDirection: "row",
-    justifyContent: "center",
-    left: 0,
-    position: "absolute",
-    right: 0,
-  },
+  row: { flexDirection: "row" },
 
   section: {
     marginHorizontal: 48,
@@ -146,12 +128,6 @@ const styles = EStyleSheet.create({
     fontSize: 18,
     textAlign: "left",
     width: "48rem",
-  },
-
-  squareButton: {
-    backgroundColor: color.primary,
-    height: 70,
-    width: 70,
   },
 })
 
@@ -168,7 +144,13 @@ const regexFilter = (network) => {
   }
 }
 
-export const SendBitcoinScreen: React.FC = ({ route }) => {
+type SendBitcoinScreenProps = {
+  route: Record<string, any>
+}
+
+export const SendBitcoinScreen: React.FC<SendBitcoinScreenProps> = ({
+  route,
+}: SendBitcoinScreenProps) => {
   const client = useApolloClient()
   const { goBack } = useNavigation()
 
@@ -546,6 +528,35 @@ export const SendBitcoinScreen: React.FC = ({ route }) => {
   )
 }
 
+type SendBitcoinScreenJSXProps = {
+  status: string
+  paymentType: string
+  amountless: boolean
+  initAmount: number
+  setAmount: (amount: string) => void
+  setStatus: (status: string) => void
+  invoice: string
+  fee
+  address: string
+  memo: string
+  errs: any[]
+  amount: number
+  goBack: () => void
+  pay: () => void
+  price: string
+  setMemo: (memo: string) => void
+  setDestination: (destination: string) => void
+  destination: string
+  usernameExists: boolean
+  loadingUserNameExist: boolean
+  interactive: boolean
+  potentialBitcoinOrLightning: boolean
+  errorMessage: string
+  reset: () => void
+  prefCurrency: string
+  nextPrefCurrency: () => void
+}
+
 export const SendBitcoinScreenJSX = ({
   status,
   paymentType,
@@ -573,7 +584,7 @@ export const SendBitcoinScreenJSX = ({
   reset,
   prefCurrency,
   nextPrefCurrency,
-}) => (
+}: SendBitcoinScreenJSXProps) => (
   <Screen preset="fixed">
     <ScrollView
       style={styles.mainView}
@@ -601,7 +612,7 @@ export const SendBitcoinScreenJSX = ({
         <Input
           placeholder={translate("SendBitcoinScreen.input")}
           leftIcon={
-            <View style={{ flexDirection: "row" }}>
+            <View style={styles.row}>
               <Text style={styles.smallText}>{translate("common.to")}</Text>
               <Icon
                 name="ios-log-out"
@@ -648,7 +659,7 @@ export const SendBitcoinScreenJSX = ({
         <Input
           placeholder={translate("SendBitcoinScreen.note")}
           leftIcon={
-            <View style={{ flexDirection: "row" }}>
+            <View style={styles.row}>
               <Text style={styles.smallText}>{translate("common.note")}</Text>
               <Icon
                 name="ios-create-outline"
@@ -667,7 +678,7 @@ export const SendBitcoinScreenJSX = ({
         <Input
           placeholder={translate("SendBitcoinScreen.fee")}
           leftIcon={
-            <View style={{ flexDirection: "row" }}>
+            <View style={styles.row}>
               <Text style={styles.smallText}>{translate("common.Fee")}</Text>
               <Icon
                 name="ios-pricetag"
@@ -715,8 +726,10 @@ export const SendBitcoinScreenJSX = ({
               style={styles.lottie}
               resizeMode="cover"
             />
-            {errs.map(({ message }) => (
-              <Text style={styles.errorText}>{message}</Text>
+            {errs.map(({ message }, item) => (
+              <Text key={`error-${item}`} style={styles.errorText}>
+                {message}
+              </Text>
             ))}
           </>
         )}

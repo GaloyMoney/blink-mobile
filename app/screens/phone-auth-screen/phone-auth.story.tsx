@@ -21,8 +21,8 @@ storiesOf("Phone number auth", module)
       <UseCase text="Dollar" usage="The primary.">
         <WelcomePhoneValidationScreen
           route={route}
-          onSuccess={() => {}}
-          navigation={{ navigate: () => {} }}
+          onSuccess={() => null}
+          navigation={{ navigate: () => null }}
         />
       </UseCase>
     </Story>

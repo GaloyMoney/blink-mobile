@@ -1,3 +1,5 @@
+/* eslint-disable react-native/no-color-literals */
+/* eslint-disable react-native/no-unused-styles */
 import * as React from "react"
 import { Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
@@ -17,13 +19,24 @@ const styles = EStyleSheet.create({
   $paddingHorizontal: "40rem",
   $textAlign: "center",
 
+  dot: {
+    backgroundColor: palette.white,
+    borderRadius: 4,
+    height: 8,
+    marginBottom: 3,
+    marginLeft: 3,
+    marginRight: 3,
+    marginTop: 3,
+    width: 8,
+  },
+
   text: {
+    color: "$color",
     fontSize: "20rem",
+    paddingHorizontal: "$paddingHorizontal",
+    paddingTop: "24rem",
     textAlign: "$textAlign",
     // fontWeight: "$fontWeight",
-    paddingTop: "24rem",
-    color: "$color",
-    paddingHorizontal: "$paddingHorizontal",
   },
 
   title: {
@@ -35,24 +48,12 @@ const styles = EStyleSheet.create({
   },
 })
 
-export const WelcomeFirstScreen = ({ navigation }) => (
-  <Swiper
-    loop={false}
-    activeDot={
-      <View
-        style={{
-          backgroundColor: palette.white,
-          width: 8,
-          height: 8,
-          borderRadius: 4,
-          marginLeft: 3,
-          marginRight: 3,
-          marginTop: 3,
-          marginBottom: 3,
-        }}
-      />
-    }
-  >
+type Props = {
+  navigation: Record<string, any>
+}
+
+export const WelcomeFirstScreen = ({ navigation }: Props) => (
+  <Swiper loop={false} activeDot={<View style={styles.dot} />}>
     <Screen backgroundColor={palette.lightBlue} statusBar="light-content">
       <OnboardingScreen Svg={MascotDollarBitcoin}>
         <Text style={styles.title}>Bitcoin:</Text>

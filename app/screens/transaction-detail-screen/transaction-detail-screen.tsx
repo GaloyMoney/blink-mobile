@@ -51,14 +51,6 @@ const styles = EStyleSheet.create({
     marginBottom: "6rem",
   },
 
-  map: {
-    height: 150,
-    marginBottom: 12,
-    marginLeft: "auto",
-    marginRight: 30,
-    width: 150,
-  },
-
   transactionDetailText: {
     color: palette.darkGrey,
     fontSize: "18rem",
@@ -77,7 +69,7 @@ const styles = EStyleSheet.create({
   },
 })
 
-const Row = ({ entry, value }) => (
+const Row = ({ entry, value }: { entry: string; value: string }) => (
   <View style={styles.description}>
     <Text style={styles.entry}>{entry}</Text>
     <Text selectable style={styles.value}>
@@ -86,7 +78,12 @@ const Row = ({ entry, value }) => (
   </View>
 )
 
-export const TransactionDetailScreen = ({ route, navigation }) => {
+type Props = {
+  navigation: Record<string, any>
+  route: Record<string, any>
+}
+
+export const TransactionDetailScreen = ({ route, navigation }: Props) => {
   const {
     currency,
     amount,

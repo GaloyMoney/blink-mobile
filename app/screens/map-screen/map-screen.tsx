@@ -3,6 +3,7 @@ import Geolocation from "@react-native-community/geolocation"
 import { useFocusEffect } from "@react-navigation/native"
 import * as React from "react"
 import { useCallback, useState } from "react"
+// eslint-disable-next-line react-native/split-platform-components
 import { PermissionsAndroid, StyleSheet, Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import MapView, { Callout, CalloutSubview, Marker } from "react-native-maps"
@@ -11,6 +12,8 @@ import { walletIsActive } from "../../graphql/query"
 import { isIos } from "../../utils/helper"
 
 const styles = StyleSheet.create({
+  android: { marginTop: 18 },
+
   customView: {
     alignItems: "center",
     margin: 12,
@@ -18,13 +21,21 @@ const styles = StyleSheet.create({
     // height: 140,
   },
 
+  ios: { paddingTop: 12 },
+
   map: {
     height: "100%",
     width: "100%",
   },
+
+  title: { fontSize: 18 },
 })
 
-export const MapScreen: React.FC = ({ navigation }) => {
+type Props = {
+  navigation: Record<string, any>
+}
+
+export const MapScreen: React.FC<Props> = ({ navigation }: Props) => {
   const client = useApolloClient()
 
   const result = client.readQuery({
@@ -123,14 +134,14 @@ export const MapScreen: React.FC = ({ navigation }) => {
           onPress={() => (!!item.username && !isIos ? onPress() : null)}
         >
           <View style={styles.customView}>
-            <Text style={{ fontSize: 18 }}>{item.title}</Text>
+            <Text style={styles.title}>{item.title}</Text>
             {!!item.username && !isIos && (
-              <Button containerStyle={{ marginTop: 18 }} title="pay this business" />
+              <Button containerStyle={styles.android} title="pay this business" />
             )}
             {isIos && (
               <CalloutSubview onPress={() => (item.username ? onPress() : null)}>
                 {!!item.username && (
-                  <Button style={{ paddingTop: 12 }} title="pay this business" />
+                  <Button style={styles.ios} title="pay this business" />
                 )}
               </CalloutSubview>
             )}

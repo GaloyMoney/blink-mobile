@@ -42,6 +42,12 @@ const styles = EStyleSheet.create({
     fontWeight: "bold",
   },
 
+  pricesContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginHorizontal: 64,
+  },
+
   textView: {
     alignSelf: "center",
     flexDirection: "row",
@@ -79,7 +85,11 @@ const mapping = {
   },
 }
 
-export const PriceGraph = ({ prices }) => {
+type Props = {
+  prices: []
+}
+
+export const PriceGraph = ({ prices }: Props) => {
   const [time, setTime] = React.useState("d") // d, w, m, y
 
   let price
@@ -131,13 +141,7 @@ export const PriceGraph = ({ prices }) => {
           />
         </VictoryChart>
       </View>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          marginHorizontal: 64,
-        }}
-      >
+      <View style={styles.pricesContainer}>
         <Button
           title="1D"
           buttonStyle={

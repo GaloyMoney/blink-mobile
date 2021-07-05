@@ -14,10 +14,11 @@ export interface PriceScreenProps {
   navigation: StackNavigationProp<any, any>
 }
 
-export const PriceScreen: React.FC<PriceScreenProps> = ({ route, navigation }) => {
+export const PriceScreen: React.FC<PriceScreenProps> = () => {
   const client = useApolloClient()
 
   return (
+    // eslint-disable-next-line react-native/no-inline-styles
     <Screen backgroundColor={palette.white} preset="scroll" style={{ flex: 1 }}>
       <BalanceHeader currency="BTC" amount={balanceBtc(client)} />
       <PriceGraphDataInjected />

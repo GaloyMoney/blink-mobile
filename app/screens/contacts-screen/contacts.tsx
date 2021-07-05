@@ -4,15 +4,27 @@ import { ListItem } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { FlatList } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
-import { useApolloClient, useQuery, gql } from "@apollo/client"
+import { useQuery, gql } from "@apollo/client"
 import { Screen } from "../../components/screen"
 import { palette } from "../../theme/palette"
 
-const styles = EStyleSheet.create({})
+const styles = EStyleSheet.create({
+  emptyList: { marginHorizontal: 12, marginTop: 32 },
 
-export const ContactsScreen = ({ navigation }) => {
-  const client = useApolloClient()
+  emptyListTitle: { fontSize: 18 },
 
+  item: { marginHorizontal: 32, marginVertical: 8 },
+
+  itemContainer: { borderRadius: 8 },
+
+  list: { paddingTop: 18 },
+})
+
+type Props = {
+  navigation: Record<string, any>
+}
+
+export const ContactsScreen = ({ navigation }: Props) => {
   const { data } = useQuery(gql`
     query contacts {
       me {
@@ -31,11 +43,11 @@ export const ContactsScreen = ({ navigation }) => {
   return (
     <Screen backgroundColor={palette.lighterGrey}>
       <FlatList
-        style={{ paddingTop: 18 }}
+        style={styles.list}
         data={contacts}
         ListEmptyComponent={() => (
-          <View style={{ marginHorizontal: 12, marginTop: 32 }}>
-            <Text style={{ fontSize: 18 }}>
+          <View style={styles.emptyList}>
+            <Text style={styles.emptyListTitle}>
               {
                 "No contact yet.\n\nSend or receive payment with a username. Usernames will automatically be added here."
               }
@@ -46,8 +58,8 @@ export const ContactsScreen = ({ navigation }) => {
           <ListItem
             underlayColor={palette.lighterGrey}
             activeOpacity={0.7}
-            style={{ marginHorizontal: 32, marginVertical: 8 }}
-            containerStyle={{ borderRadius: 8 }}
+            style={styles.item}
+            containerStyle={styles.itemContainer}
             onPress={() => navigation.navigate("contactDetail", { contact: item })}
           >
             {/* <Avatar source={{uri: .avatar_url}} /> */}

@@ -5,7 +5,7 @@ import { StoryScreen } from "../../../storybook/views"
 import { textCurrencyFormatting } from "../../utils/currencyConversion"
 import { SendBitcoinScreenJSX } from "./send-bitcoin-screen"
 
-const noop = () => {}
+const noop = () => null
 const defaultParams = {
   setStatus: noop,
   setAmount: noop,

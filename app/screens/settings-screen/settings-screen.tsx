@@ -29,14 +29,20 @@ import { hasFullPermissions, requestPermission } from "../../utils/notifications
 // Types
 import type { ScreenType } from "../../types/screen"
 
-const styles = EStyleSheet.create({
-  screenStyle: {
-    backgroundColor: palette.lighterGrey,
-  },
-})
-
 type Props = {
-  navigation: any
+  navigation: Record<string, any>
+}
+
+type ComponentProps = {
+  icon: string
+  category: string
+  id: string
+  i: number
+  enabled: boolean
+  greyed: boolean
+  defaultValue?: string
+  action: () => void
+  styleDivider?: Record<string, any>
 }
 
 export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
@@ -212,7 +218,7 @@ export const SettingsScreenJSX = (params) => {
     defaultValue = undefined,
     action,
     styleDivider,
-  }) => {
+  }: ComponentProps) => {
     const value = params[id] || defaultValue
 
     return (
