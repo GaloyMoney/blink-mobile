@@ -74,7 +74,7 @@ const styles = EStyleSheet.create({
 
   lightningText: {
     fontSize: "16rem",
-    marginBotton: 12,
+    marginBottom: 12,
     textAlign: "center",
   },
 
