@@ -35,7 +35,7 @@ import { addDeviceToken } from "../../utils/notifications"
 import BiometricWrapper from "../../utils/biometricAuthentication"
 
 // Types
-import type { ScreenType } from '../../types/screen'
+import type { ScreenType } from "../../types/screen"
 import { AuthenticationScreenPurpose } from "../../utils/enum"
 
 // Assets
@@ -263,10 +263,9 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
       if (token) {
         await onSuccess({ token })
         if (await BiometricWrapper.isSensorAvailable()) {
-          navigation.replace(
-            "authentication",
-            { screenPurpose: AuthenticationScreenPurpose.TurnOnAuthentication }
-          )
+          navigation.replace("authentication", {
+            screenPurpose: AuthenticationScreenPurpose.TurnOnAuthentication,
+          })
         } else {
           navigation.navigate("moveMoney")
         }

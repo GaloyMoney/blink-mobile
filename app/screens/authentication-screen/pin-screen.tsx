@@ -11,22 +11,18 @@ import { palette } from "../../theme/palette"
 import { translate } from "../../i18n"
 import { resetDataStore } from "../../utils/logout"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
-import type { ScreenType } from '../../types/screen'
+import type { ScreenType } from "../../types/screen"
 import { PinScreenPurpose } from "../../utils/enum"
 
 const styles = EStyleSheet.create({
-  container: {
-    alignItems: "center",
-    flex: 1,
-    width: "100%",
-  },
-
-  topSpacer: {
-    flex: 1,
-  },
-
   bottomSpacer: {
     flex: 1,
+  },
+
+  circleContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: 32,
   },
 
   circles: {
@@ -34,75 +30,79 @@ const styles = EStyleSheet.create({
     flexDirection: "row",
   },
 
-  circleContainer: {
-    width: 32,
+  container: {
     alignItems: "center",
-    justifyContent: "center",
+    flex: 1,
+    width: "100%",
   },
 
   emptyCircle: {
-    width: 16,
-    height: 16,
-    borderRadius: 16 / 2,
     backgroundColor: palette.lightBlue,
     borderColor: palette.white,
+    borderRadius: 16 / 2,
     borderWidth: 2,
+    height: 16,
+    width: 16,
   },
 
   filledCircle: {
-    width: 16,
-    height: 16,
-    borderRadius: 16 / 2,
     backgroundColor: palette.white,
+    borderRadius: 16 / 2,
+    height: 16,
+    width: 16,
+  },
+
+  helperText: {
+    color: palette.white,
+    fontSize: 20,
   },
 
   helperTextContainer: {
     flex: 1,
   },
 
-  helperText: {
-    fontSize: 20,
-    color: palette.white,
-  },
-
   pinPad: {
-    flex: 6,
     alignItems: "center",
     flexDirection: "column",
-  },
-
-  pinPadRow: {
-    marginLeft: 32,
-    marginRight: 32,
-    flex: 1,
-    flexDirection: "row",
-  },
-
-  pinPadButtonContainer: {
-    width: 100,
-    alignItems: "center",
-    justifyContent: "center",
+    flex: 6,
   },
 
   pinPadButton: {
-    flex: 1,
-    width: "95%",
-    height: "95%",
     backgroundColor: palette.lightBlue,
+    flex: 1,
+    height: "95%",
+    width: "95%",
   },
 
-  pinPadButtonTitle: {
-    marginLeft: "40%",
-    marginRight: "40%",
-    color: palette.white,
-    fontSize: 26,
-    fontWeight: "bold",
+  pinPadButtonContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: 100,
   },
 
   pinPadButtonIcon: {
-    marginRight: "20%",
     color: palette.white,
     fontSize: 32,
+    marginRight: "20%",
+  },
+
+  pinPadButtonTitle: {
+    color: palette.white,
+    fontSize: 26,
+    fontWeight: "bold",
+    marginLeft: "40%",
+    marginRight: "40%",
+  },
+
+  pinPadRow: {
+    flex: 1,
+    flexDirection: "row",
+    marginLeft: 32,
+    marginRight: 32,
+  },
+
+  topSpacer: {
+    flex: 1,
   },
 })
 
@@ -111,8 +111,8 @@ type Props = {
     params: {
       screenPurpose: PinScreenPurpose
     }
-  },
-  navigation: any,
+  }
+  navigation: any
 }
 
 export const PinScreen: ScreenType = ({ route, navigation }: Props) => {
@@ -122,7 +122,7 @@ export const PinScreen: ScreenType = ({ route, navigation }: Props) => {
 
   const [enteredPIN, setEnteredPIN] = useState("")
   const [helperText, setHelperText] = useState(
-    screenPurpose === PinScreenPurpose.SetPin ? translate("PinScreen.setPin") : ""
+    screenPurpose === PinScreenPurpose.SetPin ? translate("PinScreen.setPin") : "",
   )
   const [previousPIN, setPreviousPIN] = useState("")
   const [pinAttempts, setPinAttempts] = useState(0)
@@ -130,26 +130,25 @@ export const PinScreen: ScreenType = ({ route, navigation }: Props) => {
   const MAX_PIN_ATTEMPTS = 3
 
   useEffect(() => {
-    (async () => {
+    ;(async () => {
       setPinAttempts(await KeyStoreWrapper.getPinAttemptsOrZero())
     })()
   }, [])
 
   const handleCompletedPinForAuthenticatePin = async (newEnteredPIN: string) => {
-    KeyStoreWrapper.setPinAttempts("0")
-    if (newEnteredPIN === await KeyStoreWrapper.getPinOrEmptyString()) {
+    if (newEnteredPIN === (await KeyStoreWrapper.getPinOrEmptyString())) {
       KeyStoreWrapper.resetPinAttempts()
       navigation.reset({
         index: 0,
         routes: [{ name: "Primary" }],
       })
     } else {
-      if (pinAttempts < (MAX_PIN_ATTEMPTS - 1)) {
+      if (pinAttempts < MAX_PIN_ATTEMPTS - 1) {
         const newPinAttempts = pinAttempts + 1
         KeyStoreWrapper.setPinAttempts(newPinAttempts.toString())
         setPinAttempts(newPinAttempts)
         setEnteredPIN("")
-        if (newPinAttempts === (MAX_PIN_ATTEMPTS - 1)) {
+        if (newPinAttempts === MAX_PIN_ATTEMPTS - 1) {
           setHelperText(translate("PinScreen.oneAttemptRemaining"))
         } else {
           const attemptsRemaining = MAX_PIN_ATTEMPTS - newPinAttempts
@@ -214,7 +213,9 @@ export const PinScreen: ScreenType = ({ route, navigation }: Props) => {
   const circleComponentForDigit = (digit: number) => {
     return (
       <View style={styles.circleContainer}>
-        <View style={enteredPIN.length > digit ? styles.filledCircle : styles.emptyCircle} />
+        <View
+          style={enteredPIN.length > digit ? styles.filledCircle : styles.emptyCircle}
+        />
       </View>
     )
   }
@@ -222,7 +223,12 @@ export const PinScreen: ScreenType = ({ route, navigation }: Props) => {
   const buttonComponentForDigit = (digit: string) => {
     return (
       <View style={styles.pinPadButtonContainer}>
-        <Button buttonStyle={styles.pinPadButton} titleStyle={styles.pinPadButtonTitle} title={digit} onPress={() => addDigit(digit)} />
+        <Button
+          buttonStyle={styles.pinPadButton}
+          titleStyle={styles.pinPadButtonTitle}
+          title={digit}
+          onPress={() => addDigit(digit)}
+        />
       </View>
     )
   }
@@ -232,41 +238,37 @@ export const PinScreen: ScreenType = ({ route, navigation }: Props) => {
       <StatusBar backgroundColor={palette.lightBlue} barStyle="light-content" />
       <View style={styles.topSpacer} />
       <View style={styles.circles}>
-        { circleComponentForDigit(0) }
-        { circleComponentForDigit(1) }
-        { circleComponentForDigit(2) }
-        { circleComponentForDigit(3) }
+        {circleComponentForDigit(0)}
+        {circleComponentForDigit(1)}
+        {circleComponentForDigit(2)}
+        {circleComponentForDigit(3)}
       </View>
       <View style={styles.helperTextContainer}>
         <Text style={styles.helperText}>{helperText}</Text>
       </View>
       <View style={styles.pinPad}>
         <View style={styles.pinPadRow}>
-          { buttonComponentForDigit("1") }
-          { buttonComponentForDigit("2") }
-          { buttonComponentForDigit("3") }
+          {buttonComponentForDigit("1")}
+          {buttonComponentForDigit("2")}
+          {buttonComponentForDigit("3")}
         </View>
         <View style={styles.pinPadRow}>
-          { buttonComponentForDigit("4") }
-          { buttonComponentForDigit("5") }
-          { buttonComponentForDigit("6") }
+          {buttonComponentForDigit("4")}
+          {buttonComponentForDigit("5")}
+          {buttonComponentForDigit("6")}
         </View>
         <View style={styles.pinPadRow}>
-          { buttonComponentForDigit("7") }
-          { buttonComponentForDigit("8") }
-          { buttonComponentForDigit("9") }
+          {buttonComponentForDigit("7")}
+          {buttonComponentForDigit("8")}
+          {buttonComponentForDigit("9")}
         </View>
         <View style={styles.pinPadRow}>
           <View style={styles.pinPadButtonContainer} />
-          { buttonComponentForDigit("0") }
+          {buttonComponentForDigit("0")}
           <View style={styles.pinPadButtonContainer}>
-            <Button 
+            <Button
               buttonStyle={styles.pinPadButton}
-              icon={
-                <Icon
-                  style={styles.pinPadButtonIcon}
-                  name="delete" />
-              }
+              icon={<Icon style={styles.pinPadButtonIcon} name="delete" />}
               onPress={() => setEnteredPIN(enteredPIN.slice(0, -1))}
             />
           </View>

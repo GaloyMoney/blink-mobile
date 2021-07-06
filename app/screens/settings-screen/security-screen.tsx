@@ -3,71 +3,71 @@ import { useState } from "react"
 import { useFocusEffect } from "@react-navigation/native"
 import { Text, View } from "react-native"
 import { Button, Switch } from "react-native-elements"
-import EStyleSheet from 'react-native-extended-stylesheet'
+import EStyleSheet from "react-native-extended-stylesheet"
 
 import { Screen } from "../../components/screen"
 import { palette } from "../../theme/palette"
 import { translate } from "../../i18n"
 import BiometricWrapper from "../../utils/biometricAuthentication"
 import { toastShow } from "../../utils/toast"
-import type { ScreenType } from '../../types/screen'
+import type { ScreenType } from "../../types/screen"
 import { PinScreenPurpose } from "../../utils/enum"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
 
 const styles = EStyleSheet.create({
-  container: {
-    minHeight: "100%",
+  button: {
     backgroundColor: palette.white,
+    paddingBottom: 16,
+    paddingLeft: 0,
+    paddingRight: 16,
+    paddingTop: 16,
+  },
+
+  buttonTitle: {
+    color: palette.black,
+    fontSize: 16,
+    fontWeight: "normal",
+  },
+
+  container: {
+    backgroundColor: palette.white,
+    minHeight: "100%",
     paddingLeft: 24,
     paddingRight: 24,
   },
 
+  description: {
+    color: palette.darkGrey,
+    fontSize: 14,
+    marginTop: 2,
+  },
+
   settingContainer: {
-    flexDirection: "row",
     borderBottomColor: palette.lightGrey,
     borderBottomWidth: 1,
+    flexDirection: "row",
+  },
+
+  subtitle: {
+    fontSize: 16,
+    marginTop: 16,
+  },
+
+  switch: {
+    bottom: 18,
+    position: "absolute",
+    right: 0,
   },
 
   textContainer: {
-    marginTop: 32,
-    marginRight: 40,
     marginBottom: 12,
+    marginRight: 40,
+    marginTop: 32,
   },
 
   title: {
     fontSize: 20,
     fontWeight: "bold",
-  },
-
-  subtitle: {
-    marginTop: 16,
-    fontSize: 16,
-  },
-
-  description: {
-    marginTop: 2,
-    fontSize: 14,
-    color: palette.darkGrey,
-  },
-
-  switch: {
-    position: "absolute",
-    right: 0,
-    bottom: 18,
-  },
-
-  button: {
-    paddingTop: 16,
-    paddingRight: 16,
-    paddingBottom: 16,
-    paddingLeft: 0,
-    backgroundColor: palette.white,
-  },
-
-  buttonTitle: {
-    fontSize: 16,
-    color: palette.black,
-    fontWeight: "normal",
   },
 })
 
@@ -83,74 +83,6 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
   const [isPinEnabled, setIsPinEnabled] = useState(mIsPinEnabled)
 
   useFocusEffect(() => {
-<<<<<<< HEAD
-    RNSecureKeyStore.get("isBiometricsEnabled").then(
-      (res) => {
-        setIsBiometricsEnabled(true)
-      },
-      (err) => {
-        setIsBiometricsEnabled(false)
-      },
-    )
-
-    RNSecureKeyStore.get("PIN").then(
-      (res) => {
-        setIsPinEnabled(true)
-      },
-      (err) => {
-        setIsPinEnabled(false)
-      },
-    )
-  })
-
-  const onBiometricsValueChanged = (value) => {
-    if (value) {
-      isSensorAvailable(
-        handleBiometryAvailabilitySuccess,
-        handleBiometryAvailabilityFailure,
-      )
-    } else {
-      RNSecureKeyStore.remove("isBiometricsEnabled").then(
-        (res) => {
-          setIsBiometricsEnabled(false)
-        },
-        (err) => {
-          // unable to remove isBiometricsEnabled
-        },
-      )
-    }
-  }
-
-  const handleBiometryAvailabilitySuccess = (isBiometryAvailable: Boolean) => {
-    if (isBiometryAvailable) {
-      authenticate(
-        translate("AuthenticationScreen.setUpAuthenticationDescription"),
-        handleAuthenticationSuccess,
-        handleAuthenticationFailure,
-      )
-    } else {
-      toastShow("Biometric sensor is not available.")
-    }
-  }
-
-  const handleBiometryAvailabilityFailure = () => {
-    toastShow(
-      "Please register at least one biometric sensor in order to use biometric based authentication.",
-    )
-  }
-
-  const handleAuthenticationSuccess = () => {
-    RNSecureKeyStore.set("isBiometricsEnabled", "1", {
-      accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY,
-    }).then(
-      (res) => {
-        setIsBiometricsEnabled(true)
-      },
-      (err) => {
-        // unable to store isBiometricsEnabled
-      },
-    )
-=======
     getIsBiometricsEnabled()
     getIsPinEnabled()
   })
@@ -168,7 +100,11 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
       try {
         if (await BiometricWrapper.isSensorAvailable()) {
           // Presents the OS specific authentication prompt
-          BiometricWrapper.authenticate(translate("AuthenticationScreen.setUpAuthenticationDescription"), handleAuthenticationSuccess, handleAuthenticationFailure)      
+          BiometricWrapper.authenticate(
+            translate("AuthenticationScreen.setUpAuthenticationDescription"),
+            handleAuthenticationSuccess,
+            handleAuthenticationFailure,
+          )
         } else {
           toastShow(translate("SecurityScreen.biometryNotAvailable"))
         }
@@ -186,7 +122,6 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
     if (await KeyStoreWrapper.setIsBiometricsEnabled()) {
       setIsBiometricsEnabled(true)
     }
->>>>>>> Wrap SecureKeyStore and Biometric utility functions
   }
 
   const handleAuthenticationFailure = () => {
@@ -198,17 +133,6 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
     if (value) {
       navigation.navigate("pin", { screenPurpose: PinScreenPurpose.SetPin })
     } else {
-<<<<<<< HEAD
-      RNSecureKeyStore.remove("PIN").then(
-        (res) => {
-          RNSecureKeyStore.remove("pinAttempts")
-          setIsPinEnabled(false)
-        },
-        (err) => {
-          // unable to remove PIN
-        },
-      )
-=======
       removePin()
     }
   }
@@ -217,7 +141,6 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
     if (await KeyStoreWrapper.removePin()) {
       KeyStoreWrapper.removePinAttempts()
       setIsPinEnabled(false)
->>>>>>> Wrap SecureKeyStore and Biometric utility functions
     }
   }
 

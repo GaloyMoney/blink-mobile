@@ -4,10 +4,6 @@ import { Alert, Image, View } from "react-native"
 import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { useApolloClient } from "@apollo/client"
-<<<<<<< HEAD
-import RNSecureKeyStore, { ACCESSIBLE } from "react-native-secure-key-store"
-=======
->>>>>>> Wrap SecureKeyStore and Biometric utility functions
 
 import { Screen } from "../../components/screen"
 import { color } from "../../theme"
@@ -16,15 +12,22 @@ import { translate } from "../../i18n"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import BiometricWrapper from "../../utils/biometricAuthentication"
 import { resetDataStore } from "../../utils/logout"
-import type { ScreenType } from '../../types/screen'
+import type { ScreenType } from "../../types/screen"
 import { AuthenticationScreenPurpose, PinScreenPurpose } from "../../utils/enum"
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const BitcoinBeachLogo = require("../get-started-screen/bitcoinBeach3.png")
 
 const styles = EStyleSheet.create({
+  Logo: {
+    marginTop: 24,
+    maxHeight: "50%",
+    maxWidth: "50%",
+  },
+
   bottom: {
-    flex: 1,
     alignItems: "center",
+    flex: 1,
     justifyContent: "flex-end",
     marginBottom: 36,
     width: "100%",
@@ -40,6 +43,10 @@ const styles = EStyleSheet.create({
     borderRadius: 24,
   },
 
+  buttonAlternateTitle: {
+    color: palette.white,
+  },
+
   buttonContainer: {
     marginVertical: 12,
     width: "80%",
@@ -50,20 +57,10 @@ const styles = EStyleSheet.create({
     fontWeight: "bold",
   },
 
-  buttonAlternateTitle: {
-    color: palette.white,
-  },
-
   container: {
     alignItems: "center",
     flex: 1,
     width: "100%",
-  },
-
-  Logo: {
-    maxHeight: "50%",
-    maxWidth: "50%",
-    marginTop: 24,
   },
 })
 
@@ -73,8 +70,8 @@ type Props = {
       screenPurpose: AuthenticationScreenPurpose
       isPinEnabled: boolean
     }
-  },
-  navigation: any,
+  }
+  navigation: any
 }
 
 export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) => {
@@ -94,7 +91,11 @@ export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) =
       description = translate("AuthenticationScreen.setUpAuthenticationDescription")
     }
     // Presents the OS specific authentication prompt
-    BiometricWrapper.authenticate(description, handleAuthenticationSuccess, handleAuthenticationFailure)
+    BiometricWrapper.authenticate(
+      description,
+      handleAuthenticationSuccess,
+      handleAuthenticationFailure,
+    )
   }
 
   const handleAuthenticationSuccess = () => {
@@ -132,7 +133,9 @@ export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) =
         title={translate("AuthenticationScreen.usePin")}
         buttonStyle={styles.buttonAlternate}
         titleStyle={styles.buttonAlternateTitle}
-        onPress={() => navigation.navigate("pin", { screenPurpose: PinScreenPurpose.AuthenticatePin })}
+        onPress={() =>
+          navigation.navigate("pin", { screenPurpose: PinScreenPurpose.AuthenticatePin })
+        }
         containerStyle={styles.buttonContainer}
       />
     )
@@ -179,7 +182,9 @@ export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) =
           title={(() => {
             if (screenPurpose === AuthenticationScreenPurpose.Authenticate) {
               return translate("AuthenticationScreen.unlock")
-            } else if (screenPurpose === AuthenticationScreenPurpose.TurnOnAuthentication) {
+            } else if (
+              screenPurpose === AuthenticationScreenPurpose.TurnOnAuthentication
+            ) {
               return translate("AuthenticationScreen.setUp")
             } else {
               return ""
