@@ -63,6 +63,9 @@ export const validPayment = (input: string, network: INetwork, client: any /* ap
   let [protocol, data] = input.split(":")
   let paymentType: IPaymentType = undefined
 
+  // some apps encode addresses and invoices in UPPERCASE 
+  data = data.toLowerCase()
+  
   if (protocol.toLowerCase() === "bitcoin") {
     paymentType = "onchain"
     
@@ -85,7 +88,7 @@ export const validPayment = (input: string, network: INetwork, client: any /* ap
       return {valid: false, paymentType, errorMessage: `This is a testnet invoice. The wallet is on mainnet`}
     }
 
-    data = protocol
+    data = protocol.toLowerCase()
   } else if (protocol.toLowerCase() === "https") {
     const domain = "//ln.bitcoinbeach.com/"
     if (data.startsWith(domain)) {
