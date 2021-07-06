@@ -1,5 +1,5 @@
 import { gql, useLazyQuery, useMutation, useQuery } from "@apollo/client"
-import { useIsFocused } from '@react-navigation/native'
+import { useIsFocused } from "@react-navigation/native"
 import I18n from "i18n-js"
 import * as React from "react"
 import { useState } from "react"
@@ -23,83 +23,12 @@ const { width: screenWidth } = Dimensions.get("window")
 const svgWidth = screenWidth - 60
 
 const styles = EStyleSheet.create({
-  accountView: {
-    borderColor: color.line,
-    borderRadius: 4,
-    borderWidth: 1,
-    marginBottom: 15,
-    marginHorizontal: 15,
-    padding: 6,
-  },
-
-  header: {
-    alignItems: "center",
-    marginVertical: 10,
-  },
-
-  image: {
-    ...StyleSheet.absoluteFillObject,
-    resizeMode: "cover",
-  },
-
-  imageContainerEarn: {
-    height: 200,
-    marginBottom: Platform.select({ ios: 0, android: 1 }), // Prevent a random Android rendering issue
-    backgroundColor: palette.white,
-    borderTopLeftRadius: 32,
-    borderTopRightRadius: 32,
-  },
-
-  item: {
-    width: svgWidth,
-    borderRadius: 16,
-    backgroundColor: palette.lightBlue
-  },
-
-  itemTitle: {
-    $fontSize: 20,
-    color: palette.white,
-    fontSize: '$fontSize',
-    fontWeight: "bold",
-    textAlign: "center",
-    marginHorizontal: "24rem",
-    height: '3.6 * $fontSize',
-  },
-
-  satsButton: {
-    color: palette.white,
-    fontSize: 18,
-    textAlign: "center",
-  },
-
-  smallText: {
-    color: palette.white,
-    fontSize: 18,
-    marginBottom: 40,
-    marginHorizontal: 40,
-    textAlign: "center",
-  },
-
-  text: {
-    color: palette.white,
-    fontSize: 22,
-    marginHorizontal: 20,
-    textAlign: "center",
-  },
-
-  textButton: {
-    backgroundColor: palette.white,
-    borderRadius: 24,
-    marginHorizontal: 60,
-    marginVertical: 32,
-  },
-
   buttonStyleDisabled: {
-    opacity: .5,
     backgroundColor: palette.white,
     borderRadius: 24,
     marginHorizontal: 60,
     marginVertical: 32,
+    opacity: 0.5,
   },
 
   buttonStyleFullfilled: {
@@ -109,60 +38,81 @@ const styles = EStyleSheet.create({
     marginVertical: 32,
   },
 
-  textButtonClose: {
-    backgroundColor: palette.darkGrey,
-    marginTop: 10,
-    paddingHorizontal: 60,
+  divider: { flex: 1 },
+
+  // eslint-disable-next-line react-native/no-color-literals
+  dot: {
+    backgroundColor: "rgba(255, 255, 255, 0.92)",
+    borderRadius: 5,
+    height: 10,
+    marginHorizontal: 0,
+    width: 10,
   },
 
-  title: {
-    color: palette.darkGrey,
-    fontWeight: "bold",
-    marginHorizontal: 40,
-    textAlign: "center",
+  icon: { paddingRight: 12, paddingTop: 3 },
+
+  item: {
+    backgroundColor: palette.lightBlue,
+    borderRadius: 16,
+    width: svgWidth,
   },
 
-  titleSats: {
-    color: color.primary,
-    fontSize: 32,
-    fontWeight: "bold",
-    marginHorizontal: 40,
-    textAlign: "center",
-  },
-
-  titleStyleFullfilled: {
+  itemTitle: {
+    $fontSize: 20,
     color: palette.white,
+    fontSize: "$fontSize",
+    fontWeight: "bold",
+    height: "3.6 * $fontSize",
+    marginHorizontal: "24rem",
+    textAlign: "center",
+  },
+
+  svgContainer: { paddingVertical: 12 },
+
+  textButton: {
+    backgroundColor: palette.white,
+    borderRadius: 24,
+    marginHorizontal: 60,
+    marginVertical: 32,
+  },
+
+  titleStyle: {
+    color: palette.lightBlue,
+    fontWeight: "bold",
   },
 
   titleStyleDisabled: {
     color: palette.lightBlue,
   },
 
-  titleStyle: {
-    color: palette.lightBlue,
-    fontWeight: "bold"
-  },
-
-  unlockQuestion: {
-    paddingTop: "18rem",
+  titleStyleFullfilled: {
     color: palette.white,
-    fontSize: "16rem",
-    alignSelf: "center",
   },
 
   unlock: {
+    alignSelf: "center",
     color: palette.white,
     fontSize: "16rem",
     fontWeight: "bold",
-    alignSelf: "center",
     textAlign: "center",
+  },
+
+  unlockQuestion: {
+    alignSelf: "center",
+    color: palette.white,
+    fontSize: "16rem",
+    paddingTop: "18rem",
   },
 })
 
-export const EarnSection = ({ route, navigation }) => {
+type Props = {
+  route: Record<string, any>
+  navigation: Record<string, any>
+}
 
+export const EarnSection = ({ route, navigation }: Props) => {
   const [queryTransactions] = useLazyQuery(QUERY_TRANSACTIONS, {
-    fetchPolicy: "network-only"
+    fetchPolicy: "network-only",
   })
 
   const [earnCompleted] = useMutation(gql`
@@ -176,17 +126,23 @@ export const EarnSection = ({ route, navigation }) => {
   `)
 
   // TODO: fragment with earnList
-  const { data } = useQuery(gql`query earnList($logged: Boolean!) {
-    earnList {
-      id
-      value
-      completed @client(if: {not: $logged})
-  }}`,
-    { variables: {
-        logged: new Token().has()
+  const { data } = useQuery(
+    gql`
+      query earnList($logged: Boolean!) {
+        earnList {
+          id
+          value
+          completed @client(if: { not: $logged })
+        }
+      }
+    `,
+    {
+      variables: {
+        logged: new Token().has(),
       },
-      fetchPolicy: "cache-only"
-  })
+      fetchPolicy: "cache-only",
+    },
+  )
 
   if (!data) {
     return null
@@ -197,7 +153,7 @@ export const EarnSection = ({ route, navigation }) => {
   const sectionIndex = route.params.section
   const cards = getCardsFromSection({ sectionIndex, earnList })
 
-  const itemIndex = cards.findIndex(item => !item.fullfilled)
+  const itemIndex = cards.findIndex((item) => !item.fullfilled)
   const [firstItem] = useState(itemIndex >= 0 ? itemIndex : 0)
 
   const [currRewardIndex, setCurrRewardIndex] = useState(firstItem)
@@ -206,19 +162,20 @@ export const EarnSection = ({ route, navigation }) => {
 
   const [initialRemainingSats] = useState(remainingSats)
   const currentRemainingEarn = remainingSats
-  
-  const sectionTitle = translate(`EarnScreen.earns\.${sectionIndex}\.meta.title`)
+
+  const sectionTitle = translate(`EarnScreen.earns.${sectionIndex}.meta.title`)
 
   const isFocused = useIsFocused()
 
   if (initialRemainingSats !== 0 && currentRemainingEarn === 0 && isFocused) {
     navigation.navigate("sectionCompleted", {
       amount: cards.reduce((acc, item) => item.value + acc, 0),
-      sectionTitle
-  })}
+      sectionTitle,
+    })
+  }
 
   navigation.setOptions({ title: sectionTitle })
-  
+
   enum RewardType {
     Text = "Text",
     Video = "Video",
@@ -227,27 +184,27 @@ export const EarnSection = ({ route, navigation }) => {
 
   const open = async (card) => {
     // FIXME quick fix for apollo client refactoring
-    if (!(new Token().has())) {
+    if (!new Token().has()) {
       navigation.navigate("phoneValidation")
       return
     }
 
     switch (RewardType[card.type]) {
       case RewardType.Text:
-        navigation.navigate('earnsQuiz', { 
-          title: card.title, 
-          text: card.text, 
+        navigation.navigate("earnsQuiz", {
+          title: card.title,
+          text: card.text,
           amount: card.value,
           question: card.question,
-          answers: card.answers, 
+          answers: card.answers,
           feedback: card.feedback,
           // store.earnComplete(card.id),
           onComplete: async () => {
-            await earnCompleted({variables: { ids: [card.id]}}),
-            queryTransactions()
-          }, 
+            // eslint-disable-next-line no-sequences
+            await earnCompleted({ variables: { ids: [card.id] } }), queryTransactions()
+          },
           id: card.id,
-          completed: earnList.find(item => item.id == card.id).completed
+          completed: earnList.find((item) => item.id == card.id).completed,
         })
         break
       //     case RewardType.Video:
@@ -268,91 +225,97 @@ export const EarnSection = ({ route, navigation }) => {
     }
   }
 
-  const CardItem = ({ item, index }) => {
-    const text = I18n.t(item.fullfilled ? "EarnScreen.satsEarned" : "EarnScreen.earnSats", {
-      count: item.value,
-      formatted_number: I18n.toNumber(item.value, { precision: 0 }),
-    })
+  const CardItem = ({ item }: { item: Record<string, any> }) => {
+    const text = I18n.t(
+      item.fullfilled ? "EarnScreen.satsEarned" : "EarnScreen.earnSats",
+      {
+        count: item.value,
+        formatted_number: I18n.toNumber(item.value, { precision: 0 }),
+      },
+    )
 
     return (
       <>
         <View style={styles.item}>
-          <TouchableOpacity 
+          <TouchableOpacity
             onPress={() => open(item)}
             activeOpacity={0.9}
             disabled={!item.enabled}
-            >
-            <View style={{paddingVertical: 12}}>
-              {SVGs({name: item.id, width: svgWidth})}
+          >
+            <View style={styles.svgContainer}>
+              {SVGs({ name: item.id, width: svgWidth })}
             </View>
           </TouchableOpacity>
           <View>
-            <Text 
-              style={styles.itemTitle}
-              numberOfLines={3}  
-            >{item.title}</Text>
+            <Text style={styles.itemTitle} numberOfLines={3}>
+              {item.title}
+            </Text>
             <Button
               onPress={() => open(item)}
               disabled={!item.enabled}
               disabledStyle={styles.buttonStyleDisabled}
               disabledTitleStyle={styles.titleStyleDisabled}
-              buttonStyle={item.fullfilled ? styles.buttonStyleFullfilled : styles.textButton}
-              titleStyle={item.fullfilled ? styles.titleStyleFullfilled : styles.titleStyle}
-              title={
-                I18n.t(item.fullfilled ? "EarnScreen.satsEarned" : "EarnScreen.earnSats", {
+              buttonStyle={
+                item.fullfilled ? styles.buttonStyleFullfilled : styles.textButton
+              }
+              titleStyle={
+                item.fullfilled ? styles.titleStyleFullfilled : styles.titleStyle
+              }
+              title={I18n.t(
+                item.fullfilled ? "EarnScreen.satsEarned" : "EarnScreen.earnSats",
+                {
                   count: item.value,
                   formatted_number: I18n.toNumber(item.value, { precision: 0 }),
-                })
+                },
+              )}
+              icon={
+                item.fullfilled ? (
+                  <Icon
+                    name="ios-checkmark-circle-outline"
+                    size={36}
+                    color={palette.white}
+                    style={styles.icon}
+                  />
+                ) : undefined
               }
-              icon={item.fullfilled ? <Icon 
-                name={"ios-checkmark-circle-outline"}
-                size={36}
-                color={palette.white}
-                style={{paddingRight: 12, paddingTop: 3}}
-                />
-                : undefined}
             />
           </View>
         </View>
-        {!item.enabled &&
+        {!item.enabled && (
           <>
             <Text style={styles.unlockQuestion}>To unlock, answer the question:</Text>
             <Text style={styles.unlock}>{item.nonEnabledMessage}</Text>
           </>
-        }
+        )}
       </>
     )
   }
 
   return (
     <Screen backgroundColor={palette.blue} statusBar="light-content">
-      <View style={{ flex: 1 }} />
+      <View style={styles.divider} />
       <Carousel
         data={cards}
         renderItem={CardItem}
         sliderWidth={screenWidth}
         // scrollEnabled={!isRewardOpen}
         itemWidth={screenWidth - 60}
-        hasParallaxImages={true}
+        hasParallaxImages
         firstItem={firstItem}
         // inactiveSlideOpacity={isRewardOpen ? 0 : 0.7}
         removeClippedSubviews={false}
         onBeforeSnapToItem={(index) => setCurrRewardIndex(index)}
       />
-      <View style={{ flex: 1 }} />
+      <View style={styles.divider} />
       <Pagination
         dotsLength={cards.length}
         activeDotIndex={currRewardIndex}
-        dotStyle={{
-            width: 10,
-            height: 10,
-            borderRadius: 5,
-            marginHorizontal: 0,
-            backgroundColor: 'rgba(255, 255, 255, 0.92)'
-        }}
-        inactiveDotStyle={{
+        dotStyle={styles.dot}
+        inactiveDotStyle={
+          {
             // Define styles for inactive dots here
-        }}
+          }
+        }
         inactiveDotOpacity={0.4}
         inactiveDotScale={0.6}
       />

@@ -37,9 +37,8 @@ class KeychainAction {
     const credentials = await RNKeychain.getInternetCredentials(vKey)
     if (credentials) {
       return credentials.password
-    } else {
-      return null
     }
+    return null
   }
 }
 

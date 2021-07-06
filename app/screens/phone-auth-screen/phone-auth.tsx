@@ -1,9 +1,17 @@
 /* eslint-disable react-native/no-inline-styles */
 import * as React from "react"
 import { useEffect, useRef, useState } from "react"
-import { ActivityIndicator, Alert, KeyboardAvoidingView, Platform, ScrollView, Text, View } from "react-native"
+import {
+  ActivityIndicator,
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Text,
+  View,
+} from "react-native"
 import { Input } from "react-native-elements"
-import { gql, useApolloClient, useLazyQuery, useMutation } from '@apollo/client'
+import { gql, useApolloClient, useLazyQuery, useMutation } from "@apollo/client"
 import EStyleSheet from "react-native-extended-stylesheet"
 import PhoneInput from "react-native-phone-input"
 import analytics from "@react-native-firebase/analytics"
@@ -26,55 +34,31 @@ import { toastShow } from "../../utils/toast"
 import { addDeviceToken } from "../../utils/notifications"
 
 // Types
-import type { ScreenType } from '../../types/screen'
+import type { ScreenType } from "../../types/screen"
 
 // Assets
-import BadgerPhone from './badger-phone-01.svg'
+import BadgerPhone from "./badger-phone-01.svg"
 
 const REQUEST_PHONE_CODE = gql`
-  mutation requestPhoneCode ($phone: String) {
-    requestPhoneCode (phone: $phone) {
-        success
+  mutation requestPhoneCode($phone: String) {
+    requestPhoneCode(phone: $phone) {
+      success
     }
   }
 `
 
 const LOGIN = gql`
-  mutation login ($phone: String, $code: Int) {
-      login (phone: $phone, code: $code) {
-          token
-      }
+  mutation login($phone: String, $code: Int) {
+    login(phone: $phone, code: $code) {
+      token
+    }
   }
 `
 
 const styles = EStyleSheet.create({
-  activityIndicatorWrapper: {
-    alignItems: "center",
-    backgroundColor: "#FFFFFF",
-    borderRadius: 10,
-    display: "flex",
-    height: 100,
-    justifyContent: "space-around",
-    width: 100,
-  },
-
-  buttonContainer: {
-    paddingHorizontal: 80,
-    paddingVertical: 10,
-  },
-
-  buttonStyle: {
-    backgroundColor: color.primary,
-  },
-
-  button: {
-    color: palette.lightBlue
-  },
-
-  container: {
-    flex: 1,
-    flexDirection: "column",
-    justifyContent: "center",
+  codeContainer: {
+    alignSelf: "center",
+    width: "70%",
   },
 
   image: {
@@ -87,11 +71,11 @@ const styles = EStyleSheet.create({
     borderColor: color.palette.darkGrey,
     borderRadius: 5,
     borderWidth: 1,
+    flex: 1,
     marginHorizontal: "50rem",
     marginVertical: "18rem",
     paddingHorizontal: "18rem",
     paddingVertical: "12rem",
-    flex: 1,
   },
 
   text: {
@@ -105,20 +89,17 @@ const styles = EStyleSheet.create({
     color: color.palette.darkGrey,
     fontSize: "18rem",
   },
-
-  codeContainer: {
-    alignSelf: "center",
-    width: "70%"
-  }
 })
 
 type WelcomePhoneInputScreenProps = {
-  navigation: any,
+  navigation: any
 }
 
-export const WelcomePhoneInputScreen: ScreenType = ({ navigation }: WelcomePhoneInputScreenProps) => {
+export const WelcomePhoneInputScreen: ScreenType = ({
+  navigation,
+}: WelcomePhoneInputScreenProps) => {
   const [requestPhoneCode, { loading }] = useMutation(REQUEST_PHONE_CODE, {
-    fetchPolicy: "no-cache"
+    fetchPolicy: "no-cache",
   })
 
   const inputRef = useRef<PhoneInput | null>()
@@ -127,7 +108,9 @@ export const WelcomePhoneInputScreen: ScreenType = ({ navigation }: WelcomePhone
     console.log({ initPhoneNumber: inputRef.current.getValue() })
 
     if (!inputRef.current.isValidNumber()) {
-      Alert.alert(`${inputRef.current.getValue()} ${translate("errors.invalidPhoneNumber")}`)
+      Alert.alert(
+        `${inputRef.current.getValue()} ${translate("errors.invalidPhoneNumber")}`,
+      )
       return
     }
 
@@ -172,7 +155,12 @@ export const WelcomePhoneInputScreen: ScreenType = ({ navigation }: WelcomePhone
               onSubmitEditing: send,
             }}
           />
-          <ActivityIndicator animating={loading} size="large" color={color.primary} style={{ marginTop: 32 }}/>
+          <ActivityIndicator
+            animating={loading}
+            size="large"
+            color={color.primary}
+            style={{ marginTop: 32 }}
+          />
         </KeyboardAvoidingView>
       </View>
       <CloseCross color={palette.darkGrey} onPress={() => navigation.goBack()} />
@@ -181,21 +169,22 @@ export const WelcomePhoneInputScreen: ScreenType = ({ navigation }: WelcomePhone
 }
 
 type WelcomePhoneValidationScreenDataInjectedProps = {
-  route: string,
-  navigation: any,
+  route: string
+  navigation: any
 }
 
-export const WelcomePhoneValidationScreenDataInjected: ScreenType = (
-  { route, navigation }: WelcomePhoneValidationScreenDataInjectedProps
-) => {
+export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
+  route,
+  navigation,
+}: WelcomePhoneValidationScreenDataInjectedProps) => {
   const client = useApolloClient()
 
   const [login, { loading, error }] = useMutation(LOGIN, {
-    fetchPolicy: "no-cache"
+    fetchPolicy: "no-cache",
   })
 
   const [reloadMainQuery] = useLazyQuery(MAIN_QUERY, {
-    fetchPolicy: "network-only"
+    fetchPolicy: "network-only",
   })
 
   const onSuccess = async ({ token }) => {
@@ -233,22 +222,27 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = (
 }
 
 type WelcomePhoneValidationScreenProps = {
-  login: (params) => any,
-  onSuccess: (params) => void,
-  navigation: any,
-  route: Record<string, any>,
-  loading: boolean,
-  error: string,
+  login: (params) => any
+  onSuccess: (params) => void
+  navigation: any
+  route: Record<string, any>
+  loading: boolean
+  error: string
 }
 
 export const WelcomePhoneValidationScreen: ScreenType = ({
-  onSuccess, route, navigation, login, loading, error
+  onSuccess,
+  route,
+  navigation,
+  login,
+  loading,
+  error,
 }: WelcomePhoneValidationScreenProps) => {
   // FIXME see what to do with store and storybook
   const [code, setCode] = useState("")
 
   const { phone } = route.params
-  const updateCode = input => setCode(input)
+  const updateCode = (input) => setCode(input)
 
   const send = async () => {
     if (code.length !== 6) {
@@ -288,7 +282,9 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
         <ScrollView>
           <View style={{ flex: 1, minHeight: 32 }} />
           <BadgerPhone style={styles.image} />
-          <Text style={styles.text}>{translate("WelcomePhoneValidationScreen.header", { phone })}</Text>
+          <Text style={styles.text}>
+            {translate("WelcomePhoneValidationScreen.header", { phone })}
+          </Text>
           <KeyboardAvoidingView
             keyboardVerticalOffset={-110}
             behavior={Platform.OS === "ios" ? "padding" : undefined}
@@ -297,7 +293,7 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
             <Input
               errorStyle={{ color: palette.red }}
               errorMessage={error}
-              autoFocus={true}
+              autoFocus
               style={styles.phoneEntryContainer}
               containerStyle={styles.codeContainer}
               onChangeText={updateCode}
@@ -307,7 +303,7 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
               returnKeyType={loading ? "default" : "done"}
               maxLength={6}
               onSubmitEditing={send}
-              >
+            >
               {code}
             </Input>
           </KeyboardAvoidingView>

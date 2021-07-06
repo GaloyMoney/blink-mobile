@@ -40,7 +40,7 @@ export const NavigationEvents = types.model("NavigationEvents").volatile(() => {
    */
   const addListener = (eventName: EventType, handler: NavigationEventCallback) => {
     if (eventName !== "action") {
-      return { remove: () => {} }
+      return { remove: () => null }
     }
 
     // subscribe

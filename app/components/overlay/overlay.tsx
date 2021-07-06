@@ -6,7 +6,19 @@ import Svg, { Path, Defs, ClipPath, G, Rect, Circle } from "react-native-svg"
 import { palette } from "../../theme/palette"
 import { translate } from "../../i18n"
 
+const CY = 200
+const R = 135
+
 const styles = StyleSheet.create({
+  arrow: {
+    marginVertical: 0,
+    marginLeft: 50,
+  },
+
+  flex: {
+    flex: 1,
+  },
+
   modalBackground: {
     alignItems: "center",
     backgroundColor: palette.OPACITY,
@@ -19,6 +31,7 @@ const styles = StyleSheet.create({
     color: palette.white,
     fontSize: 24,
     margin: 30,
+    textAlign: "center",
   },
 
   modalTextCenter: {
@@ -27,29 +40,39 @@ const styles = StyleSheet.create({
     margin: 30,
     textAlign: "center",
   },
+
+  screenContainer: {
+    position: "absolute",
+    zIndex: 2,
+  },
+
+  textContainer: {
+    position: "absolute",
+    top: CY + R,
+    alignSelf: "center",
+  },
 })
 
-const DownArrow = (props) => {
-  return (
-    <Svg viewBox="0 0 776.092 693.665" height={150} width={320} {...props}>
-      <Path
-        d="M28.782 10c3.059 89.23 14.349 170.15 34.519 242.15 19.59 69.929 51.246 124.84 100.094 166.82 141.441 121.543 417.022 51.435 417.022 51.435l-12.595-101.937 198.27 132.773-159.33 182.424-10.468-84.742s-272.851 57.51-445.67-108.263C48.226 392.438 5.716 229.878 10.339 12.797c.723-.767 12.855-2.819 18.443-2.797z"
-        clipRule="evenodd"
-        fillRule="evenodd"
-        fill="#010002"
-      />
-    </Svg>
-  )
+const DownArrow = (props) => (
+  <Svg viewBox="0 0 776.092 693.665" height={150} width={320} {...props}>
+    <Path
+      d="M28.782 10c3.059 89.23 14.349 170.15 34.519 242.15 19.59 69.929 51.246 124.84 100.094 166.82 141.441 121.543 417.022 51.435 417.022 51.435l-12.595-101.937 198.27 132.773-159.33 182.424-10.468-84.742s-272.851 57.51-445.67-108.263C48.226 392.438 5.716 229.878 10.339 12.797c.723-.767 12.855-2.819 18.443-2.797z"
+      clipRule="evenodd"
+      fillRule="evenodd"
+      fill="#010002"
+    />
+  </Svg>
+)
+
+type Props = {
+  screen: string
 }
 
-const CY = 200
-const R = 135
-
-export const Overlay = ({ screen }) => {
+export const Overlay = ({ screen }: Props) => {
   const [modalVisible, setModalVisible] = useState(true)
 
   return (
-    <Modal visible={modalVisible} transparent={true} animationType={"fade"}>
+    <Modal visible={modalVisible} transparent animationType="fade">
       {screen == "accounts" && (
         <View style={styles.modalBackground}>
           <TouchableWithoutFeedback
@@ -57,25 +80,28 @@ export const Overlay = ({ screen }) => {
               setModalVisible(false)
             }}
           >
-            <SafeAreaView style={{ flex: 1 }}>
-              <View style={{ flex: 1 }}>
-                <View style={{ flex: 1 }}></View>
+            <SafeAreaView style={styles.flex}>
+              <View style={styles.flex}>
+                <View style={styles.flex} />
                 <Text style={styles.modalText}>{translate("Overlay.accounts")}</Text>
-                <DownArrow style={{ marginVertical: 0, marginLeft: 50 }} />
+                <DownArrow style={styles.arrow} />
               </View>
             </SafeAreaView>
           </TouchableWithoutFeedback>
         </View>
       )}
       {screen == "earns" && (
-        <View style={{ position: "absolute", zIndex: 2 }}>
+        <View style={styles.screenContainer}>
           <TouchableWithoutFeedback
             onPress={() => {
               setModalVisible(false)
             }}
           >
             <View>
-              <Svg width={Dimensions.get("window").width} height={Dimensions.get("window").height}>
+              <Svg
+                width={Dimensions.get("window").width}
+                height={Dimensions.get("window").height}
+              >
                 <Defs>
                   <ClipPath id="clip">
                     <G>
@@ -87,18 +113,15 @@ export const Overlay = ({ screen }) => {
                 <Rect
                   width="100%"
                   height="100%"
-                  fill={OPACITY}
                   clipPath="url(#clip)"
                   clipRule="evenodd"
                 />
               </Svg>
-              <View style={{ position: "absolute", top: CY + R, alignSelf: "center" }}>
-                <Text style={[styles.modalText, { textAlign: "center" }]}>
+              <View style={styles.textContainer}>
+                <Text style={styles.modalText}>
                   {translate("Overlay.earns.download")}
                 </Text>
-                <Text style={[styles.modalText, { textAlign: "center" }]}>
-                  {translate("Overlay.earns.getMore")}
-                </Text>
+                <Text style={styles.modalText}>{translate("Overlay.earns.getMore")}</Text>
               </View>
             </View>
           </TouchableWithoutFeedback>

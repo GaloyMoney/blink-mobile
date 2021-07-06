@@ -1,40 +1,53 @@
 import * as React from "react"
-import { View, Text } from "react-native";
+import { View, Text } from "react-native"
+import EStyleSheet from "react-native-extended-stylesheet"
 import Montain from "./mointains-cloud-01.svg"
-import EStyleSheet from "react-native-extended-stylesheet";
 import { translate } from "../../i18n"
-import { palette } from "../../theme/palette";
+import { palette } from "../../theme/palette"
 
 const styles = EStyleSheet.create({
+  amountContainer: {
+    alignItems: "center",
+    paddingBottom: 16,
+  },
+
+  headerSection: {
+    color: palette.white,
+    fontSize: "16rem",
+    paddingTop: "18rem",
+  },
+
   mountainView: {
     alignItems: "center",
+  },
+
+  titleSection: {
+    color: palette.white,
+    fontSize: "24rem",
+    fontWeight: "bold",
+    paddingTop: "6rem",
   },
 
   topView: {
     marginTop: "80rem",
   },
-
-  headerSection: { color: palette.white,
-    fontSize: "16rem",
-    paddingTop: "18rem"
-  },
-
-  titleSection: { color: palette.white, 
-    fontWeight: "bold",
-    fontSize: "24rem",
-    paddingTop: "6rem"
-  },
 })
 
-export const MountainHeader = ({amount, color}) => (
-<View style={{backgroundColor: color}}>
-  <View style={[styles.topView]}>
-    <View style={{alignItems: "center", paddingBottom: 16}}>
-      <Text style={styles.headerSection}>{translate("EarnScreen.youEarned")}</Text>
-      <Text style={styles.titleSection}>{amount} sats</Text>
+type Props = {
+  amount: string
+  color: string
+}
+
+export const MountainHeader = ({ amount, color }: Props) => (
+  <View style={{ backgroundColor: color }}>
+    <View style={styles.topView}>
+      <View style={styles.amountContainer}>
+        <Text style={styles.headerSection}>{translate("EarnScreen.youEarned")}</Text>
+        <Text style={styles.titleSection}>{amount} sats</Text>
+      </View>
+    </View>
+    <View style={styles.mountainView}>
+      <Montain />
     </View>
   </View>
-  <View style={[styles.mountainView]}>
-    <Montain />
-  </View>
-</View>)
+)

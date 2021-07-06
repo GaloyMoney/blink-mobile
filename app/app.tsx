@@ -2,18 +2,29 @@
 //
 // In this file, we'll be kicking off our app or storybook.
 
-import { ApolloClient, ApolloProvider, HttpLink, NormalizedCacheObject } from "@apollo/client"
+import {
+  ApolloClient,
+  ApolloProvider,
+  HttpLink,
+  NormalizedCacheObject,
+} from "@apollo/client"
 import { setContext } from "@apollo/client/link/context"
 import { RetryLink } from "@apollo/client/link/retry"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import analytics from "@react-native-firebase/analytics"
+// eslint-disable-next-line import/no-unassigned-import
 import "@react-native-firebase/crashlytics"
-import { NavigationContainer, NavigationState, PartialState } from "@react-navigation/native"
-import { AsyncStorageWrapper, CachePersistor } from 'apollo3-cache-persist'
+import {
+  NavigationContainer,
+  NavigationState,
+  PartialState,
+} from "@react-navigation/native"
+import { AsyncStorageWrapper, CachePersistor } from "apollo3-cache-persist"
+// eslint-disable-next-line import/no-unassigned-import
 import "node-libs-react-native/globals" // needed for Buffer?
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { createNetworkStatusNotifier } from 'react-apollo-network-status'
+import { createNetworkStatusNotifier } from "react-apollo-network-status"
 import { Dimensions, LogBox } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { RootSiblingParent } from "react-native-root-siblings"
@@ -22,17 +33,17 @@ import { GlobalErrorToast } from "./components/global-error"
 import { cache } from "./graphql/cache"
 import { initQuery, INITWALLET } from "./graphql/init"
 import { walletIsActive } from "./graphql/query"
+// eslint-disable-next-line import/no-unassigned-import
 import "./i18n"
 import { RootStack } from "./navigation/root-navigator"
 import { isIos } from "./utils/helper"
 import { getGraphQlUri, Token } from "./utils/token"
 import { saveString, loadString } from "./utils/storage"
 
-
 export const BUILD_VERSION = "build_version"
 
-
-export const {link: linkNetworkStatusNotifier, useApolloNetworkStatus} = createNetworkStatusNotifier();
+export const { link: linkNetworkStatusNotifier, useApolloNetworkStatus } =
+  createNetworkStatusNotifier()
 
 const entireScreenWidth = Dimensions.get("window").width
 EStyleSheet.build({
@@ -53,14 +64,13 @@ LogBox.ignoreLogs([
 // FIXME
 LogBox.ignoreAllLogs()
 
-
 /**
  * This is the root component of our app.
  */
 export const App = () => {
   const [routeName, setRouteName] = useState("Initial")
-  const [apolloClient, setApolloClient] = useState<ApolloClient<NormalizedCacheObject>>();
-  const [persistor, setPersistor] = useState<CachePersistor<NormalizedCacheObject>>();
+  const [apolloClient, setApolloClient] = useState<ApolloClient<NormalizedCacheObject>>()
+  const [persistor, setPersistor] = useState<CachePersistor<NormalizedCacheObject>>()
 
   const getActiveRouteName = (
     state: NavigationState | PartialState<NavigationState> | undefined,
@@ -80,11 +90,10 @@ export const App = () => {
 
   useEffect(() => {
     const fn = async () => {
-
       const token = new Token()
       await token.load()
 
-      // legacy. when was using mst-gql. storage is deleted as we don't want 
+      // legacy. when was using mst-gql. storage is deleted as we don't want
       // to keep this around.
       const LEGACY_ROOT_STATE_STORAGE_KEY = "rootAppGaloy"
       await AsyncStorage.multiRemove([LEGACY_ROOT_STATE_STORAGE_KEY])
@@ -97,12 +106,15 @@ export const App = () => {
         },
         attempts: {
           max: 3,
-          retryIf: (error, operation) => { 
-            console.log({error}, "retry error")
-            return !!error && !/onchain_pay|payKeysendUsername|payInvoice/.test(operation.operationName)
-          }
-        }
-      });
+          retryIf: (error, operation) => {
+            console.log({ error }, "retry error")
+            return (
+              !!error &&
+              !/onchain_pay|payKeysendUsername|payInvoice/.test(operation.operationName)
+            )
+          },
+        },
+      })
 
       const customFetch = async (_ /* uri not used */, options) => {
         const uri = await getGraphQlUri()
@@ -122,13 +134,15 @@ export const App = () => {
         cache,
         storage: new AsyncStorageWrapper(AsyncStorage),
         debug: __DEV__,
-      });
+      })
 
       setPersistor(persistor_)
 
       const client = new ApolloClient({
         cache,
-        link: linkNetworkStatusNotifier.concat(retryLink.concat(authLink.concat(httpLink))),
+        link: linkNetworkStatusNotifier.concat(
+          retryLink.concat(authLink.concat(httpLink)),
+        ),
         name: isIos ? "iOS" : "Android",
         version: `${VersionNumber.appVersion}-${VersionNumber.buildVersion}`,
       })
@@ -143,21 +157,20 @@ export const App = () => {
       // init the DB. will be override if a cache exists
       await initDb()
 
-
       // Read the current schema version from AsyncStorage.
-      const currentVersion = await loadString(BUILD_VERSION);
+      const currentVersion = await loadString(BUILD_VERSION)
       const buildVersion = String(VersionNumber.buildVersion)
-      
+
       // TODO: also add a schema version?
       if (currentVersion === buildVersion) {
         // If the current version matches the latest version,
         // we're good to go and can restore the cache.
-        await persistor_.restore();
+        await persistor_.restore()
       } else {
         // Otherwise, we'll want to purge the outdated persisted cache
         // and mark ourselves as having updated to the latest version.
-        await persistor_.purge();
-        await saveString(BUILD_VERSION, buildVersion);
+        await persistor_.purge()
+        await saveString(BUILD_VERSION, buildVersion)
       }
 
       client.onClearStore(initDb)
