@@ -19,6 +19,4 @@ target 'GaloyApp' do
 
   pod 'XCDYouTubeKit', '~> 2.8' # for YouTubeStandaloneIOS
 
-  pod 'RNSecureKeyStore', :path => '../node_modules/react-native-secure-key-store'
-
 end
