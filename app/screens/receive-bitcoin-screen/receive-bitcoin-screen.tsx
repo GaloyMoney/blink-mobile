@@ -350,18 +350,17 @@ export const ReceiveBitcoinScreen = ({ navigation }: Props) => {
     const getFullUri = (input) => {
       if (type === "lightning") {
         // TODO add lightning:
-        return input
+        return input.toUpperCase()
       }
       const uri = `bitcoin:${input}`
       const params = new URLSearchParams()
-      if (amount) {
-        params.append("amount", `${amount / 10 ** 8}`)
-      }
+      if (amount) params.append("amount", `${amount / 10 ** 8}`)
       if (memo) {
         params.append("message", encodeURI(memo))
+        return `${uri}?${params.toString()}`
       }
       const fullUri = params.toString() ? `${uri}?${params.toString()}` : `${uri}`
-      return fullUri
+      return fullUri.toUpperCase()
     }
 
     const copyToClipboard = () => {
