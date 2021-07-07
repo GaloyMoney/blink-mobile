@@ -32,9 +32,11 @@ import { palette } from "../../theme/palette"
 import { Token } from "../../utils/token"
 import { toastShow } from "../../utils/toast"
 import { addDeviceToken } from "../../utils/notifications"
+import BiometricWrapper from "../../utils/biometricAuthentication"
 
 // Types
 import type { ScreenType } from "../../types/screen"
+import { AuthenticationScreenPurpose } from "../../utils/enum"
 
 // Assets
 import BadgerPhone from "./badger-phone-01.svg"
@@ -258,7 +260,13 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
 
       if (token) {
         await onSuccess({ token })
-        navigation.navigate("MoveMoney")
+        if (await BiometricWrapper.isSensorAvailable()) {
+          navigation.replace("authentication", {
+            screenPurpose: AuthenticationScreenPurpose.TurnOnAuthentication,
+          })
+        } else {
+          navigation.navigate("moveMoney")
+        }
       } else {
         toastShow(translate("WelcomePhoneValidationScreen.errorLoggingIn"))
       }

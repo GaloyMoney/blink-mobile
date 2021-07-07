@@ -21,6 +21,11 @@ import {
   walletIsActive,
 } from "../graphql/query"
 import { translate } from "../i18n"
+import {
+  AuthenticationScreen,
+  AuthenticationCheckScreen,
+} from "../screens/authentication-screen"
+import { PinScreen } from "../screens/authentication-screen/pin-screen"
 import { ContactsDetailScreen } from "../screens/contacts-detail-screen"
 import { ContactsScreen } from "../screens/contacts-screen"
 import { DebugScreen } from "../screens/debug-screen"
@@ -39,6 +44,7 @@ import { ReceiveBitcoinScreen } from "../screens/receive-bitcoin-screen"
 import { ScanningQRCodeScreen, SendBitcoinScreen } from "../screens/send-bitcoin-screen"
 import { SettingsScreen, UsernameScreen } from "../screens/settings-screen"
 import { LanguageScreen } from "../screens/settings-screen/language-screen"
+import { SecurityScreen } from "../screens/settings-screen/security-screen"
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
 import { TransactionHistoryScreenDataInjected } from "../screens/transaction-screen/transaction-screen"
 import { WelcomeFirstScreen } from "../screens/welcome-screens"
@@ -260,7 +266,7 @@ export const RootStack = () => {
   return (
     <RootNavigator.Navigator
       screenOptions={{ gestureEnabled: false }}
-      initialRouteName={token.has() ? "Primary" : "getStarted"}
+      initialRouteName={token.has() ? "authenticationCheck" : "getStarted"}
     >
       <RootNavigator.Screen
         name="getStarted"
@@ -274,6 +280,21 @@ export const RootStack = () => {
       <RootNavigator.Screen
         name="welcomeFirst"
         component={WelcomeFirstScreen}
+        options={{ headerShown: false }}
+      />
+      <RootNavigator.Screen
+        name="authenticationCheck"
+        component={AuthenticationCheckScreen}
+        options={{ headerShown: false, animationEnabled: false }}
+      />
+      <RootNavigator.Screen
+        name="authentication"
+        component={AuthenticationScreen}
+        options={{ headerShown: false, animationEnabled: false }}
+      />
+      <RootNavigator.Screen
+        name="pin"
+        component={PinScreen}
         options={{ headerShown: false }}
       />
       <RootNavigator.Screen
@@ -333,6 +354,13 @@ export const RootStack = () => {
         component={LanguageScreen}
         options={() => ({
           title: "Language preference",
+        })}
+      />
+      <RootNavigator.Screen
+        name="security"
+        component={SecurityScreen}
+        options={() => ({
+          title: "Security",
         })}
       />
       <RootNavigator.Screen name="Profile" component={DebugScreen} />
