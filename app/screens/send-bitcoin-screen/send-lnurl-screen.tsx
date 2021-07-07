@@ -18,7 +18,12 @@ import { palette } from "../../theme/palette"
 import { btc_price, balanceBtc } from "../../graphql/query"
 import { usePrefCurrency } from "../../hooks/usePrefCurrency"
 import { Row } from "../../components/shared/row"
-import { invoiceRequest, isAmountValid, isProtocolSupported, parseUrl } from "../../utils/lnurl"
+import {
+  invoiceRequest,
+  isAmountValid,
+  isProtocolSupported,
+  parseUrl,
+} from "../../utils/lnurl"
 import { mSatToSat, satToMsat } from "../../utils/amount"
 
 const LIGHTNING_FEES = gql`
@@ -143,7 +148,10 @@ export const SendLNUrlScreen = ({ route }) => {
 
       setSubmitStatus(0)
 
-      if (data.invoice.payInvoice === "success" || data.invoice.payInvoice === "pending") {
+      if (
+        data.invoice.payInvoice === "success" ||
+        data.invoice.payInvoice === "pending"
+      ) {
         setStatus(PAYMENT_STATUS.Success)
       } else {
         setStatus(PAYMENT_STATUS.Error)
@@ -170,7 +178,7 @@ export const SendLNUrlScreen = ({ route }) => {
             price={price}
           />
           <View style={styles.errorContainer}>
-            {amount > balance && <Text>You don't have enough balance</Text>}
+            {amount > balance && <Text>You do not have enough balance</Text>}
             {!minSendable !== null && !isAmountValid(amount, minSendable, maxSendable) && (
               <Text>
                 You must set an amount between {minSendable} and {maxSendable}

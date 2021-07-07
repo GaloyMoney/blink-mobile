@@ -6,12 +6,16 @@ import { SUPPORTED_PROTOCOLS } from "../constants/lnurl"
 
 import type { LNUrlPay } from "../types/lnurl"
 
-export const isLnUrl = (invoice: string): boolean => invoice.toLowerCase().startsWith("lnurl")
+export const isLnUrl = (invoice: string): boolean =>
+  invoice.toLowerCase().startsWith("lnurl")
 
 export const isProtocolSupported = (tag: string): boolean => !!SUPPORTED_PROTOCOLS[tag]
 
-export const isAmountValid = (amount: number, minSendable: number, maxSendable: number): boolean =>
-  minSendable <= amount && amount <= maxSendable
+export const isAmountValid = (
+  amount: number,
+  minSendable: number,
+  maxSendable: number,
+): boolean => minSendable <= amount && amount <= maxSendable
 
 export const parseUrl = async (invoice: string): Promise<LNUrlPay> => {
   const { words } = bech32.decode(invoice, 2000)
