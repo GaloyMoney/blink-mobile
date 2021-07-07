@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
-import { gql, useApolloClient, useMutation } from "@apollo/client"
+import { gql, useApolloClient, useMutation, useLazyQuery } from "@apollo/client"
 import { Alert, ScrollView, Text, View } from "react-native"
+import { useNavigation } from "@react-navigation/native"
 import { Button, Input } from "react-native-elements"
 import LottieView from "lottie-react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
@@ -8,13 +9,12 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import errorLottie from "../move-money-screen/error_lottie.json"
 import successLottie from "../move-money-screen/success_lottie.json"
 
-import { translate } from "../../i18n"
 import { Screen } from "../../components/screen"
 import { InputPayment } from "../../components/input-payment"
 import { PAYMENT_STATUS } from "../../constants/lnurl"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-import { btc_price, balanceBtc } from "../../graphql/query"
+import { btc_price, balanceBtc, QUERY_TRANSACTIONS } from "../../graphql/query"
 import { usePrefCurrency } from "../../hooks/usePrefCurrency"
 import { Row } from "../../components/shared/row"
 import {
@@ -98,6 +98,7 @@ type Props = {
 }
 
 export const SendLNUrlScreen: React.FC<Props> = ({ route }: Props) => {
+  const { navigate } = useNavigation()
   const client = useApolloClient()
   const price = btc_price(client)
   const balance = balanceBtc(client)
@@ -114,8 +115,14 @@ export const SendLNUrlScreen: React.FC<Props> = ({ route }: Props) => {
   const [maxMemoSize, setMaxMemoSize] = useState(0)
   const [prefCurrency, nextPrefCurrency] = usePrefCurrency()
 
+  const [queryTransactions] = useLazyQuery(QUERY_TRANSACTIONS, {
+    fetchPolicy: "network-only",
+  })
+
+  const [payInvoice] = useMutation(PAY_INVOICE, {
+    update: () => queryTransactions(),
+  })
   const [lightningFees] = useMutation(LIGHTNING_FEES)
-  const [payInvoice] = useMutation(PAY_INVOICE)
 
   const hasEnoughBalance = balance >= amount
   const isAmountSendable = isAmountValid(amount, minSendable, maxSendable)
@@ -165,7 +172,9 @@ export const SendLNUrlScreen: React.FC<Props> = ({ route }: Props) => {
 
     try {
       const paymentInvoice = await invoiceRequest(callback, amount, memo)
-      const payment = await payInvoice({ variables: { invoice: paymentInvoice } })
+      const payment = await payInvoice({
+        variables: { invoice: paymentInvoice, memo: description },
+      })
       const { data } = payment
 
       setSubmitStatus(0)
@@ -181,6 +190,10 @@ export const SendLNUrlScreen: React.FC<Props> = ({ route }: Props) => {
     } catch (error) {
       setSubmitStatus(0)
       setStatus(PAYMENT_STATUS.Error)
+    } finally {
+      setTimeout(() => {
+        setStatus(PAYMENT_STATUS.Finished)
+      }, 4000)
     }
   }
 
@@ -219,7 +232,6 @@ export const SendLNUrlScreen: React.FC<Props> = ({ route }: Props) => {
           />
           <Row entry="Fees" value={fees === null ? "Loading fees..." : fees} />
           <Row entry="Description" value={description} />
-          <Text>{memo}</Text>
           {!(maxMemoSize === 0) && (
             <Input
               label="Memo"
@@ -260,8 +272,10 @@ export const SendLNUrlScreen: React.FC<Props> = ({ route }: Props) => {
         <Button
           buttonStyle={styles.buttonStyle}
           containerStyle={styles.buttonContainerStyle}
-          title={"Send"}
-          onPress={submitPayment}
+          title={status === PAYMENT_STATUS.Pending ? "Send" : "Close"}
+          onPress={() =>
+            status === PAYMENT_STATUS.Pending ? submitPayment() : navigate("Primary")
+          }
           loading={submitStatus === 1}
           disabled={!amount || !hasEnoughBalance || !isAmountSendable}
         />

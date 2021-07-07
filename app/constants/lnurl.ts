@@ -8,4 +8,5 @@ export enum PAYMENT_STATUS {
   Error = "Error",
   Pending = "Pending",
   Success = "Success",
+  Finished = "Finished",
 }
