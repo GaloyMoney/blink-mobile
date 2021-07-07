@@ -105,19 +105,17 @@ export const WelcomePhoneInputScreen: ScreenType = ({
   const inputRef = useRef<PhoneInput | null>()
 
   const send = async () => {
-    console.log({ initPhoneNumber: inputRef.current.getValue() })
+    const phone = inputRef.current.getValue()
+    console.log({ initPhoneNumber: phone })
+    const phoneRegex = new RegExp("^\\+[0-9]+$")
 
-    if (!inputRef.current.isValidNumber()) {
-      Alert.alert(
-        `${inputRef.current.getValue()} ${translate("errors.invalidPhoneNumber")}`,
-      )
+    if (!inputRef.current.isValidNumber() || !phoneRegex.test(phone)) {
+      Alert.alert(`${phone} ${translate("errors.invalidPhoneNumber")}`)
       return
     }
 
     try {
-      const phone = inputRef.current.getValue()
       const { data } = await requestPhoneCode({ variables: { phone } })
-
       if (data.requestPhoneCode.success) {
         const screen = "welcomePhoneValidation"
         navigation.navigate(screen, { phone })
@@ -131,7 +129,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
     }
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     inputRef?.current.focus()
   }, [])
 
