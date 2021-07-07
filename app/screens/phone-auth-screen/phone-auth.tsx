@@ -129,7 +129,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
     }
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     inputRef?.current.focus()
   }, [])
 
