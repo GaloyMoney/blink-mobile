@@ -3,5 +3,6 @@ export type LNUrlPay = {
   callback: string
   minSendable: number
   maxSendable: number
+  commentAllowed: number
   metadata: string[]
 }

@@ -30,13 +30,17 @@ export const parseUrl = async (invoice: string): Promise<LNUrlPay> => {
     })
 }
 
-export const invoiceRequest = (callback: string, amount: number): Promise<string> => {
+export const invoiceRequest = (
+  callback: string,
+  amount: number,
+  comment?: string,
+): Promise<string> => {
   try {
     const nonce = Math.floor(Math.random() * 2e8)
     const finalAmount = satToMsat(amount)
     const separator = callback.includes("?") ? "&" : "?"
 
-    const request = `${callback}${separator}amount=${finalAmount}&nonce=${nonce}&comment=${nonce}`
+    const request = `${callback}${separator}amount=${finalAmount}&nonce=${nonce}&comment=${comment}`
 
     return fetch(request)
       .then((response) => response.json())

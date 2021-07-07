@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react"
-import { useNavigation } from "@react-navigation/native"
 import { gql, useApolloClient, useMutation } from "@apollo/client"
 import { Alert, ScrollView, Text, View } from "react-native"
-import { Button } from "react-native-elements"
+import { Button, Input } from "react-native-elements"
 import LottieView from "lottie-react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 
-const errorLottie = require("../move-money-screen/error_lottie.json")
-const successLottie = require("../move-money-screen/success_lottie.json")
+import errorLottie from "../move-money-screen/error_lottie.json"
+import successLottie from "../move-money-screen/success_lottie.json"
 
 import { translate } from "../../i18n"
 import { Screen } from "../../components/screen"
@@ -43,6 +42,7 @@ const PAY_INVOICE = gql`
 `
 
 const styles = EStyleSheet.create({
+  animationContainer: { alignItems: "center" },
   buttonContainerStyle: {
     flex: 1,
   },
@@ -65,6 +65,13 @@ const styles = EStyleSheet.create({
     height: "200rem",
     width: "200rem",
   },
+  memoField: {
+    marginHorizontal: "-10rem",
+  },
+  memoLabel: {
+    color: palette.midGrey,
+    marginBottom: "6rem",
+  },
   scroll: {
     justifyContent: "space-between",
   },
@@ -75,14 +82,22 @@ const styles = EStyleSheet.create({
     fontSize: 18,
   },
   transactionDetailView: {
+    alignItems: "flex-start",
+    flex: 1,
     marginHorizontal: "24rem",
     marginVertical: "24rem",
   },
 })
 
-export const SendLNUrlScreen = ({ route }) => {
-  console.log(route)
-  const { goBack } = useNavigation()
+type Props = {
+  route: {
+    params: {
+      invoice: string
+    }
+  }
+}
+
+export const SendLNUrlScreen: React.FC<Props> = ({ route }: Props) => {
   const client = useApolloClient()
   const price = btc_price(client)
   const balance = balanceBtc(client)
@@ -90,23 +105,36 @@ export const SendLNUrlScreen = ({ route }) => {
   const [fees, setFees] = useState(null)
   const [amount, setAmount] = useState(0)
   const [status, setStatus] = useState(PAYMENT_STATUS.Pending)
-  const [invoice, setInvoice] = useState("")
   const [submitStatus, setSubmitStatus] = useState(0)
   const [callback, setCallback] = useState("")
   const [minSendable, setMinSendable] = useState(null)
   const [maxSendable, setMaxSendable] = useState(null)
   const [description, setDescription] = useState("")
+  const [memo, setMemo] = useState("")
+  const [maxMemoSize, setMaxMemoSize] = useState(0)
   const [prefCurrency, nextPrefCurrency] = usePrefCurrency()
 
   const [lightningFees] = useMutation(LIGHTNING_FEES)
   const [payInvoice] = useMutation(PAY_INVOICE)
 
   const hasEnoughBalance = balance >= amount
+  const isAmountSendable = isAmountValid(amount, minSendable, maxSendable)
 
   useEffect(() => {
+    const getFees = async () => {
+      const checkFeeInvoice = await invoiceRequest(callback, satToMsat(minSendable))
+      const fees = await lightningFees({ variables: { invoice: checkFeeInvoice } })
+      const {
+        data: {
+          invoice: { getFee },
+        },
+      } = fees
+      setFees(getFee)
+    }
+
     const parseInitialInvoice = async () => {
       const lnurl = await parseUrl(route.params.invoice)
-      const { tag, callback, minSendable, maxSendable } = lnurl
+      const { tag, callback, minSendable, maxSendable, commentAllowed, metadata } = lnurl
 
       if (!isProtocolSupported(tag)) {
         Alert.alert("LNUrl protocol not supported")
@@ -117,34 +145,28 @@ export const SendLNUrlScreen = ({ route }) => {
       setCallback(callback)
       setMinSendable(mSatToSat(minSendable))
       setMaxSendable(mSatToSat(maxSendable))
-      setDescription(translate("SendLNUrlScreen.description", { merchant: callback }))
-    }
+      setMaxMemoSize(commentAllowed)
 
-    const getFees = async () => {
-      const checkFeeInvoice = await invoiceRequest(callback, satToMsat(minSendable))
-      console.log("check" + checkFeeInvoice)
-      const fees = await lightningFees({ variables: { invoice: checkFeeInvoice } })
-      const {
-        data: {
-          invoice: { getFee },
-        },
-      } = fees
-      setFees(getFee)
+      try {
+        const description = JSON.parse(metadata)[0][1]
+        setDescription(description)
+      } catch (error) {
+        setDescription("Invoice description not recognized")
+      }
+
+      await getFees()
     }
 
     parseInitialInvoice()
-    getFees()
   }, [])
 
   const submitPayment = async () => {
     setSubmitStatus(1)
 
     try {
-      const paymentInvoice = await invoiceRequest(callback, amount)
-      console.log("pay", paymentInvoice)
+      const paymentInvoice = await invoiceRequest(callback, amount, memo)
       const payment = await payInvoice({ variables: { invoice: paymentInvoice } })
       const { data } = payment
-      console.log("gql", data)
 
       setSubmitStatus(0)
 
@@ -178,7 +200,7 @@ export const SendLNUrlScreen = ({ route }) => {
             price={price}
           />
           <View style={styles.errorContainer}>
-            {amount > balance && <Text>You do not have enough balance</Text>}
+            {!hasEnoughBalance && <Text>You do not have enough balance</Text>}
             {!minSendable !== null && !isAmountValid(amount, minSendable, maxSendable) && (
               <Text>
                 You must set an amount between {minSendable} and {maxSendable}
@@ -189,16 +211,26 @@ export const SendLNUrlScreen = ({ route }) => {
         <View style={styles.transactionDetailView}>
           <Row
             entry="Min. amount"
-            value={minSendable === null ? "Loading" : minSendable.toString()}
+            value={minSendable === null ? "Loading..." : `${minSendable.toString()} sats`}
           />
           <Row
             entry="Max. amount"
-            value={maxSendable === null ? "Loading" : maxSendable.toString()}
+            value={maxSendable === null ? "Loading..." : `${maxSendable.toString()} sats`}
           />
-          <Row entry="Fees" value={fees === null ? "Loading fees" : fees} />
+          <Row entry="Fees" value={fees === null ? "Loading fees..." : fees} />
           <Row entry="Description" value={description} />
+          <Text>{memo}</Text>
+          {!(maxMemoSize === 0) && (
+            <Input
+              label="Memo"
+              labelStyle={styles.memoLabel}
+              maxLength={maxMemoSize}
+              placeholder="Insert a memo"
+              onChangeText={setMemo}
+            />
+          )}
         </View>
-        <View style={{ alignItems: "center" }}>
+        <View style={styles.animationContainer}>
           {status === PAYMENT_STATUS.Success && (
             <>
               <LottieView
@@ -231,7 +263,7 @@ export const SendLNUrlScreen = ({ route }) => {
           title={"Send"}
           onPress={submitPayment}
           loading={submitStatus === 1}
-          disabled={!amount || !hasEnoughBalance}
+          disabled={!amount || !hasEnoughBalance || !isAmountSendable}
         />
       </ScrollView>
     </Screen>
