@@ -12,11 +12,10 @@ storiesOf("Large Button", module)
   .add("Style Presets", () => (
     <Story>
       <UseCase text="Dollar" usage="The primary.">
-        <LargeButton 
+        <LargeButton
           icon={<MoneyCircle width={75} height={78} />}
-          title={"Open cash account"}
-          
+          title="Open cash account"
         />
       </UseCase>
     </Story>
-))
+  ))

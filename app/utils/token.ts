@@ -1,7 +1,7 @@
+import analytics from "@react-native-firebase/analytics"
+import jwtDecode from "jwt-decode"
 import { saveString, loadString, remove } from "./storage"
-const  jwtDecode = require('jwt-decode')
 import { loadNetwork } from "./network"
-import analytics from '@react-native-firebase/analytics'
 import { scriptHostname } from "./helper"
 
 // key used to stored the token within the phone
@@ -16,40 +16,40 @@ export class Token {
   private mem_token = null
 
   constructor() {
-    const instance = this.constructor.instance;
+    const { instance } = this.constructor
     if (instance) {
-        return instance;
+      return instance
     }
 
-    this.constructor.instance = this;
+    this.constructor.instance = this
   }
 
-  async save({token}) {
+  async save({ token }) {
     this.mem_token = token
-    return await saveString(TOKEN_KEY, token)
+    return saveString(TOKEN_KEY, token)
   }
 
-  async load (){
+  async load() {
     // TODO: replace with secure storage
     this.mem_token = await loadString(TOKEN_KEY)
     analytics().setUserId(this.uid)
     return this.mem_token
   }
 
-  async remove () {
+  async remove() {
     this.mem_token = null
     remove(TOKEN_KEY)
   }
 
-  has () {
+  has() {
     return this.mem_token !== null
     // TODO check
   }
 
-  get uid (): string | null {
+  get uid(): string | null {
     try {
       const { uid } = jwtDecode(this.mem_token)
-      console.log({uid})
+      console.log({ uid })
       return uid
     } catch (err) {
       console.log(err.toString())
@@ -57,7 +57,7 @@ export class Token {
     }
   }
 
-  get network () {
+  get network() {
     try {
       const { network } = jwtDecode(this.mem_token)
       return network
@@ -68,27 +68,27 @@ export class Token {
   }
 
   get bearerString() {
-    return this.has() ? `Bearer ${this.mem_token}` : ''
+    return this.has() ? `Bearer ${this.mem_token}` : ""
   }
 }
 
 export const getNetwork = async () => {
-  let network 
+  let network
   if (new Token().has()) {
     network = new Token().network
   } else {
     network = await loadNetwork()
   }
-  analytics().setUserProperties({network})
+  analytics().setUserProperties({ network })
   return network
 }
 
 export const getGraphQlUri = async () => {
   const network = await getNetwork()
   switch (network) {
-    case "regtest": 
+    case "regtest":
       return GRAPHQL_REGTEST_URI
-    case "testnet": 
+    case "testnet":
       return GRAPHQL_TESTNET_URI
     case "mainnet":
       return GRAPHQL_MAINNET_URI

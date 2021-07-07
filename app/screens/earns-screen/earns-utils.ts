@@ -2,27 +2,29 @@ import { filter, find, sumBy } from "lodash"
 import { translate } from "../../i18n"
 
 export const getCardsFromSection = ({ earnList, sectionIndex }) => {
-  const earns_all = translate(`EarnScreen.earns`)
+  const earns_all = translate("EarnScreen.earns")
   const cards = earns_all[sectionIndex].content
 
-  cards.forEach(card => card.value = find(earnList, { id: card.id }).value)
+  cards.forEach((card) => (card.value = find(earnList, { id: card.id }).value))
 
   // FIXME O(N^2)
-  // add fullfilled property to each card 
-  cards.filter(item => item.fullfilled = earnList.find(e => e.id == item.id).completed)
-  
+  // add fullfilled property to each card
+  cards.filter(
+    (item) => (item.fullfilled = earnList.find((e) => e.id == item.id).completed),
+  )
+
   let allPreviousFullfilled = true
   let nonEnabledMessage = ""
-  
+
   // add enabled and nonEnabledMessage property
-  cards.forEach(item => {    
+  cards.forEach((item) => {
     item.enabled = true
-    
+
     if (allPreviousFullfilled === false) {
       item.enabled = false
       item.nonEnabledMessage = nonEnabledMessage
     }
-    
+
     if (!item.fullfilled && allPreviousFullfilled) {
       allPreviousFullfilled = false
       nonEnabledMessage = item.title
@@ -48,6 +50,9 @@ export const sectionCompletedPct = ({ sectionIndex, earnList }) => {
     return 0
   }
 }
-  
+
 export const remainingSatsOnSection = ({ sectionIndex, earnList }) =>
-  sumBy(filter(getCardsFromSection({ sectionIndex, earnList }), {fullfilled: false}), "value")
+  sumBy(
+    filter(getCardsFromSection({ sectionIndex, earnList }), { fullfilled: false }),
+    "value",
+  )

@@ -1,7 +1,7 @@
 import { gql, useApolloClient, useMutation } from "@apollo/client"
 import Clipboard from "@react-native-community/clipboard"
 import messaging from "@react-native-firebase/messaging"
-import LottieView from 'lottie-react-native'
+import LottieView from "lottie-react-native"
 import * as React from "react"
 import { useEffect, useState } from "react"
 import {
@@ -14,14 +14,14 @@ import {
   ScrollView,
   Share,
   Text,
-  View
+  View,
 } from "react-native"
 import { Button, Input } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import QRCode from "react-native-qrcode-svg"
 import Toast from "react-native-root-toast"
-import ScreenBrightness from 'react-native-screen-brightness'
+import ScreenBrightness from "react-native-screen-brightness"
 import Swiper from "react-native-swiper"
 import Icon from "react-native-vector-icons/Ionicons"
 import { InputPaymentDataInjected } from "../../components/input-payment"
@@ -34,17 +34,37 @@ import { hasFullPermissions, requestPermission } from "../../utils/notifications
 
 // FIXME: crash when no connection
 
-const successLottie = require('../move-money-screen/success_lottie.json')
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const successLottie = require("../move-money-screen/success_lottie.json")
 
 const styles = EStyleSheet.create({
+  buttonContainer: { marginHorizontal: 52, paddingVertical: 18 },
+
   buttonStyle: {
     backgroundColor: palette.lightBlue,
     borderRadius: 32,
   },
 
-  icon: {
-    color: palette.darkGrey,
-    marginRight: 15,
+  buttonTitle: {
+    fontWeight: "bold",
+  },
+
+  copyToClipboardText: { textAlign: "center" },
+
+  errorContainer: {
+    alignContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
+    backgroundColor: palette.white,
+    height: 280,
+    justifyContent: "center",
+    width: 280,
+  },
+
+  lottie: {
+    height: "200rem",
+    width: "200rem",
+    // backgroundColor: 'red',
   },
 
   qr: {
@@ -53,73 +73,63 @@ const styles = EStyleSheet.create({
     // flex: 1,
   },
 
-  section: {
-    paddingHorizontal: 50,
-    flex: 1,
-    width: "100%"
-  },
-
-  smallText: {
-    color: palette.darkGrey,
-    fontSize: 18,
-    textAlign: "left",
-  },
-
-  headerView: {
-    marginHorizontal: "24rem",
-    marginTop: "12rem",
-    borderRadius: 24,
-    flex: 1
-  },
-
   screen: {
     // FIXME: doesn't work for some reason
     // justifyContent: "space-around"
   },
 
-  lottie: {
-    width: "200rem",
-    height: "200rem",
-    // backgroundColor: 'red',
+  section: {
+    flex: 1,
+    paddingHorizontal: 50,
+    width: "100%",
   },
 
   textStyle: {
-    fontSize: "18rem",
     color: palette.darkGrey,
-    textAlign: "center"
+    fontSize: "18rem",
+    textAlign: "center",
   },
 })
 
-
-const ADD_INVOICE = gql`mutation addInvoice($value: Int, $memo: String) {
-  invoice {
-    addInvoice(value: $value, memo: $memo)
+const ADD_INVOICE = gql`
+  mutation addInvoice($value: Int, $memo: String) {
+    invoice {
+      addInvoice(value: $value, memo: $memo)
+    }
   }
-}`
+`
 
-const UPDATE_PENDING_INVOICE = gql`mutation updatePendingInvoice($hash: String!) {
-  invoice {
-    updatePendingInvoice(hash: $hash)
+const UPDATE_PENDING_INVOICE = gql`
+  mutation updatePendingInvoice($hash: String!) {
+    invoice {
+      updatePendingInvoice(hash: $hash)
+    }
   }
-}`
+`
 
-const GET_ONCHAIN_ADDRESS = gql`query getLastOnChainAddress {
-  getLastOnChainAddress {
-    id
+const GET_ONCHAIN_ADDRESS = gql`
+  query getLastOnChainAddress {
+    getLastOnChainAddress {
+      id
+    }
   }
-}`
+`
 
+type Props = {
+  navigation: Record<string, any>
+}
 
-export const ReceiveBitcoinScreen = ({ navigation }) => {
+export const ReceiveBitcoinScreen = ({ navigation }: Props) => {
   const client = useApolloClient()
 
   const [addInvoice] = useMutation(ADD_INVOICE)
   const [updatePendingInvoice] = useMutation(UPDATE_PENDING_INVOICE)
 
-
   let lastOnChainAddress
   try {
-    ({ getLastOnChainAddress: { id: lastOnChainAddress }} = client.readQuery({query: GET_ONCHAIN_ADDRESS}))
+    ;({
+      getLastOnChainAddress: { id: lastOnChainAddress },
+    } = client.readQuery({ query: GET_ONCHAIN_ADDRESS }))
   } catch (err) {
     // do better error handling
     lastOnChainAddress = "issue with the QRcode"
@@ -140,7 +150,6 @@ export const ReceiveBitcoinScreen = ({ navigation }) => {
 
   useEffect(() => {
     const fn = async () => {
-      
       // android required permission, and open the settings page for it
       // it's probably not worth the hurdle
       //
@@ -153,9 +162,9 @@ export const ReceiveBitcoinScreen = ({ navigation }) => {
       if (!isIos) {
         return
       }
-      
+
       // let hasPerm = await ScreenBrightness.hasPermission();
-  
+
       // if(!hasPerm){
       //   ScreenBrightness.requestPermission();
       // }
@@ -163,27 +172,30 @@ export const ReceiveBitcoinScreen = ({ navigation }) => {
       // only enter this loop when brightnessInitial is not set
       // if (!brightnessInitial && hasPerm) {
       if (!brightnessInitial) {
-        ScreenBrightness.getBrightness().then(brightness => {
-          console.log({brightness});
+        ScreenBrightness.getBrightness().then((brightness) => {
+          console.log({ brightness })
           setBrightnessInitial(brightness)
-          ScreenBrightness.setBrightness(1); // between 0 and 1
-        });
+          ScreenBrightness.setBrightness(1) // between 0 and 1
+        })
       }
     }
-    
+
     fn()
   }, [])
 
-  useEffect(() => {
-    return brightnessInitial ? () => ScreenBrightness.setBrightness(brightnessInitial) : () => {}
-  }, [brightnessInitial])
+  useEffect(
+    () =>
+      brightnessInitial
+        ? () => ScreenBrightness.setBrightness(brightnessInitial)
+        : () => null,
+    [brightnessInitial],
+  )
 
   useEffect(() => {
     const notifRequest = async () => {
       const waitUntilAuthorizationWindow = 5000
 
       if (Platform.OS === "ios") {
-
         if (await hasFullPermissions()) {
           return
         }
@@ -219,19 +231,18 @@ export const ReceiveBitcoinScreen = ({ navigation }) => {
     setLoading(true)
     console.log("createInvoice")
     try {
-      const { data } = await addInvoice({variables: { value: amount, memo }})
+      const { data } = await addInvoice({ variables: { value: amount, memo } })
       const invoice = data.invoice.addInvoice
       setInvoice(invoice)
       console.log("invoice has been updated")
     } catch (err) {
-      console.error(err, `error with AddInvoice`)
+      console.error(err, "error with AddInvoice")
       setErr(`${err}`)
       throw err
     } finally {
       setLoading(false)
     }
   }
-
 
   const paymentSuccess = () => {
     // success
@@ -260,17 +271,16 @@ export const ReceiveBitcoinScreen = ({ navigation }) => {
   useEffect(() => {
     const _handleAppStateChange = async (nextAppState) => {
       if (nextAppState === "active") {
-
         try {
           const hash = getHashFromInvoice(invoice)
 
-          const { data } = await updatePendingInvoice({variables: { hash }})
+          const { data } = await updatePendingInvoice({ variables: { hash } })
           const success = await data.invoice.updatePendingInvoice
           if (success) {
             paymentSuccess()
           }
         } catch (err) {
-          console.warn({err}, `can't fetch invoice status`)
+          console.warn({ err }, "can't fetch invoice status")
         }
       }
     }
@@ -284,12 +294,14 @@ export const ReceiveBitcoinScreen = ({ navigation }) => {
 
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async (remoteMessage) => {
-        const hash = getHashFromInvoice(invoice)
-        if (remoteMessage.data.type === "paid-invoice" && remoteMessage.data.hash === hash) {
-          paymentSuccess()
-        }
+      const hash = getHashFromInvoice(invoice)
+      if (
+        remoteMessage.data.type === "paid-invoice" &&
+        remoteMessage.data.hash === hash
+      ) {
+        paymentSuccess()
       }
-    )
+    })
 
     return unsubscribe
   }, [invoice])
@@ -323,8 +335,7 @@ export const ReceiveBitcoinScreen = ({ navigation }) => {
     setKeyboardIsShown(false)
   }
 
-  const QRView = ({type}) => {
-
+  const QRView = ({ type }: { type: string }) => {
     let data
 
     if (type === "lightning") {
@@ -333,35 +344,34 @@ export const ReceiveBitcoinScreen = ({ navigation }) => {
       data = lastOnChainAddress
     }
 
-    const isReady = 
-      type === "lightning" ? !loading && data != "" && !keyboardIsShown:
-      true
+    const isReady =
+      type === "lightning" ? !loading && data != "" && !keyboardIsShown : true
 
     const getFullUri = (input) => {
       if (type === "lightning") {
         // TODO add lightning:
-        return input 
-      } else {
-        let uri = `bitcoin:${input}`
-        const params = new URLSearchParams()
-        if (!!amount) {
-          params.append('amount', `${amount / 10 ** 8}`)
-        }
-        if (!!memo) {
-          params.append('message', encodeURI(memo))
-        }
-        const fullUri = !!params.toString() ? `${uri}?${params.toString()}` : `${uri}`
-        return fullUri
+        return input
       }
+      const uri = `bitcoin:${input}`
+      const params = new URLSearchParams()
+      if (amount) {
+        params.append("amount", `${amount / 10 ** 8}`)
+      }
+      if (memo) {
+        params.append("message", encodeURI(memo))
+      }
+      const fullUri = params.toString() ? `${uri}?${params.toString()}` : `${uri}`
+      return fullUri
     }
 
     const copyToClipboard = () => {
       Clipboard.setString(getFullUri(data))
 
       if (Platform.OS === "ios") {
-        const sringToShow = (type === "lightning") ? 
-          "ReceiveBitcoinScreen.copyClipboard":
-          "ReceiveBitcoinScreen.copyClipboardBitcoin"
+        const sringToShow =
+          type === "lightning"
+            ? "ReceiveBitcoinScreen.copyClipboard"
+            : "ReceiveBitcoinScreen.copyClipboardBitcoin"
 
         Toast.show(translate(sringToShow), {
           duration: Toast.durations.LONG,
@@ -397,80 +407,82 @@ export const ReceiveBitcoinScreen = ({ navigation }) => {
 
     const dataOneLiner = () => {
       if (type === "lightning") {
-        return data ? `${data.substr(0, 18)}...${data.substr(-18)}` : ''
-      } else {
-        return data
+        return data ? `${data.substr(0, 18)}...${data.substr(-18)}` : ""
       }
+      return data
     }
 
     return (
       <>
         <View style={styles.qr}>
-          {isSucceed && 
-            <LottieView source={successLottie} loop={false} autoPlay style={styles.lottie} resizeMode='cover' />
-          || isReady && (
-            <Pressable onPress={copyToClipboard}>
-              <QRCode
-                size={280}
-                value={getFullUri(data)}
-                logoBackgroundColor="white"
-                ecl="L"
-
-                // __DEV__ workaround for https://github.com/facebook/react-native/issues/26705
-                logo={!__DEV__ && Icon.getImageSourceSync(
-                  type === "lightning" ? "ios-flash" : "logo-bitcoin",
-                  28,
-                  palette.orange,
-                )}
-              />
-            </Pressable>
-          )
-            ||
-            <View
-              style={{
-                width: 280,
-                height: 280,
-                alignItems: "center",
-                alignContent: "center",
-                alignSelf: "center",
-                backgroundColor: palette.white,
-                justifyContent: "center",
-              }}
-            >
-            {err !== "" && 
-              <Text style={{color: palette.red, alignSelf: "center"}} selectable={true}>{err}</Text>
-              ||
-              keyboardIsShown && <Icon size={56} name="ios-flash" color={palette.orange} />
-              || 
-              <ActivityIndicator size="large" color={palette.blue} />
-            }
-            </View>
-          }
+          {(isSucceed && (
+            <LottieView
+              source={successLottie}
+              loop={false}
+              autoPlay
+              style={styles.lottie}
+              resizeMode="cover"
+            />
+          )) ||
+            (isReady && (
+              <Pressable onPress={copyToClipboard}>
+                <QRCode
+                  size={280}
+                  value={getFullUri(data)}
+                  logoBackgroundColor="white"
+                  ecl="L"
+                  // __DEV__ workaround for https://github.com/facebook/react-native/issues/26705
+                  logo={
+                    !__DEV__ &&
+                    Icon.getImageSourceSync(
+                      type === "lightning" ? "ios-flash" : "logo-bitcoin",
+                      28,
+                      palette.orange,
+                    )
+                  }
+                />
+              </Pressable>
+            )) || (
+              <View style={styles.errorContainer}>
+                {(err !== "" && (
+                  // eslint-disable-next-line react-native/no-inline-styles
+                  <Text style={{ color: palette.red, alignSelf: "center" }} selectable>
+                    {err}
+                  </Text>
+                )) ||
+                  (keyboardIsShown && (
+                    <Icon size={56} name="ios-flash" color={palette.orange} />
+                  )) || <ActivityIndicator size="large" color={palette.blue} />}
+              </View>
+            )}
           <Pressable onPress={copyToClipboard}>
-            <Text style={{textAlign: "center"}}>{dataOneLiner()}</Text>
+            <Text style={styles.copyToClipboardText}>{dataOneLiner()}</Text>
           </Pressable>
-          {isSucceed && 
-            <Text>{translate("ReceiveBitcoinScreen.invoicePaid")}</Text>
-          || isReady && 
-            <Pressable onPress={copyToClipboard}>
-              <Text>{translate("ReceiveBitcoinScreen.tapQrCodeCopy")}</Text>
-            </Pressable>
-            ||
-            <Text> </Text>
-          }
+          {(isSucceed && <Text>{translate("ReceiveBitcoinScreen.invoicePaid")}</Text>) ||
+            (isReady && (
+              <Pressable onPress={copyToClipboard}>
+                <Text>{translate("ReceiveBitcoinScreen.tapQrCodeCopy")}</Text>
+              </Pressable>
+            )) || <Text> </Text>}
         </View>
         <Button
           buttonStyle={styles.buttonStyle}
-          containerStyle={{ marginHorizontal: 52, paddingVertical: 18 }}
-          title={isSucceed ? translate("common.ok") : translate(type === "lightning" ? "common.shareLightning" : "common.shareBitcoin")}
+          containerStyle={styles.buttonContainer}
+          title={
+            isSucceed
+              ? translate("common.ok")
+              : translate(
+                  type === "lightning" ? "common.shareLightning" : "common.shareBitcoin",
+                )
+          }
           onPress={isSucceed ? () => navigation.goBack(false) : share}
           disabled={!isReady}
-          titleStyle={{ fontWeight: "bold" }}
+          titleStyle={styles.buttonTitle}
         />
       </>
     )
   }
-  
+
   return (
     <Screen backgroundColor={palette.lighterGrey} style={styles.screen} preset="fixed">
       <ScrollView>
@@ -480,20 +492,27 @@ export const ReceiveBitcoinScreen = ({ navigation }) => {
             onBlur={update}
             forceKeyboard={false}
             editable={!isSucceed}
-            sub={true}
+            sub
           />
-          <Input placeholder="set a note" value={memo} onChangeText={setMemo} containerStyle={{marginTop: 0}}
+          <Input
+            placeholder="set a note"
+            value={memo}
+            onChangeText={setMemo}
+            // eslint-disable-next-line react-native/no-inline-styles
+            containerStyle={{ marginTop: 0 }}
             inputStyle={styles.textStyle}
-            leftIcon={<Icon name={"ios-create-outline"} size={21} color={palette.darkGrey} />}
+            leftIcon={
+              <Icon name="ios-create-outline" size={21} color={palette.darkGrey} />
+            }
             ref={inputMemoRef}
             onBlur={update}
             disabled={isSucceed}
           />
         </View>
         {/* FIXME: fixed height */}
-        <Swiper height={450} loop={false} >  
-          <QRView type={"lightning"} />
-          <QRView type={"bitcoind"} />
+        <Swiper height={450} loop={false}>
+          <QRView type="lightning" />
+          <QRView type="bitcoind" />
         </Swiper>
       </ScrollView>
     </Screen>

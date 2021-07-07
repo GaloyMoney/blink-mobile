@@ -15,37 +15,48 @@ import { CurrencyType } from "../../utils/enum"
 import { TextCurrency } from "../text-currency/text-currency"
 
 const styles = EStyleSheet.create({
-  amount: {
+  container: {
     alignItems: "center",
-    flexDirection: "column",
+  },
+
+  icon: {
+    paddingTop: 4,
+  },
+
+  inputContainer: {
+    width: "100%",
   },
 
   main: {
     alignItems: "center",
+    flexDirection: "row",
     marginTop: "8rem",
     width: "100%",
-    flexDirection: "row",
   },
 
   subCurrencyText: {
-    fontSize: "16rem",
     color: palette.midGrey,
+    fontSize: "16rem",
     marginTop: 0,
     paddingTop: 0,
   },
 
   textStyle: {
-    fontSize: "18rem",
     color: palette.darkGrey,
+    fontSize: "18rem",
+    textAlign: "center",
   },
 })
 
 export interface InputPaymentDataInjectedProps {
+  price: string | number
   editable: boolean
   onUpdateAmount(number): void
   onBlur?(): void
   forceKeyboard: boolean
   initAmount?: number
+  prefCurrency: string
+  nextPrefCurrency: () => void
   currencyPreference?: string // "sats" | "BTC" | "usd"
   sub?: boolean
 }
@@ -53,28 +64,30 @@ export interface InputPaymentDataInjectedProps {
 export const InputPaymentDataInjected = (props: InputPaymentDataInjectedProps) => {
   const client = useApolloClient()
   const price = btc_price(client)
-  
+
   const [prefCurrency, nextPrefCurrency] = usePrefCurrency()
 
-  return <InputPayment 
-    price={price} 
-    prefCurrency={prefCurrency}
-    nextPrefCurrency={nextPrefCurrency}
-    {...props} />
+  return (
+    <InputPayment
+      price={price}
+      prefCurrency={prefCurrency}
+      nextPrefCurrency={nextPrefCurrency}
+      {...props}
+    />
+  )
 }
 
 export const InputPayment = ({
   price,
   editable,
   onUpdateAmount,
-  onBlur = () => {},
+  onBlur = () => null,
   forceKeyboard = false,
   sub = true,
   initAmount = 0, // in sats
   prefCurrency,
-  nextPrefCurrency
-}) => {
-
+  nextPrefCurrency,
+}: InputPaymentDataInjectedProps) => {
   const endByDot = (s: string) => s.match(/^[0-9]*\.{1}$/)
 
   const [amount, setAmount] = React.useState(initAmount)
@@ -128,14 +141,14 @@ export const InputPayment = ({
   }
 
   const valueTweak = () => {
-    let value 
+    let value
 
     if (amountInput == 0 || isNaN(amountInput)) {
       value = ""
     } else {
       value = String(+amountInput)
     }
-  
+
     // only add dot for for non-sats.
     if ((currency === CurrencyType.USD || currency === CurrencyType.BTC) && appendDot) {
       value += "."
@@ -145,32 +158,55 @@ export const InputPayment = ({
   }
 
   return (
-    <View style={{ alignItems: "center" }}>
+    <View style={styles.container}>
       <View style={styles.main}>
         <Input
           ref={inputRef}
           placeholder={translate("common.setAnAmount")}
           autoFocus={forceKeyboard}
           value={valueTweak()}
-          leftIcon={currency === CurrencyType.USD ? 
-            <Text style={[styles.textStyle, {color: valueTweak() === "" ? palette.midGrey: palette.darkGrey}]}>$</Text>
-            : null}
-          rightIcon={
-            currency === CurrencyType.BTC ? (
-              <Text style={[styles.textStyle, {color: valueTweak() === "" ? palette.midGrey: palette.darkGrey}]}>BTC</Text>
-            ) : currency === "sats" ? (
-              <Text style={[styles.textStyle, {color: valueTweak() === "" ? palette.midGrey: palette.darkGrey}]}>sats</Text>
+          leftIcon={
+            currency === CurrencyType.USD ? (
+              <Text
+                style={[
+                  styles.textStyle,
+                  { color: valueTweak() === "" ? palette.midGrey : palette.darkGrey },
+                ]}
+              >
+                $
+              </Text>
             ) : null
           }
-          inputContainerStyle={{ width: "100%" }}
-          inputStyle={[styles.textStyle, { textAlign: "center" }]}
+          rightIcon={
+            currency === CurrencyType.BTC ? (
+              <Text
+                style={[
+                  styles.textStyle,
+                  { color: valueTweak() === "" ? palette.midGrey : palette.darkGrey },
+                ]}
+              >
+                BTC
+              </Text>
+            ) : currency === "sats" ? (
+              <Text
+                style={[
+                  styles.textStyle,
+                  { color: valueTweak() === "" ? palette.midGrey : palette.darkGrey },
+                ]}
+              >
+                sats
+              </Text>
+            ) : null
+          }
+          inputContainerStyle={styles.inputContainer}
+          inputStyle={[styles.textStyle]}
           onChangeText={setInput}
           keyboardType={currency === "sats" ? "number-pad" : "decimal-pad"}
-          onBlur={event => {
+          onBlur={(event) => {
             onBlur()
             // keyboardFocus()
           }}
-          enablesReturnKeyAutomatically={true}
+          enablesReturnKeyAutomatically
           returnKeyLabel="Update"
           returnKeyType="done"
           editable={editable}
@@ -178,16 +214,16 @@ export const InputPayment = ({
           renderErrorMessage={false}
         />
         <TouchableOpacity onPress={nextPrefCurrency}>
-          <Icon name={"ios-swap-vertical"} size={32} style={{paddingTop: 4}} />
+          <Icon name="ios-swap-vertical" size={32} style={styles.icon} />
         </TouchableOpacity>
       </View>
-      {sub && 
+      {sub && (
         <TextCurrency
           amount={mapping[prefCurrency].secondaryConversion(amount)}
           currency={mapping[prefCurrency].secondary}
           style={styles.subCurrencyText}
         />
-        }
+      )}
     </View>
   )
 }

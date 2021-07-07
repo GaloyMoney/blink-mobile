@@ -15,15 +15,15 @@ import * as lightningPayReq from "bolt11"
 //   return parsePaymentRequest({request}).tokens
 // }
 
-export const getUsername = (decoded) => 
-  decoded.tags.find(value => value.tagName === "username")?.data
+export const getUsername = (decoded) =>
+  decoded.tags.find((value) => value.tagName === "username")?.data
 
-export const getDescription = (decoded) => 
-  decoded.tags.find(value => value.tagName === "description")?.data
+export const getDescription = (decoded) =>
+  decoded.tags.find((value) => value.tagName === "description")?.data
 
 export const getDestination = (decoded) => decoded.payeeNodeKey
 
 export const getHashFromInvoice = (invoice) => {
-  const decoded = lightningPayReq.decode(invoice)                
-  return decoded.tags.find(value => value.tagName === "payment_hash")?.data
+  const decoded = lightningPayReq.decode(invoice)
+  return decoded.tags.find((value) => value.tagName === "payment_hash")?.data
 }

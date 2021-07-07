@@ -16,7 +16,9 @@ import { isIos } from "../../utils/helper"
 function ScreenWithoutScrolling(props: ScreenProps) {
   const preset = presets.fixed
   const style = props.style || {}
-  const backgroundStyle = props.backgroundColor ? { backgroundColor: props.backgroundColor } : {}
+  const backgroundStyle = props.backgroundColor
+    ? { backgroundColor: props.backgroundColor }
+    : {}
   const Wrapper = props.unsafe ? View : SafeAreaView
 
   return (
@@ -25,12 +27,12 @@ function ScreenWithoutScrolling(props: ScreenProps) {
       behavior={isIos ? "padding" : null}
       keyboardVerticalOffset={offsets[props.keyboardOffset || "none"]}
     >
-      <StatusBar 
+      <StatusBar
         barStyle={props.statusBar || "dark-content"}
         backgroundColor={props.backgroundColor}
       />
       {/* modalClipboard requires StoreContext which requiere being inside a navigator */}
-      <ModalClipboard /> 
+      <ModalClipboard />
       <Wrapper style={[preset.inner, style]}>{props.children}</Wrapper>
     </KeyboardAvoidingView>
   )
@@ -39,7 +41,9 @@ function ScreenWithoutScrolling(props: ScreenProps) {
 function ScreenWithScrolling(props: ScreenProps) {
   const preset = presets.scroll
   const style = props.style || {}
-  const backgroundStyle = props.backgroundColor ? { backgroundColor: props.backgroundColor } : {}
+  const backgroundStyle = props.backgroundColor
+    ? { backgroundColor: props.backgroundColor }
+    : {}
   const Wrapper = props.unsafe ? View : SafeAreaView
 
   return (
@@ -48,7 +52,7 @@ function ScreenWithScrolling(props: ScreenProps) {
       behavior={isIos ? "padding" : null}
       keyboardVerticalOffset={offsets[props.keyboardOffset || "none"]}
     >
-      <StatusBar 
+      <StatusBar
         barStyle={props.statusBar || "dark-content"}
         backgroundColor={props.backgroundColor}
       />
@@ -73,7 +77,6 @@ function ScreenWithScrolling(props: ScreenProps) {
 export function Screen(props: ScreenProps) {
   if (isNonScrolling(props.preset)) {
     return <ScreenWithoutScrolling {...props} />
-  } else {
-    return <ScreenWithScrolling {...props} />
   }
+  return <ScreenWithScrolling {...props} />
 }

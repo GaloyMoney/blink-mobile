@@ -16,8 +16,7 @@ const styles = StyleSheet.create({
 })
 
 export const VersionComponent = ({ style }: { style? }) => {
-
-  const {navigate} = useNavigation()
+  const { navigate } = useNavigation()
 
   const [secretMenuCounter, setSecretMenuCounter] = React.useState(0)
   React.useEffect(() => {
@@ -26,7 +25,7 @@ export const VersionComponent = ({ style }: { style? }) => {
       setSecretMenuCounter(0)
     }
   }, [secretMenuCounter])
-  
+
   return (
     <Pressable onPress={() => setSecretMenuCounter(secretMenuCounter + 1)}>
       <Text style={[styles.version, style]}>
@@ -37,4 +36,5 @@ export const VersionComponent = ({ style }: { style? }) => {
         {translate("GetStartedScreen.headline")}
       </Text>
     </Pressable>
-)}
+  )
+}

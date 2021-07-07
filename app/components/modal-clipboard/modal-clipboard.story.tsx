@@ -10,7 +10,7 @@ storiesOf("Modal window", module)
   .add("Style Presets", () => (
     <Story>
       <UseCase text="Dollar" usage="The primary.">
-        <ModalClipboard invoice={""} />
+        <ModalClipboard invoice="" />
       </UseCase>
     </Story>
-))
+  ))

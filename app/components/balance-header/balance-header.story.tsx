@@ -1,7 +1,7 @@
 import * as React from "react"
 import { storiesOf } from "@storybook/react-native"
 import { StoryScreen, Story, UseCase } from "../../../storybook/views"
-import { BalanceHeader } from "./"
+import { BalanceHeader } from "."
 import { CurrencyType } from "../../utils/enum"
 
 declare let module
@@ -26,7 +26,11 @@ storiesOf("BalanceHeader", module)
         <BalanceHeader currency={CurrencyType.BTC} amount={10000} />
       </UseCase>
       <UseCase text="Sat with dollar" usage="Bitcoin Account">
-        <BalanceHeader currency={CurrencyType.BTC} amount={10000} amountOtherCurrency={10} />
+        <BalanceHeader
+          currency={CurrencyType.BTC}
+          amount={10000}
+          amountOtherCurrency={10}
+        />
       </UseCase>
     </Story>
   ))
