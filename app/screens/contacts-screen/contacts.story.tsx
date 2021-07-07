@@ -22,7 +22,7 @@ storiesOf("Phone Book", module)
   .add("Style Presets", () => (
     <Story>
       <UseCase text="Dollar" usage="The primary.">
-        <ContactsScreenJSX list={list} navigation={() => {}} />
+        <ContactsScreenJSX list={list} navigation={() => null} />
       </UseCase>
     </Story>
   ))

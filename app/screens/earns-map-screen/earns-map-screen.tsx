@@ -29,6 +29,11 @@ import RightTodo from "./right-section-to-do-01.svg"
 import TextBlock from "./text-block-medium.svg"
 
 const styles = StyleSheet.create({
+  contentContainer: {
+    backgroundColor: palette.lightBlue,
+    flexGrow: 1,
+  },
+
   finishText: {
     color: palette.white,
     fontSize: 18,
@@ -54,6 +59,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginHorizontal: 10,
   },
+
+  progressContainer: { backgroundColor: palette.darkGrey, margin: 10 },
+
+  position: { height: 40 },
 })
 
 type SideType = "left" | "right"
@@ -79,24 +88,34 @@ interface ISectionData {
 }
 
 interface IEarnMapScreen {
-  navigation: object // FIXME
+  navigation: Record<string, any> // FIXME
   currSection: number
   progress: number
   sectionsData: ISectionData[]
   earned: number
 }
 
-export const ProgressBar = ({ progress }) => {
+type ProgressProps = {
+  progress: number
+}
+
+export const ProgressBar = ({ progress }: ProgressProps) => {
   const balanceWidth = `${progress * 100}%`
 
   return (
-    <View style={{ backgroundColor: palette.darkGrey, margin: 10 }}>
+    <View style={styles.progressContainer}>
+      {/* pass props to style object to remove inline style */}
+      {/* eslint-disable-next-line react-native/no-inline-styles */}
       <View style={{ width: balanceWidth, height: 3, backgroundColor: palette.white }} />
     </View>
   )
 }
 
-export const EarnMapDataInjected = ({ navigation }) => {
+type EarnMapDataProps = {
+  navigation: Record<string, any>
+}
+
+export const EarnMapDataInjected = ({ navigation }: EarnMapDataProps) => {
   // TODO: fragment with earnList
   const { data } = useQuery(
     gql`
@@ -131,7 +150,7 @@ export const EarnMapDataInjected = ({ navigation }) => {
   for (const sectionIndex of sectionIndexs) {
     sectionsData.push({
       index: sectionIndex,
-      text: translate(`EarnScreen.earns\.${sectionIndex}.meta.title`),
+      text: translate(`EarnScreen.earns.${sectionIndex}.meta.title`),
       icon: BitcoinCircle,
     })
 
@@ -158,14 +177,19 @@ export const EarnMapDataInjected = ({ navigation }) => {
   )
 }
 
+type FinishProps = {
+  currSection: number
+  length: number
+}
+
 export const EarnMapScreen: React.FC<IEarnMapScreen> = ({
   navigation,
   sectionsData,
   currSection,
   progress,
   earned,
-}) => {
-  const Finish = ({ currSection, length }) => {
+}: IEarnMapScreen) => {
+  const Finish = ({ currSection, length }: FinishProps) => {
     if (currSection !== sectionsData.length) return null
 
     return (
@@ -177,7 +201,11 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> = ({
     )
   }
 
-  const InBetweenTile: React.FC<IInBetweenTile> = ({ side, position, length }) => {
+  const InBetweenTile: React.FC<IInBetweenTile> = ({
+    side,
+    position,
+    length,
+  }: IInBetweenTile) => {
     if (currSection < position) {
       if (position === length - 1) {
         return side === "left" ? <LeftLastTodo /> : <RightLastTodo />
@@ -189,7 +217,7 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> = ({
       if (position === length - 1) {
         return (
           <>
-            <View style={{ height: 40 }} />
+            <View style={styles.position} />
             {side === "left" ? <LeftLastOngoing /> : <RightLastOngoing />}
           </>
         )
@@ -204,26 +232,40 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> = ({
     return side === "left" ? <LeftComplete /> : <RightComplete />
   }
 
-  const BoxAdding: React.FC<IBoxAdding> = ({ text, Icon, side, position, section, length }) => {
+  const BoxAdding: React.FC<IBoxAdding> = ({
+    text,
+    Icon,
+    side,
+    position,
+    section,
+    length,
+  }: IBoxAdding) => {
     const disabled = currSection < position
     const progressSection = disabled ? 0 : currSection > position ? 1 : progress
+
+    // rework this to pass props into the style object
+    const boxStyle = StyleSheet.create({
+      container: {
+        position: "absolute",
+        bottom:
+          currSection === position ? (currSection === 0 && progress === 0 ? 30 : 80) : 30,
+        left: side === "left" ? 35 : 200,
+        opacity: disabled ? 0.5 : 1,
+      },
+    })
+
     return (
       <View>
         <InBetweenTile side={side} position={position} length={length} />
-        <View
-          style={{
-            position: "absolute",
-            bottom: currSection === position ? (currSection === 0 && progress === 0 ? 30 : 80) : 30,
-            left: side === "left" ? 35 : 200,
-            opacity: disabled ? 0.5 : 1,
-          }}
-        >
+
+        <View style={boxStyle.container}>
           <View>
             <TouchableOpacity
               disabled={disabled}
               onPress={() => navigation.navigate("earnsSection", { section })}
             >
               <TextBlock />
+              {/* eslint-disable-next-line react-native/no-inline-styles */}
               <View style={{ position: "absolute", width: "100%" }}>
                 <ProgressBar progress={progressSection} />
                 <Icon style={styles.icon} width={50} height={50} />
@@ -284,10 +326,7 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> = ({
       <ScrollView
         // removeClippedSubviews={true}
         style={{ backgroundColor }}
-        contentContainerStyle={{
-          backgroundColor: palette.lightBlue,
-          flexGrow: 1,
-        }}
+        contentContainerStyle={styles.contentContainer}
         ref={scrollViewRef}
         onContentSizeChange={() => {
           scrollViewRef.current.scrollToEnd()
@@ -307,7 +346,7 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> = ({
               <BottomOngoing />
             )
           ) : (
-            <View style={{ height: 40 }} />
+            <View style={styles.position} />
           )}
         </View>
       </ScrollView>

@@ -6,7 +6,7 @@ import { prefCurrencyVar } from "../graphql/query"
 
 const units = ["sats", "USD"] // "BTC"
 
-export function usePrefCurrency() {
+export function usePrefCurrency(): [string, () => void] {
   const navigation = useNavigation()
 
   const [prefCurrency, setPrefCurrency] = useState(() => prefCurrencyVar())

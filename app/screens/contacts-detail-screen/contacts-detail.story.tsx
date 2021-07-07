@@ -18,7 +18,7 @@ storiesOf("Contact Detail", module)
         <ContactsDetailScreenJSX
           contact={contact}
           transactions={transactions}
-          navigation={() => {}}
+          navigation={() => null}
         />
       </UseCase>
     </Story>

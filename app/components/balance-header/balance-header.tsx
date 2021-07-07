@@ -22,7 +22,8 @@ const styles = EStyleSheet.create({
   },
 
   container: {
-    flex: 1,
+    alignItems: "flex-end",
+    flexDirection: "row",
   },
 
   header: {
@@ -35,6 +36,11 @@ const styles = EStyleSheet.create({
     color: palette.darkGrey,
     fontSize: "16rem",
   },
+
+  text: {
+    color: palette.darkGrey,
+    fontSize: 32,
+  },
 })
 
 export interface BalanceHeaderProps {
@@ -42,7 +48,7 @@ export interface BalanceHeaderProps {
   amount: number
   amountOtherCurrency?: number
   loading: boolean
-  style?: object
+  style?: Record<string, any>
 }
 
 const Loader = () => (
@@ -64,7 +70,7 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
   amountOtherCurrency = null,
   loading,
   style,
-}) => {
+}: BalanceHeaderProps) => {
   const otherCurrency = currency === CurrencyType.BTC ? CurrencyType.USD : "sats"
 
   const subHeader =
@@ -80,13 +86,13 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
     <View style={[styles.header, style]}>
       <Text style={styles.balanceText}>{translate("BalanceHeader.currentBalance")}</Text>
       <View style={styles.amount}>
-        <View style={{ flexDirection: "row", alignItems: "flex-end" }}>
+        <View style={styles.container}>
           {loading && <Loader />}
           {!loading && (
             <TextCurrency
               amount={amount}
               currency={currency === CurrencyType.BTC ? "sats" : CurrencyType.USD}
-              style={{ fontSize: 32, color: palette.darkGrey }}
+              style={styles.text}
             />
           )}
         </View>

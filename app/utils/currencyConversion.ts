@@ -1,5 +1,6 @@
 export const currencyFormatting = {
-  USD: (usd) => (usd < 0.01 ? (usd == 0 ? usd.toFixed(2) : usd.toFixed(4)) : usd.toFixed(2)),
+  USD: (usd) =>
+    usd < 0.01 ? (usd == 0 ? usd.toFixed(2) : usd.toFixed(4)) : usd.toFixed(2),
   sats: (sats) => sats.toFixed(0),
   BTC: (btc) => btc,
 }

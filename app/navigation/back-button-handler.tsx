@@ -14,7 +14,7 @@ interface BackButtonHandlerProps {
 
 @inject("navigationStore")
 @observer
-export class BackButtonHandler extends React.Component<BackButtonHandlerProps, {}> {
+export class BackButtonHandler extends React.Component<BackButtonHandlerProps> {
   /**
    * Subscribe when we come to life.
    */

@@ -42,6 +42,16 @@ const styles = StyleSheet.create({
   },
 })
 
+type Props = {
+  children: JSX.Element
+  next: string
+  nextTitle: string
+  action: () => void
+  Svg: typeof React.Component
+  header: string
+  loading: boolean
+}
+
 export const OnboardingScreen = ({
   children,
   next /* screen */,
@@ -50,7 +60,7 @@ export const OnboardingScreen = ({
   Svg,
   header = "",
   loading = false,
-}) => {
+}: Props) => {
   const navigation = useNavigation()
   return (
     <>

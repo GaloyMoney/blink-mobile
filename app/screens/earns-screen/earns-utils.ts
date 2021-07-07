@@ -9,7 +9,9 @@ export const getCardsFromSection = ({ earnList, sectionIndex }) => {
 
   // FIXME O(N^2)
   // add fullfilled property to each card
-  cards.filter((item) => (item.fullfilled = earnList.find((e) => e.id == item.id).completed))
+  cards.filter(
+    (item) => (item.fullfilled = earnList.find((e) => e.id == item.id).completed),
+  )
 
   let allPreviousFullfilled = true
   let nonEnabledMessage = ""
@@ -50,4 +52,7 @@ export const sectionCompletedPct = ({ sectionIndex, earnList }) => {
 }
 
 export const remainingSatsOnSection = ({ sectionIndex, earnList }) =>
-  sumBy(filter(getCardsFromSection({ sectionIndex, earnList }), { fullfilled: false }), "value")
+  sumBy(
+    filter(getCardsFromSection({ sectionIndex, earnList }), { fullfilled: false }),
+    "value",
+  )

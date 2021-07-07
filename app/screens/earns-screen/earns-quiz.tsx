@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import * as React from "react"
 import I18n from "i18n-js"
 import { useEffect, useState } from "react"
@@ -67,11 +68,11 @@ const styles = EStyleSheet.create({
   modalBackground: {
     alignItems: "center",
     backgroundColor: palette.white,
-    minHeight: "630rem",
-    // flexGrow: 1,
-    justifyContent: "flex-end",
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
+    justifyContent: "flex-end",
+    minHeight: "630rem",
+    // flexGrow: 1,
   },
 
   quizButtonContainerStyle: {
@@ -151,7 +152,12 @@ const styles = EStyleSheet.create({
 
 const mappingLetter = { 0: "A", 1: "B", 2: "C" }
 
-export const EarnQuiz = ({ route, navigation }) => {
+type Props = {
+  route: Record<string, any>
+  navigation: Record<string, any>
+}
+
+export const EarnQuiz = ({ route, navigation }: Props) => {
   const { title, text, amount, answers, feedback, question, onComplete, id, completed } =
     route.params
 
@@ -215,7 +221,8 @@ export const EarnQuiz = ({ route, navigation }) => {
             disabled={recordedAnswer.indexOf(0) !== -1}
           />
         </View>
-        {recordedAnswer.length > 0 && recordedAnswer.indexOf(i) === recordedAnswer.length - 1 ? (
+        {recordedAnswer.length > 0 &&
+        recordedAnswer.indexOf(i) === recordedAnswer.length - 1 ? (
           <Text style={i === 0 ? styles.correctAnswerText : styles.incorrectAnswerText}>
             {feedback[i]}
           </Text>

@@ -3,7 +3,10 @@ import { Text, View } from "react-native"
 import { Divider } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { CloseCross } from "../../components/close-cross"
-import { colorTypeFromIconType, IconTransaction } from "../../components/icon-transactions"
+import {
+  colorTypeFromIconType,
+  IconTransaction,
+} from "../../components/icon-transactions"
 import { Screen } from "../../components/screen"
 import { TextCurrency } from "../../components/text-currency"
 import { TransactionItemProps } from "../../components/transaction-item"
@@ -48,14 +51,6 @@ const styles = EStyleSheet.create({
     marginBottom: "6rem",
   },
 
-  map: {
-    height: 150,
-    marginBottom: 12,
-    marginLeft: "auto",
-    marginRight: 30,
-    width: 150,
-  },
-
   transactionDetailText: {
     color: palette.darkGrey,
     fontSize: "18rem",
@@ -74,7 +69,7 @@ const styles = EStyleSheet.create({
   },
 })
 
-const Row = ({ entry, value }) => (
+const Row = ({ entry, value }: { entry: string; value: string }) => (
   <View style={styles.description}>
     <Text style={styles.entry}>{entry}</Text>
     <Text selectable style={styles.value}>
@@ -83,7 +78,12 @@ const Row = ({ entry, value }) => (
   </View>
 )
 
-export const TransactionDetailScreen = ({ route, navigation }) => {
+type Props = {
+  navigation: Record<string, any>
+  route: Record<string, any>
+}
+
+export const TransactionDetailScreen = ({ route, navigation }: Props) => {
   const {
     currency,
     amount,
@@ -116,7 +116,9 @@ export const TransactionDetailScreen = ({ route, navigation }) => {
       >
         <IconTransaction isReceive={isReceive} size={100} transparent />
         <Text style={styles.amountText}>{spendOrReceiveText}</Text>
-        {!!usd && <TextCurrency amount={Math.abs(usd)} currency="USD" style={styles.amount} />}
+        {!!usd && (
+          <TextCurrency amount={Math.abs(usd)} currency="USD" style={styles.amount} />
+        )}
         <TextCurrency
           amount={Math.abs(amount)}
           currency={currency}

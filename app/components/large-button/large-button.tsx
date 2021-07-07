@@ -1,16 +1,9 @@
 import * as React from "react"
-import ContentLoader, { Rect } from "react-content-loader/native"
-import { Text } from "react-native"
 import { ListItem, Avatar } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { palette } from "../../theme/palette"
 
 const styles = EStyleSheet.create({
-  accountAmount: {
-    color: palette.darkGrey,
-    fontSize: "18rem",
-  },
-
   accountView: {
     marginHorizontal: "30rem",
     marginTop: "15rem",
@@ -24,14 +17,8 @@ const styles = EStyleSheet.create({
   accountViewTitle: {
     // fontFamily: "DMSans",
     color: palette.darkGrey,
-    fontWeight: "bold",
     fontSize: "18rem",
-  },
-
-  transactionViewContainer: {
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
-    marginTop: 18,
+    fontWeight: "bold",
   },
 })
 
@@ -43,7 +30,14 @@ interface ILargeButton {
   style?
 }
 
-export const LargeButton = ({ style, icon, title, onPress, loading, ...props }: ILargeButton) => (
+export const LargeButton = ({
+  style,
+  icon,
+  title,
+  onPress,
+  loading,
+  ...props
+}: ILargeButton) => (
   <ListItem
     style={styles.accountView}
     containerStyle={style ? styles[style] : styles.accountViewContainer}

@@ -1,9 +1,8 @@
 import analytics from "@react-native-firebase/analytics"
+import jwtDecode from "jwt-decode"
 import { saveString, loadString, remove } from "./storage"
 import { loadNetwork } from "./network"
 import { scriptHostname } from "./helper"
-
-const jwtDecode = require("jwt-decode")
 
 // key used to stored the token within the phone
 export const TOKEN_KEY = "GaloyToken"

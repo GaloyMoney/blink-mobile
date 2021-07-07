@@ -16,6 +16,8 @@ import { QUERY_TRANSACTIONS } from "../../graphql/query"
 import { palette } from "../../theme/palette"
 
 const styles = EStyleSheet.create({
+  actionsContainer: { paddingBottom: 18 },
+
   amount: {
     color: palette.white,
     fontSize: "40rem",
@@ -32,12 +34,15 @@ const styles = EStyleSheet.create({
     paddingTop: "48rem",
   },
 
-  buttonStyle: {
-    backgroundColor: palette.orange,
-    borderRadius: 32,
-    marginVertical: 18,
-    width: "50%",
+  icon: { margin: 0 },
+
+  inputContainer: {
+    flexDirection: "row",
   },
+
+  inputStyle: { textAlign: "center", textDecorationLine: "underline" },
+
+  screenTitle: { fontSize: 18, marginBottom: 12, marginTop: 18 },
 
   transactionsView: {
     flex: 1,
@@ -45,7 +50,12 @@ const styles = EStyleSheet.create({
   },
 })
 
-export const ContactsDetailScreen = ({ route, navigation }) => {
+type ContactDetailProps = {
+  route: Record<string, any>
+  navigation: Record<string, any>
+}
+
+export const ContactsDetailScreen = ({ route, navigation }: ContactDetailProps) => {
   const { contact } = route.params
   let transactions_filtered = []
   const { data } = useQuery(QUERY_TRANSACTIONS)
@@ -70,7 +80,17 @@ export const ContactsDetailScreen = ({ route, navigation }) => {
   )
 }
 
-export const ContactsDetailScreenJSX = ({ contact, navigation, transactions }) => {
+type ContactDetailScreenProps = {
+  contact: Record<string, any>
+  navigation: Record<string, any>
+  transactions: []
+}
+
+export const ContactsDetailScreenJSX = ({
+  contact,
+  navigation,
+  transactions,
+}: ContactDetailScreenProps) => {
   const [contactName, setContactName] = React.useState(contact.prettyName)
 
   const UPDATE_NAME = gql`
@@ -92,11 +112,16 @@ export const ContactsDetailScreenJSX = ({ contact, navigation, transactions }) =
   return (
     <Screen style={styles.screen} unsafe>
       <View style={[styles.amountView, { backgroundColor: palette.green }]}>
-        <Icon name="ios-person-outline" size={94} color={palette.white} style={{ margin: 0 }} />
-        <View style={{ flexDirection: "row" }}>
+        <Icon
+          name="ios-person-outline"
+          size={94}
+          color={palette.white}
+          style={styles.icon}
+        />
+        <View style={styles.inputContainer}>
           <Input
             style={styles.amount}
-            inputStyle={{ textAlign: "center", textDecorationLine: "underline" }}
+            inputStyle={styles.inputStyle}
             inputContainerStyle={{ borderColor: palette.green }}
             onChangeText={setContactName}
             onSubmitEditing={updateName}
@@ -110,13 +135,18 @@ export const ContactsDetailScreenJSX = ({ contact, navigation, transactions }) =
       </View>
       <ScrollView style={styles.transactionsView}>
         <Text
-          style={{ fontSize: 18, marginTop: 18, marginBottom: 12 }}
+          style={styles.screenTitle}
         >{`Transactions with ${contact.prettyName}`}</Text>
         {transactions.map((item, i) => (
-          <TransactionItem navigation={navigation} tx={item} subtitle />
+          <TransactionItem
+            key={`transaction-${i}`}
+            navigation={navigation}
+            tx={item}
+            subtitle
+          />
         ))}
       </ScrollView>
-      <View style={{ paddingBottom: 18 }}>
+      <View style={styles.actionsContainer}>
         <LargeButton
           title={translate("MoveMoneyScreen.send")}
           icon={<IconTransaction isReceive={false} size={32} />}

@@ -5,7 +5,8 @@
   "scripts": {
     "start": "react-native start",
     "test": "yarn compile && jest --runInBand && yarn lint && yarn clean",
-    "lint": "eslint app --ext .js,.ts,.tsx",
+    "eslint-check": "eslint app --ext .js,.ts,.tsx",
+    "prettier-check": "prettier 'app/**/*.{ts,tsx}' 'storybook/**/*.{ts,tsx}' --check",
     "prettier-format": "prettier 'app/**/*.{ts,tsx}' 'storybook/**/*.{ts,tsx}' --write",
     "compile": "tsc -p .",
     "format": "npm-run-all format:*",
@@ -53,7 +54,7 @@
     "jwt-decode": "^3.1.2",
     "lodash": "^4.17.15",
     "lottie-ios": "3.1.9",
-    "lottie-react-native": "^3.3.2",
+    "lottie-react-native": "^4.0.2",
     "moment": "^2.24.0",
     "node-libs-react-native": "^1.2.1",
     "ramda": "0.27.1",
@@ -81,6 +82,7 @@
     "react-native-push-notification": "^7.3.1",
     "react-native-qrcode-svg": "^6.0.6",
     "react-native-reanimated": "^1.7.0",
+    "react-native-root-siblings": "^4.1.1",
     "react-native-root-toast": "^3.2.1",
     "react-native-safe-area-context": "^3.1.1",
     "react-native-screen-brightness": "^2.0.0-alpha",
@@ -159,68 +161,5 @@
   },
   "peerDependencies": {
     "solidarity": "^2.3.1"
-  },
-  "prettier": {
-    "printWidth": 100,
-    "semi": false,
-    "singleQuote": false,
-    "trailingComma": "all"
-  },
-  "eslintConfig": {
-    "parser": "@typescript-eslint/parser",
-    "extends": [
-      "prettier",
-      "plugin:@typescript-eslint/recommended",
-      "plugin:react/recommended",
-      "plugin:react-native/all",
-      "standard"
-    ],
-    "parserOptions": {
-      "ecmaFeatures": {
-        "jsx": true
-      },
-      "project": "./tsconfig.json"
-    },
-    "plugins": [
-      "@typescript-eslint",
-      "react",
-      "react-native"
-    ],
-    "settings": {
-      "react": {
-        "pragma": "React",
-        "version": "detect"
-      }
-    },
-    "globals": {
-      "__DEV__": false,
-      "jasmine": false,
-      "beforeAll": false,
-      "afterAll": false,
-      "beforeEach": false,
-      "afterEach": false,
-      "test": false,
-      "expect": false,
-      "describe": false,
-      "jest": false,
-      "it": false
-    },
-    "rules": {
-      "comma-dangle": 0,
-      "no-unused-vars": 0,
-      "no-undef": 0,
-      "quotes": 0,
-      "react/no-unescaped-entities": 0,
-      "react-native/no-raw-text": 0,
-      "space-before-function-paren": 0,
-      "@typescript-eslint/indent": 0,
-      "@typescript-eslint/explicit-member-accessibility": 0,
-      "@typescript-eslint/explicit-function-return-type": 0,
-      "@typescript-eslint/member-delimiter-style": 0,
-      "@typescript-eslint/no-explicit-any": 0,
-      "@typescript-eslint/no-object-literal-type-assertion": 0,
-      "@typescript-eslint/no-empty-interface": 0,
-      "@typescript-eslint/no-var-requires": 0
-    }
   }
 }

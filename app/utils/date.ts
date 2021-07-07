@@ -1,3 +1,6 @@
+/* eslint-disable no-param-reassign */
+
+// refactor these utils
 export const sameDay = (d1, d2) => {
   d1 = new Date(d1) // XXX FIXME
 

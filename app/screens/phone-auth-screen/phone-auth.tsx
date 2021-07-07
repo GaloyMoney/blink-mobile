@@ -56,38 +56,9 @@ const LOGIN = gql`
 `
 
 const styles = EStyleSheet.create({
-  activityIndicatorWrapper: {
-    alignItems: "center",
-    backgroundColor: "#FFFFFF",
-    borderRadius: 10,
-    display: "flex",
-    height: 100,
-    justifyContent: "space-around",
-    width: 100,
-  },
-
-  button: {
-    color: palette.lightBlue,
-  },
-
-  buttonContainer: {
-    paddingHorizontal: 80,
-    paddingVertical: 10,
-  },
-
-  buttonStyle: {
-    backgroundColor: color.primary,
-  },
-
   codeContainer: {
     alignSelf: "center",
     width: "70%",
-  },
-
-  container: {
-    flex: 1,
-    flexDirection: "column",
-    justifyContent: "center",
   },
 
   image: {
@@ -137,7 +108,9 @@ export const WelcomePhoneInputScreen: ScreenType = ({
     console.log({ initPhoneNumber: inputRef.current.getValue() })
 
     if (!inputRef.current.isValidNumber()) {
-      Alert.alert(`${inputRef.current.getValue()} ${translate("errors.invalidPhoneNumber")}`)
+      Alert.alert(
+        `${inputRef.current.getValue()} ${translate("errors.invalidPhoneNumber")}`,
+      )
       return
     }
 

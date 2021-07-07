@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-unused-styles */
 import { gql, useLazyQuery, useMutation } from "@apollo/client"
 import { useIsFocused } from "@react-navigation/native"
 import * as React from "react"
@@ -9,20 +10,31 @@ import { USERNAME_EXIST } from "../../graphql/query"
 import { translate } from "../../i18n"
 import { color } from "../../theme"
 
-const styles = EStyleSheet.create({
-  screenStyle: {
-    marginHorizontal: 48,
-    // marginVertical: 24,
-  },
+// TODO: memoize dynamic styles
+const styles = (error = false) =>
+  EStyleSheet.create({
+    activity: { marginTop: 12 },
 
-  text: {
-    fontSize: "16rem",
-    paddingVertical: "18rem",
-    textAlign: "center",
-  },
-})
+    // eslint-disable-next-line react-native/no-color-literals
+    error: { color: error ? "red" : "green" },
 
-export const UsernameScreen = ({ navigation }) => {
+    screenStyle: {
+      marginHorizontal: 48,
+      // marginVertical: 24,
+    },
+
+    text: {
+      fontSize: "16rem",
+      paddingVertical: "18rem",
+      textAlign: "center",
+    },
+  })
+
+type Props = {
+  navigation: Record<string, any>
+}
+
+export const UsernameScreen = ({ navigation }: Props) => {
   const [loading, setLoading] = React.useState(false)
   const [input, setInput] = React.useState("")
   const [message, setMessage] = React.useState("")
@@ -181,15 +193,15 @@ export const UsernameScreen = ({ navigation }) => {
   const inputForm = React.createRef()
 
   return (
-    <Screen preset="scroll" style={styles.screenStyle}>
-      <Text style={styles.text}>{translate("UsernameScreen.usernameToUse")}</Text>
+    <Screen preset="scroll" style={styles().screenStyle}>
+      <Text style={styles().text}>{translate("UsernameScreen.usernameToUse")}</Text>
       <Input
         ref={inputForm}
         autoFocus
         placeholder={translate("common.username")}
         leftIcon={{ type: "ionicon", name: "ios-person-circle" }}
         onChangeText={onChangeText}
-        errorStyle={{ color: messageIsError ? "red" : "green" }}
+        errorStyle={styles(messageIsError).error}
         errorMessage={message}
         maxLength={20}
         returnKeyType="send"
@@ -206,7 +218,7 @@ export const UsernameScreen = ({ navigation }) => {
         animating={loading}
         size="large"
         color={color.primary}
-        style={{ marginTop: 12 }}
+        style={styles().activity}
       />
     </Screen>
   )

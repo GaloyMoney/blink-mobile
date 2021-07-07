@@ -4,6 +4,7 @@ import * as React from "react"
 import EStyleSheet from "react-native-extended-stylesheet"
 
 const styles = EStyleSheet.create({
+  // eslint-disable-next-line react-native/no-unused-styles
   icon: {
     fontSize: "72rem",
   },
@@ -17,7 +18,12 @@ const styles = EStyleSheet.create({
   },
 })
 
-export const CloseCross = ({ onPress, color }) => (
+type Props = {
+  onPress: () => void
+  color: any
+}
+
+export const CloseCross: React.FC<Props> = ({ onPress, color }: Props) => (
   <View style={styles.iconContainer}>
     <Icon name="ios-close" size={styles.icon.fontSize} onPress={onPress} color={color} />
   </View>

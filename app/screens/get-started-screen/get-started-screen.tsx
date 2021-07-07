@@ -8,6 +8,7 @@ import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const BitcoinBeachLogo = require("./bitcoinBeach3.png")
 
 const styles = EStyleSheet.create({
@@ -46,19 +47,21 @@ const styles = EStyleSheet.create({
     width: "100%",
   },
 
-  sub: {
-    color: palette.white,
-    fontSize: 18,
-    marginBottom: 16,
-    marginTop: 32,
-    textAlign: "center",
-  },
+  version: { paddingTop: 18 },
 })
 
-export const GetStartedScreen = ({ navigation }) => (
-  <Screen style={styles.container} backgroundColor={palette.lightBlue} statusBar="light-content">
+type Props = {
+  navigation: Record<string, any>
+}
+
+export const GetStartedScreen = ({ navigation }: Props) => (
+  <Screen
+    style={styles.container}
+    backgroundColor={palette.lightBlue}
+    statusBar="light-content"
+  >
     <Image style={styles.Logo} source={BitcoinBeachLogo} resizeMode="contain" />
-    <VersionComponent style={{ paddingTop: 18 }} />
+    <VersionComponent style={styles.version} />
     <View style={styles.bottom}>
       <Button
         title={translate("GetStartedScreen.getStarted")}

@@ -13,18 +13,12 @@ const styles = EStyleSheet.create({
     marginHorizontal: 48,
     // marginVertical: 24,
   },
-
-  text: {
-    fontSize: "16rem",
-    paddingVertical: "18rem",
-    textAlign: "center",
-  },
 })
 
 export const language_mapping = {
   "": "Default (OS)",
-  en: "English",
-  es: "Español",
+  "en": "English",
+  "es": "Español",
 }
 
 export const LanguageScreen = () => {
@@ -68,7 +62,9 @@ export const LanguageScreen = () => {
           }
         >
           <ListItem.Title>{language_mapping[l]}</ListItem.Title>
-          {language === l && <Icon name="ios-checkmark-circle" size={18} color={palette.green} />}
+          {language === l && (
+            <Icon name="ios-checkmark-circle" size={18} color={palette.green} />
+          )}
         </ListItem>
       ))}
     </Screen>

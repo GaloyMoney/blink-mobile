@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import { useApolloClient, useQuery } from "@apollo/client"
 import Clipboard from "@react-native-community/clipboard"
 import PushNotificationIOS from "@react-native-community/push-notification-ios"
@@ -5,6 +6,7 @@ import messaging from "@react-native-firebase/messaging"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { CardStyleInterpolators, createStackNavigator } from "@react-navigation/stack"
 import i18n from "i18n-js"
+// eslint-disable-next-line import/no-unassigned-import
 import "node-libs-react-native/globals" // needed for Buffer?
 import * as React from "react"
 import { useEffect } from "react"
@@ -47,6 +49,7 @@ import { addDeviceToken } from "../utils/notifications"
 import { validPayment } from "../utils/parsing"
 import { getNetwork, Token } from "../utils/token"
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const PushNotification = require("react-native-push-notification")
 
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
@@ -105,10 +108,6 @@ const styles = EStyleSheet.create({
     height: "10%",
     // height: '60rem'
     // height: 100
-  },
-
-  person: {
-    paddingRight: 15,
   },
 })
 
@@ -401,9 +400,6 @@ export const ContactNavigator = () => (
       component={ContactsScreen}
       options={{
         title: translate("ContactsScreen.title"),
-        tabBarIcon: ({ focused, color }) => (
-          <Icon name="ios-people-outline" size={size} color={color} />
-        ),
       }}
     />
     <StackContacts.Screen
@@ -467,6 +463,10 @@ export const PhoneValidationNavigator = () => (
 
 const Tab = createBottomTabNavigator()
 
+type TabProps = {
+  color: string
+}
+
 export const PrimaryNavigator = () => {
   const [network, setNetwork] = React.useState("mainnet")
 
@@ -492,7 +492,9 @@ export const PrimaryNavigator = () => {
         component={MoveMoneyNavigator}
         options={{
           title: translate("MoveMoneyScreen.title"),
-          tabBarIcon: ({ focused, color }) => <Icon name="ios-home" size={size} color={color} />,
+          tabBarIcon: ({ color }: TabProps) => (
+            <Icon name="ios-home" size={size} color={color} />
+          ),
         }}
       />
       <Tab.Screen
@@ -500,7 +502,7 @@ export const PrimaryNavigator = () => {
         component={ContactNavigator}
         options={{
           title: translate("ContactsScreen.title"),
-          tabBarIcon: ({ focused, color }) => (
+          tabBarIcon: ({ color }: TabProps) => (
             <Icon name="ios-people-outline" size={size} color={color} />
           ),
         }}
@@ -510,7 +512,7 @@ export const PrimaryNavigator = () => {
         component={MapScreen}
         options={{
           title: translate("MapScreen.title"),
-          tabBarIcon: ({ focused, color }) => (
+          tabBarIcon: ({ color }: TabProps) => (
             <Icon name="ios-map-outline" size={size} color={color} />
           ),
         }}
@@ -520,7 +522,9 @@ export const PrimaryNavigator = () => {
         component={EarnMapDataInjected}
         options={{
           title: translate("EarnScreen.title"),
-          tabBarIcon: ({ focused, color }) => <Icon name="ios-rocket" size={size} color={color} />,
+          tabBarIcon: ({ color }: TabProps) => (
+            <Icon name="ios-rocket" size={size} color={color} />
+          ),
         }}
       />
     </Tab.Navigator>

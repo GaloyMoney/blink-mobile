@@ -14,5 +14,10 @@ storiesOf("Settings screen", module)
     <SettingsScreenJSX phone="+16505551234" notifications="enabled" loggedin />
   ))
   .add("Logged in with username", () => (
-    <SettingsScreenJSX phone="+16505551234" username="Joe" notifications="enabled" loggedin />
+    <SettingsScreenJSX
+      phone="+16505551234"
+      username="Joe"
+      notifications="enabled"
+      loggedin
+    />
   ))

@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Text, Dimensions } from "react-native"
+import { StyleSheet, Dimensions } from "react-native"
 import LottieView from "lottie-react-native"
 import WhatIsBitcoinSVG from "./01-so-what-exactly-is-bitcoin-01.svg"
 import SatSVG from "./02-i-just-earned-a-sat-01.svg"
@@ -35,6 +35,7 @@ import SecurePartOneDark from "./05-secure-part-i-02.svg"
 import SecurePartTwo from "./06-secure-part-ii-01.svg"
 import SecurePartTwoDark from "./06-secure-part-ii-02.svg"
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const lottieTest = require("./02-i-trust-my-government-02.json")
 
 interface ISVGs {
@@ -42,6 +43,10 @@ interface ISVGs {
   width?: number
   theme?: "dark" | "light"
 }
+
+const styles = StyleSheet.create({
+  lottieContainer: { alignSelf: "center" },
+})
 
 export const SVGs = ({ name, width, theme }: ISVGs) => {
   const { width: screenWidth } = Dimensions.get("window")
@@ -97,7 +102,11 @@ export const SVGs = ({ name, width, theme }: ISVGs) => {
         <FiatLosesValueOverTime width={rWidth} />
       )
     case "OtherIssues":
-      return theme === "dark" ? <OtherIssuesDark width={rWidth} /> : <OtherIssues width={rWidth} />
+      return theme === "dark" ? (
+        <OtherIssuesDark width={rWidth} />
+      ) : (
+        <OtherIssues width={rWidth} />
+      )
 
     case "LimitedSupply":
       return <LimitedSupply width={rWidth} />
@@ -132,7 +141,7 @@ export const SVGs = ({ name, width, theme }: ISVGs) => {
       return (
         <LottieView
           source={lottieTest}
-          style={{ width: rWidth, alignSelf: "center" }}
+          style={[styles.lottieContainer, { width: rWidth }]}
           autoPlay
           loop
         />

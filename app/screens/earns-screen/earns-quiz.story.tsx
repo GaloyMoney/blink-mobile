@@ -1,7 +1,6 @@
 import { storiesOf } from "@storybook/react-native"
 import * as React from "react"
 import { cloneDeep } from "lodash"
-import { Text, SafeAreaView } from "react-native"
 import { SafeAreaProvider } from "react-native-safe-area-context"
 import { action } from "@storybook/addon-actions"
 import { EarnQuiz } from "./earns-quiz"
@@ -25,7 +24,7 @@ const route = {
       "Nope, it is not analtcoin",
       "Maybe... but that's not the correct answer in this context 😂",
     ],
-    onComplete: () => {},
+    onComplete: () => null,
     completed: false,
   },
 }

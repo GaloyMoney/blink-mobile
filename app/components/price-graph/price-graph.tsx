@@ -42,6 +42,12 @@ const styles = EStyleSheet.create({
     fontWeight: "bold",
   },
 
+  pricesContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginHorizontal: 64,
+  },
+
   textView: {
     alignSelf: "center",
     flexDirection: "row",
@@ -79,7 +85,11 @@ const mapping = {
   },
 }
 
-export const PriceGraph = ({ prices }) => {
+type Props = {
+  prices: []
+}
+
+export const PriceGraph = ({ prices }: Props) => {
   const [time, setTime] = React.useState("d") // d, w, m, y
 
   let price
@@ -131,28 +141,36 @@ export const PriceGraph = ({ prices }) => {
           />
         </VictoryChart>
       </View>
-      <View style={{ flexDirection: "row", justifyContent: "space-between", marginHorizontal: 64 }}>
+      <View style={styles.pricesContainer}>
         <Button
           title="1D"
-          buttonStyle={time == "d" ? styles.buttonStyleTime : styles.buttonStyleTimeActive}
+          buttonStyle={
+            time == "d" ? styles.buttonStyleTime : styles.buttonStyleTimeActive
+          }
           titleStyle={time == "d" ? null : styles.titleStyleTime}
           onPress={() => setTime("d")}
         />
         <Button
           title="1W"
-          buttonStyle={time == "w" ? styles.buttonStyleTime : styles.buttonStyleTimeActive}
+          buttonStyle={
+            time == "w" ? styles.buttonStyleTime : styles.buttonStyleTimeActive
+          }
           titleStyle={time == "w" ? null : styles.titleStyleTime}
           onPress={() => setTime("w")}
         />
         <Button
           title="1M"
-          buttonStyle={time == "m" ? styles.buttonStyleTime : styles.buttonStyleTimeActive}
+          buttonStyle={
+            time == "m" ? styles.buttonStyleTime : styles.buttonStyleTimeActive
+          }
           titleStyle={time == "m" ? null : styles.titleStyleTime}
           onPress={() => setTime("m")}
         />
         <Button
           title="1Y"
-          buttonStyle={time == "y" ? styles.buttonStyleTime : styles.buttonStyleTimeActive}
+          buttonStyle={
+            time == "y" ? styles.buttonStyleTime : styles.buttonStyleTimeActive
+          }
           titleStyle={time == "y" ? null : styles.titleStyleTime}
           onPress={() => setTime("y")}
         />

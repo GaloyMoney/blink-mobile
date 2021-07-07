@@ -12,7 +12,10 @@ import { VersionComponent } from "../../components/version"
 // Constants
 import { language_mapping } from "./language-screen"
 import { palette } from "../../theme/palette"
-import { WHATSAPP_CONTACT_NUMBER, WHATSAPP_DEFAULT_CONTACT_MESSAGE } from "../../constants/support"
+import {
+  WHATSAPP_CONTACT_NUMBER,
+  WHATSAPP_DEFAULT_CONTACT_MESSAGE,
+} from "../../constants/support"
 
 // Functions
 import { translate } from "../../i18n"
@@ -26,14 +29,20 @@ import { hasFullPermissions, requestPermission } from "../../utils/notifications
 // Types
 import type { ScreenType } from "../../types/screen"
 
-const styles = EStyleSheet.create({
-  screenStyle: {
-    backgroundColor: palette.lighterGrey,
-  },
-})
-
 type Props = {
-  navigation: any
+  navigation: Record<string, any>
+}
+
+type ComponentProps = {
+  icon: string
+  category: string
+  id: string
+  i: number
+  enabled: boolean
+  greyed: boolean
+  defaultValue?: string
+  action: () => void
+  styleDivider?: Record<string, any>
 }
 
 export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
@@ -173,7 +182,8 @@ export const SettingsScreenJSX = (params) => {
       category: translate("common.contactUs"),
       icon: "ios-logo-whatsapp",
       id: "contact-us",
-      action: () => openWhatsApp(WHATSAPP_CONTACT_NUMBER, WHATSAPP_DEFAULT_CONTACT_MESSAGE),
+      action: () =>
+        openWhatsApp(WHATSAPP_CONTACT_NUMBER, WHATSAPP_DEFAULT_CONTACT_MESSAGE),
       enabled: true,
       greyed: false,
       styleDivider: { backgroundColor: palette.lighterGrey, height: 18 },
@@ -208,7 +218,7 @@ export const SettingsScreenJSX = (params) => {
     defaultValue = undefined,
     action,
     styleDivider,
-  }) => {
+  }: ComponentProps) => {
     const value = params[id] || defaultValue
 
     return (

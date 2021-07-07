@@ -2,14 +2,25 @@
 //
 // In this file, we'll be kicking off our app or storybook.
 
-import { ApolloClient, ApolloProvider, HttpLink, NormalizedCacheObject } from "@apollo/client"
+import {
+  ApolloClient,
+  ApolloProvider,
+  HttpLink,
+  NormalizedCacheObject,
+} from "@apollo/client"
 import { setContext } from "@apollo/client/link/context"
 import { RetryLink } from "@apollo/client/link/retry"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import analytics from "@react-native-firebase/analytics"
+// eslint-disable-next-line import/no-unassigned-import
 import "@react-native-firebase/crashlytics"
-import { NavigationContainer, NavigationState, PartialState } from "@react-navigation/native"
+import {
+  NavigationContainer,
+  NavigationState,
+  PartialState,
+} from "@react-navigation/native"
 import { AsyncStorageWrapper, CachePersistor } from "apollo3-cache-persist"
+// eslint-disable-next-line import/no-unassigned-import
 import "node-libs-react-native/globals" // needed for Buffer?
 import * as React from "react"
 import { useEffect, useState } from "react"
@@ -22,6 +33,7 @@ import { GlobalErrorToast } from "./components/global-error"
 import { cache } from "./graphql/cache"
 import { initQuery, INITWALLET } from "./graphql/init"
 import { walletIsActive } from "./graphql/query"
+// eslint-disable-next-line import/no-unassigned-import
 import "./i18n"
 import { RootStack } from "./navigation/root-navigator"
 import { isIos } from "./utils/helper"
@@ -97,7 +109,8 @@ export const App = () => {
           retryIf: (error, operation) => {
             console.log({ error }, "retry error")
             return (
-              !!error && !/onchain_pay|payKeysendUsername|payInvoice/.test(operation.operationName)
+              !!error &&
+              !/onchain_pay|payKeysendUsername|payInvoice/.test(operation.operationName)
             )
           },
         },
@@ -127,7 +140,9 @@ export const App = () => {
 
       const client = new ApolloClient({
         cache,
-        link: linkNetworkStatusNotifier.concat(retryLink.concat(authLink.concat(httpLink))),
+        link: linkNetworkStatusNotifier.concat(
+          retryLink.concat(authLink.concat(httpLink)),
+        ),
         name: isIos ? "iOS" : "Android",
         version: `${VersionNumber.appVersion}-${VersionNumber.buildVersion}`,
       })

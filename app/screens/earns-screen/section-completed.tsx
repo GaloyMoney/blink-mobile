@@ -22,6 +22,14 @@ const styles = EStyleSheet.create({
     width: "100%",
   },
 
+  container: {
+    alignItems: "center",
+    backgroundColor: palette.lightBlue,
+    flexGrow: 1,
+  },
+
+  divider: { flex: 0.5, minHeight: 30 },
+
   headerSection: {
     color: palette.white,
     fontSize: "16rem",
@@ -42,22 +50,23 @@ const styles = EStyleSheet.create({
   },
 })
 
-export const SectionCompleted = ({ navigation, route }) => {
+type Props = {
+  route: Record<string, any>
+  navigation: Record<string, any>
+}
+
+export const SectionCompleted = ({ navigation, route }: Props) => {
   const { amount, sectionTitle } = route.params
 
   return (
     <Screen backgroundColor={palette.orange} unsafe>
       <MountainHeader amount={amount} color={palette.orange} />
-      <View
-        style={{
-          backgroundColor: palette.lightBlue,
-          alignItems: "center",
-          flexGrow: 1,
-        }}
-      >
-        <View style={{ flex: 0.5, minHeight: 30 }} />
+      <View style={styles.container}>
+        <View style={styles.divider} />
         <BadgerShovelBitcoin />
-        <Text style={styles.headerSection}>{translate("EarnScreen.sectionsCompleted")}</Text>
+        <Text style={styles.headerSection}>
+          {translate("EarnScreen.sectionsCompleted")}
+        </Text>
         <Text style={styles.titleSection}>{sectionTitle}</Text>
         <Button
           title={translate("EarnScreen.keepDigging")}
