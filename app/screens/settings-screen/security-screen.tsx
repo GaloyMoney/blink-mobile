@@ -183,7 +183,9 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitle}
           title={translate("SecurityScreen.setPin")}
-          onPress={() => navigation.navigate("pin", { screenPurpose: "setPIN" })}
+          onPress={() =>
+            navigation.navigate("pin", { screenPurpose: PinScreenPurpose.SetPin })
+          }
         />
       </View>
     </Screen>

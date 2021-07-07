@@ -157,6 +157,7 @@ export const PinScreen: ScreenType = ({ route, navigation }: Props) => {
       } else {
         setHelperText(translate("PinScreen.tooManyAttempts"))
         await resetDataStore(client)
+        await sleep(1000)
         navigation.reset({
           index: 0,
           routes: [{ name: "Primary" }],
