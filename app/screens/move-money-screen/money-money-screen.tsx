@@ -8,6 +8,7 @@ import {
   Linking,
   Pressable,
   RefreshControl,
+  StatusBar,
   Text,
   View,
 } from "react-native"
@@ -288,6 +289,7 @@ export const MoveMoneyScreen = ({
 
   return (
     <Screen style={styles.screenStyle}>
+      <StatusBar backgroundColor={palette.lighterGrey} barStyle="dark-content" />
       <Modal
         style={styles.modal}
         isVisible={modalVisible}

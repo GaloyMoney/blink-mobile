@@ -25,6 +25,7 @@ import { walletIsActive } from "../../graphql/query"
 import { openWhatsApp } from "../../utils/external"
 import { resetDataStore } from "../../utils/logout"
 import { hasFullPermissions, requestPermission } from "../../utils/notifications"
+import KeyStoreWrapper from "../../utils/storage/secureStorage"
 
 // Types
 import type { ScreenType } from "../../types/screen"
@@ -60,6 +61,16 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
     `,
     { fetchPolicy: "cache-only" },
   )
+
+  const securityAction = async () => {
+    const isBiometricsEnabled = await KeyStoreWrapper.getIsBiometricsEnabled()
+    const isPinEnabled = await KeyStoreWrapper.getIsPinEnabled()
+
+    navigation.navigate("security", {
+      mIsBiometricsEnabled: isBiometricsEnabled,
+      mIsPinEnabled: isPinEnabled,
+    })
+  }
 
   const onGetCsvCallback = async (data) => {
     console.log({ data }, "result getCsv")
@@ -120,6 +131,7 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
       }
       notificationsEnabled={notificationsEnabled}
       csvAction={getCsv}
+      securityAction={securityAction}
     />
   )
 }
@@ -132,6 +144,7 @@ export const SettingsScreenJSX = (params) => {
     username,
     notificationsEnabled,
     csvAction,
+    securityAction,
     resetDataStore,
   } = params
 
@@ -168,6 +181,14 @@ export const SettingsScreenJSX = (params) => {
       id: "notifications",
       action: () => requestPermission(client),
       enabled: walletIsActive && notificationsEnabled,
+      greyed: !walletIsActive,
+    },
+    {
+      category: translate("common.security"),
+      icon: "lock-closed-outline",
+      id: "security",
+      action: securityAction,
+      enabled: walletIsActive,
       greyed: !walletIsActive,
     },
     {

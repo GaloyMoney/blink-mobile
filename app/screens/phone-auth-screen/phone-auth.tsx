@@ -32,9 +32,11 @@ import { palette } from "../../theme/palette"
 import { Token } from "../../utils/token"
 import { toastShow } from "../../utils/toast"
 import { addDeviceToken } from "../../utils/notifications"
+import BiometricWrapper from "../../utils/biometricAuthentication"
 
 // Types
 import type { ScreenType } from "../../types/screen"
+import { AuthenticationScreenPurpose } from "../../utils/enum"
 
 // Assets
 import BadgerPhone from "./badger-phone-01.svg"
@@ -105,19 +107,17 @@ export const WelcomePhoneInputScreen: ScreenType = ({
   const inputRef = useRef<PhoneInput | null>()
 
   const send = async () => {
-    console.log({ initPhoneNumber: inputRef.current.getValue() })
+    const phone = inputRef.current.getValue()
+    console.log({ initPhoneNumber: phone })
+    const phoneRegex = new RegExp("^\\+[0-9]+$")
 
-    if (!inputRef.current.isValidNumber()) {
-      Alert.alert(
-        `${inputRef.current.getValue()} ${translate("errors.invalidPhoneNumber")}`,
-      )
+    if (!inputRef.current.isValidNumber() || !phoneRegex.test(phone)) {
+      Alert.alert(`${phone} ${translate("errors.invalidPhoneNumber")}`)
       return
     }
 
     try {
-      const phone = inputRef.current.getValue()
       const { data } = await requestPhoneCode({ variables: { phone } })
-
       if (data.requestPhoneCode.success) {
         const screen = "welcomePhoneValidation"
         navigation.navigate(screen, { phone })
@@ -131,7 +131,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
     }
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     inputRef?.current.focus()
   }, [])
 
@@ -260,7 +260,13 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
 
       if (token) {
         await onSuccess({ token })
-        navigation.navigate("MoveMoney")
+        if (await BiometricWrapper.isSensorAvailable()) {
+          navigation.replace("authentication", {
+            screenPurpose: AuthenticationScreenPurpose.TurnOnAuthentication,
+          })
+        } else {
+          navigation.navigate("moveMoney")
+        }
       } else {
         toastShow(translate("WelcomePhoneValidationScreen.errorLoggingIn"))
       }
