@@ -13,6 +13,7 @@ import { resetDataStore } from "../../utils/logout"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import type { ScreenType } from "../../types/screen"
 import { PinScreenPurpose } from "../../utils/enum"
+import { sleep } from "../../utils/sleep"
 
 const styles = EStyleSheet.create({
   bottomSpacer: {
