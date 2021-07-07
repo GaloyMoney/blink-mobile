@@ -61,7 +61,7 @@ const styles = EStyleSheet.create({
 
   textContainer: {
     marginBottom: 12,
-    marginRight: 40,
+    marginRight: 60,
     marginTop: 32,
   },
 
