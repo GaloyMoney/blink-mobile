@@ -347,12 +347,12 @@ export const ReceiveBitcoinScreen = ({ navigation }: Props) => {
     const isReady =
       type === "lightning" ? !loading && data != "" && !keyboardIsShown : true
 
-    const getFullUri = (input) => {
+    const getFullUri = (input, uppercase = false) => {
       if (type === "lightning") {
         // TODO add lightning:
-        return input.toUpperCase()
+        return uppercase ? input.toUpperCase() : input
       }
-      const uri = `bitcoin:${input}`
+      const uri = uppercase ? `bitcoin:${input}`.toUpperCase() : `bitcoin:${input}`
       const params = new URLSearchParams()
       if (amount) params.append("amount", `${amount / 10 ** 8}`)
       if (memo) {
@@ -360,7 +360,7 @@ export const ReceiveBitcoinScreen = ({ navigation }: Props) => {
         return `${uri}?${params.toString()}`
       }
       const fullUri = params.toString() ? `${uri}?${params.toString()}` : `${uri}`
-      return fullUri.toUpperCase()
+      return fullUri
     }
 
     const copyToClipboard = () => {
@@ -427,7 +427,7 @@ export const ReceiveBitcoinScreen = ({ navigation }: Props) => {
               <Pressable onPress={copyToClipboard}>
                 <QRCode
                   size={280}
-                  value={getFullUri(data)}
+                  value={getFullUri(data, true)}
                   logoBackgroundColor="white"
                   ecl="L"
                   // __DEV__ workaround for https://github.com/facebook/react-native/issues/26705
