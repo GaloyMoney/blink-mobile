@@ -71,6 +71,9 @@ export const validPayment = (
   let [protocol, data] = input.split(":")
   let paymentType: IPaymentType
 
+  // some apps encode addresses and invoices in UPPERCASE 
+  data = data.toLowerCase()
+  
   if (protocol.toLowerCase() === "bitcoin") {
     paymentType = "onchain"
 
@@ -100,7 +103,7 @@ export const validPayment = (
       }
     }
 
-    data = protocol
+    data = protocol.toLowerCase()
   } else if (protocol.toLowerCase() === "https") {
     const domain = "//ln.bitcoinbeach.com/"
     if (data.startsWith(domain)) {
