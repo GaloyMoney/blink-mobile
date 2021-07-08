@@ -75,10 +75,10 @@ export const ModalClipboard = () => {
   const open = async () => {
     dismiss()
     const data = await Clipboard.getString()
-    const [_, invoice] = data.split(":")
+    const [protocol, invoice] = data.split(":")
 
-    if (invoice && isLnUrl(invoice)) {
-      navigation.navigate("sendLNUrl", { invoice })
+    if ((invoice && isLnUrl(invoice)) || isLnUrl(protocol)) {
+      navigation.navigate("sendLNUrl", { invoice: invoice ?? protocol })
     } else {
       navigation.navigate("sendBitcoin", { payment: await Clipboard.getString() })
     }

@@ -88,7 +88,11 @@ export const validPayment = (
   } else if (protocol.toLowerCase().startsWith("ln")) {
     // possibly a lightning address?
 
-    paymentType = "lightning"
+    if (isLnUrl(protocol)) {
+      paymentType = "lnurl"
+    } else {
+      paymentType = "lightning"
+    }
 
     if (network === "testnet" && protocol.toLowerCase().startsWith("lnbc")) {
       return {

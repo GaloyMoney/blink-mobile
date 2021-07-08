@@ -78,7 +78,6 @@ export const ScanningQRCodeScreen = () => {
         new Token().network,
         client,
       )
-      console.log({ valid, errorMessage, data, invoice, paymentType }, "result")
       if (valid) {
         if (paymentType === "lnurl") {
           navigate("sendLNUrl", { invoice })
