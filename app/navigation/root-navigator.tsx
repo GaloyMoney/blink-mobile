@@ -386,7 +386,13 @@ export const RootStack = () => {
         // })}
         initialParams={{ account: AccountType.Bitcoin }}
       />
-      <RootNavigator.Screen name="sendLNUrl" component={SendLNUrlScreen} />
+      <RootNavigator.Screen
+        name="sendLNUrl"
+        component={SendLNUrlScreen}
+        options={{
+          title: translate("SendBitcoinScreen.title"),
+        }}
+      />
     </RootNavigator.Navigator>
   )
 }

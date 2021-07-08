@@ -25,7 +25,6 @@ export const parseUrl = async (invoice: string): Promise<LNUrlPay> => {
   return fetch(url)
     .then((response) => response.json())
     .then((json) => {
-      console.log(json)
       return json as LNUrlPay
     })
 }
@@ -45,7 +44,6 @@ export const invoiceRequest = (
     return fetch(request)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
         if (data.status === "ERROR") {
           throw new Error("Error while requesting lnurl invoice")
         }

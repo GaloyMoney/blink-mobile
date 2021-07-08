@@ -65,12 +65,19 @@ const styles = EStyleSheet.create({
     height: "200rem",
     width: "200rem",
   },
-  memoField: {
-    marginHorizontal: "-10rem",
+  memoContainer: {
+    marginLeft: "-11rem",
+    marginVertical: 12,
+  },
+  memoInput: {
+    fontSize: 14,
   },
   memoLabel: {
     color: palette.midGrey,
-    marginBottom: "6rem",
+    fontSize: 14,
+    fontWeight: "normal",
+    marginBottom: "3rem",
+    marginLeft: "1rem",
   },
   scroll: {
     justifyContent: "space-between",
@@ -122,23 +129,13 @@ export const SendLNUrlScreen: React.FC<Props> = ({ route }: Props) => {
   const [payInvoice] = useMutation(PAY_INVOICE, {
     update: () => queryTransactions(),
   })
+
   const [lightningFees] = useMutation(LIGHTNING_FEES)
 
   const hasEnoughBalance = balance >= amount
   const isAmountSendable = isAmountValid(amount, minSendable, maxSendable)
 
   useEffect(() => {
-    const getFees = async () => {
-      const checkFeeInvoice = await invoiceRequest(callback, satToMsat(minSendable))
-      const fees = await lightningFees({ variables: { invoice: checkFeeInvoice } })
-      const {
-        data: {
-          invoice: { getFee },
-        },
-      } = fees
-      setFees(getFee)
-    }
-
     const parseInitialInvoice = async () => {
       const lnurl = await parseUrl(route.params.invoice)
       const { tag, callback, minSendable, maxSendable, commentAllowed, metadata } = lnurl
@@ -160,11 +157,23 @@ export const SendLNUrlScreen: React.FC<Props> = ({ route }: Props) => {
       } catch (error) {
         setDescription("Invoice description not recognized")
       }
+    }
 
-      await getFees()
+    const getFees = async () => {
+      const checkFeeInvoice = await invoiceRequest(callback, satToMsat(minSendable))
+      const fees = await lightningFees({ variables: { invoice: checkFeeInvoice } })
+
+      const {
+        data: {
+          invoice: { getFee },
+        },
+      } = fees
+
+      setFees(getFee)
     }
 
     parseInitialInvoice()
+    getFees()
   }, [])
 
   const submitPayment = async () => {
@@ -230,14 +239,16 @@ export const SendLNUrlScreen: React.FC<Props> = ({ route }: Props) => {
             entry="Max. amount"
             value={maxSendable === null ? "Loading..." : `${maxSendable.toString()} sats`}
           />
-          <Row entry="Fees" value={fees === null ? "Loading fees..." : fees} />
+          <Row entry="Fees" value={fees === null ? "Loading fees..." : `${fees} sats`} />
           <Row entry="Description" value={description} />
           {!(maxMemoSize === 0) && (
             <Input
               label="Memo"
               labelStyle={styles.memoLabel}
+              inputStyle={styles.memoInput}
               maxLength={maxMemoSize}
               placeholder="Insert a memo"
+              containerStyle={styles.memoContainer}
               onChangeText={setMemo}
             />
           )}
