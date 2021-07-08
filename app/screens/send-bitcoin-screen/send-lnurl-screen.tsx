@@ -136,6 +136,21 @@ export const SendLNUrlScreen: React.FC<Props> = ({ route }: Props) => {
   const isAmountSendable = isAmountValid(amount, minSendable, maxSendable)
 
   useEffect(() => {
+    const getFees = async (callback: string) => {
+      const checkFeeInvoice = await invoiceRequest(callback, 1)
+      const fees = await lightningFees({
+        variables: { invoice: checkFeeInvoice },
+      })
+
+      const {
+        data: {
+          invoice: { getFee: fee },
+        },
+      } = fees
+
+      setFees(fee)
+    }
+
     const parseInitialInvoice = async () => {
       const lnurl = await parseUrl(route.params.invoice)
       const { tag, callback, minSendable, maxSendable, commentAllowed, metadata } = lnurl
@@ -151,6 +166,8 @@ export const SendLNUrlScreen: React.FC<Props> = ({ route }: Props) => {
       setMaxSendable(mSatToSat(maxSendable))
       setMaxMemoSize(commentAllowed)
 
+      await getFees(callback)
+
       try {
         const description = JSON.parse(metadata)[0][1]
         setDescription(description)
@@ -159,21 +176,7 @@ export const SendLNUrlScreen: React.FC<Props> = ({ route }: Props) => {
       }
     }
 
-    const getFees = async () => {
-      const checkFeeInvoice = await invoiceRequest(callback, satToMsat(minSendable))
-      const fees = await lightningFees({ variables: { invoice: checkFeeInvoice } })
-
-      const {
-        data: {
-          invoice: { getFee },
-        },
-      } = fees
-
-      setFees(getFee)
-    }
-
     parseInitialInvoice()
-    getFees()
   }, [])
 
   const submitPayment = async () => {

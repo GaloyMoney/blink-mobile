@@ -4,5 +4,5 @@ export type LNUrlPay = {
   minSendable: number
   maxSendable: number
   commentAllowed: number
-  metadata: string[]
+  metadata: string
 }
