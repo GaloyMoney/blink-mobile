@@ -73,6 +73,16 @@ export const QUERY_TRANSACTIONS = gql`
   }
 `
 
+export const QUERY_EARN_LIST = gql`
+  query earnList($logged: Boolean!) {
+    earnList {
+      id
+      value
+      completed @client(if: { not: $logged })
+    }
+  }
+`
+
 export const getWallet = (client) => {
   const { wallet } = client.readQuery({
     query: WALLET,
@@ -145,7 +155,7 @@ export const walletIsActive = (client) => {
 }
 
 export const GET_LANGUAGE = gql`
-  query me {
+  query language {
     me {
       id
       language

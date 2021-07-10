@@ -10,7 +10,7 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 import Carousel, { Pagination } from "react-native-snap-carousel"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
-import { QUERY_TRANSACTIONS } from "../../graphql/query"
+import { QUERY_TRANSACTIONS, QUERY_EARN_LIST } from "../../graphql/query"
 import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
@@ -126,23 +126,12 @@ export const EarnSection = ({ route, navigation }: Props) => {
   `)
 
   // TODO: fragment with earnList
-  const { data } = useQuery(
-    gql`
-      query earnList($logged: Boolean!) {
-        earnList {
-          id
-          value
-          completed @client(if: { not: $logged })
-        }
-      }
-    `,
-    {
-      variables: {
-        logged: new Token().has(),
-      },
-      fetchPolicy: "cache-only",
+  const { data } = useQuery(QUERY_EARN_LIST, {
+    variables: {
+      logged: new Token().has(),
     },
-  )
+    fetchPolicy: "cache-only",
+  })
 
   if (!data) {
     return null
