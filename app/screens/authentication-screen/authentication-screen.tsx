@@ -14,6 +14,7 @@ import BiometricWrapper from "../../utils/biometricAuthentication"
 import { resetDataStore } from "../../utils/logout"
 import type { ScreenType } from "../../types/screen"
 import { AuthenticationScreenPurpose, PinScreenPurpose } from "../../utils/enum"
+import { checkClipboard } from "../../utils/clipboard"
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const BitcoinBeachLogo = require("../get-started-screen/bitcoinBeach3.png")
@@ -101,10 +102,11 @@ export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) =
   const handleAuthenticationSuccess = () => {
     if (screenPurpose === AuthenticationScreenPurpose.Authenticate) {
       KeyStoreWrapper.resetPinAttempts()
+      navigation.replace("Primary")
+      checkClipboard(client)
     } else if (screenPurpose === AuthenticationScreenPurpose.TurnOnAuthentication) {
       KeyStoreWrapper.setIsBiometricsEnabled()
     }
-    navigation.replace("Primary")
   }
 
   const handleAuthenticationFailure = () => {
