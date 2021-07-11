@@ -5,6 +5,7 @@ import { StatusBar, StyleSheet, Text, View } from "react-native"
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler"
 import { MountainHeader } from "../../components/mountain-header"
 import { Screen } from "../../components/screen"
+import { QUERY_EARN_LIST } from "../../graphql/query"
 import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
@@ -117,23 +118,12 @@ type EarnMapDataProps = {
 
 export const EarnMapDataInjected = ({ navigation }: EarnMapDataProps) => {
   // TODO: fragment with earnList
-  const { data } = useQuery(
-    gql`
-      query earnList($logged: Boolean!) {
-        earnList {
-          id
-          value
-          completed @client(if: { not: $logged })
-        }
-      }
-    `,
-    {
-      variables: {
-        logged: new Token().has(),
-      },
-      fetchPolicy: "cache-only",
+  const { data } = useQuery(QUERY_EARN_LIST, {
+    variables: {
+      logged: new Token().has(),
     },
-  )
+    fetchPolicy: "cache-only",
+  })
 
   if (!data) {
     return null
