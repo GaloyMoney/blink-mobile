@@ -589,9 +589,9 @@
   "SendBitcoinScreen": {
     "amount": "Cantidad",
     "cost": "Costo",
-    "input": "Nombre de usario o factura",
+    "input": "nombre de usario o factura",
     "noAmount": "Esta factura no tiene un monto, por lo que debe especificar manualmente cuánto dinero desea enviar",
-    "invalidUsername": "nombre de usuario no válido",
+    "invalidUsername": "Nombre de usuario no válido",
     "notConfirmed": "El pago ha sido enviado.\npero aún no está confirmado\n\nPuedes comprobar el estado\ndel pago en Transacciones",
     "note": "Nota ",
     "payFromUSD": "Pago desde $USD",
