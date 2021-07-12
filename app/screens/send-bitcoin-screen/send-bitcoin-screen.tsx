@@ -21,7 +21,6 @@ import {
   USERNAME_EXIST,
   WALLET,
 } from "../../graphql/query"
-import { username } from "../../graphql/__generated__/username"
 import { usePrefCurrency } from "../../hooks/usePrefCurrency"
 import { translate } from "../../i18n"
 import { color } from "../../theme"
