@@ -187,6 +187,7 @@ export const UsernameScreen: ScreenType = ({ navigation }: Props) => {
         onChangeText={onChangeText}
         errorStyle={styles(messageIsError).error}
         errorMessage={(() => {
+          // Wait for everything to download and sync through useEffect before displaying
           if (
             !loadingUserNameExist &&
             (messageIsError || messageIsError === usernameExists)
