@@ -615,7 +615,7 @@
     "noTransaction": "\nNo hay transacción para mostrar"
   },
   "UsernameScreen": {
-    "3CaractersMinimum": "al menos de 3 letras son necesarias",
+    "3CharactersMinimum": "al menos de 3 letras son necesarias",
     "confirmTitle": "establece tu nombre de usario",
     "usernameToUse": "Que nombre de usuario quieres usar?"
   },

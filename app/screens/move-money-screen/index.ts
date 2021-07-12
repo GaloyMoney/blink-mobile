@@ -1,1 +1,1 @@
-export * from "./money-money-screen"
+export * from "./move-money-screen"

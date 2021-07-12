@@ -164,7 +164,7 @@ export const SettingsScreenJSX = (params) => {
       id: "username",
       defaultValue: translate("SettingsScreen.tapUserName"),
       action: () => navigation.navigate("setUsername"),
-      enabled: walletIsActive && !username,
+      enabled: walletIsActive, // && !username,
       greyed: !walletIsActive,
     },
     {
