@@ -21,6 +21,7 @@ import {
   USERNAME_EXIST,
   WALLET,
 } from "../../graphql/query"
+import { username } from "../../graphql/__generated__/username"
 import { usePrefCurrency } from "../../hooks/usePrefCurrency"
 import { translate } from "../../i18n"
 import { color } from "../../theme"
@@ -356,8 +357,7 @@ export const SendBitcoinScreen: React.FC<SendBitcoinScreenProps> = ({
 
         setPaymentType("username")
 
-        if (destination?.length > 2) {
-          console.log({ destination })
+        if (isValidUsername(destination)) {
           usernameExistsQuery({ variables: { username: destination } })
         }
 
@@ -368,10 +368,25 @@ export const SendBitcoinScreen: React.FC<SendBitcoinScreenProps> = ({
     fn()
   }, [destination, amount])
 
+  const isValidUsername = (username: string): boolean => {
+    if (!username || username.length < 3) {
+      return false
+    }
+
+    const regexResult = new RegExp(/^[0-9a-z_]+$/i).test(destination)
+    return regexResult
+  }
+
   const pay = async () => {
     if ((amountless || paymentType === "onchain") && amount === 0) {
       setStatus("error")
       setErrs([{ message: translate("SendBitcoinScreen.noAmount") }])
+      return
+    }
+
+    if (!isValidUsername(destination)) {
+      setStatus("error")
+      setErrs([{ message: translate("SendBitcoinScreen.invalidUsername") }])
       return
     }
 
@@ -516,6 +531,7 @@ export const SendBitcoinScreen: React.FC<SendBitcoinScreenProps> = ({
       setMemo={setMemo}
       setDestination={setDestination}
       destination={destination}
+      isValidUsername={isValidUsername}
       usernameExists={usernameExists}
       loadingUserNameExist={loadingUserNameExist}
       interactive={interactive}
@@ -547,6 +563,7 @@ type SendBitcoinScreenJSXProps = {
   setMemo: (memo: string) => void
   setDestination: (destination: string) => void
   destination: string
+  isValidUsername: (username: string) => boolean
   usernameExists: boolean
   loadingUserNameExist: boolean
   interactive: boolean
@@ -576,6 +593,7 @@ export const SendBitcoinScreenJSX = ({
   setMemo,
   setDestination,
   destination,
+  isValidUsername,
   usernameExists,
   loadingUserNameExist,
   interactive,
@@ -629,7 +647,7 @@ export const SendBitcoinScreenJSX = ({
             paymentType === "username" ? (
               loadingUserNameExist ? (
                 <ActivityIndicator size="small" />
-              ) : usernameExists ? (
+              ) : isValidUsername(destination) && usernameExists ? (
                 <Text>✅</Text>
               ) : (
                 <Text>⚠️</Text>
