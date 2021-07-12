@@ -41,14 +41,12 @@ export const UsernameScreen: ScreenType = ({ navigation }: Props) => {
   const [input, setInput] = useState("")
   const [message, setMessage] = useState("")
   const [messageIsError, setMessageIsError] = useState(false)
-
-  // we don't show a error message before the user had a change to add 3 characters
-  const [init, setInit] = useState(true)
+  const [shouldShowErrorMessage, setShouldShowErrorMessage] = useState(false)
 
   // TODO use a debouncer to avoid flickering https://github.com/helfer/apollo-link-debounce
   const [usernameExistsQuery, { loading: loadingUserNameExist, data }] = useLazyQuery(
     USERNAME_EXIST,
-    { fetchPolicy: "cache-and-network" },
+    { fetchPolicy: "no-cache" },
   )
 
   const usernameExists = data?.usernameExists ?? false
@@ -73,7 +71,18 @@ export const UsernameScreen: ScreenType = ({ navigation }: Props) => {
   }, [input])
 
   useEffect(() => {
-    if (!assertValidInput()) {
+    if (!assertValidInputLength()) {
+      if (shouldShowErrorMessage) {
+        setMessage(translate("UsernameScreen.3CharactersMinimum"))
+        setMessageIsError(true)
+      }
+      inputForm.current.focus()
+      return
+    }
+
+    if (!assertValidInputCharacters()) {
+      setMessage(translate("UsernameScreen.letterAndNumber"))
+      setMessageIsError(true)
       return
     }
 
@@ -116,24 +125,16 @@ export const UsernameScreen: ScreenType = ({ navigation }: Props) => {
 
   const isFocused = useIsFocused()
 
+  const assertValidInputLength = (): boolean => {
+    return input.length >= 3
+  }
+
+  const assertValidInputCharacters = (): boolean => {
+    return new RegExp(/^[0-9a-z_]+$/i).test(input)
+  }
+
   const assertValidInput = (): boolean => {
-    if (input.length <= 2) {
-      if (!init) {
-        setMessage(translate("UsernameScreen.3CharactersMinimum"))
-        setMessageIsError(true)
-      }
-      inputForm.current.focus()
-      return false
-    }
-
-    const regexResult = new RegExp(/^[0-9a-z_]+$/i).test(input)
-    if (!regexResult) {
-      setMessage(translate("UsernameScreen.letterAndNumber"))
-      setMessageIsError(true)
-      return false
-    }
-
-    return true
+    return assertValidInputLength() && assertValidInputCharacters()
   }
 
   const validate = async () => {
@@ -141,7 +142,7 @@ export const UsernameScreen: ScreenType = ({ navigation }: Props) => {
       return
     }
 
-    setInit(false)
+    setShouldShowErrorMessage(true)
     const isValid = assertValidInput()
 
     if (!isValid) {
@@ -169,8 +170,8 @@ export const UsernameScreen: ScreenType = ({ navigation }: Props) => {
   const onChangeText = (value) => {
     setInput(value)
 
-    if (init && value.length > 2) {
-      setInit(false)
+    if (!shouldShowErrorMessage && value.length > 2) {
+      setShouldShowErrorMessage(true)
     }
   }
 
@@ -186,17 +187,7 @@ export const UsernameScreen: ScreenType = ({ navigation }: Props) => {
         leftIcon={{ type: "ionicon", name: "ios-person-circle" }}
         onChangeText={onChangeText}
         errorStyle={styles(messageIsError).error}
-        errorMessage={(() => {
-          // Wait for everything to download and sync through useEffect before displaying
-          if (
-            !loadingUserNameExist &&
-            (messageIsError || messageIsError === usernameExists)
-          ) {
-            return message
-          } else {
-            return ""
-          }
-        })()}
+        errorMessage={loadingUserNameExist ? "" : message}
         maxLength={20}
         returnKeyType="send"
         textContentType="username"
