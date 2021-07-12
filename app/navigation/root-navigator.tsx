@@ -1,6 +1,5 @@
 /* eslint-disable react/display-name */
 import { useApolloClient, useQuery } from "@apollo/client"
-import Clipboard from "@react-native-community/clipboard"
 import PushNotificationIOS from "@react-native-community/push-notification-ios"
 import messaging from "@react-native-firebase/messaging"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
@@ -14,12 +13,7 @@ import { AppState } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import * as RNLocalize from "react-native-localize"
 import Icon from "react-native-vector-icons/Ionicons"
-import {
-  GET_LANGUAGE,
-  modalClipboardVisibleVar,
-  QUERY_PRICE,
-  walletIsActive,
-} from "../graphql/query"
+import { GET_LANGUAGE, QUERY_PRICE } from "../graphql/query"
 import { translate } from "../i18n"
 import {
   AuthenticationScreen,
@@ -51,8 +45,8 @@ import { WelcomeFirstScreen } from "../screens/welcome-screens"
 import { palette } from "../theme/palette"
 import { AccountType } from "../utils/enum"
 import { addDeviceToken } from "../utils/notifications"
-import { validPayment } from "../utils/parsing"
 import { getNetwork, Token } from "../utils/token"
+import { checkClipboard } from "../utils/clipboard"
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const PushNotification = require("react-native-push-notification")
@@ -126,7 +120,6 @@ export const RootStack = () => {
 
   useEffect(() => {
     AppState.addEventListener("change", _handleAppStateChange)
-    checkClipboard()
 
     return () => {
       AppState.removeEventListener("change", _handleAppStateChange)
@@ -136,25 +129,10 @@ export const RootStack = () => {
   const _handleAppStateChange = (nextAppState) => {
     if (appState.current.match(/background/) && nextAppState === "active") {
       console.log("App has come to the foreground!")
-      checkClipboard()
+      checkClipboard(client)
     }
 
     appState.current = nextAppState
-  }
-
-  const checkClipboard = async () => {
-    const clipboard = await Clipboard.getString()
-
-    if (!walletIsActive(client)) {
-      return
-    }
-
-    const { valid } = validPayment(clipboard, new Token().network, client)
-    if (!valid) {
-      return
-    }
-
-    modalClipboardVisibleVar(true)
   }
 
   const showNotification = (remoteMessage) => {

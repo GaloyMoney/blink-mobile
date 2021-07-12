@@ -1,4 +1,4 @@
-import { gql, makeVar } from "@apollo/client"
+import { ApolloClient, gql, makeVar } from "@apollo/client"
 import _ from "lodash"
 
 export const prefCurrencyVar = makeVar("USD")
@@ -128,7 +128,8 @@ export const USERNAME_EXIST = gql`
   }
 `
 
-export const btc_price = (client) => {
+// eslint-disable-next-line @typescript-eslint/ban-types
+export const btc_price = (client: ApolloClient<object>): number => {
   const price_default = NaN
   try {
     const result = client.readQuery({ query: QUERY_PRICE })
@@ -140,7 +141,8 @@ export const btc_price = (client) => {
   }
 }
 
-export const walletIsActive = (client) => {
+// eslint-disable-next-line @typescript-eslint/ban-types
+export const walletIsActive = (client: ApolloClient<object>): boolean => {
   // { me } may not exist if the wallet is not active
   const result = client.readQuery({
     query: gql`
