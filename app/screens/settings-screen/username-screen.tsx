@@ -41,7 +41,10 @@ export const UsernameScreen: ScreenType = ({ navigation }: Props) => {
   const [input, setInput] = useState("")
   const [message, setMessage] = useState("")
   const [messageIsError, setMessageIsError] = useState(false)
-  const [shouldShowErrorMessage, setShouldShowErrorMessage] = useState(false)
+  const [
+    shouldShowCharacterMinimumErrorMessage,
+    setShouldShowCharacterMinimumErrorMessage,
+  ] = useState(false)
 
   // TODO use a debouncer to avoid flickering https://github.com/helfer/apollo-link-debounce
   const [usernameExistsQuery, { loading: loadingUserNameExist, data }] = useLazyQuery(
@@ -72,7 +75,7 @@ export const UsernameScreen: ScreenType = ({ navigation }: Props) => {
 
   useEffect(() => {
     if (!assertValidInputLength()) {
-      if (shouldShowErrorMessage) {
+      if (shouldShowCharacterMinimumErrorMessage) {
         setMessage(translate("UsernameScreen.3CharactersMinimum"))
         setMessageIsError(true)
       }
@@ -142,7 +145,7 @@ export const UsernameScreen: ScreenType = ({ navigation }: Props) => {
       return
     }
 
-    setShouldShowErrorMessage(true)
+    setShouldShowCharacterMinimumErrorMessage(true)
     const isValid = assertValidInput()
 
     if (!isValid) {
@@ -170,8 +173,8 @@ export const UsernameScreen: ScreenType = ({ navigation }: Props) => {
   const onChangeText = (value) => {
     setInput(value)
 
-    if (!shouldShowErrorMessage && value.length > 2) {
-      setShouldShowErrorMessage(true)
+    if (!shouldShowCharacterMinimumErrorMessage && value.length > 2) {
+      setShouldShowCharacterMinimumErrorMessage(true)
     }
   }
 
