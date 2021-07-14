@@ -72,7 +72,7 @@ export const validPayment = (
   let paymentType: IPaymentType
 
   // some apps encode addresses and invoices in UPPERCASE
-  data = data.toLowerCase()
+  data = data?.toLowerCase()
 
   if (protocol.toLowerCase() === "bitcoin") {
     paymentType = "onchain"
