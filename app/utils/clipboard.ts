@@ -7,7 +7,10 @@ import { Token } from "./token"
 import { loadString } from "./storage"
 import { LAST_CLIPBOARD_PAYMENT } from "../components/modal-clipboard"
 
-export const checkClipboard = async (client: ApolloClient<unknown>): Promise<void> => {
+export const showModalClipboardIfValidPayment = async (
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  client: ApolloClient<object>,
+): Promise<void> => {
   const clipboard = await Clipboard.getString()
 
   if (!walletIsActive(client)) {
