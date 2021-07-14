@@ -2,13 +2,16 @@
 import { gql, useLazyQuery, useMutation } from "@apollo/client"
 import { useIsFocused } from "@react-navigation/native"
 import * as React from "react"
-import { ActivityIndicator, Alert, Text } from "react-native"
+import { useEffect, useState } from "react"
+import { ActivityIndicator, Alert, Text, TextInput } from "react-native"
 import { Input } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
+
 import { Screen } from "../../components/screen"
 import { USERNAME_EXIST } from "../../graphql/query"
 import { translate } from "../../i18n"
 import { color } from "../../theme"
+import { ScreenType } from "../../types/screen"
 
 // TODO: memoize dynamic styles
 const styles = (error = false) =>
@@ -20,7 +23,6 @@ const styles = (error = false) =>
 
     screenStyle: {
       marginHorizontal: 48,
-      // marginVertical: 24,
     },
 
     text: {
@@ -34,14 +36,15 @@ type Props = {
   navigation: Record<string, any>
 }
 
-export const UsernameScreen = ({ navigation }: Props) => {
-  const [loading, setLoading] = React.useState(false)
-  const [input, setInput] = React.useState("")
-  const [message, setMessage] = React.useState("")
-  const [messageIsError, setMessageIsError] = React.useState(false)
-
-  // we don't show a error message before the user had a change to add 3 caracters
-  const [init, setInit] = React.useState(true)
+export const UsernameScreen: ScreenType = ({ navigation }: Props) => {
+  const [loading, setLoading] = useState(false)
+  const [input, setInput] = useState("")
+  const [message, setMessage] = useState("")
+  const [messageIsError, setMessageIsError] = useState(false)
+  const [
+    shouldShowCharacterMinimumErrorMessage,
+    setShouldShowCharacterMinimumErrorMessage,
+  ] = useState(false)
 
   // TODO use a debouncer to avoid flickering https://github.com/helfer/apollo-link-debounce
   const [usernameExistsQuery, { loading: loadingUserNameExist, data }] = useLazyQuery(
@@ -62,24 +65,27 @@ export const UsernameScreen = ({ navigation }: Props) => {
     }
   `)
 
-  React.useEffect(() => {
-    const isValid = assertValidInput()
-
-    if (!isValid) {
+  useEffect(() => {
+    if (!assertValidInput()) {
       return
     }
 
     usernameExistsQuery({ variables: { username: input } })
   }, [input])
 
-  React.useEffect(() => {
-    if (init && input.length <= 2) {
+  useEffect(() => {
+    if (!assertValidInputLength()) {
+      if (shouldShowCharacterMinimumErrorMessage) {
+        setMessage(translate("UsernameScreen.3CharactersMinimum"))
+        setMessageIsError(true)
+      }
+      inputForm.current.focus()
       return
     }
 
-    const isValid = assertValidInput()
-
-    if (!isValid) {
+    if (!assertValidInputCharacters()) {
+      setMessage(translate("UsernameScreen.letterAndNumber"))
+      setMessageIsError(true)
       return
     }
 
@@ -94,7 +100,7 @@ export const UsernameScreen = ({ navigation }: Props) => {
 
   const send = async () => {
     setLoading(true)
-    console.log("createInvoice")
+
     try {
       const { data } = await updateUsername({ variables: { username: input } })
       const success = data?.updateUser?.updateUsername
@@ -103,20 +109,14 @@ export const UsernameScreen = ({ navigation }: Props) => {
         console.warn("issue setting up username")
       }
 
-      Alert.alert(
-        translate("UsernameScreen.success", { input }),
-        // translate("UsernameScreen.confirmSubtext"),
-        null,
-        [
-          {
-            text: translate("common.ok"),
-            onPress: () => {
-              navigation.goBack()
-              navigation.goBack()
-            },
+      Alert.alert(translate("UsernameScreen.success", { input }), null, [
+        {
+          text: translate("common.ok"),
+          onPress: () => {
+            navigation.pop(2)
           },
-        ],
-      )
+        },
+      ])
     } catch (err) {
       console.error(err, "error with updateUsername")
       setMessage(`${err}`)
@@ -128,32 +128,24 @@ export const UsernameScreen = ({ navigation }: Props) => {
 
   const isFocused = useIsFocused()
 
+  const assertValidInputLength = (): boolean => {
+    return input.length >= 3
+  }
+
+  const assertValidInputCharacters = (): boolean => {
+    return new RegExp(/^[0-9a-z_]+$/i).test(input)
+  }
+
   const assertValidInput = (): boolean => {
-    if (input.length <= 2) {
-      setMessage(translate("UsernameScreen.3CaractersMinimum"))
-      setMessageIsError(true)
-      inputForm.current.focus()
-      return false
-    }
-
-    const regexResult = new RegExp(/^[0-9a-z_]+$/i).test(input)
-    if (!regexResult) {
-      setMessage(translate("UsernameScreen.letterAndNumber"))
-      setMessageIsError(true)
-      return false
-    }
-
-    return true
+    return assertValidInputLength() && assertValidInputCharacters()
   }
 
   const validate = async () => {
-    console.log("validate")
-
     if (!isFocused) {
       return
     }
 
-    setInit(false)
+    setShouldShowCharacterMinimumErrorMessage(true)
     const isValid = assertValidInput()
 
     if (!isValid) {
@@ -181,16 +173,12 @@ export const UsernameScreen = ({ navigation }: Props) => {
   const onChangeText = (value) => {
     setInput(value)
 
-    if (init) {
-      return
-    }
-
-    if (value.length > 2) {
-      setInit(false)
+    if (!shouldShowCharacterMinimumErrorMessage && value.length > 2) {
+      setShouldShowCharacterMinimumErrorMessage(true)
     }
   }
 
-  const inputForm = React.createRef()
+  const inputForm = React.createRef<TextInput>()
 
   return (
     <Screen preset="scroll" style={styles().screenStyle}>
@@ -202,7 +190,7 @@ export const UsernameScreen = ({ navigation }: Props) => {
         leftIcon={{ type: "ionicon", name: "ios-person-circle" }}
         onChangeText={onChangeText}
         errorStyle={styles(messageIsError).error}
-        errorMessage={message}
+        errorMessage={loadingUserNameExist ? "" : message}
         maxLength={20}
         returnKeyType="send"
         textContentType="username"
@@ -210,10 +198,6 @@ export const UsernameScreen = ({ navigation }: Props) => {
         autoCompleteType="username"
         autoCapitalize="none"
       />
-      {/* <Button
-      style={{marginTop: 24}}
-      title="Send"
-    /> */}
       <ActivityIndicator
         animating={loading}
         size="large"

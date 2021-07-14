@@ -88,7 +88,7 @@
   "UsernameScreen": {
     "confirmTitle": "Set %{input} as your username?",
     "confirmSubtext": "The username is permanent and can not be changed later",
-    "3CaractersMinimum": "at least 3 characters are necessary",
+    "3CharactersMinimum": "at least 3 characters are necessary",
     "notAvailable": "❌  %{input} is not available",
     "available": "✅  %{input} is available",
     "usernameToUse": "What username do you want to use?",

@@ -102,11 +102,11 @@ export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) =
   const handleAuthenticationSuccess = () => {
     if (screenPurpose === AuthenticationScreenPurpose.Authenticate) {
       KeyStoreWrapper.resetPinAttempts()
-      navigation.replace("Primary")
-      checkClipboard(client)
     } else if (screenPurpose === AuthenticationScreenPurpose.TurnOnAuthentication) {
       KeyStoreWrapper.setIsBiometricsEnabled()
     }
+    navigation.replace("Primary")
+    checkClipboard(client)
   }
 
   const handleAuthenticationFailure = () => {

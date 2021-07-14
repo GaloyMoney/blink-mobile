@@ -3,7 +3,7 @@ import * as React from "react"
 import { boolean, withKnobs } from "@storybook/addon-knobs"
 import { action } from "@storybook/addon-actions"
 import { Story, StoryScreen, UseCase } from "../../../storybook/views"
-import { MoveMoneyScreen } from "./money-money-screen"
+import { MoveMoneyScreen } from "./move-money-screen"
 
 declare let module
 
