@@ -142,7 +142,7 @@ export const btc_price = (client: ApolloClient<object>): number => {
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-export const walletIsActive = (client: ApolloClient<object>): boolean => {
+export const walletIsActive = (client: ApolloClient<unknown>): boolean => {
   // { me } may not exist if the wallet is not active
   const result = client.readQuery({
     query: gql`

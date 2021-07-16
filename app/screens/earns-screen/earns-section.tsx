@@ -133,10 +133,6 @@ export const EarnSection = ({ route, navigation }: Props) => {
     fetchPolicy: "cache-only",
   })
 
-  if (!data) {
-    return null
-  }
-
   const { earnList } = data
 
   const sectionIndex = route.params.section
@@ -144,7 +140,6 @@ export const EarnSection = ({ route, navigation }: Props) => {
 
   const itemIndex = cards.findIndex((item) => !item.fullfilled)
   const [firstItem] = useState(itemIndex >= 0 ? itemIndex : 0)
-
   const [currRewardIndex, setCurrRewardIndex] = useState(firstItem)
 
   const remainingSats = remainingSatsOnSection({ sectionIndex, earnList })
@@ -155,6 +150,10 @@ export const EarnSection = ({ route, navigation }: Props) => {
   const sectionTitle = translate(`EarnScreen.earns.${sectionIndex}.meta.title`)
 
   const isFocused = useIsFocused()
+
+  if (!data) {
+    return null
+  }
 
   if (initialRemainingSats !== 0 && currentRemainingEarn === 0 && isFocused) {
     navigation.navigate("sectionCompleted", {

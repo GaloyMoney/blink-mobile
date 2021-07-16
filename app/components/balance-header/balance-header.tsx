@@ -1,6 +1,6 @@
 import * as React from "react"
 import ContentLoader, { Rect } from "react-content-loader/native"
-import { StyleSheet, Text, View } from "react-native"
+import { StyleSheet, Text, View, TextStyle, ViewStyle } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
@@ -47,8 +47,8 @@ export interface BalanceHeaderProps {
   currency: CurrencyType
   amount: number
   amountOtherCurrency?: number
-  loading: boolean
-  style?: Record<string, any>
+  loading?: boolean
+  style?: TextStyle | ViewStyle
 }
 
 const Loader = () => (
@@ -68,7 +68,7 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
   currency,
   amount,
   amountOtherCurrency = null,
-  loading,
+  loading = false,
   style,
 }: BalanceHeaderProps) => {
   const otherCurrency = currency === CurrencyType.BTC ? CurrencyType.USD : "sats"

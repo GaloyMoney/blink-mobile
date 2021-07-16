@@ -20,7 +20,7 @@ const styles = EStyleSheet.create({
 
 type Props = {
   onPress: () => void
-  color: any
+  color: string
 }
 
 export const CloseCross: React.FC<Props> = ({ onPress, color }: Props) => (
