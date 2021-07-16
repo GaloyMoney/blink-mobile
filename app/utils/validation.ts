@@ -8,6 +8,9 @@ export class UsernameValidation {
   }
 
   public static isValid = (username: string): boolean => {
-    return username && username.length >= 3 && new RegExp(/^[0-9a-z_]+$/i).test(username)
+    return (
+      UsernameValidation.hasValidLength(username) &&
+      UsernameValidation.hasValidCharacters(username)
+    )
   }
 }
