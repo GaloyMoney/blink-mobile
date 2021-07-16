@@ -78,28 +78,26 @@ export const ContactsScreen = ({ navigation }: Props) => {
   const [matchingContacts, setMatchingContacts] = useState(contacts)
   const [searchText, setSearchText] = useState("")
 
+  // This implementation of search will cause a match if any word in the search text
+  // matches the contacts name or prettyName.
   const updateMatchingContacts = (newSearchText: string) => {
     setSearchText(newSearchText)
-    if (newSearchText) {
-      const splitSearchText = newSearchText
+    if (newSearchText.length > 0) {
+      const searchWordArray = newSearchText
         .split(" ")
         .filter((text) => text.trim().length > 0)
-      const matchingContacts = contacts.filter((contact) => {
-        return searchTextArrayMatchesContact(splitSearchText, contact)
-      })
+
+      const matchingContacts = contacts.filter((contact) =>
+        searchWordArray.some((word) => wordMatchesContact(word, contact)),
+      )
+
       setMatchingContacts(matchingContacts)
     } else {
       setMatchingContacts(contacts)
     }
   }
 
-  const searchTextArrayMatchesContact = (searchTextArray: string[], contact) => {
-    return searchTextArray.some((searchWord) => {
-      return searchWordMatchesContact(searchWord, contact)
-    })
-  }
-
-  const searchWordMatchesContact = (searchWord: string, contact) => {
+  const wordMatchesContact = (searchWord: string, contact): boolean => {
     let contactNameMatchesSearchWord
     let contactPrettyNameMatchesSearchWord
 
@@ -108,7 +106,7 @@ export const ContactsScreen = ({ navigation }: Props) => {
     } else {
       contactNameMatchesSearchWord = contact.name
         .toLowerCase()
-        .includes(searchWord.toLocaleLowerCase())
+        .includes(searchWord.toLowerCase())
     }
 
     if (contact.prettyName === null) {
@@ -116,7 +114,7 @@ export const ContactsScreen = ({ navigation }: Props) => {
     } else {
       contactPrettyNameMatchesSearchWord = contact.prettyName
         .toLowerCase()
-        .includes(searchWord.toLocaleLowerCase())
+        .includes(searchWord.toLowerCase())
     }
 
     return contactNameMatchesSearchWord || contactPrettyNameMatchesSearchWord
@@ -129,7 +127,7 @@ export const ContactsScreen = ({ navigation }: Props) => {
     searchBarContent = (
       <SearchBar
         placeholder={translate("common.search")}
-        onChangeText={(text) => updateMatchingContacts(text)}
+        onChangeText={updateMatchingContacts}
         value={searchText}
         platform="default"
         round
