@@ -75,8 +75,7 @@
     "tryAgain": "Inténtalo de nuevo",
     "type": "tipo",
     "username": "Nombre de usuario",
-    "contactUs": "¿Necesita ayuda? Llámanos por WhatsApp",
-    "search": "Buscar"
+    "contactUs": "¿Necesita ayuda? Llámanos por WhatsApp"
   },
   "DateOfBirthScreen": {
     "title": "Fecha de nacimiento"
@@ -550,11 +549,6 @@
     "title": "Mover dinero",
     "useLightning": "Usamos la red de lightning",
     "walletInCreation": "Se está creando tu billetera"
-  },
-  "ContactsScreen": {
-    "title": "Contactos",
-    "noContactsYet": "Aún no hay contactos.\n\nEnvíe o reciba un pago con un nombre de usuario. Los nombres de usuario se agregarán automáticamente aquí.",
-    "noMatchingContacts": "No se encontraron contactos que coincidan con su búsqueda."
   },
   "notifications": {
     "payment": {
