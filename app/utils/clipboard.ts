@@ -5,8 +5,7 @@ import { modalClipboardVisibleVar, walletIsActive } from "../graphql/query"
 import { Token } from "./token"
 import { ApolloClient } from "@apollo/client"
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-export const checkClipboard = async (client: ApolloClient<object>): Promise<void> => {
+export const checkClipboard = async (client: ApolloClient<unknown>): Promise<void> => {
   const clipboard = await Clipboard.getString()
 
   if (!walletIsActive(client)) {

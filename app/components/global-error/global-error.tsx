@@ -21,17 +21,17 @@ export const GlobalErrorToast = () => {
     return null
   }
 
-  if (networkError?.statusCode >= 500) {
+  if (networkError.statusCode >= 500) {
     // TODO translation
     toastShow("Server Error. Please try again later")
   }
 
-  if (networkError?.statusCode >= 400 && networkError?.statusCode < 500) {
+  if (networkError.statusCode >= 400 && networkError.statusCode < 500) {
     // TODO translation
     toastShow("Request issue.\nContact support if the problem persists")
   }
 
-  if (networkError?.message === "Network request failed") {
+  if (networkError.message === "Network request failed") {
     // TODO translation
     toastShow("Connection issue.\nVerify your internet connection")
   }
