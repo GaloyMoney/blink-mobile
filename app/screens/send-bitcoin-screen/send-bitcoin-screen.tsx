@@ -29,6 +29,7 @@ import { textCurrencyFormatting } from "../../utils/currencyConversion"
 import { IPaymentType, validPayment } from "../../utils/parsing"
 import { sleep } from "../../utils/sleep"
 import { Token } from "../../utils/token"
+import { UsernameValidation } from "../../utils/validation"
 
 const successLottie = require("../move-money-screen/success_lottie.json")
 const errorLottie = require("../move-money-screen/error_lottie.json")
@@ -356,7 +357,7 @@ export const SendBitcoinScreen: React.FC<SendBitcoinScreenProps> = ({
 
         setPaymentType("username")
 
-        if (isValidUsername(destination)) {
+        if (UsernameValidation.isValid(destination)) {
           usernameExistsQuery({ variables: { username: destination } })
         }
 
@@ -367,15 +368,6 @@ export const SendBitcoinScreen: React.FC<SendBitcoinScreenProps> = ({
     fn()
   }, [destination, amount])
 
-  const isValidUsername = (username: string): boolean => {
-    if (!username || username.length < 3) {
-      return false
-    }
-
-    const regexResult = new RegExp(/^[0-9a-z_]+$/i).test(destination)
-    return regexResult
-  }
-
   const pay = async () => {
     if ((amountless || paymentType === "onchain") && amount === 0) {
       setStatus("error")
@@ -383,7 +375,7 @@ export const SendBitcoinScreen: React.FC<SendBitcoinScreenProps> = ({
       return
     }
 
-    if (!isValidUsername(destination)) {
+    if (!UsernameValidation.isValid(destination)) {
       setStatus("error")
       setErrs([{ message: translate("SendBitcoinScreen.invalidUsername") }])
       return
@@ -530,7 +522,6 @@ export const SendBitcoinScreen: React.FC<SendBitcoinScreenProps> = ({
       setMemo={setMemo}
       setDestination={setDestination}
       destination={destination}
-      isValidUsername={isValidUsername}
       usernameExists={usernameExists}
       loadingUserNameExist={loadingUserNameExist}
       interactive={interactive}
@@ -562,7 +553,6 @@ type SendBitcoinScreenJSXProps = {
   setMemo: (memo: string) => void
   setDestination: (destination: string) => void
   destination: string
-  isValidUsername: (username: string) => boolean
   usernameExists: boolean
   loadingUserNameExist: boolean
   interactive: boolean
@@ -592,7 +582,6 @@ export const SendBitcoinScreenJSX = ({
   setMemo,
   setDestination,
   destination,
-  isValidUsername,
   usernameExists,
   loadingUserNameExist,
   interactive,
@@ -641,12 +630,12 @@ export const SendBitcoinScreenJSX = ({
           }
           onChangeText={setDestination}
           rightIcon={
-            destination?.length > 2 &&
+            UsernameValidation.hasValidLength(destination) &&
             !potentialBitcoinOrLightning &&
             paymentType === "username" ? (
               loadingUserNameExist ? (
                 <ActivityIndicator size="small" />
-              ) : isValidUsername(destination) && usernameExists ? (
+              ) : UsernameValidation.isValid(destination) && usernameExists ? (
                 <Text>✅</Text>
               ) : (
                 <Text>⚠️</Text>
