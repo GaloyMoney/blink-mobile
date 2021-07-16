@@ -2,6 +2,9 @@ check-code:
 	yarn eslint-check
 	yarn prettier-check
 
+test:
+	yarn test
+
 codegen:
 	apollo client:codegen --endpoint http://127.0.0.1:4000/graphql \
 		--target typescript \

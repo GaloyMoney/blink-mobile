@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "react-native start",
-    "test": "yarn compile && jest --runInBand && yarn lint && yarn clean",
+    "test": "jest --runInBand",
     "eslint-check": "eslint app --ext .js,.ts,.tsx",
     "prettier-check": "prettier '**/*.{js,ts,tsx}' --check",
     "prettier-write": "prettier '**/*.{js,ts,tsx}' --write",
