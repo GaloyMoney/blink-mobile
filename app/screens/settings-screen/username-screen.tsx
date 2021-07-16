@@ -12,6 +12,7 @@ import { USERNAME_EXIST } from "../../graphql/query"
 import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { ScreenType } from "../../types/screen"
+import { UsernameValidation } from "../../utils/validation"
 
 // TODO: memoize dynamic styles
 const styles = (error = false) =>
@@ -66,7 +67,7 @@ export const UsernameScreen: ScreenType = ({ navigation }: Props) => {
   `)
 
   useEffect(() => {
-    if (!assertValidInput()) {
+    if (!UsernameValidation.isValid(input)) {
       return
     }
 
@@ -74,7 +75,7 @@ export const UsernameScreen: ScreenType = ({ navigation }: Props) => {
   }, [input])
 
   useEffect(() => {
-    if (!assertValidInputLength()) {
+    if (!UsernameValidation.hasValidLength(input)) {
       if (shouldShowCharacterMinimumErrorMessage) {
         setMessage(translate("UsernameScreen.3CharactersMinimum"))
         setMessageIsError(true)
@@ -83,7 +84,7 @@ export const UsernameScreen: ScreenType = ({ navigation }: Props) => {
       return
     }
 
-    if (!assertValidInputCharacters()) {
+    if (!UsernameValidation.hasValidCharacters(input)) {
       setMessage(translate("UsernameScreen.letterAndNumber"))
       setMessageIsError(true)
       return
@@ -128,27 +129,14 @@ export const UsernameScreen: ScreenType = ({ navigation }: Props) => {
 
   const isFocused = useIsFocused()
 
-  const assertValidInputLength = (): boolean => {
-    return input.length >= 3
-  }
-
-  const assertValidInputCharacters = (): boolean => {
-    return new RegExp(/^[0-9a-z_]+$/i).test(input)
-  }
-
-  const assertValidInput = (): boolean => {
-    return assertValidInputLength() && assertValidInputCharacters()
-  }
-
   const validate = async () => {
     if (!isFocused) {
       return
     }
 
     setShouldShowCharacterMinimumErrorMessage(true)
-    const isValid = assertValidInput()
 
-    if (!isValid) {
+    if (!UsernameValidation.isValid(input)) {
       return
     }
 

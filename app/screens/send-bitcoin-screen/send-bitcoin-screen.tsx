@@ -29,6 +29,7 @@ import { textCurrencyFormatting } from "../../utils/currencyConversion"
 import { IPaymentType, validPayment } from "../../utils/parsing"
 import { sleep } from "../../utils/sleep"
 import { Token } from "../../utils/token"
+import { UsernameValidation } from "../../utils/validation"
 
 const successLottie = require("../move-money-screen/success_lottie.json")
 const errorLottie = require("../move-money-screen/error_lottie.json")
@@ -356,8 +357,7 @@ export const SendBitcoinScreen: React.FC<SendBitcoinScreenProps> = ({
 
         setPaymentType("username")
 
-        if (destination?.length > 2) {
-          console.log({ destination })
+        if (UsernameValidation.isValid(destination)) {
           usernameExistsQuery({ variables: { username: destination } })
         }
 
@@ -372,6 +372,12 @@ export const SendBitcoinScreen: React.FC<SendBitcoinScreenProps> = ({
     if ((amountless || paymentType === "onchain") && amount === 0) {
       setStatus("error")
       setErrs([{ message: translate("SendBitcoinScreen.noAmount") }])
+      return
+    }
+
+    if (!UsernameValidation.isValid(destination)) {
+      setStatus("error")
+      setErrs([{ message: translate("SendBitcoinScreen.invalidUsername") }])
       return
     }
 
@@ -624,12 +630,12 @@ export const SendBitcoinScreenJSX = ({
           }
           onChangeText={setDestination}
           rightIcon={
-            destination?.length > 2 &&
+            UsernameValidation.hasValidLength(destination) &&
             !potentialBitcoinOrLightning &&
             paymentType === "username" ? (
               loadingUserNameExist ? (
                 <ActivityIndicator size="small" />
-              ) : usernameExists ? (
+              ) : UsernameValidation.isValid(destination) && usernameExists ? (
                 <Text>✅</Text>
               ) : (
                 <Text>⚠️</Text>
