@@ -236,7 +236,11 @@ export const SendBitcoinScreen: React.FC<SendBitcoinScreenProps> = ({
 
   useEffect(() => {
     reset()
-    const { valid, username, amount, memo, currency } = validPayment(route.params?.payment, network, client)
+    const { valid, username, amount, memo, currency } = validPayment(
+      route.params?.payment,
+      network,
+      client,
+    )
     if (route.params?.username || username) {
       setInteractive(false)
       setDestination(route.params?.username || username)

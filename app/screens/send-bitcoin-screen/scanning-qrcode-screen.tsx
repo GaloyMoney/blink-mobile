@@ -81,7 +81,7 @@ const getBillpayData = (client) => {
         query: {
           amount: data.balance,
           memo: `billpay ${data.customer}-${client}`,
-          currency: data.currency
+          currency: data.currency,
         },
       }
 
