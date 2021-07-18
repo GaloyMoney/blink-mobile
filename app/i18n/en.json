@@ -178,11 +178,7 @@
             "title": "So what exactly is Bitcoin?",
             "text": "Bitcoin is digital money. \n\nIt can be transferred instantly and securely between any two people in the world — without the need for a bank or any other financial company in the middle.",
             "question": "So what exactly is Bitcoin?",
-            "answers": [
-              "Digital money",
-              "A video game",
-              "A new cartoon character"
-            ],
+            "answers": ["Digital money", "A video game", "A new cartoon character"],
             "feedback": [
               "Correct. You just earned 1 “sat”!",
               "Incorrect, please try again.",
@@ -212,11 +208,7 @@
             "title": "Where do the bitcoins exist?",
             "text": "Bitcoin is a new form of money. It can be used by anyone, anytime -- anywhere in the world. \n\nIt is not tied to a specific government or region (like US Dollars). There are also no paper bills, metal coins or plastic cards. \n\nEverything is 100% digital. Bitcoin is a network of computers running on the internet. \n\nYour bitcoin is easily managed with software on your smartphone or computer!",
             "question": "Where do the bitcoins exist?",
-            "answers": [
-              "On the Internet",
-              "On the moon",
-              "In a Federal bank account"
-            ],
+            "answers": ["On the Internet", "On the moon", "In a Federal bank account"],
             "feedback": [
               "Correct. You just earned another 5 sats.",
               "Incorrect. Well… at least not yet ;)",
