@@ -1,8 +1,16 @@
 import { filter, find, sumBy } from "lodash"
-import { translate } from "../../i18n"
+import { translateQuizSections } from "../../i18n"
+import type { QuizQuestion, QuizSectionContent } from "../../types/quiz"
+import { earnList_earnList } from "../../graphql/__generated__/earnList"
 
-export const getCardsFromSection = ({ earnList, sectionIndex }) => {
-  const earns_all = translate("EarnScreen.earns")
+export const getCardsFromSection = ({
+  earnList,
+  sectionIndex,
+}: {
+  earnList: earnList_earnList[]
+  sectionIndex: number | string
+}): QuizQuestion[] => {
+  const earns_all = translateQuizSections("EarnScreen.earns") as QuizSectionContent[]
   const cards = earns_all[sectionIndex].content
 
   cards.forEach((card) => (card.value = find(earnList, { id: card.id }).value))
@@ -34,7 +42,7 @@ export const getCardsFromSection = ({ earnList, sectionIndex }) => {
   return cards
 }
 
-export const sectionCompletedPct = ({ sectionIndex, earnList }) => {
+export const sectionCompletedPct = ({ sectionIndex, earnList }: IEarnsUtil): number => {
   // there is a recurring crash. from crashlytics:
   // using try catch until this is fixed
   //
@@ -51,7 +59,7 @@ export const sectionCompletedPct = ({ sectionIndex, earnList }) => {
   }
 }
 
-export const remainingSatsOnSection = ({ sectionIndex, earnList }) =>
+export const remainingSatsOnSection = ({ sectionIndex, earnList }: IEarnsUtil): number =>
   sumBy(
     filter(getCardsFromSection({ sectionIndex, earnList }), { fullfilled: false }),
     "value",

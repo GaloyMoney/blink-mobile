@@ -5,6 +5,7 @@ import { StyleSheet, View, Modal, SafeAreaView, Text, Dimensions } from "react-n
 import Svg, { Path, Defs, ClipPath, G, Rect, Circle } from "react-native-svg"
 import { palette } from "../../theme/palette"
 import { translate } from "../../i18n"
+import type { ComponentType } from "../../types/jsx"
 
 const CY = 200
 const R = 135
@@ -68,7 +69,7 @@ type Props = {
   screen: string
 }
 
-export const Overlay = ({ screen }: Props) => {
+export const Overlay: ComponentType = ({ screen }: Props) => {
   const [modalVisible, setModalVisible] = useState(true)
 
   return (

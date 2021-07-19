@@ -1,8 +1,10 @@
 import { ApolloClient, gql, makeVar } from "@apollo/client"
 import _ from "lodash"
+import { MockableApolloClient } from "../types/mockable"
+import { gql_main_query_wallet } from "./__generated__/gql_main_query"
 
 export const prefCurrencyVar = makeVar("USD")
-export function nextPrefCurrency() {
+export function nextPrefCurrency(): void {
   const units = ["sats", "USD"] // "BTC"
   const currentIndex = _.indexOf(units, prefCurrencyVar())
   prefCurrencyVar(units[(currentIndex + 1) % units.length])
@@ -83,18 +85,19 @@ export const QUERY_EARN_LIST = gql`
   }
 `
 
-export const getWallet = (client) => {
+export const getWallet = (client: ApolloClient<unknown>): gql_main_query_wallet => {
   const { wallet } = client.readQuery({
     query: WALLET,
   })
   return wallet
 }
 
-export const balanceUsd = (client) =>
+export const balanceUsd = (client: ApolloClient<unknown>): number =>
   _.find(getWallet(client), { id: "BTC" }).balance * btc_price(client)
-export const balanceBtc = (client) => _.find(getWallet(client), { id: "BTC" }).balance
+export const balanceBtc = (client: ApolloClient<unknown>): number =>
+  _.find(getWallet(client), { id: "BTC" }).balance
 
-export const getPubKey = (client) => {
+export const getPubKey = (client: MockableApolloClient): string => {
   const { nodeStats } = client.readQuery({
     query: gql`
       query nodeStats {
@@ -108,7 +111,7 @@ export const getPubKey = (client) => {
   return nodeStats?.id ?? ""
 }
 
-export const getMyUsername = (client) => {
+export const getMyUsername = (client: MockableApolloClient): string => {
   const { me } = client.readQuery({
     query: gql`
       query username {

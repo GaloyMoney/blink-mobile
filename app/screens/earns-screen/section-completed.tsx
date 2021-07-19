@@ -8,6 +8,10 @@ import { palette } from "../../theme/palette"
 import BadgerShovelBitcoin from "./badger-shovel-01.svg"
 import { MountainHeader } from "../../components/mountain-header"
 import { translate } from "../../i18n"
+import type { RootStackParamList } from "../../navigation/stack-param-lists"
+import { RouteProp } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
+import type { ScreenType } from "../../types/jsx"
 
 const styles = EStyleSheet.create({
   bottomView: {
@@ -51,16 +55,16 @@ const styles = EStyleSheet.create({
 })
 
 type Props = {
-  route: Record<string, any>
-  navigation: Record<string, any>
+  navigation: StackNavigationProp<RootStackParamList, "sectionCompleted">
+  route: RouteProp<RootStackParamList, "sectionCompleted">
 }
 
-export const SectionCompleted = ({ navigation, route }: Props) => {
+export const SectionCompleted: ScreenType = ({ navigation, route }: Props) => {
   const { amount, sectionTitle } = route.params
 
   return (
     <Screen backgroundColor={palette.orange} unsafe>
-      <MountainHeader amount={amount} color={palette.orange} />
+      <MountainHeader amount={amount.toString()} color={palette.orange} />
       <View style={styles.container}>
         <View style={styles.divider} />
         <BadgerShovelBitcoin />

@@ -16,6 +16,10 @@ import { palette } from "../../theme/palette"
 import { shuffle } from "../../utils/helper"
 import { sleep } from "../../utils/sleep"
 import { SVGs } from "./earn-svg-factory"
+import type { ScreenType } from "../../types/jsx"
+import { StackNavigationProp } from "@react-navigation/stack"
+import type { RootStackParamList } from "../../navigation/stack-param-lists"
+import { RouteProp } from "@react-navigation/native"
 
 const styles = EStyleSheet.create({
   answersView: {
@@ -153,11 +157,11 @@ const styles = EStyleSheet.create({
 const mappingLetter = { 0: "A", 1: "B", 2: "C" }
 
 type Props = {
-  route: Record<string, any>
-  navigation: Record<string, any>
+  navigation: StackNavigationProp<RootStackParamList, "earnsQuiz">
+  route: RouteProp<RootStackParamList, "earnsQuiz">
 }
 
-export const EarnQuiz = ({ route, navigation }: Props) => {
+export const EarnQuiz: ScreenType = ({ route, navigation }: Props) => {
   const { title, text, amount, answers, feedback, question, onComplete, id, completed } =
     route.params
 

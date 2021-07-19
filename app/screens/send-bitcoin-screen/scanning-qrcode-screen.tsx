@@ -10,7 +10,7 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
-import type { ScreenType } from "../../types/screen"
+import type { ScreenType } from "../../types/jsx"
 import { validPayment } from "../../utils/parsing"
 import { Token } from "../../utils/token"
 

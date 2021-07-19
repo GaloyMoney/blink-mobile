@@ -13,7 +13,7 @@ import { USERNAME_EXIST } from "../../graphql/query"
 import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { UsernameValidation } from "../../utils/validation"
-import type { ScreenType } from "../../types/screen"
+import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 
 // TODO: memoize dynamic styles

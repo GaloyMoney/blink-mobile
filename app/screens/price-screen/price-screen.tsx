@@ -7,7 +7,7 @@ import { Screen } from "../../components/screen"
 import { balanceBtc } from "../../graphql/query"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
-import type { ScreenType } from "../../types/screen"
+import type { ScreenType } from "../../types/jsx"
 import { CurrencyType } from "../../utils/enum"
 
 type Props = {

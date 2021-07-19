@@ -28,7 +28,7 @@ import { openWhatsApp } from "../../utils/external"
 import { resetDataStore } from "../../utils/logout"
 import { hasFullPermissions, requestPermission } from "../../utils/notifications"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
-import type { ScreenType } from "../../types/screen"
+import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 
 type Props = {

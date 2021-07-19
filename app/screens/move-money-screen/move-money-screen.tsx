@@ -31,7 +31,7 @@ import { palette } from "../../theme/palette"
 import { AccountType, CurrencyType } from "../../utils/enum"
 import { isIos } from "../../utils/helper"
 import { Token } from "../../utils/token"
-import type { ScreenType } from "../../types/screen"
+import type { ScreenType } from "../../types/jsx"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
 

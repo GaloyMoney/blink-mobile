@@ -1,4 +1,5 @@
 import { query_transactions_wallet_transactions } from "../graphql/__generated__/query_transactions"
+import { contacts_me_contacts } from "../screens/contacts-screen/__generated__/contacts"
 import { AccountType, AuthenticationScreenPurpose, PinScreenPurpose } from "../utils/enum"
 
 export type RootStackParamList = {
@@ -12,8 +13,18 @@ export type RootStackParamList = {
   }
   pin: { screenPurpose: PinScreenPurpose }
   Primary: undefined
-  earnsSection: undefined
-  earnsQuiz: undefined
+  earnsSection: { section: number }
+  earnsQuiz: {
+    title: string
+    text: string
+    amount: number
+    question: string
+    answers: string[]
+    feedback: string[]
+    onComplete: () => Promise<void>
+    id: string
+    completed: boolean
+  }
   settings: undefined
   setUsername: undefined
   language: undefined
@@ -21,7 +32,7 @@ export type RootStackParamList = {
     mIsBiometricsEnabled: boolean
     mIsPinEnabled: boolean
   }
-  sectionCompleted: undefined
+  sectionCompleted: { amount: number; sectionTitle: string }
   Profile: undefined
   phoneValidation: undefined
   transactionDetail: {
@@ -30,11 +41,16 @@ export type RootStackParamList = {
   }
   transactionHistory: undefined
   priceDetail: { account: AccountType }
+  Earn: undefined
 }
 
 export type ContactStackParamList = {
   Contacts: undefined
-  contactDetail: undefined
+  contactDetail: { contact: contacts_me_contacts }
+  sendBitcoin: { username: string }
+  transactionDetail: {
+    tx: query_transactions_wallet_transactions
+  }
 }
 
 export type MoveMoneyStackParamList = {
@@ -49,6 +65,9 @@ export type MoveMoneyStackParamList = {
   phoneValidation: undefined
   priceDetail: { account: AccountType }
   settings: undefined
+  transactionDetail: {
+    tx: query_transactions_wallet_transactions
+  }
 }
 
 export type PhoneValidationStackParamList = {
@@ -67,4 +86,5 @@ export type PrimaryStackParamList = {
   Earn: undefined
   sendBitcoin: { username: string }
   phoneValidation: undefined
+  earnsSection: { section: string }
 }

@@ -11,7 +11,7 @@ import MapView, { Callout, CalloutSubview, Marker } from "react-native-maps"
 import { Screen } from "../../components/screen"
 import { walletIsActive } from "../../graphql/query"
 import type { PrimaryStackParamList } from "../../navigation/stack-param-lists"
-import { ScreenType } from "../../types/screen"
+import { ScreenType } from "../../types/jsx"
 import { isIos } from "../../utils/helper"
 
 const styles = StyleSheet.create({

@@ -7,6 +7,7 @@ import { VictoryAxis, VictoryChart, VictoryLine } from "victory-native"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { QUERY_PRICE } from "../../graphql/query"
+import type { ComponentType } from "../../types/jsx"
 
 const styles = EStyleSheet.create({
   buttonStyleTime: {
@@ -89,7 +90,7 @@ type Props = {
   prices: []
 }
 
-export const PriceGraph = ({ prices }: Props) => {
+export const PriceGraph: ComponentType = ({ prices }: Props) => {
   const [time, setTime] = React.useState("d") // d, w, m, y
 
   let price
@@ -179,7 +180,7 @@ export const PriceGraph = ({ prices }: Props) => {
   )
 }
 
-export const PriceGraphDataInjected = () => {
+export const PriceGraphDataInjected: ComponentType = () => {
   const { error, loading, data } = useQuery(QUERY_PRICE, {
     variables: { length: 365 * 24 * 10 },
     fetchPolicy: "network-only",

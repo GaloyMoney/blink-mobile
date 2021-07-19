@@ -1,4 +1,4 @@
-import { useApolloClient, useReactiveVar } from "@apollo/client"
+import { useApolloClient } from "@apollo/client"
 import { toInteger } from "lodash"
 import * as React from "react"
 import { Keyboard, Text, View } from "react-native"
@@ -10,6 +10,7 @@ import { btc_price } from "../../graphql/query"
 import { usePrefCurrency } from "../../hooks/usePrefCurrency"
 import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
+import type { ComponentType } from "../../types/jsx"
 import { CurrencyConversion } from "../../utils/currencyConversion"
 import { CurrencyType } from "../../utils/enum"
 import { TextCurrency } from "../text-currency/text-currency"
@@ -48,8 +49,8 @@ const styles = EStyleSheet.create({
   },
 })
 
-export interface InputPaymentDataInjectedProps {
-  price: string | number
+type InputPaymentDataInjectedProps = {
+  price: number
   editable: boolean
   onUpdateAmount(number): void
   onBlur?(): void
@@ -61,7 +62,9 @@ export interface InputPaymentDataInjectedProps {
   sub?: boolean
 }
 
-export const InputPaymentDataInjected = (props: InputPaymentDataInjectedProps) => {
+export const InputPaymentDataInjected: ComponentType = (
+  props: InputPaymentDataInjectedProps,
+) => {
   const client = useApolloClient()
   const price = btc_price(client)
 
@@ -77,7 +80,7 @@ export const InputPaymentDataInjected = (props: InputPaymentDataInjectedProps) =
   )
 }
 
-export const InputPayment = ({
+export const InputPayment: ComponentType = ({
   price,
   editable,
   onUpdateAmount,
@@ -202,6 +205,7 @@ export const InputPayment = ({
           inputStyle={[styles.textStyle]}
           onChangeText={setInput}
           keyboardType={currency === "sats" ? "number-pad" : "decimal-pad"}
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           onBlur={(event) => {
             onBlur()
             // keyboardFocus()

@@ -2,6 +2,7 @@ import * as React from "react"
 import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { palette } from "../../theme/palette"
+import type { ComponentType } from "../../types/jsx"
 
 const styles = EStyleSheet.create({
   buttonContainer: {
@@ -23,7 +24,7 @@ const styles = EStyleSheet.create({
   },
 })
 
-export const BrightButton = (props) => (
+export const BrightButton: ComponentType = (props) => (
   <Button
     title="Join the waiting list"
     type="solid"

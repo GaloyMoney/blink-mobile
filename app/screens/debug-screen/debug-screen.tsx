@@ -11,7 +11,7 @@ import { requestPermission } from "../../utils/notifications"
 import { getGraphQlUri, Token } from "../../utils/token"
 import { btc_price, walletIsActive } from "../../graphql/query"
 
-import type { ScreenType } from "../../types/screen"
+import type { ScreenType } from "../../types/jsx"
 import type { INetwork } from "../../types/network"
 
 const styles = EStyleSheet.create({

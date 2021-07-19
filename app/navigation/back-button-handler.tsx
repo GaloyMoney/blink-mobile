@@ -18,21 +18,21 @@ export class BackButtonHandler extends React.Component<BackButtonHandlerProps> {
   /**
    * Subscribe when we come to life.
    */
-  componentDidMount() {
+  componentDidMount(): void {
     BackHandler.addEventListener("hardwareBackPress", this.onBackPress)
   }
 
   /**
    * Unsubscribe when we're done.
    */
-  componentWillUnmount() {
+  componentWillUnmount(): void {
     BackHandler.removeEventListener("hardwareBackPress", this.onBackPress)
   }
 
   /**
    * Fires when the back button is pressed on android.
    */
-  onBackPress = () => {
+  onBackPress = (): boolean => {
     // grab the current route
     const { routeName } = this.props.navigationStore.findCurrentRoute()
 
@@ -50,7 +50,7 @@ export class BackButtonHandler extends React.Component<BackButtonHandlerProps> {
   /**
    * Renders the children or nothing if they weren't passed.
    */
-  render() {
+  render(): React.ReactNode {
     return this.props.children
   }
 }

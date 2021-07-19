@@ -19,6 +19,7 @@ export const NavigationEvents = types.model("NavigationEvents").volatile(() => {
    * @param oldState The previous navigation state.
    * @param newState The next navigation state.
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const fireSubscribers = (action: any, oldState: any, newState: any) => {
     // tell each subscriber out this
     subs.forEach((subscriber) => {

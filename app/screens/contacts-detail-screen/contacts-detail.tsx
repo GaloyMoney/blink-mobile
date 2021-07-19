@@ -1,4 +1,4 @@
-import { useApolloClient, useMutation, useQuery, gql } from "@apollo/client"
+import { useMutation, useQuery, gql } from "@apollo/client"
 import * as React from "react"
 import { View } from "react-native"
 import { Input, Text } from "react-native-elements"
@@ -14,6 +14,12 @@ import { TransactionItem } from "../../components/transaction-item"
 import { translate } from "../../i18n"
 import { QUERY_TRANSACTIONS } from "../../graphql/query"
 import { palette } from "../../theme/palette"
+import type { ContactStackParamList } from "../../navigation/stack-param-lists"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { RouteProp } from "@react-navigation/native"
+import type { ScreenType } from "../../types/jsx"
+import { query_transactions_wallet_transactions } from "../../graphql/__generated__/query_transactions"
+import { contacts_me_contacts } from "../contacts-screen/__generated__/contacts"
 
 const styles = EStyleSheet.create({
   actionsContainer: { paddingBottom: 18 },
@@ -51,11 +57,14 @@ const styles = EStyleSheet.create({
 })
 
 type ContactDetailProps = {
-  route: Record<string, any>
-  navigation: Record<string, any>
+  route: RouteProp<ContactStackParamList, "contactDetail">
+  navigation: StackNavigationProp<ContactStackParamList, "contactDetail">
 }
 
-export const ContactsDetailScreen = ({ route, navigation }: ContactDetailProps) => {
+export const ContactsDetailScreen: ScreenType = ({
+  route,
+  navigation,
+}: ContactDetailProps) => {
   const { contact } = route.params
   let transactions_filtered = []
   const { data } = useQuery(QUERY_TRANSACTIONS)
@@ -81,12 +90,12 @@ export const ContactsDetailScreen = ({ route, navigation }: ContactDetailProps) 
 }
 
 type ContactDetailScreenProps = {
-  contact: Record<string, any>
-  navigation: Record<string, any>
-  transactions: []
+  contact: contacts_me_contacts
+  navigation: StackNavigationProp<ContactStackParamList, "contactDetail">
+  transactions: query_transactions_wallet_transactions[]
 }
 
-export const ContactsDetailScreenJSX = ({
+export const ContactsDetailScreenJSX: ScreenType = ({
   contact,
   navigation,
   transactions,

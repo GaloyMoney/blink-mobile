@@ -6,7 +6,7 @@ import { getDescription, getDestination, getUsername } from "./bolt11"
 import { getMyUsername, getPubKey } from "../graphql/query"
 
 import type { INetwork } from "../types/network"
-import { ApolloClient } from "@apollo/client"
+import type { MockableApolloClient } from "../types/mockable"
 
 // TODO: look if we own the address
 
@@ -24,7 +24,7 @@ export interface IValidPaymentReponse {
   address?: string | undefined // for bitcoin
   amount?: number | undefined
   amountless?: boolean | undefined
-  memo?: string | undefined
+  memo?: lightningPayReq.TagData | string | undefined
   paymentType?: IPaymentType
   sameNode?: boolean | undefined
   username?: string | undefined
@@ -57,7 +57,7 @@ function parseAmount(txt) {
 export const validPayment = (
   input: string,
   network: INetwork,
-  client: ApolloClient<unknown>,
+  client: MockableApolloClient,
 ): IValidPaymentReponse => {
   const myPubKey = getPubKey(client)
   const username = getMyUsername(client)

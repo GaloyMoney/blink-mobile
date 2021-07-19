@@ -8,9 +8,11 @@ import { Screen } from "../../components/screen"
 import { palette } from "../../theme/palette"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import BiometricWrapper from "../../utils/biometricAuthentication"
-import type { ScreenType } from "../../types/screen"
+import type { ScreenType } from "../../types/jsx"
 import { AuthenticationScreenPurpose, PinScreenPurpose } from "../../utils/enum"
 import { showModalClipboardIfValidPayment } from "../../utils/clipboard"
+import type { RootStackParamList } from "../../navigation/stack-param-lists"
+import { StackNavigationProp } from "@react-navigation/stack"
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const BitcoinBeachLogo = require("../get-started-screen/bitcoinBeach3.png")
@@ -30,7 +32,7 @@ const styles = EStyleSheet.create({
 })
 
 type Props = {
-  navigation: any
+  navigation: StackNavigationProp<RootStackParamList, "authenticationCheck">
 }
 
 export const AuthenticationCheckScreen: ScreenType = ({ navigation }: Props) => {

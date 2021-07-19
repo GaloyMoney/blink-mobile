@@ -1,6 +1,6 @@
 import { useState } from "react"
 import * as React from "react"
-import { useFocusEffect, useNavigation } from "@react-navigation/native"
+import { useNavigation } from "@react-navigation/native"
 import * as _ from "lodash"
 import { prefCurrencyVar } from "../graphql/query"
 

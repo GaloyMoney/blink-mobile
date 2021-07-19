@@ -1,9 +1,10 @@
 import { gql, useLazyQuery, useMutation, useQuery } from "@apollo/client"
-import { useIsFocused } from "@react-navigation/native"
+import { RouteProp, useIsFocused } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
 import I18n from "i18n-js"
 import * as React from "react"
 import { useState } from "react"
-import { Dimensions, Platform, StyleSheet, Text, View } from "react-native"
+import { Dimensions, Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableOpacity } from "react-native-gesture-handler"
@@ -12,8 +13,11 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
 import { QUERY_TRANSACTIONS, QUERY_EARN_LIST } from "../../graphql/query"
 import { translate } from "../../i18n"
+import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
+import type { QuizQuestion } from "../../types/quiz"
+import type { ScreenType } from "../../types/jsx"
 import { Token } from "../../utils/token"
 import { SVGs } from "./earn-svg-factory"
 import { getCardsFromSection, remainingSatsOnSection } from "./earns-utils"
@@ -106,11 +110,11 @@ const styles = EStyleSheet.create({
 })
 
 type Props = {
-  route: Record<string, any>
-  navigation: Record<string, any>
+  navigation: StackNavigationProp<RootStackParamList, "earnsSection">
+  route: RouteProp<RootStackParamList, "earnsSection">
 }
 
-export const EarnSection = ({ route, navigation }: Props) => {
+export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
   const [queryTransactions] = useLazyQuery(QUERY_TRANSACTIONS, {
     fetchPolicy: "network-only",
   })
@@ -213,15 +217,7 @@ export const EarnSection = ({ route, navigation }: Props) => {
     }
   }
 
-  const CardItem = ({ item }: { item: Record<string, any> }) => {
-    const text = I18n.t(
-      item.fullfilled ? "EarnScreen.satsEarned" : "EarnScreen.earnSats",
-      {
-        count: item.value,
-        formatted_number: I18n.toNumber(item.value, { precision: 0 }),
-      },
-    )
-
+  const CardItem = ({ item }: { item: QuizQuestion }) => {
     return (
       <>
         <View style={styles.item}>

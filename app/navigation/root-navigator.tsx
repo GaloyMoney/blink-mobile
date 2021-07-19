@@ -54,6 +54,7 @@ import {
   PrimaryStackParamList,
   RootStackParamList,
 } from "./stack-param-lists"
+import type { NavigatorType } from "../types/jsx"
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const PushNotification = require("react-native-push-notification")
@@ -121,7 +122,7 @@ const size = 32
 
 const RootNavigator = createStackNavigator<RootStackParamList>()
 
-export const RootStack = () => {
+export const RootStack: NavigatorType = () => {
   const appState = React.useRef(AppState.currentState)
   const client = useApolloClient()
 
@@ -221,6 +222,7 @@ export const RootStack = () => {
 
   useEffect(() => {
     // onNotificationOpenedApp: When the application is running, but in the background.
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     messaging().onNotificationOpenedApp((remoteMessage) => {
       // console.log(
       //   'Notification caused app to open from background state:',
@@ -232,6 +234,7 @@ export const RootStack = () => {
     // getInitialNotification: When the application is opened from a quit state.
     messaging()
       .getInitialNotification()
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       .then((remoteMessage) => {
         // if (remoteMessage) {
         //   console.log(
@@ -244,6 +247,7 @@ export const RootStack = () => {
       })
   }, [])
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   useEffect(() => messaging().onTokenRefresh((token) => addDeviceToken(client)), [])
 
   const token = new Token()
@@ -392,7 +396,7 @@ export const RootStack = () => {
 
 const StackContacts = createStackNavigator<ContactStackParamList>()
 
-export const ContactNavigator = () => (
+export const ContactNavigator: NavigatorType = () => (
   <StackContacts.Navigator>
     <StackContacts.Screen
       name="Contacts"
@@ -411,7 +415,7 @@ export const ContactNavigator = () => (
 
 const StackMoveMoney = createStackNavigator<MoveMoneyStackParamList>()
 
-export const MoveMoneyNavigator = () => (
+export const MoveMoneyNavigator: NavigatorType = () => (
   <StackMoveMoney.Navigator>
     <StackMoveMoney.Screen
       name="moveMoney"
@@ -440,7 +444,7 @@ export const MoveMoneyNavigator = () => (
 
 const StackPhoneValidation = createStackNavigator<PhoneValidationStackParamList>()
 
-export const PhoneValidationNavigator = () => (
+export const PhoneValidationNavigator: NavigatorType = () => (
   <StackPhoneValidation.Navigator>
     <StackPhoneValidation.Screen
       name="welcomePhoneInput"
@@ -466,7 +470,7 @@ type TabProps = {
   color: string
 }
 
-export const PrimaryNavigator = () => {
+export const PrimaryNavigator: NavigatorType = () => {
   const [network, setNetwork] = React.useState("mainnet")
 
   React.useEffect(() => {

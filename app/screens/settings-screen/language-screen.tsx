@@ -6,7 +6,7 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
 import { GET_LANGUAGE } from "../../graphql/query"
 import { palette } from "../../theme/palette"
-import type { ScreenType } from "../../types/screen"
+import type { ScreenType } from "../../types/jsx"
 import { Token } from "../../utils/token"
 
 const styles = EStyleSheet.create({

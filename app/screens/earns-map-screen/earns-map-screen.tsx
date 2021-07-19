@@ -1,4 +1,4 @@
-import { gql, useQuery } from "@apollo/client"
+import { useQuery } from "@apollo/client"
 import * as React from "react"
 import * as _ from "lodash"
 import { StatusBar, StyleSheet, Text, View } from "react-native"
@@ -6,7 +6,7 @@ import { ScrollView, TouchableOpacity } from "react-native-gesture-handler"
 import { MountainHeader } from "../../components/mountain-header"
 import { Screen } from "../../components/screen"
 import { QUERY_EARN_LIST } from "../../graphql/query"
-import { translate } from "../../i18n"
+import { translate, translateQuizSections } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { Token } from "../../utils/token"
@@ -28,6 +28,9 @@ import RightComplete from "./right-section-completed-01.svg"
 import RightOngoing from "./right-section-ongoing-01.svg"
 import RightTodo from "./right-section-to-do-01.svg"
 import TextBlock from "./text-block-medium.svg"
+import type { ScreenType } from "../../types/jsx"
+import type { PrimaryStackParamList } from "../../navigation/stack-param-lists"
+import { StackNavigationProp } from "@react-navigation/stack"
 
 const styles = StyleSheet.create({
   contentContainer: {
@@ -89,7 +92,7 @@ interface ISectionData {
 }
 
 interface IEarnMapScreen {
-  navigation: Record<string, any> // FIXME
+  navigation: StackNavigationProp<PrimaryStackParamList, "Earn"> // FIXME
   currSection: number
   progress: number
   sectionsData: ISectionData[]
@@ -100,7 +103,7 @@ type ProgressProps = {
   progress: number
 }
 
-export const ProgressBar = ({ progress }: ProgressProps) => {
+export const ProgressBar: ScreenType = ({ progress }: ProgressProps) => {
   const balanceWidth = `${progress * 100}%`
 
   return (
@@ -113,10 +116,10 @@ export const ProgressBar = ({ progress }: ProgressProps) => {
 }
 
 type EarnMapDataProps = {
-  navigation: Record<string, any>
+  navigation: StackNavigationProp<PrimaryStackParamList, "Earn">
 }
 
-export const EarnMapDataInjected = ({ navigation }: EarnMapDataProps) => {
+export const EarnMapDataInjected: ScreenType = ({ navigation }: EarnMapDataProps) => {
   // TODO: fragment with earnList
   const { data } = useQuery(QUERY_EARN_LIST, {
     variables: {
@@ -131,7 +134,7 @@ export const EarnMapDataInjected = ({ navigation }: EarnMapDataProps) => {
 
   const { earnList } = data
 
-  const sectionIndexs = Object.keys(translate("EarnScreen.earns"))
+  const sectionIndexs = Object.keys(translateQuizSections("EarnScreen.earns"))
 
   const sectionsData = []
   let currSection = 0
@@ -322,7 +325,7 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> = ({
           scrollViewRef.current.scrollToEnd()
         }}
       >
-        <MountainHeader amount={earned} color={backgroundColor} />
+        <MountainHeader amount={earned.toString()} color={backgroundColor} />
         {/* <View style={{backgroundColor: palette.sky}}>
           <Top width={screenWidth} />
         </View> */}

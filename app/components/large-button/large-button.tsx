@@ -2,6 +2,7 @@ import * as React from "react"
 import { ListItem, Avatar } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { palette } from "../../theme/palette"
+import { ComponentType } from "../../types/jsx"
 
 const styles = EStyleSheet.create({
   accountView: {
@@ -22,32 +23,24 @@ const styles = EStyleSheet.create({
   },
 })
 
-interface ILargeButton {
-  icon: React.Component
-  title: string
-  onPress: (item: any) => void
-  loading?: boolean
-  style?
-}
-
-export const LargeButton = ({
+export const LargeButton: ComponentType = ({
   style,
   icon,
   title,
   onPress,
-  loading,
   ...props
-}: ILargeButton) => (
+}: {
+  icon: React.Component
+  title: string
+  onPress: () => void
+  style?
+}) => (
   <ListItem
     style={styles.accountView}
     containerStyle={style ? styles[style] : styles.accountViewContainer}
-    titleStyle={styles.accountViewTitle}
-    chevron
-    title={title}
     onPress={onPress}
     underlayColor={palette.lighterGrey}
     activeOpacity={0.7}
-    leftAvatar={icon}
     {...props}
   >
     <Avatar>{icon}</Avatar>
