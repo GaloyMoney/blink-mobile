@@ -85,7 +85,8 @@ export const QUERY_EARN_LIST = gql`
   }
 `
 
-export const getWallet = (client: ApolloClient<unknown>): gql_main_query_wallet => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const getWallet = (client: ApolloClient<unknown>): any => {
   const { wallet } = client.readQuery({
     query: WALLET,
   })
