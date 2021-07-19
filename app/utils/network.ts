@@ -1,5 +1,7 @@
 import { saveString, loadString, remove } from "./storage"
 
+import type { INetwork } from "../types/network"
+
 export const NETWORK_STRING = "NETWORK_STRING"
 
 // FIXME: no longer need since we switch from mst-gql to apollo-client
@@ -9,10 +11,12 @@ export const NETWORK_STRING = "NETWORK_STRING"
 // rootStore. therefore we are loading this before
 // loading the main RootStore file
 
-export const loadNetwork = async () => (await loadString(NETWORK_STRING)) ?? "mainnet"
+export const loadNetwork = async (): Promise<string> =>
+  (await loadString(NETWORK_STRING)) ?? "mainnet"
 
-export const saveNetwork = async (network) => saveString(NETWORK_STRING, network)
+export const saveNetwork = async (network: INetwork): Promise<boolean> =>
+  saveString(NETWORK_STRING, network)
 
-export const removeNetwork = async () => {
+export const removeNetwork = async (): Promise<void> => {
   remove(NETWORK_STRING)
 }

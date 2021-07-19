@@ -10,6 +10,7 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
+import type { ScreenType } from "../../types/screen"
 import { validPayment } from "../../utils/parsing"
 import { Token } from "../../utils/token"
 
@@ -62,7 +63,7 @@ const styles = EStyleSheet.create({
   },
 })
 
-export const ScanningQRCodeScreen = () => {
+export const ScanningQRCodeScreen: ScreenType = () => {
   const { navigate, goBack } = useNavigation()
   const [pending, setPending] = React.useState(false)
   const client = useApolloClient()

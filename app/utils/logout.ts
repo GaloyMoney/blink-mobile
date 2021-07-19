@@ -3,8 +3,9 @@ import { BUILD_VERSION } from "../app"
 import { NETWORK_STRING } from "./network"
 import { Token, TOKEN_KEY } from "./token"
 import KeyStoreWrapper from "./storage/secureStorage"
+import { ApolloClient } from "@apollo/client"
 
-export const resetDataStore = async (client) => {
+export const resetDataStore = async (client: ApolloClient<unknown>): Promise<void> => {
   try {
     await client.clearStore()
     await new Token().remove()

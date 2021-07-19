@@ -1,4 +1,4 @@
-import { useApolloClient, useQuery } from "@apollo/client"
+import { ApolloError, useApolloClient, useQuery } from "@apollo/client"
 import messaging from "@react-native-firebase/messaging"
 import * as React from "react"
 import { useEffect, useState } from "react"
@@ -31,6 +31,9 @@ import { palette } from "../../theme/palette"
 import { AccountType, CurrencyType } from "../../utils/enum"
 import { isIos } from "../../utils/helper"
 import { Token } from "../../utils/token"
+import type { ScreenType } from "../../types/screen"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
 
 const styles = EStyleSheet.create({
   bottom: {
@@ -118,10 +121,10 @@ const styles = EStyleSheet.create({
 })
 
 type MoveMoneyScreenDataInjectedProps = {
-  navigation: Record<string, any>
+  navigation: StackNavigationProp<MoveMoneyStackParamList, "moveMoney">
 }
 
-export const MoveMoneyScreenDataInjected = ({
+export const MoveMoneyScreenDataInjected: ScreenType = ({
   navigation,
 }: MoveMoneyScreenDataInjectedProps) => {
   const client = useApolloClient()
@@ -158,6 +161,7 @@ export const MoveMoneyScreenDataInjected = ({
   }, [])
 
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const unsubscribe = messaging().onMessage(async (remoteMessage) => {
       // TODO: fine grain query
       // only refresh as necessary
@@ -215,9 +219,9 @@ export const MoveMoneyScreenDataInjected = ({
 
 type MoveMoneyScreenProps = {
   walletIsActive: boolean
-  navigation: Record<string, any>
+  navigation: StackNavigationProp<MoveMoneyStackParamList, "moveMoney">
   loading: boolean
-  error: Record<string, any>
+  error: ApolloError
   transactions: []
   refetch: () => void
   amount: number
@@ -225,7 +229,7 @@ type MoveMoneyScreenProps = {
   isUpdateAvailable: boolean
 }
 
-export const MoveMoneyScreen = ({
+export const MoveMoneyScreen: ScreenType = ({
   walletIsActive,
   navigation,
   loading,
@@ -255,13 +259,17 @@ export const MoveMoneyScreen = ({
     navigation.navigate("phoneValidation")
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const testflight = "https://testflight.apple.com/join/9aC8MMk2"
   const appstore = "https://apps.apple.com/app/bitcoin-beach-wallet/id1531383905"
 
   // from https://github.com/FiberJW/react-native-app-link/blob/master/index.js
   const openInStore = async ({
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     appName,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     appStoreId,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     appStoreLocale = "us",
     playStoreId,
   }) => {
@@ -283,7 +291,7 @@ export const MoveMoneyScreen = ({
         console.log("clicked on link")
       })
       .catch((err) => {
-        console.log("error app link on link")
+        console.log({ err }, "error app link on link")
         // handle error
       })
 
@@ -374,7 +382,7 @@ export const MoveMoneyScreen = ({
           {
             title: translate("TransactionScreen.title"),
             target: "transactionHistory",
-            icon: <Icon name="ios-list-outline" size={32} color={color} />,
+            icon: <Icon name="ios-list-outline" size={32} color={palette.black} />,
             style: "transactionViewContainer",
             transactions,
           },

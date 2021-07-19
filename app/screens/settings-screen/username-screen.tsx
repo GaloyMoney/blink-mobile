@@ -1,6 +1,7 @@
 /* eslint-disable react-native/no-unused-styles */
 import { gql, useLazyQuery, useMutation } from "@apollo/client"
 import { useIsFocused } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { useEffect, useState } from "react"
 import { ActivityIndicator, Alert, Text, TextInput } from "react-native"
@@ -11,8 +12,9 @@ import { Screen } from "../../components/screen"
 import { USERNAME_EXIST } from "../../graphql/query"
 import { translate } from "../../i18n"
 import { color } from "../../theme"
-import { ScreenType } from "../../types/screen"
 import { UsernameValidation } from "../../utils/validation"
+import type { ScreenType } from "../../types/screen"
+import type { RootStackParamList } from "../../navigation/stack-param-lists"
 
 // TODO: memoize dynamic styles
 const styles = (error = false) =>
@@ -34,7 +36,7 @@ const styles = (error = false) =>
   })
 
 type Props = {
-  navigation: Record<string, any>
+  navigation: StackNavigationProp<RootStackParamList, "setUsername">
 }
 
 export const UsernameScreen: ScreenType = ({ navigation }: Props) => {

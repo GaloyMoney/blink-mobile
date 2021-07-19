@@ -128,8 +128,7 @@ export const USERNAME_EXIST = gql`
   }
 `
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-export const btc_price = (client: ApolloClient<object>): number => {
+export const btc_price = (client: ApolloClient<unknown>): number => {
   const price_default = NaN
   try {
     const result = client.readQuery({ query: QUERY_PRICE })

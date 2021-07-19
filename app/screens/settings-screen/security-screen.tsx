@@ -1,7 +1,8 @@
 import * as React from "react"
 import { useState } from "react"
-import { useFocusEffect } from "@react-navigation/native"
+import { RouteProp, useFocusEffect } from "@react-navigation/native"
 import { Text, View } from "react-native"
+import { StackNavigationProp } from "@react-navigation/stack"
 import { Button, Switch } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 
@@ -11,6 +12,7 @@ import { translate } from "../../i18n"
 import BiometricWrapper from "../../utils/biometricAuthentication"
 import { toastShow } from "../../utils/toast"
 import type { ScreenType } from "../../types/screen"
+import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { PinScreenPurpose } from "../../utils/enum"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
 
@@ -72,8 +74,8 @@ const styles = EStyleSheet.create({
 })
 
 type Props = {
-  route: any
-  navigation: any
+  navigation: StackNavigationProp<RootStackParamList, "security">
+  route: RouteProp<RootStackParamList, "security">
 }
 
 export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {

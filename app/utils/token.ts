@@ -4,6 +4,8 @@ import { saveString, loadString, remove } from "./storage"
 import { loadNetwork } from "./network"
 import { scriptHostname } from "./helper"
 
+import type { INetwork } from "../types/network"
+
 // key used to stored the token within the phone
 export const TOKEN_KEY = "GaloyToken"
 
@@ -24,24 +26,24 @@ export class Token {
     this.constructor.instance = this
   }
 
-  async save({ token }) {
+  async save(token: string): Promise<boolean> {
     this.mem_token = token
     return saveString(TOKEN_KEY, token)
   }
 
-  async load() {
+  async load(): Promise<string> {
     // TODO: replace with secure storage
     this.mem_token = await loadString(TOKEN_KEY)
     analytics().setUserId(this.uid)
     return this.mem_token
   }
 
-  async remove() {
+  async remove(): Promise<void> {
     this.mem_token = null
     remove(TOKEN_KEY)
   }
 
-  has() {
+  has(): boolean {
     return this.mem_token !== null
     // TODO check
   }
@@ -57,7 +59,7 @@ export class Token {
     }
   }
 
-  get network() {
+  get network(): INetwork | null {
     try {
       const { network } = jwtDecode(this.mem_token)
       return network
@@ -67,12 +69,12 @@ export class Token {
     }
   }
 
-  get bearerString() {
+  get bearerString(): string {
     return this.has() ? `Bearer ${this.mem_token}` : ""
   }
 }
 
-export const getNetwork = async () => {
+export const getNetwork = async (): Promise<INetwork> => {
   let network
   if (new Token().has()) {
     network = new Token().network
@@ -83,7 +85,7 @@ export const getNetwork = async () => {
   return network
 }
 
-export const getGraphQlUri = async () => {
+export const getGraphQlUri = async (): Promise<string> => {
   const network = await getNetwork()
   switch (network) {
     case "regtest":

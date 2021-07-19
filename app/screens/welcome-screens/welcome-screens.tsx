@@ -1,5 +1,6 @@
 /* eslint-disable react-native/no-color-literals */
 /* eslint-disable react-native/no-unused-styles */
+import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
@@ -8,6 +9,8 @@ import { OnboardingScreen } from "../../components/onboarding"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
+import type { RootStackParamList } from "../../navigation/stack-param-lists"
+import type { ScreenType } from "../../types/screen"
 import BitcoinBitcoin from "./bitcoin-bitcoin-01.svg"
 import BankShop from "./cc-bank-shop-01.svg"
 import MascotDollarBitcoin from "./honey-badger-money-bitcoin-01.svg"
@@ -49,10 +52,10 @@ const styles = EStyleSheet.create({
 })
 
 type Props = {
-  navigation: Record<string, any>
+  navigation: StackNavigationProp<RootStackParamList, "welcomeFirst">
 }
 
-export const WelcomeFirstScreen = ({ navigation }: Props) => (
+export const WelcomeFirstScreen: ScreenType = ({ navigation }: Props) => (
   <Swiper loop={false} activeDot={<View style={styles.dot} />}>
     <Screen backgroundColor={palette.lightBlue} statusBar="light-content">
       <OnboardingScreen Svg={MascotDollarBitcoin}>

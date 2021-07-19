@@ -1,3 +1,5 @@
+import { StackNavigationProp } from "@react-navigation/stack"
+import { RouteProp } from "@react-navigation/native"
 import * as React from "react"
 import { Text, View } from "react-native"
 import { Divider } from "react-native-elements"
@@ -9,8 +11,9 @@ import {
 } from "../../components/icon-transactions"
 import { Screen } from "../../components/screen"
 import { TextCurrency } from "../../components/text-currency"
-import { TransactionItemProps } from "../../components/transaction-item"
 import { translate } from "../../i18n"
+import type { ScreenType } from "../../types/screen"
+import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import { currencyFormatting } from "../../utils/currencyConversion"
 
@@ -79,13 +82,13 @@ const Row = ({ entry, value }: { entry: string; value: string }) => (
 )
 
 type Props = {
-  navigation: Record<string, any>
-  route: Record<string, any>
+  navigation: StackNavigationProp<RootStackParamList, "transactionDetail">
+  route: RouteProp<RootStackParamList, "transactionDetail">
 }
 
-export const TransactionDetailScreen = ({ route, navigation }: Props) => {
+export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props) => {
+  const currency = route.params.currency
   const {
-    currency,
     amount,
     hash,
     description,
@@ -98,7 +101,7 @@ export const TransactionDetailScreen = ({ route, navigation }: Props) => {
     type,
     pending,
     username,
-  } = route.params.tx as TransactionItemProps
+  } = route.params.tx
 
   const spendOrReceiveText = isReceive
     ? translate("TransactionDetailScreen.received")

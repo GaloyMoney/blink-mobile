@@ -1,9 +1,9 @@
 import { InMemoryCache } from "@apollo/client"
 import * as currency_fmt from "currency.js"
-import moment from "moment"
+import moment, { Moment } from "moment"
 import { prefCurrencyVar } from "./query"
 
-const date_options = {
+const date_options: Intl.DateTimeFormatOptions = {
   weekday: "short",
   year: "numeric",
   month: "short",
@@ -15,8 +15,7 @@ const date_options = {
 // manage sign for usd. unlike for amount usd is not signed
 const signAmount = ({ amount, usd }) =>
   prefCurrencyVar() === "sats" ? amount : amount > 0 ? usd : -usd
-const getPrecision = ({ amount, usd }) =>
-  prefCurrencyVar() === "sats" ? 0 : usd < 0.01 ? 4 : 2
+const getPrecision = ({ usd }) => (prefCurrencyVar() === "sats" ? 0 : usd < 0.01 ? 4 : 2)
 
 export const cache = new InMemoryCache({
   typePolicies: {
@@ -36,11 +35,13 @@ export const cache = new InMemoryCache({
         },
         date_format: {
           read: (_, { readField }) =>
-            readField("date").toLocaleString("en-US", date_options),
+            (readField("date") as Date).toLocaleString("en-US", date_options),
         },
         date_nice_print: {
           read: (_, { readField }) =>
-            moment.duration(Math.min(0, readField("date").diff(moment()))).humanize(true),
+            moment
+              .duration(Math.min(0, (readField("date") as Moment).diff(moment())))
+              .humanize(true),
         },
         isReceive: {
           read: (_, { readField }) => readField("amount") > 0,
@@ -54,7 +55,7 @@ export const cache = new InMemoryCache({
               .default(signAmount({ amount, usd }), {
                 separator: ",",
                 symbol,
-                precision: getPrecision({ amount, usd }),
+                precision: getPrecision({ usd }),
               })
               .format()
           },

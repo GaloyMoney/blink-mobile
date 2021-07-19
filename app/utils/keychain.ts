@@ -14,7 +14,7 @@ class KeychainAction {
    * @param {string} value The value to be stored
    * @return {Promise<undefined>}
    */
-  async setItem(key, value) {
+  async setItem(key: string, value: string): Promise<false | RNKeychain.Result> {
     const options = {
       accessible: RNKeychain.ACCESSIBLE.WHEN_UNLOCKED_THIS_DEVICE_ONLY,
       // accessControl: RNKeychain.ACCESS_CONTROL.BIOMETRY_CURRENT_SET_OR_DEVICE_PASSCODE,
@@ -32,7 +32,7 @@ class KeychainAction {
    * @param  {string} key      The key by which to do a lookup.
    * @return {Promise<string>} The stored value
    */
-  async getItem(key) {
+  async getItem(key: string): Promise<string | null> {
     const vKey = `${VERSION}_${key}`
     const credentials = await RNKeychain.getInternetCredentials(vKey)
     if (credentials) {

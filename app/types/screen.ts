@@ -1,1 +1,1 @@
-export type ScreenType = (params: Record<string, any>) => JSX.Element
+export type ScreenType = (params: Record<string, unknown>) => JSX.Element

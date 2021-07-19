@@ -1,6 +1,6 @@
 import * as React from "react"
 import ContentLoader, { Rect } from "react-content-loader/native"
-import { StyleSheet, Text, View, TextStyle, ViewStyle } from "react-native"
+import { StyleProp, Text, View, ViewStyle } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
@@ -48,7 +48,7 @@ export interface BalanceHeaderProps {
   amount: number
   amountOtherCurrency?: number
   loading?: boolean
-  style?: TextStyle | ViewStyle
+  style?: StyleProp<ViewStyle>
 }
 
 const Loader = () => (

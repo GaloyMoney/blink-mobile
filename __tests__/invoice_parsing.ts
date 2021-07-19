@@ -1,6 +1,5 @@
 import { getDestination, getUsername } from "../app/utils/bolt11"
 import * as lightningPayReq from "bolt11"
-const util = require("util")
 
 // beforeAll(() => {
 //   moment.now = function () {

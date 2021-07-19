@@ -1,6 +1,7 @@
 import { gql, useApolloClient } from "@apollo/client"
 import Geolocation from "@react-native-community/geolocation"
 import { useFocusEffect } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { useCallback, useState } from "react"
 // eslint-disable-next-line react-native/split-platform-components
@@ -9,6 +10,8 @@ import { Button } from "react-native-elements"
 import MapView, { Callout, CalloutSubview, Marker } from "react-native-maps"
 import { Screen } from "../../components/screen"
 import { walletIsActive } from "../../graphql/query"
+import type { PrimaryStackParamList } from "../../navigation/stack-param-lists"
+import { ScreenType } from "../../types/screen"
 import { isIos } from "../../utils/helper"
 
 const styles = StyleSheet.create({
@@ -32,10 +35,10 @@ const styles = StyleSheet.create({
 })
 
 type Props = {
-  navigation: Record<string, any>
+  navigation: StackNavigationProp<PrimaryStackParamList, "Map">
 }
 
-export const MapScreen: React.FC<Props> = ({ navigation }: Props) => {
+export const MapScreen: ScreenType = ({ navigation }: Props) => {
   const client = useApolloClient()
 
   const result = client.readQuery({

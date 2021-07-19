@@ -11,35 +11,33 @@ import {
   View,
 } from "react-native"
 import { Input } from "react-native-elements"
-import { gql, useApolloClient, useLazyQuery, useMutation } from "@apollo/client"
+import {
+  FetchResult,
+  gql,
+  useApolloClient,
+  useLazyQuery,
+  useMutation,
+} from "@apollo/client"
 import EStyleSheet from "react-native-extended-stylesheet"
 import PhoneInput from "react-native-phone-input"
 import analytics from "@react-native-firebase/analytics"
+import { StackNavigationProp } from "@react-navigation/stack"
 
-// Components
 import { CloseCross } from "../../components/close-cross"
 import { Screen } from "../../components/screen"
-
-// Functions
 import { translate } from "../../i18n"
 import { MAIN_QUERY } from "../../graphql/query"
-
-// Theme
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-
-// Utils
 import { Token } from "../../utils/token"
 import { toastShow } from "../../utils/toast"
 import { addDeviceToken } from "../../utils/notifications"
 import BiometricWrapper from "../../utils/biometricAuthentication"
-
-// Types
 import type { ScreenType } from "../../types/screen"
 import { AuthenticationScreenPurpose } from "../../utils/enum"
-
-// Assets
 import BadgerPhone from "./badger-phone-01.svg"
+import type { PhoneValidationStackParamList } from "../../navigation/stack-param-lists"
+import { RouteProp } from "@react-navigation/native"
 
 const REQUEST_PHONE_CODE = gql`
   mutation requestPhoneCode($phone: String) {
@@ -94,7 +92,7 @@ const styles = EStyleSheet.create({
 })
 
 type WelcomePhoneInputScreenProps = {
-  navigation: any
+  navigation: StackNavigationProp<PhoneValidationStackParamList, "welcomePhoneInput">
 }
 
 export const WelcomePhoneInputScreen: ScreenType = ({
@@ -119,8 +117,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
     try {
       const { data } = await requestPhoneCode({ variables: { phone } })
       if (data.requestPhoneCode.success) {
-        const screen = "welcomePhoneValidation"
-        navigation.navigate(screen, { phone })
+        navigation.navigate("welcomePhoneValidation", { phone })
       } else {
         toastShow(translate("erros.generic"))
       }
@@ -169,8 +166,8 @@ export const WelcomePhoneInputScreen: ScreenType = ({
 }
 
 type WelcomePhoneValidationScreenDataInjectedProps = {
-  route: string
-  navigation: any
+  navigation: StackNavigationProp<PhoneValidationStackParamList, "welcomePhoneValidation">
+  route: RouteProp<PhoneValidationStackParamList, "welcomePhoneValidation">
 }
 
 export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
@@ -189,7 +186,7 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
 
   const onSuccess = async ({ token }) => {
     analytics().logLogin({ method: "phone" })
-    await new Token().save({ token })
+    await new Token().save(token)
 
     // TODO refactor from mst-gql to apollo client
     // sync the earned quizzes
@@ -222,10 +219,11 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
 }
 
 type WelcomePhoneValidationScreenProps = {
-  login: (params) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  login: (params) => Promise<FetchResult<any>>
   onSuccess: (params) => void
-  navigation: any
-  route: Record<string, any>
+  navigation: StackNavigationProp<PhoneValidationStackParamList, "welcomePhoneValidation">
+  route: RouteProp<PhoneValidationStackParamList, "welcomePhoneValidation">
   loading: boolean
   error: string
 }

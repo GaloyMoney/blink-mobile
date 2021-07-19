@@ -1,9 +1,8 @@
 import * as React from "react"
 import { storiesOf } from "@storybook/react-native"
-import moment from "moment"
 import { StoryScreen, Story, UseCase } from "../../../storybook/views"
 import { TransactionScreen } from "./transaction-screen"
-import { AccountType, CurrencyType } from "../../utils/enum"
+import { CurrencyType } from "../../utils/enum"
 
 let transactions = [
   {

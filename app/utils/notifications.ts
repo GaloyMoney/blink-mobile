@@ -1,8 +1,8 @@
-import { gql } from "@apollo/client"
+import { ApolloClient, gql } from "@apollo/client"
 import messaging from "@react-native-firebase/messaging"
 import { walletIsActive } from "../graphql/query"
 
-export const requestPermission = async (client) => {
+export const requestPermission = async (client: ApolloClient<unknown>): Promise<void> => {
   const authorizationStatus = await messaging().requestPermission()
 
   const enabled =
@@ -22,7 +22,7 @@ export const requestPermission = async (client) => {
   // if(Platform.OS == 'ios') { messaging().getAPNSToken().then(token => { return saveTokenToDatabase(token); }); }
 }
 
-export const addDeviceToken = async (client) => {
+export const addDeviceToken = async (client: ApolloClient<unknown>): Promise<void> => {
   if (!walletIsActive(client)) {
     return
   }
@@ -48,7 +48,7 @@ export const addDeviceToken = async (client) => {
   }
 }
 
-export const hasFullPermissions = async () => {
+export const hasFullPermissions = async (): Promise<boolean> => {
   const authorizationStatus = await messaging().hasPermission()
 
   let hasPermissions = false

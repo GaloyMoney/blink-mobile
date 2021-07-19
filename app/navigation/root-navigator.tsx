@@ -47,6 +47,13 @@ import { AccountType } from "../utils/enum"
 import { addDeviceToken } from "../utils/notifications"
 import { getNetwork, Token } from "../utils/token"
 import { showModalClipboardIfValidPayment } from "../utils/clipboard"
+import {
+  ContactStackParamList,
+  MoveMoneyStackParamList,
+  PhoneValidationStackParamList,
+  PrimaryStackParamList,
+  RootStackParamList,
+} from "./stack-param-lists"
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const PushNotification = require("react-native-push-notification")
@@ -112,7 +119,7 @@ const styles = EStyleSheet.create({
 
 const size = 32
 
-const RootNavigator = createStackNavigator()
+const RootNavigator = createStackNavigator<RootStackParamList>()
 
 export const RootStack = () => {
   const appState = React.useRef(AppState.currentState)
@@ -254,7 +261,6 @@ export const RootStack = () => {
           animationEnabled: false,
         }}
       />
-      <RootNavigator.Screen name="debug" component={DebugScreen} />
       <RootNavigator.Screen
         name="welcomeFirst"
         component={WelcomeFirstScreen}
@@ -378,24 +384,13 @@ export const RootStack = () => {
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
           title: translate("common.bitcoinPrice"),
         }}
-        // options={({ navigation }) => ({
-        //   headerRight: () => (
-        //     <Icon
-        //       name={"ios-person"}
-        //       size={32}
-        //       color={palette.darkGrey}
-        //       style={styles.person}
-        //       onPress={() => navigation.navigate("debug")}
-        //     />
-        //   ),
-        // })}
         initialParams={{ account: AccountType.Bitcoin }}
       />
     </RootNavigator.Navigator>
   )
 }
 
-const StackContacts = createStackNavigator()
+const StackContacts = createStackNavigator<ContactStackParamList>()
 
 export const ContactNavigator = () => (
   <StackContacts.Navigator>
@@ -414,7 +409,7 @@ export const ContactNavigator = () => (
   </StackContacts.Navigator>
 )
 
-const StackMoveMoney = createStackNavigator()
+const StackMoveMoney = createStackNavigator<MoveMoneyStackParamList>()
 
 export const MoveMoneyNavigator = () => (
   <StackMoveMoney.Navigator>
@@ -443,7 +438,7 @@ export const MoveMoneyNavigator = () => (
   </StackMoveMoney.Navigator>
 )
 
-const StackPhoneValidation = createStackNavigator()
+const StackPhoneValidation = createStackNavigator<PhoneValidationStackParamList>()
 
 export const PhoneValidationNavigator = () => (
   <StackPhoneValidation.Navigator>
@@ -465,7 +460,7 @@ export const PhoneValidationNavigator = () => (
   </StackPhoneValidation.Navigator>
 )
 
-const Tab = createBottomTabNavigator()
+const Tab = createBottomTabNavigator<PrimaryStackParamList>()
 
 type TabProps = {
   color: string

@@ -1,37 +1,38 @@
 import * as React from "react"
 import { Alert, View } from "react-native"
 import Share from "react-native-share"
-import EStyleSheet from "react-native-extended-stylesheet"
 import { Divider, Icon, ListItem } from "react-native-elements"
-import { gql, useApolloClient, useLazyQuery, useQuery } from "@apollo/client"
+import { StackNavigationProp } from "@react-navigation/stack"
+import {
+  ApolloClient,
+  gql,
+  OperationVariables,
+  QueryLazyOptions,
+  useApolloClient,
+  useLazyQuery,
+  useQuery,
+} from "@apollo/client"
+import type { ViewStyleProp } from "react-native/Libraries/StyleSheet/StyleSheet"
 
-// Components
 import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
-
-// Constants
 import { language_mapping } from "./language-screen"
 import { palette } from "../../theme/palette"
 import {
   WHATSAPP_CONTACT_NUMBER,
   WHATSAPP_DEFAULT_CONTACT_MESSAGE,
 } from "../../constants/support"
-
-// Functions
 import { translate } from "../../i18n"
 import { walletIsActive } from "../../graphql/query"
-
-// Utils
 import { openWhatsApp } from "../../utils/external"
 import { resetDataStore } from "../../utils/logout"
 import { hasFullPermissions, requestPermission } from "../../utils/notifications"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
-
-// Types
 import type { ScreenType } from "../../types/screen"
+import type { RootStackParamList } from "../../navigation/stack-param-lists"
 
 type Props = {
-  navigation: Record<string, any>
+  navigation: StackNavigationProp<RootStackParamList, "settings">
 }
 
 type ComponentProps = {
@@ -43,7 +44,7 @@ type ComponentProps = {
   greyed: boolean
   defaultValue?: string
   action: () => void
-  styleDivider?: Record<string, any>
+  styleDivider?: ViewStyleProp
 }
 
 export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
@@ -80,7 +81,7 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
       // const decoded = Buffer.from(csvEncoded, 'base64').toString('ascii')
       // console.log({decoded})
 
-      const shareResponse = await Share.open({
+      await Share.open({
         // title: "export-csv-title.csv",
         url: `data:text/csv;base64,${csvEncoded}`,
         type: "text/csv",
@@ -136,7 +137,18 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
   )
 }
 
-export const SettingsScreenJSX = (params) => {
+type SettingsScreenProps = {
+  client: ApolloClient<unknown>
+  walletIsActive: boolean
+  navigation: StackNavigationProp<RootStackParamList, "settings">
+  username: string
+  notificationsEnabled: boolean
+  csvAction: (options?: QueryLazyOptions<OperationVariables>) => void
+  securityAction: () => void
+  resetDataStore: () => Promise<void>
+}
+
+export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
   const {
     client,
     walletIsActive,

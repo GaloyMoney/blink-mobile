@@ -1,6 +1,7 @@
 import { gql, useApolloClient, useMutation } from "@apollo/client"
 import Clipboard from "@react-native-community/clipboard"
 import messaging from "@react-native-firebase/messaging"
+import { StackNavigationProp } from "@react-navigation/stack"
 import LottieView from "lottie-react-native"
 import * as React from "react"
 import { useEffect, useState } from "react"
@@ -27,7 +28,9 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { InputPaymentDataInjected } from "../../components/input-payment"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
+import type { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
+import type { ScreenType } from "../../types/screen"
 import { getHashFromInvoice } from "../../utils/bolt11"
 import { isIos } from "../../utils/helper"
 import { hasFullPermissions, requestPermission } from "../../utils/notifications"
@@ -116,10 +119,10 @@ const GET_ONCHAIN_ADDRESS = gql`
 `
 
 type Props = {
-  navigation: Record<string, any>
+  navigation: StackNavigationProp<MoveMoneyStackParamList, "receiveBitcoin">
 }
 
-export const ReceiveBitcoinScreen = ({ navigation }: Props) => {
+export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
   const client = useApolloClient()
 
   const [addInvoice] = useMutation(ADD_INVOICE)

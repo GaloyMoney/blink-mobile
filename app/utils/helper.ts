@@ -1,14 +1,10 @@
 import { NativeModules, Platform } from "react-native"
 
-export const emailIsValid = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-
-export const capitalize = (s) => {
-  if (typeof s !== "string") return ""
-  return s.charAt(0).toUpperCase() + s.slice(1)
-}
+export const emailIsValid = (email: string): boolean =>
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
 
 // https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
-export const shuffle = (array) => {
+export const shuffle = <Type>(array: Type[]): Type[] => {
   let currentIndex = array.length
   let temporaryValue
   let randomIndex

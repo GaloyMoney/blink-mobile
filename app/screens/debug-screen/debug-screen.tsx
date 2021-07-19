@@ -1,17 +1,18 @@
-import crashlytics from "@react-native-firebase/crashlytics"
 import * as React from "react"
 import { Alert, DevSettings, Text, View } from "react-native"
 import { Button, ButtonGroup } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
-import Clipboard from "@react-native-community/clipboard"
-import { useApolloClient, useQuery } from "@apollo/client"
+import { useApolloClient } from "@apollo/client"
 import { Screen } from "../../components/screen"
 import { color } from "../../theme"
 import { resetDataStore } from "../../utils/logout"
 import { loadNetwork, saveNetwork } from "../../utils/network"
 import { requestPermission } from "../../utils/notifications"
 import { getGraphQlUri, Token } from "../../utils/token"
-import { btc_price, QUERY_PRICE, walletIsActive } from "../../graphql/query"
+import { btc_price, walletIsActive } from "../../graphql/query"
+
+import type { ScreenType } from "../../types/screen"
+import type { INetwork } from "../../types/network"
 
 const styles = EStyleSheet.create({
   button: {
@@ -22,11 +23,11 @@ const styles = EStyleSheet.create({
   container: { marginLeft: 36, marginRight: 36, marginTop: 24 },
 })
 
-export const DebugScreen = () => {
+export const DebugScreen: ScreenType = () => {
   const client = useApolloClient()
   const token = new Token()
 
-  const networks = ["regtest", "testnet", "mainnet"]
+  const networks: INetwork[] = ["regtest", "testnet", "mainnet"]
   const [networkState, setNetworkState] = React.useState("")
   const [graphQlUri, setGraphQlUri] = React.useState("")
 

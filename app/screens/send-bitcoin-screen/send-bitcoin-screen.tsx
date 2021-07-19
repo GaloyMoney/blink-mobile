@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { gql, useApolloClient, useLazyQuery, useMutation } from "@apollo/client"
-import { useNavigation } from "@react-navigation/native"
+import { RouteProp, useNavigation } from "@react-navigation/native"
 import LottieView from "lottie-react-native"
 import * as React from "react"
 import { useEffect, useState } from "react"
@@ -23,8 +23,10 @@ import {
 } from "../../graphql/query"
 import { usePrefCurrency } from "../../hooks/usePrefCurrency"
 import { translate } from "../../i18n"
+import type { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
+import type { ScreenType } from "../../types/screen"
 import { textCurrencyFormatting } from "../../utils/currencyConversion"
 import { IPaymentType, validPayment } from "../../utils/parsing"
 import { sleep } from "../../utils/sleep"
@@ -142,11 +144,12 @@ const regexFilter = (network) => {
       return /^(2|bcrt|lnbcrt)/i
     default:
       console.warn("error network")
+      return null
   }
 }
 
 type SendBitcoinScreenProps = {
-  route: Record<string, any>
+  route: RouteProp<MoveMoneyStackParamList, "sendBitcoin">
 }
 
 export const SendBitcoinScreen: React.FC<SendBitcoinScreenProps> = ({
@@ -188,6 +191,7 @@ export const SendBitcoinScreen: React.FC<SendBitcoinScreenProps> = ({
     fetchPolicy: "network-only",
   })
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [lightningPay, { loading: paymentlightningLoading }] = useMutation(
     LIGHTNING_PAY,
     {
@@ -195,6 +199,7 @@ export const SendBitcoinScreen: React.FC<SendBitcoinScreenProps> = ({
     },
   )
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [payKeysendUsername, { loading: paymentKeysendLoading }] = useMutation(
     PAY_KEYSEND_USERNAME,
     { update: () => queryTransactions() },
@@ -209,12 +214,15 @@ export const SendBitcoinScreen: React.FC<SendBitcoinScreenProps> = ({
   //     })
   // }}
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [onchainPay, { loading: paymentOnchainLoading }] = useMutation(ONCHAIN_PAY, {
     update: () => queryTransactions(),
   })
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [getLightningFees, { loading: lightningFeeLoading }] = useMutation(LIGHTNING_FEES)
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [getOnchainFees, { loading: onchainFeeLoading }] = useMutation(ONCHAIN_FEES)
 
   const [updateWallet] = useLazyQuery(WALLET, { fetchPolicy: "network-only" })
@@ -232,7 +240,7 @@ export const SendBitcoinScreen: React.FC<SendBitcoinScreenProps> = ({
   const balance = balanceBtc(client)
 
   const { network } = new Token()
-  const potentialBitcoinOrLightning = regexFilter(network).test(destination)
+  const potentialBitcoinOrLightning = regexFilter(network)?.test(destination) ?? false
 
   useEffect(() => {
     reset()
@@ -545,7 +553,7 @@ type SendBitcoinScreenJSXProps = {
   fee
   address: string
   memo: string
-  errs: any[]
+  errs: { message: string }[]
   amount: number
   goBack: () => void
   pay: () => void
@@ -563,7 +571,7 @@ type SendBitcoinScreenJSXProps = {
   nextPrefCurrency: () => void
 }
 
-export const SendBitcoinScreenJSX = ({
+export const SendBitcoinScreenJSX: ScreenType = ({
   status,
   paymentType,
   amountless,
