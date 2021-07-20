@@ -5,7 +5,8 @@ import { validPayment } from "./parsing"
 import { modalClipboardVisibleVar, walletIsActive } from "../graphql/query"
 import { Token } from "./token"
 import { loadString } from "./storage"
-import { LAST_CLIPBOARD_PAYMENT } from "../components/modal-clipboard"
+
+export const LAST_CLIPBOARD_PAYMENT = "last_clipboard_payment"
 
 export const showModalClipboardIfValidPayment = async (
   // eslint-disable-next-line @typescript-eslint/ban-types

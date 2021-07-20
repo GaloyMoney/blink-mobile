@@ -15,8 +15,7 @@ import { palette } from "../../theme/palette"
 import { validPayment } from "../../utils/parsing"
 import { Token } from "../../utils/token"
 import { saveString } from "../../utils/storage"
-
-export const LAST_CLIPBOARD_PAYMENT = "last_clipboard_payment"
+import { LAST_CLIPBOARD_PAYMENT } from "../../utils/clipboard"
 
 const styles = StyleSheet.create({
   buttonContainer: {
