@@ -4,9 +4,8 @@ import { ApolloClient } from "@apollo/client"
 import { validPayment } from "./parsing"
 import { modalClipboardVisibleVar, walletIsActive } from "../graphql/query"
 import { Token } from "./token"
-import { loadString } from "./storage"
-
-export const LAST_CLIPBOARD_PAYMENT = "last_clipboard_payment"
+import { cache } from "../graphql/cache"
+import { LAST_CLIPBOARD_PAYMENT } from "../graphql/client-only-query"
 
 export const showModalClipboardIfValidPayment = async (
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -18,7 +17,8 @@ export const showModalClipboardIfValidPayment = async (
     return
   }
 
-  if (clipboard === (await loadString(LAST_CLIPBOARD_PAYMENT))) {
+  const { lastClipboardPayment } = cache.readQuery({ query: LAST_CLIPBOARD_PAYMENT })
+  if (clipboard === lastClipboardPayment) {
     return
   }
 

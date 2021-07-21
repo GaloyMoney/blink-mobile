@@ -14,8 +14,8 @@ import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { validPayment } from "../../utils/parsing"
 import { Token } from "../../utils/token"
-import { saveString } from "../../utils/storage"
-import { LAST_CLIPBOARD_PAYMENT } from "../../utils/clipboard"
+import { LAST_CLIPBOARD_PAYMENT } from "../../graphql/client-only-query"
+import { cache } from "../../graphql/cache"
 
 const styles = StyleSheet.create({
   buttonContainer: {
@@ -81,7 +81,12 @@ export const ModalClipboard = () => {
 
   const dismiss = async () => {
     modalClipboardVisibleVar(false)
-    saveString(LAST_CLIPBOARD_PAYMENT, await Clipboard.getString())
+    cache.writeQuery({
+      query: LAST_CLIPBOARD_PAYMENT,
+      data: {
+        lastClipboardPayment: await Clipboard.getString(),
+      },
+    })
   }
   const [message, setMessage] = React.useState("")
 
