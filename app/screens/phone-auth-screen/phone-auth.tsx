@@ -38,6 +38,7 @@ import { AuthenticationScreenPurpose } from "../../utils/enum"
 import BadgerPhone from "./badger-phone-01.svg"
 import type { PhoneValidationStackParamList } from "../../navigation/stack-param-lists"
 import { RouteProp } from "@react-navigation/native"
+import { login_login } from "./__generated__/login"
 
 const REQUEST_PHONE_CODE = gql`
   mutation requestPhoneCode($phone: String) {
@@ -219,8 +220,7 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
 }
 
 type WelcomePhoneValidationScreenProps = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  login: (params) => Promise<FetchResult<any>>
+  login: (params) => Promise<FetchResult<Record<string, login_login>>>
   onSuccess: (params) => void
   navigation: StackNavigationProp<PhoneValidationStackParamList, "welcomePhoneValidation">
   route: RouteProp<PhoneValidationStackParamList, "welcomePhoneValidation">
@@ -278,6 +278,7 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
     if (code.length === 6) {
       send()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [code])
 
   return (

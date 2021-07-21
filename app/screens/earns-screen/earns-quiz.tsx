@@ -181,7 +181,7 @@ export const EarnQuiz: ScreenType = ({ route, navigation }: Props) => {
       setIsCompleted(true)
       onComplete()
     }
-  }, [recordedAnswer])
+  }, [onComplete, recordedAnswer])
 
   const close = async () => {
     StatusBar.setBarStyle("light-content")

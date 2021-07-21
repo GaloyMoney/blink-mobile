@@ -4,7 +4,8 @@ import { useIsFocused } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { ActivityIndicator, Alert, Text, TextInput } from "react-native"
+import { ActivityIndicator, Alert, Text } from "react-native"
+import { TextInput } from "react-native-vector-icons/node_modules/@types/react-native/index"
 import { Input } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 
@@ -57,6 +58,8 @@ export const UsernameScreen: ScreenType = ({ navigation }: Props) => {
 
   const usernameExists = data?.usernameExists ?? false
 
+  const inputForm = React.createRef<TextInput>()
+
   const [updateUsername] = useMutation(gql`
     mutation updateUsername($username: String!) {
       updateUser {
@@ -74,7 +77,7 @@ export const UsernameScreen: ScreenType = ({ navigation }: Props) => {
     }
 
     usernameExistsQuery({ variables: { username: input } })
-  }, [input])
+  }, [input, usernameExistsQuery])
 
   useEffect(() => {
     if (!UsernameValidation.hasValidLength(input)) {
@@ -99,7 +102,7 @@ export const UsernameScreen: ScreenType = ({ navigation }: Props) => {
       setMessage(translate("UsernameScreen.available", { input }))
       setMessageIsError(false)
     }
-  }, [data, input])
+  }, [data, input, inputForm, shouldShowCharacterMinimumErrorMessage, usernameExists])
 
   const send = async () => {
     setLoading(true)
@@ -167,8 +170,6 @@ export const UsernameScreen: ScreenType = ({ navigation }: Props) => {
       setShouldShowCharacterMinimumErrorMessage(true)
     }
   }
-
-  const inputForm = React.createRef<TextInput>()
 
   return (
     <Screen preset="scroll" style={styles().screenStyle}>

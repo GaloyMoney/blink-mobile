@@ -158,6 +158,7 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
     return () => {
       AppState.removeEventListener("change", _handleAppStateChange)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -169,6 +170,7 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
     })
 
     return unsubscribe
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   function isUpdateAvailableOrRequired({ buildParameters }) {
@@ -248,7 +250,7 @@ export const MoveMoneyScreen: ScreenType = ({
       navigation.navigate("Profile")
       setSecretMenuCounter(0)
     }
-  }, [secretMenuCounter])
+  }, [navigation, secretMenuCounter])
 
   const onMenuClick = (target) => {
     walletIsActive ? navigation.navigate(target) : setModalVisible(true)

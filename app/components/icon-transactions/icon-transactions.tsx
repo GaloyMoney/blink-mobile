@@ -61,7 +61,7 @@ export const IconTransaction = ({
   size: number
   transparent?: boolean
   pending?: boolean
-}): Element => {
+}): JSX.Element => {
   let color = colorTypeFromIconType({ isReceive, pending })
   if (transparent) color = palette.white
   const raw_xml = isReceive ? xml_transaction_received : xml_transaction_sent

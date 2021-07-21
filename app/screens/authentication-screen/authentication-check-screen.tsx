@@ -57,7 +57,7 @@ export const AuthenticationCheckScreen: ScreenType = ({ navigation }: Props) => 
         showModalClipboardIfValidPayment(client)
       }
     })()
-  }, [])
+  }, [client, navigation])
 
   return (
     <Screen

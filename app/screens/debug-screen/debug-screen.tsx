@@ -1,4 +1,5 @@
 import * as React from "react"
+import { useCallback, useMemo } from "react"
 import { Alert, DevSettings, Text, View } from "react-native"
 import { Button, ButtonGroup } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
@@ -25,32 +26,37 @@ const styles = EStyleSheet.create({
 
 export const DebugScreen: ScreenType = () => {
   const client = useApolloClient()
-  const token = new Token()
+  const token = useMemo(() => {
+    return new Token()
+  }, [])
 
   const networks: INetwork[] = ["regtest", "testnet", "mainnet"]
   const [networkState, setNetworkState] = React.useState("")
   const [graphQlUri, setGraphQlUri] = React.useState("")
 
-  const setNetwork = async (network?) => {
-    let n
+  const setNetwork = useCallback(
+    async (network?) => {
+      let n
 
-    if (token.network) {
-      n = token.network
-    } else if (!network) {
-      n = await loadNetwork()
-    } else {
-      n = network
-    }
+      if (token.network) {
+        n = token.network
+      } else if (!network) {
+        n = await loadNetwork()
+      } else {
+        n = network
+      }
 
-    setGraphQlUri(await getGraphQlUri())
-    setNetworkState(n)
-  }
+      setGraphQlUri(await getGraphQlUri())
+      setNetworkState(n)
+    },
+    [token],
+  )
 
   React.useEffect(() => {
     ;(async () => {
       setNetwork()
     })()
-  }, [])
+  }, [setNetwork])
 
   return (
     <Screen preset="scroll" backgroundColor={color.transparent}>

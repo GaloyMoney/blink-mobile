@@ -8,7 +8,7 @@ import i18n from "i18n-js"
 // eslint-disable-next-line import/no-unassigned-import
 import "node-libs-react-native/globals" // needed for Buffer?
 import * as React from "react"
-import { useEffect } from "react"
+import { useCallback, useEffect } from "react"
 import { AppState } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import * as RNLocalize from "react-native-localize"
@@ -126,22 +126,25 @@ export const RootStack: NavigatorType = () => {
   const appState = React.useRef(AppState.currentState)
   const client = useApolloClient()
 
+  const _handleAppStateChange = useCallback(
+    (nextAppState) => {
+      if (appState.current.match(/background/) && nextAppState === "active") {
+        console.log("App has come to the foreground!")
+        showModalClipboardIfValidPayment(client)
+      }
+
+      appState.current = nextAppState
+    },
+    [client],
+  )
+
   useEffect(() => {
     AppState.addEventListener("change", _handleAppStateChange)
 
     return () => {
       AppState.removeEventListener("change", _handleAppStateChange)
     }
-  }, [])
-
-  const _handleAppStateChange = (nextAppState) => {
-    if (appState.current.match(/background/) && nextAppState === "active") {
-      console.log("App has come to the foreground!")
-      showModalClipboardIfValidPayment(client)
-    }
-
-    appState.current = nextAppState
-  }
+  }, [_handleAppStateChange])
 
   const showNotification = (remoteMessage) => {
     console.log({ remoteMessage })
@@ -248,7 +251,7 @@ export const RootStack: NavigatorType = () => {
   }, [])
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  useEffect(() => messaging().onTokenRefresh((token) => addDeviceToken(client)), [])
+  useEffect(() => messaging().onTokenRefresh((token) => addDeviceToken(client)), [client])
 
   const token = new Token()
 

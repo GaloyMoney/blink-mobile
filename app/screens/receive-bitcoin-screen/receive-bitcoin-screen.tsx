@@ -149,6 +149,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
 
   useEffect(() => {
     update()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -184,6 +185,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
     }
 
     fn()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(
@@ -228,7 +230,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
     }
 
     notifRequest()
-  }, [])
+  }, [client])
 
   const update = async () => {
     setLoading(true)
@@ -293,7 +295,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
     return () => {
       AppState.removeEventListener("change", _handleAppStateChange)
     }
-  }, [invoice])
+  }, [invoice, updatePendingInvoice])
 
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async (remoteMessage) => {
@@ -477,7 +479,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
                   type === "lightning" ? "common.shareLightning" : "common.shareBitcoin",
                 )
           }
-          onPress={isSucceed ? () => navigation.goBack(false) : share}
+          onPress={isSucceed ? () => navigation.goBack() : share}
           disabled={!isReady}
           titleStyle={styles.buttonTitle}
         />

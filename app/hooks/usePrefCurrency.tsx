@@ -21,7 +21,7 @@ export function usePrefCurrency(): [string, () => void] {
     })
 
     return unsubscribe
-  }, [prefCurrency])
+  }, [navigation, prefCurrency])
 
   return [prefCurrency, nextPrefCurrency]
 }

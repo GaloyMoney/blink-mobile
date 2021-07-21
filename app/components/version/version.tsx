@@ -25,7 +25,7 @@ export const VersionComponent: ComponentType = ({ style }: { style?: TextStylePr
       navigate("Profile")
       setSecretMenuCounter(0)
     }
-  }, [secretMenuCounter])
+  }, [navigate, secretMenuCounter])
 
   return (
     <Pressable onPress={() => setSecretMenuCounter(secretMenuCounter + 1)}>

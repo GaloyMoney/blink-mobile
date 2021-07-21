@@ -4,7 +4,7 @@ import { gql, useApolloClient, useLazyQuery, useMutation } from "@apollo/client"
 import { RouteProp, useNavigation } from "@react-navigation/native"
 import LottieView from "lottie-react-native"
 import * as React from "react"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { ActivityIndicator, ScrollView, Text, View } from "react-native"
 import { Button, Input } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
@@ -242,6 +242,21 @@ export const SendBitcoinScreen: React.FC<SendBitcoinScreenProps> = ({
   const { network } = new Token()
   const potentialBitcoinOrLightning = regexFilter(network)?.test(destination) ?? false
 
+  const reset = useCallback(() => {
+    setStatus("idle")
+    setErrs([])
+    setInvoiceError("")
+    setAddress("")
+    setPaymentType(undefined)
+    setAmountless(false)
+    setInitAmount(0)
+    setAmount(0)
+    setDestination("")
+    setInvoice("")
+    setMemo("")
+    setInitialMemo("")
+  }, [])
+
   useEffect(() => {
     reset()
     const { valid, username } = validPayment(route.params?.payment, network, client)
@@ -256,22 +271,8 @@ export const SendBitcoinScreen: React.FC<SendBitcoinScreenProps> = ({
     } else {
       setInteractive(true)
     }
-  }, [route.params])
-
-  const reset = () => {
-    setStatus("idle")
-    setErrs([])
-    setInvoiceError("")
-    setAddress("")
-    setPaymentType(undefined)
-    setAmountless(false)
-    setInitAmount(0)
-    setAmount(0)
-    setDestination("")
-    setInvoice("")
-    setMemo("")
-    setInitialMemo("")
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [client, reset, route.params])
 
   useEffect(() => {
     const fn = async () => {
@@ -374,6 +375,7 @@ export const SendBitcoinScreen: React.FC<SendBitcoinScreenProps> = ({
     }
 
     fn()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [destination, amount])
 
   const pay = async () => {

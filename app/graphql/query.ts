@@ -1,7 +1,7 @@
 import { ApolloClient, gql, makeVar } from "@apollo/client"
 import _ from "lodash"
 import { MockableApolloClient } from "../types/mockable"
-import { gql_main_query_wallet } from "./__generated__/gql_main_query"
+import { wallet_wallet } from "./__generated__/wallet"
 
 export const prefCurrencyVar = makeVar("USD")
 export function nextPrefCurrency(): void {
@@ -85,8 +85,7 @@ export const QUERY_EARN_LIST = gql`
   }
 `
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const getWallet = (client: ApolloClient<unknown>): any => {
+export const getWallet = (client: ApolloClient<unknown>): wallet_wallet[] => {
   const { wallet } = client.readQuery({
     query: WALLET,
   })
