@@ -12,7 +12,7 @@ import { usePrefCurrency } from "../../hooks/usePrefCurrency"
 import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
 import type { ComponentType } from "../../types/jsx"
-import { CurrencyConversion } from "../../utils/currencyConversion"
+import { CurrencyConversion, toCurrency } from "../../utils/currencyConversion"
 import { CurrencyType } from "../../utils/enum"
 import { TextCurrency } from "../text-currency/text-currency"
 
@@ -92,12 +92,12 @@ export const InputPayment: ComponentType = ({
   prefCurrency,
   nextPrefCurrency,
 }: InputPaymentDataInjectedProps) => {
-  const endByDot = (s: string) => s.match(/^[0-9]*\.{1}$/)
-
   const [amount, setAmount] = React.useState(initAmount)
   const [input, setInput] = React.useState("")
-  const [appendDot, setAppendDot] = React.useState(false)
 
+  const handleChange = (text) => {
+    setInput(currency === CurrencyType.USD || currency === CurrencyType.BTC ? toCurrency(text) : text)
+  }
   const mapping = CurrencyConversion(price)
   const amountInput = mapping[prefCurrency].conversion(amount)
   const currency = mapping[prefCurrency].primary
@@ -107,13 +107,14 @@ export const InputPayment: ComponentType = ({
   }, [initAmount])
 
   React.useEffect(() => {
-    setAppendDot(!!endByDot(input))
     const newAmount = mapping[prefCurrency].reverse(+input)
     if (!isNaN(newAmount)) {
       setAmount(newAmount)
       onUpdateAmount(toInteger(newAmount))
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  // note: adding additional dependencies here breaks the input field
+  // when switching between usd & sats
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [input])
 
   // is Focused part
@@ -140,23 +141,6 @@ export const InputPayment: ComponentType = ({
     inputRef?.current?.blur()
   }
 
-  const valueTweak = () => {
-    let value
-
-    if (amountInput == 0 || isNaN(amountInput)) {
-      value = ""
-    } else {
-      value = String(+amountInput)
-    }
-
-    // only add dot for for non-sats.
-    if ((currency === CurrencyType.USD || currency === CurrencyType.BTC) && appendDot) {
-      value += "."
-    }
-
-    return value
-  }
-
   return (
     <View style={styles.container}>
       <View style={styles.main}>
@@ -164,13 +148,13 @@ export const InputPayment: ComponentType = ({
           ref={inputRef}
           placeholder={translate("common.setAnAmount")}
           autoFocus={forceKeyboard}
-          value={valueTweak()}
+          value={amountInput}
           leftIcon={
             currency === CurrencyType.USD ? (
               <Text
                 style={[
                   styles.textStyle,
-                  { color: valueTweak() === "" ? palette.midGrey : palette.darkGrey },
+                  { color: amount === 0 ? palette.midGrey : palette.darkGrey },
                 ]}
               >
                 $
@@ -182,7 +166,7 @@ export const InputPayment: ComponentType = ({
               <Text
                 style={[
                   styles.textStyle,
-                  { color: valueTweak() === "" ? palette.midGrey : palette.darkGrey },
+                  { color: amount === 0 ? palette.midGrey : palette.darkGrey },
                 ]}
               >
                 BTC
@@ -191,7 +175,7 @@ export const InputPayment: ComponentType = ({
               <Text
                 style={[
                   styles.textStyle,
-                  { color: valueTweak() === "" ? palette.midGrey : palette.darkGrey },
+                  { color: input === "" ? palette.midGrey : palette.darkGrey },
                 ]}
               >
                 sats
@@ -200,7 +184,7 @@ export const InputPayment: ComponentType = ({
           }
           inputContainerStyle={styles.inputContainer}
           inputStyle={[styles.textStyle]}
-          onChangeText={setInput}
+          onChangeText={handleChange}
           keyboardType={currency === "sats" ? "number-pad" : "decimal-pad"}
           onBlur={onBlur}
           enablesReturnKeyAutomatically

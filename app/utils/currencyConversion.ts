@@ -59,3 +59,37 @@ export const textCurrencyFormatting = (
   }
   throw Error("wrong currency")
 }
+
+// Extracted from: https://github.com/ianmcnally/react-currency-masked-input/blob/3989ce3dfa69dbf78da00424811376c483aceb98/src/services/currency-conversion.js
+export const toCurrency = (value: string , separator = '.'): string => {
+  const digits = getDigitsFromValue(value)
+  const digitsWithPadding = padDigits(digits)
+  return addDecimalToNumber(digitsWithPadding, separator);
+}
+
+const getDigitsFromValue = (value = '') => value.replace(/(-(?!\d))|[^0-9|-]/g, '') || ''
+
+const padDigits = digits => {
+  const desiredLength = 3
+  const actualLength = digits.length
+
+  if (actualLength >= desiredLength) {
+    return digits
+  }
+
+  const amountToAdd = desiredLength - actualLength
+  const padding = '0'.repeat(amountToAdd)
+
+  return padding + digits
+}
+
+const removeLeadingZeros = number => number.replace(/^0+([0-9]+)/, '$1')
+
+const addDecimalToNumber = (number: string, separator: string) => {
+  const centsStartingPosition = number.length - 2
+  const dollars = removeLeadingZeros(
+    number.substring(0, centsStartingPosition)
+  )
+  const cents = number.substring(centsStartingPosition)
+  return dollars + separator + cents
+}
