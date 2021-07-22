@@ -1,7 +1,8 @@
 import * as currency_fmt from "currency.js"
 import * as React from "react"
-import { Text, View } from "react-native"
+import { Text, TextStyle, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
+import type { ComponentType } from "../../types/jsx"
 import { CurrencyType } from "../../utils/enum"
 
 const styles = EStyleSheet.create({
@@ -14,10 +15,10 @@ const styles = EStyleSheet.create({
 type Props = {
   amount: number
   currency: string
-  style: Record<string, any>
+  style: TextStyle
 }
 
-export const TextCurrency = ({ amount, currency, style }: Props) => {
+export const TextCurrency: ComponentType = ({ amount, currency, style }: Props) => {
   if (currency === CurrencyType.USD) {
     return (
       <Text style={style}>

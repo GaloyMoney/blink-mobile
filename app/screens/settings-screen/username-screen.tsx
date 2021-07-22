@@ -1,9 +1,11 @@
 /* eslint-disable react-native/no-unused-styles */
 import { gql, useLazyQuery, useMutation } from "@apollo/client"
 import { useIsFocused } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { ActivityIndicator, Alert, Text, TextInput } from "react-native"
+import { ActivityIndicator, Alert, Text } from "react-native"
+import { TextInput } from "react-native-vector-icons/node_modules/@types/react-native/index"
 import { Input } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 
@@ -11,8 +13,9 @@ import { Screen } from "../../components/screen"
 import { USERNAME_EXIST } from "../../graphql/query"
 import { translate } from "../../i18n"
 import { color } from "../../theme"
-import { ScreenType } from "../../types/screen"
 import { UsernameValidation } from "../../utils/validation"
+import type { ScreenType } from "../../types/jsx"
+import type { RootStackParamList } from "../../navigation/stack-param-lists"
 
 // TODO: memoize dynamic styles
 const styles = (error = false) =>
@@ -34,7 +37,7 @@ const styles = (error = false) =>
   })
 
 type Props = {
-  navigation: Record<string, any>
+  navigation: StackNavigationProp<RootStackParamList, "setUsername">
 }
 
 export const UsernameScreen: ScreenType = ({ navigation }: Props) => {
@@ -55,6 +58,8 @@ export const UsernameScreen: ScreenType = ({ navigation }: Props) => {
 
   const usernameExists = data?.usernameExists ?? false
 
+  const inputForm = React.createRef<TextInput>()
+
   const [updateUsername] = useMutation(gql`
     mutation updateUsername($username: String!) {
       updateUser {
@@ -72,7 +77,7 @@ export const UsernameScreen: ScreenType = ({ navigation }: Props) => {
     }
 
     usernameExistsQuery({ variables: { username: input } })
-  }, [input])
+  }, [input, usernameExistsQuery])
 
   useEffect(() => {
     if (!UsernameValidation.hasValidLength(input)) {
@@ -97,7 +102,7 @@ export const UsernameScreen: ScreenType = ({ navigation }: Props) => {
       setMessage(translate("UsernameScreen.available", { input }))
       setMessageIsError(false)
     }
-  }, [data, input])
+  }, [data, input, inputForm, shouldShowCharacterMinimumErrorMessage, usernameExists])
 
   const send = async () => {
     setLoading(true)
@@ -165,8 +170,6 @@ export const UsernameScreen: ScreenType = ({ navigation }: Props) => {
       setShouldShowCharacterMinimumErrorMessage(true)
     }
   }
-
-  const inputForm = React.createRef<TextInput>()
 
   return (
     <Screen preset="scroll" style={styles().screenStyle}>

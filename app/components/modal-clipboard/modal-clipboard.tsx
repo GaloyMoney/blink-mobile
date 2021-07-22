@@ -12,6 +12,7 @@ import { modalClipboardVisibleVar } from "../../graphql/query"
 import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
+import type { ComponentType } from "../../types/jsx"
 import { validPayment } from "../../utils/parsing"
 import { Token } from "../../utils/token"
 import { LAST_CLIPBOARD_PAYMENT } from "../../graphql/client-only-query"
@@ -70,7 +71,7 @@ const styles = StyleSheet.create({
   },
 })
 
-export const ModalClipboard = () => {
+export const ModalClipboard: ComponentType = () => {
   const client = useApolloClient()
   const navigation = useNavigation()
 
@@ -106,7 +107,7 @@ export const ModalClipboard = () => {
           : "ModalClipboard.pendingBitcoin"
       setMessage(translate(pathString))
     })()
-  }, [isVisible])
+  }, [client, isVisible])
 
   return (
     <Modal

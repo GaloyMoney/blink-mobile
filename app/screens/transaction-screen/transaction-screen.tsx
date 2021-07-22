@@ -1,4 +1,5 @@
-import { useQuery, useReactiveVar } from "@apollo/client"
+import { ApolloError, useQuery, useReactiveVar } from "@apollo/client"
+import { StackNavigationProp } from "@react-navigation/stack"
 import * as _ from "lodash"
 import * as React from "react"
 import { SectionList, Text, View } from "react-native"
@@ -9,6 +10,8 @@ import { Screen } from "../../components/screen"
 import { TransactionItem } from "../../components/transaction-item"
 import { nextPrefCurrency, prefCurrencyVar, WALLET } from "../../graphql/query"
 import { translate } from "../../i18n"
+import type { ScreenType } from "../../types/jsx"
+import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import { sameDay, sameMonth } from "../../utils/date"
 
@@ -56,10 +59,12 @@ const isYesterday = (tx) => sameDay(tx.date, new Date().setDate(new Date().getDa
 const isThisMonth = (tx) => sameMonth(tx.date, new Date())
 
 type Props = {
-  navigation: Record<string, any>
+  navigation: StackNavigationProp<RootStackParamList, "transactionHistory">
 }
 
-export const TransactionHistoryScreenDataInjected = ({ navigation }: Props) => {
+export const TransactionHistoryScreenDataInjected: ScreenType = ({
+  navigation,
+}: Props) => {
   const currency = "sat" // FIXME
 
   const { data } = useQuery(WALLET, { fetchPolicy: "cache-only" })
@@ -122,17 +127,19 @@ export const TransactionHistoryScreenDataInjected = ({ navigation }: Props) => {
 
 type TransactionScreenProps = {
   refreshing: boolean
-  navigation: Record<string, any>
+  navigation: StackNavigationProp<RootStackParamList, "transactionHistory">
   onRefresh: () => void
-  error: Record<string, any>
+  error: ApolloError
   prefCurrency: string
   nextPrefCurrency: () => void
   sections: []
 }
 
-export const TransactionScreen = ({
+export const TransactionScreen: ScreenType = ({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   refreshing,
   navigation,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onRefresh,
   error,
   prefCurrency,

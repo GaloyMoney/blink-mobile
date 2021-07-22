@@ -11,10 +11,13 @@ import { palette } from "../../theme/palette"
 import { translate } from "../../i18n"
 import { resetDataStore } from "../../utils/logout"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
-import type { ScreenType } from "../../types/screen"
+import type { ScreenType } from "../../types/jsx"
 import { PinScreenPurpose } from "../../utils/enum"
 import { sleep } from "../../utils/sleep"
 import { showModalClipboardIfValidPayment } from "../../utils/clipboard"
+import { RootStackParamList } from "../../navigation/stack-param-lists"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { RouteProp } from "@react-navigation/native"
 
 const styles = EStyleSheet.create({
   bottomSpacer: {
@@ -109,12 +112,8 @@ const styles = EStyleSheet.create({
 })
 
 type Props = {
-  route: {
-    params: {
-      screenPurpose: PinScreenPurpose
-    }
-  }
-  navigation: any
+  navigation: StackNavigationProp<RootStackParamList, "pin">
+  route: RouteProp<RootStackParamList, "pin">
 }
 
 export const PinScreen: ScreenType = ({ route, navigation }: Props) => {

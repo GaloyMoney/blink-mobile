@@ -1,7 +1,6 @@
 import * as React from "react"
 import {
   KeyboardAvoidingView,
-  Platform,
   ScrollView,
   StatusBar,
   View,
@@ -74,7 +73,7 @@ function ScreenWithScrolling(props: ScreenProps) {
  *
  * @param props The screen props
  */
-export function Screen(props: ScreenProps) {
+export function Screen(props: ScreenProps): JSX.Element {
   if (isNonScrolling(props.preset)) {
     return <ScreenWithoutScrolling {...props} />
   }

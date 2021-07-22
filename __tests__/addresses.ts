@@ -1,5 +1,5 @@
-import { validPayment } from "../app/utils/parsing"
 import moment from "moment"
+import { validPayment } from "../app/utils/parsing"
 
 // more test address can be found at: https://github.com/bitcoinjs/bitcoinjs-lib/blob/master/test/fixtures/address.json
 
@@ -21,7 +21,7 @@ const checkOnChain = (address, network) => {
 }
 
 const checkOnChainFail = (address, network) => {
-  const { valid, paymentType, errorMessage } = validPayment(address, network, client)
+  const { valid, errorMessage } = validPayment(address, network, client)
   console.log(errorMessage)
   expect(valid).toBeFalsy()
 }

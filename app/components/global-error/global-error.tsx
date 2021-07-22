@@ -1,8 +1,8 @@
 import { useApolloNetworkStatus } from "../../app"
-import { translate } from "../../i18n"
+import type { ComponentType } from "../../types/jsx"
 import { toastShow } from "../../utils/toast"
 
-export const GlobalErrorToast = () => {
+export const GlobalErrorToast: ComponentType = () => {
   const status = useApolloNetworkStatus()
 
   console.log({ status }, "status query")

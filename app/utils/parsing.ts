@@ -5,6 +5,9 @@ import { networks, address } from "bitcoinjs-lib"
 import { getDescription, getDestination, getUsername } from "./bolt11"
 import { getMyUsername, getPubKey } from "../graphql/query"
 
+import type { INetwork } from "../types/network"
+import type { MockableApolloClient } from "../types/mockable"
+
 // TODO: look if we own the address
 
 export type IPaymentType =
@@ -21,14 +24,11 @@ export interface IValidPaymentReponse {
   address?: string | undefined // for bitcoin
   amount?: number | undefined
   amountless?: boolean | undefined
-  memo?: string | undefined
+  memo?: lightningPayReq.TagData | string | undefined
   paymentType?: IPaymentType
   sameNode?: boolean | undefined
   username?: string | undefined
 }
-
-// TODO: enforce this from the backend
-type INetwork = "mainnet" | "testnet" | "regtest"
 
 const mappingToBitcoinJs = (input: INetwork) => {
   switch (input) {
@@ -57,7 +57,7 @@ function parseAmount(txt) {
 export const validPayment = (
   input: string,
   network: INetwork,
-  client: any /* apollo client */,
+  client: MockableApolloClient,
 ): IValidPaymentReponse => {
   const myPubKey = getPubKey(client)
   const username = getMyUsername(client)

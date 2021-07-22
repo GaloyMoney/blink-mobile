@@ -5,6 +5,8 @@ import { Text } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { IconTransaction } from "../icon-transactions"
 import { palette } from "../../theme/palette"
+import { query_transactions_wallet_transactions } from "../../graphql/__generated__/query_transactions"
+import { ParamListBase } from "@react-navigation/native"
 
 const styles = EStyleSheet.create({
   confirmed: {
@@ -18,8 +20,8 @@ const styles = EStyleSheet.create({
 })
 
 export interface TransactionItemProps {
-  navigation: StackNavigationProp<any, any>
-  tx: Record<string, any> // TODO
+  navigation: StackNavigationProp<ParamListBase>
+  tx: query_transactions_wallet_transactions
   subtitle?: boolean
 }
 
@@ -33,14 +35,8 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
   return (
     <ListItem
       // key={props.hash}
-      title={tx.description}
-      leftIcon={
-        <IconTransaction isReceive={tx.isReceive} size={24} pending={tx.pending} />
-      }
       containerStyle={tx.pending ? styles.pending : styles.confirmed}
-      rightTitle={<Text style={{ color: colorFromType(tx.isReceive) }}>{tx.text}</Text>}
       onPress={() => navigation.navigate("transactionDetail", { tx })}
-      subtitle={subtitle ? tx.date_nice_print : undefined}
     >
       <IconTransaction isReceive={tx.isReceive} size={24} pending={tx.pending} />
       <ListItem.Content>

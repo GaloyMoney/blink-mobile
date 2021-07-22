@@ -8,7 +8,7 @@ import i18n from "i18n-js"
 // eslint-disable-next-line import/no-unassigned-import
 import "node-libs-react-native/globals" // needed for Buffer?
 import * as React from "react"
-import { useEffect } from "react"
+import { useCallback, useEffect } from "react"
 import { AppState } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import * as RNLocalize from "react-native-localize"
@@ -47,6 +47,14 @@ import { AccountType } from "../utils/enum"
 import { addDeviceToken } from "../utils/notifications"
 import { getNetwork, Token } from "../utils/token"
 import { showModalClipboardIfValidPayment } from "../utils/clipboard"
+import {
+  ContactStackParamList,
+  MoveMoneyStackParamList,
+  PhoneValidationStackParamList,
+  PrimaryStackParamList,
+  RootStackParamList,
+} from "./stack-param-lists"
+import type { NavigatorType } from "../types/jsx"
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const PushNotification = require("react-native-push-notification")
@@ -112,11 +120,23 @@ const styles = EStyleSheet.create({
 
 const size = 32
 
-const RootNavigator = createStackNavigator()
+const RootNavigator = createStackNavigator<RootStackParamList>()
 
-export const RootStack = () => {
+export const RootStack: NavigatorType = () => {
   const appState = React.useRef(AppState.currentState)
   const client = useApolloClient()
+
+  const _handleAppStateChange = useCallback(
+    (nextAppState) => {
+      if (appState.current.match(/background/) && nextAppState === "active") {
+        console.log("App has come to the foreground!")
+        showModalClipboardIfValidPayment(client)
+      }
+
+      appState.current = nextAppState
+    },
+    [client],
+  )
 
   useEffect(() => {
     AppState.addEventListener("change", _handleAppStateChange)
@@ -124,16 +144,7 @@ export const RootStack = () => {
     return () => {
       AppState.removeEventListener("change", _handleAppStateChange)
     }
-  }, [])
-
-  const _handleAppStateChange = (nextAppState) => {
-    if (appState.current.match(/background/) && nextAppState === "active") {
-      console.log("App has come to the foreground!")
-      showModalClipboardIfValidPayment(client)
-    }
-
-    appState.current = nextAppState
-  }
+  }, [_handleAppStateChange])
 
   const showNotification = (remoteMessage) => {
     console.log({ remoteMessage })
@@ -214,6 +225,7 @@ export const RootStack = () => {
 
   useEffect(() => {
     // onNotificationOpenedApp: When the application is running, but in the background.
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     messaging().onNotificationOpenedApp((remoteMessage) => {
       // console.log(
       //   'Notification caused app to open from background state:',
@@ -225,6 +237,7 @@ export const RootStack = () => {
     // getInitialNotification: When the application is opened from a quit state.
     messaging()
       .getInitialNotification()
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       .then((remoteMessage) => {
         // if (remoteMessage) {
         //   console.log(
@@ -237,7 +250,8 @@ export const RootStack = () => {
       })
   }, [])
 
-  useEffect(() => messaging().onTokenRefresh((token) => addDeviceToken(client)), [])
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  useEffect(() => messaging().onTokenRefresh((token) => addDeviceToken(client)), [client])
 
   const token = new Token()
 
@@ -254,7 +268,6 @@ export const RootStack = () => {
           animationEnabled: false,
         }}
       />
-      <RootNavigator.Screen name="debug" component={DebugScreen} />
       <RootNavigator.Screen
         name="welcomeFirst"
         component={WelcomeFirstScreen}
@@ -378,26 +391,15 @@ export const RootStack = () => {
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
           title: translate("common.bitcoinPrice"),
         }}
-        // options={({ navigation }) => ({
-        //   headerRight: () => (
-        //     <Icon
-        //       name={"ios-person"}
-        //       size={32}
-        //       color={palette.darkGrey}
-        //       style={styles.person}
-        //       onPress={() => navigation.navigate("debug")}
-        //     />
-        //   ),
-        // })}
         initialParams={{ account: AccountType.Bitcoin }}
       />
     </RootNavigator.Navigator>
   )
 }
 
-const StackContacts = createStackNavigator()
+const StackContacts = createStackNavigator<ContactStackParamList>()
 
-export const ContactNavigator = () => (
+export const ContactNavigator: NavigatorType = () => (
   <StackContacts.Navigator>
     <StackContacts.Screen
       name="Contacts"
@@ -414,9 +416,9 @@ export const ContactNavigator = () => (
   </StackContacts.Navigator>
 )
 
-const StackMoveMoney = createStackNavigator()
+const StackMoveMoney = createStackNavigator<MoveMoneyStackParamList>()
 
-export const MoveMoneyNavigator = () => (
+export const MoveMoneyNavigator: NavigatorType = () => (
   <StackMoveMoney.Navigator>
     <StackMoveMoney.Screen
       name="moveMoney"
@@ -443,9 +445,9 @@ export const MoveMoneyNavigator = () => (
   </StackMoveMoney.Navigator>
 )
 
-const StackPhoneValidation = createStackNavigator()
+const StackPhoneValidation = createStackNavigator<PhoneValidationStackParamList>()
 
-export const PhoneValidationNavigator = () => (
+export const PhoneValidationNavigator: NavigatorType = () => (
   <StackPhoneValidation.Navigator>
     <StackPhoneValidation.Screen
       name="welcomePhoneInput"
@@ -465,13 +467,13 @@ export const PhoneValidationNavigator = () => (
   </StackPhoneValidation.Navigator>
 )
 
-const Tab = createBottomTabNavigator()
+const Tab = createBottomTabNavigator<PrimaryStackParamList>()
 
 type TabProps = {
   color: string
 }
 
-export const PrimaryNavigator = () => {
+export const PrimaryNavigator: NavigatorType = () => {
   const [network, setNetwork] = React.useState("mainnet")
 
   React.useEffect(() => {

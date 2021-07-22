@@ -1,7 +1,8 @@
-import { useApolloClient, useReactiveVar } from "@apollo/client"
+import { useApolloClient } from "@apollo/client"
 import { toInteger } from "lodash"
 import * as React from "react"
 import { Keyboard, Text, View } from "react-native"
+import { TextInput } from "react-native-vector-icons/node_modules/@types/react-native/index"
 import { Input } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableOpacity } from "react-native-gesture-handler"
@@ -10,6 +11,7 @@ import { btc_price } from "../../graphql/query"
 import { usePrefCurrency } from "../../hooks/usePrefCurrency"
 import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
+import type { ComponentType } from "../../types/jsx"
 import { CurrencyConversion } from "../../utils/currencyConversion"
 import { CurrencyType } from "../../utils/enum"
 import { TextCurrency } from "../text-currency/text-currency"
@@ -48,8 +50,8 @@ const styles = EStyleSheet.create({
   },
 })
 
-export interface InputPaymentDataInjectedProps {
-  price: string | number
+type InputPaymentDataInjectedProps = {
+  price: number
   editable: boolean
   onUpdateAmount(number): void
   onBlur?(): void
@@ -61,7 +63,9 @@ export interface InputPaymentDataInjectedProps {
   sub?: boolean
 }
 
-export const InputPaymentDataInjected = (props: InputPaymentDataInjectedProps) => {
+export const InputPaymentDataInjected: ComponentType = (
+  props: InputPaymentDataInjectedProps,
+) => {
   const client = useApolloClient()
   const price = btc_price(client)
 
@@ -77,7 +81,7 @@ export const InputPaymentDataInjected = (props: InputPaymentDataInjectedProps) =
   )
 }
 
-export const InputPayment = ({
+export const InputPayment: ComponentType = ({
   price,
   editable,
   onUpdateAmount,
@@ -95,6 +99,8 @@ export const InputPayment = ({
   const [appendDot, setAppendDot] = React.useState(false)
 
   const mapping = CurrencyConversion(price)
+  const amountInput = mapping[prefCurrency].conversion(amount)
+  const currency = mapping[prefCurrency].primary
 
   React.useEffect(() => {
     setAmount(initAmount)
@@ -107,25 +113,19 @@ export const InputPayment = ({
       setAmount(newAmount)
       onUpdateAmount(toInteger(newAmount))
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [input])
 
   // is Focused part
 
   React.useEffect(() => {
-    keyboardFocus()
-  }, [editable, amount])
-
-  const inputRef = React.useRef()
-
-  const amountInput = mapping[prefCurrency].conversion(amount)
-  const currency = mapping[prefCurrency].primary
-
-  // TODO: show "an amount is needed" in red
-  function keyboardFocus() {
+    // TODO: show "an amount is needed" in red
     if (forceKeyboard && (amountInput == "" || amountInput == "." || +amountInput == 0)) {
       inputRef?.current.focus()
     }
-  }
+  }, [editable, forceKeyboard, amountInput])
+
+  const inputRef = React.useRef<TextInput>()
 
   React.useEffect(() => {
     Keyboard.addListener("keyboardDidHide", _keyboardDidHide)
@@ -202,10 +202,7 @@ export const InputPayment = ({
           inputStyle={[styles.textStyle]}
           onChangeText={setInput}
           keyboardType={currency === "sats" ? "number-pad" : "decimal-pad"}
-          onBlur={(event) => {
-            onBlur()
-            // keyboardFocus()
-          }}
+          onBlur={onBlur}
           enablesReturnKeyAutomatically
           returnKeyLabel="Update"
           returnKeyType="done"

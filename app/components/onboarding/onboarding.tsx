@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
+import type { ScreenType } from "../../types/jsx"
 
 const styles = StyleSheet.create({
   buttonContainer: {
@@ -52,7 +53,7 @@ type Props = {
   loading: boolean
 }
 
-export const OnboardingScreen = ({
+export const OnboardingScreen: ScreenType = ({
   children,
   next /* screen */,
   nextTitle,

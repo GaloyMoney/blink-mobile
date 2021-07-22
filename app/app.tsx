@@ -67,7 +67,7 @@ LogBox.ignoreAllLogs()
 /**
  * This is the root component of our app.
  */
-export const App = () => {
+export const App = (): JSX.Element => {
   const [routeName, setRouteName] = useState("Initial")
   const [apolloClient, setApolloClient] = useState<ApolloClient<NormalizedCacheObject>>()
   const [persistor, setPersistor] = useState<CachePersistor<NormalizedCacheObject>>()

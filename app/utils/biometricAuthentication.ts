@@ -10,7 +10,11 @@ export default class BiometricWrapper {
     }
   }
 
-  public static async authenticate(description, handleSuccess, handleFailure) {
+  public static async authenticate(
+    description: string,
+    handleSuccess: () => void,
+    handleFailure: () => void,
+  ): Promise<void> {
     await FingerprintScanner.release()
     FingerprintScanner.authenticate({
       description: description,
@@ -20,6 +24,7 @@ export default class BiometricWrapper {
         handleSuccess()
       })
       .catch((error) => {
+        console.log({ error }, "error during biometric authentication")
         handleFailure()
       })
       .finally(() => {

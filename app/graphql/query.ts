@@ -1,8 +1,10 @@
 import { ApolloClient, gql, makeVar } from "@apollo/client"
 import _ from "lodash"
+import { MockableApolloClient } from "../types/mockable"
+import { wallet_wallet } from "./__generated__/wallet"
 
 export const prefCurrencyVar = makeVar("USD")
-export function nextPrefCurrency() {
+export function nextPrefCurrency(): void {
   const units = ["sats", "USD"] // "BTC"
   const currentIndex = _.indexOf(units, prefCurrencyVar())
   prefCurrencyVar(units[(currentIndex + 1) % units.length])
@@ -83,18 +85,19 @@ export const QUERY_EARN_LIST = gql`
   }
 `
 
-export const getWallet = (client) => {
+export const getWallet = (client: ApolloClient<unknown>): wallet_wallet[] => {
   const { wallet } = client.readQuery({
     query: WALLET,
   })
   return wallet
 }
 
-export const balanceUsd = (client) =>
+export const balanceUsd = (client: ApolloClient<unknown>): number =>
   _.find(getWallet(client), { id: "BTC" }).balance * btc_price(client)
-export const balanceBtc = (client) => _.find(getWallet(client), { id: "BTC" }).balance
+export const balanceBtc = (client: ApolloClient<unknown>): number =>
+  _.find(getWallet(client), { id: "BTC" }).balance
 
-export const getPubKey = (client) => {
+export const getPubKey = (client: MockableApolloClient): string => {
   const { nodeStats } = client.readQuery({
     query: gql`
       query nodeStats {
@@ -108,7 +111,7 @@ export const getPubKey = (client) => {
   return nodeStats?.id ?? ""
 }
 
-export const getMyUsername = (client) => {
+export const getMyUsername = (client: MockableApolloClient): string => {
   const { me } = client.readQuery({
     query: gql`
       query username {
@@ -128,8 +131,7 @@ export const USERNAME_EXIST = gql`
   }
 `
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-export const btc_price = (client: ApolloClient<object>): number => {
+export const btc_price = (client: ApolloClient<unknown>): number => {
   const price_default = NaN
   try {
     const result = client.readQuery({ query: QUERY_PRICE })

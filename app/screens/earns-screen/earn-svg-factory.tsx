@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   lottieContainer: { alignSelf: "center" },
 })
 
-export const SVGs = ({ name, width, theme }: ISVGs) => {
+export const SVGs = ({ name, width, theme }: ISVGs): SVGElement => {
   const { width: screenWidth } = Dimensions.get("window")
 
   const rWidth = width ?? screenWidth

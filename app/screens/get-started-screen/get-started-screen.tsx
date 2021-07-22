@@ -1,3 +1,4 @@
+import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { Image, View } from "react-native"
 import { Button } from "react-native-elements"
@@ -5,8 +6,10 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
 import { translate } from "../../i18n"
+import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
+import type { ScreenType } from "../../types/jsx"
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const BitcoinBeachLogo = require("./bitcoinBeach3.png")
@@ -51,10 +54,10 @@ const styles = EStyleSheet.create({
 })
 
 type Props = {
-  navigation: Record<string, any>
+  navigation: StackNavigationProp<RootStackParamList, "getStarted">
 }
 
-export const GetStartedScreen = ({ navigation }: Props) => (
+export const GetStartedScreen: ScreenType = ({ navigation }: Props) => (
   <Screen
     style={styles.container}
     backgroundColor={palette.lightBlue}

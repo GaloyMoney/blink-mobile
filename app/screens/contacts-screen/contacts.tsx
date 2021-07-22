@@ -10,6 +10,9 @@ import { useQuery, gql } from "@apollo/client"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
+import { StackNavigationProp } from "@react-navigation/stack"
+import type { ContactStackParamList } from "../../navigation/stack-param-lists"
+import type { ScreenType } from "../../types/jsx"
 
 const styles = EStyleSheet.create({
   emptyListNoContacts: {
@@ -57,10 +60,10 @@ const styles = EStyleSheet.create({
 })
 
 type Props = {
-  navigation: Record<string, any>
+  navigation: StackNavigationProp<ContactStackParamList, "Contacts">
 }
 
-export const ContactsScreen = ({ navigation }: Props) => {
+export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
   const { data } = useQuery(gql`
     query contacts {
       me {

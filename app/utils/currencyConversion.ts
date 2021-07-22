@@ -1,11 +1,25 @@
 export const currencyFormatting = {
-  USD: (usd) =>
+  USD: (usd: number): string =>
     usd < 0.01 ? (usd == 0 ? usd.toFixed(2) : usd.toFixed(4)) : usd.toFixed(2),
-  sats: (sats) => sats.toFixed(0),
-  BTC: (btc) => btc,
+  sats: (sats: number): string => sats.toFixed(0),
+  BTC: (btc: number): number => btc,
 }
 
-export const CurrencyConversion = (btcPrice) => ({
+interface CurrencyConverter {
+  primary: string
+  conversion: (value: number) => string
+  reverse: (value: number) => number
+  secondary: string
+  secondaryConversion: (value: number) => string | number
+}
+
+interface CurrencyConverters {
+  USD: CurrencyConverter
+  sats: CurrencyConverter
+  BTC: CurrencyConverter
+}
+
+export const CurrencyConversion = (btcPrice: number): CurrencyConverters => ({
   USD: {
     primary: "USD",
     // TODO refactor: other place could use those conversions
@@ -31,7 +45,11 @@ export const CurrencyConversion = (btcPrice) => ({
 })
 
 // TODO: refactor. this is probably elsewhere as well.
-export const textCurrencyFormatting = (sats, price, currency) => {
+export const textCurrencyFormatting = (
+  sats: number,
+  price: number,
+  currency: string,
+): string => {
   const cc = CurrencyConversion(price).sats
   if (currency === "sats") {
     return `${cc.conversion(sats)} sats`

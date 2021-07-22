@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useFocusEffect } from "@react-navigation/native"
+import { RouteProp, useFocusEffect } from "@react-navigation/native"
 import { Alert, Image, View } from "react-native"
 import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
@@ -12,9 +12,11 @@ import { translate } from "../../i18n"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import BiometricWrapper from "../../utils/biometricAuthentication"
 import { resetDataStore } from "../../utils/logout"
-import type { ScreenType } from "../../types/screen"
+import type { ScreenType } from "../../types/jsx"
 import { AuthenticationScreenPurpose, PinScreenPurpose } from "../../utils/enum"
 import { showModalClipboardIfValidPayment } from "../../utils/clipboard"
+import type { RootStackParamList } from "../../navigation/stack-param-lists"
+import { StackNavigationProp } from "@react-navigation/stack"
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const BitcoinBeachLogo = require("../get-started-screen/bitcoinBeach3.png")
@@ -66,13 +68,8 @@ const styles = EStyleSheet.create({
 })
 
 type Props = {
-  route: {
-    params: {
-      screenPurpose: AuthenticationScreenPurpose
-      isPinEnabled: boolean
-    }
-  }
-  navigation: any
+  navigation: StackNavigationProp<RootStackParamList, "authentication">
+  route: RouteProp<RootStackParamList, "authentication">
 }
 
 export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) => {

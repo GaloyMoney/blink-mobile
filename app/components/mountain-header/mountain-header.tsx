@@ -4,6 +4,7 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import Montain from "./mointains-cloud-01.svg"
 import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
+import type { ComponentType } from "../../types/jsx"
 
 const styles = EStyleSheet.create({
   amountContainer: {
@@ -38,7 +39,7 @@ type Props = {
   color: string
 }
 
-export const MountainHeader = ({ amount, color }: Props) => (
+export const MountainHeader: ComponentType = ({ amount, color }: Props) => (
   <View style={{ backgroundColor: color }}>
     <View style={styles.topView}>
       <View style={styles.amountContainer}>
