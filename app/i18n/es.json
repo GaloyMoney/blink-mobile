@@ -584,7 +584,7 @@
   "ScanningQRCodeScreen": {
     "invalidContent": "nosotros encontramos",
     "noQrCode": "No pudimos encontrar un código QR en la imagen",
-    "title": "Manda Bitcoin"
+    "title": "Escanear QR"
   },
   "SendBitcoinScreen": {
     "amount": "Cantidad",
