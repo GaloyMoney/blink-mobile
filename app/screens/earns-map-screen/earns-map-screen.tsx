@@ -28,7 +28,7 @@ import RightComplete from "./right-section-completed-01.svg"
 import RightOngoing from "./right-section-ongoing-01.svg"
 import RightTodo from "./right-section-to-do-01.svg"
 import TextBlock from "./text-block-medium.svg"
-import type { ScreenType } from "../../types/jsx"
+import type { ComponentType, ScreenType } from "../../types/jsx"
 import type { PrimaryStackParamList } from "../../navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
 
@@ -103,7 +103,7 @@ type ProgressProps = {
   progress: number
 }
 
-export const ProgressBar: ScreenType = ({ progress }: ProgressProps) => {
+export const ProgressBar: ComponentType = ({ progress }: ProgressProps) => {
   const balanceWidth = `${progress * 100}%`
 
   return (
