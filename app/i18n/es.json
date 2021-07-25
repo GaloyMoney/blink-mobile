@@ -13,9 +13,9 @@
     "title": "Cuentas"
   },
   "AuthenticationScreen": {
-    "authenticationDescription": "Autentica para continuar",
-    "setUp": "Configurar la Autenticación Biométrica",
-    "setUpAuthenticationDescription": "Utilice datos biométricos para autenticarse",
+    "authenticationDescription": "Autentiquese para continuar",
+    "setUp": "Configurar autenticación biométrica",
+    "setUpAuthenticationDescription": "Utilice sus datos biométricos para autenticarse",
     "skip": "Saltar",
     "unlock": "Desbloquear",
     "usePin": "Usar PIN"
@@ -35,6 +35,11 @@
   },
   "BankTransferScreen": {
     "title": "Transferencia bancaria"
+  },
+  "ContactsScreen": {
+    "noContactsYet": "Aún no hay contactos disponibles.\n\nEnvíe o reciba un pago con nombre de usuario y lo agregaremos automáticamente.",
+    "noMatchingContacts": "No se encontraron coincidencias para su búsqueda.",
+    "title": "Contactos"
   },
   "DateOfBirthScreen": {
     "title": "Fecha de nacimiento"
@@ -56,7 +61,8 @@
     "bankingNeeded": "Se necesita banca",
     "channelNeeded": "Primero necesitas abrir un canal",
     "earnSats": {
-      "other": "Gana ‪{{formatted_number}}‬ Satoshi"
+      "one": "Gana 1 Satoshi",
+      "other": "Gana ‪{{formatted_number}}‬ Satoshis"
     },
     "earns": [
       {
@@ -74,7 +80,7 @@
             ],
             "id": "whatIsBitcoin",
             "question": "Entonces, ¿Qué es Bitcoin?",
-            "text": "Bitcoin es dinero digital.\n \n \n Se puede transferir de forma instantánea y segura entre dos personas en el mundo, sin la necesidad de un banco o cualquier otra empresa financiera en el medio.",
+            "text": "Bitcoin es dinero digital. \n\n\nSe puede transferir de forma instantánea y segura entre dos personas en el mundo, sin la necesidad de un banco o cualquier otra empresa financiera en el medio.",
             "title": "Entonces, ¿Qué es Bitcoin?",
             "type": "Text"
           },
@@ -91,7 +97,7 @@
             ],
             "id": "sat",
             "question": "Acabo de ganar un \"Satoshi\". ¿Qué es eso?",
-            "text": "Un “Satoshi” es la unidad más pequeña de un Bitcoin.\n \n Todos sabemos que un US Dólar puede dividirse en 100 centavos. de manera similar, un bitcoin puede dividirse en 100,000,000 Satoshis. \n \n De hecho, NO necesitas ser el dueño de todo un bitcoin para poder usarlo. puedes usarla cantidad de Satoshis que tengas, no importa que tengas 20, 3000 o hasta 100,000,000 de Satoshis (que como sabes es igual a un Bitcoin).",
+            "text": "Un “Satoshi” es la unidad más pequeña de un Bitcoin.\n\nTodos sabemos que un US Dólar puede dividirse en 100 centavos. de manera similar, un bitcoin puede dividirse en 100,000,000 Satoshis. \n\nDe hecho, NO necesitas ser el dueño de todo un bitcoin para poder usarlo. puedes usarla cantidad de Satoshis que tengas, no importa que tengas 20, 3000 o hasta 100,000,000 de Satoshis (que como sabes es igual a un Bitcoin).",
             "title": "Acabo de ganar un \"Satoshi\". ¿Qué es eso?",
             "type": "Text"
           },
@@ -108,7 +114,7 @@
             ],
             "id": "whereBitcoinExist",
             "question": "¿De dónde existen los Bitcoins?",
-            "text": "Bitcoin es una nueva forma de dinero. puede ser usado por cualquiera, en cualquier momento y en cualquier lugar del mundo. \n \n No está atado a ningún gobierno o región en específico como el dólar estadounidense. tampoco hay papeles escritos, monedas metálicas o tarjetas de plástico. \n \n Todo es 100% digital. Bitcoin es una red de computadoras funcionando en el internet. \n \n Tu Bitcoin es fácilmente manejado por software en tu teléfono o computadora",
+            "text": "Bitcoin es una nueva forma de dinero. puede ser usado por cualquiera, en cualquier momento y en cualquier lugar del mundo. \n\nNo está atado a ningún gobierno o región en específico como el dólar estadounidense. tampoco hay papeles escritos, monedas metálicas o tarjetas de plástico. \n\nTodo es 100% digital. Bitcoin es una red de computadoras funcionando en el internet. \n\nTu Bitcoin es fácilmente manejado por software en tu teléfono o computadora",
             "title": "¿De dónde existen los Bitcoins?",
             "type": "Text"
           },
@@ -125,7 +131,7 @@
             ],
             "id": "whoControlsBitcoin",
             "question": "¿Quién controla Bitcoin?",
-            "text": "Bitcoin no es controlada por ninguna persona, compañía o gobierno. \n \n Es manejada por una comunidad de usuarios, personas y compañías alrededor del mundo, quienes voluntariamente corren los programas de bitcoin en sus computadores y teléfonos.",
+            "text": "Bitcoin no es controlada por ninguna persona, compañía o gobierno. \n\nEs manejada por una comunidad de usuarios, personas y compañías alrededor del mundo, quienes voluntariamente corren los programas de bitcoin en sus computadores y teléfonos.",
             "title": "¿Quién controla Bitcoin?",
             "type": "Text"
           },
@@ -142,7 +148,7 @@
             ],
             "id": "copyBitcoin",
             "question": "¿Si Bitcoin es dinero digital, puede alguien solo copiar y crear dinero gratis?",
-            "text": "El valor de un Bitcoin nunca puede ser copiado. ¡¡Esta es la razón por la que un Bitcoin es una poderoso y nuevo invento!! \n \n La mayoría de archivos digitales — Como un iPhone fotografías, una canción en MP2, o un documento hecho en Microsoft Word— pueden ser fácilmente duplicados y compartidos. \n \n La programación de Bitcoin software previenen la duplicación— o “doble gasto” — de dinero digital. ¡Te compartiremos exactamente como trabaja esto más adelante!",
+            "text": "El valor de un Bitcoin nunca puede ser copiado. ¡¡Esta es la razón por la que un Bitcoin es una poderoso y nuevo invento!! \n\nLa mayoría de archivos digitales — Como un iPhone fotografías, una canción en MP2, o un documento hecho en Microsoft Word— pueden ser fácilmente duplicados y compartidos. \n\nLa programación de Bitcoin software previenen la duplicación— o “doble gasto” — de dinero digital. ¡Te compartiremos exactamente como trabaja esto más adelante!",
             "title": "¿Si Bitcoin es dinero digital, puede alguien solo copiar y crear dinero gratis?",
             "type": "Text"
           }
@@ -457,7 +463,8 @@
     "reviewQuizz": "Cuestionario de repaso",
     "satAccumulated": "Satoshis acumulado",
     "satsEarned": {
-      "other": "‪{{formatted_number}}‬ Satoshi ganado "
+      "one": "1 Satoshi ganado",
+      "other": "‪{{formatted_number}}‬ Satoshis ganados"
     },
     "sectionsCompleted": "Has completado",
     "title": "Ganar",
@@ -481,8 +488,10 @@
     "needBankAccount": "Abra una cuenta de efectivo para activar",
     "needWallet": "Valide su teléfono para abrir su billetera",
     "openAccount": "Abre una cuenta",
-    "openWallet": "Abre tu billetera",
+    "openWallet": "Abrir billetera",
+    "receive": "Recibir",
     "seeTransaction": "Supervisar la transacción de apertura",
+    "send": "Enviar",
     "title": "Mover dinero",
     "useLightning": "Usamos la red de lightning",
     "walletInCreation": "Se está creando tu billetera"
@@ -503,13 +512,13 @@
     "title": "Informacion personal"
   },
   "PinScreen": {
-    "attemptsRemaining": "PIN incorrecto. %{attemptsRemaining} intentos restantes.",
+    "attemptsRemaining": "PIN incorrecto. Quedan %{attemptsRemaining} intentos.",
     "oneAttemptRemaining": "PIN incorrecto. Queda 1 intento.",
-    "setPin": "Establezca su código PIN",
-    "setPinFailedMatch": "Los pines no coinciden: establezca su código PIN",
-    "storePinFailed": "No se puede guardar su pin.",
-    "tooManyAttempts": "Demasiados intentos fallidos. Saliendo de tu cuenta.",
-    "verifyPin": "Verifica tu código PIN"
+    "setPin": "Establezca su PIN",
+    "setPinFailedMatch": "El PIN no coincide. Establezca su PIN",
+    "storePinFailed": "No se puede guardar su PIN.",
+    "tooManyAttempts": "Ha superado el límite de intentos. Cerrando sesión.",
+    "verifyPin": "Verifique su PIN"
   },
   "ReceiveBitcoinScreen": {
     "activateNotifications": "¿Quieres activar notificaciones para que te avisen cuando haya llegado el pago?",
@@ -537,7 +546,7 @@
   "SendBitcoinScreen": {
     "amount": "Cantidad",
     "cost": "Costo",
-    "input": "nombre de usario o factura",
+    "input": "nombre de usuario o factura",
     "invalidUsername": "Nombre de usuario no válido",
     "noAmount": "Esta factura no tiene un monto, por lo que debe especificar manualmente cuánto dinero desea enviar",
     "notConfirmed": "El pago ha sido enviado.\npero aún no está confirmado\n\nPuedes comprobar el estado\ndel pago en Transacciones",
@@ -549,8 +558,8 @@
   },
   "SettingsScreen": {
     "activated": "Activada",
-    "tapLogIn": "\ntoque para iniciar sesión",
-    "tapUserName": "toque para establecer tu nombre de usario"
+    "tapLogIn": "\nIngrese aquí para iniciar sesión",
+    "tapUserName": "Ingrese aquí para configurarlo"
   },
   "SplashScreen": {
     "update": "\nTu aplicación está desactualizada. Se necesita una actualización antes de que se pueda utilizar la aplicación. Esto se puede hacer desde PlayStore para Android y Testflight para iOS."
@@ -561,17 +570,23 @@
     "spent": "Gastaste"
   },
   "TransactionScreen": {
-    "noTransaction": "\nNo hay transacción para mostrar"
+    "noTransaction": "\nNo se han realizado transacciones",
+    "title": "Transacciones"
   },
   "UsernameScreen": {
     "3CharactersMinimum": "al menos de 3 letras son necesarias",
-    "confirmTitle": "establece tu nombre de usario",
-    "usernameToUse": "Que nombre de usuario quieres usar?"
+    "available": "✅  %{input} está disponible",
+    "confirmSubtext": "Este nombre de usuario es permanente y no se podrá cambiar más adelante.",
+    "confirmTitle": "¿Desea establecer %{input} como su nombre de usuario?",
+    "letterAndNumber": "Solo se aceptan letras en minúscula, números y guiones bajos (_)",
+    "notAvailable": "❌  %{input} no está disponible",
+    "success": "¡%{input} es ahora su nombre de usuario!",
+    "usernameToUse": "¿Qué nombre de usuario desea usar?"
   },
   "WelcomeFirstScreen": {
     "bank": "Bitcoin está diseñado para permitirle almacenar, enviar y recibir dinero, sin depender de un banco o tarjeta de crédito.",
     "before": "Antes de Bitcoin, la gente tenía que depender de bancos o proveedores de tarjetas de crédito para gastar, enviar y recibir dinero.",
-    "care": "Por qué debería importarme?",
+    "care": "¿Por qué debería importarme?",
     "learn": "No quiero molestarte, pero es hora de empezar a nadar en el océano de Bitcoin."
   },
   "WelcomePhoneInputScreen": {
@@ -580,8 +595,8 @@
   },
   "WelcomePhoneValidationScreen": {
     "errorLoggingIn": "Error al iniciar sesión. ¿Usó el código correcto?",
-    "header": "Para confirmar su número de teléfono, ingrese el código que le acabamos de enviar en %{phone}",
-    "need6Digits": "El  código debe tener 6 didgits",
+    "header": "Para confirmar su cuenta, ingrese el código que le acabamos de enviar al teléfono %{phone}",
+    "need6Digits": "El código debe tener 6 dígitos",
     "placeholder": "Código de 6 dígitos"
   },
   "common": {
@@ -597,7 +612,8 @@
     "cancel": "Cancelar",
     "close": "Cerrar ",
     "confirm": "Confirmar",
-    "contactUs": "¿Necesita ayuda? Llámanos por WhatsApp",
+    "contactUs": "¿Necesita ayuda? Contáctenos por WhatsApp",
+    "csvExport": "Exportar transacciones (CSV)",
     "date": "Fecha ",
     "description": "Descripción",
     "email": "Correo electrónico",
@@ -609,6 +625,7 @@
     "firstName": "Nombre",
     "fundingTx": "Aprenda más sobre Bitcoin y gane más",
     "invoice": "Factura",
+    "language": "Idioma",
     "lastName": "Apellido",
     "later": "Más tarde",
     "loggedOut": "Usted ha sido desconectado.",
@@ -631,10 +648,11 @@
     "transactions": "\nLas transacciones",
     "tryAgain": "Inténtalo de nuevo",
     "type": "tipo",
-    "username": "Nombre de usuario"
+    "username": "Nombre de usuario",
+    "usernameRequired": "El nombre de usuario es requerido"
   },
   "errors": {
-    "generic": "Habia un error,  Por  favor intente de nuevo mas tarde\n",
+    "generic": "Hubo un error inesperado. Por favor intente más tarde\n",
     "invalidEmail": "Correo inválido",
     "invalidPhoneNumber": "Esto no es un número de teléfono válido"
   },
