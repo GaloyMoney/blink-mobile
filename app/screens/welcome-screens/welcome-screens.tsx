@@ -79,7 +79,7 @@ export const WelcomeFirstScreen: ScreenType = ({ navigation }: Props) => (
           navigation.replace("Primary")
         }}
         Svg={HoneyBadgerShovel}
-        nextTitle={translate("WelcomeFirstScreen.learToEarn")}
+        nextTitle={translate("WelcomeFirstScreen.learnToEarn")}
       >
         <Text style={styles.text}>{translate("WelcomeFirstScreen.learn")}</Text>
       </OnboardingScreen>
