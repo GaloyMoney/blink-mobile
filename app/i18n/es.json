@@ -459,8 +459,8 @@
     "getRewardNow": "Responder al cuestionario",
     "keepDigging": "Sigue nadando",
     "phoneNumberNeeded": "Numero de telefono requerido",
-    "quizzComplete": "Prueba completada y {{amount}} sats ganados",
-    "reviewQuizz": "Cuestionario de repaso",
+    "quizComplete": "Prueba completada y {{amount}} sats ganados",
+    "reviewQuiz": "Cuestionario de repaso",
     "satAccumulated": "Satoshis acumulado",
     "satsEarned": {
       "one": "1 Satoshi ganado",
@@ -612,7 +612,6 @@
     "cancel": "Cancelar",
     "close": "Cerrar ",
     "confirm": "Confirmar",
-    "contactUs": "¿Necesita ayuda? Contáctenos por WhatsApp",
     "csvExport": "Exportar transacciones (CSV)",
     "date": "Fecha ",
     "description": "Descripción",
@@ -664,5 +663,8 @@
   },
   "sat": {
     "zero": "‪{{formatted_number}}‬ Satoshi"
+  },
+  "whatsapp": {
+    "contactUs": "¿Necesita ayuda? Contáctenos por WhatsApp"
   }
 }

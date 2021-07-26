@@ -499,7 +499,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
             sub
           />
           <Input
-            placeholder="set a note"
+            placeholder={translate("ReceiveBitcoinScreen.setNote")}
             value={memo}
             onChangeText={setMemo}
             // eslint-disable-next-line react-native/no-inline-styles

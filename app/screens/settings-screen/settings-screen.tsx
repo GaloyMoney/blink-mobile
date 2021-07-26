@@ -18,10 +18,7 @@ import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
 import { language_mapping } from "./language-screen"
 import { palette } from "../../theme/palette"
-import {
-  WHATSAPP_CONTACT_NUMBER,
-  WHATSAPP_DEFAULT_CONTACT_MESSAGE,
-} from "../../constants/support"
+import { WHATSAPP_CONTACT_NUMBER } from "../../constants/support"
 import { translate } from "../../i18n"
 import { walletIsActive } from "../../graphql/query"
 import { openWhatsApp } from "../../utils/external"
@@ -212,11 +209,11 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       greyed: !walletIsActive,
     },
     {
-      category: translate("common.contactUs"),
+      category: translate("whatsapp.contactUs"),
       icon: "ios-logo-whatsapp",
       id: "contact-us",
       action: () =>
-        openWhatsApp(WHATSAPP_CONTACT_NUMBER, WHATSAPP_DEFAULT_CONTACT_MESSAGE),
+        openWhatsApp(WHATSAPP_CONTACT_NUMBER, translate("whatsapp.defaultSupportMessage")),
       enabled: true,
       greyed: false,
       styleDivider: { backgroundColor: palette.lighterGrey, height: 18 },
@@ -227,7 +224,7 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       icon: "ios-log-out",
       action: async () => {
         await resetDataStore()
-        Alert.alert("you have been logged out", "", [
+        Alert.alert(translate("common.loggedOut"), "", [
           {
             text: translate("common.ok"),
             onPress: () => {

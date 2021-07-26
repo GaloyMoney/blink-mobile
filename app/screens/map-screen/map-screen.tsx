@@ -13,6 +13,7 @@ import { walletIsActive } from "../../graphql/query"
 import type { PrimaryStackParamList } from "../../navigation/stack-param-lists"
 import { ScreenType } from "../../types/jsx"
 import { isIos } from "../../utils/helper"
+import { translate } from "../../i18n"
 
 const styles = StyleSheet.create({
   android: { marginTop: 18 },
@@ -67,11 +68,11 @@ export const MapScreen: ScreenType = ({ navigation }: Props) => {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
         {
-          title: "Locate yourself on the map",
-          message: "Activate your location so you know where you are on the map",
-          buttonNeutral: "Ask Me Later",
-          buttonNegative: "Cancel",
-          buttonPositive: "OK",
+          title: translate("MapScreen.locationPermissionTitle"),
+          message: translate("MapScreen.locationPermissionMessage"),
+          buttonNeutral: translate("MapScreen.locationPermissionNeutral"),
+          buttonNegative: translate("MapScreen.locationPermissionNegative"),
+          buttonPositive: translate("MapScreen.locationPermissionPositive"),
         },
       )
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
@@ -139,12 +140,12 @@ export const MapScreen: ScreenType = ({ navigation }: Props) => {
           <View style={styles.customView}>
             <Text style={styles.title}>{item.title}</Text>
             {!!item.username && !isIos && (
-              <Button containerStyle={styles.android} title="pay this business" />
+              <Button containerStyle={styles.android} title={translate("MapScreen.payBusiness")} />
             )}
             {isIos && (
               <CalloutSubview onPress={() => (item.username ? onPress() : null)}>
                 {!!item.username && (
-                  <Button style={styles.ios} title="pay this business" />
+                  <Button style={styles.ios} title={translate("MapScreen.payBusiness")} />
                 )}
               </CalloutSubview>
             )}

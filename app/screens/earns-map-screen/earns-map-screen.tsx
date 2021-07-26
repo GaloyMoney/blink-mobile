@@ -13,7 +13,11 @@ import { Token } from "../../utils/token"
 import { sectionCompletedPct } from "../earns-screen"
 import BitcoinCircle from "./bitcoin-circle-01.svg"
 import BottomOngoing from "./bottom-ongoing-01.svg"
+const BottomOngoingEN = React.lazy(() => import("./bottom-ongoing-01.en.svg"))
+const BottomOngoingES = React.lazy(() => import("./bottom-ongoing-01.es.svg"))
 import BottomStart from "./bottom-start-01.svg"
+const BottomStartEN = React.lazy(() => import("./bottom-start-01.en.svg"))
+const BottomStartES = React.lazy(() => import("./bottom-start-01.es.svg"))
 import LeftFinish from "./left-finished-01.svg"
 import LeftLastOngoing from "./left-last-section-ongoing-01.svg"
 import LeftLastTodo from "./left-last-section-to-do-01.svg"
@@ -31,6 +35,7 @@ import TextBlock from "./text-block-medium.svg"
 import type { ComponentType, ScreenType } from "../../types/jsx"
 import type { PrimaryStackParamList } from "../../navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
+import i18n from "i18n-js"
 
 const styles = StyleSheet.create({
   contentContainer: {
@@ -314,6 +319,20 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> = ({
     return unsubscribe
   }, [navigation])
 
+  const translatedBottomOngoing = () => {
+    switch (i18n.locale) {
+      case ("es"): return <BottomOngoingES />
+      default: return <BottomOngoingEN />
+    }
+  }
+
+  const translatedBottomStart = () => {
+    switch (i18n.locale) {
+      case ("es"): return <BottomStartES />
+      default: return <BottomStartEN />
+    }
+  }
+
   return (
     <Screen unsafe statusBar="light-content">
       <ScrollView
@@ -334,9 +353,13 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> = ({
           {sectionsComp}
           {currSection === 0 ? (
             progress === 0 ? (
-              <BottomStart />
+              <React.Suspense fallback={<BottomStart />}>
+                {translatedBottomStart()}
+              </React.Suspense>
             ) : (
-              <BottomOngoing />
+              <React.Suspense fallback={<BottomOngoing />}>
+                {translatedBottomOngoing()}
+              </React.Suspense>
             )
           ) : (
             <View style={styles.position} />
