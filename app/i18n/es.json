@@ -459,7 +459,7 @@
     "getRewardNow": "Responder al cuestionario",
     "keepDigging": "Sigue nadando",
     "phoneNumberNeeded": "Numero de telefono requerido",
-    "quizComplete": "Prueba completada y {{amount}} sats ganados",
+    "quizComplete": "Prueba completada, has ganado {{amount}} sats",
     "reviewQuiz": "Cuestionario de repaso",
     "satAccumulated": "Satoshis acumulado",
     "satsEarned": {
@@ -478,7 +478,13 @@
     "headline": "El banco con dinero sólido"
   },
   "MapScreen": {
-    "title": "mapa"
+    "locationPermissionMessage": "Active la localización para poder ubicarlo en el mapa",
+    "locationPermissionNegative": "Cancelar",
+    "locationPermissionNeutral": "Pregúntarme más tarde",
+    "locationPermissionPositive": "OK",
+    "locationPermissionTitle": "Ubícate en el mapa",
+    "payBusiness": "pagar a este negocio",
+    "title": "Mapa"
   },
   "ModalClipboard": {
     "pendingBitcoin": "\nTienes una dirección de Bitcoin en tu portapapeles",
@@ -533,11 +539,15 @@
     "today": "Hoy",
     "yesterday": "Ayer"
   },
+  "PrimaryScreen": {
+    "title": "Inicio"
+  },
   "ReceiveBitcoinScreen": {
     "activateNotifications": "¿Quieres activar notificaciones para que te avisen cuando haya llegado el pago?",
-    "copyClipboard": "Incoice se ha copiado en el portapapeles.",
+    "copyClipboard": "La factura se ha copiado al portapapeles.",
     "invoicePaid": "Esta factura ha sido pagada",
-    "tapQrCodeCopy": "Toque Código QR para copiar",
+    "setNote": "ingrese una nota",
+    "tapQrCodeCopy": "Toque el código QR para copiar",
     "title": "Recibir Bitcoin"
   },
   "ScanningQRCodeScreen": {
@@ -572,7 +582,8 @@
   "SettingsScreen": {
     "activated": "Activada",
     "tapLogIn": "\nIngrese aquí para iniciar sesión",
-    "tapUserName": "Ingrese aquí para configurarlo"
+    "tapUserName": "Ingrese aquí para configurarlo",
+    "title": "Configuración"
   },
   "SplashScreen": {
     "update": "\nTu aplicación está desactualizada. Se necesita una actualización antes de que se pueda utilizar la aplicación. Esto se puede hacer desde PlayStore para Android y Testflight para iOS."
@@ -584,7 +595,8 @@
   },
   "TransactionScreen": {
     "noTransaction": "\nNo se han realizado transacciones",
-    "title": "Transacciones"
+    "title": "Transacciones",
+    "transactionHistoryTitle": "Historial"
   },
   "UsernameScreen": {
     "3CharactersMinimum": "al menos de 3 letras son necesarias",
@@ -600,7 +612,8 @@
     "bank": "Bitcoin está diseñado para permitirle almacenar, enviar y recibir dinero, sin depender de un banco o tarjeta de crédito.",
     "before": "Antes de Bitcoin, la gente tenía que depender de bancos o proveedores de tarjetas de crédito para gastar, enviar y recibir dinero.",
     "care": "¿Por qué debería importarme?",
-    "learn": "No quiero molestarte, pero es hora de empezar a nadar en el océano de Bitcoin."
+    "learn": "No quiero molestar, pero es hora de empezar a nadar en el océano de Bitcoin.",
+    "learnToEarn": "Aprende y gana"
   },
   "WelcomePhoneInputScreen": {
     "header": "Ingrese su número de teléfono y le enviaremos un mensaje de texto con un código de acceso.",
@@ -678,6 +691,7 @@
     "zero": "‪{{formatted_number}}‬ Satoshi"
   },
   "whatsapp": {
-    "contactUs": "¿Necesita ayuda? Contáctenos por WhatsApp"
+    "contactUs": "¿Necesita ayuda? Contáctenos por WhatsApp",
+    "defaultSupportMessage": "¡Hola! Necesito ayuda con Bitcoin Beach Wallet"
   }
 }
