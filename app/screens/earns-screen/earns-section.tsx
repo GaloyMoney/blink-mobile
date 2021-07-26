@@ -267,7 +267,9 @@ export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
         </View>
         {!item.enabled && (
           <>
-            <Text style={styles.unlockQuestion}>To unlock, answer the question:</Text>
+            <Text style={styles.unlockQuestion}>
+              {translate("EarnScreen.unlockQuestion")}
+            </Text>
             <Text style={styles.unlock}>{item.nonEnabledMessage}</Text>
           </>
         )}
