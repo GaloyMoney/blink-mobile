@@ -294,6 +294,7 @@ export const RootStack: NavigatorType = () => {
         options={{
           headerShown: false,
           animationEnabled: false,
+          title: translate("PrimaryScreen.title"),
         }}
       />
       <StackMoveMoney.Screen

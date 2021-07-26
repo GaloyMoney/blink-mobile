@@ -499,6 +499,9 @@
     "today": "Today",
     "yesterday": "Yesterday"
   },
+  "PrimaryScreen": {
+    "title": "Home"
+  },
   "ReceiveBitcoinScreen": {
     "activateNotifications": "Do you want to activate notifications to be notified when the payment has arrived?",
     "copyClipboard": "Invoice has been copied in the clipboard",
