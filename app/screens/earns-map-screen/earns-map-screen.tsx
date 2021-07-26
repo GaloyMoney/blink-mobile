@@ -321,15 +321,19 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> = ({
 
   const translatedBottomOngoing = () => {
     switch (i18n.locale) {
-      case ("es"): return <BottomOngoingES />
-      default: return <BottomOngoingEN />
+      case "es":
+        return <BottomOngoingES />
+      default:
+        return <BottomOngoingEN />
     }
   }
 
   const translatedBottomStart = () => {
     switch (i18n.locale) {
-      case ("es"): return <BottomStartES />
-      default: return <BottomStartEN />
+      case "es":
+        return <BottomStartES />
+      default:
+        return <BottomStartEN />
     }
   }
 

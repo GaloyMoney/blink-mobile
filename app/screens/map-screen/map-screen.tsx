@@ -140,7 +140,10 @@ export const MapScreen: ScreenType = ({ navigation }: Props) => {
           <View style={styles.customView}>
             <Text style={styles.title}>{item.title}</Text>
             {!!item.username && !isIos && (
-              <Button containerStyle={styles.android} title={translate("MapScreen.payBusiness")} />
+              <Button
+                containerStyle={styles.android}
+                title={translate("MapScreen.payBusiness")}
+              />
             )}
             {isIos && (
               <CalloutSubview onPress={() => (item.username ? onPress() : null)}>

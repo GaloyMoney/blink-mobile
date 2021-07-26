@@ -1,6 +1,9 @@
 import { InMemoryCache } from "@apollo/client"
 import * as currency_fmt from "currency.js"
+import i18n from "i18n-js"
 import moment, { Moment } from "moment"
+// eslint-disable-next-line import/no-unassigned-import
+import "moment/locale/es"
 import { prefCurrencyVar } from "./query"
 
 const date_options: Intl.DateTimeFormatOptions = {
@@ -38,10 +41,12 @@ export const cache = new InMemoryCache({
             (readField("date") as Date).toLocaleString("en-US", date_options),
         },
         date_nice_print: {
-          read: (_, { readField }) =>
-            moment
+          read: (_, { readField }) => {
+            moment.locale(i18n.locale)
+            return moment
               .duration(Math.min(0, (readField("date") as Moment).diff(moment())))
-              .humanize(true),
+              .humanize(true)
+          },
         },
         isReceive: {
           read: (_, { readField }) => readField("amount") > 0,

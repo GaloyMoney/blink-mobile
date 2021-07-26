@@ -213,7 +213,10 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       icon: "ios-logo-whatsapp",
       id: "contact-us",
       action: () =>
-        openWhatsApp(WHATSAPP_CONTACT_NUMBER, translate("whatsapp.defaultSupportMessage")),
+        openWhatsApp(
+          WHATSAPP_CONTACT_NUMBER,
+          translate("whatsapp.defaultSupportMessage"),
+        ),
       enabled: true,
       greyed: false,
       styleDivider: { backgroundColor: palette.lighterGrey, height: 18 },
