@@ -520,6 +520,19 @@
     "tooManyAttempts": "Ha superado el límite de intentos. Cerrando sesión.",
     "verifyPin": "Verifique su PIN"
   },
+  "PriceScreen": {
+    "oneDay": "1D",
+    "oneMonth": "1M",
+    "oneWeek": "1S",
+    "oneYear": "1A",
+    "prevMonths": "Meses anteriores",
+    "satPrice": "Precio por 100,000 sats: ",
+    "thisMonth": "Este mes",
+    "thisWeek": "Esta semana",
+    "thisYear": "Este año",
+    "today": "Hoy",
+    "yesterday": "Ayer"
+  },
   "ReceiveBitcoinScreen": {
     "activateNotifications": "¿Quieres activar notificaciones para que te avisen cuando haya llegado el pago?",
     "copyClipboard": "Incoice se ha copiado en el portapapeles.",
