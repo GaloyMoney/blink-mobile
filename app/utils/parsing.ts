@@ -168,7 +168,7 @@ export const validPayment = (
     let amountless
 
     if (payReq.satoshis || payReq.millisatoshis) {
-      amount = payReq.satoshis ?? Number(payReq.millisatoshis) * 1000
+      amount = payReq.satoshis ?? Number(payReq.millisatoshis) / 1000
       amountless = false
     } else {
       amount = 0
