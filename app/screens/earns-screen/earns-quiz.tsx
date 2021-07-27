@@ -296,10 +296,10 @@ export const EarnQuiz: ScreenType = ({ route, navigation }: Props) => {
           {(isCompleted && (
             <>
               <Text style={styles.textEarn}>
-                {translate("EarnScreen.quizzComplete", { amount })}
+                {translate("EarnScreen.quizComplete", { amount })}
               </Text>
               <Button
-                title={translate("EarnScreen.reviewQuizz")}
+                title={translate("EarnScreen.reviewQuiz")}
                 type="clear"
                 titleStyle={styles.completedTitleStyle}
                 onPress={() => setQuizVisible(true)}

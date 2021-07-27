@@ -7,7 +7,7 @@
 	<rect y="60" fill="#3654FF" width="374.999" height="135"/>
 	<g>
 		<rect x="196.216" y="91.725" fill="none" width="147.567" height="74.275"/>
-		<text transform="matrix(1 0 0 1 220.3525 103.2441)"><tspan x="0" y="0" fill="#FFFFFF" font-size="16"></tspan><tspan x="-4.784" y="19" fill="#FFFFFF" font-size="16"></tspan><tspan x="-15.456" y="38" fill="#FFFFFF" font-size="16"></tspan><tspan x="3.032" y="57" fill="#FFFFFF" font-size="16"></tspan></text>
+		<text transform="matrix(1 0 0 1 220.3525 103.2441)"><tspan id="dig-your-way" x="0" y="0" fill="#FFFFFF" font-size="16">Dig your way </tspan><tspan x="-4.784" y="19" fill="#FFFFFF" font-size="16">through these </tspan><tspan x="-15.456" y="38" fill="#FFFFFF" font-size="16">lessons and earn </tspan><tspan x="3.032" y="57" fill="#FFFFFF" font-size="16">as you learn</tspan></text>
 	</g>
 	<g>
 		<ellipse opacity="0.2" fill="#232323" cx="107.027" cy="153.044" rx="36.693" ry="5.922"/>

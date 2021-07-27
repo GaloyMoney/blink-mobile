@@ -294,6 +294,7 @@ export const RootStack: NavigatorType = () => {
         options={{
           headerShown: false,
           animationEnabled: false,
+          title: translate("PrimaryScreen.title"),
         }}
       />
       <StackMoveMoney.Screen
@@ -330,7 +331,7 @@ export const RootStack: NavigatorType = () => {
         name="settings"
         component={SettingsScreen}
         options={() => ({
-          title: "Settings",
+          title: translate("SettingsScreen.title"),
         })}
       />
       <RootNavigator.Screen
@@ -382,7 +383,7 @@ export const RootStack: NavigatorType = () => {
       <RootNavigator.Screen
         name="transactionHistory"
         component={TransactionHistoryScreenDataInjected}
-        options={{ title: "Transaction History" }}
+        options={{ title: translate("TransactionScreen.transactionHistoryTitle") }}
       />
       <RootNavigator.Screen
         name="priceDetail"

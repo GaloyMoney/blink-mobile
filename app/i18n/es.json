@@ -459,8 +459,8 @@
     "getRewardNow": "Responder al cuestionario",
     "keepDigging": "Sigue nadando",
     "phoneNumberNeeded": "Numero de telefono requerido",
-    "quizzComplete": "Prueba completada y {{amount}} sats ganados",
-    "reviewQuizz": "Cuestionario de repaso",
+    "quizComplete": "Prueba completada, has ganado {{amount}} sats",
+    "reviewQuiz": "Cuestionario de repaso",
     "satAccumulated": "Satoshis acumulado",
     "satsEarned": {
       "one": "1 Satoshi ganado",
@@ -468,6 +468,7 @@
     },
     "sectionsCompleted": "Has completado",
     "title": "Ganar",
+    "unlockQuestion": "Para desbloquear, responda la pregunta:",
     "youEarned": "Usted Ganó"
   },
   "FindATMScreen": {
@@ -478,7 +479,13 @@
     "headline": "El banco con dinero sólido"
   },
   "MapScreen": {
-    "title": "mapa"
+    "locationPermissionMessage": "Active la localización para poder ubicarlo en el mapa",
+    "locationPermissionNegative": "Cancelar",
+    "locationPermissionNeutral": "Pregúntarme más tarde",
+    "locationPermissionPositive": "OK",
+    "locationPermissionTitle": "Ubícate en el mapa",
+    "payBusiness": "pagar a este negocio",
+    "title": "Mapa"
   },
   "ModalClipboard": {
     "pendingBitcoin": "\nTienes una dirección de Bitcoin en tu portapapeles",
@@ -520,11 +527,28 @@
     "tooManyAttempts": "Ha superado el límite de intentos. Cerrando sesión.",
     "verifyPin": "Verifique su PIN"
   },
+  "PriceScreen": {
+    "oneDay": "1D",
+    "oneMonth": "1M",
+    "oneWeek": "1S",
+    "oneYear": "1A",
+    "prevMonths": "Meses anteriores",
+    "satPrice": "Precio por 100,000 sats: ",
+    "thisMonth": "Este mes",
+    "thisWeek": "Esta semana",
+    "thisYear": "Este año",
+    "today": "Hoy",
+    "yesterday": "Ayer"
+  },
+  "PrimaryScreen": {
+    "title": "Inicio"
+  },
   "ReceiveBitcoinScreen": {
     "activateNotifications": "¿Quieres activar notificaciones para que te avisen cuando haya llegado el pago?",
-    "copyClipboard": "Incoice se ha copiado en el portapapeles.",
+    "copyClipboard": "La factura se ha copiado al portapapeles.",
     "invoicePaid": "Esta factura ha sido pagada",
-    "tapQrCodeCopy": "Toque Código QR para copiar",
+    "setNote": "ingrese una nota",
+    "tapQrCodeCopy": "Toque el código QR para copiar",
     "title": "Recibir Bitcoin"
   },
   "ScanningQRCodeScreen": {
@@ -546,6 +570,8 @@
   "SendBitcoinScreen": {
     "amount": "Cantidad",
     "cost": "Costo",
+    "fee": "tarifa de red",
+    "feeCalculationUnsuccessful": "Error al calcular, inténtelo de nuevo ⚠️",
     "input": "nombre de usuario o factura",
     "invalidUsername": "Nombre de usuario no válido",
     "noAmount": "Esta factura no tiene un monto, por lo que debe especificar manualmente cuánto dinero desea enviar",
@@ -559,7 +585,8 @@
   "SettingsScreen": {
     "activated": "Activada",
     "tapLogIn": "\nIngrese aquí para iniciar sesión",
-    "tapUserName": "Ingrese aquí para configurarlo"
+    "tapUserName": "Ingrese aquí para configurarlo",
+    "title": "Configuración"
   },
   "SplashScreen": {
     "update": "\nTu aplicación está desactualizada. Se necesita una actualización antes de que se pueda utilizar la aplicación. Esto se puede hacer desde PlayStore para Android y Testflight para iOS."
@@ -571,7 +598,8 @@
   },
   "TransactionScreen": {
     "noTransaction": "\nNo se han realizado transacciones",
-    "title": "Transacciones"
+    "title": "Transacciones",
+    "transactionHistoryTitle": "Historial"
   },
   "UsernameScreen": {
     "3CharactersMinimum": "al menos de 3 letras son necesarias",
@@ -587,7 +615,8 @@
     "bank": "Bitcoin está diseñado para permitirle almacenar, enviar y recibir dinero, sin depender de un banco o tarjeta de crédito.",
     "before": "Antes de Bitcoin, la gente tenía que depender de bancos o proveedores de tarjetas de crédito para gastar, enviar y recibir dinero.",
     "care": "¿Por qué debería importarme?",
-    "learn": "No quiero molestarte, pero es hora de empezar a nadar en el océano de Bitcoin."
+    "learn": "No quiero molestar, pero es hora de empezar a nadar en el océano de Bitcoin.",
+    "learnToEarn": "Aprende y gana"
   },
   "WelcomePhoneInputScreen": {
     "header": "Ingrese su número de teléfono y le enviaremos un mensaje de texto con un código de acceso.",
@@ -612,7 +641,6 @@
     "cancel": "Cancelar",
     "close": "Cerrar ",
     "confirm": "Confirmar",
-    "contactUs": "¿Necesita ayuda? Contáctenos por WhatsApp",
     "csvExport": "Exportar transacciones (CSV)",
     "date": "Fecha ",
     "description": "Descripción",
@@ -664,5 +692,9 @@
   },
   "sat": {
     "zero": "‪{{formatted_number}}‬ Satoshi"
+  },
+  "whatsapp": {
+    "contactUs": "¿Necesita ayuda? Contáctenos por WhatsApp",
+    "defaultSupportMessage": "¡Hola! Necesito ayuda con Bitcoin Beach Wallet"
   }
 }

@@ -7,7 +7,9 @@ import { VictoryAxis, VictoryChart, VictoryLine } from "victory-native"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { QUERY_PRICE } from "../../graphql/query"
+import { translate } from "../../i18n"
 import type { ComponentType } from "../../types/jsx"
+import { prices_prices } from "../../graphql/__generated__/prices"
 
 const styles = EStyleSheet.create({
   buttonStyleTime: {
@@ -64,30 +66,30 @@ const mapping = {
   d: {
     last: 24,
     filter: 1,
-    label: "Today",
+    label: translate("PriceScreen.today"),
   },
 
   w: {
     last: 24 * 7,
     filter: 4,
-    label: "This week",
+    label: translate("PriceScreen.thisWeek"),
   },
 
   m: {
     last: 24 * 31,
     filter: 24,
-    label: "This month",
+    label: translate("PriceScreen.thisMonth"),
   },
 
   y: {
     last: 0,
     filter: 24 * 2,
-    label: "This year",
+    label: translate("PriceScreen.thisYear"),
   },
 }
 
 type Props = {
-  prices: []
+  prices: prices_prices[]
 }
 
 export const PriceGraph: ComponentType = ({ prices }: Props) => {
@@ -113,7 +115,7 @@ export const PriceGraph: ComponentType = ({ prices }: Props) => {
   return (
     <>
       <View style={styles.textView}>
-        <Text style={styles.neutral}>Price for 100,000 sats: </Text>
+        <Text style={styles.neutral}>{translate("PriceScreen.satPrice")}</Text>
         <Text style={styles.price}>${(price * MULTIPLE).toFixed(2)}</Text>
       </View>
       <View style={styles.textView}>
@@ -144,7 +146,7 @@ export const PriceGraph: ComponentType = ({ prices }: Props) => {
       </View>
       <View style={styles.pricesContainer}>
         <Button
-          title="1D"
+          title={translate("PriceScreen.oneDay")}
           buttonStyle={
             time == "d" ? styles.buttonStyleTime : styles.buttonStyleTimeActive
           }
@@ -152,7 +154,7 @@ export const PriceGraph: ComponentType = ({ prices }: Props) => {
           onPress={() => setTime("d")}
         />
         <Button
-          title="1W"
+          title={translate("PriceScreen.oneWeek")}
           buttonStyle={
             time == "w" ? styles.buttonStyleTime : styles.buttonStyleTimeActive
           }
@@ -160,7 +162,7 @@ export const PriceGraph: ComponentType = ({ prices }: Props) => {
           onPress={() => setTime("w")}
         />
         <Button
-          title="1M"
+          title={translate("PriceScreen.oneMonth")}
           buttonStyle={
             time == "m" ? styles.buttonStyleTime : styles.buttonStyleTimeActive
           }
@@ -168,7 +170,7 @@ export const PriceGraph: ComponentType = ({ prices }: Props) => {
           onPress={() => setTime("m")}
         />
         <Button
-          title="1Y"
+          title={translate("PriceScreen.oneYear")}
           buttonStyle={
             time == "y" ? styles.buttonStyleTime : styles.buttonStyleTimeActive
           }

@@ -430,8 +430,8 @@
     "getRewardNow": "Answer quiz",
     "keepDigging": "Keep digging!",
     "phoneNumberNeeded": "Phone number required",
-    "quizzComplete": "Quiz completed and {{amount}} sats earned",
-    "reviewQuizz": "Review quiz",
+    "quizComplete": "Quiz completed and {{amount}} sats earned",
+    "reviewQuiz": "Review quiz",
     "satAccumulated": "Sats accumulated",
     "satsEarned": {
       "one": "1 sat earned",
@@ -439,6 +439,7 @@
     },
     "sectionsCompleted": "You've completed",
     "title": "Earn",
+    "unlockQuestion": "To unlock, answer the question:",
     "youEarned": "You Earned"
   },
   "FindATMScreen": {
@@ -449,6 +450,12 @@
     "headline": "Wallet powered by Galoy"
   },
   "MapScreen": {
+    "locationPermissionMessage": "Activate your location so you know where you are on the map",
+    "locationPermissionNegative": "Cancel",
+    "locationPermissionNeutral": "Ask Me Later",
+    "locationPermissionPositive": "OK",
+    "locationPermissionTitle": "Locate yourself on the map",
+    "payBusiness": "pay this business",
     "title": "Map"
   },
   "ModalClipboard": {
@@ -481,16 +488,27 @@
     "verifyPin": "Verify your PIN code"
   },
   "PriceScreen": {
+    "oneDay": "1D",
+    "oneMonth": "1M",
+    "oneWeek": "1W",
+    "oneYear": "1Y",
     "prevMonths": "Previous months",
+    "satPrice": "Price for 100,000 sats: ",
     "thisMonth": "This month",
+    "thisWeek": "This week",
+    "thisYear": "This year",
     "today": "Today",
     "yesterday": "Yesterday"
+  },
+  "PrimaryScreen": {
+    "title": "Home"
   },
   "ReceiveBitcoinScreen": {
     "activateNotifications": "Do you want to activate notifications to be notified when the payment has arrived?",
     "copyClipboard": "Invoice has been copied in the clipboard",
     "copyClipboardBitcoin": "Bitcoin address has been copied in the clipboard",
     "invoicePaid": "This invoice has been paid",
+    "setNote": "set a note",
     "tapQrCodeCopy": "Tap QR Code to Copy",
     "title": "Receive Bitcoin"
   },
@@ -530,7 +548,8 @@
     "activated": "Activated",
     "logOutSuccesful": "You have been logged out.\n\nPlease restart the app to start fresh",
     "tapLogIn": "Tap to log in",
-    "tapUserName": "Tap to set username"
+    "tapUserName": "Tap to set username",
+    "title": "Settings"
   },
   "SplashScreen": {
     "update": "Your app is outdated. An update is needed before the app can be used.\n\nThis can be done from the PlayStore for Android and Testflight for iOS"
@@ -542,7 +561,8 @@
   },
   "TransactionScreen": {
     "noTransaction": "No transaction to show",
-    "title": "Transactions"
+    "title": "Transactions",
+    "transactionHistoryTitle": "Transaction History"
   },
   "UsernameScreen": {
     "3CharactersMinimum": "at least 3 characters are necessary",
@@ -558,7 +578,8 @@
     "bank": "Bitcoin is designed to let you store, send and receive money, without relying on a bank or credit card",
     "before": "Before Bitcoin, people had to rely on banks or credit card providers, to spend, send and receive money.",
     "care": "Why should I care?",
-    "learn": "I don't mean to badger you but there's lot more to learn, dig in..."
+    "learn": "I don't mean to badger you but there's lot more to learn, dig in...",
+    "learnToEarn": "Learn to Earn"
   },
   "WelcomePhoneInputScreen": {
     "header": "Enter your phone number and we'll text you an access code.",
@@ -585,7 +606,6 @@
     "close": "Close",
     "confirm": "Confirm",
     "connectionIssue": "No connection",
-    "contactUs": "Need help? Talk to us on WhatsApp!",
     "csvExport": "Export transactions as CSV",
     "date": "Date",
     "description": "Description",
@@ -639,5 +659,9 @@
     "one": "1 sat",
     "other": "{{formatted_number}} sats",
     "zero": "0 sats"
+  },
+  "whatsapp": {
+    "contactUs": "Need help? Talk to us on WhatsApp!",
+    "defaultSupportMessage": "Hey there! I need some help with Bitcoin Beach Wallet"
   }
 }
