@@ -4,13 +4,16 @@ import { useEffect, useRef, useState } from "react"
 import {
   ActivityIndicator,
   Alert,
+  EventSubscription,
   KeyboardAvoidingView,
+  NativeEventEmitter,
+  NativeModules,
   Platform,
   ScrollView,
   Text,
   View,
 } from "react-native"
-import { Input } from "react-native-elements"
+import { Button, Input } from "react-native-elements"
 import {
   FetchResult,
   gql,
@@ -39,10 +42,33 @@ import BadgerPhone from "./badger-phone-01.svg"
 import type { PhoneValidationStackParamList } from "../../navigation/stack-param-lists"
 import { RouteProp } from "@react-navigation/native"
 import { login_login } from "./__generated__/login"
+import GeeTestModule from "../../native-modules/GeeTestModule"
+import { registerCaptcha } from "./__generated__/registerCaptcha"
+
+const REGISTER_CAPTCHA = gql`
+  query registerCaptcha {
+    registerCaptchaGeetest {
+      success
+      gt
+      challenge
+      new_captcha
+    }
+  }
+`
 
 const REQUEST_PHONE_CODE = gql`
-  mutation requestPhoneCode($phone: String) {
-    requestPhoneCode(phone: $phone) {
+  mutation requestPhoneCode(
+    $phone: String
+    $captchaChallenge: String
+    $captchaValidate: String
+    $captchaSeccode: String
+  ) {
+    requestPhoneCodeGeetest(
+      phone: $phone
+      captchaChallenge: $captchaChallenge
+      captchaValidate: $captchaValidate
+      captchaSeccode: $captchaSeccode
+    ) {
       success
     }
   }
@@ -57,6 +83,12 @@ const LOGIN = gql`
 `
 
 const styles = EStyleSheet.create({
+  button: {
+    backgroundColor: color.palette.blue,
+    marginHorizontal: "50rem",
+    marginTop: "30rem",
+  },
+
   codeContainer: {
     alignSelf: "center",
     width: "70%",
@@ -96,12 +128,85 @@ type WelcomePhoneInputScreenProps = {
   navigation: StackNavigationProp<PhoneValidationStackParamList, "welcomePhoneInput">
 }
 
+type GeeTestValidationData = {
+  geeTestChallenge: string
+  geeTestSecCode: string
+  geeTestValidate: string
+}
+
 export const WelcomePhoneInputScreen: ScreenType = ({
   navigation,
 }: WelcomePhoneInputScreenProps) => {
+  const [
+    queryRegisterCaptcha,
+    { loading: loadingRegisterCaptcha, data: registerCaptchaData },
+  ] = useLazyQuery<registerCaptcha>(REGISTER_CAPTCHA, {
+    fetchPolicy: "network-only",
+  })
+
   const [requestPhoneCode, { loading }] = useMutation(REQUEST_PHONE_CODE, {
     fetchPolicy: "no-cache",
   })
+
+  const [geeTestValidationData, setGeeTestValidationData] =
+    useState<GeeTestValidationData | null>(null)
+
+  const onGeeTestDialogResultListener = React.useRef<EventSubscription>()
+  const onGeeTestSuccessListener = React.useRef<EventSubscription>()
+  const onGeeTestFailedListener = React.useRef<EventSubscription>()
+
+  useEffect(() => {
+    GeeTestModule.setUp()
+
+    const eventEmitter = new NativeEventEmitter(NativeModules.GeeTestModule)
+
+    onGeeTestDialogResultListener.current = eventEmitter.addListener(
+      "GT3BaseListener-->onDialogResult-->",
+      (event) => {
+        const parsedDialogResult = JSON.parse(event.result)
+        setGeeTestValidationData({
+          geeTestChallenge: parsedDialogResult.geetest_challenge,
+          geeTestSecCode: parsedDialogResult.geetest_seccode,
+          geeTestValidate: parsedDialogResult.geetest_validate,
+        })
+      },
+    )
+
+    onGeeTestSuccessListener.current = eventEmitter.addListener(
+      "GT3BaseListener-->onSuccess-->",
+      (event) => {
+        console.log("GT3BaseListener-->onSuccess-->", event.result)
+      },
+    )
+
+    onGeeTestFailedListener.current = eventEmitter.addListener(
+      "GT3BaseListener-->onFailed-->",
+      (event) => {
+        console.log("GT3BaseListener-->onFailed->", event.error)
+        toastShow(event.error)
+      },
+    )
+
+    return () => {
+      GeeTestModule.tearDown()
+
+      onGeeTestDialogResultListener.current.remove()
+      onGeeTestSuccessListener.current.remove()
+      onGeeTestFailedListener.current.remove()
+    }
+  }, [queryRegisterCaptcha])
+
+  useEffect(() => {
+    if (registerCaptchaData?.registerCaptchaGeetest) {
+      const params = {
+        success: registerCaptchaData.registerCaptchaGeetest.success,
+        challenge: registerCaptchaData.registerCaptchaGeetest.challenge,
+        gt: registerCaptchaData.registerCaptchaGeetest.gt,
+        new_captcha: registerCaptchaData.registerCaptchaGeetest.new_captcha,
+      }
+      GeeTestModule.handleRegisteredGeeTestCaptcha(JSON.stringify(params))
+    }
+  }, [registerCaptchaData])
 
   const inputRef = useRef<PhoneInput | null>()
 
@@ -116,8 +221,15 @@ export const WelcomePhoneInputScreen: ScreenType = ({
     }
 
     try {
-      const { data } = await requestPhoneCode({ variables: { phone } })
-      if (data.requestPhoneCode.success) {
+      const { data } = await requestPhoneCode({
+        variables: {
+          phone,
+          captchaChallenge: geeTestValidationData.geeTestChallenge,
+          captchaValidate: geeTestValidationData.geeTestValidate,
+          captchaSeccode: geeTestValidationData.geeTestSecCode,
+        },
+      })
+      if (data.requestPhoneCodeGeetest.success) {
         navigation.navigate("welcomePhoneValidation", { phone })
       } else {
         toastShow(translate("erros.generic"))
@@ -129,37 +241,46 @@ export const WelcomePhoneInputScreen: ScreenType = ({
     }
   }
 
-  useEffect(() => {
-    inputRef?.current.focus()
-  }, [])
-
   return (
     <Screen backgroundColor={palette.lighterGrey} preset="scroll">
       <View style={{ flex: 1, justifyContent: "space-around" }}>
         <View>
           <BadgerPhone style={styles.image} />
-          <Text style={styles.text}>{translate("WelcomePhoneInputScreen.header")}</Text>
+          <Text style={styles.text}>
+            {geeTestValidationData !== null
+              ? translate("WelcomePhoneInputScreen.header")
+              : translate("WelcomePhoneInputScreen.headerVerify")}
+          </Text>
         </View>
-        <KeyboardAvoidingView>
-          <PhoneInput
-            ref={inputRef}
-            style={styles.phoneEntryContainer}
-            textStyle={styles.textEntry}
-            initialCountry="sv"
-            textProps={{
-              autoFocus: true,
-              placeholder: translate("WelcomePhoneInputScreen.placeholder"),
-              returnKeyType: loading ? "default" : "done",
-              onSubmitEditing: send,
-            }}
+        {geeTestValidationData !== null ? (
+          <KeyboardAvoidingView>
+            <PhoneInput
+              ref={inputRef}
+              style={styles.phoneEntryContainer}
+              textStyle={styles.textEntry}
+              initialCountry="sv"
+              textProps={{
+                autoFocus: true,
+                placeholder: translate("WelcomePhoneInputScreen.placeholder"),
+                returnKeyType: loading ? "default" : "done",
+                onSubmitEditing: send,
+              }}
+            />
+            <ActivityIndicator
+              animating={loading}
+              size="large"
+              color={color.primary}
+              style={{ marginTop: 32 }}
+            />
+          </KeyboardAvoidingView>
+        ) : (
+          <Button
+            title={translate("WelcomePhoneInputScreen.verify")}
+            onPress={() => queryRegisterCaptcha()}
+            loading={loadingRegisterCaptcha}
+            buttonStyle={styles.button}
           />
-          <ActivityIndicator
-            animating={loading}
-            size="large"
-            color={color.primary}
-            style={{ marginTop: 32 }}
-          />
-        </KeyboardAvoidingView>
+        )}
       </View>
       <CloseCross color={palette.darkGrey} onPress={() => navigation.goBack()} />
     </Screen>

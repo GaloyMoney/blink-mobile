@@ -9,5 +9,9 @@
 
 # Add any project specific keep options here:
 
-keep class com.facebook.hermes.unicode.** { *; }
-keep class com.facebook.jni.** { *; }
+-keep class com.facebook.hermes.unicode.** { *; }
+-keep class com.facebook.jni.** { *; }
+
+# GeeTest SDK has already been obfuscated, please do not obfuscate it again
+-dontwarn com.geetest.sdk.**
+-keep class com.geetest.sdk.**{*;}
