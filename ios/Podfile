@@ -19,4 +19,6 @@ target 'GaloyApp' do
 
   pod 'XCDYouTubeKit', '~> 2.8' # for YouTubeStandaloneIOS
 
+  pod 'GT3Captcha-iOS'
+
 end
