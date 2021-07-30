@@ -196,11 +196,6 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
 
     // console.log("succesfully update earns id")
 
-    // self.transactions.clear()
-    // self.wallets.get("BTC").transactions.clear()
-
-    // console.log("cleared local transactions")
-
     reloadMainQuery({ variables: { logged: new Token().has() } })
 
     console.log("sending device token for notifications")
