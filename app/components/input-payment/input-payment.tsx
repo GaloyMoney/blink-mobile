@@ -9,10 +9,13 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
 import { btc_price } from "../../graphql/query"
 import { usePrefCurrency } from "../../hooks/usePrefCurrency"
-import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
 import type { ComponentType } from "../../types/jsx"
-import { CurrencyConversion, toCurrency } from "../../utils/currencyConversion"
+import {
+  CurrencyConversion,
+  currencyToText,
+  textToCurrency,
+} from "../../utils/currencyConversion"
 import { CurrencyType } from "../../utils/enum"
 import { TextCurrency } from "../text-currency/text-currency"
 
@@ -29,11 +32,19 @@ const styles = EStyleSheet.create({
     width: "100%",
   },
 
+  inputMaskPositioning: {
+    position: "absolute",
+    width: "100%",
+  },
+
+  inputText: {
+    opacity: 0,
+  },
+
   main: {
     alignItems: "center",
     flexDirection: "row",
     marginTop: "8rem",
-    width: "100%",
   },
 
   subCurrencyText: {
@@ -94,13 +105,13 @@ export const InputPayment: ComponentType = ({
 }: InputPaymentDataInjectedProps) => {
   const [amount, setAmount] = React.useState(initAmount)
   const [input, setInput] = React.useState("")
-
-  const handleChange = (text) => {
-    setInput(currency === CurrencyType.USD || currency === CurrencyType.BTC ? toCurrency(text) : text)
-  }
   const mapping = CurrencyConversion(price)
   const amountInput = mapping[prefCurrency].conversion(amount)
   const currency = mapping[prefCurrency].primary
+
+  const handleTextInputChange = (text) => {
+    setInput(textToCurrency(text, currency))
+  }
 
   React.useEffect(() => {
     setAmount(initAmount)
@@ -112,19 +123,19 @@ export const InputPayment: ComponentType = ({
       setAmount(newAmount)
       onUpdateAmount(toInteger(newAmount))
     }
-  // note: adding additional dependencies here breaks the input field
-  // when switching between usd & sats
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // note: adding additional dependencies here breaks the input field
+    // when switching between usd & sats
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [input])
 
   // is Focused part
 
   React.useEffect(() => {
     // TODO: show "an amount is needed" in red
-    if (forceKeyboard && (amountInput == "" || amountInput == "." || +amountInput == 0)) {
+    if (forceKeyboard && +amountInput == 0) {
       inputRef?.current.focus()
     }
-  }, [editable, forceKeyboard, amountInput])
+  }, [forceKeyboard, amountInput])
 
   const inputRef = React.useRef<TextInput>()
 
@@ -140,15 +151,18 @@ export const InputPayment: ComponentType = ({
   const _keyboardDidHide = () => {
     inputRef?.current?.blur()
   }
+  const displayValue = currencyToText(amountInput, currency)
 
   return (
     <View style={styles.container}>
       <View style={styles.main}>
+        <Text style={[styles.textStyle, styles.inputMaskPositioning]}>
+          {displayValue}
+        </Text>
         <Input
           ref={inputRef}
-          placeholder={translate("common.setAnAmount")}
           autoFocus={forceKeyboard}
-          value={amountInput}
+          value={displayValue}
           leftIcon={
             currency === CurrencyType.USD ? (
               <Text
@@ -175,7 +189,7 @@ export const InputPayment: ComponentType = ({
               <Text
                 style={[
                   styles.textStyle,
-                  { color: input === "" ? palette.midGrey : palette.darkGrey },
+                  { color: amount === 0 ? palette.midGrey : palette.darkGrey },
                 ]}
               >
                 sats
@@ -183,9 +197,10 @@ export const InputPayment: ComponentType = ({
             ) : null
           }
           inputContainerStyle={styles.inputContainer}
-          inputStyle={[styles.textStyle]}
-          onChangeText={handleChange}
-          keyboardType={currency === "sats" ? "number-pad" : "decimal-pad"}
+          inputStyle={[styles.textStyle, styles.inputText]}
+          contextMenuHidden
+          onChangeText={handleTextInputChange}
+          keyboardType={"number-pad"}
           onBlur={onBlur}
           enablesReturnKeyAutomatically
           returnKeyLabel="Update"

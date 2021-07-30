@@ -1,3 +1,5 @@
+import { CurrencyType } from "./enum"
+
 export const currencyFormatting = {
   USD: (usd: number): string =>
     usd < 0.01 ? (usd == 0 ? usd.toFixed(2) : usd.toFixed(4)) : usd.toFixed(2),
@@ -60,36 +62,43 @@ export const textCurrencyFormatting = (
   throw Error("wrong currency")
 }
 
+const isCurrencyWithDecimals = (currency) =>
+  currency === CurrencyType.USD || currency === CurrencyType.BTC
+
 // Extracted from: https://github.com/ianmcnally/react-currency-masked-input/blob/3989ce3dfa69dbf78da00424811376c483aceb98/src/services/currency-conversion.js
-export const toCurrency = (value: string , separator = '.'): string => {
-  const digits = getDigitsFromValue(value)
-  const digitsWithPadding = padDigits(digits)
-  return addDecimalToNumber(digitsWithPadding, separator);
-}
-
-const getDigitsFromValue = (value = '') => value.replace(/(-(?!\d))|[^0-9|-]/g, '') || ''
-
-const padDigits = digits => {
-  const desiredLength = 3
-  const actualLength = digits.length
-
-  if (actualLength >= desiredLength) {
-    return digits
+export const textToCurrency = (
+  value: string,
+  currency: CurrencyType,
+  separator = ".",
+): string => {
+  if (isCurrencyWithDecimals(currency)) {
+    const digits = getDigitsFromValue(value)
+    return addDecimalToNumber(digits, separator)
+  } else {
+    return value
   }
-
-  const amountToAdd = desiredLength - actualLength
-  const padding = '0'.repeat(amountToAdd)
-
-  return padding + digits
 }
 
-const removeLeadingZeros = number => number.replace(/^0+([0-9]+)/, '$1')
+export const currencyToText = (
+  value: string,
+  currency: CurrencyType,
+  locale = "en-US",
+): string =>
+  isCurrencyWithDecimals(currency)
+    ? Number(value).toLocaleString(locale, {
+        style: "decimal",
+        maximumFractionDigits: 2,
+        minimumFractionDigits: 2,
+      })
+    : value
+
+const getDigitsFromValue = (value = "") => value.replace(/(-(?!\d))|[^0-9|-]/g, "") || ""
+
+const removeLeadingZeros = (number) => number.replace(/^0+([0-9]+)/, "$1")
 
 const addDecimalToNumber = (number: string, separator: string) => {
-  const centsStartingPosition = number.length - 2
-  const dollars = removeLeadingZeros(
-    number.substring(0, centsStartingPosition)
-  )
-  const cents = number.substring(centsStartingPosition)
-  return dollars + separator + cents
+  const fractionsStartingPosition = number.length - 2
+  const integerDigits = removeLeadingZeros(number.substring(0, fractionsStartingPosition))
+  const fractionDigits = number.substring(fractionsStartingPosition)
+  return integerDigits + separator + fractionDigits
 }
