@@ -133,7 +133,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 255
-        versionName "1.4.7"
+        versionName "1.4.8"
         missingDimensionStrategy 'react-native-camera', 'general' // React native camera
 
     }
