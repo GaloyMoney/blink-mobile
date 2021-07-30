@@ -385,7 +385,7 @@ export const SendBitcoinScreen: React.FC<SendBitcoinScreenProps> = ({
       return
     }
 
-    if (!UsernameValidation.isValid(destination)) {
+    if (paymentType === "username" && !UsernameValidation.isValid(destination)) {
       setStatus("error")
       setErrs([{ message: translate("SendBitcoinScreen.invalidUsername") }])
       return
