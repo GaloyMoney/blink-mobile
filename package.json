@@ -17,7 +17,7 @@
     "coverage": "jest --runInBand --coverage",
     "hack:types-react-native": "rimraf node_modules/@types/react-native/node_modules/@types",
     "hack:types-react-test-renderer": "rimraf node_modules/@types/react-test-renderer/node_modules/@types",
-    "ios-session": "cd ios && fastlane spaceauth -u ios@galoy.io",
+    "ios-session": "cd ios && fastlane spaceauth -u jb@galoy.io",
     "fastlane-update": "cd ios && bundle update fastlane && cd ../android && bundle update fastlane && cd ..",
     "increment": "cd ios && fastlane ios increment && cd ../android && echo 'fastlane android increment'",
     "patch": "patch-package",
