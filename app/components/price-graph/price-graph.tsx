@@ -62,37 +62,40 @@ const styles = EStyleSheet.create({
   },
 })
 
-const mapping = {
-  d: {
-    last: 24,
-    filter: 1,
-    label: translate("PriceScreen.today"),
-  },
-
-  w: {
-    last: 24 * 7,
-    filter: 4,
-    label: translate("PriceScreen.thisWeek"),
-  },
-
-  m: {
-    last: 24 * 31,
-    filter: 24,
-    label: translate("PriceScreen.thisMonth"),
-  },
-
-  y: {
-    last: 0,
-    filter: 24 * 2,
-    label: translate("PriceScreen.thisYear"),
-  },
-}
-
 type Props = {
   prices: prices_prices[]
 }
 
 export const PriceGraph: ComponentType = ({ prices }: Props) => {
+  const mapping = React.useMemo(
+    () => ({
+      d: {
+        last: 24,
+        filter: 1,
+        label: translate("PriceScreen.today"),
+      },
+
+      w: {
+        last: 24 * 7,
+        filter: 4,
+        label: translate("PriceScreen.thisWeek"),
+      },
+
+      m: {
+        last: 24 * 31,
+        filter: 24,
+        label: translate("PriceScreen.thisMonth"),
+      },
+
+      y: {
+        last: 0,
+        filter: 24 * 2,
+        label: translate("PriceScreen.thisYear"),
+      },
+    }),
+    [],
+  )
+
   const [time, setTime] = React.useState("d") // d, w, m, y
 
   let price
