@@ -1,3 +1,5 @@
+import { CurrencyType } from "./enum"
+
 export const currencyFormatting = {
   USD: (usd: number): string =>
     usd < 0.01 ? (usd == 0 ? usd.toFixed(2) : usd.toFixed(4)) : usd.toFixed(2),
@@ -58,4 +60,45 @@ export const textCurrencyFormatting = (
     return `$${cc.secondaryConversion(sats)}`
   }
   throw Error("wrong currency")
+}
+
+const isCurrencyWithDecimals = (currency) =>
+  currency === CurrencyType.USD || currency === CurrencyType.BTC
+
+// Extracted from: https://github.com/ianmcnally/react-currency-masked-input/blob/3989ce3dfa69dbf78da00424811376c483aceb98/src/services/currency-conversion.js
+export const textToCurrency = (
+  value: string,
+  currency: CurrencyType,
+  separator = ".",
+): string => {
+  if (isCurrencyWithDecimals(currency)) {
+    const digits = getDigitsFromValue(value)
+    return addDecimalToNumber(digits, separator)
+  } else {
+    return value
+  }
+}
+
+export const currencyToText = (
+  value: string,
+  currency: CurrencyType,
+  locale = "en-US",
+): string =>
+  isCurrencyWithDecimals(currency)
+    ? Number(value).toLocaleString(locale, {
+        style: "decimal",
+        maximumFractionDigits: 2,
+        minimumFractionDigits: 2,
+      })
+    : value
+
+const getDigitsFromValue = (value = "") => value.replace(/(-(?!\d))|[^0-9|-]/g, "") || ""
+
+const removeLeadingZeros = (number) => number.replace(/^0+([0-9]+)/, "$1")
+
+const addDecimalToNumber = (number: string, separator: string) => {
+  const fractionsStartingPosition = number.length - 2
+  const integerDigits = removeLeadingZeros(number.substring(0, fractionsStartingPosition))
+  const fractionDigits = number.substring(fractionsStartingPosition)
+  return integerDigits + separator + fractionDigits
 }
