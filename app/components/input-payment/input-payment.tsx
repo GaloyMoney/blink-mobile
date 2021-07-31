@@ -56,7 +56,7 @@ const styles = EStyleSheet.create({
 
   textStyle: {
     color: palette.darkGrey,
-    fontSize: "18rem",
+    fontSize: "28rem",
     textAlign: "center",
   },
 })
