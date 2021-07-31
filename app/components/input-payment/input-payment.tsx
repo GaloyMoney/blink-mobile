@@ -18,6 +18,7 @@ import {
 } from "../../utils/currencyConversion"
 import { CurrencyType } from "../../utils/enum"
 import { TextCurrency } from "../text-currency/text-currency"
+import { color } from "../../theme"
 
 const digitLimit = 10
 
@@ -31,6 +32,11 @@ const styles = EStyleSheet.create({
   },
 
   inputContainer: {
+    width: "100%",
+  },
+
+  inputContainerFocused: {
+    borderBottomColor: color.palette.lightBlue,
     width: "100%",
   },
 
@@ -116,6 +122,7 @@ export const InputPayment: ComponentType = ({
 }: InputPaymentDataInjectedProps) => {
   const [amount, setAmount] = React.useState(initAmount)
   const [input, setInput] = React.useState("")
+  const [isFocused, setIsFocused] = React.useState(forceKeyboard)
   const mapping = CurrencyConversion(price)
   const amountInput = mapping[prefCurrency].conversion(amount)
   const currency = mapping[prefCurrency].primary
@@ -257,7 +264,11 @@ export const InputPayment: ComponentType = ({
           contextMenuHidden
           onChangeText={handleTextInputChange}
           keyboardType={"number-pad"}
-          onBlur={onBlur}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => {
+            setIsFocused(false)
+            onBlur()
+          }}
           enablesReturnKeyAutomatically
           returnKeyLabel="Update"
           returnKeyType="done"

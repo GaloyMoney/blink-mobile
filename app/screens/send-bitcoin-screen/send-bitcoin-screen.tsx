@@ -107,6 +107,10 @@ const styles = EStyleSheet.create({
     marginRight: 15,
   },
 
+  inputContainerFocused: {
+    borderBottomColor: color.palette.lightBlue,
+  },
+
   lottie: {
     height: "200rem",
     width: "200rem",
@@ -694,6 +698,11 @@ export const SendBitcoinScreenJSX: ScreenType = ({
             }
             renderErrorMessage={false}
             editable={interactive && status !== "success"}
+            onFocus={() => setIsDestinationFocused(true)}
+            onBlur={() => setIsDestinationFocused(false)}
+            inputContainerStyle={
+              isDestinationFocused ? styles.inputContainerFocused : null
+            }
             selectTextOnFocus
             autoCompleteType="username"
             autoCapitalize="none"
@@ -715,6 +724,9 @@ export const SendBitcoinScreenJSX: ScreenType = ({
             onChangeText={(value) => setMemo(value)}
             renderErrorMessage={false}
             editable={status !== "success"}
+            onFocus={() => setIsMemoFocused(true)}
+            onBlur={() => setIsMemoFocused(false)}
+            inputContainerStyle={isMemoFocused ? styles.inputContainerFocused : null}
             selectTextOnFocus
           />
           <Input
