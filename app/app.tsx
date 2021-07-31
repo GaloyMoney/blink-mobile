@@ -35,6 +35,8 @@ import { initQuery, INITWALLET } from "./graphql/init"
 import { walletIsActive } from "./graphql/query"
 // eslint-disable-next-line import/no-unassigned-import
 import "./i18n"
+// eslint-disable-next-line import/no-unassigned-import
+import "./utils/polyfill"
 import { RootStack } from "./navigation/root-navigator"
 import { isIos } from "./utils/helper"
 import { getGraphQlUri, Token } from "./utils/token"
