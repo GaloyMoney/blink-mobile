@@ -56,7 +56,13 @@ const styles = EStyleSheet.create({
 
   textStyle: {
     color: palette.darkGrey,
-    fontSize: "28rem",
+    fontSize: "35rem",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+
+  textStyleIcon: {
+    fontSize: "30rem",
     textAlign: "center",
   },
 })
@@ -167,7 +173,7 @@ export const InputPayment: ComponentType = ({
             currency === CurrencyType.USD ? (
               <Text
                 style={[
-                  styles.textStyle,
+                  styles.textStyleIcon,
                   { color: amount === 0 ? palette.midGrey : palette.darkGrey },
                 ]}
               >
@@ -179,7 +185,7 @@ export const InputPayment: ComponentType = ({
             currency === CurrencyType.BTC ? (
               <Text
                 style={[
-                  styles.textStyle,
+                  styles.textStyleIcon,
                   { color: amount === 0 ? palette.midGrey : palette.darkGrey },
                 ]}
               >
@@ -188,7 +194,7 @@ export const InputPayment: ComponentType = ({
             ) : currency === "sats" ? (
               <Text
                 style={[
-                  styles.textStyle,
+                  styles.textStyleIcon,
                   { color: amount === 0 ? palette.midGrey : palette.darkGrey },
                 ]}
               >
