@@ -151,7 +151,7 @@ type SendBitcoinScreenProps = {
   route: RouteProp<MoveMoneyStackParamList, "sendBitcoin">
 }
 
-export const SendBitcoinScreen: React.FC<SendBitcoinScreenProps> = ({
+export const SendBitcoinScreen: ScreenType = ({
   route,
 }: SendBitcoinScreenProps) => {
   const client = useApolloClient()
