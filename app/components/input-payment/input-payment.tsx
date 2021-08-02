@@ -33,8 +33,9 @@ const styles = EStyleSheet.create({
   },
 
   inputMaskPositioning: {
+    marginHorizontal: "15%",
     position: "absolute",
-    width: "100%",
+    width: "70%",
   },
 
   inputText: {
@@ -44,7 +45,7 @@ const styles = EStyleSheet.create({
   main: {
     alignItems: "center",
     flexDirection: "row",
-    marginTop: "8rem",
+    marginTop: "20rem",
   },
 
   subCurrencyText: {
@@ -62,7 +63,7 @@ const styles = EStyleSheet.create({
   },
 
   textStyleIcon: {
-    fontSize: "30rem",
+    fontSize: "18rem",
     textAlign: "center",
   },
 })
@@ -162,7 +163,11 @@ export const InputPayment: ComponentType = ({
   return (
     <View style={styles.container}>
       <View style={styles.main}>
-        <Text style={[styles.textStyle, styles.inputMaskPositioning]}>
+        <Text
+          ellipsizeMode="middle"
+          numberOfLines={1}
+          style={[styles.textStyle, styles.inputMaskPositioning]}
+        >
           {displayValue}
         </Text>
         <Input
