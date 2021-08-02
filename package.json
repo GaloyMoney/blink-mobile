@@ -50,6 +50,7 @@
     "currency.js": "^2.0.2",
     "graphql": "^15.5.0",
     "i18n-js": "^3.5.1",
+    "intl": "^1.2.5",
     "jwt-decode": "^3.1.2",
     "lodash": "^4.17.15",
     "lottie-ios": "3.1.9",
