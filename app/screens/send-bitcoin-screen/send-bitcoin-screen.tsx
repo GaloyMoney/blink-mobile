@@ -122,7 +122,7 @@ const styles = EStyleSheet.create({
   row: { flexDirection: "row" },
 
   section: {
-    marginHorizontal: 48,
+    marginHorizontal: 16,
     // width: "100%"
   },
 

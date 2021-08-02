@@ -33,8 +33,9 @@ const styles = EStyleSheet.create({
   },
 
   inputMaskPositioning: {
+    marginHorizontal: "15%",
     position: "absolute",
-    width: "100%",
+    width: "70%",
   },
 
   inputText: {
@@ -44,7 +45,7 @@ const styles = EStyleSheet.create({
   main: {
     alignItems: "center",
     flexDirection: "row",
-    marginTop: "8rem",
+    marginTop: "20rem",
   },
 
   subCurrencyText: {
@@ -56,6 +57,12 @@ const styles = EStyleSheet.create({
 
   textStyle: {
     color: palette.darkGrey,
+    fontSize: "35rem",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+
+  textStyleIcon: {
     fontSize: "18rem",
     textAlign: "center",
   },
@@ -156,7 +163,11 @@ export const InputPayment: ComponentType = ({
   return (
     <View style={styles.container}>
       <View style={styles.main}>
-        <Text style={[styles.textStyle, styles.inputMaskPositioning]}>
+        <Text
+          ellipsizeMode="middle"
+          numberOfLines={1}
+          style={[styles.textStyle, styles.inputMaskPositioning]}
+        >
           {displayValue}
         </Text>
         <Input
@@ -167,7 +178,7 @@ export const InputPayment: ComponentType = ({
             currency === CurrencyType.USD ? (
               <Text
                 style={[
-                  styles.textStyle,
+                  styles.textStyleIcon,
                   { color: amount === 0 ? palette.midGrey : palette.darkGrey },
                 ]}
               >
@@ -179,7 +190,7 @@ export const InputPayment: ComponentType = ({
             currency === CurrencyType.BTC ? (
               <Text
                 style={[
-                  styles.textStyle,
+                  styles.textStyleIcon,
                   { color: amount === 0 ? palette.midGrey : palette.darkGrey },
                 ]}
               >
@@ -188,7 +199,7 @@ export const InputPayment: ComponentType = ({
             ) : currency === "sats" ? (
               <Text
                 style={[
-                  styles.textStyle,
+                  styles.textStyleIcon,
                   { color: amount === 0 ? palette.midGrey : palette.darkGrey },
                 ]}
               >
