@@ -87,7 +87,6 @@ type InputPaymentDataInjectedProps = {
   prefCurrency: string
   maxLength: number
   nextPrefCurrency: () => void
-  currencyPreference?: string // "sats" | "BTC" | "usd"
   sub?: boolean
 }
 
