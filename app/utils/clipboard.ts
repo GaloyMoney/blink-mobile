@@ -6,6 +6,7 @@ import { modalClipboardVisibleVar, walletIsActive } from "../graphql/query"
 import { Token } from "./token"
 import { cache } from "../graphql/cache"
 import { LAST_CLIPBOARD_PAYMENT } from "../graphql/client-only-query"
+import { LastClipboardPayment } from "../graphql/__generated__/LastClipboardPayment"
 
 export const showModalClipboardIfValidPayment = async (
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -17,7 +18,8 @@ export const showModalClipboardIfValidPayment = async (
     return
   }
 
-  const { lastClipboardPayment } = cache.readQuery({ query: LAST_CLIPBOARD_PAYMENT })
+  const data = cache.readQuery<LastClipboardPayment>({ query: LAST_CLIPBOARD_PAYMENT })
+  const lastClipboardPayment = data?.lastClipboardPayment ?? ""
   if (clipboard === lastClipboardPayment) {
     return
   }
