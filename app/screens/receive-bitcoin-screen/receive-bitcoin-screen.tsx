@@ -66,10 +66,6 @@ const styles = EStyleSheet.create({
     width: 280,
   },
 
-  inputContainerFocused: {
-    borderBottomColor: color.palette.lightBlue,
-  },
-
   lottie: {
     height: "200rem",
     width: "200rem",
