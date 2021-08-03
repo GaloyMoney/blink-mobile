@@ -1,5 +1,6 @@
 module.exports = {
   preset: "react-native",
+  setupFilesAfterEnv: ["@testing-library/jest-native/extend-expect"],
   transform: {
     "^.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js",
     "\\.(ts|tsx)$": "ts-jest",
@@ -15,9 +16,17 @@ module.exports = {
     "node_modules/(?!(react-native" +
       "|@react-native" +
       "|react-navigation-tabs" +
+      "|react-native-animatable" +
+      "|react-native-elements" +
+      "|react-native-extended-stylesheet" +
+      "|react-native-haptic-feedback" +
+      "|react-native-modal" +
       "|react-native-splash-screen" +
       "|react-native-screens" +
+      "|react-native-size-matters" +
+      "|react-native-ratings" +
       "|react-native-reanimated" +
+      "|react-native-vector-icons" +
       "|@react-native-firebase/auth" +
       "|@react-native-firebase" +
       ")/)",

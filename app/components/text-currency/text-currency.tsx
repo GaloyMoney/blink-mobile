@@ -45,7 +45,6 @@ export const TextCurrency: ComponentType = ({ amount, currency, style }: Props) 
     <Text style={style}>
       {currency_fmt
         .default(amount, {
-          formatWithSymbol: false,
           precision: 0,
           separator: ",",
           symbol: "",

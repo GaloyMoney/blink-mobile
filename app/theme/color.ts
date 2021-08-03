@@ -31,11 +31,11 @@ export const color = {
   /**
    * The main tinting color, but darker.
    */
-  primaryDarker: palette.greenDarker,
+  primaryDarker: palette.blue,
   /**
    * A subtle color used for borders and lines.
    */
-  line: palette.offWhite,
+  line: palette.lighterGrey,
   /**
    * The default color of text in many components.
    */
@@ -51,7 +51,7 @@ export const color = {
   /**
    * Error messages and icons.
    */
-  error: palette.angry,
+  error: palette.red,
 
   /**
    * Storybook background for Text stories, or any stories where
