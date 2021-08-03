@@ -17,7 +17,7 @@ import {
   Text,
   View,
 } from "react-native"
-import { Button, Input } from "react-native-elements"
+import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import QRCode from "react-native-qrcode-svg"
@@ -25,6 +25,7 @@ import Toast from "react-native-root-toast"
 import ScreenBrightness from "react-native-screen-brightness"
 import Swiper from "react-native-swiper"
 import Icon from "react-native-vector-icons/Ionicons"
+import { GaloyInput } from "../../components/galoy-input"
 import { InputPaymentDataInjected } from "../../components/input-payment"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
@@ -151,8 +152,6 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
   const [err, setErr] = useState("")
   const [isSucceed, setIsSucceed] = useState(false)
   const [brightnessInitial, setBrightnessInitial] = useState(null)
-
-  const [isMemoFocused, setIsMemoFocused] = useState(false)
 
   useEffect(() => {
     update()
@@ -505,23 +504,18 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
             editable={!isSucceed}
             sub
           />
-          <Input
+          <GaloyInput
             placeholder={translate("ReceiveBitcoinScreen.setNote")}
             value={memo}
             onChangeText={setMemo}
             // eslint-disable-next-line react-native/no-inline-styles
             containerStyle={{ marginTop: 0 }}
-            inputContainerStyle={isMemoFocused ? styles.inputContainerFocused : null}
             inputStyle={styles.textStyle}
             leftIcon={
               <Icon name="ios-create-outline" size={21} color={palette.darkGrey} />
             }
-            ref={inputMemoRef}
-            onFocus={() => setIsMemoFocused(true)}
-            onBlur={() => {
-              setIsMemoFocused(false)
-              update()
-            }}
+            forwardedRef={inputMemoRef}
+            onBlur={update}
             disabled={isSucceed}
           />
         </View>

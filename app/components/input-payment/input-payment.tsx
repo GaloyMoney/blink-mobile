@@ -3,7 +3,6 @@ import { toInteger } from "lodash"
 import * as React from "react"
 import { Keyboard, Text, View } from "react-native"
 import { TextInput } from "react-native-vector-icons/node_modules/@types/react-native/index"
-import { Input } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
@@ -18,7 +17,7 @@ import {
 } from "../../utils/currencyConversion"
 import { CurrencyType } from "../../utils/enum"
 import { TextCurrency } from "../text-currency/text-currency"
-import { color } from "../../theme"
+import { GaloyInput } from "../galoy-input"
 
 const digitLimit = 10
 
@@ -32,11 +31,6 @@ const styles = EStyleSheet.create({
   },
 
   inputContainer: {
-    width: "100%",
-  },
-
-  inputContainerFocused: {
-    borderBottomColor: color.palette.lightBlue,
     width: "100%",
   },
 
@@ -121,7 +115,6 @@ export const InputPayment: ComponentType = ({
 }: InputPaymentDataInjectedProps) => {
   const [amount, setAmount] = React.useState(initAmount)
   const [input, setInput] = React.useState("")
-  const [isFocused, setIsFocused] = React.useState(forceKeyboard)
   const mapping = CurrencyConversion(price)
   const amountInput = mapping[prefCurrency].conversion(amount)
   const currency = mapping[prefCurrency].primary
@@ -251,6 +244,7 @@ export const InputPayment: ComponentType = ({
         >
           {displayValue}
         </Text>
+<<<<<<< HEAD
         <Input
           ref={inputRef}
           autoCorrect={false}
@@ -258,16 +252,51 @@ export const InputPayment: ComponentType = ({
           value={displayValue}
           leftIcon={leftIcon()}
           rightIcon={rightIcon()}
+=======
+        <GaloyInput
+          forwardedRef={inputRef}
+          autoFocus={forceKeyboard}
+          value={displayValue}
+          leftIcon={
+            currency === CurrencyType.USD ? (
+              <Text
+                style={[
+                  styles.textStyleIcon,
+                  { color: amount === 0 ? palette.midGrey : palette.darkGrey },
+                ]}
+              >
+                $
+              </Text>
+            ) : null
+          }
+          rightIcon={
+            currency === CurrencyType.BTC ? (
+              <Text
+                style={[
+                  styles.textStyleIcon,
+                  { color: amount === 0 ? palette.midGrey : palette.darkGrey },
+                ]}
+              >
+                BTC
+              </Text>
+            ) : currency === "sats" ? (
+              <Text
+                style={[
+                  styles.textStyleIcon,
+                  { color: amount === 0 ? palette.midGrey : palette.darkGrey },
+                ]}
+              >
+                sats
+              </Text>
+            ) : null
+          }
+>>>>>>> ff489c58 (Create GaloyInput component)
           inputContainerStyle={styles.inputContainer}
           inputStyle={[styles.textStyle, styles.inputText]}
           contextMenuHidden
           onChangeText={handleTextInputChange}
           keyboardType={"number-pad"}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => {
-            setIsFocused(false)
-            onBlur()
-          }}
+          onBlur={onBlur}
           enablesReturnKeyAutomatically
           returnKeyLabel="Update"
           returnKeyType="done"
