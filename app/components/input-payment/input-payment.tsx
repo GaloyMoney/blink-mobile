@@ -244,53 +244,13 @@ export const InputPayment: ComponentType = ({
         >
           {displayValue}
         </Text>
-<<<<<<< HEAD
-        <Input
-          ref={inputRef}
+        <GaloyInput
+          forwardedRef={inputRef}
           autoCorrect={false}
           autoFocus={forceKeyboard}
           value={displayValue}
           leftIcon={leftIcon()}
           rightIcon={rightIcon()}
-=======
-        <GaloyInput
-          forwardedRef={inputRef}
-          autoFocus={forceKeyboard}
-          value={displayValue}
-          leftIcon={
-            currency === CurrencyType.USD ? (
-              <Text
-                style={[
-                  styles.textStyleIcon,
-                  { color: amount === 0 ? palette.midGrey : palette.darkGrey },
-                ]}
-              >
-                $
-              </Text>
-            ) : null
-          }
-          rightIcon={
-            currency === CurrencyType.BTC ? (
-              <Text
-                style={[
-                  styles.textStyleIcon,
-                  { color: amount === 0 ? palette.midGrey : palette.darkGrey },
-                ]}
-              >
-                BTC
-              </Text>
-            ) : currency === "sats" ? (
-              <Text
-                style={[
-                  styles.textStyleIcon,
-                  { color: amount === 0 ? palette.midGrey : palette.darkGrey },
-                ]}
-              >
-                sats
-              </Text>
-            ) : null
-          }
->>>>>>> ff489c58 (Create GaloyInput component)
           inputContainerStyle={styles.inputContainer}
           inputStyle={[styles.textStyle, styles.inputText]}
           contextMenuHidden

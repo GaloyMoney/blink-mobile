@@ -6,7 +6,7 @@ import { TagData } from "bolt11"
 import LottieView from "lottie-react-native"
 import * as React from "react"
 import { useCallback, useEffect, useState } from "react"
-import { ActivityIndicator, ScrollView, Text, View } from "react-native"
+import { ActivityIndicator, ScrollView, Text, TextInput, View } from "react-native"
 import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
@@ -645,6 +645,59 @@ export const SendBitcoinScreenJSX: ScreenType = ({
     return TextInput
   }
 
+  const paymentLottie = () => {
+    if (status === "success") { 
+      return (
+        <>
+          <LottieView
+            source={successLottie}
+            loop={false}
+            autoPlay
+            style={styles.lottie}
+            resizeMode="cover"
+          />
+          <Text style={{ fontSize: 18 }}>
+            {translate("SendBitcoinScreen.success")}
+          </Text>
+        </>
+      )
+    } else if (status === "error") {
+      return (
+        <>
+          <LottieView
+            source={errorLottie}
+            loop={false}
+            autoPlay
+            style={styles.lottie}
+            resizeMode="cover"
+          />
+          {errs.map(({ message }, item) => (
+            <Text key={`error-${item}`} style={styles.errorText}>
+              {message}
+            </Text>
+          ))}
+        </>
+      )
+    } else if (status === "pending") {
+      return (
+        <>
+          <LottieView
+            source={pendingLottie}
+            loop={false}
+            autoPlay
+            style={styles.lottie}
+            resizeMode="cover"
+          />
+          <Text style={{ fontSize: 18, textAlign: "center" }}>
+            {translate("SendBitcoinScreen.notConfirmed")}
+          </Text>
+        </>
+      )
+    }
+
+    return null
+  }
+
   return (
     <Screen preset="fixed">
       <ScrollView
@@ -740,50 +793,7 @@ export const SendBitcoinScreenJSX: ScreenType = ({
           />
         </View>
         <View style={{ alignItems: "center" }}>
-          {status === "success" && (
-            <>
-              <LottieView
-                source={successLottie}
-                loop={false}
-                autoPlay
-                style={styles.lottie}
-                resizeMode="cover"
-              />
-              <Text style={{ fontSize: 18 }}>
-                {translate("SendBitcoinScreen.success")}
-              </Text>
-            </>
-          )}
-          {status === "error" && (
-            <>
-              <LottieView
-                source={errorLottie}
-                loop={false}
-                autoPlay
-                style={styles.lottie}
-                resizeMode="cover"
-              />
-              {errs.map(({ message }, item) => (
-                <Text key={`error-${item}`} style={styles.errorText}>
-                  {message}
-                </Text>
-              ))}
-            </>
-          )}
-          {status === "pending" && (
-            <>
-              <LottieView
-                source={pendingLottie}
-                loop={false}
-                autoPlay
-                style={styles.lottie}
-                resizeMode="cover"
-              />
-              <Text style={{ fontSize: 18, textAlign: "center" }}>
-                {translate("SendBitcoinScreen.notConfirmed")}
-              </Text>
-            </>
-          )}
+          {paymentLottie()}
         </View>
         <Button
           buttonStyle={styles.buttonStyle}
@@ -799,9 +809,7 @@ export const SendBitcoinScreenJSX: ScreenType = ({
               ? translate("common.usernameRequired")
               : translate("common.send")
           }
-          onPress={() =>
-            status === "success" || status === "pending" ? goBack() : pay()
-          }
+          onPress={() => (status === "success" || status === "pending" ? goBack() : pay())}
           disabled={!amount || !!errorMessage || !destination}
           loading={status === "loading"}
         />
