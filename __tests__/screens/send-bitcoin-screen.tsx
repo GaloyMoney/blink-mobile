@@ -1,3 +1,4 @@
+import * as React from "react"
 import { cleanup, fireEvent, render } from '@testing-library/react-native/pure'
 import { SendBitcoinScreen } from "../../app/screens/send-bitcoin-screen"
 // import { NavigationContainer } from '@react-navigation/native'

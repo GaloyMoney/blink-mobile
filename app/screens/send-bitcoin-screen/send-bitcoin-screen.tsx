@@ -2,13 +2,13 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { gql, useApolloClient, useLazyQuery, useMutation } from "@apollo/client"
 import { RouteProp, useNavigation } from "@react-navigation/native"
+import { TagData } from "bolt11"
 import LottieView from "lottie-react-native"
 import * as React from "react"
 import { useCallback, useEffect, useState } from "react"
-import { ActivityIndicator, ScrollView, Text, View } from "react-native"
+import { ActivityIndicator, ScrollView, Text, TextInput, View } from "react-native"
 import { Button, Input } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
-import { TextInput } from "react-native-gesture-handler"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import Icon from "react-native-vector-icons/Ionicons"
 import { InputPayment } from "../../components/input-payment"
@@ -147,6 +147,18 @@ const regexFilter = (network) => {
   }
 }
 
+class FeeActivityIndicator extends React.Component {
+  render() {
+    return <ActivityIndicator animating size="small" color={palette.orange} />
+  }
+}
+
+class FeeCalculationUnsuccessfulText extends React.Component {
+  render () {
+    return <Text>{translate("SendBitcoinScreen.feeCalculationUnsuccessful")}</Text> // todo: same calculation as backend
+  }
+}
+
 type SendBitcoinScreenProps = {
   route: RouteProp<MoveMoneyStackParamList, "sendBitcoin">
 }
@@ -171,8 +183,8 @@ export const SendBitcoinScreen: ScreenType = ({
 
   const [destination, setDestinationInternal] = useState("")
   const [invoice, setInvoice] = useState("")
-  const [memo, setMemo] = useState("")
-  const [initialMemo, setInitialMemo] = useState("")
+  const [memo, setMemo] = useState<string | number | TagData>("")
+  const [initialMemo, setInitialMemo] = useState<string | number | TagData>("")
 
   const setDestination = (input) => setDestinationInternal(input.trim())
 
@@ -559,7 +571,7 @@ type SendBitcoinScreenJSXProps = {
   ) => void
   pay: () => void
   price: string
-  setMemo: (memo: string) => void
+  setMemo: (memo: string | number | TagData) => void
   setDestination: (destination: string) => void
   destination: string
   usernameExists: boolean
@@ -713,13 +725,13 @@ export const SendBitcoinScreenJSX: ScreenType = ({
             errorStyle={{ fontSize: 16, alignSelf: "center", height: 18 }}
             editable={false}
             selectTextOnFocus
-            InputComponent={(props) =>
+            InputComponent={
               fee === undefined ? (
-                <ActivityIndicator animating size="small" color={palette.orange} />
+                FeeActivityIndicator
               ) : fee === -1 ? (
-                <Text>{translate("SendBitcoinScreen.feeCalculationUnsuccessful")}</Text> // todo: same calculation as backend
+                FeeCalculationUnsuccessfulText
               ) : (
-                <TextInput {...props} />
+                TextInput
               )
             }
           />
