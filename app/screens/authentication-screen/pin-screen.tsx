@@ -18,6 +18,7 @@ import { showModalClipboardIfValidPayment } from "../../utils/clipboard"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { RouteProp } from "@react-navigation/native"
+import useToken from "../../utils/use-token"
 
 const styles = EStyleSheet.create({
   bottomSpacer: {
@@ -118,6 +119,7 @@ type Props = {
 
 export const PinScreen: ScreenType = ({ route, navigation }: Props) => {
   const client = useApolloClient()
+  const { getTokenNetwork, removeToken } = useToken()
 
   const { screenPurpose } = route.params
 
@@ -143,7 +145,7 @@ export const PinScreen: ScreenType = ({ route, navigation }: Props) => {
         index: 0,
         routes: [{ name: "Primary" }],
       })
-      showModalClipboardIfValidPayment(client)
+      showModalClipboardIfValidPayment({ client, network: getTokenNetwork() })
     } else {
       if (pinAttempts < MAX_PIN_ATTEMPTS - 1) {
         const newPinAttempts = pinAttempts + 1
@@ -158,7 +160,7 @@ export const PinScreen: ScreenType = ({ route, navigation }: Props) => {
         }
       } else {
         setHelperText(translate("PinScreen.tooManyAttempts"))
-        await resetDataStore(client)
+        await resetDataStore({ client, removeToken })
         await sleep(1000)
         navigation.reset({
           index: 0,

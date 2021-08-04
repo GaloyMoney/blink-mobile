@@ -23,7 +23,7 @@ import { translate } from "../../i18n"
 import { queryMain } from "../../graphql/query"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-import { Token } from "../../utils/token"
+import useToken from "../../utils/use-token"
 import { toastShow } from "../../utils/toast"
 import { addDeviceToken } from "../../utils/notifications"
 import BiometricWrapper from "../../utils/biometricAuthentication"
@@ -190,6 +190,7 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
   navigation,
 }: WelcomePhoneValidationScreenDataInjectedProps) => {
   const client = useApolloClient()
+  const { saveToken, hasToken } = useToken()
 
   const [login, { loading, error }] = useMutation<{
     login: LoginMutationFunction
@@ -199,7 +200,7 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
 
   const onSuccess = async ({ token }) => {
     analytics().logLogin({ method: "phone" })
-    await Token.getInstance().save(token)
+    await saveToken(token)
 
     // TODO refactor from mst-gql to apollo client
     // sync the earned quizzes
@@ -208,7 +209,7 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
 
     // console.log("succesfully update earns id")
 
-    queryMain(client, { logged: Token.getInstance().has() })
+    queryMain(client, { logged: hasToken() })
 
     addDeviceToken(client)
   }
