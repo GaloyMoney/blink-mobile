@@ -26,7 +26,7 @@ export const shuffle = <Type>(array: Type[]): Type[] => {
 
 export const scriptHostname = (): string => {
   const { scriptURL } = NativeModules.SourceCode
-  const scriptHostname = scriptURL.split("://")[1].split(":")[0]
+  const scriptHostname = scriptURL?.split("://")[1].split(":")[0] ?? ""
   return scriptHostname
 }
 

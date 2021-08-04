@@ -4,6 +4,7 @@ module.exports = {
     "<rootDir>/__mocks__/global-mock.js",
     "<rootDir>/__mocks__/react-native-firebase.js",
     "<rootDir>/__mocks__/react-native-keychain.js",
+    "<rootDir>/node_modules/react-native-gesture-handler/jestSetup.js",
     "@testing-library/jest-native/extend-expect"
   ],
   transform: {
@@ -22,9 +23,11 @@ module.exports = {
       "|@react-native" +
       "|react-navigation-tabs" +
       "|react-native-animatable" +
+      "|react-native-camera" +
       "|react-native-elements" +
       "|react-native-extended-stylesheet" +
       "|react-native-haptic-feedback" +
+      "|react-native-image-picker" +
       "|react-native-modal" +
       "|react-native-splash-screen" +
       "|react-native-screens" +
