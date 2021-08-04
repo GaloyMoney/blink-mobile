@@ -23,7 +23,7 @@ export const showModalClipboardIfValidPayment = async (
     return
   }
 
-  const { valid } = validPayment(clipboard, new Token().network, client)
+  const { valid } = validPayment(clipboard, Token.getInstance().network, client)
   if (!valid) {
     return
   }

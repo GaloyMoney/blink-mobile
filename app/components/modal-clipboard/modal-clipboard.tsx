@@ -100,7 +100,7 @@ export const ModalClipboard: ComponentType = () => {
 
     ;(async () => {
       const clipboard = await Clipboard.getString()
-      const { paymentType } = validPayment(clipboard, new Token().network, client)
+      const { paymentType } = validPayment(clipboard, Token.getInstance().network, client)
       const pathString =
         paymentType === "lightning"
           ? "ModalClipboard.pendingInvoice"

@@ -27,7 +27,7 @@ const styles = EStyleSheet.create({
 export const DebugScreen: ScreenType = () => {
   const client = useApolloClient()
   const token = useMemo(() => {
-    return new Token()
+    return Token.getInstance()
   }, [])
 
   const networks: INetwork[] = ["regtest", "testnet", "mainnet"]

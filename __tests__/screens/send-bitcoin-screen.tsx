@@ -5,6 +5,16 @@ import { SendBitcoinScreen } from "../../app/screens/send-bitcoin-screen"
 
 // import { MoveMoneyNavigator } from "../../app/navigation/index"
 
+// jest.mock('Linking', () => {
+//   return {
+//     addEventListener: jest.fn(),
+//     removeEventListener: jest.fn(),
+//     openURL: jest.fn(),
+//     canOpenURL: jest.fn(),
+//     getInitialURL: jest.fn(),
+//   }
+// })
+
 
 afterEach(cleanup);
 

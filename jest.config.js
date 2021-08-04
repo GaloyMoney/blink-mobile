@@ -1,6 +1,11 @@
 module.exports = {
   preset: "react-native",
-  setupFilesAfterEnv: ["@testing-library/jest-native/extend-expect"],
+  setupFilesAfterEnv: [
+    "<rootDir>/__mocks__/global-mock.js",
+    "<rootDir>/__mocks__/react-native-firebase.js",
+    "<rootDir>/__mocks__/react-native-keychain.js",
+    "@testing-library/jest-native/extend-expect"
+  ],
   transform: {
     "^.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js",
     "\\.(ts|tsx)$": "ts-jest",

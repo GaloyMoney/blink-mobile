@@ -248,7 +248,7 @@ export const SendBitcoinScreen: ScreenType = ({
 
   const balance = balanceBtc(client)
 
-  const { network } = new Token()
+  const { network } = Token.getInstance()
   const potentialBitcoinOrLightning = regexFilter(network)?.test(destination) ?? false
 
   const reset = useCallback(() => {
