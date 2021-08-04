@@ -74,7 +74,11 @@ export const ScanningQRCodeScreen: ScreenType = () => {
     }
 
     try {
-      const { valid, errorMessage } = validPayment(data, Token.getInstance().network, client)
+      const { valid, errorMessage } = validPayment(
+        data,
+        Token.getInstance().network,
+        client,
+      )
       console.log({ valid, errorMessage, data }, "result")
       if (valid) {
         navigate("sendBitcoin", { payment: data })

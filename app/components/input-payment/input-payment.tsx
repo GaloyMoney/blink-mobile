@@ -159,6 +159,8 @@ export const InputPayment: ComponentType = ({
     inputRef?.current?.blur()
   }
   const displayValue = currencyToText(amountInput, currency)
+  console.log("%%~~~~~~~~~~~~~~~")
+  console.log(displayValue)
 
   return (
     <View style={styles.container}>

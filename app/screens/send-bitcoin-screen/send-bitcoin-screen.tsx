@@ -154,7 +154,7 @@ class FeeActivityIndicator extends React.Component {
 }
 
 class FeeCalculationUnsuccessfulText extends React.Component {
-  render () {
+  render() {
     return <Text>{translate("SendBitcoinScreen.feeCalculationUnsuccessful")}</Text> // todo: same calculation as backend
   }
 }
@@ -163,9 +163,7 @@ type SendBitcoinScreenProps = {
   route: RouteProp<MoveMoneyStackParamList, "sendBitcoin">
 }
 
-export const SendBitcoinScreen: ScreenType = ({
-  route,
-}: SendBitcoinScreenProps) => {
+export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps) => {
   const client = useApolloClient()
   const { goBack, navigate } = useNavigation()
 
