@@ -1,15 +1,13 @@
 import * as React from "react"
 import { MockedProvider } from "@apollo/client/testing"
 import { gql, InMemoryCache } from "@apollo/client"
-import { cleanup, fireEvent, render, waitFor } from "@testing-library/react-native/pure"
+import { act, cleanup, fireEvent, render, waitFor } from "@testing-library/react-native"
 import "@testing-library/jest-native/extend-expect"
 import "../../node_modules/react-native-gesture-handler/jestSetup.js"
 
 import "../../__mocks__/react-native-firebase"
-import { SendBitcoinScreen } from "../../app/screens/send-bitcoin-screen"
+import { PAY_KEYSEND_USERNAME, SendBitcoinScreen } from "../../app/screens/send-bitcoin-screen"
 import { QUERY_PRICE, WALLET } from "../../app/graphql/query"
-
-jest.useFakeTimers()
 
 jest.mock("@react-navigation/native", () => {
   const actualNav = jest.requireActual("@react-navigation/native")
@@ -49,7 +47,7 @@ const transactions = [
     date: "2021-07-26T19:41:13.000Z",
     date_format: "Mon Jul 26 2021 14:41:13 GMT-0500",
     date_nice_print: "hace 9 días",
-    description: "to dolcalmi",
+    description: "to Bitcoin",
     fee: 0,
     feeUsd: 0,
     hash: null,
@@ -59,7 +57,7 @@ const transactions = [
     text: "-$0.0040",
     type: "on_us",
     usd: 0.003969998828125,
-    username: "dolcalmi",
+    username: "Bitcoin",
   },
   {
     __typename: "Transaction",
@@ -137,30 +135,78 @@ cache.writeQuery({
   `,
   data: {
     me: {
-      username: "BitcoinBeachMarketing",
+      username: "BitcoinBeach",
     },
   },
 })
 
-const mocks = []
+// const deleteDog = { name: 'Buck', breed: 'Poodle', id: 1 };
+
+const mocks = [
+  {
+    request: {
+      query: PAY_KEYSEND_USERNAME,
+      variables: {amount:25211,destination:"",username:"Bitcoin",memo:"None"},
+    },
+    result: {
+      data: {
+        invoice: {
+          payKeySendUsername: "success"
+        }
+      },
+    },
+  },
+]
 
 afterEach(cleanup)
 
 it("SendBitcoinScreen", async () => {
-  const { getByPlaceholderText, getByText, queryByText } = render(
-    <MockedProvider mocks={mocks} cache={cache} addTypename={false}>
+  const { getByPlaceholderText, getByText, queryByPlaceholderText, queryByText } = render(
+    <MockedProvider
+      mocks={mocks} 
+      cache={cache} 
+      addTypename={false}
+    >
       <SendBitcoinScreen route={{ params: null }} />
-    </MockedProvider>,
+    </MockedProvider>
   )
+
+  await new Promise(resolve => setTimeout(resolve, 0));
 
   const amountInput = getByText("0.00")
   const destinationInput = getByPlaceholderText("username or invoice")
-  const memoInput = getByPlaceholderText("optional note")
-  const feeInput = getByPlaceholderText("network fee")
+  expect(queryByPlaceholderText("optional note")).not.toBeNull()
+  expect(queryByPlaceholderText("network fee")).not.toBeNull()
 
+  expect(queryByText("Amount is required")).not.toBeNull()
+  expect(queryByText("Username is required")).toBeNull()
+  expect(queryByText("Send")).toBeNull()
   expect(queryByText("Total exceeds your balance of $46.64")).toBeNull()
-  fireEvent(destinationInput, "changeText", "100.00")
-  // fireEvent(amountInput, 'onUpdateAmount', '100.00')
-  // await waitFor(() => getByText('100.00'))
+
+  fireEvent(amountInput, 'onUpdateAmount', 252119)
+
+  expect(queryByText("Amount is required")).toBeNull()
+  expect(queryByText("Username is required")).not.toBeNull()
+  expect(queryByText("Send")).toBeNull()
+  expect(queryByText("Total exceeds your balance of $46.64")).not.toBeNull()
+
+  fireEvent.changeText(destinationInput, "Bitcoin")
+
+  expect(queryByText("Amount is required")).toBeNull()
+  expect(queryByText("Username is required")).toBeNull()
+
+  const sendButton = getByText("Send")
+  fireEvent.press(sendButton)
+
+  fireEvent(amountInput, 'onUpdateAmount', 25211)
+  fireEvent.press(sendButton)
+
+  await act(async () => await new Promise(resolve => setTimeout(resolve, 0)))
+  
+  // expect(mocks[0].newData).toHaveBeenCalled()
+
+  // await waitFor(() => {
+  //   expect(queryByText("Payment has been sent successfully")).not.toBeNull()
+  // })
   // expect(destinationInput).toHaveTextContent("100.00")
 })

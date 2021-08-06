@@ -44,7 +44,7 @@ const LIGHTNING_PAY = gql`
   }
 `
 
-const PAY_KEYSEND_USERNAME = gql`
+export const PAY_KEYSEND_USERNAME = gql`
   mutation payKeysendUsername(
     $amount: Int!
     $destination: String!
@@ -142,7 +142,6 @@ const regexFilter = (network) => {
     case "regtest":
       return /^(2|bcrt|lnbcrt)/i
     default:
-      console.warn("error network")
       return null
   }
 }
@@ -211,7 +210,10 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [payKeysendUsername, { loading: paymentKeysendLoading }] = useMutation(
     PAY_KEYSEND_USERNAME,
-    { update: () => queryTransactions() },
+    { update: () => {
+      console.log("PayKeysendUsername on update")
+      queryTransactions()
+    }},
   )
   // TODO: add user automatically to cache
   // {
@@ -246,7 +248,8 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
 
   const balance = balanceBtc(client)
 
-  const { network } = Token.getInstance()
+  // const { network } = Token.getInstance()
+  const network = "regtest"
   const potentialBitcoinOrLightning = regexFilter(network)?.test(destination) ?? false
 
   const reset = useCallback(() => {
@@ -426,19 +429,24 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
           amount,
           destination: getPubKey(client),
           username: destination,
-          memo: optMemo,
+          memo: "None"//optMemo,
         }
       }
 
+
       try {
-        ;({ data, errors } = await mutation({ variables }))
+        console.log(variables)
+        console.log("PayKeysendUsername about to be called")
+        ;({ data, errors } = await mutation({ variables: {amount:25211,destination:"",username:"Bitcoin",memo:"None"} }))
+        // ;({ data, errors } = await mutation({ variables }))
       } catch (err) {
         console.log({ err, errors }, "mutation error")
-
+        console.log("PayKeysendUsername error")
         setStatus("error")
         setErrs([err])
         return
       }
+      console.log("PayKeysendUsername is done")
 
       let success
       let pending
