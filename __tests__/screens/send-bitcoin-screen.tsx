@@ -6,6 +6,7 @@ import moment from "moment"
 import "@testing-library/jest-native/extend-expect"
 import "../../node_modules/react-native-gesture-handler/jestSetup.js"
 
+import { translate } from "../../app/i18n/translate"
 import "../../__mocks__/react-native-firebase"
 import {
   LIGHTNING_PAY,
@@ -185,9 +186,9 @@ describe("SendBitcoinScreen", () => {
     )
 
     expect(queryByText("0.00")).not.toBeNull()
-    expect(queryByPlaceholderText("username or invoice")).not.toBeNull()
-    expect(queryByPlaceholderText("optional note")).not.toBeNull()
-    expect(queryByPlaceholderText("network fee")).not.toBeNull()
+    expect(queryByPlaceholderText(translate("SendBitcoinScreen.input"))).not.toBeNull()
+    expect(queryByPlaceholderText(translate("SendBitcoinScreen.note"))).not.toBeNull()
+    expect(queryByPlaceholderText(translate("SendBitcoinScreen.fee"))).not.toBeNull()
   })
 
   it("shows send only when an amount and destination are present", () => {
@@ -198,23 +199,23 @@ describe("SendBitcoinScreen", () => {
     )
 
     const amountInput = getByText("0.00")
-    const destinationInput = getByPlaceholderText("username or invoice")
+    const destinationInput = getByPlaceholderText(translate("SendBitcoinScreen.input"))
 
-    expect(queryByText("Amount is required")).not.toBeNull()
-    expect(queryByText("Username is required")).toBeNull()
-    expect(queryByText("Send")).toBeNull()
+    expect(queryByText(translate("common.amountRequired"))).not.toBeNull()
+    expect(queryByText(translate("common.usernameRequired"))).toBeNull()
+    expect(queryByText(translate("common.send"))).toBeNull()
 
     fireEvent(amountInput, "onUpdateAmount", 252119)
 
-    expect(queryByText("Amount is required")).toBeNull()
-    expect(queryByText("Username is required")).not.toBeNull()
-    expect(queryByText("Send")).toBeNull()
+    expect(queryByText(translate("common.amountRequired"))).toBeNull()
+    expect(queryByText(translate("common.usernameRequired"))).not.toBeNull()
+    expect(queryByText(translate("common.send"))).toBeNull()
 
     fireEvent.changeText(destinationInput, "Bitcoin")
 
-    expect(queryByText("Amount is required")).toBeNull()
-    expect(queryByText("Username is required")).toBeNull()
-    expect(queryByText("Send")).not.toBeNull()
+    expect(queryByText(translate("common.amountRequired"))).toBeNull()
+    expect(queryByText(translate("common.usernameRequired"))).toBeNull()
+    expect(queryByText(translate("common.send"))).not.toBeNull()
   })
 
   it("shows error when total exceeds the balance", () => {
@@ -226,15 +227,21 @@ describe("SendBitcoinScreen", () => {
 
     const amountInput = getByText("0.00")
 
-    expect(queryByText("Total exceeds your balance of $46.64")).toBeNull()
+    expect(
+      queryByText(translate("SendBitcoinScreen.totalExceed", { balance: "$46.64" })),
+    ).toBeNull()
 
     fireEvent(amountInput, "onUpdateAmount", 252119)
 
-    expect(queryByText("Total exceeds your balance of $46.64")).not.toBeNull()
+    expect(
+      queryByText(translate("SendBitcoinScreen.totalExceed", { balance: "$46.64" })),
+    ).not.toBeNull()
 
     fireEvent(amountInput, "onUpdateAmount", 25211)
 
-    expect(queryByText("Total exceeds your balance of $46.64")).toBeNull()
+    expect(
+      queryByText(translate("SendBitcoinScreen.totalExceed", { balance: "$46.64" })),
+    ).toBeNull()
   })
 
   it("does not send payment when total exceeds the balance", async () => {
@@ -245,16 +252,16 @@ describe("SendBitcoinScreen", () => {
     )
 
     const amountInput = getByText("0.00")
-    const destinationInput = getByPlaceholderText("username or invoice")
+    const destinationInput = getByPlaceholderText(translate("SendBitcoinScreen.input"))
 
     fireEvent.changeText(destinationInput, "Bitcoin")
     fireEvent(amountInput, "onUpdateAmount", 252119)
 
-    const sendButton = getByText("Send")
+    const sendButton = getByText(translate("common.send"))
     fireEvent.press(sendButton)
 
     await act(async () => await new Promise((resolve) => setTimeout(resolve, 0)))
-    expect(queryByText("Payment has been sent successfully")).toBeNull()
+    expect(queryByText(translate("SendBitcoinScreen.success"))).toBeNull()
   })
 
   it("successfully sends payment by payKeysendUsername", async () => {
@@ -265,16 +272,16 @@ describe("SendBitcoinScreen", () => {
     )
 
     const amountInput = getByText("0.00")
-    const destinationInput = getByPlaceholderText("username or invoice")
+    const destinationInput = getByPlaceholderText(translate("SendBitcoinScreen.input"))
 
     fireEvent.changeText(destinationInput, "Bitcoin")
     fireEvent(amountInput, "onUpdateAmount", 25211)
 
-    const sendButton = getByText("Send")
+    const sendButton = getByText(translate("common.send"))
     fireEvent.press(sendButton)
 
     await act(async () => await new Promise((resolve) => setTimeout(resolve, 0)))
-    expect(queryByText("Payment has been sent successfully")).not.toBeNull()
+    expect(queryByText(translate("SendBitcoinScreen.success"))).not.toBeNull()
   })
 
   it("successfully sends lightning payment with `lightning:` prefix", async () => {
@@ -325,7 +332,7 @@ describe("SendBitcoinScreen", () => {
       )
 
     const amountInput = getByText("0.00")
-    const destinationInput = getByPlaceholderText("username or invoice")
+    const destinationInput = getByPlaceholderText(translate("SendBitcoinScreen.input"))
 
     fireEvent.changeText(
       destinationInput,
@@ -336,10 +343,10 @@ describe("SendBitcoinScreen", () => {
 
     expect(amountInput).toHaveTextContent("272.26")
 
-    const sendButton = getByText("Send")
+    const sendButton = getByText(translate("common.send"))
     fireEvent.press(sendButton)
 
     await act(async () => await new Promise((resolve) => setTimeout(resolve, 0)))
-    expect(queryByText("Payment has been sent successfully")).not.toBeNull()
+    expect(queryByText(translate("SendBitcoinScreen.success"))).not.toBeNull()
   })
 })
