@@ -9,3 +9,7 @@ extend type Transaction {
 extend type Contact {
   prettyName: String!
 }
+
+extend type Query {
+  lastClipboardPayment: String
+}
