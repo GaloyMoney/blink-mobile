@@ -19,8 +19,7 @@ export const showModalClipboardIfValidPayment = async (
   }
 
   const data = cache.readQuery<LastClipboardPayment>({ query: LAST_CLIPBOARD_PAYMENT })
-  const lastClipboardPayment = data?.lastClipboardPayment ?? ""
-  if (clipboard === lastClipboardPayment) {
+  if (clipboard === data?.lastClipboardPayment) {
     return
   }
 
