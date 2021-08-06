@@ -36,7 +36,7 @@ const successLottie = require("../move-money-screen/success_lottie.json")
 const errorLottie = require("../move-money-screen/error_lottie.json")
 const pendingLottie = require("../move-money-screen/pending_lottie.json")
 
-const LIGHTNING_PAY = gql`
+export const LIGHTNING_PAY = gql`
   mutation payInvoice($invoice: String!, $amount: Int, $memo: String) {
     invoice {
       payInvoice(invoice: $invoice, amount: $amount, memo: $memo)
@@ -142,6 +142,7 @@ const regexFilter = (network) => {
     case "regtest":
       return /^(2|bcrt|lnbcrt)/i
     default:
+      console.warn("error network")
       return null
   }
 }
@@ -153,7 +154,7 @@ class FeeActivityIndicator extends React.Component {
 }
 
 class FeeCalculationUnsuccessfulText extends React.Component {
-  render() {
+  render () {
     return <Text>{translate("SendBitcoinScreen.feeCalculationUnsuccessful")}</Text> // todo: same calculation as backend
   }
 }
@@ -162,7 +163,9 @@ type SendBitcoinScreenProps = {
   route: RouteProp<MoveMoneyStackParamList, "sendBitcoin">
 }
 
-export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps) => {
+export const SendBitcoinScreen: ScreenType = ({
+  route,
+}: SendBitcoinScreenProps) => {
   const client = useApolloClient()
   const { goBack, navigate } = useNavigation()
 
@@ -210,10 +213,7 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [payKeysendUsername, { loading: paymentKeysendLoading }] = useMutation(
     PAY_KEYSEND_USERNAME,
-    { update: () => {
-      console.log("PayKeysendUsername on update")
-      queryTransactions()
-    }},
+    { update: () => queryTransactions() },
   )
   // TODO: add user automatically to cache
   // {
@@ -248,8 +248,7 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
 
   const balance = balanceBtc(client)
 
-  // const { network } = Token.getInstance()
-  const network = "regtest"
+  const { network } = Token.getInstance()
   const potentialBitcoinOrLightning = regexFilter(network)?.test(destination) ?? false
 
   const reset = useCallback(() => {
@@ -429,24 +428,19 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
           amount,
           destination: getPubKey(client),
           username: destination,
-          memo: "None"//optMemo,
+          memo: optMemo,
         }
       }
 
-
       try {
-        console.log(variables)
-        console.log("PayKeysendUsername about to be called")
-        ;({ data, errors } = await mutation({ variables: {amount:25211,destination:"",username:"Bitcoin",memo:"None"} }))
-        // ;({ data, errors } = await mutation({ variables }))
+        ;({ data, errors } = await mutation({ variables }))
       } catch (err) {
         console.log({ err, errors }, "mutation error")
-        console.log("PayKeysendUsername error")
+
         setStatus("error")
         setErrs([err])
         return
       }
-      console.log("PayKeysendUsername is done")
 
       let success
       let pending

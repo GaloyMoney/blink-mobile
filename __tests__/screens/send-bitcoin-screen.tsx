@@ -2,11 +2,12 @@ import * as React from "react"
 import { MockedProvider } from "@apollo/client/testing"
 import { gql, InMemoryCache } from "@apollo/client"
 import { act, cleanup, fireEvent, render, waitFor } from "@testing-library/react-native"
+import moment from "moment"
 import "@testing-library/jest-native/extend-expect"
 import "../../node_modules/react-native-gesture-handler/jestSetup.js"
 
 import "../../__mocks__/react-native-firebase"
-import { PAY_KEYSEND_USERNAME, SendBitcoinScreen } from "../../app/screens/send-bitcoin-screen"
+import { LIGHTNING_PAY, PAY_KEYSEND_USERNAME, SendBitcoinScreen } from "../../app/screens/send-bitcoin-screen"
 import { QUERY_PRICE, WALLET } from "../../app/graphql/query"
 
 jest.mock("@react-navigation/native", () => {
@@ -140,18 +141,21 @@ cache.writeQuery({
   },
 })
 
-// const deleteDog = { name: 'Buck', breed: 'Poodle', id: 1 };
-
-const mocks = [
+const payKeysendUsernameMocks = [
   {
     request: {
       query: PAY_KEYSEND_USERNAME,
-      variables: {amount:25211,destination:"",username:"Bitcoin",memo:"None"},
+      variables: {
+        amount:25211,
+        destination:"",
+        username:"Bitcoin"
+      },
     },
     result: {
       data: {
         invoice: {
-          payKeySendUsername: "success"
+          payKeysendUsername: "success",
+          __typename: "Invoice"
         }
       },
     },
@@ -160,53 +164,173 @@ const mocks = [
 
 afterEach(cleanup)
 
-it("SendBitcoinScreen", async () => {
-  const { getByPlaceholderText, getByText, queryByPlaceholderText, queryByText } = render(
-    <MockedProvider
-      mocks={mocks} 
-      cache={cache} 
-      addTypename={false}
-    >
-      <SendBitcoinScreen route={{ params: null }} />
-    </MockedProvider>
-  )
+describe("SendBitcoinScreen", () => {
+  it("can render", () => {
+    render(
+      <MockedProvider cache={cache}>
+        <SendBitcoinScreen route={{ params: null }} />
+      </MockedProvider>
+    )
+  })
 
-  await new Promise(resolve => setTimeout(resolve, 0));
+  it("has TextInputs", () => {
+    const { queryByPlaceholderText, queryByText } = render(
+      <MockedProvider cache={cache}>
+        <SendBitcoinScreen route={{ params: null }} />
+      </MockedProvider>
+    )
 
-  const amountInput = getByText("0.00")
-  const destinationInput = getByPlaceholderText("username or invoice")
-  expect(queryByPlaceholderText("optional note")).not.toBeNull()
-  expect(queryByPlaceholderText("network fee")).not.toBeNull()
+    expect(queryByText("0.00")).not.toBeNull()
+    expect(queryByPlaceholderText("username or invoice")).not.toBeNull()
+    expect(queryByPlaceholderText("optional note")).not.toBeNull()
+    expect(queryByPlaceholderText("network fee")).not.toBeNull()
+  })
 
-  expect(queryByText("Amount is required")).not.toBeNull()
-  expect(queryByText("Username is required")).toBeNull()
-  expect(queryByText("Send")).toBeNull()
-  expect(queryByText("Total exceeds your balance of $46.64")).toBeNull()
+  it("shows send only when an amount and destination are present", () => {
+    const { getByPlaceholderText, getByText, queryByText } = render(
+      <MockedProvider cache={cache}>
+        <SendBitcoinScreen route={{ params: null }} />
+      </MockedProvider>
+    )
 
-  fireEvent(amountInput, 'onUpdateAmount', 252119)
+    const amountInput = getByText("0.00")
+    const destinationInput = getByPlaceholderText("username or invoice")
 
-  expect(queryByText("Amount is required")).toBeNull()
-  expect(queryByText("Username is required")).not.toBeNull()
-  expect(queryByText("Send")).toBeNull()
-  expect(queryByText("Total exceeds your balance of $46.64")).not.toBeNull()
+    expect(queryByText("Amount is required")).not.toBeNull()
+    expect(queryByText("Username is required")).toBeNull()
+    expect(queryByText("Send")).toBeNull()
 
-  fireEvent.changeText(destinationInput, "Bitcoin")
+    fireEvent(amountInput, 'onUpdateAmount', 252119)
 
-  expect(queryByText("Amount is required")).toBeNull()
-  expect(queryByText("Username is required")).toBeNull()
+    expect(queryByText("Amount is required")).toBeNull()
+    expect(queryByText("Username is required")).not.toBeNull()
+    expect(queryByText("Send")).toBeNull()
 
-  const sendButton = getByText("Send")
-  fireEvent.press(sendButton)
+    fireEvent.changeText(destinationInput, "Bitcoin")
 
-  fireEvent(amountInput, 'onUpdateAmount', 25211)
-  fireEvent.press(sendButton)
+    expect(queryByText("Amount is required")).toBeNull()
+    expect(queryByText("Username is required")).toBeNull()
+    expect(queryByText("Send")).not.toBeNull()
+  })
 
-  await act(async () => await new Promise(resolve => setTimeout(resolve, 0)))
+  it("shows error when total exceeds the balance", () => {
+    const { getByText, queryByText } = render(
+      <MockedProvider cache={cache}>
+        <SendBitcoinScreen route={{ params: null }} />
+      </MockedProvider>
+    )
+
+    const amountInput = getByText("0.00")
+
+    expect(queryByText("Total exceeds your balance of $46.64")).toBeNull()
+
+    fireEvent(amountInput, 'onUpdateAmount', 252119)
+
+    expect(queryByText("Total exceeds your balance of $46.64")).not.toBeNull()
+
+    fireEvent(amountInput, 'onUpdateAmount', 25211)
+
+    expect(queryByText("Total exceeds your balance of $46.64")).toBeNull()
+  })
+
+  it("does not send payment when total exceeds the balance", async () => {
+    const { getByPlaceholderText, getByText, queryByText } = render(
+      <MockedProvider mocks={payKeysendUsernameMocks} cache={cache}>
+        <SendBitcoinScreen route={{ params: null }} />
+      </MockedProvider>
+    )
+
+    const amountInput = getByText("0.00")
+    const destinationInput = getByPlaceholderText("username or invoice")
+
+    fireEvent.changeText(destinationInput, "Bitcoin")
+    fireEvent(amountInput, 'onUpdateAmount', 252119)
+
+    const sendButton = getByText("Send")
+    fireEvent.press(sendButton)
+
+    await act(async () => await new Promise(resolve => setTimeout(resolve, 0)))
+    expect(queryByText("Payment has been sent successfully")).toBeNull()
+  })
+
+  it("successfully sends payment by payKeysendUsername", async () => {
+    const { getByPlaceholderText, getByText, queryByText } = render(
+      <MockedProvider mocks={payKeysendUsernameMocks} cache={cache}>
+        <SendBitcoinScreen route={{ params: null }} />
+      </MockedProvider>
+    )
+
+    const amountInput = getByText("0.00")
+    const destinationInput = getByPlaceholderText("username or invoice")
+
+    fireEvent.changeText(destinationInput, "Bitcoin")
+    fireEvent(amountInput, 'onUpdateAmount', 25211)
+
+    const sendButton = getByText("Send")
+    fireEvent.press(sendButton)
+
+    await act(async () => await new Promise(resolve => setTimeout(resolve, 0)))
+    expect(queryByText("Payment has been sent successfully")).not.toBeNull()
+  })
+
+  it("successfully sends lightning payment with `lightning:` prefix", async () => {
+    cache.writeQuery({
+      query: WALLET,
+      data: {
+        wallet: [
+          {
+            __typename: "Wallet",
+            balance: 1175855,
+            currency: "BTC",
+            id: "BTC",
+            transactions: transactions,
+          },
+        ],
+      },
+    })
+
+    const lightningPayMocks = [
+      {
+        request: {
+          query: LIGHTNING_PAY,
+          variables: {
+            invoice: "lnbc6864270n1p05zvjjpp5fpehvlv3dd2r76065r9v0l3n8qv9mfwu9ryhvpj5xsz3p4hy734qdzhxysv89eqyvmzqsnfw3pxcmmrddpx7mmdypp8yatwvd5zqmmwypqh2em4wd6zqvesyq5yyun4de3ksgz0dek8j2gcqzpgxqrrss6lqa5jllvuglw5tpsug4s2tmt5c8fnerr95fuh8htcsyx52cp3wzswj32xj5gewyfn7mg293v6jla9cz8zndhwdhcnnkul2qkf6pjlspj2nl3j",
+          },
+        },
+        result: {
+          data: {
+            invoice: {
+              payInvoice: "success",
+              __typename: "Invoice"
+            }
+          },
+        },
+      },
+    ]
+
+    moment.now = function () {
+      return 1598110996000 // Aug 22 2020 10:43
+    }
+
+    const { getByPlaceholderText, getByText, queryByPlaceholderText, queryByText } = render(
+      <MockedProvider mocks={lightningPayMocks} cache={cache}>
+        <SendBitcoinScreen route={{ params: null }} />
+      </MockedProvider>
+    )
+
+    const amountInput = getByText("0.00")
+    const destinationInput = getByPlaceholderText("username or invoice")
+
+    fireEvent.changeText(destinationInput, "lightning:lnbc6864270n1p05zvjjpp5fpehvlv3dd2r76065r9v0l3n8qv9mfwu9ryhvpj5xsz3p4hy734qdzhxysv89eqyvmzqsnfw3pxcmmrddpx7mmdypp8yatwvd5zqmmwypqh2em4wd6zqvesyq5yyun4de3ksgz0dek8j2gcqzpgxqrrss6lqa5jllvuglw5tpsug4s2tmt5c8fnerr95fuh8htcsyx52cp3wzswj32xj5gewyfn7mg293v6jla9cz8zndhwdhcnnkul2qkf6pjlspj2nl3j")
   
-  // expect(mocks[0].newData).toHaveBeenCalled()
+    await act(async () => await new Promise(resolve => setTimeout(resolve, 0)))
 
-  // await waitFor(() => {
-  //   expect(queryByText("Payment has been sent successfully")).not.toBeNull()
-  // })
-  // expect(destinationInput).toHaveTextContent("100.00")
+    expect(amountInput).toHaveTextContent("272.26")
+
+    const sendButton = getByText("Send")
+    fireEvent.press(sendButton)
+    
+    await act(async () => await new Promise(resolve => setTimeout(resolve, 0)))
+    expect(queryByText("Payment has been sent successfully")).not.toBeNull()
+  })
 })

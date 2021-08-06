@@ -119,9 +119,10 @@ describe("Lightning", () => {
     const address =
       "LNBC6864270N1P05ZVJJPP5FPEHVLV3DD2R76065R9V0L3N8QV9MFWU9RYHVPJ5XSZ3P4HY734QDZHXYSV89EQYVMZQSNFW3PXCMMRDDPX7MMDYPP8YATWVD5ZQMMWYPQH2EM4WD6ZQVESYQ5YYUN4DE3KSGZ0DEK8J2GCQZPGXQRRSS6LQA5JLLVUGLW5TPSUG4S2TMT5C8FNERR95FUH8HTCSYX52CP3WZSWJ32XJ5GEWYFN7MG293V6JLA9CZ8ZNDHWDHCNNKUL2QKF6PJLSPJ2NL3J"
 
-    const { valid, paymentType } = validPayment(address, network, client)
+    const { valid, paymentType, errorMessage } = validPayment(address, network, client)
     expect(valid).toBeTruthy()
     expect(paymentType).toBe("lightning")
+    expect(errorMessage).not.toBe("invoice has expired")
   })
 
   it("opennode_expired", () => {
@@ -138,9 +139,10 @@ describe("Lightning", () => {
     const address =
       "LIGHTNING:LNBC6864270N1P05ZVJJPP5FPEHVLV3DD2R76065R9V0L3N8QV9MFWU9RYHVPJ5XSZ3P4HY734QDZHXYSV89EQYVMZQSNFW3PXCMMRDDPX7MMDYPP8YATWVD5ZQMMWYPQH2EM4WD6ZQVESYQ5YYUN4DE3KSGZ0DEK8J2GCQZPGXQRRSS6LQA5JLLVUGLW5TPSUG4S2TMT5C8FNERR95FUH8HTCSYX52CP3WZSWJ32XJ5GEWYFN7MG293V6JLA9CZ8ZNDHWDHCNNKUL2QKF6PJLSPJ2NL3J"
 
-    const { valid, paymentType } = validPayment(address, network, client)
+    const { valid, paymentType, errorMessage } = validPayment(address, network, client)
     expect(valid).toBeTruthy()
     expect(paymentType).toBe("lightning")
+    expect(errorMessage).not.toBe("invoice has expired")
   })
 })
 
