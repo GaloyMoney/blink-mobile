@@ -74,12 +74,8 @@ export const ScanningQRCodeScreen: ScreenType = () => {
     }
 
     try {
-      const { valid, errorMessage } = validPayment(
-        data,
-        Token.getInstance().network,
-        client,
-      )
-      console.log({ valid, errorMessage, data }, "result")
+      const { valid } = validPayment(data, Token.getInstance().network, client)
+
       if (valid) {
         navigate("sendBitcoin", { payment: data })
       } else {
@@ -110,7 +106,6 @@ export const ScanningQRCodeScreen: ScreenType = () => {
           if (response.uri) {
             const uri = response.uri.toString().replace("file://", "")
             LocalQRCode.decode(uri, (error, result) => {
-              console.log({ error, result, uri })
               if (!error) {
                 decodeInvoice(result)
               } else if (error.message === "Feature size is zero!") {

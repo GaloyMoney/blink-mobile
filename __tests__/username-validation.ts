@@ -1,73 +1,75 @@
 import { UsernameValidation } from "../app/utils/validation"
 
-it("empty", () => {
-  const username = ""
+describe("Username validation", () => {
+  it("is invalid for an empty username", () => {
+    const username = ""
 
-  const hasValidLength = UsernameValidation.hasValidLength(username)
-  const hasValidCharacters = UsernameValidation.hasValidCharacters(username)
-  const isValid = UsernameValidation.isValid(username)
+    const hasValidLength = UsernameValidation.hasValidLength(username)
+    const hasValidCharacters = UsernameValidation.hasValidCharacters(username)
+    const isValid = UsernameValidation.isValid(username)
 
-  expect(hasValidLength).toBeFalsy()
-  expect(hasValidCharacters).toBeFalsy()
-  expect(isValid).toBeFalsy()
-})
+    expect(hasValidLength).toBeFalsy()
+    expect(hasValidCharacters).toBeFalsy()
+    expect(isValid).toBeFalsy()
+  })
 
-it("short username", () => {
-  const username = "ab"
+  it("is invalid for a short username", () => {
+    const username = "ab"
 
-  const hasValidLength = UsernameValidation.hasValidLength(username)
-  const hasValidCharacters = UsernameValidation.hasValidCharacters(username)
-  const isValid = UsernameValidation.isValid(username)
+    const hasValidLength = UsernameValidation.hasValidLength(username)
+    const hasValidCharacters = UsernameValidation.hasValidCharacters(username)
+    const isValid = UsernameValidation.isValid(username)
 
-  expect(hasValidLength).toBeFalsy()
-  expect(hasValidCharacters).toBeTruthy()
-  expect(isValid).toBeFalsy()
-})
+    expect(hasValidLength).toBeFalsy()
+    expect(hasValidCharacters).toBeTruthy()
+    expect(isValid).toBeFalsy()
+  })
 
-it("normal username", () => {
-  const username = "Bitcoin"
+  it("is valid for a normal username", () => {
+    const username = "Bitcoin"
 
-  const hasValidLength = UsernameValidation.hasValidLength(username)
-  const hasValidCharacters = UsernameValidation.hasValidCharacters(username)
-  const isValid = UsernameValidation.isValid(username)
+    const hasValidLength = UsernameValidation.hasValidLength(username)
+    const hasValidCharacters = UsernameValidation.hasValidCharacters(username)
+    const isValid = UsernameValidation.isValid(username)
 
-  expect(hasValidLength).toBeTruthy()
-  expect(hasValidCharacters).toBeTruthy()
-  expect(isValid).toBeTruthy()
-})
+    expect(hasValidLength).toBeTruthy()
+    expect(hasValidCharacters).toBeTruthy()
+    expect(isValid).toBeTruthy()
+  })
 
-it("_ username", () => {
-  const username = "Bit_Coin"
+  it("is valid for a username with an _", () => {
+    const username = "Bit_Coin"
 
-  const hasValidLength = UsernameValidation.hasValidLength(username)
-  const hasValidCharacters = UsernameValidation.hasValidCharacters(username)
-  const isValid = UsernameValidation.isValid(username)
+    const hasValidLength = UsernameValidation.hasValidLength(username)
+    const hasValidCharacters = UsernameValidation.hasValidCharacters(username)
+    const isValid = UsernameValidation.isValid(username)
 
-  expect(hasValidLength).toBeTruthy()
-  expect(hasValidCharacters).toBeTruthy()
-  expect(isValid).toBeTruthy()
-})
+    expect(hasValidLength).toBeTruthy()
+    expect(hasValidCharacters).toBeTruthy()
+    expect(isValid).toBeTruthy()
+  })
 
-it(". username", () => {
-  const username = "Bit.Coin"
+  it("is invalid for a username with a .", () => {
+    const username = "Bit.Coin"
 
-  const hasValidLength = UsernameValidation.hasValidLength(username)
-  const hasValidCharacters = UsernameValidation.hasValidCharacters(username)
-  const isValid = UsernameValidation.isValid(username)
+    const hasValidLength = UsernameValidation.hasValidLength(username)
+    const hasValidCharacters = UsernameValidation.hasValidCharacters(username)
+    const isValid = UsernameValidation.isValid(username)
 
-  expect(hasValidLength).toBeTruthy()
-  expect(hasValidCharacters).toBeFalsy()
-  expect(isValid).toBeFalsy()
-})
+    expect(hasValidLength).toBeTruthy()
+    expect(hasValidCharacters).toBeFalsy()
+    expect(isValid).toBeFalsy()
+  })
 
-it(": username", () => {
-  const username = "Bitcoin:"
+  it("is invalid for a username with a :", () => {
+    const username = "Bitcoin:"
 
-  const hasValidLength = UsernameValidation.hasValidLength(username)
-  const hasValidCharacters = UsernameValidation.hasValidCharacters(username)
-  const isValid = UsernameValidation.isValid(username)
+    const hasValidLength = UsernameValidation.hasValidLength(username)
+    const hasValidCharacters = UsernameValidation.hasValidCharacters(username)
+    const isValid = UsernameValidation.isValid(username)
 
-  expect(hasValidLength).toBeTruthy()
-  expect(hasValidCharacters).toBeFalsy()
-  expect(isValid).toBeFalsy()
+    expect(hasValidLength).toBeTruthy()
+    expect(hasValidCharacters).toBeFalsy()
+    expect(isValid).toBeFalsy()
+  })
 })

@@ -1,30 +1,20 @@
 import * as React from "react"
 import { MockedProvider } from "@apollo/client/testing"
 import { gql, InMemoryCache } from "@apollo/client"
-import { act, cleanup, fireEvent, render, waitFor } from "@testing-library/react-native"
+import { act, cleanup, fireEvent, render } from "@testing-library/react-native"
 import moment from "moment"
 import "@testing-library/jest-native/extend-expect"
-import "../../node_modules/react-native-gesture-handler/jestSetup.js"
+import "@node_modules/react-native-gesture-handler/jestSetup.js"
 
-import { translate } from "../../app/i18n/translate"
-import "../../__mocks__/react-native-firebase"
+import { translate } from "@app/i18n/translate"
+import "@mocks/react-native-firebase"
+import "@mocks/react-navigation-native"
 import {
   LIGHTNING_PAY,
   PAY_KEYSEND_USERNAME,
   SendBitcoinScreen,
-} from "../../app/screens/send-bitcoin-screen"
-import { QUERY_PRICE, WALLET } from "../../app/graphql/query"
-
-jest.mock("@react-navigation/native", () => {
-  const actualNav = jest.requireActual("@react-navigation/native")
-  return {
-    ...actualNav,
-    useNavigation: () => ({
-      addListener: jest.fn(),
-      navigate: jest.fn(),
-    }),
-  }
-})
+} from "@app/screens/send-bitcoin-screen"
+import { QUERY_PRICE, WALLET } from "@app/graphql/query"
 
 const transactions = [
   {

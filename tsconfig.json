@@ -18,7 +18,11 @@
     "noEmit": true,
     "esModuleInterop": true,
     "isolatedModules": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "baseUrl": "./",
+    "paths": {
+      "@app/*": ["app/*"]
+    }
   },
   "exclude": ["node_modules"],
   "include": ["app", "test", "storybook"]
