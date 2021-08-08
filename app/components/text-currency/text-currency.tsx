@@ -4,12 +4,14 @@ import {Text, TextStyle, TouchableHighlight, View} from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import type { ComponentType } from "../../types/jsx"
 import { CurrencyType } from "../../utils/enum"
-import {HIDE_BALANCE} from "../../screens/settings-screen/security-screen";
-import {load} from "../../utils/storage";
+import {HIDE_BALANCE, WALKTHROUGH_TOOLTIP} from "../../screens/settings-screen/security-screen";
+import {load, remove} from "../../utils/storage";
 import Icon from "react-native-vector-icons/Entypo"
 import {useEffect, useState} from "react";
 import { useIsFocused } from '@react-navigation/native';
 import {palette} from "../../theme/palette";
+import Tooltip from 'react-native-walkthrough-tooltip';
+import {translate} from "../../i18n";
 
 const styles = EStyleSheet.create({
   container: {
@@ -33,11 +35,14 @@ type Props = {
 
 export const TextCurrency: ComponentType = ({ amount, currency, style }: Props) => {
   const [hideBalance, setHideBalance] = useState(null)
+  const [showToolTip, setShowToolTip] = useState(null)
   const isFocused = useIsFocused()
 
   const checkHideBalanceSettings = async() => {
-        setHideBalance( await load(HIDE_BALANCE) )
+        setHideBalance(await load(HIDE_BALANCE) )
+        setShowToolTip(await load(WALKTHROUGH_TOOLTIP))
   }
+
 
   useEffect( () => {
     checkHideBalanceSettings()
@@ -45,9 +50,18 @@ export const TextCurrency: ComponentType = ({ amount, currency, style }: Props) 
 
   if ( hideBalance ) {
     return (
+        <Tooltip
+          isVisible={showToolTip}
+          content={<Text>{translate("BalanceHeader.toolTipHiddenBalance")}</Text>}
+          placement="top"
+          onClose={async() => {
+              setShowToolTip( await remove(WALKTHROUGH_TOOLTIP))
+          }}
+        >
         <TouchableHighlight onPress={ ()=> { setHideBalance(null) }}>
-          <Icon style={styles.subCurrencyText} name="eye" />
+            <Icon style={styles.subCurrencyText} name="eye" />
         </TouchableHighlight>
+        </Tooltip>
     )
   } else {
     if (currency === CurrencyType.USD) {

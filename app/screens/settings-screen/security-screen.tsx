@@ -18,6 +18,7 @@ import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import {load, remove, save} from "../../utils/storage";
 
 export const HIDE_BALANCE = "HIDE_BALANCE"
+export const WALKTHROUGH_TOOLTIP = "WALKTHROUGH_TOOLTIP"
 
 const styles = EStyleSheet.create({
   button: {
@@ -151,6 +152,7 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
   const onHideBalanceValueChanged = async (value) => {
     if (value) {
       setIsHideBalanceEnabled(await save(HIDE_BALANCE, true))
+      await save(WALKTHROUGH_TOOLTIP, true)
     } else {
       await remove(HIDE_BALANCE)
       setIsHideBalanceEnabled(null)
