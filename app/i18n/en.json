@@ -8,7 +8,8 @@
     "usePin": "Use PIN"
   },
   "BalanceHeader": {
-    "currentBalance": "Current Balance"
+    "currentBalance": "Current Balance",
+    "toolTipHiddenBalance": "Touch to reveal/hide your balance info"
   },
   "BankTransferScreen": {
     "title": "Bank Transfer"
