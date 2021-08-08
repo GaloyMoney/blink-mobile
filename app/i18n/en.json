@@ -527,7 +527,10 @@
     "pinDescription": "PIN is used as the backup authentication method for biometric authentication.",
     "pinSubtitle": "Enable PIN",
     "pinTitle": "PIN Code",
-    "setPin": "Set PIN"
+    "setPin": "Set PIN",
+    "hideBalanceDescription": "Hides the currency amounts on the home screen by default so you don't reveal your balance to anyone who can see your screen",
+    "hideBalanceSubtitle": "Enable hide balance feature",
+    "hideBalanceTitle": "Hide Balance"
   },
   "SendBitcoinScreen": {
     "amount": "Amount",
