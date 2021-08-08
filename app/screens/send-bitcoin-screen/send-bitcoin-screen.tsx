@@ -17,6 +17,7 @@ import {
   balanceBtc,
   btc_price,
   getPubKey,
+  getWalletNetworkOnly,
   QUERY_TRANSACTIONS,
   USERNAME_EXIST,
   WALLET,
@@ -29,7 +30,6 @@ import { palette } from "../../theme/palette"
 import type { ScreenType } from "../../types/jsx"
 import { textCurrencyFormatting } from "../../utils/currencyConversion"
 import { IPaymentType, validPayment } from "../../utils/parsing"
-import { sleep } from "../../utils/sleep"
 import { Token } from "../../utils/token"
 import { UsernameValidation } from "../../utils/validation"
 
@@ -224,8 +224,6 @@ export const SendBitcoinScreen: React.FC<SendBitcoinScreenProps> = ({
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [getOnchainFees, { loading: onchainFeeLoading }] = useMutation(ONCHAIN_FEES)
-
-  const [updateWallet] = useLazyQuery(WALLET, { fetchPolicy: "network-only" })
 
   // TODO use a debouncer to avoid flickering https://github.com/helfer/apollo-link-debounce
   const [
@@ -446,10 +444,8 @@ export const SendBitcoinScreen: React.FC<SendBitcoinScreenProps> = ({
       }
 
       if (success) {
-        updateWallet()
+        getWalletNetworkOnly(client)
         setStatus("success")
-        await sleep(1000)
-        updateWallet()
       } else if (pending) {
         setStatus("pending")
       } else {

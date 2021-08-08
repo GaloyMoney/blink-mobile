@@ -97,6 +97,15 @@ export const balanceUsd = (client: ApolloClient<unknown>): number =>
 export const balanceBtc = (client: ApolloClient<unknown>): number =>
   _.find(getWallet(client), { id: "BTC" }).balance
 
+export const getWalletNetworkOnly = async (
+  client: ApolloClient<unknown>,
+): Promise<void> => {
+  await client.query({
+    query: WALLET,
+    fetchPolicy: "network-only",
+  })
+}
+
 export const getPubKey = (client: MockableApolloClient): string => {
   const { nodeStats } = client.readQuery({
     query: gql`
