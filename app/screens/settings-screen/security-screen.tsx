@@ -15,6 +15,9 @@ import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { PinScreenPurpose } from "../../utils/enum"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
+import {load, remove, save} from "../../utils/storage";
+
+export const HIDE_BALANCE = "HIDE_BALANCE"
 
 const styles = EStyleSheet.create({
   button: {
@@ -83,10 +86,12 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
 
   const [isBiometricsEnabled, setIsBiometricsEnabled] = useState(mIsBiometricsEnabled)
   const [isPinEnabled, setIsPinEnabled] = useState(mIsPinEnabled)
+  const [isHideBalanceEnabled, setIsHideBalanceEnabled] = useState(null)
 
   useFocusEffect(() => {
     getIsBiometricsEnabled()
     getIsPinEnabled()
+    getIsHideBalanceEnabled()
   })
 
   const getIsBiometricsEnabled = async () => {
@@ -95,6 +100,10 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
 
   const getIsPinEnabled = async () => {
     setIsPinEnabled(await KeyStoreWrapper.getIsPinEnabled())
+  }
+
+  const getIsHideBalanceEnabled = async () => {
+    setIsHideBalanceEnabled(await load(HIDE_BALANCE))
   }
 
   const onBiometricsValueChanged = async (value) => {
@@ -136,6 +145,15 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
       navigation.navigate("pin", { screenPurpose: PinScreenPurpose.SetPin })
     } else {
       removePin()
+    }
+  }
+
+  const onHideBalanceValueChanged = async (value) => {
+    if (value) {
+      setIsHideBalanceEnabled(await save(HIDE_BALANCE, true))
+    } else {
+      await remove(HIDE_BALANCE)
+      setIsHideBalanceEnabled(null)
     }
   }
 
@@ -189,6 +207,23 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
             navigation.navigate("pin", { screenPurpose: PinScreenPurpose.SetPin })
           }
         />
+      </View>
+      <View style={styles.settingContainer}>
+        <View style={styles.textContainer}>
+          <Text style={styles.title}>{translate("SecurityScreen.hideBalanceTitle")}</Text>
+          <Text style={styles.subtitle}>{translate("SecurityScreen.hideBalanceSubtitle")}</Text>
+          <Text style={styles.description}>
+            {translate("SecurityScreen.hideBalanceDescription")}
+          </Text>
+        </View>
+        <Switch
+          style={styles.switch}
+          value={isHideBalanceEnabled}
+          color={palette.lightBlue}
+          onValueChange={(value) => onHideBalanceValueChanged(value)}
+        />
+      </View>
+      <View style={styles.settingContainer}>
       </View>
     </Screen>
   )
