@@ -1,8 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { gql, useApolloClient, useLazyQuery, useMutation } from "@apollo/client"
-import { RouteProp } from "@react-navigation/native"
-import { StackNavigationProp } from "@react-navigation/stack"
+import { RouteProp, useNavigation } from "@react-navigation/native"
 import LottieView from "lottie-react-native"
 import * as React from "react"
 import { useCallback, useEffect, useState } from "react"
@@ -150,15 +149,14 @@ const regexFilter = (network) => {
 }
 
 type SendBitcoinScreenProps = {
-  navigation: StackNavigationProp<MoveMoneyStackParamList, "sendBitcoin">
   route: RouteProp<MoveMoneyStackParamList, "sendBitcoin">
 }
 
 export const SendBitcoinScreen: React.FC<SendBitcoinScreenProps> = ({
-  navigation,
   route,
 }: SendBitcoinScreenProps) => {
   const client = useApolloClient()
+  const { goBack, navigate } = useNavigation()
 
   const [errs, setErrs] = useState([])
   const [invoiceError, setInvoiceError] = useState("")
@@ -527,7 +525,8 @@ export const SendBitcoinScreen: React.FC<SendBitcoinScreenProps> = ({
       memo={memo}
       errs={errs}
       amount={amount}
-      navigation={navigation}
+      goBack={goBack}
+      navigate={navigate}
       pay={pay}
       price={price}
       fee={feeText}
@@ -559,7 +558,10 @@ type SendBitcoinScreenJSXProps = {
   memo: string
   errs: { message: string }[]
   amount: number
-  navigation: StackNavigationProp<MoveMoneyStackParamList, "sendBitcoin">
+  goBack: () => void
+  navigate: <RouteName extends string>(
+    ...args: [RouteName] | [RouteName, unknown]
+  ) => void
   pay: () => void
   price: string
   setMemo: (memo: string) => void
@@ -588,7 +590,8 @@ export const SendBitcoinScreenJSX: ScreenType = ({
   memo,
   errs,
   amount,
-  navigation,
+  goBack,
+  navigate,
   pay,
   price,
   setMemo,
@@ -602,191 +605,197 @@ export const SendBitcoinScreenJSX: ScreenType = ({
   reset,
   prefCurrency,
   nextPrefCurrency,
-}: SendBitcoinScreenJSXProps) => (
-  <Screen preset="fixed">
-    <ScrollView
-      style={styles.mainView}
-      contentContainerStyle={{ justifyContent: "space-between" }}
-    >
-      <View style={styles.section}>
-        <InputPayment
-          prefCurrency={prefCurrency}
-          nextPrefCurrency={nextPrefCurrency}
-          editable={
-            paymentType === "lightning" || paymentType === "onchain"
-              ? amountless && (status === "idle" || status === "error")
-              : status !== "success" // bitcoin // TODO: handle amount properly
-          }
-          initAmount={initAmount}
-          onUpdateAmount={(input) => {
-            setAmount(input)
-            setStatus("idle")
-          }}
-          forceKeyboard
-          price={price}
-        />
-      </View>
-      <View style={{ marginTop: 18 }}>
-        <Input
-          placeholder={translate("SendBitcoinScreen.input")}
-          leftIcon={
-            <View style={styles.row}>
-              <Text style={styles.smallText}>{translate("common.to")}</Text>
-              <Icon
-                name="ios-log-out"
-                size={24}
-                color={color.primary}
-                style={styles.icon}
-              />
-            </View>
-          }
-          onChangeText={setDestination}
-          rightIcon={
-            UsernameValidation.hasValidLength(destination) &&
-            !potentialBitcoinOrLightning &&
-            paymentType === "username" ? (
-              loadingUserNameExist ? (
-                <ActivityIndicator size="small" />
-              ) : UsernameValidation.isValid(destination) && usernameExists ? (
-                <Text>✅</Text>
+}: SendBitcoinScreenJSXProps) => {
+  const destinationInputRightIcon = () => {
+    if (
+      UsernameValidation.hasValidLength(destination) &&
+      !potentialBitcoinOrLightning &&
+      paymentType === "username"
+    ) {
+      if (loadingUserNameExist) {
+        return <ActivityIndicator size="small" />
+      } else if (UsernameValidation.isValid(destination) && usernameExists) {
+        return <Text>✅</Text>
+      } else {
+        return <Text>⚠️</Text>
+      }
+    } else if (paymentType === "lightning" || paymentType === "onchain") {
+      return <Icon name="ios-close-circle-outline" onPress={reset} size={30} />
+    } else if (destination.length === 0) {
+      return <Icon name="camera" onPress={() => navigate("scanningQRCode")} size={30} />
+    }
+
+    return null
+  }
+
+  return (
+    <Screen preset="fixed">
+      <ScrollView
+        style={styles.mainView}
+        contentContainerStyle={{ justifyContent: "space-between" }}
+      >
+        <View style={styles.section}>
+          <InputPayment
+            prefCurrency={prefCurrency}
+            nextPrefCurrency={nextPrefCurrency}
+            editable={
+              paymentType === "lightning" || paymentType === "onchain"
+                ? amountless && (status === "idle" || status === "error")
+                : status !== "success" // bitcoin // TODO: handle amount properly
+            }
+            initAmount={initAmount}
+            onUpdateAmount={(input) => {
+              setAmount(input)
+              setStatus("idle")
+            }}
+            forceKeyboard
+            price={price}
+          />
+        </View>
+        <View style={{ marginTop: 18 }}>
+          <Input
+            placeholder={translate("SendBitcoinScreen.input")}
+            leftIcon={
+              <View style={styles.row}>
+                <Text style={styles.smallText}>{translate("common.to")}</Text>
+                <Icon
+                  name="ios-log-out"
+                  size={24}
+                  color={color.primary}
+                  style={styles.icon}
+                />
+              </View>
+            }
+            onChangeText={setDestination}
+            rightIcon={destinationInputRightIcon()}
+            value={
+              paymentType === "lightning"
+                ? invoice
+                : paymentType === "onchain"
+                ? address
+                : destination
+            }
+            renderErrorMessage={false}
+            editable={interactive && status !== "success"}
+            selectTextOnFocus
+            autoCompleteType="username"
+            autoCapitalize="none"
+          />
+          <Input
+            placeholder={translate("SendBitcoinScreen.note")}
+            leftIcon={
+              <View style={styles.row}>
+                <Text style={styles.smallText}>{translate("common.note")}</Text>
+                <Icon
+                  name="ios-create-outline"
+                  size={24}
+                  color={color.primary}
+                  style={styles.icon}
+                />
+              </View>
+            }
+            value={memo}
+            onChangeText={(value) => setMemo(value)}
+            renderErrorMessage={false}
+            editable={status !== "success"}
+            selectTextOnFocus
+          />
+          <Input
+            placeholder={translate("SendBitcoinScreen.fee")}
+            leftIcon={
+              <View style={styles.row}>
+                <Text style={styles.smallText}>{translate("common.Fee")}</Text>
+                <Icon
+                  name="ios-pricetag"
+                  size={24}
+                  color={color.primary}
+                  style={styles.icon}
+                />
+              </View>
+            }
+            value={fee}
+            errorMessage={errorMessage}
+            errorStyle={{ fontSize: 16, alignSelf: "center", height: 18 }}
+            editable={false}
+            selectTextOnFocus
+            InputComponent={(props) =>
+              fee === undefined ? (
+                <ActivityIndicator animating size="small" color={palette.orange} />
+              ) : fee === -1 ? (
+                <Text>{translate("SendBitcoinScreen.feeCalculationUnsuccessful")}</Text> // todo: same calculation as backend
               ) : (
-                <Text>⚠️</Text>
+                <TextInput {...props} />
               )
-            ) : paymentType === "lightning" || paymentType === "onchain" ? (
-              <Icon name="ios-close-circle-outline" onPress={reset} size={30} />
-            ) : destination.length === 0 ? (
-              <Icon
-                name="camera"
-                onPress={() => navigation.navigate("scanningQRCode")}
-                size={30}
+            }
+          />
+        </View>
+        <View style={{ alignItems: "center" }}>
+          {status === "success" && (
+            <>
+              <LottieView
+                source={successLottie}
+                loop={false}
+                autoPlay
+                style={styles.lottie}
+                resizeMode="cover"
               />
-            ) : null
-          }
-          value={
-            paymentType === "lightning"
-              ? invoice
-              : paymentType === "onchain"
-              ? address
-              : destination
-          }
-          renderErrorMessage={false}
-          editable={interactive && status !== "success"}
-          selectTextOnFocus
-          autoCompleteType="username"
-          autoCapitalize="none"
-        />
-        <Input
-          placeholder={translate("SendBitcoinScreen.note")}
-          leftIcon={
-            <View style={styles.row}>
-              <Text style={styles.smallText}>{translate("common.note")}</Text>
-              <Icon
-                name="ios-create-outline"
-                size={24}
-                color={color.primary}
-                style={styles.icon}
-              />
-            </View>
-          }
-          value={memo}
-          onChangeText={(value) => setMemo(value)}
-          renderErrorMessage={false}
-          editable={status !== "success"}
-          selectTextOnFocus
-        />
-        <Input
-          placeholder={translate("SendBitcoinScreen.fee")}
-          leftIcon={
-            <View style={styles.row}>
-              <Text style={styles.smallText}>{translate("common.Fee")}</Text>
-              <Icon
-                name="ios-pricetag"
-                size={24}
-                color={color.primary}
-                style={styles.icon}
-              />
-            </View>
-          }
-          value={fee}
-          errorMessage={errorMessage}
-          errorStyle={{ fontSize: 16, alignSelf: "center", height: 18 }}
-          editable={false}
-          selectTextOnFocus
-          InputComponent={(props) =>
-            fee === undefined ? (
-              <ActivityIndicator animating size="small" color={palette.orange} />
-            ) : fee === -1 ? (
-              <Text>{translate("SendBitcoinScreen.feeCalculationUnsuccessful")}</Text> // todo: same calculation as backend
-            ) : (
-              <TextInput {...props} />
-            )
-          }
-        />
-      </View>
-      <View style={{ alignItems: "center" }}>
-        {status === "success" && (
-          <>
-            <LottieView
-              source={successLottie}
-              loop={false}
-              autoPlay
-              style={styles.lottie}
-              resizeMode="cover"
-            />
-            <Text style={{ fontSize: 18 }}>{translate("SendBitcoinScreen.success")}</Text>
-          </>
-        )}
-        {status === "error" && (
-          <>
-            <LottieView
-              source={errorLottie}
-              loop={false}
-              autoPlay
-              style={styles.lottie}
-              resizeMode="cover"
-            />
-            {errs.map(({ message }, item) => (
-              <Text key={`error-${item}`} style={styles.errorText}>
-                {message}
+              <Text style={{ fontSize: 18 }}>
+                {translate("SendBitcoinScreen.success")}
               </Text>
-            ))}
-          </>
-        )}
-        {status === "pending" && (
-          <>
-            <LottieView
-              source={pendingLottie}
-              loop={false}
-              autoPlay
-              style={styles.lottie}
-              resizeMode="cover"
-            />
-            <Text style={{ fontSize: 18, textAlign: "center" }}>
-              {translate("SendBitcoinScreen.notConfirmed")}
-            </Text>
-          </>
-        )}
-      </View>
-      <Button
-        buttonStyle={styles.buttonStyle}
-        containerStyle={{ flex: 1 }}
-        title={
-          status === "success" || status === "pending"
-            ? translate("common.close")
-            : errs.length !== 0
-            ? translate("common.tryAgain")
-            : !amount
-            ? translate("common.amountRequired")
-            : !destination
-            ? translate("common.usernameRequired")
-            : translate("common.send")
-        }
-        onPress={() =>
-          status === "success" || status === "pending" ? navigation.goBack() : pay()
-        }
-        disabled={!amount || !!errorMessage || !destination}
-        loading={status === "loading"}
-      />
-    </ScrollView>
-  </Screen>
-)
+            </>
+          )}
+          {status === "error" && (
+            <>
+              <LottieView
+                source={errorLottie}
+                loop={false}
+                autoPlay
+                style={styles.lottie}
+                resizeMode="cover"
+              />
+              {errs.map(({ message }, item) => (
+                <Text key={`error-${item}`} style={styles.errorText}>
+                  {message}
+                </Text>
+              ))}
+            </>
+          )}
+          {status === "pending" && (
+            <>
+              <LottieView
+                source={pendingLottie}
+                loop={false}
+                autoPlay
+                style={styles.lottie}
+                resizeMode="cover"
+              />
+              <Text style={{ fontSize: 18, textAlign: "center" }}>
+                {translate("SendBitcoinScreen.notConfirmed")}
+              </Text>
+            </>
+          )}
+        </View>
+        <Button
+          buttonStyle={styles.buttonStyle}
+          containerStyle={{ flex: 1 }}
+          title={
+            status === "success" || status === "pending"
+              ? translate("common.close")
+              : errs.length !== 0
+              ? translate("common.tryAgain")
+              : !amount
+              ? translate("common.amountRequired")
+              : !destination
+              ? translate("common.usernameRequired")
+              : translate("common.send")
+          }
+          onPress={() =>
+            status === "success" || status === "pending" ? goBack() : pay()
+          }
+          disabled={!amount || !!errorMessage || !destination}
+          loading={status === "loading"}
+        />
+      </ScrollView>
+    </Screen>
+  )
+}
