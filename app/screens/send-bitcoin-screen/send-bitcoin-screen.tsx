@@ -1,7 +1,8 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { gql, useApolloClient, useLazyQuery, useMutation } from "@apollo/client"
-import { RouteProp, useNavigation } from "@react-navigation/native"
+import { RouteProp } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
 import LottieView from "lottie-react-native"
 import * as React from "react"
 import { useCallback, useEffect, useState } from "react"
@@ -149,14 +150,15 @@ const regexFilter = (network) => {
 }
 
 type SendBitcoinScreenProps = {
+  navigation: StackNavigationProp<MoveMoneyStackParamList, "sendBitcoin">
   route: RouteProp<MoveMoneyStackParamList, "sendBitcoin">
 }
 
 export const SendBitcoinScreen: React.FC<SendBitcoinScreenProps> = ({
+  navigation,
   route,
 }: SendBitcoinScreenProps) => {
   const client = useApolloClient()
-  const { goBack } = useNavigation()
 
   const [errs, setErrs] = useState([])
   const [invoiceError, setInvoiceError] = useState("")
@@ -525,7 +527,7 @@ export const SendBitcoinScreen: React.FC<SendBitcoinScreenProps> = ({
       memo={memo}
       errs={errs}
       amount={amount}
-      goBack={goBack}
+      navigation={navigation}
       pay={pay}
       price={price}
       fee={feeText}
@@ -557,7 +559,7 @@ type SendBitcoinScreenJSXProps = {
   memo: string
   errs: { message: string }[]
   amount: number
-  goBack: () => void
+  navigation: StackNavigationProp<MoveMoneyStackParamList, "sendBitcoin">
   pay: () => void
   price: string
   setMemo: (memo: string) => void
@@ -586,7 +588,7 @@ export const SendBitcoinScreenJSX: ScreenType = ({
   memo,
   errs,
   amount,
-  goBack,
+  navigation,
   pay,
   price,
   setMemo,
@@ -651,10 +653,11 @@ export const SendBitcoinScreenJSX: ScreenType = ({
                 <Text>⚠️</Text>
               )
             ) : paymentType === "lightning" || paymentType === "onchain" ? (
+              <Icon name="ios-close-circle-outline" onPress={reset} size={30} />
+            ) : destination.length === 0 ? (
               <Icon
-                name="ios-close-circle-outline"
-                // size={styles.icon.fontSize}
-                onPress={reset}
+                name="camera"
+                onPress={() => navigation.navigate("scanningQRCode")}
                 size={30}
               />
             ) : null
@@ -778,7 +781,9 @@ export const SendBitcoinScreenJSX: ScreenType = ({
             ? translate("common.usernameRequired")
             : translate("common.send")
         }
-        onPress={() => (status === "success" || status === "pending" ? goBack() : pay())}
+        onPress={() =>
+          status === "success" || status === "pending" ? navigation.goBack() : pay()
+        }
         disabled={!amount || !!errorMessage || !destination}
         loading={status === "loading"}
       />
