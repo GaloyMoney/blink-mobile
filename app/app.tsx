@@ -92,7 +92,7 @@ export const App = (): JSX.Element => {
 
   useEffect(() => {
     const fn = async () => {
-      const token = new Token()
+      const token = Token.getInstance()
       await token.load()
 
       // legacy. when was using mst-gql. storage is deleted as we don't want

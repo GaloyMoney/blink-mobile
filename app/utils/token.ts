@@ -13,17 +13,25 @@ const GRAPHQL_REGTEST_URI = `http://${scriptHostname()}:4000/graphql`
 const GRAPHQL_TESTNET_URI = "https://graphql.testnet.galoy.io/graphql"
 const GRAPHQL_MAINNET_URI = "https://graphql.mainnet.galoy.io/graphql"
 
+type JwtPayload = {
+  uid: string
+  network: INetwork
+}
+
 // Singleton class
 export class Token {
   private mem_token = null
+  private static _instance: Token = new Token()
 
   constructor() {
-    const { instance } = this.constructor
-    if (instance) {
-      return instance
+    if (Token._instance) {
+      throw Error("Error: Instantiation failed: Use Token.getInstance() instead of new.")
     }
+    Token._instance = this
+  }
 
-    this.constructor.instance = this
+  public static getInstance(): Token {
+    return Token._instance
   }
 
   async save(token: string): Promise<boolean> {
@@ -50,7 +58,7 @@ export class Token {
 
   get uid(): string | null {
     try {
-      const { uid } = jwtDecode(this.mem_token)
+      const { uid } = jwtDecode<JwtPayload>(this.mem_token)
       console.log({ uid })
       return uid
     } catch (err) {
@@ -61,7 +69,7 @@ export class Token {
 
   get network(): INetwork | null {
     try {
-      const { network } = jwtDecode(this.mem_token)
+      const { network } = jwtDecode<JwtPayload>(this.mem_token)
       return network
     } catch (err) {
       console.log(err.toString())
@@ -76,8 +84,8 @@ export class Token {
 
 export const getNetwork = async (): Promise<INetwork> => {
   let network
-  if (new Token().has()) {
-    network = new Token().network
+  if (Token.getInstance().has()) {
+    network = Token.getInstance().network
   } else {
     network = await loadNetwork()
   }

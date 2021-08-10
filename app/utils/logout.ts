@@ -8,7 +8,7 @@ import { ApolloClient } from "@apollo/client"
 export const resetDataStore = async (client: ApolloClient<unknown>): Promise<void> => {
   try {
     await client.clearStore()
-    await new Token().remove()
+    await Token.getInstance().remove()
     // await AsyncStorage.clear()
     await AsyncStorage.multiRemove([NETWORK_STRING, TOKEN_KEY, BUILD_VERSION]) // use storage.ts wrapper
     await KeyStoreWrapper.removeIsBiometricsEnabled()

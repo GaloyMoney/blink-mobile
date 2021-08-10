@@ -253,7 +253,7 @@ export const RootStack: NavigatorType = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   useEffect(() => messaging().onTokenRefresh((token) => addDeviceToken(client)), [client])
 
-  const token = new Token()
+  const token = Token.getInstance()
 
   return (
     <RootNavigator.Navigator

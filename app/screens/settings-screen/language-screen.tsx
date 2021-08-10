@@ -54,7 +54,7 @@ export const LanguageScreen: ScreenType = () => {
                   __typename: "UpdateUser",
                   updateLanguage: {
                     __typename: "User",
-                    id: new Token().uid,
+                    id: Token.getInstance().uid,
                     language: l,
                   },
                 },

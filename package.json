@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "react-native start",
-    "test": "jest --runInBand",
+    "test": "LOGLEVEL=warn jest --runInBand",
     "eslint-check": "eslint app --ext .js,.ts,.tsx",
     "prettier-check": "prettier '**/*.{js,ts,tsx,json}' --check",
     "prettier-write": "prettier '**/*.{js,ts,tsx,json}' --write",
@@ -115,6 +115,8 @@
     "@storybook/addon-storyshots": "^6.1.9",
     "@storybook/react-native": "^5.3.17",
     "@storybook/react-native-server": "^5.3.17",
+    "@testing-library/jest-native": "^4.0.2",
+    "@testing-library/react-native": "^7.2.0",
     "@types/babel-core": "6.25.7",
     "@types/babel__core": "^7.1.15",
     "@types/bip21": "^1.1.31",

@@ -187,7 +187,7 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
 
   const onSuccess = async ({ token }) => {
     analytics().logLogin({ method: "phone" })
-    await new Token().save(token)
+    await Token.getInstance().save(token)
 
     // TODO refactor from mst-gql to apollo client
     // sync the earned quizzes
@@ -196,7 +196,7 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
 
     // console.log("succesfully update earns id")
 
-    reloadMainQuery({ variables: { logged: new Token().has() } })
+    reloadMainQuery({ variables: { logged: Token.getInstance().has() } })
 
     console.log("sending device token for notifications")
     addDeviceToken(client)
