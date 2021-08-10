@@ -1,10 +1,17 @@
 import * as React from "react"
 import ContentLoader, { Rect } from "react-content-loader/native"
-import { StyleProp, Text, View, ViewStyle } from "react-native"
+import {StyleProp, Text, TouchableHighlight, View, ViewStyle} from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
+import { CurrencyType } from "../../utils/enum"
 import { TextCurrency } from "../text-currency/text-currency"
+import {useState, useEffect} from "react";
+import { useIsFocused } from '@react-navigation/native';
+import {load, remove} from "../../utils/storage";
+import {HIDE_BALANCE, WALKTHROUGH_TOOLTIP} from "../../screens/settings-screen/security-screen";
+import Tooltip from "react-native-walkthrough-tooltip";
+import Icon from "react-native-vector-icons/Entypo"
 
 const styles = EStyleSheet.create({
   amount: {
@@ -33,7 +40,7 @@ const styles = EStyleSheet.create({
 
   subCurrencyText: {
     color: palette.darkGrey,
-    fontSize: "16rem",
+    fontSize: "25rem",
   },
 
   text: {
@@ -70,29 +77,74 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
   loading = false,
   style,
 }: BalanceHeaderProps) => {
-  const otherCurrency = currency === "BTC" ? "USD" : "BTC"
+  const [hideBalance, setHideBalance] = useState(null)
+  const [showToolTip, setShowToolTip] = useState(null)
+  const isFocused = useIsFocused()
 
-  const subHeader =
-    amountOtherCurrency !== null ? (
-      <TextCurrency
-        amount={amountOtherCurrency}
-        currency={otherCurrency}
-        style={styles.subCurrencyText}
-      />
-    ) : null
+  const checkHideBalanceSettings = async() => {
+        setHideBalance(await load(HIDE_BALANCE) )
+        setShowToolTip(await load(WALKTHROUGH_TOOLTIP))
+  }
 
+  useEffect( () => {
+    checkHideBalanceSettings()
+  },[isFocused])
+
+
+  const otherCurrency = currency === CurrencyType.BTC ? CurrencyType.USD : "sats"
+
+  const hiddenBalanceSet = () => {
+    return (
+        <>
+          <Tooltip
+            isVisible={showToolTip}
+            content={<Text>{translate("BalanceHeader.toolTipHiddenBalance")}</Text>}
+            placement="top"
+            onClose={async() => {
+                setShowToolTip( await remove(WALKTHROUGH_TOOLTIP))
+            }}
+          >
+          <TouchableHighlight onPress={ ()=> { setHideBalance(null) }}>
+              <Icon style={styles.subCurrencyText} name="eye" />
+          </TouchableHighlight>
+          </Tooltip>
+        </>
+    )
+  }
+
+  const defaultBalanceHeader = () => {
+    const subHeader =
+        amountOtherCurrency !== null ? (
+            <TextCurrency
+                amount={amountOtherCurrency}
+                currency={otherCurrency}
+                style={styles.subCurrencyText}
+            />
+        ) : null
+    return (
+          <View style={styles.amount}>
+            <View style={styles.container}>
+              {loading && <Loader/>}
+              {!loading && (
+                  <TouchableHighlight onPress={ ()=> { setHideBalance(true) }}>
+                  <TextCurrency
+                      amount={amount}
+                      currency={currency === CurrencyType.BTC ? "sats" : CurrencyType.USD}
+                      style={styles.text}
+                  />
+                  </TouchableHighlight>
+              )}
+            </View>
+            {!loading && subHeader}
+          </View>
+    )
+  }
   return (
-    <View style={[styles.header, style]}>
-      <Text style={styles.balanceText}>{translate("BalanceHeader.currentBalance")}</Text>
-      <View style={styles.amount}>
-        <View style={styles.container}>
-          {loading && <Loader />}
-          {!loading && (
-            <TextCurrency amount={amount} currency={currency} style={styles.text} />
-          )}
-        </View>
-        {!loading && subHeader}
-      </View>
-    </View>
+       <View style={[styles.header, style]}>
+          <Text style={styles.balanceText}>{translate("BalanceHeader.currentBalance")}</Text>
+         { hideBalance && ( hiddenBalanceSet() ) }
+         { !hideBalance && ( defaultBalanceHeader() ) }
+       </View>
   )
+
 }
