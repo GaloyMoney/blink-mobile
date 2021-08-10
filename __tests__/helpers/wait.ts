@@ -1,5 +1,3 @@
-import { act } from "@testing-library/react-native"
-
-export const waitForNextRender = async () => {
-  await new Promise((resolve) => setTimeout(resolve, 0))
+export const waitForNextRender = (): Promise<void> => {
+  return new Promise((resolve) => setTimeout(resolve, 50))
 }
