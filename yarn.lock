@@ -13198,9 +13198,9 @@ react-error-overlay@^6.0.3, react-error-overlay@^6.0.9:
   resolved "https://registry.npmjs.org/react-error-overlay/-/react-error-overlay-6.0.9.tgz"
   integrity sha512-nQTTcUu+ATDbrSD1BZHr5kgSD4oF8OFjxun8uAaL8RwPBacGBNPf/yAuVVdx17N8XNzRDMrZ9XcKZHCjPW+9ew==
 
-react-fast-compare@^2.0.0:
+react-fast-compare@^2.0.0, react-fast-compare@^2.0.4:
   version "2.0.4"
-  resolved "https://registry.npmjs.org/react-fast-compare/-/react-fast-compare-2.0.4.tgz"
+  resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-2.0.4.tgz#e84b4d455b0fec113e0402c329352715196f81f9"
   integrity sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw==
 
 react-fast-compare@^3.0.1, react-fast-compare@^3.2.0:
@@ -13590,6 +13590,14 @@ react-native-version-number@*, react-native-version-number@^0.3.6:
   version "0.3.6"
   resolved "https://registry.npmjs.org/react-native-version-number/-/react-native-version-number-0.3.6.tgz"
   integrity sha512-TdyXiK90NiwmSbmAUlUBOV6WI1QGoqtvZZzI5zQY4fKl67B3ZrZn/h+Wy/OYIKKFMfePSiyfeIs8LtHGOZ/NgA==
+
+react-native-walkthrough-tooltip@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-walkthrough-tooltip/-/react-native-walkthrough-tooltip-1.2.0.tgz#4d9781d2e3231bbe5d6ab154c6cf3cbbe4040e6d"
+  integrity sha512-M4/dg8PuYKslitHXaCQ/JLudvGEVqI2tJLKv34AQ3X0tLTtNXvAvyCPlDZ+Bg2l9qJ5PQOz8iMt6dyqLn1ed+w==
+  dependencies:
+    prop-types "^15.6.1"
+    react-fast-compare "^2.0.4"
 
 react-native-youtube@^2.0.0:
   version "2.0.1"
