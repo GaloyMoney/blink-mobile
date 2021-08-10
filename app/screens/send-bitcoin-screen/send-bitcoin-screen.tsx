@@ -17,7 +17,7 @@ import {
   balanceBtc,
   btc_price,
   getPubKey,
-  getWalletNetworkOnly,
+  queryWallet,
   QUERY_TRANSACTIONS,
   USERNAME_EXIST,
 } from "../../graphql/query"
@@ -443,7 +443,7 @@ export const SendBitcoinScreen: React.FC<SendBitcoinScreenProps> = ({
       }
 
       if (success) {
-        getWalletNetworkOnly(client)
+        queryWallet(client, "network-only")
         setStatus("success")
       } else if (pending) {
         setStatus("pending")

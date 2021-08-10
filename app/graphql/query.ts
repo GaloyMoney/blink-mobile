@@ -1,4 +1,4 @@
-import { ApolloClient, gql, makeVar } from "@apollo/client"
+import { ApolloClient, FetchPolicy, gql, makeVar } from "@apollo/client"
 import _ from "lodash"
 import { MockableApolloClient } from "../types/mockable"
 import { wallet_wallet } from "./__generated__/wallet"
@@ -97,12 +97,13 @@ export const balanceUsd = (client: ApolloClient<unknown>): number =>
 export const balanceBtc = (client: ApolloClient<unknown>): number =>
   _.find(getWallet(client), { id: "BTC" }).balance
 
-export const getWalletNetworkOnly = async (
+export const queryWallet = async (
   client: ApolloClient<unknown>,
+  fetchPolicy: FetchPolicy,
 ): Promise<void> => {
   await client.query({
     query: WALLET,
-    fetchPolicy: "network-only",
+    fetchPolicy,
   })
 }
 
