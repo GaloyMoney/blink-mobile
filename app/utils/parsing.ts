@@ -42,8 +42,10 @@ const mappingToBitcoinJs = (input: INetwork) => {
   }
 }
 
-export const lightningInvoiceHasExpired = (payReq: lightningPayReq.PaymentRequestObject): boolean => {
-  return (payReq?.timeExpireDate < moment().unix())
+export const lightningInvoiceHasExpired = (
+  payReq: lightningPayReq.PaymentRequestObject,
+): boolean => {
+  return payReq?.timeExpireDate < moment().unix()
 }
 
 // from https://github.com/bitcoin/bips/blob/master/bip-0020.mediawiki#Transfer%20amount/size
@@ -204,4 +206,3 @@ export const validPayment = (
     }
   }
 }
-

@@ -2,7 +2,7 @@ import * as React from "react"
 import { MockedProvider } from "@apollo/client/testing"
 import { gql, InMemoryCache } from "@apollo/client"
 import { act, cleanup, fireEvent, render } from "@testing-library/react-native"
-import renderer from 'react-test-renderer'
+import renderer from "react-test-renderer"
 import "@testing-library/jest-native/extend-expect"
 import "@node_modules/react-native-gesture-handler/jestSetup.js"
 
@@ -17,11 +17,11 @@ import {
 import { QUERY_PRICE, WALLET } from "@app/graphql/query"
 import { waitForNextRender } from "../helpers/wait"
 
-jest.mock("../../app/utils/parsing", () => { 
+jest.mock("../../app/utils/parsing", () => {
   const actualParsing = jest.requireActual("../../app/utils/parsing")
   return {
     ...actualParsing,
-    lightningInvoiceHasExpired: () => false
+    lightningInvoiceHasExpired: () => false,
   }
 })
 
@@ -174,7 +174,7 @@ describe("SendBitcoinScreen", () => {
       .create(
         <MockedProvider cache={cache}>
           <SendBitcoinScreen route={{ params: null }} />
-        </MockedProvider>
+        </MockedProvider>,
       )
       .toJSON()
     expect(tree).toMatchSnapshot()

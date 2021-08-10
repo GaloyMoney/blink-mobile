@@ -795,15 +795,10 @@ export const SendBitcoinScreenJSX: ScreenType = ({
               : !destination
               ? translate("common.usernameRequired")
               : translate("common.send")
-<<<<<<< HEAD
           }
           onPress={() =>
             status === "success" || status === "pending" ? goBack() : pay()
           }
-=======
-          }
-          onPress={() => (status === "success" || status === "pending" ? goBack() : pay())}
->>>>>>> Address feedback including adding a render snapshot
           disabled={!amount || !!errorMessage || !destination}
           loading={status === "loading"}
         />
