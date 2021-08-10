@@ -20,7 +20,6 @@ import {
   getWalletNetworkOnly,
   QUERY_TRANSACTIONS,
   USERNAME_EXIST,
-  WALLET,
 } from "../../graphql/query"
 import { usePrefCurrency } from "../../hooks/usePrefCurrency"
 import { translate } from "../../i18n"
