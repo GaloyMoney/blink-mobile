@@ -623,6 +623,39 @@ exports[`SendBitcoinScreen render matches snapshot 1`] = `
                 underlineColorAndroid="transparent"
                 value=""
               />
+              <View
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "height": 40,
+                    "justifyContent": "center",
+                    "marginVertical": 4,
+                    "paddingRight": 4,
+                  }
+                }
+              >
+                <Text
+                  allowFontScaling={false}
+                  onPress={[Function]}
+                  style={
+                    Array [
+                      Object {
+                        "color": undefined,
+                        "fontSize": 30,
+                      },
+                      undefined,
+                      Object {
+                        "fontFamily": "Ionicons",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      Object {},
+                    ]
+                  }
+                >
+                  
+                </Text>
+              </View>
             </View>
             <Text
               style={
