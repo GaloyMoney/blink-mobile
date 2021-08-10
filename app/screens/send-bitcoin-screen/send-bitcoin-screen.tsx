@@ -633,6 +633,16 @@ export const SendBitcoinScreenJSX: ScreenType = ({
     return null
   }
 
+  const feeInputComponent = () => {
+    if (fee === undefined) {
+      return FeeActivityIndicator
+    } else if (fee === -1) {
+      FeeCalculationUnsuccessfulText
+    }
+
+    return TextInput
+  }
+
   return (
     <Screen preset="fixed">
       <ScrollView
@@ -723,15 +733,7 @@ export const SendBitcoinScreenJSX: ScreenType = ({
             errorStyle={{ fontSize: 16, alignSelf: "center", height: 18 }}
             editable={false}
             selectTextOnFocus
-            InputComponent={
-              fee === undefined ? (
-                FeeActivityIndicator
-              ) : fee === -1 ? (
-                FeeCalculationUnsuccessfulText
-              ) : (
-                TextInput
-              )
-            }
+            InputComponent={feeInputComponent()}
           />
         </View>
         <View style={{ alignItems: "center" }}>
@@ -793,10 +795,15 @@ export const SendBitcoinScreenJSX: ScreenType = ({
               : !destination
               ? translate("common.usernameRequired")
               : translate("common.send")
+<<<<<<< HEAD
           }
           onPress={() =>
             status === "success" || status === "pending" ? goBack() : pay()
           }
+=======
+          }
+          onPress={() => (status === "success" || status === "pending" ? goBack() : pay())}
+>>>>>>> Address feedback including adding a render snapshot
           disabled={!amount || !!errorMessage || !destination}
           loading={status === "loading"}
         />

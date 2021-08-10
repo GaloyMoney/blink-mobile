@@ -7,6 +7,7 @@ import { getMyUsername, getPubKey } from "../graphql/query"
 
 import type { INetwork } from "../types/network"
 import type { MockableApolloClient } from "../types/mockable"
+import * as parsing from "./parsing"
 
 // TODO: look if we own the address
 
@@ -39,6 +40,10 @@ const mappingToBitcoinJs = (input: INetwork) => {
     case "regtest":
       return networks.regtest
   }
+}
+
+export const lightningInvoiceHasExpired = (payReq: lightningPayReq.PaymentRequestObject): boolean => {
+  return (payReq?.timeExpireDate < moment().unix())
 }
 
 // from https://github.com/bitcoin/bips/blob/master/bip-0020.mediawiki#Transfer%20amount/size
@@ -178,7 +183,7 @@ export const validPayment = (
     // TODO: show that the invoice has expired in the popup
     // TODO: manage testnet as well
 
-    if (payReq?.timeExpireDate < moment().unix()) {
+    if (parsing.lightningInvoiceHasExpired(payReq)) {
       return { valid: false, errorMessage: "invoice has expired", paymentType }
     }
 
@@ -199,3 +204,4 @@ export const validPayment = (
     }
   }
 }
+

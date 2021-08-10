@@ -2,7 +2,7 @@ import * as React from "react"
 import { MockedProvider } from "@apollo/client/testing"
 import { gql, InMemoryCache } from "@apollo/client"
 import { act, cleanup, fireEvent, render } from "@testing-library/react-native"
-import moment from "moment"
+import renderer from 'react-test-renderer'
 import "@testing-library/jest-native/extend-expect"
 import "@node_modules/react-native-gesture-handler/jestSetup.js"
 
@@ -15,6 +15,15 @@ import {
   SendBitcoinScreen,
 } from "@app/screens/send-bitcoin-screen"
 import { QUERY_PRICE, WALLET } from "@app/graphql/query"
+import { waitForNextRender } from "../helpers/wait"
+
+jest.mock("../../app/utils/parsing", () => { 
+  const actualParsing = jest.requireActual("../../app/utils/parsing")
+  return {
+    ...actualParsing,
+    lightningInvoiceHasExpired: () => false
+  }
+})
 
 const transactions = [
   {
@@ -160,12 +169,15 @@ const payKeysendUsernameMocks = [
 afterEach(cleanup)
 
 describe("SendBitcoinScreen", () => {
-  it("can render", () => {
-    render(
-      <MockedProvider cache={cache}>
-        <SendBitcoinScreen route={{ params: null }} />
-      </MockedProvider>,
-    )
+  it("render matches snapshot", () => {
+    const tree = renderer
+      .create(
+        <MockedProvider cache={cache}>
+          <SendBitcoinScreen route={{ params: null }} />
+        </MockedProvider>
+      )
+      .toJSON()
+    expect(tree).toMatchSnapshot()
   })
 
   it("has TextInputs", () => {
@@ -250,7 +262,7 @@ describe("SendBitcoinScreen", () => {
     const sendButton = getByText(translate("common.send"))
     fireEvent.press(sendButton)
 
-    await act(async () => await new Promise((resolve) => setTimeout(resolve, 0)))
+    await act(waitForNextRender)
     expect(queryByText(translate("SendBitcoinScreen.success"))).toBeNull()
   })
 
@@ -270,7 +282,7 @@ describe("SendBitcoinScreen", () => {
     const sendButton = getByText(translate("common.send"))
     fireEvent.press(sendButton)
 
-    await act(async () => await new Promise((resolve) => setTimeout(resolve, 0)))
+    await waitForNextRender()
     expect(queryByText(translate("SendBitcoinScreen.success"))).not.toBeNull()
   })
 
@@ -310,10 +322,6 @@ describe("SendBitcoinScreen", () => {
       },
     ]
 
-    moment.now = function () {
-      return 1598110996000 // Aug 22 2020 10:43
-    }
-
     const { getByPlaceholderText, getByText, queryByPlaceholderText, queryByText } =
       render(
         <MockedProvider mocks={lightningPayMocks} cache={cache}>
@@ -329,14 +337,14 @@ describe("SendBitcoinScreen", () => {
       "lightning:lnbc6864270n1p05zvjjpp5fpehvlv3dd2r76065r9v0l3n8qv9mfwu9ryhvpj5xsz3p4hy734qdzhxysv89eqyvmzqsnfw3pxcmmrddpx7mmdypp8yatwvd5zqmmwypqh2em4wd6zqvesyq5yyun4de3ksgz0dek8j2gcqzpgxqrrss6lqa5jllvuglw5tpsug4s2tmt5c8fnerr95fuh8htcsyx52cp3wzswj32xj5gewyfn7mg293v6jla9cz8zndhwdhcnnkul2qkf6pjlspj2nl3j",
     )
 
-    await act(async () => await new Promise((resolve) => setTimeout(resolve, 0)))
+    await act(waitForNextRender)
 
     expect(amountInput).toHaveTextContent("272.26")
 
     const sendButton = getByText(translate("common.send"))
     fireEvent.press(sendButton)
 
-    await act(async () => await new Promise((resolve) => setTimeout(resolve, 0)))
+    await act(waitForNextRender)
     expect(queryByText(translate("SendBitcoinScreen.success"))).not.toBeNull()
   })
 })
