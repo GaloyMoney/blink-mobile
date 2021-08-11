@@ -39,6 +39,7 @@ const styles = EStyleSheet.create({
     alignItems: "center",
     marginBottom: "32rem",
     marginTop: "32rem",
+    minHeight: "75rem",
   },
 
   subCurrencyText: {
@@ -50,6 +51,7 @@ const styles = EStyleSheet.create({
     color: palette.darkGrey,
     fontSize: 32,
   },
+  touchableHighlightColor: "#ffffff00",
 })
 
 export interface BalanceHeaderProps {
@@ -107,6 +109,7 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
           }}
         >
           <TouchableHighlight
+            underlayColor={styles.touchableHighlightColor}
             onPress={() => {
               setHideBalance(null)
             }}
@@ -133,6 +136,7 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
           {loading && <Loader />}
           {!loading && (
             <TouchableHighlight
+              underlayColor={styles.touchableHighlightColor}
               onPress={() => {
                 setHideBalance(true)
               }}
