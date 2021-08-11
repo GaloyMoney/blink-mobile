@@ -161,7 +161,7 @@ export const InputPayment: ComponentType = ({
   const displayValue = currencyToText(amountInput, currency)
 
   const leftIcon = () => {
-    if (currency === CurrencyType.USD ) {
+    if (currency === CurrencyType.USD) {
       return (
         <Text
           style={[
