@@ -21,7 +21,6 @@
 		C6A433D22457478B00AA6FFC /* DMSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C6A433CC2457478B00AA6FFC /* DMSans-Medium.ttf */; };
 		C6E810012333FDA500D41794 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C6E810002333FDA400D41794 /* GoogleService-Info.plist */; };
 		C6FCE05924592E5E0076B3C0 /* LottieEmptyFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6FCE05824592E5E0076B3C0 /* LottieEmptyFile.swift */; };
-		D046A0E826B2097C00162422 /* RCTGeeTestModule.m in Sources */ = {isa = PBXBuildFile; fileRef = D046A0E726B2097C00162422 /* RCTGeeTestModule.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -83,8 +82,6 @@
 		C6E810002333FDA400D41794 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C6FCE05724592E5E0076B3C0 /* GaloyApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GaloyApp-Bridging-Header.h"; sourceTree = "<group>"; };
 		C6FCE05824592E5E0076B3C0 /* LottieEmptyFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieEmptyFile.swift; sourceTree = "<group>"; };
-		D046A0E626B208DC00162422 /* RCTGeeTestModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTGeeTestModule.h; sourceTree = "<group>"; };
-		D046A0E726B2097C00162422 /* RCTGeeTestModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTGeeTestModule.m; sourceTree = "<group>"; };
 		E5A2237A1830429A9171428B /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		EBD61B2C93AC0EB26258A04C /* Pods-GaloyApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GaloyApp.debug.xcconfig"; path = "Target Support Files/Pods-GaloyApp/Pods-GaloyApp.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -116,8 +113,6 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
-				D046A0E626B208DC00162422 /* RCTGeeTestModule.h */,
-				D046A0E726B2097C00162422 /* RCTGeeTestModule.m */,
 			);
 			name = GaloyApp;
 			sourceTree = "<group>";
@@ -476,7 +471,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C6FCE05924592E5E0076B3C0 /* LottieEmptyFile.swift in Sources */,
-				D046A0E826B2097C00162422 /* RCTGeeTestModule.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);

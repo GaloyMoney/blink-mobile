@@ -75,6 +75,7 @@
     "react-native-extended-stylesheet": "^0.12.0",
     "react-native-fingerprint-scanner": "^6.0.0",
     "react-native-fs": "^2.16.6",
+    "react-native-geetest-module": "^0.1.1",
     "react-native-gesture-handler": "^1.9.0",
     "react-native-haptic-feedback": "^1.9.0",
     "react-native-icloudstore": "^0.9.0",
