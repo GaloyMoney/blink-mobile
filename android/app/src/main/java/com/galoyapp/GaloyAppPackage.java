@@ -20,8 +20,6 @@ public class GaloyAppPackage implements ReactPackage {
             ReactApplicationContext reactContext) {
         List<NativeModule> modules = new ArrayList<>();
 
-        modules.add(new GeeTestModule(reactContext));
-
         return modules;
     }
 
