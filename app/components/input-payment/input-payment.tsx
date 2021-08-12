@@ -19,6 +19,8 @@ import {
 import { CurrencyType } from "../../utils/enum"
 import { TextCurrency } from "../text-currency/text-currency"
 
+const digitLimit = 10
+
 const styles = EStyleSheet.create({
   container: {
     alignItems: "center",
@@ -33,9 +35,21 @@ const styles = EStyleSheet.create({
   },
 
   inputMaskPositioning: {
-    marginHorizontal: "15%",
     position: "absolute",
-    width: "70%",
+  },
+
+  inputMaskPositioningBTC: {
+    marginRight: "10%",
+    width: "90%",
+  },
+
+  inputMaskPositioningDefault: {
+    width: "100%",
+  },
+
+  inputMaskPositioningUSD: {
+    marginLeft: "10%",
+    width: "90%",
   },
 
   inputText: {
@@ -53,6 +67,16 @@ const styles = EStyleSheet.create({
     fontSize: "16rem",
     marginTop: 0,
     paddingTop: 0,
+    textAlign: "center",
+  },
+
+  subCurrencyTextBTC: {
+    marginRight: "20%",
+    width: "80%",
+  },
+
+  subCurrencyTextUSD: {
+    width: "100%",
   },
 
   textStyle: {
@@ -76,6 +100,7 @@ type InputPaymentDataInjectedProps = {
   forceKeyboard: boolean
   initAmount?: number
   prefCurrency: string
+  maxLength: number
   nextPrefCurrency: () => void
   currencyPreference?: string // "sats" | "BTC" | "usd"
   sub?: boolean
@@ -117,7 +142,9 @@ export const InputPayment: ComponentType = ({
   const currency = mapping[prefCurrency].primary
 
   const handleTextInputChange = (text) => {
-    setInput(textToCurrency(text, currency))
+    setInput(
+      textToCurrency(text.replace(/[^0-9]/g, "").substring(0, digitLimit), currency),
+    )
   }
 
   React.useEffect(() => {
@@ -205,13 +232,37 @@ export const InputPayment: ComponentType = ({
     return null
   }
 
+  const inputMaskPositioningStyle = () => {
+    if (currency === CurrencyType.USD) {
+      return styles.inputMaskPositioningUSD
+    } else if (currency === CurrencyType.BTC || currency === "sats") {
+      return styles.inputMaskPositioningBTC
+    }
+
+    return styles.inputMaskPositioningDefault
+  }
+
+  const subCurrencyTextStyle = () => {
+    if (currency === CurrencyType.USD) {
+      return styles.subCurrencyTextUSD
+    } else if (currency === CurrencyType.BTC || currency === "sats") {
+      return styles.subCurrencyTextBTC
+    }
+
+    return null
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.main}>
         <Text
           ellipsizeMode="middle"
           numberOfLines={1}
-          style={[styles.textStyle, styles.inputMaskPositioning]}
+          style={[
+            styles.textStyle,
+            styles.inputMaskPositioning,
+            inputMaskPositioningStyle(),
+          ]}
         >
           {displayValue}
         </Text>
@@ -243,7 +294,7 @@ export const InputPayment: ComponentType = ({
         <TextCurrency
           amount={mapping[prefCurrency].secondaryConversion(amount)}
           currency={mapping[prefCurrency].secondary}
-          style={styles.subCurrencyText}
+          style={[styles.subCurrencyText, subCurrencyTextStyle()]}
         />
       )}
     </View>

@@ -397,6 +397,7 @@ exports[`SendBitcoinScreen render matches snapshot 1`] = `
                   Array [
                     undefined,
                     undefined,
+                    undefined,
                   ]
                 }
               >
@@ -533,7 +534,14 @@ exports[`SendBitcoinScreen render matches snapshot 1`] = `
                 </View>
               </RNGestureHandlerButton>
             </View>
-            <Text>
+            <Text
+              style={
+                Array [
+                  undefined,
+                  undefined,
+                ]
+              }
+            >
               0
                
               sats
