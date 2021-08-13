@@ -160,6 +160,51 @@ export const InputPayment: ComponentType = ({
   }
   const displayValue = currencyToText(amountInput, currency)
 
+  const leftIcon = () => {
+    if (currency === CurrencyType.USD) {
+      return (
+        <Text
+          style={[
+            styles.textStyleIcon,
+            { color: amount === 0 ? palette.midGrey : palette.darkGrey },
+          ]}
+        >
+          $
+        </Text>
+      )
+    }
+
+    return null
+  }
+
+  const rightIcon = () => {
+    if (currency === CurrencyType.BTC) {
+      return (
+        <Text
+          style={[
+            styles.textStyleIcon,
+            { color: amount === 0 ? palette.midGrey : palette.darkGrey },
+          ]}
+        >
+          BTC
+        </Text>
+      )
+    } else if (currency === "sats") {
+      return (
+        <Text
+          style={[
+            styles.textStyleIcon,
+            { color: amount === 0 ? palette.midGrey : palette.darkGrey },
+          ]}
+        >
+          sats
+        </Text>
+      )
+    }
+
+    return null
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.main}>
@@ -174,39 +219,8 @@ export const InputPayment: ComponentType = ({
           ref={inputRef}
           autoFocus={forceKeyboard}
           value={displayValue}
-          leftIcon={
-            currency === CurrencyType.USD ? (
-              <Text
-                style={[
-                  styles.textStyleIcon,
-                  { color: amount === 0 ? palette.midGrey : palette.darkGrey },
-                ]}
-              >
-                $
-              </Text>
-            ) : null
-          }
-          rightIcon={
-            currency === CurrencyType.BTC ? (
-              <Text
-                style={[
-                  styles.textStyleIcon,
-                  { color: amount === 0 ? palette.midGrey : palette.darkGrey },
-                ]}
-              >
-                BTC
-              </Text>
-            ) : currency === "sats" ? (
-              <Text
-                style={[
-                  styles.textStyleIcon,
-                  { color: amount === 0 ? palette.midGrey : palette.darkGrey },
-                ]}
-              >
-                sats
-              </Text>
-            ) : null
-          }
+          leftIcon={leftIcon()}
+          rightIcon={rightIcon()}
           inputContainerStyle={styles.inputContainer}
           inputStyle={[styles.textStyle, styles.inputText]}
           contextMenuHidden
@@ -219,6 +233,7 @@ export const InputPayment: ComponentType = ({
           editable={editable}
           onEndEditing={onBlur}
           renderErrorMessage={false}
+          selection={{ start: displayValue.length, end: displayValue.length }}
         />
         <TouchableOpacity onPress={nextPrefCurrency}>
           <Icon name="ios-swap-vertical" size={32} style={styles.icon} />

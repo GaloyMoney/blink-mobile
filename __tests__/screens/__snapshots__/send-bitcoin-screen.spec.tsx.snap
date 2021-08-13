@@ -463,6 +463,12 @@ exports[`SendBitcoinScreen render matches snapshot 1`] = `
                     rejectResponderTermination={true}
                     returnKeyLabel="Update"
                     returnKeyType="done"
+                    selection={
+                      Object {
+                        "end": 4,
+                        "start": 4,
+                      }
+                    }
                     style={
                       Object {
                         "color": "#242424",
