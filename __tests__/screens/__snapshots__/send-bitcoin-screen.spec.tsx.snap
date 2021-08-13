@@ -399,8 +399,8 @@ exports[`SendBitcoinScreen render matches snapshot 1`] = `
                     undefined,
                     undefined,
                     Object {
-                      "marginLeft": "0%",
-                      "width": "100%",
+                      "marginLeft": "1.5%",
+                      "width": "98.5%",
                     },
                   ]
                 }

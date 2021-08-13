@@ -489,7 +489,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
 
   return (
     <Screen backgroundColor={palette.lighterGrey} style={styles.screen} preset="fixed">
-      <ScrollView>
+      <ScrollView keyboardShouldPersistTaps="always">
         <View style={styles.section}>
           <InputPaymentDataInjected
             onUpdateAmount={setAmount}

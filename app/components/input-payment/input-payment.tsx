@@ -212,16 +212,17 @@ export const InputPayment: ComponentType = ({
   }
 
   const inputMaskPositioningStyle = () => {
-    const numberOfDigits = displayValue.replace(/[^0-9]/g, "").length
+    const additionalMargin = displayValue.replace(/[^0-9]/g, "").length * 1.5
+
     if (currency === CurrencyType.USD) {
       return {
-        marginLeft: `${numberOfDigits - 3}%`,
-        width: `${103 - numberOfDigits}%`,
+        marginLeft: `${additionalMargin - 3}%`,
+        width: `${103 - additionalMargin}%`,
       }
     } else if (currency === CurrencyType.BTC || currency === "sats") {
       return {
-        marginRight: `${numberOfDigits}%`,
-        width: `${100 - numberOfDigits}%`,
+        marginRight: `${additionalMargin}%`,
+        width: `${100 - additionalMargin}%`,
       }
     }
 
