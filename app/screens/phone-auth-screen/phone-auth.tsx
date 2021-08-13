@@ -11,13 +11,7 @@ import {
   View,
 } from "react-native"
 import { Input } from "react-native-elements"
-import {
-  FetchResult,
-  gql,
-  useApolloClient,
-  useLazyQuery,
-  useMutation,
-} from "@apollo/client"
+import { FetchResult, gql, useApolloClient, useMutation } from "@apollo/client"
 import EStyleSheet from "react-native-extended-stylesheet"
 import PhoneInput from "react-native-phone-input"
 import analytics from "@react-native-firebase/analytics"
@@ -26,7 +20,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { CloseCross } from "../../components/close-cross"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
-import { MAIN_QUERY } from "../../graphql/query"
+import { queryMain } from "../../graphql/query"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { Token } from "../../utils/token"
@@ -181,10 +175,6 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
     fetchPolicy: "no-cache",
   })
 
-  const [reloadMainQuery] = useLazyQuery(MAIN_QUERY, {
-    fetchPolicy: "network-only",
-  })
-
   const onSuccess = async ({ token }) => {
     analytics().logLogin({ method: "phone" })
     await Token.getInstance().save(token)
@@ -196,7 +186,7 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
 
     // console.log("succesfully update earns id")
 
-    reloadMainQuery({ variables: { logged: Token.getInstance().has() } })
+    queryMain(client, { logged: Token.getInstance().has() })
 
     console.log("sending device token for notifications")
     addDeviceToken(client)
