@@ -19,6 +19,8 @@ import {
 import { CurrencyType } from "../../utils/enum"
 import { TextCurrency } from "../text-currency/text-currency"
 
+const digitLimit = 10
+
 const styles = EStyleSheet.create({
   container: {
     alignItems: "center",
@@ -33,9 +35,7 @@ const styles = EStyleSheet.create({
   },
 
   inputMaskPositioning: {
-    marginHorizontal: "15%",
     position: "absolute",
-    width: "70%",
   },
 
   inputText: {
@@ -51,8 +51,11 @@ const styles = EStyleSheet.create({
   subCurrencyText: {
     color: palette.midGrey,
     fontSize: "16rem",
+    marginRight: "10%",
     marginTop: 0,
     paddingTop: 0,
+    textAlign: "center",
+    width: "90%",
   },
 
   textStyle: {
@@ -76,6 +79,7 @@ type InputPaymentDataInjectedProps = {
   forceKeyboard: boolean
   initAmount?: number
   prefCurrency: string
+  maxLength: number
   nextPrefCurrency: () => void
   currencyPreference?: string // "sats" | "BTC" | "usd"
   sub?: boolean
@@ -117,7 +121,9 @@ export const InputPayment: ComponentType = ({
   const currency = mapping[prefCurrency].primary
 
   const handleTextInputChange = (text) => {
-    setInput(textToCurrency(text, currency))
+    setInput(
+      textToCurrency(text.replace(/[^0-9]/g, "").substring(0, digitLimit), currency),
+    )
   }
 
   React.useEffect(() => {
@@ -139,7 +145,7 @@ export const InputPayment: ComponentType = ({
 
   React.useEffect(() => {
     // TODO: show "an amount is needed" in red
-    if (forceKeyboard && +amountInput == 0) {
+    if (forceKeyboard && +amountInput === 0) {
       inputRef?.current.focus()
     }
   }, [forceKeyboard, amountInput])
@@ -205,18 +211,43 @@ export const InputPayment: ComponentType = ({
     return null
   }
 
+  const inputMaskPositioningStyle = () => {
+    const additionalMargin = displayValue.replace(/[^0-9]/g, "").length * 1.5
+
+    if (currency === CurrencyType.USD) {
+      return {
+        marginLeft: `${additionalMargin - 3}%`,
+        width: `${103 - additionalMargin}%`,
+      }
+    } else if (currency === CurrencyType.BTC || currency === "sats") {
+      return {
+        marginRight: `${additionalMargin}%`,
+        width: `${100 - additionalMargin}%`,
+      }
+    }
+
+    return {
+      width: "100%",
+    }
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.main}>
         <Text
           ellipsizeMode="middle"
           numberOfLines={1}
-          style={[styles.textStyle, styles.inputMaskPositioning]}
+          style={[
+            styles.textStyle,
+            styles.inputMaskPositioning,
+            inputMaskPositioningStyle(),
+          ]}
         >
           {displayValue}
         </Text>
         <Input
           ref={inputRef}
+          autoCorrect={false}
           autoFocus={forceKeyboard}
           value={displayValue}
           leftIcon={leftIcon()}

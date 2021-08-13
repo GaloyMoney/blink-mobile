@@ -90,7 +90,11 @@ export const currencyToText = (
         maximumFractionDigits: 2,
         minimumFractionDigits: 2,
       })
-    : value
+    : Number(value).toLocaleString(locale, {
+        style: "decimal",
+        maximumFractionDigits: 0,
+        minimumFractionDigits: 0,
+      })
 
 const getDigitsFromValue = (value = "") => value.replace(/(-(?!\d))|[^0-9|-]/g, "") || ""
 

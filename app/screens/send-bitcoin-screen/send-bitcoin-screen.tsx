@@ -649,6 +649,7 @@ export const SendBitcoinScreenJSX: ScreenType = ({
       <ScrollView
         style={styles.mainView}
         contentContainerStyle={{ justifyContent: "space-between" }}
+        keyboardShouldPersistTaps="always"
       >
         <View style={styles.section}>
           <InputPayment

@@ -488,7 +488,7 @@ export const PrimaryNavigator: NavigatorType = () => {
       initialRouteName="MoveMoney"
       tabBarOptions={{
         activeTintColor: network === "mainnet" ? palette.lightBlue : palette.orange,
-        inactiveTintColor: palette.lightGrey,
+        inactiveTintColor: palette.midGrey,
         style: styles.bottomNavigatorStyle,
         labelStyle: { paddingBottom: 6 },
         keyboardHidesTabBar: true,
