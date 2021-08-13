@@ -7,14 +7,15 @@ import { palette } from "../../theme/palette"
 import { CurrencyType } from "../../utils/enum"
 import { TextCurrency } from "../text-currency/text-currency"
 import { useState, useEffect } from "react"
-import { useIsFocused } from "@react-navigation/native"
-import { load, remove } from "../../utils/storage"
+import {useIsFocused} from "@react-navigation/native"
 import {
+  saveWalkThroughToolTipSettings,
   HIDE_BALANCE,
-  WALKTHROUGH_TOOLTIP,
-} from "../../screens/settings-screen/security-screen"
+  WALKTHROUGH_TOOL_TIP
+} from "../../graphql/client-only-query"
 import Tooltip from "react-native-walkthrough-tooltip"
 import Icon from "react-native-vector-icons/Entypo"
+import {useQuery} from "@apollo/client";
 
 const styles = EStyleSheet.create({
   amount: {
@@ -82,21 +83,30 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
   loading = false,
   style,
 }: BalanceHeaderProps) => {
-  const [hideBalance, setHideBalance] = useState(null)
-  const [showToolTip, setShowToolTip] = useState(null)
+  const { data: balanceSettings } = useQuery(HIDE_BALANCE)
+  const { data: toolTipSettings } = useQuery(WALKTHROUGH_TOOL_TIP)
+  const [hideBalance, setHideBalance] = useState<boolean | null>(null)
+  const [showToolTip, setShowToolTip] = useState<boolean | null>( null)
   const isFocused = useIsFocused()
 
   const checkHideBalanceSettings = async () => {
-    setHideBalance(await load(HIDE_BALANCE))
-    setShowToolTip(await load(WALKTHROUGH_TOOLTIP))
+      setHideBalance(balanceSettings?.hideBalanceSettings)
+      if(toolTipSettings?.walkThroughToolTipSettings) {
+        setTimeout(function () {
+          setShowToolTip(toolTipSettings?.walkThroughToolTipSettings)
+        }, 1000);
+      }
   }
 
   useEffect(() => {
     checkHideBalanceSettings()
   }, [isFocused])
 
-  const otherCurrency = currency === CurrencyType.BTC ? CurrencyType.USD : "sats"
+  const handleToolTipClose = async () => {
+    setShowToolTip(await saveWalkThroughToolTipSettings(false))
+  }
 
+  const otherCurrency = currency === CurrencyType.BTC ? CurrencyType.USD : "sats"
   const hiddenBalanceSet = () => {
     return (
       <>
@@ -104,9 +114,7 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
           isVisible={showToolTip}
           content={<Text>{translate("BalanceHeader.toolTipHiddenBalance")}</Text>}
           placement="top"
-          onClose={async () => {
-            setShowToolTip(await remove(WALKTHROUGH_TOOLTIP))
-          }}
+          onClose={ handleToolTipClose }
         >
           <TouchableHighlight
             underlayColor={styles.touchableHighlightColor}
@@ -156,8 +164,8 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
   return (
     <View style={[styles.header, style]}>
       <Text style={styles.balanceText}>{translate("BalanceHeader.currentBalance")}</Text>
-      {hideBalance && hiddenBalanceSet()}
-      {!hideBalance && defaultBalanceHeader()}
+      {hideBalance && isFocused && hiddenBalanceSet()}
+      {!hideBalance && isFocused && defaultBalanceHeader()}
     </View>
   )
 }

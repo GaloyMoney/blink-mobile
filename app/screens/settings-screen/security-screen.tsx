@@ -15,10 +15,12 @@ import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { PinScreenPurpose } from "../../utils/enum"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
-import {load, remove, save} from "../../utils/storage";
-
-export const HIDE_BALANCE = "HIDE_BALANCE"
-export const WALKTHROUGH_TOOLTIP = "WALKTHROUGH_TOOLTIP"
+import {
+  HIDE_BALANCE,
+  saveHideBalanceSettings,
+  saveWalkThroughToolTipSettings,
+} from "../../graphql/client-only-query"
+import { useQuery} from "@apollo/client";
 
 const styles = EStyleSheet.create({
   button: {
@@ -84,27 +86,22 @@ type Props = {
 
 export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
   const { mIsBiometricsEnabled, mIsPinEnabled } = route.params
+  const { data } = useQuery(HIDE_BALANCE)
 
   const [isBiometricsEnabled, setIsBiometricsEnabled] = useState(mIsBiometricsEnabled)
   const [isPinEnabled, setIsPinEnabled] = useState(mIsPinEnabled)
-  const [isHideBalanceEnabled, setIsHideBalanceEnabled] = useState(null)
+  const [isHideBalanceEnabled, setIsHideBalanceEnabled] = useState(data?.hideBalanceSettings ? data?.hideBalanceSettings : null)
 
   useFocusEffect(() => {
     getIsBiometricsEnabled()
     getIsPinEnabled()
-    getIsHideBalanceEnabled()
   })
-
   const getIsBiometricsEnabled = async () => {
     setIsBiometricsEnabled(await KeyStoreWrapper.getIsBiometricsEnabled())
   }
 
   const getIsPinEnabled = async () => {
     setIsPinEnabled(await KeyStoreWrapper.getIsPinEnabled())
-  }
-
-  const getIsHideBalanceEnabled = async () => {
-    setIsHideBalanceEnabled(await load(HIDE_BALANCE))
   }
 
   const onBiometricsValueChanged = async (value) => {
@@ -151,11 +148,11 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
 
   const onHideBalanceValueChanged = async (value) => {
     if (value) {
-      setIsHideBalanceEnabled(await save(HIDE_BALANCE, true))
-      await save(WALKTHROUGH_TOOLTIP, true)
+      setIsHideBalanceEnabled(await saveHideBalanceSettings(true))
+      await saveWalkThroughToolTipSettings(true)
     } else {
-      await remove(HIDE_BALANCE)
-      setIsHideBalanceEnabled(null)
+      setIsHideBalanceEnabled(await saveHideBalanceSettings(null))
+      await saveWalkThroughToolTipSettings(false)
     }
   }
 
@@ -213,7 +210,9 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
       <View style={styles.settingContainer}>
         <View style={styles.textContainer}>
           <Text style={styles.title}>{translate("SecurityScreen.hideBalanceTitle")}</Text>
-          <Text style={styles.subtitle}>{translate("SecurityScreen.hideBalanceSubtitle")}</Text>
+          <Text style={styles.subtitle}>
+            {translate("SecurityScreen.hideBalanceSubtitle")}
+          </Text>
           <Text style={styles.description}>
             {translate("SecurityScreen.hideBalanceDescription")}
           </Text>
@@ -225,8 +224,7 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
           onValueChange={(value) => onHideBalanceValueChanged(value)}
         />
       </View>
-      <View style={styles.settingContainer}>
-      </View>
+      <View style={styles.settingContainer}></View>
     </Screen>
   )
 }
