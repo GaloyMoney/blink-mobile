@@ -11,13 +11,7 @@ import {
   View,
 } from "react-native"
 import { Input } from "react-native-elements"
-import {
-  FetchResult,
-  gql,
-  useApolloClient,
-  useLazyQuery,
-  useMutation,
-} from "@apollo/client"
+import { FetchResult, gql, useApolloClient, useMutation } from "@apollo/client"
 import EStyleSheet from "react-native-extended-stylesheet"
 import PhoneInput from "react-native-phone-input"
 import analytics from "@react-native-firebase/analytics"
