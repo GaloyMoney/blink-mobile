@@ -262,6 +262,7 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
     setInvoice("")
     setMemo("")
     setInitialMemo("")
+    setInteractive(true)
   }, [])
 
   useEffect(() => {
