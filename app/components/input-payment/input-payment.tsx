@@ -38,20 +38,6 @@ const styles = EStyleSheet.create({
     position: "absolute",
   },
 
-  inputMaskPositioningBTC: {
-    marginRight: "10%",
-    width: "90%",
-  },
-
-  inputMaskPositioningDefault: {
-    width: "100%",
-  },
-
-  inputMaskPositioningUSD: {
-    marginLeft: "10%",
-    width: "90%",
-  },
-
   inputText: {
     opacity: 0,
   },
@@ -65,18 +51,11 @@ const styles = EStyleSheet.create({
   subCurrencyText: {
     color: palette.midGrey,
     fontSize: "16rem",
+    marginRight: "10%",
     marginTop: 0,
     paddingTop: 0,
     textAlign: "center",
-  },
-
-  subCurrencyTextBTC: {
-    marginRight: "20%",
-    width: "80%",
-  },
-
-  subCurrencyTextUSD: {
-    width: "100%",
+    width: "90%",
   },
 
   textStyle: {
@@ -166,7 +145,7 @@ export const InputPayment: ComponentType = ({
 
   React.useEffect(() => {
     // TODO: show "an amount is needed" in red
-    if (forceKeyboard && +amountInput == 0) {
+    if (forceKeyboard && +amountInput === 0) {
       inputRef?.current.focus()
     }
   }, [forceKeyboard, amountInput])
@@ -234,22 +213,20 @@ export const InputPayment: ComponentType = ({
 
   const inputMaskPositioningStyle = () => {
     if (currency === CurrencyType.USD) {
-      return styles.inputMaskPositioningUSD
+      return {
+        marginLeft: `${displayValue.replace(/[^0-9]/g, "").length - 3}%`,
+        width: `${103 - displayValue.replace(/[^0-9]/g, "").length}%`,
+      }
     } else if (currency === CurrencyType.BTC || currency === "sats") {
-      return styles.inputMaskPositioningBTC
+      return {
+        marginRight: `${displayValue.replace(/[^0-9]/g, "").length}%`,
+        width: `${100 - displayValue.replace(/[^0-9]/g, "").length}%`,
+      }
     }
 
-    return styles.inputMaskPositioningDefault
-  }
-
-  const subCurrencyTextStyle = () => {
-    if (currency === CurrencyType.USD) {
-      return styles.subCurrencyTextUSD
-    } else if (currency === CurrencyType.BTC || currency === "sats") {
-      return styles.subCurrencyTextBTC
+    return {
+      width: "100%",
     }
-
-    return null
   }
 
   return (
@@ -268,6 +245,7 @@ export const InputPayment: ComponentType = ({
         </Text>
         <Input
           ref={inputRef}
+          autoCorrect={false}
           autoFocus={forceKeyboard}
           value={displayValue}
           leftIcon={leftIcon()}
@@ -294,7 +272,7 @@ export const InputPayment: ComponentType = ({
         <TextCurrency
           amount={mapping[prefCurrency].secondaryConversion(amount)}
           currency={mapping[prefCurrency].secondary}
-          style={[styles.subCurrencyText, subCurrencyTextStyle()]}
+          style={styles.subCurrencyText}
         />
       )}
     </View>

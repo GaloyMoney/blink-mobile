@@ -385,6 +385,7 @@ exports[`SendBitcoinScreen render matches snapshot 1`] = `
           "justifyContent": "space-between",
         }
       }
+      keyboardShouldPersistTaps="always"
     >
       <View>
         <View>
@@ -397,7 +398,10 @@ exports[`SendBitcoinScreen render matches snapshot 1`] = `
                   Array [
                     undefined,
                     undefined,
-                    undefined,
+                    Object {
+                      "marginLeft": "0%",
+                      "width": "100%",
+                    },
                   ]
                 }
               >
@@ -452,6 +456,7 @@ exports[`SendBitcoinScreen render matches snapshot 1`] = `
                   </View>
                   <TextInput
                     allowFontScaling={true}
+                    autoCorrect={false}
                     autoFocus={true}
                     contextMenuHidden={true}
                     editable={true}
@@ -534,14 +539,7 @@ exports[`SendBitcoinScreen render matches snapshot 1`] = `
                 </View>
               </RNGestureHandlerButton>
             </View>
-            <Text
-              style={
-                Array [
-                  undefined,
-                  undefined,
-                ]
-              }
-            >
+            <Text>
               0
                
               sats
