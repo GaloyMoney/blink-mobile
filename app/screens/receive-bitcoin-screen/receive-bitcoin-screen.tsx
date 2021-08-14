@@ -352,7 +352,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
     const isReady =
       type === "lightning" ? !loading && data != "" && !keyboardIsShown : true
 
-    const getFullUri = ({ input, uppercase = false, prefix = true }: IGetFullUri) => {
+    const getFullUri = ({ input, uppercase = false, prefix = true }: GetFullUriInput) => {
       if (type === "lightning") {
         // TODO add lightning:
         return uppercase ? input.toUpperCase() : input
