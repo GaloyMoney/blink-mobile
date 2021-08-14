@@ -509,7 +509,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
             leftIcon={
               <Icon name="ios-create-outline" size={21} color={palette.darkGrey} />
             }
-            forwardedRef={inputMemoRef}
+            ref={inputMemoRef}
             onBlur={update}
             disabled={isSucceed}
           />

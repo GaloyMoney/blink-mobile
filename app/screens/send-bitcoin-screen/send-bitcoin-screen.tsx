@@ -646,7 +646,7 @@ export const SendBitcoinScreenJSX: ScreenType = ({
   }
 
   const paymentLottie = () => {
-    if (status === "success") { 
+    if (status === "success") {
       return (
         <>
           <LottieView
@@ -656,9 +656,7 @@ export const SendBitcoinScreenJSX: ScreenType = ({
             style={styles.lottie}
             resizeMode="cover"
           />
-          <Text style={{ fontSize: 18 }}>
-            {translate("SendBitcoinScreen.success")}
-          </Text>
+          <Text style={{ fontSize: 18 }}>{translate("SendBitcoinScreen.success")}</Text>
         </>
       )
     } else if (status === "error") {
@@ -792,9 +790,7 @@ export const SendBitcoinScreenJSX: ScreenType = ({
             InputComponent={feeInputComponent()}
           />
         </View>
-        <View style={{ alignItems: "center" }}>
-          {paymentLottie()}
-        </View>
+        <View style={{ alignItems: "center" }}>{paymentLottie()}</View>
         <Button
           buttonStyle={styles.buttonStyle}
           containerStyle={{ flex: 1 }}
@@ -809,7 +805,9 @@ export const SendBitcoinScreenJSX: ScreenType = ({
               ? translate("common.usernameRequired")
               : translate("common.send")
           }
-          onPress={() => (status === "success" || status === "pending" ? goBack() : pay())}
+          onPress={() =>
+            status === "success" || status === "pending" ? goBack() : pay()
+          }
           disabled={!amount || !!errorMessage || !destination}
           loading={status === "loading"}
         />

@@ -245,7 +245,7 @@ export const InputPayment: ComponentType = ({
           {displayValue}
         </Text>
         <GaloyInput
-          forwardedRef={inputRef}
+          ref={inputRef}
           autoCorrect={false}
           autoFocus={forceKeyboard}
           value={displayValue}
