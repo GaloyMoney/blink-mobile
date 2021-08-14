@@ -3,7 +3,6 @@ import { toInteger } from "lodash"
 import * as React from "react"
 import { Keyboard, Text, View } from "react-native"
 import { TextInput } from "react-native-vector-icons/node_modules/@types/react-native/index"
-import { Input } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
@@ -18,6 +17,7 @@ import {
 } from "../../utils/currencyConversion"
 import { CurrencyType } from "../../utils/enum"
 import { TextCurrency } from "../text-currency/text-currency"
+import { GaloyInput } from "../galoy-input"
 
 const digitLimit = 10
 
@@ -81,7 +81,6 @@ type InputPaymentDataInjectedProps = {
   prefCurrency: string
   maxLength: number
   nextPrefCurrency: () => void
-  currencyPreference?: string // "sats" | "BTC" | "usd"
   sub?: boolean
 }
 
@@ -245,7 +244,7 @@ export const InputPayment: ComponentType = ({
         >
           {displayValue}
         </Text>
-        <Input
+        <GaloyInput
           ref={inputRef}
           autoCorrect={false}
           autoFocus={forceKeyboard}
