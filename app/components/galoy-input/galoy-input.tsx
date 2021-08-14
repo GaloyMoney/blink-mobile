@@ -15,27 +15,30 @@ type GaloyInputProps = {
   initIsFocused?: boolean
 }
 
-export const GaloyInput: ComponentType = React.forwardRef(
-  (props: InputProps & GaloyInputProps, ref: React.Ref<TextInput>) => {
-    const [isFocused, setIsFocused] = React.useState(props.initIsFocused ?? false)
+const GaloyInputFunction = (
+  props: InputProps & GaloyInputProps,
+  ref: React.Ref<TextInput>,
+) => {
+  const [isFocused, setIsFocused] = React.useState(props.initIsFocused ?? false)
 
-    return (
-      <Input
-        {...props}
-        inputContainerStyle={[
-          props.inputContainerStyle,
-          isFocused ? styles.inputContainerFocused : null,
-        ]}
-        onFocus={(e) => {
-          setIsFocused(true)
-          props.onFocus?.(e)
-        }}
-        onBlur={(e) => {
-          setIsFocused(false)
-          props.onBlur?.(e)
-        }}
-        ref={ref}
-      />
-    )
-  },
-)
+  return (
+    <Input
+      {...props}
+      inputContainerStyle={[
+        props.inputContainerStyle,
+        isFocused ? styles.inputContainerFocused : null,
+      ]}
+      onFocus={(e) => {
+        setIsFocused(true)
+        props.onFocus?.(e)
+      }}
+      onBlur={(e) => {
+        setIsFocused(false)
+        props.onBlur?.(e)
+      }}
+      ref={ref}
+    />
+  )
+}
+
+export const GaloyInput: ComponentType = React.forwardRef(GaloyInputFunction)
