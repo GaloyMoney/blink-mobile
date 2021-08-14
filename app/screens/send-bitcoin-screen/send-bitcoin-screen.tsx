@@ -7,11 +7,12 @@ import LottieView from "lottie-react-native"
 import * as React from "react"
 import { useCallback, useEffect, useState } from "react"
 import { ActivityIndicator, ScrollView, Text, TextInput, View } from "react-native"
-import { Button, Input } from "react-native-elements"
+import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import Icon from "react-native-vector-icons/Ionicons"
 import { InputPayment } from "../../components/input-payment"
+import { GaloyInput } from "../../components/galoy-input"
 import { Screen } from "../../components/screen"
 import {
   balanceBtc,
@@ -644,6 +645,57 @@ export const SendBitcoinScreenJSX: ScreenType = ({
     return TextInput
   }
 
+  const paymentLottie = () => {
+    if (status === "success") {
+      return (
+        <>
+          <LottieView
+            source={successLottie}
+            loop={false}
+            autoPlay
+            style={styles.lottie}
+            resizeMode="cover"
+          />
+          <Text style={{ fontSize: 18 }}>{translate("SendBitcoinScreen.success")}</Text>
+        </>
+      )
+    } else if (status === "error") {
+      return (
+        <>
+          <LottieView
+            source={errorLottie}
+            loop={false}
+            autoPlay
+            style={styles.lottie}
+            resizeMode="cover"
+          />
+          {errs.map(({ message }, item) => (
+            <Text key={`error-${item}`} style={styles.errorText}>
+              {message}
+            </Text>
+          ))}
+        </>
+      )
+    } else if (status === "pending") {
+      return (
+        <>
+          <LottieView
+            source={pendingLottie}
+            loop={false}
+            autoPlay
+            style={styles.lottie}
+            resizeMode="cover"
+          />
+          <Text style={{ fontSize: 18, textAlign: "center" }}>
+            {translate("SendBitcoinScreen.notConfirmed")}
+          </Text>
+        </>
+      )
+    }
+
+    return null
+  }
+
   return (
     <Screen preset="fixed">
       <ScrollView
@@ -670,7 +722,7 @@ export const SendBitcoinScreenJSX: ScreenType = ({
           />
         </View>
         <View style={{ marginTop: 18 }}>
-          <Input
+          <GaloyInput
             placeholder={translate("SendBitcoinScreen.input")}
             leftIcon={
               <View style={styles.row}>
@@ -698,7 +750,7 @@ export const SendBitcoinScreenJSX: ScreenType = ({
             autoCompleteType="username"
             autoCapitalize="none"
           />
-          <Input
+          <GaloyInput
             placeholder={translate("SendBitcoinScreen.note")}
             leftIcon={
               <View style={styles.row}>
@@ -717,7 +769,7 @@ export const SendBitcoinScreenJSX: ScreenType = ({
             editable={status !== "success"}
             selectTextOnFocus
           />
-          <Input
+          <GaloyInput
             placeholder={translate("SendBitcoinScreen.fee")}
             leftIcon={
               <View style={styles.row}>
@@ -738,52 +790,7 @@ export const SendBitcoinScreenJSX: ScreenType = ({
             InputComponent={feeInputComponent()}
           />
         </View>
-        <View style={{ alignItems: "center" }}>
-          {status === "success" && (
-            <>
-              <LottieView
-                source={successLottie}
-                loop={false}
-                autoPlay
-                style={styles.lottie}
-                resizeMode="cover"
-              />
-              <Text style={{ fontSize: 18 }}>
-                {translate("SendBitcoinScreen.success")}
-              </Text>
-            </>
-          )}
-          {status === "error" && (
-            <>
-              <LottieView
-                source={errorLottie}
-                loop={false}
-                autoPlay
-                style={styles.lottie}
-                resizeMode="cover"
-              />
-              {errs.map(({ message }, item) => (
-                <Text key={`error-${item}`} style={styles.errorText}>
-                  {message}
-                </Text>
-              ))}
-            </>
-          )}
-          {status === "pending" && (
-            <>
-              <LottieView
-                source={pendingLottie}
-                loop={false}
-                autoPlay
-                style={styles.lottie}
-                resizeMode="cover"
-              />
-              <Text style={{ fontSize: 18, textAlign: "center" }}>
-                {translate("SendBitcoinScreen.notConfirmed")}
-              </Text>
-            </>
-          )}
-        </View>
+        <View style={{ alignItems: "center" }}>{paymentLottie()}</View>
         <Button
           buttonStyle={styles.buttonStyle}
           containerStyle={{ flex: 1 }}
