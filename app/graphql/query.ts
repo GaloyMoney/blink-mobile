@@ -254,3 +254,14 @@ export const MAIN_QUERY = gql`
     }
   }
 `
+
+export const queryMain = async (
+  client: ApolloClient<unknown>,
+  variables: { logged: boolean },
+): Promise<void> => {
+  await client.query({
+    query: WALLET,
+    variables,
+    fetchPolicy: "network-only",
+  })
+}
