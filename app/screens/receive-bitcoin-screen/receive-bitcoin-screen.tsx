@@ -29,9 +29,9 @@ import { GaloyInput } from "../../components/galoy-input"
 import { InputPaymentDataInjected } from "../../components/input-payment"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
-import type { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
+import { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
-import type { ScreenType } from "../../types/jsx"
+import { ScreenType } from "../../types/jsx"
 import { getHashFromInvoice } from "../../utils/bolt11"
 import { isIos } from "../../utils/helper"
 import { hasFullPermissions, requestPermission } from "../../utils/notifications"
@@ -129,7 +129,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
   const [addInvoice] = useMutation(ADD_INVOICE)
   const [updatePendingInvoice] = useMutation(UPDATE_PENDING_INVOICE)
 
-  let lastOnChainAddress
+  let lastOnChainAddress: string
   try {
     ;({
       getLastOnChainAddress: { id: lastOnChainAddress },
@@ -342,7 +342,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
   }
 
   const QRView = ({ type }: { type: string }) => {
-    let data
+    let data: string
 
     if (type === "lightning") {
       data = invoice
@@ -353,12 +353,15 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
     const isReady =
       type === "lightning" ? !loading && data != "" && !keyboardIsShown : true
 
-    const getFullUri = (input, uppercase = false) => {
+    const getFullUri = ({ input, uppercase = false, prefix = true }: GetFullUriInput) => {
       if (type === "lightning") {
         // TODO add lightning:
         return uppercase ? input.toUpperCase() : input
       }
-      const uri = uppercase ? `bitcoin:${input}`.toUpperCase() : `bitcoin:${input}`
+      const uriPrefix = prefix ? "bitcoin:" : ""
+      const uri = uppercase
+        ? `${uriPrefix}${input}`.toUpperCase()
+        : `${uriPrefix}${input}`
       const params = new URLSearchParams()
       if (amount) params.append("amount", `${amount / 10 ** 8}`)
       if (memo) {
@@ -370,7 +373,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
     }
 
     const copyToClipboard = () => {
-      Clipboard.setString(getFullUri(data))
+      Clipboard.setString(getFullUri({ input: data, prefix: false }))
 
       if (Platform.OS === "ios") {
         const sringToShow =
@@ -393,7 +396,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
     const share = async () => {
       try {
         const result = await Share.share({
-          message: getFullUri(data),
+          message: getFullUri({ input: data, prefix: false }),
         })
 
         if (result.action === Share.sharedAction) {
@@ -433,7 +436,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
               <Pressable onPress={copyToClipboard}>
                 <QRCode
                   size={280}
-                  value={getFullUri(data, true)}
+                  value={getFullUri({ input: data, uppercase: true })}
                   logoBackgroundColor="white"
                   ecl="L"
                   // __DEV__ workaround for https://github.com/facebook/react-native/issues/26705
