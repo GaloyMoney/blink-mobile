@@ -438,7 +438,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
                   size={280}
                   value={getFullUri({ input: data, uppercase: true })}
                   logoBackgroundColor="white"
-                  ecl="L"
+                  ecl={type === "lightning" ? "L" : "M"}
                   // __DEV__ workaround for https://github.com/facebook/react-native/issues/26705
                   logo={
                     !__DEV__ &&
