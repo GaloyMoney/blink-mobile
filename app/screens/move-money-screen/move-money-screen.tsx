@@ -24,7 +24,8 @@ import { IconTransaction } from "../../components/icon-transactions"
 import { LargeButton } from "../../components/large-button"
 import { Screen } from "../../components/screen"
 import { TransactionItem } from "../../components/transaction-item"
-import { balanceBtc, balanceUsd, MAIN_QUERY, walletIsActive } from "../../graphql/query"
+import { balanceBtc, MAIN_QUERY, walletIsActive } from "../../graphql/query"
+import { useUSDBalance } from "../../hooks/useBalance"
 import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
@@ -128,6 +129,7 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
   navigation,
 }: MoveMoneyScreenDataInjectedProps) => {
   const client = useApolloClient()
+  const balanceUsd = useUSDBalance(client)
 
   const {
     loading: loadingMain,
@@ -208,7 +210,7 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
       walletIsActive={walletIsActive(client)}
       loading={loadingMain}
       error={error}
-      amount={balanceUsd(client)}
+      amount={balanceUsd}
       amountOtherCurrency={balanceBtc(client)}
       refetch={refetch}
       isUpdateAvailable={

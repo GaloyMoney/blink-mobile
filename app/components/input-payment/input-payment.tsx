@@ -6,8 +6,8 @@ import { TextInput } from "react-native-vector-icons/node_modules/@types/react-n
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
-import { btc_price } from "../../graphql/query"
 import { usePrefCurrency } from "../../hooks/usePrefCurrency"
+import { useBTCPrice } from "../../hooks/usePrice"
 import { palette } from "../../theme/palette"
 import type { ComponentType } from "../../types/jsx"
 import {
@@ -87,14 +87,13 @@ type InputPaymentDataInjectedProps = {
 export const InputPaymentDataInjected: ComponentType = (
   props: InputPaymentDataInjectedProps,
 ) => {
-  const client = useApolloClient()
-  const price = btc_price(client)
+  const btcPrice = useBTCPrice()
 
   const [prefCurrency, nextPrefCurrency] = usePrefCurrency()
 
   return (
     <InputPayment
-      price={price}
+      price={btcPrice}
       prefCurrency={prefCurrency}
       nextPrefCurrency={nextPrefCurrency}
       {...props}

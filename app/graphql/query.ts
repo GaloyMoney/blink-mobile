@@ -92,8 +92,6 @@ export const getWallet = (client: ApolloClient<unknown>): wallet_wallet[] => {
   return wallet
 }
 
-export const balanceUsd = (client: ApolloClient<unknown>): number =>
-  _.find(getWallet(client), { id: "BTC" }).balance * btc_price(client)
 export const balanceBtc = (client: ApolloClient<unknown>): number =>
   _.find(getWallet(client), { id: "BTC" }).balance
 
@@ -140,18 +138,6 @@ export const USERNAME_EXIST = gql`
     usernameExists(username: $username)
   }
 `
-
-export const btc_price = (client: ApolloClient<unknown>): number => {
-  const price_default = NaN
-  try {
-    const result = client.readQuery({ query: QUERY_PRICE })
-    const { prices } = result
-    return prices[0].o ?? price_default
-  } catch (err) {
-    console.warn({ err }, "no price has been set")
-    return price_default
-  }
-}
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export const walletIsActive = (client: ApolloClient<unknown>): boolean => {

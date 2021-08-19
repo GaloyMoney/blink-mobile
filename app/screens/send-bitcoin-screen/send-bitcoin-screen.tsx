@@ -16,7 +16,6 @@ import { GaloyInput } from "../../components/galoy-input"
 import { Screen } from "../../components/screen"
 import {
   balanceBtc,
-  btc_price,
   getPubKey,
   queryWallet,
   QUERY_TRANSACTIONS,
@@ -32,6 +31,7 @@ import { textCurrencyFormatting } from "../../utils/currencyConversion"
 import { IPaymentType, validPayment } from "../../utils/parsing"
 import { Token } from "../../utils/token"
 import { UsernameValidation } from "../../utils/validation"
+import { useBTCPrice } from "../../hooks/usePrice"
 
 const successLottie = require("../move-money-screen/success_lottie.json")
 const errorLottie = require("../move-money-screen/error_lottie.json")
@@ -167,6 +167,7 @@ type SendBitcoinScreenProps = {
 export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps) => {
   const client = useApolloClient()
   const { goBack, navigate } = useNavigation()
+  const btcPrice = useBTCPrice()
 
   const [errs, setErrs] = useState([])
   const [invoiceError, setInvoiceError] = useState("")
@@ -493,9 +494,7 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
     ReactNativeHapticFeedback.trigger(notificationType, optionsHaptic)
   }, [status])
 
-  const price = btc_price(client)
-
-  const feeTextFormatted = textCurrencyFormatting(fee ?? 0, price, prefCurrency)
+  const feeTextFormatted = textCurrencyFormatting(fee ?? 0, btcPrice, prefCurrency)
 
   const feeText =
     fee === null && !usernameExists
@@ -503,7 +502,7 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
       : fee > 0 && !!amount
       ? `${feeTextFormatted}, ${translate("common.Total")}: ${textCurrencyFormatting(
           fee + amount,
-          price,
+          btcPrice,
           prefCurrency,
         )}`
       : fee === -1 || fee === undefined
@@ -515,7 +514,7 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
     invoiceError ||
     (!!totalAmount && balance && totalAmount > balance && status !== "success"
       ? translate("SendBitcoinScreen.totalExceed", {
-          balance: textCurrencyFormatting(balance, price, prefCurrency),
+          balance: textCurrencyFormatting(balance, btcPrice, prefCurrency),
         })
       : null)
 
@@ -535,7 +534,7 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
       goBack={goBack}
       navigate={navigate}
       pay={pay}
-      price={price}
+      price={btcPrice}
       fee={feeText}
       setMemo={setMemo}
       setDestination={setDestination}
