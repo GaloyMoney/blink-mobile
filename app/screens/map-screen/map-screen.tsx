@@ -131,7 +131,7 @@ export const MapScreen: ScreenType = ({ navigation }: Props) => {
         ? navigation.navigate("sendBitcoin", { username: item.username })
         : navigation.navigate("phoneValidation")
     markers.push(
-      <Marker coordinate={item.coordinate} key={item.title}>
+      <Marker coordinate={item.coordinate} key={item.title} pinColor={'#FF8000'}>
         <Callout
           // alphaHitTest
           // tooltip
