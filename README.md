@@ -5,8 +5,17 @@
 This repository is the mobile application of Galoy. It is build with [React Native](https://reactnative.dev/), and compatible on iOS and Android.
 
 ## Start
+Prerequisite -- Follow the instruction [getting started](https://reactnative.dev/docs/getting-started) to have the correct setup.
 
-type `react-native run-ios` or `react-native run-android` to run locally. Follow the instruction [getting started](https://reactnative.dev/docs/getting-started) to have the correct setup.
+cd into project folder
+
+type `npm install`
+
+`npx react-native start` to start metro.
+
+For android in a new terminal type `npx react-native run-android` or `react-native run-android`
+
+For ios type `react-native run-ios` or `npx react-native run-ios` to run locally.
 
 The app is built and push on Play Store / Android Store on demand with CircleCI.
 
