@@ -359,9 +359,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
         return uppercase ? input.toUpperCase() : input
       }
       const uriPrefix = prefix ? "bitcoin:" : ""
-      const uri = uppercase
-        ? `${uriPrefix}${input}`.toUpperCase()
-        : `${uriPrefix}${input}`
+      const uri = `${uriPrefix}${input}`
       const params = new URLSearchParams()
       if (amount) params.append("amount", `${amount / 10 ** 8}`)
       if (memo) {
