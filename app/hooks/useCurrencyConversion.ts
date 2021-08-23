@@ -1,0 +1,27 @@
+import { toInteger } from "lodash"
+import { useBTCPrice } from "./usePrice"
+
+type CurrencyConverter = {
+  BTC: (value: number) => number
+  USD: (value: number) => number
+}
+
+type CurrencyConverterTypes = {
+  BTC: CurrencyConverter
+  USD: CurrencyConverter
+}
+
+export const useCurrencyConversion = (): CurrencyConverterTypes => {
+  const btcPrice = useBTCPrice()
+
+  return {
+    BTC: {
+      BTC: (sats) => toInteger(sats),
+      USD: (sats) => sats * btcPrice,
+    },
+    USD: {
+      BTC: (usd) => toInteger(usd / btcPrice),
+      USD: (usd) => usd,
+    },
+  }
+}

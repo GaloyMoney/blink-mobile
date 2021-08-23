@@ -1,16 +1,7 @@
-import { ApolloClient, FetchPolicy, gql, makeVar } from "@apollo/client"
+import { ApolloClient, FetchPolicy, gql } from "@apollo/client"
 import _ from "lodash"
 import { MockableApolloClient } from "../types/mockable"
 import { wallet_wallet } from "./__generated__/wallet"
-
-export const prefCurrencyVar = makeVar("USD")
-export function nextPrefCurrency(): void {
-  const units = ["sats", "USD"] // "BTC"
-  const currentIndex = _.indexOf(units, prefCurrencyVar())
-  prefCurrencyVar(units[(currentIndex + 1) % units.length])
-}
-
-export const modalClipboardVisibleVar = makeVar(false)
 
 export const QUERY_PRICE = gql`
   query prices($length: Int = 1) {

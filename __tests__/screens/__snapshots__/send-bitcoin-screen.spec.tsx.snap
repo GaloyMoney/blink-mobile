@@ -392,6 +392,7 @@ exports[`SendBitcoinScreen render matches snapshot 1`] = `
           <View>
             <View>
               <Text
+                accessibilityLabel="Input payment display value"
                 ellipsizeMode="middle"
                 numberOfLines={1}
                 style={
@@ -455,6 +456,7 @@ exports[`SendBitcoinScreen render matches snapshot 1`] = `
                     </Text>
                   </View>
                   <TextInput
+                    accessibilityLabel="Input payment"
                     allowFontScaling={true}
                     autoCorrect={false}
                     autoFocus={true}
@@ -858,7 +860,7 @@ exports[`SendBitcoinScreen render matches snapshot 1`] = `
                 }
                 testID="RNE__Input__text-input"
                 underlineColorAndroid="transparent"
-                value=""
+                value={[Function]}
               />
             </View>
             <Text

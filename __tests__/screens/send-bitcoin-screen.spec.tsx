@@ -150,7 +150,7 @@ const payKeysendUsernameMocks = [
     request: {
       query: PAY_KEYSEND_USERNAME,
       variables: {
-        amount: 25211,
+        amount: 68626,
         destination: "",
         username: "Bitcoin",
       },
@@ -181,33 +181,33 @@ describe("SendBitcoinScreen", () => {
   })
 
   it("has TextInputs", () => {
-    const { queryByPlaceholderText, queryByText } = render(
+    const { queryByA11yLabel, queryByPlaceholderText } = render(
       <MockedProvider cache={cache}>
         <SendBitcoinScreen route={{ params: null }} />
       </MockedProvider>,
     )
 
-    expect(queryByText("0.00")).not.toBeNull()
+    expect(queryByA11yLabel("Input payment")).not.toBeNull()
     expect(queryByPlaceholderText(translate("SendBitcoinScreen.input"))).not.toBeNull()
     expect(queryByPlaceholderText(translate("SendBitcoinScreen.note"))).not.toBeNull()
     expect(queryByPlaceholderText(translate("SendBitcoinScreen.fee"))).not.toBeNull()
   })
 
   it("shows send only when an amount and destination are present", () => {
-    const { getByPlaceholderText, getByText, queryByText } = render(
+    const { getByA11yLabel, getByPlaceholderText, queryByText } = render(
       <MockedProvider cache={cache}>
         <SendBitcoinScreen route={{ params: null }} />
       </MockedProvider>,
     )
 
-    const amountInput = getByText("0.00")
+    const amountInput = getByA11yLabel("Input payment")
     const destinationInput = getByPlaceholderText(translate("SendBitcoinScreen.input"))
 
     expect(queryByText(translate("common.amountRequired"))).not.toBeNull()
     expect(queryByText(translate("common.usernameRequired"))).toBeNull()
     expect(queryByText(translate("common.send"))).toBeNull()
 
-    fireEvent(amountInput, "onUpdateAmount", 252119)
+    fireEvent(amountInput, "onChangeText", "27226")
 
     expect(queryByText(translate("common.amountRequired"))).toBeNull()
     expect(queryByText(translate("common.usernameRequired"))).not.toBeNull()
@@ -221,25 +221,25 @@ describe("SendBitcoinScreen", () => {
   })
 
   it("shows error when total exceeds the balance", () => {
-    const { getByText, queryByText } = render(
+    const { getByA11yLabel, queryByText } = render(
       <MockedProvider cache={cache}>
         <SendBitcoinScreen route={{ params: null }} />
       </MockedProvider>,
     )
 
-    const amountInput = getByText("0.00")
+    const amountInput = getByA11yLabel("Input payment")
 
     expect(
       queryByText(translate("SendBitcoinScreen.totalExceed", { balance: "$46.64" })),
     ).toBeNull()
 
-    fireEvent(amountInput, "onUpdateAmount", 252119)
+    fireEvent(amountInput, "onChangeText", "27226")
 
     expect(
       queryByText(translate("SendBitcoinScreen.totalExceed", { balance: "$46.64" })),
     ).not.toBeNull()
 
-    fireEvent(amountInput, "onUpdateAmount", 25211)
+    fireEvent(amountInput, "onChangeText", "2722")
 
     expect(
       queryByText(translate("SendBitcoinScreen.totalExceed", { balance: "$46.64" })),
@@ -247,17 +247,17 @@ describe("SendBitcoinScreen", () => {
   })
 
   it("does not send payment when total exceeds the balance", async () => {
-    const { getByPlaceholderText, getByText, queryByText } = render(
+    const { getByA11yLabel, getByPlaceholderText, getByText, queryByText } = render(
       <MockedProvider mocks={payKeysendUsernameMocks} cache={cache}>
         <SendBitcoinScreen route={{ params: null }} />
       </MockedProvider>,
     )
 
-    const amountInput = getByText("0.00")
+    const amountInput = getByA11yLabel("Input payment")
     const destinationInput = getByPlaceholderText(translate("SendBitcoinScreen.input"))
 
     fireEvent.changeText(destinationInput, "Bitcoin")
-    fireEvent(amountInput, "onUpdateAmount", 252119)
+    fireEvent(amountInput, "onChangeText", "27226")
 
     const sendButton = getByText(translate("common.send"))
     fireEvent.press(sendButton)
@@ -267,17 +267,17 @@ describe("SendBitcoinScreen", () => {
   })
 
   it("successfully sends payment by payKeysendUsername", async () => {
-    const { getByPlaceholderText, getByText, queryByText } = render(
+    const { getByA11yLabel, getByPlaceholderText, getByText, queryByText } = render(
       <MockedProvider mocks={payKeysendUsernameMocks} cache={cache}>
         <SendBitcoinScreen route={{ params: null }} />
       </MockedProvider>,
     )
 
-    const amountInput = getByText("0.00")
+    const amountInput = getByA11yLabel("Input payment")
     const destinationInput = getByPlaceholderText(translate("SendBitcoinScreen.input"))
 
     fireEvent.changeText(destinationInput, "Bitcoin")
-    fireEvent(amountInput, "onUpdateAmount", 25211)
+    fireEvent(amountInput, "onChangeText", "2722")
 
     const sendButton = getByText(translate("common.send"))
     fireEvent.press(sendButton)
@@ -322,13 +322,13 @@ describe("SendBitcoinScreen", () => {
       },
     ]
 
-    const { getByPlaceholderText, getByText, queryByText } = render(
+    const { getByA11yLabel, getByPlaceholderText, getByText, queryByText } = render(
       <MockedProvider mocks={lightningPayMocks} cache={cache}>
         <SendBitcoinScreen route={{ params: null }} />
       </MockedProvider>,
     )
 
-    const amountInput = getByText("0.00")
+    const displayText = getByA11yLabel("Input payment display value")
     const destinationInput = getByPlaceholderText(translate("SendBitcoinScreen.input"))
 
     fireEvent.changeText(
@@ -337,7 +337,7 @@ describe("SendBitcoinScreen", () => {
     )
 
     await act(await waitForNextRender)
-    expect(amountInput).toHaveTextContent("272.26")
+    expect(displayText).toHaveTextContent("272.26")
 
     const sendButton = getByText(translate("common.send"))
     fireEvent.press(sendButton)

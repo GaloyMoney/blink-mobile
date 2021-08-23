@@ -8,7 +8,8 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
 import { TransactionItem } from "../../components/transaction-item"
-import { nextPrefCurrency, prefCurrencyVar, WALLET } from "../../graphql/query"
+import { WALLET } from "../../graphql/query"
+import { nextPrefCurrency, prefCurrencyVar } from "../../graphql/client-only-query"
 import { translate } from "../../i18n"
 import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
@@ -166,7 +167,9 @@ export const TransactionScreen: ScreenType = ({
         <View style={styles.sectionHeaderContainer}>
           <Text style={styles.sectionHeaderText}>{title}</Text>
           <TouchableOpacity style={styles.row} onPress={nextPrefCurrency}>
-            <Text style={styles.sectionHeaderText}>{prefCurrency} </Text>
+            <Text style={styles.sectionHeaderText}>
+              {prefCurrency === "BTC" ? "sats" : prefCurrency}{" "}
+            </Text>
             <Icon name="ios-swap-vertical" size={32} style={styles.icon} />
           </TouchableOpacity>
         </View>

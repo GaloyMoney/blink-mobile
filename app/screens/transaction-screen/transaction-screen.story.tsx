@@ -2,7 +2,6 @@ import * as React from "react"
 import { storiesOf } from "@storybook/react-native"
 import { StoryScreen, Story, UseCase } from "../../../storybook/views"
 import { TransactionScreen } from "./transaction-screen"
-import { CurrencyType } from "../../utils/enum"
 
 let transactions = [
   {
@@ -258,7 +257,7 @@ storiesOf("Transaction History", module)
   .add("Style Presets", () => (
     <Story>
       <UseCase text="Dollar" usage="The primary.">
-        <TransactionScreen transactions={transactions} currency={CurrencyType.BTC} />
+        <TransactionScreen transactions={transactions} currency={"BTC"} />
       </UseCase>
     </Story>
   ))

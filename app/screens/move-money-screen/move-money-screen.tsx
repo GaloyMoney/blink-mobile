@@ -29,7 +29,7 @@ import { useUSDBalance } from "../../hooks/useBalance"
 import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-import { AccountType, CurrencyType } from "../../utils/enum"
+import { AccountType } from "../../utils/enum"
 import { isIos } from "../../utils/helper"
 import { Token } from "../../utils/token"
 import type { ScreenType } from "../../types/jsx"
@@ -344,7 +344,7 @@ export const MoveMoneyScreen: ScreenType = ({
         />
         <BalanceHeader
           loading={loading}
-          currency={CurrencyType.USD}
+          currency={"USD"}
           amount={amount}
           amountOtherCurrency={amountOtherCurrency}
           style={{}}

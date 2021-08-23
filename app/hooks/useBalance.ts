@@ -1,5 +1,5 @@
 import { ApolloClient } from "@apollo/client"
-import _ from "lodash"
+import * as _ from "lodash"
 import { getWallet } from "../graphql/query"
 import { useBTCPrice } from "./usePrice"
 

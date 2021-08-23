@@ -4,11 +4,6 @@ export enum AccountType {
   BankAndBitcoin = "BankAndBitcoin",
 }
 
-export enum CurrencyType {
-  USD = "USD",
-  BTC = "BTC",
-}
-
 export enum AuthenticationScreenPurpose {
   Authenticate = "Authenticate",
   TurnOnAuthentication = "TurnOnAuthentication",

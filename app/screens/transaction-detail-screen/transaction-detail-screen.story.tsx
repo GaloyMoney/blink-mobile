@@ -3,11 +3,11 @@ import { storiesOf } from "@storybook/react-native"
 import moment from "moment"
 import { StoryScreen, Story, UseCase } from "../../../storybook/views"
 import { TransactionDetailScreen } from "./transaction-detail-screen"
-import { AccountType, CurrencyType } from "../../utils/enum"
+import { AccountType } from "../../utils/enum"
 
 const route = {
   params: {
-    currency: CurrencyType.BTC,
+    currency: "BTC",
     account: AccountType.Bitcoin,
     amount: 100,
     created_at: moment("2020-04-23T21:03:35.190Z"),

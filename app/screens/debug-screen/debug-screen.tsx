@@ -10,10 +10,11 @@ import { resetDataStore } from "../../utils/logout"
 import { loadNetwork, saveNetwork } from "../../utils/network"
 import { requestPermission } from "../../utils/notifications"
 import { getGraphQlUri, Token } from "../../utils/token"
-import { btc_price, walletIsActive } from "../../graphql/query"
+import { walletIsActive } from "../../graphql/query"
 
 import type { ScreenType } from "../../types/jsx"
 import type { INetwork } from "../../types/network"
+import { useBTCPrice } from "../../hooks/usePrice"
 
 const styles = EStyleSheet.create({
   button: {
@@ -26,6 +27,7 @@ const styles = EStyleSheet.create({
 
 export const DebugScreen: ScreenType = () => {
   const client = useApolloClient()
+  const btcPrice = useBTCPrice()
   const token = useMemo(() => {
     return Token.getInstance()
   }, [])
@@ -141,7 +143,7 @@ export const DebugScreen: ScreenType = () => {
         </Text>
         <Text>
           BTC price:
-          {btc_price(client)}
+          {btcPrice}
         </Text>
         <Text>
           Hermes:
