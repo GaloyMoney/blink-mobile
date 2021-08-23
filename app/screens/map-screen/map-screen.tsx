@@ -10,7 +10,7 @@ import { Button } from "react-native-elements"
 import MapView, { Callout, CalloutSubview, Marker } from "react-native-maps"
 import { Screen } from "../../components/screen"
 import { walletIsActive } from "../../graphql/query"
-import type { PrimaryStackParamList } from "../../navigation/stack-param-lists"
+import { PrimaryStackParamList } from "../../navigation/stack-param-lists"
 import { ScreenType } from "../../types/jsx"
 import { isIos } from "../../utils/helper"
 import { translate } from "../../i18n"
@@ -61,7 +61,7 @@ export const MapScreen: ScreenType = ({ navigation }: Props) => {
 
   const maps = result?.maps ?? []
 
-  const [currentLocation, setCurrentLocation] = useState(null)
+  const [currentLocation, setCurrentLocation] = useState<JSX.Element>(null)
   const [grantedPermission, setGrantedPermission] = useState(!!isIos)
 
   const requestLocationPermission = async () => {
@@ -125,7 +125,7 @@ export const MapScreen: ScreenType = ({ navigation }: Props) => {
   //   )
   // })
 
-  const markers = []
+  const markers: JSX.Element[] = []
   maps.forEach((item) => {
     const onPress = () =>
       walletIsActive(client)

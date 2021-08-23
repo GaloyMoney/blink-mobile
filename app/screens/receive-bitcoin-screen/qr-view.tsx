@@ -128,7 +128,7 @@ export const QRView = ({
             loop={false}
             autoPlay
             style={styles.lottie}
-            resizeMode='cover'
+            resizeMode="cover"
           />
         )) ||
           (isReady && (
@@ -136,7 +136,7 @@ export const QRView = ({
               <QRCode
                 size={280}
                 value={getFullUri({ input: data, uppercase: true })}
-                logoBackgroundColor='white'
+                logoBackgroundColor="white"
                 ecl={configByType[type].ecl}
                 // __DEV__ workaround for https://github.com/facebook/react-native/issues/26705
                 logo={
@@ -154,8 +154,8 @@ export const QRView = ({
                 </Text>
               )) ||
                 (keyboardIsShown && (
-                  <Icon size={56} name='ios-flash' color={palette.orange} />
-                )) || <ActivityIndicator size='large' color={palette.blue} />}
+                  <Icon size={56} name="ios-flash" color={palette.orange} />
+                )) || <ActivityIndicator size="large" color={palette.blue} />}
             </View>
           )}
         <Pressable onPress={copyToClipboard}>

@@ -301,8 +301,8 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
   }, [inputMemoRef])
 
   return (
-    <Screen backgroundColor={palette.lighterGrey} style={styles.screen} preset='fixed'>
-      <ScrollView keyboardShouldPersistTaps='always'>
+    <Screen backgroundColor={palette.lighterGrey} style={styles.screen} preset="fixed">
+      <ScrollView keyboardShouldPersistTaps="always">
         <View style={styles.section}>
           <InputPaymentDataInjected
             amount={amount}
@@ -320,7 +320,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
             containerStyle={{ marginTop: 0 }}
             inputStyle={styles.textStyle}
             leftIcon={
-              <Icon name='ios-create-outline' size={21} color={palette.darkGrey} />
+              <Icon name="ios-create-outline" size={21} color={palette.darkGrey} />
             }
             ref={inputMemoRef}
             onBlur={update}
