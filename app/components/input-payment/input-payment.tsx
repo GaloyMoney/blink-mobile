@@ -5,13 +5,13 @@ import { TextInput } from "react-native-vector-icons/node_modules/@types/react-n
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
-import { usePrefCurrency } from "../../hooks/usePrefCurrency"
+import { usePrefCurrency } from "../../hooks/use-pref-currency"
 import { palette } from "../../theme/palette"
 import type { ComponentType } from "../../types/jsx"
 import { currencyToText, textToCurrency } from "../../utils/currencyConversion"
 import { TextCurrency } from "../text-currency/text-currency"
 import { GaloyInput } from "../galoy-input"
-import { useCurrencyConversion } from "../../hooks/useCurrencyConversion"
+import { useCurrencyConversion } from "../../hooks/use-currency-conversion"
 
 const digitLimit = 10
 

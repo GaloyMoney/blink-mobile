@@ -21,7 +21,7 @@ import {
   QUERY_TRANSACTIONS,
   USERNAME_EXIST,
 } from "../../graphql/query"
-import { usePrefCurrency } from "../../hooks/usePrefCurrency"
+import { usePrefCurrency } from "../../hooks/use-pref-currency"
 import { translate } from "../../i18n"
 import type { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
@@ -31,8 +31,8 @@ import { textCurrencyFormatting } from "../../utils/currencyConversion"
 import { IPaymentType, validPayment } from "../../utils/parsing"
 import { Token } from "../../utils/token"
 import { UsernameValidation } from "../../utils/validation"
-import { useBTCPrice } from "../../hooks/usePrice"
-import { useCurrencyConversion } from "../../hooks/useCurrencyConversion"
+import { useBTCPrice } from "../../hooks/use-price"
+import { useCurrencyConversion } from "../../hooks/use-currency-conversion"
 
 const successLottie = require("../move-money-screen/success_lottie.json")
 const errorLottie = require("../move-money-screen/error_lottie.json")
