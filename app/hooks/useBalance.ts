@@ -1,9 +1,9 @@
 import { ApolloClient } from "@apollo/client"
-import * as _ from "lodash"
+import find from "lodash.find"
 import { getWallet } from "../graphql/query"
 import { useBTCPrice } from "./usePrice"
 
 export const useUSDBalance = (client: ApolloClient<unknown>): number => {
   const btcPrice = useBTCPrice()
-  return _.find(getWallet(client), { id: "BTC" }).balance * btcPrice
+  return find(getWallet(client), { id: "BTC" }).balance * btcPrice
 }

@@ -18,7 +18,7 @@ import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
 import Icon from "react-native-vector-icons/Ionicons"
 import { getBuildNumber } from "react-native-device-info"
-import _ from "lodash"
+import find from "lodash.find"
 import { BalanceHeader } from "../../components/balance-header"
 import { IconTransaction } from "../../components/icon-transactions"
 import { LargeButton } from "../../components/large-button"
@@ -199,7 +199,7 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
     }
   }
 
-  const lastTransactions = _.find(data?.wallet, { id: "BTC" })?.transactions?.slice(
+  const lastTransactions = find(data?.wallet, { id: "BTC" })?.transactions?.slice(
     undefined,
     3,
   )

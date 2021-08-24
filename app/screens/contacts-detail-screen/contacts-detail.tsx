@@ -5,7 +5,7 @@ import { Input, Text } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { ScrollView } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
-import _ from "lodash"
+import find from "lodash.find"
 import { CloseCross } from "../../components/close-cross"
 import { IconTransaction } from "../../components/icon-transactions"
 import { LargeButton } from "../../components/large-button"
@@ -70,7 +70,7 @@ export const ContactsDetailScreen: ScreenType = ({
   const { data } = useQuery(QUERY_TRANSACTIONS)
 
   try {
-    const { transactions } = _.find(data.wallet, { id: "BTC" })
+    const { transactions } = find(data.wallet, { id: "BTC" })
     // TODO: this query could be optimize through some graphql query
     transactions_filtered = transactions.filter((tx) => tx.username === contact.id)
   } catch (err) {

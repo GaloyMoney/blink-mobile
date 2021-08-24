@@ -1,4 +1,4 @@
-import { toInteger } from "lodash"
+import toInteger from "lodash.tointeger"
 import { useBTCPrice } from "./usePrice"
 
 type CurrencyConverter = {

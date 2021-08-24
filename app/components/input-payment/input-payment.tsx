@@ -1,4 +1,4 @@
-import { toNumber } from "lodash"
+import toNumber from "lodash.tonumber"
 import * as React from "react"
 import { Keyboard, Text, View } from "react-native"
 import { TextInput } from "react-native-vector-icons/node_modules/@types/react-native/index"

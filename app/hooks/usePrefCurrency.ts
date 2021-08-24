@@ -1,7 +1,7 @@
 import { useState } from "react"
 import * as React from "react"
 import { useNavigation } from "@react-navigation/native"
-import * as _ from "lodash"
+import indexOf from "lodash.indexof"
 import { prefCurrencyVar } from "../graphql/client-only-query"
 
 const units: CurrencyType[] = ["BTC", "USD"]
@@ -12,7 +12,7 @@ export const usePrefCurrency = (): [CurrencyType, () => void] => {
   const [prefCurrency, setPrefCurrency] = useState(() => prefCurrencyVar())
 
   const nextPrefCurrency = () => {
-    const currentIndex = _.indexOf(units, prefCurrency)
+    const currentIndex = indexOf(units, prefCurrency)
     setPrefCurrency(units[(currentIndex + 1) % units.length])
   }
 

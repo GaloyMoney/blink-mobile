@@ -1,11 +1,11 @@
 import { gql, makeVar } from "@apollo/client"
-import _ from "lodash"
+import indexOf from "lodash.indexof"
 
 export const prefCurrencyVar = makeVar<CurrencyType>("USD")
 
 export const nextPrefCurrency = (): void => {
   const units: CurrencyType[] = ["BTC", "USD"]
-  const currentIndex = _.indexOf(units, prefCurrencyVar())
+  const currentIndex = indexOf(units, prefCurrencyVar())
   prefCurrencyVar(units[(currentIndex + 1) % units.length])
 }
 

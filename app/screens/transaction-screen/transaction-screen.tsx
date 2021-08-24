@@ -1,6 +1,6 @@
 import { ApolloError, useQuery, useReactiveVar } from "@apollo/client"
 import { StackNavigationProp } from "@react-navigation/stack"
-import * as _ from "lodash"
+import find from "lodash.find"
 import * as React from "react"
 import { SectionList, Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
@@ -77,7 +77,7 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
   const before = []
 
   // we need a shallow copy because the array given by useQuery is otherwise immutable
-  const transactions = [..._.find(data.wallet, { id: "BTC" }).transactions]
+  const transactions = [...find(data.wallet, { id: "BTC" }).transactions]
 
   while (transactions?.length) {
     // FIXME: optimization need. slow when there are a lot of txs.

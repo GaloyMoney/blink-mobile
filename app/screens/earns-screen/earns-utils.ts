@@ -1,4 +1,6 @@
-import { filter, find, sumBy } from "lodash"
+import filter from "lodash.filter"
+import find from "lodash.find"
+import sumBy from "lodash.sumby"
 import { translateQuizSections } from "../../i18n"
 import type { QuizQuestion, QuizSectionContent } from "../../types/quiz"
 import { earnList_earnList } from "../../graphql/__generated__/earnList"

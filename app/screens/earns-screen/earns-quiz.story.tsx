@@ -1,6 +1,6 @@
 import { storiesOf } from "@storybook/react-native"
 import * as React from "react"
-import { cloneDeep } from "lodash"
+import cloneDeep from "lodash.clonedeep"
 import { SafeAreaProvider } from "react-native-safe-area-context"
 import { action } from "@storybook/addon-actions"
 import { EarnQuiz } from "./earns-quiz"
