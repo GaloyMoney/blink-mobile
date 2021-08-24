@@ -191,13 +191,23 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
     return prefCurrency
   }
 
-  const setAmounts = ({ value, referenceCurrency }: SetAmountsInput) => {
-    const postiveValue = value >= 0 ? value : -value
-    const mReferenceCurrency = referenceCurrency ?? prefCurrency
+  const setAmounts = React.useCallback(
+    ({ value, referenceCurrency }: SetAmountsInput) => {
+      const postiveValue = value >= 0 ? value : -value
+      const mReferenceCurrency = referenceCurrency ?? prefCurrency
 
-    setSatAmount(currencyConverter[mReferenceCurrency]["BTC"](postiveValue))
-    setUsdAmount(currencyConverter[mReferenceCurrency]["USD"](postiveValue))
-  }
+      setSatAmount(currencyConverter[mReferenceCurrency]["BTC"](postiveValue))
+      setUsdAmount(currencyConverter[mReferenceCurrency]["USD"](postiveValue))
+    },
+    [currencyConverter, prefCurrency],
+  )
+
+  const setAmountsAction = React.useCallback(
+    (input) => {
+      setAmounts({ value: input })
+    },
+    [setAmounts],
+  )
 
   const satMoneyAmount = (): MoneyAmount => {
     return {
@@ -308,7 +318,7 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
     setMemo("")
     setInitialMemo("")
     setInteractive(true)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // SB
   }, [])
 
   useEffect(() => {
@@ -323,12 +333,11 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
     } else {
       setInteractive(true)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [client, reset, route.params])
+  }, [client, network, reset, route.params])
 
   useEffect(() => {
     setAmounts({ value: primaryAmount().value, referenceCurrency: referenceCurrency() })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // SB
   }, [btcPrice])
 
   useEffect(() => {
@@ -431,7 +440,7 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
     }
 
     fn()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // SB
   }, [destination, satAmount])
 
   const pay = async () => {
@@ -571,9 +580,7 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
       status={status}
       paymentType={paymentType}
       amountless={amountless}
-      setAmounts={(input) => {
-        setAmounts({ value: input })
-      }}
+      setAmounts={setAmountsAction}
       setStatus={setStatus}
       invoice={invoice}
       address={address}
@@ -657,6 +664,14 @@ export const SendBitcoinScreenJSX: ScreenType = ({
   errorMessage,
   reset,
 }: SendBitcoinScreenJSXProps) => {
+  const onUpdateAmountAction = React.useCallback(
+    (input: number) => {
+      setAmounts(input)
+      setStatus("idle")
+    },
+    [setAmounts, setStatus],
+  )
+
   const destinationInputRightIcon = () => {
     if (
       UsernameValidation.hasValidLength(destination) &&
@@ -756,10 +771,7 @@ export const SendBitcoinScreenJSX: ScreenType = ({
             }
             forceKeyboard
             nextPrefCurrency={nextPrefCurrency}
-            onUpdateAmount={(input: number) => {
-              setAmounts(input)
-              setStatus("idle")
-            }}
+            onUpdateAmount={onUpdateAmountAction}
             primaryAmount={primaryAmount}
             secondaryAmount={secondaryAmount}
           />

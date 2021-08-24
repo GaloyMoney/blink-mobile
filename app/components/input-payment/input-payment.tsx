@@ -93,32 +93,35 @@ export const InputPaymentDataInjected: ComponentType = (
   const currencyConverter = useCurrencyConversion()
   const [usdAmount, setUsdAmount] = React.useState(0)
 
-  const setAmounts = (value) => {
-    const postiveValue = value >= 0 ? value : -value
-    setUsdAmount(currencyConverter[prefCurrency]["USD"](postiveValue))
-    props.onUpdateAmount(currencyConverter[prefCurrency]["BTC"](postiveValue))
-  }
+  const setAmounts = React.useCallback(
+    (value) => {
+      const postiveValue = value >= 0 ? value : -value
+      setUsdAmount(currencyConverter[prefCurrency]["USD"](postiveValue))
+      props.onUpdateAmount(currencyConverter[prefCurrency]["BTC"](postiveValue))
+    },
+    [currencyConverter, prefCurrency, props],
+  )
 
-  const satMoneyAmount = (): MoneyAmount => {
+  const satMoneyAmount = React.useCallback((): MoneyAmount => {
     return {
       value: props.amount,
       currency: "BTC",
     }
-  }
+  }, [props.amount])
 
-  const usdMoneyAmount = (): MoneyAmount => {
+  const usdMoneyAmount = React.useCallback((): MoneyAmount => {
     return {
       value: usdAmount,
       currency: "USD",
     }
-  }
+  }, [usdAmount])
 
-  const primaryAmount = (): MoneyAmount => {
+  const primaryAmount = React.useCallback((): MoneyAmount => {
     if (prefCurrency === "USD") {
       return usdMoneyAmount()
     }
     return satMoneyAmount()
-  }
+  }, [prefCurrency, satMoneyAmount, usdMoneyAmount])
 
   const secondaryAmount = (): MoneyAmount => {
     if (prefCurrency === "BTC") {
@@ -129,8 +132,7 @@ export const InputPaymentDataInjected: ComponentType = (
 
   React.useEffect(() => {
     setAmounts(primaryAmount().value)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currencyConverter])
+  }, [currencyConverter, primaryAmount, setAmounts])
 
   return (
     <InputPayment
@@ -170,12 +172,11 @@ export const InputPayment: ComponentType = ({
     if (!isNaN(newAmount)) {
       onUpdateAmount(newAmount)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [input])
+    // SB
+  }, [input, onUpdateAmount])
 
   React.useEffect(() => {
     setInput(primaryAmount.value.toString().replace(/[^0-9.]/g, ""))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [primaryAmount])
 
   React.useEffect(() => {

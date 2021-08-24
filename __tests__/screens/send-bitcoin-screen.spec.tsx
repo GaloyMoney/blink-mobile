@@ -266,7 +266,7 @@ describe("SendBitcoinScreen", () => {
     expect(queryByText(translate("SendBitcoinScreen.success"))).toBeNull()
   })
 
-  it("successfully sends payment by payKeysendUsername", async () => {
+  it.only("successfully sends payment by payKeysendUsername", async () => {
     const { getByA11yLabel, getByPlaceholderText, getByText, queryByText } = render(
       <MockedProvider mocks={payKeysendUsernameMocks} cache={cache}>
         <SendBitcoinScreen route={{ params: null }} />
