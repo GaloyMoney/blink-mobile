@@ -14,6 +14,7 @@ import type { PrimaryStackParamList } from "../../navigation/stack-param-lists"
 import { ScreenType } from "../../types/jsx"
 import { isIos } from "../../utils/helper"
 import { translate } from "../../i18n"
+import { palette } from "../../theme/palette"
 
 const styles = StyleSheet.create({
   android: { marginTop: 18 },
@@ -131,7 +132,7 @@ export const MapScreen: ScreenType = ({ navigation }: Props) => {
         ? navigation.navigate("sendBitcoin", { username: item.username })
         : navigation.navigate("phoneValidation")
     markers.push(
-      <Marker coordinate={item.coordinate} key={item.title}>
+      <Marker coordinate={item.coordinate} key={item.title} pinColor={palette.orange}>
         <Callout
           // alphaHitTest
           // tooltip
