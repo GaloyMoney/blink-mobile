@@ -11,7 +11,7 @@ export const getFullUri = ({
   memo,
   uppercase = false,
   prefix = true,
-  type = TYPE_BITCOIN,
+  type = TYPE_BITCOIN
 }: GetFullUriInput): string => {
   if (type === TYPE_LIGHTNING) {
     // TODO add lightning:

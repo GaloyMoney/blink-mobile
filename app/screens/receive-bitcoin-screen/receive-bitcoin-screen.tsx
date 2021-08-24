@@ -2,7 +2,7 @@ import { gql, useApolloClient, useMutation } from "@apollo/client"
 import messaging from "@react-native-firebase/messaging"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
-import { useEffect, useState, useCallback } from "react"
+import { useCallback, useEffect, useState } from "react"
 import {
   Alert,
   AppState,
@@ -31,7 +31,6 @@ import { getHashFromInvoice } from "../../utils/bolt11"
 import { isIos } from "../../utils/helper"
 import { hasFullPermissions, requestPermission } from "../../utils/notifications"
 import { QRView } from "./qr-view"
-import { TYPE_BITCOIN, TYPE_LIGHTNING } from "./utils"
 
 // FIXME: crash when no connection
 
@@ -331,7 +330,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
         <Swiper height={450} loop={false}>
           <QRView
             data={invoice}
-            type={TYPE_LIGHTNING}
+            type="lightning"
             amount={amount}
             memo={memo}
             keyboardIsShown={keyboardIsShown}
@@ -342,7 +341,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
           />
           <QRView
             data={lastOnChainAddress}
-            type={TYPE_BITCOIN}
+            type="bitcoin"
             amount={amount}
             memo={memo}
             keyboardIsShown={keyboardIsShown}
