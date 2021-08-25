@@ -158,22 +158,18 @@ export const InputPayment: ComponentType = ({
   const [input, setInput] = React.useState("")
   const inputRef = React.useRef<TextInput>()
 
-  const handleTextInputChange = (text) => {
-    setInput(
-      textToCurrency(
-        text.replace(/[^0-9]/g, "").substring(0, digitLimit),
-        primaryAmount.currency,
-      ),
+  const handleTextInputChange = React.useCallback((text) => {
+    const newInput = textToCurrency(
+      text.replace(/[^0-9]/g, "").substring(0, digitLimit),
+      primaryAmount.currency,
     )
-  }
+    const newAmount = toNumber(newInput)
 
-  React.useEffect(() => {
-    const newAmount = toNumber(input)
+    setInput(newInput)
     if (!isNaN(newAmount)) {
       onUpdateAmount(newAmount)
     }
-    // SB
-  }, [input, onUpdateAmount])
+  }, [onUpdateAmount, primaryAmount.currency])
 
   React.useEffect(() => {
     setInput(primaryAmount.value.toString().replace(/[^0-9.]/g, ""))
