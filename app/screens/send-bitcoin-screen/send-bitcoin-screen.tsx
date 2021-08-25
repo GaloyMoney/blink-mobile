@@ -132,20 +132,6 @@ const styles = EStyleSheet.create({
   },
 })
 
-const regexFilter = (network) => {
-  switch (network) {
-    case "mainnet":
-      return /^(1|3|bc1|lnbc1)/i
-    case "testnet":
-      return /^(2|bcrt|lnbcrt)/i
-    case "regtest":
-      return /^(2|bcrt|lnbcrt)/i
-    default:
-      console.warn("error network")
-      return null
-  }
-}
-
 class FeeActivityIndicator extends React.Component {
   render() {
     return <ActivityIndicator animating size="small" color={palette.orange} />
@@ -184,12 +170,12 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
   const [satAmount, setSatAmount] = useState(0)
   const [usdAmount, setUsdAmount] = useState(0)
 
-  const referenceCurrency = (): CurrencyType => {
+  const referenceCurrency = React.useCallback((): CurrencyType => {
     if (paymentType === ("lightning" || "onchain") && !amountless) {
       return "BTC"
     }
     return prefCurrency
-  }
+  }, [amountless, paymentType, prefCurrency])
 
   const setAmounts = React.useCallback(
     ({ value, referenceCurrency }: SetAmountsInput) => {
@@ -209,26 +195,26 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
     [setAmounts],
   )
 
-  const satMoneyAmount = (): MoneyAmount => {
+  const satMoneyAmount = React.useCallback((): MoneyAmount => {
     return {
       value: satAmount,
       currency: "BTC",
     }
-  }
+  }, [satAmount])
 
-  const usdMoneyAmount = (): MoneyAmount => {
+  const usdMoneyAmount = React.useCallback((): MoneyAmount => {
     return {
       value: usdAmount,
       currency: "USD",
     }
-  }
+  }, [usdAmount])
 
-  const primaryAmount = (): MoneyAmount => {
+  const primaryAmount = React.useCallback((): MoneyAmount => {
     if (prefCurrency === "USD") {
       return usdMoneyAmount()
     }
     return satMoneyAmount()
-  }
+  }, [prefCurrency, satMoneyAmount, usdMoneyAmount])
 
   const secondaryAmount = (): MoneyAmount => {
     if (prefCurrency === "BTC") {
@@ -303,7 +289,6 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
   const balance = balanceBtc(client)
 
   const { network } = Token.getInstance()
-  const potentialBitcoinOrLightning = regexFilter(network)?.test(destination) ?? false
 
   const reset = useCallback(() => {
     setStatus("idle")
@@ -312,13 +297,13 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
     setAddress("")
     setPaymentType(undefined)
     setAmountless(false)
-    setAmounts({ value: 0 })
+    setSatAmount(0)
+    setUsdAmount(0)
     setDestination("")
     setInvoice("")
     setMemo("")
     setInitialMemo("")
     setInteractive(true)
-    // SB
   }, [])
 
   useEffect(() => {
@@ -337,8 +322,7 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
 
   useEffect(() => {
     setAmounts({ value: primaryAmount().value, referenceCurrency: referenceCurrency() })
-    // SB
-  }, [btcPrice])
+  }, [btcPrice, primaryAmount, referenceCurrency, setAmounts])
 
   useEffect(() => {
     const fn = async () => {
@@ -424,11 +408,6 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
         setInvoiceError(errorMessage)
         setInvoice(destination)
       } else {
-        // it's kind of messy rn, but we need to check for more than just the regex, becuase we may have lightning:, bitcoin: also
-        if (potentialBitcoinOrLightning) {
-          return
-        }
-
         setPaymentType("username")
 
         if (UsernameValidation.isValid(destination)) {
@@ -440,7 +419,7 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
     }
 
     fn()
-    // SB
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [destination, satAmount])
 
   const pay = async () => {
@@ -599,7 +578,6 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
       usernameExists={usernameExists}
       loadingUserNameExist={loadingUserNameExist}
       interactive={interactive}
-      potentialBitcoinOrLightning={potentialBitcoinOrLightning}
       errorMessage={errorMessage}
       reset={reset}
     />
@@ -632,7 +610,6 @@ type SendBitcoinScreenJSXProps = {
   usernameExists: boolean
   loadingUserNameExist: boolean
   interactive: boolean
-  potentialBitcoinOrLightning: boolean
   errorMessage: string
   reset: () => void
 }
@@ -660,7 +637,6 @@ export const SendBitcoinScreenJSX: ScreenType = ({
   usernameExists,
   loadingUserNameExist,
   interactive,
-  potentialBitcoinOrLightning,
   errorMessage,
   reset,
 }: SendBitcoinScreenJSXProps) => {
@@ -673,11 +649,7 @@ export const SendBitcoinScreenJSX: ScreenType = ({
   )
 
   const destinationInputRightIcon = () => {
-    if (
-      UsernameValidation.hasValidLength(destination) &&
-      !potentialBitcoinOrLightning &&
-      paymentType === "username"
-    ) {
+    if (UsernameValidation.hasValidLength(destination) && paymentType === "username") {
       if (loadingUserNameExist) {
         return <ActivityIndicator size="small" />
       } else if (UsernameValidation.isValid(destination) && usernameExists) {
