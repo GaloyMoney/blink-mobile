@@ -1,4 +1,4 @@
-import { getFullUri } from "../utils"
+import { getFullUri } from "../wallet"
 
 describe("getFullUri", () => {
   it("should return a prefixed bitcoin uri", () => {

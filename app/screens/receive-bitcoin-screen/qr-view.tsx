@@ -20,7 +20,11 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { translate } from "../../i18n"
 import { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
-import { getFullUri as getFullUriUtil, TYPE_LIGHTNING, TYPE_BITCOIN } from "./utils"
+import {
+  getFullUri as getFullUriUtil,
+  TYPE_LIGHTNING,
+  TYPE_BITCOIN,
+} from "../../utils/wallet"
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const successLottie = require("../move-money-screen/success_lottie.json")

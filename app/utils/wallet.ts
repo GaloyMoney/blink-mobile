@@ -1,5 +1,5 @@
-const TYPE_BITCOIN = "bitcoin"
-const TYPE_LIGHTNING = "lightning"
+export const TYPE_BITCOIN = "bitcoin"
+export const TYPE_LIGHTNING = "lightning"
 
 const prefixByType = {
   [TYPE_BITCOIN]: "bitcoin:",
