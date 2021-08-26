@@ -39,8 +39,9 @@ import "./i18n"
 import "./utils/polyfill"
 import { RootStack } from "./navigation/root-navigator"
 import { isIos } from "./utils/helper"
-import { getGraphQlUri, Token } from "./utils/token"
+import { getGraphQLUri, getGraphQLV2Uri, Token } from "./utils/token"
 import { saveString, loadString } from "./utils/storage"
+import { graphqlV2OperationNames } from "./graphql/graphql-v2-operations"
 
 export const BUILD_VERSION = "build_version"
 
@@ -100,6 +101,19 @@ export const App = (): JSX.Element => {
       const LEGACY_ROOT_STATE_STORAGE_KEY = "rootAppGaloy"
       await AsyncStorage.multiRemove([LEGACY_ROOT_STATE_STORAGE_KEY])
 
+      const customFetch = async (_ /* uri not used */, options) => {
+        const uri = await getGraphQLUri()
+        return fetch(uri, options)
+      }
+
+      const customFetchV2 = async (_ /* uri not used */, options) => {
+        const uri = await getGraphQLV2Uri()
+        return fetch(uri, options)
+      }
+
+      const httpLink = new HttpLink({ fetch: customFetch })
+      const httpLinkV2 = new HttpLink({ fetch: customFetchV2 })
+
       const retryLink = new RetryLink({
         delay: {
           initial: 500, // default = 300
@@ -116,14 +130,11 @@ export const App = (): JSX.Element => {
             )
           },
         },
-      })
-
-      const customFetch = async (_ /* uri not used */, options) => {
-        const uri = await getGraphQlUri()
-        return fetch(uri, options)
-      }
-
-      const httpLink = new HttpLink({ fetch: customFetch })
+      }).split(
+        (operation) => graphqlV2OperationNames.includes(operation.operationName),
+        httpLinkV2,
+        httpLink,
+      )
 
       const authLink = setContext((_, { headers }) => ({
         headers: {

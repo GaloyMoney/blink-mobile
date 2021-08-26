@@ -34,17 +34,17 @@ import type { PhoneValidationStackParamList } from "../../navigation/stack-param
 import { RouteProp } from "@react-navigation/native"
 import { login_login } from "./__generated__/login"
 
-const REQUEST_PHONE_CODE = gql`
-  mutation requestPhoneCode($phone: String) {
-    requestPhoneCode(phone: $phone) {
+const REQUEST_AUTH_CODE = gql`
+  mutation userRequestAuthCode($phone: String) {
+    userRequestAuthCode(phone: $phone) {
       success
     }
   }
 `
 
 const LOGIN = gql`
-  mutation login($phone: String, $code: Int) {
-    login(phone: $phone, code: $code) {
+  mutation userLogin($phone: String, $code: Int) {
+    userLogin(phone: $phone, code: $code) {
       token
     }
   }
@@ -93,7 +93,7 @@ type WelcomePhoneInputScreenProps = {
 export const WelcomePhoneInputScreen: ScreenType = ({
   navigation,
 }: WelcomePhoneInputScreenProps) => {
-  const [requestPhoneCode, { loading }] = useMutation(REQUEST_PHONE_CODE, {
+  const [requestPhoneCode, { loading }] = useMutation(REQUEST_AUTH_CODE, {
     fetchPolicy: "no-cache",
   })
 

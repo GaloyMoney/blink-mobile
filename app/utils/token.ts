@@ -13,6 +13,10 @@ const GRAPHQL_REGTEST_URI = `http://${scriptHostname()}:4000/graphql`
 const GRAPHQL_TESTNET_URI = "https://graphql.testnet.galoy.io/graphql"
 const GRAPHQL_MAINNET_URI = "https://graphql.mainnet.galoy.io/graphql"
 
+const GRAPHQL_V2_REGTEST_URI = `http://${scriptHostname()}:4002/graphql`
+const GRAPHQL_V2_TESTNET_URI = "https://api.testnet.galoy.io/graphql"
+const GRAPHQL_V2_MAINNET_URI = "https://api.mainnet.galoy.io/graphql"
+
 type JwtPayload = {
   uid: string
   network: INetwork
@@ -93,7 +97,7 @@ export const getNetwork = async (): Promise<INetwork> => {
   return network
 }
 
-export const getGraphQlUri = async (): Promise<string> => {
+export const getGraphQLUri = async (): Promise<string> => {
   const network = await getNetwork()
   switch (network) {
     case "regtest":
@@ -102,6 +106,21 @@ export const getGraphQlUri = async (): Promise<string> => {
       return GRAPHQL_TESTNET_URI
     case "mainnet":
       return GRAPHQL_MAINNET_URI
+    default:
+      console.log("no network set")
+      return "none"
+  }
+}
+
+export const getGraphQLV2Uri = async (): Promise<string> => {
+  const network = await getNetwork()
+  switch (network) {
+    case "regtest":
+      return GRAPHQL_V2_REGTEST_URI
+    case "testnet":
+      return GRAPHQL_V2_TESTNET_URI
+    case "mainnet":
+      return GRAPHQL_V2_MAINNET_URI
     default:
       console.log("no network set")
       return "none"
