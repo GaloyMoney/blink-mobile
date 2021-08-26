@@ -40,7 +40,6 @@ export type RootStackParamList = {
     tx: query_transactions_wallet_transactions
   }
   transactionHistory: undefined
-  priceDetail: { account: AccountType }
   Earn: undefined
 }
 
@@ -54,7 +53,9 @@ export type ContactStackParamList = {
 }
 
 export type MoveMoneyStackParamList = {
-  moveMoney: undefined
+  moveMoney: {
+    mHideBalanceEnabled: boolean | null
+  }
   scanningQRCode: undefined
   sendBitcoin: {
     username: string | null
@@ -63,8 +64,14 @@ export type MoveMoneyStackParamList = {
   receiveBitcoin: undefined
   Profile: undefined
   phoneValidation: undefined
-  priceDetail: { account: AccountType }
+  priceDetail: {
+    account: AccountType;
+    hideBalanceSettings: boolean | null }
   settings: undefined
+  security: {
+    mIsBiometricsEnabled: boolean
+    mIsPinEnabled: boolean
+  }
   transactionDetail: {
     tx: query_transactions_wallet_transactions
   }
