@@ -45,9 +45,13 @@ const styles = EStyleSheet.create({
     minHeight: "75rem",
   },
 
+  hiddenBalanceIcon: {
+    fontSize: "25rem"
+  },
+
   subCurrencyText: {
     color: palette.darkGrey,
-    fontSize: "25rem",
+    fontSize: "16rem",
   },
 
   text: {
@@ -63,7 +67,7 @@ export interface BalanceHeaderProps {
   amountOtherCurrency?: number
   loading?: boolean
   style?: StyleProp<ViewStyle>
-  securitySettings?: object
+  securitySettings?: boolean
 }
 
 const Loader = () => (
@@ -89,13 +93,13 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
 }: BalanceHeaderProps) => {
   const { data: toolTipSettings } = useQuery(WALKTHROUGH_TOOL_TIP)
   const [hideBalance, setHideBalance] = useState<boolean | string>(
-    securitySettings?.hideBalanceSettings,
+    securitySettings,
   )
   const [showToolTip, setShowToolTip] = useState<boolean | null>(null)
   const isFocused = useIsFocused()
 
   const checkHideBalanceSettings = async () => {
-    setHideBalance(securitySettings?.hideBalanceSettings)
+    setHideBalance(securitySettings)
     if (toolTipSettings?.walkThroughToolTipSettings) {
       setTimeout(function () {
         setShowToolTip(toolTipSettings?.walkThroughToolTipSettings)
@@ -126,7 +130,7 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
               setHideBalance(null)
             }}
           >
-            <Icon style={styles.subCurrencyText} name="eye" />
+            <Icon style={styles.hiddenBalanceIcon} name="eye" />
           </TouchableHighlight>
         </Tooltip>
       </>
