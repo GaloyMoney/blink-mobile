@@ -1,6 +1,7 @@
 import { useApolloClient } from "@apollo/client"
 import { RouteProp } from "@react-navigation/native"
 import * as React from "react"
+import { Text } from "react-native"
 import { BalanceHeader } from "../../components/balance-header"
 import { PriceGraphDataInjected } from "../../components/price-graph"
 import { Screen } from "../../components/screen"
@@ -16,12 +17,16 @@ type Props = {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const PriceScreen: ScreenType = ({ route }: Props) => {
+  const { securitySettings, account } = route.params
   const client = useApolloClient()
-
   return (
     // eslint-disable-next-line react-native/no-inline-styles
     <Screen backgroundColor={palette.white} preset="scroll" style={{ flex: 1 }}>
-      <BalanceHeader currency={CurrencyType.BTC} amount={balanceBtc(client)} />
+      <BalanceHeader
+        currency={CurrencyType.BTC}
+        amount={balanceBtc(client)}
+        securitySettings={securitySettings}
+      />
       <PriceGraphDataInjected />
     </Screen>
   )

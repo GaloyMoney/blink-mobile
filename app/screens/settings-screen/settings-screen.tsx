@@ -1,8 +1,8 @@
 import * as React from "react"
-import { Alert, View } from "react-native"
+import { Alert, BackHandler, Button, TouchableOpacity, View } from "react-native"
 import Share from "react-native-share"
 import { Divider, Icon, ListItem } from "react-native-elements"
-import { StackNavigationProp } from "@react-navigation/stack"
+import { HeaderBackButton, StackNavigationProp } from "@react-navigation/stack"
 import {
   ApolloClient,
   gql,
@@ -27,6 +27,8 @@ import { hasFullPermissions, requestPermission } from "../../utils/notifications
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
+import { useIsFocused } from "@react-navigation/core"
+import { useEffect } from "react"
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "settings">
@@ -137,7 +139,7 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
 type SettingsScreenProps = {
   client: ApolloClient<unknown>
   walletIsActive: boolean
-  navigation: StackNavigationProp<RootStackParamList, "settings">
+  navigation: StackNavigationProp<RootStackParamList, "settings" | "moveMoney">
   username: string
   notificationsEnabled: boolean
   csvAction: (options?: QueryLazyOptions<OperationVariables>) => void
@@ -156,6 +158,18 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
     securityAction,
     resetDataStore,
   } = params
+  const isFocused = useIsFocused()
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => (
+        <HeaderBackButton
+          label={"Home"}
+          onPress={() => navigation.navigate("moveMoney")}
+        ></HeaderBackButton>
+      ),
+    })
+  }, [isFocused])
 
   const list = [
     {
