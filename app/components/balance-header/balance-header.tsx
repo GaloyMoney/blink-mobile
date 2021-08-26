@@ -46,7 +46,8 @@ const styles = EStyleSheet.create({
   },
 
   hiddenBalanceIcon: {
-    fontSize: "25rem"
+    fontSize: "25rem",
+    marginTop: "13rem",
   },
 
   subCurrencyText: {
