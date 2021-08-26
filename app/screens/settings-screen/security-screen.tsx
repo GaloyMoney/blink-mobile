@@ -20,7 +20,7 @@ import {
   saveHideBalanceSettings,
   saveWalkThroughToolTipSettings,
 } from "../../graphql/client-only-query"
-import { useQuery} from "@apollo/client";
+import { useQuery } from "@apollo/client"
 
 const styles = EStyleSheet.create({
   button: {
@@ -90,7 +90,9 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
 
   const [isBiometricsEnabled, setIsBiometricsEnabled] = useState(mIsBiometricsEnabled)
   const [isPinEnabled, setIsPinEnabled] = useState(mIsPinEnabled)
-  const [isHideBalanceEnabled, setIsHideBalanceEnabled] = useState(data?.hideBalanceSettings ? data?.hideBalanceSettings : null)
+  const [isHideBalanceEnabled, setIsHideBalanceEnabled] = useState(
+    data?.hideBalanceSettings ? data?.hideBalanceSettings : null,
+  )
 
   useFocusEffect(() => {
     getIsBiometricsEnabled()
