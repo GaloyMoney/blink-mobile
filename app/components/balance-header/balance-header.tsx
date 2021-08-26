@@ -6,22 +6,24 @@ import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
 import { CurrencyType } from "../../utils/enum"
 import { TextCurrency } from "../text-currency/text-currency"
-import { useState, useEffect } from "react"
-import {useIsFocused} from "@react-navigation/native"
+import { useState, useLayoutEffect } from "react"
+import { useIsFocused } from "@react-navigation/native"
 import {
   saveWalkThroughToolTipSettings,
-  HIDE_BALANCE,
-  WALKTHROUGH_TOOL_TIP
+  WALKTHROUGH_TOOL_TIP,
 } from "../../graphql/client-only-query"
 import Tooltip from "react-native-walkthrough-tooltip"
 import Icon from "react-native-vector-icons/Entypo"
-import {useQuery} from "@apollo/client";
+import { useQuery } from "@apollo/client"
 
 const styles = EStyleSheet.create({
   amount: {
     alignItems: "center",
     flexDirection: "column",
     height: 42, // FIXME should be dynamic?
+    position: "absolute",
+    top: "25rem",
+    width: "250rem",
   },
 
   balanceText: {
@@ -61,6 +63,7 @@ export interface BalanceHeaderProps {
   amountOtherCurrency?: number
   loading?: boolean
   style?: StyleProp<ViewStyle>
+  securitySettings?: object
 }
 
 const Loader = () => (
@@ -82,23 +85,24 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
   amountOtherCurrency = null,
   loading = false,
   style,
+  securitySettings,
 }: BalanceHeaderProps) => {
-  const { data: balanceSettings } = useQuery(HIDE_BALANCE)
   const { data: toolTipSettings } = useQuery(WALKTHROUGH_TOOL_TIP)
-  const [hideBalance, setHideBalance] = useState<boolean | null>(null)
-  const [showToolTip, setShowToolTip] = useState<boolean | null>( null)
+  const [hideBalance, setHideBalance] = useState<boolean | string>(
+    securitySettings?.hideBalanceSettings,
+  )
+  const [showToolTip, setShowToolTip] = useState<boolean | null>(null)
   const isFocused = useIsFocused()
 
   const checkHideBalanceSettings = async () => {
-      setHideBalance(balanceSettings?.hideBalanceSettings)
-      if(toolTipSettings?.walkThroughToolTipSettings) {
-        setTimeout(function () {
-          setShowToolTip(toolTipSettings?.walkThroughToolTipSettings)
-        }, 1000);
-      }
+    setHideBalance(securitySettings?.hideBalanceSettings)
+    if (toolTipSettings?.walkThroughToolTipSettings) {
+      setTimeout(function () {
+        setShowToolTip(toolTipSettings?.walkThroughToolTipSettings)
+      }, 1000)
+    }
   }
-
-  useEffect(() => {
+  useLayoutEffect(() => {
     checkHideBalanceSettings()
   }, [isFocused])
 
@@ -114,7 +118,7 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
           isVisible={showToolTip}
           content={<Text>{translate("BalanceHeader.toolTipHiddenBalance")}</Text>}
           placement="top"
-          onClose={ handleToolTipClose }
+          onClose={handleToolTipClose}
         >
           <TouchableHighlight
             underlayColor={styles.touchableHighlightColor}
@@ -164,8 +168,8 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
   return (
     <View style={[styles.header, style]}>
       <Text style={styles.balanceText}>{translate("BalanceHeader.currentBalance")}</Text>
-      {hideBalance && isFocused && hiddenBalanceSet()}
-      {!hideBalance && isFocused && defaultBalanceHeader()}
+      {hideBalance && hiddenBalanceSet()}
+      {!hideBalance && defaultBalanceHeader()}
     </View>
   )
 }
