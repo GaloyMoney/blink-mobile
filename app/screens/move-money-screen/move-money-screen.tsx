@@ -227,7 +227,7 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
 
 type MoveMoneyScreenProps = {
   walletIsActive: boolean
-  navigation: StackNavigationProp<RootStackParamList, "priceDetail">
+  navigation: StackNavigationProp<MoveMoneyStackParamList, "moveMoney">
   loading: boolean
   error: ApolloError
   transactions: []
@@ -345,7 +345,7 @@ export const MoveMoneyScreen: ScreenType = ({
           onPress={() =>
             navigation.navigate("priceDetail", {
               account: AccountType.Bitcoin,
-              securitySettings: balanceSettings,
+              securitySettings: balanceSettings?.hideBalanceSettings
             })
           }
           icon={<Icon name="ios-trending-up-outline" size={32} />}
@@ -356,7 +356,7 @@ export const MoveMoneyScreen: ScreenType = ({
           amount={amount}
           amountOtherCurrency={amountOtherCurrency}
           style={{}}
-          securitySettings={balanceSettings}
+          securitySettings={balanceSettings?.hideBalanceSettings}
         />
         <Button
           buttonStyle={styles.buttonStyleTime}
