@@ -114,6 +114,13 @@ export const App = (): JSX.Element => {
       const httpLink = new HttpLink({ fetch: customFetch })
       const httpLinkV2 = new HttpLink({ fetch: customFetchV2 })
 
+      const authLink = setContext((_, { headers }) => ({
+        headers: {
+          ...headers,
+          authorization: token.bearerString,
+        },
+      }))
+
       const retryLink = new RetryLink({
         delay: {
           initial: 500, // default = 300
@@ -136,13 +143,6 @@ export const App = (): JSX.Element => {
         httpLink,
       )
 
-      const authLink = setContext((_, { headers }) => ({
-        headers: {
-          ...headers,
-          authorization: token.bearerString,
-        },
-      }))
-
       const persistor_ = new CachePersistor({
         cache,
         storage: new AsyncStorageWrapper(AsyncStorage),
@@ -153,9 +153,7 @@ export const App = (): JSX.Element => {
 
       const client = new ApolloClient({
         cache,
-        link: linkNetworkStatusNotifier.concat(
-          retryLink.concat(authLink.concat(httpLink)),
-        ),
+        link: linkNetworkStatusNotifier.concat(authLink.concat(retryLink)),
         name: isIos ? "iOS" : "Android",
         version: `${VersionNumber.appVersion}-${VersionNumber.buildVersion}`,
       })

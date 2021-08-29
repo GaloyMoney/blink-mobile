@@ -32,20 +32,25 @@ import { AuthenticationScreenPurpose } from "../../utils/enum"
 import BadgerPhone from "./badger-phone-01.svg"
 import type { PhoneValidationStackParamList } from "../../navigation/stack-param-lists"
 import { RouteProp } from "@react-navigation/native"
-import { login_login } from "./__generated__/login"
 
 const REQUEST_AUTH_CODE = gql`
-  mutation userRequestAuthCode($phone: String) {
-    userRequestAuthCode(phone: $phone) {
+  mutation userRequestAuthCode($input: UserRequestAuthCodeInput!) {
+    userRequestAuthCode(input: $input) {
+      errors {
+        message
+      }
       success
     }
   }
 `
 
 const LOGIN = gql`
-  mutation userLogin($phone: String, $code: Int) {
-    userLogin(phone: $phone, code: $code) {
-      token
+  mutation userLogin($input: UserLoginInput!) {
+    userLogin(input: $input) {
+      errors {
+        message
+      }
+      authToken
     }
   }
 `
@@ -101,7 +106,6 @@ export const WelcomePhoneInputScreen: ScreenType = ({
 
   const send = async () => {
     const phone = inputRef.current.getValue()
-    console.log({ initPhoneNumber: phone })
     const phoneRegex = new RegExp("^\\+[0-9]+$")
 
     if (!inputRef.current.isValidNumber() || !phoneRegex.test(phone)) {
@@ -110,8 +114,8 @@ export const WelcomePhoneInputScreen: ScreenType = ({
     }
 
     try {
-      const { data } = await requestPhoneCode({ variables: { phone } })
-      if (data.requestPhoneCode.success) {
+      const { data } = await requestPhoneCode({ variables: { input: { phone } } })
+      if (data.userRequestAuthCode.success) {
         navigation.navigate("welcomePhoneValidation", { phone })
       } else {
         toastShow(translate("erros.generic"))
@@ -188,7 +192,6 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
 
     queryMain(client, { logged: Token.getInstance().has() })
 
-    console.log("sending device token for notifications")
     addDeviceToken(client)
   }
 
@@ -205,7 +208,8 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
 }
 
 type WelcomePhoneValidationScreenProps = {
-  login: (params) => Promise<FetchResult<Record<string, login_login>>>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  login: (params) => Promise<FetchResult<Record<string, any>>>
   onSuccess: (params) => void
   navigation: StackNavigationProp<PhoneValidationStackParamList, "welcomePhoneValidation">
   route: RouteProp<PhoneValidationStackParamList, "welcomePhoneValidation">
@@ -235,11 +239,11 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
 
     try {
       const { data } = await login({
-        variables: { phone, code: Number(code) },
+        variables: { input: { phone, code: code } },
       })
 
       // TODO: validate token
-      const token = data?.login?.token
+      const token = data?.userLogin?.authToken
 
       if (token) {
         await onSuccess({ token })
