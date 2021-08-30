@@ -1,6 +1,8 @@
 import FingerprintScanner from "react-native-fingerprint-scanner"
 
 export default class BiometricWrapper {
+  private static isHandlingAuthenticate = false
+
   public static async isSensorAvailable(): Promise<boolean> {
     try {
       const biometryType = await FingerprintScanner.isSensorAvailable()
@@ -15,6 +17,9 @@ export default class BiometricWrapper {
     handleSuccess: () => void,
     handleFailure: () => void,
   ): Promise<void> {
+    if (this.isHandlingAuthenticate) return
+    this.isHandlingAuthenticate = true
+
     await FingerprintScanner.release()
     FingerprintScanner.authenticate({
       description: description,
@@ -29,6 +34,7 @@ export default class BiometricWrapper {
       })
       .finally(() => {
         FingerprintScanner.release()
+        this.isHandlingAuthenticate = false
       })
   }
 }
