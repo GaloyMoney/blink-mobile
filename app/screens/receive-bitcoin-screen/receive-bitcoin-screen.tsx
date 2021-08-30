@@ -108,12 +108,10 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
 
   const update = useCallback(async () => {
     setLoading(true)
-    console.log("createInvoice")
     try {
       const { data } = await addInvoice({ variables: { value: amount, memo } })
       const invoice = data.invoice.addInvoice
       setInvoice(invoice)
-      console.log("invoice has been updated")
     } catch (err) {
       console.error(err, "error with AddInvoice")
       setErr(`${err}`)
@@ -126,7 +124,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
   useEffect(() => {
     update()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [update])
+  }, [])
 
   useEffect(() => {
     const fn = async () => {
@@ -153,7 +151,6 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
       // if (!brightnessInitial && hasPerm) {
       if (!brightnessInitial) {
         ScreenBrightness.getBrightness().then((brightness: number) => {
-          console.log({ brightness })
           setBrightnessInitial(brightness)
           ScreenBrightness.setBrightness(1) // between 0 and 1
         })

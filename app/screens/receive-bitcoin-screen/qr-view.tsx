@@ -123,54 +123,87 @@ export const QRView = ({
     return data
   }, [data, type])
 
+  const renderActionLabel = useMemo(() => {
+    if (isSucceed) {
+      return <Text>{translate("ReceiveBitcoinScreen.invoicePaid")}</Text>
+    }
+
+    if (isReady) {
+      return (
+        <Pressable onPress={copyToClipboard}>
+          <Text>{translate("ReceiveBitcoinScreen.tapQrCodeCopy")}</Text>
+        </Pressable>
+      )
+    }
+
+    return <Text> </Text>
+  }, [isSucceed, isReady, copyToClipboard])
+
+  const renderSuccessView = useMemo(() => {
+    if (isSucceed) {
+      return (
+        <LottieView
+          source={successLottie}
+          loop={false}
+          autoPlay
+          style={styles.lottie}
+          resizeMode="cover"
+        />
+      )
+    }
+    return null
+  }, [isSucceed])
+
+  const renderQRCode = useMemo(() => {
+    if (!isSucceed && isReady) {
+      return (
+        <Pressable onPress={copyToClipboard}>
+          <QRCode
+            size={280}
+            value={getFullUri({ input: data, uppercase: true })}
+            logoBackgroundColor="white"
+            ecl={configByType[type].ecl}
+            // __DEV__ workaround for https://github.com/facebook/react-native/issues/26705
+            logo={
+              !__DEV__ &&
+              Icon.getImageSourceSync(configByType[type].icon, 28, palette.orange)
+            }
+          />
+        </Pressable>
+      )
+    }
+    return null
+  }, [copyToClipboard, data, getFullUri, isReady, isSucceed, type])
+
+  const renderStatusView = useMemo(() => {
+    if (!isSucceed && !isReady) {
+      return (
+        <View style={styles.errorContainer}>
+          {(err !== "" && (
+            // eslint-disable-next-line react-native/no-inline-styles
+            <Text style={{ color: palette.red, alignSelf: "center" }} selectable>
+              {err}
+            </Text>
+          )) ||
+            (keyboardIsShown && (
+              <Icon size={56} name="ios-flash" color={palette.orange} />
+            )) || <ActivityIndicator size="large" color={palette.blue} />}
+        </View>
+      )
+    }
+    return null
+  }, [err, isReady, isSucceed, keyboardIsShown])
+
   return (
     <>
       <View style={styles.qr}>
-        {(isSucceed && (
-          <LottieView
-            source={successLottie}
-            loop={false}
-            autoPlay
-            style={styles.lottie}
-            resizeMode="cover"
-          />
-        )) ||
-          (isReady && (
-            <Pressable onPress={copyToClipboard}>
-              <QRCode
-                size={280}
-                value={getFullUri({ input: data, uppercase: true })}
-                logoBackgroundColor="white"
-                ecl={configByType[type].ecl}
-                // __DEV__ workaround for https://github.com/facebook/react-native/issues/26705
-                logo={
-                  !__DEV__ &&
-                  Icon.getImageSourceSync(configByType[type].icon, 28, palette.orange)
-                }
-              />
-            </Pressable>
-          )) || (
-            <View style={styles.errorContainer}>
-              {(err !== "" && (
-                // eslint-disable-next-line react-native/no-inline-styles
-                <Text style={{ color: palette.red, alignSelf: "center" }} selectable>
-                  {err}
-                </Text>
-              )) ||
-                (keyboardIsShown && (
-                  <Icon size={56} name="ios-flash" color={palette.orange} />
-                )) || <ActivityIndicator size="large" color={palette.blue} />}
-            </View>
-          )}
+        {renderSuccessView}
+        {renderQRCode}
+        {renderStatusView}
         <Pressable onPress={copyToClipboard}>
           <Text style={styles.copyToClipboardText}>{dataOneLiner()}</Text>
         </Pressable>
-        {(isSucceed && <Text>{translate("ReceiveBitcoinScreen.invoicePaid")}</Text>) ||
-          (isReady && (
-            <Pressable onPress={copyToClipboard}>
-              <Text>{translate("ReceiveBitcoinScreen.tapQrCodeCopy")}</Text>
-            </Pressable>
-          )) || <Text> </Text>}
+        {renderActionLabel}
       </View>
       <Button
         buttonStyle={styles.buttonStyle}
@@ -215,12 +248,9 @@ const styles = EStyleSheet.create({
   lottie: {
     height: "200rem",
     width: "200rem",
-    // backgroundColor: 'red',
   },
 
   qr: {
-    // paddingTop: "12rem",
     alignItems: "center",
-    // flex: 1,
   },
 })

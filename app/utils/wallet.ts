@@ -22,12 +22,14 @@ export const getFullUri = ({
   const uri = `${uriPrefix}${input}`
   const params = new URLSearchParams()
 
-  if (amount) params.append("amount", `${amount / 10 ** 8}`)
+  if (amount) params.append("amount", `${satsToBTC(amount)}`)
 
   if (memo) {
     params.append("message", encodeURI(memo))
     return `${uri}?${params.toString()}`
   }
 
-  return params.toString() ? `${uri}?${params.toString()}` : `${uri}`
+  return uri + (params.toString() ? '?' + params.toString() : '')
 }
+
+export const satsToBTC = (satsAmount: number): number => satsAmount / 10 ** 8

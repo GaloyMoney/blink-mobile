@@ -1,7 +1,7 @@
-import { getFullUri } from "../wallet"
+import { getFullUri, satsToBTC } from "../wallet"
 
 describe("getFullUri", () => {
-  it("should return a prefixed bitcoin uri", () => {
+  it("returns a prefixed bitcoin uri", () => {
     const uri = getFullUri({
       input: "btc1234567890address",
       type: "bitcoin",
@@ -10,7 +10,7 @@ describe("getFullUri", () => {
     expect(uri).toBe("bitcoin:btc1234567890address")
   })
 
-  it("should return a non-prefixed bitcoin uri", () => {
+  it("returns a non-prefixed bitcoin uri", () => {
     const uri = getFullUri({
       input: "btc1234567890address",
       type: "bitcoin",
@@ -20,7 +20,7 @@ describe("getFullUri", () => {
     expect(uri).toBe("btc1234567890address")
   })
 
-  it("should contain amount in the uri", () => {
+  it("contains amount in the uri", () => {
     const uri = getFullUri({
       input: "btc1234567890address",
       type: "bitcoin",
@@ -30,7 +30,7 @@ describe("getFullUri", () => {
     expect(uri).toBe(`bitcoin:btc1234567890address?amount=${100 / 10 ** 8}`)
   })
 
-  it("should contain memo in the uri", () => {
+  it("contains memo in the uri", () => {
     const uri = getFullUri({
       input: "btc1234567890address",
       type: "bitcoin",
@@ -40,7 +40,7 @@ describe("getFullUri", () => {
     expect(uri).toBe(`bitcoin:btc1234567890address?message=will%2520not%2520forget`)
   })
 
-  it("should contain memo and amount in the uri", () => {
+  it("contains memo and amount in the uri", () => {
     const uri = getFullUri({
       input: "btc1234567890address",
       type: "bitcoin",
@@ -49,13 +49,12 @@ describe("getFullUri", () => {
     })
 
     expect(uri).toBe(
-      `bitcoin:btc1234567890address?amount=${
-        100 / 10 ** 8
+      `bitcoin:btc1234567890address?amount=${100 / 10 ** 8
       }&message=will%2520not%2520forget`,
     )
   })
 
-  it("should return a non-prefixed lightning uri", () => {
+  it("returns a non-prefixed lightning uri", () => {
     const uri = getFullUri({
       input: "lnurl12567890",
       type: "lightning",
@@ -64,13 +63,21 @@ describe("getFullUri", () => {
     expect(uri).toBe("lnurl12567890")
   })
 
-  it("should return return an uppercase string", () => {
+  it("returns return an uppercase string", () => {
     const uri = getFullUri({
       input: "lnurl12567890",
       uppercase: true,
       type: "lightning",
     })
 
-    expect(/^[^a-z]*$/g.test(uri)).toBe(true)
+    expect(uri).toMatch(/^[^a-z]*$/g)
+  })
+})
+
+describe("satsToBTC", () => {
+  it('returns the correct BTC number', () => {
+    expect(satsToBTC(1000)).toBe(0.00001)
+    expect(satsToBTC(0)).toBe(0)
+    expect(satsToBTC(-1000)).toBe(-0.00001)
   })
 })
