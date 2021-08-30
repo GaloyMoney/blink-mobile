@@ -207,19 +207,19 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
     }
   }, [usdAmount])
 
-  const primaryAmount = React.useCallback((): MoneyAmount => {
+  const primaryAmount = React.useMemo((): MoneyAmount => {
     if (prefCurrency === "USD") {
       return usdMoneyAmount()
     }
     return satMoneyAmount()
   }, [prefCurrency, satMoneyAmount, usdMoneyAmount])
 
-  const secondaryAmount = (): MoneyAmount => {
+  const secondaryAmount = React.useMemo((): MoneyAmount => {
     if (prefCurrency === "BTC") {
       return usdMoneyAmount()
     }
     return satMoneyAmount()
-  }
+  }, [prefCurrency, satMoneyAmount, usdMoneyAmount])
 
   const [destination, setDestinationInternal] = useState("")
   const [invoice, setInvoice] = useState("")
@@ -319,7 +319,7 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
   }, [client, network, reset, route.params])
 
   useEffect(() => {
-    setAmounts({ value: primaryAmount().value, referenceCurrency: referenceCurrency() })
+    setAmounts({ value: primaryAmount.value, referenceCurrency: referenceCurrency() })
   }, [btcPrice, primaryAmount, referenceCurrency, setAmounts])
 
   useEffect(() => {
@@ -563,8 +563,8 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
       address={address}
       memo={memo}
       errs={errs}
-      primaryAmount={primaryAmount()}
-      secondaryAmount={secondaryAmount()}
+      primaryAmount={primaryAmount}
+      secondaryAmount={secondaryAmount}
       goBack={goBack}
       navigate={navigate}
       nextPrefCurrency={nextPrefCurrency}

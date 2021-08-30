@@ -115,29 +115,29 @@ export const InputPaymentDataInjected: ComponentType = (
     }
   }, [usdAmount])
 
-  const primaryAmount = React.useCallback((): MoneyAmount => {
+  const primaryAmount = React.useMemo((): MoneyAmount => {
     if (prefCurrency === "USD") {
       return usdMoneyAmount()
     }
     return satMoneyAmount()
   }, [prefCurrency, satMoneyAmount, usdMoneyAmount])
 
-  const secondaryAmount = (): MoneyAmount => {
+  const secondaryAmount = React.useMemo((): MoneyAmount => {
     if (prefCurrency === "BTC") {
       return usdMoneyAmount()
     }
     return satMoneyAmount()
-  }
+  }, [prefCurrency, satMoneyAmount, usdMoneyAmount])
 
   React.useEffect(() => {
-    setAmounts(primaryAmount().value)
+    setAmounts(primaryAmount.value)
   }, [currencyConverter, primaryAmount, setAmounts])
 
   return (
     <InputPayment
       nextPrefCurrency={nextPrefCurrency}
-      primaryAmount={primaryAmount()}
-      secondaryAmount={secondaryAmount()}
+      primaryAmount={primaryAmount}
+      secondaryAmount={secondaryAmount}
       {...props}
       onUpdateAmount={setAmounts}
     />
