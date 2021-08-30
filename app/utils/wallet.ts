@@ -29,7 +29,7 @@ export const getFullUri = ({
     return `${uri}?${params.toString()}`
   }
 
-  return uri + (params.toString() ? '?' + params.toString() : '')
+  return uri + (params.toString() ? "?" + params.toString() : "")
 }
 
 export const satsToBTC = (satsAmount: number): number => satsAmount / 10 ** 8

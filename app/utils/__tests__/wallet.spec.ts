@@ -49,7 +49,8 @@ describe("getFullUri", () => {
     })
 
     expect(uri).toBe(
-      `bitcoin:btc1234567890address?amount=${100 / 10 ** 8
+      `bitcoin:btc1234567890address?amount=${
+        100 / 10 ** 8
       }&message=will%2520not%2520forget`,
     )
   })
@@ -75,7 +76,7 @@ describe("getFullUri", () => {
 })
 
 describe("satsToBTC", () => {
-  it('returns the correct BTC number', () => {
+  it("returns the correct BTC number", () => {
     expect(satsToBTC(1000)).toBe(0.00001)
     expect(satsToBTC(0)).toBe(0)
     expect(satsToBTC(-1000)).toBe(-0.00001)
