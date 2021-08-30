@@ -1,5 +1,5 @@
 import toInteger from "lodash.tointeger"
-import { useBTCPrice } from "./use-price"
+import { useBTCPrice } from "./use-btc-price"
 
 type CurrencyConverter = {
   BTC: (value: number) => number

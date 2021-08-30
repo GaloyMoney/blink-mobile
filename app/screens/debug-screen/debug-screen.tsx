@@ -14,7 +14,7 @@ import { walletIsActive } from "../../graphql/query"
 
 import type { ScreenType } from "../../types/jsx"
 import type { INetwork } from "../../types/network"
-import { useBTCPrice } from "../../hooks/use-price"
+import { useBTCPrice } from "../../hooks"
 
 const styles = EStyleSheet.create({
   button: {
