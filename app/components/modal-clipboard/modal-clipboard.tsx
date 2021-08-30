@@ -8,14 +8,16 @@ import Modal from "react-native-modal"
 import { SafeAreaView } from "react-native-safe-area-context"
 import Icon from "react-native-vector-icons/Ionicons"
 
-import { modalClipboardVisibleVar } from "../../graphql/query"
+import {
+  LAST_CLIPBOARD_PAYMENT,
+  modalClipboardVisibleVar,
+} from "../../graphql/client-only-query"
 import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import type { ComponentType } from "../../types/jsx"
 import { validPayment } from "../../utils/parsing"
 import { Token } from "../../utils/token"
-import { LAST_CLIPBOARD_PAYMENT } from "../../graphql/client-only-query"
 import { cache } from "../../graphql/cache"
 
 const styles = StyleSheet.create({

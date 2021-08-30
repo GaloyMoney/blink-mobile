@@ -8,7 +8,6 @@ import { balanceBtc } from "../../graphql/query"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import type { ScreenType } from "../../types/jsx"
-import { CurrencyType } from "../../utils/enum"
 
 type Props = {
   route: RouteProp<RootStackParamList, "priceDetail">
@@ -21,7 +20,7 @@ export const PriceScreen: ScreenType = ({ route }: Props) => {
   return (
     // eslint-disable-next-line react-native/no-inline-styles
     <Screen backgroundColor={palette.white} preset="scroll" style={{ flex: 1 }}>
-      <BalanceHeader currency={CurrencyType.BTC} amount={balanceBtc(client)} />
+      <BalanceHeader currency={"BTC"} amount={balanceBtc(client)} />
       <PriceGraphDataInjected />
     </Screen>
   )

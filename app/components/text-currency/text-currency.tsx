@@ -1,25 +1,16 @@
 import * as currency_fmt from "currency.js"
 import * as React from "react"
-import { Text, TextStyle, View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
+import { Text, TextStyle } from "react-native"
 import type { ComponentType } from "../../types/jsx"
-import { CurrencyType } from "../../utils/enum"
-
-const styles = EStyleSheet.create({
-  container: {
-    alignItems: "flex-end",
-    flexDirection: "row",
-  },
-})
 
 type Props = {
   amount: number
-  currency: string
+  currency: CurrencyType
   style: TextStyle
 }
 
 export const TextCurrency: ComponentType = ({ amount, currency, style }: Props) => {
-  if (currency === CurrencyType.USD) {
+  if (currency === "USD") {
     return (
       <Text style={style}>
         {currency_fmt
@@ -28,29 +19,19 @@ export const TextCurrency: ComponentType = ({ amount, currency, style }: Props) 
       </Text>
     )
   }
-  if (currency === CurrencyType.BTC) {
+  if (currency === "BTC") {
     return (
-      <View style={styles.container}>
-        <Text style={style}>
-          {currency_fmt
-            .default(amount, { precision: 0, separator: ",", symbol: "" })
-            .format()}{" "}
-        </Text>
-        {/* <Text style={[style, {fontSize: 24}]}>BTC</Text> */}
-        <Text style={style}>BTC</Text>
-      </View>
+      <Text style={style}>
+        {currency_fmt
+          .default(amount, {
+            precision: 0,
+            separator: ",",
+            symbol: "",
+          })
+          .format()}{" "}
+        sats
+      </Text>
     )
-  } // if (currency === "sats") {
-  return (
-    <Text style={style}>
-      {currency_fmt
-        .default(amount, {
-          precision: 0,
-          separator: ",",
-          symbol: "",
-        })
-        .format()}{" "}
-      sats
-    </Text>
-  )
+  }
+  return null
 }

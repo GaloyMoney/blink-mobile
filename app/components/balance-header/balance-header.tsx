@@ -4,7 +4,6 @@ import { StyleProp, Text, View, ViewStyle } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
-import { CurrencyType } from "../../utils/enum"
 import { TextCurrency } from "../text-currency/text-currency"
 
 const styles = EStyleSheet.create({
@@ -71,7 +70,7 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
   loading = false,
   style,
 }: BalanceHeaderProps) => {
-  const otherCurrency = currency === CurrencyType.BTC ? CurrencyType.USD : "sats"
+  const otherCurrency = currency === "BTC" ? "USD" : "BTC"
 
   const subHeader =
     amountOtherCurrency !== null ? (
@@ -89,11 +88,7 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
         <View style={styles.container}>
           {loading && <Loader />}
           {!loading && (
-            <TextCurrency
-              amount={amount}
-              currency={currency === CurrencyType.BTC ? "sats" : CurrencyType.USD}
-              style={styles.text}
-            />
+            <TextCurrency amount={amount} currency={currency} style={styles.text} />
           )}
         </View>
         {!loading && subHeader}

@@ -1,6 +1,7 @@
 import { useQuery } from "@apollo/client"
 import * as React from "react"
-import * as _ from "lodash"
+import sumBy from "lodash.sumby"
+import filter from "lodash.filter"
 import { StatusBar, StyleSheet, Text, View } from "react-native"
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler"
 import { MountainHeader } from "../../components/mountain-header"
@@ -162,7 +163,7 @@ export const EarnMapDataInjected: ScreenType = ({ navigation }: EarnMapDataProps
     }
   }
 
-  const earnedSat = _.sumBy(_.filter(earnList, { completed: true }), "value")
+  const earnedSat = sumBy(filter(earnList, { completed: true }), "value")
 
   return (
     <EarnMapScreen

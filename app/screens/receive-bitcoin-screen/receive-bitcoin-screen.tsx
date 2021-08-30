@@ -15,6 +15,7 @@ import {
   ScrollView,
   Share,
   Text,
+  TextInput,
   View,
 } from "react-native"
 import { Button } from "react-native-elements"
@@ -312,7 +313,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
     return unsubscribe
   }, [invoice])
 
-  const inputMemoRef = React.useRef()
+  const inputMemoRef = React.useRef<TextInput>()
 
   React.useEffect(() => {
     Keyboard.addListener("keyboardDidShow", _keyboardDidShow)
@@ -337,7 +338,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
   }
 
   const _keyboardDidHide = () => {
-    inputMemoRef?.current.blur()
+    inputMemoRef?.current?.blur()
     setKeyboardIsShown(false)
   }
 
@@ -494,10 +495,11 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
       <ScrollView keyboardShouldPersistTaps="always">
         <View style={styles.section}>
           <InputPaymentDataInjected
+            amount={amount}
+            editable={!isSucceed}
+            forceKeyboard={false}
             onUpdateAmount={setAmount}
             onBlur={update}
-            forceKeyboard={false}
-            editable={!isSucceed}
             sub
           />
           <GaloyInput

@@ -1,16 +1,7 @@
-import { ApolloClient, FetchPolicy, gql, makeVar } from "@apollo/client"
-import _ from "lodash"
+import find from "lodash.find"
+import { ApolloClient, FetchPolicy, gql } from "@apollo/client"
 import { MockableApolloClient } from "../types/mockable"
 import { wallet_wallet } from "./__generated__/wallet"
-
-export const prefCurrencyVar = makeVar("USD")
-export function nextPrefCurrency(): void {
-  const units = ["sats", "USD"] // "BTC"
-  const currentIndex = _.indexOf(units, prefCurrencyVar())
-  prefCurrencyVar(units[(currentIndex + 1) % units.length])
-}
-
-export const modalClipboardVisibleVar = makeVar(false)
 
 export const QUERY_PRICE = gql`
   query prices($length: Int = 1) {
@@ -92,10 +83,8 @@ export const getWallet = (client: ApolloClient<unknown>): wallet_wallet[] => {
   return wallet
 }
 
-export const balanceUsd = (client: ApolloClient<unknown>): number =>
-  _.find(getWallet(client), { id: "BTC" }).balance * btc_price(client)
 export const balanceBtc = (client: ApolloClient<unknown>): number =>
-  _.find(getWallet(client), { id: "BTC" }).balance
+  find(getWallet(client), { id: "BTC" }).balance
 
 export const queryWallet = async (
   client: ApolloClient<unknown>,
@@ -140,18 +129,6 @@ export const USERNAME_EXIST = gql`
     usernameExists(username: $username)
   }
 `
-
-export const btc_price = (client: ApolloClient<unknown>): number => {
-  const price_default = NaN
-  try {
-    const result = client.readQuery({ query: QUERY_PRICE })
-    const { prices } = result
-    return prices[0].o ?? price_default
-  } catch (err) {
-    console.warn({ err }, "no price has been set")
-    return price_default
-  }
-}
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export const walletIsActive = (client: ApolloClient<unknown>): boolean => {

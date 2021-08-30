@@ -4,7 +4,7 @@ import i18n from "i18n-js"
 import moment, { Moment } from "moment"
 // eslint-disable-next-line import/no-unassigned-import
 import "moment/locale/es"
-import { prefCurrencyVar } from "./query"
+import { prefCurrencyVar } from "./client-only-query"
 
 const date_options: Intl.DateTimeFormatOptions = {
   weekday: "short",
@@ -17,8 +17,8 @@ const date_options: Intl.DateTimeFormatOptions = {
 
 // manage sign for usd. unlike for amount usd is not signed
 const signAmount = ({ amount, usd }) =>
-  prefCurrencyVar() === "sats" ? amount : amount > 0 ? usd : -usd
-const getPrecision = ({ usd }) => (prefCurrencyVar() === "sats" ? 0 : usd < 0.01 ? 4 : 2)
+  prefCurrencyVar() === "BTC" ? amount : amount > 0 ? usd : -usd
+const getPrecision = ({ usd }) => (prefCurrencyVar() === "BTC" ? 0 : usd < 0.01 ? 4 : 2)
 
 export const cache = new InMemoryCache({
   typePolicies: {
@@ -55,7 +55,7 @@ export const cache = new InMemoryCache({
           read(_, { readField }) {
             const usd = readField("usd")
             const amount = readField("amount")
-            const symbol = prefCurrencyVar() === "sats" ? "" : "$"
+            const symbol = prefCurrencyVar() === "BTC" ? "" : "$"
             return currency_fmt
               .default(signAmount({ amount, usd }), {
                 separator: ",",

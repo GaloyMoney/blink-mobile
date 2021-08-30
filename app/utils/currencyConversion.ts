@@ -1,5 +1,3 @@
-import { CurrencyType } from "./enum"
-
 export const currencyFormatting = {
   USD: (usd: number): string =>
     usd < 0.01 ? (usd == 0 ? usd.toFixed(2) : usd.toFixed(4)) : usd.toFixed(2),
@@ -7,7 +5,7 @@ export const currencyFormatting = {
   BTC: (btc: number): number => btc,
 }
 
-interface CurrencyConverter {
+interface OldCurrencyConverter {
   primary: string
   conversion: (value: number) => string
   reverse: (value: number) => number
@@ -15,13 +13,13 @@ interface CurrencyConverter {
   secondaryConversion: (value: number) => string | number
 }
 
-interface CurrencyConverters {
-  USD: CurrencyConverter
-  sats: CurrencyConverter
-  BTC: CurrencyConverter
+interface OldCurrencyConverters {
+  USD: OldCurrencyConverter
+  sats: OldCurrencyConverter
+  BTC: OldCurrencyConverter
 }
 
-export const CurrencyConversion = (btcPrice: number): CurrencyConverters => ({
+export const OldCurrencyConversion = (btcPrice: number): OldCurrencyConverters => ({
   USD: {
     primary: "USD",
     // TODO refactor: other place could use those conversions
@@ -50,10 +48,10 @@ export const CurrencyConversion = (btcPrice: number): CurrencyConverters => ({
 export const textCurrencyFormatting = (
   sats: number,
   price: number,
-  currency: string,
+  currency: CurrencyType,
 ): string => {
-  const cc = CurrencyConversion(price).sats
-  if (currency === "sats") {
+  const cc = OldCurrencyConversion(price).sats
+  if (currency === "BTC") {
     return `${cc.conversion(sats)} sats`
   }
   if (currency === "USD") {
@@ -62,8 +60,9 @@ export const textCurrencyFormatting = (
   throw Error("wrong currency")
 }
 
-const isCurrencyWithDecimals = (currency) =>
-  currency === CurrencyType.USD || currency === CurrencyType.BTC
+const isCurrencyWithDecimals = (currency) => {
+  return currency === "USD"
+}
 
 // Extracted from: https://github.com/ianmcnally/react-currency-masked-input/blob/3989ce3dfa69dbf78da00424811376c483aceb98/src/services/currency-conversion.js
 export const textToCurrency = (

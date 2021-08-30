@@ -18,17 +18,18 @@ import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
 import Icon from "react-native-vector-icons/Ionicons"
 import { getBuildNumber } from "react-native-device-info"
-import _ from "lodash"
+import find from "lodash.find"
 import { BalanceHeader } from "../../components/balance-header"
 import { IconTransaction } from "../../components/icon-transactions"
 import { LargeButton } from "../../components/large-button"
 import { Screen } from "../../components/screen"
 import { TransactionItem } from "../../components/transaction-item"
-import { balanceBtc, balanceUsd, MAIN_QUERY, walletIsActive } from "../../graphql/query"
+import { balanceBtc, MAIN_QUERY, walletIsActive } from "../../graphql/query"
+import { useUSDBalance } from "../../hooks"
 import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-import { AccountType, CurrencyType } from "../../utils/enum"
+import { AccountType } from "../../utils/enum"
 import { isIos } from "../../utils/helper"
 import { Token } from "../../utils/token"
 import type { ScreenType } from "../../types/jsx"
@@ -128,6 +129,7 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
   navigation,
 }: MoveMoneyScreenDataInjectedProps) => {
   const client = useApolloClient()
+  const balanceUsd = useUSDBalance(client)
 
   const {
     loading: loadingMain,
@@ -197,7 +199,7 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
     }
   }
 
-  const lastTransactions = _.find(data?.wallet, { id: "BTC" })?.transactions?.slice(
+  const lastTransactions = find(data?.wallet, { id: "BTC" })?.transactions?.slice(
     undefined,
     3,
   )
@@ -208,7 +210,7 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
       walletIsActive={walletIsActive(client)}
       loading={loadingMain}
       error={error}
-      amount={balanceUsd(client)}
+      amount={balanceUsd}
       amountOtherCurrency={balanceBtc(client)}
       refetch={refetch}
       isUpdateAvailable={
@@ -342,7 +344,7 @@ export const MoveMoneyScreen: ScreenType = ({
         />
         <BalanceHeader
           loading={loading}
-          currency={CurrencyType.USD}
+          currency={"USD"}
           amount={amount}
           amountOtherCurrency={amountOtherCurrency}
           style={{}}

@@ -11,12 +11,7 @@ import * as parsing from "./parsing"
 
 // TODO: look if we own the address
 
-export type IPaymentType =
-  | "lightning"
-  | "onchain"
-  | "onchainAndLightning"
-  | "username"
-  | undefined
+export type IPaymentType = "lightning" | "onchain" | "username" | undefined
 
 export interface IValidPaymentReponse {
   valid: boolean
