@@ -55,6 +55,19 @@ const LOGIN = gql`
   }
 `
 
+type MutationError = {
+  message: string
+}
+
+type UserLoginMutationResponse = {
+  errors: MutationError[]
+  authToken?: string
+}
+
+type LoginMutationFunction = (
+  params,
+) => Promise<FetchResult<Record<string, UserLoginMutationResponse>>>
+
 const styles = EStyleSheet.create({
   codeContainer: {
     alignSelf: "center",
@@ -175,7 +188,9 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
 }: WelcomePhoneValidationScreenDataInjectedProps) => {
   const client = useApolloClient()
 
-  const [login, { loading, error }] = useMutation(LOGIN, {
+  const [login, { loading, error }] = useMutation<{
+    login: LoginMutationFunction
+  }>(LOGIN, {
     fetchPolicy: "no-cache",
   })
 
@@ -208,8 +223,7 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
 }
 
 type WelcomePhoneValidationScreenProps = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  login: (params) => Promise<FetchResult<Record<string, any>>>
+  login: LoginMutationFunction
   onSuccess: (params) => void
   navigation: StackNavigationProp<PhoneValidationStackParamList, "welcomePhoneValidation">
   route: RouteProp<PhoneValidationStackParamList, "welcomePhoneValidation">
