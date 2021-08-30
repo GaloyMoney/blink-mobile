@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import * as React from "react"
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import {
   ActivityIndicator,
   Alert,
@@ -104,7 +104,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
 
   const inputRef = useRef<PhoneInput | null>()
 
-  const send = async () => {
+  const send = useCallback(async () => {
     const phone = inputRef.current.getValue()
     const phoneRegex = new RegExp("^\\+[0-9]+$")
 
@@ -125,7 +125,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
       // use global Toaster?
       // setErr(err.toString())
     }
-  }
+  }, [navigation, requestPhoneCode])
 
   useEffect(() => {
     inputRef?.current.focus()
