@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import * as React from "react"
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import {
   ActivityIndicator,
   Alert,
@@ -32,23 +32,41 @@ import { AuthenticationScreenPurpose } from "../../utils/enum"
 import BadgerPhone from "./badger-phone-01.svg"
 import type { PhoneValidationStackParamList } from "../../navigation/stack-param-lists"
 import { RouteProp } from "@react-navigation/native"
-import { login_login } from "./__generated__/login"
 
-const REQUEST_PHONE_CODE = gql`
-  mutation requestPhoneCode($phone: String) {
-    requestPhoneCode(phone: $phone) {
+const REQUEST_AUTH_CODE = gql`
+  mutation userRequestAuthCode($input: UserRequestAuthCodeInput!) {
+    userRequestAuthCode(input: $input) {
+      errors {
+        message
+      }
       success
     }
   }
 `
 
 const LOGIN = gql`
-  mutation login($phone: String, $code: Int) {
-    login(phone: $phone, code: $code) {
-      token
+  mutation userLogin($input: UserLoginInput!) {
+    userLogin(input: $input) {
+      errors {
+        message
+      }
+      authToken
     }
   }
 `
+
+type MutationError = {
+  message: string
+}
+
+type UserLoginMutationResponse = {
+  errors: MutationError[]
+  authToken?: string
+}
+
+type LoginMutationFunction = (
+  params,
+) => Promise<FetchResult<Record<string, UserLoginMutationResponse>>>
 
 const styles = EStyleSheet.create({
   codeContainer: {
@@ -93,15 +111,14 @@ type WelcomePhoneInputScreenProps = {
 export const WelcomePhoneInputScreen: ScreenType = ({
   navigation,
 }: WelcomePhoneInputScreenProps) => {
-  const [requestPhoneCode, { loading }] = useMutation(REQUEST_PHONE_CODE, {
+  const [requestPhoneCode, { loading }] = useMutation(REQUEST_AUTH_CODE, {
     fetchPolicy: "no-cache",
   })
 
   const inputRef = useRef<PhoneInput | null>()
 
-  const send = async () => {
+  const send = useCallback(async () => {
     const phone = inputRef.current.getValue()
-    console.log({ initPhoneNumber: phone })
     const phoneRegex = new RegExp("^\\+[0-9]+$")
 
     if (!inputRef.current.isValidNumber() || !phoneRegex.test(phone)) {
@@ -110,8 +127,8 @@ export const WelcomePhoneInputScreen: ScreenType = ({
     }
 
     try {
-      const { data } = await requestPhoneCode({ variables: { phone } })
-      if (data.requestPhoneCode.success) {
+      const { data } = await requestPhoneCode({ variables: { input: { phone } } })
+      if (data.userRequestAuthCode.success) {
         navigation.navigate("welcomePhoneValidation", { phone })
       } else {
         toastShow(translate("erros.generic"))
@@ -121,7 +138,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
       // use global Toaster?
       // setErr(err.toString())
     }
-  }
+  }, [navigation, requestPhoneCode])
 
   useEffect(() => {
     inputRef?.current.focus()
@@ -171,7 +188,9 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
 }: WelcomePhoneValidationScreenDataInjectedProps) => {
   const client = useApolloClient()
 
-  const [login, { loading, error }] = useMutation(LOGIN, {
+  const [login, { loading, error }] = useMutation<{
+    login: LoginMutationFunction
+  }>(LOGIN, {
     fetchPolicy: "no-cache",
   })
 
@@ -188,7 +207,6 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
 
     queryMain(client, { logged: Token.getInstance().has() })
 
-    console.log("sending device token for notifications")
     addDeviceToken(client)
   }
 
@@ -205,7 +223,7 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
 }
 
 type WelcomePhoneValidationScreenProps = {
-  login: (params) => Promise<FetchResult<Record<string, login_login>>>
+  login: LoginMutationFunction
   onSuccess: (params) => void
   navigation: StackNavigationProp<PhoneValidationStackParamList, "welcomePhoneValidation">
   route: RouteProp<PhoneValidationStackParamList, "welcomePhoneValidation">
@@ -235,11 +253,11 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
 
     try {
       const { data } = await login({
-        variables: { phone, code: Number(code) },
+        variables: { input: { phone, code: code } },
       })
 
       // TODO: validate token
-      const token = data?.login?.token
+      const token = data?.userLogin?.authToken
 
       if (token) {
         await onSuccess({ token })

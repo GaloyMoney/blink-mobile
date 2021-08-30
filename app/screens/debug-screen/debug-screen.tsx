@@ -9,7 +9,7 @@ import { color } from "../../theme"
 import { resetDataStore } from "../../utils/logout"
 import { loadNetwork, saveNetwork } from "../../utils/network"
 import { requestPermission } from "../../utils/notifications"
-import { getGraphQlUri, Token } from "../../utils/token"
+import { getGraphQLUri, Token } from "../../utils/token"
 import { walletIsActive } from "../../graphql/query"
 
 import type { ScreenType } from "../../types/jsx"
@@ -34,7 +34,7 @@ export const DebugScreen: ScreenType = () => {
 
   const networks: INetwork[] = ["regtest", "testnet", "mainnet"]
   const [networkState, setNetworkState] = React.useState("")
-  const [graphQlUri, setGraphQlUri] = React.useState("")
+  const [graphQLUri, setGraphQLUri] = React.useState("")
 
   const setNetwork = useCallback(
     async (network?) => {
@@ -48,7 +48,7 @@ export const DebugScreen: ScreenType = () => {
         n = network
       }
 
-      setGraphQlUri(await getGraphQlUri())
+      setGraphQLUri(await getGraphQLUri())
       setNetworkState(n)
     },
     [token],
@@ -72,7 +72,7 @@ export const DebugScreen: ScreenType = () => {
                 deleteCurrentUser
               }`
 
-              // const result = await request(getGraphQlUri(), query, {uid: "1234"})
+              // const result = await request(getGraphQLUri(), query, {uid: "1234"})
               // FIXME
             } catch (err) {
               console.log(`${err}`)
@@ -138,8 +138,8 @@ export const DebugScreen: ScreenType = () => {
           {token.network}
         </Text>
         <Text>
-          GraphQlUri:
-          {graphQlUri}
+          GraphQLUri:
+          {graphQLUri}
         </Text>
         <Text>
           BTC price:
