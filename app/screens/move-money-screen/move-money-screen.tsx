@@ -34,9 +34,7 @@ import { isIos } from "../../utils/helper"
 import { Token } from "../../utils/token"
 import { ScreenType } from "../../types/jsx"
 import { StackNavigationProp } from "@react-navigation/stack"
-import {
-  MoveMoneyStackParamList,
-} from "../../navigation/stack-param-lists"
+import { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
 import { HIDE_BALANCE } from "../../graphql/client-only-query"
 
 const styles = EStyleSheet.create({
@@ -344,7 +342,7 @@ export const MoveMoneyScreen: ScreenType = ({
           onPress={() =>
             navigation.navigate("priceDetail", {
               account: AccountType.Bitcoin,
-              securitySettings: balanceSettings?.hideBalanceSettings
+              securitySettings: balanceSettings?.hideBalanceSettings,
             })
           }
           icon={<Icon name="ios-trending-up-outline" size={32} />}

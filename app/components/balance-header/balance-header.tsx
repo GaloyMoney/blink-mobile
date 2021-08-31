@@ -93,22 +93,20 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
   securitySettings,
 }: BalanceHeaderProps) => {
   const { data: toolTipSettings } = useQuery(WALKTHROUGH_TOOL_TIP)
-  const [hideBalance, setHideBalance] = useState<boolean | string>(
-    securitySettings,
-  )
+  const [hideBalance, setHideBalance] = useState<boolean | string>(securitySettings)
   const [showToolTip, setShowToolTip] = useState<boolean | null>(null)
   const isFocused = useIsFocused()
 
   React.useEffect(() => {
-      setTimeout(function () {
-        setShowToolTip( toolTipSettings?.walkThroughToolTipSettings )
-      }, 1000)
+    setTimeout(function () {
+      setShowToolTip(toolTipSettings?.walkThroughToolTipSettings)
+    }, 1000)
     // note: using the toolTipSettings dependency will cause this to fire too early. Need to wait for component to be in focus
     // eslint-disable-next-line
-  },[isFocused])
+  }, [isFocused])
 
   React.useEffect(() => {
-      setHideBalance(securitySettings)
+    setHideBalance(securitySettings)
   }, [isFocused, securitySettings])
 
   const handleToolTipClose = async () => {

@@ -65,8 +65,9 @@ export type MoveMoneyStackParamList = {
   Profile: undefined
   phoneValidation: undefined
   priceDetail: {
-    account: AccountType;
-    hideBalanceSettings: boolean | null }
+    account: AccountType
+    hideBalanceSettings: boolean | null
+  }
   settings: undefined
   security: {
     mIsBiometricsEnabled: boolean
