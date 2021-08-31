@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Alert, BackHandler, Button, TouchableOpacity, View } from "react-native"
+import { Alert, View } from "react-native"
 import Share from "react-native-share"
 import { Divider, Icon, ListItem } from "react-native-elements"
 import { HeaderBackButton, StackNavigationProp } from "@react-navigation/stack"
@@ -27,7 +27,7 @@ import { hasFullPermissions, requestPermission } from "../../utils/notifications
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
-import { useIsFocused } from "@react-navigation/core"
+import { useIsFocused } from "@react-navigation/native"
 import { useEffect } from "react"
 
 type Props = {
@@ -161,13 +161,14 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
   const isFocused = useIsFocused()
 
   useEffect(() => {
-    navigation.setOptions({
-      headerLeft: () => (
-        <HeaderBackButton
-          label={"Home"}
-          onPress={() => navigation.navigate("moveMoney")}
-        ></HeaderBackButton>
-      ),
+     navigation.setOptions({
+        headerLeft: function HeaderBackOverRider() {
+          return  ( <HeaderBackButton
+              label={"Home"}
+              onPress={() => navigation.navigate("moveMoney")}
+          ></HeaderBackButton>
+          )
+        }
     })
   }, [isFocused])
 

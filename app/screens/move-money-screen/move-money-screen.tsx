@@ -34,7 +34,13 @@ import { isIos } from "../../utils/helper"
 import { Token } from "../../utils/token"
 import { ScreenType } from "../../types/jsx"
 import { StackNavigationProp } from "@react-navigation/stack"
+<<<<<<< HEAD
 import { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
+=======
+import {
+  MoveMoneyStackParamList,
+} from "../../navigation/stack-param-lists"
+>>>>>>> 8255d77d (remove unused and incorrect imports as well as unused initialized variables. Update navigation.setOptions render to fix component displayName error)
 import { HIDE_BALANCE } from "../../graphql/client-only-query"
 
 const styles = EStyleSheet.create({
