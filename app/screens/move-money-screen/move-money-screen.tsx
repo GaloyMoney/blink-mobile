@@ -36,7 +36,6 @@ import { ScreenType } from "../../types/jsx"
 import { StackNavigationProp } from "@react-navigation/stack"
 import {
   MoveMoneyStackParamList,
-  RootStackParamList,
 } from "../../navigation/stack-param-lists"
 import { HIDE_BALANCE } from "../../graphql/client-only-query"
 
