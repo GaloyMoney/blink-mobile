@@ -157,15 +157,16 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
     resetDataStore,
   } = params
 
- React.useEffect(() => {
+  React.useEffect(() => {
     navigation.setOptions({
       headerLeft: function HeaderBackOverRider() {
-        return  ( <HeaderBackButton
-                label={"Home"}
-                onPress={() => navigation.navigate("moveMoney")}
-            ></HeaderBackButton>
+        return (
+          <HeaderBackButton
+            label={"Home"}
+            onPress={() => navigation.navigate("moveMoney")}
+          ></HeaderBackButton>
         )
-      }
+      },
     })
   })
 
