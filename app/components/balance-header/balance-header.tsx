@@ -4,7 +4,6 @@ import { StyleProp, Text, TouchableHighlight, View, ViewStyle } from "react-nati
 import EStyleSheet from "react-native-extended-stylesheet"
 import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
-import { CurrencyType } from "../../utils/enum"
 import { TextCurrency } from "../text-currency/text-currency"
 import { useState } from "react"
 import { useIsFocused } from "@react-navigation/native"
@@ -113,7 +112,8 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
     setShowToolTip(await saveWalkThroughToolTipSettings(false))
   }
 
-  const otherCurrency = currency === CurrencyType.BTC ? CurrencyType.USD : "sats"
+  const otherCurrency = currency === "BTC" ? "USD" : "BTC"
+
   const hiddenBalanceSet = () => {
     return (
       <>
@@ -158,7 +158,7 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
             >
               <TextCurrency
                 amount={amount}
-                currency={currency === CurrencyType.BTC ? "sats" : CurrencyType.USD}
+                currency={otherCurrency}
                 style={styles.text}
               />
             </TouchableHighlight>

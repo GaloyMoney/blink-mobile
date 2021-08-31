@@ -21,7 +21,7 @@ export const PriceScreen: ScreenType = ({ route }: Props) => {
     // eslint-disable-next-line react-native/no-inline-styles
     <Screen backgroundColor={palette.white} preset="scroll" style={{ flex: 1 }}>
       <BalanceHeader
-        currency={CurrencyType.BTC}
+        currency={"BTC"}
         amount={balanceBtc(client)}
         securitySettings={securitySettings}
       />

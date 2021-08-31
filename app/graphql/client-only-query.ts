@@ -1,5 +1,7 @@
 import { gql, makeVar } from "@apollo/client"
 import indexOf from "lodash.indexof"
+import { remove, save } from "../utils/storage"
+import { cache } from "./cache"
 
 export const prefCurrencyVar = makeVar<CurrencyType>("USD")
 
@@ -10,9 +12,6 @@ export const nextPrefCurrency = (): void => {
 }
 
 export const modalClipboardVisibleVar = makeVar(false)
-import { gql } from "@apollo/client"
-import { remove, save } from "../utils/storage"
-import { cache } from "./cache"
 
 export const LAST_CLIPBOARD_PAYMENT = gql`
   query LastClipboardPayment {
