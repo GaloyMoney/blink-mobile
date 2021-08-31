@@ -6,7 +6,7 @@ import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
 import { CurrencyType } from "../../utils/enum"
 import { TextCurrency } from "../text-currency/text-currency"
-import { useState, useLayoutEffect } from "react"
+import { useState } from "react"
 import { useIsFocused } from "@react-navigation/native"
 import {
   saveWalkThroughToolTipSettings,
@@ -99,17 +99,17 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
   const [showToolTip, setShowToolTip] = useState<boolean | null>(null)
   const isFocused = useIsFocused()
 
-  const checkHideBalanceSettings = async () => {
-    setHideBalance(securitySettings)
-    if (toolTipSettings?.walkThroughToolTipSettings) {
+  React.useEffect(() => {
       setTimeout(function () {
-        setShowToolTip(toolTipSettings?.walkThroughToolTipSettings)
+        setShowToolTip( toolTipSettings?.walkThroughToolTipSettings )
       }, 1000)
-    }
-  }
-  useLayoutEffect(() => {
-    checkHideBalanceSettings()
-  }, [isFocused])
+    // note: using the toolTipSettings dependency will cause this to fire too early. Need to wait for component to be in focus
+    // eslint-disable-next-line
+  },[isFocused])
+
+  React.useEffect(() => {
+      setHideBalance(securitySettings)
+  }, [isFocused, securitySettings])
 
   const handleToolTipClose = async () => {
     setShowToolTip(await saveWalkThroughToolTipSettings(false))
