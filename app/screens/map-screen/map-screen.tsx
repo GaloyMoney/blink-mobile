@@ -91,8 +91,8 @@ export const MapScreen: ScreenType = ({ navigation }: Props) => {
     useCallback(() => {
       requestLocationPermission()
 
-      if (!grantedPermission) {
-        return
+      if (grantedPermission) {
+        return null
       }
 
       const watchId = Geolocation.watchPosition((info) => {

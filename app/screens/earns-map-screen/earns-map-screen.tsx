@@ -37,6 +37,7 @@ import type { ComponentType, ScreenType } from "../../types/jsx"
 import type { PrimaryStackParamList } from "../../navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
 import i18n from "i18n-js"
+import { SvgProps } from "react-native-svg"
 
 const styles = StyleSheet.create({
   contentContainer: {
@@ -85,7 +86,7 @@ interface IInBetweenTile {
 interface IBoxAdding {
   text: string
   section: string
-  Icon: React.Component
+  Icon: typeof React.Component
   side: SideType
   position: number
   length: number
@@ -94,7 +95,7 @@ interface IBoxAdding {
 interface ISectionData {
   text: string
   index: string
-  icon: React.Component
+  icon: React.FunctionComponent<SvgProps>
 }
 
 interface IEarnMapScreen {
@@ -292,7 +293,7 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> = ({
     )
   })
 
-  const scrollViewRef = React.useRef()
+  const scrollViewRef: React.MutableRefObject<ScrollView> = React.useRef()
 
   React.useEffect(() => {
     scrollViewRef.current.scrollToEnd()
