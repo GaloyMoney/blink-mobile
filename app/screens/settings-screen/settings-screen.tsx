@@ -27,8 +27,6 @@ import { hasFullPermissions, requestPermission } from "../../utils/notifications
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
-import { useIsFocused } from "@react-navigation/native"
-import { useEffect } from "react"
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "settings">
@@ -158,19 +156,18 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
     securityAction,
     resetDataStore,
   } = params
-  const isFocused = useIsFocused()
 
-  useEffect(() => {
-     navigation.setOptions({
-        headerLeft: function HeaderBackOverRider() {
-          return  ( <HeaderBackButton
-              label={"Home"}
-              onPress={() => navigation.navigate("moveMoney")}
-          ></HeaderBackButton>
-          )
-        }
+ React.useEffect(() => {
+    navigation.setOptions({
+      headerLeft: function HeaderBackOverRider() {
+        return  ( <HeaderBackButton
+                label={"Home"}
+                onPress={() => navigation.navigate("moveMoney")}
+            ></HeaderBackButton>
+        )
+      }
     })
-  }, [isFocused])
+  })
 
   const list = [
     {
