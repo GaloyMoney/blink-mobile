@@ -170,18 +170,6 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
     })
   })
 
-  React.useEffect(() => {
-    navigation.setOptions({
-      headerLeft: function HeaderBackOverRider() {
-        return (
-          <HeaderBackButton
-            label={"Home"}
-            onPress={() => navigation.navigate("moveMoney")}
-          ></HeaderBackButton>
-        )
-      },
-    })
-  })
 
   const list = [
     {

@@ -69,10 +69,6 @@ export type MoveMoneyStackParamList = {
     hideBalanceSettings: boolean | null
   }
   settings: undefined
-  security: {
-    mIsBiometricsEnabled: boolean
-    mIsPinEnabled: boolean
-  }
   transactionDetail: {
     tx: query_transactions_wallet_transactions
   }
