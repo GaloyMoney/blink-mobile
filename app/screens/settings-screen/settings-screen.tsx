@@ -139,7 +139,7 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
 type SettingsScreenProps = {
   client: ApolloClient<unknown>
   walletIsActive: boolean
-  navigation: StackNavigationProp<RootStackParamList, "settings" | "moveMoney">
+  navigation: StackNavigationProp<RootStackParamList, "settings">
   username: string
   notificationsEnabled: boolean
   csvAction: (options?: QueryLazyOptions<OperationVariables>) => void
