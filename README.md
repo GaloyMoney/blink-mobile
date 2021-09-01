@@ -5,6 +5,7 @@
 This repository is the mobile application of Galoy. It is build with [React Native](https://reactnative.dev/), and compatible on iOS and Android.
 
 ## Start
+
 Prerequisite -- Follow the instruction [getting started](https://reactnative.dev/docs/getting-started) to have the correct setup.
 
 Clone into the project

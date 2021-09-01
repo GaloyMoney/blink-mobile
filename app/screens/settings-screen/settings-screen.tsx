@@ -170,7 +170,6 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
     })
   })
 
-
   const list = [
     {
       category: translate("common.phoneNumber"),
