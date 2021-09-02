@@ -15,16 +15,10 @@ type Props = {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const PriceScreen: ScreenType = ({ route }: Props) => {
-  const { securitySettings } = route.params
   const client = useApolloClient()
   return (
     // eslint-disable-next-line react-native/no-inline-styles
     <Screen backgroundColor={palette.white} preset="scroll" style={{ flex: 1 }}>
-      <BalanceHeader
-        currency={"BTC"}
-        amount={balanceBtc(client)}
-        securitySettings={securitySettings}
-      />
       <BalanceHeader currency={"BTC"} amount={balanceBtc(client)} />
       <PriceGraphDataInjected />
     </Screen>

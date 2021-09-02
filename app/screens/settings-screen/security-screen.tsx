@@ -17,10 +17,10 @@ import { PinScreenPurpose } from "../../utils/enum"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import {
   HIDE_BALANCE,
-  saveHideBalanceSettings,
-  saveWalkThroughToolTipSettings,
+  saveHideBalance,
+  saveHiddenBalanceToolTip,
 } from "../../graphql/client-only-query"
-import { useQuery } from "@apollo/client"
+import { useApolloClient, useQuery } from "@apollo/client"
 
 const styles = EStyleSheet.create({
   button: {
@@ -85,13 +85,14 @@ type Props = {
 }
 
 export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
+  const client = useApolloClient()
   const { mIsBiometricsEnabled, mIsPinEnabled } = route.params
   const { data } = useQuery(HIDE_BALANCE)
 
   const [isBiometricsEnabled, setIsBiometricsEnabled] = useState(mIsBiometricsEnabled)
   const [isPinEnabled, setIsPinEnabled] = useState(mIsPinEnabled)
   const [isHideBalanceEnabled, setIsHideBalanceEnabled] = useState(
-    data?.hideBalanceSettings ? data?.hideBalanceSettings : null,
+    data?.hideBalance ?? null,
   )
 
   useFocusEffect(() => {
@@ -150,11 +151,11 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
 
   const onHideBalanceValueChanged = async (value) => {
     if (value) {
-      setIsHideBalanceEnabled(await saveHideBalanceSettings(true))
-      await saveWalkThroughToolTipSettings(true)
+      setIsHideBalanceEnabled(await saveHideBalance(client, true))
+      await saveHiddenBalanceToolTip(client, true)
     } else {
-      setIsHideBalanceEnabled(await saveHideBalanceSettings(null))
-      await saveWalkThroughToolTipSettings(false)
+      setIsHideBalanceEnabled(await saveHideBalance(client, false))
+      await saveHiddenBalanceToolTip(client, false)
     }
   }
 
@@ -226,7 +227,6 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
           onValueChange={(value) => onHideBalanceValueChanged(value)}
         />
       </View>
-      <View style={styles.settingContainer}></View>
     </Screen>
   )
 }

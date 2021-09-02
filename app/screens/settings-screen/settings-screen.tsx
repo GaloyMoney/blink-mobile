@@ -2,7 +2,7 @@ import * as React from "react"
 import { Alert, View } from "react-native"
 import Share from "react-native-share"
 import { Divider, Icon, ListItem } from "react-native-elements"
-import { HeaderBackButton, StackNavigationProp } from "@react-navigation/stack"
+import { StackNavigationProp } from "@react-navigation/stack"
 import {
   ApolloClient,
   gql,
@@ -156,19 +156,6 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
     securityAction,
     resetDataStore,
   } = params
-
-  React.useEffect(() => {
-    navigation.setOptions({
-      headerLeft: function HeaderBackOverRider() {
-        return (
-          <HeaderBackButton
-            label={"Home"}
-            onPress={() => navigation.navigate("moveMoney")}
-          ></HeaderBackButton>
-        )
-      },
-    })
-  })
 
   const list = [
     {

@@ -1,19 +1,17 @@
 import * as React from "react"
+import { useCallback, useEffect, useState } from "react"
 import ContentLoader, { Rect } from "react-content-loader/native"
 import { StyleProp, Text, TouchableHighlight, View, ViewStyle } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
+import Icon from "react-native-vector-icons/Ionicons"
+import Tooltip from "react-native-walkthrough-tooltip"
 import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
 import { TextCurrency } from "../text-currency/text-currency"
-import { useState } from "react"
 import { useIsFocused } from "@react-navigation/native"
-import {
-  saveWalkThroughToolTipSettings,
-  WALKTHROUGH_TOOL_TIP,
-} from "../../graphql/client-only-query"
-import Tooltip from "react-native-walkthrough-tooltip"
-import Icon from "react-native-vector-icons/Entypo"
-import { useQuery } from "@apollo/client"
+import { useHiddenBalanceToolTip, useHideBalance } from "../../hooks"
+import { saveHiddenBalanceToolTip } from "../../graphql/client-only-query"
+import { useApolloClient } from "@apollo/client"
 
 const styles = EStyleSheet.create({
   amount: {
@@ -39,14 +37,19 @@ const styles = EStyleSheet.create({
 
   header: {
     alignItems: "center",
-    marginBottom: "32rem",
+    marginBottom: "12rem",
     marginTop: "32rem",
     minHeight: "75rem",
   },
 
+  hiddenBalanceContainer: {
+    alignItems: "center",
+    flexGrow: 1,
+    justifyContent: "center",
+  },
+
   hiddenBalanceIcon: {
     fontSize: "25rem",
-    marginTop: "13rem",
   },
 
   subCurrencyText: {
@@ -67,7 +70,6 @@ export interface BalanceHeaderProps {
   amountOtherCurrency?: number
   loading?: boolean
   style?: StyleProp<ViewStyle>
-  securitySettings?: boolean
 }
 
 const Loader = () => (
@@ -89,28 +91,38 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
   amountOtherCurrency = null,
   loading = false,
   style,
-  securitySettings,
 }: BalanceHeaderProps) => {
-  const { data: toolTipSettings } = useQuery(WALKTHROUGH_TOOL_TIP)
-  const [hideBalance, setHideBalance] = useState<boolean | string>(securitySettings)
-  const [showToolTip, setShowToolTip] = useState<boolean | null>(null)
+  const client = useApolloClient()
+  const hideBalance = useHideBalance()
+  const hiddenBalanceToolTip = useHiddenBalanceToolTip()
   const isFocused = useIsFocused()
+  const [showToolTip, setShowToolTip] = useState<boolean>(false)
+  const [mHideBalance, setHideBalance] = useState<boolean>(hideBalance)
 
-  React.useEffect(() => {
-    setTimeout(function () {
-      setShowToolTip(toolTipSettings?.walkThroughToolTipSettings)
-    }, 1000)
-    // note: using the toolTipSettings dependency will cause this to fire too early. Need to wait for component to be in focus
-    // eslint-disable-next-line
-  }, [isFocused])
+  const closeToolTip = useCallback(async () => {
+    setShowToolTip(await saveHiddenBalanceToolTip(client, false))
+  }, [client])
 
-  React.useEffect(() => {
-    setHideBalance(securitySettings)
-  }, [isFocused, securitySettings])
+  useEffect(() => {
+    // Need to wait for the component to be in focus
+    if (isFocused) {
+      setTimeout(function () {
+        if (isFocused) {
+          setShowToolTip(hiddenBalanceToolTip)
+        }
+      }, 1000)
+    }
+  }, [hiddenBalanceToolTip, isFocused, showToolTip])
 
-  const handleToolTipClose = async () => {
-    setShowToolTip(await saveWalkThroughToolTipSettings(false))
-  }
+  useEffect(() => {
+    if (showToolTip && !isFocused) {
+      closeToolTip()
+    }
+  }, [closeToolTip, isFocused, showToolTip])
+
+  useEffect(() => {
+    setHideBalance(hideBalance)
+  }, [hideBalance, isFocused])
 
   const otherCurrency = currency === "BTC" ? "USD" : "BTC"
 
@@ -119,15 +131,19 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
       <>
         <Tooltip
           isVisible={showToolTip}
-          content={<Text>{translate("BalanceHeader.toolTipHiddenBalance")}</Text>}
-          placement="top"
-          onClose={handleToolTipClose}
+          content={<Text>{translate("BalanceHeader.hiddenBalanceToolTip")}</Text>}
+          placement="bottom"
+          onClose={closeToolTip}
         >
           <TouchableHighlight
             underlayColor={styles.touchableHighlightColor}
-            onPress={() => {
-              setHideBalance(null)
+            onLongPress={() => {
+              if (showToolTip) {
+                closeToolTip()
+              }
+              setHideBalance(false)
             }}
+            style={styles.hiddenBalanceTouchableHighlight}
           >
             <Icon style={styles.hiddenBalanceIcon} name="eye" />
           </TouchableHighlight>
@@ -145,6 +161,7 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
           style={styles.subCurrencyText}
         />
       ) : null
+
     return (
       <View style={styles.amount}>
         <View style={styles.container}>
@@ -153,14 +170,14 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
             <TouchableHighlight
               underlayColor={styles.touchableHighlightColor}
               onPress={() => {
-                setHideBalance(true)
+                if (hideBalance) {
+                  setHideBalance(true)
+                }
               }}
             >
-              <TextCurrency
-                amount={amount}
-                currency={otherCurrency}
-                style={styles.text}
-              />
+              <>
+                <TextCurrency amount={amount} currency={currency} style={styles.text} />
+              </>
             </TouchableHighlight>
           )}
         </View>
@@ -168,11 +185,14 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
       </View>
     )
   }
+
   return (
     <View style={[styles.header, style]}>
       <Text style={styles.balanceText}>{translate("BalanceHeader.currentBalance")}</Text>
-      {hideBalance && hiddenBalanceSet()}
-      {!hideBalance && defaultBalanceHeader()}
+      {!mHideBalance && defaultBalanceHeader()}
+      <View style={styles.hiddenBalanceContainer}>
+        {mHideBalance && hiddenBalanceSet()}
+      </View>
     </View>
   )
 }

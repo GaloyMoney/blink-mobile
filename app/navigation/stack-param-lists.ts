@@ -33,6 +33,9 @@ export type RootStackParamList = {
     mIsPinEnabled: boolean
   }
   sectionCompleted: { amount: number; sectionTitle: string }
+  priceDetail: {
+    account: AccountType
+  }
   Profile: undefined
   phoneValidation: undefined
   transactionDetail: {
@@ -53,9 +56,7 @@ export type ContactStackParamList = {
 }
 
 export type MoveMoneyStackParamList = {
-  moveMoney: {
-    mHideBalanceEnabled: boolean | null
-  }
+  moveMoney: undefined
   scanningQRCode: undefined
   sendBitcoin: {
     username: string | null
@@ -66,7 +67,6 @@ export type MoveMoneyStackParamList = {
   phoneValidation: undefined
   priceDetail: {
     account: AccountType
-    hideBalanceSettings: boolean | null
   }
   settings: undefined
   transactionDetail: {

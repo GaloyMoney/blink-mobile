@@ -35,9 +35,12 @@ import { Token } from "../../utils/token"
 import { ScreenType } from "../../types/jsx"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
-import { HIDE_BALANCE } from "../../graphql/client-only-query"
 
 const styles = EStyleSheet.create({
+  balanceHeader: {
+    marginBottom: "32rem",
+  },
+
   bottom: {
     alignItems: "center",
     marginVertical: "16rem",
@@ -85,7 +88,7 @@ const styles = EStyleSheet.create({
   },
 
   listContainer: {
-    marginTop: "32rem",
+    marginTop: "24rem",
   },
 
   modal: { marginBottom: 0, marginHorizontal: 0 },
@@ -245,7 +248,6 @@ export const MoveMoneyScreen: ScreenType = ({
   amountOtherCurrency,
   isUpdateAvailable,
 }: MoveMoneyScreenProps) => {
-  const { data: balanceSettings } = useQuery(HIDE_BALANCE)
   const [modalVisible, setModalVisible] = useState(false)
   const [secretMenuCounter, setSecretMenuCounter] = useState(0)
 
@@ -342,7 +344,6 @@ export const MoveMoneyScreen: ScreenType = ({
           onPress={() =>
             navigation.navigate("priceDetail", {
               account: AccountType.Bitcoin,
-              securitySettings: balanceSettings?.hideBalanceSettings,
             })
           }
           icon={<Icon name="ios-trending-up-outline" size={32} />}
@@ -352,8 +353,7 @@ export const MoveMoneyScreen: ScreenType = ({
           currency={"USD"}
           amount={amount}
           amountOtherCurrency={amountOtherCurrency}
-          style={{}}
-          securitySettings={balanceSettings?.hideBalanceSettings}
+          style={styles.balanceHeader}
         />
         <Button
           buttonStyle={styles.buttonStyleTime}
