@@ -64,10 +64,10 @@ type Props = {
 }
 
 type Contact = {
-  id: string,
-  name: string,
-  prettyName: string,
-  transactionsCount: string,
+  id: string
+  name: string
+  prettyName: string
+  transactionsCount: string
 }
 
 export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
@@ -90,22 +90,25 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
 
   // This implementation of search will cause a match if any word in the search text
   // matches the contacts name or prettyName.
-  const updateMatchingContacts = useCallback((newSearchText: string) => {
-    setSearchText(newSearchText)
-    if (newSearchText.length > 0) {
-      const searchWordArray = newSearchText
-        .split(" ")
-        .filter((text) => text.trim().length > 0)
+  const updateMatchingContacts = useCallback(
+    (newSearchText: string) => {
+      setSearchText(newSearchText)
+      if (newSearchText.length > 0) {
+        const searchWordArray = newSearchText
+          .split(" ")
+          .filter((text) => text.trim().length > 0)
 
-      const matchingContacts = contacts.filter((contact) =>
-        searchWordArray.some((word) => wordMatchesContact(word, contact)),
-      )
+        const matchingContacts = contacts.filter((contact) =>
+          searchWordArray.some((word) => wordMatchesContact(word, contact)),
+        )
 
-      setMatchingContacts(matchingContacts)
-    } else {
-      setMatchingContacts(contacts)
-    }
-  }, [contacts])
+        setMatchingContacts(matchingContacts)
+      } else {
+        setMatchingContacts(contacts)
+      }
+    },
+    [contacts],
+  )
 
   const wordMatchesContact = (searchWord: string, contact: Contact): boolean => {
     let contactNameMatchesSearchWord

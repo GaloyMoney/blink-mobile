@@ -6,9 +6,24 @@ import BitcoinCircle from "./bitcoin-circle-01.svg"
 import { EarnMapScreen } from "./earns-map-screen"
 
 const sectionsData = [
-  { text: "Bitcoin:\nwhat is it?", icon: BitcoinCircle, id: "bitcoinWhatIsIt", index: "1" },
-  { text: "Bitcoin v traditional Money", icon: BitcoinCircle, id: "bitcoinWhatIsIt", index: "2" },
-  { text: "Bitcoin:\nwhy is it special?", icon: BitcoinCircle, id: "bitcoinWhatIsIt", index: "3" },
+  {
+    text: "Bitcoin:\nwhat is it?",
+    icon: BitcoinCircle,
+    id: "bitcoinWhatIsIt",
+    index: "1",
+  },
+  {
+    text: "Bitcoin v traditional Money",
+    icon: BitcoinCircle,
+    id: "bitcoinWhatIsIt",
+    index: "2",
+  },
+  {
+    text: "Bitcoin:\nwhy is it special?",
+    icon: BitcoinCircle,
+    id: "bitcoinWhatIsIt",
+    index: "3",
+  },
 ]
 
 declare let module
