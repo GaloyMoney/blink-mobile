@@ -10,8 +10,6 @@ import {
   Keyboard,
   Platform,
   ScrollView,
-  Share,
-  Text,
   TextInput,
   View,
 } from "react-native"

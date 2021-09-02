@@ -33,6 +33,9 @@ export type RootStackParamList = {
     mIsPinEnabled: boolean
   }
   sectionCompleted: { amount: number; sectionTitle: string }
+  priceDetail: {
+    account: AccountType
+  }
   Profile: undefined
   phoneValidation: undefined
   transactionDetail: {
@@ -40,7 +43,6 @@ export type RootStackParamList = {
     tx: query_transactions_wallet_transactions
   }
   transactionHistory: undefined
-  priceDetail: { account: AccountType }
   Earn: undefined
 }
 
@@ -63,7 +65,9 @@ export type MoveMoneyStackParamList = {
   receiveBitcoin: undefined
   Profile: undefined
   phoneValidation: undefined
-  priceDetail: { account: AccountType }
+  priceDetail: {
+    account: AccountType
+  }
   settings: undefined
   transactionDetail: {
     tx: query_transactions_wallet_transactions

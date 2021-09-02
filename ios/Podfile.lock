@@ -663,7 +663,7 @@ SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
   FBLazyVector: 49cbe4b43e445b06bf29199b6ad2057649e4c8f5
-  FBReactNativeSpec: 49af259315248df108d3144509353caec1d96a1d
+  FBReactNativeSpec: 84b8a46a46edfef70b945915cbe6edc4577fbbf0
   Firebase: e1e089d9aac215a52442583f818ab61de3c4581b
   FirebaseAnalytics: 9f8f4feab1f3fddf4e4515f8f022fe6aa9e51043
   FirebaseCore: 0a43b7f1c5b36f3358cd703011ca4c7e0df55870
@@ -740,6 +740,6 @@ SPEC CHECKSUMS:
   Yoga: 8c8436d4171c87504c648ae23b1d81242bdf3bbf
   YoutubePlayer-in-WKWebView: cfbf46da51d7370662a695a8f351e5fa1d3e1008
 
-PODFILE CHECKSUM: 9452286fe8fd98fc112c1f8fc1fbf80a59af1476
+PODFILE CHECKSUM: dea6bd9d8eef32f99ced67f98e8d4a370eabd428
 
 COCOAPODS: 1.10.1

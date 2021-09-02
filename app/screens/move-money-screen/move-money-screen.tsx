@@ -32,11 +32,15 @@ import { palette } from "../../theme/palette"
 import { AccountType } from "../../utils/enum"
 import { isIos } from "../../utils/helper"
 import { Token } from "../../utils/token"
-import type { ScreenType } from "../../types/jsx"
+import { ScreenType } from "../../types/jsx"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
 
 const styles = EStyleSheet.create({
+  balanceHeader: {
+    marginBottom: "32rem",
+  },
+
   bottom: {
     alignItems: "center",
     marginVertical: "16rem",
@@ -84,7 +88,7 @@ const styles = EStyleSheet.create({
   },
 
   listContainer: {
-    marginTop: "32rem",
+    marginTop: "24rem",
   },
 
   modal: { marginBottom: 0, marginHorizontal: 0 },
@@ -245,8 +249,8 @@ export const MoveMoneyScreen: ScreenType = ({
   isUpdateAvailable,
 }: MoveMoneyScreenProps) => {
   const [modalVisible, setModalVisible] = useState(false)
-
   const [secretMenuCounter, setSecretMenuCounter] = useState(0)
+
   React.useEffect(() => {
     if (secretMenuCounter > 2) {
       navigation.navigate("Profile")
@@ -338,7 +342,9 @@ export const MoveMoneyScreen: ScreenType = ({
           buttonStyle={styles.buttonStyleTime}
           containerStyle={styles.separator}
           onPress={() =>
-            navigation.navigate("priceDetail", { account: AccountType.Bitcoin })
+            navigation.navigate("priceDetail", {
+              account: AccountType.Bitcoin,
+            })
           }
           icon={<Icon name="ios-trending-up-outline" size={32} />}
         />
@@ -347,7 +353,7 @@ export const MoveMoneyScreen: ScreenType = ({
           currency={"USD"}
           amount={amount}
           amountOtherCurrency={amountOtherCurrency}
-          style={{}}
+          style={styles.balanceHeader}
         />
         <Button
           buttonStyle={styles.buttonStyleTime}

@@ -15,6 +15,12 @@ import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { PinScreenPurpose } from "../../utils/enum"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
+import {
+  HIDE_BALANCE,
+  saveHideBalance,
+  saveHiddenBalanceToolTip,
+} from "../../graphql/client-only-query"
+import { useApolloClient, useQuery } from "@apollo/client"
 
 const styles = EStyleSheet.create({
   button: {
@@ -79,16 +85,20 @@ type Props = {
 }
 
 export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
+  const client = useApolloClient()
   const { mIsBiometricsEnabled, mIsPinEnabled } = route.params
+  const { data } = useQuery(HIDE_BALANCE)
 
   const [isBiometricsEnabled, setIsBiometricsEnabled] = useState(mIsBiometricsEnabled)
   const [isPinEnabled, setIsPinEnabled] = useState(mIsPinEnabled)
+  const [isHideBalanceEnabled, setIsHideBalanceEnabled] = useState(
+    data?.hideBalance ?? null,
+  )
 
   useFocusEffect(() => {
     getIsBiometricsEnabled()
     getIsPinEnabled()
   })
-
   const getIsBiometricsEnabled = async () => {
     setIsBiometricsEnabled(await KeyStoreWrapper.getIsBiometricsEnabled())
   }
@@ -136,6 +146,16 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
       navigation.navigate("pin", { screenPurpose: PinScreenPurpose.SetPin })
     } else {
       removePin()
+    }
+  }
+
+  const onHideBalanceValueChanged = async (value) => {
+    if (value) {
+      setIsHideBalanceEnabled(await saveHideBalance(client, true))
+      await saveHiddenBalanceToolTip(client, true)
+    } else {
+      setIsHideBalanceEnabled(await saveHideBalance(client, false))
+      await saveHiddenBalanceToolTip(client, false)
     }
   }
 
@@ -188,6 +208,23 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
           onPress={() =>
             navigation.navigate("pin", { screenPurpose: PinScreenPurpose.SetPin })
           }
+        />
+      </View>
+      <View style={styles.settingContainer}>
+        <View style={styles.textContainer}>
+          <Text style={styles.title}>{translate("SecurityScreen.hideBalanceTitle")}</Text>
+          <Text style={styles.subtitle}>
+            {translate("SecurityScreen.hideBalanceSubtitle")}
+          </Text>
+          <Text style={styles.description}>
+            {translate("SecurityScreen.hideBalanceDescription")}
+          </Text>
+        </View>
+        <Switch
+          style={styles.switch}
+          value={isHideBalanceEnabled}
+          color={palette.lightBlue}
+          onValueChange={(value) => onHideBalanceValueChanged(value)}
         />
       </View>
     </Screen>

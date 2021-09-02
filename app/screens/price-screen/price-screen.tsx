@@ -16,7 +16,6 @@ type Props = {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const PriceScreen: ScreenType = ({ route }: Props) => {
   const client = useApolloClient()
-
   return (
     // eslint-disable-next-line react-native/no-inline-styles
     <Screen backgroundColor={palette.white} preset="scroll" style={{ flex: 1 }}>
