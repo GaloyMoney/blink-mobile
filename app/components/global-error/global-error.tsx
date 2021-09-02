@@ -1,5 +1,6 @@
+import { ServerError, ServerParseError } from "@apollo/client"
 import { useApolloNetworkStatus } from "../../app"
-import type { ComponentType } from "../../types/jsx"
+import { ComponentType } from "../../types/jsx"
 import { toastShow } from "../../utils/toast"
 
 export const GlobalErrorToast: ComponentType = () => {
@@ -14,8 +15,9 @@ export const GlobalErrorToast: ComponentType = () => {
     return null
   }
 
-  const networkError =
-    status.queryError?.networkError || status.mutationError?.networkError
+  const networkError = (status.queryError || status.mutationError)?.networkError as
+    | ServerError
+    | ServerParseError
 
   if (!networkError) {
     return null

@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useState } from "react"
+import { useCallback, useMemo, useState } from "react"
 import { Text, View } from "react-native"
 import { ListItem, SearchBar } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
@@ -63,6 +63,13 @@ type Props = {
   navigation: StackNavigationProp<ContactStackParamList, "Contacts">
 }
 
+type Contact = {
+  id: string,
+  name: string,
+  prettyName: string,
+  transactionsCount: string,
+}
+
 export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
   const { data } = useQuery(gql`
     query contacts {
@@ -77,13 +84,13 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
     }
   `)
 
-  const contacts = data?.me?.contacts ?? []
+  const contacts: Contact[] = useMemo(() => data?.me?.contacts ?? [], [data])
   const [matchingContacts, setMatchingContacts] = useState(contacts)
   const [searchText, setSearchText] = useState("")
 
   // This implementation of search will cause a match if any word in the search text
   // matches the contacts name or prettyName.
-  const updateMatchingContacts = (newSearchText: string) => {
+  const updateMatchingContacts = useCallback((newSearchText: string) => {
     setSearchText(newSearchText)
     if (newSearchText.length > 0) {
       const searchWordArray = newSearchText
@@ -98,9 +105,9 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
     } else {
       setMatchingContacts(contacts)
     }
-  }
+  }, [contacts])
 
-  const wordMatchesContact = (searchWord: string, contact): boolean => {
+  const wordMatchesContact = (searchWord: string, contact: Contact): boolean => {
     let contactNameMatchesSearchWord
     let contactPrettyNameMatchesSearchWord
 
@@ -123,8 +130,8 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
     return contactNameMatchesSearchWord || contactPrettyNameMatchesSearchWord
   }
 
-  let searchBarContent
-  let listEmptyContent
+  let searchBarContent: JSX.Element
+  let listEmptyContent: JSX.Element
 
   if (contacts.length > 0) {
     searchBarContent = (

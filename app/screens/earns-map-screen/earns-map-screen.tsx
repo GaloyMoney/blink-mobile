@@ -1,24 +1,25 @@
 import { useQuery } from "@apollo/client"
-import * as React from "react"
-import sumBy from "lodash.sumby"
+import { StackNavigationProp } from "@react-navigation/stack"
+import i18n from "i18n-js"
 import filter from "lodash.filter"
+import sumBy from "lodash.sumby"
+import * as React from "react"
 import { StatusBar, StyleSheet, Text, View } from "react-native"
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler"
+import { SvgProps } from "react-native-svg"
 import { MountainHeader } from "../../components/mountain-header"
 import { Screen } from "../../components/screen"
 import { QUERY_EARN_LIST } from "../../graphql/query"
 import { translate, translateQuizSections } from "../../i18n"
+import { PrimaryStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
+import { ComponentType, ScreenType } from "../../types/jsx"
 import { Token } from "../../utils/token"
 import { sectionCompletedPct } from "../earns-screen"
 import BitcoinCircle from "./bitcoin-circle-01.svg"
 import BottomOngoing from "./bottom-ongoing-01.svg"
-const BottomOngoingEN = React.lazy(() => import("./bottom-ongoing-01.en.svg"))
-const BottomOngoingES = React.lazy(() => import("./bottom-ongoing-01.es.svg"))
 import BottomStart from "./bottom-start-01.svg"
-const BottomStartEN = React.lazy(() => import("./bottom-start-01.en.svg"))
-const BottomStartES = React.lazy(() => import("./bottom-start-01.es.svg"))
 import LeftFinish from "./left-finished-01.svg"
 import LeftLastOngoing from "./left-last-section-ongoing-01.svg"
 import LeftLastTodo from "./left-last-section-to-do-01.svg"
@@ -33,11 +34,10 @@ import RightComplete from "./right-section-completed-01.svg"
 import RightOngoing from "./right-section-ongoing-01.svg"
 import RightTodo from "./right-section-to-do-01.svg"
 import TextBlock from "./text-block-medium.svg"
-import type { ComponentType, ScreenType } from "../../types/jsx"
-import type { PrimaryStackParamList } from "../../navigation/stack-param-lists"
-import { StackNavigationProp } from "@react-navigation/stack"
-import i18n from "i18n-js"
-import { SvgProps } from "react-native-svg"
+const BottomOngoingEN = React.lazy(() => import("./bottom-ongoing-01.en.svg"))
+const BottomOngoingES = React.lazy(() => import("./bottom-ongoing-01.es.svg"))
+const BottomStartEN = React.lazy(() => import("./bottom-start-01.en.svg"))
+const BottomStartES = React.lazy(() => import("./bottom-start-01.es.svg"))
 
 const styles = StyleSheet.create({
   contentContainer: {
@@ -86,7 +86,7 @@ interface IInBetweenTile {
 interface IBoxAdding {
   text: string
   section: string
-  Icon: typeof React.Component
+  Icon: React.FunctionComponent<SvgProps>
   side: SideType
   position: number
   length: number
