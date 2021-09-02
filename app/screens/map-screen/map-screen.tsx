@@ -91,7 +91,7 @@ export const MapScreen: ScreenType = ({ navigation }: Props) => {
     useCallback(() => {
       requestLocationPermission()
 
-      if (grantedPermission) {
+      if (!grantedPermission) {
         return null
       }
 
