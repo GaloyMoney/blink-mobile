@@ -85,21 +85,21 @@ interface IInBetweenTile {
 
 interface IBoxAdding {
   text: string
-  section: string
   Icon: React.FunctionComponent<SvgProps>
   side: SideType
   position: number
   length: number
+  onPress: () => void
 }
 
 interface ISectionData {
   text: string
   index: string
   icon: React.FunctionComponent<SvgProps>
+  onPress: () => void
 }
 
 interface IEarnMapScreen {
-  navigation: StackNavigationProp<PrimaryStackParamList, "Earn"> // FIXME
   currSection: number
   progress: number
   sectionsData: ISectionData[]
@@ -135,6 +135,26 @@ export const EarnMapDataInjected: ScreenType = ({ navigation }: EarnMapDataProps
     fetchPolicy: "cache-only",
   })
 
+  React.useEffect(() => {
+    const unsubscribe = navigation?.addListener("focus", () => {
+      StatusBar.setBackgroundColor(color.transparent)
+      StatusBar.setBarStyle("light-content")
+      StatusBar.setTranslucent(true)
+    })
+
+    return unsubscribe
+  }, [navigation])
+
+  React.useEffect(() => {
+    const unsubscribe = navigation?.addListener("blur", () => {
+      StatusBar.setTranslucent(false)
+      StatusBar.setBarStyle("dark-content")
+      StatusBar.setBackgroundColor(palette.lighterGrey)
+    })
+
+    return unsubscribe
+  }, [navigation])
+
   if (!data) {
     return null
   }
@@ -152,6 +172,9 @@ export const EarnMapDataInjected: ScreenType = ({ navigation }: EarnMapDataProps
       index: sectionIndex,
       text: translate(`EarnScreen.earns.${sectionIndex}.meta.title`),
       icon: BitcoinCircle,
+      onPress: navigation.navigate.bind(navigation.navigate, "earnsSection", {
+        section: sectionIndex,
+      }),
     })
 
     const sectionCompletion = sectionCompletedPct({ sectionIndex, earnList })
@@ -168,7 +191,6 @@ export const EarnMapDataInjected: ScreenType = ({ navigation }: EarnMapDataProps
 
   return (
     <EarnMapScreen
-      navigation={navigation}
       sectionsData={sectionsData}
       currSection={currSection}
       progress={progress}
@@ -183,7 +205,6 @@ type FinishProps = {
 }
 
 export const EarnMapScreen: React.FC<IEarnMapScreen> = ({
-  navigation,
   sectionsData,
   currSection,
   progress,
@@ -237,8 +258,8 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> = ({
     Icon,
     side,
     position,
-    section,
     length,
+    onPress,
   }: IBoxAdding) => {
     const disabled = currSection < position
     const progressSection = disabled ? 0 : currSection > position ? 1 : progress
@@ -260,10 +281,7 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> = ({
 
         <View style={boxStyle.container}>
           <View>
-            <TouchableOpacity
-              disabled={disabled}
-              onPress={() => navigation.navigate("earnsSection", { section })}
-            >
+            <TouchableOpacity disabled={disabled} onPress={onPress}>
               <TextBlock />
               {/* eslint-disable-next-line react-native/no-inline-styles */}
               <View style={{ position: "absolute", width: "100%" }}>
@@ -287,8 +305,8 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> = ({
         Icon={item.icon}
         side={index % 2 ? "left" : "right"}
         position={index}
-        section={item.index}
         length={sectionsData.length}
+        onPress={item.onPress}
       />,
     )
   })
@@ -300,26 +318,6 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> = ({
   }, [])
 
   const backgroundColor = currSection < sectionsData.length ? palette.sky : palette.orange
-
-  React.useEffect(() => {
-    const unsubscribe = navigation?.addListener("focus", () => {
-      StatusBar.setBackgroundColor(color.transparent)
-      StatusBar.setBarStyle("light-content")
-      StatusBar.setTranslucent(true)
-    })
-
-    return unsubscribe
-  }, [navigation])
-
-  React.useEffect(() => {
-    const unsubscribe = navigation?.addListener("blur", () => {
-      StatusBar.setTranslucent(false)
-      StatusBar.setBarStyle("dark-content")
-      StatusBar.setBackgroundColor(palette.lighterGrey)
-    })
-
-    return unsubscribe
-  }, [navigation])
 
   const translatedBottomOngoing = () => {
     switch (i18n.locale) {

@@ -141,7 +141,7 @@ export const PriceGraph: ComponentType = ({ prices }: Props) => {
           <VictoryLine
             data={currentData
               .filter((element, index) => index % mapping[time].filter == 0)
-              .map((index) => ({ x: index.t, y: index.o * MULTIPLE }))}
+              .map((index) => ({ y: index.o * MULTIPLE }))}
             interpolation="basis"
             style={{ data: { stroke: palette.lightBlue, strokeWidth: 4 } }}
           />

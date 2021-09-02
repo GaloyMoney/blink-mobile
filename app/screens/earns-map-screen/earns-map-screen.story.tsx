@@ -1,3 +1,4 @@
+import { action } from "@storybook/addon-actions"
 import { number, withKnobs } from "@storybook/addon-knobs"
 import { storiesOf } from "@storybook/react-native"
 import * as React from "react"
@@ -11,18 +12,21 @@ const sectionsData = [
     icon: BitcoinCircle,
     id: "bitcoinWhatIsIt",
     index: "1",
+    onPress: () => ({}),
   },
   {
     text: "Bitcoin v traditional Money",
     icon: BitcoinCircle,
     id: "bitcoinWhatIsIt",
     index: "2",
+    onPress: () => ({}),
   },
   {
     text: "Bitcoin:\nwhy is it special?",
     icon: BitcoinCircle,
     id: "bitcoinWhatIsIt",
     index: "3",
+    onPress: () => ({}),
   },
 ]
 
@@ -37,6 +41,7 @@ storiesOf("Map", module)
         currSection={number("section", 0)}
         progress={number("progress", 1)}
         sectionsData={sectionsData}
+        earned={1000}
       />
     </Story>
   ))
