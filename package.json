@@ -8,7 +8,7 @@
     "eslint-check": "eslint app --ext .js,.ts,.tsx",
     "prettier-check": "prettier '**/*.{js,ts,tsx,json}' --check",
     "prettier-write": "prettier '**/*.{js,ts,tsx,json}' --write",
-    "compile": "tsc -p .",
+    "build": "tsc -p .",
     "format": "npm-run-all format:*",
     "format:js": "prettier --write {.,**}/*.js",
     "format:json": "prettier --write {.,**}/*.json",

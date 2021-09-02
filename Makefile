@@ -1,4 +1,5 @@
 check-code:
+	yarn build
 	yarn eslint-check
 	yarn prettier-check
 
