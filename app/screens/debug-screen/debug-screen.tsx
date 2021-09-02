@@ -25,6 +25,8 @@ const styles = EStyleSheet.create({
   container: { marginLeft: 36, marginRight: 36, marginTop: 24 },
 })
 
+const usingHermes = typeof HermesInternal === "object" && HermesInternal !== null
+
 export const DebugScreen: ScreenType = () => {
   const client = useApolloClient()
   const btcPrice = useBTCPrice()
@@ -147,7 +149,7 @@ export const DebugScreen: ScreenType = () => {
         </Text>
         <Text>
           Hermes:
-          {String(!!global.HermesInternal)}
+          {String(!!usingHermes)}
         </Text>
 
         <ButtonGroup

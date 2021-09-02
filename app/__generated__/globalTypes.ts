@@ -10,3 +10,6 @@
 //==============================================================
 // END Enums and Input Objects
 //==============================================================
+
+// prevents error: cannot be compiled under '--isolatedModules'
+export {}

@@ -92,7 +92,7 @@ export const MapScreen: ScreenType = ({ navigation }: Props) => {
       requestLocationPermission()
 
       if (!grantedPermission) {
-        return
+        return null
       }
 
       const watchId = Geolocation.watchPosition((info) => {

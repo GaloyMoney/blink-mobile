@@ -7,3 +7,5 @@ it("I can get username from a custom invoice", () => {
   const url = Buffer.from(bech32.fromWords(decoded.words)).toString()
   console.log({ url })
 })
+
+export {}

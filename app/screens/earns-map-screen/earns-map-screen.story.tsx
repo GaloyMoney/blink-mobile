@@ -6,15 +6,27 @@ import BitcoinCircle from "./bitcoin-circle-01.svg"
 import { EarnMapScreen } from "./earns-map-screen"
 
 const sectionsData = [
-  // {text: "Bitcoin:\nwhat is it?", icon: BitcoinCircle, id:"bitcoinWhatIsIt"},
-  // {text: "Bitcoin v traditional Money", icon: BitcoinCircle, id:"bitcoinWhatIsIt"},
-  // {text: "Bitcoin:\nwhy is it special?", icon: BitcoinCircle, id:"bitcoinWhatIsIt"},
-  // {text: "Bitcoin:\nwhat is it?", icon: BitcoinCircle, id:"bitcoinWhatIsIt"},
-  // {text: "Bitcoin v traditional Money", icon: BitcoinCircle, id:"bitcoinWhatIsIt"},
-  { text: "Bitcoin:\nwhy is it special?", icon: BitcoinCircle, id: "bitcoinWhatIsIt" },
-  { text: "Bitcoin:\nwhat is it?", icon: BitcoinCircle, id: "bitcoinWhatIsIt" },
-  { text: "Bitcoin v traditional Money", icon: BitcoinCircle, id: "bitcoinWhatIsIt" },
-  { text: "Bitcoin:\nwhy is it special?", icon: BitcoinCircle, id: "bitcoinWhatIsIt" },
+  {
+    text: "Bitcoin:\nwhat is it?",
+    icon: BitcoinCircle,
+    id: "bitcoinWhatIsIt",
+    index: "1",
+    onPress: () => ({}),
+  },
+  {
+    text: "Bitcoin v traditional Money",
+    icon: BitcoinCircle,
+    id: "bitcoinWhatIsIt",
+    index: "2",
+    onPress: () => ({}),
+  },
+  {
+    text: "Bitcoin:\nwhy is it special?",
+    icon: BitcoinCircle,
+    id: "bitcoinWhatIsIt",
+    index: "3",
+    onPress: () => ({}),
+  },
 ]
 
 declare let module
@@ -28,6 +40,7 @@ storiesOf("Map", module)
         currSection={number("section", 0)}
         progress={number("progress", 1)}
         sectionsData={sectionsData}
+        earned={1000}
       />
     </Story>
   ))

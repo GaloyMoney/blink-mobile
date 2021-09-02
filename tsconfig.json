@@ -25,5 +25,5 @@
     }
   },
   "exclude": ["node_modules"],
-  "include": ["app", "test", "storybook"]
+  "include": ["app", "test", "storybook", "utils/declaration.d.ts"]
 }

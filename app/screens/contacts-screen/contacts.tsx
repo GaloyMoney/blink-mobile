@@ -1,18 +1,30 @@
+import { gql, useQuery } from "@apollo/client"
+import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
-import { useState } from "react"
+import { useCallback, useMemo, useState } from "react"
 import { Text, View } from "react-native"
-import { ListItem, SearchBar } from "react-native-elements"
+import {
+  ListItem,
+  SearchBar,
+  SearchBarAndroidProps,
+  SearchBarDefaultProps,
+  SearchBarIosProps,
+} from "react-native-elements"
+import { SearchBarBaseProps } from "react-native-elements/dist/searchbar/SearchBar"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { FlatList } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
-import { useQuery, gql } from "@apollo/client"
 
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
+import { ContactStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
-import { StackNavigationProp } from "@react-navigation/stack"
-import type { ContactStackParamList } from "../../navigation/stack-param-lists"
-import type { ScreenType } from "../../types/jsx"
+import { ScreenType } from "../../types/jsx"
+
+// TODO: get rid of this wrapper once SearchBar props are figured out ref: https://github.com/react-native-elements/react-native-elements/issues/3089
+const SafeSearchBar = SearchBar as unknown as React.FC<
+  SearchBarBaseProps | SearchBarDefaultProps | SearchBarAndroidProps | SearchBarIosProps
+>
 
 const styles = EStyleSheet.create({
   emptyListNoContacts: {
@@ -63,6 +75,13 @@ type Props = {
   navigation: StackNavigationProp<ContactStackParamList, "Contacts">
 }
 
+type Contact = {
+  id: string
+  name: string
+  prettyName: string
+  transactionsCount: string
+}
+
 export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
   const { data } = useQuery(gql`
     query contacts {
@@ -77,30 +96,33 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
     }
   `)
 
-  const contacts = data?.me?.contacts ?? []
+  const contacts: Contact[] = useMemo(() => data?.me?.contacts ?? [], [data])
   const [matchingContacts, setMatchingContacts] = useState(contacts)
   const [searchText, setSearchText] = useState("")
 
   // This implementation of search will cause a match if any word in the search text
   // matches the contacts name or prettyName.
-  const updateMatchingContacts = (newSearchText: string) => {
-    setSearchText(newSearchText)
-    if (newSearchText.length > 0) {
-      const searchWordArray = newSearchText
-        .split(" ")
-        .filter((text) => text.trim().length > 0)
+  const updateMatchingContacts = useCallback(
+    (newSearchText: string) => {
+      setSearchText(newSearchText)
+      if (newSearchText.length > 0) {
+        const searchWordArray = newSearchText
+          .split(" ")
+          .filter((text) => text.trim().length > 0)
 
-      const matchingContacts = contacts.filter((contact) =>
-        searchWordArray.some((word) => wordMatchesContact(word, contact)),
-      )
+        const matchingContacts = contacts.filter((contact) =>
+          searchWordArray.some((word) => wordMatchesContact(word, contact)),
+        )
 
-      setMatchingContacts(matchingContacts)
-    } else {
-      setMatchingContacts(contacts)
-    }
-  }
+        setMatchingContacts(matchingContacts)
+      } else {
+        setMatchingContacts(contacts)
+      }
+    },
+    [contacts],
+  )
 
-  const wordMatchesContact = (searchWord: string, contact): boolean => {
+  const wordMatchesContact = (searchWord: string, contact: Contact): boolean => {
     let contactNameMatchesSearchWord
     let contactPrettyNameMatchesSearchWord
 
@@ -123,12 +145,12 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
     return contactNameMatchesSearchWord || contactPrettyNameMatchesSearchWord
   }
 
-  let searchBarContent
-  let listEmptyContent
+  let searchBarContent: JSX.Element
+  let listEmptyContent: JSX.Element
 
   if (contacts.length > 0) {
     searchBarContent = (
-      <SearchBar
+      <SafeSearchBar
         placeholder={translate("common.search")}
         onChangeText={updateMatchingContacts}
         value={searchText}

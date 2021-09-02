@@ -5,13 +5,15 @@ import { translateQuizSections } from "../../i18n"
 import type { QuizQuestion, QuizSectionContent } from "../../types/quiz"
 import { earnList_earnList } from "../../graphql/__generated__/earnList"
 
+type IEarnsUtil = {
+  earnList: earnList_earnList[]
+  sectionIndex: number | string
+}
+
 export const getCardsFromSection = ({
   earnList,
   sectionIndex,
-}: {
-  earnList: earnList_earnList[]
-  sectionIndex: number | string
-}): QuizQuestion[] => {
+}: IEarnsUtil): QuizQuestion[] => {
   const earns_all = translateQuizSections("EarnScreen.earns") as QuizSectionContent[]
   const cards = earns_all[sectionIndex].content
 

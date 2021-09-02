@@ -1,24 +1,25 @@
 import { useQuery } from "@apollo/client"
-import * as React from "react"
-import sumBy from "lodash.sumby"
+import { StackNavigationProp } from "@react-navigation/stack"
+import i18n from "i18n-js"
 import filter from "lodash.filter"
+import sumBy from "lodash.sumby"
+import * as React from "react"
 import { StatusBar, StyleSheet, Text, View } from "react-native"
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler"
+import { SvgProps } from "react-native-svg"
 import { MountainHeader } from "../../components/mountain-header"
 import { Screen } from "../../components/screen"
 import { QUERY_EARN_LIST } from "../../graphql/query"
 import { translate, translateQuizSections } from "../../i18n"
+import { PrimaryStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
+import { ComponentType, ScreenType } from "../../types/jsx"
 import { Token } from "../../utils/token"
 import { sectionCompletedPct } from "../earns-screen"
 import BitcoinCircle from "./bitcoin-circle-01.svg"
 import BottomOngoing from "./bottom-ongoing-01.svg"
-const BottomOngoingEN = React.lazy(() => import("./bottom-ongoing-01.en.svg"))
-const BottomOngoingES = React.lazy(() => import("./bottom-ongoing-01.es.svg"))
 import BottomStart from "./bottom-start-01.svg"
-const BottomStartEN = React.lazy(() => import("./bottom-start-01.en.svg"))
-const BottomStartES = React.lazy(() => import("./bottom-start-01.es.svg"))
 import LeftFinish from "./left-finished-01.svg"
 import LeftLastOngoing from "./left-last-section-ongoing-01.svg"
 import LeftLastTodo from "./left-last-section-to-do-01.svg"
@@ -33,10 +34,10 @@ import RightComplete from "./right-section-completed-01.svg"
 import RightOngoing from "./right-section-ongoing-01.svg"
 import RightTodo from "./right-section-to-do-01.svg"
 import TextBlock from "./text-block-medium.svg"
-import type { ComponentType, ScreenType } from "../../types/jsx"
-import type { PrimaryStackParamList } from "../../navigation/stack-param-lists"
-import { StackNavigationProp } from "@react-navigation/stack"
-import i18n from "i18n-js"
+const BottomOngoingEN = React.lazy(() => import("./bottom-ongoing-01.en.svg"))
+const BottomOngoingES = React.lazy(() => import("./bottom-ongoing-01.es.svg"))
+const BottomStartEN = React.lazy(() => import("./bottom-start-01.en.svg"))
+const BottomStartES = React.lazy(() => import("./bottom-start-01.es.svg"))
 
 const styles = StyleSheet.create({
   contentContainer: {
@@ -84,21 +85,21 @@ interface IInBetweenTile {
 
 interface IBoxAdding {
   text: string
-  section: string
-  Icon: React.Component
+  Icon: React.FunctionComponent<SvgProps>
   side: SideType
   position: number
   length: number
+  onPress: () => void
 }
 
 interface ISectionData {
   text: string
   index: string
-  icon: React.Component
+  icon: React.FunctionComponent<SvgProps>
+  onPress: () => void
 }
 
 interface IEarnMapScreen {
-  navigation: StackNavigationProp<PrimaryStackParamList, "Earn"> // FIXME
   currSection: number
   progress: number
   sectionsData: ISectionData[]
@@ -134,6 +135,26 @@ export const EarnMapDataInjected: ScreenType = ({ navigation }: EarnMapDataProps
     fetchPolicy: "cache-only",
   })
 
+  React.useEffect(() => {
+    const unsubscribe = navigation?.addListener("focus", () => {
+      StatusBar.setBackgroundColor(color.transparent)
+      StatusBar.setBarStyle("light-content")
+      StatusBar.setTranslucent(true)
+    })
+
+    return unsubscribe
+  }, [navigation])
+
+  React.useEffect(() => {
+    const unsubscribe = navigation?.addListener("blur", () => {
+      StatusBar.setTranslucent(false)
+      StatusBar.setBarStyle("dark-content")
+      StatusBar.setBackgroundColor(palette.lighterGrey)
+    })
+
+    return unsubscribe
+  }, [navigation])
+
   if (!data) {
     return null
   }
@@ -151,6 +172,9 @@ export const EarnMapDataInjected: ScreenType = ({ navigation }: EarnMapDataProps
       index: sectionIndex,
       text: translate(`EarnScreen.earns.${sectionIndex}.meta.title`),
       icon: BitcoinCircle,
+      onPress: navigation.navigate.bind(navigation.navigate, "earnsSection", {
+        section: sectionIndex,
+      }),
     })
 
     const sectionCompletion = sectionCompletedPct({ sectionIndex, earnList })
@@ -167,7 +191,6 @@ export const EarnMapDataInjected: ScreenType = ({ navigation }: EarnMapDataProps
 
   return (
     <EarnMapScreen
-      navigation={navigation}
       sectionsData={sectionsData}
       currSection={currSection}
       progress={progress}
@@ -182,7 +205,6 @@ type FinishProps = {
 }
 
 export const EarnMapScreen: React.FC<IEarnMapScreen> = ({
-  navigation,
   sectionsData,
   currSection,
   progress,
@@ -236,8 +258,8 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> = ({
     Icon,
     side,
     position,
-    section,
     length,
+    onPress,
   }: IBoxAdding) => {
     const disabled = currSection < position
     const progressSection = disabled ? 0 : currSection > position ? 1 : progress
@@ -259,10 +281,7 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> = ({
 
         <View style={boxStyle.container}>
           <View>
-            <TouchableOpacity
-              disabled={disabled}
-              onPress={() => navigation.navigate("earnsSection", { section })}
-            >
+            <TouchableOpacity disabled={disabled} onPress={onPress}>
               <TextBlock />
               {/* eslint-disable-next-line react-native/no-inline-styles */}
               <View style={{ position: "absolute", width: "100%" }}>
@@ -286,39 +305,19 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> = ({
         Icon={item.icon}
         side={index % 2 ? "left" : "right"}
         position={index}
-        section={item.index}
         length={sectionsData.length}
+        onPress={item.onPress}
       />,
     )
   })
 
-  const scrollViewRef = React.useRef()
+  const scrollViewRef: React.MutableRefObject<ScrollView> = React.useRef()
 
   React.useEffect(() => {
     scrollViewRef.current.scrollToEnd()
   }, [])
 
   const backgroundColor = currSection < sectionsData.length ? palette.sky : palette.orange
-
-  React.useEffect(() => {
-    const unsubscribe = navigation?.addListener("focus", () => {
-      StatusBar.setBackgroundColor(color.transparent)
-      StatusBar.setBarStyle("light-content")
-      StatusBar.setTranslucent(true)
-    })
-
-    return unsubscribe
-  }, [navigation])
-
-  React.useEffect(() => {
-    const unsubscribe = navigation?.addListener("blur", () => {
-      StatusBar.setTranslucent(false)
-      StatusBar.setBarStyle("dark-content")
-      StatusBar.setBackgroundColor(palette.lighterGrey)
-    })
-
-    return unsubscribe
-  }, [navigation])
 
   const translatedBottomOngoing = () => {
     switch (i18n.locale) {

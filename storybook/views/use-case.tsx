@@ -45,8 +45,8 @@ export interface UseCaseProps {
   noBackground?: boolean
 }
 
-export function UseCase(props: UseCaseProps) {
-  const style = {
+export function UseCase(props: UseCaseProps): JSX.Element {
+  const style: ViewStyle = {
     ...COMPONENT,
     ...{ padding: props.noPad ? 0 : 10 },
     ...{
