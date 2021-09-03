@@ -27,7 +27,7 @@ import {
 } from "../../utils/wallet"
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const successLottie = require("../move-money-screen/success_lottie.json")
+const successLottie = require("../send-bitcoin-screen/success_lottie.json")
 
 const configByType = {
   [TYPE_LIGHTNING]: {

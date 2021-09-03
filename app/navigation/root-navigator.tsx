@@ -35,7 +35,7 @@ import {
 } from "../screens/phone-auth-screen"
 import { PriceScreen } from "../screens/price-screen/price-screen"
 import { ReceiveBitcoinScreen } from "../screens/receive-bitcoin-screen"
-import { ScanningQRCodeScreen, SendBitcoinScreen } from "../screens/send-bitcoin-screen"
+import { ScanningQRCodeScreen, SendBitcoinConfirmationScreen, SendBitcoinScreen } from "../screens/send-bitcoin-screen"
 import { SettingsScreen, UsernameScreen } from "../screens/settings-screen"
 import { LanguageScreen } from "../screens/settings-screen/language-screen"
 import { SecurityScreen } from "../screens/settings-screen/security-screen"
@@ -434,6 +434,11 @@ export const MoveMoneyNavigator: NavigatorType = () => (
       name="sendBitcoin"
       component={SendBitcoinScreen}
       options={{ title: translate("SendBitcoinScreen.title") }}
+    />
+    <StackMoveMoney.Screen
+      name="sendBitcoinConfirmation"
+      component={SendBitcoinConfirmationScreen}
+      options={{ title: translate("SendBitcoinConfirmationScreen.title") }}
     />
     <StackMoveMoney.Screen
       name="receiveBitcoin"

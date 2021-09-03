@@ -1,6 +1,7 @@
 import { query_transactions_wallet_transactions } from "../graphql/__generated__/query_transactions"
 import { contacts_me_contacts } from "../screens/contacts-screen/__generated__/contacts"
 import { AccountType, AuthenticationScreenPurpose, PinScreenPurpose } from "../utils/enum"
+import { IPaymentType } from "../utils/parsing"
 
 export type RootStackParamList = {
   getStarted: undefined
@@ -57,16 +58,25 @@ export type ContactStackParamList = {
 
 export type MoveMoneyStackParamList = {
   moveMoney: undefined
+  phoneValidation: undefined
+  priceDetail: { account: AccountType }
+  Profile: undefined
+  receiveBitcoin: undefined
   scanningQRCode: undefined
   sendBitcoin: {
     username: string | null
     payment: string | null
   }
-  receiveBitcoin: undefined
-  Profile: undefined
-  phoneValidation: undefined
-  priceDetail: {
-    account: AccountType
+  sendBitcoinConfirmation: {
+    address: string | null
+    amountless: boolean
+    invoice: string | null
+    memo: string | null
+    paymentType: IPaymentType
+    sameNode: boolean | null
+    satAmount: number
+    usdAmount: number
+    username: string | null
   }
   settings: undefined
   transactionDetail: {

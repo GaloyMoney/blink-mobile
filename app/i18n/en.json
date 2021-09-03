@@ -535,6 +535,9 @@
     "pinTitle": "PIN Code",
     "setPin": "Set PIN"
   },
+  "SendBitcoinConfirmationScreen": {
+    "title": "Confirm Payment"
+  },
   "SendBitcoinScreen": {
     "amount": "Amount",
     "cost": "Cost",
