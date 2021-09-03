@@ -6,7 +6,6 @@ import sumBy from "lodash.sumby"
 import * as React from "react"
 import { StatusBar, StyleSheet, Text, View } from "react-native"
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler"
-import { SvgProps } from "react-native-svg"
 import { MountainHeader } from "../../components/mountain-header"
 import { Screen } from "../../components/screen"
 import { QUERY_EARN_LIST } from "../../graphql/query"
@@ -20,6 +19,13 @@ import { sectionCompletedPct } from "../earns-screen"
 import BitcoinCircle from "./bitcoin-circle-01.svg"
 import BottomOngoing from "./bottom-ongoing-01.svg"
 import BottomStart from "./bottom-start-01.svg"
+import {
+  FinishProps,
+  IBoxAdding,
+  IEarnMapScreen,
+  IInBetweenTile,
+  ProgressProps,
+} from "./earns-map-screen.types"
 import LeftFinish from "./left-finished-01.svg"
 import LeftLastOngoing from "./left-last-section-ongoing-01.svg"
 import LeftLastTodo from "./left-last-section-to-do-01.svg"
@@ -76,40 +82,6 @@ const styles = StyleSheet.create({
   position: { height: 40 },
 })
 
-type SideType = "left" | "right"
-interface IInBetweenTile {
-  side: SideType
-  position: number
-  length: number
-}
-
-interface IBoxAdding {
-  text: string
-  Icon: React.FunctionComponent<SvgProps>
-  side: SideType
-  position: number
-  length: number
-  onPress: () => void
-}
-
-interface ISectionData {
-  text: string
-  index: string
-  icon: React.FunctionComponent<SvgProps>
-  onPress: () => void
-}
-
-interface IEarnMapScreen {
-  currSection: number
-  progress: number
-  sectionsData: ISectionData[]
-  earned: number
-}
-
-type ProgressProps = {
-  progress: number
-}
-
 export const ProgressBar: ComponentType = ({ progress }: ProgressProps) => {
   const balanceWidth = `${progress * 100}%`
 
@@ -125,6 +97,8 @@ export const ProgressBar: ComponentType = ({ progress }: ProgressProps) => {
 type EarnMapDataProps = {
   navigation: StackNavigationProp<PrimaryStackParamList, "Earn">
 }
+
+const sectionIndexes = Object.keys(translateQuizSections("EarnScreen.earns"))
 
 export const EarnMapDataInjected: ScreenType = ({ navigation }: EarnMapDataProps) => {
   // TODO: fragment with earnList
@@ -155,39 +129,46 @@ export const EarnMapDataInjected: ScreenType = ({ navigation }: EarnMapDataProps
     return unsubscribe
   }, [navigation])
 
+  const [sectionsData, setSectionsData] = React.useState([])
+  const [currSection, setCurrSection] = React.useState(0)
+  const [progress, setProgress] = React.useState(NaN)
+  const [earnedSat, setEarnedSat] = React.useState(NaN)
+
+  React.useEffect(() => {
+    if (data) {
+      const { earnList } = data
+      const newSectionsData = []
+      let currSection = 0
+
+      for (const sectionIndex of sectionIndexes) {
+        newSectionsData.push({
+          index: sectionIndex,
+          text: translate(`EarnScreen.earns.${sectionIndex}.meta.title`),
+          icon: BitcoinCircle,
+          onPress: navigation.navigate.bind(navigation.navigate, "earnsSection", {
+            section: sectionIndex,
+          }),
+        })
+
+        const sectionCompletion = sectionCompletedPct({ sectionIndex, earnList })
+
+        if (sectionCompletion === 1) {
+          currSection += 1
+        } else if (isNaN(progress)) {
+          // only do it once for the first uncompleted section
+          setProgress(sectionCompletion)
+        }
+      }
+
+      setCurrSection(currSection)
+      setSectionsData(newSectionsData)
+      setEarnedSat(sumBy(filter(earnList, { completed: true }), "value"))
+    }
+  }, [data, navigation.navigate, progress])
+
   if (!data) {
     return null
   }
-
-  const { earnList } = data
-
-  const sectionIndexs = Object.keys(translateQuizSections("EarnScreen.earns"))
-
-  const sectionsData = []
-  let currSection = 0
-  let progress = NaN
-
-  for (const sectionIndex of sectionIndexs) {
-    sectionsData.push({
-      index: sectionIndex,
-      text: translate(`EarnScreen.earns.${sectionIndex}.meta.title`),
-      icon: BitcoinCircle,
-      onPress: navigation.navigate.bind(navigation.navigate, "earnsSection", {
-        section: sectionIndex,
-      }),
-    })
-
-    const sectionCompletion = sectionCompletedPct({ sectionIndex, earnList })
-
-    if (sectionCompletion === 1) {
-      currSection += 1
-    } else if (isNaN(progress)) {
-      // only do it once for the first uncompleted section
-      progress = sectionCompletion
-    }
-  }
-
-  const earnedSat = sumBy(filter(earnList, { completed: true }), "value")
 
   return (
     <EarnMapScreen
@@ -199,117 +180,31 @@ export const EarnMapDataInjected: ScreenType = ({ navigation }: EarnMapDataProps
   )
 }
 
-type FinishProps = {
-  currSection: number
-  length: number
-}
-
-export const EarnMapScreen: React.FC<IEarnMapScreen> = ({
+export const EarnMapScreen = ({
   sectionsData,
   currSection,
   progress,
   earned,
-}: IEarnMapScreen) => {
-  const Finish = ({ currSection, length }: FinishProps) => {
-    if (currSection !== sectionsData.length) return null
-
-    return (
-      <>
-        <Text style={styles.finishText}>{translate("EarnScreen.finishText")}</Text>
-        {/* TODO FIXME for even section # */}
-        {length % 2 ? <LeftFinish /> : <RightFinish />}
-      </>
-    )
-  }
-
-  const InBetweenTile: React.FC<IInBetweenTile> = ({
-    side,
-    position,
-    length,
-  }: IInBetweenTile) => {
-    if (currSection < position) {
-      if (position === length - 1) {
-        return side === "left" ? <LeftLastTodo /> : <RightLastTodo />
-      }
-
-      return side === "left" ? <LeftTodo /> : <RightTodo />
-    }
-    if (currSection === position) {
-      if (position === length - 1) {
-        return (
-          <>
-            <View style={styles.position} />
-            {side === "left" ? <LeftLastOngoing /> : <RightLastOngoing />}
-          </>
-        )
-      }
-
-      if (position === 0 && progress === 0) {
-        return <RightFirst />
-      }
-
-      return side === "left" ? <LeftOngoing /> : <RightOngoing />
-    }
-    return side === "left" ? <LeftComplete /> : <RightComplete />
-  }
-
-  const BoxAdding: React.FC<IBoxAdding> = ({
-    text,
-    Icon,
-    side,
-    position,
-    length,
-    onPress,
-  }: IBoxAdding) => {
-    const disabled = currSection < position
-    const progressSection = disabled ? 0 : currSection > position ? 1 : progress
-
-    // rework this to pass props into the style object
-    const boxStyle = StyleSheet.create({
-      container: {
-        position: "absolute",
-        bottom:
-          currSection === position ? (currSection === 0 && progress === 0 ? 30 : 80) : 30,
-        left: side === "left" ? 35 : 200,
-        opacity: disabled ? 0.5 : 1,
-      },
-    })
-
-    return (
-      <View>
-        <InBetweenTile side={side} position={position} length={length} />
-
-        <View style={boxStyle.container}>
-          <View>
-            <TouchableOpacity disabled={disabled} onPress={onPress}>
-              <TextBlock />
-              {/* eslint-disable-next-line react-native/no-inline-styles */}
-              <View style={{ position: "absolute", width: "100%" }}>
-                <ProgressBar progress={progressSection} />
-                <Icon style={styles.icon} width={50} height={50} />
-                <Text style={styles.textStyleBox}>{text}</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View>
-    )
-  }
-
-  const sectionsComp = []
-
-  sectionsData.forEach((item, index) => {
-    sectionsComp.unshift(
-      <BoxAdding
-        text={item.text}
-        Icon={item.icon}
-        side={index % 2 ? "left" : "right"}
-        position={index}
-        length={sectionsData.length}
-        onPress={item.onPress}
-      />,
-    )
-  })
+}: IEarnMapScreen): JSX.Element => {
+  const sectionsComp = React.useMemo(
+    () =>
+      sectionsData
+        .reverse()
+        .map((item, index) => (
+          <BoxAdding
+            key={item.index}
+            text={item.text}
+            Icon={item.icon}
+            side={index % 2 ? "left" : "right"}
+            position={index}
+            length={sectionsData.length}
+            onPress={item.onPress}
+            currSection={currSection}
+            progress={progress}
+          />
+        )),
+    [currSection, progress, sectionsData],
+  )
 
   const scrollViewRef: React.MutableRefObject<ScrollView> = React.useRef()
 
@@ -317,28 +212,31 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> = ({
     scrollViewRef.current.scrollToEnd()
   }, [])
 
-  const backgroundColor = currSection < sectionsData.length ? palette.sky : palette.orange
+  const backgroundColor = React.useMemo(
+    () => (currSection < sectionsData.length ? palette.sky : palette.orange),
+    [currSection, sectionsData],
+  )
 
-  const translatedBottomOngoing = () => {
+  const translatedBottomOngoing = React.useMemo(() => {
     switch (i18n.locale) {
       case "es":
         return <BottomOngoingES />
       default:
         return <BottomOngoingEN />
     }
-  }
+  }, [])
 
-  const translatedBottomStart = () => {
+  const translatedBottomStart = React.useMemo(() => {
     switch (i18n.locale) {
       case "es":
         return <BottomStartES />
       default:
         return <BottomStartEN />
     }
-  }
+  }, [])
 
   return (
-    <Screen unsafe statusBar="light-content">
+    <Screen unsafe statusBar='light-content'>
       <ScrollView
         // removeClippedSubviews={true}
         style={{ backgroundColor }}
@@ -353,16 +251,16 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> = ({
           <Top width={screenWidth} />
         </View> */}
         <View style={styles.mainView}>
-          <Finish currSection={currSection} length={sectionsData.length} />
+          <Finish currSection={currSection} sectionsData={sectionsData} />
           {sectionsComp}
           {currSection === 0 ? (
             progress === 0 ? (
               <React.Suspense fallback={<BottomStart />}>
-                {translatedBottomStart()}
+                {translatedBottomStart}
               </React.Suspense>
             ) : (
               <React.Suspense fallback={<BottomOngoing />}>
-                {translatedBottomOngoing()}
+                {translatedBottomOngoing}
               </React.Suspense>
             )
           ) : (
@@ -371,5 +269,109 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> = ({
         </View>
       </ScrollView>
     </Screen>
+  )
+}
+
+const Finish = ({ currSection, sectionsData }: FinishProps) => {
+  if (currSection !== sectionsData.length) return null
+
+  return (
+    <>
+      <Text style={styles.finishText}>{translate("EarnScreen.finishText")}</Text>
+      {/* TODO FIXME for even section # */}
+      {sectionsData.length % 2 ? <LeftFinish /> : <RightFinish />}
+    </>
+  )
+}
+
+const InBetweenTile = ({
+  side,
+  position,
+  length,
+  currSection,
+  progress,
+}: IInBetweenTile) => {
+  if (currSection < position) {
+    if (position === length - 1) {
+      return side === "left" ? <LeftLastTodo /> : <RightLastTodo />
+    }
+
+    return side === "left" ? <LeftTodo /> : <RightTodo />
+  }
+  if (currSection === position) {
+    if (position === length - 1) {
+      return (
+        <>
+          <View style={styles.position} />
+          {side === "left" ? <LeftLastOngoing /> : <RightLastOngoing />}
+        </>
+      )
+    }
+
+    if (position === 0 && progress === 0) {
+      return <RightFirst />
+    }
+
+    return side === "left" ? <LeftOngoing /> : <RightOngoing />
+  }
+  return side === "left" ? <LeftComplete /> : <RightComplete />
+}
+
+const BoxAdding: React.FC<IBoxAdding> = ({
+  text,
+  Icon,
+  side,
+  position,
+  length,
+  onPress,
+  currSection,
+  progress,
+}: IBoxAdding) => {
+  const disabled = currSection < position
+  const progressSection = disabled ? 0 : currSection > position ? 1 : progress
+
+  // rework this to pass props into the style object
+  const boxStyle = React.useMemo(
+    () =>
+      StyleSheet.create({
+        container: {
+          position: "absolute",
+          bottom:
+            currSection === position
+              ? currSection === 0 && progress === 0
+                ? 30
+                : 80
+              : 30,
+          left: side === "left" ? 35 : 200,
+          opacity: disabled ? 0.5 : 1,
+        },
+      }),
+    [currSection, disabled, position, progress, side],
+  )
+
+  return (
+    <View>
+      <InBetweenTile
+        side={side}
+        position={position}
+        length={length}
+        currSection={currSection}
+        progress={progress}
+      />
+
+      <View style={boxStyle.container}>
+        <View>
+          <TouchableOpacity disabled={disabled} onPress={onPress}>
+            <TextBlock />
+            {/* eslint-disable-next-line react-native/no-inline-styles */}
+            <View style={{ position: "absolute", width: "100%" }}>
+              <ProgressBar progress={progressSection} />
+              <Icon style={styles.icon} width={50} height={50} />
+              <Text style={styles.textStyleBox}>{text}</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
   )
 }
