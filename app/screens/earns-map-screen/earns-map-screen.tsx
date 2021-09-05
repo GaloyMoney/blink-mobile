@@ -231,7 +231,7 @@ export const EarnMapScreen = ({
   }, [])
 
   return (
-    <Screen unsafe statusBar='light-content'>
+    <Screen unsafe statusBar="light-content">
       <ScrollView
         // removeClippedSubviews={true}
         style={{ backgroundColor }}
