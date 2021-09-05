@@ -1,4 +1,6 @@
+import { StackNavigationProp } from "@react-navigation/stack"
 import { SvgProps } from "react-native-svg"
+import { PrimaryStackParamList } from "../../navigation/stack-param-lists"
 
 type SideType = "left" | "right"
 
@@ -42,4 +44,8 @@ export type ProgressProps = {
 export type FinishProps = {
   currSection: number
   sectionsData: ISectionData[]
+}
+
+export type EarnMapDataProps = {
+  navigation: StackNavigationProp<PrimaryStackParamList, "Earn">
 }

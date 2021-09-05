@@ -1,5 +1,4 @@
 import { useQuery } from "@apollo/client"
-import { StackNavigationProp } from "@react-navigation/stack"
 import i18n from "i18n-js"
 import filter from "lodash.filter"
 import sumBy from "lodash.sumby"
@@ -10,7 +9,6 @@ import { MountainHeader } from "../../components/mountain-header"
 import { Screen } from "../../components/screen"
 import { QUERY_EARN_LIST } from "../../graphql/query"
 import { translate, translateQuizSections } from "../../i18n"
-import { PrimaryStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { ComponentType, ScreenType } from "../../types/jsx"
@@ -20,6 +18,7 @@ import BitcoinCircle from "./bitcoin-circle-01.svg"
 import BottomOngoing from "./bottom-ongoing-01.svg"
 import BottomStart from "./bottom-start-01.svg"
 import {
+  EarnMapDataProps,
   FinishProps,
   IBoxAdding,
   IEarnMapScreen,
@@ -92,10 +91,6 @@ export const ProgressBar: ComponentType = ({ progress }: ProgressProps) => {
       <View style={{ width: balanceWidth, height: 3, backgroundColor: palette.white }} />
     </View>
   )
-}
-
-type EarnMapDataProps = {
-  navigation: StackNavigationProp<PrimaryStackParamList, "Earn">
 }
 
 const sectionIndexes = Object.keys(translateQuizSections("EarnScreen.earns"))
