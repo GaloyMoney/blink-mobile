@@ -12,7 +12,7 @@ import { InputPayment } from "../../components/input-payment"
 import { GaloyInput } from "../../components/galoy-input"
 import { Screen } from "../../components/screen"
 import { balanceBtc, USERNAME_EXIST } from "../../graphql/query"
-import { useCurrencyConversion, usePrefCurrency, useBTCPrice } from "../../hooks"
+import { useMoneyAmount, usePrefCurrency, useBTCPrice } from "../../hooks"
 import { translate } from "../../i18n"
 import type { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
@@ -23,11 +23,6 @@ import { IPaymentType, validPayment } from "../../utils/parsing"
 import { Token } from "../../utils/token"
 import { UsernameValidation } from "../../utils/validation"
 
-type SetAmountsInput = {
-  value: number
-  referenceCurrency?: CurrencyType
-}
-
 type SendBitcoinScreenProps = {
   route: RouteProp<MoveMoneyStackParamList, "sendBitcoin">
 }
@@ -36,8 +31,8 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
   const client = useApolloClient()
   const { navigate } = useNavigation()
   const btcPrice = useBTCPrice()
-  const currencyConverter = useCurrencyConversion()
   const [prefCurrency, nextPrefCurrency] = usePrefCurrency()
+  const [satMoneyAmount, usdMoneyAmount, setAmounts] = useMoneyAmount()
 
   const [invoiceError, setInvoiceError] = useState("")
 
@@ -45,26 +40,12 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
   const [paymentType, setPaymentType] = useState<IPaymentType>(undefined)
   const [amountless, setAmountless] = useState(false)
 
-  const [satAmount, setSatAmount] = useState(0)
-  const [usdAmount, setUsdAmount] = useState(0)
-
-  const referenceCurrency = useCallback((): CurrencyType => {
+  const referenceCurrency = useMemo((): CurrencyType => {
     if (paymentType === ("lightning" || "onchain") && !amountless) {
       return "BTC"
     }
     return prefCurrency
   }, [amountless, paymentType, prefCurrency])
-
-  const setAmounts = useCallback(
-    ({ value, referenceCurrency }: SetAmountsInput) => {
-      const postiveValue = value >= 0 ? value : -value
-      const mReferenceCurrency = referenceCurrency ?? prefCurrency
-
-      setSatAmount(currencyConverter[mReferenceCurrency]["BTC"](postiveValue))
-      setUsdAmount(currencyConverter[mReferenceCurrency]["USD"](postiveValue))
-    },
-    [currencyConverter, prefCurrency],
-  )
 
   const setAmountsAction = useCallback(
     (input) => {
@@ -73,32 +54,18 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
     [setAmounts],
   )
 
-  const satMoneyAmount = useCallback((): MoneyAmount => {
-    return {
-      value: satAmount,
-      currency: "BTC",
-    }
-  }, [satAmount])
-
-  const usdMoneyAmount = useCallback((): MoneyAmount => {
-    return {
-      value: usdAmount,
-      currency: "USD",
-    }
-  }, [usdAmount])
-
   const primaryAmount = useMemo((): MoneyAmount => {
     if (prefCurrency === "USD") {
-      return usdMoneyAmount()
+      return usdMoneyAmount
     }
-    return satMoneyAmount()
+    return satMoneyAmount
   }, [prefCurrency, satMoneyAmount, usdMoneyAmount])
 
   const secondaryAmount = useMemo((): MoneyAmount => {
     if (prefCurrency === "BTC") {
-      return usdMoneyAmount()
+      return usdMoneyAmount
     }
-    return satMoneyAmount()
+    return satMoneyAmount
   }, [prefCurrency, satMoneyAmount, usdMoneyAmount])
 
   const [destination, setDestinationInternal] = useState("")
@@ -127,8 +94,7 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
     setAddress("")
     setPaymentType(undefined)
     setAmountless(false)
-    setSatAmount(0)
-    setUsdAmount(0)
+    setAmounts({ value: 0 })
     setDestination("")
     setInvoice("")
     setMemo("")
@@ -150,7 +116,7 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
   }, [client, network, reset, route.params])
 
   useEffect(() => {
-    setAmounts({ value: primaryAmount.value, referenceCurrency: referenceCurrency() })
+    setAmounts({ value: primaryAmount.value, referenceCurrency })
   }, [btcPrice, primaryAmount, referenceCurrency, setAmounts])
 
   useEffect(() => {
@@ -198,18 +164,18 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
 
     fn()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [destination, satAmount])
+  }, [destination, satMoneyAmount])
 
   const errorMessage = useMemo(() => {
     if (invoiceError) {
       return invoiceError
-    } else if (!!satAmount && balance && satAmount > balance) {
-      return translate("SendBitcoinScreen.totalExceed", {
+    } else if (!!satMoneyAmount.value && balance && satMoneyAmount.value > balance) {
+      return translate("SendBitcoinScreen.amountExceed", {
         balance: textCurrencyFormatting(balance, btcPrice, prefCurrency),
       })
     }
     return null
-  }, [balance, btcPrice, invoiceError, prefCurrency, satAmount])
+  }, [balance, btcPrice, invoiceError, prefCurrency, satMoneyAmount])
 
   const pay = useCallback(() => {
     navigate("sendBitcoinConfirmation", {
@@ -218,12 +184,13 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
       invoice,
       memo,
       paymentType,
+      prefCurrency,
       sameNode,
-      satAmount, 
-      usdAmount,
+      satMoneyAmount, 
+      usdMoneyAmount,
       username: paymentType === "username" ? destination : null
     })
-  }, [address, amountless, destination, invoice, memo, navigate, paymentType, sameNode, satAmount, usdAmount])
+  }, [address, amountless, destination, invoice, memo, navigate, prefCurrency, paymentType, sameNode, satMoneyAmount, usdMoneyAmount])
 
   return (
     <SendBitcoinScreenJSX
@@ -251,7 +218,6 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
 }
 
 type SendBitcoinScreenJSXProps = {
-  status: string
   paymentType: string
   amountless: boolean
   setAmounts: (input: number) => void
@@ -277,7 +243,6 @@ type SendBitcoinScreenJSXProps = {
 }
 
 export const SendBitcoinScreenJSX: ScreenType = ({
-  status,
   paymentType,
   amountless,
   setAmounts,
@@ -325,11 +290,7 @@ export const SendBitcoinScreenJSX: ScreenType = ({
       >
         <View style={styles.section}>
           <InputPayment
-            editable={
-              paymentType === "lightning" || paymentType === "onchain"
-                ? amountless && (status === "idle" || status === "error")
-                : status !== "success" // bitcoin // TODO: handle amount properly
-            }
+            editable={paymentType !== ("lightning" || "onchain") || amountless}
             forceKeyboard
             nextPrefCurrency={nextPrefCurrency}
             onUpdateAmount={setAmounts}
@@ -360,8 +321,7 @@ export const SendBitcoinScreenJSX: ScreenType = ({
                 ? address
                 : destination
             }
-            renderErrorMessage={false}
-            editable={interactive && status !== "success"}
+            editable={interactive}
             selectTextOnFocus
             autoCompleteType="username"
             autoCapitalize="none"
@@ -381,29 +341,22 @@ export const SendBitcoinScreenJSX: ScreenType = ({
             }
             value={memo}
             onChangeText={(value) => setMemo(value)}
-            renderErrorMessage={false}
-            editable={status !== "success"}
             selectTextOnFocus
           />
         </View>
+        { errorMessage && <View style={styles.errorContainer}><Text style={styles.errorText}>{errorMessage}</Text></View> }
         <Button
           buttonStyle={styles.buttonStyle}
           containerStyle={{ flex: 1 }}
           title={
-            status === "success" || status === "pending"
-              ? translate("common.close")
-              : !primaryAmount.value
+            !primaryAmount.value
               ? translate("common.amountRequired")
               : !destination
               ? translate("common.usernameRequired")
               : translate("common.send")
           }
-          onPress={() =>
-            pay()
-            // status === "success" || status === "pending" ? goBack() : pay()
-          }
+          onPress={pay}
           disabled={!primaryAmount.value || !!errorMessage || !destination}
-          loading={status === "loading"}
         />
       </ScrollView>
     </Screen>
@@ -413,9 +366,17 @@ export const SendBitcoinScreenJSX: ScreenType = ({
 const styles = EStyleSheet.create({
   buttonStyle: {
     backgroundColor: color.primary,
-    marginBottom: 32,
-    marginHorizontal: 24,
-    marginTop: 32,
+    marginBottom: "32rem",
+    marginHorizontal: "24rem",
+    marginTop: "32rem",
+  },
+
+  errorContainer: {
+    alignItems: "center"
+  },
+
+  errorText: {
+    color: color.error
   },
 
   icon: {

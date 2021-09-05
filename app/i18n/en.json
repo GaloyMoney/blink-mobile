@@ -536,10 +536,15 @@
     "setPin": "Set PIN"
   },
   "SendBitcoinConfirmationScreen": {
-    "title": "Confirm Payment"
+    "confirmPayment": "Confirm payment",
+    "confirmPayment?": "Do you want to confirm this payment?",
+    "paymentFinal": "Payments are final.",
+    "title": "Confirm Payment",
+    "totalExceed": "Total exceeds your balance of {{balance}}"
   },
   "SendBitcoinScreen": {
     "amount": "Amount",
+    "amountExceed": "Amount exceeds your balance of {{balance}}",
     "cost": "Cost",
     "fee": "network fee",
     "feeCalculationUnsuccessful": "Calculation unsuccessful ⚠️",
@@ -549,8 +554,7 @@
     "notConfirmed": "Payment has been sent\nbut is not confirmed yet\n\nYou can check the status\nof the payment in Transactions",
     "note": "optional note",
     "success": "Payment has been sent successfully",
-    "title": "Send Bitcoin",
-    "totalExceed": "Total exceeds your balance of {{balance}}"
+    "title": "Send Bitcoin"
   },
   "SettingsScreen": {
     "activate": "Tap to activate",

@@ -52,6 +52,7 @@ export const textCurrencyFormatting = (
 ): string => {
   const cc = OldCurrencyConversion(price).sats
   if (currency === "BTC") {
+    if (sats === 1) { return "1 sat" }
     return `${cc.conversion(sats)} sats`
   }
   if (currency === "USD") {
