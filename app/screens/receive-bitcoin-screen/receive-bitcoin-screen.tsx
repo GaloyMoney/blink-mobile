@@ -19,7 +19,7 @@ import ScreenBrightness from "react-native-screen-brightness"
 import Swiper from "react-native-swiper"
 import Icon from "react-native-vector-icons/Ionicons"
 import { GaloyInput } from "../../components/galoy-input"
-import { InputPaymentDataInjected } from "../../components/input-payment"
+import { InputPayment } from "../../components/input-payment"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
 import { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
@@ -29,6 +29,7 @@ import { getHashFromInvoice } from "../../utils/bolt11"
 import { isIos } from "../../utils/helper"
 import { hasFullPermissions, requestPermission } from "../../utils/notifications"
 import { QRView } from "./qr-view"
+import { useBTCPrice, useMoneyAmount } from "../../hooks"
 
 // FIXME: crash when no connection
 
@@ -81,6 +82,8 @@ type Props = {
 
 export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
   const client = useApolloClient()
+  const btcPrice = useBTCPrice()
+  const { nextPrefCurrency, primaryAmount, satMoneyAmount, secondaryAmount, setAmounts } = useMoneyAmount()
 
   const [addInvoice] = useMutation(ADD_INVOICE)
   const [updatePendingInvoice] = useMutation(UPDATE_PENDING_INVOICE)
@@ -97,7 +100,6 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
 
   const [keyboardIsShown, setKeyboardIsShown] = useState(false)
   const [memo, setMemo] = useState("")
-  const [amount, setAmount] = useState(0)
   const [loading, setLoading] = useState(true)
   const [invoice, setInvoice] = useState("")
   const [err, setErr] = useState("")
@@ -107,7 +109,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
   const update = useCallback(async () => {
     setLoading(true)
     try {
-      const { data } = await addInvoice({ variables: { value: amount, memo } })
+      const { data } = await addInvoice({ variables: { value: satMoneyAmount.value, memo } })
       const invoice = data.invoice.addInvoice
       setInvoice(invoice)
     } catch (err) {
@@ -117,7 +119,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
     } finally {
       setLoading(false)
     }
-  }, [addInvoice, amount, memo])
+  }, [addInvoice, satMoneyAmount.value, memo])
 
   useEffect(() => {
     update()
@@ -202,6 +204,11 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
 
     notifRequest()
   }, [client])
+
+  useEffect(() => {
+    setAmounts({ value: primaryAmount.value })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [btcPrice])
 
   const paymentSuccess = useCallback(() => {
     // success
@@ -294,16 +301,25 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
     setKeyboardIsShown(false)
   }, [inputMemoRef])
 
+  const onUpdateAmount = React.useCallback(
+    (value) => {
+      setAmounts({ value })
+    },
+    [setAmounts]
+  )
+
   return (
     <Screen backgroundColor={palette.lighterGrey} style={styles.screen} preset="fixed">
       <ScrollView keyboardShouldPersistTaps="always">
         <View style={styles.section}>
-          <InputPaymentDataInjected
-            amount={amount}
+          <InputPayment
             editable={!isSucceed}
             forceKeyboard={false}
-            onUpdateAmount={setAmount}
+            nextPrefCurrency={nextPrefCurrency}
+            onUpdateAmount={onUpdateAmount}
             onBlur={update}
+            primaryAmount={primaryAmount}
+            secondaryAmount={secondaryAmount}
             sub
           />
           <GaloyInput
@@ -326,7 +342,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
           <QRView
             data={invoice}
             type="lightning"
-            amount={amount}
+            amount={satMoneyAmount.value}
             memo={memo}
             keyboardIsShown={keyboardIsShown}
             loading={loading}
@@ -337,7 +353,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
           <QRView
             data={lastOnChainAddress}
             type="bitcoin"
-            amount={amount}
+            amount={satMoneyAmount.value}
             memo={memo}
             keyboardIsShown={keyboardIsShown}
             loading={loading}

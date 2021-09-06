@@ -5,7 +5,7 @@ import { TextInput } from "react-native-vector-icons/node_modules/@types/react-n
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
-import { useCurrencyConversion, usePrefCurrency } from "../../hooks"
+import { useBTCPrice, usePrefCurrency } from "../../hooks"
 import { palette } from "../../theme/palette"
 import type { ComponentType } from "../../types/jsx"
 import { currencyToText, textToCurrency } from "../../utils/currencyConversion"
@@ -64,16 +64,6 @@ const styles = EStyleSheet.create({
   },
 })
 
-type InputPaymentDataInjectedProps = {
-  amount: number
-  editable: boolean
-  forceKeyboard: boolean
-  onBlur?: () => void
-  onUpdateAmount: (amount: number) => void
-  prefCurrency: CurrencyType
-  sub?: boolean
-}
-
 type InputPaymentProps = {
   editable: boolean
   forceKeyboard: boolean
@@ -83,65 +73,6 @@ type InputPaymentProps = {
   primaryAmount: MoneyAmount
   secondaryAmount: MoneyAmount
   sub?: boolean
-}
-
-export const InputPaymentDataInjected: ComponentType = (
-  props: InputPaymentDataInjectedProps,
-) => {
-  const [prefCurrency, nextPrefCurrency] = usePrefCurrency()
-  const currencyConverter = useCurrencyConversion()
-  const [usdAmount, setUsdAmount] = React.useState(0)
-
-  const setAmounts = React.useCallback(
-    (value) => {
-      const postiveValue = value >= 0 ? value : -value
-      setUsdAmount(currencyConverter[prefCurrency]["USD"](postiveValue))
-      props.onUpdateAmount(currencyConverter[prefCurrency]["BTC"](postiveValue))
-    },
-    [currencyConverter, prefCurrency, props],
-  )
-
-  const satMoneyAmount = React.useCallback((): MoneyAmount => {
-    return {
-      value: props.amount,
-      currency: "BTC",
-    }
-  }, [props.amount])
-
-  const usdMoneyAmount = React.useCallback((): MoneyAmount => {
-    return {
-      value: usdAmount,
-      currency: "USD",
-    }
-  }, [usdAmount])
-
-  const primaryAmount = React.useMemo((): MoneyAmount => {
-    if (prefCurrency === "USD") {
-      return usdMoneyAmount()
-    }
-    return satMoneyAmount()
-  }, [prefCurrency, satMoneyAmount, usdMoneyAmount])
-
-  const secondaryAmount = React.useMemo((): MoneyAmount => {
-    if (prefCurrency === "BTC") {
-      return usdMoneyAmount()
-    }
-    return satMoneyAmount()
-  }, [prefCurrency, satMoneyAmount, usdMoneyAmount])
-
-  React.useEffect(() => {
-    setAmounts(primaryAmount.value)
-  }, [currencyConverter, primaryAmount, setAmounts])
-
-  return (
-    <InputPayment
-      nextPrefCurrency={nextPrefCurrency}
-      primaryAmount={primaryAmount}
-      secondaryAmount={secondaryAmount}
-      {...props}
-      onUpdateAmount={setAmounts}
-    />
-  )
 }
 
 export const InputPayment: ComponentType = ({

@@ -12,7 +12,7 @@ import { InputPayment } from "../../components/input-payment"
 import { GaloyInput } from "../../components/galoy-input"
 import { Screen } from "../../components/screen"
 import { balanceBtc, USERNAME_EXIST } from "../../graphql/query"
-import { useMoneyAmount, usePrefCurrency, useBTCPrice } from "../../hooks"
+import { useMoneyAmount, useBTCPrice } from "../../hooks"
 import { translate } from "../../i18n"
 import type { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
@@ -31,8 +31,7 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
   const client = useApolloClient()
   const { navigate } = useNavigation()
   const btcPrice = useBTCPrice()
-  const [prefCurrency, nextPrefCurrency] = usePrefCurrency()
-  const [satMoneyAmount, usdMoneyAmount, setAmounts] = useMoneyAmount()
+  const { nextPrefCurrency, prefCurrency, primaryAmount, satMoneyAmount, secondaryAmount, usdMoneyAmount, setAmounts } = useMoneyAmount()
 
   const [invoiceError, setInvoiceError] = useState("")
 
@@ -53,20 +52,6 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
     },
     [setAmounts],
   )
-
-  const primaryAmount = useMemo((): MoneyAmount => {
-    if (prefCurrency === "USD") {
-      return usdMoneyAmount
-    }
-    return satMoneyAmount
-  }, [prefCurrency, satMoneyAmount, usdMoneyAmount])
-
-  const secondaryAmount = useMemo((): MoneyAmount => {
-    if (prefCurrency === "BTC") {
-      return usdMoneyAmount
-    }
-    return satMoneyAmount
-  }, [prefCurrency, satMoneyAmount, usdMoneyAmount])
 
   const [destination, setDestinationInternal] = useState("")
   const [invoice, setInvoice] = useState("")
@@ -99,7 +84,7 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
     setInvoice("")
     setMemo("")
     setInteractive(true)
-  }, [])
+  }, [setAmounts])
 
   useEffect(() => {
     reset()
@@ -113,11 +98,13 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
     } else {
       setInteractive(true)
     }
-  }, [client, network, reset, route.params])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [client, network, route.params])
 
   useEffect(() => {
     setAmounts({ value: primaryAmount.value, referenceCurrency })
-  }, [btcPrice, primaryAmount, referenceCurrency, setAmounts])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [btcPrice])
 
   useEffect(() => {
     const fn = async () => {

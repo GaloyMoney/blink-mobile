@@ -2,13 +2,18 @@ import { useCallback, useMemo, useState } from "react"
 import { useCurrencyConversion } from "./use-currency-conversion"
 import { usePrefCurrency } from "./use-pref-currency"
 
-type SetAmountsInput = {
-  value: number
-  referenceCurrency?: CurrencyType
+type UseMoneyAmountReturn = {
+  nextPrefCurrency: () => void
+  prefCurrency: CurrencyType
+  primaryAmount: MoneyAmount
+  satMoneyAmount: MoneyAmount
+  secondaryAmount: MoneyAmount
+  usdMoneyAmount: MoneyAmount
+  setAmounts: (SetAmountsInput) => void 
 }
 
-export const useMoneyAmount = (): [MoneyAmount, MoneyAmount, (SetAmountsInput) => void] => {
-  const [prefCurrency] = usePrefCurrency()
+export const useMoneyAmount = (): UseMoneyAmountReturn => {
+  const [prefCurrency, nextPrefCurrency] = usePrefCurrency()
   const currencyConverter = useCurrencyConversion()
 
   const [satAmount, setSatAmount] = useState(0)
@@ -39,5 +44,19 @@ export const useMoneyAmount = (): [MoneyAmount, MoneyAmount, (SetAmountsInput) =
     }
   }, [usdAmount])
 
-  return [satMoneyAmount, usdMoneyAmount, setAmounts]
+  const primaryAmount = useMemo((): MoneyAmount => {
+    if (prefCurrency === "USD") {
+      return usdMoneyAmount
+    }
+    return satMoneyAmount
+  }, [prefCurrency, satMoneyAmount, usdMoneyAmount])
+
+  const secondaryAmount = useMemo((): MoneyAmount => {
+    if (prefCurrency === "BTC") {
+      return usdMoneyAmount
+    }
+    return satMoneyAmount
+  }, [prefCurrency, satMoneyAmount, usdMoneyAmount])
+
+  return { nextPrefCurrency, prefCurrency, primaryAmount, satMoneyAmount, secondaryAmount, usdMoneyAmount, setAmounts }
 }
