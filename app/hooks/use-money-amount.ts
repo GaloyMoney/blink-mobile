@@ -6,9 +6,8 @@ type UseMoneyAmountReturn = {
   nextPrefCurrency: () => void
   prefCurrency: CurrencyType
   primaryAmount: MoneyAmount
-  satMoneyAmount: MoneyAmount
+  satAmount: number
   secondaryAmount: MoneyAmount
-  usdMoneyAmount: MoneyAmount
   setAmounts: (SetAmountsInput) => void
 }
 
@@ -20,14 +19,14 @@ export const useMoneyAmount = (): UseMoneyAmountReturn => {
   const [usdAmount, setUsdAmount] = useState(0)
 
   const setAmounts = useCallback(
-    ({ value, referenceCurrency }: SetAmountsInput) => {
-      const postiveValue = value >= 0 ? value : -value
-      const mReferenceCurrency = referenceCurrency ?? prefCurrency
+    ({ moneyAmount }: SetAmountsInput) => {
+      const postiveValue = moneyAmount.value >= 0 ? moneyAmount.value : -moneyAmount.value
+      const mReferenceCurrency = moneyAmount.currency
 
       setSatAmount(currencyConverter[mReferenceCurrency]["BTC"](postiveValue))
       setUsdAmount(currencyConverter[mReferenceCurrency]["USD"](postiveValue))
     },
-    [currencyConverter, prefCurrency],
+    [currencyConverter],
   )
 
   const satMoneyAmount = useMemo((): MoneyAmount => {
@@ -62,9 +61,8 @@ export const useMoneyAmount = (): UseMoneyAmountReturn => {
     nextPrefCurrency,
     prefCurrency,
     primaryAmount,
-    satMoneyAmount,
+    satAmount,
     secondaryAmount,
-    usdMoneyAmount,
     setAmounts,
   }
 }

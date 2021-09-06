@@ -17,8 +17,11 @@ import {
   balanceBtc,
 } from "../../graphql/query"
 import { UsernameValidation } from "../../utils/validation"
-import { textCurrencyFormatting } from "../../utils/currencyConversion"
-import { useBTCPrice } from "../../hooks"
+import {
+  currencyToTextWithUnits,
+  textCurrencyFormatting,
+} from "../../utils/currencyConversion"
+import { useBTCPrice, useCurrencyConversion } from "../../hooks"
 import { PaymentLottieView } from "./payment-lottie-view"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
@@ -94,6 +97,7 @@ export const SendBitcoinConfirmationScreen = ({
 }: SendBitcoinConfirmationScreenProps): JSX.Element => {
   const client = useApolloClient()
   const btcPrice = useBTCPrice()
+  const currencyConversion = useCurrencyConversion()
   const {
     address,
     amountless,
@@ -101,9 +105,8 @@ export const SendBitcoinConfirmationScreen = ({
     memo,
     paymentType,
     prefCurrency,
+    primaryAmount,
     sameNode,
-    satMoneyAmount,
-    usdMoneyAmount,
     username,
   } = useMemo(() => {
     return route.params
@@ -156,6 +159,20 @@ export const SendBitcoinConfirmationScreen = ({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [getOnchainFees, { loading: onchainFeeLoading }] = useMutation(ONCHAIN_FEES)
 
+  const satAmount = useMemo(() => {
+    return currencyConversion[primaryAmount.currency]["BTC"](primaryAmount.value)
+  }, [currencyConversion, primaryAmount])
+
+  const secondaryAmount: MoneyAmount = useMemo(() => {
+    const otherCurrency = primaryAmount.currency === "BTC" ? "USD" : "BTC"
+    return {
+      value: currencyConversion[primaryAmount.currency][otherCurrency](
+        primaryAmount.value,
+      ),
+      currency: otherCurrency,
+    }
+  }, [currencyConversion, primaryAmount])
+
   const initializeFees = async () => {
     switch (paymentType) {
       case "lightning":
@@ -164,7 +181,7 @@ export const SendBitcoinConfirmationScreen = ({
           return
         }
 
-        if (amountless && satMoneyAmount.value === 0) {
+        if (amountless && satAmount === 0) {
           setFee(null)
           return
         }
@@ -176,7 +193,7 @@ export const SendBitcoinConfirmationScreen = ({
               invoice: { getFee: fee },
             },
           } = await getLightningFees({
-            variables: { invoice, amount: amountless ? satMoneyAmount.value : undefined },
+            variables: { invoice, amount: amountless ? satAmount : undefined },
           })
           setFee(fee)
         } catch (err) {
@@ -186,7 +203,7 @@ export const SendBitcoinConfirmationScreen = ({
 
         return
       case "onchain":
-        if (satMoneyAmount.value === 0) {
+        if (satAmount === 0) {
           setFee(null)
           return
         }
@@ -198,7 +215,7 @@ export const SendBitcoinConfirmationScreen = ({
               onchain: { getFee: fee },
             },
           } = await getOnchainFees({
-            variables: { address, amount: satMoneyAmount.value },
+            variables: { address, amount: satAmount },
           })
           setFee(fee)
         } catch (err) {
@@ -217,7 +234,7 @@ export const SendBitcoinConfirmationScreen = ({
   }, [])
 
   const pay = async () => {
-    if ((amountless || paymentType === "onchain") && satMoneyAmount.value === 0) {
+    if ((amountless || paymentType === "onchain") && satAmount === 0) {
       setStatus("error")
       setErrs([{ message: translate("SendBitcoinScreen.noAmount") }])
       return
@@ -241,18 +258,18 @@ export const SendBitcoinConfirmationScreen = ({
         mutation = lightningPay
         variables = {
           invoice,
-          amount: amountless ? satMoneyAmount.value : undefined,
+          amount: amountless ? satAmount : undefined,
           memo,
         }
       } else if (paymentType === "onchain") {
         mutation = onchainPay
-        variables = { address, amount: satMoneyAmount.value, memo }
+        variables = { address, amount: satAmount, memo }
       } else if (paymentType === "username") {
         mutation = payKeysendUsername
 
         // FIXME destination is confusing
         variables = {
-          amount: satMoneyAmount.value,
+          amount: satAmount,
           destination: getPubKey(client),
           username,
           memo,
@@ -329,7 +346,7 @@ export const SendBitcoinConfirmationScreen = ({
       return ""
     } else if (fee > 0) {
       return `${feeTextFormatted}, ${translate("common.Total")}: ${textCurrencyFormatting(
-        fee + satMoneyAmount.value,
+        fee + satAmount,
         btcPrice,
         prefCurrency,
       )}`
@@ -338,11 +355,11 @@ export const SendBitcoinConfirmationScreen = ({
     } else {
       return feeTextFormatted
     }
-  }, [btcPrice, fee, feeTextFormatted, paymentType, prefCurrency, satMoneyAmount])
+  }, [btcPrice, fee, feeTextFormatted, paymentType, prefCurrency, satAmount])
 
   const totalAmount = useMemo(() => {
-    return fee == null ? satMoneyAmount.value : satMoneyAmount.value + fee
-  }, [fee, satMoneyAmount])
+    return fee == null ? satAmount : satAmount + fee
+  }, [fee, satAmount])
 
   const balance = balanceBtc(client)
 
@@ -354,15 +371,19 @@ export const SendBitcoinConfirmationScreen = ({
     }
     return ""
   }, [balance, btcPrice, prefCurrency, totalAmount])
-  console.log("Error Message", errorMessage)
 
   const amountElement: JSX.Element = useMemo(() => {
     return (
-      <Text style={styles.paymentInformationData}>
-        {textCurrencyFormatting(satMoneyAmount.value, btcPrice, prefCurrency)}
-      </Text>
+      <>
+        <Text style={styles.paymentInformationData}>
+          {currencyToTextWithUnits(primaryAmount)}
+        </Text>
+        <Text style={styles.paymentInformationSubData}>
+          {currencyToTextWithUnits(secondaryAmount)}
+        </Text>
+      </>
     )
-  }, [btcPrice, prefCurrency, satMoneyAmount])
+  }, [primaryAmount, secondaryAmount])
 
   const destinationElement: JSX.Element | null = useMemo(() => {
     let destination = ""
@@ -536,6 +557,11 @@ const styles = EStyleSheet.create({
   paymentInformationRow: {
     flexDirection: "row",
     marginBottom: "12rem",
+  },
+
+  paymentInformationSubData: {
+    color: palette.midGrey,
+    fontSize: "14rem",
   },
 
   paymentLottieContainer: {

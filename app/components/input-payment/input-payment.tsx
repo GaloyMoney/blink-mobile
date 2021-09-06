@@ -5,7 +5,6 @@ import { TextInput } from "react-native-vector-icons/node_modules/@types/react-n
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
-import { useBTCPrice, usePrefCurrency } from "../../hooks"
 import { palette } from "../../theme/palette"
 import type { ComponentType } from "../../types/jsx"
 import { currencyToText, textToCurrency } from "../../utils/currencyConversion"
@@ -69,7 +68,7 @@ type InputPaymentProps = {
   forceKeyboard: boolean
   nextPrefCurrency: () => void
   onBlur?: () => void
-  onUpdateAmount: (amount: number) => void
+  onUpdateAmount: (amount: MoneyAmount) => void
   primaryAmount: MoneyAmount
   secondaryAmount: MoneyAmount
   sub?: boolean
@@ -98,7 +97,10 @@ export const InputPayment: ComponentType = ({
 
       setInput(newInput)
       if (!isNaN(newAmount)) {
-        onUpdateAmount(newAmount)
+        onUpdateAmount({
+          value: newAmount,
+          currency: primaryAmount.currency,
+        })
       }
     },
     [onUpdateAmount, primaryAmount.currency],

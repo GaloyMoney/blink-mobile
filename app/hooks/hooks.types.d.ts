@@ -1,4 +1,3 @@
 type SetAmountsInput = {
-  value: number
-  referenceCurrency?: CurrencyType
+  moneyAmount: MoneyAmount
 }

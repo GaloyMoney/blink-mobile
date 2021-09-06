@@ -35,9 +35,8 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
     nextPrefCurrency,
     prefCurrency,
     primaryAmount,
-    satMoneyAmount,
+    satAmount,
     secondaryAmount,
-    usdMoneyAmount,
     setAmounts,
   } = useMoneyAmount()
 
@@ -47,16 +46,9 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
   const [paymentType, setPaymentType] = useState<IPaymentType>(undefined)
   const [amountless, setAmountless] = useState(false)
 
-  const referenceCurrency = useMemo((): CurrencyType => {
-    if (paymentType === ("lightning" || "onchain") && !amountless) {
-      return "BTC"
-    }
-    return prefCurrency
-  }, [amountless, paymentType, prefCurrency])
-
   const setAmountsAction = useCallback(
     (input) => {
-      setAmounts({ value: input })
+      setAmounts({ moneyAmount: input })
     },
     [setAmounts],
   )
@@ -87,12 +79,12 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
     setAddress("")
     setPaymentType(undefined)
     setAmountless(false)
-    setAmounts({ value: 0 })
+    setAmounts({ moneyAmount: { value: 0, currency: prefCurrency } })
     setDestination("")
     setInvoice("")
     setMemo("")
     setInteractive(true)
-  }, [setAmounts])
+  }, [prefCurrency, setAmounts])
 
   useEffect(() => {
     reset()
@@ -110,9 +102,9 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
   }, [client, network, route.params])
 
   useEffect(() => {
-    setAmounts({ value: primaryAmount.value, referenceCurrency })
+    setAmounts({ moneyAmount: primaryAmount })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [btcPrice])
+  }, [setAmounts])
 
   useEffect(() => {
     const fn = async () => {
@@ -135,7 +127,8 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
         setAmountless(amountless)
 
         if (!amountless) {
-          setAmounts({ value: amountInvoice, referenceCurrency: "BTC" })
+          const moneyAmount = { value: amountInvoice, currency: prefCurrency }
+          setAmounts({ moneyAmount })
         }
 
         if (!memo) {
@@ -159,18 +152,18 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
 
     fn()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [destination, satMoneyAmount])
+  }, [destination, satAmount])
 
   const errorMessage = useMemo(() => {
     if (invoiceError) {
       return invoiceError
-    } else if (!!satMoneyAmount.value && balance && satMoneyAmount.value > balance) {
+    } else if (!!satAmount && balance && satAmount > balance) {
       return translate("SendBitcoinScreen.amountExceed", {
         balance: textCurrencyFormatting(balance, btcPrice, prefCurrency),
       })
     }
     return null
-  }, [balance, btcPrice, invoiceError, prefCurrency, satMoneyAmount])
+  }, [balance, btcPrice, invoiceError, prefCurrency, satAmount])
 
   const pay = useCallback(() => {
     navigate("sendBitcoinConfirmation", {
@@ -180,9 +173,8 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
       memo,
       paymentType,
       prefCurrency,
+      primaryAmount,
       sameNode,
-      satMoneyAmount,
-      usdMoneyAmount,
       username: paymentType === "username" ? destination : null,
     })
   }, [
@@ -193,10 +185,9 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
     memo,
     navigate,
     prefCurrency,
+    primaryAmount,
     paymentType,
     sameNode,
-    satMoneyAmount,
-    usdMoneyAmount,
   ])
 
   return (

@@ -83,7 +83,7 @@ type Props = {
 export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
   const client = useApolloClient()
   const btcPrice = useBTCPrice()
-  const { nextPrefCurrency, primaryAmount, satMoneyAmount, secondaryAmount, setAmounts } =
+  const { nextPrefCurrency, primaryAmount, satAmount, secondaryAmount, setAmounts } =
     useMoneyAmount()
 
   const [addInvoice] = useMutation(ADD_INVOICE)
@@ -111,7 +111,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
     setLoading(true)
     try {
       const { data } = await addInvoice({
-        variables: { value: satMoneyAmount.value, memo },
+        variables: { value: satAmount, memo },
       })
       const invoice = data.invoice.addInvoice
       setInvoice(invoice)
@@ -122,7 +122,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
     } finally {
       setLoading(false)
     }
-  }, [addInvoice, satMoneyAmount.value, memo])
+  }, [addInvoice, satAmount, memo])
 
   useEffect(() => {
     update()
@@ -209,7 +209,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
   }, [client])
 
   useEffect(() => {
-    setAmounts({ value: primaryAmount.value })
+    setAmounts({ moneyAmount: primaryAmount })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [btcPrice])
 
@@ -300,13 +300,13 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
   }, [])
 
   const _keyboardDidHide = useCallback(() => {
-    inputMemoRef?.current.blur()
+    inputMemoRef?.current?.blur()
     setKeyboardIsShown(false)
   }, [inputMemoRef])
 
   const onUpdateAmount = React.useCallback(
-    (value) => {
-      setAmounts({ value })
+    (amount) => {
+      setAmounts({ moneyAmount: amount })
     },
     [setAmounts],
   )
@@ -345,7 +345,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
           <QRView
             data={invoice}
             type="lightning"
-            amount={satMoneyAmount.value}
+            amount={satAmount}
             memo={memo}
             keyboardIsShown={keyboardIsShown}
             loading={loading}
@@ -356,7 +356,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
           <QRView
             data={lastOnChainAddress}
             type="bitcoin"
-            amount={satMoneyAmount.value}
+            amount={satAmount}
             memo={memo}
             keyboardIsShown={keyboardIsShown}
             loading={loading}
