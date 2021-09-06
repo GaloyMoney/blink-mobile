@@ -9,7 +9,7 @@ type UseMoneyAmountReturn = {
   satMoneyAmount: MoneyAmount
   secondaryAmount: MoneyAmount
   usdMoneyAmount: MoneyAmount
-  setAmounts: (SetAmountsInput) => void 
+  setAmounts: (SetAmountsInput) => void
 }
 
 export const useMoneyAmount = (): UseMoneyAmountReturn => {
@@ -58,5 +58,13 @@ export const useMoneyAmount = (): UseMoneyAmountReturn => {
     return satMoneyAmount
   }, [prefCurrency, satMoneyAmount, usdMoneyAmount])
 
-  return { nextPrefCurrency, prefCurrency, primaryAmount, satMoneyAmount, secondaryAmount, usdMoneyAmount, setAmounts }
+  return {
+    nextPrefCurrency,
+    prefCurrency,
+    primaryAmount,
+    satMoneyAmount,
+    secondaryAmount,
+    usdMoneyAmount,
+    setAmounts,
+  }
 }

@@ -10,7 +10,12 @@ import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
 import type { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
-import { getPubKey, QUERY_TRANSACTIONS, queryWallet, balanceBtc } from "../../graphql/query"
+import {
+  getPubKey,
+  QUERY_TRANSACTIONS,
+  queryWallet,
+  balanceBtc,
+} from "../../graphql/query"
 import { UsernameValidation } from "../../utils/validation"
 import { textCurrencyFormatting } from "../../utils/currencyConversion"
 import { useBTCPrice } from "../../hooks"
@@ -83,10 +88,24 @@ type PaymentInformationElement = {
 
 type Status = "idle" | "loading" | "pending" | "success" | "error"
 
-export const SendBitcoinConfirmationScreen = ({ navigation, route }: SendBitcoinConfirmationScreenProps): JSX.Element => {
+export const SendBitcoinConfirmationScreen = ({
+  navigation,
+  route,
+}: SendBitcoinConfirmationScreenProps): JSX.Element => {
   const client = useApolloClient()
   const btcPrice = useBTCPrice()
-  const { address, amountless, invoice, memo, paymentType, prefCurrency, sameNode, satMoneyAmount, usdMoneyAmount, username } = useMemo(() => {
+  const {
+    address,
+    amountless,
+    invoice,
+    memo,
+    paymentType,
+    prefCurrency,
+    sameNode,
+    satMoneyAmount,
+    usdMoneyAmount,
+    username,
+  } = useMemo(() => {
     return route.params
   }, [route.params])
 
@@ -97,7 +116,7 @@ export const SendBitcoinConfirmationScreen = ({ navigation, route }: SendBitcoin
   // if -1, there is an error
   // otherwise, fee in sats
   const [fee, setFee] = useState(null)
-  
+
   const [queryTransactions] = useLazyQuery(QUERY_TRANSACTIONS, {
     fetchPolicy: "network-only",
   })
@@ -178,7 +197,9 @@ export const SendBitcoinConfirmationScreen = ({ navigation, route }: SendBitcoin
             data: {
               onchain: { getFee: fee },
             },
-          } = await getOnchainFees({ variables: { address, amount: satMoneyAmount.value } })
+          } = await getOnchainFees({
+            variables: { address, amount: satMoneyAmount.value },
+          })
           setFee(fee)
         } catch (err) {
           console.warn({ err, message: "error getting onchains fees" })
@@ -192,7 +213,7 @@ export const SendBitcoinConfirmationScreen = ({ navigation, route }: SendBitcoin
 
   useEffect(() => {
     initializeFees()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const pay = async () => {
@@ -218,7 +239,11 @@ export const SendBitcoinConfirmationScreen = ({ navigation, route }: SendBitcoin
 
       if (paymentType === "lightning") {
         mutation = lightningPay
-        variables = { invoice, amount: amountless ? satMoneyAmount.value : undefined, memo }
+        variables = {
+          invoice,
+          amount: amountless ? satMoneyAmount.value : undefined,
+          memo,
+        }
       } else if (paymentType === "onchain") {
         mutation = onchainPay
         variables = { address, amount: satMoneyAmount.value, memo }
@@ -321,18 +346,22 @@ export const SendBitcoinConfirmationScreen = ({ navigation, route }: SendBitcoin
 
   const balance = balanceBtc(client)
 
-  useEffect(() => {
+  const errorMessage = useMemo(() => {
     if (totalAmount > balance) {
-      setErrs([{
-        message: translate("SendBitcoinScreen.totalExceed", {
-          balance: textCurrencyFormatting(balance, btcPrice, prefCurrency),
-        })
-      }])
+      return translate("SendBitcoinConfirmationScreen.totalExceed", {
+        balance: textCurrencyFormatting(balance, btcPrice, prefCurrency),
+      })
     }
+    return ""
   }, [balance, btcPrice, prefCurrency, totalAmount])
+  console.log("Error Message", errorMessage)
 
   const amountElement: JSX.Element = useMemo(() => {
-    return <Text style={styles.paymentInformationData}>{textCurrencyFormatting(satMoneyAmount.value, btcPrice, prefCurrency)}</Text>
+    return (
+      <Text style={styles.paymentInformationData}>
+        {textCurrencyFormatting(satMoneyAmount.value, btcPrice, prefCurrency)}
+      </Text>
+    )
   }, [btcPrice, prefCurrency, satMoneyAmount])
 
   const destinationElement: JSX.Element | null = useMemo(() => {
@@ -344,14 +373,27 @@ export const SendBitcoinConfirmationScreen = ({ navigation, route }: SendBitcoin
     } else if (paymentType === "onchain") {
       destination = address
     }
-    return destination.length > 0 ? <Text style={styles.paymentInformationData}>{destination}</Text> : null
+    return destination.length > 0 ? (
+      <Text style={styles.paymentInformationData}>{destination}</Text>
+    ) : null
   }, [address, invoice, paymentType, username])
 
   const feeElement: JSX.Element = useMemo(() => {
     if (fee === undefined) {
-      return <ActivityIndicator style={styles.activityIndicator} animating size="small" color={palette.orange} />
+      return (
+        <ActivityIndicator
+          style={styles.activityIndicator}
+          animating
+          size="small"
+          color={palette.orange}
+        />
+      )
     } else if (fee === -1) {
-      return <Text style={styles.paymentInformationData}>{translate("SendBitcoinScreen.feeCalculationUnsuccessful")}</Text> // todo: same calculation as backend
+      return (
+        <Text style={styles.paymentInformationData}>
+          {translate("SendBitcoinScreen.feeCalculationUnsuccessful")}
+        </Text>
+      ) // todo: same calculation as backend
     }
     return <Text style={styles.paymentInformationData}>{feeText}</Text>
   }, [fee, feeText])
@@ -360,15 +402,15 @@ export const SendBitcoinConfirmationScreen = ({ navigation, route }: SendBitcoin
     return [
       {
         label: "Amount:",
-        data: amountElement
+        data: amountElement,
       },
       {
         label: "To:",
-        data: destinationElement
+        data: destinationElement,
       },
       {
         label: "Fee:",
-        data: feeElement
+        data: feeElement,
       },
     ]
   }, [amountElement, destinationElement, feeElement])
@@ -385,34 +427,49 @@ export const SendBitcoinConfirmationScreen = ({ navigation, route }: SendBitcoin
             data={paymentInformation}
             renderItem={({ item }) => (
               <View style={styles.paymentInformationRow}>
-              <Text style={styles.paymentInformationLabel}>{item.label}</Text>
-              <View style={styles.paymentInformationData}>{item.data}</View>
-            </View>
+                <Text style={styles.paymentInformationLabel}>{item.label}</Text>
+                <View style={styles.paymentInformationData}>{item.data}</View>
+              </View>
             )}
+            scrollEnabled={false}
           />
         </View>
         <View style={styles.paymentLottieContainer}>
-          <PaymentLottieView
-            errs={errs}
-            status={status}
-          />
+          <PaymentLottieView errs={errs} status={status} />
         </View>
+        {errorMessage.length > 0 && (
+          <View style={styles.errorContainer}>
+            <Text style={styles.errorText}>{errorMessage}</Text>
+          </View>
+        )}
         <View style={styles.bottomContainer}>
           <View style={styles.confirmationTextContainer}>
-            <Text style={styles.confirmationText}>{translate("SendBitcoinConfirmationScreen.confirmPayment?")}</Text>
-            <Text style={styles.confirmationText}>{translate("SendBitcoinConfirmationScreen.paymentFinal")}</Text>
+            <Text style={styles.confirmationText}>
+              {translate("SendBitcoinConfirmationScreen.confirmPayment?")}
+            </Text>
+            <Text style={styles.confirmationText}>
+              {translate("SendBitcoinConfirmationScreen.paymentFinal")}
+            </Text>
           </View>
           <Button
             buttonStyle={styles.buttonStyle}
             loading={status === "loading"}
-            onPress={() =>
-              status === "success" || status === "pending" ? navigation.pop(2) : pay()
-            }
+            onPress={() => {
+              if (status === "success" || status === "pending") {
+                navigation.pop(2)
+              } else if (errorMessage.length > 0) {
+                navigation.pop(1)
+              } else {
+                pay()
+              }
+            }}
             title={
               status === "success" || status === "pending"
                 ? translate("common.close")
                 : status === "error"
                 ? translate("common.tryAgain")
+                : errorMessage.length > 0
+                ? translate("common.cancel")
                 : translate("SendBitcoinConfirmationScreen.confirmPayment")
             }
           />
@@ -424,12 +481,12 @@ export const SendBitcoinConfirmationScreen = ({ navigation, route }: SendBitcoin
 
 const styles = EStyleSheet.create({
   activityIndicator: {
-    alignItems: "flex-start"
+    alignItems: "flex-start",
   },
 
   bottomContainer: {
     flex: 1,
-    justifyContent: "flex-end"
+    justifyContent: "flex-end",
   },
 
   buttonStyle: {
@@ -440,11 +497,20 @@ const styles = EStyleSheet.create({
   },
 
   confirmationText: {
-    fontSize: "14rem"
+    fontSize: "14rem",
   },
 
   confirmationTextContainer: {
-    alignItems: "center"
+    alignItems: "center",
+  },
+
+  errorContainer: {
+    alignItems: "center",
+    flex: 1,
+  },
+
+  errorText: {
+    color: color.error,
   },
 
   mainView: {
@@ -469,17 +535,17 @@ const styles = EStyleSheet.create({
 
   paymentInformationRow: {
     flexDirection: "row",
-    marginBottom: "12rem"
+    marginBottom: "12rem",
   },
 
   paymentLottieContainer: {
     alignItems: "center",
-    flex: 1
+    flex: 1,
   },
 
   scrollView: {
     flexDirection: "column",
     flexGrow: 1,
-    justifyContent: "space-between"
-  }
+    justifyContent: "space-between",
+  },
 })

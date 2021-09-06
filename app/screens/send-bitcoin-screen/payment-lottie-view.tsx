@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import * as React from "react"
 import { useCallback, useMemo } from "react"
-import { Text} from "react-native"
+import { Text } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import LottieView from "lottie-react-native"
 
@@ -17,11 +17,7 @@ type Props = {
   status: string
 }
 
-export const PaymentLottieView = ({
-  errs,
-  status
-}: Props): JSX.Element => {
-
+export const PaymentLottieView = ({ errs, status }: Props): JSX.Element => {
   const successLottie = useMemo(() => {
     return (
       <>
@@ -102,10 +98,10 @@ const styles = EStyleSheet.create({
 
   pendingLottieText: {
     fontSize: 18,
-    textAlign: "center"
+    textAlign: "center",
   },
 
   successLottieText: {
-    fontSize: 18
-  }
+    fontSize: 18,
+  },
 })

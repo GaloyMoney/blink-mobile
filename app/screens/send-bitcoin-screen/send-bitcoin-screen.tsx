@@ -31,7 +31,15 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
   const client = useApolloClient()
   const { navigate } = useNavigation()
   const btcPrice = useBTCPrice()
-  const { nextPrefCurrency, prefCurrency, primaryAmount, satMoneyAmount, secondaryAmount, usdMoneyAmount, setAmounts } = useMoneyAmount()
+  const {
+    nextPrefCurrency,
+    prefCurrency,
+    primaryAmount,
+    satMoneyAmount,
+    secondaryAmount,
+    usdMoneyAmount,
+    setAmounts,
+  } = useMoneyAmount()
 
   const [invoiceError, setInvoiceError] = useState("")
 
@@ -98,12 +106,12 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
     } else {
       setInteractive(true)
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [client, network, route.params])
 
   useEffect(() => {
     setAmounts({ value: primaryAmount.value, referenceCurrency })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [btcPrice])
 
   useEffect(() => {
@@ -173,11 +181,23 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
       paymentType,
       prefCurrency,
       sameNode,
-      satMoneyAmount, 
+      satMoneyAmount,
       usdMoneyAmount,
-      username: paymentType === "username" ? destination : null
+      username: paymentType === "username" ? destination : null,
     })
-  }, [address, amountless, destination, invoice, memo, navigate, prefCurrency, paymentType, sameNode, satMoneyAmount, usdMoneyAmount])
+  }, [
+    address,
+    amountless,
+    destination,
+    invoice,
+    memo,
+    navigate,
+    prefCurrency,
+    paymentType,
+    sameNode,
+    satMoneyAmount,
+    usdMoneyAmount,
+  ])
 
   return (
     <SendBitcoinScreenJSX
@@ -331,7 +351,11 @@ export const SendBitcoinScreenJSX: ScreenType = ({
             selectTextOnFocus
           />
         </View>
-        { errorMessage && <View style={styles.errorContainer}><Text style={styles.errorText}>{errorMessage}</Text></View> }
+        {errorMessage && (
+          <View style={styles.errorContainer}>
+            <Text style={styles.errorText}>{errorMessage}</Text>
+          </View>
+        )}
         <Button
           buttonStyle={styles.buttonStyle}
           containerStyle={{ flex: 1 }}
@@ -359,11 +383,11 @@ const styles = EStyleSheet.create({
   },
 
   errorContainer: {
-    alignItems: "center"
+    alignItems: "center",
   },
 
   errorText: {
-    color: color.error
+    color: color.error,
   },
 
   icon: {

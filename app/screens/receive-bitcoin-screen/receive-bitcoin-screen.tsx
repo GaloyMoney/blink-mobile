@@ -83,7 +83,8 @@ type Props = {
 export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
   const client = useApolloClient()
   const btcPrice = useBTCPrice()
-  const { nextPrefCurrency, primaryAmount, satMoneyAmount, secondaryAmount, setAmounts } = useMoneyAmount()
+  const { nextPrefCurrency, primaryAmount, satMoneyAmount, secondaryAmount, setAmounts } =
+    useMoneyAmount()
 
   const [addInvoice] = useMutation(ADD_INVOICE)
   const [updatePendingInvoice] = useMutation(UPDATE_PENDING_INVOICE)
@@ -109,7 +110,9 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
   const update = useCallback(async () => {
     setLoading(true)
     try {
-      const { data } = await addInvoice({ variables: { value: satMoneyAmount.value, memo } })
+      const { data } = await addInvoice({
+        variables: { value: satMoneyAmount.value, memo },
+      })
       const invoice = data.invoice.addInvoice
       setInvoice(invoice)
     } catch (err) {
@@ -207,7 +210,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
 
   useEffect(() => {
     setAmounts({ value: primaryAmount.value })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [btcPrice])
 
   const paymentSuccess = useCallback(() => {
@@ -305,7 +308,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
     (value) => {
       setAmounts({ value })
     },
-    [setAmounts]
+    [setAmounts],
   )
 
   return (
