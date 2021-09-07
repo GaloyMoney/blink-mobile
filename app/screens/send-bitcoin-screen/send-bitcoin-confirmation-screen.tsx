@@ -277,6 +277,7 @@ export const SendBitcoinConfirmationScreen = ({
       }
 
       try {
+        console.log("ABOUT TO PAY", paymentType, variables)
         ;({ data, errors } = await mutation({ variables }))
       } catch (err) {
         console.log({ err, errors }, "mutation error")

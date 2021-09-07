@@ -127,7 +127,7 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
         setAmountless(amountless)
 
         if (!amountless) {
-          const moneyAmount = { value: amountInvoice, currency: prefCurrency }
+          const moneyAmount = { value: amountInvoice, currency: "BTC" }
           setAmounts({ moneyAmount })
         }
 

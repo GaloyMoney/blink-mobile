@@ -13870,10 +13870,10 @@ react-native-icloudstore@^0.9.0:
   resolved "https://registry.npmjs.org/react-native-icloudstore/-/react-native-icloudstore-0.9.0.tgz"
   integrity sha1-QVzyynnnHrUBAkB587dvm4LT1Yc=
 
-react-native-image-picker@^3.3.4:
-  version "3.8.1"
-  resolved "https://registry.npmjs.org/react-native-image-picker/-/react-native-image-picker-3.8.1.tgz"
-  integrity sha512-Q7qaJ7Zkt8ipIkkF+7UcuRbI0cxaNwsHBcnDLZdlpHnxuMaLhS/xp6v/om/kBYhMg6BeT+NcncynZQoKz7dQqw==
+react-native-image-picker@^4.0.6:
+  version "4.0.6"
+  resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-4.0.6.tgz#0dfa5bb83bcf6ff58635ebb9201a185c2271e8cc"
+  integrity sha512-Pp3UWKUADuMG1mz12m6dSO/R2KnvXVEd77bldrfTMFpz4PFc4iVKo+bHeS79It0mUBezfzDMgfesg/OPLSugvQ==
 
 react-native-inappbrowser-reborn@^3.3.4:
   version "3.5.1"
@@ -14012,7 +14012,7 @@ react-native-safe-modules@^1.0.3:
 
 react-native-screen-brightness@^2.0.0-alpha:
   version "2.0.0-alpha"
-  resolved "https://registry.npmjs.org/react-native-screen-brightness/-/react-native-screen-brightness-2.0.0-alpha.tgz"
+  resolved "https://registry.yarnpkg.com/react-native-screen-brightness/-/react-native-screen-brightness-2.0.0-alpha.tgz#2fc30cf711cfafa5e0aec685f0fce51ce65e0052"
   integrity sha512-NdJPptcWiFwG9aypm0awYv9d/aoZSJetXPFkx6w/UuNX9SRr5YTKXMSND/2lwuSOw6uGU9mQ0f4dBuGZSNgzow==
 
 react-native-screens@^2.4.0:

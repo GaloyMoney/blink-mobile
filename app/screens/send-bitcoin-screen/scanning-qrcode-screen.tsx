@@ -103,8 +103,8 @@ export const ScanningQRCodeScreen: ScreenType = () => {
           mediaType: "photo",
         },
         (response) => {
-          if (response.uri) {
-            const uri = response.uri.toString().replace("file://", "")
+          if (response.assets[0].uri) {
+            const uri = response.assets[0].uri.toString().replace("file://", "")
             LocalQRCode.decode(uri, (error, result) => {
               if (!error) {
                 decodeInvoice(result)

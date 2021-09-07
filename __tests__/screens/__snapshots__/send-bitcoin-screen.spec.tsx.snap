@@ -679,9 +679,7 @@ exports[`SendBitcoinScreen render matches snapshot 1`] = `
                 Object {
                   "color": "#ff190c",
                   "fontSize": 12,
-                  "height": 0,
-                  "margin": 0,
-                  "padding": 0,
+                  "margin": 5,
                 }
               }
             />
@@ -774,115 +772,12 @@ exports[`SendBitcoinScreen render matches snapshot 1`] = `
                 Object {
                   "color": "#ff190c",
                   "fontSize": 12,
-                  "height": 0,
-                  "margin": 0,
-                  "padding": 0,
-                }
-              }
-            />
-          </View>
-          <View
-            style={
-              Object {
-                "paddingHorizontal": 10,
-                "width": "100%",
-              }
-            }
-          >
-            <View
-              style={
-                Object {
-                  "alignItems": "center",
-                  "borderBottomWidth": 1,
-                  "borderColor": "#86939e",
-                  "flexDirection": "row",
-                  "transform": Array [
-                    Object {
-                      "translateX": 0,
-                    },
-                  ],
-                }
-              }
-            >
-              <View
-                style={
-                  Object {
-                    "alignItems": "center",
-                    "height": 40,
-                    "justifyContent": "center",
-                    "marginVertical": 4,
-                    "paddingRight": 4,
-                  }
-                }
-              >
-                <View>
-                  <Text>
-                    Fee
-                  </Text>
-                  <Text
-                    allowFontScaling={false}
-                    style={
-                      Array [
-                        Object {
-                          "color": "#3050C4",
-                          "fontSize": 24,
-                        },
-                        undefined,
-                        Object {
-                          "fontFamily": "Ionicons",
-                          "fontStyle": "normal",
-                          "fontWeight": "normal",
-                        },
-                        Object {},
-                      ]
-                    }
-                  >
-                    
-                  </Text>
-                </View>
-              </View>
-              <TextInput
-                allowFontScaling={true}
-                editable={false}
-                onBlur={[Function]}
-                onFocus={[Function]}
-                placeholder="network fee"
-                placeholderTextColor="#86939e"
-                rejectResponderTermination={true}
-                selectTextOnFocus={true}
-                style={
-                  Object {
-                    "color": "#242424",
-                    "flex": 1,
-                    "fontSize": 18,
-                    "minHeight": 40,
-                  }
-                }
-                testID="RNE__Input__text-input"
-                underlineColorAndroid="transparent"
-                value={[Function]}
-              />
-            </View>
-            <Text
-              style={
-                Object {
-                  "alignSelf": "center",
-                  "color": "#ff190c",
-                  "fontSize": 16,
-                  "height": 18,
                   "margin": 5,
                 }
               }
             />
           </View>
         </View>
-        <View
-          style={
-            Object {
-              "alignItems": "center",
-            }
-          }
-        />
         <View
           style={
             Array [
