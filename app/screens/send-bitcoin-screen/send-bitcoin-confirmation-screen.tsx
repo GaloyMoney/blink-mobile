@@ -465,14 +465,16 @@ export const SendBitcoinConfirmationScreen = ({
           </View>
         )}
         <View style={styles.bottomContainer}>
-          <View style={styles.confirmationTextContainer}>
-            <Text style={styles.confirmationText}>
-              {translate("SendBitcoinConfirmationScreen.confirmPayment?")}
-            </Text>
-            <Text style={styles.confirmationText}>
-              {translate("SendBitcoinConfirmationScreen.paymentFinal")}
-            </Text>
-          </View>
+          {status === "idle" && (
+            <View style={styles.confirmationTextContainer}>
+              <Text style={styles.confirmationText}>
+                {translate("SendBitcoinConfirmationScreen.confirmPayment?")}
+              </Text>
+              <Text style={styles.confirmationText}>
+                {translate("SendBitcoinConfirmationScreen.paymentFinal")}
+              </Text>
+            </View>
+          )}
           <Button
             buttonStyle={styles.buttonStyle}
             loading={status === "loading"}
