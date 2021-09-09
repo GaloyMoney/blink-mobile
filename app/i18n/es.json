@@ -701,7 +701,8 @@
   "errors": {
     "generic": "Hubo un error inesperado. Por favor intente más tarde\n",
     "invalidEmail": "Correo inválido",
-    "invalidPhoneNumber": "Esto no es un número de teléfono válido"
+    "invalidPhoneNumber": "Esto no es un número de teléfono válido",
+    "tooManyRequestsPhoneCode": "Espere 60 minutos antes de solicitar otro mensaje de texto"
   },
   "notifications": {
     "payment": {

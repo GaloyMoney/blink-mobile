@@ -665,7 +665,8 @@
   "errors": {
     "generic": "There was an error. Please try again later",
     "invalidEmail": "Invalid email",
-    "invalidPhoneNumber": "is not a valid phone number"
+    "invalidPhoneNumber": "is not a valid phone number",
+    "tooManyRequestsPhoneCode": "Please wait 60 minutes before requesting another text message"
   },
   "notifications": {
     "payment": {
