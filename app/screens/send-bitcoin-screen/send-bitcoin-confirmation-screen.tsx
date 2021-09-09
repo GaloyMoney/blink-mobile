@@ -479,7 +479,7 @@ export const SendBitcoinConfirmationScreen = ({
             buttonStyle={styles.buttonStyle}
             loading={status === "loading"}
             onPress={() => {
-              if (status === "success" || status === "pending") {
+              if (status === "success" || status === "pending" || status === "error") {
                 navigation.pop(2)
               } else if (errorMessage.length > 0) {
                 navigation.pop(1)
@@ -488,10 +488,8 @@ export const SendBitcoinConfirmationScreen = ({
               }
             }}
             title={
-              status === "success" || status === "pending"
+              status === "success" || status === "pending" || status === "error"
                 ? translate("common.close")
-                : status === "error"
-                ? translate("common.tryAgain")
                 : errorMessage.length > 0
                 ? translate("common.cancel")
                 : translate("SendBitcoinConfirmationScreen.confirmPayment")
