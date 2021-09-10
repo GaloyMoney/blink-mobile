@@ -53,6 +53,16 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
     [setAmounts],
   )
 
+  const referenceAmount: MoneyAmount = useMemo(() => {
+    if ((paymentType === "onchain" || paymentType === "lightning") && !amountless) {
+      return {
+        value: satAmount,
+        currency: "BTC",
+      }
+    }
+    return primaryAmount
+  }, [amountless, paymentType, primaryAmount, satAmount])
+
   const [destination, setDestinationInternal] = useState("")
   const [invoice, setInvoice] = useState("")
   const [memo, setMemo] = useState<string | number | TagData>("")
@@ -102,7 +112,7 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
   }, [client, network, route.params])
 
   useEffect(() => {
-    setAmounts({ moneyAmount: primaryAmount })
+    setAmounts({ moneyAmount: referenceAmount })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setAmounts])
 
@@ -173,7 +183,7 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
       memo,
       paymentType,
       prefCurrency,
-      primaryAmount,
+      referenceAmount,
       sameNode,
       username: paymentType === "username" ? destination : null,
     })
@@ -185,7 +195,7 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
     memo,
     navigate,
     prefCurrency,
-    primaryAmount,
+    referenceAmount,
     paymentType,
     sameNode,
   ])

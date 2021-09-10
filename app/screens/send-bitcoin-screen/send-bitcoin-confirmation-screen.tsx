@@ -1,6 +1,6 @@
 import * as React from "react"
-import { useEffect, useMemo, useState } from "react"
-import { ActivityIndicator, FlatList, ScrollView, Text, View } from "react-native"
+import { useCallback, useEffect, useMemo, useState } from "react"
+import { ActivityIndicator, ScrollView, Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { gql, useApolloClient, useLazyQuery, useMutation } from "@apollo/client"
@@ -84,10 +84,7 @@ type SendBitcoinConfirmationScreenProps = {
   route: RouteProp<MoveMoneyStackParamList, "sendBitcoinConfirmation">
 }
 
-type PaymentInformationElement = {
-  label: string
-  data: JSX.Element
-}
+type PaymentInformationRowType = "destination" | "amount" | "fee" | "total"
 
 type Status = "idle" | "loading" | "pending" | "success" | "error"
 
@@ -105,7 +102,7 @@ export const SendBitcoinConfirmationScreen = ({
     memo,
     paymentType,
     prefCurrency,
-    primaryAmount,
+    referenceAmount,
     sameNode,
     username,
   } = useMemo(() => {
@@ -159,19 +156,31 @@ export const SendBitcoinConfirmationScreen = ({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [getOnchainFees, { loading: onchainFeeLoading }] = useMutation(ONCHAIN_FEES)
 
+  const secondaryCurrency: CurrencyType = useMemo(() => {
+    return prefCurrency === "BTC" ? "USD" : "BTC"
+  }, [prefCurrency])
+
   const satAmount = useMemo(() => {
-    return currencyConversion[primaryAmount.currency]["BTC"](primaryAmount.value)
-  }, [currencyConversion, primaryAmount])
+    return currencyConversion[referenceAmount.currency]["BTC"](referenceAmount.value)
+  }, [currencyConversion, referenceAmount])
+
+  const primaryAmount: MoneyAmount = useMemo(() => {
+    return {
+      value: currencyConversion[referenceAmount.currency][prefCurrency](
+        referenceAmount.value,
+      ),
+      currency: prefCurrency,
+    }
+  }, [currencyConversion, prefCurrency, referenceAmount])
 
   const secondaryAmount: MoneyAmount = useMemo(() => {
-    const otherCurrency = primaryAmount.currency === "BTC" ? "USD" : "BTC"
     return {
-      value: currencyConversion[primaryAmount.currency][otherCurrency](
-        primaryAmount.value,
+      value: currencyConversion[referenceAmount.currency][secondaryCurrency](
+        referenceAmount.value,
       ),
-      currency: otherCurrency,
+      currency: secondaryCurrency,
     }
-  }, [currencyConversion, primaryAmount])
+  }, [currencyConversion, secondaryCurrency, referenceAmount])
 
   const initializeFees = async () => {
     switch (paymentType) {
@@ -277,7 +286,6 @@ export const SendBitcoinConfirmationScreen = ({
       }
 
       try {
-        console.log("ABOUT TO PAY", paymentType, variables)
         ;({ data, errors } = await mutation({ variables }))
       } catch (err) {
         console.log({ err, errors }, "mutation error")
@@ -342,21 +350,15 @@ export const SendBitcoinConfirmationScreen = ({
     return textCurrencyFormatting(fee ?? 0, btcPrice, prefCurrency)
   }, [btcPrice, fee, prefCurrency])
 
-  const feeText = useMemo(() => {
+  const feeText: string = useMemo(() => {
     if (fee === null && paymentType !== "username") {
       return ""
-    } else if (fee > 0) {
-      return `${feeTextFormatted}, ${translate("common.Total")}: ${textCurrencyFormatting(
-        fee + satAmount,
-        btcPrice,
-        prefCurrency,
-      )}`
     } else if (fee === -1 || fee === undefined) {
       return fee
     } else {
       return feeTextFormatted
     }
-  }, [btcPrice, fee, feeTextFormatted, paymentType, prefCurrency, satAmount])
+  }, [fee, feeTextFormatted, paymentType])
 
   const totalAmount = useMemo(() => {
     return fee == null ? satAmount : satAmount + fee
@@ -376,10 +378,10 @@ export const SendBitcoinConfirmationScreen = ({
   const amountElement: JSX.Element = useMemo(() => {
     return (
       <>
-        <Text style={styles.paymentInformationData}>
+        <Text style={styles.paymentInformationMainAmount}>
           {currencyToTextWithUnits(primaryAmount)}
         </Text>
-        <Text style={styles.paymentInformationSubData}>
+        <Text style={styles.paymentInformationSecondaryAmount}>
           {currencyToTextWithUnits(secondaryAmount)}
         </Text>
       </>
@@ -404,7 +406,7 @@ export const SendBitcoinConfirmationScreen = ({
     if (fee === undefined) {
       return (
         <ActivityIndicator
-          style={styles.activityIndicator}
+          style={[styles.activityIndicator, styles.paymentInformationData]}
           animating
           size="small"
           color={palette.orange}
@@ -420,22 +422,78 @@ export const SendBitcoinConfirmationScreen = ({
     return <Text style={styles.paymentInformationData}>{feeText}</Text>
   }, [fee, feeText])
 
-  const paymentInformation: PaymentInformationElement[] = useMemo(() => {
-    return [
-      {
-        label: "Amount:",
-        data: amountElement,
-      },
-      {
-        label: "To:",
-        data: destinationElement,
-      },
-      {
-        label: "Fee:",
-        data: feeElement,
-      },
-    ]
-  }, [amountElement, destinationElement, feeElement])
+  const totalElement: JSX.Element = useMemo(() => {
+    if (fee === null || fee === undefined || fee === -1) {
+      return null
+    }
+
+    return (
+      <>
+        <Text style={styles.paymentInformationMainAmount}>
+          {currencyToTextWithUnits({
+            value: currencyConversion["BTC"][prefCurrency](totalAmount),
+            currency: prefCurrency,
+          })}
+        </Text>
+        <Text style={styles.paymentInformationSecondaryAmount}>
+          {currencyToTextWithUnits({
+            value: currencyConversion["BTC"][secondaryCurrency](totalAmount),
+            currency: secondaryCurrency,
+          })}
+        </Text>
+      </>
+    )
+  }, [currencyConversion, fee, prefCurrency, secondaryCurrency, totalAmount])
+
+  const paymentInformationLabelText = useCallback(
+    (rowType: PaymentInformationRowType): string => {
+      switch (rowType) {
+        case "destination":
+          return translate("SendBitcoinConfirmationScreen.destinationLabel")
+        case "amount":
+          return translate("SendBitcoinConfirmationScreen.amountLabel")
+        case "fee":
+          return translate("SendBitcoinConfirmationScreen.feeLabel")
+        case "total":
+          return translate("SendBitcoinConfirmationScreen.totalLabel")
+      }
+    },
+    [],
+  )
+
+  const paymentInformationData = useCallback(
+    (rowType: PaymentInformationRowType): JSX.Element => {
+      switch (rowType) {
+        case "destination":
+          return destinationElement
+        case "amount":
+          return amountElement
+        case "fee":
+          return feeElement
+        case "total":
+          return totalElement
+      }
+    },
+    [amountElement, destinationElement, feeElement, totalElement],
+  )
+
+  const paymentInformationRow = useCallback(
+    (rowType: PaymentInformationRowType): JSX.Element => {
+      if (rowType === "total" && (fee === null || fee === undefined || fee === -1)) {
+        return null
+      }
+
+      return (
+        <View style={styles.paymentInformationRow}>
+          <Text style={styles.paymentInformationLabel}>
+            {paymentInformationLabelText(rowType)}
+          </Text>
+          {paymentInformationData(rowType)}
+        </View>
+      )
+    },
+    [fee, paymentInformationData, paymentInformationLabelText],
+  )
 
   return (
     <Screen preset="fixed">
@@ -445,16 +503,10 @@ export const SendBitcoinConfirmationScreen = ({
         keyboardShouldPersistTaps="always"
       >
         <View style={styles.paymentInformation}>
-          <FlatList
-            data={paymentInformation}
-            renderItem={({ item }) => (
-              <View style={styles.paymentInformationRow}>
-                <Text style={styles.paymentInformationLabel}>{item.label}</Text>
-                <View style={styles.paymentInformationData}>{item.data}</View>
-              </View>
-            )}
-            scrollEnabled={false}
-          />
+          {paymentInformationRow("destination")}
+          {paymentInformationRow("amount")}
+          {paymentInformationRow("fee")}
+          {paymentInformationRow("total")}
         </View>
         <View style={styles.paymentLottieContainer}>
           <PaymentLottieView errs={errs} status={status} />
@@ -548,6 +600,7 @@ const styles = EStyleSheet.create({
   paymentInformationData: {
     flex: 5,
     fontSize: "18rem",
+    textAlignVertical: "bottom",
   },
 
   paymentInformationLabel: {
@@ -555,14 +608,22 @@ const styles = EStyleSheet.create({
     fontSize: "18rem",
   },
 
+  paymentInformationMainAmount: {
+    flex: 3,
+    fontSize: "18rem",
+    textAlignVertical: "bottom",
+  },
+
   paymentInformationRow: {
     flexDirection: "row",
     marginBottom: "12rem",
   },
 
-  paymentInformationSubData: {
+  paymentInformationSecondaryAmount: {
     color: palette.midGrey,
+    flex: 2,
     fontSize: "14rem",
+    textAlignVertical: "bottom",
   },
 
   paymentLottieContainer: {

@@ -536,10 +536,14 @@
     "setPin": "Set PIN"
   },
   "SendBitcoinConfirmationScreen": {
+    "amountLabel": "Amount:",
     "confirmPayment": "Confirm payment",
     "confirmPayment?": "Do you want to confirm this payment?",
+    "destinationLabel": "To:",
+    "feeLabel": "Fee:",
     "paymentFinal": "Payments are final.",
     "title": "Confirm Payment",
+    "totalLabel": "Total:",
     "totalExceed": "Total exceeds your balance of {{balance}}"
   },
   "SendBitcoinScreen": {

@@ -74,7 +74,7 @@ export type MoveMoneyStackParamList = {
     memo: string | null
     paymentType: IPaymentType
     prefCurrency: CurrencyType
-    primaryAmount: MoneyAmount
+    referenceAmount: MoneyAmount
     sameNode: boolean | null
     username: string | null
   }

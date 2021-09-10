@@ -73,7 +73,7 @@ const usernameRouteParams = {
   memo: null,
   paymentType: "username" as IPaymentType,
   prefCurrency: "BTC" as CurrencyType,
-  primaryAmount: usernameSatAmount,
+  referenceAmount: usernameSatAmount,
   sameNode: null,
   username: "Bitcoin",
 }
@@ -98,7 +98,7 @@ const lightningRouteParams = {
   memo: null,
   paymentType: "lightning" as IPaymentType,
   prefCurrency: "BTC" as CurrencyType,
-  primaryAmount: lightningSatAmount,
+  referenceAmount: lightningSatAmount,
   sameNode: false,
   username: null,
 }

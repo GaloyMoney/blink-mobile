@@ -384,108 +384,33 @@ exports[`SendBitcoinConfirmationScreen render matches snapshot 1`] = `
     >
       <View>
         <View>
-          <RCTScrollView
-            data={
-              Array [
-                Object {
-                  "data": <React.Fragment>
-                    <Text>
-                      68,626 sats
-                    </Text>
-                    <Text>
-                      $27.22
-                    </Text>
-                  </React.Fragment>,
-                  "label": "Amount:",
-                },
-                Object {
-                  "data": <Text>
-                    Bitcoin
-                  </Text>,
-                  "label": "To:",
-                },
-                Object {
-                  "data": <Text>
-                    0 sats
-                  </Text>,
-                  "label": "Fee:",
-                },
-              ]
-            }
-            disableVirtualization={false}
-            getItem={[Function]}
-            getItemCount={[Function]}
-            horizontal={false}
-            initialNumToRender={10}
-            keyExtractor={[Function]}
-            maxToRenderPerBatch={10}
-            onContentSizeChange={[Function]}
-            onEndReachedThreshold={2}
-            onLayout={[Function]}
-            onMomentumScrollEnd={[Function]}
-            onScroll={[Function]}
-            onScrollBeginDrag={[Function]}
-            onScrollEndDrag={[Function]}
-            removeClippedSubviews={false}
-            renderItem={[Function]}
-            scrollEnabled={false}
-            scrollEventThrottle={50}
-            stickyHeaderIndices={Array []}
-            updateCellsBatchingPeriod={50}
-            viewabilityConfigCallbackPairs={Array []}
-            windowSize={21}
-          >
-            <View>
-              <View
-                onLayout={[Function]}
-                style={null}
-              >
-                <View>
-                  <Text>
-                    Amount:
-                  </Text>
-                  <View>
-                    <Text>
-                      68,626 sats
-                    </Text>
-                    <Text>
-                      $27.22
-                    </Text>
-                  </View>
-                </View>
-              </View>
-              <View
-                onLayout={[Function]}
-                style={null}
-              >
-                <View>
-                  <Text>
-                    To:
-                  </Text>
-                  <View>
-                    <Text>
-                      Bitcoin
-                    </Text>
-                  </View>
-                </View>
-              </View>
-              <View
-                onLayout={[Function]}
-                style={null}
-              >
-                <View>
-                  <Text>
-                    Fee:
-                  </Text>
-                  <View>
-                    <Text>
-                      0 sats
-                    </Text>
-                  </View>
-                </View>
-              </View>
-            </View>
-          </RCTScrollView>
+          <View>
+            <Text>
+              To:
+            </Text>
+            <Text>
+              Bitcoin
+            </Text>
+          </View>
+          <View>
+            <Text>
+              Amount:
+            </Text>
+            <Text>
+              68,626 sats
+            </Text>
+            <Text>
+              $27.22
+            </Text>
+          </View>
+          <View>
+            <Text>
+              Fee:
+            </Text>
+            <Text>
+              0 sats
+            </Text>
+          </View>
         </View>
         <View />
         <View>
