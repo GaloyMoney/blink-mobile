@@ -319,8 +319,11 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
   }, [client, network, reset, route.params])
 
   useEffect(() => {
-    setAmounts({ value: primaryAmount.value, referenceCurrency: referenceCurrency() })
-  }, [btcPrice, primaryAmount, referenceCurrency, setAmounts])
+    const mReferenceCurrency = referenceCurrency()
+    const newAmount = mReferenceCurrency === "BTC" ? satAmount : usdAmount
+    setAmounts({ value: newAmount, referenceCurrency: mReferenceCurrency })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [setAmounts])
 
   useEffect(() => {
     const fn = async () => {
@@ -335,7 +338,6 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
         address,
         sameNode,
       } = validPayment(destination, network, client)
-
       if (valid) {
         setStatus("idle")
         setAddress(address)
@@ -527,7 +529,7 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
 
   const feeTextFormatted = textCurrencyFormatting(fee ?? 0, btcPrice, prefCurrency)
 
-  const feeText = () => {
+  const feeText = React.useMemo(() => {
     if (fee === null && !usernameExists) {
       return ""
     } else if (fee > 0 && !!satAmount) {
@@ -541,7 +543,7 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
     } else {
       return feeTextFormatted
     }
-  }
+  }, [btcPrice, fee, feeTextFormatted, prefCurrency, satAmount, usernameExists])
 
   const totalAmount = fee == null ? satAmount : satAmount + fee
   const errorMessage =
