@@ -73,15 +73,14 @@ export const validPayment = (
   let [protocol, data] = input.split(":")
   let paymentType: IPaymentType
 
-  // some apps encode addresses and invoices in UPPERCASE
-  data = data?.toLowerCase()
-
   if (protocol.toLowerCase() === "bitcoin") {
     paymentType = "onchain"
 
     // TODO manage bitcoin= case
   } else if (protocol.toLowerCase() === "lightning") {
     paymentType = "lightning"
+    // some apps encode lightning invoices in UPPERCASE
+    data = data.toLowerCase()
 
     // no protocol. let's see if this could have an address directly
   } else if (protocol.toLowerCase().startsWith("ln")) {
@@ -105,6 +104,7 @@ export const validPayment = (
       }
     }
 
+    // some apps encode lightning invoices in UPPERCASE
     data = protocol.toLowerCase()
   } else if (protocol.toLowerCase() === "https") {
     const domain = "//ln.bitcoinbeach.com/"
@@ -123,7 +123,17 @@ export const validPayment = (
   if (paymentType === "onchain" || paymentType === undefined) {
     try {
       const decodedData = url.parse(data, true)
-      const path = decodedData.pathname // using url node library. the address is exposed as the "host" here
+      let path = decodedData.pathname // using url node library. the address is exposed as the "host" here
+      // some apps encode bech32 addresses in UPPERCASE
+      const lowerCasePath = path.toLowerCase()
+      if (
+        lowerCasePath.startsWith("bc1") ||
+        lowerCasePath.startsWith("tb1") ||
+        lowerCasePath.startsWith("bcrt1")
+      ) {
+        path = lowerCasePath
+      }
+
       let amount
 
       try {
