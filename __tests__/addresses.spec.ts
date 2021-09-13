@@ -30,6 +30,10 @@ const p2pkh = "1KP2uzAZYoNF6U8BkMBRdivLNujwSjtAQV"
 const p2sh = "3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy"
 const bech32 = "bc1qdx09anw82zhujxzzsn56mruv8qvd33czzy9apt"
 const bech32_caps = "BC1QW508D6QEJXTDG4Y5R3ZARVARY0C5XW7KV8F3T4"
+const p2pkh_prefix = "bitcoin:1KP2uzAZYoNF6U8BkMBRdivLNujwSjtAQV"
+const p2sh_prefix = "bitcoin:3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy"
+const bech32_prefix = "bitcoin:bc1qdx09anw82zhujxzzsn56mruv8qvd33czzy9apt"
+const bech32_caps_prefix = "bitcoin:BC1QW508D6QEJXTDG4Y5R3ZARVARY0C5XW7KV8F3T4"
 
 const bech32_regtest = "bcrt1qam64av6cyhjsgdwajjpe0l9z8ju4w7rjryecf3"
 
@@ -42,6 +46,10 @@ it("bitcoin address mainnet", () => {
   checkOnChain(p2sh, network)
   checkOnChain(bech32, network)
   checkOnChain(bech32_caps, network)
+  checkOnChain(p2pkh_prefix, network)
+  checkOnChain(p2sh_prefix, network)
+  checkOnChain(bech32_prefix, network)
+  checkOnChain(bech32_caps_prefix, network)
 
   checkOnChainFail(bech32_regtest, network)
   checkOnChainFail(bech32_testnet, network)
