@@ -86,7 +86,15 @@ type SendBitcoinConfirmationScreenProps = {
 
 type PaymentInformationRowType = "destination" | "amount" | "fee" | "total"
 
-type Status = "idle" | "loading" | "pending" | "success" | "error"
+const Status = {
+  IDLE: "idle",
+  LOADING: "loading",
+  PENDING: "pending",
+  SUCCESS: "success",
+  ERROR: "error",
+} as const
+
+type StatusType = typeof Status[keyof typeof Status]
 
 export const SendBitcoinConfirmationScreen = ({
   navigation,
@@ -111,7 +119,7 @@ export const SendBitcoinConfirmationScreen = ({
 
   const [errs, setErrs] = useState<{ message: string }[]>([])
   // idle, loading, pending, success, error
-  const [status, setStatus] = useState<Status>("idle")
+  const [status, setStatus] = useState<StatusType>(Status.IDLE)
   // if null ==> we don't know (blank fee field)
   // if -1, there is an error
   // otherwise, fee in sats
@@ -244,19 +252,19 @@ export const SendBitcoinConfirmationScreen = ({
 
   const pay = async () => {
     if ((amountless || paymentType === "onchain") && satAmount === 0) {
-      setStatus("error")
+      setStatus(Status.ERROR)
       setErrs([{ message: translate("SendBitcoinScreen.noAmount") }])
       return
     }
 
     if (paymentType === "username" && !UsernameValidation.isValid(username)) {
-      setStatus("error")
+      setStatus(Status.ERROR)
       setErrs([{ message: translate("SendBitcoinScreen.invalidUsername") }])
       return
     }
 
     setErrs([])
-    setStatus("loading")
+    setStatus(Status.LOADING)
     try {
       let mutation
       let variables
@@ -290,7 +298,7 @@ export const SendBitcoinConfirmationScreen = ({
       } catch (err) {
         console.log({ err, errors }, "mutation error")
 
-        setStatus("error")
+        setStatus(Status.ERROR)
         setErrs([err])
         return
       }
@@ -299,26 +307,26 @@ export const SendBitcoinConfirmationScreen = ({
       let pending
 
       if (paymentType === "lightning") {
-        success = data?.invoice?.payInvoice === "success" ?? false
+        success = data?.invoice?.payInvoice === Status.SUCCESS ?? false
         pending = data?.invoice?.payInvoice === "pending" ?? false
       } else if (paymentType === "onchain") {
         success = data?.onchain?.pay?.success
       } else if (paymentType === "username") {
-        success = data?.invoice?.payKeysendUsername === "success" ?? false
+        success = data?.invoice?.payKeysendUsername === Status.SUCCESS ?? false
       }
 
       if (success) {
         queryWallet(client, "network-only")
-        setStatus("success")
+        setStatus(Status.SUCCESS)
       } else if (pending) {
-        setStatus("pending")
+        setStatus(Status.PENDING)
       } else {
-        setStatus("error")
+        setStatus(Status.ERROR)
         setErrs(errors)
       }
     } catch (err) {
       console.log({ err }, "error loop")
-      setStatus("error")
+      setStatus(Status.ERROR)
       setErrs([{ message: `an error occured. try again later\n${err}` }])
     }
   }
@@ -330,11 +338,11 @@ export const SendBitcoinConfirmationScreen = ({
 
     let notificationType
 
-    if (status === "pending" || status === "error") {
+    if (status === Status.PENDING || status === Status.ERROR) {
       notificationType = "notificationError"
     }
 
-    if (status === "success") {
+    if (status === Status.SUCCESS) {
       notificationType = "notificationSuccess"
     }
 
@@ -531,7 +539,11 @@ export const SendBitcoinConfirmationScreen = ({
             buttonStyle={styles.buttonStyle}
             loading={status === "loading"}
             onPress={() => {
-              if (status === "success" || status === "pending" || status === "error") {
+              if (
+                status === Status.SUCCESS ||
+                status === Status.PENDING ||
+                status === Status.ERROR
+              ) {
                 navigation.pop(2)
               } else if (errorMessage.length > 0) {
                 navigation.pop(1)
@@ -540,7 +552,9 @@ export const SendBitcoinConfirmationScreen = ({
               }
             }}
             title={
-              status === "success" || status === "pending" || status === "error"
+              status === Status.SUCCESS ||
+              status === Status.PENDING ||
+              status === Status.ERROR
                 ? translate("common.close")
                 : errorMessage.length > 0
                 ? translate("common.cancel")
