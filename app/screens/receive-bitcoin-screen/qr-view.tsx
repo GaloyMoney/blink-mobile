@@ -26,8 +26,7 @@ import {
   TYPE_BITCOIN,
 } from "../../utils/wallet"
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const successLottie = require("../send-bitcoin-screen/success_lottie.json")
+import successLottie from "../send-bitcoin-screen/success_lottie.json"
 
 const configByType = {
   [TYPE_LIGHTNING]: {

@@ -60,8 +60,7 @@ import {
 } from "./stack-param-lists"
 import type { NavigatorType } from "../types/jsx"
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const PushNotification = require("react-native-push-notification")
+import PushNotification from "react-native-push-notification"
 
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
 PushNotification.configure({

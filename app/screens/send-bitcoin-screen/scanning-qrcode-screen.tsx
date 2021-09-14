@@ -14,8 +14,7 @@ import type { ScreenType } from "../../types/jsx"
 import { validPayment } from "../../utils/parsing"
 import { Token } from "../../utils/token"
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const LocalQRCode = require("@remobile/react-native-qrcode-local-image")
+import LocalQRCode from "@remobile/react-native-qrcode-local-image"
 
 const CAMERA: ViewStyle = {
   width: "100%",

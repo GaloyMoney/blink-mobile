@@ -8,9 +8,9 @@ import LottieView from "lottie-react-native"
 import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
 
-const successLottieJson = require("./success_lottie.json")
-const errorLottieJson = require("./error_lottie.json")
-const pendingLottieJson = require("./pending_lottie.json")
+import successLottieJson from "./success_lottie.json"
+import errorLottieJson from "./error_lottie.json"
+import pendingLottieJson from "./pending_lottie.json"
 
 type Props = {
   errs: { message: string }[]
