@@ -46,13 +46,6 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
   const [paymentType, setPaymentType] = useState<IPaymentType>(undefined)
   const [amountless, setAmountless] = useState(false)
 
-  const setAmountsAction = useCallback(
-    (input) => {
-      setAmounts({ moneyAmount: input })
-    },
-    [setAmounts],
-  )
-
   const referenceAmount: MoneyAmount = useMemo(() => {
     if ((paymentType === "onchain" || paymentType === "lightning") && !amountless) {
       return {
@@ -204,7 +197,7 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
     <SendBitcoinScreenJSX
       paymentType={paymentType}
       amountless={amountless}
-      setAmounts={setAmountsAction}
+      setAmounts={setAmounts}
       invoice={invoice}
       address={address}
       memo={memo}
