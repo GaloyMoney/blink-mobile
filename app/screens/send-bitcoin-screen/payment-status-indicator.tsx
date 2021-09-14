@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import * as React from "react"
-import { useCallback, useMemo } from "react"
 import { Text } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import LottieView from "lottie-react-native"
@@ -18,7 +17,7 @@ type Props = {
 }
 
 export const PaymentStatusIndicator = ({ errs, status }: Props): JSX.Element => {
-  const successLottie = useMemo(() => {
+  if (status === "success") {
     return (
       <>
         <LottieView
@@ -33,9 +32,9 @@ export const PaymentStatusIndicator = ({ errs, status }: Props): JSX.Element => 
         </Text>
       </>
     )
-  }, [])
+  }
 
-  const errorLottie = useMemo(() => {
+  if (status === "error") {
     return (
       <>
         <LottieView
@@ -52,9 +51,9 @@ export const PaymentStatusIndicator = ({ errs, status }: Props): JSX.Element => 
         ))}
       </>
     )
-  }, [errs])
+  }
 
-  const pendingLottie = useMemo(() => {
+  if (status === "pending") {
     return (
       <>
         <LottieView
@@ -69,20 +68,9 @@ export const PaymentStatusIndicator = ({ errs, status }: Props): JSX.Element => 
         </Text>
       </>
     )
-  }, [])
+  }
 
-  const paymentLottie = useCallback(() => {
-    if (status === "success") {
-      return successLottie
-    } else if (status === "error") {
-      return errorLottie
-    } else if (status === "pending") {
-      return pendingLottie
-    }
-    return null
-  }, [errorLottie, pendingLottie, status, successLottie])
-
-  return paymentLottie()
+  return null
 }
 
 const styles = EStyleSheet.create({
