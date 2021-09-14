@@ -11,7 +11,7 @@ type CurrencyConverterTypes = {
   USD: CurrencyConverter
 }
 
-export const useCurrencyConversion = (): CurrencyConverterTypes => {
+export const useCurrencyConverter = (): CurrencyConverterTypes => {
   const btcPrice = useBTCPrice()
 
   return {

@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from "react"
-import { useCurrencyConversion } from "./use-currency-conversion"
+import { useCurrencyConverter } from "./use-currency-conversion"
 import { usePrefCurrency } from "./use-pref-currency"
 
 type UseMoneyAmountReturn = {
@@ -13,7 +13,7 @@ type UseMoneyAmountReturn = {
 
 export const useMoneyAmount = (): UseMoneyAmountReturn => {
   const [prefCurrency, nextPrefCurrency] = usePrefCurrency()
-  const currencyConverter = useCurrencyConversion()
+  const currencyConverter = useCurrencyConverter()
 
   const [amounts, setAmmounts] = useState({
     sat: 0,
