@@ -137,7 +137,7 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
         >
           <TouchableHighlight
             underlayColor={styles.touchableHighlightColor}
-            onLongPress={() => {
+            onPress={() => {
               if (showToolTip) {
                 closeToolTip()
               }
@@ -175,9 +175,7 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
                 }
               }}
             >
-              <>
-                <TextCurrency amount={amount} currency={currency} style={styles.text} />
-              </>
+              <TextCurrency amount={amount} currency={currency} style={styles.text} />
             </TouchableHighlight>
           )}
         </View>

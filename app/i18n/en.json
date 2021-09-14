@@ -9,7 +9,7 @@
   },
   "BalanceHeader": {
     "currentBalance": "Current Balance",
-    "hiddenBalanceToolTip": "Hold to reveal your balance"
+    "hiddenBalanceToolTip": "Tap to reveal your balance"
   },
   "BankTransferScreen": {
     "title": "Bank Transfer"
