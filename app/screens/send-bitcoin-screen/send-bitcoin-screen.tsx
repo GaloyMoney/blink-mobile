@@ -37,7 +37,7 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
     primaryAmount,
     satAmount,
     secondaryAmount,
-    setAmounts,
+    setConvertedAmounts,
   } = useMoneyAmount()
 
   const [invoiceError, setInvoiceError] = useState("")
@@ -82,12 +82,12 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
     setAddress("")
     setPaymentType(undefined)
     setAmountless(false)
-    setAmounts({ moneyAmount: { value: 0, currency: prefCurrency } })
+    setConvertedAmounts({ moneyAmount: { value: 0, currency: prefCurrency } })
     setDestination("")
     setInvoice("")
     setMemo("")
     setInteractive(true)
-  }, [prefCurrency, setAmounts])
+  }, [prefCurrency, setConvertedAmounts])
 
   useEffect(() => {
     reset()
@@ -105,9 +105,9 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
   }, [client, network, route.params])
 
   useEffect(() => {
-    setAmounts({ moneyAmount: referenceAmount })
+    setConvertedAmounts({ moneyAmount: referenceAmount })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setAmounts])
+  }, [setConvertedAmounts])
 
   useEffect(() => {
     const fn = async () => {
@@ -131,7 +131,7 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
 
         if (!amountless) {
           const moneyAmount = { value: amountInvoice, currency: "BTC" }
-          setAmounts({ moneyAmount })
+          setConvertedAmounts({ moneyAmount })
         }
 
         if (!memo) {
@@ -197,7 +197,7 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
     <SendBitcoinScreenJSX
       paymentType={paymentType}
       amountless={amountless}
-      setAmounts={setAmounts}
+      setConvertedAmounts={setConvertedAmounts}
       invoice={invoice}
       address={address}
       memo={memo}
@@ -221,7 +221,7 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
 type SendBitcoinScreenJSXProps = {
   paymentType: string
   amountless: boolean
-  setAmounts: (input: number) => void
+  setConvertedAmounts: (input: number) => void
   invoice: string
   address: string
   memo: string
@@ -246,7 +246,7 @@ type SendBitcoinScreenJSXProps = {
 export const SendBitcoinScreenJSX: ScreenType = ({
   paymentType,
   amountless,
-  setAmounts,
+  setConvertedAmounts,
   invoice,
   address,
   memo,
@@ -294,7 +294,7 @@ export const SendBitcoinScreenJSX: ScreenType = ({
             editable={paymentType !== ("lightning" || "onchain") || amountless}
             forceKeyboard
             nextPrefCurrency={nextPrefCurrency}
-            onUpdateAmount={setAmounts}
+            onUpdateAmount={setConvertedAmounts}
             primaryAmount={primaryAmount}
             secondaryAmount={secondaryAmount}
           />

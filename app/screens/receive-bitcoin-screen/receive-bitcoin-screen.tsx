@@ -83,8 +83,13 @@ type Props = {
 export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
   const client = useApolloClient()
   const btcPrice = useBTCPrice()
-  const { nextPrefCurrency, primaryAmount, satAmount, secondaryAmount, setAmounts } =
-    useMoneyAmount()
+  const {
+    nextPrefCurrency,
+    primaryAmount,
+    satAmount,
+    secondaryAmount,
+    setConvertedAmounts,
+  } = useMoneyAmount()
 
   const [addInvoice] = useMutation(ADD_INVOICE)
   const [updatePendingInvoice] = useMutation(UPDATE_PENDING_INVOICE)
@@ -209,7 +214,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
   }, [client])
 
   useEffect(() => {
-    setAmounts({ moneyAmount: primaryAmount })
+    setConvertedAmounts({ moneyAmount: primaryAmount })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [btcPrice])
 
@@ -304,13 +309,6 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
     setKeyboardIsShown(false)
   }, [inputMemoRef])
 
-  const onUpdateAmount = React.useCallback(
-    (amount) => {
-      setAmounts({ moneyAmount: amount })
-    },
-    [setAmounts],
-  )
-
   return (
     <Screen backgroundColor={palette.lighterGrey} style={styles.screen} preset="fixed">
       <ScrollView keyboardShouldPersistTaps="always">
@@ -319,7 +317,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
             editable={!isSucceed}
             forceKeyboard={false}
             nextPrefCurrency={nextPrefCurrency}
-            onUpdateAmount={onUpdateAmount}
+            onUpdateAmount={setConvertedAmounts}
             onBlur={update}
             primaryAmount={primaryAmount}
             secondaryAmount={secondaryAmount}

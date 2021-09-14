@@ -1,3 +1,3 @@
-type SetAmountsInput = {
+type SetConvertedAmountsInput = {
   moneyAmount: MoneyAmount
 }

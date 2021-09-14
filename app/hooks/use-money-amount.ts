@@ -8,7 +8,7 @@ type UseMoneyAmountReturn = {
   primaryAmount: MoneyAmount
   satAmount: number
   secondaryAmount: MoneyAmount
-  setAmounts: (SetAmountsInput) => void
+  setConvertedAmounts: (SetConvertedAmountsInput) => void
 }
 
 export const useMoneyAmount = (): UseMoneyAmountReturn => {
@@ -20,8 +20,8 @@ export const useMoneyAmount = (): UseMoneyAmountReturn => {
     usd: 0,
   })
 
-  const setAmounts = useCallback(
-    ({ moneyAmount }: SetAmountsInput) => {
+  const setConvertedAmounts = useCallback(
+    ({ moneyAmount }: SetConvertedAmountsInput) => {
       const postiveValue = moneyAmount.value >= 0 ? moneyAmount.value : -moneyAmount.value
       const referenceCurrency = moneyAmount.currency
       const refCurrenciesConverter = currencyConverter[referenceCurrency]
@@ -58,6 +58,6 @@ export const useMoneyAmount = (): UseMoneyAmountReturn => {
     satAmount: amounts.sat,
     primaryAmount,
     secondaryAmount,
-    setAmounts,
+    setConvertedAmounts,
   }
 }
