@@ -22,7 +22,7 @@ import {
   textCurrencyFormatting,
 } from "../../utils/currencyConversion"
 import { useBTCPrice, useCurrencyConversion } from "../../hooks"
-import { PaymentLottieView } from "./payment-lottie-view"
+import { PaymentStatusIndicator } from "./payment-status-indicator"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { StackNavigationProp } from "@react-navigation/stack"
@@ -509,7 +509,7 @@ export const SendBitcoinConfirmationScreen = ({
           {paymentInformationRow("total")}
         </View>
         <View style={styles.paymentLottieContainer}>
-          <PaymentLottieView errs={errs} status={status} />
+          <PaymentStatusIndicator errs={errs} status={status} />
         </View>
         {errorMessage.length > 0 && (
           <View style={styles.errorContainer}>

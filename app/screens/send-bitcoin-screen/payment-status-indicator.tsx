@@ -17,7 +17,7 @@ type Props = {
   status: string
 }
 
-export const PaymentLottieView = ({ errs, status }: Props): JSX.Element => {
+export const PaymentStatusIndicator = ({ errs, status }: Props): JSX.Element => {
   const successLottie = useMemo(() => {
     return (
       <>
