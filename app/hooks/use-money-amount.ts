@@ -15,53 +15,48 @@ export const useMoneyAmount = (): UseMoneyAmountReturn => {
   const [prefCurrency, nextPrefCurrency] = usePrefCurrency()
   const currencyConverter = useCurrencyConversion()
 
-  const [satAmount, setSatAmount] = useState(0)
-  const [usdAmount, setUsdAmount] = useState(0)
+  const [amounts, setAmmounts] = useState({
+    sat: 0,
+    usd: 0,
+  })
 
   const setAmounts = useCallback(
     ({ moneyAmount }: SetAmountsInput) => {
       const postiveValue = moneyAmount.value >= 0 ? moneyAmount.value : -moneyAmount.value
-      const mReferenceCurrency = moneyAmount.currency
+      const referenceCurrency = moneyAmount.currency
+      const refCurrenciesConverter = currencyConverter[referenceCurrency]
 
-      setSatAmount(currencyConverter[mReferenceCurrency]["BTC"](postiveValue))
-      setUsdAmount(currencyConverter[mReferenceCurrency]["USD"](postiveValue))
+      setAmmounts({
+        sat: refCurrenciesConverter["BTC"](postiveValue),
+        usd: refCurrenciesConverter["USD"](postiveValue),
+      })
     },
     [currencyConverter],
   )
 
-  const satMoneyAmount = useMemo((): MoneyAmount => {
-    return {
-      value: satAmount,
+  const { primaryAmount, secondaryAmount } = useMemo((): {
+    primaryAmount: MoneyAmount
+    secondaryAmount: MoneyAmount
+  } => {
+    const satMoneyAmount: MoneyAmount = {
+      value: amounts.sat,
       currency: "BTC",
     }
-  }, [satAmount])
-
-  const usdMoneyAmount = useMemo((): MoneyAmount => {
-    return {
-      value: usdAmount,
+    const usdMoneyAmount: MoneyAmount = {
+      value: amounts.usd,
       currency: "USD",
     }
-  }, [usdAmount])
-
-  const primaryAmount = useMemo((): MoneyAmount => {
-    if (prefCurrency === "USD") {
-      return usdMoneyAmount
+    return {
+      primaryAmount: prefCurrency === "USD" ? usdMoneyAmount : satMoneyAmount,
+      secondaryAmount: prefCurrency === "BTC" ? usdMoneyAmount : satMoneyAmount,
     }
-    return satMoneyAmount
-  }, [prefCurrency, satMoneyAmount, usdMoneyAmount])
-
-  const secondaryAmount = useMemo((): MoneyAmount => {
-    if (prefCurrency === "BTC") {
-      return usdMoneyAmount
-    }
-    return satMoneyAmount
-  }, [prefCurrency, satMoneyAmount, usdMoneyAmount])
+  }, [amounts, prefCurrency])
 
   return {
     nextPrefCurrency,
     prefCurrency,
+    satAmount: amounts.sat,
     primaryAmount,
-    satAmount,
     secondaryAmount,
     setAmounts,
   }
