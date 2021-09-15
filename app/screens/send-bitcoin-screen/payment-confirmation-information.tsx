@@ -6,9 +6,18 @@ import { translate } from "../../i18n"
 import { currencyToTextWithUnits } from "../../utils/currencyConversion"
 import { palette } from "../../theme/palette"
 
+type FeeType = {
+  value: number | null | undefined
+  status: string
+  text: string
+}
+
+type FeeDetailsProps = {
+  fee: FeeType
+}
+
 type PaymentConfirmationInformationProps = {
-  fee: number | null | undefined
-  feeText: string
+  fee: FeeType
   destination: string
   primaryAmount: MoneyAmount
   secondaryAmount: MoneyAmount
@@ -18,7 +27,6 @@ type PaymentConfirmationInformationProps = {
 
 export const PaymentConfirmationInformation = ({
   fee,
-  feeText,
   destination,
   primaryAmount,
   secondaryAmount,
@@ -50,10 +58,10 @@ export const PaymentConfirmationInformation = ({
         <Text style={styles.paymentInformationLabel}>
           {translate("SendBitcoinConfirmationScreen.feeLabel")}
         </Text>
-        <FeeDetails fee={fee} feeText={feeText} />
+        <FeeDetails fee={fee} />
       </View>
 
-      {!(fee === null || fee === undefined || fee === -1) && (
+      {fee.value !== null && (
         <View style={styles.paymentInformationRow}>
           <Text style={styles.paymentInformationLabel}>
             {translate("SendBitcoinConfirmationScreen.totalLabel")}
@@ -70,13 +78,8 @@ export const PaymentConfirmationInformation = ({
   )
 }
 
-type FeeDetailsProps = {
-  fee: number | null | undefined
-  feeText: string
-}
-
-const FeeDetails = ({ fee, feeText }: FeeDetailsProps): JSX.Element => {
-  if (fee === undefined) {
+const FeeDetails = ({ fee }: FeeDetailsProps): JSX.Element => {
+  if (fee.status === "loading") {
     return (
       <ActivityIndicator
         style={[styles.activityIndicator, styles.paymentInformationData]}
@@ -87,7 +90,7 @@ const FeeDetails = ({ fee, feeText }: FeeDetailsProps): JSX.Element => {
     )
   }
 
-  if (fee === -1) {
+  if (fee.status === "error") {
     return (
       <Text style={styles.paymentInformationData}>
         {translate("SendBitcoinScreen.feeCalculationUnsuccessful")}
@@ -95,7 +98,7 @@ const FeeDetails = ({ fee, feeText }: FeeDetailsProps): JSX.Element => {
     ) // todo: same calculation as backend
   }
 
-  return <Text style={styles.paymentInformationData}>{feeText}</Text>
+  return <Text style={styles.paymentInformationData}>{fee.text}</Text>
 }
 
 const styles = EStyleSheet.create({

@@ -81,6 +81,133 @@ type SendBitcoinConfirmationScreenProps = {
   route: RouteProp<MoveMoneyStackParamList, "sendBitcoinConfirmation">
 }
 
+const useFee = ({
+  address,
+  amountless,
+  invoice,
+  paymentType,
+  sameNode,
+  paymentSatAmount,
+  btcPrice,
+  prefCurrency,
+}) => {
+  const [fee, setFee] = useState<{
+    value: number | null
+    status: "loading" | "error" | "unset" | "set"
+  }>({
+    value: null, // TODO: get rid of this
+    status: "unset",
+  })
+
+  const [getLightningFees] = useMutation(LIGHTNING_FEES)
+  const [getOnchainFees] = useMutation(ONCHAIN_FEES)
+
+  if (fee.status !== "unset") {
+    if (fee.status === "loading") {
+      return { ...fee, text: "" }
+    }
+
+    if (fee.status === "error") {
+      return { ...fee, text: "" }
+    }
+
+    if (fee.value === null && paymentType !== "username") {
+      return { ...fee, text: "" }
+    }
+
+    return {
+      ...fee,
+      text: textCurrencyFormatting(fee.value ?? 0, btcPrice, prefCurrency),
+    }
+  }
+
+  const initializeFee = async () => {
+    if (paymentType == "lightning") {
+      if (sameNode) {
+        return setFee({
+          value: 0,
+          status: "set",
+        })
+      }
+
+      if (amountless && paymentSatAmount === 0) {
+        return setFee({
+          value: null,
+          status: "set",
+        })
+      }
+
+      try {
+        setFee({
+          value: null,
+          status: "loading",
+        })
+        const {
+          data: {
+            invoice: { getFee: feeValue },
+          },
+        } = await getLightningFees({
+          variables: { invoice, amount: amountless ? paymentSatAmount : undefined },
+        })
+        setFee({
+          value: feeValue,
+          status: "set",
+        })
+      } catch (err) {
+        console.warn({ err, message: "error getting lightning fees" })
+        setFee({
+          value: null,
+          status: "error",
+        })
+      }
+      return
+    }
+
+    if (paymentType === "onchain") {
+      if (paymentSatAmount === 0) {
+        return setFee({
+          value: null,
+          status: "set",
+        })
+      }
+
+      try {
+        setFee({
+          value: null,
+          status: "loading",
+        })
+        const {
+          data: {
+            onchain: { getFee: feeValue },
+          },
+        } = await getOnchainFees({
+          variables: { address, amount: paymentSatAmount },
+        })
+        setFee({
+          value: feeValue,
+          status: "set",
+        })
+      } catch (err) {
+        console.warn({ err, message: "error getting onchains fees" })
+        setFee({
+          value: null,
+          status: "error",
+        })
+      }
+      return
+    }
+
+    return setFee({
+      value: null,
+      status: "set",
+    })
+  }
+
+  initializeFee()
+
+  return { ...fee, text: "" }
+}
+
 const Status = {
   IDLE: "idle",
   LOADING: "loading",
@@ -112,122 +239,43 @@ export const SendBitcoinConfirmationScreen = ({
   } = route.params
 
   const [errs, setErrs] = useState<{ message: string }[]>([])
-  // idle, loading, pending, success, error
   const [status, setStatus] = useState<StatusType>(Status.IDLE)
-  // if null ==> we don't know (blank fee field)
-  // if -1, there is an error
-  // otherwise, fee in sats
-  const [fee, setFee] = useState<number | null | undefined>(null)
+
+  const paymentSatAmount = currencyConverter[referenceAmount.currency]["BTC"](
+    referenceAmount.value,
+  )
+
+  const fee = useFee({
+    address,
+    amountless,
+    invoice,
+    paymentType,
+    sameNode,
+    paymentSatAmount,
+    btcPrice,
+    prefCurrency,
+  })
 
   const [queryTransactions] = useLazyQuery(QUERY_TRANSACTIONS, {
     fetchPolicy: "network-only",
   })
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [lightningPay, { loading: paymentlightningLoading }] = useMutation(
-    LIGHTNING_PAY,
-    {
-      update: () => queryTransactions(),
-    },
-  )
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [payKeysendUsername, { loading: paymentKeysendLoading }] = useMutation(
-    PAY_KEYSEND_USERNAME,
-    { update: () => queryTransactions() },
-  )
-
-  // TODO: add user automatically to cache
-  // {
-  //   update(cache, { data }) {
-  //     cache.modify({
-  //       fields: {
-  //         Contact
-  //       }
-  //     })
-  // }}
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [onchainPay, { loading: paymentOnchainLoading }] = useMutation(ONCHAIN_PAY, {
+  const [lightningPay] = useMutation(LIGHTNING_PAY, {
     update: () => queryTransactions(),
   })
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [getLightningFees, { loading: lightningFeeLoading }] = useMutation(LIGHTNING_FEES)
+  const [payKeysendUsername] = useMutation(PAY_KEYSEND_USERNAME, {
+    update: () => queryTransactions(),
+  })
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [getOnchainFees, { loading: onchainFeeLoading }] = useMutation(ONCHAIN_FEES)
+  // TODO: add user automatically to cache
 
-  const secondaryCurrency: CurrencyType = useMemo(() => {
-    return prefCurrency === "BTC" ? "USD" : "BTC"
-  }, [prefCurrency])
-
-  const satAmount = useMemo(() => {
-    return currencyConverter[referenceAmount.currency]["BTC"](referenceAmount.value)
-  }, [currencyConverter, referenceAmount])
-
-  const initializeFees = async () => {
-    switch (paymentType) {
-      case "lightning":
-        if (sameNode) {
-          setFee(0)
-          return
-        }
-
-        if (amountless && satAmount === 0) {
-          setFee(null)
-          return
-        }
-
-        try {
-          setFee(undefined)
-          const {
-            data: {
-              invoice: { getFee: fee },
-            },
-          } = await getLightningFees({
-            variables: { invoice, amount: amountless ? satAmount : undefined },
-          })
-          setFee(fee)
-        } catch (err) {
-          console.warn({ err, message: "error getting lightning fees" })
-          setFee(-1)
-        }
-
-        return
-      case "onchain":
-        if (satAmount === 0) {
-          setFee(null)
-          return
-        }
-
-        try {
-          setFee(undefined)
-          const {
-            data: {
-              onchain: { getFee: fee },
-            },
-          } = await getOnchainFees({
-            variables: { address, amount: satAmount },
-          })
-          setFee(fee)
-        } catch (err) {
-          console.warn({ err, message: "error getting onchains fees" })
-          setFee(-1)
-        }
-        return
-      default:
-        setFee(null)
-    }
-  }
-
-  useEffect(() => {
-    initializeFees()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  const [onchainPay] = useMutation(ONCHAIN_PAY, {
+    update: () => queryTransactions(),
+  })
 
   const pay = async () => {
-    if ((amountless || paymentType === "onchain") && satAmount === 0) {
+    if ((amountless || paymentType === "onchain") && paymentSatAmount === 0) {
       setStatus(Status.ERROR)
       setErrs([{ message: translate("SendBitcoinScreen.noAmount") }])
       return
@@ -251,18 +299,18 @@ export const SendBitcoinConfirmationScreen = ({
         mutation = lightningPay
         variables = {
           invoice,
-          amount: amountless ? satAmount : undefined,
+          amount: amountless ? paymentSatAmount : undefined,
           memo,
         }
       } else if (paymentType === "onchain") {
         mutation = onchainPay
-        variables = { address, amount: satAmount, memo }
+        variables = { address, amount: paymentSatAmount, memo }
       } else if (paymentType === "username") {
         mutation = payKeysendUsername
 
         // FIXME destination is confusing
         variables = {
-          amount: satAmount,
+          amount: paymentSatAmount,
           destination: getPubKey(client),
           username,
           memo,
@@ -330,21 +378,9 @@ export const SendBitcoinConfirmationScreen = ({
     ReactNativeHapticFeedback.trigger(notificationType, optionsHaptic)
   }, [status])
 
-  const feeText = useMemo(() => {
-    if (fee === undefined || (fee === null && paymentType !== "username")) {
-      return ""
-    }
-
-    if (fee === -1) {
-      return fee.toString()
-    }
-
-    return textCurrencyFormatting(fee ?? 0, btcPrice, prefCurrency)
-  }, [btcPrice, fee, paymentType, prefCurrency])
-
   const totalAmount = useMemo(() => {
-    return fee == null ? satAmount : satAmount + fee
-  }, [fee, satAmount])
+    return fee.value == null ? paymentSatAmount : paymentSatAmount + fee.value
+  }, [fee.value, paymentSatAmount])
 
   const balance = balanceBtc(client)
 
@@ -373,16 +409,18 @@ export const SendBitcoinConfirmationScreen = ({
     currency: prefCurrency,
   }
 
+  const primaryTotalAmount: MoneyAmount = {
+    value: currencyConverter["BTC"][prefCurrency](totalAmount),
+    currency: prefCurrency,
+  }
+
+  const secondaryCurrency: CurrencyType = prefCurrency === "BTC" ? "USD" : "BTC"
+
   const secondaryAmount: MoneyAmount = {
     value: currencyConverter[referenceAmount.currency][secondaryCurrency](
       referenceAmount.value,
     ),
     currency: secondaryCurrency,
-  }
-
-  const primaryTotalAmount: MoneyAmount = {
-    value: currencyConverter["BTC"][prefCurrency](totalAmount),
-    currency: prefCurrency,
   }
 
   const secondaryTotalAmount: MoneyAmount = {
@@ -399,7 +437,6 @@ export const SendBitcoinConfirmationScreen = ({
       >
         <PaymentConfirmationInformation
           fee={fee}
-          feeText={feeText}
           destination={destination}
           primaryAmount={primaryAmount}
           secondaryAmount={secondaryAmount}
