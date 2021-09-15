@@ -137,8 +137,16 @@ export const ModalClipboard: ComponentType = () => {
         </View>
         <Text style={styles.message}>{message}</Text>
         <View style={styles.buttonContainer}>
-          <Button title="Dismiss" onPress={dismiss} buttonStyle={styles.buttonStyle} />
-          <Button title="Open" onPress={open} buttonStyle={styles.buttonStyle} />
+          <Button
+            title={translate("ModalClipboard.dismiss")}
+            onPress={dismiss}
+            buttonStyle={styles.buttonStyle}
+          />
+          <Button
+            title={translate("ModalClipboard.open")}
+            onPress={open}
+            buttonStyle={styles.buttonStyle}
+          />
         </View>
       </SafeAreaView>
     </Modal>

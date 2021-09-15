@@ -21,7 +21,8 @@
     "usePin": "Usar PIN"
   },
   "BalanceHeader": {
-    "currentBalance": "Saldo actual"
+    "currentBalance": "Saldo actual",
+    "hiddenBalanceToolTip": "Presione para ver el saldo"
   },
   "BankAccountEarnScreen": {
     "buySell": "y compre y venda bitcoins fácilmente en la aplicación\n",
@@ -488,6 +489,8 @@
     "title": "Mapa"
   },
   "ModalClipboard": {
+    "dismiss": "Rechazar",
+    "open": "Abrir",
     "pendingBitcoin": "\nTienes una dirección de Bitcoin en tu portapapeles",
     "pendingInvoice": "Tienes una factura relámpago en tu portapapeles"
   },
@@ -562,6 +565,9 @@
     "biometricTitle": "Biométrica",
     "biometryNotAvailable": "El sensor biométrico no está disponible.",
     "biometryNotEnrolled": "Registre al menos un sensor biométrico para utilizar la autenticación basada en datos biométricos.",
+    "hideBalanceDescription": "Ocultar su saldo de forma predeterminada para no mostrarlo si alguien está viendo su pantalla.",
+    "hideBalanceSubtitle": "Ocultar saldo",
+    "hideBalanceTitle": "Saldo",
     "pinDescription": "El PIN se utiliza como método de autenticación de respaldo para la autenticación biométrica.",
     "pinSubtitle": "Habilitar PIN",
     "pinTitle": "Código PIN",
