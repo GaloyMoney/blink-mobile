@@ -693,6 +693,10 @@
   "sat": {
     "zero": "‪{{formatted_number}}‬ Satoshi"
   },
+  "tippingLink": {
+  "title": "¿Quiere recibir propinas? ¡Comparta su enlace!",
+  "copied": "{{data}} se ha guardado al portapapeles"
+  },
   "whatsapp": {
     "contactUs": "¿Necesita ayuda? Contáctenos por WhatsApp",
     "defaultSupportMessage": "¡Hola! Necesito ayuda con Bitcoin Beach Wallet"

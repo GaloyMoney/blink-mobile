@@ -222,8 +222,8 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       icon: "cash-outline",
       id: "tippingLink",
       action: () => copyToClipBoard(username),
-      enabled: walletIsActive,
-      greyed: !walletIsActive,
+      enabled: walletIsActive && username,
+      greyed: !walletIsActive || !username,
     },
     {
       category: translate("whatsapp.contactUs"),
