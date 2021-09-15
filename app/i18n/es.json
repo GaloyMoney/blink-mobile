@@ -573,6 +573,17 @@
     "pinTitle": "Código PIN",
     "setPin": "Establecer PIN"
   },
+  "SendBitcoinConfirmationScreen": {
+    "amountLabel": "Cantidad:",
+    "confirmPayment": "Confirmar y pagar",
+    "confirmPayment?": "¿Desea confirmar este pago?",
+    "destinationLabel": "Para:",
+    "feeLabel": "Tarifa de red:",
+    "paymentFinal": "Recuerde que los pagos son definitivos y una vez realizados son irreversibles.",
+    "title": "Confirmar pago",
+    "totalLabel": "Total:",
+    "totalExceed": "El total excede su saldo de {{balance}}"
+  },
   "SendBitcoinScreen": {
     "amount": "Cantidad",
     "cost": "Costo",
