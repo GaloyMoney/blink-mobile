@@ -222,7 +222,7 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       icon: "cash-outline",
       id: "tippingLink",
       action: () => copyToClipBoard(username),
-      enabled: walletIsActive && username,
+      enabled: walletIsActive && typeof username !== null,
       greyed: !walletIsActive || !username,
     },
     {
