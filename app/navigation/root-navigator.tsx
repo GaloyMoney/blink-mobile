@@ -309,6 +309,24 @@ export const RootStack: NavigatorType = () => {
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}
       />
+      <StackMoveMoney.Screen
+        name="sendBitcoin"
+        component={SendBitcoinScreen}
+        options={{ title: translate("SendBitcoinScreen.title") }}
+      />
+      <StackMoveMoney.Screen
+        name="sendBitcoinConfirmation"
+        component={SendBitcoinConfirmationScreen}
+        options={{ title: translate("SendBitcoinConfirmationScreen.title") }}
+      />
+      <StackMoveMoney.Screen
+        name="receiveBitcoin"
+        component={ReceiveBitcoinScreen}
+        options={{
+          title: translate("ReceiveBitcoinScreen.title"),
+          // headerShown: false,
+        }}
+      />
       <RootNavigator.Screen
         name="earnsSection"
         component={EarnSection}
@@ -431,24 +449,6 @@ export const MoveMoneyNavigator: NavigatorType = () => (
       options={{
         headerShown: false,
         title: translate("MoveMoneyScreen.title"),
-      }}
-    />
-    <StackMoveMoney.Screen
-      name="sendBitcoin"
-      component={SendBitcoinScreen}
-      options={{ title: translate("SendBitcoinScreen.title") }}
-    />
-    <StackMoveMoney.Screen
-      name="sendBitcoinConfirmation"
-      component={SendBitcoinConfirmationScreen}
-      options={{ title: translate("SendBitcoinConfirmationScreen.title") }}
-    />
-    <StackMoveMoney.Screen
-      name="receiveBitcoin"
-      component={ReceiveBitcoinScreen}
-      options={{
-        title: translate("ReceiveBitcoinScreen.title"),
-        // headerShown: false,
       }}
     />
   </StackMoveMoney.Navigator>

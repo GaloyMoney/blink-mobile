@@ -104,10 +104,10 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [client, network, route.params])
 
-  useEffect(() => {
-    setConvertedAmounts({ moneyAmount: referenceAmount })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setConvertedAmounts])
+  // useEffect(() => {
+  //   setConvertedAmounts({ moneyAmount: referenceAmount })
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [setConvertedAmounts])
 
   useEffect(() => {
     const fn = async () => {
