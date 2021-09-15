@@ -8,7 +8,6 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { palette } from "../../theme/palette"
 import type { ComponentType } from "../../types/jsx"
 import { currencyToText, textToCurrency } from "../../utils/currencyConversion"
-import { TextCurrency } from "../text-currency/text-currency"
 import { GaloyInput } from "../galoy-input"
 
 const digitLimit = 10
@@ -40,16 +39,6 @@ const styles = EStyleSheet.create({
     marginTop: "20rem",
   },
 
-  subCurrencyText: {
-    color: palette.midGrey,
-    fontSize: "16rem",
-    marginRight: "10%",
-    marginTop: 0,
-    paddingTop: 0,
-    textAlign: "center",
-    width: "90%",
-  },
-
   textStyle: {
     color: palette.darkGrey,
     fontSize: "35rem",
@@ -70,8 +59,6 @@ type InputPaymentProps = {
   onBlur?: () => void
   onUpdateAmount: ({ moneyAmount: MoneyAmount }) => void
   primaryAmount: MoneyAmount
-  secondaryAmount: MoneyAmount
-  sub?: boolean
 }
 
 export const InputPayment: ComponentType = ({
@@ -81,8 +68,6 @@ export const InputPayment: ComponentType = ({
   onBlur = () => null,
   onUpdateAmount,
   primaryAmount,
-  secondaryAmount,
-  sub = true,
 }: InputPaymentProps) => {
   const [input, setInput] = React.useState("")
   const inputRef = React.useRef<TextInput>()
@@ -96,6 +81,7 @@ export const InputPayment: ComponentType = ({
       const newAmount = toNumber(newInput)
 
       setInput(newInput)
+
       if (!isNaN(newAmount)) {
         onUpdateAmount({
           moneyAmount: {
@@ -221,13 +207,6 @@ export const InputPayment: ComponentType = ({
           <Icon name="ios-swap-vertical" size={32} style={styles.icon} />
         </TouchableOpacity>
       </View>
-      {sub && (
-        <TextCurrency
-          amount={secondaryAmount.value}
-          currency={secondaryAmount.currency}
-          style={styles.subCurrencyText}
-        />
-      )}
     </View>
   )
 }

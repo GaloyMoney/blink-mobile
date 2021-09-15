@@ -22,6 +22,7 @@ import { textCurrencyFormatting } from "../../utils/currencyConversion"
 import { IPaymentType, validPayment } from "../../utils/parsing"
 import { Token } from "../../utils/token"
 import { UsernameValidation } from "../../utils/validation"
+import { TextCurrency } from "../../components/text-currency/text-currency"
 
 type SendBitcoinScreenProps = {
   route: RouteProp<MoveMoneyStackParamList, "sendBitcoin">
@@ -298,7 +299,13 @@ export const SendBitcoinScreenJSX: ScreenType = ({
             primaryAmount={primaryAmount}
             secondaryAmount={secondaryAmount}
           />
+          <TextCurrency
+            amount={secondaryAmount.value}
+            currency={secondaryAmount.currency}
+            style={styles.subCurrencyText}
+          />
         </View>
+
         <View style={{ marginTop: 18 }}>
           <GaloyInput
             placeholder={translate("SendBitcoinScreen.input")}
@@ -405,5 +412,15 @@ const styles = EStyleSheet.create({
     fontSize: 18,
     textAlign: "left",
     width: "48rem",
+  },
+
+  subCurrencyText: {
+    color: palette.midGrey,
+    fontSize: "16rem",
+    marginRight: "10%",
+    marginTop: 0,
+    paddingTop: 0,
+    textAlign: "center",
+    width: "90%",
   },
 })

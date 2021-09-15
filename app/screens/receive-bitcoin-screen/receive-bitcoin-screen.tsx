@@ -30,6 +30,7 @@ import { isIos } from "../../utils/helper"
 import { hasFullPermissions, requestPermission } from "../../utils/notifications"
 import { QRView } from "./qr-view"
 import { useMoneyAmount } from "../../hooks"
+import { TextCurrency } from "../../components/text-currency"
 
 // FIXME: crash when no connection
 
@@ -43,6 +44,16 @@ const styles = EStyleSheet.create({
     flex: 1,
     paddingHorizontal: 50,
     width: "100%",
+  },
+
+  subCurrencyText: {
+    color: palette.midGrey,
+    fontSize: "16rem",
+    marginRight: "10%",
+    marginTop: 0,
+    paddingTop: 0,
+    textAlign: "center",
+    width: "90%",
   },
 
   textStyle: {
@@ -319,6 +330,11 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
             primaryAmount={primaryAmount}
             secondaryAmount={secondaryAmount}
             sub
+          />
+          <TextCurrency
+            amount={secondaryAmount.value}
+            currency={secondaryAmount.currency}
+            style={styles.subCurrencyText}
           />
           <GaloyInput
             placeholder={translate("ReceiveBitcoinScreen.setNote")}
