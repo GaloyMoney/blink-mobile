@@ -346,7 +346,11 @@ export const SendBitcoinConfirmationScreen = ({
         setStatus(Status.PENDING)
       } else {
         setStatus(Status.ERROR)
-        setErrs(errors)
+        if (errors) {
+          setErrs(errors)
+        } else {
+          setErrs([{ message: data?.invoice?.payInvoice }])
+        }
       }
     } catch (err) {
       console.log({ err }, "error loop")
@@ -430,19 +434,18 @@ export const SendBitcoinConfirmationScreen = ({
 
   return (
     <Screen preset="fixed">
-      <ScrollView
-        style={styles.mainView}
-        contentContainerStyle={styles.scrollView}
-        keyboardShouldPersistTaps="always"
-      >
-        <PaymentConfirmationInformation
-          fee={fee}
-          destination={destination}
-          primaryAmount={primaryAmount}
-          secondaryAmount={secondaryAmount}
-          primaryTotalAmount={primaryTotalAmount}
-          secondaryTotalAmount={secondaryTotalAmount}
-        />
+      <View style={styles.mainView}>
+        <View style={styles.paymentInformationContainer}>
+          <PaymentConfirmationInformation
+            fee={fee}
+            destination={destination}
+            memo={memo}
+            primaryAmount={primaryAmount}
+            secondaryAmount={secondaryAmount}
+            primaryTotalAmount={primaryTotalAmount}
+            secondaryTotalAmount={secondaryTotalAmount}
+          />
+        </View>
         <View style={styles.paymentLottieContainer}>
           <PaymentStatusIndicator errs={errs} status={status} />
         </View>
@@ -490,14 +493,14 @@ export const SendBitcoinConfirmationScreen = ({
             }
           />
         </View>
-      </ScrollView>
+      </View>
     </Screen>
   )
 }
 
 const styles = EStyleSheet.create({
   bottomContainer: {
-    flex: 1,
+    flex: 2,
     justifyContent: "flex-end",
   },
 
@@ -531,14 +534,12 @@ const styles = EStyleSheet.create({
     paddingHorizontal: "24rem",
   },
 
-  paymentLottieContainer: {
-    alignItems: "center",
-    flex: 1,
+  paymentInformationContainer: {
+    flex: 4,
   },
 
-  scrollView: {
-    flexDirection: "column",
-    flexGrow: 1,
-    justifyContent: "space-between",
+  paymentLottieContainer: {
+    alignItems: "center",
+    flex: 2,
   },
 })

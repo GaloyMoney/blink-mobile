@@ -19,6 +19,7 @@ type FeeDetailsProps = {
 type PaymentConfirmationInformationProps = {
   fee: FeeType
   destination: string
+  memo: string
   primaryAmount: MoneyAmount
   secondaryAmount: MoneyAmount
   primaryTotalAmount: MoneyAmount
@@ -28,6 +29,7 @@ type PaymentConfirmationInformationProps = {
 export const PaymentConfirmationInformation = ({
   fee,
   destination,
+  memo,
   primaryAmount,
   secondaryAmount,
   primaryTotalAmount,
@@ -39,8 +41,19 @@ export const PaymentConfirmationInformation = ({
         <Text style={styles.paymentInformationLabel}>
           {translate("SendBitcoinConfirmationScreen.destinationLabel")}
         </Text>
-        {destination && <Text style={styles.paymentInformationData}>{destination}</Text>}
+        {destination?.length > 0 && (
+          <Text style={styles.paymentInformationData}>{destination}</Text>
+        )}
       </View>
+
+      {memo?.length > 0 && (
+        <View style={styles.paymentInformationRow}>
+          <Text style={styles.paymentInformationLabel}>
+            {translate("SendBitcoinConfirmationScreen.memoLabel")}
+          </Text>
+          <Text style={styles.paymentInformationData}>{memo}</Text>
+        </View>
+      )}
 
       {fee.value === null && (
         <View style={styles.paymentInformationRow}>

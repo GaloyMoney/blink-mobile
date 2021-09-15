@@ -80,8 +80,8 @@ const styles = EStyleSheet.create({
   },
 
   lottie: {
-    height: "200rem",
-    width: "200rem",
+    height: "150rem",
+    width: "150rem",
   },
 
   pendingLottieText: {

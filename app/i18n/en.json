@@ -541,6 +541,7 @@
     "confirmPayment?": "Do you want to confirm this payment?",
     "destinationLabel": "To:",
     "feeLabel": "Fee:",
+    "memoLabel": "Note:",
     "paymentFinal": "Payments are final.",
     "title": "Confirm Payment",
     "totalLabel": "Total:",
