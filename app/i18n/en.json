@@ -460,6 +460,8 @@
     "title": "Map"
   },
   "ModalClipboard": {
+    "dismiss": "Dismiss",
+    "open": "Open",
     "pendingBitcoin": "You have a Bitcoin address in your clipboard",
     "pendingInvoice": "You have a Lightning Invoice in your clipboard"
   },

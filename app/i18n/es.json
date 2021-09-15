@@ -488,6 +488,8 @@
     "title": "Mapa"
   },
   "ModalClipboard": {
+    "dismiss": "Rechazar",
+    "open": "Abrir",
     "pendingBitcoin": "\nTienes una dirección de Bitcoin en tu portapapeles",
     "pendingInvoice": "Tienes una factura relámpago en tu portapapeles"
   },
