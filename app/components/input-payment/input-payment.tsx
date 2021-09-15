@@ -68,7 +68,7 @@ type InputPaymentProps = {
   forceKeyboard: boolean
   nextPrefCurrency: () => void
   onBlur?: () => void
-  onUpdateAmount: (amount: MoneyAmount) => void
+  onUpdateAmount: ({ moneyAmount: MoneyAmount }) => void
   primaryAmount: MoneyAmount
   secondaryAmount: MoneyAmount
   sub?: boolean
@@ -98,8 +98,10 @@ export const InputPayment: ComponentType = ({
       setInput(newInput)
       if (!isNaN(newAmount)) {
         onUpdateAmount({
+          moneyAmount: {
           value: newAmount,
           currency: primaryAmount.currency,
+          }
         })
       }
     },
