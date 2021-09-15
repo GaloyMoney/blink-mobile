@@ -1,4 +1,5 @@
 import toInteger from "lodash.tointeger"
+import { useMemo } from "react"
 import { useBTCPrice } from "./use-btc-price"
 
 type CurrencyConverter = {
@@ -14,14 +15,16 @@ type CurrencyConverterTypes = {
 export const useCurrencyConverter = (): CurrencyConverterTypes => {
   const btcPrice = useBTCPrice()
 
-  return {
-    BTC: {
-      BTC: (sats) => toInteger(sats),
-      USD: (sats) => sats * btcPrice,
-    },
-    USD: {
-      BTC: (usd) => toInteger(usd / btcPrice),
-      USD: (usd) => usd,
-    },
-  }
+  return useMemo(() => {
+    return {
+      BTC: {
+        BTC: (sats) => toInteger(sats),
+        USD: (sats) => sats * btcPrice,
+      },
+      USD: {
+        BTC: (usd) => toInteger(usd / btcPrice),
+        USD: (usd) => usd,
+      },
+    }
+  }, [btcPrice])
 }

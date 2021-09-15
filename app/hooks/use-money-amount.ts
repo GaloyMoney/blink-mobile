@@ -15,7 +15,7 @@ export const useMoneyAmount = (): UseMoneyAmountReturn => {
   const [prefCurrency, nextPrefCurrency] = usePrefCurrency()
   const currencyConverter = useCurrencyConverter()
 
-  const [amounts, setAmmounts] = useState({
+  const [amounts, setAmounts] = useState({
     sat: 0,
     usd: 0,
   })
@@ -26,7 +26,7 @@ export const useMoneyAmount = (): UseMoneyAmountReturn => {
       const referenceCurrency = moneyAmount.currency
       const refCurrenciesConverter = currencyConverter[referenceCurrency]
 
-      setAmmounts({
+      setAmounts({
         sat: refCurrenciesConverter["BTC"](postiveValue),
         usd: refCurrenciesConverter["USD"](postiveValue),
       })

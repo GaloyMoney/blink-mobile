@@ -29,7 +29,7 @@ import { getHashFromInvoice } from "../../utils/bolt11"
 import { isIos } from "../../utils/helper"
 import { hasFullPermissions, requestPermission } from "../../utils/notifications"
 import { QRView } from "./qr-view"
-import { useBTCPrice, useMoneyAmount } from "../../hooks"
+import { useMoneyAmount } from "../../hooks"
 
 // FIXME: crash when no connection
 
@@ -82,7 +82,6 @@ type Props = {
 
 export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
   const client = useApolloClient()
-  // const btcPrice = useBTCPrice()
   const {
     nextPrefCurrency,
     primaryAmount,
@@ -112,7 +111,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
   const [isSucceed, setIsSucceed] = useState(false)
   const [brightnessInitial, setBrightnessInitial] = useState(null)
 
-  const update = useCallback(async () => {
+  const updateInvoice = useCallback(async () => {
     setLoading(true)
     try {
       const { data } = await addInvoice({
@@ -130,9 +129,8 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
   }, [addInvoice, satAmount, memo])
 
   useEffect(() => {
-    update()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    updateInvoice()
+  }, [updateInvoice])
 
   useEffect(() => {
     const fn = async () => {
@@ -214,10 +212,8 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
   }, [client])
 
   useEffect(() => {
-    setConvertedAmounts({ moneyAmount: primaryAmount })
-    update()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setConvertedAmounts])
+    // setConvertedAmounts({ moneyAmount: primaryAmount })
+  }, [primaryAmount, setConvertedAmounts])
 
   const paymentSuccess = useCallback(() => {
     // success
@@ -319,7 +315,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
             forceKeyboard={false}
             nextPrefCurrency={nextPrefCurrency}
             onUpdateAmount={setConvertedAmounts}
-            onBlur={update}
+            onBlur={updateInvoice}
             primaryAmount={primaryAmount}
             secondaryAmount={secondaryAmount}
             sub
@@ -335,7 +331,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
               <Icon name="ios-create-outline" size={21} color={palette.darkGrey} />
             }
             ref={inputMemoRef}
-            onBlur={update}
+            onBlur={updateInvoice}
             disabled={isSucceed}
           />
         </View>
