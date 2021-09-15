@@ -1,5 +1,5 @@
 import * as React from "react"
-import {Alert, Platform, View} from "react-native"
+import { Alert, View } from "react-native"
 import Share from "react-native-share"
 import { Divider, Icon, ListItem } from "react-native-elements"
 import { StackNavigationProp } from "@react-navigation/stack"
@@ -159,10 +159,11 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
     resetDataStore,
   } = params
 
-
   const copyToClipBoard = (username) => {
     Clipboard.setString(LN_PAGE_DOMAIN + username)
-    Clipboard.getString().then((data) => (toastShow(translate("tippingLink.copied", {data}))))
+    Clipboard.getString().then((data) =>
+      toastShow(translate("tippingLink.copied", { data })),
+    )
   }
 
   const list = [
