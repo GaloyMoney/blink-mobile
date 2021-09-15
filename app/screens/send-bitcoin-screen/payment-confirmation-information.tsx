@@ -76,7 +76,6 @@ export const PaymentConfirmationInformation = ({
         </Text>
         <FeeDetails fee={fee} />
       </View>
-
     </View>
   )
 }

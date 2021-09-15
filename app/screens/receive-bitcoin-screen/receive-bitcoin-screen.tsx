@@ -82,7 +82,7 @@ type Props = {
 
 export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
   const client = useApolloClient()
-  const btcPrice = useBTCPrice()
+  // const btcPrice = useBTCPrice()
   const {
     nextPrefCurrency,
     primaryAmount,
@@ -215,8 +215,9 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
 
   useEffect(() => {
     setConvertedAmounts({ moneyAmount: primaryAmount })
+    update()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [btcPrice])
+  }, [setConvertedAmounts])
 
   const paymentSuccess = useCallback(() => {
     // success

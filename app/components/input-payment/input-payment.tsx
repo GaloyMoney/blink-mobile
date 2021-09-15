@@ -99,9 +99,9 @@ export const InputPayment: ComponentType = ({
       if (!isNaN(newAmount)) {
         onUpdateAmount({
           moneyAmount: {
-          value: newAmount,
-          currency: primaryAmount.currency,
-          }
+            value: newAmount,
+            currency: primaryAmount.currency,
+          },
         })
       }
     },

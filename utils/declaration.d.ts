@@ -6,7 +6,8 @@ declare module "*.svg" {
 }
 
 declare module "*.png" {
-  const content: string
+  import { ImageSourcePropType } from "react-native"
+  const content: ImageSourcePropType
   export default content
 }
 

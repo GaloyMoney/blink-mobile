@@ -446,11 +446,12 @@ export const SendBitcoinConfirmationScreen = ({
         <View style={styles.paymentLottieContainer}>
           <PaymentStatusIndicator errs={errs} status={status} />
         </View>
-        {!(status === Status.SUCCESS || status === Status.PENDING) && errorMessage.length > 0 && (
-          <View style={styles.errorContainer}>
-            <Text style={styles.errorText}>{errorMessage}</Text>
-          </View>
-        )}
+        {!(status === Status.SUCCESS || status === Status.PENDING) &&
+          errorMessage.length > 0 && (
+            <View style={styles.errorContainer}>
+              <Text style={styles.errorText}>{errorMessage}</Text>
+            </View>
+          )}
         <View style={styles.bottomContainer}>
           {status === "idle" && (
             <View style={styles.confirmationTextContainer}>
@@ -509,7 +510,7 @@ const styles = EStyleSheet.create({
 
   confirmationText: {
     fontSize: "16rem",
-    textAlign: "center"
+    textAlign: "center",
   },
 
   confirmationTextContainer: {

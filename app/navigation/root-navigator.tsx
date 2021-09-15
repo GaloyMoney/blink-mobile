@@ -171,7 +171,7 @@ export const RootStack: NavigatorType = () => {
       // invokeApp: true, // (optional) This enable click on actions to bring back the application to foreground or stay in background, default: true
 
       /* iOS only properties */
-      alertAction: "view", // (optional) default: view
+      // alertAction: "view", // (optional) default: view
       category: "", // (optional) default: empty string
 
       /* iOS and Android properties */
