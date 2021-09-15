@@ -64,8 +64,8 @@ export type MoveMoneyStackParamList = {
   receiveBitcoin: undefined
   scanningQRCode: undefined
   sendBitcoin: {
-    username: string | null
     payment: string | null
+    username?: string | null
   }
   sendBitcoinConfirmation: {
     address: string | null

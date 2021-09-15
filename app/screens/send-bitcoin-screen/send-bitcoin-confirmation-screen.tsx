@@ -379,7 +379,7 @@ export const SendBitcoinConfirmationScreen = ({
   }, [status])
 
   const totalAmount = useMemo(() => {
-    return fee.value == null ? paymentSatAmount : paymentSatAmount + fee.value
+    return fee.value === null ? paymentSatAmount : paymentSatAmount + fee.value
   }, [fee.value, paymentSatAmount])
 
   const balance = balanceBtc(client)

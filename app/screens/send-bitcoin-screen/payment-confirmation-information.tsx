@@ -42,24 +42,19 @@ export const PaymentConfirmationInformation = ({
         {destination && <Text style={styles.paymentInformationData}>{destination}</Text>}
       </View>
 
-      <View style={styles.paymentInformationRow}>
-        <Text style={styles.paymentInformationLabel}>
-          {translate("SendBitcoinConfirmationScreen.amountLabel")}
-        </Text>
-        <Text style={styles.paymentInformationMainAmount}>
-          {currencyToTextWithUnits(primaryAmount)}
-        </Text>
-        <Text style={styles.paymentInformationSecondaryAmount}>
-          {currencyToTextWithUnits(secondaryAmount)}
-        </Text>
-      </View>
-
-      <View style={styles.paymentInformationRow}>
-        <Text style={styles.paymentInformationLabel}>
-          {translate("SendBitcoinConfirmationScreen.feeLabel")}
-        </Text>
-        <FeeDetails fee={fee} />
-      </View>
+      {fee.value === null && (
+        <View style={styles.paymentInformationRow}>
+          <Text style={styles.paymentInformationLabel}>
+            {translate("SendBitcoinConfirmationScreen.amountLabel")}
+          </Text>
+          <Text style={styles.paymentInformationMainAmount}>
+            {currencyToTextWithUnits(primaryAmount)}
+          </Text>
+          <Text style={styles.paymentInformationSecondaryAmount}>
+            {currencyToTextWithUnits(secondaryAmount)}
+          </Text>
+        </View>
+      )}
 
       {fee.value !== null && (
         <View style={styles.paymentInformationRow}>
@@ -74,6 +69,14 @@ export const PaymentConfirmationInformation = ({
           </Text>
         </View>
       )}
+
+      <View style={styles.paymentInformationRow}>
+        <Text style={styles.paymentInformationLabel}>
+          {translate("SendBitcoinConfirmationScreen.feeLabel")}
+        </Text>
+        <FeeDetails fee={fee} />
+      </View>
+
     </View>
   )
 }

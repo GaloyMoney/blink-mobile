@@ -15,6 +15,8 @@ import { validPayment } from "../../utils/parsing"
 import { Token } from "../../utils/token"
 
 import LocalQRCode from "@remobile/react-native-qrcode-local-image"
+import { MoveMoneyStackParamList } from "@app/navigation/stack-param-lists"
+import { StackNavigationProp } from "@react-navigation/stack"
 
 const CAMERA: ViewStyle = {
   width: "100%",
@@ -62,8 +64,11 @@ const styles = EStyleSheet.create({
   },
 })
 
-export const ScanningQRCodeScreen: ScreenType = () => {
-  const { navigate, goBack } = useNavigation()
+type ScanningQRCodeScreenProps = {
+  navigation: StackNavigationProp<MoveMoneyStackParamList, "sendBitcoin">
+}
+
+export const ScanningQRCodeScreen: ScreenType = ({ navigation }: ScanningQRCodeScreenProps) => {
   const [pending, setPending] = React.useState(false)
   const client = useApolloClient()
 
@@ -76,7 +81,7 @@ export const ScanningQRCodeScreen: ScreenType = () => {
       const { valid } = validPayment(data, Token.getInstance().network, client)
 
       if (valid) {
-        navigate("sendBitcoin", { payment: data })
+        navigation.replace("sendBitcoin", { payment: data })
       } else {
         setPending(true)
         Alert.alert(
@@ -141,7 +146,7 @@ export const ScanningQRCodeScreen: ScreenType = () => {
           <View style={styles.rectangleContainer}>
             <View style={styles.rectangle} />
           </View>
-          <Pressable onPress={goBack}>
+          <Pressable onPress={navigation.goBack}>
             <View style={styles.close}>
               <Svg viewBox="0 0 100 100">
                 <Circle cx={50} cy={50} r={50} fill={palette.white} opacity={0.5} />
