@@ -27,7 +27,7 @@ import { hasFullPermissions, requestPermission } from "../../utils/notifications
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
-import { Clipboard } from "@react-native-community/clipboard/dist/Clipboard"
+import Clipboard from "@react-native-community/clipboard"
 import { toastShow } from "../../utils/toast"
 
 type Props = {
@@ -162,8 +162,7 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
 
   const copyToClipBoard = (username) => {
     Clipboard.setString(LN_PAGE_DOMAIN + username)
-    if (Clipboard.hasURL())
-      Clipboard.getString().then((data) => (toastShow(translate("tippingLink.copied", {data}))))
+    Clipboard.getString().then((data) => (toastShow(translate("tippingLink.copied", {data}))))
   }
 
   const list = [
