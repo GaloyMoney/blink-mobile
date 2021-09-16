@@ -99,7 +99,8 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
 
   const { primaryCurrency, secondaryCurrency, toggleCurrency } = useCurrencies()
 
-  const [primaryAmount, setPrimaryAmount, setPrimaryAmountValue] =
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [primaryAmount, _, setPrimaryAmount, setPrimaryAmountValue] =
     useMoneyAmount(primaryCurrency)
 
   const [secondaryAmount, convertSecondaryAmount, setSecondaryAmount] =
@@ -248,8 +249,6 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
 
   useEffect(() => {
     // Update secondary amount when price updates
-    console.log("UPDATING secondary amoun...", primaryAmount)
-
     convertSecondaryAmount(primaryAmount)
   }, [primaryAmount, convertSecondaryAmount])
 
