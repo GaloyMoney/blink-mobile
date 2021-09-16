@@ -158,7 +158,6 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
     securityAction,
     resetDataStore,
   } = params
-
   const copyToClipBoard = (username) => {
     Clipboard.setString(LN_PAGE_DOMAIN + username)
     Clipboard.getString().then((data) =>
@@ -222,7 +221,7 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       icon: "cash-outline",
       id: "tippingLink",
       action: () => copyToClipBoard(username),
-      enabled: walletIsActive && typeof username !== null,
+      enabled: walletIsActive && username !== null,
       greyed: !walletIsActive || !username,
     },
     {
