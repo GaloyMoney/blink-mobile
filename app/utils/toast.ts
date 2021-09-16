@@ -1,8 +1,8 @@
-import Toast from "react-native-root-toast"
+import Toast, { ToastOptions } from "react-native-root-toast"
 import { palette } from "../theme/palette"
 
-export const toastShow = (message: string): void => {
-  Toast.show(message, {
+export const toastShow = (message: string, options?: ToastOptions): void => {
+  const toastShowOptions = {
     duration: Toast.durations.LONG,
     shadow: false,
     animation: true,
@@ -11,5 +11,12 @@ export const toastShow = (message: string): void => {
     position: 50,
     opacity: 1,
     backgroundColor: palette.red,
-  })
+  }
+
+  if (options) {
+    Object.entries(options).map(([key, value]) => {
+      toastShowOptions[key] = value
+    })
+  }
+  Toast.show(message, toastShowOptions)
 }

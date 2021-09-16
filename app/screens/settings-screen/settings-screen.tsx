@@ -161,7 +161,9 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
   const copyToClipBoard = (username) => {
     Clipboard.setString(LN_PAGE_DOMAIN + username)
     Clipboard.getString().then((data) =>
-      toastShow(translate("tippingLink.copied", { data })),
+      toastShow(translate("tippingLink.copied", { data }), {
+        backgroundColor: palette.lightBlue,
+      }),
     )
   }
 
