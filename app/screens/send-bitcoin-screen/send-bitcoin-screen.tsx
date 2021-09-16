@@ -1,7 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import { useApolloClient, useLazyQuery } from "@apollo/client"
-import { RouteProp, useNavigation } from "@react-navigation/native"
-import { TagData } from "bolt11"
+import { RouteProp } from "@react-navigation/native"
 import * as React from "react"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { ActivityIndicator, ScrollView, Text, View } from "react-native"
@@ -24,14 +23,18 @@ import { Token } from "../../utils/token"
 import { UsernameValidation } from "../../utils/validation"
 import { TextCurrency } from "../../components/text-currency/text-currency"
 import { useCurrencies } from "../../hooks/use-currencies"
+import { StackNavigationProp } from "@react-navigation/stack"
 
 type SendBitcoinScreenProps = {
+  navigation: StackNavigationProp<MoveMoneyStackParamList, "sendBitcoin">
   route: RouteProp<MoveMoneyStackParamList, "sendBitcoin">
 }
 
-export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps) => {
+export const SendBitcoinScreen: ScreenType = ({
+  navigation,
+  route,
+}: SendBitcoinScreenProps) => {
   const client = useApolloClient()
-  const { navigate } = useNavigation()
   const btcPrice = useBTCPrice()
 
   const { primaryCurrency, secondaryCurrency, toggleCurrency } = useCurrencies()
@@ -39,11 +42,16 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
   const [primaryAmount, convertPrimaryAmount, setPrimaryAmount, setPrimaryAmountValue] =
     useMoneyAmount(primaryCurrency)
 
-  const [secondaryAmount, convertSecondaryAmount, setSecondaryAmount] =
-    useMoneyAmount(secondaryCurrency)
+  const [
+    secondaryAmount,
+    convertSecondaryAmount,
+    setSecondaryAmount,
+    setSecondaryAmountValue,
+  ] = useMoneyAmount(secondaryCurrency)
 
-  const satAmount =
-    primaryCurrency === "BTC" ? primaryAmount.value : secondaryAmount.value
+  const satAmount = useMemo(() => {
+    return primaryCurrency === "BTC" ? primaryAmount.value : secondaryAmount.value
+  }, [primaryAmount.value, primaryCurrency, secondaryAmount.value])
 
   const [invoiceError, setInvoiceError] = useState("")
 
@@ -63,7 +71,7 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
 
   const [destination, setDestinationInternal] = useState("")
   const [invoice, setInvoice] = useState("")
-  const [memo, setMemo] = useState<string | number | TagData>("")
+  const [memo, setMemo] = useState<string>("")
   const [sameNode, setSameNode] = useState<boolean | null>(null)
 
   const setDestination = (input) => setDestinationInternal(input.trim())
@@ -125,28 +133,34 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
 
   useEffect(() => {
     // Update the secondary amount based on a new price from the API
-    // Or update the USD amount (which could be primary or secondary) based on a new price from the API
-    // setConvertedAmounts({ moneyAmount: referenceAmount })
-
-    if ((paymentType === "onchain" || paymentType === "lightning") && !amountless) {
-      convertPrimaryAmount({
-        value: satAmount,
-        currency: "BTC",
-      })
-      convertSecondaryAmount({
-        value: satAmount,
-        currency: "BTC",
-      })
-    } else {
+    if ((paymentType !== "onchain" && paymentType !== "lightning") || amountless) {
       convertSecondaryAmount(primaryAmount)
+    }
+  }, [amountless, convertSecondaryAmount, paymentType, primaryAmount])
+
+  useEffect(() => {
+    // Update the USD amount (which could be primary or secondary) based on a new price from the API
+    if (
+      (paymentType === "onchain" || paymentType === "lightning") &&
+      !amountless &&
+      satAmount !== 0
+    ) {
+      if (primaryAmount.currency === "BTC") {
+        setPrimaryAmountValue(satAmount)
+      } else {
+        convertPrimaryAmount({
+          value: satAmount,
+          currency: "BTC",
+        })
+      }
     }
   }, [
     amountless,
-    paymentType,
-    primaryAmount,
-    satAmount,
     convertPrimaryAmount,
-    convertSecondaryAmount,
+    paymentType,
+    primaryAmount.currency,
+    satAmount,
+    setPrimaryAmountValue,
   ])
 
   useEffect(() => {
@@ -175,11 +189,12 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
             setPrimaryAmountValue(amountInvoice)
           } else {
             convertPrimaryAmount(moneyAmount)
+            setSecondaryAmountValue(amountInvoice)
           }
         }
 
         if (!memo) {
-          setMemo(memoInvoice)
+          setMemo(memoInvoice.toString())
         }
 
         setInteractive(false)
@@ -199,7 +214,7 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
 
     fn()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [destination, satAmount])
+  }, [destination])
 
   const errorMessage = useMemo(() => {
     if (invoiceError) {
@@ -213,7 +228,7 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
   }, [balance, btcPrice, invoiceError, primaryCurrency, satAmount])
 
   const pay = useCallback(() => {
-    navigate("sendBitcoinConfirmation", {
+    navigation.navigate("sendBitcoinConfirmation", {
       address,
       amountless,
       invoice,
@@ -230,7 +245,7 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
     destination,
     invoice,
     memo,
-    navigate,
+    navigation,
     primaryCurrency,
     referenceAmount,
     paymentType,
@@ -248,7 +263,7 @@ export const SendBitcoinScreen: ScreenType = ({ route }: SendBitcoinScreenProps)
       pay={pay}
       primaryAmount={primaryAmount}
       secondaryAmount={secondaryAmount}
-      navigate={navigate}
+      navigation={navigation}
       toggleCurrency={toggleCurrency}
       setMemo={setMemo}
       setDestination={setDestination}
@@ -270,14 +285,12 @@ type SendBitcoinScreenJSXProps = {
   address: string
   memo: string
   amount: number
-  navigate: <RouteName extends string>(
-    ...args: [RouteName] | [RouteName, unknown]
-  ) => void
+  navigation: StackNavigationProp<MoveMoneyStackParamList, "sendBitcoin">
   toggleCurrency: () => void
   pay: () => void
   primaryAmount: MoneyAmount
   secondaryAmount: MoneyAmount
-  setMemo: (memo: string | number | TagData) => void
+  setMemo: (memo: string) => void
   setDestination: (destination: string) => void
   destination: string
   usernameExists: boolean
@@ -294,7 +307,7 @@ export const SendBitcoinScreenJSX: ScreenType = ({
   invoice,
   address,
   memo,
-  navigate,
+  navigation,
   toggleCurrency,
   pay,
   primaryAmount,
@@ -320,7 +333,13 @@ export const SendBitcoinScreenJSX: ScreenType = ({
     } else if (paymentType === "lightning" || paymentType === "onchain") {
       return <Icon name="ios-close-circle-outline" onPress={reset} size={30} />
     } else if (destination.length === 0) {
-      return <Icon name="camera" onPress={() => navigate("scanningQRCode")} size={30} />
+      return (
+        <Icon
+          name="camera"
+          onPress={() => navigation.navigate("scanningQRCode")}
+          size={30}
+        />
+      )
     }
 
     return null

@@ -1,5 +1,4 @@
-import { useCallback, useMemo, useState } from "react"
-import { useCurrencies } from "."
+import { useCallback, useState } from "react"
 import { useCurrencyConverter } from "./use-currency-conversion"
 
 type UseMoneyAmountFunction = (
@@ -29,6 +28,7 @@ export const useMoneyAmount: UseMoneyAmountFunction = (currency) => {
           moneyAmount.value >= 0 ? moneyAmount.value : -moneyAmount.value
         const refCurrency = moneyAmount.currency
         const refCurrenciesConverter = currencyConverter[refCurrency]
+
         return {
           value: refCurrenciesConverter[pMoneyAmount.currency](postiveValue),
           currency: pMoneyAmount.currency,

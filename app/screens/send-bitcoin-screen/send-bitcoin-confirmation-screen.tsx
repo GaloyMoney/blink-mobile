@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
@@ -89,7 +89,7 @@ const useFee = ({
   sameNode,
   paymentSatAmount,
   btcPrice,
-  prefCurrency,
+  primaryCurrency,
 }) => {
   const [fee, setFee] = useState<{
     value: number | null
@@ -117,7 +117,7 @@ const useFee = ({
 
     return {
       ...fee,
-      text: textCurrencyFormatting(fee.value ?? 0, btcPrice, prefCurrency),
+      text: textCurrencyFormatting(fee.value ?? 0, btcPrice, primaryCurrency),
     }
   }
 
@@ -226,13 +226,23 @@ export const SendBitcoinConfirmationScreen = ({
   const btcPrice = useBTCPrice()
   const currencyConverter = useCurrencyConverter()
 
+  const convertCurrency = useCallback(
+    (amount: number, from: CurrencyType, to: CurrencyType) => {
+      if (from === to) {
+        return amount
+      }
+      return currencyConverter[from][to](amount)
+    },
+    [currencyConverter],
+  )
+
   const {
     address,
     amountless,
     invoice,
     memo,
     paymentType,
-    prefCurrency,
+    primaryCurrency,
     referenceAmount,
     sameNode,
     username,
@@ -241,10 +251,11 @@ export const SendBitcoinConfirmationScreen = ({
   const [errs, setErrs] = useState<{ message: string }[]>([])
   const [status, setStatus] = useState<StatusType>(Status.IDLE)
 
-  const paymentSatAmount =
-    referenceAmount.currency === "BTC"
-      ? referenceAmount.value
-      : currencyConverter[referenceAmount.currency]["BTC"](referenceAmount.value)
+  const paymentSatAmount = convertCurrency(
+    referenceAmount.value,
+    referenceAmount.currency,
+    "BTC",
+  )
 
   const fee = useFee({
     address,
@@ -254,7 +265,7 @@ export const SendBitcoinConfirmationScreen = ({
     sameNode,
     paymentSatAmount,
     btcPrice,
-    prefCurrency,
+    primaryCurrency,
   })
 
   const [queryTransactions] = useLazyQuery(QUERY_TRANSACTIONS, {
@@ -392,11 +403,11 @@ export const SendBitcoinConfirmationScreen = ({
   const errorMessage = useMemo(() => {
     if (totalAmount > balance) {
       return translate("SendBitcoinConfirmationScreen.totalExceed", {
-        balance: textCurrencyFormatting(balance, btcPrice, prefCurrency),
+        balance: textCurrencyFormatting(balance, btcPrice, primaryCurrency),
       })
     }
     return ""
-  }, [balance, btcPrice, prefCurrency, totalAmount])
+  }, [balance, btcPrice, primaryCurrency, totalAmount])
 
   let destination = ""
   if (paymentType === "username") {
@@ -408,28 +419,32 @@ export const SendBitcoinConfirmationScreen = ({
   }
 
   const primaryAmount: MoneyAmount = {
-    value: currencyConverter[referenceAmount.currency][prefCurrency](
+    value: convertCurrency(
       referenceAmount.value,
+      referenceAmount.currency,
+      primaryCurrency,
     ),
-    currency: prefCurrency,
+    currency: primaryCurrency,
   }
 
   const primaryTotalAmount: MoneyAmount = {
-    value: currencyConverter["BTC"][prefCurrency](totalAmount),
-    currency: prefCurrency,
+    value: convertCurrency(totalAmount, "BTC", primaryCurrency),
+    currency: primaryCurrency,
   }
 
-  const secondaryCurrency: CurrencyType = prefCurrency === "BTC" ? "USD" : "BTC"
+  const secondaryCurrency: CurrencyType = primaryCurrency === "BTC" ? "USD" : "BTC"
 
   const secondaryAmount: MoneyAmount = {
-    value: currencyConverter[referenceAmount.currency][secondaryCurrency](
+    value: convertCurrency(
       referenceAmount.value,
+      referenceAmount.currency,
+      secondaryCurrency,
     ),
     currency: secondaryCurrency,
   }
 
   const secondaryTotalAmount: MoneyAmount = {
-    value: currencyConverter["BTC"][secondaryCurrency](totalAmount),
+    value: convertCurrency(totalAmount, "BTC", secondaryCurrency),
     currency: secondaryCurrency,
   }
 

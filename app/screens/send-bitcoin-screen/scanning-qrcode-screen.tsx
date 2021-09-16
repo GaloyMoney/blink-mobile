@@ -1,5 +1,5 @@
 import { useApolloClient } from "@apollo/client"
-import { useIsFocused } from "@react-navigation/native"
+import { useIsFocused, useNavigationState } from "@react-navigation/native"
 import * as React from "react"
 import { Alert, Dimensions, Pressable, View, ViewStyle } from "react-native"
 import { RNCamera } from "react-native-camera"
@@ -71,6 +71,7 @@ type ScanningQRCodeScreenProps = {
 export const ScanningQRCodeScreen: ScreenType = ({
   navigation,
 }: ScanningQRCodeScreenProps) => {
+  const index = useNavigationState((state) => state.index)
   const [pending, setPending] = React.useState(false)
   const client = useApolloClient()
 
@@ -83,7 +84,11 @@ export const ScanningQRCodeScreen: ScreenType = ({
       const { valid } = validPayment(data, Token.getInstance().network, client)
 
       if (valid) {
-        navigation.replace("sendBitcoin", { payment: data })
+        if (index <= 1) {
+          navigation.replace("sendBitcoin", { payment: data })
+        } else {
+          navigation.navigate("sendBitcoin", { payment: data })
+        }
       } else {
         setPending(true)
         Alert.alert(
