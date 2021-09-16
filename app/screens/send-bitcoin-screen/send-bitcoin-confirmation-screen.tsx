@@ -1,6 +1,6 @@
 import * as React from "react"
 import { useEffect, useMemo, useState } from "react"
-import { ScrollView, Text, View } from "react-native"
+import { Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { gql, useApolloClient, useLazyQuery, useMutation } from "@apollo/client"
@@ -241,9 +241,10 @@ export const SendBitcoinConfirmationScreen = ({
   const [errs, setErrs] = useState<{ message: string }[]>([])
   const [status, setStatus] = useState<StatusType>(Status.IDLE)
 
-  const paymentSatAmount = currencyConverter[referenceAmount.currency]["BTC"](
-    referenceAmount.value,
-  )
+  const paymentSatAmount =
+    referenceAmount.currency === "BTC"
+      ? referenceAmount.value
+      : currencyConverter[referenceAmount.currency]["BTC"](referenceAmount.value)
 
   const fee = useFee({
     address,

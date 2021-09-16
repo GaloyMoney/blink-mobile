@@ -3,8 +3,8 @@ import { useMemo } from "react"
 import { useBTCPrice } from "./use-btc-price"
 
 type CurrencyConverter = {
-  BTC: (value: number) => number
-  USD: (value: number) => number
+  BTC?: (value: number) => number
+  USD?: (value: number) => number
 }
 
 type CurrencyConverterTypes = {
@@ -18,12 +18,10 @@ export const useCurrencyConverter = (): CurrencyConverterTypes => {
   return useMemo(() => {
     return {
       BTC: {
-        BTC: (sats) => toInteger(sats),
         USD: (sats) => sats * btcPrice,
       },
       USD: {
         BTC: (usd) => toInteger(usd / btcPrice),
-        USD: (usd) => usd,
       },
     }
   }, [btcPrice])

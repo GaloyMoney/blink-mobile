@@ -55,7 +55,7 @@ const styles = EStyleSheet.create({
 type InputPaymentProps = {
   editable: boolean
   forceKeyboard: boolean
-  nextPrefCurrency: () => void
+  toggleCurrency: () => void
   onBlur?: () => void
   onUpdateAmount: ({ moneyAmount: MoneyAmount }) => void
   primaryAmount: MoneyAmount
@@ -64,7 +64,7 @@ type InputPaymentProps = {
 export const InputPayment: ComponentType = ({
   editable,
   forceKeyboard = false,
-  nextPrefCurrency,
+  toggleCurrency,
   onBlur = () => null,
   onUpdateAmount,
   primaryAmount,
@@ -72,43 +72,37 @@ export const InputPayment: ComponentType = ({
   const [input, setInput] = React.useState("")
   const inputRef = React.useRef<TextInput>()
 
+  React.useEffect(() => {
+    // TODO: re-use textToCurrency
+    setInput(primaryAmount.value.toString().replace(/[^0-9.]/g, ""))
+  }, [primaryAmount])
+
+  React.useEffect(() => {
+    const _keyboardDidHide = () => {
+      inputRef?.current?.blur()
+    }
+
+    Keyboard.addListener("keyboardDidHide", _keyboardDidHide)
+    return () => {
+      Keyboard.removeListener("keyboardDidHide", _keyboardDidHide)
+    }
+  }, [])
+
   const handleTextInputChange = React.useCallback(
     (text) => {
       const newInput = textToCurrency(
         text.replace(/[^0-9]/g, "").substring(0, digitLimit),
         primaryAmount.currency,
       )
-      const newAmount = toNumber(newInput)
-
       setInput(newInput)
 
+      const newAmount = toNumber(newInput)
       if (!isNaN(newAmount)) {
-        onUpdateAmount({
-          moneyAmount: {
-            value: newAmount,
-            currency: primaryAmount.currency,
-          },
-        })
+        onUpdateAmount(newAmount)
       }
     },
     [onUpdateAmount, primaryAmount.currency],
   )
-
-  React.useEffect(() => {
-    setInput(primaryAmount.value.toString().replace(/[^0-9.]/g, ""))
-  }, [primaryAmount])
-
-  React.useEffect(() => {
-    Keyboard.addListener("keyboardDidHide", _keyboardDidHide)
-
-    return () => {
-      Keyboard.removeListener("keyboardDidHide", _keyboardDidHide)
-    }
-  }, [])
-
-  const _keyboardDidHide = () => {
-    inputRef?.current?.blur()
-  }
 
   const displayValue = currencyToText(input, primaryAmount.currency)
 
@@ -203,7 +197,7 @@ export const InputPayment: ComponentType = ({
           renderErrorMessage={false}
           selection={{ start: displayValue.length, end: displayValue.length }}
         />
-        <TouchableOpacity onPress={nextPrefCurrency}>
+        <TouchableOpacity onPress={toggleCurrency}>
           <Icon name="ios-swap-vertical" size={32} style={styles.icon} />
         </TouchableOpacity>
       </View>

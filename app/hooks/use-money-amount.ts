@@ -1,63 +1,51 @@
 import { useCallback, useMemo, useState } from "react"
+import { useCurrencies } from "."
 import { useCurrencyConverter } from "./use-currency-conversion"
-import { usePrefCurrency } from "./use-pref-currency"
 
-type UseMoneyAmountReturn = {
-  nextPrefCurrency: () => void
-  prefCurrency: CurrencyType
-  primaryAmount: MoneyAmount
-  satAmount: number
-  secondaryAmount: MoneyAmount
-  setConvertedAmounts: (SetConvertedAmountsInput) => void
-}
+type UseMoneyAmountFunction = (
+  currency: CurrencyType,
+) => [
+  MoneyAmount,
+  (moneyAmount: MoneyAmount) => void,
+  (moneyAmount: MoneyAmount) => void,
+  (value: number) => void,
+]
 
-export const useMoneyAmount = (): UseMoneyAmountReturn => {
-  const [prefCurrency, nextPrefCurrency] = usePrefCurrency()
+export const useMoneyAmount: UseMoneyAmountFunction = (currency) => {
   const currencyConverter = useCurrencyConverter()
 
-  const [amounts, setAmounts] = useState({
-    sat: 0,
-    usd: 0,
+  const [moneyAmount, setMoneyAmount] = useState<MoneyAmount>({
+    value: 0,
+    currency,
   })
 
-  const setConvertedAmounts = useCallback(
-    ({ moneyAmount }: SetConvertedAmountsInput) => {
-      const postiveValue = moneyAmount.value >= 0 ? moneyAmount.value : -moneyAmount.value
-      const referenceCurrency = moneyAmount.currency
-      const refCurrenciesConverter = currencyConverter[referenceCurrency]
-
-      setAmounts({
-        sat: refCurrenciesConverter["BTC"](postiveValue),
-        usd: refCurrenciesConverter["USD"](postiveValue),
+  const convertAmount = useCallback(
+    (moneyAmount: MoneyAmount) => {
+      setMoneyAmount((pMoneyAmount) => {
+        if (moneyAmount.currency === pMoneyAmount.currency) {
+          return pMoneyAmount
+        }
+        const postiveValue =
+          moneyAmount.value >= 0 ? moneyAmount.value : -moneyAmount.value
+        const refCurrency = moneyAmount.currency
+        const refCurrenciesConverter = currencyConverter[refCurrency]
+        return {
+          value: refCurrenciesConverter[pMoneyAmount.currency](postiveValue),
+          currency: pMoneyAmount.currency,
+        }
       })
     },
     [currencyConverter],
   )
 
-  const { primaryAmount, secondaryAmount } = useMemo((): {
-    primaryAmount: MoneyAmount
-    secondaryAmount: MoneyAmount
-  } => {
-    const satMoneyAmount: MoneyAmount = {
-      value: amounts.sat,
-      currency: "BTC",
-    }
-    const usdMoneyAmount: MoneyAmount = {
-      value: amounts.usd,
-      currency: "USD",
-    }
-    return {
-      primaryAmount: prefCurrency === "USD" ? usdMoneyAmount : satMoneyAmount,
-      secondaryAmount: prefCurrency === "BTC" ? usdMoneyAmount : satMoneyAmount,
-    }
-  }, [amounts, prefCurrency])
+  const setAmountValue = useCallback((value: number) => {
+    setMoneyAmount((pMoneyAmount) => {
+      return {
+        value,
+        currency: pMoneyAmount.currency,
+      }
+    })
+  }, [])
 
-  return {
-    nextPrefCurrency,
-    prefCurrency,
-    satAmount: amounts.sat,
-    primaryAmount,
-    secondaryAmount,
-    setConvertedAmounts,
-  }
+  return [moneyAmount, convertAmount, setMoneyAmount, setAmountValue]
 }
