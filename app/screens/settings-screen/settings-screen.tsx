@@ -222,7 +222,7 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       id: "tippingLink",
       action: () => copyToClipBoard(username),
       enabled: walletIsActive && username !== null,
-      greyed: !walletIsActive || !username,
+      greyed: !walletIsActive || username === null,
     },
     {
       category: translate("whatsapp.contactUs"),
