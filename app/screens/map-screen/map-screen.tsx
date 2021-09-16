@@ -87,35 +87,6 @@ export const MapScreen: ScreenType = ({ navigation }: Props) => {
     }
   }
 
-  useFocusEffect(
-    useCallback(() => {
-      requestLocationPermission()
-
-      if (!grantedPermission) {
-        return null
-      }
-
-      const watchId = Geolocation.watchPosition((info) => {
-        // console.log(info)
-        setCurrentLocation(
-          <Marker
-            coordinate={{
-              latitude: info.coords.latitude,
-              longitude: info.coords.longitude,
-            }}
-            title="Current location"
-            key="currentLocation"
-            pinColor="blue"
-          />,
-        )
-      })
-
-      return () => {
-        Geolocation.clearWatch(watchId)
-      }
-    }, [grantedPermission]),
-  )
-
   // React.useLayoutEffect(() => {
   //   navigation.setOptions(
   //     {
@@ -163,6 +134,7 @@ export const MapScreen: ScreenType = ({ navigation }: Props) => {
     <Screen>
       <MapView
         style={styles.map}
+        showsUserLocation={true}
         initialRegion={{
           latitude: 13.496743,
           longitude: -89.439462,
@@ -171,7 +143,6 @@ export const MapScreen: ScreenType = ({ navigation }: Props) => {
         }}
       >
         {markers}
-        {currentLocation}
       </MapView>
     </Screen>
   )
