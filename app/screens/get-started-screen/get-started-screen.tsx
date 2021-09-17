@@ -11,8 +11,7 @@ import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import type { ScreenType } from "../../types/jsx"
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const BitcoinBeachLogo = require("./bitcoinBeach3.png")
+import BitcoinBeachLogo from "./bitcoinBeach3.png"
 
 const styles = EStyleSheet.create({
   Logo: {

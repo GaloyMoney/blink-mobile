@@ -35,7 +35,11 @@ import {
 } from "../screens/phone-auth-screen"
 import { PriceScreen } from "../screens/price-screen/price-screen"
 import { ReceiveBitcoinScreen } from "../screens/receive-bitcoin-screen"
-import { ScanningQRCodeScreen, SendBitcoinScreen } from "../screens/send-bitcoin-screen"
+import {
+  ScanningQRCodeScreen,
+  SendBitcoinConfirmationScreen,
+  SendBitcoinScreen,
+} from "../screens/send-bitcoin-screen"
 import { SettingsScreen, UsernameScreen } from "../screens/settings-screen"
 import { LanguageScreen } from "../screens/settings-screen/language-screen"
 import { SecurityScreen } from "../screens/settings-screen/security-screen"
@@ -56,8 +60,7 @@ import {
 } from "./stack-param-lists"
 import type { NavigatorType } from "../types/jsx"
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const PushNotification = require("react-native-push-notification")
+import PushNotification from "react-native-push-notification"
 
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
 PushNotification.configure({
@@ -168,7 +171,7 @@ export const RootStack: NavigatorType = () => {
       // invokeApp: true, // (optional) This enable click on actions to bring back the application to foreground or stay in background, default: true
 
       /* iOS only properties */
-      alertAction: "view", // (optional) default: view
+      // alertAction: "view", // (optional) default: view
       category: "", // (optional) default: empty string
 
       /* iOS and Android properties */
@@ -306,6 +309,24 @@ export const RootStack: NavigatorType = () => {
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}
       />
+      <StackMoveMoney.Screen
+        name="sendBitcoin"
+        component={SendBitcoinScreen}
+        options={{ title: translate("SendBitcoinScreen.title") }}
+      />
+      <StackMoveMoney.Screen
+        name="sendBitcoinConfirmation"
+        component={SendBitcoinConfirmationScreen}
+        options={{ title: translate("SendBitcoinConfirmationScreen.title") }}
+      />
+      <StackMoveMoney.Screen
+        name="receiveBitcoin"
+        component={ReceiveBitcoinScreen}
+        options={{
+          title: translate("ReceiveBitcoinScreen.title"),
+          // headerShown: false,
+        }}
+      />
       <RootNavigator.Screen
         name="earnsSection"
         component={EarnSection}
@@ -428,19 +449,6 @@ export const MoveMoneyNavigator: NavigatorType = () => (
       options={{
         headerShown: false,
         title: translate("MoveMoneyScreen.title"),
-      }}
-    />
-    <StackMoveMoney.Screen
-      name="sendBitcoin"
-      component={SendBitcoinScreen}
-      options={{ title: translate("SendBitcoinScreen.title") }}
-    />
-    <StackMoveMoney.Screen
-      name="receiveBitcoin"
-      component={ReceiveBitcoinScreen}
-      options={{
-        title: translate("ReceiveBitcoinScreen.title"),
-        // headerShown: false,
       }}
     />
   </StackMoveMoney.Navigator>
