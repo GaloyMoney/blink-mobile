@@ -49,9 +49,8 @@ export const SendBitcoinScreen: ScreenType = ({
     setSecondaryAmountValue,
   ] = useMoneyAmount(secondaryCurrency)
 
-  const satAmount = useMemo(() => {
-    return primaryCurrency === "BTC" ? primaryAmount.value : secondaryAmount.value
-  }, [primaryAmount.value, primaryCurrency, secondaryAmount.value])
+  const satAmount =
+    primaryCurrency === "BTC" ? primaryAmount.value : secondaryAmount.value
 
   const [invoiceError, setInvoiceError] = useState("")
 

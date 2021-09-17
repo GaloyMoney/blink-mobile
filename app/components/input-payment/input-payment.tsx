@@ -57,7 +57,7 @@ type InputPaymentProps = {
   forceKeyboard: boolean
   toggleCurrency: () => void
   onBlur?: () => void
-  onUpdateAmount: ({ moneyAmount: MoneyAmount }) => void
+  onUpdateAmount: (amount: number) => void
   primaryAmount: MoneyAmount
 }
 
