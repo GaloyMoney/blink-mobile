@@ -311,7 +311,7 @@ PODS:
     - React
   - react-native-geolocation (2.0.2):
     - React
-  - react-native-image-picker (3.8.1):
+  - react-native-image-picker (4.0.6):
     - React-Core
   - react-native-maps (0.27.1):
     - React
@@ -663,7 +663,7 @@ SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
   FBLazyVector: 49cbe4b43e445b06bf29199b6ad2057649e4c8f5
-  FBReactNativeSpec: 84b8a46a46edfef70b945915cbe6edc4577fbbf0
+  FBReactNativeSpec: 49af259315248df108d3144509353caec1d96a1d
   Firebase: e1e089d9aac215a52442583f818ab61de3c4581b
   FirebaseAnalytics: 9f8f4feab1f3fddf4e4515f8f022fe6aa9e51043
   FirebaseCore: 0a43b7f1c5b36f3358cd703011ca4c7e0df55870
@@ -695,7 +695,7 @@ SPEC CHECKSUMS:
   react-native-camera: 7bf59f2728ffb019fa25e60a225d2c57e1a8f0f6
   react-native-fingerprint-scanner: ac6656f18c8e45a7459302b84da41a44ad96dbbe
   react-native-geolocation: c956aeb136625c23e0dce0467664af2c437888c9
-  react-native-image-picker: 31971f6184e7c1dcb4fc1f122e1ba2c3fb11ef1e
+  react-native-image-picker: a6e56460d34905c849ada551db30897dc7f3d535
   react-native-maps: f4b89da81626ad7f151a8bfcb79733295d31ce5c
   react-native-qrcode-local-image: a16d554baf5cf5c04da86b464d99cf658e215c52
   react-native-safe-area-context: f0906bf8bc9835ac9a9d3f97e8bde2a997d8da79
@@ -742,4 +742,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 028fb7ec1075d7a1b2bb21696c23f73efb635029
 
-COCOAPODS: 1.11.0
+COCOAPODS: 1.10.1
