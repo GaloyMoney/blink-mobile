@@ -695,7 +695,7 @@
   },
   "tippingLink": {
     "title": "¿Quiere recibir propinas? ¡Comparta su enlace!",
-    "copied": "{{data}} se ha guardado al portapapeles"
+    "copied": "{{data}} se ha copiado en el portapapeles"
   },
   "whatsapp": {
     "contactUs": "¿Necesita ayuda? Contáctenos por WhatsApp",
