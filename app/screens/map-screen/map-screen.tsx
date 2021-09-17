@@ -1,9 +1,8 @@
 import { gql, useApolloClient } from "@apollo/client"
-import Geolocation from "@react-native-community/geolocation"
 import { useFocusEffect } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
-import { useCallback, useState } from "react"
+import { useCallback } from "react"
 // eslint-disable-next-line react-native/split-platform-components
 import { PermissionsAndroid, StyleSheet, Text, View } from "react-native"
 import { Button } from "react-native-elements"
@@ -61,9 +60,6 @@ export const MapScreen: ScreenType = ({ navigation }: Props) => {
 
   const maps = result?.maps ?? []
 
-  const [currentLocation, setCurrentLocation] = useState<JSX.Element>(null)
-  const [grantedPermission, setGrantedPermission] = useState(!!isIos)
-
   const requestLocationPermission = async () => {
     try {
       const granted = await PermissionsAndroid.request(
@@ -77,7 +73,6 @@ export const MapScreen: ScreenType = ({ navigation }: Props) => {
         },
       )
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        setGrantedPermission(true)
         console.log("You can use the location")
       } else {
         console.log("Location permission denied")
@@ -86,6 +81,12 @@ export const MapScreen: ScreenType = ({ navigation }: Props) => {
       console.warn(err)
     }
   }
+
+  useFocusEffect(
+    useCallback(() => {
+      requestLocationPermission()
+    }, []),
+  )
 
   // React.useLayoutEffect(() => {
   //   navigation.setOptions(
