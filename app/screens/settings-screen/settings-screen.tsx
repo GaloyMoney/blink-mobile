@@ -18,7 +18,7 @@ import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
 import { language_mapping } from "./language-screen"
 import { palette } from "../../theme/palette"
-import { WHATSAPP_CONTACT_NUMBER } from "../../constants/support"
+import { LN_PAGE_DOMAIN, WHATSAPP_CONTACT_NUMBER } from "../../constants/support"
 import { translate } from "../../i18n"
 import { walletIsActive } from "../../graphql/query"
 import { openWhatsApp } from "../../utils/external"
@@ -27,6 +27,8 @@ import { hasFullPermissions, requestPermission } from "../../utils/notifications
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
+import Clipboard from "@react-native-community/clipboard"
+import { toastShow } from "../../utils/toast"
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "settings">
@@ -156,6 +158,14 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
     securityAction,
     resetDataStore,
   } = params
+  const copyToClipBoard = (username) => {
+    Clipboard.setString(LN_PAGE_DOMAIN + username)
+    Clipboard.getString().then((data) =>
+      toastShow(translate("tippingLink.copied", { data }), {
+        backgroundColor: palette.lightBlue,
+      }),
+    )
+  }
 
   const list = [
     {
@@ -207,6 +217,14 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       action: () => csvAction(),
       enabled: walletIsActive,
       greyed: !walletIsActive,
+    },
+    {
+      category: translate("tippingLink.title"),
+      icon: "cash-outline",
+      id: "tippingLink",
+      action: () => copyToClipBoard(username),
+      enabled: walletIsActive && username !== null,
+      greyed: !walletIsActive || username === null,
     },
     {
       category: translate("whatsapp.contactUs"),
