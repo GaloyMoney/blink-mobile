@@ -42,7 +42,12 @@ import {
 } from "../screens/send-bitcoin-screen"
 import { SettingsScreen, UsernameScreen } from "../screens/settings-screen"
 import { LanguageScreen } from "../screens/settings-screen/language-screen"
-import { SecurityScreen } from "../screens/settings-screen/security-screen"
+import {
+  SecurityScreen,
+  TwoFactorAuthenticationSecretScreen,
+  TwoFactorAuthenticationSelectionScreen,
+  TwoFactorAuthenticationVerificationScreen,
+} from "../screens/security-screen"
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
 import { TransactionHistoryScreenDataInjected } from "../screens/transaction-screen/transaction-screen"
 import { WelcomeFirstScreen } from "../screens/welcome-screens"
@@ -405,6 +410,27 @@ export const RootStack: NavigatorType = () => {
         name="transactionHistory"
         component={TransactionHistoryScreenDataInjected}
         options={{ title: translate("TransactionScreen.transactionHistoryTitle") }}
+      />
+      <RootNavigator.Screen
+        name="twoFASecret"
+        component={TwoFactorAuthenticationSecretScreen}
+        options={() => ({
+          title: "2FA",
+        })}
+      />
+      <RootNavigator.Screen
+        name="twoFASelection"
+        component={TwoFactorAuthenticationSelectionScreen}
+        options={() => ({
+          title: "2FA",
+        })}
+      />
+      <RootNavigator.Screen
+        name="twoFAVerification"
+        component={TwoFactorAuthenticationVerificationScreen}
+        options={() => ({
+          title: "2FA",
+        })}
       />
       <RootNavigator.Screen
         name="priceDetail"

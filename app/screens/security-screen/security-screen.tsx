@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useState } from "react"
+import { useCallback, useState } from "react"
 import { RouteProp, useFocusEffect } from "@react-navigation/native"
 import { Text, View } from "react-native"
 import { StackNavigationProp } from "@react-navigation/stack"
@@ -16,13 +16,18 @@ import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { PinScreenPurpose } from "../../utils/enum"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import {
-  HIDE_BALANCE,
   saveHideBalance,
   saveHiddenBalanceToolTip,
 } from "../../graphql/client-only-query"
-import { useApolloClient, useQuery } from "@apollo/client"
+import { useApolloClient } from "@apollo/client"
+import { useHideBalance, useTwoFAEnabled } from "../../hooks"
+import { TwoFAVerificationType } from "."
 
 const styles = EStyleSheet.create({
+  bottomSpacer: {
+    height: 16,
+  },
+
   button: {
     backgroundColor: palette.white,
     paddingBottom: 16,
@@ -87,13 +92,11 @@ type Props = {
 export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
   const client = useApolloClient()
   const { mIsBiometricsEnabled, mIsPinEnabled } = route.params
-  const { data } = useQuery(HIDE_BALANCE)
+  const isHideBalanceEnabled = useHideBalance()
+  const isTwoFAEnabled = useTwoFAEnabled()
 
   const [isBiometricsEnabled, setIsBiometricsEnabled] = useState(mIsBiometricsEnabled)
   const [isPinEnabled, setIsPinEnabled] = useState(mIsPinEnabled)
-  const [isHideBalanceEnabled, setIsHideBalanceEnabled] = useState(
-    data?.hideBalance ?? null,
-  )
 
   useFocusEffect(() => {
     getIsBiometricsEnabled()
@@ -149,15 +152,33 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
     }
   }
 
-  const onHideBalanceValueChanged = async (value) => {
-    if (value) {
-      setIsHideBalanceEnabled(await saveHideBalance(client, true))
-      await saveHiddenBalanceToolTip(client, true)
-    } else {
-      setIsHideBalanceEnabled(await saveHideBalance(client, false))
-      await saveHiddenBalanceToolTip(client, false)
-    }
-  }
+  const onHideBalanceValueChanged = useCallback(
+    async (value) => {
+      if (value) {
+        await saveHideBalance(client, true)
+        await saveHiddenBalanceToolTip(client, true)
+      } else {
+        await saveHideBalance(client, false)
+        await saveHiddenBalanceToolTip(client, false)
+      }
+    },
+    [client],
+  )
+
+  const onTwoFAEnabledValueChanged = useCallback(
+    (value) => {
+      if (value) {
+        navigation.navigate("twoFASelection")
+        console.log("Two FA", "True", value)
+      } else {
+        navigation.navigate("twoFAVerification", {
+          verificationType: TwoFAVerificationType.Delete,
+        })
+        console.log("Two FA", "False", value)
+      }
+    },
+    [navigation],
+  )
 
   const removePin = async () => {
     if (await KeyStoreWrapper.removePin()) {
@@ -182,7 +203,7 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
           style={styles.switch}
           value={isBiometricsEnabled}
           color={palette.lightBlue}
-          onValueChange={(value) => onBiometricsValueChanged(value)}
+          onValueChange={onBiometricsValueChanged}
         />
       </View>
       <View style={styles.settingContainer}>
@@ -197,7 +218,7 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
           style={styles.switch}
           value={isPinEnabled}
           color={palette.lightBlue}
-          onValueChange={(value) => onPinValueChanged(value)}
+          onValueChange={onPinValueChanged}
         />
       </View>
       <View style={styles.settingContainer}>
@@ -208,6 +229,21 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
           onPress={() =>
             navigation.navigate("pin", { screenPurpose: PinScreenPurpose.SetPin })
           }
+        />
+      </View>
+      <View style={styles.settingContainer}>
+        <View style={styles.textContainer}>
+          <Text style={styles.title}>{translate("SecurityScreen.twoFATitle")}</Text>
+          <Text style={styles.subtitle}>{translate("SecurityScreen.twoFASubtitle")}</Text>
+          <Text style={styles.description}>
+            {translate("SecurityScreen.twoFADescription")}
+          </Text>
+        </View>
+        <Switch
+          style={styles.switch}
+          value={isTwoFAEnabled}
+          color={palette.lightBlue}
+          onValueChange={onTwoFAEnabledValueChanged}
         />
       </View>
       <View style={styles.settingContainer}>
@@ -224,9 +260,10 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
           style={styles.switch}
           value={isHideBalanceEnabled}
           color={palette.lightBlue}
-          onValueChange={(value) => onHideBalanceValueChanged(value)}
+          onValueChange={onHideBalanceValueChanged}
         />
       </View>
+      <View style={styles.bottomSpacer} />
     </Screen>
   )
 }

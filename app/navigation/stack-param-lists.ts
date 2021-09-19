@@ -44,6 +44,17 @@ export type RootStackParamList = {
     tx: query_transactions_wallet_transactions
   }
   transactionHistory: undefined
+  twoFASelection: undefined
+  twoFASecret: {
+    twoFASecret: string
+    twoFAUri: string
+    verificationType: TwoFAVerificationType
+  }
+  twoFAVerification: {
+    twoFASecret?: string
+    twoFAUri?: string
+    verificationType: TwoFAVerificationType
+  }
   Earn: undefined
 }
 

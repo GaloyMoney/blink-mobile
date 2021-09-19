@@ -1,1 +1,7 @@
-export const graphqlV2OperationNames: string[] = ["userLogin", "userRequestAuthCode"]
+export const graphqlV2OperationNames: string[] = [
+  "twoFAGenerate",
+  "twoFASave",
+  "twoFADelete",
+  "userLogin",
+  "userRequestAuthCode",
+]

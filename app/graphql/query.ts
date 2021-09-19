@@ -154,6 +154,14 @@ export const GET_LANGUAGE = gql`
   }
 `
 
+export const GET_TWO_FA_ENABLED = gql`
+  query twoFAEnabled {
+    me {
+      twoFAEnabled
+    }
+  }
+`
+
 export const MAIN_QUERY = gql`
   query gql_main_query($logged: Boolean!) {
     prices(length: 1) {
@@ -223,6 +231,7 @@ export const MAIN_QUERY = gql`
       username
       phone
       language
+      twoFAEnabled
       contacts {
         id
         name
