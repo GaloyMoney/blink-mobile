@@ -13,7 +13,7 @@ import { useHiddenBalanceToolTip, useHideBalance } from "../../hooks"
 import { saveHiddenBalanceToolTip } from "../../graphql/client-only-query"
 import { useApolloClient } from "@apollo/client"
 
-const styles = EStyleSheet.create({
+export const styles = EStyleSheet.create({
   amount: {
     alignItems: "center",
     flexDirection: "column",
@@ -187,7 +187,7 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
   }
 
   return (
-    <View style={[styles.header, style]}>
+    <View style={[style ? style : styles.header, style]}>
       <Text style={styles.balanceText}>{translate("BalanceHeader.currentBalance")}</Text>
       {!mHideBalance && defaultBalanceHeader()}
       <View style={styles.hiddenBalanceContainer}>
