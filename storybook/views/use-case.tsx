@@ -15,12 +15,12 @@ const USE_CASE_WRAPPER: ViewStyle = {
   flexDirection: "row",
 }
 const USE_CASE: TextStyle = {
-  fontSize: 10,
+  fontSize: 14,
   color: "#666",
   paddingHorizontal: 4,
   paddingBottom: 2,
 }
-const USAGE: TextStyle = { color: "#666", fontSize: 10, paddingTop: 0 }
+const USAGE: TextStyle = { color: "#666", fontSize: 12, paddingTop: 0}
 const HEADER: ViewStyle = {
   paddingTop: 20,
   paddingBottom: 10,
@@ -28,7 +28,7 @@ const HEADER: ViewStyle = {
   borderBottomColor: "#e6e6e6",
   borderBottomWidth: 1,
 }
-const COMPONENT: ViewStyle = { backgroundColor: color.background }
+const COMPONENT: ViewStyle = { backgroundColor: color.background, width:"100%" }
 
 export interface UseCaseProps {
   /** The title. */
@@ -50,7 +50,7 @@ export function UseCase(props: UseCaseProps): JSX.Element {
     ...COMPONENT,
     ...{ padding: props.noPad ? 0 : 10 },
     ...{
-      backgroundColor: props.noBackground ? "rgba(0,0,0,0)" : COMPONENT.backgroundColor,
+      backgroundColor: props.noBackground ? "rgba(0,0,0,0)" : COMPONENT.backgroundColor, width: "100%"
     },
     ...props.style,
   }

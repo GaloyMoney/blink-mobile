@@ -23,7 +23,8 @@
     "patch": "patch-package",
     "postinstall": "jetify && if which pod >/dev/null; then (cd ios; pod install); fi",
     "prepare": "npm-run-all patch hack:*",
-    "storybook": "storybook start -p 9001 --skip-packager",
+    "storybook": "start-storybook -p 7007",
+    "prestorybook": "rnstl",
     "adb": "adb reverse tcp:9090 tcp:9090 && adb reverse tcp:3000 tcp:3000 && adb reverse tcp:4000 tcp:4000 && adb reverse tcp:9001 tcp:9001 && adb reverse tcp:8081 tcp:8081"
   },
   "dependencies": {
@@ -42,6 +43,7 @@
     "@react-navigation/native": "^5.8.10",
     "@react-navigation/stack": "^5.12.8",
     "@remobile/react-native-qrcode-local-image": "nicolasburtey/react-native-qrcode-local-image.git#master",
+    "@storybook/cli": "^6.3.8",
     "apollo3-cache-persist": "^0.9.1",
     "bip21": "^2.0.2",
     "bitcoinjs-lib": "^5.1.10",
@@ -50,6 +52,7 @@
     "currency.js": "^2.0.2",
     "graphql": "^15.5.0",
     "i18n-js": "^3.5.1",
+    "init": "^0.1.2",
     "intl": "^1.2.5",
     "jwt-decode": "^3.1.2",
     "lodash.clonedeep": "^4.5.0",
@@ -70,6 +73,7 @@
     "react-dom": "^17.0.1",
     "react-native": "0.64.0",
     "react-native-camera": "^3.21.0",
+    "react-native-config": "^1.4.4",
     "react-native-device-info": "^8.0.8",
     "react-native-elements": "^3.4.2",
     "react-native-extended-stylesheet": "^0.12.0",
@@ -103,6 +107,7 @@
     "react-native-version-number": "^0.3.6",
     "react-native-walkthrough-tooltip": "^1.2.0",
     "react-native-youtube": "^2.0.0",
+    "sb": "^6.3.8",
     "tempy": "^1.0.0",
     "url": "^0.11.0",
     "victory-native": "^35.0.1"
@@ -121,7 +126,7 @@
     "@storybook/addon-ondevice-knobs": "^5.3.25",
     "@storybook/addon-storyshots": "^6.1.9",
     "@storybook/react-native": "^5.3.17",
-    "@storybook/react-native-server": "^5.3.17",
+    "@storybook/react-native-server": "^5.3.23",
     "@testing-library/jest-native": "^4.0.2",
     "@testing-library/react-native": "^7.2.0",
     "@types/babel-core": "6.25.7",
@@ -181,15 +186,24 @@
     "prettier-eslint": "^12.0.0",
     "prettier-eslint-cli": "^5.0.1",
     "react-devtools-core": "4.10.0",
+    "react-native-storybook-loader": "^2.0.4",
     "react-native-svg-transformer": "^0.14.3",
     "react-powerplug": "1.0.0",
     "react-test-renderer": "17.0.1",
     "rimraf": "3.0.2",
     "solidarity": "^3.0.0",
+    "storybook-addon-apollo-client": "^4.0.9",
     "ts-jest": "^26.1.4",
     "typescript": "^4.1.2"
   },
   "peerDependencies": {
     "solidarity": "^2.3.1"
+  },
+  "config": {
+    "react-native-storybook-loader": {
+      "searchDir": "./app/components/",
+      "pattern": "**/*.stories.tsx",
+      "outputFile": "./storybook/storyLoader.js"
+    }
   }
 }
