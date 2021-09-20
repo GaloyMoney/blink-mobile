@@ -25,6 +25,7 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import PhoneInput from "react-native-phone-input"
 import analytics from "@react-native-firebase/analytics"
 import { StackNavigationProp } from "@react-navigation/stack"
+import GeetestModule from "react-native-geetest-module"
 
 import { CloseCross } from "../../components/close-cross"
 import { Screen } from "../../components/screen"
@@ -42,7 +43,6 @@ import BadgerPhone from "./badger-phone-01.svg"
 import type { PhoneValidationStackParamList } from "../../navigation/stack-param-lists"
 import { RouteProp } from "@react-navigation/native"
 import { login_login } from "./__generated__/login"
-import GeeTestModule from "../../native-modules/GeeTestModule"
 import { registerCaptcha } from "./__generated__/registerCaptcha"
 
 const REGISTER_CAPTCHA = gql`
@@ -190,16 +190,15 @@ export const WelcomePhoneInputScreen: ScreenType = ({
     useState<GeeTestValidationData | null>(null)
 
   const onGeeTestDialogResultListener = React.useRef<EventSubscription>()
-  const onGeeTestSuccessListener = React.useRef<EventSubscription>()
   const onGeeTestFailedListener = React.useRef<EventSubscription>()
 
   useEffect(() => {
-    GeeTestModule.setUp()
+    GeetestModule.setUp()
 
-    const eventEmitter = new NativeEventEmitter(NativeModules.GeeTestModule)
+    const eventEmitter = new NativeEventEmitter(NativeModules.GeetestModule)
 
     onGeeTestDialogResultListener.current = eventEmitter.addListener(
-      "GT3BaseListener-->onDialogResult-->",
+      "GT3-->onDialogResult-->",
       (event) => {
         const parsedDialogResult = JSON.parse(event.result)
         setGeeTestValidationData({
@@ -210,26 +209,18 @@ export const WelcomePhoneInputScreen: ScreenType = ({
       },
     )
 
-    onGeeTestSuccessListener.current = eventEmitter.addListener(
-      "GT3BaseListener-->onSuccess-->",
-      (event) => {
-        console.log("GT3BaseListener-->onSuccess-->", event.result)
-      },
-    )
-
     onGeeTestFailedListener.current = eventEmitter.addListener(
-      "GT3BaseListener-->onFailed-->",
+      "GT3-->onFailed-->",
       (event) => {
-        console.log("GT3BaseListener-->onFailed->", event.error)
+        console.log("GT3-->onFailed->", event.error)
         toastShow(event.error)
       },
     )
 
     return () => {
-      GeeTestModule.tearDown()
+      GeetestModule.tearDown()
 
       onGeeTestDialogResultListener.current.remove()
-      onGeeTestSuccessListener.current.remove()
       onGeeTestFailedListener.current.remove()
     }
   }, [queryRegisterCaptcha])
@@ -242,7 +233,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
         gt: registerCaptchaData.registerCaptchaGeetest.gt,
         new_captcha: registerCaptchaData.registerCaptchaGeetest.new_captcha,
       }
-      GeeTestModule.handleRegisteredGeeTestCaptcha(JSON.stringify(params))
+      GeetestModule.handleRegisteredGeeTestCaptcha(JSON.stringify(params))
     }
   }, [registerCaptchaData])
 
