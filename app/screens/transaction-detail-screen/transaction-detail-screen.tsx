@@ -150,7 +150,7 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
         <TextCurrency amount={Math.abs(usdAmount)} currency="USD" style={styles.amount} />
         <TextCurrency
           amount={Math.abs(settlementAmount)}
-          currency={"BTC"}
+          currency="BTC"
           style={styles.amountSecondary}
         />
       </View>
