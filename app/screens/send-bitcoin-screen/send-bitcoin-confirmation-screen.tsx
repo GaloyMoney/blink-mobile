@@ -18,6 +18,7 @@ import { PaymentStatusIndicator } from "./payment-status-indicator"
 import { color } from "../../theme"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { PaymentConfirmationInformation } from "./payment-confirmation-information"
+import useFee from "./use-fee"
 
 export const LIGHTNING_PAY = gql`
   mutation payInvoice($invoice: String!, $amount: Int, $memo: String) {
@@ -45,15 +46,15 @@ export const LIGHTNING_PAY = gql`
 //   }
 // `
 
-// export INTRA_LEDGER_PAYMENT_SEND = gql`
-//   mutation intraLedgerPaymentSend(
-//     $recipient: String!
-//     $amount: Int!
-//     $memo: String
-//   ) {
+export INTRA_LEDGER_PAYMENT_SEND = gql`
+  mutation intraLedgerPaymentSend(
+    $recipient: String!
+    $amount: Int!
+    $memo: String
+  ) {
 
-//   }
-// `
+  }
+`
 
 const ONCHAIN_PAY = gql`
   mutation onchain_pay($address: String!, $amount: Int!, $memo: String) {
@@ -65,152 +66,9 @@ const ONCHAIN_PAY = gql`
   }
 `
 
-const LIGHTNING_FEES = gql`
-  mutation lightning_fees($invoice: String, $amount: Int) {
-    invoice {
-      getFee(invoice: $invoice, amount: $amount)
-    }
-  }
-`
-
-const ONCHAIN_FEES = gql`
-  mutation onchain_fees($address: String!, $amount: Int) {
-    onchain {
-      getFee(address: $address, amount: $amount)
-    }
-  }
-`
-
 type SendBitcoinConfirmationScreenProps = {
   navigation: StackNavigationProp<MoveMoneyStackParamList, "sendBitcoinConfirmation">
   route: RouteProp<MoveMoneyStackParamList, "sendBitcoinConfirmation">
-}
-
-const useFee = ({
-  address,
-  amountless,
-  invoice,
-  paymentType,
-  sameNode,
-  paymentSatAmount,
-  btcPrice,
-  primaryCurrency,
-}) => {
-  const [fee, setFee] = useState<{
-    value: number | null
-    status: "loading" | "error" | "unset" | "set"
-  }>({
-    value: null, // TODO: get rid of this
-    status: "unset",
-  })
-
-  const [getLightningFees] = useMutation(LIGHTNING_FEES)
-  const [getOnchainFees] = useMutation(ONCHAIN_FEES)
-
-  if (fee.status !== "unset") {
-    if (fee.status === "loading") {
-      return { ...fee, text: "" }
-    }
-
-    if (fee.status === "error") {
-      return { ...fee, text: "" }
-    }
-
-    if (fee.value === null && paymentType !== "username") {
-      return { ...fee, text: "" }
-    }
-
-    return {
-      ...fee,
-      text: textCurrencyFormatting(fee.value ?? 0, btcPrice, primaryCurrency),
-    }
-  }
-
-  const initializeFee = async () => {
-    if (paymentType == "lightning") {
-      if (sameNode) {
-        return setFee({
-          value: 0,
-          status: "set",
-        })
-      }
-
-      if (amountless && paymentSatAmount === 0) {
-        return setFee({
-          value: null,
-          status: "set",
-        })
-      }
-
-      try {
-        setFee({
-          value: null,
-          status: "loading",
-        })
-        const {
-          data: {
-            invoice: { getFee: feeValue },
-          },
-        } = await getLightningFees({
-          variables: { invoice, amount: amountless ? paymentSatAmount : undefined },
-        })
-        setFee({
-          value: feeValue,
-          status: "set",
-        })
-      } catch (err) {
-        console.warn({ err, message: "error getting lightning fees" })
-        setFee({
-          value: null,
-          status: "error",
-        })
-      }
-      return
-    }
-
-    if (paymentType === "onchain") {
-      if (paymentSatAmount === 0) {
-        return setFee({
-          value: null,
-          status: "set",
-        })
-      }
-
-      try {
-        setFee({
-          value: null,
-          status: "loading",
-        })
-        const {
-          data: {
-            onchain: { getFee: feeValue },
-          },
-        } = await getOnchainFees({
-          variables: { address, amount: paymentSatAmount },
-        })
-        setFee({
-          value: feeValue,
-          status: "set",
-        })
-      } catch (err) {
-        console.warn({ err, message: "error getting onchains fees" })
-        setFee({
-          value: null,
-          status: "error",
-        })
-      }
-      return
-    }
-
-    return setFee({
-      value: null,
-      status: "set",
-    })
-  }
-
-  initializeFee()
-
-  return { ...fee, text: "" }
 }
 
 const Status = {
@@ -286,6 +144,8 @@ export const SendBitcoinConfirmationScreen = ({
   const [onchainPay] = useMutation(ONCHAIN_PAY, {
     refetchQueries: ["gql_main_query", "transactionsList"],
   })
+
+  const pay
 
   const pay = async () => {
     if ((amountless || paymentType === "onchain") && paymentSatAmount === 0) {
