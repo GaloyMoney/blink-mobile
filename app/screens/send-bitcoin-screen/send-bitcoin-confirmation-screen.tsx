@@ -27,23 +27,33 @@ export const LIGHTNING_PAY = gql`
   }
 `
 
-export const PAY_KEYSEND_USERNAME = gql`
-  mutation payKeysendUsername(
-    $amount: Int!
-    $destination: String!
-    $username: String!
-    $memo: String
-  ) {
-    invoice {
-      payKeysendUsername(
-        amount: $amount
-        destination: $destination
-        username: $username
-        memo: $memo
-      )
-    }
-  }
-`
+// export const PAY_KEYSEND_USERNAME = gql`
+//   mutation payKeysendUsername(
+//     $amount: Int!
+//     $destination: String!
+//     $username: String!
+//     $memo: String
+//   ) {
+//     invoice {
+//       payKeysendUsername(
+//         amount: $amount
+//         destination: $destination
+//         username: $username
+//         memo: $memo
+//       )
+//     }
+//   }
+// `
+
+// export INTRA_LEDGER_PAYMENT_SEND = gql`
+//   mutation intraLedgerPaymentSend(
+//     $recipient: String!
+//     $amount: Int!
+//     $memo: String
+//   ) {
+
+//   }
+// `
 
 const ONCHAIN_PAY = gql`
   mutation onchain_pay($address: String!, $amount: Int!, $memo: String) {
