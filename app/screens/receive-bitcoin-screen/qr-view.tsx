@@ -26,8 +26,7 @@ import {
   TYPE_BITCOIN,
 } from "../../utils/wallet"
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const successLottie = require("../move-money-screen/success_lottie.json")
+import successLottie from "../send-bitcoin-screen/success_lottie.json"
 
 const configByType = {
   [TYPE_LIGHTNING]: {
@@ -49,7 +48,6 @@ type Props = {
   type: GetFullUriInput["type"]
   amount: GetFullUriInput["amount"]
   memo: GetFullUriInput["memo"]
-  keyboardIsShown: boolean
   loading: boolean
   isSucceed: boolean
   navigation: StackNavigationProp<MoveMoneyStackParamList, "receiveBitcoin">
@@ -61,16 +59,12 @@ export const QRView = ({
   type,
   amount,
   memo,
-  keyboardIsShown,
   loading,
   isSucceed,
   navigation,
   err,
 }: Props): JSX.Element => {
-  const isReady = useMemo(
-    () => (type === TYPE_LIGHTNING ? !loading && data !== "" && !keyboardIsShown : true),
-    [data, keyboardIsShown, loading, type],
-  )
+  const isReady = type === TYPE_LIGHTNING ? !loading && data !== "" : true
 
   const getFullUri = useCallback(
     ({ input, uppercase = false, prefix = true }) =>
@@ -184,15 +178,12 @@ export const QRView = ({
             <Text style={{ color: palette.red, alignSelf: "center" }} selectable>
               {err}
             </Text>
-          )) ||
-            (keyboardIsShown && (
-              <Icon size={56} name="ios-flash" color={palette.orange} />
-            )) || <ActivityIndicator size="large" color={palette.blue} />}
+          )) || <ActivityIndicator size="large" color={palette.blue} />}
         </View>
       )
     }
     return null
-  }, [err, isReady, isSucceed, keyboardIsShown])
+  }, [err, isReady, isSucceed])
 
   return (
     <>

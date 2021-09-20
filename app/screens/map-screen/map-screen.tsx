@@ -1,9 +1,8 @@
 import { gql, useApolloClient } from "@apollo/client"
-import Geolocation from "@react-native-community/geolocation"
 import { useFocusEffect } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
-import { useCallback, useState } from "react"
+import { useCallback } from "react"
 // eslint-disable-next-line react-native/split-platform-components
 import { PermissionsAndroid, StyleSheet, Text, View } from "react-native"
 import { Button } from "react-native-elements"
@@ -61,9 +60,6 @@ export const MapScreen: ScreenType = ({ navigation }: Props) => {
 
   const maps = result?.maps ?? []
 
-  const [currentLocation, setCurrentLocation] = useState<JSX.Element>(null)
-  const [grantedPermission, setGrantedPermission] = useState(!!isIos)
-
   const requestLocationPermission = async () => {
     try {
       const granted = await PermissionsAndroid.request(
@@ -77,7 +73,6 @@ export const MapScreen: ScreenType = ({ navigation }: Props) => {
         },
       )
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        setGrantedPermission(true)
         console.log("You can use the location")
       } else {
         console.log("Location permission denied")
@@ -90,30 +85,7 @@ export const MapScreen: ScreenType = ({ navigation }: Props) => {
   useFocusEffect(
     useCallback(() => {
       requestLocationPermission()
-
-      if (!grantedPermission) {
-        return null
-      }
-
-      const watchId = Geolocation.watchPosition((info) => {
-        // console.log(info)
-        setCurrentLocation(
-          <Marker
-            coordinate={{
-              latitude: info.coords.latitude,
-              longitude: info.coords.longitude,
-            }}
-            title="Current location"
-            key="currentLocation"
-            pinColor="blue"
-          />,
-        )
-      })
-
-      return () => {
-        Geolocation.clearWatch(watchId)
-      }
-    }, [grantedPermission]),
+    }, []),
   )
 
   // React.useLayoutEffect(() => {
@@ -163,6 +135,7 @@ export const MapScreen: ScreenType = ({ navigation }: Props) => {
     <Screen>
       <MapView
         style={styles.map}
+        showsUserLocation={true}
         initialRegion={{
           latitude: 13.496743,
           longitude: -89.439462,
@@ -171,7 +144,6 @@ export const MapScreen: ScreenType = ({ navigation }: Props) => {
         }}
       >
         {markers}
-        {currentLocation}
       </MapView>
     </Screen>
   )
