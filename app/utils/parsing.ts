@@ -9,9 +9,10 @@ import type { INetwork } from "../types/network"
 import type { MockableApolloClient } from "../types/mockable"
 import * as parsing from "./parsing"
 
+
 // TODO: look if we own the address
 
-export type IPaymentType = "lightning" | "onchain" | "username" | undefined
+export type IPaymentType = "lightning" | "onchain" | "username" | "lnurl" | undefined
 
 export interface IValidPaymentReponse {
   valid: boolean
@@ -50,8 +51,8 @@ function parseAmount(txt) {
   return Math.round(
     m[5]
       ? (parseInt(m[5], 16) +
-          (m[7] ? parseInt(m[7], 16) * Math.pow(16, -m[7].length) : 0)) *
-          (m[9] ? Math.pow(16, parseInt(m[9], 16)) : 0x10000)
+        (m[7] ? parseInt(m[7], 16) * Math.pow(16, -m[7].length) : 0)) *
+      (m[9] ? Math.pow(16, parseInt(m[9], 16)) : 0x10000)
       : m[2] * (m[4] ? Math.pow(10, m[4]) : 1e8),
   )
 }
@@ -82,6 +83,10 @@ export const validPayment = (
     // some apps encode lightning invoices in UPPERCASE
     data = data.toLowerCase()
 
+    // Handle LNurl protocol
+  } else if (protocol.toLowerCase().startsWith("lnurl")) {
+    paymentType = "lnurl"
+    data = protocol.toLowerCase()
     // no protocol. let's see if this could have an address directly
   } else if (protocol.toLowerCase().startsWith("ln")) {
     // possibly a lightning address?
@@ -203,6 +208,12 @@ export const validPayment = (
       memo,
       paymentType,
       sameNode,
+    }
+  } else if (paymentType === "lnurl") {
+    return {
+      valid: true,
+      invoice: data,
+      paymentType,
     }
   } else {
     return {

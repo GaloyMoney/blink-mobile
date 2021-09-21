@@ -45,6 +45,7 @@ import { LanguageScreen } from "../screens/settings-screen/language-screen"
 import { SecurityScreen } from "../screens/settings-screen/security-screen"
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
 import { TransactionHistoryScreenDataInjected } from "../screens/transaction-screen/transaction-screen"
+import { SendLNUrlScreen } from "../screens/send-bitcoin-screen/send-lnurl-screen"
 import { WelcomeFirstScreen } from "../screens/welcome-screens"
 import { palette } from "../theme/palette"
 import { AccountType } from "../utils/enum"
@@ -414,6 +415,13 @@ export const RootStack: NavigatorType = () => {
           title: translate("common.bitcoinPrice"),
         }}
         initialParams={{ account: AccountType.Bitcoin }}
+      />
+      <RootNavigator.Screen
+        name="sendLNUrl"
+        component={SendLNUrlScreen}
+        options={{
+          title: translate("SendBitcoinScreen.title"),
+        }}
       />
     </RootNavigator.Navigator>
   )

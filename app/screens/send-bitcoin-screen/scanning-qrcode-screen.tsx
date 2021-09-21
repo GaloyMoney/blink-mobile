@@ -1,5 +1,5 @@
 import { useApolloClient } from "@apollo/client"
-import { useIsFocused, useNavigationState } from "@react-navigation/native"
+import { useIsFocused, useNavigationState, RouteProp } from "@react-navigation/native"
 import * as React from "react"
 import { Alert, Dimensions, Pressable, View, ViewStyle } from "react-native"
 import { RNCamera } from "react-native-camera"
@@ -66,6 +66,7 @@ const styles = EStyleSheet.create({
 
 type ScanningQRCodeScreenProps = {
   navigation: StackNavigationProp<MoveMoneyStackParamList, "sendBitcoin">
+  route: RouteProp<MoveMoneyStackParamList, "sendLNUrl">
 }
 
 export const ScanningQRCodeScreen: ScreenType = ({
@@ -81,10 +82,16 @@ export const ScanningQRCodeScreen: ScreenType = ({
     }
 
     try {
-      const { valid } = validPayment(data, Token.getInstance().network, client)
+      const { valid, invoice, paymentType } = validPayment(
+        data,
+        Token.getInstance().network,
+        client,
+      )
 
       if (valid) {
-        if (index <= 1) {
+        if (paymentType === "lnurl") {
+          navigation.replace("sendLNUrl", { invoice })
+        } else if (index <= 1) {
           navigation.replace("sendBitcoin", { payment: data })
         } else {
           navigation.navigate("sendBitcoin", { payment: data })

@@ -197,9 +197,11 @@ export const InputPayment: ComponentType = ({
           renderErrorMessage={false}
           selection={{ start: displayValue.length, end: displayValue.length }}
         />
-        <TouchableOpacity onPress={toggleCurrency}>
-          <Icon name="ios-swap-vertical" size={32} style={styles.icon} />
-        </TouchableOpacity>
+        {toggleCurrency && (
+          <TouchableOpacity onPress={toggleCurrency}>
+            <Icon name="ios-swap-vertical" size={32} style={styles.icon} />
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   )
