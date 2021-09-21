@@ -416,7 +416,7 @@ export const RootStack: NavigatorType = () => {
         }}
         initialParams={{ account: AccountType.Bitcoin }}
       />
-      <RootNavigator.Screen
+      <StackMoveMoney.Screen
         name="sendLNUrl"
         component={SendLNUrlScreen}
         options={{
