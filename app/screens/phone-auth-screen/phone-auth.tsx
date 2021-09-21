@@ -65,10 +65,6 @@ const LOGIN = gql`
   }
 `
 
-type MutationError = {
-  message: string
-}
-
 type UserLoginMutationResponse = {
   errors: MutationError[]
   authToken?: string

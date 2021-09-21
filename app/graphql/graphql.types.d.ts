@@ -25,3 +25,7 @@ type WalletTransaction = {
   readonly memo: string | null
   readonly createdAt: number
 }
+
+type MutationError = {
+  message: string
+}
