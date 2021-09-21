@@ -204,21 +204,7 @@ export const SendLNUrlScreen: React.FC<Props> = ({ route }: Props) => {
     }
 
     parseInitialInvoice()
-  }, [route.params.invoice])
-
-  // useEffect(() => {
-  //   if (primaryCurrency !== primaryAmount.currency) {
-  //     // const tempAmount = { ...secondaryAmount }
-  //     // setSecondaryAmount(primaryAmount)
-  //     // setPrimaryAmount(tempAmount)
-  //   }
-  // }, [
-  //   primaryAmount,
-  //   primaryCurrency,
-  //   secondaryAmount,
-  //   setPrimaryAmount,
-  //   setSecondaryAmount,
-  // ])
+  }, [route.params.invoice, setPrimaryAmountValue, setSecondaryAmountValue])
 
   const submitPayment = async () => {
     setSubmitStatus(1)

@@ -57,7 +57,7 @@ export const invoiceRequest = (
         return data.pr
       })
   } catch (error) {
-    // TODO: treat errors
     console.log("ERR" + error)
+    return error
   }
 }
