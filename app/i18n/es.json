@@ -491,8 +491,8 @@
   "ModalClipboard": {
     "dismiss": "Rechazar",
     "open": "Abrir",
-    "pendingBitcoin": "\nTienes una dirección de Bitcoin en tu portapapeles",
-    "pendingInvoice": "Tienes una factura relámpago en tu portapapeles"
+    "pendingBitcoin": "Hay una dirección Bitcoin en el portapapeles",
+    "pendingInvoice": "Hay una factura Lightning en el portapapeles"
   },
   "MoveMoneyScreen": {
     "needBankAccount": "Abra una cuenta de efectivo para activar",
@@ -555,7 +555,8 @@
     "title": "Recibir Bitcoin"
   },
   "ScanningQRCodeScreen": {
-    "invalidContent": "nosotros encontramos",
+    "invalidContent": "Encontramos lo siguiente:\n\n{{found}}\n\nEsto no es una dirección Bitcoin o factura Lightning válida",
+    "invalidTitle": "Código QR inválido",
     "noQrCode": "No pudimos encontrar un código QR en la imagen",
     "title": "Escanear QR"
   },
