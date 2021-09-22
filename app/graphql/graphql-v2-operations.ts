@@ -1,1 +1,5 @@
-export const graphqlV2OperationNames: string[] = ["userLogin", "userRequestAuthCode"]
+export const graphqlV2OperationNames: string[] = [
+  "btcPriceList",
+  "userLogin",
+  "userRequestAuthCode",
+]
