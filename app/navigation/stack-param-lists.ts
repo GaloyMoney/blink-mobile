@@ -81,7 +81,7 @@ export type MoveMoneyStackParamList = {
   settings: undefined
   transactionDetail: {
     tx: query_transactions_wallet_transactions
-  },
+  }
   sendLNUrl: { invoice: string | null }
 }
 
