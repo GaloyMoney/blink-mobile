@@ -1,4 +1,5 @@
 export const graphqlV2OperationNames: string[] = [
+  "btcPriceList",
   "businessMapMarkers",
   "captchaCreateChallenge",
   "captchaRequestAuthCode",
@@ -12,7 +13,8 @@ export const graphqlV2OperationNames: string[] = [
   "onChainTxFee",
   "transactionsList",
   "transactionsListForContact",
-  "userQuizQuestionUpdateCompleted",
-  "userLogin",
   "userDefaultWalletId",
+  "userLogin",
+  "userQuizQuestionUpdateCompleted",
+  "userRequestAuthCode",
 ]
