@@ -1,20 +1,15 @@
 import React, { useEffect, useState } from "react"
 import { gql, useApolloClient, useMutation, useLazyQuery } from "@apollo/client"
-import { Alert, ScrollView, Text, View } from "react-native"
+import { ActivityIndicator, Alert, ScrollView, Text, View } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import { Button, Input } from "react-native-elements"
-import LottieView from "lottie-react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
-
-import errorLottie from "./error_lottie.json"
-import successLottie from "./success_lottie.json"
 
 import { Screen } from "../../components/screen"
 import { InputPayment } from "../../components/input-payment"
-import { PAYMENT_STATUS } from "../../constants/lnurl"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-import { balanceBtc, QUERY_TRANSACTIONS } from "../../graphql/query"
+import { balanceBtc, queryWallet, QUERY_TRANSACTIONS } from "../../graphql/query"
 import {
   invoiceRequest,
   isAmountValid,
@@ -22,7 +17,9 @@ import {
   parseUrl,
 } from "../../utils/lnurl"
 import { mSatToSat } from "../../utils/amount"
-import { useMoneyAmount, useBTCPrice, useCurrencies } from "../../hooks"
+import { useMoneyAmount, useBTCPrice } from "../../hooks"
+import { PaymentStatusIndicator } from "./payment-status-indicator"
+import { translate } from "../../i18n/translate"
 
 const PAY_INVOICE = gql`
   mutation payInvoice($invoice: String!, $amount: Int, $memo: String) {
@@ -51,14 +48,6 @@ const styles = EStyleSheet.create({
     flex: 1,
     justifyContent: "center",
   },
-  errorText: {
-    color: palette.red,
-    fontSize: 18,
-  },
-  lottie: {
-    height: "200rem",
-    width: "200rem",
-  },
   memoContainer: {
     marginLeft: "-11rem",
     marginVertical: 12,
@@ -81,11 +70,6 @@ const styles = EStyleSheet.create({
     alignItems: "center",
     marginHorizontal: 48,
   },
-
-  successText: {
-    fontSize: 18,
-  },
-
   transactionDetailView: {
     alignItems: "center",
     flex: 1,
@@ -104,18 +88,6 @@ type Props = {
 }
 
 const rowStyles = EStyleSheet.create({
-  description: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    marginVertical: 12,
-    minWidth: "48%",
-  },
-
-  entry: {
-    color: palette.midGrey,
-    marginBottom: "6rem",
-  },
-
   value: {
     color: palette.darkGrey,
     fontSize: "14rem",
@@ -123,21 +95,15 @@ const rowStyles = EStyleSheet.create({
   },
 })
 
-type RowProps = {
-  entry: string
-  value: string
-}
+const Status = {
+  IDLE: "idle",
+  LOADING: "loading",
+  PENDING: "pending",
+  SUCCESS: "success",
+  ERROR: "error",
+} as const
 
-export const Row = ({ entry, value }: RowProps): JSX.Element => {
-  return (
-    <View style={rowStyles.description}>
-      <Text style={rowStyles.entry}>{entry}</Text>
-      <Text selectable style={rowStyles.value}>
-        {value}
-      </Text>
-    </View>
-  )
-}
+type StatusType = typeof Status[keyof typeof Status]
 
 export const SendLNUrlScreen: React.FC<Props> = ({ route }: Props) => {
   const { navigate } = useNavigation()
@@ -145,19 +111,14 @@ export const SendLNUrlScreen: React.FC<Props> = ({ route }: Props) => {
   const balance = balanceBtc(client)
 
   const btcPrice = useBTCPrice()
-  const { primaryCurrency, secondaryCurrency, toggleCurrency } = useCurrencies()
+
+  // Disabling becuase useMoneyAmount exports values as an array instead of an object so I need to take everything in order.
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [primaryAmount, convertPrimaryAmount, setPrimaryAmount, setPrimaryAmountValue] =
-    useMoneyAmount(secondaryCurrency)
+    useMoneyAmount("BTC")
 
-  const [
-    secondaryAmount,
-    convertSecondaryAmount,
-    setSecondaryAmount,
-    setSecondaryAmountValue,
-  ] = useMoneyAmount(secondaryCurrency)
-
-  const [amount, setAmount] = useState(0)
-  const [status, setStatus] = useState(PAYMENT_STATUS.Pending)
+  const [status, setStatus] = useState<StatusType>(Status.IDLE)
+  const [errs, setErrs] = useState<{ message: string }[]>([])
   const [submitStatus, setSubmitStatus] = useState(0)
   const [callback, setCallback] = useState("")
   const [minSendable, setMinSendable] = useState(null)
@@ -174,9 +135,6 @@ export const SendLNUrlScreen: React.FC<Props> = ({ route }: Props) => {
     update: () => queryTransactions(),
   })
 
-  const hasEnoughBalance = balance >= amount
-  const isAmountSendable = isAmountValid(amount, minSendable, maxSendable)
-
   useEffect(() => {
     const parseInitialInvoice = async () => {
       const lnurl = await parseUrl(route.params.invoice)
@@ -187,9 +145,7 @@ export const SendLNUrlScreen: React.FC<Props> = ({ route }: Props) => {
         throw new Error("LNURL protocol not supported")
       }
 
-      setAmount(mSatToSat(minSendable))
       setPrimaryAmountValue(mSatToSat(minSendable))
-      setSecondaryAmountValue(mSatToSat(minSendable))
       setCallback(callback)
       setMinSendable(mSatToSat(minSendable))
       setMaxSendable(mSatToSat(maxSendable))
@@ -204,36 +160,46 @@ export const SendLNUrlScreen: React.FC<Props> = ({ route }: Props) => {
     }
 
     parseInitialInvoice()
-  }, [route.params.invoice, setPrimaryAmountValue, setSecondaryAmountValue])
+  }, [route.params.invoice, setPrimaryAmountValue])
+
+  const hasEnoughBalance = balance >= primaryAmount.value
+  const isAmountSendable = isAmountValid(primaryAmount.value, minSendable, maxSendable)
 
   const submitPayment = async () => {
     setSubmitStatus(1)
 
     try {
-      const paymentInvoice = await invoiceRequest(callback, amount, memo)
+      const paymentInvoice = await invoiceRequest(callback, primaryAmount.value, memo)
       const payment = await payInvoice({
         variables: { invoice: paymentInvoice, memo: description },
       })
       const { data } = payment
 
       setSubmitStatus(0)
-
-      if (
-        data.invoice.payInvoice === "success" ||
-        data.invoice.payInvoice === "pending"
-      ) {
-        setStatus(PAYMENT_STATUS.Success)
+      if (data.invoice.payInvoice === "success") {
+        setStatus(Status.SUCCESS)
+        queryWallet(client, "network-only")
+      } else if (data.invoice.payInvoice === "pending") {
+        setStatus(Status.PENDING)
       } else {
-        setStatus(PAYMENT_STATUS.Error)
+        setStatus(Status.ERROR)
       }
     } catch (error) {
+      setErrs(error)
       setSubmitStatus(0)
-      setStatus(PAYMENT_STATUS.Error)
+      setStatus(Status.ERROR)
     } finally {
       setTimeout(() => {
-        setStatus(PAYMENT_STATUS.Finished)
+        navigate("Primary")
       }, 4000)
     }
+  }
+
+  const PayText = () => {
+    if (!minSendable || !maxSendable) {
+      return <ActivityIndicator size="small" />
+    }
+    return <Text>{`Please pay between ${minSendable} and ${maxSendable}`}</Text>
   }
 
   return (
@@ -242,26 +208,18 @@ export const SendLNUrlScreen: React.FC<Props> = ({ route }: Props) => {
         <View style={styles.section}>
           <InputPayment
             editable={true}
-            onUpdateAmount={(input) => {
-              setAmount(input)
-            }}
+            onUpdateAmount={setPrimaryAmountValue}
             forceKeyboard
             price={btcPrice}
             primaryAmount={primaryAmount}
-            secondaryAmount={secondaryAmount}
           />
 
           <View style={styles.errorContainer}>
-            {!hasEnoughBalance && <Text>You do not have enough sats</Text>}
+            {!hasEnoughBalance && <Text>{translate("LNUrlScreen.balance")}</Text>}
           </View>
         </View>
         <View style={styles.transactionDetailView}>
-          <Text>
-            Please pay between{" "}
-            {minSendable === null ? "Loading..." : `${minSendable.toString()} sats`}
-            {" and "}{" "}
-            {maxSendable === null ? "Loading..." : `${maxSendable.toString()} sats`}
-          </Text>
+          <PayText />
 
           <Text style={styles.description}>Description: </Text>
           <Text selectable style={rowStyles.value}>
@@ -281,41 +239,15 @@ export const SendLNUrlScreen: React.FC<Props> = ({ route }: Props) => {
           )}
         </View>
         <View style={styles.animationContainer}>
-          {status === PAYMENT_STATUS.Success && (
-            <>
-              <LottieView
-                source={successLottie}
-                loop={false}
-                autoPlay
-                style={styles.lottie}
-                resizeMode="cover"
-              />
-              <Text style={styles.successText}>{"Success"}</Text>
-            </>
-          )}
-
-          {status === PAYMENT_STATUS.Error && (
-            <>
-              <LottieView
-                source={errorLottie}
-                loop={false}
-                autoPlay
-                style={styles.lottie}
-                resizeMode="cover"
-              />
-              <Text style={styles.errorText}>{"Payment error"}</Text>
-            </>
-          )}
+          <PaymentStatusIndicator errs={errs} status={status} />
         </View>
         <Button
           buttonStyle={styles.buttonStyle}
           containerStyle={styles.buttonContainerStyle}
-          title={status === PAYMENT_STATUS.Pending ? "Send" : "Close"}
-          onPress={() =>
-            status === PAYMENT_STATUS.Pending ? submitPayment() : navigate("Primary")
-          }
+          title={status === Status.IDLE ? "Send" : "Close"}
+          onPress={() => (status === Status.IDLE ? submitPayment() : navigate("Primary"))}
           loading={submitStatus === 1}
-          disabled={!amount || !hasEnoughBalance || !isAmountSendable}
+          disabled={!primaryAmount.value || !hasEnoughBalance || !isAmountSendable}
         />
       </ScrollView>
     </Screen>

@@ -561,6 +561,9 @@
     "success": "Payment has been sent successfully",
     "title": "Send Bitcoin"
   },
+  "LNUrlScreen": {
+    "balance": "You do not have enough sats"
+  },
   "SettingsScreen": {
     "activate": "Tap to activate",
     "activated": "Activated",
