@@ -718,5 +718,15 @@
   "whatsapp": {
     "contactUs": "¿Necesita ayuda? Contáctenos por WhatsApp",
     "defaultSupportMessage": "¡Hola! Necesito ayuda con Bitcoin Beach Wallet"
+  },
+  "LNUrlScreen": {
+    "balance": "No tienes suficientes sats",
+    "notSupported": "No se admite el protocolo LNUrl",
+    "notRecognized": "Descripción de la factura no reconocida",
+    "description": "Descripción",
+    "memo": "Insertar una nota",
+    "payText": "Paga entre {{minSendable}} y {{maxSendable}}",
+    "send": "Enviar",
+    "close": "Cerrar"
   }
 }

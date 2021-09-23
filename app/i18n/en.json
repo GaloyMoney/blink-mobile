@@ -562,7 +562,14 @@
     "title": "Send Bitcoin"
   },
   "LNUrlScreen": {
-    "balance": "You do not have enough sats"
+    "balance": "You do not have enough sats",
+    "notSupported": "LNUrl protocol not supported",
+    "notRecognized": "Invoice description not recognized",
+    "description": "Description",
+    "memo": "Insert a memo",
+    "payText": "Please pay between {{minSendable}} and {{maxSendable}}",
+    "send": "Send",
+    "close": "Close"
   },
   "SettingsScreen": {
     "activate": "Tap to activate",

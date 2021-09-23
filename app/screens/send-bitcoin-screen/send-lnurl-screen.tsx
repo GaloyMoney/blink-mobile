@@ -4,6 +4,7 @@ import { ActivityIndicator, Alert, ScrollView, Text, View } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import { Button, Input } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
+import I18n from "i18n-js"
 
 import { Screen } from "../../components/screen"
 import { InputPayment } from "../../components/input-payment"
@@ -75,7 +76,7 @@ const styles = EStyleSheet.create({
     flex: 1,
     justifyContent: "center",
     marginHorizontal: "24rem",
-    marginVertical: "24rem",
+    marginVertical: "10rem",
   },
 })
 
@@ -141,8 +142,8 @@ export const SendLNUrlScreen: React.FC<Props> = ({ route }: Props) => {
       const { tag, callback, minSendable, maxSendable, commentAllowed, metadata } = lnurl
 
       if (!isProtocolSupported(tag)) {
-        Alert.alert("LNUrl protocol not supported")
-        throw new Error("LNURL protocol not supported")
+        Alert.alert(translate("LNUrlScreen.notSupported"))
+        throw new Error(translate("LNUrlScreen.notSupported"))
       }
 
       setPrimaryAmountValue(mSatToSat(minSendable))
@@ -155,7 +156,7 @@ export const SendLNUrlScreen: React.FC<Props> = ({ route }: Props) => {
         const description = JSON.parse(metadata)[0][1]
         setDescription(description)
       } catch (error) {
-        setDescription("Invoice description not recognized")
+        setDescription(translate("LNUrlScreen.notRecognized"))
       }
     }
 
@@ -195,11 +196,25 @@ export const SendLNUrlScreen: React.FC<Props> = ({ route }: Props) => {
     }
   }
 
-  const PayText = () => {
+  const TransactionDetailView = () => {
     if (!minSendable || !maxSendable) {
-      return <ActivityIndicator size="small" />
+      return <ActivityIndicator color={color.primary} size="small" />
     }
-    return <Text>{`Please pay between ${minSendable} and ${maxSendable}`}</Text>
+    return (
+      <View style={styles.transactionDetailView}>
+        <Text>
+          {I18n.t("LNUrlScreen.payText", {
+            minSendable: I18n.toNumber(minSendable, { precision: 0 }),
+            maxSendable: I18n.toNumber(maxSendable, { precision: 0 }),
+          })}
+        </Text>
+
+        <Text style={styles.description}>{translate("LNUrlScreen.description")}: </Text>
+        <Text selectable style={rowStyles.value}>
+          {description}
+        </Text>
+      </View>
+    )
   }
 
   return (
@@ -213,18 +228,12 @@ export const SendLNUrlScreen: React.FC<Props> = ({ route }: Props) => {
             price={btcPrice}
             primaryAmount={primaryAmount}
           />
-
           <View style={styles.errorContainer}>
             {!hasEnoughBalance && <Text>{translate("LNUrlScreen.balance")}</Text>}
           </View>
         </View>
         <View style={styles.transactionDetailView}>
-          <PayText />
-
-          <Text style={styles.description}>Description: </Text>
-          <Text selectable style={rowStyles.value}>
-            {description}
-          </Text>
+          <TransactionDetailView />
 
           {!(maxMemoSize === 0) && (
             <Input
@@ -232,7 +241,7 @@ export const SendLNUrlScreen: React.FC<Props> = ({ route }: Props) => {
               labelStyle={styles.memoLabel}
               inputStyle={styles.memoInput}
               maxLength={maxMemoSize}
-              placeholder="Insert a memo"
+              placeholder={translate("LNUrlScreen.memo")}
               containerStyle={styles.memoContainer}
               onChangeText={setMemo}
             />
@@ -244,7 +253,11 @@ export const SendLNUrlScreen: React.FC<Props> = ({ route }: Props) => {
         <Button
           buttonStyle={styles.buttonStyle}
           containerStyle={styles.buttonContainerStyle}
-          title={status === Status.IDLE ? "Send" : "Close"}
+          title={
+            status === Status.IDLE
+              ? translate("LNUrlScreen.send")
+              : translate("LNUrlScreen.close")
+          }
           onPress={() => (status === Status.IDLE ? submitPayment() : navigate("Primary"))}
           loading={submitStatus === 1}
           disabled={!primaryAmount.value || !hasEnoughBalance || !isAmountSendable}
