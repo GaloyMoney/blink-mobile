@@ -131,12 +131,15 @@ export const WelcomePhoneInputScreen: ScreenType = ({
       if (data.userRequestAuthCode.success) {
         navigation.navigate("welcomePhoneValidation", { phone })
       } else {
-        toastShow(translate("erros.generic"))
+        toastShow(translate("errors.generic"))
       }
     } catch (err) {
       console.warn({ err })
-      // use global Toaster?
-      // setErr(err.toString())
+      if (err.message === "Too many requests") {
+        toastShow(translate("errors.tooManyRequestsPhoneCode"))
+      } else {
+        toastShow(translate("errors.generic"))
+      }
     }
   }, [navigation, requestPhoneCode])
 
