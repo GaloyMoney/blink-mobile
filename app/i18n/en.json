@@ -588,6 +588,7 @@
     "confirmSubtext": "The username is permanent and can not be changed later",
     "confirmTitle": "Set %{input} as your username?",
     "letterAndNumber": "Only lowercase letter, number and underscore (_) are accepted",
+    "forbiddenStart": "Cannot start with bc1, 1, or 3",
     "notAvailable": "❌  %{input} is not available",
     "success": "%{input} is now your username!",
     "usernameToUse": "What username do you want to use?"

@@ -626,6 +626,7 @@
     "confirmSubtext": "Este nombre de usuario es permanente y no se podrá cambiar más adelante.",
     "confirmTitle": "¿Desea establecer %{input} como su nombre de usuario?",
     "letterAndNumber": "Solo se aceptan letras en minúscula, números y guiones bajos (_)",
+    "forbiddenStart": "No se puede empezar con bc1, 1, o 3 ",
     "notAvailable": "❌  %{input} no está disponible",
     "success": "¡%{input} es ahora su nombre de usuario!",
     "usernameToUse": "¿Qué nombre de usuario desea usar?"
