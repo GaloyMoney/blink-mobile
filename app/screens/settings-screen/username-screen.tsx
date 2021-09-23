@@ -95,6 +95,12 @@ export const UsernameScreen: ScreenType = ({ navigation }: Props) => {
       return
     }
 
+    if (!UsernameValidation.hasNoRestictedStartCharacters(input)) {
+      setMessage(translate("UsernameScreen.forbiddenStart"))
+      setMessageIsError(true)
+      return
+    }
+
     if (usernameExists) {
       setMessage(translate("UsernameScreen.notAvailable", { input }))
       setMessageIsError(true)
