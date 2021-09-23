@@ -87,7 +87,6 @@ type Props = {
 }
 
 export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props) => {
-  const currency = route.params.currency
   const {
     amount,
     hash,
@@ -124,7 +123,7 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
         )}
         <TextCurrency
           amount={Math.abs(amount)}
-          currency={currency}
+          currency={"BTC"}
           style={styles.amountSecondary}
         />
       </View>
