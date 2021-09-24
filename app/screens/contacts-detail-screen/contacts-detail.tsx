@@ -140,12 +140,16 @@ export const ContactsDetailScreenJSX: ScreenType = ({
             {contact.prettyName}
           </Input>
         </View>
-        <Text style={styles.amountSecondary}>{`${translate("common.username")}: ${contact.id}`}</Text>
+        <Text style={styles.amountSecondary}>{`${translate("common.username")}: ${
+          contact.id
+        }`}</Text>
       </View>
       <ScrollView style={styles.transactionsView}>
-        <Text
-          style={styles.screenTitle}
-        >{translate("ContactDetailsScreen.transactionswith", {input: contact.prettyName})}</Text>
+        <Text style={styles.screenTitle}>
+          {translate("ContactDetailsScreen.transactionswith", {
+            input: contact.prettyName,
+          })}
+        </Text>
         {transactions.map((item, i) => (
           <TransactionItem
             key={`transaction-${i}`}

@@ -42,7 +42,7 @@
     "noMatchingContacts": "No se encontraron coincidencias para su búsqueda.",
     "title": "Contactos"
   },
-  "ContactDetailsScreen":{
+  "ContactDetailsScreen": {
     "title": "Transacciones con %{input}"
   },
   "DateOfBirthScreen": {

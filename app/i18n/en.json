@@ -19,7 +19,7 @@
     "noMatchingContacts": "No contacts matching your search were found.",
     "title": "Contacts"
   },
-  "ContactDetailsScreen":{
+  "ContactDetailsScreen": {
     "title": "Transactions with %{input}"
   },
   "DepositCashScreen": {
