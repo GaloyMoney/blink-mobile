@@ -19,6 +19,9 @@
     "noMatchingContacts": "No contacts matching your search were found.",
     "title": "Contacts"
   },
+  "ContactDetailsScreen":{
+    "title": "Transactions with %{input}"
+  },
   "DepositCashScreen": {
     "title": "Deposit Cash"
   },
@@ -574,6 +577,7 @@
   },
   "TransactionDetailScreen": {
     "detail": "Transaction Details",
+    "paid": "Paid to/from",
     "received": "You received",
     "spent": "You spent"
   },
