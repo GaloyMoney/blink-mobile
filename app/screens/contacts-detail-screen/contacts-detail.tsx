@@ -146,7 +146,7 @@ export const ContactsDetailScreenJSX: ScreenType = ({
       </View>
       <ScrollView style={styles.transactionsView}>
         <Text style={styles.screenTitle}>
-          {translate("ContactDetailsScreen.transactionswith", {
+          {translate("ContactDetailsScreen.title", {
             input: contact.prettyName,
           })}
         </Text>
