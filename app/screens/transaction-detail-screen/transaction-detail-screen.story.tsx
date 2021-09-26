@@ -7,6 +7,7 @@ import { AccountType } from "../../utils/enum"
 
 const route = {
   params: {
+    tx:{
     currency: "BTC",
     account: AccountType.Bitcoin,
     amount: 100,
@@ -15,6 +16,11 @@ const route = {
     type: "invoice",
     description: "This is my description",
     destination: "0d1ea4c256cd50a2a7ccbfd22b3d9959f6fd30bd840b9ff3c7c65ee4e21df06d",
+    usd: 100,
+    feeUsd: 0.1,
+    fee: 5,
+    date_format: "10/06/2021"
+    }
   },
 }
 

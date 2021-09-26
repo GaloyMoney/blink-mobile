@@ -15,6 +15,10 @@ storiesOf("InputPayment", module)
           price={0.00011}
           onUpdateAmount={() => true}
           editable
+          primaryAmount={{
+            value: 100,
+            currency: "USD"
+          }}
         />
       </UseCase>
       <UseCase text="Non editable" usage="Loading">
@@ -24,6 +28,10 @@ storiesOf("InputPayment", module)
           initAmount={12345}
           onUpdateAmount={() => true}
           editable={false}
+          primaryAmount={{
+            value: 100,
+            currency: "BTC"
+          }}
         />
       </UseCase>
     </Story>
