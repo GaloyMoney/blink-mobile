@@ -11922,6 +11922,11 @@ mkdirp@^0.5.1, mkdirp@^0.5.3, mkdirp@~0.5.1:
   dependencies:
     minimist "^1.2.5"
 
+mock-apollo-client@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/mock-apollo-client/-/mock-apollo-client-1.2.0.tgz#72543df0d74577d29be1b34cecba8898c7e71451"
+  integrity sha512-zCVHv3p7zvUmen9zce9l965ZrI6rMbrm2/oqGaTerVYOaYskl/cVgTG/L7iIToTIpI7onk/f6tu8hxPXZdyy/g==
+
 moment@^2.19.3, moment@^2.24.0:
   version "2.29.1"
   resolved "https://registry.npmjs.org/moment/-/moment-2.29.1.tgz"
