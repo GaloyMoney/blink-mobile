@@ -17,7 +17,7 @@ storiesOf("InputPayment", module)
           editable
           primaryAmount={{
             value: 100,
-            currency: "USD"
+            currency: "USD",
           }}
         />
       </UseCase>
@@ -30,7 +30,7 @@ storiesOf("InputPayment", module)
           editable={false}
           primaryAmount={{
             value: 100,
-            currency: "BTC"
+            currency: "BTC",
           }}
         />
       </UseCase>
