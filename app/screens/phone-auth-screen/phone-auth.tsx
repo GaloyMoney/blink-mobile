@@ -6,6 +6,7 @@ import {
   Alert,
   KeyboardAvoidingView,
   Platform,
+  Pressable,
   ScrollView,
   Text,
   View,
@@ -32,6 +33,7 @@ import { AuthenticationScreenPurpose } from "../../utils/enum"
 import BadgerPhone from "./badger-phone-01.svg"
 import type { PhoneValidationStackParamList } from "../../navigation/stack-param-lists"
 import { RouteProp } from "@react-navigation/native"
+import { Timer } from "../../components/timer"
 
 const REQUEST_AUTH_CODE = gql`
   mutation userRequestAuthCode($input: UserRequestAuthCodeInput!) {
@@ -90,7 +92,6 @@ const styles = EStyleSheet.create({
     paddingHorizontal: "18rem",
     paddingVertical: "12rem",
   },
-
   text: {
     fontSize: "20rem",
     paddingBottom: "10rem",
@@ -101,6 +102,13 @@ const styles = EStyleSheet.create({
   textEntry: {
     color: color.palette.darkGrey,
     fontSize: "18rem",
+  },
+
+  timerRow: {
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: "25rem",
   },
 })
 
@@ -239,14 +247,36 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
   route,
   navigation,
   login,
-  loading,
   error,
 }: WelcomePhoneValidationScreenProps) => {
   // FIXME see what to do with store and storybook
   const [code, setCode] = useState("")
+  const [timer, setTimer] = useState<number>(60)
 
   const { phone } = route.params
   const updateCode = (input) => setCode(input)
+
+  const [requestPhoneCode, { loading }] = useMutation(REQUEST_AUTH_CODE, {
+    fetchPolicy: "no-cache",
+  })
+
+  const sendCodeAgain = useCallback(async () => {
+    try {
+      const { data } = await requestPhoneCode({ variables: { input: { phone } } })
+      if (data.userRequestAuthCode.success) {
+        setTimer(60)
+      } else {
+        toastShow(translate("errors.generic"))
+      }
+    } catch (err) {
+      console.warn({ err })
+      if (err.message === "Too many requests") {
+        toastShow(translate("errors.tooManyRequestsPhoneCode"))
+      } else {
+        toastShow(translate("errors.generic"))
+      }
+    }
+  }, [phone, requestPhoneCode])
 
   const send = async () => {
     if (code.length !== 6) {
@@ -317,6 +347,24 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
             >
               {code}
             </Input>
+            <View style={styles.timerRow}>
+              <Pressable
+                onPress={() => {
+                  if (!loading && timer === 0) {
+                    sendCodeAgain()
+                  }
+                }}
+              >
+                <Text
+                  style={{
+                    color: timer === 0 ? color.palette.black : color.palette.midGrey,
+                  }}
+                >
+                  {translate("WelcomePhoneValidationScreen.sendAgain")}
+                </Text>
+              </Pressable>
+              <Timer onTimerFinish={() => setTimer(0)} count={timer} />
+            </View>
           </KeyboardAvoidingView>
           <View style={{ flex: 1, minHeight: 16 }} />
           <ActivityIndicator animating={loading} size="large" color={color.primary} />

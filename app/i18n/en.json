@@ -612,7 +612,8 @@
     "errorLoggingIn": "Error logging in. Did you use the right code?",
     "header": "To confirm your phone number, enter the code we just sent you on %{phone}",
     "need6Digits": "The code need to have 6 digits",
-    "placeholder": "6 Digits Code"
+    "placeholder": "6 Digits Code",
+    "sendAgain": "Send Again"
   },
   "common": {
     "Fee": "Fee",
