@@ -42,6 +42,9 @@ import { isIos } from "./utils/helper"
 import { getGraphQLUri, getGraphQLV2Uri, Token } from "./utils/token"
 import { saveString, loadString } from "./utils/storage"
 import { graphqlV2OperationNames } from "./graphql/graphql-v2-operations"
+import useToken from "./utils/use-token"
+import { getGraphQLUri, getGraphQLV2Uri } from "./utils/network"
+import { loadAuthToken } from "./graphql/client-only-query"
 
 export const BUILD_VERSION = "build_version"
 
@@ -71,6 +74,7 @@ LogBox.ignoreAllLogs()
  * This is the root component of our app.
  */
 export const App = (): JSX.Element => {
+  const { getToken, hasToken, getNetwork } = useToken()
   const [routeName, setRouteName] = useState("Initial")
   const [apolloClient, setApolloClient] = useState<ApolloClient<NormalizedCacheObject>>()
   const [persistor, setPersistor] = useState<CachePersistor<NormalizedCacheObject>>()
@@ -93,8 +97,8 @@ export const App = (): JSX.Element => {
 
   useEffect(() => {
     const fn = async () => {
-      const token = Token.getInstance()
-      await token.load()
+      await loadAuthToken()
+      const network = await getNetwork()
 
       // legacy. when was using mst-gql. storage is deleted as we don't want
       // to keep this around.
@@ -102,24 +106,26 @@ export const App = (): JSX.Element => {
       await AsyncStorage.multiRemove([LEGACY_ROOT_STATE_STORAGE_KEY])
 
       const customFetch = async (_ /* uri not used */, options) => {
-        const uri = await getGraphQLUri()
+        const uri = await getGraphQLUri(network)
         return fetch(uri, options)
       }
 
       const customFetchV2 = async (_ /* uri not used */, options) => {
-        const uri = await getGraphQLV2Uri()
+        const uri = await getGraphQLV2Uri(network)
         return fetch(uri, options)
       }
 
       const httpLink = new HttpLink({ fetch: customFetch })
       const httpLinkV2 = new HttpLink({ fetch: customFetchV2 })
 
-      const authLink = setContext((_, { headers }) => ({
-        headers: {
-          ...headers,
-          authorization: token.bearerString,
-        },
-      }))
+      const authLink = setContext((_, { headers }) => {
+        return {
+          headers: {
+            ...headers,
+            authorization: hasToken() ? `Bearer ${getToken()}` : "",
+          },
+        }
+      })
 
       const retryLink = new RetryLink({
         delay: {
@@ -189,7 +195,7 @@ export const App = (): JSX.Element => {
       setApolloClient(client)
     }
     fn()
-  }, [])
+  }, [getToken, getNetwork, hasToken])
 
   // Before we show the app, we have to wait for our state to be ready.
   // In the meantime, don't render anything. This will be the background

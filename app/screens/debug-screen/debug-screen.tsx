@@ -7,7 +7,7 @@ import { useApolloClient } from "@apollo/client"
 import { Screen } from "../../components/screen"
 import { color } from "../../theme"
 import { resetDataStore } from "../../utils/logout"
-import { loadNetwork, saveNetwork } from "../../utils/network"
+import { getGraphQLUri, saveNetwork } from "../../utils/network"
 import { requestPermission } from "../../utils/notifications"
 import { getGraphQLUri, Token } from "../../utils/token"
 import { walletIsActive } from "../../graphql/query"
@@ -30,37 +30,24 @@ const usingHermes = typeof HermesInternal === "object" && HermesInternal !== nul
 export const DebugScreen: ScreenType = () => {
   const client = useApolloClient()
   const btcPrice = useBTCPrice()
-  const token = useMemo(() => {
-    return Token.getInstance()
-  }, [])
+  const { getTokenUid, network: tokenNetwork, getNetwork, removeToken } = useToken()
 
   const networks: INetwork[] = ["regtest", "testnet", "mainnet"]
   const [networkState, setNetworkState] = React.useState("")
   const [graphQLUri, setGraphQLUri] = React.useState("")
 
-  const setNetwork = useCallback(
+  const updateNetwork = useCallback(
     async (network?) => {
-      let n
-
-      if (token.network) {
-        n = token.network
-      } else if (!network) {
-        n = await loadNetwork()
-      } else {
-        n = network
-      }
-
-      setGraphQLUri(await getGraphQLUri())
-      setNetworkState(n)
+      const newNetwork = (await getNetwork()) || network
+      setGraphQLUri(await getGraphQLUri(newNetwork))
+      setNetworkState(newNetwork)
     },
-    [token],
+    [getNetwork],
   )
 
   React.useEffect(() => {
-    ;(async () => {
-      setNetwork()
-    })()
-  }, [setNetwork])
+    updateNetwork()
+  }, [updateNetwork])
 
   return (
     <Screen preset="scroll" backgroundColor={color.transparent}>
@@ -136,8 +123,8 @@ export const DebugScreen: ScreenType = () => {
           {token.uid}
         </Text>
         <Text>
-          token network:
-          {token.network}
+          Token network:
+          {tokenNetwork}
         </Text>
         <Text>
           GraphQLUri:
@@ -155,7 +142,7 @@ export const DebugScreen: ScreenType = () => {
         <ButtonGroup
           onPress={(index) => {
             saveNetwork(networks[index])
-            setNetwork(networks[index])
+            updateNetwork(networks[index])
           }}
           selectedIndex={networks.findIndex((value) => value === networkState)}
           buttons={networks}

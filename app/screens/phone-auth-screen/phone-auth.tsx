@@ -136,6 +136,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
 
     try {
       const { data } = await requestPhoneCode({ variables: { input: { phone } } })
+
       if (data.userRequestAuthCode.success) {
         navigation.navigate("welcomePhoneValidation", { phone })
       } else {

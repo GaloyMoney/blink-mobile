@@ -12,11 +12,11 @@ import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
 import type { ScreenType } from "../../types/jsx"
 import { validPayment } from "../../utils/parsing"
-import { Token } from "../../utils/token"
 
 import LocalQRCode from "@remobile/react-native-qrcode-local-image"
 import { MoveMoneyStackParamList } from "@app/navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
+import useToken from "../../utils/use-token"
 
 const CAMERA: ViewStyle = {
   width: "100%",

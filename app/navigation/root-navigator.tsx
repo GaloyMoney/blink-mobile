@@ -128,17 +128,18 @@ const RootNavigator = createStackNavigator<RootStackParamList>()
 export const RootStack: NavigatorType = () => {
   const appState = React.useRef(AppState.currentState)
   const client = useApolloClient()
+  const { hasToken, getNetwork } = useToken()
 
   const _handleAppStateChange = useCallback(
-    (nextAppState) => {
+    async (nextAppState) => {
       if (appState.current.match(/background/) && nextAppState === "active") {
         console.log("App has come to the foreground!")
-        showModalClipboardIfValidPayment(client)
+        showModalClipboardIfValidPayment({ client, network: await getNetwork() })
       }
 
       appState.current = nextAppState
     },
-    [client],
+    [client, getNetwork],
   )
 
   useEffect(() => {
@@ -483,13 +484,16 @@ type TabProps = {
 }
 
 export const PrimaryNavigator: NavigatorType = () => {
+  const { getNetwork } = useToken()
   const [network, setNetwork] = React.useState("mainnet")
 
   React.useEffect(() => {
     ;(async () => {
-      setNetwork(await getNetwork())
+      const network = await getNetwork()
+      analytics().setUserProperties({ network })
+      setNetwork(network)
     })()
-  }, [])
+  }, [getNetwork])
 
   return (
     <Tab.Navigator

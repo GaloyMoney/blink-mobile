@@ -15,3 +15,14 @@ declare module "*.json" {
   const content: string
   export default content
 }
+
+type JwtPayload = {
+  uid: string
+  network: INetwork
+}
+
+type TokenPayload = {
+  uid: string
+  network: INetwork
+  token: string
+}

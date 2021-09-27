@@ -15,6 +15,7 @@ import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
 
 import BitcoinBeachLogo from "../get-started-screen/bitcoinBeach3.png"
+import useToken from "../../utils/use-token"
 
 const styles = EStyleSheet.create({
   Logo: {
@@ -36,6 +37,7 @@ type Props = {
 
 export const AuthenticationCheckScreen: ScreenType = ({ navigation }: Props) => {
   const client = useApolloClient()
+  const { getNetwork } = useToken()
 
   useEffect(() => {
     ;(async () => {
@@ -53,10 +55,10 @@ export const AuthenticationCheckScreen: ScreenType = ({ navigation }: Props) => 
         navigation.replace("pin", { screenPurpose: PinScreenPurpose.AuthenticatePin })
       } else {
         navigation.replace("Primary")
-        showModalClipboardIfValidPayment(client)
+        showModalClipboardIfValidPayment({ client, network: await getNetwork() })
       }
     })()
-  }, [client, navigation])
+  }, [client, getNetwork, navigation])
 
   return (
     <Screen
