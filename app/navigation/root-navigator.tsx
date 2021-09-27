@@ -13,6 +13,8 @@ import { AppState } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import * as RNLocalize from "react-native-localize"
 import Icon from "react-native-vector-icons/Ionicons"
+import analytics from "@react-native-firebase/analytics"
+
 import { GET_LANGUAGE, QUERY_PRICE } from "../graphql/query"
 import { translate } from "../i18n"
 import {
@@ -49,7 +51,7 @@ import { WelcomeFirstScreen } from "../screens/welcome-screens"
 import { palette } from "../theme/palette"
 import { AccountType } from "../utils/enum"
 import { addDeviceToken } from "../utils/notifications"
-import { getNetwork, Token } from "../utils/token"
+import useToken from "../utils/use-token"
 import { showModalClipboardIfValidPayment } from "../utils/clipboard"
 import {
   ContactStackParamList,
@@ -59,6 +61,7 @@ import {
   RootStackParamList,
 } from "./stack-param-lists"
 import type { NavigatorType } from "../types/jsx"
+import { loadNetwork } from "../utils/network"
 
 import PushNotification from "react-native-push-notification"
 
@@ -128,17 +131,18 @@ const RootNavigator = createStackNavigator<RootStackParamList>()
 export const RootStack: NavigatorType = () => {
   const appState = React.useRef(AppState.currentState)
   const client = useApolloClient()
+  const { getTokenNetwork, hasToken } = useToken()
 
   const _handleAppStateChange = useCallback(
     (nextAppState) => {
       if (appState.current.match(/background/) && nextAppState === "active") {
         console.log("App has come to the foreground!")
-        showModalClipboardIfValidPayment(client)
+        showModalClipboardIfValidPayment({ client, network: getTokenNetwork() })
       }
 
       appState.current = nextAppState
     },
-    [client],
+    [client, getTokenNetwork],
   )
 
   useEffect(() => {
@@ -256,12 +260,10 @@ export const RootStack: NavigatorType = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   useEffect(() => messaging().onTokenRefresh((token) => addDeviceToken(client)), [client])
 
-  const token = Token.getInstance()
-
   return (
     <RootNavigator.Navigator
       screenOptions={{ gestureEnabled: false }}
-      initialRouteName={token.has() ? "authenticationCheck" : "getStarted"}
+      initialRouteName={hasToken() ? "authenticationCheck" : "getStarted"}
     >
       <RootNavigator.Screen
         name="getStarted"
@@ -483,13 +485,21 @@ type TabProps = {
 }
 
 export const PrimaryNavigator: NavigatorType = () => {
+  const { getTokenNetwork, hasToken } = useToken()
   const [network, setNetwork] = React.useState("mainnet")
 
   React.useEffect(() => {
     ;(async () => {
-      setNetwork(await getNetwork())
+      let network
+      if (hasToken()) {
+        network = getTokenNetwork()
+      } else {
+        network = await loadNetwork()
+      }
+      analytics().setUserProperties({ network })
+      setNetwork(network)
     })()
-  }, [])
+  }, [getTokenNetwork, hasToken])
 
   return (
     <Tab.Navigator
