@@ -354,7 +354,7 @@ export const SendBitcoinScreenJSX: ScreenType = ({
         <View style={styles.section}>
           <InputPayment
             editable={paymentType !== ("lightning" || "onchain") || amountless}
-            forceKeyboard
+            forceKeyboard={navigation?.isFocused ?? false}
             toggleCurrency={toggleCurrency}
             onUpdateAmount={setPrimaryAmountValue}
             primaryAmount={primaryAmount}
