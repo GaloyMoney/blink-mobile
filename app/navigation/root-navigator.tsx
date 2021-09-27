@@ -62,6 +62,8 @@ import type { NavigatorType } from "../types/jsx"
 
 import PushNotification from "react-native-push-notification"
 
+const PRICE_POLLING_INTERVAL = 30000
+
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
 PushNotification.configure({
   // (optional) Called when Token is generated (iOS and Android)
@@ -129,16 +131,23 @@ export const RootStack: NavigatorType = () => {
   const appState = React.useRef(AppState.currentState)
   const client = useApolloClient()
 
+  const { startPolling, stopPolling } = useQuery(QUERY_PRICE, {
+    notifyOnNetworkStatusChange: true,
+    pollInterval: PRICE_POLLING_INTERVAL,
+  })
+
   const _handleAppStateChange = useCallback(
     (nextAppState) => {
       if (appState.current.match(/background/) && nextAppState === "active") {
         console.log("App has come to the foreground!")
+        stopPolling()
+        startPolling(PRICE_POLLING_INTERVAL)
         showModalClipboardIfValidPayment(client)
       }
 
       appState.current = nextAppState
     },
-    [client],
+    [client, startPolling, stopPolling],
   )
 
   useEffect(() => {
@@ -184,11 +193,6 @@ export const RootStack: NavigatorType = () => {
       // number: 18, // (optional) Valid 32 bit integer specified as string. default: none (Cannot be zero) --> badge
     })
   }
-
-  useQuery(QUERY_PRICE, {
-    notifyOnNetworkStatusChange: true,
-    pollInterval: 30000,
-  })
 
   const fallback = { languageTag: "es", isRTL: false }
   const { languageTag } =
