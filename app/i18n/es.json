@@ -42,6 +42,9 @@
     "noMatchingContacts": "No se encontraron coincidencias para su búsqueda.",
     "title": "Contactos"
   },
+  "ContactDetailsScreen": {
+    "title": "Transacciones con %{input}"
+  },
   "DateOfBirthScreen": {
     "title": "Fecha de nacimiento"
   },
@@ -612,6 +615,7 @@
   },
   "TransactionDetailScreen": {
     "detail": "Detalles de la transacción",
+    "paid": "Pagado a/desde",
     "received": "Recibiste",
     "spent": "Gastaste"
   },
