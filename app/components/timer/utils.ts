@@ -2,11 +2,9 @@ export function parseTimer(seconds: number): string {
   if (!seconds) {
     return "00:00"
   }
-  const min = parseInt(String(seconds / 60)).toString()
-  const sec = parseInt(String(seconds % 60)).toString()
-  const minute = parseInt(min) < 10 ? `0${min}` : min
-  const second = parseInt(sec) < 10 ? `0${sec}` : sec
-  return `${minute}:${second}`
+  const minute = parseInt(String(seconds / 60)).toString()
+  const second = parseInt(String(seconds % 60)).toString()
+  return `${minute.padStart(2, '0')}:${second.padStart(2, '0')}`
 }
 
 // this function is used to compute correct time spent

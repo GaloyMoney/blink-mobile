@@ -10,10 +10,10 @@ type Props = {
 
 export const Timer: ComponentType = ({ onTimerFinish, count }: Props) => {
   const [timer, setTimer] = useState(60)
-  const [isRun, setIsRun] = useState(false)
+  const [timerIsActive, setTimerIsActive] = useState(false)
 
   const runTimer = useCallback(() => {
-    setIsRun(true)
+    setTimerIsActive(true)
     const startTime = new Date()
     const interval = setInterval(() => {
       let count = computeCount(startTime)
@@ -21,7 +21,7 @@ export const Timer: ComponentType = ({ onTimerFinish, count }: Props) => {
         count = 0
         clearInterval(interval)
         onTimerFinish()
-        setIsRun(false)
+        setTimerIsActive(false)
       }
       setTimer(count)
     }, 1000)
@@ -29,10 +29,10 @@ export const Timer: ComponentType = ({ onTimerFinish, count }: Props) => {
   }, [onTimerFinish])
 
   useEffect(() => {
-    if (count === 60 && !isRun) {
+    if (count === 60 && !timerIsActive) {
       runTimer()
     }
-  }, [isRun, count, runTimer])
+  }, [timerIsActive, count, runTimer])
 
   return <Text>{parseTimer(timer)}</Text>
 }

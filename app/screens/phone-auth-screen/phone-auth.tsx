@@ -107,7 +107,7 @@ const styles = EStyleSheet.create({
   timerRow: {
     alignItems: "center",
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "center",
     paddingHorizontal: "25rem",
   },
 })
@@ -322,7 +322,6 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
       <View style={{ flex: 1 }}>
         <ScrollView>
           <View style={{ flex: 1, minHeight: 32 }} />
-          <BadgerPhone style={styles.image} />
           <Text style={styles.text}>
             {translate("WelcomePhoneValidationScreen.header", { phone })}
           </Text>
@@ -348,22 +347,17 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
               {code}
             </Input>
             <View style={styles.timerRow}>
-              <Pressable
+              {timer===0?<Pressable
                 onPress={() => {
-                  if (!loading && timer === 0) {
+                  if (!loading) {
                     sendCodeAgain()
                   }
                 }}
               >
-                <Text
-                  style={{
-                    color: timer === 0 ? color.palette.black : color.palette.midGrey,
-                  }}
-                >
+                <Text>
                   {translate("WelcomePhoneValidationScreen.sendAgain")}
                 </Text>
-              </Pressable>
-              <Timer onTimerFinish={() => setTimer(0)} count={timer} />
+              </Pressable>:<Timer onTimerFinish={() => setTimer(0)} count={timer} />}
             </View>
           </KeyboardAvoidingView>
           <View style={{ flex: 1, minHeight: 16 }} />
