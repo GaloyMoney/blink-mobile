@@ -12,7 +12,7 @@ import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
 import type { ScreenType } from "../../types/jsx"
 import { validPayment } from "../../utils/parsing"
-import useToken from "../../utils/use-token"
+import { Token } from "../../utils/token"
 
 import LocalQRCode from "@remobile/react-native-qrcode-local-image"
 import { MoveMoneyStackParamList } from "@app/navigation/stack-param-lists"
@@ -74,7 +74,6 @@ export const ScanningQRCodeScreen: ScreenType = ({
   const index = useNavigationState((state) => state.index)
   const [pending, setPending] = React.useState(false)
   const client = useApolloClient()
-  const { getTokenNetwork } = useToken()
 
   const decodeInvoice = async (data) => {
     if (pending) {
@@ -82,7 +81,8 @@ export const ScanningQRCodeScreen: ScreenType = ({
     }
 
     try {
-      const { valid } = validPayment(data, getTokenNetwork(), client)
+      const { valid } = validPayment(data, Token.getInstance().network, client)
+
       if (valid) {
         if (index <= 1) {
           navigation.replace("sendBitcoin", { payment: data })

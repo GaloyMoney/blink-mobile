@@ -39,10 +39,9 @@ import "./i18n"
 import "./utils/polyfill"
 import { RootStack } from "./navigation/root-navigator"
 import { isIos } from "./utils/helper"
+import { getGraphQLUri, getGraphQLV2Uri, Token } from "./utils/token"
 import { saveString, loadString } from "./utils/storage"
 import { graphqlV2OperationNames } from "./graphql/graphql-v2-operations"
-import useToken from "./utils/use-token"
-import { getGraphQLUri, getGraphQLV2Uri } from "./utils/network"
 
 export const BUILD_VERSION = "build_version"
 
@@ -72,7 +71,6 @@ LogBox.ignoreAllLogs()
  * This is the root component of our app.
  */
 export const App = (): JSX.Element => {
-  const { loadToken, getTokenNetwork, getToken, hasToken } = useToken()
   const [routeName, setRouteName] = useState("Initial")
   const [apolloClient, setApolloClient] = useState<ApolloClient<NormalizedCacheObject>>()
   const [persistor, setPersistor] = useState<CachePersistor<NormalizedCacheObject>>()
@@ -95,7 +93,8 @@ export const App = (): JSX.Element => {
 
   useEffect(() => {
     const fn = async () => {
-      await loadToken()
+      const token = Token.getInstance()
+      await token.load()
 
       // legacy. when was using mst-gql. storage is deleted as we don't want
       // to keep this around.
@@ -103,12 +102,12 @@ export const App = (): JSX.Element => {
       await AsyncStorage.multiRemove([LEGACY_ROOT_STATE_STORAGE_KEY])
 
       const customFetch = async (_ /* uri not used */, options) => {
-        const uri = await getGraphQLUri(getTokenNetwork())
+        const uri = await getGraphQLUri()
         return fetch(uri, options)
       }
 
       const customFetchV2 = async (_ /* uri not used */, options) => {
-        const uri = await getGraphQLV2Uri(getTokenNetwork())
+        const uri = await getGraphQLV2Uri()
         return fetch(uri, options)
       }
 
@@ -118,7 +117,7 @@ export const App = (): JSX.Element => {
       const authLink = setContext((_, { headers }) => ({
         headers: {
           ...headers,
-          authorization: hasToken() ? `Bearer ${getToken()}` : "",
+          authorization: token.bearerString,
         },
       }))
 
@@ -190,7 +189,7 @@ export const App = (): JSX.Element => {
       setApolloClient(client)
     }
     fn()
-  }, [getToken, getTokenNetwork, hasToken, loadToken])
+  }, [])
 
   // Before we show the app, we have to wait for our state to be ready.
   // In the meantime, don't render anything. This will be the background

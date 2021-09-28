@@ -19,7 +19,7 @@ import { palette } from "../../theme/palette"
 import type { ScreenType } from "../../types/jsx"
 import { textCurrencyFormatting } from "../../utils/currencyConversion"
 import { IPaymentType, validPayment } from "../../utils/parsing"
-import useToken from "../../utils/use-token"
+import { Token } from "../../utils/token"
 import { UsernameValidation } from "../../utils/validation"
 import { TextCurrency } from "../../components/text-currency/text-currency"
 import { useCurrencies } from "../../hooks/use-currencies"
@@ -35,7 +35,6 @@ export const SendBitcoinScreen: ScreenType = ({
   route,
 }: SendBitcoinScreenProps) => {
   const client = useApolloClient()
-  const { getTokenNetwork } = useToken()
   const btcPrice = useBTCPrice()
 
   const { primaryCurrency, secondaryCurrency, toggleCurrency } = useCurrencies()
@@ -88,7 +87,7 @@ export const SendBitcoinScreen: ScreenType = ({
 
   const balance = balanceBtc(client)
 
-  const network = getTokenNetwork()
+  const { network } = Token.getInstance()
 
   const reset = useCallback(() => {
     setInvoiceError("")

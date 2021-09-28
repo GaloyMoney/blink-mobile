@@ -17,7 +17,6 @@ import { AuthenticationScreenPurpose, PinScreenPurpose } from "../../utils/enum"
 import { showModalClipboardIfValidPayment } from "../../utils/clipboard"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
-import useToken from "../../utils/use-token"
 
 import BitcoinBeachLogo from "../get-started-screen/bitcoinBeach3.png"
 
@@ -74,7 +73,6 @@ type Props = {
 
 export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) => {
   const client = useApolloClient()
-  const { getTokenNetwork, removeToken } = useToken()
 
   const { screenPurpose, isPinEnabled } = route.params
 
@@ -104,7 +102,7 @@ export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) =
       KeyStoreWrapper.setIsBiometricsEnabled()
     }
     navigation.replace("Primary")
-    showModalClipboardIfValidPayment({ client, network: getTokenNetwork() })
+    showModalClipboardIfValidPayment(client)
   }
 
   const handleAuthenticationFailure = () => {
@@ -113,7 +111,7 @@ export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) =
   }
 
   const logout = async () => {
-    await resetDataStore({ client, removeToken })
+    await resetDataStore(client)
     Alert.alert(translate("common.loggedOut"), "", [
       {
         text: translate("common.ok"),

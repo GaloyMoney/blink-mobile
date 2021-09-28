@@ -7,7 +7,7 @@ import { Screen } from "../../components/screen"
 import { GET_LANGUAGE } from "../../graphql/query"
 import { palette } from "../../theme/palette"
 import type { ScreenType } from "../../types/jsx"
-import useToken from "../../utils/use-token"
+import { Token } from "../../utils/token"
 
 const styles = EStyleSheet.create({
   screenStyle: {
@@ -23,7 +23,6 @@ export const language_mapping = {
 }
 
 export const LanguageScreen: ScreenType = () => {
-  const { getTokenUid } = useToken()
   const { data } = useQuery(GET_LANGUAGE, { fetchPolicy: "cache-only" })
   const language = data?.me?.language ?? ""
 
@@ -55,7 +54,7 @@ export const LanguageScreen: ScreenType = () => {
                   __typename: "UpdateUser",
                   updateLanguage: {
                     __typename: "User",
-                    id: getTokenUid(),
+                    id: Token.getInstance().uid,
                     language: l,
                   },
                 },

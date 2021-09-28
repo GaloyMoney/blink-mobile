@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useCallback } from "react"
+import { useCallback, useMemo } from "react"
 import { Alert, DevSettings, Text, View } from "react-native"
 import { Button, ButtonGroup } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
@@ -7,10 +7,10 @@ import { useApolloClient } from "@apollo/client"
 import { Screen } from "../../components/screen"
 import { color } from "../../theme"
 import { resetDataStore } from "../../utils/logout"
-import { getGraphQLUri, loadNetwork, saveNetwork } from "../../utils/network"
+import { loadNetwork, saveNetwork } from "../../utils/network"
 import { requestPermission } from "../../utils/notifications"
+import { getGraphQLUri, Token } from "../../utils/token"
 import { walletIsActive } from "../../graphql/query"
-import useToken from "../../utils/use-token"
 
 import type { ScreenType } from "../../types/jsx"
 import type { INetwork } from "../../types/network"
@@ -30,7 +30,9 @@ const usingHermes = typeof HermesInternal === "object" && HermesInternal !== nul
 export const DebugScreen: ScreenType = () => {
   const client = useApolloClient()
   const btcPrice = useBTCPrice()
-  const { getTokenUid, getTokenNetwork, removeToken } = useToken()
+  const token = useMemo(() => {
+    return Token.getInstance()
+  }, [])
 
   const networks: INetwork[] = ["regtest", "testnet", "mainnet"]
   const [networkState, setNetworkState] = React.useState("")
@@ -40,20 +42,18 @@ export const DebugScreen: ScreenType = () => {
     async (network?) => {
       let n
 
-      const tokenNetwork = getTokenNetwork()
-
-      if (tokenNetwork) {
-        n = tokenNetwork
+      if (token.network) {
+        n = token.network
       } else if (!network) {
         n = await loadNetwork()
       } else {
         n = network
       }
 
-      setGraphQLUri(await getGraphQLUri(n))
+      setGraphQLUri(await getGraphQLUri())
       setNetworkState(n)
     },
-    [getTokenNetwork],
+    [token],
   )
 
   React.useEffect(() => {
@@ -88,7 +88,7 @@ export const DebugScreen: ScreenType = () => {
         title="Log out"
         style={styles.button}
         onPress={async () => {
-          await resetDataStore({ client, removeToken })
+          await resetDataStore(client)
           Alert.alert("state succesfully deleted. Restart your app")
         }}
       />
@@ -133,11 +133,11 @@ export const DebugScreen: ScreenType = () => {
       <View>
         <Text>
           UID:
-          {getTokenUid()}
+          {token.uid}
         </Text>
         <Text>
           token network:
-          {getTokenNetwork()}
+          {token.network}
         </Text>
         <Text>
           GraphQLUri:
