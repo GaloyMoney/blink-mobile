@@ -83,8 +83,13 @@ export const getWallet = (client: ApolloClient<unknown>): wallet_wallet[] => {
   return wallet
 }
 
-export const balanceBtc = (client: ApolloClient<unknown>): number =>
-  find(getWallet(client), { id: "BTC" }).balance
+export const balanceBtc = (client: ApolloClient<unknown>): number => {
+  const wallet = getWallet(client)
+  if (!wallet) {
+    return 0
+  }
+  return find(wallet, { id: "BTC" }).balance
+}
 
 export const queryWallet = async (
   client: ApolloClient<unknown>,

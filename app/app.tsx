@@ -97,7 +97,9 @@ export const App = (): JSX.Element => {
 
   useEffect(() => {
     const fn = async () => {
-      await loadAuthToken()
+      if (!token) {
+        await loadAuthToken()
+      }
       const network = await getNetwork()
 
       // legacy. when was using mst-gql. storage is deleted as we don't want

@@ -144,13 +144,6 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
     variables: {
       logged: Token.getInstance().has(),
     },
-    onCompleted: (data) => {
-      console.log("Refetch data", data)
-      console.log("Has token", hasToken())
-    },
-    onError: (error) => {
-      console.log("Refetch error", error)
-    },
     notifyOnNetworkStatusChange: true,
     errorPolicy: "all",
   })

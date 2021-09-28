@@ -18,7 +18,7 @@ import { palette } from "../../theme/palette"
 import type { ComponentType } from "../../types/jsx"
 import { cache } from "../../graphql/cache"
 import { validPayment } from "../../utils/parsing"
-import useToken from "@app/utils/use-token"
+import useToken from "../../utils/use-token"
 
 const styles = StyleSheet.create({
   buttonContainer: {

@@ -12,7 +12,7 @@ export const NETWORK_STRING = "NETWORK_STRING"
 // loading the main RootStore file
 
 export const loadNetwork = async (): Promise<INetwork> =>
-  ((await loadString(NETWORK_STRING)) as INetwork) ?? "mainnet"
+  ((await loadString(NETWORK_STRING)) ?? "mainnet") as INetwork
 
 export const saveNetwork = async (network: INetwork): Promise<boolean> =>
   saveString(NETWORK_STRING, network)
