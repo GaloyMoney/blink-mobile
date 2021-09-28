@@ -29,7 +29,6 @@ import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import Clipboard from "@react-native-community/clipboard"
 import { toastShow } from "../../utils/toast"
-import useToken from "../../utils/use-token"
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "settings">
@@ -49,7 +48,6 @@ type ComponentProps = {
 
 export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
   const client = useApolloClient()
-  const { removeToken } = useToken()
 
   const { data } = useQuery(
     gql`
@@ -121,7 +119,7 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
     <SettingsScreenJSX
       client={client}
       walletIsActive={walletIsActive(client)}
-      resetDataStore={() => resetDataStore({ client, removeToken })}
+      resetDataStore={() => resetDataStore(client)}
       navigation={navigation}
       username={me.username}
       phone={me.phone}

@@ -15,7 +15,7 @@ import { PrimaryStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { ComponentType, ScreenType } from "../../types/jsx"
-import useToken from "../../utils/use-token"
+import { Token } from "../../utils/token"
 import { sectionCompletedPct } from "../earns-screen"
 import BitcoinCircle from "./bitcoin-circle-01.svg"
 import BottomOngoing from "./bottom-ongoing-01.svg"
@@ -127,11 +127,10 @@ type EarnMapDataProps = {
 }
 
 export const EarnMapDataInjected: ScreenType = ({ navigation }: EarnMapDataProps) => {
-  const { hasToken } = useToken()
   // TODO: fragment with earnList
   const { data } = useQuery(QUERY_EARN_LIST, {
     variables: {
-      logged: hasToken(),
+      logged: Token.getInstance().has(),
     },
     fetchPolicy: "cache-only",
   })
