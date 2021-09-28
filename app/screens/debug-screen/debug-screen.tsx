@@ -30,7 +30,7 @@ const usingHermes = typeof HermesInternal === "object" && HermesInternal !== nul
 export const DebugScreen: ScreenType = () => {
   const client = useApolloClient()
   const btcPrice = useBTCPrice()
-  const { getTokenUid, network: tokenNetwork, getNetwork, removeToken } = useToken()
+  const { tokenUid, tokenNetwork, getNetwork, removeToken } = useToken()
 
   const networks: INetwork[] = ["regtest", "testnet", "mainnet"]
   const [networkState, setNetworkState] = React.useState("")
@@ -120,7 +120,11 @@ export const DebugScreen: ScreenType = () => {
       <View>
         <Text>
           UID:
+<<<<<<< HEAD
           {token.uid}
+=======
+          {tokenUid}
+>>>>>>> Use token values directly
         </Text>
         <Text>
           Token network:

@@ -74,6 +74,10 @@ export const ScanningQRCodeScreen: ScreenType = ({
   const index = useNavigationState((state) => state.index)
   const [pending, setPending] = React.useState(false)
   const client = useApolloClient()
+<<<<<<< HEAD
+=======
+  const { tokenNetwork } = useToken()
+>>>>>>> Use token values directly
 
   const decodeInvoice = async (data) => {
     if (pending) {
@@ -81,8 +85,12 @@ export const ScanningQRCodeScreen: ScreenType = ({
     }
 
     try {
+<<<<<<< HEAD
       const { valid } = validPayment(data, Token.getInstance().network, client)
 
+=======
+      const { valid } = validPayment(data, tokenNetwork, client)
+>>>>>>> Use token values directly
       if (valid) {
         if (index <= 1) {
           navigation.replace("sendBitcoin", { payment: data })

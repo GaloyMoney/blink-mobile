@@ -74,7 +74,7 @@ LogBox.ignoreAllLogs()
  * This is the root component of our app.
  */
 export const App = (): JSX.Element => {
-  const { getToken, hasToken, getNetwork } = useToken()
+  const { token, hasToken, getNetwork } = useToken()
   const [routeName, setRouteName] = useState("Initial")
   const [apolloClient, setApolloClient] = useState<ApolloClient<NormalizedCacheObject>>()
   const [persistor, setPersistor] = useState<CachePersistor<NormalizedCacheObject>>()
@@ -122,7 +122,7 @@ export const App = (): JSX.Element => {
         return {
           headers: {
             ...headers,
-            authorization: hasToken() ? `Bearer ${getToken()}` : "",
+            authorization: hasToken() ? `Bearer ${token}` : "",
           },
         }
       })
@@ -195,7 +195,7 @@ export const App = (): JSX.Element => {
       setApolloClient(client)
     }
     fn()
-  }, [getToken, getNetwork, hasToken])
+  }, [token, getNetwork, hasToken])
 
   // Before we show the app, we have to wait for our state to be ready.
   // In the meantime, don't render anything. This will be the background

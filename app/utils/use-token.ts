@@ -13,7 +13,6 @@ export const TOKEN_KEY = "GaloyToken"
 const decodeToken = (token) => {
   try {
     const { uid, network } = jwtDecode<JwtPayload>(token)
-    console.log({ uid, network })
     return { uid, network }
   } catch (err) {
     console.log(err.toString())
@@ -22,13 +21,14 @@ const decodeToken = (token) => {
 }
 
 type UseTokenReturn = {
+  token: string | null
+  tokenUid: string | null
+  tokenNetwork: INetwork | null
+
   saveToken: (token: string) => Promise<boolean>
   removeToken: () => Promise<void>
-  getToken: () => string | null
-  getTokenUid: () => string | null
-  getNetwork: () => Promise<INetwork | null>
   hasToken: () => boolean
-  network: INetwork | null
+  getNetwork: () => Promise<INetwork | null>
 }
 
 const useToken = (): UseTokenReturn => {
@@ -36,6 +36,10 @@ const useToken = (): UseTokenReturn => {
 
   return React.useMemo(
     () => ({
+      token: authToken?.token,
+      tokenUid: authToken?.uid,
+      tokenNetwork: authToken?.network,
+
       saveToken: async (token: string) => {
         const { uid, network } = decodeToken(token)
         authTokenVar({ token, uid, network })
@@ -45,23 +49,8 @@ const useToken = (): UseTokenReturn => {
         authTokenVar(null)
         removeString(TOKEN_KEY)
       },
-      getToken: () => {
-        return authToken?.token
-      },
-      getTokenUid: () => {
-        return authToken?.uid
-      },
-      hasToken: () => {
-        return authToken?.token !== null
-      },
-      getNetwork: async () => {
-        if (authToken?.token !== null) {
-          return Promise.resolve(authToken?.network)
-        } else {
-          return loadNetwork()
-        }
-      },
-      network: authToken?.network,
+      hasToken: () => authToken !== null,
+      getNetwork: async () => authToken.network ?? loadNetwork(),
     }),
     [authToken],
   )

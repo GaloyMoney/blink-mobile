@@ -35,6 +35,7 @@ export const SendBitcoinScreen: ScreenType = ({
   route,
 }: SendBitcoinScreenProps) => {
   const client = useApolloClient()
+  const { tokenNetwork } = useToken()
   const btcPrice = useBTCPrice()
 
   const { primaryCurrency, secondaryCurrency, toggleCurrency } = useCurrencies()
@@ -87,8 +88,6 @@ export const SendBitcoinScreen: ScreenType = ({
 
   const balance = balanceBtc(client)
 
-  const { network } = Token.getInstance()
-
   const reset = useCallback(() => {
     setInvoiceError("")
     setAddress("")
@@ -117,7 +116,7 @@ export const SendBitcoinScreen: ScreenType = ({
 
   useEffect(() => {
     reset()
-    const { valid, username } = validPayment(route.params?.payment, network, client)
+    const { valid, username } = validPayment(route.params?.payment, tokenNetwork, client)
     if (route.params?.username || username) {
       setInteractive(false)
       setDestination(route.params?.username || username)
@@ -128,7 +127,7 @@ export const SendBitcoinScreen: ScreenType = ({
       setInteractive(true)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [client, network, route.params])
+  }, [client, tokenNetwork, route.params])
 
   useEffect(() => {
     // Update the secondary amount based on a new price from the API
@@ -174,7 +173,7 @@ export const SendBitcoinScreen: ScreenType = ({
         paymentType,
         address,
         sameNode,
-      } = validPayment(destination, network, client)
+      } = validPayment(destination, tokenNetwork, client)
 
       if (valid) {
         setAddress(address)
