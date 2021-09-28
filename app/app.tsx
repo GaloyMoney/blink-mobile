@@ -95,10 +95,14 @@ export const App = (): JSX.Element => {
     return route.name
   }
 
+  const [hasLoadedToken, setHasLoadedToken] = useState(false)
+
   useEffect(() => {
     const fn = async () => {
-      if (!token) {
+      if (!hasLoadedToken) {
         await loadAuthToken()
+        setHasLoadedToken(true)
+        return
       }
       const network = await getNetwork()
 
@@ -197,7 +201,7 @@ export const App = (): JSX.Element => {
       setApolloClient(client)
     }
     fn()
-  }, [token, getNetwork, hasToken])
+  }, [token, getNetwork, hasToken, hasLoadedToken])
 
   // Before we show the app, we have to wait for our state to be ready.
   // In the meantime, don't render anything. This will be the background
@@ -207,7 +211,6 @@ export const App = (): JSX.Element => {
   //
   // You're welcome to swap in your own component to render if your boot up
   // sequence is too slow though.
-
   if (!apolloClient || !persistor) {
     return null
   }

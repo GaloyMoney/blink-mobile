@@ -9,5 +9,5 @@ export const useUSDBalance = (client: ApolloClient<unknown>): number => {
   if (!wallet) {
     return 0
   }
-  return find(getWallet(client), { id: "BTC" }).balance * btcPrice
+  return find(wallet, { id: "BTC" }).balance * btcPrice
 }

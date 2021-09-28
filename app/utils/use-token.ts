@@ -50,7 +50,7 @@ const useToken = (): UseTokenReturn => {
         removeString(TOKEN_KEY)
       },
       hasToken: () => authToken !== null,
-      getNetwork: async () => authToken.network ?? loadNetwork(),
+      getNetwork: async () => authToken?.network ?? loadNetwork(),
     }),
     [authToken],
   )
