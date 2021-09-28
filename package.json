@@ -180,7 +180,6 @@
     "patch-package": "6.4.7",
     "postinstall-prepare": "2.0.0",
     "prettier": "^2.3.1",
-    "prettier-eslint": "^12.0.0",
     "prettier-eslint-cli": "^5.0.1",
     "react-devtools-core": "4.18.0",
     "react-native-svg-transformer": "^0.14.3",
