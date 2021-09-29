@@ -42,8 +42,9 @@ import { isIos } from "./utils/helper"
 import { saveString, loadString } from "./utils/storage"
 import { graphqlV2OperationNames } from "./graphql/graphql-v2-operations"
 import useToken from "./utils/use-token"
-import { getGraphQLUri, getGraphQLV2Uri } from "./utils/network"
+import { getGraphQLUri, getGraphQLV2Uri, loadNetwork } from "./utils/network"
 import { loadAuthToken } from "./graphql/client-only-query"
+import { INetwork } from "./types/network"
 
 export const BUILD_VERSION = "build_version"
 
@@ -73,7 +74,7 @@ LogBox.ignoreAllLogs()
  * This is the root component of our app.
  */
 export const App = (): JSX.Element => {
-  const { token, hasToken, getNetwork } = useToken()
+  const { token, tokenNetwork } = useToken()
   const [routeName, setRouteName] = useState("Initial")
   const [apolloClient, setApolloClient] = useState<ApolloClient<NormalizedCacheObject>>()
   const [persistor, setPersistor] = useState<CachePersistor<NormalizedCacheObject>>()
@@ -94,16 +95,19 @@ export const App = (): JSX.Element => {
     return route.name
   }
 
-  const [hasLoadedToken, setHasLoadedToken] = useState(false)
+  useEffect(() => {
+    loadAuthToken()
+  }, [])
 
   useEffect(() => {
     const fn = async () => {
-      if (!hasLoadedToken) {
-        await loadAuthToken()
-        setHasLoadedToken(true)
-        return
+      let network: INetwork
+
+      if (token) {
+        network = tokenNetwork
+      } else {
+        network = await loadNetwork()
       }
-      const network = await getNetwork()
 
       // legacy. when was using mst-gql. storage is deleted as we don't want
       // to keep this around.
@@ -127,7 +131,7 @@ export const App = (): JSX.Element => {
         return {
           headers: {
             ...headers,
-            authorization: hasToken() ? `Bearer ${token}` : "",
+            authorization: token ? `Bearer ${token}` : "",
           },
         }
       })
@@ -200,7 +204,7 @@ export const App = (): JSX.Element => {
       setApolloClient(client)
     }
     fn()
-  }, [token, getNetwork, hasToken, hasLoadedToken])
+  }, [token, tokenNetwork])
 
   // Before we show the app, we have to wait for our state to be ready.
   // In the meantime, don't render anything. This will be the background

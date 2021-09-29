@@ -5,12 +5,14 @@ import jwtDecode from "jwt-decode"
 import { saveString, remove as removeString } from "./storage"
 import type { INetwork } from "../types/network"
 import { authTokenVar } from "../graphql/client-only-query"
-import { loadNetwork } from "./network"
 
 // key used to stored the token within the phone
 export const TOKEN_KEY = "GaloyToken"
 
-const decodeToken = (token) => {
+export const decodeToken: (string) => {
+  uid: string
+  network: INetwork
+} = (token) => {
   try {
     const { uid, network } = jwtDecode<JwtPayload>(token)
     return { uid, network }
@@ -21,24 +23,24 @@ const decodeToken = (token) => {
 }
 
 type UseTokenReturn = {
-  token: string | null
-  tokenUid: string | null
-  tokenNetwork: INetwork | null
+  token: string | undefined
+  tokenUid: string | undefined
+  tokenNetwork: INetwork | undefined
+  hasToken: boolean
 
   saveToken: (token: string) => Promise<boolean>
   removeToken: () => Promise<void>
-  hasToken: () => boolean
-  getNetwork: () => Promise<INetwork | null>
 }
 
 const useToken = (): UseTokenReturn => {
-  const authToken = useReactiveVar<TokenPayload | null>(authTokenVar)
+  const authToken = useReactiveVar<TokenPayload | null>(authTokenVar) // null means there is no user session
 
   return React.useMemo(
     () => ({
       token: authToken?.token,
       tokenUid: authToken?.uid,
       tokenNetwork: authToken?.network,
+      hasToken: Boolean(authToken?.token),
 
       saveToken: async (token: string) => {
         const { uid, network } = decodeToken(token)
@@ -49,8 +51,6 @@ const useToken = (): UseTokenReturn => {
         authTokenVar(null)
         removeString(TOKEN_KEY)
       },
-      hasToken: () => authToken !== null,
-      getNetwork: async () => authToken?.network ?? loadNetwork(),
     }),
     [authToken],
   )

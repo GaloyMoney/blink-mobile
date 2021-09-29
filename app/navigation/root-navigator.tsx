@@ -130,18 +130,18 @@ const RootNavigator = createStackNavigator<RootStackParamList>()
 export const RootStack: NavigatorType = () => {
   const appState = React.useRef(AppState.currentState)
   const client = useApolloClient()
-  const { hasToken, getNetwork } = useToken()
+  const { token, tokenNetwork } = useToken()
 
   const _handleAppStateChange = useCallback(
     async (nextAppState) => {
       if (appState.current.match(/background/) && nextAppState === "active") {
         console.log("App has come to the foreground!")
-        showModalClipboardIfValidPayment({ client, network: await getNetwork() })
+        showModalClipboardIfValidPayment({ client, network: tokenNetwork })
       }
 
       appState.current = nextAppState
     },
-    [client, getNetwork],
+    [client, tokenNetwork],
   )
 
   useEffect(() => {
@@ -262,7 +262,7 @@ export const RootStack: NavigatorType = () => {
   return (
     <RootNavigator.Navigator
       screenOptions={{ gestureEnabled: false }}
-      initialRouteName={hasToken() ? "authenticationCheck" : "getStarted"}
+      initialRouteName={token ? "authenticationCheck" : "getStarted"}
     >
       <RootNavigator.Screen
         name="getStarted"
@@ -484,16 +484,16 @@ type TabProps = {
 }
 
 export const PrimaryNavigator: NavigatorType = () => {
-  const { getNetwork } = useToken()
+  const { tokenNetwork } = useToken()
   const [network, setNetwork] = React.useState("mainnet")
 
+  // TODO: get rid of this
   React.useEffect(() => {
     ;(async () => {
-      const network = await getNetwork()
-      analytics().setUserProperties({ network })
-      setNetwork(network)
+      analytics().setUserProperties({ network: tokenNetwork })
+      setNetwork(tokenNetwork)
     })()
-  }, [getNetwork])
+  }, [tokenNetwork])
 
   return (
     <Tab.Navigator

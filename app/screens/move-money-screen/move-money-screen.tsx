@@ -134,7 +134,9 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
 }: MoveMoneyScreenDataInjectedProps) => {
   const client = useApolloClient()
   const balanceUsd = useUSDBalance(client)
-  const { hasToken } = useToken()
+  const { hasToken, tokenNetwork } = useToken()
+
+  console.log("HOME", { tokenNetwork, hasToken })
 
   const {
     loading: loadingMain,
@@ -143,7 +145,7 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
     refetch,
   } = useQuery(MAIN_QUERY, {
     variables: {
-      logged: hasToken(),
+      logged: hasToken,
     },
     notifyOnNetworkStatusChange: true,
     errorPolicy: "all",

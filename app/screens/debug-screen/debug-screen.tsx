@@ -7,7 +7,7 @@ import { useApolloClient } from "@apollo/client"
 import { Screen } from "../../components/screen"
 import { color } from "../../theme"
 import { resetDataStore } from "../../utils/logout"
-import { getGraphQLUri, saveNetwork } from "../../utils/network"
+import { getGraphQLUri, loadNetwork, saveNetwork } from "../../utils/network"
 import { requestPermission } from "../../utils/notifications"
 import { walletIsActive } from "../../graphql/query"
 import useToken from "../../utils/use-token"
@@ -30,7 +30,7 @@ const usingHermes = typeof HermesInternal === "object" && HermesInternal !== nul
 export const DebugScreen: ScreenType = () => {
   const client = useApolloClient()
   const btcPrice = useBTCPrice()
-  const { tokenUid, tokenNetwork, getNetwork, removeToken } = useToken()
+  const { tokenUid, tokenNetwork, removeToken } = useToken()
 
   const networks: INetwork[] = ["regtest", "testnet", "mainnet"]
   const [networkState, setNetworkState] = React.useState("")
@@ -38,11 +38,14 @@ export const DebugScreen: ScreenType = () => {
 
   const updateNetwork = useCallback(
     async (network?) => {
-      const newNetwork = (await getNetwork()) || network
+      let newNetwork = tokenNetwork || network
+      if (!newNetwork) {
+        newNetwork = await loadNetwork()
+      }
       setGraphQLUri(await getGraphQLUri(newNetwork))
       setNetworkState(newNetwork)
     },
-    [getNetwork],
+    [tokenNetwork],
   )
 
   React.useEffect(() => {

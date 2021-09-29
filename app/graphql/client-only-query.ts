@@ -2,24 +2,9 @@ import { ApolloClient, gql, makeVar } from "@apollo/client"
 import indexOf from "lodash.indexof"
 import analytics from "@react-native-firebase/analytics"
 
-import jwtDecode from "jwt-decode"
-
 import type { INetwork } from "../types/network"
 import { loadString } from "../utils/storage"
-
-// key used to stored the token within the phone
-export const TOKEN_KEY = "GaloyToken"
-
-const decodeToken = (token) => {
-  try {
-    const { uid, network } = jwtDecode<JwtPayload>(token)
-    console.log({ uid, network })
-    return { uid, network }
-  } catch (err) {
-    console.log(err.toString())
-    return null
-  }
-}
+import { decodeToken, TOKEN_KEY } from "../utils/use-token"
 
 export const authTokenVar = makeVar<TokenPayload | null>(null)
 
@@ -27,10 +12,11 @@ export const loadAuthToken = async (): Promise<void> => {
   let uid: string
   let network: INetwork
   const token: string | null = await loadString(TOKEN_KEY)
+
   if (token) {
     ;({ uid, network } = decodeToken(token))
-    analytics().setUserId(uid)
     authTokenVar({ token, uid, network })
+    analytics().setUserId(uid)
   }
 }
 

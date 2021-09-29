@@ -37,7 +37,7 @@ type Props = {
 
 export const AuthenticationCheckScreen: ScreenType = ({ navigation }: Props) => {
   const client = useApolloClient()
-  const { getNetwork } = useToken()
+  const { tokenNetwork } = useToken()
 
   useEffect(() => {
     ;(async () => {
@@ -55,10 +55,10 @@ export const AuthenticationCheckScreen: ScreenType = ({ navigation }: Props) => 
         navigation.replace("pin", { screenPurpose: PinScreenPurpose.AuthenticatePin })
       } else {
         navigation.replace("Primary")
-        showModalClipboardIfValidPayment({ client, network: await getNetwork() })
+        showModalClipboardIfValidPayment({ client, network: tokenNetwork })
       }
     })()
-  }, [client, getNetwork, navigation])
+  }, [client, navigation, tokenNetwork])
 
   return (
     <Screen

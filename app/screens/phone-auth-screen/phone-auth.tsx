@@ -218,7 +218,7 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
 
     // console.log("succesfully update earns id")
 
-    queryMain(client, { logged: hasToken() })
+    queryMain(client, { logged: hasToken })
 
     addDeviceToken(client)
   }

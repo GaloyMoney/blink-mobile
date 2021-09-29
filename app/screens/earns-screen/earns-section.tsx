@@ -133,7 +133,7 @@ export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
   // TODO: fragment with earnList
   const { data } = useQuery(QUERY_EARN_LIST, {
     variables: {
-      logged: hasToken(),
+      logged: hasToken,
     },
     fetchPolicy: "cache-only",
   })
@@ -177,7 +177,7 @@ export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
 
   const open = async (card) => {
     // FIXME quick fix for apollo client refactoring
-    if (!hasToken()) {
+    if (!hasToken) {
       navigation.navigate("phoneValidation")
       return
     }

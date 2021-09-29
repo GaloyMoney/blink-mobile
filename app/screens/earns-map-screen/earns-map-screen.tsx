@@ -131,7 +131,7 @@ export const EarnMapDataInjected: ScreenType = ({ navigation }: EarnMapDataProps
   // TODO: fragment with earnList
   const { data } = useQuery(QUERY_EARN_LIST, {
     variables: {
-      logged: hasToken(),
+      logged: hasToken,
     },
     fetchPolicy: "cache-only",
   })

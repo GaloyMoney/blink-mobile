@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
 export const ModalClipboard: ComponentType = () => {
   const client = useApolloClient()
   const navigation = useNavigation()
-  const { getNetwork } = useToken()
+  const { tokenNetwork } = useToken()
 
   const open = async () => {
     modalClipboardVisibleVar(false)
@@ -103,14 +103,14 @@ export const ModalClipboard: ComponentType = () => {
 
     ;(async () => {
       const clipboard = await Clipboard.getString()
-      const { paymentType } = validPayment(clipboard, await getNetwork(), client)
+      const { paymentType } = validPayment(clipboard, tokenNetwork, client)
       const pathString =
         paymentType === "lightning"
           ? "ModalClipboard.pendingInvoice"
           : "ModalClipboard.pendingBitcoin"
       setMessage(translate(pathString))
     })()
-  }, [client, isVisible, getNetwork])
+  }, [client, isVisible, tokenNetwork])
 
   return (
     <Modal
