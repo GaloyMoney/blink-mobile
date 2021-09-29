@@ -4,7 +4,7 @@ import { InMemoryCache } from "@apollo/client"
 import { act, cleanup, fireEvent, render } from "@testing-library/react-native"
 import renderer from "react-test-renderer"
 import "@testing-library/jest-native/extend-expect"
-import "@node_modules/react-native-gesture-handler/jestSetup.js"
+import "react-native-gesture-handler/jestSetup.js"
 
 import { translate } from "@app/i18n/translate"
 import "@mocks/react-native-firebase"
@@ -21,14 +21,14 @@ jest.mock("../../app/utils/parsing", () => {
   }
 })
 
-afterEach(cleanup)
-
 describe("SendBitcoinScreen", () => {
   const cache = new InMemoryCache()
   cacheWallet(cache, 117585)
   cacheNodeStats(cache)
   cachePrice(cache)
   cacheUsername(cache)
+
+  afterEach(cleanup)
 
   it("render matches snapshot", () => {
     const tree = renderer

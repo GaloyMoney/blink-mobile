@@ -1,7 +1,6 @@
 import toNumber from "lodash.tonumber"
 import * as React from "react"
-import { Keyboard, Text, View } from "react-native"
-import { TextInput } from "react-native-vector-icons/node_modules/@types/react-native/index"
+import { Keyboard, Text, TextInput, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
