@@ -5,5 +5,9 @@ import { useBTCPrice } from "./use-btc-price"
 
 export const useUSDBalance = (client: ApolloClient<unknown>): number => {
   const btcPrice = useBTCPrice()
-  return find(getWallet(client), { id: "BTC" }).balance * btcPrice
+  const wallet = getWallet(client)
+  if (!wallet) {
+    return 0
+  }
+  return find(wallet, { id: "BTC" }).balance * btcPrice
 }

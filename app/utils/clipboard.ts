@@ -7,13 +7,18 @@ import {
   LAST_CLIPBOARD_PAYMENT,
   modalClipboardVisibleVar,
 } from "../graphql/client-only-query"
-import { Token } from "./token"
 import { cache } from "../graphql/cache"
 import { LastClipboardPayment } from "../graphql/__generated__/LastClipboardPayment"
+import { INetwork } from "../types/network"
+
+type ShowModalClipboardIfValidPaymentInput = {
+  client: ApolloClient<unknown>
+  network: INetwork
+}
 
 export const showModalClipboardIfValidPayment = async (
   // eslint-disable-next-line @typescript-eslint/ban-types
-  client: ApolloClient<object>,
+  { client, network }: ShowModalClipboardIfValidPaymentInput,
 ): Promise<void> => {
   const clipboard = await Clipboard.getString()
 
@@ -26,7 +31,7 @@ export const showModalClipboardIfValidPayment = async (
     return
   }
 
-  const { valid } = validPayment(clipboard, Token.getInstance().network, client)
+  const { valid } = validPayment(clipboard, network, client)
   if (!valid) {
     return
   }

@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useCallback, useMemo } from "react"
+import { useCallback } from "react"
 import { Alert, DevSettings, Text, View } from "react-native"
 import { Button, ButtonGroup } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
@@ -7,10 +7,10 @@ import { useApolloClient } from "@apollo/client"
 import { Screen } from "../../components/screen"
 import { color } from "../../theme"
 import { resetDataStore } from "../../utils/logout"
-import { loadNetwork, saveNetwork } from "../../utils/network"
+import { getGraphQLUri, loadNetwork, saveNetwork } from "../../utils/network"
 import { requestPermission } from "../../utils/notifications"
-import { getGraphQLUri, Token } from "../../utils/token"
 import { walletIsActive } from "../../graphql/query"
+import useToken from "../../utils/use-token"
 
 import type { ScreenType } from "../../types/jsx"
 import type { INetwork } from "../../types/network"
@@ -30,37 +30,27 @@ const usingHermes = typeof HermesInternal === "object" && HermesInternal !== nul
 export const DebugScreen: ScreenType = () => {
   const client = useApolloClient()
   const btcPrice = useBTCPrice()
-  const token = useMemo(() => {
-    return Token.getInstance()
-  }, [])
+  const { tokenUid, tokenNetwork, removeToken } = useToken()
 
   const networks: INetwork[] = ["regtest", "testnet", "mainnet"]
   const [networkState, setNetworkState] = React.useState("")
   const [graphQLUri, setGraphQLUri] = React.useState("")
 
-  const setNetwork = useCallback(
+  const updateNetwork = useCallback(
     async (network?) => {
-      let n
-
-      if (token.network) {
-        n = token.network
-      } else if (!network) {
-        n = await loadNetwork()
-      } else {
-        n = network
+      let newNetwork = tokenNetwork || network
+      if (!newNetwork) {
+        newNetwork = await loadNetwork()
       }
-
-      setGraphQLUri(await getGraphQLUri())
-      setNetworkState(n)
+      setGraphQLUri(await getGraphQLUri(newNetwork))
+      setNetworkState(newNetwork)
     },
-    [token],
+    [tokenNetwork],
   )
 
   React.useEffect(() => {
-    ;(async () => {
-      setNetwork()
-    })()
-  }, [setNetwork])
+    updateNetwork()
+  }, [updateNetwork])
 
   return (
     <Screen preset="scroll" backgroundColor={color.transparent}>
@@ -73,7 +63,6 @@ export const DebugScreen: ScreenType = () => {
               const query = `mutation deleteCurrentUser {
                 deleteCurrentUser
               }`
-
               // const result = await request(getGraphQLUri(), query, {uid: "1234"})
               // FIXME
             } catch (err) {
@@ -88,7 +77,7 @@ export const DebugScreen: ScreenType = () => {
         title="Log out"
         style={styles.button}
         onPress={async () => {
-          await resetDataStore(client)
+          await resetDataStore({ client, removeToken })
           Alert.alert("state succesfully deleted. Restart your app")
         }}
       />
@@ -133,11 +122,11 @@ export const DebugScreen: ScreenType = () => {
       <View>
         <Text>
           UID:
-          {token.uid}
+          {tokenUid}
         </Text>
         <Text>
-          token network:
-          {token.network}
+          Token network:
+          {tokenNetwork}
         </Text>
         <Text>
           GraphQLUri:
@@ -155,7 +144,7 @@ export const DebugScreen: ScreenType = () => {
         <ButtonGroup
           onPress={(index) => {
             saveNetwork(networks[index])
-            setNetwork(networks[index])
+            updateNetwork(networks[index])
           }}
           selectedIndex={networks.findIndex((value) => value === networkState)}
           buttons={networks}
