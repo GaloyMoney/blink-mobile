@@ -134,9 +134,7 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
 }: MoveMoneyScreenDataInjectedProps) => {
   const client = useApolloClient()
   const balanceUsd = useUSDBalance(client)
-  const { hasToken, tokenNetwork } = useToken()
-
-  console.log("HOME", { tokenNetwork, hasToken })
+  const { hasToken } = useToken()
 
   const {
     loading: loadingMain,
