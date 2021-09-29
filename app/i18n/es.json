@@ -650,7 +650,8 @@
     "errorLoggingIn": "Error al iniciar sesión. ¿Usó el código correcto?",
     "header": "Para confirmar su cuenta, ingrese el código que le acabamos de enviar al teléfono %{phone}",
     "need6Digits": "El código debe tener 6 dígitos",
-    "placeholder": "Código de 6 dígitos"
+    "placeholder": "Código de 6 dígitos",
+    "sendAgain": "enviar de nuevo"
   },
   "common": {
     "Fee": "Tarifa",
