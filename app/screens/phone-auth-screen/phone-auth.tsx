@@ -6,12 +6,11 @@ import {
   Alert,
   KeyboardAvoidingView,
   Platform,
-  Pressable,
   ScrollView,
   Text,
   View,
 } from "react-native"
-import { Input } from "react-native-elements"
+import { Button, Input } from "react-native-elements"
 import { FetchResult, gql, useApolloClient, useMutation } from "@apollo/client"
 import EStyleSheet from "react-native-extended-stylesheet"
 import PhoneInput from "react-native-phone-input"
@@ -33,7 +32,7 @@ import { AuthenticationScreenPurpose } from "../../utils/enum"
 import BadgerPhone from "./badger-phone-01.svg"
 import type { PhoneValidationStackParamList } from "../../navigation/stack-param-lists"
 import { RouteProp } from "@react-navigation/native"
-import { Timer } from "../../components/timer"
+import { parseTimer } from "../../utils/timer"
 
 const REQUEST_AUTH_CODE = gql`
   mutation userRequestAuthCode($input: UserRequestAuthCodeInput!) {
@@ -71,6 +70,10 @@ type LoginMutationFunction = (
 ) => Promise<FetchResult<Record<string, UserLoginMutationResponse>>>
 
 const styles = EStyleSheet.create({
+  buttonStyle: {
+    backgroundColor: color.primary,
+  },
+
   codeContainer: {
     alignSelf: "center",
     width: "70%",
@@ -92,11 +95,23 @@ const styles = EStyleSheet.create({
     paddingHorizontal: "18rem",
     paddingVertical: "12rem",
   },
+
+  sendAgainButtonRow: {
+    flexDirection: "row",
+    justifyContent: "center",
+    paddingHorizontal: "25rem",
+    textAlign: "center",
+  },
+
   text: {
     fontSize: "20rem",
     paddingBottom: "10rem",
     paddingHorizontal: "40rem",
     textAlign: "center",
+  },
+
+  textDisabledSendAgain: {
+    color: color.palette.midGrey,
   },
 
   textEntry: {
@@ -105,10 +120,10 @@ const styles = EStyleSheet.create({
   },
 
   timerRow: {
-    alignItems: "center",
     flexDirection: "row",
     justifyContent: "space-between",
     paddingHorizontal: "25rem",
+    textAlign: "center",
   },
 })
 
@@ -253,7 +268,7 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
 }: WelcomePhoneValidationScreenProps) => {
   // FIXME see what to do with store and storybook
   const [code, setCode] = useState("")
-  const [timer, setTimer] = useState<number>(60)
+  const [secondsRemaining, setSecondsRemaining] = useState<number>(60)
 
   const { phone } = route.params
   const updateCode = (input) => setCode(input)
@@ -266,7 +281,7 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
     try {
       const { data } = await requestPhoneCode({ variables: { input: { phone } } })
       if (data.userRequestAuthCode.success) {
-        setTimer(60)
+        setSecondsRemaining(60)
       } else {
         toastShow(translate("errors.generic"))
       }
@@ -319,6 +334,15 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [code])
 
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      if (secondsRemaining > 0) {
+        setSecondsRemaining(secondsRemaining - 1)
+      }
+    }, 1000)
+    return () => clearTimeout(timerId)
+  }, [secondsRemaining])
+
   return (
     <Screen backgroundColor={palette.lighterGrey}>
       <View style={{ flex: 1 }}>
@@ -348,28 +372,27 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
             >
               {code}
             </Input>
-            <View style={styles.timerRow}>
-              <Pressable
-                onPress={() => {
-                  if (!loading && timer === 0) {
-                    sendCodeAgain()
-                  }
-                }}
-              >
-                <Text
-                  style={{
-                    color: timer === 0 ? color.palette.black : color.palette.midGrey,
-                  }}
-                >
+            {secondsRemaining > 0 ? (
+              <View style={styles.timerRow}>
+                <Text style={styles.textDisabledSendAgain}>
                   {translate("WelcomePhoneValidationScreen.sendAgain")}
                 </Text>
-              </Pressable>
-              {timer > 0 ? (
-                <Timer onTimerFinish={() => setTimer(0)} count={timer} />
-              ) : (
-                <View />
-              )}
-            </View>
+                <Text>{parseTimer(secondsRemaining)}</Text>
+              </View>
+            ) : (
+              <View style={styles.sendAgainButtonRow}>
+                <Button
+                  buttonStyle={styles.buttonStyle}
+                  title={translate("WelcomePhoneValidationScreen.sendAgain")}
+                  onPress={() => {
+                    if (!loading) {
+                      sendCodeAgain()
+                    }
+                  }}
+                  disabled={loading}
+                />
+              </View>
+            )}
           </KeyboardAvoidingView>
           <View style={{ flex: 1, minHeight: 16 }} />
           <ActivityIndicator animating={loading} size="large" color={color.primary} />
