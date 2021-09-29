@@ -1,4 +1,4 @@
-import { computeCount, parseTimer } from "../utils"
+import { computeCount, parseTimer } from "../app/utils/timer"
 
 describe("parseTimer", () => {
   it("parse time when is more than 1 minute", () => {

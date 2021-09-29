@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react"
 import { Text } from "react-native"
-import { computeCount, parseTimer } from "./utils"
+import { computeCount, parseTimer } from "../../utils/timer"
 import { ComponentType } from "@app/types/jsx"
 
 type Props = {
