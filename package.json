@@ -157,7 +157,7 @@
     "pod-install": "^0.1.27",
     "postinstall-prepare": "2.0.0",
     "prettier": "^2.3.1",
-    "react-dev-tools": "^0.0.1",
+    "react-devtools": "^4.19.0",
     "react-devtools-core": "4.18.0",
     "react-native-svg-transformer": "^0.14.3",
     "react-test-renderer": "17.0.2",

@@ -70,6 +70,10 @@ type LoginMutationFunction = (
 ) => Promise<FetchResult<Record<string, UserLoginMutationResponse>>>
 
 const styles = EStyleSheet.create({
+  buttonStyle: {
+    backgroundColor: color.primary,
+  },
+
   codeContainer: {
     alignSelf: "center",
     width: "70%",
@@ -91,11 +95,23 @@ const styles = EStyleSheet.create({
     paddingHorizontal: "18rem",
     paddingVertical: "12rem",
   },
+
+  sendAgainButtonRow: {
+    flexDirection: "row",
+    justifyContent: "center",
+    paddingHorizontal: "25rem",
+    textAlign: "center",
+  },
+
   text: {
     fontSize: "20rem",
     paddingBottom: "10rem",
     paddingHorizontal: "40rem",
     textAlign: "center",
+  },
+
+  textDisabledSendAgain: {
+    color: color.palette.midGrey,
   },
 
   textEntry: {
@@ -104,7 +120,6 @@ const styles = EStyleSheet.create({
   },
 
   timerRow: {
-    alignItems: "center",
     flexDirection: "row",
     justifyContent: "space-between",
     paddingHorizontal: "25rem",
@@ -357,11 +372,17 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
             >
               {code}
             </Input>
-            <View style={styles.timerRow}>
-              {secondsRemaining > 0 ? (
-                <Text>{translate("WelcomePhoneValidationScreen.sendAgain")}</Text>
-              ) : (
+            {secondsRemaining > 0 ? (
+              <View style={styles.timerRow}>
+                <Text style={styles.textDisabledSendAgain}>
+                  {translate("WelcomePhoneValidationScreen.sendAgain")}
+                </Text>
+                <Text>{parseTimer(secondsRemaining)}</Text>
+              </View>
+            ) : (
+              <View style={styles.sendAgainButtonRow}>
                 <Button
+                  buttonStyle={styles.buttonStyle}
                   title={translate("WelcomePhoneValidationScreen.sendAgain")}
                   onPress={() => {
                     if (!loading) {
@@ -370,9 +391,8 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
                   }}
                   disabled={loading}
                 />
-              )}
-              {secondsRemaining > 0 && <Text>{parseTimer(secondsRemaining)}</Text>}
-            </View>
+              </View>
+            )}
           </KeyboardAvoidingView>
           <View style={{ flex: 1, minHeight: 16 }} />
           <ActivityIndicator animating={loading} size="large" color={color.primary} />
