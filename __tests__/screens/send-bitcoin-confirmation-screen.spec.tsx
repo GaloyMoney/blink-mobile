@@ -4,7 +4,7 @@ import { InMemoryCache } from "@apollo/client"
 import { act, cleanup, fireEvent, render } from "@testing-library/react-native"
 import renderer from "react-test-renderer"
 import "@testing-library/jest-native/extend-expect"
-import "@node_modules/react-native-gesture-handler/jestSetup.js"
+import "react-native-gesture-handler/jestSetup.js"
 
 import { translate } from "@app/i18n/translate"
 import "@mocks/react-native-firebase"
