@@ -15,6 +15,7 @@ export const Timer: ComponentType = ({ onTimerFinish, count }: Props) => {
   const runTimer = useCallback(() => {
     setTimerIsActive(true)
     const startTime = new Date()
+    setTimer(computeCount(startTime))
     const interval = setInterval(() => {
       let count = computeCount(startTime)
       if (count <= 0) {
