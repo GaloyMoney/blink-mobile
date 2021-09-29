@@ -12512,6 +12512,11 @@ react-content-loader@^5.0.2:
   resolved "https://registry.npmjs.org/react-content-loader/-/react-content-loader-5.1.4.tgz"
   integrity sha512-hTq7pZi2GKCK6a9d3u6XStozm0QGCEjw8cSqQReiWnh2up6IwCha5R5TF0o6SY5qUDpByloEZEZtnFxpJyENFw==
 
+react-dev-tools@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/react-dev-tools/-/react-dev-tools-0.0.1.tgz#f7cf35ad701db3c028280c632767fba6dba13ac7"
+  integrity sha1-9881rXAds8AoKAxjJ2f7ptuhOsc=
+
 react-dev-utils@^9.0.0:
   version "9.1.0"
   resolved "https://registry.npmjs.org/react-dev-utils/-/react-dev-utils-9.1.0.tgz"
