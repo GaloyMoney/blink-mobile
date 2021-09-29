@@ -21,14 +21,14 @@ jest.mock("../../app/utils/parsing", () => {
   }
 })
 
-afterEach(cleanup)
-
 describe("SendBitcoinScreen", () => {
   const cache = new InMemoryCache()
   cacheWallet(cache, 117585)
   cacheNodeStats(cache)
   cachePrice(cache)
   cacheUsername(cache)
+
+  afterEach(cleanup)
 
   it("render matches snapshot", () => {
     const tree = renderer

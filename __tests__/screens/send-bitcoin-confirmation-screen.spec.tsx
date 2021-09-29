@@ -103,12 +103,12 @@ const lightningRouteParams = {
   username: null,
 }
 
-afterEach(cleanup)
-
 describe("SendBitcoinConfirmationScreen", () => {
   const cache = new InMemoryCache()
   cacheNodeStats(cache)
   cachePrice(cache)
+
+  afterEach(cleanup)
 
   it("render matches snapshot", () => {
     cacheWallet(cache, 1175855)
