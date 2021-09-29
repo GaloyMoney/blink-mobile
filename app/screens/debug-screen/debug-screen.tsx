@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useCallback, useMemo } from "react"
+import { useCallback } from "react"
 import { Alert, DevSettings, Text, View } from "react-native"
 import { Button, ButtonGroup } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
@@ -9,8 +9,8 @@ import { color } from "../../theme"
 import { resetDataStore } from "../../utils/logout"
 import { getGraphQLUri, saveNetwork } from "../../utils/network"
 import { requestPermission } from "../../utils/notifications"
-import { getGraphQLUri, Token } from "../../utils/token"
 import { walletIsActive } from "../../graphql/query"
+import useToken from "../../utils/use-token"
 
 import type { ScreenType } from "../../types/jsx"
 import type { INetwork } from "../../types/network"
@@ -60,7 +60,6 @@ export const DebugScreen: ScreenType = () => {
               const query = `mutation deleteCurrentUser {
                 deleteCurrentUser
               }`
-
               // const result = await request(getGraphQLUri(), query, {uid: "1234"})
               // FIXME
             } catch (err) {
@@ -75,7 +74,7 @@ export const DebugScreen: ScreenType = () => {
         title="Log out"
         style={styles.button}
         onPress={async () => {
-          await resetDataStore(client)
+          await resetDataStore({ client, removeToken })
           Alert.alert("state succesfully deleted. Restart your app")
         }}
       />
@@ -120,11 +119,7 @@ export const DebugScreen: ScreenType = () => {
       <View>
         <Text>
           UID:
-<<<<<<< HEAD
-          {token.uid}
-=======
           {tokenUid}
->>>>>>> Use token values directly
         </Text>
         <Text>
           Token network:

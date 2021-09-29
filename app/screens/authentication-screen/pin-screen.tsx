@@ -18,6 +18,7 @@ import { showModalClipboardIfValidPayment } from "../../utils/clipboard"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { RouteProp } from "@react-navigation/native"
+import useToken from "../../utils/use-token"
 
 const styles = EStyleSheet.create({
   bottomSpacer: {
@@ -159,7 +160,7 @@ export const PinScreen: ScreenType = ({ route, navigation }: Props) => {
         }
       } else {
         setHelperText(translate("PinScreen.tooManyAttempts"))
-        await resetDataStore(client)
+        await resetDataStore({ client, removeToken })
         await sleep(1000)
         navigation.reset({
           index: 0,

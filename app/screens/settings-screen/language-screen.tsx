@@ -7,7 +7,7 @@ import { Screen } from "../../components/screen"
 import { GET_LANGUAGE } from "../../graphql/query"
 import { palette } from "../../theme/palette"
 import type { ScreenType } from "../../types/jsx"
-import { Token } from "../../utils/token"
+import useToken from "../../utils/use-token"
 
 const styles = EStyleSheet.create({
   screenStyle: {

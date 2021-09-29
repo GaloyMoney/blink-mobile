@@ -18,7 +18,7 @@ import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import type { QuizQuestion } from "../../types/quiz"
 import type { ScreenType } from "../../types/jsx"
-import { Token } from "../../utils/token"
+import useToken from "../../utils/use-token"
 import { SVGs } from "./earn-svg-factory"
 import { getCardsFromSection, remainingSatsOnSection } from "./earns-utils"
 
@@ -115,6 +115,7 @@ type Props = {
 }
 
 export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
+  const { hasToken } = useToken()
   const [queryTransactions] = useLazyQuery(QUERY_TRANSACTIONS, {
     fetchPolicy: "network-only",
   })
@@ -132,7 +133,7 @@ export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
   // TODO: fragment with earnList
   const { data } = useQuery(QUERY_EARN_LIST, {
     variables: {
-      logged: Token.getInstance().has(),
+      logged: hasToken(),
     },
     fetchPolicy: "cache-only",
   })
@@ -176,7 +177,7 @@ export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
 
   const open = async (card) => {
     // FIXME quick fix for apollo client refactoring
-    if (!Token.getInstance().has()) {
+    if (!hasToken()) {
       navigation.navigate("phoneValidation")
       return
     }

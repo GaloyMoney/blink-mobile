@@ -17,6 +17,7 @@ import { AuthenticationScreenPurpose, PinScreenPurpose } from "../../utils/enum"
 import { showModalClipboardIfValidPayment } from "../../utils/clipboard"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
+import useToken from "../../utils/use-token"
 
 import BitcoinBeachLogo from "../get-started-screen/bitcoinBeach3.png"
 
@@ -112,7 +113,7 @@ export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) =
   }
 
   const logout = async () => {
-    await resetDataStore(client)
+    await resetDataStore({ client, removeToken })
     Alert.alert(translate("common.loggedOut"), "", [
       {
         text: translate("common.ok"),

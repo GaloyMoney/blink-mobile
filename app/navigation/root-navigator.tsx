@@ -13,6 +13,8 @@ import { AppState } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import * as RNLocalize from "react-native-localize"
 import Icon from "react-native-vector-icons/Ionicons"
+import analytics from "@react-native-firebase/analytics"
+
 import { GET_LANGUAGE, QUERY_PRICE } from "../graphql/query"
 import { translate } from "../i18n"
 import {
@@ -49,7 +51,7 @@ import { WelcomeFirstScreen } from "../screens/welcome-screens"
 import { palette } from "../theme/palette"
 import { AccountType } from "../utils/enum"
 import { addDeviceToken } from "../utils/notifications"
-import { getNetwork, Token } from "../utils/token"
+import useToken from "../utils/use-token"
 import { showModalClipboardIfValidPayment } from "../utils/clipboard"
 import {
   ContactStackParamList,
@@ -257,12 +259,10 @@ export const RootStack: NavigatorType = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   useEffect(() => messaging().onTokenRefresh((token) => addDeviceToken(client)), [client])
 
-  const token = Token.getInstance()
-
   return (
     <RootNavigator.Navigator
       screenOptions={{ gestureEnabled: false }}
-      initialRouteName={token.has() ? "authenticationCheck" : "getStarted"}
+      initialRouteName={hasToken() ? "authenticationCheck" : "getStarted"}
     >
       <RootNavigator.Screen
         name="getStarted"
