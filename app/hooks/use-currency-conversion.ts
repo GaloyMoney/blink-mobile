@@ -13,7 +13,7 @@ type CurrencyConverterTypes = {
 }
 
 export const useCurrencyConverter = (): CurrencyConverterTypes => {
-  const btcPrice = useBTCPrice()
+  const { btcPrice } = useBTCPrice()
 
   return useMemo(() => {
     return {

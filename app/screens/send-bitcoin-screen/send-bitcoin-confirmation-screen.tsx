@@ -6,6 +6,7 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import { gql, useApolloClient, useLazyQuery, useMutation } from "@apollo/client"
 import { RouteProp } from "@react-navigation/native"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
+import moment from "moment"
 
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
@@ -15,6 +16,7 @@ import {
   QUERY_TRANSACTIONS,
   queryWallet,
   balanceBtc,
+  QUERY_PRICE,
 } from "../../graphql/query"
 import { UsernameValidation } from "../../utils/validation"
 import { textCurrencyFormatting } from "../../utils/currencyConversion"
@@ -23,6 +25,7 @@ import { PaymentStatusIndicator } from "./payment-status-indicator"
 import { color } from "../../theme"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { PaymentConfirmationInformation } from "./payment-confirmation-information"
+import { MAXIMUM_PRICE_STALENESS_SECONDS } from "./send-bitcoin-screen"
 
 export const LIGHTNING_PAY = gql`
   mutation payInvoice($invoice: String!, $amount: Int, $memo: String) {
@@ -223,7 +226,7 @@ export const SendBitcoinConfirmationScreen = ({
   route,
 }: SendBitcoinConfirmationScreenProps): JSX.Element => {
   const client = useApolloClient()
-  const btcPrice = useBTCPrice()
+  const { btcPrice, priceTimestamp } = useBTCPrice()
   const currencyConverter = useCurrencyConverter()
 
   const convertCurrency = useCallback(
@@ -285,6 +288,17 @@ export const SendBitcoinConfirmationScreen = ({
   const [onchainPay] = useMutation(ONCHAIN_PAY, {
     update: () => queryTransactions(),
   })
+
+  const [queryPrice, { loading: loadingPrice }] = useLazyQuery(QUERY_PRICE, {
+    fetchPolicy: "network-only",
+  })
+
+  if (
+    moment().unix() - priceTimestamp > MAXIMUM_PRICE_STALENESS_SECONDS &&
+    !loadingPrice
+  ) {
+    queryPrice()
+  }
 
   const pay = async () => {
     if ((amountless || paymentType === "onchain") && paymentSatAmount === 0) {

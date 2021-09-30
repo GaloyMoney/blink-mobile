@@ -7,10 +7,12 @@ import { ActivityIndicator, ScrollView, Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
+import moment from "moment"
+
 import { InputPayment } from "../../components/input-payment"
 import { GaloyInput } from "../../components/galoy-input"
 import { Screen } from "../../components/screen"
-import { balanceBtc, USERNAME_EXIST } from "../../graphql/query"
+import { balanceBtc, QUERY_PRICE, USERNAME_EXIST } from "../../graphql/query"
 import { useMoneyAmount, useBTCPrice } from "../../hooks"
 import { translate } from "../../i18n"
 import type { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
@@ -25,6 +27,8 @@ import { TextCurrency } from "../../components/text-currency/text-currency"
 import { useCurrencies } from "../../hooks/use-currencies"
 import { StackNavigationProp } from "@react-navigation/stack"
 
+export const MAXIMUM_PRICE_STALENESS_SECONDS = 300
+
 type SendBitcoinScreenProps = {
   navigation: StackNavigationProp<MoveMoneyStackParamList, "sendBitcoin">
   route: RouteProp<MoveMoneyStackParamList, "sendBitcoin">
@@ -36,7 +40,7 @@ export const SendBitcoinScreen: ScreenType = ({
 }: SendBitcoinScreenProps) => {
   const client = useApolloClient()
   const { tokenNetwork } = useToken()
-  const btcPrice = useBTCPrice()
+  const { btcPrice, priceTimestamp } = useBTCPrice()
 
   const { primaryCurrency, secondaryCurrency, toggleCurrency } = useCurrencies()
 
@@ -83,6 +87,17 @@ export const SendBitcoinScreen: ScreenType = ({
     usernameExistsQuery,
     { loading: loadingUserNameExist, data: dataUsernameExists },
   ] = useLazyQuery(USERNAME_EXIST, { fetchPolicy: "network-only" })
+
+  const [queryPrice, { loading: loadingPrice }] = useLazyQuery(QUERY_PRICE, {
+    fetchPolicy: "network-only",
+  })
+
+  if (
+    moment().unix() - priceTimestamp > MAXIMUM_PRICE_STALENESS_SECONDS &&
+    !loadingPrice
+  ) {
+    queryPrice()
+  }
 
   const usernameExists = dataUsernameExists?.usernameExists ?? false
 
