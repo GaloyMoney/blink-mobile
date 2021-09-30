@@ -28,6 +28,7 @@ import { useCurrencies } from "../../hooks/use-currencies"
 import { StackNavigationProp } from "@react-navigation/stack"
 
 export const MAXIMUM_PRICE_STALENESS_SECONDS = 300
+export const PRICE_CHECK_INTERVAL = 10000
 
 type SendBitcoinScreenProps = {
   navigation: StackNavigationProp<MoveMoneyStackParamList, "sendBitcoin">
@@ -100,7 +101,7 @@ export const SendBitcoinScreen: ScreenType = ({
       ) {
         queryPrice()
       }
-    }, 10000)
+    }, PRICE_CHECK_INTERVAL)
     return () => clearInterval(interval)
   }, [loadingPrice, priceTimestamp, queryPrice])
 

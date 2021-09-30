@@ -16,7 +16,6 @@ import {
   QUERY_TRANSACTIONS,
   queryWallet,
   balanceBtc,
-  QUERY_PRICE,
 } from "../../graphql/query"
 import { UsernameValidation } from "../../utils/validation"
 import { textCurrencyFormatting } from "../../utils/currencyConversion"
@@ -289,22 +288,6 @@ export const SendBitcoinConfirmationScreen = ({
     update: () => queryTransactions(),
   })
 
-  const [queryPrice, { loading: loadingPrice }] = useLazyQuery(QUERY_PRICE, {
-    fetchPolicy: "network-only",
-  })
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (
-        moment().unix() - priceTimestamp > MAXIMUM_PRICE_STALENESS_SECONDS &&
-        !loadingPrice
-      ) {
-        queryPrice()
-      }
-    }, 10000)
-    return () => clearInterval(interval)
-  }, [loadingPrice, priceTimestamp, queryPrice])
-
   const pay = async () => {
     if ((amountless || paymentType === "onchain") && paymentSatAmount === 0) {
       setStatus(Status.ERROR)
@@ -425,8 +408,30 @@ export const SendBitcoinConfirmationScreen = ({
         balance: textCurrencyFormatting(balance, btcPrice, primaryCurrency),
       })
     }
+
+    const secondsSinceLastPriceUpdate = moment().unix() - priceTimestamp
+    if (secondsSinceLastPriceUpdate > MAXIMUM_PRICE_STALENESS_SECONDS) {
+      if (secondsSinceLastPriceUpdate > 3600) {
+        const hours = secondsSinceLastPriceUpdate % 3600
+        if (hours === 1) {
+          return translate("SendBitcoinConfirmationScreen.stalePrice", {
+            timePeriod: `1 ${translate("common.hour")}`,
+          })
+        }
+        return translate("SendBitcoinConfirmationScreen.stalePrice", {
+          timePeriod: `${Math.floor(secondsSinceLastPriceUpdate / 3600)} ${translate(
+            "common.hours",
+          )}`,
+        })
+      }
+
+      const minutes = Math.floor(secondsSinceLastPriceUpdate / 60)
+      return translate("SendBitcoinConfirmationScreen.stalePrice", {
+        timePeriod: `${minutes} ${translate("common.minutes")}`,
+      })
+    }
     return ""
-  }, [balance, btcPrice, primaryCurrency, totalAmount])
+  }, [balance, btcPrice, priceTimestamp, primaryCurrency, totalAmount])
 
   let destination = ""
   if (paymentType === "username") {
@@ -562,6 +567,7 @@ const styles = EStyleSheet.create({
 
   errorText: {
     color: color.error,
+    textAlign: "center",
   },
 
   mainView: {
