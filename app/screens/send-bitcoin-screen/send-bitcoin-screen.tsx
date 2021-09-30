@@ -92,12 +92,17 @@ export const SendBitcoinScreen: ScreenType = ({
     fetchPolicy: "network-only",
   })
 
-  if (
-    moment().unix() - priceTimestamp > MAXIMUM_PRICE_STALENESS_SECONDS &&
-    !loadingPrice
-  ) {
-    queryPrice()
-  }
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (
+        moment().unix() - priceTimestamp > MAXIMUM_PRICE_STALENESS_SECONDS &&
+        !loadingPrice
+      ) {
+        queryPrice()
+      }
+    }, 10000)
+    return () => clearInterval(interval)
+  }, [loadingPrice, priceTimestamp, queryPrice])
 
   const usernameExists = dataUsernameExists?.usernameExists ?? false
 
