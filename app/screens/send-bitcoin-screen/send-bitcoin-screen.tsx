@@ -497,7 +497,7 @@ const styles = EStyleSheet.create({
 
   subCurrencyText: {
     color: palette.midGrey,
-    fontSize: "16rem",
+    fontSize: "20rem",
     marginRight: "10%",
     marginTop: 0,
     paddingTop: 0,

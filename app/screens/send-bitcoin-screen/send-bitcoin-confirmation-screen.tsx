@@ -552,7 +552,7 @@ const styles = EStyleSheet.create({
   },
 
   confirmationText: {
-    fontSize: "16rem",
+    fontSize: "18rem",
     textAlign: "center",
   },
 

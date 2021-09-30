@@ -151,7 +151,7 @@ const styles = EStyleSheet.create({
   paymentInformationSecondaryAmount: {
     color: palette.midGrey,
     flex: 2,
-    fontSize: "14rem",
+    fontSize: "18rem",
     textAlignVertical: "bottom",
   },
 })
