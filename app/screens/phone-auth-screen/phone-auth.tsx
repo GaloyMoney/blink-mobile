@@ -4,28 +4,19 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import {
   ActivityIndicator,
   Alert,
-  EventSubscription,
   KeyboardAvoidingView,
-  NativeEventEmitter,
-  NativeModules,
   Platform,
   ScrollView,
   Text,
   View,
 } from "react-native"
 import { Button, Input } from "react-native-elements"
-import {
-  FetchResult,
-  gql,
-  useApolloClient,
-  useLazyQuery,
-  useMutation,
-} from "@apollo/client"
+import { FetchResult, gql, useApolloClient, useMutation } from "@apollo/client"
 import EStyleSheet from "react-native-extended-stylesheet"
 import PhoneInput from "react-native-phone-input"
 import analytics from "@react-native-firebase/analytics"
 import { StackNavigationProp } from "@react-navigation/stack"
-import GeetestModule from "react-native-geetest-module"
+import { RouteProp } from "@react-navigation/native"
 
 import { CloseCross } from "../../components/close-cross"
 import { Screen } from "../../components/screen"
@@ -41,34 +32,15 @@ import type { ScreenType } from "../../types/jsx"
 import { AuthenticationScreenPurpose } from "../../utils/enum"
 import BadgerPhone from "./badger-phone-01.svg"
 import type { PhoneValidationStackParamList } from "../../navigation/stack-param-lists"
-import { RouteProp } from "@react-navigation/native"
-import { login_login } from "./__generated__/login"
-import { registerCaptcha } from "./__generated__/registerCaptcha"
+import { parseTimer } from "../../utils/timer"
+import { useGeetestCaptcha } from "../../hooks"
 
-const REGISTER_CAPTCHA = gql`
-  query registerCaptcha {
-    registerCaptchaGeetest {
-      success
-      gt
-      challenge
-      new_captcha
-    }
-  }
-`
-
-const REQUEST_PHONE_CODE = gql`
-  mutation requestPhoneCode(
-    $phone: String
-    $captchaChallenge: String
-    $captchaValidate: String
-    $captchaSeccode: String
-  ) {
-    requestPhoneCodeGeetest(
-      phone: $phone
-      captchaChallenge: $captchaChallenge
-      captchaValidate: $captchaValidate
-      captchaSeccode: $captchaSeccode
-    ) {
+const REQUEST_AUTH_CODE = gql`
+  mutation captchaRequestAuthCode($input: CaptchaRequestAuthCodeInput!) {
+    captchaRequestAuthCode(input: $input) {
+      errors {
+        message
+      }
       success
     }
   }
@@ -100,13 +72,16 @@ type LoginMutationFunction = (
 
 const styles = EStyleSheet.create({
   button: {
+    alignSelf: "center",
     backgroundColor: color.palette.blue,
-    marginHorizontal: "50rem",
     marginTop: "30rem",
+    width: "200rem",
   },
 
-  buttonStyle: {
-    backgroundColor: color.primary,
+  buttonResend: {
+    alignSelf: "center",
+    backgroundColor: color.palette.blue,
+    width: "200rem",
   },
 
   codeContainer: {
@@ -166,99 +141,39 @@ type WelcomePhoneInputScreenProps = {
   navigation: StackNavigationProp<PhoneValidationStackParamList, "welcomePhoneInput">
 }
 
-type GeeTestValidationData = {
-  geeTestChallenge: string
-  geeTestSecCode: string
-  geeTestValidate: string
-}
-
 export const WelcomePhoneInputScreen: ScreenType = ({
   navigation,
 }: WelcomePhoneInputScreenProps) => {
-  const [
-    queryRegisterCaptcha,
-    { loading: loadingRegisterCaptcha, data: registerCaptchaData },
-  ] = useLazyQuery<registerCaptcha>(REGISTER_CAPTCHA, {
-    fetchPolicy: "network-only",
-  })
+  const handleGeetestError = useCallback((error: string) => {
+    toastShow(error)
+  }, [])
+  const { geetestValidationData, loadingRegisterCaptcha, registerCaptcha } =
+    useGeetestCaptcha(handleGeetestError)
 
-  const [requestPhoneCode, { loading }] = useMutation(REQUEST_PHONE_CODE, {
+  const [phoneNumber, setPhoneNumber] = useState("")
+
+  const phoneInputRef = useRef<PhoneInput | null>()
+
+  const [requestPhoneCode, { loading }] = useMutation(REQUEST_AUTH_CODE, {
     fetchPolicy: "no-cache",
   })
 
-  const [geeTestValidationData, setGeeTestValidationData] =
-    useState<GeeTestValidationData | null>(null)
-
-  const onGeeTestDialogResultListener = React.useRef<EventSubscription>()
-  const onGeeTestFailedListener = React.useRef<EventSubscription>()
-
-  useEffect(() => {
-    GeetestModule.setUp()
-
-    const eventEmitter = new NativeEventEmitter(NativeModules.GeetestModule)
-
-    onGeeTestDialogResultListener.current = eventEmitter.addListener(
-      "GT3-->onDialogResult-->",
-      (event) => {
-        const parsedDialogResult = JSON.parse(event.result)
-        setGeeTestValidationData({
-          geeTestChallenge: parsedDialogResult.geetest_challenge,
-          geeTestSecCode: parsedDialogResult.geetest_seccode,
-          geeTestValidate: parsedDialogResult.geetest_validate,
-        })
-      },
-    )
-
-    onGeeTestFailedListener.current = eventEmitter.addListener(
-      "GT3-->onFailed-->",
-      (event) => {
-        console.log("GT3-->onFailed->", event.error)
-        toastShow(event.error)
-      },
-    )
-
-    return () => {
-      GeetestModule.tearDown()
-
-      onGeeTestDialogResultListener.current.remove()
-      onGeeTestFailedListener.current.remove()
-    }
-  }, [queryRegisterCaptcha])
-
-  useEffect(() => {
-    if (registerCaptchaData?.registerCaptchaGeetest) {
-      const params = {
-        success: registerCaptchaData.registerCaptchaGeetest.success,
-        challenge: registerCaptchaData.registerCaptchaGeetest.challenge,
-        gt: registerCaptchaData.registerCaptchaGeetest.gt,
-        new_captcha: registerCaptchaData.registerCaptchaGeetest.new_captcha,
-      }
-      GeetestModule.handleRegisteredGeeTestCaptcha(JSON.stringify(params))
-    }
-  }, [registerCaptchaData])
-
-  const inputRef = useRef<PhoneInput | null>()
-
-  const send = useCallback(async () => {
-    const phone = inputRef.current.getValue()
-    const phoneRegex = new RegExp("^\\+[0-9]+$")
-
-    if (!inputRef.current.isValidNumber() || !phoneRegex.test(phone)) {
-      Alert.alert(`${phone} ${translate("errors.invalidPhoneNumber")}`)
-      return
-    }
-
+  const sendRequestAuthCode = useCallback(async () => {
     try {
       const { data } = await requestPhoneCode({
         variables: {
-          phone,
-          captchaChallenge: geeTestValidationData.geeTestChallenge,
-          captchaValidate: geeTestValidationData.geeTestValidate,
-          captchaSeccode: geeTestValidationData.geeTestSecCode,
+          input: {
+            phone: phoneNumber,
+            challengeCode: geetestValidationData?.geetestChallenge,
+            validationCode: geetestValidationData?.geetestValidate,
+            secCode: geetestValidationData?.geetestSecCode,
+          },
         },
       })
-      if (data.requestPhoneCodeGeetest.success) {
-        navigation.navigate("welcomePhoneValidation", { phone })
+      if (data.captchaRequestAuthCode.success) {
+        navigation.navigate("welcomePhoneValidation", {
+          phone: phoneNumber,
+        })
       } else {
         toastShow(translate("errors.generic"))
       }
@@ -270,7 +185,27 @@ export const WelcomePhoneInputScreen: ScreenType = ({
         toastShow(translate("errors.generic"))
       }
     }
-  }, [navigation, requestPhoneCode])
+  }, [geetestValidationData, navigation, phoneNumber, requestPhoneCode])
+
+  useEffect(() => {
+    if (geetestValidationData) {
+      sendRequestAuthCode()
+    }
+  }, [geetestValidationData, sendRequestAuthCode])
+
+  const submitPhoneNumber = () => {
+    const phone = phoneInputRef.current.getValue()
+    const phoneRegex = new RegExp("^\\+[0-9]+$")
+
+    if (!phoneInputRef.current.isValidNumber() || !phoneRegex.test(phone)) {
+      Alert.alert(`${phone} ${translate("errors.invalidPhoneNumber")}`)
+      return
+    }
+
+    setPhoneNumber(phone)
+  }
+
+  const showCaptcha = phoneNumber.length > 0
 
   return (
     <Screen backgroundColor={palette.lighterGrey} preset="scroll">
@@ -278,15 +213,22 @@ export const WelcomePhoneInputScreen: ScreenType = ({
         <View>
           <BadgerPhone style={styles.image} />
           <Text style={styles.text}>
-            {geeTestValidationData !== null
-              ? translate("WelcomePhoneInputScreen.header")
-              : translate("WelcomePhoneInputScreen.headerVerify")}
+            {showCaptcha
+              ? translate("WelcomePhoneInputScreen.headerVerify")
+              : translate("WelcomePhoneInputScreen.header")}
           </Text>
         </View>
-        {geeTestValidationData !== null ? (
+        {showCaptcha ? (
+          <Button
+            title={translate("WelcomePhoneInputScreen.verify")}
+            onPress={() => registerCaptcha()}
+            loading={loadingRegisterCaptcha}
+            buttonStyle={styles.button}
+          />
+        ) : (
           <KeyboardAvoidingView>
             <PhoneInput
-              ref={inputRef}
+              ref={phoneInputRef}
               style={styles.phoneEntryContainer}
               textStyle={styles.textEntry}
               initialCountry="sv"
@@ -294,7 +236,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
                 autoFocus: true,
                 placeholder: translate("WelcomePhoneInputScreen.placeholder"),
                 returnKeyType: loading ? "default" : "done",
-                onSubmitEditing: send,
+                onSubmitEditing: submitPhoneNumber,
               }}
             />
             <ActivityIndicator
@@ -304,13 +246,6 @@ export const WelcomePhoneInputScreen: ScreenType = ({
               style={{ marginTop: 32 }}
             />
           </KeyboardAvoidingView>
-        ) : (
-          <Button
-            title={translate("WelcomePhoneInputScreen.verify")}
-            onPress={() => queryRegisterCaptcha()}
-            loading={loadingRegisterCaptcha}
-            buttonStyle={styles.button}
-          />
         )}
       </View>
       <CloseCross color={palette.darkGrey} onPress={() => navigation.goBack()} />
@@ -377,9 +312,16 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
   onSuccess,
   route,
   navigation,
+  loading,
   login,
   error,
 }: WelcomePhoneValidationScreenProps) => {
+  const handleGeetestError = useCallback((error: string) => {
+    toastShow(error)
+  }, [])
+  const { geetestValidationData, loadingRegisterCaptcha, registerCaptcha } =
+    useGeetestCaptcha(handleGeetestError)
+
   // FIXME see what to do with store and storybook
   const [code, setCode] = useState("")
   const [secondsRemaining, setSecondsRemaining] = useState<number>(60)
@@ -387,16 +329,30 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
   const { phone } = route.params
   const updateCode = (input) => setCode(input)
 
-  const [requestPhoneCode, { loading }] = useMutation(REQUEST_AUTH_CODE, {
-    fetchPolicy: "no-cache",
-  })
+  const [requestPhoneCode, { loading: loadingAuthCode }] = useMutation(
+    REQUEST_AUTH_CODE,
+    {
+      fetchPolicy: "no-cache",
+    },
+  )
 
   const sendCodeAgain = useCallback(async () => {
     try {
-      const { data } = await requestPhoneCode({ variables: { input: { phone } } })
-      if (data.userRequestAuthCode.success) {
+      const { data } = await requestPhoneCode({
+        variables: {
+          input: {
+            phone,
+            challengeCode: geetestValidationData?.geetestChallenge,
+            validationCode: geetestValidationData?.geetestValidate,
+            secCode: geetestValidationData?.geetestSecCode,
+          },
+        },
+      })
+
+      if (data.captchaRequestAuthCode.success) {
         setSecondsRemaining(60)
       } else {
+        console.log("Error", data.captchaRequestAuthCode.errors)
         toastShow(translate("errors.generic"))
       }
     } catch (err) {
@@ -407,7 +363,13 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
         toastShow(translate("errors.generic"))
       }
     }
-  }, [phone, requestPhoneCode])
+  }, [geetestValidationData, phone, requestPhoneCode])
+
+  useEffect(() => {
+    if (geetestValidationData) {
+      sendCodeAgain()
+    }
+  }, [geetestValidationData, sendCodeAgain])
 
   const send = async () => {
     if (code.length !== 6) {
@@ -496,14 +458,14 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
             ) : (
               <View style={styles.sendAgainButtonRow}>
                 <Button
-                  buttonStyle={styles.buttonStyle}
+                  buttonStyle={styles.buttonResend}
+                  loading={loadingRegisterCaptcha || loadingAuthCode}
                   title={translate("WelcomePhoneValidationScreen.sendAgain")}
                   onPress={() => {
                     if (!loading) {
-                      sendCodeAgain()
+                      registerCaptcha()
                     }
                   }}
-                  disabled={loading}
                 />
               </View>
             )}

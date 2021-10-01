@@ -606,7 +606,7 @@
   },
   "WelcomePhoneInputScreen": {
     "header": "Enter your phone number and we'll text you an access code.",
-    "headerVerify": "Verify you are not a bot.",
+    "headerVerify": "Verify you are human.",
     "placeholder": "Phone Number",
     "verify": "Click to Verify"
   },
