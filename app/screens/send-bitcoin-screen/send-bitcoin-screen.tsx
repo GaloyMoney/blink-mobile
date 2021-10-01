@@ -41,7 +41,7 @@ export const SendBitcoinScreen: ScreenType = ({
 }: SendBitcoinScreenProps) => {
   const client = useApolloClient()
   const { tokenNetwork } = useToken()
-  const { btcPrice, priceTimestamp } = useBTCPrice()
+  const { btcPrice, priceTimestamp, updatePrice } = useBTCPrice()
 
   const { primaryCurrency, secondaryCurrency, toggleCurrency } = useCurrencies()
 
@@ -89,21 +89,14 @@ export const SendBitcoinScreen: ScreenType = ({
     { loading: loadingUserNameExist, data: dataUsernameExists },
   ] = useLazyQuery(USERNAME_EXIST, { fetchPolicy: "network-only" })
 
-  const [queryPrice, { loading: loadingPrice }] = useLazyQuery(QUERY_PRICE, {
-    fetchPolicy: "network-only",
-  })
-
   useEffect(() => {
     const interval = setInterval(() => {
-      if (
-        unixTime() - priceTimestamp > MAXIMUM_PRICE_STALENESS_SECONDS &&
-        !loadingPrice
-      ) {
-        queryPrice()
+      if (unixTime() - priceTimestamp > MAXIMUM_PRICE_STALENESS_SECONDS) {
+        updatePrice()
       }
     }, PRICE_CHECK_INTERVAL)
     return () => clearInterval(interval)
-  }, [loadingPrice, priceTimestamp, queryPrice])
+  }, [priceTimestamp, updatePrice])
 
   const usernameExists = dataUsernameExists?.usernameExists ?? false
 
