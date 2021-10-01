@@ -1,6 +1,6 @@
 import * as React from "react"
 import { useCallback, useEffect, useMemo, useState } from "react"
-import { Text, View } from "react-native"
+import { Alert, Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { gql, useApolloClient, useMutation } from "@apollo/client"
@@ -277,6 +277,30 @@ export const SendBitcoinConfirmationScreen = ({
     refetchQueries: ["gql_main_query", "transactionsList"],
   })
 
+  useEffect(
+    () =>
+      navigation.addListener("beforeRemove", (e) => {
+        if (status !== Status.LOADING) {
+          return
+        }
+
+        e.preventDefault()
+        Alert.alert(
+          translate("SendBitcoinConfirmationScreen.paymentProcessing"),
+          translate("SendBitcoinConfirmationScreen.processingDescription"),
+          [
+            { text: translate("common.cancel"), style: "cancel" },
+            {
+              text: translate("common.yes"),
+              style: "destructive",
+              onPress: () => navigation.dispatch(e.data.action),
+            },
+          ],
+        )
+      }),
+    [navigation, status],
+  )
+
   const pay = async () => {
     if ((amountless || paymentType === "onchain") && paymentSatAmount === 0) {
       setStatus(Status.ERROR)
@@ -363,7 +387,7 @@ export const SendBitcoinConfirmationScreen = ({
   }
 
   useEffect(() => {
-    if (status === "loading" || status === "idle") {
+    if (status === Status.LOADING || status === Status.IDLE) {
       return
     }
 
@@ -504,7 +528,7 @@ export const SendBitcoinConfirmationScreen = ({
           )}
           <Button
             buttonStyle={styles.buttonStyle}
-            loading={status === "loading"}
+            loading={status === Status.LOADING}
             onPress={() => {
               if (hasCompletedPayment) {
                 navigation.pop(2)

@@ -79,6 +79,7 @@ const usernameRouteParams = {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const mNavigation: any = {
+  addListener: jest.fn(),
   goBack: jest.fn(),
   navigate: jest.fn(),
   pop: jest.fn(),

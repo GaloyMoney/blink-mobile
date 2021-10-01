@@ -544,6 +544,8 @@
     "feeLabel": "Fee:",
     "memoLabel": "Note:",
     "paymentFinal": "Payments are final.",
+    "paymentProcessing": "Payment Processing",
+    "processingDescription": "Your payment is currently process. Are you sure you want to leave the screen?",
     "stalePrice": "Your bitcoin price is old and was last updated {{timePeriod}} ago. Please restart the app before making a payment.",
     "title": "Confirm Payment",
     "totalLabel": "Total:",
@@ -673,7 +675,8 @@
     "tryAgain": "Try again",
     "type": "Type",
     "username": "Username",
-    "usernameRequired": "Username is required"
+    "usernameRequired": "Username is required",
+    "yes": "Yes"
   },
   "errors": {
     "generic": "There was an error. Please try again later",
