@@ -583,6 +583,8 @@
     "feeLabel": "Tarifa de red:",
     "memoLabel": "Nota:",
     "paymentFinal": "Recuerde que los pagos son definitivos y una vez realizados son irreversibles.",
+    "paymentProcessing": "Procesando pago",
+    "processingDescription": "Su pago está en proceso. ¿Está seguro que desea salir?",
     "stalePrice": "El precio de bitcoin está desactualizado, se actualizó por última vez hace {{timePeriod}}. Por favor reinicie la aplicación antes de realizar el pago.",
     "title": "Confirmar pago",
     "totalLabel": "Total:",
@@ -708,7 +710,8 @@
     "tryAgain": "Inténtalo de nuevo",
     "type": "tipo",
     "username": "Nombre de usuario",
-    "usernameRequired": "El nombre de usuario es requerido"
+    "usernameRequired": "El nombre de usuario es requerido",
+    "yes": "Si"
   },
   "errors": {
     "generic": "Hubo un error inesperado. Por favor intente más tarde\n",
