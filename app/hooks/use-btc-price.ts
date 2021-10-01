@@ -37,5 +37,5 @@ export const useBTCPrice = (): BTCPriceReturn => {
         }
       },
     }
-  }, [data])
+  }, [data, priceIsStale, refetch, secondsSinceLastPriceUpdate])
 }
