@@ -7,7 +7,6 @@ import { ActivityIndicator, ScrollView, Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
-import moment from "moment"
 
 import { InputPayment } from "../../components/input-payment"
 import { GaloyInput } from "../../components/galoy-input"
@@ -26,6 +25,7 @@ import { UsernameValidation } from "../../utils/validation"
 import { TextCurrency } from "../../components/text-currency/text-currency"
 import { useCurrencies } from "../../hooks/use-currencies"
 import { StackNavigationProp } from "@react-navigation/stack"
+import { unixTime } from "../../utils/date"
 
 export const MAXIMUM_PRICE_STALENESS_SECONDS = 300
 export const PRICE_CHECK_INTERVAL = 10000
@@ -96,7 +96,7 @@ export const SendBitcoinScreen: ScreenType = ({
   useEffect(() => {
     const interval = setInterval(() => {
       if (
-        moment().unix() - priceTimestamp > MAXIMUM_PRICE_STALENESS_SECONDS &&
+        unixTime() - priceTimestamp > MAXIMUM_PRICE_STALENESS_SECONDS &&
         !loadingPrice
       ) {
         queryPrice()

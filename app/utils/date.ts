@@ -38,3 +38,5 @@ export const parseDate = (timeStamp: number): Date => {
   }
   return new Date(timeStamp * 1000)
 }
+
+export const unixTime = (): number => Date.now() / 1000
