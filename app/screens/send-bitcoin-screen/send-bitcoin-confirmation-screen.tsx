@@ -6,7 +6,6 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import { gql, useApolloClient, useLazyQuery, useMutation } from "@apollo/client"
 import { RouteProp } from "@react-navigation/native"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
-import moment from "moment"
 
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
@@ -24,7 +23,6 @@ import { PaymentStatusIndicator } from "./payment-status-indicator"
 import { color } from "../../theme"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { PaymentConfirmationInformation } from "./payment-confirmation-information"
-import { MAXIMUM_PRICE_STALENESS_SECONDS } from "./send-bitcoin-screen"
 
 export const LIGHTNING_PAY = gql`
   mutation payInvoice($invoice: String!, $amount: Int, $memo: String) {
@@ -225,7 +223,7 @@ export const SendBitcoinConfirmationScreen = ({
   route,
 }: SendBitcoinConfirmationScreenProps): JSX.Element => {
   const client = useApolloClient()
-  const { btcPrice, priceTimestamp } = useBTCPrice()
+  const { btcPrice, priceIsStale, timeSinceLastPriceUpdate } = useBTCPrice()
   const currencyConverter = useCurrencyConverter()
 
   const convertCurrency = useCallback(
@@ -409,29 +407,32 @@ export const SendBitcoinConfirmationScreen = ({
       })
     }
 
-    const secondsSinceLastPriceUpdate = moment().unix() - priceTimestamp
-    if (secondsSinceLastPriceUpdate > MAXIMUM_PRICE_STALENESS_SECONDS) {
-      if (secondsSinceLastPriceUpdate > 3600) {
-        const hours = secondsSinceLastPriceUpdate % 3600
+    if (priceIsStale) {
+      const { hours, minutes } = timeSinceLastPriceUpdate
+      if (hours > 0) {
         if (hours === 1) {
           return translate("SendBitcoinConfirmationScreen.stalePrice", {
             timePeriod: `1 ${translate("common.hour")}`,
           })
         }
         return translate("SendBitcoinConfirmationScreen.stalePrice", {
-          timePeriod: `${Math.floor(secondsSinceLastPriceUpdate / 3600)} ${translate(
-            "common.hours",
-          )}`,
+          timePeriod: `${hours} ${translate("common.hours")}`,
         })
       }
 
-      const minutes = Math.floor(secondsSinceLastPriceUpdate / 60)
       return translate("SendBitcoinConfirmationScreen.stalePrice", {
         timePeriod: `${minutes} ${translate("common.minutes")}`,
       })
     }
     return ""
-  }, [balance, btcPrice, priceTimestamp, primaryCurrency, totalAmount])
+  }, [
+    balance,
+    btcPrice,
+    priceIsStale,
+    primaryCurrency,
+    timeSinceLastPriceUpdate,
+    totalAmount,
+  ])
 
   let destination = ""
   if (paymentType === "username") {

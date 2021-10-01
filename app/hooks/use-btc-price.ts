@@ -1,22 +1,41 @@
-import { ApolloQueryResult, useQuery } from "@apollo/client"
+import { useQuery } from "@apollo/client"
+import { unixTime } from "../utils/date"
 import { useMemo } from "react"
 import { QUERY_PRICE } from "../graphql/query"
 import { prices } from "../graphql/__generated__/prices"
 
 type BTCPriceReturn = {
   btcPrice: number
-  priceTimestamp: number
-  updatePrice: () => Promise<ApolloQueryResult<prices>>
+  priceIsStale: boolean
+  timeSinceLastPriceUpdate: {
+    minutes: number
+    hours: number
+  }
+  updateStalePrice: () => void
 }
+
+export const MAXIMUM_PRICE_STALENESS_SECONDS = 300
 
 export const useBTCPrice = (): BTCPriceReturn => {
   const { data, refetch } = useQuery<prices>(QUERY_PRICE)
 
+  const priceTimestamp: number | typeof NaN = parseInt(data?.prices?.[0]?.id ?? "")
+  const secondsSinceLastPriceUpdate: number | typeof NaN = unixTime() - priceTimestamp
+  const priceIsStale = secondsSinceLastPriceUpdate > MAXIMUM_PRICE_STALENESS_SECONDS
+
   return useMemo(() => {
     return {
       btcPrice: data?.prices?.[0]?.o ?? NaN,
-      priceTimestamp: parseInt(data?.prices?.[0]?.id) ?? NaN,
-      updatePrice: () => refetch(),
+      priceIsStale,
+      timeSinceLastPriceUpdate: {
+        hours: Math.floor(secondsSinceLastPriceUpdate / 3600),
+        minutes: Math.floor(secondsSinceLastPriceUpdate / 60),
+      },
+      updateStalePrice: () => {
+        if (priceIsStale) {
+          refetch()
+        }
+      },
     }
   }, [data])
 }

@@ -11,7 +11,7 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { InputPayment } from "../../components/input-payment"
 import { GaloyInput } from "../../components/galoy-input"
 import { Screen } from "../../components/screen"
-import { balanceBtc, QUERY_PRICE, USERNAME_EXIST } from "../../graphql/query"
+import { balanceBtc, USERNAME_EXIST } from "../../graphql/query"
 import { useMoneyAmount, useBTCPrice } from "../../hooks"
 import { translate } from "../../i18n"
 import type { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
@@ -25,9 +25,7 @@ import { UsernameValidation } from "../../utils/validation"
 import { TextCurrency } from "../../components/text-currency/text-currency"
 import { useCurrencies } from "../../hooks/use-currencies"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { unixTime } from "../../utils/date"
 
-export const MAXIMUM_PRICE_STALENESS_SECONDS = 300
 export const PRICE_CHECK_INTERVAL = 10000
 
 type SendBitcoinScreenProps = {
@@ -41,7 +39,7 @@ export const SendBitcoinScreen: ScreenType = ({
 }: SendBitcoinScreenProps) => {
   const client = useApolloClient()
   const { tokenNetwork } = useToken()
-  const { btcPrice, priceTimestamp, updatePrice } = useBTCPrice()
+  const { btcPrice, updateStalePrice } = useBTCPrice()
 
   const { primaryCurrency, secondaryCurrency, toggleCurrency } = useCurrencies()
 
@@ -90,13 +88,9 @@ export const SendBitcoinScreen: ScreenType = ({
   ] = useLazyQuery(USERNAME_EXIST, { fetchPolicy: "network-only" })
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (unixTime() - priceTimestamp > MAXIMUM_PRICE_STALENESS_SECONDS) {
-        updatePrice()
-      }
-    }, PRICE_CHECK_INTERVAL)
+    const interval = setInterval(() => updateStalePrice(), PRICE_CHECK_INTERVAL)
     return () => clearInterval(interval)
-  }, [priceTimestamp, updatePrice])
+  }, [updateStalePrice])
 
   const usernameExists = dataUsernameExists?.usernameExists ?? false
 
