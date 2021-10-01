@@ -2,7 +2,6 @@ import * as React from "react"
 import { MockedProvider } from "@apollo/client/testing"
 import { InMemoryCache } from "@apollo/client"
 import { act, cleanup, fireEvent, render } from "@testing-library/react-native"
-import renderer from "react-test-renderer"
 import "@testing-library/jest-native/extend-expect"
 import "react-native-gesture-handler/jestSetup.js"
 
@@ -112,20 +111,18 @@ describe("SendBitcoinConfirmationScreen", () => {
 
   it("render matches snapshot", () => {
     cacheWallet(cache, 1175855)
-    const tree = renderer
-      .create(
-        <MockedProvider cache={cache}>
-          <SendBitcoinConfirmationScreen
-            navigation={mNavigation}
-            route={{
-              key: "",
-              name: "sendBitcoinConfirmation",
-              params: usernameRouteParams,
-            }}
-          />
-        </MockedProvider>,
-      )
-      .toJSON()
+    const tree = render(
+      <MockedProvider cache={cache}>
+        <SendBitcoinConfirmationScreen
+          navigation={mNavigation}
+          route={{
+            key: "",
+            name: "sendBitcoinConfirmation",
+            params: usernameRouteParams,
+          }}
+        />
+      </MockedProvider>,
+    ).toJSON()
     expect(tree).toMatchSnapshot()
   })
 

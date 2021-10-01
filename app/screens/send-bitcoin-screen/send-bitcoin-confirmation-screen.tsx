@@ -223,7 +223,7 @@ export const SendBitcoinConfirmationScreen = ({
   route,
 }: SendBitcoinConfirmationScreenProps): JSX.Element => {
   const client = useApolloClient()
-  const btcPrice = useBTCPrice()
+  const { btcPrice, priceIsStale, timeSinceLastPriceUpdate } = useBTCPrice()
   const currencyConverter = useCurrencyConverter()
 
   const convertCurrency = useCallback(
@@ -406,8 +406,33 @@ export const SendBitcoinConfirmationScreen = ({
         balance: textCurrencyFormatting(balance, btcPrice, primaryCurrency),
       })
     }
+
+    if (priceIsStale) {
+      const { hours, minutes } = timeSinceLastPriceUpdate
+      if (hours > 0) {
+        if (hours === 1) {
+          return translate("SendBitcoinConfirmationScreen.stalePrice", {
+            timePeriod: `1 ${translate("common.hour")}`,
+          })
+        }
+        return translate("SendBitcoinConfirmationScreen.stalePrice", {
+          timePeriod: `${hours} ${translate("common.hours")}`,
+        })
+      }
+
+      return translate("SendBitcoinConfirmationScreen.stalePrice", {
+        timePeriod: `${minutes} ${translate("common.minutes")}`,
+      })
+    }
     return ""
-  }, [balance, btcPrice, primaryCurrency, totalAmount])
+  }, [
+    balance,
+    btcPrice,
+    priceIsStale,
+    primaryCurrency,
+    timeSinceLastPriceUpdate,
+    totalAmount,
+  ])
 
   let destination = ""
   if (paymentType === "username") {
@@ -528,7 +553,7 @@ const styles = EStyleSheet.create({
   },
 
   confirmationText: {
-    fontSize: "16rem",
+    fontSize: "18rem",
     textAlign: "center",
   },
 
@@ -543,6 +568,7 @@ const styles = EStyleSheet.create({
 
   errorText: {
     color: color.error,
+    textAlign: "center",
   },
 
   mainView: {

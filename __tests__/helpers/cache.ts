@@ -1,5 +1,6 @@
 import { gql, InMemoryCache } from "@apollo/client"
 import { QUERY_PRICE, WALLET } from "@app/graphql/query"
+import moment from "moment"
 
 export const cacheWallet = (cache: InMemoryCache, balance: number): void => {
   const transactions = [
@@ -103,7 +104,7 @@ export const cachePrice = (cache: InMemoryCache): void => {
       prices: [
         {
           __typename: "Price",
-          id: "1628106059",
+          id: moment().unix().toString(),
           o: 0.0003966375,
         },
       ],

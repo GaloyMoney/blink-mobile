@@ -29,7 +29,7 @@ const usingHermes = typeof HermesInternal === "object" && HermesInternal !== nul
 
 export const DebugScreen: ScreenType = () => {
   const client = useApolloClient()
-  const btcPrice = useBTCPrice()
+  const { btcPrice } = useBTCPrice()
   const { tokenUid, tokenNetwork, removeToken } = useToken()
 
   const networks: INetwork[] = ["regtest", "testnet", "mainnet"]

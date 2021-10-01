@@ -23,7 +23,6 @@
     "patch": "patch-package",
     "postinstall": "jetify && if which pod >/dev/null; then (cd ios; pod install); fi",
     "hack:types-react-native": "rimraf node_modules/@types/react-native/node_modules/@types",
-    "hack:types-react-test-renderer": "rimraf node_modules/@types/react-test-renderer/node_modules/@types",
     "prepare": "npm-run-all patch hack:*"
   },
   "dependencies": {
@@ -133,7 +132,6 @@
     "@types/react-native-swiper": "^1.5.12",
     "@types/react-native-vector-icons": "^6.4.8",
     "@types/react-native-version-number": "^0.3.5",
-    "@types/react-test-renderer": "^17.0.0",
     "@typescript-eslint/eslint-plugin": "^4.28.0",
     "@typescript-eslint/parser": "^4.28.0",
     "babel-core": "7.0.0-bridge.0",
@@ -160,7 +158,7 @@
     "react-devtools": "^4.19.0",
     "react-devtools-core": "4.18.0",
     "react-native-svg-transformer": "^0.14.3",
-    "react-test-renderer": "17.0.2",
+    "react-test-renderer": "^17.0.2",
     "rimraf": "3.0.2",
     "solidarity": "^3.0.0",
     "ts-jest": "^27.0.5",

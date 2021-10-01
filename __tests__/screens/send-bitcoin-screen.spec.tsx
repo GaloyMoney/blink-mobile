@@ -2,7 +2,6 @@ import * as React from "react"
 import { MockedProvider } from "@apollo/client/testing"
 import { InMemoryCache } from "@apollo/client"
 import { act, cleanup, fireEvent, render } from "@testing-library/react-native"
-import renderer from "react-test-renderer"
 import "@testing-library/jest-native/extend-expect"
 import "react-native-gesture-handler/jestSetup.js"
 
@@ -21,23 +20,23 @@ jest.mock("../../app/utils/parsing", () => {
   }
 })
 
-describe("SendBitcoinScreen", () => {
-  const cache = new InMemoryCache()
-  cacheWallet(cache, 117585)
-  cacheNodeStats(cache)
-  cachePrice(cache)
-  cacheUsername(cache)
+const cache = new InMemoryCache()
 
+describe("SendBitcoinScreen", () => {
+  beforeEach(() => {
+    cacheWallet(cache, 117585)
+    cacheNodeStats(cache)
+    cachePrice(cache)
+    cacheUsername(cache)
+  })
   afterEach(cleanup)
 
   it("render matches snapshot", () => {
-    const tree = renderer
-      .create(
-        <MockedProvider cache={cache}>
-          <SendBitcoinScreen route={{ params: null }} />
-        </MockedProvider>,
-      )
-      .toJSON()
+    const tree = render(
+      <MockedProvider cache={cache}>
+        <SendBitcoinScreen route={{ params: null }} />
+      </MockedProvider>,
+    ).toJSON()
     expect(tree).toMatchSnapshot()
   })
 
@@ -107,8 +106,6 @@ describe("SendBitcoinScreen", () => {
   })
 
   it("successfully parses lightning payment with `lightning:` prefix", async () => {
-    cacheWallet(cache, 1175855)
-
     const { getByA11yLabel, getByPlaceholderText, queryByText } = render(
       <MockedProvider cache={cache}>
         <SendBitcoinScreen route={{ params: null }} />

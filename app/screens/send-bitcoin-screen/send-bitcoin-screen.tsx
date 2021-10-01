@@ -7,6 +7,7 @@ import { ActivityIndicator, ScrollView, Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
+
 import { InputPayment } from "../../components/input-payment"
 import { GaloyInput } from "../../components/galoy-input"
 import { Screen } from "../../components/screen"
@@ -25,6 +26,8 @@ import { TextCurrency } from "../../components/text-currency/text-currency"
 import { useCurrencies } from "../../hooks/use-currencies"
 import { StackNavigationProp } from "@react-navigation/stack"
 
+export const PRICE_CHECK_INTERVAL = 10000
+
 type SendBitcoinScreenProps = {
   navigation: StackNavigationProp<MoveMoneyStackParamList, "sendBitcoin">
   route: RouteProp<MoveMoneyStackParamList, "sendBitcoin">
@@ -36,7 +39,7 @@ export const SendBitcoinScreen: ScreenType = ({
 }: SendBitcoinScreenProps) => {
   const client = useApolloClient()
   const { tokenNetwork } = useToken()
-  const btcPrice = useBTCPrice()
+  const { btcPrice, updateStalePrice } = useBTCPrice()
 
   const { primaryCurrency, secondaryCurrency, toggleCurrency } = useCurrencies()
 
@@ -83,6 +86,11 @@ export const SendBitcoinScreen: ScreenType = ({
     usernameExistsQuery,
     { loading: loadingUserNameExist, data: dataUsernameExists },
   ] = useLazyQuery(USERNAME_EXIST, { fetchPolicy: "network-only" })
+
+  useEffect(() => {
+    const interval = setInterval(() => updateStalePrice(), PRICE_CHECK_INTERVAL)
+    return () => clearInterval(interval)
+  }, [updateStalePrice])
 
   const usernameExists = dataUsernameExists?.usernameExists ?? false
 
@@ -476,7 +484,7 @@ const styles = EStyleSheet.create({
 
   subCurrencyText: {
     color: palette.midGrey,
-    fontSize: "16rem",
+    fontSize: "20rem",
     marginRight: "10%",
     marginTop: 0,
     paddingTop: 0,
