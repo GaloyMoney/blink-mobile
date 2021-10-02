@@ -18,12 +18,13 @@
     "ios-session": "(cd ios && fastlane spaceauth -u jb@galoy.io)",
     "fastlane-update": "(cd ios && bundle update fastlane && cd ../android && bundle update fastlane)",
     "increment": "(cd ios && fastlane ios increment && cd ../android && echo 'fastlane android increment')",
-    "storybook": "start-storybook -p 9001",
     "adb": "adb reverse tcp:9090 tcp:9090 && adb reverse tcp:3000 tcp:3000 && adb reverse tcp:4000 tcp:4000 && adb reverse tcp:9001 tcp:9001 && adb reverse tcp:8081 tcp:8081",
     "patch": "patch-package",
     "postinstall": "jetify && if which pod >/dev/null; then (cd ios; pod install); fi",
     "hack:types-react-native": "rimraf node_modules/@types/react-native/node_modules/@types",
-    "prepare": "npm-run-all patch hack:*"
+    "prepare": "npm-run-all patch hack:*",
+    "storybook": "start-storybook -p 7007",
+    "prestorybook": "rnstl"
   },
   "dependencies": {
     "@apollo/client": "^3.3.13",
@@ -41,6 +42,7 @@
     "@react-navigation/native": "^5.8.10",
     "@react-navigation/stack": "^5.12.8",
     "@remobile/react-native-qrcode-local-image": "nicolasburtey/react-native-qrcode-local-image.git",
+    "@storybook/cli": "^6.3.8",
     "apollo3-cache-persist": "^0.9.1",
     "bitcoinjs-lib": "^5.1.10",
     "bolt11": "nicolasburtey/bolt11",
@@ -48,6 +50,7 @@
     "currency.js": "^2.0.2",
     "graphql": "^15.5.0",
     "i18n-js": "^3.5.1",
+    "init": "^0.1.2",
     "intl": "^1.2.5",
     "jwt-decode": "^3.1.2",
     "lodash.clonedeep": "^4.5.0",
@@ -101,6 +104,8 @@
     "react-native-version-number": "^0.3.6",
     "react-native-walkthrough-tooltip": "^1.2.0",
     "react-native-youtube": "^2.0.0",
+    "sb": "^6.3.8",
+    "tempy": "^1.0.0",
     "url": "^0.11.0",
     "victory-native": "^35.0.1"
   },
@@ -112,8 +117,9 @@
     "@storybook/addon-knobs": "^6.1.9",
     "@storybook/addon-ondevice-actions": "^5.3.18",
     "@storybook/addon-ondevice-knobs": "^5.3.25",
+    "@storybook/addon-storyshots": "^6.1.9",
     "@storybook/react-native": "^5.3.17",
-    "@storybook/react-native-server": "^5.3.17",
+    "@storybook/react-native-server": "^5.3.23",
     "@testing-library/jest-native": "^4.0.2",
     "@testing-library/react-native": "^7.2.0",
     "@types/detox": "^17.14.2",
@@ -134,6 +140,7 @@
     "@types/react-native-version-number": "^0.3.5",
     "@typescript-eslint/eslint-plugin": "^4.28.0",
     "@typescript-eslint/parser": "^4.28.0",
+    "apollo-storybook-decorator": "^0.5.3",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^27.2.3",
     "babel-loader": "^8.2.2",
@@ -157,10 +164,12 @@
     "prettier": "^2.3.1",
     "react-devtools": "^4.19.0",
     "react-devtools-core": "4.18.0",
+    "react-native-storybook-loader": "^2.0.4",
     "react-native-svg-transformer": "^0.14.3",
     "react-test-renderer": "^17.0.2",
     "rimraf": "3.0.2",
     "solidarity": "^3.0.0",
+    "storybook-addon-apollo-client": "^4.0.9",
     "ts-jest": "^27.0.5",
     "typescript": "^4.1.2"
   },
@@ -169,5 +178,12 @@
   },
   "resolutions": {
     "react-native/@jest/create-cache-key-function": "^27.2.3"
+  },
+  "config": {
+    "react-native-storybook-loader": {
+      "searchDir": ["./app/components/", "./app/screens/"],
+      "pattern": "**/*.stories.tsx",
+      "outputFile": "./storybook/storyLoader.js"
+    }
   }
 }

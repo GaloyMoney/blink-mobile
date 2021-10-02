@@ -37,5 +37,7 @@ storiesOf("InputPayment", module)
           }}
         />
       </UseCase>
+
     </Story>
   ))
+

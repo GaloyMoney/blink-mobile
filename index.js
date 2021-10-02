@@ -10,6 +10,7 @@
 import React from "react";
 import { AppRegistry } from "react-native"
 import { App } from "./app/app.tsx"
+
 /**
  * This needs to match what's found in your app_delegate.m and MainActivity.java.
  */

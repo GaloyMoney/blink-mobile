@@ -9,8 +9,9 @@ const StoryBookStack = createStackNavigator();
 
 const client = new ApolloClient({
   name: isIos ? "iOS" : "Android",
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
 });
+
 /**
  * Helper component tor create a Dummy Stack to access {navigation} object on *.story.tsx files
  *
