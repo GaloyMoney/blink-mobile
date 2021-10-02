@@ -2,7 +2,7 @@ import { gql, useApolloClient, useMutation } from "@apollo/client"
 import messaging from "@react-native-firebase/messaging"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useMemo, useEffect, useState } from "react"
 import {
   Alert,
   AppState,
@@ -18,8 +18,10 @@ import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import ScreenBrightness from "react-native-screen-brightness"
 import Swiper from "react-native-swiper"
 import Icon from "react-native-vector-icons/Ionicons"
+import debounce from "lodash.debounce"
+
 import { GaloyInput } from "../../components/galoy-input"
-import { InputPaymentDataInjected } from "../../components/input-payment"
+import { InputPayment } from "../../components/input-payment"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
 import { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
@@ -29,6 +31,9 @@ import { getHashFromInvoice } from "../../utils/bolt11"
 import { isIos } from "../../utils/helper"
 import { hasFullPermissions, requestPermission } from "../../utils/notifications"
 import { QRView } from "./qr-view"
+import { useMoneyAmount } from "../../hooks"
+import { TextCurrency } from "../../components/text-currency"
+import { useCurrencies } from "../../hooks/use-currencies"
 
 // FIXME: crash when no connection
 
@@ -42,6 +47,16 @@ const styles = EStyleSheet.create({
     flex: 1,
     paddingHorizontal: 50,
     width: "100%",
+  },
+
+  subCurrencyText: {
+    color: palette.midGrey,
+    fontSize: "16rem",
+    marginRight: "10%",
+    marginTop: 0,
+    paddingTop: 0,
+    textAlign: "center",
+    width: "90%",
   },
 
   textStyle: {
@@ -82,6 +97,18 @@ type Props = {
 export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
   const client = useApolloClient()
 
+  const { primaryCurrency, secondaryCurrency, toggleCurrency } = useCurrencies()
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [primaryAmount, _, setPrimaryAmount, setPrimaryAmountValue] =
+    useMoneyAmount(primaryCurrency)
+
+  const [secondaryAmount, convertSecondaryAmount, setSecondaryAmount] =
+    useMoneyAmount(secondaryCurrency)
+
+  const satAmount =
+    primaryCurrency === "BTC" ? primaryAmount.value : secondaryAmount.value
+
   const [addInvoice] = useMutation(ADD_INVOICE)
   const [updatePendingInvoice] = useMutation(UPDATE_PENDING_INVOICE)
 
@@ -95,34 +122,51 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
     lastOnChainAddress = "issue with the QRcode"
   }
 
-  const [keyboardIsShown, setKeyboardIsShown] = useState(false)
   const [memo, setMemo] = useState("")
-  const [amount, setAmount] = useState(0)
   const [loading, setLoading] = useState(true)
   const [invoice, setInvoice] = useState("")
   const [err, setErr] = useState("")
   const [isSucceed, setIsSucceed] = useState(false)
   const [brightnessInitial, setBrightnessInitial] = useState(null)
 
-  const update = useCallback(async () => {
-    setLoading(true)
-    try {
-      const { data } = await addInvoice({ variables: { value: amount, memo } })
-      const invoice = data.invoice.addInvoice
-      setInvoice(invoice)
-    } catch (err) {
-      console.error(err, "error with AddInvoice")
-      setErr(`${err}`)
-      throw err
-    } finally {
-      setLoading(false)
-    }
-  }, [addInvoice, amount, memo])
+  const updateInvoice = useMemo(
+    () =>
+      debounce(async ({ satAmount, memo }) => {
+        setLoading(true)
+        try {
+          const { data } = await addInvoice({
+            variables: { value: satAmount, memo },
+          })
+          const invoice = data.invoice.addInvoice
+          setInvoice(invoice)
+        } catch (err) {
+          console.error(err, "error with AddInvoice")
+          setErr(`${err}`)
+          throw err
+        } finally {
+          setLoading(false)
+        }
+      }, 750),
+    [addInvoice],
+  )
 
   useEffect(() => {
-    update()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    if (primaryCurrency !== primaryAmount.currency) {
+      const tempAmount = { ...secondaryAmount }
+      setSecondaryAmount(primaryAmount)
+      setPrimaryAmount(tempAmount)
+    }
+  }, [
+    primaryAmount,
+    primaryCurrency,
+    secondaryAmount,
+    setPrimaryAmount,
+    setSecondaryAmount,
+  ])
+
+  useEffect(() => {
+    updateInvoice({ satAmount, memo })
+  }, [satAmount, memo, updateInvoice])
 
   useEffect(() => {
     const fn = async () => {
@@ -203,6 +247,11 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
     notifRequest()
   }, [client])
 
+  useEffect(() => {
+    // Update secondary amount when price updates
+    convertSecondaryAmount(primaryAmount)
+  }, [primaryAmount, convertSecondaryAmount])
+
   const paymentSuccess = useCallback(() => {
     // success
 
@@ -268,15 +317,6 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
   const inputMemoRef = React.useRef<TextInput>()
 
   useEffect(() => {
-    Keyboard.addListener("keyboardDidShow", _keyboardDidShow)
-
-    // cleanup function
-    return () => {
-      Keyboard.removeListener("keyboardDidShow", _keyboardDidShow)
-    }
-  })
-
-  useEffect(() => {
     Keyboard.addListener("keyboardDidHide", _keyboardDidHide)
 
     // cleanup function
@@ -285,26 +325,27 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
     }
   })
 
-  const _keyboardDidShow = useCallback(() => {
-    setKeyboardIsShown(true)
-  }, [])
-
   const _keyboardDidHide = useCallback(() => {
-    inputMemoRef?.current.blur()
-    setKeyboardIsShown(false)
+    inputMemoRef?.current?.blur()
   }, [inputMemoRef])
 
   return (
     <Screen backgroundColor={palette.lighterGrey} style={styles.screen} preset="fixed">
       <ScrollView keyboardShouldPersistTaps="always">
         <View style={styles.section}>
-          <InputPaymentDataInjected
-            amount={amount}
+          <InputPayment
             editable={!isSucceed}
             forceKeyboard={false}
-            onUpdateAmount={setAmount}
-            onBlur={update}
+            toggleCurrency={toggleCurrency}
+            onUpdateAmount={setPrimaryAmountValue}
+            primaryAmount={primaryAmount}
+            secondaryAmount={secondaryAmount}
             sub
+          />
+          <TextCurrency
+            amount={secondaryAmount.value}
+            currency={secondaryAmount.currency}
+            style={styles.subCurrencyText}
           />
           <GaloyInput
             placeholder={translate("ReceiveBitcoinScreen.setNote")}
@@ -317,7 +358,6 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
               <Icon name="ios-create-outline" size={21} color={palette.darkGrey} />
             }
             ref={inputMemoRef}
-            onBlur={update}
             disabled={isSucceed}
           />
         </View>
@@ -326,9 +366,8 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
           <QRView
             data={invoice}
             type="lightning"
-            amount={amount}
+            amount={satAmount}
             memo={memo}
-            keyboardIsShown={keyboardIsShown}
             loading={loading}
             isSucceed={isSucceed}
             navigation={navigation}
@@ -337,9 +376,8 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
           <QRView
             data={lastOnChainAddress}
             type="bitcoin"
-            amount={amount}
+            amount={satAmount}
             memo={memo}
-            keyboardIsShown={keyboardIsShown}
             loading={loading}
             isSucceed={isSucceed}
             navigation={navigation}

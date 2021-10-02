@@ -16,7 +16,6 @@ module.exports = {
   moduleNameMapper: {
     "^@app/(.*)$": ["<rootDir>app/$1"],
     "^@mocks/(.*)$": ["<rootDir>__mocks__/$1"],
-    "^@node_modules/(.*)$": ["<rootDir>node_modules/$1"],
   },
   transformIgnorePatterns: [
     "node_modules/(?!(react-native" +

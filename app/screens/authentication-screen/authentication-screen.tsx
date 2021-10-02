@@ -17,9 +17,9 @@ import { AuthenticationScreenPurpose, PinScreenPurpose } from "../../utils/enum"
 import { showModalClipboardIfValidPayment } from "../../utils/clipboard"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
+import useToken from "../../utils/use-token"
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const BitcoinBeachLogo = require("../get-started-screen/bitcoinBeach3.png")
+import BitcoinBeachLogo from "../get-started-screen/bitcoinBeach3.png"
 
 const styles = EStyleSheet.create({
   Logo: {
@@ -74,6 +74,7 @@ type Props = {
 
 export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) => {
   const client = useApolloClient()
+  const { removeToken, tokenNetwork } = useToken()
 
   const { screenPurpose, isPinEnabled } = route.params
 
@@ -96,14 +97,14 @@ export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) =
     )
   }
 
-  const handleAuthenticationSuccess = () => {
+  const handleAuthenticationSuccess = async () => {
     if (screenPurpose === AuthenticationScreenPurpose.Authenticate) {
       KeyStoreWrapper.resetPinAttempts()
     } else if (screenPurpose === AuthenticationScreenPurpose.TurnOnAuthentication) {
       KeyStoreWrapper.setIsBiometricsEnabled()
     }
     navigation.replace("Primary")
-    showModalClipboardIfValidPayment(client)
+    showModalClipboardIfValidPayment({ client, network: tokenNetwork })
   }
 
   const handleAuthenticationFailure = () => {
@@ -112,7 +113,7 @@ export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) =
   }
 
   const logout = async () => {
-    await resetDataStore(client)
+    await resetDataStore({ client, removeToken })
     Alert.alert(translate("common.loggedOut"), "", [
       {
         text: translate("common.ok"),

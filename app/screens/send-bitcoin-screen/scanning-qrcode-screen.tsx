@@ -1,5 +1,5 @@
 import { useApolloClient } from "@apollo/client"
-import { useIsFocused, useNavigation } from "@react-navigation/native"
+import { useIsFocused, useNavigationState } from "@react-navigation/native"
 import * as React from "react"
 import { Alert, Dimensions, Pressable, View, ViewStyle } from "react-native"
 import { RNCamera } from "react-native-camera"
@@ -12,10 +12,11 @@ import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
 import type { ScreenType } from "../../types/jsx"
 import { validPayment } from "../../utils/parsing"
-import { Token } from "../../utils/token"
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const LocalQRCode = require("@remobile/react-native-qrcode-local-image")
+import LocalQRCode from "@remobile/react-native-qrcode-local-image"
+import { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
+import { StackNavigationProp } from "@react-navigation/stack"
+import useToken from "../../utils/use-token"
 
 const CAMERA: ViewStyle = {
   width: "100%",
@@ -63,10 +64,17 @@ const styles = EStyleSheet.create({
   },
 })
 
-export const ScanningQRCodeScreen: ScreenType = () => {
-  const { navigate, goBack } = useNavigation()
+type ScanningQRCodeScreenProps = {
+  navigation: StackNavigationProp<MoveMoneyStackParamList, "sendBitcoin">
+}
+
+export const ScanningQRCodeScreen: ScreenType = ({
+  navigation,
+}: ScanningQRCodeScreenProps) => {
+  const index = useNavigationState((state) => state.index)
   const [pending, setPending] = React.useState(false)
   const client = useApolloClient()
+  const { tokenNetwork } = useToken()
 
   const decodeInvoice = async (data) => {
     if (pending) {
@@ -74,10 +82,13 @@ export const ScanningQRCodeScreen: ScreenType = () => {
     }
 
     try {
-      const { valid } = validPayment(data, Token.getInstance().network, client)
-
+      const { valid } = validPayment(data, tokenNetwork, client)
       if (valid) {
-        navigate("sendBitcoin", { payment: data })
+        if (index <= 1) {
+          navigation.replace("sendBitcoin", { payment: data })
+        } else {
+          navigation.navigate("sendBitcoin", { payment: data })
+        }
       } else {
         setPending(true)
         Alert.alert(
@@ -103,8 +114,8 @@ export const ScanningQRCodeScreen: ScreenType = () => {
           mediaType: "photo",
         },
         (response) => {
-          if (response.uri) {
-            const uri = response.uri.toString().replace("file://", "")
+          if (response.assets[0].uri) {
+            const uri = response.assets[0].uri.toString().replace("file://", "")
             LocalQRCode.decode(uri, (error, result) => {
               if (!error) {
                 decodeInvoice(result)
@@ -142,7 +153,7 @@ export const ScanningQRCodeScreen: ScreenType = () => {
           <View style={styles.rectangleContainer}>
             <View style={styles.rectangle} />
           </View>
-          <Pressable onPress={goBack}>
+          <Pressable onPress={navigation.goBack}>
             <View style={styles.close}>
               <Svg viewBox="0 0 100 100">
                 <Circle cx={50} cy={50} r={50} fill={palette.white} opacity={0.5} />

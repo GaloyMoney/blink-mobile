@@ -4,8 +4,7 @@ import { useIsFocused } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { ActivityIndicator, Alert, Text } from "react-native"
-import { TextInput } from "react-native-vector-icons/node_modules/@types/react-native/index"
+import { ActivityIndicator, Alert, Text, TextInput } from "react-native"
 import { Input } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 
@@ -91,6 +90,12 @@ export const UsernameScreen: ScreenType = ({ navigation }: Props) => {
 
     if (!UsernameValidation.hasValidCharacters(input)) {
       setMessage(translate("UsernameScreen.letterAndNumber"))
+      setMessageIsError(true)
+      return
+    }
+
+    if (!UsernameValidation.hasNoRestictedStartCharacters(input)) {
+      setMessage(translate("UsernameScreen.forbiddenStart"))
       setMessageIsError(true)
       return
     }

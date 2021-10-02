@@ -9,7 +9,7 @@
   },
   "BalanceHeader": {
     "currentBalance": "Current Balance",
-    "hiddenBalanceToolTip": "Hold to reveal your balance"
+    "hiddenBalanceToolTip": "Tap to reveal your balance"
   },
   "BankTransferScreen": {
     "title": "Bank Transfer"
@@ -18,6 +18,9 @@
     "noContactsYet": "No contacts yet.\n\nSend or receive a payment with a username. Usernames will automatically be added here.",
     "noMatchingContacts": "No contacts matching your search were found.",
     "title": "Contacts"
+  },
+  "ContactDetailsScreen": {
+    "title": "Transactions with %{input}"
   },
   "DepositCashScreen": {
     "title": "Deposit Cash"
@@ -460,6 +463,8 @@
     "title": "Map"
   },
   "ModalClipboard": {
+    "dismiss": "Dismiss",
+    "open": "Open",
     "pendingBitcoin": "You have a Bitcoin address in your clipboard",
     "pendingInvoice": "You have a Lightning Invoice in your clipboard"
   },
@@ -533,8 +538,22 @@
     "pinTitle": "PIN Code",
     "setPin": "Set PIN"
   },
+  "SendBitcoinConfirmationScreen": {
+    "amountLabel": "Amount:",
+    "confirmPayment": "Confirm payment",
+    "confirmPayment?": "Do you want to confirm this payment?",
+    "destinationLabel": "To:",
+    "feeLabel": "Fee:",
+    "memoLabel": "Note:",
+    "paymentFinal": "Payments are final.",
+    "stalePrice": "Your bitcoin price is old and was last updated {{timePeriod}} ago. Please restart the app before making a payment.",
+    "title": "Confirm Payment",
+    "totalLabel": "Total:",
+    "totalExceed": "Total exceeds your balance of {{balance}}"
+  },
   "SendBitcoinScreen": {
     "amount": "Amount",
+    "amountExceed": "Amount exceeds your balance of {{balance}}",
     "cost": "Cost",
     "fee": "network fee",
     "feeCalculationUnsuccessful": "Calculation unsuccessful ⚠️",
@@ -544,8 +563,7 @@
     "notConfirmed": "Payment has been sent\nbut is not confirmed yet\n\nYou can check the status\nof the payment in Transactions",
     "note": "optional note",
     "success": "Payment has been sent successfully",
-    "title": "Send Bitcoin",
-    "totalExceed": "Total exceeds your balance of {{balance}}"
+    "title": "Send Bitcoin"
   },
   "SettingsScreen": {
     "activate": "Tap to activate",
@@ -560,6 +578,7 @@
   },
   "TransactionDetailScreen": {
     "detail": "Transaction Details",
+    "paid": "Paid to/from",
     "received": "You received",
     "spent": "You spent"
   },
@@ -573,6 +592,7 @@
     "available": "✅  %{input} is available",
     "confirmSubtext": "The username is permanent and can not be changed later",
     "confirmTitle": "Set %{input} as your username?",
+    "forbiddenStart": "Cannot start with bc1, 1, or 3",
     "letterAndNumber": "Only lowercase letter, number and underscore (_) are accepted",
     "notAvailable": "❌  %{input} is not available",
     "success": "%{input} is now your username!",
@@ -593,7 +613,8 @@
     "errorLoggingIn": "Error logging in. Did you use the right code?",
     "header": "To confirm your phone number, enter the code we just sent you on %{phone}",
     "need6Digits": "The code need to have 6 digits",
-    "placeholder": "6 Digits Code"
+    "placeholder": "6 Digits Code",
+    "sendAgain": "Send Again"
   },
   "common": {
     "Fee": "Fee",
@@ -620,12 +641,15 @@
     "fees": "Fees",
     "feesUsd": "Fees (USD)",
     "firstName": "First Name",
+    "hour": "hour",
+    "hours": "hours",
     "invoice": "Invoice",
     "language": "language",
     "lastName": "Last Name",
     "later": "Later",
     "loggedOut": "You have been logged out.",
     "logout": "Log Out",
+    "minutes": "minutes",
     "next": "Next",
     "note": "Note",
     "notification": "Notification",
@@ -651,7 +675,8 @@
   "errors": {
     "generic": "There was an error. Please try again later",
     "invalidEmail": "Invalid email",
-    "invalidPhoneNumber": "is not a valid phone number"
+    "invalidPhoneNumber": "is not a valid phone number",
+    "tooManyRequestsPhoneCode": "Too many requests. Please wait before requesting another text message."
   },
   "notifications": {
     "payment": {
@@ -663,6 +688,10 @@
     "one": "1 sat",
     "other": "{{formatted_number}} sats",
     "zero": "0 sats"
+  },
+  "tippingLink": {
+    "title": "Want to receive tips? Share your tipping link!",
+    "copied": "{{data}} saved to clipboard"
   },
   "whatsapp": {
     "contactUs": "Need help? Talk to us on WhatsApp!",

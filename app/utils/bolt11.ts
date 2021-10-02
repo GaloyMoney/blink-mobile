@@ -1,5 +1,4 @@
 import * as lightningPayReq from "bolt11"
-// const {parsePaymentRequest} = require('invoices');
 
 // helper for bolt11
 

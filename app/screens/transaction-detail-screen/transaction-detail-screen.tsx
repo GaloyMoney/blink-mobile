@@ -87,7 +87,6 @@ type Props = {
 }
 
 export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props) => {
-  const currency = route.params.currency
   const {
     amount,
     hash,
@@ -124,7 +123,7 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
         )}
         <TextCurrency
           amount={Math.abs(amount)}
-          currency={currency}
+          currency={"BTC"}
           style={styles.amountSecondary}
         />
       </View>
@@ -137,7 +136,9 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
         <Row entry={translate("common.date")} value={date_format} />
         {!isReceive && <Row entry={translate("common.fees")} value={feeEntry} />}
         <Row entry={translate("common.description")} value={description} />
-        {username && <Row entry="Paid to/from" value={username} />}
+        {username && (
+          <Row entry={translate("TransactionDetailScreen.paid")} value={username} />
+        )}
         <Row entry={translate("common.type")} value={type} />
         {hash && <Row entry="Hash" value={hash} />}
         {id && <Row entry="id" value={id} />}

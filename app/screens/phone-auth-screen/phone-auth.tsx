@@ -10,7 +10,7 @@ import {
   Text,
   View,
 } from "react-native"
-import { Input } from "react-native-elements"
+import { Button, Input } from "react-native-elements"
 import { FetchResult, gql, useApolloClient, useMutation } from "@apollo/client"
 import EStyleSheet from "react-native-extended-stylesheet"
 import PhoneInput from "react-native-phone-input"
@@ -23,7 +23,7 @@ import { translate } from "../../i18n"
 import { queryMain } from "../../graphql/query"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-import { Token } from "../../utils/token"
+import useToken from "../../utils/use-token"
 import { toastShow } from "../../utils/toast"
 import { addDeviceToken } from "../../utils/notifications"
 import BiometricWrapper from "../../utils/biometricAuthentication"
@@ -32,6 +32,7 @@ import { AuthenticationScreenPurpose } from "../../utils/enum"
 import BadgerPhone from "./badger-phone-01.svg"
 import type { PhoneValidationStackParamList } from "../../navigation/stack-param-lists"
 import { RouteProp } from "@react-navigation/native"
+import { parseTimer } from "../../utils/timer"
 
 const REQUEST_AUTH_CODE = gql`
   mutation userRequestAuthCode($input: UserRequestAuthCodeInput!) {
@@ -69,6 +70,10 @@ type LoginMutationFunction = (
 ) => Promise<FetchResult<Record<string, UserLoginMutationResponse>>>
 
 const styles = EStyleSheet.create({
+  buttonStyle: {
+    backgroundColor: color.primary,
+  },
+
   codeContainer: {
     alignSelf: "center",
     width: "70%",
@@ -91,6 +96,13 @@ const styles = EStyleSheet.create({
     paddingVertical: "12rem",
   },
 
+  sendAgainButtonRow: {
+    flexDirection: "row",
+    justifyContent: "center",
+    paddingHorizontal: "25rem",
+    textAlign: "center",
+  },
+
   text: {
     fontSize: "20rem",
     paddingBottom: "10rem",
@@ -98,9 +110,20 @@ const styles = EStyleSheet.create({
     textAlign: "center",
   },
 
+  textDisabledSendAgain: {
+    color: color.palette.midGrey,
+  },
+
   textEntry: {
     color: color.palette.darkGrey,
     fontSize: "18rem",
+  },
+
+  timerRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: "25rem",
+    textAlign: "center",
   },
 })
 
@@ -128,15 +151,19 @@ export const WelcomePhoneInputScreen: ScreenType = ({
 
     try {
       const { data } = await requestPhoneCode({ variables: { input: { phone } } })
+
       if (data.userRequestAuthCode.success) {
         navigation.navigate("welcomePhoneValidation", { phone })
       } else {
-        toastShow(translate("erros.generic"))
+        toastShow(translate("errors.generic"))
       }
     } catch (err) {
       console.warn({ err })
-      // use global Toaster?
-      // setErr(err.toString())
+      if (err.message === "Too many requests") {
+        toastShow(translate("errors.tooManyRequestsPhoneCode"))
+      } else {
+        toastShow(translate("errors.generic"))
+      }
     }
   }, [navigation, requestPhoneCode])
 
@@ -187,6 +214,7 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
   navigation,
 }: WelcomePhoneValidationScreenDataInjectedProps) => {
   const client = useApolloClient()
+  const { saveToken, hasToken } = useToken()
 
   const [login, { loading, error }] = useMutation<{
     login: LoginMutationFunction
@@ -196,7 +224,7 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
 
   const onSuccess = async ({ token }) => {
     analytics().logLogin({ method: "phone" })
-    await Token.getInstance().save(token)
+    await saveToken(token)
 
     // TODO refactor from mst-gql to apollo client
     // sync the earned quizzes
@@ -205,7 +233,7 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
 
     // console.log("succesfully update earns id")
 
-    queryMain(client, { logged: Token.getInstance().has() })
+    queryMain(client, { logged: hasToken })
 
     addDeviceToken(client)
   }
@@ -236,14 +264,36 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
   route,
   navigation,
   login,
-  loading,
   error,
 }: WelcomePhoneValidationScreenProps) => {
   // FIXME see what to do with store and storybook
   const [code, setCode] = useState("")
+  const [secondsRemaining, setSecondsRemaining] = useState<number>(60)
 
   const { phone } = route.params
   const updateCode = (input) => setCode(input)
+
+  const [requestPhoneCode, { loading }] = useMutation(REQUEST_AUTH_CODE, {
+    fetchPolicy: "no-cache",
+  })
+
+  const sendCodeAgain = useCallback(async () => {
+    try {
+      const { data } = await requestPhoneCode({ variables: { input: { phone } } })
+      if (data.userRequestAuthCode.success) {
+        setSecondsRemaining(60)
+      } else {
+        toastShow(translate("errors.generic"))
+      }
+    } catch (err) {
+      console.warn({ err })
+      if (err.message === "Too many requests") {
+        toastShow(translate("errors.tooManyRequestsPhoneCode"))
+      } else {
+        toastShow(translate("errors.generic"))
+      }
+    }
+  }, [phone, requestPhoneCode])
 
   const send = async () => {
     if (code.length !== 6) {
@@ -284,12 +334,20 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [code])
 
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      if (secondsRemaining > 0) {
+        setSecondsRemaining(secondsRemaining - 1)
+      }
+    }, 1000)
+    return () => clearTimeout(timerId)
+  }, [secondsRemaining])
+
   return (
     <Screen backgroundColor={palette.lighterGrey}>
       <View style={{ flex: 1 }}>
         <ScrollView>
           <View style={{ flex: 1, minHeight: 32 }} />
-          <BadgerPhone style={styles.image} />
           <Text style={styles.text}>
             {translate("WelcomePhoneValidationScreen.header", { phone })}
           </Text>
@@ -314,6 +372,27 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
             >
               {code}
             </Input>
+            {secondsRemaining > 0 ? (
+              <View style={styles.timerRow}>
+                <Text style={styles.textDisabledSendAgain}>
+                  {translate("WelcomePhoneValidationScreen.sendAgain")}
+                </Text>
+                <Text>{parseTimer(secondsRemaining)}</Text>
+              </View>
+            ) : (
+              <View style={styles.sendAgainButtonRow}>
+                <Button
+                  buttonStyle={styles.buttonStyle}
+                  title={translate("WelcomePhoneValidationScreen.sendAgain")}
+                  onPress={() => {
+                    if (!loading) {
+                      sendCodeAgain()
+                    }
+                  }}
+                  disabled={loading}
+                />
+              </View>
+            )}
           </KeyboardAvoidingView>
           <View style={{ flex: 1, minHeight: 16 }} />
           <ActivityIndicator animating={loading} size="large" color={color.primary} />

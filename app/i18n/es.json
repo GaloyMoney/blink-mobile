@@ -21,7 +21,8 @@
     "usePin": "Usar PIN"
   },
   "BalanceHeader": {
-    "currentBalance": "Saldo actual"
+    "currentBalance": "Saldo actual",
+    "hiddenBalanceToolTip": "Presione para ver el saldo"
   },
   "BankAccountEarnScreen": {
     "buySell": "y compre y venda bitcoins fácilmente en la aplicación\n",
@@ -40,6 +41,9 @@
     "noContactsYet": "Aún no hay contactos disponibles.\n\nEnvíe o reciba un pago con nombre de usuario y lo agregaremos automáticamente.",
     "noMatchingContacts": "No se encontraron coincidencias para su búsqueda.",
     "title": "Contactos"
+  },
+  "ContactDetailsScreen": {
+    "title": "Transacciones con %{input}"
   },
   "DateOfBirthScreen": {
     "title": "Fecha de nacimiento"
@@ -488,8 +492,10 @@
     "title": "Mapa"
   },
   "ModalClipboard": {
-    "pendingBitcoin": "\nTienes una dirección de Bitcoin en tu portapapeles",
-    "pendingInvoice": "Tienes una factura relámpago en tu portapapeles"
+    "dismiss": "Rechazar",
+    "open": "Abrir",
+    "pendingBitcoin": "Hay una dirección Bitcoin en el portapapeles",
+    "pendingInvoice": "Hay una factura Lightning en el portapapeles"
   },
   "MoveMoneyScreen": {
     "needBankAccount": "Abra una cuenta de efectivo para activar",
@@ -552,7 +558,8 @@
     "title": "Recibir Bitcoin"
   },
   "ScanningQRCodeScreen": {
-    "invalidContent": "nosotros encontramos",
+    "invalidContent": "Encontramos lo siguiente:\n\n{{found}}\n\nEsto no es una dirección Bitcoin o factura Lightning válida",
+    "invalidTitle": "Código QR inválido",
     "noQrCode": "No pudimos encontrar un código QR en la imagen",
     "title": "Escanear QR"
   },
@@ -562,10 +569,25 @@
     "biometricTitle": "Biométrica",
     "biometryNotAvailable": "El sensor biométrico no está disponible.",
     "biometryNotEnrolled": "Registre al menos un sensor biométrico para utilizar la autenticación basada en datos biométricos.",
+    "hideBalanceDescription": "Ocultar su saldo de forma predeterminada para no mostrarlo si alguien está viendo su pantalla.",
+    "hideBalanceSubtitle": "Ocultar saldo",
+    "hideBalanceTitle": "Saldo",
     "pinDescription": "El PIN se utiliza como método de autenticación de respaldo para la autenticación biométrica.",
     "pinSubtitle": "Habilitar PIN",
     "pinTitle": "Código PIN",
     "setPin": "Establecer PIN"
+  },
+  "SendBitcoinConfirmationScreen": {
+    "amountLabel": "Cantidad:",
+    "confirmPayment": "Confirmar y pagar",
+    "confirmPayment?": "¿Desea confirmar este pago?",
+    "destinationLabel": "Para:",
+    "feeLabel": "Tarifa de red:",
+    "memoLabel": "Nota:",
+    "paymentFinal": "Recuerde que los pagos son definitivos y una vez realizados son irreversibles.",
+    "title": "Confirmar pago",
+    "totalLabel": "Total:",
+    "totalExceed": "El total excede su saldo de {{balance}}"
   },
   "SendBitcoinScreen": {
     "amount": "Cantidad",
@@ -593,6 +615,7 @@
   },
   "TransactionDetailScreen": {
     "detail": "Detalles de la transacción",
+    "paid": "Pagado a/desde",
     "received": "Recibiste",
     "spent": "Gastaste"
   },
@@ -606,6 +629,7 @@
     "available": "✅  %{input} está disponible",
     "confirmSubtext": "Este nombre de usuario es permanente y no se podrá cambiar más adelante.",
     "confirmTitle": "¿Desea establecer %{input} como su nombre de usuario?",
+    "forbiddenStart": "No debe empezar con bc1, 1 o 3",
     "letterAndNumber": "Solo se aceptan letras en minúscula, números y guiones bajos (_)",
     "notAvailable": "❌  %{input} no está disponible",
     "success": "¡%{input} es ahora su nombre de usuario!",
@@ -626,7 +650,8 @@
     "errorLoggingIn": "Error al iniciar sesión. ¿Usó el código correcto?",
     "header": "Para confirmar su cuenta, ingrese el código que le acabamos de enviar al teléfono %{phone}",
     "need6Digits": "El código debe tener 6 dígitos",
-    "placeholder": "Código de 6 dígitos"
+    "placeholder": "Código de 6 dígitos",
+    "sendAgain": "enviar de nuevo"
   },
   "common": {
     "Fee": "Tarifa",
@@ -682,7 +707,8 @@
   "errors": {
     "generic": "Hubo un error inesperado. Por favor intente más tarde\n",
     "invalidEmail": "Correo inválido",
-    "invalidPhoneNumber": "Esto no es un número de teléfono válido"
+    "invalidPhoneNumber": "Esto no es un número de teléfono válido",
+    "tooManyRequestsPhoneCode": "Demasiadas peticiones. Por favor, espere antes de solicitar otro mensaje de texto."
   },
   "notifications": {
     "payment": {
@@ -692,6 +718,10 @@
   },
   "sat": {
     "zero": "‪{{formatted_number}}‬ Satoshi"
+  },
+  "tippingLink": {
+    "title": "¿Quiere recibir propinas? ¡Comparta su enlace!",
+    "copied": "{{data}} se ha copiado en el portapapeles"
   },
   "whatsapp": {
     "contactUs": "¿Necesita ayuda? Contáctenos por WhatsApp",

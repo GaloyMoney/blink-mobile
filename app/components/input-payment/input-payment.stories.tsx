@@ -18,6 +18,10 @@ storiesOf("InputPayment", module)
           secondaryAmount={{currency: "BTC", value: 0.00011}}
           onUpdateAmount={() => true}
           editable
+          primaryAmount={{
+            value: 100,
+            currency: "USD",
+          }}
         />
       </UseCase>
       <UseCase text="Non editable" usage="Loading">
@@ -27,6 +31,10 @@ storiesOf("InputPayment", module)
           secondaryAmount={{currency: "BTC", value: 0.00011}}
           onUpdateAmount={() => true}
           editable={false}
+          primaryAmount={{
+            value: 100,
+            currency: "BTC",
+          }}
         />
       </UseCase>
     </Story>

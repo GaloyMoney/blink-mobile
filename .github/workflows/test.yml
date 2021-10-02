@@ -1,15 +1,14 @@
 name: "Test"
 on:
-  push:
   pull_request:
-    branches: [ main ]
+    branches: [main]
 jobs:
   check-code:
-    name: Check Code
+    name: Tests
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
-    - run: yarn install
-    - name: Run test
-      run: make test
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+      - run: yarn install
+      - name: Run test
+        run: yarn test

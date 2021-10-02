@@ -35,8 +35,7 @@ import SecurePartOneDark from "./05-secure-part-i-02.svg"
 import SecurePartTwo from "./06-secure-part-ii-01.svg"
 import SecurePartTwoDark from "./06-secure-part-ii-02.svg"
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const lottieTest = require("./02-i-trust-my-government-02.json")
+import lottieTest from "./02-i-trust-my-government-02.json"
 
 interface ISVGs {
   name: string

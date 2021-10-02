@@ -13,6 +13,8 @@ import { AppState } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import * as RNLocalize from "react-native-localize"
 import Icon from "react-native-vector-icons/Ionicons"
+import analytics from "@react-native-firebase/analytics"
+
 import { GET_LANGUAGE, QUERY_PRICE } from "../graphql/query"
 import { translate } from "../i18n"
 import {
@@ -35,7 +37,11 @@ import {
 } from "../screens/phone-auth-screen"
 import { PriceScreen } from "../screens/price-screen/price-screen"
 import { ReceiveBitcoinScreen } from "../screens/receive-bitcoin-screen"
-import { ScanningQRCodeScreen, SendBitcoinScreen } from "../screens/send-bitcoin-screen"
+import {
+  ScanningQRCodeScreen,
+  SendBitcoinConfirmationScreen,
+  SendBitcoinScreen,
+} from "../screens/send-bitcoin-screen"
 import { SettingsScreen, UsernameScreen } from "../screens/settings-screen"
 import { LanguageScreen } from "../screens/settings-screen/language-screen"
 import { SecurityScreen } from "../screens/settings-screen/security-screen"
@@ -45,7 +51,7 @@ import { WelcomeFirstScreen } from "../screens/welcome-screens"
 import { palette } from "../theme/palette"
 import { AccountType } from "../utils/enum"
 import { addDeviceToken } from "../utils/notifications"
-import { getNetwork, Token } from "../utils/token"
+import useToken from "../utils/use-token"
 import { showModalClipboardIfValidPayment } from "../utils/clipboard"
 import {
   ContactStackParamList,
@@ -56,8 +62,7 @@ import {
 } from "./stack-param-lists"
 import type { NavigatorType } from "../types/jsx"
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const PushNotification = require("react-native-push-notification")
+import PushNotification from "react-native-push-notification"
 
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
 PushNotification.configure({
@@ -125,17 +130,18 @@ const RootNavigator = createStackNavigator<RootStackParamList>()
 export const RootStack: NavigatorType = () => {
   const appState = React.useRef(AppState.currentState)
   const client = useApolloClient()
+  const { token, tokenNetwork } = useToken()
 
   const _handleAppStateChange = useCallback(
-    (nextAppState) => {
+    async (nextAppState) => {
       if (appState.current.match(/background/) && nextAppState === "active") {
         console.log("App has come to the foreground!")
-        showModalClipboardIfValidPayment(client)
+        showModalClipboardIfValidPayment({ client, network: tokenNetwork })
       }
 
       appState.current = nextAppState
     },
-    [client],
+    [client, tokenNetwork],
   )
 
   useEffect(() => {
@@ -168,7 +174,7 @@ export const RootStack: NavigatorType = () => {
       // invokeApp: true, // (optional) This enable click on actions to bring back the application to foreground or stay in background, default: true
 
       /* iOS only properties */
-      alertAction: "view", // (optional) default: view
+      // alertAction: "view", // (optional) default: view
       category: "", // (optional) default: empty string
 
       /* iOS and Android properties */
@@ -253,12 +259,10 @@ export const RootStack: NavigatorType = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   useEffect(() => messaging().onTokenRefresh((token) => addDeviceToken(client)), [client])
 
-  const token = Token.getInstance()
-
   return (
     <RootNavigator.Navigator
       screenOptions={{ gestureEnabled: false }}
-      initialRouteName={token.has() ? "authenticationCheck" : "getStarted"}
+      initialRouteName={token ? "authenticationCheck" : "getStarted"}
     >
       <RootNavigator.Screen
         name="getStarted"
@@ -304,6 +308,24 @@ export const RootStack: NavigatorType = () => {
           title: translate("ScanningQRCodeScreen.title"),
           headerShown: false,
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        }}
+      />
+      <StackMoveMoney.Screen
+        name="sendBitcoin"
+        component={SendBitcoinScreen}
+        options={{ title: translate("SendBitcoinScreen.title") }}
+      />
+      <StackMoveMoney.Screen
+        name="sendBitcoinConfirmation"
+        component={SendBitcoinConfirmationScreen}
+        options={{ title: translate("SendBitcoinConfirmationScreen.title") }}
+      />
+      <StackMoveMoney.Screen
+        name="receiveBitcoin"
+        component={ReceiveBitcoinScreen}
+        options={{
+          title: translate("ReceiveBitcoinScreen.title"),
+          // headerShown: false,
         }}
       />
       <RootNavigator.Screen
@@ -430,19 +452,6 @@ export const MoveMoneyNavigator: NavigatorType = () => (
         title: translate("MoveMoneyScreen.title"),
       }}
     />
-    <StackMoveMoney.Screen
-      name="sendBitcoin"
-      component={SendBitcoinScreen}
-      options={{ title: translate("SendBitcoinScreen.title") }}
-    />
-    <StackMoveMoney.Screen
-      name="receiveBitcoin"
-      component={ReceiveBitcoinScreen}
-      options={{
-        title: translate("ReceiveBitcoinScreen.title"),
-        // headerShown: false,
-      }}
-    />
   </StackMoveMoney.Navigator>
 )
 
@@ -475,13 +484,16 @@ type TabProps = {
 }
 
 export const PrimaryNavigator: NavigatorType = () => {
+  const { tokenNetwork } = useToken()
   const [network, setNetwork] = React.useState("mainnet")
 
+  // TODO: get rid of this
   React.useEffect(() => {
     ;(async () => {
-      setNetwork(await getNetwork())
+      analytics().setUserProperties({ network: tokenNetwork })
+      setNetwork(tokenNetwork)
     })()
-  }, [])
+  }, [tokenNetwork])
 
   return (
     <Tab.Navigator

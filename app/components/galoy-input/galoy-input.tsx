@@ -1,5 +1,5 @@
 import * as React from "react"
-import { TextInput } from "react-native-vector-icons/node_modules/@types/react-native/index"
+import { TextInput } from "react-native"
 import { Input, InputProps } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { color } from "../../theme"

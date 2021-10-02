@@ -16,9 +16,9 @@ import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import type { ComponentType } from "../../types/jsx"
-import { validPayment } from "../../utils/parsing"
-import { Token } from "../../utils/token"
 import { cache } from "../../graphql/cache"
+import { validPayment } from "../../utils/parsing"
+import useToken from "../../utils/use-token"
 
 const styles = StyleSheet.create({
   buttonContainer: {
@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
 export const ModalClipboard: ComponentType = () => {
   const client = useApolloClient()
   const navigation = useNavigation()
+  const { tokenNetwork } = useToken()
 
   const open = async () => {
     modalClipboardVisibleVar(false)
@@ -102,14 +103,14 @@ export const ModalClipboard: ComponentType = () => {
 
     ;(async () => {
       const clipboard = await Clipboard.getString()
-      const { paymentType } = validPayment(clipboard, Token.getInstance().network, client)
+      const { paymentType } = validPayment(clipboard, tokenNetwork, client)
       const pathString =
         paymentType === "lightning"
           ? "ModalClipboard.pendingInvoice"
           : "ModalClipboard.pendingBitcoin"
       setMessage(translate(pathString))
     })()
-  }, [client, isVisible])
+  }, [client, isVisible, tokenNetwork])
 
   return (
     <Modal
@@ -137,8 +138,16 @@ export const ModalClipboard: ComponentType = () => {
         </View>
         <Text style={styles.message}>{message}</Text>
         <View style={styles.buttonContainer}>
-          <Button title="Dismiss" onPress={dismiss} buttonStyle={styles.buttonStyle} />
-          <Button title="Open" onPress={open} buttonStyle={styles.buttonStyle} />
+          <Button
+            title={translate("ModalClipboard.dismiss")}
+            onPress={dismiss}
+            buttonStyle={styles.buttonStyle}
+          />
+          <Button
+            title={translate("ModalClipboard.open")}
+            onPress={open}
+            buttonStyle={styles.buttonStyle}
+          />
         </View>
       </SafeAreaView>
     </Modal>
