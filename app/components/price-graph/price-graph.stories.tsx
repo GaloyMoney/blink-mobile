@@ -8,10 +8,6 @@ declare let module
 
 storiesOf("Price Component", module)
   .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
-  .add("Style Presets", () => (
-    <Story>
-      <UseCase text="BTC" usage="The primary." noBackground>
+  .add("Price Graph", () => (
         <PriceGraph prices={prices} />
-      </UseCase>
-    </Story>
   ))

@@ -1,43 +1,24 @@
 import { storiesOf } from "@storybook/react-native"
 import * as React from "react"
 import { InputPayment } from "."
-import { Story, StoryScreen, UseCase } from "../../../storybook/views"
+import { StoryScreen } from "../../../storybook/views"
 import {reactNavigationDecorator} from "../../../storybook/storybook-navigator";
+import { withKnobs, select, number} from "@storybook/addon-knobs";
 
 declare let module
 
 storiesOf("InputPayment", module)
   .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
   .addDecorator(reactNavigationDecorator)
-  .add("Style Presets", () => (
-    <Story>
-      <UseCase text="Editable" usage="Loading">
+      .addDecorator(withKnobs)
+
+  .add("Input Field - Dynamic", () => (
         <InputPayment
-          nextPrefCurrency="USD"
-          primaryAmount={{currency: "USD", value: 0.00011}}
-          secondaryAmount={{currency: "BTC", value: 0.00011}}
+          nextPrefCurrency={select("currency", ["USD" , "BTC"], "USD" )}
+          primaryAmount={{currency: select("currency", ["USD" , "BTC"], "USD" ), value: number("amount", 100)}}
+          secondaryAmount={{currency: select("currency", ["USD" , "BTC"], "BTC" ), value: number("amount", 100)}}
           onUpdateAmount={() => true}
           editable
-          primaryAmount={{
-            value: 100,
-            currency: "USD",
-          }}
         />
-      </UseCase>
-      <UseCase text="Non editable" usage="Loading">
-        <InputPayment
-          nextPrefCurrency="USD"
-          primaryAmount={{currency: "USD", value: 0.00011}}
-          secondaryAmount={{currency: "BTC", value: 0.00011}}
-          onUpdateAmount={() => true}
-          editable={false}
-          primaryAmount={{
-            value: 100,
-            currency: "BTC",
-          }}
-        />
-      </UseCase>
-
-    </Story>
   ))
 
