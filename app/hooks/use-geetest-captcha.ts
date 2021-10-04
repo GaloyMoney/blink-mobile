@@ -1,14 +1,8 @@
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { EventSubscription, NativeEventEmitter, NativeModules } from "react-native"
-import {
-  ApolloCache,
-  DefaultContext,
-  gql,
-  MutationFunctionOptions,
-  OperationVariables,
-  useMutation,
-} from "@apollo/client"
+import { gql, useMutation } from "@apollo/client"
 import GeetestModule from "react-native-geetest-module"
+import { translate } from "../i18n"
 
 const REGISTER_CAPTCHA = gql`
   mutation captchaCreateChallenge {
@@ -25,42 +19,56 @@ const REGISTER_CAPTCHA = gql`
     }
   }
 `
-type GeetestValidationData = {
-  geetestChallenge: string
-  geetestSecCode: string
-  geetestValidate: string
-}
 
 type GeetestCaptchaReturn = {
+  geetestError: string | null
   geetestValidationData: GeetestValidationData | null
   loadingRegisterCaptcha: boolean
-  registerCaptcha: (
-    options?: MutationFunctionOptions<
-      unknown,
-      OperationVariables,
-      DefaultContext,
-      ApolloCache<unknown>
-    >,
-  ) => Promise<unknown>
+  registerCaptcha: () => void
+  resetError: () => void
+  resetValidationData: () => void
 }
 
-export const useGeetestCaptcha = (
-  handleGeetestError: (error: string) => void,
-): GeetestCaptchaReturn => {
+export const useGeetestCaptcha = (): GeetestCaptchaReturn => {
   const [geetestValidationData, setGeetesValidationData] =
     useState<GeetestValidationData | null>(null)
+  const [error, setError] = useState<string | null>(null)
 
   const onGeeTestDialogResultListener = useRef<EventSubscription>()
   const onGeeTestFailedListener = useRef<EventSubscription>()
 
-  const [
-    registerCaptcha,
-    { loading: loadingRegisterCaptcha, data: registerCaptchaData },
-  ] = useMutation(REGISTER_CAPTCHA, {
-    fetchPolicy: "no-cache",
-  })
+  const [registerCaptchaMutation, { loading: loadingRegisterCaptcha }] = useMutation(
+    REGISTER_CAPTCHA,
+    {
+      fetchPolicy: "no-cache",
+    },
+  )
+
+  const resetValidationData = useCallback(() => setGeetesValidationData(null), [])
+  const resetError = useCallback(() => () => setError(null), [])
+
+  const registerCaptcha = useCallback(async () => {
+    const { data } = await registerCaptchaMutation()
+
+    const result = data.captchaCreateChallenge?.result
+    const errors = data.captchaCreateChallenge?.errors ?? []
+    if (errors.length > 0) {
+      setError(errors[0].message)
+    } else if (result) {
+      const params = {
+        success: !result.failbackMode ? 1 : 0,
+        challenge: result.challengeCode,
+        gt: result.id,
+        new_captcha: result.newCaptcha,
+      }
+      GeetestModule.handleRegisteredGeeTestCaptcha(JSON.stringify(params))
+    } else {
+      setError(translate("errors.generic"))
+    }
+  }, [registerCaptchaMutation])
 
   useEffect(() => {
+    console.log("$$$$$")
     GeetestModule.setUp()
 
     const eventEmitter = new NativeEventEmitter(NativeModules.GeetestModule)
@@ -80,34 +88,32 @@ export const useGeetestCaptcha = (
     onGeeTestFailedListener.current = eventEmitter.addListener(
       "GT3-->onFailed-->",
       (event) => {
-        handleGeetestError(event.error)
+        setError(event.error)
       },
     )
 
     return () => {
       GeetestModule.tearDown()
-
       onGeeTestDialogResultListener.current.remove()
       onGeeTestFailedListener.current.remove()
     }
-  }, [handleGeetestError])
+  }, [])
 
-  useEffect(() => {
-    const result = registerCaptchaData?.captchaCreateChallenge?.result
-    if (result) {
-      const params = {
-        success: !result.failbackMode,
-        challenge: result.challengeCode,
-        gt: result.id,
-        new_captcha: result.newCaptcha,
-      }
-      GeetestModule.handleRegisteredGeeTestCaptcha(JSON.stringify(params))
+  return useMemo(() => {
+    return {
+      geetestError: error,
+      geetestValidationData,
+      loadingRegisterCaptcha,
+      registerCaptcha,
+      resetError,
+      resetValidationData,
     }
-  }, [registerCaptchaData])
-
-  return {
+  }, [
+    error,
     geetestValidationData,
     loadingRegisterCaptcha,
     registerCaptcha,
-  }
+    resetError,
+    resetValidationData,
+  ])
 }

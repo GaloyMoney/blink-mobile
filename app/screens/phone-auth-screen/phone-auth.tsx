@@ -144,36 +144,43 @@ type WelcomePhoneInputScreenProps = {
 export const WelcomePhoneInputScreen: ScreenType = ({
   navigation,
 }: WelcomePhoneInputScreenProps) => {
-  const handleGeetestError = useCallback((error: string) => {
-    toastShow(error)
-  }, [])
-  const { geetestValidationData, loadingRegisterCaptcha, registerCaptcha } =
-    useGeetestCaptcha(handleGeetestError)
+  const {
+    geetestError,
+    geetestValidationData,
+    loadingRegisterCaptcha,
+    registerCaptcha,
+    resetError,
+    resetValidationData,
+  } = useGeetestCaptcha()
 
   const [phoneNumber, setPhoneNumber] = useState("")
 
   const phoneInputRef = useRef<PhoneInput | null>()
 
-  const [requestPhoneCode, { loading }] = useMutation(REQUEST_AUTH_CODE, {
-    fetchPolicy: "no-cache",
-  })
+  const [requestPhoneCode, { loading: loadingRequestPhoneCode }] = useMutation(
+    REQUEST_AUTH_CODE,
+    {
+      fetchPolicy: "no-cache",
+    },
+  )
 
   const sendRequestAuthCode = useCallback(async () => {
     try {
-      const { data } = await requestPhoneCode({
-        variables: {
-          input: {
-            phone: phoneNumber,
-            challengeCode: geetestValidationData?.geetestChallenge,
-            validationCode: geetestValidationData?.geetestValidate,
-            secCode: geetestValidationData?.geetestSecCode,
-          },
-        },
-      })
+      const input = {
+        phone: phoneNumber,
+        challengeCode: geetestValidationData?.geetestChallenge,
+        validationCode: geetestValidationData?.geetestValidate,
+        secCode: geetestValidationData?.geetestSecCode,
+      }
+      resetValidationData()
+
+      const { data } = await requestPhoneCode({ variables: { input } })
+      console.log("Dog")
+      console.log(data.captchaRequestAuthCode.success)
+      console.log(data.captchaRequestAuthCode.errors)
+      console.log("Hound")
       if (data.captchaRequestAuthCode.success) {
-        navigation.navigate("welcomePhoneValidation", {
-          phone: phoneNumber,
-        })
+        navigation.navigate("welcomePhoneValidation", { phone: phoneNumber })
       } else {
         toastShow(translate("errors.generic"))
       }
@@ -185,13 +192,28 @@ export const WelcomePhoneInputScreen: ScreenType = ({
         toastShow(translate("errors.generic"))
       }
     }
-  }, [geetestValidationData, navigation, phoneNumber, requestPhoneCode])
+  }, [
+    geetestValidationData,
+    navigation,
+    phoneNumber,
+    requestPhoneCode,
+    resetValidationData,
+  ])
 
   useEffect(() => {
+    console.log("VD", geetestValidationData)
     if (geetestValidationData) {
+      console.log("Inner", geetestValidationData)
       sendRequestAuthCode()
     }
   }, [geetestValidationData, sendRequestAuthCode])
+
+  useEffect(() => {
+    if (geetestError) {
+      toastShow(geetestError)
+      resetError()
+    }
+  })
 
   const submitPhoneNumber = () => {
     const phone = phoneInputRef.current.getValue()
@@ -222,7 +244,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
           <Button
             title={translate("WelcomePhoneInputScreen.verify")}
             onPress={() => registerCaptcha()}
-            loading={loadingRegisterCaptcha}
+            loading={loadingRegisterCaptcha || loadingRequestPhoneCode}
             buttonStyle={styles.button}
           />
         ) : (
@@ -235,12 +257,12 @@ export const WelcomePhoneInputScreen: ScreenType = ({
               textProps={{
                 autoFocus: true,
                 placeholder: translate("WelcomePhoneInputScreen.placeholder"),
-                returnKeyType: loading ? "default" : "done",
+                returnKeyType: loadingRequestPhoneCode ? "default" : "done",
                 onSubmitEditing: submitPhoneNumber,
               }}
             />
             <ActivityIndicator
-              animating={loading}
+              animating={loadingRequestPhoneCode}
               size="large"
               color={color.primary}
               style={{ marginTop: 32 }}
@@ -316,60 +338,12 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
   login,
   error,
 }: WelcomePhoneValidationScreenProps) => {
-  const handleGeetestError = useCallback((error: string) => {
-    toastShow(error)
-  }, [])
-  const { geetestValidationData, loadingRegisterCaptcha, registerCaptcha } =
-    useGeetestCaptcha(handleGeetestError)
-
   // FIXME see what to do with store and storybook
   const [code, setCode] = useState("")
   const [secondsRemaining, setSecondsRemaining] = useState<number>(60)
 
   const { phone } = route.params
   const updateCode = (input) => setCode(input)
-
-  const [requestPhoneCode, { loading: loadingAuthCode }] = useMutation(
-    REQUEST_AUTH_CODE,
-    {
-      fetchPolicy: "no-cache",
-    },
-  )
-
-  const sendCodeAgain = useCallback(async () => {
-    try {
-      const { data } = await requestPhoneCode({
-        variables: {
-          input: {
-            phone,
-            challengeCode: geetestValidationData?.geetestChallenge,
-            validationCode: geetestValidationData?.geetestValidate,
-            secCode: geetestValidationData?.geetestSecCode,
-          },
-        },
-      })
-
-      if (data.captchaRequestAuthCode.success) {
-        setSecondsRemaining(60)
-      } else {
-        console.log("Error", data.captchaRequestAuthCode.errors)
-        toastShow(translate("errors.generic"))
-      }
-    } catch (err) {
-      console.warn({ err })
-      if (err.message === "Too many requests") {
-        toastShow(translate("errors.tooManyRequestsPhoneCode"))
-      } else {
-        toastShow(translate("errors.generic"))
-      }
-    }
-  }, [geetestValidationData, phone, requestPhoneCode])
-
-  useEffect(() => {
-    if (geetestValidationData) {
-      sendCodeAgain()
-    }
-  }, [geetestValidationData, sendCodeAgain])
 
   const send = async () => {
     if (code.length !== 6) {
@@ -459,11 +433,10 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
               <View style={styles.sendAgainButtonRow}>
                 <Button
                   buttonStyle={styles.buttonResend}
-                  loading={loadingRegisterCaptcha || loadingAuthCode}
                   title={translate("WelcomePhoneValidationScreen.sendAgain")}
                   onPress={() => {
                     if (!loading) {
-                      registerCaptcha()
+                      navigation.goBack()
                     }
                   }}
                 />
