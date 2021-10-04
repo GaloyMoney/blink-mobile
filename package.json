@@ -181,7 +181,10 @@
   },
   "config": {
     "react-native-storybook-loader": {
-      "searchDir": ["./app/components/", "./app/screens/"],
+      "searchDir": [
+        "./app/components/",
+        "./app/screens/"
+      ],
       "pattern": "**/*.stories.tsx",
       "outputFile": "./storybook/storyLoader.js"
     }
