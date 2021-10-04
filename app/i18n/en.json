@@ -689,6 +689,9 @@
     "other": "{{formatted_number}} sats",
     "zero": "0 sats"
   },
+  "storybook": {
+    "welcome": "Welcome to the Bitcoin Beach Storybook"
+  },
   "tippingLink": {
     "title": "Want to receive tips? Share your tipping link!",
     "copied": "{{data}} saved to clipboard"
@@ -696,5 +699,5 @@
   "whatsapp": {
     "contactUs": "Need help? Talk to us on WhatsApp!",
     "defaultSupportMessage": "Hey there! I need some help with Bitcoin Beach Wallet"
-  }
+  },
 }
