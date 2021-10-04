@@ -68,7 +68,6 @@ export const useGeetestCaptcha = (): GeetestCaptchaReturn => {
   }, [registerCaptchaMutation])
 
   useEffect(() => {
-    console.log("$$$$$")
     GeetestModule.setUp()
 
     const eventEmitter = new NativeEventEmitter(NativeModules.GeetestModule)
