@@ -4,6 +4,7 @@ import { Alert, DevSettings, Text, View } from "react-native"
 import { Button, ButtonGroup } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { useApolloClient } from "@apollo/client"
+
 import { Screen } from "../../components/screen"
 import { color } from "../../theme"
 import { resetDataStore } from "../../utils/logout"
@@ -11,10 +12,10 @@ import { getGraphQLUri, loadNetwork, saveNetwork } from "../../utils/network"
 import { requestPermission } from "../../utils/notifications"
 import { walletIsActive } from "../../graphql/query"
 import useToken from "../../utils/use-token"
-
 import type { ScreenType } from "../../types/jsx"
 import type { INetwork } from "../../types/network"
 import { useBTCPrice } from "../../hooks"
+import { loadAuthToken } from "../../graphql/client-only-query"
 
 const styles = EStyleSheet.create({
   button: {
@@ -144,6 +145,7 @@ export const DebugScreen: ScreenType = () => {
         <ButtonGroup
           onPress={(index) => {
             saveNetwork(networks[index])
+            loadAuthToken()
             updateNetwork(networks[index])
           }}
           selectedIndex={networks.findIndex((value) => value === networkState)}
