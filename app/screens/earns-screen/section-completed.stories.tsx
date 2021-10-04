@@ -3,6 +3,7 @@ import * as React from "react"
 import { SafeAreaProvider } from "react-native-safe-area-context"
 import { Story, StoryScreen, UseCase } from "../../../storybook/views"
 import { SectionCompleted } from "./section-completed"
+import {reactNavigationDecorator} from "../../../storybook/storybook-navigator";
 
 declare let module
 
@@ -15,12 +16,9 @@ const route = {
 
 storiesOf("Section Completed", module)
   .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
-  .add("Style Presets", () => (
+    .addDecorator(reactNavigationDecorator)
+  .add("Default", () => (
     <SafeAreaProvider>
-      <Story>
-        <UseCase text="not earned">
           <SectionCompleted route={route} />
-        </UseCase>
-      </Story>
     </SafeAreaProvider>
   ))

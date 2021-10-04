@@ -1,25 +1,30 @@
 import * as React from "react"
 import { storiesOf } from "@storybook/react-native"
-import { StoryScreen, Story, UseCase } from "../../../storybook/views"
+import { StoryScreen } from "../../../storybook/views"
 import { ContactsDetailScreenJSX } from "./contacts-detail"
+import {reactNavigationDecorator} from "../../../storybook/storybook-navigator";
+import {transactions} from "../../screens/transaction-screen/transaction-screen.stories";
 
 const contact = {
   id: "MikeP",
   name: "Mike Peterson",
 }
 
-const transactions = []
 
 storiesOf("Contact Detail", module)
   .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
-  .add("Contact default", () => (
-    <Story>
-      <UseCase text="Dollar" usage="The primary.">
+    .addDecorator(reactNavigationDecorator)
+  .add("Contact with transactions", () => (
         <ContactsDetailScreenJSX
           contact={contact}
           transactions={transactions}
-          navigation={() => null}
+          navigation={{navigate: () => null }}
         />
-      </UseCase>
-    </Story>
+  ))
+.add("Contact no transactions", () => (
+        <ContactsDetailScreenJSX
+          contact={contact}
+          transactions={[]}
+          navigation={{navigate: () => null }}
+        />
   ))

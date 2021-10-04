@@ -4,6 +4,7 @@ import moment from "moment"
 import { StoryScreen, Story, UseCase } from "../../../storybook/views"
 import { TransactionDetailScreen } from "./transaction-detail-screen"
 import { AccountType } from "../../utils/enum"
+import {reactNavigationDecorator} from "../../../storybook/storybook-navigator";
 
 const route = {
   params: {
@@ -24,12 +25,10 @@ const route = {
   },
 }
 
+
 storiesOf("Transaction Detail", module)
   .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
-  .add("Style Presets", () => (
-    <Story>
-      <UseCase text="Dollar" usage="The primary.">
-        <TransactionDetailScreen route={route} />
-      </UseCase>
-    </Story>
+  .addDecorator(reactNavigationDecorator)
+  .add("100 sat invoice transaction", () => (
+      <TransactionDetailScreen route={route}/>
   ))

@@ -1,15 +1,17 @@
-import { withKnobs } from "@storybook/addon-knobs"
 import { storiesOf } from "@storybook/react-native"
 import * as React from "react"
 import { StoryScreen } from "../../../storybook/views"
-import { textCurrencyFormatting } from "../../utils/currencyConversion"
 import { SendBitcoinScreenJSX } from "./send-bitcoin-screen"
+import {reactNavigationDecorator} from "../../../storybook/storybook-navigator";
+import { withKnobs, select, number, text} from "@storybook/addon-knobs";
+
 
 const noop = () => null
 const defaultParams = {
   setStatus: noop,
   setAmount: noop,
   goBack: noop,
+  setMemo: noop,
   pay: noop,
   price: 10000,
   prefCurrency: "BTC",
@@ -25,104 +27,23 @@ declare let module
 storiesOf("Send bitcoin Screen", module)
   .addDecorator(withKnobs)
   .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
-  .add("Loading", () => (
+    .addDecorator(reactNavigationDecorator)
+  .add("Send Bitcoin - Dynamic", () => (
     <SendBitcoinScreenJSX
-      status="loading"
+      status={ select("status", ["loading", "idle", "success"], "loading") }
       paymentType="lightning"
       amountless={false}
-      initAmount={1000}
-      note=""
-      err=""
-      amount={1000}
+      initAmount={number("initAmount", 1000)}
+      note={text("note", "")}
+      err={text("err", "")}
+      amount={number("amount", 1000)}
       primaryAmount={{
-        value: 1000,
-        currency: "BTC",
+        value: number("value", 1000),
+        currency: select("currency", ["USD", "BTC"], "BTC"),
       }}
       secondaryAmount={{
-        value: 1000,
-        currency: "USD",
-      }}
-      {...defaultParams}
-    />
-  ))
-  .add("Idle", () => (
-    <SendBitcoinScreenJSX
-      status="idle"
-      paymentType="lightning"
-      amountless={false}
-      initAmount={1000}
-      note="this is my note"
-      err={null}
-      amount={1000}
-      primaryAmount={{
-        value: 1000,
-        currency: "BTC",
-      }}
-      secondaryAmount={{
-        value: 1000,
-        currency: "USD",
-      }}
-      {...defaultParams}
-    />
-  ))
-  .add("success", () => (
-    <SendBitcoinScreenJSX
-      status="success"
-      paymentType="lightning"
-      amountless={false}
-      initAmount={1000}
-      note={null}
-      err={null}
-      amount={1000}
-      primaryAmount={{
-        value: 1000,
-        currency: "BTC",
-      }}
-      secondaryAmount={{
-        value: 1000,
-        currency: "USD",
-      }}
-      {...defaultParams}
-    />
-  ))
-  .add("bitcoin", () => (
-    <SendBitcoinScreenJSX
-      status="idle"
-      paymentType="bitcoin"
-      amountless={false}
-      initAmount={1000}
-      note={null}
-      err={null}
-      amount={1000}
-      primaryAmount={{
-        value: 1000,
-        currency: "BTC",
-      }}
-      secondaryAmount={{
-        value: 1000,
-        currency: "USD",
-      }}
-      fee={textCurrencyFormatting(1234, 9.3927e-5, "USD")}
-      {...defaultParams}
-    />
-  ))
-  .add("bitcoin fee loading", () => (
-    <SendBitcoinScreenJSX
-      status="idle"
-      paymentType="bitcoin"
-      amountless={false}
-      initAmount={1000}
-      note={null}
-      err={null}
-      amount={1000}
-      fee={undefined}
-      primaryAmount={{
-        value: 1000,
-        currency: "BTC",
-      }}
-      secondaryAmount={{
-        value: 1000,
-        currency: "USD",
+        value: number("value", 1000),
+        currency: select("currency", ["USD", "BTC"], "USD"),
       }}
       {...defaultParams}
     />

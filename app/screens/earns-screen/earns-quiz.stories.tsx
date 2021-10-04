@@ -1,10 +1,10 @@
 import { storiesOf } from "@storybook/react-native"
 import * as React from "react"
 import cloneDeep from "lodash.clonedeep"
-import { SafeAreaProvider } from "react-native-safe-area-context"
 import { action } from "@storybook/addon-actions"
 import { EarnQuiz } from "./earns-quiz"
-import { Story, StoryScreen, UseCase } from "../../../storybook/views"
+import {  StoryScreen} from "../../../storybook/views"
+import {reactNavigationDecorator} from "../../../storybook/storybook-navigator";
 
 declare let module
 
@@ -38,30 +38,13 @@ route_long.params.feedback[1] = "a \n b \n c \n d \n e \n f \n g \n h"
 
 storiesOf("Quiz", module)
   .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
+    .addDecorator(reactNavigationDecorator)
   .add("Not earned", () => (
-    <SafeAreaProvider>
-      <Story>
-        <UseCase text="not earned">
           <EarnQuiz route={route} navigation={{ goBack: action("goBack") }} />
-        </UseCase>
-      </Story>
-    </SafeAreaProvider>
   ))
   .add("Not earned - long text", () => (
-    <SafeAreaProvider>
-      <Story>
-        <UseCase text="Not earned - long text">
           <EarnQuiz route={route_long} navigation={{ goBack: action("goBack") }} />
-        </UseCase>
-      </Story>
-    </SafeAreaProvider>
   ))
   .add("Earned", () => (
-    <SafeAreaProvider>
-      <Story>
-        <UseCase text="earned">
           <EarnQuiz route={route_completed} navigation={{ goBack: action("goBack") }} />
-        </UseCase>
-      </Story>
-    </SafeAreaProvider>
   ))

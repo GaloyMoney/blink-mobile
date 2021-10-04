@@ -1,9 +1,17 @@
 import * as React from "react"
 import { storiesOf } from "@storybook/react-native"
-import { StoryScreen, Story, UseCase } from "../../../storybook/views"
-import { TransactionScreen } from "./transaction-screen"
+import { StoryScreen, } from "../../../storybook/views"
+import {
+  isThisMonth,
+  isToday,
+  isYesterday,
+  TransactionScreen
+} from "./transaction-screen"
+import {reactNavigationDecorator} from "../../../storybook/storybook-navigator";
+import {translate} from "../../i18n";
+import { withKnobs, select, number} from "@storybook/addon-knobs";
 
-let transactions = [
+export const  transactions = [
   {
     id: "txishash",
     amount: 10040,
@@ -245,19 +253,53 @@ let transactions = [
     pending: false,
   },
 ]
+  const sections = []
+  const today = []
+  const yesterday = []
+  const thisMonth = []
+  const before = []
 
-transactions = transactions.map((tx) => ({
-  ...tx,
-  text: () => tx.amount,
-  isReceive: tx.amount > 0,
-}))
+ while (transactions?.length) {
+    // FIXME: optimization need. slow when there are a lot of txs.
+    const tx = transactions.shift()
+
+    if (isToday(tx)) {
+      today.push(tx)
+    } else if (isYesterday(tx)) {
+      yesterday.push(tx)
+    } else if (isThisMonth(tx)) {
+      thisMonth.push(tx)
+    } else {
+      before.push(tx)
+    }
+  }
+
+  if (today.length > 0) {
+    sections.push({ title: translate("PriceScreen.today"), data: today })
+  }
+
+  if (yesterday.length > 0) {
+    sections.push({ title: translate("PriceScreen.yesterday"), data: yesterday })
+  }
+
+  if (thisMonth.length > 0) {
+    sections.push({ title: translate("PriceScreen.thisMonth"), data: thisMonth })
+  }
+
+  if (before.length > 0) {
+    sections.push({ title: translate("PriceScreen.prevMonths"), data: before })
+  }
 
 storiesOf("Transaction History", module)
   .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
-  .add("Style Presets", () => (
-    <Story>
-      <UseCase text="Dollar" usage="The primary.">
-        <TransactionScreen transactions={transactions} currency={"BTC"} />
-      </UseCase>
-    </Story>
+    .addDecorator(reactNavigationDecorator)
+  .add("With History", () => (
+        <TransactionScreen
+          sections={sections}
+          currency={select("currency", ["USD", "BTC"], "BTC")}
+          prefCurrency={select("prefCurrency", ["USD", "BTC"], "USD")}
+          navigation={{ navigate: () => null }}/>
+  ))
+.add("No History", () => (
+        <TransactionScreen/>
   ))
