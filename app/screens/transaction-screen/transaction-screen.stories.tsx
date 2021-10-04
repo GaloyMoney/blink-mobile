@@ -1,17 +1,17 @@
 import * as React from "react"
 import { storiesOf } from "@storybook/react-native"
-import { StoryScreen, } from "../../../storybook/views"
+import { StoryScreen } from "../../../storybook/views"
 import {
   isThisMonth,
   isToday,
   isYesterday,
-  TransactionScreen
+  TransactionScreen,
 } from "./transaction-screen"
-import {reactNavigationDecorator} from "../../../storybook/storybook-navigator";
-import {translate} from "../../i18n";
-import { withKnobs, select, number} from "@storybook/addon-knobs";
+import { reactNavigationDecorator } from "../../../storybook/storybook-navigator"
+import { translate } from "../../i18n"
+import { withKnobs, select } from "@storybook/addon-knobs"
 
-export const  transactions = [
+export const transactions = [
   {
     id: "txishash",
     amount: 10040,
@@ -253,53 +253,53 @@ export const  transactions = [
     pending: false,
   },
 ]
-  const sections = []
-  const today = []
-  const yesterday = []
-  const thisMonth = []
-  const before = []
+const sections = []
+const today = []
+const yesterday = []
+const thisMonth = []
+const before = []
 
- while (transactions?.length) {
-    // FIXME: optimization need. slow when there are a lot of txs.
-    const tx = transactions.shift()
+while (transactions?.length) {
+  // FIXME: optimization need. slow when there are a lot of txs.
+  const tx = transactions.shift()
 
-    if (isToday(tx)) {
-      today.push(tx)
-    } else if (isYesterday(tx)) {
-      yesterday.push(tx)
-    } else if (isThisMonth(tx)) {
-      thisMonth.push(tx)
-    } else {
-      before.push(tx)
-    }
+  if (isToday(tx)) {
+    today.push(tx)
+  } else if (isYesterday(tx)) {
+    yesterday.push(tx)
+  } else if (isThisMonth(tx)) {
+    thisMonth.push(tx)
+  } else {
+    before.push(tx)
   }
+}
 
-  if (today.length > 0) {
-    sections.push({ title: translate("PriceScreen.today"), data: today })
-  }
+if (today.length > 0) {
+  sections.push({ title: translate("PriceScreen.today"), data: today })
+}
 
-  if (yesterday.length > 0) {
-    sections.push({ title: translate("PriceScreen.yesterday"), data: yesterday })
-  }
+if (yesterday.length > 0) {
+  sections.push({ title: translate("PriceScreen.yesterday"), data: yesterday })
+}
 
-  if (thisMonth.length > 0) {
-    sections.push({ title: translate("PriceScreen.thisMonth"), data: thisMonth })
-  }
+if (thisMonth.length > 0) {
+  sections.push({ title: translate("PriceScreen.thisMonth"), data: thisMonth })
+}
 
-  if (before.length > 0) {
-    sections.push({ title: translate("PriceScreen.prevMonths"), data: before })
-  }
+if (before.length > 0) {
+  sections.push({ title: translate("PriceScreen.prevMonths"), data: before })
+}
 
 storiesOf("Transaction History", module)
   .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
-    .addDecorator(reactNavigationDecorator)
+  .addDecorator(reactNavigationDecorator)
+  .addDecorator(withKnobs)
   .add("With History", () => (
-        <TransactionScreen
-          sections={sections}
-          currency={select("currency", ["USD", "BTC"], "BTC")}
-          prefCurrency={select("prefCurrency", ["USD", "BTC"], "USD")}
-          navigation={{ navigate: () => null }}/>
+    <TransactionScreen
+      sections={sections}
+      currency={select("currency", ["USD", "BTC"], "BTC")}
+      prefCurrency={select("prefCurrency", ["USD", "BTC"], "USD")}
+      navigation={{ navigate: () => null }}
+    />
   ))
-.add("No History", () => (
-        <TransactionScreen/>
-  ))
+  .add("No History", () => <TransactionScreen />)

@@ -53,11 +53,12 @@ const styles = EStyleSheet.create({
   },
 })
 
-export const isToday = (tx) => sameDay(tx.date, new Date())
+export const isToday = (tx): boolean => sameDay(tx.date, new Date())
 
-export const isYesterday = (tx) => sameDay(tx.date, new Date().setDate(new Date().getDate() - 1))
+export const isYesterday = (tx): boolean =>
+  sameDay(tx.date, new Date().setDate(new Date().getDate() - 1))
 
-export const isThisMonth = (tx) => sameMonth(tx.date, new Date())
+export const isThisMonth = (tx): boolean => sameMonth(tx.date, new Date())
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "transactionHistory">

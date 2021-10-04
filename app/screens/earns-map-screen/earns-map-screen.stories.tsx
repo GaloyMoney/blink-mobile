@@ -1,10 +1,10 @@
 import { number, withKnobs } from "@storybook/addon-knobs"
 import { storiesOf } from "@storybook/react-native"
 import * as React from "react"
-import { Story, StoryScreen } from "../../../storybook/views"
+import { StoryScreen } from "../../../storybook/views"
 import BitcoinCircle from "./bitcoin-circle-01.svg"
 import { EarnMapScreen } from "./earns-map-screen"
-import {reactNavigationDecorator} from "../../../storybook/storybook-navigator";
+import { reactNavigationDecorator } from "../../../storybook/storybook-navigator"
 
 const sectionsData = [
   {
@@ -35,12 +35,12 @@ declare let module
 storiesOf("Map", module)
   .addDecorator(withKnobs)
   .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
-    .addDecorator(reactNavigationDecorator)
+  .addDecorator(reactNavigationDecorator)
   .add("Earned 1000 sats", () => (
-      <EarnMapScreen
-        currSection={number("section", 0)}
-        progress={number("progress", 1)}
-        sectionsData={sectionsData}
-        earned={1000}
-      />
+    <EarnMapScreen
+      currSection={number("section", 0)}
+      progress={number("progress", 1)}
+      sectionsData={sectionsData}
+      earned={1000}
+    />
   ))
