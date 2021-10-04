@@ -644,7 +644,9 @@
   },
   "WelcomePhoneInputScreen": {
     "header": "Ingrese su número de teléfono y le enviaremos un mensaje de texto con un código de acceso.",
-    "placeholder": "Número de teléfono"
+    "headerVerify": "¿Eres un robot?",
+    "placeholder": "Número de teléfono",
+    "verify": "No soy un robot"
   },
   "WelcomePhoneValidationScreen": {
     "errorLoggingIn": "Error al iniciar sesión. ¿Usó el código correcto?",
