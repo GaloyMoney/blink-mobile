@@ -19,7 +19,7 @@ const APP_NAME = "GaloyApp"
 // Should we show storybook instead of our app?
 //
 let RootComponent = App
-const SHOW_STORYBOOK = true
+const SHOW_STORYBOOK = false
 if (__DEV__ && SHOW_STORYBOOK) {
   // Only include Storybook if we're in dev mode
   // eslint-disable-next-line @typescript-eslint/no-var-requires
