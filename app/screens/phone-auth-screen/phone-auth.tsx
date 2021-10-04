@@ -175,8 +175,16 @@ export const WelcomePhoneInputScreen: ScreenType = ({
       resetValidationData()
 
       const { data } = await requestPhoneCode({ variables: { input } })
+
       if (data.captchaRequestAuthCode.success) {
         navigation.navigate("welcomePhoneValidation", { phone: phoneNumber })
+      } else if (data.captchaRequestAuthCode.errors.length > 0) {
+        const errorMessage = data.captchaRequestAuthCode.errors[0].message
+        if (errorMessage === "Too many requests") {
+          toastShow(translate("errors.tooManyRequestsPhoneCode"))
+        } else {
+          toastShow(errorMessage)
+        }
       } else {
         toastShow(translate("errors.generic"))
       }
