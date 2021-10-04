@@ -13213,6 +13213,11 @@ react-native-fs@^2.16.6:
     base-64 "^0.1.0"
     utf8 "^3.0.0"
 
+react-native-geetest-module@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-geetest-module/-/react-native-geetest-module-0.1.1.tgz#f1cbd17b51e21655675363b99c27f73dfd2765db"
+  integrity sha512-kh2oDDaf4Qn1eOFBxYmlZ0HXEET8HwTO2N7lBnhyHRizwBWmw0xl1pejMdibFXpV4VvET8Uk4MI+7Ijp/2GwpQ==
+
 react-native-gesture-handler@^1.9.0:
   version "1.10.3"
   resolved "https://registry.npmjs.org/react-native-gesture-handler/-/react-native-gesture-handler-1.10.3.tgz"

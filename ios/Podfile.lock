@@ -309,6 +309,9 @@ PODS:
     - React-Core
   - react-native-fingerprint-scanner (6.0.0):
     - React
+  - react-native-geetest-module (0.1.1):
+    - GT3Captcha-iOS
+    - React-Core
   - react-native-geolocation (2.0.2):
     - React
   - react-native-image-picker (4.1.1):
@@ -467,6 +470,7 @@ DEPENDENCIES:
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - react-native-camera (from `../node_modules/react-native-camera`)
   - react-native-fingerprint-scanner (from `../node_modules/react-native-fingerprint-scanner`)
+  - react-native-geetest-module (from `../node_modules/react-native-geetest-module`)
   - "react-native-geolocation (from `../node_modules/@react-native-community/geolocation`)"
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-maps (from `../node_modules/react-native-maps`)
@@ -526,6 +530,7 @@ SPEC REPOS:
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleUtilities
+    - GT3Captcha-iOS
     - nanopb
     - PromisesObjC
     - XCDYouTubeKit
@@ -572,6 +577,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-camera"
   react-native-fingerprint-scanner:
     :path: "../node_modules/react-native-fingerprint-scanner"
+  react-native-geetest-module:
+    :path: "../node_modules/react-native-geetest-module"
   react-native-geolocation:
     :path: "../node_modules/@react-native-community/geolocation"
   react-native-image-picker:
@@ -663,7 +670,7 @@ SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
   FBLazyVector: 49cbe4b43e445b06bf29199b6ad2057649e4c8f5
-  FBReactNativeSpec: 572f815cad3abdac3d9d0f8ca349c1e97a5504a0
+  FBReactNativeSpec: 84b8a46a46edfef70b945915cbe6edc4577fbbf0
   Firebase: e1e089d9aac215a52442583f818ab61de3c4581b
   FirebaseAnalytics: 9f8f4feab1f3fddf4e4515f8f022fe6aa9e51043
   FirebaseCore: 0a43b7f1c5b36f3358cd703011ca4c7e0df55870
@@ -675,9 +682,10 @@ SPEC CHECKSUMS:
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
   GoogleAppMeasurement: c542a2feaac9ab98fd074e8f1a02c3585bbfbd47
   GoogleDataTransport: 8b0e733ea77c9218778e5a9e34ba9508b8328939
-  GoogleUtilities: 8de2a97a17e15b6b98e38e8770e2d129a57c0040
-  lottie-ios: c058aeafa76daa4cf64d773554bccc8385d0150e
-  lottie-react-native: b561920bba7ec727ec94a473b683cffba00faece
+  GoogleUtilities: e1d9ed4e544fc32a93e00e721400cbc3f377200d
+  GT3Captcha-iOS: ce311aeb1bb2ee04783df4a70c48698494155ff7
+  lottie-ios: 3a3758ef5a008e762faec9c9d50a39842f26d124
+  lottie-react-native: 4dff8fe8d10ddef9e7880e770080f4a56121397e
   nanopb: 59221d7f958fb711001e6a449489542d92ae113e
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   RCT-Folly: ec7a233ccc97cc556cf7237f0db1ff65b986f27c
@@ -694,6 +702,7 @@ SPEC CHECKSUMS:
   React-jsinspector: 0ae35a37b20d5e031eb020a69cc5afdbd6406301
   react-native-camera: b8cc03e2feec0c04403d0998e37cf519d8fd4c6f
   react-native-fingerprint-scanner: ac6656f18c8e45a7459302b84da41a44ad96dbbe
+  react-native-geetest-module: 5977e8024328198610d8a962d06fb1178b20c4d1
   react-native-geolocation: c956aeb136625c23e0dce0467664af2c437888c9
   react-native-image-picker: 92f51a85a62c2d829dcbd0dda5af99e6f988a113
   react-native-maps: f4b89da81626ad7f151a8bfcb79733295d31ce5c
@@ -740,6 +749,6 @@ SPEC CHECKSUMS:
   Yoga: 8c8436d4171c87504c648ae23b1d81242bdf3bbf
   YoutubePlayer-in-WKWebView: 795acdc5e27769cc647ad7f982dabc26050b47eb
 
-PODFILE CHECKSUM: 3de2fdac4ede7e062e498f6303e9b1cba1b4d103
+PODFILE CHECKSUM: 97d6c57a03ad50dae7b77f010b739d72aaee9647
 
 COCOAPODS: 1.11.2

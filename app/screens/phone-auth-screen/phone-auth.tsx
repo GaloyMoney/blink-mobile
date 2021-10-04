@@ -16,6 +16,7 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import PhoneInput from "react-native-phone-input"
 import analytics from "@react-native-firebase/analytics"
 import { StackNavigationProp } from "@react-navigation/stack"
+import { RouteProp } from "@react-navigation/native"
 
 import { CloseCross } from "../../components/close-cross"
 import { Screen } from "../../components/screen"
@@ -31,12 +32,12 @@ import type { ScreenType } from "../../types/jsx"
 import { AuthenticationScreenPurpose } from "../../utils/enum"
 import BadgerPhone from "./badger-phone-01.svg"
 import type { PhoneValidationStackParamList } from "../../navigation/stack-param-lists"
-import { RouteProp } from "@react-navigation/native"
 import { parseTimer } from "../../utils/timer"
+import { useGeetestCaptcha } from "../../hooks"
 
 const REQUEST_AUTH_CODE = gql`
-  mutation userRequestAuthCode($input: UserRequestAuthCodeInput!) {
-    userRequestAuthCode(input: $input) {
+  mutation captchaRequestAuthCode($input: CaptchaRequestAuthCodeInput!) {
+    captchaRequestAuthCode(input: $input) {
       errors {
         message
       }
@@ -70,8 +71,17 @@ type LoginMutationFunction = (
 ) => Promise<FetchResult<Record<string, UserLoginMutationResponse>>>
 
 const styles = EStyleSheet.create({
-  buttonStyle: {
-    backgroundColor: color.primary,
+  button: {
+    alignSelf: "center",
+    backgroundColor: color.palette.blue,
+    marginTop: "30rem",
+    width: "200rem",
+  },
+
+  buttonResend: {
+    alignSelf: "center",
+    backgroundColor: color.palette.blue,
+    width: "200rem",
   },
 
   codeContainer: {
@@ -134,26 +144,47 @@ type WelcomePhoneInputScreenProps = {
 export const WelcomePhoneInputScreen: ScreenType = ({
   navigation,
 }: WelcomePhoneInputScreenProps) => {
-  const [requestPhoneCode, { loading }] = useMutation(REQUEST_AUTH_CODE, {
-    fetchPolicy: "no-cache",
-  })
+  const {
+    geetestError,
+    geetestValidationData,
+    loadingRegisterCaptcha,
+    registerCaptcha,
+    resetError,
+    resetValidationData,
+  } = useGeetestCaptcha()
 
-  const inputRef = useRef<PhoneInput | null>()
+  const [phoneNumber, setPhoneNumber] = useState("")
 
-  const send = useCallback(async () => {
-    const phone = inputRef.current.getValue()
-    const phoneRegex = new RegExp("^\\+[0-9]+$")
+  const phoneInputRef = useRef<PhoneInput | null>()
 
-    if (!inputRef.current.isValidNumber() || !phoneRegex.test(phone)) {
-      Alert.alert(`${phone} ${translate("errors.invalidPhoneNumber")}`)
-      return
-    }
+  const [requestPhoneCode, { loading: loadingRequestPhoneCode }] = useMutation(
+    REQUEST_AUTH_CODE,
+    {
+      fetchPolicy: "no-cache",
+    },
+  )
 
+  const sendRequestAuthCode = useCallback(async () => {
     try {
-      const { data } = await requestPhoneCode({ variables: { input: { phone } } })
+      const input = {
+        phone: phoneNumber,
+        challengeCode: geetestValidationData?.geetestChallenge,
+        validationCode: geetestValidationData?.geetestValidate,
+        secCode: geetestValidationData?.geetestSecCode,
+      }
+      resetValidationData()
 
-      if (data.userRequestAuthCode.success) {
-        navigation.navigate("welcomePhoneValidation", { phone })
+      const { data } = await requestPhoneCode({ variables: { input } })
+
+      if (data.captchaRequestAuthCode.success) {
+        navigation.navigate("welcomePhoneValidation", { phone: phoneNumber })
+      } else if (data.captchaRequestAuthCode.errors.length > 0) {
+        const errorMessage = data.captchaRequestAuthCode.errors[0].message
+        if (errorMessage === "Too many requests") {
+          toastShow(translate("errors.tooManyRequestsPhoneCode"))
+        } else {
+          toastShow(errorMessage)
+        }
       } else {
         toastShow(translate("errors.generic"))
       }
@@ -165,39 +196,81 @@ export const WelcomePhoneInputScreen: ScreenType = ({
         toastShow(translate("errors.generic"))
       }
     }
-  }, [navigation, requestPhoneCode])
+  }, [
+    geetestValidationData,
+    navigation,
+    phoneNumber,
+    requestPhoneCode,
+    resetValidationData,
+  ])
 
   useEffect(() => {
-    inputRef?.current.focus()
-  }, [])
+    if (geetestValidationData) {
+      sendRequestAuthCode()
+    }
+  }, [geetestValidationData, sendRequestAuthCode])
+
+  useEffect(() => {
+    if (geetestError) {
+      toastShow(geetestError)
+      resetError()
+    }
+  })
+
+  const submitPhoneNumber = () => {
+    const phone = phoneInputRef.current.getValue()
+    const phoneRegex = new RegExp("^\\+[0-9]+$")
+
+    if (!phoneInputRef.current.isValidNumber() || !phoneRegex.test(phone)) {
+      Alert.alert(`${phone} ${translate("errors.invalidPhoneNumber")}`)
+      return
+    }
+
+    setPhoneNumber(phone)
+  }
+
+  const showCaptcha = phoneNumber.length > 0
 
   return (
     <Screen backgroundColor={palette.lighterGrey} preset="scroll">
       <View style={{ flex: 1, justifyContent: "space-around" }}>
         <View>
           <BadgerPhone style={styles.image} />
-          <Text style={styles.text}>{translate("WelcomePhoneInputScreen.header")}</Text>
+          <Text style={styles.text}>
+            {showCaptcha
+              ? translate("WelcomePhoneInputScreen.headerVerify")
+              : translate("WelcomePhoneInputScreen.header")}
+          </Text>
         </View>
-        <KeyboardAvoidingView>
-          <PhoneInput
-            ref={inputRef}
-            style={styles.phoneEntryContainer}
-            textStyle={styles.textEntry}
-            initialCountry="sv"
-            textProps={{
-              autoFocus: true,
-              placeholder: translate("WelcomePhoneInputScreen.placeholder"),
-              returnKeyType: loading ? "default" : "done",
-              onSubmitEditing: send,
-            }}
+        {showCaptcha ? (
+          <Button
+            title={translate("WelcomePhoneInputScreen.verify")}
+            onPress={() => registerCaptcha()}
+            loading={loadingRegisterCaptcha || loadingRequestPhoneCode}
+            buttonStyle={styles.button}
           />
-          <ActivityIndicator
-            animating={loading}
-            size="large"
-            color={color.primary}
-            style={{ marginTop: 32 }}
-          />
-        </KeyboardAvoidingView>
+        ) : (
+          <KeyboardAvoidingView>
+            <PhoneInput
+              ref={phoneInputRef}
+              style={styles.phoneEntryContainer}
+              textStyle={styles.textEntry}
+              initialCountry="sv"
+              textProps={{
+                autoFocus: true,
+                placeholder: translate("WelcomePhoneInputScreen.placeholder"),
+                returnKeyType: loadingRequestPhoneCode ? "default" : "done",
+                onSubmitEditing: submitPhoneNumber,
+              }}
+            />
+            <ActivityIndicator
+              animating={loadingRequestPhoneCode}
+              size="large"
+              color={color.primary}
+              style={{ marginTop: 32 }}
+            />
+          </KeyboardAvoidingView>
+        )}
       </View>
       <CloseCross color={palette.darkGrey} onPress={() => navigation.goBack()} />
     </Screen>
@@ -263,6 +336,7 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
   onSuccess,
   route,
   navigation,
+  loading,
   login,
   error,
 }: WelcomePhoneValidationScreenProps) => {
@@ -272,28 +346,6 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
 
   const { phone } = route.params
   const updateCode = (input) => setCode(input)
-
-  const [requestPhoneCode, { loading }] = useMutation(REQUEST_AUTH_CODE, {
-    fetchPolicy: "no-cache",
-  })
-
-  const sendCodeAgain = useCallback(async () => {
-    try {
-      const { data } = await requestPhoneCode({ variables: { input: { phone } } })
-      if (data.userRequestAuthCode.success) {
-        setSecondsRemaining(60)
-      } else {
-        toastShow(translate("errors.generic"))
-      }
-    } catch (err) {
-      console.warn({ err })
-      if (err.message === "Too many requests") {
-        toastShow(translate("errors.tooManyRequestsPhoneCode"))
-      } else {
-        toastShow(translate("errors.generic"))
-      }
-    }
-  }, [phone, requestPhoneCode])
 
   const send = async () => {
     if (code.length !== 6) {
@@ -382,14 +434,13 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
             ) : (
               <View style={styles.sendAgainButtonRow}>
                 <Button
-                  buttonStyle={styles.buttonStyle}
+                  buttonStyle={styles.buttonResend}
                   title={translate("WelcomePhoneValidationScreen.sendAgain")}
                   onPress={() => {
                     if (!loading) {
-                      sendCodeAgain()
+                      navigation.goBack()
                     }
                   }}
-                  disabled={loading}
                 />
               </View>
             )}

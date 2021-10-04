@@ -490,8 +490,10 @@ export const PrimaryNavigator: NavigatorType = () => {
   // TODO: get rid of this
   React.useEffect(() => {
     ;(async () => {
-      analytics().setUserProperties({ network: tokenNetwork })
-      setNetwork(tokenNetwork)
+      if (tokenNetwork) {
+        analytics().setUserProperties({ network: tokenNetwork })
+        setNetwork(tokenNetwork)
+      }
     })()
   }, [tokenNetwork])
 

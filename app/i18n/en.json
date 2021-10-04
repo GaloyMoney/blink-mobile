@@ -607,7 +607,9 @@
   },
   "WelcomePhoneInputScreen": {
     "header": "Enter your phone number and we'll text you an access code.",
-    "placeholder": "Phone Number"
+    "headerVerify": "Verify you are not a bot",
+    "placeholder": "Phone Number",
+    "verify": "Click to Verify"
   },
   "WelcomePhoneValidationScreen": {
     "errorLoggingIn": "Error logging in. Did you use the right code?",
