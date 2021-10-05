@@ -473,6 +473,9 @@ export const SendBitcoinConfirmationScreen = ({
     currency: secondaryCurrency,
   }
 
+  const hasCompletedPayment =
+    status === Status.SUCCESS || status === Status.PENDING || status === Status.ERROR
+
   return (
     <Screen preset="fixed">
       <View style={styles.mainView}>
@@ -487,17 +490,18 @@ export const SendBitcoinConfirmationScreen = ({
             secondaryTotalAmount={secondaryTotalAmount}
           />
         </View>
-        <View style={styles.paymentLottieContainer}>
-          <PaymentStatusIndicator errs={errs} status={status} />
-        </View>
-        {!(status === Status.SUCCESS || status === Status.PENDING) &&
-          errorMessage.length > 0 && (
-            <View style={styles.errorContainer}>
-              <Text style={styles.errorText}>{errorMessage}</Text>
-            </View>
-          )}
+        {hasCompletedPayment && (
+          <View style={styles.paymentLottieContainer}>
+            <PaymentStatusIndicator errs={errs} status={status} />
+          </View>
+        )}
+        {!hasCompletedPayment && errorMessage.length > 0 && (
+          <View style={styles.errorContainer}>
+            <Text style={styles.errorText}>{errorMessage}</Text>
+          </View>
+        )}
         <View style={styles.bottomContainer}>
-          {status === "idle" && (
+          {status === "idle" && errorMessage.length === 0 && (
             <View style={styles.confirmationTextContainer}>
               <Text style={styles.confirmationText}>
                 {translate("SendBitcoinConfirmationScreen.confirmPayment?")}
@@ -511,11 +515,7 @@ export const SendBitcoinConfirmationScreen = ({
             buttonStyle={styles.buttonStyle}
             loading={status === "loading"}
             onPress={() => {
-              if (
-                status === Status.SUCCESS ||
-                status === Status.PENDING ||
-                status === Status.ERROR
-              ) {
+              if (hasCompletedPayment) {
                 navigation.pop(2)
               } else if (errorMessage.length > 0) {
                 navigation.pop(1)
@@ -524,9 +524,7 @@ export const SendBitcoinConfirmationScreen = ({
               }
             }}
             title={
-              status === Status.SUCCESS ||
-              status === Status.PENDING ||
-              status === Status.ERROR
+              hasCompletedPayment
                 ? translate("common.close")
                 : errorMessage.length > 0
                 ? translate("common.cancel")
