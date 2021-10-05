@@ -18,13 +18,12 @@ import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
 import Icon from "react-native-vector-icons/Ionicons"
 import { getBuildNumber } from "react-native-device-info"
-import find from "lodash.find"
 import { BalanceHeader } from "../../components/balance-header"
 import { IconTransaction } from "../../components/icon-transactions"
 import { LargeButton } from "../../components/large-button"
 import { Screen } from "../../components/screen"
 import { TransactionItem } from "../../components/transaction-item"
-import { MAIN_QUERY, walletIsActive } from "../../graphql/query"
+import { MAIN_QUERY, RECENT_TRANSACTIONS, walletIsActive } from "../../graphql/query"
 import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
@@ -34,6 +33,7 @@ import { ScreenType } from "../../types/jsx"
 import useToken from "../../utils/use-token"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
+import { toastShow } from "../../utils/toast"
 
 const styles = EStyleSheet.create({
   balanceHeader: {
@@ -108,6 +108,11 @@ const styles = EStyleSheet.create({
     color: color.primary,
     fontSize: "18rem",
     fontWeight: "bold",
+  },
+
+  transactionsLoading: {
+    marginTop: "20rem",
+    textAlign: "center",
   },
 
   transactionsView: {
@@ -202,11 +207,6 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
     }
   }
 
-  const lastTransactions = find(data?.wallet, { id: "BTC" })?.transactions?.slice(
-    undefined,
-    3,
-  )
-
   return (
     <MoveMoneyScreen
       navigation={navigation}
@@ -217,8 +217,37 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
       isUpdateAvailable={
         isUpdateAvailableOrRequired({ buildParameters: data?.buildParameters }).available
       }
-      transactions={lastTransactions}
+      hasToken={hasToken}
     />
+  )
+}
+
+const RecentTransactions = ({ navigation }) => {
+  const { error, loading, data } = useQuery(RECENT_TRANSACTIONS)
+
+  if (error) {
+    console.error(error)
+    toastShow("Error loading recent transactions.")
+    return null
+  }
+
+  if (loading) {
+    return <Text style={styles.transactionsLoading}>Loading...</Text>
+  }
+
+  const transactionsEdges = data.me.defaultAccount.wallets[0].transactions.edges
+
+  return (
+    <View style={styles.transactionsView}>
+      {transactionsEdges.map(({ node }) => (
+        <TransactionItem
+          key={`transaction-${node.id}`}
+          navigation={navigation}
+          tx={node}
+          subtitle
+        />
+      ))}
+    </View>
   )
 }
 
@@ -230,6 +259,7 @@ type MoveMoneyScreenProps = {
   transactions: []
   refetch: () => void
   isUpdateAvailable: boolean
+  hasToken: boolean
 }
 
 export const MoveMoneyScreen: ScreenType = ({
@@ -237,9 +267,9 @@ export const MoveMoneyScreen: ScreenType = ({
   navigation,
   loading,
   error,
-  transactions,
   refetch,
   isUpdateAvailable,
+  hasToken,
 }: MoveMoneyScreenProps) => {
   const [modalVisible, setModalVisible] = useState(false)
   const [secretMenuCounter, setSecretMenuCounter] = useState(0)
@@ -376,13 +406,17 @@ export const MoveMoneyScreen: ScreenType = ({
             target: "receiveBitcoin",
             icon: <IconTransaction isReceive size={32} />,
           },
-          {
-            title: translate("TransactionScreen.title"),
-            target: "transactionHistory",
-            icon: <Icon name="ios-list-outline" size={32} color={palette.black} />,
-            style: "transactionViewContainer",
-            transactions,
-          },
+          ...(hasToken
+            ? [
+                {
+                  title: translate("TransactionScreen.title"),
+                  target: "transactionHistory",
+                  icon: <Icon name="ios-list-outline" size={32} color={palette.black} />,
+                  style: "transactionViewContainer",
+                  details: <RecentTransactions navigation={navigation} />,
+                },
+              ]
+            : []),
         ]}
         style={styles.listContainer}
         refreshControl={<RefreshControl refreshing={loading} onRefresh={refetch} />}
@@ -394,18 +428,7 @@ export const MoveMoneyScreen: ScreenType = ({
               onPress={() => onMenuClick(item.target)}
               style={item.style}
             />
-            {item.transactions && (
-              <View style={styles.transactionsView}>
-                {item.transactions.map((item, i) => (
-                  <TransactionItem
-                    key={`transaction-${i}`}
-                    navigation={navigation}
-                    tx={item}
-                    subtitle
-                  />
-                ))}
-              </View>
-            )}
+            {item.details}
           </>
         )}
       />
