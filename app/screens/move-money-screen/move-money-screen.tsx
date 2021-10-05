@@ -24,8 +24,7 @@ import { IconTransaction } from "../../components/icon-transactions"
 import { LargeButton } from "../../components/large-button"
 import { Screen } from "../../components/screen"
 import { TransactionItem } from "../../components/transaction-item"
-import { balanceBtc, MAIN_QUERY, walletIsActive } from "../../graphql/query"
-import { useUSDBalance } from "../../hooks"
+import { MAIN_QUERY, walletIsActive } from "../../graphql/query"
 import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
@@ -133,7 +132,6 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
   navigation,
 }: MoveMoneyScreenDataInjectedProps) => {
   const client = useApolloClient()
-  const balanceUsd = useUSDBalance(client)
   const { hasToken } = useToken()
 
   const {
@@ -215,8 +213,6 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
       walletIsActive={walletIsActive(client)}
       loading={loadingMain}
       error={error}
-      amount={balanceUsd}
-      amountOtherCurrency={balanceBtc(client)}
       refetch={refetch}
       isUpdateAvailable={
         isUpdateAvailableOrRequired({ buildParameters: data?.buildParameters }).available
@@ -233,8 +229,6 @@ type MoveMoneyScreenProps = {
   error: ApolloError
   transactions: []
   refetch: () => void
-  amount: number
-  amountOtherCurrency: number
   isUpdateAvailable: boolean
 }
 
@@ -245,8 +239,6 @@ export const MoveMoneyScreen: ScreenType = ({
   error,
   transactions,
   refetch,
-  amount,
-  amountOtherCurrency,
   isUpdateAvailable,
 }: MoveMoneyScreenProps) => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -349,13 +341,7 @@ export const MoveMoneyScreen: ScreenType = ({
           }
           icon={<Icon name="ios-trending-up-outline" size={32} />}
         />
-        <BalanceHeader
-          loading={loading}
-          currency={"USD"}
-          amount={amount}
-          amountOtherCurrency={amountOtherCurrency}
-          style={styles.balanceHeader}
-        />
+        <BalanceHeader loading={loading} style={styles.balanceHeader} />
         <Button
           buttonStyle={styles.buttonStyleTime}
           containerStyle={styles.separator}
