@@ -26,6 +26,8 @@ const SafeSearchBar = SearchBar as unknown as React.FC<
   SearchBarBaseProps | SearchBarDefaultProps | SearchBarAndroidProps | SearchBarIosProps
 >
 
+const filteredContactNames = ["BitcoinBeachMarketing"]
+
 const styles = EStyleSheet.create({
   emptyListNoContacts: {
     marginHorizontal: 12,
@@ -96,7 +98,13 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
     }
   `)
 
-  const contacts: Contact[] = useMemo(() => data?.me?.contacts ?? [], [data])
+  const contacts: Contact[] = useMemo(() => {
+    return (
+      data?.me?.contacts.filter((contact) => {
+        return !filteredContactNames.includes(contact.name)
+      }) ?? []
+    )
+  }, [data])
   const [matchingContacts, setMatchingContacts] = useState(contacts)
   const [searchText, setSearchText] = useState("")
 
