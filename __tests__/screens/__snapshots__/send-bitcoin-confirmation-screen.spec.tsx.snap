@@ -411,7 +411,6 @@ exports[`SendBitcoinConfirmationScreen render matches snapshot 1`] = `
           </View>
         </View>
       </View>
-      <View />
       <View>
         <View>
           <Text>
