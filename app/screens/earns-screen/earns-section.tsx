@@ -117,13 +117,24 @@ type Props = {
 export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
   const { hasToken } = useToken()
 
-  const [earnCompleted] = useMutation(
+  const [updateCompleted] = useMutation(
     gql`
-      mutation earnCompleted($ids: [ID]) {
-        earnCompleted(ids: $ids) {
-          id
-          value
-          completed
+      mutation userQuizQuestionUpdateCompleted(
+        $input: UserQuizQuestionUpdateCompletedInput!
+      ) {
+        userQuizQuestionUpdateCompleted(input: $input) {
+          errors {
+            message
+          }
+
+          userQuizQuestion {
+            question {
+              id
+              earnAmount
+            }
+
+            completed
+          }
         }
       }
     `,
@@ -195,8 +206,7 @@ export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
           feedback: card.feedback,
           // store.earnComplete(card.id),
           onComplete: async () => {
-            // eslint-disable-next-line no-sequences
-            await earnCompleted({ variables: { ids: [card.id] } })
+            updateCompleted({ variables: { input: { id: card.id } } })
           },
           id: card.id,
           completed: earnList.find((item) => item.id == card.id).completed,
