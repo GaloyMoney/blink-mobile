@@ -1,7 +1,6 @@
 import { useQuery } from "@apollo/client"
 import { StackNavigationProp } from "@react-navigation/stack"
 import i18n from "i18n-js"
-import filter from "lodash.filter"
 import sumBy from "lodash.sumby"
 import * as React from "react"
 import { StatusBar, StyleSheet, Text, View } from "react-native"
@@ -188,7 +187,10 @@ export const EarnMapDataInjected: ScreenType = ({ navigation }: EarnMapDataProps
     }
   }
 
-  const earnedSat = sumBy(filter(earnList, { completed: true }), "value")
+  const earnedSat = sumBy(
+    earnList.filter((x) => x.completed === true),
+    "value",
+  )
 
   return (
     <EarnMapScreen

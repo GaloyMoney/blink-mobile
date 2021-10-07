@@ -1,4 +1,3 @@
-import find from "lodash.find"
 import { ApolloClient, FetchPolicy, gql } from "@apollo/client"
 import { MockableApolloClient } from "../types/mockable"
 import { wallet_wallet } from "./__generated__/wallet"
@@ -88,7 +87,7 @@ export const balanceBtc = (client: ApolloClient<unknown>): number => {
   if (!wallet) {
     return 0
   }
-  return find(wallet, { id: "BTC" }).balance
+  return wallet.find((x) => x.id === "BTC").balance
 }
 
 export const queryWallet = async (

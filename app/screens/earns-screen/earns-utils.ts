@@ -1,5 +1,3 @@
-import filter from "lodash.filter"
-import find from "lodash.find"
 import sumBy from "lodash.sumby"
 import { translateQuizSections } from "../../i18n"
 import type { QuizQuestion, QuizSectionContent } from "../../types/quiz"
@@ -17,7 +15,7 @@ export const getCardsFromSection = ({
   const earns_all = translateQuizSections("EarnScreen.earns") as QuizSectionContent[]
   const cards = earns_all[sectionIndex].content
 
-  cards.forEach((card) => (card.value = find(earnList, { id: card.id }).value))
+  cards.forEach((card) => (card.value = earnList.find((x) => x.id === card.id).value))
 
   // FIXME O(N^2)
   // add fullfilled property to each card
@@ -65,6 +63,6 @@ export const sectionCompletedPct = ({ sectionIndex, earnList }: IEarnsUtil): num
 
 export const remainingSatsOnSection = ({ sectionIndex, earnList }: IEarnsUtil): number =>
   sumBy(
-    filter(getCardsFromSection({ sectionIndex, earnList }), { fullfilled: false }),
+    getCardsFromSection({ sectionIndex, earnList }).filter((x) => x.fullfilled === false),
     "value",
   )

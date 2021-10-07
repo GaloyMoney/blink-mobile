@@ -1,5 +1,4 @@
 import { ApolloClient, gql, makeVar } from "@apollo/client"
-import indexOf from "lodash.indexof"
 import analytics from "@react-native-firebase/analytics"
 
 import type { INetwork } from "../types/network"
@@ -25,7 +24,7 @@ export const modalClipboardVisibleVar = makeVar(false)
 
 export const nextPrefCurrency = (): void => {
   const units: CurrencyType[] = ["BTC", "USD"]
-  const currentIndex = indexOf(units, prefCurrencyVar())
+  const currentIndex = units.indexOf(prefCurrencyVar())
   prefCurrencyVar(units[(currentIndex + 1) % units.length])
 }
 
