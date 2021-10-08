@@ -16,6 +16,7 @@ import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import { currencyFormatting } from "../../utils/currencyConversion"
+import moment from "moment"
 
 const styles = EStyleSheet.create({
   amount: {
@@ -86,43 +87,69 @@ type Props = {
   route: RouteProp<RootStackParamList, "transactionDetail">
 }
 
+const typeDisplay = (type) => {
+  switch (type) {
+    case "OnChainTransaction":
+      return "OnChain"
+    case "LnTransaction":
+      return "Lightning"
+    case "IntraLedgerTransaction":
+      return "BitcoinBeach"
+  }
+}
+
 export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props) => {
   const {
-    amount,
-    hash,
+    settlementAmount,
+    settlementFee,
+    settlementPrice,
+    usdAmount,
+
+    paymentHash,
     description,
-    fee,
-    isReceive,
     id,
-    usd,
-    feeUsd,
-    date_format,
-    type,
-    pending,
-    username,
-  } = route.params.tx
+    __typename,
+    recipientUsername,
+
+    isReceive,
+    isPending,
+    createdAt,
+  } = route.params
 
   const spendOrReceiveText = isReceive
     ? translate("TransactionDetailScreen.received")
     : translate("TransactionDetailScreen.spent")
 
-  const feeEntry = `${fee} sats ($${currencyFormatting.USD(feeUsd)})`
+  const { base, offset } = settlementPrice
+  const usdPerSat = base / 10 ** offset / 100
+
+  const feeEntry = `${settlementFee} sats ($${currencyFormatting.USD(
+    settlementFee * usdPerSat,
+  )})`
+
+  const dateDisplay = moment.unix(createdAt).toDate().toLocaleString("en-US", {
+    weekday: "short",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+  })
 
   return (
     <Screen backgroundColor={palette.white} unsafe preset="scroll">
       <View
         style={[
           styles.amountView,
-          { backgroundColor: colorTypeFromIconType({ isReceive, pending }) },
+          { backgroundColor: colorTypeFromIconType({ isReceive, isPending }) },
         ]}
       >
         <IconTransaction isReceive={isReceive} size={100} transparent />
+
         <Text style={styles.amountText}>{spendOrReceiveText}</Text>
-        {!!usd && (
-          <TextCurrency amount={Math.abs(usd)} currency="USD" style={styles.amount} />
-        )}
+        <TextCurrency amount={Math.abs(usdAmount)} currency="USD" style={styles.amount} />
         <TextCurrency
-          amount={Math.abs(amount)}
+          amount={Math.abs(settlementAmount)}
           currency={"BTC"}
           style={styles.amountSecondary}
         />
@@ -133,14 +160,17 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
           {translate("TransactionDetailScreen.detail")}
         </Text>
         <Divider style={styles.divider} />
-        <Row entry={translate("common.date")} value={date_format} />
+        <Row entry={translate("common.date")} value={dateDisplay} />
         {!isReceive && <Row entry={translate("common.fees")} value={feeEntry} />}
         <Row entry={translate("common.description")} value={description} />
-        {username && (
-          <Row entry={translate("TransactionDetailScreen.paid")} value={username} />
+        {recipientUsername && (
+          <Row
+            entry={translate("TransactionDetailScreen.paid")}
+            value={recipientUsername}
+          />
         )}
-        <Row entry={translate("common.type")} value={type} />
-        {hash && <Row entry="Hash" value={hash} />}
+        <Row entry={translate("common.type")} value={typeDisplay(__typename)} />
+        {paymentHash && <Row entry="Hash" value={paymentHash} />}
         {id && <Row entry="id" value={id} />}
       </View>
       <CloseCross color={palette.white} onPress={() => navigation.goBack()} />

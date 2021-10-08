@@ -197,13 +197,14 @@ export const MAIN_QUERY = gql`
   }
 `
 
-export const RECENT_TRANSACTIONS = gql`
-  query recentTransactions {
+export const TRANSACTIONS_LIST = gql`
+  query transactionsList($first: Int, $after: String) {
     me {
       defaultAccount {
         wallets {
-          transactions(first: 3) {
+          transactions(first: $first, after: $after) {
             edges {
+              cursor
               node {
                 __typename
                 id
@@ -217,6 +218,9 @@ export const RECENT_TRANSACTIONS = gql`
                 }
                 memo
                 createdAt
+                ... on LnTransaction {
+                  paymentHash
+                }
                 ... on IntraLedgerTransaction {
                   recipientUsername
                 }

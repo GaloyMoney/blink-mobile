@@ -45,11 +45,11 @@ const xml_transaction_received = `
 
 export const colorTypeFromIconType = ({
   isReceive,
-  pending,
+  isPending,
 }: {
   isReceive: boolean
-  pending: boolean
-}): string => (pending ? palette.midGrey : isReceive ? palette.green : palette.orange)
+  isPending: boolean
+}): string => (isPending ? palette.midGrey : isReceive ? palette.green : palette.orange)
 
 export const IconTransaction = ({
   isReceive,

@@ -23,7 +23,7 @@ import { IconTransaction } from "../../components/icon-transactions"
 import { LargeButton } from "../../components/large-button"
 import { Screen } from "../../components/screen"
 import { TransactionItem } from "../../components/transaction-item"
-import { MAIN_QUERY, RECENT_TRANSACTIONS, walletIsActive } from "../../graphql/query"
+import { MAIN_QUERY, TRANSACTIONS_LIST, walletIsActive } from "../../graphql/query"
 import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
@@ -223,7 +223,10 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
 }
 
 const RecentTransactions = ({ navigation }) => {
-  const { error, loading, data } = useQuery(RECENT_TRANSACTIONS)
+  const { error, loading, data } = useQuery(TRANSACTIONS_LIST, {
+    variables: { first: 3 },
+    onError: console.error,
+  })
 
   if (error) {
     console.error(error)

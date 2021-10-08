@@ -11,7 +11,7 @@ import { prefCurrencyVar as primaryCurrencyVar } from "../../graphql/client-only
 
 import * as currency_fmt from "currency.js"
 import i18n from "i18n-js"
-import moment, { Moment } from "moment"
+import moment from "moment"
 
 const MEMO_SHARING_SATS_THRESHOLD = 1000
 
@@ -24,12 +24,12 @@ const styles = EStyleSheet.create({
     color: palette.midGrey,
   },
 
-  send: {
-    color: palette.darkGrey,
-  },
-
   receive: {
     color: palette.green,
+  },
+
+  send: {
+    color: palette.darkGrey,
   },
 })
 
@@ -44,11 +44,13 @@ moment.locale(i18n.locale)
 const dateDisplay = ({ createdAt }) =>
   moment.duration(Math.min(0, moment.unix(createdAt).diff(moment()))).humanize(true)
 
-const amountDisplay = ({ primaryCurrency, settlementAmount, settlementPrice }) => {
+const computeUsdAmount = ({ settlementAmount, settlementPrice }) => {
   const { base, offset } = settlementPrice
   const usdPerSat = base / 10 ** offset / 100
-  const usdAmount = settlementAmount * usdPerSat
+  return settlementAmount * usdPerSat
+}
 
+const amountDisplay = ({ primaryCurrency, settlementAmount, usdAmount }) => {
   const symbol = primaryCurrency === "BTC" ? "" : "$"
   const precision = primaryCurrency === "BTC" ? 0 : Math.abs(usdAmount) < 0.01 ? 4 : 2
 
@@ -110,19 +112,29 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
 
   const isReceive = tx.direction === "RECEIVE"
   const isPending = tx.status === "PENDING"
+  const description = descriptionDisplay(tx)
+  const usdAmount = computeUsdAmount(tx)
 
   return (
     <ListItem
       containerStyle={styles.container}
-      onPress={() => navigation.navigate("transactionDetail", { tx })}
+      onPress={() =>
+        navigation.navigate("transactionDetail", {
+          ...tx,
+          isReceive,
+          isPending,
+          description,
+          usdAmount,
+        })
+      }
     >
       <IconTransaction isReceive={isReceive} size={24} pending={isPending} />
       <ListItem.Content>
-        <ListItem.Title>{descriptionDisplay(tx)}</ListItem.Title>
+        <ListItem.Title>{description}</ListItem.Title>
         <ListItem.Subtitle>{subtitle ? dateDisplay(tx) : undefined}</ListItem.Subtitle>
       </ListItem.Content>
       <Text style={amountDisplayStyle({ isReceive, isPending })}>
-        {amountDisplay({ ...tx, primaryCurrency })}
+        {amountDisplay({ ...tx, usdAmount, primaryCurrency })}
       </Text>
     </ListItem>
   )

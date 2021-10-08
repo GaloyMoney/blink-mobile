@@ -1,6 +1,5 @@
 import { ApolloError, useQuery, useReactiveVar } from "@apollo/client"
 import { StackNavigationProp } from "@react-navigation/stack"
-import find from "lodash.find"
 import * as React from "react"
 import { SectionList, Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
@@ -8,13 +7,14 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
 import { TransactionItem } from "../../components/transaction-item"
-import { WALLET } from "../../graphql/query"
 import { nextPrefCurrency, prefCurrencyVar } from "../../graphql/client-only-query"
 import { translate } from "../../i18n"
 import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import { sameDay, sameMonth } from "../../utils/date"
+import { TRANSACTIONS_LIST } from "../../graphql/query"
+import { toastShow } from "../../utils/toast"
 
 const styles = EStyleSheet.create({
   errorText: { alignSelf: "center", color: palette.red, paddingBottom: 18 },
@@ -68,7 +68,23 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
 }: Props) => {
   const currency = "sat" // FIXME
 
-  const { data } = useQuery(WALLET, { fetchPolicy: "cache-only" })
+  const { error, data } = useQuery(TRANSACTIONS_LIST, {
+    variables: { first: 20 },
+  })
+
+  const prefCurrency = useReactiveVar(prefCurrencyVar)
+
+  if (error) {
+    console.error(error)
+    toastShow("Error loading transactions.")
+    return null
+  }
+
+  if (!data) {
+    return null
+  }
+
+  const transactionsEdges = data.me.defaultAccount.wallets[0].transactions.edges
 
   const sections = []
   const today = []
@@ -76,13 +92,8 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
   const thisMonth = []
   const before = []
 
-  // we need a shallow copy because the array given by useQuery is otherwise immutable
-  const transactions = [...find(data.wallet, { id: "BTC" }).transactions]
-
-  while (transactions?.length) {
-    // FIXME: optimization need. slow when there are a lot of txs.
-    const tx = transactions.shift()
-
+  for (const txEdge of transactionsEdges) {
+    const tx = txEdge.node
     if (isToday(tx)) {
       today.push(tx)
     } else if (isYesterday(tx)) {
@@ -110,17 +121,12 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
     sections.push({ title: translate("PriceScreen.prevMonths"), data: before })
   }
 
-  const prefCurrency = useReactiveVar(prefCurrencyVar)
-
   return (
     <TransactionScreen
       navigation={navigation}
       currency={currency}
-      // refreshing={loading}
-      // error={error}
       prefCurrency={prefCurrency}
       nextPrefCurrency={nextPrefCurrency}
-      // onRefresh={refreshQuery}
       sections={sections}
     />
   )
@@ -137,11 +143,7 @@ type TransactionScreenProps = {
 }
 
 export const TransactionScreen: ScreenType = ({
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  refreshing,
   navigation,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  onRefresh,
   error,
   prefCurrency,
   nextPrefCurrency,
@@ -149,7 +151,6 @@ export const TransactionScreen: ScreenType = ({
 }: TransactionScreenProps) => (
   <Screen style={styles.screen}>
     <SectionList
-      // refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
       renderItem={({ item, index }) => (
         <TransactionItem key={`txn-${index}`} navigation={navigation} tx={item} />
       )}
@@ -162,7 +163,7 @@ export const TransactionScreen: ScreenType = ({
           ))}
         </>
       )}
-      initialNumToRender={18}
+      initialNumToRender={20}
       renderSectionHeader={({ section: { title } }) => (
         <View style={styles.sectionHeaderContainer}>
           <Text style={styles.sectionHeaderText}>{title}</Text>
