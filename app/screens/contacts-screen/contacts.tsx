@@ -87,13 +87,6 @@ type Props = {
   navigation: StackNavigationProp<ContactStackParamList, "Contacts">
 }
 
-type Contact = {
-  id: string
-  username: string
-  alias: string | null
-  transactionsCount: number
-}
-
 export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
   const [isRefreshed, setIsRefreshed] = useState(false)
   const { loading, data, error, refetch } = useQuery(gql`

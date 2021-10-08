@@ -22,8 +22,7 @@ import {
   AuthenticationCheckScreen,
 } from "../screens/authentication-screen"
 import { PinScreen } from "../screens/authentication-screen/pin-screen"
-import { ContactsDetailScreen } from "../screens/contacts-detail-screen"
-import { ContactsScreen } from "../screens/contacts-screen"
+import { ContactsScreen, ContactsDetailScreen } from "../screens/contacts-screen"
 import { DebugScreen } from "../screens/debug-screen"
 import { EarnMapDataInjected } from "../screens/earns-map-screen"
 import { EarnQuiz, EarnSection } from "../screens/earns-screen"
