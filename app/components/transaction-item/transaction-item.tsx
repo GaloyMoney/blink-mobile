@@ -67,7 +67,7 @@ const descriptionDisplay = ({
   settlementAmount,
   memo,
   direction,
-  recipientUsername,
+  otherPartyUsername,
   __typename,
 }) => {
   const shouldDisplayMemo =
@@ -81,8 +81,8 @@ const descriptionDisplay = ({
 
   const isReceive = direction === "RECEIVE"
 
-  if (recipientUsername) {
-    return isReceive ? `From ${recipientUsername}` : `To ${recipientUsername}`
+  if (otherPartyUsername) {
+    return isReceive ? `From ${otherPartyUsername}` : `To ${otherPartyUsername}`
   }
 
   switch (__typename) {

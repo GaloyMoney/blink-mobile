@@ -222,7 +222,7 @@ export const TRANSACTIONS_LIST = gql`
                   paymentHash
                 }
                 ... on IntraLedgerTransaction {
-                  recipientUsername
+                  otherPartyUsername
                 }
               }
             }

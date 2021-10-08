@@ -109,7 +109,7 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
     description,
     id,
     __typename,
-    recipientUsername,
+    otherPartyUsername,
 
     isReceive,
     isPending,
@@ -163,10 +163,10 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
         <Row entry={translate("common.date")} value={dateDisplay} />
         {!isReceive && <Row entry={translate("common.fees")} value={feeEntry} />}
         <Row entry={translate("common.description")} value={description} />
-        {recipientUsername && (
+        {otherPartyUsername && (
           <Row
             entry={translate("TransactionDetailScreen.paid")}
-            value={recipientUsername}
+            value={otherPartyUsername}
           />
         )}
         <Row entry={translate("common.type")} value={typeDisplay(__typename)} />

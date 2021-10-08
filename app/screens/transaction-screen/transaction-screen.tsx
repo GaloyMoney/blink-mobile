@@ -63,16 +63,22 @@ type Props = {
   navigation: StackNavigationProp<RootStackParamList, "transactionHistory">
 }
 
+const TRANSACTIONS_PER_PAGE = 20
+
 export const TransactionHistoryScreenDataInjected: ScreenType = ({
   navigation,
 }: Props) => {
   const currency = "sat" // FIXME
 
-  const { error, data } = useQuery(TRANSACTIONS_LIST, {
-    variables: { first: 20 },
+  const { error, data, refetch } = useQuery(TRANSACTIONS_LIST, {
+    variables: { first: TRANSACTIONS_PER_PAGE, after: null },
   })
 
   const prefCurrency = useReactiveVar(prefCurrencyVar)
+
+  // The source of truth for listing the transactions
+  // The data gets "cached" here and more pages are appended when they're fetched (through useQuery)
+  const transactionsRef = React.useRef([])
 
   if (error) {
     console.error(error)
@@ -84,7 +90,24 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
     return null
   }
 
-  const transactionsEdges = data.me.defaultAccount.wallets[0].transactions.edges
+  const transactionEdges = data.me.defaultAccount.wallets[0].transactions.edges
+  const lastDataCursor =
+    transactionEdges.length > 0
+      ? transactionEdges[transactionEdges.length - 1].cursor
+      : null
+  const lastSeenCursor =
+    transactionsRef.current.length > 0
+      ? transactionsRef.current[transactionsRef.current.length - 1].cursor
+      : null
+
+  // Add page of data to the source of truth if the data is new
+  if (lastSeenCursor !== lastDataCursor) {
+    transactionsRef.current = transactionsRef.current.concat(transactionEdges)
+  }
+
+  const fetchNextTransactionsPage = () => {
+    refetch({ first: TRANSACTIONS_PER_PAGE, after: lastSeenCursor })
+  }
 
   const sections = []
   const today = []
@@ -92,7 +115,7 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
   const thisMonth = []
   const before = []
 
-  for (const txEdge of transactionsEdges) {
+  for (const txEdge of transactionsRef.current) {
     const tx = txEdge.node
     if (isToday(tx)) {
       today.push(tx)
@@ -128,6 +151,7 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
       prefCurrency={prefCurrency}
       nextPrefCurrency={nextPrefCurrency}
       sections={sections}
+      fetchNextTransactionsPage={fetchNextTransactionsPage}
     />
   )
 }
@@ -140,6 +164,7 @@ type TransactionScreenProps = {
   prefCurrency: string
   nextPrefCurrency: () => void
   sections: []
+  fetchNextTransactionsPage: () => void
 }
 
 export const TransactionScreen: ScreenType = ({
@@ -148,11 +173,12 @@ export const TransactionScreen: ScreenType = ({
   prefCurrency,
   nextPrefCurrency,
   sections,
+  fetchNextTransactionsPage,
 }: TransactionScreenProps) => (
   <Screen style={styles.screen}>
     <SectionList
-      renderItem={({ item, index }) => (
-        <TransactionItem key={`txn-${index}`} navigation={navigation} tx={item} />
+      renderItem={({ item }) => (
+        <TransactionItem key={`txn-${item.id}`} navigation={navigation} tx={item} />
       )}
       ListHeaderComponent={() => (
         <>
@@ -184,6 +210,8 @@ export const TransactionScreen: ScreenType = ({
       }
       sections={sections}
       keyExtractor={(item, index) => item + index}
+      onEndReached={fetchNextTransactionsPage}
+      onEndReachedThreshold={0.5}
     />
   </Screen>
 )
