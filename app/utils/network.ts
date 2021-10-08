@@ -20,8 +20,15 @@ const GRAPHQL_V2_MAINNET_URI = "https://api.mainnet.galoy.io/graphql"
 // rootStore. therefore we are loading this before
 // loading the main RootStore file
 
-export const loadNetwork = async (): Promise<INetwork> =>
-  ((await loadString(NETWORK_STRING)) ?? "mainnet") as INetwork
+export const loadNetwork = async (): Promise<INetwork> => {
+  let network = await loadString(NETWORK_STRING)
+
+  if (!network) {
+    network = __DEV__ ? "regtest" : "mainnet"
+  }
+
+  return network as INetwork
+}
 
 export const saveNetwork = async (network: INetwork): Promise<boolean> =>
   saveString(NETWORK_STRING, network)

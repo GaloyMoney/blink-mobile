@@ -34,6 +34,7 @@ import BadgerPhone from "./badger-phone-01.svg"
 import type { PhoneValidationStackParamList } from "../../navigation/stack-param-lists"
 import { parseTimer } from "../../utils/timer"
 import { useGeetestCaptcha } from "../../hooks"
+import { loadNetwork } from "../../utils/network"
 
 const REQUEST_AUTH_CODE = gql`
   mutation captchaRequestAuthCode($input: CaptchaRequestAuthCodeInput!) {
@@ -163,6 +164,18 @@ export const WelcomePhoneInputScreen: ScreenType = ({
       fetchPolicy: "no-cache",
     },
   )
+
+  // This bypasses the captcha for local dev
+  // Comment it out to test captcha locally
+  useEffect(() => {
+    if (phoneNumber) {
+      loadNetwork().then((network) => {
+        if (network === "regtest") {
+          navigation.navigate("welcomePhoneValidation", { phone: phoneNumber })
+        }
+      })
+    }
+  }, [navigation, phoneNumber])
 
   const sendRequestAuthCode = useCallback(async () => {
     try {
