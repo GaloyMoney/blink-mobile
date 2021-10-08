@@ -1,8 +1,9 @@
 import { gql, useQuery } from "@apollo/client"
+import { useFocusEffect } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { useCallback, useMemo, useState } from "react"
-import { Text, View } from "react-native"
+import { ActivityIndicator, Text, View } from "react-native"
 import {
   ListItem,
   SearchBar,
@@ -18,8 +19,9 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
 import { ContactStackParamList } from "../../navigation/stack-param-lists"
-import { palette } from "../../theme/palette"
+import { color } from "../../theme"
 import { ScreenType } from "../../types/jsx"
+import { toastShow } from "../../utils/toast"
 
 // TODO: get rid of this wrapper once SearchBar props are figured out ref: https://github.com/react-native-elements/react-native-elements/issues/3089
 const SafeSearchBar = SearchBar as unknown as React.FC<
@@ -29,6 +31,12 @@ const SafeSearchBar = SearchBar as unknown as React.FC<
 const filteredContactNames = ["BitcoinBeachMarketing"]
 
 const styles = EStyleSheet.create({
+  activityIndicatorContainer: {
+    alignItems: "center",
+    flex: 1,
+    justifyContent: "center",
+  },
+
   emptyListNoContacts: {
     marginHorizontal: 12,
     marginTop: 32,
@@ -50,8 +58,10 @@ const styles = EStyleSheet.create({
 
   itemContainer: { borderRadius: 8 },
 
+  listContainer: { flexGrow: 1 },
+
   searchBarContainer: {
-    backgroundColor: palette.lighterGrey,
+    backgroundColor: color.palette.lighterGrey,
     borderBottomWidth: 0,
     borderTopWidth: 0,
     marginHorizontal: 26,
@@ -60,7 +70,7 @@ const styles = EStyleSheet.create({
   },
 
   searchBarInputContainerStyle: {
-    backgroundColor: palette.white,
+    backgroundColor: color.palette.white,
   },
 
   searchBarRightIconStyle: {
@@ -68,7 +78,7 @@ const styles = EStyleSheet.create({
   },
 
   searchBarText: {
-    color: palette.black,
+    color: color.palette.black,
     textDecorationLine: "none",
   },
 })
@@ -79,35 +89,45 @@ type Props = {
 
 type Contact = {
   id: string
-  name: string
-  prettyName: string
-  transactionsCount: string
+  username: string
+  alias: string | null
+  transactionsCount: number
 }
 
 export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
-  const { data } = useQuery(gql`
+  const [isRefreshed, setIsRefreshed] = useState(false)
+  const { loading, data, error, refetch } = useQuery(gql`
     query contacts {
       me {
         contacts {
-          id
-          name
-          prettyName @client
+          username
+          alias
           transactionsCount
         }
       }
     }
   `)
 
-  const [matchingContacts, setMatchingContacts] = useState([])
-  const [searchText, setSearchText] = useState("")
+  useFocusEffect(() => {
+    if (!isRefreshed) {
+      setIsRefreshed(true)
+      refetch()
+    }
+  })
+
+  if (error) {
+    toastShow(error.message)
+  }
 
   const contacts: Contact[] = useMemo(() => {
     return (
-      data?.me?.contacts.filter(
-        (contact) => !filteredContactNames.includes(contact.name),
-      ) ?? []
+      data?.me?.contacts.filter((contact) => {
+        return !filteredContactNames.includes(contact.username)
+      }) ?? []
     )
   }, [data])
+  const [matchingContacts, setMatchingContacts] = useState([])
+  const [searchText, setSearchText] = useState("")
 
   React.useEffect(() => {
     setMatchingContacts(contacts)
@@ -134,27 +154,26 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
   )
 
   const wordMatchesContact = (searchWord: string, contact: Contact): boolean => {
-    let contactNameMatchesSearchWord
     let contactPrettyNameMatchesSearchWord
 
-    if (contact.name === null) {
-      contactNameMatchesSearchWord = false
-    } else {
-      contactNameMatchesSearchWord = contact.name
-        .toLowerCase()
-        .includes(searchWord.toLowerCase())
-    }
+    const contactNameMatchesSearchWord = contact.username
+      .toLowerCase()
+      .includes(searchWord.toLowerCase())
 
-    if (contact.prettyName === null) {
+    if (contact.alias === null) {
       contactPrettyNameMatchesSearchWord = false
     } else {
-      contactPrettyNameMatchesSearchWord = contact.prettyName
+      contactPrettyNameMatchesSearchWord = contact.alias
         .toLowerCase()
         .includes(searchWord.toLowerCase())
     }
 
     return contactNameMatchesSearchWord || contactPrettyNameMatchesSearchWord
   }
+
+  React.useEffect(() => {
+    updateMatchingContacts(searchText)
+  }, [searchText, updateMatchingContacts, data])
 
   let searchBarContent: JSX.Element
   let listEmptyContent: JSX.Element
@@ -163,7 +182,6 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
     searchBarContent = (
       <SafeSearchBar
         placeholder={translate("common.search")}
-        onChangeText={updateMatchingContacts}
         value={searchText}
         platform="default"
         round
@@ -188,6 +206,12 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
         </Text>
       </View>
     )
+  } else if (loading) {
+    listEmptyContent = (
+      <View style={styles.activityIndicatorContainer}>
+        <ActivityIndicator size="large" color={color.palette.midGrey} />
+      </View>
+    )
   } else {
     listEmptyContent = (
       <View style={styles.emptyListNoContacts}>
@@ -199,22 +223,23 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
   }
 
   return (
-    <Screen backgroundColor={palette.lighterGrey}>
+    <Screen backgroundColor={color.palette.lighterGrey}>
       {searchBarContent}
       <FlatList
+        contentContainerStyle={styles.listContainer}
         data={matchingContacts}
         ListEmptyComponent={() => listEmptyContent}
         renderItem={({ item }) => (
           <ListItem
-            underlayColor={palette.lighterGrey}
+            underlayColor={color.palette.lighterGrey}
             activeOpacity={0.7}
             style={styles.item}
             containerStyle={styles.itemContainer}
             onPress={() => navigation.navigate("contactDetail", { contact: item })}
           >
-            <Icon name={"ios-person-outline"} size={24} color={palette.green} />
+            <Icon name={"ios-person-outline"} size={24} color={color.palette.green} />
             <ListItem.Content>
-              <ListItem.Title>{item.prettyName}</ListItem.Title>
+              <ListItem.Title>{item.alias}</ListItem.Title>
             </ListItem.Content>
           </ListItem>
         )}
