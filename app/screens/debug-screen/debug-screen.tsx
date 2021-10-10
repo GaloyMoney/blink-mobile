@@ -15,7 +15,7 @@ import useToken from "../../utils/use-token"
 import type { ScreenType } from "../../types/jsx"
 import type { INetwork } from "../../types/network"
 import { useBTCPrice } from "../../hooks"
-import { loadAuthToken } from "../../graphql/client-only-query"
+import { networkVar } from "../../graphql/client-only-query"
 
 const styles = EStyleSheet.create({
   button: {
@@ -145,7 +145,7 @@ export const DebugScreen: ScreenType = () => {
         <ButtonGroup
           onPress={(index) => {
             saveNetwork(networks[index])
-            loadAuthToken()
+            networkVar(networks[index])
             updateNetwork(networks[index])
           }}
           selectedIndex={networks.findIndex((value) => value === networkState)}
