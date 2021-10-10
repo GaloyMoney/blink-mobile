@@ -7,6 +7,7 @@ import {
   ApolloProvider,
   HttpLink,
   NormalizedCacheObject,
+  useReactiveVar,
 } from "@apollo/client"
 import { setContext } from "@apollo/client/link/context"
 import { RetryLink } from "@apollo/client/link/retry"
@@ -43,7 +44,7 @@ import { saveString, loadString } from "./utils/storage"
 import { graphqlV2OperationNames } from "./graphql/graphql-v2-operations"
 import useToken from "./utils/use-token"
 import { getGraphQLUri, getGraphQLV2Uri, loadNetwork } from "./utils/network"
-import { loadAuthToken } from "./graphql/client-only-query"
+import { loadAuthToken, networkVar } from "./graphql/client-only-query"
 import { INetwork } from "./types/network"
 
 export const BUILD_VERSION = "build_version"
@@ -75,6 +76,7 @@ LogBox.ignoreAllLogs()
  */
 export const App = (): JSX.Element => {
   const { token, tokenNetwork } = useToken()
+  const networkReactiveVar = useReactiveVar<INetwork | null>(networkVar)
   const [routeName, setRouteName] = useState("Initial")
   const [apolloClient, setApolloClient] = useState<ApolloClient<NormalizedCacheObject>>()
   const [persistor, setPersistor] = useState<CachePersistor<NormalizedCacheObject>>()
@@ -101,12 +103,15 @@ export const App = (): JSX.Element => {
 
   useEffect(() => {
     const fn = async () => {
-      let network: INetwork
+      let currentNetwork: INetwork
 
       if (token) {
-        network = tokenNetwork
+        currentNetwork = tokenNetwork
+      } else if (networkReactiveVar) {
+        currentNetwork = networkReactiveVar
       } else {
-        network = await loadNetwork()
+        currentNetwork = await loadNetwork()
+        networkVar(currentNetwork)
       }
 
       // legacy. when was using mst-gql. storage is deleted as we don't want
@@ -115,12 +120,12 @@ export const App = (): JSX.Element => {
       await AsyncStorage.multiRemove([LEGACY_ROOT_STATE_STORAGE_KEY])
 
       const customFetch = async (_ /* uri not used */, options) => {
-        const uri = await getGraphQLUri(network)
+        const uri = await getGraphQLUri(currentNetwork)
         return fetch(uri, options)
       }
 
       const customFetchV2 = async (_ /* uri not used */, options) => {
-        const uri = await getGraphQLV2Uri(network)
+        const uri = await getGraphQLV2Uri(currentNetwork)
         return fetch(uri, options)
       }
 
@@ -204,7 +209,7 @@ export const App = (): JSX.Element => {
       setApolloClient(client)
     }
     fn()
-  }, [token, tokenNetwork])
+  }, [networkReactiveVar, token, tokenNetwork])
 
   // Before we show the app, we have to wait for our state to be ready.
   // In the meantime, don't render anything. This will be the background

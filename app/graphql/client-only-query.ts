@@ -20,6 +20,8 @@ export const loadAuthToken = async (): Promise<void> => {
   }
 }
 
+export const networkVar = makeVar<INetwork | null>(null)
+
 export const prefCurrencyVar = makeVar<CurrencyType>("USD")
 export const modalClipboardVisibleVar = makeVar(false)
 
