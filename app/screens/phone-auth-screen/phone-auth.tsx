@@ -8,6 +8,7 @@ import {
   Platform,
   ScrollView,
   Text,
+  TextInput,
   View,
 } from "react-native"
 import { Button, Input } from "react-native-elements"
@@ -34,7 +35,7 @@ import BadgerPhone from "./badger-phone-01.svg"
 import type { PhoneValidationStackParamList } from "../../navigation/stack-param-lists"
 import { parseTimer } from "../../utils/timer"
 import { useGeetestCaptcha } from "../../hooks"
-import { loadNetwork } from "../../utils/network"
+import { networkVar } from "../../graphql/client-only-query"
 
 const REQUEST_AUTH_CODE = gql`
   mutation captchaRequestAuthCode($input: CaptchaRequestAuthCodeInput!) {
@@ -72,13 +73,6 @@ type LoginMutationFunction = (
 ) => Promise<FetchResult<Record<string, UserLoginMutationResponse>>>
 
 const styles = EStyleSheet.create({
-  button: {
-    alignSelf: "center",
-    backgroundColor: color.palette.blue,
-    marginTop: "30rem",
-    width: "200rem",
-  },
-
   buttonResend: {
     alignSelf: "center",
     backgroundColor: color.palette.blue,
@@ -165,17 +159,22 @@ export const WelcomePhoneInputScreen: ScreenType = ({
     },
   )
 
+  const setPhone = (newPhoneNumber: string) => {
+    setPhoneNumber(newPhoneNumber)
+  }
+
   // This bypasses the captcha for local dev
   // Comment it out to test captcha locally
   useEffect(() => {
     if (phoneNumber) {
-      loadNetwork().then((network) => {
-        if (network === "regtest") {
-          navigation.navigate("welcomePhoneValidation", { phone: phoneNumber })
-        }
-      })
+      if (networkVar() === "regtest") {
+        navigation.navigate("welcomePhoneValidation", { phone: phoneNumber, setPhone })
+        setPhoneNumber("")
+      } else {
+        registerCaptcha()
+      }
     }
-  }, [navigation, phoneNumber])
+  }, [navigation, phoneNumber, registerCaptcha])
 
   const sendRequestAuthCode = useCallback(async () => {
     try {
@@ -190,7 +189,8 @@ export const WelcomePhoneInputScreen: ScreenType = ({
       const { data } = await requestPhoneCode({ variables: { input } })
 
       if (data.captchaRequestAuthCode.success) {
-        navigation.navigate("welcomePhoneValidation", { phone: phoneNumber })
+        navigation.navigate("welcomePhoneValidation", { phone: phoneNumber, setPhone })
+        setPhoneNumber("")
       } else if (data.captchaRequestAuthCode.errors.length > 0) {
         const errorMessage = data.captchaRequestAuthCode.errors[0].message
         if (errorMessage === "Too many requests") {
@@ -225,8 +225,9 @@ export const WelcomePhoneInputScreen: ScreenType = ({
 
   useEffect(() => {
     if (geetestError) {
-      toastShow(geetestError)
+      const error = geetestError
       resetError()
+      toastShow(error)
     }
   })
 
@@ -243,6 +244,13 @@ export const WelcomePhoneInputScreen: ScreenType = ({
   }
 
   const showCaptcha = phoneNumber.length > 0
+  let captchaContent: JSX.Element
+
+  if (loadingRegisterCaptcha || loadingRequestPhoneCode) {
+    captchaContent = <ActivityIndicator size="large" color={color.primary} />
+  } else {
+    captchaContent = null
+  }
 
   return (
     <Screen backgroundColor={palette.lighterGrey} preset="scroll">
@@ -256,12 +264,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
           </Text>
         </View>
         {showCaptcha ? (
-          <Button
-            title={translate("WelcomePhoneInputScreen.verify")}
-            onPress={() => registerCaptcha()}
-            loading={loadingRegisterCaptcha || loadingRequestPhoneCode}
-            buttonStyle={styles.button}
-          />
+          captchaContent
         ) : (
           <KeyboardAvoidingView>
             <PhoneInput
@@ -308,50 +311,53 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
     fetchPolicy: "no-cache",
   })
 
-  const onSuccess = async ({ token }) => {
-    analytics().logLogin({ method: "phone" })
-    await saveToken(token)
-
-    // TODO refactor from mst-gql to apollo client
-    // sync the earned quizzes
-    // const ids = map(filter(values(self.earns), {completed: true}), "id")
-    // yield self.mutateEarnCompleted({ids})
-
-    // console.log("succesfully update earns id")
-
-    queryMain(client, { logged: hasToken })
-
+  const onHasToken = useCallback(async () => {
+    await queryMain(client, { logged: hasToken })
     addDeviceToken(client)
-  }
+
+    if (await BiometricWrapper.isSensorAvailable()) {
+      navigation.replace("authentication", {
+        screenPurpose: AuthenticationScreenPurpose.TurnOnAuthentication,
+      })
+    } else {
+      navigation.navigate("moveMoney")
+    }
+  }, [client, hasToken, navigation])
+
+  useEffect(() => {
+    if (hasToken) {
+      onHasToken()
+    }
+  }, [hasToken, onHasToken])
 
   return (
     <WelcomePhoneValidationScreen
-      onSuccess={onSuccess}
       route={route}
       navigation={navigation}
       login={login}
-      loading={loading}
+      loading={loading || hasToken}
       error={error}
+      saveToken={saveToken}
     />
   )
 }
 
 type WelcomePhoneValidationScreenProps = {
   login: LoginMutationFunction
-  onSuccess: (params) => void
   navigation: StackNavigationProp<PhoneValidationStackParamList, "welcomePhoneValidation">
   route: RouteProp<PhoneValidationStackParamList, "welcomePhoneValidation">
   loading: boolean
   error: string
+  saveToken: (string) => Promise<boolean>
 }
 
 export const WelcomePhoneValidationScreen: ScreenType = ({
-  onSuccess,
   route,
   navigation,
   loading,
   login,
   error,
+  saveToken,
 }: WelcomePhoneValidationScreenProps) => {
   // FIXME see what to do with store and storybook
   const [code, setCode] = useState("")
@@ -359,6 +365,11 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
 
   const { phone } = route.params
   const updateCode = (input) => setCode(input)
+  const inputRef = useRef<TextInput>()
+
+  useEffect(() => {
+    setTimeout(() => inputRef?.current?.focus(), 150)
+  }, [])
 
   const send = async () => {
     if (code.length !== 6) {
@@ -375,14 +386,8 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
       const token = data?.userLogin?.authToken
 
       if (token) {
-        await onSuccess({ token })
-        if (await BiometricWrapper.isSensorAvailable()) {
-          navigation.replace("authentication", {
-            screenPurpose: AuthenticationScreenPurpose.TurnOnAuthentication,
-          })
-        } else {
-          navigation.navigate("moveMoney")
-        }
+        analytics().logLogin({ method: "phone" })
+        saveToken(token)
       } else {
         toastShow(translate("WelcomePhoneValidationScreen.errorLoggingIn"))
       }
@@ -422,9 +427,10 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
             style={{ flex: 1 }}
           >
             <Input
+              ref={inputRef}
               errorStyle={{ color: palette.red }}
               errorMessage={error}
-              autoFocus
+              autoFocus={true}
               style={styles.phoneEntryContainer}
               containerStyle={styles.codeContainer}
               onChangeText={updateCode}
@@ -451,6 +457,7 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
                   title={translate("WelcomePhoneValidationScreen.sendAgain")}
                   onPress={() => {
                     if (!loading) {
+                      route.params?.setPhone(phone)
                       navigation.goBack()
                     }
                   }}
