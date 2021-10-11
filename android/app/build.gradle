@@ -79,7 +79,6 @@ import com.android.build.OutputFile
 
 project.ext.react = [
     enableHermes: true,  // clean and rebuild if changing
-    extraPackagerArgs: ["--sourcemap-output", file("$buildDir/../../sourcemap.android.js")]
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
