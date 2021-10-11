@@ -359,7 +359,6 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
   error,
   saveToken,
 }: WelcomePhoneValidationScreenProps) => {
-  // FIXME see what to do with store and storybook
   const [code, setCode] = useState("")
   const [secondsRemaining, setSecondsRemaining] = useState<number>(60)
 
