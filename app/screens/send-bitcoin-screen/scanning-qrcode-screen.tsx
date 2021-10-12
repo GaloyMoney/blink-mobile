@@ -114,18 +114,22 @@ export const ScanningQRCodeScreen: ScreenType = ({
           mediaType: "photo",
         },
         (response) => {
-          if (response.assets[0].uri) {
-            const uri = response.assets[0].uri.toString().replace("file://", "")
-            LocalQRCode.decode(uri, (error, result) => {
-              if (!error) {
-                decodeInvoice(result)
-              } else if (error.message === "Feature size is zero!") {
-                Alert.alert(translate("ScanningQRCodeScreen.noQrCode"))
-              } else {
-                console.log({ error })
-                Alert.alert(`${error}`)
-              }
-            })
+          try {
+            if (response?.assets?.[0]?.uri) {
+              const uri = response.assets[0].uri.toString().replace("file://", "")
+              LocalQRCode.decode(uri, (error, result) => {
+                if (!error) {
+                  decodeInvoice(result)
+                } else if (error.message === "Feature size is zero!") {
+                  Alert.alert(translate("ScanningQRCodeScreen.noQrCode"))
+                } else {
+                  console.log({ error })
+                  Alert.alert(`${error}`)
+                }
+              })
+            }
+          } catch (err) {
+            Alert.alert(err.toString())
           }
         },
       )
