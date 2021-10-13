@@ -42,7 +42,6 @@ import type { PhoneValidationStackParamList } from "../../navigation/stack-param
 import { parseTimer } from "../../utils/timer"
 import { useGeetestCaptcha } from "../../hooks"
 import { hasSetAuthorizationVar, networkVar } from "../../graphql/client-only-query"
-import { sleep } from "../../utils/sleep"
 
 const REQUEST_AUTH_CODE = gql`
   mutation captchaRequestAuthCode($input: CaptchaRequestAuthCodeInput!) {
@@ -399,7 +398,7 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
         toastShow(translate("WelcomePhoneValidationScreen.errorLoggingIn"))
       }
     } catch (err) {
-      console.warn("PINEAPPLE", { err })
+      console.warn({ err })
       toastShow(`${err}`)
     }
   }
