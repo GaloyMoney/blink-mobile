@@ -41,7 +41,11 @@ export const DebugScreen: ScreenType = () => {
     async (network?) => {
       let newNetwork = tokenNetwork || network
       if (!newNetwork) {
-        newNetwork = await loadNetwork()
+        if (networkVar()) {
+          newNetwork = networkVar()
+        } else {
+          newNetwork = await loadNetwork()
+        }
       }
       setGraphQLUri(await getGraphQLUri(newNetwork))
       setNetworkState(newNetwork)

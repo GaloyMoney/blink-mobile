@@ -147,6 +147,7 @@ export const walletIsActive = (client: ApolloClient<unknown>): boolean => {
       }
     `,
   })
+
   return result?.me?.level ?? 0 > 0
 }
 
@@ -242,7 +243,7 @@ export const queryMain = async (
   variables: { logged: boolean },
 ): Promise<void> => {
   await client.query({
-    query: WALLET,
+    query: MAIN_QUERY,
     variables,
     fetchPolicy: "network-only",
   })
