@@ -44,7 +44,11 @@ import { saveString, loadString } from "./utils/storage"
 import { graphqlV2OperationNames } from "./graphql/graphql-v2-operations"
 import useToken from "./utils/use-token"
 import { getGraphQLUri, getGraphQLV2Uri, loadNetwork } from "./utils/network"
-import { loadAuthToken, networkVar } from "./graphql/client-only-query"
+import {
+  hasSetAuthorizationVar,
+  loadAuthToken,
+  networkVar,
+} from "./graphql/client-only-query"
 import { INetwork } from "./types/network"
 
 export const BUILD_VERSION = "build_version"
@@ -133,6 +137,11 @@ export const App = (): JSX.Element => {
       const httpLinkV2 = new HttpLink({ fetch: customFetchV2 })
 
       const authLink = setContext((_, { headers }) => {
+        if (token) {
+          hasSetAuthorizationVar(true)
+        } else {
+          hasSetAuthorizationVar(false)
+        }
         return {
           headers: {
             ...headers,
