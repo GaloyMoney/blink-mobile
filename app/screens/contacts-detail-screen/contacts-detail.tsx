@@ -1,25 +1,22 @@
-import { useMutation, useQuery, gql } from "@apollo/client"
+import { useMutation, gql } from "@apollo/client"
 import * as React from "react"
 import { View } from "react-native"
 import { Input, Text } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { ScrollView } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
-import find from "lodash.find"
 import { CloseCross } from "../../components/close-cross"
 import { IconTransaction } from "../../components/icon-transactions"
 import { LargeButton } from "../../components/large-button"
 import { Screen } from "../../components/screen"
-import { TransactionItem } from "../../components/transaction-item"
 import { translate } from "../../i18n"
-import { QUERY_TRANSACTIONS } from "../../graphql/query"
 import { palette } from "../../theme/palette"
 import type { ContactStackParamList } from "../../navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { RouteProp } from "@react-navigation/native"
 import type { ScreenType } from "../../types/jsx"
-import { query_transactions_wallet_transactions } from "../../graphql/__generated__/query_transactions"
 import { contacts_me_contacts } from "../contacts-screen/__generated__/contacts"
+import { ContactTransactionsDataInjected } from "./contact-transactions"
 
 const styles = EStyleSheet.create({
   actionsContainer: { paddingBottom: 18 },
@@ -66,39 +63,17 @@ export const ContactsDetailScreen: ScreenType = ({
   navigation,
 }: ContactDetailProps) => {
   const { contact } = route.params
-  let transactions_filtered = []
-  const { data } = useQuery(QUERY_TRANSACTIONS)
-
-  try {
-    const { transactions } = find(data.wallet, { id: "BTC" })
-    // TODO: this query could be optimize through some graphql query
-    transactions_filtered = transactions.filter((tx) => tx.username === contact.id)
-  } catch (err) {
-    // do not throw if there is a username mismatch. the value from me.contact.name is currently
-    // handled on the backend, and there could be some discrepencies, ie: if a username get manually renamed
-    // (which should not happen in a normal workflow)
-    console.error({ err })
-  }
-
-  return (
-    <ContactsDetailScreenJSX
-      navigation={navigation}
-      contact={contact}
-      transactions={transactions_filtered}
-    />
-  )
+  return <ContactsDetailScreenJSX navigation={navigation} contact={contact} />
 }
 
 type ContactDetailScreenProps = {
   contact: contacts_me_contacts
   navigation: StackNavigationProp<ContactStackParamList, "contactDetail">
-  transactions: query_transactions_wallet_transactions[]
 }
 
 export const ContactsDetailScreenJSX: ScreenType = ({
   contact,
   navigation,
-  transactions,
 }: ContactDetailScreenProps) => {
   const [contactName, setContactName] = React.useState(contact.prettyName)
 
@@ -150,14 +125,10 @@ export const ContactsDetailScreenJSX: ScreenType = ({
             input: contact.prettyName,
           })}
         </Text>
-        {transactions.map((item, i) => (
-          <TransactionItem
-            key={`transaction-${i}`}
-            navigation={navigation}
-            tx={item}
-            subtitle
-          />
-        ))}
+        <ContactTransactionsDataInjected
+          navigation={navigation}
+          contactUsername={contact.id}
+        />
       </ScrollView>
       <View style={styles.actionsContainer}>
         <LargeButton

@@ -22,32 +22,6 @@ export const WALLET = gql`
   }
 `
 
-export const QUERY_TRANSACTIONS = gql`
-  query query_transactions {
-    wallet {
-      id
-      transactions {
-        id
-        amount
-        description
-        created_at
-        hash
-        type
-        usd
-        fee
-        feeUsd
-        pending
-        username
-        date @client
-        date_format @client
-        date_nice_print @client
-        isReceive @client
-        text @client
-      }
-    }
-  }
-`
-
 export const QUERY_EARN_LIST = gql`
   query earnList($logged: Boolean!) {
     earnList {
@@ -188,11 +162,6 @@ export const MAIN_QUERY = gql`
       username
       phone
       language
-      contacts {
-        id
-        name
-        transactionsCount
-      }
     }
   }
 `
@@ -200,8 +169,10 @@ export const MAIN_QUERY = gql`
 export const TRANSACTIONS_LIST = gql`
   query transactionsList($first: Int, $after: String) {
     me {
+      id
       defaultAccount {
         wallets {
+          id
           transactions(first: $first, after: $after) {
             edges {
               cursor
@@ -224,6 +195,40 @@ export const TRANSACTIONS_LIST = gql`
                 ... on IntraLedgerTransaction {
                   otherPartyUsername
                 }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`
+
+export const TRANSACTIONS_LIST_FOR_CONACT = gql`
+  query transactionsList($username: Username!, $first: Int, $after: String) {
+    me {
+      contactByUsername(username: $username) {
+        transactions(first: $first, after: $after) {
+          edges {
+            cursor
+            node {
+              __typename
+              id
+              settlementAmount
+              settlementFee
+              status
+              direction
+              settlementPrice {
+                base
+                offset
+              }
+              memo
+              createdAt
+              ... on LnTransaction {
+                paymentHash
+              }
+              ... on IntraLedgerTransaction {
+                otherPartyUsername
               }
             }
           }

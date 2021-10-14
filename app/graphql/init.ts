@@ -10,16 +10,8 @@ export const INITWALLET = gql`
   }
 `
 
-// FIXME TODO: add __typename for all values
-
 export const initQuery = {
   wallet: [
-    {
-      __typename: "Wallet",
-      id: "USD",
-      currency: "USD",
-      balance: 0,
-    },
     {
       __typename: "Wallet",
       id: "BTC",
