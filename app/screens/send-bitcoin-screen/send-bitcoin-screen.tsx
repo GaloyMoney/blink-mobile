@@ -1,5 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
-import { useApolloClient, useLazyQuery } from "@apollo/client"
+import { gql, useApolloClient, useLazyQuery } from "@apollo/client"
+import { StackNavigationProp } from "@react-navigation/stack"
 import { RouteProp } from "@react-navigation/native"
 import * as React from "react"
 import { useCallback, useEffect, useMemo, useState } from "react"
@@ -11,7 +12,7 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { InputPayment } from "../../components/input-payment"
 import { GaloyInput } from "../../components/galoy-input"
 import { Screen } from "../../components/screen"
-import { balanceBtc, USERNAME_EXIST } from "../../graphql/query"
+import { balanceBtc } from "../../graphql/query"
 import { useMoneyAmount, useBTCPrice } from "../../hooks"
 import { translate } from "../../i18n"
 import type { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
@@ -24,9 +25,15 @@ import useToken from "../../utils/use-token"
 import { UsernameValidation } from "../../utils/validation"
 import { TextCurrency } from "../../components/text-currency/text-currency"
 import { useCurrencies } from "../../hooks/use-currencies"
-import { StackNavigationProp } from "@react-navigation/stack"
+import { toastShow } from "../../utils/toast"
 
 export const PRICE_CHECK_INTERVAL = 10000
+
+const USER_WALLET_ID = gql`
+  query userWalletId($username: Username!) {
+    userWalletId(username: $username)
+  }
+`
 
 type SendBitcoinScreenProps = {
   navigation: StackNavigationProp<MoveMoneyStackParamList, "sendBitcoin">
@@ -82,17 +89,16 @@ export const SendBitcoinScreen: ScreenType = ({
   const [interactive, setInteractive] = useState(false)
 
   // TODO use a debouncer to avoid flickering https://github.com/helfer/apollo-link-debounce
-  const [
-    usernameExistsQuery,
-    { loading: loadingUserNameExist, data: dataUsernameExists },
-  ] = useLazyQuery(USERNAME_EXIST, { fetchPolicy: "network-only" })
+
+  const [userWalletIdQuery, { loading: loadingUserWalletId, data: dataUserWalletId }] =
+    useLazyQuery(USER_WALLET_ID, { fetchPolicy: "network-only" })
 
   useEffect(() => {
     const interval = setInterval(() => updateStalePrice(), PRICE_CHECK_INTERVAL)
     return () => clearInterval(interval)
   }, [updateStalePrice])
 
-  const usernameExists = dataUsernameExists?.usernameExists ?? false
+  const usernameExists = Boolean(dataUserWalletId?.userWalletId)
 
   const balance = balanceBtc(client)
 
@@ -213,7 +219,7 @@ export const SendBitcoinScreen: ScreenType = ({
         setPaymentType("username")
 
         if (UsernameValidation.isValid(destination)) {
-          usernameExistsQuery({ variables: { username: destination } })
+          userWalletIdQuery({ variables: { username: destination } })
         }
       }
     }
@@ -234,28 +240,38 @@ export const SendBitcoinScreen: ScreenType = ({
   }, [balance, btcPrice, invoiceError, primaryCurrency, satAmount])
 
   const pay = useCallback(() => {
-    navigation.navigate("sendBitcoinConfirmation", {
-      address,
-      amountless,
-      invoice,
-      memo,
-      paymentType,
-      primaryCurrency,
-      referenceAmount,
-      sameNode,
-      username: paymentType === "username" ? destination : null,
-    })
+    if (paymentType === "username" && !usernameExists) {
+      userWalletIdQuery({ variables: { username: destination } })
+      toastShow(translate("SendBitcoinScreen.usernameNotFound"))
+      return
+    } else {
+      navigation.navigate("sendBitcoinConfirmation", {
+        address,
+        amountless,
+        invoice,
+        memo,
+        paymentType,
+        primaryCurrency,
+        referenceAmount,
+        sameNode,
+        username: paymentType === "username" ? destination : null,
+        userWalletId: paymentType === "username" ? dataUserWalletId.userWalletId : null,
+      })
+    }
   }, [
+    paymentType,
+    usernameExists,
+    userWalletIdQuery,
+    destination,
+    navigation,
     address,
     amountless,
-    destination,
     invoice,
     memo,
-    navigation,
     primaryCurrency,
     referenceAmount,
-    paymentType,
     sameNode,
+    dataUserWalletId,
   ])
 
   return (
@@ -275,7 +291,7 @@ export const SendBitcoinScreen: ScreenType = ({
       setDestination={setDestination}
       destination={destination}
       usernameExists={usernameExists}
-      loadingUserNameExist={loadingUserNameExist}
+      loadingUserNameExist={loadingUserWalletId}
       interactive={interactive}
       errorMessage={errorMessage}
       reset={reset}

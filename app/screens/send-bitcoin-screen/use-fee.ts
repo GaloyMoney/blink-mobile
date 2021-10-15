@@ -3,19 +3,19 @@ import { gql, useMutation } from "@apollo/client"
 import { textCurrencyFormatting } from "../../utils/currencyConversion"
 
 const LIGHTNING_FEES = gql`
-mutation lightning_fees($invoice: String, $amount: Int) {
-  invoice {
-    getFee(invoice: $invoice, amount: $amount)
+  mutation lightning_fees($invoice: String, $amount: Int) {
+    invoice {
+      getFee(invoice: $invoice, amount: $amount)
+    }
   }
-}
 `
 
 const ONCHAIN_FEES = gql`
-mutation onchain_fees($address: String!, $amount: Int) {
-  onchain {
-    getFee(address: $address, amount: $amount)
+  mutation onchain_fees($address: String!, $amount: Int) {
+    onchain {
+      getFee(address: $address, amount: $amount)
+    }
   }
-}
 `
 
 const useFee = ({
