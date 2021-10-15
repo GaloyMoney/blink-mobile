@@ -561,7 +561,8 @@
     "notConfirmed": "Payment has been sent\nbut is not confirmed yet\n\nYou can check the status\nof the payment in Transactions",
     "note": "optional note",
     "success": "Payment has been sent successfully",
-    "title": "Send Bitcoin"
+    "title": "Send Bitcoin",
+    "usernameNotFound": "A user matching the entered username could not be found."
   },
   "SettingsScreen": {
     "activate": "Tap to activate",

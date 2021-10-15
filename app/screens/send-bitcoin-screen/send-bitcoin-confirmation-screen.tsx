@@ -11,7 +11,6 @@ import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
 import type { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
 import { queryWallet, balanceBtc } from "../../graphql/query"
-import { UsernameValidation } from "../../utils/validation"
 import { textCurrencyFormatting } from "../../utils/currencyConversion"
 import { useBTCPrice, useCurrencyConverter } from "../../hooks"
 import { PaymentStatusIndicator } from "./payment-status-indicator"
@@ -20,20 +19,13 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { PaymentConfirmationInformation } from "./payment-confirmation-information"
 import useFee from "./use-fee"
 
-// export const LIGHTNING_PAY = gql`
-//   mutation payInvoice($invoice: String!, $amount: Int, $memo: String) {
-//     invoice {
-//       payInvoice(invoice: $invoice, amount: $amount, memo: $memo)
-//     }
-//   }
-// `
-
 export const LN_PAY = gql`
-  mutation lnInvoicePaymentSend(input: LnInvoicePaymentInput!) {
+  mutation lnInvoicePaymentSend($input: LnInvoicePaymentInput!) {
     lnInvoicePaymentSend(input: $input) {
       errors {
         message
       }
+      status
     }
   }
 `
@@ -44,6 +36,7 @@ const LN_NO_AMOUNT_PAY = gql`
       errors {
         message
       }
+      status
     }
   }
 `
@@ -60,24 +53,15 @@ export const INTRA_LEDGER_PAY = gql`
 `
 
 const ONCHAIN_PAY = gql`
-  mutation onChainPaymentSend(input: OnChainPaymentSendInput!) {
+  mutation onChainPaymentSend($input: OnChainPaymentSendInput!) {
     onChainPaymentSend(input: $input) {
       errors {
         message
       }
+      status
     }
   }
 `
-
-// const ONCHAIN_PAY = gql`
-//   mutation onchain_pay($address: String!, $amount: Int!, $memo: String) {
-//     onchain {
-//       pay(address: $address, amount: $amount, memo: $memo) {
-//         success
-//       }
-//     }
-//   }
-// `
 
 type SendBitcoinConfirmationScreenProps = {
   navigation: StackNavigationProp<MoveMoneyStackParamList, "sendBitcoinConfirmation">
@@ -122,6 +106,7 @@ export const SendBitcoinConfirmationScreen = ({
     referenceAmount,
     sameNode,
     username,
+    userWalletId,
   } = route.params
 
   const [errs, setErrs] = useState<{ message: string }[]>([])
@@ -180,20 +165,14 @@ export const SendBitcoinConfirmationScreen = ({
     setErrs([{ message: `an error occured. try again later\n${error}` }])
   }
 
-  const payUsername = async () => {
-    if (!UsernameValidation.isValid(username)) {
-      setStatus(Status.ERROR)
-      setErrs([{ message: translate("SendBitcoinScreen.invalidUsername") }])
-      return
-    }
-
+  const payWallet = async () => {
     setErrs([])
     setStatus(Status.LOADING)
     try {
       const { data, errors } = await intraLedgerPay({
         variables: {
           input: {
-            recipient: username,
+            recipientWalletId: userWalletId,
             amount: paymentSatAmount,
             memo,
           },
@@ -269,17 +248,46 @@ export const SendBitcoinConfirmationScreen = ({
     }
   }
 
-  const payOnchain = () => {
+  const payOnchain = async () => {
     if (paymentSatAmount === 0) {
       setStatus(Status.ERROR)
       setErrs([{ message: translate("SendBitcoinScreen.noAmount") }])
       return
     }
+
+    setErrs([])
+    setStatus(Status.LOADING)
+    try {
+      console.log("AAAA", {
+        address,
+        amount: paymentSatAmount,
+        memo,
+      })
+      const { data, errors } = await onchainPay({
+        variables: {
+          input: {
+            address,
+            amount: paymentSatAmount,
+            memo,
+          },
+        },
+      })
+
+      const status = data.onChainPaymentSend.status
+      const errs = errors
+        ? errors.map((error) => {
+            return { message: error.message }
+          })
+        : data.onChainPaymentSend.errors
+      handlePaymentReturn(status, errs)
+    } catch (err) {
+      handlePaymentError(err)
+    }
   }
 
   const pay = async () => {
     if (paymentType === "username") {
-      payUsername()
+      payWallet()
       return
     }
 
@@ -295,71 +303,6 @@ export const SendBitcoinConfirmationScreen = ({
     if (paymentType === "onchain") {
       payOnchain()
       return
-    }
-
-    if ((amountless || paymentType === "onchain") && paymentSatAmount === 0) {
-      setStatus(Status.ERROR)
-      setErrs([{ message: translate("SendBitcoinScreen.noAmount") }])
-      return
-    }
-
-    setErrs([])
-    setStatus(Status.LOADING)
-    try {
-      let mutation
-      let variables
-      let errors
-      let data
-
-      if (paymentType === "lightning") {
-        mutation = lightningPay
-        variables = {
-          invoice,
-          amount: amountless ? paymentSatAmount : undefined,
-          memo,
-        }
-      } else if (paymentType === "onchain") {
-        mutation = onchainPay
-        variables = { address, amount: paymentSatAmount, memo }
-      }
-
-      try {
-        ;({ data, errors } = await mutation({ variables }))
-      } catch (err) {
-        console.log({ err, errors }, "mutation error")
-
-        setStatus(Status.ERROR)
-        setErrs([err])
-        return
-      }
-
-      let success
-      let pending
-
-      if (paymentType === "lightning") {
-        success = data?.invoice?.payInvoice === Status.SUCCESS ?? false
-        pending = data?.invoice?.payInvoice === "pending" ?? false
-      } else if (paymentType === "onchain") {
-        success = data?.onchain?.pay?.success
-      }
-
-      if (success) {
-        queryWallet(client, "network-only")
-        setStatus(Status.SUCCESS)
-      } else if (pending) {
-        setStatus(Status.PENDING)
-      } else {
-        setStatus(Status.ERROR)
-        if (errors) {
-          setErrs(errors)
-        } else {
-          setErrs([{ message: data?.invoice?.payInvoice }])
-        }
-      }
-    } catch (err) {
-      console.log({ err }, "error loop")
-      setStatus(Status.ERROR)
-      setErrs([{ message: `an error occured. try again later\n${err}` }])
     }
   }
 
@@ -469,7 +412,7 @@ export const SendBitcoinConfirmationScreen = ({
     status === Status.SUCCESS || status === Status.PENDING || status === Status.ERROR
 
   return (
-    <Screen preset="fixed">
+    <Screen preset="scroll">
       <View style={styles.mainView}>
         <View style={styles.paymentInformationContainer}>
           <PaymentConfirmationInformation

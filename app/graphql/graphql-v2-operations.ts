@@ -6,8 +6,9 @@ export const graphqlV2OperationNames: string[] = [
   "intraLedgerPaymentSend",
   "lnInvoicePaymentSend",
   "lnNoAmountInvoicePaymentSend",
-  "userLogin",
   "transactionsList",
   "transactionsListForContact",
   "userQuizQuestionUpdateCompleted",
+  "userLogin",
+  "userWalletId",
 ]

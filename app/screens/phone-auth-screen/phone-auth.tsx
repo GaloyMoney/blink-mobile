@@ -339,7 +339,7 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
       navigation={navigation}
       login={login}
       loading={loading || hasToken}
-      error={error}
+      error={error?.message}
       saveToken={saveToken}
     />
   )
