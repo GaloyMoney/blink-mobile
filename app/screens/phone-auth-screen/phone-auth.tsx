@@ -339,7 +339,8 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
       navigation={navigation}
       login={login}
       loading={loading || hasToken}
-      error={error?.message}
+      // Todo: provide specific translated error messages in known cases
+      error={error?.message ? translate("errors.generic") + error.message : ""}
       saveToken={saveToken}
     />
   )
