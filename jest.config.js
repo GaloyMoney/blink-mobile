@@ -33,6 +33,8 @@ module.exports = {
       "|react-native-size-matters" +
       "|react-native-ratings" +
       "|react-native-reanimated" +
+      "|react-native-root-siblings" +
+      "|react-native-root-toast" +
       "|react-native-vector-icons" +
       "|@react-native-firebase/auth" +
       "|@react-native-firebase" +
