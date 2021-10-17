@@ -86,7 +86,7 @@ const useFee = ({
   const walletId = dataUserWalletId?.userWalletId ?? ""
 
   const [fee, setFee] = useState<FeeType>({
-    value: null, // TODO: get rid of this
+    value: null,
     status: "unset",
   })
 

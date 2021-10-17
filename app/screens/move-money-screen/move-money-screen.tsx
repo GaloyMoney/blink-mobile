@@ -149,7 +149,7 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
     loading: loadingMain,
     error,
     data,
-    refetch: reftechMain,
+    refetch: refetchMain,
   } = useQuery(MAIN_QUERY, {
     variables: {
       logged: hasToken,
@@ -163,7 +163,7 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
   })
 
   const refetch = () => {
-    reftechMain()
+    refetchMain()
     refetchWalletId()
   }
 

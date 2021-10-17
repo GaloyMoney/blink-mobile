@@ -155,14 +155,19 @@ export const SendBitcoinConfirmationScreen = ({
       setStatus(Status.PENDING)
     } else {
       setStatus(Status.ERROR)
-      setErrs(errors)
+      setErrs(
+        errors.map((error) => {
+          // Todo: provide specific translated error messages in known cases
+          return { message: translate("erros.generic") + error.message }
+        }),
+      )
     }
   }
 
   const handlePaymentError = (error) => {
-    console.log({ error }, "error loop")
     setStatus(Status.ERROR)
-    setErrs([{ message: `an error occured. try again later\n${error}` }])
+    // Todo: provide specific translated error messages in known cases
+    setErrs([{ message: translate("errors.generic") + error }])
   }
 
   const payWallet = async () => {
