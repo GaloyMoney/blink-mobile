@@ -370,125 +370,148 @@ exports[`SendBitcoinConfirmationScreen render matches snapshot 1`] = `
     style={
       Array [
         Object {
-          "alignItems": "stretch",
+          "backgroundColor": "#E6EBEf",
+          "flex": 1,
           "height": "100%",
-          "justifyContent": "flex-start",
-          "width": "100%",
         },
         Object {},
       ]
     }
   >
-    <View>
+    <RCTScrollView
+      contentContainerStyle={
+        Array [
+          Object {
+            "alignItems": "stretch",
+            "justifyContent": "flex-start",
+          },
+          Object {},
+        ]
+      }
+      style={
+        Array [
+          Object {
+            "backgroundColor": "#E6EBEf",
+            "flex": 1,
+            "height": "100%",
+          },
+          Object {},
+        ]
+      }
+    >
       <View>
         <View>
           <View>
-            <Text>
-              To:
-            </Text>
-            <Text>
-              Bitcoin
-            </Text>
+            <View>
+              <View>
+                <Text>
+                  To:
+                </Text>
+                <Text>
+                  Bitcoin
+                </Text>
+              </View>
+              <View>
+                <Text>
+                  Amount:
+                </Text>
+                <Text>
+                  68,626 sats
+                </Text>
+                <Text>
+                  $27.22
+                </Text>
+              </View>
+              <View>
+                <Text>
+                  Fee:
+                </Text>
+                <Text>
+                  0 sats
+                </Text>
+              </View>
+            </View>
           </View>
           <View>
-            <Text>
-              Amount:
-            </Text>
-            <Text>
-              68,626 sats
-            </Text>
-            <Text>
-              $27.22
-            </Text>
-          </View>
-          <View>
-            <Text>
-              Fee:
-            </Text>
-            <Text>
-              0 sats
-            </Text>
-          </View>
-        </View>
-      </View>
-      <View>
-        <View>
-          <Text>
-            Do you want to confirm this payment?
-          </Text>
-          <Text>
-            Payments are final.
-          </Text>
-        </View>
-        <View
-          style={
-            Array [
-              Object {
-                "borderRadius": 3,
-                "overflow": "hidden",
-              },
-              Object {
-                "borderRadius": 3,
-              },
-              undefined,
-              false,
-            ]
-          }
-        >
-          <View
-            accessibilityRole="button"
-            accessibilityState={
-              Object {
-                "busy": false,
-                "disabled": false,
-              }
-            }
-            accessible={true}
-            focusable={true}
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "opacity": 1,
-              }
-            }
-          >
+            <View>
+              <Text>
+                Do you want to confirm this payment?
+              </Text>
+              <Text>
+                Payments are final.
+              </Text>
+            </View>
             <View
               style={
-                Object {
-                  "alignItems": "center",
-                  "backgroundColor": "#2089dc",
-                  "borderColor": "#2089dc",
-                  "borderRadius": 3,
-                  "borderWidth": 0,
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                  "padding": 8,
-                }
+                Array [
+                  Object {
+                    "borderRadius": 3,
+                    "overflow": "hidden",
+                  },
+                  Object {
+                    "borderRadius": 3,
+                  },
+                  undefined,
+                  false,
+                ]
               }
             >
-              <Text
+              <View
+                accessibilityRole="button"
+                accessibilityState={
+                  Object {
+                    "busy": false,
+                    "disabled": false,
+                  }
+                }
+                accessible={true}
+                focusable={true}
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
                 style={
                   Object {
-                    "color": "white",
-                    "fontSize": 18,
-                    "paddingVertical": 1,
-                    "textAlign": "center",
+                    "opacity": 1,
                   }
                 }
               >
-                Confirm payment
-              </Text>
+                <View
+                  style={
+                    Object {
+                      "alignItems": "center",
+                      "backgroundColor": "#2089dc",
+                      "borderColor": "#2089dc",
+                      "borderRadius": 3,
+                      "borderWidth": 0,
+                      "flexDirection": "row",
+                      "justifyContent": "center",
+                      "padding": 8,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Object {
+                        "color": "white",
+                        "fontSize": 18,
+                        "paddingVertical": 1,
+                        "textAlign": "center",
+                      }
+                    }
+                  >
+                    Confirm payment
+                  </Text>
+                </View>
+              </View>
             </View>
           </View>
         </View>
       </View>
-    </View>
+    </RCTScrollView>
   </RCTSafeAreaView>
 </View>
 `;

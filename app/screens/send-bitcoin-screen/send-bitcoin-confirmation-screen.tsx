@@ -257,12 +257,8 @@ export const SendBitcoinConfirmationScreen = ({
 
     setErrs([])
     setStatus(Status.LOADING)
+
     try {
-      console.log("AAAA", {
-        address,
-        amount: paymentSatAmount,
-        memo,
-      })
       const { data, errors } = await onchainPay({
         variables: {
           input: {
@@ -272,7 +268,6 @@ export const SendBitcoinConfirmationScreen = ({
           },
         },
       })
-
       const status = data.onChainPaymentSend.status
       const errs = errors
         ? errors.map((error) => {
