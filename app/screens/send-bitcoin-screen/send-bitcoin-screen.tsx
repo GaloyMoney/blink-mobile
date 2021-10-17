@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import { gql, useApolloClient, useLazyQuery } from "@apollo/client"
+import { useApolloClient, useLazyQuery } from "@apollo/client"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { RouteProp } from "@react-navigation/native"
 import * as React from "react"
@@ -12,7 +12,7 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { InputPayment } from "../../components/input-payment"
 import { GaloyInput } from "../../components/galoy-input"
 import { Screen } from "../../components/screen"
-import { balanceBtc } from "../../graphql/query"
+import { balanceBtc, USER_WALLET_ID } from "../../graphql/query"
 import { useMoneyAmount, useBTCPrice } from "../../hooks"
 import { translate } from "../../i18n"
 import type { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
@@ -28,12 +28,6 @@ import { useCurrencies } from "../../hooks/use-currencies"
 import { toastShow } from "../../utils/toast"
 
 export const PRICE_CHECK_INTERVAL = 10000
-
-const USER_WALLET_ID = gql`
-  query userWalletId($username: Username!) {
-    userWalletId(username: $username)
-  }
-`
 
 type SendBitcoinScreenProps = {
   navigation: StackNavigationProp<MoveMoneyStackParamList, "sendBitcoin">

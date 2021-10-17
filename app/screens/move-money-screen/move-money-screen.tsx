@@ -23,7 +23,13 @@ import { IconTransaction } from "../../components/icon-transactions"
 import { LargeButton } from "../../components/large-button"
 import { Screen } from "../../components/screen"
 import { TransactionItem } from "../../components/transaction-item"
-import { MAIN_QUERY, TRANSACTIONS_LIST, walletIsActive } from "../../graphql/query"
+import {
+  getMyUsername,
+  MAIN_QUERY,
+  TRANSACTIONS_LIST,
+  USER_WALLET_ID,
+  walletIsActive,
+} from "../../graphql/query"
 import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
@@ -143,7 +149,7 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
     loading: loadingMain,
     error,
     data,
-    refetch,
+    refetch: reftechMain,
   } = useQuery(MAIN_QUERY, {
     variables: {
       logged: hasToken,
@@ -151,6 +157,15 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
     notifyOnNetworkStatusChange: true,
     errorPolicy: "all",
   })
+
+  const { refetch: refetchWalletId } = useQuery(USER_WALLET_ID, {
+    variables: { username: getMyUsername(client) },
+  })
+
+  const refetch = () => {
+    reftechMain()
+    refetchWalletId()
+  }
 
   // temporary fix until we have a better management of notifications:
   // when coming back to active state. look if the invoice has been paid

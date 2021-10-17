@@ -1,22 +1,73 @@
 import { useState } from "react"
-import { gql, useMutation } from "@apollo/client"
+import { gql, useApolloClient, useMutation, useQuery } from "@apollo/client"
+
 import { textCurrencyFormatting } from "../../utils/currencyConversion"
+import { getMyUsername, USER_WALLET_ID } from "../../graphql/query"
 
 const LIGHTNING_FEES = gql`
-  mutation lightning_fees($invoice: String, $amount: Int) {
-    invoice {
-      getFee(invoice: $invoice, amount: $amount)
+  mutation lnInvoiceFeeProbe($input: LnInvoiceFeeProbeInput!) {
+    lnInvoiceFeeProbe(input: $input) {
+      errors {
+        message
+      }
+
+      amount
+    }
+  }
+`
+
+const NO_AMOUNT_LIGHTNING_FEES = gql`
+  mutation lnNoAmountInvoiceFeeProbe($input: LnNoAmountInvoiceFeeProbeInput!) {
+    lnNoAmountInvoiceFeeProbe(input: $input) {
+      errors {
+        message
+      }
+
+      amount
     }
   }
 `
 
 const ONCHAIN_FEES = gql`
-  mutation onchain_fees($address: String!, $amount: Int) {
-    onchain {
-      getFee(address: $address, amount: $amount)
+  query onChainTxFee(
+    $walletId: WalletId!
+    $address: OnChainAddress!
+    $amount: SatAmount!
+    $targetConfirmations: TargetConfirmations
+  ) {
+    onChainTxFee(
+      walletId: $walletId
+      address: $address
+      amount: $amount
+      targetConfirmations: $targetConfirmations
+    ) {
+      amount
+      targetConfirmations
     }
   }
 `
+
+type FeeType = {
+  value: number | null
+  status: "loading" | "error" | "unset" | "set"
+}
+
+type UseFeeInput = {
+  address: string
+  amountless: boolean
+  invoice: string
+  paymentType: string
+  sameNode: boolean
+  paymentSatAmount: number
+  btcPrice: number
+  primaryCurrency: CurrencyType
+}
+
+type UseFeeReturn = {
+  value: number | null
+  status: "loading" | "error" | "unset" | "set"
+  text: string
+}
 
 const useFee = ({
   address,
@@ -27,17 +78,21 @@ const useFee = ({
   paymentSatAmount,
   btcPrice,
   primaryCurrency,
-}) => {
-  const [fee, setFee] = useState<{
-    value: number | null
-    status: "loading" | "error" | "unset" | "set"
-  }>({
+}: UseFeeInput): UseFeeReturn => {
+  const client = useApolloClient()
+  const { data: dataUserWalletId } = useQuery(USER_WALLET_ID, {
+    variables: { username: getMyUsername(client) },
+  })
+  const walletId = dataUserWalletId?.userWalletId ?? ""
+
+  const [fee, setFee] = useState<FeeType>({
     value: null, // TODO: get rid of this
     status: "unset",
   })
 
   const [getLightningFees] = useMutation(LIGHTNING_FEES)
-  const [getOnchainFees] = useMutation(ONCHAIN_FEES)
+  const [getNoAmountLightningFees] = useMutation(NO_AMOUNT_LIGHTNING_FEES)
+  // const [getOnchainFees] = useMutation(ONCHAIN_FEES)
 
   if (fee.status !== "unset") {
     if (fee.status === "loading") {
@@ -79,13 +134,22 @@ const useFee = ({
           value: null,
           status: "loading",
         })
-        const {
-          data: {
-            invoice: { getFee: feeValue },
-          },
-        } = await getLightningFees({
-          variables: { invoice, amount: amountless ? paymentSatAmount : undefined },
-        })
+
+        let feeValue: number
+        if (amountless) {
+          const { data } = await getNoAmountLightningFees({
+            variables: { input: { paymentRequest: invoice, amount: paymentSatAmount } },
+          })
+
+          feeValue = data.lnNoAmountInvoiceFeeProbe.amount
+        } else {
+          const { data } = await getLightningFees({
+            variables: { input: { paymentRequest: invoice } },
+          })
+
+          feeValue = data.lnInvoiceFeeProbe.amount
+        }
+
         setFee({
           value: feeValue,
           status: "set",
@@ -113,13 +177,14 @@ const useFee = ({
           value: null,
           status: "loading",
         })
-        const {
-          data: {
-            onchain: { getFee: feeValue },
-          },
-        } = await getOnchainFees({
-          variables: { address, amount: paymentSatAmount },
+
+        const { data } = await client.query({
+          query: ONCHAIN_FEES,
+          variables: { walletId, address, amount: paymentSatAmount },
+          fetchPolicy: "no-cache",
         })
+        const feeValue = data.onChainTxFee.amount
+
         setFee({
           value: feeValue,
           status: "set",

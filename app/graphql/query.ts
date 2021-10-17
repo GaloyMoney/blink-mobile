@@ -22,6 +22,12 @@ export const WALLET = gql`
   }
 `
 
+export const USER_WALLET_ID = gql`
+  query userWalletId($username: Username!) {
+    userWalletId(username: $username)
+  }
+`
+
 export const QUERY_EARN_LIST = gql`
   query earnList($logged: Boolean!) {
     earnList {
@@ -72,7 +78,7 @@ export const getPubKey = (client: MockableApolloClient): string => {
 }
 
 export const getMyUsername = (client: MockableApolloClient): string => {
-  const response = client.readQuery({
+  const data = client.readQuery({
     query: gql`
       query username {
         me {
@@ -82,7 +88,7 @@ export const getMyUsername = (client: MockableApolloClient): string => {
     `,
   })
 
-  return response?.me?.username ?? ""
+  return data?.me?.username ?? ""
 }
 
 export const USERNAME_EXIST = gql`
