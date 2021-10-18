@@ -14,7 +14,7 @@ import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import { sameDay, sameMonth } from "../../utils/date"
 import { toastShow } from "../../utils/toast"
-import { TRANSACTIONS_LIST_FOR_CONACT } from "../../graphql/query"
+import { TRANSACTIONS_LIST_FOR_CONTACT } from "../../graphql/query"
 
 const styles = EStyleSheet.create({
   errorText: { alignSelf: "center", color: palette.red, paddingBottom: 18 },
@@ -53,11 +53,12 @@ const styles = EStyleSheet.create({
   },
 })
 
-const isToday = (tx) => sameDay(tx.date, new Date())
+const isToday = (tx) => sameDay(tx.createdAt, new Date())
 
-const isYesterday = (tx) => sameDay(tx.date, new Date().setDate(new Date().getDate() - 1))
+const isYesterday = (tx) =>
+  sameDay(tx.createdAt, new Date().setDate(new Date().getDate() - 1))
 
-const isThisMonth = (tx) => sameMonth(tx.date, new Date())
+const isThisMonth = (tx) => sameMonth(tx.createdAt, new Date())
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "transactionHistory">
@@ -72,7 +73,7 @@ export const ContactTransactionsDataInjected: ScreenType = ({
 }: Props) => {
   const currency = "sat" // FIXME
 
-  const { error, data, refetch } = useQuery(TRANSACTIONS_LIST_FOR_CONACT, {
+  const { error, data, refetch } = useQuery(TRANSACTIONS_LIST_FOR_CONTACT, {
     variables: { username: contactUsername, first: TRANSACTIONS_PER_PAGE, after: null },
   })
 
@@ -84,7 +85,7 @@ export const ContactTransactionsDataInjected: ScreenType = ({
 
   if (error) {
     console.error(error)
-    toastShow("Error loading transactions.")
+    toastShow(translate("common.transactionsError"))
     return null
   }
 
@@ -97,7 +98,7 @@ export const ContactTransactionsDataInjected: ScreenType = ({
     transactionEdges.length > 0
       ? transactionEdges[transactionEdges.length - 1].cursor
       : null
-  const lastSeenCursor =
+  let lastSeenCursor =
     transactionsRef.current.length > 0
       ? transactionsRef.current[transactionsRef.current.length - 1].cursor
       : null
@@ -105,6 +106,7 @@ export const ContactTransactionsDataInjected: ScreenType = ({
   // Add page of data to the source of truth if the data is new
   if (lastSeenCursor !== lastDataCursor) {
     transactionsRef.current = transactionsRef.current.concat(transactionEdges)
+    lastSeenCursor = lastDataCursor
   }
 
   const fetchNextTransactionsPage = () => {

@@ -3,4 +3,5 @@ export const graphqlV2OperationNames: string[] = [
   "captchaRequestAuthCode",
   "userLogin",
   "transactionsList",
+  "transactionsListForContact",
 ]

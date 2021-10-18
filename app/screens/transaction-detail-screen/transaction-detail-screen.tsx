@@ -87,7 +87,7 @@ type Props = {
   route: RouteProp<RootStackParamList, "transactionDetail">
 }
 
-const typeDisplay = (type) => {
+const typeDisplay = (type: TransactionType) => {
   switch (type) {
     case "OnChainTransaction":
       return "OnChain"

@@ -204,8 +204,8 @@ export const TRANSACTIONS_LIST = gql`
   }
 `
 
-export const TRANSACTIONS_LIST_FOR_CONACT = gql`
-  query transactionsList($username: Username!, $first: Int, $after: String) {
+export const TRANSACTIONS_LIST_FOR_CONTACT = gql`
+  query transactionsListForContact($username: Username!, $first: Int, $after: String) {
     me {
       contactByUsername(username: $username) {
         transactions(first: $first, after: $after) {

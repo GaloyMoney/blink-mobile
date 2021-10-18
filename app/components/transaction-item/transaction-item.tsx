@@ -5,15 +5,12 @@ import { Text } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { IconTransaction } from "../icon-transactions"
 import { palette } from "../../theme/palette"
-import { query_transactions_wallet_transactions } from "../../graphql/__generated__/query_transactions"
 import { ParamListBase } from "@react-navigation/native"
 import { prefCurrencyVar as primaryCurrencyVar } from "../../graphql/client-only-query"
 
 import * as currency_fmt from "currency.js"
 import i18n from "i18n-js"
 import moment from "moment"
-
-const MEMO_SHARING_SATS_THRESHOLD = 1000
 
 const styles = EStyleSheet.create({
   container: {
@@ -35,7 +32,7 @@ const styles = EStyleSheet.create({
 
 export interface TransactionItemProps {
   navigation: StackNavigationProp<ParamListBase>
-  tx: query_transactions_wallet_transactions
+  tx: WalletTransaction
   subtitle?: boolean
 }
 
@@ -44,7 +41,8 @@ moment.locale(i18n.locale)
 const dateDisplay = ({ createdAt }) =>
   moment.duration(Math.min(0, moment.unix(createdAt).diff(moment()))).humanize(true)
 
-const computeUsdAmount = ({ settlementAmount, settlementPrice }) => {
+const computeUsdAmount = (tx: WalletTransaction) => {
+  const { settlementAmount, settlementPrice } = tx
   const { base, offset } = settlementPrice
   const usdPerSat = base / 10 ** offset / 100
   return settlementAmount * usdPerSat
@@ -63,20 +61,10 @@ const amountDisplay = ({ primaryCurrency, settlementAmount, usdAmount }) => {
     .format()
 }
 
-const descriptionDisplay = ({
-  settlementAmount,
-  memo,
-  direction,
-  otherPartyUsername,
-  __typename,
-}) => {
-  const shouldDisplayMemo =
-    settlementAmount === 0 || settlementAmount >= MEMO_SHARING_SATS_THRESHOLD
-
-  if (shouldDisplayMemo) {
-    if (memo) {
-      return memo
-    }
+const descriptionDisplay = (tx: WalletTransaction) => {
+  const { memo, direction, otherPartyUsername, __typename } = tx
+  if (memo) {
+    return memo
   }
 
   const isReceive = direction === "RECEIVE"

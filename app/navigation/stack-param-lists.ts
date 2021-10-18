@@ -1,7 +1,13 @@
-import { query_transactions_wallet_transactions } from "../graphql/__generated__/query_transactions"
 import { contacts_me_contacts } from "../screens/contacts-screen/__generated__/contacts"
 import { AccountType, AuthenticationScreenPurpose, PinScreenPurpose } from "../utils/enum"
 import { IPaymentType } from "../utils/parsing"
+
+type TransactionDetail = WalletTransaction & {
+  usdAmount: number
+  description: string
+  isReceive: boolean
+  isPending: boolean
+}
 
 export type RootStackParamList = {
   getStarted: undefined
@@ -39,10 +45,7 @@ export type RootStackParamList = {
   }
   Profile: undefined
   phoneValidation: undefined
-  transactionDetail: {
-    currency: string | null
-    tx: query_transactions_wallet_transactions
-  }
+  transactionDetail: TransactionDetail
   transactionHistory: undefined
   Earn: undefined
 }
@@ -51,9 +54,7 @@ export type ContactStackParamList = {
   Contacts: undefined
   contactDetail: { contact: contacts_me_contacts }
   sendBitcoin: { username: string }
-  transactionDetail: {
-    tx: query_transactions_wallet_transactions
-  }
+  transactionDetail: TransactionDetail
 }
 
 export type MoveMoneyStackParamList = {
@@ -79,9 +80,7 @@ export type MoveMoneyStackParamList = {
     username: string | null
   }
   settings: undefined
-  transactionDetail: {
-    tx: query_transactions_wallet_transactions
-  }
+  transactionDetail: TransactionDetail
 }
 
 export type PhoneValidationStackParamList = {

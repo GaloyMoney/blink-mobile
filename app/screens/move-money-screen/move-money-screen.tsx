@@ -238,6 +238,10 @@ const RecentTransactions = ({ navigation }) => {
     return <Text style={styles.transactionsLoading}>Loading...</Text>
   }
 
+  if (!data?.me?.defaultAccount) {
+    return null
+  }
+
   const transactionsEdges = data.me.defaultAccount.wallets[0].transactions.edges
 
   return (

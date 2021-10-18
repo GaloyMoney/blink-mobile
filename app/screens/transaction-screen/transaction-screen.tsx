@@ -53,11 +53,12 @@ const styles = EStyleSheet.create({
   },
 })
 
-const isToday = (tx) => sameDay(tx.date, new Date())
+const isToday = (tx) => sameDay(tx.createdAt, new Date())
 
-const isYesterday = (tx) => sameDay(tx.date, new Date().setDate(new Date().getDate() - 1))
+const isYesterday = (tx) =>
+  sameDay(tx.createdAt, new Date().setDate(new Date().getDate() - 1))
 
-const isThisMonth = (tx) => sameMonth(tx.date, new Date())
+const isThisMonth = (tx) => sameMonth(tx.createdAt, new Date())
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "transactionHistory">
@@ -82,11 +83,11 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
 
   if (error) {
     console.error(error)
-    toastShow("Error loading transactions.")
+    toastShow(translate("common.transactionsError"))
     return null
   }
 
-  if (!data) {
+  if (!data?.me?.defaultAccount) {
     return null
   }
 
@@ -95,7 +96,7 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
     transactionEdges.length > 0
       ? transactionEdges[transactionEdges.length - 1].cursor
       : null
-  const lastSeenCursor =
+  let lastSeenCursor =
     transactionsRef.current.length > 0
       ? transactionsRef.current[transactionsRef.current.length - 1].cursor
       : null
@@ -103,6 +104,7 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
   // Add page of data to the source of truth if the data is new
   if (lastSeenCursor !== lastDataCursor) {
     transactionsRef.current = transactionsRef.current.concat(transactionEdges)
+    lastSeenCursor = lastDataCursor
   }
 
   const fetchNextTransactionsPage = () => {
