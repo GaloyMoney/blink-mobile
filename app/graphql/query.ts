@@ -18,50 +18,6 @@ export const WALLET = gql`
       id
       balance
       currency
-      transactions {
-        id
-        amount
-        description
-        created_at
-        hash
-        type
-        usd
-        fee
-        feeUsd
-        pending
-        username
-        date @client
-        date_format @client
-        date_nice_print @client
-        isReceive @client
-        text @client
-      }
-    }
-  }
-`
-
-export const QUERY_TRANSACTIONS = gql`
-  query query_transactions {
-    wallet {
-      id
-      transactions {
-        id
-        amount
-        description
-        created_at
-        hash
-        type
-        usd
-        fee
-        feeUsd
-        pending
-        username
-        date @client
-        date_format @client
-        date_nice_print @client
-        isReceive @client
-        text @client
-      }
     }
   }
 `
@@ -162,9 +118,10 @@ export const GET_LANGUAGE = gql`
 
 export const MAIN_QUERY = gql`
   query gql_main_query($logged: Boolean!) {
-    prices(length: 1) {
+    wallet @include(if: $logged) {
       id
-      o
+      balance
+      currency
     }
 
     maps {
@@ -187,30 +144,6 @@ export const MAIN_QUERY = gql`
       completed @include(if: $logged)
     }
 
-    wallet @include(if: $logged) {
-      id
-      balance
-      currency
-      transactions {
-        id
-        amount
-        description
-        created_at
-        hash
-        type
-        usd
-        fee
-        feeUsd
-        pending
-        username
-        date @client
-        date_format @client
-        date_nice_print @client
-        isReceive @client
-        text @client
-      }
-    }
-
     buildParameters {
       id
       minBuildNumberAndroid
@@ -229,10 +162,77 @@ export const MAIN_QUERY = gql`
       username
       phone
       language
-      contacts {
-        id
-        name
-        transactionsCount
+    }
+  }
+`
+
+export const TRANSACTIONS_LIST = gql`
+  query transactionsList($first: Int, $after: String) {
+    me {
+      id
+      defaultAccount {
+        wallets {
+          id
+          transactions(first: $first, after: $after) {
+            edges {
+              cursor
+              node {
+                __typename
+                id
+                settlementAmount
+                settlementFee
+                status
+                direction
+                settlementPrice {
+                  base
+                  offset
+                }
+                memo
+                createdAt
+                ... on LnTransaction {
+                  paymentHash
+                }
+                ... on IntraLedgerTransaction {
+                  otherPartyUsername
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`
+
+export const TRANSACTIONS_LIST_FOR_CONTACT = gql`
+  query transactionsListForContact($username: Username!, $first: Int, $after: String) {
+    me {
+      contactByUsername(username: $username) {
+        transactions(first: $first, after: $after) {
+          edges {
+            cursor
+            node {
+              __typename
+              id
+              settlementAmount
+              settlementFee
+              status
+              direction
+              settlementPrice {
+                base
+                offset
+              }
+              memo
+              createdAt
+              ... on LnTransaction {
+                paymentHash
+              }
+              ... on IntraLedgerTransaction {
+                otherPartyUsername
+              }
+            }
+          }
+        }
       }
     }
   }

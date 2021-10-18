@@ -2,7 +2,7 @@
 
 // refactor these utils
 export const sameDay = (d1: number, d2: number | Date): boolean => {
-  const parsed_d1 = new Date(d1) // XXX FIXME
+  const parsed_d1 = new Date(1000 * d1) // XXX FIXME
 
   if (typeof d2 === "number") {
     d2 = new Date(d2)
@@ -16,7 +16,7 @@ export const sameDay = (d1: number, d2: number | Date): boolean => {
 }
 
 export const sameMonth = (d1: number, d2: number | Date): boolean => {
-  const parsed_d1 = new Date(d1) // XXX FIXME
+  const parsed_d1 = new Date(1000 * d1) // XXX FIXME
 
   if (typeof d2 === "number") {
     d2 = new Date(d2)

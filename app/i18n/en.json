@@ -669,6 +669,7 @@
     "success": "Success!",
     "to": "To",
     "transactions": "Transactions",
+    "transactionsError": "Error loading transactions",
     "tryAgain": "Try again",
     "type": "Type",
     "username": "Username",

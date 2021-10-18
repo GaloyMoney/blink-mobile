@@ -1,4 +1,4 @@
-import { gql, useLazyQuery, useMutation, useQuery } from "@apollo/client"
+import { gql, useMutation, useQuery } from "@apollo/client"
 import { RouteProp, useIsFocused } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import I18n from "i18n-js"
@@ -11,7 +11,7 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 import Carousel, { Pagination } from "react-native-snap-carousel"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
-import { QUERY_TRANSACTIONS, QUERY_EARN_LIST } from "../../graphql/query"
+import { QUERY_EARN_LIST } from "../../graphql/query"
 import { translate } from "../../i18n"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
@@ -116,19 +116,21 @@ type Props = {
 
 export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
   const { hasToken } = useToken()
-  const [queryTransactions] = useLazyQuery(QUERY_TRANSACTIONS, {
-    fetchPolicy: "network-only",
-  })
 
-  const [earnCompleted] = useMutation(gql`
-    mutation earnCompleted($ids: [ID]) {
-      earnCompleted(ids: $ids) {
-        id
-        value
-        completed
+  const [earnCompleted] = useMutation(
+    gql`
+      mutation earnCompleted($ids: [ID]) {
+        earnCompleted(ids: $ids) {
+          id
+          value
+          completed
+        }
       }
-    }
-  `)
+    `,
+    {
+      refetchQueries: ["gql_main_query", "transactionsList"],
+    },
+  )
 
   // TODO: fragment with earnList
   const { data } = useQuery(QUERY_EARN_LIST, {
@@ -194,7 +196,7 @@ export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
           // store.earnComplete(card.id),
           onComplete: async () => {
             // eslint-disable-next-line no-sequences
-            await earnCompleted({ variables: { ids: [card.id] } }), queryTransactions()
+            await earnCompleted({ variables: { ids: [card.id] } })
           },
           id: card.id,
           completed: earnList.find((item) => item.id == card.id).completed,

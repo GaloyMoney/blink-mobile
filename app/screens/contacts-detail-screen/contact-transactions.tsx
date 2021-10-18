@@ -13,8 +13,8 @@ import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import { sameDay, sameMonth } from "../../utils/date"
-import { TRANSACTIONS_LIST } from "../../graphql/query"
 import { toastShow } from "../../utils/toast"
+import { TRANSACTIONS_LIST_FOR_CONTACT } from "../../graphql/query"
 
 const styles = EStyleSheet.create({
   errorText: { alignSelf: "center", color: palette.red, paddingBottom: 18 },
@@ -62,17 +62,19 @@ const isThisMonth = (tx) => sameMonth(tx.createdAt, new Date())
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "transactionHistory">
+  contactUsername: string
 }
 
 const TRANSACTIONS_PER_PAGE = 20
 
-export const TransactionHistoryScreenDataInjected: ScreenType = ({
+export const ContactTransactionsDataInjected: ScreenType = ({
   navigation,
+  contactUsername,
 }: Props) => {
   const currency = "sat" // FIXME
 
-  const { error, data, refetch } = useQuery(TRANSACTIONS_LIST, {
-    variables: { first: TRANSACTIONS_PER_PAGE, after: null },
+  const { error, data, refetch } = useQuery(TRANSACTIONS_LIST_FOR_CONTACT, {
+    variables: { username: contactUsername, first: TRANSACTIONS_PER_PAGE, after: null },
   })
 
   const prefCurrency = useReactiveVar(prefCurrencyVar)
@@ -87,11 +89,11 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
     return null
   }
 
-  if (!data?.me?.defaultAccount) {
+  if (!data) {
     return null
   }
 
-  const transactionEdges = data.me.defaultAccount.wallets[0].transactions.edges
+  const transactionEdges = data.me.contactByUsername.transactions.edges
   const lastDataCursor =
     transactionEdges.length > 0
       ? transactionEdges[transactionEdges.length - 1].cursor
@@ -147,7 +149,7 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
   }
 
   return (
-    <TransactionScreen
+    <ContactTransactions
       navigation={navigation}
       currency={currency}
       prefCurrency={prefCurrency}
@@ -158,7 +160,7 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
   )
 }
 
-type TransactionScreenProps = {
+type ContactTransactionsProps = {
   refreshing: boolean
   navigation: StackNavigationProp<RootStackParamList, "transactionHistory">
   onRefresh: () => void
@@ -169,14 +171,14 @@ type TransactionScreenProps = {
   fetchNextTransactionsPage: () => void
 }
 
-export const TransactionScreen: ScreenType = ({
+export const ContactTransactions: ScreenType = ({
   navigation,
   error,
   prefCurrency,
   nextPrefCurrency,
   sections,
   fetchNextTransactionsPage,
-}: TransactionScreenProps) => (
+}: ContactTransactionsProps) => (
   <Screen style={styles.screen}>
     <SectionList
       renderItem={({ item }) => (

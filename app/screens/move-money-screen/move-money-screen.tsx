@@ -18,14 +18,12 @@ import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
 import Icon from "react-native-vector-icons/Ionicons"
 import { getBuildNumber } from "react-native-device-info"
-import find from "lodash.find"
 import { BalanceHeader } from "../../components/balance-header"
 import { IconTransaction } from "../../components/icon-transactions"
 import { LargeButton } from "../../components/large-button"
 import { Screen } from "../../components/screen"
 import { TransactionItem } from "../../components/transaction-item"
-import { balanceBtc, MAIN_QUERY, walletIsActive } from "../../graphql/query"
-import { useUSDBalance } from "../../hooks"
+import { MAIN_QUERY, TRANSACTIONS_LIST, walletIsActive } from "../../graphql/query"
 import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
@@ -35,6 +33,7 @@ import { ScreenType } from "../../types/jsx"
 import useToken from "../../utils/use-token"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
+import { toastShow } from "../../utils/toast"
 
 const styles = EStyleSheet.create({
   balanceHeader: {
@@ -111,6 +110,11 @@ const styles = EStyleSheet.create({
     fontWeight: "bold",
   },
 
+  transactionsLoading: {
+    marginTop: "20rem",
+    textAlign: "center",
+  },
+
   transactionsView: {
     flex: 1,
     marginHorizontal: "30rem",
@@ -133,7 +137,6 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
   navigation,
 }: MoveMoneyScreenDataInjectedProps) => {
   const client = useApolloClient()
-  const balanceUsd = useUSDBalance(client)
   const { hasToken } = useToken()
 
   const {
@@ -204,25 +207,54 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
     }
   }
 
-  const lastTransactions = find(data?.wallet, { id: "BTC" })?.transactions?.slice(
-    undefined,
-    3,
-  )
-
   return (
     <MoveMoneyScreen
       navigation={navigation}
       walletIsActive={walletIsActive(client)}
       loading={loadingMain}
       error={error}
-      amount={balanceUsd}
-      amountOtherCurrency={balanceBtc(client)}
       refetch={refetch}
       isUpdateAvailable={
         isUpdateAvailableOrRequired({ buildParameters: data?.buildParameters }).available
       }
-      transactions={lastTransactions}
+      hasToken={hasToken}
     />
+  )
+}
+
+const RecentTransactions = ({ navigation }) => {
+  const { error, loading, data } = useQuery(TRANSACTIONS_LIST, {
+    variables: { first: 3 },
+    onError: console.error,
+  })
+
+  if (error) {
+    console.error(error)
+    toastShow("Error loading recent transactions.")
+    return null
+  }
+
+  if (loading) {
+    return <Text style={styles.transactionsLoading}>Loading...</Text>
+  }
+
+  if (!data?.me?.defaultAccount) {
+    return null
+  }
+
+  const transactionsEdges = data.me.defaultAccount.wallets[0].transactions.edges
+
+  return (
+    <View style={styles.transactionsView}>
+      {transactionsEdges.map(({ node }) => (
+        <TransactionItem
+          key={`transaction-${node.id}`}
+          navigation={navigation}
+          tx={node}
+          subtitle
+        />
+      ))}
+    </View>
   )
 }
 
@@ -233,9 +265,8 @@ type MoveMoneyScreenProps = {
   error: ApolloError
   transactions: []
   refetch: () => void
-  amount: number
-  amountOtherCurrency: number
   isUpdateAvailable: boolean
+  hasToken: boolean
 }
 
 export const MoveMoneyScreen: ScreenType = ({
@@ -243,11 +274,9 @@ export const MoveMoneyScreen: ScreenType = ({
   navigation,
   loading,
   error,
-  transactions,
   refetch,
-  amount,
-  amountOtherCurrency,
   isUpdateAvailable,
+  hasToken,
 }: MoveMoneyScreenProps) => {
   const [modalVisible, setModalVisible] = useState(false)
   const [secretMenuCounter, setSecretMenuCounter] = useState(0)
@@ -349,13 +378,7 @@ export const MoveMoneyScreen: ScreenType = ({
           }
           icon={<Icon name="ios-trending-up-outline" size={32} />}
         />
-        <BalanceHeader
-          loading={loading}
-          currency={"USD"}
-          amount={amount}
-          amountOtherCurrency={amountOtherCurrency}
-          style={styles.balanceHeader}
-        />
+        <BalanceHeader loading={loading} style={styles.balanceHeader} />
         <Button
           buttonStyle={styles.buttonStyleTime}
           containerStyle={styles.separator}
@@ -390,13 +413,17 @@ export const MoveMoneyScreen: ScreenType = ({
             target: "receiveBitcoin",
             icon: <IconTransaction isReceive size={32} />,
           },
-          {
-            title: translate("TransactionScreen.title"),
-            target: "transactionHistory",
-            icon: <Icon name="ios-list-outline" size={32} color={palette.black} />,
-            style: "transactionViewContainer",
-            transactions,
-          },
+          ...(hasToken
+            ? [
+                {
+                  title: translate("TransactionScreen.title"),
+                  target: "transactionHistory",
+                  icon: <Icon name="ios-list-outline" size={32} color={palette.black} />,
+                  style: "transactionViewContainer",
+                  details: <RecentTransactions navigation={navigation} />,
+                },
+              ]
+            : []),
         ]}
         style={styles.listContainer}
         refreshControl={<RefreshControl refreshing={loading} onRefresh={refetch} />}
@@ -408,18 +435,7 @@ export const MoveMoneyScreen: ScreenType = ({
               onPress={() => onMenuClick(item.target)}
               style={item.style}
             />
-            {item.transactions && (
-              <View style={styles.transactionsView}>
-                {item.transactions.map((item, i) => (
-                  <TransactionItem
-                    key={`transaction-${i}`}
-                    navigation={navigation}
-                    tx={item}
-                    subtitle
-                  />
-                ))}
-              </View>
-            )}
+            {item.details}
           </>
         )}
       />

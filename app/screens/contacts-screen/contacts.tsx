@@ -98,15 +98,20 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
     }
   `)
 
+  const [matchingContacts, setMatchingContacts] = useState([])
+  const [searchText, setSearchText] = useState("")
+
   const contacts: Contact[] = useMemo(() => {
     return (
-      data?.me?.contacts.filter((contact) => {
-        return !filteredContactNames.includes(contact.name)
-      }) ?? []
+      data?.me?.contacts.filter(
+        (contact) => !filteredContactNames.includes(contact.name),
+      ) ?? []
     )
   }, [data])
-  const [matchingContacts, setMatchingContacts] = useState(contacts)
-  const [searchText, setSearchText] = useState("")
+
+  React.useEffect(() => {
+    setMatchingContacts(contacts)
+  }, [contacts])
 
   // This implementation of search will cause a match if any word in the search text
   // matches the contacts name or prettyName.
@@ -117,11 +122,9 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
         const searchWordArray = newSearchText
           .split(" ")
           .filter((text) => text.trim().length > 0)
-
         const matchingContacts = contacts.filter((contact) =>
           searchWordArray.some((word) => wordMatchesContact(word, contact)),
         )
-
         setMatchingContacts(matchingContacts)
       } else {
         setMatchingContacts(contacts)
@@ -209,7 +212,6 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
             containerStyle={styles.itemContainer}
             onPress={() => navigation.navigate("contactDetail", { contact: item })}
           >
-            {/* <Avatar source={{uri: .avatar_url}} /> */}
             <Icon name={"ios-person-outline"} size={24} color={palette.green} />
             <ListItem.Content>
               <ListItem.Title>{item.prettyName}</ListItem.Title>

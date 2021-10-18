@@ -3,19 +3,14 @@ import { useCallback, useEffect, useMemo, useState } from "react"
 import { Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
-import { gql, useApolloClient, useLazyQuery, useMutation } from "@apollo/client"
+import { gql, useApolloClient, useMutation } from "@apollo/client"
 import { RouteProp } from "@react-navigation/native"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
 import type { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
-import {
-  getPubKey,
-  QUERY_TRANSACTIONS,
-  queryWallet,
-  balanceBtc,
-} from "../../graphql/query"
+import { getPubKey, queryWallet, balanceBtc } from "../../graphql/query"
 import { UsernameValidation } from "../../utils/validation"
 import { textCurrencyFormatting } from "../../utils/currencyConversion"
 import { useBTCPrice, useCurrencyConverter } from "../../hooks"
@@ -268,22 +263,18 @@ export const SendBitcoinConfirmationScreen = ({
     primaryCurrency,
   })
 
-  const [queryTransactions] = useLazyQuery(QUERY_TRANSACTIONS, {
-    fetchPolicy: "network-only",
-  })
-
   const [lightningPay] = useMutation(LIGHTNING_PAY, {
-    update: () => queryTransactions(),
+    refetchQueries: ["gql_main_query", "transactionsList"],
   })
 
   const [payKeysendUsername] = useMutation(PAY_KEYSEND_USERNAME, {
-    update: () => queryTransactions(),
+    refetchQueries: ["gql_main_query", "transactionsList"],
   })
 
   // TODO: add user automatically to cache
 
   const [onchainPay] = useMutation(ONCHAIN_PAY, {
-    update: () => queryTransactions(),
+    refetchQueries: ["gql_main_query", "transactionsList"],
   })
 
   const pay = async () => {

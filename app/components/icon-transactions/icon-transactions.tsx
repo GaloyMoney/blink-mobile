@@ -45,11 +45,11 @@ const xml_transaction_received = `
 
 export const colorTypeFromIconType = ({
   isReceive,
-  pending,
+  isPending,
 }: {
   isReceive: boolean
-  pending: boolean
-}): string => (pending ? palette.midGrey : isReceive ? palette.green : palette.orange)
+  isPending: boolean
+}): string => (isPending ? palette.midGrey : isReceive ? palette.green : palette.orange)
 
 export const IconTransaction = ({
   isReceive,
@@ -62,7 +62,7 @@ export const IconTransaction = ({
   transparent?: boolean
   pending?: boolean
 }): JSX.Element => {
-  let color = colorTypeFromIconType({ isReceive, pending })
+  let color = colorTypeFromIconType({ isReceive, isPending: pending })
   if (transparent) color = palette.white
   const raw_xml = isReceive ? xml_transaction_received : xml_transaction_sent
   const parse_xml = raw_xml.replace("{color}", color)

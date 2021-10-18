@@ -9,9 +9,10 @@ import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
 import { TextCurrency } from "../text-currency/text-currency"
 import { useIsFocused } from "@react-navigation/native"
-import { useHiddenBalanceToolTip, useHideBalance } from "../../hooks"
+import { useUSDBalance, useHiddenBalanceToolTip, useHideBalance } from "../../hooks"
 import { saveHiddenBalanceToolTip } from "../../graphql/client-only-query"
 import { useApolloClient } from "@apollo/client"
+import { balanceBtc } from "../../graphql/query"
 
 const styles = EStyleSheet.create({
   amount: {
@@ -65,9 +66,7 @@ const styles = EStyleSheet.create({
 })
 
 export interface BalanceHeaderProps {
-  currency: CurrencyType
-  amount: number
-  amountOtherCurrency?: number
+  showSecondaryCurrency?: boolean
   loading?: boolean
   style?: StyleProp<ViewStyle>
 }
@@ -86,13 +85,12 @@ const Loader = () => (
 )
 
 export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
-  currency,
-  amount,
-  amountOtherCurrency = null,
+  showSecondaryCurrency = true,
   loading = false,
   style,
 }: BalanceHeaderProps) => {
   const client = useApolloClient()
+  const balanceUsd = useUSDBalance(client)
   const hideBalance = useHideBalance()
   const hiddenBalanceToolTip = useHiddenBalanceToolTip()
   const isFocused = useIsFocused()
@@ -124,7 +122,8 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
     setHideBalance(hideBalance)
   }, [hideBalance, isFocused])
 
-  const otherCurrency = currency === "BTC" ? "USD" : "BTC"
+  const currency = "USD"
+  const otherCurrency = "BTC"
 
   const hiddenBalanceSet = () => {
     return (
@@ -153,14 +152,14 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
   }
 
   const defaultBalanceHeader = () => {
-    const subHeader =
-      amountOtherCurrency !== null ? (
-        <TextCurrency
-          amount={amountOtherCurrency}
-          currency={otherCurrency}
-          style={styles.subCurrencyText}
-        />
-      ) : null
+    const amountOtherCurrency = balanceBtc(client)
+    const subHeader = showSecondaryCurrency && (
+      <TextCurrency
+        amount={amountOtherCurrency}
+        currency={otherCurrency}
+        style={styles.subCurrencyText}
+      />
+    )
 
     return (
       <View style={styles.amount}>
@@ -175,7 +174,7 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
                 }
               }}
             >
-              <TextCurrency amount={amount} currency={currency} style={styles.text} />
+              <TextCurrency amount={balanceUsd} currency={currency} style={styles.text} />
             </TouchableHighlight>
           )}
         </View>

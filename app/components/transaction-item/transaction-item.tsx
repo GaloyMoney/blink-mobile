@@ -5,24 +5,90 @@ import { Text } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { IconTransaction } from "../icon-transactions"
 import { palette } from "../../theme/palette"
-import { query_transactions_wallet_transactions } from "../../graphql/__generated__/query_transactions"
 import { ParamListBase } from "@react-navigation/native"
+import { prefCurrencyVar as primaryCurrencyVar } from "../../graphql/client-only-query"
+
+import * as currency_fmt from "currency.js"
+import i18n from "i18n-js"
+import moment from "moment"
 
 const styles = EStyleSheet.create({
-  confirmed: {
+  container: {
     paddingVertical: 9,
   },
 
   pending: {
-    backgroundColor: palette.lighterGrey,
-    paddingVertical: 9,
+    color: palette.midGrey,
+  },
+
+  receive: {
+    color: palette.green,
+  },
+
+  send: {
+    color: palette.darkGrey,
   },
 })
 
 export interface TransactionItemProps {
   navigation: StackNavigationProp<ParamListBase>
-  tx: query_transactions_wallet_transactions
+  tx: WalletTransaction
   subtitle?: boolean
+}
+
+moment.locale(i18n.locale)
+
+const dateDisplay = ({ createdAt }) =>
+  moment.duration(Math.min(0, moment.unix(createdAt).diff(moment()))).humanize(true)
+
+const computeUsdAmount = (tx: WalletTransaction) => {
+  const { settlementAmount, settlementPrice } = tx
+  const { base, offset } = settlementPrice
+  const usdPerSat = base / 10 ** offset / 100
+  return settlementAmount * usdPerSat
+}
+
+const amountDisplay = ({ primaryCurrency, settlementAmount, usdAmount }) => {
+  const symbol = primaryCurrency === "BTC" ? "" : "$"
+  const precision = primaryCurrency === "BTC" ? 0 : Math.abs(usdAmount) < 0.01 ? 4 : 2
+
+  return currency_fmt
+    .default(primaryCurrency === "BTC" ? settlementAmount : usdAmount, {
+      separator: ",",
+      symbol,
+      precision,
+    })
+    .format()
+}
+
+const descriptionDisplay = (tx: WalletTransaction) => {
+  const { memo, direction, otherPartyUsername, __typename } = tx
+  if (memo) {
+    return memo
+  }
+
+  const isReceive = direction === "RECEIVE"
+
+  if (otherPartyUsername) {
+    return isReceive ? `From ${otherPartyUsername}` : `To ${otherPartyUsername}`
+  }
+
+  switch (__typename) {
+    case "OnChainTransaction":
+      return "OnChain Receipt"
+    case "LnTransaction":
+      return "Invoice"
+    case "IntraLedgerTransaction":
+      return isReceive ? "From BitcoinBeach Wallet" : "To BitcointBeach Wallet"
+  }
+}
+
+const amountDisplayStyle = ({ isReceive, isPending }) => {
+  if (isPending) {
+    return styles.pending
+  }
+
+  return isReceive ? styles.receive : styles.send
 }
 
 export const TransactionItem: React.FC<TransactionItemProps> = ({
@@ -30,20 +96,34 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
   navigation,
   subtitle = false,
 }: TransactionItemProps) => {
-  const colorFromType = (isReceive) => (isReceive ? palette.green : palette.darkGrey)
+  const primaryCurrency = primaryCurrencyVar()
+
+  const isReceive = tx.direction === "RECEIVE"
+  const isPending = tx.status === "PENDING"
+  const description = descriptionDisplay(tx)
+  const usdAmount = computeUsdAmount(tx)
 
   return (
     <ListItem
-      // key={props.hash}
-      containerStyle={tx.pending ? styles.pending : styles.confirmed}
-      onPress={() => navigation.navigate("transactionDetail", { tx })}
+      containerStyle={styles.container}
+      onPress={() =>
+        navigation.navigate("transactionDetail", {
+          ...tx,
+          isReceive,
+          isPending,
+          description,
+          usdAmount,
+        })
+      }
     >
-      <IconTransaction isReceive={tx.isReceive} size={24} pending={tx.pending} />
+      <IconTransaction isReceive={isReceive} size={24} pending={isPending} />
       <ListItem.Content>
-        <ListItem.Title>{tx.description}</ListItem.Title>
-        <ListItem.Subtitle>{subtitle ? tx.date_nice_print : undefined}</ListItem.Subtitle>
+        <ListItem.Title>{description}</ListItem.Title>
+        <ListItem.Subtitle>{subtitle ? dateDisplay(tx) : undefined}</ListItem.Subtitle>
       </ListItem.Content>
-      <Text style={{ color: colorFromType(tx.isReceive) }}>{tx.text}</Text>
+      <Text style={amountDisplayStyle({ isReceive, isPending })}>
+        {amountDisplay({ ...tx, usdAmount, primaryCurrency })}
+      </Text>
     </ListItem>
   )
 }
