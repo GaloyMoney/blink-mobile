@@ -11,5 +11,5 @@ export const graphqlV2OperationNames: string[] = [
   "transactionsList",
   "transactionsListForContact",
   "userLogin",
-  "userWalletDefaultId",
+  "userDefaultWalletId",
 ]
