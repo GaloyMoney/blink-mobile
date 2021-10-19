@@ -15,7 +15,6 @@ import type { ContactStackParamList } from "../../navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { RouteProp } from "@react-navigation/native"
 import type { ScreenType } from "../../types/jsx"
-import { contacts_me_contacts } from "../contacts-screen/__generated__/contacts"
 import { ContactTransactionsDataInjected } from "./contact-transactions"
 
 const styles = EStyleSheet.create({
@@ -67,7 +66,7 @@ export const ContactsDetailScreen: ScreenType = ({
 }
 
 type ContactDetailScreenProps = {
-  contact: contacts_me_contacts
+  contact: Contact
   navigation: StackNavigationProp<ContactStackParamList, "contactDetail">
 }
 
@@ -75,7 +74,7 @@ export const ContactsDetailScreenJSX: ScreenType = ({
   contact,
   navigation,
 }: ContactDetailScreenProps) => {
-  const [contactName, setContactName] = React.useState(contact.prettyName)
+  const [contactName, setContactName] = React.useState(contact.alias)
 
   const UPDATE_NAME = gql`
     mutation setName($username: String, $name: String) {
@@ -90,7 +89,7 @@ export const ContactsDetailScreenJSX: ScreenType = ({
   const updateName = () => {
     // TODO: need optimistic updates
     // FIXME this one doesn't work
-    updateNameMutation({ variables: { username: contact.id, name: contactName } })
+    updateNameMutation({ variables: { username: contact.username, name: contactName } })
   }
 
   return (
@@ -112,29 +111,31 @@ export const ContactsDetailScreenJSX: ScreenType = ({
             onBlur={updateName}
             returnKeyType="done"
           >
-            {contact.prettyName}
+            {contact.alias}
           </Input>
         </View>
         <Text style={styles.amountSecondary}>{`${translate("common.username")}: ${
-          contact.id
+          contact.username
         }`}</Text>
       </View>
       <ScrollView style={styles.transactionsView}>
         <Text style={styles.screenTitle}>
           {translate("ContactDetailsScreen.title", {
-            input: contact.prettyName,
+            input: contact.alias,
           })}
         </Text>
         <ContactTransactionsDataInjected
           navigation={navigation}
-          contactUsername={contact.id}
+          contactUsername={contact.username}
         />
       </ScrollView>
       <View style={styles.actionsContainer}>
         <LargeButton
           title={translate("MoveMoneyScreen.send")}
           icon={<IconTransaction isReceive={false} size={32} />}
-          onPress={() => navigation.navigate("sendBitcoin", { username: contact.id })}
+          onPress={() =>
+            navigation.navigate("sendBitcoin", { username: contact.username })
+          }
         />
       </View>
       <CloseCross color={palette.white} onPress={navigation.goBack} />

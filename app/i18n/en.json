@@ -469,8 +469,6 @@
     "pendingInvoice": "You have a Lightning Invoice in your clipboard"
   },
   "MoveMoneyScreen": {
-    "needWallet": "Validate your phone to open your wallet",
-    "openWallet": "Open Wallet",
     "receive": "Receive",
     "send": "Send",
     "title": "Home",
@@ -652,10 +650,12 @@
     "loggedOut": "You have been logged out.",
     "logout": "Log Out",
     "minutes": "minutes",
+    "needWallet": "Validate your phone to open your wallet",
     "next": "Next",
     "note": "Note",
     "notification": "Notification",
     "ok": "OK",
+    "openWallet": "Open Wallet",
     "phoneNumber": "Phone Number",
     "sats": "sats",
     "search": "Search",

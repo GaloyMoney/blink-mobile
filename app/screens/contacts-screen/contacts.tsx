@@ -1,9 +1,11 @@
 import { gql, useQuery } from "@apollo/client"
+import { useFocusEffect } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { useCallback, useMemo, useState } from "react"
-import { Text, View } from "react-native"
+import { ActivityIndicator, Text, View } from "react-native"
 import {
+  Button,
   ListItem,
   SearchBar,
   SearchBarAndroidProps,
@@ -18,8 +20,10 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
 import { ContactStackParamList } from "../../navigation/stack-param-lists"
-import { palette } from "../../theme/palette"
+import { color } from "../../theme"
 import { ScreenType } from "../../types/jsx"
+import { toastShow } from "../../utils/toast"
+import useToken from "../../utils/use-token"
 
 // TODO: get rid of this wrapper once SearchBar props are figured out ref: https://github.com/react-native-elements/react-native-elements/issues/3089
 const SafeSearchBar = SearchBar as unknown as React.FC<
@@ -29,6 +33,12 @@ const SafeSearchBar = SearchBar as unknown as React.FC<
 const filteredContactNames = ["BitcoinBeachMarketing"]
 
 const styles = EStyleSheet.create({
+  activityIndicatorContainer: {
+    alignItems: "center",
+    flex: 1,
+    justifyContent: "center",
+  },
+
   emptyListNoContacts: {
     marginHorizontal: 12,
     marginTop: 32,
@@ -50,8 +60,10 @@ const styles = EStyleSheet.create({
 
   itemContainer: { borderRadius: 8 },
 
+  listContainer: { flexGrow: 1 },
+
   searchBarContainer: {
-    backgroundColor: palette.lighterGrey,
+    backgroundColor: color.palette.lighterGrey,
     borderBottomWidth: 0,
     borderTopWidth: 0,
     marginHorizontal: 26,
@@ -60,7 +72,7 @@ const styles = EStyleSheet.create({
   },
 
   searchBarInputContainerStyle: {
-    backgroundColor: palette.white,
+    backgroundColor: color.palette.white,
   },
 
   searchBarRightIconStyle: {
@@ -68,8 +80,32 @@ const styles = EStyleSheet.create({
   },
 
   searchBarText: {
-    color: palette.black,
+    color: color.palette.black,
     textDecorationLine: "none",
+  },
+
+  validationButton: {
+    borderColor: color.primary,
+    borderRadius: 32,
+    borderWidth: 2,
+  },
+
+  validationButtonContainer: {
+    marginHorizontal: "20rem",
+    marginTop: "16rem",
+  },
+
+  validationButtonTitle: {
+    color: color.primary,
+    fontSize: "18rem",
+    fontWeight: "bold",
+  },
+
+  validationText: {
+    color: color.palette.darkGrey,
+    fontSize: "20rem",
+    marginHorizontal: "20rem",
+    marginTop: "50rem",
   },
 })
 
@@ -77,35 +113,60 @@ type Props = {
   navigation: StackNavigationProp<ContactStackParamList, "Contacts">
 }
 
-type Contact = {
-  id: string
-  name: string
-  prettyName: string
-  transactionsCount: string
+export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
+  const { hasToken } = useToken()
+
+  if (!hasToken) {
+    return (
+      <>
+        <Text style={styles.validationText}>{translate("common.needWallet")}</Text>
+        <Button
+          title={translate("common.openWallet")}
+          onPress={() => navigation.navigate("phoneValidation")}
+          type="outline"
+          buttonStyle={styles.validationButton}
+          titleStyle={styles.validationButtonTitle}
+          containerStyle={styles.validationButtonContainer}
+        />
+      </>
+    )
+  }
+
+  return <ContactListScreen navigation={navigation} />
 }
 
-export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
-  const { data } = useQuery(gql`
+const ContactListScreen: ScreenType = ({ navigation }: Props) => {
+  const [matchingContacts, setMatchingContacts] = useState([])
+  const [searchText, setSearchText] = useState("")
+  const [isRefreshed, setIsRefreshed] = useState(false)
+  const { loading, data, error, refetch } = useQuery(gql`
     query contacts {
       me {
         contacts {
-          id
-          name
-          prettyName @client
+          username
+          alias
           transactionsCount
         }
       }
     }
   `)
 
-  const [matchingContacts, setMatchingContacts] = useState([])
-  const [searchText, setSearchText] = useState("")
+  useFocusEffect(() => {
+    if (!isRefreshed) {
+      setIsRefreshed(true)
+      refetch()
+    }
+  })
+
+  if (error) {
+    toastShow(error.message)
+  }
 
   const contacts: Contact[] = useMemo(() => {
     return (
-      data?.me?.contacts.filter(
-        (contact) => !filteredContactNames.includes(contact.name),
-      ) ?? []
+      data?.me?.contacts.filter((contact) => {
+        return !filteredContactNames.includes(contact.username)
+      }) ?? []
     )
   }, [data])
 
@@ -134,21 +195,16 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
   )
 
   const wordMatchesContact = (searchWord: string, contact: Contact): boolean => {
-    let contactNameMatchesSearchWord
     let contactPrettyNameMatchesSearchWord
 
-    if (contact.name === null) {
-      contactNameMatchesSearchWord = false
-    } else {
-      contactNameMatchesSearchWord = contact.name
-        .toLowerCase()
-        .includes(searchWord.toLowerCase())
-    }
+    const contactNameMatchesSearchWord = contact.username
+      .toLowerCase()
+      .includes(searchWord.toLowerCase())
 
-    if (contact.prettyName === null) {
+    if (contact.alias === null) {
       contactPrettyNameMatchesSearchWord = false
     } else {
-      contactPrettyNameMatchesSearchWord = contact.prettyName
+      contactPrettyNameMatchesSearchWord = contact.alias
         .toLowerCase()
         .includes(searchWord.toLowerCase())
     }
@@ -163,8 +219,8 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
     searchBarContent = (
       <SafeSearchBar
         placeholder={translate("common.search")}
-        onChangeText={updateMatchingContacts}
         value={searchText}
+        onChangeText={updateMatchingContacts}
         platform="default"
         round
         lightTheme
@@ -188,6 +244,12 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
         </Text>
       </View>
     )
+  } else if (loading) {
+    listEmptyContent = (
+      <View style={styles.activityIndicatorContainer}>
+        <ActivityIndicator size="large" color={color.palette.midGrey} />
+      </View>
+    )
   } else {
     listEmptyContent = (
       <View style={styles.emptyListNoContacts}>
@@ -199,22 +261,23 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
   }
 
   return (
-    <Screen backgroundColor={palette.lighterGrey}>
+    <Screen backgroundColor={color.palette.lighterGrey}>
       {searchBarContent}
       <FlatList
+        contentContainerStyle={styles.listContainer}
         data={matchingContacts}
         ListEmptyComponent={() => listEmptyContent}
         renderItem={({ item }) => (
           <ListItem
-            underlayColor={palette.lighterGrey}
+            underlayColor={color.palette.lighterGrey}
             activeOpacity={0.7}
             style={styles.item}
             containerStyle={styles.itemContainer}
             onPress={() => navigation.navigate("contactDetail", { contact: item })}
           >
-            <Icon name={"ios-person-outline"} size={24} color={palette.green} />
+            <Icon name={"ios-person-outline"} size={24} color={color.palette.green} />
             <ListItem.Content>
-              <ListItem.Title>{item.prettyName}</ListItem.Title>
+              <ListItem.Title>{item.alias}</ListItem.Title>
             </ListItem.Content>
           </ListItem>
         )}

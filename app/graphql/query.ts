@@ -72,7 +72,7 @@ export const getPubKey = (client: MockableApolloClient): string => {
 }
 
 export const getMyUsername = (client: MockableApolloClient): string => {
-  const { me } = client.readQuery({
+  const response = client.readQuery({
     query: gql`
       query username {
         me {
@@ -82,7 +82,7 @@ export const getMyUsername = (client: MockableApolloClient): string => {
     `,
   })
 
-  return me?.username ?? ""
+  return response?.me?.username ?? ""
 }
 
 export const USERNAME_EXIST = gql`
@@ -197,6 +197,7 @@ export const TRANSACTIONS_LIST = gql`
 export const TRANSACTIONS_LIST_FOR_CONTACT = gql`
   query transactionsListForContact($username: Username!, $first: Int, $after: String) {
     me {
+      id
       contactByUsername(username: $username) {
         transactions(first: $first, after: $after) {
           edges {
