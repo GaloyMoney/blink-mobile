@@ -1,6 +1,6 @@
 # GaloyMobile
 
-![Galoy Logo](.readme/galoy-logo.png)
+<img src=".readme/galoy-logo.png" alt="Galoy Logo" width="300">
 
 ## Goal
 
