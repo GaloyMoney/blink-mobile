@@ -126,7 +126,7 @@ export const ContactsDetailScreenJSX: ScreenType = ({
         </Text>
         <ContactTransactionsDataInjected
           navigation={navigation}
-          contactUsername={contact.id}
+          contactUsername={contact.username}
         />
       </ScrollView>
       <View style={styles.actionsContainer}>
