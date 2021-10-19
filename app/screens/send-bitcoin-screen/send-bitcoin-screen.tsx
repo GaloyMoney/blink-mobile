@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import { useApolloClient, useLazyQuery } from "@apollo/client"
+import { gql, useApolloClient, useLazyQuery } from "@apollo/client"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { RouteProp } from "@react-navigation/native"
 import * as React from "react"
@@ -12,7 +12,7 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { InputPayment } from "../../components/input-payment"
 import { GaloyInput } from "../../components/galoy-input"
 import { Screen } from "../../components/screen"
-import { balanceBtc, USER_WALLET_ID } from "../../graphql/query"
+import { balanceBtc } from "../../graphql/query"
 import { useMoneyAmount, useBTCPrice } from "../../hooks"
 import { translate } from "../../i18n"
 import type { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
@@ -28,6 +28,12 @@ import { useCurrencies } from "../../hooks/use-currencies"
 import { toastShow } from "../../utils/toast"
 
 export const PRICE_CHECK_INTERVAL = 10000
+
+const USER_WALLET_ID = gql`
+  query userWalletId($username: Username!) {
+    userWalletId(username: $username)
+  }
+`
 
 type SendBitcoinScreenProps = {
   navigation: StackNavigationProp<MoveMoneyStackParamList, "sendBitcoin">
@@ -84,15 +90,17 @@ export const SendBitcoinScreen: ScreenType = ({
 
   // TODO use a debouncer to avoid flickering https://github.com/helfer/apollo-link-debounce
 
-  const [userWalletIdQuery, { loading: loadingUserWalletId, data: dataUserWalletId }] =
-    useLazyQuery(USER_WALLET_ID, { fetchPolicy: "network-only" })
+  const [
+    userDefaultWalletIdQuery,
+    { loading: loadingUserDefaultWalletId, data: dataUserDefaultWalletId },
+  ] = useLazyQuery(USER_WALLET_ID, { fetchPolicy: "network-only" })
 
   useEffect(() => {
     const interval = setInterval(() => updateStalePrice(), PRICE_CHECK_INTERVAL)
     return () => clearInterval(interval)
   }, [updateStalePrice])
 
-  const usernameExists = Boolean(dataUserWalletId?.userWalletId)
+  const usernameExists = Boolean(dataUserDefaultWalletId?.userdefaultWalletId)
 
   const balance = balanceBtc(client)
 
@@ -213,7 +221,7 @@ export const SendBitcoinScreen: ScreenType = ({
         setPaymentType("username")
 
         if (UsernameValidation.isValid(destination)) {
-          userWalletIdQuery({ variables: { username: destination } })
+          userDefaultWalletIdQuery({ variables: { username: destination } })
         }
       }
     }
@@ -235,7 +243,7 @@ export const SendBitcoinScreen: ScreenType = ({
 
   const pay = useCallback(() => {
     if (paymentType === "username" && !usernameExists) {
-      userWalletIdQuery({ variables: { username: destination } })
+      userDefaultWalletIdQuery({ variables: { username: destination } })
       toastShow(translate("SendBitcoinScreen.usernameNotFound"))
       return
     } else {
@@ -249,13 +257,14 @@ export const SendBitcoinScreen: ScreenType = ({
         referenceAmount,
         sameNode,
         username: paymentType === "username" ? destination : null,
-        userWalletId: paymentType === "username" ? dataUserWalletId.userWalletId : null,
+        userDefaultWalletId:
+          paymentType === "username" ? dataUserDefaultWalletId.userDefaultWalletId : null,
       })
     }
   }, [
     paymentType,
     usernameExists,
-    userWalletIdQuery,
+    userDefaultWalletIdQuery,
     destination,
     navigation,
     address,
@@ -265,7 +274,7 @@ export const SendBitcoinScreen: ScreenType = ({
     primaryCurrency,
     referenceAmount,
     sameNode,
-    dataUserWalletId,
+    dataUserDefaultWalletId,
   ])
 
   return (
@@ -285,7 +294,7 @@ export const SendBitcoinScreen: ScreenType = ({
       setDestination={setDestination}
       destination={destination}
       usernameExists={usernameExists}
-      loadingUserNameExist={loadingUserWalletId}
+      loadingUserNameExist={loadingUserDefaultWalletId}
       interactive={interactive}
       errorMessage={errorMessage}
       reset={reset}

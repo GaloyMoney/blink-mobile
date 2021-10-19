@@ -80,7 +80,7 @@ const usernameRouteParams = {
   referenceAmount: usernameSatAmount,
   sameNode: null,
   username: "Bitcoin",
-  userWalletId: "62af205a-298f-4448-bb31-4b424a27a4ee",
+  userDefaultWalletId: "62af205a-298f-4448-bb31-4b424a27a4ee",
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -106,7 +106,7 @@ const lightningRouteParams = {
   referenceAmount: lightningSatAmount,
   sameNode: false,
   username: null,
-  userWalletId: null,
+  userDefaultWalletId: null,
 }
 
 describe("SendBitcoinConfirmationScreen", () => {

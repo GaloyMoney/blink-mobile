@@ -27,7 +27,6 @@ import {
   getMyUsername,
   MAIN_QUERY,
   TRANSACTIONS_LIST,
-  USER_WALLET_ID,
   walletIsActive,
 } from "../../graphql/query"
 import { translate } from "../../i18n"
@@ -149,7 +148,7 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
     loading: loadingMain,
     error,
     data,
-    refetch: refetchMain,
+    refetch,
   } = useQuery(MAIN_QUERY, {
     variables: {
       logged: hasToken,
@@ -157,15 +156,6 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
     notifyOnNetworkStatusChange: true,
     errorPolicy: "all",
   })
-
-  const { refetch: refetchWalletId } = useQuery(USER_WALLET_ID, {
-    variables: { username: getMyUsername(client) },
-  })
-
-  const refetch = () => {
-    refetchMain()
-    refetchWalletId()
-  }
 
   // temporary fix until we have a better management of notifications:
   // when coming back to active state. look if the invoice has been paid
