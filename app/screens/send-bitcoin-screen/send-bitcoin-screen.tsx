@@ -30,8 +30,8 @@ import { toastShow } from "../../utils/toast"
 export const PRICE_CHECK_INTERVAL = 10000
 
 const USER_WALLET_ID = gql`
-  query userWalletId($username: Username!) {
-    userWalletId(username: $username)
+  query userDefaultWalletId($username: Username!) {
+    userDefaultWalletId(username: $username)
   }
 `
 
@@ -100,7 +100,7 @@ export const SendBitcoinScreen: ScreenType = ({
     return () => clearInterval(interval)
   }, [updateStalePrice])
 
-  const usernameExists = Boolean(dataUserDefaultWalletId?.userdefaultWalletId)
+  const usernameExists = Boolean(dataUserDefaultWalletId?.userDefaultWalletId)
 
   const balance = balanceBtc(client)
 
