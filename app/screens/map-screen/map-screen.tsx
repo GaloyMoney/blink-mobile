@@ -1,4 +1,4 @@
-import { gql, useApolloClient } from "@apollo/client"
+import { gql, useApolloClient, useQuery } from "@apollo/client"
 import { useFocusEffect } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
@@ -14,6 +14,22 @@ import { ScreenType } from "../../types/jsx"
 import { isIos } from "../../utils/helper"
 import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
+import { toastShow } from "../../utils/toast"
+
+const QUERY_BUSINESSES = gql`
+  query businessMapMarkers {
+    businessMapMarkers {
+      username
+      mapInfo {
+        title
+        coordinates {
+          longitude
+          latitude
+        }
+      }
+    }
+  }
+`
 
 const styles = StyleSheet.create({
   android: { marginTop: 18 },
@@ -21,8 +37,6 @@ const styles = StyleSheet.create({
   customView: {
     alignItems: "center",
     margin: 12,
-    // width: 140,
-    // height: 140,
   },
 
   ios: { paddingTop: 12 },
@@ -40,25 +54,24 @@ type Props = {
 }
 
 export const MapScreen: ScreenType = ({ navigation }: Props) => {
+  const [isRefreshed, setIsRefreshed] = React.useState(false)
   const client = useApolloClient()
-
-  const result = client.readQuery({
-    query: gql`
-      query gql_maps {
-        maps {
-          id
-          title
-          username
-          coordinate {
-            latitude
-            longitude
-          }
-        }
-      }
-    `,
+  const { data, error, refetch } = useQuery(QUERY_BUSINESSES, {
+    notifyOnNetworkStatusChange: true,
   })
 
-  const maps = result?.maps ?? []
+  useFocusEffect(() => {
+    if (!isRefreshed) {
+      setIsRefreshed(true)
+      refetch()
+    }
+  })
+
+  if (error) {
+    toastShow(error.message)
+  }
+
+  const maps = data?.businessMapMarkers ?? []
 
   const requestLocationPermission = async () => {
     try {
@@ -104,14 +117,18 @@ export const MapScreen: ScreenType = ({ navigation }: Props) => {
         ? navigation.navigate("sendBitcoin", { username: item.username })
         : navigation.navigate("phoneValidation")
     markers.push(
-      <Marker coordinate={item.coordinate} key={item.title} pinColor={palette.orange}>
+      <Marker
+        coordinate={item.mapInfo.coordinates}
+        key={item.title}
+        pinColor={palette.orange}
+      >
         <Callout
           // alphaHitTest
           // tooltip
           onPress={() => (!!item.username && !isIos ? onPress() : null)}
         >
           <View style={styles.customView}>
-            <Text style={styles.title}>{item.title}</Text>
+            <Text style={styles.title}>{item.mapInfo.title}</Text>
             {!!item.username && !isIos && (
               <Button
                 containerStyle={styles.android}

@@ -124,16 +124,6 @@ export const MAIN_QUERY = gql`
       currency
     }
 
-    maps {
-      id
-      title
-      username
-      coordinate {
-        latitude
-        longitude
-      }
-    }
-
     nodeStats {
       id
     }
