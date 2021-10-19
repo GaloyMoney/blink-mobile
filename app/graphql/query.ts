@@ -22,12 +22,6 @@ export const WALLET = gql`
   }
 `
 
-export const USER_WALLET_ID = gql`
-  query userWalletId($username: Username!) {
-    userWalletId(username: $username)
-  }
-`
-
 export const QUERY_EARN_LIST = gql`
   query earnList($logged: Boolean!) {
     earnList {

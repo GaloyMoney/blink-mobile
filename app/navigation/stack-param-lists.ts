@@ -78,7 +78,7 @@ export type MoveMoneyStackParamList = {
     referenceAmount: MoneyAmount
     sameNode: boolean | null
     username: string | null
-    userWalletId: string | null
+    userDefaultWalletId: string | null
   }
   settings: undefined
   transactionDetail: TransactionDetail
