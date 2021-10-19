@@ -23,12 +23,7 @@ import { IconTransaction } from "../../components/icon-transactions"
 import { LargeButton } from "../../components/large-button"
 import { Screen } from "../../components/screen"
 import { TransactionItem } from "../../components/transaction-item"
-import {
-  getMyUsername,
-  MAIN_QUERY,
-  TRANSACTIONS_LIST,
-  walletIsActive,
-} from "../../graphql/query"
+import { MAIN_QUERY, TRANSACTIONS_LIST, walletIsActive } from "../../graphql/query"
 import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
