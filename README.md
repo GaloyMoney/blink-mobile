@@ -8,7 +8,7 @@ This repository is the Bitcoin Beach Wallet mobile application. The goal is to m
 
 ## Start
 
-Prerequisite -- Follow the instruction [getting started](https://reactnative.dev/docs/getting-started) to have the correct setup.
+Prerequisite -- Follow the instructions to [set up React Native](https://reactnative.dev/docs/getting-started).
 
 Clone into the project
 
