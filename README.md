@@ -6,6 +6,10 @@
 
 This repository is the Bitcoin Beach Wallet mobile application. The goal is to make a mobile application compatible with Galoy's backend than can be customized and used by any community or organization. It is built with [React Native](https://reactnative.dev/), and runs on both iOS and Android.
 
+## Screenshots
+
+<img src=".readme/screenshot-1.png" alt="Screenshot 1" width="150"> <img src=".readme/screenshot-2.png" alt="Screenshot 2" width="150"> <img src=".readme/screenshot-3.png" alt="Screenshot 3" width="150"> <img src=".readme/screenshot-4.png" alt="Screenshot 4" width="150">
+
 ## Start
 
 Prerequisite -- Follow the instructions to [set up React Native](https://reactnative.dev/docs/getting-started).
