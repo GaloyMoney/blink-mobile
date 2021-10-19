@@ -355,9 +355,9 @@ export const MoveMoneyScreen: ScreenType = ({
             color={palette.lightGrey}
             style={styles.icon}
           />
-          <Text style={styles.text}>{translate("MoveMoneyScreen.needWallet")}</Text>
+          <Text style={styles.text}>{translate("common.needWallet")}</Text>
           <Button
-            title={translate("MoveMoneyScreen.openWallet")}
+            title={translate("common.openWallet")}
             onPress={activateWallet}
             type="outline"
             buttonStyle={styles.buttonStyle}
