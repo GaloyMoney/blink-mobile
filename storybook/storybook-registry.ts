@@ -15,6 +15,6 @@ require("../app/screens/settings-screen/username-screen.story")
 require("../app/screens/send-bitcoin-screen/send-bitcoin-screen.story")
 require("../app/screens/phone-auth-screen/phone-auth.story")
 require("../app/screens/contacts-screen/contacts.story")
-require("../app/screens/contacts-detail-screen/contacts-detail.story")
+require("../app/screens/contacts-screen/contacts-detail.story")
 
 export {}
