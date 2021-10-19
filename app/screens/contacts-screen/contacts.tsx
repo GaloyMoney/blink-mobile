@@ -136,6 +136,8 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
 }
 
 const ContactListScreen: ScreenType = ({ navigation }: Props) => {
+  const [matchingContacts, setMatchingContacts] = useState([])
+  const [searchText, setSearchText] = useState("")
   const [isRefreshed, setIsRefreshed] = useState(false)
   const { loading, data, error, refetch } = useQuery(gql`
     query contacts {
@@ -167,8 +169,6 @@ const ContactListScreen: ScreenType = ({ navigation }: Props) => {
       }) ?? []
     )
   }, [data])
-  const [matchingContacts, setMatchingContacts] = useState([])
-  const [searchText, setSearchText] = useState("")
 
   React.useEffect(() => {
     setMatchingContacts(contacts)
@@ -212,10 +212,6 @@ const ContactListScreen: ScreenType = ({ navigation }: Props) => {
     return contactNameMatchesSearchWord || contactPrettyNameMatchesSearchWord
   }
 
-  React.useEffect(() => {
-    updateMatchingContacts(searchText)
-  }, [searchText, updateMatchingContacts, data])
-
   let searchBarContent: JSX.Element
   let listEmptyContent: JSX.Element
 
@@ -224,6 +220,7 @@ const ContactListScreen: ScreenType = ({ navigation }: Props) => {
       <SafeSearchBar
         placeholder={translate("common.search")}
         value={searchText}
+        onChangeText={updateMatchingContacts}
         platform="default"
         round
         lightTheme
