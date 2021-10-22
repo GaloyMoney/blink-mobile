@@ -68,7 +68,7 @@
     "react-apollo-network-status": "^5.1.0",
     "react-content-loader": "^6.0.3",
     "react-dom": "^17.0.1",
-    "react-native": "0.64.2",
+    "react-native": "0.66.1",
     "react-native-camera": "^4.2.1",
     "react-native-device-info": "^8.4.1",
     "react-native-elements": "^3.4.2",

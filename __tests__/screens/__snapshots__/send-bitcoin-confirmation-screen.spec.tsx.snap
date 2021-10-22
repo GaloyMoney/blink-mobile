@@ -54,8 +54,10 @@ exports[`SendBitcoinConfirmationScreen render matches snapshot 1`] = `
   >
     <View
       accessible={true}
+      collapsable={false}
       focusable={true}
       forwardedRef={[Function]}
+      nativeID="animatedComponent"
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -78,10 +80,12 @@ exports[`SendBitcoinConfirmationScreen render matches snapshot 1`] = `
       }
     />
     <View
+      collapsable={false}
       deviceHeight={null}
       deviceWidth={null}
       forwardedRef={[Function]}
       hideModalContentWhileAnimating={false}
+      nativeID="animatedComponent"
       onBackdropPress={[Function]}
       onModalHide={[Function]}
       onModalWillHide={[Function]}
@@ -247,7 +251,9 @@ exports[`SendBitcoinConfirmationScreen render matches snapshot 1`] = `
                 }
               }
               accessible={true}
+              collapsable={false}
               focusable={true}
+              nativeID="animatedComponent"
               onClick={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
@@ -317,7 +323,9 @@ exports[`SendBitcoinConfirmationScreen render matches snapshot 1`] = `
                 }
               }
               accessible={true}
+              collapsable={false}
               focusable={true}
+              nativeID="animatedComponent"
               onClick={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
@@ -446,7 +454,9 @@ exports[`SendBitcoinConfirmationScreen render matches snapshot 1`] = `
               }
             }
             accessible={true}
+            collapsable={false}
             focusable={true}
+            nativeID="animatedComponent"
             onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}

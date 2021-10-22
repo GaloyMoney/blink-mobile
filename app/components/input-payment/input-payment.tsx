@@ -81,10 +81,8 @@ export const InputPayment: ComponentType = ({
       inputRef?.current?.blur()
     }
 
-    Keyboard.addListener("keyboardDidHide", _keyboardDidHide)
-    return () => {
-      Keyboard.removeListener("keyboardDidHide", _keyboardDidHide)
-    }
+    const subscription = Keyboard.addListener("keyboardDidHide", _keyboardDidHide)
+    return () => subscription.remove()
   }, [])
 
   const handleTextInputChange = React.useCallback(

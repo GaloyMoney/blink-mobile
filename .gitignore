@@ -29,6 +29,7 @@ build/
 .gradle
 local.properties
 *.iml
+*.hprof
 
 # node.js
 #
@@ -62,7 +63,7 @@ android/api-8350101450647692243-59029-b9bec84a7e5a.json
 android/fastlane/report.xml
 android/fastlane/metadata/android/en-US/
 
-galoy.code-workspace 
+galoy.code-workspace
 
 .phrase.yml
 ios/GoogleService-Info.plist

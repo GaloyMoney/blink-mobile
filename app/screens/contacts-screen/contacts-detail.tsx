@@ -3,7 +3,6 @@ import * as React from "react"
 import { View } from "react-native"
 import { Input, Text } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
-import { ScrollView } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
 import { CloseCross } from "../../components/close-cross"
 import { IconTransaction } from "../../components/icon-transactions"
@@ -118,7 +117,7 @@ export const ContactsDetailScreenJSX: ScreenType = ({
           contact.username
         }`}</Text>
       </View>
-      <ScrollView style={styles.transactionsView}>
+      <View style={styles.transactionsView}>
         <Text style={styles.screenTitle}>
           {translate("ContactDetailsScreen.title", {
             input: contact.alias,
@@ -128,7 +127,7 @@ export const ContactsDetailScreenJSX: ScreenType = ({
           navigation={navigation}
           contactUsername={contact.username}
         />
-      </ScrollView>
+      </View>
       <View style={styles.actionsContainer}>
         <LargeButton
           title={translate("MoveMoneyScreen.send")}

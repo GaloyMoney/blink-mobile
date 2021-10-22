@@ -317,12 +317,8 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
   const inputMemoRef = React.useRef<TextInput>()
 
   useEffect(() => {
-    Keyboard.addListener("keyboardDidHide", _keyboardDidHide)
-
-    // cleanup function
-    return () => {
-      Keyboard.removeListener("keyboardDidHide", _keyboardDidHide)
-    }
+    const subscription = Keyboard.addListener("keyboardDidHide", _keyboardDidHide)
+    return () => subscription.remove()
   })
 
   const _keyboardDidHide = useCallback(() => {
