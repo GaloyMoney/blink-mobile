@@ -17,4 +17,5 @@ export const graphqlV2OperationNames: string[] = [
   "userLogin",
   "userQuizQuestionUpdateCompleted",
   "userRequestAuthCode",
+  "globals",
 ]

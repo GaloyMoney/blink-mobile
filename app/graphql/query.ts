@@ -57,18 +57,20 @@ export const queryWallet = async (
   })
 }
 
+export const GLOBALS = gql`
+  query globals {
+    globals {
+      nodesIds
+    }
+  }
+`
+
 export const getPubKey = (client: MockableApolloClient): string => {
-  const { nodeStats } = client.readQuery({
-    query: gql`
-      query nodeStats {
-        nodeStats {
-          id
-        }
-      }
-    `,
+  const { globals } = client.readQuery({
+    query: GLOBALS,
   })
 
-  return nodeStats?.id ?? ""
+  return globals?.nodesIds?.[0] ?? ""
 }
 
 export const getMyUsername = (client: MockableApolloClient): string => {
@@ -122,10 +124,6 @@ export const MAIN_QUERY = gql`
       id
       balance
       currency
-    }
-
-    nodeStats {
-      id
     }
 
     earnList {
@@ -235,6 +233,11 @@ export const queryMain = async (
 ): Promise<void> => {
   await client.query({
     query: MAIN_QUERY,
+    variables,
+    fetchPolicy: "network-only",
+  })
+  await client.query({
+    query: GLOBALS,
     variables,
     fetchPolicy: "network-only",
   })

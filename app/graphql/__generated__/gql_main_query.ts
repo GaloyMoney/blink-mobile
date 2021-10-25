@@ -27,11 +27,6 @@ export interface gql_main_query_maps {
   coordinate: gql_main_query_maps_coordinate | null;
 }
 
-export interface gql_main_query_nodeStats {
-  __typename: "NodeStats";
-  id: string | null;
-}
-
 export interface gql_main_query_earnList {
   __typename: "Earn";
   /**
@@ -107,7 +102,6 @@ export interface gql_main_query_me {
 export interface gql_main_query {
   prices: (gql_main_query_prices | null)[] | null;
   maps: (gql_main_query_maps | null)[] | null;
-  nodeStats: gql_main_query_nodeStats | null;
   earnList: (gql_main_query_earnList | null)[] | null;
   wallet: (gql_main_query_wallet | null)[] | null;
   buildParameters: gql_main_query_buildParameters | null;

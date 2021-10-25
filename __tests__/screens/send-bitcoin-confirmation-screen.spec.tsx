@@ -14,7 +14,7 @@ import {
   SendBitcoinConfirmationScreen,
 } from "@app/screens/send-bitcoin-screen"
 import { waitForNextRender } from "../helpers/wait"
-import { cacheNodeStats, cachePrice, cacheWallet } from "../helpers/cache"
+import { cacheGlobals, cachePrice, cacheWallet } from "../helpers/cache"
 import { IPaymentType } from "@app/utils/parsing"
 
 const payKeysendUsernameMocks = [
@@ -111,7 +111,7 @@ const lightningRouteParams = {
 
 describe("SendBitcoinConfirmationScreen", () => {
   const cache = new InMemoryCache()
-  cacheNodeStats(cache)
+  cacheGlobals(cache)
   cachePrice(cache)
 
   afterEach(cleanup)

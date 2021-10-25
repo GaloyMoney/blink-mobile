@@ -79,19 +79,19 @@ export const cacheWallet = (cache: InMemoryCache, balance: number): void => {
   })
 }
 
-export const cacheNodeStats = (cache: InMemoryCache): void => {
+export const cacheGlobals = (cache: InMemoryCache): void => {
   cache.writeQuery({
     query: gql`
-      query nodeStats {
-        nodeStats {
-          id
+      query globals {
+        globals {
+          nodesIds
         }
       }
     `,
     data: {
-      nodeStats: {
-        __typename: "NodeStats",
-        id: "",
+      globals: {
+        __typename: "Globals",
+        nodesIds: [""],
       },
     },
   })

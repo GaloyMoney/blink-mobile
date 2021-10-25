@@ -10,7 +10,7 @@ import "@mocks/react-native-firebase"
 import "@mocks/react-navigation-native"
 import { SendBitcoinScreen } from "@app/screens/send-bitcoin-screen"
 import { waitForNextRender } from "../helpers/wait"
-import { cacheNodeStats, cachePrice, cacheUsername, cacheWallet } from "../helpers/cache"
+import { cacheGlobals, cachePrice, cacheUsername, cacheWallet } from "../helpers/cache"
 
 jest.mock("../../app/utils/parsing", () => {
   const actualParsing = jest.requireActual("../../app/utils/parsing")
@@ -25,7 +25,7 @@ const cache = new InMemoryCache()
 describe("SendBitcoinScreen", () => {
   beforeEach(() => {
     cacheWallet(cache, 117585)
-    cacheNodeStats(cache)
+    cacheGlobals(cache)
     cachePrice(cache)
     cacheUsername(cache)
   })
