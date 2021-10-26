@@ -10,7 +10,7 @@ import "@mocks/react-native-firebase"
 import "@mocks/react-navigation-native"
 import { SendBitcoinScreen } from "@app/screens/send-bitcoin-screen"
 import { waitForNextRender } from "../helpers/wait"
-import { cacheGlobals, cachePrice, cacheUsername, cacheWallet } from "../helpers/cache"
+import { cacheGlobals, cachePrice, cacheWallet } from "../helpers/cache"
 
 jest.mock("../../app/utils/parsing", () => {
   const actualParsing = jest.requireActual("../../app/utils/parsing")
@@ -27,7 +27,6 @@ describe("SendBitcoinScreen", () => {
     cacheWallet(cache, 117585)
     cacheGlobals(cache)
     cachePrice(cache)
-    cacheUsername(cache)
   })
   afterEach(cleanup)
 

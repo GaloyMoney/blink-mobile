@@ -37,37 +37,6 @@ export interface gql_main_query_earnList {
   completed: boolean | null;
 }
 
-export interface gql_main_query_wallet_transactions {
-  __typename: "Transaction";
-  id: string;
-  amount: number;
-  description: string;
-  created_at: number;
-  /**
-   * https: // www.apollographql.com/docs/graphql-tools/scalars/
-   */
-  hash: string | null;
-  type: string;
-  usd: number | null;
-  fee: number | null;
-  feeUsd: number | null;
-  pending: boolean | null;
-  username: string | null;
-  date: string;
-  date_format: string;
-  date_nice_print: string;
-  isReceive: boolean;
-  text: string;
-}
-
-export interface gql_main_query_wallet {
-  __typename: "Wallet";
-  id: string | null;
-  balance: number | null;
-  currency: string | null;
-  transactions: (gql_main_query_wallet_transactions | null)[] | null;
-}
-
 export interface gql_main_query_buildParameters {
   __typename: "BuildParameter";
   id: string | null;
@@ -100,10 +69,7 @@ export interface gql_main_query_me {
 }
 
 export interface gql_main_query {
-  prices: (gql_main_query_prices | null)[] | null;
-  maps: (gql_main_query_maps | null)[] | null;
   earnList: (gql_main_query_earnList | null)[] | null;
-  wallet: (gql_main_query_wallet | null)[] | null;
   buildParameters: gql_main_query_buildParameters | null;
   getLastOnChainAddress: gql_main_query_getLastOnChainAddress | null;
   me: gql_main_query_me | null;

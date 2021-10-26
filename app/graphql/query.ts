@@ -1,7 +1,5 @@
-import find from "lodash.find"
 import { ApolloClient, FetchPolicy, gql } from "@apollo/client"
 import { MockableApolloClient } from "../types/mockable"
-import { wallet_wallet } from "./__generated__/wallet"
 
 export const QUERY_PRICE = gql`
   query prices($length: Int = 1) {
@@ -13,11 +11,17 @@ export const QUERY_PRICE = gql`
 `
 
 export const WALLET = gql`
-  query wallet {
-    wallet {
+  query myWallets {
+    me {
       id
-      balance
-      currency
+      username
+      defaultAccount {
+        wallets {
+          id
+          balance
+          currency: walletCurrency
+        }
+      }
     }
   }
 `
@@ -32,19 +36,18 @@ export const QUERY_EARN_LIST = gql`
   }
 `
 
-export const getWallet = (client: ApolloClient<unknown>): wallet_wallet[] => {
-  const { wallet } = client.readQuery({
+export const getWallet = (client: ApolloClient<unknown>): Wallet => {
+  const data = client.readQuery({
     query: WALLET,
   })
-  return wallet
+
+  return data?.me?.defaultAccount?.wallets?.[0]
 }
 
 export const balanceBtc = (client: ApolloClient<unknown>): number => {
   const wallet = getWallet(client)
-  if (!wallet) {
-    return 0
-  }
-  return find(wallet, { id: "BTC" }).balance
+
+  return wallet?.balance ?? 0
 }
 
 export const queryWallet = async (
@@ -75,13 +78,7 @@ export const getPubKey = (client: MockableApolloClient): string => {
 
 export const getMyUsername = (client: MockableApolloClient): string => {
   const data = client.readQuery({
-    query: gql`
-      query username {
-        me {
-          username
-        }
-      }
-    `,
+    query: WALLET,
   })
 
   return data?.me?.username ?? ""
@@ -120,12 +117,6 @@ export const GET_LANGUAGE = gql`
 
 export const MAIN_QUERY = gql`
   query gql_main_query($logged: Boolean!) {
-    wallet @include(if: $logged) {
-      id
-      balance
-      currency
-    }
-
     earnList {
       id
       value
@@ -232,12 +223,17 @@ export const queryMain = async (
   variables: { logged: boolean },
 ): Promise<void> => {
   await client.query({
+    query: GLOBALS,
+    variables,
+    fetchPolicy: "network-only",
+  })
+  await client.query({
     query: MAIN_QUERY,
     variables,
     fetchPolicy: "network-only",
   })
   await client.query({
-    query: GLOBALS,
+    query: WALLET,
     variables,
     fetchPolicy: "network-only",
   })

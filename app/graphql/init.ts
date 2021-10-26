@@ -2,21 +2,29 @@ import { gql } from "@apollo/client"
 
 export const INITWALLET = gql`
   query InitWallet {
-    wallet {
-      id
-      balance
-      currency
+    me {
+      defaultAccount {
+        wallets {
+          id
+          balance
+          currency: walletCurrency
+        }
+      }
     }
   }
 `
 
 export const initQuery = {
-  wallet: [
-    {
-      __typename: "Wallet",
-      id: "BTC",
-      currency: "BTC",
-      balance: 0,
+  me: {
+    defaultAccount: {
+      wallets: [
+        {
+          __typename: "Wallet",
+          id: "BTC",
+          currency: "BTC",
+          balance: 0,
+        },
+      ],
     },
-  ],
+  },
 }
