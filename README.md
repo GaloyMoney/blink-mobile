@@ -4,7 +4,7 @@
 
 ## Goal
 
-This repository is the Bitcoin Beach Wallet mobile application. The goal is to make a mobile application compatible with Galoy's backend than can be customized and used by any community or organization. It is built with [React Native](https://reactnative.dev/), and runs on both iOS and Android.
+This repository is the Bitcoin Beach Wallet mobile application. The goal is to make a mobile application compatible with Galoy's backend that can be customized and used by any community or organization. It is built with [React Native](https://reactnative.dev/), and runs on both iOS and Android.
 
 ## Screenshots
 
@@ -37,3 +37,7 @@ This starts up the storybook server.
 In `app/app.tsx`, change `SHOW_STORYBOOK` to `true` and reload the app.
 
 For Visual Studio Code users, there is a handy extension that makes it easy to load Storybook use cases into a running emulator via tapping on items in the editor sidebar. Install the `React Native Storybook` extension by `Orta`, hit `cmd + shift + P` and select "Reconnect Storybook to VSCode". Expand the STORYBOOK section in the sidebar to see all use cases for components that have `.story.tsx` files in their directories.
+
+## Contributing
+
+If you wish to contribute see [CONTRIBUTING.MD](./CONTRIBUTING.MD)
