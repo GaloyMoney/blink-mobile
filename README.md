@@ -10,6 +10,10 @@ This repository is the Bitcoin Beach Wallet mobile application. The goal is to m
 
 <img src=".readme/screenshot-1.png" alt="Screenshot 1" width="150"> <img src=".readme/screenshot-2.png" alt="Screenshot 2" width="150"> <img src=".readme/screenshot-3.png" alt="Screenshot 3" width="150"> <img src=".readme/screenshot-4.png" alt="Screenshot 4" width="150">
 
+## Contributing
+
+If you wish to contribute see [CONTRIBUTING.MD](./CONTRIBUTING.MD)
+
 ## Start
 
 Prerequisite -- Follow the instructions to [set up React Native](https://reactnative.dev/docs/getting-started).
@@ -37,7 +41,3 @@ This starts up the storybook server.
 In `app/app.tsx`, change `SHOW_STORYBOOK` to `true` and reload the app.
 
 For Visual Studio Code users, there is a handy extension that makes it easy to load Storybook use cases into a running emulator via tapping on items in the editor sidebar. Install the `React Native Storybook` extension by `Orta`, hit `cmd + shift + P` and select "Reconnect Storybook to VSCode". Expand the STORYBOOK section in the sidebar to see all use cases for components that have `.story.tsx` files in their directories.
-
-## Contributing
-
-If you wish to contribute see [CONTRIBUTING.MD](./CONTRIBUTING.MD)
