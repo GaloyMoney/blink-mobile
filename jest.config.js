@@ -2,7 +2,6 @@ module.exports = {
   preset: "react-native",
   setupFilesAfterEnv: [],
   transform: {
-    "^.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js",
     "\\.(ts|tsx)$": "ts-jest",
   },
   globals: {

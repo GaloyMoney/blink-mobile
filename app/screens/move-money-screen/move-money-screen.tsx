@@ -162,12 +162,8 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
         refetch()
       }
     }
-
-    AppState.addEventListener("change", _handleAppStateChange)
-
-    return () => {
-      AppState.removeEventListener("change", _handleAppStateChange)
-    }
+    const subscription = AppState.addEventListener("change", _handleAppStateChange)
+    return () => subscription.remove()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

@@ -36,6 +36,7 @@ exports[`SendBitcoinScreen render matches snapshot 1`] = `
     scrollOffset={0}
     scrollOffsetMax={0}
     scrollTo={null}
+    statusBarTranslucent={false}
     supportedOrientations={
       Array [
         "portrait",
@@ -104,6 +105,7 @@ exports[`SendBitcoinScreen render matches snapshot 1`] = `
       scrollOffset={0}
       scrollOffsetMax={0}
       scrollTo={null}
+      statusBarTranslucent={false}
       style={
         Object {
           "flex": 1,
@@ -457,7 +459,6 @@ exports[`SendBitcoinScreen render matches snapshot 1`] = `
                   </View>
                   <TextInput
                     accessibilityLabel="Input payment"
-                    allowFontScaling={true}
                     autoCorrect={false}
                     autoFocus={false}
                     contextMenuHidden={true}
@@ -469,7 +470,6 @@ exports[`SendBitcoinScreen render matches snapshot 1`] = `
                     onEndEditing={[Function]}
                     onFocus={[Function]}
                     placeholderTextColor="#86939e"
-                    rejectResponderTermination={true}
                     returnKeyLabel="Update"
                     returnKeyType="done"
                     selection={
@@ -617,7 +617,6 @@ exports[`SendBitcoinScreen render matches snapshot 1`] = `
                 </View>
               </View>
               <TextInput
-                allowFontScaling={true}
                 autoCapitalize="none"
                 autoCompleteType="username"
                 editable={true}
@@ -626,7 +625,6 @@ exports[`SendBitcoinScreen render matches snapshot 1`] = `
                 onFocus={[Function]}
                 placeholder="username or invoice"
                 placeholderTextColor="#86939e"
-                rejectResponderTermination={true}
                 selectTextOnFocus={true}
                 style={
                   Object {
@@ -745,14 +743,12 @@ exports[`SendBitcoinScreen render matches snapshot 1`] = `
                 </View>
               </View>
               <TextInput
-                allowFontScaling={true}
                 editable={true}
                 onBlur={[Function]}
                 onChangeText={[Function]}
                 onFocus={[Function]}
                 placeholder="optional note"
                 placeholderTextColor="#86939e"
-                rejectResponderTermination={true}
                 selectTextOnFocus={true}
                 style={
                   Object {
