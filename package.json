@@ -93,7 +93,7 @@
     "react-native-root-toast": "^3.2.1",
     "react-native-safe-area-context": "^3.1.1",
     "react-native-screen-brightness": "^2.0.0-alpha",
-    "react-native-screens": "^3.8.0",
+    "react-native-screens": "git://github.com/software-mansion/react-native-screens.git#edf6026a78d186b64c3ea4ec06fb4f13aeb4b5bb",
     "react-native-secure-key-store": "^2.0.9",
     "react-native-share": "^7.2.0",
     "react-native-snap-carousel": "^3.9.1",

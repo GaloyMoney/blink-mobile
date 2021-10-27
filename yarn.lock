@@ -13449,10 +13449,9 @@ react-native-screen-brightness@^2.0.0-alpha:
   resolved "https://registry.yarnpkg.com/react-native-screen-brightness/-/react-native-screen-brightness-2.0.0-alpha.tgz#2fc30cf711cfafa5e0aec685f0fce51ce65e0052"
   integrity sha512-NdJPptcWiFwG9aypm0awYv9d/aoZSJetXPFkx6w/UuNX9SRr5YTKXMSND/2lwuSOw6uGU9mQ0f4dBuGZSNgzow==
 
-react-native-screens@^3.8.0:
+"react-native-screens@git://github.com/software-mansion/react-native-screens.git#edf6026a78d186b64c3ea4ec06fb4f13aeb4b5bb":
   version "3.8.0"
-  resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-3.8.0.tgz#4ec84c55a7b4a4aa9405c812978ca2ba5c0242a4"
-  integrity sha512-lHrnB/elAoMJKv8O12U6BLgeup4lB6ZKJHEOVuG/D72nv/OE9wUusbou6YCB5tp3YbaSpHflPnkFmHA/vCejpw==
+  resolved "git://github.com/software-mansion/react-native-screens.git#edf6026a78d186b64c3ea4ec06fb4f13aeb4b5bb"
   dependencies:
     warn-once "^0.1.0"
 
