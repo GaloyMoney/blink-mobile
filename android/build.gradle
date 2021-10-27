@@ -13,6 +13,7 @@ buildscript {
         google()
         mavenCentral()
         maven { url 'https://www.jitpack.io' }
+        jcenter()
     }
     dependencies {
         classpath('com.android.tools.build:gradle:4.2.2')
@@ -20,7 +21,7 @@ buildscript {
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
 
-        classpath 'com.google.gms:google-services:4.3.3' // firebase
+        classpath 'com.google.gms:google-services:4.3.5' // firebase
         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.1.0'
 
         // https://github.com/wix/react-native-notifications/issues/649
@@ -43,6 +44,7 @@ allprojects {
 
         google()
         mavenCentral()
+        jcenter()
     }
 
     //add the folllowing lines to force libs to use recent buildtools
