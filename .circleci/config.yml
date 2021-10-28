@@ -67,7 +67,7 @@ jobs:
 
   build_android:
     docker:
-      - image: circleci/android:api-29
+      - image: circleci/android:api-30
     resource_class: large
     environment:
       TERM: dumb
