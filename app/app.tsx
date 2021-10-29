@@ -41,9 +41,8 @@ import "./utils/polyfill"
 import { RootStack } from "./navigation/root-navigator"
 import { isIos } from "./utils/helper"
 import { saveString, loadString } from "./utils/storage"
-import { graphqlV2OperationNames } from "./graphql/graphql-v2-operations"
 import useToken from "./utils/use-token"
-import { getGraphQLUri, getGraphQLV2Uri, loadNetwork } from "./utils/network"
+import { getGraphQLUri, loadNetwork } from "./utils/network"
 import {
   hasSetAuthorizationVar,
   loadAuthToken,
@@ -128,13 +127,7 @@ export const App = (): JSX.Element => {
         return fetch(uri, options)
       }
 
-      const customFetchV2 = async (_ /* uri not used */, options) => {
-        const uri = await getGraphQLV2Uri(currentNetwork)
-        return fetch(uri, options)
-      }
-
       const httpLink = new HttpLink({ fetch: customFetch })
-      const httpLinkV2 = new HttpLink({ fetch: customFetchV2 })
 
       const authLink = setContext((_, { headers }) => {
         if (token) {
@@ -166,11 +159,7 @@ export const App = (): JSX.Element => {
             )
           },
         },
-      }).split(
-        (operation) => graphqlV2OperationNames.includes(operation.operationName),
-        httpLinkV2,
-        httpLink,
-      )
+      })
 
       const persistor_ = new CachePersistor({
         cache,
@@ -182,7 +171,9 @@ export const App = (): JSX.Element => {
 
       const client = new ApolloClient({
         cache,
-        link: linkNetworkStatusNotifier.concat(authLink.concat(retryLink)),
+        link: linkNetworkStatusNotifier.concat(
+          retryLink.concat(authLink.concat(httpLink)),
+        ),
         name: isIos ? "iOS" : "Android",
         version: `${VersionNumber.appVersion}-${VersionNumber.buildVersion}`,
       })
