@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unassigned-import */
 require("../app/components/balance-header/balance-header.story")
 require("../app/components/input-payment/input-payment.story")
 require("../app/components/price-graph/price-graph.story")

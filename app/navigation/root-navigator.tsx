@@ -5,7 +5,6 @@ import messaging from "@react-native-firebase/messaging"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { CardStyleInterpolators, createStackNavigator } from "@react-navigation/stack"
 import i18n from "i18n-js"
-// eslint-disable-next-line import/no-unassigned-import
 import "node-libs-react-native/globals" // needed for Buffer?
 import * as React from "react"
 import { useCallback, useEffect } from "react"
