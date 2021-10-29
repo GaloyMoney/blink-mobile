@@ -128,18 +128,18 @@ const RootNavigator = createStackNavigator<RootStackParamList>()
 export const RootStack: NavigatorType = () => {
   const appState = React.useRef(AppState.currentState)
   const client = useApolloClient()
-  const { token, tokenNetwork } = useToken()
+  const { token, hasToken, tokenNetwork } = useToken()
 
   const _handleAppStateChange = useCallback(
     async (nextAppState) => {
       if (appState.current.match(/background/) && nextAppState === "active") {
         console.log("App has come to the foreground!")
-        showModalClipboardIfValidPayment({ client, network: tokenNetwork })
+        hasToken && showModalClipboardIfValidPayment({ client, network: tokenNetwork })
       }
 
       appState.current = nextAppState
     },
-    [client, tokenNetwork],
+    [client, hasToken, tokenNetwork],
   )
 
   useEffect(() => {
@@ -252,8 +252,10 @@ export const RootStack: NavigatorType = () => {
       })
   }, [])
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  useEffect(() => messaging().onTokenRefresh((token) => addDeviceToken(client)), [client])
+  useEffect(
+    () => messaging().onTokenRefresh((token) => token && addDeviceToken(client)),
+    [client],
+  )
 
   return (
     <RootNavigator.Navigator

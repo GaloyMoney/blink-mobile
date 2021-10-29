@@ -1,4 +1,4 @@
-import { gql, useApolloClient, useQuery } from "@apollo/client"
+import { gql, useQuery } from "@apollo/client"
 import { useFocusEffect } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
@@ -8,13 +8,13 @@ import { PermissionsAndroid, StyleSheet, Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import MapView, { Callout, CalloutSubview, Marker } from "react-native-maps"
 import { Screen } from "../../components/screen"
-import { walletIsActive } from "../../graphql/query"
 import { PrimaryStackParamList } from "../../navigation/stack-param-lists"
 import { ScreenType } from "../../types/jsx"
 import { isIos } from "../../utils/helper"
 import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
 import { toastShow } from "../../utils/toast"
+import useToken from "../../utils/use-token"
 
 const QUERY_BUSINESSES = gql`
   query businessMapMarkers {
@@ -54,8 +54,8 @@ type Props = {
 }
 
 export const MapScreen: ScreenType = ({ navigation }: Props) => {
+  const { hasToken } = useToken()
   const [isRefreshed, setIsRefreshed] = React.useState(false)
-  const client = useApolloClient()
   const { data, error, refetch } = useQuery(QUERY_BUSINESSES, {
     notifyOnNetworkStatusChange: true,
   })
@@ -113,7 +113,7 @@ export const MapScreen: ScreenType = ({ navigation }: Props) => {
   const markers: JSX.Element[] = []
   maps.forEach((item) => {
     const onPress = () =>
-      walletIsActive(client)
+      hasToken
         ? navigation.navigate("sendBitcoin", { username: item.username })
         : navigation.navigate("phoneValidation")
     markers.push(

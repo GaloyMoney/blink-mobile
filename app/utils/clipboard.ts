@@ -2,7 +2,6 @@ import Clipboard from "@react-native-community/clipboard"
 import { ApolloClient } from "@apollo/client"
 
 import { validPayment } from "./parsing"
-import { walletIsActive } from "../graphql/query"
 import {
   LAST_CLIPBOARD_PAYMENT,
   modalClipboardVisibleVar,
@@ -20,10 +19,6 @@ export const showModalClipboardIfValidPayment = async (
   { client, network }: ShowModalClipboardIfValidPaymentInput,
 ): Promise<void> => {
   const clipboard = await Clipboard.getString()
-
-  if (!walletIsActive(client)) {
-    return
-  }
 
   const data: any = cache.readQuery({ query: LAST_CLIPBOARD_PAYMENT })
   if (clipboard === data?.lastClipboardPayment) {

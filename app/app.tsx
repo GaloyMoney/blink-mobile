@@ -31,7 +31,6 @@ import VersionNumber from "react-native-version-number"
 import { GlobalErrorToast } from "./components/global-error"
 import { cache } from "./graphql/cache"
 import { initQuery, INITWALLET } from "./graphql/init"
-import { walletIsActive } from "./graphql/query"
 import "./i18n"
 import "./utils/polyfill"
 import { RootStack } from "./navigation/root-navigator"
@@ -74,7 +73,7 @@ LogBox.ignoreAllLogs()
  * This is the root component of our app.
  */
 export const App = (): JSX.Element => {
-  const { token, tokenNetwork } = useToken()
+  const { token, hasToken, tokenNetwork } = useToken()
   const networkReactiveVar = useReactiveVar<INetwork | null>(networkVar)
   const [routeName, setRouteName] = useState("Initial")
   const [apolloClient, setApolloClient] = useState<ApolloClient<NormalizedCacheObject>>()
@@ -230,7 +229,7 @@ export const App = (): JSX.Element => {
                 screens: {
                   MoveMoney: {
                     initialRouteName: "moveMoney",
-                    screens: walletIsActive(apolloClient)
+                    screens: hasToken
                       ? {
                           sendBitcoin: ":username",
                           moveMoney: "/",

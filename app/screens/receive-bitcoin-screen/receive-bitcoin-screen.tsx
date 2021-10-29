@@ -34,6 +34,7 @@ import { QRView } from "./qr-view"
 import { useMoneyAmount } from "../../hooks"
 import { TextCurrency } from "../../components/text-currency"
 import { useCurrencies } from "../../hooks/use-currencies"
+import useToken from "../../utils/use-token"
 
 // FIXME: crash when no connection
 
@@ -96,6 +97,7 @@ type Props = {
 
 export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
   const client = useApolloClient()
+  const { hasToken } = useToken()
 
   const { primaryCurrency, secondaryCurrency, toggleCurrency } = useCurrencies()
 
@@ -234,7 +236,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
                 },
                 {
                   text: translate("common.ok"),
-                  onPress: () => requestPermission(client),
+                  onPress: () => hasToken && requestPermission(client),
                 },
               ],
               { cancelable: true },
@@ -245,7 +247,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
     }
 
     notifRequest()
-  }, [client])
+  }, [client, hasToken])
 
   useEffect(() => {
     // Update secondary amount when price updates

@@ -20,7 +20,6 @@ import { language_mapping } from "./language-screen"
 import { palette } from "../../theme/palette"
 import { LN_PAGE_DOMAIN, WHATSAPP_CONTACT_NUMBER } from "../../constants/support"
 import { translate } from "../../i18n"
-import { walletIsActive } from "../../graphql/query"
 import { openWhatsApp } from "../../utils/external"
 import { resetDataStore } from "../../utils/logout"
 import { hasFullPermissions, requestPermission } from "../../utils/notifications"
@@ -49,7 +48,7 @@ type ComponentProps = {
 
 export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
   const client = useApolloClient()
-  const { removeToken } = useToken()
+  const { hasToken, removeToken } = useToken()
 
   const { data } = useQuery(
     gql`
@@ -115,7 +114,7 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
   return (
     <SettingsScreenJSX
       client={client}
-      walletIsActive={walletIsActive(client)}
+      hasToken={hasToken}
       resetDataStore={() => resetDataStore({ client, removeToken })}
       navigation={navigation}
       username={me.username}
@@ -135,7 +134,7 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
 
 type SettingsScreenProps = {
   client: ApolloClient<unknown>
-  walletIsActive: boolean
+  hasToken: boolean
   navigation: StackNavigationProp<RootStackParamList, "settings">
   username: string
   notificationsEnabled: boolean
@@ -147,7 +146,7 @@ type SettingsScreenProps = {
 export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
   const {
     client,
-    walletIsActive,
+    hasToken,
     navigation,
     username,
     notificationsEnabled,
@@ -171,8 +170,8 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       id: "phone",
       defaultValue: translate("SettingsScreen.tapLogIn"),
       action: () => navigation.navigate("phoneValidation"),
-      enabled: !walletIsActive,
-      greyed: walletIsActive,
+      enabled: !hasToken,
+      greyed: hasToken,
     },
     {
       category: translate("common.username"),
@@ -180,48 +179,48 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       id: "username",
       defaultValue: translate("SettingsScreen.tapUserName"),
       action: () => navigation.navigate("setUsername"),
-      enabled: walletIsActive && !username,
-      greyed: !walletIsActive,
+      enabled: hasToken && !username,
+      greyed: !hasToken,
     },
     {
       category: translate("common.language"),
       icon: "ios-language",
       id: "language",
       action: () => navigation.navigate("language"),
-      enabled: walletIsActive,
-      greyed: !walletIsActive,
+      enabled: hasToken,
+      greyed: !hasToken,
     },
     {
       category: translate("common.notification"),
       icon: "ios-notifications-circle",
       id: "notifications",
-      action: () => requestPermission(client),
-      enabled: walletIsActive && notificationsEnabled,
-      greyed: !walletIsActive,
+      action: () => hasToken && requestPermission(client),
+      enabled: hasToken && notificationsEnabled,
+      greyed: !hasToken,
     },
     {
       category: translate("common.security"),
       icon: "lock-closed-outline",
       id: "security",
       action: securityAction,
-      enabled: walletIsActive,
-      greyed: !walletIsActive,
+      enabled: hasToken,
+      greyed: !hasToken,
     },
     {
       category: translate("common.csvExport"),
       icon: "ios-download",
       id: "csv",
       action: () => csvAction(),
-      enabled: walletIsActive,
-      greyed: !walletIsActive,
+      enabled: hasToken,
+      greyed: !hasToken,
     },
     {
       category: translate("tippingLink.title"),
       icon: "cash-outline",
       id: "tippingLink",
       action: () => copyToClipBoard(username),
-      enabled: walletIsActive && username !== null,
-      greyed: !walletIsActive || username === null,
+      enabled: hasToken && username !== null,
+      greyed: !hasToken || username === null,
     },
     {
       category: translate("whatsapp.contactUs"),
@@ -251,8 +250,8 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
           },
         ])
       },
-      enabled: walletIsActive,
-      greyed: !walletIsActive,
+      enabled: hasToken,
+      greyed: !hasToken,
     },
   ]
 

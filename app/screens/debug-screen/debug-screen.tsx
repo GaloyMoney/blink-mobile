@@ -10,7 +10,6 @@ import { color } from "../../theme"
 import { resetDataStore } from "../../utils/logout"
 import { getGraphQLUri, loadNetwork, saveNetwork } from "../../utils/network"
 import { requestPermission } from "../../utils/notifications"
-import { walletIsActive } from "../../graphql/query"
 import useToken from "../../utils/use-token"
 import type { ScreenType } from "../../types/jsx"
 import type { INetwork } from "../../types/network"
@@ -31,7 +30,7 @@ const usingHermes = typeof HermesInternal === "object" && HermesInternal !== nul
 export const DebugScreen: ScreenType = () => {
   const client = useApolloClient()
   const { btcPrice } = useBTCPrice()
-  const { tokenUid, tokenNetwork, removeToken } = useToken()
+  const { hasToken, tokenUid, tokenNetwork, removeToken } = useToken()
 
   const networks: INetwork[] = ["regtest", "testnet", "mainnet"]
   const [networkState, setNetworkState] = React.useState("")
@@ -106,7 +105,7 @@ export const DebugScreen: ScreenType = () => {
         title="Request permission + send device token"
         style={styles.button}
         onPress={async () => {
-          walletIsActive(client) && requestPermission(client)
+          hasToken && requestPermission(client)
         }}
       />
       {__DEV__ && (
