@@ -119,7 +119,7 @@ export const MapScreen: ScreenType = ({ navigation }: Props) => {
     markers.push(
       <Marker
         coordinate={item.mapInfo.coordinates}
-        key={item.title}
+        key={item.username}
         pinColor={palette.orange}
       >
         <Callout

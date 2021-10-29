@@ -12,8 +12,7 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { InputPayment } from "../../components/input-payment"
 import { GaloyInput } from "../../components/galoy-input"
 import { Screen } from "../../components/screen"
-import { balanceBtc } from "../../graphql/query"
-import { useMoneyAmount, useBTCPrice } from "../../hooks"
+import { useMoneyAmount, useBTCPrice, useWalletBalance } from "../../hooks"
 import { translate } from "../../i18n"
 import type { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
@@ -47,6 +46,7 @@ export const SendBitcoinScreen: ScreenType = ({
   const client = useApolloClient()
   const { tokenNetwork } = useToken()
   const { btcPrice, updateStalePrice } = useBTCPrice()
+  const { satBalance } = useWalletBalance(client)
 
   const { primaryCurrency, secondaryCurrency, toggleCurrency } = useCurrencies()
 
@@ -102,7 +102,7 @@ export const SendBitcoinScreen: ScreenType = ({
 
   const usernameExists = Boolean(dataUserDefaultWalletId?.userDefaultWalletId)
 
-  const balance = balanceBtc(client)
+  const balance = satBalance
 
   const reset = useCallback(() => {
     setInvoiceError("")

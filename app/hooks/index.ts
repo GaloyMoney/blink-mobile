@@ -1,4 +1,4 @@
-export * from "./use-usd-balance"
+export * from "./use-wallet-balance"
 export * from "./use-currency-conversion"
 export * from "./use-hidden-balance-walk-through-tooltip"
 export * from "./use-hide-balance"

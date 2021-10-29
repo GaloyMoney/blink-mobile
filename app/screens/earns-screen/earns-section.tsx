@@ -1,4 +1,4 @@
-import { gql, useMutation, useQuery } from "@apollo/client"
+import { gql, useApolloClient, useMutation } from "@apollo/client"
 import { RouteProp, useIsFocused } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import I18n from "i18n-js"
@@ -11,7 +11,6 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 import Carousel, { Pagination } from "react-native-snap-carousel"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
-import { QUERY_EARN_LIST } from "../../graphql/query"
 import { translate } from "../../i18n"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
@@ -21,6 +20,7 @@ import type { ScreenType } from "../../types/jsx"
 import useToken from "../../utils/use-token"
 import { SVGs } from "./earn-svg-factory"
 import { getCardsFromSection, remainingSatsOnSection } from "./earns-utils"
+import { getQuizQuestions } from "../../graphql/query"
 
 const { width: screenWidth } = Dimensions.get("window")
 
@@ -116,6 +116,7 @@ type Props = {
 
 export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
   const { hasToken } = useToken()
+  const client = useApolloClient()
 
   const [updateCompleted] = useMutation(
     gql`
@@ -139,28 +140,20 @@ export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
       }
     `,
     {
-      refetchQueries: ["gql_main_query", "transactionsList"],
+      refetchQueries: ["mainQuery"],
     },
   )
 
-  // TODO: fragment with earnList
-  const { data } = useQuery(QUERY_EARN_LIST, {
-    variables: {
-      logged: hasToken,
-    },
-    fetchPolicy: "cache-only",
-  })
-
-  const { earnList } = data
+  const quizQuestions = getQuizQuestions(client, { hasToken })
 
   const sectionIndex = route.params.section
-  const cards = getCardsFromSection({ sectionIndex, earnList })
+  const cards = getCardsFromSection({ quizQuestions, sectionIndex })
 
   const itemIndex = cards.findIndex((item) => !item.fullfilled)
   const [firstItem] = useState(itemIndex >= 0 ? itemIndex : 0)
   const [currRewardIndex, setCurrRewardIndex] = useState(firstItem)
 
-  const remainingSats = remainingSatsOnSection({ sectionIndex, earnList })
+  const remainingSats = remainingSatsOnSection({ quizQuestions, sectionIndex })
 
   const [initialRemainingSats] = useState(remainingSats)
   const currentRemainingEarn = remainingSats
@@ -169,10 +162,6 @@ export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
 
   const isFocused = useIsFocused()
 
-  if (!data) {
-    return null
-  }
-
   if (initialRemainingSats !== 0 && currentRemainingEarn === 0 && isFocused) {
     navigation.navigate("sectionCompleted", {
       amount: cards.reduce((acc, item) => item.value + acc, 0),
@@ -180,7 +169,9 @@ export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
     })
   }
 
-  navigation.setOptions({ title: sectionTitle })
+  React.useEffect(() => {
+    navigation.setOptions({ title: sectionTitle })
+  }, [navigation, sectionTitle])
 
   enum RewardType {
     Text = "Text",
@@ -209,7 +200,7 @@ export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
             updateCompleted({ variables: { input: { id: card.id } } })
           },
           id: card.id,
-          completed: earnList.find((item) => item.id == card.id).completed,
+          completed: Boolean(quizQuestions.myCompletedQuestions[card.id]),
         })
         break
       //     case RewardType.Video:

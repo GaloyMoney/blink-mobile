@@ -10,9 +10,9 @@ import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
 import type { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
-import { queryWallet, balanceBtc } from "../../graphql/query"
+import { queryMain } from "../../graphql/query"
 import { textCurrencyFormatting } from "../../utils/currencyConversion"
-import { useBTCPrice, useCurrencyConverter } from "../../hooks"
+import { useBTCPrice, useCurrencyConverter, useWalletBalance } from "../../hooks"
 import { PaymentStatusIndicator } from "./payment-status-indicator"
 import { color } from "../../theme"
 import { StackNavigationProp } from "@react-navigation/stack"
@@ -85,6 +85,7 @@ export const SendBitcoinConfirmationScreen = ({
   const client = useApolloClient()
   const { btcPrice, priceIsStale, timeSinceLastPriceUpdate } = useBTCPrice()
   const currencyConverter = useCurrencyConverter()
+  const { satBalance } = useWalletBalance(client)
 
   const convertCurrency = useCallback(
     (amount: number, from: CurrencyType, to: CurrencyType) => {
@@ -129,27 +130,21 @@ export const SendBitcoinConfirmationScreen = ({
     primaryCurrency,
   })
 
-  const [lnPay] = useMutation(LN_PAY, {
-    refetchQueries: ["gql_main_query", "transactionsList"],
-  })
+  const [lnPay] = useMutation(LN_PAY, { refetchQueries: ["mainQuery"] })
 
-  const [lnNoAmountPay] = useMutation(LN_NO_AMOUNT_PAY, {
-    refetchQueries: ["gql_main_query", "transactionsList"],
-  })
+  const [lnNoAmountPay] = useMutation(LN_NO_AMOUNT_PAY, { refetchQueries: ["mainQuery"] })
 
   const [intraLedgerPay] = useMutation(INTRA_LEDGER_PAY, {
-    refetchQueries: ["gql_main_query", "transactionsList"],
+    refetchQueries: ["mainQuery"],
   })
 
   // TODO: add user automatically to cache
 
-  const [onchainPay] = useMutation(ONCHAIN_PAY, {
-    refetchQueries: ["gql_main_query", "transactionsList"],
-  })
+  const [onchainPay] = useMutation(ONCHAIN_PAY, { refetchQueries: ["mainQuery"] })
 
   const handlePaymentReturn = (status, errors) => {
     if (status === "SUCCESS") {
-      queryWallet(client, "network-only")
+      queryMain(client, { hasToken: true })
       setStatus(Status.SUCCESS)
     } else if (status === "PENDING") {
       setStatus(Status.PENDING)
@@ -333,7 +328,7 @@ export const SendBitcoinConfirmationScreen = ({
     return fee.value === null ? paymentSatAmount : paymentSatAmount + fee.value
   }, [fee.value, paymentSatAmount])
 
-  const balance = balanceBtc(client)
+  const balance = satBalance
 
   const errorMessage = useMemo(() => {
     if (totalAmount > balance) {

@@ -1,8 +1,6 @@
-import { useQuery } from "@apollo/client"
 import { unixTime } from "../utils/date"
 import { useMemo } from "react"
-import { QUERY_PRICE } from "../graphql/query"
-import { prices } from "../graphql/__generated__/prices"
+import moment from "moment"
 
 type BTCPriceReturn = {
   btcPrice: number
@@ -17,7 +15,15 @@ type BTCPriceReturn = {
 export const MAXIMUM_PRICE_STALENESS_SECONDS = 300
 
 export const useBTCPrice = (): BTCPriceReturn => {
-  const { data, refetch } = useQuery<prices>(QUERY_PRICE)
+  // const { data, refetch } = useQuery<prices>(QUERY_PRICE)
+  const data = {
+    prices: [
+      {
+        id: moment().unix().toString(),
+        o: 0.0003966375,
+      },
+    ],
+  }
 
   const priceTimestamp: number | typeof NaN = parseInt(data?.prices?.[0]?.id ?? "")
   const secondsSinceLastPriceUpdate: number | typeof NaN = unixTime() - priceTimestamp
@@ -33,9 +39,9 @@ export const useBTCPrice = (): BTCPriceReturn => {
       },
       updateStalePrice: () => {
         if (priceIsStale) {
-          refetch()
+          // refetch()
         }
       },
     }
-  }, [data, priceIsStale, refetch, secondsSinceLastPriceUpdate])
+  }, [priceIsStale, secondsSinceLastPriceUpdate])
 }

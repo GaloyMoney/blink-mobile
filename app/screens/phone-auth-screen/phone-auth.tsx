@@ -315,7 +315,7 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
   })
 
   const onHasToken = useCallback(async () => {
-    await queryMain(client, { logged: hasToken })
+    await queryMain(client, { hasToken })
     hasToken && addDeviceToken(client)
 
     if (await BiometricWrapper.isSensorAvailable()) {

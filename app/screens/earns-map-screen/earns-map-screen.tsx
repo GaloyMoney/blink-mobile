@@ -1,15 +1,13 @@
-import { useQuery } from "@apollo/client"
+import { useApolloClient } from "@apollo/client"
 import { StackNavigationProp } from "@react-navigation/stack"
 import i18n from "i18n-js"
-import filter from "lodash.filter"
-import sumBy from "lodash.sumby"
 import * as React from "react"
 import { StatusBar, StyleSheet, Text, View } from "react-native"
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler"
 import { SvgProps } from "react-native-svg"
 import { MountainHeader } from "../../components/mountain-header"
 import { Screen } from "../../components/screen"
-import { QUERY_EARN_LIST } from "../../graphql/query"
+import { getQuizQuestions } from "../../graphql/query"
 import { translate, translateQuizSections } from "../../i18n"
 import { PrimaryStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
@@ -128,13 +126,8 @@ type EarnMapDataProps = {
 
 export const EarnMapDataInjected: ScreenType = ({ navigation }: EarnMapDataProps) => {
   const { hasToken } = useToken()
-  // TODO: fragment with earnList
-  const { data } = useQuery(QUERY_EARN_LIST, {
-    variables: {
-      logged: hasToken,
-    },
-    fetchPolicy: "cache-only",
-  })
+  const client = useApolloClient()
+  const quizQuestions = getQuizQuestions(client, { hasToken })
 
   React.useEffect(() => {
     const unsubscribe = navigation?.addListener("focus", () => {
@@ -156,11 +149,9 @@ export const EarnMapDataInjected: ScreenType = ({ navigation }: EarnMapDataProps
     return unsubscribe
   }, [navigation])
 
-  if (!data) {
+  if (!quizQuestions.allQuestions) {
     return null
   }
-
-  const { earnList } = data
 
   const sectionIndexs = Object.keys(translateQuizSections("EarnScreen.earns"))
 
@@ -178,7 +169,7 @@ export const EarnMapDataInjected: ScreenType = ({ navigation }: EarnMapDataProps
       }),
     })
 
-    const sectionCompletion = sectionCompletedPct({ sectionIndex, earnList })
+    const sectionCompletion = sectionCompletedPct({ quizQuestions, sectionIndex })
 
     if (sectionCompletion === 1) {
       currSection += 1
@@ -188,7 +179,8 @@ export const EarnMapDataInjected: ScreenType = ({ navigation }: EarnMapDataProps
     }
   }
 
-  const earnedSat = sumBy(filter(earnList, { completed: true }), "value")
+  const earnedSat =
+    Object.values(quizQuestions.myCompletedQuestions).reduce((a, b) => a + b) ?? 0
 
   return (
     <EarnMapScreen
@@ -302,6 +294,7 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> = ({
   sectionsData.forEach((item, index) => {
     sectionsComp.unshift(
       <BoxAdding
+        key={item.index}
         text={item.text}
         Icon={item.icon}
         side={index % 2 ? "left" : "right"}

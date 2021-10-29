@@ -7,7 +7,7 @@ export const INITWALLET = gql`
         wallets {
           id
           balance
-          currency: walletCurrency
+          walletCurrency
         }
       }
     }
@@ -21,7 +21,7 @@ export const initQuery = {
         {
           __typename: "Wallet",
           id: "BTC",
-          currency: "BTC",
+          walletCurrency: "BTC",
           balance: 0,
         },
       ],

@@ -1,6 +1,6 @@
-import { gql, InMemoryCache } from "@apollo/client"
-import { QUERY_PRICE, WALLET, GLOBALS } from "@app/graphql/query"
-import moment from "moment"
+import { InMemoryCache } from "@apollo/client"
+import { MAIN_QUERY } from "@app/graphql/query"
+// import moment from "moment"
 
 export const cacheWallet = (cache: InMemoryCache, balance: number): void => {
   // TODO: figure out why no tests are failing with these commented out!!
@@ -65,8 +65,12 @@ export const cacheWallet = (cache: InMemoryCache, balance: number): void => {
   // ]
 
   cache.writeQuery({
-    query: WALLET,
+    query: MAIN_QUERY,
     data: {
+      globals: {
+        __typename: "Globals",
+        nodesIds: [""],
+      },
       me: {
         id: "BitcoinBeach",
         username: "BitcoinBeach",
@@ -74,9 +78,9 @@ export const cacheWallet = (cache: InMemoryCache, balance: number): void => {
           wallets: [
             {
               __typename: "BTCWallet",
-              balance: balance,
-              currency: "BTC",
               id: "8e8ed189-4da5-4729-b457-8ef9c069fa6a",
+              balance: balance,
+              walletCurrency: "BTC",
               // transactions: transactions,
             },
           ],
@@ -86,29 +90,17 @@ export const cacheWallet = (cache: InMemoryCache, balance: number): void => {
   })
 }
 
-export const cacheGlobals = (cache: InMemoryCache): void => {
-  cache.writeQuery({
-    query: GLOBALS,
-    data: {
-      globals: {
-        __typename: "Globals",
-        nodesIds: [""],
-      },
-    },
-  })
-}
-
-export const cachePrice = (cache: InMemoryCache): void => {
-  cache.writeQuery({
-    query: QUERY_PRICE,
-    data: {
-      prices: [
-        {
-          __typename: "Price",
-          id: moment().unix().toString(),
-          o: 0.0003966375,
-        },
-      ],
-    },
-  })
-}
+// export const cachePrice = (cache: InMemoryCache): void => {
+//   cache.writeQuery({
+//     query: QUERY_PRICE,
+//     data: {
+//       prices: [
+//         {
+//           __typename: "Price",
+//           id: moment().unix().toString(),
+//           o: 0.0003966375,
+//         },
+//       ],
+//     },
+//   })
+// }

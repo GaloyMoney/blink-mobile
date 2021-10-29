@@ -9,10 +9,9 @@ import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
 import { TextCurrency } from "../text-currency/text-currency"
 import { useIsFocused } from "@react-navigation/native"
-import { useUSDBalance, useHiddenBalanceToolTip, useHideBalance } from "../../hooks"
+import { useWalletBalance, useHiddenBalanceToolTip, useHideBalance } from "../../hooks"
 import { saveHiddenBalanceToolTip } from "../../graphql/client-only-query"
 import { useApolloClient } from "@apollo/client"
-import { balanceBtc } from "../../graphql/query"
 
 const styles = EStyleSheet.create({
   amount: {
@@ -90,7 +89,7 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
   style,
 }: BalanceHeaderProps) => {
   const client = useApolloClient()
-  const balanceUsd = useUSDBalance(client)
+  const { satBalance, usdBalance } = useWalletBalance(client)
   const hideBalance = useHideBalance()
   const hiddenBalanceToolTip = useHiddenBalanceToolTip()
   const isFocused = useIsFocused()
@@ -152,7 +151,7 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
   }
 
   const defaultBalanceHeader = () => {
-    const amountOtherCurrency = balanceBtc(client)
+    const amountOtherCurrency = satBalance
     const subHeader = showSecondaryCurrency && (
       <TextCurrency
         amount={amountOtherCurrency}
@@ -174,7 +173,7 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
                 }
               }}
             >
-              <TextCurrency amount={balanceUsd} currency={currency} style={styles.text} />
+              <TextCurrency amount={usdBalance} currency={currency} style={styles.text} />
             </TouchableHighlight>
           )}
         </View>

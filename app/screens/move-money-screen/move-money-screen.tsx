@@ -144,9 +144,7 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
     data,
     refetch,
   } = useQuery(MAIN_QUERY, {
-    variables: {
-      logged: hasToken,
-    },
+    variables: { hasToken },
     notifyOnNetworkStatusChange: true,
     errorPolicy: "all",
   })

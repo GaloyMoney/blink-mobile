@@ -83,9 +83,7 @@ const useFee = ({
   const client = useApolloClient()
   const { hasToken } = useToken()
   const { data: dataMain } = useQuery(MAIN_QUERY, {
-    variables: {
-      logged: hasToken,
-    },
+    variables: { hasToken },
   })
   const walletId = dataMain?.wallet?.[0]?.id ?? ""
 

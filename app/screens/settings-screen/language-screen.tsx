@@ -4,7 +4,7 @@ import { ListItem } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
-import { GET_LANGUAGE } from "../../graphql/query"
+import { MAIN_QUERY } from "../../graphql/query"
 import { palette } from "../../theme/palette"
 import type { ScreenType } from "../../types/jsx"
 import useToken from "../../utils/use-token"
@@ -23,8 +23,11 @@ export const language_mapping = {
 }
 
 export const LanguageScreen: ScreenType = () => {
-  const { tokenUid } = useToken()
-  const { data } = useQuery(GET_LANGUAGE, { fetchPolicy: "cache-only" })
+  const { tokenUid, hasToken } = useToken()
+  const { data } = useQuery(MAIN_QUERY, {
+    variables: { hasToken },
+    fetchPolicy: "cache-only",
+  })
   const language = data?.me?.language ?? ""
 
   const [updateLanguage] = useMutation(gql`

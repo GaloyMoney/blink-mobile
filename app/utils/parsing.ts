@@ -3,7 +3,7 @@ import moment from "moment"
 import url from "url"
 import { networks, address } from "bitcoinjs-lib"
 import { getDescription, getDestination, getUsername } from "./bolt11"
-import { getMyUsername, getPubKey } from "../graphql/query"
+import { MAIN_QUERY } from "../graphql/query"
 
 import type { INetwork } from "../types/network"
 import type { MockableApolloClient } from "../types/mockable"
@@ -61,9 +61,13 @@ export const validPayment = (
   network: INetwork,
   client: MockableApolloClient,
 ): IValidPaymentReponse => {
-  const myPubKey = getPubKey(client)
-  console.log("XXXXXXX", { myPubKey })
-  const username = getMyUsername(client)
+  const mainQueryData = client.readQuery({
+    query: MAIN_QUERY,
+    variables: { hasToken: true }, // TODO: redo without the MAIN_QUERY
+  })
+
+  const myPubKey = mainQueryData?.globals?.nodesIds?.[0] ?? ""
+  const username = mainQueryData?.me?.username ?? ""
 
   if (!input) {
     return { valid: false }

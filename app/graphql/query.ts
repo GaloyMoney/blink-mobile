@@ -1,88 +1,5 @@
-import { ApolloClient, FetchPolicy, gql } from "@apollo/client"
+import { ApolloClient, gql } from "@apollo/client"
 import { MockableApolloClient } from "../types/mockable"
-
-export const QUERY_PRICE = gql`
-  query prices($length: Int = 1) {
-    prices(length: $length) {
-      id
-      o
-    }
-  }
-`
-
-export const WALLET = gql`
-  query myWallets {
-    me {
-      id
-      username
-      defaultAccount {
-        wallets {
-          id
-          balance
-          currency: walletCurrency
-        }
-      }
-    }
-  }
-`
-
-export const QUERY_EARN_LIST = gql`
-  query earnList($logged: Boolean!) {
-    earnList {
-      id
-      value
-      completed @client(if: { not: $logged })
-    }
-  }
-`
-
-export const getWallet = (client: ApolloClient<unknown>): Wallet => {
-  const data = client.readQuery({
-    query: WALLET,
-  })
-
-  return data?.me?.defaultAccount?.wallets?.[0]
-}
-
-export const balanceBtc = (client: ApolloClient<unknown>): number => {
-  const wallet = getWallet(client)
-
-  return wallet?.balance ?? 0
-}
-
-export const queryWallet = async (
-  client: ApolloClient<unknown>,
-  fetchPolicy: FetchPolicy,
-): Promise<void> => {
-  await client.query({
-    query: WALLET,
-    fetchPolicy,
-  })
-}
-
-export const GLOBALS = gql`
-  query globals {
-    globals {
-      nodesIds
-    }
-  }
-`
-
-export const getPubKey = (client: MockableApolloClient): string => {
-  const { globals } = client.readQuery({
-    query: GLOBALS,
-  })
-
-  return globals?.nodesIds?.[0] ?? ""
-}
-
-export const getMyUsername = (client: MockableApolloClient): string => {
-  const data = client.readQuery({
-    query: WALLET,
-  })
-
-  return data?.me?.username ?? ""
-}
 
 export const USERNAME_EXIST = gql`
   query username_exist($username: String!) {
@@ -90,59 +7,66 @@ export const USERNAME_EXIST = gql`
   }
 `
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-export const walletIsActive = (client: ApolloClient<unknown>): boolean => {
-  // { me } may not exist if the wallet is not active
-  const result = client.readQuery({
-    query: gql`
-      query me {
-        me {
-          level
+const TRANSACTION_LIST_FRAGMENT = gql`
+  fragment TransactionList on TransactionConnection {
+    edges {
+      cursor
+      node {
+        __typename
+        id
+        settlementAmount
+        settlementFee
+        status
+        direction
+        settlementPrice {
+          base
+          offset
+        }
+        memo
+        createdAt
+        ... on LnTransaction {
+          paymentHash
+        }
+        ... on IntraLedgerTransaction {
+          otherPartyUsername
         }
       }
-    `,
-  })
-
-  return result?.me?.level ?? 0 > 0
-}
-
-export const GET_LANGUAGE = gql`
-  query language {
-    me {
-      id
-      language
     }
   }
 `
 
 export const MAIN_QUERY = gql`
-  query gql_main_query($logged: Boolean!) {
-    earnList {
-      id
-      value
-      completed @include(if: $logged)
+  query mainQuery($hasToken: Boolean!) {
+    globals {
+      nodesIds
     }
-
-    buildParameters {
+    quizQuestions {
       id
-      minBuildNumberAndroid
-      minBuildNumberIos
-      lastBuildNumberAndroid
-      lastBuildNumberIos
+      earnAmount
     }
-
-    getLastOnChainAddress @include(if: $logged) {
+    me @include(if: $hasToken) {
       id
-    }
-
-    me @include(if: $logged) {
-      id
-      level
-      username
-      phone
       language
+      quizQuestions {
+        question {
+          id
+          earnAmount
+        }
+        completed
+      }
+      defaultAccount {
+        wallets {
+          id
+          balance
+          walletCurrency
+          transactions(first: 3) {
+            ...TransactionList
+          }
+        }
+      }
     }
   }
+  ${TRANSACTION_LIST_FRAGMENT}
 `
 
 export const TRANSACTIONS_LIST = gql`
@@ -153,34 +77,13 @@ export const TRANSACTIONS_LIST = gql`
         wallets {
           id
           transactions(first: $first, after: $after) {
-            edges {
-              cursor
-              node {
-                __typename
-                id
-                settlementAmount
-                settlementFee
-                status
-                direction
-                settlementPrice {
-                  base
-                  offset
-                }
-                memo
-                createdAt
-                ... on LnTransaction {
-                  paymentHash
-                }
-                ... on IntraLedgerTransaction {
-                  otherPartyUsername
-                }
-              }
-            }
+            ...TransactionList
           }
         }
       }
     }
   }
+  ${TRANSACTION_LIST_FRAGMENT}
 `
 
 export const TRANSACTIONS_LIST_FOR_CONTACT = gql`
@@ -189,52 +92,58 @@ export const TRANSACTIONS_LIST_FOR_CONTACT = gql`
       id
       contactByUsername(username: $username) {
         transactions(first: $first, after: $after) {
-          edges {
-            cursor
-            node {
-              __typename
-              id
-              settlementAmount
-              settlementFee
-              status
-              direction
-              settlementPrice {
-                base
-                offset
-              }
-              memo
-              createdAt
-              ... on LnTransaction {
-                paymentHash
-              }
-              ... on IntraLedgerTransaction {
-                otherPartyUsername
-              }
-            }
-          }
+          ...TransactionList
         }
       }
     }
   }
+  ${TRANSACTION_LIST_FRAGMENT}
 `
 
 export const queryMain = async (
   client: ApolloClient<unknown>,
-  variables: { logged: boolean },
+  variables: { hasToken: boolean },
 ): Promise<void> => {
-  await client.query({
-    query: GLOBALS,
-    variables,
-    fetchPolicy: "network-only",
-  })
   await client.query({
     query: MAIN_QUERY,
     variables,
     fetchPolicy: "network-only",
   })
-  await client.query({
-    query: WALLET,
-    variables,
-    fetchPolicy: "network-only",
+}
+
+export const getBtcWallet = (client: ApolloClient<unknown>, { hasToken }): Wallet => {
+  const data = client.readQuery({
+    query: MAIN_QUERY,
+    variables: { hasToken },
   })
+
+  return data?.me?.defaultAccount?.wallets?.[0]
+}
+
+export const getQuizQuestions = (client: MockableApolloClient, { hasToken }) => {
+  const data = client.readQuery({
+    query: MAIN_QUERY,
+    variables: { hasToken },
+  })
+
+  const allQuestions: Record<string, number> | null = data?.quizQuestions
+    ? data.quizQuestions.reduce((acc, curr) => {
+        acc[curr.id] = curr.earnAmount
+        return acc
+      }, {})
+    : null
+
+  const myCompletedQuestions: Record<string, number> | null = data?.me?.quizQuestions
+    ? data?.me?.quizQuestions.reduce((acc, curr) => {
+        if (curr.completed) {
+          acc[curr.question.id] = curr.question.earnAmount
+        }
+        return acc
+      }, {})
+    : null
+
+  return {
+    allQuestions,
+    myCompletedQuestions,
+  }
 }

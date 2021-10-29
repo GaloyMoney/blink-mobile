@@ -14,7 +14,7 @@ import * as RNLocalize from "react-native-localize"
 import Icon from "react-native-vector-icons/Ionicons"
 import analytics from "@react-native-firebase/analytics"
 
-import { GET_LANGUAGE, QUERY_PRICE } from "../graphql/query"
+import { MAIN_QUERY } from "../graphql/query"
 import { translate } from "../i18n"
 import {
   AuthenticationScreen,
@@ -184,16 +184,19 @@ export const RootStack: NavigatorType = () => {
     })
   }
 
-  useQuery(QUERY_PRICE, {
-    notifyOnNetworkStatusChange: true,
-    pollInterval: 30000,
-  })
+  // useQuery(QUERY_PRICE, {
+  //   notifyOnNetworkStatusChange: true,
+  //   pollInterval: 30000,
+  // })
 
   const fallback = { languageTag: "es", isRTL: false }
   const { languageTag } =
     RNLocalize.findBestAvailableLanguage(Object.keys(i18n.translations)) || fallback
 
-  const { data } = useQuery(GET_LANGUAGE, { fetchPolicy: "cache-only" })
+  const { data } = useQuery(MAIN_QUERY, {
+    variables: { hasToken },
+    fetchPolicy: "cache-only",
+  })
   const language = data?.me?.language ?? ""
   i18n.locale = language || languageTag
 
