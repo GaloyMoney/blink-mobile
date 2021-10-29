@@ -152,8 +152,6 @@ export const RootStack: NavigatorType = () => {
   }, [_handleAppStateChange])
 
   const showNotification = (remoteMessage) => {
-    console.log({ remoteMessage })
-
     const soundName = undefined
     PushNotification.localNotification({
       /* Android Only Properties */

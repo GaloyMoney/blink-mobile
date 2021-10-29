@@ -123,7 +123,7 @@ export const ScanningQRCodeScreen: ScreenType = ({
                 } else if (error.message === "Feature size is zero!") {
                   Alert.alert(translate("ScanningQRCodeScreen.noQrCode"))
                 } else {
-                  console.log({ error })
+                  console.error(error)
                   Alert.alert(`${error}`)
                 }
               })

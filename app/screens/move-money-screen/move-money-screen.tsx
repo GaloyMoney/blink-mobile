@@ -320,14 +320,10 @@ export const MoveMoneyScreen: ScreenType = ({
       appName: "Bitcoin Beach Wallet",
       appStoreId: "",
       playStoreId: "com.galoyapp",
+    }).catch((err) => {
+      console.log({ err }, "error app link on link")
+      // handle error
     })
-      .then(() => {
-        console.log("clicked on link")
-      })
-      .catch((err) => {
-        console.log({ err }, "error app link on link")
-        // handle error
-      })
 
   return (
     <Screen style={styles.screenStyle}>

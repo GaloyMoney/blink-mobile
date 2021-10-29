@@ -62,6 +62,7 @@ export const validPayment = (
   client: MockableApolloClient,
 ): IValidPaymentReponse => {
   const myPubKey = getPubKey(client)
+  console.log("XXXXXXX", { myPubKey })
   const username = getMyUsername(client)
 
   if (!input) {

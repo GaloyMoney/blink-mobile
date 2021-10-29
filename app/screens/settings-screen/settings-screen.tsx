@@ -75,13 +75,8 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
   }
 
   const onGetCsvCallback = async (data) => {
-    console.log({ data }, "result getCsv")
     const csvEncoded = data.wallet[0].csv
     try {
-      console.log({ csvEncoded })
-      // const decoded = Buffer.from(csvEncoded, 'base64').toString('ascii')
-      // console.log({decoded})
-
       await Share.open({
         // title: "export-csv-title.csv",
         url: `data:text/csv;base64,${csvEncoded}`,
@@ -91,7 +86,7 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
         // message: 'export message'
       })
     } catch (err) {
-      console.error({ err }, "export export CSV")
+      console.error(err)
     }
   }
 

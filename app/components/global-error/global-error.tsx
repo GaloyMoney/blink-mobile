@@ -6,8 +6,6 @@ import { toastShow } from "../../utils/toast"
 export const GlobalErrorToast: ComponentType = () => {
   const status = useApolloNetworkStatus()
 
-  console.log({ status }, "status query")
-
   // "prices" is a polled query.
   // filter this to not have the error message being showed
   // every 5 seconds or so in case of network disruption

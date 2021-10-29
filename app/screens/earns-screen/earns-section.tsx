@@ -310,11 +310,6 @@ export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
         dotsLength={cards.length}
         activeDotIndex={currRewardIndex}
         dotStyle={styles.dot}
-        inactiveDotStyle={
-          {
-            // Define styles for inactive dots here
-          }
-        }
         inactiveDotOpacity={0.4}
         inactiveDotScale={0.6}
       />
