@@ -1,6 +1,6 @@
 import { InMemoryCache } from "@apollo/client"
 import { MAIN_QUERY } from "@app/graphql/query"
-// import moment from "moment"
+import { PRICE_CACHE } from "@app/graphql/client-only-query"
 
 export const cacheWallet = (cache: InMemoryCache, balance: number): void => {
   // TODO: figure out why no tests are failing with these commented out!!
@@ -66,14 +66,18 @@ export const cacheWallet = (cache: InMemoryCache, balance: number): void => {
 
   cache.writeQuery({
     query: MAIN_QUERY,
+    variables: { hasToken: true },
     data: {
       globals: {
         __typename: "Globals",
         nodesIds: [""],
       },
+      quizQuestions: [],
       me: {
         id: "BitcoinBeach",
         username: "BitcoinBeach",
+        language: "",
+        quizQuestions: [],
         defaultAccount: {
           wallets: [
             {
@@ -81,7 +85,7 @@ export const cacheWallet = (cache: InMemoryCache, balance: number): void => {
               id: "8e8ed189-4da5-4729-b457-8ef9c069fa6a",
               balance: balance,
               walletCurrency: "BTC",
-              // transactions: transactions,
+              transactions: [],
             },
           ],
         },
@@ -90,17 +94,11 @@ export const cacheWallet = (cache: InMemoryCache, balance: number): void => {
   })
 }
 
-// export const cachePrice = (cache: InMemoryCache): void => {
-//   cache.writeQuery({
-//     query: QUERY_PRICE,
-//     data: {
-//       prices: [
-//         {
-//           __typename: "Price",
-//           id: moment().unix().toString(),
-//           o: 0.0003966375,
-//         },
-//       ],
-//     },
-//   })
-// }
+export const cachePrice = (cache: InMemoryCache): void => {
+  cache.writeQuery({
+    query: PRICE_CACHE,
+    data: {
+      price: 0.03966375,
+    },
+  })
+}

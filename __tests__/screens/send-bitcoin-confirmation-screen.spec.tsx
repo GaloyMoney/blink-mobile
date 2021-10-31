@@ -14,8 +14,12 @@ import {
   SendBitcoinConfirmationScreen,
 } from "@app/screens/send-bitcoin-screen"
 import { waitForNextRender } from "../helpers/wait"
-import { cacheGlobals, cachePrice, cacheWallet } from "../helpers/cache"
+import { cachePrice, cacheWallet } from "../helpers/cache"
 import { IPaymentType } from "@app/utils/parsing"
+
+jest.mock("@app/utils/use-token", () => () => ({
+  hasToken: true,
+}))
 
 const payKeysendUsernameMocks = [
   {
@@ -111,9 +115,8 @@ const lightningRouteParams = {
 
 describe("SendBitcoinConfirmationScreen", () => {
   const cache = new InMemoryCache()
-  cacheGlobals(cache)
-  cachePrice(cache)
 
+  cachePrice(cache)
   afterEach(cleanup)
 
   it("render matches snapshot", () => {

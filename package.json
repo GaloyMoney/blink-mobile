@@ -103,6 +103,7 @@
     "react-native-version-number": "^0.3.6",
     "react-native-walkthrough-tooltip": "^1.2.0",
     "react-native-youtube": "^2.0.0",
+    "subscriptions-transport-ws": "^0.9.19",
     "url": "^0.11.0",
     "victory-native": "^35.0.1"
   },

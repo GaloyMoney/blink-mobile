@@ -10,22 +10,25 @@ import "@mocks/react-native-firebase"
 import "@mocks/react-navigation-native"
 import { SendBitcoinScreen } from "@app/screens/send-bitcoin-screen"
 import { waitForNextRender } from "../helpers/wait"
-import { cacheGlobals, cachePrice, cacheWallet } from "../helpers/cache"
+import { cachePrice, cacheWallet } from "../helpers/cache"
 
-jest.mock("../../app/utils/parsing", () => {
-  const actualParsing = jest.requireActual("../../app/utils/parsing")
+jest.mock("@app/utils/parsing", () => {
+  const actualParsing = jest.requireActual("@app/utils/parsing")
   return {
     ...actualParsing,
     lightningInvoiceHasExpired: () => false,
   }
 })
 
+jest.mock("@app/utils/use-token", () => () => ({
+  hasToken: true,
+}))
+
 const cache = new InMemoryCache()
 
 describe("SendBitcoinScreen", () => {
   beforeEach(() => {
     cacheWallet(cache, 117585)
-    cacheGlobals(cache)
     cachePrice(cache)
   })
   afterEach(cleanup)

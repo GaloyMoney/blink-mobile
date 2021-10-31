@@ -184,11 +184,6 @@ export const RootStack: NavigatorType = () => {
     })
   }
 
-  // useQuery(QUERY_PRICE, {
-  //   notifyOnNetworkStatusChange: true,
-  //   pollInterval: 30000,
-  // })
-
   const fallback = { languageTag: "es", isRTL: false }
   const { languageTag } =
     RNLocalize.findBestAvailableLanguage(Object.keys(i18n.translations)) || fallback

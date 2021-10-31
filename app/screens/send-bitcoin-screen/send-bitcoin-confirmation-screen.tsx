@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useCallback, useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
@@ -11,8 +11,7 @@ import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
 import type { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
 import { queryMain } from "../../graphql/query"
-import { textCurrencyFormatting } from "../../utils/currencyConversion"
-import { useBTCPrice, useCurrencyConverter, useWalletBalance } from "../../hooks"
+import { useWalletBalance, usePriceConversions } from "../../hooks"
 import { PaymentStatusIndicator } from "./payment-status-indicator"
 import { color } from "../../theme"
 import { StackNavigationProp } from "@react-navigation/stack"
@@ -83,19 +82,8 @@ export const SendBitcoinConfirmationScreen = ({
   route,
 }: SendBitcoinConfirmationScreenProps): JSX.Element => {
   const client = useApolloClient()
-  const { btcPrice, priceIsStale, timeSinceLastPriceUpdate } = useBTCPrice()
-  const currencyConverter = useCurrencyConverter()
+  const { convertCurrencyAmount, formatCurrencyAmount } = usePriceConversions()
   const { satBalance } = useWalletBalance(client)
-
-  const convertCurrency = useCallback(
-    (amount: number, from: CurrencyType, to: CurrencyType) => {
-      if (from === to) {
-        return amount
-      }
-      return currencyConverter[from][to](amount)
-    },
-    [currencyConverter],
-  )
 
   const {
     address,
@@ -113,11 +101,11 @@ export const SendBitcoinConfirmationScreen = ({
   const [errs, setErrs] = useState<{ message: string }[]>([])
   const [status, setStatus] = useState<StatusType>(Status.IDLE)
 
-  const paymentSatAmount = convertCurrency(
-    referenceAmount.value,
-    referenceAmount.currency,
-    "BTC",
-  )
+  const paymentSatAmount = convertCurrencyAmount({
+    amount: referenceAmount.value,
+    from: referenceAmount.currency,
+    to: "BTC",
+  })
 
   const fee = useFee({
     address,
@@ -126,7 +114,6 @@ export const SendBitcoinConfirmationScreen = ({
     paymentType,
     sameNode,
     paymentSatAmount,
-    btcPrice,
     primaryCurrency,
   })
 
@@ -153,7 +140,7 @@ export const SendBitcoinConfirmationScreen = ({
       setErrs(
         errors.map((error) => {
           // Todo: provide specific translated error messages in known cases
-          return { message: translate("erros.generic") + error.message }
+          return { message: translate("errors.generic") + error.message }
         }),
       )
     }
@@ -333,36 +320,12 @@ export const SendBitcoinConfirmationScreen = ({
   const errorMessage = useMemo(() => {
     if (totalAmount > balance) {
       return translate("SendBitcoinConfirmationScreen.totalExceed", {
-        balance: textCurrencyFormatting(balance, btcPrice, primaryCurrency),
+        balance: formatCurrencyAmount({ sats: balance, currency: primaryCurrency }),
       })
     }
 
-    if (priceIsStale) {
-      const { hours, minutes } = timeSinceLastPriceUpdate
-      if (hours > 0) {
-        if (hours === 1) {
-          return translate("SendBitcoinConfirmationScreen.stalePrice", {
-            timePeriod: `1 ${translate("common.hour")}`,
-          })
-        }
-        return translate("SendBitcoinConfirmationScreen.stalePrice", {
-          timePeriod: `${hours} ${translate("common.hours")}`,
-        })
-      }
-
-      return translate("SendBitcoinConfirmationScreen.stalePrice", {
-        timePeriod: `${minutes} ${translate("common.minutes")}`,
-      })
-    }
     return ""
-  }, [
-    balance,
-    btcPrice,
-    priceIsStale,
-    primaryCurrency,
-    timeSinceLastPriceUpdate,
-    totalAmount,
-  ])
+  }, [balance, formatCurrencyAmount, primaryCurrency, totalAmount])
 
   let destination = ""
   if (paymentType === "username") {
@@ -374,32 +337,40 @@ export const SendBitcoinConfirmationScreen = ({
   }
 
   const primaryAmount: MoneyAmount = {
-    value: convertCurrency(
-      referenceAmount.value,
-      referenceAmount.currency,
-      primaryCurrency,
-    ),
+    value: convertCurrencyAmount({
+      amount: referenceAmount.value,
+      from: referenceAmount.currency,
+      to: primaryCurrency,
+    }),
     currency: primaryCurrency,
   }
 
   const primaryTotalAmount: MoneyAmount = {
-    value: convertCurrency(totalAmount, "BTC", primaryCurrency),
+    value: convertCurrencyAmount({
+      amount: totalAmount,
+      from: "BTC",
+      to: primaryCurrency,
+    }),
     currency: primaryCurrency,
   }
 
   const secondaryCurrency: CurrencyType = primaryCurrency === "BTC" ? "USD" : "BTC"
 
   const secondaryAmount: MoneyAmount = {
-    value: convertCurrency(
-      referenceAmount.value,
-      referenceAmount.currency,
-      secondaryCurrency,
-    ),
+    value: convertCurrencyAmount({
+      amount: referenceAmount.value,
+      from: referenceAmount.currency,
+      to: secondaryCurrency,
+    }),
     currency: secondaryCurrency,
   }
 
   const secondaryTotalAmount: MoneyAmount = {
-    value: convertCurrency(totalAmount, "BTC", secondaryCurrency),
+    value: convertCurrencyAmount({
+      amount: totalAmount,
+      from: "BTC",
+      to: secondaryCurrency,
+    }),
     currency: secondaryCurrency,
   }
 

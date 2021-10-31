@@ -15,8 +15,8 @@ import { translate } from "../../i18n"
 import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
-import { currencyFormatting } from "../../utils/currencyConversion"
 import moment from "moment"
+import { formatUsdAmount } from "../../hooks"
 
 const styles = EStyleSheet.create({
   amount: {
@@ -123,7 +123,7 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
   const { base, offset } = settlementPrice
   const usdPerSat = base / 10 ** offset / 100
 
-  const feeEntry = `${settlementFee} sats ($${currencyFormatting.USD(
+  const feeEntry = `${settlementFee} sats ($${formatUsdAmount(
     settlementFee * usdPerSat,
   )})`
 

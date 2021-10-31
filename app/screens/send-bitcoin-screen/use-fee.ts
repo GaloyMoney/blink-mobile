@@ -1,9 +1,9 @@
 import { useState } from "react"
 import { gql, useApolloClient, useMutation, useQuery } from "@apollo/client"
 
-import { textCurrencyFormatting } from "../../utils/currencyConversion"
 import { MAIN_QUERY } from "../../graphql/query"
 import useToken from "../../utils/use-token"
+import { usePriceConversions } from "../../hooks/currency-hooks"
 
 const LIGHTNING_FEES = gql`
   mutation lnInvoiceFeeProbe($input: LnInvoiceFeeProbeInput!) {
@@ -60,7 +60,6 @@ type UseFeeInput = {
   paymentType: string
   sameNode: boolean
   paymentSatAmount: number
-  btcPrice: number
   primaryCurrency: CurrencyType
 }
 
@@ -77,10 +76,10 @@ const useFee = ({
   paymentType,
   sameNode,
   paymentSatAmount,
-  btcPrice,
   primaryCurrency,
 }: UseFeeInput): UseFeeReturn => {
   const client = useApolloClient()
+  const { formatCurrencyAmount } = usePriceConversions()
   const { hasToken } = useToken()
   const { data: dataMain } = useQuery(MAIN_QUERY, {
     variables: { hasToken },
@@ -111,7 +110,7 @@ const useFee = ({
 
     return {
       ...fee,
-      text: textCurrencyFormatting(fee.value ?? 0, btcPrice, primaryCurrency),
+      text: formatCurrencyAmount({ sats: fee.value ?? 0, currency: primaryCurrency }),
     }
   }
 

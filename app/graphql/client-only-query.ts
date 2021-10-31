@@ -32,6 +32,12 @@ export const nextPrefCurrency = (): void => {
   prefCurrencyVar(units[(currentIndex + 1) % units.length])
 }
 
+export const PRICE_CACHE = gql`
+  query priceCache {
+    price @client
+  }
+`
+
 export const LAST_CLIPBOARD_PAYMENT = gql`
   query LastClipboardPayment {
     lastClipboardPayment @client

@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react"
-import { useCurrencyConverter } from "./use-currency-conversion"
+import { usePriceConversions } from "./currency-hooks"
 
 type UseMoneyAmountFunction = (
   currency: CurrencyType,
@@ -11,7 +11,7 @@ type UseMoneyAmountFunction = (
 ]
 
 export const useMoneyAmount: UseMoneyAmountFunction = (currency) => {
-  const currencyConverter = useCurrencyConverter()
+  const { convertCurrencyAmount, usdPerSat } = usePriceConversions()
 
   const [moneyAmount, setMoneyAmount] = useState<MoneyAmount>({
     value: 0,
@@ -27,15 +27,18 @@ export const useMoneyAmount: UseMoneyAmountFunction = (currency) => {
         const postiveValue =
           moneyAmount.value >= 0 ? moneyAmount.value : -moneyAmount.value
         const refCurrency = moneyAmount.currency
-        const refCurrenciesConverter = currencyConverter[refCurrency]
 
         return {
-          value: refCurrenciesConverter[pMoneyAmount.currency](postiveValue),
+          value: convertCurrencyAmount({
+            amount: postiveValue,
+            from: refCurrency,
+            to: pMoneyAmount.currency,
+          }),
           currency: pMoneyAmount.currency,
         }
       })
     },
-    [currencyConverter],
+    [convertCurrencyAmount, usdPerSat],
   )
 
   const setAmountValue = useCallback((value: number) => {

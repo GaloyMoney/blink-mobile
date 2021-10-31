@@ -8,7 +8,10 @@ import {
   HttpLink,
   NormalizedCacheObject,
   useReactiveVar,
+  split,
 } from "@apollo/client"
+import { WebSocketLink } from "@apollo/client/link/ws"
+import { getMainDefinition } from "@apollo/client/utilities"
 import { setContext } from "@apollo/client/link/context"
 import { RetryLink } from "@apollo/client/link/retry"
 import AsyncStorage from "@react-native-async-storage/async-storage"
@@ -112,17 +115,35 @@ export const App = (): JSX.Element => {
         networkVar(currentNetwork)
       }
 
+      const { GRAPHQL_URI, GRAPHQL_WS_URI } = getGraphQLUri(currentNetwork)
+
       // legacy. when was using mst-gql. storage is deleted as we don't want
       // to keep this around.
       const LEGACY_ROOT_STATE_STORAGE_KEY = "rootAppGaloy"
       await AsyncStorage.multiRemove([LEGACY_ROOT_STATE_STORAGE_KEY])
 
-      const customFetch = async (_ /* uri not used */, options) => {
-        const uri = await getGraphQLUri(currentNetwork)
-        return fetch(uri, options)
-      }
+      const httpLink = new HttpLink({
+        uri: GRAPHQL_URI,
+      })
 
-      const httpLink = new HttpLink({ fetch: customFetch })
+      const wsLink = new WebSocketLink({
+        uri: GRAPHQL_WS_URI,
+        options: {
+          reconnect: true,
+        },
+      })
+
+      const splitLink = split(
+        ({ query }) => {
+          const definition = getMainDefinition(query)
+          return (
+            definition.kind === "OperationDefinition" &&
+            definition.operation === "subscription"
+          )
+        },
+        wsLink,
+        httpLink,
+      )
 
       const authLink = setContext((_, { headers }) => {
         if (token) {
@@ -167,7 +188,7 @@ export const App = (): JSX.Element => {
       const client = new ApolloClient({
         cache,
         link: linkNetworkStatusNotifier.concat(
-          retryLink.concat(authLink.concat(httpLink)),
+          retryLink.concat(authLink.concat(splitLink)),
         ),
         name: isIos ? "iOS" : "Android",
         version: `${VersionNumber.appVersion}-${VersionNumber.buildVersion}`,

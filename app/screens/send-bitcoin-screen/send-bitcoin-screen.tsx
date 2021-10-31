@@ -12,18 +12,17 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { InputPayment } from "../../components/input-payment"
 import { GaloyInput } from "../../components/galoy-input"
 import { Screen } from "../../components/screen"
-import { useMoneyAmount, useBTCPrice, useWalletBalance } from "../../hooks"
+import { useMoneyAmount, useWalletBalance } from "../../hooks"
 import { translate } from "../../i18n"
 import type { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import type { ScreenType } from "../../types/jsx"
-import { textCurrencyFormatting } from "../../utils/currencyConversion"
 import { IPaymentType, validPayment } from "../../utils/parsing"
 import useToken from "../../utils/use-token"
 import { UsernameValidation } from "../../utils/validation"
 import { TextCurrency } from "../../components/text-currency/text-currency"
-import { useCurrencies } from "../../hooks/use-currencies"
+import { useCurrencies, usePriceConversions } from "../../hooks/currency-hooks"
 import { toastShow } from "../../utils/toast"
 
 export const PRICE_CHECK_INTERVAL = 10000
@@ -45,14 +44,12 @@ export const SendBitcoinScreen: ScreenType = ({
 }: SendBitcoinScreenProps) => {
   const client = useApolloClient()
   const { tokenNetwork } = useToken()
-  const { btcPrice, updateStalePrice } = useBTCPrice()
+
+  const { formatCurrencyAmount } = usePriceConversions()
   const { satBalance } = useWalletBalance(client)
-
   const { primaryCurrency, secondaryCurrency, toggleCurrency } = useCurrencies()
-
   const [primaryAmount, convertPrimaryAmount, setPrimaryAmount, setPrimaryAmountValue] =
     useMoneyAmount(primaryCurrency)
-
   const [
     secondaryAmount,
     convertSecondaryAmount,
@@ -60,14 +57,18 @@ export const SendBitcoinScreen: ScreenType = ({
     setSecondaryAmountValue,
   ] = useMoneyAmount(secondaryCurrency)
 
-  const satAmount =
-    primaryCurrency === "BTC" ? primaryAmount.value : secondaryAmount.value
-
   const [invoiceError, setInvoiceError] = useState("")
-
   const [address, setAddress] = useState("")
   const [paymentType, setPaymentType] = useState<IPaymentType>(undefined)
   const [amountless, setAmountless] = useState(false)
+  const [destination, setDestinationInternal] = useState("")
+  const [invoice, setInvoice] = useState("")
+  const [memo, setMemo] = useState<string>("")
+  const [sameNode, setSameNode] = useState<boolean | null>(null)
+  const [interactive, setInteractive] = useState(false)
+
+  const satAmount =
+    primaryCurrency === "BTC" ? primaryAmount.value : secondaryAmount.value
 
   const referenceAmount: MoneyAmount = useMemo(() => {
     if ((paymentType === "onchain" || paymentType === "lightning") && !amountless) {
@@ -79,15 +80,6 @@ export const SendBitcoinScreen: ScreenType = ({
     return primaryAmount
   }, [amountless, paymentType, primaryAmount, satAmount])
 
-  const [destination, setDestinationInternal] = useState("")
-  const [invoice, setInvoice] = useState("")
-  const [memo, setMemo] = useState<string>("")
-  const [sameNode, setSameNode] = useState<boolean | null>(null)
-
-  const setDestination = (input) => setDestinationInternal(input.trim())
-
-  const [interactive, setInteractive] = useState(false)
-
   // TODO use a debouncer to avoid flickering https://github.com/helfer/apollo-link-debounce
 
   const [
@@ -95,14 +87,9 @@ export const SendBitcoinScreen: ScreenType = ({
     { loading: loadingUserDefaultWalletId, data: dataUserDefaultWalletId },
   ] = useLazyQuery(USER_WALLET_ID, { fetchPolicy: "network-only" })
 
-  useEffect(() => {
-    const interval = setInterval(() => updateStalePrice(), PRICE_CHECK_INTERVAL)
-    return () => clearInterval(interval)
-  }, [updateStalePrice])
-
   const usernameExists = Boolean(dataUserDefaultWalletId?.userDefaultWalletId)
 
-  const balance = satBalance
+  const setDestination = (input) => setDestinationInternal(input.trim())
 
   const reset = useCallback(() => {
     setInvoiceError("")
@@ -123,8 +110,8 @@ export const SendBitcoinScreen: ScreenType = ({
       setPrimaryAmount(tempAmount)
     }
   }, [
-    primaryAmount,
     primaryCurrency,
+    primaryAmount,
     secondaryAmount,
     setPrimaryAmount,
     setSecondaryAmount,
@@ -146,7 +133,6 @@ export const SendBitcoinScreen: ScreenType = ({
   }, [client, tokenNetwork, route.params])
 
   useEffect(() => {
-    // Update the secondary amount based on a new price from the API
     if ((paymentType !== "onchain" && paymentType !== "lightning") || amountless) {
       convertSecondaryAmount(primaryAmount)
     }
@@ -233,13 +219,13 @@ export const SendBitcoinScreen: ScreenType = ({
   const errorMessage = useMemo(() => {
     if (invoiceError) {
       return invoiceError
-    } else if (!!satAmount && balance && satAmount > balance) {
+    } else if (!!satAmount && satBalance && satAmount > satBalance) {
       return translate("SendBitcoinScreen.amountExceed", {
-        balance: textCurrencyFormatting(balance, btcPrice, primaryCurrency),
+        balance: formatCurrencyAmount({ sats: satBalance, currency: primaryCurrency }),
       })
     }
     return null
-  }, [balance, btcPrice, invoiceError, primaryCurrency, satAmount])
+  }, [formatCurrencyAmount, invoiceError, primaryCurrency, satAmount, satBalance])
 
   const pay = useCallback(() => {
     if (paymentType === "username" && !usernameExists) {
@@ -380,7 +366,7 @@ export const SendBitcoinScreenJSX: ScreenType = ({
         <View style={styles.section}>
           <InputPayment
             editable={paymentType !== ("lightning" || "onchain") || amountless}
-            forceKeyboard={navigation?.isFocused ?? false}
+            forceKeyboard={navigation?.isFocused() ?? false}
             toggleCurrency={toggleCurrency}
             onUpdateAmount={setPrimaryAmountValue}
             primaryAmount={primaryAmount}

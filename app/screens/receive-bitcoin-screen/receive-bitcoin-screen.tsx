@@ -33,7 +33,7 @@ import { hasFullPermissions, requestPermission } from "../../utils/notifications
 import { QRView } from "./qr-view"
 import { useMoneyAmount } from "../../hooks"
 import { TextCurrency } from "../../components/text-currency"
-import { useCurrencies } from "../../hooks/use-currencies"
+import { useCurrencies } from "../../hooks/currency-hooks"
 import useToken from "../../utils/use-token"
 
 // FIXME: crash when no connection
