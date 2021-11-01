@@ -75,20 +75,26 @@ export const ContactsDetailScreenJSX: ScreenType = ({
 }: ContactDetailScreenProps) => {
   const [contactName, setContactName] = React.useState(contact.alias)
 
-  const UPDATE_NAME = gql`
-    mutation setName($username: String, $name: String) {
-      updateContact {
-        setName(username: $username, name: $name)
-      }
+
+const UPDATE_NAME = gql`
+mutation userContactUpdateAlias($input: UserContactUpdateAliasInput!) {
+  userContactUpdateAlias(input: $input) {
+    errors {
+      message
     }
-  `
+  }
+}
+`
 
-  const [updateNameMutation] = useMutation(UPDATE_NAME)
 
-  const updateName = () => {
+  const [updateNameMutation] = useMutation(UPDATE_NAME, {
+    refetchQueries: ["contacts"],
+  })
+
+  const updateName = async () => {
     // TODO: need optimistic updates
     // FIXME this one doesn't work
-    updateNameMutation({ variables: { username: contact.username, name: contactName } })
+    await updateNameMutation({ variables: { input: {username: contact.username, alias: contactName} } })
   }
 
   return (

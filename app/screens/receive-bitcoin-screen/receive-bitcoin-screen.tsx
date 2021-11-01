@@ -67,12 +67,40 @@ const styles = EStyleSheet.create({
   },
 })
 
-const ADD_INVOICE = gql`
-  mutation addInvoice($value: Int, $memo: String) {
-    invoice {
-      addInvoice(value: $value, memo: $memo)
+// const ADD_INVOICE = gql`
+//   mutation addInvoice($value: Int, $memo: String) {
+//     invoice {
+//       addInvoice(value: $value, memo: $memo)
+//     }
+//   }
+// `
+
+const ADD_NO_AMOUNT_INVOICE = gql`
+mutation lnNoAmountInvoiceCreate($input: LnNoAmountInvoiceCreateInput!){
+  lnNoAmountInvoiceCreate(input: $input){
+    errors {
+      message
     }
+    invoice {
+      paymentRequest
+      paymentHash
+     }
   }
+}
+`
+
+const ADD_INVOICE = gql`
+mutation lnInvoiceCreate($input: LnInvoiceCreateInput!){
+  lnInvoiceCreate(input: $input){
+    errors {
+      message
+    }
+    invoice {
+      paymentRequest
+      paymentHash
+     }
+  }
+}
 `
 
 const UPDATE_PENDING_INVOICE = gql`
@@ -111,6 +139,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
   const satAmount =
     primaryCurrency === "BTC" ? primaryAmount.value : secondaryAmount.value
 
+  const [addNoAmountInvoice] = useMutation(ADD_NO_AMOUNT_INVOICE)
   const [addInvoice] = useMutation(ADD_INVOICE)
   const [updatePendingInvoice] = useMutation(UPDATE_PENDING_INVOICE)
 
@@ -136,11 +165,19 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
       debounce(async ({ satAmount, memo }) => {
         setLoading(true)
         try {
-          const { data } = await addInvoice({
-            variables: { value: satAmount, memo },
+          if(satAmount === 0){
+          const { data } = await addNoAmountInvoice({
+            variables: { input: { memo: memo } },
           })
-          const invoice = data.invoice.addInvoice
-          setInvoice(invoice)
+          console.log(data)
+        } else {
+          const {data} = await addInvoice({
+            variables: { input: { amount: satAmount, memo: memo } }
+          })
+          console.log(data)
+        }
+          // const invoice = data.invoice.addInvoice
+          // setInvoice(invoice)
         } catch (err) {
           console.error(err, "error with AddInvoice")
           setErr(`${err}`)
@@ -149,7 +186,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
           setLoading(false)
         }
       }, 750),
-    [addInvoice],
+    [addNoAmountInvoice],
   )
 
   useEffect(() => {
