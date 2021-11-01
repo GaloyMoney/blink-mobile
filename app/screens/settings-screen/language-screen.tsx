@@ -12,15 +12,14 @@ import useToken from "../../utils/use-token"
 const styles = EStyleSheet.create({
   screenStyle: {
     marginHorizontal: 48,
-    // marginVertical: 24,
   },
 })
 
-export const language_mapping = {
-  "": "Default (OS)",
-  "en": "English",
-  "es": "Español",
-}
+export const LANGUAGES = {
+  "DEFAULT": "Default (OS)",
+  "en-US": "English",
+  "es-SV": "Español",
+} as const
 
 export const LanguageScreen: ScreenType = () => {
   const { tokenUid, hasToken } = useToken()
@@ -28,46 +27,56 @@ export const LanguageScreen: ScreenType = () => {
     variables: { hasToken },
     fetchPolicy: "cache-only",
   })
-  const language = data?.me?.language ?? ""
 
-  const [updateLanguage] = useMutation(gql`
-    mutation updateLanguage($language: String!) {
-      updateUser {
-        updateLanguage(language: $language) {
-          id
-          language
+  const currentLanguage = data?.me?.language ?? "DEFAULT"
+
+  const [updateLanguage] = useMutation(
+    gql`
+      mutation updateLanguage($language: Language!) {
+        userUpdateLanguage(input: { language: $language }) {
+          errors {
+            message
+          }
+          user {
+            id
+            language
+          }
         }
       }
-    }
-  `)
+    `,
+    {
+      refetchQueries: ["mainQuery"],
+    },
+  )
 
-  const list = ["", "en", "es"]
+  const list = ["DEFAULT", "en-US", "es-SV"]
 
   return (
     <Screen preset="scroll" style={styles.screenStyle}>
-      {list.map((l, i) => (
+      {list.map((language) => (
         <ListItem
-          key={i}
+          key={language}
           bottomDivider
           onPress={() =>
             updateLanguage({
-              variables: { language: l },
+              variables: { language },
               optimisticResponse: {
                 __typename: "Mutation",
-                updateUser: {
-                  __typename: "UpdateUser",
-                  updateLanguage: {
-                    __typename: "User",
+                userUpdateLanguage: {
+                  __typename: "UserUpdateLanguagePayload",
+                  errors: [],
+                  user: {
+                    __typename: "UserDetails",
                     id: tokenUid,
-                    language: l,
+                    language,
                   },
                 },
               },
             })
           }
         >
-          <ListItem.Title>{language_mapping[l]}</ListItem.Title>
-          {language === l && (
+          <ListItem.Title>{LANGUAGES[language]}</ListItem.Title>
+          {currentLanguage === language && (
             <Icon name="ios-checkmark-circle" size={18} color={palette.green} />
           )}
         </ListItem>

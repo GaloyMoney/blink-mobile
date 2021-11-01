@@ -16,7 +16,6 @@ import type { ViewStyleProp } from "react-native/Libraries/StyleSheet/StyleSheet
 
 import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
-import { language_mapping } from "./language-screen"
 import { palette } from "../../theme/palette"
 import { LN_PAGE_DOMAIN, WHATSAPP_CONTACT_NUMBER } from "../../constants/support"
 import { translate } from "../../i18n"
@@ -29,6 +28,8 @@ import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import Clipboard from "@react-native-community/clipboard"
 import { toastShow } from "../../utils/toast"
 import useToken from "../../utils/use-token"
+import { MAIN_QUERY } from "../../graphql/query"
+import { LANGUAGES } from "./language-screen"
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "settings">
@@ -50,18 +51,10 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
   const client = useApolloClient()
   const { hasToken, removeToken } = useToken()
 
-  const { data } = useQuery(
-    gql`
-      query me_settings {
-        me {
-          username
-          phone
-          language
-        }
-      }
-    `,
-    { fetchPolicy: "cache-only" },
-  )
+  const { data } = useQuery(MAIN_QUERY, {
+    variables: { hasToken },
+    fetchPolicy: "cache-only",
+  })
 
   const securityAction = async () => {
     const isBiometricsEnabled = await KeyStoreWrapper.getIsBiometricsEnabled()
@@ -119,7 +112,7 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
       navigation={navigation}
       username={me.username}
       phone={me.phone}
-      language={language_mapping[me.language]}
+      language={LANGUAGES[me.language]}
       notifications={
         notificationsEnabled
           ? translate("SettingsScreen.activated")

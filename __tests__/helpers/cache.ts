@@ -77,6 +77,7 @@ export const cacheWallet = (cache: InMemoryCache, balance: number): void => {
         id: "BitcoinBeach",
         username: "BitcoinBeach",
         language: "",
+        phone: "",
         quizQuestions: [],
         defaultAccount: {
           wallets: [

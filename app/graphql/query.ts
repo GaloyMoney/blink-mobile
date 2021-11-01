@@ -47,6 +47,8 @@ export const MAIN_QUERY = gql`
     me @include(if: $hasToken) {
       id
       language
+      username
+      phone
       quizQuestions {
         question {
           id

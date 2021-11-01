@@ -184,16 +184,17 @@ export const RootStack: NavigatorType = () => {
     })
   }
 
-  const fallback = { languageTag: "es", isRTL: false }
+  const fallback = RNLocalize.getLocales()?.[0] ?? { languageTag: "es-SV", isRTL: false }
+
   const { languageTag } =
     RNLocalize.findBestAvailableLanguage(Object.keys(i18n.translations)) || fallback
 
   const { data } = useQuery(MAIN_QUERY, {
     variables: { hasToken },
-    fetchPolicy: "cache-only",
+    fetchPolicy: "cache-and-network",
   })
-  const language = data?.me?.language ?? ""
-  i18n.locale = language || languageTag
+
+  i18n.locale = data?.me?.language === "DEFAULT" ? languageTag : data?.me?.language
 
   // TODO: need to add isHeadless?
   // https://rnfirebase.io/messaging/usage
