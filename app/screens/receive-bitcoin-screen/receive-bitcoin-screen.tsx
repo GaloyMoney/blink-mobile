@@ -1,4 +1,4 @@
-import { gql, useApolloClient, useMutation } from "@apollo/client"
+import { gql, useApolloClient, useLazyQuery, useMutation, useQuery, useSubscription } from "@apollo/client"
 import messaging from "@react-native-firebase/messaging"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
@@ -35,8 +35,15 @@ import { useMoneyAmount } from "../../hooks"
 import { TextCurrency } from "../../components/text-currency"
 import { useCurrencies } from "../../hooks/currency-hooks"
 import useToken from "../../utils/use-token"
+import { MAIN_QUERY } from "../../graphql/query"
+import { Button, Text } from "react-native-elements"
 
 // FIXME: crash when no connection
+
+
+type OperationError = {
+  message: string
+}
 
 const styles = EStyleSheet.create({
   screen: {
@@ -46,8 +53,7 @@ const styles = EStyleSheet.create({
 
   section: {
     flex: 1,
-    paddingHorizontal: 50,
-    width: "100%",
+    paddingHorizontal: 50
   },
 
   subCurrencyText: {
@@ -65,15 +71,18 @@ const styles = EStyleSheet.create({
     fontSize: "18rem",
     textAlign: "center",
   },
-})
+  buttonContainer: { marginHorizontal: 52, paddingVertical: 18 },
 
-// const ADD_INVOICE = gql`
-//   mutation addInvoice($value: Int, $memo: String) {
-//     invoice {
-//       addInvoice(value: $value, memo: $memo)
-//     }
-//   }
-// `
+  buttonStyle: {
+    backgroundColor: palette.lightBlue,
+    borderRadius: 32,
+  },
+
+  buttonTitle: {
+    fontWeight: "bold",
+    color: "white"
+  },
+})
 
 const ADD_NO_AMOUNT_INVOICE = gql`
 mutation lnNoAmountInvoiceCreate($input: LnNoAmountInvoiceCreateInput!){
@@ -103,20 +112,26 @@ mutation lnInvoiceCreate($input: LnInvoiceCreateInput!){
 }
 `
 
-const UPDATE_PENDING_INVOICE = gql`
-  mutation updatePendingInvoice($hash: String!) {
-    invoice {
-      updatePendingInvoice(hash: $hash)
+const LN_INVOICE_PAYMENT_STATUS = gql`
+  subscription lnInvoicePaymentStatus($input: LnInvoicePaymentStatusInput!) {
+    mutationData: lnInvoicePaymentStatus(input: $input) {
+      errors {
+        message
+      }
+      status
     }
   }
 `
 
 const GET_ONCHAIN_ADDRESS = gql`
-  query getLastOnChainAddress {
-    getLastOnChainAddress {
-      id
+mutation onChainAddressCurrent($input: OnChainAddressCurrentInput!) {
+  onChainAddressCurrent(input: $input) {
+    errors{
+      message
     }
+    address
   }
+}
 `
 
 type Props = {
@@ -141,17 +156,38 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
 
   const [addNoAmountInvoice] = useMutation(ADD_NO_AMOUNT_INVOICE)
   const [addInvoice] = useMutation(ADD_INVOICE)
-  const [updatePendingInvoice] = useMutation(UPDATE_PENDING_INVOICE)
+  const [getOnchainAddress] = useMutation(GET_ONCHAIN_ADDRESS)
+  const [lastOnChainAddress, setLastOnChainAddress] = useState<string>()
+  const [btcAddressRequested, setBtcAddressRequested] = useState<Boolean>(false)
+  const {
+    loading: loadingMain,
+    error,
+    data,
+    refetch,
+  } = useQuery(MAIN_QUERY, {
+    variables: { hasToken },
+    notifyOnNetworkStatusChange: true,
+    errorPolicy: "all",
+  })
+  
+  const onBtcAddressRequestClick = (async () => {
+    try {
+      setLoading(true)
+      const defaultWalletId: string = data?.me?.defaultAccount?.wallets?.find(wallet => wallet?.__typename === "BTCWallet")?.id
+      const { data: { onChainAddressCurrent: { address } } } = await getOnchainAddress({
+        variables: { input: { walletId: defaultWalletId } }
+      })
+      setLastOnChainAddress(address)
+      setBtcAddressRequested(true)
+    } catch (err) {
+      console.log(err)
+      setLastOnChainAddress("issue with the QRcode")
+    }
+    finally {
+      setLoading(false)
+    }
+  })
 
-  let lastOnChainAddress: string
-  try {
-    ;({
-      getLastOnChainAddress: { id: lastOnChainAddress },
-    } = client.readQuery({ query: GET_ONCHAIN_ADDRESS }))
-  } catch (err) {
-    // do better error handling
-    lastOnChainAddress = "issue with the QRcode"
-  }
 
   const [memo, setMemo] = useState("")
   const [loading, setLoading] = useState(true)
@@ -159,25 +195,47 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
   const [err, setErr] = useState("")
   const [isSucceed, setIsSucceed] = useState(false)
   const [brightnessInitial, setBrightnessInitial] = useState(null)
-
+  console.log("invoice:")
+  console.log(invoice)
+  const { loading: loadingFetchInvoiceStatus, error: errorFetchInvoiceStatus, data: fetchInvoiceStatusData } = useSubscription<{
+    mutationData: {
+      errors: OperationError[]
+      status?: string
+    }
+  }>(LN_INVOICE_PAYMENT_STATUS, {
+    variables: {
+      input: {
+        invoice,
+      },
+    },
+  })
   const updateInvoice = useMemo(
     () =>
       debounce(async ({ satAmount, memo }) => {
         setLoading(true)
         try {
-          if(satAmount === 0){
-          const { data } = await addNoAmountInvoice({
-            variables: { input: { memo: memo } },
-          })
-          console.log(data)
-        } else {
-          const {data} = await addInvoice({
-            variables: { input: { amount: satAmount, memo: memo } }
-          })
-          console.log(data)
-        }
-          // const invoice = data.invoice.addInvoice
-          // setInvoice(invoice)
+          if (satAmount === 0) {
+            const { data: { lnNoAmountInvoiceCreate: { invoice, errors } } } = await addNoAmountInvoice({
+              variables: { input: { memo: memo } },
+            })
+            if (errors && errors.length !== 0) {
+              console.error(errors, "error with lnNoAmountInvoiceCreate")
+              setErr(translate("ReceiveBitcoinScreen.error"))
+              return
+            }
+            setInvoice(invoice.paymentRequest)
+          } else {
+            const { data: { lnInvoiceCreate: { invoice, errors } } } = await addInvoice({
+              variables: { input: { amount: satAmount, memo: memo } }
+            })
+            if (errors && errors.length !== 0) {
+              console.error(errors, "error with lnInvoiceCreate")
+              setErr(translate("ReceiveBitcoinScreen.error"))
+              return
+            }
+            setInvoice(invoice.paymentRequest)
+          }
+
         } catch (err) {
           console.error(err, "error with AddInvoice")
           setErr(`${err}`)
@@ -186,8 +244,13 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
           setLoading(false)
         }
       }, 750),
-    [addNoAmountInvoice],
+    [satAmount],
   )
+
+  useEffect(() => {
+    console.log("status data")
+    console.log(fetchInvoiceStatusData)
+  }, [fetchInvoiceStatusData])
 
   useEffect(() => {
     if (primaryCurrency !== primaryAmount.currency) {
@@ -313,45 +376,9 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
     // ])
   }, [])
 
-  // temporary fix until we have a better management of notifications:
-  // when coming back to active state. look if the invoice has been paid
-  useEffect(() => {
-    const _handleAppStateChange = async (nextAppState: AppStateStatus) => {
-      if (nextAppState === "active") {
-        try {
-          const hash = getHashFromInvoice(invoice)
 
-          const { data } = await updatePendingInvoice({ variables: { hash } })
-          const success = await data.invoice.updatePendingInvoice
-          if (success) {
-            paymentSuccess()
-          }
-        } catch (err) {
-          console.warn({ err }, "can't fetch invoice status")
-        }
-      }
-    }
 
-    AppState.addEventListener("change", _handleAppStateChange)
 
-    return () => {
-      AppState.removeEventListener("change", _handleAppStateChange)
-    }
-  }, [invoice, updatePendingInvoice, paymentSuccess])
-
-  useEffect(() => {
-    const unsubscribe = messaging().onMessage(async (remoteMessage) => {
-      const hash = getHashFromInvoice(invoice)
-      if (
-        remoteMessage.data.type === "paid-invoice" &&
-        remoteMessage.data.hash === hash
-      ) {
-        paymentSuccess()
-      }
-    })
-
-    return unsubscribe
-  }, [invoice, paymentSuccess])
 
   const inputMemoRef = React.useRef<TextInput>()
 
@@ -397,7 +424,8 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
           />
         </View>
         {/* FIXME: fixed height */}
-        <Swiper height={450} loop={false}>
+
+        <Swiper height={450} loop={false} index={btcAddressRequested ? 1 : 0}>
           <QRView
             data={invoice}
             type="lightning"
@@ -408,7 +436,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
             navigation={navigation}
             err={err}
           />
-          <QRView
+          {btcAddressRequested && lastOnChainAddress && <QRView
             data={lastOnChainAddress}
             type="bitcoin"
             amount={satAmount}
@@ -417,7 +445,14 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
             isSucceed={isSucceed}
             navigation={navigation}
             err={err}
-          />
+          />}
+          {!btcAddressRequested && !lastOnChainAddress && <Text style={{ alignSelf: "center", marginHorizontal: 52 }}><Button
+            buttonStyle={styles.buttonStyle}
+            containerStyle={styles.buttonContainer}
+            title={"Generate BTC Address"}
+            onPress={onBtcAddressRequestClick}
+            titleStyle={styles.buttonTitle}
+          /></Text>}
         </Swiper>
       </ScrollView>
     </Screen>
