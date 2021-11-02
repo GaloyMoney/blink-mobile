@@ -8,6 +8,7 @@ import { ActivityIndicator, ScrollView, Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
+import debounce from "lodash.debounce"
 
 import { InputPayment } from "../../components/input-payment"
 import { GaloyInput } from "../../components/galoy-input"
@@ -62,6 +63,9 @@ export const SendBitcoinScreen: ScreenType = ({
   const [paymentType, setPaymentType] = useState<IPaymentType>(undefined)
   const [amountless, setAmountless] = useState(false)
   const [destination, setDestinationInternal] = useState("")
+  const [destinationStatus, setDestinationStatus] = useState<
+    "VALID" | "INVAILD" | "NOT_CHECKED"
+  >("NOT_CHECKED")
   const [invoice, setInvoice] = useState("")
   const [memo, setMemo] = useState<string>("")
   const [sameNode, setSameNode] = useState<boolean | null>(null)
@@ -80,14 +84,20 @@ export const SendBitcoinScreen: ScreenType = ({
     return primaryAmount
   }, [amountless, paymentType, primaryAmount, satAmount])
 
-  // TODO use a debouncer to avoid flickering https://github.com/helfer/apollo-link-debounce
-
   const [
     userDefaultWalletIdQuery,
     { loading: loadingUserDefaultWalletId, data: dataUserDefaultWalletId },
-  ] = useLazyQuery(USER_WALLET_ID, { fetchPolicy: "network-only" })
-
-  const usernameExists = Boolean(dataUserDefaultWalletId?.userDefaultWalletId)
+  ] = useLazyQuery(USER_WALLET_ID, {
+    fetchPolicy: "network-only",
+    onCompleted: (dataUserDefaultWalletId) => {
+      if (dataUserDefaultWalletId?.userDefaultWalletId) {
+        setDestinationStatus("VALID")
+      }
+    },
+    onError: () => {
+      setDestinationStatus("INVAILD")
+    },
+  })
 
   const setDestination = (input) => setDestinationInternal(input.trim())
 
@@ -163,56 +173,61 @@ export const SendBitcoinScreen: ScreenType = ({
     setPrimaryAmountValue,
   ])
 
+  const userDefaultWalletIdQueryDebounced = React.useMemo(
+    () =>
+      debounce(async () => {
+        userDefaultWalletIdQuery({ variables: { username: destination } })
+      }, 1000),
+    [destination, userDefaultWalletIdQuery],
+  )
+
   useEffect(() => {
-    const fn = async () => {
-      const {
-        valid,
-        errorMessage,
-        invoice,
-        amount: amountInvoice,
-        amountless,
-        memo: memoInvoice,
-        paymentType,
-        address,
-        sameNode,
-      } = validPayment(destination, tokenNetwork, client)
+    const {
+      valid,
+      errorMessage,
+      invoice,
+      amount: amountInvoice,
+      amountless,
+      memo: memoInvoice,
+      paymentType,
+      address,
+      sameNode,
+    } = validPayment(destination, tokenNetwork, client)
 
-      if (valid) {
-        setAddress(address)
-        setPaymentType(paymentType)
-        setInvoice(invoice)
-        setAmountless(amountless)
+    if (valid) {
+      setAddress(address)
+      setPaymentType(paymentType)
+      setInvoice(invoice)
+      setAmountless(amountless)
 
-        if (!amountless) {
-          const moneyAmount: MoneyAmount = { value: amountInvoice, currency: "BTC" }
-          if (primaryCurrency === "BTC") {
-            setPrimaryAmountValue(amountInvoice)
-          } else {
-            convertPrimaryAmount(moneyAmount)
-            setSecondaryAmountValue(amountInvoice)
-          }
-        }
-
-        if (!memo) {
-          setMemo(memoInvoice.toString())
-        }
-
-        setInteractive(false)
-        setSameNode(sameNode)
-      } else if (errorMessage) {
-        setPaymentType(paymentType)
-        setInvoiceError(errorMessage)
-        setInvoice(destination)
-      } else {
-        setPaymentType("username")
-
-        if (UsernameValidation.isValid(destination)) {
-          userDefaultWalletIdQuery({ variables: { username: destination } })
+      if (!amountless) {
+        const moneyAmount: MoneyAmount = { value: amountInvoice, currency: "BTC" }
+        if (primaryCurrency === "BTC") {
+          setPrimaryAmountValue(amountInvoice)
+        } else {
+          convertPrimaryAmount(moneyAmount)
+          setSecondaryAmountValue(amountInvoice)
         }
       }
-    }
 
-    fn()
+      if (!memo) {
+        setMemo(memoInvoice.toString())
+      }
+
+      setInteractive(false)
+      setSameNode(sameNode)
+    } else if (errorMessage) {
+      setPaymentType(paymentType)
+      setInvoiceError(errorMessage)
+      setInvoice(destination)
+    } else {
+      setPaymentType("username")
+
+      if (UsernameValidation.isValid(destination)) {
+        userDefaultWalletIdQueryDebounced()
+      }
+    }
+    return () => userDefaultWalletIdQueryDebounced.cancel()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [destination])
 
@@ -227,8 +242,12 @@ export const SendBitcoinScreen: ScreenType = ({
     return null
   }, [formatCurrencyAmount, invoiceError, primaryCurrency, satAmount, satBalance])
 
+  useEffect(() => {
+    setDestinationStatus("NOT_CHECKED")
+  }, [destination])
+
   const pay = useCallback(() => {
-    if (paymentType === "username" && !usernameExists) {
+    if (paymentType === "username" && destinationStatus !== "VALID") {
       userDefaultWalletIdQuery({ variables: { username: destination } })
       toastShow(translate("SendBitcoinScreen.usernameNotFound"))
       return
@@ -249,7 +268,7 @@ export const SendBitcoinScreen: ScreenType = ({
     }
   }, [
     paymentType,
-    usernameExists,
+    destinationStatus,
     userDefaultWalletIdQuery,
     destination,
     navigation,
@@ -279,7 +298,7 @@ export const SendBitcoinScreen: ScreenType = ({
       setMemo={setMemo}
       setDestination={setDestination}
       destination={destination}
-      usernameExists={usernameExists}
+      destinationStatus={destinationStatus}
       loadingUserNameExist={loadingUserDefaultWalletId}
       interactive={interactive}
       errorMessage={errorMessage}
@@ -304,7 +323,7 @@ type SendBitcoinScreenJSXProps = {
   setMemo: (memo: string) => void
   setDestination: (destination: string) => void
   destination: string
-  usernameExists: boolean
+  destinationStatus: string
   loadingUserNameExist: boolean
   interactive: boolean
   errorMessage: string
@@ -326,7 +345,7 @@ export const SendBitcoinScreenJSX: ScreenType = ({
   setMemo,
   setDestination,
   destination,
-  usernameExists,
+  destinationStatus,
   loadingUserNameExist,
   interactive,
   errorMessage,
@@ -334,12 +353,23 @@ export const SendBitcoinScreenJSX: ScreenType = ({
 }: SendBitcoinScreenJSXProps) => {
   const destinationInputRightIcon = () => {
     if (UsernameValidation.hasValidLength(destination) && paymentType === "username") {
-      if (loadingUserNameExist) {
+      if (
+        loadingUserNameExist ||
+        (UsernameValidation.isValid(destination) && destinationStatus === "NOT_CHECKED") // The debounce delay
+      ) {
         return <ActivityIndicator size="small" />
-      } else if (UsernameValidation.isValid(destination) && usernameExists) {
+      } else if (
+        UsernameValidation.isValid(destination) &&
+        destinationStatus === "VALID"
+      ) {
         return <Text>✅</Text>
-      } else {
+      } else if (
+        !UsernameValidation.isValid(destination) ||
+        destinationStatus === "INVAILD"
+      ) {
         return <Text>⚠️</Text>
+      } else {
+        return <Text></Text>
       }
     } else if (paymentType === "lightning" || paymentType === "onchain") {
       return <Icon name="ios-close-circle-outline" onPress={reset} size={30} />
