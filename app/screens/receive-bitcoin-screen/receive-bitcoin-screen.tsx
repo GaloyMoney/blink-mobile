@@ -1,12 +1,9 @@
-import { gql, useApolloClient, useLazyQuery, useMutation, useQuery, useSubscription } from "@apollo/client"
-import messaging from "@react-native-firebase/messaging"
+import { gql, useApolloClient, useMutation, useQuery, useSubscription } from "@apollo/client"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { useCallback, useMemo, useEffect, useState } from "react"
 import {
   Alert,
-  AppState,
-  AppStateStatus,
   Keyboard,
   Platform,
   ScrollView,
@@ -14,7 +11,6 @@ import {
   View,
 } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
-import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import ScreenBrightness from "react-native-screen-brightness"
 import Swiper from "react-native-swiper"
 import Icon from "react-native-vector-icons/Ionicons"
@@ -27,13 +23,13 @@ import { translate } from "../../i18n"
 import { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import { ScreenType } from "../../types/jsx"
-import { getHashFromInvoice } from "../../utils/bolt11"
 import { isIos } from "../../utils/helper"
 import { hasFullPermissions, requestPermission } from "../../utils/notifications"
 import { QRView } from "./qr-view"
 import { useMoneyAmount } from "../../hooks"
 import { TextCurrency } from "../../components/text-currency"
 import { useCurrencies } from "../../hooks/currency-hooks"
+import { usePrevious } from "../../hooks/use-previous"
 import useToken from "../../utils/use-token"
 import { MAIN_QUERY } from "../../graphql/query"
 import { Button, Text } from "react-native-elements"
@@ -46,11 +42,21 @@ type OperationError = {
 }
 
 const styles = EStyleSheet.create({
+  buttonContainer: { marginHorizontal: 52, paddingVertical: 200 },
+
+  buttonStyle: {
+    backgroundColor: palette.lightBlue,
+    borderRadius: 32,
+  },
+
+  buttonTitle: {
+    fontWeight: "bold"
+  },
+
   screen: {
     // FIXME: doesn't work for some reason
     // justifyContent: "space-around"
   },
-
   section: {
     flex: 1,
     paddingHorizontal: 50
@@ -65,22 +71,11 @@ const styles = EStyleSheet.create({
     textAlign: "center",
     width: "90%",
   },
-
+  textButtonWrapper: { alignSelf: "center", marginHorizontal: 52 },
   textStyle: {
     color: palette.darkGrey,
     fontSize: "18rem",
     textAlign: "center",
-  },
-  buttonContainer: { marginHorizontal: 52, paddingVertical: 18 },
-
-  buttonStyle: {
-    backgroundColor: palette.lightBlue,
-    borderRadius: 32,
-  },
-
-  buttonTitle: {
-    fontWeight: "bold",
-    color: "white"
   },
 })
 
@@ -147,6 +142,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [primaryAmount, _, setPrimaryAmount, setPrimaryAmountValue] =
     useMoneyAmount(primaryCurrency)
+  const prevPrimaryAmount: MoneyAmount = usePrevious(primaryAmount)
 
   const [secondaryAmount, convertSecondaryAmount, setSecondaryAmount] =
     useMoneyAmount(secondaryCurrency)
@@ -158,18 +154,15 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
   const [addInvoice] = useMutation(ADD_INVOICE)
   const [getOnchainAddress] = useMutation(GET_ONCHAIN_ADDRESS)
   const [lastOnChainAddress, setLastOnChainAddress] = useState<string>()
-  const [btcAddressRequested, setBtcAddressRequested] = useState<Boolean>(false)
+  const [btcAddressRequested, setBtcAddressRequested] = useState<boolean>(false)
   const {
-    loading: loadingMain,
-    error,
     data,
-    refetch,
   } = useQuery(MAIN_QUERY, {
     variables: { hasToken },
     notifyOnNetworkStatusChange: true,
     errorPolicy: "all",
   })
-  
+
   const onBtcAddressRequestClick = (async () => {
     try {
       setLoading(true)
@@ -195,17 +188,15 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
   const [err, setErr] = useState("")
   const [isSucceed, setIsSucceed] = useState(false)
   const [brightnessInitial, setBrightnessInitial] = useState(null)
-  console.log("invoice:")
-  console.log(invoice)
-  const { loading: loadingFetchInvoiceStatus, error: errorFetchInvoiceStatus, data: fetchInvoiceStatusData } = useSubscription<{
-    mutationData: {
-      errors: OperationError[]
-      status?: string
-    }
+  const { data: invoiceStatusSubscriptionData } = useSubscription<{
+      mutationData: {
+        errors: OperationError[]
+        status?: string
+      }
   }>(LN_INVOICE_PAYMENT_STATUS, {
     variables: {
       input: {
-        invoice,
+        paymentRequest: invoice,
       },
     },
   })
@@ -248,9 +239,11 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
   )
 
   useEffect(() => {
-    console.log("status data")
-    console.log(fetchInvoiceStatusData)
-  }, [fetchInvoiceStatusData])
+    const status = invoiceStatusSubscriptionData?.mutationData?.status
+    if (status === "PAID") {
+      setIsSucceed(true)
+    }
+  }, [invoiceStatusSubscriptionData?.mutationData?.status])
 
   useEffect(() => {
     if (primaryCurrency !== primaryAmount.currency) {
@@ -350,35 +343,13 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
   }, [client, hasToken])
 
   useEffect(() => {
-    // Update secondary amount when price updates
+    if(primaryAmount.currency === "USD" && primaryAmount?.value === prevPrimaryAmount?.value){
+      // USD/BTC price has changed so don't update
+      //TODO come up with a better way of updating the lightning invoice when price changes.
+      return
+    }
     convertSecondaryAmount(primaryAmount)
   }, [primaryAmount, convertSecondaryAmount])
-
-  const paymentSuccess = useCallback(() => {
-    // success
-
-    const options = {
-      enableVibrateFallback: true,
-      ignoreAndroidSystemSettings: false,
-    }
-
-    ReactNativeHapticFeedback.trigger("notificationSuccess", options)
-
-    setIsSucceed(true)
-
-    // Alert.alert("success", translate("ReceiveBitcoinScreen.invoicePaid"), [
-    //   {
-    //     text: translate("common.ok"),
-    //     onPress: () => {
-    //       navigation.goBack(false)
-    //     },
-    //   },
-    // ])
-  }, [])
-
-
-
-
 
   const inputMemoRef = React.useRef<TextInput>()
 
@@ -425,7 +396,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
         </View>
         {/* FIXME: fixed height */}
 
-        <Swiper height={450} loop={false} index={btcAddressRequested ? 1 : 0}>
+        <Swiper height={450} loop={false} index={btcAddressRequested ? 1 : 0} showsButtons={true}>
           <QRView
             data={invoice}
             type="lightning"
@@ -446,7 +417,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
             navigation={navigation}
             err={err}
           />}
-          {!btcAddressRequested && !lastOnChainAddress && <Text style={{ alignSelf: "center", marginHorizontal: 52 }}><Button
+          {!btcAddressRequested && !lastOnChainAddress && <Text style={styles.textButtonWrapper}><Button
             buttonStyle={styles.buttonStyle}
             containerStyle={styles.buttonContainer}
             title={"Generate BTC Address"}
