@@ -1,9 +1,9 @@
 import { ApolloClient, gql } from "@apollo/client"
 import { MockableApolloClient } from "../types/mockable"
 
-export const USERNAME_EXIST = gql`
-  query username_exist($username: String!) {
-    usernameExists(username: $username)
+export const USERNAME_AVAILABLE = gql`
+  query usernameAvailable($username: Username!) {
+    usernameAvailable(username: $username)
   }
 `
 

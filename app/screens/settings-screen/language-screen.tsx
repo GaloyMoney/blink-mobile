@@ -66,7 +66,7 @@ export const LanguageScreen: ScreenType = () => {
                   __typename: "UserUpdateLanguagePayload",
                   errors: [],
                   user: {
-                    __typename: "UserDetails",
+                    __typename: "UserLanguageDetails",
                     id: tokenUid,
                     language,
                   },
