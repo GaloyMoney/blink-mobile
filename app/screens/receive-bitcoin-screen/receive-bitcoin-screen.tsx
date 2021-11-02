@@ -234,7 +234,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
         } finally {
           setLoading(false)
         }
-      }, 750),
+      }, 750, {trailing: true}),
     [satAmount],
   )
 
@@ -261,6 +261,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
 
   useEffect(() => {
     updateInvoice({ satAmount, memo })
+    return () => updateInvoice.cancel()
   }, [satAmount, memo, updateInvoice])
 
   useEffect(() => {
