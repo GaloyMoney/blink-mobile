@@ -179,8 +179,9 @@ export const EarnMapDataInjected: ScreenType = ({ navigation }: EarnMapDataProps
     }
   }
 
-  const earnedSat =
-    Object.values(quizQuestions.myCompletedQuestions).reduce((a, b) => a + b) ?? 0
+  const earnedSat = quizQuestions.myCompletedQuestions
+    ? Object.values(quizQuestions.myCompletedQuestions).reduce((a, b) => a + b, 0)
+    : 0
 
   return (
     <EarnMapScreen

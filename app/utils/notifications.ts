@@ -26,7 +26,7 @@ export const addDeviceToken = async (client: ApolloClient<unknown>): Promise<voi
     const token = await messaging().getToken()
 
     const ADD_DEVICE_TOKEN = gql`
-      mutation deviceNotificationTokenCreate($deviceToken: String) {
+      mutation deviceNotificationTokenCreate($deviceToken: String!) {
         deviceNotificationTokenCreate(input: { deviceToken: $deviceToken }) {
           errors {
             message
