@@ -5,7 +5,6 @@ import messaging from "@react-native-firebase/messaging"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { CardStyleInterpolators, createStackNavigator } from "@react-navigation/stack"
 import i18n from "i18n-js"
-// eslint-disable-next-line import/no-unassigned-import
 import "node-libs-react-native/globals" // needed for Buffer?
 import * as React from "react"
 import { useCallback, useEffect } from "react"
@@ -15,7 +14,7 @@ import * as RNLocalize from "react-native-localize"
 import Icon from "react-native-vector-icons/Ionicons"
 import analytics from "@react-native-firebase/analytics"
 
-import { GET_LANGUAGE, QUERY_PRICE } from "../graphql/query"
+import { MAIN_QUERY } from "../graphql/query"
 import { translate } from "../i18n"
 import {
   AuthenticationScreen,
@@ -129,18 +128,18 @@ const RootNavigator = createStackNavigator<RootStackParamList>()
 export const RootStack: NavigatorType = () => {
   const appState = React.useRef(AppState.currentState)
   const client = useApolloClient()
-  const { token, tokenNetwork } = useToken()
+  const { token, hasToken, tokenNetwork } = useToken()
 
   const _handleAppStateChange = useCallback(
     async (nextAppState) => {
       if (appState.current.match(/background/) && nextAppState === "active") {
         console.log("App has come to the foreground!")
-        showModalClipboardIfValidPayment({ client, network: tokenNetwork })
+        hasToken && showModalClipboardIfValidPayment({ client, network: tokenNetwork })
       }
 
       appState.current = nextAppState
     },
-    [client, tokenNetwork],
+    [client, hasToken, tokenNetwork],
   )
 
   useEffect(() => {
@@ -152,8 +151,6 @@ export const RootStack: NavigatorType = () => {
   }, [_handleAppStateChange])
 
   const showNotification = (remoteMessage) => {
-    console.log({ remoteMessage })
-
     const soundName = undefined
     PushNotification.localNotification({
       /* Android Only Properties */
@@ -187,18 +184,17 @@ export const RootStack: NavigatorType = () => {
     })
   }
 
-  useQuery(QUERY_PRICE, {
-    notifyOnNetworkStatusChange: true,
-    pollInterval: 30000,
-  })
+  const fallback = RNLocalize.getLocales()?.[0] ?? { languageTag: "es-SV", isRTL: false }
 
-  const fallback = { languageTag: "es", isRTL: false }
   const { languageTag } =
     RNLocalize.findBestAvailableLanguage(Object.keys(i18n.translations)) || fallback
 
-  const { data } = useQuery(GET_LANGUAGE, { fetchPolicy: "cache-only" })
-  const language = data?.me?.language ?? ""
-  i18n.locale = language || languageTag
+  const { data } = useQuery(MAIN_QUERY, {
+    variables: { hasToken },
+    fetchPolicy: "cache-and-network",
+  })
+
+  i18n.locale = data?.me?.language === "DEFAULT" ? languageTag : data?.me?.language
 
   // TODO: need to add isHeadless?
   // https://rnfirebase.io/messaging/usage
@@ -255,8 +251,10 @@ export const RootStack: NavigatorType = () => {
       })
   }, [])
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  useEffect(() => messaging().onTokenRefresh((token) => addDeviceToken(client)), [client])
+  useEffect(
+    () => messaging().onTokenRefresh((token) => token && addDeviceToken(client)),
+    [client],
+  )
 
   return (
     <RootNavigator.Navigator

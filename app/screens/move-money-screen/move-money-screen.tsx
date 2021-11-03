@@ -1,4 +1,4 @@
-import { ApolloError, useApolloClient, useQuery } from "@apollo/client"
+import { ApolloError, useQuery } from "@apollo/client"
 import messaging from "@react-native-firebase/messaging"
 import * as React from "react"
 import { useEffect, useState } from "react"
@@ -23,7 +23,7 @@ import { IconTransaction } from "../../components/icon-transactions"
 import { LargeButton } from "../../components/large-button"
 import { Screen } from "../../components/screen"
 import { TransactionItem } from "../../components/transaction-item"
-import { MAIN_QUERY, TRANSACTIONS_LIST, walletIsActive } from "../../graphql/query"
+import { MAIN_QUERY, TRANSACTIONS_LIST } from "../../graphql/query"
 import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
@@ -136,7 +136,6 @@ type MoveMoneyScreenDataInjectedProps = {
 export const MoveMoneyScreenDataInjected: ScreenType = ({
   navigation,
 }: MoveMoneyScreenDataInjectedProps) => {
-  const client = useApolloClient()
   const { hasToken } = useToken()
 
   const {
@@ -145,9 +144,7 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
     data,
     refetch,
   } = useQuery(MAIN_QUERY, {
-    variables: {
-      logged: hasToken,
-    },
+    variables: { hasToken },
     notifyOnNetworkStatusChange: true,
     errorPolicy: "all",
   })
@@ -206,7 +203,6 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
   return (
     <MoveMoneyScreen
       navigation={navigation}
-      walletIsActive={walletIsActive(client)}
       loading={loadingMain}
       error={error}
       refetch={refetch}
@@ -255,7 +251,6 @@ const RecentTransactions = ({ navigation }) => {
 }
 
 type MoveMoneyScreenProps = {
-  walletIsActive: boolean
   navigation: StackNavigationProp<MoveMoneyStackParamList, "moveMoney">
   loading: boolean
   error: ApolloError
@@ -266,7 +261,6 @@ type MoveMoneyScreenProps = {
 }
 
 export const MoveMoneyScreen: ScreenType = ({
-  walletIsActive,
   navigation,
   loading,
   error,
@@ -285,7 +279,7 @@ export const MoveMoneyScreen: ScreenType = ({
   }, [navigation, secretMenuCounter])
 
   const onMenuClick = (target) => {
-    walletIsActive ? navigation.navigate(target) : setModalVisible(true)
+    hasToken ? navigation.navigate(target) : setModalVisible(true)
   }
 
   const activateWallet = () => {
@@ -320,14 +314,10 @@ export const MoveMoneyScreen: ScreenType = ({
       appName: "Bitcoin Beach Wallet",
       appStoreId: "",
       playStoreId: "com.galoyapp",
+    }).catch((err) => {
+      console.log({ err }, "error app link on link")
+      // handle error
     })
-      .then(() => {
-        console.log("clicked on link")
-      })
-      .catch((err) => {
-        console.log({ err }, "error app link on link")
-        // handle error
-      })
 
   return (
     <Screen style={styles.screenStyle}>

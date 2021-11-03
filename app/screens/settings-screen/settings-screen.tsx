@@ -16,11 +16,9 @@ import type { ViewStyleProp } from "react-native/Libraries/StyleSheet/StyleSheet
 
 import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
-import { language_mapping } from "./language-screen"
 import { palette } from "../../theme/palette"
 import { LN_PAGE_DOMAIN, WHATSAPP_CONTACT_NUMBER } from "../../constants/support"
 import { translate } from "../../i18n"
-import { walletIsActive } from "../../graphql/query"
 import { openWhatsApp } from "../../utils/external"
 import { resetDataStore } from "../../utils/logout"
 import { hasFullPermissions, requestPermission } from "../../utils/notifications"
@@ -30,6 +28,8 @@ import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import Clipboard from "@react-native-community/clipboard"
 import { toastShow } from "../../utils/toast"
 import useToken from "../../utils/use-token"
+import { MAIN_QUERY } from "../../graphql/query"
+import { LANGUAGES } from "./language-screen"
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "settings">
@@ -49,20 +49,12 @@ type ComponentProps = {
 
 export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
   const client = useApolloClient()
-  const { removeToken } = useToken()
+  const { hasToken, removeToken } = useToken()
 
-  const { data } = useQuery(
-    gql`
-      query me_settings {
-        me {
-          username
-          phone
-          language
-        }
-      }
-    `,
-    { fetchPolicy: "cache-only" },
-  )
+  const { data } = useQuery(MAIN_QUERY, {
+    variables: { hasToken },
+    fetchPolicy: "cache-only",
+  })
 
   const securityAction = async () => {
     const isBiometricsEnabled = await KeyStoreWrapper.getIsBiometricsEnabled()
@@ -75,13 +67,8 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
   }
 
   const onGetCsvCallback = async (data) => {
-    console.log({ data }, "result getCsv")
     const csvEncoded = data.wallet[0].csv
     try {
-      console.log({ csvEncoded })
-      // const decoded = Buffer.from(csvEncoded, 'base64').toString('ascii')
-      // console.log({decoded})
-
       await Share.open({
         // title: "export-csv-title.csv",
         url: `data:text/csv;base64,${csvEncoded}`,
@@ -91,7 +78,7 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
         // message: 'export message'
       })
     } catch (err) {
-      console.error({ err }, "export export CSV")
+      console.error(err)
     }
   }
 
@@ -120,12 +107,12 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
   return (
     <SettingsScreenJSX
       client={client}
-      walletIsActive={walletIsActive(client)}
+      hasToken={hasToken}
       resetDataStore={() => resetDataStore({ client, removeToken })}
       navigation={navigation}
       username={me.username}
       phone={me.phone}
-      language={language_mapping[me.language]}
+      language={LANGUAGES[me.language]}
       notifications={
         notificationsEnabled
           ? translate("SettingsScreen.activated")
@@ -140,7 +127,7 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
 
 type SettingsScreenProps = {
   client: ApolloClient<unknown>
-  walletIsActive: boolean
+  hasToken: boolean
   navigation: StackNavigationProp<RootStackParamList, "settings">
   username: string
   notificationsEnabled: boolean
@@ -152,7 +139,7 @@ type SettingsScreenProps = {
 export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
   const {
     client,
-    walletIsActive,
+    hasToken,
     navigation,
     username,
     notificationsEnabled,
@@ -176,8 +163,8 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       id: "phone",
       defaultValue: translate("SettingsScreen.tapLogIn"),
       action: () => navigation.navigate("phoneValidation"),
-      enabled: !walletIsActive,
-      greyed: walletIsActive,
+      enabled: !hasToken,
+      greyed: hasToken,
     },
     {
       category: translate("common.username"),
@@ -185,48 +172,48 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       id: "username",
       defaultValue: translate("SettingsScreen.tapUserName"),
       action: () => navigation.navigate("setUsername"),
-      enabled: walletIsActive && !username,
-      greyed: !walletIsActive,
+      enabled: hasToken && !username,
+      greyed: !hasToken,
     },
     {
       category: translate("common.language"),
       icon: "ios-language",
       id: "language",
       action: () => navigation.navigate("language"),
-      enabled: walletIsActive,
-      greyed: !walletIsActive,
+      enabled: hasToken,
+      greyed: !hasToken,
     },
     {
       category: translate("common.notification"),
       icon: "ios-notifications-circle",
       id: "notifications",
-      action: () => requestPermission(client),
-      enabled: walletIsActive && notificationsEnabled,
-      greyed: !walletIsActive,
+      action: () => hasToken && requestPermission(client),
+      enabled: hasToken && notificationsEnabled,
+      greyed: !hasToken,
     },
     {
       category: translate("common.security"),
       icon: "lock-closed-outline",
       id: "security",
       action: securityAction,
-      enabled: walletIsActive,
-      greyed: !walletIsActive,
+      enabled: hasToken,
+      greyed: !hasToken,
     },
     {
       category: translate("common.csvExport"),
       icon: "ios-download",
       id: "csv",
       action: () => csvAction(),
-      enabled: walletIsActive,
-      greyed: !walletIsActive,
+      enabled: hasToken,
+      greyed: !hasToken,
     },
     {
       category: translate("tippingLink.title"),
       icon: "cash-outline",
       id: "tippingLink",
       action: () => copyToClipBoard(username),
-      enabled: walletIsActive && username !== null,
-      greyed: !walletIsActive || username === null,
+      enabled: hasToken && username !== null,
+      greyed: !hasToken || username === null,
     },
     {
       category: translate("whatsapp.contactUs"),
@@ -256,8 +243,8 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
           },
         ])
       },
-      enabled: walletIsActive,
-      greyed: !walletIsActive,
+      enabled: hasToken,
+      greyed: !hasToken,
     },
   ]
 

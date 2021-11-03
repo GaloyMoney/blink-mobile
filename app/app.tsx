@@ -8,12 +8,14 @@ import {
   HttpLink,
   NormalizedCacheObject,
   useReactiveVar,
+  split,
 } from "@apollo/client"
+import { WebSocketLink } from "@apollo/client/link/ws"
+import { getMainDefinition } from "@apollo/client/utilities"
 import { setContext } from "@apollo/client/link/context"
 import { RetryLink } from "@apollo/client/link/retry"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import analytics from "@react-native-firebase/analytics"
-// eslint-disable-next-line import/no-unassigned-import
 import "@react-native-firebase/crashlytics"
 import {
   NavigationContainer,
@@ -21,7 +23,6 @@ import {
   PartialState,
 } from "@react-navigation/native"
 import { AsyncStorageWrapper, CachePersistor } from "apollo3-cache-persist"
-// eslint-disable-next-line import/no-unassigned-import
 import "node-libs-react-native/globals" // needed for Buffer?
 import * as React from "react"
 import { useEffect, useState } from "react"
@@ -33,17 +34,13 @@ import VersionNumber from "react-native-version-number"
 import { GlobalErrorToast } from "./components/global-error"
 import { cache } from "./graphql/cache"
 import { initQuery, INITWALLET } from "./graphql/init"
-import { walletIsActive } from "./graphql/query"
-// eslint-disable-next-line import/no-unassigned-import
 import "./i18n"
-// eslint-disable-next-line import/no-unassigned-import
 import "./utils/polyfill"
 import { RootStack } from "./navigation/root-navigator"
 import { isIos } from "./utils/helper"
 import { saveString, loadString } from "./utils/storage"
-import { graphqlV2OperationNames } from "./graphql/graphql-v2-operations"
 import useToken from "./utils/use-token"
-import { getGraphQLUri, getGraphQLV2Uri, loadNetwork } from "./utils/network"
+import { getGraphQLUri, loadNetwork } from "./utils/network"
 import {
   hasSetAuthorizationVar,
   loadAuthToken,
@@ -79,7 +76,7 @@ LogBox.ignoreAllLogs()
  * This is the root component of our app.
  */
 export const App = (): JSX.Element => {
-  const { token, tokenNetwork } = useToken()
+  const { token, hasToken, tokenNetwork } = useToken()
   const networkReactiveVar = useReactiveVar<INetwork | null>(networkVar)
   const [routeName, setRouteName] = useState("Initial")
   const [apolloClient, setApolloClient] = useState<ApolloClient<NormalizedCacheObject>>()
@@ -118,23 +115,35 @@ export const App = (): JSX.Element => {
         networkVar(currentNetwork)
       }
 
+      const { GRAPHQL_URI, GRAPHQL_WS_URI } = getGraphQLUri(currentNetwork)
+
       // legacy. when was using mst-gql. storage is deleted as we don't want
       // to keep this around.
       const LEGACY_ROOT_STATE_STORAGE_KEY = "rootAppGaloy"
       await AsyncStorage.multiRemove([LEGACY_ROOT_STATE_STORAGE_KEY])
 
-      const customFetch = async (_ /* uri not used */, options) => {
-        const uri = await getGraphQLUri(currentNetwork)
-        return fetch(uri, options)
-      }
+      const httpLink = new HttpLink({
+        uri: GRAPHQL_URI,
+      })
 
-      const customFetchV2 = async (_ /* uri not used */, options) => {
-        const uri = await getGraphQLV2Uri(currentNetwork)
-        return fetch(uri, options)
-      }
+      const wsLink = new WebSocketLink({
+        uri: GRAPHQL_WS_URI,
+        options: {
+          reconnect: true,
+        },
+      })
 
-      const httpLink = new HttpLink({ fetch: customFetch })
-      const httpLinkV2 = new HttpLink({ fetch: customFetchV2 })
+      const splitLink = split(
+        ({ query }) => {
+          const definition = getMainDefinition(query)
+          return (
+            definition.kind === "OperationDefinition" &&
+            definition.operation === "subscription"
+          )
+        },
+        wsLink,
+        httpLink,
+      )
 
       const authLink = setContext((_, { headers }) => {
         if (token) {
@@ -166,11 +175,7 @@ export const App = (): JSX.Element => {
             )
           },
         },
-      }).split(
-        (operation) => graphqlV2OperationNames.includes(operation.operationName),
-        httpLinkV2,
-        httpLink,
-      )
+      })
 
       const persistor_ = new CachePersistor({
         cache,
@@ -182,7 +187,9 @@ export const App = (): JSX.Element => {
 
       const client = new ApolloClient({
         cache,
-        link: linkNetworkStatusNotifier.concat(authLink.concat(retryLink)),
+        link: linkNetworkStatusNotifier.concat(
+          retryLink.concat(authLink.concat(splitLink)),
+        ),
         name: isIos ? "iOS" : "Android",
         version: `${VersionNumber.appVersion}-${VersionNumber.buildVersion}`,
       })
@@ -243,7 +250,7 @@ export const App = (): JSX.Element => {
                 screens: {
                   MoveMoney: {
                     initialRouteName: "moveMoney",
-                    screens: walletIsActive(apolloClient)
+                    screens: hasToken
                       ? {
                           sendBitcoin: ":username",
                           moveMoney: "/",

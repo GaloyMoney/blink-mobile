@@ -77,6 +77,7 @@ const styles = EStyleSheet.create({
   errorText: {
     color: palette.red,
     fontSize: 18,
+    textAlign: "center",
   },
 
   lottie: {
@@ -91,5 +92,6 @@ const styles = EStyleSheet.create({
 
   successLottieText: {
     fontSize: 18,
+    textAlign: "center",
   },
 })

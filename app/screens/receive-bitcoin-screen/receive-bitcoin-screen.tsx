@@ -1,20 +1,15 @@
-import { gql, useApolloClient, useMutation } from "@apollo/client"
-import messaging from "@react-native-firebase/messaging"
+import {
+  gql,
+  useApolloClient,
+  useMutation,
+  useQuery,
+  useSubscription,
+} from "@apollo/client"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { useCallback, useMemo, useEffect, useState } from "react"
-import {
-  Alert,
-  AppState,
-  AppStateStatus,
-  Keyboard,
-  Platform,
-  ScrollView,
-  TextInput,
-  View,
-} from "react-native"
+import { Alert, Keyboard, Platform, ScrollView, TextInput, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
-import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import ScreenBrightness from "react-native-screen-brightness"
 import Swiper from "react-native-swiper"
 import Icon from "react-native-vector-icons/Ionicons"
@@ -27,26 +22,42 @@ import { translate } from "../../i18n"
 import { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import { ScreenType } from "../../types/jsx"
-import { getHashFromInvoice } from "../../utils/bolt11"
 import { isIos } from "../../utils/helper"
 import { hasFullPermissions, requestPermission } from "../../utils/notifications"
 import { QRView } from "./qr-view"
 import { useMoneyAmount } from "../../hooks"
 import { TextCurrency } from "../../components/text-currency"
-import { useCurrencies } from "../../hooks/use-currencies"
+import { useCurrencies } from "../../hooks/currency-hooks"
+import { usePrevious } from "../../hooks/use-previous"
+import useToken from "../../utils/use-token"
+import { MAIN_QUERY } from "../../graphql/query"
+import { Button, Text } from "react-native-elements"
 
 // FIXME: crash when no connection
 
+type OperationError = {
+  message: string
+}
+
 const styles = EStyleSheet.create({
+  buttonContainer: { marginHorizontal: 52, paddingVertical: 200 },
+
+  buttonStyle: {
+    backgroundColor: palette.lightBlue,
+    borderRadius: 32,
+  },
+
+  buttonTitle: {
+    fontWeight: "bold",
+  },
+
   screen: {
     // FIXME: doesn't work for some reason
     // justifyContent: "space-around"
   },
-
   section: {
     flex: 1,
     paddingHorizontal: 50,
-    width: "100%",
   },
 
   subCurrencyText: {
@@ -58,7 +69,7 @@ const styles = EStyleSheet.create({
     textAlign: "center",
     width: "90%",
   },
-
+  textButtonWrapper: { alignSelf: "center", marginHorizontal: 52 },
   textStyle: {
     color: palette.darkGrey,
     fontSize: "18rem",
@@ -66,26 +77,52 @@ const styles = EStyleSheet.create({
   },
 })
 
-const ADD_INVOICE = gql`
-  mutation addInvoice($value: Int, $memo: String) {
-    invoice {
-      addInvoice(value: $value, memo: $memo)
+const ADD_NO_AMOUNT_INVOICE = gql`
+  mutation lnNoAmountInvoiceCreate($input: LnNoAmountInvoiceCreateInput!) {
+    lnNoAmountInvoiceCreate(input: $input) {
+      errors {
+        message
+      }
+      invoice {
+        paymentRequest
+        paymentHash
+      }
     }
   }
 `
 
-const UPDATE_PENDING_INVOICE = gql`
-  mutation updatePendingInvoice($hash: String!) {
-    invoice {
-      updatePendingInvoice(hash: $hash)
+const ADD_INVOICE = gql`
+  mutation lnInvoiceCreate($input: LnInvoiceCreateInput!) {
+    lnInvoiceCreate(input: $input) {
+      errors {
+        message
+      }
+      invoice {
+        paymentRequest
+        paymentHash
+      }
+    }
+  }
+`
+
+const LN_INVOICE_PAYMENT_STATUS = gql`
+  subscription lnInvoicePaymentStatus($input: LnInvoicePaymentStatusInput!) {
+    mutationData: lnInvoicePaymentStatus(input: $input) {
+      errors {
+        message
+      }
+      status
     }
   }
 `
 
 const GET_ONCHAIN_ADDRESS = gql`
-  query getLastOnChainAddress {
-    getLastOnChainAddress {
-      id
+  mutation onChainAddressCurrent($input: OnChainAddressCurrentInput!) {
+    onChainAddressCurrent(input: $input) {
+      errors {
+        message
+      }
+      address
     }
   }
 `
@@ -96,12 +133,14 @@ type Props = {
 
 export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
   const client = useApolloClient()
+  const { hasToken } = useToken()
 
   const { primaryCurrency, secondaryCurrency, toggleCurrency } = useCurrencies()
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [primaryAmount, _, setPrimaryAmount, setPrimaryAmountValue] =
     useMoneyAmount(primaryCurrency)
+  const prevPrimaryAmount: MoneyAmount = usePrevious(primaryAmount)
 
   const [secondaryAmount, convertSecondaryAmount, setSecondaryAmount] =
     useMoneyAmount(secondaryCurrency)
@@ -109,17 +148,38 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
   const satAmount =
     primaryCurrency === "BTC" ? primaryAmount.value : secondaryAmount.value
 
+  const [addNoAmountInvoice] = useMutation(ADD_NO_AMOUNT_INVOICE)
   const [addInvoice] = useMutation(ADD_INVOICE)
-  const [updatePendingInvoice] = useMutation(UPDATE_PENDING_INVOICE)
+  const [getOnchainAddress] = useMutation(GET_ONCHAIN_ADDRESS)
+  const [lastOnChainAddress, setLastOnChainAddress] = useState<string>()
+  const [btcAddressRequested, setBtcAddressRequested] = useState<boolean>(false)
+  const { data } = useQuery(MAIN_QUERY, {
+    variables: { hasToken },
+    notifyOnNetworkStatusChange: true,
+    errorPolicy: "all",
+  })
 
-  let lastOnChainAddress: string
-  try {
-    ;({
-      getLastOnChainAddress: { id: lastOnChainAddress },
-    } = client.readQuery({ query: GET_ONCHAIN_ADDRESS }))
-  } catch (err) {
-    // do better error handling
-    lastOnChainAddress = "issue with the QRcode"
+  const onBtcAddressRequestClick = async () => {
+    try {
+      setLoading(true)
+      const defaultWalletId: string = data?.me?.defaultAccount?.wallets?.find(
+        (wallet) => wallet?.__typename === "BTCWallet",
+      )?.id
+      const {
+        data: {
+          onChainAddressCurrent: { address },
+        },
+      } = await getOnchainAddress({
+        variables: { input: { walletId: defaultWalletId } },
+      })
+      setLastOnChainAddress(address)
+      setBtcAddressRequested(true)
+    } catch (err) {
+      console.log(err)
+      setLastOnChainAddress("issue with the QRcode")
+    } finally {
+      setLoading(false)
+    }
   }
 
   const [memo, setMemo] = useState("")
@@ -128,27 +188,73 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
   const [err, setErr] = useState("")
   const [isSucceed, setIsSucceed] = useState(false)
   const [brightnessInitial, setBrightnessInitial] = useState(null)
-
+  const { data: invoiceStatusSubscriptionData } = useSubscription<{
+    mutationData: {
+      errors: OperationError[]
+      status?: string
+    }
+  }>(LN_INVOICE_PAYMENT_STATUS, {
+    variables: {
+      input: {
+        paymentRequest: invoice,
+      },
+    },
+  })
   const updateInvoice = useMemo(
     () =>
-      debounce(async ({ satAmount, memo }) => {
-        setLoading(true)
-        try {
-          const { data } = await addInvoice({
-            variables: { value: satAmount, memo },
-          })
-          const invoice = data.invoice.addInvoice
-          setInvoice(invoice)
-        } catch (err) {
-          console.error(err, "error with AddInvoice")
-          setErr(`${err}`)
-          throw err
-        } finally {
-          setLoading(false)
-        }
-      }, 750),
-    [addInvoice],
+      debounce(
+        async ({ satAmount, memo }) => {
+          setLoading(true)
+          try {
+            if (satAmount === 0) {
+              const {
+                data: {
+                  lnNoAmountInvoiceCreate: { invoice, errors },
+                },
+              } = await addNoAmountInvoice({
+                variables: { input: { memo: memo } },
+              })
+              if (errors && errors.length !== 0) {
+                console.error(errors, "error with lnNoAmountInvoiceCreate")
+                setErr(translate("ReceiveBitcoinScreen.error"))
+                return
+              }
+              setInvoice(invoice.paymentRequest)
+            } else {
+              const {
+                data: {
+                  lnInvoiceCreate: { invoice, errors },
+                },
+              } = await addInvoice({
+                variables: { input: { amount: satAmount, memo: memo } },
+              })
+              if (errors && errors.length !== 0) {
+                console.error(errors, "error with lnInvoiceCreate")
+                setErr(translate("ReceiveBitcoinScreen.error"))
+                return
+              }
+              setInvoice(invoice.paymentRequest)
+            }
+          } catch (err) {
+            console.error(err, "error with AddInvoice")
+            setErr(`${err}`)
+            throw err
+          } finally {
+            setLoading(false)
+          }
+        },
+        750,
+        { trailing: true },
+      ),
+    [satAmount],
   )
+
+  useEffect(() => {
+    const status = invoiceStatusSubscriptionData?.mutationData?.status
+    if (status === "PAID") {
+      setIsSucceed(true)
+    }
+  }, [invoiceStatusSubscriptionData?.mutationData?.status])
 
   useEffect(() => {
     if (primaryCurrency !== primaryAmount.currency) {
@@ -166,6 +272,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
 
   useEffect(() => {
     updateInvoice({ satAmount, memo })
+    return () => updateInvoice.cancel()
   }, [satAmount, memo, updateInvoice])
 
   useEffect(() => {
@@ -234,7 +341,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
                 },
                 {
                   text: translate("common.ok"),
-                  onPress: () => requestPermission(client),
+                  onPress: () => hasToken && requestPermission(client),
                 },
               ],
               { cancelable: true },
@@ -245,74 +352,19 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
     }
 
     notifRequest()
-  }, [client])
+  }, [client, hasToken])
 
   useEffect(() => {
-    // Update secondary amount when price updates
+    if (
+      primaryAmount.currency === "USD" &&
+      primaryAmount?.value === prevPrimaryAmount?.value
+    ) {
+      // USD/BTC price has changed so don't update
+      //TODO come up with a better way of updating the lightning invoice when price changes.
+      return
+    }
     convertSecondaryAmount(primaryAmount)
   }, [primaryAmount, convertSecondaryAmount])
-
-  const paymentSuccess = useCallback(() => {
-    // success
-
-    const options = {
-      enableVibrateFallback: true,
-      ignoreAndroidSystemSettings: false,
-    }
-
-    ReactNativeHapticFeedback.trigger("notificationSuccess", options)
-
-    setIsSucceed(true)
-
-    // Alert.alert("success", translate("ReceiveBitcoinScreen.invoicePaid"), [
-    //   {
-    //     text: translate("common.ok"),
-    //     onPress: () => {
-    //       navigation.goBack(false)
-    //     },
-    //   },
-    // ])
-  }, [])
-
-  // temporary fix until we have a better management of notifications:
-  // when coming back to active state. look if the invoice has been paid
-  useEffect(() => {
-    const _handleAppStateChange = async (nextAppState: AppStateStatus) => {
-      if (nextAppState === "active") {
-        try {
-          const hash = getHashFromInvoice(invoice)
-
-          const { data } = await updatePendingInvoice({ variables: { hash } })
-          const success = await data.invoice.updatePendingInvoice
-          if (success) {
-            paymentSuccess()
-          }
-        } catch (err) {
-          console.warn({ err }, "can't fetch invoice status")
-        }
-      }
-    }
-
-    AppState.addEventListener("change", _handleAppStateChange)
-
-    return () => {
-      AppState.removeEventListener("change", _handleAppStateChange)
-    }
-  }, [invoice, updatePendingInvoice, paymentSuccess])
-
-  useEffect(() => {
-    const unsubscribe = messaging().onMessage(async (remoteMessage) => {
-      const hash = getHashFromInvoice(invoice)
-      if (
-        remoteMessage.data.type === "paid-invoice" &&
-        remoteMessage.data.hash === hash
-      ) {
-        paymentSuccess()
-      }
-    })
-
-    return unsubscribe
-  }, [invoice, paymentSuccess])
 
   const inputMemoRef = React.useRef<TextInput>()
 
@@ -358,7 +410,13 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
           />
         </View>
         {/* FIXME: fixed height */}
-        <Swiper height={450} loop={false}>
+
+        <Swiper
+          height={450}
+          loop={false}
+          index={btcAddressRequested ? 1 : 0}
+          showsButtons={true}
+        >
           <QRView
             data={invoice}
             type="lightning"
@@ -369,16 +427,29 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
             navigation={navigation}
             err={err}
           />
-          <QRView
-            data={lastOnChainAddress}
-            type="bitcoin"
-            amount={satAmount}
-            memo={memo}
-            loading={loading}
-            isSucceed={isSucceed}
-            navigation={navigation}
-            err={err}
-          />
+          {btcAddressRequested && lastOnChainAddress && (
+            <QRView
+              data={lastOnChainAddress}
+              type="bitcoin"
+              amount={satAmount}
+              memo={memo}
+              loading={loading}
+              isSucceed={isSucceed}
+              navigation={navigation}
+              err={err}
+            />
+          )}
+          {!btcAddressRequested && !lastOnChainAddress && (
+            <Text style={styles.textButtonWrapper}>
+              <Button
+                buttonStyle={styles.buttonStyle}
+                containerStyle={styles.buttonContainer}
+                title={"Generate BTC Address"}
+                onPress={onBtcAddressRequestClick}
+                titleStyle={styles.buttonTitle}
+              />
+            </Text>
+          )}
         </Swiper>
       </ScrollView>
     </Screen>

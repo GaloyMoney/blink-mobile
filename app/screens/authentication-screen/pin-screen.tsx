@@ -119,7 +119,7 @@ type Props = {
 
 export const PinScreen: ScreenType = ({ route, navigation }: Props) => {
   const client = useApolloClient()
-  const { removeToken, tokenNetwork } = useToken()
+  const { hasToken, removeToken, tokenNetwork } = useToken()
 
   const { screenPurpose } = route.params
 
@@ -145,7 +145,7 @@ export const PinScreen: ScreenType = ({ route, navigation }: Props) => {
         index: 0,
         routes: [{ name: "Primary" }],
       })
-      showModalClipboardIfValidPayment({ client, network: tokenNetwork })
+      hasToken && showModalClipboardIfValidPayment({ client, network: tokenNetwork })
     } else {
       if (pinAttempts < MAX_PIN_ATTEMPTS - 1) {
         const newPinAttempts = pinAttempts + 1

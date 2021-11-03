@@ -11,27 +11,22 @@ type Props = {
 
 export const TextCurrency: ComponentType = ({ amount, currency, style }: Props) => {
   if (currency === "USD") {
-    return (
-      <Text style={style}>
-        {currency_fmt
+    const amountDisplay = Number.isNaN(amount)
+      ? "..."
+      : currency_fmt
           .default(amount, { precision: amount < 0.01 && amount !== 0 ? 4 : 2 })
-          .format()}
-      </Text>
-    )
+          .format()
+    return <Text style={style}>{amountDisplay}</Text>
   }
   if (currency === "BTC") {
-    return (
-      <Text style={style}>
-        {currency_fmt
-          .default(amount, {
-            precision: 0,
-            separator: ",",
-            symbol: "",
-          })
-          .format()}{" "}
-        sats
-      </Text>
-    )
+    const amountDisplay = currency_fmt
+      .default(amount, {
+        precision: 0,
+        separator: ",",
+        symbol: "",
+      })
+      .format()
+    return <Text style={style}>{amountDisplay} sats</Text>
   }
   return null
 }

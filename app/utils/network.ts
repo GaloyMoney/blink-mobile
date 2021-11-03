@@ -5,13 +5,13 @@ import { scriptHostname } from "./helper"
 
 export const NETWORK_STRING = "NETWORK_STRING"
 
-const GRAPHQL_REGTEST_URI = `http://${scriptHostname()}:4000/graphql`
-const GRAPHQL_TESTNET_URI = "https://graphql.testnet.galoy.io/graphql"
-const GRAPHQL_MAINNET_URI = "https://graphql.mainnet.galoy.io/graphql"
+const GRAPHQL_REGTEST_URI = `http://${scriptHostname()}:4002/graphql`
+const GRAPHQL_TESTNET_URI = "https://api.testnet.galoy.io/graphql"
+const GRAPHQL_MAINNET_URI = "https://api.mainnet.galoy.io/graphql"
 
-const GRAPHQL_V2_REGTEST_URI = `http://${scriptHostname()}:4002/graphql`
-const GRAPHQL_V2_TESTNET_URI = "https://api.testnet.galoy.io/graphql"
-const GRAPHQL_V2_MAINNET_URI = "https://api.mainnet.galoy.io/graphql"
+const GRAPHQL_REGTEST_WS_URI = `ws://${scriptHostname()}:4002/graphql`
+const GRAPHQL_TESTNET_WS_URI = "wss://api.testnet.galoy.io/graphql"
+const GRAPHQL_MAINNET_WS_URI = "wss://api.mainnet.galoy.io/graphql"
 
 // FIXME: no longer need since we switch from mst-gql to apollo-client
 
@@ -37,30 +37,15 @@ export const removeNetwork = async (): Promise<void> => {
   remove(NETWORK_STRING)
 }
 
-export const getGraphQLUri = (network: INetwork): string => {
+export const getGraphQLUri = (
+  network: INetwork,
+): Record<"GRAPHQL_URI" | "GRAPHQL_WS_URI", string> => {
   switch (network) {
     case "regtest":
-      return GRAPHQL_REGTEST_URI
+      return { GRAPHQL_URI: GRAPHQL_REGTEST_URI, GRAPHQL_WS_URI: GRAPHQL_REGTEST_WS_URI }
     case "testnet":
-      return GRAPHQL_TESTNET_URI
+      return { GRAPHQL_URI: GRAPHQL_TESTNET_URI, GRAPHQL_WS_URI: GRAPHQL_TESTNET_WS_URI }
     case "mainnet":
-      return GRAPHQL_MAINNET_URI
-    default:
-      console.log("no network set")
-      return "none"
-  }
-}
-
-export const getGraphQLV2Uri = async (network: INetwork): Promise<string> => {
-  switch (network) {
-    case "regtest":
-      return GRAPHQL_V2_REGTEST_URI
-    case "testnet":
-      return GRAPHQL_V2_TESTNET_URI
-    case "mainnet":
-      return GRAPHQL_V2_MAINNET_URI
-    default:
-      console.log("no network set")
-      return "none"
+      return { GRAPHQL_URI: GRAPHQL_MAINNET_URI, GRAPHQL_WS_URI: GRAPHQL_MAINNET_WS_URI }
   }
 }

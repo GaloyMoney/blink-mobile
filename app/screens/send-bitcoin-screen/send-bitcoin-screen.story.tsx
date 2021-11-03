@@ -1,9 +1,10 @@
+import * as React from "react"
 import { withKnobs } from "@storybook/addon-knobs"
 import { storiesOf } from "@storybook/react-native"
-import * as React from "react"
+
 import { StoryScreen } from "../../../storybook/views"
-import { textCurrencyFormatting } from "../../utils/currencyConversion"
 import { SendBitcoinScreenJSX } from "./send-bitcoin-screen"
+import { formatUsdAmount } from "../../hooks"
 
 const noop = () => null
 const defaultParams = {
@@ -102,7 +103,7 @@ storiesOf("Send bitcoin Screen", module)
         value: 1000,
         currency: "USD",
       }}
-      fee={textCurrencyFormatting(1234, 9.3927e-5, "USD")}
+      fee={formatUsdAmount(1234 * 9.3927e-5)}
       {...defaultParams}
     />
   ))

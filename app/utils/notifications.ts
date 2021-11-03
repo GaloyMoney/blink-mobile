@@ -1,6 +1,5 @@
 import { ApolloClient, gql } from "@apollo/client"
 import messaging from "@react-native-firebase/messaging"
-import { walletIsActive } from "../graphql/query"
 
 export const requestPermission = async (client: ApolloClient<unknown>): Promise<void> => {
   const authorizationStatus = await messaging().requestPermission()
@@ -11,7 +10,7 @@ export const requestPermission = async (client: ApolloClient<unknown>): Promise<
 
   // Alert.alert(`enable: ${enabled ? 'true': 'false'}`)
 
-  if (!enabled || !walletIsActive(client)) {
+  if (!enabled) {
     return
   }
 
@@ -23,16 +22,15 @@ export const requestPermission = async (client: ApolloClient<unknown>): Promise<
 }
 
 export const addDeviceToken = async (client: ApolloClient<unknown>): Promise<void> => {
-  if (!walletIsActive(client)) {
-    return
-  }
-
   try {
     const token = await messaging().getToken()
 
     const ADD_DEVICE_TOKEN = gql`
-      mutation addDeviceToken($deviceToken: String) {
-        addDeviceToken(deviceToken: $deviceToken) {
+      mutation deviceNotificationTokenCreate($deviceToken: String) {
+        deviceNotificationTokenCreate(input: { deviceToken: $deviceToken }) {
+          errors {
+            message
+          }
           success
         }
       }
@@ -42,7 +40,8 @@ export const addDeviceToken = async (client: ApolloClient<unknown>): Promise<voi
       mutation: ADD_DEVICE_TOKEN,
       variables: { deviceToken: token },
     })
-    console.log({ result })
+
+    console.log("deviceNotificationTokenCreate result", result)
   } catch (err) {
     console.error(err, "impossible to upload device token")
   }

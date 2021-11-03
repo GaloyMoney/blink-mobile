@@ -47,6 +47,7 @@ const useToken = (): UseTokenReturn => {
         authTokenVar({ token, uid, network })
         return saveString(TOKEN_KEY, token)
       },
+
       removeToken: async () => {
         authTokenVar(null)
         removeString(TOKEN_KEY)

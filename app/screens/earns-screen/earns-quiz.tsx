@@ -202,7 +202,7 @@ export const EarnQuiz: ScreenType = ({ route, navigation }: Props) => {
   let j = 0
   permutation.forEach((i) => {
     answers_shuffled.push(
-      <View style={{ width: "100%" }}>
+      <View key={i} style={{ width: "100%" }}>
         <View style={{ flexDirection: "row", alignItems: "center", width: "100%" }}>
           <Button
             title={mappingLetter[j]}

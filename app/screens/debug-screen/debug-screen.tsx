@@ -10,12 +10,11 @@ import { color } from "../../theme"
 import { resetDataStore } from "../../utils/logout"
 import { getGraphQLUri, loadNetwork, saveNetwork } from "../../utils/network"
 import { requestPermission } from "../../utils/notifications"
-import { walletIsActive } from "../../graphql/query"
 import useToken from "../../utils/use-token"
 import type { ScreenType } from "../../types/jsx"
 import type { INetwork } from "../../types/network"
-import { useBTCPrice } from "../../hooks"
 import { networkVar } from "../../graphql/client-only-query"
+import { usePriceConversions } from "../../hooks"
 
 const styles = EStyleSheet.create({
   button: {
@@ -30,12 +29,15 @@ const usingHermes = typeof HermesInternal === "object" && HermesInternal !== nul
 
 export const DebugScreen: ScreenType = () => {
   const client = useApolloClient()
-  const { btcPrice } = useBTCPrice()
-  const { tokenUid, tokenNetwork, removeToken } = useToken()
+  const { usdPerSat } = usePriceConversions()
+  const { hasToken, tokenUid, tokenNetwork, removeToken } = useToken()
 
   const networks: INetwork[] = ["regtest", "testnet", "mainnet"]
   const [networkState, setNetworkState] = React.useState("")
-  const [graphQLUri, setGraphQLUri] = React.useState("")
+  const [graphQLURIs, setGraphQLURIs] = React.useState({
+    GRAPHQL_URI: "",
+    GRAPHQL_WS_URI: "",
+  })
 
   const updateNetwork = useCallback(
     async (network?) => {
@@ -47,7 +49,7 @@ export const DebugScreen: ScreenType = () => {
           newNetwork = await loadNetwork()
         }
       }
-      setGraphQLUri(await getGraphQLUri(newNetwork))
+      setGraphQLURIs(getGraphQLUri(newNetwork))
       setNetworkState(newNetwork)
     },
     [tokenNetwork],
@@ -106,7 +108,7 @@ export const DebugScreen: ScreenType = () => {
         title="Request permission + send device token"
         style={styles.button}
         onPress={async () => {
-          walletIsActive(client) && requestPermission(client)
+          hasToken && requestPermission(client)
         }}
       />
       {__DEV__ && (
@@ -134,13 +136,14 @@ export const DebugScreen: ScreenType = () => {
           {tokenNetwork}
         </Text>
         <Text>
-          GraphQLUri:
-          {graphQLUri}
+          GRAPHQL_URL:
+          {graphQLURIs.GRAPHQL_URI}
         </Text>
         <Text>
-          BTC price:
-          {btcPrice}
+          GRAPHQL_WS_URL:
+          {graphQLURIs.GRAPHQL_WS_URI}
         </Text>
+        <Text>USD per 1 sat: ${usdPerSat}</Text>
         <Text>
           Hermes:
           {String(!!usingHermes)}

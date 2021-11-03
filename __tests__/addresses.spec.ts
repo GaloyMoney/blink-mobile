@@ -14,15 +14,13 @@ const client = {
 }
 
 const checkOnChain = (address, network) => {
-  const { valid, paymentType, errorMessage } = validPayment(address, network, client)
-  console.log(errorMessage)
+  const { valid, paymentType } = validPayment(address, network, client)
   expect(valid).toBeTruthy()
   expect(paymentType).toBe("onchain")
 }
 
 const checkOnChainFail = (address, network) => {
-  const { valid, errorMessage } = validPayment(address, network, client)
-  console.log(errorMessage)
+  const { valid } = validPayment(address, network, client)
   expect(valid).toBeFalsy()
 }
 

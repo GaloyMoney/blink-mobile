@@ -74,7 +74,7 @@ type Props = {
 
 export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) => {
   const client = useApolloClient()
-  const { removeToken, tokenNetwork } = useToken()
+  const { hasToken, removeToken, tokenNetwork } = useToken()
 
   const { screenPurpose, isPinEnabled } = route.params
 
@@ -104,7 +104,7 @@ export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) =
       KeyStoreWrapper.setIsBiometricsEnabled()
     }
     navigation.replace("Primary")
-    showModalClipboardIfValidPayment({ client, network: tokenNetwork })
+    hasToken && showModalClipboardIfValidPayment({ client, network: tokenNetwork })
   }
 
   const handleAuthenticationFailure = () => {

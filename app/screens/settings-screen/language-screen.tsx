@@ -4,7 +4,7 @@ import { ListItem } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
-import { GET_LANGUAGE } from "../../graphql/query"
+import { MAIN_QUERY } from "../../graphql/query"
 import { palette } from "../../theme/palette"
 import type { ScreenType } from "../../types/jsx"
 import useToken from "../../utils/use-token"
@@ -12,59 +12,71 @@ import useToken from "../../utils/use-token"
 const styles = EStyleSheet.create({
   screenStyle: {
     marginHorizontal: 48,
-    // marginVertical: 24,
   },
 })
 
-export const language_mapping = {
-  "": "Default (OS)",
-  "en": "English",
-  "es": "Español",
-}
+export const LANGUAGES = {
+  "DEFAULT": "Default (OS)",
+  "en-US": "English",
+  "es-SV": "Español",
+} as const
 
 export const LanguageScreen: ScreenType = () => {
-  const { tokenUid } = useToken()
-  const { data } = useQuery(GET_LANGUAGE, { fetchPolicy: "cache-only" })
-  const language = data?.me?.language ?? ""
+  const { tokenUid, hasToken } = useToken()
+  const { data } = useQuery(MAIN_QUERY, {
+    variables: { hasToken },
+    fetchPolicy: "cache-only",
+  })
 
-  const [updateLanguage] = useMutation(gql`
-    mutation updateLanguage($language: String!) {
-      updateUser {
-        updateLanguage(language: $language) {
-          id
-          language
+  const currentLanguage = data?.me?.language ?? "DEFAULT"
+
+  const [updateLanguage] = useMutation(
+    gql`
+      mutation updateLanguage($language: Language!) {
+        userUpdateLanguage(input: { language: $language }) {
+          errors {
+            message
+          }
+          user {
+            id
+            language
+          }
         }
       }
-    }
-  `)
+    `,
+    {
+      refetchQueries: ["mainQuery"],
+    },
+  )
 
-  const list = ["", "en", "es"]
+  const list = ["DEFAULT", "en-US", "es-SV"]
 
   return (
     <Screen preset="scroll" style={styles.screenStyle}>
-      {list.map((l, i) => (
+      {list.map((language) => (
         <ListItem
-          key={i}
+          key={language}
           bottomDivider
           onPress={() =>
             updateLanguage({
-              variables: { language: l },
+              variables: { language },
               optimisticResponse: {
                 __typename: "Mutation",
-                updateUser: {
-                  __typename: "UpdateUser",
-                  updateLanguage: {
-                    __typename: "User",
+                userUpdateLanguage: {
+                  __typename: "UserUpdateLanguagePayload",
+                  errors: [],
+                  user: {
+                    __typename: "UserLanguageDetails",
                     id: tokenUid,
-                    language: l,
+                    language,
                   },
                 },
               },
             })
           }
         >
-          <ListItem.Title>{language_mapping[l]}</ListItem.Title>
-          {language === l && (
+          <ListItem.Title>{LANGUAGES[language]}</ListItem.Title>
+          {currentLanguage === language && (
             <Icon name="ios-checkmark-circle" size={18} color={palette.green} />
           )}
         </ListItem>

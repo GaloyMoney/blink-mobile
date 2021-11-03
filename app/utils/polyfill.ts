@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unassigned-import */
 import { Platform } from "react-native"
 
 // Polyfill for Intl.NumberFormat.

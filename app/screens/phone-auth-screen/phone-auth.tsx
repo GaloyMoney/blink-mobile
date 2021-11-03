@@ -65,10 +65,6 @@ const LOGIN = gql`
   }
 `
 
-type MutationError = {
-  message: string
-}
-
 type UserLoginMutationResponse = {
   errors: MutationError[]
   authToken?: string
@@ -319,8 +315,8 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
   })
 
   const onHasToken = useCallback(async () => {
-    await queryMain(client, { logged: hasToken })
-    addDeviceToken(client)
+    await queryMain(client, { hasToken })
+    hasToken && addDeviceToken(client)
 
     if (await BiometricWrapper.isSensorAvailable()) {
       navigation.replace("authentication", {
@@ -343,7 +339,8 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
       navigation={navigation}
       login={login}
       loading={loading || hasToken}
-      error={error}
+      // Todo: provide specific translated error messages in known cases
+      error={error?.message ? translate("errors.generic") + error.message : ""}
       saveToken={saveToken}
     />
   )

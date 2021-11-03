@@ -1,52 +1,47 @@
 import filter from "lodash.filter"
-import find from "lodash.find"
 import sumBy from "lodash.sumby"
 import { translateQuizSections } from "../../i18n"
 import type { QuizQuestion, QuizSectionContent } from "../../types/quiz"
-import { earnList_earnList } from "../../graphql/__generated__/earnList"
 
-type IEarnsUtil = {
-  earnList: earnList_earnList[]
-  sectionIndex: number | string
-}
+export const getCardsFromSection = ({ quizQuestions, sectionIndex }): QuizQuestion[] => {
+  const quizQuestionsContent = translateQuizSections(
+    "EarnScreen.earns",
+  ) as QuizSectionContent[]
 
-export const getCardsFromSection = ({
-  earnList,
-  sectionIndex,
-}: IEarnsUtil): QuizQuestion[] => {
-  const earns_all = translateQuizSections("EarnScreen.earns") as QuizSectionContent[]
-  const cards = earns_all[sectionIndex].content
+  const { allQuestions, myCompletedQuestions } = quizQuestions
 
-  cards.forEach((card) => (card.value = find(earnList, { id: card.id }).value))
+  const cards = quizQuestionsContent[sectionIndex].content.map((card) => {
+    card.value = allQuestions[card.id]
+    return card
+  })
 
-  // FIXME O(N^2)
   // add fullfilled property to each card
-  cards.filter(
-    (item) => (item.fullfilled = earnList.find((e) => e.id == item.id).completed),
-  )
+  cards.filter((card) => {
+    card.fullfilled = Boolean(myCompletedQuestions[card.id])
+  })
 
   let allPreviousFullfilled = true
   let nonEnabledMessage = ""
 
   // add enabled and nonEnabledMessage property
-  cards.forEach((item) => {
-    item.enabled = true
+  cards.forEach((card) => {
+    card.enabled = true
 
     if (allPreviousFullfilled === false) {
-      item.enabled = false
-      item.nonEnabledMessage = nonEnabledMessage
+      card.enabled = false
+      card.nonEnabledMessage = nonEnabledMessage
     }
 
-    if (!item.fullfilled && allPreviousFullfilled) {
+    if (!card.fullfilled && allPreviousFullfilled) {
       allPreviousFullfilled = false
-      nonEnabledMessage = item.title
+      nonEnabledMessage = card.title
     }
   })
 
   return cards
 }
 
-export const sectionCompletedPct = ({ sectionIndex, earnList }: IEarnsUtil): number => {
+export const sectionCompletedPct = ({ quizQuestions, sectionIndex }): number => {
   // there is a recurring crash. from crashlytics:
   // using try catch until this is fixed
   //
@@ -56,15 +51,15 @@ export const sectionCompletedPct = ({ sectionIndex, earnList }: IEarnsUtil): num
   // l@2707:285
   // sectionCompletedPct@2707:675
   try {
-    const earns = getCardsFromSection({ sectionIndex, earnList })
+    const earns = getCardsFromSection({ quizQuestions, sectionIndex })
     return earns.filter((item) => item.fullfilled).length / earns.length
   } catch (err) {
     return 0
   }
 }
 
-export const remainingSatsOnSection = ({ sectionIndex, earnList }: IEarnsUtil): number =>
+export const remainingSatsOnSection = ({ quizQuestions, sectionIndex }): number =>
   sumBy(
-    filter(getCardsFromSection({ sectionIndex, earnList }), { fullfilled: false }),
+    filter(getCardsFromSection({ quizQuestions, sectionIndex }), { fullfilled: false }),
     "value",
   )

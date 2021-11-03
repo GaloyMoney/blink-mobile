@@ -2,13 +2,11 @@ import Clipboard from "@react-native-community/clipboard"
 import { ApolloClient } from "@apollo/client"
 
 import { validPayment } from "./parsing"
-import { walletIsActive } from "../graphql/query"
 import {
   LAST_CLIPBOARD_PAYMENT,
   modalClipboardVisibleVar,
 } from "../graphql/client-only-query"
 import { cache } from "../graphql/cache"
-import { LastClipboardPayment } from "../graphql/__generated__/LastClipboardPayment"
 import { INetwork } from "../types/network"
 
 type ShowModalClipboardIfValidPaymentInput = {
@@ -22,11 +20,7 @@ export const showModalClipboardIfValidPayment = async (
 ): Promise<void> => {
   const clipboard = await Clipboard.getString()
 
-  if (!walletIsActive(client)) {
-    return
-  }
-
-  const data = cache.readQuery<LastClipboardPayment>({ query: LAST_CLIPBOARD_PAYMENT })
+  const data: any = cache.readQuery({ query: LAST_CLIPBOARD_PAYMENT })
   if (clipboard === data?.lastClipboardPayment) {
     return
   }

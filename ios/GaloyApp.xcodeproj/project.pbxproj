@@ -489,7 +489,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = GaloyApp/GaloyApp.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 276;
 				DEAD_CODE_STRIPPING = YES;
@@ -507,7 +507,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.galoy.bitcoinbeach;
 				PRODUCT_NAME = "Bitcoin Beach";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore io.galoy.bitcoinbeach";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development io.galoy.bitcoinbeach";
 				SWIFT_OBJC_BRIDGING_HEADER = "GaloyApp-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -522,7 +522,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = GaloyApp/GaloyApp.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 276;
 				DEVELOPMENT_TEAM = AYPCPV46WW;
@@ -539,7 +539,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.galoy.bitcoinbeach;
 				PRODUCT_NAME = "Bitcoin Beach";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore io.galoy.bitcoinbeach";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development io.galoy.bitcoinbeach";
 				SWIFT_OBJC_BRIDGING_HEADER = "GaloyApp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -579,7 +579,7 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -641,7 +641,7 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;

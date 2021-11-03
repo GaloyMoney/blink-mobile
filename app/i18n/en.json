@@ -514,7 +514,8 @@
     "invoicePaid": "This invoice has been paid",
     "setNote": "set a note",
     "tapQrCodeCopy": "Tap QR Code to Copy",
-    "title": "Receive Bitcoin"
+    "title": "Receive Bitcoin",
+    "error": "Failed to generate invoice. Please contact support if this problem persists."
   },
   "ScanningQRCodeScreen": {
     "invalidContent": "We found:\n\n{{found}}\n\nThis is not a valid Bitcoin address or Lightning invoice",
@@ -561,7 +562,8 @@
     "notConfirmed": "Payment has been sent\nbut is not confirmed yet\n\nYou can check the status\nof the payment in Transactions",
     "note": "optional note",
     "success": "Payment has been sent successfully",
-    "title": "Send Bitcoin"
+    "title": "Send Bitcoin",
+    "usernameNotFound": "A user matching the entered username could not be found."
   },
   "SettingsScreen": {
     "activate": "Tap to activate",
@@ -644,7 +646,7 @@
     "hour": "hour",
     "hours": "hours",
     "invoice": "Invoice",
-    "language": "language",
+    "language": "Language",
     "lastName": "Last Name",
     "later": "Later",
     "loggedOut": "You have been logged out.",
@@ -676,7 +678,7 @@
     "usernameRequired": "Username is required"
   },
   "errors": {
-    "generic": "There was an error. Please try again later",
+    "generic": "There was an error. Please try again later.",
     "invalidEmail": "Invalid email",
     "invalidPhoneNumber": "is not a valid phone number",
     "tooManyRequestsPhoneCode": "Too many requests. Please wait before requesting another text message."

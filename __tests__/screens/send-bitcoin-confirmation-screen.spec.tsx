@@ -9,29 +9,35 @@ import { translate } from "@app/i18n/translate"
 import "@mocks/react-native-firebase"
 import "@mocks/react-navigation-native"
 import {
-  LIGHTNING_PAY,
-  PAY_KEYSEND_USERNAME,
+  INTRA_LEDGER_PAY,
+  LN_PAY,
   SendBitcoinConfirmationScreen,
 } from "@app/screens/send-bitcoin-screen"
 import { waitForNextRender } from "../helpers/wait"
-import { cacheNodeStats, cachePrice, cacheWallet } from "../helpers/cache"
+import { cachePrice, cacheWallet } from "../helpers/cache"
 import { IPaymentType } from "@app/utils/parsing"
+
+jest.mock("@app/utils/use-token", () => () => ({
+  hasToken: true,
+}))
 
 const payKeysendUsernameMocks = [
   {
     request: {
-      query: PAY_KEYSEND_USERNAME,
+      query: INTRA_LEDGER_PAY,
       variables: {
-        amount: 68626,
-        destination: "",
-        username: "Bitcoin",
-        memo: null,
+        input: {
+          recipientWalletId: "62af205a-298f-4448-bb31-4b424a27a4ee",
+          amount: 68626,
+          memo: null,
+        },
       },
     },
     result: {
       data: {
-        invoice: {
-          payKeysendUsername: "success",
+        intraLedgerPaymentSend: {
+          errors: [],
+          status: "SUCCESS",
           __typename: "Invoice",
         },
       },
@@ -42,17 +48,20 @@ const payKeysendUsernameMocks = [
 const lightningPayMocks = [
   {
     request: {
-      query: LIGHTNING_PAY,
+      query: LN_PAY,
       variables: {
-        invoice:
-          "lnbc6864270n1p05zvjjpp5fpehvlv3dd2r76065r9v0l3n8qv9mfwu9ryhvpj5xsz3p4hy734qdzhxysv89eqyvmzqsnfw3pxcmmrddpx7mmdypp8yatwvd5zqmmwypqh2em4wd6zqvesyq5yyun4de3ksgz0dek8j2gcqzpgxqrrss6lqa5jllvuglw5tpsug4s2tmt5c8fnerr95fuh8htcsyx52cp3wzswj32xj5gewyfn7mg293v6jla9cz8zndhwdhcnnkul2qkf6pjlspj2nl3j",
-        memo: null,
+        input: {
+          paymentRequest:
+            "lnbc6864270n1p05zvjjpp5fpehvlv3dd2r76065r9v0l3n8qv9mfwu9ryhvpj5xsz3p4hy734qdzhxysv89eqyvmzqsnfw3pxcmmrddpx7mmdypp8yatwvd5zqmmwypqh2em4wd6zqvesyq5yyun4de3ksgz0dek8j2gcqzpgxqrrss6lqa5jllvuglw5tpsug4s2tmt5c8fnerr95fuh8htcsyx52cp3wzswj32xj5gewyfn7mg293v6jla9cz8zndhwdhcnnkul2qkf6pjlspj2nl3j",
+          memo: null,
+        },
       },
     },
     result: {
       data: {
-        invoice: {
-          payInvoice: "success",
+        lnInvoicePaymentSend: {
+          errors: [],
+          status: "SUCCESS",
           __typename: "Invoice",
         },
       },
@@ -75,6 +84,7 @@ const usernameRouteParams = {
   referenceAmount: usernameSatAmount,
   sameNode: null,
   username: "Bitcoin",
+  userDefaultWalletId: "62af205a-298f-4448-bb31-4b424a27a4ee",
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -100,13 +110,13 @@ const lightningRouteParams = {
   referenceAmount: lightningSatAmount,
   sameNode: false,
   username: null,
+  userDefaultWalletId: null,
 }
 
 describe("SendBitcoinConfirmationScreen", () => {
   const cache = new InMemoryCache()
-  cacheNodeStats(cache)
-  cachePrice(cache)
 
+  cachePrice(cache)
   afterEach(cleanup)
 
   it("render matches snapshot", () => {
@@ -146,7 +156,7 @@ describe("SendBitcoinConfirmationScreen", () => {
     ).toBeNull()
   })
 
-  it("successfully sends payment by payKeysendUsername", async () => {
+  it("successfully sends payment by intraLedgerPaymentSend", async () => {
     cacheWallet(cache, 1175855)
     const { getByText, queryByText } = render(
       <MockedProvider mocks={payKeysendUsernameMocks} cache={cache}>
@@ -170,7 +180,7 @@ describe("SendBitcoinConfirmationScreen", () => {
     expect(queryByText(translate("SendBitcoinScreen.success"))).not.toBeNull()
   })
 
-  it("successfully sends lightning payment with `lightning:` prefix", async () => {
+  it("successfully sends lightning payment with `lightning:` prefix and amount", async () => {
     cacheWallet(cache, 1175855)
     const { getByText, queryByText } = render(
       <MockedProvider mocks={lightningPayMocks} cache={cache}>
