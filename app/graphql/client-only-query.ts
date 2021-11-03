@@ -7,7 +7,6 @@ import { loadString } from "../utils/storage"
 import { decodeToken, TOKEN_KEY } from "../utils/use-token"
 
 export const authTokenVar = makeVar<TokenPayload | null>(null)
-export const hasSetAuthorizationVar = makeVar<boolean>(false)
 
 export const loadAuthToken = async (): Promise<void> => {
   let uid: string

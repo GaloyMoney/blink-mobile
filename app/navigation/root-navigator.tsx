@@ -191,7 +191,7 @@ export const RootStack: NavigatorType = () => {
 
   const { data } = useQuery(MAIN_QUERY, {
     variables: { hasToken },
-    fetchPolicy: "cache-and-network",
+    fetchPolicy: "cache-only",
   })
 
   i18n.locale = data?.me?.language === "DEFAULT" ? languageTag : data?.me?.language

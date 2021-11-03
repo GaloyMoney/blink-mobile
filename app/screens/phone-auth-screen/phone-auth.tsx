@@ -12,13 +12,7 @@ import {
   View,
 } from "react-native"
 import { Button, Input } from "react-native-elements"
-import {
-  FetchResult,
-  gql,
-  useApolloClient,
-  useMutation,
-  useReactiveVar,
-} from "@apollo/client"
+import { FetchResult, gql, useApolloClient, useMutation } from "@apollo/client"
 import EStyleSheet from "react-native-extended-stylesheet"
 import PhoneInput from "react-native-phone-input"
 import analytics from "@react-native-firebase/analytics"
@@ -41,7 +35,7 @@ import BadgerPhone from "./badger-phone-01.svg"
 import type { PhoneValidationStackParamList } from "../../navigation/stack-param-lists"
 import { parseTimer } from "../../utils/timer"
 import { useGeetestCaptcha } from "../../hooks"
-import { hasSetAuthorizationVar, networkVar } from "../../graphql/client-only-query"
+import { networkVar } from "../../graphql/client-only-query"
 
 const REQUEST_AUTH_CODE = gql`
   mutation captchaRequestAuthCode($input: CaptchaRequestAuthCodeInput!) {
@@ -306,7 +300,6 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
 }: WelcomePhoneValidationScreenDataInjectedProps) => {
   const client = useApolloClient()
   const { saveToken, hasToken } = useToken()
-  const hasSetAuthorizationReactiveVar = useReactiveVar(hasSetAuthorizationVar)
 
   const [login, { loading, error }] = useMutation<{
     login: LoginMutationFunction
@@ -328,10 +321,10 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
   }, [client, hasToken, navigation])
 
   useEffect(() => {
-    if (hasToken && hasSetAuthorizationReactiveVar) {
+    if (hasToken) {
       onHasToken()
     }
-  }, [hasSetAuthorizationReactiveVar, hasToken, onHasToken])
+  }, [hasToken, onHasToken])
 
   return (
     <WelcomePhoneValidationScreen

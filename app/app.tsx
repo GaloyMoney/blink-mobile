@@ -39,13 +39,9 @@ import "./utils/polyfill"
 import { RootStack } from "./navigation/root-navigator"
 import { isIos } from "./utils/helper"
 import { saveString, loadString } from "./utils/storage"
-import useToken from "./utils/use-token"
+import useToken, { getAuthorizationHeader } from "./utils/use-token"
 import { getGraphQLUri, loadNetwork } from "./utils/network"
-import {
-  hasSetAuthorizationVar,
-  loadAuthToken,
-  networkVar,
-} from "./graphql/client-only-query"
+import { loadAuthToken, networkVar } from "./graphql/client-only-query"
 import { INetwork } from "./types/network"
 
 export const BUILD_VERSION = "build_version"
@@ -145,16 +141,11 @@ export const App = (): JSX.Element => {
         httpLink,
       )
 
-      const authLink = setContext((_, { headers }) => {
-        if (token) {
-          hasSetAuthorizationVar(true)
-        } else {
-          hasSetAuthorizationVar(false)
-        }
+      const authLink = setContext((request, { headers }) => {
         return {
           headers: {
             ...headers,
-            authorization: token ? `Bearer ${token}` : "",
+            authorization: getAuthorizationHeader(),
           },
         }
       })
@@ -242,6 +233,7 @@ export const App = (): JSX.Element => {
   return (
     <ApolloProvider client={apolloClient}>
       <NavigationContainer
+        key={token}
         linking={{
           prefixes: ["https://ln.bitcoinbeach.com", "bitcoinbeach://"],
           config: {

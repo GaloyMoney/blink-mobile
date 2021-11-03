@@ -36,12 +36,10 @@ export const addDeviceToken = async (client: ApolloClient<unknown>): Promise<voi
       }
     `
 
-    const result = await client.mutate({
+    await client.mutate({
       mutation: ADD_DEVICE_TOKEN,
       variables: { deviceToken: token },
     })
-
-    console.log("deviceNotificationTokenCreate result", result)
   } catch (err) {
     console.error(err, "impossible to upload device token")
   }

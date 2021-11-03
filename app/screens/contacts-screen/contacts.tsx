@@ -139,17 +139,19 @@ const ContactListScreen: ScreenType = ({ navigation }: Props) => {
   const [matchingContacts, setMatchingContacts] = useState([])
   const [searchText, setSearchText] = useState("")
   const [isRefreshed, setIsRefreshed] = useState(false)
-  const { loading, data, error, refetch } = useQuery(gql`
-    query contacts {
-      me {
-        contacts {
-          username
-          alias
-          transactionsCount
+  const { loading, data, error, refetch } = useQuery(
+    gql`
+      query contacts {
+        me {
+          contacts {
+            username
+            alias
+            transactionsCount
+          }
         }
       }
-    }
-  `)
+    `,
+  )
 
   useFocusEffect(() => {
     if (!isRefreshed) {
@@ -269,6 +271,7 @@ const ContactListScreen: ScreenType = ({ navigation }: Props) => {
         ListEmptyComponent={() => listEmptyContent}
         renderItem={({ item }) => (
           <ListItem
+            key={item.username}
             underlayColor={color.palette.lighterGrey}
             activeOpacity={0.7}
             style={styles.item}
@@ -281,7 +284,7 @@ const ContactListScreen: ScreenType = ({ navigation }: Props) => {
             </ListItem.Content>
           </ListItem>
         )}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.username}
       />
     </Screen>
   )
