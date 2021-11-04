@@ -38,7 +38,8 @@
     "title": "Transferencia bancaria"
   },
   "ContactsScreen": {
-    "noContactsYet": "Aún no hay contactos disponibles.\n\nEnvíe o reciba un pago con nombre de usuario y lo agregaremos automáticamente.",
+    "noContactsTitle": "No se encontraron contactos",
+    "noContactsYet": "Envíe o reciba un pago utilizando un nombre de usuario y los contactos se agregarán automáticamente aquí",
     "noMatchingContacts": "No se encontraron coincidencias para su búsqueda.",
     "title": "Contactos"
   },
