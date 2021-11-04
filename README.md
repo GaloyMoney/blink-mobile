@@ -16,7 +16,7 @@ If you wish to contribute see [CONTRIBUTING.MD](./CONTRIBUTING.MD)
 
 ## Start
 
-Prerequisite -- Follow the instructions to [set up React Native](https://reactnative.dev/docs/getting-started).
+Prerequisite -- [Set up React Native](https://reactnative.dev/docs/environment-setup) by following the instructions in the **React Native CLI Quickstart** tab
 
 Clone into the project
 
