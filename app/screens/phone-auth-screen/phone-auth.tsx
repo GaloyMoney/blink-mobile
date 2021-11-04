@@ -214,7 +214,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
   ])
 
   useEffect(() => {
-    if (geetestValidationData) {
+    if (geetestValidationData?.geetestValidate && geetestValidationData?.geetestChallenge && geetestValidationData?.geetestSecCode) {
       sendRequestAuthCode()
     }
   }, [geetestValidationData, sendRequestAuthCode])
