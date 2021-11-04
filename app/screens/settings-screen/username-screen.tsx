@@ -59,9 +59,7 @@ export const UsernameScreen: ScreenType = ({ navigation }: Props) => {
 
   const { loading: checkingUserName, refetch: checkUsername } = useQuery(
     USERNAME_AVAILABLE,
-    {
-      skip: true,
-    },
+    { skip: true }, // useLazyQuery executor function does not return data. refetch does.
   )
 
   const inputForm = React.createRef<TextInput>()

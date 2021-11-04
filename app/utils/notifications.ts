@@ -26,7 +26,7 @@ export const addDeviceToken = async (client: ApolloClient<unknown>): Promise<voi
     const token = await messaging().getToken()
 
     const ADD_DEVICE_TOKEN = gql`
-      mutation deviceNotificationTokenCreate($deviceToken: String) {
+      mutation deviceNotificationTokenCreate($deviceToken: String!) {
         deviceNotificationTokenCreate(input: { deviceToken: $deviceToken }) {
           errors {
             message
@@ -36,12 +36,10 @@ export const addDeviceToken = async (client: ApolloClient<unknown>): Promise<voi
       }
     `
 
-    const result = await client.mutate({
+    await client.mutate({
       mutation: ADD_DEVICE_TOKEN,
       variables: { deviceToken: token },
     })
-
-    console.log("deviceNotificationTokenCreate result", result)
   } catch (err) {
     console.error(err, "impossible to upload device token")
   }

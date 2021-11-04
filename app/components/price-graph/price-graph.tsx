@@ -63,6 +63,7 @@ export const PriceGraphDataInjected: ComponentType = () => {
 
   const { error, loading, data, refetch } = useQuery(BTC_PRICE_LIST, {
     variables: { range: graphRange },
+    notifyOnNetworkStatusChange: true,
   })
 
   if (loading || data === null) {

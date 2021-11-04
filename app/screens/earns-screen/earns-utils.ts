@@ -17,7 +17,7 @@ export const getCardsFromSection = ({ quizQuestions, sectionIndex }): QuizQuesti
 
   // add fullfilled property to each card
   cards.filter((card) => {
-    card.fullfilled = Boolean(myCompletedQuestions[card.id])
+    card.fullfilled = myCompletedQuestions && Boolean(myCompletedQuestions[card.id])
   })
 
   let allPreviousFullfilled = true

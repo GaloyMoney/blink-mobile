@@ -217,11 +217,9 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
 const RecentTransactions = ({ navigation }) => {
   const { error, loading, data } = useQuery(TRANSACTIONS_LIST, {
     variables: { first: 3 },
-    onError: console.error,
   })
 
   if (error) {
-    console.error(error)
     toastShow("Error loading recent transactions.")
     return null
   }

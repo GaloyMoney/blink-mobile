@@ -84,7 +84,6 @@ export const ContactTransactionsDataInjected: ScreenType = ({
   const transactionsRef = React.useRef([])
 
   if (error) {
-    console.error(error)
     toastShow(translate("common.transactionsError"))
     return null
   }

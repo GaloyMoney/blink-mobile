@@ -32,6 +32,11 @@ type UseTokenReturn = {
   removeToken: () => Promise<void>
 }
 
+export const getAuthorizationHeader = (): string => {
+  const authToken = authTokenVar()
+  return authToken?.token ? `Bearer ${authToken?.token}` : ""
+}
+
 const useToken = (): UseTokenReturn => {
   const authToken = useReactiveVar<TokenPayload | null>(authTokenVar) // null means there is no user session
 
