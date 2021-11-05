@@ -182,7 +182,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
       }
       resetValidationData()
 
-      const { data } = await requestPhoneCode({ variables: { input } })      
+      const { data } = await requestPhoneCode({ variables: { input } })
 
       if (data.captchaRequestAuthCode.success) {
         navigation.navigate("welcomePhoneValidation", { phone: phoneNumber, setPhone })
@@ -214,7 +214,11 @@ export const WelcomePhoneInputScreen: ScreenType = ({
   ])
 
   useEffect(() => {
-    if (geetestValidationData?.geetestValidate && geetestValidationData?.geetestChallenge && geetestValidationData?.geetestSecCode) {
+    if (
+      geetestValidationData?.geetestValidate &&
+      geetestValidationData?.geetestChallenge &&
+      geetestValidationData?.geetestSecCode
+    ) {
       sendRequestAuthCode()
     }
   }, [geetestValidationData, sendRequestAuthCode])

@@ -49,8 +49,8 @@ const styles = EStyleSheet.create({
 
   emptyListText: {
     fontSize: 18,
+    marginTop: 30,
     textAlign: "center",
-    marginTop: 30
   },
 
   emptyListTitle: {
@@ -89,30 +89,6 @@ const styles = EStyleSheet.create({
     color: color.palette.black,
     textDecorationLine: "none",
   },
-
-  validationButton: {
-    borderColor: color.primary,
-    borderRadius: 32,
-    borderWidth: 2,
-  },
-
-  validationButtonContainer: {
-    marginHorizontal: "20rem",
-    marginTop: "16rem",
-  },
-
-  validationButtonTitle: {
-    color: color.primary,
-    fontSize: "18rem",
-    fontWeight: "bold",
-  },
-
-  validationText: {
-    color: color.palette.darkGrey,
-    fontSize: "20rem",
-    marginHorizontal: "20rem",
-    marginTop: "50rem",
-  },
 })
 
 type Props = {
@@ -125,17 +101,20 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
   const [searchText, setSearchText] = useState("")
   const [isRefreshed, setIsRefreshed] = useState(false)
 
-  const { loading, data, error, refetch } = useQuery(gql`
-    query contacts {
-      me {
-        contacts {
-          username
-          alias
-          transactionsCount
+  const { loading, data, error, refetch } = useQuery(
+    gql`
+      query contacts {
+        me {
+          contacts {
+            username
+            alias
+            transactionsCount
+          }
         }
       }
-    }
-  `, { skip: !hasToken })
+    `,
+    { skip: !hasToken },
+  )
 
   useFocusEffect(() => {
     if (!isRefreshed) {
@@ -241,7 +220,7 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
       <View style={styles.emptyListNoContacts}>
         <Text style={styles.emptyListTitle}>
           {translate("ContactsScreen.noContactsTitle")}
-          </Text>
+        </Text>
         <Text style={styles.emptyListText}>
           {translate("ContactsScreen.noContactsYet")}
         </Text>
