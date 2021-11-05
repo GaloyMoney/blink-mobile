@@ -90,7 +90,7 @@
     "react-native-qrcode-svg": "^6.0.6",
     "react-native-reanimated": "^2.2.3",
     "react-native-root-siblings": "^4.1.1",
-    "react-native-root-toast": "^3.2.1",
+    "react-native-root-toast": "git://github.com/magicismight/react-native-root-toast",
     "react-native-safe-area-context": "^3.1.1",
     "react-native-screen-brightness": "^2.0.0-alpha",
     "react-native-screens": "git://github.com/software-mansion/react-native-screens.git#edf6026a78d186b64c3ea4ec06fb4f13aeb4b5bb",

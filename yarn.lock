@@ -13439,10 +13439,9 @@ react-native-root-siblings@^4.0.0, react-native-root-siblings@^4.1.1:
   resolved "https://registry.yarnpkg.com/react-native-root-siblings/-/react-native-root-siblings-4.1.1.tgz#b7742db7634a87f507eb99a5fd699c4f10c46ab0"
   integrity sha512-sdmLElNs5PDWqmZmj4/aNH4anyxreaPm61c4ZkRiR8SO/GzLg6KjAbb0e17RmMdnBdD0AIQbS38h/l55YKN4ZA==
 
-react-native-root-toast@^3.2.1:
-  version "3.2.1"
-  resolved "https://registry.npmjs.org/react-native-root-toast/-/react-native-root-toast-3.2.1.tgz"
-  integrity sha512-BNf6LKMqcIAonKgqCGQWk+1lduFqSjPYbEF0FygMZbXhODRTvrGUAvAgV6kfamVPOkKHUkPU7dnnvmgEQ8ZDzQ==
+"react-native-root-toast@git://github.com/magicismight/react-native-root-toast":
+  version "3.3.0"
+  resolved "git://github.com/magicismight/react-native-root-toast#14c0f0805cfa7712579601707a42a5bcf8f98c8e"
   dependencies:
     prop-types "^15.5.10"
     react-native-root-siblings "^4.0.0"
