@@ -15,7 +15,8 @@
     "title": "Bank Transfer"
   },
   "ContactsScreen": {
-    "noContactsYet": "No contacts yet.\n\nSend or receive a payment with a username. Usernames will automatically be added here.",
+    "noContactsTitle": "No Contacts Found",
+    "noContactsYet": "Send or receive a payment using a username and contacts will automatically be added here",
     "noMatchingContacts": "No contacts matching your search were found.",
     "title": "Contacts"
   },

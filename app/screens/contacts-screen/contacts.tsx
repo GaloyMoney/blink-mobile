@@ -5,7 +5,6 @@ import * as React from "react"
 import { useCallback, useMemo, useState } from "react"
 import { ActivityIndicator, Text, View } from "react-native"
 import {
-  Button,
   ListItem,
   SearchBar,
   SearchBarAndroidProps,
@@ -24,7 +23,6 @@ import { color } from "../../theme"
 import { ScreenType } from "../../types/jsx"
 import { toastShow } from "../../utils/toast"
 import useToken from "../../utils/use-token"
-
 // TODO: get rid of this wrapper once SearchBar props are figured out ref: https://github.com/react-native-elements/react-native-elements/issues/3089
 const SafeSearchBar = SearchBar as unknown as React.FC<
   SearchBarBaseProps | SearchBarDefaultProps | SearchBarAndroidProps | SearchBarIosProps
@@ -49,8 +47,16 @@ const styles = EStyleSheet.create({
     marginTop: 8,
   },
 
-  emptyListTitle: {
+  emptyListText: {
     fontSize: 18,
+    marginTop: 30,
+    textAlign: "center",
+  },
+
+  emptyListTitle: {
+    fontSize: 24,
+    fontWeight: "bold",
+    textAlign: "center",
   },
 
   item: {
@@ -83,30 +89,6 @@ const styles = EStyleSheet.create({
     color: color.palette.black,
     textDecorationLine: "none",
   },
-
-  validationButton: {
-    borderColor: color.primary,
-    borderRadius: 32,
-    borderWidth: 2,
-  },
-
-  validationButtonContainer: {
-    marginHorizontal: "20rem",
-    marginTop: "16rem",
-  },
-
-  validationButtonTitle: {
-    color: color.primary,
-    fontSize: "18rem",
-    fontWeight: "bold",
-  },
-
-  validationText: {
-    color: color.palette.darkGrey,
-    fontSize: "20rem",
-    marginHorizontal: "20rem",
-    marginTop: "50rem",
-  },
 })
 
 type Props = {
@@ -115,30 +97,10 @@ type Props = {
 
 export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
   const { hasToken } = useToken()
-
-  if (!hasToken) {
-    return (
-      <>
-        <Text style={styles.validationText}>{translate("common.needWallet")}</Text>
-        <Button
-          title={translate("common.openWallet")}
-          onPress={() => navigation.navigate("phoneValidation")}
-          type="outline"
-          buttonStyle={styles.validationButton}
-          titleStyle={styles.validationButtonTitle}
-          containerStyle={styles.validationButtonContainer}
-        />
-      </>
-    )
-  }
-
-  return <ContactListScreen navigation={navigation} />
-}
-
-const ContactListScreen: ScreenType = ({ navigation }: Props) => {
   const [matchingContacts, setMatchingContacts] = useState([])
   const [searchText, setSearchText] = useState("")
   const [isRefreshed, setIsRefreshed] = useState(false)
+
   const { loading, data, error, refetch } = useQuery(
     gql`
       query contacts {
@@ -151,6 +113,7 @@ const ContactListScreen: ScreenType = ({ navigation }: Props) => {
         }
       }
     `,
+    { skip: !hasToken },
   )
 
   useFocusEffect(() => {
@@ -256,6 +219,9 @@ const ContactListScreen: ScreenType = ({ navigation }: Props) => {
     listEmptyContent = (
       <View style={styles.emptyListNoContacts}>
         <Text style={styles.emptyListTitle}>
+          {translate("ContactsScreen.noContactsTitle")}
+        </Text>
+        <Text style={styles.emptyListText}>
           {translate("ContactsScreen.noContactsYet")}
         </Text>
       </View>

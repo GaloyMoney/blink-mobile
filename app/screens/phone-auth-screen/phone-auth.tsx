@@ -117,7 +117,7 @@ const styles = EStyleSheet.create({
 
   textEntry: {
     color: color.palette.darkGrey,
-    fontSize: "18rem",
+    fontSize: "16rem",
   },
 
   timerRow: {
@@ -214,7 +214,11 @@ export const WelcomePhoneInputScreen: ScreenType = ({
   ])
 
   useEffect(() => {
-    if (geetestValidationData) {
+    if (
+      geetestValidationData?.geetestValidate &&
+      geetestValidationData?.geetestChallenge &&
+      geetestValidationData?.geetestSecCode
+    ) {
       sendRequestAuthCode()
     }
   }, [geetestValidationData, sendRequestAuthCode])
@@ -250,7 +254,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
 
   return (
     <Screen backgroundColor={palette.lighterGrey} preset="scroll">
-      <View style={{ flex: 1, justifyContent: "space-around" }}>
+      <View style={{ flex: 1, justifyContent: "space-around", marginTop: 50 }}>
         <View>
           <BadgerPhone style={styles.image} />
           <Text style={styles.text}>

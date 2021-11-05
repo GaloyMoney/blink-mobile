@@ -178,14 +178,12 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
 
   function isUpdateAvailableOrRequired({ buildParameters }) {
     try {
-      const {
-        minBuildNumberAndroid,
-        minBuildNumberIos,
-        lastBuildNumberAndroid,
-        lastBuildNumberIos,
-      } = buildParameters
-      const minBuildNumber = isIos ? minBuildNumberIos : minBuildNumberAndroid
-      const lastBuildNumber = isIos ? lastBuildNumberIos : lastBuildNumberAndroid
+      const minBuildNumber = isIos
+        ? buildParameters?.minBuildNumberIos
+        : buildParameters?.minBuildNumberAndroid
+      const lastBuildNumber = isIos
+        ? buildParameters?.lastBuildNumberIos
+        : buildParameters?.lastBuildNumberAndroid
       const buildNumber = Number(getBuildNumber())
       return {
         required: buildNumber < minBuildNumber,
