@@ -688,6 +688,7 @@
     "later": "Más tarde",
     "loggedOut": "Usted ha sido desconectado.",
     "logout": "cerrar sesion",
+    "logoutOnInvalidToken": "Token inválido.\nSe cerrará la sesión.",
     "minutes": "minutos",
     "needWallet": "Valide su teléfono para abrir su billetera",
     "next": "Próximo",
