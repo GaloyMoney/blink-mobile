@@ -84,7 +84,7 @@ export const DebugScreen: ScreenType = () => {
         title="Log out"
         style={styles.button}
         onPress={async () => {
-          await resetDataStore({ client, removeToken })
+          await resetDataStore({ client, removeToken }) //TODO this could be replaced with logout from useLogout
           Alert.alert("state succesfully deleted. Restart your app")
         }}
       />

@@ -160,7 +160,7 @@ export const PinScreen: ScreenType = ({ route, navigation }: Props) => {
         }
       } else {
         setHelperText(translate("PinScreen.tooManyAttempts"))
-        await resetDataStore({ client, removeToken })
+        await resetDataStore({ client, removeToken }) //TODO this could be replaced with logout from useLogout
         await sleep(1000)
         navigation.reset({
           index: 0,

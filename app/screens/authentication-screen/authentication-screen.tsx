@@ -113,7 +113,7 @@ export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) =
   }
 
   const logout = async () => {
-    await resetDataStore({ client, removeToken })
+    await resetDataStore({ client, removeToken }) //TODO this could be replaced with logout from useLogout
     Alert.alert(translate("common.loggedOut"), "", [
       {
         text: translate("common.ok"),

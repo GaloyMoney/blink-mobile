@@ -108,7 +108,7 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
     <SettingsScreenJSX
       client={client}
       hasToken={hasToken}
-      resetDataStore={() => resetDataStore({ client, removeToken })}
+      resetDataStore={() => resetDataStore({ client, removeToken })} //TODO this could be replaced with logout from useLogout
       navigation={navigation}
       username={me.username}
       phone={me.phone}
