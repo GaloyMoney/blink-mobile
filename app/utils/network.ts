@@ -6,11 +6,11 @@ import { scriptHostname } from "./helper"
 export const NETWORK_STRING = "NETWORK_STRING"
 
 const GRAPHQL_REGTEST_URI = `http://${scriptHostname()}:4000/graphql`
-const GRAPHQL_TESTNET_URI = "https://graphql.testnet.galoy.io/graphql"
+const GRAPHQL_TESTNET_URI = "https://graphql.staging.galoy.io/graphql"
 const GRAPHQL_MAINNET_URI = "https://graphql.mainnet.galoy.io/graphql"
 
 const GRAPHQL_V2_REGTEST_URI = `http://${scriptHostname()}:4002/graphql`
-const GRAPHQL_V2_TESTNET_URI = "https://api.testnet.galoy.io/graphql"
+const GRAPHQL_V2_TESTNET_URI = "https://api.staging.galoy.io/graphql"
 const GRAPHQL_V2_MAINNET_URI = "https://api.mainnet.galoy.io/graphql"
 
 // FIXME: no longer need since we switch from mst-gql to apollo-client
