@@ -230,7 +230,7 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       action: () => logoutAction(),
       enabled: hasToken,
       greyed: !hasToken,
-      hidden: hasToken,
+      hidden: !hasToken,
     },
   ]
 
