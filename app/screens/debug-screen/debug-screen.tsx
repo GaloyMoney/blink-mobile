@@ -9,7 +9,7 @@ import { Screen } from "../../components/screen"
 import { color } from "../../theme"
 import { resetDataStore } from "../../utils/logout"
 import { getGraphQLUri, loadNetwork, saveNetwork } from "../../utils/network"
-import { requestPermission } from "../../utils/notifications"
+import { enableAllNotifications } from "../../utils/notifications"
 import useToken from "../../utils/use-token"
 import type { ScreenType } from "../../types/jsx"
 import type { INetwork } from "../../types/network"
@@ -108,7 +108,7 @@ export const DebugScreen: ScreenType = () => {
         title="Request permission + send device token"
         style={styles.button}
         onPress={async () => {
-          hasToken && requestPermission(client)
+          hasToken && enableAllNotifications(client)
         }}
       />
       {__DEV__ && (

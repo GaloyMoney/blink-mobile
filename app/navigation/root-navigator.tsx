@@ -48,7 +48,7 @@ import { TransactionHistoryScreenDataInjected } from "../screens/transaction-scr
 import { WelcomeFirstScreen } from "../screens/welcome-screens"
 import { palette } from "../theme/palette"
 import { AccountType } from "../utils/enum"
-import { addDeviceToken } from "../utils/notifications"
+import { enableAllNotifications } from "../utils/notifications"
 import useToken from "../utils/use-token"
 import { showModalClipboardIfValidPayment } from "../utils/clipboard"
 import {
@@ -252,7 +252,7 @@ export const RootStack: NavigatorType = () => {
   }, [])
 
   useEffect(
-    () => messaging().onTokenRefresh((token) => token && addDeviceToken(client)),
+    () => messaging().onTokenRefresh((token) => token && enableAllNotifications(client)),
     [client],
   )
 

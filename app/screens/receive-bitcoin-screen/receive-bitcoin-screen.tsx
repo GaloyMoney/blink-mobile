@@ -23,7 +23,7 @@ import { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import { ScreenType } from "../../types/jsx"
 import { isIos } from "../../utils/helper"
-import { hasFullPermissions, requestPermission } from "../../utils/notifications"
+import { hasFullPermissions, enableAllNotifications } from "../../utils/notifications"
 import { QRView } from "./qr-view"
 import { useMoneyAmount } from "../../hooks"
 import { TextCurrency } from "../../components/text-currency"
@@ -341,7 +341,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
                 },
                 {
                   text: translate("common.ok"),
-                  onPress: () => hasToken && requestPermission(client),
+                  onPress: () => hasToken && enableAllNotifications(client),
                 },
               ],
               { cancelable: true },

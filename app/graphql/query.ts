@@ -49,6 +49,7 @@ export const MAIN_QUERY = gql`
       language
       username
       phone
+      enabledNotifications
       quizQuestions {
         question {
           id

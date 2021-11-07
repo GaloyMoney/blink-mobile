@@ -27,7 +27,7 @@ import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import useToken from "../../utils/use-token"
 import { toastShow } from "../../utils/toast"
-import { addDeviceToken } from "../../utils/notifications"
+import { enableAllNotifications } from "../../utils/notifications"
 import BiometricWrapper from "../../utils/biometricAuthentication"
 import type { ScreenType } from "../../types/jsx"
 import { AuthenticationScreenPurpose } from "../../utils/enum"
@@ -313,7 +313,6 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
 
   const onHasToken = useCallback(async () => {
     await queryMain(client, { hasToken })
-    hasToken && addDeviceToken(client)
 
     if (await BiometricWrapper.isSensorAvailable()) {
       navigation.replace("authentication", {
