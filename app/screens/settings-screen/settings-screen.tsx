@@ -20,7 +20,6 @@ import { palette } from "../../theme/palette"
 import { LN_PAGE_DOMAIN, WHATSAPP_CONTACT_NUMBER } from "../../constants/support"
 import { translate } from "../../i18n"
 import { openWhatsApp } from "../../utils/external"
-import { resetDataStore } from "../../utils/logout"
 import { hasFullPermissions, requestPermission } from "../../utils/notifications"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import type { ScreenType } from "../../types/jsx"
@@ -30,6 +29,7 @@ import { toastShow } from "../../utils/toast"
 import useToken from "../../utils/use-token"
 import { MAIN_QUERY } from "../../graphql/query"
 import { LANGUAGES } from "./language-screen"
+import useLogout from "../../hooks/use-logout"
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "settings">
@@ -49,7 +49,8 @@ type ComponentProps = {
 
 export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
   const client = useApolloClient()
-  const { hasToken, removeToken } = useToken()
+  const { hasToken } = useToken()
+  const { logout } = useLogout()
 
   const { data } = useQuery(MAIN_QUERY, {
     variables: { hasToken },
@@ -108,7 +109,7 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
     <SettingsScreenJSX
       client={client}
       hasToken={hasToken}
-      resetDataStore={() => resetDataStore({ client, removeToken })} //TODO this could be replaced with logout from useLogout
+      resetDataStore={() => logout()}
       navigation={navigation}
       username={me.username}
       phone={me.phone}
@@ -133,7 +134,7 @@ type SettingsScreenProps = {
   notificationsEnabled: boolean
   csvAction: (options?: QueryLazyOptions<OperationVariables>) => void
   securityAction: () => void
-  resetDataStore: () => Promise<void>
+  logout: () => Promise<void>
 }
 
 export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
@@ -145,7 +146,7 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
     notificationsEnabled,
     csvAction,
     securityAction,
-    resetDataStore,
+    logout,
   } = params
   const copyToClipBoard = (username) => {
     Clipboard.setString(LN_PAGE_DOMAIN + username)
@@ -233,7 +234,7 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       id: "logout",
       icon: "ios-log-out",
       action: async () => {
-        await resetDataStore()
+        await logout()
         Alert.alert(translate("common.loggedOut"), "", [
           {
             text: translate("common.ok"),

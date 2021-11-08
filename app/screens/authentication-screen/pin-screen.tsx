@@ -9,7 +9,6 @@ import { useApolloClient } from "@apollo/client"
 import { Screen } from "../../components/screen"
 import { palette } from "../../theme/palette"
 import { translate } from "../../i18n"
-import { resetDataStore } from "../../utils/logout"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import type { ScreenType } from "../../types/jsx"
 import { PinScreenPurpose } from "../../utils/enum"
@@ -19,6 +18,7 @@ import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { RouteProp } from "@react-navigation/native"
 import useToken from "../../utils/use-token"
+import useLogout from "../../hooks/use-logout"
 
 const styles = EStyleSheet.create({
   bottomSpacer: {
@@ -119,7 +119,8 @@ type Props = {
 
 export const PinScreen: ScreenType = ({ route, navigation }: Props) => {
   const client = useApolloClient()
-  const { hasToken, removeToken, tokenNetwork } = useToken()
+  const { hasToken, tokenNetwork } = useToken()
+  const { logout } = useLogout()
 
   const { screenPurpose } = route.params
 
@@ -160,7 +161,7 @@ export const PinScreen: ScreenType = ({ route, navigation }: Props) => {
         }
       } else {
         setHelperText(translate("PinScreen.tooManyAttempts"))
-        await resetDataStore({ client, removeToken }) //TODO this could be replaced with logout from useLogout
+        await logout()
         await sleep(1000)
         navigation.reset({
           index: 0,

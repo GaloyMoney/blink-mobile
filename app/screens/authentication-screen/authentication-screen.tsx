@@ -11,7 +11,6 @@ import { palette } from "../../theme/palette"
 import { translate } from "../../i18n"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import BiometricWrapper from "../../utils/biometricAuthentication"
-import { resetDataStore } from "../../utils/logout"
 import type { ScreenType } from "../../types/jsx"
 import { AuthenticationScreenPurpose, PinScreenPurpose } from "../../utils/enum"
 import { showModalClipboardIfValidPayment } from "../../utils/clipboard"
@@ -20,6 +19,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import useToken from "../../utils/use-token"
 
 import BitcoinBeachLogo from "../get-started-screen/bitcoinBeach3.png"
+import useLogout from "../../hooks/use-logout"
 
 const styles = EStyleSheet.create({
   Logo: {
@@ -74,7 +74,8 @@ type Props = {
 
 export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) => {
   const client = useApolloClient()
-  const { hasToken, removeToken, tokenNetwork } = useToken()
+  const { hasToken, tokenNetwork } = useToken()
+  const { logout } = useLogout()
 
   const { screenPurpose, isPinEnabled } = route.params
 
@@ -112,8 +113,8 @@ export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) =
     // so no action is necessary.
   }
 
-  const logout = async () => {
-    await resetDataStore({ client, removeToken }) //TODO this could be replaced with logout from useLogout
+  const logoutAndNavigateToPrimary = async () => {
+    await logout()
     Alert.alert(translate("common.loggedOut"), "", [
       {
         text: translate("common.ok"),
@@ -151,7 +152,7 @@ export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) =
           title={translate("common.logout")}
           buttonStyle={styles.buttonAlternate}
           titleStyle={styles.buttonAlternateTitle}
-          onPress={() => logout()}
+          onPress={() => logoutAndNavigateToPrimary()}
           containerStyle={styles.buttonContainer}
         />
       </>

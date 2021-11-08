@@ -7,7 +7,6 @@ import { useApolloClient } from "@apollo/client"
 
 import { Screen } from "../../components/screen"
 import { color } from "../../theme"
-import { resetDataStore } from "../../utils/logout"
 import { getGraphQLUri, loadNetwork, saveNetwork } from "../../utils/network"
 import { requestPermission } from "../../utils/notifications"
 import useToken from "../../utils/use-token"
@@ -15,6 +14,7 @@ import type { ScreenType } from "../../types/jsx"
 import type { INetwork } from "../../types/network"
 import { networkVar } from "../../graphql/client-only-query"
 import { usePriceConversions } from "../../hooks"
+import useLogout from "../../hooks/use-logout"
 
 const styles = EStyleSheet.create({
   button: {
@@ -30,7 +30,8 @@ const usingHermes = typeof HermesInternal === "object" && HermesInternal !== nul
 export const DebugScreen: ScreenType = () => {
   const client = useApolloClient()
   const { usdPerSat } = usePriceConversions()
-  const { hasToken, tokenUid, tokenNetwork, removeToken } = useToken()
+  const { hasToken, tokenUid, tokenNetwork } = useToken()
+  const { logout } = useLogout()
 
   const networks: INetwork[] = ["regtest", "testnet", "mainnet"]
   const [networkState, setNetworkState] = React.useState("")
@@ -64,7 +65,7 @@ export const DebugScreen: ScreenType = () => {
       {/* <Button
         title="Delete account and log out (TODO)"
         onPress={async () => {
-          resetDataStore()
+          logout()
           if (token.has()) {
             try { // FIXME
               const query = `mutation deleteCurrentUser {
@@ -84,7 +85,7 @@ export const DebugScreen: ScreenType = () => {
         title="Log out"
         style={styles.button}
         onPress={async () => {
-          await resetDataStore({ client, removeToken }) //TODO this could be replaced with logout from useLogout
+          await logout()
           Alert.alert("state succesfully deleted. Restart your app")
         }}
       />
