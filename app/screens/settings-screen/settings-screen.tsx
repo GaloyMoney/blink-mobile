@@ -67,7 +67,8 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
   }
 
   const onGetCsvCallback = async (data) => {
-    const csvEncoded = data.wallet[0].csv
+    const csvEncoded = data.me?.defaultAccount?.csvTransactions
+
     try {
       await Share.open({
         // title: "export-csv-title.csv",
@@ -82,19 +83,23 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
     }
   }
 
+  const me = data?.me || {}
+
+  const defaultWalletId = me.defaultAccount?.wallets?.[0].id
+
   const [getCsv] = useLazyQuery(
     gql`
-      query csv {
-        wallet {
+      query getWalletCSVTransactions($defaultWalletId: WalletId!) {
+        me {
           id
-          csv
+          defaultAccount {
+            csvTransactions(walletIds: [$defaultWalletId])
+          }
         }
       }
     `,
     { onCompleted: onGetCsvCallback },
   )
-
-  const me = data?.me || {}
 
   const [notificationsEnabled, setNotificationsEnabled] = React.useState(false)
 
@@ -119,7 +124,7 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
           : translate("SettingsScreen.activate")
       }
       notificationsEnabled={notificationsEnabled}
-      csvAction={getCsv}
+      csvAction={() => getCsv({ variables: { defaultWalletId } })}
       securityAction={securityAction}
     />
   )
