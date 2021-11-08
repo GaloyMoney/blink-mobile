@@ -1,6 +1,7 @@
 import { MockedProvider } from "@apollo/client/testing"
 import "@mocks/react-navigation-stack"
 import "@mocks/react-native-push-notification"
+import "@mocks/react-native-iphone-x-helper"
 import { render } from "@testing-library/react-native"
 import * as React from "react"
 import { NetworkStatus } from "react-apollo-network-status"
@@ -74,7 +75,7 @@ describe("GlobalError tests", () => {
     expect(toastSpy).toHaveBeenCalledWith("Server Error. Please try again later")
   })
 
-  it(`should show a toast with "Invalid token.\nYou will be logged out" 
+  it(`should show a toast with "You have been logged out." 
       when statusCode >= 400 and < 500; and errorCode is "INVALID_AUTHENTICATION"`, () => {
     renderGlobalErrorToast({
       queryError: {
@@ -86,13 +87,13 @@ describe("GlobalError tests", () => {
     })
 
     expect(toastSpy).toHaveBeenCalledTimes(1)
-    expect(toastSpy).toHaveBeenCalledWith("Invalid token.\nYou will be logged out", {
+    expect(toastSpy).toHaveBeenCalledWith("You have been logged out.", {
       duration: Toast.durations.SHORT,
       onHidden: expect.any(Function),
     })
   })
 
-  it(`should show a toast with "Invalid token.\nYou will be logged out" 
+  it(`should show a toast with "Request issue.\nContact support if the problem persists" 
       when statusCode >= 400 and < 500; and errorCode is DIFFERENT FROM "INVALID_AUTHENTICATION"`, () => {
     renderGlobalErrorToast({
       queryError: { networkError: { statusCode: 400 } },
