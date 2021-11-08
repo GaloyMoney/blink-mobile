@@ -35,7 +35,7 @@ export const GlobalErrorToast: ComponentType = () => {
     const errorCode = (networkError as ServerError).result?.errors?.[0]?.code
     switch (errorCode) {
       case NetworkErrorCode.InvalidAuthentication:
-        toastShow(translate("common.logoutOnInvalidToken"), {
+        toastShow(translate("common.loggedOut"), {
           duration: Toast.durations.SHORT,
           onHidden: () => logout(),
         })
