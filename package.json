@@ -47,7 +47,7 @@
     "bolt11": "nicolasburtey/bolt11",
     "buffer": "^6.0.3",
     "currency.js": "^2.0.2",
-    "graphql": "^15.6.1",
+    "graphql": "^16.0.1",
     "i18n-js": "^3.5.1",
     "intl": "^1.2.5",
     "jwt-decode": "^3.1.2",
@@ -103,7 +103,7 @@
     "react-native-version-number": "^0.3.6",
     "react-native-walkthrough-tooltip": "^1.2.0",
     "react-native-youtube": "^2.0.0",
-    "subscriptions-transport-ws": "^0.9.19",
+    "subscriptions-transport-ws": "^0.11.0",
     "url": "^0.11.0",
     "victory-native": "^35.0.1"
   },
