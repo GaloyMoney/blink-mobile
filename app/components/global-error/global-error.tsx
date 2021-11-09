@@ -28,7 +28,7 @@ export const GlobalErrorToast: ComponentType = () => {
 
   if (networkError.statusCode >= 500) {
     // TODO translation
-    toastShow("Server Error. Please try again later")
+    toastShow(translate("errors.network.server"))
   }
 
   if (networkError.statusCode >= 400 && networkError.statusCode < 500) {
@@ -43,14 +43,14 @@ export const GlobalErrorToast: ComponentType = () => {
 
       default:
         // TODO translation
-        toastShow("Request issue.\nContact support if the problem persists")
+        toastShow(translate("errors.network.request"))
         break
     }
   }
 
   if (networkError.message === "Network request failed") {
     // TODO translation
-    toastShow("Connection issue.\nVerify your internet connection")
+    toastShow(translate("errors.network.connection"))
   }
 
   if (status.mutationError) {
