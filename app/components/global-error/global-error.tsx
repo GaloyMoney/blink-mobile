@@ -2,9 +2,14 @@ import { ServerError, ServerParseError } from "@apollo/client"
 import { useApolloNetworkStatus } from "../../app"
 import { ComponentType } from "../../types/jsx"
 import { toastShow } from "../../utils/toast"
+import { NetworkErrorCode } from "./network-error-code"
+import useLogout from "../../hooks/use-logout"
+import { translate } from "../../i18n"
+import Toast from "react-native-root-toast"
 
 export const GlobalErrorToast: ComponentType = () => {
   const status = useApolloNetworkStatus()
+  const { logout } = useLogout()
 
   // "prices" is a polled query.
   // filter this to not have the error message being showed
@@ -23,17 +28,29 @@ export const GlobalErrorToast: ComponentType = () => {
 
   if (networkError.statusCode >= 500) {
     // TODO translation
-    toastShow("Server Error. Please try again later")
+    toastShow(translate("errors.network.server"))
   }
 
   if (networkError.statusCode >= 400 && networkError.statusCode < 500) {
-    // TODO translation
-    toastShow("Request issue.\nContact support if the problem persists")
+    const errorCode = (networkError as ServerError).result?.errors?.[0]?.code
+    switch (errorCode) {
+      case NetworkErrorCode.InvalidAuthentication:
+        toastShow(translate("common.loggedOut"), {
+          duration: Toast.durations.SHORT,
+          onHidden: () => logout(),
+        })
+        break
+
+      default:
+        // TODO translation
+        toastShow(translate("errors.network.request"))
+        break
+    }
   }
 
   if (networkError.message === "Network request failed") {
     // TODO translation
-    toastShow("Connection issue.\nVerify your internet connection")
+    toastShow(translate("errors.network.connection"))
   }
 
   if (status.mutationError) {

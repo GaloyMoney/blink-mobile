@@ -686,8 +686,8 @@
     "language": "Idioma",
     "lastName": "Apellido",
     "later": "Más tarde",
-    "loggedOut": "Usted ha sido desconectado.",
-    "logout": "cerrar sesion",
+    "loggedOut": "Se ha cerrado su sesión.",
+    "logout": "Cerrar sesion",
     "minutes": "minutos",
     "needWallet": "Valide su teléfono para abrir su billetera",
     "next": "Próximo",
@@ -713,10 +713,15 @@
     "usernameRequired": "El nombre de usuario es requerido"
   },
   "errors": {
-    "generic": "Hubo un error inesperado. Por favor intente más tarde\n",
+    "generic": "Hubo un error inesperado.\nPor favor intente más tarde",
     "invalidEmail": "Correo inválido",
     "invalidPhoneNumber": "Esto no es un número de teléfono válido",
-    "tooManyRequestsPhoneCode": "Demasiadas peticiones. Por favor, espere antes de solicitar otro mensaje de texto."
+    "tooManyRequestsPhoneCode": "Demasiadas peticiones. Por favor, espere antes de solicitar otro mensaje de texto.",
+    "network": {
+      "server": "Hubo un error en el servidor.\nPor favor intente más tarde",
+      "connection": "Error al conectar.\nVerifica tu conexión a internet.",
+      "request": "Hay un error en el requerimiento. Póngase en contacto con el soporte técnico si este problema persiste."
+    }
   },
   "notifications": {
     "payment": {

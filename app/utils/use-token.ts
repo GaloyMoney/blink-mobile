@@ -2,7 +2,7 @@ import * as React from "react"
 import { useReactiveVar } from "@apollo/client"
 import jwtDecode from "jwt-decode"
 
-import { saveString, remove as removeString } from "./storage"
+import { saveString } from "./storage"
 import type { INetwork } from "../types/network"
 import { authTokenVar } from "../graphql/client-only-query"
 
@@ -29,7 +29,6 @@ type UseTokenReturn = {
   hasToken: boolean
 
   saveToken: (token: string) => Promise<boolean>
-  removeToken: () => Promise<void>
 }
 
 export const getAuthorizationHeader = (): string => {
@@ -51,11 +50,6 @@ const useToken = (): UseTokenReturn => {
         const { uid, network } = decodeToken(token)
         authTokenVar({ token, uid, network })
         return saveString(TOKEN_KEY, token)
-      },
-
-      removeToken: async () => {
-        authTokenVar(null)
-        removeString(TOKEN_KEY)
       },
     }),
     [authToken],
