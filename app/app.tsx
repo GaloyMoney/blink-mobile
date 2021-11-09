@@ -230,30 +230,33 @@ export const App = (): JSX.Element => {
     return null
   }
 
+  // TODO: Fix this. It does not work currently
+  const linking: any = {
+    prefixes: ["https://ln.bitcoinbeach.com", "bitcoinbeach://"],
+    config: {
+      screens: {
+        Primary: {
+          screens: {
+            MoveMoney: {
+              initialRouteName: "moveMoney",
+              screens: hasToken
+                ? {
+                    sendBitcoin: ":username",
+                    moveMoney: "/",
+                  }
+                : null,
+            },
+          },
+        },
+      },
+    },
+  }
+
   return (
     <ApolloProvider client={apolloClient}>
       <NavigationContainer
         key={token}
-        linking={{
-          prefixes: ["https://ln.bitcoinbeach.com", "bitcoinbeach://"],
-          config: {
-            screens: {
-              Primary: {
-                screens: {
-                  MoveMoney: {
-                    initialRouteName: "moveMoney",
-                    screens: hasToken
-                      ? {
-                          sendBitcoin: ":username",
-                          moveMoney: "/",
-                        }
-                      : null,
-                  },
-                },
-              },
-            },
-          },
-        }}
+        linking={linking}
         // fallback={<Text>Loading...</Text>}
         onStateChange={(state) => {
           const currentRouteName = getActiveRouteName(state)

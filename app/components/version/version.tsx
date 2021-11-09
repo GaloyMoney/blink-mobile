@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
 })
 
 export const VersionComponent: ComponentType = ({ style }: { style?: TextStyleProp }) => {
-  const { navigate } = useNavigation()
+  const { navigate } = useNavigation<any>()
 
   const [secretMenuCounter, setSecretMenuCounter] = React.useState(0)
   React.useEffect(() => {

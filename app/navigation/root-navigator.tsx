@@ -322,7 +322,6 @@ export const RootStack: NavigatorType = () => {
         component={ReceiveBitcoinScreen}
         options={{
           title: translate("ReceiveBitcoinScreen.title"),
-          // headerShown: false,
         }}
       />
       <RootNavigator.Screen
@@ -426,6 +425,7 @@ export const ContactNavigator: NavigatorType = () => (
       component={ContactsScreen}
       options={{
         title: translate("ContactsScreen.title"),
+        headerShown: false,
       }}
     />
     <StackContacts.Screen
@@ -497,12 +497,12 @@ export const PrimaryNavigator: NavigatorType = () => {
   return (
     <Tab.Navigator
       initialRouteName="MoveMoney"
-      tabBarOptions={{
-        activeTintColor: network === "mainnet" ? palette.lightBlue : palette.orange,
-        inactiveTintColor: palette.midGrey,
-        style: styles.bottomNavigatorStyle,
-        labelStyle: { paddingBottom: 6 },
-        keyboardHidesTabBar: true,
+      screenOptions={{
+        tabBarActiveTintColor: network === "mainnet" ? palette.lightBlue : palette.orange,
+        tabBarInactiveTintColor: palette.midGrey,
+        tabBarStyle: styles.bottomNavigatorStyle,
+        tabBarLabelStyle: { paddingBottom: 6 },
+        tabBarHideOnKeyboard: true,
       }}
     >
       <Tab.Screen
@@ -513,6 +513,7 @@ export const PrimaryNavigator: NavigatorType = () => {
           tabBarIcon: ({ color }: TabProps) => (
             <Icon name="ios-home" size={size} color={color} />
           ),
+          headerShown: false,
         }}
       />
       <Tab.Screen
@@ -530,6 +531,7 @@ export const PrimaryNavigator: NavigatorType = () => {
         component={MapScreen}
         options={{
           title: translate("MapScreen.title"),
+          headerShown: false,
           tabBarIcon: ({ color }: TabProps) => (
             <Icon name="ios-map-outline" size={size} color={color} />
           ),
@@ -540,6 +542,7 @@ export const PrimaryNavigator: NavigatorType = () => {
         component={EarnMapDataInjected}
         options={{
           title: translate("EarnScreen.title"),
+          headerShown: false,
           tabBarIcon: ({ color }: TabProps) => (
             <Icon name="ios-rocket" size={size} color={color} />
           ),

@@ -62,7 +62,7 @@ export const OnboardingScreen: ScreenType = ({
   header = "",
   loading = false,
 }: Props) => {
-  const navigation = useNavigation()
+  const navigation = useNavigation<any>()
   return (
     <>
       <Text style={styles.header}>{header}</Text>
