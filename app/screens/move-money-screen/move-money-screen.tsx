@@ -6,6 +6,7 @@ import {
   AppState,
   FlatList,
   Linking,
+  Platform,
   Pressable,
   RefreshControl,
   StatusBar,
@@ -176,22 +177,18 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  function isUpdateAvailableOrRequired({ buildParameters }) {
+  function isUpdateAvailableOrRequired(mobileVersions) {
     try {
-      const minBuildNumber = isIos
-        ? buildParameters?.find((mobileVersion) => mobileVersion?.platform === "ios")
-            .minSupported
-        : buildParameters?.find((mobileVersion) => mobileVersion?.platform === "android")
-            .minSupported
-      const lastBuildNumber = isIos
-        ? buildParameters?.find((mobileVersion) => mobileVersion?.platform === "ios")
-            .currentSupported
-        : buildParameters?.find((mobileVersion) => mobileVersion?.platform === "android")
-            .currentSupported
+      const minSupportedVersion = mobileVersions?.find(
+        (mobileVersion) => mobileVersion?.platform === Platform.OS,
+      ).minSupported
+      const currentSupportedVersion = mobileVersions?.find(
+        (mobileVersion) => mobileVersion?.platform === Platform.OS,
+      ).currentSupported
       const buildNumber = Number(getBuildNumber())
       return {
-        required: buildNumber < minBuildNumber,
-        available: buildNumber < lastBuildNumber,
+        required: buildNumber < minSupportedVersion,
+        available: buildNumber < currentSupportedVersion,
       }
     } catch (err) {
       return {
@@ -208,9 +205,7 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
       loading={loadingMain}
       error={error}
       refetch={refetch}
-      isUpdateAvailable={
-        isUpdateAvailableOrRequired({ buildParameters: data?.mobileVersions }).available
-      }
+      isUpdateAvailable={isUpdateAvailableOrRequired(data?.mobileVersions).available}
       hasToken={hasToken}
     />
   )
