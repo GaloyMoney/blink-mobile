@@ -210,7 +210,7 @@ export const SendBitcoinScreen: ScreenType = ({
         }
       }
 
-      if (memoInvoice) {
+      if (!memo && memoInvoice) {
         setMemo(memoInvoice.toString())
       }
 
