@@ -67,6 +67,11 @@ export const MAIN_QUERY = gql`
         }
       }
     }
+    mobileVersions {
+      platform
+      currentSupported
+      minSupported
+    }
   }
   ${TRANSACTION_LIST_FRAGMENT}
 `

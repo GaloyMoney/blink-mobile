@@ -179,11 +179,11 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
   function isUpdateAvailableOrRequired({ buildParameters }) {
     try {
       const minBuildNumber = isIos
-        ? buildParameters?.minBuildNumberIos
-        : buildParameters?.minBuildNumberAndroid
+        ? buildParameters?.find(mobileVersion => mobileVersion?.platform === "ios").minSupported
+        : buildParameters?.find(mobileVersion => mobileVersion?.platform === "android").minSupported
       const lastBuildNumber = isIos
-        ? buildParameters?.lastBuildNumberIos
-        : buildParameters?.lastBuildNumberAndroid
+        ? buildParameters?.find(mobileVersion => mobileVersion?.platform === "ios").currentSupported
+        : buildParameters?.find(mobileVersion => mobileVersion?.platform === "android").currentSupported
       const buildNumber = Number(getBuildNumber())
       return {
         required: buildNumber < minBuildNumber,
@@ -205,7 +205,7 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
       error={error}
       refetch={refetch}
       isUpdateAvailable={
-        isUpdateAvailableOrRequired({ buildParameters: data?.buildParameters }).available
+        isUpdateAvailableOrRequired({ buildParameters: data?.mobileVersions }).available
       }
       hasToken={hasToken}
     />
