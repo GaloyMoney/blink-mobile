@@ -95,14 +95,14 @@ export const cacheWallet = (cache: InMemoryCache, balance: number): void => {
         {
           platform: "android",
           currentSupported: 100,
-          minSupported: 50
+          minSupported: 50,
         },
         {
           platform: "ios",
           currentSupported: 100,
-          minSupported: 50
-        }
-      ]
+          minSupported: 50,
+        },
+      ],
     },
   })
 }
