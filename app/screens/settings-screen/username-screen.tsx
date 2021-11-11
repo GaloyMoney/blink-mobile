@@ -71,7 +71,7 @@ export const UsernameScreen: ScreenType = ({ navigation }: Props) => {
       setInputStatus({ message: translate("errors.generic"), status: "error" })
     },
     onCompleted: (data) => {
-      const { errors, user } = data?.userUpdateUsername
+      const { errors, user } = data.userUpdateUsername
 
       const errorMessage =
         errors.length > 0 || !user
