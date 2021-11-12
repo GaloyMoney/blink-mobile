@@ -91,11 +91,8 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
     return null
   }
 
-  const transactionEdges = data.me.defaultAccount.wallets[0].transactions.edges
-  const lastDataCursor =
-    transactionEdges.length > 0
-      ? transactionEdges[transactionEdges.length - 1].cursor
-      : null
+  const { edges, pageInfo } = data.me.defaultAccount.wallets[0].transactions
+  const lastDataCursor = edges.length > 0 ? edges[edges.length - 1].cursor : null
   let lastSeenCursor =
     transactionsRef.current.length > 0
       ? transactionsRef.current[transactionsRef.current.length - 1].cursor
@@ -103,12 +100,14 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
 
   // Add page of data to the source of truth if the data is new
   if (lastSeenCursor !== lastDataCursor) {
-    transactionsRef.current = transactionsRef.current.concat(transactionEdges)
+    transactionsRef.current = transactionsRef.current.concat(edges)
     lastSeenCursor = lastDataCursor
   }
 
   const fetchNextTransactionsPage = () => {
-    refetch({ first: TRANSACTIONS_PER_PAGE, after: lastSeenCursor })
+    if (pageInfo.hasNextPage && lastSeenCursor) {
+      refetch({ first: TRANSACTIONS_PER_PAGE, after: lastSeenCursor })
+    }
   }
 
   const sections = []
@@ -211,7 +210,7 @@ export const TransactionScreen: ScreenType = ({
         </View>
       }
       sections={sections}
-      keyExtractor={(item, index) => item + index}
+      keyExtractor={(item) => item.id}
       onEndReached={fetchNextTransactionsPage}
       onEndReachedThreshold={0.5}
     />

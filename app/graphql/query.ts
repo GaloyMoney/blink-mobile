@@ -9,6 +9,9 @@ export const USERNAME_AVAILABLE = gql`
 
 const TRANSACTION_LIST_FRAGMENT = gql`
   fragment TransactionList on TransactionConnection {
+    pageInfo {
+      hasNextPage
+    }
     edges {
       cursor
       node {
