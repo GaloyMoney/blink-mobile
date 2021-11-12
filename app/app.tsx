@@ -230,30 +230,34 @@ export const App = (): JSX.Element => {
     return null
   }
 
+  // TODO: Fix deep linking. It broke somewhere around version 1.4.11
+  // As of react-navigation 6.x, this code has type problems too
+  const linking: any = {
+    prefixes: ["https://ln.bitcoinbeach.com", "bitcoinbeach://"],
+    config: {
+      screens: {
+        Primary: {
+          screens: {
+            MoveMoney: {
+              initialRouteName: "moveMoney",
+              screens: hasToken
+                ? {
+                    sendBitcoin: ":username",
+                    moveMoney: "/",
+                  }
+                : null,
+            },
+          },
+        },
+      },
+    },
+  }
+
   return (
     <ApolloProvider client={apolloClient}>
       <NavigationContainer
         key={token}
-        linking={{
-          prefixes: ["https://ln.bitcoinbeach.com", "bitcoinbeach://"],
-          config: {
-            screens: {
-              Primary: {
-                screens: {
-                  MoveMoney: {
-                    initialRouteName: "moveMoney",
-                    screens: hasToken
-                      ? {
-                          sendBitcoin: ":username",
-                          moveMoney: "/",
-                        }
-                      : null,
-                  },
-                },
-              },
-            },
-          },
-        }}
+        linking={linking}
         // fallback={<Text>Loading...</Text>}
         onStateChange={(state) => {
           const currentRouteName = getActiveRouteName(state)

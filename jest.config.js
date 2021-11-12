@@ -37,6 +37,7 @@ module.exports = {
       "|react-native-vector-icons" +
       "|@react-native-firebase/auth" +
       "|@react-native-firebase" +
+      "|@react-navigation" +
       ")/)",
   ],
 }

@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
 
 export const ModalClipboard: ComponentType = () => {
   const client = useApolloClient()
-  const navigation = useNavigation()
+  const navigation = useNavigation<any>()
   const { tokenNetwork } = useToken()
 
   const open = async () => {
