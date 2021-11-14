@@ -305,15 +305,17 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
   const client = useApolloClient()
   const { saveToken, hasToken } = useToken()
 
-  const [login, { loading, error }] = useMutation<{
-    login: LoginMutationFunction
-  }>(LOGIN, {
+  const [login, { loading, error }] = useMutation(LOGIN, {
     fetchPolicy: "no-cache",
+    onCompleted: async (data) => {
+      if (data.userLogin.authToken) {
+        await addDeviceToken(client)
+      }
+    },
   })
 
   const onHasToken = useCallback(async () => {
     await queryMain(client, { hasToken })
-    hasToken && addDeviceToken(client)
 
     if (await BiometricWrapper.isSensorAvailable()) {
       navigation.replace("authentication", {
