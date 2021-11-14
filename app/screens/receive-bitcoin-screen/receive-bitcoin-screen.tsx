@@ -1,10 +1,4 @@
-import {
-  gql,
-  useApolloClient,
-  useMutation,
-  useQuery,
-  useSubscription,
-} from "@apollo/client"
+import { gql, useApolloClient, useMutation, useQuery } from "@apollo/client"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { useCallback, useMemo, useEffect, useState } from "react"
@@ -25,19 +19,16 @@ import { ScreenType } from "../../types/jsx"
 import { isIos } from "../../utils/helper"
 import { hasFullPermissions, requestPermission } from "../../utils/notifications"
 import { QRView } from "./qr-view"
-import { useMoneyAmount } from "../../hooks"
+import {
+  useMoneyAmount,
+  useMyCurrencies,
+  usePrevious,
+  useMySubscription,
+} from "../../hooks"
 import { TextCurrency } from "../../components/text-currency"
-import { useCurrencies } from "../../hooks/currency-hooks"
-import { usePrevious } from "../../hooks/use-previous"
 import useToken from "../../utils/use-token"
 import { MAIN_QUERY } from "../../graphql/query"
 import { Button, Text } from "react-native-elements"
-
-// FIXME: crash when no connection
-
-type OperationError = {
-  message: string
-}
 
 const styles = EStyleSheet.create({
   buttonContainer: { marginHorizontal: 52, paddingVertical: 200 },
@@ -105,17 +96,6 @@ const ADD_INVOICE = gql`
   }
 `
 
-const LN_INVOICE_PAYMENT_STATUS = gql`
-  subscription lnInvoicePaymentStatus($input: LnInvoicePaymentStatusInput!) {
-    mutationData: lnInvoicePaymentStatus(input: $input) {
-      errors {
-        message
-      }
-      status
-    }
-  }
-`
-
 const GET_ONCHAIN_ADDRESS = gql`
   mutation onChainAddressCurrent($input: OnChainAddressCurrentInput!) {
     onChainAddressCurrent(input: $input) {
@@ -135,7 +115,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
   const client = useApolloClient()
   const { hasToken } = useToken()
 
-  const { primaryCurrency, secondaryCurrency, toggleCurrency } = useCurrencies()
+  const { primaryCurrency, secondaryCurrency, toggleCurrency } = useMyCurrencies()
 
   const [primaryAmount, _, setPrimaryAmount, setPrimaryAmountValue] =
     useMoneyAmount(primaryCurrency)
@@ -183,22 +163,14 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
 
   const [memo, setMemo] = useState("")
   const [loading, setLoading] = useState(true)
-  const [invoice, setInvoice] = useState("")
+  const [invoice, setInvoice] = useState<{
+    paymentHash: string
+    paymentRequest: string
+  } | null>(null)
   const [err, setErr] = useState("")
-  const [isSucceed, setIsSucceed] = useState(false)
+  const { lnInvoiceStatus } = useMySubscription()
   const [brightnessInitial, setBrightnessInitial] = useState(null)
-  const { data: invoiceStatusSubscriptionData } = useSubscription<{
-    mutationData: {
-      errors: OperationError[]
-      status?: string
-    }
-  }>(LN_INVOICE_PAYMENT_STATUS, {
-    variables: {
-      input: {
-        paymentRequest: invoice,
-      },
-    },
-  })
+
   const updateInvoice = useMemo(
     () =>
       debounce(
@@ -218,7 +190,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
                 setErr(translate("ReceiveBitcoinScreen.error"))
                 return
               }
-              setInvoice(invoice.paymentRequest)
+              setInvoice(invoice)
             } else {
               const {
                 data: {
@@ -232,7 +204,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
                 setErr(translate("ReceiveBitcoinScreen.error"))
                 return
               }
-              setInvoice(invoice.paymentRequest)
+              setInvoice(invoice)
             }
           } catch (err) {
             console.error(err, "error with AddInvoice")
@@ -247,13 +219,6 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
       ),
     [satAmount],
   )
-
-  useEffect(() => {
-    const status = invoiceStatusSubscriptionData?.mutationData?.status
-    if (status === "PAID") {
-      setIsSucceed(true)
-    }
-  }, [invoiceStatusSubscriptionData?.mutationData?.status])
 
   useEffect(() => {
     if (primaryCurrency !== primaryAmount.currency) {
@@ -376,12 +341,16 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
     inputMemoRef?.current?.blur()
   }, [inputMemoRef])
 
+  const invoicePaid =
+    lnInvoiceStatus?.paymentHash === invoice?.paymentHash &&
+    lnInvoiceStatus?.status === "PAID"
+
   return (
     <Screen backgroundColor={palette.lighterGrey} style={styles.screen} preset="fixed">
       <ScrollView keyboardShouldPersistTaps="always">
         <View style={styles.section}>
           <InputPayment
-            editable={!isSucceed}
+            editable={!invoicePaid}
             forceKeyboard={false}
             toggleCurrency={toggleCurrency}
             onUpdateAmount={setPrimaryAmountValue}
@@ -405,7 +374,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
               <Icon name="ios-create-outline" size={21} color={palette.darkGrey} />
             }
             ref={inputMemoRef}
-            disabled={isSucceed}
+            disabled={invoicePaid}
           />
         </View>
         {/* FIXME: fixed height */}
@@ -417,12 +386,12 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
           showsButtons={true}
         >
           <QRView
-            data={invoice}
+            data={invoice?.paymentRequest}
             type="lightning"
             amount={satAmount}
             memo={memo}
             loading={loading}
-            isSucceed={isSucceed}
+            completed={invoicePaid}
             navigation={navigation}
             err={err}
           />
@@ -433,7 +402,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
               amount={satAmount}
               memo={memo}
               loading={loading}
-              isSucceed={isSucceed}
+              completed={invoicePaid}
               navigation={navigation}
               err={err}
             />

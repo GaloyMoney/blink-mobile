@@ -49,7 +49,7 @@ type Props = {
   amount: GetFullUriInput["amount"]
   memo: GetFullUriInput["memo"]
   loading: boolean
-  isSucceed: boolean
+  completed: boolean
   navigation: StackNavigationProp<MoveMoneyStackParamList, "receiveBitcoin">
   err: string
 }
@@ -60,7 +60,7 @@ export const QRView = ({
   amount,
   memo,
   loading,
-  isSucceed,
+  completed,
   navigation,
   err,
 }: Props): JSX.Element => {
@@ -118,7 +118,7 @@ export const QRView = ({
   }, [data, type])
 
   const renderActionLabel = useMemo(() => {
-    if (isSucceed) {
+    if (completed) {
       return <Text>{translate("ReceiveBitcoinScreen.invoicePaid")}</Text>
     }
 
@@ -131,10 +131,10 @@ export const QRView = ({
     }
 
     return <Text> </Text>
-  }, [isSucceed, isReady, copyToClipboard])
+  }, [completed, isReady, copyToClipboard])
 
   const renderSuccessView = useMemo(() => {
-    if (isSucceed) {
+    if (completed) {
       return (
         <LottieView
           source={successLottie}
@@ -146,10 +146,10 @@ export const QRView = ({
       )
     }
     return null
-  }, [isSucceed])
+  }, [completed])
 
   const renderQRCode = useMemo(() => {
-    if (!isSucceed && isReady) {
+    if (!completed && isReady) {
       return (
         <Pressable onPress={copyToClipboard}>
           <QRCode
@@ -167,10 +167,10 @@ export const QRView = ({
       )
     }
     return null
-  }, [copyToClipboard, data, getFullUri, isReady, isSucceed, type])
+  }, [copyToClipboard, data, getFullUri, isReady, completed, type])
 
   const renderStatusView = useMemo(() => {
-    if (!isSucceed && !isReady) {
+    if (!completed && !isReady) {
       return (
         <View style={styles.errorContainer}>
           {(err !== "" && (
@@ -183,7 +183,7 @@ export const QRView = ({
       )
     }
     return null
-  }, [err, isReady, isSucceed])
+  }, [err, isReady, completed])
 
   return (
     <>
@@ -200,11 +200,11 @@ export const QRView = ({
         buttonStyle={styles.buttonStyle}
         containerStyle={styles.buttonContainer}
         title={
-          isSucceed
+          completed
             ? translate("common.ok")
             : translate(configByType[type].shareButtonLabel)
         }
-        onPress={isSucceed ? () => navigation.goBack() : share}
+        onPress={completed ? () => navigation.goBack() : share}
         disabled={!isReady}
         titleStyle={styles.buttonTitle}
       />

@@ -1,7 +1,7 @@
 import { ApolloClient } from "@apollo/client"
 import useToken from "../utils/use-token"
 import { getBtcWallet } from "../graphql/query"
-import { usePriceConversions } from "./currency-hooks"
+import { useMySubscription } from "./user-hooks"
 
 export const useWalletBalance = (
   client: ApolloClient<unknown>,
@@ -9,7 +9,7 @@ export const useWalletBalance = (
   satBalance: number
   usdBalance: number | string
 } => {
-  const { convertCurrencyAmount } = usePriceConversions()
+  const { convertCurrencyAmount, lnInvoiceStatus } = useMySubscription()
   const { hasToken } = useToken()
 
   let satBalance = 0
@@ -21,6 +21,11 @@ export const useWalletBalance = (
       satBalance = wallet.balance
       usdBalance = convertCurrencyAmount({ amount: satBalance, from: "BTC", to: "USD" })
     }
+  }
+
+  if (lnInvoiceStatus?.balance) {
+    satBalance = lnInvoiceStatus?.balance
+    usdBalance = convertCurrencyAmount({ amount: satBalance, from: "BTC", to: "USD" })
   }
 
   return {
