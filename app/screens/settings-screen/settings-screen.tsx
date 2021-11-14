@@ -67,6 +67,23 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
     })
   }
 
+  const logoutAction = async () => {
+    try {
+      await logout()
+      Alert.alert(translate("common.loggedOut"), "", [
+        {
+          text: translate("common.ok"),
+          onPress: () => {
+            navigation.goBack()
+          },
+        },
+      ])
+    } catch (err) {
+      // TODO: figure out why ListItem onPress is swallowing errors
+      console.error(err)
+    }
+  }
+
   const onGetCsvCallback = async (data) => {
     const csvEncoded = data.wallet[0].csv
     try {
@@ -109,7 +126,6 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
     <SettingsScreenJSX
       client={client}
       hasToken={hasToken}
-      resetDataStore={() => logout()}
       navigation={navigation}
       username={me.username}
       phone={me.phone}
@@ -122,6 +138,7 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
       notificationsEnabled={notificationsEnabled}
       csvAction={getCsv}
       securityAction={securityAction}
+      logoutAction={logoutAction}
     />
   )
 }
@@ -134,7 +151,7 @@ type SettingsScreenProps = {
   notificationsEnabled: boolean
   csvAction: (options?: QueryLazyOptions<OperationVariables>) => void
   securityAction: () => void
-  logout: () => Promise<void>
+  logoutAction: () => Promise<void>
 }
 
 export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
@@ -146,7 +163,7 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
     notificationsEnabled,
     csvAction,
     securityAction,
-    logout,
+    logoutAction,
   } = params
   const copyToClipBoard = (username) => {
     Clipboard.setString(LN_PAGE_DOMAIN + username)
@@ -233,17 +250,7 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       category: translate("common.logout"),
       id: "logout",
       icon: "ios-log-out",
-      action: async () => {
-        await logout()
-        Alert.alert(translate("common.loggedOut"), "", [
-          {
-            text: translate("common.ok"),
-            onPress: () => {
-              navigation.goBack()
-            },
-          },
-        ])
-      },
+      action: () => logoutAction(),
       enabled: hasToken,
       greyed: !hasToken,
     },
