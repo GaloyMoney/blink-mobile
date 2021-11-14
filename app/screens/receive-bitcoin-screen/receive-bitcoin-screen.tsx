@@ -137,7 +137,6 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
 
   const { primaryCurrency, secondaryCurrency, toggleCurrency } = useCurrencies()
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [primaryAmount, _, setPrimaryAmount, setPrimaryAmountValue] =
     useMoneyAmount(primaryCurrency)
   const prevPrimaryAmount: MoneyAmount = usePrevious(primaryAmount)
@@ -360,7 +359,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
       primaryAmount?.value === prevPrimaryAmount?.value
     ) {
       // USD/BTC price has changed so don't update
-      //TODO come up with a better way of updating the lightning invoice when price changes.
+      // TODO come up with a better way of updating the lightning invoice when price changes.
       return
     }
     convertSecondaryAmount(primaryAmount)

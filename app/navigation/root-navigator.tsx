@@ -226,8 +226,7 @@ export const RootStack: NavigatorType = () => {
 
   useEffect(() => {
     // onNotificationOpenedApp: When the application is running, but in the background.
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    messaging().onNotificationOpenedApp((remoteMessage) => {
+    messaging().onNotificationOpenedApp((_remoteMessage) => {
       // console.log(
       //   'Notification caused app to open from background state:',
       //   remoteMessage.notification,
@@ -238,8 +237,7 @@ export const RootStack: NavigatorType = () => {
     // getInitialNotification: When the application is opened from a quit state.
     messaging()
       .getInitialNotification()
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      .then((remoteMessage) => {
+      .then((_remoteMessage) => {
         // if (remoteMessage) {
         //   console.log(
         //     'Notification caused app to open from quit state:',

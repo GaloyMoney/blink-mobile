@@ -166,8 +166,7 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
   }, [])
 
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const unsubscribe = messaging().onMessage(async (remoteMessage) => {
+    const unsubscribe = messaging().onMessage(async (_remoteMessage) => {
       // TODO: fine grain query
       // only refresh as necessary
       refetch()
@@ -282,18 +281,14 @@ export const MoveMoneyScreen: ScreenType = ({
     navigation.navigate("phoneValidation")
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const testflight = "https://testflight.apple.com/join/9aC8MMk2"
+  // const testflight = "https://testflight.apple.com/join/9aC8MMk2"
   const appstore = "https://apps.apple.com/app/bitcoin-beach-wallet/id1531383905"
 
   // from https://github.com/FiberJW/react-native-app-link/blob/master/index.js
   const openInStore = async ({
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    appName,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    appStoreId,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    appStoreLocale = "us",
+    // appName,
+    // appStoreId,
+    // appStoreLocale = "us",
     playStoreId,
   }) => {
     if (isIos) {
@@ -306,8 +301,8 @@ export const MoveMoneyScreen: ScreenType = ({
 
   const linkUpgrade = () =>
     openInStore({
-      appName: "Bitcoin Beach Wallet",
-      appStoreId: "",
+      // appName: "Bitcoin Beach Wallet",
+      // appStoreId: "",
       playStoreId: "com.galoyapp",
     }).catch((err) => {
       console.log({ err }, "error app link on link")
