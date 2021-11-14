@@ -3,7 +3,7 @@ import { gql, useApolloClient, useMutation, useQuery } from "@apollo/client"
 
 import { MAIN_QUERY } from "../../graphql/query"
 import useToken from "../../utils/use-token"
-import { usePriceConversions } from "../../hooks/currency-hooks"
+import { useMySubscription } from "../../hooks/user-hooks"
 
 const LIGHTNING_FEES = gql`
   mutation lnInvoiceFeeProbe($input: LnInvoiceFeeProbeInput!) {
@@ -79,7 +79,7 @@ const useFee = ({
   primaryCurrency,
 }: UseFeeInput): UseFeeReturn => {
   const client = useApolloClient()
-  const { formatCurrencyAmount } = usePriceConversions()
+  const { formatCurrencyAmount } = useMySubscription()
   const { hasToken } = useToken()
   const { data: dataMain } = useQuery(MAIN_QUERY, {
     variables: { hasToken },

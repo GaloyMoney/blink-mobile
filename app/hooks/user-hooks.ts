@@ -6,7 +6,7 @@ import {
   prefCurrencyVar as primaryCurrencyVar,
 } from "../graphql/client-only-query"
 
-type UsePriceConversions = {
+type UseMyUpdates = {
   convertCurrencyAmount: (arg0: {
     amount: number
     from: CurrencyType
@@ -14,53 +14,39 @@ type UsePriceConversions = {
   }) => number
   formatCurrencyAmount: (arg0: { sats: number; currency: CurrencyType }) => string
   usdPerSat: string
+  lnInvoiceStatus: {
+    paymentHash: string
+    status: string
+    balance: number
+  } | null
 }
 
-const PRICE_SUBSCRIPTION = gql`
-  subscription price(
-    $amount: SatAmount!
-    $amountCurrencyUnit: ExchangeCurrencyUnit!
-    $priceCurrencyUnit: ExchangeCurrencyUnit!
-  ) {
-    price(
-      input: {
-        amount: $amount
-        amountCurrencyUnit: $amountCurrencyUnit
-        priceCurrencyUnit: $priceCurrencyUnit
-      }
-    ) {
+const ME_SUBSCRIPTION = gql`
+  subscription ME {
+    me {
       errors {
         message
       }
-      price {
-        base
-        offset
-        currencyUnit
-        formattedAmount
+      data {
+        type: __typename
+        ... on Price {
+          base
+          offset
+          currencyUnit
+          formattedAmount
+        }
+        ... on InvoiceStatus {
+          paymentHash
+          status
+          balance
+        }
       }
     }
   }
 `
 
-export const formatUsdAmount: (usd: number) => string = (usd) => {
-  if (usd === 0 || usd >= 0.01) {
-    return usd.toFixed(2)
-  }
-  return usd.toFixed(4)
-}
-
-export const useCurrencies = (): {
-  primaryCurrency: CurrencyType
-  secondaryCurrency: CurrencyType
-  toggleCurrency: () => void
-} => {
-  const primaryCurrency = useReactiveVar<CurrencyType>(primaryCurrencyVar)
-  const secondaryCurrency = primaryCurrency === "BTC" ? "USD" : "BTC"
-  const toggleCurrency = () => primaryCurrencyVar(secondaryCurrency)
-
-  return { primaryCurrency, secondaryCurrency, toggleCurrency }
-}
-
+// Private custom hook to get the initial price from cache (if set)
+// in case the subscription failed to provide an initial price
 const usePriceCache = () => {
   const client = useApolloClient()
   const [cachedPrice] = React.useState(() => {
@@ -80,16 +66,31 @@ const usePriceCache = () => {
   return [cachedPrice, updatePriceCache]
 }
 
-export const usePriceConversions = (): UsePriceConversions => {
+export const formatUsdAmount: (usd: number) => string = (usd) => {
+  if (usd === 0 || usd >= 0.01) {
+    return usd.toFixed(2)
+  }
+  return usd.toFixed(4)
+}
+
+export const useMyCurrencies = (): {
+  primaryCurrency: CurrencyType
+  secondaryCurrency: CurrencyType
+  toggleCurrency: () => void
+} => {
+  // TODO: cache selected primary currenncy
+  const primaryCurrency = useReactiveVar<CurrencyType>(primaryCurrencyVar)
+  const secondaryCurrency = primaryCurrency === "BTC" ? "USD" : "BTC"
+  const toggleCurrency = () => primaryCurrencyVar(secondaryCurrency)
+
+  return { primaryCurrency, secondaryCurrency, toggleCurrency }
+}
+
+export const useMySubscription = (): UseMyUpdates => {
   const [cachedPrice, updatePriceCach] = usePriceCache()
   const priceRef = React.useRef<number>(cachedPrice)
-  const { data } = useSubscription(PRICE_SUBSCRIPTION, {
-    variables: {
-      amount: 1,
-      amountCurrencyUnit: "BTCSAT",
-      priceCurrencyUnit: "USDCENT",
-    },
-  })
+  const lnInvoiceStatusRef = React.useRef<UseMyUpdates["lnInvoiceStatus"]>(null)
+  const { data } = useSubscription(ME_SUBSCRIPTION)
 
   const noPriceData = priceRef.current === 0
 
@@ -128,15 +129,21 @@ export const usePriceConversions = (): UsePriceConversions => {
     [noPriceData],
   )
 
-  if (data?.price?.price) {
-    const { base, offset } = data.price.price
-    priceRef.current = base / 10 ** offset
-    updatePriceCach(priceRef.current)
+  if (data?.me?.data) {
+    if (data.me.data.type === "Price") {
+      const { base, offset } = data.me.data
+      priceRef.current = base / 10 ** offset
+      updatePriceCach(priceRef.current)
+    }
+    if (data.me.data.type === "InvoiceStatus") {
+      lnInvoiceStatusRef.current = data.me.data
+    }
   }
 
   return {
     convertCurrencyAmount,
     formatCurrencyAmount,
     usdPerSat: (priceRef.current / 100).toFixed(8),
+    lnInvoiceStatus: lnInvoiceStatusRef.current,
   }
 }

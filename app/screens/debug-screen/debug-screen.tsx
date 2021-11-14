@@ -13,7 +13,7 @@ import useToken from "../../utils/use-token"
 import type { ScreenType } from "../../types/jsx"
 import type { INetwork } from "../../types/network"
 import { networkVar } from "../../graphql/client-only-query"
-import { usePriceConversions } from "../../hooks"
+import { useMySubscription } from "../../hooks"
 import useLogout from "../../hooks/use-logout"
 
 const styles = EStyleSheet.create({
@@ -29,7 +29,7 @@ const usingHermes = typeof HermesInternal === "object" && HermesInternal !== nul
 
 export const DebugScreen: ScreenType = () => {
   const client = useApolloClient()
-  const { usdPerSat } = usePriceConversions()
+  const { usdPerSat } = useMySubscription()
   const { hasToken, tokenUid, tokenNetwork } = useToken()
   const { logout } = useLogout()
 

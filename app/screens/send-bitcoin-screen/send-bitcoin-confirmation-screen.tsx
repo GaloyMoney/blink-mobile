@@ -11,7 +11,7 @@ import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
 import type { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
 import { queryMain } from "../../graphql/query"
-import { useWalletBalance, usePriceConversions } from "../../hooks"
+import { useWalletBalance, useMySubscription } from "../../hooks"
 import { PaymentStatusIndicator } from "./payment-status-indicator"
 import { color } from "../../theme"
 import { StackNavigationProp } from "@react-navigation/stack"
@@ -82,7 +82,7 @@ export const SendBitcoinConfirmationScreen = ({
   route,
 }: SendBitcoinConfirmationScreenProps): JSX.Element => {
   const client = useApolloClient()
-  const { convertCurrencyAmount, formatCurrencyAmount } = usePriceConversions()
+  const { convertCurrencyAmount, formatCurrencyAmount } = useMySubscription()
   const { satBalance } = useWalletBalance(client)
 
   const {

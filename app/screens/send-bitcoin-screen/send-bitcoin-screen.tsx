@@ -23,7 +23,7 @@ import { IPaymentType, validPayment } from "../../utils/parsing"
 import useToken from "../../utils/use-token"
 import { UsernameValidation } from "../../utils/validation"
 import { TextCurrency } from "../../components/text-currency/text-currency"
-import { useCurrencies, usePriceConversions } from "../../hooks/currency-hooks"
+import { useMyCurrencies, useMySubscription } from "../../hooks/user-hooks"
 import { toastShow } from "../../utils/toast"
 
 export const PRICE_CHECK_INTERVAL = 10000
@@ -46,9 +46,9 @@ export const SendBitcoinScreen: ScreenType = ({
   const client = useApolloClient()
   const { tokenNetwork } = useToken()
 
-  const { formatCurrencyAmount } = usePriceConversions()
+  const { formatCurrencyAmount } = useMySubscription()
   const { satBalance } = useWalletBalance(client)
-  const { primaryCurrency, secondaryCurrency, toggleCurrency } = useCurrencies()
+  const { primaryCurrency, secondaryCurrency, toggleCurrency } = useMyCurrencies()
   const [primaryAmount, convertPrimaryAmount, setPrimaryAmount, setPrimaryAmountValue] =
     useMoneyAmount(primaryCurrency)
   const [
