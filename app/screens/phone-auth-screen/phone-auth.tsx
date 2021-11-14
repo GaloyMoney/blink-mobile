@@ -22,7 +22,6 @@ import { RouteProp } from "@react-navigation/native"
 import { CloseCross } from "../../components/close-cross"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
-import { queryMain } from "../../graphql/query"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import useToken from "../../utils/use-token"
@@ -294,7 +293,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
 }
 
 type WelcomePhoneValidationScreenDataInjectedProps = {
-  navigation: StackNavigationProp<PhoneValidationStackParamList, "welcomePhoneValidation">
+  navigation: StackNavigationProp<any>
   route: RouteProp<PhoneValidationStackParamList, "welcomePhoneValidation">
 }
 
@@ -310,27 +309,22 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
     onCompleted: async (data) => {
       if (data.userLogin.authToken) {
         await addDeviceToken(client)
+
+        if (await BiometricWrapper.isSensorAvailable()) {
+          navigation.replace("authentication", {
+            screenPurpose: AuthenticationScreenPurpose.TurnOnAuthentication,
+          })
+        } else {
+          navigation.navigate("Primary", {
+            screen: "MoveMoney",
+            params: {
+              screen: "moveMoney",
+            },
+          })
+        }
       }
     },
   })
-
-  const onHasToken = useCallback(async () => {
-    await queryMain(client, { hasToken })
-
-    if (await BiometricWrapper.isSensorAvailable()) {
-      navigation.replace("authentication", {
-        screenPurpose: AuthenticationScreenPurpose.TurnOnAuthentication,
-      })
-    } else {
-      navigation.navigate("moveMoney")
-    }
-  }, [client, hasToken, navigation])
-
-  useEffect(() => {
-    if (hasToken) {
-      onHasToken()
-    }
-  }, [hasToken, onHasToken])
 
   return (
     <WelcomePhoneValidationScreen
