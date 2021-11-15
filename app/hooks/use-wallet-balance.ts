@@ -1,6 +1,6 @@
 import { ApolloClient } from "@apollo/client"
 import useToken from "../utils/use-token"
-import { getBtcWallet } from "../graphql/query"
+import { getBtcWallet, TRANSACTIONS_LIST } from "../graphql/query"
 import { useMySubscription } from "./user-hooks"
 
 export const useWalletBalance = (
@@ -26,6 +26,12 @@ export const useWalletBalance = (
   if (lnInvoiceStatus?.balance) {
     satBalance = lnInvoiceStatus?.balance
     usdBalance = convertCurrencyAmount({ amount: satBalance, from: "BTC", to: "USD" })
+    // Update the cached recent transactions list
+    client.query({
+      query: TRANSACTIONS_LIST,
+      variables: { first: 3 },
+      fetchPolicy: "network-only",
+    })
   }
 
   return {
