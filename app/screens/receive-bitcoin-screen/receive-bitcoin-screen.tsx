@@ -166,7 +166,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
     paymentRequest: string
   } | null>(null)
   const [err, setErr] = useState("")
-  const { lnInvoiceStatus } = useMySubscription()
+  const { lnUpdate } = useMySubscription()
   const [brightnessInitial, setBrightnessInitial] = useState(null)
 
   const updateInvoice = useMemo(
@@ -341,8 +341,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
   }, [inputMemoRef])
 
   const invoicePaid =
-    lnInvoiceStatus?.paymentHash === invoice?.paymentHash &&
-    lnInvoiceStatus?.status === "PAID"
+    lnUpdate?.paymentHash === invoice?.paymentHash && lnUpdate?.status === "PAID"
 
   return (
     <Screen backgroundColor={palette.lighterGrey} style={styles.screen} preset="fixed">
