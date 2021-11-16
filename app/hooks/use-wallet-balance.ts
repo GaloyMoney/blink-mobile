@@ -9,23 +9,21 @@ export const useWalletBalance = (
   satBalance: number
   usdBalance: number | string
 } => {
-  const { convertCurrencyAmount, lnInvoiceStatus } = useMySubscription()
+  const { convertCurrencyAmount, currentBalance } = useMySubscription()
   const { hasToken } = useToken()
 
   let satBalance = 0
-  let usdBalance = 0
 
   if (hasToken) {
     const wallet = getBtcWallet(client, { hasToken })
     if (wallet) {
       satBalance = wallet.balance
-      usdBalance = convertCurrencyAmount({ amount: satBalance, from: "BTC", to: "USD" })
     }
   }
 
-  if (lnInvoiceStatus?.balance) {
-    satBalance = lnInvoiceStatus?.balance
-    usdBalance = convertCurrencyAmount({ amount: satBalance, from: "BTC", to: "USD" })
+  if (currentBalance) {
+    satBalance = currentBalance
+
     // Update the cached recent transactions list
     client.query({
       query: TRANSACTIONS_LIST,
@@ -36,6 +34,9 @@ export const useWalletBalance = (
 
   return {
     satBalance,
-    usdBalance,
+    usdBalance:
+      satBalance > 0
+        ? convertCurrencyAmount({ amount: satBalance, from: "BTC", to: "USD" })
+        : 0,
   }
 }

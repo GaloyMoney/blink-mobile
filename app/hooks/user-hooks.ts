@@ -14,20 +14,41 @@ type UseMyUpdates = {
   }) => number
   formatCurrencyAmount: (arg0: { sats: number; currency: CurrencyType }) => string
   usdPerSat: string
-  lnInvoiceStatus: {
+  currentBalance: number | null
+  intraLedgerUpdate: {
+    txNotificationType: string
+    amount: number
+    usdPerSat: number
+  }
+  lnUpdate: {
     paymentHash: string
     status: string
-    balance: number
-  } | null
+  }
+  onChainUpdate: {
+    txNotificationType: string
+    txHash: string
+    amount: number
+    usdPerSat: number
+  }
 }
 
-const ME_SUBSCRIPTION = gql`
-  subscription ME {
-    me {
+const MY_UPDATES_SUBSCRIPTION = gql`
+  subscription myUpdates {
+    myUpdates {
       errors {
         message
       }
-      data {
+      me {
+        id
+        defaultAccount {
+          wallets {
+            id
+            walletCurrency
+            balance
+          }
+        }
+      }
+      update {
         type: __typename
         ... on Price {
           base
@@ -35,10 +56,20 @@ const ME_SUBSCRIPTION = gql`
           currencyUnit
           formattedAmount
         }
-        ... on InvoiceStatus {
+        ... on LnUpdate {
           paymentHash
           status
-          balance
+        }
+        ... on OnChainUpdate {
+          txNotificationType
+          txHash
+          amount
+          usdPerSat
+        }
+        ... on IntraLedgerUpdate {
+          txNotificationType
+          amount
+          usdPerSat
         }
       }
     }
@@ -50,17 +81,12 @@ const ME_SUBSCRIPTION = gql`
 const usePriceCache = () => {
   const client = useApolloClient()
   const [cachedPrice] = React.useState(() => {
-    const lastPriceData = client.readQuery({
-      query: PRICE_CACHE,
-    })
+    const lastPriceData = client.readQuery({ query: PRICE_CACHE })
     return lastPriceData?.price ?? 0
   })
 
   const updatePriceCache = (newPrice) => {
-    client.writeQuery({
-      query: PRICE_CACHE,
-      data: { price: newPrice },
-    })
+    client.writeQuery({ query: PRICE_CACHE, data: { price: newPrice } })
   }
 
   return [cachedPrice, updatePriceCache]
@@ -87,10 +113,14 @@ export const useMyCurrencies = (): {
 }
 
 export const useMySubscription = (): UseMyUpdates => {
+  const { data } = useSubscription(MY_UPDATES_SUBSCRIPTION)
+
   const [cachedPrice, updatePriceCach] = usePriceCache()
+
   const priceRef = React.useRef<number>(cachedPrice)
-  const lnInvoiceStatusRef = React.useRef<UseMyUpdates["lnInvoiceStatus"]>(null)
-  const { data } = useSubscription(ME_SUBSCRIPTION)
+  const intraLedgerUpdate = React.useRef<UseMyUpdates["intraLedgerUpdate"]>(null)
+  const lnUpdate = React.useRef<UseMyUpdates["lnUpdate"]>(null)
+  const onChainUpdate = React.useRef<UseMyUpdates["onChainUpdate"]>(null)
 
   const noPriceData = priceRef.current === 0
 
@@ -129,14 +159,20 @@ export const useMySubscription = (): UseMyUpdates => {
     [noPriceData],
   )
 
-  if (data?.me?.data) {
-    if (data.me.data.type === "Price") {
-      const { base, offset } = data.me.data
+  if (data?.myUpdates?.update) {
+    if (data.myUpdates.update.type === "Price") {
+      const { base, offset } = data.myUpdates.update
       priceRef.current = base / 10 ** offset
       updatePriceCach(priceRef.current)
     }
-    if (data.me.data.type === "InvoiceStatus") {
-      lnInvoiceStatusRef.current = data.me.data
+    if (data.myUpdates.update.type === "IntraLedgerUpdate") {
+      intraLedgerUpdate.current = data.myUpdates.update
+    }
+    if (data.myUpdates.update.type === "LnUpdate") {
+      lnUpdate.current = data.myUpdates.update
+    }
+    if (data.myUpdates.update.type === "OnChainUpdate") {
+      onChainUpdate.current = data.myUpdates.update
     }
   }
 
@@ -144,6 +180,9 @@ export const useMySubscription = (): UseMyUpdates => {
     convertCurrencyAmount,
     formatCurrencyAmount,
     usdPerSat: (priceRef.current / 100).toFixed(8),
-    lnInvoiceStatus: lnInvoiceStatusRef.current,
+    currentBalance: data?.myUpdates?.me?.defaultAccount?.wallets?.[0].balance,
+    intraLedgerUpdate: intraLedgerUpdate.current,
+    lnUpdate: lnUpdate.current,
+    onChainUpdate: onChainUpdate.current,
   }
 }
