@@ -84,7 +84,8 @@ const useFee = ({
   const { data: dataMain } = useQuery(MAIN_QUERY, {
     variables: { hasToken },
   })
-  const walletId = dataMain?.wallet?.[0]?.id ?? ""
+
+  const defaultWalletId = dataMain?.me?.defaultAccount?.defaultWalletId
 
   const [fee, setFee] = useState<FeeType>({
     value: null,
@@ -181,7 +182,7 @@ const useFee = ({
 
         const { data } = await client.query({
           query: ONCHAIN_FEES,
-          variables: { walletId, address, amount: paymentSatAmount },
+          variables: { walletId: defaultWalletId, address, amount: paymentSatAmount },
           fetchPolicy: "no-cache",
         })
         const feeValue = data.onChainTxFee.amount
