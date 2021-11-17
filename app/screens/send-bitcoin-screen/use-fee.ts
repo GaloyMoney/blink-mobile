@@ -67,6 +67,7 @@ type UseFeeReturn = {
   value: number | null
   status: "loading" | "error" | "unset" | "set"
   text: string
+  defaultWalletId: string
 }
 
 const useFee = ({
@@ -97,21 +98,18 @@ const useFee = ({
   // const [getOnchainFees] = useMutation(ONCHAIN_FEES)
 
   if (fee.status !== "unset") {
-    if (fee.status === "loading") {
-      return { ...fee, text: "" }
-    }
-
-    if (fee.status === "error") {
-      return { ...fee, text: "" }
-    }
-
-    if (fee.value === null && paymentType !== "username") {
-      return { ...fee, text: "" }
+    if (
+      fee.status === "loading" ||
+      fee.status === "error" ||
+      (fee.value === null && paymentType !== "username")
+    ) {
+      return { ...fee, text: "", defaultWalletId }
     }
 
     return {
       ...fee,
       text: formatCurrencyAmount({ sats: fee.value ?? 0, currency: primaryCurrency }),
+      defaultWalletId,
     }
   }
 
@@ -209,7 +207,7 @@ const useFee = ({
 
   initializeFee()
 
-  return { ...fee, text: "" }
+  return { ...fee, text: "", defaultWalletId }
 }
 
 export default useFee

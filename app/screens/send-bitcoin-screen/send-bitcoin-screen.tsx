@@ -262,7 +262,7 @@ export const SendBitcoinScreen: ScreenType = ({
         referenceAmount,
         sameNode,
         username: paymentType === "username" ? destination : null,
-        userDefaultWalletId:
+        recipientDefaultWalletId:
           paymentType === "username" ? dataUserDefaultWalletId.userDefaultWalletId : null,
       })
     }
