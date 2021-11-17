@@ -95,7 +95,7 @@ export const SendBitcoinConfirmationScreen = ({
     referenceAmount,
     sameNode,
     username,
-    userDefaultWalletId,
+    recipientDefaultWalletId,
   } = route.params
 
   const [errs, setErrs] = useState<{ message: string }[]>([])
@@ -107,7 +107,7 @@ export const SendBitcoinConfirmationScreen = ({
     to: "BTC",
   })
 
-  const fee = useFee({
+  const { defaultWalletId: myDefaultWalletId, ...fee } = useFee({
     address,
     amountless,
     invoice,
@@ -159,7 +159,7 @@ export const SendBitcoinConfirmationScreen = ({
       const { data, errors } = await intraLedgerPay({
         variables: {
           input: {
-            recipientWalletId: userDefaultWalletId,
+            recipientWalletId: recipientDefaultWalletId,
             amount: paymentSatAmount,
             memo,
           },
@@ -249,6 +249,7 @@ export const SendBitcoinConfirmationScreen = ({
       const { data, errors } = await onchainPay({
         variables: {
           input: {
+            walletId: myDefaultWalletId,
             address,
             amount: paymentSatAmount,
             memo,
