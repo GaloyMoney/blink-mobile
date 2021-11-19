@@ -28,7 +28,7 @@ export const LanguageScreen: ScreenType = () => {
     fetchPolicy: "cache-only",
   })
 
-  const currentLanguage = data?.me?.language ?? "DEFAULT"
+  const currentLanguage = data?.me?.language
 
   const [updateLanguage] = useMutation(
     gql`
@@ -57,23 +57,25 @@ export const LanguageScreen: ScreenType = () => {
         <ListItem
           key={language}
           bottomDivider
-          onPress={() =>
-            updateLanguage({
-              variables: { language },
-              optimisticResponse: {
-                __typename: "Mutation",
-                userUpdateLanguage: {
-                  __typename: "UserUpdateLanguagePayload",
-                  errors: [],
-                  user: {
-                    __typename: "User",
-                    id: tokenUid,
-                    language,
+          onPress={() => {
+            if (language !== currentLanguage) {
+              updateLanguage({
+                variables: { language },
+                optimisticResponse: {
+                  __typename: "Mutation",
+                  userUpdateLanguage: {
+                    __typename: "UserUpdateLanguagePayload",
+                    errors: [],
+                    user: {
+                      __typename: "User",
+                      id: tokenUid,
+                      language,
+                    },
                   },
                 },
-              },
-            })
-          }
+              })
+            }
+          }}
         >
           <ListItem.Title>{LANGUAGES[language]}</ListItem.Title>
           {currentLanguage === language && (
