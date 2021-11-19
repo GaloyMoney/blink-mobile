@@ -3,7 +3,7 @@ module.exports = {
     includes: ["app/**/*.{ts,tsx,js,jsx,graphql}"],
     service: {
       name: `galoy`,
-      url: `http://localhost:4000/graphql`,
+      url: `https://api.mainnet.bitcoinjungle.app/graphql`,
     },
   },
 }
