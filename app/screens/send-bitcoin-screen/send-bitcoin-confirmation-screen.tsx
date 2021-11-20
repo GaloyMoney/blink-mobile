@@ -137,7 +137,7 @@ export const SendBitcoinConfirmationScreen = ({
       setStatus(Status.PENDING)
     } else {
       setStatus(Status.ERROR)
-      if (errors && errors instanceof Array) {
+      if (errors && Array.isArray(errors)) {
         setErrs(
           errors.map((error) => {
             // Todo: provide specific translated error messages in known cases
