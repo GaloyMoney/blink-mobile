@@ -143,11 +143,8 @@ export const RootStack: NavigatorType = () => {
   )
 
   useEffect(() => {
-    AppState.addEventListener("change", _handleAppStateChange)
-
-    return () => {
-      AppState.removeEventListener("change", _handleAppStateChange)
-    }
+    const subscription = AppState.addEventListener("change", _handleAppStateChange)
+    return () => subscription.remove()
   }, [_handleAppStateChange])
 
   const showNotification = (remoteMessage) => {
