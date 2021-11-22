@@ -83,7 +83,7 @@ export const SendBitcoinConfirmationScreen = ({
 }: SendBitcoinConfirmationScreenProps): JSX.Element => {
   const client = useApolloClient()
   const { convertCurrencyAmount, formatCurrencyAmount } = useMySubscription()
-  const { satBalance } = useWalletBalance(client)
+  const { satBalance } = useWalletBalance()
 
   const {
     address,

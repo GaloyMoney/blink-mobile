@@ -142,6 +142,7 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
     variables: { hasToken },
     notifyOnNetworkStatusChange: true,
     errorPolicy: "all",
+    fetchPolicy: "network-only",
   })
 
   // temporary fix until we have a better management of notifications:

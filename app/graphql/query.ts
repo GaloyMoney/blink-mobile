@@ -122,15 +122,6 @@ export const fetchMainQuery = async (
   })
 }
 
-export const getBtcWallet = (client: ApolloClient<unknown>, { hasToken }): Wallet => {
-  const data = client.readQuery({
-    query: MAIN_QUERY,
-    variables: { hasToken },
-  })
-
-  return data?.me?.defaultAccount?.wallets?.[0]
-}
-
 export const getQuizQuestions = (client: MockableApolloClient, { hasToken }) => {
   const data = client.readQuery({
     query: MAIN_QUERY,

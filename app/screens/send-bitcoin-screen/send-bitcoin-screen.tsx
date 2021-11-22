@@ -47,7 +47,7 @@ export const SendBitcoinScreen: ScreenType = ({
   const { tokenNetwork } = useToken()
 
   const { formatCurrencyAmount } = useMySubscription()
-  const { satBalance } = useWalletBalance(client)
+  const { satBalance } = useWalletBalance()
   const { primaryCurrency, secondaryCurrency, toggleCurrency } = useMyCurrencies()
   const [primaryAmount, convertPrimaryAmount, setPrimaryAmount, setPrimaryAmountValue] =
     useMoneyAmount(primaryCurrency)

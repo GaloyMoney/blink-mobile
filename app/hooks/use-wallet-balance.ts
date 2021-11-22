@@ -1,29 +1,34 @@
-import { ApolloClient } from "@apollo/client"
+import { useQuery } from "@apollo/client"
 import useToken from "../utils/use-token"
-import { fetchMainQuery, getBtcWallet } from "../graphql/query"
+import { MAIN_QUERY } from "../graphql/query"
 import { useMySubscription } from "./user-hooks"
 
-export const useWalletBalance = (
-  client: ApolloClient<unknown>,
-): {
+export const useWalletBalance = (): {
   satBalance: number
   usdBalance: number | string
 } => {
   const { convertCurrencyAmount, currentBalance } = useMySubscription()
   const { hasToken } = useToken()
 
-  let satBalance = 0
+  const { data, refetch } = useQuery(MAIN_QUERY, {
+    variables: { hasToken },
+    fetchPolicy: "cache-only",
+  })
 
-  if (hasToken) {
-    const wallet = getBtcWallet(client, { hasToken })
-    if (wallet) {
-      satBalance = wallet.balance
+  const wallet = data?.me?.defaultAccount?.wallets?.[0]
+
+  if (!wallet) {
+    return {
+      satBalance: 0,
+      usdBalance: 0,
     }
   }
 
-  if (currentBalance) {
+  let satBalance = wallet.balance
+
+  if (currentBalance && currentBalance !== satBalance) {
     satBalance = currentBalance
-    fetchMainQuery(client, { hasToken: true })
+    refetch()
   }
 
   return {
