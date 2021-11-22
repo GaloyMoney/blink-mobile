@@ -128,8 +128,10 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
   const [addNoAmountInvoice] = useMutation(ADD_NO_AMOUNT_INVOICE)
   const [addInvoice] = useMutation(ADD_INVOICE)
   const [getOnchainAddress] = useMutation(GET_ONCHAIN_ADDRESS)
+
   const [lastOnChainAddress, setLastOnChainAddress] = useState<string>()
   const [btcAddressRequested, setBtcAddressRequested] = useState<boolean>(false)
+
   const { data } = useQuery(MAIN_QUERY, {
     variables: { hasToken },
     notifyOnNetworkStatusChange: true,
@@ -169,6 +171,8 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
   const { lnUpdate } = useMySubscription()
   const [brightnessInitial, setBrightnessInitial] = useState(null)
 
+  const myDefaultWalletId = data?.me?.defaultAccount?.defaultWalletId
+
   const updateInvoice = useMemo(
     () =>
       debounce(
@@ -181,7 +185,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
                   lnNoAmountInvoiceCreate: { invoice, errors },
                 },
               } = await addNoAmountInvoice({
-                variables: { input: { memo: memo } },
+                variables: { input: { walletId: myDefaultWalletId, memo: memo } },
               })
               if (errors && errors.length !== 0) {
                 console.error(errors, "error with lnNoAmountInvoiceCreate")
@@ -195,7 +199,9 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
                   lnInvoiceCreate: { invoice, errors },
                 },
               } = await addInvoice({
-                variables: { input: { amount: satAmount, memo: memo } },
+                variables: {
+                  input: { walletId: myDefaultWalletId, amount: satAmount, memo: memo },
+                },
               })
               if (errors && errors.length !== 0) {
                 console.error(errors, "error with lnInvoiceCreate")

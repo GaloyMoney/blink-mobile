@@ -5,7 +5,7 @@ import { MAIN_QUERY } from "../../graphql/query"
 import useToken from "../../utils/use-token"
 import { useMySubscription } from "../../hooks/user-hooks"
 
-const LIGHTNING_FEES = gql`
+export const LIGHTNING_FEES = gql`
   mutation lnInvoiceFeeProbe($input: LnInvoiceFeeProbeInput!) {
     lnInvoiceFeeProbe(input: $input) {
       errors {

@@ -189,6 +189,7 @@ export const SendBitcoinConfirmationScreen = ({
       const { data, errors } = await lnPay({
         variables: {
           input: {
+            walletId: myDefaultWalletId,
             paymentRequest: invoice,
             memo,
           },
@@ -220,6 +221,7 @@ export const SendBitcoinConfirmationScreen = ({
       const { data, errors } = await lnNoAmountPay({
         variables: {
           input: {
+            walletId: myDefaultWalletId,
             paymentRequest: invoice,
             amount: paymentSatAmount,
             memo,
