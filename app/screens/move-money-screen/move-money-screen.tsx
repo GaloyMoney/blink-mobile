@@ -263,14 +263,6 @@ export const MoveMoneyScreen: ScreenType = ({
   hasToken,
 }: MoveMoneyScreenProps) => {
   const [modalVisible, setModalVisible] = useState(false)
-  const [secretMenuCounter, setSecretMenuCounter] = useState(0)
-
-  React.useEffect(() => {
-    if (secretMenuCounter > 2) {
-      navigation.navigate("Profile")
-      setSecretMenuCounter(0)
-    }
-  }, [navigation, secretMenuCounter])
 
   const onMenuClick = (target) => {
     hasToken ? navigation.navigate(target) : setModalVisible(true)
