@@ -111,7 +111,7 @@ export const TRANSACTIONS_LIST_FOR_CONTACT = gql`
   ${TRANSACTION_LIST_FRAGMENT}
 `
 
-export const queryMain = async (
+export const fetchMainQuery = async (
   client: ApolloClient<unknown>,
   variables: { hasToken: boolean },
 ): Promise<void> => {

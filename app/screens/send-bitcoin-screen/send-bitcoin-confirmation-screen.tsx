@@ -10,7 +10,7 @@ import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
 import type { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
-import { queryMain } from "../../graphql/query"
+import { fetchMainQuery } from "../../graphql/query"
 import { useWalletBalance, useMySubscription } from "../../hooks"
 import { PaymentStatusIndicator } from "./payment-status-indicator"
 import { color } from "../../theme"
@@ -131,7 +131,7 @@ export const SendBitcoinConfirmationScreen = ({
 
   const handlePaymentReturn = (status, errors) => {
     if (status === "SUCCESS") {
-      queryMain(client, { hasToken: true })
+      fetchMainQuery(client, { hasToken: true })
       setStatus(Status.SUCCESS)
     } else if (status === "PENDING") {
       setStatus(Status.PENDING)

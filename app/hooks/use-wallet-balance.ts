@@ -1,6 +1,6 @@
 import { ApolloClient } from "@apollo/client"
 import useToken from "../utils/use-token"
-import { getBtcWallet, TRANSACTIONS_LIST } from "../graphql/query"
+import { fetchMainQuery, getBtcWallet } from "../graphql/query"
 import { useMySubscription } from "./user-hooks"
 
 export const useWalletBalance = (
@@ -23,13 +23,7 @@ export const useWalletBalance = (
 
   if (currentBalance) {
     satBalance = currentBalance
-
-    // Update the cached recent transactions list
-    client.query({
-      query: TRANSACTIONS_LIST,
-      variables: { first: 3 },
-      fetchPolicy: "network-only",
-    })
+    fetchMainQuery(client, { hasToken: true })
   }
 
   return {

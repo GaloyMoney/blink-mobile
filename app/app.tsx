@@ -43,7 +43,6 @@ import useToken, { getAuthorizationHeader } from "./utils/use-token"
 import { getGraphQLUri, loadNetwork } from "./utils/network"
 import { loadAuthToken, networkVar } from "./graphql/client-only-query"
 import { INetwork } from "./types/network"
-import { queryMain } from "./graphql/query"
 
 export const BUILD_VERSION = "build_version"
 
@@ -221,15 +220,6 @@ export const App = (): JSX.Element => {
     }
     fn()
   }, [networkReactiveVar, token, tokenNetwork])
-
-  useEffect(() => {
-    if (hasToken) {
-      const fetchMainData = async () => {
-        await queryMain(apolloClient, { hasToken })
-      }
-      fetchMainData()
-    }
-  }, [hasToken, apolloClient])
 
   // Before we show the app, we have to wait for our state to be ready.
   // In the meantime, don't render anything. This will be the background
