@@ -60,6 +60,7 @@ export const MAIN_QUERY = gql`
         completed
       }
       defaultAccount {
+        id: defaultWalletId
         defaultWalletId
         wallets {
           id

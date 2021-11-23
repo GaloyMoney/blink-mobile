@@ -25,7 +25,6 @@ import Clipboard from "@react-native-community/clipboard"
 import { toastShow } from "../../utils/toast"
 import useToken from "../../utils/use-token"
 import { MAIN_QUERY } from "../../graphql/query"
-import { LANGUAGES } from "./language-screen"
 import useLogout from "../../hooks/use-logout"
 
 type Props = {
@@ -38,7 +37,6 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
 
   const { data } = useQuery(MAIN_QUERY, {
     variables: { hasToken },
-    fetchPolicy: "cache-only",
   })
 
   const securityAction = async () => {
@@ -108,7 +106,7 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
       navigation={navigation}
       username={me.username}
       phone={me.phone}
-      language={LANGUAGES[me.language]}
+      language={translate(`Languages.${me.language}`)}
       csvAction={() => getCsv({ variables: { defaultWalletId } })}
       securityAction={securityAction}
       logoutAction={logoutAction}

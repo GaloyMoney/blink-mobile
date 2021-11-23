@@ -163,6 +163,7 @@ export const SendBitcoinConfirmationScreen = ({
       const { data, errors } = await intraLedgerPay({
         variables: {
           input: {
+            walletId: myDefaultWalletId,
             recipientWalletId: recipientDefaultWalletId,
             amount: paymentSatAmount,
             memo,

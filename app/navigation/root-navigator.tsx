@@ -358,14 +358,16 @@ export const RootStack: NavigatorType = () => {
         name="language"
         component={LanguageScreen}
         options={() => ({
-          title: "Language preference",
+          title: translate("common.languagePreference"),
+          headerBackTitle: translate("common.back"),
         })}
       />
       <RootNavigator.Screen
         name="security"
         component={SecurityScreen}
         options={() => ({
-          title: "Security",
+          title: translate("common.security"),
+          headerBackTitle: translate("common.back"),
         })}
       />
       <RootNavigator.Screen name="Profile" component={DebugScreen} />

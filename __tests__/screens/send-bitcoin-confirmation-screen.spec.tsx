@@ -29,6 +29,7 @@ const payKeysendUsernameMocks = [
       query: INTRA_LEDGER_PAY,
       variables: {
         input: {
+          walletId: "8e8ed189-4da5-4729-b457-8ef9c069fa6a",
           recipientWalletId: "62af205a-298f-4448-bb31-4b424a27a4ee",
           amount: 68626,
           memo: null,

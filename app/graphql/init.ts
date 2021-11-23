@@ -18,6 +18,7 @@ export const INITWALLET = gql`
 export const initQuery = {
   me: {
     defaultAccount: {
+      id: "BTC",
       defaultWalletId: "BTC",
       wallets: [
         {
