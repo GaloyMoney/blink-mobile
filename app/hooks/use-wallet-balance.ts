@@ -7,11 +7,17 @@ export const useWalletBalance = (): {
   walletId?: string
   satBalance: number
   usdBalance: number | string
+  loading: boolean
 } => {
-  const { convertCurrencyAmount, currentBalance } = useMySubscription()
+  const { convertCurrencyAmount, currentBalance, mySubscriptionLoading } =
+    useMySubscription()
   const { hasToken } = useToken()
 
-  const { data, refetch } = useQuery(MAIN_QUERY, {
+  const {
+    data,
+    refetch,
+    loading: mainQueryLoading,
+  } = useQuery(MAIN_QUERY, {
     variables: { hasToken },
     fetchPolicy: "cache-only",
   })
@@ -22,6 +28,7 @@ export const useWalletBalance = (): {
     return {
       satBalance: 0,
       usdBalance: 0,
+      loading: false,
     }
   }
 
@@ -39,5 +46,6 @@ export const useWalletBalance = (): {
       satBalance > 0
         ? convertCurrencyAmount({ amount: satBalance, from: "BTC", to: "USD" })
         : 0,
+    loading: mySubscriptionLoading && mainQueryLoading,
   }
 }
