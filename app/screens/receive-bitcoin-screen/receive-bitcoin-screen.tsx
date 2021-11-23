@@ -17,7 +17,7 @@ import { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import { ScreenType } from "../../types/jsx"
 import { isIos } from "../../utils/helper"
-import { QRView } from "./qr-view"
+import QRView from "./qr-view"
 import {
   useMoneyAmount,
   useMyCurrencies,
@@ -134,7 +134,6 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
 
   const { data } = useQuery(MAIN_QUERY, {
     variables: { hasToken },
-    notifyOnNetworkStatusChange: true,
     errorPolicy: "all",
   })
 
@@ -176,7 +175,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
   const updateInvoice = useMemo(
     () =>
       debounce(
-        async ({ satAmount, memo }) => {
+        async ({ walletId, satAmount, memo }) => {
           setLoading(true)
           try {
             if (satAmount === 0) {
@@ -185,7 +184,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
                   lnNoAmountInvoiceCreate: { invoice, errors },
                 },
               } = await addNoAmountInvoice({
-                variables: { input: { walletId: myDefaultWalletId, memo: memo } },
+                variables: { input: { walletId, memo } },
               })
               if (errors && errors.length !== 0) {
                 console.error(errors, "error with lnNoAmountInvoiceCreate")
@@ -200,7 +199,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
                 },
               } = await addInvoice({
                 variables: {
-                  input: { walletId: myDefaultWalletId, amount: satAmount, memo: memo },
+                  input: { walletId, amount: satAmount, memo },
                 },
               })
               if (errors && errors.length !== 0) {
@@ -218,10 +217,10 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
             setLoading(false)
           }
         },
-        750,
+        1000,
         { trailing: true },
       ),
-    [satAmount],
+    [addNoAmountInvoice, addInvoice],
   )
 
   useEffect(() => {
@@ -238,10 +237,12 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
     setSecondaryAmount,
   ])
 
-  useEffect(() => {
-    updateInvoice({ satAmount, memo })
-    return () => updateInvoice.cancel()
-  }, [satAmount, memo, updateInvoice])
+  useEffect((): void | (() => void) => {
+    if (myDefaultWalletId) {
+      updateInvoice({ walletId: myDefaultWalletId, satAmount, memo })
+      return () => updateInvoice.cancel()
+    }
+  }, [satAmount, memo, updateInvoice, myDefaultWalletId])
 
   useEffect(() => {
     const fn = async () => {

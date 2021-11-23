@@ -64,7 +64,7 @@ export const QRView = ({
   navigation,
   err,
 }: Props): JSX.Element => {
-  const isReady = type === TYPE_LIGHTNING ? !loading && data !== "" : true
+  const isReady = !err && (type === TYPE_LIGHTNING ? !loading && data !== "" : true)
 
   const getFullUri = useCallback(
     ({ input, uppercase = false, prefix = true }) =>
@@ -245,3 +245,5 @@ const styles = EStyleSheet.create({
     alignItems: "center",
   },
 })
+
+export default React.memo(QRView)
