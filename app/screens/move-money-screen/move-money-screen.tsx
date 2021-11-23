@@ -24,7 +24,7 @@ import { IconTransaction } from "../../components/icon-transactions"
 import { LargeButton } from "../../components/large-button"
 import { Screen } from "../../components/screen"
 import { TransactionItem } from "../../components/transaction-item"
-import { MAIN_QUERY, TRANSACTIONS_LIST } from "../../graphql/query"
+import { MAIN_QUERY } from "../../graphql/query"
 import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
@@ -34,7 +34,6 @@ import { ScreenType } from "../../types/jsx"
 import useToken from "../../utils/use-token"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
-import { toastShow } from "../../utils/toast"
 
 const styles = EStyleSheet.create({
   balanceHeader: {
@@ -111,11 +110,6 @@ const styles = EStyleSheet.create({
     fontWeight: "bold",
   },
 
-  transactionsLoading: {
-    marginTop: "20rem",
-    textAlign: "center",
-  },
-
   transactionsView: {
     flex: 1,
     marginHorizontal: "30rem",
@@ -148,6 +142,7 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
     variables: { hasToken },
     notifyOnNetworkStatusChange: true,
     errorPolicy: "all",
+    fetchPolicy: "network-only",
   })
 
   // temporary fix until we have a better management of notifications:
@@ -166,8 +161,7 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
   }, [])
 
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const unsubscribe = messaging().onMessage(async (remoteMessage) => {
+    const unsubscribe = messaging().onMessage(async (_remoteMessage) => {
       // TODO: fine grain query
       // only refresh as necessary
       refetch()
@@ -205,43 +199,10 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
       loading={loadingMain}
       error={error}
       refetch={refetch}
+      transactionsEdges={data?.me?.defaultAccount?.wallets?.[0].transactions?.edges}
       isUpdateAvailable={isUpdateAvailableOrRequired(data?.mobileVersions).available}
       hasToken={hasToken}
     />
-  )
-}
-
-const RecentTransactions = ({ navigation }) => {
-  const { error, loading, data } = useQuery(TRANSACTIONS_LIST, {
-    variables: { first: 3 },
-  })
-
-  if (error) {
-    toastShow("Error loading recent transactions.")
-    return null
-  }
-
-  if (loading) {
-    return <Text style={styles.transactionsLoading}>Loading...</Text>
-  }
-
-  if (!data?.me?.defaultAccount) {
-    return null
-  }
-
-  const transactionsEdges = data.me.defaultAccount.wallets[0].transactions.edges
-
-  return (
-    <View style={styles.transactionsView}>
-      {transactionsEdges.map(({ node }) => (
-        <TransactionItem
-          key={`transaction-${node.id}`}
-          navigation={navigation}
-          tx={node}
-          subtitle
-        />
-      ))}
-    </View>
   )
 }
 
@@ -249,7 +210,7 @@ type MoveMoneyScreenProps = {
   navigation: StackNavigationProp<MoveMoneyStackParamList, "moveMoney">
   loading: boolean
   error: ApolloError
-  transactions: []
+  transactionsEdges: any[]
   refetch: () => void
   isUpdateAvailable: boolean
   hasToken: boolean
@@ -260,18 +221,11 @@ export const MoveMoneyScreen: ScreenType = ({
   loading,
   error,
   refetch,
+  transactionsEdges,
   isUpdateAvailable,
   hasToken,
 }: MoveMoneyScreenProps) => {
   const [modalVisible, setModalVisible] = useState(false)
-  const [secretMenuCounter, setSecretMenuCounter] = useState(0)
-
-  React.useEffect(() => {
-    if (secretMenuCounter > 2) {
-      navigation.navigate("Profile")
-      setSecretMenuCounter(0)
-    }
-  }, [navigation, secretMenuCounter])
 
   const onMenuClick = (target) => {
     hasToken ? navigation.navigate(target) : setModalVisible(true)
@@ -282,18 +236,14 @@ export const MoveMoneyScreen: ScreenType = ({
     navigation.navigate("phoneValidation")
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const testflight = "https://testflight.apple.com/join/9aC8MMk2"
+  // const testflight = "https://testflight.apple.com/join/9aC8MMk2"
   const appstore = "https://apps.apple.com/app/bitcoin-beach-wallet/id1531383905"
 
   // from https://github.com/FiberJW/react-native-app-link/blob/master/index.js
   const openInStore = async ({
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    appName,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    appStoreId,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    appStoreLocale = "us",
+    // appName,
+    // appStoreId,
+    // appStoreLocale = "us",
     playStoreId,
   }) => {
     if (isIos) {
@@ -306,13 +256,36 @@ export const MoveMoneyScreen: ScreenType = ({
 
   const linkUpgrade = () =>
     openInStore({
-      appName: "Bitcoin Beach Wallet",
-      appStoreId: "",
+      // appName: "Bitcoin Beach Wallet",
+      // appStoreId: "",
       playStoreId: "com.galoyapp",
     }).catch((err) => {
       console.log({ err }, "error app link on link")
       // handle error
     })
+
+  let recentTRansactionsData = undefined
+
+  if (hasToken && transactionsEdges) {
+    recentTRansactionsData = {
+      title: translate("TransactionScreen.title"),
+      target: "transactionHistory",
+      icon: <Icon name="ios-list-outline" size={32} color={palette.black} />,
+      style: "transactionViewContainer",
+      details: (
+        <View style={styles.transactionsView}>
+          {transactionsEdges.map(({ node }) => (
+            <TransactionItem
+              key={`transaction-${node.id}`}
+              navigation={navigation}
+              tx={node}
+              subtitle
+            />
+          ))}
+        </View>
+      ),
+    }
+  }
 
   return (
     <Screen style={styles.screenStyle}>
@@ -394,31 +367,23 @@ export const MoveMoneyScreen: ScreenType = ({
             target: "receiveBitcoin",
             icon: <IconTransaction isReceive size={32} />,
           },
-          ...(hasToken
-            ? [
-                {
-                  title: translate("TransactionScreen.title"),
-                  target: "transactionHistory",
-                  icon: <Icon name="ios-list-outline" size={32} color={palette.black} />,
-                  style: "transactionViewContainer",
-                  details: <RecentTransactions navigation={navigation} />,
-                },
-              ]
-            : []),
+          recentTRansactionsData,
         ]}
         style={styles.listContainer}
         refreshControl={<RefreshControl refreshing={loading} onRefresh={refetch} />}
-        renderItem={({ item }) => (
-          <>
-            <LargeButton
-              title={item.title}
-              icon={item.icon}
-              onPress={() => onMenuClick(item.target)}
-              style={item.style}
-            />
-            {item.details}
-          </>
-        )}
+        renderItem={({ item }) =>
+          item && (
+            <>
+              <LargeButton
+                title={item.title}
+                icon={item.icon}
+                onPress={() => onMenuClick(item.target)}
+                style={item.style}
+              />
+              {item.details}
+            </>
+          )
+        }
       />
       <View style={styles.bottom}>
         {isUpdateAvailable && (

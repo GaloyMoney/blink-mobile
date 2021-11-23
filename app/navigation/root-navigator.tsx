@@ -143,11 +143,8 @@ export const RootStack: NavigatorType = () => {
   )
 
   useEffect(() => {
-    AppState.addEventListener("change", _handleAppStateChange)
-
-    return () => {
-      AppState.removeEventListener("change", _handleAppStateChange)
-    }
+    const subscription = AppState.addEventListener("change", _handleAppStateChange)
+    return () => subscription.remove()
   }, [_handleAppStateChange])
 
   const showNotification = (remoteMessage) => {
@@ -226,8 +223,7 @@ export const RootStack: NavigatorType = () => {
 
   useEffect(() => {
     // onNotificationOpenedApp: When the application is running, but in the background.
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    messaging().onNotificationOpenedApp((remoteMessage) => {
+    messaging().onNotificationOpenedApp((_remoteMessage) => {
       // console.log(
       //   'Notification caused app to open from background state:',
       //   remoteMessage.notification,
@@ -238,8 +234,7 @@ export const RootStack: NavigatorType = () => {
     // getInitialNotification: When the application is opened from a quit state.
     messaging()
       .getInitialNotification()
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      .then((remoteMessage) => {
+      .then((_remoteMessage) => {
         // if (remoteMessage) {
         //   console.log(
         //     'Notification caused app to open from quit state:',
@@ -363,14 +358,16 @@ export const RootStack: NavigatorType = () => {
         name="language"
         component={LanguageScreen}
         options={() => ({
-          title: "Language preference",
+          title: translate("common.languagePreference"),
+          headerBackTitle: translate("common.back"),
         })}
       />
       <RootNavigator.Screen
         name="security"
         component={SecurityScreen}
         options={() => ({
-          title: "Security",
+          title: translate("common.security"),
+          headerBackTitle: translate("common.back"),
         })}
       />
       <RootNavigator.Screen name="Profile" component={DebugScreen} />
@@ -482,23 +479,19 @@ type TabProps = {
 
 export const PrimaryNavigator: NavigatorType = () => {
   const { tokenNetwork } = useToken()
-  const [network, setNetwork] = React.useState("mainnet")
 
-  // TODO: get rid of this
   React.useEffect(() => {
-    ;(async () => {
-      if (tokenNetwork) {
-        analytics().setUserProperties({ network: tokenNetwork })
-        setNetwork(tokenNetwork)
-      }
-    })()
+    if (tokenNetwork) {
+      analytics().setUserProperties({ network: tokenNetwork })
+    }
   }, [tokenNetwork])
 
   return (
     <Tab.Navigator
       initialRouteName="MoveMoney"
       screenOptions={{
-        tabBarActiveTintColor: network === "mainnet" ? palette.lightBlue : palette.orange,
+        tabBarActiveTintColor:
+          tokenNetwork === "mainnet" ? palette.lightBlue : palette.orange,
         tabBarInactiveTintColor: palette.midGrey,
         tabBarStyle: styles.bottomNavigatorStyle,
         tabBarLabelStyle: { paddingBottom: 6 },

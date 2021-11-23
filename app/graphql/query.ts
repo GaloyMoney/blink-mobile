@@ -60,6 +60,8 @@ export const MAIN_QUERY = gql`
         completed
       }
       defaultAccount {
+        id: defaultWalletId
+        defaultWalletId
         wallets {
           id
           balance
@@ -110,7 +112,7 @@ export const TRANSACTIONS_LIST_FOR_CONTACT = gql`
   ${TRANSACTION_LIST_FRAGMENT}
 `
 
-export const queryMain = async (
+export const fetchMainQuery = async (
   client: ApolloClient<unknown>,
   variables: { hasToken: boolean },
 ): Promise<void> => {
@@ -119,15 +121,6 @@ export const queryMain = async (
     variables,
     fetchPolicy: "network-only",
   })
-}
-
-export const getBtcWallet = (client: ApolloClient<unknown>, { hasToken }): Wallet => {
-  const data = client.readQuery({
-    query: MAIN_QUERY,
-    variables: { hasToken },
-  })
-
-  return data?.me?.defaultAccount?.wallets?.[0]
 }
 
 export const getQuizQuestions = (client: MockableApolloClient, { hasToken }) => {

@@ -80,6 +80,8 @@ export const cacheWallet = (cache: InMemoryCache, balance: number): void => {
         phone: "",
         quizQuestions: [],
         defaultAccount: {
+          id: "8e8ed189-4da5-4729-b457-8ef9c069fa6a",
+          defaultWalletId: "8e8ed189-4da5-4729-b457-8ef9c069fa6a",
           wallets: [
             {
               __typename: "BTCWallet",

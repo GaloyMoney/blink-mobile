@@ -611,6 +611,11 @@
     "tapUserName": "Ingrese aquí para configurarlo",
     "title": "Configuración"
   },
+  "Languages": {
+    "DEFAULT": "Predeterminado (OS)",
+    "en-US": "Inglés",
+    "es-SV": "Español"
+  },
   "SplashScreen": {
     "update": "\nTu aplicación está desactualizada. Se necesita una actualización antes de que se pueda utilizar la aplicación. Esto se puede hacer desde PlayStore para Android y Testflight para iOS."
   },
@@ -684,6 +689,7 @@
     "hours": "horas",
     "invoice": "Factura",
     "language": "Idioma",
+    "languagePreference": "Configuración de idioma",
     "lastName": "Apellido",
     "later": "Más tarde",
     "loggedOut": "Se ha cerrado su sesión.",

@@ -126,6 +126,9 @@ export const App = (): JSX.Element => {
         uri: GRAPHQL_WS_URI,
         options: {
           reconnect: true,
+          connectionParams: {
+            authorization: getAuthorizationHeader(),
+          },
         },
       })
 
