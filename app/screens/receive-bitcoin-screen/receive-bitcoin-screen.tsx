@@ -170,7 +170,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
   const { lnUpdate } = useMySubscription()
   const [brightnessInitial, setBrightnessInitial] = useState(null)
 
-  const myDefaultWalletId = data?.me?.defaultAccount?.defaultWalletId
+  const myDefaultWalletId = data?.me?.defaultAccount?.wallets?.[0].id
 
   const updateInvoice = useMemo(
     () =>

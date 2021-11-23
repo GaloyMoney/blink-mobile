@@ -83,7 +83,7 @@ export const SendBitcoinConfirmationScreen = ({
 }: SendBitcoinConfirmationScreenProps): JSX.Element => {
   const client = useApolloClient()
   const { convertCurrencyAmount, formatCurrencyAmount } = useMySubscription()
-  const { satBalance } = useWalletBalance()
+  const { walletId: myDefaultWalletId, satBalance } = useWalletBalance()
 
   const {
     address,
@@ -107,7 +107,8 @@ export const SendBitcoinConfirmationScreen = ({
     to: "BTC",
   })
 
-  const { defaultWalletId: myDefaultWalletId, ...fee } = useFee({
+  const fee = useFee({
+    walletId: myDefaultWalletId,
     address,
     amountless,
     invoice,

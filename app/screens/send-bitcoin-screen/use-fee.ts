@@ -1,8 +1,6 @@
 import { useState } from "react"
-import { gql, useApolloClient, useMutation, useQuery } from "@apollo/client"
+import { gql, useApolloClient, useMutation } from "@apollo/client"
 
-import { MAIN_QUERY } from "../../graphql/query"
-import useToken from "../../utils/use-token"
 import { useMySubscription } from "../../hooks/user-hooks"
 
 export const LIGHTNING_FEES = gql`
@@ -54,6 +52,7 @@ type FeeType = {
 }
 
 type UseFeeInput = {
+  walletId: string
   address: string
   amountless: boolean
   invoice: string
@@ -67,10 +66,10 @@ type UseFeeReturn = {
   value: number | null
   status: "loading" | "error" | "unset" | "set"
   text: string
-  defaultWalletId: string
 }
 
 const useFee = ({
+  walletId,
   address,
   amountless,
   invoice,
@@ -81,12 +80,6 @@ const useFee = ({
 }: UseFeeInput): UseFeeReturn => {
   const client = useApolloClient()
   const { formatCurrencyAmount } = useMySubscription()
-  const { hasToken } = useToken()
-  const { data: dataMain } = useQuery(MAIN_QUERY, {
-    variables: { hasToken },
-  })
-
-  const defaultWalletId = dataMain?.me?.defaultAccount?.defaultWalletId
 
   const [fee, setFee] = useState<FeeType>({
     value: null,
@@ -95,7 +88,10 @@ const useFee = ({
 
   const [getLightningFees] = useMutation(LIGHTNING_FEES)
   const [getNoAmountLightningFees] = useMutation(NO_AMOUNT_LIGHTNING_FEES)
-  // const [getOnchainFees] = useMutation(ONCHAIN_FEES)
+
+  if (!walletId) {
+    return { ...fee, text: "" }
+  }
 
   if (fee.status !== "unset") {
     if (
@@ -103,13 +99,12 @@ const useFee = ({
       fee.status === "error" ||
       (fee.value === null && paymentType !== "username")
     ) {
-      return { ...fee, text: "", defaultWalletId }
+      return { ...fee, text: "" }
     }
 
     return {
       ...fee,
       text: formatCurrencyAmount({ sats: fee.value ?? 0, currency: primaryCurrency }),
-      defaultWalletId,
     }
   }
 
@@ -180,7 +175,7 @@ const useFee = ({
 
         const { data } = await client.query({
           query: ONCHAIN_FEES,
-          variables: { walletId: defaultWalletId, address, amount: paymentSatAmount },
+          variables: { walletId, address, amount: paymentSatAmount },
           fetchPolicy: "no-cache",
         })
         const feeValue = data.onChainTxFee.amount
@@ -207,7 +202,7 @@ const useFee = ({
 
   initializeFee()
 
-  return { ...fee, text: "", defaultWalletId }
+  return { ...fee, text: "" }
 }
 
 export default useFee

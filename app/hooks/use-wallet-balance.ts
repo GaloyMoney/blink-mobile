@@ -4,6 +4,7 @@ import { MAIN_QUERY } from "../graphql/query"
 import { useMySubscription } from "./user-hooks"
 
 export const useWalletBalance = (): {
+  walletId?: string
   satBalance: number
   usdBalance: number | string
 } => {
@@ -32,6 +33,7 @@ export const useWalletBalance = (): {
   }
 
   return {
+    walletId: wallet.id,
     satBalance,
     usdBalance:
       satBalance > 0

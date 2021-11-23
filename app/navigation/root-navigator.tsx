@@ -479,23 +479,19 @@ type TabProps = {
 
 export const PrimaryNavigator: NavigatorType = () => {
   const { tokenNetwork } = useToken()
-  const [network, setNetwork] = React.useState("mainnet")
 
-  // TODO: get rid of this
   React.useEffect(() => {
-    ;(async () => {
-      if (tokenNetwork) {
-        analytics().setUserProperties({ network: tokenNetwork })
-        setNetwork(tokenNetwork)
-      }
-    })()
+    if (tokenNetwork) {
+      analytics().setUserProperties({ network: tokenNetwork })
+    }
   }, [tokenNetwork])
 
   return (
     <Tab.Navigator
       initialRouteName="MoveMoney"
       screenOptions={{
-        tabBarActiveTintColor: network === "mainnet" ? palette.lightBlue : palette.orange,
+        tabBarActiveTintColor:
+          tokenNetwork === "mainnet" ? palette.lightBlue : palette.orange,
         tabBarInactiveTintColor: palette.midGrey,
         tabBarStyle: styles.bottomNavigatorStyle,
         tabBarLabelStyle: { paddingBottom: 6 },
