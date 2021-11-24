@@ -30,6 +30,7 @@ type UseMyUpdates = {
     amount: number
     usdPerSat: number
   }
+  mySubscriptionLoading: boolean
 }
 
 const MY_UPDATES_SUBSCRIPTION = gql`
@@ -113,7 +114,7 @@ export const useMyCurrencies = (): {
 }
 
 export const useMySubscription = (): UseMyUpdates => {
-  const { data } = useSubscription(MY_UPDATES_SUBSCRIPTION)
+  const { data, loading } = useSubscription(MY_UPDATES_SUBSCRIPTION)
 
   const [cachedPrice, updatePriceCach] = usePriceCache()
 
@@ -180,9 +181,10 @@ export const useMySubscription = (): UseMyUpdates => {
     convertCurrencyAmount,
     formatCurrencyAmount,
     usdPerSat: (priceRef.current / 100).toFixed(8),
-    currentBalance: data?.myUpdates?.me?.defaultAccount?.wallets?.[0].balance,
+    currentBalance: data?.myUpdates?.me?.defaultAccount?.wallets?.[0]?.balance,
     intraLedgerUpdate: intraLedgerUpdate.current,
     lnUpdate: lnUpdate.current,
     onChainUpdate: onChainUpdate.current,
+    mySubscriptionLoading: loading,
   }
 }

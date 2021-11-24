@@ -83,7 +83,7 @@ export const SendBitcoinConfirmationScreen = ({
 }: SendBitcoinConfirmationScreenProps): JSX.Element => {
   const client = useApolloClient()
   const { convertCurrencyAmount, formatCurrencyAmount } = useMySubscription()
-  const { walletId: myDefaultWalletId, satBalance } = useWalletBalance()
+  const { walletId: myDefaultWalletId, satBalance, loading } = useWalletBalance()
 
   const {
     address,
@@ -296,6 +296,14 @@ export const SendBitcoinConfirmationScreen = ({
       return
     }
   }
+
+  useEffect(() => {
+    if (loading) {
+      setStatus(Status.LOADING)
+    } else {
+      setStatus(Status.IDLE)
+    }
+  }, [loading])
 
   useEffect(() => {
     if (status === "loading" || status === "idle") {
