@@ -4,6 +4,7 @@ export const INITWALLET = gql`
   query InitWallet {
     me {
       defaultAccount {
+        id
         defaultWalletId
         wallets {
           id

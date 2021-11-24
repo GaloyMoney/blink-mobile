@@ -92,6 +92,7 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
         me {
           id
           defaultAccount {
+            id
             csvTransactions(walletIds: [$defaultWalletId])
           }
         }

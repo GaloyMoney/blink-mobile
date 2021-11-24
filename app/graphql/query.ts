@@ -60,7 +60,7 @@ export const MAIN_QUERY = gql`
         completed
       }
       defaultAccount {
-        id: defaultWalletId
+        id
         defaultWalletId
         wallets {
           id
@@ -86,6 +86,7 @@ export const TRANSACTIONS_LIST = gql`
     me {
       id
       defaultAccount {
+        id
         wallets {
           id
           transactions(first: $first, after: $after) {

@@ -133,13 +133,15 @@ const useFee = ({
         let feeValue: number
         if (amountless) {
           const { data } = await getNoAmountLightningFees({
-            variables: { input: { paymentRequest: invoice, amount: paymentSatAmount } },
+            variables: {
+              input: { walletId, paymentRequest: invoice, amount: paymentSatAmount },
+            },
           })
 
           feeValue = data.lnNoAmountInvoiceFeeProbe.amount
         } else {
           const { data } = await getLightningFees({
-            variables: { input: { paymentRequest: invoice } },
+            variables: { input: { walletId, paymentRequest: invoice } },
           })
 
           feeValue = data.lnInvoiceFeeProbe.amount

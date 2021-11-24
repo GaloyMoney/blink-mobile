@@ -42,6 +42,7 @@ const MY_UPDATES_SUBSCRIPTION = gql`
       me {
         id
         defaultAccount {
+          id
           wallets {
             id
             walletCurrency
