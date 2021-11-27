@@ -413,7 +413,7 @@ export const SendBitcoinConfirmationScreen = ({
     status === Status.SUCCESS || status === Status.PENDING || status === Status.ERROR
 
   return (
-    <Screen preset="scroll">
+    <Screen>
       <View style={styles.mainView}>
         <View style={styles.paymentInformationContainer}>
           <PaymentConfirmationInformation
@@ -475,15 +475,16 @@ export const SendBitcoinConfirmationScreen = ({
 
 const styles = EStyleSheet.create({
   bottomContainer: {
-    flex: 2,
+    flex: 4,
+    flexDirection: "column",
     justifyContent: "flex-end",
+    marginBottom: "24rem",
   },
 
   buttonStyle: {
     backgroundColor: color.primary,
-    marginBottom: "32rem",
     marginHorizontal: "12rem",
-    marginTop: "32rem",
+    marginTop: "12rem",
   },
 
   confirmationText: {
@@ -497,7 +498,7 @@ const styles = EStyleSheet.create({
 
   errorContainer: {
     alignItems: "center",
-    flex: 1,
+    flex: 2,
   },
 
   errorText: {
@@ -506,12 +507,13 @@ const styles = EStyleSheet.create({
   },
 
   mainView: {
-    flex: 1,
+    flex: 6,
+    flexDirection: "column",
     paddingHorizontal: "24rem",
   },
 
   paymentInformationContainer: {
-    flex: 4,
+    flex: 2,
   },
 
   paymentLottieContainer: {
