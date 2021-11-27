@@ -191,7 +191,10 @@ export const RootStack: NavigatorType = () => {
     fetchPolicy: "cache-only",
   })
 
-  i18n.locale = data?.me?.language === "DEFAULT" ? languageTag : data?.me?.language
+  i18n.locale =
+    !data?.me?.language || data?.me?.language === "DEFAULT"
+      ? languageTag
+      : data?.me?.language
 
   // TODO: need to add isHeadless?
   // https://rnfirebase.io/messaging/usage
