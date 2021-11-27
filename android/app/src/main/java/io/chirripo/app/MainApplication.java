@@ -1,4 +1,4 @@
-package com.galoyapp;
+package io.chirripo.app;
 
 import android.app.Application;
 import android.content.Context;
