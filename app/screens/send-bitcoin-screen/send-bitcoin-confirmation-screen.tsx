@@ -10,7 +10,7 @@ import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
 import type { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
-import { fetchMainQuery, TRANSACTIONS_LIST } from "../../graphql/query"
+import { fetchMainQuery } from "../../graphql/query"
 import { useWalletBalance, useMySubscription } from "../../hooks"
 import { PaymentStatusIndicator } from "./payment-status-indicator"
 import { color } from "../../theme"
@@ -119,33 +119,21 @@ export const SendBitcoinConfirmationScreen = ({
   })
 
   const [lnPay] = useMutation(LN_PAY, {
-    refetchQueries: [
-      "mainQuery",
-      { query: TRANSACTIONS_LIST, variables: { first: 20, after: null } },
-    ],
+    refetchQueries: ["mainQuery"],
   })
 
   const [lnNoAmountPay] = useMutation(LN_NO_AMOUNT_PAY, {
-    refetchQueries: [
-      "mainQuery",
-      { query: TRANSACTIONS_LIST, variables: { first: 20, after: null } },
-    ],
+    refetchQueries: ["mainQuery"],
   })
 
   const [intraLedgerPay] = useMutation(INTRA_LEDGER_PAY, {
-    refetchQueries: [
-      "mainQuery",
-      { query: TRANSACTIONS_LIST, variables: { first: 20, after: null } },
-    ],
+    refetchQueries: ["mainQuery"],
   })
 
   // TODO: add user automatically to cache
 
   const [onchainPay] = useMutation(ONCHAIN_PAY, {
-    refetchQueries: [
-      "mainQuery",
-      { query: TRANSACTIONS_LIST, variables: { first: 20, after: null } },
-    ],
+    refetchQueries: ["mainQuery"],
   })
 
   const handlePaymentReturn = (status, errors) => {
