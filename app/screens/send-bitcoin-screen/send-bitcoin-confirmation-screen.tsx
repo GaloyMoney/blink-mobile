@@ -478,7 +478,7 @@ const styles = EStyleSheet.create({
     flex: 4,
     justifyContent: "flex-end",
     flexDirection: "column",
-    marginBottom: "24rem"
+    marginBottom: "24rem",
   },
 
   buttonStyle: {
