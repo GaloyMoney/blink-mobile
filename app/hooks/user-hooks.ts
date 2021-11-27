@@ -13,7 +13,7 @@ type UseMyUpdates = {
     to: CurrencyType
   }) => number
   formatCurrencyAmount: (arg0: { sats: number; currency: CurrencyType }) => string
-  usdPerSat: string
+  usdPerSat: string | null
   currentBalance: number | null
   intraLedgerUpdate: {
     txNotificationType: string
@@ -181,7 +181,7 @@ export const useMySubscription = (): UseMyUpdates => {
   return {
     convertCurrencyAmount,
     formatCurrencyAmount,
-    usdPerSat: (priceRef.current / 100).toFixed(8),
+    usdPerSat: priceRef.current === 0 ? null : (priceRef.current / 100).toFixed(8),
     currentBalance: data?.myUpdates?.me?.defaultAccount?.wallets?.[0]?.balance,
     intraLedgerUpdate: intraLedgerUpdate.current,
     lnUpdate: lnUpdate.current,
