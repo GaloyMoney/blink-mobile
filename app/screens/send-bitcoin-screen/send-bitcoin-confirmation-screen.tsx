@@ -476,8 +476,8 @@ export const SendBitcoinConfirmationScreen = ({
 const styles = EStyleSheet.create({
   bottomContainer: {
     flex: 4,
-    justifyContent: "flex-end",
     flexDirection: "column",
+    justifyContent: "flex-end",
     marginBottom: "24rem",
   },
 
@@ -508,8 +508,8 @@ const styles = EStyleSheet.create({
 
   mainView: {
     flex: 6,
-    paddingHorizontal: "24rem",
     flexDirection: "column",
+    paddingHorizontal: "24rem",
   },
 
   paymentInformationContainer: {
