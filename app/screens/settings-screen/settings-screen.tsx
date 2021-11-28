@@ -107,7 +107,7 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
       navigation={navigation}
       username={me.username}
       phone={me.phone}
-      language={translate(`Languages.${me.language}`)}
+      language={translate(`Languages.${me.language || "DEFAULT"}`)}
       csvAction={() => getCsv({ variables: { defaultWalletId } })}
       securityAction={securityAction}
       logoutAction={logoutAction}

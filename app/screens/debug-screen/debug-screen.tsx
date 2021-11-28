@@ -128,27 +128,12 @@ export const DebugScreen: ScreenType = () => {
           }}
         /> */}
       <View>
-        <Text>
-          UID:
-          {tokenUid}
-        </Text>
-        <Text>
-          Token network:
-          {tokenNetwork}
-        </Text>
-        <Text>
-          GRAPHQL_URL:
-          {graphQLURIs.GRAPHQL_URI}
-        </Text>
-        <Text>
-          GRAPHQL_WS_URL:
-          {graphQLURIs.GRAPHQL_WS_URI}
-        </Text>
-        <Text>USD per 1 sat: ${usdPerSat}</Text>
-        <Text>
-          Hermes:
-          {String(!!usingHermes)}
-        </Text>
+        <Text>UID: {tokenUid}</Text>
+        <Text>Token network: {tokenNetwork}</Text>
+        <Text>GRAPHQL_URL: {graphQLURIs.GRAPHQL_URI}</Text>
+        <Text>GRAPHQL_WS_URL: {graphQLURIs.GRAPHQL_WS_URI}</Text>
+        <Text>USD per 1 sat: {usdPerSat ? `$${usdPerSat}` : "No price data"}</Text>
+        <Text>Hermes: {String(!!usingHermes)}</Text>
 
         <ButtonGroup
           onPress={(index) => {

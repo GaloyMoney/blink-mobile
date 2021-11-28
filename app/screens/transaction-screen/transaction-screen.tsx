@@ -73,8 +73,7 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
 
   const { error, data, refetch, loading } = useQuery(TRANSACTIONS_LIST, {
     variables: { first: TRANSACTIONS_PER_PAGE, after: null },
-    fetchPolicy: "cache-and-network",
-    nextFetchPolicy: "network-only",
+    fetchPolicy: "network-only",
   })
 
   const prefCurrency = useReactiveVar(prefCurrencyVar)
