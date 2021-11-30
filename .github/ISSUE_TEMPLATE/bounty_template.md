@@ -6,10 +6,10 @@ labels: bounty
 assignees: ""
 ---
 
-**Title**
+## Title
 A title for the bounty.
 
-**Description**
+## Description
 A clear and concise description of what needs to be added.
 
 | Date added    | Bounty Amount |
