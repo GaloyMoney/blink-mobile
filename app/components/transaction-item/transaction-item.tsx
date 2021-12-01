@@ -62,24 +62,22 @@ const amountDisplay = ({ primaryCurrency, settlementAmount, usdAmount }) => {
 }
 
 const descriptionDisplay = (tx: WalletTransaction) => {
-  const { memo, direction, otherPartyUsername, __typename } = tx
+  const { memo, direction, settlementVia } = tx
   if (memo) {
     return memo
   }
 
   const isReceive = direction === "RECEIVE"
 
-  if (otherPartyUsername) {
-    return isReceive ? `From ${otherPartyUsername}` : `To ${otherPartyUsername}`
-  }
-
-  switch (__typename) {
-    case "OnChainTransaction":
+  switch (settlementVia.__typename) {
+    case "SettlementViaOnChain":
       return "OnChain Receipt"
-    case "LnTransaction":
+    case "SettlementViaLn":
       return "Invoice"
-    case "IntraLedgerTransaction":
-      return isReceive ? "From BitcoinBeach Wallet" : "To BitcointBeach Wallet"
+    case "SettlementViaIntraLedger":
+      return isReceive
+        ? `From ${settlementVia.counterPartyUsername || "BitcoinBeach Wallet"}`
+        : `To ${settlementVia.counterPartyUsername || "BitcointBeach Wallet"}`
   }
 }
 

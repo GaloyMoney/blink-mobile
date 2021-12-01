@@ -5,25 +5,43 @@ type SettlementPrice = {
   currencyUnit: string
 }
 
-type TransactionType = "IntraLedgerTransaction" | "LnTransaction" | "OnChainTransaction"
+type SettlementViaType =
+  | "SettlementViaIntraLedger"
+  | "SettlementViaLn"
+  | "SettlementViaOnChain"
+
+type SettlementViaIntraLedger = {
+  readonly __typename: "SettlementViaIntraLedger"
+  readonly walletId: string
+  readonly counterPartyUsername: string | null
+}
+
+type SettlementViaLn = {
+  readonly __typename: "SettlementViaLn"
+  readonly paymentHash: string
+}
+
+type SettlementViaOnChain = {
+  readonly __typename: "SettlementViaOnChain"
+  transactionHash: string
+}
 
 type WalletTransaction = {
-  readonly __typename: TransactionType
+  readonly __typename: "Transaction"
   readonly id: string
-  readonly walletId: string | null
-  readonly initiationVia: "intraledger" | "onchain" | "lightning"
-  readonly settlementVia: "intraledger" | "onchain" | "lightning"
   readonly settlementAmount: number
   readonly settlementFee: number
   readonly settlementUsdPerSat: number
   readonly settlementPrice: SettlementPrice
-  readonly otherPartyUsername: string | null
-  readonly addresses: string[] | null
-  readonly paymentHash: string | null
   readonly status: string
   readonly direction: "SEND" | "RECEIVE"
   readonly memo: string | null
   readonly createdAt: number
+
+  readonly settlementVia:
+    | SettlementViaIntraLedger
+    | SettlementViaLn
+    | SettlementViaOnChain
 }
 
 type MutationError = {

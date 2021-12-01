@@ -17,21 +17,42 @@ const TRANSACTION_LIST_FRAGMENT = gql`
       node {
         __typename
         id
-        settlementAmount
-        settlementFee
         status
         direction
+        memo
+        createdAt
+
+        settlementAmount
+        settlementFee
         settlementPrice {
           base
           offset
         }
-        memo
-        createdAt
-        ... on LnTransaction {
-          paymentHash
+
+        initiationVia {
+          __typename
+          ... on InitiationViaIntraLedger {
+            counterPartyUsername
+          }
+          ... on InitiationViaLn {
+            paymentHash
+          }
+          ... on InitiationViaOnChain {
+            address
+          }
         }
-        ... on IntraLedgerTransaction {
-          otherPartyUsername
+
+        settlementVia {
+          __typename
+          ... on SettlementViaIntraLedger {
+            counterPartyUsername
+          }
+          ... on SettlementViaLn {
+            paymentSecret
+          }
+          ... on SettlementViaOnChain {
+            transactionHash
+          }
         }
       }
     }
