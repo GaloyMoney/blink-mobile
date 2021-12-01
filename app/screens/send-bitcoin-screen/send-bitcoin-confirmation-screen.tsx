@@ -10,8 +10,8 @@ import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import { Screen } from "../../components/screen"
 import { translate } from "../../i18n"
 import type { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
-import { queryMain } from "../../graphql/query"
-import { useWalletBalance, usePriceConversions } from "../../hooks"
+import { fetchMainQuery } from "../../graphql/query"
+import { useWalletBalance, useMySubscription } from "../../hooks"
 import { PaymentStatusIndicator } from "./payment-status-indicator"
 import { color } from "../../theme"
 import { StackNavigationProp } from "@react-navigation/stack"
@@ -82,8 +82,8 @@ export const SendBitcoinConfirmationScreen = ({
   route,
 }: SendBitcoinConfirmationScreenProps): JSX.Element => {
   const client = useApolloClient()
-  const { convertCurrencyAmount, formatCurrencyAmount } = usePriceConversions()
-  const { satBalance } = useWalletBalance(client)
+  const { convertCurrencyAmount, formatCurrencyAmount } = useMySubscription()
+  const { walletId: myDefaultWalletId, satBalance, loading } = useWalletBalance()
 
   const {
     address,
@@ -95,7 +95,7 @@ export const SendBitcoinConfirmationScreen = ({
     referenceAmount,
     sameNode,
     username,
-    userDefaultWalletId,
+    recipientDefaultWalletId,
   } = route.params
 
   const [errs, setErrs] = useState<{ message: string }[]>([])
@@ -108,6 +108,7 @@ export const SendBitcoinConfirmationScreen = ({
   })
 
   const fee = useFee({
+    walletId: myDefaultWalletId,
     address,
     amountless,
     invoice,
@@ -117,9 +118,13 @@ export const SendBitcoinConfirmationScreen = ({
     primaryCurrency,
   })
 
-  const [lnPay] = useMutation(LN_PAY, { refetchQueries: ["mainQuery"] })
+  const [lnPay] = useMutation(LN_PAY, {
+    refetchQueries: ["mainQuery"],
+  })
 
-  const [lnNoAmountPay] = useMutation(LN_NO_AMOUNT_PAY, { refetchQueries: ["mainQuery"] })
+  const [lnNoAmountPay] = useMutation(LN_NO_AMOUNT_PAY, {
+    refetchQueries: ["mainQuery"],
+  })
 
   const [intraLedgerPay] = useMutation(INTRA_LEDGER_PAY, {
     refetchQueries: ["mainQuery"],
@@ -127,22 +132,28 @@ export const SendBitcoinConfirmationScreen = ({
 
   // TODO: add user automatically to cache
 
-  const [onchainPay] = useMutation(ONCHAIN_PAY, { refetchQueries: ["mainQuery"] })
+  const [onchainPay] = useMutation(ONCHAIN_PAY, {
+    refetchQueries: ["mainQuery"],
+  })
 
   const handlePaymentReturn = (status, errors) => {
     if (status === "SUCCESS") {
-      queryMain(client, { hasToken: true })
+      fetchMainQuery(client, { hasToken: true })
       setStatus(Status.SUCCESS)
     } else if (status === "PENDING") {
       setStatus(Status.PENDING)
     } else {
       setStatus(Status.ERROR)
-      setErrs(
-        errors.map((error) => {
-          // Todo: provide specific translated error messages in known cases
-          return { message: translate("errors.generic") + error.message }
-        }),
-      )
+      if (errors && Array.isArray(errors)) {
+        setErrs(
+          errors.map((error) => {
+            // Todo: provide specific translated error messages in known cases
+            return { message: translate("errors.generic") + error.message }
+          }),
+        )
+      } else {
+        setErrs([{ message: translate("errors.generic") }])
+      }
     }
   }
 
@@ -159,7 +170,8 @@ export const SendBitcoinConfirmationScreen = ({
       const { data, errors } = await intraLedgerPay({
         variables: {
           input: {
-            recipientWalletId: userDefaultWalletId,
+            walletId: myDefaultWalletId,
+            recipientWalletId: recipientDefaultWalletId,
             amount: paymentSatAmount,
             memo,
           },
@@ -185,6 +197,7 @@ export const SendBitcoinConfirmationScreen = ({
       const { data, errors } = await lnPay({
         variables: {
           input: {
+            walletId: myDefaultWalletId,
             paymentRequest: invoice,
             memo,
           },
@@ -216,6 +229,7 @@ export const SendBitcoinConfirmationScreen = ({
       const { data, errors } = await lnNoAmountPay({
         variables: {
           input: {
+            walletId: myDefaultWalletId,
             paymentRequest: invoice,
             amount: paymentSatAmount,
             memo,
@@ -249,6 +263,7 @@ export const SendBitcoinConfirmationScreen = ({
       const { data, errors } = await onchainPay({
         variables: {
           input: {
+            walletId: myDefaultWalletId,
             address,
             amount: paymentSatAmount,
             memo,
@@ -287,6 +302,14 @@ export const SendBitcoinConfirmationScreen = ({
       return
     }
   }
+
+  useEffect(() => {
+    if (loading) {
+      setStatus(Status.LOADING)
+    } else {
+      setStatus(Status.IDLE)
+    }
+  }, [loading])
 
   useEffect(() => {
     if (status === "loading" || status === "idle") {
@@ -378,7 +401,7 @@ export const SendBitcoinConfirmationScreen = ({
     status === Status.SUCCESS || status === Status.PENDING || status === Status.ERROR
 
   return (
-    <Screen preset="scroll">
+    <Screen>
       <View style={styles.mainView}>
         <View style={styles.paymentInformationContainer}>
           <PaymentConfirmationInformation
@@ -440,15 +463,16 @@ export const SendBitcoinConfirmationScreen = ({
 
 const styles = EStyleSheet.create({
   bottomContainer: {
-    flex: 2,
+    flex: 4,
+    flexDirection: "column",
     justifyContent: "flex-end",
+    marginBottom: "24rem",
   },
 
   buttonStyle: {
     backgroundColor: color.primary,
-    marginBottom: "32rem",
     marginHorizontal: "12rem",
-    marginTop: "32rem",
+    marginTop: "12rem",
   },
 
   confirmationText: {
@@ -462,7 +486,7 @@ const styles = EStyleSheet.create({
 
   errorContainer: {
     alignItems: "center",
-    flex: 1,
+    flex: 2,
   },
 
   errorText: {
@@ -471,12 +495,13 @@ const styles = EStyleSheet.create({
   },
 
   mainView: {
-    flex: 1,
+    flex: 6,
+    flexDirection: "column",
     paddingHorizontal: "24rem",
   },
 
   paymentInformationContainer: {
-    flex: 4,
+    flex: 2,
   },
 
   paymentLottieContainer: {

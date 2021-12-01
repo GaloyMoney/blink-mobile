@@ -13,7 +13,7 @@ import useToken from "../../utils/use-token"
 import type { ScreenType } from "../../types/jsx"
 import type { INetwork } from "../../types/network"
 import { networkVar } from "../../graphql/client-only-query"
-import { usePriceConversions } from "../../hooks"
+import { useMySubscription } from "../../hooks"
 import useLogout from "../../hooks/use-logout"
 
 const styles = EStyleSheet.create({
@@ -29,7 +29,7 @@ const usingHermes = typeof HermesInternal === "object" && HermesInternal !== nul
 
 export const DebugScreen: ScreenType = () => {
   const client = useApolloClient()
-  const { usdPerSat } = usePriceConversions()
+  const { usdPerSat } = useMySubscription()
   const { hasToken, tokenUid, tokenNetwork } = useToken()
   const { logout } = useLogout()
 
@@ -128,27 +128,12 @@ export const DebugScreen: ScreenType = () => {
           }}
         /> */}
       <View>
-        <Text>
-          UID:
-          {tokenUid}
-        </Text>
-        <Text>
-          Token network:
-          {tokenNetwork}
-        </Text>
-        <Text>
-          GRAPHQL_URL:
-          {graphQLURIs.GRAPHQL_URI}
-        </Text>
-        <Text>
-          GRAPHQL_WS_URL:
-          {graphQLURIs.GRAPHQL_WS_URI}
-        </Text>
-        <Text>USD per 1 sat: ${usdPerSat}</Text>
-        <Text>
-          Hermes:
-          {String(!!usingHermes)}
-        </Text>
+        <Text>UID: {tokenUid}</Text>
+        <Text>Token network: {tokenNetwork}</Text>
+        <Text>GRAPHQL_URL: {graphQLURIs.GRAPHQL_URI}</Text>
+        <Text>GRAPHQL_WS_URL: {graphQLURIs.GRAPHQL_WS_URI}</Text>
+        <Text>USD per 1 sat: {usdPerSat ? `$${usdPerSat}` : "No price data"}</Text>
+        <Text>Hermes: {String(!!usingHermes)}</Text>
 
         <ButtonGroup
           onPress={(index) => {

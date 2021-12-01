@@ -4,6 +4,8 @@ export const INITWALLET = gql`
   query InitWallet {
     me {
       defaultAccount {
+        id
+        defaultWalletId
         wallets {
           id
           balance
@@ -17,6 +19,8 @@ export const INITWALLET = gql`
 export const initQuery = {
   me: {
     defaultAccount: {
+      id: "BTC",
+      defaultWalletId: "BTC",
       wallets: [
         {
           __typename: "Wallet",

@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react"
-import { usePriceConversions } from "./currency-hooks"
+import { useMySubscription } from "./user-hooks"
 
 type UseMoneyAmountFunction = (
   currency: CurrencyType,
@@ -11,7 +11,7 @@ type UseMoneyAmountFunction = (
 ]
 
 export const useMoneyAmount: UseMoneyAmountFunction = (currency) => {
-  const { convertCurrencyAmount, usdPerSat } = usePriceConversions()
+  const { convertCurrencyAmount, usdPerSat } = useMySubscription()
 
   const [moneyAmount, setMoneyAmount] = useState<MoneyAmount>({
     value: 0,

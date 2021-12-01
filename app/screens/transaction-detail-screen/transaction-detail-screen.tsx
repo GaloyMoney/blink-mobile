@@ -87,29 +87,28 @@ type Props = {
   route: RouteProp<RootStackParamList, "transactionDetail">
 }
 
-const typeDisplay = (type: TransactionType) => {
+const typeDisplay = (type: SettlementViaType) => {
   switch (type) {
-    case "OnChainTransaction":
+    case "SettlementViaOnChain":
       return "OnChain"
-    case "LnTransaction":
+    case "SettlementViaLn":
       return "Lightning"
-    case "IntraLedgerTransaction":
+    case "SettlementViaIntraLedger":
       return "BitcoinBeach"
   }
 }
 
 export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props) => {
   const {
+    id,
+    description,
+
     settlementAmount,
     settlementFee,
     settlementPrice,
     usdAmount,
 
-    paymentHash,
-    description,
-    id,
-    __typename,
-    otherPartyUsername,
+    settlementVia,
 
     isReceive,
     isPending,
@@ -163,14 +162,22 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
         <Row entry={translate("common.date")} value={dateDisplay} />
         {!isReceive && <Row entry={translate("common.fees")} value={feeEntry} />}
         <Row entry={translate("common.description")} value={description} />
-        {otherPartyUsername && (
+        {settlementVia.__typename === "SettlementViaIntraLedger" && (
           <Row
             entry={translate("TransactionDetailScreen.paid")}
-            value={otherPartyUsername}
+            value={settlementVia.counterPartyUsername || "BitcoinBeach Wallet"}
           />
         )}
-        <Row entry={translate("common.type")} value={typeDisplay(__typename)} />
-        {paymentHash && <Row entry="Hash" value={paymentHash} />}
+        <Row
+          entry={translate("common.type")}
+          value={typeDisplay(settlementVia.__typename)}
+        />
+        {settlementVia.__typename === "SettlementViaLn" && (
+          <Row entry="Hash" value={settlementVia.paymentHash} />
+        )}
+        {settlementVia.__typename === "SettlementViaOnChain" && (
+          <Row entry="Hash" value={settlementVia.transactionHash} />
+        )}
         {id && <Row entry="id" value={id} />}
       </View>
       <CloseCross color={palette.white} onPress={() => navigation.goBack()} />
