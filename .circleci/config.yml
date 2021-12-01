@@ -18,7 +18,7 @@ commands:
 jobs:
   build_ios:
     macos:
-      xcode: 12.5.1
+      xcode: 13.1.0
     working_directory: ~/galoy-mobile
     environment:
       FL_OUTPUT_DIR: output
@@ -67,7 +67,7 @@ jobs:
 
   build_android:
     docker:
-      - image: circleci/android:api-29
+      - image: circleci/android:api-30
     resource_class: large
     environment:
       TERM: dumb
@@ -80,7 +80,7 @@ jobs:
           path: ~/galoy-mobile
       - run: sudo apt-get update
       - run: sudo apt-get install gnupg2
-      - run: curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+      - run: curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
       - run: sudo apt-get install -y nodejs
       - run: sudo apt-get install gcc g++ make
       - run: sudo npm install -g yarn
@@ -110,15 +110,15 @@ jobs:
       - run: echo $GRADLE_OPTS
       - run: cd android && fastlane android beta
 
-      - gke-auth
-      - run:
-          name: upload latest apk to gcs
-          command: |
-            cd ~/galoy-mobile/android/app/build
-            VERSION_CODE=$(jq .elements[0].apkData.versionCode ./intermediates/instant_app_manifest/release/output.json)
-            cd ./outputs/apk/release/
-            gsutil cp ./app-release.apk gs://bitcoin-beach-wallet/"$VERSION_CODE".apk
-            gsutil cp ./app-release.apk gs://bitcoin-beach-wallet/latest.apk
+      # - gke-auth
+      # - run:
+      #     name: upload latest apk to gcs
+      #     command: |
+      #       cd ~/galoy-mobile/android/app/build
+      #       VERSION_CODE=$(jq .elements[0].apkData.versionCode ./intermediates/instant_app_manifest/release/output.json)
+      #       cd ./outputs/apk/release/
+      #       gsutil cp ./app-release.apk gs://bitcoin-beach-wallet/"$VERSION_CODE".apk
+      #       gsutil cp ./app-release.apk gs://bitcoin-beach-wallet/latest.apk
 
       - run: git config credential.helper 'cache --timeout=120'
       - run: git config --global user.name "circleci-bot"

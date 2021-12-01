@@ -1,4 +1,5 @@
 import { gql, useMutation, useQuery } from "@apollo/client"
+import { translate } from "../../i18n"
 import * as React from "react"
 import { ListItem } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
@@ -15,12 +16,6 @@ const styles = EStyleSheet.create({
   },
 })
 
-export const LANGUAGES = {
-  "DEFAULT": "Default (OS)",
-  "en-US": "English",
-  "es-SV": "Español",
-} as const
-
 export const LanguageScreen: ScreenType = () => {
   const { tokenUid, hasToken } = useToken()
   const { data } = useQuery(MAIN_QUERY, {
@@ -28,7 +23,7 @@ export const LanguageScreen: ScreenType = () => {
     fetchPolicy: "cache-only",
   })
 
-  const currentLanguage = data?.me?.language ?? "DEFAULT"
+  const currentLanguage = data?.me?.language
 
   const [updateLanguage] = useMutation(
     gql`
@@ -57,25 +52,27 @@ export const LanguageScreen: ScreenType = () => {
         <ListItem
           key={language}
           bottomDivider
-          onPress={() =>
-            updateLanguage({
-              variables: { language },
-              optimisticResponse: {
-                __typename: "Mutation",
-                userUpdateLanguage: {
-                  __typename: "UserUpdateLanguagePayload",
-                  errors: [],
-                  user: {
-                    __typename: "UserLanguageDetails",
-                    id: tokenUid,
-                    language,
+          onPress={() => {
+            if (language !== currentLanguage) {
+              updateLanguage({
+                variables: { language },
+                optimisticResponse: {
+                  __typename: "Mutation",
+                  userUpdateLanguage: {
+                    __typename: "UserUpdateLanguagePayload",
+                    errors: [],
+                    user: {
+                      __typename: "User",
+                      id: tokenUid,
+                      language,
+                    },
                   },
                 },
-              },
-            })
-          }
+              })
+            }
+          }}
         >
-          <ListItem.Title>{LANGUAGES[language]}</ListItem.Title>
+          <ListItem.Title>{translate(`Languages.${language}`)}</ListItem.Title>
           {currentLanguage === language && (
             <Icon name="ios-checkmark-circle" size={18} color={palette.green} />
           )}

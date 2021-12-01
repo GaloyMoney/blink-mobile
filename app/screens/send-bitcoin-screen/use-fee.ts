@@ -1,11 +1,9 @@
 import { useState } from "react"
-import { gql, useApolloClient, useMutation, useQuery } from "@apollo/client"
+import { gql, useApolloClient, useMutation } from "@apollo/client"
 
-import { MAIN_QUERY } from "../../graphql/query"
-import useToken from "../../utils/use-token"
-import { usePriceConversions } from "../../hooks/currency-hooks"
+import { useMySubscription } from "../../hooks/user-hooks"
 
-const LIGHTNING_FEES = gql`
+export const LIGHTNING_FEES = gql`
   mutation lnInvoiceFeeProbe($input: LnInvoiceFeeProbeInput!) {
     lnInvoiceFeeProbe(input: $input) {
       errors {
@@ -54,6 +52,7 @@ type FeeType = {
 }
 
 type UseFeeInput = {
+  walletId: string
   address: string
   amountless: boolean
   invoice: string
@@ -70,6 +69,7 @@ type UseFeeReturn = {
 }
 
 const useFee = ({
+  walletId,
   address,
   amountless,
   invoice,
@@ -79,12 +79,7 @@ const useFee = ({
   primaryCurrency,
 }: UseFeeInput): UseFeeReturn => {
   const client = useApolloClient()
-  const { formatCurrencyAmount } = usePriceConversions()
-  const { hasToken } = useToken()
-  const { data: dataMain } = useQuery(MAIN_QUERY, {
-    variables: { hasToken },
-  })
-  const walletId = dataMain?.wallet?.[0]?.id ?? ""
+  const { formatCurrencyAmount } = useMySubscription()
 
   const [fee, setFee] = useState<FeeType>({
     value: null,
@@ -93,18 +88,17 @@ const useFee = ({
 
   const [getLightningFees] = useMutation(LIGHTNING_FEES)
   const [getNoAmountLightningFees] = useMutation(NO_AMOUNT_LIGHTNING_FEES)
-  // const [getOnchainFees] = useMutation(ONCHAIN_FEES)
+
+  if (!walletId) {
+    return { ...fee, text: "" }
+  }
 
   if (fee.status !== "unset") {
-    if (fee.status === "loading") {
-      return { ...fee, text: "" }
-    }
-
-    if (fee.status === "error") {
-      return { ...fee, text: "" }
-    }
-
-    if (fee.value === null && paymentType !== "username") {
+    if (
+      fee.status === "loading" ||
+      fee.status === "error" ||
+      (fee.value === null && paymentType !== "username")
+    ) {
       return { ...fee, text: "" }
     }
 
@@ -139,13 +133,15 @@ const useFee = ({
         let feeValue: number
         if (amountless) {
           const { data } = await getNoAmountLightningFees({
-            variables: { input: { paymentRequest: invoice, amount: paymentSatAmount } },
+            variables: {
+              input: { walletId, paymentRequest: invoice, amount: paymentSatAmount },
+            },
           })
 
           feeValue = data.lnNoAmountInvoiceFeeProbe.amount
         } else {
           const { data } = await getLightningFees({
-            variables: { input: { paymentRequest: invoice } },
+            variables: { input: { walletId, paymentRequest: invoice } },
           })
 
           feeValue = data.lnInvoiceFeeProbe.amount

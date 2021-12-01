@@ -71,8 +71,9 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
 }: Props) => {
   const currency = "sat" // FIXME
 
-  const { error, data, refetch } = useQuery(TRANSACTIONS_LIST, {
+  const { error, data, refetch, loading } = useQuery(TRANSACTIONS_LIST, {
     variables: { first: TRANSACTIONS_PER_PAGE, after: null },
+    fetchPolicy: "network-only",
   })
 
   const prefCurrency = useReactiveVar(prefCurrencyVar)
@@ -153,6 +154,8 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
       nextPrefCurrency={nextPrefCurrency}
       sections={sections}
       fetchNextTransactionsPage={fetchNextTransactionsPage}
+      loading={loading}
+      refetch={refetch}
     />
   )
 }
@@ -166,6 +169,8 @@ type TransactionScreenProps = {
   nextPrefCurrency: () => void
   sections: []
   fetchNextTransactionsPage: () => void
+  loading: boolean
+  refetch: () => void
 }
 
 export const TransactionScreen: ScreenType = ({
@@ -175,6 +180,8 @@ export const TransactionScreen: ScreenType = ({
   nextPrefCurrency,
   sections,
   fetchNextTransactionsPage,
+  loading,
+  refetch,
 }: TransactionScreenProps) => (
   <Screen style={styles.screen}>
     <SectionList
@@ -213,6 +220,8 @@ export const TransactionScreen: ScreenType = ({
       keyExtractor={(item) => item.id}
       onEndReached={fetchNextTransactionsPage}
       onEndReachedThreshold={0.5}
+      onRefresh={() => refetch()}
+      refreshing={loading}
     />
   </Screen>
 )

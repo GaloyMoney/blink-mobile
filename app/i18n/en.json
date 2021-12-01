@@ -574,6 +574,11 @@
     "tapUserName": "Tap to set username",
     "title": "Settings"
   },
+  "Languages": {
+    "DEFAULT": "Default (OS)",
+    "en-US": "English",
+    "es-SV": "Spanish"
+  },
   "SplashScreen": {
     "update": "Your app is outdated. An update is needed before the app can be used.\n\nThis can be done from the PlayStore for Android and Testflight for iOS"
   },
@@ -648,6 +653,7 @@
     "hours": "hours",
     "invoice": "Invoice",
     "language": "Language",
+    "languagePreference": "Language preference",
     "lastName": "Last Name",
     "later": "Later",
     "loggedOut": "You have been logged out.",

@@ -1,14 +1,12 @@
 import * as React from "react"
-import { Alert, View } from "react-native"
+import { Alert, Text, TextStyle } from "react-native"
 import Share from "react-native-share"
 import { Divider, Icon, ListItem } from "react-native-elements"
 import { StackNavigationProp } from "@react-navigation/stack"
 import {
-  ApolloClient,
   gql,
   OperationVariables,
   QueryLazyOptions,
-  useApolloClient,
   useLazyQuery,
   useQuery,
 } from "@apollo/client"
@@ -20,7 +18,6 @@ import { palette } from "../../theme/palette"
 import { LN_PAGE_DOMAIN, WHATSAPP_CONTACT_NUMBER } from "../../constants/support"
 import { translate } from "../../i18n"
 import { openWhatsApp } from "../../utils/external"
-import { hasFullPermissions, requestPermission } from "../../utils/notifications"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
@@ -28,33 +25,18 @@ import Clipboard from "@react-native-community/clipboard"
 import { toastShow } from "../../utils/toast"
 import useToken from "../../utils/use-token"
 import { MAIN_QUERY } from "../../graphql/query"
-import { LANGUAGES } from "./language-screen"
 import useLogout from "../../hooks/use-logout"
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "settings">
 }
 
-type ComponentProps = {
-  icon: string
-  category: string
-  id: string
-  i: number
-  enabled: boolean
-  greyed: boolean
-  defaultValue?: string
-  action: () => void
-  styleDivider?: ViewStyleProp
-}
-
 export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
-  const client = useApolloClient()
   const { hasToken } = useToken()
   const { logout } = useLogout()
 
   const { data } = useQuery(MAIN_QUERY, {
     variables: { hasToken },
-    fetchPolicy: "cache-only",
   })
 
   const securityAction = async () => {
@@ -67,8 +49,26 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
     })
   }
 
+  const logoutAction = async () => {
+    try {
+      await logout()
+      Alert.alert(translate("common.loggedOut"), "", [
+        {
+          text: translate("common.ok"),
+          onPress: () => {
+            navigation.goBack()
+          },
+        },
+      ])
+    } catch (err) {
+      // TODO: figure out why ListItem onPress is swallowing errors
+      console.error(err)
+    }
+  }
+
   const onGetCsvCallback = async (data) => {
-    const csvEncoded = data.wallet[0].csv
+    const csvEncoded = data.me?.defaultAccount?.csvTransactions
+
     try {
       await Share.open({
         // title: "export-csv-title.csv",
@@ -83,70 +83,73 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
     }
   }
 
+  const me = data?.me || {}
+  const defaultWalletId = me.defaultAccount?.defaultWalletId
+
   const [getCsv] = useLazyQuery(
     gql`
-      query csv {
-        wallet {
+      query getWalletCSVTransactions($defaultWalletId: WalletId!) {
+        me {
           id
-          csv
+          defaultAccount {
+            id
+            csvTransactions(walletIds: [$defaultWalletId])
+          }
         }
       }
     `,
     { onCompleted: onGetCsvCallback },
   )
 
-  const me = data?.me || {}
-
-  const [notificationsEnabled, setNotificationsEnabled] = React.useState(false)
-
-  React.useEffect(() => {
-    ;(async () => {
-      setNotificationsEnabled(await hasFullPermissions())
-    })()
-  }, [])
-
   return (
     <SettingsScreenJSX
-      client={client}
       hasToken={hasToken}
-      resetDataStore={() => logout()}
       navigation={navigation}
       username={me.username}
       phone={me.phone}
-      language={LANGUAGES[me.language]}
-      notifications={
-        notificationsEnabled
-          ? translate("SettingsScreen.activated")
-          : translate("SettingsScreen.activate")
-      }
-      notificationsEnabled={notificationsEnabled}
-      csvAction={getCsv}
+      language={translate(`Languages.${me.language || "DEFAULT"}`)}
+      csvAction={() => getCsv({ variables: { defaultWalletId } })}
       securityAction={securityAction}
+      logoutAction={logoutAction}
     />
   )
 }
 
 type SettingsScreenProps = {
-  client: ApolloClient<unknown>
   hasToken: boolean
   navigation: StackNavigationProp<RootStackParamList, "settings">
   username: string
+  phone: string
+  language: string
   notificationsEnabled: boolean
   csvAction: (options?: QueryLazyOptions<OperationVariables>) => void
   securityAction: () => void
-  logout: () => Promise<void>
+  logoutAction: () => Promise<void>
+}
+
+type SettingRow = {
+  id: string
+  icon: string
+  category: string
+  hidden?: boolean
+  enabled?: boolean
+  subTitleText?: string
+  subTitleDefaultValue?: string
+  action?: () => void
+  greyed?: boolean
+  styleDivider?: ViewStyleProp
 }
 
 export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
   const {
-    client,
     hasToken,
     navigation,
     username,
-    notificationsEnabled,
+    phone,
+    language,
     csvAction,
     securityAction,
-    logout,
+    logoutAction,
   } = params
   const copyToClipBoard = (username) => {
     Clipboard.setString(LN_PAGE_DOMAIN + username)
@@ -157,12 +160,16 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
     )
   }
 
-  const list = [
+  const openWhatsAppAction = () =>
+    openWhatsApp(WHATSAPP_CONTACT_NUMBER, translate("whatsapp.defaultSupportMessage"))
+
+  const settingList: SettingRow[] = [
     {
       category: translate("common.phoneNumber"),
       icon: "call",
       id: "phone",
-      defaultValue: translate("SettingsScreen.tapLogIn"),
+      subTitleDefaultValue: translate("SettingsScreen.tapLogIn"),
+      subTitleText: phone,
       action: () => navigation.navigate("phoneValidation"),
       enabled: !hasToken,
       greyed: hasToken,
@@ -171,7 +178,8 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       category: translate("common.username"),
       icon: "ios-person-circle",
       id: "username",
-      defaultValue: translate("SettingsScreen.tapUserName"),
+      subTitleDefaultValue: translate("SettingsScreen.tapUserName"),
+      subTitleText: username,
       action: () => navigation.navigate("setUsername"),
       enabled: hasToken && !username,
       greyed: !hasToken,
@@ -180,16 +188,9 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       category: translate("common.language"),
       icon: "ios-language",
       id: "language",
+      subTitleText: language,
       action: () => navigation.navigate("language"),
       enabled: hasToken,
-      greyed: !hasToken,
-    },
-    {
-      category: translate("common.notification"),
-      icon: "ios-notifications-circle",
-      id: "notifications",
-      action: () => hasToken && requestPermission(client),
-      enabled: hasToken && notificationsEnabled,
       greyed: !hasToken,
     },
     {
@@ -220,11 +221,7 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       category: translate("whatsapp.contactUs"),
       icon: "ios-logo-whatsapp",
       id: "contact-us",
-      action: () =>
-        openWhatsApp(
-          WHATSAPP_CONTACT_NUMBER,
-          translate("whatsapp.defaultSupportMessage"),
-        ),
+      action: openWhatsAppAction,
       enabled: true,
       greyed: false,
       styleDivider: { backgroundColor: palette.lighterGrey, height: 18 },
@@ -233,19 +230,10 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       category: translate("common.logout"),
       id: "logout",
       icon: "ios-log-out",
-      action: async () => {
-        await logout()
-        Alert.alert(translate("common.loggedOut"), "", [
-          {
-            text: translate("common.ok"),
-            onPress: () => {
-              navigation.goBack()
-            },
-          },
-        ])
-      },
+      action: () => logoutAction(),
       enabled: hasToken,
       greyed: !hasToken,
+      hidden: !hasToken,
     },
     {
       category: "Debug Screen",
@@ -259,47 +247,35 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
     },
   ]
 
-  const Component = ({
-    icon,
-    category,
-    id,
-    i,
-    enabled,
-    greyed,
-    defaultValue = undefined,
-    action,
-    styleDivider,
-  }: ComponentProps) => {
-    const value = params[id] || defaultValue
-
-    return (
-      <>
-        <ListItem key={`setting-option-${i}`} onPress={action} disabled={!enabled}>
-          <Icon name={icon} type="ionicon" color={greyed ? palette.midGrey : null} />
-          <ListItem.Content>
-            <View>
-              <ListItem.Title style={greyed ? { color: palette.midGrey } : {}}>
-                {category}
-              </ListItem.Title>
-              {value && (
-                <ListItem.Title style={greyed ? { color: palette.midGrey } : {}}>
-                  {value}
-                </ListItem.Title>
-              )}
-            </View>
-          </ListItem.Content>
-          {enabled && <ListItem.Chevron />}
-        </ListItem>
-        <Divider style={styleDivider} />
-      </>
-    )
-  }
-
   return (
     <Screen preset="scroll">
-      {list.map((item, i) => (
-        <Component {...item} i={i} key={i} />
-      ))}
+      {settingList.map((setting, i) => {
+        if (setting.hidden) {
+          return null
+        }
+        const settingColor = setting.greyed ? palette.midGrey : null
+        const settingStyle: TextStyle = { color: settingColor }
+
+        return (
+          <React.Fragment key={`setting-option-${i}`}>
+            <ListItem onPress={setting.action} disabled={!setting.enabled}>
+              <Icon name={setting.icon} type="ionicon" color={settingColor} />
+              <ListItem.Content>
+                <ListItem.Title style={settingStyle}>
+                  <Text>{setting.category}</Text>
+                </ListItem.Title>
+                {setting.subTitleText && (
+                  <ListItem.Subtitle style={settingStyle}>
+                    {setting.subTitleText}
+                  </ListItem.Subtitle>
+                )}
+              </ListItem.Content>
+              {setting.enabled && <ListItem.Chevron />}
+            </ListItem>
+            <Divider style={setting.styleDivider} />
+          </React.Fragment>
+        )
+      })}
       <VersionComponent />
     </Screen>
   )

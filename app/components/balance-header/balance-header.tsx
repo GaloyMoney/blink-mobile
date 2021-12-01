@@ -89,7 +89,7 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
   style,
 }: BalanceHeaderProps) => {
   const client = useApolloClient()
-  const { satBalance, usdBalance } = useWalletBalance(client)
+  const { satBalance, usdBalance } = useWalletBalance()
   const hideBalance = useHideBalance()
   const hiddenBalanceToolTip = useHiddenBalanceToolTip()
   const isFocused = useIsFocused()
