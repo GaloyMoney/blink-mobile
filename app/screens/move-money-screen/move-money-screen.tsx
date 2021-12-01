@@ -172,6 +172,12 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
   }, [])
 
   function isUpdateAvailableOrRequired(mobileVersions) {
+    // TODO :: LEE :: currently this is stored as a static value in a .yaml file in the `galoy` repo. we haven't forked that repo yet so we can't edit it.
+    return {
+      required: false,
+      available: false
+    }
+
     try {
       const minSupportedVersion = mobileVersions?.find(
         (mobileVersion) => mobileVersion?.platform === Platform.OS,
