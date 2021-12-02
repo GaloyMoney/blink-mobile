@@ -505,7 +505,7 @@ export const SendBitcoinScreenJSX: ScreenType = ({
         </View>
 
         <View style={{ marginTop: 18 }}>
-          {lnurlDomain && (<GaloyInput
+          {paymentType === "lnurl" && (<GaloyInput
             placeholder={translate("common.domain")}
             style={styles.smallText}
             leftIcon={
