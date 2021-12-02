@@ -67,6 +67,8 @@ export const SendBitcoinScreen: ScreenType = ({
   const [maxSendable, setMaxSendable] = useState("")
   const [lnurlDomain, setLnurlDomain] = useState("domain")
   const [lnurlCb, setLnurlCb] = useState("")
+  const [lnurlError, setLnurlError] = useState("")
+
 
   const [paymentType, setPaymentType] = useState<IPaymentType>(undefined)
   const [amountless, setAmountless] = useState(false)
@@ -291,21 +293,25 @@ export const SendBitcoinScreen: ScreenType = ({
         .then(res => res.json())
         .then(res => {
           console.log('fetch res ', res)
-          navigation.navigate("sendBitcoinConfirmation", {
-            address,
-            amountless,
-            invoice: res.pr,
-            memo,
-            paymentType,
-            primaryCurrency,
-            referenceAmount,
-            sameNode,
-            username: null,
-            recipientDefaultWalletId: null,
-          })
+          if (res.status && res.status === "ERROR") {
+            console.log('invoice fetch error ', res.reason)
+          } else {
+            navigation.navigate("sendBitcoinConfirmation", {
+              address,
+              amountless,
+              invoice: res.pr,
+              memo,
+              paymentType,
+              primaryCurrency,
+              referenceAmount,
+              sameNode,
+              username: null,
+              recipientDefaultWalletId: null,
+            })
+          }
         })
         .catch(error => {
-          console.log('invoice fetch error ', error)
+          console.log('fetch error ', error)
         })
     } else {
       navigation.navigate("sendBitcoinConfirmation", {
@@ -351,6 +357,8 @@ export const SendBitcoinScreen: ScreenType = ({
       minSendable={minSendable}
       maxSendable={maxSendable}
       lnurlDomain={lnurlDomain}
+      lnurlError={lnurlError}
+      setLnurlError={setLnurlError}
       memo={memo}
       pay={pay}
       primaryAmount={primaryAmount}
@@ -379,6 +387,8 @@ type SendBitcoinScreenJSXProps = {
   minSendable: string
   maxSendable: string
   lnurlDomain: string
+  lnurlError: string
+  setLnurlError: (error: string) => void
   memo: string
   amount: number
   navigation: StackNavigationProp<MoveMoneyStackParamList, "sendBitcoin">
@@ -406,6 +416,8 @@ export const SendBitcoinScreenJSX: ScreenType = ({
   minSendable,
   maxSendable,
   lnurlDomain,
+  lnurlError,
+  setLnurlError,
   memo,
   navigation,
   toggleCurrency,
@@ -445,7 +457,19 @@ export const SendBitcoinScreenJSX: ScreenType = ({
     } else if (paymentType === "lightning" || paymentType === "onchain") {
       return <Icon name="ios-close-circle-outline" onPress={reset} size={30} />
     } else if (paymentType === "lnurl") {
-      console.log('destinationInputRightIcon lnurl ', lnurl)
+      console.log('destinationInputRightIcon lnurl ', lnurl, primaryAmount, maxSendable, minSendable, memo)
+      // lnurl checksß
+      if (primaryAmount && primaryAmount.currency === "BTC" && primaryAmount.value > maxSendable) {
+        setLnurlError(translate("lnurl.overLimit"))
+      } else if (primaryAmount && primaryAmount.currency === "BTC" && primaryAmount.value < minSendable) {
+        setLnurlError(translate("lnurl.underLimit"))
+      } else {
+        setLnurlError("")
+      }
+      // TODO: Handle error from lnurl request
+      // if (lnurlCommentAllowed && memo === "") {
+      //   setLnurlError(translate("lnurl.commentRequired"))
+      // }
     } else if (destination.length === 0) {
       return (
         <Icon
@@ -569,10 +593,12 @@ export const SendBitcoinScreenJSX: ScreenType = ({
               ? translate("common.amountRequired")
               : !destination
               ? translate("common.usernameRequired")
+              : lnurlError
+              ? lnurlError
               : translate("common.send")
           }
           onPress={pay}
-          disabled={!primaryAmount.value || !!errorMessage || !destination}
+          disabled={!primaryAmount.value || !!errorMessage || !destination || !!lnurlError}
         />
       </ScrollView>
     </Screen>
