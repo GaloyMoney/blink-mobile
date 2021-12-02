@@ -642,6 +642,7 @@
     "csvExport": "Export transactions as CSV",
     "date": "Date",
     "description": "Description",
+    "domain": "Domain",
     "email": "Email",
     "error": "Error",
     "fatal": "Fatal",

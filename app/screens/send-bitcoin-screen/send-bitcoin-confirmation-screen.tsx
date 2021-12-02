@@ -356,11 +356,12 @@ export const SendBitcoinConfirmationScreen = ({
   let destination = ""
   if (paymentType === "username") {
     destination = username
-  } else if (paymentType === "lightning") {
+  } else if (paymentType === "lightning" || paymentType === "lnurl") {
     destination = `${invoice.substr(0, 18)}...${invoice.substr(-18)}`
   } else if (paymentType === "onchain") {
     destination = address
   }
+  
 
   const primaryAmount: MoneyAmount = {
     value: convertCurrencyAmount({
@@ -379,6 +380,8 @@ export const SendBitcoinConfirmationScreen = ({
     }),
     currency: primaryCurrency,
   }
+  // {"currency": "BTC", "value": NaN}
+  console.log('confirmation screen ', destination, primaryAmount, primaryTotalAmount)
 
   const secondaryCurrency: CurrencyType = primaryCurrency === "BTC" ? "USD" : "BTC"
 

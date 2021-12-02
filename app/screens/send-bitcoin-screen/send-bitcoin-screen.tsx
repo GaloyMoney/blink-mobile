@@ -9,6 +9,7 @@ import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 import debounce from "lodash.debounce"
+import { getParams } from 'js-lnurl'
 
 import { InputPayment } from "../../components/input-payment"
 import { GaloyInput } from "../../components/galoy-input"
@@ -61,6 +62,12 @@ export const SendBitcoinScreen: ScreenType = ({
   const { myPubKey, username: myUsername } = useMainQuery()
   const [invoiceError, setInvoiceError] = useState("")
   const [address, setAddress] = useState("")
+  const [lnurl] = useState("")
+  const [minSendable, setMinSendable] = useState("")
+  const [maxSendable, setMaxSendable] = useState("")
+  const [lnurlDomain, setLnurlDomain] = useState("domain")
+  const [lnurlCb, setLnurlCb] = useState("")
+
   const [paymentType, setPaymentType] = useState<IPaymentType>(undefined)
   const [amountless, setAmountless] = useState(false)
   const [destination, setDestinationInternal] = useState("")
@@ -202,6 +209,7 @@ export const SendBitcoinScreen: ScreenType = ({
       memo: memoInvoice,
       paymentType,
       address,
+      lnurl,
       sameNode,
     } = validPayment(destination, tokenNetwork, myPubKey, myUsername)
 
@@ -209,6 +217,19 @@ export const SendBitcoinScreen: ScreenType = ({
       setAddress(address)
       setPaymentType(paymentType)
       setInvoice(invoice)
+
+      console.log('203 ', valid, address, invoice, lnurl, destination, paymentType)
+      if (lnurl) {
+        getParams(lnurl).then(params => {
+          console.log('setMinSendable ', params.minSendable, ' sats')
+          setMinSendable(params.minSendable/1000)
+          setMaxSendable(params.maxSendable/1000)
+          setLnurlDomain(params.domain)
+          setLnurlCb(params.callback)
+          setPaymentType("lnurl")
+          console.log('minSendable ', minSendable, lnurlDomain, paymentType)
+        })
+      }
       setAmountless(amountless)
 
       if (!amountless) {
@@ -258,10 +279,34 @@ export const SendBitcoinScreen: ScreenType = ({
   }, [destination])
 
   const pay = useCallback(() => {
+    console.log('pay ', paymentType, primaryAmount)
     if (paymentType === "username" && destinationStatus !== "VALID") {
       userDefaultWalletIdQuery({ variables: { username: destination } })
       toastShow(translate("SendBitcoinScreen.usernameNotFound"))
       return
+    } else if (paymentType == "lnurl") {
+      const satAmount = primaryAmount.value * 1000
+      console.log('preparing invoice ', `${lnurlCb}?amount=${satAmount}&comment=${memo}`)
+      fetch(`${lnurlCb}?amount=${satAmount}&comment=${memo}`)
+        .then(res => res.json())
+        .then(res => {
+          console.log('fetch res ', res)
+          navigation.navigate("sendBitcoinConfirmation", {
+            address,
+            amountless,
+            invoice: res.pr,
+            memo,
+            paymentType,
+            primaryCurrency,
+            referenceAmount,
+            sameNode,
+            username: null,
+            recipientDefaultWalletId: null,
+          })
+        })
+        .catch(error => {
+          console.log('invoice fetch error ', error)
+        })
     } else {
       navigation.navigate("sendBitcoinConfirmation", {
         address,
@@ -286,6 +331,8 @@ export const SendBitcoinScreen: ScreenType = ({
     address,
     amountless,
     invoice,
+    lnurlCb,
+    primaryAmount,
     memo,
     primaryCurrency,
     referenceAmount,
@@ -300,6 +347,10 @@ export const SendBitcoinScreen: ScreenType = ({
       setPrimaryAmountValue={setPrimaryAmountValue}
       invoice={invoice}
       address={address}
+      lnurl={lnurl}
+      minSendable={minSendable}
+      maxSendable={maxSendable}
+      lnurlDomain={lnurlDomain}
       memo={memo}
       pay={pay}
       primaryAmount={primaryAmount}
@@ -324,6 +375,10 @@ type SendBitcoinScreenJSXProps = {
   setPrimaryAmountValue: (value: number) => void
   invoice: string
   address: string
+  lnurl: string
+  minSendable: string
+  maxSendable: string
+  lnurlDomain: string
   memo: string
   amount: number
   navigation: StackNavigationProp<MoveMoneyStackParamList, "sendBitcoin">
@@ -347,6 +402,10 @@ export const SendBitcoinScreenJSX: ScreenType = ({
   setPrimaryAmountValue,
   invoice,
   address,
+  lnurl,
+  minSendable,
+  maxSendable,
+  lnurlDomain,
   memo,
   navigation,
   toggleCurrency,
@@ -362,6 +421,7 @@ export const SendBitcoinScreenJSX: ScreenType = ({
   errorMessage,
   reset,
 }: SendBitcoinScreenJSXProps) => {
+  // console.log('SendBitcoinScreenJSXProps ', lnurl, lnurlDomain, translate("common.domain"))
   const destinationInputRightIcon = () => {
     if (UsernameValidation.hasValidLength(destination) && paymentType === "username") {
       if (
@@ -384,6 +444,8 @@ export const SendBitcoinScreenJSX: ScreenType = ({
       }
     } else if (paymentType === "lightning" || paymentType === "onchain") {
       return <Icon name="ios-close-circle-outline" onPress={reset} size={30} />
+    } else if (paymentType === "lnurl") {
+      console.log('destinationInputRightIcon lnurl ', lnurl)
     } else if (destination.length === 0) {
       return (
         <Icon
@@ -419,9 +481,36 @@ export const SendBitcoinScreenJSX: ScreenType = ({
             currency={secondaryAmount.currency}
             style={styles.subCurrencyText}
           />
+          {minSendable !== "" && (
+            <View style={styles.errorContainer}>
+              <Text>Min: {minSendable} sats - Max: {maxSendable} sats</Text>
+            </View>
+          )}
         </View>
 
         <View style={{ marginTop: 18 }}>
+          {lnurlDomain && (<GaloyInput
+            placeholder={translate("common.domain")}
+            style={styles.smallText}
+            leftIcon={
+              <View style={styles.row}>
+                <Text style={styles.smallText}>{translate("common.domain")}</Text>
+                <Icon
+                  name="ios-at"
+                  size={24}
+                  color={color.primary}
+                  style={styles.icon}
+                />
+              </View>
+            }
+            onChangeText={setDestination}
+            rightIcon={destinationInputRightIcon()}
+            value={lnurlDomain}
+            editable={interactive}
+            selectTextOnFocus
+            autoCompleteType="username"
+            autoCapitalize="none"
+          />)}          
           <GaloyInput
             placeholder={translate("SendBitcoinScreen.input")}
             leftIcon={
