@@ -8,16 +8,18 @@ import { MAIN_QUERY } from "../graphql/query"
 import type { INetwork } from "../types/network"
 import type { MockableApolloClient } from "../types/mockable"
 import * as parsing from "./parsing"
+import { getParams } from 'js-lnurl'
 
 // TODO: look if we own the address
 
-export type IPaymentType = "lightning" | "onchain" | "username" | undefined
+export type IPaymentType = "lightning" | "onchain" | "username" | "lnurl" | undefined
 
 export interface IValidPaymentReponse {
   valid: boolean
   errorMessage?: string | undefined
   invoice?: string | undefined // for lightning
   address?: string | undefined // for bitcoin
+  lnurl?: object // for lnurl
   amount?: number | undefined
   amountless?: boolean | undefined
   memo?: lightningPayReq.TagData | string | undefined
@@ -77,6 +79,7 @@ export const validPayment = (
   // eslint-disable-next-line prefer-const
   let [protocol, data] = input.split(":")
   let paymentType: IPaymentType
+  let lnurl: object
 
   if (protocol.toLowerCase() === "bitcoin") {
     paymentType = "onchain"
@@ -86,6 +89,16 @@ export const validPayment = (
     paymentType = "lightning"
     // some apps encode lightning invoices in UPPERCASE
     data = data.toLowerCase()
+
+  } else if ((protocol && protocol.toLowerCase().startsWith("lnurl")) ||  (data && data.toLowerCase().startsWith("lnurl"))) {
+
+    paymentType = "lnurl"
+
+    const lnurlStr = protocol || data;
+    getParams(lnurlStr)
+      .then(params => {
+        lnurl = params
+      })
 
     // no protocol. let's see if this could have an address directly
   } else if (protocol.toLowerCase().startsWith("ln")) {
@@ -208,6 +221,13 @@ export const validPayment = (
       memo,
       paymentType,
       sameNode,
+    }
+  } else if (paymentType === "lnurl") {
+    return {
+      valid: true,
+      paymentType,
+      lnurl,
+      amountless: true,
     }
   } else {
     return {
