@@ -3,23 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>72279297366-s58nf2odpar8o97abjd5ajglgveo4ug9.apps.googleusercontent.com</string>
+	<string>864118073014-puuuffp1dkd9kaopcrq30bbpdqj78iv2.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.72279297366-s58nf2odpar8o97abjd5ajglgveo4ug9</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>72279297366-pm5ng6a6lrqirbi80kfgbf206uh567go.apps.googleusercontent.com</string>
+	<string>com.googleusercontent.apps.864118073014-puuuffp1dkd9kaopcrq30bbpdqj78iv2</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCFE9KsSzcme-0TBv52mE1orpN94fq77aQ</string>
+	<string>AIzaSyDWy0fI99G7HrcygHt6GkwAKmVgnz7p3DA</string>
 	<key>GCM_SENDER_ID</key>
-	<string>72279297366</string>
+	<string>864118073014</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>io.galoy.bitcoinbeach</string>
+	<string>io.chirripo.app</string>
 	<key>PROJECT_ID</key>
-	<string>galoyapp</string>
+	<string>galoy-pura-vida</string>
 	<key>STORAGE_BUCKET</key>
-	<string>galoyapp.appspot.com</string>
+	<string>galoy-pura-vida.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,8 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:72279297366:ios:547c29acd2e1d3a6a75af7</string>
-	<key>DATABASE_URL</key>
-	<string>https://galoyapp.firebaseio.com</string>
+	<string>1:864118073014:ios:be9a6207b736944537e817</string>
 </dict>
 </plist>
