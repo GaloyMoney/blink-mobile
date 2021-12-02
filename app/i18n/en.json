@@ -714,5 +714,10 @@
   "whatsapp": {
     "contactUs": "Need help? Talk to us on WhatsApp!",
     "defaultSupportMessage": "Hey there! I need some help with Bitcoin Beach Wallet"
+  },
+  "lnurl": {
+    "overLimit": "You can't send more than max amount",
+    "underLimit": "You can't send less than min amount",
+    "commentRequired": "Comment required"
   }
 }
