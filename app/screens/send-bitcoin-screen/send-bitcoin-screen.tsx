@@ -220,16 +220,13 @@ export const SendBitcoinScreen: ScreenType = ({
       setPaymentType(paymentType)
       setInvoice(invoice)
 
-      console.log('203 ', valid, address, invoice, lnurl, destination, paymentType)
       if (lnurl) {
         getParams(lnurl).then(params => {
-          console.log('setMinSendable ', params.minSendable, ' sats')
           setMinSendable(params.minSendable/1000)
           setMaxSendable(params.maxSendable/1000)
           setLnurlDomain(params.domain)
           setLnurlCb(params.callback)
           setPaymentType("lnurl")
-          console.log('minSendable ', minSendable, lnurlDomain, paymentType)
         })
       }
       setAmountless(amountless)
@@ -281,18 +278,15 @@ export const SendBitcoinScreen: ScreenType = ({
   }, [destination])
 
   const pay = useCallback(() => {
-    console.log('pay ', paymentType, primaryAmount)
     if (paymentType === "username" && destinationStatus !== "VALID") {
       userDefaultWalletIdQuery({ variables: { username: destination } })
       toastShow(translate("SendBitcoinScreen.usernameNotFound"))
       return
     } else if (paymentType == "lnurl") {
       const satAmount = primaryAmount.value * 1000
-      console.log('preparing invoice ', `${lnurlCb}?amount=${satAmount}&comment=${memo}`)
       fetch(`${lnurlCb}?amount=${satAmount}&comment=${memo}`)
         .then(res => res.json())
         .then(res => {
-          console.log('fetch res ', res)
           if (res.status && res.status === "ERROR") {
             console.log('invoice fetch error ', res.reason)
           } else {
@@ -433,7 +427,6 @@ export const SendBitcoinScreenJSX: ScreenType = ({
   errorMessage,
   reset,
 }: SendBitcoinScreenJSXProps) => {
-  // console.log('SendBitcoinScreenJSXProps ', lnurl, lnurlDomain, translate("common.domain"))
   const destinationInputRightIcon = () => {
     if (UsernameValidation.hasValidLength(destination) && paymentType === "username") {
       if (
@@ -457,8 +450,7 @@ export const SendBitcoinScreenJSX: ScreenType = ({
     } else if (paymentType === "lightning" || paymentType === "onchain") {
       return <Icon name="ios-close-circle-outline" onPress={reset} size={30} />
     } else if (paymentType === "lnurl") {
-      console.log('destinationInputRightIcon lnurl ', lnurl, primaryAmount, maxSendable, minSendable, memo)
-      // lnurl checksß
+      // lnurl checks
       if (primaryAmount && primaryAmount.currency === "BTC" && primaryAmount.value > maxSendable) {
         setLnurlError(translate("lnurl.overLimit"))
       } else if (primaryAmount && primaryAmount.currency === "BTC" && primaryAmount.value < minSendable) {
