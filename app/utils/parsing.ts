@@ -8,7 +8,6 @@ import { MAIN_QUERY } from "../graphql/query"
 import type { INetwork } from "../types/network"
 import type { MockableApolloClient } from "../types/mockable"
 import * as parsing from "./parsing"
-import { getParams } from 'js-lnurl'
 
 // TODO: look if we own the address
 
@@ -19,7 +18,7 @@ export interface IValidPaymentReponse {
   errorMessage?: string | undefined
   invoice?: string | undefined // for lightning
   address?: string | undefined // for bitcoin
-  lnurl?: object // for lnurl
+  lnurl?: string | undefined // for lnurl
   amount?: number | undefined
   amountless?: boolean | undefined
   memo?: lightningPayReq.TagData | string | undefined
@@ -79,7 +78,7 @@ export const validPayment = (
   // eslint-disable-next-line prefer-const
   let [protocol, data] = input.split(":")
   let paymentType: IPaymentType
-  let lnurl: object
+  let lnurl: string
 
   if (protocol.toLowerCase() === "bitcoin") {
     paymentType = "onchain"
@@ -94,11 +93,25 @@ export const validPayment = (
 
     paymentType = "lnurl"
 
-    const lnurlStr = protocol || data;
-    getParams(lnurlStr)
-      .then(params => {
-        lnurl = params
-      })
+    lnurl = protocol || data;
+
+    // getParams(lnurlStr)
+    //   .then(params => {
+    //     console.log('gotparams ', params)
+    //     lnurl = params
+    //     return params;
+    //   })
+    //   .finally(() => {
+    //     // console.log('finally ', lnurl)
+    //     const retobj = {
+    //       valid: true,
+    //       paymentType,
+    //       lnurl,
+    //       amountless: true,
+    //     }
+    //     console.log('finally retobj ', retobj)
+    //     return retobj
+    //   })
 
     // no protocol. let's see if this could have an address directly
   } else if (protocol.toLowerCase().startsWith("ln")) {
@@ -225,9 +238,8 @@ export const validPayment = (
   } else if (paymentType === "lnurl") {
     return {
       valid: true,
-      paymentType,
       lnurl,
-      amountless: true,
+      amountless: true
     }
   } else {
     return {
