@@ -37,9 +37,6 @@ const TRANSACTION_LIST_FRAGMENT = gql`
           ... on InitiationViaLn {
             paymentHash
           }
-          ... on InitiationViaOnChain {
-            address
-          }
         }
 
         settlementVia {
@@ -49,9 +46,6 @@ const TRANSACTION_LIST_FRAGMENT = gql`
           }
           ... on SettlementViaLn {
             paymentSecret
-          }
-          ... on SettlementViaOnChain {
-            transactionHash
           }
         }
       }

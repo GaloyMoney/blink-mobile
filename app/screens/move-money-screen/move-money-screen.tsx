@@ -274,14 +274,17 @@ export const MoveMoneyScreen: ScreenType = ({
       style: "transactionViewContainer",
       details: (
         <View style={styles.transactionsView}>
-          {transactionsEdges.map(({ node }) => (
-            <TransactionItem
-              key={`transaction-${node.id}`}
-              navigation={navigation}
-              tx={node}
-              subtitle
-            />
-          ))}
+          {transactionsEdges.map(
+            ({ node }) =>
+              node && (
+                <TransactionItem
+                  key={`transaction-${node.id}`}
+                  navigation={navigation}
+                  tx={node}
+                  subtitle
+                />
+              ),
+          )}
         </View>
       ),
     }
