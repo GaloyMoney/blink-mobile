@@ -85,6 +85,7 @@ export const ScanningQRCodeScreen: ScreenType = ({
       const { valid, lnurl } = validPayment(data, tokenNetwork, myPubKey, username)
       if (valid) {
         if (lnurl) {
+          setPending(true)
           const lnurlParams = await getParams(lnurl)
           switch (lnurlParams.tag) {
             case 'withdrawRequest':
@@ -92,9 +93,9 @@ export const ScanningQRCodeScreen: ScreenType = ({
               break
             case 'payRequest':
               if (index <= 1) {
-                navigation.replace("sendBitcoin", { payment: data })
+                navigation.replace("sendBitcoin", { payment: data, lnurlParams: lnurlParams })
               } else {
-                navigation.navigate("sendBitcoin", { payment: data })
+                navigation.navigate("sendBitcoin", { payment: data, lnurlParams: lnurlParams })
               }
               break
           }

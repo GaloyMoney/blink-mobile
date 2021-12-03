@@ -86,24 +86,6 @@ export const validPayment = (
 
     lnurl = protocol || data;
 
-    // getParams(lnurlStr)
-    //   .then(params => {
-    //     console.log('gotparams ', params)
-    //     lnurl = params
-    //     return params;
-    //   })
-    //   .finally(() => {
-    //     // console.log('finally ', lnurl)
-    //     const retobj = {
-    //       valid: true,
-    //       paymentType,
-    //       lnurl,
-    //       amountless: true,
-    //     }
-    //     console.log('finally retobj ', retobj)
-    //     return retobj
-    //   })
-
     // no protocol. let's see if this could have an address directly
   } else if (protocol.toLowerCase().startsWith("ln")) {
     // possibly a lightning address?
