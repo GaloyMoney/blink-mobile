@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:864118073014:android:672c64d999c2ca9037e817",
+        "mobilesdk_app_id": "1:864118073014:android:ee90e087b85acf8a37e817",
         "android_client_info": {
-          "package_name": "io.chirripo.app"
+          "package_name": "app.bitcoinjungle.mobile"
         }
       },
       "oauth_client": [
@@ -31,11 +31,11 @@
               "client_type": 3
             },
             {
-              "client_id": "864118073014-puuuffp1dkd9kaopcrq30bbpdqj78iv2.apps.googleusercontent.com",
+              "client_id": "864118073014-lg6e194oj51nlg0iedhkvbjk5uhd1fj3.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "io.chirripo.app",
-                "app_store_id": "1597535464"
+                "bundle_id": "app.bitcoinjungle.mobile",
+                "app_store_id": "1598646780"
               }
             }
           ]

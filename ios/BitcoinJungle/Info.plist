@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>Chirripo</string>
+	<string>Bitcoin Jungle</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -36,10 +36,10 @@
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>CFBundleURLName</key>
-			<string>io.galoy</string>
+			<string>app.bitcoinjungle</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>galoy</string>
+				<string>bitcoinjungle</string>
 			</array>
 		</dict>
 		<dict>
@@ -66,7 +66,7 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>bitcoinbeach</string>
+			<string>bitcoinjungle</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>bitcoinbeach</string>

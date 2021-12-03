@@ -1,4 +1,4 @@
-package io.chirripo.app;
+package app.bitcoinjungle.mobile;
 
 import com.facebook.react.ReactActivity;
 
@@ -24,6 +24,6 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-        return "chirripoApp";
+        return "BitcoinJungle";
     }
 }
