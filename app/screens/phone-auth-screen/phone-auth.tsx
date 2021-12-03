@@ -14,7 +14,7 @@ import {
 import { Button, Input } from "react-native-elements"
 import { FetchResult, gql, useApolloClient, useMutation } from "@apollo/client"
 import EStyleSheet from "react-native-extended-stylesheet"
-import PhoneInput from "react-native-phone-input"
+import PhoneInput from "react-native-phone-number-input"
 import analytics from "@react-native-firebase/analytics"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { RouteProp } from "@react-navigation/native"
@@ -90,10 +90,8 @@ const styles = EStyleSheet.create({
     borderRadius: 5,
     borderWidth: 1,
     flex: 1,
-    marginHorizontal: "50rem",
+    marginHorizontal: "40rem",
     marginVertical: "18rem",
-    paddingHorizontal: "18rem",
-    paddingVertical: "12rem",
   },
 
   sendAgainButtonRow: {
@@ -109,6 +107,10 @@ const styles = EStyleSheet.create({
     paddingBottom: "10rem",
     paddingHorizontal: "40rem",
     textAlign: "center",
+  },
+
+  textContainer: {
+    backgroundColor: color.transparent,
   },
 
   textDisabledSendAgain: {
@@ -232,15 +234,19 @@ export const WelcomePhoneInputScreen: ScreenType = ({
   })
 
   const submitPhoneNumber = () => {
-    const phone = phoneInputRef.current.getValue()
+    const phone = phoneInputRef.current.state.number
     const phoneRegex = new RegExp("^\\+[0-9]+$")
 
-    if (!phoneInputRef.current.isValidNumber() || !phoneRegex.test(phone)) {
+    // Trims leading zero on some numbers (https://github.com/GaloyMoney/galoy-mobile/issues/119#issuecomment-936669141)
+    // @returns:  Formatted number with country code & unformatted number without country code
+    const formattedNumber = phoneInputRef.current.getNumberAfterPossiblyEliminatingZero()
+
+    if (!phoneInputRef.current.isValidNumber(phone) || phoneRegex.test(phone)) {
       Alert.alert(`${phone} ${translate("errors.invalidPhoneNumber")}`)
       return
     }
 
-    setPhoneNumber(phone)
+    setPhoneNumber(formattedNumber.formattedNumber)
   }
 
   const showCaptcha = phoneNumber.length > 0
@@ -269,15 +275,20 @@ export const WelcomePhoneInputScreen: ScreenType = ({
           <KeyboardAvoidingView>
             <PhoneInput
               ref={phoneInputRef}
-              style={styles.phoneEntryContainer}
-              textStyle={styles.textEntry}
-              initialCountry="sv"
-              textProps={{
-                autoFocus: true,
+              value={phoneNumber}
+              containerStyle={styles.phoneEntryContainer}
+              textInputStyle={styles.textEntry}
+              textContainerStyle={styles.textContainer}
+              defaultValue={phoneNumber}
+              defaultCode="SV"
+              layout="first"
+              textInputProps={{
                 placeholder: translate("WelcomePhoneInputScreen.placeholder"),
                 returnKeyType: loadingRequestPhoneCode ? "default" : "done",
                 onSubmitEditing: submitPhoneNumber,
               }}
+              codeTextStyle={{ marginLeft: -25 }}
+              autoFocus
             />
             <ActivityIndicator
               animating={loadingRequestPhoneCode}
