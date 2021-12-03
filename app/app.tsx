@@ -236,7 +236,7 @@ export const App = (): JSX.Element => {
   // TODO: Fix deep linking. It broke somewhere around version 1.4.11
   // As of react-navigation 6.x, this code has type problems too
   const linking: any = {
-    prefixes: ["https://ln.bitcoinbeach.com", "bitcoinbeach://"],
+    prefixes: ["https://pay.bitcoinjungle.app", "bitcoinjungle://"],
     config: {
       screens: {
         Primary: {
