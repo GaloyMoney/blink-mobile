@@ -9,7 +9,6 @@ import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 import debounce from "lodash.debounce"
-import { getParams } from 'js-lnurl'
 
 import { InputPayment } from "../../components/input-payment"
 import { GaloyInput } from "../../components/galoy-input"
@@ -61,11 +60,7 @@ export const SendBitcoinScreen: ScreenType = ({
 
   const [invoiceError, setInvoiceError] = useState("")
   const [address, setAddress] = useState("")
-  const [lnurl] = useState("")
-  const [minSendable, setMinSendable] = useState("")
-  const [maxSendable, setMaxSendable] = useState("")
-  const [lnurlDomain, setLnurlDomain] = useState("domain")
-  const [lnurlCb, setLnurlCb] = useState("")
+  const [lnurlPay, setLnurlPay] = useState({lnurl: "", minSendable: "", maxSendable: "", domain: "", callback: "", commentAllowed:"", error: ""})
   const [lnurlError, setLnurlError] = useState("")
 
 
@@ -210,13 +205,17 @@ export const SendBitcoinScreen: ScreenType = ({
       setInvoice(invoice)
 
       if (lnurl) {
-        getParams(lnurl).then(params => {
-          setMinSendable(params.minSendable/1000)
-          setMaxSendable(params.maxSendable/1000)
-          setLnurlDomain(params.domain)
-          setLnurlCb(params.callback)
-          setPaymentType("lnurl")
-        })
+        setPaymentType("lnurl")
+        const lnurlParams = {
+          lnurl: lnurl, 
+          minSendable: (route.params?.lnurlParams.minSendable/1000)+"", 
+          maxSendable: (route.params?.lnurlParams.maxSendable/1000)+"", 
+          domain: route.params?.lnurlParams.domain,
+          callback: route.params?.lnurlParams.callback,
+          commentAllowed: route.params?.lnurlParams.commentAllowed,
+          error: ""
+        }
+        setLnurlPay({...lnurlParams})
       }
       setAmountless(amountless)
 
@@ -266,36 +265,35 @@ export const SendBitcoinScreen: ScreenType = ({
     setDestinationStatus("NOT_CHECKED")
   }, [destination])
 
-  const pay = useCallback(() => {
+  const fetchInvoice = async (url) => {
+    const response = await fetch(url);
+    return await response.json();
+  }
+
+  const pay = useCallback(async () => {
     if (paymentType === "username" && destinationStatus !== "VALID") {
       userDefaultWalletIdQuery({ variables: { username: destination } })
       toastShow(translate("SendBitcoinScreen.usernameNotFound"))
       return
     } else if (paymentType == "lnurl") {
       const satAmount = primaryAmount.value * 1000
-      fetch(`${lnurlCb}?amount=${satAmount}&comment=${memo}`)
-        .then(res => res.json())
-        .then(res => {
-          if (res.status && res.status === "ERROR") {
-            console.log('invoice fetch error ', res.reason)
-          } else {
-            navigation.navigate("sendBitcoinConfirmation", {
-              address,
-              amountless,
-              invoice: res.pr,
-              memo,
-              paymentType,
-              primaryCurrency,
-              referenceAmount,
-              sameNode,
-              username: null,
-              recipientDefaultWalletId: null,
-            })
-          }
+      const lnurlInvoice = await fetchInvoice(`${lnurlPay.callback}?amount=${satAmount}&comment=${memo}`);
+      if (lnurlInvoice.status && lnurlInvoice.status === "ERROR") {
+        setLnurlError(lnurlInvoice.reason)
+      } else {
+        navigation.navigate("sendBitcoinConfirmation", {
+          address,
+          amountless,
+          invoice: lnurlInvoice.pr,
+          memo,
+          paymentType,
+          primaryCurrency,
+          referenceAmount,
+          sameNode,
+          username: null,
+          recipientDefaultWalletId: null,
         })
-        .catch(error => {
-          console.log('fetch error ', error)
-        })
+      }
     } else {
       navigation.navigate("sendBitcoinConfirmation", {
         address,
@@ -320,7 +318,7 @@ export const SendBitcoinScreen: ScreenType = ({
     address,
     amountless,
     invoice,
-    lnurlCb,
+    lnurlPay,
     primaryAmount,
     memo,
     primaryCurrency,
@@ -336,10 +334,7 @@ export const SendBitcoinScreen: ScreenType = ({
       setPrimaryAmountValue={setPrimaryAmountValue}
       invoice={invoice}
       address={address}
-      lnurl={lnurl}
-      minSendable={minSendable}
-      maxSendable={maxSendable}
-      lnurlDomain={lnurlDomain}
+      lnurlPay={lnurlPay}
       lnurlError={lnurlError}
       setLnurlError={setLnurlError}
       memo={memo}
@@ -366,10 +361,7 @@ type SendBitcoinScreenJSXProps = {
   setPrimaryAmountValue: (value: number) => void
   invoice: string
   address: string
-  lnurl: string
-  minSendable: string
-  maxSendable: string
-  lnurlDomain: string
+  lnurlPay: object
   lnurlError: string
   setLnurlError: (error: string) => void
   memo: string
@@ -395,10 +387,7 @@ export const SendBitcoinScreenJSX: ScreenType = ({
   setPrimaryAmountValue,
   invoice,
   address,
-  lnurl,
-  minSendable,
-  maxSendable,
-  lnurlDomain,
+  lnurlPay,
   lnurlError,
   setLnurlError,
   memo,
@@ -440,17 +429,19 @@ export const SendBitcoinScreenJSX: ScreenType = ({
       return <Icon name="ios-close-circle-outline" onPress={reset} size={30} />
     } else if (paymentType === "lnurl") {
       // lnurl checks
-      if (primaryAmount && primaryAmount.currency === "BTC" && primaryAmount.value > maxSendable) {
-        setLnurlError(translate("lnurl.overLimit"))
-      } else if (primaryAmount && primaryAmount.currency === "BTC" && primaryAmount.value < minSendable) {
-        setLnurlError(translate("lnurl.underLimit"))
+      let lnurlErrorStr = "";
+      if (primaryAmount && primaryAmount.currency === "BTC" && primaryAmount.value > lnurlPay.maxSendable) {
+        lnurlErrorStr = translate("lnurl.overLimit")
+      } else if (primaryAmount && primaryAmount.currency === "BTC" && primaryAmount.value < lnurlPay.minSendable) {
+        lnurlErrorStr = translate("lnurl.underLimit")
       } else {
-        setLnurlError("")
+        lnurlErrorStr = ""
       }
-      // TODO: Handle error from lnurl request
-      // if (lnurlCommentAllowed && memo === "") {
-      //   setLnurlError(translate("lnurl.commentRequired"))
-      // }
+      setLnurlError(lnurlErrorStr)
+
+      if (lnurlPay.commentAllowed && memo === "") {
+        setLnurlError(translate("lnurl.commentRequired"))
+      }
     } else if (destination.length === 0) {
       return (
         <Icon
@@ -485,9 +476,9 @@ export const SendBitcoinScreenJSX: ScreenType = ({
             currency={secondaryAmount.currency}
             style={styles.subCurrencyText}
           />
-          {minSendable !== "" && (
+          {paymentType === "lnurl" && (
             <View style={styles.errorContainer}>
-              <Text>Min: {minSendable} sats - Max: {maxSendable} sats</Text>
+              <Text>Min: {lnurlPay.minSendable} sats - Max: {lnurlPay.maxSendable} sats</Text>
             </View>
           )}
         </View>
@@ -509,7 +500,7 @@ export const SendBitcoinScreenJSX: ScreenType = ({
             }
             onChangeText={setDestination}
             rightIcon={destinationInputRightIcon()}
-            value={lnurlDomain}
+            value={lnurlPay.domain}
             editable={interactive}
             selectTextOnFocus
             autoCompleteType="username"

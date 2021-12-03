@@ -68,6 +68,7 @@ export type MoveMoneyStackParamList = {
   sendBitcoin: {
     payment: string | null
     username?: string | null
+    lnurlParams?: object | null
   }
   sendBitcoinConfirmation: {
     address: string | null

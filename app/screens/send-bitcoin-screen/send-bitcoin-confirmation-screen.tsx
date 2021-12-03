@@ -377,8 +377,6 @@ export const SendBitcoinConfirmationScreen = ({
     }),
     currency: primaryCurrency,
   }
-  // {"currency": "BTC", "value": NaN}
-  console.log('confirmation screen ', destination, primaryAmount, primaryTotalAmount)
 
   const secondaryCurrency: CurrencyType = primaryCurrency === "BTC" ? "USD" : "BTC"
 
