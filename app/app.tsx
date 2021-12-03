@@ -233,7 +233,7 @@ export const App = (): JSX.Element => {
     return null
   }
 
-  const linking: any = {
+  const linking = {
     prefixes: ["https://ln.bitcoinbeach.com", "bitcoinbeach://"],
     config: {
       screens: hasToken
