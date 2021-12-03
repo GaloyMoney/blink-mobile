@@ -1,8 +1,8 @@
-import { gql, useMutation, useQuery } from "@apollo/client"
+import { gql, useApolloClient, useMutation, useQuery } from "@apollo/client"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { useCallback, useMemo, useEffect, useState } from "react"
-import { Keyboard, ScrollView, TextInput, View } from "react-native"
+import { Alert, Keyboard, Platform, ScrollView, TextInput, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import ScreenBrightness from "react-native-screen-brightness"
 import Swiper from "react-native-swiper"
@@ -28,6 +28,7 @@ import { TextCurrency } from "../../components/text-currency"
 import useToken from "../../utils/use-token"
 import { MAIN_QUERY } from "../../graphql/query"
 import { Button, Text } from "react-native-elements"
+import { hasFullPermissions, requestPermission } from "../../utils/notifications"
 
 const styles = EStyleSheet.create({
   buttonContainer: { marginHorizontal: 52, paddingVertical: 200 },
@@ -111,6 +112,7 @@ type Props = {
 }
 
 export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
+  const client = useApolloClient()
   const { hasToken } = useToken()
 
   const { primaryCurrency, secondaryCurrency, toggleCurrency } = useMyCurrencies()
@@ -287,42 +289,40 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
     [brightnessInitial],
   )
 
-  // TODO: re-enable notifications when we have API endpoints for it
-  // useEffect(() => {
-  //   const notifRequest = async () => {
-  //     const waitUntilAuthorizationWindow = 5000
+  useEffect(() => {
+    const notifRequest = async () => {
+      const waitUntilAuthorizationWindow = 5000
 
-  //     if (Platform.OS === "ios") {
-  //       if (await hasFullPermissions()) {
-  //         return
-  //       }
+      if (Platform.OS === "ios") {
+        if (await hasFullPermissions()) {
+          return
+        }
 
-  //       setTimeout(
-  //         () =>
-  //           Alert.alert(
-  //             translate("common.notification"),
-  //             translate("ReceiveBitcoinScreen.activateNotifications"),
-  //             [
-  //               {
-  //                 text: translate("common.later"),
-  //                 // todo: add analytics
-  //                 onPress: () => console.log("Cancel/Later Pressed"),
-  //                 style: "cancel",
-  //               },
-  //               {
-  //                 text: translate("common.ok"),
-  //                 onPress: () => hasToken && requestPermission(client),
-  //               },
-  //             ],
-  //             { cancelable: true },
-  //           ),
-  //         waitUntilAuthorizationWindow,
-  //       )
-  //     }
-  //   }
-
-  //   notifRequest()
-  // }, [client, hasToken])
+        setTimeout(
+          () =>
+            Alert.alert(
+              translate("common.notification"),
+              translate("ReceiveBitcoinScreen.activateNotifications"),
+              [
+                {
+                  text: translate("common.later"),
+                  // todo: add analytics
+                  onPress: () => console.log("Cancel/Later Pressed"),
+                  style: "cancel",
+                },
+                {
+                  text: translate("common.ok"),
+                  onPress: () => hasToken && requestPermission(client),
+                },
+              ],
+              { cancelable: true },
+            ),
+          waitUntilAuthorizationWindow,
+        )
+      }
+    }
+    notifRequest()
+  }, [client, hasToken])
 
   useEffect(() => {
     if (
