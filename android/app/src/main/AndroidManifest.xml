@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="io.chirripo.app"
+  package="app.bitcoinjungle.mobile"
   xmlns:tools="http://schemas.android.com/tools"
 >
 
@@ -37,7 +37,7 @@
             <category android:name="android.intent.category.DEFAULT" />
             <category android:name="android.intent.category.BROWSABLE" />
             <data android:scheme="https"
-                  android:host="ln.bitcoinbeach.com"
+                  android:host="pay.bitcoinjungle.app"
                   />
                   <!-- android:pathPrefix="/gizmos"  -->
 

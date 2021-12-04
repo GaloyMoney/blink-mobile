@@ -112,7 +112,7 @@ export const validPayment = (
     // some apps encode lightning invoices in UPPERCASE
     data = protocol.toLowerCase()
   } else if (protocol.toLowerCase() === "https") {
-    const domain = "//ln.bitcoinbeach.com/"
+    const domain = "//pay.bitcoinjungle.app/"
     if (data.startsWith(domain)) {
       return {
         valid: true,

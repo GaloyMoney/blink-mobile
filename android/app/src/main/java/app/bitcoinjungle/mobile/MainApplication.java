@@ -1,4 +1,4 @@
-package io.chirripo.app;
+package app.bitcoinjungle.mobile;
 
 import android.app.Application;
 import android.content.Context;

@@ -129,11 +129,11 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
-        applicationId "io.chirripo.app"
+        applicationId "app.bitcoinjungle.mobile"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 2
-        versionName "1.0"
+        versionCode 289
+        versionName "1.0.0"
         missingDimensionStrategy 'react-native-camera', 'general' // React native camera
 
     }
@@ -146,21 +146,13 @@ android {
         }
     }
     signingConfigs {
-
-           release {
-            if (project.hasProperty('PLAY_STORE_FILE')) {
-                storeFile file(PLAY_STORE_FILE)
-                storePassword PLAY_STORE_PASSWORD
-                keyAlias PLAY_STORE_KEY_ALIAS
-                keyPassword PLAY_STORE_KEY_PASSWORD
+        release {
+            if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
+                storeFile file(MYAPP_UPLOAD_STORE_FILE)
+                storePassword MYAPP_UPLOAD_STORE_PASSWORD
+                keyAlias MYAPP_UPLOAD_KEY_ALIAS
+                keyPassword MYAPP_UPLOAD_KEY_PASSWORD
             }
-        }
-    
-        debug {
-            storeFile file('release.keystore')
-            storePassword 'android'
-            keyAlias 'androiddebugkey'
-            keyPassword 'android'
         }
     }
     buildTypes {

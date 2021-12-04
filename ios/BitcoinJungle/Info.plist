@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>Chirripo</string>
+	<string>Bitcoin Jungle</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -36,10 +36,10 @@
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>CFBundleURLName</key>
-			<string>io.galoy</string>
+			<string>app.bitcoinjungle</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>galoy</string>
+				<string>bitcoinjungle</string>
 			</array>
 		</dict>
 		<dict>
@@ -56,17 +56,17 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>ln.bitcoinbeach.com</string>
+			<string>pay.bitcoinjungle.app</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>ln.bitcoinbeach.com</string>
+				<string>pay.bitcoinjungle.app</string>
 			</array>
 		</dict>
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>bitcoinbeach</string>
+			<string>bitcoinjungle</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>bitcoinbeach</string>
@@ -75,6 +75,8 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -140,8 +142,6 @@
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
-	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 </dict>
 </plist>
