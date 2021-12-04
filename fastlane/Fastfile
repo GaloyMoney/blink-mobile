@@ -1,0 +1,130 @@
+# Before Start pushing
+before_all do
+    ensure_git_branch(
+        branch: 'main'
+      )  
+    ensure_git_status_clean
+    git_pull
+end
+
+platform :ios do
+
+    desc "Configure environment variables"
+    private_lane :bootstrap do |options|
+        ENV["KEYCHAIN_NAME"] = "#{ENV['KEYCHAIN']}.keychain"
+        ENV["MATCH_KEYCHAIN_NAME"] = "#{ENV['KEYCHAIN']}"
+        ENV["CER_KEYCHAIN_PATH"] = "~/Library/Keychains/#{ENV['KEYCHAIN']}.keychain-db"
+        ENV["SPACESHIP_SKIP_2FA_UPGRADE"] = "1"
+    end
+
+    desc "Configure Code-Signing assets"
+    private_lane :sync_signing_assets do |options|
+      selectedType = options[:type]
+      match(type: selectedType)
+    end
+
+    desc "Increment version minor number for the iOS application."
+    lane :increment_version do
+      increment_version_number(
+        bump_type: "patch", # Automatically increment patch version number
+        xcodeproj: "./ios/#{ENV['PROJECT_FILE_NAME']}.xcodeproj"
+      )
+    end
+
+    desc "Increment build number for the iOS application."
+    lane :increment_build do
+        increment_build_number(xcodeproj: "./ios/#{ENV['PROJECT_FILE_NAME']}.xcodeproj")
+    end
+
+    desc "Build the iOS application."
+    lane :build do
+        bootstrap
+        sync_signing_assets(type: "appstore")
+        gym(
+            scheme: "#{ENV['PROJECT_FILE_NAME']}",
+            workspace: "./ios/#{ENV['PROJECT_FILE_NAME']}.xcworkspace",
+        )
+    end
+
+    desc "Release On TestFlight"
+    lane :beta do
+        build
+        pilot(
+            username: "#{ENV['APPLE_ID']}",
+            skip_submission: true,
+            notify_external_testers: false,
+            app_identifier: "#{ENV['BUNDLE_ID']}",
+            skip_waiting_for_build_processing: true
+        )
+    end
+
+    lane :release do
+      build
+      upload_to_app_store
+    end
+
+end
+
+
+platform :android do
+    desc "Setup Android build and release to beta"
+    lane :beta do
+        increment_version_code(app_project_dir: './android/app')
+        gradle(task: 'clean', project_dir: './android/')
+        gradle(task: 'bundle', build_type: 'Release', project_dir: './android')
+        supply(track: 'beta', aab: './android/app/build/outputs/bundle/release/app-release.aab')
+    end 
+    lane :release do
+        increment_version_code(app_project_dir: './android/app')
+        increment_version_name(app_project_dir: './android/app', bump_type: 'patch')
+        gradle(task: 'clean', project_dir: './android/')
+        gradle(task: 'bundle', build_type: 'Release', project_dir: './android')
+        supply(track: 'production', aab: './android/app/build/outputs/bundle/release/app-release.aab', release_status: 'draft')
+    end
+end
+
+lane :codepush_ios do |options|
+    current_version = get_version_number(xcodeproj: './ios/chirripoApp.xcodeproj', target: 'chirripoApp')
+    codepush(current_version: current_version, manditory: options[:manditory])
+end
+
+lane :codepush_android do |options|
+    current_version = google_play_track_release_names
+    codepush(current_version: current_version, manditory: options[:manditory])
+end
+
+private_lane :select_app_version do |options|
+    current_version = options[:current_version]
+    current_major = [current_version.split(".").first, 'x', 'x'].join('.')
+    current_minor = current_version.split('.').slice(0,2).push('x').join('.')
+    target_version_label = UI.select("What version do you want to target?", [
+        "All users",
+        "Most recent major (#{current_major})",
+        "Most recent minor (#{current_mior})",
+        "Current version (#{current_version})"
+    ])
+
+    next "\"*\"" if target_version_label.match(/All/)
+    next current_major if target_version_label.match(/major/)
+    next current_minor if target_version_label.match(/minor/)
+
+    current_version
+end
+
+lane :codepush do |options|
+    manditory = !!options[:manditory]
+    manditory_string = manditory ? " -m" : ""
+    version = select_app_version(current_version: options[:current_version])
+    if UI.confirm("Going to CodePush #{version} to production.")
+        Dir.chdir("..") do
+            sh "appcenter codepush release-react -a chirripoApp -d Production -t #{version}#{maditory_string} --output-dir ./build" do |status, result, command|
+            unless status.success?
+                UI.error "Command #{command} failed with status #{status.exitstatus}"
+            end
+            UI.message "Finished! released on App center."
+        end
+        end
+    else
+        UI.error "Not going to push"
+    end
+end

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="fastlane.lanes">
+    
+    
+    
+      
+      <testcase classname="fastlane.lanes" name="0: ensure_git_branch" time="0.007419">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="1: git_pull" time="1.178533">
+        
+          <failure message="/Library/Ruby/Gems/2.6.0/gems/fastlane-2.198.1/fastlane/lib/fastlane/actions/actions_helper.rb:67:in `execute_action'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.198.1/fastlane/lib/fastlane/runner.rb:255:in `block in execute_action'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.198.1/fastlane/lib/fastlane/runner.rb:229:in `chdir'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.198.1/fastlane/lib/fastlane/runner.rb:229:in `execute_action'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.198.1/fastlane/lib/fastlane/runner.rb:157:in `trigger_action_by_name'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.198.1/fastlane/lib/fastlane/fast_file.rb:159:in `method_missing'&#10;Fastfile:7:in `block in parsing_binding'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.198.1/fastlane/lib/fastlane/runner.rb:292:in `execute_flow_block'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.198.1/fastlane/lib/fastlane/runner.rb:46:in `block in execute'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.198.1/fastlane/lib/fastlane/runner.rb:45:in `chdir'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.198.1/fastlane/lib/fastlane/runner.rb:45:in `execute'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.198.1/fastlane/lib/fastlane/lane_manager.rb:47:in `cruise_lane'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.198.1/fastlane/lib/fastlane/command_line_handler.rb:36:in `handle'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.198.1/fastlane/lib/fastlane/commands_generator.rb:109:in `block (2 levels) in run'&#10;/Library/Ruby/Gems/2.6.0/gems/commander-4.6.0/lib/commander/command.rb:187:in `call'&#10;/Library/Ruby/Gems/2.6.0/gems/commander-4.6.0/lib/commander/command.rb:157:in `run'&#10;/Library/Ruby/Gems/2.6.0/gems/commander-4.6.0/lib/commander/runner.rb:444:in `run_active_command'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.198.1/fastlane_core/lib/fastlane_core/ui/fastlane_runner.rb:117:in `run!'&#10;/Library/Ruby/Gems/2.6.0/gems/commander-4.6.0/lib/commander/delegates.rb:18:in `run!'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.198.1/fastlane/lib/fastlane/commands_generator.rb:353:in `run'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.198.1/fastlane/lib/fastlane/commands_generator.rb:42:in `start'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.198.1/fastlane/lib/fastlane/cli_tools_distributor.rb:122:in `take_off'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.198.1/bin/fastlane:23:in `&lt;top (required)&gt;'&#10;/usr/local/bin/fastlane:23:in `load'&#10;/usr/local/bin/fastlane:23:in `&lt;main&gt;'&#10;&#10;Exit status of command 'git pull &amp;&amp; git fetch --tags' was 1 instead of 0.&#10;hint: Pulling without specifying how to reconcile divergent branches is&#10;hint: discouraged. You can squelch this message by running one of the following&#10;hint: commands sometime before your next pull:&#10;hint: &#10;hint:   git config pull.rebase false  # merge (the default strategy)&#10;hint:   git config pull.rebase true   # rebase&#10;hint:   git config pull.ff only       # fast-forward only&#10;hint: &#10;hint: You can replace &quot;git config&quot; with &quot;git config --global&quot; to set a default&#10;hint: preference for all repositories. You can also pass --rebase, --no-rebase,&#10;hint: or --ff-only on the command line to override the configured default per&#10;hint: invocation.&#10;error: Your local changes to the following files would be overwritten by merge:&#10;	android/app/build.gradle&#10;	android/gradle.properties&#10;	ios/Podfile.lock&#10;Please commit your changes or stash them before you merge.&#10;Aborting&#10;Updating 5dce01f8..c0a184fe&#10;" />
+        
+      </testcase>
+    
+  </testsuite>
+</testsuites>
