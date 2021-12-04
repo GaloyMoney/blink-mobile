@@ -443,7 +443,7 @@
               "Si. Bitcoin usualmente tiene hackeos en Días festivos. cuando los bancos están cerrados."
             ],
             "feedback": [
-              "Esto es correcto. La red de Bitcoin nunca se ha visto comprometida. De cualquier manera, es importante que uses unca cartera digital segura (¡Como lo es Bitcoin Beach Wallet, desarrollada por Galoy!) para mantener tus Bitcoins personales seguros todo el tiempo.",
+              "Esto es correcto. La red de Bitcoin nunca se ha visto comprometida. De cualquier manera, es importante que uses unca cartera digital segura (¡Como lo es Bitcoin Jungle Wallet, desarrollada por Galoy!) para mantener tus Bitcoins personales seguros todo el tiempo.",
               "Equivocado, intenta de nuevo.",
               "No amiguito, sabes bien que eso no es correcto."
             ],
@@ -744,6 +744,6 @@
   },
   "whatsapp": {
     "contactUs": "¿Necesita ayuda? Contáctenos por WhatsApp",
-    "defaultSupportMessage": "¡Hola! Necesito ayuda con Bitcoin Beach Wallet"
+    "defaultSupportMessage": "¡Hola! Necesito ayuda con Bitcoin Jungle Wallet"
   }
 }
