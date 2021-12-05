@@ -158,11 +158,11 @@ export const useMySubscription = (): UseMyUpdates => {
         }
         return `${sats.toFixed(0)} sats`
       }
-      if (currency === "CRC") {
+      if (currency === "CRC" || currency === "USD") {
         if (noPriceData) {
           return "??"
         }
-        return `₡${formatCurrencyAmount((sats * priceRef.current) / 100)}`
+        return `${formatUsdAmount((sats * priceRef.current) / 100)}`
       }
       throw new Error("Unsupported currency")
     },
