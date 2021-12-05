@@ -6,7 +6,7 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import { IconTransaction } from "../icon-transactions"
 import { palette } from "../../theme/palette"
 import { ParamListBase } from "@react-navigation/native"
-import { prefCurrencyVar as primaryCurrencyVar } from "../../graphql/client-only-query"
+// import { prefCurrencyVar as primaryCurrencyVar } from "../../graphql/client-only-query"
 
 import * as currency_fmt from "currency.js"
 import i18n from "i18n-js"
@@ -41,22 +41,23 @@ moment.locale(i18n.locale)
 const dateDisplay = ({ createdAt }) =>
   moment.duration(Math.min(0, moment.unix(createdAt).diff(moment()))).humanize(true)
 
-const computeUsdAmount = (tx: WalletTransaction) => {
+const computeCurrencyAmount = (tx: WalletTransaction) => {
   const { settlementAmount, settlementPrice } = tx
   const { base, offset } = settlementPrice
   const usdPerSat = base / 10 ** offset / 100
   return settlementAmount * usdPerSat
 }
 
-const amountDisplay = ({ primaryCurrency, settlementAmount, usdAmount }) => {
-  const symbol = primaryCurrency === "BTC" ? "" : "$"
-  const precision = primaryCurrency === "BTC" ? 0 : Math.abs(usdAmount) < 0.01 ? 4 : 2
+const amountDisplay = ({ primaryCurrency, settlementAmount, currencyAmount }) => {
+  const symbol = primaryCurrency === "CRC" ? "₡" : "$"
+  const precision = primaryCurrency === "CRC" ? 2 : Math.abs(currencyAmount) < 0.01 ? 4 : 2
 
   return currency_fmt
-    .default(primaryCurrency === "BTC" ? settlementAmount : usdAmount, {
-      separator: ",",
+    .default(primaryCurrency != "CRC" ? settlementAmount : currencyAmount, {
+      separator: ".",
       symbol,
       precision,
+      decimal: ","
     })
     .format()
 }
@@ -94,12 +95,12 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
   navigation,
   subtitle = false,
 }: TransactionItemProps) => {
-  const primaryCurrency = primaryCurrencyVar()
+  const primaryCurrency = 'CRC' // primaryCurrencyVar()
 
   const isReceive = tx.direction === "RECEIVE"
   const isPending = tx.status === "PENDING"
   const description = descriptionDisplay(tx)
-  const usdAmount = computeUsdAmount(tx)
+  const currencyAmount = computeCurrencyAmount(tx)
 
   return (
     <ListItem
@@ -110,7 +111,7 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
           isReceive,
           isPending,
           description,
-          usdAmount,
+          currencyAmount,
         })
       }
     >
@@ -120,7 +121,7 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
         <ListItem.Subtitle>{subtitle ? dateDisplay(tx) : undefined}</ListItem.Subtitle>
       </ListItem.Content>
       <Text style={amountDisplayStyle({ isReceive, isPending })}>
-        {amountDisplay({ ...tx, usdAmount, primaryCurrency })}
+        {amountDisplay({ ...tx, currencyAmount, primaryCurrency })}
       </Text>
     </ListItem>
   )
