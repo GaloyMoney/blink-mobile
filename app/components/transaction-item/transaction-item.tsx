@@ -42,6 +42,7 @@ const dateDisplay = ({ createdAt }) =>
   moment.duration(Math.min(0, moment.unix(createdAt).diff(moment()))).humanize(true)
 
 const computeCurrencyAmount = (tx: WalletTransaction) => {
+  console.log('tx : ', tx)
   const { settlementAmount, settlementPrice } = tx
   const { base, offset } = settlementPrice
   const usdPerSat = base / 10 ** offset / 100
@@ -50,7 +51,7 @@ const computeCurrencyAmount = (tx: WalletTransaction) => {
 
 const amountDisplay = ({ primaryCurrency, settlementAmount, currencyAmount }) => {
   const symbol = primaryCurrency === "CRC" ? "₡" : "$"
-  const precision = primaryCurrency === "CRC" ? 2 : Math.abs(currencyAmount) < 0.01 ? 4 : 2
+  const precision = primaryCurrency === "CRC" ? 0 : Math.abs(currencyAmount) < 0.01 ? 4 : 2
 
   return currency_fmt
     .default(primaryCurrency != "CRC" ? settlementAmount : currencyAmount, {
