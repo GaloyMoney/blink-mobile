@@ -95,18 +95,18 @@ const usePriceCache = () => {
   return [cachedPrice, updatePriceCache]
 }
 
-export const formatUsdAmount: (usd: number) => string = (usd) => {
-  if (usd === 0 || usd >= 0.01) {
+export const formatCurrencyAmount: (currency: number) => string = (currency) => {
+  if (currency === 0 || currency >= 0.01) {
     return currency_fmt
-      .default(usd, {
+      .default(currency, {
         precision: 2,
-        separator: ".",
-        symbol: "",
-        decimal: ",",
+        separator: ",",
+        symbol: "₡",
+        decimal: ".",
       })
       .format()
   }
-  return usd.toFixed(4)
+  return currency.toFixed(4)
 }
 
 export const useMyCurrencies = (): {
@@ -158,11 +158,11 @@ export const useMySubscription = (): UseMyUpdates => {
         }
         return `${sats.toFixed(0)} sats`
       }
-      if (currency === "USD") {
+      if (currency === "CRC") {
         if (noPriceData) {
           return "??"
         }
-        return `₡${formatUsdAmount((sats * priceRef.current) / 100)}`
+        return `₡${formatCurrencyAmount((sats * priceRef.current) / 100)}`
       }
       throw new Error("Unsupported currency")
     },
