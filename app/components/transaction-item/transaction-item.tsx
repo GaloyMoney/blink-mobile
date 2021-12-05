@@ -6,7 +6,7 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import { IconTransaction } from "../icon-transactions"
 import { palette } from "../../theme/palette"
 import { ParamListBase } from "@react-navigation/native"
-// import { prefCurrencyVar as primaryCurrencyVar } from "../../graphql/client-only-query"
+import { prefCurrencyVar as primaryCurrencyVar } from "../../graphql/client-only-query"
 
 import * as currency_fmt from "currency.js"
 import i18n from "i18n-js"
@@ -42,7 +42,6 @@ const dateDisplay = ({ createdAt }) =>
   moment.duration(Math.min(0, moment.unix(createdAt).diff(moment()))).humanize(true)
 
 const computeCurrencyAmount = (tx: WalletTransaction) => {
-  console.log('tx : ', tx)
   const { settlementAmount, settlementPrice } = tx
   const { base, offset } = settlementPrice
   const usdPerSat = base / 10 ** offset / 100
@@ -50,11 +49,11 @@ const computeCurrencyAmount = (tx: WalletTransaction) => {
 }
 
 const amountDisplay = ({ primaryCurrency, settlementAmount, currencyAmount }) => {
-  const symbol = primaryCurrency === "CRC" ? "₡" : "$"
-  const precision = primaryCurrency === "CRC" ? 0 : Math.abs(currencyAmount) < 0.01 ? 4 : 2
+  const symbol = primaryCurrency === "USD" ? "₡" : ""
+  const precision = primaryCurrency === "USD" ? 0 : Math.abs(currencyAmount) < 0.01 ? 4 : 2
 
   return currency_fmt
-    .default(primaryCurrency != "CRC" ? settlementAmount : currencyAmount, {
+    .default(primaryCurrency != "USD" ? settlementAmount : currencyAmount, {
       separator: ".",
       symbol,
       precision,
@@ -96,7 +95,7 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
   navigation,
   subtitle = false,
 }: TransactionItemProps) => {
-  const primaryCurrency = 'CRC' // primaryCurrencyVar()
+  const primaryCurrency = primaryCurrencyVar()
 
   const isReceive = tx.direction === "RECEIVE"
   const isPending = tx.status === "PENDING"
