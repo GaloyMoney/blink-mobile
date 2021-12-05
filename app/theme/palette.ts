@@ -9,7 +9,8 @@ export const palette = {
   green: "#459C0B",
   orange: "#FF7e1c",
   blue: "#315b5a",
-  lightBlue: "#EDECE1",
+  lightBlue: "#3553FF",
   sky: "#C3CCFF",
   OPACITY: "#202020D0",
+  offWhite: "#EDECE1",
 }

@@ -59,7 +59,7 @@ type Props = {
 export const GetStartedScreen: ScreenType = ({ navigation }: Props) => (
   <Screen
     style={styles.container}
-    backgroundColor={palette.lightBlue}
+    backgroundColor={palette.offWhite}
     statusBar="light-content"
   >
     <Image style={styles.Logo} source={BitcoinJungleLogo} resizeMode="contain" />
