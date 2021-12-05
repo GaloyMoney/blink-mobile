@@ -28,7 +28,7 @@ const SafeSearchBar = SearchBar as unknown as React.FC<
   SearchBarBaseProps | SearchBarDefaultProps | SearchBarAndroidProps | SearchBarIosProps
 >
 
-const filteredContactNames = ["BitcoinBeachMarketing"]
+const filteredContactNames = ["BitcoinJungleMarketing"]
 
 const styles = EStyleSheet.create({
   activityIndicatorContainer: {

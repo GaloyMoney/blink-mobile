@@ -76,8 +76,8 @@ const descriptionDisplay = (tx: WalletTransaction) => {
       return "Invoice"
     case "SettlementViaIntraLedger":
       return isReceive
-        ? `From ${settlementVia.counterPartyUsername || "BitcoinBeach Wallet"}`
-        : `To ${settlementVia.counterPartyUsername || "BitcointBeach Wallet"}`
+        ? `From ${settlementVia.counterPartyUsername || "Bitcoin Jungle Wallet"}`
+        : `To ${settlementVia.counterPartyUsername || "Bitcoin Jungle Wallet"}`
   }
 }
 

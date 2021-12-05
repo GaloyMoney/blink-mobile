@@ -17,7 +17,7 @@ import MascotDollarBitcoin from "./honey-badger-money-bitcoin-01.svg"
 import HoneyBadgerShovel from "./honey-badger-shovel-01.svg"
 
 const styles = EStyleSheet.create({
-  $color: palette.white,
+  $color: palette.blue,
   $fontWeight: "bold",
   $paddingHorizontal: "40rem",
   $textAlign: "center",

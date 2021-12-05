@@ -14,7 +14,7 @@ import { showModalClipboardIfValidPayment } from "../../utils/clipboard"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
 
-import BitcoinBeachLogo from "../get-started-screen/bitcoinBeach3.png"
+import BitcoinJungleLogo from "../get-started-screen/BitcoinJungleLogo.png"
 import useToken from "../../utils/use-token"
 
 const styles = EStyleSheet.create({
@@ -66,7 +66,7 @@ export const AuthenticationCheckScreen: ScreenType = ({ navigation }: Props) => 
       backgroundColor={palette.lightBlue}
       statusBar="light-content"
     >
-      <Image style={styles.Logo} source={BitcoinBeachLogo} resizeMode="contain" />
+      <Image style={styles.Logo} source={BitcoinJungleLogo} resizeMode="contain" />
     </Screen>
   )
 }

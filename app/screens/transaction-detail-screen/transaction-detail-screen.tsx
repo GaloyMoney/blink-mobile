@@ -94,7 +94,7 @@ const typeDisplay = (type: SettlementViaType) => {
     case "SettlementViaLn":
       return "Lightning"
     case "SettlementViaIntraLedger":
-      return "BitcoinBeach"
+      return "BitcoinJungle"
   }
 }
 
@@ -165,7 +165,7 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
         {settlementVia.__typename === "SettlementViaIntraLedger" && (
           <Row
             entry={translate("TransactionDetailScreen.paid")}
-            value={settlementVia.counterPartyUsername || "BitcoinBeach Wallet"}
+            value={settlementVia.counterPartyUsername || "Bitcoin Jungle Wallet"}
           />
         )}
         <Row

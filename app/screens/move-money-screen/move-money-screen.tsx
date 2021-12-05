@@ -243,7 +243,7 @@ export const MoveMoneyScreen: ScreenType = ({
   }
 
   // const testflight = "https://testflight.apple.com/join/9aC8MMk2"
-  const appstore = "https://apps.apple.com/app/bitcoin-beach-wallet/id1531383905"
+  const appstore = "https://apps.apple.com/app/bitcoin-jungle/id1598646780"
 
   // from https://github.com/FiberJW/react-native-app-link/blob/master/index.js
   const openInStore = async ({
@@ -264,7 +264,7 @@ export const MoveMoneyScreen: ScreenType = ({
     openInStore({
       // appName: "Bitcoin Beach Wallet",
       // appStoreId: "",
-      playStoreId: "com.galoyapp",
+      playStoreId: "app.bitcoinjungle.mobile",
     }).catch((err) => {
       console.log({ err }, "error app link on link")
       // handle error

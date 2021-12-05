@@ -69,7 +69,7 @@
 			<string>bitcoinjungle</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>bitcoinbeach</string>
+				<string>bitcoinjungle</string>
 			</array>
 		</dict>
 	</array>

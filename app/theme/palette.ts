@@ -8,8 +8,8 @@ export const palette = {
   red: "#FF2301",
   green: "#459C0B",
   orange: "#FF7e1c",
-  blue: "#3050C4",
-  lightBlue: "#3553FF",
+  blue: "#315b5a",
+  lightBlue: "#EDECE1",
   sky: "#C3CCFF",
   OPACITY: "#202020D0",
 }

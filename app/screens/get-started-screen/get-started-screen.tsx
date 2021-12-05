@@ -11,7 +11,7 @@ import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import type { ScreenType } from "../../types/jsx"
 
-import BitcoinBeachLogo from "./bitcoinBeach3.png"
+import BitcoinJungleLogo from "./BitcoinJungleLogo.png"
 
 const styles = EStyleSheet.create({
   Logo: {
@@ -62,7 +62,7 @@ export const GetStartedScreen: ScreenType = ({ navigation }: Props) => (
     backgroundColor={palette.lightBlue}
     statusBar="light-content"
   >
-    <Image style={styles.Logo} source={BitcoinBeachLogo} resizeMode="contain" />
+    <Image style={styles.Logo} source={BitcoinJungleLogo} resizeMode="contain" />
     <VersionComponent style={styles.version} />
     <View style={styles.bottom}>
       <Button

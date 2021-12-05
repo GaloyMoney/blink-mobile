@@ -18,7 +18,7 @@ import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
 import useToken from "../../utils/use-token"
 
-import BitcoinBeachLogo from "../get-started-screen/bitcoinBeach3.png"
+import BitcoinJungleLogo from "../get-started-screen/BitcoinJungleLogo.png"
 import useLogout from "../../hooks/use-logout"
 
 const styles = EStyleSheet.create({
@@ -177,7 +177,7 @@ export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) =
       backgroundColor={palette.lightBlue}
       statusBar="light-content"
     >
-      <Image style={styles.Logo} source={BitcoinBeachLogo} resizeMode="contain" />
+      <Image style={styles.Logo} source={BitcoinJungleLogo} resizeMode="contain" />
       <View style={styles.bottom}>
         <Button
           title={(() => {
