@@ -4,6 +4,7 @@ import { ActivityIndicator, StyleProp, Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { VictoryAxis, VictoryChart, VictoryLine } from "victory-native"
+import * as currency_fmt from "currency.js"
 import {
   TextStyle,
   ViewStyle,
@@ -166,7 +167,10 @@ export const PriceGraph: ComponentType = ({
     <>
       <View style={styles.textView}>
         <Text style={styles.neutral}>{translate("PriceScreen.satPrice")}</Text>
-        <Text style={styles.price}>${price.toFixed(2)}</Text>
+        <Text style={styles.price}>{currency_fmt
+          .default(price, { precision: 2, symbol: "₡", separator: ".", decimal: "," })
+          .format()}
+        </Text>
       </View>
       <View style={styles.textView}>
         <Text style={[styles.delta, color]}>{(delta * 100).toFixed(2)}% </Text>
@@ -181,7 +185,7 @@ export const PriceGraph: ComponentType = ({
               axis: { strokeWidth: 0 },
               tickLabels: {
                 fill: palette.midGrey,
-                fontSize: 16,
+                fontSize: 14,
               },
             }}
           />

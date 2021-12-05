@@ -1,5 +1,6 @@
 import { gql, useApolloClient, useReactiveVar, useSubscription } from "@apollo/client"
 import * as React from "react"
+import * as currency_fmt from "currency.js"
 
 import {
   PRICE_CACHE,
@@ -96,7 +97,14 @@ const usePriceCache = () => {
 
 export const formatUsdAmount: (usd: number) => string = (usd) => {
   if (usd === 0 || usd >= 0.01) {
-    return usd.toFixed(2)
+    return currency_fmt
+      .default(usd, {
+        precision: 2,
+        separator: ".",
+        symbol: "",
+        decimal: ",",
+      })
+      .format()
   }
   return usd.toFixed(4)
 }
@@ -154,7 +162,7 @@ export const useMySubscription = (): UseMyUpdates => {
         if (noPriceData) {
           return "??"
         }
-        return `$${formatUsdAmount((sats * priceRef.current) / 100)}`
+        return `₡${formatUsdAmount((sats * priceRef.current) / 100)}`
       }
       throw new Error("Unsupported currency")
     },

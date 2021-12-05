@@ -112,7 +112,7 @@ export const InputPayment: ComponentType = ({
             { color: primaryAmount.value === 0 ? palette.midGrey : palette.darkGrey },
           ]}
         >
-          $
+          ₡
         </Text>
       )
     }

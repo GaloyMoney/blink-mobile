@@ -25,7 +25,7 @@ export const currencyToTextWithUnits = (moneyAmount: MoneyAmount): string => {
   }
 
   if (moneyAmount.currency === "USD") {
-    return "$" + currencyToText(moneyAmount.value.toString(), moneyAmount.currency)
+    return "₡" + currencyToText(moneyAmount.value.toString(), moneyAmount.currency)
   }
   throw Error("wrong currency")
 }
@@ -33,10 +33,11 @@ export const currencyToTextWithUnits = (moneyAmount: MoneyAmount): string => {
 export const currencyToText = (
   value: string,
   currency: CurrencyType,
-  locale = "en-US",
+  locale = "es-CR",
 ): string =>
   isCurrencyWithDecimals(currency)
     ? Number(value).toLocaleString(locale, {
+        currency: "CRC",
         style: "decimal",
         maximumFractionDigits: 2,
         minimumFractionDigits: 2,

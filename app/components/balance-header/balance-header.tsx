@@ -122,7 +122,7 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
     setHideBalance(hideBalance)
   }, [hideBalance, isFocused])
 
-  const currency = "USD"
+  const currency = "CRC"
   const otherCurrency = "BTC"
 
   const hiddenBalanceSet = () => {
