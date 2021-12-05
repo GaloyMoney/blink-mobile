@@ -35,6 +35,7 @@ import type { PhoneValidationStackParamList } from "../../navigation/stack-param
 import { parseTimer } from "../../utils/timer"
 import { useGeetestCaptcha } from "../../hooks"
 import { networkVar } from "../../graphql/client-only-query"
+import { requestPermission } from "../../utils/notifications"
 
 const REQUEST_AUTH_CODE = gql`
   mutation captchaRequestAuthCode($input: CaptchaRequestAuthCodeInput!) {
@@ -309,7 +310,8 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
     onCompleted: async (data) => {
       if (data.userLogin.authToken) {
         await addDeviceToken(client)
-
+        requestPermission(client)
+        
         if (await BiometricWrapper.isSensorAvailable()) {
           navigation.replace("authentication", {
             screenPurpose: AuthenticationScreenPurpose.TurnOnAuthentication,
