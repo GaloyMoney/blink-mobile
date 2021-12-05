@@ -100,9 +100,9 @@ export const formatCurrencyAmount: (currency: number) => string = (currency) => 
     return currency_fmt
       .default(currency, {
         precision: 2,
-        separator: ",",
+        separator: ".",
         symbol: "₡",
-        decimal: ".",
+        decimal: ",",
       })
       .format()
   }
