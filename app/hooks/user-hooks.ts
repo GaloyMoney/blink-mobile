@@ -95,10 +95,10 @@ const usePriceCache = () => {
   return [cachedPrice, updatePriceCache]
 }
 
-export const formatCurrencyAmount: (currency: number) => string = (currency) => {
-  if (currency === 0 || currency >= 0.01) {
+export const formatUsdAmount: (usd: number) => string = (usd) => {
+  if (usd === 0 || usd >= 0.01) {
     return currency_fmt
-      .default(currency, {
+      .default(usd, {
         precision: 2,
         separator: ".",
         symbol: "₡",
@@ -106,7 +106,7 @@ export const formatCurrencyAmount: (currency: number) => string = (currency) => 
       })
       .format()
   }
-  return currency.toFixed(4)
+  return usd.toFixed(4)
 }
 
 export const useMyCurrencies = (): {
