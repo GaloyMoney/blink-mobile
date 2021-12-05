@@ -235,16 +235,6 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       greyed: !hasToken,
       hidden: !hasToken,
     },
-    {
-      category: "Debug Screen",
-      id: "debug",
-      icon: "ios-log-out",
-      action: async () => {
-        
-        navigation.navigate("Profile")
-      },
-      enabled: true
-    },
   ]
 
   return (
