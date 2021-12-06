@@ -207,6 +207,7 @@ exports[`SendBitcoinScreen render matches snapshot 1`] = `
         <Text
           style={
             Object {
+              "color": "#1d1d1d",
               "fontSize": 18,
               "marginVertical": 8,
             }

@@ -90,6 +90,10 @@ const styles = EStyleSheet.create({
     marginTop: "24rem",
   },
 
+  menuIcon: {
+    color: palette.darkGrey,
+  },
+
   modal: { marginBottom: 0, marginHorizontal: 0 },
 
   screenStyle: {
@@ -333,14 +337,14 @@ export const MoveMoneyScreen: ScreenType = ({
               account: AccountType.Bitcoin,
             })
           }
-          icon={<Icon name="ios-trending-up-outline" size={32} />}
+          icon={<Icon name="ios-trending-up-outline" size={32} style={styles.menuIcon} />}
         />
         <BalanceHeader loading={loading} style={styles.balanceHeader} />
         <Button
           buttonStyle={styles.buttonStyleTime}
           containerStyle={styles.separator}
           onPress={() => navigation.navigate("settings")}
-          icon={<Icon name="ios-settings-outline" size={32} />}
+          icon={<Icon name="ios-settings-outline" size={32} style={styles.menuIcon} />}
         />
       </View>
 

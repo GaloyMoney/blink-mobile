@@ -17,6 +17,7 @@ import { color } from "../../theme"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { PaymentConfirmationInformation } from "./payment-confirmation-information"
 import useFee from "./use-fee"
+import { palette } from "../../theme/palette"
 
 export const LN_PAY = gql`
   mutation lnInvoicePaymentSend($input: LnInvoicePaymentInput!) {
@@ -476,6 +477,7 @@ const styles = EStyleSheet.create({
   },
 
   confirmationText: {
+    color: palette.darkGrey,
     fontSize: "18rem",
     textAlign: "center",
   },

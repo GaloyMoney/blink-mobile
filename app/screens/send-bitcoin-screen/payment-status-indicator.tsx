@@ -91,6 +91,7 @@ const styles = EStyleSheet.create({
   },
 
   successLottieText: {
+    color: palette.darkGrey,
     fontSize: 18,
     textAlign: "center",
   },

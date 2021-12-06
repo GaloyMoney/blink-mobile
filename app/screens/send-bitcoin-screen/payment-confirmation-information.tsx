@@ -122,22 +122,26 @@ const styles = EStyleSheet.create({
   },
 
   paymentInformation: {
+    color: palette.midGrey,
     flex: 1,
     marginTop: "32rem",
   },
 
   paymentInformationData: {
+    color: palette.midGrey,
     flex: 5,
     fontSize: "18rem",
     textAlignVertical: "bottom",
   },
 
   paymentInformationLabel: {
+    color: palette.midGrey,
     flex: 2,
     fontSize: "18rem",
   },
 
   paymentInformationMainAmount: {
+    color: palette.midGrey,
     flex: 3,
     fontSize: "18rem",
     textAlignVertical: "bottom",

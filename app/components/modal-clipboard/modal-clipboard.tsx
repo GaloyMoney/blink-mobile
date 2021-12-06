@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
   message: {
     fontSize: 18,
     marginVertical: 8,
+    color: palette.darkGrey,
   },
 
   modal: {
