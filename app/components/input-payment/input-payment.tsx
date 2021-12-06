@@ -17,6 +17,7 @@ const styles = EStyleSheet.create({
   },
 
   icon: {
+    color: palette.darkGrey,
     paddingTop: 4,
   },
 

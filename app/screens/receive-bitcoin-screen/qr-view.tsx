@@ -119,13 +119,19 @@ export const QRView = ({
 
   const renderActionLabel = useMemo(() => {
     if (completed) {
-      return <Text>{translate("ReceiveBitcoinScreen.invoicePaid")}</Text>
+      return (
+        <Text style={styles.completedText}>
+          {translate("ReceiveBitcoinScreen.invoicePaid")}
+        </Text>
+      )
     }
 
     if (isReady) {
       return (
         <Pressable onPress={copyToClipboard}>
-          <Text>{translate("ReceiveBitcoinScreen.tapQrCodeCopy")}</Text>
+          <Text style={styles.completedText}>
+            {translate("ReceiveBitcoinScreen.tapQrCodeCopy")}
+          </Text>
         </Pressable>
       )
     }
@@ -224,7 +230,11 @@ const styles = EStyleSheet.create({
     fontWeight: "bold",
   },
 
-  copyToClipboardText: { textAlign: "center" },
+  completedText: {
+    color: palette.darkGrey,
+  },
+
+  copyToClipboardText: { color: palette.darkGrey, textAlign: "center" },
 
   errorContainer: {
     alignContent: "center",
@@ -237,6 +247,7 @@ const styles = EStyleSheet.create({
   },
 
   lottie: {
+    color: palette.darkGrey,
     height: "200rem",
     width: "200rem",
   },

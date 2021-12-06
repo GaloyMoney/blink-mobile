@@ -243,7 +243,7 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
         if (setting.hidden) {
           return null
         }
-        const settingColor = setting.greyed ? palette.midGrey : null
+        const settingColor = setting.greyed ? palette.midGrey : palette.darkGrey
         const settingStyle: TextStyle = { color: settingColor }
 
         return (

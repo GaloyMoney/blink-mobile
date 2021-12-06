@@ -104,6 +104,7 @@ const styles = EStyleSheet.create({
   },
 
   text: {
+    color: color.palette.darkGrey,
     fontSize: "20rem",
     paddingBottom: "10rem",
     paddingHorizontal: "40rem",

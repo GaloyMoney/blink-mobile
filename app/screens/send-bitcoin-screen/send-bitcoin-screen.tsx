@@ -379,6 +379,7 @@ export const SendBitcoinScreenJSX: ScreenType = ({
           name="camera"
           onPress={() => navigation.navigate("scanningQRCode")}
           size={30}
+          style={styles.iconColor}
         />
       )
     }
@@ -497,6 +498,10 @@ const styles = EStyleSheet.create({
   icon: {
     color: palette.darkGrey,
     marginRight: 15,
+  },
+
+  iconColor: {
+    color: palette.darkGrey,
   },
 
   mainView: {
