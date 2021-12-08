@@ -128,7 +128,7 @@ export const SendBitcoinConfirmationScreen = ({
   })
 
   const [intraLedgerPay] = useMutation(INTRA_LEDGER_PAY, {
-    refetchQueries: ["mainQuery"],
+    refetchQueries: ["mainQuery", "contacts"],
   })
 
   // TODO: add user automatically to cache

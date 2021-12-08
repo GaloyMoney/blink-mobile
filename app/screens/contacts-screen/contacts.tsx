@@ -113,7 +113,7 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
         }
       }
     `,
-    { skip: !hasToken },
+    { fetchPolicy: "cache-and-network", skip: !hasToken },
   )
 
   useFocusEffect(() => {
