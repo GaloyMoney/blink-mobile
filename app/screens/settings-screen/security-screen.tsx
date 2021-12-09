@@ -57,6 +57,7 @@ const styles = EStyleSheet.create({
   },
 
   subtitle: {
+    color: palette.darkGrey,
     fontSize: 16,
     marginTop: 16,
   },
@@ -74,6 +75,7 @@ const styles = EStyleSheet.create({
   },
 
   title: {
+    color: palette.black,
     fontSize: 20,
     fontWeight: "bold",
   },
