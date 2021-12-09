@@ -1,13 +1,15 @@
+import * as React from "react"
+import { useState, useEffect } from "react"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { ListItem } from "react-native-elements"
-import * as React from "react"
 import { Text } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
+import Icon from "react-native-vector-icons/Ionicons"
 import { IconTransaction } from "../icon-transactions"
 import { palette } from "../../theme/palette"
 import { ParamListBase } from "@react-navigation/native"
 import { prefCurrencyVar as primaryCurrencyVar } from "../../graphql/client-only-query"
-
+import { useHideBalance } from "../../hooks"
 import * as currency_fmt from "currency.js"
 import i18n from "i18n-js"
 import moment from "moment"
@@ -15,6 +17,10 @@ import moment from "moment"
 const styles = EStyleSheet.create({
   container: {
     paddingVertical: 9,
+  },
+
+  hiddenBalanceContainer: {
+    fontSize: "16rem",
   },
 
   pending: {
@@ -95,11 +101,20 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
   subtitle = false,
 }: TransactionItemProps) => {
   const primaryCurrency = primaryCurrencyVar()
+  const hideBalance = useHideBalance()
 
   const isReceive = tx.direction === "RECEIVE"
   const isPending = tx.status === "PENDING"
   const description = descriptionDisplay(tx)
   const usdAmount = computeUsdAmount(tx)
+
+  const [txHideBalance, setTxHideBalance] = useState(hideBalance)
+
+  useEffect(() => {
+    setTxHideBalance(hideBalance)
+  }, [hideBalance])
+
+  const pressTxAmount = () => setTxHideBalance((prev) => !prev)
 
   return (
     <ListItem
@@ -119,9 +134,16 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
         <ListItem.Title>{description}</ListItem.Title>
         <ListItem.Subtitle>{subtitle ? dateDisplay(tx) : undefined}</ListItem.Subtitle>
       </ListItem.Content>
-      <Text style={amountDisplayStyle({ isReceive, isPending })}>
-        {amountDisplay({ ...tx, usdAmount, primaryCurrency })}
-      </Text>
+      {txHideBalance ? (
+        <Icon style={styles.hiddenBalanceContainer} name="eye" onPress={pressTxAmount} />
+      ) : (
+        <Text
+          style={amountDisplayStyle({ isReceive, isPending })}
+          onPress={hideBalance ? pressTxAmount : undefined}
+        >
+          {amountDisplay({ ...tx, usdAmount, primaryCurrency })}
+        </Text>
+      )}
     </ListItem>
   )
 }
