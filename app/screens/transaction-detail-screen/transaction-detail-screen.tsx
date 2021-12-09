@@ -172,9 +172,6 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
           entry={translate("common.type")}
           value={typeDisplay(settlementVia.__typename)}
         />
-        {settlementVia.__typename === "SettlementViaLn" && (
-          <Row entry="Hash" value={settlementVia.paymentHash} />
-        )}
         {settlementVia.__typename === "SettlementViaOnChain" && (
           <Row entry="Hash" value={settlementVia.transactionHash} />
         )}
