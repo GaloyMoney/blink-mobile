@@ -4,6 +4,8 @@ import { StyleSheet, Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
+import type { StackNavigationProp } from "@react-navigation/stack"
+import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import type { ScreenType } from "../../types/jsx"
 
 const styles = StyleSheet.create({
@@ -45,7 +47,7 @@ const styles = StyleSheet.create({
 
 type Props = {
   children: JSX.Element
-  next: string
+  next: keyof RootStackParamList
   nextTitle: string
   action: () => void
   Svg: typeof React.Component
@@ -62,7 +64,8 @@ export const OnboardingScreen: ScreenType = ({
   header = "",
   loading = false,
 }: Props) => {
-  const navigation = useNavigation<any>()
+  const navigation =
+    useNavigation<StackNavigationProp<RootStackParamList, "welcomeFirst">>()
   return (
     <>
       <Text style={styles.header}>{header}</Text>

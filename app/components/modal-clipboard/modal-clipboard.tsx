@@ -15,10 +15,12 @@ import {
 import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-import type { ComponentType } from "../../types/jsx"
 import { cache } from "../../graphql/cache"
 import { validPayment } from "../../utils/parsing"
 import useToken from "../../utils/use-token"
+import type { StackNavigationProp } from "@react-navigation/stack"
+import type { ComponentType } from "../../types/jsx"
+import type { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
 
 const styles = StyleSheet.create({
   buttonContainer: {
@@ -76,7 +78,7 @@ const styles = StyleSheet.create({
 
 export const ModalClipboard: ComponentType = () => {
   const client = useApolloClient()
-  const navigation = useNavigation<any>()
+  const navigation = useNavigation<StackNavigationProp<MoveMoneyStackParamList>>()
   const { tokenNetwork } = useToken()
 
   const open = async () => {

@@ -1,11 +1,13 @@
 import { useNavigation } from "@react-navigation/native"
 import * as React from "react"
 import { Pressable, StyleSheet, Text } from "react-native"
-import type { TextStyleProp } from "react-native/Libraries/StyleSheet/StyleSheet"
 import VersionNumber from "react-native-version-number"
 import { translate } from "../../i18n"
 import { palette } from "../../theme/palette"
+import type { StackNavigationProp } from "@react-navigation/stack"
+import type { TextStyleProp } from "react-native/Libraries/StyleSheet/StyleSheet"
 import type { ComponentType } from "../../types/jsx"
+import type { RootStackParamList } from "../../navigation/stack-param-lists"
 
 const styles = StyleSheet.create({
   version: {
@@ -16,8 +18,13 @@ const styles = StyleSheet.create({
   },
 })
 
+type VersionComponentNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  "getStarted" | "settings"
+>
+
 export const VersionComponent: ComponentType = ({ style }: { style?: TextStyleProp }) => {
-  const { navigate } = useNavigation<any>()
+  const { navigate } = useNavigation<VersionComponentNavigationProp>()
 
   const [secretMenuCounter, setSecretMenuCounter] = React.useState(0)
   React.useEffect(() => {

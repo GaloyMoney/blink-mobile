@@ -334,7 +334,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
       return
     }
     convertSecondaryAmount(primaryAmount)
-  }, [primaryAmount, convertSecondaryAmount])
+  }, [primaryAmount, prevPrimaryAmount?.value, convertSecondaryAmount])
 
   const inputMemoRef = React.useRef<TextInput>()
 
