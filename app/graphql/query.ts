@@ -44,14 +44,14 @@ const TRANSACTION_LIST_FRAGMENT = gql`
         }
         settlementVia {
           __typename
-          ... on  SettlementViaIntraLedger{
+          ... on SettlementViaIntraLedger {
             counterPartyWalletId
             counterPartyUsername
           }
-          ... on  SettlementViaLn{
+          ... on SettlementViaLn {
             paymentSecret
           }
-          ... on  SettlementViaOnChain{
+          ... on SettlementViaOnChain {
             transactionHash
           }
         }
@@ -154,18 +154,18 @@ export const getQuizQuestions = (client: MockableApolloClient, { hasToken }) => 
 
   const allQuestions: Record<string, number> | null = data?.quizQuestions
     ? data.quizQuestions.reduce((acc, curr) => {
-      acc[curr.id] = curr.earnAmount
-      return acc
-    }, {})
+        acc[curr.id] = curr.earnAmount
+        return acc
+      }, {})
     : null
 
   const myCompletedQuestions: Record<string, number> | null = data?.me?.quizQuestions
     ? data?.me?.quizQuestions.reduce((acc, curr) => {
-      if (curr.completed) {
-        acc[curr.question.id] = curr.question.earnAmount
-      }
-      return acc
-    }, {})
+        if (curr.completed) {
+          acc[curr.question.id] = curr.question.earnAmount
+        }
+        return acc
+      }, {})
     : null
 
   return {
