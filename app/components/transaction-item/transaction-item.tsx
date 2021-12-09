@@ -71,7 +71,7 @@ const descriptionDisplay = (tx: WalletTransaction) => {
 
   switch (settlementVia.__typename) {
     case "SettlementViaOnChain":
-      return "OnChain Receipt"
+      return "OnChain Payment"
     case "SettlementViaLn":
       return "Invoice"
     case "SettlementViaIntraLedger":
