@@ -294,7 +294,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
 }
 
 type WelcomePhoneValidationScreenDataInjectedProps = {
-  navigation: StackNavigationProp<any>
+  navigation: StackNavigationProp<PhoneValidationStackParamList, "welcomePhoneValidation">
   route: RouteProp<PhoneValidationStackParamList, "welcomePhoneValidation">
 }
 
@@ -316,12 +316,7 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
             screenPurpose: AuthenticationScreenPurpose.TurnOnAuthentication,
           })
         } else {
-          navigation.navigate("Primary", {
-            screen: "MoveMoney",
-            params: {
-              screen: "moveMoney",
-            },
-          })
+          navigation.navigate("Primary")
         }
       }
     },

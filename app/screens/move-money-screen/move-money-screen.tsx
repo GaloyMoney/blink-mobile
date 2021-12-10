@@ -214,7 +214,7 @@ type MoveMoneyScreenProps = {
   navigation: StackNavigationProp<MoveMoneyStackParamList, "moveMoney">
   loading: boolean
   error: ApolloError
-  transactionsEdges: any[]
+  transactionsEdges: { cursor: string; node: WalletTransaction | null }[]
   refetch: () => void
   isUpdateAvailable: boolean
   hasToken: boolean

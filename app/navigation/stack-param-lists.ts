@@ -86,10 +86,11 @@ export type MoveMoneyStackParamList = {
 }
 
 export type PhoneValidationStackParamList = {
+  Primary: undefined
   welcomePhoneInput: undefined
   welcomePhoneValidation: {
     phone: string
-    setPhone: (string) => void
+    setPhone: (str: string) => void
   }
   authentication: {
     screenPurpose: AuthenticationScreenPurpose

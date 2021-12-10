@@ -11,7 +11,7 @@ type UseMoneyAmountFunction = (
 ]
 
 export const useMoneyAmount: UseMoneyAmountFunction = (currency) => {
-  const { convertCurrencyAmount, usdPerSat } = useMySubscription()
+  const { convertCurrencyAmount } = useMySubscription()
 
   const [moneyAmount, setMoneyAmount] = useState<MoneyAmount>({
     value: 0,
@@ -38,7 +38,7 @@ export const useMoneyAmount: UseMoneyAmountFunction = (currency) => {
         }
       })
     },
-    [convertCurrencyAmount, usdPerSat],
+    [convertCurrencyAmount],
   )
 
   const setAmountValue = useCallback((value: number) => {
