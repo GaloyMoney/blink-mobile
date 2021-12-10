@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { EventSubscription, NativeEventEmitter, NativeModules } from "react-native"
 import { gql, useMutation } from "@apollo/client"
-import GeetestModule from "react-native-geetest-module"
+import GeetestModule from "@galoymoney/react-native-geetest-module"
 import { translate } from "../i18n"
 
 const REGISTER_CAPTCHA = gql`
