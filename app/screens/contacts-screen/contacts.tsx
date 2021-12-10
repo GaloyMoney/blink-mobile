@@ -99,9 +99,8 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
   const { hasToken } = useToken()
   const [matchingContacts, setMatchingContacts] = useState([])
   const [searchText, setSearchText] = useState("")
-  const [isRefreshed, setIsRefreshed] = useState(false)
 
-  const { loading, data, error, refetch } = useQuery(
+  const { loading, data, error, startPolling, stopPolling } = useQuery(
     gql`
       query contacts {
         me {
@@ -113,15 +112,16 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
         }
       }
     `,
-    { fetchPolicy: "cache-and-network", skip: !hasToken },
+    { skip: !hasToken },
   )
 
-  useFocusEffect(() => {
-    if (!isRefreshed) {
-      setIsRefreshed(true)
-      refetch()
-    }
-  })
+  useFocusEffect(
+    useCallback(() => {
+      startPolling(10 * 1000)
+
+      return () => stopPolling()
+    }, [startPolling, stopPolling]),
+  )
 
   if (error) {
     toastShow(error.message)
