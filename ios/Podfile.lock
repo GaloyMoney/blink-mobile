@@ -337,7 +337,7 @@ PODS:
     - React-Core
   - react-native-fingerprint-scanner (6.0.0):
     - React
-  - react-native-geetest-module (0.1.2):
+  - react-native-geetest-module (0.1.3):
     - GT3Captcha-iOS
     - React-Core
   - react-native-geolocation (2.0.2):
@@ -531,7 +531,7 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - react-native-camera (from `../node_modules/react-native-camera`)
   - react-native-fingerprint-scanner (from `../node_modules/react-native-fingerprint-scanner`)
-  - react-native-geetest-module (from `../node_modules/react-native-geetest-module`)
+  - "react-native-geetest-module (from `../node_modules/@galoymoney/react-native-geetest-module`)"
   - "react-native-geolocation (from `../node_modules/@react-native-community/geolocation`)"
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-maps (from `../node_modules/react-native-maps`)
@@ -643,7 +643,7 @@ EXTERNAL SOURCES:
   react-native-fingerprint-scanner:
     :path: "../node_modules/react-native-fingerprint-scanner"
   react-native-geetest-module:
-    :path: "../node_modules/react-native-geetest-module"
+    :path: "../node_modules/@galoymoney/react-native-geetest-module"
   react-native-geolocation:
     :path: "../node_modules/@react-native-community/geolocation"
   react-native-image-picker:
@@ -770,7 +770,7 @@ SPEC CHECKSUMS:
   React-logger: e522e76fa3e9ec3e7d7115b49485cc065cf4ae06
   react-native-camera: 3eae183c1d111103963f3dd913b65d01aef8110f
   react-native-fingerprint-scanner: ac6656f18c8e45a7459302b84da41a44ad96dbbe
-  react-native-geetest-module: 266983e2bad2f5cb7203184c97159ed2f99244e1
+  react-native-geetest-module: 602c894ef1790a953a46cd45c11e585972e3970d
   react-native-geolocation: c956aeb136625c23e0dce0467664af2c437888c9
   react-native-image-picker: 869530859570f2af86ae57bc48886a5e2367a825
   react-native-maps: a421fe6aeb74279597c4ea9598f25796108e2d89

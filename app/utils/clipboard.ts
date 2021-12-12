@@ -20,7 +20,10 @@ export const showModalClipboardIfValidPayment = async (
 ): Promise<void> => {
   const clipboard = await Clipboard.getString()
 
-  const data: any = cache.readQuery({ query: LAST_CLIPBOARD_PAYMENT })
+  const data = cache.readQuery<{ lastClipboardPayment?: string }, never>({
+    query: LAST_CLIPBOARD_PAYMENT,
+  })
+
   if (clipboard === data?.lastClipboardPayment) {
     return
   }

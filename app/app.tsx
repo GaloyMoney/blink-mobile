@@ -234,12 +234,15 @@ export const App = (): JSX.Element => {
   }
 
   // As of react-navigation 6.x, this code has type problems too
-  const linking: any = {
+  const linking = {
     prefixes: ["https://pay.bitcoinjungle.app", "bitcoinjungle://"],
     config: {
-      screens: {
-        sendBitcoin: ":username"
-      },
+      screens: hasToken
+        ? {
+            sendBitcoin: ":username",
+            moveMoney: "/",
+          }
+        : null,
     },
   }
 

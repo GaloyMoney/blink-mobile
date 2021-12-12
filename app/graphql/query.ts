@@ -32,6 +32,7 @@ const TRANSACTION_LIST_FRAGMENT = gql`
         initiationVia {
           __typename
           ... on InitiationViaIntraLedger {
+            counterPartyWalletId
             counterPartyUsername
           }
           ... on InitiationViaLn {
@@ -41,10 +42,10 @@ const TRANSACTION_LIST_FRAGMENT = gql`
             address
           }
         }
-
         settlementVia {
           __typename
           ... on SettlementViaIntraLedger {
+            counterPartyWalletId
             counterPartyUsername
           }
           ... on SettlementViaLn {

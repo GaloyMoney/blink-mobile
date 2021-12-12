@@ -90,6 +90,10 @@ const styles = EStyleSheet.create({
     marginTop: "24rem",
   },
 
+  menuIcon: {
+    color: palette.darkGrey,
+  },
+
   modal: { marginBottom: 0, marginHorizontal: 0 },
 
   screenStyle: {
@@ -216,7 +220,7 @@ type MoveMoneyScreenProps = {
   navigation: StackNavigationProp<MoveMoneyStackParamList, "moveMoney">
   loading: boolean
   error: ApolloError
-  transactionsEdges: any[]
+  transactionsEdges: { cursor: string; node: WalletTransaction | null }[]
   refetch: () => void
   isUpdateAvailable: boolean
   hasToken: boolean
@@ -280,14 +284,17 @@ export const MoveMoneyScreen: ScreenType = ({
       style: "transactionViewContainer",
       details: (
         <View style={styles.transactionsView}>
-          {transactionsEdges.map(({ node }) => (
-            <TransactionItem
-              key={`transaction-${node.id}`}
-              navigation={navigation}
-              tx={node}
-              subtitle
-            />
-          ))}
+          {transactionsEdges.map(
+            ({ node }) =>
+              node && (
+                <TransactionItem
+                  key={`transaction-${node.id}`}
+                  navigation={navigation}
+                  tx={node}
+                  subtitle
+                />
+              ),
+          )}
         </View>
       ),
     }
@@ -336,14 +343,14 @@ export const MoveMoneyScreen: ScreenType = ({
               account: AccountType.Bitcoin,
             })
           }
-          icon={<Icon name="ios-trending-up-outline" size={32} />}
+          icon={<Icon name="ios-trending-up-outline" size={32} style={styles.menuIcon} />}
         />
         <BalanceHeader loading={loading} style={styles.balanceHeader} />
         <Button
           buttonStyle={styles.buttonStyleTime}
           containerStyle={styles.separator}
           onPress={() => navigation.navigate("settings")}
-          icon={<Icon name="ios-settings-outline" size={32} />}
+          icon={<Icon name="ios-settings-outline" size={32} style={styles.menuIcon} />}
         />
       </View>
 

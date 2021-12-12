@@ -256,7 +256,10 @@ export const RootStack: NavigatorType = () => {
 
   return (
     <RootNavigator.Navigator
-      screenOptions={{ gestureEnabled: false }}
+      screenOptions={{
+        gestureEnabled: false,
+        headerBackTitle: translate("common.back"),
+      }}
       initialRouteName={token ? "authenticationCheck" : "getStarted"}
     >
       <RootNavigator.Screen
@@ -360,18 +363,12 @@ export const RootStack: NavigatorType = () => {
       <RootNavigator.Screen
         name="language"
         component={LanguageScreen}
-        options={() => ({
-          title: translate("common.languagePreference"),
-          headerBackTitle: translate("common.back"),
-        })}
+        options={{ title: translate("common.languagePreference") }}
       />
       <RootNavigator.Screen
         name="security"
         component={SecurityScreen}
-        options={() => ({
-          title: translate("common.security"),
-          headerBackTitle: translate("common.back"),
-        })}
+        options={{ title: translate("common.security") }}
       />
       <RootNavigator.Screen name="Profile" component={DebugScreen} />
       <RootNavigator.Screen
