@@ -182,7 +182,7 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       subTitleText: username,
       action: () => navigation.navigate("setUsername"),
       enabled: hasToken && !username,
-      greyed: !hasToken,
+      greyed: !hasToken || !!(hasToken && username),
     },
     {
       category: translate("common.language"),
@@ -245,7 +245,6 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
         }
         const settingColor = setting.greyed ? palette.midGrey : null
         const settingStyle: TextStyle = { color: settingColor }
-
         return (
           <React.Fragment key={`setting-option-${i}`}>
             <ListItem onPress={setting.action} disabled={!setting.enabled}>
