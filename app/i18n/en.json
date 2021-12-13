@@ -605,14 +605,14 @@
     "usernameToUse": "What username do you want to use?"
   },
   "WelcomeFirstScreen": {
-    "bank": "Bitcoin is designed to let you store, send and receive money, without relying on a bank or credit card",
+    "bank": "Bitcoin is designed to let you store, send and receive money, without relying on a bank or credit card.",
     "before": "Before Bitcoin, people had to rely on banks or credit card providers, to spend, send and receive money.",
     "care": "Why should I care?",
-    "learn": "I don't mean to badger you but there's lot more to learn, dig in...",
+    "learn": "I don't mean to badger you, but there's lot more to learn, dig in...",
     "learnToEarn": "Learn to Earn"
   },
   "WelcomePhoneInputScreen": {
-    "header": "Enter your phone number and we'll text you an access code.",
+    "header": "Enter your phone number, and we'll text you an access code.",
     "headerVerify": "Verify you are human",
     "placeholder": "Phone Number",
     "verify": "Click to Verify"
@@ -620,8 +620,8 @@
   "WelcomePhoneValidationScreen": {
     "errorLoggingIn": "Error logging in. Did you use the right code?",
     "header": "To confirm your phone number, enter the code we just sent you on %{phone}",
-    "need6Digits": "The code need to have 6 digits",
-    "placeholder": "6 Digits Code",
+    "need6Digits": "The code needs to have 6 digits",
+    "placeholder": "6 Digit Code",
     "sendAgain": "Send Again"
   },
   "common": {
