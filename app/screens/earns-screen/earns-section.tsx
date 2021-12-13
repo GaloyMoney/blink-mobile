@@ -21,6 +21,7 @@ import useToken from "../../utils/use-token"
 import { SVGs } from "./earn-svg-factory"
 import { getCardsFromSection, remainingSatsOnSection } from "./earns-utils"
 import { getQuizQuestions } from "../../graphql/query"
+import { cacheIdVar } from "../../graphql/client-only-query"
 
 const { width: screenWidth } = Dimensions.get("window")
 
@@ -140,7 +141,7 @@ export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
       }
     `,
     {
-      refetchQueries: ["mainQuery"],
+      onCompleted: () => cacheIdVar(Date.now()),
     },
   )
 

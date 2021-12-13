@@ -15,6 +15,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { RouteProp } from "@react-navigation/native"
 import type { ScreenType } from "../../types/jsx"
 import { ContactTransactionsDataInjected } from "./contact-transactions"
+import { cacheIdVar } from "../../graphql/client-only-query"
 
 const styles = EStyleSheet.create({
   actionsContainer: { paddingBottom: 18 },
@@ -86,7 +87,7 @@ export const ContactsDetailScreenJSX: ScreenType = ({
   `
 
   const [updateNameMutation] = useMutation(UPDATE_NAME, {
-    refetchQueries: ["contacts"],
+    onCompleted: () => cacheIdVar(Date.now()),
   })
 
   const updateName = async () => {

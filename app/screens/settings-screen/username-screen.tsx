@@ -13,6 +13,7 @@ import { UsernameValidation } from "../../utils/validation"
 import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { USERNAME_AVAILABLE } from "../../graphql/query"
+import { cacheIdVar } from "../../graphql/client-only-query"
 
 const styles = EStyleSheet.create({
   activity: { marginTop: 12 },
@@ -65,7 +66,6 @@ export const UsernameScreen: ScreenType = ({ navigation }: Props) => {
   const inputForm = React.createRef<TextInput>()
 
   const [updateUsername, { loading: updatingUsername }] = useMutation(UPDATE_USERNAME, {
-    refetchQueries: ["mainQuery"],
     onError: (error) => {
       console.error(error)
       setInputStatus({ message: translate("errors.generic"), status: "error" })
@@ -81,6 +81,8 @@ export const UsernameScreen: ScreenType = ({ navigation }: Props) => {
       if (errorMessage) {
         setInputStatus({ message: errorMessage, status: "error" })
       }
+
+      cacheIdVar(Date.now())
 
       Alert.alert(translate("UsernameScreen.success", { input }), null, [
         {

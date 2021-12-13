@@ -9,6 +9,7 @@ import { MAIN_QUERY } from "../../graphql/query"
 import { palette } from "../../theme/palette"
 import type { ScreenType } from "../../types/jsx"
 import useToken from "../../utils/use-token"
+import { cacheIdVar } from "../../graphql/client-only-query"
 
 const styles = EStyleSheet.create({
   screenStyle: {
@@ -40,7 +41,7 @@ export const LanguageScreen: ScreenType = () => {
       }
     `,
     {
-      refetchQueries: ["mainQuery"],
+      onCompleted: () => cacheIdVar(Date.now()),
     },
   )
 
