@@ -286,6 +286,12 @@ export const WelcomePhoneInputScreen: ScreenType = ({
                 placeholder: translate("WelcomePhoneInputScreen.placeholder"),
                 returnKeyType: loadingRequestPhoneCode ? "default" : "done",
                 onSubmitEditing: submitPhoneNumber,
+                accessibilityLabel: "Input phone number",
+              }}
+              countryPickerProps={{
+                modalProps: {
+                  testID: "country-picker",
+                },
               }}
               codeTextStyle={{ marginLeft: -25 }}
               autoFocus

@@ -149,6 +149,7 @@
     "eslint-plugin-react-native": "^3.11.0",
     "jest": "^27.3.1",
     "jest-circus": "^27.3.1",
+    "jest-transform-stub": "^2.0.0",
     "jetifier": "^2.0.0",
     "metro-config": "^0.66.2",
     "metro-react-native-babel-preset": "^0.66.2",
