@@ -157,6 +157,10 @@ export const SendBitcoinScreen: ScreenType = ({
     ) {
       if (primaryAmount.currency === "BTC") {
         setPrimaryAmountValue(satAmount)
+        convertSecondaryAmount({
+          value: satAmount,
+          currency: "BTC",
+        })
       } else {
         convertPrimaryAmount({
           value: satAmount,
