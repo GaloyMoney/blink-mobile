@@ -100,7 +100,7 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
   const [matchingContacts, setMatchingContacts] = useState([])
   const [searchText, setSearchText] = useState("")
 
-  const { loading, data, error, startPolling, stopPolling } = useQuery(
+  const { loading, data, error, refetch } = useQuery(
     gql`
       query contacts {
         me {
@@ -117,10 +117,8 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
 
   useFocusEffect(
     useCallback(() => {
-      startPolling(10 * 1000)
-
-      return () => stopPolling()
-    }, [startPolling, stopPolling]),
+      refetch()
+    }, [refetch]),
   )
 
   if (error) {
