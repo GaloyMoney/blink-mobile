@@ -649,7 +649,7 @@
     "learnToEarn": "Aprende y gana"
   },
   "WelcomePhoneInputScreen": {
-    "header": "Ingrese su número de teléfono y le enviaremos un mensaje de texto con un código de acceso.",
+    "header": "Ingrese su número de teléfono, y le enviaremos un mensaje de texto con un código de acceso.",
     "headerVerify": "¿Eres un robot?",
     "placeholder": "Número de teléfono",
     "verify": "No soy un robot"
