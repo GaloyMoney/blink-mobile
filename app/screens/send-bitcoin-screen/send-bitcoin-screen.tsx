@@ -39,6 +39,16 @@ type SendBitcoinScreenProps = {
   route: RouteProp<MoveMoneyStackParamList, "sendBitcoin">
 }
 
+type LnurlParams = {
+  lnurl: string
+  minSendable: number
+  maxSendable: number
+  domain: string,
+  callback: string,
+  commentAllowed: boolean,
+  error: string
+}
+
 export const SendBitcoinScreen: ScreenType = ({
   navigation,
   route,
@@ -60,7 +70,7 @@ export const SendBitcoinScreen: ScreenType = ({
 
   const [invoiceError, setInvoiceError] = useState("")
   const [address, setAddress] = useState("")
-  const [lnurlPay, setLnurlPay] = useState({lnurl: "", minSendable: "", maxSendable: "", domain: "", callback: "", commentAllowed:"", error: ""})
+  const [lnurlPay, setLnurlPay] = useState<LnurlParams>({lnurl: "", minSendable: 0, maxSendable: 0, domain: "", callback: "", commentAllowed: false, error: ""})
   const [lnurlError, setLnurlError] = useState("")
 
 
@@ -206,10 +216,10 @@ export const SendBitcoinScreen: ScreenType = ({
 
       if (lnurl) {
         setPaymentType("lnurl")
-        const lnurlParams = {
+        const lnurlParams:LnurlParams = {
           lnurl: lnurl, 
-          minSendable: (route.params?.lnurlParams.minSendable/1000)+"", 
-          maxSendable: (route.params?.lnurlParams.maxSendable/1000)+"", 
+          minSendable: (route.params?.lnurlParams.minSendable/1000), 
+          maxSendable: (route.params?.lnurlParams.maxSendable/1000), 
           domain: route.params?.lnurlParams.domain,
           callback: route.params?.lnurlParams.callback,
           commentAllowed: route.params?.lnurlParams.commentAllowed,
@@ -361,7 +371,7 @@ type SendBitcoinScreenJSXProps = {
   setPrimaryAmountValue: (value: number) => void
   invoice: string
   address: string
-  lnurlPay: object
+  lnurlPay: LnurlParams
   lnurlError: string
   setLnurlError: (error: string) => void
   memo: string
