@@ -522,30 +522,6 @@ export const SendBitcoinScreenJSX: ScreenType = ({
         </View>
 
         <View style={{ marginTop: 18 }}>
-          {paymentType === "lnurl" && (
-            <GaloyInput
-              placeholder={translate("common.domain")}
-              style={styles.smallText}
-              leftIcon={
-                <View style={styles.row}>
-                  <Text style={styles.smallText}>{translate("common.domain")}</Text>
-                  <Icon
-                    name="ios-at"
-                    size={24}
-                    color={color.primary}
-                    style={styles.icon}
-                  />
-                </View>
-              }
-              onChangeText={setDestination}
-              rightIcon={destinationInputRightIcon()}
-              value={lnurlPay.domain}
-              editable={interactive}
-              selectTextOnFocus
-              autoCompleteType="username"
-              autoCapitalize="none"
-            />
-          )}
           <GaloyInput
             placeholder={translate("SendBitcoinScreen.input")}
             leftIcon={
@@ -590,6 +566,11 @@ export const SendBitcoinScreenJSX: ScreenType = ({
             onChangeText={(value) => setMemo(value)}
             selectTextOnFocus
           />
+          {paymentType === "lnurl" && (
+            <View>
+              <Text style={styles.domainText}>{translate("common.domain")}: {lnurlPay.domain}</Text>
+            </View>
+          )}
         </View>
         {errorMessage && (
           <View style={styles.errorContainer}>
@@ -669,5 +650,10 @@ const styles = EStyleSheet.create({
     paddingTop: 0,
     textAlign: "center",
     width: "90%",
+  },
+
+  domainText:  {
+    fontSize: 20,
+    marginLeft: "4%",
   },
 })
