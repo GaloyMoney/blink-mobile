@@ -82,13 +82,16 @@ const MY_UPDATES_SUBSCRIPTION = gql`
 // in case the subscription failed to provide an initial price
 const usePriceCache = () => {
   const client = useApolloClient()
-  const [cachedPrice] = React.useState(() => {
+  const [cachedPrice, setCachedPrice] = React.useState(() => {
     const lastPriceData = client.readQuery({ query: PRICE_CACHE })
     return lastPriceData?.price ?? 0
   })
 
   const updatePriceCache = (newPrice) => {
-    client.writeQuery({ query: PRICE_CACHE, data: { price: newPrice } })
+    if (cachedPrice !== newPrice) {
+      client.writeQuery({ query: PRICE_CACHE, data: { price: newPrice } })
+      setCachedPrice(newPrice)
+    }
   }
 
   return [cachedPrice, updatePriceCache]
@@ -119,27 +122,24 @@ export const useMySubscription = (): UseMyUpdates => {
 
   const [cachedPrice, updatePriceCach] = usePriceCache()
 
-  const priceRef = React.useRef<number>(cachedPrice)
   const intraLedgerUpdate = React.useRef<UseMyUpdates["intraLedgerUpdate"]>(null)
   const lnUpdate = React.useRef<UseMyUpdates["lnUpdate"]>(null)
   const onChainUpdate = React.useRef<UseMyUpdates["onChainUpdate"]>(null)
 
-  const noPriceData = priceRef.current === 0
-
   const convertCurrencyAmount = React.useCallback(
     ({ amount, from, to }) => {
-      if (noPriceData) {
+      if (cachedPrice === 0) {
         return NaN
       }
       if (from === "BTC" && to === "USD") {
-        return (amount * priceRef.current) / 100
+        return (amount * cachedPrice) / 100
       }
       if (from === "USD" && to === "BTC") {
-        return (100 * amount) / priceRef.current
+        return (100 * amount) / cachedPrice
       }
       return amount
     },
-    [noPriceData],
+    [cachedPrice],
   )
 
   const formatCurrencyAmount = React.useCallback(
@@ -151,21 +151,20 @@ export const useMySubscription = (): UseMyUpdates => {
         return `${sats.toFixed(0)} sats`
       }
       if (currency === "USD") {
-        if (noPriceData) {
-          return "??"
+        if (cachedPrice === 0) {
+          return "..."
         }
-        return `$${formatUsdAmount((sats * priceRef.current) / 100)}`
+        return `$${formatUsdAmount((sats * cachedPrice) / 100)}`
       }
       throw new Error("Unsupported currency")
     },
-    [noPriceData],
+    [cachedPrice],
   )
 
   if (data?.myUpdates?.update) {
     if (data.myUpdates.update.type === "Price") {
       const { base, offset } = data.myUpdates.update
-      priceRef.current = base / 10 ** offset
-      updatePriceCach(priceRef.current)
+      updatePriceCach(base / 10 ** offset)
     }
     if (data.myUpdates.update.type === "IntraLedgerUpdate") {
       intraLedgerUpdate.current = data.myUpdates.update
@@ -181,7 +180,7 @@ export const useMySubscription = (): UseMyUpdates => {
   return {
     convertCurrencyAmount,
     formatCurrencyAmount,
-    usdPerSat: priceRef.current === 0 ? null : (priceRef.current / 100).toFixed(8),
+    usdPerSat: cachedPrice === 0 ? null : (cachedPrice / 100).toFixed(8),
     currentBalance: data?.myUpdates?.me?.defaultAccount?.wallets?.[0]?.balance,
     intraLedgerUpdate: intraLedgerUpdate.current,
     lnUpdate: lnUpdate.current,

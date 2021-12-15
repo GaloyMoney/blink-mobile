@@ -546,7 +546,8 @@ exports[`SendBitcoinScreen render matches snapshot 1`] = `
           </View>
           <Text>
             0
-             sats
+             
+            sats
           </Text>
         </View>
         <View
