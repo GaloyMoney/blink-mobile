@@ -42,7 +42,7 @@ type WalletTransaction = {
     | SettlementViaIntraLedger
     | SettlementViaLn
     | SettlementViaOnChain
-    
+
   readonly initiationVia:
     | InitiationViaIntraLedger
     | InititationViaLn
