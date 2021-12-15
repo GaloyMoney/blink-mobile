@@ -43,9 +43,9 @@ type LnurlParams = {
   lnurl: string
   minSendable: number
   maxSendable: number
-  domain: string,
-  callback: string,
-  commentAllowed: boolean,
+  domain: string
+  callback: string
+  commentAllowed: boolean
   error: string
 }
 
@@ -70,9 +70,16 @@ export const SendBitcoinScreen: ScreenType = ({
 
   const [invoiceError, setInvoiceError] = useState("")
   const [address, setAddress] = useState("")
-  const [lnurlPay, setLnurlPay] = useState<LnurlParams>({lnurl: "", minSendable: 0, maxSendable: 0, domain: "", callback: "", commentAllowed: false, error: ""})
+  const [lnurlPay, setLnurlPay] = useState<LnurlParams>({
+    lnurl: "",
+    minSendable: 0,
+    maxSendable: 0,
+    domain: "",
+    callback: "",
+    commentAllowed: false,
+    error: "",
+  })
   const [lnurlError, setLnurlError] = useState("")
-
 
   const [paymentType, setPaymentType] = useState<IPaymentType>(undefined)
   const [amountless, setAmountless] = useState(false)
@@ -216,16 +223,16 @@ export const SendBitcoinScreen: ScreenType = ({
 
       if (lnurl) {
         setPaymentType("lnurl")
-        const lnurlParams:LnurlParams = {
-          lnurl: lnurl, 
-          minSendable: (route.params?.lnurlParams.minSendable/1000), 
-          maxSendable: (route.params?.lnurlParams.maxSendable/1000), 
+        const lnurlParams: LnurlParams = {
+          lnurl: lnurl,
+          minSendable: route.params?.lnurlParams.minSendable / 1000,
+          maxSendable: route.params?.lnurlParams.maxSendable / 1000,
           domain: route.params?.lnurlParams.domain,
           callback: route.params?.lnurlParams.callback,
           commentAllowed: route.params?.lnurlParams.commentAllowed,
-          error: ""
+          error: "",
         }
-        setLnurlPay({...lnurlParams})
+        setLnurlPay({ ...lnurlParams })
       }
       setAmountless(amountless)
 
@@ -276,8 +283,8 @@ export const SendBitcoinScreen: ScreenType = ({
   }, [destination])
 
   const fetchInvoice = async (url) => {
-    const response = await fetch(url);
-    return await response.json();
+    const response = await fetch(url)
+    return await response.json()
   }
 
   const pay = useCallback(async () => {
@@ -287,7 +294,9 @@ export const SendBitcoinScreen: ScreenType = ({
       return
     } else if (paymentType == "lnurl") {
       const satAmount = primaryAmount.value * 1000
-      const lnurlInvoice = await fetchInvoice(`${lnurlPay.callback}?amount=${satAmount}&comment=${memo}`);
+      const lnurlInvoice = await fetchInvoice(
+        `${lnurlPay.callback}?amount=${satAmount}&comment=${memo}`,
+      )
       if (lnurlInvoice.status && lnurlInvoice.status === "ERROR") {
         setLnurlError(lnurlInvoice.reason)
       } else {
@@ -438,20 +447,25 @@ export const SendBitcoinScreenJSX: ScreenType = ({
     } else if (paymentType === "lightning" || paymentType === "onchain") {
       return <Icon name="ios-close-circle-outline" onPress={reset} size={30} />
     } else if (paymentType === "lnurl") {
-      // lnurl checks
-      let lnurlErrorStr = "";
-      if (primaryAmount && primaryAmount.currency === "BTC" && primaryAmount.value > lnurlPay.maxSendable) {
+      let lnurlErrorStr = ""
+      if (
+        primaryAmount &&
+        primaryAmount.currency === "BTC" &&
+        primaryAmount.value > lnurlPay.maxSendable
+      ) {
         lnurlErrorStr = translate("lnurl.overLimit")
-      } else if (primaryAmount && primaryAmount.currency === "BTC" && primaryAmount.value < lnurlPay.minSendable) {
+      } else if (
+        primaryAmount &&
+        primaryAmount.currency === "BTC" &&
+        primaryAmount.value < lnurlPay.minSendable
+      ) {
         lnurlErrorStr = translate("lnurl.underLimit")
+      } else if (lnurlPay.commentAllowed && memo === "") {
+        lnurlErrorStr = translate("lnurl.commentRequired")
       } else {
         lnurlErrorStr = ""
       }
       setLnurlError(lnurlErrorStr)
-
-      if (lnurlPay.commentAllowed && memo === "") {
-        setLnurlError(translate("lnurl.commentRequired"))
-      }
     } else if (destination.length === 0) {
       return (
         <Icon
@@ -488,34 +502,38 @@ export const SendBitcoinScreenJSX: ScreenType = ({
           />
           {paymentType === "lnurl" && (
             <View style={styles.errorContainer}>
-              <Text>Min: {lnurlPay.minSendable} sats - Max: {lnurlPay.maxSendable} sats</Text>
+              <Text>
+                Min: {lnurlPay.minSendable} sats - Max: {lnurlPay.maxSendable} sats
+              </Text>
             </View>
           )}
         </View>
 
         <View style={{ marginTop: 18 }}>
-          {paymentType === "lnurl" && (<GaloyInput
-            placeholder={translate("common.domain")}
-            style={styles.smallText}
-            leftIcon={
-              <View style={styles.row}>
-                <Text style={styles.smallText}>{translate("common.domain")}</Text>
-                <Icon
-                  name="ios-at"
-                  size={24}
-                  color={color.primary}
-                  style={styles.icon}
-                />
-              </View>
-            }
-            onChangeText={setDestination}
-            rightIcon={destinationInputRightIcon()}
-            value={lnurlPay.domain}
-            editable={interactive}
-            selectTextOnFocus
-            autoCompleteType="username"
-            autoCapitalize="none"
-          />)}          
+          {paymentType === "lnurl" && (
+            <GaloyInput
+              placeholder={translate("common.domain")}
+              style={styles.smallText}
+              leftIcon={
+                <View style={styles.row}>
+                  <Text style={styles.smallText}>{translate("common.domain")}</Text>
+                  <Icon
+                    name="ios-at"
+                    size={24}
+                    color={color.primary}
+                    style={styles.icon}
+                  />
+                </View>
+              }
+              onChangeText={setDestination}
+              rightIcon={destinationInputRightIcon()}
+              value={lnurlPay.domain}
+              editable={interactive}
+              selectTextOnFocus
+              autoCompleteType="username"
+              autoCapitalize="none"
+            />
+          )}
           <GaloyInput
             placeholder={translate("SendBitcoinScreen.input")}
             leftIcon={
@@ -579,7 +597,9 @@ export const SendBitcoinScreenJSX: ScreenType = ({
               : translate("common.send")
           }
           onPress={pay}
-          disabled={!primaryAmount.value || !!errorMessage || !destination || !!lnurlError}
+          disabled={
+            !primaryAmount.value || !!errorMessage || !destination || !!lnurlError
+          }
         />
       </ScrollView>
     </Screen>

@@ -88,12 +88,13 @@ export const validPayment = (
     paymentType = "lightning"
     // some apps encode lightning invoices in UPPERCASE
     data = data.toLowerCase()
-
-  } else if ((protocol && protocol.toLowerCase().startsWith("lnurl")) ||  (data && data.toLowerCase().startsWith("lnurl"))) {
-
+  } else if (
+    (protocol && protocol.toLowerCase().startsWith("lnurl")) ||
+    (data && data.toLowerCase().startsWith("lnurl"))
+  ) {
     paymentType = "lnurl"
 
-    lnurl = protocol || data;
+    lnurl = protocol || data
 
     // no protocol. let's see if this could have an address directly
   } else if (protocol.toLowerCase().startsWith("ln")) {
@@ -221,7 +222,7 @@ export const validPayment = (
     return {
       valid: true,
       lnurl,
-      amountless: true
+      amountless: true,
     }
   } else {
     return {
