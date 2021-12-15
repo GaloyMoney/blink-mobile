@@ -361,7 +361,6 @@ export const SendBitcoinConfirmationScreen = ({
   } else if (paymentType === "onchain") {
     destination = address
   }
-  
 
   const primaryAmount: MoneyAmount = {
     value: convertCurrencyAmount({
