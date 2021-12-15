@@ -556,7 +556,9 @@ export const SendBitcoinScreenJSX: ScreenType = ({
           />
           {paymentType === "lnurl" && (
             <View>
-              <Text style={styles.domainText}>{translate("common.domain")}: {lnurlPay.domain}</Text>
+              <Text style={styles.domainText}>
+                {translate("common.domain")}: {lnurlPay.domain}
+              </Text>
             </View>
           )}
         </View>
@@ -636,7 +638,7 @@ const styles = EStyleSheet.create({
     width: "90%",
   },
 
-  domainText:  {
+  domainText: {
     fontSize: 20,
     marginLeft: "4%",
   },
