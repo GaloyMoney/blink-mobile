@@ -302,15 +302,12 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
   route,
   navigation,
 }: WelcomePhoneValidationScreenDataInjectedProps) => {
-  const client = useApolloClient()
   const { saveToken, hasToken } = useToken()
 
   const [login, { loading, error }] = useMutation(LOGIN, {
     fetchPolicy: "no-cache",
     onCompleted: async (data) => {
       if (data.userLogin.authToken) {
-        await addDeviceToken(client)
-
         if (await BiometricWrapper.isSensorAvailable()) {
           navigation.replace("authentication", {
             screenPurpose: AuthenticationScreenPurpose.TurnOnAuthentication,
@@ -352,6 +349,7 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
   error,
   saveToken,
 }: WelcomePhoneValidationScreenProps) => {
+  const client = useApolloClient()
   const [code, setCode] = useState("")
   const [secondsRemaining, setSecondsRemaining] = useState<number>(60)
 
@@ -379,7 +377,8 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
 
       if (token) {
         analytics().logLogin({ method: "phone" })
-        saveToken(token)
+        await saveToken(token)
+        await addDeviceToken(client)
       } else {
         toastShow(translate("WelcomePhoneValidationScreen.errorLoggingIn"))
       }

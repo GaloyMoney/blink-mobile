@@ -251,7 +251,7 @@ export const RootStack: NavigatorType = () => {
   }, [])
 
   useEffect(
-    () => messaging().onTokenRefresh((token) => token && addDeviceToken(client)),
+    () => messaging().onTokenRefresh(() => token && addDeviceToken(client)),
     [client],
   )
 
