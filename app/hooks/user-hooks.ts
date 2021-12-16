@@ -156,7 +156,7 @@ export const useMySubscription = (): UseMyUpdates => {
         }
         return `$${formatUsdAmount((sats * priceRef.current) / 100)}`
       }
-      throw new Error("Unsupported currency")
+      return ""
     },
     [noPriceData],
   )

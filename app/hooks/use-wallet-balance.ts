@@ -33,8 +33,12 @@ export const useWalletBalance = (): {
   const wallet = data?.me?.defaultAccount?.wallets?.[0]
 
   if (!wallet) {
-    // If this is thrown, it means Apollo Cache is not able to read the MAIN_QUERY from the cache (because of missing fields)
-    throw new Error("Something went wrong")
+    // If we get here, it means Apollo Cache is not able to read the MAIN_QUERY from the cache (because of missing fields)
+    return {
+      satBalance: NaN,
+      usdBalance: NaN,
+      loading: false,
+    }
   }
 
   let satBalance = wallet.balance

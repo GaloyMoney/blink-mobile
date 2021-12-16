@@ -214,7 +214,6 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
           } catch (err) {
             console.error(err, "error with AddInvoice")
             setErr(`${err}`)
-            throw err
           } finally {
             setLoading(false)
           }

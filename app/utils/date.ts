@@ -27,16 +27,4 @@ export const sameMonth = (d1: number, d2: number | Date): boolean => {
   )
 }
 
-/**
- * Parse a unix time stamp to a JavaScript date object
- * @param  {number} timeStamp The unix time stamp in seconds
- * @return {Date}             The date object
- */
-export const parseDate = (timeStamp: number): Date => {
-  if (!Number.isInteger(timeStamp)) {
-    throw new Error("Invalid input!")
-  }
-  return new Date(timeStamp * 1000)
-}
-
 export const unixTime = (): number => Math.floor(Date.now() / 1000)

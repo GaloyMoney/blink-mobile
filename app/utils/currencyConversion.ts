@@ -27,7 +27,7 @@ export const currencyToTextWithUnits = (moneyAmount: MoneyAmount): string => {
   if (moneyAmount.currency === "USD") {
     return "$" + currencyToText(moneyAmount.value.toString(), moneyAmount.currency)
   }
-  throw Error("wrong currency")
+  return ""
 }
 
 export const currencyToText = (
