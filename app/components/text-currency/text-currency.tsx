@@ -19,14 +19,20 @@ export const TextCurrency: ComponentType = ({ amount, currency, style }: Props) 
     return <Text style={style}>{amountDisplay}</Text>
   }
   if (currency === "BTC") {
-    const amountDisplay = currency_fmt
-      .default(amount, {
-        precision: 0,
-        separator: ",",
-        symbol: "",
-      })
-      .format()
-    return <Text style={style}>{amountDisplay} sats</Text>
+    return Number.isNaN(amount) ? (
+      <Text style={style}>...</Text>
+    ) : (
+      <Text style={style}>
+        {currency_fmt
+          .default(amount, {
+            precision: 0,
+            separator: ",",
+            symbol: "",
+          })
+          .format()}{" "}
+        sats
+      </Text>
+    )
   }
   return null
 }
