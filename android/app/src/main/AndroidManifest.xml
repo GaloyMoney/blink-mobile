@@ -52,6 +52,10 @@
       android:value="AIzaSyCttrzic-C_V-mbnZjU0qLhw80f82HZ50k"/>
     <!-- TODO: key (a new one) should be added dynamically during the build? -->
 
+    <meta-data
+      android:name="com.google.firebase.messaging.default_notification_icon"
+      android:resource="@drawable/ic_stat_name" />
+
      <!-- You will also only need to add this uses-library tag -->
     <uses-library android:name="org.apache.http.legacy" android:required="false"/>
 
