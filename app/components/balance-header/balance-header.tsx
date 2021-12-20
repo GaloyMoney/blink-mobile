@@ -88,6 +88,21 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
   loading = false,
   style,
 }: BalanceHeaderProps) => {
+  return (
+    <View style={[styles.header, style]}>
+      <Text style={styles.balanceText}>{translate("BalanceHeader.currentBalance")}</Text>
+      {loading ? (
+        <Loader />
+      ) : (
+        <BalanceHeaderDisplay showSecondaryCurrency={showSecondaryCurrency} />
+      )}
+    </View>
+  )
+}
+
+export const BalanceHeaderDisplay: React.FC<BalanceHeaderProps> = ({
+  showSecondaryCurrency = true,
+}: BalanceHeaderProps) => {
   const client = useApolloClient()
   const { satBalance, usdBalance } = useWalletBalance()
   const hideBalance = useHideBalance()
@@ -164,32 +179,28 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
     return (
       <View style={styles.amount}>
         <View style={styles.container}>
-          {loading && <Loader />}
-          {!loading && (
-            <TouchableHighlight
-              underlayColor={styles.touchableHighlightColor}
-              onPress={() => {
-                if (hideBalance) {
-                  setHideBalance(true)
-                }
-              }}
-            >
-              <TextCurrency amount={usdBalance} currency={currency} style={styles.text} />
-            </TouchableHighlight>
-          )}
+          <TouchableHighlight
+            underlayColor={styles.touchableHighlightColor}
+            onPress={() => {
+              if (hideBalance) {
+                setHideBalance(true)
+              }
+            }}
+          >
+            <TextCurrency amount={usdBalance} currency={currency} style={styles.text} />
+          </TouchableHighlight>
         </View>
-        {!loading && subHeader}
+        {subHeader}
       </View>
     )
   }
 
   return (
-    <View style={[styles.header, style]}>
-      <Text style={styles.balanceText}>{translate("BalanceHeader.currentBalance")}</Text>
+    <>
       {!mHideBalance && defaultBalanceHeader()}
       <View style={styles.hiddenBalanceContainer}>
         {mHideBalance && hiddenBalanceSet()}
       </View>
-    </View>
+    </>
   )
 }

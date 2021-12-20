@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import { useApolloClient, useQuery } from "@apollo/client"
+import { useApolloClient, useQuery, useReactiveVar } from "@apollo/client"
 import PushNotificationIOS from "@react-native-community/push-notification-ios"
 import messaging from "@react-native-firebase/messaging"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
@@ -61,6 +61,7 @@ import {
 import type { NavigatorType } from "../types/jsx"
 
 import PushNotification from "react-native-push-notification"
+import { cacheIdVar } from "../graphql/client-only-query"
 
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
 PushNotification.configure({
@@ -250,7 +251,7 @@ export const RootStack: NavigatorType = () => {
   }, [])
 
   useEffect(
-    () => messaging().onTokenRefresh((token) => token && addDeviceToken(client)),
+    () => messaging().onTokenRefresh(() => token && addDeviceToken(client)),
     [client],
   )
 
@@ -480,6 +481,10 @@ type TabProps = {
 export const PrimaryNavigator: NavigatorType = () => {
   const { tokenNetwork } = useToken()
 
+  // The cacheId is updated after every mutation that affects current user data (balanace, contacts, ...)
+  // It's used to re-mount this component and thus reset what's cached in Apollo (and React)
+  const cacheId = useReactiveVar<number>(cacheIdVar)
+
   React.useEffect(() => {
     if (tokenNetwork) {
       analytics().setUserProperties({ network: tokenNetwork })
@@ -488,6 +493,7 @@ export const PrimaryNavigator: NavigatorType = () => {
 
   return (
     <Tab.Navigator
+      key={cacheId}
       initialRouteName="MoveMoney"
       screenOptions={{
         tabBarActiveTintColor:

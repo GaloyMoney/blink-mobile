@@ -247,7 +247,6 @@ const styles = EStyleSheet.create({
   },
 
   lottie: {
-    color: palette.darkGrey,
     height: "200rem",
     width: "200rem",
   },

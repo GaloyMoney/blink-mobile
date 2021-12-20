@@ -54,10 +54,8 @@ exports[`SendBitcoinConfirmationScreen render matches snapshot 1`] = `
   >
     <View
       accessible={true}
-      collapsable={false}
       focusable={true}
       forwardedRef={[Function]}
-      nativeID="animatedComponent"
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -80,12 +78,10 @@ exports[`SendBitcoinConfirmationScreen render matches snapshot 1`] = `
       }
     />
     <View
-      collapsable={false}
       deviceHeight={null}
       deviceWidth={null}
       forwardedRef={[Function]}
       hideModalContentWhileAnimating={false}
-      nativeID="animatedComponent"
       onBackdropPress={[Function]}
       onModalHide={[Function]}
       onModalWillHide={[Function]}
@@ -252,9 +248,7 @@ exports[`SendBitcoinConfirmationScreen render matches snapshot 1`] = `
                 }
               }
               accessible={true}
-              collapsable={false}
               focusable={true}
-              nativeID="animatedComponent"
               onClick={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
@@ -324,9 +318,7 @@ exports[`SendBitcoinConfirmationScreen render matches snapshot 1`] = `
                 }
               }
               accessible={true}
-              collapsable={false}
               focusable={true}
-              nativeID="animatedComponent"
               onClick={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
@@ -423,14 +415,6 @@ exports[`SendBitcoinConfirmationScreen render matches snapshot 1`] = `
         </View>
       </View>
       <View>
-        <View>
-          <Text>
-            Do you want to confirm this payment?
-          </Text>
-          <Text>
-            Payments are final.
-          </Text>
-        </View>
         <View
           style={
             Array [
@@ -450,14 +434,12 @@ exports[`SendBitcoinConfirmationScreen render matches snapshot 1`] = `
             accessibilityRole="button"
             accessibilityState={
               Object {
-                "busy": false,
+                "busy": true,
                 "disabled": false,
               }
             }
             accessible={true}
-            collapsable={false}
             focusable={true}
-            nativeID="animatedComponent"
             onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
@@ -485,18 +467,15 @@ exports[`SendBitcoinConfirmationScreen render matches snapshot 1`] = `
                 }
               }
             >
-              <Text
+              <ActivityIndicator
+                color="white"
+                size="small"
                 style={
                   Object {
-                    "color": "white",
-                    "fontSize": 18,
-                    "paddingVertical": 1,
-                    "textAlign": "center",
+                    "marginVertical": 2,
                   }
                 }
-              >
-                Confirm payment
-              </Text>
+              />
             </View>
           </View>
         </View>

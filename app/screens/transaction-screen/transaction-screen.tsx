@@ -19,7 +19,7 @@ import { toastShow } from "../../utils/toast"
 const styles = EStyleSheet.create({
   errorText: { alignSelf: "center", color: palette.red, paddingBottom: 18 },
 
-  icon: { top: -4 },
+  icon: { color: palette.darkGrey, top: -4 },
 
   noTransactionText: {
     fontSize: "24rem",

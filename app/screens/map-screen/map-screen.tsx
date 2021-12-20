@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
 
-  title: { fontSize: 18 },
+  title: { color: palette.darkGrey, fontSize: 18 },
 })
 
 type Props = {

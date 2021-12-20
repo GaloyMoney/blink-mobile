@@ -195,7 +195,7 @@ describe("SendBitcoinConfirmationScreen", () => {
         />
       </MockedProvider>,
     )
-
+    await act(await waitForNextRender)
     const sendButton = getByText(
       translate("SendBitcoinConfirmationScreen.confirmPayment"),
     )
@@ -219,6 +219,7 @@ describe("SendBitcoinConfirmationScreen", () => {
         />
       </MockedProvider>,
     )
+    await act(await waitForNextRender)
     const sendButton = getByText(
       translate("SendBitcoinConfirmationScreen.confirmPayment"),
     )
