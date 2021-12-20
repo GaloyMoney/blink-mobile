@@ -3,6 +3,7 @@ import { gql } from "@apollo/client"
 export const INITWALLET = gql`
   query InitWallet {
     me {
+      id
       defaultAccount {
         id
         defaultWalletId
@@ -18,6 +19,7 @@ export const INITWALLET = gql`
 
 export const initQuery = {
   me: {
+    id: "guest",
     defaultAccount: {
       id: "BTC",
       defaultWalletId: "BTC",

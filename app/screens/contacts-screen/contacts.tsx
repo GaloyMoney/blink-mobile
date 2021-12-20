@@ -1,5 +1,4 @@
 import { gql, useQuery } from "@apollo/client"
-import { useFocusEffect } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { useCallback, useMemo, useState } from "react"
@@ -99,12 +98,12 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
   const { hasToken } = useToken()
   const [matchingContacts, setMatchingContacts] = useState([])
   const [searchText, setSearchText] = useState("")
-  const [isRefreshed, setIsRefreshed] = useState(false)
 
-  const { loading, data, error, refetch } = useQuery(
+  const { loading, data, error } = useQuery(
     gql`
       query contacts {
         me {
+          id
           contacts {
             username
             alias
@@ -113,15 +112,11 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
         }
       }
     `,
-    { skip: !hasToken },
+    {
+      skip: !hasToken,
+      fetchPolicy: "cache-and-network",
+    },
   )
-
-  useFocusEffect(() => {
-    if (!isRefreshed) {
-      setIsRefreshed(true)
-      refetch()
-    }
-  })
 
   if (error) {
     toastShow(error.message)
