@@ -379,7 +379,7 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
       if (token) {
         analytics().logLogin({ method: "phone" })
         await saveToken(token)
-        await addDeviceToken(client)
+        await requestPermission(client)
       } else {
         toastShow(translate("WelcomePhoneValidationScreen.errorLoggingIn"))
       }

@@ -26,7 +26,7 @@
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		0FB417A8CA3C4CB2BC55769B /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* Bitcoin Beach.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bitcoin Beach.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* Bitcoin Jungle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bitcoin Jungle.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = BitcoinJungle/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = BitcoinJungle/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = BitcoinJungle/Images.xcassets; sourceTree = "<group>"; };
@@ -194,7 +194,7 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* Bitcoin Beach.app */,
+				13B07F961A680F5B00A75B9A /* Bitcoin Jungle.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -253,7 +253,7 @@
 			);
 			name = BitcoinJungle;
 			productName = BitcoinJungle;
-			productReference = 13B07F961A680F5B00A75B9A /* Bitcoin Beach.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* Bitcoin Jungle.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -489,7 +489,7 @@
 				CODE_SIGN_ENTITLEMENTS = BitcoinJungle/BitcoinJungle.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 294;
+				CURRENT_PROJECT_VERSION = 299;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = QU8N6UZ5LD;
 				ENABLE_BITCODE = YES;
@@ -504,7 +504,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = app.bitcoinjungle.ios;
-				PRODUCT_NAME = "Bitcoin Beach";
+				PRODUCT_NAME = "Bitcoin Jungle";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "BitcoinJungle-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -522,7 +522,7 @@
 				CODE_SIGN_ENTITLEMENTS = BitcoinJungle/BitcoinJungle.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 294;
+				CURRENT_PROJECT_VERSION = 299;
 				DEVELOPMENT_TEAM = QU8N6UZ5LD;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -536,7 +536,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = app.bitcoinjungle.ios;
-				PRODUCT_NAME = "Bitcoin Beach";
+				PRODUCT_NAME = "Bitcoin Jungle";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "BitcoinJungle-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
