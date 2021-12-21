@@ -213,6 +213,7 @@ exports[`WelcomePhoneInputScreen render matches snapshot 1`] = `
         <Text
           style={
             Object {
+              "color": "#1d1d1d",
               "fontSize": 18,
               "marginVertical": 8,
             }
@@ -428,7 +429,7 @@ exports[`WelcomePhoneInputScreen render matches snapshot 1`] = `
           <View>
             < />
             <Text>
-              Enter your phone number and we'll text you an access code.
+              Enter your phone number, and we'll text you an access code.
             </Text>
           </View>
           <View
@@ -677,7 +678,7 @@ exports[`WelcomePhoneInputScreen render matches snapshot 1`] = `
                   autoFocus={true}
                   editable={true}
                   keyboardAppearance="default"
-                  keyboardType="number-pad"
+                  keyboardType="phone-pad"
                   onChangeText={[Function]}
                   onSubmitEditing={[Function]}
                   placeholder="Phone Number"
@@ -693,6 +694,7 @@ exports[`WelcomePhoneInputScreen render matches snapshot 1`] = `
                       Object {},
                     ]
                   }
+                  textContentType="telephoneNumber"
                   value=""
                 />
               </View>

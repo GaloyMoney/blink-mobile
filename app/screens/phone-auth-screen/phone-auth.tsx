@@ -36,6 +36,8 @@ import { parseTimer } from "../../utils/timer"
 import { useGeetestCaptcha } from "../../hooks"
 import { networkVar } from "../../graphql/client-only-query"
 
+const phoneRegex = new RegExp("^\\+[0-9]+$")
+
 const REQUEST_AUTH_CODE = gql`
   mutation captchaRequestAuthCode($input: CaptchaRequestAuthCodeInput!) {
     captchaRequestAuthCode(input: $input) {
@@ -68,6 +70,17 @@ type LoginMutationFunction = (
 ) => Promise<FetchResult<Record<string, UserLoginMutationResponse>>>
 
 const styles = EStyleSheet.create({
+  authCodeEntryContainer: {
+    borderColor: color.palette.darkGrey,
+    borderRadius: 5,
+    borderWidth: 1,
+    flex: 1,
+    marginHorizontal: "50rem",
+    marginVertical: "18rem",
+    paddingHorizontal: "18rem",
+    paddingVertical: "12rem",
+  },
+
   buttonResend: {
     alignSelf: "center",
     backgroundColor: color.palette.blue,
@@ -235,18 +248,20 @@ export const WelcomePhoneInputScreen: ScreenType = ({
 
   const submitPhoneNumber = () => {
     const phone = phoneInputRef.current.state.number
-    const phoneRegex = new RegExp("^\\+[0-9]+$")
 
-    // Trims leading zero on some numbers (https://github.com/GaloyMoney/galoy-mobile/issues/119#issuecomment-936669141)
-    // @returns:  Formatted number with country code & unformatted number without country code
     const formattedNumber = phoneInputRef.current.getNumberAfterPossiblyEliminatingZero()
 
-    if (!phoneInputRef.current.isValidNumber(phone) || phoneRegex.test(phone)) {
+    const cleanFormattedNumber = formattedNumber.formattedNumber.replace(/[^\d+]/g, "")
+
+    if (
+      !phoneInputRef.current.isValidNumber(phone) ||
+      !phoneRegex.test(cleanFormattedNumber)
+    ) {
       Alert.alert(`${phone} ${translate("errors.invalidPhoneNumber")}`)
       return
     }
 
-    setPhoneNumber(formattedNumber.formattedNumber)
+    setPhoneNumber(cleanFormattedNumber)
   }
 
   const showCaptcha = phoneNumber.length > 0
@@ -286,6 +301,8 @@ export const WelcomePhoneInputScreen: ScreenType = ({
                 placeholder: translate("WelcomePhoneInputScreen.placeholder"),
                 returnKeyType: loadingRequestPhoneCode ? "default" : "done",
                 onSubmitEditing: submitPhoneNumber,
+                keyboardType: "phone-pad",
+                textContentType: "telephoneNumber",
                 accessibilityLabel: "Input phone number",
               }}
               countryPickerProps={{
@@ -409,7 +426,6 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
     if (code.length === 6) {
       send()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [code])
 
   useEffect(() => {
@@ -439,7 +455,7 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
               errorStyle={{ color: palette.red }}
               errorMessage={error}
               autoFocus={true}
-              style={styles.phoneEntryContainer}
+              style={styles.authCodeEntryContainer}
               containerStyle={styles.codeContainer}
               onChangeText={updateCode}
               keyboardType="number-pad"

@@ -6,18 +6,12 @@ import "@testing-library/jest-native/extend-expect"
 import "react-native-gesture-handler/jestSetup.js"
 
 import { translate } from "@app/i18n/translate"
-// import "@mocks/react-native-firebase"
 import "@mocks/react-navigation-native"
 import "@mocks/react-native-geetest-module"
 import { WelcomePhoneInputScreen } from "@app/screens/phone-auth-screen"
 
 jest.mock("react-native/Libraries/EventEmitter/NativeEventEmitter")
 jest.mock("react-native-fingerprint-scanner", () => ({}))
-// jest.mock("react-native-extended-stylesheet", () => ({
-//   StyleSheet: {
-//     create: {},
-//   },
-// }))
 
 const cache = new InMemoryCache()
 
