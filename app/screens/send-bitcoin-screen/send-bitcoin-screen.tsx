@@ -171,6 +171,7 @@ export const SendBitcoinScreen: ScreenType = ({
   }, [
     amountless,
     convertPrimaryAmount,
+    convertSecondaryAmount,
     paymentType,
     primaryAmount.currency,
     satAmount,
