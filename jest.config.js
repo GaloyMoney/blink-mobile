@@ -38,6 +38,7 @@ module.exports = {
       "|@react-native-firebase/auth" +
       "|@react-native-firebase" +
       "|@react-navigation" +
+      "|react-native-exception-handler" +
       ")/)",
   ],
 }
