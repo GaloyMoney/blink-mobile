@@ -3,6 +3,7 @@ module.exports = {
   setupFilesAfterEnv: [],
   transform: {
     "\\.(ts|tsx)$": "ts-jest",
+    "^.+\\.svg$": "jest-transform-stub",
   },
   globals: {
     "ts-jest": {
@@ -35,6 +36,8 @@ module.exports = {
       "|react-native-root-siblings" +
       "|react-native-root-toast" +
       "|react-native-vector-icons" +
+      "|react-native-phone-number-input" +
+      "|react-native-country-picker-modal" +
       "|@react-native-firebase/auth" +
       "|@react-native-firebase" +
       "|@react-navigation" +
