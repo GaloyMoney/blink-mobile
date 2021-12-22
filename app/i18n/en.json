@@ -644,6 +644,7 @@
     "description": "Description",
     "email": "Email",
     "error": "Error",
+    "fatal": "Fatal",
     "fee": "fee",
     "feeSats": "Fees (sats)",
     "fees": "Fees",
@@ -666,6 +667,7 @@
     "ok": "OK",
     "openWallet": "Open Wallet",
     "phoneNumber": "Phone Number",
+    "restart": "Restart",
     "sats": "sats",
     "search": "Search",
     "security": "Security",
@@ -693,7 +695,10 @@
       "server": "Server Error. Please try again later",
       "request": "Request issue.\nContact support if the problem persists",
       "connection": "Connection issue.\nVerify your internet connection"
-    }
+    },
+    "unexpectedError": "Unexpected error occurred",
+    "restartApp": "Please restart the application.",
+    "problemPersists": "If problem persists contact support."
   },
   "notifications": {
     "payment": {
@@ -712,6 +717,7 @@
   },
   "whatsapp": {
     "contactUs": "Need help? Talk to us on WhatsApp!",
-    "defaultSupportMessage": "Hey there! I need some help with Bitcoin Beach Wallet"
+    "defaultSupportMessage": "Hey there! I need some help with Bitcoin Beach Wallet",
+    "contactSupport": "Contact Support"
   }
 }
