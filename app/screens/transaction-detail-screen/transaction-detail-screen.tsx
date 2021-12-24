@@ -1,7 +1,7 @@
 import { StackNavigationProp } from "@react-navigation/stack"
 import { RouteProp } from "@react-navigation/native"
 import * as React from "react"
-import { Text, View, Linking } from "react-native"
+import { Text, View, Linking, TouchableWithoutFeedback } from "react-native"
 import { Divider } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { CloseCross } from "../../components/close-cross"
@@ -20,7 +20,7 @@ import { formatUsdAmount } from "../../hooks"
 import Icon from "react-native-vector-icons/Ionicons"
 import { BLOCKCHAIN_EXPLORER_URL } from "../../constants/support"
 
-const viewInExplorer = (hash): {hash: string} => Linking.openURL(BLOCKCHAIN_EXPLORER_URL + hash)
+const viewInExplorer = (hash: string): Object => Linking.openURL(BLOCKCHAIN_EXPLORER_URL + hash)
 
 const styles = EStyleSheet.create({
   amount: {
@@ -77,19 +77,21 @@ const styles = EStyleSheet.create({
   },
 })
 
-const Row = ({ entry, value, type }: { entry: string; value: string, type: SettlementViaType }) => (
-  <View style={styles.description}>
-    <Text style={styles.entry}>
-      {entry}
-      {" "}
-      {type === 'SettlementViaOnChain' &&
-        <Icon name="open-outline" size={18} color={palette.darkGrey} onPress={() => viewInExplorer(value)} />
-      }
-    </Text>
-    <Text selectable style={styles.value}>
-      {value}
-    </Text>
-  </View>
+const Row = ({ entry, value, type }: { entry: string; value: string, type?: SettlementViaType }) => (
+  <TouchableWithoutFeedback onPress={() => viewInExplorer(value)}>
+    <View style={styles.description}>
+      <Text style={styles.entry}>
+        {entry}
+        {" "}
+        {type === 'SettlementViaOnChain' &&
+          <Icon name="open-outline" size={18} color={palette.darkGrey} />
+        }
+      </Text>
+      <Text selectable style={styles.value}>
+        {value}
+      </Text>
+    </View>
+  </TouchableWithoutFeedback>
 )
 
 type Props = {
