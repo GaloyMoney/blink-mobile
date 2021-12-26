@@ -9,7 +9,7 @@ import { MAIN_QUERY } from "../../graphql/query"
 import { palette } from "../../theme/palette"
 import type { ScreenType } from "../../types/jsx"
 import useToken from "../../utils/use-token"
-import { cacheIdVar } from "../../graphql/client-only-query"
+import useMainQuery from "@app/hooks/use-main-query"
 
 const styles = EStyleSheet.create({
   screenStyle: {
@@ -18,14 +18,8 @@ const styles = EStyleSheet.create({
 })
 
 export const LanguageScreen: ScreenType = () => {
-  const { tokenUid, hasToken } = useToken()
-  const { data } = useQuery(MAIN_QUERY, {
-    variables: { hasToken },
-    fetchPolicy: "cache-only",
-  })
-
-  const currentLanguage = data?.me?.language
-
+  const { tokenUid } = useToken()
+  const { userPreferredLanguage, refetch: refetchMain  } = useMainQuery()
   const [updateLanguage] = useMutation(
     gql`
       mutation updateLanguage($language: Language!) {
@@ -41,7 +35,7 @@ export const LanguageScreen: ScreenType = () => {
       }
     `,
     {
-      onCompleted: () => cacheIdVar(Date.now()),
+      onCompleted: () => refetchMain(),
     },
   )
 
@@ -54,7 +48,7 @@ export const LanguageScreen: ScreenType = () => {
           key={language}
           bottomDivider
           onPress={() => {
-            if (language !== currentLanguage) {
+            if (language !== userPreferredLanguage) {
               updateLanguage({
                 variables: { language },
                 optimisticResponse: {
@@ -74,7 +68,7 @@ export const LanguageScreen: ScreenType = () => {
           }}
         >
           <ListItem.Title>{translate(`Languages.${language}`)}</ListItem.Title>
-          {currentLanguage === language && (
+          {userPreferredLanguage === language && (
             <Icon name="ios-checkmark-circle" size={18} color={palette.green} />
           )}
         </ListItem>

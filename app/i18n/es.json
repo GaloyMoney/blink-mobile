@@ -732,7 +732,8 @@
     },
     "unexpectedError": "Ocurrió un error inesperado",
     "restartApp": "Reinicie la aplicación.",
-    "problemPersists": "Si el problema persiste, comuníquese con el soporte técnico."
+    "problemPersists": "Si el problema persiste, comuníquese con el soporte técnico.",
+    "fatalError": "Lo sentimos, parece que estamos teniendo problemas para cargar la aplicación por usted. Si los problemas persisten, comuníquese con el soporte técnico."
   },
   "notifications": {
     "payment": {

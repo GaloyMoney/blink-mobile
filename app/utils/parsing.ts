@@ -3,11 +3,10 @@ import moment from "moment"
 import url from "url"
 import { networks, address } from "bitcoinjs-lib"
 import { getDescription, getDestination, getUsername } from "./bolt11"
-import { MAIN_QUERY } from "../graphql/query"
 
 import type { INetwork } from "../types/network"
-import type { MockableApolloClient } from "../types/mockable"
 import * as parsing from "./parsing"
+import useMainQuery from "@app/hooks/use-main-query"
 
 // TODO: look if we own the address
 
@@ -59,15 +58,11 @@ function parseAmount(txt) {
 export const validPayment = (
   input: string,
   network: INetwork,
-  client: MockableApolloClient,
+  myPubKey: string,
+  username: string
 ): IValidPaymentReponse => {
-  const mainQueryData = client.readQuery({
-    query: MAIN_QUERY,
-    variables: { hasToken: true }, // TODO: redo without the MAIN_QUERY
-  })
 
-  const myPubKey = mainQueryData?.globals?.nodesIds?.[0] ?? ""
-  const username = mainQueryData?.me?.username ?? ""
+  
 
   if (!input) {
     return { valid: false }

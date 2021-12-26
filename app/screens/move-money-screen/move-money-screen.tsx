@@ -34,6 +34,7 @@ import { ScreenType } from "../../types/jsx"
 import useToken from "../../utils/use-token"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
+import useMainQuery from "@app/hooks/use-main-query"
 
 const styles = EStyleSheet.create({
   balanceHeader: {
@@ -137,17 +138,7 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
 }: MoveMoneyScreenDataInjectedProps) => {
   const { hasToken } = useToken()
 
-  const {
-    loading: loadingMain,
-    error,
-    data,
-    refetch,
-  } = useQuery(MAIN_QUERY, {
-    variables: { hasToken },
-    notifyOnNetworkStatusChange: true,
-    errorPolicy: "all",
-    fetchPolicy: "network-only",
-  })
+  const {mobileVersions, transactionsEdges, errors, loading: loadingMain, refetch} = useMainQuery()
 
   // temporary fix until we have a better management of notifications:
   // when coming back to active state. look if the invoice has been paid
@@ -201,10 +192,10 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
     <MoveMoneyScreen
       navigation={navigation}
       loading={loadingMain}
-      error={error}
+      errors={errors}
       refetch={refetch}
-      transactionsEdges={data?.me?.defaultAccount?.wallets?.[0].transactions?.edges}
-      isUpdateAvailable={isUpdateAvailableOrRequired(data?.mobileVersions).available}
+      transactionsEdges={transactionsEdges}
+      isUpdateAvailable={isUpdateAvailableOrRequired(mobileVersions).available}
       hasToken={hasToken}
     />
   )
@@ -213,7 +204,7 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
 type MoveMoneyScreenProps = {
   navigation: StackNavigationProp<MoveMoneyStackParamList, "moveMoney">
   loading: boolean
-  error: ApolloError
+  errors: []
   transactionsEdges: { cursor: string; node: WalletTransaction | null }[]
   refetch: () => void
   isUpdateAvailable: boolean
@@ -223,7 +214,7 @@ type MoveMoneyScreenProps = {
 export const MoveMoneyScreen: ScreenType = ({
   navigation,
   loading,
-  error,
+  errors,
   refetch,
   transactionsEdges,
   isUpdateAvailable,
@@ -351,7 +342,7 @@ export const MoveMoneyScreen: ScreenType = ({
       <FlatList
         ListHeaderComponent={() => (
           <>
-            {error?.graphQLErrors?.map(({ message }, item) => (
+            {errors?.map(({ message }, item) => (
               <Text key={`error-${item}`} style={styles.error} selectable>
                 {message}
               </Text>
