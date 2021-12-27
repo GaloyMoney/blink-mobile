@@ -679,6 +679,7 @@
     "description": "Descripción",
     "email": "Correo electrónico",
     "error": "Error",
+    "fatal": "Fatal",
     "fee": "Cuota",
     "feeSats": "Tarifas (sats)",
     "fees": "\nTarifa",
@@ -702,6 +703,7 @@
     "ok": "OK",
     "openWallet": "Abrir billetera",
     "phoneNumber": "Número de teléfono",
+    "restart": "Reiniciar",
     "sats": "Satoshis",
     "security": "Seguridad",
     "send": "Enviar",
@@ -727,7 +729,10 @@
       "server": "Hubo un error en el servidor.\nPor favor intente más tarde",
       "connection": "Error al conectar.\nVerifique su conexión a internet.",
       "request": "Hay un error en el requerimiento. Póngase en contacto con el soporte técnico si este problema persiste."
-    }
+    },
+    "unexpectedError": "Ocurrió un error inesperado",
+    "restartApp": "Reinicie la aplicación.",
+    "problemPersists": "Si el problema persiste, comuníquese con el soporte técnico."
   },
   "notifications": {
     "payment": {
@@ -744,6 +749,7 @@
   },
   "whatsapp": {
     "contactUs": "¿Necesita ayuda? Contáctenos por WhatsApp",
-    "defaultSupportMessage": "¡Hola! Necesito ayuda con Bitcoin Jungle Wallet"
+    "defaultSupportMessage": "¡Hola! Necesito ayuda con Bitcoin Jungle Wallet",
+    "contactSupport": "Soporte de contacto"
   }
 }
