@@ -14,7 +14,7 @@ import {
 import { Button, Input } from "react-native-elements"
 import { FetchResult, gql, useApolloClient, useMutation } from "@apollo/client"
 import EStyleSheet from "react-native-extended-stylesheet"
-import PhoneInput from "react-native-phone-input"
+import PhoneInput from "react-native-phone-number-input"
 import analytics from "@react-native-firebase/analytics"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { RouteProp } from "@react-navigation/native"
@@ -36,6 +36,8 @@ import { parseTimer } from "../../utils/timer"
 import { useGeetestCaptcha } from "../../hooks"
 import { networkVar } from "../../graphql/client-only-query"
 import { requestPermission } from "../../utils/notifications"
+
+const phoneRegex = new RegExp("^\\+[0-9]+$")
 
 const REQUEST_AUTH_CODE = gql`
   mutation captchaRequestAuthCode($input: CaptchaRequestAuthCodeInput!) {
@@ -69,6 +71,17 @@ type LoginMutationFunction = (
 ) => Promise<FetchResult<Record<string, UserLoginMutationResponse>>>
 
 const styles = EStyleSheet.create({
+  authCodeEntryContainer: {
+    borderColor: color.palette.darkGrey,
+    borderRadius: 5,
+    borderWidth: 1,
+    flex: 1,
+    marginHorizontal: "50rem",
+    marginVertical: "18rem",
+    paddingHorizontal: "18rem",
+    paddingVertical: "12rem",
+  },
+
   buttonResend: {
     alignSelf: "center",
     backgroundColor: color.palette.blue,
@@ -91,10 +104,8 @@ const styles = EStyleSheet.create({
     borderRadius: 5,
     borderWidth: 1,
     flex: 1,
-    marginHorizontal: "50rem",
+    marginHorizontal: "40rem",
     marginVertical: "18rem",
-    paddingHorizontal: "18rem",
-    paddingVertical: "12rem",
   },
 
   sendAgainButtonRow: {
@@ -110,6 +121,10 @@ const styles = EStyleSheet.create({
     paddingBottom: "10rem",
     paddingHorizontal: "40rem",
     textAlign: "center",
+  },
+
+  textContainer: {
+    backgroundColor: color.transparent,
   },
 
   textDisabledSendAgain: {
@@ -233,15 +248,21 @@ export const WelcomePhoneInputScreen: ScreenType = ({
   })
 
   const submitPhoneNumber = () => {
-    const phone = phoneInputRef.current.getValue()
-    const phoneRegex = new RegExp("^\\+[0-9]+$")
+    const phone = phoneInputRef.current.state.number
 
-    if (!phoneInputRef.current.isValidNumber() || !phoneRegex.test(phone)) {
+    const formattedNumber = phoneInputRef.current.getNumberAfterPossiblyEliminatingZero()
+
+    const cleanFormattedNumber = formattedNumber.formattedNumber.replace(/[^\d+]/g, "")
+
+    if (
+      !phoneInputRef.current.isValidNumber(phone) ||
+      !phoneRegex.test(cleanFormattedNumber)
+    ) {
       Alert.alert(`${phone} ${translate("errors.invalidPhoneNumber")}`)
       return
     }
 
-    setPhoneNumber(phone)
+    setPhoneNumber(cleanFormattedNumber)
   }
 
   const showCaptcha = phoneNumber.length > 0
@@ -270,15 +291,28 @@ export const WelcomePhoneInputScreen: ScreenType = ({
           <KeyboardAvoidingView>
             <PhoneInput
               ref={phoneInputRef}
-              style={styles.phoneEntryContainer}
-              textStyle={styles.textEntry}
-              initialCountry="cr"
-              textProps={{
-                autoFocus: true,
+              value={phoneNumber}
+              containerStyle={styles.phoneEntryContainer}
+              textInputStyle={styles.textEntry}
+              textContainerStyle={styles.textContainer}
+              defaultValue={phoneNumber}
+              defaultCode="CR"
+              layout="first"
+              textInputProps={{
                 placeholder: translate("WelcomePhoneInputScreen.placeholder"),
                 returnKeyType: loadingRequestPhoneCode ? "default" : "done",
                 onSubmitEditing: submitPhoneNumber,
+                keyboardType: "phone-pad",
+                textContentType: "telephoneNumber",
+                accessibilityLabel: "Input phone number",
               }}
+              countryPickerProps={{
+                modalProps: {
+                  testID: "country-picker",
+                },
+              }}
+              codeTextStyle={{ marginLeft: -25 }}
+              autoFocus
             />
             <ActivityIndicator
               animating={loadingRequestPhoneCode}
@@ -393,7 +427,6 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
     if (code.length === 6) {
       send()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [code])
 
   useEffect(() => {
@@ -423,7 +456,7 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
               errorStyle={{ color: palette.red }}
               errorMessage={error}
               autoFocus={true}
-              style={styles.phoneEntryContainer}
+              style={styles.authCodeEntryContainer}
               containerStyle={styles.codeContainer}
               onChangeText={updateCode}
               keyboardType="number-pad"
