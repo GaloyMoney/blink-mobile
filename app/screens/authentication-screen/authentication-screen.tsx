@@ -106,7 +106,13 @@ export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) =
       KeyStoreWrapper.setIsBiometricsEnabled()
     }
     navigation.replace("Primary")
-    hasToken && showModalClipboardIfValidPayment({ client, network: tokenNetwork, myPubKey, username })
+    hasToken &&
+      showModalClipboardIfValidPayment({
+        client,
+        network: tokenNetwork,
+        myPubKey,
+        username,
+      })
   }
 
   const handleAuthenticationFailure = () => {

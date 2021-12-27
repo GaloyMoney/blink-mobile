@@ -1,4 +1,3 @@
-import { useApolloClient } from "@apollo/client"
 import { useIsFocused, useNavigationState } from "@react-navigation/native"
 import * as React from "react"
 import { Alert, Dimensions, Pressable, View, ViewStyle } from "react-native"

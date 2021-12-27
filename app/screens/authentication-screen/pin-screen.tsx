@@ -147,7 +147,13 @@ export const PinScreen: ScreenType = ({ route, navigation }: Props) => {
         index: 0,
         routes: [{ name: "Primary" }],
       })
-      hasToken && showModalClipboardIfValidPayment({ client, network: tokenNetwork, myPubKey, username })
+      hasToken &&
+        showModalClipboardIfValidPayment({
+          client,
+          network: tokenNetwork,
+          myPubKey,
+          username,
+        })
     } else {
       if (pinAttempts < MAX_PIN_ATTEMPTS - 1) {
         const newPinAttempts = pinAttempts + 1

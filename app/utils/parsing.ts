@@ -6,7 +6,6 @@ import { getDescription, getDestination, getUsername } from "./bolt11"
 
 import type { INetwork } from "../types/network"
 import * as parsing from "./parsing"
-import useMainQuery from "@app/hooks/use-main-query"
 
 // TODO: look if we own the address
 
@@ -59,11 +58,8 @@ export const validPayment = (
   input: string,
   network: INetwork,
   myPubKey: string,
-  username: string
+  username: string,
 ): IValidPaymentReponse => {
-
-  
-
   if (!input) {
     return { valid: false }
   }

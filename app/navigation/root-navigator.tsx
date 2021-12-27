@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import { useApolloClient, useQuery, useReactiveVar } from "@apollo/client"
+import { useApolloClient } from "@apollo/client"
 import PushNotificationIOS from "@react-native-community/push-notification-ios"
 import messaging from "@react-native-firebase/messaging"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
@@ -134,7 +134,13 @@ export const RootStack: NavigatorType = () => {
     async (nextAppState) => {
       if (appState.current.match(/background/) && nextAppState === "active") {
         console.log("App has come to the foreground!")
-        hasToken && showModalClipboardIfValidPayment({ client, network: tokenNetwork, myPubKey, username })
+        hasToken &&
+          showModalClipboardIfValidPayment({
+            client,
+            network: tokenNetwork,
+            myPubKey,
+            username,
+          })
       }
 
       appState.current = nextAppState

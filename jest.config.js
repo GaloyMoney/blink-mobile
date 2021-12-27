@@ -1,6 +1,6 @@
 module.exports = {
   preset: "react-native",
-  setupFilesAfterEnv: [],
+  setupFilesAfterEnv: ["<rootDir>/__tests__/helpers/jest.setup.js"],
   transform: {
     "\\.(ts|tsx)$": "ts-jest",
     "^.+\\.svg$": "jest-transform-stub",
@@ -42,6 +42,7 @@ module.exports = {
       "|@react-native-firebase" +
       "|@react-navigation" +
       "|react-native-exception-handler" +
+      "|@react-native-community" +
       ")/)",
   ],
 }

@@ -11,14 +11,14 @@ import { INetwork } from "../types/network"
 
 type ShowModalClipboardIfValidPaymentInput = {
   client: ApolloClient<unknown>
-  network: INetwork,
-  myPubKey: string,
+  network: INetwork
+  myPubKey: string
   username: string
 }
 
 export const showModalClipboardIfValidPayment = async (
   // eslint-disable-next-line @typescript-eslint/ban-types
-  { client, network, myPubKey, username }: ShowModalClipboardIfValidPaymentInput,
+  { network, myPubKey, username }: ShowModalClipboardIfValidPaymentInput,
 ): Promise<void> => {
   const clipboard = await Clipboard.getString()
 

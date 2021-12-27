@@ -1,11 +1,10 @@
-import { gql, useMutation, useQuery } from "@apollo/client"
+import { gql, useMutation } from "@apollo/client"
 import { translate } from "../../i18n"
 import * as React from "react"
 import { ListItem } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
-import { MAIN_QUERY } from "../../graphql/query"
 import { palette } from "../../theme/palette"
 import type { ScreenType } from "../../types/jsx"
 import useToken from "../../utils/use-token"
@@ -19,7 +18,7 @@ const styles = EStyleSheet.create({
 
 export const LanguageScreen: ScreenType = () => {
   const { tokenUid } = useToken()
-  const { userPreferredLanguage, refetch: refetchMain  } = useMainQuery()
+  const { userPreferredLanguage, refetch: refetchMain } = useMainQuery()
   const [updateLanguage] = useMutation(
     gql`
       mutation updateLanguage($language: Language!) {

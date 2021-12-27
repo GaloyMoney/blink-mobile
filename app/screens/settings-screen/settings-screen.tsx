@@ -3,12 +3,7 @@ import { Alert, Text, TextStyle } from "react-native"
 import Share from "react-native-share"
 import { Divider, Icon, ListItem } from "react-native-elements"
 import { StackNavigationProp } from "@react-navigation/stack"
-import {
-  gql,
-  OperationVariables,
-  QueryLazyOptions,
-  useLazyQuery,
-} from "@apollo/client"
+import { gql, OperationVariables, QueryLazyOptions, useLazyQuery } from "@apollo/client"
 import type { ViewStyleProp } from "react-native/Libraries/StyleSheet/StyleSheet"
 
 import { Screen } from "../../components/screen"
@@ -34,7 +29,8 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
   const { hasToken } = useToken()
   const { logout } = useLogout()
 
-  const { btcWalletId, csvEncoded, username, phoneNumber, userPreferredLanguage } = useMainQuery()
+  const { btcWalletId, csvEncoded, username, phoneNumber, userPreferredLanguage } =
+    useMainQuery()
 
   const securityAction = async () => {
     const isBiometricsEnabled = await KeyStoreWrapper.getIsBiometricsEnabled()

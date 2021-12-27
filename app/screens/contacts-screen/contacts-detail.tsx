@@ -63,7 +63,13 @@ export const ContactsDetailScreen: ScreenType = ({
 }: ContactDetailProps) => {
   const { contact } = route.params
   const { refetch: refetchMain } = useMainQuery()
-  return <ContactsDetailScreenJSX navigation={navigation} contact={contact} refetchMain={refetchMain} />
+  return (
+    <ContactsDetailScreenJSX
+      navigation={navigation}
+      contact={contact}
+      refetchMain={refetchMain}
+    />
+  )
 }
 
 type ContactDetailScreenProps = {
@@ -75,7 +81,7 @@ type ContactDetailScreenProps = {
 export const ContactsDetailScreenJSX: ScreenType = ({
   contact,
   navigation,
-  refetchMain
+  refetchMain,
 }: ContactDetailScreenProps) => {
   const [contactName, setContactName] = React.useState(contact.alias)
 
