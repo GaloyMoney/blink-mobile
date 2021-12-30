@@ -41,7 +41,6 @@ module.exports = {
       "|@react-native-firebase/auth" +
       "|@react-native-firebase" +
       "|@react-navigation" +
-      "|react-native-exception-handler" +
       "|@react-native-community" +
       "|react-native-error-boundary" +
       ")/)",
