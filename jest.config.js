@@ -43,6 +43,7 @@ module.exports = {
       "|@react-navigation" +
       "|react-native-exception-handler" +
       "|@react-native-community" +
+      "|react-native-error-boundary" +
       ")/)",
   ],
 }
