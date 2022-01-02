@@ -25,6 +25,7 @@ import { UsernameValidation } from "../../utils/validation"
 import { TextCurrency } from "../../components/text-currency/text-currency"
 import { useMyCurrencies, useMySubscription } from "../../hooks/user-hooks"
 import { toastShow } from "../../utils/toast"
+import KeyStoreWrapper from "../../utils/storage/secureStorage"
 
 export const PRICE_CHECK_INTERVAL = 10000
 
@@ -70,6 +71,7 @@ export const SendBitcoinScreen: ScreenType = ({
   const [memo, setMemo] = useState<string>("")
   const [sameNode, setSameNode] = useState<boolean | null>(null)
   const [interactive, setInteractive] = useState(false)
+  const [isSendLockEnabled, setIsSendLockEnabled] = useState(false)
 
   const satAmount =
     primaryCurrency === "BTC" ? primaryAmount.value : secondaryAmount.value
@@ -100,6 +102,10 @@ export const SendBitcoinScreen: ScreenType = ({
   })
 
   const setDestination = (input) => setDestinationInternal(input.trim())
+
+  const getIsSendLockEnabled = async () => {
+    setIsSendLockEnabled(await KeyStoreWrapper.getIsSendLockEnabled())
+  }
 
   const reset = useCallback(() => {
     setInvoiceError("")
@@ -139,6 +145,8 @@ export const SendBitcoinScreen: ScreenType = ({
     } else {
       setInteractive(true)
     }
+
+    getIsSendLockEnabled()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [client, tokenNetwork, route.params])
 
@@ -243,9 +251,11 @@ export const SendBitcoinScreen: ScreenType = ({
       return translate("SendBitcoinScreen.amountExceed", {
         balance: formatCurrencyAmount({ sats: satBalance, currency: primaryCurrency }),
       })
+    } else if(isSendLockEnabled) {
+      return translate("SendBitcoinScreen.sendLockEnabled")
     }
     return null
-  }, [formatCurrencyAmount, invoiceError, primaryCurrency, satAmount, satBalance])
+  }, [formatCurrencyAmount, invoiceError, primaryCurrency, satAmount, satBalance, isSendLockEnabled])
 
   useEffect(() => {
     setDestinationStatus("NOT_CHECKED")
