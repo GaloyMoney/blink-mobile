@@ -753,5 +753,10 @@
     "contactUs": "¿Necesita ayuda? Contáctenos por WhatsApp",
     "defaultSupportMessage": "¡Hola! Necesito ayuda con Bitcoin Beach Wallet",
     "contactSupport": "Soporte de contacto"
+  },
+  "lnurl": {
+    "overLimit": "No se puede enviar más de la cantidad máxima",
+    "underLimit": "No se puede enviar una cantidad inferior a la mínima",
+    "commentRequired": "Se requiere una nota"
   }
 }
