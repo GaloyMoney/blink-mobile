@@ -87,6 +87,11 @@ export const ScanningQRCodeScreen: ScreenType = ({
         if (lnurl) {
           setPending(true)
           const lnurlParams = await getParams(lnurl)
+
+          if("reason" in lnurlParams) {
+            throw lnurlParams.reason
+          }
+
           switch (lnurlParams.tag) {
             case "withdrawRequest":
               // TODO: lnurl-withdraw
