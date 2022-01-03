@@ -151,7 +151,7 @@ export const SendBitcoinScreen: ScreenType = ({
 
   useEffect(() => {
     reset()
-    const { valid, lnurl, username } = validPayment(
+    const { valid, username } = validPayment(
       route.params?.payment,
       tokenNetwork,
       myPubKey,
