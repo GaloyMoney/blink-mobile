@@ -213,7 +213,7 @@ export const validPayment = (
     return {
       valid: true,
       lnurl,
-      amountless: true,
+      amountless: false,
     }
   } else {
     return {

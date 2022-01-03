@@ -291,7 +291,7 @@ export const SendBitcoinConfirmationScreen = ({
       return
     }
 
-    if (paymentType === "lightning") {
+    if (paymentType === "lightning" || paymentType === "lnurl") {
       if (amountless) {
         payAmountlessLightning()
       } else {
