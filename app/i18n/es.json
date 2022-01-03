@@ -677,6 +677,7 @@
     "csvExport": "Exportar transacciones (CSV)",
     "date": "Fecha ",
     "description": "Descripción",
+    "domain": "Dominio",
     "email": "Correo electrónico",
     "error": "Error",
     "fatal": "Fatal",
