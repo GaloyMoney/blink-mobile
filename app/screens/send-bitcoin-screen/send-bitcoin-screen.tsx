@@ -46,7 +46,7 @@ type LnurlParams = {
   maxSendable: number
   domain: string
   callback: string
-  commentAllowed: boolean
+  commentAllowed: number
   error: string
 }
 
@@ -77,7 +77,7 @@ export const SendBitcoinScreen: ScreenType = ({
     maxSendable: 0,
     domain: "",
     callback: "",
-    commentAllowed: false,
+    commentAllowed: 0,
     error: "",
   })
   const [lnurlError, setLnurlError] = useState("")
