@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-color-literals */
 /* eslint-disable react-native/no-unused-styles */
-import React from "react"
+import React, { useEffect } from "react"
 import { WHATSAPP_CONTACT_NUMBER } from "@app/constants/support"
 import { color, palette } from "@app/theme"
 import { openWhatsApp } from "@app/utils/external"
@@ -59,7 +59,7 @@ const styles = EStyleSheet.create({
   },
 })
 export const ErrorScreen = ({ error, resetError }) => {
-  crashlytics().recordError(error)
+  useEffect(() => crashlytics().recordError(error), [error])
   return (
     <KeyboardAvoidingView
       style={[presets.fixed.outer, { backgroundColor: palette.lightBlue }]}
@@ -74,7 +74,7 @@ export const ErrorScreen = ({ error, resetError }) => {
           <Text style={styles.text}>{translate("errors.fatalError")}</Text>
           <Button
             title={translate("errors.showError")}
-            onPress={() => Alert.alert(translate("common.error"), error)}
+            onPress={() => Alert.alert(translate("common.error"), String(error))}
             containerStyle={styles.buttonContainer}
             buttonStyle={styles.buttonStyle}
             titleStyle={styles.buttonTitle}
