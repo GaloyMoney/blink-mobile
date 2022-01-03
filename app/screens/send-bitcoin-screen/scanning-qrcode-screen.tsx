@@ -93,9 +93,6 @@ export const ScanningQRCodeScreen: ScreenType = ({
           }
 
           switch (lnurlParams.tag) {
-            case "withdrawRequest":
-              // TODO: lnurl-withdraw
-              break
             case "payRequest":
               if (index <= 1) {
                 navigation.replace("sendBitcoin", {
@@ -108,6 +105,20 @@ export const ScanningQRCodeScreen: ScreenType = ({
                   lnurlParams: lnurlParams as LNURLPayParams,
                 })
               }
+              break
+            default:
+              Alert.alert(
+                translate("ScanningQRCodeScreen.invalidTitle"),
+                translate("ScanningQRCodeScreen.invalidContent", {
+                  found: lnurlParams.tag,
+                }),
+                [
+                  {
+                    text: translate("common.ok"),
+                    onPress: () => setPending(false),
+                  },
+                ],
+              )
               break
           }
         } else {
