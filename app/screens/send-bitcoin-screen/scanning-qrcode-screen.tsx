@@ -88,7 +88,7 @@ export const ScanningQRCodeScreen: ScreenType = ({
           setPending(true)
           const lnurlParams = await getParams(lnurl)
 
-          if("reason" in lnurlParams) {
+          if ("reason" in lnurlParams) {
             throw lnurlParams.reason
           }
 
