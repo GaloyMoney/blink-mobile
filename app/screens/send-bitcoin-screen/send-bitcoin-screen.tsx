@@ -319,7 +319,7 @@ export const SendBitcoinScreen: ScreenType = ({
     } else if (paymentType == "lnurl") {
       const satAmount = primaryAmount.value * 1000
       const lnurlInvoice = await fetchInvoice(
-        `${lnurlPay.callback}?amount=${satAmount}&comment=${memo}`,
+        `${lnurlPay.callback}?amount=${satAmount}&comment=${encodeURIComponent(memo)}`,
       )
       if (lnurlInvoice.status && lnurlInvoice.status === "ERROR") {
         toastShow(lnurlInvoice.reason)
