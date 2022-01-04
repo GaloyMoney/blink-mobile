@@ -642,6 +642,7 @@
     "csvExport": "Export transactions as CSV",
     "date": "Date",
     "description": "Description",
+    "domain": "Domain",
     "email": "Email",
     "error": "Error",
     "fatal": "Fatal",
@@ -721,5 +722,10 @@
     "contactUs": "Need help? Talk to us on WhatsApp!",
     "defaultSupportMessage": "Hey there! I need some help with Bitcoin Beach Wallet",
     "contactSupport": "Contact Support"
+  },
+  "lnurl": {
+    "overLimit": "You can't send more than max amount",
+    "underLimit": "You can't send less than min amount",
+    "commentRequired": "Comment required"
   }
 }
