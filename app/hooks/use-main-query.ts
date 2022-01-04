@@ -23,7 +23,7 @@ const useMainQuery = (): useMainQueryOutput => {
         crashlytics().recordError(e)
         console.log(e)
       })
-      throw translate("errors.fatalError")
+      throw new Error(translate("errors.fatalError"))
     }
     if (error.networkError && previousData) {
       // Call to mainquery has failed but we have data in the cache
@@ -39,7 +39,7 @@ const useMainQuery = (): useMainQueryOutput => {
     if (error.networkError && !previousData) {
       // This is the first execution of mainquery and it has failed
       crashlytics().recordError(error.networkError)
-      throw translate("errors.fatalError")
+      throw new Error(translate("errors.fatalError"))
     }
   }
   const userPreferredLanguage = data?.me?.language
@@ -48,7 +48,7 @@ const useMainQuery = (): useMainQueryOutput => {
   )
   if (hasToken && !btcWallet && !loading) {
     // User is logged in but no wallet was returned.  We need a BTC wallet for the app to function.
-    throw translate("errors.fatalError")
+    throw new Error(translate("errors.fatalError"))
   }
   const btcWalletBalance = btcWallet?.balance
   const btcWalletId = btcWallet?.id
