@@ -294,8 +294,21 @@ export const SendBitcoinScreen: ScreenType = ({
   }, [destination])
 
   const fetchInvoice = async (url) => {
-    const response = await fetch(url)
-    return await response.json()
+    try {
+      const response = await fetch(url)
+      if (!response.ok) {
+        return {
+          status: "ERROR",
+          reason: translate("errors.network.server"),
+        }
+      }
+      return await response.json()
+    } catch (err) {
+      return {
+        status: "ERROR",
+        reason: translate("errors.network.server"),
+      }
+    }
   }
 
   const pay = useCallback(async () => {
@@ -309,7 +322,7 @@ export const SendBitcoinScreen: ScreenType = ({
         `${lnurlPay.callback}?amount=${satAmount}&comment=${memo}`,
       )
       if (lnurlInvoice.status && lnurlInvoice.status === "ERROR") {
-        setLnurlError(lnurlInvoice.reason)
+        toastShow(lnurlInvoice.reason)
       } else {
         navigation.navigate("sendBitcoinConfirmation", {
           address,
