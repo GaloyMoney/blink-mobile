@@ -64,7 +64,6 @@ const useMainQuery = (): useMainQueryOutput => {
     userPreferredLanguage,
     btcWalletBalance,
     btcWalletId,
-    transactionsEdges,
     csvEncoded,
     me,
     myPubKey,

@@ -16,6 +16,7 @@ module.exports = {
   moduleNameMapper: {
     "^@app/(.*)$": ["<rootDir>app/$1"],
     "^@mocks/(.*)$": ["<rootDir>__mocks__/$1"],
+    "^@generated/(.*)$": ["<rootDir>__generated__/$1"],
   },
   transformIgnorePatterns: [
     "node_modules/(?!(react-native" +
@@ -32,7 +33,6 @@ module.exports = {
       "|react-native-screens" +
       "|react-native-size-matters" +
       "|react-native-ratings" +
-      "|react-native-reanimated" +
       "|react-native-root-siblings" +
       "|react-native-root-toast" +
       "|react-native-vector-icons" +

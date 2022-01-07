@@ -13,8 +13,8 @@ import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import { sameDay, sameMonth } from "../../utils/date"
-import { TRANSACTIONS_LIST } from "../../graphql/query"
 import { toastShow } from "../../utils/toast"
+import { useTransactions } from "@app/hooks/use-transactions"
 
 const styles = EStyleSheet.create({
   errorText: { alignSelf: "center", color: palette.red, paddingBottom: 18 },
@@ -71,44 +71,13 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
 }: Props) => {
   const currency = "sat" // FIXME
 
-  const { error, data, refetch, loading } = useQuery(TRANSACTIONS_LIST, {
-    variables: { first: TRANSACTIONS_PER_PAGE, after: null },
-    fetchPolicy: "network-only",
-  })
-
+  const { error, transactions, pageInfo, refetch, loading, fetchMore } = useTransactions()
   const prefCurrency = useReactiveVar(prefCurrencyVar)
-
-  // The source of truth for listing the transactions
-  // The data gets "cached" here and more pages are appended when they're fetched (through useQuery)
-  const transactionsRef = React.useRef([])
 
   if (error) {
     console.error(error)
     toastShow(translate("common.transactionsError"))
     return null
-  }
-
-  if (!data?.me?.defaultAccount) {
-    return null
-  }
-
-  const { edges, pageInfo } = data.me.defaultAccount.wallets[0].transactions
-  const lastDataCursor = edges.length > 0 ? edges[edges.length - 1].cursor : null
-  let lastSeenCursor =
-    transactionsRef.current.length > 0
-      ? transactionsRef.current[transactionsRef.current.length - 1].cursor
-      : null
-
-  // Add page of data to the source of truth if the data is new
-  if (lastSeenCursor !== lastDataCursor) {
-    transactionsRef.current = transactionsRef.current.concat(edges)
-    lastSeenCursor = lastDataCursor
-  }
-
-  const fetchNextTransactionsPage = () => {
-    if (pageInfo.hasNextPage && lastSeenCursor) {
-      refetch({ first: TRANSACTIONS_PER_PAGE, after: lastSeenCursor })
-    }
   }
 
   const sections = []
@@ -117,8 +86,7 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
   const thisMonth = []
   const before = []
 
-  for (const txEdge of transactionsRef.current) {
-    const tx = txEdge.node
+  transactions.forEach((tx) => {
     if (isToday(tx)) {
       today.push(tx)
     } else if (isYesterday(tx)) {
@@ -128,7 +96,7 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
     } else {
       before.push(tx)
     }
-  }
+  })
 
   if (today.length > 0) {
     sections.push({ title: translate("PriceScreen.today"), data: today })
@@ -153,9 +121,11 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
       prefCurrency={prefCurrency}
       nextPrefCurrency={nextPrefCurrency}
       sections={sections}
-      fetchNextTransactionsPage={fetchNextTransactionsPage}
+      fetchMore={fetchMore}
       loading={loading}
       refetch={refetch}
+      pageInfo={pageInfo}
+      transactions={transactions}
     />
   )
 }
@@ -171,6 +141,9 @@ type TransactionScreenProps = {
   fetchNextTransactionsPage: () => void
   loading: boolean
   refetch: () => void
+  fetchMore: (arg0: object) => void
+  pageInfo: { hasNextPage: boolean }
+  transactions: [WalletTransaction | null]
 }
 
 export const TransactionScreen: ScreenType = ({
@@ -179,9 +152,11 @@ export const TransactionScreen: ScreenType = ({
   prefCurrency,
   nextPrefCurrency,
   sections,
-  fetchNextTransactionsPage,
+  fetchMore,
   loading,
   refetch,
+  pageInfo,
+  transactions,
 }: TransactionScreenProps) => (
   <Screen style={styles.screen}>
     <SectionList
@@ -218,7 +193,18 @@ export const TransactionScreen: ScreenType = ({
       }
       sections={sections}
       keyExtractor={(item) => item.id}
-      onEndReached={fetchNextTransactionsPage}
+      onEndReached={() => {
+        console.log(pageInfo.hasNextPage)
+        console.log(transactions[transactions.length - 1].cursor)
+        if (pageInfo.hasNextPage) {
+          fetchMore({
+            variables: {
+              first: TRANSACTIONS_PER_PAGE,
+              after: transactions[transactions.length - 1].cursor,
+            },
+          })
+        }
+      }}
       onEndReachedThreshold={0.5}
       onRefresh={() => refetch()}
       refreshing={loading}

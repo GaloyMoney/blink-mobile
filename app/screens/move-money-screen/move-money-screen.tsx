@@ -33,6 +33,7 @@ import useToken from "../../utils/use-token"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
 import useMainQuery from "@app/hooks/use-main-query"
+import { useTransactions } from "@app/hooks/use-transactions"
 
 const styles = EStyleSheet.create({
   balanceHeader: {
@@ -136,13 +137,9 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
 }: MoveMoneyScreenDataInjectedProps) => {
   const { hasToken } = useToken()
 
-  const {
-    mobileVersions,
-    transactionsEdges,
-    errors,
-    loading: loadingMain,
-    refetch,
-  } = useMainQuery()
+  const { mobileVersions, errors, loading: loadingMain, refetch } = useMainQuery()
+
+  const { transactions, loading: loadingTransactions } = useTransactions()
 
   // temporary fix until we have a better management of notifications:
   // when coming back to active state. look if the invoice has been paid
@@ -195,10 +192,10 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
   return (
     <MoveMoneyScreen
       navigation={navigation}
-      loading={loadingMain}
+      loading={loadingMain || loadingTransactions}
       errors={errors}
       refetch={refetch}
-      transactionsEdges={transactionsEdges}
+      transactions={transactions}
       isUpdateAvailable={isUpdateAvailableOrRequired(mobileVersions).available}
       hasToken={hasToken}
     />
@@ -209,7 +206,7 @@ type MoveMoneyScreenProps = {
   navigation: StackNavigationProp<MoveMoneyStackParamList, "moveMoney">
   loading: boolean
   errors: []
-  transactionsEdges: { cursor: string; node: WalletTransaction | null }[]
+  transactions: [WalletTransaction | null]
   refetch: () => void
   isUpdateAvailable: boolean
   hasToken: boolean
@@ -220,7 +217,7 @@ export const MoveMoneyScreen: ScreenType = ({
   loading,
   errors,
   refetch,
-  transactionsEdges,
+  transactions,
   isUpdateAvailable,
   hasToken,
 }: MoveMoneyScreenProps) => {
@@ -265,7 +262,7 @@ export const MoveMoneyScreen: ScreenType = ({
 
   let recentTRansactionsData = undefined
 
-  if (hasToken && transactionsEdges) {
+  if (hasToken && transactions) {
     recentTRansactionsData = {
       title: translate("TransactionScreen.title"),
       target: "transactionHistory",
@@ -273,17 +270,14 @@ export const MoveMoneyScreen: ScreenType = ({
       style: "transactionViewContainer",
       details: (
         <View style={styles.transactionsView}>
-          {transactionsEdges.map(
-            ({ node }) =>
-              node && (
-                <TransactionItem
-                  key={`transaction-${node.id}`}
-                  navigation={navigation}
-                  tx={node}
-                  subtitle
-                />
-              ),
-          )}
+          {transactions.slice(0, 3).map((transaction) => (
+            <TransactionItem
+              key={`transaction-${transaction.id}`}
+              navigation={navigation}
+              tx={transaction}
+              subtitle
+            />
+          ))}
         </View>
       ),
     }

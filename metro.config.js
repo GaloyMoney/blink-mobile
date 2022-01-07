@@ -26,7 +26,7 @@ module.exports = (async () => {
     projectRoot: path.resolve(__dirname),
     resolver: {
       assetExts: assetExts.filter((ext) => ext !== "svg"),
-      sourceExts: [...sourceExts, "svg"],
+      sourceExts: [...sourceExts, "svg", "cjs"],
       extraNodeModules: {
         stream: path.resolve(__dirname, "node_modules/readable-stream"),
         zlib: path.resolve(__dirname, "node_modules/browserify-zlib"),

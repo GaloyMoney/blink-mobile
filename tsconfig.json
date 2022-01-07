@@ -21,7 +21,8 @@
     "resolveJsonModule": true,
     "baseUrl": "./",
     "paths": {
-      "@app/*": ["app/*"]
+      "@app/*": ["app/*"],
+      "@generated/*": ["__generated__/*"]
     }
   },
   "exclude": ["node_modules"],

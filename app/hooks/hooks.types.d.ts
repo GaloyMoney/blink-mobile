@@ -12,7 +12,6 @@ type useMainQueryOutput = {
   userPreferredLanguage: string
   btcWalletBalance: number
   btcWalletId: string
-  transactionsEdges: object[]
   csvEncoded: any
   me: any
   myPubKey: string

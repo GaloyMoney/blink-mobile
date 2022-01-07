@@ -1,6 +1,7 @@
 import useToken from "../utils/use-token"
 import { useMySubscription } from "./user-hooks"
 import useMainQuery from "./use-main-query"
+import { useTransactions } from "./use-transactions"
 
 export const useWalletBalance = (): {
   walletId?: string
@@ -10,7 +11,8 @@ export const useWalletBalance = (): {
 } => {
   const { convertCurrencyAmount, currentBalance, mySubscriptionLoading } =
     useMySubscription()
-  const { btcWalletBalance, btcWalletId, refetch: refetchMainQuery } = useMainQuery()
+  const { btcWalletBalance, btcWalletId } = useMainQuery()
+  const { refetch: refetchTransactions } = useTransactions()
 
   const { hasToken } = useToken()
 
@@ -23,7 +25,10 @@ export const useWalletBalance = (): {
   }
 
   if (currentBalance && currentBalance !== btcWalletBalance) {
-    refetchMainQuery()
+    // balance has updated so new transactions have been made
+    refetchTransactions({
+      first: 10,
+    })
   }
 
   return {

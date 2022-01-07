@@ -88,9 +88,6 @@ export const MAIN_QUERY = gql`
           id
           balance
           walletCurrency
-          transactions(first: 3) {
-            ...TransactionList
-          }
         }
       }
     }
@@ -100,7 +97,6 @@ export const MAIN_QUERY = gql`
       minSupported
     }
   }
-  ${TRANSACTION_LIST_FRAGMENT}
 `
 
 export const TRANSACTIONS_LIST = gql`
