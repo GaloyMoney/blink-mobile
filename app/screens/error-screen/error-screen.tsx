@@ -66,14 +66,14 @@ export const ErrorScreen = ({ error, resetError }) => {
 
   const logoutAction = async () => {
     try {
-        await logout()
-        resetError()
-        Alert.alert(translate("common.reauth"), "", [
-          {
-            text: translate("common.ok"),
-            onPress: () => console.log("OK pressed"),
-          },
-        ])
+      await logout()
+      resetError()
+      Alert.alert(translate("common.reauth"), "", [
+        {
+          text: translate("common.ok"),
+          onPress: () => console.log("OK pressed"),
+        },
+      ])
     } catch (err) {
       // TODO: figure out why ListItem onPress is swallowing errors
       console.error(err)
@@ -85,7 +85,7 @@ export const ErrorScreen = ({ error, resetError }) => {
       setLogoutShown(true)
       logoutAction()
     }
-    
+
     return null
   }
 
