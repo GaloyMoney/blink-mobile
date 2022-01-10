@@ -13,6 +13,7 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import { isIos } from "@app/utils/helper"
 import { offsets, presets } from "@app/components/screen/screen.presets"
 import crashlytics from "@react-native-firebase/crashlytics"
+import useLogout from "../../hooks/use-logout"
 
 const styles = EStyleSheet.create({
   $color: palette.white,
@@ -59,7 +60,35 @@ const styles = EStyleSheet.create({
   },
 })
 export const ErrorScreen = ({ error, resetError }) => {
+  const { logout } = useLogout()
+  const [logoutShown, setLogoutShown] = React.useState(false)
   useEffect(() => crashlytics().recordError(error), [error])
+
+  const logoutAction = async () => {
+    try {
+        await logout()
+        resetError()
+        Alert.alert(translate("common.reauth"), "", [
+          {
+            text: translate("common.ok"),
+            onPress: () => console.log("OK pressed"),
+          },
+        ])
+    } catch (err) {
+      // TODO: figure out why ListItem onPress is swallowing errors
+      console.error(err)
+    }
+  }
+
+  if (String(error) === "Error: 401") {
+    if (!logoutShown) {
+      setLogoutShown(true)
+      logoutAction()
+    }
+    
+    return null
+  }
+
   return (
     <KeyboardAvoidingView
       style={[presets.fixed.outer, { backgroundColor: palette.lightBlue }]}

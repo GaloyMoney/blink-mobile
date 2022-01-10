@@ -13,6 +13,9 @@ const useMainQuery = (): useMainQueryOutput => {
   })
   let errors = []
   if (error) {
+    if (hasToken && error.networkError && error.networkError.statusCode === 401) {
+      throw new Error(401)
+    }
     if (error.graphQLErrors && previousData) {
       // We got an error back from the server but we have data in the cache
       errors = [...error.graphQLErrors]
