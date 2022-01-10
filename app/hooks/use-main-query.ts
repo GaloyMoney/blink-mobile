@@ -13,7 +13,11 @@ const useMainQuery = (): useMainQueryOutput => {
   })
   let errors = []
   if (error) {
-    if (hasToken && error.networkError && (error.networkError as ServerError).statusCode === 401) {
+    if (
+      hasToken &&
+      error.networkError &&
+      (error.networkError as ServerError).statusCode === 401
+    ) {
       throw new Error("401")
     }
     if (error.graphQLErrors && previousData) {
