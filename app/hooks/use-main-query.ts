@@ -1,4 +1,4 @@
-import { useQuery } from "@apollo/client"
+import { useQuery, ServerError } from "@apollo/client"
 import { MAIN_QUERY } from "@app/graphql/query"
 import useToken from "@app/utils/use-token"
 import NetInfo from "@react-native-community/netinfo"
@@ -13,8 +13,8 @@ const useMainQuery = (): useMainQueryOutput => {
   })
   let errors = []
   if (error) {
-    if (hasToken && error.networkError && error.networkError.statusCode === 401) {
-      throw new Error(401)
+    if (hasToken && error.networkError && (error.networkError as ServerError).statusCode === 401) {
+      throw new Error("401")
     }
     if (error.graphQLErrors && previousData) {
       // We got an error back from the server but we have data in the cache
