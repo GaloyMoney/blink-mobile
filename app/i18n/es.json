@@ -635,7 +635,7 @@
     "available": "✅  %{input} está disponible",
     "confirmSubtext": "Este nombre de usuario es permanente y no se podrá cambiar más adelante.",
     "confirmTitle": "¿Desea establecer %{input} como su nombre de usuario?",
-    "forbiddenStart": "No debe empezar con bc1, 1 o 3",
+    "forbiddenStart": "No debe empezar con lnbc1, bc1, 1 o 3 y no debe ser Bitcoin o factura Lightning",
     "letterAndNumber": "Solo se aceptan letras en minúscula, números y guiones bajos (_)",
     "notAvailable": "❌  %{input} no está disponible",
     "success": "¡%{input} es ahora su nombre de usuario!",
