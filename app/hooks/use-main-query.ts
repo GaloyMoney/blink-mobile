@@ -23,7 +23,9 @@ const useMainQuery = (): useMainQueryOutput => {
         crashlytics().recordError(e)
         console.log(e)
       })
-      throw new Error(translate("errors.fatalError"))
+      throw new Error(
+        "Error occurred during main query execution prior to cache population.  Unable to confirm if data necessary for proper execution of the app is present.",
+      )
     }
     if (error.networkError && previousData) {
       // Call to mainquery has failed but we have data in the cache
@@ -39,7 +41,9 @@ const useMainQuery = (): useMainQueryOutput => {
     if (error.networkError && !previousData) {
       // This is the first execution of mainquery and it has failed
       crashlytics().recordError(error.networkError)
-      throw new Error(translate("errors.fatalError"))
+      throw new Error(
+        "Did not receive a response from main query.  Either the network is offline or servers are not responding.",
+      )
     }
   }
   const userPreferredLanguage = data?.me?.language
@@ -48,7 +52,9 @@ const useMainQuery = (): useMainQueryOutput => {
   )
   if (hasToken && !btcWallet && !loading) {
     // User is logged in but no wallet was returned.  We need a BTC wallet for the app to function.
-    throw new Error(translate("errors.fatalError"))
+    throw new Error(
+      "Did not receive a BTC wallet for the default account.  Unable to load application data.",
+    )
   }
   const btcWalletBalance = btcWallet?.balance
   const btcWalletId = btcWallet?.id
