@@ -572,7 +572,8 @@
     "logOutSuccesful": "You have been logged out.\n\nPlease restart the app to start fresh",
     "tapLogIn": "Tap to log in",
     "tapUserName": "Tap to set username",
-    "title": "Settings"
+    "title": "Settings",
+    "csvTransactionsError": "Unable to export transactions to csv. Something went wrong. If issue persists please contact support."
   },
   "Languages": {
     "DEFAULT": "Default (OS)",
