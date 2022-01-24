@@ -609,7 +609,8 @@
     "activated": "Activada",
     "tapLogIn": "\nIngrese aquí para iniciar sesión",
     "tapUserName": "Ingrese aquí para configurarlo",
-    "title": "Configuración"
+    "title": "Configuración",
+    "csvTransactionsError": "No se pueden exportar transacciones a csv. Algo salió mal. Si el problema persiste, póngase en contacto con el soporte."
   },
   "Languages": {
     "DEFAULT": "Predeterminado (OS)",

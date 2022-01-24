@@ -59,7 +59,6 @@ const useMainQuery = (): useMainQueryOutput => {
   const btcWalletBalance = btcWallet?.balance
   const btcWalletId = btcWallet?.id
   const transactionsEdges = btcWallet?.transactions?.edges
-  const csvEncoded = data?.me?.defaultAccount?.csvTransactions
   const me = data?.me || {}
   const myPubKey = data?.globals?.nodesIds?.[0] ?? ""
   const username = data?.me?.username
@@ -71,7 +70,6 @@ const useMainQuery = (): useMainQueryOutput => {
     btcWalletBalance,
     btcWalletId,
     transactionsEdges,
-    csvEncoded,
     me,
     myPubKey,
     username,
