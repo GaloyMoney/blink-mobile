@@ -603,7 +603,8 @@
     "payFromUSD": "Pago desde $USD",
     "success": "El pago se ha enviado correctamente.",
     "title": "Enviar Bitcoin",
-    "totalExceed": "total excede su saldo"
+    "totalExceed": "total excede su saldo",
+    "invalidLnurl": "lnurl no válido"
   },
   "SettingsScreen": {
     "activated": "Activada",
