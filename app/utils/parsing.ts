@@ -67,7 +67,7 @@ export const validPayment = (
 
   // input might start with 'lightning:', 'bitcoin:'
   if (input.toLowerCase().startsWith("lightning:lnurl")) {
-     /* eslint-disable no-param-reassign */
+    /* eslint-disable no-param-reassign */
     input = input.replace("lightning:", "")
   }
   // eslint-disable-next-line prefer-const
