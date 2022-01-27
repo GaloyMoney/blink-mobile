@@ -67,7 +67,7 @@ export const validPayment = (
 
   // input might start with 'lightning:', 'bitcoin:'
   // eslint-disable-next-line prefer-const
-  let [protocol, data] = input.split(":")
+  let [protocol, data] = input.replace("lightning:", "").split(":")
   let paymentType: IPaymentType
   let lnurl: string
 
