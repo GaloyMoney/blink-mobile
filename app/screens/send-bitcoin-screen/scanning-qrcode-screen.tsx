@@ -110,7 +110,7 @@ export const ScanningQRCodeScreen: ScreenType = ({
             default:
               Alert.alert(
                 translate("ScanningQRCodeScreen.invalidTitle"),
-                translate("ScanningQRCodeScreen.invalidContent", {
+                translate("ScanningQRCodeScreen.invalidContentLnurl", {
                   found: lnurlParams.tag,
                 }),
                 [
