@@ -562,7 +562,7 @@
     "invalidTitle": "Código QR inválido",
     "noQrCode": "No pudimos encontrar un código QR en la imagen",
     "title": "Escanear QR",
-    "invalidTitleLnurl": "Encontramos lo siguiente:\n\n{{found}}\n\n actualmente no es compatible"
+    "invalidContentLnurl": "Encontramos lo siguiente:\n\n{{found}}\n\n actualmente no es compatible"
   },
   "SecurityScreen": {
     "biometricDescription": "Desbloqueo con huella dactilar o reconocimiento facial.",
@@ -603,9 +603,7 @@
     "note": "Nota ",
     "payFromUSD": "Pago desde $USD",
     "success": "El pago se ha enviado correctamente.",
-    "title": "Enviar Bitcoin",
-    "totalExceed": "total excede su saldo",
-    "invalidLnurl": "lnurl no válido"
+    "title": "Enviar Bitcoin"
   },
   "SettingsScreen": {
     "activated": "Activada",

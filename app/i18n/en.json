@@ -565,8 +565,7 @@
     "note": "optional note",
     "success": "Payment has been sent successfully",
     "title": "Send Bitcoin",
-    "usernameNotFound": "A user matching the entered username could not be found.",
-    "invalidLnurl": "Invalid lnurl"
+    "usernameNotFound": "A user matching the entered username could not be found."
   },
   "SettingsScreen": {
     "activate": "Tap to activate",
