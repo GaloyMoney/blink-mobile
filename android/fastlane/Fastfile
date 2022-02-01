@@ -50,6 +50,9 @@ platform :android do
       client_secret: ENV["HAUWEI_CLIENT_SECRET"],
       app_id: ENV["HUAWEI_APP_ID"],
       apk_path: "./app/build/outputs/apk/release/app-release.apk",
+      phase_wise_release: true,
+    phase_release_percent: "1",
+    phase_release_description: "Phased Release"
     )
   end
 
