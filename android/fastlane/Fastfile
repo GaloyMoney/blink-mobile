@@ -53,6 +53,7 @@ platform :android do
       phase_wise_release: true,
     phase_release_percent: "1",
     phase_release_description: "Phased Release"
+    submit_for_review: false
     )
   end
 
