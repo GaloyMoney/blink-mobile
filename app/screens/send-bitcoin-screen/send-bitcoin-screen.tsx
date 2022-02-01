@@ -4,11 +4,12 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { RouteProp } from "@react-navigation/native"
 import * as React from "react"
 import { useCallback, useEffect, useMemo, useState } from "react"
-import { ActivityIndicator, ScrollView, Text, View } from "react-native"
+import { ActivityIndicator, Alert, ScrollView, Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 import debounce from "lodash.debounce"
+import { getParams, LNURLPayParams } from "js-lnurl"
 
 import { InputPayment } from "../../components/input-payment"
 import { GaloyInput } from "../../components/galoy-input"
@@ -121,7 +122,9 @@ export const SendBitcoinScreen: ScreenType = ({
     },
   })
 
-  const setDestination = (input) => setDestinationInternal(input.trim())
+  const setDestination = (input) => {
+    setDestinationInternal(input.trim())
+  }
 
   const reset = useCallback(() => {
     setInvoiceError("")
@@ -209,9 +212,21 @@ export const SendBitcoinScreen: ScreenType = ({
     () =>
       debounce(async () => {
         userDefaultWalletIdQuery({ variables: { username: destination } })
-      }, 1500),
+      }, 1000),
     [destination, userDefaultWalletIdQuery],
   )
+
+  const setLnurlParams = ({ params, lnurl }): LnurlParams => {
+    return {
+      lnurl: lnurl,
+      minSendable: params.minSendable / 1000,
+      maxSendable: params.maxSendable / 1000,
+      domain: params.domain,
+      callback: params.callback,
+      commentAllowed: params.commentAllowed,
+      error: "",
+    }
+  }
 
   useEffect(() => {
     const {
@@ -234,19 +249,29 @@ export const SendBitcoinScreen: ScreenType = ({
 
       if (lnurl) {
         setPaymentType("lnurl")
-        const lnurlParams: LnurlParams = {
-          lnurl: lnurl,
-          minSendable: route.params?.lnurlParams.minSendable / 1000,
-          maxSendable: route.params?.lnurlParams.maxSendable / 1000,
-          domain: route.params?.lnurlParams.domain,
-          callback: route.params?.lnurlParams.callback,
-          commentAllowed: route.params?.lnurlParams.commentAllowed,
-          error: "",
+        if (route.params?.lnurlParams) {
+          const params = setLnurlParams({ params: route.params.lnurlParams, lnurl })
+          setLnurlPay({ ...params })
+        } else {
+          getParams(lnurl)
+            .then((params) => {
+              if ("reason" in params) {
+                throw params.reason
+              }
+              if (params.tag === "payRequest") {
+                const lnurlparams = setLnurlParams({
+                  params: params as LNURLPayParams,
+                  lnurl,
+                })
+                setLnurlPay({ ...lnurlparams })
+              }
+            })
+            .catch((err) => {
+              Alert.alert(err.toString())
+            })
         }
-        setLnurlPay({ ...lnurlParams })
       }
       setAmountless(amountless)
-
       if (!amountless) {
         const moneyAmount: MoneyAmount = { value: amountInvoice, currency: "BTC" }
         if (primaryCurrency === "BTC") {

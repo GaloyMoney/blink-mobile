@@ -561,7 +561,8 @@
     "invalidContent": "Encontramos lo siguiente:\n\n{{found}}\n\nEsto no es una dirección Bitcoin o factura Lightning válida",
     "invalidTitle": "Código QR inválido",
     "noQrCode": "No pudimos encontrar un código QR en la imagen",
-    "title": "Escanear QR"
+    "title": "Escanear QR",
+    "invalidContentLnurl": "Encontramos lo siguiente:\n\n{{found}}\n\n actualmente no es compatible"
   },
   "SecurityScreen": {
     "biometricDescription": "Desbloqueo con huella dactilar o reconocimiento facial.",
@@ -602,8 +603,7 @@
     "note": "Nota ",
     "payFromUSD": "Pago desde $USD",
     "success": "El pago se ha enviado correctamente.",
-    "title": "Enviar Bitcoin",
-    "totalExceed": "total excede su saldo"
+    "title": "Enviar Bitcoin"
   },
   "SettingsScreen": {
     "activated": "Activada",
