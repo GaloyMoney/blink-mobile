@@ -52,7 +52,7 @@ platform :android do
       apk_path: "./app/build/outputs/apk/release/app-release.apk",
       phase_wise_release: true,
     phase_release_percent: "1",
-    phase_release_description: "Phased Release"
+    phase_release_description: "Phased Release",
     submit_for_review: false
     )
   end
