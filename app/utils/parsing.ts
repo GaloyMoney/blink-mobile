@@ -3,7 +3,7 @@ import moment from "moment"
 import url from "url"
 import { networks, address } from "bitcoinjs-lib"
 import { getDescription, getDestination, getUsername } from "./bolt11"
-
+import { utils } from "lnurl-pay"
 import type { INetwork } from "../types/network"
 import * as parsing from "./parsing"
 
@@ -23,6 +23,7 @@ export interface IValidPaymentReponse {
   paymentType?: IPaymentType
   sameNode?: boolean | undefined
   username?: string | undefined
+  staticLnurlIdentifier?: boolean
 }
 
 const mappingToBitcoinJs = (input: INetwork) => {
@@ -72,8 +73,11 @@ export const validPayment = (
   }
   // eslint-disable-next-line prefer-const
   let [protocol, data] = input.split(":")
+  console.log(protocol)
+  console.log(utils.isLightningAddress(protocol))
   let paymentType: IPaymentType
   let lnurl: string
+  let staticLnurlIdentifier = false
 
   if (protocol.toLowerCase() === "bitcoin") {
     paymentType = "onchain"
@@ -115,7 +119,12 @@ export const validPayment = (
 
     // some apps encode lightning invoices in UPPERCASE
     data = protocol.toLowerCase()
-  } else if (protocol.toLowerCase() === "https") {
+  } else if (utils.isLightningAddress(protocol)) {
+    paymentType = "lnurl"
+    staticLnurlIdentifier = true
+    console.log(utils.decodeUrlOrAddress(protocol))
+    lnurl = utils.decodeUrlOrAddress(protocol)
+  } else if (!utils.isLightningAddress(protocol) && protocol.toLowerCase() === "https") {
     const domain = "//ln.bitcoinbeach.com/"
     if (data.startsWith(domain)) {
       return {
@@ -218,6 +227,7 @@ export const validPayment = (
       valid: true,
       lnurl,
       amountless: false,
+      staticLnurlIdentifier,
     }
   } else {
     return {
