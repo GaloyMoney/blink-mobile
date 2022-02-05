@@ -40,6 +40,7 @@ export type RootStackParamList = {
     mIsBiometricsEnabled: boolean
     mIsPinEnabled: boolean
   }
+  lnurl: undefined
   sectionCompleted: { amount: number; sectionTitle: string }
   priceDetail: {
     account: AccountType

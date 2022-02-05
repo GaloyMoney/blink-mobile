@@ -98,6 +98,10 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
     })
   }
 
+  const lnurlAction = () => {
+    navigation.navigate("lnurl")
+  }
+
   const logoutAction = async () => {
     try {
       await logout()
@@ -134,6 +138,7 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
       securityAction={securityAction}
       logoutAction={logoutAction}
       loadingCsvTransactions={loadingCsvTransactions}
+      lnurlAction={lnurlAction}
     />
   )
 }
@@ -148,6 +153,7 @@ type SettingsScreenProps = {
   csvAction: (options?: QueryLazyOptions<OperationVariables>) => void
   securityAction: () => void
   logoutAction: () => Promise<void>
+  lnurlAction: () => void
   loadingCsvTransactions: boolean
 }
 
@@ -174,6 +180,7 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
     csvAction,
     securityAction,
     logoutAction,
+    lnurlAction,
     loadingCsvTransactions,
   } = params
   const copyToClipBoard = (username) => {
@@ -223,6 +230,14 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       icon: "lock-closed-outline",
       id: "security",
       action: securityAction,
+      enabled: hasToken,
+      greyed: !hasToken,
+    },
+    {
+      category: "lnurl",
+      icon: "ios-globe",
+      id: "lnurl",
+      action: lnurlAction,
       enabled: hasToken,
       greyed: !hasToken,
     },
