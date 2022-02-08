@@ -235,8 +235,6 @@ export const SendBitcoinScreen: ScreenType = ({
             }
           })
           .catch((err) => {
-            console.log("caught error")
-            console.log(err)
             setDestinationStatus("INVALID")
             toastShow(err.toString())
             // Alert.alert(err.toString())
@@ -271,7 +269,7 @@ export const SendBitcoinScreen: ScreenType = ({
       sameNode,
       staticLnurlIdentifier,
     } = validPayment(destination, tokenNetwork, myPubKey, myUsername)
-    console.log(lnurl)
+
     if (valid) {
       setAddress(address)
       setPaymentType(paymentType)

@@ -73,8 +73,6 @@ export const validPayment = (
   }
   // eslint-disable-next-line prefer-const
   let [protocol, data] = input.split(":")
-  console.log(protocol)
-  console.log(utils.isLightningAddress(protocol))
   let paymentType: IPaymentType
   let lnurl: string
   let staticLnurlIdentifier = false
@@ -122,7 +120,6 @@ export const validPayment = (
   } else if (utils.isLightningAddress(protocol)) {
     paymentType = "lnurl"
     staticLnurlIdentifier = true
-    console.log(utils.decodeUrlOrAddress(protocol))
     lnurl = utils.decodeUrlOrAddress(protocol)
   } else if (!utils.isLightningAddress(protocol) && protocol.toLowerCase() === "https") {
     const domain = "//ln.bitcoinbeach.com/"
