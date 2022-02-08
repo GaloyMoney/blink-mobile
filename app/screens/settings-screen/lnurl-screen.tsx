@@ -1,6 +1,6 @@
 import * as React from "react"
 import { RouteProp } from "@react-navigation/native"
-import { Platform, Pressable, View } from "react-native"
+import { Pressable, View } from "react-native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import EStyleSheet from "react-native-extended-stylesheet"
 
