@@ -316,10 +316,7 @@ export const SendBitcoinScreen: ScreenType = ({
         userDefaultWalletIdQueryDebounced()
       }
     }
-    return () => {
-      userDefaultWalletIdQueryDebounced.flush()
-    }
-
+    return () => userDefaultWalletIdQueryDebounced.cancel()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [destination])
 
@@ -680,13 +677,7 @@ export const SendBitcoinScreenJSX: ScreenType = ({
           }
           onPress={pay}
           disabled={
-            !primaryAmount.value ||
-            !!errorMessage ||
-            !destination ||
-            !!lnurlError ||
-            loadingUserNameExist ||
-            (UsernameValidation.isValid(destination) &&
-              destinationStatus === "NOT_CHECKED")
+            !primaryAmount.value || !!errorMessage || !destination || !!lnurlError
           }
         />
       </ScrollView>
