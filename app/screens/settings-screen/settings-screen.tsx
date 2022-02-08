@@ -99,7 +99,23 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
   }
 
   const lnurlAction = () => {
-    navigation.navigate("lnurl")
+    if (username) {
+      navigation.navigate("lnurl", { username: username })
+    } else {
+      Alert.alert(
+        `Lnurl ${translate("SettingsScreen.title")}`,
+        translate("SettingsScreen.lnurlNoUsername"),
+        [
+          {
+            text: translate("Common.yes"),
+            onPress: () => navigation.navigate("setUsername"),
+          },
+          {
+            text: translate("Common.no"),
+          },
+        ],
+      )
+    }
   }
 
   const logoutAction = async () => {
@@ -239,7 +255,7 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       id: "lnurl",
       action: lnurlAction,
       enabled: hasToken,
-      greyed: !hasToken,
+      greyed: !hasToken || !username,
     },
     {
       category: translate("common.csvExport"),

@@ -1,95 +1,85 @@
 import * as React from "react"
-import { useState } from "react"
-import { RouteProp, useFocusEffect } from "@react-navigation/native"
-import { Text, View } from "react-native"
+import { RouteProp } from "@react-navigation/native"
+import { Platform, Pressable, View } from "react-native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Button, Switch } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 
 import { Screen } from "../../components/screen"
 import { palette } from "../../theme/palette"
-import { translate } from "../../i18n"
-import BiometricWrapper from "../../utils/biometricAuthentication"
-import { toastShow } from "../../utils/toast"
+
 import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
-import { PinScreenPurpose } from "../../utils/enum"
-import KeyStoreWrapper from "../../utils/storage/secureStorage"
-import {
-  HIDE_BALANCE,
-  saveHideBalance,
-  saveHiddenBalanceToolTip,
-} from "../../graphql/client-only-query"
-import { useApolloClient, useQuery } from "@apollo/client"
+
+import { bech32 } from "bech32"
+import QRCode from "react-native-qrcode-svg"
+import { Text } from "react-native-elements"
+import Clipboard from "@react-native-community/clipboard"
+import Toast from "react-native-root-toast"
+import { translate } from "@app/i18n"
 
 const styles = EStyleSheet.create({
-  button: {
-    backgroundColor: palette.white,
-    paddingBottom: 16,
-    paddingLeft: 0,
-    paddingRight: 16,
-    paddingTop: 16,
-  },
-
-  buttonTitle: {
-    color: palette.black,
-    fontSize: 16,
-    fontWeight: "normal",
-  },
-
   container: {
     backgroundColor: palette.white,
     minHeight: "100%",
     paddingLeft: 24,
     paddingRight: 24,
   },
-
-  description: {
-    color: palette.darkGrey,
-    fontSize: 14,
-    marginTop: 2,
-  },
-
   settingContainer: {
-    borderBottomColor: palette.lightGrey,
-    borderBottomWidth: 1,
-    flexDirection: "row",
+    alignItems: "center",
+    paddingTop: 40,
   },
-
-  subtitle: {
-    color: palette.darkGrey,
-    fontSize: 16,
-    marginTop: 16,
-  },
-
-  switch: {
-    bottom: 18,
-    position: "absolute",
-    right: 0,
-  },
-
   textContainer: {
-    marginBottom: 12,
-    marginRight: 60,
-    marginTop: 32,
+    paddingTop: 40,
+    alignItems: "center",
   },
-
-  title: {
-    color: palette.black,
-    fontSize: 20,
+  text: {
     fontWeight: "bold",
+    fontSize: 21,
   },
 })
 
 type Props = {
-  navigation: StackNavigationProp<RootStackParamList, "security">
-  route: RouteProp<RootStackParamList, "security">
+  navigation: StackNavigationProp<RootStackParamList, "lnurl">
+  route: RouteProp<RootStackParamList, "lnurl">
 }
 
-export const LnurlScreen: ScreenType = ({ navigation }: Props) => {
+const copyToClipboard = (str) => {
+  Clipboard.setString(str)
+
+  Toast.show(translate("SettingsScreen.copyClipboardLnurl"), {
+    duration: Toast.durations.LONG,
+    shadow: false,
+    animation: true,
+    hideOnPress: true,
+    delay: 0,
+    position: -100,
+    opacity: 0.5,
+  })
+}
+
+export const LnurlScreen: ScreenType = ({ route }: Props) => {
+  const { username } = route.params
+  const lnurl = bech32.encode(
+    "lnurl",
+    bech32.toWords(
+      Buffer.from(`https://ln.bitcoinbeach.com/.well-known/lnurlp/${username}`, "utf8"),
+    ),
+    1500,
+  )
+  const lnurlAddress = `${username}@ln.bitcoinbeach.com`
+
   return (
     <Screen style={styles.container} preset="scroll">
-      <View style={styles.settingContainer}></View>
+      <View style={styles.settingContainer}>
+        <Pressable onPress={() => copyToClipboard(lnurl)}>
+          <QRCode size={280} value={lnurl} logoBackgroundColor="white" ecl={"H"} />
+        </Pressable>
+      </View>
+      <View style={styles.textContainer}>
+        <Pressable onPress={() => copyToClipboard(lnurlAddress)}>
+          <Text style={styles.text}>{lnurlAddress}</Text>
+        </Pressable>
+      </View>
     </Screen>
   )
 }
