@@ -71,9 +71,7 @@ export const LnurlScreen: ScreenType = ({ route }: Props) => {
   return (
     <Screen style={styles.container} preset="scroll">
       <View style={styles.settingContainer}>
-        <Pressable onPress={() => copyToClipboard(lnurl)}>
-          <QRCode size={280} value={lnurl} logoBackgroundColor="white" ecl={"H"} />
-        </Pressable>
+        <QRCode size={280} value={lnurl} logoBackgroundColor="white" ecl={"H"} />
       </View>
       <View style={styles.textContainer}>
         <Pressable onPress={() => copyToClipboard(lnurlAddress)}>
