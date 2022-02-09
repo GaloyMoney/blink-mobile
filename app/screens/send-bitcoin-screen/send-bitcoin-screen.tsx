@@ -208,12 +208,11 @@ export const SendBitcoinScreen: ScreenType = ({
     setPrimaryAmountValue,
   ])
 
-  const userDefaultWalletIdQueryDebounced = React.useMemo(
-    () =>
-      debounce(async () => {
-        userDefaultWalletIdQuery({ variables: { username: destination } })
-      }, 1000),
-    [destination, userDefaultWalletIdQuery],
+  const userDefaultWalletIdQueryDebounced = useCallback(
+    debounce(async (destination) => {
+      userDefaultWalletIdQuery({ variables: { username: destination } })
+    }, 1500),
+    [],
   )
 
   const setLnurlParams = ({ params, lnurl }): LnurlParams => {
@@ -296,10 +295,9 @@ export const SendBitcoinScreen: ScreenType = ({
       setPaymentType("username")
 
       if (UsernameValidation.isValid(destination)) {
-        userDefaultWalletIdQueryDebounced()
+        userDefaultWalletIdQueryDebounced(destination)
       }
     }
-    return () => userDefaultWalletIdQueryDebounced.cancel()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [destination])
 
@@ -651,7 +649,13 @@ export const SendBitcoinScreenJSX: ScreenType = ({
           }
           onPress={pay}
           disabled={
-            !primaryAmount.value || !!errorMessage || !destination || !!lnurlError
+            !primaryAmount.value ||
+            !!errorMessage ||
+            !destination ||
+            !!lnurlError ||
+            loadingUserNameExist ||
+            (UsernameValidation.isValid(destination) &&
+              destinationStatus === "NOT_CHECKED")
           }
         />
       </ScrollView>
