@@ -10721,9 +10721,10 @@ listr@^0.14.3:
     p-map "^2.0.0"
     rxjs "^6.3.3"
 
-lnurl-pay@daviroo/lnurl-pay#main:
-  version "0.1.0"
-  resolved "https://codeload.github.com/daviroo/lnurl-pay/tar.gz/dce14af90b82fe22fe421b4bb861a28f459dd8b4"
+lnurl-pay@0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/lnurl-pay/-/lnurl-pay-0.1.1.tgz#76d0f5c13285d4b0b325152f9e3615193085f402"
+  integrity sha512-4dSvnJ2MSHkXuDhwp9Yot+416VcyF55MCOFd9l1NmydTDRLDs9hKh9kgycz0yq6FSE1TMSCkt9V8VphdBz7QUQ==
   dependencies:
     axios "^0.24.0"
     bech32 "^2.0.0"
