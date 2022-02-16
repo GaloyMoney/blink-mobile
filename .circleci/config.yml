@@ -160,12 +160,32 @@ workflows:
     jobs:
       - hold_build_mobile:
           type: approval
+          filters:
+            tags:
+              only: /^(?!v).*/
+            branches:
+              ignore: /.*/
       - update_locale:
           requires:
             - hold_build_mobile
+          filters:
+            tags:
+              only: /^(?!v).*/
+            branches:
+              ignore: /.*/
       - build_ios:
           requires:
             - update_locale
+          filters:
+            tags:
+              only: /^(?!v).*/
+            branches:
+              ignore: /.*/
       - build_android:
           requires:
             - update_locale
+          filters:
+            tags:
+              only: /^(?!v).*/
+            branches:
+              ignore: /.*/
