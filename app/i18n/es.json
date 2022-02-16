@@ -767,6 +767,7 @@
   "lnurl": {
     "overLimit": "No se puede enviar más de la cantidad máxima",
     "underLimit": "No se puede enviar una cantidad inferior a la mínima",
-    "commentRequired": "Se requiere una nota"
+    "commentRequired": "Se requiere una nota",
+    "viewPrintable": "Ver Versión Imprimible"
   }
 }

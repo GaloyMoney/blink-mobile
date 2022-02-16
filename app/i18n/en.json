@@ -735,6 +735,7 @@
   "lnurl": {
     "overLimit": "You can't send more than max amount",
     "underLimit": "You can't send less than min amount",
-    "commentRequired": "Comment required"
+    "commentRequired": "Comment required",
+    "viewPrintable": "View Printable Version"
   }
 }

@@ -1,6 +1,6 @@
 import * as React from "react"
 import { RouteProp } from "@react-navigation/native"
-import { Pressable, View } from "react-native"
+import { Linking, Pressable, View } from "react-native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import EStyleSheet from "react-native-extended-stylesheet"
 
@@ -12,10 +12,12 @@ import type { RootStackParamList } from "../../navigation/stack-param-lists"
 
 import { bech32 } from "bech32"
 import QRCode from "react-native-qrcode-svg"
-import { Text } from "react-native-elements"
+import { Button, Text } from "react-native-elements"
 import Clipboard from "@react-native-community/clipboard"
 import Toast from "react-native-root-toast"
 import { translate } from "@app/i18n"
+import Icon from "react-native-vector-icons/MaterialCommunityIcons"
+import { color } from "@app/theme"
 
 const styles = EStyleSheet.create({
   container: {
@@ -28,13 +30,22 @@ const styles = EStyleSheet.create({
     alignItems: "center",
     paddingTop: 40,
   },
-  textContainer: {
+  lightningAddressContainer: {
+    paddingLeft: 20,
+    paddingRight: 20,
     paddingTop: 40,
     alignItems: "center",
+    justifyContent: "center",
   },
   text: {
     fontWeight: "bold",
-    fontSize: 21,
+    fontSize: 50,
+  },
+  buttonStyle: {
+    backgroundColor: color.primary,
+    marginBottom: "32rem",
+    marginHorizontal: "24rem",
+    marginTop: "32rem",
   },
 })
 
@@ -67,16 +78,30 @@ export const LnurlScreen: ScreenType = ({ route }: Props) => {
     1500,
   )
   const lnurlAddress = `${username}@ln.bitcoinbeach.com`
+  const viewPrintableVersion = (): Promise<Linking> =>
+    Linking.openURL(`https://ln.bitcoinbeach.com/${username}/print`)
 
   return (
     <Screen style={styles.container} preset="scroll">
       <View style={styles.settingContainer}>
         <QRCode size={280} value={lnurl} logoBackgroundColor="white" ecl={"H"} />
       </View>
-      <View style={styles.textContainer}>
+      <View style={styles.lightningAddressContainer}>
         <Pressable onPress={() => copyToClipboard(lnurlAddress)}>
-          <Text style={styles.text}>{lnurlAddress}</Text>
+          <Text style={styles.text} adjustsFontSizeToFit={true} numberOfLines={1}>
+            <Icon name="content-copy" size={40} />
+            {`  `}
+            {lnurlAddress}
+          </Text>
         </Pressable>
+      </View>
+      <View>
+        <Button
+          buttonStyle={styles.buttonStyle}
+          containerStyle={{ flex: 1 }}
+          title={translate("lnurl.viewPrintable")}
+          onPress={viewPrintableVersion}
+        />
       </View>
     </Screen>
   )
