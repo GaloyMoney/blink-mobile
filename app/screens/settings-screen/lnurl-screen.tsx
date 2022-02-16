@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import * as React from "react"
 import { RouteProp } from "@react-navigation/native"
 import { Linking, Pressable, View } from "react-native"
