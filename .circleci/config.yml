@@ -181,3 +181,12 @@ workflows:
               only: /^(?!v).*/
             branches:
               ignore: /.*/
+      - release:
+          requires:
+            - build_ios
+            - build_android
+          filters:
+            tags:
+              only: /^(?!v).*/
+            branches:
+              ignore: /.*/
