@@ -87,6 +87,12 @@ const styles = EStyleSheet.create({
     width: "200rem",
   },
 
+  buttonContinue: {
+    alignSelf: "center",
+    backgroundColor: color.palette.blue,
+    width: "200rem",
+  },
+
   codeContainer: {
     alignSelf: "center",
     width: "70%",
@@ -321,6 +327,13 @@ export const WelcomePhoneInputScreen: ScreenType = ({
             />
           </KeyboardAvoidingView>
         )}
+        <Button
+          buttonStyle={styles.buttonContinue}
+          title={translate("WelcomePhoneInputScreen.continue")}
+          onPress={() => {
+            submitPhoneNumber()
+          }}
+        />
       </View>
       <CloseCross color={palette.darkGrey} onPress={() => navigation.goBack()} />
     </Screen>
