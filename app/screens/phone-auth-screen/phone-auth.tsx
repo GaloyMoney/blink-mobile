@@ -91,7 +91,7 @@ const styles = EStyleSheet.create({
     alignSelf: "center",
     backgroundColor: color.palette.blue,
     width: "200rem",
-    marginVertical: "10rem",
+    marginVertical: "15rem",
     padding: "15rem",
   },
 
@@ -332,7 +332,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
         <Button
           buttonStyle={styles.buttonContinue}
           title={translate("WelcomePhoneInputScreen.continue")}
-          disabled={phoneNumber}
+          disabled={phoneNumber ? true : false}
           onPress={() => {
             submitPhoneNumber()
           }}
