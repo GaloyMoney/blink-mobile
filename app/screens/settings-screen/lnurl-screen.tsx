@@ -10,7 +10,7 @@ import { palette } from "../../theme/palette"
 
 import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
-import { LN_PAGE_DOMAIN } from "../../constants/support"
+import { GALOY_PAY_DOMAIN } from "../../constants/support"
 
 import { bech32 } from "bech32"
 import QRCode from "react-native-qrcode-svg"
@@ -75,16 +75,16 @@ export const LnurlScreen: ScreenType = ({ route }: Props) => {
   const lnurl = bech32.encode(
     "lnurl",
     bech32.toWords(
-      Buffer.from(`${LN_PAGE_DOMAIN}.well-known/lnurlp/${username}`, "utf8"),
+      Buffer.from(`${GALOY_PAY_DOMAIN}.well-known/lnurlp/${username}`, "utf8"),
     ),
     1500,
   )
-  const lnurlAddress = `${username}@${LN_PAGE_DOMAIN.replace("https://", "").replace(
+  const lnurlAddress = `${username}@${GALOY_PAY_DOMAIN.replace("https://", "").replace(
     "/",
     "",
   )}`
   const viewPrintableVersion = (): Promise<Linking> =>
-    Linking.openURL(`${LN_PAGE_DOMAIN}${username}/print`)
+    Linking.openURL(`${GALOY_PAY_DOMAIN}${username}/print`)
 
   return (
     <Screen style={styles.container} preset="scroll">
