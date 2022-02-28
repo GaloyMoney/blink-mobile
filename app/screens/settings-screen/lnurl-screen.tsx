@@ -79,7 +79,10 @@ export const LnurlScreen: ScreenType = ({ route }: Props) => {
     ),
     1500,
   )
-  const lnurlAddress = `${username}@${LN_PAGE_DOMAIN.replace('https://', '').replace('/', '')}`
+  const lnurlAddress = `${username}@${LN_PAGE_DOMAIN.replace("https://", "").replace(
+    "/",
+    "",
+  )}`
   const viewPrintableVersion = (): Promise<Linking> =>
     Linking.openURL(`${LN_PAGE_DOMAIN}${username}/print`)
 
