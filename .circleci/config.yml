@@ -153,7 +153,7 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - android/app/build.gradle
+            - ios/GaloyApp.xcodeproj/project.pbxproj
 
   release:
     working_directory: ~/galoy-mobile
