@@ -144,7 +144,7 @@ jobs:
       - checkout:
           path: ~/galoy-mobile
       - run: sed -i "s/versionName .*/versionName \"$CIRCLE_TAG\"/g" android/app/build.gradle
-      - run: sed -i "s/MARKETING_VERSION = .*/MARKETING_VERSION = $CIRCLE_TAG/g" ios/GaloyApp.xcodeproj/project.pbxproj
+      - run: sed -i "s/MARKETING_VERSION = .*/MARKETING_VERSION = $CIRCLE_TAG;/g" ios/GaloyApp.xcodeproj/project.pbxproj
 
       - persist_to_workspace:
           root: .
