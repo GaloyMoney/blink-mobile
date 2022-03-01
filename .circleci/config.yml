@@ -11,6 +11,12 @@ jobs:
     steps:
       - checkout:
           path: ~/galoy-mobile
+
+      - attach_workspace:
+          at: /tmp/workspace
+      - run: cp /tmp/workspace/ios/GaloyApp.xcodeproj/project.pbxproj ios/GaloyApp.xcodeproj/project.pbxproj
+      - run: cat ios/GaloyApp.xcodeproj/project.pbxproj
+
       - add_ssh_keys:
           fingerprints:
             - "19:7e:f3:6c:be:a7:17:01:7d:09:ca:39:c3:98:86:90"
@@ -61,6 +67,12 @@ jobs:
     steps:
       - checkout:
           path: ~/galoy-mobile
+
+      - attach_workspace:
+          at: /tmp/workspace
+      - run: cp /tmp/workspace/android/app/build.gradle android/app/build.gradle
+      - run: cat android/app/build.gradle
+
       - run: sudo apt-get update
       - run: sudo apt-get install gnupg2
       - run: curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
@@ -122,6 +134,26 @@ jobs:
           else
             echo "nothing to commit"
           fi
+  
+  update_marketing_version:
+    working_directory: ~/galoy-mobile
+    docker:
+      - image: cimg/base:2022.02-20.04
+    resource_class: small
+    steps:
+      - checkout:
+          path: ~/galoy-mobile
+      - run: sed -i "s/versionName .*/versionName \"$CIRCLE_TAG\"/g" android/app/build.gradle
+      - run: sed -i "s/MARKETING_VERSION = .*/MARKETING_VERSION = $CIRCLE_TAG/g" ios/GaloyApp.xcodeproj/project.pbxproj
+
+      - persist_to_workspace:
+          root: .
+          paths:
+            - android/app/build.gradle
+      - persist_to_workspace:
+          root: .
+          paths:
+            - android/app/build.gradle
 
   release:
     working_directory: ~/galoy-mobile
@@ -154,15 +186,23 @@ workflows:
           type: approval
           filters:
             tags:
-              only: /^(?!v).*/
+              only: /^[0-9]+\.[0-9]+\.[0-9]+/
             branches:
               ignore: /.*/
-      - update_locale:
+      - update_marketing_version:
           requires:
             - hold_build_mobile
           filters:
             tags:
-              only: /^(?!v).*/
+              only: /^[0-9]+\.[0-9]+\.[0-9]+/
+            branches:
+              ignore: /.*/
+      - update_locale:
+          requires:
+            - update_marketing_version
+          filters:
+            tags:
+              only: /^[0-9]+\.[0-9]+\.[0-9]+/
             branches:
               ignore: /.*/
       - build_ios:
@@ -170,7 +210,7 @@ workflows:
             - update_locale
           filters:
             tags:
-              only: /^(?!v).*/
+              only: /^[0-9]+\.[0-9]+\.[0-9]+/
             branches:
               ignore: /.*/
       - build_android:
@@ -178,7 +218,7 @@ workflows:
             - update_locale
           filters:
             tags:
-              only: /^(?!v).*/
+              only: /^[0-9]+\.[0-9]+\.[0-9]+/
             branches:
               ignore: /.*/
       - release:
@@ -187,6 +227,6 @@ workflows:
             - build_android
           filters:
             tags:
-              only: /^(?!v).*/
+              only: /^[0-9]+\.[0-9]+\.[0-9]+/
             branches:
               ignore: /.*/
