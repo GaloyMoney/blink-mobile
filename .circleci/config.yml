@@ -155,7 +155,7 @@ jobs:
           paths:
             - ios/GaloyApp.xcodeproj/project.pbxproj
 
-  release:
+  update_build_commit:
     working_directory: ~/galoy-mobile
     docker:
       - image: cimg/base:2022.02-20.04
@@ -178,6 +178,31 @@ jobs:
       - run: git add --force android/app/build/generated/sourcemaps/react/release
       - run: "git commit -a -m \"ci: new build\""
       - run: git push -q https://${GITHUB_TOKEN}@github.com/GaloyMoney/galoy-mobile.git $CIRCLE_BRANCH
+      - run:
+          name: Tag
+          command: |
+            VERSION=$(cat ios/GaloyApp.xcodeproj/project.pbxproj | sed -n 's/.*CURRENT_PROJECT_VERSION = \(.*\);/\1/p' | head -n 1 | xargs)
+            git tag $VERSION
+            git push -q https://${GITHUB_TOKEN}@github.com/GaloyMoney/galoy-mobile.git $VERSION
+
+  gh_release:
+    working_directory: ~/galoy-mobile
+    docker:
+      - image: circleci/golang:1.8
+    steps:
+      - checkout:
+          path: ~/galoy-mobile
+      - attach_workspace:
+          at: /tmp/workspace
+      - run: cp -r /tmp/workspace/android .
+      - run: cp -r /tmp/workspace/ios .
+
+      - run:
+          name: Publish Release on GitHub
+          command: |
+            go get github.com/tcnksm/ghr
+            VERSION=$(cat ios/GaloyApp.xcodeproj/project.pbxproj | sed -n 's/.*CURRENT_PROJECT_VERSION = \(.*\);/\1/p' | head -n 1 | xargs)
+            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION}
 
 workflows:
   mobile:
@@ -221,10 +246,18 @@ workflows:
               only: /^[0-9]+\.[0-9]+\.[0-9]+/
             branches:
               ignore: /.*/
-      - release:
+      - update_build_commit:
           requires:
             - build_ios
             - build_android
+          filters:
+            tags:
+              only: /^[0-9]+\.[0-9]+\.[0-9]+/
+            branches:
+              ignore: /.*/
+      - gh_release:
+          requires:
+            - update_build_commit
           filters:
             tags:
               only: /^[0-9]+\.[0-9]+\.[0-9]+/
