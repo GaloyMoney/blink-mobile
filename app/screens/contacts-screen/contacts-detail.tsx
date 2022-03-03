@@ -32,8 +32,7 @@ const styles = EStyleSheet.create({
 
   amountView: {
     alignItems: "center",
-    paddingBottom: "24rem",
-    paddingTop: "48rem",
+    paddingBottom: "6rem",
   },
 
   icon: { margin: 0 },
