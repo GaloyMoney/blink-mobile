@@ -21,7 +21,7 @@ jobs:
   - task: browserstack
     config:
       platform: linux
-      image_resource: #@ pipeline_image()
+      image_resource: #@ task_image_config()
       inputs:
       - name: pipeline-tasks
       run:
@@ -37,7 +37,7 @@ jobs:
   - task: prep-release
     config:
       platform: linux
-      image_resource: #@ release_task_image_config()
+      image_resource: #@ task_image_config()
       inputs:
       - name: repo
       - name: pipeline-tasks
