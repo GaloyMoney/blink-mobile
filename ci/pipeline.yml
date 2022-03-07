@@ -34,6 +34,7 @@ jobs:
       trigger: true
       passed: [ test ]
     - get: pipeline-tasks
+    - get: version
   - task: prep-release
     config:
       platform: linux
