@@ -1,0 +1,7 @@
+#@data/values
+---
+git_uri: git@github.com:GaloyMoney/galoy-money.git
+git_branch: add-concourse
+pipeline_git_branch: add-concourse
+github_private_key: ((github.private_key))
+github_api_token: ((github.api_token))
