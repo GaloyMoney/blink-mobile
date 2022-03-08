@@ -180,6 +180,7 @@ jobs:
       - run:
           name : App upload and Set app id in environment variable.
           command : |
+            cd android
             APP_UPLOAD_RESPONSE=$(curl -u "$BROWSERSTACK_USER:$BROWSERSTACK_ACCESS_KEY" -X POST https://api-cloud.browserstack.com/app-automate/upload -F "file=@app/build/outputs/apk/debug/app-debug.apk")
             APP_ID=$(echo $APP_UPLOAD_RESPONSE | jq -r ".app_url")
             if [ $APP_ID != null ]; then
@@ -192,6 +193,7 @@ jobs:
               echo "App upload failed, reason : ",$UPLOAD_ERROR_MESSAGE
               exit 1;
             fi
+      - run: cd android && ./gradlew test
 
 workflows:
   mobile:
