@@ -181,7 +181,7 @@ resources:
     initial_version: 0.1.0
     driver: gcs
     bucket: #@ data.values.artifacts_bucket_name
-    key: galoy-app-artifacts/versions/deps
+    key: galoy-mobile-artifacts/versions/deps
     json_key: #@ data.values.staging_inception_creds
 
 - name: pipeline-image
