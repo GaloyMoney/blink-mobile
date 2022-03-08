@@ -199,3 +199,9 @@ resources:
     uri: #@ data.values.git_uri
     branch: #@ data.values.pipeline_git_branch
     private_key: #@ data.values.github_private_key
+
+resource_types:
+- name: gcs-resource
+  type: docker-image
+  source:
+    repository: frodenas/gcs-resource
