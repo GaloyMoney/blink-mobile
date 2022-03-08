@@ -155,6 +155,26 @@ jobs:
             echo "nothing to commit"
           fi
 
+  build_apk:
+    docker:
+      - image: circleci/android:api-30
+    resource_class: large
+    environment:
+      TERM: dumb
+      JAVA_OPTS: -Xms512m -Xmx2g
+      GRADLE_OPTS: -Xmx3g -Dorg.gradle.daemon=false -Dorg.gradle.jvmargs="-Xmx2g -XX:+HeapDumpOnOutOfMemoryError"
+    working_directory: ~/galoy-mobile
+    shell: /bin/bash --login -o pipefail
+    steps:
+      - checkout:
+          path: ~/galoy-mobile
+      - run: sudo apt-get update
+      - run: curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+      - run: sudo apt-get install -y gnupg2 gcc g++ make nodejs
+      - run: sudo npm install -g yarn
+      - run: yarn install
+      - run: cd android && ./gradlew assembleDebug
+
 workflows:
   mobile:
     jobs:
@@ -169,3 +189,7 @@ workflows:
       - build_android:
           requires:
             - update_locale
+
+  android:
+    jobs:
+      - build_apk
