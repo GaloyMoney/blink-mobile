@@ -13,26 +13,69 @@ source:
 #@ end
 
 jobs:
-- name: test
+- name: install-deps
   plan:
   - in_parallel:
-    - get: repo
-    - get: pipeline-tasks
-  - task: browserstack
+    - { get: deps, trigger: true }
+    - { get: pipeline-tasks }
+    - { put: deps-version, params: {bump: patch} }
+  - task: install-deps
     config:
       platform: linux
       image_resource: #@ task_image_config()
       inputs:
       - name: pipeline-tasks
+      - name: deps
+      - name: deps-version
+      outputs:
+      - name: bundled-deps
       run:
-        path: pipeline-tasks/ci/tasks/test.sh
+        path: pipeline-tasks/ci/tasks/install-deps.sh
+  - put: bundled-deps
+    params:
+      file: bundled-deps/bundled-deps-*.tgz
+
+- name: test-unit
+  plan:
+  - in_parallel:
+    - { get: repo, trigger: true }
+    - { get: bundled-deps, trigger: true }
+    - get: pipeline-tasks
+  - task: test-unit
+    config:
+      platform: linux
+      image_resource: #@ task_image_config()
+      inputs:
+      - name: bundled-deps
+      - name: pipeline-tasks
+      - name: repo
+      run:
+        path: pipeline-tasks/ci/tasks/test-unit.sh
+
+- name: check-code
+  plan:
+  - in_parallel:
+    - { get: repo, trigger: true }
+    - { get: bundled-deps, trigger: true }
+    - get: pipeline-tasks
+  - task: test-unit
+    config:
+      platform: linux
+      image_resource: #@ task_image_config()
+      inputs:
+      - name: bundled-deps
+      - name: pipeline-tasks
+      - name: repo
+      run:
+        path: pipeline-tasks/ci/tasks/check-code.sh
 
 - name: release
   plan:
   - in_parallel:
     - get: repo
-      trigger: true
-      passed: [ test ]
+      passed:
+      - test-unit
+      - check-code
     - get: pipeline-tasks
     - get: version
   - task: prep-release
@@ -48,14 +91,15 @@ jobs:
       - name: artifacts
       run:
         path: pipeline-tasks/ci/tasks/vendor/prep-release-src.sh
-  - put: gh-release
-    params:
-      name: artifacts/gh-release-name
-      tag: artifacts/gh-release-tag
-      body: artifacts/gh-release-notes.md
-  - put: version
-    params:
-      file: version/version
+  - in_parallel:
+    - put: gh-release
+      params:
+        name: artifacts/gh-release-name
+        tag: artifacts/gh-release-tag
+        body: artifacts/gh-release-notes.md
+    - put: version
+      params:
+        file: version/version
 
 resources:
 - name: repo
@@ -90,3 +134,27 @@ resources:
     uri: #@ data.values.git_uri
     branch: #@ data.values.git_version_branch
     private_key: #@ data.values.github_private_key
+
+- name: deps
+  type: git
+  source:
+    paths: [ yarn.lock ]
+    uri: #@ data.values.git_uri
+    branch: #@ data.values.git_branch
+    private_key: #@ data.values.github_private_key
+
+- name: bundled-deps
+  type: gcs-resource
+  source:
+    bucket: #@ data.values.artifacts_bucket_name
+    json_key: #@ data.values.staging_inception_creds
+    regexp: galoy-mobile-artifacts/deps/bundled-deps-v(.*)-.*.tgz
+
+- name: deps-version
+  type: semver
+  source:
+    initial_version: 0.1.0
+    driver: gcs
+    bucket: #@ data.values.artifacts_bucket_name
+    key: galoy-app-artifacts/versions/deps
+    json_key: #@ data.values.staging_inception_creds
