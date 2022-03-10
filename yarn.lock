@@ -7069,7 +7069,7 @@ browserslist@^4.16.6:
     node-releases "^2.0.1"
     picocolors "^1.0.0"
 
-browserstack-local@^1.4.5:
+browserstack-local@^1.4.5, browserstack-local@^1.4.9:
   version "1.4.9"
   resolved "https://registry.yarnpkg.com/browserstack-local/-/browserstack-local-1.4.9.tgz#5d3e405d425ee5a3ec5cba853c9a078242d944db"
   integrity sha512-V+q8HQwRQFr9nd32xR66ZZ3VDWa3Kct4IMMudhKgcuD7cWrvvFARZOibx71II+Rf7P5nMQpWWxl9z/3p927nbg==

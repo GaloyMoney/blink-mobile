@@ -153,6 +153,7 @@
     "babel-jest": "^27.3.1",
     "babel-loader": "^8.2.3",
     "babel-plugin-module-resolver": "^4.1.0",
+    "browserstack-local": "^1.4.9",
     "chromedriver": "^99.0.0",
     "csv-parse": "^5.0.3",
     "detox": "^19.0.0",

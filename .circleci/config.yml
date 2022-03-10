@@ -193,7 +193,7 @@ jobs:
               echo "App upload failed, reason : ",$UPLOAD_ERROR_MESSAGE
               exit 1;
             fi
-      - run: cd android && ./gradlew test
+      - run: node browserstack.js
 
 workflows:
   mobile:

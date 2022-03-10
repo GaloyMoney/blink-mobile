@@ -59,7 +59,7 @@ export const WelcomeFirstScreen: ScreenType = ({ navigation }: Props) => (
   <Swiper loop={false} activeDot={<View style={styles.dot} />}>
     <Screen backgroundColor={palette.lightBlue} statusBar="light-content">
       <OnboardingScreen Svg={MascotDollarBitcoin}>
-        <Text style={styles.title}>Bitcoin:</Text>
+        <Text testID="btc-welcomefirstscreen" style={styles.title}>Bitcoin:</Text>
         <Text style={styles.text}>{translate("WelcomeFirstScreen.care")}</Text>
       </OnboardingScreen>
     </Screen>
