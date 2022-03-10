@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const wd = require("wd")
-const asserters = wd.asserters
+// const asserters = wd.asserters
 
 const desiredCaps = {
   // Set your BrowserStack access credentials
@@ -27,12 +27,12 @@ const driver = wd.promiseRemote("http://hub-cloud.browserstack.com/wd/hub");
 // Test case for the BrowserStack sample Android app. 
 // If you have uploaded your app, update the test case here. 
 driver.init(desiredCaps)
-  .then(function () {
-    return driver.waitForElementByAccessibilityId('btc-welcomefirstscreen', asserters.isDisplayed, 30000);
-  })
-  .then(function (searchElement) {
-    return searchElement.click();
-  })
+  // .then(function () {
+  //   return driver.waitForElementByAccessibilityId('btc-welcomefirstscreen', asserters.isDisplayed, 30000);
+  // })
+  // .then(function (searchElement) {
+  //   return searchElement.click();
+  // })
   .fin(function () {
     // Invoke driver.quit() after the test is done to indicate that the test is completed.
     return driver.quit();
