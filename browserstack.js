@@ -27,6 +27,7 @@ const driver = wd.promiseRemote("http://hub-cloud.browserstack.com/wd/hub");
 // Test case for the BrowserStack sample Android app. 
 // If you have uploaded your app, update the test case here. 
 driver.init(desiredCaps)
+  .then(() => console.log("RUNNNING!"))
   // .then(function () {
   //   return driver.waitForElementByAccessibilityId('btc-welcomefirstscreen', asserters.isDisplayed, 30000);
   // })
