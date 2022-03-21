@@ -41,6 +41,7 @@ jobs:
       - run:
           name: Run Test on Android
           command: |
+            yarn start &
             ./node_modules/.bin/wdio android/browserstack.js
   
   ios_test:
@@ -97,6 +98,7 @@ jobs:
       - run:
           name: Run Test on iOS
           command: |
+            yarn start &
             ./node_modules/.bin/wdio ios/browserstack.js
 
 workflows:

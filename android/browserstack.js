@@ -15,6 +15,7 @@ exports.config = {
     device: 'Google Pixel 3',
     os_version: "9.0",
     app: process.env.BROWSERSTACK_APP_ID,
+    'browserstack.local': true,
     'browserstack.debug': true
   }],
 
@@ -32,11 +33,11 @@ exports.config = {
     timeout: 20000
   },
 
-  onPrepare: function (config, capabilities) {
+  onPrepare: (config, capabilities) => {
     console.log("Connecting local");
-    return new Promise(function (resolve, reject) {
+    return new Promise( (resolve, reject) => {
       exports.bs_local = new browserstack.Local();
-      exports.bs_local.start({ 'key': exports.config.key }, function (error) {
+      exports.bs_local.start({'key': exports.config.key }, (error) => {
         if (error) return reject(error);
         console.log('Connected. Now testing...');
 
@@ -45,7 +46,15 @@ exports.config = {
     });
   },
 
-  onComplete: function (capabilties, specs) {
-    exports.bs_local.stop(function () { });
+  onComplete: (capabilties, specs) => {
+    console.log("Closing local tunnel");
+    return new Promise( (resolve, reject) => {
+      exports.bs_local.stop( (error) => {
+        if (error) return reject(error);
+        console.log("Stopped BrowserStackLocal");
+
+        resolve();
+      });
+    });
   }
 };
