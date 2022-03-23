@@ -83,6 +83,7 @@ jobs:
             - ios/Pods
       - run: yarn jest
       - run: sed -i'' -e "s/GOOGLE_SERVICE_FIREBASE_API_KEY/$GOOGLE_SERVICE_FIREBASE_API_KEY/" ios/GoogleService-Info.plist
+      - run: sed -i'' -e 's/PROVISIONING_PROFILE_SPECIFIER = "match AppStore io.galoy.bitcoinbeach"/PROVISIONING_PROFILE_SPECIFIER = "match Development io.galoy.bitcoinbeach"/g' ios/GaloyApp.xcodeproj/project.pbxproj
       - run:
           name: Build IPA
           command: cd ios && bundle exec fastlane build_ipa
