@@ -18,7 +18,15 @@ jobs:
       - run: curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
       - run: sudo apt-get install -y gnupg2 gcc g++ make nodejs
       - run: sudo npm install -g yarn
+
+      - restore_cache:
+          key: yarn-{{ checksum "yarn.lock" }}
       - run: yarn install
+      - save_cache:
+          key: yarn-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules
+
       - run:
           name: Build APK
           command: cd android && ./gradlew assembleDebug
@@ -189,7 +197,14 @@ jobs:
       - run: fastlane -v
       - run: yarn -v
 
+      - restore_cache:
+          key: 1-yarn-{{ checksum "yarn.lock" }}
       - run: yarn install
+      - save_cache:
+          key: 1-yarn-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules
+
       - run: yarn jest
       - run: echo $JAVA_OPTS
       - run: echo $GRADLE_OPTS
