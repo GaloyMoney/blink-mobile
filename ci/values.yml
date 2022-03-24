@@ -1,0 +1,19 @@
+#@data/values
+---
+git_uri: git@github.com:GaloyMoney/galoy-mobile.git
+git_branch: main
+pipeline_git_branch: main
+git_version_branch: version
+
+github_private_key: ((github.private_key))
+github_api_token: ((github.api_token))
+
+docker_registry: us.gcr.io/galoy-org
+docker_registry_user: ((docker-creds.username))
+docker_registry_password: ((docker-creds.password))
+
+gh_org: GaloyMoney
+gh_repository: galoy-mobile
+
+artifacts_bucket_name: ((staging-gcp-creds.bucket_name))
+staging_inception_creds: ((staging-gcp-creds.creds_json))
