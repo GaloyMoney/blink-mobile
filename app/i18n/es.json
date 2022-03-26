@@ -3,7 +3,7 @@
     "openAccount": "Abra una cuenta de efectivo en Galoy",
     "openAccountReason": "Para {{side}} bitcoin, necesita una cuenta de efectivo de Galoy, por lo que puede transferir dólares estadounidenses",
     "prevMonths": "Meses  previos",
-    "quote": "Cuantas Satoshis a {{side}}:",
+    "quote": "Cuantos Satoshis a {{side}}:",
     "thisMonth": "Este mes",
     "today": "Hoy ",
     "yesterday": "Ayer"
@@ -56,7 +56,7 @@
     "account": "Cuenta",
     "action": "Mover mi cheque de pago",
     "bank": "Cuenta corriente Galoy",
-    "bankName": "Nobre del banco",
+    "bankName": "Nombre del Banco",
     "generate": "Genere un formulario de depósito directo para su empleador o proveedor de nómina.",
     "routing": "Enrutamiento",
     "setup": "Configurar deposito directo",
@@ -651,7 +651,7 @@
     "bank": "Bitcoin está diseñado para permitirle almacenar, enviar y recibir dinero, sin depender de un banco o tarjeta de crédito.",
     "before": "Antes de Bitcoin, la gente tenía que depender de bancos o proveedores de tarjetas de crédito para gastar, enviar y recibir dinero.",
     "care": "¿Por qué debería importarme?",
-    "learn": "No quiero molestar, pero es hora de empezar a nadar en el océano de Bitcoin.",
+    "learn": "Es hora de empezar a nadar en el Océano de Bitcoin.",
     "learnToEarn": "Aprende y gana"
   },
   "WelcomePhoneInputScreen": {
@@ -757,13 +757,13 @@
     "zero": "‪{{formatted_number}}‬ Satoshi"
   },
   "tippingLink": {
-    "title": "¿Quiere recibir propinas? ¡Comparta su enlace!",
+    "title": "Comparte este link para recibir pagos o propinas de tus clientes o amigos",
     "copied": "{{data}} se ha copiado en el portapapeles"
   },
   "whatsapp": {
     "contactUs": "¿Necesita ayuda? Contáctenos por WhatsApp",
     "defaultSupportMessage": "¡Hola! Necesito ayuda con Bitcoin Beach Wallet",
-    "contactSupport": "Soporte de contacto"
+    "contactSupport": "Contactar a Soporte"
   },
   "lnurl": {
     "overLimit": "No se puede enviar más de la cantidad máxima",
