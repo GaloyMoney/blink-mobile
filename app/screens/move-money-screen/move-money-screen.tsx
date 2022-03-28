@@ -139,7 +139,7 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
 
   const {
     mobileVersions,
-    transactionsEdges,
+    btcTransactionsEdges,
     errors,
     loading: loadingMain,
     refetch,
@@ -199,7 +199,7 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
       loading={loadingMain}
       errors={errors}
       refetch={refetch}
-      transactionsEdges={transactionsEdges}
+      transactionsEdges={btcTransactionsEdges}
       isUpdateAvailable={isUpdateAvailableOrRequired(mobileVersions).available}
       hasToken={hasToken}
     />
