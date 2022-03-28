@@ -12,4 +12,10 @@ export const palette = {
   lightBlue: "#3553FF",
   sky: "#C3CCFF",
   OPACITY: "#202020D0",
+  usdPrimary: "#6374c3",
+  usdSecondary: "#b9c1d9",
+  btcSecondary: "#f1a43c",
+  btcPrimary: "#ee853a",
+  galoyBlue: "#3B52F5",
+  coolGrey: "#919BBA",
 }
