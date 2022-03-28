@@ -11,8 +11,11 @@ type mobileVersions = {
 type useMainQueryOutput = {
   userPreferredLanguage: string
   btcWalletBalance: number
+  usdWalletBalance: number
   btcWalletId: string
-  transactionsEdges: object[]
+  usdWalletId: string
+  btcTransactionsEdges: object[]
+  usdTransactionsEdges: object[]
   me: any
   myPubKey: string
   username?: string
