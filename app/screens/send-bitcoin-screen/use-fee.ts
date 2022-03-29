@@ -132,17 +132,22 @@ const useFee = ({
 
         let feeValue: number
         if (amountless) {
-          const { data } = await getNoAmountLightningFees({
+          const { data, errors } = await getNoAmountLightningFees({
             variables: {
               input: { walletId, paymentRequest: invoice, amount: paymentSatAmount },
             },
           })
-
+          if (errors?.length > 0 || data?.lnNoAmountInvoiceFeeProbe?.errors?.length > 0) {
+            throw new Error("Error returned from API while calculating fee.")
+          }
           feeValue = data.lnNoAmountInvoiceFeeProbe.amount
         } else {
-          const { data } = await getLightningFees({
+          const { data, errors } = await getLightningFees({
             variables: { input: { walletId, paymentRequest: invoice } },
           })
+          if (errors?.length > 0 || data?.lnNoAmountInvoiceFeeProbe?.errors?.length > 0) {
+            throw new Error("Error returned from API while calculating fee.")
+          }
 
           feeValue = data.lnInvoiceFeeProbe.amount
         }
