@@ -90,7 +90,9 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
 }: BalanceHeaderProps) => {
   return (
     <View style={[styles.header, style]}>
-      <Text style={styles.balanceText}>{translate("BalanceHeader.currentBalance")}</Text>
+      <Text testID="currentBalance" style={styles.balanceText}>
+        {translate("BalanceHeader.currentBalance")}
+      </Text>
       {loading ? (
         <Loader />
       ) : (

@@ -72,6 +72,7 @@ export const GetStartedScreen: ScreenType = ({ navigation }: Props) => (
         onPress={() => navigation.replace("welcomeFirst")}
         containerStyle={styles.buttonContainer}
         testID="getStarted"
+        accessibilityLabel="getStarted"
       />
     </View>
   </Screen>

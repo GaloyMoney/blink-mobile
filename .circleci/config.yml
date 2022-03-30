@@ -1,21 +1,115 @@
 version: 2.1
 
-orbs:
-  gcp-cli: circleci/gcp-cli@2.1.0
-
-## FIXME / SECURITY: do not use this cluster to push the APK
-commands:
-  gke-auth:
-    steps:
-      - run:
-          name: Authenticate on gcloud
-          command: |
-            echo ${GCLOUD_SERVICE_KEY} > gcloud-service-key.json
-            gcloud auth activate-service-account --key-file=gcloud-service-key.json
-            gcloud config set project ${GOOGLE_PROJECT_ID}
-            gcloud container clusters get-credentials testnet-cluster --region us-central1-a --project ${GOOGLE_PROJECT_ID}
-
 jobs:
+  android_test:
+    docker:
+      - image: circleci/android:api-30
+    resource_class: large
+    environment:
+      TERM: dumb
+      JAVA_OPTS: -Xms512m -Xmx2g
+      GRADLE_OPTS: -Xmx3g -Dorg.gradle.daemon=false -Dorg.gradle.jvmargs="-Xmx2g -XX:+HeapDumpOnOutOfMemoryError"
+    working_directory: ~/galoy-mobile
+    shell: /bin/bash --login -o pipefail
+    steps:
+      - checkout:
+          path: ~/galoy-mobile
+      - run: sudo apt-get update
+      - run: curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+      - run: sudo apt-get install -y gnupg2 gcc g++ make nodejs
+      - run: sudo npm install -g yarn
+
+      - restore_cache:
+          key: yarn-{{ checksum "yarn.lock" }}
+      - run: yarn install
+      - save_cache:
+          key: yarn-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules
+
+      - run:
+          name: Build APK
+          command: cd android && ./gradlew assembleDebug
+      - run:
+          name: App upload and Set app id in environment variable.
+          command: |
+            cd android
+            APP_UPLOAD_RESPONSE=$(curl -u "$BROWSERSTACK_USER:$BROWSERSTACK_ACCESS_KEY" -X POST https://api-cloud.browserstack.com/app-automate/upload -F "file=@app/build/outputs/apk/debug/app-debug.apk")
+            APP_ID=$(echo $APP_UPLOAD_RESPONSE | jq -r ".app_url")
+            if [ $APP_ID != null ]; then
+              echo "Apk uploaded to BrowserStack with app id : ",$APP_ID;
+              echo "export BROWSERSTACK_APP_ID=$APP_ID" >> $BASH_ENV;
+              source $BASH_ENV;
+              echo "Setting value of BROWSERSTACK_APP_ID in environment variables to  ",$APP_ID;
+            else
+              UPLOAD_ERROR_MESSAGE=$(echo $APP_UPLOAD_RESPONSE | jq -r ".error")
+              echo "App upload failed, reason : ",$UPLOAD_ERROR_MESSAGE
+              exit 1;
+            fi
+      - run:
+          name: Run Test on Android
+          command: |
+            yarn start &
+            ./node_modules/.bin/wdio android/browserstack.js
+  
+  ios_test:
+    macos:
+      xcode: 13.1.0
+    working_directory: ~/galoy-mobile
+    environment:
+      FL_OUTPUT_DIR: output
+    shell: /bin/bash --login -o pipefail
+    steps:
+      - checkout:
+          path: ~/galoy-mobile
+      - add_ssh_keys:
+          fingerprints:
+            - "19:7e:f3:6c:be:a7:17:01:7d:09:ca:39:c3:98:86:90"
+      - restore_cache:
+          key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
+      - run: cd ios && bundle config set deployment 'true'
+      - run: cd ios && bundle check || bundle install
+      - save_cache:
+          key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
+          paths:
+            - ios/vendor
+      - restore_cache:
+          key: 1-yarn-{{ checksum "yarn.lock" }}-pod1-{{ checksum "ios/Podfile.lock" }}
+      - run: yarn install
+      - save_cache:
+          key: 1-yarn-{{ checksum "yarn.lock" }}-pod1-{{ checksum "ios/Podfile.lock" }}
+          paths:
+            - node_modules
+            - ios/Pods
+      - run: yarn jest
+      - run: sed -i'' -e "s/GOOGLE_SERVICE_FIREBASE_API_KEY/$GOOGLE_SERVICE_FIREBASE_API_KEY/" ios/GoogleService-Info.plist
+      - run: sed -i'' -e 's/PROVISIONING_PROFILE_SPECIFIER = "match AppStore io.galoy.bitcoinbeach"/PROVISIONING_PROFILE_SPECIFIER = "match Development io.galoy.bitcoinbeach"/g' ios/GaloyApp.xcodeproj/project.pbxproj
+      - run:
+          name: Build IPA
+          command: cd ios && bundle exec fastlane build_ipa
+          no_output_timeout: 15m
+      - run:
+          name: App upload and Set app id in environment variable.
+          command: |
+            cd ios
+            APP_UPLOAD_RESPONSE=$(curl -u "$BROWSERSTACK_USER:$BROWSERSTACK_ACCESS_KEY" -X POST https://api-cloud.browserstack.com/app-automate/upload -F "file=@output/gym/Bitcoin Beach.ipa")
+            APP_ID=$(echo $APP_UPLOAD_RESPONSE | jq -r ".app_url")
+            if [ $APP_ID != null ]; then
+              echo "Apk uploaded to BrowserStack with app id : ",$APP_ID;
+              echo "export BROWSERSTACK_APP_ID=$APP_ID" >> $BASH_ENV;
+              source $BASH_ENV;
+              echo "Setting value of BROWSERSTACK_APP_ID in environment variables to  ",$APP_ID;
+            else
+              UPLOAD_ERROR_MESSAGE=$(echo $APP_UPLOAD_RESPONSE | jq -r ".error")
+              echo "App upload failed, reason : ",$UPLOAD_ERROR_MESSAGE
+              exit 1;
+            fi
+      - run:
+          name: Run Test on iOS
+          command: |
+            yarn start &
+            ./node_modules/.bin/wdio ios/browserstack.js
+
   build_ios:
     macos:
       xcode: 13.1.0
@@ -48,6 +142,7 @@ jobs:
             - ios/Pods
       - run: yarn jest
       - run: sed -i'' -e "s/GOOGLE_SERVICE_FIREBASE_API_KEY/$GOOGLE_SERVICE_FIREBASE_API_KEY/" ios/GoogleService-Info.plist
+      - run: sed -i'' -e "s/MARKETING_VERSION.*/MARKETING_VERSION = $CIRCLE_TAG;/g" ios/GaloyApp.xcodeproj/project.pbxproj
       - run:
           name: fastlane
           command: cd ios && bundle exec fastlane beta
@@ -104,7 +199,14 @@ jobs:
       - run: fastlane -v
       - run: yarn -v
 
+      - restore_cache:
+          key: 1-yarn-{{ checksum "yarn.lock" }}
       - run: yarn install
+      - save_cache:
+          key: 1-yarn-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules
+
       - run: yarn jest
       - run: echo $JAVA_OPTS
       - run: echo $GRADLE_OPTS
@@ -158,14 +260,49 @@ jobs:
 workflows:
   mobile:
     jobs:
+      - android_test:
+          filters:
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+/
+            branches:
+              ignore: /.*/
+      - ios_test:
+          filters:
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+/
+            branches:
+              ignore: /.*/
       - hold_build_mobile:
           type: approval
+          requires:
+            - android_test
+            - ios_test
+          filters:
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+/
+            branches:
+              ignore: /.*/
       - update_locale:
           requires:
             - hold_build_mobile
+          filters:
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+/
+            branches:
+              ignore: /.*/
       - build_ios:
           requires:
             - update_locale
+          filters:
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+/
+            branches:
+              ignore: /.*/
       - build_android:
           requires:
             - update_locale
+          filters:
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+/
+            branches:
+              ignore: /.*/
