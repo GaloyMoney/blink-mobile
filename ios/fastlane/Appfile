@@ -1,5 +1,4 @@
 app_identifier("io.galoy.bitcoinbeach") # The bundle identifier of your app
-apple_id("david@galoy.io") # Your Apple email address
 
 itc_team_id("122101820") # App Store Connect Team ID
 team_id("AYPCPV46WW") # Developer Portal Team ID
