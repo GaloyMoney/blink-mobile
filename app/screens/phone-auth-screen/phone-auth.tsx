@@ -412,6 +412,9 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
   }, [])
 
   const send = async () => {
+    if (loading) {
+      return
+    }
     if (code.length !== 6) {
       toastShow(translate("WelcomePhoneValidationScreen.need6Digits"))
       return
