@@ -150,10 +150,10 @@ jobs:
       - run: git config --global user.name "circleci-bot"
       - run: git config --global user.email "bot@circleci.com"
       - run: git config pull.rebase false
-      - run: git pull https://${GITHUB_TOKEN}@github.com/GaloyMoney/galoy-mobile.git $CIRCLE_BRANCH
+      - run: git pull https://${GITHUB_TOKEN}@github.com/GaloyMoney/galoy-mobile.git main
       - run: git commit -a -m "new ios build [ci skip]"
       - run: git reset -- GoogleService-Info.plist
-      - run: git push -q https://${GITHUB_TOKEN}@github.com/GaloyMoney/galoy-mobile.git $CIRCLE_BRANCH
+      - run: git push -q https://${GITHUB_TOKEN}@github.com/GaloyMoney/galoy-mobile.git main
       - store_artifacts:
           path: ios/output
       - store_test_results:
@@ -224,11 +224,11 @@ jobs:
       - run: git config --global user.name "circleci-bot"
       - run: git config --global user.email "bot@circleci.com"
       - run: git config pull.rebase false
-      - run: git pull origin $CIRCLE_BRANCH
+      - run: git pull origin main
       - run: cd ~/galoy-mobile
       - run: git add --force android/app/build/generated/sourcemaps/react/release
       - run: git commit -a -m "new android build [ci skip]"
-      - run: git push -q https://${GITHUB_TOKEN}@github.com/GaloyMoney/galoy-mobile.git $CIRCLE_BRANCH
+      - run: git push -q https://${GITHUB_TOKEN}@github.com/GaloyMoney/galoy-mobile.git main
 
   update_locale:
     working_directory: ~/galoy-mobile
@@ -250,7 +250,7 @@ jobs:
       - run: |
           if [[ $(-- . ':!.phrase.yml') ]]; then
             git commit -a -m "update translation file [ci skip]" -- . ':!.phrase.yml'
-            git push -q https://${GITHUB_TOKEN}@github.com/GaloyMoney/galoy-mobile.git $CIRCLE_BRANCH
+            git push -q https://${GITHUB_TOKEN}@github.com/GaloyMoney/galoy-mobile.git main
           else
             echo "nothing to commit"
           fi
