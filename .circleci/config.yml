@@ -200,10 +200,10 @@ jobs:
       - run: yarn -v
 
       - restore_cache:
-          key: 1-yarn-{{ checksum "yarn.lock" }}
+          key: 2-yarn-{{ checksum "yarn.lock" }}-android
       - run: yarn install
       - save_cache:
-          key: 1-yarn-{{ checksum "yarn.lock" }}
+          key: 2-yarn-{{ checksum "yarn.lock" }}-android
           paths:
             - node_modules
 
