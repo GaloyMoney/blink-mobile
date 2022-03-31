@@ -14,7 +14,8 @@ type UseMyUpdates = {
   }) => number
   formatCurrencyAmount: (arg0: { sats: number; currency: CurrencyType }) => string
   usdPerSat: string | null
-  currentBalance: number | null
+  currentUsdWalletBalance: number | null
+  currentBtcWalletBalance: number | null
   intraLedgerUpdate: {
     txNotificationType: string
     amount: number
@@ -177,11 +178,19 @@ export const useMySubscription = (): UseMyUpdates => {
     }
   }
 
+  const btcWalletBalance = data?.myUpdates?.me?.defaultAccount?.wallets?.find(
+    (wallet) => wallet?.__typename === "BTCWallet",
+  )?.balance
+  const usdWalletBalance = data?.myUpdates?.me?.defaultAccount?.wallets?.find(
+    (wallet) => wallet?.__typename === "USDWallet",
+  )?.balance
+
   return {
     convertCurrencyAmount,
     formatCurrencyAmount,
     usdPerSat: cachedPrice === 0 ? null : (cachedPrice / 100).toFixed(8),
-    currentBalance: data?.myUpdates?.me?.defaultAccount?.wallets?.[0]?.balance,
+    currentBtcWalletBalance: btcWalletBalance,
+    currentUsdWalletBalance: usdWalletBalance,
     intraLedgerUpdate: intraLedgerUpdate.current,
     lnUpdate: lnUpdate.current,
     onChainUpdate: onChainUpdate.current,
