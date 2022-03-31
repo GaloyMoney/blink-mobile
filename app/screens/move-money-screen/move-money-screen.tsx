@@ -34,10 +34,16 @@ import useToken from "../../utils/use-token"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
 import useMainQuery from "@app/hooks/use-main-query"
+import { WalletOverviewDataInjected } from "@app/components/wallet-overview/wallet-overview"
+import QrCodeIcon from "@app/assets/icons/qr-code.svg"
+import SendIcon from "@app/assets/icons/send.svg"
+import ReceiveIcon from "@app/assets/icons/receive.svg"
+import PriceIcon from "@app/assets/icons/price.svg"
+import SettingsIcon from "@app/assets/icons/settings.svg"
 
 const styles = EStyleSheet.create({
   balanceHeader: {
-    marginBottom: "32rem",
+    marginBottom: "1rem",
   },
 
   bottom: {
@@ -60,6 +66,7 @@ const styles = EStyleSheet.create({
     backgroundColor: palette.white,
     borderRadius: "38rem",
     width: "50rem",
+    height: "50rem",
   },
 
   cover: { height: "100%", width: "100%" },
@@ -87,7 +94,7 @@ const styles = EStyleSheet.create({
   },
 
   listContainer: {
-    marginTop: "24rem",
+    marginTop: "1rem",
   },
 
   menuIcon: {
@@ -270,7 +277,6 @@ export const MoveMoneyScreen: ScreenType = ({
     recentTRansactionsData = {
       title: translate("TransactionScreen.title"),
       target: "transactionHistory",
-      icon: <Icon name="ios-list-outline" size={32} color={palette.black} />,
       style: "transactionViewContainer",
       details: (
         <View style={styles.transactionsView}>
@@ -333,17 +339,17 @@ export const MoveMoneyScreen: ScreenType = ({
               account: AccountType.Bitcoin,
             })
           }
-          icon={<Icon name="ios-trending-up-outline" size={32} style={styles.menuIcon} />}
+          icon={<PriceIcon />}
         />
         <BalanceHeader loading={loading} style={styles.balanceHeader} />
         <Button
           buttonStyle={styles.buttonStyleTime}
           containerStyle={styles.separator}
           onPress={() => navigation.navigate("settings")}
-          icon={<Icon name="ios-settings-outline" size={32} style={styles.menuIcon} />}
+          icon={<SettingsIcon />}
         />
       </View>
-
+      <WalletOverviewDataInjected />
       <FlatList
         ListHeaderComponent={() => (
           <>
@@ -358,17 +364,17 @@ export const MoveMoneyScreen: ScreenType = ({
           {
             title: translate("ScanningQRCodeScreen.title"),
             target: "scanningQRCode",
-            icon: <Icon name="qr-code" size={32} color={palette.orange} />,
+            icon: <QrCodeIcon />,
           },
           {
             title: translate("MoveMoneyScreen.send"),
             target: "sendBitcoin",
-            icon: <IconTransaction isReceive={false} size={32} />,
+            icon: <SendIcon />,
           },
           {
             title: translate("MoveMoneyScreen.receive"),
             target: "receiveBitcoin",
-            icon: <IconTransaction isReceive size={32} />,
+            icon: <ReceiveIcon />,
           },
           recentTRansactionsData,
         ]}
