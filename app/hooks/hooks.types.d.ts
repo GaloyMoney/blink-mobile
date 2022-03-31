@@ -14,6 +14,7 @@ type useMainQueryOutput = {
   usdWalletBalance: number
   btcWalletId: string
   usdWalletId: string
+  defaultWalletId: string
   btcTransactionsEdges: object[]
   usdTransactionsEdges: object[]
   me: any

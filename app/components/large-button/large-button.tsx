@@ -12,12 +12,17 @@ const styles = EStyleSheet.create({
 
   accountViewContainer: {
     backgroundColor: palette.white,
-    borderRadius: 8,
+    borderRadius: 10,
+    paddingTop: 15,
+    paddingBottom: 15,
+    paddingLeft: 17,
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   accountViewTitle: {
     // fontFamily: "DMSans",
-    color: palette.darkGrey,
+    color: palette.lapisLazuli,
     fontSize: "18rem",
     fontWeight: "bold",
   },
@@ -43,7 +48,10 @@ export const LargeButton: ComponentType = ({
     activeOpacity={0.7}
     {...props}
   >
-    <Avatar>{icon}</Avatar>
+    {
+      icon && icon
+      // <Avatar avatarStyle={{ borderColor: "black", borderWidth: 1 }}>{icon}</Avatar>
+    }
     <ListItem.Content>
       <ListItem.Title style={styles.accountViewTitle}>{title}</ListItem.Title>
     </ListItem.Content>

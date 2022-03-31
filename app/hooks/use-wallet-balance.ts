@@ -3,36 +3,56 @@ import { useMySubscription } from "./user-hooks"
 import useMainQuery from "./use-main-query"
 
 export const useWalletBalance = (): {
-  walletId?: string
-  satBalance: number
-  usdBalance: number | string
+  btcWalletId?: string
+  btcWalletBalance: number
+  btcWalletValueInUsd: number
+  usdWalletId?: string
+  usdWalletBalance: number
   loading: boolean
 } => {
-  const { convertCurrencyAmount, currentBalance, mySubscriptionLoading } =
-    useMySubscription()
-  const { btcWalletBalance, btcWalletId, refetch: refetchMainQuery } = useMainQuery()
+  const {
+    convertCurrencyAmount,
+    currentBtcWalletBalance,
+    currentUsdWalletBalance,
+    mySubscriptionLoading,
+  } = useMySubscription()
+  const {
+    btcWalletBalance,
+    btcWalletId,
+    usdWalletId,
+    usdWalletBalance,
+    refetch: refetchMainQuery,
+  } = useMainQuery()
 
   const { hasToken } = useToken()
 
   if (!hasToken) {
     return {
-      satBalance: 0,
-      usdBalance: 0,
+      btcWalletBalance: 0,
+      btcWalletValueInUsd: 0,
+      usdWalletBalance: 0,
       loading: false,
     }
   }
 
-  if (currentBalance && currentBalance !== btcWalletBalance) {
+  if (
+    currentBtcWalletBalance &&
+    currentUsdWalletBalance &&
+    currentBtcWalletBalance !== btcWalletBalance &&
+    currentUsdWalletBalance !== usdWalletBalance
+  ) {
     refetchMainQuery()
   }
 
   return {
-    walletId: btcWalletId,
-    satBalance: btcWalletBalance,
-    usdBalance:
+    btcWalletId,
+    btcWalletBalance,
+    btcWalletValueInUsd:
       btcWalletBalance > 0
         ? convertCurrencyAmount({ amount: btcWalletBalance, from: "BTC", to: "USD" })
         : 0,
+    usdWalletId,
+    usdWalletBalance,
     loading: mySubscriptionLoading,
   }
 }
