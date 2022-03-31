@@ -30,7 +30,17 @@ Submit a new Beta Build to Crashlytics Beta
 ```
 fastlane android beta
 ```
+Deploy a new version to both Play Store and Huawei Store
+### android play_store_release
+```
+fastlane android play_store_release
+```
 Deploy a new version to the Google Play
+### android huawei_release
+```
+fastlane android huawei_release
+```
+Deploy a new version to Huawei App Gallery
 
 ----
 
