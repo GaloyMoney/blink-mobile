@@ -8,13 +8,14 @@ import { useApolloClient } from "@apollo/client"
 import { Screen } from "../../components/screen"
 import { color } from "../../theme"
 import { getGraphQLUri, loadNetwork, saveNetwork } from "../../utils/network"
-import { requestPermission } from "../../utils/notifications"
+import { addDeviceToken, requestPermission } from "../../utils/notifications"
 import useToken from "../../utils/use-token"
 import type { ScreenType } from "../../types/jsx"
 import type { INetwork } from "../../types/network"
 import { networkVar } from "../../graphql/client-only-query"
 import { useMySubscription } from "../../hooks"
 import useLogout from "../../hooks/use-logout"
+import { GaloyInput } from "@app/components/galoy-input"
 
 const styles = EStyleSheet.create({
   button: {
@@ -30,8 +31,9 @@ const usingHermes = typeof HermesInternal === "object" && HermesInternal !== nul
 export const DebugScreen: ScreenType = () => {
   const client = useApolloClient()
   const { usdPerSat } = useMySubscription()
-  const { hasToken, tokenUid, tokenNetwork } = useToken()
+  const { hasToken, tokenUid, tokenNetwork, saveToken } = useToken()
   const { logout } = useLogout()
+  const [token, setToken] = React.useState()
 
   const networks: INetwork[] = ["regtest", "testnet", "mainnet"]
   const [networkState, setNetworkState] = React.useState("")
@@ -145,6 +147,20 @@ export const DebugScreen: ScreenType = () => {
           buttons={networks}
           buttonStyle={styles.button} // FIXME
           containerStyle={styles.container}
+        />
+        <GaloyInput
+          placeholder={"Input access token"}
+          value={token}
+          onChangeText={(value) => setToken(value)}
+          selectTextOnFocus
+        />
+        <Button
+          title="Change token"
+          style={styles.button}
+          onPress={async () => {
+            await saveToken(token)
+            await addDeviceToken(client)
+          }}
         />
       </View>
     </Screen>

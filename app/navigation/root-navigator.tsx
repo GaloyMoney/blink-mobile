@@ -61,6 +61,10 @@ import type { NavigatorType } from "../types/jsx"
 import PushNotification from "react-native-push-notification"
 import useMainQuery from "@app/hooks/use-main-query"
 import { LnurlScreen } from "@app/screens/settings-screen/lnurl-screen"
+import HomeIcon from "@app/assets/icons/home.svg"
+import ContactsIcon from "@app/assets/icons/contacts.svg"
+import MapIcon from "@app/assets/icons/map.svg"
+import LearnIcon from "@app/assets/icons/learn.svg"
 
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
 PushNotification.configure({
@@ -509,7 +513,7 @@ export const PrimaryNavigator: NavigatorType = () => {
         options={{
           title: translate("MoveMoneyScreen.title"),
           tabBarIcon: ({ color }: TabProps) => (
-            <Icon name="ios-home" size={size} color={color} />
+            <HomeIcon fill="currentColor" color={color} />
           ),
           headerShown: false,
         }}
@@ -520,7 +524,7 @@ export const PrimaryNavigator: NavigatorType = () => {
         options={{
           title: translate("ContactsScreen.title"),
           tabBarIcon: ({ color }: TabProps) => (
-            <Icon name="ios-people-outline" size={size} color={color} />
+            <ContactsIcon fill="currentColor" color={color} />
           ),
         }}
       />
@@ -530,9 +534,7 @@ export const PrimaryNavigator: NavigatorType = () => {
         options={{
           title: translate("MapScreen.title"),
           headerShown: false,
-          tabBarIcon: ({ color }: TabProps) => (
-            <Icon name="ios-map-outline" size={size} color={color} />
-          ),
+          tabBarIcon: ({ color }: TabProps) => <MapIcon color={color} />,
         }}
       />
       <Tab.Screen
@@ -542,7 +544,7 @@ export const PrimaryNavigator: NavigatorType = () => {
           title: translate("EarnScreen.title"),
           headerShown: false,
           tabBarIcon: ({ color }: TabProps) => (
-            <Icon name="ios-rocket" size={size} color={color} />
+            <LearnIcon fill="currentColor" color={color} />
           ),
         }}
       />
