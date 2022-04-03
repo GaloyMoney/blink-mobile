@@ -1,7 +1,6 @@
 import { gql, useApolloClient, useMutation } from "@apollo/client"
 import { RouteProp, useIsFocused } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import I18n from "i18n-js"
 import * as React from "react"
 import { useState } from "react"
 import { Dimensions, Text, View } from "react-native"
@@ -11,7 +10,7 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 import Carousel, { Pagination } from "react-native-snap-carousel"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
-import { translate } from "../../i18n"
+import { toLocaleNumber, translateUnknown as translate } from "@galoymoney/client"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
@@ -251,11 +250,11 @@ export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
               titleStyle={
                 item.fullfilled ? styles.titleStyleFullfilled : styles.titleStyle
               }
-              title={I18n.t(
+              title={translate(
                 item.fullfilled ? "EarnScreen.satsEarned" : "EarnScreen.earnSats",
                 {
                   count: item.value,
-                  formatted_number: I18n.toNumber(item.value, { precision: 0 }),
+                  formatted_number: toLocaleNumber(item.value, { precision: 0 }),
                 },
               )}
               icon={

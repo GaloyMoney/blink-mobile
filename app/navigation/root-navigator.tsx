@@ -4,7 +4,6 @@ import PushNotificationIOS from "@react-native-community/push-notification-ios"
 import messaging from "@react-native-firebase/messaging"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { CardStyleInterpolators, createStackNavigator } from "@react-navigation/stack"
-import i18n from "i18n-js"
 import "node-libs-react-native/globals" // needed for Buffer?
 import * as React from "react"
 import { useCallback, useEffect } from "react"
@@ -14,7 +13,7 @@ import * as RNLocalize from "react-native-localize"
 import Icon from "react-native-vector-icons/Ionicons"
 import analytics from "@react-native-firebase/analytics"
 
-import { translate } from "../i18n"
+import { setLocale, translateUnknown as translate } from "@galoymoney/client"
 import {
   AuthenticationScreen,
   AuthenticationCheckScreen,
@@ -188,15 +187,13 @@ export const RootStack: NavigatorType = () => {
     })
   }
 
-  const fallback = RNLocalize.getLocales()?.[0] ?? { languageTag: "es-SV", isRTL: false }
+  const fallback = RNLocalize.getLocales()?.[0]?.languageCode ?? "es-SV"
 
-  const { languageTag } =
-    RNLocalize.findBestAvailableLanguage(Object.keys(i18n.translations)) || fallback
-
-  i18n.locale =
+  setLocale(
     !userPreferredLanguage || userPreferredLanguage === "DEFAULT"
-      ? languageTag
-      : userPreferredLanguage
+      ? fallback
+      : userPreferredLanguage,
+  )
 
   // TODO: need to add isHeadless?
   // https://rnfirebase.io/messaging/usage

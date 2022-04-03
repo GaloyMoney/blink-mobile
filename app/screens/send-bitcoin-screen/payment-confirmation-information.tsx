@@ -2,7 +2,7 @@ import * as React from "react"
 import { ActivityIndicator, Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 
-import { translate } from "../../i18n"
+import { translateUnknown as translate } from "@galoymoney/client"
 import { currencyToTextWithUnits } from "../../utils/currencyConversion"
 import { palette } from "../../theme/palette"
 

@@ -1,6 +1,5 @@
 import { useApolloClient } from "@apollo/client"
 import { StackNavigationProp } from "@react-navigation/stack"
-import i18n from "i18n-js"
 import * as React from "react"
 import { StatusBar, StyleSheet, Text, View } from "react-native"
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler"
@@ -8,7 +7,7 @@ import { SvgProps } from "react-native-svg"
 import { MountainHeader } from "../../components/mountain-header"
 import { Screen } from "../../components/screen"
 import { getQuizQuestions } from "../../graphql/query"
-import { translate, translateQuizSections } from "../../i18n"
+import { getLocale, translateUnknown as translate } from "@galoymoney/client"
 import { PrimaryStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
@@ -153,7 +152,7 @@ export const EarnMapDataInjected: ScreenType = ({ navigation }: EarnMapDataProps
     return null
   }
 
-  const sectionIndexs = Object.keys(translateQuizSections("EarnScreen.earns"))
+  const sectionIndexs = Object.keys(translate("EarnScreen.earns"))
 
   const sectionsData = []
   let currSection = 0
@@ -315,7 +314,7 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> = ({
   const backgroundColor = currSection < sectionsData.length ? palette.sky : palette.orange
 
   const translatedBottomOngoing = () => {
-    switch (i18n.locale) {
+    switch (getLocale()) {
       case "es":
         return <BottomOngoingES />
       default:
@@ -324,7 +323,7 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> = ({
   }
 
   const translatedBottomStart = () => {
-    switch (i18n.locale) {
+    switch (getLocale()) {
       case "es":
         return <BottomStartES />
       default:

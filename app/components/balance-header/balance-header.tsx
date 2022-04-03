@@ -5,7 +5,7 @@ import { StyleProp, Text, TouchableHighlight, View, ViewStyle } from "react-nati
 import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 import Tooltip from "react-native-walkthrough-tooltip"
-import { translate } from "../../i18n"
+import { translateUnknown as translate } from "@galoymoney/client"
 import { palette } from "../../theme/palette"
 import { TextCurrency } from "../text-currency/text-currency"
 import { useIsFocused } from "@react-navigation/native"

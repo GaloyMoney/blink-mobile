@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { EventSubscription, NativeEventEmitter, NativeModules } from "react-native"
 import { gql, useMutation } from "@apollo/client"
 import GeetestModule from "@galoymoney/react-native-geetest-module"
-import { translate } from "../i18n"
+import { translateUnknown as translate } from "@galoymoney/client"
 
 const REGISTER_CAPTCHA = gql`
   mutation captchaCreateChallenge {

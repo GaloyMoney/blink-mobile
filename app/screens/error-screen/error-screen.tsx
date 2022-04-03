@@ -8,7 +8,7 @@ import { Alert, KeyboardAvoidingView, StatusBar, Text, View } from "react-native
 import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import HoneyBadgerShovel from "../welcome-screens/honey-badger-shovel-01.svg"
-import { translate } from "@app/i18n"
+import { translateUnknown as translate } from "@galoymoney/client"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { isIos } from "@app/utils/helper"
 import { offsets, presets } from "@app/components/screen/screen.presets"

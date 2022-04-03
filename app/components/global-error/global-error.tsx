@@ -4,7 +4,7 @@ import { ComponentType } from "../../types/jsx"
 import { toastShow } from "../../utils/toast"
 import { NetworkErrorCode } from "./network-error-code"
 import useLogout from "../../hooks/use-logout"
-import { translate } from "../../i18n"
+import { translateUnknown as translate } from "@galoymoney/client"
 import Toast from "react-native-root-toast"
 
 export const GlobalErrorToast: ComponentType = () => {

@@ -7,7 +7,7 @@ import { Input } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 
 import { Screen } from "../../components/screen"
-import { translate } from "../../i18n"
+import { translateUnknown as translate } from "@galoymoney/client"
 import { color, palette } from "../../theme"
 import * as UsernameValidation from "../../utils/validation"
 import { InvalidUsernameError } from "../../utils/validation"

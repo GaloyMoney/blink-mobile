@@ -11,7 +11,7 @@ import {
 
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-import { translate } from "../../i18n"
+import { translateUnknown as translate } from "@galoymoney/client"
 import type { ComponentType } from "../../types/jsx"
 
 const BTC_PRICE_LIST = gql`

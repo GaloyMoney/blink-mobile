@@ -1,12 +1,12 @@
 import filter from "lodash.filter"
 import sumBy from "lodash.sumby"
-import { translateQuizSections } from "../../i18n"
+import { translateUnknown as translate } from "@galoymoney/client"
 import type { QuizQuestion, QuizSectionContent } from "../../types/quiz"
 
 export const getCardsFromSection = ({ quizQuestions, sectionIndex }): QuizQuestion[] => {
-  const quizQuestionsContent = translateQuizSections(
+  const quizQuestionsContent = translate(
     "EarnScreen.earns",
-  ) as QuizSectionContent[]
+  ) as unknown as QuizSectionContent[]
 
   const { allQuestions, myCompletedQuestions } = quizQuestions
 

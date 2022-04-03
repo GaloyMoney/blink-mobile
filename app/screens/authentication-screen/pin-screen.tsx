@@ -8,7 +8,7 @@ import { useApolloClient } from "@apollo/client"
 
 import { Screen } from "../../components/screen"
 import { palette } from "../../theme/palette"
-import { translate } from "../../i18n"
+import { translateUnknown as translate } from "@galoymoney/client"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import type { ScreenType } from "../../types/jsx"
 import { PinScreenPurpose } from "../../utils/enum"

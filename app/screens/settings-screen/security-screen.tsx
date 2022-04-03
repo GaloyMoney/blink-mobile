@@ -8,7 +8,7 @@ import EStyleSheet from "react-native-extended-stylesheet"
 
 import { Screen } from "../../components/screen"
 import { palette } from "../../theme/palette"
-import { translate } from "../../i18n"
+import { translateUnknown as translate } from "@galoymoney/client"
 import BiometricWrapper from "../../utils/biometricAuthentication"
 import { toastShow } from "../../utils/toast"
 import type { ScreenType } from "../../types/jsx"

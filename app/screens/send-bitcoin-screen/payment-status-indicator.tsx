@@ -4,7 +4,7 @@ import { Text } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import LottieView from "lottie-react-native"
 
-import { translate } from "../../i18n"
+import { translateUnknown as translate } from "@galoymoney/client"
 import { palette } from "../../theme/palette"
 
 import successLottieJson from "./success_lottie.json"

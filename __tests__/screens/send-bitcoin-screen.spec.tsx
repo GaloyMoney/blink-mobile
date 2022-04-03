@@ -5,7 +5,7 @@ import { act, cleanup, fireEvent, render } from "@testing-library/react-native"
 import "@testing-library/jest-native/extend-expect"
 import "react-native-gesture-handler/jestSetup.js"
 
-import { translate } from "@app/i18n/translate"
+import { translateUnknown as translate } from "@galoymoney/client"
 import "@mocks/react-native-firebase"
 import "@mocks/react-navigation-native"
 import { SendBitcoinScreen } from "@app/screens/send-bitcoin-screen"
