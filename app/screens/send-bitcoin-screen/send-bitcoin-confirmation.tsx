@@ -174,11 +174,12 @@ const SendBitcoinConfirmation = ({
   amountless,
   paymentType,
   sameNode,
+  setStatus,
 }) => {
   const { convertCurrencyAmount } = useMySubscription()
   const [secondaryAmount, setSecondaryAmount] = useState(0)
   const { usdWalletBalance, btcWalletBalance, btcWalletValueInUsd } = useWalletBalance()
-  const [status, setStatus] = useState<StatusType>(Status.IDLE)
+
   const [lnPay] = useMutation(LN_PAY)
 
   const [lnNoAmountPay] = useMutation(LN_NO_AMOUNT_PAY)
