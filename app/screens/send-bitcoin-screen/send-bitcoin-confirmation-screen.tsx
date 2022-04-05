@@ -102,7 +102,6 @@ export const SendBitcoinConfirmationScreen = ({
   } = route.params
 
   const [errs, setErrs] = useState<{ message: string }[]>([])
-  const [status, setStatus] = useState<StatusType>(Status.IDLE)
 
   const paymentSatAmount = convertCurrencyAmount({
     amount: referenceAmount.value,
