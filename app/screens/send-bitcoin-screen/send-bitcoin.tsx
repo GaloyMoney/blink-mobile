@@ -10,6 +10,15 @@ import * as UsernameValidation from "../../utils/validation"
 import { debounce } from "lodash"
 import { gql, useLazyQuery } from "@apollo/client"
 import { useMySubscription } from "@app/hooks"
+import SendBitcoinSuccess from "./send-bitcoin-success"
+
+const Status = {
+  IDLE: "idle",
+  LOADING: "loading",
+  PENDING: "pending",
+  SUCCESS: "success",
+  ERROR: "error",
+} as const
 
 const USER_WALLET_ID = gql`
   query userDefaultWalletId($username: Username!) {
@@ -44,6 +53,7 @@ const SendBitcoin = ({ navigation, route }) => {
   const [destinationStatus, setDestinationStatus] = useState<
     "VALID" | "INVALID" | "NOT_CHECKED"
   >("NOT_CHECKED")
+  const [status, setStatus] = useState<StatusType>(Status.IDLE)
   const nextStep = () => setStep(step + 1)
   const prevStep = () => setStep(step - 1)
 
@@ -146,6 +156,12 @@ const SendBitcoin = ({ navigation, route }) => {
     }
   }
 
+  useEffect(() => {
+    if (status === Status.SUCCESS) {
+      setStep(4)
+    }
+  }, [status])
+
   return (
     <View style={Styles.container}>
       {step === 1 && (
@@ -178,12 +194,13 @@ const SendBitcoin = ({ navigation, route }) => {
           amount={amount}
           amountCurrency={amountCurrency}
           note={note}
-          makePayment={() => null}
+          setStatus={setStatus}
           amountless={amountless}
           paymentType={paymentType}
           sameNode={sameNode}
         />
       )}
+      {step === 4 && <SendBitcoinSuccess />}
     </View>
   )
 }
