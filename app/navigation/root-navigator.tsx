@@ -36,7 +36,6 @@ import { ReceiveBitcoinScreen } from "../screens/receive-bitcoin-screen"
 import {
   ScanningQRCodeScreen,
   SendBitcoinConfirmationScreen,
-  SendBitcoinScreen,
 } from "../screens/send-bitcoin-screen"
 import { SettingsScreen, UsernameScreen } from "../screens/settings-screen"
 import { LanguageScreen } from "../screens/settings-screen/language-screen"
@@ -65,6 +64,7 @@ import HomeIcon from "@app/assets/icons/home.svg"
 import ContactsIcon from "@app/assets/icons/contacts.svg"
 import MapIcon from "@app/assets/icons/map.svg"
 import LearnIcon from "@app/assets/icons/learn.svg"
+import SendBitcoin from "@app/screens/send-bitcoin-screen/send-bitcoin"
 
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
 PushNotification.configure({
@@ -311,7 +311,7 @@ export const RootStack: NavigatorType = () => {
       />
       <StackMoveMoney.Screen
         name="sendBitcoin"
-        component={SendBitcoinScreen}
+        component={SendBitcoin}
         options={{ title: translate("SendBitcoinScreen.title") }}
       />
       <StackMoveMoney.Screen
