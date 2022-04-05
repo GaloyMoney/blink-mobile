@@ -19,4 +19,5 @@ export const palette = {
   galoyBlue: "#3B52F5",
   coolGrey: "#919BBA",
   lapisLazuli: "#344075",
+  orangePill: "#f1a43c",
 }

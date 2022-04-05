@@ -1,0 +1,11 @@
+<svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="15" cy="15" r="15" fill="#F1A43C"/>
+    <g clip-path="url(#hqkemtmala)" fill="#fff" stroke="#fff" stroke-width=".5">
+        <path d="m11.82 8.216-1.04.6 1.026 1.78 1.042-.602-1.027-1.778zM18.448 19.695l-1.041.6 1.027 1.78 1.041-.601-1.027-1.78zM17.541 10.755l-.6-1.041-7.424 4.285.601 1.041 7.423-4.285zM19.129 13.504l-.601-1.04-7.423 4.285.6 1.041 7.424-4.286zM20.672 16.176l-.601-1.04-7.424 4.285.601 1.041 7.424-4.286z"/>
+    </g>
+    <defs>
+        <clipPath id="hqkemtmala">
+            <path fill="#fff" transform="translate(7.368 7.368)" d="M0 0h15.517v15.517H0z"/>
+        </clipPath>
+    </defs>
+</svg>

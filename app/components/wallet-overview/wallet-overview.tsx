@@ -62,7 +62,6 @@ const styles = EStyleSheet.create({
   btcLabelContainer: {
     transform: [{ rotate: "90deg" }],
     width: 50,
-    backgroundColor: palette.btcSecondary,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     position: "absolute",

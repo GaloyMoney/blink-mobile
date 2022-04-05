@@ -17,6 +17,9 @@ type useMainQueryOutput = {
   defaultWalletId: string
   btcTransactionsEdges: object[]
   usdTransactionsEdges: object[]
+  mergedTransactions: object[]
+  wallets: any[]
+  defaultWallet: any
   me: any
   myPubKey: string
   username?: string
