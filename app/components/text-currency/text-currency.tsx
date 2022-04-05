@@ -29,15 +29,27 @@ export const TextCurrency: ComponentType = ({
     return Number.isNaN(amount) ? (
       <Text style={style}>...</Text>
     ) : (
-      <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
+      <View
+        style={{
+          flex: 1,
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "flex-end",
+          paddingLeft: 8,
+        }}
+      >
         <SatsIcon
           style={{
+            width: satsIconSize,
             fill: palette.black,
             height: satsIconSize,
-            flex: 1,
           }}
         />
-        <Text style={style}>
+        <Text
+          style={{
+            ...style,
+          }}
+        >
           {currency_fmt
             .default(amount, {
               precision: 0,

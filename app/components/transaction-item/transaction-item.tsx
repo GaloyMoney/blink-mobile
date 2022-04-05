@@ -129,7 +129,13 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
         })
       }
     >
-      <IconTransaction isReceive={isReceive} size={24} pending={isPending} />
+      <IconTransaction
+        onChain={tx.settlementVia.__typename === "SettlementViaOnChain"}
+        isReceive={isReceive}
+        size={24}
+        pending={isPending}
+        walletType={tx.walletType}
+      />
       <ListItem.Content>
         <ListItem.Title>{description}</ListItem.Title>
         <ListItem.Subtitle>{subtitle ? dateDisplay(tx) : undefined}</ListItem.Subtitle>

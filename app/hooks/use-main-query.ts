@@ -48,12 +48,11 @@ const useMainQuery = (): useMainQueryOutput => {
     }
   }
   const userPreferredLanguage = data?.me?.language
-  const btcWallet = data?.me?.defaultAccount?.wallets?.find(
-    (wallet) => wallet?.__typename === "BTCWallet",
-  )
-  const usdWallet = data?.me?.defaultAccount?.wallets?.find(
-    (wallet) => wallet?.__typename === "UsdWallet",
-  )
+  const wallets = data?.me?.defaultAccount?.wallets
+  const defaultWalletId = data?.me?.defaultAccount?.defaultWalletId
+  const defaultWallet = wallets?.find((wallet) => wallet?.id === defaultWalletId)
+  const btcWallet = wallets?.find((wallet) => wallet?.__typename === "BTCWallet")
+  const usdWallet = wallets?.find((wallet) => wallet?.__typename === "UsdWallet")
   if (hasToken && !btcWallet && !loading) {
     // User is logged in but no wallet was returned.  We need a BTC wallet for the app to function.
     throw new Error(
@@ -71,7 +70,19 @@ const useMainQuery = (): useMainQueryOutput => {
   const username = data?.me?.username
   const phoneNumber = data?.me?.phone
   const mobileVersions = data?.mobileVersions
-  const defaultWalletId = data?.me?.defaultAccount?.defaultWalletId
+
+  btcTransactionsEdges.forEach((btcTransaction, index) => {
+    const tx = btcTransaction
+    tx.node = { ...tx.node, walletType: "BTC" }
+    btcTransactionsEdges[index] = tx
+  })
+  usdTransactionsEdges.forEach((usdTransaction, index) => {
+    const tx = usdTransaction
+    tx.node = { ...tx.node, walletType: "USD" }
+    usdTransactionsEdges[index] = tx
+  })
+  const mergedTransactions = btcTransactionsEdges?.concat(usdTransactionsEdges)
+  mergedTransactions.sort((a, b) => b.date - a.date)
 
   return {
     userPreferredLanguage,
@@ -80,8 +91,11 @@ const useMainQuery = (): useMainQueryOutput => {
     btcWalletId,
     usdWalletId,
     defaultWalletId,
+    defaultWallet,
     btcTransactionsEdges,
     usdTransactionsEdges,
+    mergedTransactions,
+    wallets,
     me,
     myPubKey,
     username,
