@@ -169,6 +169,7 @@ const SendBitcoin = ({ navigation, route }) => {
           destination={destination}
           setDestination={setDestination}
           nextStep={nextStep}
+          navigation={navigation}
         />
       )}
       {step === 2 && (
