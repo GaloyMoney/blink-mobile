@@ -1,14 +1,26 @@
 import React from "react"
 import { palette } from "@app/theme"
-import { StyleSheet, TextInput, View } from "react-native"
+import { StyleSheet, Text, TextInput, View } from "react-native"
 import { translate } from "@app/i18n"
 import { Button } from "react-native-elements"
 import { isDestinationLightningPayment, isDestinationNetworkValid } from "./validation"
 import { INetwork } from "@app/types/network"
+import ScanIcon from "@app/assets/icons/scan.svg"
+import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 
 const Styles = StyleSheet.create({
   inputContainer: {
     flex: 1,
+  },
+  fieldBackground: {
+    flexDirection: "row",
+    borderStyle: "solid",
+    overflow: "hidden",
+    backgroundColor: palette.white,
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    height: 60,
   },
   descriptionContainer: {
     flex: 4,
@@ -17,13 +29,7 @@ const Styles = StyleSheet.create({
     flex: 1,
   },
   input: {
-    borderStyle: "solid",
-    overflow: "hidden",
-    borderWidth: 1,
-    borderColor: palette.white,
-    backgroundColor: palette.white,
-    borderRadius: 10,
-    padding: 10,
+    flex: 1,
   },
   button: {
     height: 50,
@@ -43,6 +49,15 @@ const Styles = StyleSheet.create({
     color: palette.white,
     fontWeight: "bold",
   },
+  fieldTitleText: {
+    fontWeight: "bold",
+    color: palette.lapisLazuli,
+  },
+  iconContainer: {
+    width: 50,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 })
 
 const validateDestination = (destination: string, network: INetwork) => {
@@ -54,10 +69,18 @@ const validateDestination = (destination: string, network: INetwork) => {
   return false
 }
 
-const SendBitcoinDestination = ({ destination, setDestination, nextStep }) => {
+const SendBitcoinDestination = ({
+  destination,
+  setDestination,
+  nextStep,
+  navigation,
+}) => {
   return (
     <>
-      <View style={Styles.inputContainer}>
+      <Text style={Styles.fieldTitleText}>
+        {translate("SendBitcoinScreen.destination")}
+      </Text>
+      <View style={Styles.fieldBackground}>
         <TextInput
           style={Styles.input}
           placeholder={translate("SendBitcoinScreen.input")}
@@ -66,7 +89,13 @@ const SendBitcoinDestination = ({ destination, setDestination, nextStep }) => {
           selectTextOnFocus
           autoCapitalize="none"
         />
+        <TouchableWithoutFeedback onPress={() => navigation?.navigate("scanningQRCode")}>
+          <View style={Styles.iconContainer}>
+            <ScanIcon />
+          </View>
+        </TouchableWithoutFeedback>
       </View>
+
       <View style={Styles.descriptionContainer}></View>
       <View style={Styles.buttonContainer}>
         <Button
