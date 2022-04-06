@@ -32,7 +32,7 @@ import {
   WelcomePhoneValidationScreenDataInjected,
 } from "../screens/phone-auth-screen"
 import { PriceScreen } from "../screens/price-screen/price-screen"
-import { ReceiveBitcoinScreen } from "../screens/receive-bitcoin-screen"
+
 import {
   ScanningQRCodeScreen,
   SendBitcoinConfirmationScreen,
@@ -56,7 +56,7 @@ import {
   RootStackParamList,
 } from "./stack-param-lists"
 import type { NavigatorType } from "../types/jsx"
-
+import ReceiveBitcoin from "@app/screens/receive-bitcoin-screen/receive-bitcoin"
 import PushNotification from "react-native-push-notification"
 import useMainQuery from "@app/hooks/use-main-query"
 import { LnurlScreen } from "@app/screens/settings-screen/lnurl-screen"
@@ -321,7 +321,7 @@ export const RootStack: NavigatorType = () => {
       />
       <StackMoveMoney.Screen
         name="receiveBitcoin"
-        component={ReceiveBitcoinScreen}
+        component={ReceiveBitcoin}
         options={{
           title: translate("ReceiveBitcoinScreen.title"),
         }}
