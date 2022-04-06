@@ -71,18 +71,18 @@ const useMainQuery = (): useMainQueryOutput => {
   const phoneNumber = data?.me?.phone
   const mobileVersions = data?.mobileVersions
 
-  btcTransactionsEdges.forEach((btcTransaction, index) => {
+  btcTransactionsEdges?.forEach((btcTransaction, index) => {
     const tx = btcTransaction
     tx.node = { ...tx.node, walletType: "BTC" }
     btcTransactionsEdges[index] = tx
   })
-  usdTransactionsEdges.forEach((usdTransaction, index) => {
+  usdTransactionsEdges?.forEach((usdTransaction, index) => {
     const tx = usdTransaction
     tx.node = { ...tx.node, walletType: "USD" }
     usdTransactionsEdges[index] = tx
   })
   const mergedTransactions = btcTransactionsEdges?.concat(usdTransactionsEdges)
-  mergedTransactions.sort((a, b) => b.date - a.date)
+  mergedTransactions?.sort((a, b) => b.date - a.date)
 
   return {
     userPreferredLanguage,
