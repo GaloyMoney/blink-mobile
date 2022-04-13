@@ -271,10 +271,10 @@ export const MoveMoneyScreen: ScreenType = ({
       // handle error
     })
 
-  let recentTRansactionsData = undefined
+  let recentTransactionsData = undefined
 
   if (hasToken && transactionsEdges) {
-    recentTRansactionsData = {
+    recentTransactionsData = {
       title: translate("TransactionScreen.title"),
       target: "transactionHistory",
       style: "transactionViewContainer",
@@ -376,7 +376,7 @@ export const MoveMoneyScreen: ScreenType = ({
             target: "receiveBitcoin",
             icon: <ReceiveIcon />,
           },
-          recentTRansactionsData,
+          recentTransactionsData,
         ]}
         style={styles.listContainer}
         refreshControl={<RefreshControl refreshing={loading} onRefresh={refetch} />}
