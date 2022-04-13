@@ -26,6 +26,11 @@ const styles = EStyleSheet.create({
     fontSize: "18rem",
     fontWeight: "bold",
   },
+
+  transactionViewContainer: {
+    borderTopRightRadius: "10rem",
+    borderTopLeftRadius: "10rem",
+  },
 })
 
 export const LargeButton: ComponentType = ({
