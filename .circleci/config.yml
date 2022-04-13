@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  gh: circleci/github-cli@2.0
+
 jobs:
   android_test:
     docker:
@@ -117,6 +120,7 @@ jobs:
       FL_OUTPUT_DIR: output
     shell: /bin/bash --login -o pipefail
     steps:
+      - gh/install
       - checkout:
           path: ~/galoy-mobile
       - add_ssh_keys:
@@ -155,6 +159,7 @@ jobs:
       - run: git commit -a -m "new ios build [ci skip]"
       - run: git reset -- GoogleService-Info.plist
       - run: git push -q https://${GITHUB_TOKEN}@github.com/GaloyMoney/galoy-mobile.git main
+      - run: gh release upload $CIRCLE_TAG "output/gym/Bitcoin Beach.ipa" --clobber
       - store_artifacts:
           path: ios/output
       - store_test_results:
@@ -171,6 +176,7 @@ jobs:
     working_directory: ~/galoy-mobile
     shell: /bin/bash --login -o pipefail
     steps:
+      - gh/install
       - checkout:
           path: ~/galoy-mobile
       - run: sudo apt-get update
@@ -221,6 +227,10 @@ jobs:
       - run: git add --force android/app/build/generated/sourcemaps/react/release
       - run: git commit -a -m "new android build [ci skip]"
       - run: git push -q https://${GITHUB_TOKEN}@github.com/GaloyMoney/galoy-mobile.git main
+      
+      - run: gh release upload $CIRCLE_TAG "app/build/outputs/apk/release/app-release.apk" --clobber
+      - store_artifacts:
+          path: android/app/build/outputs/apk
 
   update_locale:
     working_directory: ~/galoy-mobile
