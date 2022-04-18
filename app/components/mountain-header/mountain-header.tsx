@@ -2,7 +2,7 @@ import * as React from "react"
 import { View, Text } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Montain from "./mointains-cloud-01.svg"
-import { translate } from "../../i18n"
+import { translateUnknown as translate } from "@galoymoney/client"
 import { palette } from "../../theme/palette"
 import type { ComponentType } from "../../types/jsx"
 

@@ -2,7 +2,7 @@ import { useQuery } from "@apollo/client"
 import { MAIN_QUERY } from "@app/graphql/query"
 import useToken from "@app/utils/use-token"
 import NetInfo from "@react-native-community/netinfo"
-import { translate } from "../i18n"
+import { translateUnknown as translate } from "@galoymoney/client"
 import crashlytics from "@react-native-firebase/crashlytics"
 
 const useMainQuery = (): useMainQueryOutput => {
@@ -13,11 +13,11 @@ const useMainQuery = (): useMainQueryOutput => {
   })
   let errors = []
   if (error) {
-    if (error.graphQLErrors && previousData) {
+    if (error.graphQLErrors?.length > 0 && previousData) {
       // We got an error back from the server but we have data in the cache
       errors = [...error.graphQLErrors]
     }
-    if (error.graphQLErrors && !previousData) {
+    if (error.graphQLErrors?.length > 0 && !previousData) {
       // This is the first execution of mainquery and we received errors back from the server
       error.graphQLErrors.forEach((e) => {
         crashlytics().recordError(e)
@@ -41,9 +41,10 @@ const useMainQuery = (): useMainQueryOutput => {
     if (error.networkError && !previousData) {
       // This is the first execution of mainquery and it has failed
       crashlytics().recordError(error.networkError)
-      throw new Error(
-        "Did not receive a response from main query.  Either the network is offline or servers are not responding.",
-      )
+      // TODO: check if error is INVALID_AUTHENTICATION here
+      // throw new Error(
+      //   "Did not receive a response from main query.  Either the network is offline or servers are not responding.",
+      // )
     }
   }
   const userPreferredLanguage = data?.me?.language

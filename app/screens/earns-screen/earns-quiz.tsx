@@ -1,6 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
 import * as React from "react"
-import I18n from "i18n-js"
 import { useEffect, useState } from "react"
 import { StatusBar, Text, View } from "react-native"
 import { Button } from "react-native-elements"
@@ -11,7 +10,7 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import Icon from "react-native-vector-icons/Ionicons"
 import { CloseCross } from "../../components/close-cross"
 import { Screen } from "../../components/screen"
-import { translate } from "../../i18n"
+import { toLocaleNumber, translateUnknown as translate } from "@galoymoney/client"
 import { palette } from "../../theme/palette"
 import { shuffle } from "../../utils/helper"
 import { sleep } from "../../utils/sleep"
@@ -307,9 +306,9 @@ export const EarnQuiz: ScreenType = ({ route, navigation }: Props) => {
             </>
           )) || (
             <Button
-              title={I18n.t("EarnScreen.earnSats", {
+              title={translate("EarnScreen.earnSats", {
                 count: amount,
-                formatted_number: I18n.toNumber(amount, { precision: 0 }),
+                formatted_number: toLocaleNumber(amount, { precision: 0 }),
               })}
               buttonStyle={styles.buttonStyle}
               titleStyle={styles.titleStyle}

@@ -5,7 +5,7 @@ import { act, cleanup, fireEvent, render } from "@testing-library/react-native"
 import "@testing-library/jest-native/extend-expect"
 import "react-native-gesture-handler/jestSetup.js"
 
-import { translate } from "@app/i18n/translate"
+import { translateUnknown as translate } from "@galoymoney/client"
 import "@mocks/react-navigation-native"
 import "@mocks/react-native-geetest-module"
 import { WelcomePhoneInputScreen } from "@app/screens/phone-auth-screen"
@@ -35,17 +35,5 @@ describe("WelcomePhoneInputScreen", () => {
     expect(
       queryByPlaceholderText(translate("WelcomePhoneInputScreen.placeholder")),
     ).not.toBeNull()
-  })
-  it("country picker is visible on press", async () => {
-    const { getByTestId } = render(
-      <MockedProvider cache={cache}>
-        <WelcomePhoneInputScreen />
-      </MockedProvider>,
-    )
-    const countryPicker = getByTestId("country-picker")
-    await act(() => {
-      fireEvent.press(countryPicker)
-    })
-    expect(countryPicker).toHaveProp("visible", true)
   })
 })

@@ -17,7 +17,7 @@ import QRCode from "react-native-qrcode-svg"
 import { Button, Text } from "react-native-elements"
 import Clipboard from "@react-native-community/clipboard"
 import Toast from "react-native-root-toast"
-import { translate } from "@app/i18n"
+import { translateUnknown as translate } from "@galoymoney/client"
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 import { color } from "@app/theme"
 

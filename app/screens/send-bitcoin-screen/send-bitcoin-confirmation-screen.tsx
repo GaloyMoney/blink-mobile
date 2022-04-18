@@ -8,7 +8,7 @@ import { RouteProp } from "@react-navigation/native"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 
 import { Screen } from "../../components/screen"
-import { translate } from "../../i18n"
+import { translateUnknown as translate } from "@galoymoney/client"
 import type { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
 import { fetchMainQuery } from "../../graphql/query"
 import { useWalletBalance, useMySubscription } from "../../hooks"
@@ -431,7 +431,7 @@ export const SendBitcoinConfirmationScreen = ({
           {status === "idle" && errorMessage.length === 0 && (
             <View style={styles.confirmationTextContainer}>
               <Text style={styles.confirmationText}>
-                {translate("SendBitcoinConfirmationScreen.confirmPayment?")}
+                {translate("SendBitcoinConfirmationScreen.confirmPaymentQuestion")}
               </Text>
               <Text style={styles.confirmationText}>
                 {translate("SendBitcoinConfirmationScreen.paymentFinal")}

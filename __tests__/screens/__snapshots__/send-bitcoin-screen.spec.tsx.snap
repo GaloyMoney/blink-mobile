@@ -212,9 +212,7 @@ exports[`SendBitcoinScreen render matches snapshot 1`] = `
               "marginVertical": 8,
             }
           }
-        >
-          
-        </Text>
+        />
         <View
           style={
             Object {

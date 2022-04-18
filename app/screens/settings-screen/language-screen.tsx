@@ -1,5 +1,5 @@
 import { gql, useMutation } from "@apollo/client"
-import { translate } from "../../i18n"
+import { translateUnknown as translate } from "@galoymoney/client"
 import * as React from "react"
 import { ListItem } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"

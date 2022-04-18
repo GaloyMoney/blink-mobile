@@ -1,4 +1,4 @@
-import { translate } from "@app/i18n"
+import { translateUnknown as translate } from "@galoymoney/client"
 
 export class InvalidUsernameError extends Error {
   constructor(message) {

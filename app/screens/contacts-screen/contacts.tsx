@@ -16,7 +16,7 @@ import { FlatList } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
 
 import { Screen } from "../../components/screen"
-import { translate } from "../../i18n"
+import { translateUnknown as translate } from "@galoymoney/client"
 import { ContactStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
 import { ScreenType } from "../../types/jsx"

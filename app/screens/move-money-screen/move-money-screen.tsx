@@ -1,3 +1,5 @@
+import { translateUnknown as translate } from "@galoymoney/client"
+
 import messaging from "@react-native-firebase/messaging"
 import * as React from "react"
 import { useEffect, useState } from "react"
@@ -23,7 +25,6 @@ import { IconTransaction } from "../../components/icon-transactions"
 import { LargeButton } from "../../components/large-button"
 import { Screen } from "../../components/screen"
 import { TransactionItem } from "../../components/transaction-item"
-import { translate } from "../../i18n"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { AccountType } from "../../utils/enum"

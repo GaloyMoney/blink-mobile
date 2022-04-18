@@ -11,7 +11,7 @@ import {
 } from "../../components/icon-transactions"
 import { Screen } from "../../components/screen"
 import { TextCurrency } from "../../components/text-currency"
-import { translate } from "../../i18n"
+import { translateUnknown as translate } from "@galoymoney/client"
 import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"

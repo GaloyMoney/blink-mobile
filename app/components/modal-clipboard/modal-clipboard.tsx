@@ -12,7 +12,7 @@ import {
   LAST_CLIPBOARD_PAYMENT,
   modalClipboardVisibleVar,
 } from "../../graphql/client-only-query"
-import { translate } from "../../i18n"
+import { translateUnknown as translate } from "@galoymoney/client"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { cache } from "../../graphql/cache"

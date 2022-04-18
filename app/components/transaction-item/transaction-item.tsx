@@ -11,8 +11,8 @@ import { ParamListBase } from "@react-navigation/native"
 import { prefCurrencyVar as primaryCurrencyVar } from "../../graphql/client-only-query"
 import { useHideBalance } from "../../hooks"
 import * as currency_fmt from "currency.js"
-import i18n from "i18n-js"
 import moment from "moment"
+import { getLocale } from "@galoymoney/client"
 
 const styles = EStyleSheet.create({
   container: {
@@ -42,7 +42,7 @@ export interface TransactionItemProps {
   subtitle?: boolean
 }
 
-moment.locale(i18n.locale)
+moment.locale(getLocale())
 
 const dateDisplay = ({ createdAt }) =>
   moment.duration(Math.min(0, moment.unix(createdAt).diff(moment()))).humanize(true)
