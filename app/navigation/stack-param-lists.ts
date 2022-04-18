@@ -86,6 +86,7 @@ export type MoveMoneyStackParamList = {
   }
   settings: undefined
   transactionDetail: TransactionDetail
+  TransferScreen: undefined
 }
 
 export type PhoneValidationStackParamList = {
