@@ -349,7 +349,7 @@ export const MoveMoneyScreen: ScreenType = ({
           icon={<SettingsIcon />}
         />
       </View>
-      <WalletOverviewDataInjected />
+      <WalletOverviewDataInjected navigation={navigation} />
       <FlatList
         ListHeaderComponent={() => (
           <>

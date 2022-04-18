@@ -88,14 +88,14 @@ const styles = EStyleSheet.create({
   },
 })
 
-export const WalletOverviewDataInjected = () => {
+export const WalletOverviewDataInjected = ({ navigation }) => {
   const { usdWalletBalance, btcWalletBalance, btcWalletValueInUsd } = useWalletBalance()
   return (
     <WalletOverview
       usdBalance={usdWalletBalance / 100}
       btcPrimaryBalance={btcWalletValueInUsd}
       btcSecondaryBalance={btcWalletBalance}
-      transferButtonAction={() => console.log("test")}
+      transferButtonAction={() => navigation.navigate("TransferScreen")}
     />
   )
 }
