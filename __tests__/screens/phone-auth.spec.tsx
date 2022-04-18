@@ -36,16 +36,4 @@ describe("WelcomePhoneInputScreen", () => {
       queryByPlaceholderText(translate("WelcomePhoneInputScreen.placeholder")),
     ).not.toBeNull()
   })
-  it("country picker is visible on press", async () => {
-    const { getByTestId } = render(
-      <MockedProvider cache={cache}>
-        <WelcomePhoneInputScreen />
-      </MockedProvider>,
-    )
-    const countryPicker = getByTestId("country-picker")
-    await act(() => {
-      fireEvent.press(countryPicker)
-    })
-    expect(countryPicker).toHaveProp("visible", true)
-  })
 })
