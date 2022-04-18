@@ -65,6 +65,7 @@ import ContactsIcon from "@app/assets/icons/contacts.svg"
 import MapIcon from "@app/assets/icons/map.svg"
 import LearnIcon from "@app/assets/icons/learn.svg"
 import SendBitcoin from "@app/screens/send-bitcoin-screen/send-bitcoin"
+import { TransferScreenDataInjected as TransferScreen } from "@app/screens/transfer-screen"
 
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
 PushNotification.configure({
@@ -324,6 +325,13 @@ export const RootStack: NavigatorType = () => {
         component={ReceiveBitcoin}
         options={{
           title: translate("ReceiveBitcoinScreen.title"),
+        }}
+      />
+      <StackMoveMoney.Screen
+        name="TransferScreen"
+        component={TransferScreen}
+        options={{
+          title: translate("TransferScreen.title"),
         }}
       />
       <RootNavigator.Screen
