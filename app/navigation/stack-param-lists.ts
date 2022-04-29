@@ -87,6 +87,14 @@ export type MoveMoneyStackParamList = {
   settings: undefined
   transactionDetail: TransactionDetail
   TransferScreen: undefined
+  transferConfirmation: {
+    fromWallet: Wallet
+    toWallet: Wallet
+    satAmount: number
+    satAmountInUsd: number
+    dollarAmount: number
+    amountCurrency: string
+  }
 }
 
 export type PhoneValidationStackParamList = {
