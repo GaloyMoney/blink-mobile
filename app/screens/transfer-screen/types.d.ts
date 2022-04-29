@@ -1,1 +1,3 @@
-type TransferScreenProps = {}
+type TransferScreenProps = {
+  navigation: StackNavigationProp<TransferScreenParamList, "TransferScreen">
+}

@@ -7,9 +7,13 @@ import { FakeCurrencyInput } from "react-native-currency-input"
 import { useMySubscription, useWalletBalance } from "@app/hooks"
 import * as currency_fmt from "currency.js"
 import { Button } from "react-native-elements"
-import FeeIcon from "@app/assets/icons/fee.svg"
-import useFee from "./use-fee"
-import { gql, useMutation } from "@apollo/client"
+import { useMutation } from "@apollo/client"
+import { INTRA_LEDGER_PAY } from "../send-bitcoin-screen"
+import { RouteProp } from "@react-navigation/native"
+import {
+  MoveMoneyStackParamList,
+  RootStackParamList,
+} from "@app/navigation/stack-param-lists"
 
 const Status = {
   IDLE: "idle",
@@ -132,72 +136,24 @@ const styles = StyleSheet.create({
   },
 })
 
-export const LN_PAY = gql`
-  mutation lnInvoicePaymentSend($input: LnInvoicePaymentInput!) {
-    lnInvoicePaymentSend(input: $input) {
-      errors {
-        message
-      }
-      status
-    }
-  }
-`
+type StatusType = typeof Status[keyof typeof Status]
 
-const LN_NO_AMOUNT_PAY = gql`
-  mutation lnNoAmountInvoicePaymentSend($input: LnNoAmountInvoicePaymentInput!) {
-    lnNoAmountInvoicePaymentSend(input: $input) {
-      errors {
-        message
-      }
-      status
-    }
-  }
-`
-
-const LN_NO_AMOUNT_PAY_USD = gql`
-  mutation LnNoAmountUsdInvoicePaymentSend($input: LnNoAmountUsdInvoicePaymentInput!) {
-    lnNoAmountUsdInvoicePaymentSend(input: $input) {
-      errors {
-        message
-      }
-      status
-    }
-  }
-`
-
-const SendBitcoinConfirmation = ({
-  destination,
-  wallet,
-  amount,
-  amountCurrency,
-  note,
-  amountless,
-  paymentType,
-  sameNode,
-  setStatus,
+const TransferConfirmationScreen = ({
+  route,
+}: {
+  route: RouteProp<MoveMoneyStackParamList, "transferConfirmation">
 }) => {
-  const { convertCurrencyAmount } = useMySubscription()
-  const [secondaryAmount, setSecondaryAmount] = useState(0)
+  const {
+    fromWallet,
+    toWallet,
+    dollarAmount,
+    satAmount,
+    satAmountInUsd,
+    amountCurrency,
+  } = route.params
   const { usdWalletBalance, btcWalletBalance, btcWalletValueInUsd } = useWalletBalance()
-
-  const [lnPay] = useMutation(LN_PAY)
-
-  const [lnNoAmountPay] = useMutation(LN_NO_AMOUNT_PAY)
-  const [lnNoAmountPayUsd] = useMutation(LN_NO_AMOUNT_PAY_USD)
-  const fee = useFee({
-    walletId: wallet.id,
-    address: destination,
-    amountless,
-    invoice: destination,
-    paymentType,
-    sameNode,
-    paymentSatAmount: convertCurrencyAmount({
-      from: "USD",
-      to: "BTC",
-      amount: amount,
-    }),
-    primaryCurrency: amountCurrency,
-  })
+  const [intraLedgerPay] = useMutation(INTRA_LEDGER_PAY)
+  const [status, setStatus] = useState<StatusType>(Status.IDLE)
 
   const handlePaymentReturn = (status, errors) => {
     if (status === "SUCCESS") {
@@ -212,121 +168,32 @@ const SendBitcoinConfirmation = ({
     //  setErrs([{ message: translate("errors.generic") + error }])
   }
 
-  const payLightning = async () => {
+  const payWallet = async () => {
     setStatus(Status.LOADING)
+
     try {
-      const { data, errors } = await lnPay({
+      const { data, errors } = await intraLedgerPay({
         variables: {
           input: {
-            walletId: wallet.id,
-            paymentRequest: destination,
-            memo: note,
+            walletId: fromWallet?.id,
+            recipientWalletId: toWallet?.id,
+            amount: fromWallet?.walletCurrency === "BTC" ? satAmount : dollarAmount / 100,
           },
         },
       })
 
-      const status = data.lnInvoicePaymentSend.status
+      const status = data.intraLedgerPaymentSend.status
       const errs = errors
         ? errors.map((error) => {
             return { message: error.message }
           })
-        : data.lnInvoicePaymentSend.errors
+        : data.intraLedgerPaymentSend.errors
       handlePaymentReturn(status, errs)
     } catch (err) {
       handlePaymentError(err)
     }
   }
 
-  const payAmountlessLightning = async () => {
-    setStatus(Status.LOADING)
-    try {
-      const { data, errors } = await lnNoAmountPay({
-        variables: {
-          input: {
-            walletId: wallet.id,
-            paymentRequest: destination,
-            amount: amount,
-            memo: note,
-          },
-        },
-      })
-
-      const status = data.lnNoAmountInvoicePaymentSend.status
-      const errs = errors
-        ? errors.map((error) => {
-            return { message: error.message }
-          })
-        : data.lnNoAmountInvoicePaymentSend.errors
-      handlePaymentReturn(status, errs)
-    } catch (err) {
-      handlePaymentError(err)
-    }
-  }
-
-  const payAmountlessLightningUsd = async () => {
-    setStatus(Status.LOADING)
-    try {
-      const { data, errors } = await lnNoAmountPayUsd({
-        variables: {
-          input: {
-            walletId: wallet.id,
-            paymentRequest: destination,
-            amount: amount * 100,
-            memo: note,
-          },
-        },
-      })
-      console.log(data)
-      const status = data.lnNoAmountUsdInvoicePaymentSend.status
-      console.log(data.lnNoAmountUsdInvoicePaymentSend.errors)
-      const errs = errors
-        ? errors.map((error) => {
-            return { message: error.message }
-          })
-        : data.lnNoAmountUsdInvoicePaymentSend.errors
-      handlePaymentReturn(status, errs)
-    } catch (err) {
-      handlePaymentError(err)
-    }
-  }
-
-  const pay = async () => {
-    console.log(paymentType)
-    console.log(amountless)
-    if (paymentType === "lightning") {
-      if (amountless) {
-        if (wallet.__typename === "UsdWallet") {
-          payAmountlessLightningUsd()
-          return
-        }
-        payAmountlessLightning()
-      } else {
-        payLightning()
-      }
-      return
-    }
-  }
-
-  useEffect(() => {
-    if (wallet.__typename === "BtcWallet" && amountCurrency === "USD") {
-      setSecondaryAmount(
-        convertCurrencyAmount({
-          amount: amount,
-          from: "USD",
-          to: "BTC",
-        }),
-      )
-    }
-    if (wallet.__typename === "BtcWallet" && amountCurrency === "USD") {
-      setSecondaryAmount(
-        convertCurrencyAmount({
-          amount: amount,
-          from: "BTC",
-          to: "USD",
-        }),
-      )
-    }
-  }, [amount, amountCurrency])
   return (
     <View style={styles.sendBitcoinConfirmationContainer}>
       <Text style={styles.fieldTitleText}>
@@ -336,15 +203,15 @@ const SendBitcoinConfirmation = ({
         <View style={styles.destinationIconContainer}>
           <DestinationIcon />
         </View>
-        <Text style={styles.destinationText}>{destination}</Text>
+        {/* <Text style={styles.destinationText}>{destination}</Text> */}
       </View>
       <Text style={styles.fieldTitleText}>{translate("SendBitcoinScreen.amount")}</Text>
       <View style={styles.fieldBackground}>
         <View style={styles.amountContainer}>
-          {wallet.__typename === "BTCWallet" && amountCurrency === "BTC" && (
+          {fromWallet?.walletCurrency === "BTC" && amountCurrency === "BTC" && (
             <>
               <FakeCurrencyInput
-                value={amount}
+                value={satAmount}
                 prefix=""
                 delimiter=","
                 separator="."
@@ -355,7 +222,7 @@ const SendBitcoinConfirmation = ({
                 style={styles.walletBalanceInput}
               />
               <FakeCurrencyInput
-                value={secondaryAmount}
+                value={satAmountInUsd}
                 prefix="$"
                 delimiter=","
                 separator="."
@@ -365,10 +232,10 @@ const SendBitcoinConfirmation = ({
               />
             </>
           )}
-          {wallet.__typename === "BTCWallet" && amountCurrency === "USD" && (
+          {fromWallet?.walletCurrency === "BTC" && amountCurrency === "USD" && (
             <>
               <FakeCurrencyInput
-                value={amount}
+                value={satAmountInUsd}
                 prefix="$"
                 delimiter=","
                 separator="."
@@ -378,7 +245,7 @@ const SendBitcoinConfirmation = ({
                 editable={false}
               />
               <FakeCurrencyInput
-                value={secondaryAmount}
+                value={satAmount}
                 prefix=""
                 delimiter=","
                 separator="."
@@ -389,9 +256,9 @@ const SendBitcoinConfirmation = ({
               />
             </>
           )}
-          {wallet.__typename === "UsdWallet" && (
+          {fromWallet?.walletCurrency === "USD" && (
             <FakeCurrencyInput
-              value={amount}
+              value={dollarAmount}
               prefix="$"
               delimiter=","
               separator="."
@@ -408,12 +275,12 @@ const SendBitcoinConfirmation = ({
         <View style={styles.walletSelectorTypeContainer}>
           <View
             style={
-              wallet.__typename === "BTCWallet"
+              fromWallet?.walletCurrency === "BTC"
                 ? styles.walletSelectorTypeLabelBitcoin
                 : styles.walletSelectorTypeLabelUsd
             }
           >
-            {wallet.__typename === "BTCWallet" ? (
+            {fromWallet?.walletCurrency === "BTC" ? (
               <Text style={styles.walletSelectorTypeLabelBtcText}>BTC</Text>
             ) : (
               <Text style={styles.walletSelectorTypeLabelUsdText}>USD</Text>
@@ -422,7 +289,7 @@ const SendBitcoinConfirmation = ({
         </View>
         <View style={styles.walletSelectorInfoContainer}>
           <View style={styles.walletSelectorTypeTextContainer}>
-            {wallet.__typename === "BTCWallet" ? (
+            {fromWallet?.walletCurrency === "BTC" ? (
               <>
                 <Text style={styles.walletTypeText}>Bitcoin Wallet</Text>
               </>
@@ -433,7 +300,7 @@ const SendBitcoinConfirmation = ({
             )}
           </View>
           <View style={styles.walletSelectorBalanceContainer}>
-            {wallet.__typename === "BTCWallet" ? (
+            {fromWallet?.walletCurrency === "BTC" ? (
               <>
                 <Text style={styles.walletBalanceText}>
                   {currency_fmt
@@ -471,25 +338,16 @@ const SendBitcoinConfirmation = ({
           <View />
         </View>
       </View>
-      <Text style={styles.fieldTitleText}>
-        {translate("SendBitcoinConfirmationScreen.feeLabel")}
-      </Text>
-      <View style={styles.fieldBackground}>
-        <View style={styles.destinationIconContainer}>
-          <FeeIcon />
-        </View>
-        <Text style={styles.destinationText}>{fee?.text}</Text>
-      </View>
       <View style={styles.buttonContainer}>
         <Button
           title={translate("SendBitcoinConfirmationScreen.title")}
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitleStyle}
-          onPress={() => pay()}
+          onPress={() => payWallet()}
         />
       </View>
     </View>
   )
 }
 
-export default SendBitcoinConfirmation
+export default TransferConfirmationScreen
