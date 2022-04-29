@@ -21,4 +21,5 @@ export const palette = {
   lapisLazuli: "#344075",
   orangePill: "#f1a43c",
   violetteBlue: "#6374c3",
+  culturedWhite: "#f1f3f6",
 }

@@ -1889,10 +1889,8 @@
     base64-js "^1.2.3"
     xmlbuilder "^14.0.0"
 
-"@galoymoney/client@^0.1.13":
+"@galoymoney/client@../galoy-client":
   version "0.1.13"
-  resolved "https://registry.yarnpkg.com/@galoymoney/client/-/client-0.1.13.tgz#60bb7aa6fd7cb2894ee3a32e05bc9ed8a94047a2"
-  integrity sha512-wOB9+1ITNF+s5SOanNSVyLGPl74B/NAnmyg9AJacTlJ7+He8QnfSzA3GzrOBheUFsML+8doeix5wEUmRDgg1aA==
   dependencies:
     "@apollo/client" "^3.5.8"
     bitcoinjs-lib "^5.0.0"
