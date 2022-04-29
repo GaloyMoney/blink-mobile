@@ -1,7 +1,7 @@
 import { useMutation } from "@apollo/client"
 import { useMySubscription } from "@app/hooks"
 import useMainQuery from "@app/hooks/use-main-query"
-import { translate } from "@app/i18n"
+import { translateUnknown as translate } from "@galoymoney/client"
 import { debounce } from "lodash"
 import React, { useEffect, useMemo, useState } from "react"
 import { View } from "react-native"

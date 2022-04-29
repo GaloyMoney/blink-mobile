@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 })
-const SendBitcoinSuccess = () => {
+const TransferSuccess = () => {
   return (
     <View style={styles.lottieContainer}>
       <LottieView
@@ -38,4 +38,4 @@ const SendBitcoinSuccess = () => {
   )
 }
 
-export default SendBitcoinSuccess
+export default TransferSuccess
