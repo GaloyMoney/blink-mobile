@@ -1,7 +1,7 @@
 import React from "react"
 import { palette } from "@app/theme"
 import { StyleSheet, Text, TextInput, View } from "react-native"
-import { translate } from "@app/i18n"
+import { translateUnknown as translate } from "@galoymoney/client"
 import { Button } from "react-native-elements"
 import { isDestinationLightningPayment, isDestinationNetworkValid } from "./validation"
 import { INetwork } from "@app/types/network"
