@@ -69,7 +69,7 @@
     "moment": "^2.24.0",
     "node-libs-react-native": "^1.2.1",
     "ramda": "0.27.1",
-    "react": "18.0.0",
+    "react": "18.1.0",
     "react-apollo-network-status": "^5.1.0",
     "react-content-loader": "^6.0.3",
     "react-dom": "^18.0.0",
