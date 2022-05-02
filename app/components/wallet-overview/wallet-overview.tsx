@@ -31,6 +31,7 @@ const styles = EStyleSheet.create({
   textPrimary: {
     fontSize: 20,
     fontWeight: "600",
+    color: palette.black
   },
   textRight: {
     textAlign: "right",
@@ -42,6 +43,7 @@ const styles = EStyleSheet.create({
   },
   textSecondary: {
     fontSize: 12,
+    color: palette.darkGrey
   },
   usdLabelContainer: {
     transform: [{ rotate: "-90deg" }],
