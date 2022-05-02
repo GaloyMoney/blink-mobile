@@ -453,6 +453,7 @@ export const TransferScreen = ({ navigation }: TransferScreenProps) => {
               satAmount,
               satAmountInUsd,
               dollarAmount,
+              amountCurrency,
             })
           }
         />
@@ -627,6 +628,7 @@ const styles = EStyleSheet.create({
     flexDirection: "row",
   },
   buttonContainer: {
+    padding: 10,
     flex: 1,
   },
   button: {
