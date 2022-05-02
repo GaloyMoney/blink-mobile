@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
   sendBitcoinConfirmationContainer: {
     flex: 1,
     flexDirection: "column",
+    padding: 10,
   },
   fieldBackground: {
     flexDirection: "row",
@@ -155,6 +156,8 @@ const TransferConfirmationScreen = ({
   const [intraLedgerPay] = useMutation(INTRA_LEDGER_PAY)
   const [status, setStatus] = useState<StatusType>(Status.IDLE)
 
+  useEffect(() => {})
+
   const handlePaymentReturn = (status, errors) => {
     if (status === "SUCCESS") {
       setStatus(Status.SUCCESS)
@@ -183,6 +186,7 @@ const TransferConfirmationScreen = ({
       })
 
       const status = data.intraLedgerPaymentSend.status
+      console.log("transaction status:", data.intraLedgerPaymentSend)
       const errs = errors
         ? errors.map((error) => {
             return { message: error.message }
@@ -196,80 +200,6 @@ const TransferConfirmationScreen = ({
 
   return (
     <View style={styles.sendBitcoinConfirmationContainer}>
-      <Text style={styles.fieldTitleText}>
-        {translate("SendBitcoinScreen.destination")}
-      </Text>
-      <View style={styles.fieldBackground}>
-        <View style={styles.destinationIconContainer}>
-          <DestinationIcon />
-        </View>
-        {/* <Text style={styles.destinationText}>{destination}</Text> */}
-      </View>
-      <Text style={styles.fieldTitleText}>{translate("SendBitcoinScreen.amount")}</Text>
-      <View style={styles.fieldBackground}>
-        <View style={styles.amountContainer}>
-          {fromWallet?.walletCurrency === "BTC" && amountCurrency === "BTC" && (
-            <>
-              <FakeCurrencyInput
-                value={satAmount}
-                prefix=""
-                delimiter=","
-                separator="."
-                precision={0}
-                suffix=" sats"
-                minValue={0}
-                editable={false}
-                style={styles.walletBalanceInput}
-              />
-              <FakeCurrencyInput
-                value={satAmountInUsd}
-                prefix="$"
-                delimiter=","
-                separator="."
-                precision={2}
-                editable={false}
-                style={styles.convertedAmountText}
-              />
-            </>
-          )}
-          {fromWallet?.walletCurrency === "BTC" && amountCurrency === "USD" && (
-            <>
-              <FakeCurrencyInput
-                value={satAmountInUsd}
-                prefix="$"
-                delimiter=","
-                separator="."
-                precision={2}
-                style={styles.walletBalanceInput}
-                minValue={0}
-                editable={false}
-              />
-              <FakeCurrencyInput
-                value={satAmount}
-                prefix=""
-                delimiter=","
-                separator="."
-                suffix=" sats"
-                precision={0}
-                editable={false}
-                style={styles.convertedAmountText}
-              />
-            </>
-          )}
-          {fromWallet?.walletCurrency === "USD" && (
-            <FakeCurrencyInput
-              value={dollarAmount}
-              prefix="$"
-              delimiter=","
-              separator="."
-              precision={2}
-              minValue={0}
-              style={styles.walletBalanceInput}
-              editable={false}
-            />
-          )}
-        </View>
-      </View>
       <Text style={styles.fieldTitleText}>{translate("common.from")}</Text>
       <View style={styles.fieldBackground}>
         <View style={styles.walletSelectorTypeContainer}>
@@ -336,6 +266,139 @@ const TransferConfirmationScreen = ({
             )}
           </View>
           <View />
+        </View>
+      </View>
+      <Text style={styles.fieldTitleText}>{translate("common.to")}</Text>
+      <View style={styles.fieldBackground}>
+        <View style={styles.walletSelectorTypeContainer}>
+          <View
+            style={
+              toWallet?.walletCurrency === "BTC"
+                ? styles.walletSelectorTypeLabelBitcoin
+                : styles.walletSelectorTypeLabelUsd
+            }
+          >
+            {toWallet?.walletCurrency === "BTC" ? (
+              <Text style={styles.walletSelectorTypeLabelBtcText}>BTC</Text>
+            ) : (
+              <Text style={styles.walletSelectorTypeLabelUsdText}>USD</Text>
+            )}
+          </View>
+        </View>
+        <View style={styles.walletSelectorInfoContainer}>
+          <View style={styles.walletSelectorTypeTextContainer}>
+            {toWallet?.walletCurrency === "BTC" ? (
+              <>
+                <Text style={styles.walletTypeText}>Bitcoin Wallet</Text>
+              </>
+            ) : (
+              <>
+                <Text style={styles.walletTypeText}>US Dollar Wallet</Text>
+              </>
+            )}
+          </View>
+          <View style={styles.walletSelectorBalanceContainer}>
+            {toWallet?.walletCurrency === "BTC" ? (
+              <>
+                <Text style={styles.walletBalanceText}>
+                  {currency_fmt
+                    .default(btcWalletValueInUsd, {
+                      precision: 2,
+                      separator: ",",
+                      symbol: "$",
+                    })
+                    .format()}
+                  {" - "}
+                  {currency_fmt
+                    .default(btcWalletBalance, {
+                      precision: 0,
+                      separator: ",",
+                      symbol: "",
+                    })
+                    .format()}
+                  {" sats"}
+                </Text>
+              </>
+            ) : (
+              <>
+                <Text style={styles.walletBalanceText}>
+                  {currency_fmt
+                    .default(usdWalletBalance / 100, {
+                      precision: 2,
+                      separator: ",",
+                      symbol: "$",
+                    })
+                    .format()}
+                </Text>
+              </>
+            )}
+          </View>
+          <View />
+        </View>
+      </View>
+      <Text style={styles.fieldTitleText}>{translate("SendBitcoinScreen.amount")}</Text>
+      <View style={styles.fieldBackground}>
+        <View style={styles.amountContainer}>
+          {fromWallet?.walletCurrency === "BTC" && amountCurrency === "BTC" && (
+            <>
+              <FakeCurrencyInput
+                value={satAmount}
+                prefix=""
+                delimiter=","
+                separator="."
+                precision={0}
+                suffix=" sats"
+                minValue={0}
+                editable={false}
+                style={styles.walletBalanceInput}
+              />
+              <FakeCurrencyInput
+                value={satAmountInUsd}
+                prefix="$"
+                delimiter=","
+                separator="."
+                precision={2}
+                editable={false}
+                style={styles.convertedAmountText}
+              />
+            </>
+          )}
+          {fromWallet?.walletCurrency === "BTC" && amountCurrency === "USD" && (
+            <>
+              <FakeCurrencyInput
+                value={satAmountInUsd}
+                prefix="$"
+                delimiter=","
+                separator="."
+                precision={2}
+                style={styles.walletBalanceInput}
+                minValue={0}
+                editable={false}
+              />
+              <FakeCurrencyInput
+                value={satAmount}
+                prefix=""
+                delimiter=","
+                separator="."
+                suffix=" sats"
+                precision={0}
+                editable={false}
+                style={styles.convertedAmountText}
+              />
+            </>
+          )}
+          {fromWallet?.walletCurrency === "USD" && (
+            <FakeCurrencyInput
+              value={dollarAmount}
+              prefix="$"
+              delimiter=","
+              separator="."
+              precision={2}
+              minValue={0}
+              style={styles.walletBalanceInput}
+              editable={false}
+            />
+          )}
         </View>
       </View>
       <View style={styles.buttonContainer}>
