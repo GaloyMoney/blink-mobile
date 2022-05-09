@@ -1,6 +1,7 @@
 import { useMutation } from "@apollo/client"
 import { useMySubscription } from "@app/hooks"
 import useMainQuery from "@app/hooks/use-main-query"
+import { TYPE_LIGHTNING_BTC } from "@app/utils/wallet"
 import { translateUnknown as translate } from "@galoymoney/client"
 import { debounce } from "lodash"
 import React, { useEffect, useMemo, useState } from "react"
@@ -88,7 +89,7 @@ const ReceiveBtc = ({ navigation }) => {
     <View>
       <QRView
         data={invoice?.paymentRequest}
-        type="lightning"
+        type={TYPE_LIGHTNING_BTC}
         amount={btcAmount}
         memo={memo}
         loading={loading}

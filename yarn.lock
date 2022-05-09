@@ -1919,7 +1919,7 @@
     base64-js "^1.2.3"
     xmlbuilder "^14.0.0"
 
-"@galoymoney/client@file:../galoy-client":
+"@galoymoney/client@../galoy-client":
   version "0.1.13"
   dependencies:
     "@apollo/client" "^3.5.8"
@@ -15597,6 +15597,11 @@ react-native-swiper@*, react-native-swiper@^1.6.0-rc.3:
   integrity sha512-OnkTTZi+9uZUgy0uz1I9oYDhCU3z36lZn+LFsk9FXPRelxb/KeABzvPs3r3SrHWy1aA67KGtSFj0xNK2QD0NJQ==
   dependencies:
     prop-types "^15.5.10"
+
+react-native-toast-message@^2.1.5:
+  version "2.1.5"
+  resolved "https://registry.yarnpkg.com/react-native-toast-message/-/react-native-toast-message-2.1.5.tgz#550acb9c6c0f1ee49c6b57b65a56d34e297eb723"
+  integrity sha512-mk3rELtBEhrhWBCN6CTaw0gypgL9ZNauX3xx1LUs4uee9vc0pVsghrKxO57vroUCcNL2hDeZSLJWdQNMCkGeaQ==
 
 react-native-vector-icons@^9.0.0:
   version "9.0.0"

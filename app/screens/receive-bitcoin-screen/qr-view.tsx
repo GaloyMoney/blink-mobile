@@ -16,26 +16,35 @@ import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import QRCode from "react-native-qrcode-svg"
 import Toast from "react-native-root-toast"
-import Icon from "react-native-vector-icons/Ionicons"
+import LightningSats from "@app/assets/icons/lightning-sats.png"
+import LightningUsd from "@app/assets/icons/lightning-usd.png"
+import OnchainSats from "@app/assets/icons/onchain-btc.png"
 import { translateUnknown as translate } from "@galoymoney/client"
 import { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import {
   getFullUri as getFullUriUtil,
-  TYPE_LIGHTNING,
-  TYPE_BITCOIN,
+  TYPE_LIGHTNING_BTC,
+  TYPE_BITCOIN_ONCHAIN,
+  TYPE_LIGHTNING_USD,
 } from "../../utils/wallet"
 
 import successLottie from "../send-bitcoin-screen/success_lottie.json"
 
 const configByType = {
-  [TYPE_LIGHTNING]: {
+  [TYPE_LIGHTNING_BTC]: {
     copyToClipboardLabel: "ReceiveBitcoinScreen.copyClipboard",
     shareButtonLabel: "common.shareLightning",
     ecl: "L" as const,
     icon: "ios-flash",
   },
-  [TYPE_BITCOIN]: {
+  [TYPE_LIGHTNING_USD]: {
+    copyToClipboardLabel: "ReceiveBitcoinScreen.copyClipboard",
+    shareButtonLabel: "common.shareLightning",
+    ecl: "L" as const,
+    icon: "ios-flash",
+  },
+  [TYPE_BITCOIN_ONCHAIN]: {
     copyToClipboardLabel: "ReceiveBitcoinScreen.copyClipboardBitcoin",
     shareButtonLabel: "common.shareBitcoin",
     ecl: "M" as const,
@@ -64,7 +73,11 @@ export const QRView = ({
   navigation,
   err,
 }: Props): JSX.Element => {
-  const isReady = !err && (type === TYPE_LIGHTNING ? !loading && data !== "" : true)
+  const isReady =
+    !err &&
+    (type === TYPE_LIGHTNING_BTC || type === TYPE_LIGHTNING_USD
+      ? !loading && data !== ""
+      : true)
 
   const getFullUri = useCallback(
     ({ input, uppercase = false, prefix = true }) =>
@@ -111,33 +124,11 @@ export const QRView = ({
   }, [data, getFullUri])
 
   const dataOneLiner = useCallback(() => {
-    if (type === TYPE_LIGHTNING) {
+    if (type === TYPE_LIGHTNING_BTC) {
       return data ? `${data.substr(0, 18)}...${data.substr(-18)}` : ""
     }
     return data
   }, [data, type])
-
-  const renderActionLabel = useMemo(() => {
-    if (completed) {
-      return (
-        <Text style={styles.completedText}>
-          {translate("ReceiveBitcoinScreen.invoicePaid")}
-        </Text>
-      )
-    }
-
-    if (isReady) {
-      return (
-        <Pressable onPress={copyToClipboard}>
-          <Text style={styles.completedText}>
-            {translate("ReceiveBitcoinScreen.tapQrCodeCopy")}
-          </Text>
-        </Pressable>
-      )
-    }
-
-    return <Text> </Text>
-  }, [completed, isReady, copyToClipboard])
 
   const renderSuccessView = useMemo(() => {
     if (completed) {
@@ -155,20 +146,26 @@ export const QRView = ({
   }, [completed])
 
   const renderQRCode = useMemo(() => {
+    const getQrLogo = () => {
+      if (type === TYPE_LIGHTNING_BTC) return LightningSats
+      if (type === TYPE_LIGHTNING_USD) return LightningUsd
+      if (type === TYPE_BITCOIN_ONCHAIN) return OnchainSats
+    }
+
     if (!completed && isReady) {
       return (
         <Pressable onPress={copyToClipboard}>
-          <QRCode
-            size={280}
-            value={getFullUri({ input: data, uppercase: true })}
-            logoBackgroundColor="white"
-            ecl={configByType[type].ecl}
-            // __DEV__ workaround for https://github.com/facebook/react-native/issues/26705
-            logo={
-              !__DEV__ &&
-              Icon.getImageSourceSync(configByType[type].icon, 28, palette.orange)
-            }
-          />
+          <View style={styles.qrBackround}>
+            <QRCode
+              size={200}
+              value={getFullUri({ input: data, uppercase: true })}
+              logoBackgroundColor="white"
+              ecl={configByType[type].ecl}
+              logo={getQrLogo()}
+              logoSize={60}
+              logoBorderRadius={10}
+            />
+          </View>
         </Pressable>
       )
     }
@@ -197,23 +194,7 @@ export const QRView = ({
         {renderSuccessView}
         {renderQRCode}
         {renderStatusView}
-        <Pressable onPress={copyToClipboard}>
-          <Text style={styles.copyToClipboardText}>{dataOneLiner()}</Text>
-        </Pressable>
-        {renderActionLabel}
       </View>
-      <Button
-        buttonStyle={styles.buttonStyle}
-        containerStyle={styles.buttonContainer}
-        title={
-          completed
-            ? translate("common.ok")
-            : translate(configByType[type].shareButtonLabel)
-        }
-        onPress={completed ? () => navigation.goBack() : share}
-        disabled={!isReady}
-        titleStyle={styles.buttonTitle}
-      />
     </>
   )
 }
@@ -253,6 +234,11 @@ const styles = EStyleSheet.create({
 
   qr: {
     alignItems: "center",
+  },
+  qrBackround: {
+    backgroundColor: palette.white,
+    padding: 20,
+    borderRadius: 10,
   },
 })
 

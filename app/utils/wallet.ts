@@ -1,8 +1,9 @@
-export const TYPE_BITCOIN = "bitcoin"
-export const TYPE_LIGHTNING = "lightning"
+export const TYPE_BITCOIN_ONCHAIN = "BITCOIN_ONCHAIN"
+export const TYPE_LIGHTNING_BTC = "LIGHTNING_BTC"
+export const TYPE_LIGHTNING_USD = "LIGHTNING_USD"
 
 const prefixByType = {
-  [TYPE_BITCOIN]: "bitcoin:",
+  [TYPE_BITCOIN_ONCHAIN]: "bitcoin:",
 }
 
 export const getFullUri = ({
@@ -11,9 +12,9 @@ export const getFullUri = ({
   memo,
   uppercase = false,
   prefix = true,
-  type = TYPE_BITCOIN,
+  type = TYPE_BITCOIN_ONCHAIN,
 }: GetFullUriInput): string => {
-  if (type === TYPE_LIGHTNING) {
+  if (type === TYPE_LIGHTNING_BTC) {
     // TODO add lightning:
     return uppercase ? input.toUpperCase() : input
   }

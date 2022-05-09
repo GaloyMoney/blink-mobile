@@ -1,15 +1,34 @@
 import { useMutation } from "@apollo/client"
+import LightningInvoice from "@app/components/lightning-invoice/lightning-invoice"
 import { useMySubscription } from "@app/hooks"
 import useMainQuery from "@app/hooks/use-main-query"
+import { palette } from "@app/theme"
+import { TYPE_LIGHTNING_USD } from "@app/utils/wallet"
 import { translateUnknown as translate } from "@galoymoney/client"
 import { debounce } from "lodash"
 import React, { useEffect, useMemo, useState } from "react"
-import { View } from "react-native"
+import { ActivityIndicator, View } from "react-native"
+import { Text } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { ADD_NO_AMOUNT_INVOICE, ADD_USD_INVOICE } from "./gql"
 import { QRView } from "./qr-view"
 
-const styles = EStyleSheet.create({})
+const styles = EStyleSheet.create({
+  fieldsContainer: {
+    marginTop: "20rem",
+    marginLeft: 20,
+    marginRight: 20,
+  },
+  field: {
+    padding: 10,
+    height: "40rem",
+    backgroundColor: palette.white,
+    borderRadius: 10,
+  },
+  infoText: {
+    color: palette.midGrey,
+  },
+})
 const ReceiveUsd = ({ navigation }) => {
   const [loading, setLoading] = useState(true)
   const [err, setErr] = useState("")
@@ -83,17 +102,12 @@ const ReceiveUsd = ({ navigation }) => {
 
   const invoicePaid =
     lnUpdate?.paymentHash === invoice?.paymentHash && lnUpdate?.status === "PAID"
-  console.log(invoice)
-  console.log(usdAmount)
-  console.log(memo)
-  console.log(loading)
-  console.log(invoicePaid)
 
   return (
     <View>
       <QRView
         data={invoice?.paymentRequest}
-        type="lightning"
+        type={TYPE_LIGHTNING_USD}
         amount={usdAmount}
         memo={memo}
         loading={loading}
@@ -101,6 +115,18 @@ const ReceiveUsd = ({ navigation }) => {
         navigation={navigation}
         err={err}
       />
+      <View style={styles.fieldsContainer}>
+        <View style={styles.field}>
+          {!loading && <LightningInvoice invoice={invoice?.paymentRequest} />}
+          {loading && <ActivityIndicator />}
+        </View>
+
+        <View>
+          <Text style={styles.infoText}>
+            {translate("ReceiveBitcoinScreen.copyInvoice")}
+          </Text>
+        </View>
+      </View>
     </View>
   )
 }
