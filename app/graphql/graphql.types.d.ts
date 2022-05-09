@@ -1,8 +1,8 @@
 type SettlementPrice = {
   formattedAmount: string
   base: number
-  offset: number
-  currencyUnit: string
+  offset?: number
+  currencyUnit?: string
 }
 
 type SettlementViaType =
@@ -12,7 +12,7 @@ type SettlementViaType =
 
 type SettlementViaIntraLedger = {
   readonly __typename: "SettlementViaIntraLedger"
-  readonly walletId: string
+  readonly walletId: string | null
   readonly counterPartyUsername: string | null
 }
 
