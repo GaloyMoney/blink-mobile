@@ -124,6 +124,7 @@ const styles = EStyleSheet.create({
   transactionsView: {
     flex: 1,
     marginHorizontal: "30rem",
+    backgroundColor: palette.white,
   },
 
   viewModal: {
@@ -232,6 +233,8 @@ export const MoveMoneyScreen: ScreenType = ({
   isUpdateAvailable,
   hasToken,
 }: MoveMoneyScreenProps) => {
+
+  console.log(transactionsEdges)
   const [modalVisible, setModalVisible] = useState(false)
 
   const onMenuClick = (target) => {
