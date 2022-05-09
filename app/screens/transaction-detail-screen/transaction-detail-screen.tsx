@@ -6,7 +6,6 @@ import { Divider } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { CloseCross } from "../../components/close-cross"
 import {
-  colorTypeFromIconType,
   IconTransaction,
 } from "../../components/icon-transactions"
 import { Screen } from "../../components/screen"
@@ -14,11 +13,13 @@ import { TextCurrency } from "../../components/text-currency"
 import { translateUnknown as translate } from "@galoymoney/client"
 import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
-import { palette } from "../../theme/palette"
+import { palette } from "../../theme"
 import moment from "moment"
 import { formatUsdAmount } from "../../hooks"
 import Icon from "react-native-vector-icons/Ionicons"
 import { BLOCKCHAIN_EXPLORER_URL } from "../../constants/support"
+import { WalletType } from '@app/utils/enum'
+import { WalletSummary } from "@app/components/wallet-summary"
 
 const viewInExplorer = (hash: string): Promise<Linking> =>
   Linking.openURL(BLOCKCHAIN_EXPLORER_URL + hash)
@@ -49,30 +50,34 @@ const styles = EStyleSheet.create({
   description: {
     marginVertical: 12,
   },
-
   divider: {
     backgroundColor: palette.midGrey,
     marginVertical: "12rem",
   },
-
   entry: {
-    color: palette.midGrey,
+    color: palette.darkGrey,
     marginBottom: "6rem",
   },
-
   transactionDetailText: {
     color: palette.darkGrey,
     fontSize: "18rem",
     fontWeight: "bold",
   },
-
   transactionDetailView: {
     marginHorizontal: "24rem",
     marginVertical: "24rem",
   },
-
+  valueContainer: {
+    flexDirection:"row",
+    height:50,
+    backgroundColor: palette.white,
+    alignItems:'center',
+    borderRadius:8
+  },
   value: {
-    color: palette.darkGrey,
+    marginLeft: 10,
+    alignItems:'center',
+    justifyContent:"center",
     fontSize: "14rem",
     fontWeight: "bold",
   },
@@ -82,10 +87,12 @@ const Row = ({
   entry,
   value,
   type,
+  content
 }: {
   entry: string
   value: string
   type?: SettlementViaType
+  content?: any
 }) => (
   <View style={styles.description}>
     <Text style={styles.entry}>
@@ -94,9 +101,12 @@ const Row = ({
         <Icon name="open-outline" size={18} color={palette.darkGrey} />
       )}
     </Text>
+    {content || ( <View style={styles.valueContainer}>
     <Text selectable style={styles.value}>
       {value}
     </Text>
+    </View> )}
+    
   </View>
 )
 
@@ -120,7 +130,7 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
   const {
     id,
     description,
-
+    walletType,
     settlementAmount,
     settlementFee,
     settlementPrice,
@@ -130,7 +140,6 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
     initiationVia,
 
     isReceive,
-    isPending,
     createdAt,
   } = route.params
 
@@ -154,30 +163,36 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
     minute: "numeric",
   })
 
+  const walletSummary = <WalletSummary walletType={walletType} amountType={isReceive ? "RECEIVE" : "SEND"} usdBalanceInDollars={Math.abs(usdAmount)} btcBalanceInSats={walletType === WalletType.BTC && Math.abs(settlementAmount)}/>
+
   return (
-    <Screen backgroundColor={palette.white} unsafe preset="scroll">
+    <Screen backgroundColor={palette.grey} unsafe preset="scroll">
       <View
         style={[
           styles.amountView,
-          { backgroundColor: colorTypeFromIconType({ isReceive, isPending }) },
+          {backgroundColor: walletType === WalletType.USD ? palette.usdPrimary : palette.btcPrimary}
         ]}
       >
-        <IconTransaction isReceive={isReceive} size={100} transparent />
-
+        <IconTransaction isReceive={isReceive} size={100} walletType={walletType} pending={false}/>
         <Text style={styles.amountText}>{spendOrReceiveText}</Text>
         <TextCurrency amount={Math.abs(usdAmount)} currency="USD" style={styles.amount} />
-        <TextCurrency
+        {
+          walletType === WalletType.BTC && <TextCurrency
           amount={Math.abs(settlementAmount)}
           currency="BTC"
           style={styles.amountSecondary}
+          satsIconSize={20}
+          iconColor={palette.white}
         />
+        }
       </View>
-
       <View style={styles.transactionDetailView}>
         <Text style={styles.transactionDetailText}>
           {translate("TransactionDetailScreen.detail")}
         </Text>
         <Divider style={styles.divider} />
+        {/* NEED TRANSLATION */}
+        <Row entry={isReceive ? "Receiving Wallet" : "Sending Wallet" } content={walletSummary} />
         <Row entry={translate("common.date")} value={dateDisplay} />
         {!isReceive && <Row entry={translate("common.fees")} value={feeEntry} />}
         <Row entry={translate("common.description")} value={description} />

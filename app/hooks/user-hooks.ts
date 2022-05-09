@@ -138,14 +138,14 @@ export const useMyCurrencies = (): {
 export const useMySubscription = (): UseMyUpdates => {
   const { data, loading, error } = useSubscription(MY_UPDATES_SUBSCRIPTION)
   const { data: queryData, loading: queryLoading } = useQuery(PRICE_QUERY)
-  console.log("subscription")
-  console.log(data)
-  console.log(loading)
-  console.log(error)
+  // console.log("subscription")
+  // console.log(data)
+  // console.log(loading)
+  // console.log(error)
 
-  console.log("query")
-  console.log(queryData)
-  console.log(queryLoading)
+  // console.log("query")
+  // console.log(queryData)
+  // console.log(queryLoading)
 
   const [cachedPrice, updatePriceCach] = usePriceCache()
 

@@ -3,7 +3,7 @@ import { contacts_me_contacts } from "../screens/contacts-screen/__generated__/c
 import { AccountType, AuthenticationScreenPurpose, PinScreenPurpose } from "../utils/enum"
 import { IPaymentType } from "../utils/parsing"
 
-type TransactionDetail = WalletTransaction & {
+export type TransactionDetail = WalletTransaction & {
   usdAmount: number
   description: string
   isReceive: boolean
