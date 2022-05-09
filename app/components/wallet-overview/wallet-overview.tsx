@@ -20,6 +20,7 @@ const styles = EStyleSheet.create({
     backgroundColor: palette.white,
     borderRadius: 10,
     marginRight: -10,
+    flexDirection:"row",
   },
   balanceRight: {
     flex: 3,
@@ -27,6 +28,8 @@ const styles = EStyleSheet.create({
     backgroundColor: palette.white,
     borderRadius: 10,
     marginLeft: -10,
+    flexDirection:"row",
+    justifyContent: 'flex-end'
   },
   textPrimary: {
     fontSize: 20,
@@ -35,10 +38,10 @@ const styles = EStyleSheet.create({
   },
   textRight: {
     textAlign: "right",
-    marginRight: 25,
+    marginRight: 10,
   },
   textLeft: {
-    marginLeft: 25,
+    marginLeft: 10,
     lineHeight: 50,
   },
   textSecondary: {
@@ -46,32 +49,28 @@ const styles = EStyleSheet.create({
     color: palette.darkGrey
   },
   usdLabelContainer: {
-    transform: [{ rotate: "-90deg" }],
-    width: 50,
+    height: 50,
     backgroundColor: palette.usdSecondary,
+    borderBottomLeftRadius: 10,
     borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    position: "absolute",
-    left: -16,
-    top: 16,
+    justifyContent: "center"
   },
   usdLabelText: {
+    transform: [{ rotate: "-90deg" }],
     color: palette.usdPrimary,
     textAlign: "center",
     fontWeight: "bold",
     letterSpacing: 0.41,
   },
   btcLabelContainer: {
-    transform: [{ rotate: "90deg" }],
-    width: 50,
-    borderTopLeftRadius: 10,
+    height: 50,
     borderTopRightRadius: 10,
-    position: "absolute",
-    right: -17,
-    top: 17,
+    borderBottomRightRadius: 10,
     backgroundColor: "rgba(241, 164, 60, 0.5)",
+    justifyContent: "center"
   },
   btcLabelText: {
+    transform: [{ rotate: "90deg" }],
     color: palette.btcPrimary,
     textAlign: "center",
     fontWeight: "bold",
@@ -115,7 +114,7 @@ const WalletOverview = (props: WalletOverviewProps) => {
         <TextCurrency
           amount={usdBalance}
           currency={"USD"}
-          style={{ ...styles.textPrimary, ...styles.textLeft }}
+          style={{ ...styles.textPrimary, ...styles.textLeft}}
         />
       </View>
 
@@ -126,9 +125,8 @@ const WalletOverview = (props: WalletOverviewProps) => {
       </View>
 
       <View style={styles.balanceRight}>
-        <View style={styles.btcLabelContainer}>
-          <Text style={styles.btcLabelText}>SAT</Text>
-        </View>
+        <View>
+
         <TextCurrency
           amount={btcPrimaryBalance}
           currency={"USD"}
@@ -140,6 +138,10 @@ const WalletOverview = (props: WalletOverviewProps) => {
           style={{ ...styles.textSecondary, ...styles.textRight }}
           satsIconSize={15}
         />
+        </View>
+        <View style={styles.btcLabelContainer}>
+          <Text style={styles.btcLabelText}>SAT</Text>
+        </View>
       </View>
     </View>
   )

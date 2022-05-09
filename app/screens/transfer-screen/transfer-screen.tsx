@@ -244,11 +244,9 @@ export const TransferScreen = ({ navigation }: TransferScreenProps) => {
             </View>
           </View>
         </View>
-        <View style={styles.switchButtonContainer}>
-          <TouchableWithoutFeedback onPress={() => switchWallets()}>
-            <View style={styles.switchButton}>
+        <View style={[styles.switchButtonContainer]}>
+          <TouchableWithoutFeedback style={styles.switchButton} onPress={() => switchWallets()}>
               <SwitchButton />
-            </View>
           </TouchableWithoutFeedback>
         </View>
         <View style={styles.toFieldContainer}>
@@ -488,12 +486,11 @@ const styles = EStyleSheet.create({
     borderBottomLeftRadius: 10,
   },
   switchButtonContainer: {
-    backgroundColor: palette.lightGrey,
     height: 1,
     flex: 1,
     justifyContent: "center",
     alignItems: "flex-end",
-    zIndex: 1,
+    zIndex: 30,
   },
   switchButton: {
     height: 50,

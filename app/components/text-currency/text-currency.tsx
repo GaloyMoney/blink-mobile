@@ -9,6 +9,7 @@ type Props = {
   currency: CurrencyType
   style: TextStyle
   satsIconSize?: number
+  iconColor: string
 }
 
 export const TextCurrency: ComponentType = ({
@@ -16,7 +17,9 @@ export const TextCurrency: ComponentType = ({
   currency,
   style,
   satsIconSize,
+  iconColor = palette.black
 }: Props) => {
+
   if (currency === "USD") {
     const amountDisplay = Number.isNaN(amount)
       ? "..."
@@ -40,15 +43,15 @@ export const TextCurrency: ComponentType = ({
       >
         <SatsIcon
           style={{
+            fill: iconColor,
             width: satsIconSize,
-            fill: palette.black,
             height: satsIconSize,
           }}
         />
         <Text
-          style={{
+          style={[{
             ...style,
-          }}
+          }]}
         >
           {currency_fmt
             .default(amount, {
