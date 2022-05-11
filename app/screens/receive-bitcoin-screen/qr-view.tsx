@@ -28,6 +28,7 @@ import {
   TYPE_BITCOIN_ONCHAIN,
   TYPE_LIGHTNING_USD,
 } from "../../utils/wallet"
+import ReactNativeModal from "react-native-modal"
 
 import successLottie from "../send-bitcoin-screen/success_lottie.json"
 
@@ -59,8 +60,8 @@ type Props = {
   memo: GetFullUriInput["memo"]
   loading: boolean
   completed: boolean
-  navigation: StackNavigationProp<MoveMoneyStackParamList, "receiveBitcoin">
   err: string
+  size?: number
 }
 
 export const QRView = ({
@@ -70,9 +71,15 @@ export const QRView = ({
   memo,
   loading,
   completed,
-  navigation,
   err,
+  size = 200,
 }: Props): JSX.Element => {
+  const [isModalVisible, setIsModalVisible] = React.useState(false)
+
+  const toggleModal = () => {
+    console.log("show modal" + isModalVisible)
+    setIsModalVisible(!isModalVisible)
+  }
   const isReady =
     !err &&
     (type === TYPE_LIGHTNING_BTC || type === TYPE_LIGHTNING_USD
@@ -84,51 +91,6 @@ export const QRView = ({
       getFullUriUtil({ type, amount, memo, input, uppercase, prefix }),
     [type, amount, memo],
   )
-
-  const copyToClipboard = useCallback(() => {
-    Clipboard.setString(getFullUri({ input: data, prefix: false }))
-
-    if (Platform.OS === "ios") {
-      const stringToShow = configByType[type].copyToClipboardLabel
-
-      Toast.show(translate(stringToShow), {
-        duration: Toast.durations.LONG,
-        shadow: false,
-        animation: true,
-        hideOnPress: true,
-        delay: 0,
-        position: -100,
-        opacity: 0.5,
-      })
-    }
-  }, [data, getFullUri, type])
-
-  const share = useCallback(async () => {
-    try {
-      const result = await Share.share({
-        message: getFullUri({ input: data, prefix: false }),
-      })
-
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-        } else {
-          // shared
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-      }
-    } catch (error) {
-      Alert.alert(error.message)
-    }
-  }, [data, getFullUri])
-
-  const dataOneLiner = useCallback(() => {
-    if (type === TYPE_LIGHTNING_BTC) {
-      return data ? `${data.substr(0, 18)}...${data.substr(-18)}` : ""
-    }
-    return data
-  }, [data, type])
 
   const renderSuccessView = useMemo(() => {
     if (completed) {
@@ -154,23 +116,43 @@ export const QRView = ({
 
     if (!completed && isReady) {
       return (
-        <Pressable onPress={copyToClipboard}>
+        <>
           <View style={styles.qrBackround}>
-            <QRCode
-              size={200}
-              value={getFullUri({ input: data, uppercase: true })}
-              logoBackgroundColor="white"
-              ecl={configByType[type].ecl}
-              logo={getQrLogo()}
-              logoSize={60}
-              logoBorderRadius={10}
-            />
+            <Pressable onPress={toggleModal}>
+              <QRCode
+                size={size}
+                value={getFullUri({ input: data, uppercase: true })}
+                logoBackgroundColor="white"
+                ecl={configByType[type].ecl}
+                logo={getQrLogo()}
+                logoSize={60}
+                logoBorderRadius={10}
+              />
+            </Pressable>
           </View>
-        </Pressable>
+          <ReactNativeModal
+            isVisible={isModalVisible}
+            onBackButtonPress={() => toggleModal()}
+          >
+            <View style={styles.qrContainer}>
+              <Pressable onPress={toggleModal}>
+                <QRCode
+                  size={300}
+                  value={getFullUri({ input: data, uppercase: true })}
+                  logoBackgroundColor="white"
+                  ecl={configByType[type].ecl}
+                  logo={getQrLogo()}
+                  logoSize={60}
+                  logoBorderRadius={10}
+                />
+              </Pressable>
+            </View>
+          </ReactNativeModal>
+        </>
       )
     }
     return null
-  }, [copyToClipboard, data, getFullUri, isReady, completed, type])
+  }, [isModalVisible, data, getFullUri, isReady, completed, type])
 
   const renderStatusView = useMemo(() => {
     if (!completed && !isReady) {
@@ -238,6 +220,13 @@ const styles = EStyleSheet.create({
   qrBackround: {
     backgroundColor: palette.white,
     padding: 20,
+    borderRadius: 10,
+  },
+  qrContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 20,
+    backgroundColor: palette.white,
     borderRadius: 10,
   },
 })

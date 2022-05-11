@@ -75,6 +75,7 @@
     "react-dom": "^18.0.0",
     "react-native": "0.66.3",
     "react-native-camera": "^4.2.1",
+    "react-native-countdown-circle-timer": "^3.0.9",
     "react-native-currency-input": "^1.0.1",
     "react-native-device-info": "^8.4.8",
     "react-native-elements": "^3.4.2",

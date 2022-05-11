@@ -14,7 +14,7 @@ export const getFullUri = ({
   prefix = true,
   type = TYPE_BITCOIN_ONCHAIN,
 }: GetFullUriInput): string => {
-  if (type === TYPE_LIGHTNING_BTC) {
+  if (type === TYPE_LIGHTNING_BTC || type === TYPE_LIGHTNING_USD) {
     // TODO add lightning:
     return uppercase ? input.toUpperCase() : input
   }
