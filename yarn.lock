@@ -1919,17 +1919,20 @@
     base64-js "^1.2.3"
     xmlbuilder "^14.0.0"
 
-"@galoymoney/client@../galoy-client":
-  version "0.1.13"
+"@galoymoney/client@0.1.18":
+  version "0.1.18"
+  resolved "https://registry.yarnpkg.com/@galoymoney/client/-/client-0.1.18.tgz#df8073780adf3ba4e4037905fba4878938a1529a"
+  integrity sha512-uJBFE7BqD83831j7TxyaIp/trwAQUKO9BDYyxh3P3G1qtXklXPnhYahRAYj9hvCDz99K3DtckuMcmiMKgwLhCg==
   dependencies:
     "@apollo/client" "^3.5.8"
     bitcoinjs-lib "^5.0.0"
     bolt11 "^1.3.4"
     cross-fetch "^3.1.5"
     graphql "^16.3.0"
-    i18n-js "^3.8.0"
+    i18n-js "^3.9.2"
     react "^18.0.0"
     react-dom "^18.0.0"
+    subscriptions-transport-ws "^0.11.0"
     url "^0.11.0"
 
 "@galoymoney/react-native-geetest-module@^0.1.3":
@@ -10073,10 +10076,10 @@ human-signals@^2.1.0:
   resolved "https://registry.yarnpkg.com/human-signals/-/human-signals-2.1.0.tgz#dc91fcba42e4d06e4abaed33b3e7a3c02f514ea0"
   integrity sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==
 
-i18n-js@^3.8.0:
-  version "3.8.0"
-  resolved "https://registry.npmjs.org/i18n-js/-/i18n-js-3.8.0.tgz"
-  integrity sha512-hDsGgPuvw/2P+lXSbOafAwspK8Ste8YrwuuUg17W3wEcO1JkQxBlPgsN1t2+852nTnz4YSYTjZc/1nAA2PC/nw==
+i18n-js@^3.9.2:
+  version "3.9.2"
+  resolved "https://registry.yarnpkg.com/i18n-js/-/i18n-js-3.9.2.tgz#4a015dcfabd4c9fc73115fc2d02d2627e4c15ca5"
+  integrity sha512-+Gm8h5HL0emzKhRx2avMKX+nKiVPXeaOZm7Euf2/pbbFcLQoJ3zZYiUykAzoRasijCoWos2Kl1tslmScTgAQKw==
 
 iconv-lite@0.4.24, iconv-lite@^0.4.24:
   version "0.4.24"
