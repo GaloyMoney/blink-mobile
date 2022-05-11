@@ -33,6 +33,12 @@ The app is built and pushed to the App Store and Play Store on demand with Circl
 
 To run the app fully locally the backend must also be set up by following the instructions at https://github.com/GaloyMoney/galoy.
 
+---
+### *Notes for Running on M1 Mac:*
+The app currently only builds for x86_64 simulators. Simulators prior to IOS 13.7 are x86_64 by default, however starting with 13.7 they become platform specific. In order to get an x86_64 simulator of a newer IOS version, one must set XCode to open in [emulation using Rosetta](https://www.macworld.com/article/338843/how-to-force-a-native-m1-mac-app-to-run-as-an-intel-app-instead.html). To run the project, open [GaloyApp.xcworkspace](./ios/GaloyApp.xcworkspace/) in XCode, choose an x86_64 simulator, and click the play button. This should start the Metro bundler in a new terminal as well as launch the simulator with the app.
+
+---
+
 ## Running Storybook
 
 From the command line in your generated app's root directory, enter `yarn storybook`
