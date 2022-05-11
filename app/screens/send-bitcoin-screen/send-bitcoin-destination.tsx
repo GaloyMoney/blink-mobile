@@ -101,7 +101,7 @@ const SendBitcoinDestination = ({
         <Button
           title={
             !destination
-              ? translate("SendBitcoinScreen.DestinationIsRequired")
+              ? translate("SendBitcoinScreen.destinationIsRequired")
               : translate("common.next")
           }
           buttonStyle={{ ...Styles.button, ...Styles.activeButtonStyle }}
