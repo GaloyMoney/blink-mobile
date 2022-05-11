@@ -276,9 +276,7 @@ const SendBitcoinConfirmation = ({
           },
         },
       })
-      console.log(data)
       const status = data.lnNoAmountUsdInvoicePaymentSend.status
-      console.log(data.lnNoAmountUsdInvoicePaymentSend.errors)
       const errs = errors
         ? errors.map((error) => {
             return { message: error.message }
@@ -291,8 +289,6 @@ const SendBitcoinConfirmation = ({
   }
 
   const pay = async () => {
-    console.log(paymentType)
-    console.log(amountless)
     if (paymentType === "lightning") {
       if (amountless) {
         if (wallet.__typename === "UsdWallet") {
