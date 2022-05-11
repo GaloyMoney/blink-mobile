@@ -4,5 +4,5 @@ type GetFullUriInput = {
   memo?: string
   uppercase?: boolean
   prefix?: boolean
-  type?: "bitcoin" | "lightning"
+  type?: "BITCOIN_ONCHAIN" | "LIGHTNING_BTC" | "LIGHTNING_USD"
 }
