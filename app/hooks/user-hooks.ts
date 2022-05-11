@@ -1,10 +1,4 @@
-import {
-  gql,
-  useApolloClient,
-  useQuery,
-  useReactiveVar,
-  useSubscription,
-} from "@apollo/client"
+import { gql, useApolloClient, useReactiveVar, useSubscription } from "@apollo/client"
 import * as React from "react"
 
 import {
@@ -39,17 +33,6 @@ type UseMyUpdates = {
   }
   mySubscriptionLoading: boolean
 }
-
-const PRICE_QUERY = gql`
-  query btcPrice {
-    btcPrice {
-      base
-      offset
-      currencyUnit
-      formattedAmount
-    }
-  }
-`
 
 const MY_UPDATES_SUBSCRIPTION = gql`
   subscription myUpdates {
@@ -136,16 +119,7 @@ export const useMyCurrencies = (): {
 }
 
 export const useMySubscription = (): UseMyUpdates => {
-  const { data, loading, error } = useSubscription(MY_UPDATES_SUBSCRIPTION)
-  const { data: queryData, loading: queryLoading } = useQuery(PRICE_QUERY)
-  // console.log("subscription")
-  // console.log(data)
-  // console.log(loading)
-  // console.log(error)
-
-  // console.log("query")
-  // console.log(queryData)
-  // console.log(queryLoading)
+  const { data, loading } = useSubscription(MY_UPDATES_SUBSCRIPTION)
 
   const [cachedPrice, updatePriceCach] = usePriceCache()
 

@@ -18,8 +18,9 @@ const styles = EStyleSheet.create({
   },
   tabRow: {
     flexDirection: "row",
-    flex: 1,
+    flexWrap: "nowrap",
     justifyContent: "center",
+    height: "50rem",
   },
   usdActive: {
     backgroundColor: palette.violetteBlue,
