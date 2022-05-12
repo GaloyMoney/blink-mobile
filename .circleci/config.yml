@@ -247,10 +247,8 @@ workflows:
               only: /^[0-9]+\.[0-9]+\.[0-9]+/
             branches:
               ignore: /.*/
-      - hold_build_mobile:
-          type: approval
+      - build_ios:
           requires:
-            - android_test
             - ios_test
           filters:
             tags:
