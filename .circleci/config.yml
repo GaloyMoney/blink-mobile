@@ -114,7 +114,7 @@ jobs:
 
   build_ios:
     macos:
-      xcode: 13.1.0
+      xcode: 13.3.0
     working_directory: ~/galoy-mobile
     environment:
       FL_OUTPUT_DIR: output
