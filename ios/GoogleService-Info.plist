@@ -3,23 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>72279297366-s58nf2odpar8o97abjd5ajglgveo4ug9.apps.googleusercontent.com</string>
+	<string>796001515981-gdqb577847h3codpfvrhe1ipu8hnbnav.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.72279297366-s58nf2odpar8o97abjd5ajglgveo4ug9</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>72279297366-pm5ng6a6lrqirbi80kfgbf206uh567go.apps.googleusercontent.com</string>
+	<string>com.googleusercontent.apps.796001515981-gdqb577847h3codpfvrhe1ipu8hnbnav</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCFE9KsSzcme-0TBv52mE1orpN94fq77aQ</string>
+	<string>AIzaSyBj-kb50Am11N-s4kzQQFD3U4hPNSNEuiE</string>
 	<key>GCM_SENDER_ID</key>
-	<string>72279297366</string>
+	<string>796001515981</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>io.galoy.bitcoinbeach</string>
+	<string>com.puravida.app</string>
 	<key>PROJECT_ID</key>
-	<string>galoyapp</string>
+	<string>puravida-7022b</string>
 	<key>STORAGE_BUCKET</key>
-	<string>galoyapp.appspot.com</string>
+	<string>puravida-7022b.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,8 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:72279297366:ios:547c29acd2e1d3a6a75af7</string>
-	<key>DATABASE_URL</key>
-	<string>https://galoyapp.firebaseio.com</string>
+	<string>1:796001515981:ios:5ce9db52dbc3bea97b2c84</string>
 </dict>
 </plist>

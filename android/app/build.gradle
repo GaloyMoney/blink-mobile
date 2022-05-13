@@ -1,3 +1,4 @@
+apply from: './versionCode.gradle'
 apply plugin: "com.android.application"
 
 import com.android.build.OutputFile
@@ -129,11 +130,11 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
-        applicationId "com.galoyapp"
+        applicationId "com.puravida.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 310
-        versionName "1.7.5"
+        versionCode Integer.parseInt(VERSION_CODE)
+        versionName VERSION_NAME
         missingDimensionStrategy 'react-native-camera', 'general' // React native camera
 
     }
@@ -146,8 +147,16 @@ android {
         }
     }
     signingConfigs {
-        release {
-            storeFile file('release.keystore')
+         release {
+            if (project.hasProperty('RELEASE_STORE_FILE')) {
+                storeFile file(RELEASE_STORE_FILE)
+                storePassword RELEASE_STORE_PASSWORD
+                keyAlias RELEASE_KEY_ALIAS
+                keyPassword RELEASE_STORE_PASSWORD
+            }
+        }
+        debug {
+            storeFile file('debug.keystore')
             storePassword 'android'
             keyAlias 'androiddebugkey'
             keyPassword 'android'

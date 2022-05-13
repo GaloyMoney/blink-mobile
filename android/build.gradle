@@ -45,6 +45,8 @@ allprojects {
         google()
         mavenCentral()
         jcenter()
+                maven { url 'https://www.jitpack.io' }
+
     }
 
     //add the folllowing lines to force libs to use recent buildtools

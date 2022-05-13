@@ -21,6 +21,11 @@ platform :android do
     gradle(task: "test")
   end
 
+  desc "Increment Build Number"
+  lane :increment_build do
+    gradle(task: 'incrementVersionCode', project_dir: './')
+  end 
+
   desc "Submit a new Beta Build to Crashlytics Beta"
   lane :build do
     increment_version_code(gradle_file_path: "app/build.gradle")
@@ -56,20 +61,49 @@ platform :android do
     )
   end
 
-  desc "Deploy a new version to Huawei App Gallery"
-  lane :huawei_release do
-    huawei_appgallery_connect(
-      client_id: ENV["HUAWEI_CLIENT_ID"],
-      client_secret: ENV["HAUWEI_CLIENT_SECRET"],
-      app_id: ENV["HUAWEI_APP_ID"],
-      apk_path: "./app/build/outputs/apk/release/app-release.apk",
-      phase_wise_release: true,
-      phase_release_percent: "1",
-      phase_release_description: "Phased Release",
-      submit_for_review: false
+  # desc "Deploy a new version to Huawei App Gallery"
+  # lane :huawei_release do
+  #   huawei_appgallery_connect(
+  #     client_id: ENV["HUAWEI_CLIENT_ID"],
+  #     client_secret: ENV["HAUWEI_CLIENT_SECRET"],
+  #     app_id: ENV["HUAWEI_APP_ID"],
+  #     apk_path: "./app/build/outputs/apk/release/app-release.apk",
+  #     phase_wise_release: true,
+  #     phase_release_percent: "1",
+  #     phase_release_description: "Phased Release",
+  #     submit_for_review: false
+  #   )
+  # end
+
+  desc "Create Release APK"
+  lane :build_apk do
+    increment_build
+    store_password = get_properties_value(
+        key: "keystore_password",
+        path: "fastlane/puravida-app.properties"
+    )
+
+    gradle(
+      task: "assemble",
+      build_type: "Release",
+      print_command: false,
+      properties: {
+          "RELEASE_STORE_PASSWORD" => store_password
+      },
+      flags: "--no-daemon --max-workers=8 --stacktrace --info"
     )
   end
 
+  desc "Deploy a new version to Firebase"
+  lane :distribute_firebase do
+   build_apk
+       # build_android_app is a built-in fastlane action.
+       firebase_app_distribution(
+           app: "1:796001515981:android:b5aa2ab2617eaa7b7b2c84",
+           groups: "internal-testers",
+           release_notes: ""
+       )
+   end
 #  desc "Promote Internal to Alpha"
 #  lane :promote_internal_to_alpha do
 #    upload_to_play_store(
