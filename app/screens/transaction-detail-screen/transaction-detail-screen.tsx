@@ -16,7 +16,7 @@ import moment from "moment"
 import { formatUsdAmount } from "../../hooks"
 import Icon from "react-native-vector-icons/Ionicons"
 import { BLOCKCHAIN_EXPLORER_URL } from "../../constants/support"
-import { WalletType } from '@app/utils/enum'
+import { WalletType } from "@app/utils/enum"
 import { WalletSummary } from "@app/components/wallet-summary"
 
 const viewInExplorer = (hash: string): Promise<Linking> =>
@@ -66,16 +66,16 @@ const styles = EStyleSheet.create({
     marginVertical: "24rem",
   },
   valueContainer: {
-    flexDirection:"row",
-    height:50,
+    flexDirection: "row",
+    height: 50,
     backgroundColor: palette.white,
-    alignItems:'center',
-    borderRadius:8
+    alignItems: "center",
+    borderRadius: 8,
   },
   value: {
     marginLeft: 10,
-    alignItems:'center',
-    justifyContent:"center",
+    alignItems: "center",
+    justifyContent: "center",
     fontSize: "14rem",
     fontWeight: "bold",
   },
@@ -85,7 +85,7 @@ const Row = ({
   entry,
   value,
   type,
-  content
+  content,
 }: {
   entry: string
   value: string
@@ -99,12 +99,13 @@ const Row = ({
         <Icon name="open-outline" size={18} color={palette.darkGrey} />
       )}
     </Text>
-    {content || ( <View style={styles.valueContainer}>
-    <Text selectable style={styles.value}>
-      {value}
-    </Text>
-    </View> )}
-    
+    {content || (
+      <View style={styles.valueContainer}>
+        <Text selectable style={styles.value}>
+          {value}
+        </Text>
+      </View>
+    )}
   </View>
 )
 
@@ -161,17 +162,32 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
     minute: "numeric",
   })
 
-  const walletSummary = <WalletSummary walletType={walletType} amountType={isReceive ? "RECEIVE" : "SEND"} usdBalanceInDollars={Math.abs(usdAmount)} btcBalanceInSats={walletType === WalletType.BTC && Math.abs(settlementAmount)}/>
+  const walletSummary = (
+    <WalletSummary
+      walletType={walletType}
+      amountType={isReceive ? "RECEIVE" : "SEND"}
+      usdBalanceInDollars={Math.abs(usdAmount)}
+      btcBalanceInSats={walletType === WalletType.BTC && Math.abs(settlementAmount)}
+    />
+  )
 
   return (
     <Screen backgroundColor={palette.grey} unsafe preset="scroll">
       <View
         style={[
           styles.amountView,
-          {backgroundColor: walletType === WalletType.USD ? palette.usdPrimary : palette.btcPrimary}
+          {
+            backgroundColor:
+              walletType === WalletType.USD ? palette.usdPrimary : palette.btcPrimary,
+          },
         ]}
       >
-        <IconTransaction isReceive={isReceive} size={100} walletType={walletType} pending={false}/>
+        <IconTransaction
+          isReceive={isReceive}
+          size={100}
+          walletType={walletType}
+          pending={false}
+        />
         <Text style={styles.amountText}>{spendOrReceiveText}</Text>
         <TextCurrencyForAmount
           amount={Math.abs(usdAmount)}
@@ -194,7 +210,10 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
         </Text>
         <Divider style={styles.divider} />
         {/* NEED TRANSLATION */}
-        <Row entry={isReceive ? "Receiving Wallet" : "Sending Wallet" } content={walletSummary} />
+        <Row
+          entry={isReceive ? "Receiving Wallet" : "Sending Wallet"}
+          content={walletSummary}
+        />
         <Row entry={translate("common.date")} value={dateDisplay} />
         {!isReceive && <Row entry={translate("common.fees")} value={feeEntry} />}
         <Row entry={translate("common.description")} value={description} />

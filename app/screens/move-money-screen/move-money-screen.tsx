@@ -21,7 +21,6 @@ import Modal from "react-native-modal"
 import Icon from "react-native-vector-icons/Ionicons"
 import { getBuildNumber } from "react-native-device-info"
 import { BalanceHeader } from "../../components/balance-header"
-import { IconTransaction } from "../../components/icon-transactions"
 import { LargeButton } from "../../components/large-button"
 import { Screen } from "../../components/screen"
 import { TransactionItem } from "../../components/transaction-item"
@@ -95,10 +94,6 @@ const styles = EStyleSheet.create({
 
   listContainer: {
     marginTop: "1rem",
-  },
-
-  menuIcon: {
-    color: palette.darkGrey,
   },
 
   modal: { marginBottom: 0, marginHorizontal: 0 },
@@ -233,7 +228,6 @@ export const MoveMoneyScreen: ScreenType = ({
   isUpdateAvailable,
   hasToken,
 }: MoveMoneyScreenProps) => {
-
   console.log(transactionsEdges)
   const [modalVisible, setModalVisible] = useState(false)
 

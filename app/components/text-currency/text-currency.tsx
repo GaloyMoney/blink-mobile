@@ -5,6 +5,7 @@ import type { ComponentType } from "../../types/jsx"
 import { palette } from "@app/theme"
 import SatsIcon from "../../assets/icons/sat.svg"
 import { useWalletBalance } from "@app/hooks"
+import EStyleSheet from "react-native-extended-stylesheet"
 type Props = {
   amount: number
   currency: CurrencyType
@@ -13,14 +14,23 @@ type Props = {
   iconColor: string
 }
 
+const ComponentStyle = EStyleSheet.create({
+  view: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    paddingLeft: 8,
+  },
+})
+
 export const TextCurrencyForAmount: ComponentType = ({
   amount,
   currency,
   style,
   satsIconSize,
-  iconColor = palette.black
+  iconColor = palette.black,
 }: Props) => {
-
   if (currency === "USD") {
     const amountDisplay = Number.isNaN(amount)
       ? "..."
@@ -33,27 +43,12 @@ export const TextCurrencyForAmount: ComponentType = ({
     return Number.isNaN(amount) ? (
       <Text style={style}>...</Text>
     ) : (
-      <View
-        style={{
-          flex: 1,
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "flex-end",
-          paddingLeft: 8,
-        }}
-      >
+      <View style={ComponentStyle.view}>
         <SatsIcon
-          style={{
-            fill: iconColor,
-            width: satsIconSize,
-            height: satsIconSize,
-          }}
+          // @ts-expect-error: fill
+          style={{ fill: iconColor, width: satsIconSize, height: satsIconSize }}
         />
-        <Text
-          style={[{
-            ...style,
-          }]}
-        >
+        <Text style={style}>
           {currency_fmt
             .default(amount, {
               precision: 0,

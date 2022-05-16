@@ -19,7 +19,7 @@ const styles = EStyleSheet.create({
     backgroundColor: palette.white,
     borderRadius: 10,
     marginRight: -10,
-    flexDirection:"row",
+    flexDirection: "row",
   },
   balanceRight: {
     flex: 3,
@@ -27,13 +27,13 @@ const styles = EStyleSheet.create({
     backgroundColor: palette.white,
     borderRadius: 10,
     marginLeft: -10,
-    flexDirection:"row",
-    justifyContent: 'flex-end'
+    flexDirection: "row",
+    justifyContent: "flex-end",
   },
   textPrimary: {
     fontSize: 20,
     fontWeight: "600",
-    color: palette.black
+    color: palette.black,
   },
   textRight: {
     textAlign: "right",
@@ -45,14 +45,14 @@ const styles = EStyleSheet.create({
   },
   textSecondary: {
     fontSize: 12,
-    color: palette.darkGrey
+    color: palette.darkGrey,
   },
   usdLabelContainer: {
     height: 50,
     backgroundColor: palette.usdSecondary,
     borderBottomLeftRadius: 10,
     borderTopLeftRadius: 10,
-    justifyContent: "center"
+    justifyContent: "center",
   },
   usdLabelText: {
     transform: [{ rotate: "-90deg" }],
@@ -62,11 +62,11 @@ const styles = EStyleSheet.create({
     letterSpacing: 0.41,
   },
   btcLabelContainer: {
-    height: 50,
-    borderTopRightRadius: 10,
+    backgroundColor: palette.lightOrange,
     borderBottomRightRadius: 10,
-    backgroundColor: "rgba(241, 164, 60, 0.5)",
-    justifyContent: "center"
+    borderTopRightRadius: 10,
+    height: 50,
+    justifyContent: "center",
   },
   btcLabelText: {
     transform: [{ rotate: "90deg" }],
@@ -78,7 +78,7 @@ const styles = EStyleSheet.create({
   },
   transferButton: {
     alignItems: "center",
-    backgroundColor: "rgba(228, 233, 238, 1)",
+    backgroundColor: palette.lighterGrey,
     borderRadius: 50,
     elevation: Platform.OS === "android" ? 50 : 0,
     height: 50,
@@ -98,7 +98,7 @@ const WalletOverview = ({ navigation }) => {
         <TextCurrency
           view="UsdWallet"
           currency={"USD"}
-          style={{ ...styles.textPrimary, ...styles.textLeft}}
+          style={{ ...styles.textPrimary, ...styles.textLeft }}
         />
       </View>
 
