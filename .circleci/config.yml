@@ -54,7 +54,7 @@ jobs:
           command: |
             yarn start &
             ./node_modules/.bin/wdio android/browserstack.js
-  
+
   ios_test:
     macos:
       xcode: 13.1.0
@@ -227,35 +227,10 @@ jobs:
       - run: git add --force android/app/build/generated/sourcemaps/react/release
       - run: git commit -a -m "new android build [ci skip]"
       - run: git push -q https://${GITHUB_TOKEN}@github.com/GaloyMoney/galoy-mobile.git main
-      
+
       - run: gh release upload $CIRCLE_TAG "app/build/outputs/apk/release/app-release.apk" --clobber
       - store_artifacts:
           path: android/app/build/outputs/apk
-
-  update_locale:
-    working_directory: ~/galoy-mobile
-    docker:
-      - image: cimg/base:2020.01
-    resource_class: small
-    steps:
-      - checkout:
-          path: ~/galoy-mobile
-      - run: sed -i "s/__TOKEN__/$PHRASE_TOKEN/" .phrase.yml
-      - run: wget https://github.com/phrase/phrase-cli/releases/download/2.0.13/phrase_linux_amd64
-      - run: chmod +x ./phrase_linux_amd64
-      - run: ./phrase_linux_amd64 push
-      - run: ./phrase_linux_amd64 pull
-      - run: git config credential.helper 'cache --timeout=120'
-      - run: git config --global user.name "circleci-bot"
-      - run: git config --global user.email "bot@circleci.com"
-      - run: git config pull.rebase false
-      - run: |
-          if [[ $(-- . ':!.phrase.yml') ]]; then
-            git commit -a -m "update translation file [ci skip]" -- . ':!.phrase.yml'
-            git push -q https://${GITHUB_TOKEN}@github.com/GaloyMoney/galoy-mobile.git main
-          else
-            echo "nothing to commit"
-          fi
 
 workflows:
   mobile:
@@ -282,7 +257,7 @@ workflows:
               only: /^[0-9]+\.[0-9]+\.[0-9]+/
             branches:
               ignore: /.*/
-      - update_locale:
+      - build_ios:
           requires:
             - hold_build_mobile
           filters:
@@ -290,17 +265,9 @@ workflows:
               only: /^[0-9]+\.[0-9]+\.[0-9]+/
             branches:
               ignore: /.*/
-      - build_ios:
-          requires:
-            - update_locale
-          filters:
-            tags:
-              only: /^[0-9]+\.[0-9]+\.[0-9]+/
-            branches:
-              ignore: /.*/
       - build_android:
           requires:
-            - update_locale
+            - hold_build_mobile
           filters:
             tags:
               only: /^[0-9]+\.[0-9]+\.[0-9]+/
