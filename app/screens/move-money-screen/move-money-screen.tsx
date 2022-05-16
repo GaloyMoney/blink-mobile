@@ -34,7 +34,7 @@ import useToken from "../../utils/use-token"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
 import useMainQuery from "@app/hooks/use-main-query"
-import { WalletOverviewDataInjected } from "@app/components/wallet-overview/wallet-overview"
+import WalletOverview from "@app/components/wallet-overview/wallet-overview"
 import QrCodeIcon from "@app/assets/icons/qr-code.svg"
 import SendIcon from "@app/assets/icons/send.svg"
 import ReceiveIcon from "@app/assets/icons/receive.svg"
@@ -352,7 +352,7 @@ export const MoveMoneyScreen: ScreenType = ({
           icon={<SettingsIcon />}
         />
       </View>
-      <WalletOverviewDataInjected navigation={navigation} />
+      <WalletOverview navigation={navigation} />
       <FlatList
         ListHeaderComponent={() => (
           <>

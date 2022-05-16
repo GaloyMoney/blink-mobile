@@ -5,11 +5,9 @@ import { Text, View, Linking, TouchableWithoutFeedback } from "react-native"
 import { Divider } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { CloseCross } from "../../components/close-cross"
-import {
-  IconTransaction,
-} from "../../components/icon-transactions"
+import { IconTransaction } from "../../components/icon-transactions"
 import { Screen } from "../../components/screen"
-import { TextCurrency } from "../../components/text-currency"
+import { TextCurrencyForAmount } from "../../components/text-currency"
 import { translateUnknown as translate } from "@galoymoney/client"
 import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
@@ -175,16 +173,20 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
       >
         <IconTransaction isReceive={isReceive} size={100} walletType={walletType} pending={false}/>
         <Text style={styles.amountText}>{spendOrReceiveText}</Text>
-        <TextCurrency amount={Math.abs(usdAmount)} currency="USD" style={styles.amount} />
-        {
-          walletType === WalletType.BTC && <TextCurrency
-          amount={Math.abs(settlementAmount)}
-          currency="BTC"
-          style={styles.amountSecondary}
-          satsIconSize={20}
-          iconColor={palette.white}
+        <TextCurrencyForAmount
+          amount={Math.abs(usdAmount)}
+          currency="USD"
+          style={styles.amount}
         />
-        }
+        {walletType === WalletType.BTC && (
+          <TextCurrencyForAmount
+            amount={Math.abs(settlementAmount)}
+            currency="BTC"
+            style={styles.amountSecondary}
+            satsIconSize={20}
+            iconColor={palette.white}
+          />
+        )}
       </View>
       <View style={styles.transactionDetailView}>
         <Text style={styles.transactionDetailText}>
