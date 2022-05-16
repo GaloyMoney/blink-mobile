@@ -9,7 +9,7 @@ import * as parsing from "./parsing"
 
 // TODO: look if we own the address
 
-export type IPaymentType = "lightning" | "onchain" | "username" | "lnurl" | undefined
+export type IPaymentType = "lightning" | "onchain" | "username" | "lnurl"
 
 export interface IValidPaymentReponse {
   valid: boolean
@@ -56,6 +56,11 @@ function parseAmount(txt) {
   )
 }
 
+const debugConsole = (...args: string[]) => {
+  let str = args.join("\n")
+  console.log(`XXXXXXXXXXX\n${str}`)
+}
+
 export const validPayment = (
   input: string,
   network: INetwork,
@@ -67,169 +72,229 @@ export const validPayment = (
   }
 
   // input might start with 'lightning:', 'bitcoin:'
-  if (input.toLowerCase().startsWith("lightning:lnurl")) {
-    /* eslint-disable no-param-reassign */
-    input = input.replace("lightning:", "")
-  }
-  // eslint-disable-next-line prefer-const
-  let [protocol, data] = input.split(":")
-  let paymentType: IPaymentType
-  let lnurl: string
-  let staticLnurlIdentifier = false
+  let inputData = input.toLowerCase().startsWith("lightning:lnurl")
+    ? input.replace("lightning:", "")
+    : input
 
-  if (protocol.toLowerCase() === "bitcoin") {
-    paymentType = "onchain"
+  const [protocol, data] = inputData.split(":")
 
-    // TODO manage bitcoin= case
-  } else if (protocol.toLowerCase() === "lightning") {
-    paymentType = "lightning"
-    // some apps encode lightning invoices in UPPERCASE
-    data = data.toLowerCase()
+  debugConsole(`protocol: ${protocol}`, `data: ${data}`)
+
+  let paymentType = getPaymentType(protocol, data)
+
+  debugConsole(`paymentTyp: ${paymentType}`)
+
+  return getPaymentResponse(paymentType, protocol, data, network, myPubKey, username)
+}
+
+// one function to detect and return payment type
+const getPaymentType = (protocol: string, data: string): IPaymentType => {
+  if (
+    protocol.toLowerCase() === "lightning" || // TODO manage bitcoin= case
+    protocol.toLowerCase().startsWith("ln") // possibly a lightning address?
+  ) {
+    return "lightning"
+  } else if (protocol.toLowerCase() === "bitcoin") {
+    return "onchain"
   } else if (
     (protocol && protocol.toLowerCase().startsWith("lnurl")) ||
-    (data && data.toLowerCase().startsWith("lnurl"))
+    (data && data.toLowerCase().startsWith("lnurl")) ||
+    utils.isLightningAddress(protocol) // no protocol. let's see if this could have an address directly
   ) {
-    paymentType = "lnurl"
-
-    lnurl = protocol || data
-
-    // no protocol. let's see if this could have an address directly
-  } else if (protocol.toLowerCase().startsWith("ln")) {
-    // possibly a lightning address?
-
-    paymentType = "lightning"
-
-    if (network === "testnet" && protocol.toLowerCase().startsWith("lnbc")) {
-      return {
-        valid: false,
-        paymentType,
-        errorMessage: "This is a mainnet invoice. The wallet is on testnet",
-      }
-    }
-
-    if (network === "mainnet" && protocol.toLowerCase().startsWith("lntb")) {
-      return {
-        valid: false,
-        paymentType,
-        errorMessage: "This is a testnet invoice. The wallet is on mainnet",
-      }
-    }
-
-    // some apps encode lightning invoices in UPPERCASE
-    data = protocol.toLowerCase()
-  } else if (utils.isLightningAddress(protocol)) {
-    paymentType = "lnurl"
-    staticLnurlIdentifier = true
-    lnurl = utils.decodeUrlOrAddress(protocol)
+    return "lnurl"
   } else if (!utils.isLightningAddress(protocol) && protocol.toLowerCase() === "https") {
-    const domain = "//ln.bitcoinbeach.com/"
-    if (data.startsWith(domain)) {
-      return {
-        valid: true,
-        paymentType: "username",
-        username: data.substring(domain.length),
-      }
-    }
+    return "username"
   } else {
-    // no schema
-    data = protocol
+    return "onchain"
   }
+}
 
-  if (paymentType === "onchain" || paymentType === undefined) {
-    try {
-      const decodedData = url.parse(data, true)
-      let path = decodedData.pathname // using url node library. the address is exposed as the "host" here
-      // some apps encode bech32 addresses in UPPERCASE
-      const lowerCasePath = path.toLowerCase()
-      if (
-        lowerCasePath.startsWith("bc1") ||
-        lowerCasePath.startsWith("tb1") ||
-        lowerCasePath.startsWith("bcrt1")
-      ) {
-        path = lowerCasePath
-      }
-
-      let amount
-
-      try {
-        amount = parseAmount(decodedData.query.amount)
-      } catch (err) {
-        console.log(`can't decode amount ${err}`)
-      }
-
-      // will throw if address is not valid
-      address.toOutputScript(path, mappingToBitcoinJs(network))
-      paymentType = "onchain"
-      return {
-        valid: true,
-        paymentType,
-        address: path,
-        amount,
-        amountless: !amount,
-      }
-    } catch (e) {
-      console.warn(`issue with payment ${e}`)
-      return { valid: false }
-    }
-  } else if (paymentType === "lightning") {
-    let payReq
-    try {
-      payReq = lightningPayReq.decode(data)
-    } catch (err) {
-      console.log(err)
-      return { valid: false }
-    }
-    // console.log(JSON.stringify({ payReq }, null, 2))
-
-    const sameNode = myPubKey === getDestination(payReq)
-
-    if (sameNode && username === getUsername(payReq)) {
+const getPaymentResponse = (
+  paymentType: IPaymentType,
+  protocol: string,
+  data: string,
+  network: INetwork,
+  myPubKey: string,
+  username: string,
+): IValidPaymentReponse => {
+  switch (paymentType) {
+    case "onchain":
+      return getOnChainPayResponse(data || protocol, network)
+    case "lnurl":
+      return getLNURLPayResponse(protocol, data)
+    case "username":
+      return getUsernamePayResponse(data)
+    case "lightning":
+      return getLightningPayResponse(protocol, data, network, myPubKey, username)
+    default:
       return {
         valid: false,
-        paymentType,
-        errorMessage: "invoice needs to be for a different user",
+        errorMessage: "We are unable to detect an invoice or payment address",
       }
+  }
+}
+
+const getLNURL = (protocol: string, data: string): string => {
+  if (protocol && protocol.toLowerCase().startsWith("lnurl")) {
+    return protocol
+  } else if (data && data.toLowerCase().startsWith("lnurl")) {
+    return data
+  } else if (utils.isLightningAddress(protocol)) {
+    return utils.decodeUrlOrAddress(protocol)
+  }
+  return null
+}
+
+const getOnChainPayResponse = (data: string, network: INetwork): IValidPaymentReponse => {
+  try {
+    const decodedData = url.parse(data, true)
+    let path = decodedData.pathname // using url node library. the address is exposed as the "host" here
+    // some apps encode bech32 addresses in UPPERCASE
+    const lowerCasePath = path.toLowerCase()
+    if (
+      lowerCasePath.startsWith("bc1") ||
+      lowerCasePath.startsWith("tb1") ||
+      lowerCasePath.startsWith("bcrt1")
+    ) {
+      path = lowerCasePath
     }
 
     let amount
-    let amountless
 
-    if (payReq.satoshis || payReq.millisatoshis) {
-      amount = payReq.satoshis ?? Number(payReq.millisatoshis) / 1000
-      amountless = false
-    } else {
-      amount = 0
-      amountless = true
+    try {
+      amount = parseAmount(decodedData.query.amount)
+    } catch (err) {
+      console.log(`can't decode amount ${err}`)
     }
+    debugConsole("onChain3")
+    // will throw if address is not valid
+    address.toOutputScript(path, mappingToBitcoinJs(network)) // this currently throws. need to figure out why
 
-    // TODO: show that the invoice has expired in the popup
-    // TODO: manage testnet as well
-
-    if (parsing.lightningInvoiceHasExpired(payReq)) {
-      return { valid: false, errorMessage: "invoice has expired", paymentType }
-    }
-
-    const memo = getDescription(payReq)
     return {
       valid: true,
-      invoice: data,
+      paymentType: "onchain",
+      address: path,
       amount,
-      amountless,
-      memo,
-      paymentType,
-      sameNode,
+      amountless: !amount,
     }
-  } else if (paymentType === "lnurl") {
-    return {
-      valid: true,
-      lnurl,
-      amountless: false,
-      staticLnurlIdentifier,
-    }
-  } else {
-    return {
-      valid: false,
-      errorMessage: "We are unable to detect an invoice or payment address",
-    }
+  } catch (e) {
+    console.warn(`issue with payment ${e}`) // we catch here.
+    return { valid: false }
   }
 }
+
+const getLightningPayResponse = (
+  protocol: string,
+  data: string,
+  network: INetwork,
+  myPubKey: string,
+  username: string,
+): IValidPaymentReponse => {
+  const paymentType = "lightning"
+  if (network === "testnet" && protocol.toLowerCase().startsWith("lnbc")) {
+    return {
+      valid: false,
+      paymentType,
+      errorMessage: "This is a mainnet invoice. The wallet is on testnet",
+    }
+  }
+
+  if (network === "mainnet" && protocol.toLowerCase().startsWith("lntb")) {
+    return {
+      valid: false,
+      paymentType,
+      errorMessage: "This is a testnet invoice. The wallet is on mainnet",
+    }
+  }
+
+  // cant overwrite data, first of all. need to pull out lightning param if it is present.
+  // otherwise, do this nonsense.
+
+  debugConsole("start", `data: ${data}`, `protocol: ${protocol}`)
+
+  const dataToDecode = (
+    protocol.toLowerCase() === "lightning" ? data : protocol
+  ).toLowerCase()
+
+  // some apps encode lightning invoices in UPPERCASE
+  // data = protocol.toLowerCase()
+  let payReq
+  try {
+    payReq = lightningPayReq.decode(dataToDecode)
+  } catch (err) {
+    debugConsole("catch")
+    console.log(err)
+    return { valid: false }
+  }
+
+  if (parsing.lightningInvoiceHasExpired(payReq)) {
+    debugConsole("expiry")
+    return { valid: false, errorMessage: "invoice has expired", paymentType }
+  }
+  debugConsole("Still looking")
+
+  const sameNode = myPubKey === getDestination(payReq)
+  const sameNodeAndUsername = sameNode && username === getUsername(payReq)
+
+  if (sameNodeAndUsername) {
+    debugConsole("Samenode&username")
+    return {
+      valid: false,
+      paymentType,
+      errorMessage: "invoice needs to be for a different user",
+    }
+  }
+
+  let amount = 0
+  let amountless = true
+
+  if (payReq.satoshis || payReq.millisatoshis) {
+    amount = payReq.satoshis ?? Number(payReq.millisatoshis) / 1000
+    amountless = false
+  }
+
+  // TODO: show that the invoice has expired in the popup
+  // TODO: manage testnet as well
+
+  const memo = getDescription(payReq)
+  return {
+    valid: true,
+    invoice: dataToDecode,
+    amount,
+    amountless,
+    memo,
+    paymentType,
+    sameNode,
+  }
+}
+
+const getLNURLPayResponse = (protocol: string, data: string): IValidPaymentReponse => {
+  return {
+    valid: true,
+    lnurl: getLNURL(protocol, data),
+    paymentType: "lnurl",
+    amountless: false,
+    staticLnurlIdentifier: utils.isLightningAddress(protocol),
+  }
+}
+
+// TODO: empty return case here?
+const getUsernamePayResponse = (data: string): IValidPaymentReponse => {
+  const domain = "//ln.bitcoinbeach.com/"
+  if (data.startsWith(domain)) {
+    return {
+      valid: true,
+      paymentType: "username",
+      username: data.substring(domain.length),
+    }
+  }
+  return { valid: false }
+}
+
+const hasLNParam = (url: string): boolean => {
+  return url.includes("lightning=")
+  // need to check for valid payment address too?
+}
+
+// is there a url parser in the codebase already??
+// url.parse(data, true) ?
