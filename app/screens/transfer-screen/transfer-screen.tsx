@@ -1,19 +1,17 @@
-import { translateUnknown as translate } from "@galoymoney/client"
-import { palette } from "@app/theme"
 import React, { useEffect, useState } from "react"
-import { ActivityIndicator, Platform, StyleSheet, Text, View } from "react-native"
+import { ActivityIndicator, Platform, Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { ScrollView, TouchableWithoutFeedback } from "react-native-gesture-handler"
+import { FakeCurrencyInput } from "react-native-currency-input"
+import { Button } from "react-native-elements"
+
+import { translateUnknown as translate } from "@galoymoney/client"
+
+import { palette } from "@app/theme"
 import useMainQuery from "@app/hooks/use-main-query"
 import * as currency_fmt from "currency.js"
 import { useMySubscription, useWalletBalance } from "@app/hooks"
 import SwitchButton from "@app/assets/icons/transfer.svg"
-import { FakeCurrencyInput } from "react-native-currency-input"
-import { Button } from "react-native-elements"
-import { NavigationHelpersContext } from "@react-navigation/native"
-export const TransferScreenDataInjected = (props: TransferScreenProps) => {
-  return <TransferScreen {...props} />
-}
 
 export const TransferScreen = ({ navigation }: TransferScreenProps) => {
   const { wallets, defaultWalletId } = useMainQuery()
@@ -244,9 +242,12 @@ export const TransferScreen = ({ navigation }: TransferScreenProps) => {
             </View>
           </View>
         </View>
-        <View style={[styles.switchButtonContainer]}>
-          <TouchableWithoutFeedback style={styles.switchButton} onPress={() => switchWallets()}>
-              <SwitchButton />
+        <View style={styles.switchButtonContainer}>
+          <TouchableWithoutFeedback
+            style={styles.switchButton}
+            onPress={() => switchWallets()}
+          >
+            <SwitchButton />
           </TouchableWithoutFeedback>
         </View>
         <View style={styles.toFieldContainer}>
@@ -544,7 +545,7 @@ const styles = EStyleSheet.create({
     height: 30,
     width: 50,
     borderRadius: 10,
-    backgroundColor: "rgba(241, 164, 60, 0.5)",
+    backgroundColor: palette.lightOrange,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -634,7 +635,7 @@ const styles = EStyleSheet.create({
     marginTop: "80%",
   },
   disabledButtonStyle: {
-    backgroundColor: "rgba(83, 111, 242, 0.1)",
+    backgroundColor: palette.lighterGrey,
   },
   disabledButtonTitleStyle: {
     color: palette.lightBlue,

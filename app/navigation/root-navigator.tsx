@@ -10,7 +10,6 @@ import { useCallback, useEffect } from "react"
 import { AppState } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import * as RNLocalize from "react-native-localize"
-import Icon from "react-native-vector-icons/Ionicons"
 import analytics from "@react-native-firebase/analytics"
 
 import { setLocale, translateUnknown as translate } from "@galoymoney/client"
@@ -65,7 +64,7 @@ import ContactsIcon from "@app/assets/icons/contacts.svg"
 import MapIcon from "@app/assets/icons/map.svg"
 import LearnIcon from "@app/assets/icons/learn.svg"
 import SendBitcoin from "@app/screens/send-bitcoin-screen/send-bitcoin"
-import { TransferScreenDataInjected as TransferScreen } from "@app/screens/transfer-screen"
+import { TransferScreen } from "@app/screens/transfer-screen"
 import TransferConfirmationScreen from "@app/screens/transfer-screen/transfer-confirmation-screen"
 
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
@@ -125,7 +124,7 @@ const styles = EStyleSheet.create({
   },
 })
 
-const size = 32
+// const size = 32
 
 const RootNavigator = createStackNavigator<RootStackParamList>()
 
