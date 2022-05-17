@@ -1,8 +1,7 @@
-import { useWalletBalance } from "@app/hooks"
 import { palette } from "@app/theme"
 import React from "react"
 import { Platform, View } from "react-native"
-import { Button, Text } from "react-native-elements"
+import { Text } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TextCurrency } from "../text-currency"
 import TransferIcon from "@app/assets/icons/transfer.svg"
@@ -20,7 +19,7 @@ const styles = EStyleSheet.create({
     backgroundColor: palette.white,
     borderRadius: 10,
     marginRight: -10,
-    flexDirection:"row",
+    flexDirection: "row",
   },
   balanceRight: {
     flex: 3,
@@ -28,13 +27,13 @@ const styles = EStyleSheet.create({
     backgroundColor: palette.white,
     borderRadius: 10,
     marginLeft: -10,
-    flexDirection:"row",
-    justifyContent: 'flex-end'
+    flexDirection: "row",
+    justifyContent: "flex-end",
   },
   textPrimary: {
     fontSize: 20,
     fontWeight: "600",
-    color: palette.black
+    color: palette.black,
   },
   textRight: {
     textAlign: "right",
@@ -46,14 +45,14 @@ const styles = EStyleSheet.create({
   },
   textSecondary: {
     fontSize: 12,
-    color: palette.darkGrey
+    color: palette.darkGrey,
   },
   usdLabelContainer: {
     height: 50,
     backgroundColor: palette.usdSecondary,
     borderBottomLeftRadius: 10,
     borderTopLeftRadius: 10,
-    justifyContent: "center"
+    justifyContent: "center",
   },
   usdLabelText: {
     transform: [{ rotate: "-90deg" }],
@@ -63,11 +62,11 @@ const styles = EStyleSheet.create({
     letterSpacing: 0.41,
   },
   btcLabelContainer: {
-    height: 50,
-    borderTopRightRadius: 10,
+    backgroundColor: palette.lightOrange,
     borderBottomRightRadius: 10,
-    backgroundColor: "rgba(241, 164, 60, 0.5)",
-    justifyContent: "center"
+    borderTopRightRadius: 10,
+    height: 50,
+    justifyContent: "center",
   },
   btcLabelText: {
     transform: [{ rotate: "90deg" }],
@@ -78,33 +77,18 @@ const styles = EStyleSheet.create({
     opacity: 100,
   },
   transferButton: {
-    height: 50,
-    width: 50,
-    borderRadius: 50,
-    zIndex: 50,
-    elevation: Platform.OS === "android" ? 50 : 0,
-    backgroundColor: "rgba(228, 233, 238, 1)",
-    justifyContent: "center",
     alignItems: "center",
+    backgroundColor: palette.lighterGrey,
+    borderRadius: 50,
+    elevation: Platform.OS === "android" ? 50 : 0,
+    height: 50,
+    justifyContent: "center",
+    width: 50,
+    zIndex: 50,
   },
 })
 
-export const WalletOverviewDataInjected = ({ navigation }) => {
-  const { usdWalletBalance, btcWalletBalance, btcWalletValueInUsd } = useWalletBalance()
-  return (
-    <WalletOverview
-      usdBalance={usdWalletBalance / 100}
-      btcPrimaryBalance={btcWalletValueInUsd}
-      btcSecondaryBalance={btcWalletBalance}
-      transferButtonAction={() => navigation.navigate("TransferScreen")}
-    />
-  )
-}
-
-const WalletOverview = (props: WalletOverviewProps) => {
-  const { usdBalance, btcPrimaryBalance, btcSecondaryBalance, transferButtonAction } =
-    props
-
+const WalletOverview = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.balanceLeft}>
@@ -112,32 +96,31 @@ const WalletOverview = (props: WalletOverviewProps) => {
           <Text style={styles.usdLabelText}>USD</Text>
         </View>
         <TextCurrency
-          amount={usdBalance}
+          view="UsdWallet"
           currency={"USD"}
-          style={{ ...styles.textPrimary, ...styles.textLeft}}
+          style={{ ...styles.textPrimary, ...styles.textLeft }}
         />
       </View>
 
       <View style={styles.transferButton}>
-        <TouchableWithoutFeedback onPress={() => transferButtonAction()}>
+        <TouchableWithoutFeedback onPress={() => navigation.navigate("TransferScreen")}>
           <TransferIcon />
         </TouchableWithoutFeedback>
       </View>
 
       <View style={styles.balanceRight}>
         <View>
-
-        <TextCurrency
-          amount={btcPrimaryBalance}
-          currency={"USD"}
-          style={{ ...styles.textPrimary, ...styles.textRight }}
-        />
-        <TextCurrency
-          amount={btcSecondaryBalance}
-          currency={"BTC"}
-          style={{ ...styles.textSecondary, ...styles.textRight }}
-          satsIconSize={15}
-        />
+          <TextCurrency
+            view="BtcWalletInUsd"
+            currency={"USD"}
+            style={{ ...styles.textPrimary, ...styles.textRight }}
+          />
+          <TextCurrency
+            view="BtcWallet"
+            currency={"BTC"}
+            style={{ ...styles.textSecondary, ...styles.textRight }}
+            satsIconSize={15}
+          />
         </View>
         <View style={styles.btcLabelContainer}>
           <Text style={styles.btcLabelText}>SAT</Text>
@@ -145,13 +128,6 @@ const WalletOverview = (props: WalletOverviewProps) => {
       </View>
     </View>
   )
-}
-
-export interface WalletOverviewProps {
-  usdBalance: number
-  btcPrimaryBalance: number
-  btcSecondaryBalance: number
-  transferButtonAction: () => void
 }
 
 export default WalletOverview
