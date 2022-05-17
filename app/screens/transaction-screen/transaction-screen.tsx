@@ -92,7 +92,12 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
     return null
   }
 
-  const { edges, pageInfo } = data.me.defaultAccount.wallets[0].transactions
+  const walletCurrency = data.me.defaultAccount.wallets[0].walletCurrency
+  const { edges: edgesRaw, pageInfo } = data.me.defaultAccount.wallets[0].transactions
+  const edges = edgesRaw.map((edge) => ({
+    ...edge,
+    node: { ...edge.node, walletType: walletCurrency },
+  }))
   const lastDataCursor = edges.length > 0 ? edges[edges.length - 1].cursor : null
   let lastSeenCursor =
     transactionsRef.current.length > 0
