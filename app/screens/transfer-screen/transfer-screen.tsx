@@ -628,11 +628,11 @@ const styles = EStyleSheet.create({
   buttonContainer: {
     padding: 10,
     flex: 1,
+    paddingTop: "80%",
   },
   button: {
     height: 50,
     borderRadius: 10,
-    marginTop: "80%",
   },
   disabledButtonStyle: {
     backgroundColor: palette.lighterGrey,
