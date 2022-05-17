@@ -23,7 +23,7 @@ import type { ScreenType } from "../../types/jsx"
 import { IPaymentType, validPayment } from "../../utils/parsing"
 import useToken from "../../utils/use-token"
 import * as UsernameValidation from "../../utils/validation"
-import { TextCurrency } from "../../components/text-currency/text-currency"
+import { TextCurrencyForAmount } from "../../components/text-currency/text-currency"
 import { useMyCurrencies, useMySubscription } from "../../hooks/user-hooks"
 import { toastShow } from "../../utils/toast"
 import useMainQuery from "@app/hooks/use-main-query"
@@ -587,7 +587,7 @@ export const SendBitcoinScreenJSX: ScreenType = ({
             primaryAmount={primaryAmount}
             secondaryAmount={secondaryAmount}
           />
-          <TextCurrency
+          <TextCurrencyForAmount
             amount={secondaryAmount.value}
             currency={secondaryAmount.currency}
             style={styles.subCurrencyText}
