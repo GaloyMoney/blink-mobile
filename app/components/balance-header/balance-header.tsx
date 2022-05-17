@@ -9,7 +9,7 @@ import { translateUnknown as translate } from "@galoymoney/client"
 import { palette } from "../../theme/palette"
 import { TextCurrency } from "../text-currency/text-currency"
 import { useIsFocused } from "@react-navigation/native"
-import { useWalletBalance, useHiddenBalanceToolTip, useHideBalance } from "../../hooks"
+import { useHiddenBalanceToolTip, useHideBalance } from "../../hooks"
 import { saveHiddenBalanceToolTip } from "../../graphql/client-only-query"
 import { useApolloClient } from "@apollo/client"
 
@@ -106,7 +106,6 @@ export const BalanceHeaderDisplay: React.FC<BalanceHeaderProps> = ({
   showSecondaryCurrency = false,
 }: BalanceHeaderProps) => {
   const client = useApolloClient()
-  const { btcWalletBalance, btcWalletValueInUsd, usdWalletBalance } = useWalletBalance()
   const hideBalance = useHideBalance()
   const hiddenBalanceToolTip = useHiddenBalanceToolTip()
   const isFocused = useIsFocused()
@@ -169,10 +168,9 @@ export const BalanceHeaderDisplay: React.FC<BalanceHeaderProps> = ({
   }
 
   const defaultBalanceHeader = () => {
-    const amountOtherCurrency = btcWalletBalance
     const subHeader = showSecondaryCurrency && (
       <TextCurrency
-        amount={amountOtherCurrency}
+        view="BtcWallet"
         currency={otherCurrency}
         style={styles.subCurrencyText}
       />
@@ -189,11 +187,7 @@ export const BalanceHeaderDisplay: React.FC<BalanceHeaderProps> = ({
               }
             }}
           >
-            <TextCurrency
-              amount={usdWalletBalance / 100 + btcWalletValueInUsd}
-              currency={currency}
-              style={styles.text}
-            />
+            <TextCurrency view="UsdBalance" currency={currency} style={styles.text} />
           </TouchableHighlight>
         </View>
         {subHeader}
