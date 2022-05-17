@@ -53,6 +53,29 @@ const TransferConfirmationScreen = ({
     //  setErrs([{ message: translate("errors.generic") + error }])
   }
 
+  const isButtonEnabled = () => {
+    if (fromWallet?.walletCurrency === "BTC" && amountCurrency === "BTC") {
+      if (satAmount && satAmount !== 0 && satAmount <= btcWalletBalance) {
+        return true
+      }
+    }
+    if (fromWallet?.walletCurrency === "BTC" && amountCurrency === "USD") {
+      if (
+        satAmountInUsd &&
+        satAmountInUsd !== 0 &&
+        satAmountInUsd <= btcWalletValueInUsd
+      ) {
+        return true
+      }
+    }
+    if (fromWallet?.walletCurrency === "USD") {
+      if (dollarAmount && dollarAmount !== 0 && 100 * dollarAmount <= usdWalletBalance) {
+        return true
+      }
+    }
+    return false
+  }
+
   const payWallet = async () => {
     setStatus(Status.LOADING)
 
@@ -288,6 +311,9 @@ const TransferConfirmationScreen = ({
           title={translate("SendBitcoinConfirmationScreen.title")}
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitleStyle}
+          disabledStyle={{ ...styles.button, ...styles.disabledButtonStyle }}
+          disabledTitleStyle={styles.disabledButtonTitleStyle}
+          disabled={!isButtonEnabled()}
           onPress={() => payWallet()}
         />
       </View>
@@ -401,6 +427,13 @@ const styles = StyleSheet.create({
   buttonTitleStyle: {
     color: palette.white,
     fontWeight: "bold",
+  },
+  disabledButtonStyle: {
+    backgroundColor: palette.lighterGrey,
+  },
+  disabledButtonTitleStyle: {
+    color: palette.lightBlue,
+    fontWeight: "600",
   },
   buttonContainer: {
     flex: 1,

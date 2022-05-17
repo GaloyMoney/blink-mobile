@@ -7,7 +7,7 @@ import { Button } from "react-native-elements"
 
 import { translateUnknown as translate } from "@galoymoney/client"
 
-import { palette } from "@app/theme"
+import { color, palette } from "@app/theme"
 import useMainQuery from "@app/hooks/use-main-query"
 import * as currency_fmt from "currency.js"
 import { useMySubscription, useWalletBalance } from "@app/hooks"
@@ -96,8 +96,9 @@ export const TransferScreen = ({ navigation }: TransferScreenProps) => {
         setAmountFieldError(undefined)
       }
     }
+
     if (fromWallet?.walletCurrency === "USD") {
-      if (dollarAmount > usdWalletBalance) {
+      if (100 * dollarAmount > usdWalletBalance) {
         setAmountFieldError(
           translate("SendBitcoinScreen.amountExceed", {
             balance: currency_fmt
@@ -146,17 +147,21 @@ export const TransferScreen = ({ navigation }: TransferScreenProps) => {
 
   const isButtonEnabled = () => {
     if (fromWallet?.walletCurrency === "BTC" && amountCurrency === "BTC") {
-      if (satAmount !== 0 && satAmount < btcWalletBalance) {
+      if (satAmount && satAmount !== 0 && satAmount <= btcWalletBalance) {
         return true
       }
     }
     if (fromWallet?.walletCurrency === "BTC" && amountCurrency === "USD") {
-      if (satAmountInUsd !== 0 && satAmountInUsd < btcWalletValueInUsd) {
+      if (
+        satAmountInUsd &&
+        satAmountInUsd !== 0 &&
+        satAmountInUsd <= btcWalletValueInUsd
+      ) {
         return true
       }
     }
     if (fromWallet?.walletCurrency === "USD") {
-      if (dollarAmount !== 0 && dollarAmount < usdWalletBalance) {
+      if (dollarAmount && dollarAmount !== 0 && 100 * dollarAmount <= usdWalletBalance) {
         return true
       }
     }
@@ -400,11 +405,11 @@ export const TransferScreen = ({ navigation }: TransferScreenProps) => {
             </View>
           )}
         </View>
-        {
+        {amountFieldError && (
           <View style={styles.errorContainer}>
             <Text style={styles.errorText}>{amountFieldError}</Text>
           </View>
-        }
+        )}
       </View>
       <View style={styles.fieldContainer}>
         <View style={styles.percentageContainer}>
@@ -647,5 +652,12 @@ const styles = EStyleSheet.create({
   activeButtonTitleStyle: {
     color: palette.white,
     fontWeight: "bold",
+  },
+  errorContainer: {
+    marginTop: 10,
+    alignItems: "center",
+  },
+  errorText: {
+    color: color.error,
   },
 })
