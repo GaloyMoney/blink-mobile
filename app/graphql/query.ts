@@ -111,6 +111,7 @@ export const TRANSACTIONS_LIST = gql`
         id
         wallets {
           id
+          walletCurrency
           transactions(first: $first, after: $after) {
             ...TransactionList
           }
