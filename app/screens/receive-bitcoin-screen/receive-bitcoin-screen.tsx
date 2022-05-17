@@ -24,7 +24,7 @@ import {
   usePrevious,
   useMySubscription,
 } from "../../hooks"
-import { TextCurrency } from "../../components/text-currency"
+import { TextCurrencyForAmount } from "../../components/text-currency"
 import useToken from "../../utils/use-token"
 import { Button, Text } from "react-native-elements"
 import { hasFullPermissions, requestPermission } from "../../utils/notifications"
@@ -355,7 +355,7 @@ export const ReceiveBitcoinScreen: ScreenType = ({ navigation }: Props) => {
             secondaryAmount={secondaryAmount}
             sub
           />
-          <TextCurrency
+          <TextCurrencyForAmount
             amount={secondaryAmount.value}
             currency={secondaryAmount.currency}
             style={styles.subCurrencyText}
