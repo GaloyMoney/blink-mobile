@@ -10,8 +10,8 @@ import { translateUnknown as translate } from "@galoymoney/client"
 import { palette } from "@app/theme"
 import { useWalletBalance } from "@app/hooks"
 import * as currency_fmt from "currency.js"
-import { INTRA_LEDGER_PAY } from "../send-bitcoin-screen"
 import { MoveMoneyStackParamList } from "@app/navigation/stack-param-lists"
+import { INTRA_LEDGER_PAY } from "../send-bitcoin-screen/graphql"
 
 const Status = {
   IDLE: "idle",
