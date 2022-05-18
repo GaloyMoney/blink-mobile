@@ -1,19 +1,17 @@
-import { translateUnknown as translate } from "@galoymoney/client"
-import { palette } from "@app/theme"
 import React, { useEffect, useState } from "react"
-import { ActivityIndicator, Platform, StyleSheet, Text, View } from "react-native"
+import { ActivityIndicator, Platform, Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { ScrollView, TouchableWithoutFeedback } from "react-native-gesture-handler"
+import { FakeCurrencyInput } from "react-native-currency-input"
+import { Button } from "react-native-elements"
+
+import { translateUnknown as translate } from "@galoymoney/client"
+
+import { color, palette } from "@app/theme"
 import useMainQuery from "@app/hooks/use-main-query"
 import * as currency_fmt from "currency.js"
 import { useMySubscription, useWalletBalance } from "@app/hooks"
 import SwitchButton from "@app/assets/icons/transfer.svg"
-import { FakeCurrencyInput } from "react-native-currency-input"
-import { Button } from "react-native-elements"
-import { NavigationHelpersContext } from "@react-navigation/native"
-export const TransferScreenDataInjected = (props: TransferScreenProps) => {
-  return <TransferScreen {...props} />
-}
 
 export const TransferScreen = ({ navigation }: TransferScreenProps) => {
   const { wallets, defaultWalletId } = useMainQuery()
@@ -98,8 +96,9 @@ export const TransferScreen = ({ navigation }: TransferScreenProps) => {
         setAmountFieldError(undefined)
       }
     }
+
     if (fromWallet?.walletCurrency === "USD") {
-      if (dollarAmount > usdWalletBalance) {
+      if (100 * dollarAmount > usdWalletBalance) {
         setAmountFieldError(
           translate("SendBitcoinScreen.amountExceed", {
             balance: currency_fmt
@@ -148,17 +147,21 @@ export const TransferScreen = ({ navigation }: TransferScreenProps) => {
 
   const isButtonEnabled = () => {
     if (fromWallet?.walletCurrency === "BTC" && amountCurrency === "BTC") {
-      if (satAmount !== 0 && satAmount < btcWalletBalance) {
+      if (satAmount && satAmount !== 0 && satAmount <= btcWalletBalance) {
         return true
       }
     }
     if (fromWallet?.walletCurrency === "BTC" && amountCurrency === "USD") {
-      if (satAmountInUsd !== 0 && satAmountInUsd < btcWalletValueInUsd) {
+      if (
+        satAmountInUsd &&
+        satAmountInUsd !== 0 &&
+        satAmountInUsd <= btcWalletValueInUsd
+      ) {
         return true
       }
     }
     if (fromWallet?.walletCurrency === "USD") {
-      if (dollarAmount !== 0 && dollarAmount < usdWalletBalance) {
+      if (dollarAmount && dollarAmount !== 0 && 100 * dollarAmount <= usdWalletBalance) {
         return true
       }
     }
@@ -244,9 +247,12 @@ export const TransferScreen = ({ navigation }: TransferScreenProps) => {
             </View>
           </View>
         </View>
-        <View style={[styles.switchButtonContainer]}>
-          <TouchableWithoutFeedback style={styles.switchButton} onPress={() => switchWallets()}>
-              <SwitchButton />
+        <View style={styles.switchButtonContainer}>
+          <TouchableWithoutFeedback
+            style={styles.switchButton}
+            onPress={() => switchWallets()}
+          >
+            <SwitchButton />
           </TouchableWithoutFeedback>
         </View>
         <View style={styles.toFieldContainer}>
@@ -399,11 +405,11 @@ export const TransferScreen = ({ navigation }: TransferScreenProps) => {
             </View>
           )}
         </View>
-        {
+        {amountFieldError && (
           <View style={styles.errorContainer}>
             <Text style={styles.errorText}>{amountFieldError}</Text>
           </View>
-        }
+        )}
       </View>
       <View style={styles.fieldContainer}>
         <View style={styles.percentageContainer}>
@@ -544,7 +550,7 @@ const styles = EStyleSheet.create({
     height: 30,
     width: 50,
     borderRadius: 10,
-    backgroundColor: "rgba(241, 164, 60, 0.5)",
+    backgroundColor: palette.lightOrange,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -627,14 +633,14 @@ const styles = EStyleSheet.create({
   buttonContainer: {
     padding: 10,
     flex: 1,
+    paddingTop: "80%",
   },
   button: {
     height: 50,
     borderRadius: 10,
-    marginTop: "80%",
   },
   disabledButtonStyle: {
-    backgroundColor: "rgba(83, 111, 242, 0.1)",
+    backgroundColor: palette.lighterGrey,
   },
   disabledButtonTitleStyle: {
     color: palette.lightBlue,
@@ -646,5 +652,12 @@ const styles = EStyleSheet.create({
   activeButtonTitleStyle: {
     color: palette.white,
     fontWeight: "bold",
+  },
+  errorContainer: {
+    marginTop: 10,
+    alignItems: "center",
+  },
+  errorText: {
+    color: color.error,
   },
 })
