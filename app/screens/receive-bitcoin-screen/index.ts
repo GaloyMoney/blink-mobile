@@ -1,1 +1,1 @@
-export * from "./receive-bitcoin-screen"
+export * from "./receive-bitcoin"
