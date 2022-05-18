@@ -1,26 +1,17 @@
-import Clipboard from "@react-native-community/clipboard"
-import { StackNavigationProp } from "@react-navigation/stack"
 import LottieView from "lottie-react-native"
 import * as React from "react"
 import { useCallback, useMemo } from "react"
 import {
   ActivityIndicator,
-  Alert,
-  Platform,
   Pressable,
-  Share,
   Text,
   View,
 } from "react-native"
-import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import QRCode from "react-native-qrcode-svg"
-import Toast from "react-native-root-toast"
 import LightningSats from "@app/assets/icons/lightning-sats.png"
 import LightningUsd from "@app/assets/icons/lightning-usd.png"
 import OnchainSats from "@app/assets/icons/onchain-btc.png"
-import { translateUnknown as translate } from "@galoymoney/client"
-import { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import {
   getFullUri as getFullUriUtil,
@@ -112,6 +103,7 @@ export const QRView = ({
       if (type === TYPE_LIGHTNING_BTC) return LightningSats
       if (type === TYPE_LIGHTNING_USD) return LightningUsd
       if (type === TYPE_BITCOIN_ONCHAIN) return OnchainSats
+      return null
     }
 
     if (!completed && isReady) {
@@ -182,23 +174,6 @@ export const QRView = ({
 }
 
 const styles = EStyleSheet.create({
-  buttonContainer: { marginHorizontal: 52, paddingVertical: 18 },
-
-  buttonStyle: {
-    backgroundColor: palette.lightBlue,
-    borderRadius: 32,
-  },
-
-  buttonTitle: {
-    fontWeight: "bold",
-  },
-
-  completedText: {
-    color: palette.darkGrey,
-  },
-
-  copyToClipboardText: { color: palette.darkGrey, textAlign: "center" },
-
   errorContainer: {
     alignContent: "center",
     alignItems: "center",
