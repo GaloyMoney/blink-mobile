@@ -4,7 +4,7 @@ describe("getFullUri", () => {
   it("returns a prefixed bitcoin uri", () => {
     const uri = getFullUri({
       input: "btc1234567890address",
-      type: "bitcoin",
+      type: "BITCOIN_ONCHAIN",
     })
 
     expect(uri).toBe("bitcoin:btc1234567890address")
@@ -13,7 +13,7 @@ describe("getFullUri", () => {
   it("returns a non-prefixed bitcoin uri", () => {
     const uri = getFullUri({
       input: "btc1234567890address",
-      type: "bitcoin",
+      type: "BITCOIN_ONCHAIN",
       prefix: false,
     })
 
@@ -23,7 +23,7 @@ describe("getFullUri", () => {
   it("contains amount in the uri", () => {
     const uri = getFullUri({
       input: "btc1234567890address",
-      type: "bitcoin",
+      type: "BITCOIN_ONCHAIN",
       amount: 100,
     })
 
@@ -33,7 +33,7 @@ describe("getFullUri", () => {
   it("contains memo in the uri", () => {
     const uri = getFullUri({
       input: "btc1234567890address",
-      type: "bitcoin",
+      type: "BITCOIN_ONCHAIN",
       memo: "will not forget",
     })
 
@@ -43,7 +43,7 @@ describe("getFullUri", () => {
   it("contains memo and amount in the uri", () => {
     const uri = getFullUri({
       input: "btc1234567890address",
-      type: "bitcoin",
+      type: "BITCOIN_ONCHAIN",
       amount: 100,
       memo: "will not forget",
     })
@@ -58,7 +58,7 @@ describe("getFullUri", () => {
   it("returns a non-prefixed lightning uri", () => {
     const uri = getFullUri({
       input: "lnurl12567890",
-      type: "lightning",
+      type: "LIGHTNING_BTC",
     })
 
     expect(uri).toBe("lnurl12567890")
@@ -68,7 +68,7 @@ describe("getFullUri", () => {
     const uri = getFullUri({
       input: "lnurl12567890",
       uppercase: true,
-      type: "lightning",
+      type: "LIGHTNING_BTC",
     })
 
     expect(uri).toMatch(/^[^a-z]*$/g)
