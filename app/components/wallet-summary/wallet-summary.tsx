@@ -49,16 +49,7 @@ export const WalletSummary: FunctionComponent<WalletSummaryProps> = ({ walletTyp
         currencyColor: palette.usdPrimary,
         walletName: "US Dollar Wallet"
     }
-    
-    //   {" - "}
-    //   {currency_fmt
-    //     .default(btcWalletBalance, {
-    //       precision: 0,
-    //       separator: ",",
-    //       symbol: "",
-    //     })
-    //     .format()}
-    //   {" sats"}
+
     const formattedUsdAmount = currency_fmt.default(usdBalanceInDollars, {
       precision: 2,
       separator: ",",

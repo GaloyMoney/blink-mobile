@@ -124,8 +124,6 @@ const styles = EStyleSheet.create({
   },
 })
 
-// const size = 32
-
 const RootNavigator = createStackNavigator<RootStackParamList>()
 
 export const RootStack: NavigatorType = () => {
