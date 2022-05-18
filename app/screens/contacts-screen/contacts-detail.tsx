@@ -16,6 +16,7 @@ import { RouteProp } from "@react-navigation/native"
 import type { ScreenType } from "../../types/jsx"
 import { ContactTransactionsDataInjected } from "./contact-transactions"
 import useMainQuery from "@app/hooks/use-main-query"
+import { WalletType } from "@app/utils/enum"
 
 const styles = EStyleSheet.create({
   actionsContainer: { paddingBottom: 18 },
@@ -146,7 +147,7 @@ export const ContactsDetailScreenJSX: ScreenType = ({
       <View style={styles.actionsContainer}>
         <LargeButton
           title={translate("MoveMoneyScreen.send")}
-          icon={<IconTransaction isReceive={false} size={32} />}
+          icon={<IconTransaction isReceive={false} size={32} walletType={WalletType.BTC} pending={false} onChain={false}/>}
           onPress={() =>
             navigation.navigate("sendBitcoin", { username: contact.username })
           }

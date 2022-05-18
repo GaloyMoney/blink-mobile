@@ -8,8 +8,8 @@ import * as currency_fmt from "currency.js"
 
 type WalletSummaryProps = {
     walletType: WalletType
-    usdBalanceInDollars: Number
-    btcBalanceInSats?: Number
+    usdBalanceInDollars: number
+    btcBalanceInSats?: number
     amountType: "RECEIVE" | "SEND" | "BALANCE"
 }
 

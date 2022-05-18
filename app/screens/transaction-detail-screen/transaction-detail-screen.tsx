@@ -88,7 +88,7 @@ const Row = ({
   content,
 }: {
   entry: string
-  value: string
+  value?: string
   type?: SettlementViaType
   content?: any
 }) => (
@@ -172,7 +172,7 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
   )
 
   return (
-    <Screen backgroundColor={palette.grey} unsafe preset="scroll">
+    <Screen backgroundColor={palette.lightGrey} unsafe preset="scroll">
       <View
         style={[
           styles.amountView,
@@ -187,6 +187,7 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
           size={100}
           walletType={walletType}
           pending={false}
+          onChain={false}
         />
         <Text style={styles.amountText}>{spendOrReceiveText}</Text>
         <TextCurrencyForAmount
