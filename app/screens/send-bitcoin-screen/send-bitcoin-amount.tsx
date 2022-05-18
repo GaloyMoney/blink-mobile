@@ -499,7 +499,7 @@ const SendBitcoinAmount = ({
           </View>
         </View>
       </View>
-      <View style={Styles.buttonContainer}>
+      <View >
         <Button
           title={
             !validate()

@@ -53,7 +53,7 @@ const SendBitcoin = ({ navigation, route }) => {
   const [destinationStatus, setDestinationStatus] = useState<
     "VALID" | "INVALID" | "NOT_CHECKED"
   >("NOT_CHECKED")
-  const [status, setStatus] = useState<StatusType>(Status.IDLE)
+  const [status, setStatus] = useState<"idle" | "loading" | "pending" | "success" | "error">(Status.IDLE)
   const nextStep = () => setStep(step + 1)
   const prevStep = () => setStep(step - 1)
 
