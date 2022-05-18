@@ -34,7 +34,6 @@ import { PriceScreen } from "../screens/price-screen/price-screen"
 
 import {
   ScanningQRCodeScreen,
-  SendBitcoinConfirmationScreen,
 } from "../screens/send-bitcoin-screen"
 import { SettingsScreen, UsernameScreen } from "../screens/settings-screen"
 import { LanguageScreen } from "../screens/settings-screen/language-screen"
@@ -312,11 +311,6 @@ export const RootStack: NavigatorType = () => {
         name="sendBitcoin"
         component={SendBitcoin}
         options={{ title: translate("SendBitcoinScreen.title") }}
-      />
-      <StackMoveMoney.Screen
-        name="sendBitcoinConfirmation"
-        component={SendBitcoinConfirmationScreen}
-        options={{ title: translate("SendBitcoinConfirmationScreen.title") }}
       />
       <StackMoveMoney.Screen
         name="receiveBitcoin"
