@@ -109,7 +109,7 @@ const useFee = ({
   }
 
   const initializeFee = async () => {
-    if (paymentType == "lightning" || paymentType == "lnurl") {
+    if (paymentType === "lightning" || paymentType === "lnurl") {
       if (sameNode) {
         return setFee({
           value: 0,
@@ -157,7 +157,7 @@ const useFee = ({
           status: "set",
         })
       } catch (err) {
-        console.warn({ err, message: "error getting lightning fees" })
+        console.debug({ err, message: "error getting lightning fees" })
         setFee({
           value: null,
           status: "error",
@@ -192,7 +192,7 @@ const useFee = ({
           status: "set",
         })
       } catch (err) {
-        console.warn({ err, message: "error getting onchains fees" })
+        console.debug({ err, message: "error getting onchains fees" })
         setFee({
           value: null,
           status: "error",

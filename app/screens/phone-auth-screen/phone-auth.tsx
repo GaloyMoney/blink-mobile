@@ -221,7 +221,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
         toastShow(translate("errors.generic"))
       }
     } catch (err) {
-      console.warn({ err })
+      console.debug({ err })
       if (err.message === "Too many requests") {
         toastShow(translate("errors.tooManyRequestsPhoneCode"))
       } else {
@@ -332,7 +332,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
         <Button
           buttonStyle={styles.buttonContinue}
           title={translate("WelcomePhoneInputScreen.continue")}
-          disabled={phoneNumber ? true : false}
+          disabled={Boolean(phoneNumber)}
           onPress={() => {
             submitPhoneNumber()
           }}
@@ -411,7 +411,7 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
     setTimeout(() => inputRef?.current?.focus(), 150)
   }, [])
 
-  const send = async () => {
+  const send = useCallback(async () => {
     if (loading) {
       return
     }
@@ -422,7 +422,7 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
 
     try {
       const { data } = await login({
-        variables: { input: { phone, code: code } },
+        variables: { input: { phone, code } },
       })
 
       // TODO: validate token
@@ -436,16 +436,16 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
         toastShow(translate("WelcomePhoneValidationScreen.errorLoggingIn"))
       }
     } catch (err) {
-      console.warn({ err })
+      console.debug({ err })
       toastShow(`${err}`)
     }
-  }
+  }, [client, code, loading, login, phone, saveToken])
 
   useEffect(() => {
     if (code.length === 6) {
       send()
     }
-  }, [code])
+  }, [code, send])
 
   useEffect(() => {
     const timerId = setTimeout(() => {

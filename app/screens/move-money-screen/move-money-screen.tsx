@@ -228,11 +228,14 @@ export const MoveMoneyScreen: ScreenType = ({
   isUpdateAvailable,
   hasToken,
 }: MoveMoneyScreenProps) => {
-  console.log(transactionsEdges)
   const [modalVisible, setModalVisible] = useState(false)
 
   const onMenuClick = (target) => {
-    hasToken ? navigation.navigate(target) : setModalVisible(true)
+    if (hasToken) {
+      navigation.navigate(target)
+    } else {
+      setModalVisible(true)
+    }
   }
 
   const activateWallet = () => {
@@ -264,7 +267,7 @@ export const MoveMoneyScreen: ScreenType = ({
       // appStoreId: "",
       playStoreId: "com.galoyapp",
     }).catch((err) => {
-      console.log({ err }, "error app link on link")
+      console.debug({ err }, "error app link on link")
       // handle error
     })
 
