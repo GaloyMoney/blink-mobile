@@ -39,7 +39,7 @@ import SendIcon from "@app/assets/icons/send.svg"
 import ReceiveIcon from "@app/assets/icons/receive.svg"
 import PriceIcon from "@app/assets/icons/price.svg"
 import SettingsIcon from "@app/assets/icons/settings.svg"
-import Toast from "react-native-toast-message"
+
 
 const styles = EStyleSheet.create({
   balanceHeader: {
@@ -148,16 +148,6 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
     loading: loadingMain,
     refetch,
   } = useMainQuery()
-
-  useEffect(() => {
-    Toast.show({
-      type: "error",
-      text1: "Hello",
-      text2: "This is some something 👋",
-      position: "bottom",
-      bottomOffset: 80,
-    })
-  })
 
   // temporary fix until we have a better management of notifications:
   // when coming back to active state. look if the invoice has been paid
