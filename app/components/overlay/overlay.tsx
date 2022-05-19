@@ -74,7 +74,7 @@ export const Overlay: ComponentType = ({ screen }: Props) => {
 
   return (
     <Modal visible={modalVisible} transparent animationType="fade">
-      {screen == "accounts" && (
+      {screen === "accounts" && (
         <View style={styles.modalBackground}>
           <TouchableWithoutFeedback
             onPress={() => {
@@ -91,7 +91,7 @@ export const Overlay: ComponentType = ({ screen }: Props) => {
           </TouchableWithoutFeedback>
         </View>
       )}
-      {screen == "earns" && (
+      {screen === "earns" && (
         <View style={styles.screenContainer}>
           <TouchableWithoutFeedback
             onPress={() => {

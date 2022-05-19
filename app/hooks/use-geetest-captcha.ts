@@ -56,9 +56,10 @@ export const useGeetestCaptcha = (): GeetestCaptchaReturn => {
       setError(errors[0].message)
     } else if (result) {
       const params = {
-        success: !result.failbackMode ? 1 : 0,
+        success: result.failbackMode ? 0 : 1,
         challenge: result.challengeCode,
         gt: result.id,
+        // eslint-disable-next-line camelcase
         new_captcha: result.newCaptcha,
       }
       GeetestModule.handleRegisteredGeeTestCaptcha(JSON.stringify(params))

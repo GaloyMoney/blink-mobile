@@ -91,7 +91,7 @@ export default class KeyStoreWrapper {
   }
 
   public static async resetPinAttempts(): Promise<boolean> {
-    return await KeyStoreWrapper.setPinAttempts("0")
+    return KeyStoreWrapper.setPinAttempts("0")
   }
 
   public static async removePinAttempts(): Promise<boolean> {

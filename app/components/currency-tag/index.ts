@@ -1,1 +1,1 @@
-export * from './currency-tag'
+export * from "./currency-tag"

@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 export const prices = [
   {
     t: 1557608400,

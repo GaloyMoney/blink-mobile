@@ -56,16 +56,17 @@ export const AuthenticationCheckScreen: ScreenType = ({ navigation }: Props) => 
         navigation.replace("pin", { screenPurpose: PinScreenPurpose.AuthenticatePin })
       } else {
         navigation.replace("Primary")
-        hasToken &&
+        if (hasToken) {
           showModalClipboardIfValidPayment({
             client,
             network: tokenNetwork,
             myPubKey,
             username,
           })
+        }
       }
     })()
-  }, [client, hasToken, navigation, tokenNetwork])
+  }, [client, hasToken, myPubKey, navigation, tokenNetwork, username])
 
   return (
     <Screen

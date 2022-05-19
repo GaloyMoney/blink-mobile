@@ -10,7 +10,7 @@ import { palette } from "../../theme/palette"
 import { ParamListBase } from "@react-navigation/native"
 import { prefCurrencyVar as primaryCurrencyVar } from "../../graphql/client-only-query"
 import { useHideBalance } from "../../hooks"
-import * as currency_fmt from "currency.js"
+import * as currencyFmt from "currency.js"
 import moment from "moment"
 import { getLocale } from "@galoymoney/client"
 
@@ -58,7 +58,7 @@ const amountDisplay = ({ primaryCurrency, settlementAmount, usdAmount }) => {
   const symbol = primaryCurrency === "BTC" ? "" : "$"
   const precision = primaryCurrency === "BTC" ? 0 : Math.abs(usdAmount) < 0.01 ? 4 : 2
 
-  return currency_fmt
+  return currencyFmt
     .default(primaryCurrency === "BTC" ? settlementAmount : usdAmount, {
       separator: ",",
       symbol,
@@ -132,7 +132,6 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
       <IconTransaction
         onChain={tx.settlementVia.__typename === "SettlementViaOnChain"}
         isReceive={isReceive}
-        size={24}
         pending={isPending}
         walletType={tx.walletType}
       />

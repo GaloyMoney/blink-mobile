@@ -147,34 +147,33 @@ export const PinScreen: ScreenType = ({ route, navigation }: Props) => {
         index: 0,
         routes: [{ name: "Primary" }],
       })
-      hasToken &&
+      if (hasToken) {
         showModalClipboardIfValidPayment({
           client,
           network: tokenNetwork,
           myPubKey,
           username,
         })
-    } else {
-      if (pinAttempts < MAX_PIN_ATTEMPTS - 1) {
-        const newPinAttempts = pinAttempts + 1
-        KeyStoreWrapper.setPinAttempts(newPinAttempts.toString())
-        setPinAttempts(newPinAttempts)
-        setEnteredPIN("")
-        if (newPinAttempts === MAX_PIN_ATTEMPTS - 1) {
-          setHelperText(translate("PinScreen.oneAttemptRemaining"))
-        } else {
-          const attemptsRemaining = MAX_PIN_ATTEMPTS - newPinAttempts
-          setHelperText(translate("PinScreen.attemptsRemaining", { attemptsRemaining }))
-        }
-      } else {
-        setHelperText(translate("PinScreen.tooManyAttempts"))
-        await logout()
-        await sleep(1000)
-        navigation.reset({
-          index: 0,
-          routes: [{ name: "Primary" }],
-        })
       }
+    } else if (pinAttempts < MAX_PIN_ATTEMPTS - 1) {
+      const newPinAttempts = pinAttempts + 1
+      KeyStoreWrapper.setPinAttempts(newPinAttempts.toString())
+      setPinAttempts(newPinAttempts)
+      setEnteredPIN("")
+      if (newPinAttempts === MAX_PIN_ATTEMPTS - 1) {
+        setHelperText(translate("PinScreen.oneAttemptRemaining"))
+      } else {
+        const attemptsRemaining = MAX_PIN_ATTEMPTS - newPinAttempts
+        setHelperText(translate("PinScreen.attemptsRemaining", { attemptsRemaining }))
+      }
+    } else {
+      setHelperText(translate("PinScreen.tooManyAttempts"))
+      await logout()
+      await sleep(1000)
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "Primary" }],
+      })
     }
   }
 

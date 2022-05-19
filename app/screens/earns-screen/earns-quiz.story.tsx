@@ -29,12 +29,12 @@ const route = {
   },
 }
 
-const route_completed = cloneDeep(route)
-route_completed.params.completed = true
+const routeCompleted = cloneDeep(route)
+routeCompleted.params.completed = true
 
-const route_long = cloneDeep(route)
-route_long.params.answers[0] = "a \n b \n c \n d \n e \n f \n g \n h"
-route_long.params.feedback[1] = "a \n b \n c \n d \n e \n f \n g \n h"
+const routeLong = cloneDeep(route)
+routeLong.params.answers[0] = "a \n b \n c \n d \n e \n f \n g \n h"
+routeLong.params.feedback[1] = "a \n b \n c \n d \n e \n f \n g \n h"
 
 storiesOf("Quiz", module)
   .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
@@ -51,7 +51,7 @@ storiesOf("Quiz", module)
     <SafeAreaProvider>
       <Story>
         <UseCase text="Not earned - long text">
-          <EarnQuiz route={route_long} navigation={{ goBack: action("goBack") }} />
+          <EarnQuiz route={routeLong} navigation={{ goBack: action("goBack") }} />
         </UseCase>
       </Story>
     </SafeAreaProvider>
@@ -60,7 +60,7 @@ storiesOf("Quiz", module)
     <SafeAreaProvider>
       <Story>
         <UseCase text="earned">
-          <EarnQuiz route={route_completed} navigation={{ goBack: action("goBack") }} />
+          <EarnQuiz route={routeCompleted} navigation={{ goBack: action("goBack") }} />
         </UseCase>
       </Story>
     </SafeAreaProvider>

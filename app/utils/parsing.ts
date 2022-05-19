@@ -61,6 +61,7 @@ export const validPayment = (
   network: INetwork,
   myPubKey: string,
   username: string,
+  // eslint-disable-next-line max-params
 ): IValidPaymentReponse => {
   if (!input) {
     return { valid: false }
@@ -154,7 +155,7 @@ export const validPayment = (
       try {
         amount = parseAmount(decodedData.query.amount)
       } catch (err) {
-        console.log(`can't decode amount ${err}`)
+        console.debug(`can't decode amount ${err}`)
       }
 
       // will throw if address is not valid
@@ -168,7 +169,7 @@ export const validPayment = (
         amountless: !amount,
       }
     } catch (e) {
-      console.warn(`issue with payment ${e}`)
+      console.debug(`issue with payment ${e}`)
       return { valid: false }
     }
   } else if (paymentType === "lightning") {
@@ -176,7 +177,7 @@ export const validPayment = (
     try {
       payReq = lightningPayReq.decode(data)
     } catch (err) {
-      console.log(err)
+      console.debug(err)
       return { valid: false }
     }
     // console.log(JSON.stringify({ payReq }, null, 2))
