@@ -52,11 +52,11 @@ export const hasFullPermissions = async (): Promise<boolean> => {
 
   if (authorizationStatus === messaging.AuthorizationStatus.AUTHORIZED) {
     hasPermissions = true
-    console.log("User has notification permissions enabled.")
+    console.debug("User has notification permissions enabled.")
   } else if (authorizationStatus === messaging.AuthorizationStatus.PROVISIONAL) {
-    console.log("User has provisional notification permissions.")
+    console.debug("User has provisional notification permissions.")
   } else {
-    console.log("User has notification permissions disabled")
+    console.debug("User has notification permissions disabled")
   }
 
   return hasPermissions

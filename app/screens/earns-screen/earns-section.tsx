@@ -255,6 +255,7 @@ export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
                 item.fullfilled ? "EarnScreen.satsEarned" : "EarnScreen.earnSats",
                 {
                   count: item.value,
+                  // eslint-disable-next-line camelcase
                   formatted_number: I18n.toNumber(item.value, { precision: 0 }),
                 },
               )}

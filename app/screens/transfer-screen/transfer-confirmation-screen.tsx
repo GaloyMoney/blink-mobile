@@ -9,7 +9,7 @@ import { translateUnknown as translate } from "@galoymoney/client"
 
 import { palette } from "@app/theme"
 import { useWalletBalance } from "@app/hooks"
-import * as currency_fmt from "currency.js"
+import * as currencyFmt from "currency.js"
 import { MoveMoneyStackParamList } from "@app/navigation/stack-param-lists"
 import { INTRA_LEDGER_PAY } from "../send-bitcoin-screen/graphql"
 
@@ -47,7 +47,7 @@ const TransferConfirmationScreen = ({
   }
 
   const handlePaymentError = (error) => {
-    console.log(error)
+    console.debug(error)
     //  setStatus(Status.ERROR)
     //  // Todo: provide specific translated error messages in known cases
     //  setErrs([{ message: translate("errors.generic") + error }])
@@ -91,7 +91,6 @@ const TransferConfirmationScreen = ({
       })
 
       const status = data.intraLedgerPaymentSend.status
-      console.log("transaction status:", data.intraLedgerPaymentSend)
       const errs = errors
         ? errors.map((error) => {
             return { message: error.message }
@@ -138,7 +137,7 @@ const TransferConfirmationScreen = ({
             {fromWallet?.walletCurrency === "BTC" ? (
               <>
                 <Text style={styles.walletBalanceText}>
-                  {currency_fmt
+                  {currencyFmt
                     .default(btcWalletValueInUsd, {
                       precision: 2,
                       separator: ",",
@@ -146,7 +145,7 @@ const TransferConfirmationScreen = ({
                     })
                     .format()}
                   {" - "}
-                  {currency_fmt
+                  {currencyFmt
                     .default(btcWalletBalance, {
                       precision: 0,
                       separator: ",",
@@ -159,7 +158,7 @@ const TransferConfirmationScreen = ({
             ) : (
               <>
                 <Text style={styles.walletBalanceText}>
-                  {currency_fmt
+                  {currencyFmt
                     .default(usdWalletBalance / 100, {
                       precision: 2,
                       separator: ",",
@@ -206,7 +205,7 @@ const TransferConfirmationScreen = ({
             {toWallet?.walletCurrency === "BTC" ? (
               <>
                 <Text style={styles.walletBalanceText}>
-                  {currency_fmt
+                  {currencyFmt
                     .default(btcWalletValueInUsd, {
                       precision: 2,
                       separator: ",",
@@ -214,7 +213,7 @@ const TransferConfirmationScreen = ({
                     })
                     .format()}
                   {" - "}
-                  {currency_fmt
+                  {currencyFmt
                     .default(btcWalletBalance, {
                       precision: 0,
                       separator: ",",
@@ -227,7 +226,7 @@ const TransferConfirmationScreen = ({
             ) : (
               <>
                 <Text style={styles.walletBalanceText}>
-                  {currency_fmt
+                  {currencyFmt
                     .default(usdWalletBalance / 100, {
                       precision: 2,
                       separator: ",",

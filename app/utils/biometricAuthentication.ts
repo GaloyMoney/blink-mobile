@@ -22,14 +22,14 @@ export default class BiometricWrapper {
 
     await FingerprintScanner.release()
     FingerprintScanner.authenticate({
-      description: description,
+      description,
       fallbackEnabled: true,
     })
       .then(() => {
         handleSuccess()
       })
       .catch((error) => {
-        console.log({ error }, "error during biometric authentication")
+        console.debug({ error }, "error during biometric authentication")
         handleFailure()
       })
       .finally(() => {

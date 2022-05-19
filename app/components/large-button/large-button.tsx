@@ -1,5 +1,5 @@
 import * as React from "react"
-import { ListItem, Avatar } from "react-native-elements"
+import { ListItem } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { palette } from "../../theme/palette"
 import { ComponentType } from "../../types/jsx"
@@ -21,15 +21,9 @@ const styles = EStyleSheet.create({
   },
 
   accountViewTitle: {
-    // fontFamily: "DMSans",
     color: palette.lapisLazuli,
     fontSize: "18rem",
     fontWeight: "bold",
-  },
-
-  transactionViewContainer: {
-    borderTopRightRadius: "10rem",
-    borderTopLeftRadius: "10rem",
   },
 })
 

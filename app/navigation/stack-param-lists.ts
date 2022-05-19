@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { LNURLPayParams } from "js-lnurl"
 import { contacts_me_contacts } from "../screens/contacts-screen/__generated__/contacts"
 import { AccountType, AuthenticationScreenPurpose, PinScreenPurpose } from "../utils/enum"

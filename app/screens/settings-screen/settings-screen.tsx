@@ -100,7 +100,7 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
 
   const lnurlAction = () => {
     if (username) {
-      navigation.navigate("lnurl", { username: username })
+      navigation.navigate("lnurl", { username })
     } else {
       Alert.alert(
         `Lnurl ${translate("SettingsScreen.title")}`,
@@ -143,12 +143,12 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
       phone={phoneNumber}
       language={translate(`Languages.${userPreferredLanguage || "DEFAULT"}`)}
       csvAction={() => {
-        if (!called) {
+        if (called) {
+          refetch({ defaultWalletId: btcWalletId })
+        } else {
           fetchCsvTransactions({
             variables: { defaultWalletId: btcWalletId },
           })
-        } else {
-          refetch({ defaultWalletId: btcWalletId })
         }
       }}
       securityAction={securityAction}

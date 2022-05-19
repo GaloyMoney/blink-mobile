@@ -1,24 +1,17 @@
-import { useMyCurrencies, useMySubscription, useWalletBalance } from "@app/hooks"
+import { useMySubscription, useWalletBalance } from "@app/hooks"
 import useMainQuery from "@app/hooks/use-main-query"
 import { palette } from "@app/theme"
 import React, { useEffect, useState } from "react"
-import {
-  StyleSheet,
-  View,
-  TouchableWithoutFeedback,
-  TextInput,
-  KeyboardAvoidingView,
-} from "react-native"
+import { StyleSheet, View, TouchableWithoutFeedback, TextInput } from "react-native"
 import { Button, Text } from "react-native-elements"
-import * as currency_fmt from "currency.js"
+import * as currencyFmt from "currency.js"
 import ReactNativeModal from "react-native-modal"
 import { FakeCurrencyInput } from "react-native-currency-input"
 import SwitchIcon from "@app/assets/icons/switch.svg"
-import { transformSync } from "@babel/core"
 import { translateUnknown as translate } from "@galoymoney/client"
 import NoteIcon from "@app/assets/icons/note.svg"
-import { validate } from "graphql"
 import { ScrollView } from "react-native-gesture-handler"
+
 const Styles = StyleSheet.create({
   sendBitcoinAmountContainer: {
     flex: 1,
@@ -143,7 +136,6 @@ const Styles = StyleSheet.create({
   noteInput: {
     flex: 1,
   },
-
   button: {
     height: 60,
     borderRadius: 10,
@@ -164,11 +156,11 @@ const Styles = StyleSheet.create({
     color: palette.white,
     fontWeight: "bold",
   },
+  chooseWalletModalView: { flex: 1 },
 })
 
 const SendBitcoinAmount = ({
   nextStep,
-  prevStep,
   defaultWallet,
   fromWallet,
   setFromWallet,
@@ -197,7 +189,7 @@ const SendBitcoinAmount = ({
 
   useEffect(() => {
     setFromWallet(defaultWallet)
-  }, [defaultWallet])
+  }, [defaultWallet, setFromWallet])
 
   useEffect(() => {
     if (amountCurrency === "USD") {
@@ -238,13 +230,12 @@ const SendBitcoinAmount = ({
   }
   const chooseWalletModal = (
     <ReactNativeModal isVisible={isModalVisible} onBackButtonPress={() => toggleModal()}>
-      <View style={{ flex: 1 }}>
+      <View style={Styles.chooseWalletModalView}>
         {wallets?.map((wallet) => {
           return (
             <TouchableWithoutFeedback
               key={wallet.id}
               onPress={() => {
-                console.log("pressed")
                 setFromWallet(wallet)
                 toggleModal()
               }}
@@ -281,7 +272,7 @@ const SendBitcoinAmount = ({
                     {wallet.__typename === "BTCWallet" ? (
                       <>
                         <Text style={Styles.walletBalanceText}>
-                          {currency_fmt
+                          {currencyFmt
                             .default(btcWalletValueInUsd, {
                               precision: 2,
                               separator: ",",
@@ -289,7 +280,7 @@ const SendBitcoinAmount = ({
                             })
                             .format()}
                           {" - "}
-                          {currency_fmt
+                          {currencyFmt
                             .default(btcWalletBalance, {
                               precision: 0,
                               separator: ",",
@@ -302,7 +293,7 @@ const SendBitcoinAmount = ({
                     ) : (
                       <>
                         <Text style={Styles.walletBalanceText}>
-                          {currency_fmt
+                          {currencyFmt
                             .default(usdWalletBalance / 100, {
                               precision: 2,
                               separator: ",",
@@ -360,7 +351,7 @@ const SendBitcoinAmount = ({
                 {fromWallet.__typename === "BTCWallet" ? (
                   <>
                     <Text style={Styles.walletBalanceText}>
-                      {currency_fmt
+                      {currencyFmt
                         .default(btcWalletValueInUsd, {
                           precision: 2,
                           separator: ",",
@@ -368,7 +359,7 @@ const SendBitcoinAmount = ({
                         })
                         .format()}
                       {" - "}
-                      {currency_fmt
+                      {currencyFmt
                         .default(btcWalletBalance, {
                           precision: 0,
                           separator: ",",
@@ -381,7 +372,7 @@ const SendBitcoinAmount = ({
                 ) : (
                   <>
                     <Text style={Styles.walletBalanceText}>
-                      {currency_fmt
+                      {currencyFmt
                         .default(usdWalletBalance / 100, {
                           precision: 2,
                           separator: ",",
@@ -499,12 +490,12 @@ const SendBitcoinAmount = ({
           </View>
         </View>
       </View>
-      <View >
+      <View>
         <Button
           title={
-            !validate()
-              ? translate("SendBitcoinScreen.amountIsRequired")
-              : translate("common.next")
+            validate()
+              ? translate("common.next")
+              : translate("SendBitcoinScreen.amountIsRequired")
           }
           buttonStyle={{ ...Styles.button, ...Styles.activeButtonStyle }}
           titleStyle={Styles.activeButtonTitleStyle}
