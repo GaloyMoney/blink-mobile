@@ -24,7 +24,7 @@ export const IconTransaction = ({
       if (onChain && !pending) return <OnchainIcon color={palette.orangePill} />
       return <LightningIcon />
     case WalletType.USD:
-      return <DollarIcon/>
+      return <DollarIcon />
     default:
       return <View />
   }

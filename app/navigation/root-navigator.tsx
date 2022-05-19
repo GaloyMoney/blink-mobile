@@ -32,9 +32,7 @@ import {
 } from "../screens/phone-auth-screen"
 import { PriceScreen } from "../screens/price-screen/price-screen"
 
-import {
-  ScanningQRCodeScreen,
-} from "../screens/send-bitcoin-screen"
+import { ScanningQRCodeScreen } from "../screens/send-bitcoin-screen"
 import { SettingsScreen, UsernameScreen } from "../screens/settings-screen"
 import { LanguageScreen } from "../screens/settings-screen/language-screen"
 import { SecurityScreen } from "../screens/settings-screen/security-screen"

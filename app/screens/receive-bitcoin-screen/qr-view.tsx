@@ -1,12 +1,7 @@
 import LottieView from "lottie-react-native"
 import * as React from "react"
 import { useCallback, useMemo } from "react"
-import {
-  ActivityIndicator,
-  Pressable,
-  Text,
-  View,
-} from "react-native"
+import { ActivityIndicator, Pressable, Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import QRCode from "react-native-qrcode-svg"
 import LightningSats from "@app/assets/icons/lightning-sats.png"

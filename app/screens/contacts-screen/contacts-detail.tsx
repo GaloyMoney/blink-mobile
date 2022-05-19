@@ -147,7 +147,15 @@ export const ContactsDetailScreenJSX: ScreenType = ({
       <View style={styles.actionsContainer}>
         <LargeButton
           title={translate("MoveMoneyScreen.send")}
-          icon={<IconTransaction isReceive={false} size={32} walletType={WalletType.BTC} pending={false} onChain={false}/>}
+          icon={
+            <IconTransaction
+              isReceive={false}
+              size={32}
+              walletType={WalletType.BTC}
+              pending={false}
+              onChain={false}
+            />
+          }
           onPress={() =>
             navigation.navigate("sendBitcoin", { username: contact.username })
           }

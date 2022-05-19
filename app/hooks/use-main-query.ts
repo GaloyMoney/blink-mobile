@@ -81,7 +81,9 @@ const useMainQuery = (): useMainQueryOutput => {
     tx.node = { ...tx.node, walletType: "USD" }
     usdTransactionsEdges[index] = tx
   })
-  const mergedTransactions = btcTransactionsEdges?.concat(usdTransactionsEdges)?.sort((a, b) => b.node.createdAt - a.node.createdAt)
+  const mergedTransactions = btcTransactionsEdges
+    ?.concat(usdTransactionsEdges)
+    ?.sort((a, b) => b.node.createdAt - a.node.createdAt)
 
   return {
     userPreferredLanguage,
