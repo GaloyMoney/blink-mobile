@@ -23,7 +23,12 @@ const route: RouteData = {
       __typename: "InitiationViaLn",
       paymentHash: "efef76ca1018a61dd381238d3925da44510304f9193953fe6d28b988505c6fb5",
     },
-    settlementVia: { __typename: "SettlementViaIntraLedger", counterPartyUsername: null },
+    settlementVia: {
+      __typename: "SettlementViaIntraLedger",
+      walletId: "test",
+      counterPartyUsername: null,
+    },
+    settlementUsdPerSat: 0.00001,
     walletType: "USD",
     isReceive: true,
     isPending: false,

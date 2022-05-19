@@ -150,7 +150,6 @@ export const ContactsDetailScreenJSX: ScreenType = ({
           icon={
             <IconTransaction
               isReceive={false}
-              size={32}
               walletType={WalletType.BTC}
               pending={false}
               onChain={false}

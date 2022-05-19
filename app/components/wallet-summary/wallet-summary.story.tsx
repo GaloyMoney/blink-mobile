@@ -19,7 +19,11 @@ storiesOf("Wallet Summary", module)
         />
       </UseCase>
       <UseCase text="USD" usage="The default.">
-        <WalletSummary walletType={WalletType.USD} usdBalanceInDollars={129.2} />
+        <WalletSummary
+          amountType="SEND"
+          walletType={WalletType.USD}
+          usdBalanceInDollars={129.2}
+        />
       </UseCase>
     </Story>
   ))
