@@ -217,17 +217,27 @@ const SendBitcoinAmount = ({
   }
 
   const validate = (): boolean => {
-    if (fromWallet.__typename === "UsdWallet" && dollarAmount) {
+    if (
+      fromWallet.__typename === "UsdWallet" &&
+      dollarAmount &&
+      100 * dollarAmount <= usdWalletBalance
+    ) {
       return true
     }
-    if (fromWallet.__typename === "BTCWallet" && satAmount) {
+    if (
+      fromWallet.__typename === "BTCWallet" &&
+      satAmount &&
+      satAmount <= btcWalletBalance
+    ) {
       return true
     }
     return false
   }
+
   if (!defaultWallet) {
     return <></>
   }
+
   const chooseWalletModal = (
     <ReactNativeModal isVisible={isModalVisible} onBackButtonPress={() => toggleModal()}>
       <View style={Styles.chooseWalletModalView}>
@@ -492,11 +502,7 @@ const SendBitcoinAmount = ({
       </View>
       <View>
         <Button
-          title={
-            validate()
-              ? translate("common.next")
-              : translate("SendBitcoinScreen.amountIsRequired")
-          }
+          title={translate("common.next")}
           buttonStyle={{ ...Styles.button, ...Styles.activeButtonStyle }}
           titleStyle={Styles.activeButtonTitleStyle}
           disabledStyle={{ ...Styles.button, ...Styles.disabledButtonStyle }}
