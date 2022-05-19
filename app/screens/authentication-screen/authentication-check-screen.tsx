@@ -65,7 +65,7 @@ export const AuthenticationCheckScreen: ScreenType = ({ navigation }: Props) => 
           })
       }
     })()
-  }, [client, hasToken, navigation, tokenNetwork])
+  }, [client, hasToken, myPubKey, navigation, tokenNetwork, username])
 
   return (
     <Screen

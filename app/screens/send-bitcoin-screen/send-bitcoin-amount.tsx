@@ -1,24 +1,17 @@
-import { useMyCurrencies, useMySubscription, useWalletBalance } from "@app/hooks"
+import { useMySubscription, useWalletBalance } from "@app/hooks"
 import useMainQuery from "@app/hooks/use-main-query"
 import { palette } from "@app/theme"
 import React, { useEffect, useState } from "react"
-import {
-  StyleSheet,
-  View,
-  TouchableWithoutFeedback,
-  TextInput,
-  KeyboardAvoidingView,
-} from "react-native"
+import { StyleSheet, View, TouchableWithoutFeedback, TextInput } from "react-native"
 import { Button, Text } from "react-native-elements"
 import * as currency_fmt from "currency.js"
 import ReactNativeModal from "react-native-modal"
 import { FakeCurrencyInput } from "react-native-currency-input"
 import SwitchIcon from "@app/assets/icons/switch.svg"
-import { transformSync } from "@babel/core"
 import { translateUnknown as translate } from "@galoymoney/client"
 import NoteIcon from "@app/assets/icons/note.svg"
-import { validate } from "graphql"
 import { ScrollView } from "react-native-gesture-handler"
+
 const Styles = StyleSheet.create({
   sendBitcoinAmountContainer: {
     flex: 1,
@@ -143,7 +136,6 @@ const Styles = StyleSheet.create({
   noteInput: {
     flex: 1,
   },
-
   button: {
     height: 60,
     borderRadius: 10,
@@ -164,11 +156,11 @@ const Styles = StyleSheet.create({
     color: palette.white,
     fontWeight: "bold",
   },
+  chooseWalletModalView: { flex: 1 },
 })
 
 const SendBitcoinAmount = ({
   nextStep,
-  prevStep,
   defaultWallet,
   fromWallet,
   setFromWallet,
@@ -197,7 +189,7 @@ const SendBitcoinAmount = ({
 
   useEffect(() => {
     setFromWallet(defaultWallet)
-  }, [defaultWallet])
+  }, [defaultWallet, setFromWallet])
 
   useEffect(() => {
     if (amountCurrency === "USD") {
@@ -238,7 +230,7 @@ const SendBitcoinAmount = ({
   }
   const chooseWalletModal = (
     <ReactNativeModal isVisible={isModalVisible} onBackButtonPress={() => toggleModal()}>
-      <View style={{ flex: 1 }}>
+      <View style={Styles.chooseWalletModalView}>
         {wallets?.map((wallet) => {
           return (
             <TouchableWithoutFeedback

@@ -114,7 +114,17 @@ export const TransferScreen = ({ navigation }: TransferScreenProps) => {
         setAmountFieldError(undefined)
       }
     }
-  }, [satAmount, dollarAmount, fromWallet, toWallet])
+  }, [
+    satAmount,
+    dollarAmount,
+    fromWallet,
+    toWallet,
+    amountCurrency,
+    btcWalletBalance,
+    satAmountInUsd,
+    btcWalletValueInUsd,
+    usdWalletBalance,
+  ])
 
   const switchWallets = () => {
     setAmountFieldError(undefined)

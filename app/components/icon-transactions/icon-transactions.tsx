@@ -7,13 +7,11 @@ import { WalletType } from "@app/utils/enum"
 import { View } from "react-native"
 
 export const IconTransaction = ({
-  size,
   walletType,
   onChain = false,
   pending = false,
 }: {
   isReceive: boolean
-  size: number
   pending?: boolean
   walletType: WalletType
   onChain: boolean

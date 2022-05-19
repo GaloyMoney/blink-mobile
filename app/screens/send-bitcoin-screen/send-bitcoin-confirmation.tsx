@@ -199,7 +199,7 @@ const SendBitcoinConfirmation = ({
     primaryCurrency: amountCurrency,
   })
 
-  const handlePaymentReturn = (status, errors) => {
+  const handlePaymentReturn = (status, _errors) => {
     if (status === "SUCCESS") {
       setStatus(Status.SUCCESS)
     }
@@ -322,7 +322,8 @@ const SendBitcoinConfirmation = ({
         }),
       )
     }
-  }, [amount, amountCurrency])
+  }, [amount, amountCurrency, convertCurrencyAmount, wallet.__typename])
+
   return (
     <View style={styles.sendBitcoinConfirmationContainer}>
       <Text style={styles.fieldTitleText}>

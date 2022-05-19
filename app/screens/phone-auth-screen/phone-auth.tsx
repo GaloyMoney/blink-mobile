@@ -411,7 +411,7 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
     setTimeout(() => inputRef?.current?.focus(), 150)
   }, [])
 
-  const send = async () => {
+  const send = useCallback(async () => {
     if (loading) {
       return
     }
@@ -439,13 +439,13 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
       console.warn({ err })
       toastShow(`${err}`)
     }
-  }
+  }, [client, code, loading, login, phone, saveToken])
 
   useEffect(() => {
     if (code.length === 6) {
       send()
     }
-  }, [code])
+  }, [code, send])
 
   useEffect(() => {
     const timerId = setTimeout(() => {

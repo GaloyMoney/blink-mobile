@@ -1,13 +1,15 @@
+// FIXME: there are many unused variables in this file
+
 import useMainQuery from "@app/hooks/use-main-query"
 import { IPaymentType, validPayment } from "@app/utils/parsing"
 import useToken from "@app/utils/use-token"
 import React, { useCallback, useEffect, useState } from "react"
-import { StyleSheet, TextInput, View } from "react-native"
+import { StyleSheet, View } from "react-native"
 import SendBitcoinAmount from "./send-bitcoin-amount"
 import SendBitcoinConfirmation from "./send-bitcoin-confirmation"
 import SendBitcoinDestination from "./send-bitcoin-destination"
 import * as UsernameValidation from "../../utils/validation"
-import { debounce } from "lodash"
+import debounce from "lodash.debounce"
 import { gql, useLazyQuery } from "@apollo/client"
 import { useMySubscription } from "@app/hooks"
 import SendBitcoinSuccess from "./send-bitcoin-success"
@@ -49,19 +51,18 @@ const SendBitcoin = ({ navigation, route }) => {
   const { tokenNetwork } = useToken()
   const [defaultAmount, setDefaultAmount] = useState(0)
   const { convertCurrencyAmount } = useMySubscription()
-  const [invoiceError, setInvoiceError] = useState(undefined)
-  const [destinationStatus, setDestinationStatus] = useState<
+  const [_invoiceError, setInvoiceError] = useState(undefined)
+  const [_destinationStatus, setDestinationStatus] = useState<
     "VALID" | "INVALID" | "NOT_CHECKED"
   >("NOT_CHECKED")
   const [status, setStatus] = useState<
     "idle" | "loading" | "pending" | "success" | "error"
   >(Status.IDLE)
   const nextStep = () => setStep(step + 1)
-  const prevStep = () => setStep(step - 1)
 
   const [
     userDefaultWalletIdQuery,
-    { loading: loadingUserDefaultWalletId, data: dataUserDefaultWalletId },
+    { loading: _loadingUserDefaultWalletId, data: _dataUserDefaultWalletId },
   ] = useLazyQuery(USER_WALLET_ID, {
     fetchPolicy: "network-only",
     onCompleted: (dataUserDefaultWalletId) => {
@@ -74,6 +75,7 @@ const SendBitcoin = ({ navigation, route }) => {
     },
   })
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const userDefaultWalletIdQueryDebounced = useCallback(
     debounce(async (destination) => {
       userDefaultWalletIdQuery({ variables: { username: destination } })
@@ -91,7 +93,7 @@ const SendBitcoin = ({ navigation, route }) => {
       memo: memoInvoice,
       paymentType,
       address,
-      lnurl,
+      // lnurl,
       sameNode,
       staticLnurlIdentifier,
     } = validPayment(destination, tokenNetwork, myPubKey, myUsername)
@@ -114,6 +116,7 @@ const SendBitcoin = ({ navigation, route }) => {
       //       debouncedGetLnurlParams(lnurl)
       //     }
       //   }
+
       setAmountless(amountless)
       if (!amountless && !staticLnurlIdentifier) {
         setDefaultAmount(
@@ -177,7 +180,6 @@ const SendBitcoin = ({ navigation, route }) => {
       {step === 2 && (
         <SendBitcoinAmount
           nextStep={nextStep}
-          prevStep={prevStep}
           defaultWallet={defaultWallet}
           fromWallet={fromWallet}
           setFromWallet={setFromWallet}

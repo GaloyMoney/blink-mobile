@@ -114,7 +114,7 @@ export const ModalClipboard: ComponentType = () => {
           : "ModalClipboard.pendingBitcoin"
       setMessage(translate(pathString))
     })()
-  }, [client, isVisible, tokenNetwork])
+  }, [client, isVisible, myPubKey, tokenNetwork, username])
 
   return (
     <Modal

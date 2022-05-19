@@ -3,8 +3,6 @@ import { palette } from "@app/theme"
 import { StyleSheet, Text, TextInput, View } from "react-native"
 import { translateUnknown as translate } from "@galoymoney/client"
 import { Button } from "react-native-elements"
-import { isDestinationLightningPayment, isDestinationNetworkValid } from "./validation"
-import { INetwork } from "@app/types/network"
 import ScanIcon from "@app/assets/icons/scan.svg"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 
@@ -60,14 +58,14 @@ const Styles = StyleSheet.create({
   },
 })
 
-const validateDestination = (destination: string, network: INetwork) => {
-  if (isDestinationLightningPayment(destination)) {
-    if (isDestinationNetworkValid(destination, network)) {
-      return true
-    }
-  }
-  return false
-}
+// const validateDestination = (destination: string, network: INetwork) => {
+//   if (isDestinationLightningPayment(destination)) {
+//     if (isDestinationNetworkValid(destination, network)) {
+//       return true
+//     }
+//   }
+//   return false
+// }
 
 const SendBitcoinDestination = ({
   destination,
