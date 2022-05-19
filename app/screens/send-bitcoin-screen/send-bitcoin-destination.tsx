@@ -28,6 +28,7 @@ const Styles = StyleSheet.create({
   },
   input: {
     flex: 1,
+    paddingHorizontal: 12,
   },
   button: {
     height: 50,
