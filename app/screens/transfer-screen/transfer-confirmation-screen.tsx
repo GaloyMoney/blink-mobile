@@ -55,21 +55,17 @@ const TransferConfirmationScreen = ({
 
   const isButtonEnabled = () => {
     if (fromWallet?.walletCurrency === "BTC" && amountCurrency === "BTC") {
-      if (satAmount && satAmount !== 0 && satAmount <= btcWalletBalance) {
+      if (satAmount && satAmount <= btcWalletBalance) {
         return true
       }
     }
     if (fromWallet?.walletCurrency === "BTC" && amountCurrency === "USD") {
-      if (
-        satAmountInUsd &&
-        satAmountInUsd !== 0 &&
-        satAmountInUsd <= btcWalletValueInUsd
-      ) {
+      if (satAmountInUsd && satAmountInUsd <= btcWalletValueInUsd) {
         return true
       }
     }
     if (fromWallet?.walletCurrency === "USD") {
-      if (dollarAmount && dollarAmount !== 0 && 100 * dollarAmount <= usdWalletBalance) {
+      if (dollarAmount && 100 * dollarAmount <= usdWalletBalance) {
         return true
       }
     }

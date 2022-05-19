@@ -137,6 +137,7 @@ const SendBitcoin = ({ navigation, route }) => {
       setDestination(destination)
     } else {
       setPaymentType("username")
+      setAmountless(true)
 
       if (UsernameValidation.isValid(destination)) {
         userDefaultWalletIdQueryDebounced(destination)
