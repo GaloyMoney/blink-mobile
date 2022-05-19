@@ -482,7 +482,7 @@ const SendBitcoinAmount = ({
             </View>
             <TextInput
               style={Styles.noteInput}
-              placeholder={translate("SendBitcoinScreen.input")}
+              placeholder={translate("SendBitcoinScreen.note")}
               onChangeText={setNote}
               value={note}
               selectTextOnFocus
