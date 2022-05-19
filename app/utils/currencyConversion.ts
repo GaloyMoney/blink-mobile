@@ -11,9 +11,9 @@ export const textToCurrency = (
   if (isCurrencyWithDecimals(currency)) {
     const digits = getDigitsFromValue(value)
     return addDecimalToNumber(digits, separator)
-  } else {
-    return value
   }
+
+  return value
 }
 
 export const currencyToTextWithUnits = (moneyAmount: MoneyAmount): string => {
@@ -34,8 +34,8 @@ export const currencyToText = (
   value: string,
   currency: CurrencyType,
   locale = "en-US",
-): string =>
-  isCurrencyWithDecimals(currency)
+): string => {
+  return isCurrencyWithDecimals(currency)
     ? Number(value).toLocaleString(locale, {
         style: "decimal",
         maximumFractionDigits: 2,
@@ -46,6 +46,7 @@ export const currencyToText = (
         maximumFractionDigits: 0,
         minimumFractionDigits: 0,
       })
+}
 
 const getDigitsFromValue = (value = "") => value.replace(/(-(?!\d))|[^0-9|-]/g, "") || ""
 

@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 // Welcome to the main entry point of the app.
 //
 // In this file, we'll be kicking off our app or storybook.
@@ -173,8 +174,8 @@ export const App = (): JSX.Element => {
         attempts: {
           max: 3,
           retryIf: (error, operation) => {
-            console.log({ error }, "retry error")
-            return !!error && !noRetryOperations.includes(operation.operationName)
+            console.debug({ error }, "retry error")
+            return Boolean(error) && !noRetryOperations.includes(operation.operationName)
           },
         },
       })

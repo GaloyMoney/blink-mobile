@@ -59,7 +59,7 @@ const styles = EStyleSheet.create({
     flex: 5,
   },
 })
-const ReceiveBitcoin = ({ navigation }) => {
+const ReceiveBitcoin = () => {
   const [receiveCurrency, setReceiveCurrency] = useState<CurrencyType>(CurrencyType.USD)
 
   return (
@@ -101,8 +101,8 @@ const ReceiveBitcoin = ({ navigation }) => {
         </TouchableWithoutFeedback>
       </View>
       <View style={styles.screenContainer}>
-        {receiveCurrency === CurrencyType.USD && <ReceiveUsd navigation={navigation} />}
-        {receiveCurrency === CurrencyType.BTC && <ReceiveBtc navigation={navigation} />}
+        {receiveCurrency === CurrencyType.USD && <ReceiveUsd />}
+        {receiveCurrency === CurrencyType.BTC && <ReceiveBtc />}
       </View>
     </View>
   )

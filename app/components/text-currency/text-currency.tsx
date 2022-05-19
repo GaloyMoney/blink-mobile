@@ -1,4 +1,4 @@
-import * as currency_fmt from "currency.js"
+import * as currencyFmt from "currency.js"
 import * as React from "react"
 import { Text, TextStyle, View } from "react-native"
 import type { ComponentType } from "../../types/jsx"
@@ -34,7 +34,7 @@ export const TextCurrencyForAmount: ComponentType = ({
   if (currency === "USD") {
     const amountDisplay = Number.isNaN(amount)
       ? "..."
-      : currency_fmt
+      : currencyFmt
           .default(amount, { precision: amount < 0.01 && amount !== 0 ? 4 : 2 })
           .format()
     return <Text style={style}>{amountDisplay}</Text>
@@ -49,7 +49,7 @@ export const TextCurrencyForAmount: ComponentType = ({
           style={{ fill: iconColor, width: satsIconSize, height: satsIconSize }}
         />
         <Text style={style}>
-          {currency_fmt
+          {currencyFmt
             .default(amount, {
               precision: 0,
               separator: ",",

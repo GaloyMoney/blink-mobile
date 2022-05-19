@@ -17,7 +17,7 @@ export const decodeToken: (string) => {
     const { uid, network } = jwtDecode<JwtPayload>(token)
     return { uid, network }
   } catch (err) {
-    console.log(err.toString())
+    console.debug(err.toString())
     return null
   }
 }

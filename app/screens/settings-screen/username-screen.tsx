@@ -144,7 +144,7 @@ export const UsernameScreen: ScreenType = ({ navigation }: Props) => {
       [
         {
           text: translate("common.cancel"),
-          onPress: () => console.log("Cancel Pressed"),
+          onPress: () => console.debug("Cancel Pressed"),
           style: "cancel",
         },
         {

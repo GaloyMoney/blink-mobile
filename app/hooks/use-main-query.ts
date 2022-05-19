@@ -21,7 +21,7 @@ const useMainQuery = (): useMainQueryOutput => {
       // This is the first execution of mainquery and we received errors back from the server
       error.graphQLErrors.forEach((e) => {
         crashlytics().recordError(e)
-        console.log(e)
+        console.debug(e)
       })
       throw new Error(
         "Error occurred during main query execution prior to cache population.  Unable to confirm if data necessary for proper execution of the app is present.",
@@ -30,11 +30,11 @@ const useMainQuery = (): useMainQueryOutput => {
     if (error.networkError && previousData) {
       // Call to mainquery has failed but we have data in the cache
       NetInfo.fetch().then((state) => {
-        if (!state.isConnected) {
+        if (state.isConnected) {
+          errors.push({ message: translate("errors.network.request") })
+        } else {
           // We failed to fetch the data because the device is offline
           errors.push({ message: translate("errors.network.connection") })
-        } else {
-          errors.push({ message: translate("errors.network.request") })
         }
       })
     }
@@ -81,7 +81,9 @@ const useMainQuery = (): useMainQueryOutput => {
     tx.node = { ...tx.node, walletType: "USD" }
     usdTransactionsEdges[index] = tx
   })
-  const mergedTransactions = btcTransactionsEdges?.concat(usdTransactionsEdges)?.sort((a, b) => b.node.createdAt - a.node.createdAt)
+  const mergedTransactions = btcTransactionsEdges
+    ?.concat(usdTransactionsEdges)
+    ?.sort((a, b) => b.node.createdAt - a.node.createdAt)
 
   return {
     userPreferredLanguage,

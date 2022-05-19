@@ -90,7 +90,7 @@ const Row = ({
   entry: string
   value?: string
   type?: SettlementViaType
-  content?: any
+  content?: unknown
 }) => (
   <View style={styles.description}>
     <Text style={styles.entry}>
@@ -184,7 +184,6 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
       >
         <IconTransaction
           isReceive={isReceive}
-          size={100}
           walletType={walletType}
           pending={false}
           onChain={false}
