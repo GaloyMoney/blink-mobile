@@ -423,7 +423,7 @@ const SendBitcoinAmount = ({
               <>
                 <FakeCurrencyInput
                   value={satAmountInUsd}
-                  onChangeValue={setSatAmount}
+                  onChangeValue={setSatAmountInUsd}
                   prefix="$"
                   delimiter=","
                   separator="."
