@@ -173,7 +173,7 @@ export const EarnQuiz: ScreenType = ({ route, navigation }: Props) => {
     setRecordedAnswer([...recordedAnswer, value])
   }
 
-  const answers_shuffled = []
+  const answersShuffled = []
 
   useEffect(() => {
     if (recordedAnswer.indexOf(0) !== -1) {
@@ -191,16 +191,17 @@ export const EarnQuiz: ScreenType = ({ route, navigation }: Props) => {
     navigation.goBack()
   }
 
-  const buttonStyleHelper = (i) =>
-    recordedAnswer.indexOf(i) === -1
+  const buttonStyleHelper = (i) => {
+    return recordedAnswer.indexOf(i) === -1
       ? styles.quizButtonStyle
       : i === 0
       ? styles.quizCorrectButtonStyle
       : styles.quizWrongButtonStyle
+  }
 
   let j = 0
   permutation.forEach((i) => {
-    answers_shuffled.push(
+    answersShuffled.push(
       <View key={i} style={{ width: "100%" }}>
         <View style={{ flexDirection: "row", alignItems: "center", width: "100%" }}>
           <Button
@@ -232,7 +233,7 @@ export const EarnQuiz: ScreenType = ({ route, navigation }: Props) => {
         ) : null}
       </View>,
     )
-    j++
+    j = j + 1
   })
 
   return (
@@ -263,10 +264,10 @@ export const EarnQuiz: ScreenType = ({ route, navigation }: Props) => {
           <View style={{ flex: 1 }}>
             <View style={styles.answersView}>
               <Text style={styles.title}>{question ?? title}</Text>
-              {answers_shuffled}
+              {answersShuffled}
             </View>
             <View>
-              {recordedAnswer.indexOf(0) !== -1 ? (
+              {recordedAnswer.indexOf(0) === -1 ? null : (
                 <Button
                   title={translate("EarnScreen.keepDigging")}
                   type="outline"
@@ -275,7 +276,7 @@ export const EarnQuiz: ScreenType = ({ route, navigation }: Props) => {
                   buttonStyle={styles.buttonStyle}
                   titleStyle={styles.titleStyle}
                 />
-              ) : null}
+              )}
             </View>
           </View>
         </View>
@@ -308,6 +309,7 @@ export const EarnQuiz: ScreenType = ({ route, navigation }: Props) => {
             <Button
               title={translate("EarnScreen.earnSats", {
                 count: amount,
+                // eslint-disable-next-line camelcase
                 formatted_number: toLocaleNumber(amount, { precision: 0 }),
               })}
               buttonStyle={styles.buttonStyle}

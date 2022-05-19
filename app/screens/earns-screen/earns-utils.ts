@@ -16,6 +16,7 @@ export const getCardsFromSection = ({ quizQuestions, sectionIndex }): QuizQuesti
   })
 
   // add fullfilled property to each card
+  // eslint-disable-next-line array-callback-return
   cards.filter((card) => {
     card.fullfilled = myCompletedQuestions && Boolean(myCompletedQuestions[card.id])
   })

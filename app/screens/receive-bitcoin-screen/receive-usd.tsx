@@ -265,7 +265,7 @@ const ReceiveUsd = () => {
             )}
           </View>
         </View>
-        {!isAmountless && invoice?.paymentRequest && !!usdAmount && (
+        {!isAmountless && invoice?.paymentRequest && Boolean(usdAmount) && (
           <View style={styles.countdownTimerContainer}>
             <CountdownCircleTimer
               key={invoice?.paymentRequest}

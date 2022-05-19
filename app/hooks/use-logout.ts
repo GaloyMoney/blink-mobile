@@ -19,7 +19,7 @@ const useLogout = () => {
       await KeyStoreWrapper.removePin()
       await KeyStoreWrapper.removePinAttempts()
     } catch (err) {
-      console.log({ err }, `error resetting RootStore`)
+      console.debug({ err }, `error resetting RootStore`)
     }
   }
 

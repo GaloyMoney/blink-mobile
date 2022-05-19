@@ -9,7 +9,7 @@ import { translateUnknown as translate } from "@galoymoney/client"
 
 import { color, palette } from "@app/theme"
 import useMainQuery from "@app/hooks/use-main-query"
-import * as currency_fmt from "currency.js"
+import * as currencyFmt from "currency.js"
 import { useMySubscription, useWalletBalance } from "@app/hooks"
 import SwitchButton from "@app/assets/icons/transfer.svg"
 
@@ -26,8 +26,8 @@ export const TransferScreen = ({ navigation }: TransferScreenProps) => {
   const [amountFieldError, setAmountFieldError] = useState<string>()
 
   useEffect(() => {
-    const defaultWallet = wallets.find((w) => w.id === defaultWalletId)
-    const nonDefaultWallet = wallets.find((w) => w.id !== defaultWalletId)
+    const defaultWallet = wallets.find((wallet) => wallet.id === defaultWalletId)
+    const nonDefaultWallet = wallets.find((wallet) => wallet.id !== defaultWalletId)
     setFromWallet(nonDefaultWallet)
     setToWallet(defaultWallet)
   }, [wallets, defaultWalletId])
@@ -65,7 +65,7 @@ export const TransferScreen = ({ navigation }: TransferScreenProps) => {
         setAmountFieldError(
           translate("SendBitcoinScreen.amountExceed", {
             balance:
-              currency_fmt
+              currencyFmt
                 .default(btcWalletBalance, {
                   precision: 0,
                   separator: ",",
@@ -83,7 +83,7 @@ export const TransferScreen = ({ navigation }: TransferScreenProps) => {
       if (satAmountInUsd > btcWalletValueInUsd) {
         setAmountFieldError(
           translate("SendBitcoinScreen.amountExceed", {
-            balance: currency_fmt
+            balance: currencyFmt
               .default(btcWalletValueInUsd, {
                 precision: 2,
                 separator: ",",
@@ -101,7 +101,7 @@ export const TransferScreen = ({ navigation }: TransferScreenProps) => {
       if (100 * dollarAmount > usdWalletBalance) {
         setAmountFieldError(
           translate("SendBitcoinScreen.amountExceed", {
-            balance: currency_fmt
+            balance: currencyFmt
               .default(usdWalletBalance / 100, {
                 precision: 2,
                 separator: ",",
@@ -223,7 +223,7 @@ export const TransferScreen = ({ navigation }: TransferScreenProps) => {
               {fromWallet?.walletCurrency === "BTC" ? (
                 <>
                   <Text style={styles.walletBalanceText}>
-                    {currency_fmt
+                    {currencyFmt
                       .default(btcWalletValueInUsd, {
                         precision: 2,
                         separator: ",",
@@ -231,7 +231,7 @@ export const TransferScreen = ({ navigation }: TransferScreenProps) => {
                       })
                       .format()}
                     {" - "}
-                    {currency_fmt
+                    {currencyFmt
                       .default(btcWalletBalance, {
                         precision: 0,
                         separator: ",",
@@ -244,7 +244,7 @@ export const TransferScreen = ({ navigation }: TransferScreenProps) => {
               ) : (
                 <>
                   <Text style={styles.walletBalanceText}>
-                    {currency_fmt
+                    {currencyFmt
                       .default(usdWalletBalance / 100, {
                         precision: 2,
                         separator: ",",
@@ -300,7 +300,7 @@ export const TransferScreen = ({ navigation }: TransferScreenProps) => {
               {toWallet?.walletCurrency === "BTC" ? (
                 <>
                   <Text style={styles.walletBalanceText}>
-                    {currency_fmt
+                    {currencyFmt
                       .default(btcWalletValueInUsd, {
                         precision: 2,
                         separator: ",",
@@ -308,7 +308,7 @@ export const TransferScreen = ({ navigation }: TransferScreenProps) => {
                       })
                       .format()}
                     {" - "}
-                    {currency_fmt
+                    {currencyFmt
                       .default(btcWalletBalance, {
                         precision: 0,
                         separator: ",",
@@ -321,7 +321,7 @@ export const TransferScreen = ({ navigation }: TransferScreenProps) => {
               ) : (
                 <>
                   <Text style={styles.walletBalanceText}>
-                    {currency_fmt
+                    {currencyFmt
                       .default(usdWalletBalance / 100, {
                         precision: 2,
                         separator: ",",

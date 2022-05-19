@@ -4,7 +4,7 @@ import { palette } from "@app/theme"
 import React, { useEffect, useState } from "react"
 import { StyleSheet, View, TouchableWithoutFeedback, TextInput } from "react-native"
 import { Button, Text } from "react-native-elements"
-import * as currency_fmt from "currency.js"
+import * as currencyFmt from "currency.js"
 import ReactNativeModal from "react-native-modal"
 import { FakeCurrencyInput } from "react-native-currency-input"
 import SwitchIcon from "@app/assets/icons/switch.svg"
@@ -236,7 +236,6 @@ const SendBitcoinAmount = ({
             <TouchableWithoutFeedback
               key={wallet.id}
               onPress={() => {
-                console.log("pressed")
                 setFromWallet(wallet)
                 toggleModal()
               }}
@@ -273,7 +272,7 @@ const SendBitcoinAmount = ({
                     {wallet.__typename === "BTCWallet" ? (
                       <>
                         <Text style={Styles.walletBalanceText}>
-                          {currency_fmt
+                          {currencyFmt
                             .default(btcWalletValueInUsd, {
                               precision: 2,
                               separator: ",",
@@ -281,7 +280,7 @@ const SendBitcoinAmount = ({
                             })
                             .format()}
                           {" - "}
-                          {currency_fmt
+                          {currencyFmt
                             .default(btcWalletBalance, {
                               precision: 0,
                               separator: ",",
@@ -294,7 +293,7 @@ const SendBitcoinAmount = ({
                     ) : (
                       <>
                         <Text style={Styles.walletBalanceText}>
-                          {currency_fmt
+                          {currencyFmt
                             .default(usdWalletBalance / 100, {
                               precision: 2,
                               separator: ",",
@@ -352,7 +351,7 @@ const SendBitcoinAmount = ({
                 {fromWallet.__typename === "BTCWallet" ? (
                   <>
                     <Text style={Styles.walletBalanceText}>
-                      {currency_fmt
+                      {currencyFmt
                         .default(btcWalletValueInUsd, {
                           precision: 2,
                           separator: ",",
@@ -360,7 +359,7 @@ const SendBitcoinAmount = ({
                         })
                         .format()}
                       {" - "}
-                      {currency_fmt
+                      {currencyFmt
                         .default(btcWalletBalance, {
                           precision: 0,
                           separator: ",",
@@ -373,7 +372,7 @@ const SendBitcoinAmount = ({
                 ) : (
                   <>
                     <Text style={Styles.walletBalanceText}>
-                      {currency_fmt
+                      {currencyFmt
                         .default(usdWalletBalance / 100, {
                           precision: 2,
                           separator: ",",
@@ -494,9 +493,9 @@ const SendBitcoinAmount = ({
       <View>
         <Button
           title={
-            !validate()
-              ? translate("SendBitcoinScreen.amountIsRequired")
-              : translate("common.next")
+            validate()
+              ? translate("common.next")
+              : translate("SendBitcoinScreen.amountIsRequired")
           }
           buttonStyle={{ ...Styles.button, ...Styles.activeButtonStyle }}
           titleStyle={Styles.activeButtonTitleStyle}

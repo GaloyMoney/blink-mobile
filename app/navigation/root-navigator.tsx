@@ -68,12 +68,12 @@ import TransferConfirmationScreen from "@app/screens/transfer-screen/transfer-co
 PushNotification.configure({
   // (optional) Called when Token is generated (iOS and Android)
   onRegister(token) {
-    console.log("TOKEN:", token)
+    console.debug("TOKEN:", token)
   },
 
   // (required) Called when a remote is received or opened, or local notification is opened
   onNotification(notification) {
-    console.log("NOTIFICATION:", notification)
+    console.debug("NOTIFICATION:", notification)
 
     // process the notification
 
@@ -83,8 +83,8 @@ PushNotification.configure({
 
   // (optional) Called when Registered Action is pressed and invokeApp is false, if true onNotification will be called (Android)
   onAction(notification) {
-    console.log("ACTION:", notification.action)
-    console.log("NOTIFICATION:", notification)
+    console.debug("ACTION:", notification.action)
+    console.debug("NOTIFICATION:", notification)
 
     // process the action
   },
@@ -131,14 +131,15 @@ export const RootStack: NavigatorType = () => {
   const _handleAppStateChange = useCallback(
     async (nextAppState) => {
       if (appState.current.match(/background/) && nextAppState === "active") {
-        console.log("App has come to the foreground!")
-        hasToken &&
+        console.info("App has come to the foreground!")
+        if (hasToken) {
           showModalClipboardIfValidPayment({
             client,
             network: tokenNetwork,
             myPubKey,
             username,
           })
+        }
       }
 
       appState.current = nextAppState
@@ -179,7 +180,7 @@ export const RootStack: NavigatorType = () => {
       title: remoteMessage.notification.title, // (optional)
       message: remoteMessage.notification.body, // (required)
       userInfo: { screen: "home" }, // (optional) default: {} (using null throws a JSON value '<null>' error)
-      playSound: !!soundName, // (optional) default: true
+      playSound: Boolean(soundName), // (optional) default: true
       soundName: soundName || "default", // (optional) Sound to play when the notification is shown. Value of 'default' plays the default sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file in 'res/raw' directory and play it. default: 'default' (default sound is played)
       // number: 18, // (optional) Valid 32 bit integer specified as string. default: none (Cannot be zero) --> badge
     })
@@ -200,7 +201,7 @@ export const RootStack: NavigatorType = () => {
   // for iOS, which would remove the need for firebase.messaging() dependancy
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async (remoteMessage) => {
-      console.log("onMessage")
+      console.debug("onMessage")
       showNotification(remoteMessage)
     })
 
@@ -216,7 +217,7 @@ export const RootStack: NavigatorType = () => {
 
   useEffect(() => {
     messaging().setBackgroundMessageHandler(async (remoteMessage) => {
-      console.log("background arrived from setBackgroundMessageHandler")
+      console.debug("background arrived from setBackgroundMessageHandler")
       showNotification(remoteMessage)
     })
   }, [])

@@ -4,7 +4,7 @@ import React, { FunctionComponent } from "react"
 import { Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { CurrencyTag } from "../currency-tag"
-import * as currency_fmt from "currency.js"
+import * as currencyFmt from "currency.js"
 
 type WalletSummaryProps = {
   walletType: WalletType
@@ -57,7 +57,7 @@ export const WalletSummary: FunctionComponent<WalletSummaryProps> = ({
           walletName: "US Dollar Wallet",
         }
 
-  const formattedUsdAmount = currency_fmt
+  const formattedUsdAmount = currencyFmt
     .default(usdBalanceInDollars, {
       precision: 2,
       separator: ",",
@@ -66,7 +66,7 @@ export const WalletSummary: FunctionComponent<WalletSummaryProps> = ({
     .format()
 
   const formattedBtcAmount = btcBalanceInSats
-    ? currency_fmt
+    ? currencyFmt
         .default(btcBalanceInSats, {
           precision: 0,
           separator: ",",

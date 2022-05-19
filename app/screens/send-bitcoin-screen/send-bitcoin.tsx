@@ -37,7 +37,6 @@ const Styles = StyleSheet.create({
 })
 
 const SendBitcoin = ({ navigation, route }) => {
-  console.log(route)
   const [step, setStep] = useState(1)
   const [destination, setDestination] = useState("")
   const [amount, setAmount] = useState(0)

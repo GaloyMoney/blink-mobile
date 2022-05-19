@@ -5,7 +5,7 @@ import { StyleSheet, Text, View } from "react-native"
 import DestinationIcon from "@app/assets/icons/destination.svg"
 import { FakeCurrencyInput } from "react-native-currency-input"
 import { useMySubscription, useWalletBalance } from "@app/hooks"
-import * as currency_fmt from "currency.js"
+import * as currencyFmt from "currency.js"
 import { Button } from "react-native-elements"
 import FeeIcon from "@app/assets/icons/fee.svg"
 import useFee from "./use-fee"
@@ -194,7 +194,7 @@ const SendBitcoinConfirmation = ({
     paymentSatAmount: convertCurrencyAmount({
       from: "USD",
       to: "BTC",
-      amount: amount,
+      amount,
     }),
     primaryCurrency: amountCurrency,
   })
@@ -206,7 +206,7 @@ const SendBitcoinConfirmation = ({
   }
 
   const handlePaymentError = (error) => {
-    console.log(error)
+    console.debug(error)
     //  setStatus(Status.ERROR)
     //  // Todo: provide specific translated error messages in known cases
     //  setErrs([{ message: translate("errors.generic") + error }])
@@ -245,7 +245,7 @@ const SendBitcoinConfirmation = ({
           input: {
             walletId: wallet.id,
             paymentRequest: destination,
-            amount: amount,
+            amount,
             memo: note,
           },
         },
@@ -299,7 +299,6 @@ const SendBitcoinConfirmation = ({
       } else {
         payLightning()
       }
-      return
     }
   }
 
@@ -307,7 +306,7 @@ const SendBitcoinConfirmation = ({
     if (wallet.__typename === "BtcWallet" && amountCurrency === "USD") {
       setSecondaryAmount(
         convertCurrencyAmount({
-          amount: amount,
+          amount,
           from: "USD",
           to: "BTC",
         }),
@@ -316,7 +315,7 @@ const SendBitcoinConfirmation = ({
     if (wallet.__typename === "BtcWallet" && amountCurrency === "USD") {
       setSecondaryAmount(
         convertCurrencyAmount({
-          amount: amount,
+          amount,
           from: "BTC",
           to: "USD",
         }),
@@ -433,7 +432,7 @@ const SendBitcoinConfirmation = ({
             {wallet.__typename === "BTCWallet" ? (
               <>
                 <Text style={styles.walletBalanceText}>
-                  {currency_fmt
+                  {currencyFmt
                     .default(btcWalletValueInUsd, {
                       precision: 2,
                       separator: ",",
@@ -441,7 +440,7 @@ const SendBitcoinConfirmation = ({
                     })
                     .format()}
                   {" - "}
-                  {currency_fmt
+                  {currencyFmt
                     .default(btcWalletBalance, {
                       precision: 0,
                       separator: ",",
@@ -454,7 +453,7 @@ const SendBitcoinConfirmation = ({
             ) : (
               <>
                 <Text style={styles.walletBalanceText}>
-                  {currency_fmt
+                  {currencyFmt
                     .default(usdWalletBalance / 100, {
                       precision: 2,
                       separator: ",",

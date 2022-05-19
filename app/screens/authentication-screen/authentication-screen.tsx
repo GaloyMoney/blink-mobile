@@ -106,13 +106,14 @@ export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) =
       KeyStoreWrapper.setIsBiometricsEnabled()
     }
     navigation.replace("Primary")
-    hasToken &&
+    if (hasToken) {
       showModalClipboardIfValidPayment({
         client,
         network: tokenNetwork,
         myPubKey,
         username,
       })
+    }
   }
 
   const handleAuthenticationFailure = () => {
@@ -194,9 +195,8 @@ export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) =
               screenPurpose === AuthenticationScreenPurpose.TurnOnAuthentication
             ) {
               return translate("AuthenticationScreen.setUp")
-            } else {
-              return ""
             }
+            return ""
           })()}
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitle}

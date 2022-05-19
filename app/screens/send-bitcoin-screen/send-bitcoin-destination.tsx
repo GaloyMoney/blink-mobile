@@ -98,9 +98,9 @@ const SendBitcoinDestination = ({
       <View style={Styles.buttonContainer}>
         <Button
           title={
-            !destination
-              ? translate("SendBitcoinScreen.destinationIsRequired")
-              : translate("common.next")
+            destination
+              ? translate("common.next")
+              : translate("SendBitcoinScreen.destinationIsRequired")
           }
           buttonStyle={{ ...Styles.button, ...Styles.activeButtonStyle }}
           titleStyle={Styles.activeButtonTitleStyle}
