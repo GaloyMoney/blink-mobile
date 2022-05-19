@@ -76,19 +76,16 @@ export const validPayment = (
     ? input.replace("lightning:", "")
     : input
 
-  const [protocol, data] = inputData.split(":")
-
-  debugConsole(`protocol: ${protocol}`, `data: ${data}`)
-
-  let paymentType = getPaymentType(protocol, data)
+  let paymentType = getPaymentType(inputData)
 
   debugConsole(`paymentTyp: ${paymentType}`)
 
-  return getPaymentResponse(paymentType, protocol, data, network, myPubKey, username)
+  return getPaymentResponse(paymentType, inputData, network, myPubKey, username)
 }
 
 // one function to detect and return payment type
-const getPaymentType = (protocol: string, data: string): IPaymentType => {
+const getPaymentType = (inputData: string): IPaymentType => {
+  const [protocol, data] = getProtocolAndData(inputData)
   if (
     protocol.toLowerCase() === "lightning" || // TODO manage bitcoin= case
     protocol.toLowerCase().startsWith("ln") // possibly a lightning address?
@@ -111,21 +108,20 @@ const getPaymentType = (protocol: string, data: string): IPaymentType => {
 
 const getPaymentResponse = (
   paymentType: IPaymentType,
-  protocol: string,
-  data: string,
+  inputData: string,
   network: INetwork,
   myPubKey: string,
   username: string,
 ): IValidPaymentReponse => {
   switch (paymentType) {
     case "onchain":
-      return getOnChainPayResponse(data || protocol, network)
+      return getOnChainPayResponse(inputData, network)
     case "lnurl":
-      return getLNURLPayResponse(protocol, data)
+      return getLNURLPayResponse(inputData)
     case "username":
-      return getUsernamePayResponse(data)
+      return getUsernamePayResponse(inputData)
     case "lightning":
-      return getLightningPayResponse(protocol, data, network, myPubKey, username)
+      return getLightningPayResponse(inputData, network, myPubKey, username)
     default:
       return {
         valid: false,
@@ -142,12 +138,16 @@ const getLNURL = (protocol: string, data: string): string => {
   } else if (utils.isLightningAddress(protocol)) {
     return utils.decodeUrlOrAddress(protocol)
   }
-  return null
+  return ""
 }
 
-const getOnChainPayResponse = (data: string, network: INetwork): IValidPaymentReponse => {
+const getOnChainPayResponse = (
+  inputData: string,
+  network: INetwork,
+): IValidPaymentReponse => {
+  const [protocol, data] = getProtocolAndData(inputData)
   try {
-    const decodedData = url.parse(data, true)
+    const decodedData = url.parse(data || protocol, true)
     let path = decodedData.pathname // using url node library. the address is exposed as the "host" here
     // some apps encode bech32 addresses in UPPERCASE
     const lowerCasePath = path.toLowerCase()
@@ -184,13 +184,13 @@ const getOnChainPayResponse = (data: string, network: INetwork): IValidPaymentRe
 }
 
 const getLightningPayResponse = (
-  protocol: string,
-  data: string,
+  inputData: string,
   network: INetwork,
   myPubKey: string,
   username: string,
 ): IValidPaymentReponse => {
   const paymentType = "lightning"
+  const [protocol, data] = getProtocolAndData(inputData)
   if (network === "testnet" && protocol.toLowerCase().startsWith("lnbc")) {
     return {
       valid: false,
@@ -268,7 +268,8 @@ const getLightningPayResponse = (
   }
 }
 
-const getLNURLPayResponse = (protocol: string, data: string): IValidPaymentReponse => {
+const getLNURLPayResponse = (inputData: string): IValidPaymentReponse => {
+  const [protocol, data] = getProtocolAndData(inputData)
   return {
     valid: true,
     lnurl: getLNURL(protocol, data),
@@ -278,7 +279,6 @@ const getLNURLPayResponse = (protocol: string, data: string): IValidPaymentRepon
   }
 }
 
-// TODO: empty return case here?
 const getUsernamePayResponse = (data: string): IValidPaymentReponse => {
   const domain = "//ln.bitcoinbeach.com/"
   if (data.startsWith(domain)) {
@@ -291,10 +291,14 @@ const getUsernamePayResponse = (data: string): IValidPaymentReponse => {
   return { valid: false }
 }
 
-const hasLNParam = (url: string): boolean => {
-  return url.includes("lightning=")
-  // need to check for valid payment address too?
+const getProtocolAndData = (inputData: string): string[] => {
+  return inputData.split(":")
 }
 
-// is there a url parser in the codebase already??
-// url.parse(data, true) ?
+// const hasLNParam = (url: string): boolean => {
+//   return url.includes("lightning=")
+//   // need to check for valid payment address too?
+// }
+
+// // is there a url parser in the codebase already??
+// // url.parse(data, true) ?
