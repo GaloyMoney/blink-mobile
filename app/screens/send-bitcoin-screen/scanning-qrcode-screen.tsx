@@ -122,12 +122,10 @@ export const ScanningQRCodeScreen: ScreenType = ({
               )
               break
           }
+        } else if (index <= 1) {
+          navigation.replace("sendBitcoin", { payment: data })
         } else {
-          if (index <= 1) {
-            navigation.replace("sendBitcoin", { payment: data })
-          } else {
-            navigation.navigate("sendBitcoin", { payment: data })
-          }
+          navigation.navigate("sendBitcoin", { payment: data })
         }
       } else {
         setPending(true)
@@ -203,7 +201,7 @@ export const ScanningQRCodeScreen: ScreenType = ({
             const qr = event.data
             decodeInvoice(qr)
           }}
-          onTap={(r) => console.log({ r })}
+          onTap={(r) => console.debug({ r })}
         >
           <View style={styles.rectangleContainer}>
             <View style={styles.rectangle} />

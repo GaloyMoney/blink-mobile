@@ -86,12 +86,12 @@ export const MapScreen: ScreenType = ({ navigation }: Props) => {
         },
       )
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        console.log("You can use the location")
+        console.debug("You can use the location")
       } else {
-        console.log("Location permission denied")
+        console.debug("Location permission denied")
       }
     } catch (err) {
-      console.warn(err)
+      console.debug(err)
     }
   }
 
@@ -112,10 +112,13 @@ export const MapScreen: ScreenType = ({ navigation }: Props) => {
 
   const markers: JSX.Element[] = []
   maps.forEach((item) => {
-    const onPress = () =>
-      hasToken
-        ? navigation.navigate("sendBitcoin", { username: item.username })
-        : navigation.navigate("phoneValidation")
+    const onPress = () => {
+      if (hasToken) {
+        navigation.navigate("sendBitcoin", { username: item.username })
+      } else {
+        navigation.navigate("phoneValidation")
+      }
+    }
     markers.push(
       <Marker
         coordinate={item.mapInfo.coordinates}
@@ -125,11 +128,11 @@ export const MapScreen: ScreenType = ({ navigation }: Props) => {
         <Callout
           // alphaHitTest
           // tooltip
-          onPress={() => (!!item.username && !isIos ? onPress() : null)}
+          onPress={() => (Boolean(item.username) && !isIos ? onPress() : null)}
         >
           <View style={styles.customView}>
             <Text style={styles.title}>{item.mapInfo.title}</Text>
-            {!!item.username && !isIos && (
+            {Boolean(item.username) && !isIos && (
               <Button
                 containerStyle={styles.android}
                 title={translate("MapScreen.payBusiness")}
@@ -137,7 +140,7 @@ export const MapScreen: ScreenType = ({ navigation }: Props) => {
             )}
             {isIos && (
               <CalloutSubview onPress={() => (item.username ? onPress() : null)}>
-                {!!item.username && (
+                {Boolean(item.username) && (
                   <Button style={styles.ios} title={translate("MapScreen.payBusiness")} />
                 )}
               </CalloutSubview>

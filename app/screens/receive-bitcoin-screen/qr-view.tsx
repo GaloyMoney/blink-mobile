@@ -1,12 +1,7 @@
 import LottieView from "lottie-react-native"
 import * as React from "react"
 import { useCallback, useMemo } from "react"
-import {
-  ActivityIndicator,
-  Pressable,
-  Text,
-  View,
-} from "react-native"
+import { ActivityIndicator, Pressable, Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import QRCode from "react-native-qrcode-svg"
 import LightningSats from "@app/assets/icons/lightning-sats.png"
@@ -67,10 +62,6 @@ export const QRView = ({
 }: Props): JSX.Element => {
   const [isModalVisible, setIsModalVisible] = React.useState(false)
 
-  const toggleModal = () => {
-    console.log("show modal" + isModalVisible)
-    setIsModalVisible(!isModalVisible)
-  }
   const isReady =
     !err &&
     (type === TYPE_LIGHTNING_BTC || type === TYPE_LIGHTNING_USD
@@ -104,6 +95,10 @@ export const QRView = ({
       if (type === TYPE_LIGHTNING_USD) return LightningUsd
       if (type === TYPE_BITCOIN_ONCHAIN) return OnchainSats
       return null
+    }
+
+    const toggleModal = () => {
+      setIsModalVisible(!isModalVisible)
     }
 
     if (!completed && isReady) {
@@ -144,7 +139,7 @@ export const QRView = ({
       )
     }
     return null
-  }, [isModalVisible, data, getFullUri, isReady, completed, type])
+  }, [completed, isReady, type, size, getFullUri, data, isModalVisible])
 
   const renderStatusView = useMemo(() => {
     if (!completed && !isReady) {

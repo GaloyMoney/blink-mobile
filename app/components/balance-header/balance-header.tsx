@@ -119,7 +119,7 @@ export const BalanceHeaderDisplay: React.FC<BalanceHeaderProps> = ({
   useEffect((): void | (() => void) => {
     // Need to wait for the component to be in focus
     if (isFocused) {
-      const timerId = setTimeout(function () {
+      const timerId = setTimeout(function focusedToolTip() {
         if (isFocused) {
           setShowToolTip(hiddenBalanceToolTip)
         }

@@ -37,14 +37,14 @@ const multiple = (currentUnit: string) => {
   }
 }
 
-const Graph_Range = {
+const GraphRange = {
   ONE_DAY: "ONE_DAY",
   ONE_WEEK: "ONE_WEEK",
   ONE_MONTH: "ONE_MONTH",
   ONE_YEAR: "ONE_YEAR",
 } as const
 
-type GraphRangeType = typeof Graph_Range[keyof typeof Graph_Range]
+type GraphRangeType = typeof GraphRange[keyof typeof GraphRange]
 
 type Price = {
   base: number
@@ -59,7 +59,7 @@ type PricePoint = {
 }
 
 export const PriceGraphDataInjected: ComponentType = () => {
-  const [graphRange, setGraphRange] = React.useState<GraphRangeType>(Graph_Range.ONE_DAY)
+  const [graphRange, setGraphRange] = React.useState<GraphRangeType>(GraphRange.ONE_DAY)
 
   const { error, loading, data, refetch } = useQuery(BTC_PRICE_LIST, {
     variables: { range: graphRange },
@@ -77,19 +77,19 @@ export const PriceGraphDataInjected: ComponentType = () => {
   const lastPrice = data.btcPriceList[data.btcPriceList.length - 1]
   if (!loading) {
     const unixTime = Date.now() / 1000
-    if (graphRange === Graph_Range.ONE_DAY) {
+    if (graphRange === GraphRange.ONE_DAY) {
       if (unixTime - lastPrice.timestamp > 300) {
         refetch()
       }
-    } else if (graphRange === Graph_Range.ONE_WEEK) {
+    } else if (graphRange === GraphRange.ONE_WEEK) {
       if (unixTime - lastPrice.timestamp > 1800) {
         refetch()
       }
-    } else if (graphRange === Graph_Range.ONE_MONTH) {
+    } else if (graphRange === GraphRange.ONE_MONTH) {
       if (unixTime - lastPrice.timestamp > 86400) {
         refetch()
       }
-    } else if (graphRange === Graph_Range.ONE_YEAR) {
+    } else if (graphRange === GraphRange.ONE_YEAR) {
       if (unixTime - lastPrice.timestamp > 86400) {
         refetch()
       }
@@ -140,13 +140,13 @@ export const PriceGraph: ComponentType = ({
 
   const label = () => {
     switch (graphRange) {
-      case Graph_Range.ONE_DAY:
+      case GraphRange.ONE_DAY:
         return translate("PriceScreen.today")
-      case Graph_Range.ONE_WEEK:
+      case GraphRange.ONE_WEEK:
         return translate("PriceScreen.thisWeek")
-      case Graph_Range.ONE_MONTH:
+      case GraphRange.ONE_MONTH:
         return translate("PriceScreen.thisMonth")
-      case Graph_Range.ONE_YEAR:
+      case GraphRange.ONE_YEAR:
         return translate("PriceScreen.thisYear")
     }
   }
@@ -199,27 +199,27 @@ export const PriceGraph: ComponentType = ({
       <View style={styles.pricesContainer}>
         <Button
           title={translate("PriceScreen.oneDay")}
-          buttonStyle={buttonStyleForRange(Graph_Range.ONE_DAY)}
-          titleStyle={titleStyleForRange(Graph_Range.ONE_DAY)}
-          onPress={() => setGraphRange(Graph_Range.ONE_DAY)}
+          buttonStyle={buttonStyleForRange(GraphRange.ONE_DAY)}
+          titleStyle={titleStyleForRange(GraphRange.ONE_DAY)}
+          onPress={() => setGraphRange(GraphRange.ONE_DAY)}
         />
         <Button
           title={translate("PriceScreen.oneWeek")}
-          buttonStyle={buttonStyleForRange(Graph_Range.ONE_WEEK)}
-          titleStyle={titleStyleForRange(Graph_Range.ONE_WEEK)}
-          onPress={() => setGraphRange(Graph_Range.ONE_WEEK)}
+          buttonStyle={buttonStyleForRange(GraphRange.ONE_WEEK)}
+          titleStyle={titleStyleForRange(GraphRange.ONE_WEEK)}
+          onPress={() => setGraphRange(GraphRange.ONE_WEEK)}
         />
         <Button
           title={translate("PriceScreen.oneMonth")}
-          buttonStyle={buttonStyleForRange(Graph_Range.ONE_MONTH)}
-          titleStyle={titleStyleForRange(Graph_Range.ONE_MONTH)}
-          onPress={() => setGraphRange(Graph_Range.ONE_MONTH)}
+          buttonStyle={buttonStyleForRange(GraphRange.ONE_MONTH)}
+          titleStyle={titleStyleForRange(GraphRange.ONE_MONTH)}
+          onPress={() => setGraphRange(GraphRange.ONE_MONTH)}
         />
         <Button
           title={translate("PriceScreen.oneYear")}
-          buttonStyle={buttonStyleForRange(Graph_Range.ONE_YEAR)}
-          titleStyle={titleStyleForRange(Graph_Range.ONE_YEAR)}
-          onPress={() => setGraphRange(Graph_Range.ONE_YEAR)}
+          buttonStyle={buttonStyleForRange(GraphRange.ONE_YEAR)}
+          titleStyle={titleStyleForRange(GraphRange.ONE_YEAR)}
+          onPress={() => setGraphRange(GraphRange.ONE_YEAR)}
         />
       </View>
     </>

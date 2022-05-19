@@ -111,7 +111,9 @@ export const DebugScreen: ScreenType = () => {
         title="Request permission + send device token"
         style={styles.button}
         onPress={async () => {
-          hasToken && requestPermission(client)
+          if (hasToken) {
+            requestPermission(client)
+          }
         }}
       />
       {__DEV__ && (
@@ -135,7 +137,7 @@ export const DebugScreen: ScreenType = () => {
         <Text>GRAPHQL_URL: {graphQLURIs.GRAPHQL_URI}</Text>
         <Text>GRAPHQL_WS_URL: {graphQLURIs.GRAPHQL_WS_URI}</Text>
         <Text>USD per 1 sat: {usdPerSat ? `$${usdPerSat}` : "No price data"}</Text>
-        <Text>Hermes: {String(!!usingHermes)}</Text>
+        <Text>Hermes: {String(Boolean(usingHermes))}</Text>
 
         <ButtonGroup
           onPress={(index) => {

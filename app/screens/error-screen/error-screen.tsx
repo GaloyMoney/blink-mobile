@@ -64,7 +64,7 @@ export const ErrorScreen = ({ error, resetError }) => {
     <KeyboardAvoidingView
       style={[presets.fixed.outer, { backgroundColor: palette.lightBlue }]}
       behavior={isIos ? "padding" : null}
-      keyboardVerticalOffset={offsets["none"]}
+      keyboardVerticalOffset={offsets.none}
     >
       <StatusBar barStyle={"dark-content"} backgroundColor={palette.lightBlue} />
       <SafeAreaView style={presets.fixed.inner}>

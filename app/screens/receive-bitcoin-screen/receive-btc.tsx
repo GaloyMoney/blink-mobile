@@ -7,15 +7,7 @@ import { translateUnknown as translate } from "@galoymoney/client"
 import Clipboard from "@react-native-community/clipboard"
 import debounce from "lodash.debounce"
 import React, { useCallback, useEffect, useMemo, useState } from "react"
-import {
-  ActivityIndicator,
-  Alert,
-  KeyboardAvoidingView,
-  Platform,
-  Pressable,
-  Share,
-  View,
-} from "react-native"
+import { ActivityIndicator, Alert, Pressable, Share, View } from "react-native"
 import { Text } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { ScrollView } from "react-native-gesture-handler"
@@ -108,7 +100,7 @@ const styles = EStyleSheet.create({
     justifyContent: "flex-end",
   },
 })
-const ReceiveBtc = ({ navigation }) => {
+const ReceiveBtc = () => {
   const [loading, setLoading] = useState(true)
   const [err, setErr] = useState("")
   const [addNoAmountInvoice] = useMutation(ADD_NO_AMOUNT_INVOICE)
@@ -120,7 +112,7 @@ const ReceiveBtc = ({ navigation }) => {
   } | null>(null)
   const [satAmount, setSatAmount] = useState(0)
   const [satAmountInUsd, setSatAmountInUsd] = useState(0)
-  const [memo, setMemo] = useState("")
+  const [memo] = useState("") // FIXME
   const { lnUpdate } = useMySubscription()
   const [isAmountless, setIsAmountless] = useState(true)
   const [amountCurrency, setAmountCurrency] = useState("USD")
@@ -203,7 +195,7 @@ const ReceiveBtc = ({ navigation }) => {
     } catch (error) {
       Alert.alert(error.message)
     }
-  }, [invoice?.paymentRequest, getFullUri])
+  }, [invoice?.paymentRequest])
 
   useEffect((): void | (() => void) => {
     if (btcWalletId) {

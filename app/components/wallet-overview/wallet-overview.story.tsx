@@ -10,14 +10,7 @@ storiesOf("Wallet Overview", module)
   .add("Style Presets", () => (
     <Story>
       <UseCase text="USD" usage="The default.">
-        <WalletOverview
-          usdBalance={100.0}
-          btcPrimaryBalance={100.0}
-          btcSecondaryBalance={356542}
-          transferButtonAction={() => {
-            return
-          }}
-        />
+        <WalletOverview navigation={undefined} />
       </UseCase>
     </Story>
   ))

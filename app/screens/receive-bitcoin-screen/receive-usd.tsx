@@ -90,7 +90,7 @@ const styles = EStyleSheet.create({
     marginTop: "20rem",
   },
 })
-const ReceiveUsd = ({ navigation }) => {
+const ReceiveUsd = () => {
   const [loading, setLoading] = useState(true)
   const [err, setErr] = useState("")
   const [addNoAmountInvoice] = useMutation(ADD_NO_AMOUNT_INVOICE)
@@ -101,7 +101,7 @@ const ReceiveUsd = ({ navigation }) => {
     paymentRequest: string
   } | null>(null)
   const [usdAmount, setUsdAmount] = useState(0)
-  const [memo, setMemo] = useState("")
+  const [memo] = useState("") // FIXME
   const { lnUpdate } = useMySubscription()
   const [isAmountless, setIsAmountless] = useState(true)
   const updateInvoice = useMemo(
@@ -183,7 +183,7 @@ const ReceiveUsd = ({ navigation }) => {
     } catch (error) {
       Alert.alert(error.message)
     }
-  }, [invoice?.paymentRequest, getFullUri])
+  }, [invoice?.paymentRequest])
 
   return (
     <ScrollView>
@@ -265,7 +265,7 @@ const ReceiveUsd = ({ navigation }) => {
             )}
           </View>
         </View>
-        {!isAmountless && invoice?.paymentRequest && !!usdAmount && (
+        {!isAmountless && invoice?.paymentRequest && Boolean(usdAmount) && (
           <View style={styles.countdownTimerContainer}>
             <CountdownCircleTimer
               key={invoice?.paymentRequest}
