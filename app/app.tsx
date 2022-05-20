@@ -45,6 +45,7 @@ import { loadAuthToken, networkVar } from "./graphql/client-only-query"
 import { INetwork } from "./types/network"
 import ErrorBoundary from "react-native-error-boundary"
 import { ErrorScreen } from "./screens/error-screen"
+import Toast from "react-native-toast-message"
 
 export const BUILD_VERSION = "build_version"
 
@@ -273,6 +274,7 @@ export const App = (): JSX.Element => {
           <RootSiblingParent>
             <GlobalErrorToast />
             <RootStack />
+            <Toast />
           </RootSiblingParent>
         </NavigationContainer>
       </ErrorBoundary>
