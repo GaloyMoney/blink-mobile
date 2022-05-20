@@ -1,7 +1,7 @@
 import LottieView from "lottie-react-native"
 import * as React from "react"
 import { useCallback, useMemo } from "react"
-import { ActivityIndicator, Pressable, Text, View } from "react-native"
+import { ActivityIndicator, Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import QRCode from "react-native-qrcode-svg"
 import LightningSats from "@app/assets/icons/lightning-sats.png"
@@ -14,9 +14,10 @@ import {
   TYPE_BITCOIN_ONCHAIN,
   TYPE_LIGHTNING_USD,
 } from "../../utils/wallet"
-import ReactNativeModal from "react-native-modal"
 
 import successLottie from "../send-bitcoin-screen/success_lottie.json"
+import ScreenBrightness from "react-native-screen-brightness"
+import { isIos } from "@app/utils/helper"
 
 const configByType = {
   [TYPE_LIGHTNING_BTC]: {
@@ -58,9 +59,45 @@ export const QRView = ({
   loading,
   completed,
   err,
-  size = 200,
+  size = 300,
 }: Props): JSX.Element => {
-  const [isModalVisible, setIsModalVisible] = React.useState(false)
+  const [brightnessInitial, setBrightnessInitial] = React.useState(0)
+
+  React.useEffect(() => {
+    const fn = async () => {
+      // android required permission, and open the settings page for it
+      // it's probably not worth the hurdle
+      //
+      // only doing the brightness for iOS for now
+      //
+      // only need     <uses-permission android:name="android.permission.WRITE_SETTINGS" tools:ignore="ProtectedPermissions"/>
+      // in the manifest
+      // see: https://github.com/robinpowered/react-native-screen-brightness/issues/38
+      //
+      if (!isIos) {
+        return
+      }
+
+      // let hasPerm = await ScreenBrightness.hasPermission();
+
+      // if(!hasPerm){
+      //   ScreenBrightness.requestPermission();
+      // }
+
+      // only enter this loop when brightnessInitial is not set
+      // if (!brightnessInitial && hasPerm) {
+      if (!brightnessInitial) {
+        ScreenBrightness.getBrightness().then((brightness: number) => {
+          setBrightnessInitial(brightness)
+          ScreenBrightness.setBrightness(1) // between 0 and 1
+        })
+      }
+    }
+
+    fn()
+    return () => ScreenBrightness.setBrightness(brightnessInitial)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const isReady =
     !err &&
@@ -97,49 +134,25 @@ export const QRView = ({
       return null
     }
 
-    const toggleModal = () => {
-      setIsModalVisible(!isModalVisible)
-    }
-
     if (!completed && isReady) {
       return (
         <>
           <View style={styles.qrBackround}>
-            <Pressable onPress={toggleModal}>
-              <QRCode
-                size={size}
-                value={getFullUri({ input: data, uppercase: true })}
-                logoBackgroundColor="white"
-                ecl={configByType[type].ecl}
-                logo={getQrLogo()}
-                logoSize={60}
-                logoBorderRadius={10}
-              />
-            </Pressable>
+            <QRCode
+              size={size}
+              value={getFullUri({ input: data, uppercase: true })}
+              logoBackgroundColor="white"
+              ecl={configByType[type].ecl}
+              logo={getQrLogo()}
+              logoSize={60}
+              logoBorderRadius={10}
+            />
           </View>
-          <ReactNativeModal
-            isVisible={isModalVisible}
-            onBackButtonPress={() => toggleModal()}
-          >
-            <View style={styles.qrContainer}>
-              <Pressable onPress={toggleModal}>
-                <QRCode
-                  size={300}
-                  value={getFullUri({ input: data, uppercase: true })}
-                  logoBackgroundColor="white"
-                  ecl={configByType[type].ecl}
-                  logo={getQrLogo()}
-                  logoSize={60}
-                  logoBorderRadius={10}
-                />
-              </Pressable>
-            </View>
-          </ReactNativeModal>
         </>
       )
     }
     return null
-  }, [completed, isReady, type, size, getFullUri, data, isModalVisible])
+  }, [completed, isReady, type, size, getFullUri, data])
 
   const renderStatusView = useMemo(() => {
     if (!completed && !isReady) {
