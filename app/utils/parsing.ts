@@ -6,6 +6,8 @@ import { getDescription, getDestination, getUsername } from "./bolt11"
 import { utils } from "lnurl-pay"
 import type { INetwork } from "../types/network"
 import * as parsing from "./parsing"
+import queryString from "query-string"
+import { getInputRangeFromIndexes } from "react-native-snap-carousel"
 
 // TODO: look if we own the address
 
@@ -56,11 +58,6 @@ function parseAmount(txt) {
   )
 }
 
-const debugConsole = (...args: string[]) => {
-  let str = args.join("\n")
-  console.log(`XXXXXXXXXXX\n${str}`)
-}
-
 export const validPayment = (
   input: string,
   network: INetwork,
@@ -78,8 +75,6 @@ export const validPayment = (
 
   let paymentType = getPaymentType(inputData)
 
-  debugConsole(`paymentTyp: ${paymentType}`)
-
   return getPaymentResponse(paymentType, inputData, network, myPubKey, username)
 }
 
@@ -88,7 +83,8 @@ const getPaymentType = (inputData: string): IPaymentType => {
   const [protocol, data] = getProtocolAndData(inputData)
   if (
     protocol.toLowerCase() === "lightning" || // TODO manage bitcoin= case
-    protocol.toLowerCase().startsWith("ln") // possibly a lightning address?
+    protocol.toLowerCase().startsWith("ln") || // possibly a lightning address?
+    (data && getLNParam(data) != null)
   ) {
     return "lightning"
   } else if (protocol.toLowerCase() === "bitcoin") {
@@ -166,7 +162,6 @@ const getOnChainPayResponse = (
     } catch (err) {
       console.log(`can't decode amount ${err}`)
     }
-    debugConsole("onChain3")
     // will throw if address is not valid
     address.toOutputScript(path, mappingToBitcoinJs(network)) // this currently throws. need to figure out why
 
@@ -183,6 +178,16 @@ const getOnChainPayResponse = (
   }
 }
 
+const getDataToDecode = (inputData: string): string => {
+  const lnParam = getLNParam(inputData)
+  if (lnParam != null) {
+    return lnParam
+  }
+  const [protocol, data] = getProtocolAndData(inputData)
+  // some apps encode lightning invoices in UPPERCASE
+  return (protocol.toLowerCase() === "lightning" ? data : protocol).toLowerCase()
+}
+
 const getLightningPayResponse = (
   inputData: string,
   network: INetwork,
@@ -190,7 +195,9 @@ const getLightningPayResponse = (
   username: string,
 ): IValidPaymentReponse => {
   const paymentType = "lightning"
-  const [protocol, data] = getProtocolAndData(inputData)
+  const dataToDecode = getDataToDecode(inputData)
+  const protocol = getLNParam(inputData) ?? getProtocolAndData(inputData)[0]
+
   if (network === "testnet" && protocol.toLowerCase().startsWith("lnbc")) {
     return {
       valid: false,
@@ -207,37 +214,22 @@ const getLightningPayResponse = (
     }
   }
 
-  // cant overwrite data, first of all. need to pull out lightning param if it is present.
-  // otherwise, do this nonsense.
-
-  debugConsole("start", `data: ${data}`, `protocol: ${protocol}`)
-
-  const dataToDecode = (
-    protocol.toLowerCase() === "lightning" ? data : protocol
-  ).toLowerCase()
-
-  // some apps encode lightning invoices in UPPERCASE
-  // data = protocol.toLowerCase()
   let payReq
   try {
     payReq = lightningPayReq.decode(dataToDecode)
   } catch (err) {
-    debugConsole("catch")
     console.log(err)
     return { valid: false }
   }
 
   if (parsing.lightningInvoiceHasExpired(payReq)) {
-    debugConsole("expiry")
     return { valid: false, errorMessage: "invoice has expired", paymentType }
   }
-  debugConsole("Still looking")
 
   const sameNode = myPubKey === getDestination(payReq)
   const sameNodeAndUsername = sameNode && username === getUsername(payReq)
 
   if (sameNodeAndUsername) {
-    debugConsole("Samenode&username")
     return {
       valid: false,
       paymentType,
@@ -295,10 +287,13 @@ const getProtocolAndData = (inputData: string): string[] => {
   return inputData.split(":")
 }
 
-// const hasLNParam = (url: string): boolean => {
-//   return url.includes("lightning=")
-//   // need to check for valid payment address too?
-// }
+const inputDataToObject = (data: string): any => {
+  const parsedQuery = queryString.parseUrl(data)
+  let qrDataObj = parsedQuery.query
+  qrDataObj["address"] = parsedQuery.url
+  return qrDataObj
+}
 
-// // is there a url parser in the codebase already??
-// // url.parse(data, true) ?
+const getLNParam = (data: string): string | undefined => {
+  return inputDataToObject(data)?.lightning
+}
