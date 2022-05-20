@@ -16,7 +16,7 @@ import { bech32 } from "bech32"
 import QRCode from "react-native-qrcode-svg"
 import { Button, Text } from "react-native-elements"
 import Clipboard from "@react-native-community/clipboard"
-import Toast from "react-native-root-toast"
+import Toast from "react-native-toast-message"
 import { translateUnknown as translate } from "@galoymoney/client"
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 import { color } from "@app/theme"
@@ -58,15 +58,12 @@ type Props = {
 
 const copyToClipboard = (str) => {
   Clipboard.setString(str)
-
-  Toast.show(translate("SettingsScreen.copyClipboardLnurl"), {
-    duration: Toast.durations.LONG,
-    shadow: false,
-    animation: true,
-    hideOnPress: true,
-    delay: 0,
-    position: -100,
-    opacity: 0.5,
+  Toast.show({
+    type: "error",
+    text1: translate("common.error"),
+    text2: translate("SettingsScreen.copyClipboardLnurl"),
+    position: "bottom",
+    bottomOffset: 80,
   })
 }
 
