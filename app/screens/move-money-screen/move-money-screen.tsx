@@ -274,6 +274,8 @@ export const MoveMoneyScreen: ScreenType = ({
 
   let recentTransactionsData = undefined
 
+  const TRANSACTIONS_TO_SHOW = 3
+
   if (hasToken && transactionsEdges) {
     recentTransactionsData = {
       title: translate("TransactionScreen.title"),
@@ -281,7 +283,7 @@ export const MoveMoneyScreen: ScreenType = ({
       style: "transactionViewContainer",
       details: (
         <View style={styles.transactionsView}>
-          {transactionsEdges.map(
+          {transactionsEdges.slice(0,TRANSACTIONS_TO_SHOW).map(
             ({ node }) =>
               node && (
                 <TransactionItem
