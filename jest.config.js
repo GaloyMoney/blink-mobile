@@ -34,7 +34,6 @@ module.exports = {
       "|react-native-ratings" +
       "|react-native-reanimated" +
       "|react-native-root-siblings" +
-      "|react-native-root-toast" +
       "|react-native-vector-icons" +
       "|react-native-phone-number-input" +
       "|react-native-country-picker-modal" +
@@ -43,6 +42,7 @@ module.exports = {
       "|@react-navigation" +
       "|@react-native-community" +
       "|react-native-error-boundary" +
+      "|react-native-toast-message" +
       ")/)",
   ],
 }

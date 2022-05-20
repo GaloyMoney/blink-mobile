@@ -1,12 +1,10 @@
 import { ServerError, ServerParseError } from "@apollo/client"
 import { useApolloNetworkStatus } from "../../app"
 import { ComponentType } from "../../types/jsx"
-import { toastShow } from "../../utils/toast"
 import { NetworkErrorCode } from "./network-error-code"
 import useLogout from "../../hooks/use-logout"
 import { translateUnknown as translate } from "@galoymoney/client"
-import Toast from "react-native-root-toast"
-
+import { toastShow } from "@app/utils/toast"
 export const GlobalErrorToast: ComponentType = () => {
   const status = useApolloNetworkStatus()
   const { logout } = useLogout()
@@ -44,10 +42,7 @@ export const GlobalErrorToast: ComponentType = () => {
 
     switch (errorCode) {
       case NetworkErrorCode.InvalidAuthentication:
-        toastShow(translate("common.reauth"), {
-          duration: Toast.durations.SHORT,
-          onHidden: () => logout(),
-        })
+        toastShow(translate("common.reauth"))
         break
 
       default:

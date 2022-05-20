@@ -1,18 +1,13 @@
-import Toast, { ToastOptions } from "react-native-root-toast"
-import { palette } from "../theme/palette"
+import { translateUnknown } from "@galoymoney/client"
+import Toast from "react-native-toast-message"
 
-export const toastShow = (message: string, options?: ToastOptions): void => {
-  const toastShowOptions: ToastOptions = {
-    duration: Toast.durations.LONG,
-    shadow: false,
-    animation: true,
-    hideOnPress: true,
-    delay: 0,
-    position: 50,
-    opacity: 1,
-    backgroundColor: palette.red,
-    ...options,
-  }
-
-  Toast.show(message, toastShowOptions)
+export const toastShow = (message: string, onHide?: () => void): void => {
+  Toast.show({
+      type: "error",
+      text1: translateUnknown("common.error"),
+      text2: message,
+      position: "bottom",
+      bottomOffset: 80,
+      onHide: () => onHide()
+    })
 }
