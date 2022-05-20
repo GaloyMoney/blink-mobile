@@ -40,6 +40,7 @@ import ReceiveIcon from "@app/assets/icons/receive.svg"
 import PriceIcon from "@app/assets/icons/price.svg"
 import SettingsIcon from "@app/assets/icons/settings.svg"
 
+
 const styles = EStyleSheet.create({
   balanceHeader: {
     marginBottom: "1rem",

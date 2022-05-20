@@ -202,9 +202,7 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
   const copyToClipBoard = (username) => {
     Clipboard.setString(GALOY_PAY_DOMAIN + username)
     Clipboard.getString().then((data) =>
-      toastShow(translate("tippingLink.copied", { data }), {
-        backgroundColor: palette.lightBlue,
-      }),
+      toastShow(translate("tippingLink.copied", { data })),
     )
   }
 

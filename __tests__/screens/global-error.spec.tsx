@@ -6,7 +6,6 @@ import { render } from "@testing-library/react-native"
 import * as React from "react"
 import { NetworkStatus } from "react-apollo-network-status"
 import { UseApolloNetworkStatusOptions } from "react-apollo-network-status/dist/src/useApolloNetworkStatus"
-import Toast from "react-native-root-toast"
 import { useApolloNetworkStatus } from "../../app/app"
 import { GlobalErrorToast } from "../../app/components/global-error"
 import { NetworkErrorCode } from "../../app/components/global-error/network-error-code"
@@ -89,10 +88,6 @@ describe("GlobalError tests", () => {
     expect(toastSpy).toHaveBeenCalledTimes(1)
     expect(toastSpy).toHaveBeenCalledWith(
       "Your session has expired. Please log in again.",
-      {
-        duration: Toast.durations.SHORT,
-        onHidden: expect.any(Function),
-      },
     )
   })
 
