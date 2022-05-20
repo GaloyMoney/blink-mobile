@@ -33,6 +33,17 @@ export const INTRA_LEDGER_PAY = gql`
   }
 `
 
+export const INTRA_LEDGER_PAY_USD = gql`
+  mutation intraLedgerUsdPaymentSend($input: IntraLedgerUsdPaymentSendInput!) {
+    intraLedgerUsdPaymentSend(input: $input) {
+      errors {
+        message
+      }
+      status
+    }
+  }
+`
+
 export const ONCHAIN_PAY = gql`
   mutation onChainPaymentSend($input: OnChainPaymentSendInput!) {
     onChainPaymentSend(input: $input) {

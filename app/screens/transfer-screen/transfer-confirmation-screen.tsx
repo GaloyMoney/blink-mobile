@@ -1,8 +1,8 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { StyleSheet, Text, View } from "react-native"
 import { FakeCurrencyInput } from "react-native-currency-input"
 import { Button } from "react-native-elements"
-import { RouteProp } from "@react-navigation/native"
+import { RouteProp, useNavigation } from "@react-navigation/native"
 import { useMutation } from "@apollo/client"
 
 import { translateUnknown as translate } from "@galoymoney/client"
@@ -11,7 +11,8 @@ import { palette } from "@app/theme"
 import { useWalletBalance } from "@app/hooks"
 import * as currencyFmt from "currency.js"
 import { MoveMoneyStackParamList } from "@app/navigation/stack-param-lists"
-import { INTRA_LEDGER_PAY } from "../send-bitcoin-screen/graphql"
+import { INTRA_LEDGER_PAY, INTRA_LEDGER_PAY_USD } from "../send-bitcoin-screen/graphql"
+import { toastShow } from "@app/utils/toast"
 
 const Status = {
   IDLE: "idle",
@@ -24,21 +25,24 @@ const Status = {
 type StatusType = typeof Status[keyof typeof Status]
 
 const TransferConfirmationScreen = ({
-  route,
-}: {
-  route: RouteProp<MoveMoneyStackParamList, "transferConfirmation">
-}) => {
-  const {
-    fromWallet,
-    toWallet,
-    dollarAmount,
-    satAmount,
-    satAmountInUsd,
-    amountCurrency,
-  } = route.params
+  fromWallet,
+  toWallet,
+  dollarAmount,
+  satAmount,
+  satAmountInUsd,
+  amountCurrency,
+  nextStep
+}: TransferConfirmationScreenProps) => {
   const { usdWalletBalance, btcWalletBalance, btcWalletValueInUsd } = useWalletBalance()
   const [intraLedgerPay] = useMutation(INTRA_LEDGER_PAY)
+  const [intraLedgerPayUsd] = useMutation(INTRA_LEDGER_PAY_USD)
   const [_status, setStatus] = useState<StatusType>(Status.IDLE)
+
+  useEffect(() => {
+    if (_status === Status.SUCCESS) {
+      nextStep()
+    }
+  }, [_status])
 
   const handlePaymentReturn = (status, _errors) => {
     if (status === "SUCCESS") {
@@ -48,12 +52,16 @@ const TransferConfirmationScreen = ({
 
   const handlePaymentError = (error) => {
     console.debug(error)
+    toastShow(error?.message)
     //  setStatus(Status.ERROR)
     //  // Todo: provide specific translated error messages in known cases
     //  setErrs([{ message: translate("errors.generic") + error }])
   }
 
   const isButtonEnabled = () => {
+    if (_status === Status.LOADING) {
+      return false
+    }
     if (fromWallet?.walletCurrency === "BTC" && amountCurrency === "BTC") {
       if (satAmount && satAmount <= btcWalletBalance) {
         return true
@@ -74,29 +82,57 @@ const TransferConfirmationScreen = ({
 
   const payWallet = async () => {
     setStatus(Status.LOADING)
+    if (fromWallet?.walletCurrency === "BTC") {
+      try {
 
-    try {
-      const { data, errors } = await intraLedgerPay({
-        variables: {
-          input: {
-            walletId: fromWallet?.id,
-            recipientWalletId: toWallet?.id,
-            amount: fromWallet?.walletCurrency === "BTC" ? satAmount : dollarAmount / 100,
+
+        const { data, errors } = await intraLedgerPay({
+          variables: {
+            input: {
+              walletId: fromWallet?.id,
+              recipientWalletId: toWallet?.id,
+              amount: satAmount,
+            },
           },
-        },
-      })
+        })
 
-      const status = data.intraLedgerPaymentSend.status
-      const errs = errors
-        ? errors.map((error) => {
+        const status = data.intraLedgerPaymentSend.status
+        const errs = errors
+          ? errors.map((error) => {
             return { message: error.message }
           })
-        : data.intraLedgerPaymentSend.errors
-      handlePaymentReturn(status, errs)
-    } catch (err) {
-      handlePaymentError(err)
+          : data.intraLedgerPaymentSend.errors
+        handlePaymentReturn(status, errs)
+      } catch (err) {
+        handlePaymentError(err)
+      }
+    }
+    if (fromWallet?.walletCurrency === "USD") {
+      try {
+
+        const { data, errors } = await intraLedgerPayUsd({
+          variables: {
+            input: {
+              walletId: fromWallet?.id,
+              recipientWalletId: toWallet?.id,
+              amount: dollarAmount * 100,
+            },
+          },
+        })
+
+        const status = data.intraLedgerUsdPaymentSend.status
+        const errs = errors
+          ? errors.map((error) => {
+            return { message: error.message }
+          })
+          : data.intraLedgerUsdPaymentSend.errors
+        handlePaymentReturn(status, errs)
+      } catch (err) {
+        handlePaymentError(err)
+      }
     }
   }
+
 
   return (
     <View style={styles.sendBitcoinConfirmationContainer}>
