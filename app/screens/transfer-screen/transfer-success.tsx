@@ -5,9 +5,10 @@ import LottieView from "lottie-react-native"
 import { translateUnknown as translate } from "@galoymoney/client"
 
 import { palette } from "@app/theme"
-import successLottieJson from "./success_lottie.json"
+import successLottieJson from "../send-bitcoin-screen/success_lottie.json"
 
 const TransferSuccess = () => {
+
   return (
     <View style={styles.lottieContainer}>
       <LottieView
