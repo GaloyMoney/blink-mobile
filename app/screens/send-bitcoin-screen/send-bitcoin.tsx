@@ -1,18 +1,19 @@
-// FIXME: there are many unused variables in this file
-
 import useMainQuery from "@app/hooks/use-main-query"
-import { IPaymentType, validPayment } from "@app/utils/parsing"
+import { IPaymentType } from "@app/utils/parsing"
 import useToken from "@app/utils/use-token"
-import React, { useCallback, useEffect, useState } from "react"
-import { StyleSheet, View } from "react-native"
+import React, { useEffect, useState } from "react"
+import { StyleSheet, Text, View } from "react-native"
 import SendBitcoinAmount from "./send-bitcoin-amount"
 import SendBitcoinConfirmation from "./send-bitcoin-confirmation"
 import SendBitcoinDestination from "./send-bitcoin-destination"
-import * as UsernameValidation from "../../utils/validation"
-import debounce from "lodash.debounce"
-import { gql, useLazyQuery } from "@apollo/client"
 import { useMySubscription } from "@app/hooks"
 import SendBitcoinSuccess from "./send-bitcoin-success"
+import {
+  parsePaymentDestination,
+  translateUnknown as translate,
+  useDelayedQuery,
+} from "@galoymoney/client"
+import { palette } from "@app/theme"
 
 const Status = {
   IDLE: "idle",
@@ -22,17 +23,18 @@ const Status = {
   ERROR: "error",
 } as const
 
-const USER_WALLET_ID = gql`
-  query userDefaultWalletId($username: Username!) {
-    userDefaultWalletId(username: $username)
-  }
-`
-
 const Styles = StyleSheet.create({
   container: {
     flexDirection: "column",
     padding: 10,
     flex: 6,
+  },
+  errorContainer: {
+    margin: 20,
+  },
+  errorText: {
+    color: palette.red,
+    textAlign: "center",
   },
 })
 
@@ -44,63 +46,71 @@ const SendBitcoin = ({ navigation, route }) => {
   const { defaultWallet, myPubKey, username: myUsername } = useMainQuery()
   const [fromWallet, setFromWallet] = useState(defaultWallet)
   const [amountCurrency, setAmountCurrency] = useState("USD")
-  const [amountless, setAmountless] = useState(false)
+  const [fixedAmount, setFixedAmount] = useState(false)
   const [sameNode, setSameNode] = useState(false)
   const [paymentType, setPaymentType] = useState<IPaymentType>(undefined)
   const { tokenNetwork } = useToken()
   const [defaultAmount, setDefaultAmount] = useState(0)
   const { convertCurrencyAmount } = useMySubscription()
-  const [_invoiceError, setInvoiceError] = useState(undefined)
-  const [_destinationStatus, setDestinationStatus] = useState<
-    "VALID" | "INVALID" | "NOT_CHECKED"
-  >("NOT_CHECKED")
+  const [inputError, setInputError] = useState(undefined)
   const [status, setStatus] = useState<
     "idle" | "loading" | "pending" | "success" | "error"
   >(Status.IDLE)
-  const nextStep = () => setStep(step + 1)
-
-  const [
-    userDefaultWalletIdQuery,
-    { loading: _loadingUserDefaultWalletId, data: _dataUserDefaultWalletId },
-  ] = useLazyQuery(USER_WALLET_ID, {
-    fetchPolicy: "network-only",
-    onCompleted: (dataUserDefaultWalletId) => {
-      if (dataUserDefaultWalletId?.userDefaultWalletId) {
-        setDestinationStatus("VALID")
-      }
-    },
-    onError: () => {
-      setDestinationStatus("INVALID")
-    },
-  })
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const userDefaultWalletIdQueryDebounced = useCallback(
-    debounce(async (destination) => {
-      userDefaultWalletIdQuery({ variables: { username: destination } })
-    }, 1500),
-    [],
+  const [recipientWalletId, setRecipientWalletId] = useState<string | undefined>(
+    undefined,
   )
 
-  useEffect(() => {
+  const nextStep = () => setStep(step + 1)
+
+  const [userDefaultWalletIdQuery, { loading: userDefaultWalletIdLoading }] =
+    useDelayedQuery.userDefaultWalletId()
+
+  const validateDestination = React.useCallback(async () => {
+    if (userDefaultWalletIdLoading) {
+      return false
+    }
+
+    setInputError(undefined)
+
     const {
       valid,
       errorMessage,
-      invoice,
-      amount: amountInvoice,
-      amountless,
-      memo: memoInvoice,
+
       paymentType,
       address,
-      // lnurl,
+      paymentRequest,
+      handle,
+
+      amount: amountInvoice,
+      memo: memoInvoice,
       sameNode,
-      staticLnurlIdentifier,
-    } = validPayment(destination, tokenNetwork, myPubKey, myUsername)
+      // staticLnurlIdentifier,
+    } = parsePaymentDestination({ destination, network: tokenNetwork, pubKey: myPubKey })
+
+    if (destination === myUsername) {
+      return false
+    }
+
+    const fixedAmount = amountInvoice !== undefined
+
+    const staticLnurlIdentifier = false // FIXME: Change galoy-client to return this
+
+    setPaymentType(paymentType)
 
     if (valid) {
       if (paymentType === "onchain") setDestination(address)
-      if (paymentType === "lightning") setDestination(invoice)
-      setPaymentType(paymentType)
+      if (paymentType === "lightning") setDestination(paymentRequest)
+
+      if (paymentType === "intraledger") {
+        const { data, errorsMessage } = await userDefaultWalletIdQuery({
+          username: handle,
+        })
+        if (errorsMessage) {
+          return false
+        }
+        setDestination(handle)
+        setRecipientWalletId(data?.userDefaultWalletId)
+      }
 
       //   if (lnurl) {
       //     setPaymentType("lnurl")
@@ -116,8 +126,8 @@ const SendBitcoin = ({ navigation, route }) => {
       //     }
       //   }
 
-      setAmountless(amountless)
-      if (!amountless && !staticLnurlIdentifier) {
+      setFixedAmount(fixedAmount)
+      if (fixedAmount && !staticLnurlIdentifier) {
         setDefaultAmount(
           convertCurrencyAmount({
             from: "BTC",
@@ -132,19 +142,21 @@ const SendBitcoin = ({ navigation, route }) => {
       }
       setSameNode(sameNode)
     } else if (errorMessage) {
-      setPaymentType(paymentType)
-      setInvoiceError(errorMessage)
+      setInputError(errorMessage)
       setDestination(destination)
-    } else {
-      setPaymentType("username")
-      setAmountless(true)
-
-      if (UsernameValidation.isValid(destination)) {
-        userDefaultWalletIdQueryDebounced(destination)
-      }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [destination])
+
+    return valid
+  }, [
+    convertCurrencyAmount,
+    destination,
+    myPubKey,
+    myUsername,
+    note,
+    tokenNetwork,
+    userDefaultWalletIdLoading,
+    userDefaultWalletIdQuery,
+  ])
 
   useEffect(() => {
     if (route.params?.payment) {
@@ -169,10 +181,17 @@ const SendBitcoin = ({ navigation, route }) => {
 
   return (
     <View style={Styles.container}>
+      {inputError && (
+        <View style={Styles.errorContainer}>
+          <Text style={Styles.errorText}>{translate("Invalid Payment Destination")}</Text>
+        </View>
+      )}
+
       {step === 1 && (
         <SendBitcoinDestination
           destination={destination}
           setDestination={setDestination}
+          validateDestination={validateDestination}
           nextStep={nextStep}
           navigation={navigation}
         />
@@ -189,18 +208,19 @@ const SendBitcoin = ({ navigation, route }) => {
           toggleAmountCurrency={toggleAmountCurrency}
           setAmount={setAmount}
           defaultAmount={defaultAmount}
-          amountless={amountless}
+          fixedAmount={fixedAmount}
         />
       )}
       {step === 3 && (
         <SendBitcoinConfirmation
           destination={destination}
+          recipientWalletId={recipientWalletId}
           wallet={fromWallet}
           amount={amount}
           amountCurrency={amountCurrency}
           note={note}
           setStatus={setStatus}
-          amountless={amountless}
+          fixedAmount={fixedAmount}
           paymentType={paymentType}
           sameNode={sameNode}
         />

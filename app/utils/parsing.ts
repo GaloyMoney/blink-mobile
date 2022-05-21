@@ -9,7 +9,7 @@ import * as parsing from "./parsing"
 
 // TODO: look if we own the address
 
-export type IPaymentType = "lightning" | "onchain" | "username" | "lnurl" | undefined
+export type IPaymentType = "lightning" | "onchain" | "intraledger" | "lnurl" | undefined
 
 export interface IValidPaymentReponse {
   valid: boolean
@@ -127,7 +127,7 @@ export const validPayment = (
     if (data.startsWith(domain)) {
       return {
         valid: true,
-        paymentType: "username",
+        paymentType: "username" as "intraledger", // FIXME: temp
         username: data.substring(domain.length),
       }
     }

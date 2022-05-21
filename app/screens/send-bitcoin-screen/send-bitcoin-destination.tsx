@@ -57,23 +57,41 @@ const Styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  errorContainer: {
+    flex: 1,
+  },
+  errorText: {
+    color: palette.red,
+    textAlign: "center",
+  },
 })
-
-// const validateDestination = (destination: string, network: INetwork) => {
-//   if (isDestinationLightningPayment(destination)) {
-//     if (isDestinationNetworkValid(destination, network)) {
-//       return true
-//     }
-//   }
-//   return false
-// }
 
 const SendBitcoinDestination = ({
   destination,
   setDestination,
+  validateDestination,
   nextStep,
   navigation,
 }) => {
+  const [validDestination, setValidDestination] = React.useState<boolean | undefined>(
+    undefined,
+  )
+
+  const handleChangeText = (newDestination) => {
+    setValidDestination(undefined)
+    setDestination(newDestination)
+  }
+
+  const handlePress = async () => {
+    const valid = await validateDestination()
+    if (valid) {
+      return nextStep()
+    }
+    setValidDestination(valid)
+  }
+
+  const showError = Boolean(destination && validDestination === false)
+
   return (
     <>
       <Text style={Styles.fieldTitleText}>
@@ -83,7 +101,7 @@ const SendBitcoinDestination = ({
         <TextInput
           style={Styles.input}
           placeholder={translate("SendBitcoinScreen.input")}
-          onChangeText={setDestination}
+          onChangeText={handleChangeText}
           value={destination}
           selectTextOnFocus
           autoCapitalize="none"
@@ -96,6 +114,13 @@ const SendBitcoinDestination = ({
       </View>
 
       <View style={Styles.descriptionContainer}></View>
+
+      {showError && (
+        <View style={Styles.errorContainer}>
+          <Text style={Styles.errorText}>{translate("Invalid Payment Destination")}</Text>
+        </View>
+      )}
+
       <View style={Styles.buttonContainer}>
         <Button
           title={
@@ -107,8 +132,8 @@ const SendBitcoinDestination = ({
           titleStyle={Styles.activeButtonTitleStyle}
           disabledStyle={{ ...Styles.button, ...Styles.disabledButtonStyle }}
           disabledTitleStyle={Styles.disabledButtonTitleStyle}
-          disabled={!destination}
-          onPress={() => nextStep()}
+          disabled={!destination || validDestination === false}
+          onPress={handlePress}
         />
       </View>
     </>

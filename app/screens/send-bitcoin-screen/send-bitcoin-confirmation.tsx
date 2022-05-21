@@ -167,11 +167,12 @@ const LN_NO_AMOUNT_PAY_USD = gql`
 
 const SendBitcoinConfirmation = ({
   destination,
+  recipientWalletId, // FIXME: use this
   wallet,
   amount,
   amountCurrency,
   note,
-  amountless,
+  fixedAmount,
   paymentType,
   sameNode,
   setStatus,
@@ -187,7 +188,7 @@ const SendBitcoinConfirmation = ({
   const fee = useFee({
     walletId: wallet.id,
     address: destination,
-    amountless,
+    amountless: !fixedAmount,
     invoice: destination,
     paymentType,
     sameNode,
@@ -290,14 +291,14 @@ const SendBitcoinConfirmation = ({
 
   const pay = async () => {
     if (paymentType === "lightning") {
-      if (amountless) {
+      if (fixedAmount) {
+        payLightning()
+      } else {
         if (wallet.__typename === "UsdWallet") {
           payAmountlessLightningUsd()
           return
         }
         payAmountlessLightning()
-      } else {
-        payLightning()
       }
     }
   }

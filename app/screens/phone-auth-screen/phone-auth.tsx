@@ -416,8 +416,7 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
       return
     }
     if (code.length !== 6) {
-      toastShow(translate("WelcomePhoneValidationScreen.need6Digits"))
-      return
+      throw new Error(translate("WelcomePhoneValidationScreen.need6Digits"))
     }
 
     try {
@@ -433,10 +432,11 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
         await saveToken(token)
         await addDeviceToken(client)
       } else {
-        toastShow(translate("WelcomePhoneValidationScreen.errorLoggingIn"))
+        throw new Error(translate("WelcomePhoneValidationScreen.errorLoggingIn"))
       }
     } catch (err) {
       console.debug({ err })
+      setCode("")
       toastShow(`${err}`)
     }
   }, [client, code, loading, login, phone, saveToken])
