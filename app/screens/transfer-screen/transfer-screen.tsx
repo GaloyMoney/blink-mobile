@@ -13,16 +13,23 @@ import * as currencyFmt from "currency.js"
 import { useMySubscription, useWalletBalance } from "@app/hooks"
 import SwitchButton from "@app/assets/icons/transfer.svg"
 
-export const TransferScreen = ({ navigation }: TransferScreenProps) => {
+export const TransferScreen = ({
+  fromWallet,
+  setFromWallet,
+  toWallet,
+  setToWallet,
+  satAmount,
+  setSatAmount,
+  satAmountInUsd,
+  setSatAmountInUsd,
+  dollarAmount,
+  setDollarAmount,
+  amountCurrency,
+  nextStep,
+  setAmountCurrency }: TransferScreenProps) => {
   const { wallets, defaultWalletId } = useMainQuery()
   const { usdWalletBalance, btcWalletBalance, btcWalletValueInUsd } = useWalletBalance()
   const { convertCurrencyAmount } = useMySubscription()
-  const [fromWallet, setFromWallet] = useState<Wallet>()
-  const [toWallet, setToWallet] = useState<Wallet>()
-  const [amountCurrency, setAmountCurrency] = useState("USD")
-  const [dollarAmount, setDollarAmount] = useState(0)
-  const [satAmount, setSatAmount] = useState(0)
-  const [satAmountInUsd, setSatAmountInUsd] = useState(0)
   const [amountFieldError, setAmountFieldError] = useState<string>()
 
   useEffect(() => {
@@ -457,14 +464,7 @@ export const TransferScreen = ({ navigation }: TransferScreenProps) => {
           disabledTitleStyle={styles.disabledButtonTitleStyle}
           disabled={!isButtonEnabled()}
           onPress={() =>
-            navigation.navigate("transferConfirmation", {
-              fromWallet,
-              toWallet,
-              satAmount,
-              satAmountInUsd,
-              dollarAmount,
-              amountCurrency,
-            })
+            nextStep()
           }
         />
       </View>
