@@ -63,28 +63,20 @@ const useMainQuery = (): useMainQueryOutput => {
   const usdWalletBalance = usdWallet?.balance
   const btcWalletId = btcWallet?.id
   const usdWalletId = usdWallet?.id
-  const btcTransactionsEdges = btcWallet?.transactions?.edges
-  const usdTransactionsEdges = usdWallet?.transactions?.edges
+
+  const addWalletType = (transaction, walletType) => ({...transaction, node: {...transaction.node, walletType}})
+
+  const btcTransactionsEdges = btcWallet?.transactions?.edges.map(transaction => addWalletType(transaction, "BTC"))
+  const usdTransactionsEdges = usdWallet?.transactions?.edges.map(transaction => addWalletType(transaction, "USD"))
   const me = data?.me || {}
   const myPubKey = data?.globals?.nodesIds?.[0] ?? ""
   const username = data?.me?.username
   const phoneNumber = data?.me?.phone
   const mobileVersions = data?.mobileVersions
-
-  btcTransactionsEdges?.forEach((btcTransaction, index) => {
-    const tx = btcTransaction
-    tx.node = { ...tx.node, walletType: "BTC" }
-    btcTransactionsEdges[index] = tx
-  })
-  usdTransactionsEdges?.forEach((usdTransaction, index) => {
-    const tx = usdTransaction
-    tx.node = { ...tx.node, walletType: "USD" }
-    usdTransactionsEdges[index] = tx
-  })
   const mergedTransactions = btcTransactionsEdges
     ?.concat(usdTransactionsEdges)
     ?.sort((a, b) => b.node.createdAt - a.node.createdAt)
-
+    
   return {
     userPreferredLanguage,
     btcWalletBalance,
