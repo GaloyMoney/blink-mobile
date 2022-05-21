@@ -172,7 +172,7 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
   )
 
   return (
-    <Screen backgroundColor={palette.lightGrey} unsafe preset="scroll">
+    <Screen backgroundColor={palette.lighterGrey} unsafe preset="scroll">
       <View
         style={[
           styles.amountView,
