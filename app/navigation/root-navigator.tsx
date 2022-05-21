@@ -63,6 +63,7 @@ import LearnIcon from "@app/assets/icons/learn.svg"
 import SendBitcoin from "@app/screens/send-bitcoin-screen/send-bitcoin"
 import { TransferScreen } from "@app/screens/transfer-screen"
 import TransferConfirmationScreen from "@app/screens/transfer-screen/transfer-confirmation-screen"
+import TransferFlow from "@app/screens/transfer-screen/transfer-flow"
 
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
 PushNotification.configure({
@@ -320,7 +321,7 @@ export const RootStack: NavigatorType = () => {
       />
       <StackMoveMoney.Screen
         name="TransferScreen"
-        component={TransferScreen}
+        component={TransferFlow}
         options={{
           title: translate("TransferScreen.title"),
         }}
