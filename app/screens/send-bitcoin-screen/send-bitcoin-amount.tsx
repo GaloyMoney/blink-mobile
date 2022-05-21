@@ -170,7 +170,7 @@ const SendBitcoinAmount = ({
   toggleAmountCurrency,
   setAmount,
   defaultAmount = 0,
-  amountless,
+  fixedAmount,
 }) => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const { wallets } = useMainQuery()
@@ -414,7 +414,7 @@ const SendBitcoinAmount = ({
                   precision={0}
                   suffix=" sats"
                   minValue={0}
-                  editable={amountless}
+                  editable={!fixedAmount}
                   style={Styles.walletBalanceInput}
                 />
                 <FakeCurrencyInput
@@ -440,7 +440,7 @@ const SendBitcoinAmount = ({
                   precision={2}
                   style={Styles.walletBalanceInput}
                   minValue={0}
-                  editable={amountless}
+                  editable={!fixedAmount}
                 />
                 <FakeCurrencyInput
                   value={satAmount}
@@ -465,7 +465,7 @@ const SendBitcoinAmount = ({
                 precision={2}
                 minValue={0}
                 style={Styles.walletBalanceInput}
-                editable={amountless}
+                editable={!fixedAmount}
               />
             )}
           </View>
@@ -477,11 +477,9 @@ const SendBitcoinAmount = ({
             </TouchableWithoutFeedback>
           )}
         </View>
-        {
-          <View style={Styles.errorContainer}>
-            <Text style={Styles.errorText}></Text>
-          </View>
-        }
+        <View style={Styles.errorContainer}>
+          <Text style={Styles.errorText}></Text>
+        </View>
       </View>
       <View style={Styles.fieldContainer}>
         <Text style={Styles.fieldTitleText}>{translate("SendBitcoinScreen.note")}</Text>
