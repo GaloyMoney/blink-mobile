@@ -121,7 +121,7 @@ describe("Onchain", () => {
   })
 })
 
-describe("Lightning", () => {
+describe("Lightning mainnet", () => {
   const network = "mainnet"
 
   it("opennode", () => {
@@ -152,6 +152,35 @@ describe("Lightning", () => {
     expect(valid).toBeTruthy()
     expect(paymentType).toBe("lightning")
     expect(errorMessage).not.toBe("invoice has expired")
+  })
+
+  it("lightning param", () => {
+    const address =
+      "bitcoin:bc1qylh3u67j673h6y6alv70m0pl2yz53tzhvxgg7u?amount=0.00001&label=sbddesign%3A%20For%20lunch%20Tuesday&message=For%20lunch%20Tuesday&lightning=lnbc10u1p3pj257pp5yztkwjcz5ftl5laxkav23zmzekaw37zk6kmv80pk4xaev5qhtz7qdpdwd3xger9wd5kwm36yprx7u3qd36kucmgyp282etnv3shjcqzpgxqyz5vqsp5usyc4lk9chsfp53kvcnvq456ganh60d89reykdngsmtj6yw3nhvq9qyyssqjcewm5cjwz4a6rfjx77c490yced6pemk0upkxhy89cmm7sct66k8gneanwykzgdrwrfje69h9u5u0w57rrcsysas7gadwmzxc8c6t0spjazup6"
+    const { valid, paymentType, errorMessage } = validPayment(address, network, "", "")
+    expect(valid).toBeTruthy()
+    expect(paymentType).toBe("lightning")
+    expect(errorMessage).not.toBe("invoice has expired")
+  })
+})
+
+describe("Lightning mismatched invoice & network", () => {
+  it("prefix, mainnet invoice on testnet", () => {
+    const network = "testnet"
+    const address =
+      "LNBC6864270N1P05ZVJJPP5FPEHVLV3DD2R76065R9V0L3N8QV9MFWU9RYHVPJ5XSZ3P4HY734QDZHXYSV89EQYVMZQSNFW3PXCMMRDDPX7MMDYPP8YATWVD5ZQMMWYPQH2EM4WD6ZQVESYQ5YYUN4DE3KSGZ0DEK8J2GCQZPGXQRRSS6LQA5JLLVUGLW5TPSUG4S2TMT5C8FNERR95FUH8HTCSYX52CP3WZSWJ32XJ5GEWYFN7MG293V6JLA9CZ8ZNDHWDHCNNKUL2QKF6PJLSPJ2NL3J"
+    const { valid, paymentType } = validPayment(address, network, "", "")
+    expect(valid).toBeFalsy()
+    expect(paymentType).toBe("lightning")
+  })
+
+  it("prefix, testnet invoice on mainnet", () => {
+    const network = "mainnet"
+    const address =
+      "lntb1m1pd2awsppp54q20f42rpuzapqpxl4l5a2vhrm89pth7rj0nv3fyqvkl89hc8myqdqqcqzysms67f23xktazlazsjdwvqv7j59c34q5vqp4gnmddpkmlwqpufecxf9ledyq0ma495wrak26nvq5qcg6lgw7zwfy5yq4w54ux7qay3tsqrg02mh"
+    const { valid, paymentType } = validPayment(address, network, "", "")
+    expect(valid).toBeFalsy()
+    expect(paymentType).toBe("lightning")
   })
 })
 
