@@ -10,7 +10,7 @@ import queryString from "query-string"
 
 // TODO: look if we own the address
 
-export type IPaymentType = "lightning" | "onchain" | "username" | "lnurl"
+export type IPaymentType = "lightning" | "onchain" | "username" | "lnurl" | undefined
 
 export interface IValidPaymentReponse {
   valid: boolean
