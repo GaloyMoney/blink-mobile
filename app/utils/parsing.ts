@@ -7,7 +7,6 @@ import { utils } from "lnurl-pay"
 import type { INetwork } from "../types/network"
 import * as parsing from "./parsing"
 import queryString from "query-string"
-import { getInputRangeFromIndexes } from "react-native-snap-carousel"
 
 // TODO: look if we own the address
 
