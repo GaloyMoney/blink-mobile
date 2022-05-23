@@ -162,22 +162,21 @@ describe("Lightning mainnet", () => {
     expect(paymentType).toBe("lightning")
     expect(errorMessage).not.toBe("invoice has expired")
   })
-})
 
-describe("Lightning mismatched invoice & network", () => {
-  it("prefix, mainnet invoice on testnet", () => {
-    const network = "testnet"
+  it("testnet invoice", () => {
     const address =
-      "LNBC6864270N1P05ZVJJPP5FPEHVLV3DD2R76065R9V0L3N8QV9MFWU9RYHVPJ5XSZ3P4HY734QDZHXYSV89EQYVMZQSNFW3PXCMMRDDPX7MMDYPP8YATWVD5ZQMMWYPQH2EM4WD6ZQVESYQ5YYUN4DE3KSGZ0DEK8J2GCQZPGXQRRSS6LQA5JLLVUGLW5TPSUG4S2TMT5C8FNERR95FUH8HTCSYX52CP3WZSWJ32XJ5GEWYFN7MG293V6JLA9CZ8ZNDHWDHCNNKUL2QKF6PJLSPJ2NL3J"
+      "lntb1m1pd2awsppp54q20f42rpuzapqpxl4l5a2vhrm89pth7rj0nv3fyqvkl89hc8myqdqqcqzysms67f23xktazlazsjdwvqv7j59c34q5vqp4gnmddpkmlwqpufecxf9ledyq0ma495wrak26nvq5qcg6lgw7zwfy5yq4w54ux7qay3tsqrg02mh"
     const { valid, paymentType } = validPayment(address, network, "", "")
     expect(valid).toBeFalsy()
     expect(paymentType).toBe("lightning")
   })
+})
 
-  it("prefix, testnet invoice on mainnet", () => {
-    const network = "mainnet"
+describe("Lightning testnet", () => {
+  const network = "testnet"
+  it("mainnet invoice", () => {
     const address =
-      "lntb1m1pd2awsppp54q20f42rpuzapqpxl4l5a2vhrm89pth7rj0nv3fyqvkl89hc8myqdqqcqzysms67f23xktazlazsjdwvqv7j59c34q5vqp4gnmddpkmlwqpufecxf9ledyq0ma495wrak26nvq5qcg6lgw7zwfy5yq4w54ux7qay3tsqrg02mh"
+      "LNBC6864270N1P05ZVJJPP5FPEHVLV3DD2R76065R9V0L3N8QV9MFWU9RYHVPJ5XSZ3P4HY734QDZHXYSV89EQYVMZQSNFW3PXCMMRDDPX7MMDYPP8YATWVD5ZQMMWYPQH2EM4WD6ZQVESYQ5YYUN4DE3KSGZ0DEK8J2GCQZPGXQRRSS6LQA5JLLVUGLW5TPSUG4S2TMT5C8FNERR95FUH8HTCSYX52CP3WZSWJ32XJ5GEWYFN7MG293V6JLA9CZ8ZNDHWDHCNNKUL2QKF6PJLSPJ2NL3J"
     const { valid, paymentType } = validPayment(address, network, "", "")
     expect(valid).toBeFalsy()
     expect(paymentType).toBe("lightning")
