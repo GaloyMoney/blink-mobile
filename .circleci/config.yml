@@ -236,23 +236,23 @@ jobs:
 workflows:
   mobile:
     jobs:
-      - android_test:
-          filters:
-            tags:
-              only: /^[0-9]+\.[0-9]+\.[0-9]+/
-            branches:
-              ignore: /.*/
-      - ios_test:
-          filters:
-            tags:
-              only: /^[0-9]+\.[0-9]+\.[0-9]+/
-            branches:
-              ignore: /.*/
+      # - android_test:
+      #     filters:
+      #       tags:
+      #         only: /^[0-9]+\.[0-9]+\.[0-9]+/
+      #       branches:
+      #         ignore: /.*/
+      # - ios_test:
+      #     filters:
+      #       tags:
+      #         only: /^[0-9]+\.[0-9]+\.[0-9]+/
+      #       branches:
+      #         ignore: /.*/
       - hold_build_mobile:
           type: approval
-          requires:
-            - android_test
-            - ios_test
+          # requires:
+          #   - android_test
+          #   - ios_test
           filters:
             tags:
               only: /^[0-9]+\.[0-9]+\.[0-9]+/
