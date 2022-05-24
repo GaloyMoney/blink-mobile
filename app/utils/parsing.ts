@@ -68,11 +68,11 @@ export const validPayment = (
   }
 
   // input might start with 'lightning:', 'bitcoin:'
-  let inputData = input.toLowerCase().startsWith("lightning:lnurl")
+  const inputData = input.toLowerCase().startsWith("lightning:lnurl")
     ? input.replace("lightning:", "")
     : input
 
-  let paymentType = getPaymentType(inputData)
+  const paymentType = getPaymentType(inputData)
 
   return getPaymentResponse(paymentType, inputData, network, myPubKey, username)
 }
@@ -288,7 +288,7 @@ const getProtocolAndData = (inputData: string): string[] => {
 
 const inputDataToObject = (data: string): any => {
   const parsedQuery = queryString.parseUrl(data)
-  let qrDataObj = parsedQuery.query
+  const qrDataObj = parsedQuery.query
   qrDataObj["address"] = parsedQuery.url
   return qrDataObj
 }

@@ -61,6 +61,7 @@
     "lottie-react-native": "^4.0.2",
     "moment": "^2.24.0",
     "node-libs-react-native": "^1.2.1",
+    "query-string": "^7.1.1",
     "ramda": "0.27.1",
     "react": "18.0.0",
     "react-apollo-network-status": "^5.1.0",
