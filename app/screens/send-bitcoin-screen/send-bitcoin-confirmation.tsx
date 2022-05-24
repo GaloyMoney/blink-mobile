@@ -151,7 +151,7 @@ const SendBitcoinConfirmation = ({
   setStatus,
 }) => {
   const { convertCurrencyAmount } = useMySubscription()
-  const [secondaryAmount, setSecondaryAmount] = useState(0)
+  const [secondaryAmount, setSecondaryAmount] = useState<number | undefined>(undefined)
   const { usdWalletBalance, btcWalletBalance, btcWalletValueInUsd } = useWalletBalance()
   const [error, setError] = useState<string | undefined>(undefined)
 
@@ -258,7 +258,7 @@ const SendBitcoinConfirmation = ({
   }
 
   useEffect(() => {
-    if (wallet.__typename === "BtcWallet" && amountCurrency === "USD") {
+    if (wallet.__typename === "BTCWallet" && amountCurrency === "USD") {
       setSecondaryAmount(
         convertCurrencyAmount({
           amount,
@@ -267,7 +267,7 @@ const SendBitcoinConfirmation = ({
         }),
       )
     }
-    if (wallet.__typename === "BtcWallet" && amountCurrency === "USD") {
+    if (wallet.__typename === "BTCWallet" && amountCurrency === "BTC") {
       setSecondaryAmount(
         convertCurrencyAmount({
           amount,
