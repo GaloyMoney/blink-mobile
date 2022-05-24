@@ -1,4 +1,4 @@
-import { translateUnknown as translate } from "@galoymoney/client"
+import { translateUnknown as translate, useMutation } from "@galoymoney/client"
 import { palette } from "@app/theme"
 import React, { useEffect, useState } from "react"
 import { StyleSheet, Text, View } from "react-native"
@@ -9,7 +9,6 @@ import * as currencyFmt from "currency.js"
 import { Button } from "react-native-elements"
 import FeeIcon from "@app/assets/icons/fee.svg"
 import useFee from "./use-fee"
-import { gql, useMutation } from "@apollo/client"
 
 const Status = {
   IDLE: "idle",
@@ -130,40 +129,14 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     padding: 10,
   },
+  errorContainer: {
+    margin: 25,
+  },
+  errorText: {
+    color: palette.red,
+    textAlign: "center",
+  },
 })
-
-export const LN_PAY = gql`
-  mutation lnInvoicePaymentSend($input: LnInvoicePaymentInput!) {
-    lnInvoicePaymentSend(input: $input) {
-      errors {
-        message
-      }
-      status
-    }
-  }
-`
-
-const LN_NO_AMOUNT_PAY = gql`
-  mutation lnNoAmountInvoicePaymentSend($input: LnNoAmountInvoicePaymentInput!) {
-    lnNoAmountInvoicePaymentSend(input: $input) {
-      errors {
-        message
-      }
-      status
-    }
-  }
-`
-
-const LN_NO_AMOUNT_PAY_USD = gql`
-  mutation LnNoAmountUsdInvoicePaymentSend($input: LnNoAmountUsdInvoicePaymentInput!) {
-    lnNoAmountUsdInvoicePaymentSend(input: $input) {
-      errors {
-        message
-      }
-      status
-    }
-  }
-`
 
 const SendBitcoinConfirmation = ({
   destination,
@@ -180,11 +153,12 @@ const SendBitcoinConfirmation = ({
   const { convertCurrencyAmount } = useMySubscription()
   const [secondaryAmount, setSecondaryAmount] = useState(0)
   const { usdWalletBalance, btcWalletBalance, btcWalletValueInUsd } = useWalletBalance()
+  const [error, setError] = useState<string | undefined>(undefined)
 
-  const [lnPay] = useMutation(LN_PAY)
+  const [lnPay] = useMutation.lnInvoicePaymentSend()
+  const [lnNoAmountPay] = useMutation.lnNoAmountInvoicePaymentSend()
+  const [lnNoAmountPayUsd] = useMutation.lnNoAmountUsdInvoicePaymentSend()
 
-  const [lnNoAmountPay] = useMutation(LN_NO_AMOUNT_PAY)
-  const [lnNoAmountPayUsd] = useMutation(LN_NO_AMOUNT_PAY_USD)
   const fee = useFee({
     walletId: wallet.id,
     address: destination,
@@ -200,23 +174,18 @@ const SendBitcoinConfirmation = ({
     primaryCurrency: amountCurrency,
   })
 
-  const handlePaymentReturn = (status, _errors) => {
-    if (status === "SUCCESS") {
+  const handlePaymentReturn = (status, errorsMessage) => {
+    if (!errorsMessage && status === "SUCCESS") {
       setStatus(Status.SUCCESS)
+      return
     }
-  }
-
-  const handlePaymentError = (error) => {
-    console.debug(error)
-    //  setStatus(Status.ERROR)
-    //  // Todo: provide specific translated error messages in known cases
-    //  setErrs([{ message: translate("errors.generic") + error }])
+    setError(errorsMessage || "Something went wrong")
   }
 
   const payLightning = async () => {
     setStatus(Status.LOADING)
     try {
-      const { data, errors } = await lnPay({
+      const { data, errorsMessage } = await lnPay({
         variables: {
           input: {
             walletId: wallet.id,
@@ -227,21 +196,16 @@ const SendBitcoinConfirmation = ({
       })
 
       const status = data.lnInvoicePaymentSend.status
-      const errs = errors
-        ? errors.map((error) => {
-            return { message: error.message }
-          })
-        : data.lnInvoicePaymentSend.errors
-      handlePaymentReturn(status, errs)
+      handlePaymentReturn(status, errorsMessage)
     } catch (err) {
-      handlePaymentError(err)
+      setError(err.message || err.toString())
     }
   }
 
   const payAmountlessLightning = async () => {
     setStatus(Status.LOADING)
     try {
-      const { data, errors } = await lnNoAmountPay({
+      const { data, errorsMessage } = await lnNoAmountPay({
         variables: {
           input: {
             walletId: wallet.id,
@@ -253,21 +217,16 @@ const SendBitcoinConfirmation = ({
       })
 
       const status = data.lnNoAmountInvoicePaymentSend.status
-      const errs = errors
-        ? errors.map((error) => {
-            return { message: error.message }
-          })
-        : data.lnNoAmountInvoicePaymentSend.errors
-      handlePaymentReturn(status, errs)
+      handlePaymentReturn(status, errorsMessage)
     } catch (err) {
-      handlePaymentError(err)
+      setError(err.message || err.toString())
     }
   }
 
   const payAmountlessLightningUsd = async () => {
     setStatus(Status.LOADING)
     try {
-      const { data, errors } = await lnNoAmountPayUsd({
+      const { data, errorsMessage } = await lnNoAmountPayUsd({
         variables: {
           input: {
             walletId: wallet.id,
@@ -278,14 +237,9 @@ const SendBitcoinConfirmation = ({
         },
       })
       const status = data.lnNoAmountUsdInvoicePaymentSend.status
-      const errs = errors
-        ? errors.map((error) => {
-            return { message: error.message }
-          })
-        : data.lnNoAmountUsdInvoicePaymentSend.errors
-      handlePaymentReturn(status, errs)
+      handlePaymentReturn(status, errorsMessage)
     } catch (err) {
-      handlePaymentError(err)
+      setError(err.message || err.toString())
     }
   }
 
@@ -477,6 +431,13 @@ const SendBitcoinConfirmation = ({
         </View>
         <Text style={styles.destinationText}>{fee?.text}</Text>
       </View>
+
+      {error && (
+        <View style={styles.errorContainer}>
+          <Text style={styles.errorText}>{translate(error)}</Text>
+        </View>
+      )}
+
       <View style={styles.buttonContainer}>
         <Button
           title={translate("SendBitcoinConfirmationScreen.title")}
