@@ -69,11 +69,14 @@ LogBox.ignoreLogs([
 // FIXME
 LogBox.ignoreAllLogs()
 
-const paymentOperations = [
+const noRetryOperations = [
   "lnInvoicePaymentSend",
   "lnNoAmountInvoicePaymentSend",
   "intraLedgerPaymentSend",
   "onChainPaymentSend",
+  "lnInvoiceFeeProbe",
+  "lnNoAmountInvoiceFeeProbe",
+  "onChainTxFee",
 ]
 
 /**
@@ -171,7 +174,7 @@ export const App = (): JSX.Element => {
           max: 3,
           retryIf: (error, operation) => {
             console.log({ error }, "retry error")
-            return !!error && !paymentOperations.includes(operation.operationName)
+            return !!error && !noRetryOperations.includes(operation.operationName)
           },
         },
       })
