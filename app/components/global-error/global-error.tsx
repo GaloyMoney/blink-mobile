@@ -2,12 +2,10 @@ import { ServerError, ServerParseError } from "@apollo/client"
 import { useApolloNetworkStatus } from "../../app"
 import { ComponentType } from "../../types/jsx"
 import { NetworkErrorCode } from "./network-error-code"
-import useLogout from "../../hooks/use-logout"
 import { translateUnknown as translate } from "@galoymoney/client"
 import { toastShow } from "@app/utils/toast"
 export const GlobalErrorToast: ComponentType = () => {
   const status = useApolloNetworkStatus()
-  const { logout } = useLogout()
 
   // "prices" is a polled query.
   // filter this to not have the error message being showed
