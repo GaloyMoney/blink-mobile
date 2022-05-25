@@ -209,6 +209,7 @@ const SendBitcoin = ({ navigation, route }) => {
           setAmount={setAmount}
           defaultAmount={defaultAmount}
           fixedAmount={fixedAmount}
+          walletPickerEnabled={paymentType !== "onchain"}
         />
       )}
       {step === 3 && (

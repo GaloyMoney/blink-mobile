@@ -205,13 +205,6 @@ const styles = EStyleSheet.create({
     padding: 20,
     borderRadius: 10,
   },
-  qrContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 20,
-    backgroundColor: palette.white,
-    borderRadius: 10,
-  },
 })
 
 export default React.memo(QRView)
