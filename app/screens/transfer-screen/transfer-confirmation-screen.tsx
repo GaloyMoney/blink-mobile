@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react"
 import { StyleSheet, Text, View } from "react-native"
 import { FakeCurrencyInput } from "react-native-currency-input"
 import { Button } from "react-native-elements"
-import { RouteProp, useNavigation } from "@react-navigation/native"
 import { useMutation } from "@apollo/client"
 
 import { translateUnknown as translate } from "@galoymoney/client"
@@ -10,7 +9,6 @@ import { translateUnknown as translate } from "@galoymoney/client"
 import { palette } from "@app/theme"
 import { useWalletBalance } from "@app/hooks"
 import * as currencyFmt from "currency.js"
-import { MoveMoneyStackParamList } from "@app/navigation/stack-param-lists"
 import { INTRA_LEDGER_PAY, INTRA_LEDGER_PAY_USD } from "../send-bitcoin-screen/graphql"
 import { toastShow } from "@app/utils/toast"
 
@@ -31,7 +29,7 @@ const TransferConfirmationScreen = ({
   satAmount,
   satAmountInUsd,
   amountCurrency,
-  nextStep
+  nextStep,
 }: TransferConfirmationScreenProps) => {
   const { usdWalletBalance, btcWalletBalance, btcWalletValueInUsd } = useWalletBalance()
   const [intraLedgerPay] = useMutation(INTRA_LEDGER_PAY)
@@ -42,7 +40,7 @@ const TransferConfirmationScreen = ({
     if (_status === Status.SUCCESS) {
       nextStep()
     }
-  }, [_status])
+  }, [_status, nextStep])
 
   const handlePaymentReturn = (status, _errors) => {
     if (status === "SUCCESS") {
@@ -84,8 +82,6 @@ const TransferConfirmationScreen = ({
     setStatus(Status.LOADING)
     if (fromWallet?.walletCurrency === "BTC") {
       try {
-
-
         const { data, errors } = await intraLedgerPay({
           variables: {
             input: {
@@ -99,8 +95,8 @@ const TransferConfirmationScreen = ({
         const status = data.intraLedgerPaymentSend.status
         const errs = errors
           ? errors.map((error) => {
-            return { message: error.message }
-          })
+              return { message: error.message }
+            })
           : data.intraLedgerPaymentSend.errors
         handlePaymentReturn(status, errs)
       } catch (err) {
@@ -109,7 +105,6 @@ const TransferConfirmationScreen = ({
     }
     if (fromWallet?.walletCurrency === "USD") {
       try {
-
         const { data, errors } = await intraLedgerPayUsd({
           variables: {
             input: {
@@ -123,8 +118,8 @@ const TransferConfirmationScreen = ({
         const status = data.intraLedgerUsdPaymentSend.status
         const errs = errors
           ? errors.map((error) => {
-            return { message: error.message }
-          })
+              return { message: error.message }
+            })
           : data.intraLedgerUsdPaymentSend.errors
         handlePaymentReturn(status, errs)
       } catch (err) {
@@ -132,7 +127,6 @@ const TransferConfirmationScreen = ({
       }
     }
   }
-
 
   return (
     <View style={styles.sendBitcoinConfirmationContainer}>

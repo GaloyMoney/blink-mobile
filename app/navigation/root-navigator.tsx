@@ -61,7 +61,6 @@ import ContactsIcon from "@app/assets/icons/contacts.svg"
 import MapIcon from "@app/assets/icons/map.svg"
 import LearnIcon from "@app/assets/icons/learn.svg"
 import SendBitcoin from "@app/screens/send-bitcoin-screen/send-bitcoin"
-import { TransferScreen } from "@app/screens/transfer-screen"
 import TransferConfirmationScreen from "@app/screens/transfer-screen/transfer-confirmation-screen"
 import TransferFlow from "@app/screens/transfer-screen/transfer-flow"
 

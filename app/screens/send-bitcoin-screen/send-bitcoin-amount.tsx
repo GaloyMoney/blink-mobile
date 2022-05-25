@@ -156,7 +156,6 @@ const Styles = StyleSheet.create({
     color: palette.white,
     fontWeight: "bold",
   },
-  chooseWalletModalView: { flex: 1 },
 })
 
 const SendBitcoinAmount = ({
@@ -171,6 +170,7 @@ const SendBitcoinAmount = ({
   setAmount,
   defaultAmount = 0,
   fixedAmount,
+  walletPickerEnabled,
 }) => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const { wallets } = useMainQuery()
@@ -240,7 +240,7 @@ const SendBitcoinAmount = ({
 
   const chooseWalletModal = (
     <ReactNativeModal isVisible={isModalVisible} onBackButtonPress={() => toggleModal()}>
-      <View style={Styles.chooseWalletModalView}>
+      <View>
         {wallets?.map((wallet) => {
           return (
             <TouchableWithoutFeedback
@@ -328,7 +328,7 @@ const SendBitcoinAmount = ({
     <ScrollView style={Styles.sendBitcoinAmountContainer}>
       <View style={Styles.fieldContainer}>
         <Text style={Styles.fieldTitleText}>{translate("common.from")}</Text>
-        <TouchableWithoutFeedback onPress={toggleModal}>
+        <TouchableWithoutFeedback onPress={() => walletPickerEnabled && toggleModal()}>
           <View style={Styles.fieldBackground}>
             <View style={Styles.walletSelectorTypeContainer}>
               <View
