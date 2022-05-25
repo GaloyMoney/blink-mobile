@@ -40,7 +40,6 @@ import ReceiveIcon from "@app/assets/icons/receive.svg"
 import PriceIcon from "@app/assets/icons/price.svg"
 import SettingsIcon from "@app/assets/icons/settings.svg"
 
-
 const styles = EStyleSheet.create({
   balanceHeader: {
     marginBottom: "1rem",
@@ -283,17 +282,19 @@ export const MoveMoneyScreen: ScreenType = ({
       style: "transactionViewContainer",
       details: (
         <View style={styles.transactionsView}>
-          {transactionsEdges.slice(0,TRANSACTIONS_TO_SHOW).map(
-            ({ node }) =>
-              node && (
-                <TransactionItem
-                  key={`transaction-${node.id}`}
-                  navigation={navigation}
-                  tx={node}
-                  subtitle
-                />
-              ),
-          )}
+          {transactionsEdges
+            .slice(0, TRANSACTIONS_TO_SHOW)
+            .map(
+              ({ node }) =>
+                node && (
+                  <TransactionItem
+                    key={`transaction-${node.id}`}
+                    navigation={navigation}
+                    tx={node}
+                    subtitle
+                  />
+                ),
+            )}
         </View>
       ),
     }

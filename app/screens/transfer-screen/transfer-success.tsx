@@ -8,7 +8,6 @@ import { palette } from "@app/theme"
 import successLottieJson from "../send-bitcoin-screen/success_lottie.json"
 
 const TransferSuccess = () => {
-
   return (
     <View style={styles.lottieContainer}>
       <LottieView
