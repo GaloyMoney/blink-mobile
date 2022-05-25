@@ -1,4 +1,4 @@
-import { translateUnknown as translate, useMutation } from "@galoymoney/client"
+import { GaloyGQL, translateUnknown as translate, useMutation } from "@galoymoney/client"
 import { palette } from "@app/theme"
 import React, { useEffect, useState } from "react"
 import { StyleSheet, Text, View } from "react-native"
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
 
 const SendBitcoinConfirmation = ({
   destination,
-  recipientWalletId, // FIXME: use this
+  recipientWalletId,
   wallet,
   amount,
   amountCurrency,
@@ -155,9 +155,12 @@ const SendBitcoinConfirmation = ({
   const { usdWalletBalance, btcWalletBalance, btcWalletValueInUsd } = useWalletBalance()
   const [error, setError] = useState<string | undefined>(undefined)
 
-  const [lnPay] = useMutation.lnInvoicePaymentSend()
-  const [lnNoAmountPay] = useMutation.lnNoAmountInvoicePaymentSend()
-  const [lnNoAmountPayUsd] = useMutation.lnNoAmountUsdInvoicePaymentSend()
+  const [intraLedgerPaymentSend] = useMutation.intraLedgerPaymentSend()
+  const [intraLedgerUsdPaymentSend] = useMutation.intraLedgerUsdPaymentSend()
+  const [lnInvoicePaymentSend] = useMutation.lnInvoicePaymentSend()
+  const [lnNoAmountInvoicePaymentSend] = useMutation.lnNoAmountInvoicePaymentSend()
+  const [lnNoAmountUsdInvoicePaymentSend] = useMutation.lnNoAmountUsdInvoicePaymentSend()
+  const [onChainPaymentSend] = useMutation.onChainPaymentSend()
 
   const fee = useFee({
     walletId: wallet.id,
@@ -174,105 +177,143 @@ const SendBitcoinConfirmation = ({
     primaryCurrency: amountCurrency,
   })
 
-  const handlePaymentReturn = (status, errorsMessage) => {
-    if (!errorsMessage && status === "SUCCESS") {
-      setStatus(Status.SUCCESS)
-      return
-    }
-    setError(errorsMessage || "Something went wrong")
-  }
-
-  const payLightning = async () => {
-    setStatus(Status.LOADING)
-    try {
-      const { data, errorsMessage } = await lnPay({
-        variables: {
-          input: {
-            walletId: wallet.id,
-            paymentRequest: destination,
-            memo: note,
-          },
+  const payIntraLedger = async () => {
+    const { data, errorsMessage } = await intraLedgerPaymentSend({
+      variables: {
+        input: {
+          walletId: wallet.id,
+          recipientWalletId,
+          amount: amountCurrency === "USD" ? secondaryAmount : amount,
+          memo: note,
         },
-      })
-
-      const status = data.lnInvoicePaymentSend.status
-      handlePaymentReturn(status, errorsMessage)
-    } catch (err) {
-      setError(err.message || err.toString())
-    }
+      },
+    })
+    return { status: data.intraLedgerPaymentSend.status, errorsMessage }
   }
 
-  const payAmountlessLightning = async () => {
-    setStatus(Status.LOADING)
-    try {
-      const { data, errorsMessage } = await lnNoAmountPay({
-        variables: {
-          input: {
-            walletId: wallet.id,
-            paymentRequest: destination,
-            amount,
-            memo: note,
-          },
+  const payIntraLedgerUsd = async () => {
+    const { data, errorsMessage } = await intraLedgerUsdPaymentSend({
+      variables: {
+        input: {
+          walletId: wallet.id,
+          recipientWalletId,
+          amount: amount * 100,
+          memo: note,
         },
-      })
-
-      const status = data.lnNoAmountInvoicePaymentSend.status
-      handlePaymentReturn(status, errorsMessage)
-    } catch (err) {
-      setError(err.message || err.toString())
-    }
+      },
+    })
+    return { status: data.intraLedgerUsdPaymentSend.status, errorsMessage }
   }
 
-  const payAmountlessLightningUsd = async () => {
-    setStatus(Status.LOADING)
-    try {
-      const { data, errorsMessage } = await lnNoAmountPayUsd({
-        variables: {
-          input: {
-            walletId: wallet.id,
-            paymentRequest: destination,
-            amount: amount * 100,
-            memo: note,
-          },
+  const payLnInvoice = async () => {
+    const { data, errorsMessage } = await lnInvoicePaymentSend({
+      variables: {
+        input: {
+          walletId: wallet.id,
+          paymentRequest: destination,
+          memo: note,
         },
-      })
-      const status = data.lnNoAmountUsdInvoicePaymentSend.status
-      handlePaymentReturn(status, errorsMessage)
-    } catch (err) {
-      setError(err.message || err.toString())
-    }
+      },
+    })
+
+    return { status: data.lnInvoicePaymentSend.status, errorsMessage }
   }
 
-  const pay = async () => {
-    if (paymentType === "lightning") {
-      if (fixedAmount) {
-        payLightning()
-      } else {
-        if (wallet.__typename === "UsdWallet") {
-          payAmountlessLightningUsd()
-          return
+  const payLnNoAmountInvoice = async () => {
+    const { data, errorsMessage } = await lnNoAmountInvoicePaymentSend({
+      variables: {
+        input: {
+          walletId: wallet.id,
+          paymentRequest: destination,
+          amount: amountCurrency === "USD" ? secondaryAmount : amount,
+          memo: note,
+        },
+      },
+    })
+
+    return { status: data.lnNoAmountInvoicePaymentSend.status, errorsMessage }
+  }
+
+  const payLnNoAmountUsdInvoice = async () => {
+    const { data, errorsMessage } = await lnNoAmountUsdInvoicePaymentSend({
+      variables: {
+        input: {
+          walletId: wallet.id,
+          paymentRequest: destination,
+          amount: amount * 100,
+          memo: note,
+        },
+      },
+    })
+    return { status: data.lnNoAmountUsdInvoicePaymentSend.status, errorsMessage }
+  }
+
+  const payOnChain = async () => {
+    const { data, errorsMessage } = await onChainPaymentSend({
+      variables: {
+        input: {
+          walletId: wallet.id,
+          address: destination,
+          amount: amountCurrency === "USD" ? secondaryAmount : amount,
+          memo: note,
+        },
+      },
+    })
+
+    return { status: data.onChainPaymentSend.status, errorsMessage }
+  }
+
+  const transacitonPaymentMutation = (): (() => Promise<{
+    status: GaloyGQL.PaymentSendResult
+    errorsMessage: string
+  }>) => {
+    switch (paymentType) {
+      case "intraledger":
+        return wallet.__typename === "UsdWallet" ? payIntraLedgerUsd : payIntraLedger
+      case "lightning":
+        if (fixedAmount) {
+          return payLnInvoice
         }
-        payAmountlessLightning()
+        return wallet.__typename === "UsdWallet"
+          ? payLnNoAmountUsdInvoice
+          : payLnNoAmountInvoice
+      case "onchain":
+        return payOnChain
+      default:
+        throw new Error("Unsupported payment type")
+    }
+  }
+
+  const sendPayment = async () => {
+    setStatus(Status.LOADING)
+    try {
+      const paymentMutation = transacitonPaymentMutation()
+      const { status, errorsMessage } = await paymentMutation()
+
+      if (!errorsMessage && status === "SUCCESS") {
+        setStatus(Status.SUCCESS)
+        return
       }
+
+      if (status === "ALREADY_PAID") {
+        setError("Invoice is already paid")
+        return
+      }
+
+      setError(errorsMessage || "Something went wrong")
+    } catch (err) {
+      setStatus(Status.ERROR)
+      setError(err.message || err.toString())
     }
   }
 
   useEffect(() => {
-    if (wallet.__typename === "BTCWallet" && amountCurrency === "USD") {
+    if (wallet.__typename === "BTCWallet") {
       setSecondaryAmount(
         convertCurrencyAmount({
           amount,
-          from: "USD",
-          to: "BTC",
-        }),
-      )
-    }
-    if (wallet.__typename === "BTCWallet" && amountCurrency === "BTC") {
-      setSecondaryAmount(
-        convertCurrencyAmount({
-          amount,
-          from: "BTC",
-          to: "USD",
+          from: amountCurrency,
+          to: amountCurrency === "USD" ? "BTC" : "USD",
         }),
       )
     }
@@ -443,7 +484,7 @@ const SendBitcoinConfirmation = ({
           title={translate("SendBitcoinConfirmationScreen.title")}
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitleStyle}
-          onPress={() => pay()}
+          onPress={sendPayment}
         />
       </View>
     </View>
