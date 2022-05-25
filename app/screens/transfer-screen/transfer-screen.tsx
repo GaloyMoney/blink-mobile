@@ -26,7 +26,8 @@ export const TransferScreen = ({
   setDollarAmount,
   amountCurrency,
   nextStep,
-  setAmountCurrency }: TransferScreenProps) => {
+  setAmountCurrency,
+}: TransferScreenProps) => {
   const { wallets, defaultWalletId } = useMainQuery()
   const { usdWalletBalance, btcWalletBalance, btcWalletValueInUsd } = useWalletBalance()
   const { convertCurrencyAmount } = useMySubscription()
@@ -37,7 +38,18 @@ export const TransferScreen = ({
     const nonDefaultWallet = wallets.find((wallet) => wallet.id !== defaultWalletId)
     setFromWallet(nonDefaultWallet)
     setToWallet(defaultWallet)
-  }, [wallets, defaultWalletId])
+    setDollarAmount(0)
+    setSatAmount(0)
+    setSatAmountInUsd(0)
+  }, [
+    wallets,
+    defaultWalletId,
+    setFromWallet,
+    setToWallet,
+    setDollarAmount,
+    setSatAmount,
+    setSatAmountInUsd,
+  ])
 
   useEffect(() => {
     if (amountCurrency === "USD") {
@@ -58,13 +70,14 @@ export const TransferScreen = ({
         }),
       )
     }
-  }, [satAmount, satAmountInUsd, amountCurrency, convertCurrencyAmount])
-
-  useEffect(() => {
-    setDollarAmount(0)
-    setSatAmount(0)
-    setSatAmountInUsd(0)
-  }, [fromWallet, toWallet])
+  }, [
+    satAmount,
+    satAmountInUsd,
+    amountCurrency,
+    convertCurrencyAmount,
+    setSatAmount,
+    setSatAmountInUsd,
+  ])
 
   useEffect(() => {
     if (fromWallet?.walletCurrency === "BTC" && amountCurrency === "BTC") {
@@ -463,9 +476,7 @@ export const TransferScreen = ({
           disabledStyle={{ ...styles.button, ...styles.disabledButtonStyle }}
           disabledTitleStyle={styles.disabledButtonTitleStyle}
           disabled={!isButtonEnabled()}
-          onPress={() =>
-            nextStep()
-          }
+          onPress={() => nextStep()}
         />
       </View>
     </ScrollView>
