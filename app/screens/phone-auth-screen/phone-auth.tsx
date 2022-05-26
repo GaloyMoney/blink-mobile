@@ -12,7 +12,7 @@ import {
   View,
 } from "react-native"
 import { Button, Input } from "react-native-elements"
-import { FetchResult, gql, useApolloClient, useMutation } from "@apollo/client"
+import { FetchResult, useApolloClient } from "@apollo/client"
 import EStyleSheet from "react-native-extended-stylesheet"
 import PhoneInput from "react-native-phone-number-input"
 import analytics from "@react-native-firebase/analytics"
@@ -21,7 +21,7 @@ import { RouteProp } from "@react-navigation/native"
 
 import { CloseCross } from "../../components/close-cross"
 import { Screen } from "../../components/screen"
-import { translateUnknown as translate } from "@galoymoney/client"
+import { translateUnknown as translate, useMutation } from "@galoymoney/client"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import useToken from "../../utils/use-token"
@@ -37,28 +37,6 @@ import { useGeetestCaptcha } from "../../hooks"
 import { networkVar } from "../../graphql/client-only-query"
 
 const phoneRegex = new RegExp("^\\+[0-9]+$")
-
-const REQUEST_AUTH_CODE = gql`
-  mutation captchaRequestAuthCode($input: CaptchaRequestAuthCodeInput!) {
-    captchaRequestAuthCode(input: $input) {
-      errors {
-        message
-      }
-      success
-    }
-  }
-`
-
-const LOGIN = gql`
-  mutation userLogin($input: UserLoginInput!) {
-    userLogin(input: $input) {
-      errors {
-        message
-      }
-      authToken
-    }
-  }
-`
 
 type UserLoginMutationResponse = {
   errors: MutationError[]
@@ -171,12 +149,10 @@ export const WelcomePhoneInputScreen: ScreenType = ({
 
   const phoneInputRef = useRef<PhoneInput | null>()
 
-  const [requestPhoneCode, { loading: loadingRequestPhoneCode }] = useMutation(
-    REQUEST_AUTH_CODE,
-    {
+  const [captchaRequestAuthCode, { loading: loadingRequestPhoneCode }] =
+    useMutation.captchaRequestAuthCode({
       fetchPolicy: "no-cache",
-    },
-  )
+    })
 
   const setPhone = (newPhoneNumber: string) => {
     setPhoneNumber(newPhoneNumber)
@@ -205,7 +181,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
       }
       resetValidationData()
 
-      const { data } = await requestPhoneCode({ variables: { input } })
+      const { data } = await captchaRequestAuthCode({ variables: { input } })
 
       if (data.captchaRequestAuthCode.success) {
         navigation.navigate("welcomePhoneValidation", { phone: phoneNumber, setPhone })
@@ -232,7 +208,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
     geetestValidationData,
     navigation,
     phoneNumber,
-    requestPhoneCode,
+    captchaRequestAuthCode,
     resetValidationData,
   ])
 
@@ -354,7 +330,7 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
 }: WelcomePhoneValidationScreenDataInjectedProps) => {
   const { saveToken, hasToken } = useToken()
 
-  const [login, { loading, error }] = useMutation(LOGIN, {
+  const [userLogin, { loading, error }] = useMutation.userLogin({
     fetchPolicy: "no-cache",
     onCompleted: async (data) => {
       if (data.userLogin.authToken) {
@@ -373,7 +349,7 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
     <WelcomePhoneValidationScreen
       route={route}
       navigation={navigation}
-      login={login}
+      login={userLogin}
       loading={loading || hasToken}
       // Todo: provide specific translated error messages in known cases
       error={error?.message ? translate("errors.generic") + error.message : ""}

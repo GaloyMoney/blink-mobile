@@ -2,14 +2,12 @@ import React, { useEffect, useState } from "react"
 import { StyleSheet, Text, View } from "react-native"
 import { FakeCurrencyInput } from "react-native-currency-input"
 import { Button } from "react-native-elements"
-import { useMutation } from "@apollo/client"
 
-import { translateUnknown as translate } from "@galoymoney/client"
+import { translateUnknown as translate, useMutation } from "@galoymoney/client"
 
 import { palette } from "@app/theme"
 import { useWalletBalance } from "@app/hooks"
 import * as currencyFmt from "currency.js"
-import { INTRA_LEDGER_PAY, INTRA_LEDGER_PAY_USD } from "../send-bitcoin-screen/graphql"
 import { toastShow } from "@app/utils/toast"
 
 const Status = {
@@ -32,8 +30,8 @@ const TransferConfirmationScreen = ({
   nextStep,
 }: TransferConfirmationScreenProps) => {
   const { usdWalletBalance, btcWalletBalance, btcWalletValueInUsd } = useWalletBalance()
-  const [intraLedgerPay] = useMutation(INTRA_LEDGER_PAY)
-  const [intraLedgerPayUsd] = useMutation(INTRA_LEDGER_PAY_USD)
+  const [intraLedgerPaymentSend] = useMutation.intraLedgerPaymentSend()
+  const [intraLedgerUsdPaymentSend] = useMutation.intraLedgerUsdPaymentSend()
   const [_status, setStatus] = useState<StatusType>(Status.IDLE)
 
   useEffect(() => {
@@ -82,7 +80,7 @@ const TransferConfirmationScreen = ({
     setStatus(Status.LOADING)
     if (fromWallet?.walletCurrency === "BTC") {
       try {
-        const { data, errors } = await intraLedgerPay({
+        const { data, errorsMessage } = await intraLedgerPaymentSend({
           variables: {
             input: {
               walletId: fromWallet?.id,
@@ -93,19 +91,14 @@ const TransferConfirmationScreen = ({
         })
 
         const status = data.intraLedgerPaymentSend.status
-        const errs = errors
-          ? errors.map((error) => {
-              return { message: error.message }
-            })
-          : data.intraLedgerPaymentSend.errors
-        handlePaymentReturn(status, errs)
+        handlePaymentReturn(status, errorsMessage)
       } catch (err) {
         handlePaymentError(err)
       }
     }
     if (fromWallet?.walletCurrency === "USD") {
       try {
-        const { data, errors } = await intraLedgerPayUsd({
+        const { data, errorsMessage } = await intraLedgerUsdPaymentSend({
           variables: {
             input: {
               walletId: fromWallet?.id,
@@ -116,12 +109,7 @@ const TransferConfirmationScreen = ({
         })
 
         const status = data.intraLedgerUsdPaymentSend.status
-        const errs = errors
-          ? errors.map((error) => {
-              return { message: error.message }
-            })
-          : data.intraLedgerUsdPaymentSend.errors
-        handlePaymentReturn(status, errs)
+        handlePaymentReturn(status, errorsMessage)
       } catch (err) {
         handlePaymentError(err)
       }

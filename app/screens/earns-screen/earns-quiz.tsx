@@ -8,9 +8,11 @@ import { ScrollView, TouchableWithoutFeedback } from "react-native-gesture-handl
 import Modal from "react-native-modal"
 import { SafeAreaView } from "react-native-safe-area-context"
 import Icon from "react-native-vector-icons/Ionicons"
+import I18n from "i18n-js"
+
 import { CloseCross } from "../../components/close-cross"
 import { Screen } from "../../components/screen"
-import { toLocaleNumber, translateUnknown as translate } from "@galoymoney/client"
+import { translateUnknown as translate } from "@galoymoney/client"
 import { palette } from "../../theme/palette"
 import { shuffle } from "../../utils/helper"
 import { sleep } from "../../utils/sleep"
@@ -310,7 +312,7 @@ export const EarnQuiz: ScreenType = ({ route, navigation }: Props) => {
               title={translate("EarnScreen.earnSats", {
                 count: amount,
                 // eslint-disable-next-line camelcase
-                formatted_number: toLocaleNumber(amount, { precision: 0 }),
+                formatted_number: I18n.toNumber(amount, { precision: 0 }),
               })}
               buttonStyle={styles.buttonStyle}
               titleStyle={styles.titleStyle}
