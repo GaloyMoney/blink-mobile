@@ -88,6 +88,7 @@ const Styles = StyleSheet.create({
   fieldTitleText: {
     fontWeight: "bold",
     color: palette.lapisLazuli,
+    marginBottom: 5,
   },
   fieldContainer: {
     padding: 10,
