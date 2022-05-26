@@ -10,7 +10,7 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import Icon from "react-native-vector-icons/Ionicons"
 import { CloseCross } from "../../components/close-cross"
 import { Screen } from "../../components/screen"
-import { toLocaleNumber, translateUnknown as translate } from "@galoymoney/client"
+import { translateUnknown as translate } from "@galoymoney/client"
 import { palette } from "../../theme/palette"
 import { shuffle } from "../../utils/helper"
 import { sleep } from "../../utils/sleep"
@@ -19,6 +19,7 @@ import type { ScreenType } from "../../types/jsx"
 import { StackNavigationProp } from "@react-navigation/stack"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { RouteProp } from "@react-navigation/native"
+import I18n from "i18n-js"
 
 const styles = EStyleSheet.create({
   answersView: {
@@ -308,7 +309,7 @@ export const EarnQuiz: ScreenType = ({ route, navigation }: Props) => {
             <Button
               title={translate("EarnScreen.earnSats", {
                 count: amount,
-                formatted_number: toLocaleNumber(amount, { precision: 0 }),
+                formatted_number: I18n.toNumber(amount, { precision: 0 }),
               })}
               buttonStyle={styles.buttonStyle}
               titleStyle={styles.titleStyle}
