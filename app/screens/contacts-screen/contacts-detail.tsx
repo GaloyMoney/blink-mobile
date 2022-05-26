@@ -1,4 +1,3 @@
-import { useMutation, gql } from "@apollo/client"
 import * as React from "react"
 import { View } from "react-native"
 import { Input, Text } from "react-native-elements"
@@ -8,7 +7,7 @@ import { CloseCross } from "../../components/close-cross"
 import { IconTransaction } from "../../components/icon-transactions"
 import { LargeButton } from "../../components/large-button"
 import { Screen } from "../../components/screen"
-import { translateUnknown as translate } from "@galoymoney/client"
+import { translateUnknown as translate, useMutation } from "@galoymoney/client"
 import { palette } from "../../theme/palette"
 import type { ContactStackParamList } from "../../navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
@@ -85,24 +84,14 @@ export const ContactsDetailScreenJSX: ScreenType = ({
 }: ContactDetailScreenProps) => {
   const [contactName, setContactName] = React.useState(contact.alias)
 
-  const UPDATE_NAME = gql`
-    mutation userContactUpdateAlias($input: UserContactUpdateAliasInput!) {
-      userContactUpdateAlias(input: $input) {
-        errors {
-          message
-        }
-      }
-    }
-  `
-
-  const [updateNameMutation] = useMutation(UPDATE_NAME, {
+  const [userContactUpdateAlias] = useMutation.userContactUpdateAlias({
     onCompleted: () => refetchMain(),
   })
 
   const updateName = async () => {
     // TODO: need optimistic updates
     // FIXME this one doesn't work
-    await updateNameMutation({
+    await userContactUpdateAlias({
       variables: { input: { username: contact.username, alias: contactName } },
     })
   }

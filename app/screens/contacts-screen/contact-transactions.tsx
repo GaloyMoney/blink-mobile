@@ -1,4 +1,4 @@
-import { ApolloError, useQuery, useReactiveVar } from "@apollo/client"
+import { ApolloError, useReactiveVar } from "@apollo/client"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { SectionList, Text, View } from "react-native"
@@ -8,13 +8,12 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
 import { TransactionItem } from "../../components/transaction-item"
 import { nextPrefCurrency, prefCurrencyVar } from "../../graphql/client-only-query"
-import { translateUnknown as translate } from "@galoymoney/client"
+import { translateUnknown as translate, useQuery } from "@galoymoney/client"
 import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import { sameDay, sameMonth } from "../../utils/date"
 import { toastShow } from "../../utils/toast"
-import { TRANSACTIONS_LIST_FOR_CONTACT } from "../../graphql/query"
 
 const styles = EStyleSheet.create({
   errorText: { alignSelf: "center", color: palette.red, paddingBottom: 18 },
@@ -73,7 +72,7 @@ export const ContactTransactionsDataInjected: ScreenType = ({
 }: Props) => {
   const currency = "sat" // FIXME
 
-  const { error, data, refetch } = useQuery(TRANSACTIONS_LIST_FOR_CONTACT, {
+  const { error, data, refetch } = useQuery.transactionListForContact({
     variables: { username: contactUsername, first: TRANSACTIONS_PER_PAGE, after: null },
   })
 
