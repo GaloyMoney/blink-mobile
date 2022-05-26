@@ -8795,10 +8795,10 @@ good-listener@^1.2.2:
   dependencies:
     delegate "^3.1.2"
 
-google-libphonenumber@^3.2.10:
-  version "3.2.25"
-  resolved "https://registry.yarnpkg.com/google-libphonenumber/-/google-libphonenumber-3.2.25.tgz#3bc1a041fa392739d201eacf66761df236f1614b"
-  integrity sha512-M/b5mij5o2aGnbe+Id9O3847jBtP0baW61foFkevxBxbuV4LH9AcujjYLd2UVkUPKVdMpKyBZxfeNwdxqobQFQ==
+google-libphonenumber@3.2.27, google-libphonenumber@^3.2.10:
+  version "3.2.27"
+  resolved "https://registry.yarnpkg.com/google-libphonenumber/-/google-libphonenumber-3.2.27.tgz#06a0c1d42be712a6fd4189e2e3b07fc36cacee01"
+  integrity sha512-et3QlrfWemNPhyUfXZmJG8TfzitfAN71ygNI15+B35zNge/7vyZxkpDsc13oninkf8RAtN2kNEzvMr4L1n3vfQ==
 
 graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.1.9, graceful-fs@^4.2.0, graceful-fs@^4.2.4:
   version "4.2.8"
