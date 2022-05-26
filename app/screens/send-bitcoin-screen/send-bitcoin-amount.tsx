@@ -170,7 +170,7 @@ const SendBitcoinAmount = ({
   setAmount,
   defaultAmount = 0,
   fixedAmount,
-  walletPickerEnabled,
+  usdDisabled,
 }) => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const { wallets } = useMainQuery()
@@ -188,8 +188,13 @@ const SendBitcoinAmount = ({
   }, [defaultAmount])
 
   useEffect(() => {
-    setFromWallet(defaultWallet)
-  }, [defaultWallet, setFromWallet])
+    setFromWallet(
+      // Force from wallet to be BTC for onchain
+      usdDisabled
+        ? wallets.find((wallet) => wallet?.__typename === "BTCWallet")
+        : defaultWallet,
+    )
+  }, [defaultWallet, setFromWallet, usdDisabled, wallets])
 
   useEffect(() => {
     if (amountCurrency === "USD") {
@@ -324,11 +329,13 @@ const SendBitcoinAmount = ({
     </ReactNativeModal>
   )
 
+  const showWalletPicker = !usdDisabled
+
   return (
     <ScrollView style={Styles.sendBitcoinAmountContainer}>
       <View style={Styles.fieldContainer}>
         <Text style={Styles.fieldTitleText}>{translate("common.from")}</Text>
-        <TouchableWithoutFeedback onPress={() => walletPickerEnabled && toggleModal()}>
+        <TouchableWithoutFeedback onPress={() => showWalletPicker && toggleModal()}>
           <View style={Styles.fieldBackground}>
             <View style={Styles.walletSelectorTypeContainer}>
               <View
