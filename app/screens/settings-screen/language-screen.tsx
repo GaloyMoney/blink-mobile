@@ -1,5 +1,4 @@
-import { gql, useMutation } from "@apollo/client"
-import { translateUnknown as translate } from "@galoymoney/client"
+import { translateUnknown as translate, useMutation } from "@galoymoney/client"
 import * as React from "react"
 import { ListItem } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
@@ -19,24 +18,9 @@ const styles = EStyleSheet.create({
 export const LanguageScreen: ScreenType = () => {
   const { tokenUid } = useToken()
   const { userPreferredLanguage, refetch: refetchMain } = useMainQuery()
-  const [updateLanguage] = useMutation(
-    gql`
-      mutation updateLanguage($language: Language!) {
-        userUpdateLanguage(input: { language: $language }) {
-          errors {
-            message
-          }
-          user {
-            id
-            language
-          }
-        }
-      }
-    `,
-    {
-      onCompleted: () => refetchMain(),
-    },
-  )
+  const [updateLanguage] = useMutation.userUpdateLanguage({
+    onCompleted: () => refetchMain(),
+  })
 
   const list = ["DEFAULT", "en-US", "es-SV", "pt-BR", "fr-CA"]
 
@@ -49,7 +33,7 @@ export const LanguageScreen: ScreenType = () => {
           onPress={() => {
             if (language !== userPreferredLanguage) {
               updateLanguage({
-                variables: { language },
+                variables: { input: { language } },
                 optimisticResponse: {
                   __typename: "Mutation",
                   userUpdateLanguage: {

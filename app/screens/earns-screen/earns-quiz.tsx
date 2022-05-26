@@ -8,6 +8,8 @@ import { ScrollView, TouchableWithoutFeedback } from "react-native-gesture-handl
 import Modal from "react-native-modal"
 import { SafeAreaView } from "react-native-safe-area-context"
 import Icon from "react-native-vector-icons/Ionicons"
+import I18n from "i18n-js"
+
 import { CloseCross } from "../../components/close-cross"
 import { Screen } from "../../components/screen"
 import { translateUnknown as translate } from "@galoymoney/client"
@@ -19,7 +21,6 @@ import type { ScreenType } from "../../types/jsx"
 import { StackNavigationProp } from "@react-navigation/stack"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { RouteProp } from "@react-navigation/native"
-import I18n from "i18n-js"
 
 const styles = EStyleSheet.create({
   answersView: {

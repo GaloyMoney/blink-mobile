@@ -1,10 +1,9 @@
-import { useMutation } from "@apollo/client"
 import LightningInvoice from "@app/components/lightning-invoice/lightning-invoice"
 import { useMySubscription } from "@app/hooks"
 import useMainQuery from "@app/hooks/use-main-query"
 import { palette } from "@app/theme"
 import { getFullUri, TYPE_LIGHTNING_USD } from "@app/utils/wallet"
-import { translateUnknown as translate } from "@galoymoney/client"
+import { translateUnknown as translate, useMutation } from "@galoymoney/client"
 import debounce from "lodash.debounce"
 import React, { useCallback, useEffect, useMemo, useState } from "react"
 import {
@@ -18,7 +17,6 @@ import {
 } from "react-native"
 import { Text } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
-import { ADD_NO_AMOUNT_INVOICE, ADD_USD_INVOICE } from "./gql"
 import { QRView } from "./qr-view"
 import Icon from "react-native-vector-icons/Ionicons"
 import Clipboard from "@react-native-community/clipboard"
@@ -93,8 +91,8 @@ const styles = EStyleSheet.create({
 const ReceiveUsd = () => {
   const [loading, setLoading] = useState(true)
   const [err, setErr] = useState("")
-  const [addNoAmountInvoice] = useMutation(ADD_NO_AMOUNT_INVOICE)
-  const [addUsdInvoice] = useMutation(ADD_USD_INVOICE)
+  const [lnNoAmountInvoiceCreate] = useMutation.lnNoAmountInvoiceCreate()
+  const [lnUsdInvoiceCreate] = useMutation.lnUsdInvoiceCreate()
   const { usdWalletId } = useMainQuery()
   const [invoice, setInvoice] = useState<{
     paymentHash: string
@@ -115,7 +113,7 @@ const ReceiveUsd = () => {
                 data: {
                   lnNoAmountInvoiceCreate: { invoice, errors },
                 },
-              } = await addNoAmountInvoice({
+              } = await lnNoAmountInvoiceCreate({
                 variables: { input: { walletId, memo } },
               })
               if (errors && errors.length !== 0) {
@@ -129,7 +127,7 @@ const ReceiveUsd = () => {
                 data: {
                   lnUsdInvoiceCreate: { invoice, errors },
                 },
-              } = await addUsdInvoice({
+              } = await lnUsdInvoiceCreate({
                 variables: {
                   input: { walletId, amount: parseFloat(usdAmount) * 100, memo },
                 },
@@ -152,7 +150,7 @@ const ReceiveUsd = () => {
         1000,
         { trailing: true },
       ),
-    [addNoAmountInvoice, addUsdInvoice],
+    [lnNoAmountInvoiceCreate, lnUsdInvoiceCreate],
   )
 
   useEffect((): void | (() => void) => {

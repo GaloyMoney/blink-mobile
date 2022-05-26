@@ -1,9 +1,8 @@
-import { useMutation } from "@apollo/client"
 import LightningInvoice from "@app/components/lightning-invoice/lightning-invoice"
 import { useMySubscription } from "@app/hooks"
 import useMainQuery from "@app/hooks/use-main-query"
 import { getFullUri, TYPE_LIGHTNING_BTC } from "@app/utils/wallet"
-import { translateUnknown as translate } from "@galoymoney/client"
+import { translateUnknown as translate, useMutation } from "@galoymoney/client"
 import Clipboard from "@react-native-community/clipboard"
 import debounce from "lodash.debounce"
 import React, { useCallback, useEffect, useMemo, useState } from "react"
@@ -11,7 +10,6 @@ import { ActivityIndicator, Alert, Pressable, Share, View } from "react-native"
 import { Text } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { ScrollView } from "react-native-gesture-handler"
-import { ADD_INVOICE, ADD_NO_AMOUNT_INVOICE } from "./gql"
 import { QRView } from "./qr-view"
 import Icon from "react-native-vector-icons/Ionicons"
 import CalculatorIcon from "@app/assets/icons/calculator.svg"
@@ -103,8 +101,8 @@ const styles = EStyleSheet.create({
 const ReceiveBtc = () => {
   const [loading, setLoading] = useState(true)
   const [err, setErr] = useState("")
-  const [addNoAmountInvoice] = useMutation(ADD_NO_AMOUNT_INVOICE)
-  const [addInvoice] = useMutation(ADD_INVOICE)
+  const [lnNoAmountInvoiceCreate] = useMutation.lnNoAmountInvoiceCreate()
+  const [lnInvoiceCreate] = useMutation.lnInvoiceCreate()
   const { btcWalletId } = useMainQuery()
   const [invoice, setInvoice] = useState<{
     paymentHash: string
@@ -128,7 +126,7 @@ const ReceiveBtc = () => {
                 data: {
                   lnNoAmountInvoiceCreate: { invoice, errors },
                 },
-              } = await addNoAmountInvoice({
+              } = await lnNoAmountInvoiceCreate({
                 variables: { input: { walletId, memo } },
               })
               if (errors && errors.length !== 0) {
@@ -142,7 +140,7 @@ const ReceiveBtc = () => {
                 data: {
                   lnInvoiceCreate: { invoice, errors },
                 },
-              } = await addInvoice({
+              } = await lnInvoiceCreate({
                 variables: {
                   input: { walletId, amount: satAmount, memo },
                 },
@@ -165,7 +163,7 @@ const ReceiveBtc = () => {
         1000,
         { trailing: true },
       ),
-    [addNoAmountInvoice, addInvoice],
+    [lnInvoiceCreate, lnNoAmountInvoiceCreate],
   )
 
   const toggleAmountCurrency = () => {
