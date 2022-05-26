@@ -1,13 +1,13 @@
 import * as React from "react"
 import debounce from "lodash.debounce"
-import { gql, useQuery, useMutation } from "@apollo/client"
+import { useQuery } from "@apollo/client"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { ActivityIndicator, Alert, Text, TextInput } from "react-native"
 import { Input } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 
 import { Screen } from "../../components/screen"
-import { translateUnknown as translate } from "@galoymoney/client"
+import { translateUnknown as translate, useMutation } from "@galoymoney/client"
 import { color, palette } from "../../theme"
 import * as UsernameValidation from "../../utils/validation"
 import { InvalidUsernameError } from "../../utils/validation"
@@ -38,20 +38,6 @@ type Props = {
   navigation: StackNavigationProp<RootStackParamList, "setUsername">
 }
 
-const UPDATE_USERNAME = gql`
-  mutation updateUsername($username: Username!) {
-    userUpdateUsername(input: { username: $username }) {
-      errors {
-        message
-      }
-      user {
-        id
-        username
-      }
-    }
-  }
-`
-
 export const UsernameScreen: ScreenType = ({ navigation }: Props) => {
   const [input, setInput] = React.useState("")
   const [inputStatus, setInputStatus] = React.useState({
@@ -66,7 +52,7 @@ export const UsernameScreen: ScreenType = ({ navigation }: Props) => {
   const { refetch: refetchMain } = useMainQuery()
   const inputForm = React.createRef<TextInput>()
 
-  const [updateUsername, { loading: updatingUsername }] = useMutation(UPDATE_USERNAME, {
+  const [updateUsername, { loading: updatingUsername }] = useMutation.userUpdateUsername({
     onError: (error) => {
       console.error(error)
       setInputStatus({ message: translate("errors.generic"), status: "error" })
@@ -151,7 +137,7 @@ export const UsernameScreen: ScreenType = ({ navigation }: Props) => {
           text: translate("common.ok"),
           onPress: () =>
             updateUsername({
-              variables: { username: input },
+              variables: { input: { username: input } },
             }),
         },
       ],

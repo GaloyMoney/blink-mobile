@@ -1,4 +1,5 @@
-import { ApolloClient, gql } from "@apollo/client"
+import { ApolloClient } from "@apollo/client"
+import { MUTATIONS } from "@galoymoney/client"
 import messaging from "@react-native-firebase/messaging"
 
 export const requestPermission = async (client: ApolloClient<unknown>): Promise<void> => {
@@ -25,20 +26,9 @@ export const addDeviceToken = async (client: ApolloClient<unknown>): Promise<voi
   try {
     const deviceToken = await messaging().getToken()
 
-    const ADD_DEVICE_TOKEN = gql`
-      mutation deviceNotificationTokenCreate($deviceToken: String!) {
-        deviceNotificationTokenCreate(input: { deviceToken: $deviceToken }) {
-          errors {
-            message
-          }
-          success
-        }
-      }
-    `
-
     await client.mutate({
-      mutation: ADD_DEVICE_TOKEN,
-      variables: { deviceToken },
+      mutation: MUTATIONS.deviceNotificationTokenCreate,
+      variables: { input: { deviceToken } },
     })
   } catch (err) {
     console.error(err, "impossible to upload device token")

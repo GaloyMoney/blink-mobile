@@ -1,4 +1,4 @@
-import { gql, useApolloClient, useMutation } from "@apollo/client"
+import { useApolloClient } from "@apollo/client"
 import { RouteProp, useIsFocused } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
@@ -9,8 +9,10 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import Carousel, { Pagination } from "react-native-snap-carousel"
 import Icon from "react-native-vector-icons/Ionicons"
+import I18n from "i18n-js"
+
 import { Screen } from "../../components/screen"
-import { toLocaleNumber, translateUnknown as translate } from "@galoymoney/client"
+import { translateUnknown as translate, useMutation } from "@galoymoney/client"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
@@ -119,31 +121,9 @@ export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
   const client = useApolloClient()
   const { refetch: refetchMain } = useMainQuery()
 
-  const [updateCompleted] = useMutation(
-    gql`
-      mutation userQuizQuestionUpdateCompleted(
-        $input: UserQuizQuestionUpdateCompletedInput!
-      ) {
-        userQuizQuestionUpdateCompleted(input: $input) {
-          errors {
-            message
-          }
-
-          userQuizQuestion {
-            question {
-              id
-              earnAmount
-            }
-
-            completed
-          }
-        }
-      }
-    `,
-    {
-      onCompleted: () => refetchMain(),
-    },
-  )
+  const [userQuizQuestionUpdateCompleted] = useMutation.userQuizQuestionUpdateCompleted({
+    onCompleted: () => refetchMain(),
+  })
 
   const quizQuestions = getQuizQuestions(client, { hasToken })
 
@@ -198,7 +178,8 @@ export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
           feedback: card.feedback,
           // store.earnComplete(card.id),
           onComplete: async () => {
-            updateCompleted({ variables: { input: { id: card.id } } })
+            // FIXME: handle errors
+            userQuizQuestionUpdateCompleted({ variables: { input: { id: card.id } } })
           },
           id: card.id,
           completed: Boolean(quizQuestions.myCompletedQuestions[card.id]),
@@ -255,7 +236,7 @@ export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
                 {
                   count: item.value,
                   // eslint-disable-next-line camelcase
-                  formatted_number: toLocaleNumber(item.value, { precision: 0 }),
+                  formatted_number: I18n.toNumber(item.value, { precision: 0 }),
                 },
               )}
               icon={

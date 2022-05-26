@@ -1,24 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { EventSubscription, NativeEventEmitter, NativeModules } from "react-native"
-import { gql, useMutation } from "@apollo/client"
 import GeetestModule from "@galoymoney/react-native-geetest-module"
-import { translateUnknown as translate } from "@galoymoney/client"
-
-const REGISTER_CAPTCHA = gql`
-  mutation captchaCreateChallenge {
-    captchaCreateChallenge {
-      errors {
-        message
-      }
-      result {
-        id
-        challengeCode
-        newCaptcha
-        failbackMode
-      }
-    }
-  }
-`
+import { translateUnknown as translate, useMutation } from "@galoymoney/client"
 
 type GeetestCaptchaReturn = {
   geetestError: string | null
@@ -37,18 +20,16 @@ export const useGeetestCaptcha = (): GeetestCaptchaReturn => {
   const onGeeTestDialogResultListener = useRef<EventSubscription>()
   const onGeeTestFailedListener = useRef<EventSubscription>()
 
-  const [registerCaptchaMutation, { loading: loadingRegisterCaptcha }] = useMutation(
-    REGISTER_CAPTCHA,
-    {
+  const [captchaCreateChallenge, { loading: loadingRegisterCaptcha }] =
+    useMutation.captchaCreateChallenge({
       fetchPolicy: "no-cache",
-    },
-  )
+    })
 
   const resetValidationData = useCallback(() => setGeetesValidationData(null), [])
   const resetError = useCallback(() => () => setError(null), [])
 
   const registerCaptcha = useCallback(async () => {
-    const { data } = await registerCaptchaMutation()
+    const { data } = await captchaCreateChallenge()
 
     const result = data.captchaCreateChallenge?.result
     const errors = data.captchaCreateChallenge?.errors ?? []
@@ -66,7 +47,7 @@ export const useGeetestCaptcha = (): GeetestCaptchaReturn => {
     } else {
       setError(translate("errors.generic"))
     }
-  }, [registerCaptchaMutation])
+  }, [captchaCreateChallenge])
 
   useEffect(() => {
     GeetestModule.setUp()

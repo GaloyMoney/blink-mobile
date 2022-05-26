@@ -1,50 +1,8 @@
 import { useState } from "react"
-import { gql, useApolloClient, useMutation } from "@apollo/client"
+import { useApolloClient } from "@apollo/client"
 
 import { useMySubscription } from "../../hooks/user-hooks"
-
-export const LIGHTNING_FEES = gql`
-  mutation lnInvoiceFeeProbe($input: LnInvoiceFeeProbeInput!) {
-    lnInvoiceFeeProbe(input: $input) {
-      errors {
-        message
-      }
-
-      amount
-    }
-  }
-`
-
-const NO_AMOUNT_LIGHTNING_FEES = gql`
-  mutation lnNoAmountInvoiceFeeProbe($input: LnNoAmountInvoiceFeeProbeInput!) {
-    lnNoAmountInvoiceFeeProbe(input: $input) {
-      errors {
-        message
-      }
-
-      amount
-    }
-  }
-`
-
-const ONCHAIN_FEES = gql`
-  query onChainTxFee(
-    $walletId: WalletId!
-    $address: OnChainAddress!
-    $amount: SatAmount!
-    $targetConfirmations: TargetConfirmations
-  ) {
-    onChainTxFee(
-      walletId: $walletId
-      address: $address
-      amount: $amount
-      targetConfirmations: $targetConfirmations
-    ) {
-      amount
-      targetConfirmations
-    }
-  }
-`
+import { QUERIES, useMutation } from "@galoymoney/client"
 
 type FeeType = {
   value: number | null
@@ -86,8 +44,8 @@ const useFee = ({
     status: "unset",
   })
 
-  const [getLightningFees] = useMutation(LIGHTNING_FEES)
-  const [getNoAmountLightningFees] = useMutation(NO_AMOUNT_LIGHTNING_FEES)
+  const [lnInvoiceFeeProbe] = useMutation.lnInvoiceFeeProbe()
+  const [lnNoAmountInvoiceFeeProbe] = useMutation.lnNoAmountInvoiceFeeProbe()
 
   if (!walletId) {
     return { ...fee, text: "" }
@@ -132,23 +90,22 @@ const useFee = ({
 
         let feeValue: number
         if (amountless) {
-          const { data, errors } = await getNoAmountLightningFees({
+          const { data, errorsMessage } = await lnNoAmountInvoiceFeeProbe({
             variables: {
               input: { walletId, paymentRequest: invoice, amount: paymentSatAmount },
             },
           })
-          if (errors?.length > 0 || data?.lnNoAmountInvoiceFeeProbe?.errors?.length > 0) {
+          if (errorsMessage) {
             throw new Error("Error returned from API while calculating fee.")
           }
           feeValue = data.lnNoAmountInvoiceFeeProbe.amount
         } else {
-          const { data, errors } = await getLightningFees({
+          const { data, errorsMessage } = await lnInvoiceFeeProbe({
             variables: { input: { walletId, paymentRequest: invoice } },
           })
-          if (errors?.length > 0 || data?.lnNoAmountInvoiceFeeProbe?.errors?.length > 0) {
+          if (errorsMessage) {
             throw new Error("Error returned from API while calculating fee.")
           }
-
           feeValue = data.lnInvoiceFeeProbe.amount
         }
 
@@ -180,8 +137,9 @@ const useFee = ({
           status: "loading",
         })
 
+        // FIXME: Switch this to a delayed query
         const { data } = await client.query({
-          query: ONCHAIN_FEES,
+          query: QUERIES.onChainTxFee,
           variables: { walletId, address, amount: paymentSatAmount },
           fetchPolicy: "no-cache",
         })
