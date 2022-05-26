@@ -10,7 +10,7 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 import Carousel, { Pagination } from "react-native-snap-carousel"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
-import { toLocaleNumber, translateUnknown as translate } from "@galoymoney/client"
+import { translateUnknown as translate } from "@galoymoney/client"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
@@ -21,6 +21,7 @@ import { SVGs } from "./earn-svg-factory"
 import { getCardsFromSection, remainingSatsOnSection } from "./earns-utils"
 import { getQuizQuestions } from "../../graphql/query"
 import useMainQuery from "@app/hooks/use-main-query"
+import I18n from "i18n-js"
 
 const { width: screenWidth } = Dimensions.get("window")
 
@@ -254,7 +255,7 @@ export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
                 item.fullfilled ? "EarnScreen.satsEarned" : "EarnScreen.earnSats",
                 {
                   count: item.value,
-                  formatted_number: toLocaleNumber(item.value, { precision: 0 }),
+                  formatted_number: I18n.toNumber(item.value, { precision: 0 }),
                 },
               )}
               icon={
