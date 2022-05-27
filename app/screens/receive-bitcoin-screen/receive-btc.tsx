@@ -9,7 +9,6 @@ import React, { useCallback, useEffect, useMemo, useState } from "react"
 import { ActivityIndicator, Alert, Pressable, Share, View } from "react-native"
 import { Text } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
-import { ScrollView } from "react-native-gesture-handler"
 import { QRView } from "./qr-view"
 import Icon from "react-native-vector-icons/Ionicons"
 import CalculatorIcon from "@app/assets/icons/calculator.svg"
@@ -18,6 +17,7 @@ import { FakeCurrencyInput } from "react-native-currency-input"
 import { palette } from "@app/theme"
 import SwitchIcon from "@app/assets/icons/switch.svg"
 import Toast from "react-native-toast-message"
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const styles = EStyleSheet.create({
   fieldsContainer: {
@@ -117,6 +117,25 @@ const ReceiveBtc = () => {
   const [isAmountless, setIsAmountless] = useState(true)
   const [amountCurrency, setAmountCurrency] = useState("USD")
   const { convertCurrencyAmount } = useMySubscription()
+
+  const updateSatAmount = (newValue) => {
+    // eslint-disable-next-line no-negated-condition
+    if (!newValue) {
+      setSatAmount(0)
+    } else {
+      setSatAmount(newValue)
+    }
+  }
+
+  const updateSatAmountInUsd = (newValue) => {
+    // eslint-disable-next-line no-negated-condition
+    if (!newValue) {
+      setSatAmountInUsd(0)
+    } else {
+      setSatAmountInUsd(newValue)
+    }
+  }
+
   const updateInvoice = useMemo(
     () =>
       debounce(
@@ -239,7 +258,7 @@ const ReceiveBtc = () => {
     lnUpdate?.paymentHash === invoice?.paymentHash && lnUpdate?.status === "PAID"
 
   return (
-    <ScrollView>
+    <KeyboardAwareScrollView>
       <Pressable onPress={copyToClipboard}>
         <QRView
           data={invoice?.paymentRequest}
@@ -303,7 +322,7 @@ const ReceiveBtc = () => {
                     <>
                       <FakeCurrencyInput
                         value={satAmount}
-                        onChangeValue={setSatAmount}
+                        onChangeValue={updateSatAmount}
                         prefix=""
                         delimiter=","
                         separator="."
@@ -314,7 +333,7 @@ const ReceiveBtc = () => {
                       />
                       <FakeCurrencyInput
                         value={satAmountInUsd}
-                        onChangeValue={setSatAmountInUsd}
+                        onChangeValue={updateSatAmountInUsd}
                         prefix="$"
                         delimiter=","
                         separator="."
@@ -328,7 +347,7 @@ const ReceiveBtc = () => {
                     <>
                       <FakeCurrencyInput
                         value={satAmountInUsd}
-                        onChangeValue={setSatAmountInUsd}
+                        onChangeValue={updateSatAmountInUsd}
                         prefix="$"
                         delimiter=","
                         separator="."
@@ -338,7 +357,7 @@ const ReceiveBtc = () => {
                       />
                       <FakeCurrencyInput
                         value={satAmount}
-                        onChangeValue={setSatAmount}
+                        onChangeValue={updateSatAmount}
                         prefix=""
                         delimiter=","
                         separator="."
@@ -362,7 +381,7 @@ const ReceiveBtc = () => {
           )}
         </View>
       </View>
-    </ScrollView>
+    </KeyboardAwareScrollView>
   )
 }
 
