@@ -471,9 +471,9 @@ export const TransferScreen = ({
       <View style={styles.buttonContainer}>
         <Button
           title={translate("common.next")}
-          buttonStyle={{ ...styles.button, ...styles.activeButtonStyle }}
+          buttonStyle={[styles.button, styles.activeButtonStyle]}
           titleStyle={styles.activeButtonTitleStyle}
-          disabledStyle={{ ...styles.button, ...styles.disabledButtonStyle }}
+          disabledStyle={[styles.button, styles.disabledButtonStyle]}
           disabledTitleStyle={styles.disabledButtonTitleStyle}
           disabled={!isButtonEnabled()}
           onPress={() => nextStep()}

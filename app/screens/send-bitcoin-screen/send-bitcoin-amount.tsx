@@ -88,6 +88,7 @@ const Styles = StyleSheet.create({
   fieldTitleText: {
     fontWeight: "bold",
     color: palette.lapisLazuli,
+    marginBottom: 5,
   },
   fieldContainer: {
     padding: 10,
@@ -508,9 +509,9 @@ const SendBitcoinAmount = ({
       <View>
         <Button
           title={translate("common.next")}
-          buttonStyle={{ ...Styles.button, ...Styles.activeButtonStyle }}
+          buttonStyle={[Styles.button, Styles.activeButtonStyle]}
           titleStyle={Styles.activeButtonTitleStyle}
-          disabledStyle={{ ...Styles.button, ...Styles.disabledButtonStyle }}
+          disabledStyle={[Styles.button, Styles.disabledButtonStyle]}
           disabledTitleStyle={Styles.disabledButtonTitleStyle}
           disabled={!validate()}
           onPress={() => {
