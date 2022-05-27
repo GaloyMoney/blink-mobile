@@ -6,13 +6,7 @@ import { getFullUri, TYPE_LIGHTNING_USD } from "@app/utils/wallet"
 import { translateUnknown as translate, useMutation } from "@galoymoney/client"
 import debounce from "lodash.debounce"
 import React, { useCallback, useEffect, useMemo, useState } from "react"
-import {
-  ActivityIndicator,
-  Alert,
-  Pressable,
-  Share,
-  View,
-} from "react-native"
+import { ActivityIndicator, Alert, Pressable, Share, View } from "react-native"
 import { Text } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { QRView } from "./qr-view"
@@ -23,7 +17,7 @@ import ChevronIcon from "@app/assets/icons/chevron.svg"
 import { FakeCurrencyInput } from "react-native-currency-input"
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer"
 import Toast from "react-native-toast-message"
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 
 const styles = EStyleSheet.create({
   fieldsContainer: {

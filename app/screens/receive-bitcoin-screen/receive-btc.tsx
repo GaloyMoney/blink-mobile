@@ -17,7 +17,7 @@ import { FakeCurrencyInput } from "react-native-currency-input"
 import { palette } from "@app/theme"
 import SwitchIcon from "@app/assets/icons/switch.svg"
 import Toast from "react-native-toast-message"
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 
 const styles = EStyleSheet.create({
   fieldsContainer: {
