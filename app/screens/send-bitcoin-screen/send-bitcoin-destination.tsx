@@ -129,9 +129,9 @@ const SendBitcoinDestination = ({
               ? translate("common.next")
               : translate("SendBitcoinScreen.destinationIsRequired")
           }
-          buttonStyle={{ ...Styles.button, ...Styles.activeButtonStyle }}
+          buttonStyle={[Styles.button, Styles.activeButtonStyle]}
           titleStyle={Styles.activeButtonTitleStyle}
-          disabledStyle={{ ...Styles.button, ...Styles.disabledButtonStyle }}
+          disabledStyle={[Styles.button, Styles.disabledButtonStyle]}
           disabledTitleStyle={Styles.disabledButtonTitleStyle}
           disabled={!destination || validDestination === false}
           onPress={handlePress}
