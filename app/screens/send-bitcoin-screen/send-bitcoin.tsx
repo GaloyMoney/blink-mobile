@@ -14,6 +14,7 @@ import {
   useDelayedQuery,
 } from "@galoymoney/client"
 import { palette } from "@app/theme"
+import { WalletCurrency } from "@app/types/amounts"
 
 const Status = {
   IDLE: "idle",
@@ -223,11 +224,13 @@ const SendBitcoin = ({ navigation, route }) => {
           destination={destination}
           recipientWalletId={recipientWalletId}
           wallet={fromWallet}
-          amount={amount}
-          amountCurrency={amountCurrency}
+          paymentAmount={{
+            amount: amountCurrency === WalletCurrency.USD ? amount * 100 : amount,
+            currency: amountCurrency,
+          }}
           note={note}
           setStatus={setStatus}
-          fixedAmount={fixedAmount}
+          isNoAmountInvoice={!fixedAmount}
           paymentType={paymentType}
           sameNode={sameNode}
         />
