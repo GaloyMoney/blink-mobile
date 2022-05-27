@@ -17,6 +17,7 @@ import ChevronIcon from "@app/assets/icons/chevron.svg"
 import { FakeCurrencyInput } from "react-native-currency-input"
 import { palette } from "@app/theme"
 import SwitchIcon from "@app/assets/icons/switch.svg"
+import Toast from "react-native-toast-message"
 
 const styles = EStyleSheet.create({
   fieldsContainer: {
@@ -51,6 +52,7 @@ const styles = EStyleSheet.create({
   },
   textContainer: {
     flexDirection: "row",
+    marginTop: 10,
   },
   optionsContainer: {
     marginTop: 30,
@@ -223,20 +225,32 @@ const ReceiveBtc = () => {
     }
   }, [satAmount, satAmountInUsd, amountCurrency, convertCurrencyAmount])
 
+  const copyToClipboard = () => {
+    Clipboard.setString(getFullUri({ input: invoice?.paymentRequest, prefix: false }))
+    Toast.show({
+      type: "info",
+      text1: translate("ReceiveBitcoinScreen.copyClipboard"),
+      position: "bottom",
+      bottomOffset: 80,
+    })
+  }
+
   const invoicePaid =
     lnUpdate?.paymentHash === invoice?.paymentHash && lnUpdate?.status === "PAID"
 
   return (
     <ScrollView>
-      <QRView
-        data={invoice?.paymentRequest}
-        type={TYPE_LIGHTNING_BTC}
-        amount={satAmount}
-        memo={memo}
-        loading={loading}
-        completed={invoicePaid}
-        err={err}
-      />
+      <Pressable onPress={copyToClipboard}>
+        <QRView
+          data={invoice?.paymentRequest}
+          type={TYPE_LIGHTNING_BTC}
+          amount={satAmount}
+          memo={memo}
+          loading={loading}
+          completed={invoicePaid}
+          err={err}
+        />
+      </Pressable>
       <View style={styles.fieldsContainer}>
         <View style={styles.field}>
           {!loading && <LightningInvoice invoice={invoice?.paymentRequest} />}
@@ -245,15 +259,9 @@ const ReceiveBtc = () => {
 
         <View style={styles.textContainer}>
           <View style={styles.copyInvoiceContainer}>
-            <Pressable
-              onPress={() =>
-                Clipboard.setString(
-                  getFullUri({ input: invoice?.paymentRequest, prefix: false }),
-                )
-              }
-            >
+            <Pressable onPress={copyToClipboard}>
               <Text style={styles.infoText}>
-                <Icon style={styles.infoText} name="copy-outline" />
+                <Icon style={styles.infoText} name="copy-outline" />{" "}
                 {translate("ReceiveBitcoinScreen.copyInvoice")}
               </Text>
             </Pressable>
@@ -261,7 +269,7 @@ const ReceiveBtc = () => {
           <View style={styles.shareInvoiceContainer}>
             <Pressable onPress={share}>
               <Text style={styles.infoText}>
-                <Icon style={styles.infoText} name="share-outline" />
+                <Icon style={styles.infoText} name="share-outline" />{" "}
                 {translate("ReceiveBitcoinScreen.shareInvoice")}
               </Text>
             </Pressable>

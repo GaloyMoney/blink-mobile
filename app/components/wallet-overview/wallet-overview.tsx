@@ -98,7 +98,7 @@ const WalletOverview = ({ navigation }) => {
         <TextCurrency
           view="UsdWallet"
           currency={"USD"}
-          style={{ ...styles.textPrimary, ...styles.textLeft }}
+          style={[styles.textPrimary, styles.textLeft]}
         />
       </View>
 
@@ -113,12 +113,12 @@ const WalletOverview = ({ navigation }) => {
           <TextCurrency
             view="BtcWalletInUsd"
             currency={"USD"}
-            style={{ ...styles.textPrimary, ...styles.textRight }}
+            style={[styles.textPrimary, styles.textRight]}
           />
           <TextCurrency
             view="BtcWallet"
             currency={"BTC"}
-            style={{ ...styles.textSecondary, ...styles.textRight }}
+            style={[styles.textSecondary, styles.textRight]}
             satsIconSize={15}
           />
         </View>

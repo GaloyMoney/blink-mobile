@@ -1,7 +1,7 @@
 import { GaloyGQL, translateUnknown as translate, useMutation } from "@galoymoney/client"
 import { palette } from "@app/theme"
 import React, { useEffect, useState } from "react"
-import { StyleSheet, Text, View } from "react-native"
+import { ActivityIndicator, StyleSheet, Text, View } from "react-native"
 import DestinationIcon from "@app/assets/icons/destination.svg"
 import { FakeCurrencyInput } from "react-native-currency-input"
 import { useMySubscription, useWalletBalance } from "@app/hooks"
@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
   fieldTitleText: {
     fontWeight: "bold",
     color: palette.lapisLazuli,
+    marginBottom: 5,
   },
 
   destinationIconContainer: {
@@ -136,6 +137,13 @@ const styles = StyleSheet.create({
     color: palette.red,
     textAlign: "center",
   },
+  disabledButtonStyle: {
+    backgroundColor: "rgba(83, 111, 242, 0.1)",
+  },
+  disabledButtonTitleStyle: {
+    color: palette.lightBlue,
+    fontWeight: "600",
+  },
 })
 
 const SendBitcoinConfirmation = ({
@@ -155,12 +163,26 @@ const SendBitcoinConfirmation = ({
   const { usdWalletBalance, btcWalletBalance, btcWalletValueInUsd } = useWalletBalance()
   const [error, setError] = useState<string | undefined>(undefined)
 
-  const [intraLedgerPaymentSend] = useMutation.intraLedgerPaymentSend()
-  const [intraLedgerUsdPaymentSend] = useMutation.intraLedgerUsdPaymentSend()
-  const [lnInvoicePaymentSend] = useMutation.lnInvoicePaymentSend()
-  const [lnNoAmountInvoicePaymentSend] = useMutation.lnNoAmountInvoicePaymentSend()
-  const [lnNoAmountUsdInvoicePaymentSend] = useMutation.lnNoAmountUsdInvoicePaymentSend()
-  const [onChainPaymentSend] = useMutation.onChainPaymentSend()
+  const [intraLedgerPaymentSend, { loading: intraledgerLoading }] =
+    useMutation.intraLedgerPaymentSend()
+  const [intraLedgerUsdPaymentSend, { loading: intraLedgerUsdLoading }] =
+    useMutation.intraLedgerUsdPaymentSend()
+  const [lnInvoicePaymentSend, { loading: lnInvoiceLoading }] =
+    useMutation.lnInvoicePaymentSend()
+  const [lnNoAmountInvoicePaymentSend, { loading: lnNoAmountInvoiceLoading }] =
+    useMutation.lnNoAmountInvoicePaymentSend()
+  const [lnNoAmountUsdInvoicePaymentSend, { loading: lnNoAmountUsdLoading }] =
+    useMutation.lnNoAmountUsdInvoicePaymentSend()
+  const [onChainPaymentSend, { loading: onChainLoading }] =
+    useMutation.onChainPaymentSend()
+
+  const isLoading =
+    intraledgerLoading ||
+    intraLedgerUsdLoading ||
+    lnInvoiceLoading ||
+    lnNoAmountInvoiceLoading ||
+    lnNoAmountUsdLoading ||
+    onChainLoading
 
   const fee = useFee({
     walletId: wallet.id,
@@ -480,10 +502,14 @@ const SendBitcoinConfirmation = ({
       )}
 
       <View style={styles.buttonContainer}>
+        {isLoading && <ActivityIndicator />}
         <Button
           title={translate("SendBitcoinConfirmationScreen.title")}
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitleStyle}
+          disabledStyle={[styles.button, styles.disabledButtonStyle]}
+          disabledTitleStyle={styles.disabledButtonTitleStyle}
+          disabled={isLoading}
           onPress={sendPayment}
         />
       </View>
