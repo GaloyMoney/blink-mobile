@@ -324,7 +324,7 @@ const TransferConfirmationScreen = ({
           title={translate("SendBitcoinConfirmationScreen.title")}
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitleStyle}
-          disabledStyle={{ ...styles.button, ...styles.disabledButtonStyle }}
+          disabledStyle={[styles.button, styles.disabledButtonStyle]}
           disabledTitleStyle={styles.disabledButtonTitleStyle}
           disabled={!isButtonEnabled()}
           onPress={() => payWallet()}
