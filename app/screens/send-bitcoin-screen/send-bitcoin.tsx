@@ -164,6 +164,12 @@ const SendBitcoin = ({ navigation, route }) => {
     }
   }, [route.params?.payment])
 
+  useEffect(() => {
+    if (route.params?.username) {
+      setDestination(route.params?.username)
+    }
+  }, [route.params?.username])
+
   const toggleAmountCurrency = () => {
     if (amountCurrency === "USD") {
       setAmountCurrency("BTC")
