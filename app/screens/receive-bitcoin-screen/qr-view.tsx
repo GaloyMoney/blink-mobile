@@ -61,7 +61,7 @@ export const QRView = ({
   err,
   size = 300,
 }: Props): JSX.Element => {
-  const [brightnessInitial, setBrightnessInitial] = React.useState(0)
+  const [brightnessInitial, setBrightnessInitial] = React.useState(0.5)
 
   React.useEffect(() => {
     const fn = async () => {

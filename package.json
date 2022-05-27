@@ -79,6 +79,7 @@
     "react-native-gesture-handler": "^1.9.0",
     "react-native-haptic-feedback": "^1.13.0",
     "react-native-image-picker": "^4.3.0",
+    "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-keychain": "^8.0.0",
     "react-native-localize": "^2.1.5",
     "react-native-maps": "0.29.4",
@@ -155,8 +156,8 @@
     "typescript": "^4.6.3"
   },
   "resolutions": {
-      "google-libphonenumber": "3.2.27"
-},
+    "google-libphonenumber": "3.2.27"
+  },
   "peerDependencies": {
     "solidarity": "^2.3.1"
   }

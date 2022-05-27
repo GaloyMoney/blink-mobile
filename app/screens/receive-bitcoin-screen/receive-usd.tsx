@@ -6,15 +6,7 @@ import { getFullUri, TYPE_LIGHTNING_USD } from "@app/utils/wallet"
 import { translateUnknown as translate, useMutation } from "@galoymoney/client"
 import debounce from "lodash.debounce"
 import React, { useCallback, useEffect, useMemo, useState } from "react"
-import {
-  ActivityIndicator,
-  Alert,
-  KeyboardAvoidingView,
-  Platform,
-  Pressable,
-  Share,
-  View,
-} from "react-native"
+import { ActivityIndicator, Alert, Pressable, Share, View } from "react-native"
 import { Text } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { QRView } from "./qr-view"
@@ -23,9 +15,9 @@ import Clipboard from "@react-native-community/clipboard"
 import CalculatorIcon from "@app/assets/icons/calculator.svg"
 import ChevronIcon from "@app/assets/icons/chevron.svg"
 import { FakeCurrencyInput } from "react-native-currency-input"
-import { ScrollView } from "react-native-gesture-handler"
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer"
 import Toast from "react-native-toast-message"
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 
 const styles = EStyleSheet.create({
   fieldsContainer: {
@@ -104,6 +96,15 @@ const ReceiveUsd = () => {
   const [memo] = useState("") // FIXME
   const { lnUpdate } = useMySubscription()
   const [isAmountless, setIsAmountless] = useState(true)
+
+  const updateUsdValue = (newValue) => {
+    // eslint-disable-next-line no-negated-condition
+    if (!newValue) {
+      setUsdAmount(0)
+    } else {
+      setUsdAmount(newValue)
+    }
+  }
   const updateInvoice = useMemo(
     () =>
       debounce(
@@ -196,7 +197,7 @@ const ReceiveUsd = () => {
   }
 
   return (
-    <ScrollView>
+    <KeyboardAwareScrollView>
       <Pressable onPress={copyToClipboard}>
         <QRView
           data={invoice?.paymentRequest}
@@ -253,22 +254,17 @@ const ReceiveUsd = () => {
               </Pressable>
             )}
             {!isAmountless && (
-              <KeyboardAvoidingView
-                behavior={Platform.OS === "ios" ? "padding" : null}
-                keyboardVerticalOffset={Platform.select({ ios: 0, android: 500 })}
-              >
-                <FakeCurrencyInput
-                  value={usdAmount}
-                  onChangeValue={setUsdAmount}
-                  prefix="$"
-                  delimiter=","
-                  separator="."
-                  precision={2}
-                  suffix=""
-                  minValue={0}
-                  style={styles.amountInput}
-                />
-              </KeyboardAvoidingView>
+              <FakeCurrencyInput
+                value={usdAmount}
+                onChangeValue={updateUsdValue}
+                prefix="$"
+                delimiter=","
+                separator="."
+                precision={2}
+                suffix=""
+                minValue={0}
+                style={styles.amountInput}
+              />
             )}
           </View>
         </View>
@@ -287,7 +283,7 @@ const ReceiveUsd = () => {
           </View>
         )}
       </View>
-    </ScrollView>
+    </KeyboardAwareScrollView>
   )
 }
 
