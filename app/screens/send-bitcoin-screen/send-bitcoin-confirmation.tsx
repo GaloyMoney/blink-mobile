@@ -248,7 +248,6 @@ const SendBitcoinConfirmation = ({
   }
 
   const payLnNoAmountInvoice = async () => {
-    console.log("made ln payment")
     const { data, errorsMessage } = await lnNoAmountInvoicePaymentSend({
       variables: {
         input: {
@@ -351,6 +350,7 @@ const SendBitcoinConfirmation = ({
     paymentAmount.currency,
     convertCurrencyAmount,
     wallet.__typename,
+    paymentAmount,
   ])
 
   return (
