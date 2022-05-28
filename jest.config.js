@@ -19,30 +19,31 @@ module.exports = {
   },
   transformIgnorePatterns: [
     "node_modules/(?!(react-native" +
+      "|@react-native-community" +
+      "|@react-native-firebase" +
+      "|@react-native-firebase/auth" +
       "|@react-native" +
-      "|react-navigation-tabs" +
+      "|@react-navigation" +
       "|react-native-animatable" +
       "|react-native-camera" +
+      "|react-native-country-picker-modal" +
       "|react-native-elements" +
+      "|react-native-error-boundary" +
       "|react-native-extended-stylesheet" +
       "|react-native-haptic-feedback" +
       "|react-native-image-picker" +
+      "|react-native-keyboard-aware-scroll-view" +
       "|react-native-modal" +
-      "|react-native-splash-screen" +
-      "|react-native-screens" +
-      "|react-native-size-matters" +
+      "|react-native-phone-number-input" +
       "|react-native-ratings" +
       "|react-native-reanimated" +
       "|react-native-root-siblings" +
-      "|react-native-vector-icons" +
-      "|react-native-phone-number-input" +
-      "|react-native-country-picker-modal" +
-      "|@react-native-firebase/auth" +
-      "|@react-native-firebase" +
-      "|@react-navigation" +
-      "|@react-native-community" +
-      "|react-native-error-boundary" +
+      "|react-native-screens" +
+      "|react-native-size-matters" +
+      "|react-native-splash-screen" +
       "|react-native-toast-message" +
+      "|react-native-vector-icons" +
+      "|react-navigation-tabs" +
       ")/)",
   ],
 }
