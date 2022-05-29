@@ -1,4 +1,5 @@
 import { gql, useApolloClient, useReactiveVar, useSubscription } from "@apollo/client"
+import { PaymentAmount, WalletCurrency } from "@app/types/amounts"
 import * as React from "react"
 
 import {
@@ -12,7 +13,13 @@ type UseMyUpdates = {
     from: CurrencyType
     to: CurrencyType
   }) => number
-  formatCurrencyAmount: (arg0: { sats: number; currency: CurrencyType }) => string
+  convertPaymentAmount: (
+    paymentAmount: PaymentAmount<WalletCurrency>,
+    toCurrency: WalletCurrency,
+  ) => PaymentAmount<WalletCurrency>
+  convertPaymentAmountToPrimaryCurrency: (
+    paymentAmount: PaymentAmount<WalletCurrency>,
+  ) => PaymentAmount<WalletCurrency>
   usdPerSat: string | null
   currentUsdWalletBalance: number | null
   currentBtcWalletBalance: number | null
@@ -143,24 +150,43 @@ export const useMySubscription = (): UseMyUpdates => {
     [cachedPrice],
   )
 
-  const formatCurrencyAmount = React.useCallback(
-    ({ sats, currency }) => {
-      if (currency === "BTC") {
-        if (sats === 1) {
-          return "1 sat"
-        }
-        return `${sats.toFixed(0)} sats`
+  const convertPaymentAmount = React.useCallback(
+    (paymentAmount, toCurrency) => {
+      if (cachedPrice === 0) {
+        return NaN
       }
-      if (currency === "USD") {
-        if (cachedPrice === 0) {
-          return "..."
-        }
-        return `$${formatUsdAmount((sats * cachedPrice) / 100)}`
+
+      if (paymentAmount.currency === toCurrency) {
+        return paymentAmount
       }
-      throw new Error("Unsupported currency")
+
+      if (
+        paymentAmount.currency === WalletCurrency.BTC &&
+        toCurrency === WalletCurrency.USD
+      ) {
+        return {
+          amount: Math.round(paymentAmount * cachedPrice),
+          currency: WalletCurrency.USD,
+        }
+      }
+      if (
+        paymentAmount.currency === WalletCurrency.USD &&
+        toCurrency === WalletCurrency.BTC
+      ) {
+        return {
+          amount: Math.round(paymentAmount.amount / cachedPrice),
+          currency: WalletCurrency.BTC,
+        }
+      }
     },
     [cachedPrice],
   )
+
+  const primaryCurrency = useReactiveVar<CurrencyType>(primaryCurrencyVar)
+
+  const convertPaymentAmountToPrimaryCurrency = (
+    paymentAmount: PaymentAmount<WalletCurrency>,
+  ) => convertPaymentAmount(paymentAmount, primaryCurrency)
 
   if (data?.myUpdates?.update) {
     if (data.myUpdates.update.type === "Price") {
@@ -187,7 +213,8 @@ export const useMySubscription = (): UseMyUpdates => {
 
   return {
     convertCurrencyAmount,
-    formatCurrencyAmount,
+    convertPaymentAmount,
+    convertPaymentAmountToPrimaryCurrency,
     usdPerSat: cachedPrice === 0 ? null : (cachedPrice / 100).toFixed(8),
     currentBtcWalletBalance: btcWalletBalance,
     currentUsdWalletBalance: usdWalletBalance,

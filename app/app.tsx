@@ -72,12 +72,16 @@ LogBox.ignoreLogs([
 LogBox.ignoreAllLogs()
 
 const noRetryOperations = [
-  "lnInvoicePaymentSend",
-  "lnNoAmountInvoicePaymentSend",
   "intraLedgerPaymentSend",
-  "onChainPaymentSend",
+
   "lnInvoiceFeeProbe",
+  "lnInvoicePaymentSend",
   "lnNoAmountInvoiceFeeProbe",
+  "lnNoAmountInvoicePaymentSend",
+  "lnNoAmountUsdInvoiceFeeProbe",
+  "lnUsdInvoiceFeeProbe",
+
+  "onChainPaymentSend",
   "onChainTxFee",
 ]
 
