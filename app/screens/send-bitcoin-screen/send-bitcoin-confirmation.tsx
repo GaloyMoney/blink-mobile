@@ -353,6 +353,10 @@ const SendBitcoinConfirmation = ({
     paymentAmount,
   ])
 
+  const errorMessage =
+    error ||
+    (fee.status === "error" && translate("SendBitcoinScreen.feeCalculationUnsuccessful"))
+
   return (
     <View style={styles.sendBitcoinConfirmationContainer}>
       <Text style={styles.fieldTitleText}>
@@ -504,12 +508,14 @@ const SendBitcoinConfirmation = ({
         <View style={styles.destinationIconContainer}>
           <FeeIcon />
         </View>
-        <Text style={styles.destinationText}>{feeDisplayText}</Text>
+        <Text style={styles.destinationText}>
+          {fee.status === "loading" ? <ActivityIndicator /> : feeDisplayText}
+        </Text>
       </View>
 
-      {error && (
+      {errorMessage && (
         <View style={styles.errorContainer}>
-          <Text style={styles.errorText}>{translate(error)}</Text>
+          <Text style={styles.errorText}>{translate(errorMessage)}</Text>
         </View>
       )}
 
@@ -521,7 +527,7 @@ const SendBitcoinConfirmation = ({
           titleStyle={styles.buttonTitleStyle}
           disabledStyle={[styles.button, styles.disabledButtonStyle]}
           disabledTitleStyle={styles.disabledButtonTitleStyle}
-          disabled={isLoading}
+          disabled={isLoading || fee.status !== "set"}
           onPress={sendPayment}
         />
       </View>
