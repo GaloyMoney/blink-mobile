@@ -51,31 +51,23 @@ const useFee = ({
 
   useEffect(() => {
     const initializeFee = async () => {
-      if (paymentType === "lightning" || paymentType === "lnurl") {
-        if (sameNode) {
-          return setFee({
-            amount: {
-              amount: 0,
-              currency: walletDescriptor.currency,
-            },
-            status: "set",
-          })
-        }
+      if (paymentType === "intraledger") {
+        return setFee({
+          amount: { amount: 0, currency: walletDescriptor.currency },
+          status: "set",
+        })
+      }
 
-        if (isNoAmountInvoice && paymentAmount.amount === 0) {
+      if (paymentType === "lightning" || paymentType === "lnurl") {
+        if (sameNode || (isNoAmountInvoice && paymentAmount.amount === 0)) {
           return setFee({
-            amount: {
-              amount: 0,
-              currency: walletDescriptor.currency,
-            },
+            amount: { amount: 0, currency: walletDescriptor.currency },
             status: "set",
           })
         }
 
         try {
-          setFee({
-            status: "loading",
-          })
+          setFee({ status: "loading" })
 
           let feeValue: number
           if (isNoAmountInvoice) {
@@ -113,17 +105,12 @@ const useFee = ({
           }
 
           setFee({
-            amount: {
-              amount: feeValue,
-              currency: walletDescriptor.currency,
-            },
+            amount: { amount: feeValue, currency: walletDescriptor.currency },
             status: "set",
           })
         } catch (err) {
           console.debug({ err, message: "error getting lightning fees" })
-          setFee({
-            status: "error",
-          })
+          setFee({ status: "error" })
         }
 
         return
@@ -131,15 +118,11 @@ const useFee = ({
 
       if (paymentType === "onchain") {
         if (paymentAmount.amount === 0) {
-          return setFee({
-            status: "set",
-          })
+          return setFee({ status: "set" })
         }
 
         try {
-          setFee({
-            status: "loading",
-          })
+          setFee({ status: "loading" })
 
           const { data } = await client.query({
             query: QUERIES.onChainTxFee,
@@ -153,23 +136,18 @@ const useFee = ({
           const feeValue = data.onChainTxFee.amount
 
           setFee({
-            amount: {
-              amount: feeValue,
-              currency: walletDescriptor.currency,
-            },
+            amount: { amount: feeValue, currency: walletDescriptor.currency },
             status: "set",
           })
         } catch (err) {
           console.debug({ err, message: "error getting onchains fees" })
-          setFee({
-            status: "error",
-          })
+          setFee({ status: "error" })
         }
       }
     }
     initializeFee()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [invoice, paymentAmount.amount])
+  }, [paymentType, invoice, paymentAmount.amount])
 
   return fee
 }
