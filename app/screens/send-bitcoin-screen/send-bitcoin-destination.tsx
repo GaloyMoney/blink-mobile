@@ -14,9 +14,6 @@ import { useMySubscription } from "@app/hooks"
 import useToken from "@app/utils/use-token"
 
 const Styles = StyleSheet.create({
-  inputContainer: {
-    flex: 1,
-  },
   fieldBackground: {
     flexDirection: "row",
     borderStyle: "solid",
@@ -27,11 +24,10 @@ const Styles = StyleSheet.create({
     alignItems: "center",
     height: 60,
   },
-  descriptionContainer: {
-    flex: 4,
-  },
   buttonContainer: {
     flex: 1,
+    justifyContent: "flex-end",
+    marginBottom: 50,
   },
   input: {
     flex: 1,
@@ -66,6 +62,7 @@ const Styles = StyleSheet.create({
     alignItems: "center",
   },
   errorContainer: {
+    marginVertical: 20,
     flex: 1,
   },
   errorText: {
@@ -206,6 +203,7 @@ const SendBitcoinDestination = ({
       <Text style={Styles.fieldTitleText}>
         {translate("SendBitcoinScreen.destination")}
       </Text>
+
       <View style={Styles.fieldBackground}>
         <TextInput
           style={Styles.input}
@@ -221,8 +219,6 @@ const SendBitcoinDestination = ({
           </View>
         </TouchableWithoutFeedback>
       </View>
-
-      <View style={Styles.descriptionContainer}></View>
 
       {error && (
         <View style={Styles.errorContainer}>
