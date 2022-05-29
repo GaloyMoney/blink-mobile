@@ -1,5 +1,15 @@
+import { PaymentAmount, WalletCurrency } from "@app/types/amounts"
+
 const isCurrencyWithDecimals = (currency) => {
   return currency === "USD"
+}
+
+export const paymentAmountToDollarsOrSats = (
+  paymentAmount: PaymentAmount<WalletCurrency>,
+) => {
+  return paymentAmount.currency === WalletCurrency.USD
+    ? paymentAmount.amount / 100
+    : paymentAmount.amount
 }
 
 // Extracted from: https://github.com/ianmcnally/react-currency-masked-input/blob/3989ce3dfa69dbf78da00424811376c483aceb98/src/services/currency-conversion.js
@@ -28,6 +38,46 @@ export const currencyToTextWithUnits = (moneyAmount: MoneyAmount): string => {
     return "$" + currencyToText(moneyAmount.value.toString(), moneyAmount.currency)
   }
   throw Error("wrong currency")
+}
+
+export const paymentAmountToTextWithUnits = (
+  paymentAmount: PaymentAmount<WalletCurrency>,
+): string => {
+  if (paymentAmount.currency === WalletCurrency.BTC) {
+    if (paymentAmount.amount === 1) {
+      return "1 sat"
+    }
+    return paymentAmountToText(paymentAmount) + " sats"
+  }
+
+  if (paymentAmount.currency === WalletCurrency.USD) {
+    return "$" + paymentAmountToText(paymentAmount)
+  }
+
+  throw Error("wrong currency")
+}
+
+export const paymentAmountToText = (
+  paymentAmount: PaymentAmount<WalletCurrency>,
+  locale = "en-US",
+): string => {
+  if (paymentAmount.currency === WalletCurrency.USD) {
+    return (paymentAmount.amount / 100).toLocaleString(locale, {
+      style: "decimal",
+      maximumFractionDigits: 2,
+      minimumFractionDigits: 2,
+    })
+  }
+
+  if (paymentAmount.currency === WalletCurrency.BTC) {
+    return paymentAmount.amount.toLocaleString(locale, {
+      style: "decimal",
+      maximumFractionDigits: 0,
+      minimumFractionDigits: 0,
+    })
+  }
+
+  throw Error("Currency not supported")
 }
 
 export const currencyToText = (
