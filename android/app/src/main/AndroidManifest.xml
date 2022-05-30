@@ -39,6 +39,12 @@
             <data android:scheme="https"
                   android:host="ln.bitcoinbeach.com"
                   />
+            <data android:scheme="https"
+                  android:host="pay.bbw.sv"
+                  />
+            <data android:scheme="https"
+                  android:host="pay.mainnet.galoy.io"
+                  />
                   <!-- android:pathPrefix="/gizmos"  -->
 
             <!-- note that the leading "/" is required for pathPrefix-->
