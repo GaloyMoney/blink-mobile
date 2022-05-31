@@ -5,13 +5,14 @@ import { ActivityIndicator, StyleSheet, Text, View } from "react-native"
 import DestinationIcon from "@app/assets/icons/destination.svg"
 import { FakeCurrencyInput } from "react-native-currency-input"
 import { useMySubscription, useWalletBalance } from "@app/hooks"
-import * as currencyFmt from "currency.js"
 import { Button } from "react-native-elements"
 import FeeIcon from "@app/assets/icons/fee.svg"
 import useFee from "./use-fee"
 import {
   paymentAmountToDollarsOrSats,
   paymentAmountToTextWithUnits,
+  satAmountDisplay,
+  usdAmountDisplay,
 } from "@app/utils/currencyConversion"
 
 const Status = {
@@ -466,34 +467,15 @@ const SendBitcoinConfirmation = ({
             {wallet.__typename === "BTCWallet" ? (
               <>
                 <Text style={styles.walletBalanceText}>
-                  {currencyFmt
-                    .default(btcWalletValueInUsd, {
-                      precision: 2,
-                      separator: ",",
-                      symbol: "$",
-                    })
-                    .format()}
+                  {usdAmountDisplay(btcWalletValueInUsd)}
                   {" - "}
-                  {currencyFmt
-                    .default(btcWalletBalance, {
-                      precision: 0,
-                      separator: ",",
-                      symbol: "",
-                    })
-                    .format()}
-                  {" sats"}
+                  {satAmountDisplay(btcWalletBalance)}
                 </Text>
               </>
             ) : (
               <>
                 <Text style={styles.walletBalanceText}>
-                  {currencyFmt
-                    .default(usdWalletBalance / 100, {
-                      precision: 2,
-                      separator: ",",
-                      symbol: "$",
-                    })
-                    .format()}
+                  {usdAmountDisplay(usdWalletBalance / 100)}
                 </Text>
               </>
             )}

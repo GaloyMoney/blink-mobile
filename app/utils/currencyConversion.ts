@@ -1,3 +1,5 @@
+import * as currencyFmt from "currency.js"
+
 import { PaymentAmount, WalletCurrency } from "@app/types/amounts"
 
 const isCurrencyWithDecimals = (currency) => {
@@ -107,4 +109,28 @@ const addDecimalToNumber = (number: string, separator: string) => {
   const integerDigits = removeLeadingZeros(number.substring(0, fractionsStartingPosition))
   const fractionDigits = number.substring(fractionsStartingPosition)
   return integerDigits + separator + fractionDigits
+}
+
+export const usdAmountDisplay = (amount: number): string =>
+  currencyFmt
+    .default(amount, {
+      precision: amount < 0.01 && amount !== 0 ? 4 : 2,
+      separator: ",",
+      symbol: "$",
+    })
+    .format()
+
+export const satAmountDisplay = (amount: number): string => {
+  if (amount === 1) {
+    return "1 sat"
+  }
+  return (
+    currencyFmt
+      .default(amount, {
+        precision: 0,
+        separator: ",",
+        symbol: "",
+      })
+      .format() + " sats"
+  )
 }
