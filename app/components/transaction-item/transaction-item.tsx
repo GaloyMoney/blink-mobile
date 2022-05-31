@@ -10,9 +10,9 @@ import { palette } from "../../theme/palette"
 import { ParamListBase } from "@react-navigation/native"
 import { prefCurrencyVar as primaryCurrencyVar } from "../../graphql/client-only-query"
 import { useHideBalance } from "../../hooks"
-import * as currencyFmt from "currency.js"
 import moment from "moment"
 import { getLocale } from "@galoymoney/client"
+import { satAmountDisplay, usdAmountDisplay } from "@app/utils/currencyConversion"
 
 const styles = EStyleSheet.create({
   container: {
@@ -52,19 +52,6 @@ const computeUsdAmount = (tx: WalletTransaction) => {
   const { base, offset } = settlementPrice
   const usdPerSat = base / 10 ** offset / 100
   return settlementAmount * usdPerSat
-}
-
-const amountDisplay = ({ primaryCurrency, settlementAmount, usdAmount }) => {
-  const symbol = primaryCurrency === "BTC" ? "" : "$"
-  const precision = primaryCurrency === "BTC" ? 0 : Math.abs(usdAmount) < 0.01 ? 4 : 2
-
-  return currencyFmt
-    .default(primaryCurrency === "BTC" ? settlementAmount : usdAmount, {
-      separator: ",",
-      symbol,
-      precision,
-    })
-    .format()
 }
 
 const descriptionDisplay = (tx: WalletTransaction) => {
@@ -146,7 +133,9 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
           style={amountDisplayStyle({ isReceive, isPending })}
           onPress={hideBalance ? pressTxAmount : undefined}
         >
-          {amountDisplay({ ...tx, usdAmount, primaryCurrency })}
+          {primaryCurrency === "BTC"
+            ? satAmountDisplay(tx.settlementAmount)
+            : usdAmountDisplay(usdAmount)}
         </Text>
       )}
     </ListItem>

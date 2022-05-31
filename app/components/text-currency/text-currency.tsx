@@ -1,4 +1,3 @@
-import * as currencyFmt from "currency.js"
 import * as React from "react"
 import { Text, TextStyle, View } from "react-native"
 import type { ComponentType } from "../../types/jsx"
@@ -6,6 +5,7 @@ import { palette } from "@app/theme"
 import SatsIcon from "../../assets/icons/sat.svg"
 import { useWalletBalance } from "@app/hooks"
 import EStyleSheet from "react-native-extended-stylesheet"
+import { satAmountDisplay, usdAmountDisplay } from "@app/utils/currencyConversion"
 type Props = {
   amount: number
   currency: CurrencyType
@@ -32,11 +32,7 @@ export const TextCurrencyForAmount: ComponentType = ({
   iconColor = palette.black,
 }: Props) => {
   if (currency === "USD") {
-    const amountDisplay = Number.isNaN(amount)
-      ? "..."
-      : currencyFmt
-          .default(amount, { precision: amount < 0.01 && amount !== 0 ? 4 : 2 })
-          .format()
+    const amountDisplay = Number.isNaN(amount) ? "..." : usdAmountDisplay(amount)
     return <Text style={style}>{amountDisplay}</Text>
   }
   if (currency === "BTC") {
@@ -48,15 +44,7 @@ export const TextCurrencyForAmount: ComponentType = ({
           // @ts-expect-error: fill
           style={{ fill: iconColor, width: satsIconSize, height: satsIconSize }}
         />
-        <Text style={style}>
-          {currencyFmt
-            .default(amount, {
-              precision: 0,
-              separator: ",",
-              symbol: "",
-            })
-            .format()}
-        </Text>
+        <Text style={style}>{satAmountDisplay(amount)}</Text>
       </View>
     )
   }

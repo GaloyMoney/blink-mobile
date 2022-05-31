@@ -4,13 +4,13 @@ import { palette } from "@app/theme"
 import React, { useEffect, useState } from "react"
 import { StyleSheet, View, TouchableWithoutFeedback, TextInput } from "react-native"
 import { Button, Text } from "react-native-elements"
-import * as currencyFmt from "currency.js"
 import ReactNativeModal from "react-native-modal"
 import { FakeCurrencyInput } from "react-native-currency-input"
 import SwitchIcon from "@app/assets/icons/switch.svg"
 import { translateUnknown as translate } from "@galoymoney/client"
 import NoteIcon from "@app/assets/icons/note.svg"
 import { ScrollView } from "react-native-gesture-handler"
+import { satAmountDisplay, usdAmountDisplay } from "@app/utils/currencyConversion"
 
 const Styles = StyleSheet.create({
   sendBitcoinAmountContainer: {
@@ -288,34 +288,15 @@ const SendBitcoinAmount = ({
                     {wallet.__typename === "BTCWallet" ? (
                       <>
                         <Text style={Styles.walletBalanceText}>
-                          {currencyFmt
-                            .default(btcWalletValueInUsd, {
-                              precision: 2,
-                              separator: ",",
-                              symbol: "$",
-                            })
-                            .format()}
+                          {usdAmountDisplay(btcWalletValueInUsd)}
                           {" - "}
-                          {currencyFmt
-                            .default(btcWalletBalance, {
-                              precision: 0,
-                              separator: ",",
-                              symbol: "",
-                            })
-                            .format()}
-                          {" sats"}
+                          {satAmountDisplay(btcWalletBalance)}
                         </Text>
                       </>
                     ) : (
                       <>
                         <Text style={Styles.walletBalanceText}>
-                          {currencyFmt
-                            .default(usdWalletBalance / 100, {
-                              precision: 2,
-                              separator: ",",
-                              symbol: "$",
-                            })
-                            .format()}
+                          {usdAmountDisplay(usdWalletBalance / 100)}
                         </Text>
                       </>
                     )}
@@ -369,34 +350,15 @@ const SendBitcoinAmount = ({
                 {fromWallet.__typename === "BTCWallet" ? (
                   <>
                     <Text style={Styles.walletBalanceText}>
-                      {currencyFmt
-                        .default(btcWalletValueInUsd, {
-                          precision: 2,
-                          separator: ",",
-                          symbol: "$",
-                        })
-                        .format()}
+                      {usdAmountDisplay(btcWalletValueInUsd)}
                       {" - "}
-                      {currencyFmt
-                        .default(btcWalletBalance, {
-                          precision: 0,
-                          separator: ",",
-                          symbol: "",
-                        })
-                        .format()}
-                      {" sats"}
+                      {satAmountDisplay(btcWalletBalance)}
                     </Text>
                   </>
                 ) : (
                   <>
                     <Text style={Styles.walletBalanceText}>
-                      {currencyFmt
-                        .default(usdWalletBalance / 100, {
-                          precision: 2,
-                          separator: ",",
-                          symbol: "$",
-                        })
-                        .format()}
+                      {usdAmountDisplay(usdWalletBalance / 100)}
                     </Text>
                   </>
                 )}
