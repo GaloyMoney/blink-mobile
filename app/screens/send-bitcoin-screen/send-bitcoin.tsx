@@ -161,7 +161,16 @@ const SendBitcoin = ({ navigation, route }) => {
 
   useEffect(() => {
     if (route.params?.payment) {
-      setDestination(route.params?.payment)
+      const domains = [
+        "https://ln.bitcoinbeach.com/",
+        "https://pay.mainnet.galoy.io/",
+        "https://pay.bbw.sv/",
+      ]
+      domains.forEach((domain) => {
+        if (route.params?.payment?.startsWith(domain)) {
+          setDestination(route.params?.payment?.substring(domain.length))
+        }
+      })
     }
   }, [route.params?.payment])
 

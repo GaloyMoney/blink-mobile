@@ -123,12 +123,18 @@ export const validPayment = (
     staticLnurlIdentifier = true
     lnurl = utils.decodeUrlOrAddress(protocol)
   } else if (!utils.isLightningAddress(protocol) && protocol.toLowerCase() === "https") {
-    const domain = "//ln.bitcoinbeach.com/"
-    if (data.startsWith(domain)) {
-      return {
-        valid: true,
-        paymentType: "username" as "intraledger", // FIXME: temp
-        username: data.substring(domain.length),
+    const domains = [
+      "https://ln.bitcoinbeach.com/",
+      "https://pay.mainnet.galoy.io/",
+      "https://pay.bbw.sv/",
+    ]
+    for (const domain of domains) {
+      if (input.startsWith(domain)) {
+        return {
+          valid: true,
+          paymentType: "username" as "intraledger", // FIXME: temp
+          username: input.substring(domain.length),
+        }
       }
     }
   } else {

@@ -248,7 +248,12 @@ export const App = (): JSX.Element => {
   }
 
   const linking = {
-    prefixes: ["https://ln.bitcoinbeach.com", "bitcoinbeach://"],
+    prefixes: [
+      "https://ln.bitcoinbeach.com",
+      "bitcoinbeach://",
+      "https://pay.mainnet.galoy.io",
+      "https://pay.bbw.sv",
+    ],
     config: {
       screens: hasToken
         ? {
