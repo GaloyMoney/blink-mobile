@@ -39,6 +39,15 @@ platform :ios do
     # upload_to_testflight
   end
 
+  desc "Upload to browserstack for testing"
+  lane :browserstack do
+    build_ipa
+    upload_to_browserstack_app_automate(
+      browserstack_username: ENV["BROWSERSTACK_USER"],
+      browserstack_access_key: ENV["BROWSERSTACK_ACCESS_KEY"],
+    )
+  end
+
   desc "increment path version"
   lane :increment do
     increment_version_number(bump_type: "patch")
@@ -47,7 +56,7 @@ platform :ios do
   desc "build ipa"
   lane :build_ipa do
     match(type: "development", readonly: is_ci)
-    gym(scheme: "GaloyApp", export_method: "development", codesigning_identity: "Apple Development: Nicolas Burtey (MT977993KD)")
+    gym(scheme: "GaloyApp", export_method: "development", codesigning_identity: "Apple Development: David Borthwick (SU5SVAJAAL)")
   end
 
 end
