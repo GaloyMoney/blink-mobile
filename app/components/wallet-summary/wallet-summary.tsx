@@ -1,10 +1,10 @@
 import { palette } from "@app/theme"
+import { satAmountDisplay, usdAmountDisplay } from "@app/utils/currencyConversion"
 import { WalletType } from "@app/utils/enum"
 import React, { FunctionComponent } from "react"
 import { Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { CurrencyTag } from "../currency-tag"
-import * as currencyFmt from "currency.js"
 
 type WalletSummaryProps = {
   walletType: WalletType
@@ -57,23 +57,9 @@ export const WalletSummary: FunctionComponent<WalletSummaryProps> = ({
           walletName: "US Dollar Wallet",
         }
 
-  const formattedUsdAmount = currencyFmt
-    .default(usdBalanceInDollars, {
-      precision: 2,
-      separator: ",",
-      symbol: "$",
-    })
-    .format()
+  const formattedUsdAmount = usdAmountDisplay(usdBalanceInDollars)
 
-  const formattedBtcAmount = btcBalanceInSats
-    ? currencyFmt
-        .default(btcBalanceInSats, {
-          precision: 0,
-          separator: ",",
-          symbol: "",
-        })
-        .format() + " sats"
-    : ""
+  const formattedBtcAmount = btcBalanceInSats ? satAmountDisplay(btcBalanceInSats) : ""
 
   const amounts = formattedBtcAmount
     ? formattedUsdAmount + " - " + formattedBtcAmount

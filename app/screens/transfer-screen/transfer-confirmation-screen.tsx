@@ -7,8 +7,8 @@ import { translateUnknown as translate, useMutation } from "@galoymoney/client"
 
 import { palette } from "@app/theme"
 import { useWalletBalance } from "@app/hooks"
-import * as currencyFmt from "currency.js"
 import { toastShow } from "@app/utils/toast"
+import { satAmountDisplay, usdAmountDisplay } from "@app/utils/currencyConversion"
 
 const Status = {
   IDLE: "idle",
@@ -151,34 +151,15 @@ const TransferConfirmationScreen = ({
             {fromWallet?.walletCurrency === "BTC" ? (
               <>
                 <Text style={styles.walletBalanceText}>
-                  {currencyFmt
-                    .default(btcWalletValueInUsd, {
-                      precision: 2,
-                      separator: ",",
-                      symbol: "$",
-                    })
-                    .format()}
+                  {usdAmountDisplay(btcWalletValueInUsd)}
                   {" - "}
-                  {currencyFmt
-                    .default(btcWalletBalance, {
-                      precision: 0,
-                      separator: ",",
-                      symbol: "",
-                    })
-                    .format()}
-                  {" sats"}
+                  {satAmountDisplay(btcWalletBalance)}
                 </Text>
               </>
             ) : (
               <>
                 <Text style={styles.walletBalanceText}>
-                  {currencyFmt
-                    .default(usdWalletBalance / 100, {
-                      precision: 2,
-                      separator: ",",
-                      symbol: "$",
-                    })
-                    .format()}
+                  {usdAmountDisplay(usdWalletBalance / 100)}
                 </Text>
               </>
             )}
@@ -219,34 +200,15 @@ const TransferConfirmationScreen = ({
             {toWallet?.walletCurrency === "BTC" ? (
               <>
                 <Text style={styles.walletBalanceText}>
-                  {currencyFmt
-                    .default(btcWalletValueInUsd, {
-                      precision: 2,
-                      separator: ",",
-                      symbol: "$",
-                    })
-                    .format()}
+                  {usdAmountDisplay(btcWalletValueInUsd)}
                   {" - "}
-                  {currencyFmt
-                    .default(btcWalletBalance, {
-                      precision: 0,
-                      separator: ",",
-                      symbol: "",
-                    })
-                    .format()}
-                  {" sats"}
+                  {satAmountDisplay(btcWalletBalance)}
                 </Text>
               </>
             ) : (
               <>
                 <Text style={styles.walletBalanceText}>
-                  {currencyFmt
-                    .default(usdWalletBalance / 100, {
-                      precision: 2,
-                      separator: ",",
-                      symbol: "$",
-                    })
-                    .format()}
+                  {usdAmountDisplay(usdWalletBalance / 100)}
                 </Text>
               </>
             )}
