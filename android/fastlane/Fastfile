@@ -74,7 +74,6 @@ platform :android do
   lane :browserstack do
     gradle(
         task: "clean assembleDebug",
-        build_type: "Debug",
         print_command: false,
         flags: "--no-daemon --max-workers=8 --stacktrace --info",
         properties: {
