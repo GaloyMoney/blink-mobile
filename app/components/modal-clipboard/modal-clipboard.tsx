@@ -12,11 +12,13 @@ import {
   LAST_CLIPBOARD_PAYMENT,
   modalClipboardVisibleVar,
 } from "../../graphql/client-only-query"
-import { translateUnknown as translate } from "@galoymoney/client"
+import {
+  parsePaymentDestination,
+  translateUnknown as translate,
+} from "@galoymoney/client"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { cache } from "../../graphql/cache"
-import { validPayment } from "../../utils/parsing"
 import useToken from "../../utils/use-token"
 import type { StackNavigationProp } from "@react-navigation/stack"
 import type { ComponentType } from "../../types/jsx"
@@ -107,12 +109,19 @@ export const ModalClipboard: ComponentType = () => {
 
     ;(async () => {
       const clipboard = await Clipboard.getString()
-      const { paymentType } = validPayment(clipboard, tokenNetwork, myPubKey, username)
-      const pathString =
-        paymentType === "lightning"
-          ? "ModalClipboard.pendingInvoice"
-          : "ModalClipboard.pendingBitcoin"
-      setMessage(translate(pathString))
+      if (clipboard) {
+        const { paymentType } = parsePaymentDestination({
+          destination: clipboard,
+          network: tokenNetwork,
+          pubKey: myPubKey,
+        })
+
+        const pathString =
+          paymentType === "lightning"
+            ? "ModalClipboard.pendingInvoice"
+            : "ModalClipboard.pendingBitcoin"
+        setMessage(translate(pathString))
+      }
     })()
   }, [client, isVisible, myPubKey, tokenNetwork, username])
 

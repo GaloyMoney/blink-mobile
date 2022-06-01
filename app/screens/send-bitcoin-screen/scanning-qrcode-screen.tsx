@@ -8,10 +8,12 @@ import Svg, { Circle } from "react-native-svg"
 import Icon from "react-native-vector-icons/Ionicons"
 import Paste from "react-native-vector-icons/FontAwesome"
 import { Screen } from "../../components/screen"
-import { translateUnknown as translate } from "@galoymoney/client"
+import {
+  parsePaymentDestination,
+  translateUnknown as translate,
+} from "@galoymoney/client"
 import { palette } from "../../theme/palette"
 import type { ScreenType } from "../../types/jsx"
-import { validPayment } from "../../utils/parsing"
 import { getParams, LNURLPayParams } from "js-lnurl"
 
 import LocalQRCode from "@remobile/react-native-qrcode-local-image"
@@ -77,13 +79,18 @@ export const ScanningQRCodeScreen: ScreenType = ({
   const index = useNavigationState((state) => state.index)
   const [pending, setPending] = React.useState(false)
   const { tokenNetwork } = useToken()
-  const { myPubKey, username } = useMainQuery()
+  const { myPubKey } = useMainQuery()
   const decodeInvoice = async (data) => {
     if (pending) {
       return
     }
     try {
-      const { valid, lnurl } = validPayment(data, tokenNetwork, myPubKey, username)
+      const { valid, lnurl } = parsePaymentDestination({
+        destination: data,
+        network: tokenNetwork,
+        pubKey: myPubKey,
+      })
+
       if (valid) {
         if (lnurl) {
           setPending(true)

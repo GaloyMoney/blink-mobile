@@ -1889,10 +1889,10 @@
     base64-js "^1.2.3"
     xmlbuilder "^14.0.0"
 
-"@galoymoney/client@^0.1.23":
-  version "0.1.23"
-  resolved "https://registry.yarnpkg.com/@galoymoney/client/-/client-0.1.23.tgz#11d559210551bba7a4de03068290dd94d5521d91"
-  integrity sha512-C494c8oS9Pwd/Bvoa0xWrxijuPA8yBc8wlmprlySjj5UZrtm2wSd57zor3aJBNUd5ablbXWxw8Yhv9tgIv4r4g==
+"@galoymoney/client@^0.1.24":
+  version "0.1.24"
+  resolved "https://registry.yarnpkg.com/@galoymoney/client/-/client-0.1.24.tgz#adbb10ccfd38d509cdd3246e7550b98a5c6eb545"
+  integrity sha512-LE1I4bfkdwJ3xpkgoAXUyi6gsuE9RAWzCJ0p3Qe34GwS5yN9UAIUJr44iIz2RFnFEkfxwwG5qC0nNc3/hIA2Fw==
 
 "@galoymoney/react-native-geetest-module@^0.1.3":
   version "0.1.3"
