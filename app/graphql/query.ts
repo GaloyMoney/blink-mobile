@@ -22,6 +22,7 @@ const TRANSACTION_LIST_FRAGMENT = gql`
         memo
         createdAt
 
+        settlementCurrency
         settlementAmount
         settlementFee
         settlementPrice {
@@ -84,13 +85,13 @@ export const MAIN_QUERY = gql`
       defaultAccount {
         id
         defaultWalletId
+        transactions(first: 3) {
+          ...TransactionList
+        }
         wallets {
           id
           balance
           walletCurrency
-          transactions(first: 3) {
-            ...TransactionList
-          }
         }
       }
     }

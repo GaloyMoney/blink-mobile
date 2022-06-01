@@ -114,7 +114,7 @@ const addDecimalToNumber = (number: string, separator: string) => {
 export const usdAmountDisplay = (amount: number): string =>
   currencyFmt
     .default(amount, {
-      precision: amount < 0.01 && amount !== 0 ? 4 : 2,
+      precision: Math.abs(amount) < 0.01 && amount !== 0 ? 4 : 2,
       separator: ",",
       symbol: "$",
     })
