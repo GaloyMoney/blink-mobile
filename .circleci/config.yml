@@ -59,9 +59,7 @@ jobs:
           command: cd android && bundle exec fastlane browserstack
       - run:
           name: Run Test on Android
-          command: |
-            yarn start &
-            ./node_modules/.bin/wdio android/browserstack.js
+          command: ./node_modules/.bin/wdio android/browserstack.js
 
   ios_test:
     macos:
