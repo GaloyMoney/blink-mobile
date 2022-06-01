@@ -14,8 +14,10 @@ import { satAmountDisplay, usdAmountDisplay } from "@app/utils/currencyConversio
 
 const Styles = StyleSheet.create({
   sendBitcoinAmountContainer: {
-    flex: 1,
     flexDirection: "column",
+  },
+  contentContainer: {
+    flexGrow: 1,
   },
   fieldBackground: {
     flexDirection: "row",
@@ -114,12 +116,12 @@ const Styles = StyleSheet.create({
     marginLeft: 20,
   },
   errorContainer: {
+    marginVertical: 20,
     flex: 1,
-    alignItems: "flex-end",
   },
   errorText: {
-    fontSize: 12,
     color: palette.red,
+    textAlign: "center",
   },
   noteContainer: {
     flex: 1,
@@ -140,8 +142,6 @@ const Styles = StyleSheet.create({
   button: {
     height: 60,
     borderRadius: 10,
-    marginBottom: 20,
-    marginTop: 20,
   },
   disabledButtonStyle: {
     backgroundColor: "rgba(83, 111, 242, 0.1)",
@@ -156,6 +156,11 @@ const Styles = StyleSheet.create({
   activeButtonTitleStyle: {
     color: palette.white,
     fontWeight: "bold",
+  },
+  buttonContainer: {
+    flex: 1,
+    justifyContent: "flex-end",
+    marginBottom: 50,
   },
 })
 
@@ -218,30 +223,12 @@ const SendBitcoinAmount = ({
     }
   }, [satAmount, satAmountInUsd, amountCurrency, convertCurrencyAmount])
 
-  const toggleModal = () => {
-    setIsModalVisible(!isModalVisible)
-  }
-
-  const validate = (): boolean => {
-    if (
-      fromWallet.__typename === "UsdWallet" &&
-      dollarAmount &&
-      100 * dollarAmount <= usdWalletBalance
-    ) {
-      return true
-    }
-    if (
-      fromWallet.__typename === "BTCWallet" &&
-      satAmount &&
-      satAmount <= btcWalletBalance
-    ) {
-      return true
-    }
-    return false
-  }
-
   if (!defaultWallet) {
     return <></>
+  }
+
+  const toggleModal = () => {
+    setIsModalVisible(!isModalVisible)
   }
 
   const chooseWalletModal = (
@@ -313,8 +300,32 @@ const SendBitcoinAmount = ({
 
   const showWalletPicker = !usdDisabled
 
+  let validAmount = false
+  let errorMessage
+
+  if (fromWallet.__typename === "UsdWallet" && dollarAmount) {
+    validAmount = 100 * dollarAmount <= usdWalletBalance
+    if (!validAmount) {
+      errorMessage = translate("SendBitcoinScreen.amountExceed", {
+        balance: usdAmountDisplay(usdWalletBalance / 100),
+      })
+    }
+  }
+
+  if (fromWallet.__typename === "BTCWallet" && satAmount) {
+    validAmount = satAmount <= btcWalletBalance
+    if (!validAmount) {
+      errorMessage = translate("SendBitcoinScreen.amountExceed", {
+        balance: satAmountDisplay(btcWalletBalance),
+      })
+    }
+  }
+
   return (
-    <ScrollView style={Styles.sendBitcoinAmountContainer}>
+    <ScrollView
+      style={Styles.sendBitcoinAmountContainer}
+      contentContainerStyle={Styles.contentContainer}
+    >
       <View style={Styles.fieldContainer}>
         <Text style={Styles.fieldTitleText}>{translate("common.from")}</Text>
         <TouchableWithoutFeedback onPress={() => showWalletPicker && toggleModal()}>
@@ -447,9 +458,6 @@ const SendBitcoinAmount = ({
             </TouchableWithoutFeedback>
           )}
         </View>
-        <View style={Styles.errorContainer}>
-          <Text style={Styles.errorText}></Text>
-        </View>
       </View>
       <View style={Styles.fieldContainer}>
         <Text style={Styles.fieldTitleText}>{translate("SendBitcoinScreen.note")}</Text>
@@ -468,14 +476,21 @@ const SendBitcoinAmount = ({
           </View>
         </View>
       </View>
-      <View>
+
+      {errorMessage && (
+        <View style={Styles.errorContainer}>
+          <Text style={Styles.errorText}>{errorMessage}</Text>
+        </View>
+      )}
+
+      <View style={Styles.buttonContainer}>
         <Button
           title={translate("common.next")}
           buttonStyle={[Styles.button, Styles.activeButtonStyle]}
           titleStyle={Styles.activeButtonTitleStyle}
           disabledStyle={[Styles.button, Styles.disabledButtonStyle]}
           disabledTitleStyle={Styles.disabledButtonTitleStyle}
-          disabled={!validate()}
+          disabled={!validAmount}
           onPress={() => {
             if (fromWallet.__typename === "UsdWallet") {
               setAmount(dollarAmount)
