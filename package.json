@@ -6,6 +6,8 @@
     "start": "react-native start",
     "ios": "react-native run-ios",
     "android": "react-native run-android",
+    "android:prepareAssets": "./android/gradlew clean -b ./android/build.gradle && npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res && rm -rf android/app/src/main/res/drawable**",
+    "android:buildDebug": "yarn android:prepareAssets && ./android/gradlew -b ./android/build.gradle assembleDebug",
     "tsc:check": "tsc -p .",
     "eslint:check": "eslint app --ext .js,.ts,.tsx",
     "eslint:fix": "eslint app --ext .js,.ts,.tsx --fix",

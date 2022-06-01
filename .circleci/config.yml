@@ -51,7 +51,9 @@ jobs:
           key: yarn-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
-
+      - run:
+          name: Prepare assets for debug build
+          command: yarn android:prepareAssets
       - run:
           name: Upload to browserstack
           command: cd android && bundle exec fastlane browserstack

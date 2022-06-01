@@ -73,8 +73,8 @@ platform :android do
   desc "Upload to browserstack for testing"
   lane :browserstack do
     gradle(
-        task: "clean assemble",
-        build_type: "Release",
+        task: "clean assembleDebug",
+        build_type: "Debug",
         print_command: false,
         flags: "--no-daemon --max-workers=8 --stacktrace --info",
         properties: {
