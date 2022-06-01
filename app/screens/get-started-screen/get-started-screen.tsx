@@ -13,6 +13,7 @@ import type { ScreenType } from "../../types/jsx"
 
 import BitcoinBeachLogo from "./bitcoinBeach3.png"
 
+
 const styles = EStyleSheet.create({
   Logo: {
     marginTop: 24,

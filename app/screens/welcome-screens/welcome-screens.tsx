@@ -16,6 +16,7 @@ import BankShop from "./cc-bank-shop-01.svg"
 import MascotDollarBitcoin from "./honey-badger-money-bitcoin-01.svg"
 import HoneyBadgerShovel from "./honey-badger-shovel-01.svg"
 
+
 const styles = EStyleSheet.create({
   $color: palette.white,
   $fontWeight: "bold",
@@ -34,7 +35,7 @@ const styles = EStyleSheet.create({
   },
 
   text: {
-    color: "$color",
+    color: "#000",
     fontSize: "20rem",
     paddingHorizontal: "$paddingHorizontal",
     paddingTop: "24rem",
@@ -43,7 +44,7 @@ const styles = EStyleSheet.create({
   },
 
   title: {
-    color: "$color",
+    color: "#000",
     fontSize: "30rem",
     fontWeight: "$fontWeight",
     paddingTop: "24rem",
