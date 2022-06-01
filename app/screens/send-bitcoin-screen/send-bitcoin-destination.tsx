@@ -1,15 +1,19 @@
-import React from "react"
+import React, { useState } from "react"
 import { palette } from "@app/theme"
 import { StyleSheet, Text, TextInput, View } from "react-native"
-import { translateUnknown as translate } from "@galoymoney/client"
+import {
+  parsePaymentDestination,
+  useDelayedQuery,
+  translateUnknown as translate,
+} from "@galoymoney/client"
 import { Button } from "react-native-elements"
 import ScanIcon from "@app/assets/icons/scan.svg"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
+import useMainQuery from "@app/hooks/use-main-query"
+import { useMySubscription } from "@app/hooks"
+import useToken from "@app/utils/use-token"
 
 const Styles = StyleSheet.create({
-  inputContainer: {
-    flex: 1,
-  },
   fieldBackground: {
     flexDirection: "row",
     borderStyle: "solid",
@@ -20,11 +24,10 @@ const Styles = StyleSheet.create({
     alignItems: "center",
     height: 60,
   },
-  descriptionContainer: {
-    flex: 4,
-  },
   buttonContainer: {
     flex: 1,
+    justifyContent: "flex-end",
+    marginBottom: 50,
   },
   input: {
     flex: 1,
@@ -59,6 +62,7 @@ const Styles = StyleSheet.create({
     alignItems: "center",
   },
   errorContainer: {
+    marginVertical: 20,
     flex: 1,
   },
   errorText: {
@@ -70,34 +74,136 @@ const Styles = StyleSheet.create({
 const SendBitcoinDestination = ({
   destination,
   setDestination,
-  validateDestination,
   nextStep,
   navigation,
 }) => {
-  const [validDestination, setValidDestination] = React.useState<boolean | undefined>(
-    undefined,
-  )
+  const { myPubKey, username: myUsername } = useMainQuery()
+  const { convertCurrencyAmount } = useMySubscription()
+  const [error, setError] = useState<string | undefined>(undefined)
+  const { tokenNetwork } = useToken()
+
+  const [userDefaultWalletIdQuery, { loading: userDefaultWalletIdLoading }] =
+    useDelayedQuery.userDefaultWalletId()
+
+  const validateDestination = React.useCallback(async () => {
+    setError(undefined)
+    setDestination(destination)
+
+    const {
+      valid,
+      errorMessage,
+
+      paymentType,
+      address,
+      paymentRequest,
+      handle,
+
+      amount: amountInvoice,
+      memo: memoInvoice,
+      sameNode,
+      // staticLnurlIdentifier,
+    } = parsePaymentDestination({ destination, network: tokenNetwork, pubKey: myPubKey })
+
+    if (destination === myUsername) {
+      setError(translate("You can't send a payment to yourself"))
+
+      return { valid: false }
+    }
+
+    const fixedAmount = amountInvoice !== undefined
+
+    const staticLnurlIdentifier = false // FIXME: Change galoy-client to return this
+
+    let recipientWalletId, note, defaultAmount
+
+    if (valid) {
+      if (paymentType === "onchain") setDestination(address)
+      if (paymentType === "lightning") setDestination(paymentRequest)
+
+      if (paymentType === "intraledger") {
+        if (userDefaultWalletIdLoading) {
+          return { valid: false }
+        }
+
+        const { data, errorsMessage } = await userDefaultWalletIdQuery({
+          username: handle,
+        })
+
+        if (errorsMessage) {
+          setError(errorsMessage)
+          return { valid: false }
+        }
+        setDestination(handle)
+        recipientWalletId = data?.userDefaultWalletId
+      }
+
+      //   if (lnurl) {
+      //     setPaymentType("lnurl")
+      //     if (staticLnurlIdentifier) {
+      //       setIsStaticLnurlIdentifier(true)
+      //       setInteractive(true)
+      //     }
+      //     if (route.params?.lnurlParams) {
+      //       const params = setLnurlParams({ params: route.params.lnurlParams, lnurl })
+      //       setLnurlPay({ ...params })
+      //     } else {
+      //       debouncedGetLnurlParams(lnurl)
+      //     }
+      //   }
+
+      if (fixedAmount && !staticLnurlIdentifier) {
+        defaultAmount = convertCurrencyAmount({
+          from: "BTC",
+          to: "USD",
+          amount: amountInvoice,
+        })
+      }
+
+      if (memoInvoice) {
+        note = memoInvoice.toString()
+      }
+    } else {
+      setError(translate(errorMessage || "Invalid Payment Destination"))
+    }
+
+    return {
+      valid,
+      paymentType,
+      sameNode,
+      fixedAmount,
+      defaultAmount,
+      note,
+      recipientWalletId,
+    }
+  }, [
+    convertCurrencyAmount,
+    destination,
+    myPubKey,
+    myUsername,
+    setDestination,
+    tokenNetwork,
+    userDefaultWalletIdLoading,
+    userDefaultWalletIdQuery,
+  ])
 
   const handleChangeText = (newDestination) => {
-    setValidDestination(undefined)
+    setError(undefined)
     setDestination(newDestination)
   }
 
   const handlePress = async () => {
-    const valid = await validateDestination()
-    if (valid) {
-      return nextStep()
+    const parsedDestination = await validateDestination()
+    if (parsedDestination.valid) {
+      return nextStep(parsedDestination)
     }
-    setValidDestination(valid)
   }
-
-  const showError = Boolean(destination && validDestination === false)
 
   return (
     <>
       <Text style={Styles.fieldTitleText}>
         {translate("SendBitcoinScreen.destination")}
       </Text>
+
       <View style={Styles.fieldBackground}>
         <TextInput
           style={Styles.input}
@@ -114,11 +220,9 @@ const SendBitcoinDestination = ({
         </TouchableWithoutFeedback>
       </View>
 
-      <View style={Styles.descriptionContainer}></View>
-
-      {showError && (
+      {error && (
         <View style={Styles.errorContainer}>
-          <Text style={Styles.errorText}>{translate("Invalid Payment Destination")}</Text>
+          <Text style={Styles.errorText}>{error}</Text>
         </View>
       )}
 
@@ -133,7 +237,7 @@ const SendBitcoinDestination = ({
           titleStyle={Styles.activeButtonTitleStyle}
           disabledStyle={[Styles.button, Styles.disabledButtonStyle]}
           disabledTitleStyle={Styles.disabledButtonTitleStyle}
-          disabled={!destination || validDestination === false}
+          disabled={Boolean(!destination || error)}
           onPress={handlePress}
         />
       </View>
