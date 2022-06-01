@@ -1,4 +1,4 @@
-import LightningInvoice from "@app/components/lightning-invoice/lightning-invoice"
+import { PaymentDestinationDisplay } from "@app/components/payment-destination-display"
 import { useMySubscription } from "@app/hooks"
 import useMainQuery from "@app/hooks/use-main-query"
 import { palette } from "@app/theme"
@@ -9,7 +9,7 @@ import React, { useCallback, useEffect, useMemo, useState } from "react"
 import { ActivityIndicator, Alert, Pressable, Share, View } from "react-native"
 import { Text } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
-import { QRView } from "./qr-view"
+import QRView from "./qr-view"
 import Icon from "react-native-vector-icons/Ionicons"
 import Clipboard from "@react-native-community/clipboard"
 import CalculatorIcon from "@app/assets/icons/calculator.svg"
@@ -211,7 +211,7 @@ const ReceiveUsd = () => {
       </Pressable>
       <View style={styles.fieldsContainer}>
         <View style={styles.field}>
-          {!loading && <LightningInvoice invoice={invoice?.paymentRequest} />}
+          {!loading && <PaymentDestinationDisplay data={invoice?.paymentRequest} />}
           {loading && <ActivityIndicator />}
         </View>
 
