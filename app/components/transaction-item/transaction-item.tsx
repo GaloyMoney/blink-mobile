@@ -11,14 +11,26 @@ import { ParamListBase } from "@react-navigation/native"
 import { prefCurrencyVar as primaryCurrencyVar } from "../../graphql/client-only-query"
 import { useHideBalance } from "../../hooks"
 import moment from "moment"
-import { getLocale } from "@galoymoney/client"
 import { satAmountDisplay, usdAmountDisplay } from "@app/utils/currencyConversion"
+import { GaloyGQL, getLocale } from "@galoymoney/client"
+import { WalletCurrency } from "@app/types/amounts"
 
 const styles = EStyleSheet.create({
   container: {
     paddingVertical: 9,
+    borderColor: palette.lighterGrey,
+    borderBottomWidth: "2rem",
+    overflow: "hidden",
   },
-
+  containerFirst: {
+    borderTopLeftRadius: "12rem",
+    borderTopRightRadius: "12rem",
+  },
+  containerLast: {
+    borderBottomWitdth: 0,
+    borderBottomLeftRadius: "12rem",
+    borderBottomRightRadius: "12rem",
+  },
   hiddenBalanceContainer: {
     fontSize: "16rem",
   },
@@ -38,7 +50,9 @@ const styles = EStyleSheet.create({
 
 export interface TransactionItemProps {
   navigation: StackNavigationProp<ParamListBase>
-  tx: WalletTransaction
+  isFirst: boolean
+  isLast: boolean
+  tx: GaloyGQL.Transaction
   subtitle?: boolean
 }
 
@@ -47,7 +61,7 @@ moment.locale(getLocale())
 const dateDisplay = ({ createdAt }) =>
   moment.duration(Math.min(0, moment.unix(createdAt).diff(moment()))).humanize(true)
 
-const computeUsdAmount = (tx: WalletTransaction) => {
+const computeUsdAmount = (tx: GaloyGQL.Transaction) => {
   const { settlementAmount, settlementPrice } = tx
   const { base, offset } = settlementPrice
   const usdPerSat = base / 10 ** offset / 100
@@ -85,6 +99,8 @@ const amountDisplayStyle = ({ isReceive, isPending }) => {
 export const TransactionItem: React.FC<TransactionItemProps> = ({
   tx,
   navigation,
+  isFirst = false,
+  isLast = false,
   subtitle = false,
 }: TransactionItemProps) => {
   const primaryCurrency = primaryCurrencyVar()
@@ -94,7 +110,6 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
   const isPending = tx.status === "PENDING"
   const description = descriptionDisplay(tx)
   const usdAmount = computeUsdAmount(tx)
-
   const [txHideBalance, setTxHideBalance] = useState(hideBalance)
 
   useEffect(() => {
@@ -105,10 +120,15 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
 
   return (
     <ListItem
-      containerStyle={styles.container}
+      containerStyle={[
+        styles.container,
+        isFirst ? styles.containerFirst : {},
+        isLast ? styles.containerLast : {},
+      ]}
       onPress={() =>
         navigation.navigate("transactionDetail", {
           ...tx,
+          walletType: tx.settlementCurrency,
           isReceive,
           isPending,
           description,
@@ -120,7 +140,7 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
         onChain={tx.settlementVia.__typename === "SettlementViaOnChain"}
         isReceive={isReceive}
         pending={isPending}
-        walletType={tx.walletType}
+        walletType={tx.settlementCurrency}
       />
       <ListItem.Content>
         <ListItem.Title>{description}</ListItem.Title>
@@ -133,7 +153,7 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
           style={amountDisplayStyle({ isReceive, isPending })}
           onPress={hideBalance ? pressTxAmount : undefined}
         >
-          {primaryCurrency === "BTC"
+          {primaryCurrency === "BTC" && tx.settlementCurrency === WalletCurrency.BTC
             ? satAmountDisplay(tx.settlementAmount)
             : usdAmountDisplay(usdAmount)}
         </Text>

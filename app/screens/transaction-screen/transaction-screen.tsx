@@ -8,12 +8,14 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
 import { TransactionItem } from "../../components/transaction-item"
 import { nextPrefCurrency, prefCurrencyVar } from "../../graphql/client-only-query"
-import { translateUnknown as translate } from "@galoymoney/client"
+import {
+  translateUnknown as translate,
+  useQuery as useGaloyQuery,
+} from "@galoymoney/client"
 import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import { sameDay, sameMonth } from "../../utils/date"
-import { TRANSACTIONS_LIST } from "../../graphql/query"
 import { toastShow } from "../../utils/toast"
 
 const styles = EStyleSheet.create({
@@ -34,13 +36,11 @@ const styles = EStyleSheet.create({
   row: {
     flexDirection: "row",
   },
-
   screen: {
-    backgroundColor: palette.white,
+    backgroundColor: palette.lighterGrey,
+    padding: "18rem",
   },
-
   sectionHeaderContainer: {
-    backgroundColor: palette.white,
     color: palette.darkGrey,
     flexDirection: "row",
     justifyContent: "space-between",
@@ -71,11 +71,8 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
 }: Props) => {
   const currency = "sat" // FIXME
 
-  const { error, data, refetch, loading } = useQuery(TRANSACTIONS_LIST, {
-    variables: { first: TRANSACTIONS_PER_PAGE, after: null },
-    fetchPolicy: "network-only",
-  })
-
+  const { data, error, refetch, loading } =
+    useGaloyQuery.transactionListForDefaultAccount()
   const prefCurrency = useReactiveVar(prefCurrencyVar)
 
   // The source of truth for listing the transactions
@@ -92,12 +89,7 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
     return null
   }
 
-  const walletCurrency = data.me.defaultAccount.wallets[0].walletCurrency
-  const { edges: edgesRaw, pageInfo } = data.me.defaultAccount.wallets[0].transactions
-  const edges = edgesRaw.map((edge) => ({
-    ...edge,
-    node: { ...edge.node, walletType: walletCurrency },
-  }))
+  const { edges, pageInfo } = data.me.defaultAccount.transactions
   const lastDataCursor = edges.length > 0 ? edges[edges.length - 1].cursor : null
   let lastSeenCursor =
     transactionsRef.current.length > 0
@@ -190,8 +182,16 @@ export const TransactionScreen: ScreenType = ({
 }: TransactionScreenProps) => (
   <Screen style={styles.screen}>
     <SectionList
-      renderItem={({ item }) => (
-        <TransactionItem key={`txn-${item.id}`} navigation={navigation} tx={item} />
+      style={styles.transactionGroup}
+      renderItem={({ item, index, section }) => (
+        <TransactionItem
+          key={`txn-${item.id}`}
+          isFirst={index === 0}
+          isLast={index === section.data.length - 1}
+          navigation={navigation}
+          tx={item}
+          subtitle
+        />
       )}
       ListHeaderComponent={() => (
         <>
