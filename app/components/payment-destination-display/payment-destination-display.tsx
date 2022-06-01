@@ -15,9 +15,9 @@ export const PaymentDestinationDisplay = ({ data }: { data: string }) => {
   if (!data) {
     return <ActivityIndicator />
   }
-  const firstSix = data.slice(0, 6)
-  const lastSix = data.slice(-6)
-  const middle = data.slice(6, -6)
+  const firstSix = data.slice(0, 5)
+  const lastSix = data.slice(-5)
+  const middle = data.slice(5, -5)
 
   return (
     <Text numberOfLines={1} ellipsizeMode={"middle"}>

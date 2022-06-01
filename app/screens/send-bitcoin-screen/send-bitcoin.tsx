@@ -1,5 +1,4 @@
 import useMainQuery from "@app/hooks/use-main-query"
-import { IPaymentType } from "@app/utils/parsing"
 import React, { useEffect, useState } from "react"
 import { StyleSheet, View } from "react-native"
 import SendBitcoinAmount from "./send-bitcoin-amount"
@@ -8,6 +7,7 @@ import SendBitcoinDestination from "./send-bitcoin-destination"
 import SendBitcoinSuccess from "./send-bitcoin-success"
 import { palette } from "@app/theme"
 import { WalletCurrency } from "@app/types/amounts"
+import { PaymentType } from "@galoymoney/client"
 
 const Status = {
   IDLE: "idle",
@@ -46,7 +46,7 @@ const SendBitcoin = ({ navigation, route }) => {
   const [amountCurrency, setAmountCurrency] = useState("USD")
   const [fixedAmount, setFixedAmount] = useState(false)
   const [sameNode, setSameNode] = useState(false)
-  const [paymentType, setPaymentType] = useState<IPaymentType>(undefined)
+  const [paymentType, setPaymentType] = useState<PaymentType>(undefined)
   const [defaultAmount, setDefaultAmount] = useState(0)
   const [recipientWalletId, setRecipientWalletId] = useState<string | undefined>(
     undefined,
