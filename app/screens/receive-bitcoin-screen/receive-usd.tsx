@@ -3,11 +3,11 @@ import { useMySubscription } from "@app/hooks"
 import useMainQuery from "@app/hooks/use-main-query"
 import { palette } from "@app/theme"
 import { getFullUri, TYPE_LIGHTNING_USD } from "@app/utils/wallet"
-import { translateUnknown as translate, useMutation } from "@galoymoney/client"
+import { GaloyGQL, translateUnknown as translate, useMutation } from "@galoymoney/client"
 import debounce from "lodash.debounce"
 import React, { useCallback, useEffect, useMemo, useState } from "react"
 import { ActivityIndicator, Alert, Pressable, Share, View } from "react-native"
-import { Text } from "react-native-elements"
+import { Button, Text } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import QRView from "./qr-view"
 import Icon from "react-native-vector-icons/Ionicons"
@@ -27,10 +27,18 @@ const styles = EStyleSheet.create({
   },
   field: {
     padding: 10,
-    height: "50rem",
     backgroundColor: palette.white,
     borderRadius: 10,
-    marginTop: 10,
+    marginBottom: 12,
+  },
+  inputForm: {
+    marginVertical: 20,
+  },
+
+  invoiceDisplay: {
+    padding: 15,
+    backgroundColor: palette.white,
+    borderRadius: 10,
   },
   infoText: {
     color: palette.midGrey,
@@ -38,10 +46,12 @@ const styles = EStyleSheet.create({
   },
   copyInvoiceContainer: {
     flex: 2,
+    marginLeft: 10,
   },
   shareInvoiceContainer: {
     flex: 2,
     alignItems: "flex-end",
+    marginRight: 10,
   },
   textContainer: {
     marginTop: 10,
@@ -81,30 +91,34 @@ const styles = EStyleSheet.create({
     alignItems: "center",
     marginTop: "20rem",
   },
+  button: {
+    height: 60,
+    borderRadius: 10,
+    marginTop: 40,
+  },
+  activeButtonStyle: {
+    backgroundColor: palette.lightBlue,
+  },
+  activeButtonTitleStyle: {
+    color: palette.white,
+    fontWeight: "bold",
+  },
 })
+
 const ReceiveUsd = () => {
   const [loading, setLoading] = useState(true)
   const [err, setErr] = useState("")
   const [lnNoAmountInvoiceCreate] = useMutation.lnNoAmountInvoiceCreate()
   const [lnUsdInvoiceCreate] = useMutation.lnUsdInvoiceCreate()
   const { usdWalletId } = useMainQuery()
-  const [invoice, setInvoice] = useState<{
-    paymentHash: string
-    paymentRequest: string
-  } | null>(null)
+  const [invoice, setInvoice] = useState<
+    GaloyGQL.LnInvoice | GaloyGQL.LnNoAmountInvoice | null
+  >(null)
   const [usdAmount, setUsdAmount] = useState(0)
   const [memo] = useState("") // FIXME
   const { lnUpdate } = useMySubscription()
-  const [isAmountless, setIsAmountless] = useState(true)
+  const [showAmountInput, setShowAmountInput] = useState(false)
 
-  const updateUsdValue = (newValue) => {
-    // eslint-disable-next-line no-negated-condition
-    if (!newValue) {
-      setUsdAmount(0)
-    } else {
-      setUsdAmount(newValue)
-    }
-  }
   const updateInvoice = useMemo(
     () =>
       debounce(
@@ -135,6 +149,7 @@ const ReceiveUsd = () => {
                   input: { walletId, amount: parseFloat(usdAmount) * 100, memo },
                 },
               })
+
               if (errors && errors.length !== 0) {
                 console.error(errors, "error with lnInvoiceCreate")
                 setErr(translate("ReceiveBitcoinScreen.error"))
@@ -196,6 +211,37 @@ const ReceiveUsd = () => {
     })
   }
 
+  if (showAmountInput) {
+    return (
+      <View style={styles.inputForm}>
+        <View style={styles.fieldsContainer}>
+          <Text style={styles.fieldTitleText}>{translate("Invoice Amount")}</Text>
+          <View style={styles.field}>
+            <FakeCurrencyInput
+              value={usdAmount}
+              onChangeValue={(newValue) => setUsdAmount(newValue ?? 0)}
+              prefix="$"
+              delimiter=","
+              separator="."
+              precision={2}
+              suffix=""
+              minValue={0}
+              style={styles.amountInput}
+              autoFocus
+            />
+          </View>
+
+          <Button
+            title={translate("Update Invoice")}
+            buttonStyle={[styles.button, styles.activeButtonStyle]}
+            titleStyle={styles.activeButtonTitleStyle}
+            onPress={() => setShowAmountInput(false)}
+          />
+        </View>
+      </View>
+    )
+  }
+
   return (
     <KeyboardAwareScrollView>
       <Pressable onPress={copyToClipboard}>
@@ -209,8 +255,9 @@ const ReceiveUsd = () => {
           err={err}
         />
       </Pressable>
+
       <View style={styles.fieldsContainer}>
-        <View style={styles.field}>
+        <View style={styles.invoiceDisplay}>
           {!loading && <PaymentDestinationDisplay data={invoice?.paymentRequest} />}
           {loading && <ActivityIndicator />}
         </View>
@@ -236,8 +283,8 @@ const ReceiveUsd = () => {
 
         <View style={styles.optionsContainer}>
           <View style={styles.field}>
-            {isAmountless && (
-              <Pressable onPress={() => setIsAmountless(false)}>
+            {!showAmountInput && (
+              <Pressable onPress={() => setShowAmountInput(true)}>
                 <View style={styles.fieldContainer}>
                   <View style={styles.fieldIconContainer}>
                     <CalculatorIcon />
@@ -253,22 +300,10 @@ const ReceiveUsd = () => {
                 </View>
               </Pressable>
             )}
-            {!isAmountless && (
-              <FakeCurrencyInput
-                value={usdAmount}
-                onChangeValue={updateUsdValue}
-                prefix="$"
-                delimiter=","
-                separator="."
-                precision={2}
-                suffix=""
-                minValue={0}
-                style={styles.amountInput}
-              />
-            )}
           </View>
         </View>
-        {!isAmountless && invoice?.paymentRequest && Boolean(usdAmount) && (
+
+        {invoice?.paymentRequest && Boolean(usdAmount) && (
           <View style={styles.countdownTimerContainer}>
             <CountdownCircleTimer
               key={invoice?.paymentRequest}
