@@ -14,6 +14,7 @@ import {
   satAmountDisplay,
   usdAmountDisplay,
 } from "@app/utils/currencyConversion"
+import { WalletCurrency } from "@app/types/amounts"
 
 const Status = {
   IDLE: "idle",
@@ -133,10 +134,11 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flex: 1,
     justifyContent: "flex-end",
-    padding: 10,
+    marginBottom: 50,
   },
   errorContainer: {
-    margin: 25,
+    marginVertical: 20,
+    flex: 1,
   },
   errorText: {
     color: palette.red,
@@ -354,8 +356,41 @@ const SendBitcoinConfirmation = ({
     paymentAmount,
   ])
 
-  const errorMessage =
-    error ||
+  let validAmount = false
+  let errorMessage
+
+  if (fee.amount && wallet.__typename === "BTCWallet") {
+    if (paymentAmount.currency === WalletCurrency.USD) {
+      validAmount = secondaryAmount + fee.amount.amount <= 100 * btcWalletBalance
+      if (!validAmount) {
+        errorMessage = translate("SendBitcoinScreen.amountExceed", {
+          balance: usdAmountDisplay(btcWalletValueInUsd),
+        })
+      }
+    }
+
+    if (paymentAmount.currency === WalletCurrency.BTC) {
+      validAmount = paymentAmount.amount + fee.amount.amount <= btcWalletBalance
+      if (!validAmount) {
+        errorMessage = translate("SendBitcoinScreen.amountExceed", {
+          balance: satAmountDisplay(btcWalletBalance),
+        })
+      }
+    }
+  }
+
+  if (fee.amount && wallet.__typename === "UsdWallet") {
+    validAmount = paymentAmount.amount + fee.amount.amount <= usdWalletBalance
+    if (!validAmount) {
+      errorMessage = translate("SendBitcoinScreen.amountExceed", {
+        balance: usdAmountDisplay(usdWalletBalance / 100),
+      })
+    }
+  }
+
+  errorMessage =
+    errorMessage ??
+    error ??
     (fee.status === "error" && translate("SendBitcoinScreen.feeCalculationUnsuccessful"))
 
   return (
@@ -509,7 +544,7 @@ const SendBitcoinConfirmation = ({
           titleStyle={styles.buttonTitleStyle}
           disabledStyle={[styles.button, styles.disabledButtonStyle]}
           disabledTitleStyle={styles.disabledButtonTitleStyle}
-          disabled={isLoading || fee.status !== "set"}
+          disabled={isLoading || fee.status !== "set" || !validAmount}
           onPress={sendPayment}
         />
       </View>
