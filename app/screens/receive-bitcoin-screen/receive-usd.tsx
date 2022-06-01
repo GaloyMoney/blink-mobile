@@ -4,8 +4,7 @@ import useMainQuery from "@app/hooks/use-main-query"
 import { palette } from "@app/theme"
 import { getFullUri, TYPE_LIGHTNING_USD } from "@app/utils/wallet"
 import { GaloyGQL, translateUnknown as translate, useMutation } from "@galoymoney/client"
-import debounce from "lodash.debounce"
-import React, { useCallback, useEffect, useMemo, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import { ActivityIndicator, Alert, Pressable, Share, View } from "react-native"
 import { Button, Text } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
@@ -18,6 +17,7 @@ import { FakeCurrencyInput } from "react-native-currency-input"
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer"
 import Toast from "react-native-toast-message"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
+import { usdAmountDisplay } from "@app/utils/currencyConversion"
 
 const styles = EStyleSheet.create({
   fieldsContainer: {
@@ -103,6 +103,16 @@ const styles = EStyleSheet.create({
     color: palette.white,
     fontWeight: "bold",
   },
+  invoiceInfo: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    marginHorizontal: 20,
+    marginTop: 5,
+  },
+  primaryAmount: {
+    fontWeight: "bold",
+  },
 })
 
 const ReceiveUsd = () => {
@@ -119,64 +129,58 @@ const ReceiveUsd = () => {
   const { lnUpdate } = useMySubscription()
   const [showAmountInput, setShowAmountInput] = useState(false)
 
-  const updateInvoice = useMemo(
-    () =>
-      debounce(
-        async ({ walletId, usdAmount, memo }) => {
-          setLoading(true)
-          try {
-            if (usdAmount === 0) {
-              const {
-                data: {
-                  lnNoAmountInvoiceCreate: { invoice, errors },
-                },
-              } = await lnNoAmountInvoiceCreate({
-                variables: { input: { walletId, memo } },
-              })
-              if (errors && errors.length !== 0) {
-                console.error(errors, "error with lnNoAmountInvoiceCreate")
-                setErr(translate("ReceiveBitcoinScreen.error"))
-                return
-              }
-              setInvoice(invoice)
-            } else {
-              const {
-                data: {
-                  lnUsdInvoiceCreate: { invoice, errors },
-                },
-              } = await lnUsdInvoiceCreate({
-                variables: {
-                  input: { walletId, amount: parseFloat(usdAmount) * 100, memo },
-                },
-              })
-
-              if (errors && errors.length !== 0) {
-                console.error(errors, "error with lnInvoiceCreate")
-                setErr(translate("ReceiveBitcoinScreen.error"))
-                return
-              }
-              setInvoice(invoice)
-            }
-          } catch (err) {
-            console.error(err, "error with AddInvoice")
-            setErr(`${err}`)
-            throw err
-          } finally {
-            setLoading(false)
+  const updateInvoice = useCallback(
+    async ({ walletId, usdAmount, memo }) => {
+      setLoading(true)
+      try {
+        if (usdAmount === 0) {
+          const {
+            data: {
+              lnNoAmountInvoiceCreate: { invoice, errors },
+            },
+          } = await lnNoAmountInvoiceCreate({
+            variables: { input: { walletId, memo } },
+          })
+          if (errors && errors.length !== 0) {
+            console.error(errors, "error with lnNoAmountInvoiceCreate")
+            setErr(translate("ReceiveBitcoinScreen.error"))
+            return
           }
-        },
-        1000,
-        { trailing: true },
-      ),
+          setInvoice(invoice)
+        } else {
+          const {
+            data: {
+              lnUsdInvoiceCreate: { invoice, errors },
+            },
+          } = await lnUsdInvoiceCreate({
+            variables: {
+              input: { walletId, amount: parseFloat(usdAmount) * 100, memo },
+            },
+          })
+
+          if (errors && errors.length !== 0) {
+            console.error(errors, "error with lnInvoiceCreate")
+            setErr(translate("ReceiveBitcoinScreen.error"))
+            return
+          }
+          setInvoice(invoice)
+        }
+      } catch (err) {
+        console.error(err, "error with AddInvoice")
+        setErr(`${err}`)
+        throw err
+      } finally {
+        setLoading(false)
+      }
+    },
     [lnNoAmountInvoiceCreate, lnUsdInvoiceCreate],
   )
 
   useEffect((): void | (() => void) => {
-    if (usdWalletId) {
+    if (usdWalletId && !showAmountInput) {
       updateInvoice({ walletId: usdWalletId, usdAmount, memo })
-      return () => updateInvoice.cancel()
     }
-  }, [usdAmount, memo, updateInvoice, usdWalletId])
+  }, [usdAmount, memo, updateInvoice, usdWalletId, showAmountInput])
 
   const invoicePaid =
     lnUpdate?.paymentHash === invoice?.paymentHash && lnUpdate?.status === "PAID"
@@ -242,6 +246,17 @@ const ReceiveUsd = () => {
     )
   }
 
+  const displayAmount = () => {
+    if (!usdAmount) {
+      return undefined
+    }
+    return (
+      <>
+        <Text style={styles.primaryAmount}>{usdAmountDisplay(usdAmount)}</Text>
+      </>
+    )
+  }
+
   return (
     <KeyboardAwareScrollView>
       <Pressable onPress={copyToClipboard}>
@@ -255,6 +270,8 @@ const ReceiveUsd = () => {
           err={err}
         />
       </Pressable>
+
+      <View style={styles.invoiceInfo}>{displayAmount()}</View>
 
       <View style={styles.fieldsContainer}>
         <View style={styles.invoiceDisplay}>
@@ -311,7 +328,9 @@ const ReceiveUsd = () => {
               duration={120}
               colors={"#004777"}
               size={80}
-              onComplete={() => updateInvoice({ walletId: usdWalletId, usdAmount, memo })}
+              onComplete={() => {
+                updateInvoice({ walletId: usdWalletId, usdAmount, memo })
+              }}
             >
               {({ remainingTime }) => <Text>{remainingTime}</Text>}
             </CountdownCircleTimer>

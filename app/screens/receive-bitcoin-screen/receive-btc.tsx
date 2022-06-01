@@ -19,6 +19,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import CalculatorIcon from "@app/assets/icons/calculator.svg"
 import ChevronIcon from "@app/assets/icons/chevron.svg"
 import ChainIcon from "@app/assets/icons/chain.svg"
+import { satAmountDisplay, usdAmountDisplay } from "@app/utils/currencyConversion"
 
 const styles = EStyleSheet.create({
   fieldsContainer: {
@@ -120,6 +121,20 @@ const styles = EStyleSheet.create({
   activeButtonTitleStyle: {
     color: palette.white,
     fontWeight: "bold",
+  },
+  invoiceInfo: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    marginHorizontal: 20,
+    marginTop: 5,
+  },
+  primaryAmount: {
+    fontWeight: "bold",
+  },
+  convertedAmount: {
+    color: palette.coolGrey,
+    marginLeft: 5,
   },
 })
 
@@ -400,6 +415,33 @@ const ReceiveBtc = () => {
     )
   }
 
+  const displayAmount = () => {
+    if (!satAmount) {
+      return undefined
+    }
+    if (amountCurrency === "USD") {
+      return (
+        <>
+          <Text style={styles.primaryAmount}>{usdAmountDisplay(satAmountInUsd)}</Text>
+          <Text style={styles.convertedAmount}>
+            &#8776; {satAmountDisplay(satAmount)}
+          </Text>
+        </>
+      )
+    }
+    if (amountCurrency === "BTC") {
+      return (
+        <>
+          <Text style={styles.primaryAmount}>{satAmountDisplay(satAmount)}</Text>
+          <Text style={styles.convertedAmount}>
+            &#8776; {usdAmountDisplay(satAmountInUsd)}
+          </Text>
+        </>
+      )
+    }
+    return undefined
+  }
+
   return (
     <KeyboardAwareScrollView>
       <Pressable onPress={copyToClipboard}>
@@ -413,6 +455,9 @@ const ReceiveBtc = () => {
           err={err}
         />
       </Pressable>
+
+      <View style={styles.invoiceInfo}>{displayAmount()}</View>
+
       <View style={styles.fieldsContainer}>
         <View style={styles.invoiceDisplay}>
           {!loading && <PaymentDestinationDisplay data={paymentDestination} />}
