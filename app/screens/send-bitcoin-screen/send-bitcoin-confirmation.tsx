@@ -15,6 +15,7 @@ import {
   usdAmountDisplay,
 } from "@app/utils/currencyConversion"
 import { WalletCurrency } from "@app/types/amounts"
+import { PaymentDestinationDisplay } from "@app/components/payment-destination-display"
 
 const Status = {
   IDLE: "idle",
@@ -402,8 +403,11 @@ const SendBitcoinConfirmation = ({
         <View style={styles.destinationIconContainer}>
           <DestinationIcon />
         </View>
-        <Text style={styles.destinationText}>{destination}</Text>
+        <View style={styles.destinationText}>
+          <PaymentDestinationDisplay data={destination} />
+        </View>
       </View>
+
       <Text style={styles.fieldTitleText}>{translate("SendBitcoinScreen.amount")}</Text>
       <View style={styles.fieldBackground}>
         <View style={styles.amountContainer}>

@@ -1,8 +1,8 @@
 /* eslint-disable camelcase */
+import { PaymentType } from "@galoymoney/client"
 import { LNURLPayParams } from "js-lnurl"
 import { contacts_me_contacts } from "../screens/contacts-screen/__generated__/contacts"
 import { AccountType, AuthenticationScreenPurpose, PinScreenPurpose } from "../utils/enum"
-import { IPaymentType } from "../utils/parsing"
 
 export type TransactionDetail = WalletTransaction & {
   usdAmount: number
@@ -78,7 +78,7 @@ export type MoveMoneyStackParamList = {
     amountless: boolean
     invoice: string | null
     memo: string | null
-    paymentType: IPaymentType
+    paymentType: PaymentType
     primaryCurrency: CurrencyType
     referenceAmount: MoneyAmount
     sameNode: boolean | null
