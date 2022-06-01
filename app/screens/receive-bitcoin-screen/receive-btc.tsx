@@ -1,23 +1,25 @@
-import LightningInvoice from "@app/components/lightning-invoice/lightning-invoice"
+import { PaymentDestinationDisplay } from "@app/components/payment-destination-display"
 import { useMySubscription } from "@app/hooks"
 import useMainQuery from "@app/hooks/use-main-query"
-import { getFullUri, TYPE_LIGHTNING_BTC } from "@app/utils/wallet"
-import { translateUnknown as translate, useMutation } from "@galoymoney/client"
+import { getFullUri, TYPE_LIGHTNING_BTC, TYPE_BITCOIN_ONCHAIN } from "@app/utils/wallet"
+import { GaloyGQL, translateUnknown as translate, useMutation } from "@galoymoney/client"
 import Clipboard from "@react-native-community/clipboard"
 import debounce from "lodash.debounce"
 import React, { useCallback, useEffect, useMemo, useState } from "react"
 import { ActivityIndicator, Alert, Pressable, Share, View } from "react-native"
 import { Text } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
-import { QRView } from "./qr-view"
+import QRView from "./qr-view"
 import Icon from "react-native-vector-icons/Ionicons"
-import CalculatorIcon from "@app/assets/icons/calculator.svg"
-import ChevronIcon from "@app/assets/icons/chevron.svg"
 import { FakeCurrencyInput } from "react-native-currency-input"
 import { palette } from "@app/theme"
 import SwitchIcon from "@app/assets/icons/switch.svg"
 import Toast from "react-native-toast-message"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
+
+import CalculatorIcon from "@app/assets/icons/calculator.svg"
+import ChevronIcon from "@app/assets/icons/chevron.svg"
+import ChainIcon from "@app/assets/icons/chain.svg"
 
 const styles = EStyleSheet.create({
   fieldsContainer: {
@@ -103,20 +105,26 @@ const styles = EStyleSheet.create({
 const ReceiveBtc = () => {
   const [loading, setLoading] = useState(true)
   const [err, setErr] = useState("")
-  const [lnNoAmountInvoiceCreate] = useMutation.lnNoAmountInvoiceCreate()
-  const [lnInvoiceCreate] = useMutation.lnInvoiceCreate()
-  const { btcWalletId } = useMainQuery()
-  const [invoice, setInvoice] = useState<{
-    paymentHash: string
-    paymentRequest: string
-  } | null>(null)
+  const [invoice, setInvoice] = useState<
+    GaloyGQL.LnInvoice | GaloyGQL.LnNoAmountInvoice | null
+  >(null)
+  const [btcAddress, setBtcAddress] = useState<string | null>(null)
   const [satAmount, setSatAmount] = useState(0)
   const [satAmountInUsd, setSatAmountInUsd] = useState(0)
   const [memo] = useState("") // FIXME
-  const { lnUpdate } = useMySubscription()
   const [isAmountless, setIsAmountless] = useState(true)
   const [amountCurrency, setAmountCurrency] = useState("USD")
-  const { convertCurrencyAmount } = useMySubscription()
+
+  const [paymentLayer, setPaymentLayer] = useState<"BITCOIN_ONCHAIN" | "LIGHTNING_BTC">(
+    TYPE_LIGHTNING_BTC,
+  )
+
+  const { btcWalletId } = useMainQuery()
+  const { lnUpdate, convertCurrencyAmount } = useMySubscription()
+
+  const [lnNoAmountInvoiceCreate] = useMutation.lnNoAmountInvoiceCreate()
+  const [lnInvoiceCreate] = useMutation.lnInvoiceCreate()
+  const [generateBtcAddress] = useMutation.onChainAddressCurrent()
 
   const updateSatAmount = (newValue) => {
     // eslint-disable-next-line no-negated-condition
@@ -141,6 +149,7 @@ const ReceiveBtc = () => {
       debounce(
         async ({ walletId, satAmount, memo }) => {
           setLoading(true)
+          setInvoice(null)
           try {
             if (satAmount === 0) {
               const {
@@ -187,6 +196,41 @@ const ReceiveBtc = () => {
     [lnInvoiceCreate, lnNoAmountInvoiceCreate],
   )
 
+  const updateBtcAddress = useMemo(
+    () =>
+      debounce(
+        async ({ walletId }) => {
+          setLoading(true)
+          try {
+            const {
+              data: {
+                onChainAddressCurrent: { address, errors },
+              },
+            } = await generateBtcAddress({
+              variables: {
+                input: { walletId },
+              },
+            })
+            if (errors && errors.length !== 0) {
+              console.error(errors, "error with generateBtcAddress")
+              setErr(translate("ReceiveBitcoinScreen.error"))
+              return
+            }
+            setBtcAddress(address)
+          } catch (err) {
+            console.error(err, "error with updateBtcAddress")
+            setErr(`${err}`)
+            throw err
+          } finally {
+            setLoading(false)
+          }
+        },
+        1000,
+        { trailing: true },
+      ),
+    [generateBtcAddress],
+  )
+
   const toggleAmountCurrency = () => {
     if (amountCurrency === "USD") {
       setAmountCurrency("BTC")
@@ -196,32 +240,26 @@ const ReceiveBtc = () => {
     }
   }
 
-  const share = useCallback(async () => {
-    try {
-      const result = await Share.share({
-        message: getFullUri({ input: invoice?.paymentRequest, prefix: false }),
-      })
-
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-        } else {
-          // shared
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-      }
-    } catch (error) {
-      Alert.alert(error.message)
-    }
-  }, [invoice?.paymentRequest])
-
   useEffect((): void | (() => void) => {
     if (btcWalletId) {
-      updateInvoice({ walletId: btcWalletId, satAmount, memo })
-      return () => updateInvoice.cancel()
+      if (paymentLayer === TYPE_LIGHTNING_BTC) {
+        updateInvoice({ walletId: btcWalletId, satAmount, memo })
+        return () => updateInvoice.cancel()
+      }
+      if (paymentLayer === TYPE_BITCOIN_ONCHAIN && !btcAddress) {
+        updateBtcAddress({ walletId: btcWalletId })
+        return () => updateBtcAddress.cancel()
+      }
     }
-  }, [satAmount, memo, updateInvoice, btcWalletId])
+  }, [
+    btcAddress,
+    btcWalletId,
+    memo,
+    paymentLayer,
+    satAmount,
+    updateBtcAddress,
+    updateInvoice,
+  ])
 
   useEffect(() => {
     if (amountCurrency === "USD") {
@@ -244,13 +282,51 @@ const ReceiveBtc = () => {
     }
   }, [satAmount, satAmountInUsd, amountCurrency, convertCurrencyAmount])
 
-  const copyToClipboard = () => {
-    Clipboard.setString(getFullUri({ input: invoice?.paymentRequest, prefix: false }))
+  const paymentDestination =
+    paymentLayer === TYPE_LIGHTNING_BTC ? invoice?.paymentRequest : btcAddress
+
+  const paymentFullUri = getFullUri({
+    type: paymentLayer,
+    input: paymentDestination,
+    amount: satAmount,
+    memo,
+    prefix: false,
+  })
+
+  const copyToClipboard = useCallback(() => {
+    Clipboard.setString(paymentFullUri)
     Toast.show({
       type: "info",
       text1: translate("ReceiveBitcoinScreen.copyClipboard"),
       position: "bottom",
       bottomOffset: 80,
+    })
+  }, [paymentFullUri])
+
+  const share = useCallback(async () => {
+    try {
+      const result = await Share.share({ message: paymentFullUri })
+
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      Alert.alert(error.message)
+    }
+  }, [paymentFullUri])
+
+  const togglePaymentLayer = () => {
+    setInvoice(null)
+    setPaymentLayer((currentPaymentLayer) => {
+      return currentPaymentLayer === TYPE_LIGHTNING_BTC
+        ? TYPE_BITCOIN_ONCHAIN
+        : TYPE_LIGHTNING_BTC
     })
   }
 
@@ -261,18 +337,18 @@ const ReceiveBtc = () => {
     <KeyboardAwareScrollView>
       <Pressable onPress={copyToClipboard}>
         <QRView
-          data={invoice?.paymentRequest}
-          type={TYPE_LIGHTNING_BTC}
+          data={paymentDestination}
+          type={paymentLayer}
           amount={satAmount}
           memo={memo}
-          loading={loading}
-          completed={invoicePaid}
+          loading={loading || !paymentDestination}
+          completed={paymentLayer === TYPE_LIGHTNING_BTC ? invoicePaid : false}
           err={err}
         />
       </Pressable>
       <View style={styles.fieldsContainer}>
         <View style={styles.field}>
-          {!loading && <LightningInvoice invoice={invoice?.paymentRequest} />}
+          {!loading && <PaymentDestinationDisplay data={paymentDestination} />}
           {loading && <ActivityIndicator />}
         </View>
 
@@ -281,7 +357,11 @@ const ReceiveBtc = () => {
             <Pressable onPress={copyToClipboard}>
               <Text style={styles.infoText}>
                 <Icon style={styles.infoText} name="copy-outline" />{" "}
-                {translate("ReceiveBitcoinScreen.copyInvoice")}
+                {translate(
+                  paymentLayer === TYPE_LIGHTNING_BTC
+                    ? "ReceiveBitcoinScreen.copyInvoice"
+                    : "Copy Address",
+                )}
               </Text>
             </Pressable>
           </View>
@@ -289,7 +369,11 @@ const ReceiveBtc = () => {
             <Pressable onPress={share}>
               <Text style={styles.infoText}>
                 <Icon style={styles.infoText} name="share-outline" />{" "}
-                {translate("ReceiveBitcoinScreen.shareInvoice")}
+                {translate(
+                  paymentLayer === TYPE_LIGHTNING_BTC
+                    ? "ReceiveBitcoinScreen.shareInvoice"
+                    : "Share Address",
+                )}
               </Text>
             </Pressable>
           </View>
@@ -379,6 +463,27 @@ const ReceiveBtc = () => {
               </View>
             </View>
           )}
+          <View style={styles.field}>
+            <Pressable onPress={togglePaymentLayer}>
+              <View style={styles.fieldContainer}>
+                <View style={styles.fieldIconContainer}>
+                  <ChainIcon />
+                </View>
+                <View style={styles.fieldTextContainer}>
+                  <Text style={styles.fieldText}>
+                    {translate(
+                      paymentLayer === TYPE_LIGHTNING_BTC
+                        ? "Use a Bitcoin on-chain address"
+                        : "Use a Lightning invoice",
+                    )}
+                  </Text>
+                </View>
+                <View style={styles.fieldArrowContainer}>
+                  <ChevronIcon />
+                </View>
+              </View>
+            </Pressable>
+          </View>
         </View>
       </View>
     </KeyboardAwareScrollView>
