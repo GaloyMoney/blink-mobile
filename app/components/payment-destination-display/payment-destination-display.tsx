@@ -11,13 +11,13 @@ const styles = EStyleSheet.create({
   },
 })
 
-const LightningInvoice = ({ invoice }: { invoice: string }) => {
-  if (!invoice) {
+export const PaymentDestinationDisplay = ({ data }: { data: string }) => {
+  if (!data) {
     return <ActivityIndicator />
   }
-  const firstSix = invoice.slice(0, 6)
-  const lastSix = invoice.slice(-6)
-  const middle = invoice.slice(6, -6)
+  const firstSix = data.slice(0, 6)
+  const lastSix = data.slice(-6)
+  const middle = data.slice(6, -6)
 
   return (
     <Text numberOfLines={1} ellipsizeMode={"middle"}>
@@ -27,5 +27,3 @@ const LightningInvoice = ({ invoice }: { invoice: string }) => {
     </Text>
   )
 }
-
-export default LightningInvoice

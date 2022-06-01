@@ -4,9 +4,11 @@ import { useCallback, useMemo } from "react"
 import { ActivityIndicator, Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import QRCode from "react-native-qrcode-svg"
+
 import LightningSats from "@app/assets/icons/lightning-sats.png"
 import LightningUsd from "@app/assets/icons/lightning-usd.png"
 import OnchainSats from "@app/assets/icons/onchain-btc.png"
+
 import { palette } from "../../theme/palette"
 import {
   getFullUri as getFullUriUtil,
@@ -99,11 +101,7 @@ export const QRView = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const isReady =
-    !err &&
-    (type === TYPE_LIGHTNING_BTC || type === TYPE_LIGHTNING_USD
-      ? !loading && data !== ""
-      : true)
+  const isReady = data && !loading && !err
 
   const getFullUri = useCallback(
     ({ input, uppercase = false, prefix = true }) =>
