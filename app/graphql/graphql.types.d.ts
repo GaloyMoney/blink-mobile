@@ -29,6 +29,7 @@ type SettlementViaOnChain = {
 type WalletTransaction = {
   readonly __typename: "Transaction"
   readonly id: string
+  readonly settlementCurrency: "BTC" | "USD"
   readonly settlementAmount: number
   readonly settlementFee: number
   readonly settlementUsdPerSat: number

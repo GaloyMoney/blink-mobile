@@ -41,7 +41,7 @@ export const LargeButton: ComponentType = ({
 }) => (
   <ListItem
     style={styles.accountView}
-    containerStyle={style ? styles[style] : styles.accountViewContainer}
+    containerStyle={style ? style : styles.accountViewContainer}
     onPress={onPress}
     underlayColor={palette.lighterGrey}
     activeOpacity={0.7}

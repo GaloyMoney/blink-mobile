@@ -63,26 +63,12 @@ const useMainQuery = (): useMainQueryOutput => {
   const usdWalletBalance = usdWallet?.balance
   const btcWalletId = btcWallet?.id
   const usdWalletId = usdWallet?.id
-
-  const addWalletType = (transaction, walletType) => ({
-    ...transaction,
-    node: { ...transaction.node, walletType },
-  })
-
-  const btcTransactionsEdges = btcWallet?.transactions?.edges.map((transaction) =>
-    addWalletType(transaction, "BTC"),
-  )
-  const usdTransactionsEdges = usdWallet?.transactions?.edges.map((transaction) =>
-    addWalletType(transaction, "USD"),
-  )
   const me = data?.me || {}
   const myPubKey = data?.globals?.nodesIds?.[0] ?? ""
   const username = data?.me?.username
   const phoneNumber = data?.me?.phone
   const mobileVersions = data?.mobileVersions
-  const mergedTransactions = btcTransactionsEdges
-    ?.concat(usdTransactionsEdges)
-    ?.sort((a, b) => b.node.createdAt - a.node.createdAt)
+  const mergedTransactions = me.defaultAccount?.transactions.edges
 
   return {
     userPreferredLanguage,
@@ -92,8 +78,6 @@ const useMainQuery = (): useMainQueryOutput => {
     usdWalletId,
     defaultWalletId,
     defaultWallet,
-    btcTransactionsEdges,
-    usdTransactionsEdges,
     mergedTransactions,
     wallets,
     me,

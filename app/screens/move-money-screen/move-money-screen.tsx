@@ -107,7 +107,6 @@ const styles = EStyleSheet.create({
   text: {
     color: palette.darkGrey,
     fontSize: "20rem",
-    // fontWeight: "bold",
   },
 
   titleStyle: {
@@ -119,7 +118,14 @@ const styles = EStyleSheet.create({
   transactionsView: {
     flex: 1,
     marginHorizontal: "30rem",
-    backgroundColor: palette.white,
+    borderTopLeftRadius: "12rem",
+  },
+
+  transactionViewButton: {
+    borderTopLeftRadius: "12rem",
+    borderTopRightRadius: "12rem",
+    borderColor: palette.lighterGrey,
+    borderBottomWidth: "2rem",
   },
 
   viewModal: {
@@ -279,19 +285,20 @@ export const MoveMoneyScreen: ScreenType = ({
     recentTransactionsData = {
       title: translate("TransactionScreen.title"),
       target: "transactionHistory",
-      style: "transactionViewContainer",
+      style: styles.transactionViewButton,
       details: (
         <View style={styles.transactionsView}>
           {transactionsEdges
             .slice(0, TRANSACTIONS_TO_SHOW)
             .map(
-              ({ node }) =>
+              ({ node }, index, array) =>
                 node && (
                   <TransactionItem
                     key={`transaction-${node.id}`}
                     navigation={navigation}
                     tx={node}
                     subtitle
+                    isLast={index === array.length - 1}
                   />
                 ),
             )}
