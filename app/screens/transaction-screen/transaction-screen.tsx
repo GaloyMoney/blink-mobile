@@ -9,6 +9,7 @@ import { Screen } from "../../components/screen"
 import { TransactionItem } from "../../components/transaction-item"
 import { nextPrefCurrency, prefCurrencyVar } from "../../graphql/client-only-query"
 import {
+  GaloyGQL,
   translateUnknown as translate,
   useQuery as useGaloyQuery,
 } from "@galoymoney/client"
@@ -164,12 +165,10 @@ type TransactionScreenProps = {
   error: ApolloError
   prefCurrency: string
   nextPrefCurrency: () => void
-  sections: [
-    {
-      title: string
-      data: WalletTransaction[]
-    },
-  ]
+  sections: {
+    title: string
+    data: GaloyGQL.Transaction[]
+  }[]
   fetchNextTransactionsPage: () => void
   loading: boolean
   refetch: () => void

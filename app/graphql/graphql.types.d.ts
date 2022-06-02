@@ -38,7 +38,6 @@ type WalletTransaction = {
   readonly direction: "SEND" | "RECEIVE"
   readonly memo: string | null
   readonly createdAt: number
-  readonly walletType: WalletType
 
   readonly settlementVia:
     | SettlementViaIntraLedger

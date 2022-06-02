@@ -16,6 +16,7 @@ const route: RouteData = {
     direction: "RECEIVE",
     memo: null,
     createdAt: 1647696611,
+    settlementCurrency: "USD",
     settlementAmount: 500,
     settlementFee: 0,
     settlementPrice: { base: 999616128000, offset: 12, formattedAmount: "" },
@@ -29,12 +30,10 @@ const route: RouteData = {
       counterPartyUsername: null,
     },
     settlementUsdPerSat: 0.00001,
-    walletType: "USD",
     isReceive: true,
     isPending: false,
     description: "From BitcoinBeach Wallet",
     usdAmount: 4.99808064,
-    settlementCurrency: "USD",
   },
 }
 

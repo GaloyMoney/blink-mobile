@@ -165,12 +165,7 @@ type ContactTransactionsProps = {
   error: ApolloError
   prefCurrency: string
   nextPrefCurrency: () => void
-  sections: [
-    {
-      title: string
-      data: WalletTransaction[]
-    },
-  ]
+  sections: []
   fetchNextTransactionsPage: () => void
 }
 
@@ -184,14 +179,8 @@ export const ContactTransactions: ScreenType = ({
 }: ContactTransactionsProps) => (
   <Screen style={styles.screen}>
     <SectionList
-      renderItem={({ item, index, section }) => (
-        <TransactionItem
-          key={`txn-${item.id}`}
-          navigation={navigation}
-          tx={item}
-          isFirst={index === 0}
-          isLast={index === section.data?.length}
-        />
+      renderItem={({ item }) => (
+        <TransactionItem key={`txn-${item.id}`} navigation={navigation} tx={item} />
       )}
       ListHeaderComponent={() => (
         <>
@@ -222,7 +211,7 @@ export const ContactTransactions: ScreenType = ({
         </View>
       }
       sections={sections}
-      keyExtractor={(item, index) => item?.id + index}
+      keyExtractor={(item, index) => item + index}
       onEndReached={fetchNextTransactionsPage}
       onEndReachedThreshold={0.5}
     />
