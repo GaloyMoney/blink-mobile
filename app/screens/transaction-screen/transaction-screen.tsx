@@ -164,12 +164,7 @@ type TransactionScreenProps = {
   error: ApolloError
   prefCurrency: string
   nextPrefCurrency: () => void
-  sections: [
-    {
-      title: string
-      data: WalletTransaction[]
-    },
-  ]
+  sections: []
   fetchNextTransactionsPage: () => void
   loading: boolean
   refetch: () => void

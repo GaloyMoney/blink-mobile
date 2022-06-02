@@ -12,7 +12,7 @@ import { prefCurrencyVar as primaryCurrencyVar } from "../../graphql/client-only
 import { useHideBalance } from "../../hooks"
 import moment from "moment"
 import { satAmountDisplay, usdAmountDisplay } from "@app/utils/currencyConversion"
-import { getLocale } from "@galoymoney/client"
+import { GaloyGQL, getLocale } from "@galoymoney/client"
 import { WalletCurrency } from "@app/types/amounts"
 
 const styles = EStyleSheet.create({
@@ -52,7 +52,7 @@ export interface TransactionItemProps {
   navigation: StackNavigationProp<ParamListBase>
   isFirst: boolean
   isLast: boolean
-  tx: WalletTransaction
+  tx: GaloyGQL.Transaction
   subtitle?: boolean
 }
 
@@ -61,7 +61,7 @@ moment.locale(getLocale())
 const dateDisplay = ({ createdAt }) =>
   moment.duration(Math.min(0, moment.unix(createdAt).diff(moment()))).humanize(true)
 
-const computeUsdAmount = (tx: WalletTransaction) => {
+const computeUsdAmount = (tx: GaloyGQL.Transaction) => {
   const { settlementAmount, settlementPrice } = tx
   const { base, offset } = settlementPrice
   const usdPerSat = base / 10 ** offset / 100
@@ -140,7 +140,7 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
         onChain={tx.settlementVia.__typename === "SettlementViaOnChain"}
         isReceive={isReceive}
         pending={isPending}
-        walletType={tx.walletType}
+        walletType={tx.settlementCurrency}
       />
       <ListItem.Content>
         <ListItem.Title>{description}</ListItem.Title>

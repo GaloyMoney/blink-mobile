@@ -34,7 +34,6 @@ const route: RouteData = {
     isPending: false,
     description: "From BitcoinBeach Wallet",
     usdAmount: 4.99808064,
-    settlementCurrency: "USD",
   },
 }
 
