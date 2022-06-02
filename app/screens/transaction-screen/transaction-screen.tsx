@@ -1,4 +1,4 @@
-import { ApolloError, useQuery, useReactiveVar } from "@apollo/client"
+import { ApolloError, useReactiveVar } from "@apollo/client"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { SectionList, Text, View } from "react-native"
@@ -164,7 +164,12 @@ type TransactionScreenProps = {
   error: ApolloError
   prefCurrency: string
   nextPrefCurrency: () => void
-  sections: []
+  sections: [
+    {
+      title: string
+      data: WalletTransaction[]
+    },
+  ]
   fetchNextTransactionsPage: () => void
   loading: boolean
   refetch: () => void
