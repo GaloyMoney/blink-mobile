@@ -5,7 +5,7 @@ import { getFullUri, TYPE_LIGHTNING_BTC, TYPE_BITCOIN_ONCHAIN } from "@app/utils
 import { GaloyGQL, translateUnknown as translate, useMutation } from "@galoymoney/client"
 import Clipboard from "@react-native-community/clipboard"
 import React, { useCallback, useEffect, useState } from "react"
-import { ActivityIndicator, Alert, Pressable, Share, View } from "react-native"
+import { ActivityIndicator, Alert, Pressable, Share, TextInput, View } from "react-native"
 import { Button, Text } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import QRView from "./qr-view"
@@ -15,11 +15,12 @@ import { palette } from "@app/theme"
 import SwitchIcon from "@app/assets/icons/switch.svg"
 import Toast from "react-native-toast-message"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
+import { satAmountDisplay, usdAmountDisplay } from "@app/utils/currencyConversion"
 
 import CalculatorIcon from "@app/assets/icons/calculator.svg"
 import ChevronIcon from "@app/assets/icons/chevron.svg"
 import ChainIcon from "@app/assets/icons/chain.svg"
-import { satAmountDisplay, usdAmountDisplay } from "@app/utils/currencyConversion"
+import NoteIcon from "@app/assets/icons/note.svg"
 
 const styles = EStyleSheet.create({
   fieldsContainer: {
@@ -136,6 +137,11 @@ const styles = EStyleSheet.create({
     color: palette.coolGrey,
     marginLeft: 5,
   },
+  fieldTitleText: {
+    fontWeight: "bold",
+    color: palette.lapisLazuli,
+    marginBottom: 5,
+  },
 })
 
 const ReceiveBtc = () => {
@@ -147,7 +153,8 @@ const ReceiveBtc = () => {
   const [btcAddress, setBtcAddress] = useState<string | null>(null)
   const [satAmount, setSatAmount] = useState(0)
   const [satAmountInUsd, setSatAmountInUsd] = useState(0)
-  const [memo] = useState("") // FIXME
+  const [memo, setMemo] = useState("")
+  const [showMemoInput, setShowMemoInput] = useState(false)
   const [showAmountInput, setShowAmountInput] = useState(false)
   const [amountCurrency, setAmountCurrency] = useState("USD")
 
@@ -249,7 +256,7 @@ const ReceiveBtc = () => {
   }
 
   useEffect((): void | (() => void) => {
-    if (btcWalletId && !showAmountInput) {
+    if (btcWalletId && !showAmountInput && !showMemoInput) {
       if (paymentLayer === TYPE_LIGHTNING_BTC) {
         updateInvoice({ walletId: btcWalletId, satAmount, memo })
       }
@@ -264,6 +271,7 @@ const ReceiveBtc = () => {
     paymentLayer,
     satAmount,
     showAmountInput,
+    showMemoInput,
     updateBtcAddress,
     updateInvoice,
   ])
@@ -415,6 +423,34 @@ const ReceiveBtc = () => {
     )
   }
 
+  if (showMemoInput) {
+    return (
+      <View style={styles.inputForm}>
+        <View style={styles.fieldsContainer}>
+          <Text style={styles.fieldTitleText}>{translate("SendBitcoinScreen.note")}</Text>
+          <View style={styles.field}>
+            <TextInput
+              style={styles.noteInput}
+              placeholder={translate("SendBitcoinScreen.note")}
+              onChangeText={(note) => setMemo(note)}
+              value={memo}
+              multiline={true}
+              numberOfLines={3}
+              autoFocus
+            />
+          </View>
+
+          <Button
+            title={translate("Update Invoice")}
+            buttonStyle={[styles.button, styles.activeButtonStyle]}
+            titleStyle={styles.activeButtonTitleStyle}
+            onPress={() => setShowMemoInput(false)}
+          />
+        </View>
+      </View>
+    )
+  }
+
   const displayAmount = () => {
     if (!satAmount) {
       return undefined
@@ -502,6 +538,24 @@ const ReceiveBtc = () => {
                     <Text style={styles.fieldText}>
                       {translate("ReceiveBitcoinScreen.addAmount")}
                     </Text>
+                  </View>
+                  <View style={styles.fieldArrowContainer}>
+                    <ChevronIcon />
+                  </View>
+                </View>
+              </Pressable>
+            </View>
+          )}
+
+          {!showMemoInput && (
+            <View style={styles.field}>
+              <Pressable onPress={() => setShowMemoInput(true)}>
+                <View style={styles.fieldContainer}>
+                  <View style={styles.fieldIconContainer}>
+                    <NoteIcon />
+                  </View>
+                  <View style={styles.fieldTextContainer}>
+                    <Text style={styles.fieldText}>{translate("Set a note/label")}</Text>
                   </View>
                   <View style={styles.fieldArrowContainer}>
                     <ChevronIcon />

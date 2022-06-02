@@ -5,19 +5,21 @@ import { palette } from "@app/theme"
 import { getFullUri, TYPE_LIGHTNING_USD } from "@app/utils/wallet"
 import { GaloyGQL, translateUnknown as translate, useMutation } from "@galoymoney/client"
 import React, { useCallback, useEffect, useState } from "react"
-import { ActivityIndicator, Alert, Pressable, Share, View } from "react-native"
+import { ActivityIndicator, Alert, Pressable, Share, TextInput, View } from "react-native"
 import { Button, Text } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import QRView from "./qr-view"
 import Icon from "react-native-vector-icons/Ionicons"
 import Clipboard from "@react-native-community/clipboard"
-import CalculatorIcon from "@app/assets/icons/calculator.svg"
-import ChevronIcon from "@app/assets/icons/chevron.svg"
 import { FakeCurrencyInput } from "react-native-currency-input"
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer"
 import Toast from "react-native-toast-message"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import { usdAmountDisplay } from "@app/utils/currencyConversion"
+
+import CalculatorIcon from "@app/assets/icons/calculator.svg"
+import ChevronIcon from "@app/assets/icons/chevron.svg"
+import NoteIcon from "@app/assets/icons/note.svg"
 
 const styles = EStyleSheet.create({
   fieldsContainer: {
@@ -113,6 +115,11 @@ const styles = EStyleSheet.create({
   primaryAmount: {
     fontWeight: "bold",
   },
+  fieldTitleText: {
+    fontWeight: "bold",
+    color: palette.lapisLazuli,
+    marginBottom: 5,
+  },
 })
 
 const ReceiveUsd = () => {
@@ -125,8 +132,9 @@ const ReceiveUsd = () => {
     GaloyGQL.LnInvoice | GaloyGQL.LnNoAmountInvoice | null
   >(null)
   const [usdAmount, setUsdAmount] = useState(0)
-  const [memo] = useState("") // FIXME
+  const [memo, setMemo] = useState("")
   const { lnUpdate } = useMySubscription()
+  const [showMemoInput, setShowMemoInput] = useState(false)
   const [showAmountInput, setShowAmountInput] = useState(false)
 
   const updateInvoice = useCallback(
@@ -177,10 +185,10 @@ const ReceiveUsd = () => {
   )
 
   useEffect((): void | (() => void) => {
-    if (usdWalletId && !showAmountInput) {
+    if (usdWalletId && !showAmountInput && !showMemoInput) {
       updateInvoice({ walletId: usdWalletId, usdAmount, memo })
     }
-  }, [usdAmount, memo, updateInvoice, usdWalletId, showAmountInput])
+  }, [usdAmount, memo, updateInvoice, usdWalletId, showAmountInput, showMemoInput])
 
   const invoicePaid =
     lnUpdate?.paymentHash === invoice?.paymentHash && lnUpdate?.status === "PAID"
@@ -246,6 +254,34 @@ const ReceiveUsd = () => {
     )
   }
 
+  if (showMemoInput) {
+    return (
+      <View style={styles.inputForm}>
+        <View style={styles.fieldsContainer}>
+          <Text style={styles.fieldTitleText}>{translate("SendBitcoinScreen.note")}</Text>
+          <View style={styles.field}>
+            <TextInput
+              style={styles.noteInput}
+              placeholder={translate("SendBitcoinScreen.note")}
+              onChangeText={(note) => setMemo(note)}
+              value={memo}
+              multiline={true}
+              numberOfLines={3}
+              autoFocus
+            />
+          </View>
+
+          <Button
+            title={translate("Update Invoice")}
+            buttonStyle={[styles.button, styles.activeButtonStyle]}
+            titleStyle={styles.activeButtonTitleStyle}
+            onPress={() => setShowMemoInput(false)}
+          />
+        </View>
+      </View>
+    )
+  }
+
   const displayAmount = () => {
     if (!usdAmount) {
       return undefined
@@ -299,8 +335,8 @@ const ReceiveUsd = () => {
         </View>
 
         <View style={styles.optionsContainer}>
-          <View style={styles.field}>
-            {!showAmountInput && (
+          {!showAmountInput && (
+            <View style={styles.field}>
               <Pressable onPress={() => setShowAmountInput(true)}>
                 <View style={styles.fieldContainer}>
                   <View style={styles.fieldIconContainer}>
@@ -316,8 +352,26 @@ const ReceiveUsd = () => {
                   </View>
                 </View>
               </Pressable>
-            )}
-          </View>
+            </View>
+          )}
+
+          {!showMemoInput && (
+            <View style={styles.field}>
+              <Pressable onPress={() => setShowMemoInput(true)}>
+                <View style={styles.fieldContainer}>
+                  <View style={styles.fieldIconContainer}>
+                    <NoteIcon />
+                  </View>
+                  <View style={styles.fieldTextContainer}>
+                    <Text style={styles.fieldText}>{translate("Set a note/label")}</Text>
+                  </View>
+                  <View style={styles.fieldArrowContainer}>
+                    <ChevronIcon />
+                  </View>
+                </View>
+              </Pressable>
+            </View>
+          )}
         </View>
 
         {invoice?.paymentRequest && Boolean(usdAmount) && (
