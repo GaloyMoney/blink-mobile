@@ -80,20 +80,16 @@ const SendBitcoin = ({ navigation, route }) => {
 
   useEffect(() => {
     if (route.params?.payment) {
-      if (route.params.payment.startsWith("https")) {
-        const domains = [
-          "https://ln.bitcoinbeach.com/",
-          "https://pay.mainnet.galoy.io/",
-          "https://pay.bbw.sv/",
-        ]
-        domains.forEach((domain) => {
-          if (route.params?.payment?.startsWith(domain)) {
-            setDestination(route.params?.payment?.substring(domain.length))
-          }
-        })
-      } else {
-        setDestination(route?.params?.payment)
-      }
+      const domains = [
+        "https://ln.bitcoinbeach.com/",
+        "https://pay.mainnet.galoy.io/",
+        "https://pay.bbw.sv/",
+      ]
+      domains.forEach((domain) => {
+        if (route.params?.payment?.startsWith(domain)) {
+          setDestination(route.params?.payment?.substring(domain.length))
+        }
+      })
     }
   }, [route.params?.payment])
 
