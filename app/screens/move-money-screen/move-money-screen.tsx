@@ -298,6 +298,7 @@ export const MoveMoneyScreen: ScreenType = ({
                     navigation={navigation}
                     tx={node}
                     subtitle
+                    isFirst={index === 0}
                     isLast={index === array.length - 1}
                   />
                 ),
