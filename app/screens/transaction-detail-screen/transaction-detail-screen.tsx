@@ -129,7 +129,7 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
   const {
     id,
     description,
-    walletType,
+    settlementCurrency,
     settlementAmount,
     settlementFee,
     settlementPrice,
@@ -141,7 +141,7 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
     isReceive,
     createdAt,
   } = route.params
-
+  const walletType = settlementCurrency as WalletType
   const spendOrReceiveText = isReceive
     ? translate("TransactionDetailScreen.received")
     : translate("TransactionDetailScreen.spent")
