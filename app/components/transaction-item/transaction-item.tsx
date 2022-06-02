@@ -14,6 +14,7 @@ import moment from "moment"
 import { satAmountDisplay, usdAmountDisplay } from "@app/utils/currencyConversion"
 import { GaloyGQL, getLocale } from "@galoymoney/client"
 import { WalletCurrency } from "@app/types/amounts"
+import { WalletType } from "@app/utils/enum"
 
 const styles = EStyleSheet.create({
   container: {
@@ -50,8 +51,8 @@ const styles = EStyleSheet.create({
 
 export interface TransactionItemProps {
   navigation: StackNavigationProp<ParamListBase>
-  isFirst: boolean
-  isLast: boolean
+  isFirst?: boolean
+  isLast?: boolean
   tx: GaloyGQL.Transaction
   subtitle?: boolean
 }
@@ -68,7 +69,7 @@ const computeUsdAmount = (tx: GaloyGQL.Transaction) => {
   return settlementAmount * usdPerSat
 }
 
-const descriptionDisplay = (tx: WalletTransaction) => {
+const descriptionDisplay = (tx: GaloyGQL.Transaction) => {
   const { memo, direction, settlementVia } = tx
   if (memo) {
     return memo
@@ -140,7 +141,7 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
         onChain={tx.settlementVia.__typename === "SettlementViaOnChain"}
         isReceive={isReceive}
         pending={isPending}
-        walletType={tx.settlementCurrency}
+        walletType={tx.settlementCurrency as WalletType}
       />
       <ListItem.Content>
         <ListItem.Title>{description}</ListItem.Title>

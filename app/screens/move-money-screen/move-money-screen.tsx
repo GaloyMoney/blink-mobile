@@ -1,4 +1,4 @@
-import { translateUnknown as translate } from "@galoymoney/client"
+import { GaloyGQL, translateUnknown as translate } from "@galoymoney/client"
 
 import messaging from "@react-native-firebase/messaging"
 import * as React from "react"
@@ -219,7 +219,7 @@ type MoveMoneyScreenProps = {
   navigation: StackNavigationProp<MoveMoneyStackParamList, "moveMoney">
   loading: boolean
   errors: []
-  transactionsEdges: { cursor: string; node: WalletTransaction | null }[]
+  transactionsEdges: { cursor: string; node: GaloyGQL.Transaction | null }[]
   refetch: () => void
   isUpdateAvailable: boolean
   hasToken: boolean
