@@ -1,6 +1,11 @@
-import { GaloyGQL, translateUnknown as translate, useMutation } from "@galoymoney/client"
+import {
+  GaloyGQL,
+  PaymentType,
+  translateUnknown as translate,
+  useMutation,
+} from "@galoymoney/client"
 import { palette } from "@app/theme"
-import React, { useEffect, useState } from "react"
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native"
 import DestinationIcon from "@app/assets/icons/destination.svg"
 import { FakeCurrencyInput } from "react-native-currency-input"
@@ -14,16 +19,9 @@ import {
   satAmountDisplay,
   usdAmountDisplay,
 } from "@app/utils/currencyConversion"
-import { WalletCurrency } from "@app/types/amounts"
+import { PaymentAmount, WalletCurrency } from "@app/types/amounts"
 import { PaymentDestinationDisplay } from "@app/components/payment-destination-display"
-
-const Status = {
-  IDLE: "idle",
-  LOADING: "loading",
-  PENDING: "pending",
-  SUCCESS: "success",
-  ERROR: "error",
-} as const
+import { Status } from "./send-bitcoin.types"
 
 const styles = StyleSheet.create({
   sendBitcoinConfirmationContainer: {
@@ -154,6 +152,18 @@ const styles = StyleSheet.create({
   },
 })
 
+type SendBitcoinConfirmationProps = {
+  destination: string
+  recipientWalletId?: string
+  wallet: any
+  paymentAmount: PaymentAmount<WalletCurrency>
+  note?: string
+  setStatus: Dispatch<SetStateAction<Status>>
+  isNoAmountInvoice: boolean
+  paymentType: PaymentType
+  sameNode: boolean
+}
+
 const SendBitcoinConfirmation = ({
   destination,
   recipientWalletId,
@@ -164,7 +174,7 @@ const SendBitcoinConfirmation = ({
   paymentType,
   sameNode,
   setStatus,
-}) => {
+}: SendBitcoinConfirmationProps) => {
   const { convertCurrencyAmount, convertPaymentAmount } = useMySubscription()
   const [secondaryAmount, setSecondaryAmount] = useState<number | undefined>(undefined)
   const { usdWalletBalance, btcWalletBalance, btcWalletValueInUsd } = useWalletBalance()
@@ -184,7 +194,7 @@ const SendBitcoinConfirmation = ({
     useMutation.onChainPaymentSend()
   const paymentAmountInWalletCurrency = convertPaymentAmount(
     paymentAmount,
-    wallet.walletCurrency,
+    wallet.walletCurrency as WalletCurrency,
   )
   const isLoading =
     intraledgerLoading ||
@@ -404,7 +414,7 @@ const SendBitcoinConfirmation = ({
           <DestinationIcon />
         </View>
         <View style={styles.destinationText}>
-          <PaymentDestinationDisplay data={destination} />
+          <PaymentDestinationDisplay destination={destination} />
         </View>
       </View>
 

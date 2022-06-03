@@ -8,14 +8,7 @@ import SendBitcoinSuccess from "./send-bitcoin-success"
 import { palette } from "@app/theme"
 import { WalletCurrency } from "@app/types/amounts"
 import { PaymentType } from "@galoymoney/client"
-
-const Status = {
-  IDLE: "idle",
-  LOADING: "loading",
-  PENDING: "pending",
-  SUCCESS: "success",
-  ERROR: "error",
-} as const
+import { Status } from "./send-bitcoin.types"
 
 const Styles = StyleSheet.create({
   container: {
@@ -35,9 +28,7 @@ const Styles = StyleSheet.create({
 const SendBitcoin = ({ navigation, route }) => {
   const { defaultWallet } = useMainQuery()
 
-  const [status, setStatus] = useState<
-    "idle" | "loading" | "pending" | "success" | "error"
-  >(Status.IDLE)
+  const [status, setStatus] = useState<Status>(Status.IDLE)
   const [step, setStep] = useState(1)
   const [destination, setDestination] = useState("")
   const [amount, setAmount] = useState(0)
@@ -64,7 +55,7 @@ const SendBitcoin = ({ navigation, route }) => {
       if (parsedDestination.note !== undefined) {
         setNote(parsedDestination.note)
       }
-      if (parsedDestination.recipiertWalletId !== undefined) {
+      if (parsedDestination.recipientWalletId !== undefined) {
         setRecipientWalletId(parsedDestination.recipientWalletId)
       }
     }
@@ -141,7 +132,7 @@ const SendBitcoin = ({ navigation, route }) => {
           wallet={fromWallet}
           paymentAmount={{
             amount: amountCurrency === WalletCurrency.USD ? amount * 100 : amount,
-            currency: amountCurrency,
+            currency: amountCurrency as WalletCurrency,
           }}
           note={note}
           setStatus={setStatus}
