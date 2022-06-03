@@ -11,13 +11,21 @@ const styles = EStyleSheet.create({
   },
 })
 
-export const PaymentDestinationDisplay = ({ data }: { data: string }) => {
-  if (!data) {
+export const PaymentDestinationDisplay = ({ destination }: { destination?: string }) => {
+  if (!destination) {
     return <ActivityIndicator />
   }
-  const firstSix = data.slice(0, 5)
-  const lastSix = data.slice(-5)
-  const middle = data.slice(5, -5)
+
+  if (destination.length < 40) {
+    return (
+      <Text numberOfLines={1} ellipsizeMode={"middle"}>
+        <Text>{destination}</Text>
+      </Text>
+    )
+  }
+  const firstSix = destination.slice(0, 5)
+  const lastSix = destination.slice(-5)
+  const middle = destination.slice(5, -5)
 
   return (
     <Text numberOfLines={1} ellipsizeMode={"middle"}>
