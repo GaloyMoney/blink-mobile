@@ -508,7 +508,7 @@ const ReceiveBtc = () => {
 
       <View style={styles.fieldsContainer}>
         <View style={styles.invoiceDisplay}>
-          {!loading && <PaymentDestinationDisplay data={paymentDestination} />}
+          {!loading && <PaymentDestinationDisplay destination={paymentDestination} />}
           {loading && <ActivityIndicator />}
         </View>
 
