@@ -179,8 +179,9 @@ export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
           feedback: card.feedback,
           // store.earnComplete(card.id),
           onComplete: async () => {
-            
-            const { data, errorsMessage } = await userQuizQuestionUpdateCompleted({ variables: { input: { id: card.id } } })
+            const { errorsMessage } = await userQuizQuestionUpdateCompleted({
+              variables: { input: { id: card.id } },
+            })
             if (errorsMessage) {
               toastShow(errorsMessage)
             }
