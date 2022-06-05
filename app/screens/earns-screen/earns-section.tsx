@@ -17,6 +17,7 @@ import { palette } from "../../theme/palette"
 import type { QuizQuestion } from "../../types/quiz"
 import type { ScreenType } from "../../types/jsx"
 import useToken from "../../utils/use-token"
+import { toastShow } from "../../utils/toast"
 import { SVGs } from "./earn-svg-factory"
 import { getCardsFromSection, remainingSatsOnSection } from "./earns-utils"
 import { getQuizQuestions } from "../../graphql/query"
@@ -199,7 +200,15 @@ export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
           feedback: card.feedback,
           // store.earnComplete(card.id),
           onComplete: async () => {
-            updateCompleted({ variables: { input: { id: card.id } } })
+            const { data }  = await updateCompleted({ variables: { input: { id: card.id } } });
+            if (data?.userQuizQuestionUpdateCompleted?.errors?.length > 0) {
+              toastShow(
+                data.userQuizQuestionUpdateCompleted.errors.map((error) => {
+                  // Todo: translated error messages in known cases
+                  return error.message 
+                }).join(" ")
+              );
+            }
           },
           id: card.id,
           completed: Boolean(quizQuestions.myCompletedQuestions[card.id]),
