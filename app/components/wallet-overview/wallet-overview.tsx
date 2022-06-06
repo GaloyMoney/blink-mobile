@@ -31,31 +31,35 @@ const styles = EStyleSheet.create({
     justifyContent: "flex-end",
   },
   textPrimary: {
-    fontSize: 20,
+    fontSize: 17,
     fontWeight: "600",
     color: palette.black,
   },
   textRight: {
     textAlign: "right",
-    marginRight: 10,
+    marginRight: 8,
+    flexDirection: "column",
+    justifyContent: "center",
   },
   textLeft: {
-    marginLeft: 10,
-    lineHeight: 50,
+    marginLeft: 8,
+    paddingVertical: 4,
+    flexDirection: "column",
+    justifyContent: "center",
   },
   textSecondary: {
-    fontSize: 12,
+    fontSize: 10,
     color: palette.darkGrey,
   },
   usdLabelContainer: {
     height: 50,
     backgroundColor: palette.usdSecondary,
-    borderBottomLeftRadius: 10,
-    borderTopLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    borderTopRightRadius: 10,
     justifyContent: "center",
   },
   usdLabelText: {
-    transform: [{ rotate: "-90deg" }],
+    transform: [{ rotate: "90deg" }],
     color: palette.usdPrimary,
     textAlign: "center",
     fontWeight: "bold",
@@ -63,13 +67,13 @@ const styles = EStyleSheet.create({
   },
   btcLabelContainer: {
     backgroundColor: palette.lightOrange,
-    borderBottomRightRadius: 10,
-    borderTopRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    borderTopLeftRadius: 10,
     height: 50,
     justifyContent: "center",
   },
   btcLabelText: {
-    transform: [{ rotate: "90deg" }],
+    transform: [{ rotate: "-90deg" }],
     color: palette.btcPrimary,
     textAlign: "center",
     fontWeight: "bold",
@@ -92,14 +96,23 @@ const WalletOverview = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.balanceLeft}>
-        <View style={styles.usdLabelContainer}>
-          <Text style={styles.usdLabelText}>USD</Text>
+        <View style={styles.btcLabelContainer}>
+          <Text style={styles.btcLabelText}>SAT</Text>
         </View>
-        <TextCurrency
-          view="UsdWallet"
-          currency={"USD"}
-          style={[styles.textPrimary, styles.textLeft]}
-        />
+
+        <View style={styles.textLeft}>
+          <TextCurrency
+            view="BtcWalletInUsd"
+            currency={"USD"}
+            style={styles.textPrimary}
+          />
+          <TextCurrency
+            view="BtcWallet"
+            currency={"BTC"}
+            style={styles.textSecondary}
+            satsIconSize={15}
+          />
+        </View>
       </View>
 
       <View style={styles.transferButton}>
@@ -109,21 +122,11 @@ const WalletOverview = ({ navigation }) => {
       </View>
 
       <View style={styles.balanceRight}>
-        <View>
-          <TextCurrency
-            view="BtcWalletInUsd"
-            currency={"USD"}
-            style={[styles.textPrimary, styles.textRight]}
-          />
-          <TextCurrency
-            view="BtcWallet"
-            currency={"BTC"}
-            style={[styles.textSecondary, styles.textRight]}
-            satsIconSize={15}
-          />
+        <View style={styles.textRight}>
+          <TextCurrency view="UsdWallet" currency={"USD"} style={styles.textPrimary} />
         </View>
-        <View style={styles.btcLabelContainer}>
-          <Text style={styles.btcLabelText}>SAT</Text>
+        <View style={styles.usdLabelContainer}>
+          <Text style={styles.usdLabelText}>USD</Text>
         </View>
       </View>
     </View>

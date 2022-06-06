@@ -20,7 +20,6 @@ const ComponentStyle = EStyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-end",
-    paddingLeft: 8,
   },
 })
 
