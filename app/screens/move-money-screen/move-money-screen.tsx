@@ -79,9 +79,10 @@ const styles = EStyleSheet.create({
   },
 
   header: {
-    alignItems: "center",
+    display: "flex",
     flexDirection: "row",
     justifyContent: "space-around",
+    marginVertical: "14rem",
   },
 
   icon: { height: 34, top: -22 },
@@ -152,6 +153,7 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
     errors,
     loading: loadingMain,
     refetch,
+    usdWalletId,
   } = useMainQuery()
 
   // temporary fix until we have a better management of notifications:
@@ -211,6 +213,7 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
       transactionsEdges={mergedTransactions}
       isUpdateAvailable={isUpdateAvailableOrRequired(mobileVersions).available}
       hasToken={hasToken}
+      hasUsdWallet={usdWalletId !== undefined}
     />
   )
 }
@@ -223,6 +226,7 @@ type MoveMoneyScreenProps = {
   refetch: () => void
   isUpdateAvailable: boolean
   hasToken: boolean
+  hasUsdWallet: boolean
 }
 
 export const MoveMoneyScreen: ScreenType = ({
@@ -233,6 +237,7 @@ export const MoveMoneyScreen: ScreenType = ({
   transactionsEdges,
   isUpdateAvailable,
   hasToken,
+  hasUsdWallet,
 }: MoveMoneyScreenProps) => {
   const [modalVisible, setModalVisible] = useState(false)
 
@@ -310,6 +315,7 @@ export const MoveMoneyScreen: ScreenType = ({
   return (
     <Screen style={styles.screenStyle}>
       <StatusBar backgroundColor={palette.lighterGrey} barStyle="dark-content" />
+
       <Modal
         style={styles.modal}
         isVisible={modalVisible}
@@ -341,6 +347,7 @@ export const MoveMoneyScreen: ScreenType = ({
           <View style={styles.divider} />
         </View>
       </Modal>
+
       <View style={styles.header}>
         <Button
           buttonStyle={styles.buttonStyleTime}
@@ -352,7 +359,13 @@ export const MoveMoneyScreen: ScreenType = ({
           }
           icon={<PriceIcon />}
         />
-        <BalanceHeader loading={loading} style={styles.balanceHeader} />
+
+        <BalanceHeader
+          loading={loading}
+          style={styles.balanceHeader}
+          showSecondaryCurrency={!hasUsdWallet}
+        />
+
         <Button
           buttonStyle={styles.buttonStyleTime}
           containerStyle={styles.separator}
@@ -360,7 +373,9 @@ export const MoveMoneyScreen: ScreenType = ({
           icon={<SettingsIcon />}
         />
       </View>
-      <WalletOverview navigation={navigation} />
+
+      {hasUsdWallet && <WalletOverview navigation={navigation} />}
+
       <FlatList
         ListHeaderComponent={() => (
           <>
