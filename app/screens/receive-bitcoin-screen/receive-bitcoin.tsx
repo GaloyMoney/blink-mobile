@@ -10,6 +10,7 @@ const CurrencyType = {
   USD: "USD",
   BTC: "BTC",
 } as const
+
 const styles = EStyleSheet.create({
   container: {
     flexDirection: "column",
@@ -60,28 +61,11 @@ const styles = EStyleSheet.create({
   },
 })
 const ReceiveBitcoin = () => {
-  const [receiveCurrency, setReceiveCurrency] = useState<CurrencyType>(CurrencyType.USD)
+  const [receiveCurrency, setReceiveCurrency] = useState<CurrencyType>(CurrencyType.BTC)
 
   return (
     <View style={styles.container}>
       <View style={styles.tabRow}>
-        <TouchableWithoutFeedback onPress={() => setReceiveCurrency(CurrencyType.USD)}>
-          <View
-            style={
-              receiveCurrency === CurrencyType.USD ? styles.usdActive : styles.inactiveTab
-            }
-          >
-            <Text
-              style={
-                receiveCurrency === CurrencyType.USD
-                  ? styles.activeTabText
-                  : styles.inactiveTabText
-              }
-            >
-              USD
-            </Text>
-          </View>
-        </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={() => setReceiveCurrency(CurrencyType.BTC)}>
           <View
             style={
@@ -96,6 +80,23 @@ const ReceiveBitcoin = () => {
               }
             >
               BTC
+            </Text>
+          </View>
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback onPress={() => setReceiveCurrency(CurrencyType.USD)}>
+          <View
+            style={
+              receiveCurrency === CurrencyType.USD ? styles.usdActive : styles.inactiveTab
+            }
+          >
+            <Text
+              style={
+                receiveCurrency === CurrencyType.USD
+                  ? styles.activeTabText
+                  : styles.inactiveTabText
+              }
+            >
+              USD
             </Text>
           </View>
         </TouchableWithoutFeedback>
