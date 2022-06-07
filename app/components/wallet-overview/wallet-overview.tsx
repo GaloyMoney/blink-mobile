@@ -1,11 +1,13 @@
 import { palette } from "@app/theme"
-import React from "react"
-import { Platform, View } from "react-native"
+import React, { useState } from "react"
+import { Platform, TouchableHighlight, View } from "react-native"
 import { Text } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TextCurrency } from "../text-currency"
 import TransferIcon from "@app/assets/icons/transfer.svg"
+import Icon from "react-native-vector-icons/Ionicons"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
+import { useHideBalance } from "@app/hooks"
 
 const styles = EStyleSheet.create({
   container: {
@@ -90,9 +92,30 @@ const styles = EStyleSheet.create({
     width: 50,
     zIndex: 50,
   },
+  hiddenBalanceIcon: {
+    fontSize: "25rem",
+    width: 75,
+    textAlign: "center",
+  },
 })
 
+const HidableArea = ({ hidden, style, children }) => {
+  const [visible, setVisible] = useState<boolean>(!hidden)
+
+  return (
+    <TouchableHighlight
+      style={style}
+      underlayColor="#ffffff00"
+      onPress={() => setVisible((v) => !v)}
+    >
+      <>{visible ? children : <Icon style={styles.hiddenBalanceIcon} name="eye" />}</>
+    </TouchableHighlight>
+  )
+}
+
 const WalletOverview = ({ navigation }) => {
+  const defaultHideBalance = useHideBalance()
+
   return (
     <View style={styles.container}>
       <View style={styles.balanceLeft}>
@@ -100,7 +123,11 @@ const WalletOverview = ({ navigation }) => {
           <Text style={styles.btcLabelText}>SAT</Text>
         </View>
 
-        <View style={styles.textLeft}>
+        <HidableArea
+          key={`BTC-hide-balance-${defaultHideBalance}`}
+          hidden={defaultHideBalance}
+          style={styles.textLeft}
+        >
           <TextCurrency
             view="BtcWalletInUsd"
             currency={"USD"}
@@ -112,7 +139,7 @@ const WalletOverview = ({ navigation }) => {
             style={styles.textSecondary}
             satsIconSize={15}
           />
-        </View>
+        </HidableArea>
       </View>
 
       <View style={styles.transferButton}>
@@ -122,9 +149,14 @@ const WalletOverview = ({ navigation }) => {
       </View>
 
       <View style={styles.balanceRight}>
-        <View style={styles.textRight}>
+        <HidableArea
+          key={`USD-hide-balance-${defaultHideBalance}`}
+          hidden={defaultHideBalance}
+          style={styles.textRight}
+        >
           <TextCurrency view="UsdWallet" currency={"USD"} style={styles.textPrimary} />
-        </View>
+        </HidableArea>
+
         <View style={styles.usdLabelContainer}>
           <Text style={styles.usdLabelText}>USD</Text>
         </View>

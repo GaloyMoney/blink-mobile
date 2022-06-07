@@ -182,9 +182,7 @@ export const BalanceHeaderDisplay: React.FC<BalanceHeaderProps> = ({
           <TouchableHighlight
             underlayColor={styles.touchableHighlightColor}
             onPress={() => {
-              if (hideBalance) {
-                setHideBalance(true)
-              }
+              setHideBalance(true)
             }}
           >
             <TextCurrency view="UsdBalance" currency={currency} style={styles.text} />
