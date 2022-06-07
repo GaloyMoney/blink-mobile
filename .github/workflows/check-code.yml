@@ -1,7 +1,7 @@
 name: "Check code"
 on:
   pull_request:
-    branches: [main, usd-integration]
+    branches: [main]
 jobs:
   check-code:
     name: Check Code
