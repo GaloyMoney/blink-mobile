@@ -13,7 +13,8 @@ const styles = EStyleSheet.create({
   container: {
     display: "flex",
     flexDirection: "row",
-    padding: 30,
+    marginVertical: 15,
+    marginHorizontal: 30,
   },
   balanceLeft: {
     flex: 3,
