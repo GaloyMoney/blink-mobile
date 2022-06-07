@@ -7,20 +7,18 @@ import Icon from "react-native-vector-icons/Ionicons"
 import Tooltip from "react-native-walkthrough-tooltip"
 import { translateUnknown as translate } from "@galoymoney/client"
 import { palette } from "../../theme/palette"
-import { TextCurrency } from "../text-currency/text-currency"
+import { TextCurrencyForAmount } from "../text-currency/text-currency"
 import { useIsFocused } from "@react-navigation/native"
-import { useHiddenBalanceToolTip, useHideBalance } from "../../hooks"
+import { useHiddenBalanceToolTip, useHideBalance, useWalletBalance } from "../../hooks"
 import { saveHiddenBalanceToolTip } from "../../graphql/client-only-query"
 import { useApolloClient } from "@apollo/client"
 
 const styles = EStyleSheet.create({
-  amount: {
-    alignItems: "center",
+  container: {
+    display: "flex",
     flexDirection: "column",
-    height: 42, // FIXME should be dynamic?
-    position: "absolute",
-    top: "25rem",
-    width: "250rem",
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   balanceText: {
@@ -28,18 +26,6 @@ const styles = EStyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     marginBottom: 8,
-  },
-
-  container: {
-    alignItems: "flex-end",
-    flexDirection: "row",
-  },
-
-  header: {
-    alignItems: "center",
-    marginBottom: "12rem",
-    marginTop: "32rem",
-    minHeight: "75rem",
   },
 
   hiddenBalanceContainer: {
@@ -55,13 +41,13 @@ const styles = EStyleSheet.create({
   subCurrencyText: {
     color: palette.darkGrey,
     fontSize: "16rem",
+    textAlign: "center",
   },
 
   text: {
     color: palette.darkGrey,
     fontSize: 32,
   },
-  touchableHighlightColor: "#ffffff00",
 })
 
 export interface BalanceHeaderProps {
@@ -106,6 +92,7 @@ export const BalanceHeaderDisplay: React.FC<BalanceHeaderProps> = ({
   showSecondaryCurrency = false,
 }: BalanceHeaderProps) => {
   const client = useApolloClient()
+  const { btcWalletBalance, btcWalletValueInUsd, usdWalletBalance } = useWalletBalance()
   const hideBalance = useHideBalance()
   const hiddenBalanceToolTip = useHiddenBalanceToolTip()
   const isFocused = useIsFocused()
@@ -151,7 +138,7 @@ export const BalanceHeaderDisplay: React.FC<BalanceHeaderProps> = ({
           onClose={closeToolTip}
         >
           <TouchableHighlight
-            underlayColor={styles.touchableHighlightColor}
+            underlayColor="#ffffff00"
             onPress={() => {
               if (showToolTip) {
                 closeToolTip()
@@ -168,27 +155,27 @@ export const BalanceHeaderDisplay: React.FC<BalanceHeaderProps> = ({
   }
 
   const defaultBalanceHeader = () => {
-    const subHeader = showSecondaryCurrency && (
-      <TextCurrency
-        view="BtcWallet"
-        currency={otherCurrency}
-        style={styles.subCurrencyText}
-      />
-    )
-
     return (
-      <View style={styles.amount}>
-        <View style={styles.container}>
-          <TouchableHighlight
-            underlayColor={styles.touchableHighlightColor}
-            onPress={() => {
-              setHideBalance(true)
-            }}
-          >
-            <TextCurrency view="UsdBalance" currency={currency} style={styles.text} />
-          </TouchableHighlight>
-        </View>
-        {subHeader}
+      <View style={styles.container}>
+        <TouchableHighlight
+          underlayColor="#ffffff00"
+          onPress={() => setHideBalance(true)}
+        >
+          <TextCurrencyForAmount
+            currency={currency}
+            amount={usdWalletBalance / 100 + btcWalletValueInUsd}
+            style={styles.text}
+          />
+        </TouchableHighlight>
+
+        {showSecondaryCurrency && (
+          <TextCurrencyForAmount
+            amount={btcWalletBalance}
+            currency={otherCurrency}
+            satsIconSize={12}
+            style={styles.subCurrencyText}
+          />
+        )}
       </View>
     )
   }

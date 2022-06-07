@@ -1,3 +1,4 @@
+import useMainQuery from "@app/hooks/use-main-query"
 import { palette } from "@app/theme"
 import React, { useState } from "react"
 import { Text, View } from "react-native"
@@ -61,7 +62,12 @@ const styles = EStyleSheet.create({
   },
 })
 const ReceiveBitcoin = () => {
+  const { usdWalletId } = useMainQuery()
   const [receiveCurrency, setReceiveCurrency] = useState<CurrencyType>(CurrencyType.BTC)
+
+  if (!usdWalletId) {
+    return <ReceiveBtc />
+  }
 
   return (
     <View style={styles.container}>

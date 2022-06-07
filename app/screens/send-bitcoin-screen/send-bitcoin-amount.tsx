@@ -298,7 +298,7 @@ const SendBitcoinAmount = ({
     </ReactNativeModal>
   )
 
-  const showWalletPicker = !usdDisabled
+  const showWalletPicker = !usdDisabled && wallets.length > 1
 
   let validAmount = false
   let errorMessage
