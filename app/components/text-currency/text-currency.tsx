@@ -16,11 +16,10 @@ type Props = {
 
 const ComponentStyle = EStyleSheet.create({
   view: {
-    flex: 1,
+    display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "flex-end",
-    paddingLeft: 8,
+    justifyContent: "center",
   },
 })
 

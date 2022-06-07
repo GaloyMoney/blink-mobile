@@ -60,7 +60,7 @@ const useMainQuery = (): useMainQueryOutput => {
     )
   }
   const btcWalletBalance = btcWallet?.balance
-  const usdWalletBalance = usdWallet?.balance
+  const usdWalletBalance = usdWallet?.balance ?? 0
   const btcWalletId = btcWallet?.id
   const usdWalletId = usdWallet?.id
   const me = data?.me || {}
