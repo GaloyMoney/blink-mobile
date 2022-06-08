@@ -1,11 +1,10 @@
-import { PaymentDestinationDisplay } from "@app/components/payment-destination-display"
 import { useMySubscription } from "@app/hooks"
 import useMainQuery from "@app/hooks/use-main-query"
 import { palette } from "@app/theme"
 import { getFullUri, TYPE_LIGHTNING_USD } from "@app/utils/wallet"
 import { GaloyGQL, translateUnknown as translate, useMutation } from "@galoymoney/client"
 import React, { useCallback, useEffect, useState } from "react"
-import { ActivityIndicator, Alert, Pressable, Share, TextInput, View } from "react-native"
+import { Alert, Pressable, Share, TextInput, View } from "react-native"
 import { Button, Text } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import QRView from "./qr-view"
@@ -22,7 +21,7 @@ import ChevronIcon from "@app/assets/icons/chevron.svg"
 import NoteIcon from "@app/assets/icons/note.svg"
 
 const styles = EStyleSheet.create({
-  fieldsContainer: {
+  container: {
     marginTop: "14rem",
     marginLeft: 20,
     marginRight: 20,
@@ -36,6 +35,12 @@ const styles = EStyleSheet.create({
   inputForm: {
     marginVertical: 20,
   },
+  invoiceInfo: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: 14,
+  },
   invoiceExpired: {
     marginTop: 25,
   },
@@ -43,11 +48,6 @@ const styles = EStyleSheet.create({
     color: palette.red,
     fontSize: "20rem",
     textAlign: "center",
-  },
-  invoiceDisplay: {
-    padding: 15,
-    backgroundColor: palette.white,
-    borderRadius: 10,
   },
   infoText: {
     color: palette.midGrey,
@@ -63,8 +63,9 @@ const styles = EStyleSheet.create({
     marginRight: 10,
   },
   textContainer: {
-    marginTop: 6,
     flexDirection: "row",
+    justifyContent: "center",
+    marginTop: 6,
   },
   optionsContainer: {
     marginTop: 20,
@@ -111,13 +112,6 @@ const styles = EStyleSheet.create({
   activeButtonTitleStyle: {
     color: palette.white,
     fontWeight: "bold",
-  },
-  invoiceInfo: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-    marginHorizontal: 20,
-    marginTop: 5,
   },
   primaryAmount: {
     fontWeight: "bold",
@@ -244,7 +238,7 @@ const ReceiveUsd = () => {
   if (showAmountInput) {
     return (
       <View style={styles.inputForm}>
-        <View style={styles.fieldsContainer}>
+        <View style={styles.container}>
           <Text style={styles.fieldTitleText}>{translate("Invoice Amount")}</Text>
           <View style={styles.field}>
             <FakeCurrencyInput
@@ -278,7 +272,7 @@ const ReceiveUsd = () => {
   if (showMemoInput) {
     return (
       <View style={styles.inputForm}>
-        <View style={styles.fieldsContainer}>
+        <View style={styles.container}>
           <Text style={styles.fieldTitleText}>{translate("SendBitcoinScreen.note")}</Text>
           <View style={styles.field}>
             <TextInput
@@ -305,7 +299,9 @@ const ReceiveUsd = () => {
 
   const displayAmount = () => {
     if (!usdAmount) {
-      return undefined
+      return (
+        <Text style={styles.primaryAmount}>{translate("Flexible Amount Invoice")}</Text>
+      )
     }
     return (
       <>
@@ -318,119 +314,123 @@ const ReceiveUsd = () => {
 
   return (
     <KeyboardAwareScrollView>
-      <Pressable onPress={copyToClipboard}>
-        <QRView
-          data={invoice?.paymentRequest}
-          type={TYPE_LIGHTNING_USD}
-          amount={usdAmount}
-          memo={memo}
-          loading={loading}
-          completed={invoicePaid}
-          err={err}
-        />
-      </Pressable>
-
-      <View style={styles.invoiceInfo}>{displayAmount()}</View>
-
-      {status === "expired" && (
-        <View style={[styles.fieldsContainer, styles.invoiceExpired]}>
-          <Text style={styles.invoiceExpiredMessage}>{translate("Invoice Expired")}</Text>
-          <Button
-            title={translate("Generate new invoice")}
-            buttonStyle={[styles.button, styles.activeButtonStyle]}
-            titleStyle={styles.activeButtonTitleStyle}
-            onPress={() => {
-              setStatus("loading")
-              updateInvoice({ walletId: usdWalletId, usdAmount, memo })
-            }}
+      <View style={styles.container}>
+        <Pressable onPress={copyToClipboard}>
+          <QRView
+            data={invoice?.paymentRequest}
+            type={TYPE_LIGHTNING_USD}
+            amount={usdAmount}
+            memo={memo}
+            loading={loading}
+            completed={invoicePaid}
+            err={err}
           />
-        </View>
-      )}
-
-      {status === "active" && (
-        <View style={styles.fieldsContainer}>
-          <View style={styles.invoiceDisplay}>
-            {!loading && (
-              <PaymentDestinationDisplay destination={invoice?.paymentRequest} />
-            )}
-            {loading && <ActivityIndicator />}
-          </View>
-          <View style={styles.textContainer}>
-            <View style={styles.copyInvoiceContainer}>
-              <Pressable onPress={copyToClipboard}>
-                <Text style={styles.infoText}>
-                  <Icon style={styles.infoText} name="copy-outline" />{" "}
-                  {translate("ReceiveBitcoinScreen.copyInvoice")}
-                </Text>
-              </Pressable>
-            </View>
-            <View style={styles.shareInvoiceContainer}>
-              <Pressable onPress={share}>
-                <Text style={styles.infoText}>
-                  <Icon style={styles.infoText} name="share-outline" />{" "}
-                  {translate("ReceiveBitcoinScreen.shareInvoice")}
-                </Text>
-              </Pressable>
-            </View>
-          </View>
-          <View style={styles.optionsContainer}>
-            {!showAmountInput && (
-              <View style={styles.field}>
-                <Pressable onPress={() => setShowAmountInput(true)}>
-                  <View style={styles.fieldContainer}>
-                    <View style={styles.fieldIconContainer}>
-                      <CalculatorIcon />
-                    </View>
-                    <View style={styles.fieldTextContainer}>
-                      <Text style={styles.fieldText}>
-                        {translate("ReceiveBitcoinScreen.addAmount")}
-                      </Text>
-                    </View>
-                    <View style={styles.fieldArrowContainer}>
-                      <ChevronIcon />
-                    </View>
-                  </View>
+        </Pressable>
+        <View style={styles.textContainer}>
+          {loading ? (
+            <Text>{translate("Generating Invoice...")}</Text>
+          ) : (
+            <>
+              <View style={styles.copyInvoiceContainer}>
+                <Pressable onPress={copyToClipboard}>
+                  <Text style={styles.infoText}>
+                    <Icon style={styles.infoText} name="copy-outline" />{" "}
+                    {translate("ReceiveBitcoinScreen.copyInvoice")}
+                  </Text>
                 </Pressable>
               </View>
-            )}
-
-            {!showMemoInput && (
-              <View style={styles.field}>
-                <Pressable onPress={() => setShowMemoInput(true)}>
-                  <View style={styles.fieldContainer}>
-                    <View style={styles.fieldIconContainer}>
-                      <NoteIcon />
-                    </View>
-                    <View style={styles.fieldTextContainer}>
-                      <Text style={styles.fieldText}>
-                        {translate("Set a note/label")}
-                      </Text>
-                    </View>
-                    <View style={styles.fieldArrowContainer}>
-                      <ChevronIcon />
-                    </View>
-                  </View>
+              <View style={styles.shareInvoiceContainer}>
+                <Pressable onPress={share}>
+                  <Text style={styles.infoText}>
+                    <Icon style={styles.infoText} name="share-outline" />{" "}
+                    {translate("ReceiveBitcoinScreen.shareInvoice")}
+                  </Text>
                 </Pressable>
               </View>
-            )}
-          </View>
-
-          {invoice?.paymentRequest && status === "active" && Boolean(usdAmount) && (
-            <View style={styles.countdownTimerContainer}>
-              <CountdownCircleTimer
-                key={invoice?.paymentRequest}
-                isPlaying
-                duration={120}
-                colors={"#004777"}
-                size={80}
-                onComplete={() => setStatus("expired")}
-              >
-                {({ remainingTime }) => <Text>{remainingTime}</Text>}
-              </CountdownCircleTimer>
-            </View>
+            </>
           )}
         </View>
-      )}
+
+        <View style={styles.invoiceInfo}>{displayAmount()}</View>
+
+        {status === "expired" && (
+          <View style={[styles.container, styles.invoiceExpired]}>
+            <Text style={styles.invoiceExpiredMessage}>
+              {translate("Invoice Expired")}
+            </Text>
+            <Button
+              title={translate("Generate new invoice")}
+              buttonStyle={[styles.button, styles.activeButtonStyle]}
+              titleStyle={styles.activeButtonTitleStyle}
+              onPress={() => {
+                setStatus("loading")
+                updateInvoice({ walletId: usdWalletId, usdAmount, memo })
+              }}
+            />
+          </View>
+        )}
+
+        {status === "active" && (
+          <>
+            <View style={styles.optionsContainer}>
+              {!showAmountInput && (
+                <View style={styles.field}>
+                  <Pressable onPress={() => setShowAmountInput(true)}>
+                    <View style={styles.fieldContainer}>
+                      <View style={styles.fieldIconContainer}>
+                        <CalculatorIcon />
+                      </View>
+                      <View style={styles.fieldTextContainer}>
+                        <Text style={styles.fieldText}>
+                          {translate("ReceiveBitcoinScreen.addAmount")}
+                        </Text>
+                      </View>
+                      <View style={styles.fieldArrowContainer}>
+                        <ChevronIcon />
+                      </View>
+                    </View>
+                  </Pressable>
+                </View>
+              )}
+
+              {!showMemoInput && (
+                <View style={styles.field}>
+                  <Pressable onPress={() => setShowMemoInput(true)}>
+                    <View style={styles.fieldContainer}>
+                      <View style={styles.fieldIconContainer}>
+                        <NoteIcon />
+                      </View>
+                      <View style={styles.fieldTextContainer}>
+                        <Text style={styles.fieldText}>
+                          {translate("Set a note/label")}
+                        </Text>
+                      </View>
+                      <View style={styles.fieldArrowContainer}>
+                        <ChevronIcon />
+                      </View>
+                    </View>
+                  </Pressable>
+                </View>
+              )}
+            </View>
+
+            {invoice?.paymentRequest && status === "active" && Boolean(usdAmount) && (
+              <View style={styles.countdownTimerContainer}>
+                <CountdownCircleTimer
+                  key={invoice?.paymentRequest}
+                  isPlaying
+                  duration={120}
+                  colors={"#004777"}
+                  size={80}
+                  onComplete={() => setStatus("expired")}
+                >
+                  {({ remainingTime }) => <Text>{remainingTime}</Text>}
+                </CountdownCircleTimer>
+              </View>
+            )}
+          </>
+        )}
+      </View>
     </KeyboardAwareScrollView>
   )
 }

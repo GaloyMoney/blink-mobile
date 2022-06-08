@@ -15,14 +15,13 @@ const CurrencyType = {
 const styles = EStyleSheet.create({
   container: {
     flexDirection: "column",
-    padding: 10,
-    flex: 6,
+    // padding: 10,
   },
   tabRow: {
     flexDirection: "row",
     flexWrap: "nowrap",
     justifyContent: "center",
-    height: "50rem",
+    marginTop: 12,
   },
   usdActive: {
     backgroundColor: palette.usdSecondary,
@@ -56,9 +55,6 @@ const styles = EStyleSheet.create({
   },
   inactiveTabText: {
     color: palette.coolGrey,
-  },
-  screenContainer: {
-    flex: 5,
   },
 })
 const ReceiveBitcoin = () => {

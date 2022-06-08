@@ -22,8 +22,8 @@ export const palette = {
   sky: "#C3CCFF",
   violetteBlue: "#6374c3",
 
-  btcPrimary: "#333333",
+  btcPrimary: "#8c540a",
   btcSecondary: "#f1a43c",
-  usdPrimary: "#333333",
+  usdPrimary: "#40632c",
   usdSecondary: "#85bb65",
 }

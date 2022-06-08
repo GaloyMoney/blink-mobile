@@ -26,7 +26,7 @@ const Styles = StyleSheet.create({
 })
 
 const SendBitcoin = ({ navigation, route }) => {
-  const { defaultWallet } = useMainQuery()
+  const { defaultWallet, usdWalletId } = useMainQuery()
 
   const [status, setStatus] = useState<Status>(Status.IDLE)
   const [step, setStep] = useState(1)
@@ -122,7 +122,7 @@ const SendBitcoin = ({ navigation, route }) => {
           setAmount={setAmount}
           defaultAmount={defaultAmount}
           fixedAmount={fixedAmount}
-          usdDisabled={paymentType === "onchain"}
+          usdDisabled={paymentType === "onchain" || usdWalletId === undefined}
         />
       )}
       {step === 3 && (
