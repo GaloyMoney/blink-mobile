@@ -510,7 +510,7 @@ const styles = EStyleSheet.create({
     height: 30,
     width: 50,
     borderRadius: 10,
-    backgroundColor: palette.lightOrange,
+    backgroundColor: palette.btcSecondary,
     justifyContent: "center",
     alignItems: "center",
   },

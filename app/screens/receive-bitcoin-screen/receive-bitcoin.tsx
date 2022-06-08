@@ -25,7 +25,7 @@ const styles = EStyleSheet.create({
     height: "50rem",
   },
   usdActive: {
-    backgroundColor: palette.violetteBlue,
+    backgroundColor: palette.usdSecondary,
     borderRadius: 7,
     justifyContent: "center",
     alignItems: "center",
@@ -34,7 +34,7 @@ const styles = EStyleSheet.create({
     margin: "5rem",
   },
   btcActive: {
-    backgroundColor: palette.orangePill,
+    backgroundColor: palette.btcSecondary,
     borderRadius: 7,
     justifyContent: "center",
     alignItems: "center",
@@ -43,7 +43,7 @@ const styles = EStyleSheet.create({
     margin: "5rem",
   },
   activeTabText: {
-    color: palette.white,
+    color: palette.darkGrey,
   },
   inactiveTab: {
     backgroundColor: palette.white,

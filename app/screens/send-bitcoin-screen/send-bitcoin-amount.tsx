@@ -90,10 +90,11 @@ const Styles = StyleSheet.create({
   fieldTitleText: {
     fontWeight: "bold",
     color: palette.lapisLazuli,
-    marginBottom: 5,
+    marginTop: 8,
+    marginBottom: 4,
   },
   fieldContainer: {
-    padding: 10,
+    padding: 5,
   },
   currencyInputContainer: {
     flexDirection: "column",
