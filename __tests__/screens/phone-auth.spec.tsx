@@ -1,7 +1,7 @@
 import * as React from "react"
 import { MockedProvider } from "@apollo/client/testing"
 import { InMemoryCache } from "@apollo/client"
-import { act, cleanup, fireEvent, render } from "@testing-library/react-native"
+import { cleanup, render } from "@testing-library/react-native"
 import "@testing-library/jest-native/extend-expect"
 import "react-native-gesture-handler/jestSetup.js"
 

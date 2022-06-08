@@ -170,6 +170,14 @@ exports[`WelcomePhoneInputScreen render matches snapshot 1`] = `
         />
       </View>
       <RNCSafeAreaView
+        edges={
+          Array [
+            "bottom",
+            "left",
+            "right",
+            "top",
+          ]
+        }
         style={
           Object {
             "alignItems": "center",
@@ -188,6 +196,7 @@ exports[`WelcomePhoneInputScreen render matches snapshot 1`] = `
         >
           <Text
             allowFontScaling={false}
+            selectable={false}
             style={
               Array [
                 Object {
@@ -218,7 +227,9 @@ exports[`WelcomePhoneInputScreen render matches snapshot 1`] = `
               "marginVertical": 8,
             }
           }
-        />
+        >
+          
+        </Text>
         <View
           style={
             Object {
@@ -782,6 +793,7 @@ exports[`WelcomePhoneInputScreen render matches snapshot 1`] = `
           <Text
             allowFontScaling={false}
             onPress={[Function]}
+            selectable={false}
             style={
               Array [
                 Object {
