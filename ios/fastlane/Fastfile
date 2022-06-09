@@ -57,7 +57,7 @@ platform :ios do
   desc "build ipa"
   lane :build_ipa do
     match(type: "development", readonly: is_ci)
-    gym(scheme: "GaloyApp")
+    gym(scheme: "GaloyApp", export_method: "development", codesigning_identity: "Apple Development: David Borthwick (SU5SVAJAAL)")
   end
 
 end
