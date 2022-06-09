@@ -26,6 +26,7 @@ const styles = EStyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     marginBottom: 8,
+    textAlign: "center",
   },
 
   hiddenBalanceContainer: {

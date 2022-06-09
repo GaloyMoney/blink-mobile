@@ -41,10 +41,6 @@ import PriceIcon from "@app/assets/icons/price.svg"
 import SettingsIcon from "@app/assets/icons/settings.svg"
 
 const styles = EStyleSheet.create({
-  balanceHeader: {
-    marginBottom: "1rem",
-  },
-
   bottom: {
     alignItems: "center",
     marginVertical: "16rem",
@@ -61,7 +57,7 @@ const styles = EStyleSheet.create({
     borderWidth: 2,
   },
 
-  buttonStyleTime: {
+  topButton: {
     backgroundColor: palette.white,
     borderRadius: "38rem",
     width: "50rem",
@@ -82,7 +78,12 @@ const styles = EStyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-around",
-    marginVertical: "14rem",
+    alignItems: "center",
+    marginVertical: "15rem",
+  },
+
+  walletOverview: {
+    marginVertical: "15rem",
   },
 
   icon: { height: 34, top: -22 },
@@ -102,8 +103,6 @@ const styles = EStyleSheet.create({
   screenStyle: {
     backgroundColor: palette.lighterGrey,
   },
-
-  separator: { marginTop: 32 },
 
   text: {
     color: palette.darkGrey,
@@ -350,8 +349,7 @@ export const MoveMoneyScreen: ScreenType = ({
 
       <View style={styles.header}>
         <Button
-          buttonStyle={styles.buttonStyleTime}
-          containerStyle={styles.separator}
+          buttonStyle={styles.topButton}
           onPress={() =>
             navigation.navigate("priceDetail", {
               account: AccountType.Bitcoin,
@@ -367,14 +365,18 @@ export const MoveMoneyScreen: ScreenType = ({
         />
 
         <Button
-          buttonStyle={styles.buttonStyleTime}
+          buttonStyle={styles.topButton}
           containerStyle={styles.separator}
           onPress={() => navigation.navigate("settings")}
           icon={<SettingsIcon />}
         />
       </View>
 
-      {hasUsdWallet && <WalletOverview navigation={navigation} />}
+      {hasUsdWallet && (
+        <View style={styles.walletOverview}>
+          <WalletOverview navigation={navigation} />
+        </View>
+      )}
 
       <FlatList
         ListHeaderComponent={() => (

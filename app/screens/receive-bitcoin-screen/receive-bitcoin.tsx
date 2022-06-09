@@ -15,17 +15,16 @@ const CurrencyType = {
 const styles = EStyleSheet.create({
   container: {
     flexDirection: "column",
-    padding: 10,
-    flex: 6,
+    // padding: 10,
   },
   tabRow: {
     flexDirection: "row",
     flexWrap: "nowrap",
     justifyContent: "center",
-    height: "50rem",
+    marginTop: 12,
   },
   usdActive: {
-    backgroundColor: palette.violetteBlue,
+    backgroundColor: palette.usdSecondary,
     borderRadius: 7,
     justifyContent: "center",
     alignItems: "center",
@@ -34,7 +33,7 @@ const styles = EStyleSheet.create({
     margin: "5rem",
   },
   btcActive: {
-    backgroundColor: palette.orangePill,
+    backgroundColor: palette.btcSecondary,
     borderRadius: 7,
     justifyContent: "center",
     alignItems: "center",
@@ -43,7 +42,7 @@ const styles = EStyleSheet.create({
     margin: "5rem",
   },
   activeTabText: {
-    color: palette.white,
+    color: palette.darkGrey,
   },
   inactiveTab: {
     backgroundColor: palette.white,
@@ -56,9 +55,6 @@ const styles = EStyleSheet.create({
   },
   inactiveTabText: {
     color: palette.coolGrey,
-  },
-  screenContainer: {
-    flex: 5,
   },
 })
 const ReceiveBitcoin = () => {

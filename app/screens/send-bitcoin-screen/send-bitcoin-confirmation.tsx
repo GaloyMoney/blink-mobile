@@ -41,7 +41,8 @@ const styles = StyleSheet.create({
   fieldTitleText: {
     fontWeight: "bold",
     color: palette.lapisLazuli,
-    marginBottom: 5,
+    marginTop: 8,
+    marginBottom: 4,
   },
 
   destinationIconContainer: {

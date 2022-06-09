@@ -3,17 +3,16 @@ import React, { useState } from "react"
 import { Platform, TouchableHighlight, View } from "react-native"
 import { Text } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
-import { TextCurrency } from "../text-currency"
+import { TextCurrencyForAmount } from "../text-currency"
 import TransferIcon from "@app/assets/icons/transfer.svg"
 import Icon from "react-native-vector-icons/Ionicons"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
-import { useHideBalance } from "@app/hooks"
+import { useHideBalance, useWalletBalance } from "@app/hooks"
 
 const styles = EStyleSheet.create({
   container: {
     display: "flex",
     flexDirection: "row",
-    marginVertical: 15,
     marginHorizontal: 30,
   },
   balanceLeft: {
@@ -69,7 +68,7 @@ const styles = EStyleSheet.create({
     letterSpacing: 0.41,
   },
   btcLabelContainer: {
-    backgroundColor: palette.lightOrange,
+    backgroundColor: palette.btcSecondary,
     borderBottomLeftRadius: 10,
     borderTopLeftRadius: 10,
     height: 50,
@@ -85,7 +84,7 @@ const styles = EStyleSheet.create({
   },
   transferButton: {
     alignItems: "center",
-    backgroundColor: palette.lighterGrey,
+    backgroundColor: palette.lightGrey,
     borderRadius: 50,
     elevation: Platform.OS === "android" ? 50 : 0,
     height: 50,
@@ -116,6 +115,7 @@ const HidableArea = ({ hidden, style, children }) => {
 
 const WalletOverview = ({ navigation }) => {
   const defaultHideBalance = useHideBalance()
+  const { btcWalletBalance, btcWalletValueInUsd, usdWalletBalance } = useWalletBalance()
 
   return (
     <View style={styles.container}>
@@ -129,16 +129,16 @@ const WalletOverview = ({ navigation }) => {
           hidden={defaultHideBalance}
           style={styles.textLeft}
         >
-          <TextCurrency
-            view="BtcWalletInUsd"
+          <TextCurrencyForAmount
+            amount={btcWalletValueInUsd}
             currency={"USD"}
             style={styles.textPrimary}
           />
-          <TextCurrency
-            view="BtcWallet"
+          <TextCurrencyForAmount
+            amount={btcWalletBalance}
             currency={"BTC"}
             style={styles.textSecondary}
-            satsIconSize={15}
+            satsIconSize={14}
           />
         </HidableArea>
       </View>
@@ -155,7 +155,11 @@ const WalletOverview = ({ navigation }) => {
           hidden={defaultHideBalance}
           style={styles.textRight}
         >
-          <TextCurrency view="UsdWallet" currency={"USD"} style={styles.textPrimary} />
+          <TextCurrencyForAmount
+            amount={usdWalletBalance / 100}
+            currency={"USD"}
+            style={styles.textPrimary}
+          />
         </HidableArea>
 
         <View style={styles.usdLabelContainer}>

@@ -1,11 +1,10 @@
-import { PaymentDestinationDisplay } from "@app/components/payment-destination-display"
 import { useMySubscription } from "@app/hooks"
 import useMainQuery from "@app/hooks/use-main-query"
 import { getFullUri, TYPE_LIGHTNING_BTC, TYPE_BITCOIN_ONCHAIN } from "@app/utils/wallet"
 import { GaloyGQL, translateUnknown as translate, useMutation } from "@galoymoney/client"
 import Clipboard from "@react-native-community/clipboard"
 import React, { useCallback, useEffect, useState } from "react"
-import { ActivityIndicator, Alert, Pressable, Share, TextInput, View } from "react-native"
+import { Alert, Pressable, Share, TextInput, View } from "react-native"
 import { Button, Text } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import QRView from "./qr-view"
@@ -23,7 +22,7 @@ import ChainIcon from "@app/assets/icons/chain.svg"
 import NoteIcon from "@app/assets/icons/note.svg"
 
 const styles = EStyleSheet.create({
-  fieldsContainer: {
+  container: {
     marginTop: "14rem",
     marginLeft: 20,
     marginRight: 20,
@@ -33,11 +32,6 @@ const styles = EStyleSheet.create({
     backgroundColor: palette.white,
     borderRadius: 10,
     marginBottom: 12,
-  },
-  invoiceDisplay: {
-    padding: 15,
-    backgroundColor: palette.white,
-    borderRadius: 10,
   },
   inputForm: {
     marginVertical: 20,
@@ -64,6 +58,7 @@ const styles = EStyleSheet.create({
   },
   textContainer: {
     flexDirection: "row",
+    justifyContent: "center",
     marginTop: 6,
   },
   optionsContainer: {
@@ -127,8 +122,7 @@ const styles = EStyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
-    marginHorizontal: 20,
-    marginTop: 5,
+    marginTop: 14,
   },
   primaryAmount: {
     fontWeight: "bold",
@@ -362,7 +356,7 @@ const ReceiveBtc = () => {
       (amountCurrency === "USD" && usdAmount !== null)
 
     return (
-      <View style={[styles.inputForm, styles.fieldsContainer]}>
+      <View style={[styles.inputForm, styles.container]}>
         <View style={styles.currencyInputContainer}>
           <View style={styles.currencyInput}>
             {amountCurrency === "BTC" && (
@@ -448,7 +442,7 @@ const ReceiveBtc = () => {
   if (showMemoInput) {
     return (
       <View style={styles.inputForm}>
-        <View style={styles.fieldsContainer}>
+        <View style={styles.container}>
           <Text style={styles.fieldTitleText}>{translate("SendBitcoinScreen.note")}</Text>
           <View style={styles.field}>
             <TextInput
@@ -478,7 +472,9 @@ const ReceiveBtc = () => {
 
   const displayAmount = () => {
     if (!satAmount) {
-      return undefined
+      return (
+        <Text style={styles.primaryAmount}>{translate("Flexible Amount Invoice")}</Text>
+      )
     }
     return (
       <>
@@ -490,54 +486,57 @@ const ReceiveBtc = () => {
     )
   }
 
+  const invoiceReady = paymentDestination && !loading
+
   return (
     <KeyboardAwareScrollView>
-      <Pressable onPress={copyToClipboard}>
-        <QRView
-          data={paymentDestination}
-          type={paymentLayer}
-          amount={satAmount}
-          memo={memo}
-          loading={loading || !paymentDestination}
-          completed={paymentLayer === TYPE_LIGHTNING_BTC ? invoicePaid : false}
-          err={err}
-        />
-      </Pressable>
-
-      <View style={styles.invoiceInfo}>{displayAmount()}</View>
-
-      <View style={styles.fieldsContainer}>
-        <View style={styles.invoiceDisplay}>
-          {!loading && <PaymentDestinationDisplay destination={paymentDestination} />}
-          {loading && <ActivityIndicator />}
-        </View>
-
+      <View style={styles.container}>
+        <Pressable onPress={copyToClipboard}>
+          <QRView
+            data={paymentDestination}
+            type={paymentLayer}
+            amount={satAmount}
+            memo={memo}
+            loading={!invoiceReady}
+            completed={paymentLayer === TYPE_LIGHTNING_BTC ? invoicePaid : false}
+            err={err}
+          />
+        </Pressable>
         <View style={styles.textContainer}>
-          <View style={styles.copyInvoiceContainer}>
-            <Pressable onPress={copyToClipboard}>
-              <Text style={styles.infoText}>
-                <Icon style={styles.infoText} name="copy-outline" />{" "}
-                {translate(
-                  paymentLayer === TYPE_LIGHTNING_BTC
-                    ? "ReceiveBitcoinScreen.copyInvoice"
-                    : "Copy Address",
-                )}
-              </Text>
-            </Pressable>
-          </View>
-          <View style={styles.shareInvoiceContainer}>
-            <Pressable onPress={share}>
-              <Text style={styles.infoText}>
-                <Icon style={styles.infoText} name="share-outline" />{" "}
-                {translate(
-                  paymentLayer === TYPE_LIGHTNING_BTC
-                    ? "ReceiveBitcoinScreen.shareInvoice"
-                    : "Share Address",
-                )}
-              </Text>
-            </Pressable>
-          </View>
+          {invoiceReady ? (
+            <>
+              <View style={styles.copyInvoiceContainer}>
+                <Pressable onPress={copyToClipboard}>
+                  <Text style={styles.infoText}>
+                    <Icon style={styles.infoText} name="copy-outline" />{" "}
+                    {translate(
+                      paymentLayer === TYPE_LIGHTNING_BTC
+                        ? "ReceiveBitcoinScreen.copyInvoice"
+                        : "Copy Address",
+                    )}
+                  </Text>
+                </Pressable>
+              </View>
+              <View style={styles.shareInvoiceContainer}>
+                <Pressable onPress={share}>
+                  <Text style={styles.infoText}>
+                    <Icon style={styles.infoText} name="share-outline" />{" "}
+                    {translate(
+                      paymentLayer === TYPE_LIGHTNING_BTC
+                        ? "ReceiveBitcoinScreen.shareInvoice"
+                        : "Share Address",
+                    )}
+                  </Text>
+                </Pressable>
+              </View>
+            </>
+          ) : (
+            <Text>{translate("Generating Invoice...")}</Text>
+          )}
         </View>
+
+        <View style={styles.invoiceInfo}>{displayAmount()}</View>
+
         <View style={styles.optionsContainer}>
           {!showAmountInput && (
             <View style={styles.field}>

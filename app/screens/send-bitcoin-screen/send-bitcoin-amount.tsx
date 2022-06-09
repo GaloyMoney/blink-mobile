@@ -11,6 +11,7 @@ import { translateUnknown as translate } from "@galoymoney/client"
 import NoteIcon from "@app/assets/icons/note.svg"
 import { ScrollView } from "react-native-gesture-handler"
 import { satAmountDisplay, usdAmountDisplay } from "@app/utils/currencyConversion"
+import Icon from "react-native-vector-icons/Ionicons"
 
 const Styles = StyleSheet.create({
   sendBitcoinAmountContainer: {
@@ -90,10 +91,11 @@ const Styles = StyleSheet.create({
   fieldTitleText: {
     fontWeight: "bold",
     color: palette.lapisLazuli,
-    marginBottom: 5,
+    marginTop: 8,
+    marginBottom: 4,
   },
   fieldContainer: {
-    padding: 10,
+    padding: 5,
   },
   currencyInputContainer: {
     flexDirection: "column",
@@ -161,6 +163,12 @@ const Styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-end",
     marginBottom: 50,
+  },
+  modal: {
+    marginBottom: "90%",
+  },
+  pickWalletIcon: {
+    marginRight: 12,
   },
 })
 
@@ -232,7 +240,13 @@ const SendBitcoinAmount = ({
   }
 
   const chooseWalletModal = (
-    <ReactNativeModal isVisible={isModalVisible} onBackButtonPress={() => toggleModal()}>
+    <ReactNativeModal
+      style={Styles.modal}
+      animationIn="fadeInDown"
+      animationOut="fadeOutUp"
+      isVisible={isModalVisible}
+      onBackButtonPress={() => toggleModal()}
+    >
       <View>
         {wallets?.map((wallet) => {
           return (
@@ -376,6 +390,12 @@ const SendBitcoinAmount = ({
               </View>
               <View />
             </View>
+
+            {!usdDisabled && (
+              <View style={Styles.pickWalletIcon}>
+                <Icon name={"chevron-down"} size={24} color={palette.lightBlue} />
+              </View>
+            )}
           </View>
         </TouchableWithoutFeedback>
         {chooseWalletModal}

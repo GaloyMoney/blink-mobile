@@ -9,8 +9,6 @@ export const palette = {
   lighterGrey: "#E6EBEf",
 
   blue: "#3050C4",
-  btcPrimary: "#ee853a",
-  btcSecondary: "#f1a43c",
   culturedWhite: "#f1f3f6",
   galoyBlue: "#3B52F5",
   green: "#459C0B",
@@ -22,7 +20,10 @@ export const palette = {
   orangePill: "#f1a43c",
   red: "#FF2301",
   sky: "#C3CCFF",
-  usdPrimary: "#6374c3",
-  usdSecondary: "#b9c1d9",
   violetteBlue: "#6374c3",
+
+  btcPrimary: "#8c540a",
+  btcSecondary: "#f1a43c",
+  usdPrimary: "#40632c",
+  usdSecondary: "#85bb65",
 }

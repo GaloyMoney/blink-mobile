@@ -20,6 +20,7 @@ import {
 import successLottie from "../send-bitcoin-screen/success_lottie.json"
 import ScreenBrightness from "react-native-screen-brightness"
 import { isIos } from "@app/utils/helper"
+import { PaymentDestinationDisplay } from "@app/components/payment-destination-display"
 
 const configByType = {
   [TYPE_LIGHTNING_BTC]: {
@@ -61,7 +62,7 @@ export const QRView = ({
   loading,
   completed,
   err,
-  size = 300,
+  size = 320,
 }: Props): JSX.Element => {
   const [brightnessInitial, setBrightnessInitial] = React.useState(0.5)
 
@@ -112,13 +113,15 @@ export const QRView = ({
   const renderSuccessView = useMemo(() => {
     if (completed) {
       return (
-        <LottieView
-          source={successLottie}
-          loop={false}
-          autoPlay
-          style={styles.lottie}
-          resizeMode="cover"
-        />
+        <View style={styles.container}>
+          <LottieView
+            source={successLottie}
+            loop={false}
+            autoPlay
+            style={styles.lottie}
+            resizeMode="cover"
+          />
+        </View>
       )
     }
     return null
@@ -135,7 +138,7 @@ export const QRView = ({
     if (!completed && isReady) {
       return (
         <>
-          <View style={styles.qrBackround}>
+          <View style={styles.container}>
             <QRCode
               size={size}
               value={getFullUri({ input: data, uppercase: true })}
@@ -145,6 +148,9 @@ export const QRView = ({
               logoSize={60}
               logoBorderRadius={10}
             />
+            <View style={styles.invoiceDisplay}>
+              <PaymentDestinationDisplay destination={data} />
+            </View>
           </View>
         </>
       )
@@ -155,13 +161,15 @@ export const QRView = ({
   const renderStatusView = useMemo(() => {
     if (!completed && !isReady) {
       return (
-        <View style={styles.errorContainer}>
-          {(err !== "" && (
-            // eslint-disable-next-line react-native/no-inline-styles
-            <Text style={{ color: palette.red, alignSelf: "center" }} selectable>
-              {err}
-            </Text>
-          )) || <ActivityIndicator size="large" color={palette.blue} />}
+        <View style={styles.container}>
+          <View style={styles.errorContainer}>
+            {(err !== "" && (
+              // eslint-disable-next-line react-native/no-inline-styles
+              <Text style={{ color: palette.red, alignSelf: "center" }} selectable>
+                {err}
+              </Text>
+            )) || <ActivityIndicator size="large" color={palette.blue} />}
+          </View>
         </View>
       )
     }
@@ -180,28 +188,28 @@ export const QRView = ({
 }
 
 const styles = EStyleSheet.create({
-  errorContainer: {
-    alignContent: "center",
-    alignItems: "center",
-    alignSelf: "center",
-    backgroundColor: palette.white,
-    height: 280,
+  container: {
     justifyContent: "center",
-    width: 280,
+    alignItems: "center",
+    backgroundColor: palette.white,
+    height: 380,
+    width: "100%",
+    borderRadius: 10,
   },
-
+  errorContainer: {
+    justifyContent: "center",
+    height: "100%",
+  },
   lottie: {
     height: "200rem",
     width: "200rem",
   },
-
   qr: {
     alignItems: "center",
   },
-  qrBackround: {
-    backgroundColor: palette.white,
-    padding: 20,
-    borderRadius: 10,
+  invoiceDisplay: {
+    marginTop: 14,
+    marginHorizontal: 20,
   },
 })
 
