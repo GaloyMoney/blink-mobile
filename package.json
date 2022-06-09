@@ -26,7 +26,8 @@
     "postinstall": "jetify && if which pod >/dev/null; then (cd ios; pod install); fi",
     "hack:types-react-native": "rimraf node_modules/@types/react-native/node_modules/@types",
     "prepare": "npm-run-all patch hack:*",
-    "ci:browserstack": "npx wdio android/browserstack.js"
+    "android:browserstack": "npx wdio android/browserstack.js",
+    "ios:browserstack": "npx wdio ios/browserstack.js"
   },
   "dependencies": {
     "@apollo/client": "^3.6.6",

@@ -46,7 +46,7 @@ platform :ios do
       browserstack_username: ENV["BROWSERSTACK_USER"],
       browserstack_access_key: ENV["BROWSERSTACK_ACCESS_KEY"],
     )
-    yarn(command: "ci:browserstack", project_root: "../")
+    yarn(command: "ios:browserstack", project_root: "../")
   end
 
   desc "increment path version"

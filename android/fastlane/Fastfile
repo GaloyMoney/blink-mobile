@@ -85,7 +85,7 @@ platform :android do
       browserstack_access_key: ENV["BROWSERSTACK_ACCESS_KEY"],
       file_path: lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH],
     )
-    yarn(command: "ci:browserstack", project_root: "../")
+    yarn(command: "android:browserstack", project_root: "../")
     end
 
 #  desc "Promote Internal to Alpha"
