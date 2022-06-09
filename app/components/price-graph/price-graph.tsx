@@ -127,11 +127,7 @@ export const PriceGraph: ComponentType = ({
     price =
       (currentPriceData.base / 10 ** currentPriceData.offset) *
       multiple(currentPriceData.currencyUnit)
-    delta =
-      (price -
-        (startPriceData.base / 10 ** startPriceData.offset) *
-          multiple(startPriceData.currencyUnit)) /
-      price
+    delta = currentPriceData.base / startPriceData.base - 1
     color = delta > 0 ? { color: palette.green } : { color: palette.red }
   } catch (err) {
     // FIXME proper Loader
