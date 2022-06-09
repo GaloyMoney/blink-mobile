@@ -41,6 +41,11 @@ Deploy a new version to the Google Play
 fastlane android huawei_release
 ```
 Deploy a new version to Huawei App Gallery
+### android browserstack
+```
+fastlane android browserstack
+```
+Upload to browserstack for testing
 
 ----
 

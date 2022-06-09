@@ -15,7 +15,6 @@ exports.config = {
     device: 'Google Pixel 3',
     os_version: "9.0",
     app: process.env.BROWSERSTACK_APP_ID,
-    'browserstack.local': true,
     'browserstack.debug': true
   }],
 

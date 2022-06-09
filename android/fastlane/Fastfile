@@ -70,6 +70,24 @@ platform :android do
     )
   end
 
+  desc "Upload to browserstack for testing"
+  lane :browserstack do
+    gradle(
+        task: "clean assembleDebug",
+        print_command: false,
+        flags: "--no-daemon --max-workers=8 --stacktrace --info",
+        properties: {
+          "android.injected.version.name" => ENV["CIRCLE_TAG"],
+        }
+      )
+    upload_to_browserstack_app_automate(
+      browserstack_username: ENV["BROWSERSTACK_USER"],
+      browserstack_access_key: ENV["BROWSERSTACK_ACCESS_KEY"],
+      file_path: lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH],
+    )
+    yarn(command: "ci:browserstack", project_root: "../")
+    end
+
 #  desc "Promote Internal to Alpha"
 #  lane :promote_internal_to_alpha do
 #    upload_to_play_store(
