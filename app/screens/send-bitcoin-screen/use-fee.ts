@@ -27,7 +27,6 @@ const useFee = ({
   sameNode,
   paymentAmount,
 }: UseFeeInput): FeeType => {
-
   const [fee, setFee] = useState<FeeType>({
     status: "unset",
   })

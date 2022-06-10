@@ -62,7 +62,6 @@ export const QRView = ({
   err,
   size = 320,
 }: Props): JSX.Element => {
-
   const isReady = data && !loading && !err
 
   const getFullUri = useCallback(
