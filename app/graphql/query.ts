@@ -70,6 +70,13 @@ export const MAIN_QUERY = gql`
       id
       earnAmount
     }
+    btcPrice {
+      __typename
+      base
+      offset
+      currencyUnit
+      formattedAmount
+    }
     me @include(if: $hasToken) {
       id
       language

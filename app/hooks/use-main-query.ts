@@ -17,6 +17,7 @@ const useMainQuery = (): useMainQueryOutput => {
       // We got an error back from the server but we have data in the cache
       errors = [...error.graphQLErrors]
     }
+
     if (error.graphQLErrors?.length > 0 && !previousData) {
       // This is the first execution of mainquery and we received errors back from the server
       error.graphQLErrors.forEach((e) => {
@@ -53,12 +54,14 @@ const useMainQuery = (): useMainQueryOutput => {
   const defaultWallet = wallets?.find((wallet) => wallet?.id === defaultWalletId)
   const btcWallet = wallets?.find((wallet) => wallet?.__typename === "BTCWallet")
   const usdWallet = wallets?.find((wallet) => wallet?.__typename === "UsdWallet")
+
   if (hasToken && !btcWallet && !loading) {
     // User is logged in but no wallet was returned.  We need a BTC wallet for the app to function.
     throw new Error(
       "Did not receive a BTC wallet for the default account.  Unable to load application data.",
     )
   }
+
   const btcWalletBalance = btcWallet?.balance
   const usdWalletBalance = usdWallet?.balance ?? 0
   const btcWalletId = btcWallet?.id
@@ -69,6 +72,8 @@ const useMainQuery = (): useMainQueryOutput => {
   const phoneNumber = data?.me?.phone
   const mobileVersions = data?.mobileVersions
   const mergedTransactions = me.defaultAccount?.transactions.edges
+
+  const initialBtcPrice = data?.btcPrice
 
   return {
     userPreferredLanguage,
@@ -85,6 +90,7 @@ const useMainQuery = (): useMainQueryOutput => {
     username,
     phoneNumber,
     mobileVersions,
+    initialBtcPrice,
     loading,
     refetch,
     errors,
