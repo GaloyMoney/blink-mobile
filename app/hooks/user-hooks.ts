@@ -6,6 +6,7 @@ import {
   PRICE_CACHE,
   prefCurrencyVar as primaryCurrencyVar,
 } from "../graphql/client-only-query"
+import useMainQuery from "./use-main-query"
 
 type UseMyUpdates = {
   convertCurrencyAmount: (arg0: {
@@ -90,7 +91,12 @@ const MY_UPDATES_SUBSCRIPTION = gql`
 // in case the subscription failed to provide an initial price
 const usePriceCache = () => {
   const client = useApolloClient()
+  const { initialBtcPrice } = useMainQuery()
+
   const [cachedPrice, setCachedPrice] = React.useState(() => {
+    if (initialBtcPrice) {
+      return initialBtcPrice
+    }
     const lastPriceData = client.readQuery({ query: PRICE_CACHE })
     return lastPriceData?.price ?? 0
   })
