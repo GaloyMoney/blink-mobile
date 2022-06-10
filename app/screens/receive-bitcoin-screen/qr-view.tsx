@@ -18,8 +18,6 @@ import {
 } from "../../utils/wallet"
 
 import successLottie from "../send-bitcoin-screen/success_lottie.json"
-import ScreenBrightness from "react-native-screen-brightness"
-import { isIos } from "@app/utils/helper"
 import { PaymentDestinationDisplay } from "@app/components/payment-destination-display"
 
 const configByType = {
@@ -64,43 +62,6 @@ export const QRView = ({
   err,
   size = 320,
 }: Props): JSX.Element => {
-  const [brightnessInitial, setBrightnessInitial] = React.useState(0.5)
-
-  React.useEffect(() => {
-    const fn = async () => {
-      // android required permission, and open the settings page for it
-      // it's probably not worth the hurdle
-      //
-      // only doing the brightness for iOS for now
-      //
-      // only need     <uses-permission android:name="android.permission.WRITE_SETTINGS" tools:ignore="ProtectedPermissions"/>
-      // in the manifest
-      // see: https://github.com/robinpowered/react-native-screen-brightness/issues/38
-      //
-      if (!isIos) {
-        return
-      }
-
-      // let hasPerm = await ScreenBrightness.hasPermission();
-
-      // if(!hasPerm){
-      //   ScreenBrightness.requestPermission();
-      // }
-
-      // only enter this loop when brightnessInitial is not set
-      // if (!brightnessInitial && hasPerm) {
-      if (!brightnessInitial) {
-        ScreenBrightness.getBrightness().then((brightness: number) => {
-          setBrightnessInitial(brightness)
-          ScreenBrightness.setBrightness(1) // between 0 and 1
-        })
-      }
-    }
-
-    fn()
-    return () => ScreenBrightness.setBrightness(brightnessInitial)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   const isReady = data && !loading && !err
 
