@@ -1,6 +1,5 @@
-import { QUERIES, useMutation } from "@galoymoney/client"
+import { useMutation, useDelayedQuery } from "@galoymoney/client"
 import { useState, useEffect } from "react"
-import { useApolloClient } from "@apollo/client"
 import { WalletDescriptor } from "@app/types/wallets"
 import { PaymentAmount, WalletCurrency } from "@app/types/amounts"
 
@@ -28,7 +27,6 @@ const useFee = ({
   sameNode,
   paymentAmount,
 }: UseFeeInput): FeeType => {
-  const client = useApolloClient()
 
   const [fee, setFee] = useState<FeeType>({
     status: "unset",
@@ -38,7 +36,7 @@ const useFee = ({
   const [lnNoAmountInvoiceFeeProbe] = useMutation.lnNoAmountInvoiceFeeProbe()
   const [lnUsdInvoiceFeeProbe] = useMutation.lnUsdInvoiceFeeProbe()
   const [lnNoAmountUsdInvoiceFeeProbe] = useMutation.lnNoAmountUsdInvoiceFeeProbe()
-
+  const [onChainTxFee] = useDelayedQuery.onChainTxFee()
   const getLightningFees =
     walletDescriptor.currency === WalletCurrency.BTC
       ? lnInvoiceFeeProbe
@@ -123,16 +121,12 @@ const useFee = ({
 
         try {
           setFee({ status: "loading" })
-
-          const { data } = await client.query({
-            query: QUERIES.onChainTxFee,
-            variables: {
-              walletId: walletDescriptor.id,
-              address,
-              amount: paymentAmount.amount,
-            },
-            fetchPolicy: "no-cache",
+          const { data } = await onChainTxFee({
+            walletId: walletDescriptor.id,
+            address,
+            amount: paymentAmount.amount,
           })
+
           const feeValue = data.onChainTxFee.amount
 
           setFee({
