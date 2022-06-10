@@ -25,7 +25,7 @@ type useMainQueryOutput = {
   username?: string
   phoneNumber: string
   mobileVersions: mobileVersions
-  initialBtcPrice: object
+  initialBtcPrice: Price
   loading: boolean
   refetch: () => void
   errors: object[]
