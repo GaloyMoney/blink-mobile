@@ -95,10 +95,13 @@ const usePriceCache = () => {
 
   const [cachedPrice, setCachedPrice] = React.useState(() => {
     if (initialBtcPrice) {
-      return initialBtcPrice
+      return initialBtcPrice?.formattedAmount
     }
     const lastPriceData = client.readQuery({ query: PRICE_CACHE })
-    return lastPriceData?.price ?? 0
+    if (!lastPriceData && !initialBtcPrice) {
+      throw new Error("No price data in cache or inital price")
+    }
+    return lastPriceData?.price
   })
 
   const updatePriceCache = (newPrice) => {
