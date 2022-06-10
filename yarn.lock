@@ -1850,10 +1850,10 @@
   resolved "https://registry.yarnpkg.com/@expo/sdk-runtime-versions/-/sdk-runtime-versions-1.0.0.tgz#d7ebd21b19f1c6b0395e50d78da4416941c57f7c"
   integrity sha512-Doz2bfiPndXYFPMRwPyGa1k5QaKDVpY806UJj570epIiMzWaYyCtobasyfC++qfIXVb5Ocy7r3tP9d62hAQ7IQ==
 
-"@galoymoney/client@^0.1.25":
-  version "0.1.25"
-  resolved "https://registry.yarnpkg.com/@galoymoney/client/-/client-0.1.25.tgz#6188ab0e8f056906542bd90e3707fba3716cc0b1"
-  integrity sha512-oZBv1+GuXbSvrAAMAIj+z0cZ97nS/1BAIfmQhoyRHNahKHQhMWDG5B1lWad8UPC8RLIZoKfpLxniwd+gRXn1Hw==
+"@galoymoney/client@^0.1.28":
+  version "0.1.28"
+  resolved "https://registry.yarnpkg.com/@galoymoney/client/-/client-0.1.28.tgz#d41dfc419622938a23c870cfd63ca49e23477033"
+  integrity sha512-Gbvnd+l1dViQMtK8+RN3RZIYN3WChkY6jKg/Ek88TT9dERAAICPNWTgD7/i1dNL0JRxumXjTWWGUR0vHEk/+3A==
 
 "@galoymoney/react-native-geetest-module@^0.1.3":
   version "0.1.3"
@@ -13500,11 +13500,6 @@ react-native-safe-modules@^1.0.3:
   integrity sha512-DUxti4Z+AgJ/ZsO5U7p3uSCUBko8JT8GvFlCeOXk9bMd+4qjpoDvMYpfbixXKgL88M+HwmU/KI1YFN6gsQZyBA==
   dependencies:
     dedent "^0.6.0"
-
-react-native-screen-brightness@^2.0.0-alpha:
-  version "2.0.0-alpha"
-  resolved "https://registry.yarnpkg.com/react-native-screen-brightness/-/react-native-screen-brightness-2.0.0-alpha.tgz#2fc30cf711cfafa5e0aec685f0fce51ce65e0052"
-  integrity sha512-NdJPptcWiFwG9aypm0awYv9d/aoZSJetXPFkx6w/UuNX9SRr5YTKXMSND/2lwuSOw6uGU9mQ0f4dBuGZSNgzow==
 
 react-native-screens@^3.13.1:
   version "3.13.1"
