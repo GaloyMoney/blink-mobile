@@ -540,7 +540,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.galoy.bitcoinbeach;
 				PRODUCT_NAME = "Bitcoin Beach";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore io.galoy.bitcoinbeach";
 				SWIFT_OBJC_BRIDGING_HEADER = "GaloyApp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
