@@ -56,7 +56,7 @@ platform :ios do
 
   desc "build ipa"
   lane :build_ipa do
-    match(type: "appstore", readonly: is_ci)
+    match(type: "development", readonly: is_ci)
     gym(scheme: "GaloyApp", export_method: "development", configuration: "Debug", codesigning_identity: "Apple Development: Nicolas Burtey (MT977993KD)")
   end
 
