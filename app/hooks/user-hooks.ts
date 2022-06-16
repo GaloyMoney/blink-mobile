@@ -174,7 +174,7 @@ export const useMySubscription = (): UseMyUpdates => {
         toCurrency === WalletCurrency.USD
       ) {
         return {
-          amount: Math.round(paymentAmount * cachedPrice),
+          amount: Math.round(paymentAmount.amount * cachedPrice),
           currency: WalletCurrency.USD,
         }
       }
