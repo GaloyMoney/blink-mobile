@@ -1,5 +1,5 @@
 import useMainQuery from "@app/hooks/use-main-query"
-import React, { useEffect, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import { StyleSheet, View } from "react-native"
 import SendBitcoinAmount from "./send-bitcoin-amount"
 import SendBitcoinConfirmation from "./send-bitcoin-confirmation"
@@ -9,6 +9,7 @@ import { palette } from "@app/theme"
 import { WalletCurrency } from "@app/types/amounts"
 import { PaymentType } from "@galoymoney/client"
 import { Status } from "./send-bitcoin.types"
+import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
 
 const Styles = StyleSheet.create({
   container: {
@@ -25,6 +26,12 @@ const Styles = StyleSheet.create({
   },
 })
 
+const domains = [
+  "https://ln.bitcoinbeach.com/",
+  "https://pay.mainnet.galoy.io/",
+  "https://pay.bbw.sv/",
+]
+
 const SendBitcoin = ({ navigation, route }) => {
   const { defaultWallet, usdWalletId } = useMainQuery()
 
@@ -39,16 +46,20 @@ const SendBitcoin = ({ navigation, route }) => {
   const [sameNode, setSameNode] = useState(false)
   const [paymentType, setPaymentType] = useState<PaymentType>(undefined)
   const [defaultAmount, setDefaultAmount] = useState(0)
+  const [lnurlParams, setLnurlParams] = useState<LnUrlPayServiceResponse>()
+  const [lnurlInvoice, setLnurlInvoice] = useState("")
   const [recipientWalletId, setRecipientWalletId] = useState<string | undefined>(
     undefined,
   )
 
-  const nextStep = (parsedDestination) => {
+  const nextStep = useCallback((parsedDestination?) => {
     if (parsedDestination) {
       setPaymentType(parsedDestination.paymentType)
       setSameNode(parsedDestination.sameNode)
       setFixedAmount(parsedDestination.fixedAmount)
-
+      if (parsedDestination.lnurlParams && !parsedDestination.sameNode) {
+        setLnurlParams(parsedDestination.lnurlParams)
+      }
       if (parsedDestination.defaultAmount !== undefined) {
         setDefaultAmount(parsedDestination.defaultAmount)
       }
@@ -61,7 +72,7 @@ const SendBitcoin = ({ navigation, route }) => {
     }
 
     setStep(step + 1)
-  }
+  }, [step])
 
   useEffect(() => {
     if (status === Status.SUCCESS) {
@@ -72,11 +83,6 @@ const SendBitcoin = ({ navigation, route }) => {
   useEffect(() => {
     if (route.params?.payment) {
       if (route.params.payment.startsWith("https://")) {
-        const domains = [
-          "https://ln.bitcoinbeach.com/",
-          "https://pay.mainnet.galoy.io/",
-          "https://pay.bbw.sv/",
-        ]
         domains.forEach((domain) => {
           if (route.params?.payment?.startsWith(domain)) {
             setDestination(route.params?.payment?.substring(domain.length))
@@ -94,14 +100,14 @@ const SendBitcoin = ({ navigation, route }) => {
     }
   }, [route.params?.username])
 
-  const toggleAmountCurrency = () => {
+  const toggleAmountCurrency = useCallback(() => {
     if (amountCurrency === "USD") {
       setAmountCurrency("BTC")
     }
     if (amountCurrency === "BTC") {
       setAmountCurrency("USD")
     }
-  }
+  }, [amountCurrency])
 
   return (
     <View style={Styles.container}>
@@ -127,6 +133,11 @@ const SendBitcoin = ({ navigation, route }) => {
           defaultAmount={defaultAmount}
           fixedAmount={fixedAmount}
           usdDisabled={paymentType === "onchain" || usdWalletId === undefined}
+          lnurlParams={lnurlParams}
+          paymentType={paymentType}
+          setLnurlInvoice={setLnurlInvoice}
+          setFixedAmount={setFixedAmount}
+          destination={destination}
         />
       )}
       {step === 3 && (
@@ -143,6 +154,7 @@ const SendBitcoin = ({ navigation, route }) => {
           isNoAmountInvoice={!fixedAmount}
           paymentType={paymentType}
           sameNode={sameNode}
+          lnurlInvoice={lnurlInvoice}
         />
       )}
       {step === 4 && <SendBitcoinSuccess />}

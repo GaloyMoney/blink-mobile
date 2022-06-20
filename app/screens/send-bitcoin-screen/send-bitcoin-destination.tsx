@@ -5,6 +5,7 @@ import {
   parsePaymentDestination,
   useDelayedQuery,
   translateUnknown as translate,
+  fetchLnurlPaymentParams,
 } from "@galoymoney/client"
 import { Button } from "react-native-elements"
 import ScanIcon from "@app/assets/icons/scan.svg"
@@ -71,6 +72,10 @@ const Styles = StyleSheet.create({
   },
 })
 
+const lnurlDomains = [
+  "ln.bitcoinbeach.com"
+]
+
 const SendBitcoinDestination = ({
   destination,
   setDestination,
@@ -101,8 +106,9 @@ const SendBitcoinDestination = ({
       amount: amountInvoice,
       memo: memoInvoice,
       sameNode,
-      // staticLnurlIdentifier,
     } = parsePaymentDestination({ destination, network: tokenNetwork, pubKey: myPubKey })
+    let isSameNode = sameNode
+    let lnurlParams
 
     if (destination === myUsername) {
       setError(translate("You can't send a payment to yourself"))
@@ -111,8 +117,6 @@ const SendBitcoinDestination = ({
     }
 
     const fixedAmount = amountInvoice !== undefined
-
-    const staticLnurlIdentifier = false // FIXME: Change galoy-client to return this
 
     let recipientWalletId, note, defaultAmount
 
@@ -137,21 +141,17 @@ const SendBitcoinDestination = ({
         recipientWalletId = data?.userDefaultWalletId
       }
 
-      //   if (lnurl) {
-      //     setPaymentType("lnurl")
-      //     if (staticLnurlIdentifier) {
-      //       setIsStaticLnurlIdentifier(true)
-      //       setInteractive(true)
-      //     }
-      //     if (route.params?.lnurlParams) {
-      //       const params = setLnurlParams({ params: route.params.lnurlParams, lnurl })
-      //       setLnurlPay({ ...params })
-      //     } else {
-      //       debouncedGetLnurlParams(lnurl)
-      //     }
-      //   }
+      if (paymentType === "lnurl") {
+        try {
+          lnurlParams = await fetchLnurlPaymentParams({ lnUrlOrAddress: destination })
+        } catch (error) {
+          setError(translate("SendBitcoinScreen.failedToFetchLnurlParams"))
+          return { valid: false }
+        }
+        isSameNode = lnurlDomains.some(domain => lnurlParams?.domain.includes(domain))
+      }
 
-      if (fixedAmount && !staticLnurlIdentifier) {
+      if (fixedAmount) {
         defaultAmount = convertCurrencyAmount({
           from: "BTC",
           to: "USD",
@@ -169,11 +169,12 @@ const SendBitcoinDestination = ({
     return {
       valid,
       paymentType,
-      sameNode,
+      sameNode: isSameNode,
       fixedAmount,
       defaultAmount,
       note,
       recipientWalletId,
+      lnurlParams
     }
   }, [
     convertCurrencyAmount,

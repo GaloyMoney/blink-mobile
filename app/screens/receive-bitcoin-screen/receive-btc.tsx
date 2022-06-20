@@ -508,7 +508,7 @@ const ReceiveBtc = () => {
               <View style={styles.copyInvoiceContainer}>
                 <Pressable onPress={copyToClipboard}>
                   <Text style={styles.infoText}>
-                    <Icon style={styles.infoText} name="copy-outline" />{" "}
+                    <Icon style={styles.infoText} name="copy-outline" /><Text>{" "}</Text>
                     {translate(
                       paymentLayer === TYPE_LIGHTNING_BTC
                         ? "ReceiveBitcoinScreen.copyInvoice"
@@ -520,7 +520,7 @@ const ReceiveBtc = () => {
               <View style={styles.shareInvoiceContainer}>
                 <Pressable onPress={share}>
                   <Text style={styles.infoText}>
-                    <Icon style={styles.infoText} name="share-outline" />{" "}
+                    <Icon style={styles.infoText} name="share-outline" /><Text>{" "}</Text>
                     {translate(
                       paymentLayer === TYPE_LIGHTNING_BTC
                         ? "ReceiveBitcoinScreen.shareInvoice"

@@ -163,6 +163,7 @@ type SendBitcoinConfirmationProps = {
   isNoAmountInvoice: boolean
   paymentType: PaymentType
   sameNode: boolean
+  lnurlInvoice: string
 }
 
 const SendBitcoinConfirmation = ({
@@ -175,6 +176,7 @@ const SendBitcoinConfirmation = ({
   paymentType,
   sameNode,
   setStatus,
+  lnurlInvoice
 }: SendBitcoinConfirmationProps) => {
   const { convertCurrencyAmount, convertPaymentAmount } = useMySubscription()
   const [secondaryAmount, setSecondaryAmount] = useState<number | undefined>(undefined)
@@ -210,9 +212,9 @@ const SendBitcoinConfirmation = ({
       id: wallet.id,
       currency: wallet.walletCurrency,
     },
-    address: destination,
+    address: paymentType === "lnurl" ? lnurlInvoice : destination,
     isNoAmountInvoice,
-    invoice: destination,
+    invoice: paymentType === "lnurl" ? lnurlInvoice : destination,
     paymentType,
     sameNode,
     paymentAmount: paymentAmountInWalletCurrency,
@@ -253,7 +255,7 @@ const SendBitcoinConfirmation = ({
       variables: {
         input: {
           walletId: wallet.id,
-          paymentRequest: destination,
+          paymentRequest: paymentType === "lnurl" ? lnurlInvoice : destination,
           memo: note,
         },
       },
@@ -322,6 +324,8 @@ const SendBitcoinConfirmation = ({
           : payLnNoAmountInvoice
       case "onchain":
         return payOnChain
+      case "lnurl":
+        return payLnInvoice
       default:
         throw new Error("Unsupported payment type")
     }
