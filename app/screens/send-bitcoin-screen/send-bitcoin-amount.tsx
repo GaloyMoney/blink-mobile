@@ -1,17 +1,24 @@
 import { useMySubscription, useWalletBalance } from "@app/hooks"
 import useMainQuery from "@app/hooks/use-main-query"
 import { palette } from "@app/theme"
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 import { StyleSheet, View, TouchableWithoutFeedback, TextInput } from "react-native"
 import { Button, Text } from "react-native-elements"
 import ReactNativeModal from "react-native-modal"
 import { FakeCurrencyInput } from "react-native-currency-input"
 import SwitchIcon from "@app/assets/icons/switch.svg"
-import { translateUnknown as translate } from "@galoymoney/client"
+import {
+  fetchLnurlInvoice,
+  GaloyGQL,
+  PaymentType,
+  translateUnknown as translate,
+} from "@galoymoney/client"
 import NoteIcon from "@app/assets/icons/note.svg"
 import { ScrollView } from "react-native-gesture-handler"
 import { satAmountDisplay, usdAmountDisplay } from "@app/utils/currencyConversion"
 import Icon from "react-native-vector-icons/Ionicons"
+import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
+import { utils } from "lnurl-pay"
 
 const Styles = StyleSheet.create({
   sendBitcoinAmountContainer: {
@@ -172,6 +179,26 @@ const Styles = StyleSheet.create({
   },
 })
 
+type SendBitcoinAmountProps = {
+  nextStep: () => void
+  defaultWallet: GaloyGQL.UsdWallet | GaloyGQL.BtcWallet
+  fromWallet: GaloyGQL.UsdWallet | GaloyGQL.BtcWallet
+  setFromWallet: (wallet: GaloyGQL.UsdWallet | GaloyGQL.BtcWallet) => void
+  note: string
+  setNote: (note: string) => void
+  amountCurrency: string
+  toggleAmountCurrency: () => void
+  setAmount: (amount: number) => void
+  defaultAmount: number
+  fixedAmount: boolean
+  usdDisabled: boolean
+  lnurlParams: LnUrlPayServiceResponse
+  paymentType: PaymentType
+  setLnurlInvoice: (invoice: string) => void
+  setFixedAmount: (boolean) => void
+  destination: string
+}
+
 const SendBitcoinAmount = ({
   nextStep,
   defaultWallet,
@@ -185,7 +212,12 @@ const SendBitcoinAmount = ({
   defaultAmount = 0,
   fixedAmount,
   usdDisabled,
-}) => {
+  lnurlParams,
+  paymentType,
+  setLnurlInvoice,
+  setFixedAmount,
+  destination,
+}: SendBitcoinAmountProps) => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const { wallets } = useMainQuery()
   const { usdWalletBalance, btcWalletBalance, btcWalletValueInUsd } = useWalletBalance()
@@ -193,6 +225,40 @@ const SendBitcoinAmount = ({
   const [satAmount, setSatAmount] = useState(0)
   const [satAmountInUsd, setSatAmountInUsd] = useState(0)
   const { convertCurrencyAmount } = useMySubscription()
+  const [errorMessage, setErrorMessage] = useState("")
+  const [validAmount, setValidAmount] = useState(false)
+
+  const lnurlInvoiceAmount = useMemo(() => {
+    if (fromWallet.walletCurrency === "BTC" && amountCurrency === "BTC") {
+      return satAmount
+    }
+    if (fromWallet.walletCurrency === "BTC" && amountCurrency === "USD") {
+      return Math.round(
+        convertCurrencyAmount({
+          amount: satAmountInUsd,
+          from: "USD",
+          to: "BTC",
+        }),
+      )
+    }
+    if (fromWallet.walletCurrency === "USD") {
+      return Math.round(
+        convertCurrencyAmount({
+          amount: dollarAmount,
+          from: "USD",
+          to: "BTC",
+        }),
+      )
+    }
+    return 0
+  }, [
+    fromWallet,
+    satAmount,
+    satAmountInUsd,
+    dollarAmount,
+    amountCurrency,
+    convertCurrencyAmount,
+  ])
 
   useEffect(() => {
     if (defaultAmount) {
@@ -230,6 +296,31 @@ const SendBitcoinAmount = ({
       )
     }
   }, [satAmount, satAmountInUsd, amountCurrency, convertCurrencyAmount])
+
+  useEffect(() => {
+    if (fromWallet.__typename === "BTCWallet" && satAmount) {
+      const isAmountValid = satAmount <= btcWalletBalance
+      setValidAmount(isAmountValid)
+      if (!isAmountValid) {
+        setErrorMessage(
+          translate("SendBitcoinScreen.amountExceed", {
+            balance: satAmountDisplay(btcWalletBalance),
+          }),
+        )
+      }
+    }
+    if (fromWallet.__typename === "UsdWallet" && dollarAmount) {
+      const isAmountValid = 100 * dollarAmount <= usdWalletBalance
+      setValidAmount(isAmountValid)
+      if (!isAmountValid) {
+        setErrorMessage(
+          translate("SendBitcoinScreen.amountExceed", {
+            balance: usdAmountDisplay(usdWalletBalance / 100),
+          }),
+        )
+      }
+    }
+  }, [fromWallet, satAmount, dollarAmount, btcWalletBalance, usdWalletBalance])
 
   if (!defaultWallet) {
     return <></>
@@ -313,27 +404,6 @@ const SendBitcoinAmount = ({
   )
 
   const showWalletPicker = !usdDisabled && wallets.length > 1
-
-  let validAmount = false
-  let errorMessage
-
-  if (fromWallet.__typename === "UsdWallet" && dollarAmount) {
-    validAmount = 100 * dollarAmount <= usdWalletBalance
-    if (!validAmount) {
-      errorMessage = translate("SendBitcoinScreen.amountExceed", {
-        balance: usdAmountDisplay(usdWalletBalance / 100),
-      })
-    }
-  }
-
-  if (fromWallet.__typename === "BTCWallet" && satAmount) {
-    validAmount = satAmount <= btcWalletBalance
-    if (!validAmount) {
-      errorMessage = translate("SendBitcoinScreen.amountExceed", {
-        balance: satAmountDisplay(btcWalletBalance),
-      })
-    }
-  }
 
   return (
     <ScrollView
@@ -478,6 +548,26 @@ const SendBitcoinAmount = ({
             </TouchableWithoutFeedback>
           )}
         </View>
+        {lnurlParams && (
+          <Text>
+            Min:{" "}
+            {fromWallet.__typename === "UsdWallet"
+              ? convertCurrencyAmount({
+                  amount: lnurlParams.min,
+                  from: "BTC",
+                  to: "USD",
+                })
+              : lnurlParams.min}{" "}
+            - Max:{" "}
+            {fromWallet.__typename === "UsdWallet"
+              ? convertCurrencyAmount({
+                  amount: lnurlParams.max,
+                  from: "BTC",
+                  to: "USD",
+                })
+              : lnurlParams.max}
+          </Text>
+        )}
       </View>
       <View style={Styles.fieldContainer}>
         <Text style={Styles.fieldTitleText}>{translate("SendBitcoinScreen.note")}</Text>
@@ -492,12 +582,13 @@ const SendBitcoinAmount = ({
               onChangeText={setNote}
               value={note}
               selectTextOnFocus
+              maxLength={lnurlParams ? lnurlParams.commentAllowed : 500}
             />
           </View>
         </View>
       </View>
 
-      {errorMessage && (
+      {Boolean(errorMessage) && (
         <View style={Styles.errorContainer}>
           <Text style={Styles.errorText}>{errorMessage}</Text>
         </View>
@@ -511,7 +602,7 @@ const SendBitcoinAmount = ({
           disabledStyle={[Styles.button, Styles.disabledButtonStyle]}
           disabledTitleStyle={Styles.disabledButtonTitleStyle}
           disabled={!validAmount}
-          onPress={() => {
+          onPress={async () => {
             if (fromWallet.__typename === "UsdWallet") {
               setAmount(dollarAmount)
             }
@@ -520,6 +611,20 @@ const SendBitcoinAmount = ({
             }
             if (fromWallet.__typename === "BTCWallet" && amountCurrency === "BTC") {
               setAmount(satAmount)
+            }
+            if (paymentType === "lnurl") {
+              try {
+                const { invoice } = await fetchLnurlInvoice({
+                  lnUrlOrAddress: destination,
+                  tokens: utils.toSats(lnurlInvoiceAmount),
+                })
+                setLnurlInvoice(invoice)
+                setFixedAmount(true)
+              } catch (error) {
+                console.error(error)
+                setErrorMessage(translate("SendBitcoinScreen.failedToFetchLnurlInvoice"))
+                return
+              }
             }
             nextStep()
           }}
