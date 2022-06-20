@@ -334,7 +334,8 @@ const ReceiveUsd = () => {
               <View style={styles.copyInvoiceContainer}>
                 <Pressable onPress={copyToClipboard}>
                   <Text style={styles.infoText}>
-                    <Icon style={styles.infoText} name="copy-outline" /><Text>{" "}</Text>
+                    <Icon style={styles.infoText} name="copy-outline" />
+                    <Text> </Text>
                     {translate("ReceiveBitcoinScreen.copyInvoice")}
                   </Text>
                 </Pressable>
@@ -342,7 +343,8 @@ const ReceiveUsd = () => {
               <View style={styles.shareInvoiceContainer}>
                 <Pressable onPress={share}>
                   <Text style={styles.infoText}>
-                    <Icon style={styles.infoText} name="share-outline" /><Text>{" "}</Text>
+                    <Icon style={styles.infoText} name="share-outline" />
+                    <Text> </Text>
                     {translate("ReceiveBitcoinScreen.shareInvoice")}
                   </Text>
                 </Pressable>

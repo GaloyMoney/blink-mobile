@@ -52,27 +52,30 @@ const SendBitcoin = ({ navigation, route }) => {
     undefined,
   )
 
-  const nextStep = useCallback((parsedDestination?) => {
-    if (parsedDestination) {
-      setPaymentType(parsedDestination.paymentType)
-      setSameNode(parsedDestination.sameNode)
-      setFixedAmount(parsedDestination.fixedAmount)
-      if (parsedDestination.lnurlParams && !parsedDestination.sameNode) {
-        setLnurlParams(parsedDestination.lnurlParams)
+  const nextStep = useCallback(
+    (parsedDestination?) => {
+      if (parsedDestination) {
+        setPaymentType(parsedDestination.paymentType)
+        setSameNode(parsedDestination.sameNode)
+        setFixedAmount(parsedDestination.fixedAmount)
+        if (parsedDestination.lnurlParams && !parsedDestination.sameNode) {
+          setLnurlParams(parsedDestination.lnurlParams)
+        }
+        if (parsedDestination.defaultAmount !== undefined) {
+          setDefaultAmount(parsedDestination.defaultAmount)
+        }
+        if (parsedDestination.note !== undefined) {
+          setNote(parsedDestination.note)
+        }
+        if (parsedDestination.recipientWalletId !== undefined) {
+          setRecipientWalletId(parsedDestination.recipientWalletId)
+        }
       }
-      if (parsedDestination.defaultAmount !== undefined) {
-        setDefaultAmount(parsedDestination.defaultAmount)
-      }
-      if (parsedDestination.note !== undefined) {
-        setNote(parsedDestination.note)
-      }
-      if (parsedDestination.recipientWalletId !== undefined) {
-        setRecipientWalletId(parsedDestination.recipientWalletId)
-      }
-    }
 
-    setStep(step + 1)
-  }, [step])
+      setStep(step + 1)
+    },
+    [step],
+  )
 
   useEffect(() => {
     if (status === Status.SUCCESS) {

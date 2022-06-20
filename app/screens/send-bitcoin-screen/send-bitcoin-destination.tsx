@@ -72,9 +72,7 @@ const Styles = StyleSheet.create({
   },
 })
 
-const lnurlDomains = [
-  "ln.bitcoinbeach.com"
-]
+const lnurlDomains = ["ln.bitcoinbeach.com"]
 
 const SendBitcoinDestination = ({
   destination,
@@ -148,7 +146,7 @@ const SendBitcoinDestination = ({
           setError(translate("SendBitcoinScreen.failedToFetchLnurlParams"))
           return { valid: false }
         }
-        isSameNode = lnurlDomains.some(domain => lnurlParams?.domain.includes(domain))
+        isSameNode = lnurlDomains.some((domain) => lnurlParams?.domain.includes(domain))
       }
 
       if (fixedAmount) {
@@ -174,7 +172,7 @@ const SendBitcoinDestination = ({
       defaultAmount,
       note,
       recipientWalletId,
-      lnurlParams
+      lnurlParams,
     }
   }, [
     convertCurrencyAmount,

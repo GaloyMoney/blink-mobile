@@ -176,7 +176,7 @@ const SendBitcoinConfirmation = ({
   paymentType,
   sameNode,
   setStatus,
-  lnurlInvoice
+  lnurlInvoice,
 }: SendBitcoinConfirmationProps) => {
   const { convertCurrencyAmount, convertPaymentAmount } = useMySubscription()
   const [secondaryAmount, setSecondaryAmount] = useState<number | undefined>(undefined)

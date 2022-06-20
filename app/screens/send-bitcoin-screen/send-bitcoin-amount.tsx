@@ -7,7 +7,12 @@ import { Button, Text } from "react-native-elements"
 import ReactNativeModal from "react-native-modal"
 import { FakeCurrencyInput } from "react-native-currency-input"
 import SwitchIcon from "@app/assets/icons/switch.svg"
-import { fetchLnurlInvoice, GaloyGQL, PaymentType, translateUnknown as translate } from "@galoymoney/client"
+import {
+  fetchLnurlInvoice,
+  GaloyGQL,
+  PaymentType,
+  translateUnknown as translate,
+} from "@galoymoney/client"
 import NoteIcon from "@app/assets/icons/note.svg"
 import { ScrollView } from "react-native-gesture-handler"
 import { satAmountDisplay, usdAmountDisplay } from "@app/utils/currencyConversion"
@@ -211,7 +216,7 @@ const SendBitcoinAmount = ({
   paymentType,
   setLnurlInvoice,
   setFixedAmount,
-  destination
+  destination,
 }: SendBitcoinAmountProps) => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const { wallets } = useMainQuery()
@@ -228,21 +233,32 @@ const SendBitcoinAmount = ({
       return satAmount
     }
     if (fromWallet.walletCurrency === "BTC" && amountCurrency === "USD") {
-      return Math.round(convertCurrencyAmount({
-        amount: satAmountInUsd,
-        from: "USD",
-        to: "BTC"
-      }))
+      return Math.round(
+        convertCurrencyAmount({
+          amount: satAmountInUsd,
+          from: "USD",
+          to: "BTC",
+        }),
+      )
     }
     if (fromWallet.walletCurrency === "USD") {
-      return Math.round(convertCurrencyAmount({
-        amount: dollarAmount,
-        from: "USD",
-        to: "BTC"
-      }))
+      return Math.round(
+        convertCurrencyAmount({
+          amount: dollarAmount,
+          from: "USD",
+          to: "BTC",
+        }),
+      )
     }
     return 0
-  }, [fromWallet, satAmount, satAmountInUsd, dollarAmount, amountCurrency, convertCurrencyAmount])
+  }, [
+    fromWallet,
+    satAmount,
+    satAmountInUsd,
+    dollarAmount,
+    amountCurrency,
+    convertCurrencyAmount,
+  ])
 
   useEffect(() => {
     if (defaultAmount) {
@@ -286,18 +302,22 @@ const SendBitcoinAmount = ({
       const isAmountValid = satAmount <= btcWalletBalance
       setValidAmount(isAmountValid)
       if (!isAmountValid) {
-        setErrorMessage(translate("SendBitcoinScreen.amountExceed", {
-          balance: satAmountDisplay(btcWalletBalance),
-        }))
+        setErrorMessage(
+          translate("SendBitcoinScreen.amountExceed", {
+            balance: satAmountDisplay(btcWalletBalance),
+          }),
+        )
       }
     }
     if (fromWallet.__typename === "UsdWallet" && dollarAmount) {
       const isAmountValid = 100 * dollarAmount <= usdWalletBalance
       setValidAmount(isAmountValid)
       if (!isAmountValid) {
-        setErrorMessage(translate("SendBitcoinScreen.amountExceed", {
-          balance: usdAmountDisplay(usdWalletBalance / 100),
-        }))
+        setErrorMessage(
+          translate("SendBitcoinScreen.amountExceed", {
+            balance: usdAmountDisplay(usdWalletBalance / 100),
+          }),
+        )
       }
     }
   }, [fromWallet, satAmount, dollarAmount, btcWalletBalance, usdWalletBalance])
@@ -528,15 +548,26 @@ const SendBitcoinAmount = ({
             </TouchableWithoutFeedback>
           )}
         </View>
-        {lnurlParams && <Text>Min: {fromWallet.__typename === "UsdWallet" ? convertCurrencyAmount({
-          amount: lnurlParams.min,
-          from: "BTC",
-          to: "USD"
-        }) : lnurlParams.min} - Max: {fromWallet.__typename === "UsdWallet" ? convertCurrencyAmount({
-          amount: lnurlParams.max,
-          from: "BTC",
-          to: "USD"
-        }) : lnurlParams.max}</Text>}
+        {lnurlParams && (
+          <Text>
+            Min:{" "}
+            {fromWallet.__typename === "UsdWallet"
+              ? convertCurrencyAmount({
+                  amount: lnurlParams.min,
+                  from: "BTC",
+                  to: "USD",
+                })
+              : lnurlParams.min}{" "}
+            - Max:{" "}
+            {fromWallet.__typename === "UsdWallet"
+              ? convertCurrencyAmount({
+                  amount: lnurlParams.max,
+                  from: "BTC",
+                  to: "USD",
+                })
+              : lnurlParams.max}
+          </Text>
+        )}
       </View>
       <View style={Styles.fieldContainer}>
         <Text style={Styles.fieldTitleText}>{translate("SendBitcoinScreen.note")}</Text>
@@ -585,7 +616,7 @@ const SendBitcoinAmount = ({
               try {
                 const { invoice } = await fetchLnurlInvoice({
                   lnUrlOrAddress: destination,
-                  tokens: utils.toSats(lnurlInvoiceAmount)
+                  tokens: utils.toSats(lnurlInvoiceAmount),
                 })
                 setLnurlInvoice(invoice)
                 setFixedAmount(true)
