@@ -31,11 +31,10 @@ const Styles = StyleSheet.create({
     flexDirection: "row",
     borderStyle: "solid",
     overflow: "hidden",
-    borderWidth: 1,
-    borderColor: palette.white,
     backgroundColor: palette.white,
+    paddingHorizontal: 14,
+    marginBottom: 12,
     borderRadius: 10,
-    justifyContent: "center",
     alignItems: "center",
     height: 60,
   },
@@ -43,7 +42,7 @@ const Styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "flex-start",
     width: 50,
-    margin: 20,
+    marginRight: 20,
   },
   walletSelectorTypeLabelBitcoin: {
     height: 30,
@@ -98,12 +97,9 @@ const Styles = StyleSheet.create({
   fieldTitleText: {
     fontWeight: "bold",
     color: palette.lapisLazuli,
-    marginTop: 8,
     marginBottom: 4,
   },
-  fieldContainer: {
-    padding: 5,
-  },
+  fieldContainer: {},
   currencyInputContainer: {
     flexDirection: "column",
     flex: 1,
@@ -117,12 +113,10 @@ const Styles = StyleSheet.create({
     color: palette.lapisLazuli,
     fontSize: 20,
     fontWeight: "600",
-    marginLeft: 20,
   },
   convertedAmountText: {
     color: palette.coolGrey,
     fontSize: 12,
-    marginLeft: 20,
   },
   errorContainer: {
     marginVertical: 20,
@@ -137,9 +131,9 @@ const Styles = StyleSheet.create({
     flexDirection: "row",
   },
   noteIconContainer: {
-    width: 50,
+    marginRight: 12,
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "flex-start",
   },
   noteIcon: {
     justifyContent: "center",
@@ -149,6 +143,7 @@ const Styles = StyleSheet.create({
     flex: 1,
   },
   button: {
+    marginTop: 20,
     height: 60,
     borderRadius: 10,
   },

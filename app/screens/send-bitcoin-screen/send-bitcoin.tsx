@@ -14,7 +14,7 @@ import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
 const Styles = StyleSheet.create({
   container: {
     flexDirection: "column",
-    padding: 10,
+    padding: 20,
     flex: 6,
   },
   errorContainer: {
