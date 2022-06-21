@@ -7,7 +7,6 @@ import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
 import { translateUnknown as translate } from "@galoymoney/client"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
-import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import type { ScreenType } from "../../types/jsx"
 

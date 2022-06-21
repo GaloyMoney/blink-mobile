@@ -41,7 +41,7 @@ export const AuthenticationCheckScreen: ScreenType = ({ navigation }: Props) => 
   const { hasToken, tokenNetwork } = useToken()
   const { myPubKey, username } = useMainQuery()
   useEffect(() => {
-    ; (async () => {
+    ;(async () => {
       const isPinEnabled = await KeyStoreWrapper.getIsPinEnabled()
 
       if (
