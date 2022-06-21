@@ -563,7 +563,7 @@ const SendBitcoinConfirmation = ({
           titleStyle={styles.buttonTitleStyle}
           disabledStyle={[styles.button, styles.disabledButtonStyle]}
           disabledTitleStyle={styles.disabledButtonTitleStyle}
-          disabled={isLoading || fee.status !== "set" || !validAmount}
+          disabled={isLoading || !validAmount}
           onPress={sendPayment}
         />
       </View>
