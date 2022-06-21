@@ -14,7 +14,7 @@ import { showModalClipboardIfValidPayment } from "../../utils/clipboard"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
 
-import BitcoinBeachLogo from "../get-started-screen/bitcoinBeach3.png"
+import BitcoinBeachLogo from "../get-started-screen/bitcoin-beach-logo.png"
 import useToken from "../../utils/use-token"
 import useMainQuery from "@app/hooks/use-main-query"
 
@@ -71,7 +71,7 @@ export const AuthenticationCheckScreen: ScreenType = ({ navigation }: Props) => 
   return (
     <Screen
       style={styles.container}
-      backgroundColor={palette.lightBlue}
+      backgroundColor={palette.white}
       statusBar="light-content"
     >
       <Image style={styles.Logo} source={BitcoinBeachLogo} resizeMode="contain" />
