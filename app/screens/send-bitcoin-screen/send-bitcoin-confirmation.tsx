@@ -11,7 +11,6 @@ import DestinationIcon from "@app/assets/icons/destination.svg"
 import { FakeCurrencyInput } from "react-native-currency-input"
 import { useMySubscription, useWalletBalance } from "@app/hooks"
 import { Button } from "react-native-elements"
-import FeeIcon from "@app/assets/icons/fee.svg"
 import useFee from "./use-fee"
 import {
   paymentAmountToDollarsOrSats,
@@ -22,6 +21,7 @@ import {
 import { PaymentAmount, WalletCurrency } from "@app/types/amounts"
 import { PaymentDestinationDisplay } from "@app/components/payment-destination-display"
 import { Status } from "./send-bitcoin.types"
+import NoteIcon from "@app/assets/icons/note.svg"
 
 const styles = StyleSheet.create({
   sendBitcoinConfirmationContainer: {
@@ -33,22 +33,22 @@ const styles = StyleSheet.create({
     borderStyle: "solid",
     overflow: "hidden",
     backgroundColor: palette.white,
+    paddingHorizontal: 14,
+    marginBottom: 12,
     borderRadius: 10,
-    justifyContent: "center",
     alignItems: "center",
     height: 60,
   },
   fieldTitleText: {
     fontWeight: "bold",
     color: palette.lapisLazuli,
-    marginTop: 8,
     marginBottom: 4,
   },
 
   destinationIconContainer: {
-    width: 50,
     justifyContent: "center",
     alignItems: "center",
+    marginRight: 12,
   },
   destinationText: {
     flex: 1,
@@ -57,12 +57,10 @@ const styles = StyleSheet.create({
     color: palette.lapisLazuli,
     fontSize: 20,
     fontWeight: "600",
-    marginLeft: 20,
   },
   convertedAmountText: {
     color: palette.coolGrey,
     fontSize: 12,
-    marginLeft: 20,
   },
   amountContainer: {
     flex: 1,
@@ -72,7 +70,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "flex-start",
     width: 50,
-    margin: 20,
+    marginRight: 20,
   },
   walletSelectorTypeLabelBitcoin: {
     height: 30,
@@ -150,6 +148,15 @@ const styles = StyleSheet.create({
   disabledButtonTitleStyle: {
     color: palette.lightBlue,
     fontWeight: "600",
+  },
+  noteIconContainer: {
+    marginRight: 12,
+    justifyContent: "center",
+    alignItems: "flex-start",
+  },
+  noteIcon: {
+    justifyContent: "center",
+    alignItems: "center",
   },
 })
 
@@ -537,13 +544,22 @@ const SendBitcoinConfirmation = ({
           <View />
         </View>
       </View>
+      {note ? (
+        <>
+          <Text style={styles.fieldTitleText}>{translate("SendBitcoinScreen.note")}</Text>
+          <View style={styles.fieldBackground}>
+            <View style={styles.noteIconContainer}>
+              <NoteIcon style={styles.noteIcon} />
+            </View>
+            <Text>{note}</Text>
+          </View>
+        </>
+      ) : null}
+
       <Text style={styles.fieldTitleText}>
         {translate("SendBitcoinConfirmationScreen.feeLabel")}
       </Text>
       <View style={styles.fieldBackground}>
-        <View style={styles.destinationIconContainer}>
-          <FeeIcon />
-        </View>
         <Text style={styles.destinationText}>
           {fee.status === "loading" ? <ActivityIndicator /> : feeDisplayText}
         </Text>
