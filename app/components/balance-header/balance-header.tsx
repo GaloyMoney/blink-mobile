@@ -18,9 +18,19 @@ const styles = EStyleSheet.create({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
   },
-
+  balanceHeaderContainer: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "flex-start",
+  },
+  balanceAmountContainer: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "flex-start",
+  },
   balanceText: {
     color: palette.midGrey,
     fontSize: 16,
@@ -59,14 +69,14 @@ export interface BalanceHeaderProps {
 
 const Loader = () => (
   <ContentLoader
-    height={40}
-    width={120}
+    height={100}
+    width={100}
     speed={1.2}
     backgroundColor="#f3f3f3"
     foregroundColor="#ecebeb"
   >
-    <Rect x="0" y="12" rx="4" ry="4" width="120" height="28" />
-    {/* <Rect x="30" y="35" rx="4" ry="4" width="60" height="10" /> */}
+    <Rect x="0" y="0" rx="4" ry="4" width="100" height="40" />
+    <Rect x="0" y="45" rx="4" ry="4" width="100" height="20" />
   </ContentLoader>
 )
 
@@ -76,15 +86,17 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
   style,
 }: BalanceHeaderProps) => {
   return (
-    <View style={[styles.header, style]}>
+    <View style={[styles.balanceHeaderContainer, style]}>
       <Text testID="currentBalance" style={styles.balanceText}>
         {translate("BalanceHeader.currentBalance")}
       </Text>
-      {loading ? (
-        <Loader />
-      ) : (
-        <BalanceHeaderDisplay showSecondaryCurrency={showSecondaryCurrency} />
-      )}
+      <View style={styles.balanceAmountContainer}>
+        {loading ? (
+          <Loader />
+        ) : (
+          <BalanceHeaderDisplay showSecondaryCurrency={showSecondaryCurrency} />
+        )}
+      </View>
     </View>
   )
 }

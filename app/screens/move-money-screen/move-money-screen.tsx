@@ -80,6 +80,7 @@ const styles = EStyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
     marginVertical: "15rem",
+    height: "120rem",
   },
 
   walletOverview: {
@@ -358,11 +359,7 @@ export const MoveMoneyScreen: ScreenType = ({
           icon={<PriceIcon />}
         />
 
-        <BalanceHeader
-          loading={loading}
-          style={styles.balanceHeader}
-          showSecondaryCurrency={!hasUsdWallet}
-        />
+        <BalanceHeader loading={loading} showSecondaryCurrency={!hasUsdWallet} />
 
         <Button
           buttonStyle={styles.topButton}
