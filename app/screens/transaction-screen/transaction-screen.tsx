@@ -1,7 +1,7 @@
 import { ApolloError, useReactiveVar } from "@apollo/client"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
-import { SectionList, Text, View } from "react-native"
+import { ActivityIndicator, SectionList, Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
@@ -24,6 +24,7 @@ const styles = EStyleSheet.create({
 
   icon: { color: palette.darkGrey, top: -4 },
 
+  loadingContainer: { justifyContent: "center", alignItems: "center", flex: 1 },
   noTransactionText: {
     fontSize: "24rem",
   },
@@ -87,7 +88,11 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
   }
 
   if (!data?.me?.defaultAccount) {
-    return null
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator color={palette.coolGrey} size={"large"} />
+      </View>
+    )
   }
 
   const { edges, pageInfo } = data.me.defaultAccount.transactions
