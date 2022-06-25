@@ -5,3 +5,4 @@ android
 ignite/ignite.json
 package.json
 __generated__
+app/components/price-graph/data-tst.ts

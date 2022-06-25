@@ -67,3 +67,6 @@ galoy.code-workspace
 
 .phrase.yml
 ios/GoogleService-Info.plist
+
+.yalc
+yalc.lock
