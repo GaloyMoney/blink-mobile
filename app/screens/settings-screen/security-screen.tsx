@@ -120,10 +120,10 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
             handleAuthenticationFailure,
           )
         } else {
-          toastShow(translate("SecurityScreen.biometryNotAvailable"))
+          toastShow({ message: translate("SecurityScreen.biometryNotAvailable") })
         }
       } catch {
-        toastShow(translate("SecurityScreen.biometryNotEnrolled"))
+        toastShow({ message: translate("SecurityScreen.biometryNotEnrolled") })
       }
     } else if (await KeyStoreWrapper.removeIsBiometricsEnabled()) {
       setIsBiometricsEnabled(false)

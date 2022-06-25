@@ -189,19 +189,19 @@ export const WelcomePhoneInputScreen: ScreenType = ({
       } else if (data.captchaRequestAuthCode.errors.length > 0) {
         const errorMessage = data.captchaRequestAuthCode.errors[0].message
         if (errorMessage === "Too many requests") {
-          toastShow(translate("errors.tooManyRequestsPhoneCode"))
+          toastShow({ message: translate("errors.tooManyRequestsPhoneCode") })
         } else {
-          toastShow(errorMessage)
+          toastShow({ message: errorMessage })
         }
       } else {
-        toastShow(translate("errors.generic"))
+        toastShow({ message: translate("errors.generic") })
       }
     } catch (err) {
       console.debug({ err })
       if (err.message === "Too many requests") {
-        toastShow(translate("errors.tooManyRequestsPhoneCode"))
+        toastShow({ message: translate("errors.tooManyRequestsPhoneCode") })
       } else {
-        toastShow(translate("errors.generic"))
+        toastShow({ message: translate("errors.generic") })
       }
     }
   }, [
@@ -226,7 +226,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
     if (geetestError) {
       const error = geetestError
       resetError()
-      toastShow(error)
+      toastShow({ message: error })
     }
   })
 
@@ -413,7 +413,7 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
     } catch (err) {
       console.debug({ err })
       setCode("")
-      toastShow(`${err}`)
+      toastShow({ message: `${err}` })
     }
   }, [client, code, loading, login, phone, saveToken])
 

@@ -4,8 +4,11 @@ import { ComponentType } from "../../types/jsx"
 import { NetworkErrorCode } from "./network-error-code"
 import { translateUnknown as translate } from "@galoymoney/client"
 import { toastShow } from "@app/utils/toast"
+import useLogout from "@app/hooks/use-logout"
 export const GlobalErrorToast: ComponentType = () => {
   const status = useApolloNetworkStatus()
+  // use logout hook
+  const { logout } = useLogout()
 
   // "prices" is a polled query.
   // filter this to not have the error message being showed
@@ -24,7 +27,7 @@ export const GlobalErrorToast: ComponentType = () => {
 
   if (networkError.statusCode >= 500) {
     // TODO translation
-    toastShow(translate("errors.network.server"))
+    toastShow({ message: translate("errors.network.server") })
   }
 
   if (networkError.statusCode >= 400 && networkError.statusCode < 500) {
@@ -40,19 +43,19 @@ export const GlobalErrorToast: ComponentType = () => {
 
     switch (errorCode) {
       case NetworkErrorCode.InvalidAuthentication:
-        toastShow(translate("common.reauth"))
+        toastShow({ message: translate("common.reauth"), _onHide: () => logout() })
         break
 
       default:
         // TODO translation
-        toastShow(translate("errors.network.request"))
+        toastShow({ message: translate("errors.network.request") })
         break
     }
   }
 
   if (networkError.message === "Network request failed") {
     // TODO translation
-    toastShow(translate("errors.network.connection"))
+    toastShow({ message: translate("errors.network.connection") })
   }
 
   if (status.mutationError) {

@@ -12,13 +12,12 @@ import Icon from "react-native-vector-icons/Ionicons"
 import Clipboard from "@react-native-community/clipboard"
 import { FakeCurrencyInput } from "react-native-currency-input"
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer"
-import Toast from "react-native-toast-message"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import { usdAmountDisplay } from "@app/utils/currencyConversion"
-
 import CalculatorIcon from "@app/assets/icons/calculator.svg"
 import ChevronIcon from "@app/assets/icons/chevron.svg"
 import NoteIcon from "@app/assets/icons/note.svg"
+import { toastShow } from "@app/utils/toast"
 
 const styles = EStyleSheet.create({
   container: {
@@ -227,11 +226,9 @@ const ReceiveUsd = () => {
 
   const copyToClipboard = () => {
     Clipboard.setString(getFullUri({ input: invoice?.paymentRequest, prefix: false }))
-    Toast.show({
-      type: "info",
-      text1: translate("ReceiveBitcoinScreen.copyClipboard"),
-      position: "bottom",
-      bottomOffset: 80,
+    toastShow({
+      message: translate("ReceiveBitcoinScreen.copyClipboard"),
+      type: "success",
     })
   }
 
