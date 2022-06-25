@@ -1,9 +1,7 @@
 /* eslint-disable react-native/no-color-literals */
 /* eslint-disable react-native/no-unused-styles */
 import React, { useEffect } from "react"
-import { WHATSAPP_CONTACT_NUMBER } from "@app/constants/support"
 import { color, palette } from "@app/theme"
-import { openWhatsApp } from "@app/utils/external"
 import { Alert, KeyboardAvoidingView, StatusBar, Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
@@ -15,6 +13,7 @@ import { offsets, presets } from "@app/components/screen/screen.presets"
 import crashlytics from "@react-native-firebase/crashlytics"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import useLogout from "@app/hooks/use-logout"
+import ContactModal from "@app/components/contact-modal/contact-modal"
 
 const styles = EStyleSheet.create({
   $color: palette.white,
@@ -58,6 +57,7 @@ const styles = EStyleSheet.create({
   },
 })
 export const ErrorScreen = ({ error, resetError }) => {
+  const [isContactModalVisible, setIsContactModalVisible] = React.useState(false)
   const { logout } = useLogout()
   useEffect(() => crashlytics().recordError(error), [error])
 
@@ -65,6 +65,10 @@ export const ErrorScreen = ({ error, resetError }) => {
     await logout()
     await AsyncStorage.removeItem("apollo-cache-persist")
     resetError()
+  }
+
+  const toggleIsContactModalVisible = () => {
+    setIsContactModalVisible(!isContactModalVisible)
   }
 
   return (
@@ -87,13 +91,8 @@ export const ErrorScreen = ({ error, resetError }) => {
             titleStyle={styles.buttonTitle}
           />
           <Button
-            title={translate("whatsapp.contactSupport")}
-            onPress={() =>
-              openWhatsApp(
-                WHATSAPP_CONTACT_NUMBER,
-                translate("whatsapp.defaultSupportMessage"),
-              )
-            }
+            title={translate("support.contactUs")}
+            onPress={() => toggleIsContactModalVisible()}
             containerStyle={styles.buttonContainer}
             buttonStyle={styles.buttonStyle}
             titleStyle={styles.buttonTitle}
@@ -113,6 +112,10 @@ export const ErrorScreen = ({ error, resetError }) => {
             titleStyle={styles.buttonTitle}
           />
         </View>
+        <ContactModal
+          isVisble={isContactModalVisible}
+          toggleModal={toggleIsContactModalVisible}
+        />
       </SafeAreaView>
     </KeyboardAvoidingView>
   )
