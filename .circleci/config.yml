@@ -6,7 +6,7 @@ orbs:
 jobs:
   android_test:
     docker:
-      - image: circleci/android:api-30
+      - image: cimg/android:api-30
     resource_class: large
     environment:
       TERM: dumb
@@ -167,7 +167,7 @@ jobs:
 
   build_android:
     docker:
-      - image: circleci/android:api-30
+      - image: cimg/android:api-30
     resource_class: large
     environment:
       TERM: dumb
