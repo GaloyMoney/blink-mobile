@@ -9,6 +9,11 @@ import { translateUnknown as translate } from "@galoymoney/client"
 import "@mocks/react-navigation-native"
 import "@mocks/react-native-geetest-module"
 import { WelcomePhoneInputScreen } from "@app/screens/phone-auth-screen"
+import {
+  AppConfiguration,
+  AppConfigurationContext,
+  defaultConfiguration,
+} from "../../app/context/app-configuration"
 
 jest.mock("react-native/Libraries/EventEmitter/NativeEventEmitter")
 jest.mock("react-native-fingerprint-scanner", () => ({}))
@@ -19,17 +24,31 @@ describe("WelcomePhoneInputScreen", () => {
   afterEach(cleanup)
   it("render matches snapshot", () => {
     const tree = render(
-      <MockedProvider cache={cache}>
-        <WelcomePhoneInputScreen />
-      </MockedProvider>,
+      <AppConfigurationContext.Provider
+        value={{
+          appConfig: defaultConfiguration,
+          setAppConfig: (config: AppConfiguration) => {},
+        }}
+      >
+        <MockedProvider cache={cache}>
+          <WelcomePhoneInputScreen />
+        </MockedProvider>
+      </AppConfigurationContext.Provider>,
     )
     expect(tree).toMatchSnapshot()
   })
   it("has TextInput", () => {
     const { queryByA11yLabel, queryByPlaceholderText } = render(
-      <MockedProvider cache={cache}>
-        <WelcomePhoneInputScreen />
-      </MockedProvider>,
+      <AppConfigurationContext.Provider
+        value={{
+          appConfig: defaultConfiguration,
+          setAppConfig: (config: AppConfiguration) => {},
+        }}
+      >
+        <MockedProvider cache={cache}>
+          <WelcomePhoneInputScreen />
+        </MockedProvider>
+      </AppConfigurationContext.Provider>,
     )
     expect(queryByA11yLabel("Input phone number")).not.toBeNull()
     expect(

@@ -4,9 +4,11 @@ import useToken from "@app/utils/use-token"
 import NetInfo from "@react-native-community/netinfo"
 import { translateUnknown as translate } from "@galoymoney/client"
 import crashlytics from "@react-native-firebase/crashlytics"
+import { useAppConfig } from "./use-app-config"
 
 const useMainQuery = (): useMainQueryOutput => {
   const { hasToken } = useToken()
+  const { appConfig } = useAppConfig()
   const { data, previousData, error, loading, refetch } = useQuery(MAIN_QUERY, {
     variables: { hasToken },
     fetchPolicy: "cache-and-network",
@@ -47,7 +49,9 @@ const useMainQuery = (): useMainQueryOutput => {
   const defaultWalletId = data?.me?.defaultAccount?.defaultWalletId
   const defaultWallet = wallets?.find((wallet) => wallet?.id === defaultWalletId)
   const btcWallet = wallets?.find((wallet) => wallet?.__typename === "BTCWallet")
-  const usdWallet = wallets?.find((wallet) => wallet?.__typename === "UsdWallet")
+  const usdWallet = appConfig.isUsdDisabled
+    ? undefined
+    : wallets?.find((wallet) => wallet?.__typename === "UsdWallet")
 
   const btcWalletBalance = btcWallet?.balance
   const usdWalletBalance = usdWallet?.balance ?? 0

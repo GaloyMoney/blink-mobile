@@ -29,12 +29,21 @@ export async function saveString(key: string, value: string): Promise<boolean> {
   }
 }
 
+export async function saveJson(key: string, value: any): Promise<boolean> {
+  try {
+    await AsyncStorage.setItem(key, JSON.stringify(value))
+    return true
+  } catch {
+    return false
+  }
+}
+
 /**
  * Loads something from storage and runs it thru JSON.parse.
  *
  * @param key The key to fetch.
  */
-export async function load(key: string): Promise<string | null> {
+export async function loadJson(key: string): Promise<any | null> {
   try {
     const data = await AsyncStorage.getItem(key)
     return JSON.parse(data)

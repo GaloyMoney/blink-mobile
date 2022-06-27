@@ -46,7 +46,11 @@ import { INetwork } from "./types/network"
 import ErrorBoundary from "react-native-error-boundary"
 import { ErrorScreen } from "./screens/error-screen"
 import Toast from "react-native-toast-message"
-
+import {
+  AppConfigurationContext,
+  AppConfiguration,
+  loadAppConfig,
+} from "./context/app-configuration"
 export const BUILD_VERSION = "build_version"
 
 export const { link: linkNetworkStatusNotifier, useApolloNetworkStatus } =
@@ -110,9 +114,11 @@ export const App = (): JSX.Element => {
 
     return route.name
   }
+  const [appConfig, setAppConfig] = useState<AppConfiguration>(undefined)
 
   useEffect(() => {
     loadAuthToken()
+    loadAppConfig().then((config) => setAppConfig(config))
   }, [])
 
   useEffect(() => {
@@ -243,7 +249,7 @@ export const App = (): JSX.Element => {
   //
   // You're welcome to swap in your own component to render if your boot up
   // sequence is too slow though.
-  if (!apolloClient || !persistor) {
+  if (!apolloClient || !persistor || !appConfig) {
     return null
   }
 
@@ -265,31 +271,33 @@ export const App = (): JSX.Element => {
   }
 
   return (
-    <ApolloProvider client={apolloClient}>
-      <ErrorBoundary FallbackComponent={ErrorScreen}>
-        <NavigationContainer
-          key={token}
-          linking={linking}
-          // fallback={<Text>Loading...</Text>}
-          onStateChange={(state) => {
-            const currentRouteName = getActiveRouteName(state)
+    <AppConfigurationContext.Provider value={{ appConfig, setAppConfig }}>
+      <ApolloProvider client={apolloClient}>
+        <ErrorBoundary FallbackComponent={ErrorScreen}>
+          <NavigationContainer
+            key={token}
+            linking={linking}
+            // fallback={<Text>Loading...</Text>}
+            onStateChange={(state) => {
+              const currentRouteName = getActiveRouteName(state)
 
-            if (routeName !== currentRouteName) {
-              analytics().logScreenView({
-                screen_name: currentRouteName,
-                screen_class: currentRouteName,
-              })
-              setRouteName(currentRouteName)
-            }
-          }}
-        >
-          <RootSiblingParent>
-            <GlobalErrorToast />
-            <RootStack />
-            <Toast />
-          </RootSiblingParent>
-        </NavigationContainer>
-      </ErrorBoundary>
-    </ApolloProvider>
+              if (routeName !== currentRouteName) {
+                analytics().logScreenView({
+                  screen_name: currentRouteName,
+                  screen_class: currentRouteName,
+                })
+                setRouteName(currentRouteName)
+              }
+            }}
+          >
+            <RootSiblingParent>
+              <GlobalErrorToast />
+              <RootStack />
+              <Toast />
+            </RootSiblingParent>
+          </NavigationContainer>
+        </ErrorBoundary>
+      </ApolloProvider>
+    </AppConfigurationContext.Provider>
   )
 }
