@@ -16,6 +16,7 @@ import { networkVar } from "../../graphql/client-only-query"
 import { useMySubscription } from "../../hooks"
 import useLogout from "../../hooks/use-logout"
 import { GaloyInput } from "@app/components/galoy-input"
+import { useAppConfig } from "@app/hooks/use-app-config"
 
 const styles = EStyleSheet.create({
   button: {
@@ -41,7 +42,7 @@ export const DebugScreen: ScreenType = () => {
     GRAPHQL_URI: "",
     GRAPHQL_WS_URI: "",
   })
-
+  const { appConfig, toggleUsdDisabled } = useAppConfig()
   const updateNetwork = useCallback(
     async (network?) => {
       let newNetwork = tokenNetwork || network
@@ -106,6 +107,11 @@ export const DebugScreen: ScreenType = () => {
           // Clipboard.setString(JSON.stringify(store))
           // Alert.alert("Store copied in clipboard. send it over whatsapp or email")
         }}
+      />
+      <Button
+        title={appConfig.isUsdDisabled ? "Enable USD" : "Disable USD"}
+        style={styles.button}
+        onPress={toggleUsdDisabled}
       />
       <Button
         title="Request permission + send device token"

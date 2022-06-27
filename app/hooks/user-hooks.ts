@@ -121,19 +121,6 @@ export const formatUsdAmount: (usd: number) => string = (usd) => {
   return usd.toFixed(4)
 }
 
-export const useMyCurrencies = (): {
-  primaryCurrency: CurrencyType
-  secondaryCurrency: CurrencyType
-  toggleCurrency: () => void
-} => {
-  // TODO: cache selected primary currenncy
-  const primaryCurrency = useReactiveVar<CurrencyType>(primaryCurrencyVar)
-  const secondaryCurrency = primaryCurrency === "BTC" ? "USD" : "BTC"
-  const toggleCurrency = () => primaryCurrencyVar(secondaryCurrency)
-
-  return { primaryCurrency, secondaryCurrency, toggleCurrency }
-}
-
 export const useMySubscription = (): UseMyUpdates => {
   const { data, loading } = useSubscription(MY_UPDATES_SUBSCRIPTION)
 
