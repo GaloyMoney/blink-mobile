@@ -153,7 +153,10 @@ export const useMySubscription = (): UseMyUpdates => {
       }
 
       if (paymentAmount.currency === toCurrency) {
-        return paymentAmount
+        return {
+          amount: Math.round(paymentAmount.amount),
+          currency: paymentAmount.currency,
+        }
       }
 
       if (
