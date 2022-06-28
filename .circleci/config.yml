@@ -6,7 +6,7 @@ orbs:
 jobs:
   android_test:
     docker:
-      - image: cimg/android
+      - image: cimg/android:2022.06.1
     resource_class: large
     environment:
       TERM: dumb
@@ -167,7 +167,7 @@ jobs:
 
   build_android:
     docker:
-      - image: cimg/android
+      - image: cimg/android:2022.06.1
     resource_class: large
     environment:
       TERM: dumb
