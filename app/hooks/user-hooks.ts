@@ -147,15 +147,11 @@ export const useMySubscription = (): UseMyUpdates => {
   )
 
   const convertPaymentAmount = React.useCallback(
-    (paymentAmount, toCurrency) => {
+    (paymentAmount, toCurrency: WalletCurrency) => {
       if (cachedPrice === 0) {
-        return NaN
-      }
-
-      if (paymentAmount.currency === toCurrency) {
         return {
-          amount: Math.round(paymentAmount.amount),
-          currency: paymentAmount.currency,
+          amount: NaN,
+          currency: toCurrency,
         }
       }
 
@@ -168,6 +164,7 @@ export const useMySubscription = (): UseMyUpdates => {
           currency: WalletCurrency.USD,
         }
       }
+
       if (
         paymentAmount.currency === WalletCurrency.USD &&
         toCurrency === WalletCurrency.BTC
@@ -177,6 +174,11 @@ export const useMySubscription = (): UseMyUpdates => {
           currency: WalletCurrency.BTC,
         }
       }
+
+      return {
+        amount: Math.round(paymentAmount.amount),
+        currency: paymentAmount.currency,
+      }
     },
     [cachedPrice],
   )
@@ -185,7 +187,7 @@ export const useMySubscription = (): UseMyUpdates => {
 
   const convertPaymentAmountToPrimaryCurrency = (
     paymentAmount: PaymentAmount<WalletCurrency>,
-  ) => convertPaymentAmount(paymentAmount, primaryCurrency)
+  ) => convertPaymentAmount(paymentAmount, primaryCurrency as WalletCurrency)
 
   if (data?.myUpdates?.update) {
     if (data.myUpdates.update.type === "Price") {
