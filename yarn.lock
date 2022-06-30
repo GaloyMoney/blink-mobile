@@ -1881,9 +1881,9 @@
   integrity sha512-Doz2bfiPndXYFPMRwPyGa1k5QaKDVpY806UJj570epIiMzWaYyCtobasyfC++qfIXVb5Ocy7r3tP9d62hAQ7IQ==
 
 "@galoymoney/client@^0.1.31":
-  version "0.1.31"
-  resolved "https://registry.yarnpkg.com/@galoymoney/client/-/client-0.1.31.tgz#404b5bfbd3ce3e191a60e6814c652c824b7897a8"
-  integrity sha512-JGSV8GlUDrgQyfioJECP6L1xZ8W7iW5c7RRJnHXi7SodthaohysKsKwaon0uN6rTaFoqO8++vdpmtu+84tbkHA==
+  version "0.1.32"
+  resolved "https://registry.yarnpkg.com/@galoymoney/client/-/client-0.1.32.tgz#da2992b4f43de9fc59f7bc5c2f85bd812e8fe99b"
+  integrity sha512-qukVUqLCFFg1OKnOqk+ph+KGUwOH9IX8nMITwg1b0Xx2ZnzF6jVvRdf0hkb/XIb6I61e86NXCm9Y1t97NGuPIQ==
 
 "@galoymoney/react-native-geetest-module@^0.1.3":
   version "0.1.3"
