@@ -9,7 +9,7 @@ import type { ViewStyleProp } from "react-native/Libraries/StyleSheet/StyleSheet
 import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
 import { palette } from "../../theme/palette"
-import { GALOY_PAY_DOMAIN, WHATSAPP_CONTACT_NUMBER } from "../../constants/support"
+import { GALOY_PAY_DOMAIN } from "../../constants/support"
 import { translateUnknown as translate } from "@galoymoney/client"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import type { ScreenType } from "../../types/jsx"
@@ -20,7 +20,7 @@ import useToken from "../../utils/use-token"
 import useLogout from "../../hooks/use-logout"
 import useMainQuery from "@app/hooks/use-main-query"
 import crashlytics from "@react-native-firebase/crashlytics"
-import { openWhatsApp } from "@app/utils/external"
+import ContactModal from "@app/components/contact-modal/contact-modal"
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "settings">
@@ -70,19 +70,7 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
           Alert.alert(
             translate("common.error"),
             translate("SettingsScreen.csvTransactionsError"),
-            [
-              {
-                text: translate("whatsapp.contactSupport"),
-                onPress: () =>
-                  openWhatsApp(
-                    WHATSAPP_CONTACT_NUMBER,
-                    translate("whatsapp.defaultSupportMessage"),
-                  ),
-              },
-              {
-                text: translate("common.cancel"),
-              },
-            ],
+            [{ text: translate("common.ok") }],
           )
         },
       },
@@ -187,6 +175,7 @@ type SettingRow = {
 }
 
 export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
+  const [isContactModalVisible, setIsContactModalVisible] = React.useState(false)
   const {
     hasToken,
     navigation,
@@ -202,12 +191,13 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
   const copyToClipBoard = (username) => {
     Clipboard.setString(GALOY_PAY_DOMAIN + username)
     Clipboard.getString().then((data) =>
-      toastShow(translate("tippingLink.copied", { data })),
+      toastShow({ message: translate("tippingLink.copied", { data }), type: "success" }),
     )
   }
 
-  const openWhatsAppAction = () =>
-    openWhatsApp(WHATSAPP_CONTACT_NUMBER, translate("whatsapp.defaultSupportMessage"))
+  const toggleIsContactModalVisible = () => {
+    setIsContactModalVisible(!isContactModalVisible)
+  }
 
   const settingList: SettingRow[] = [
     {
@@ -272,10 +262,10 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       greyed: !hasToken || username === null,
     },
     {
-      category: translate("whatsapp.contactUs"),
-      icon: "ios-logo-whatsapp",
+      category: translate("support.contactUs"),
+      icon: "help-circle",
       id: "contact-us",
-      action: openWhatsAppAction,
+      action: toggleIsContactModalVisible,
       enabled: true,
       greyed: false,
       styleDivider: { backgroundColor: palette.lighterGrey, height: 18 },
@@ -321,6 +311,10 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
         )
       })}
       <VersionComponent />
+      <ContactModal
+        isVisble={isContactModalVisible}
+        toggleModal={toggleIsContactModalVisible}
+      />
     </Screen>
   )
 }

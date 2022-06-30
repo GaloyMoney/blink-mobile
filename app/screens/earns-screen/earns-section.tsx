@@ -183,7 +183,7 @@ export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
               variables: { input: { id: card.id } },
             })
             if (errorsMessage) {
-              toastShow(errorsMessage)
+              toastShow({ message: errorsMessage })
             }
           },
           id: card.id,

@@ -70,7 +70,9 @@ describe("GlobalError tests", () => {
     })
 
     expect(toastSpy).toHaveBeenCalledTimes(1)
-    expect(toastSpy).toHaveBeenCalledWith("Server Error. Please try again later")
+    expect(toastSpy).toHaveBeenCalledWith({
+      message: "Server Error. Please try again later",
+    })
   })
 
   it(`should show a toast with "Your session has expired. Please log in again." 
@@ -85,9 +87,10 @@ describe("GlobalError tests", () => {
     })
 
     expect(toastSpy).toHaveBeenCalledTimes(1)
-    expect(toastSpy).toHaveBeenCalledWith(
-      "Your session has expired. Please log in again.",
-    )
+    expect(toastSpy).toHaveBeenCalledWith({
+      message: "Your session has expired. Please log in again.",
+      _onHide: expect.any(Function),
+    })
   })
 
   it(`should show a toast with "Request issue.\nContact support if the problem persists" 
@@ -97,9 +100,9 @@ describe("GlobalError tests", () => {
     })
 
     expect(toastSpy).toHaveBeenCalledTimes(1)
-    expect(toastSpy).toHaveBeenCalledWith(
-      "Request issue.\nContact support if the problem persists",
-    )
+    expect(toastSpy).toHaveBeenCalledWith({
+      message: "Request issue.\nContact support if the problem persists",
+    })
   })
 
   it(`should show a toast with "Connection issue.\nVerify your internet connection" 
@@ -111,8 +114,8 @@ describe("GlobalError tests", () => {
     })
 
     expect(toastSpy).toHaveBeenCalledTimes(1)
-    expect(toastSpy).toHaveBeenCalledWith(
-      "Connection issue.\nVerify your internet connection",
-    )
+    expect(toastSpy).toHaveBeenCalledWith({
+      message: "Connection issue.\nVerify your internet connection",
+    })
   })
 })

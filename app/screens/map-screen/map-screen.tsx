@@ -68,7 +68,7 @@ export const MapScreen: ScreenType = ({ navigation }: Props) => {
   })
 
   if (error) {
-    toastShow(error.message)
+    toastShow({ message: error.message })
   }
 
   const maps = data?.businessMapMarkers ?? []

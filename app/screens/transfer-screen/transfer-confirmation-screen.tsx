@@ -48,7 +48,7 @@ const TransferConfirmationScreen = ({
 
   const handlePaymentError = (error) => {
     console.debug(error)
-    toastShow(error?.message)
+    toastShow({ message: error?.message })
     //  setStatus(Status.ERROR)
     //  // Todo: provide specific translated error messages in known cases
     //  setErrs([{ message: translate("errors.generic") + error }])

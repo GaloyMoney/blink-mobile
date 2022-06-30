@@ -1,11 +1,22 @@
 import { translateUnknown } from "@galoymoney/client"
 import Toast from "react-native-toast-message"
 
-export const toastShow = (message: string, _onHide?: () => void): void => {
+export const toastShow = ({
+  message,
+  _onHide,
+  type = "error",
+}: {
+  message: string
+  _onHide?: () => void
+  type?: "error" | "success" | "warning"
+}): void => {
   if (_onHide) {
     Toast.show({
-      type: "error",
-      text1: translateUnknown("common.error"),
+      type,
+      text1:
+        type === "error"
+          ? translateUnknown("common.error")
+          : translateUnknown("common.success"),
       text2: message,
       position: "bottom",
       bottomOffset: 80,
@@ -13,8 +24,11 @@ export const toastShow = (message: string, _onHide?: () => void): void => {
     })
   } else {
     Toast.show({
-      type: "error",
-      text1: translateUnknown("common.error"),
+      type,
+      text1:
+        type === "error"
+          ? translateUnknown("common.error")
+          : translateUnknown("common.success"),
       text2: message,
       position: "bottom",
       bottomOffset: 80,

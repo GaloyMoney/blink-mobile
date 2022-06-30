@@ -119,7 +119,7 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
   )
 
   if (error) {
-    toastShow(error.message)
+    toastShow({ message: error.message })
   }
 
   const contacts: Contact[] = useMemo(() => {

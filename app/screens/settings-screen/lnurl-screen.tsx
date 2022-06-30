@@ -16,10 +16,10 @@ import { bech32 } from "bech32"
 import QRCode from "react-native-qrcode-svg"
 import { Button, Text } from "react-native-elements"
 import Clipboard from "@react-native-community/clipboard"
-import Toast from "react-native-toast-message"
 import { translateUnknown as translate } from "@galoymoney/client"
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 import { color } from "@app/theme"
+import { toastShow } from "@app/utils/toast"
 
 const styles = EStyleSheet.create({
   container: {
@@ -58,12 +58,9 @@ type Props = {
 
 const copyToClipboard = (str) => {
   Clipboard.setString(str)
-  Toast.show({
-    type: "error",
-    text1: translate("common.error"),
-    text2: translate("SettingsScreen.copyClipboardLnurl"),
-    position: "bottom",
-    bottomOffset: 80,
+  toastShow({
+    message: translate("SettingsScreen.copyClipboardLnurl"),
+    type: "success",
   })
 }
 
