@@ -15,6 +15,9 @@ import { useMySubscription } from "@app/hooks"
 import useToken from "@app/utils/use-token"
 
 const Styles = StyleSheet.create({
+  sendBitcoinDestinationContainer: {
+    flex: 1,
+  },
   fieldBackground: {
     flexDirection: "row",
     borderStyle: "solid",
@@ -198,7 +201,7 @@ const SendBitcoinDestination = ({
   }
 
   return (
-    <>
+    <View style={Styles.sendBitcoinDestinationContainer}>
       <Text style={Styles.fieldTitleText}>
         {translate("SendBitcoinScreen.destination")}
       </Text>
@@ -240,7 +243,7 @@ const SendBitcoinDestination = ({
           onPress={handlePress}
         />
       </View>
-    </>
+    </View>
   )
 }
 

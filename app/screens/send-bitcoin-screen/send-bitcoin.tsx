@@ -1,6 +1,6 @@
 import useMainQuery from "@app/hooks/use-main-query"
 import React, { useCallback, useEffect, useState } from "react"
-import { StyleSheet, View } from "react-native"
+import { ScrollView, StyleSheet } from "react-native"
 import SendBitcoinAmount from "./send-bitcoin-amount"
 import SendBitcoinConfirmation from "./send-bitcoin-confirmation"
 import SendBitcoinDestination from "./send-bitcoin-destination"
@@ -12,10 +12,13 @@ import { Status } from "./send-bitcoin.types"
 import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
 
 const Styles = StyleSheet.create({
-  container: {
+  scrollView: {
     flexDirection: "column",
     padding: 20,
     flex: 6,
+  },
+  contentContainer: {
+    flexGrow: 1,
   },
   errorContainer: {
     margin: 20,
@@ -113,7 +116,11 @@ const SendBitcoin = ({ navigation, route }) => {
   }, [amountCurrency])
 
   return (
-    <View style={Styles.container}>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      style={Styles.scrollView}
+      contentContainerStyle={Styles.contentContainer}
+    >
       {step === 1 && (
         <SendBitcoinDestination
           destination={destination}
@@ -161,7 +168,7 @@ const SendBitcoin = ({ navigation, route }) => {
         />
       )}
       {step === 4 && <SendBitcoinSuccess />}
-    </View>
+    </ScrollView>
   )
 }
 

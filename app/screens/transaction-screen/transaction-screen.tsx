@@ -191,6 +191,7 @@ export const TransactionScreen: ScreenType = ({
 }: TransactionScreenProps) => (
   <Screen style={styles.screen}>
     <SectionList
+      showsVerticalScrollIndicator={false}
       style={styles.transactionGroup}
       renderItem={({ item, index, section }) => (
         <TransactionItem
