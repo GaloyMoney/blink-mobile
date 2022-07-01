@@ -79,12 +79,12 @@ const styles = EStyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
-    marginVertical: "15rem",
+    marginTop: "15rem",
     height: "120rem",
   },
 
   walletOverview: {
-    marginVertical: "15rem",
+    marginBottom: "15rem",
   },
 
   icon: { height: 34, top: -22 },
