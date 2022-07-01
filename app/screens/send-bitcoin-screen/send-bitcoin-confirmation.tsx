@@ -26,7 +26,6 @@ import NoteIcon from "@app/assets/icons/note.svg"
 const styles = StyleSheet.create({
   sendBitcoinConfirmationContainer: {
     flex: 1,
-    flexDirection: "column",
   },
   fieldBackground: {
     flexDirection: "row",

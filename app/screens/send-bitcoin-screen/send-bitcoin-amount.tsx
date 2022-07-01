@@ -14,7 +14,6 @@ import {
   translateUnknown as translate,
 } from "@galoymoney/client"
 import NoteIcon from "@app/assets/icons/note.svg"
-import { ScrollView } from "react-native-gesture-handler"
 import { satAmountDisplay, usdAmountDisplay } from "@app/utils/currencyConversion"
 import Icon from "react-native-vector-icons/Ionicons"
 import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
@@ -22,10 +21,7 @@ import { utils } from "lnurl-pay"
 
 const Styles = StyleSheet.create({
   sendBitcoinAmountContainer: {
-    flexDirection: "column",
-  },
-  contentContainer: {
-    flexGrow: 1,
+    flex: 1,
   },
   fieldBackground: {
     flexDirection: "row",
@@ -401,10 +397,7 @@ const SendBitcoinAmount = ({
   const showWalletPicker = !usdDisabled && wallets.length > 1
 
   return (
-    <ScrollView
-      style={Styles.sendBitcoinAmountContainer}
-      contentContainerStyle={Styles.contentContainer}
-    >
+    <View style={Styles.sendBitcoinAmountContainer}>
       <View style={Styles.fieldContainer}>
         <Text style={Styles.fieldTitleText}>{translate("common.from")}</Text>
         <TouchableWithoutFeedback onPress={() => showWalletPicker && toggleModal()}>
@@ -625,7 +618,7 @@ const SendBitcoinAmount = ({
           }}
         />
       </View>
-    </ScrollView>
+    </View>
   )
 }
 
