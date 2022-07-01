@@ -1,9 +1,10 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { translateUnknown as translate } from "@galoymoney/client"
 import { palette } from "@app/theme"
 import LottieView from "lottie-react-native"
 import { StyleSheet, Text, View } from "react-native"
 import successLottieJson from "./success_lottie.json"
+import useMainQuery from "@app/hooks/use-main-query"
 
 const styles = StyleSheet.create({
   lottie: {
@@ -22,6 +23,11 @@ const styles = StyleSheet.create({
   },
 })
 const SendBitcoinSuccess = () => {
+  const { refetch } = useMainQuery()
+  useEffect(() => {
+    return refetch
+  }, [])
+
   return (
     <View style={styles.lottieContainer}>
       <LottieView
