@@ -64,7 +64,10 @@ const useFee = ({
         }
 
         try {
-          setFee({ status: "loading" })
+          setFee({
+            status: "loading",
+            amount: { amount: 0, currency: walletDescriptor.currency },
+          })
 
           let feeValue: number
           if (isNoAmountInvoice) {
@@ -119,7 +122,10 @@ const useFee = ({
         }
 
         try {
-          setFee({ status: "loading" })
+          setFee({
+            status: "loading",
+            amount: { amount: 0, currency: walletDescriptor.currency },
+          })
           const { data } = await onChainTxFee({
             walletId: walletDescriptor.id,
             address,
