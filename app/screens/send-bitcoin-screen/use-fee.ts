@@ -146,7 +146,7 @@ const useFee = ({
     }
     initializeFee()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [paymentType, invoice, paymentAmount.amount])
+  }, [paymentType, invoice])
 
   return fee
 }
