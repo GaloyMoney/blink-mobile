@@ -22,9 +22,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 })
-const SendBitcoinSuccess = () => {
+const SendBitcoinSuccess = ({ callback }: { callback: () => void }) => {
   const { refetch } = useMainQuery()
+  const CALLBACK_DELAY = 2000
   useEffect(() => {
+    setTimeout(callback, CALLBACK_DELAY)
     return refetch
   }, [])
 

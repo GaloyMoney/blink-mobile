@@ -167,7 +167,9 @@ const SendBitcoin = ({ navigation, route }) => {
           lnurlInvoice={lnurlInvoice}
         />
       )}
-      {step === 4 && <SendBitcoinSuccess />}
+      {step === 4 && (
+        <SendBitcoinSuccess callback={() => navigation.navigate("moveMoney")} />
+      )}
     </ScrollView>
   )
 }
