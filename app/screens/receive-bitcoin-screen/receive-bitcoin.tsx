@@ -15,7 +15,6 @@ const CurrencyType = {
 const styles = EStyleSheet.create({
   container: {
     flexDirection: "column",
-    // padding: 10,
   },
   tabRow: {
     flexDirection: "row",
@@ -103,10 +102,8 @@ const ReceiveBitcoin = () => {
           </View>
         </TouchableWithoutFeedback>
       </View>
-      <View style={styles.screenContainer}>
-        {receiveCurrency === CurrencyType.USD && <ReceiveUsd />}
-        {receiveCurrency === CurrencyType.BTC && <ReceiveBtc />}
-      </View>
+      {receiveCurrency === CurrencyType.USD && <ReceiveUsd />}
+      {receiveCurrency === CurrencyType.BTC && <ReceiveBtc />}
     </View>
   )
 }
