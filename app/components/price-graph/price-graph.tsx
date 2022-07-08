@@ -42,6 +42,7 @@ const GraphRange = {
   ONE_WEEK: "ONE_WEEK",
   ONE_MONTH: "ONE_MONTH",
   ONE_YEAR: "ONE_YEAR",
+  FIVE_YEARS: "FIVE_YEARS",
 } as const
 
 type GraphRangeType = typeof GraphRange[keyof typeof GraphRange]
@@ -90,6 +91,10 @@ export const PriceGraphDataInjected: ComponentType = () => {
         refetch()
       }
     } else if (graphRange === GraphRange.ONE_YEAR) {
+      if (unixTime - lastPrice.timestamp > 86400) {
+        refetch()
+      }
+    } else if (graphRange === GraphRange.FIVE_YEARS) {
       if (unixTime - lastPrice.timestamp > 86400) {
         refetch()
       }
@@ -144,6 +149,8 @@ export const PriceGraph: ComponentType = ({
         return translate("PriceScreen.thisMonth")
       case GraphRange.ONE_YEAR:
         return translate("PriceScreen.thisYear")
+      case GraphRange.FIVE_YEARS:
+        return translate("PriceScreen.lastFiveYears")
     }
   }
 
@@ -216,6 +223,12 @@ export const PriceGraph: ComponentType = ({
           buttonStyle={buttonStyleForRange(GraphRange.ONE_YEAR)}
           titleStyle={titleStyleForRange(GraphRange.ONE_YEAR)}
           onPress={() => setGraphRange(GraphRange.ONE_YEAR)}
+        />
+        <Button
+          title={translate("PriceScreen.fiveYears")}
+          buttonStyle={buttonStyleForRange(GraphRange.FIVE_YEARS)}
+          titleStyle={titleStyleForRange(GraphRange.FIVE_YEARS)}
+          onPress={() => setGraphRange(GraphRange.FIVE_YEARS)}
         />
       </View>
     </>
