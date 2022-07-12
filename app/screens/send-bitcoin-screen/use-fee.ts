@@ -56,6 +56,8 @@ const useFee = ({
       }
 
       if (paymentType === "lightning" || paymentType === "lnurl") {
+        let feeProbeFailed = false
+
         if (sameNode || (isNoAmountInvoice && paymentAmount.amount === 0)) {
           return setFee({
             amount: { amount: 0, currency: walletDescriptor.currency },
@@ -80,13 +82,15 @@ const useFee = ({
                 },
               },
             })
-            if (errorsMessage) {
-              throw new Error("Error returned from API while calculating fee.")
-            }
+
             feeValue =
               "lnNoAmountInvoiceFeeProbe" in data
                 ? data.lnNoAmountInvoiceFeeProbe.amount
                 : data.lnNoAmountUsdInvoiceFeeProbe.amount
+
+            if (errorsMessage && feeValue) {
+              feeProbeFailed = true
+            }
           } else {
             const { data, errorsMessage } = await getLightningFees({
               variables: {
@@ -94,19 +98,18 @@ const useFee = ({
               },
             })
 
-            if (errorsMessage) {
-              throw new Error("Error returned from API while calculating fee.")
-            }
-
             feeValue =
               "lnInvoiceFeeProbe" in data
                 ? data.lnInvoiceFeeProbe.amount
                 : data.lnUsdInvoiceFeeProbe.amount
+            if (errorsMessage && feeValue) {
+              feeProbeFailed = true
+            }
           }
 
           setFee({
             amount: { amount: feeValue, currency: walletDescriptor.currency },
-            status: "set",
+            status: feeProbeFailed ? "error" : "set",
           })
         } catch (err) {
           console.debug({ err, message: "error getting lightning fees" })

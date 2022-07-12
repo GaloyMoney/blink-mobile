@@ -147,6 +147,10 @@ const styles = StyleSheet.create({
     color: palette.red,
     textAlign: "center",
   },
+  maxFeeWarningText: {
+    color: palette.midGrey,
+    fontWeight: "bold",
+  },
   disabledButtonStyle: {
     backgroundColor: "rgba(83, 111, 242, 0.1)",
   },
@@ -198,7 +202,7 @@ const SendBitcoinConfirmationScreen = ({
     }, [convertPaymentAmount, paymentAmount, payerWalletDescriptor.currency])
 
   const { usdWalletBalance, btcWalletBalance, btcWalletValueInUsd } = useWalletBalance()
-  const [error, setError] = useState<string | undefined>(undefined)
+  const [paymentError, setPaymentError] = useState<string | undefined>(undefined)
 
   const [intraLedgerPaymentSend, { loading: intraledgerLoading }] =
     useMutation.intraLedgerPaymentSend()
@@ -364,37 +368,40 @@ const SendBitcoinConfirmationScreen = ({
       }
 
       if (status === "ALREADY_PAID") {
-        setError("Invoice is already paid")
+        setPaymentError("Invoice is already paid")
         return
       }
 
-      setError(errorsMessage || "Something went wrong")
+      setPaymentError(errorsMessage || "Something went wrong")
     } catch (err) {
       setStatus(Status.ERROR)
-      setError(err.message || err.toString())
+      setPaymentError(err.message || err.toString())
     }
   }
 
   let validAmount = false
-  let errorMessage
 
   if (fee.amount && payerWalletDescriptor.currency === WalletCurrency.BTC) {
     if (paymentAmount.currency === WalletCurrency.USD) {
       validAmount =
         usdPaymentAmount.amount + fee.amount.amount <= 100 * btcWalletValueInUsd
       if (!validAmount) {
-        errorMessage = translate("SendBitcoinScreen.amountExceed", {
-          balance: usdAmountDisplay(btcWalletValueInUsd),
-        })
+        setPaymentError(
+          translate("SendBitcoinScreen.amountExceed", {
+            balance: usdAmountDisplay(btcWalletValueInUsd),
+          }),
+        )
       }
     }
 
     if (paymentAmount.currency === WalletCurrency.BTC) {
       validAmount = paymentAmount.amount + fee.amount.amount <= btcWalletBalance
       if (!validAmount) {
-        errorMessage = translate("SendBitcoinScreen.amountExceed", {
-          balance: satAmountDisplay(btcWalletBalance),
-        })
+        setPaymentError(
+          translate("SendBitcoinScreen.amountExceed", {
+            balance: satAmountDisplay(btcWalletBalance),
+          }),
+        )
       }
     }
   }
@@ -402,16 +409,13 @@ const SendBitcoinConfirmationScreen = ({
   if (fee.amount && payerWalletDescriptor.currency === WalletCurrency.USD) {
     validAmount = paymentAmount.amount + fee.amount.amount <= usdWalletBalance
     if (!validAmount) {
-      errorMessage = translate("SendBitcoinScreen.amountExceed", {
-        balance: usdAmountDisplay(usdWalletBalance / 100),
-      })
+      setPaymentError(
+        translate("SendBitcoinScreen.amountExceed", {
+          balance: usdAmountDisplay(usdWalletBalance / 100),
+        }),
+      )
     }
   }
-
-  errorMessage =
-    errorMessage ??
-    error ??
-    (fee.status === "error" && translate("SendBitcoinScreen.feeCalculationUnsuccessful"))
 
   return (
     <ScrollView
@@ -561,31 +565,38 @@ const SendBitcoinConfirmationScreen = ({
             </View>
           </>
         ) : null}
-
         <Text style={styles.fieldTitleText}>
           {translate("SendBitcoinConfirmationScreen.feeLabel")}
         </Text>
         <View style={styles.fieldBackground}>
-          <Text style={styles.destinationText}>
-            {fee.status === "loading" ? <ActivityIndicator /> : feeDisplayText}
-          </Text>
-        </View>
-
-        {errorMessage && (
-          <View style={styles.errorContainer}>
-            <Text style={styles.errorText}>{translate(errorMessage)}</Text>
+          <View style={styles.destinationText}>
+            {fee.status === "loading" && <ActivityIndicator />}
+            {fee.status === "set" && <Text>{feeDisplayText}</Text>}
+            {fee.status === "error" && Boolean(feeDisplayText) && (
+              <Text>{feeDisplayText} *</Text>
+            )}
           </View>
+        </View>
+        {fee.status === "error" && Boolean(feeDisplayText) && (
+          <Text style={styles.maxFeeWarningText}>
+            {"*" + translate("SendBitcoinConfirmationScreen.maxFeeSelected")}
+          </Text>
         )}
 
+        {paymentError && (
+          <View style={styles.errorContainer}>
+            <Text style={styles.errorText}>{paymentError}</Text>
+          </View>
+        )}
         <View style={styles.buttonContainer}>
-          {isLoading && <ActivityIndicator />}
           <Button
+            loading={isLoading}
             title={translate("SendBitcoinConfirmationScreen.title")}
             buttonStyle={styles.button}
             titleStyle={styles.buttonTitleStyle}
             disabledStyle={[styles.button, styles.disabledButtonStyle]}
             disabledTitleStyle={styles.disabledButtonTitleStyle}
-            disabled={fee.status === "error" || !validAmount}
+            disabled={fee.status === "loading" || isLoading || !validAmount}
             onPress={sendPayment}
           />
         </View>
