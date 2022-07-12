@@ -201,6 +201,23 @@ export const PriceGraph: ComponentType = ({
               <Stop offset="100%" stopColor={palette.white} />
             </LinearGradient>
           </Defs>
+          <VictoryAxis
+            dependentAxis
+            standalone
+            style={{
+              axis: { strokeWidth: 0 },
+              grid: {
+                stroke: palette.black,
+                strokeOpacity: 0.1,
+                strokeWidth: 1,
+                strokeDasharray: "6, 6",
+              },
+              tickLabels: {
+                fill: palette.midGrey,
+                fontSize: 16,
+              },
+            }}
+          />
           <VictoryArea
             animate={{
               duration: 500,
@@ -219,23 +236,6 @@ export const PriceGraph: ComponentType = ({
                 strokeWidth: 3,
                 fillOpacity: 0.3,
                 fill: "url(#gradient)",
-              },
-            }}
-          />
-          <VictoryAxis
-            dependentAxis
-            standalone
-            style={{
-              axis: { strokeWidth: 0 },
-              grid: {
-                stroke: palette.black,
-                strokeOpacity: 0.1,
-                strokeWidth: 1,
-                strokeDasharray: "6, 6",
-              },
-              tickLabels: {
-                fill: palette.midGrey,
-                fontSize: 16,
               },
             }}
           />
