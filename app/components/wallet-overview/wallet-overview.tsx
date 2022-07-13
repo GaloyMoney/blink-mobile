@@ -7,7 +7,7 @@ import { TextCurrencyForAmount } from "../text-currency"
 import TransferIcon from "@app/assets/icons/transfer.svg"
 import Icon from "react-native-vector-icons/Ionicons"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
-import { useHideBalance, useWalletBalance } from "@app/hooks"
+import { useHideBalance } from "@app/hooks"
 
 const styles = EStyleSheet.create({
   container: {
@@ -113,9 +113,20 @@ const HidableArea = ({ hidden, style, children }) => {
   )
 }
 
-const WalletOverview = ({ navigation }) => {
+type WalletOverviewProps = {
+  navigateToTransferScreen: () => void
+  btcWalletBalance: number
+  btcWalletValueInUsd: number
+  usdWalletBalance: number
+}
+
+const WalletOverview = ({
+  navigateToTransferScreen,
+  btcWalletBalance,
+  btcWalletValueInUsd,
+  usdWalletBalance,
+}: WalletOverviewProps) => {
   const defaultHideBalance = useHideBalance()
-  const { btcWalletBalance, btcWalletValueInUsd, usdWalletBalance } = useWalletBalance()
 
   return (
     <View style={styles.container}>
@@ -144,7 +155,7 @@ const WalletOverview = ({ navigation }) => {
       </View>
 
       <View style={styles.transferButton}>
-        <TouchableWithoutFeedback onPress={() => navigation.navigate("TransferScreen")}>
+        <TouchableWithoutFeedback onPress={navigateToTransferScreen}>
           <TransferIcon />
         </TouchableWithoutFeedback>
       </View>

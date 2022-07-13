@@ -44,6 +44,7 @@ import PriceIcon from "@app/assets/icons/price.svg"
 import SettingsIcon from "@app/assets/icons/settings.svg"
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs"
 import { CompositeNavigationProp } from "@react-navigation/native"
+import { useWalletBalance } from "@app/hooks"
 
 const styles = EStyleSheet.create({
   bottom: {
@@ -164,6 +165,7 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
     usdWalletId,
   } = useMainQuery()
 
+  const { btcWalletBalance, btcWalletValueInUsd, usdWalletBalance } = useWalletBalance()
   // temporary fix until we have a better management of notifications:
   // when coming back to active state. look if the invoice has been paid
   useEffect(() => {
@@ -222,6 +224,9 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
       isUpdateAvailable={isUpdateAvailableOrRequired(mobileVersions).available}
       hasToken={hasToken}
       hasUsdWallet={usdWalletId !== undefined}
+      usdWalletBalance={usdWalletBalance}
+      btcWalletBalance={btcWalletBalance}
+      btcWalletValueInUsd={btcWalletValueInUsd}
     />
   )
 }
@@ -238,6 +243,9 @@ type MoveMoneyScreenProps = {
   isUpdateAvailable: boolean
   hasToken: boolean
   hasUsdWallet: boolean
+  btcWalletBalance: number
+  btcWalletValueInUsd: number
+  usdWalletBalance: number
 }
 
 export const MoveMoneyScreen: ScreenType = ({
@@ -249,6 +257,9 @@ export const MoveMoneyScreen: ScreenType = ({
   isUpdateAvailable,
   hasToken,
   hasUsdWallet,
+  btcWalletBalance,
+  btcWalletValueInUsd,
+  usdWalletBalance,
 }: MoveMoneyScreenProps) => {
   const [modalVisible, setModalVisible] = useState(false)
 
@@ -370,7 +381,13 @@ export const MoveMoneyScreen: ScreenType = ({
           icon={<PriceIcon />}
         />
 
-        <BalanceHeader loading={loading} showSecondaryCurrency={!hasUsdWallet} />
+        <BalanceHeader
+          loading={loading}
+          showSecondaryCurrency={!hasUsdWallet}
+          btcWalletBalance={btcWalletBalance}
+          btcWalletValueInUsd={btcWalletValueInUsd}
+          usdWalletBalance={usdWalletBalance}
+        />
 
         <Button
           buttonStyle={styles.topButton}
@@ -382,7 +399,12 @@ export const MoveMoneyScreen: ScreenType = ({
 
       {hasUsdWallet && (
         <View style={styles.walletOverview}>
-          <WalletOverview navigation={navigation} />
+          <WalletOverview
+            navigateToTransferScreen={() => navigation.navigate("TransferScreen")}
+            btcWalletBalance={btcWalletBalance}
+            usdWalletBalance={usdWalletBalance}
+            btcWalletValueInUsd={btcWalletValueInUsd}
+          />
         </View>
       )}
 
