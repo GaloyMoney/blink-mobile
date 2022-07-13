@@ -1,6 +1,8 @@
 /* eslint-disable camelcase */
+import { PaymentAmount, WalletCurrency } from "@app/types/amounts"
+import { WalletDescriptor } from "@app/types/wallets"
 import { PaymentType } from "@galoymoney/client"
-import { LNURLPayParams } from "js-lnurl"
+import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
 import { contacts_me_contacts } from "../screens/contacts-screen/__generated__/contacts"
 import { AccountType, AuthenticationScreenPurpose, PinScreenPurpose } from "../utils/enum"
 
@@ -34,8 +36,42 @@ export type RootStackParamList = {
     id: string
     completed: boolean
   }
+  scanningQRCode: undefined
   settings: undefined
   setUsername: undefined
+  sendBitcoinDestination: {
+    payment?: string
+    username?: string
+  }
+  sendBitcoinDetails: {
+    fixedAmount: PaymentAmount<WalletCurrency.BTC> | undefined
+    destination: string
+    note?: string
+    lnurl?: LnUrlPayServiceResponse
+    recipientWalletId?: string
+    paymentType: PaymentType
+    sameNode: boolean
+  }
+  sendBitcoinConfirmation: {
+    fixedAmount?: PaymentAmount<WalletCurrency.BTC>
+    destination: string
+    recipientWalletId?: string
+    payerWalletDescriptor: WalletDescriptor<WalletCurrency>
+    paymentAmount?: PaymentAmount<WalletCurrency>
+    note?: string
+    paymentType: PaymentType
+    sameNode: boolean
+    lnurlInvoice?: string
+  }
+  transferConfirmation: {
+    fromWallet: Wallet
+    toWallet: Wallet
+    satAmount: number
+    satAmountInUsd: number
+    dollarAmount: number
+    amountCurrency: string
+  }
+  sendBitcoinSuccess: undefined
   language: undefined
   security: {
     mIsBiometricsEnabled: boolean
@@ -47,6 +83,8 @@ export type RootStackParamList = {
     account: AccountType
   }
   Profile: undefined
+  TransferScreen: undefined
+  receiveBitcoin: undefined
   phoneValidation: undefined
   transactionDetail: TransactionDetail
   transactionHistory: undefined
@@ -57,45 +95,8 @@ export type ContactStackParamList = {
   Contacts: undefined
   contactDetail: { contact: contacts_me_contacts }
   phoneValidation: undefined
-  sendBitcoin: { username: string }
+  sendBitcoinDestination: { username: string }
   transactionDetail: TransactionDetail
-}
-
-export type MoveMoneyStackParamList = {
-  moveMoney: undefined
-  phoneValidation: undefined
-  priceDetail: { account: AccountType }
-  Profile: undefined
-  receiveBitcoin: undefined
-  scanningQRCode: undefined
-  sendBitcoin: {
-    payment: string | null
-    username?: string | null
-    lnurlParams?: LNURLPayParams | null
-  }
-  sendBitcoinConfirmation: {
-    address: string | null
-    amountless: boolean
-    invoice: string | null
-    memo: string | null
-    paymentType: PaymentType
-    primaryCurrency: CurrencyType
-    referenceAmount: MoneyAmount
-    sameNode: boolean | null
-    username: string | null
-    recipientDefaultWalletId: string | null
-  }
-  settings: undefined
-  transactionDetail: TransactionDetail
-  TransferScreen: undefined
-  transferConfirmation: {
-    fromWallet: Wallet
-    toWallet: Wallet
-    satAmount: number
-    satAmountInUsd: number
-    dollarAmount: number
-    amountCurrency: string
-  }
 }
 
 export type PhoneValidationStackParamList = {
@@ -116,7 +117,7 @@ export type PrimaryStackParamList = {
   Contacts: undefined
   Map: undefined
   Earn: undefined
-  sendBitcoin: { username: string }
+  sendBitcoinDestination: { username: string }
   phoneValidation: undefined
   earnsSection: { section: string }
 }

@@ -145,7 +145,7 @@ export const ContactsDetailScreenJSX: ScreenType = ({
             />
           }
           onPress={() =>
-            navigation.navigate("sendBitcoin", { username: contact.username })
+            navigation.navigate("sendBitcoinDestination", { username: contact.username })
           }
         />
       </View>

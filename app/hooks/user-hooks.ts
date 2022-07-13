@@ -14,10 +14,10 @@ type UseMyUpdates = {
     from: CurrencyType
     to: CurrencyType
   }) => number
-  convertPaymentAmount: (
+  convertPaymentAmount: <T extends WalletCurrency>(
     paymentAmount: PaymentAmount<WalletCurrency>,
-    toCurrency: WalletCurrency,
-  ) => PaymentAmount<WalletCurrency>
+    toCurrency: T,
+  ) => PaymentAmount<T>
   convertPaymentAmountToPrimaryCurrency: (
     paymentAmount: PaymentAmount<WalletCurrency>,
   ) => PaymentAmount<WalletCurrency>
@@ -160,7 +160,7 @@ export const useMySubscription = (): UseMyUpdates => {
         toCurrency === WalletCurrency.USD
       ) {
         return {
-          amount: Math.round(paymentAmount * cachedPrice),
+          amount: Math.round(paymentAmount.amount * cachedPrice),
           currency: WalletCurrency.USD,
         }
       }

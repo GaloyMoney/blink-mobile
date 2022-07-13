@@ -46,7 +46,6 @@ import useToken from "../utils/use-token"
 import { showModalClipboardIfValidPayment } from "../utils/clipboard"
 import {
   ContactStackParamList,
-  MoveMoneyStackParamList,
   PhoneValidationStackParamList,
   PrimaryStackParamList,
   RootStackParamList,
@@ -60,9 +59,12 @@ import HomeIcon from "@app/assets/icons/home.svg"
 import ContactsIcon from "@app/assets/icons/contacts.svg"
 import MapIcon from "@app/assets/icons/map.svg"
 import LearnIcon from "@app/assets/icons/learn.svg"
-import SendBitcoin from "@app/screens/send-bitcoin-screen/send-bitcoin"
 import TransferConfirmationScreen from "@app/screens/transfer-screen/transfer-confirmation-screen"
 import TransferFlow from "@app/screens/transfer-screen/transfer-flow"
+import SendBitcoinDestinationScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-destination-screen"
+import SendBitcoinDetailsScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-details-screen"
+import SendBitcoinConfirmationScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-confirmation-screen"
+import SendBitcoinSuccessScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-success-screen"
 
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
 PushNotification.configure({
@@ -297,7 +299,7 @@ export const RootStack: NavigatorType = () => {
           title: translate("PrimaryScreen.title"),
         }}
       />
-      <StackMoveMoney.Screen
+      <RootNavigator.Screen
         name="scanningQRCode"
         component={ScanningQRCodeScreen}
         options={{
@@ -306,26 +308,41 @@ export const RootStack: NavigatorType = () => {
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}
       />
-      <StackMoveMoney.Screen
-        name="sendBitcoin"
-        component={SendBitcoin}
+      <RootNavigator.Screen
+        name="sendBitcoinDestination"
+        component={SendBitcoinDestinationScreen}
         options={{ title: translate("SendBitcoinScreen.title") }}
       />
-      <StackMoveMoney.Screen
+      <RootNavigator.Screen
+        name="sendBitcoinDetails"
+        component={SendBitcoinDetailsScreen}
+        options={{ title: translate("SendBitcoinScreen.title") }}
+      />
+      <RootNavigator.Screen
+        name="sendBitcoinConfirmation"
+        component={SendBitcoinConfirmationScreen}
+        options={{ title: translate("SendBitcoinScreen.title") }}
+      />
+      <RootNavigator.Screen
+        name="sendBitcoinSuccess"
+        component={SendBitcoinSuccessScreen}
+        options={{ title: translate("SendBitcoinScreen.title") }}
+      />
+      <RootNavigator.Screen
         name="receiveBitcoin"
         component={ReceiveBitcoin}
         options={{
           title: translate("ReceiveBitcoinScreen.title"),
         }}
       />
-      <StackMoveMoney.Screen
+      <RootNavigator.Screen
         name="TransferScreen"
         component={TransferFlow}
         options={{
           title: translate("TransferScreen.title"),
         }}
       />
-      <StackMoveMoney.Screen
+      <RootNavigator.Screen
         name="transferConfirmation"
         component={TransferConfirmationScreen}
         options={{
@@ -440,25 +457,9 @@ export const ContactNavigator: NavigatorType = () => (
     <StackContacts.Screen
       name="contactDetail"
       component={ContactsDetailScreen}
-      options={{ headerShown: false }}
+      options={{ headerShown: false, title: "test" }}
     />
   </StackContacts.Navigator>
-)
-
-const StackMoveMoney = createStackNavigator<MoveMoneyStackParamList>()
-
-export const MoveMoneyNavigator: NavigatorType = () => (
-  <StackMoveMoney.Navigator>
-    <StackMoveMoney.Screen
-      name="moveMoney"
-      component={MoveMoneyScreenDataInjected}
-      // options={{ title: translate("MoveMoneyScreen.title") }}
-      options={{
-        headerShown: false,
-        title: translate("MoveMoneyScreen.title"),
-      }}
-    />
-  </StackMoveMoney.Navigator>
 )
 
 const StackPhoneValidation = createStackNavigator<PhoneValidationStackParamList>()
@@ -515,7 +516,7 @@ export const PrimaryNavigator: NavigatorType = () => {
     >
       <Tab.Screen
         name="MoveMoney"
-        component={MoveMoneyNavigator}
+        component={MoveMoneyScreenDataInjected}
         options={{
           title: translate("MoveMoneyScreen.title"),
           tabBarIcon: ({ color }: TabProps) => (
@@ -528,6 +529,7 @@ export const PrimaryNavigator: NavigatorType = () => {
         name="Contacts"
         component={ContactNavigator}
         options={{
+          headerShown: false,
           title: translate("ContactsScreen.title"),
           tabBarIcon: ({ color }: TabProps) => (
             <ContactsIcon fill="currentColor" color={color} />

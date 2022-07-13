@@ -14,10 +14,10 @@ import {
 } from "@galoymoney/client"
 import { palette } from "../../theme/palette"
 import type { ScreenType } from "../../types/jsx"
-import { getParams, LNURLPayParams } from "js-lnurl"
+import { getParams } from "js-lnurl"
 
 import LocalQRCode from "@remobile/react-native-qrcode-local-image"
-import { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
+import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
 import useToken from "../../utils/use-token"
 import useMainQuery from "@app/hooks/use-main-query"
@@ -70,7 +70,7 @@ const styles = EStyleSheet.create({
 })
 
 type ScanningQRCodeScreenProps = {
-  navigation: StackNavigationProp<MoveMoneyStackParamList, "sendBitcoin">
+  navigation: StackNavigationProp<RootStackParamList, "sendBitcoinDestination">
 }
 
 export const ScanningQRCodeScreen: ScreenType = ({
@@ -80,6 +80,7 @@ export const ScanningQRCodeScreen: ScreenType = ({
   const [pending, setPending] = React.useState(false)
   const { tokenNetwork } = useToken()
   const { myPubKey } = useMainQuery()
+
   const decodeInvoice = async (data) => {
     if (pending) {
       return
@@ -103,14 +104,12 @@ export const ScanningQRCodeScreen: ScreenType = ({
           switch (lnurlParams.tag) {
             case "payRequest":
               if (index <= 1) {
-                navigation.replace("sendBitcoin", {
+                navigation.replace("sendBitcoinDestination", {
                   payment: data,
-                  lnurlParams: lnurlParams as LNURLPayParams,
                 })
               } else {
-                navigation.navigate("sendBitcoin", {
+                navigation.navigate("sendBitcoinDestination", {
                   payment: data,
-                  lnurlParams: lnurlParams as LNURLPayParams,
                 })
               }
               break
@@ -130,9 +129,9 @@ export const ScanningQRCodeScreen: ScreenType = ({
               break
           }
         } else if (index <= 1) {
-          navigation.replace("sendBitcoin", { payment: data })
+          navigation.replace("sendBitcoinDestination", { payment: data })
         } else {
-          navigation.navigate("sendBitcoin", { payment: data })
+          navigation.navigate("sendBitcoinDestination", { payment: data })
         }
       } else {
         setPending(true)

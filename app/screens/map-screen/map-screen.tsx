@@ -114,7 +114,7 @@ export const MapScreen: ScreenType = ({ navigation }: Props) => {
   maps.forEach((item) => {
     const onPress = () => {
       if (hasToken) {
-        navigation.navigate("sendBitcoin", { username: item.username })
+        navigation.navigate("sendBitcoinDestination", { username: item.username })
       } else {
         navigation.navigate("phoneValidation")
       }
