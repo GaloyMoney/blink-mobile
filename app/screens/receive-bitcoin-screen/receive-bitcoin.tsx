@@ -1,16 +1,15 @@
 import useMainQuery from "@app/hooks/use-main-query"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { palette } from "@app/theme"
-import React, { useState } from "react"
+import { WalletCurrency } from "@app/types/amounts"
+import { translateUnknown as translate } from "@galoymoney/client"
+import { StackScreenProps } from "@react-navigation/stack"
+import React, { useEffect, useState } from "react"
 import { Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import ReceiveBtc from "./receive-btc"
 import ReceiveUsd from "./receive-usd"
-
-const CurrencyType = {
-  USD: "USD",
-  BTC: "BTC",
-} as const
 
 const styles = EStyleSheet.create({
   container: {
@@ -56,9 +55,26 @@ const styles = EStyleSheet.create({
     color: palette.coolGrey,
   },
 })
-const ReceiveBitcoin = () => {
+const ReceiveBitcoinScreen = ({
+  navigation,
+  route,
+}: StackScreenProps<RootStackParamList, "receiveBitcoin">) => {
+  const { receiveCurrency: initialReceiveCurrency } = route.params || {}
+
   const { usdWalletId } = useMainQuery()
-  const [receiveCurrency, setReceiveCurrency] = useState<CurrencyType>(CurrencyType.BTC)
+  const [receiveCurrency, setReceiveCurrency] = useState<WalletCurrency>(
+    initialReceiveCurrency || WalletCurrency.BTC,
+  )
+
+  useEffect(() => {
+    if (receiveCurrency === WalletCurrency.USD) {
+      navigation.setOptions({ title: translate("ReceiveBitcoinScreen.usdTitle") })
+    }
+
+    if (receiveCurrency === WalletCurrency.BTC) {
+      navigation.setOptions({ title: translate("ReceiveBitcoinScreen.title") })
+    }
+  }, [receiveCurrency, navigation])
 
   if (!usdWalletId) {
     return <ReceiveBtc />
@@ -67,15 +83,17 @@ const ReceiveBitcoin = () => {
   return (
     <View style={styles.container}>
       <View style={styles.tabRow}>
-        <TouchableWithoutFeedback onPress={() => setReceiveCurrency(CurrencyType.BTC)}>
+        <TouchableWithoutFeedback onPress={() => setReceiveCurrency(WalletCurrency.BTC)}>
           <View
             style={
-              receiveCurrency === CurrencyType.BTC ? styles.btcActive : styles.inactiveTab
+              receiveCurrency === WalletCurrency.BTC
+                ? styles.btcActive
+                : styles.inactiveTab
             }
           >
             <Text
               style={
-                receiveCurrency === CurrencyType.BTC
+                receiveCurrency === WalletCurrency.BTC
                   ? styles.activeTabText
                   : styles.inactiveTabText
               }
@@ -84,15 +102,17 @@ const ReceiveBitcoin = () => {
             </Text>
           </View>
         </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={() => setReceiveCurrency(CurrencyType.USD)}>
+        <TouchableWithoutFeedback onPress={() => setReceiveCurrency(WalletCurrency.USD)}>
           <View
             style={
-              receiveCurrency === CurrencyType.USD ? styles.usdActive : styles.inactiveTab
+              receiveCurrency === WalletCurrency.USD
+                ? styles.usdActive
+                : styles.inactiveTab
             }
           >
             <Text
               style={
-                receiveCurrency === CurrencyType.USD
+                receiveCurrency === WalletCurrency.USD
                   ? styles.activeTabText
                   : styles.inactiveTabText
               }
@@ -102,10 +122,10 @@ const ReceiveBitcoin = () => {
           </View>
         </TouchableWithoutFeedback>
       </View>
-      {receiveCurrency === CurrencyType.USD && <ReceiveUsd />}
-      {receiveCurrency === CurrencyType.BTC && <ReceiveBtc />}
+      {receiveCurrency === WalletCurrency.USD && <ReceiveUsd />}
+      {receiveCurrency === WalletCurrency.BTC && <ReceiveBtc />}
     </View>
   )
 }
 
-export default ReceiveBitcoin
+export default ReceiveBitcoinScreen

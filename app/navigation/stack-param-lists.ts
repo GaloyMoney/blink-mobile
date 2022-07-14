@@ -84,7 +84,9 @@ export type RootStackParamList = {
   }
   Profile: undefined
   TransferScreen: undefined
-  receiveBitcoin: undefined
+  receiveBitcoin: {
+    receiveCurrency?: WalletCurrency
+  }
   phoneValidation: undefined
   transactionDetail: TransactionDetail
   transactionHistory: undefined
