@@ -12,7 +12,6 @@ import { translateUnknown as translate } from "@galoymoney/client"
 import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme"
-import moment from "moment"
 import { formatUsdAmount } from "../../hooks"
 import Icon from "react-native-vector-icons/Ionicons"
 import { BLOCKCHAIN_EXPLORER_URL } from "../../constants/support"
@@ -20,6 +19,7 @@ import { WalletType } from "@app/utils/enum"
 import { WalletSummary } from "@app/components/wallet-summary"
 import { WalletCurrency } from "@app/types/amounts"
 import { paymentAmountToTextWithUnits } from "@app/utils/currencyConversion"
+import { TransactionDate } from "@app/components/transaction-date"
 
 const viewInExplorer = (hash: string): Promise<Linking> =>
   Linking.openURL(BLOCKCHAIN_EXPLORER_URL + hash)
@@ -90,7 +90,7 @@ const Row = ({
   content,
 }: {
   entry: string
-  value?: string
+  value?: string | JSX.Element
   type?: SettlementViaType
   content?: unknown
 }) => (
@@ -141,7 +141,6 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
     initiationVia,
 
     isReceive,
-    createdAt,
   } = route.params
   const walletType = settlementCurrency as WalletType
   const spendOrReceiveText = isReceive
@@ -158,15 +157,6 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
           amount: settlementFee,
           currency: settlementCurrency as WalletCurrency,
         })
-
-  const dateDisplay = moment.unix(createdAt).toDate().toLocaleString("en-US", {
-    weekday: "short",
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-  })
 
   const walletSummary = (
     <WalletSummary
@@ -220,7 +210,10 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
           entry={isReceive ? "Receiving Wallet" : "Sending Wallet"}
           content={walletSummary}
         />
-        <Row entry={translate("common.date")} value={dateDisplay} />
+        <Row
+          entry={translate("common.date")}
+          value={<TransactionDate tx={route.params} />}
+        />
         {!isReceive && <Row entry={translate("common.fees")} value={feeEntry} />}
         <Row entry={translate("common.description")} value={description} />
         {settlementVia.__typename === "SettlementViaIntraLedger" && (
@@ -233,9 +226,10 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
           entry={translate("common.type")}
           value={typeDisplay(settlementVia.__typename)}
         />
-        {settlementVia.__typename === "SettlementViaLn" && (
-          <Row entry="Hash" value={initiationVia.paymentHash} />
-        )}
+        {settlementVia.__typename === "SettlementViaLn" &&
+          initiationVia.__typename === "InitiationViaLn" && (
+            <Row entry="Hash" value={initiationVia.paymentHash} />
+          )}
         {settlementVia.__typename === "SettlementViaOnChain" && (
           <TouchableWithoutFeedback
             onPress={() => viewInExplorer(settlementVia.transactionHash)}
