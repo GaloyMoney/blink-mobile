@@ -9,7 +9,7 @@ import { translateUnknown as translate } from "@galoymoney/client"
 import { palette } from "../../theme/palette"
 import { TextCurrencyForAmount } from "../text-currency/text-currency"
 import { useIsFocused } from "@react-navigation/native"
-import { useHiddenBalanceToolTip, useHideBalance, useWalletBalance } from "../../hooks"
+import { useHiddenBalanceToolTip, useHideBalance } from "../../hooks"
 import { saveHiddenBalanceToolTip } from "../../graphql/client-only-query"
 import { useApolloClient } from "@apollo/client"
 
@@ -65,6 +65,9 @@ export interface BalanceHeaderProps {
   showSecondaryCurrency?: boolean
   loading?: boolean
   style?: StyleProp<ViewStyle>
+  btcWalletBalance?: number
+  btcWalletValueInUsd?: number
+  usdWalletBalance?: number
 }
 
 const Loader = () => (
@@ -84,6 +87,9 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
   showSecondaryCurrency = false,
   loading = false,
   style,
+  btcWalletBalance,
+  btcWalletValueInUsd,
+  usdWalletBalance,
 }: BalanceHeaderProps) => {
   return (
     <View style={[styles.balanceHeaderContainer, style]}>
@@ -94,7 +100,12 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
         {loading ? (
           <Loader />
         ) : (
-          <BalanceHeaderDisplay showSecondaryCurrency={showSecondaryCurrency} />
+          <BalanceHeaderDisplay
+            showSecondaryCurrency={showSecondaryCurrency}
+            btcWalletBalance={btcWalletBalance}
+            btcWalletValueInUsd={btcWalletValueInUsd}
+            usdWalletBalance={usdWalletBalance}
+          />
         )}
       </View>
     </View>
@@ -103,9 +114,11 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
 
 export const BalanceHeaderDisplay: React.FC<BalanceHeaderProps> = ({
   showSecondaryCurrency = false,
+  btcWalletBalance,
+  btcWalletValueInUsd,
+  usdWalletBalance,
 }: BalanceHeaderProps) => {
   const client = useApolloClient()
-  const { btcWalletBalance, btcWalletValueInUsd, usdWalletBalance } = useWalletBalance()
   const hideBalance = useHideBalance()
   const hiddenBalanceToolTip = useHiddenBalanceToolTip()
   const isFocused = useIsFocused()
