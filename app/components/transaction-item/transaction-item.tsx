@@ -7,7 +7,7 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 import { IconTransaction } from "../icon-transactions"
 import { palette } from "../../theme/palette"
-import { ParamListBase } from "@react-navigation/native"
+import { CompositeNavigationProp, ParamListBase } from "@react-navigation/native"
 import { prefCurrencyVar as primaryCurrencyVar } from "../../graphql/client-only-query"
 import { useHideBalance } from "../../hooks"
 import moment from "moment"
@@ -15,6 +15,7 @@ import { satAmountDisplay, usdAmountDisplay } from "@app/utils/currencyConversio
 import { GaloyGQL, getLocale } from "@galoymoney/client"
 import { WalletCurrency } from "@app/types/amounts"
 import { WalletType } from "@app/utils/enum"
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs"
 
 const styles = EStyleSheet.create({
   container: {
@@ -50,7 +51,12 @@ const styles = EStyleSheet.create({
 })
 
 export interface TransactionItemProps {
-  navigation: StackNavigationProp<ParamListBase>
+  navigation:
+    | CompositeNavigationProp<
+        BottomTabNavigationProp<ParamListBase>,
+        StackNavigationProp<ParamListBase>
+      >
+    | StackNavigationProp<ParamListBase>
   isFirst?: boolean
   isLast?: boolean
   tx: GaloyGQL.Transaction

@@ -22,7 +22,7 @@ import { cache } from "../../graphql/cache"
 import useToken from "../../utils/use-token"
 import type { StackNavigationProp } from "@react-navigation/stack"
 import type { ComponentType } from "../../types/jsx"
-import type { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
+import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import useMainQuery from "@app/hooks/use-main-query"
 
 const styles = StyleSheet.create({
@@ -81,12 +81,14 @@ const styles = StyleSheet.create({
 
 export const ModalClipboard: ComponentType = () => {
   const client = useApolloClient()
-  const navigation = useNavigation<StackNavigationProp<MoveMoneyStackParamList>>()
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { tokenNetwork } = useToken()
   const { myPubKey, username } = useMainQuery()
   const open = async () => {
     modalClipboardVisibleVar(false)
-    navigation.navigate("sendBitcoin", { payment: await Clipboard.getString() })
+    navigation.navigate("sendBitcoinDestination", {
+      payment: await Clipboard.getString(),
+    })
   }
 
   const dismiss = async () => {

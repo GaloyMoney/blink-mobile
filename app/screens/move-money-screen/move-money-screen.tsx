@@ -31,7 +31,10 @@ import { isIos } from "../../utils/helper"
 import { ScreenType } from "../../types/jsx"
 import useToken from "../../utils/use-token"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { MoveMoneyStackParamList } from "../../navigation/stack-param-lists"
+import {
+  PrimaryStackParamList,
+  RootStackParamList,
+} from "../../navigation/stack-param-lists"
 import useMainQuery from "@app/hooks/use-main-query"
 import WalletOverview from "@app/components/wallet-overview/wallet-overview"
 import QrCodeIcon from "@app/assets/icons/qr-code.svg"
@@ -39,6 +42,8 @@ import SendIcon from "@app/assets/icons/send.svg"
 import ReceiveIcon from "@app/assets/icons/receive.svg"
 import PriceIcon from "@app/assets/icons/price.svg"
 import SettingsIcon from "@app/assets/icons/settings.svg"
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs"
+import { CompositeNavigationProp } from "@react-navigation/native"
 
 const styles = EStyleSheet.create({
   bottom: {
@@ -139,7 +144,10 @@ const styles = EStyleSheet.create({
 })
 
 type MoveMoneyScreenDataInjectedProps = {
-  navigation: StackNavigationProp<MoveMoneyStackParamList, "moveMoney">
+  navigation: CompositeNavigationProp<
+    BottomTabNavigationProp<PrimaryStackParamList, "MoveMoney">,
+    StackNavigationProp<RootStackParamList>
+  >
 }
 
 export const MoveMoneyScreenDataInjected: ScreenType = ({
@@ -219,7 +227,10 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
 }
 
 type MoveMoneyScreenProps = {
-  navigation: StackNavigationProp<MoveMoneyStackParamList, "moveMoney">
+  navigation: CompositeNavigationProp<
+    BottomTabNavigationProp<PrimaryStackParamList, "MoveMoney">,
+    StackNavigationProp<RootStackParamList>
+  >
   loading: boolean
   errors: []
   transactionsEdges: { cursor: string; node: GaloyGQL.Transaction | null }[]
@@ -393,7 +404,7 @@ export const MoveMoneyScreen: ScreenType = ({
           },
           {
             title: translate("MoveMoneyScreen.send"),
-            target: "sendBitcoin",
+            target: "sendBitcoinDestination",
             icon: <SendIcon />,
           },
           {
