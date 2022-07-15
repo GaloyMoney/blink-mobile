@@ -664,6 +664,7 @@ exports[`WelcomePhoneInputScreen render matches snapshot 1`] = `
                       "width": 12,
                     }
                   }
+                  testID="DropDownButton"
                 />
               </View>
               <View
