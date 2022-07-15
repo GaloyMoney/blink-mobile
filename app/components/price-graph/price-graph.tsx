@@ -3,7 +3,7 @@ import * as React from "react"
 import { ActivityIndicator, StyleProp, Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
-import { VictoryAxis, VictoryChart, VictoryLine } from "victory-native"
+import { VictoryAxis, VictoryChart, VictoryArea } from "victory-native"
 import {
   TextStyle,
   ViewStyle,
@@ -13,6 +13,7 @@ import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { translateUnknown as translate } from "@galoymoney/client"
 import type { ComponentType } from "../../types/jsx"
+import { Defs, LinearGradient, Stop } from "react-native-svg"
 
 const BTC_PRICE_LIST = gql`
   query btcPriceList($range: PriceGraphRange!) {
@@ -124,6 +125,7 @@ export const PriceGraph: ComponentType = ({
   let price
   let delta
   let color
+  let priceDomain
 
   try {
     const currentPriceData = prices[prices.length - 1].price
@@ -134,6 +136,19 @@ export const PriceGraph: ComponentType = ({
       multiple(currentPriceData.currencyUnit)
     delta = currentPriceData.base / startPriceData.base - 1
     color = delta > 0 ? { color: palette.green } : { color: palette.red }
+
+    // get min and max prices for domain
+    priceDomain = [null, null]
+    prices.forEach((p) => {
+      if (!priceDomain[0] || p.price.base < priceDomain[0]) priceDomain[0] = p.price.base
+      if (!priceDomain[1] || p.price.base > priceDomain[1]) priceDomain[1] = p.price.base
+    })
+    priceDomain = [
+      (priceDomain[0] / 10 ** startPriceData.offset) *
+        multiple(startPriceData.currencyUnit),
+      (priceDomain[1] / 10 ** startPriceData.offset) *
+        multiple(startPriceData.currencyUnit),
+    ]
   } catch (err) {
     // FIXME proper Loader
     return <ActivityIndicator animating size="large" color={palette.lightBlue} />
@@ -176,26 +191,53 @@ export const PriceGraph: ComponentType = ({
         <Text style={styles.neutral}>{label()}</Text>
       </View>
       <View style={styles.chart}>
-        <VictoryChart>
+        <VictoryChart
+          padding={{ top: 50, bottom: 50, left: 50, right: 25 }}
+          domainPadding={{ y: 10 }}
+        >
+          <Defs>
+            <LinearGradient id="gradient" x1="0.5" y1="0" x2="0.5" y2="1">
+              <Stop offset="0%" stopColor={palette.lightBlue} />
+              <Stop offset="100%" stopColor={palette.white} />
+            </LinearGradient>
+          </Defs>
           <VictoryAxis
             dependentAxis
             standalone
             style={{
               axis: { strokeWidth: 0 },
+              grid: {
+                stroke: palette.black,
+                strokeOpacity: 0.1,
+                strokeWidth: 1,
+                strokeDasharray: "6, 6",
+              },
               tickLabels: {
                 fill: palette.midGrey,
                 fontSize: 16,
               },
             }}
           />
-          <VictoryLine
+          <VictoryArea
+            animate={{
+              duration: 500,
+              easing: "expInOut",
+            }}
             data={prices.map((index) => ({
               y:
                 (index.price.base / 10 ** index.price.offset) *
                 multiple(index.price.currencyUnit),
             }))}
-            interpolation="basis"
-            style={{ data: { stroke: palette.lightBlue, strokeWidth: 4 } }}
+            domain={{ y: priceDomain }}
+            interpolation="monotoneX"
+            style={{
+              data: {
+                stroke: palette.lightBlue,
+                strokeWidth: 3,
+                fillOpacity: 0.3,
+                fill: "url(#gradient)",
+              },
+            }}
           />
         </VictoryChart>
       </View>
@@ -239,18 +281,20 @@ const styles = EStyleSheet.create({
   buttonStyleTime: {
     backgroundColor: color.transparent,
     borderRadius: "40rem",
-    width: "42rem",
+    width: "48rem",
+    height: "48rem",
   },
 
   buttonStyleTimeActive: {
     backgroundColor: palette.lightBlue,
     borderRadius: "40rem",
-    width: "42rem",
+    width: "48rem",
+    height: "48rem",
   },
 
   chart: {
     alignSelf: "center",
-    marginLeft: "32rem",
+    marginLeft: "0rem",
   },
 
   delta: {
@@ -272,7 +316,7 @@ const styles = EStyleSheet.create({
   pricesContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginHorizontal: 64,
+    marginHorizontal: 32,
   },
 
   textView: {
