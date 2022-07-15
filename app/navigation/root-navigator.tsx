@@ -51,7 +51,7 @@ import {
   RootStackParamList,
 } from "./stack-param-lists"
 import type { NavigatorType } from "../types/jsx"
-import ReceiveBitcoin from "@app/screens/receive-bitcoin-screen/receive-bitcoin"
+import ReceiveBitcoinScreen from "@app/screens/receive-bitcoin-screen/receive-bitcoin"
 import PushNotification from "react-native-push-notification"
 import useMainQuery from "@app/hooks/use-main-query"
 import { LnurlScreen } from "@app/screens/settings-screen/lnurl-screen"
@@ -330,7 +330,7 @@ export const RootStack: NavigatorType = () => {
       />
       <RootNavigator.Screen
         name="receiveBitcoin"
-        component={ReceiveBitcoin}
+        component={ReceiveBitcoinScreen}
         options={{
           title: translate("ReceiveBitcoinScreen.title"),
         }}
