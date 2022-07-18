@@ -98,10 +98,11 @@ const usePriceCache = () => {
       return initialBtcPrice?.formattedAmount
     }
     const lastPriceData = client.readQuery({ query: PRICE_CACHE })
-    if (!lastPriceData && !initialBtcPrice) {
-      throw new Error("No price data in cache or inital price")
+    if (lastPriceData) {
+      return lastPriceData.price
     }
-    return lastPriceData?.price
+
+    return 0
   })
 
   const updatePriceCache = (newPrice) => {
