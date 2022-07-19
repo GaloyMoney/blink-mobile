@@ -89,28 +89,35 @@ const MY_UPDATES_SUBSCRIPTION = gql`
 
 // Private custom hook to get the initial price from cache (if set)
 // in case the subscription failed to provide an initial price
-const usePriceCache = () => {
+const usePriceCache = (): [number, (newPrice: number) => void] => {
   const client = useApolloClient()
   const { initialBtcPrice } = useMainQuery()
+  const [cachedPrice, setCachedPrice] = React.useState(0)
 
-  const [cachedPrice, setCachedPrice] = React.useState(() => {
-    if (initialBtcPrice) {
-      return initialBtcPrice?.formattedAmount
-    }
-    const lastPriceData = client.readQuery({ query: PRICE_CACHE })
-    if (lastPriceData) {
-      return lastPriceData.price
-    }
+  const updatePriceCache = React.useCallback(
+    (newPrice) => {
+      if (cachedPrice !== newPrice) {
+        client.writeQuery({ query: PRICE_CACHE, data: { price: newPrice } })
+        setCachedPrice(newPrice)
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    },
+    [cachedPrice],
+  )
 
-    return 0
-  })
-
-  const updatePriceCache = (newPrice) => {
-    if (cachedPrice !== newPrice) {
-      client.writeQuery({ query: PRICE_CACHE, data: { price: newPrice } })
-      setCachedPrice(newPrice)
+  React.useEffect(() => {
+    if (!cachedPrice) {
+      const lastPriceData = client.readQuery({ query: PRICE_CACHE })
+      if (lastPriceData) {
+        updatePriceCache(lastPriceData.price)
+      } else if (initialBtcPrice) {
+        updatePriceCache(initialBtcPrice.formattedAmount)
+      } else {
+        updatePriceCache(0)
+      }
     }
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialBtcPrice, cachedPrice])
 
   return [cachedPrice, updatePriceCache]
 }
@@ -124,7 +131,10 @@ export const formatUsdAmount: (usd: number) => string = (usd) => {
 
 export const useMySubscription = (): UseMyUpdates => {
   const { data, loading } = useSubscription(MY_UPDATES_SUBSCRIPTION)
-
+  const {
+    btcWalletBalance: btcWalletBalanceFromMainQuery,
+    usdWalletBalance: usdWalletBalanceFromMainQuery,
+  } = useMainQuery()
   const [cachedPrice, updatePriceCach] = usePriceCache()
 
   const intraLedgerUpdate = React.useRef<UseMyUpdates["intraLedgerUpdate"]>(null)
@@ -206,12 +216,21 @@ export const useMySubscription = (): UseMyUpdates => {
     }
   }
 
-  const btcWalletBalance = data?.myUpdates?.me?.defaultAccount?.wallets?.find(
-    (wallet) => wallet?.__typename === "BTCWallet",
-  )?.balance
-  const usdWalletBalance = data?.myUpdates?.me?.defaultAccount?.wallets?.find(
-    (wallet) => wallet?.__typename === "USDWallet",
-  )?.balance
+  const btcWalletBalanceFromSubscription =
+    data?.myUpdates?.me?.defaultAccount?.wallets?.find(
+      (wallet) => wallet?.__typename === "BTCWallet",
+    )?.balance
+  const btcWalletBalance = btcWalletBalanceFromSubscription
+    ? btcWalletBalanceFromSubscription
+    : btcWalletBalanceFromMainQuery
+
+  const usdWalletBalanceFromSubscription =
+    data?.myUpdates?.me?.defaultAccount?.wallets?.find(
+      (wallet) => wallet?.__typename === "USDWallet",
+    )?.balance
+  const usdWalletBalance = usdWalletBalanceFromSubscription
+    ? usdWalletBalanceFromSubscription
+    : usdWalletBalanceFromMainQuery
 
   return {
     convertCurrencyAmount,
