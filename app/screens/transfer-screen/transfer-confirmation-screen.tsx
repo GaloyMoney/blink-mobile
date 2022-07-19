@@ -30,9 +30,12 @@ const TransferConfirmationScreen = ({
   nextStep,
 }: TransferConfirmationScreenProps) => {
   const { usdWalletBalance, btcWalletBalance, btcWalletValueInUsd } = useWalletBalance()
-  const [intraLedgerPaymentSend] = useMutation.intraLedgerPaymentSend()
-  const [intraLedgerUsdPaymentSend] = useMutation.intraLedgerUsdPaymentSend()
+  const [intraLedgerPaymentSend, { loading: intraLedgerPaymentSendLoading }] =
+    useMutation.intraLedgerPaymentSend()
+  const [intraLedgerUsdPaymentSend, { loading: intraLedgerUsdPaymentSendLoading }] =
+    useMutation.intraLedgerUsdPaymentSend()
   const [_status, setStatus] = useState<StatusType>(Status.IDLE)
+  const isLoading = intraLedgerPaymentSendLoading || intraLedgerUsdPaymentSendLoading
 
   useEffect(() => {
     if (_status === Status.SUCCESS) {
@@ -69,7 +72,7 @@ const TransferConfirmationScreen = ({
       }
     }
     if (fromWallet?.walletCurrency === "USD") {
-      if (dollarAmount && 100 * dollarAmount <= usdWalletBalance) {
+      if (dollarAmount && Math.floor(100 * dollarAmount) <= usdWalletBalance) {
         return true
       }
     }
@@ -103,7 +106,7 @@ const TransferConfirmationScreen = ({
             input: {
               walletId: fromWallet?.id,
               recipientWalletId: toWallet?.id,
-              amount: dollarAmount * 100,
+              amount: Math.floor(dollarAmount * 100),
             },
           },
         })
@@ -290,6 +293,7 @@ const TransferConfirmationScreen = ({
           disabledTitleStyle={styles.disabledButtonTitleStyle}
           disabled={!isButtonEnabled()}
           onPress={() => payWallet()}
+          loading={isLoading}
         />
       </View>
     </View>
