@@ -92,7 +92,19 @@ const MY_UPDATES_SUBSCRIPTION = gql`
 const usePriceCache = (): [number, (newPrice: number) => void] => {
   const client = useApolloClient()
   const { initialBtcPrice } = useMainQuery()
-  const [cachedPrice, setCachedPrice] = React.useState(0)
+  const [cachedPrice, setCachedPrice] = React.useState(() => {
+    const lastPriceData = client.readQuery({ query: PRICE_CACHE })
+    if (lastPriceData) {
+      return lastPriceData.price
+    } else if (initialBtcPrice) {
+      client.writeQuery({
+        query: PRICE_CACHE,
+        data: { price: initialBtcPrice.formattedAmount },
+      })
+      return initialBtcPrice.formattedAmount
+    }
+    return 0
+  })
 
   const updatePriceCache = React.useCallback(
     (newPrice) => {
@@ -136,7 +148,6 @@ export const useMySubscription = (): UseMyUpdates => {
     usdWalletBalance: usdWalletBalanceFromMainQuery,
   } = useMainQuery()
   const [cachedPrice, updatePriceCach] = usePriceCache()
-
   const intraLedgerUpdate = React.useRef<UseMyUpdates["intraLedgerUpdate"]>(null)
   const lnUpdate = React.useRef<UseMyUpdates["lnUpdate"]>(null)
   const onChainUpdate = React.useRef<UseMyUpdates["onChainUpdate"]>(null)
