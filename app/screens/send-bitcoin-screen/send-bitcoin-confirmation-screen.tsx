@@ -1,5 +1,5 @@
 import DestinationIcon from "@app/assets/icons/destination.svg"
-import React, { useState, useMemo } from "react"
+import React, { useState } from "react"
 import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-native"
 import { palette } from "@app/theme"
 import { WalletCurrency } from "@app/types/amounts"
@@ -7,7 +7,7 @@ import { GaloyGQL, translateUnknown as translate, useMutation } from "@galoymone
 import { Status } from "./send-bitcoin.types"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { useMySubscription, useWalletBalance } from "@app/hooks"
+import { useWalletBalance } from "@app/hooks"
 import useFee from "./use-fee"
 import {
   paymentAmountToDollarsOrSats,
@@ -177,7 +177,8 @@ const SendBitcoinConfirmationScreen = ({
     paymentType,
     destination,
     fixedAmount,
-    paymentAmount,
+    paymentAmountInBtc,
+    paymentAmountInUsd,
     recipientWalletId,
     lnurlInvoice,
     payerWalletDescriptor,
@@ -188,18 +189,10 @@ const SendBitcoinConfirmationScreen = ({
   const isNoAmountInvoice = fixedAmount === undefined
   const [, setStatus] = useState<Status>(Status.IDLE)
 
-  const { convertPaymentAmount } = useMySubscription()
-  const { usdPaymentAmount, btcPaymentAmount, paymentAmountInWalletCurrency } =
-    useMemo(() => {
-      return {
-        usdPaymentAmount: convertPaymentAmount(paymentAmount, WalletCurrency.USD),
-        btcPaymentAmount: convertPaymentAmount(paymentAmount, WalletCurrency.BTC),
-        paymentAmountInWalletCurrency: convertPaymentAmount(
-          paymentAmount,
-          payerWalletDescriptor.currency,
-        ),
-      }
-    }, [convertPaymentAmount, paymentAmount, payerWalletDescriptor.currency])
+  const paymentAmountInWalletCurrency =
+    payerWalletDescriptor.currency === WalletCurrency.BTC
+      ? paymentAmountInBtc
+      : paymentAmountInUsd
 
   const { usdWalletBalance, btcWalletBalance, btcWalletValueInUsd } = useWalletBalance()
   const [paymentError, setPaymentError] = useState<string | undefined>(undefined)
@@ -382,32 +375,18 @@ const SendBitcoinConfirmationScreen = ({
   let validAmount = false
 
   if (fee.amount && payerWalletDescriptor.currency === WalletCurrency.BTC) {
-    if (paymentAmount.currency === WalletCurrency.USD) {
-      validAmount =
-        usdPaymentAmount.amount + fee.amount.amount <= 100 * btcWalletValueInUsd
-      if (!validAmount) {
-        setPaymentError(
-          translate("SendBitcoinScreen.amountExceed", {
-            balance: usdAmountDisplay(btcWalletValueInUsd),
-          }),
-        )
-      }
-    }
-
-    if (paymentAmount.currency === WalletCurrency.BTC) {
-      validAmount = paymentAmount.amount + fee.amount.amount <= btcWalletBalance
-      if (!validAmount) {
-        setPaymentError(
-          translate("SendBitcoinScreen.amountExceed", {
-            balance: satAmountDisplay(btcWalletBalance),
-          }),
-        )
-      }
+    validAmount = paymentAmountInBtc.amount + fee.amount.amount <= btcWalletBalance
+    if (!validAmount) {
+      setPaymentError(
+        translate("SendBitcoinScreen.amountExceed", {
+          balance: satAmountDisplay(btcWalletBalance),
+        }),
+      )
     }
   }
 
   if (fee.amount && payerWalletDescriptor.currency === WalletCurrency.USD) {
-    validAmount = paymentAmount.amount + fee.amount.amount <= usdWalletBalance
+    validAmount = paymentAmountInUsd.amount + fee.amount.amount <= usdWalletBalance
     if (!validAmount) {
       setPaymentError(
         translate("SendBitcoinScreen.amountExceed", {
@@ -439,59 +418,34 @@ const SendBitcoinConfirmationScreen = ({
         <Text style={styles.fieldTitleText}>{translate("SendBitcoinScreen.amount")}</Text>
         <View style={styles.fieldBackground}>
           <View style={styles.amountContainer}>
-            {payerWalletDescriptor.currency === WalletCurrency.BTC &&
-              paymentAmount.currency === WalletCurrency.BTC && (
-                <>
-                  <FakeCurrencyInput
-                    value={paymentAmountToDollarsOrSats(btcPaymentAmount)}
-                    prefix=""
-                    delimiter=","
-                    separator="."
-                    precision={0}
-                    suffix=" sats"
-                    minValue={0}
-                    editable={false}
-                    style={styles.walletBalanceInput}
-                  />
-                  <FakeCurrencyInput
-                    value={paymentAmountToDollarsOrSats(usdPaymentAmount)}
-                    prefix="$"
-                    delimiter=","
-                    separator="."
-                    precision={2}
-                    editable={false}
-                    style={styles.convertedAmountText}
-                  />
-                </>
-              )}
-            {payerWalletDescriptor.currency === WalletCurrency.BTC &&
-              paymentAmount.currency === WalletCurrency.USD && (
-                <>
-                  <FakeCurrencyInput
-                    value={paymentAmountToDollarsOrSats(usdPaymentAmount)}
-                    prefix="$"
-                    delimiter=","
-                    separator="."
-                    precision={2}
-                    style={styles.walletBalanceInput}
-                    minValue={0}
-                    editable={false}
-                  />
-                  <FakeCurrencyInput
-                    value={paymentAmountToDollarsOrSats(btcPaymentAmount)}
-                    prefix=""
-                    delimiter=","
-                    separator="."
-                    suffix=" sats"
-                    precision={0}
-                    editable={false}
-                    style={styles.convertedAmountText}
-                  />
-                </>
-              )}
+            {payerWalletDescriptor.currency === WalletCurrency.BTC && (
+              <>
+                <FakeCurrencyInput
+                  value={paymentAmountToDollarsOrSats(paymentAmountInBtc)}
+                  prefix=""
+                  delimiter=","
+                  separator="."
+                  precision={0}
+                  suffix=" sats"
+                  minValue={0}
+                  editable={false}
+                  style={styles.walletBalanceInput}
+                />
+                <FakeCurrencyInput
+                  value={paymentAmountToDollarsOrSats(paymentAmountInUsd)}
+                  prefix="$"
+                  delimiter=","
+                  separator="."
+                  precision={2}
+                  editable={false}
+                  style={styles.convertedAmountText}
+                />
+              </>
+            )}
+
             {payerWalletDescriptor.currency === WalletCurrency.USD && (
               <FakeCurrencyInput
-                value={paymentAmountToDollarsOrSats(usdPaymentAmount)}
+                value={paymentAmountToDollarsOrSats(paymentAmountInUsd)}
                 prefix="$"
                 delimiter=","
                 separator="."
