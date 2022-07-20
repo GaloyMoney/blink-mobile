@@ -389,14 +389,10 @@ const SendBitcoinDetailsScreen = ({
   const showWalletPicker = !usdDisabled && wallets.length > 1
 
   const goToNextScreen = async () => {
-    let invoice: string | undefined,
-      paymentAmount: PaymentAmount<WalletCurrency> | undefined
+    let invoice: string | undefined
 
-    if (isFixedAmountInvoice) {
-      paymentAmount = fixedAmount
-    } else {
-      paymentAmount = amountCurrency === WalletCurrency.BTC ? satAmount : centAmount
-    }
+    const paymentAmountInBtc = satAmount
+    const paymentAmountInUsd = centAmount
 
     if (paymentType === "lnurl") {
       try {
@@ -412,18 +408,20 @@ const SendBitcoinDetailsScreen = ({
       }
     }
 
+    const payerWalletDescriptor = {
+      id: fromWallet.id,
+      currency:
+        fromWallet.__typename === "BTCWallet" ? WalletCurrency.BTC : WalletCurrency.USD,
+    }
     navigation.navigate("sendBitcoinConfirmation", {
       lnurlInvoice: invoice,
       fixedAmount,
-      paymentAmount,
+      paymentAmountInBtc,
+      paymentAmountInUsd,
       recipientWalletId,
       paymentType,
       destination,
-      payerWalletDescriptor: {
-        id: fromWallet.id,
-        currency:
-          fromWallet.__typename === "BTCWallet" ? WalletCurrency.BTC : WalletCurrency.USD,
-      },
+      payerWalletDescriptor,
       note,
       sameNode,
     })

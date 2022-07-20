@@ -110,94 +110,101 @@ const SendBitcoinDestinationScreen = ({
   const [userDefaultWalletIdQuery, { loading: userDefaultWalletIdLoading }] =
     useDelayedQuery.userDefaultWalletId()
 
-  const validateDestination = React.useCallback(async () => {
-    setError(undefined)
-    setDestination(destination)
+  const validateDestination = React.useCallback(
+    async (destination) => {
+      setError(undefined)
 
-    const {
-      valid,
-      errorMessage,
+      const {
+        valid,
+        errorMessage,
 
-      paymentType,
-      address,
-      paymentRequest,
-      handle,
+        paymentType,
+        address,
+        paymentRequest,
+        handle,
 
-      amount: amountInvoice,
-      memo: memoInvoice,
-      sameNode,
-    } = parsePaymentDestination({ destination, network: tokenNetwork, pubKey: myPubKey })
-    let isSameNode = sameNode
-    let lnurlParams
+        amount: amountInvoice,
+        memo: memoInvoice,
+        sameNode,
+      } = parsePaymentDestination({
+        destination,
+        network: tokenNetwork,
+        pubKey: myPubKey,
+      })
+      let isSameNode = sameNode
+      let lnurlParams
 
-    if (destination === myUsername) {
-      setError(translate("You can't send a payment to yourself"))
+      if (destination === myUsername) {
+        setError(translate("You can't send a payment to yourself"))
 
-      return { valid: false }
-    }
-
-    let recipientWalletId, note
-
-    if (valid) {
-      if (paymentType === "onchain") setDestination(address)
-      if (paymentType === "lightning") setDestination(paymentRequest)
-
-      if (paymentType === "intraledger") {
-        if (userDefaultWalletIdLoading) {
-          return { valid: false }
-        }
-
-        const { data, errorsMessage } = await userDefaultWalletIdQuery({
-          username: handle,
-        })
-
-        if (errorsMessage) {
-          setError(errorsMessage)
-          return { valid: false }
-        }
-        setDestination(handle)
-        recipientWalletId = data?.userDefaultWalletId
+        return { valid: false }
       }
 
-      if (paymentType === "lnurl") {
-        try {
-          lnurlParams = await fetchLnurlPaymentParams({ lnUrlOrAddress: destination })
-        } catch (error) {
-          setError(translate("SendBitcoinScreen.failedToFetchLnurlParams"))
-          return { valid: false }
+      let recipientWalletId, note, parsedDestination
+
+      if (valid) {
+        if (paymentType === "onchain") parsedDestination = address
+        if (paymentType === "lightning") parsedDestination = paymentRequest
+
+        if (paymentType === "intraledger") {
+          if (userDefaultWalletIdLoading) {
+            return { valid: false }
+          }
+
+          const { data, errorsMessage } = await userDefaultWalletIdQuery({
+            username: handle,
+          })
+
+          if (errorsMessage) {
+            setError(errorsMessage)
+            return { valid: false }
+          }
+          parsedDestination = handle
+          recipientWalletId = data?.userDefaultWalletId
         }
-        isSameNode = lnurlDomains.some((domain) => lnurlParams?.domain.includes(domain))
+
+        if (paymentType === "lnurl") {
+          try {
+            lnurlParams = await fetchLnurlPaymentParams({ lnUrlOrAddress: destination })
+          } catch (error) {
+            setError(translate("SendBitcoinScreen.failedToFetchLnurlParams"))
+            return { valid: false }
+          }
+          isSameNode = lnurlDomains.some((domain) => lnurlParams?.domain.includes(domain))
+          parsedDestination = destination
+        }
+
+        if (memoInvoice) {
+          note = memoInvoice.toString()
+        }
+      } else {
+        setError(translate(errorMessage || "Invalid Payment Destination"))
       }
 
-      if (memoInvoice) {
-        note = memoInvoice.toString()
+      return {
+        valid,
+        paymentType,
+        sameNode: isSameNode,
+        destination: parsedDestination,
+        fixedAmount:
+          amountInvoice &&
+          ({
+            amount: amountInvoice,
+            currency: WalletCurrency.BTC,
+          } as PaymentAmount<WalletCurrency.BTC>),
+        note,
+        recipientWalletId,
+        lnurlParams,
       }
-    } else {
-      setError(translate(errorMessage || "Invalid Payment Destination"))
-    }
-
-    return {
-      valid,
-      paymentType,
-      sameNode: isSameNode,
-      fixedAmount:
-        amountInvoice &&
-        ({
-          amount: amountInvoice,
-          currency: WalletCurrency.BTC,
-        } as PaymentAmount<WalletCurrency.BTC>),
-      note,
-      recipientWalletId,
-      lnurlParams,
-    }
-  }, [
-    destination,
-    myPubKey,
-    myUsername,
-    tokenNetwork,
-    userDefaultWalletIdLoading,
-    userDefaultWalletIdQuery,
-  ])
+    },
+    [
+      myPubKey,
+      myUsername,
+      tokenNetwork,
+      userDefaultWalletIdLoading,
+      userDefaultWalletIdQuery,
+    ],
+  )
 
   const handleChangeText = (newDestination) => {
     setError(undefined)
@@ -205,12 +212,12 @@ const SendBitcoinDestinationScreen = ({
   }
 
   const goToNextScreen = async () => {
-    const parsedDestination = await validateDestination()
+    const parsedDestination = await validateDestination(destination)
 
     if (parsedDestination.valid) {
       return navigation.navigate("sendBitcoinDetails", {
         fixedAmount: parsedDestination.fixedAmount,
-        destination,
+        destination: parsedDestination.destination,
         note: parsedDestination.note,
         recipientWalletId: parsedDestination.recipientWalletId,
         lnurl: parsedDestination.lnurlParams,

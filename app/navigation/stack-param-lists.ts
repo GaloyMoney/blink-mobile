@@ -57,7 +57,8 @@ export type RootStackParamList = {
     destination: string
     recipientWalletId?: string
     payerWalletDescriptor: WalletDescriptor<WalletCurrency>
-    paymentAmount?: PaymentAmount<WalletCurrency>
+    paymentAmountInBtc?: PaymentAmount<WalletCurrency.BTC>
+    paymentAmountInUsd?: PaymentAmount<WalletCurrency.USD>
     note?: string
     paymentType: PaymentType
     sameNode: boolean
