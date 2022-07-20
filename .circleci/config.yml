@@ -231,7 +231,7 @@ jobs:
 
       - run: gh release upload $CIRCLE_TAG "android/app/build/outputs/apk/release/app-release.apk" --clobber
       - store_artifacts:
-          path: android/app/build/outputs/apk
+          path: android/app/build/outputs
 
 workflows:
   mobile:
