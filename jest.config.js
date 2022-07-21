@@ -1,5 +1,6 @@
 module.exports = {
   preset: "react-native",
+  setupFiles: ["<rootDir>/jest-ts-auto-mock-config.ts"],
   setupFilesAfterEnv: ["<rootDir>/__tests__/helpers/jest.setup.js"],
   transform: {
     "\\.(ts|tsx)$": "ts-jest",
@@ -7,6 +8,7 @@ module.exports = {
   },
   globals: {
     "ts-jest": {
+      compiler: "ttypescript",
       tsconfig: "tsconfig.jest.json",
     },
   },

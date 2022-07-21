@@ -22,7 +22,14 @@
     "baseUrl": "./",
     "paths": {
       "@app/*": ["app/*"]
-    }
+    },
+    "plugins": [
+      {
+        "transform": "ts-auto-mock/transformer",
+        "cacheBetweenTests": false,
+        "features": ["random"]
+      }
+    ]
   },
   "exclude": ["node_modules"],
   "include": ["app", "test", "storybook", "utils/declaration.d.ts"]
