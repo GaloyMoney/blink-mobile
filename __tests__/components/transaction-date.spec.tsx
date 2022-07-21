@@ -33,7 +33,7 @@ describe("Display the createdAt date for a transaction", () => {
 
   it("Displays non-friendly date which adapts to timezone", () => {
     i18n.locale = "en-GB"
-    const testTransactionCreatedAtDate = moment("2022-07-15T14:15:00+00:00")
+    const testTransactionCreatedAtDate = moment("2022-07-15T14:15:00+01:00")
     const mockedTransaction = createMock<GaloyGQL.Transaction>({
       createdAt: testTransactionCreatedAtDate.unix(),
     })
@@ -48,7 +48,7 @@ describe("Display the createdAt date for a transaction", () => {
         <TransactionDate tx={mockedTransaction} />
       </AppConfigurationContext.Provider>,
     )
-    expect(queryByText("15 July 2022 15:15")).not.toBeNull()
+    expect(queryByText("15 July 2022 14:15")).not.toBeNull()
   })
 
   it("Displays friendly date", () => {

@@ -52,11 +52,11 @@ const styles = EStyleSheet.create({
 
 export interface TransactionItemProps {
   navigation:
-  | CompositeNavigationProp<
-    BottomTabNavigationProp<ParamListBase>,
-    StackNavigationProp<ParamListBase>
-  >
-  | StackNavigationProp<ParamListBase>
+    | CompositeNavigationProp<
+        BottomTabNavigationProp<ParamListBase>,
+        StackNavigationProp<ParamListBase>
+      >
+    | StackNavigationProp<ParamListBase>
   isFirst?: boolean
   isLast?: boolean
   tx: GaloyGQL.Transaction
