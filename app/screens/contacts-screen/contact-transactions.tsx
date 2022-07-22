@@ -119,7 +119,7 @@ export const ContactTransactionsDataInjected: ScreenType = ({
 
   for (const txEdge of transactionsRef.current) {
     const tx = txEdge.node
-    if (isToday(tx)) {
+    if (isToday(tx) || tx.status === "PENDING") {
       today.push(tx)
     } else if (isYesterday(tx)) {
       yesterday.push(tx)

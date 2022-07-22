@@ -1,12 +1,12 @@
 /* eslint-disable camelcase */
 import { PaymentAmount, WalletCurrency } from "@app/types/amounts"
 import { WalletDescriptor } from "@app/types/wallets"
-import { PaymentType } from "@galoymoney/client"
 import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
+import { GaloyGQL, PaymentType } from "@galoymoney/client"
 import { contacts_me_contacts } from "../screens/contacts-screen/__generated__/contacts"
 import { AccountType, AuthenticationScreenPurpose, PinScreenPurpose } from "../utils/enum"
 
-export type TransactionDetail = WalletTransaction & {
+export type TransactionDetail = GaloyGQL.Transaction & {
   usdAmount: number
   description: string
   isReceive: boolean

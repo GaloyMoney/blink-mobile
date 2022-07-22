@@ -10,12 +10,12 @@ import { palette } from "../../theme/palette"
 import { CompositeNavigationProp, ParamListBase } from "@react-navigation/native"
 import { prefCurrencyVar as primaryCurrencyVar } from "../../graphql/client-only-query"
 import { useHideBalance } from "../../hooks"
-import moment from "moment"
 import { satAmountDisplay, usdAmountDisplay } from "@app/utils/currencyConversion"
-import { GaloyGQL, getLocale } from "@galoymoney/client"
+import { GaloyGQL } from "@galoymoney/client"
 import { WalletCurrency } from "@app/types/amounts"
 import { WalletType } from "@app/utils/enum"
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs"
+import { TransactionDate } from "../transaction-date"
 
 const styles = EStyleSheet.create({
   container: {
@@ -62,11 +62,6 @@ export interface TransactionItemProps {
   tx: GaloyGQL.Transaction
   subtitle?: boolean
 }
-
-moment.locale(getLocale())
-
-const dateDisplay = ({ createdAt }) =>
-  moment.duration(Math.min(0, moment.unix(createdAt).diff(moment()))).humanize(true)
 
 const computeUsdAmount = (tx: GaloyGQL.Transaction) => {
   const { settlementAmount, settlementPrice } = tx
@@ -151,7 +146,11 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
       />
       <ListItem.Content>
         <ListItem.Title>{description}</ListItem.Title>
-        <ListItem.Subtitle>{subtitle ? dateDisplay(tx) : undefined}</ListItem.Subtitle>
+        <ListItem.Subtitle>
+          {subtitle ? (
+            <TransactionDate tx={tx} diffDate={true} friendly={true} />
+          ) : undefined}
+        </ListItem.Subtitle>
       </ListItem.Content>
       {txHideBalance ? (
         <Icon style={styles.hiddenBalanceContainer} name="eye" onPress={pressTxAmount} />

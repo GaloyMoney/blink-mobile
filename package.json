@@ -144,6 +144,7 @@
     "jest": "^27.5.1",
     "jest-circus": "^27.3.1",
     "jest-transform-stub": "^2.0.0",
+    "jest-ts-auto-mock": "^2.1.0",
     "jetifier": "^2.0.0",
     "metro-config": "^0.66.2",
     "mocha": "^9.2.1",
@@ -155,7 +156,9 @@
     "react-test-renderer": "17.x",
     "rimraf": "3.0.2",
     "solidarity": "^3.0.0",
+    "ts-auto-mock": "^3.6.2",
     "ts-jest": "^27.1.4",
+    "ttypescript": "^1.5.13",
     "typescript": "^4.7.3",
     "yalc": "^1.0.0-pre.53"
   },
