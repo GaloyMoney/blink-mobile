@@ -15,17 +15,6 @@ describe("Display the createdAt date for a transaction", () => {
     const { queryAllByText } = render(<TransactionDate tx={mockedTransaction} />)
     expect(queryAllByText(translateUnknown("common.pending"))).not.toBeNull()
   })
-
-  it("Displays non-friendly date which adapts to timezone", () => {
-    const testTransactionCreatedAtDate = moment.utc("2022-07-15T14:15:00+00:00")
-    const mockedTransaction = createMock<GaloyGQL.Transaction>({
-      createdAt: testTransactionCreatedAtDate.unix(),
-    })
-
-    const { queryByText } = render(<TransactionDate tx={mockedTransaction} />)
-    expect(queryByText("July 15, 2022 3:15 PM")).not.toBeNull()
-  })
-
   it("Displays friendly date", () => {
     const testTransactionCreatedAtDate = moment().subtract(1, "days")
     const mockedTransaction = createMock<GaloyGQL.Transaction>({
