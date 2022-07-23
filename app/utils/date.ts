@@ -50,5 +50,5 @@ export const toMomentLocale = (locale) => {
   for (let i = 0; i < tryLocales.length; i++) {
     if (moment.locales().indexOf(tryLocales[i]) >= 0) return tryLocales[i]
   }
-  return "en-us"
+  return "en"
 }
