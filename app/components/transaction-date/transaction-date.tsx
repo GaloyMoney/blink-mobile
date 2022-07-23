@@ -1,7 +1,8 @@
 import React from "react"
 import { Text } from "react-native"
 import moment from "moment"
-import { GaloyGQL, translateUnknown as translate } from "@galoymoney/client"
+import { GaloyGQL, getLocale, translateUnknown as translate } from "@galoymoney/client"
+import { toMomentLocale } from "@app/utils/date"
 
 type TransactionDateProps = {
   tx: GaloyGQL.Transaction
@@ -15,6 +16,7 @@ export const TransactionDate = ({
   diffDate = false,
 }: TransactionDateProps) => {
   const { status, createdAt } = tx
+  moment.locale(toMomentLocale(getLocale()))
   if (status === "PENDING") {
     return <Text>{translate("common.pending")?.toUpperCase()}</Text>
   }
