@@ -1,5 +1,4 @@
 import { InMemoryCache } from "@apollo/client"
-import "moment/locale/es"
 
 export const cache = new InMemoryCache({
   typePolicies: {
