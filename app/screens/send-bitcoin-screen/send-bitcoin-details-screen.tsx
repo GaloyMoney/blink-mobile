@@ -415,7 +415,7 @@ const SendBitcoinDetailsScreen = ({
     }
     navigation.navigate("sendBitcoinConfirmation", {
       lnurlInvoice: invoice,
-      fixedAmount,
+      fixedAmount: paymentType === "lnurl" ? paymentAmountInBtc : fixedAmount,
       paymentAmountInBtc,
       paymentAmountInUsd,
       recipientWalletId,
