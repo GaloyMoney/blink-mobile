@@ -51,6 +51,11 @@ import {
   AppConfiguration,
   loadAppConfig,
 } from "./context/app-configuration"
+// import moment locale files so we can display dates in the user's language
+import "moment/locale/es"
+import "moment/locale/fr-ca"
+import "moment/locale/pt-br"
+
 export const BUILD_VERSION = "build_version"
 
 export const { link: linkNetworkStatusNotifier, useApolloNetworkStatus } =
