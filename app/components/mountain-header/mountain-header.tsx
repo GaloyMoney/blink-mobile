@@ -31,7 +31,7 @@ const styles = EStyleSheet.create({
 
   topView: {
     marginTop: "80rem",
-  }
+  },
 })
 
 type Props = {
