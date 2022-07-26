@@ -1,6 +1,6 @@
 # Contributing
 
-Galoy is an open source project and so contributions to this repository are welcome.  If this is your first contribution then please take a look at the issues in the backlog with the [good first issue](https://github.com/GaloyMoney/galoy-mobile/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) tag.  If you would like to discuss anything with the team before picking up an issue then feel free to join our [public slack channel](https://galoymoney-workspace.slack.com/archives/C0255DTE6TX).
+Galoy is an open source project and so contributions to this repository are welcome.  If this is your first contribution then please take a look at the issues in the backlog with the [good first issue](https://github.com/GaloyMoney/galoy-mobile/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) tag.  If you would like to discuss anything with the team before picking up an issue then feel free to join our [public workspace on mattermost](https://chat.galoy.io).
 
 ## Pull Request Process
 
