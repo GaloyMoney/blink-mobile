@@ -55,7 +55,7 @@ describe("WelcomePhoneInputScreen", () => {
     ).not.toBeNull()
   })
   it("country picker is visible on press", async () => {
-    const { UNSAFE_queryByType, getByTestId } = render(
+    const { getByTestId } = render(
       <AppConfigurationContext.Provider
         value={{
           appConfig: defaultConfiguration,
