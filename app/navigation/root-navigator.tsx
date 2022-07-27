@@ -59,12 +59,15 @@ import HomeIcon from "@app/assets/icons/home.svg"
 import ContactsIcon from "@app/assets/icons/contacts.svg"
 import MapIcon from "@app/assets/icons/map.svg"
 import LearnIcon from "@app/assets/icons/learn.svg"
-import TransferConfirmationScreen from "@app/screens/transfer-screen/transfer-confirmation-screen"
-import TransferFlow from "@app/screens/transfer-screen/transfer-flow"
 import SendBitcoinDestinationScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-destination-screen"
 import SendBitcoinDetailsScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-details-screen"
 import SendBitcoinConfirmationScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-confirmation-screen"
 import SendBitcoinSuccessScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-success-screen"
+import {
+  ConversionDetailsScreen,
+  ConversionSuccessScreen,
+  ConversionConfirmationScreen,
+} from "@app/screens/conversion-flow"
 
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
 PushNotification.configure({
@@ -336,17 +339,25 @@ export const RootStack: NavigatorType = () => {
         }}
       />
       <RootNavigator.Screen
-        name="TransferScreen"
-        component={TransferFlow}
+        name="conversionDetails"
+        component={ConversionDetailsScreen}
         options={{
-          title: translate("TransferScreen.title"),
+          title: translate("ConversionDetailsScreen.title"),
         }}
       />
       <RootNavigator.Screen
-        name="transferConfirmation"
-        component={TransferConfirmationScreen}
+        name="conversionConfirmation"
+        component={ConversionConfirmationScreen}
         options={{
-          title: translate("TransferScreen.title"),
+          title: translate("ConversionConfirmationScreen.title"),
+        }}
+      />
+      <RootNavigator.Screen
+        name="conversionSuccess"
+        component={ConversionSuccessScreen}
+        options={{
+          headerShown: false,
+          title: translate("ConversionSuccess.title"),
         }}
       />
       <RootNavigator.Screen

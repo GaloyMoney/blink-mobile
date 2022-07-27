@@ -155,7 +155,6 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
   navigation,
 }: MoveMoneyScreenDataInjectedProps) => {
   const { hasToken } = useToken()
-
   const {
     mobileVersions,
     mergedTransactions,
@@ -400,7 +399,7 @@ export const MoveMoneyScreen: ScreenType = ({
       {hasUsdWallet && (
         <View style={styles.walletOverview}>
           <WalletOverview
-            navigateToTransferScreen={() => navigation.navigate("TransferScreen")}
+            navigateToTransferScreen={() => navigation.navigate("conversionDetails")}
             btcWalletBalance={btcWalletBalance}
             usdWalletBalance={usdWalletBalance}
             btcWalletValueInUsd={btcWalletValueInUsd}

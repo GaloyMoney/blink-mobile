@@ -64,13 +64,21 @@ export type RootStackParamList = {
     sameNode: boolean
     lnurlInvoice?: string
   }
-  transferConfirmation: {
-    fromWallet: Wallet
-    toWallet: Wallet
-    satAmount: number
-    satAmountInUsd: number
-    dollarAmount: number
-    amountCurrency: string
+  conversionDetails: {
+    transferAmount: PaymentAmount<WalletCurrency> | undefined
+  }
+  conversionConfirmation: {
+    fromWallet: WalletDescriptor<WalletCurrency>
+    toWallet: WalletDescriptor<WalletCurrency>
+    btcAmount: PaymentAmount<WalletCurrency.BTC>
+    usdAmount: PaymentAmount<WalletCurrency.USD>
+    usdPerBtc: PaymentAmount<WalletCurrency.USD>
+  }
+  conversionSuccess: {
+    fromWallet: WalletDescriptor<WalletCurrency>
+    toWallet: WalletDescriptor<WalletCurrency>
+    btcAmount: PaymentAmount<WalletCurrency.BTC>
+    usdAmount: PaymentAmount<WalletCurrency.USD>
   }
   sendBitcoinSuccess: undefined
   language: undefined
@@ -84,7 +92,6 @@ export type RootStackParamList = {
     account: AccountType
   }
   Profile: undefined
-  TransferScreen: undefined
   receiveBitcoin: {
     receiveCurrency?: WalletCurrency
   }
