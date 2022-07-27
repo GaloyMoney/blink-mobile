@@ -21,7 +21,6 @@ type UseMyUpdates = {
   convertPaymentAmountToPrimaryCurrency: (
     paymentAmount: PaymentAmount<WalletCurrency>,
   ) => PaymentAmount<WalletCurrency>
-  usdPerBtc: PaymentAmount<WalletCurrency.USD>
   usdPerSat: string | null
   currentUsdWalletBalance: number | null
   currentBtcWalletBalance: number | null
@@ -248,10 +247,6 @@ export const useMySubscription = (): UseMyUpdates => {
     convertCurrencyAmount,
     convertPaymentAmount,
     convertPaymentAmountToPrimaryCurrency,
-    usdPerBtc: {
-      currency: WalletCurrency.USD,
-      amount: cachedPrice === 0 ? NaN : cachedPrice * 100000000,
-    },
     usdPerSat: cachedPrice === 0 ? null : (cachedPrice / 100).toFixed(8),
     currentBtcWalletBalance: btcWalletBalance,
     currentUsdWalletBalance: usdWalletBalance,

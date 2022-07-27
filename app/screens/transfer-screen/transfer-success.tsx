@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { StyleSheet, Text, View } from "react-native"
 import LottieView from "lottie-react-native"
 
@@ -6,21 +6,8 @@ import { translateUnknown as translate } from "@galoymoney/client"
 
 import { palette } from "@app/theme"
 import successLottieJson from "../send-bitcoin-screen/success_lottie.json"
-import { StackScreenProps } from "@react-navigation/stack"
-import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import useMainQuery from "@app/hooks/use-main-query"
 
-export const ConversionSuccessScreen = ({
-  navigation,
-}: StackScreenProps<RootStackParamList, "conversionSuccess">) => {
-  const { refetch } = useMainQuery()
-  const CALLBACK_DELAY = 2000
-  useEffect(() => {
-    refetch()
-    const navigateToHomeTimeout = setTimeout(() => navigation.popToTop(), CALLBACK_DELAY)
-    return () => clearTimeout(navigateToHomeTimeout)
-  }, [navigation, refetch])
-
+const TransferSuccess = () => {
   return (
     <View style={styles.lottieContainer}>
       <LottieView
@@ -31,7 +18,7 @@ export const ConversionSuccessScreen = ({
         resizeMode="cover"
       />
       <Text style={styles.successLottieText}>
-        {translate("ConversionSuccessScreen.message")}
+        {translate("SendBitcoinScreen.success")}
       </Text>
     </View>
   )
@@ -53,3 +40,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 })
+
+export default TransferSuccess
