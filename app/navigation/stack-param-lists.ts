@@ -104,9 +104,19 @@ export type PhoneValidationStackParamList = {
 export type PrimaryStackParamList = {
   MoveMoney: undefined
   Contacts: undefined
-  Map: undefined
+  MarketPlace: MarketPlaceParamList
   Earn: undefined
   sendBitcoin: { username: string }
   phoneValidation: undefined
   earnsSection: { section: string }
+}
+
+export type MarketPlaceParamList = {
+  MarketPlace: undefined
+  CreatePost: undefined
+  AddImage: undefined
+  AddLocation: undefined
+  MapScreen: undefined
+  AddContact:undefined
+  ConfirmInformation:undefined
 }

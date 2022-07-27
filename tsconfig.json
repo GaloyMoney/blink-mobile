@@ -21,7 +21,8 @@
     "resolveJsonModule": true,
     "baseUrl": "./",
     "paths": {
-      "@app/*": ["app/*"]
+      "@app/*": ["app/*"],
+      "@asset/*": ["app/assets/*"]
     }
   },
   "exclude": ["node_modules"],

@@ -45,18 +45,11 @@ allprojects {
         google()
         mavenCentral()
         jcenter()
-    }
+        // ADD THIS
+        maven { url 'https://maven.google.com' }
 
-    //add the folllowing lines to force libs to use recent buildtools
-    subprojects {
-        afterEvaluate {
-            project ->
-                if (project.hasProperty("android")) {
-                    android {
-                        compileSdkVersion = 31
-                        buildToolsVersion = "30.0.3"
-                    }
-                }
-        }
+        // ADD THIS
+        maven { url "https://www.jitpack.io" }
+
     }
 }

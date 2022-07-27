@@ -135,6 +135,7 @@ android {
         versionCode 310
         versionName "1.7.5"
         missingDimensionStrategy 'react-native-camera', 'general' // React native camera
+        vectorDrawables.useSupportLibrary = true // react native crop picker
 
     }
     splits {
