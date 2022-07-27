@@ -4,7 +4,6 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import {
   ActivityIndicator,
   Alert,
-  Image,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -36,6 +35,7 @@ import type { PhoneValidationStackParamList } from "../../navigation/stack-param
 import { parseTimer } from "../../utils/timer"
 import { useGeetestCaptcha } from "../../hooks"
 import { networkVar } from "../../graphql/client-only-query"
+import DownArrow from "@app/assets/icons/downarrow.svg"
 
 const phoneRegex = new RegExp("^\\+[0-9]+$")
 
@@ -257,17 +257,9 @@ export const WelcomePhoneInputScreen: ScreenType = ({
   } else {
     captchaContent = null
   }
-  const dropDown =
-    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAi0lEQVRYR+3WuQ6AIBRE0eHL1T83FBqU5S1szdiY2NyTKcCAzU/Y3AcBXIALcIF0gRPAsehgugDEXnYQrUC88RIgfpuJ+MRrgFmILN4CjEYU4xJgFKIa1wB6Ec24FuBFiHELwIpQxa0ALUId9wAkhCnuBdQQ5ngP4I9wxXsBDyJ9m+8y/g9wAS7ABW4giBshQZji3AAAAABJRU5ErkJggg=="
+
   const renderDropdownImage = () => {
-    return (
-      <Image
-        testID="DropDownButton"
-        source={{ uri: dropDown }}
-        resizeMode="contain"
-        style={{ height: 14, width: 12 }}
-      />
-    )
+    return <DownArrow testID="DropDownButton" width={12} height={14} />
   }
 
   return (

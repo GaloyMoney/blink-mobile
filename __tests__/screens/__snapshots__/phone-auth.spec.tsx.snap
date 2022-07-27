@@ -651,20 +651,10 @@ exports[`WelcomePhoneInputScreen render matches snapshot 1`] = `
                     </View>
                   </RCTSafeAreaView>
                 </Modal>
-                <Image
-                  resizeMode="contain"
-                  source={
-                    Object {
-                      "uri": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAi0lEQVRYR+3WuQ6AIBRE0eHL1T83FBqU5S1szdiY2NyTKcCAzU/Y3AcBXIALcIF0gRPAsehgugDEXnYQrUC88RIgfpuJ+MRrgFmILN4CjEYU4xJgFKIa1wB6Ec24FuBFiHELwIpQxa0ALUId9wAkhCnuBdQQ5ngP4I9wxXsBDyJ9m+8y/g9wAS7ABW4giBshQZji3AAAAABJRU5ErkJggg==",
-                    }
-                  }
-                  style={
-                    Object {
-                      "height": 14,
-                      "width": 12,
-                    }
-                  }
+                <
+                  height={14}
                   testID="DropDownButton"
+                  width={12}
                 />
               </View>
               <View
