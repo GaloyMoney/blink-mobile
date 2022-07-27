@@ -2,6 +2,4 @@
 #
 # Ensure this file is checked in to source control!
 
-gem 'fastlane-plugin-increment_version_code'
-gem 'fastlane-plugin-huawei_appgallery_connect'
 gem 'fastlane-plugin-browserstack'
