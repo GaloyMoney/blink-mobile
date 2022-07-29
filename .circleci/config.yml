@@ -199,29 +199,9 @@ workflows:
     jobs:
       - test_ios:
           filters:
-            tags:
-              only: /^[0-9]+\.[0-9]+\.[0-9]+/
             branches:
-              ignore: /.*/
-      - build_ios:
-          requires:
-            - test_ios
-          filters:
-            tags:
-              only: /^[0-9]+\.[0-9]+\.[0-9]+/
-            branches:
-              ignore: /.*/
+              only: improve-end-to-end-tests
       - test_android:
           filters:
-            tags:
-              only: /^[0-9]+\.[0-9]+\.[0-9]+/
             branches:
-              ignore: /.*/
-      - build_android:
-          requires:
-            - test_android
-          filters:
-            tags:
-              only: /^[0-9]+\.[0-9]+\.[0-9]+/
-            branches:
-              ignore: /.*/
+              only: improve-end-to-end-tests

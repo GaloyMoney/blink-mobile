@@ -1,12 +1,14 @@
 
 const browserstack = require('browserstack-local');
 
+
+console.log(process.env.BROWSERSTACK_APP_ID)
 exports.config = {
   user: process.env.BROWSERSTACK_USER,
   key: process.env.BROWSERSTACK_ACCESS_KEY,
 
   updateJob: false,
-  specs: ['../../__tests__/browserstack/*.e2e.js'],
+  specs: ['../../__tests__/browserstack/**/*.e2e.js'],
   exclude: [],
 
   capabilities: [{
