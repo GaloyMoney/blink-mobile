@@ -1,6 +1,3 @@
-const browserstack = require('browserstack-local');
-
-console.log(process.env.BROWSERSTACK_APP_ID)
 exports.config = {
   user: process.env.BROWSERSTACK_USER,
   key: process.env.BROWSERSTACK_ACCESS_KEY,
@@ -32,29 +29,27 @@ exports.config = {
     ui: 'bdd',
     timeout: 2 * 60 * 1000
   },
-
-  onPrepare: (config, capabilities) => {
-    console.log("Connecting local");
-    return new Promise((resolve, reject) => {
-      exports.bs_local = new browserstack.Local();
-      exports.bs_local.start({ 'key': exports.config.key }, (error) => {
-        if (error) return reject(error);
-        console.log('Connected. Now testing...');
-
-        resolve();
-      });
-    });
-  },
-
-  onComplete: (capabilties, specs) => {
-    console.log("Closing local tunnel");
-    return new Promise((resolve, reject) => {
-      exports.bs_local.stop((error) => {
-        if (error) return reject(error);
-        console.log("Stopped BrowserStackLocal");
-
-        resolve();
-      });
+  before: (capabilities, specs, browser) => {
+    browser.addCommand('swipe', (from, to) => {
+      browser.touchPerform([
+        {
+          action: "press",
+          options: from,
+        },
+        {
+          action: "wait",
+          options: { ms: 1000 },
+        },
+        {
+          action: "moveTo",
+          options: to,
+        },
+        {
+          action: "release",
+          options: to,
+        },
+      ]);
     });
   }
+    
 };

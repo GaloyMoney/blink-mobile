@@ -101,7 +101,13 @@ export const WelcomeFirstScreen: ScreenType = ({ navigation }: Props) => (
         Svg={HoneyBadgerShovel}
         nextTitle={translate("WelcomeFirstScreen.learnToEarn")}
       >
-        <Text style={styles.text}>{translate("WelcomeFirstScreen.learn")}</Text>
+        <Text
+          style={styles.text}
+          testID={translate("WelcomeFirstScreen.learn")}
+          accessibilityLabel={translate("WelcomeFirstScreen.learn")}
+        >
+          {translate("WelcomeFirstScreen.learn")}
+        </Text>
       </OnboardingScreen>
     </Screen>
   </Swiper>

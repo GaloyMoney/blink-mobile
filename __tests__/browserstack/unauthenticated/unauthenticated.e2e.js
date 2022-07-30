@@ -1,10 +1,8 @@
 var assert = require("assert")
 var client = require("@galoymoney/client")
 
-client.setLocale("en")
-
-describe("Home Page", () => {
-  it("get started button redirects to welcome flow", async () => {
+describe("Unauthenticated navigation renders correctly", () => {
+  it("Welcome flow", async () => {
     const getStartedButton = await $(
       `~${client.translateUnknown("GetStartedScreen.getStarted")}`,
     )
@@ -13,17 +11,24 @@ describe("Home Page", () => {
     assert.ok(
       await $(`~${client.translateUnknown("WelcomeFirstScreen.care")}`).isDisplayed(),
     )
-    browser.execute("mobile: swipe", {
-      direction: "right",
-    })
+
+    browser.swipe({ x: 800, y: 1500 }, { x: 150, y: 1500 })
     assert.ok(
       await $(`~${client.translateUnknown("WelcomeFirstScreen.bank")}`).isDisplayed(),
     )
-    browser.execute("mobile: swipe", {
-      direction: "right",
-    })
+    browser.swipe({ x: 800, y: 1500 }, { x: 150, y: 1500 })
     assert.ok(
       await $(`~${client.translateUnknown("WelcomeFirstScreen.before")}`).isDisplayed(),
     )
+    browser.swipe({ x: 800, y: 1500 }, { x: 150, y: 1500 })
+    assert.ok(
+      await $(`~${client.translateUnknown("WelcomeFirstScreen.learn")}`).isDisplayed(),
+    )
+    assert.ok(
+      await $(
+        `~${client.translateUnknown("WelcomeFirstScreen.learnToEarn")}`,
+      ).isDisplayed(),
+    )
+    await $(`~${client.translateUnknown("WelcomeFirstScreen.learnToEarn")}`).click()
   })
 })

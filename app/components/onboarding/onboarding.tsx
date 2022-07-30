@@ -82,6 +82,8 @@ export const OnboardingScreen: ScreenType = ({
           loading={loading}
           disabled={loading}
           titleStyle={styles.buttonTitle}
+          testID={nextTitle || "Next"}
+          accessibilityLabel={nextTitle || "Next"}
         />
       )}
     </>
