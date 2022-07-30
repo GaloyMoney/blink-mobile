@@ -13,7 +13,6 @@ exports.config = {
     device: 'iPhone 11 Pro',
     os_version: "13",
     app: process.env.BROWSERSTACK_APP_ID,
-    'browserstack.local': true,
     'browserstack.debug': true
   }],
 
