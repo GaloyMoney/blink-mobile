@@ -59,18 +59,26 @@ export const WelcomeFirstScreen: ScreenType = ({ navigation }: Props) => (
   <Swiper loop={false} activeDot={<View style={styles.dot} />}>
     <Screen backgroundColor={palette.lightBlue} statusBar="light-content">
       <OnboardingScreen Svg={MascotDollarBitcoin}>
-        <Text style={styles.title}>Bitcoin:</Text>
-        <Text style={styles.text}>{translate("WelcomeFirstScreen.care")}</Text>
+        <Text style={styles.title} testID="Bitcoin:">
+          Bitcoin:
+        </Text>
+        <Text style={styles.text} testID={translate("WelcomeFirstScreen.care")}>
+          {translate("WelcomeFirstScreen.care")}
+        </Text>
       </OnboardingScreen>
     </Screen>
     <Screen backgroundColor={palette.lightBlue}>
       <OnboardingScreen Svg={BitcoinBitcoin}>
-        <Text style={styles.text}>{translate("WelcomeFirstScreen.bank")}</Text>
+        <Text style={styles.text} testID={translate("WelcomeFirstScreen.bank")}>
+          {translate("WelcomeFirstScreen.bank")}
+        </Text>
       </OnboardingScreen>
     </Screen>
     <Screen backgroundColor={palette.lightBlue} statusBar="light-content">
       <OnboardingScreen Svg={BankShop}>
-        <Text style={styles.text}>{translate("WelcomeFirstScreen.before")}</Text>
+        <Text style={styles.text} testID={translate("WelcomeFirstScreen.before")}>
+          {translate("WelcomeFirstScreen.before")}
+        </Text>
       </OnboardingScreen>
     </Screen>
     <Screen backgroundColor={palette.lightBlue} statusBar="light-content">
