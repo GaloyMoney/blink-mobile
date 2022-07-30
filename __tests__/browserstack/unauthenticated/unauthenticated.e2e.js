@@ -1,23 +1,29 @@
 var assert = require("assert")
-import { translateUnknown, setLocale } from "@galoymoney/client"
+var client = require("@galoymoney/client")
 
-setLocale("en")
+client.setLocale("en")
 
 describe("Home Page", () => {
   it("get started button redirects to welcome flow", async () => {
     const getStartedButton = await $(
-      `~${translateUnknown("GetStartedScreen.getStarted")}`,
+      `~${client.translateUnknown("GetStartedScreen.getStarted")}`,
     )
     await getStartedButton.click()
     assert.ok(await $("~Bitcoin:").isDisplayed())
-    assert.ok(await $(`~${translateUnknown("WelcomeFirstScreen.care")}`).isDisplayed())
+    assert.ok(
+      await $(`~${client.translateUnknown("WelcomeFirstScreen.care")}`).isDisplayed(),
+    )
     browser.execute("mobile: swipe", {
       direction: "right",
     })
-    assert.ok(await $(`~${translateUnknown("WelcomeFirstScreen.bank")}`).isDisplayed())
+    assert.ok(
+      await $(`~${client.translateUnknown("WelcomeFirstScreen.bank")}`).isDisplayed(),
+    )
     browser.execute("mobile: swipe", {
       direction: "right",
     })
-    assert.ok(await $(`~${translateUnknown("WelcomeFirstScreen.before")}`).isDisplayed())
+    assert.ok(
+      await $(`~${client.translateUnknown("WelcomeFirstScreen.before")}`).isDisplayed(),
+    )
   })
 })

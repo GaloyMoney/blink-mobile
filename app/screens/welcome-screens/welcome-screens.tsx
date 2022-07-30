@@ -59,24 +59,36 @@ export const WelcomeFirstScreen: ScreenType = ({ navigation }: Props) => (
   <Swiper loop={false} activeDot={<View style={styles.dot} />}>
     <Screen backgroundColor={palette.lightBlue} statusBar="light-content">
       <OnboardingScreen Svg={MascotDollarBitcoin}>
-        <Text style={styles.title} testID="Bitcoin:">
+        <Text style={styles.title} testID="Bitcoin:" accessibilityLabel="Bitcoin:">
           Bitcoin:
         </Text>
-        <Text style={styles.text} testID={translate("WelcomeFirstScreen.care")}>
+        <Text
+          style={styles.text}
+          testID={translate("WelcomeFirstScreen.care")}
+          accessibilityLabel={translate("WelcomeFirstScreen.care")}
+        >
           {translate("WelcomeFirstScreen.care")}
         </Text>
       </OnboardingScreen>
     </Screen>
     <Screen backgroundColor={palette.lightBlue}>
       <OnboardingScreen Svg={BitcoinBitcoin}>
-        <Text style={styles.text} testID={translate("WelcomeFirstScreen.bank")}>
+        <Text
+          style={styles.text}
+          testID={translate("WelcomeFirstScreen.bank")}
+          accessibilityLabel={translate("WelcomeFirstScreen.bank")}
+        >
           {translate("WelcomeFirstScreen.bank")}
         </Text>
       </OnboardingScreen>
     </Screen>
     <Screen backgroundColor={palette.lightBlue} statusBar="light-content">
       <OnboardingScreen Svg={BankShop}>
-        <Text style={styles.text} testID={translate("WelcomeFirstScreen.before")}>
+        <Text
+          style={styles.text}
+          testID={translate("WelcomeFirstScreen.before")}
+          accessibilityLabel={translate("WelcomeFirstScreen.before")}
+        >
           {translate("WelcomeFirstScreen.before")}
         </Text>
       </OnboardingScreen>
