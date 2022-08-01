@@ -1,5 +1,5 @@
 import DestinationIcon from "@app/assets/icons/destination.svg"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-native"
 import { palette } from "@app/theme"
 import { WalletCurrency } from "@app/types/amounts"
@@ -374,27 +374,36 @@ const SendBitcoinConfirmationScreen = ({
 
   let validAmount = false
 
-  if (fee.amount && payerWalletDescriptor.currency === WalletCurrency.BTC) {
-    validAmount = paymentAmountInBtc.amount + fee.amount.amount <= btcWalletBalance
-    if (!validAmount) {
-      setPaymentError(
-        translate("SendBitcoinScreen.amountExceed", {
-          balance: satAmountDisplay(btcWalletBalance),
-        }),
-      )
+  useEffect(() => {
+    if (fee.amount && payerWalletDescriptor.currency === WalletCurrency.BTC) {
+      validAmount = paymentAmountInBtc.amount + fee.amount.amount <= btcWalletBalance
+      if (!validAmount) {
+        setPaymentError(
+          translate("SendBitcoinScreen.amountExceed", {
+            balance: satAmountDisplay(btcWalletBalance),
+          }),
+        )
+      }
     }
-  }
 
-  if (fee.amount && payerWalletDescriptor.currency === WalletCurrency.USD) {
-    validAmount = paymentAmountInUsd.amount + fee.amount.amount <= usdWalletBalance
-    if (!validAmount) {
-      setPaymentError(
-        translate("SendBitcoinScreen.amountExceed", {
-          balance: usdAmountDisplay(usdWalletBalance / 100),
-        }),
-      )
+    if (fee.amount && payerWalletDescriptor.currency === WalletCurrency.USD) {
+      validAmount = paymentAmountInUsd.amount + fee.amount.amount <= usdWalletBalance
+      if (!validAmount) {
+        setPaymentError(
+          translate("SendBitcoinScreen.amountExceed", {
+            balance: usdAmountDisplay(usdWalletBalance / 100),
+          }),
+        )
+      }
     }
-  }
+  }, [
+    fee,
+    payerWalletDescriptor.currency,
+    paymentAmountInBtc,
+    paymentAmountInUsd,
+    btcWalletBalance,
+    usdWalletBalance,
+  ])
 
   return (
     <ScrollView
