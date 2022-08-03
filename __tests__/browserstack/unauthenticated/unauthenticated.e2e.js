@@ -3,10 +3,8 @@ var client = require("@galoymoney/client")
 
 describe("Unauthenticated navigation renders correctly", () => {
   it("Welcome flow", async () => {
-    const getStartedButton = await $(
-      `~${client.translateUnknown("GetStartedScreen.getStarted")}`,
-    )
-    await getStartedButton.click()
+    await $(`~${client.translateUnknown("GetStartedScreen.getStarted")}`).waitForExist()
+    await $(`~${client.translateUnknown("GetStartedScreen.getStarted")}`).click()
     assert.ok(await $("~Bitcoin:").isDisplayed())
     assert.ok(
       await $(`~${client.translateUnknown("WelcomeFirstScreen.care")}`).isDisplayed(),
