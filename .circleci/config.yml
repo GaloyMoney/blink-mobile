@@ -4,7 +4,7 @@ orbs:
   gh: circleci/github-cli@2.0
 
 jobs:
-  android_test:
+  test_android:
     docker:
       - image: cimg/android:2022.06.1
     resource_class: large
@@ -51,100 +51,14 @@ jobs:
           key: yarn-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
+      - run:
+          name: Unit Testing
+          command: yarn test
       - run: echo $RELEASE_KEYSTORE | base64 -d > android/release.keystore
       - run: echo $RELEASE_KEYSTORE | base64 -d > android/app/release.keystore
       - run:
           name: Test Browserstack
           command: cd android && bundle exec fastlane browserstack
-
-  ios_test:
-    macos:
-      xcode: 13.3.0
-    working_directory: ~/galoy-mobile
-    environment:
-      FL_OUTPUT_DIR: output
-    shell: /bin/bash --login -o pipefail
-    steps:
-      - checkout:
-          path: ~/galoy-mobile
-      - add_ssh_keys:
-          fingerprints:
-            - "19:7e:f3:6c:be:a7:17:01:7d:09:ca:39:c3:98:86:90"
-      - restore_cache:
-          key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
-      - run: cd ios && bundle config set deployment 'true'
-      - run: cd ios && bundle check || bundle install
-      - save_cache:
-          key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
-          paths:
-            - ios/vendor
-      - restore_cache:
-          key: 1-yarn-{{ checksum "yarn.lock" }}-pod1-{{ checksum "ios/Podfile.lock" }}
-      - run: yarn install
-      - save_cache:
-          key: 1-yarn-{{ checksum "yarn.lock" }}-pod1-{{ checksum "ios/Podfile.lock" }}
-          paths:
-            - node_modules
-            - ios/Pods
-      # - run: sed -i'' -e "s/GOOGLE_SERVICE_FIREBASE_API_KEY/$GOOGLE_SERVICE_FIREBASE_API_KEY/" ios/GoogleService-Info.plist
-      # - run: sed -i'' -e 's/PROVISIONING_PROFILE_SPECIFIER = "match AppStore io.galoy.bitcoinbeach"/PROVISIONING_PROFILE_SPECIFIER = "match Development io.galoy.bitcoinbeach"/g' ios/GaloyApp.xcodeproj/project.pbxproj
-      - run:
-          name: Test Browserstack
-          command: cd ios && bundle exec fastlane browserstack
-          no_output_timeout: 15m
-
-  build_ios:
-    macos:
-      xcode: 13.3.0
-    working_directory: ~/galoy-mobile
-    environment:
-      FL_OUTPUT_DIR: output
-    shell: /bin/bash --login -o pipefail
-    steps:
-      - gh/install
-      - checkout:
-          path: ~/galoy-mobile
-      - add_ssh_keys:
-          fingerprints:
-            - "19:7e:f3:6c:be:a7:17:01:7d:09:ca:39:c3:98:86:90"
-      - restore_cache:
-          key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
-      - run: cd ios && bundle config set deployment 'true'
-      - run: cd ios && bundle check || bundle install
-      - save_cache:
-          key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
-          paths:
-            - ios/vendor
-      - restore_cache:
-          key: 1-yarn-{{ checksum "yarn.lock" }}-pod1-{{ checksum "ios/Podfile.lock" }}
-      - run: yarn install
-      # - run: git diff "ios/Podfile.lock" | cat
-      - save_cache:
-          key: 1-yarn-{{ checksum "yarn.lock" }}-pod1-{{ checksum "ios/Podfile.lock" }}
-          paths:
-            - node_modules
-            - ios/Pods
-      - run: git checkout main
-      - run: yarn jest
-      - run: sed -i'' -e "s/GOOGLE_SERVICE_FIREBASE_API_KEY/$GOOGLE_SERVICE_FIREBASE_API_KEY/" ios/GoogleService-Info.plist
-      - run: sed -i'' -e "s/MARKETING_VERSION.*/MARKETING_VERSION = $CIRCLE_TAG;/g" ios/GaloyApp.xcodeproj/project.pbxproj
-      - run:
-          name: fastlane
-          command: cd ios && bundle exec fastlane beta
-          no_output_timeout: 15m
-      - run: git config credential.helper 'cache --timeout=120'
-      - run: git config --global user.name "circleci-bot"
-      - run: git config --global user.email "bot@circleci.com"
-      - run: git config pull.rebase false
-      - run: git pull https://${GITHUB_TOKEN}@github.com/GaloyMoney/galoy-mobile.git main
-      - run: git commit -a -m "new ios build [ci skip]"
-      - run: git reset -- GoogleService-Info.plist
-      - run: git push -q https://${GITHUB_TOKEN}@github.com/GaloyMoney/galoy-mobile.git main
-      - run: gh release upload $CIRCLE_TAG "ios/output/gym/Bitcoin Beach.ipa" --clobber
-      - store_artifacts:
-          path: ios/output
-      - store_test_results:
-          path: ios/output/scan
 
   build_android:
     docker:
@@ -193,13 +107,10 @@ jobs:
           key: 2-yarn-{{ checksum "yarn.lock" }}-android
           paths:
             - node_modules
-
-      - run: git checkout main
-      - run: yarn jest
       - run: echo $JAVA_OPTS
       - run: echo $GRADLE_OPTS
       - run: cd android && fastlane android beta
-
+      - run: git checkout main
       - run: git config credential.helper 'cache --timeout=120'
       - run: git config --global user.name "circleci-bot"
       - run: git config --global user.email "bot@circleci.com"
@@ -214,11 +125,98 @@ jobs:
       - store_artifacts:
           path: android/app/build/outputs
 
+  test_ios:
+    macos:
+      xcode: 13.3.0
+    working_directory: ~/galoy-mobile
+    environment:
+      FL_OUTPUT_DIR: output
+    shell: /bin/bash --login -o pipefail
+    steps:
+      - checkout:
+          path: ~/galoy-mobile
+      - add_ssh_keys:
+          fingerprints:
+            - "19:7e:f3:6c:be:a7:17:01:7d:09:ca:39:c3:98:86:90"
+      - restore_cache:
+          key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
+      - run: cd ios && bundle config set deployment 'true'
+      - run: cd ios && bundle check || bundle install
+      - save_cache:
+          key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
+          paths:
+            - ios/vendor
+      - restore_cache:
+          key: 1-yarn-{{ checksum "yarn.lock" }}-pod1-{{ checksum "ios/Podfile.lock" }}
+      - run: yarn install
+      - save_cache:
+          key: 1-yarn-{{ checksum "yarn.lock" }}-pod1-{{ checksum "ios/Podfile.lock" }}
+          paths:
+            - node_modules
+            - ios/Pods
+      - run:
+          name: Unit Testing
+          command: yarn test
+      - run:
+          name: Browserstack Testing
+          command: cd ios && bundle exec fastlane browserstack
+          no_output_timeout: 15m
+
+  build_ios:
+    macos:
+      xcode: 13.3.0
+    working_directory: ~/galoy-mobile
+    environment:
+      FL_OUTPUT_DIR: output
+    shell: /bin/bash --login -o pipefail
+    steps:
+      - gh/install
+      - checkout:
+          path: ~/galoy-mobile
+      - add_ssh_keys:
+          fingerprints:
+            - "19:7e:f3:6c:be:a7:17:01:7d:09:ca:39:c3:98:86:90"
+      - restore_cache:
+          key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
+      - run: cd ios && bundle config set deployment 'true'
+      - run: cd ios && bundle check || bundle install
+      - save_cache:
+          key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
+          paths:
+            - ios/vendor
+      - restore_cache:
+          key: 1-yarn-{{ checksum "yarn.lock" }}-pod1-{{ checksum "ios/Podfile.lock" }}
+      - run: yarn install
+      # - run: git diff "ios/Podfile.lock" | cat
+      - save_cache:
+          key: 1-yarn-{{ checksum "yarn.lock" }}-pod1-{{ checksum "ios/Podfile.lock" }}
+          paths:
+            - node_modules
+            - ios/Pods
+      - run: sed -i'' -e "s/GOOGLE_SERVICE_FIREBASE_API_KEY/$GOOGLE_SERVICE_FIREBASE_API_KEY/" ios/GoogleService-Info.plist
+      - run: sed -i'' -e "s/MARKETING_VERSION.*/MARKETING_VERSION = $CIRCLE_TAG;/g" ios/GaloyApp.xcodeproj/project.pbxproj
+      - run:
+          name: fastlane
+          command: cd ios && bundle exec fastlane beta
+          no_output_timeout: 15m
+      - run: git config credential.helper 'cache --timeout=120'
+      - run: git config --global user.name "circleci-bot"
+      - run: git config --global user.email "bot@circleci.com"
+      - run: git config pull.rebase false
+      - run: git pull https://${GITHUB_TOKEN}@github.com/GaloyMoney/galoy-mobile.git main
+      - run: git commit -a -m "new ios build [ci skip]"
+      - run: git reset -- GoogleService-Info.plist
+      - run: git push -q https://${GITHUB_TOKEN}@github.com/GaloyMoney/galoy-mobile.git main
+      - run: gh release upload $CIRCLE_TAG "ios/output/gym/Bitcoin Beach.ipa" --clobber
+      - store_artifacts:
+          path: ios/output
+      - store_test_results:
+          path: ios/output/scan
+
 workflows:
   mobile:
     jobs:
-      - hold_build_mobile:
-          type: approval
+      - test_ios:
           filters:
             tags:
               only: /^[0-9]+\.[0-9]+\.[0-9]+/
@@ -226,7 +224,8 @@ workflows:
               ignore: /.*/
       - build_ios:
           requires:
-            - hold_build_mobile
+            - test_ios
+      - test_android:
           filters:
             tags:
               only: /^[0-9]+\.[0-9]+\.[0-9]+/
@@ -234,9 +233,4 @@ workflows:
               ignore: /.*/
       - build_android:
           requires:
-            - hold_build_mobile
-          filters:
-            tags:
-              only: /^[0-9]+\.[0-9]+\.[0-9]+/
-            branches:
-              ignore: /.*/
+            - test_android
