@@ -11,7 +11,7 @@ import {
   View,
 } from "react-native"
 import { Screen } from "../../components/screen"
-import { fontSize, typography } from "@app/theme"
+import { color, fontSize, typography } from "@app/theme"
 import { HeaderComponent } from "@app/components/header"
 import { images } from "@app/assets/images"
 import { eng } from "@app/constants/en"
@@ -21,6 +21,7 @@ import DropDownPicker from "react-native-dropdown-picker"
 import { MarketPlaceParamList } from "@app/navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { CustomTextInput } from "@app/components/text-input"
+import TextInputComponent from "@app/components/text-input-component"
 const { width, height } = Dimensions.get("window")
 const IMAGE_WIDTH = width - 32 * 2
 const IMAGE_HEIGHT = IMAGE_WIDTH * 0.635
@@ -29,16 +30,44 @@ interface Props {
 }
 export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
   const dispatch = useDispatch()
-  const [name, setName] = useState("Burger Store")
+  const [name, setName] = useState("")
   const [category, setCategory] = useState("Foods")
   const [description, setDescription] = useState(
-    "The text was prefilled for faster testing",
+    "",
   )
+  const [nameError, setNameError] = useState('')
+  const [descriptionError, setDescriptionError] = useState('')
   const [open, setOpen] = useState(false)
   const [items] = useState([
     { label: "Foods", value: "Foods" },
     { label: "Drinks", value: "Drinks" },
   ])
+const isCorrectInput = ()=>{
+  let nameValid = false
+  let descriptionValid = false
+  console.log('name: ',name,description);
+  
+  if (!name) setNameError('Name is required')
+  else if (name?.length < 2) setNameError('Name must be more than 2 characters')
+  else {
+    nameValid = true
+    setNameError('')
+  }
+
+  if (!description) setDescriptionError('Description is required')
+  else if (description?.length < 2) setDescriptionError('Description must be more than 2 characters')
+  else {
+    descriptionValid = true
+    setDescriptionError('')
+  }
+  
+  return (nameValid && descriptionValid) ? true : false
+}
+  const onNext = () => {
+    if (!isCorrectInput()) return
+    dispatch(setTempStore({ name, description, category }))
+    navigation.navigate("AddImage")
+  }
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Screen style={styles.container} preset="fixed">
@@ -46,12 +75,15 @@ export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
         <Image source={images.backgroundSimple} style={{ width: 177, height: 158 }} />
         <Text style={styles.title}>{eng.register_store}</Text>
         <View style={{ paddingHorizontal: 30, width: "100%" }}>
-          <CustomTextInput
-            placeHolder={"Burger"}
+          <TextInputComponent
             title={"Name"}
+            containerStyle={[{ marginTop: 40 }]}
             onChangeText={setName}
             value={name}
+            placeholder={'Burger'}
+            isError={nameError !== ''}
           />
+          {nameError ? <Text style={styles.errorText}>{nameError}</Text> : null}
           <Text style={styles.labelStyle}>Category</Text>
           <DropDownPicker
             style={styles.dropdownStyle}
@@ -68,20 +100,21 @@ export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
             setOpen={setOpen}
             setValue={setCategory}
           />
-          <CustomTextInput
-            placeHolder={"Description ..."}
+
+          <TextInputComponent
             title={"Description"}
+            placeholder={"Description ..."}
+            containerStyle={[{ marginTop: 20 }]}
             textField={true}
             onChangeText={setDescription}
             value={description}
+            isError={descriptionError !== ''}
           />
+          {descriptionError ? <Text style={styles.errorText}>{descriptionError}</Text> : null}
           <View style={{ alignItems: "flex-end", marginTop: 15 }}>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => {
-                dispatch(setTempStore({ name, description, category }))
-                navigation.navigate("AddImage")
-              }}
+              onPress={onNext}
             >
               <Text style={[styles.text]}>{eng.next}</Text>
             </TouchableOpacity>
@@ -93,6 +126,7 @@ export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
 }
 
 const styles = StyleSheet.create({
+  errorText: { fontFamily: typography.regular, fontSize: fontSize.font12, color: color.darkPink },
   dropdownStyle: {
     borderWidth: 1,
     borderColor: "#EBEBEB",
