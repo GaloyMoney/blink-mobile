@@ -19,7 +19,10 @@ export const typography = {
   italic: Platform.select({ ios: "DMSans-Italic", android: "DMSans-Italic" }),
   regular: Platform.select({ ios: "DMSans-Regular", android: "DMSans-Regular" }),
   medium: Platform.select({ ios: "DMSans-Medium", android: "DMSans-Medium" }),
-  mediumItalic: Platform.select({ ios: "DMSans-MediumItalic", android: "DMSans-MediumItalic" }),
+  mediumItalic: Platform.select({
+    ios: "DMSans-MediumItalic",
+    android: "DMSans-MediumItalic",
+  }),
   bold: Platform.select({ ios: "DMSans-Bold", android: "DMSans-Bold" }),
   boldItalic: Platform.select({ ios: "DMSans-BoldItalic", android: "DMSans-BoldItalic" }),
 }

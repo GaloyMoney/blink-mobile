@@ -117,6 +117,6 @@ export type MarketPlaceParamList = {
   AddImage: undefined
   AddLocation: undefined
   MapScreen: undefined
-  AddContact:undefined
-  ConfirmInformation:undefined
+  AddContact: undefined
+  ConfirmInformation: undefined
 }

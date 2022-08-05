@@ -11,17 +11,14 @@ import { CreatePostScreen } from "@app/screens/create-post/create-post-screen"
 import { MarketPlaceParamList } from "./stack-param-lists"
 import { AddImageScreen } from "@app/screens/create-post/add-images-screen"
 import { AddLocationScreen } from "@app/screens/create-post/location-screen"
-import { MarketPlace } from "@app/screens/map-screen/map-screen"
+import { MarketPlace } from "@app/screens/market-place-screen/market-place-screen"
 import { MapScreen } from "@app/screens/full-view-map-screen/map-screen"
 import { AddContactScreen } from "@app/screens/create-post/add-contact-screen"
 import { ConfirmInformationScreen } from "@app/screens/create-post/confirm-information-screen"
 
-
-
 const MarketPlaceStack = createStackNavigator<MarketPlaceParamList>()
 
 export const MarketPlaceStacks: NavigatorType = () => {
-
   return (
     <MarketPlaceStack.Navigator
       screenOptions={{
@@ -31,30 +28,12 @@ export const MarketPlaceStacks: NavigatorType = () => {
       }}
       initialRouteName={"MarketPlace"}
     >
-      <MarketPlaceStack.Screen
-        name="MarketPlace"
-        component={MarketPlace}
-      />
-      <MarketPlaceStack.Screen
-        name="CreatePost"
-        component={CreatePostScreen}
-      />
-      <MarketPlaceStack.Screen
-        name="AddImage"
-        component={AddImageScreen}
-      />
-      <MarketPlaceStack.Screen
-        name="AddLocation"
-        component={AddLocationScreen}
-      />
-      <MarketPlaceStack.Screen
-        name="MapScreen"
-        component={MapScreen}
-      />
-      <MarketPlaceStack.Screen
-        name="AddContact"
-        component={AddContactScreen}
-      />
+      <MarketPlaceStack.Screen name="MarketPlace" component={MarketPlace} />
+      <MarketPlaceStack.Screen name="CreatePost" component={CreatePostScreen} />
+      <MarketPlaceStack.Screen name="AddImage" component={AddImageScreen} />
+      <MarketPlaceStack.Screen name="AddLocation" component={AddLocationScreen} />
+      <MarketPlaceStack.Screen name="MapScreen" component={MapScreen} />
+      <MarketPlaceStack.Screen name="AddContact" component={AddContactScreen} />
       <MarketPlaceStack.Screen
         name="ConfirmInformation"
         component={ConfirmInformationScreen}

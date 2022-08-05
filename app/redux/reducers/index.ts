@@ -1,4 +1,4 @@
-import storeReducer from './store-reducer'
+import storeReducer from "./store-reducer"
 export const rootReducer = {
-    storeReducer
+  storeReducer,
 }

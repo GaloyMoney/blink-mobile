@@ -534,7 +534,7 @@ export const PrimaryNavigator: NavigatorType = () => {
           title: eng.marketPlace,
           headerShown: false,
           tabBarIcon: ({ color }: TabProps) => (
-            <MarketPlaceSvg stroke={color}/>
+            <MarketPlaceSvg stroke={color} />
             // <Icon name="ios-map-outline" size={size} color={color} />
           ),
         }}
