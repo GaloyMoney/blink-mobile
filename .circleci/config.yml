@@ -22,6 +22,28 @@ jobs:
       - run: sudo apt-get install -y gnupg2 gcc g++ make nodejs
       - run: sudo npm install -g yarn
 
+      - run: sudo apt-get update
+      - run: sudo apt-get install gnupg2
+      - run: curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+      - run: sudo apt-get install -y nodejs
+      - run: sudo apt-get install gcc g++ make
+      - run: sudo npm install -g yarn
+      - run: gpg --keyserver keyserver.ubuntu.com --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+      - run: curl -sL https://get.rvm.io | bash -s stable --ruby
+      - run: source /home/circleci/.rvm/scripts/rvm
+      - run: rvm install 2.7
+      - run: rvm use 2.7 --default
+      - run: gem install fastlane -NV
+
+      - restore_cache:
+          key: 1-gem-{{ checksum "android/Gemfile.lock" }}
+      - run: cd android && bundle config set deployment 'true'
+      - run: cd android && bundle check || bundle install
+      - save_cache:
+          key: 1-gem-{{ checksum "android/Gemfile.lock" }}
+          paths:
+            - android/vendor
+
       - restore_cache:
           key: yarn-{{ checksum "yarn.lock" }}
       - run: yarn install
@@ -29,31 +51,11 @@ jobs:
           key: yarn-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
-
+      - run: echo $RELEASE_KEYSTORE | base64 -d > android/release.keystore
+      - run: echo $RELEASE_KEYSTORE | base64 -d > android/app/release.keystore
       - run:
-          name: Build APK
-          command: cd android && ./gradlew assembleDebug
-      - run:
-          name: App upload and Set app id in environment variable.
-          command: |
-            cd android
-            APP_UPLOAD_RESPONSE=$(curl -u "$BROWSERSTACK_USER:$BROWSERSTACK_ACCESS_KEY" -X POST https://api-cloud.browserstack.com/app-automate/upload -F "file=@app/build/outputs/apk/debug/app-debug.apk")
-            APP_ID=$(echo $APP_UPLOAD_RESPONSE | jq -r ".app_url")
-            if [ $APP_ID != null ]; then
-              echo "Apk uploaded to BrowserStack with app id : ",$APP_ID;
-              echo "export BROWSERSTACK_APP_ID=$APP_ID" >> $BASH_ENV;
-              source $BASH_ENV;
-              echo "Setting value of BROWSERSTACK_APP_ID in environment variables to  ",$APP_ID;
-            else
-              UPLOAD_ERROR_MESSAGE=$(echo $APP_UPLOAD_RESPONSE | jq -r ".error")
-              echo "App upload failed, reason : ",$UPLOAD_ERROR_MESSAGE
-              exit 1;
-            fi
-      - run:
-          name: Run Test on Android
-          command: |
-            yarn start &
-            ./node_modules/.bin/wdio android/browserstack.js
+          name: Test Browserstack
+          command: cd android && bundle exec fastlane browserstack
 
   ios_test:
     macos:
@@ -84,33 +86,12 @@ jobs:
           paths:
             - node_modules
             - ios/Pods
-      - run: sed -i'' -e "s/GOOGLE_SERVICE_FIREBASE_API_KEY/$GOOGLE_SERVICE_FIREBASE_API_KEY/" ios/GoogleService-Info.plist
-      - run: sed -i'' -e 's/PROVISIONING_PROFILE_SPECIFIER = "match AppStore io.galoy.bitcoinbeach"/PROVISIONING_PROFILE_SPECIFIER = "match Development io.galoy.bitcoinbeach"/g' ios/GaloyApp.xcodeproj/project.pbxproj
+      # - run: sed -i'' -e "s/GOOGLE_SERVICE_FIREBASE_API_KEY/$GOOGLE_SERVICE_FIREBASE_API_KEY/" ios/GoogleService-Info.plist
+      # - run: sed -i'' -e 's/PROVISIONING_PROFILE_SPECIFIER = "match AppStore io.galoy.bitcoinbeach"/PROVISIONING_PROFILE_SPECIFIER = "match Development io.galoy.bitcoinbeach"/g' ios/GaloyApp.xcodeproj/project.pbxproj
       - run:
-          name: Build IPA
-          command: cd ios && bundle exec fastlane build_ipa
+          name: Test Browserstack
+          command: cd ios && bundle exec fastlane browserstack
           no_output_timeout: 15m
-      - run:
-          name: App upload and Set app id in environment variable.
-          command: |
-            cd ios
-            APP_UPLOAD_RESPONSE=$(curl -u "$BROWSERSTACK_USER:$BROWSERSTACK_ACCESS_KEY" -X POST https://api-cloud.browserstack.com/app-automate/upload -F "file=@output/gym/Bitcoin Beach.ipa")
-            APP_ID=$(echo $APP_UPLOAD_RESPONSE | jq -r ".app_url")
-            if [ $APP_ID != null ]; then
-              echo "Apk uploaded to BrowserStack with app id : ",$APP_ID;
-              echo "export BROWSERSTACK_APP_ID=$APP_ID" >> $BASH_ENV;
-              source $BASH_ENV;
-              echo "Setting value of BROWSERSTACK_APP_ID in environment variables to  ",$APP_ID;
-            else
-              UPLOAD_ERROR_MESSAGE=$(echo $APP_UPLOAD_RESPONSE | jq -r ".error")
-              echo "App upload failed, reason : ",$UPLOAD_ERROR_MESSAGE
-              exit 1;
-            fi
-      - run:
-          name: Run Test on iOS
-          command: |
-            yarn start &
-            ./node_modules/.bin/wdio ios/browserstack.js
 
   build_ios:
     macos:

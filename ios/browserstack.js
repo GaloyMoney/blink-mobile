@@ -6,7 +6,7 @@ exports.config = {
   key: process.env.BROWSERSTACK_ACCESS_KEY,
 
   updateJob: false,
-  specs: ['__tests__/browserstack/*.e2e.js'],
+  specs: ['../../__tests__/browserstack/*.e2e.js'],
   exclude: [],
 
   capabilities: [{

@@ -70,6 +70,30 @@ platform :android do
     )
   end
 
+  desc "End to end testing on browserstack"
+  lane :browserstack do
+    build_e2e
+    upload_to_browserstack_app_automate(
+      browserstack_username: ENV["BROWSERSTACK_USER"],
+      browserstack_access_key: ENV["BROWSERSTACK_ACCESS_KEY"],
+      file_path: lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH],
+    )
+    sh("npx wdio ../browserstack.js")
+  end
+
+  desc "Build for end to end testing"
+  lane :build_e2e do
+    gradle(
+      task: "clean assemble",
+      build_type: "Release",
+      print_command: false,
+      flags: "--no-daemon --max-workers=8 --stacktrace --info",
+      properties: {
+        "android.injected.version.name" => ENV["CIRCLE_TAG"],
+      }
+    )
+  end
+
 #  desc "Promote Internal to Alpha"
 #  lane :promote_internal_to_alpha do
 #    upload_to_play_store(
