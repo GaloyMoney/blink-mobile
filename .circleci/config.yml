@@ -194,6 +194,8 @@ jobs:
       - run: gh release upload $CIRCLE_TAG "ios/output/gym/Bitcoin Beach.ipa" --clobber
       - store_artifacts:
           path: ios/output
+      - store_test_results:
+          path: ios/output/scan
 
 workflows:
   mobile:
