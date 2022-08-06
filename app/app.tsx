@@ -39,7 +39,7 @@ import "./utils/polyfill"
 import { RootStack } from "./navigation/root-navigator"
 import { isIos } from "./utils/helper"
 import { saveString, loadString } from "./utils/storage"
-import useToken, { getAuthorizationHeader } from "./utils/use-token"
+import useToken, { getAuthorizationHeader } from "./hooks/use-token"
 import { getGraphQLUri, loadNetwork } from "./utils/network"
 import { loadAuthToken, networkVar } from "./graphql/client-only-query"
 import { INetwork } from "./types/network"
@@ -50,11 +50,12 @@ import {
   AppConfigurationContext,
   AppConfiguration,
   loadAppConfig,
-} from "./context/app-configuration"
+} from "./store/app-configuration-context"
 // import moment locale files so we can display dates in the user's language
 import "moment/locale/es"
 import "moment/locale/fr-ca"
 import "moment/locale/pt-br"
+import { PriceContextProvider } from "./store/price-context"
 
 export const BUILD_VERSION = "build_version"
 
@@ -278,30 +279,31 @@ export const App = (): JSX.Element => {
   return (
     <AppConfigurationContext.Provider value={{ appConfig, setAppConfig }}>
       <ApolloProvider client={apolloClient}>
-        <ErrorBoundary FallbackComponent={ErrorScreen}>
-          <NavigationContainer
-            key={token}
-            linking={linking}
-            // fallback={<Text>Loading...</Text>}
-            onStateChange={(state) => {
-              const currentRouteName = getActiveRouteName(state)
+        <PriceContextProvider>
+          <ErrorBoundary FallbackComponent={ErrorScreen}>
+            <NavigationContainer
+              key={token}
+              linking={linking}
+              onStateChange={(state) => {
+                const currentRouteName = getActiveRouteName(state)
 
-              if (routeName !== currentRouteName) {
-                analytics().logScreenView({
-                  screen_name: currentRouteName,
-                  screen_class: currentRouteName,
-                })
-                setRouteName(currentRouteName)
-              }
-            }}
-          >
-            <RootSiblingParent>
-              <GlobalErrorToast />
-              <RootStack />
-              <Toast />
-            </RootSiblingParent>
-          </NavigationContainer>
-        </ErrorBoundary>
+                if (routeName !== currentRouteName) {
+                  analytics().logScreenView({
+                    screen_name: currentRouteName,
+                    screen_class: currentRouteName,
+                  })
+                  setRouteName(currentRouteName)
+                }
+              }}
+            >
+              <RootSiblingParent>
+                <GlobalErrorToast />
+                <RootStack />
+                <Toast />
+              </RootSiblingParent>
+            </NavigationContainer>
+          </ErrorBoundary>
+        </PriceContextProvider>
       </ApolloProvider>
     </AppConfigurationContext.Provider>
   )

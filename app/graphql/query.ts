@@ -1,4 +1,4 @@
-import { ApolloClient, gql } from "@apollo/client"
+import { gql } from "@apollo/client"
 import { MockableApolloClient } from "../types/mockable"
 
 export const USERNAME_AVAILABLE = gql`
@@ -129,17 +129,6 @@ export const TRANSACTIONS_LIST = gql`
   }
   ${TRANSACTION_LIST_FRAGMENT}
 `
-
-export const fetchMainQuery = async (
-  client: ApolloClient<unknown>,
-  variables: { hasToken: boolean },
-): Promise<void> => {
-  await client.query({
-    query: MAIN_QUERY,
-    variables,
-    fetchPolicy: "network-only",
-  })
-}
 
 export const getQuizQuestions = (client: MockableApolloClient, { hasToken }) => {
   const data = client.readQuery({

@@ -12,13 +12,15 @@ import { translateUnknown as translate } from "@galoymoney/client"
 import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme"
-import { formatUsdAmount } from "../../hooks"
 import Icon from "react-native-vector-icons/Ionicons"
 import { BLOCKCHAIN_EXPLORER_URL } from "../../constants/support"
 import { WalletType } from "@app/utils/enum"
 import { WalletSummary } from "@app/components/wallet-summary"
 import { WalletCurrency } from "@app/types/amounts"
-import { paymentAmountToTextWithUnits } from "@app/utils/currencyConversion"
+import {
+  paymentAmountToTextWithUnits,
+  usdAmountDisplay,
+} from "@app/utils/currencyConversion"
 import { TransactionDate } from "@app/components/transaction-date"
 
 const viewInExplorer = (hash: string): Promise<Linking> =>
@@ -152,7 +154,7 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
 
   const feeEntry =
     settlementCurrency === WalletCurrency.BTC
-      ? `${settlementFee} sats ($${formatUsdAmount(settlementFee * usdPerSat)})`
+      ? `${settlementFee} sats (${usdAmountDisplay(settlementFee * usdPerSat)})`
       : paymentAmountToTextWithUnits({
           amount: settlementFee,
           currency: settlementCurrency as WalletCurrency,

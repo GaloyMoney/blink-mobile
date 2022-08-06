@@ -7,12 +7,13 @@ import "react-native-gesture-handler/jestSetup.js"
 import { translateUnknown as translate } from "@galoymoney/client"
 import "@mocks/react-navigation-native"
 import "@mocks/react-native-geetest-module"
-import { WelcomePhoneInputScreen } from "@app/screens/phone-auth-screen"
+import { WelcomePhoneInputScreen } from "../../app/screens/phone-auth-screen"
 import {
   AppConfiguration,
   AppConfigurationContext,
   defaultConfiguration,
-} from "../../app/context/app-configuration"
+} from "../../app/store/app-configuration-context"
+import { PriceContextProvider } from "../../app/store/price-context"
 
 jest.mock("react-native/Libraries/EventEmitter/NativeEventEmitter")
 jest.mock("react-native-fingerprint-scanner", () => ({}))
@@ -30,7 +31,9 @@ describe("WelcomePhoneInputScreen", () => {
         }}
       >
         <MockedProvider cache={cache}>
-          <WelcomePhoneInputScreen />
+          <PriceContextProvider>
+            <WelcomePhoneInputScreen />
+          </PriceContextProvider>
         </MockedProvider>
       </AppConfigurationContext.Provider>,
     )
@@ -45,7 +48,9 @@ describe("WelcomePhoneInputScreen", () => {
         }}
       >
         <MockedProvider cache={cache}>
-          <WelcomePhoneInputScreen />
+          <PriceContextProvider>
+            <WelcomePhoneInputScreen />
+          </PriceContextProvider>
         </MockedProvider>
       </AppConfigurationContext.Provider>,
     )
@@ -63,7 +68,9 @@ describe("WelcomePhoneInputScreen", () => {
         }}
       >
         <MockedProvider cache={cache}>
-          <WelcomePhoneInputScreen />
+          <PriceContextProvider>
+            <WelcomePhoneInputScreen />
+          </PriceContextProvider>
         </MockedProvider>
       </AppConfigurationContext.Provider>,
     )

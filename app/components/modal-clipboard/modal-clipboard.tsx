@@ -19,7 +19,7 @@ import {
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { cache } from "../../graphql/cache"
-import useToken from "../../utils/use-token"
+import useToken from "../../hooks/use-token"
 import type { StackNavigationProp } from "@react-navigation/stack"
 import type { ComponentType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
