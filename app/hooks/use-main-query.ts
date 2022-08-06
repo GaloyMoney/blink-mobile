@@ -1,14 +1,16 @@
 import { useQuery } from "@apollo/client"
 import { MAIN_QUERY } from "@app/graphql/query"
-import useToken from "@app/utils/use-token"
+import useToken from "@app/hooks/use-token"
 import NetInfo from "@react-native-community/netinfo"
 import { translateUnknown as translate } from "@galoymoney/client"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { useAppConfig } from "./use-app-config"
+import { usePriceConversion } from "./use-price-conversion"
 
 const useMainQuery = (): useMainQueryOutput => {
   const { hasToken } = useToken()
   const { appConfig } = useAppConfig()
+  const { convertCurrencyAmount } = usePriceConversion()
   const { data, previousData, error, loading, refetch } = useQuery(MAIN_QUERY, {
     variables: { hasToken },
     fetchPolicy: "cache-and-network",
@@ -53,7 +55,12 @@ const useMainQuery = (): useMainQueryOutput => {
     ? undefined
     : wallets?.find((wallet) => wallet?.__typename === "UsdWallet")
 
-  const btcWalletBalance = btcWallet?.balance
+  const btcWalletBalance = btcWallet?.balance || 0
+  const btcWalletValueInUsd = convertCurrencyAmount({
+    amount: btcWalletBalance,
+    from: "BTC",
+    to: "USD",
+  })
   const usdWalletBalance = usdWallet?.balance ?? 0
   const btcWalletId = btcWallet?.id
   const usdWalletId = usdWallet?.id
@@ -69,6 +76,7 @@ const useMainQuery = (): useMainQueryOutput => {
   return {
     userPreferredLanguage,
     btcWalletBalance,
+    btcWalletValueInUsd,
     usdWalletBalance,
     btcWalletId,
     usdWalletId,

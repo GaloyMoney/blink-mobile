@@ -9,11 +9,11 @@ import { Screen } from "../../components/screen"
 import { color } from "../../theme"
 import { getGraphQLUri, loadNetwork, saveNetwork } from "../../utils/network"
 import { addDeviceToken, requestPermission } from "../../utils/notifications"
-import useToken from "../../utils/use-token"
+import useToken from "../../hooks/use-token"
 import type { ScreenType } from "../../types/jsx"
 import type { INetwork } from "../../types/network"
 import { networkVar } from "../../graphql/client-only-query"
-import { useMySubscription } from "../../hooks"
+import { usePriceConversion } from "../../hooks"
 import useLogout from "../../hooks/use-logout"
 import { GaloyInput } from "@app/components/galoy-input"
 import { useAppConfig } from "@app/hooks/use-app-config"
@@ -31,7 +31,7 @@ const usingHermes = typeof HermesInternal === "object" && HermesInternal !== nul
 
 export const DebugScreen: ScreenType = () => {
   const client = useApolloClient()
-  const { usdPerSat } = useMySubscription()
+  const { usdPerSat } = usePriceConversion()
   const { hasToken, tokenUid, tokenNetwork, saveToken } = useToken()
   const { logout } = useLogout()
   const [token, setToken] = React.useState()

@@ -7,7 +7,6 @@ import { GaloyGQL, translateUnknown as translate, useMutation } from "@galoymone
 import { Status } from "./send-bitcoin.types"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { useWalletBalance } from "@app/hooks"
 import useFee from "./use-fee"
 import {
   paymentAmountToDollarsOrSats,
@@ -20,6 +19,7 @@ import { FakeCurrencyInput } from "react-native-currency-input"
 import { Button } from "react-native-elements"
 import NoteIcon from "@app/assets/icons/note.svg"
 import { CommonActions } from "@react-navigation/native"
+import useMainQuery from "@app/hooks/use-main-query"
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -186,6 +186,7 @@ const SendBitcoinConfirmationScreen = ({
     note,
   } = route.params
 
+  const { usdWalletBalance, btcWalletBalance, btcWalletValueInUsd } = useMainQuery()
   const isNoAmountInvoice = fixedAmount === undefined
   const [, setStatus] = useState<Status>(Status.IDLE)
 
@@ -194,7 +195,6 @@ const SendBitcoinConfirmationScreen = ({
       ? paymentAmountInBtc
       : paymentAmountInUsd
 
-  const { usdWalletBalance, btcWalletBalance, btcWalletValueInUsd } = useWalletBalance()
   const [paymentError, setPaymentError] = useState<string | undefined>(undefined)
 
   const [intraLedgerPaymentSend, { loading: intraledgerLoading }] =

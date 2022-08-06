@@ -21,7 +21,7 @@ import { ContactStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
 import { ScreenType } from "../../types/jsx"
 import { toastShow } from "../../utils/toast"
-import useToken from "../../utils/use-token"
+import useToken from "../../hooks/use-token"
 // TODO: get rid of this wrapper once SearchBar props are figured out ref: https://github.com/react-native-elements/react-native-elements/issues/3089
 const SafeSearchBar = SearchBar as unknown as React.FC<
   SearchBarBaseProps | SearchBarDefaultProps | SearchBarAndroidProps | SearchBarIosProps

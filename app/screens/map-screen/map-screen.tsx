@@ -14,7 +14,7 @@ import { isIos } from "../../utils/helper"
 import { translateUnknown as translate } from "@galoymoney/client"
 import { palette } from "../../theme/palette"
 import { toastShow } from "../../utils/toast"
-import useToken from "../../utils/use-token"
+import useToken from "../../hooks/use-token"
 
 const QUERY_BUSINESSES = gql`
   query businessMapMarkers {

@@ -16,7 +16,7 @@ import { AuthenticationScreenPurpose, PinScreenPurpose } from "../../utils/enum"
 import { showModalClipboardIfValidPayment } from "../../utils/clipboard"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
-import useToken from "../../utils/use-token"
+import useToken from "../../hooks/use-token"
 
 import BitcoinBeachLogo from "../get-started-screen/bitcoin-beach-logo.png"
 import useLogout from "../../hooks/use-logout"

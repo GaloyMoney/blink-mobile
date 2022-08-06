@@ -1,12 +1,12 @@
 import { PaymentAmount, WalletCurrency } from "@app/types/amounts"
 import React from "react"
-import { useMySubscription } from "./user-hooks"
+import { usePriceConversion } from "./use-price-conversion"
 
 export const useUsdBtcAmount = (initialAmount?: PaymentAmount<WalletCurrency>) => {
   const [paymentAmount, setPaymentAmount] = React.useState<PaymentAmount<WalletCurrency>>(
     initialAmount || { amount: 0, currency: WalletCurrency.USD },
   )
-  const { convertPaymentAmount } = useMySubscription()
+  const { convertPaymentAmount } = usePriceConversion()
 
   const btcAmount = React.useMemo(() => {
     return paymentAmount.currency === WalletCurrency.BTC

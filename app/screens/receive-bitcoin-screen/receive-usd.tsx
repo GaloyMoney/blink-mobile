@@ -1,4 +1,4 @@
-import { useMySubscription } from "@app/hooks"
+import { useSubscriptionUpdates } from "@app/hooks"
 import useMainQuery from "@app/hooks/use-main-query"
 import { palette } from "@app/theme"
 import { getFullUri, TYPE_LIGHTNING_USD } from "@app/utils/wallet"
@@ -142,7 +142,7 @@ const ReceiveUsd = () => {
   >(null)
   const [usdAmount, setUsdAmount] = useState(0)
   const [memo, setMemo] = useState("")
-  const { lnUpdate } = useMySubscription()
+  const { lnUpdate } = useSubscriptionUpdates()
   const [showMemoInput, setShowMemoInput] = useState(false)
   const [showAmountInput, setShowAmountInput] = useState(false)
 

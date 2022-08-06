@@ -8,7 +8,7 @@ import { translateUnknown as translate } from "@galoymoney/client"
 
 import { color, palette } from "@app/theme"
 import useMainQuery from "@app/hooks/use-main-query"
-import { useMySubscription, useWalletBalance } from "@app/hooks"
+import { usePriceConversion } from "@app/hooks"
 import SwitchButton from "@app/assets/icons/transfer.svg"
 import {
   paymentAmountToDollarsOrSats,
@@ -25,9 +25,14 @@ export const ConversionDetailsScreen = ({
   route,
   navigation,
 }: StackScreenProps<RootStackParamList, "conversionDetails">) => {
-  const { wallets, defaultWalletId } = useMainQuery()
-  const { usdWalletBalance, btcWalletBalance, btcWalletValueInUsd } = useWalletBalance()
-  const { usdPerBtc } = useMySubscription()
+  const {
+    wallets,
+    defaultWalletId,
+    usdWalletBalance,
+    btcWalletBalance,
+    btcWalletValueInUsd,
+  } = useMainQuery()
+  const { usdPerBtc } = usePriceConversion()
   const [fromWallet, setFromWallet] = useState<WalletDescriptor<WalletCurrency>>()
   const [toWallet, setToWallet] = useState<WalletDescriptor<WalletCurrency>>()
   const {
@@ -84,7 +89,7 @@ export const ConversionDetailsScreen = ({
     if (fromWallet.currency === WalletCurrency.USD) {
       setActiveCurrencyInput(WalletCurrency.USD)
     }
-  }, [fromWallet?.currency])
+  }, [fromWallet])
 
   const switchWallets = () => {
     setAmountFieldError(undefined)

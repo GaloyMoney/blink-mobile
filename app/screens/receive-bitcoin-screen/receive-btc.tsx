@@ -1,4 +1,4 @@
-import { useMySubscription } from "@app/hooks"
+import { usePriceConversion, useSubscriptionUpdates } from "@app/hooks"
 import useMainQuery from "@app/hooks/use-main-query"
 import { getFullUri, TYPE_LIGHTNING_BTC, TYPE_BITCOIN_ONCHAIN } from "@app/utils/wallet"
 import { GaloyGQL, translateUnknown as translate, useMutation } from "@galoymoney/client"
@@ -161,9 +161,9 @@ const ReceiveBtc = () => {
   const [paymentLayer, setPaymentLayer] = useState<"BITCOIN_ONCHAIN" | "LIGHTNING_BTC">(
     TYPE_LIGHTNING_BTC,
   )
-
+  const { convertCurrencyAmount } = usePriceConversion()
   const { btcWalletId } = useMainQuery()
-  const { lnUpdate, convertCurrencyAmount } = useMySubscription()
+  const { lnUpdate } = useSubscriptionUpdates()
 
   const [lnNoAmountInvoiceCreate] = useMutation.lnNoAmountInvoiceCreate()
   const [lnInvoiceCreate] = useMutation.lnInvoiceCreate()
