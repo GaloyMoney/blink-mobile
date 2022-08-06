@@ -177,7 +177,6 @@ jobs:
       - restore_cache:
           key: 1-yarn-{{ checksum "yarn.lock" }}-pod1-{{ checksum "ios/Podfile.lock" }}
       - run: yarn install
-      # - run: git diff "ios/Podfile.lock" | cat
       - save_cache:
           key: 1-yarn-{{ checksum "yarn.lock" }}-pod1-{{ checksum "ios/Podfile.lock" }}
           paths:
@@ -215,6 +214,11 @@ workflows:
       - build_ios:
           requires:
             - test_ios
+          filters:
+            tags:
+              only: /^[0-9]+\.[0-9]+\.[0-9]+/
+            branches:
+              ignore: /.*/
       - test_android:
           filters:
             tags:
@@ -224,3 +228,8 @@ workflows:
       - build_android:
           requires:
             - test_android
+          filters:
+            tags:
+              only: /^[0-9]+\.[0-9]+\.[0-9]+/
+            branches:
+              ignore: /.*/
