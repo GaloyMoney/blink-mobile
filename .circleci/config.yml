@@ -84,12 +84,6 @@ jobs:
       - run: echo $RELEASE_KEYSTORE | base64 -d > android/release.keystore
       - run: echo $RELEASE_KEYSTORE | base64 -d > android/app/release.keystore
 
-      - run: node -v
-      - run: npm -v
-      - run: ruby -v
-      - run: fastlane -v
-      - run: yarn -v
-
       - restore_cache:
           key: 2-yarn-{{ checksum "yarn.lock" }}-android
       - run: yarn install
