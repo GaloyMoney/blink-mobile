@@ -2,7 +2,7 @@ import * as React from "react"
 import { useState, useEffect } from "react"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { ListItem } from "react-native-elements"
-import { Text } from "react-native"
+import { Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 import { IconTransaction } from "../icon-transactions"
@@ -25,13 +25,17 @@ const styles = EStyleSheet.create({
     overflow: "hidden",
   },
   containerFirst: {
+    overflow: "hidden",
     borderTopLeftRadius: "12rem",
     borderTopRightRadius: "12rem",
   },
   containerLast: {
-    borderBottomWitdth: 0,
+    overflow: "hidden",
     borderBottomLeftRadius: "12rem",
     borderBottomRightRadius: "12rem",
+  },
+  lastListItemContainer: {
+    borderBottomWidth: 0,
   },
   hiddenBalanceContainer: {
     fontSize: "16rem",
@@ -121,49 +125,53 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
   const pressTxAmount = () => setTxHideBalance((prev) => !prev)
 
   return (
-    <ListItem
-      containerStyle={[
-        styles.container,
-        isFirst ? styles.containerFirst : {},
-        isLast ? styles.containerLast : {},
-      ]}
-      onPress={() =>
-        navigation.navigate("transactionDetail", {
-          ...tx,
-          walletType: tx.settlementCurrency,
-          isReceive,
-          isPending,
-          description,
-          usdAmount,
-        })
-      }
+    <View
+      style={[isLast ? styles.containerLast : {}, isFirst ? styles.containerFirst : {}]}
     >
-      <IconTransaction
-        onChain={tx.settlementVia.__typename === "SettlementViaOnChain"}
-        isReceive={isReceive}
-        pending={isPending}
-        walletType={tx.settlementCurrency as WalletType}
-      />
-      <ListItem.Content>
-        <ListItem.Title>{description}</ListItem.Title>
-        <ListItem.Subtitle>
-          {subtitle ? (
-            <TransactionDate tx={tx} diffDate={true} friendly={true} />
-          ) : undefined}
-        </ListItem.Subtitle>
-      </ListItem.Content>
-      {txHideBalance ? (
-        <Icon style={styles.hiddenBalanceContainer} name="eye" onPress={pressTxAmount} />
-      ) : (
-        <Text
-          style={amountDisplayStyle({ isReceive, isPending })}
-          onPress={hideBalance ? pressTxAmount : undefined}
-        >
-          {primaryCurrency === "BTC" && tx.settlementCurrency === WalletCurrency.BTC
-            ? satAmountDisplay(tx.settlementAmount)
-            : usdAmountDisplay(usdAmount)}
-        </Text>
-      )}
-    </ListItem>
+      <ListItem
+        containerStyle={[styles.container, isLast ? styles.lastListItemContainer : {}]}
+        onPress={() =>
+          navigation.navigate("transactionDetail", {
+            ...tx,
+            walletType: tx.settlementCurrency,
+            isReceive,
+            isPending,
+            description,
+            usdAmount,
+          })
+        }
+      >
+        <IconTransaction
+          onChain={tx.settlementVia.__typename === "SettlementViaOnChain"}
+          isReceive={isReceive}
+          pending={isPending}
+          walletType={tx.settlementCurrency as WalletType}
+        />
+        <ListItem.Content>
+          <ListItem.Title>{description}</ListItem.Title>
+          <ListItem.Subtitle>
+            {subtitle ? (
+              <TransactionDate tx={tx} diffDate={true} friendly={true} />
+            ) : undefined}
+          </ListItem.Subtitle>
+        </ListItem.Content>
+        {txHideBalance ? (
+          <Icon
+            style={styles.hiddenBalanceContainer}
+            name="eye"
+            onPress={pressTxAmount}
+          />
+        ) : (
+          <Text
+            style={amountDisplayStyle({ isReceive, isPending })}
+            onPress={hideBalance ? pressTxAmount : undefined}
+          >
+            {primaryCurrency === "BTC" && tx.settlementCurrency === WalletCurrency.BTC
+              ? satAmountDisplay(tx.settlementAmount)
+              : usdAmountDisplay(usdAmount)}
+          </Text>
+        )}
+      </ListItem>
+    </View>
   )
 }
