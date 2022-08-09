@@ -18,7 +18,7 @@ import useMainQuery from "@app/hooks/use-main-query"
 import { WalletType } from "@app/utils/enum"
 
 const styles = EStyleSheet.create({
-  actionsContainer: { paddingBottom: 18 },
+  actionsContainer: { marginBottom: "15rem", backgroundColor: palette.lighterGrey },
 
   amount: {
     color: palette.white,
@@ -33,6 +33,12 @@ const styles = EStyleSheet.create({
   amountView: {
     alignItems: "center",
     paddingBottom: "6rem",
+    backgroundColor: palette.coolGrey,
+    paddingTop: 40,
+  },
+
+  contactBodyContainer: {
+    flex: 1,
   },
 
   icon: { margin: 0 },
@@ -40,6 +46,8 @@ const styles = EStyleSheet.create({
   inputContainer: {
     flexDirection: "row",
   },
+
+  screen: {},
 
   inputStyle: { textAlign: "center", textDecorationLine: "underline" },
 
@@ -98,7 +106,7 @@ export const ContactsDetailScreenJSX: ScreenType = ({
 
   return (
     <Screen style={styles.screen} unsafe>
-      <View style={[styles.amountView, { backgroundColor: palette.green }]}>
+      <View style={styles.amountView}>
         <Icon
           name="ios-person-outline"
           size={86}
@@ -109,7 +117,7 @@ export const ContactsDetailScreenJSX: ScreenType = ({
           <Input
             style={styles.amount}
             inputStyle={styles.inputStyle}
-            inputContainerStyle={{ borderColor: palette.green }}
+            inputContainerStyle={{ borderColor: palette.coolGrey }}
             onChangeText={setContactName}
             onSubmitEditing={updateName}
             onBlur={updateName}
@@ -122,33 +130,38 @@ export const ContactsDetailScreenJSX: ScreenType = ({
           contact.username
         }`}</Text>
       </View>
-      <View style={styles.transactionsView}>
-        <Text style={styles.screenTitle}>
-          {translate("ContactDetailsScreen.title", {
-            input: contact.alias,
-          })}
-        </Text>
-        <ContactTransactionsDataInjected
-          navigation={navigation}
-          contactUsername={contact.username}
-        />
+      <View style={styles.contactBodyContainer}>
+        <View style={styles.transactionsView}>
+          <Text style={styles.screenTitle}>
+            {translate("ContactDetailsScreen.title", {
+              input: contact.alias,
+            })}
+          </Text>
+          <ContactTransactionsDataInjected
+            navigation={navigation}
+            contactUsername={contact.username}
+          />
+        </View>
+        <View style={styles.actionsContainer}>
+          <LargeButton
+            title={translate("MoveMoneyScreen.send")}
+            icon={
+              <IconTransaction
+                isReceive={false}
+                walletType={WalletType.BTC}
+                pending={false}
+                onChain={false}
+              />
+            }
+            onPress={() =>
+              navigation.navigate("sendBitcoinDestination", {
+                username: contact.username,
+              })
+            }
+          />
+        </View>
       </View>
-      <View style={styles.actionsContainer}>
-        <LargeButton
-          title={translate("MoveMoneyScreen.send")}
-          icon={
-            <IconTransaction
-              isReceive={false}
-              walletType={WalletType.BTC}
-              pending={false}
-              onChain={false}
-            />
-          }
-          onPress={() =>
-            navigation.navigate("sendBitcoinDestination", { username: contact.username })
-          }
-        />
-      </View>
+
       <CloseCross color={palette.white} onPress={navigation.goBack} />
     </Screen>
   )
