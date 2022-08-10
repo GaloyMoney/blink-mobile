@@ -2,7 +2,7 @@ import * as React from "react"
 import { useReactiveVar } from "@apollo/client"
 import jwtDecode from "jwt-decode"
 
-import { saveString } from "./storage"
+import { saveString } from "../utils/storage"
 import type { INetwork } from "../types/network"
 import { authTokenVar } from "../graphql/client-only-query"
 

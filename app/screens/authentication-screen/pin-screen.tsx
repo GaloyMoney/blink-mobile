@@ -17,7 +17,7 @@ import { showModalClipboardIfValidPayment } from "../../utils/clipboard"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { RouteProp } from "@react-navigation/native"
-import useToken from "../../utils/use-token"
+import useToken from "../../hooks/use-token"
 import useLogout from "../../hooks/use-logout"
 import useMainQuery from "@app/hooks/use-main-query"
 

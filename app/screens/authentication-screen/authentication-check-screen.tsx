@@ -15,7 +15,7 @@ import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
 
 import BitcoinBeachLogo from "../get-started-screen/bitcoin-beach-logo.png"
-import useToken from "../../utils/use-token"
+import useToken from "../../hooks/use-token"
 import useMainQuery from "@app/hooks/use-main-query"
 
 const styles = EStyleSheet.create({

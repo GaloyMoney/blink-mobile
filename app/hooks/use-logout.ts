@@ -4,7 +4,7 @@ import { BUILD_VERSION } from "../app"
 import { authTokenVar } from "../graphql/client-only-query"
 import { NETWORK_STRING } from "../utils/network"
 import KeyStoreWrapper from "../utils/storage/secureStorage"
-import { TOKEN_KEY } from "../utils/use-token"
+import { TOKEN_KEY } from "./use-token"
 
 const useLogout = () => {
   const client = useApolloClient()
@@ -13,7 +13,6 @@ const useLogout = () => {
     try {
       await client.clearStore()
       authTokenVar(null)
-      // await AsyncStorage.clear()
       await AsyncStorage.multiRemove([NETWORK_STRING, TOKEN_KEY, BUILD_VERSION]) // use storage.ts wrapper
       await KeyStoreWrapper.removeIsBiometricsEnabled()
       await KeyStoreWrapper.removePin()

@@ -2,7 +2,7 @@ import {
   AppConfiguration,
   AppConfigurationContext,
   saveAppConfig,
-} from "@app/context/app-configuration"
+} from "@app/store/app-configuration-context"
 import { useContext } from "react"
 
 export const useAppConfig = () => {

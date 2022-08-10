@@ -29,7 +29,7 @@ import { palette } from "../../theme/palette"
 import { AccountType } from "../../utils/enum"
 import { isIos } from "../../utils/helper"
 import { ScreenType } from "../../types/jsx"
-import useToken from "../../utils/use-token"
+import useToken from "../../hooks/use-token"
 import { StackNavigationProp } from "@react-navigation/stack"
 import {
   PrimaryStackParamList,
@@ -44,7 +44,6 @@ import PriceIcon from "@app/assets/icons/price.svg"
 import SettingsIcon from "@app/assets/icons/settings.svg"
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs"
 import { CompositeNavigationProp } from "@react-navigation/native"
-import { useWalletBalance } from "@app/hooks"
 
 const styles = EStyleSheet.create({
   bottom: {
@@ -158,13 +157,15 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
   const {
     mobileVersions,
     mergedTransactions,
+    btcWalletBalance,
+    btcWalletValueInUsd,
+    usdWalletBalance,
     errors,
     loading: loadingMain,
     refetch,
     usdWalletId,
   } = useMainQuery()
 
-  const { btcWalletBalance, btcWalletValueInUsd, usdWalletBalance } = useWalletBalance()
   // temporary fix until we have a better management of notifications:
   // when coming back to active state. look if the invoice has been paid
   useEffect(() => {

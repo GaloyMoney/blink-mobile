@@ -13,6 +13,7 @@ type mobileVersions = {
 type useMainQueryOutput = {
   userPreferredLanguage: string
   btcWalletBalance: number
+  btcWalletValueInUsd: number
   usdWalletBalance: number
   btcWalletId: string
   usdWalletId: string

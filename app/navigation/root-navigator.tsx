@@ -42,7 +42,7 @@ import { WelcomeFirstScreen } from "../screens/welcome-screens"
 import { palette } from "../theme/palette"
 import { AccountType } from "../utils/enum"
 import { addDeviceToken } from "../utils/notifications"
-import useToken from "../utils/use-token"
+import useToken from "../hooks/use-token"
 import { showModalClipboardIfValidPayment } from "../utils/clipboard"
 import {
   ContactStackParamList,

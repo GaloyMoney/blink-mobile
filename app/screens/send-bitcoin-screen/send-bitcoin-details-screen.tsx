@@ -14,7 +14,7 @@ import { fetchLnurlInvoice, translateUnknown as translate } from "@galoymoney/cl
 import { Satoshis } from "lnurl-pay/dist/types/types"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { useMySubscription, useWalletBalance } from "@app/hooks"
+import { usePriceConversion } from "@app/hooks"
 import {
   paymentAmountToDollarsOrSats,
   satAmountDisplay,
@@ -200,7 +200,13 @@ const SendBitcoinDetailsScreen = ({
     sameNode,
   } = route.params
 
-  const { defaultWallet, usdWalletId } = useMainQuery()
+  const {
+    defaultWallet,
+    usdWalletId,
+    btcWalletBalance,
+    btcWalletValueInUsd,
+    usdWalletBalance,
+  } = useMainQuery()
   const [amountCurrency, setAmountCurrency] = useState<WalletCurrency>(
     fixedAmount ? WalletCurrency.BTC : WalletCurrency.USD,
   )
@@ -222,7 +228,6 @@ const SendBitcoinDetailsScreen = ({
 
   const [isModalVisible, setIsModalVisible] = useState(false)
   const { wallets } = useMainQuery()
-  const { usdWalletBalance, btcWalletBalance, btcWalletValueInUsd } = useWalletBalance()
   const [centAmount, setCentAmount] = useState<PaymentAmount<WalletCurrency.USD>>({
     amount: 0,
     currency: WalletCurrency.USD,
@@ -237,7 +242,7 @@ const SendBitcoinDetailsScreen = ({
     setSatAmount({ amount: sats, currency: WalletCurrency.BTC })
   }
 
-  const { convertPaymentAmount } = useMySubscription()
+  const { convertPaymentAmount } = usePriceConversion()
   const [errorMessage, setErrorMessage] = useState("")
   const [validAmount, setValidAmount] = useState(false)
   const usdDisabled = paymentType === "onchain" || usdWalletId === undefined
