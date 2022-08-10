@@ -1,7 +1,7 @@
 import { useApolloClient } from "@apollo/client"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
-import { StatusBar, StyleSheet, Text, View } from "react-native"
+import { StyleSheet, Text, View } from "react-native"
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler"
 import { SvgProps } from "react-native-svg"
 import { MountainHeader } from "../../components/mountain-header"
@@ -9,7 +9,6 @@ import { Screen } from "../../components/screen"
 import { getQuizQuestions } from "../../graphql/query"
 import { getLocale, translateUnknown as translate } from "@galoymoney/client"
 import { PrimaryStackParamList } from "../../navigation/stack-param-lists"
-import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { ComponentType, ScreenType } from "../../types/jsx"
 import useToken from "../../hooks/use-token"
@@ -127,26 +126,6 @@ export const EarnMapDataInjected: ScreenType = ({ navigation }: EarnMapDataProps
   const { hasToken } = useToken()
   const client = useApolloClient()
   const quizQuestions = getQuizQuestions(client, { hasToken })
-
-  React.useEffect(() => {
-    const unsubscribe = navigation?.addListener("focus", () => {
-      StatusBar.setBackgroundColor(color.transparent)
-      StatusBar.setBarStyle("light-content")
-      StatusBar.setTranslucent(true)
-    })
-
-    return unsubscribe
-  }, [navigation])
-
-  React.useEffect(() => {
-    const unsubscribe = navigation?.addListener("blur", () => {
-      StatusBar.setTranslucent(false)
-      StatusBar.setBarStyle("dark-content")
-      StatusBar.setBackgroundColor(palette.lighterGrey)
-    })
-
-    return unsubscribe
-  }, [navigation])
 
   if (!quizQuestions.allQuestions) {
     return null
