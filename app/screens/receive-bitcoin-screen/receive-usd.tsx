@@ -163,7 +163,7 @@ const ReceiveUsd = () => {
         if (invoice) {
           resetCountdownTimer(
             getLightningInvoiceExpiryTime(decodeInvoiceString(invoice.paymentRequest)) -
-            Math.round(Date.now() / 1000),
+              Math.round(Date.now() / 1000),
             () => setStatus("expired"),
           )
         }
