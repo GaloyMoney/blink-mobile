@@ -308,7 +308,7 @@ export const MoveMoneyScreen: ScreenType = ({
 
   const TRANSACTIONS_TO_SHOW = 3
 
-  if (hasToken && transactionsEdges) {
+  if (hasToken && transactionsEdges?.length) {
     recentTransactionsData = {
       title: translate("TransactionScreen.title"),
       target: "transactionHistory",

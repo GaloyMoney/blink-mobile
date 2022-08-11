@@ -5,7 +5,6 @@ import { ActivityIndicator, SectionList, Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
-import { Screen } from "../../components/screen"
 import { TransactionItem } from "../../components/transaction-item"
 import { nextPrefCurrency, prefCurrencyVar } from "../../graphql/client-only-query"
 import {
@@ -39,14 +38,15 @@ const styles = EStyleSheet.create({
     flexDirection: "row",
   },
   screen: {
+    paddingHorizontal: "18rem",
     backgroundColor: palette.lighterGrey,
-    padding: "18rem",
   },
   sectionHeaderContainer: {
     color: palette.darkGrey,
+    backgroundColor: palette.lighterGrey,
     flexDirection: "row",
     justifyContent: "space-between",
-    padding: 22,
+    padding: 18,
   },
 
   sectionHeaderText: {
@@ -189,7 +189,7 @@ export const TransactionScreen: ScreenType = ({
   loading,
   refetch,
 }: TransactionScreenProps) => (
-  <Screen style={styles.screen}>
+  <View style={styles.screen}>
     <SectionList
       showsVerticalScrollIndicator={false}
       style={styles.transactionGroup}
@@ -238,5 +238,5 @@ export const TransactionScreen: ScreenType = ({
       onRefresh={() => refetch()}
       refreshing={loading}
     />
-  </Screen>
+  </View>
 )

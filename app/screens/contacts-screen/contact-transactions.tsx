@@ -5,7 +5,6 @@ import { SectionList, Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
-import { Screen } from "../../components/screen"
 import { TransactionItem } from "../../components/transaction-item"
 import { nextPrefCurrency, prefCurrencyVar } from "../../graphql/client-only-query"
 import { translateUnknown as translate, useQuery } from "@galoymoney/client"
@@ -35,15 +34,21 @@ const styles = EStyleSheet.create({
   },
 
   screen: {
-    backgroundColor: palette.white,
+    flex: 1,
+    backgroundColor: palette.lighterGrey,
+    borderRadius: "10rem",
+    borderColor: palette.lightGrey,
+    borderWidth: 2,
+    overflow: "hidden",
   },
 
+  contactTransactionListContainer: {},
   sectionHeaderContainer: {
-    backgroundColor: palette.white,
+    backgroundColor: palette.lighterGrey,
     color: palette.darkGrey,
     flexDirection: "row",
     justifyContent: "space-between",
-    padding: 22,
+    padding: 10,
   },
 
   sectionHeaderText: {
@@ -177,8 +182,9 @@ export const ContactTransactions: ScreenType = ({
   sections,
   fetchNextTransactionsPage,
 }: ContactTransactionsProps) => (
-  <Screen style={styles.screen}>
+  <View style={styles.screen}>
     <SectionList
+      style={styles.contactTransactionListContainer}
       renderItem={({ item }) => (
         <TransactionItem key={`txn-${item.id}`} navigation={navigation} tx={item} />
       )}
@@ -215,5 +221,5 @@ export const ContactTransactions: ScreenType = ({
       onEndReached={fetchNextTransactionsPage}
       onEndReachedThreshold={0.5}
     />
-  </Screen>
+  </View>
 )
