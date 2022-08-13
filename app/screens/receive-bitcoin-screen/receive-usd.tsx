@@ -153,22 +153,20 @@ const ReceiveUsd = () => {
   const { lnUpdate } = useSubscriptionUpdates()
   const [showMemoInput, setShowMemoInput] = useState(false)
   const [showAmountInput, setShowAmountInput] = useState(false)
-  const { timeLeft, startCountdownTimer, resetCountdownTimer, stopCountdownTimer } = useCountdownTimer()
-  console.log(timeLeft)
+  const { timeLeft, startCountdownTimer, resetCountdownTimer, stopCountdownTimer } =
+    useCountdownTimer()
   useEffect(() => {
     if (invoice && usdAmount > 0) {
       const subscription = AppState.addEventListener("change", (nextAppState) => {
         if (appState.current.match(/inactive|background/) && nextAppState === "active") {
-          const timeUntilInvoiceExpires = getLightningInvoiceExpiryTime(decodeInvoiceString(invoice.paymentRequest)) -
+          const timeUntilInvoiceExpires =
+            getLightningInvoiceExpiryTime(decodeInvoiceString(invoice.paymentRequest)) -
             Math.round(Date.now() / 1000)
           if (timeUntilInvoiceExpires <= 0) {
             setStatus("expired")
             stopCountdownTimer()
           }
-          resetCountdownTimer(
-            timeUntilInvoiceExpires,
-            () => setStatus("expired"),
-          )
+          resetCountdownTimer(timeUntilInvoiceExpires, () => setStatus("expired"))
         }
         appState.current = nextAppState
       })
@@ -184,7 +182,8 @@ const ReceiveUsd = () => {
       const callback = () => {
         setStatus("expired")
       }
-      const timeUntilInvoiceExpires = getLightningInvoiceExpiryTime(decodeInvoiceString(invoice.paymentRequest)) -
+      const timeUntilInvoiceExpires =
+        getLightningInvoiceExpiryTime(decodeInvoiceString(invoice.paymentRequest)) -
         Math.round(Date.now() / 1000)
       if (timeUntilInvoiceExpires <= 0) {
         callback()
