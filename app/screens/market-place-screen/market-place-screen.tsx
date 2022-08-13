@@ -34,10 +34,14 @@ export const MarketPlace: ScreenType = ({ navigation }: Props) => {
     <SafeAreaView style={{ flex: 1 }}>
       <Screen style={styles.screenContainer}>
         <View style={styles.contentContainer}>
-          <Row containerStyle={styles.rowContainer}>
-            <TextInput style={styles.searchText} placeholder={eng.search} />
-            <FilterSvg />
-          </Row>
+            <Row containerStyle={styles.rowContainer}>
+              <TextInput style={styles.searchText} placeholder={eng.search} editable={false}
+              onPressIn={()=>{
+                navigation.navigate('StoreList')
+              }}
+              />
+              <FilterSvg />
+            </Row>
           <View style={styles.imageRow}>
             <Image
               source={images.group}

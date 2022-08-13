@@ -4,4 +4,5 @@ export const images = {
   placeholderImage: require("./place-holder-image.png"),
   landscapePlaceholderImage: require("./landscape-placeholder.png"),
   uploadIcon: require("./upload-icon.png"),
+  tempStore: require("./temp-store.png"),
 }

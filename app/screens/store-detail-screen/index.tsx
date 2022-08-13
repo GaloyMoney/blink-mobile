@@ -18,8 +18,8 @@ import { HeaderComponent } from "@app/components/header"
 import { images } from "@app/assets/images"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "@app/redux"
-import { FooterCreatePost } from "./footer"
-import { MarketPlaceParamList } from "@app/navigation/stack-param-lists"
+import { FooterCreatePost } from "../create-post/footer"
+import { MarketPlaceParamList, RootStackParamList } from "@app/navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
 import CurrentLocation from "@asset/svgs/current-location.svg"
 import CheckSvg from "@asset/svgs/check-icon.svg"
@@ -31,6 +31,7 @@ import LocationMarkerSvg from "@asset/svgs/location-marker.svg"
 import { getLocation } from "@app/utils/helper"
 import StarRating from "react-native-star-rating"
 import { eng } from "@app/constants/en"
+import { RouteProp, useRoute } from "@react-navigation/native"
 const { width, height } = Dimensions.get("window")
 const IMAGE_WIDTH = width - 30 * 2
 const IMAGE_HEIGHT = IMAGE_WIDTH * 0.61
@@ -68,15 +69,23 @@ const detailStyle = StyleSheet.create({
   label: { color: "#212121", fontFamily: typography.medium, fontSize: fontSize.font16 },
   rowItem: { flex: 1, marginVertical: 10 },
 })
-export const ConfirmInformationScreen: React.FC<Props> = ({ navigation }) => {
+export const StoreDetailScreen: React.FC<Props> = ({ navigation }) => {
+
+  const route = useRoute<RouteProp<RootStackParamList, 'StoreDetail'>>()
+  const editable = route.params.editable
+  const [store, setStore] = useState<any>({})
   const dispatch = useDispatch()
-  const name = useSelector((state: RootState) => state.storeReducer?.tempStore?.name)
-  const location = useSelector(
-    (state: RootState) => state.storeReducer?.tempStore?.location,
-  )
+  const tempStore = useSelector((state: RootState) => state.storeReducer?.tempStore)
   const thumbnail = useSelector(
     (state: RootState) => state.storeReducer?.tempStore?.thumbnail,
   )
+  React.useEffect(() => {
+    if (route.params.storeInfor) {
+      setStore(route.params.storeInfor)
+    }else{
+      setStore(tempStore)
+    }
+  }, [])
   return (
     <Screen style={styles.container}>
       <ImageBackground
@@ -85,23 +94,24 @@ export const ConfirmInformationScreen: React.FC<Props> = ({ navigation }) => {
       >
         <HeaderComponent
           style={{ paddingHorizontal: 20, marginTop: 10 }}
-          rightComponent={
+          rightComponent={editable?
             <Row containerStyle={styles.headerRow}>
               <Text style={styles.headerText}>{eng.update_cover_image}</Text>
               <Image
                 source={images.uploadIcon}
                 style={{ width: 25, height: 19, marginLeft: 5 }}
               />
-            </Row>
+            </Row>:null
           }
         />
-        <View style={styles.editButtonContainer}>
-          <EditSvg />
-        </View>
+        {editable ?
+          <View style={styles.editButtonContainer}>
+            <EditSvg />
+          </View> : null}
       </ImageBackground>
       <View style={styles.contentContainer}>
         <Row containerStyle={styles.titleRow}>
-          <Text style={[styles.title]}>{name}</Text>
+          <Text style={[styles.title]}>{store.name}</Text>
           <Row containerStyle={styles.locationButtonContainer}>
             <Text style={styles.locationText}>{eng.location}</Text>
             <View style={styles.locationSvgContainer}>
@@ -111,25 +121,24 @@ export const ConfirmInformationScreen: React.FC<Props> = ({ navigation }) => {
         </Row>
         <Row containerStyle={[{ marginTop: 5, alignItems: "center" }]}>
           <LocationMarkerSvg />
-          <Text style={styles.addressText}>{getLocation(location)}</Text>
+          <Text style={styles.addressText}>{getLocation(store.location)}</Text>
         </Row>
         <StarRating
           disabled
           maxStars={5}
-          rating={3}
-          selectedStar={(rating) => {}}
+          rating={store.rating}
+          selectedStar={(rating) => { }}
           emptyStarColor={"#FFC62B"}
           fullStarColor={"#FFC62B"}
           starSize={18}
           containerStyle={{ width: 18 * 5 + 4 * 7, marginVertical: 10 }}
         />
         <Text style={styles.value}>
-          “Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur,
-          adipisci velit…”
+          {store.description}
         </Text>
         <DetailComponent />
 
-        <TouchableOpacity
+        {editable?<TouchableOpacity
           style={{
             backgroundColor: "#3653FE",
             alignSelf: "flex-end",
@@ -140,7 +149,7 @@ export const ConfirmInformationScreen: React.FC<Props> = ({ navigation }) => {
           }}
         >
           <Text style={styles.locationText}>{eng.submit}</Text>
-        </TouchableOpacity>
+        </TouchableOpacity>:null}
       </View>
     </Screen>
   )
@@ -166,6 +175,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 5,
     borderRadius: 15,
+    alignItems:'center'
   },
   headerText: {
     color: "white",

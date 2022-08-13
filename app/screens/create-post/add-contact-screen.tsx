@@ -94,7 +94,7 @@ export const AddContactScreen: React.FC<Props> = ({ navigation }) => {
           </ScrollView>
           <FooterCreatePost
             onPress={() => {
-              navigation.navigate("ConfirmInformation")
+              navigation.navigate("ConfirmInformation",{editable:true})
             }}
             style={{ position: "absolute", bottom: 0, left: 30, marginBottom: 20 }}
           />

@@ -63,6 +63,9 @@ import { LnurlScreen } from "@app/screens/settings-screen/lnurl-screen"
 import { eng } from "@app/constants/en"
 import MarketPlaceSvg from "../assets/svgs/market-place.svg"
 import { MarketPlaceStacks } from "./marketplace-stack"
+import { StoreListScreen } from "@app/screens/store-list-screen"
+import { StoreListViewScreen } from "@app/screens/store-list-screen/list-view-screen"
+import { StoreDetailScreen } from "@app/screens/store-detail-screen"
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
 PushNotification.configure({
   // (optional) Called when Token is generated (iOS and Android)
@@ -413,6 +416,27 @@ export const RootStack: NavigatorType = () => {
           title: translate("common.bitcoinPrice"),
         }}
         initialParams={{ account: AccountType.Bitcoin }}
+      />
+      <RootNavigator.Screen
+        name="StoreList"
+        component={StoreListScreen}
+        options={{
+          headerShown:false
+        }}
+      /> 
+      <RootNavigator.Screen
+        name="StoreListView"
+        component={StoreListViewScreen}
+        options={{
+          headerShown:false
+        }}
+      />
+      <RootNavigator.Screen
+        name="StoreDetail"
+        component={StoreDetailScreen}
+        options={{
+          headerShown:false
+        }}
       />
     </RootNavigator.Navigator>
   )

@@ -1,8 +1,8 @@
 import React from "react"
-import { View, ViewStyle } from "react-native"
+import { StyleProp, View, ViewStyle } from "react-native"
 interface RowProps {
   children: any
-  containerStyle?: ViewStyle | ViewStyle[]
+  containerStyle?: StyleProp<ViewStyle>
 }
 export const Row = ({ children, containerStyle }: RowProps) => {
   return <View style={[{ flexDirection: "row" }, containerStyle]}>{children}</View>

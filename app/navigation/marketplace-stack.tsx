@@ -14,7 +14,8 @@ import { AddLocationScreen } from "@app/screens/create-post/location-screen"
 import { MarketPlace } from "@app/screens/market-place-screen/market-place-screen"
 import { MapScreen } from "@app/screens/full-view-map-screen/map-screen"
 import { AddContactScreen } from "@app/screens/create-post/add-contact-screen"
-import { ConfirmInformationScreen } from "@app/screens/create-post/confirm-information-screen"
+import { StoreDetailScreen } from "@app/screens/store-detail-screen"
+import { StoreListScreen } from "@app/screens/store-list-screen"
 
 const MarketPlaceStack = createStackNavigator<MarketPlaceParamList>()
 
@@ -36,7 +37,7 @@ export const MarketPlaceStacks: NavigatorType = () => {
       <MarketPlaceStack.Screen name="AddContact" component={AddContactScreen} />
       <MarketPlaceStack.Screen
         name="ConfirmInformation"
-        component={ConfirmInformationScreen}
+        component={StoreDetailScreen}
       />
     </MarketPlaceStack.Navigator>
   )

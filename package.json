@@ -29,6 +29,7 @@
     "@apollo/client": "^3.5.10",
     "@galoymoney/client": "^0.1.13",
     "@galoymoney/react-native-geetest-module": "^0.1.3",
+    "@gorhom/bottom-sheet": "^2",
     "@react-native-async-storage/async-storage": "^1.15.9",
     "@react-native-community/clipboard": "^1.2.3",
     "@react-native-community/geolocation": "^2.0.2",

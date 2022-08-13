@@ -28,6 +28,7 @@ export const typography = {
 }
 
 export const fontSize = {
+  font8: 8,
   font12: 12,
   font13: 13,
   font14: 14,

@@ -1,3 +1,4 @@
+import { StoreAttributes } from "@app/redux/reducers/store-reducer"
 import { LNURLPayParams } from "js-lnurl"
 import { contacts_me_contacts } from "../screens/contacts-screen/__generated__/contacts"
 import { AccountType, AuthenticationScreenPurpose, PinScreenPurpose } from "../utils/enum"
@@ -50,6 +51,9 @@ export type RootStackParamList = {
   transactionDetail: TransactionDetail
   transactionHistory: undefined
   Earn: undefined
+  StoreList: undefined
+  StoreListView:{searchText:string}
+  StoreDetail: { editable?: boolean, storeInfor: StoreAttributes }
 }
 
 export type ContactStackParamList = {
@@ -118,5 +122,7 @@ export type MarketPlaceParamList = {
   AddLocation: undefined
   MapScreen: undefined
   AddContact: undefined
-  ConfirmInformation: undefined
+  ConfirmInformation: {editable?:boolean}
+  StoreList:undefined
+  StoreListView: { searchText?: string }
 }

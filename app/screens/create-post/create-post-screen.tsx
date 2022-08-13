@@ -4,6 +4,8 @@ import { useState } from "react"
 import {
   Dimensions,
   Image,
+  Keyboard,
+  KeyboardAvoidingView,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -42,38 +44,45 @@ export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
     { label: "Foods", value: "Foods" },
     { label: "Drinks", value: "Drinks" },
   ])
-const isCorrectInput = ()=>{
-  let nameValid = false
-  let descriptionValid = false
-  console.log('name: ',name,description);
-  
-  if (!name) setNameError('Name is required')
-  else if (name?.length < 2) setNameError('Name must be more than 2 characters')
-  else {
-    nameValid = true
-    setNameError('')
-  }
+  const isCorrectInput = () => {
+    let nameValid = false
+    let descriptionValid = false
+    console.log('name: ', name, description);
 
-  if (!description) setDescriptionError('Description is required')
-  else if (description?.length < 2) setDescriptionError('Description must be more than 2 characters')
-  else {
-    descriptionValid = true
-    setDescriptionError('')
+    if (!name) setNameError('Name is required')
+    else if (name?.length < 2) setNameError('Name must be more than 2 characters')
+    else {
+      nameValid = true
+      setNameError('')
+    }
+
+    if (!description) setDescriptionError('Description is required')
+    else if (description?.length < 2) setDescriptionError('Description must be more than 2 characters')
+    else {
+      descriptionValid = true
+      setDescriptionError('')
+    }
+
+    return (nameValid && descriptionValid) ? true : false
   }
-  
-  return (nameValid && descriptionValid) ? true : false
-}
   const onNext = () => {
     if (!isCorrectInput()) return
     dispatch(setTempStore({ name, description, category }))
     navigation.navigate("AddImage")
   }
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <Screen style={styles.container} preset="fixed">
-        <HeaderComponent style={{ paddingHorizontal: 20 }} />
+    <Screen style={styles.container}
+      keyboardOffset={"none"}
+    //  preset="scroll"
+    >
+      <TouchableOpacity
+        style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+        onPress={() => { Keyboard.dismiss() }}
+        activeOpacity={1}
+      >
+        <HeaderComponent style={{ paddingHorizontal: 20, width }} />
         <Image source={images.backgroundSimple} style={{ width: 177, height: 158 }} />
-        <Text style={styles.title}>{eng.register_store}</Text>
+        <Text style={styles.title}>{eng.create_post}</Text>
         <View style={{ paddingHorizontal: 30, width: "100%" }}>
           <TextInputComponent
             title={"Name"}
@@ -100,6 +109,14 @@ const isCorrectInput = ()=>{
             setOpen={setOpen}
             setValue={setCategory}
           />
+          <TextInputComponent
+            title={"Price"}
+            containerStyle={[{ marginTop: 40 }]}
+            onChangeText={setName}
+            value={name}
+            placeholder={'Burger'}
+            isError={nameError !== ''}
+          />
 
           <TextInputComponent
             title={"Description"}
@@ -120,8 +137,9 @@ const isCorrectInput = ()=>{
             </TouchableOpacity>
           </View>
         </View>
-      </Screen>
-    </SafeAreaView>
+      </TouchableOpacity>
+    </Screen>
+
   )
 }
 
@@ -169,7 +187,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "white",
     alignItems: "center",
   },
 })
