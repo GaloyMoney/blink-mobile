@@ -18,8 +18,6 @@ import {
 } from "../../utils/wallet"
 
 import successLottie from "../send-bitcoin-screen/success_lottie.json"
-import moment from "moment"
-import { translateUnknown as translate } from "@galoymoney/client"
 
 const configByType = {
   [TYPE_LIGHTNING_BTC]: {
@@ -51,7 +49,6 @@ type Props = {
   completed: boolean
   err: string
   size?: number
-  expiresIn?: number
 }
 
 export const QRView = ({
@@ -63,7 +60,6 @@ export const QRView = ({
   completed,
   err,
   size = 320,
-  expiresIn,
 }: Props): JSX.Element => {
   const isReady = data && !loading && !err
 
@@ -138,21 +134,11 @@ export const QRView = ({
 
   return (
     <>
-      {expiresIn !== 0 && (
-        <View style={styles.qr}>
-          {renderSuccessView}
-          {renderQRCode}
-          {Boolean(expiresIn) && (
-            <View style={styles.invoiceDisplay}>
-              <Text style={expiresIn < 10 ? styles.lowTimer : undefined}>
-                {translate("ReceiveBitcoinScreen.expiresIn")}:{" "}
-                {moment.utc(expiresIn * 1000).format("m:ss")}
-              </Text>
-            </View>
-          )}
-          {renderStatusView}
-        </View>
-      )}
+      <View style={styles.qr}>
+        {renderSuccessView}
+        {renderQRCode}
+        {renderStatusView}
+      </View>
     </>
   )
 }
@@ -176,13 +162,6 @@ const styles = EStyleSheet.create({
   },
   qr: {
     alignItems: "center",
-  },
-  invoiceDisplay: {
-    marginTop: 14,
-    marginHorizontal: 20,
-  },
-  lowTimer: {
-    color: palette.red,
   },
 })
 

@@ -5,11 +5,11 @@ type useCountdownTimerReturnValue = {
   startCountdownTimer: (seconds: number, callback?: () => void) => void
   stopCountdownTimer: () => void
   resetCountdownTimer: (seconds: number, newCallback?: () => void) => void
-  resetCountdownTimerAndExecuteCallback: (
+  resetCountdownTimerAndExecuteExistingCallback: (
     seconds: number,
     newCallback?: () => void,
   ) => void
-  stopCountdownTimerAndExecuteCallback: (newCallback?: () => void) => void
+  clearCountdownTimerAndExecuteCallback: () => void
 }
 
 export const useCountdownTimer = (): useCountdownTimerReturnValue => {
@@ -35,7 +35,7 @@ export const useCountdownTimer = (): useCountdownTimerReturnValue => {
     }
     // We need to return from all code paths but we only need a callback if an interval is set so returning undefined is fine
     return undefined
-  }, [timeLeft, completedCallback])
+  }, [timeLeft, completedCallback, setTimeLeft])
 
   const startCountdownTimer = (seconds: number, callback?: () => void) => {
     setTimeLeft(seconds)
@@ -45,6 +45,7 @@ export const useCountdownTimer = (): useCountdownTimerReturnValue => {
   }
 
   const stopCountdownTimer = () => {
+    setCompletedCallback(undefined)
     setTimeLeft(0)
   }
 
@@ -55,7 +56,7 @@ export const useCountdownTimer = (): useCountdownTimerReturnValue => {
     }
   }
 
-  const resetCountdownTimerAndExecuteCallback = (
+  const resetCountdownTimerAndExecuteExistingCallback = (
     seconds: number,
     newCallback?: () => void,
   ) => {
@@ -66,12 +67,8 @@ export const useCountdownTimer = (): useCountdownTimerReturnValue => {
     setCompletedCallback(() => newCallback)
   }
 
-  const stopCountdownTimerAndExecuteCallback = (newCallback?: () => void) => {
+  const clearCountdownTimerAndExecuteCallback = () => {
     setTimeLeft(0)
-    if (completedCallback) {
-      completedCallback()
-    }
-    setCompletedCallback(() => newCallback)
   }
 
   return {
@@ -79,7 +76,7 @@ export const useCountdownTimer = (): useCountdownTimerReturnValue => {
     startCountdownTimer,
     stopCountdownTimer,
     resetCountdownTimer,
-    resetCountdownTimerAndExecuteCallback,
-    stopCountdownTimerAndExecuteCallback,
+    resetCountdownTimerAndExecuteExistingCallback,
+    clearCountdownTimerAndExecuteCallback,
   }
 }
