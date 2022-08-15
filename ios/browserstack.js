@@ -7,12 +7,12 @@ exports.config = {
   exclude: [],
 
   capabilities: [{
-    project: "First Webdriverio iOS Project",
-    build: 'Webdriverio iOS',
-    name: 'single_test',
-    device: 'iPhone 11 Pro',
-    os_version: "13",
-    app: process.env.BROWSERSTACK_APP_ID,
+    "project": "First Webdriverio iOS Project",
+    "build": 'Webdriverio iOS',
+    "name": 'single_test',
+    "device": 'iPhone 11 Pro',
+    "os_version": "13",
+    "app": process.env.BROWSERSTACK_APP_ID,
     'browserstack.debug': true
   }],
 

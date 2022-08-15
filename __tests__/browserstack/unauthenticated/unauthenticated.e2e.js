@@ -1,32 +1,29 @@
-var assert = require("assert")
-var client = require("@galoymoney/client")
+import { translateUnknown } from "@galoymoney/client"
 
 describe("Unauthenticated navigation renders correctly", () => {
   it("Welcome flow", async () => {
-    await $(`~${client.translateUnknown("GetStartedScreen.getStarted")}`).waitForExist()
-    await $(`~${client.translateUnknown("GetStartedScreen.getStarted")}`).click()
-    assert.ok(await $("~Bitcoin:").isDisplayed())
-    assert.ok(
-      await $(`~${client.translateUnknown("WelcomeFirstScreen.care")}`).isDisplayed(),
-    )
+    await $(`~${translateUnknown("GetStartedScreen.getStarted")}`).waitForExist()
+    await $(`~${translateUnknown("GetStartedScreen.getStarted")}`).click()
+    expect(await $("~Bitcoin:").isDisplayed()).toBeTruthy()
+    expect(
+      await $(`~${translateUnknown("WelcomeFirstScreen.care")}`).isDisplayed(),
+    ).toBeTruthy()
 
     browser.swipe({ x: 800, y: 1500 }, { x: 150, y: 1500 })
-    assert.ok(
-      await $(`~${client.translateUnknown("WelcomeFirstScreen.bank")}`).isDisplayed(),
-    )
+    expect(
+      await $(`~${translateUnknown("WelcomeFirstScreen.bank")}`).isDisplayed(),
+    ).toBeTruthy()
     browser.swipe({ x: 800, y: 1500 }, { x: 150, y: 1500 })
-    assert.ok(
-      await $(`~${client.translateUnknown("WelcomeFirstScreen.before")}`).isDisplayed(),
-    )
+    expect(
+      await $(`~${translateUnknown("WelcomeFirstScreen.before")}`).isDisplayed(),
+    ).toBeTruthy()
     browser.swipe({ x: 800, y: 1500 }, { x: 150, y: 1500 })
-    assert.ok(
-      await $(`~${client.translateUnknown("WelcomeFirstScreen.learn")}`).isDisplayed(),
-    )
-    assert.ok(
-      await $(
-        `~${client.translateUnknown("WelcomeFirstScreen.learnToEarn")}`,
-      ).isDisplayed(),
-    )
-    await $(`~${client.translateUnknown("WelcomeFirstScreen.learnToEarn")}`).click()
+    expect(
+      await $(`~${translateUnknown("WelcomeFirstScreen.learn")}`).isDisplayed(),
+    ).toBeTruthy()
+    expect(
+      await $(`~${translateUnknown("WelcomeFirstScreen.learnToEarn")}`).isDisplayed(),
+    ).toBeTruthy()
+    await $(`~${translateUnknown("WelcomeFirstScreen.learnToEarn")}`).click()
   })
 })
