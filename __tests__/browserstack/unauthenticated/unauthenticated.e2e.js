@@ -1,4 +1,4 @@
-import { translateUnknown } from "@galoymoney/client"
+var client = require("@galoymoney/client")
 
 describe("Unauthenticated navigation renders correctly", () => {
   it("Welcome flow", async () => {
