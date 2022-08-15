@@ -112,7 +112,7 @@ jobs:
   test_ios:
     macos:
       xcode: 13.3.0
-    resource_class: large
+    resource_class: macos.x86.medium.gen2
     working_directory: ~/galoy-mobile
     environment:
       FL_OUTPUT_DIR: output
