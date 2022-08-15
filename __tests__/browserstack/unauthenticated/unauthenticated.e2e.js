@@ -4,7 +4,7 @@ describe("Unauthenticated navigation renders correctly", () => {
   it("Welcome flow", async () => {
     await $(`~${client.translateUnknown("GetStartedScreen.getStarted")}`).waitForExist()
     await $(`~${client.translateUnknown("GetStartedScreen.getStarted")}`).touchAction([
-      "tap",
+      "press",
     ])
     expect(await $("~Bitcoin:").isDisplayed()).toBeTruthy()
     expect(
@@ -29,7 +29,7 @@ describe("Unauthenticated navigation renders correctly", () => {
       ).isDisplayed(),
     ).toBeTruthy()
     await $(`~${client.translateUnknown("WelcomeFirstScreen.learnToEarn")}`).touchAction([
-      "tap",
+      "press",
     ])
   })
 })
