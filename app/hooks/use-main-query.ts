@@ -13,7 +13,6 @@ const useMainQuery = (): useMainQueryOutput => {
   const { convertCurrencyAmount } = usePriceConversion()
   const { data, previousData, error, loading, refetch } = useQuery(MAIN_QUERY, {
     variables: { hasToken },
-    fetchPolicy: "cache-and-network",
   })
   let errors = []
   if (error) {

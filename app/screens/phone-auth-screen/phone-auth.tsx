@@ -386,48 +386,51 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
   const [secondsRemaining, setSecondsRemaining] = useState<number>(60)
 
   const { phone } = route.params
-  const updateCode = (input) => setCode(input)
   const inputRef = useRef<TextInput>()
 
   useEffect(() => {
     setTimeout(() => inputRef?.current?.focus(), 150)
   }, [])
 
-  const send = useCallback(async () => {
-    if (loading) {
-      return
-    }
-    if (code.length !== 6) {
-      throw new Error(translate("WelcomePhoneValidationScreen.need6Digits"))
-    }
-
-    try {
-      const { data } = await login({
-        variables: { input: { phone, code } },
-      })
-
-      // TODO: validate token
-      const token = data?.userLogin?.authToken
-
-      if (token) {
-        analytics().logLogin({ method: "phone" })
-        await saveToken(token)
-        await addDeviceToken(client)
-      } else {
-        throw new Error(translate("WelcomePhoneValidationScreen.errorLoggingIn"))
+  const send = useCallback(
+    async (code: string) => {
+      if (loading) {
+        return
       }
-    } catch (err) {
-      console.debug({ err })
-      setCode("")
-      toastShow({ message: `${err}` })
-    }
-  }, [client, code, loading, login, phone, saveToken])
+      if (code.length !== 6) {
+        throw new Error(translate("WelcomePhoneValidationScreen.need6Digits"))
+      }
 
-  useEffect(() => {
+      try {
+        const { data } = await login({
+          variables: { input: { phone, code } },
+        })
+
+        // TODO: validate token
+        const token = data?.userLogin?.authToken
+
+        if (token) {
+          analytics().logLogin({ method: "phone" })
+          await saveToken(token)
+          await addDeviceToken(client)
+        } else {
+          throw new Error(translate("WelcomePhoneValidationScreen.errorLoggingIn"))
+        }
+      } catch (err) {
+        console.debug({ err })
+        setCode("")
+        toastShow({ message: `${err}` })
+      }
+    },
+    [client, loading, login, phone, saveToken, setCode],
+  )
+
+  const updateCode = (code: string) => {
+    setCode(code)
     if (code.length === 6) {
-      send()
+      send(code)
     }
-  }, [code, send])
+  }
 
   useEffect(() => {
     const timerId = setTimeout(() => {
@@ -464,7 +467,6 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
               placeholder={translate("WelcomePhoneValidationScreen.placeholder")}
               returnKeyType={loading ? "default" : "done"}
               maxLength={6}
-              onSubmitEditing={send}
             >
               {code}
             </Input>
