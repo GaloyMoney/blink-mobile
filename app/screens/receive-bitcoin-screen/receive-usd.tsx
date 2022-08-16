@@ -1,23 +1,29 @@
-import { useSubscriptionUpdates } from "@app/hooks"
+import { useSubscriptionUpdates, useCountdownTimer } from "@app/hooks"
 import useMainQuery from "@app/hooks/use-main-query"
 import { palette } from "@app/theme"
 import { getFullUri, TYPE_LIGHTNING_USD } from "@app/utils/wallet"
-import { GaloyGQL, translateUnknown as translate, useMutation } from "@galoymoney/client"
-import React, { useCallback, useEffect, useState } from "react"
-import { Alert, Pressable, Share, TextInput, View } from "react-native"
+import {
+  decodeInvoiceString,
+  GaloyGQL,
+  getLightningInvoiceExpiryTime,
+  translateUnknown as translate,
+  useMutation,
+} from "@galoymoney/client"
+import React, { useCallback, useEffect, useRef, useState } from "react"
+import { Alert, AppState, Pressable, Share, TextInput, View } from "react-native"
 import { Button, Text } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import QRView from "./qr-view"
 import Icon from "react-native-vector-icons/Ionicons"
 import Clipboard from "@react-native-community/clipboard"
 import { FakeCurrencyInput } from "react-native-currency-input"
-import { CountdownCircleTimer } from "react-native-countdown-circle-timer"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import { usdAmountDisplay } from "@app/utils/currencyConversion"
 import CalculatorIcon from "@app/assets/icons/calculator.svg"
 import ChevronIcon from "@app/assets/icons/chevron.svg"
 import NoteIcon from "@app/assets/icons/note.svg"
 import { toastShow } from "@app/utils/toast"
+import moment from "moment"
 
 const styles = EStyleSheet.create({
   container: {
@@ -95,11 +101,6 @@ const styles = EStyleSheet.create({
     fontSize: 20,
     fontWeight: "600",
   },
-  countdownTimerContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: "8rem",
-  },
   button: {
     height: 60,
     borderRadius: 10,
@@ -127,12 +128,19 @@ const styles = EStyleSheet.create({
     color: palette.lightBlue,
     fontWeight: "600",
   },
+  lowTimer: {
+    color: palette.red,
+  },
+  countdownTimer: {
+    alignItems: "center",
+  },
 })
 
 const ReceiveUsd = () => {
-  const [status, setStatus] = useState<"loading" | "active" | "expired" | "error">(
-    "loading",
-  )
+  const appState = useRef(AppState.currentState)
+  const [status, setStatus] = useState<
+    "loading" | "active" | "expired" | "error" | "paid"
+  >("loading")
   const [err, setErr] = useState("")
   const [lnNoAmountInvoiceCreate] = useMutation.lnNoAmountInvoiceCreate()
   const [lnUsdInvoiceCreate] = useMutation.lnUsdInvoiceCreate()
@@ -145,6 +153,46 @@ const ReceiveUsd = () => {
   const { lnUpdate } = useSubscriptionUpdates()
   const [showMemoInput, setShowMemoInput] = useState(false)
   const [showAmountInput, setShowAmountInput] = useState(false)
+  const { timeLeft, startCountdownTimer, resetCountdownTimer, stopCountdownTimer } =
+    useCountdownTimer()
+  useEffect(() => {
+    if (invoice && usdAmount > 0) {
+      const subscription = AppState.addEventListener("change", (nextAppState) => {
+        if (appState.current.match(/inactive|background/) && nextAppState === "active") {
+          const timeUntilInvoiceExpires =
+            getLightningInvoiceExpiryTime(decodeInvoiceString(invoice.paymentRequest)) -
+            Math.round(Date.now() / 1000)
+          if (timeUntilInvoiceExpires <= 0) {
+            setStatus("expired")
+            stopCountdownTimer()
+          }
+          resetCountdownTimer(timeUntilInvoiceExpires, () => setStatus("expired"))
+        }
+        appState.current = nextAppState
+      })
+      return () => {
+        subscription.remove()
+      }
+    }
+    return undefined
+  }, [invoice, setStatus, stopCountdownTimer, resetCountdownTimer, usdAmount])
+
+  useEffect(() => {
+    if (usdAmount && usdAmount > 0) {
+      const callback = () => {
+        setStatus("expired")
+      }
+      const timeUntilInvoiceExpires =
+        getLightningInvoiceExpiryTime(decodeInvoiceString(invoice.paymentRequest)) -
+        Math.round(Date.now() / 1000)
+      if (timeUntilInvoiceExpires <= 0) {
+        callback()
+        return
+      }
+      startCountdownTimer(timeUntilInvoiceExpires, callback)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [usdAmount, invoice])
 
   const updateInvoice = useCallback(
     async ({ walletId, usdAmount, memo }) => {
@@ -201,8 +249,19 @@ const ReceiveUsd = () => {
     }
   }, [usdAmount, memo, updateInvoice, usdWalletId, showAmountInput, showMemoInput])
 
-  const invoicePaid =
-    lnUpdate?.paymentHash === invoice?.paymentHash && lnUpdate?.status === "PAID"
+  useEffect((): void | (() => void) => {
+    if (lnUpdate?.paymentHash === invoice?.paymentHash && lnUpdate?.status === "PAID") {
+      setStatus("paid")
+    }
+  }, [lnUpdate, invoice])
+
+  useEffect((): void | (() => void) => {
+    if (status === "expired") {
+      setErr(translate("ReceiveBitcoinScreen.expired"))
+    } else if (status !== "error") {
+      setErr("")
+    }
+  }, [status])
 
   const share = useCallback(async () => {
     try {
@@ -312,45 +371,52 @@ const ReceiveUsd = () => {
   return (
     <KeyboardAwareScrollView>
       <View style={styles.container}>
-        <Pressable onPress={copyToClipboard}>
-          <QRView
-            data={invoice?.paymentRequest}
-            type={TYPE_LIGHTNING_USD}
-            amount={usdAmount}
-            memo={memo}
-            loading={loading}
-            completed={invoicePaid}
-            err={err}
-          />
-        </Pressable>
-        <View style={styles.textContainer}>
-          {loading ? (
-            <Text>{translate("Generating Invoice...")}</Text>
-          ) : (
-            <>
-              <View style={styles.copyInvoiceContainer}>
-                <Pressable onPress={copyToClipboard}>
-                  <Text style={styles.infoText}>
-                    <Icon style={styles.infoText} name="copy-outline" />
-                    <Text> </Text>
-                    {translate("ReceiveBitcoinScreen.copyInvoice")}
-                  </Text>
-                </Pressable>
-              </View>
-              <View style={styles.shareInvoiceContainer}>
-                <Pressable onPress={share}>
-                  <Text style={styles.infoText}>
-                    <Icon style={styles.infoText} name="share-outline" />
-                    <Text> </Text>
-                    {translate("ReceiveBitcoinScreen.shareInvoice")}
-                  </Text>
-                </Pressable>
-              </View>
-            </>
-          )}
-        </View>
+        {status !== "expired" && (
+          <>
+            <Pressable onPress={copyToClipboard}>
+              <QRView
+                data={invoice?.paymentRequest}
+                type={TYPE_LIGHTNING_USD}
+                amount={usdAmount}
+                memo={memo}
+                loading={loading}
+                completed={status === "paid"}
+                err={err}
+              />
+            </Pressable>
 
-        <View style={styles.invoiceInfo}>{displayAmount()}</View>
+            <>
+              <View style={styles.textContainer}>
+                {loading ? (
+                  <Text>{translate("Generating Invoice...")}</Text>
+                ) : (
+                  <>
+                    <View style={styles.copyInvoiceContainer}>
+                      <Pressable onPress={copyToClipboard}>
+                        <Text style={styles.infoText}>
+                          <Icon style={styles.infoText} name="copy-outline" />
+                          <Text> </Text>
+                          {translate("ReceiveBitcoinScreen.copyInvoice")}
+                        </Text>
+                      </Pressable>
+                    </View>
+                    <View style={styles.shareInvoiceContainer}>
+                      <Pressable onPress={share}>
+                        <Text style={styles.infoText}>
+                          <Icon style={styles.infoText} name="share-outline" />
+                          <Text> </Text>
+                          {translate("ReceiveBitcoinScreen.shareInvoice")}
+                        </Text>
+                      </Pressable>
+                    </View>
+                  </>
+                )}
+              </View>
+
+              <View style={styles.invoiceInfo}>{displayAmount()}</View>
+            </>
+          </>
+        )}
 
         {status === "expired" && (
           <View style={[styles.container, styles.invoiceExpired]}>
@@ -411,22 +477,15 @@ const ReceiveUsd = () => {
                   </Pressable>
                 </View>
               )}
+              {Boolean(timeLeft) && (
+                <View style={styles.countdownTimer}>
+                  <Text style={timeLeft < 10 ? styles.lowTimer : undefined}>
+                    {translate("ReceiveBitcoinScreen.expiresIn")}:{" "}
+                    {moment.utc(timeLeft * 1000).format("m:ss")}
+                  </Text>
+                </View>
+              )}
             </View>
-
-            {invoice?.paymentRequest && status === "active" && Boolean(usdAmount) && (
-              <View style={styles.countdownTimerContainer}>
-                <CountdownCircleTimer
-                  key={invoice?.paymentRequest}
-                  isPlaying
-                  duration={120}
-                  colors={"#004777"}
-                  size={80}
-                  onComplete={() => setStatus("expired")}
-                >
-                  {({ remainingTime }) => <Text>{remainingTime}</Text>}
-                </CountdownCircleTimer>
-              </View>
-            )}
           </>
         )}
       </View>

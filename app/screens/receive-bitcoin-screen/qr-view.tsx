@@ -18,7 +18,6 @@ import {
 } from "../../utils/wallet"
 
 import successLottie from "../send-bitcoin-screen/success_lottie.json"
-import { PaymentDestinationDisplay } from "@app/components/payment-destination-display"
 
 const configByType = {
   [TYPE_LIGHTNING_BTC]: {
@@ -108,9 +107,6 @@ export const QRView = ({
               logoSize={60}
               logoBorderRadius={10}
             />
-            <View style={styles.invoiceDisplay}>
-              <PaymentDestinationDisplay destination={data} />
-            </View>
           </View>
         </>
       )
@@ -166,10 +162,6 @@ const styles = EStyleSheet.create({
   },
   qr: {
     alignItems: "center",
-  },
-  invoiceDisplay: {
-    marginTop: 14,
-    marginHorizontal: 20,
   },
 })
 
