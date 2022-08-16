@@ -15,11 +15,11 @@ import { GALOY_PAY_DOMAIN } from "../../constants/support"
 import { bech32 } from "bech32"
 import QRCode from "react-native-qrcode-svg"
 import { Button, Text } from "react-native-elements"
-import Clipboard from "@react-native-community/clipboard"
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 import { color } from "@app/theme"
 import { toastShow } from "@app/utils/toast"
 import { translate } from "@app/utils/translate"
+import { copyPaymentInfoToClipboard } from "@app/utils/clipboard"
 
 const styles = EStyleSheet.create({
   container: {
@@ -57,7 +57,7 @@ type Props = {
 }
 
 const copyToClipboard = (str) => {
-  Clipboard.setString(str)
+  copyPaymentInfoToClipboard(str)
   toastShow({
     message: translate("SettingsScreen.copyClipboardLnurl"),
     type: "success",

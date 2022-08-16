@@ -14,7 +14,6 @@ import { Button, Text } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import QRView from "./qr-view"
 import Icon from "react-native-vector-icons/Ionicons"
-import Clipboard from "@react-native-community/clipboard"
 import { FakeCurrencyInput } from "react-native-currency-input"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import { usdAmountDisplay } from "@app/utils/currencyConversion"
@@ -22,6 +21,7 @@ import CalculatorIcon from "@app/assets/icons/calculator.svg"
 import ChevronIcon from "@app/assets/icons/chevron.svg"
 import NoteIcon from "@app/assets/icons/note.svg"
 import { toastShow } from "@app/utils/toast"
+import { copyPaymentInfoToClipboard } from "@app/utils/clipboard"
 import moment from "moment"
 import { translate } from "@app/utils/translate"
 
@@ -284,7 +284,9 @@ const ReceiveUsd = () => {
   }, [invoice?.paymentRequest])
 
   const copyToClipboard = () => {
-    Clipboard.setString(getFullUri({ input: invoice?.paymentRequest, prefix: false }))
+    copyPaymentInfoToClipboard(
+      getFullUri({ input: invoice?.paymentRequest, prefix: false }),
+    )
     toastShow({
       message: translate("ReceiveBitcoinScreen.copyClipboard"),
       type: "success",

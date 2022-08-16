@@ -21,6 +21,7 @@ import useMainQuery from "@app/hooks/use-main-query"
 import crashlytics from "@react-native-firebase/crashlytics"
 import ContactModal from "@app/components/contact-modal/contact-modal"
 import { translate } from "@app/utils/translate"
+import { copyPaymentInfoToClipboard } from "@app/utils/clipboard"
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "settings">
@@ -189,7 +190,7 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
     loadingCsvTransactions,
   } = params
   const copyToClipBoard = (username) => {
-    Clipboard.setString(GALOY_PAY_DOMAIN + username)
+    copyPaymentInfoToClipboard(GALOY_PAY_DOMAIN + username)
     Clipboard.getString().then((data) =>
       toastShow({ message: translate("tippingLink.copied", { data }), type: "success" }),
     )
