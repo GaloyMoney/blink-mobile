@@ -5,13 +5,13 @@ import { StyleProp, Text, TouchableHighlight, View, ViewStyle } from "react-nati
 import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 import Tooltip from "react-native-walkthrough-tooltip"
-import { translateUnknown as translate } from "@galoymoney/client"
 import { palette } from "../../theme/palette"
 import { TextCurrencyForAmount } from "../text-currency/text-currency"
 import { useIsFocused } from "@react-navigation/native"
 import { useHiddenBalanceToolTip, useHideBalance } from "../../hooks"
 import { saveHiddenBalanceToolTip } from "../../graphql/client-only-query"
 import { useApolloClient } from "@apollo/client"
+import { translate } from "@app/utils/translate"
 
 const styles = EStyleSheet.create({
   container: {

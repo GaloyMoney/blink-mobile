@@ -3,7 +3,7 @@ import React, { useState } from "react"
 import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-native"
 import { palette } from "@app/theme"
 import { WalletCurrency } from "@app/types/amounts"
-import { GaloyGQL, translateUnknown as translate, useMutation } from "@galoymoney/client"
+import { GaloyGQL, useMutation } from "@galoymoney/client"
 import { Status } from "./send-bitcoin.types"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
@@ -20,6 +20,7 @@ import { Button } from "react-native-elements"
 import NoteIcon from "@app/assets/icons/note.svg"
 import { CommonActions } from "@react-navigation/native"
 import useMainQuery from "@app/hooks/use-main-query"
+import { translate } from "@app/utils/translate"
 
 const styles = StyleSheet.create({
   scrollView: {

@@ -4,7 +4,6 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import { ScrollView, TouchableWithoutFeedback } from "react-native-gesture-handler"
 import { FakeCurrencyInput } from "react-native-currency-input"
 import { Button } from "react-native-elements"
-import { translateUnknown as translate } from "@galoymoney/client"
 
 import { color, palette } from "@app/theme"
 import useMainQuery from "@app/hooks/use-main-query"
@@ -20,6 +19,7 @@ import { useUsdBtcAmount } from "@app/hooks/use-amount"
 import { WalletDescriptor } from "@app/types/wallets"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { translate } from "@app/utils/translate"
 
 export const ConversionDetailsScreen = ({
   route,

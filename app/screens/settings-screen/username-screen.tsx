@@ -7,7 +7,7 @@ import { Input } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 
 import { Screen } from "../../components/screen"
-import { translateUnknown as translate, useMutation } from "@galoymoney/client"
+import { useMutation } from "@galoymoney/client"
 import { color, palette } from "../../theme"
 import * as UsernameValidation from "../../utils/validation"
 import { InvalidUsernameError } from "../../utils/validation"
@@ -15,6 +15,7 @@ import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { USERNAME_AVAILABLE } from "../../graphql/query"
 import useMainQuery from "@app/hooks/use-main-query"
+import { translate } from "@app/utils/translate"
 
 const styles = EStyleSheet.create({
   activity: { marginTop: 12 },

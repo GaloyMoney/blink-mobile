@@ -1,4 +1,4 @@
-import { translateUnknown as translate } from "@galoymoney/client"
+import { translate } from "@app/utils/translate"
 
 export class InvalidUsernameError extends Error {
   constructor(message) {

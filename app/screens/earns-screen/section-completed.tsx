@@ -7,11 +7,11 @@ import { Screen } from "../../components/screen"
 import { palette } from "../../theme/palette"
 import BadgerShovelBitcoin from "./badger-shovel-01.svg"
 import { MountainHeader } from "../../components/mountain-header"
-import { translateUnknown as translate } from "@galoymoney/client"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { RouteProp } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import type { ScreenType } from "../../types/jsx"
+import { translate } from "@app/utils/translate"
 
 const styles = EStyleSheet.create({
   bottomView: {

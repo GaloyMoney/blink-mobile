@@ -2,7 +2,6 @@ import useMainQuery from "@app/hooks/use-main-query"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { palette } from "@app/theme"
 import { WalletCurrency } from "@app/types/amounts"
-import { translateUnknown as translate } from "@galoymoney/client"
 import { StackScreenProps } from "@react-navigation/stack"
 import React, { useEffect, useState } from "react"
 import { Text, View } from "react-native"
@@ -10,6 +9,7 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import ReceiveBtc from "./receive-btc"
 import ReceiveUsd from "./receive-usd"
+import { translate } from "@app/utils/translate"
 
 const styles = EStyleSheet.create({
   container: {

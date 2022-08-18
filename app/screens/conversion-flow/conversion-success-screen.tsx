@@ -2,13 +2,12 @@ import React, { useEffect } from "react"
 import { StyleSheet, Text, View } from "react-native"
 import LottieView from "lottie-react-native"
 
-import { translateUnknown as translate } from "@galoymoney/client"
-
 import { palette } from "@app/theme"
 import successLottieJson from "../send-bitcoin-screen/success_lottie.json"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import useMainQuery from "@app/hooks/use-main-query"
+import { translate } from "@app/utils/translate"
 
 export const ConversionSuccessScreen = ({
   navigation,

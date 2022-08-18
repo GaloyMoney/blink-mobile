@@ -11,9 +11,9 @@ import {
 
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-import { translateUnknown as translate } from "@galoymoney/client"
 import type { ComponentType } from "../../types/jsx"
 import { Defs, LinearGradient, Stop } from "react-native-svg"
+import { translate } from "@app/utils/translate"
 
 const BTC_PRICE_LIST = gql`
   query btcPriceList($range: PriceGraphRange!) {

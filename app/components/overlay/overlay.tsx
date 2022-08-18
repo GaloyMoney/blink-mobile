@@ -4,8 +4,8 @@ import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import { StyleSheet, View, Modal, SafeAreaView, Text, Dimensions } from "react-native"
 import Svg, { Path, Defs, ClipPath, G, Rect, Circle } from "react-native-svg"
 import { palette } from "../../theme/palette"
-import { translateUnknown as translate } from "@galoymoney/client"
 import type { ComponentType } from "../../types/jsx"
+import { translate } from "@app/utils/translate"
 
 const CY = 200
 const R = 135

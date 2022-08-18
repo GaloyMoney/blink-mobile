@@ -12,7 +12,6 @@ import { palette } from "@app/theme"
 import {
   fetchLnurlPaymentParams,
   parsePaymentDestination,
-  translateUnknown as translate,
   useDelayedQuery,
 } from "@galoymoney/client"
 import { StackScreenProps } from "@react-navigation/stack"
@@ -21,6 +20,7 @@ import useToken from "@app/hooks/use-token"
 import { PaymentAmount, WalletCurrency } from "@app/types/amounts"
 import { Button } from "react-native-elements"
 import ScanIcon from "@app/assets/icons/scan.svg"
+import { translate } from "@app/utils/translate"
 
 const Styles = StyleSheet.create({
   scrollView: {

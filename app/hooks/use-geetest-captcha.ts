@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { EventSubscription, NativeEventEmitter, NativeModules } from "react-native"
 import GeetestModule from "@galoymoney/react-native-geetest-module"
-import { translateUnknown as translate, useMutation } from "@galoymoney/client"
+import { useMutation } from "@galoymoney/client"
+import { translate } from "../utils/translate"
 
 type GeetestCaptchaReturn = {
   geetestError: string | null

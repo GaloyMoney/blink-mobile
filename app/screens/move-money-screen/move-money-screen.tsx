@@ -1,4 +1,4 @@
-import { GaloyGQL, translateUnknown as translate } from "@galoymoney/client"
+import { GaloyGQL } from "@galoymoney/client"
 
 import messaging from "@react-native-firebase/messaging"
 import * as React from "react"
@@ -44,6 +44,7 @@ import PriceIcon from "@app/assets/icons/price.svg"
 import SettingsIcon from "@app/assets/icons/settings.svg"
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs"
 import { CompositeNavigationProp } from "@react-navigation/native"
+import { translate } from "@app/utils/translate"
 
 const styles = EStyleSheet.create({
   bottom: {

@@ -7,7 +7,6 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import Swiper from "react-native-swiper"
 import { OnboardingScreen } from "../../components/onboarding"
 import { Screen } from "../../components/screen"
-import { translateUnknown as translate } from "@galoymoney/client"
 import { palette } from "../../theme/palette"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import type { ScreenType } from "../../types/jsx"
@@ -15,6 +14,7 @@ import BitcoinBitcoin from "./bitcoin-bitcoin-01.svg"
 import BankShop from "./cc-bank-shop-01.svg"
 import MascotDollarBitcoin from "./honey-badger-money-bitcoin-01.svg"
 import HoneyBadgerShovel from "./honey-badger-shovel-01.svg"
+import { translate } from "@app/utils/translate"
 
 const styles = EStyleSheet.create({
   $color: palette.white,

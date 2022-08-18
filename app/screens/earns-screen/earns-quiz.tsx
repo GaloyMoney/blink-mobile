@@ -12,7 +12,6 @@ import I18n from "i18n-js"
 
 import { CloseCross } from "../../components/close-cross"
 import { Screen } from "../../components/screen"
-import { translateUnknown as translate } from "@galoymoney/client"
 import { palette } from "../../theme/palette"
 import { shuffle } from "../../utils/helper"
 import { sleep } from "../../utils/sleep"
@@ -21,6 +20,7 @@ import type { ScreenType } from "../../types/jsx"
 import { StackNavigationProp } from "@react-navigation/stack"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { RouteProp } from "@react-navigation/native"
+import { translate } from "@app/utils/translate"
 
 const styles = EStyleSheet.create({
   answersView: {

@@ -2,9 +2,10 @@ import { ServerError, ServerParseError } from "@apollo/client"
 import { useApolloNetworkStatus } from "../../app"
 import { ComponentType } from "../../types/jsx"
 import { NetworkErrorCode } from "./network-error-code"
-import { translateUnknown as translate } from "@galoymoney/client"
 import { toastShow } from "@app/utils/toast"
 import useLogout from "@app/hooks/use-logout"
+import { translate } from "@app/utils/translate"
+
 export const GlobalErrorToast: ComponentType = () => {
   const status = useApolloNetworkStatus()
   // use logout hook

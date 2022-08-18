@@ -8,7 +8,6 @@ import { useApolloClient } from "@apollo/client"
 
 import { Screen } from "../../components/screen"
 import { palette } from "../../theme/palette"
-import { translateUnknown as translate } from "@galoymoney/client"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import type { ScreenType } from "../../types/jsx"
 import { PinScreenPurpose } from "../../utils/enum"
@@ -21,6 +20,7 @@ import useToken from "../../hooks/use-token"
 import useLogout from "../../hooks/use-logout"
 import useMainQuery from "@app/hooks/use-main-query"
 import { useAuthenticationContext } from "@app/store/authentication-context"
+import { translate } from "@app/utils/translate"
 
 const styles = EStyleSheet.create({
   bottomSpacer: {
@@ -137,7 +137,7 @@ export const PinScreen: ScreenType = ({ route, navigation }: Props) => {
   const MAX_PIN_ATTEMPTS = 3
 
   useEffect(() => {
-    ;(async () => {
+    ; (async () => {
       setPinAttempts(await KeyStoreWrapper.getPinAttemptsOrZero())
     })()
   }, [])

@@ -10,7 +10,7 @@ import {
 } from "react-native"
 import { palette } from "@app/theme"
 import { PaymentAmount, WalletCurrency } from "@app/types/amounts"
-import { fetchLnurlInvoice, translateUnknown as translate } from "@galoymoney/client"
+import { fetchLnurlInvoice } from "@galoymoney/client"
 import { Satoshis } from "lnurl-pay/dist/types/types"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
@@ -26,6 +26,7 @@ import SwitchIcon from "@app/assets/icons/switch.svg"
 import Icon from "react-native-vector-icons/Ionicons"
 import NoteIcon from "@app/assets/icons/note.svg"
 import { Button } from "react-native-elements"
+import { translate } from "@app/utils/translate"
 
 const Styles = StyleSheet.create({
   scrollView: {

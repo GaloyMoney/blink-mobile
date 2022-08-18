@@ -1894,10 +1894,10 @@
   resolved "https://registry.yarnpkg.com/@expo/sdk-runtime-versions/-/sdk-runtime-versions-1.0.0.tgz#d7ebd21b19f1c6b0395e50d78da4416941c57f7c"
   integrity sha512-Doz2bfiPndXYFPMRwPyGa1k5QaKDVpY806UJj570epIiMzWaYyCtobasyfC++qfIXVb5Ocy7r3tP9d62hAQ7IQ==
 
-"@galoymoney/client@^0.1.44":
-  version "0.1.44"
-  resolved "https://registry.yarnpkg.com/@galoymoney/client/-/client-0.1.44.tgz#630af5856834e7dcba93820df0118e6d267412a8"
-  integrity sha512-s/2ucVTiuYmDx6kNjWtiZCn9LUF/oLBtPRXOYBcz/CpwW/pax3pbjJVNWWp1JwjDzZXIM891R6nIUDWUbPTQyA==
+"@galoymoney/client@^0.1.46":
+  version "0.1.46"
+  resolved "https://registry.yarnpkg.com/@galoymoney/client/-/client-0.1.46.tgz#558ec54f2541974fcec430e4c704aed6779cec57"
+  integrity sha512-puDsnevkR1EFaXuPUWlg/rE2fWR79XofY1Mxqm5q3nYbsWJAV8eLU+xLEua5tDUqb+TgDjBBWdW/muh8iCOmZw==
 
 "@galoymoney/react-native-geetest-module@^0.1.3":
   version "0.1.3"

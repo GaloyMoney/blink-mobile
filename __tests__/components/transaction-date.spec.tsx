@@ -1,9 +1,11 @@
 import * as React from "react"
 import { render } from "@testing-library/react-native"
-import { TransactionDate } from "../../app/components/transaction-date"
-import { GaloyGQL, translateUnknown } from "@galoymoney/client"
+import { GaloyGQL } from "@galoymoney/client"
 import { createMock } from "ts-auto-mock"
 import moment from "moment"
+
+import { TransactionDate } from "../../app/components/transaction-date"
+import { translate } from "../../app/utils/translate"
 
 describe("Display the createdAt date for a transaction", () => {
   it("Displays pending for a pending onchain transaction", () => {
@@ -13,7 +15,7 @@ describe("Display the createdAt date for a transaction", () => {
     })
 
     const { queryAllByText } = render(<TransactionDate tx={mockedTransaction} />)
-    expect(queryAllByText(translateUnknown("common.pending"))).not.toBeNull()
+    expect(queryAllByText(translate("common.pending"))).not.toBeNull()
   })
   it("Displays friendly date", () => {
     const testTransactionCreatedAtDate = moment().subtract(1, "days")

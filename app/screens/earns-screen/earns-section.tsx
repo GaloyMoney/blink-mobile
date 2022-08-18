@@ -12,7 +12,7 @@ import Icon from "react-native-vector-icons/Ionicons"
 import I18n from "i18n-js"
 
 import { Screen } from "../../components/screen"
-import { translateUnknown as translate, useMutation } from "@galoymoney/client"
+import { useMutation } from "@galoymoney/client"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
@@ -24,6 +24,7 @@ import { SVGs } from "./earn-svg-factory"
 import { getCardsFromSection, remainingSatsOnSection } from "./earns-utils"
 import { getQuizQuestions } from "../../graphql/query"
 import useMainQuery from "@app/hooks/use-main-query"
+import { translate } from "@app/utils/translate"
 
 const { width: screenWidth } = Dimensions.get("window")
 

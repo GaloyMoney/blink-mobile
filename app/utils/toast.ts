@@ -1,5 +1,6 @@
-import { translateUnknown } from "@galoymoney/client"
 import Toast from "react-native-toast-message"
+
+import { translate } from "@app/utils/translate"
 
 export const toastShow = ({
   message,
@@ -13,10 +14,7 @@ export const toastShow = ({
   if (_onHide) {
     Toast.show({
       type,
-      text1:
-        type === "error"
-          ? translateUnknown("common.error")
-          : translateUnknown("common.success"),
+      text1: type === "error" ? translate("common.error") : translate("common.success"),
       text2: message,
       position: "bottom",
       bottomOffset: 80,
@@ -25,10 +23,7 @@ export const toastShow = ({
   } else {
     Toast.show({
       type,
-      text1:
-        type === "error"
-          ? translateUnknown("common.error")
-          : translateUnknown("common.success"),
+      text1: type === "error" ? translate("common.error") : translate("common.success"),
       text2: message,
       position: "bottom",
       bottomOffset: 80,

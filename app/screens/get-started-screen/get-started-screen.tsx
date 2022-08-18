@@ -5,10 +5,10 @@ import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
-import { translateUnknown as translate } from "@galoymoney/client"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import type { ScreenType } from "../../types/jsx"
+import { translate } from "@app/utils/translate"
 
 import BitcoinBeachLogo from "./bitcoin-beach-logo.png"
 

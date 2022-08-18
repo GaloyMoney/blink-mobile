@@ -21,7 +21,7 @@ import { RouteProp } from "@react-navigation/native"
 
 import { CloseCross } from "../../components/close-cross"
 import { Screen } from "../../components/screen"
-import { translateUnknown as translate, useMutation } from "@galoymoney/client"
+import { useMutation } from "@galoymoney/client"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import useToken from "../../hooks/use-token"
@@ -36,6 +36,7 @@ import { parseTimer } from "../../utils/timer"
 import { useGeetestCaptcha } from "../../hooks"
 import { networkVar } from "../../graphql/client-only-query"
 import DownArrow from "@app/assets/icons/downarrow.svg"
+import { translate } from "@app/utils/translate"
 
 const phoneRegex = new RegExp("^\\+[0-9]+$")
 

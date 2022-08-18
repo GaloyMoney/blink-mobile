@@ -1,12 +1,12 @@
 import { palette } from "@app/theme"
 import React, { useEffect } from "react"
-import { translateUnknown as translate } from "@galoymoney/client"
 import LottieView from "lottie-react-native"
 import { ScrollView, StyleSheet, Text, View } from "react-native"
 import successLottieJson from "./success_lottie.json"
 import useMainQuery from "@app/hooks/use-main-query"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { translate } from "@app/utils/translate"
 
 const styles = StyleSheet.create({
   scrollView: {
