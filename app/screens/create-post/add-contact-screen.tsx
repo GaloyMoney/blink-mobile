@@ -61,7 +61,10 @@ export const AddContactScreen: React.FC<Props> = ({ navigation }) => {
 
             <Row containerStyle={styles.rowStyle}>
               <CurrentLocation />
-              <Text style={[styles.location, { marginLeft: 10 }]} numberOfLines={1}>
+              <Text
+                style={[styles.location, { marginLeft: 10, flex: 1 }]}
+                numberOfLines={1}
+              >
                 {getLocation(location)}
               </Text>
             </Row>
@@ -94,7 +97,7 @@ export const AddContactScreen: React.FC<Props> = ({ navigation }) => {
           </ScrollView>
           <FooterCreatePost
             onPress={() => {
-              navigation.navigate("ConfirmInformation",{editable:true})
+              navigation.navigate("ConfirmInformation", { editable: true })
             }}
             style={{ position: "absolute", bottom: 0, left: 30, marginBottom: 20 }}
           />

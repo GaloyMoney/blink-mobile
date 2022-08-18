@@ -21,6 +21,7 @@ import { Row } from "@app/components/row"
 import { eng } from "@app/constants/en"
 import FilterSvg from "@asset/svgs/filter.svg"
 import { images } from "@app/assets/images"
+import { CreatePostSuccessModal } from "@app/components/create-post-success-modal"
 const { width, height } = Dimensions.get("window")
 const IMAGE_WIDTH = width - 32 * 2
 const IMAGE_HEIGHT = IMAGE_WIDTH * 0.635
@@ -34,14 +35,17 @@ export const MarketPlace: ScreenType = ({ navigation }: Props) => {
     <SafeAreaView style={{ flex: 1 }}>
       <Screen style={styles.screenContainer}>
         <View style={styles.contentContainer}>
-            <Row containerStyle={styles.rowContainer}>
-              <TextInput style={styles.searchText} placeholder={eng.search} editable={false}
-              onPressIn={()=>{
-                navigation.navigate('StoreList')
+          <Row containerStyle={styles.rowContainer}>
+            <TextInput
+              style={styles.searchText}
+              placeholder={eng.search}
+              editable={false}
+              onPressIn={() => {
+                navigation.navigate("StoreList")
               }}
-              />
-              <FilterSvg />
-            </Row>
+            />
+            <FilterSvg />
+          </Row>
           <View style={styles.imageRow}>
             <Image
               source={images.group}

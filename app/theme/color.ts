@@ -10,10 +10,10 @@ import { palette } from "./palette"
  * put that in the <Spinner /> component.
  */
 export const color = {
-  black:'black',
-  white:'white',
-  gray: '#757575',
-  darkPink: '#CE837D',
+  black: "black",
+  white: "white",
+  gray: "#757575",
+  darkPink: "#CE837D",
   /**
    * The palette is available to use, but prefer using the name.
    */

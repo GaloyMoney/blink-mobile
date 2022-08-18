@@ -3,36 +3,36 @@ import type { PayloadAction } from "@reduxjs/toolkit"
 
 const FAKE_DATA = [
   {
-    name: 'Avenida 24 bar',
+    name: "Avenida 24 bar",
     location: {
       lat: 9.922547,
       long: -84.075127,
     },
     distance: 200,
     rating: 4,
-    description: 'Burgers - Italian - Hot vine - Grilled - Canadian',
+    description: "Burgers - Italian - Hot vine - Grilled - Canadian",
     reviewNumber: 54,
   },
   {
-    name: 'Dónde Glori',
+    name: "Dónde Glori",
     location: {
-      lat: 9.923100,
+      lat: 9.9231,
       long: -84.074872,
     },
     distance: 321,
     rating: 4.5,
-    description: 'Burgers - Italian - Hot vine - Grilled - Canadian',
+    description: "Burgers - Italian - Hot vine - Grilled - Canadian",
     reviewNumber: 54,
   },
   {
-    name: 'Mariscos Bar',
+    name: "Mariscos Bar",
     location: {
       lat: 9.922835,
-      long: -84.075830,
+      long: -84.07583,
     },
     distance: 222,
     rating: 5,
-    description: 'Burgers - Italian - Hot vine - Grilled - Canadian',
+    description: "Burgers - Italian - Hot vine - Grilled - Canadian",
     reviewNumber: 54,
   },
   {
@@ -43,47 +43,57 @@ const FAKE_DATA = [
     },
     distance: 155,
     rating: 5,
-    description: 'Burgers - Italian - Hot vine - Grilled - Canadian',
+    description: "Burgers - Italian - Hot vine - Grilled - Canadian",
     reviewNumber: 54,
   },
 ]
 
-export interface StoreAttributes {
-  name?: string
-  description?: string
-  category?: string
-  images?: string[]
-  thumbnail?: string
-  location?: { lat: any; long: any }
-  reviewNumber?: number
-  distance?: number
+export interface PostAttributes {
+  _id: string
+  address: string
+  categoryId: string
+  createdAt: string
+  description: string
+  imagesUrls?: string[]
+  location: {
+    lat: number
+    long: number
+  }
+  mainImageUrl: string
+  name: string
+  openHours?: string
+  price: number
   rating?: number
-  price?:number
+  updatedAt: string
+  userId: string
 }
 interface StoreReducer {
   value: number
-  tempStore: StoreAttributes
-  storeList: StoreAttributes[]
+  tempStore: PostAttributes
+  postList: PostAttributes[]
 }
 
 const initialState = {
   value: 0,
   tempStore: null,
-  storeList: FAKE_DATA
+  postList: [],
 } as StoreReducer
 
 const storeSlice = createSlice({
   name: "store",
   initialState,
   reducers: {
-    setTempStore(state, action: PayloadAction<StoreAttributes>) {
+    setTempStore(state, action: PayloadAction<PostAttributes>) {
       state.tempStore = { ...state.tempStore, ...action.payload }
     },
     clearTempStore(state) {
       state.tempStore = null
     },
+    setPostList(state, action: PayloadAction<PostAttributes[]>) {
+      state.postList = action.payload
+    },
   },
 })
 
-export const { setTempStore, clearTempStore } = storeSlice.actions
+export const { setTempStore, clearTempStore, setPostList } = storeSlice.actions
 export default storeSlice.reducer

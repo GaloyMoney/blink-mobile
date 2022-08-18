@@ -2,6 +2,7 @@ import * as React from "react"
 import { useState } from "react"
 // eslint-disable-next-line react-native/split-platform-components
 import {
+  Alert,
   Dimensions,
   Image,
   ImageBackground,
@@ -19,7 +20,10 @@ import { images } from "@app/assets/images"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "@app/redux"
 import { FooterCreatePost } from "../create-post/footer"
-import { MarketPlaceParamList, RootStackParamList } from "@app/navigation/stack-param-lists"
+import {
+  MarketPlaceParamList,
+  RootStackParamList,
+} from "@app/navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
 import CurrentLocation from "@asset/svgs/current-location.svg"
 import CheckSvg from "@asset/svgs/check-icon.svg"
@@ -32,6 +36,9 @@ import { getLocation } from "@app/utils/helper"
 import StarRating from "react-native-star-rating"
 import { eng } from "@app/constants/en"
 import { RouteProp, useRoute } from "@react-navigation/native"
+import { createPost } from "@app/graphql/second-graphql-client"
+import { LoadingComponent } from "@app/components/loading-component"
+import { CreatePostSuccessModal } from "@app/components/create-post-success-modal"
 const { width, height } = Dimensions.get("window")
 const IMAGE_WIDTH = width - 30 * 2
 const IMAGE_HEIGHT = IMAGE_WIDTH * 0.61
@@ -39,23 +46,21 @@ interface Props {
   navigation: StackNavigationProp<MarketPlaceParamList>
 }
 const DetailComponent = () => {
+  const tempStore = useSelector((state: RootState) => state.storeReducer?.tempStore)
   return (
     <View style={{ width: "100%" }}>
       <Row>
         <View style={detailStyle.rowItem}>
-          <Text style={detailStyle.label}>{eng.open_hour}</Text>
-          <Text style={detailStyle.value}>10:00 - 23:00</Text>
+          <Text style={detailStyle.label}>{eng.price}</Text>
+          <Text style={detailStyle.value}>$ {tempStore?.price || 0}</Text>
         </View>
-        <View style={detailStyle.rowItem}>
+        {/* <View style={detailStyle.rowItem}>
           <Text style={detailStyle.label}>{eng.cuisines}</Text>
           <Text style={detailStyle.value}>Western, Asian</Text>
-        </View>
+        </View> */}
       </Row>
       <Text style={detailStyle.label}>{eng.description}</Text>
-      <Text style={detailStyle.value}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis in mollis eros. Cras
-        at malesuada lectus. Fusce ac massa nec nunc consectetur convallis.
-      </Text>
+      <Text style={detailStyle.value}>{tempStore?.description}</Text>
     </View>
   )
 }
@@ -70,19 +75,45 @@ const detailStyle = StyleSheet.create({
   rowItem: { flex: 1, marginVertical: 10 },
 })
 export const StoreDetailScreen: React.FC<Props> = ({ navigation }) => {
-
-  const route = useRoute<RouteProp<RootStackParamList, 'StoreDetail'>>()
+  const route = useRoute<RouteProp<RootStackParamList, "StoreDetail">>()
   const editable = route.params.editable
   const [store, setStore] = useState<any>({})
+  const [isLoading, setIsLoading] = useState(false)
+  const [isVisible, setIsVisible] = useState(false)
   const dispatch = useDispatch()
   const tempStore = useSelector((state: RootState) => state.storeReducer?.tempStore)
   const thumbnail = useSelector(
-    (state: RootState) => state.storeReducer?.tempStore?.thumbnail,
+    (state: RootState) => state.storeReducer?.tempStore?.mainImageUrl,
   )
+  const formatRequestObject = (tempPost) => {
+    return {
+      ...tempPost,
+      latitude: tempPost.location.lat,
+      longitude: tempPost.location.long,
+      categoryId: tempPost.category,
+      price: parseFloat(tempPost.price || 0),
+      userId: "hardcoded_user_id",
+      address: "hardcoded_address",
+    }
+  }
+  const onSubmit = async () => {
+    try {
+      setIsLoading(true)
+      let request = formatRequestObject(tempStore)
+      console.log("store: ", tempStore, request)
+      let res = await createPost(request)
+
+      setIsVisible(true)
+    } catch (error) {
+      Alert.alert(`Something goes wrong \n ${JSON.stringify(error)}`)
+    } finally {
+      setIsLoading(false)
+    }
+  }
   React.useEffect(() => {
     if (route.params.storeInfor) {
       setStore(route.params.storeInfor)
-    }else{
+    } else {
       setStore(tempStore)
     }
   }, [])
@@ -94,20 +125,28 @@ export const StoreDetailScreen: React.FC<Props> = ({ navigation }) => {
       >
         <HeaderComponent
           style={{ paddingHorizontal: 20, marginTop: 10 }}
-          rightComponent={editable?
-            <Row containerStyle={styles.headerRow}>
-              <Text style={styles.headerText}>{eng.update_cover_image}</Text>
-              <Image
-                source={images.uploadIcon}
-                style={{ width: 25, height: 19, marginLeft: 5 }}
-              />
-            </Row>:null
+          rightComponent={
+            editable ? (
+              <Row containerStyle={styles.headerRow}>
+                <Text style={styles.headerText}>{eng.update_cover_image}</Text>
+                <Image
+                  source={images.uploadIcon}
+                  style={{ width: 25, height: 19, marginLeft: 5 }}
+                />
+              </Row>
+            ) : null
           }
         />
-        {editable ?
-          <View style={styles.editButtonContainer}>
+        {editable ? (
+          <TouchableOpacity
+            style={styles.editButtonContainer}
+            onPress={() => {
+              navigation.navigate("CreatePost")
+            }}
+          >
             <EditSvg />
-          </View> : null}
+          </TouchableOpacity>
+        ) : null}
       </ImageBackground>
       <View style={styles.contentContainer}>
         <Row containerStyle={styles.titleRow}>
@@ -127,30 +166,39 @@ export const StoreDetailScreen: React.FC<Props> = ({ navigation }) => {
           disabled
           maxStars={5}
           rating={store.rating}
-          selectedStar={(rating) => { }}
+          selectedStar={(rating) => {}}
           emptyStarColor={"#FFC62B"}
           fullStarColor={"#FFC62B"}
           starSize={18}
           containerStyle={{ width: 18 * 5 + 4 * 7, marginVertical: 10 }}
         />
-        <Text style={styles.value}>
-          {store.description}
-        </Text>
+        <Text style={styles.value}>{store.description}</Text>
         <DetailComponent />
 
-        {editable?<TouchableOpacity
-          style={{
-            backgroundColor: "#3653FE",
-            alignSelf: "flex-end",
-            paddingHorizontal: 15,
-            paddingVertical: 5,
-            marginVertical: 15,
-            borderRadius: 22,
-          }}
-        >
-          <Text style={styles.locationText}>{eng.submit}</Text>
-        </TouchableOpacity>:null}
+        {editable ? (
+          <TouchableOpacity
+            style={{
+              backgroundColor: "#3653FE",
+              alignSelf: "flex-end",
+              paddingHorizontal: 15,
+              paddingVertical: 5,
+              marginVertical: 15,
+              borderRadius: 22,
+            }}
+            onPress={onSubmit}
+          >
+            <Text style={styles.locationText}>{eng.submit}</Text>
+          </TouchableOpacity>
+        ) : null}
       </View>
+      <LoadingComponent isLoading={isLoading} />
+      <CreatePostSuccessModal
+        isVisible={isVisible}
+        onClose={() => {
+          setIsVisible(false)
+          navigation.navigate("MarketPlace")
+        }}
+      />
     </Screen>
   )
 }
@@ -175,7 +223,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 5,
     borderRadius: 15,
-    alignItems:'center'
+    alignItems: "center",
   },
   headerText: {
     color: "white",

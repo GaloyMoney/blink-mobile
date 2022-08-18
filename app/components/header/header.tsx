@@ -17,7 +17,7 @@ export interface HeaderProps {
 export const HeaderComponent: React.FC<HeaderProps> = ({
   style,
   rightComponent,
-  title
+  title,
 }: HeaderProps) => {
   const navigation = useNavigation()
   return (
@@ -31,7 +31,9 @@ export const HeaderComponent: React.FC<HeaderProps> = ({
         }}
       >
         <BackSvg />
-        <Text style={{ fontFamily: typography.regular, fontSize: fontSize.font20 }}>{title}</Text>
+        <Text style={{ fontFamily: typography.regular, fontSize: fontSize.font20 }}>
+          {title}
+        </Text>
       </TouchableOpacity>
       {rightComponent ? rightComponent : <View />}
     </Row>

@@ -1,6 +1,7 @@
 import { StyleSheet } from "react-native"
 
 export const GlobalStyles = StyleSheet.create({
+  center: { justifyContent: "center", alignItems: "center" },
   shadow: {
     shadowColor: "#000",
     shadowOffset: {

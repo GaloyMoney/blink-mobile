@@ -38,11 +38,12 @@ interface Props {
 export const AddLocationScreen: React.FC<Props> = ({ navigation }) => {
   const dispatch = useDispatch()
   const name = useSelector((state: RootState) => state.storeReducer?.tempStore?.name)
+  const tempPost = useSelector((state: RootState) => state.storeReducer?.tempStore)
   const location = useSelector(
     (state: RootState) => state.storeReducer?.tempStore?.location,
   )
   const thumbnail = useSelector(
-    (state: RootState) => state.storeReducer?.tempStore?.thumbnail,
+    (state: RootState) => state.storeReducer?.tempStore?.mainImageUrl,
   )
 
   const [position, setPosition] = useState({
@@ -61,17 +62,25 @@ export const AddLocationScreen: React.FC<Props> = ({ navigation }) => {
         const crd = pos.coords
         dispatch(
           setTempStore({
+            ...tempPost,
             location: {
-              lat: crd.latitude,
-              long: crd.longitude,
+              // lat: crd.latitude,
+              // long: crd.longitude,
+              lat: 9.9227376,
+              long: -84.0748629,
             },
           }),
         )
         setPosition({
-          latitude: crd.latitude,
-          longitude: crd.longitude,
-          latitudeDelta: 0.02,
-          longitudeDelta: 0.02,
+          // latitude: crd.latitude,
+          // longitude: crd.longitude,
+          // latitudeDelta: 0.02,
+          // longitudeDelta: 0.02,
+
+          latitude: 9.9227376,
+          longitude: -84.0748629,
+          latitudeDelta: 0.001,
+          longitudeDelta: 0.001,
         })
       },
       (err) => {
@@ -114,6 +123,27 @@ export const AddLocationScreen: React.FC<Props> = ({ navigation }) => {
                 key={"1"}
                 pinColor={palette.orange}
                 draggable
+                onDragEnd={({ nativeEvent: { coordinate } }) => {
+                  // location: {
+                  //   lat: coordinate.latitude,
+                  //   long: coordinate.longitude,
+                  // },
+                  dispatch(
+                    setTempStore({
+                      ...tempPost,
+                      location: {
+                        lat: coordinate.latitude,
+                        long: coordinate.longitude,
+                      },
+                    }),
+                  )
+                  // setPosition({
+                  //   latitude: coordinate.latitude,
+                  //   longitude: coordinate.longitude,
+                  //   latitudeDelta: 0.02,
+                  //   longitudeDelta: 0.02,
+                  // })
+                }}
               />
             </MapView>
             <Text style={[styles.title, { marginTop: 20 }]}>

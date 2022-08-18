@@ -421,21 +421,21 @@ export const RootStack: NavigatorType = () => {
         name="StoreList"
         component={StoreListScreen}
         options={{
-          headerShown:false
+          headerShown: false,
         }}
-      /> 
+      />
       <RootNavigator.Screen
         name="StoreListView"
         component={StoreListViewScreen}
         options={{
-          headerShown:false
+          headerShown: false,
         }}
       />
       <RootNavigator.Screen
         name="StoreDetail"
         component={StoreDetailScreen}
         options={{
-          headerShown:false
+          headerShown: false,
         }}
       />
     </RootNavigator.Navigator>
@@ -552,7 +552,7 @@ export const PrimaryNavigator: NavigatorType = () => {
         }}
       />
       <Tab.Screen
-        name="MarketPlace"
+        name="MarketPlaceTab"
         component={MarketPlaceStacks}
         options={{
           title: eng.marketPlace,

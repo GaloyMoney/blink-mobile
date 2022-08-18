@@ -35,10 +35,7 @@ export const MarketPlaceStacks: NavigatorType = () => {
       <MarketPlaceStack.Screen name="AddLocation" component={AddLocationScreen} />
       <MarketPlaceStack.Screen name="MapScreen" component={MapScreen} />
       <MarketPlaceStack.Screen name="AddContact" component={AddContactScreen} />
-      <MarketPlaceStack.Screen
-        name="ConfirmInformation"
-        component={StoreDetailScreen}
-      />
+      <MarketPlaceStack.Screen name="ConfirmInformation" component={StoreDetailScreen} />
     </MarketPlaceStack.Navigator>
   )
 }

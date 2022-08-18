@@ -37,4 +37,5 @@ export const fontSize = {
   font18: 18,
   font20: 20,
   font22: 22,
+  font24: 24,
 }

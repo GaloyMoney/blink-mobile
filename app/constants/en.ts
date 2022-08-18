@@ -23,4 +23,5 @@ export const eng = {
   phone: "Phone",
   phone_number: "Phone number",
   email: "Email",
+  price: "Price",
 }
