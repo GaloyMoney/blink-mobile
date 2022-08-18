@@ -20,6 +20,7 @@ import { RouteProp } from "@react-navigation/native"
 import useToken from "../../hooks/use-token"
 import useLogout from "../../hooks/use-logout"
 import useMainQuery from "@app/hooks/use-main-query"
+import { useAuthenticationContext } from "@app/store/authentication-context"
 
 const styles = EStyleSheet.create({
   bottomSpacer: {
@@ -124,6 +125,7 @@ export const PinScreen: ScreenType = ({ route, navigation }: Props) => {
   const { logout } = useLogout()
   const { myPubKey, username } = useMainQuery()
   const { screenPurpose } = route.params
+  const { setAppUnlocked } = useAuthenticationContext()
 
   const [enteredPIN, setEnteredPIN] = useState("")
   const [helperText, setHelperText] = useState(
@@ -143,6 +145,7 @@ export const PinScreen: ScreenType = ({ route, navigation }: Props) => {
   const handleCompletedPinForAuthenticatePin = async (newEnteredPIN: string) => {
     if (newEnteredPIN === (await KeyStoreWrapper.getPinOrEmptyString())) {
       KeyStoreWrapper.resetPinAttempts()
+      setAppUnlocked()
       navigation.reset({
         index: 0,
         routes: [{ name: "Primary" }],

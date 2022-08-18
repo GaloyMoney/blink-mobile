@@ -68,6 +68,7 @@ import {
   ConversionSuccessScreen,
   ConversionConfirmationScreen,
 } from "@app/screens/conversion-flow"
+import { useAuthenticationContext } from "@app/store/authentication-context"
 
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
 PushNotification.configure({
@@ -133,11 +134,12 @@ export const RootStack: NavigatorType = () => {
   const client = useApolloClient()
   const { token, hasToken, tokenNetwork } = useToken()
   const { userPreferredLanguage, myPubKey, username } = useMainQuery()
+  const { isAppLocked } = useAuthenticationContext()
   const _handleAppStateChange = useCallback(
     async (nextAppState) => {
       if (appState.current.match(/background/) && nextAppState === "active") {
         console.info("App has come to the foreground!")
-        if (hasToken) {
+        if (hasToken && !isAppLocked) {
           showModalClipboardIfValidPayment({
             client,
             network: tokenNetwork,
@@ -149,7 +151,7 @@ export const RootStack: NavigatorType = () => {
 
       appState.current = nextAppState
     },
-    [client, hasToken, tokenNetwork, myPubKey, username],
+    [client, hasToken, tokenNetwork, myPubKey, username, isAppLocked],
   )
 
   useEffect(() => {

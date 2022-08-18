@@ -56,6 +56,7 @@ import "moment/locale/es"
 import "moment/locale/fr-ca"
 import "moment/locale/pt-br"
 import { PriceContextProvider } from "./store/price-context"
+import { AuthenticationContextProvider } from "./store/authentication-context"
 
 export const BUILD_VERSION = "build_version"
 
@@ -278,33 +279,35 @@ export const App = (): JSX.Element => {
 
   return (
     <AppConfigurationContext.Provider value={{ appConfig, setAppConfig }}>
-      <ApolloProvider client={apolloClient}>
-        <PriceContextProvider>
-          <ErrorBoundary FallbackComponent={ErrorScreen}>
-            <NavigationContainer
-              key={token}
-              linking={linking}
-              onStateChange={(state) => {
-                const currentRouteName = getActiveRouteName(state)
+      <AuthenticationContextProvider>
+        <ApolloProvider client={apolloClient}>
+          <PriceContextProvider>
+            <ErrorBoundary FallbackComponent={ErrorScreen}>
+              <NavigationContainer
+                key={token}
+                linking={linking}
+                onStateChange={(state) => {
+                  const currentRouteName = getActiveRouteName(state)
 
-                if (routeName !== currentRouteName) {
-                  analytics().logScreenView({
-                    screen_name: currentRouteName,
-                    screen_class: currentRouteName,
-                  })
-                  setRouteName(currentRouteName)
-                }
-              }}
-            >
-              <RootSiblingParent>
-                <GlobalErrorToast />
-                <RootStack />
-                <Toast />
-              </RootSiblingParent>
-            </NavigationContainer>
-          </ErrorBoundary>
-        </PriceContextProvider>
-      </ApolloProvider>
+                  if (routeName !== currentRouteName) {
+                    analytics().logScreenView({
+                      screen_name: currentRouteName,
+                      screen_class: currentRouteName,
+                    })
+                    setRouteName(currentRouteName)
+                  }
+                }}
+              >
+                <RootSiblingParent>
+                  <GlobalErrorToast />
+                  <RootStack />
+                  <Toast />
+                </RootSiblingParent>
+              </NavigationContainer>
+            </ErrorBoundary>
+          </PriceContextProvider>
+        </ApolloProvider>
+      </AuthenticationContextProvider>
     </AppConfigurationContext.Provider>
   )
 }
