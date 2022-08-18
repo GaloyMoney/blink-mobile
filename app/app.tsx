@@ -269,7 +269,7 @@ export const App = (): JSX.Element => {
     config: {
       screens: hasToken
         ? {
-            sendBitcoin: ":username",
+            sendBitcoinDestination: ":username",
             moveMoney: "/",
           }
         : null,
