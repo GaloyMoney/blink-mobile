@@ -21,6 +21,7 @@ import useToken from "../../hooks/use-token"
 import BitcoinBeachLogo from "../get-started-screen/bitcoin-beach-logo.png"
 import useLogout from "../../hooks/use-logout"
 import useMainQuery from "@app/hooks/use-main-query"
+import { useAuthenticationContext } from "@app/store/authentication-context"
 
 const styles = EStyleSheet.create({
   Logo: {
@@ -79,6 +80,7 @@ export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) =
   const { logout } = useLogout()
   const { myPubKey, username } = useMainQuery()
   const { screenPurpose, isPinEnabled } = route.params
+  const { setAppUnlocked } = useAuthenticationContext()
 
   useFocusEffect(() => {
     attemptAuthentication()
@@ -105,6 +107,7 @@ export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) =
     } else if (screenPurpose === AuthenticationScreenPurpose.TurnOnAuthentication) {
       KeyStoreWrapper.setIsBiometricsEnabled()
     }
+    setAppUnlocked()
     navigation.replace("Primary")
     if (hasToken) {
       showModalClipboardIfValidPayment({

@@ -17,6 +17,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import BitcoinBeachLogo from "../get-started-screen/bitcoin-beach-logo.png"
 import useToken from "../../hooks/use-token"
 import useMainQuery from "@app/hooks/use-main-query"
+import { useAuthenticationContext } from "@app/store/authentication-context"
 
 const styles = EStyleSheet.create({
   Logo: {
@@ -40,6 +41,8 @@ export const AuthenticationCheckScreen: ScreenType = ({ navigation }: Props) => 
   const client = useApolloClient()
   const { hasToken, tokenNetwork } = useToken()
   const { myPubKey, username } = useMainQuery()
+  const { setAppUnlocked } = useAuthenticationContext()
+
   useEffect(() => {
     ;(async () => {
       const isPinEnabled = await KeyStoreWrapper.getIsPinEnabled()
@@ -55,6 +58,7 @@ export const AuthenticationCheckScreen: ScreenType = ({ navigation }: Props) => 
       } else if (isPinEnabled) {
         navigation.replace("pin", { screenPurpose: PinScreenPurpose.AuthenticatePin })
       } else {
+        setAppUnlocked()
         navigation.replace("Primary")
         if (hasToken) {
           showModalClipboardIfValidPayment({
@@ -66,7 +70,7 @@ export const AuthenticationCheckScreen: ScreenType = ({ navigation }: Props) => 
         }
       }
     })()
-  }, [client, hasToken, myPubKey, navigation, tokenNetwork, username])
+  }, [client, hasToken, myPubKey, navigation, tokenNetwork, username, setAppUnlocked])
 
   return (
     <Screen
