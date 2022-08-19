@@ -2,12 +2,12 @@ import { useNavigation } from "@react-navigation/native"
 import * as React from "react"
 import { Pressable, StyleSheet, Text } from "react-native"
 import VersionNumber from "react-native-version-number"
-import { translateUnknown as translate } from "@galoymoney/client"
 import { palette } from "../../theme/palette"
 import type { StackNavigationProp } from "@react-navigation/stack"
 import type { TextStyleProp } from "react-native/Libraries/StyleSheet/StyleSheet"
 import type { ComponentType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
+import { translate } from "@app/utils/translate"
 
 const styles = StyleSheet.create({
   version: {

@@ -1,12 +1,12 @@
 import { CONTACT_EMAIL_ADDRESS, WHATSAPP_CONTACT_NUMBER } from "@app/constants/support"
 import { palette } from "@app/theme"
-import { translateUnknown as translate } from "@galoymoney/client"
 import React from "react"
 import { Linking, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import ReactNativeModal from "react-native-modal"
 import { openWhatsApp } from "@app/utils/external"
 import { ListItem, Icon } from "react-native-elements"
+import { translate } from "@app/utils/translate"
 
 const styles = EStyleSheet.create({
   container: {

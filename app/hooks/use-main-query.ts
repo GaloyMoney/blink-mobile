@@ -2,10 +2,10 @@ import { useQuery } from "@apollo/client"
 import { MAIN_QUERY } from "@app/graphql/query"
 import useToken from "@app/hooks/use-token"
 import NetInfo from "@react-native-community/netinfo"
-import { translateUnknown as translate } from "@galoymoney/client"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { useAppConfig } from "./use-app-config"
 import { usePriceConversion } from "./use-price-conversion"
+import { translate } from "../utils/translate"
 
 const useMainQuery = (): useMainQueryOutput => {
   const { hasToken } = useToken()

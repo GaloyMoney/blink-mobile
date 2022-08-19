@@ -4,7 +4,7 @@ import { InMemoryCache } from "@apollo/client"
 import { act, cleanup, fireEvent, render } from "@testing-library/react-native"
 import "@testing-library/jest-native/extend-expect"
 import "react-native-gesture-handler/jestSetup.js"
-import { translateUnknown as translate } from "@galoymoney/client"
+
 import "@mocks/react-navigation-native"
 import "@mocks/react-native-geetest-module"
 import { WelcomePhoneInputScreen } from "../../app/screens/phone-auth-screen"
@@ -14,6 +14,7 @@ import {
   defaultConfiguration,
 } from "../../app/store/app-configuration-context"
 import { PriceContextProvider } from "../../app/store/price-context"
+import { translate } from "../../app/utils/translate"
 
 jest.mock("react-native/Libraries/EventEmitter/NativeEventEmitter")
 jest.mock("react-native-fingerprint-scanner", () => ({}))

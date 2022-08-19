@@ -16,10 +16,10 @@ import { bech32 } from "bech32"
 import QRCode from "react-native-qrcode-svg"
 import { Button, Text } from "react-native-elements"
 import Clipboard from "@react-native-community/clipboard"
-import { translateUnknown as translate } from "@galoymoney/client"
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 import { color } from "@app/theme"
 import { toastShow } from "@app/utils/toast"
+import { translate } from "@app/utils/translate"
 
 const styles = EStyleSheet.create({
   container: {

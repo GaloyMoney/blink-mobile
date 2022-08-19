@@ -1,7 +1,7 @@
 import filter from "lodash.filter"
 import sumBy from "lodash.sumby"
-import { translateUnknown as translate } from "@galoymoney/client"
 import type { QuizQuestion, QuizSectionContent } from "../../types/quiz"
+import { translate } from "@app/utils/translate"
 
 export const getCardsFromSection = ({ quizQuestions, sectionIndex }): QuizQuestion[] => {
   const quizQuestionsContent = translate(

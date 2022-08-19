@@ -8,10 +8,7 @@ import Svg, { Circle } from "react-native-svg"
 import Icon from "react-native-vector-icons/Ionicons"
 import Paste from "react-native-vector-icons/FontAwesome"
 import { Screen } from "../../components/screen"
-import {
-  parsePaymentDestination,
-  translateUnknown as translate,
-} from "@galoymoney/client"
+import { parsePaymentDestination } from "@galoymoney/client"
 import { palette } from "../../theme/palette"
 import type { ScreenType } from "../../types/jsx"
 import { getParams } from "js-lnurl"
@@ -22,6 +19,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import useToken from "../../hooks/use-token"
 import useMainQuery from "@app/hooks/use-main-query"
 import Clipboard from "@react-native-community/clipboard"
+import { translate } from "@app/utils/translate"
 
 const CAMERA: ViewStyle = {
   width: "100%",

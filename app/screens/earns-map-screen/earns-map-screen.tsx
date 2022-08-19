@@ -7,12 +7,13 @@ import { SvgProps } from "react-native-svg"
 import { MountainHeader } from "../../components/mountain-header"
 import { Screen } from "../../components/screen"
 import { getQuizQuestions } from "../../graphql/query"
-import { getLocale, translateUnknown as translate } from "@galoymoney/client"
 import { PrimaryStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import { ComponentType, ScreenType } from "../../types/jsx"
 import useToken from "../../hooks/use-token"
 import { sectionCompletedPct } from "../earns-screen"
+import { translate, getLocale } from "@app/utils/translate"
+
 import BitcoinCircle from "./bitcoin-circle-01.svg"
 import BottomOngoing from "./bottom-ongoing-01.svg"
 import BottomStart from "./bottom-start-01.svg"
@@ -30,6 +31,7 @@ import RightComplete from "./right-section-completed-01.svg"
 import RightOngoing from "./right-section-ongoing-01.svg"
 import RightTodo from "./right-section-to-do-01.svg"
 import TextBlock from "./text-block-medium.svg"
+
 const BottomOngoingEN = React.lazy(() => import("./bottom-ongoing-01.en.svg"))
 const BottomOngoingES = React.lazy(() => import("./bottom-ongoing-01.es.svg"))
 const BottomStartEN = React.lazy(() => import("./bottom-start-01.en.svg"))

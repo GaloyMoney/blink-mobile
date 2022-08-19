@@ -7,7 +7,7 @@ import { CloseCross } from "../../components/close-cross"
 import { IconTransaction } from "../../components/icon-transactions"
 import { LargeButton } from "../../components/large-button"
 import { Screen } from "../../components/screen"
-import { translateUnknown as translate, useMutation } from "@galoymoney/client"
+import { useMutation } from "@galoymoney/client"
 import { palette } from "../../theme/palette"
 import type { ContactStackParamList } from "../../navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
@@ -16,6 +16,7 @@ import type { ScreenType } from "../../types/jsx"
 import { ContactTransactionsDataInjected } from "./contact-transactions"
 import useMainQuery from "@app/hooks/use-main-query"
 import { WalletType } from "@app/utils/enum"
+import { translate } from "@app/utils/translate"
 
 const styles = EStyleSheet.create({
   actionsContainer: { marginBottom: "15rem", backgroundColor: palette.lighterGrey },

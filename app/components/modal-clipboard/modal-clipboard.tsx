@@ -12,10 +12,7 @@ import {
   LAST_CLIPBOARD_PAYMENT,
   modalClipboardVisibleVar,
 } from "../../graphql/client-only-query"
-import {
-  parsePaymentDestination,
-  translateUnknown as translate,
-} from "@galoymoney/client"
+import { parsePaymentDestination } from "@galoymoney/client"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { cache } from "../../graphql/cache"
@@ -24,6 +21,7 @@ import type { StackNavigationProp } from "@react-navigation/stack"
 import type { ComponentType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import useMainQuery from "@app/hooks/use-main-query"
+import { translate } from "@app/utils/translate"
 
 const styles = StyleSheet.create({
   buttonContainer: {

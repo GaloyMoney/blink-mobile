@@ -2,9 +2,9 @@ import * as React from "react"
 import { View, Text } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Montain from "./mointains-cloud-01.svg"
-import { translateUnknown as translate } from "@galoymoney/client"
 import { palette } from "../../theme/palette"
 import type { ComponentType } from "../../types/jsx"
+import { translate } from "@app/utils/translate"
 
 const styles = EStyleSheet.create({
   amountContainer: {

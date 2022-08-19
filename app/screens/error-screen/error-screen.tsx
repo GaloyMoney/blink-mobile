@@ -6,7 +6,6 @@ import { Alert, KeyboardAvoidingView, StatusBar, Text, View } from "react-native
 import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import HoneyBadgerShovel from "../welcome-screens/honey-badger-shovel-01.svg"
-import { translateUnknown as translate } from "@galoymoney/client"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { isIos } from "@app/utils/helper"
 import { offsets, presets } from "@app/components/screen/screen.presets"
@@ -14,6 +13,7 @@ import crashlytics from "@react-native-firebase/crashlytics"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import useLogout from "@app/hooks/use-logout"
 import ContactModal from "@app/components/contact-modal/contact-modal"
+import { translate } from "@app/utils/translate"
 
 const styles = EStyleSheet.create({
   $color: palette.white,

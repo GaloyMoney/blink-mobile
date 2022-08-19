@@ -6,7 +6,6 @@ import {
   decodeInvoiceString,
   GaloyGQL,
   getLightningInvoiceExpiryTime,
-  translateUnknown as translate,
   useMutation,
 } from "@galoymoney/client"
 import React, { useCallback, useEffect, useRef, useState } from "react"
@@ -24,6 +23,7 @@ import ChevronIcon from "@app/assets/icons/chevron.svg"
 import NoteIcon from "@app/assets/icons/note.svg"
 import { toastShow } from "@app/utils/toast"
 import moment from "moment"
+import { translate } from "@app/utils/translate"
 
 const styles = EStyleSheet.create({
   container: {

@@ -16,12 +16,13 @@ import { FlatList } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
 
 import { Screen } from "../../components/screen"
-import { translateUnknown as translate } from "@galoymoney/client"
 import { ContactStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
 import { ScreenType } from "../../types/jsx"
 import { toastShow } from "../../utils/toast"
 import useToken from "../../hooks/use-token"
+import { translate } from "@app/utils/translate"
+
 // TODO: get rid of this wrapper once SearchBar props are figured out ref: https://github.com/react-native-elements/react-native-elements/issues/3089
 const SafeSearchBar = SearchBar as unknown as React.FC<
   SearchBarBaseProps | SearchBarDefaultProps | SearchBarAndroidProps | SearchBarIosProps

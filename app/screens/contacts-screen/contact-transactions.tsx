@@ -7,12 +7,13 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
 import { TransactionItem } from "../../components/transaction-item"
 import { nextPrefCurrency, prefCurrencyVar } from "../../graphql/client-only-query"
-import { translateUnknown as translate, useQuery } from "@galoymoney/client"
+import { useQuery } from "@galoymoney/client"
 import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import { sameDay, sameMonth } from "../../utils/date"
 import { toastShow } from "../../utils/toast"
+import { translate } from "@app/utils/translate"
 
 const styles = EStyleSheet.create({
   errorText: { alignSelf: "center", color: palette.red, paddingBottom: 18 },

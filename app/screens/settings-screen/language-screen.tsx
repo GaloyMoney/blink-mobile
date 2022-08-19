@@ -1,4 +1,4 @@
-import { translateUnknown as translate, useMutation } from "@galoymoney/client"
+import { useMutation } from "@galoymoney/client"
 import * as React from "react"
 import { ListItem } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
@@ -8,6 +8,7 @@ import { palette } from "../../theme/palette"
 import type { ScreenType } from "../../types/jsx"
 import useToken from "../../hooks/use-token"
 import useMainQuery from "@app/hooks/use-main-query"
+import { translate } from "@app/utils/translate"
 
 const styles = EStyleSheet.create({
   screenStyle: {

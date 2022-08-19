@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { StyleSheet, Text, View } from "react-native"
 import { Button } from "react-native-elements"
-import { translateUnknown as translate, useMutation } from "@galoymoney/client"
+import { useMutation } from "@galoymoney/client"
 import { palette } from "@app/theme"
 import { toastShow } from "@app/utils/toast"
 import { paymentAmountToTextWithUnits } from "@app/utils/currencyConversion"
@@ -9,6 +9,7 @@ import { WalletCurrency } from "@app/types/amounts"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { CommonActions } from "@react-navigation/native"
+import { translate } from "@app/utils/translate"
 
 export const ConversionConfirmationScreen = ({
   navigation,

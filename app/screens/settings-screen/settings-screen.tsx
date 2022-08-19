@@ -10,7 +10,6 @@ import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
 import { palette } from "../../theme/palette"
 import { GALOY_PAY_DOMAIN } from "../../constants/support"
-import { translateUnknown as translate } from "@galoymoney/client"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
@@ -21,6 +20,7 @@ import useLogout from "../../hooks/use-logout"
 import useMainQuery from "@app/hooks/use-main-query"
 import crashlytics from "@react-native-firebase/crashlytics"
 import ContactModal from "@app/components/contact-modal/contact-modal"
+import { translate } from "@app/utils/translate"
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "settings">

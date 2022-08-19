@@ -8,7 +8,6 @@ import { CloseCross } from "../../components/close-cross"
 import { IconTransaction } from "../../components/icon-transactions"
 import { Screen } from "../../components/screen"
 import { TextCurrencyForAmount } from "../../components/text-currency"
-import { translateUnknown as translate } from "@galoymoney/client"
 import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme"
@@ -22,6 +21,7 @@ import {
   usdAmountDisplay,
 } from "@app/utils/currencyConversion"
 import { TransactionDate } from "@app/components/transaction-date"
+import { translate } from "@app/utils/translate"
 
 const viewInExplorer = (hash: string): Promise<Linking> =>
   Linking.openURL(BLOCKCHAIN_EXPLORER_URL + hash)

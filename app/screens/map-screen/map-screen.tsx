@@ -11,10 +11,10 @@ import { Screen } from "../../components/screen"
 import { PrimaryStackParamList } from "../../navigation/stack-param-lists"
 import { ScreenType } from "../../types/jsx"
 import { isIos } from "../../utils/helper"
-import { translateUnknown as translate } from "@galoymoney/client"
 import { palette } from "../../theme/palette"
 import { toastShow } from "../../utils/toast"
 import useToken from "../../hooks/use-token"
+import { translate } from "@app/utils/translate"
 
 const QUERY_BUSINESSES = gql`
   query businessMapMarkers {

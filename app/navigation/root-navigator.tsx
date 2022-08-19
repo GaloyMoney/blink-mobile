@@ -12,7 +12,6 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import * as RNLocalize from "react-native-localize"
 import analytics from "@react-native-firebase/analytics"
 
-import { setLocale, translateUnknown as translate } from "@galoymoney/client"
 import {
   AuthenticationScreen,
   AuthenticationCheckScreen,
@@ -68,6 +67,7 @@ import {
   ConversionSuccessScreen,
   ConversionConfirmationScreen,
 } from "@app/screens/conversion-flow"
+import { translate, setLocale } from "../utils/translate"
 import { useAuthenticationContext } from "@app/store/authentication-context"
 
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
