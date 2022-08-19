@@ -528,11 +528,14 @@ const SendBitcoinConfirmationScreen = ({
             {fee.status === "error" && Boolean(feeDisplayText) && (
               <Text>{feeDisplayText} *</Text>
             )}
+            {fee.status === "error" && !feeDisplayText && (
+              <Text>{translate("SendBitcoinConfirmationScreen.feeError")}</Text>
+            )}
           </View>
         </View>
         {fee.status === "error" && Boolean(feeDisplayText) && (
           <Text style={styles.maxFeeWarningText}>
-            {"*" + translate("SendBitcoinConfirmationScreen.maxFeeSelected")}
+            {"* " + translate("SendBitcoinConfirmationScreen.maxFeeSelected")}
           </Text>
         )}
 
