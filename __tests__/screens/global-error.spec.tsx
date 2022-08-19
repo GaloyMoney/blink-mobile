@@ -10,7 +10,7 @@ import { useApolloNetworkStatus } from "../../app/app"
 import { GlobalErrorToast } from "../../app/components/global-error"
 import { NetworkErrorCode } from "../../app/components/global-error/network-error-code"
 import * as toastShowModule from "../../app/utils/toast"
-import { AuthenticationContextProvider } from "../../app/store/authentication-context"
+import { AuthenticationContext } from "../../app/store/authentication-context"
 
 jest.mock("../../app/app")
 jest.mock("react-native/Libraries/EventEmitter/NativeEventEmitter")
@@ -42,9 +42,11 @@ describe("GlobalError tests", () => {
     useApolloNetworkStatusMock.mockReturnValue(status)
     const tree = render(
       <MockedProvider>
-        <AuthenticationContextProvider>
+        <AuthenticationContext.Provider
+          value={{ isAppLocked: false, setAppLocked: () => {}, setAppUnlocked: () => {} }}
+        >
           <GlobalErrorToast />
-        </AuthenticationContextProvider>
+        </AuthenticationContext.Provider>
       </MockedProvider>,
     ).toJSON()
 

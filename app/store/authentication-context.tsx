@@ -1,23 +1,11 @@
-import { createContext, useContext, useMemo, useState } from "react"
-import * as React from "react"
+import { createContext, useContext } from "react"
 
-export type AutheticationContextType = {
+export type AuthenticationContextType = {
   isAppLocked: boolean
   setAppUnlocked: () => void
   setAppLocked: () => void
 }
 
-export const AuthenticationContext = createContext<AutheticationContextType>(null)
-
-export const AuthenticationContextProvider = ({ children }) => {
-  const [isAppLocked, setIsAppLocked] = useState(true)
-  const setAppUnlocked = useMemo(() => () => setIsAppLocked(false), [])
-  const setAppLocked = useMemo(() => () => setIsAppLocked(true), [])
-  return (
-    <AuthenticationContext.Provider value={{ isAppLocked, setAppUnlocked, setAppLocked }}>
-      {children}
-    </AuthenticationContext.Provider>
-  )
-}
+export const AuthenticationContext = createContext<AuthenticationContextType>(null)
 
 export const useAuthenticationContext = () => useContext(AuthenticationContext)
