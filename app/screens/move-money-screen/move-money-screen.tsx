@@ -437,6 +437,7 @@ export const MoveMoneyScreen: ScreenType = ({
           },
           recentTransactionsData,
         ]}
+        showsVerticalScrollIndicator={false}
         style={styles.listContainer}
         refreshControl={<RefreshControl refreshing={loading} onRefresh={refetch} />}
         renderItem={({ item }) =>
