@@ -2,10 +2,8 @@ var client = require("@galoymoney/client")
 
 describe("Unauthenticated navigation renders correctly", () => {
   it("Welcome flow", async () => {
-    await $(`~${client.translateUnknown("GetStartedScreen.getStarted")}`).waitForExist()
-    await $(`~${client.translateUnknown("GetStartedScreen.getStarted")}`).touchAction([
-      "press",
-    ])
+    let el1 = driver.element('//XCUIElementTypeButton[@name="Get Started"]')
+    el1.click()
     expect(await $("~Bitcoin:").isDisplayed()).toBeTruthy()
     expect(
       await $(`~${client.translateUnknown("WelcomeFirstScreen.care")}`).isDisplayed(),
