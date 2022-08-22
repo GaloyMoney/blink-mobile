@@ -26,9 +26,9 @@ import {
 import { AsyncStorageWrapper, CachePersistor } from "apollo3-cache-persist"
 import "node-libs-react-native/globals" // needed for Buffer?
 import * as React from "react"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { createNetworkStatusNotifier } from "react-apollo-network-status"
-import { Dimensions, LogBox } from "react-native"
+import { Dimensions, Linking, LogBox } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { RootSiblingParent } from "react-native-root-siblings"
 import VersionNumber from "react-native-version-number"
@@ -56,7 +56,7 @@ import "moment/locale/es"
 import "moment/locale/fr-ca"
 import "moment/locale/pt-br"
 import { PriceContextProvider } from "./store/price-context"
-import { AuthenticationContextProvider } from "./store/authentication-context"
+import { AuthenticationContext } from "./store/authentication-context"
 
 export const BUILD_VERSION = "build_version"
 
@@ -102,10 +102,24 @@ const noRetryOperations = [
 export const App = (): JSX.Element => {
   const { token, hasToken, tokenNetwork } = useToken()
   const networkReactiveVar = useReactiveVar<INetwork | null>(networkVar)
-  const [routeName, setRouteName] = useState("Initial")
+  const routeName = useRef("Initial")
   const [apolloClient, setApolloClient] = useState<ApolloClient<NormalizedCacheObject>>()
   const [persistor, setPersistor] = useState<CachePersistor<NormalizedCacheObject>>()
+  const [isAppLocked, setIsAppLocked] = useState(true)
+  const processLink = useRef(null)
+  const setAppUnlocked = useMemo(
+    () => () => {
+      setIsAppLocked(false)
+      Linking.getInitialURL().then((url) => {
+        if (url && hasToken && processLink.current) {
+          processLink.current(url)
+        }
+      })
+    },
+    [hasToken],
+  )
 
+  const setAppLocked = useMemo(() => () => setIsAppLocked(true), [])
   const getActiveRouteName = (
     state: NavigationState | PartialState<NavigationState> | undefined,
   ): string => {
@@ -122,7 +136,6 @@ export const App = (): JSX.Element => {
     return route.name
   }
   const [appConfig, setAppConfig] = useState<AppConfiguration>(undefined)
-
   useEffect(() => {
     loadAuthToken()
     loadAppConfig().then((config) => setAppConfig(config))
@@ -268,18 +281,37 @@ export const App = (): JSX.Element => {
       "https://pay.bbw.sv",
     ],
     config: {
-      screens: hasToken
-        ? {
-            sendBitcoin: ":username",
-            moveMoney: "/",
-          }
-        : null,
+      screens: {
+        sendBitcoinDestination: ":username",
+        moveMoney: "/",
+      },
+    },
+    getInitialURL: async () => {
+      const url = await Linking.getInitialURL()
+      if (Boolean(url) && hasToken && !isAppLocked) {
+        return url
+      }
+      return null
+    },
+    subscribe: (listener) => {
+      const onReceiveURL = ({ url }: { url: string }) => listener(url)
+      // Listen to incoming links from deep linking
+      const subscription = Linking.addEventListener("url", onReceiveURL)
+      processLink.current = listener
+
+      return () => {
+        // Clean up the event listeners
+        subscription.remove()
+        processLink.current = null
+      }
     },
   }
 
   return (
     <AppConfigurationContext.Provider value={{ appConfig, setAppConfig }}>
-      <AuthenticationContextProvider>
+      <AuthenticationContext.Provider
+        value={{ isAppLocked, setAppUnlocked, setAppLocked }}
+      >
         <ApolloProvider client={apolloClient}>
           <PriceContextProvider>
             <ErrorBoundary FallbackComponent={ErrorScreen}>
@@ -288,13 +320,12 @@ export const App = (): JSX.Element => {
                 linking={linking}
                 onStateChange={(state) => {
                   const currentRouteName = getActiveRouteName(state)
-
-                  if (routeName !== currentRouteName) {
+                  if (routeName.current !== currentRouteName) {
                     analytics().logScreenView({
                       screen_name: currentRouteName,
                       screen_class: currentRouteName,
                     })
-                    setRouteName(currentRouteName)
+                    routeName.current = currentRouteName
                   }
                 }}
               >
@@ -307,7 +338,7 @@ export const App = (): JSX.Element => {
             </ErrorBoundary>
           </PriceContextProvider>
         </ApolloProvider>
-      </AuthenticationContextProvider>
+      </AuthenticationContext.Provider>
     </AppConfigurationContext.Provider>
   )
 }
