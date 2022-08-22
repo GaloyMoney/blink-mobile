@@ -46,3 +46,13 @@ export const showModalClipboardIfValidPayment = async ({
 
   modalClipboardVisibleVar(true)
 }
+
+export const copyPaymentInfoToClipboard = (paymentInfo: string): void => {
+  cache.writeQuery({
+    query: LAST_CLIPBOARD_PAYMENT,
+    data: {
+      lastClipboardPayment: paymentInfo,
+    },
+  })
+  Clipboard.setString(paymentInfo)
+}

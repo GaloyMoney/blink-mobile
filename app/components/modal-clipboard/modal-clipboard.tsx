@@ -84,8 +84,15 @@ export const ModalClipboard: ComponentType = () => {
   const { myPubKey, username } = useMainQuery()
   const open = async () => {
     modalClipboardVisibleVar(false)
+    const clipboardString = await Clipboard.getString()
+    cache.writeQuery({
+      query: LAST_CLIPBOARD_PAYMENT,
+      data: {
+        lastClipboardPayment: clipboardString,
+      },
+    })
     navigation.navigate("sendBitcoinDestination", {
-      payment: await Clipboard.getString(),
+      payment: clipboardString,
     })
   }
 

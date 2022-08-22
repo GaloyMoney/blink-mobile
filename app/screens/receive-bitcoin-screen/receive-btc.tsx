@@ -2,7 +2,6 @@ import { usePriceConversion, useSubscriptionUpdates } from "@app/hooks"
 import useMainQuery from "@app/hooks/use-main-query"
 import { getFullUri, TYPE_LIGHTNING_BTC, TYPE_BITCOIN_ONCHAIN } from "@app/utils/wallet"
 import { GaloyGQL, useMutation } from "@galoymoney/client"
-import Clipboard from "@react-native-community/clipboard"
 import React, { useCallback, useEffect, useState } from "react"
 import { Alert, Pressable, Share, TextInput, View } from "react-native"
 import { Button, Text } from "react-native-elements"
@@ -20,6 +19,7 @@ import ChainIcon from "@app/assets/icons/chain.svg"
 import NoteIcon from "@app/assets/icons/note.svg"
 import { toastShow } from "@app/utils/toast"
 import { translate } from "@app/utils/translate"
+import { copyPaymentInfoToClipboard } from "@app/utils/clipboard"
 
 const styles = EStyleSheet.create({
   container: {
@@ -297,7 +297,7 @@ const ReceiveBtc = () => {
   })
 
   const copyToClipboard = useCallback(() => {
-    Clipboard.setString(paymentFullUri)
+    copyPaymentInfoToClipboard(paymentFullUri)
     toastShow({
       message: translate("ReceiveBitcoinScreen.copyClipboard"),
       type: "success",
