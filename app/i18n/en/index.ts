@@ -596,6 +596,12 @@ const en: BaseTranslation = {
     "pt-BR": "Portuguese (Brazil)",
     "fr-CA": "French (Canada)",
   },
+  StablesatsModal: {
+    header: "With Stablesats, you now have a USD account added to your wallet!",
+    body: "You can use it to send and receive Bitcoin, and instantly transfer value between your BTC and USD account. Value in the USD account will not fluctuate with the price of Bitcoin. This feature is not compatible with the traditional banking system.",
+    termsAndConditions: "Read the Terms & Conditions.",
+    learnMore: "Learn more about Stablesats"
+  },
   SplashScreen: {
     update:
       "Your app is outdated. An update is needed before the app can be used.\n\nThis can be done from the PlayStore for Android and Testflight for iOS",

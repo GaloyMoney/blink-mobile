@@ -607,6 +607,13 @@ const frCA: Translation = {
     "pt-BR": "Portuguese",
     "fr-CA": "Français Canada",
   },
+  // TODO translate StablesatsModal
+  StablesatsModal: {
+    header: "With Stablesats, you now have a USD account added to your wallet!",
+    body: "You can use it to send and receive Bitcoin, and instantly transfer value between your BTC and USD account. Value in the USD account will not fluctuate with the price of Bitcoin. This feature is not compatible with the traditional banking system.",
+    termsAndConditions: "Read the Terms & Conditions.",
+    learnMore: "Learn more about Stablesats"
+  },
   SplashScreen: {
     update:
       "Votre application n'est plus à jour. Une mise à jour est nécessaire avant que l'application puisse être utilisée.\n\nCela peut être fait depuis le PlayStore pour Android et Testflight pour iOS",

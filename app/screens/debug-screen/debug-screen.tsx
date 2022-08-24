@@ -17,6 +17,7 @@ import { usePriceConversion } from "../../hooks"
 import useLogout from "../../hooks/use-logout"
 import { GaloyInput } from "@app/components/galoy-input"
 import { useAppConfig } from "@app/hooks/use-app-config"
+import { usePersistentStateContext } from "@app/store/persistent-state"
 
 const styles = EStyleSheet.create({
   button: {
@@ -35,7 +36,7 @@ export const DebugScreen: ScreenType = () => {
   const { hasToken, tokenUid, tokenNetwork, saveToken } = useToken()
   const { logout } = useLogout()
   const [token, setToken] = React.useState()
-
+  const persistentState = usePersistentStateContext()
   const networks: INetwork[] = ["regtest", "testnet", "mainnet"]
   const [networkState, setNetworkState] = React.useState("")
   const [graphQLURIs, setGraphQLURIs] = React.useState({
@@ -112,6 +113,11 @@ export const DebugScreen: ScreenType = () => {
         title={appConfig.isUsdDisabled ? "Enable USD" : "Disable USD"}
         style={styles.button}
         onPress={toggleUsdDisabled}
+      />
+      <Button
+        title="Reset persistent state"
+        style={styles.button}
+        onPress={persistentState.resetState}
       />
       <Button
         title="Request permission + send device token"

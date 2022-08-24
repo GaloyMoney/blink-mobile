@@ -43,8 +43,9 @@ import ReceiveIcon from "@app/assets/icons/receive.svg"
 import PriceIcon from "@app/assets/icons/price.svg"
 import SettingsIcon from "@app/assets/icons/settings.svg"
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs"
-import { CompositeNavigationProp } from "@react-navigation/native"
+import { CompositeNavigationProp, useIsFocused } from "@react-navigation/native"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { StableSatsModal } from "@app/components/stablesats-modal"
 
 const styles = EStyleSheet.create({
   bottom: {
@@ -264,7 +265,7 @@ export const MoveMoneyScreen: ScreenType = ({
 }: MoveMoneyScreenProps) => {
   const [modalVisible, setModalVisible] = useState(false)
   const { LL } = useI18nContext()
-
+  const isFocused = useIsFocused()
   const onMenuClick = (target) => {
     if (hasToken) {
       navigation.navigate(target)
@@ -339,7 +340,7 @@ export const MoveMoneyScreen: ScreenType = ({
   return (
     <Screen style={styles.screenStyle}>
       <StatusBar backgroundColor={palette.lighterGrey} barStyle="dark-content" />
-
+      {hasUsdWallet && isFocused ? <StableSatsModal /> : null}
       <Modal
         style={styles.modal}
         isVisible={modalVisible}
