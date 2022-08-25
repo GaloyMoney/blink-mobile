@@ -41,7 +41,7 @@ const en: BaseTranslation = {
     message: "Conversion successful",
   },
   EarnScreen: {
-    earnSats: "Earn {formattedNumber|sats: number}",
+    earnSats: "Earn {formattedNumber|sats}",
     earns: [
       {
         content: [
@@ -452,7 +452,7 @@ const en: BaseTranslation = {
     quizComplete: "Quiz completed and {amount: number} sats earned",
     reviewQuiz: "Review quiz",
     satAccumulated: "Sats accumulated",
-    satsEarned: "{formattedNumber|sats: number} earned",
+    satsEarned: "{formattedNumber|sats} earned",
     sectionsCompleted: "You've completed",
     title: "Earn",
     unlockQuestion: "To unlock, answer the question:",

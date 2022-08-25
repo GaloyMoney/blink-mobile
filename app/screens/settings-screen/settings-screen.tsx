@@ -22,6 +22,7 @@ import crashlytics from "@react-native-firebase/crashlytics"
 import ContactModal from "@app/components/contact-modal/contact-modal"
 
 import { copyPaymentInfoToClipboard } from "@app/utils/clipboard"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "settings">
@@ -30,7 +31,7 @@ type Props = {
 export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
   const { hasToken } = useToken()
   const { logout } = useLogout()
-
+  const { LL } = useI18nContext()
   const { btcWalletId, username, phoneNumber, userPreferredLanguage } = useMainQuery()
 
   const onGetCsvCallback = async (data) => {
@@ -69,9 +70,9 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
         onError: (error) => {
           crashlytics().recordError(error)
           Alert.alert(
-            translate("common.error"),
-            translate("SettingsScreen.csvTransactionsError"),
-            [{ text: translate("common.ok") }],
+            LL.common.error(),
+            LL.SettingsScreen.csvTransactionsError(),
+            [{ text: LL.common.ok() }],
           )
         },
       },
@@ -92,15 +93,15 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
       navigation.navigate("lnurl", { username })
     } else {
       Alert.alert(
-        `Lnurl ${translate("SettingsScreen.title")}`,
-        translate("SettingsScreen.lnurlNoUsername"),
+        `Lnurl ${LL.SettingsScreen.title()}`,
+        LL.SettingsScreen.lnurlNoUsername(),
         [
           {
-            text: translate("Common.yes"),
+            text: LL.common.yes(),
             onPress: () => navigation.navigate("setUsername"),
           },
           {
-            text: translate("Common.no"),
+            text: LL.common.No(),
           },
         ],
       )
@@ -110,9 +111,9 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
   const logoutAction = async () => {
     try {
       await logout()
-      Alert.alert(translate("common.loggedOut"), "", [
+      Alert.alert(LL.common.loggedOut(), "", [
         {
-          text: translate("common.ok"),
+          text: LL.common.ok(),
           onPress: () => {
             navigation.goBack()
           },
@@ -130,7 +131,7 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
       navigation={navigation}
       username={username}
       phone={phoneNumber}
-      language={translate(`Languages.${userPreferredLanguage || "DEFAULT"}`)}
+      language={LL.Languages[userPreferredLanguage]() || "DEFAULT"}
       csvAction={() => {
         if (called) {
           refetch({ defaultWalletId: btcWalletId })
@@ -177,6 +178,7 @@ type SettingRow = {
 
 export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
   const [isContactModalVisible, setIsContactModalVisible] = React.useState(false)
+  const { LL } = useI18nContext()
   const {
     hasToken,
     navigation,
@@ -192,7 +194,7 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
   const copyToClipBoard = (username) => {
     copyPaymentInfoToClipboard(GALOY_PAY_DOMAIN + username)
     Clipboard.getString().then((data) =>
-      toastShow({ message: translate("tippingLink.copied", { data }), type: "success" }),
+      toastShow({ message: LL.tippingLink.copied({ data }), type: "success" }),
     )
   }
 
@@ -202,27 +204,27 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
 
   const settingList: SettingRow[] = [
     {
-      category: translate("common.phoneNumber"),
+      category: LL.common.phoneNumber(),
       icon: "call",
       id: "phone",
-      subTitleDefaultValue: translate("SettingsScreen.tapLogIn"),
+      subTitleDefaultValue: LL.SettingsScreen.tapLogIn(),
       subTitleText: phone,
       action: () => navigation.navigate("phoneValidation"),
       enabled: !hasToken,
       greyed: hasToken,
     },
     {
-      category: translate("common.username"),
+      category: LL.common.username(),
       icon: "ios-person-circle",
       id: "username",
-      subTitleDefaultValue: translate("SettingsScreen.tapUserName"),
+      subTitleDefaultValue: LL.SettingsScreen.tapUserName(),
       subTitleText: username,
       action: () => navigation.navigate("setUsername"),
       enabled: hasToken && !username,
       greyed: !hasToken,
     },
     {
-      category: translate("common.language"),
+      category: LL.common.language(),
       icon: "ios-language",
       id: "language",
       subTitleText: language,
@@ -231,7 +233,7 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       greyed: !hasToken,
     },
     {
-      category: translate("common.security"),
+      category: LL.common.security(),
       icon: "lock-closed-outline",
       id: "security",
       action: securityAction,
@@ -247,7 +249,7 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       greyed: !hasToken || !username,
     },
     {
-      category: translate("common.csvExport"),
+      category: LL.common.csvExport(),
       icon: "ios-download",
       id: "csv",
       action: () => csvAction(),
@@ -255,7 +257,7 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       greyed: !hasToken || loadingCsvTransactions,
     },
     {
-      category: translate("tippingLink.title"),
+      category: LL.tippingLink.title(),
       icon: "cash-outline",
       id: "tippingLink",
       action: () => copyToClipBoard(username),
@@ -263,7 +265,7 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       greyed: !hasToken || username === null,
     },
     {
-      category: translate("support.contactUs"),
+      category: LL.support.contactUs(),
       icon: "help-circle",
       id: "contact-us",
       action: toggleIsContactModalVisible,
@@ -272,7 +274,7 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       styleDivider: { backgroundColor: palette.lighterGrey, height: 18 },
     },
     {
-      category: translate("common.logout"),
+      category: LL.common.logout(),
       id: "logout",
       icon: "ios-log-out",
       action: () => logoutAction(),

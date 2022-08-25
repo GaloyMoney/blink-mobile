@@ -5,6 +5,7 @@ import { createMock } from "ts-auto-mock"
 import moment from "moment"
 
 import { TransactionDate } from "../../app/components/transaction-date"
+import { LocalizationContextProvider } from "../../app/store/localization-context"
 
 describe("Display the createdAt date for a transaction", () => {
   it("Displays pending for a pending onchain transaction", () => {
@@ -13,8 +14,8 @@ describe("Display the createdAt date for a transaction", () => {
       createdAt: new Date().getDate(),
     })
 
-    const { queryAllByText } = render(<TransactionDate tx={mockedTransaction} />)
-    expect(queryAllByText(translate("common.pending"))).not.toBeNull()
+    const { queryAllByText } = render(<LocalizationContextProvider><TransactionDate tx={mockedTransaction} /></LocalizationContextProvider>)
+    expect(queryAllByText("pending")).not.toBeNull()
   })
   it("Displays friendly date", () => {
     const testTransactionCreatedAtDate = moment().subtract(1, "days")
@@ -23,7 +24,7 @@ describe("Display the createdAt date for a transaction", () => {
     })
 
     const { queryByText } = render(
-      <TransactionDate tx={mockedTransaction} diffDate={true} friendly={true} />,
+      <LocalizationContextProvider><TransactionDate tx={mockedTransaction} diffDate={true} friendly={true} /></LocalizationContextProvider>,
     )
     expect(
       queryByText(

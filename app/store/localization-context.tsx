@@ -1,5 +1,5 @@
 import useMainQuery from "@app/hooks/use-main-query"
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import TypesafeI18n from "../i18n/i18n-react"
 import { detectLocale } from "../i18n/i18n-util"
 import * as RNLocalize from "react-native-localize"

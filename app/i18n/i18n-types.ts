@@ -113,10 +113,10 @@ type RootTranslation = {
 	}
 	EarnScreen: {
 		/**
-		 * Earn {formattedNumber|sats: number}
+		 * Earn {formattedNumber|sats}
 		 * @param {unknown} formattedNumber
 		 */
-		earnSats: RequiredParams<'formattedNumber|sats: number'>
+		earnSats: RequiredParams<'formattedNumber|sats'>
 		earns: {
 			'0': {
 				content: {
@@ -1443,10 +1443,10 @@ type RootTranslation = {
 		 */
 		satAccumulated: string
 		/**
-		 * {formattedNumber|sats: number} earned
+		 * {formattedNumber|sats} earned
 		 * @param {unknown} formattedNumber
 		 */
-		satsEarned: RequiredParams<'formattedNumber|sats: number'>
+		satsEarned: RequiredParams<'formattedNumber|sats'>
 		/**
 		 * You've completed
 		 */
@@ -2704,7 +2704,7 @@ export type TranslationFunctions = {
 	}
 	EarnScreen: {
 		/**
-		 * Earn {formattedNumber|sats: number}
+		 * Earn {formattedNumber|sats}
 		 */
 		earnSats: (arg: { formattedNumber: unknown }) => LocalizedString
 		earns: {
@@ -4032,7 +4032,7 @@ export type TranslationFunctions = {
 		 */
 		satAccumulated: () => LocalizedString
 		/**
-		 * {formattedNumber|sats: number} earned
+		 * {formattedNumber|sats} earned
 		 */
 		satsEarned: (arg: { formattedNumber: unknown }) => LocalizedString
 		/**
@@ -5183,5 +5183,5 @@ export type TranslationFunctions = {
 }
 
 export type Formatters = {
-	'sats: number': (value: unknown) => unknown
+	sats: (value: unknown) => unknown
 }

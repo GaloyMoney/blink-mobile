@@ -13,6 +13,7 @@ import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import { sameDay, sameMonth } from "../../utils/date"
 import { toastShow } from "../../utils/toast"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 
 const styles = EStyleSheet.create({
@@ -69,7 +70,7 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
   navigation,
 }: Props) => {
   const currency = "sat" // FIXME
-
+  const { LL } = useI18nContext()
   const { data, error, refetch, loading } =
     useGaloyQuery.transactionListForDefaultAccount()
   const prefCurrency = useReactiveVar(prefCurrencyVar)
@@ -80,7 +81,7 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
 
   if (error) {
     console.error(error)
-    toastShow({ message: translate("common.transactionsError") })
+    toastShow({ message: LL.common.transactionsError() })
     return null
   }
 
@@ -131,19 +132,19 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
   }
 
   if (today.length > 0) {
-    sections.push({ title: translate("PriceScreen.today"), data: today })
+    sections.push({ title: LL.PriceScreen.today(), data: today })
   }
 
   if (yesterday.length > 0) {
-    sections.push({ title: translate("PriceScreen.yesterday"), data: yesterday })
+    sections.push({ title: LL.PriceScreen.yesterday(), data: yesterday })
   }
 
   if (thisMonth.length > 0) {
-    sections.push({ title: translate("PriceScreen.thisMonth"), data: thisMonth })
+    sections.push({ title: LL.PriceScreen.thisMonth(), data: thisMonth })
   }
 
   if (before.length > 0) {
-    sections.push({ title: translate("PriceScreen.prevMonths"), data: before })
+    sections.push({ title: LL.PriceScreen.prevMonths(), data: before })
   }
 
   return (
@@ -185,55 +186,58 @@ export const TransactionScreen: ScreenType = ({
   fetchNextTransactionsPage,
   loading,
   refetch,
-}: TransactionScreenProps) => (
-  <View style={styles.screen}>
-    <SectionList
-      showsVerticalScrollIndicator={false}
-      style={styles.transactionGroup}
-      renderItem={({ item, index, section }) => (
-        <TransactionItem
-          key={`txn-${item.id}`}
-          isFirst={index === 0}
-          isLast={index === section.data.length - 1}
-          navigation={navigation}
-          tx={item}
-          subtitle
-        />
-      )}
-      ListHeaderComponent={() => (
-        <>
-          {error?.graphQLErrors?.map(({ message }, item) => (
-            <Text key={`error-${item}`} style={styles.errorText} selectable>
-              {message}
+}: TransactionScreenProps) => {
+  const { LL } = useI18nContext()
+  return (
+    <View style={styles.screen}>
+      <SectionList
+        showsVerticalScrollIndicator={false}
+        style={styles.transactionGroup}
+        renderItem={({ item, index, section }) => (
+          <TransactionItem
+            key={`txn-${item.id}`}
+            isFirst={index === 0}
+            isLast={index === section.data.length - 1}
+            navigation={navigation}
+            tx={item}
+            subtitle
+          />
+        )}
+        ListHeaderComponent={() => (
+          <>
+            {error?.graphQLErrors?.map(({ message }, item) => (
+              <Text key={`error-${item}`} style={styles.errorText} selectable>
+                {message}
+              </Text>
+            ))}
+          </>
+        )}
+        initialNumToRender={20}
+        renderSectionHeader={({ section: { title } }) => (
+          <View style={styles.sectionHeaderContainer}>
+            <Text style={styles.sectionHeaderText}>{title}</Text>
+            <TouchableOpacity style={styles.row} onPress={nextPrefCurrency}>
+              <Text style={styles.sectionHeaderText}>
+                {prefCurrency === "BTC" ? "sats" : prefCurrency}{" "}
+              </Text>
+              <Icon name="ios-swap-vertical" size={32} style={styles.icon} />
+            </TouchableOpacity>
+          </View>
+        )}
+        ListEmptyComponent={
+          <View style={styles.noTransactionView}>
+            <Text style={styles.noTransactionText}>
+              {LL.TransactionScreen.noTransaction()}
             </Text>
-          ))}
-        </>
-      )}
-      initialNumToRender={20}
-      renderSectionHeader={({ section: { title } }) => (
-        <View style={styles.sectionHeaderContainer}>
-          <Text style={styles.sectionHeaderText}>{title}</Text>
-          <TouchableOpacity style={styles.row} onPress={nextPrefCurrency}>
-            <Text style={styles.sectionHeaderText}>
-              {prefCurrency === "BTC" ? "sats" : prefCurrency}{" "}
-            </Text>
-            <Icon name="ios-swap-vertical" size={32} style={styles.icon} />
-          </TouchableOpacity>
-        </View>
-      )}
-      ListEmptyComponent={
-        <View style={styles.noTransactionView}>
-          <Text style={styles.noTransactionText}>
-            {translate("TransactionScreen.noTransaction")}
-          </Text>
-        </View>
-      }
-      sections={sections}
-      keyExtractor={(item) => item.id}
-      onEndReached={fetchNextTransactionsPage}
-      onEndReachedThreshold={0.5}
-      onRefresh={() => refetch()}
-      refreshing={loading}
-    />
-  </View>
-)
+          </View>
+        }
+        sections={sections}
+        keyExtractor={(item) => item.id}
+        onEndReached={fetchNextTransactionsPage}
+        onEndReachedThreshold={0.5}
+        onRefresh={() => refetch()}
+        refreshing={loading}
+      />
+    </View>
+  )
+}

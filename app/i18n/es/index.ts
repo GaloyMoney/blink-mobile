@@ -470,7 +470,7 @@ const es: Translation = {
     quizComplete: "Prueba completada, has ganado {{amount}} sats",
     reviewQuiz: "Cuestionario de repaso",
     satAccumulated: "Satoshis acumulado",
-    satsEarned: "‪{{formattedNumber}}‬ ganados",
+    satsEarned: "‪{formattedNumber}‬ ganados",
     sectionsCompleted: "Has completado",
     title: "Ganar",
     unlockQuestion: "Para desbloquear, responda la pregunta:",

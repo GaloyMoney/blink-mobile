@@ -9,7 +9,6 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import Carousel, { Pagination } from "react-native-snap-carousel"
 import Icon from "react-native-vector-icons/Ionicons"
-import I18n from "i18n-js"
 
 import { Screen } from "../../components/screen"
 import { useMutation } from "@galoymoney/client"
@@ -239,8 +238,8 @@ export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
                 item.fullfilled ? styles.titleStyleFullfilled : styles.titleStyle
               }
               title={
-                item.fullfilled ? LL.EarnScreen.satsEarned({ formattedNumber: I18n.toNumber(item.value, { precision: 0 }) }) : LL.EarnScreen.earnSats(
-                  { formattedNumber: I18n.toNumber(item.value, { precision: 0 }) }
+                item.fullfilled ? LL.EarnScreen.satsEarned({ formattedNumber: item.value }) : LL.EarnScreen.earnSats(
+                  { formattedNumber: item.value }
                 )}
               icon={
                 item.fullfilled ? (

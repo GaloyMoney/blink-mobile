@@ -1,3 +1,5 @@
+import { detectLocale, i18nObject } from "@app/i18n/i18n-util"
+
 export class InvalidUsernameError extends Error {
   constructor(message) {
     super(message)
@@ -7,26 +9,24 @@ export class InvalidUsernameError extends Error {
 
 export const validateUsername = (username: string) => {
   const usernameRegex = /(?!^(1|3|bc1|lnbc1))^[0-9a-z_]{3,50}$/i
-
+  const LL = i18nObject(detectLocale())
   if (!username.match(usernameRegex)) {
     switch (false) {
       case hasValidLength(username):
         return username.length > 3
-          ? new InvalidUsernameError(translate("UsernameScreen.50CharactersMaximum"))
-          : new InvalidUsernameError(translate("UsernameScreen.3CharactersMinimum"))
+          ? new InvalidUsernameError(LL.UsernameScreen["50CharactersMaximum"]())
+          : new InvalidUsernameError(LL.UsernameScreen["3CharactersMinimum"]())
       case hasValidCharacters(username):
         if (isEmailAddress(username)) {
           return new InvalidUsernameError(
-            translate("UsernameScreen.emailAddress") +
-              ". " +
-              translate("UsernameScreen.letterAndNumber"),
+            LL.UsernameScreen.emailAddress() + ". " + LL.UsernameScreen.letterAndNumber(),
           )
         }
-        return new InvalidUsernameError(translate("UsernameScreen.letterAndNumber"))
+        return new InvalidUsernameError(LL.UsernameScreen.letterAndNumber())
       case hasNoRestictedStartCharacters(username):
-        return new InvalidUsernameError(translate("UsernameScreen.forbiddenStart"))
+        return new InvalidUsernameError(LL.UsernameScreen.forbiddenStart())
       default:
-        return new InvalidUsernameError(translate("errors.unexpectedError"))
+        return new InvalidUsernameError(LL.errors.unexpectedError())
     }
   }
   return username

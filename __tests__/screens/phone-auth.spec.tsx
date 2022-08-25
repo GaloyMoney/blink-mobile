@@ -14,6 +14,7 @@ import {
   defaultConfiguration,
 } from "../../app/store/app-configuration-context"
 import { PriceContextProvider } from "../../app/store/price-context"
+import { LocalizationContextProvider } from "../../app/store/localization-context"
 
 jest.mock("react-native/Libraries/EventEmitter/NativeEventEmitter")
 jest.mock("react-native-fingerprint-scanner", () => ({}))
@@ -31,9 +32,11 @@ describe("WelcomePhoneInputScreen", () => {
         }}
       >
         <MockedProvider cache={cache}>
-          <PriceContextProvider>
-            <WelcomePhoneInputScreen />
-          </PriceContextProvider>
+          <LocalizationContextProvider>
+            <PriceContextProvider>
+              <WelcomePhoneInputScreen />
+            </PriceContextProvider>
+          </LocalizationContextProvider>
         </MockedProvider>
       </AppConfigurationContext.Provider>,
     )
@@ -48,15 +51,17 @@ describe("WelcomePhoneInputScreen", () => {
         }}
       >
         <MockedProvider cache={cache}>
-          <PriceContextProvider>
-            <WelcomePhoneInputScreen />
-          </PriceContextProvider>
+          <LocalizationContextProvider>
+            <PriceContextProvider>
+              <WelcomePhoneInputScreen />
+            </PriceContextProvider>
+          </LocalizationContextProvider>
         </MockedProvider>
       </AppConfigurationContext.Provider>,
     )
     expect(queryByA11yLabel("Input phone number")).not.toBeNull()
     expect(
-      queryByPlaceholderText(translate("WelcomePhoneInputScreen.placeholder")),
+      queryByPlaceholderText("Phone Number"),
     ).not.toBeNull()
   })
   it("country picker is visible on press", async () => {
@@ -68,9 +73,11 @@ describe("WelcomePhoneInputScreen", () => {
         }}
       >
         <MockedProvider cache={cache}>
-          <PriceContextProvider>
-            <WelcomePhoneInputScreen />
-          </PriceContextProvider>
+          <LocalizationContextProvider>
+            <PriceContextProvider>
+              <WelcomePhoneInputScreen />
+            </PriceContextProvider>
+          </LocalizationContextProvider>
         </MockedProvider>
       </AppConfigurationContext.Provider>,
     )

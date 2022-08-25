@@ -1,4 +1,5 @@
 import Toast from "react-native-toast-message"
+import { i18nObject, detectLocale } from "@app/i18n/i18n-util"
 
 export const toastShow = ({
   message,
@@ -9,10 +10,11 @@ export const toastShow = ({
   _onHide?: () => void
   type?: "error" | "success" | "warning"
 }): void => {
+  const LL = i18nObject(detectLocale())
   if (_onHide) {
     Toast.show({
       type,
-      text1: type === "error" ? translate("common.error") : translate("common.success"),
+      text1: type === "error" ? LL.common.error() : LL.common.success(),
       text2: message,
       position: "bottom",
       bottomOffset: 80,
@@ -21,7 +23,7 @@ export const toastShow = ({
   } else {
     Toast.show({
       type,
-      text1: type === "error" ? translate("common.error") : translate("common.success"),
+      text1: type === "error" ? LL.common.error() : LL.common.success(),
       text2: message,
       position: "bottom",
       bottomOffset: 80,

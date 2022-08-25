@@ -20,6 +20,7 @@ import {
   saveHiddenBalanceToolTip,
 } from "../../graphql/client-only-query"
 import { useApolloClient, useQuery } from "@apollo/client"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 
 const styles = EStyleSheet.create({
@@ -90,7 +91,7 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
   const client = useApolloClient()
   const { mIsBiometricsEnabled, mIsPinEnabled } = route.params
   const { data } = useQuery(HIDE_BALANCE)
-
+  const { LL } = useI18nContext()
   const [isBiometricsEnabled, setIsBiometricsEnabled] = useState(mIsBiometricsEnabled)
   const [isPinEnabled, setIsPinEnabled] = useState(mIsPinEnabled)
   const [isHideBalanceEnabled, setIsHideBalanceEnabled] = useState(
@@ -115,15 +116,15 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
         if (await BiometricWrapper.isSensorAvailable()) {
           // Presents the OS specific authentication prompt
           BiometricWrapper.authenticate(
-            translate("AuthenticationScreen.setUpAuthenticationDescription"),
+            LL.AuthenticationScreen.setUpAuthenticationDescription(),
             handleAuthenticationSuccess,
             handleAuthenticationFailure,
           )
         } else {
-          toastShow({ message: translate("SecurityScreen.biometryNotAvailable") })
+          toastShow({ message: LL.SecurityScreen.biometryNotAvailable() })
         }
       } catch {
-        toastShow({ message: translate("SecurityScreen.biometryNotEnrolled") })
+        toastShow({ message: LL.SecurityScreen.biometryNotEnrolled() })
       }
     } else if (await KeyStoreWrapper.removeIsBiometricsEnabled()) {
       setIsBiometricsEnabled(false)
@@ -170,12 +171,12 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
     <Screen style={styles.container} preset="scroll">
       <View style={styles.settingContainer}>
         <View style={styles.textContainer}>
-          <Text style={styles.title}>{translate("SecurityScreen.biometricTitle")}</Text>
+          <Text style={styles.title}>{LL.SecurityScreen.biometricTitle()}</Text>
           <Text style={styles.subtitle}>
-            {translate("SecurityScreen.biometricSubtitle")}
+            {LL.SecurityScreen.biometricSubtitle()}
           </Text>
           <Text style={styles.description}>
-            {translate("SecurityScreen.biometricDescription")}
+            {LL.SecurityScreen.biometricDescription()}
           </Text>
         </View>
         <Switch
@@ -187,10 +188,10 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
       </View>
       <View style={styles.settingContainer}>
         <View style={styles.textContainer}>
-          <Text style={styles.title}>{translate("SecurityScreen.pinTitle")}</Text>
-          <Text style={styles.subtitle}>{translate("SecurityScreen.pinSubtitle")}</Text>
+          <Text style={styles.title}>{LL.SecurityScreen.pinTitle()}</Text>
+          <Text style={styles.subtitle}>{LL.SecurityScreen.pinSubtitle()}</Text>
           <Text style={styles.description}>
-            {translate("SecurityScreen.pinDescription")}
+            {LL.SecurityScreen.pinDescription()}
           </Text>
         </View>
         <Switch
@@ -204,7 +205,7 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
         <Button
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitle}
-          title={translate("SecurityScreen.setPin")}
+          title={LL.SecurityScreen.setPin()}
           onPress={() =>
             navigation.navigate("pin", { screenPurpose: PinScreenPurpose.SetPin })
           }
@@ -212,12 +213,12 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
       </View>
       <View style={styles.settingContainer}>
         <View style={styles.textContainer}>
-          <Text style={styles.title}>{translate("SecurityScreen.hideBalanceTitle")}</Text>
+          <Text style={styles.title}>{LL.SecurityScreen.hideBalanceTitle()}</Text>
           <Text style={styles.subtitle}>
-            {translate("SecurityScreen.hideBalanceSubtitle")}
+            {LL.SecurityScreen.hideBalanceSubtitle()}
           </Text>
           <Text style={styles.description}>
-            {translate("SecurityScreen.hideBalanceDescription")}
+            {LL.SecurityScreen.hideBalanceDescription()}
           </Text>
         </View>
         <Switch
