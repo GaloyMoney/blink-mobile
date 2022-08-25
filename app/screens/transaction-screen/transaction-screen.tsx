@@ -13,7 +13,7 @@ import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import { sameDay, sameMonth } from "../../utils/date"
 import { toastShow } from "../../utils/toast"
-import { translate } from "@app/utils/translate"
+
 
 const styles = EStyleSheet.create({
   errorText: { alignSelf: "center", color: palette.red, paddingBottom: 18 },

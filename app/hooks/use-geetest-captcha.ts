@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { EventSubscription, NativeEventEmitter, NativeModules } from "react-native"
 import GeetestModule from "@galoymoney/react-native-geetest-module"
 import { useMutation } from "@galoymoney/client"
-import { translate } from "../utils/translate"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 type GeetestCaptchaReturn = {
   geetestError: string | null
@@ -17,7 +17,7 @@ export const useGeetestCaptcha = (): GeetestCaptchaReturn => {
   const [geetestValidationData, setGeetesValidationData] =
     useState<GeetestValidationData | null>(null)
   const [error, setError] = useState<string | null>(null)
-
+  const { LL } = useI18nContext()
   const onGeeTestDialogResultListener = useRef<EventSubscription>()
   const onGeeTestFailedListener = useRef<EventSubscription>()
 
@@ -31,7 +31,6 @@ export const useGeetestCaptcha = (): GeetestCaptchaReturn => {
 
   const registerCaptcha = useCallback(async () => {
     const { data } = await captchaCreateChallenge()
-
     const result = data.captchaCreateChallenge?.result
     const errors = data.captchaCreateChallenge?.errors ?? []
     if (errors.length > 0) {
@@ -46,9 +45,9 @@ export const useGeetestCaptcha = (): GeetestCaptchaReturn => {
       }
       GeetestModule.handleRegisteredGeeTestCaptcha(JSON.stringify(params))
     } else {
-      setError(translate("errors.generic"))
+      setError(LL.errors.generic())
     }
-  }, [captchaCreateChallenge])
+  }, [captchaCreateChallenge, LL])
 
   useEffect(() => {
     GeetestModule.setUp()

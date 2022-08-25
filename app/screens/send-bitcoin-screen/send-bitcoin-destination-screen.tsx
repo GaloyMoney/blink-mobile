@@ -20,7 +20,8 @@ import useToken from "@app/hooks/use-token"
 import { PaymentAmount, WalletCurrency } from "@app/types/amounts"
 import { Button } from "react-native-elements"
 import ScanIcon from "@app/assets/icons/scan.svg"
-import { translate } from "@app/utils/translate"
+import { useI18nContext } from "@app/i18n/i18n-react"
+
 
 const Styles = StyleSheet.create({
   scrollView: {
@@ -106,6 +107,7 @@ const SendBitcoinDestinationScreen = ({
   const { myPubKey, username: myUsername } = useMainQuery()
   const [error, setError] = useState<string | undefined>(undefined)
   const { tokenNetwork } = useToken()
+  const { LL } = useI18nContext()
 
   const [userDefaultWalletIdQuery, { loading: userDefaultWalletIdLoading }] =
     useDelayedQuery.userDefaultWalletId()
@@ -135,7 +137,7 @@ const SendBitcoinDestinationScreen = ({
       let lnurlParams
 
       if (destination === myUsername) {
-        setError(translate("You can't send a payment to yourself"))
+        setError(LL.SendBitcoinScreen.youCantSendAPaymentToYourself())
 
         return { valid: false }
       }
@@ -167,7 +169,7 @@ const SendBitcoinDestinationScreen = ({
           try {
             lnurlParams = await fetchLnurlPaymentParams({ lnUrlOrAddress: destination })
           } catch (error) {
-            setError(translate("SendBitcoinScreen.failedToFetchLnurlParams"))
+            setError(LL.SendBitcoinScreen.failedToFetchLnurlParams())
             return { valid: false }
           }
           isSameNode = lnurlDomains.some((domain) => lnurlParams?.domain.includes(domain))
@@ -178,7 +180,7 @@ const SendBitcoinDestinationScreen = ({
           note = memoInvoice.toString()
         }
       } else {
-        setError(translate(errorMessage || "Invalid Payment Destination"))
+        setError(errorMessage || "Invalid Payment Destination")
       }
 
       return {
@@ -257,13 +259,13 @@ const SendBitcoinDestinationScreen = ({
     >
       <View style={Styles.sendBitcoinDestinationContainer}>
         <Text style={Styles.fieldTitleText}>
-          {translate("SendBitcoinScreen.destination")}
+          {LL.SendBitcoinScreen.destination()}
         </Text>
 
         <View style={Styles.fieldBackground}>
           <TextInput
             style={Styles.input}
-            placeholder={translate("SendBitcoinScreen.input")}
+            placeholder={LL.SendBitcoinScreen.input()}
             onChangeText={handleChangeText}
             value={destination}
             selectTextOnFocus
@@ -287,8 +289,8 @@ const SendBitcoinDestinationScreen = ({
           <Button
             title={
               destination
-                ? translate("common.next")
-                : translate("SendBitcoinScreen.destinationIsRequired")
+                ? LL.common.next()
+                : LL.SendBitcoinScreen.destinationIsRequired()
             }
             buttonStyle={[Styles.button, Styles.activeButtonStyle]}
             titleStyle={Styles.activeButtonTitleStyle}

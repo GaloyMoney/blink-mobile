@@ -14,7 +14,6 @@ import {
   defaultConfiguration,
 } from "../../app/store/app-configuration-context"
 import { PriceContextProvider } from "../../app/store/price-context"
-import { translate } from "../../app/utils/translate"
 
 jest.mock("react-native/Libraries/EventEmitter/NativeEventEmitter")
 jest.mock("react-native-fingerprint-scanner", () => ({}))
@@ -28,7 +27,7 @@ describe("WelcomePhoneInputScreen", () => {
       <AppConfigurationContext.Provider
         value={{
           appConfig: defaultConfiguration,
-          setAppConfig: (config: AppConfiguration) => {},
+          setAppConfig: (config: AppConfiguration) => { },
         }}
       >
         <MockedProvider cache={cache}>
@@ -45,7 +44,7 @@ describe("WelcomePhoneInputScreen", () => {
       <AppConfigurationContext.Provider
         value={{
           appConfig: defaultConfiguration,
-          setAppConfig: (config: AppConfiguration) => {},
+          setAppConfig: (config: AppConfiguration) => { },
         }}
       >
         <MockedProvider cache={cache}>
@@ -65,7 +64,7 @@ describe("WelcomePhoneInputScreen", () => {
       <AppConfigurationContext.Provider
         value={{
           appConfig: defaultConfiguration,
-          setAppConfig: (config: AppConfiguration) => {},
+          setAppConfig: (config: AppConfiguration) => { },
         }}
       >
         <MockedProvider cache={cache}>

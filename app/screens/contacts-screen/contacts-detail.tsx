@@ -16,7 +16,7 @@ import type { ScreenType } from "../../types/jsx"
 import { ContactTransactionsDataInjected } from "./contact-transactions"
 import useMainQuery from "@app/hooks/use-main-query"
 import { WalletType } from "@app/utils/enum"
-import { translate } from "@app/utils/translate"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 const styles = EStyleSheet.create({
   actionsContainer: { marginBottom: "15rem", backgroundColor: palette.lighterGrey },
@@ -92,7 +92,7 @@ export const ContactsDetailScreenJSX: ScreenType = ({
   refetchMain,
 }: ContactDetailScreenProps) => {
   const [contactName, setContactName] = React.useState(contact.alias)
-
+  const { LL } = useI18nContext()
   const [userContactUpdateAlias] = useMutation.userContactUpdateAlias({
     onCompleted: () => refetchMain(),
   })
@@ -127,15 +127,14 @@ export const ContactsDetailScreenJSX: ScreenType = ({
             {contact.alias}
           </Input>
         </View>
-        <Text style={styles.amountSecondary}>{`${translate("common.username")}: ${
-          contact.username
-        }`}</Text>
+        <Text style={styles.amountSecondary}>{`${LL.common.username()}: ${contact.username
+          }`}</Text>
       </View>
       <View style={styles.contactBodyContainer}>
         <View style={styles.transactionsView}>
           <Text style={styles.screenTitle}>
-            {translate("ContactDetailsScreen.title", {
-              input: contact.alias,
+            {LL.ContactDetailsScreen.title({
+              username: contact.alias,
             })}
           </Text>
           <ContactTransactionsDataInjected
@@ -145,7 +144,7 @@ export const ContactsDetailScreenJSX: ScreenType = ({
         </View>
         <View style={styles.actionsContainer}>
           <LargeButton
-            title={translate("MoveMoneyScreen.send")}
+            title={LL.MoveMoneyScreen.send()}
             icon={
               <IconTransaction
                 isReceive={false}

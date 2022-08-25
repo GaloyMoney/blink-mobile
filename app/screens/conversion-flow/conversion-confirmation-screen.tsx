@@ -9,7 +9,8 @@ import { WalletCurrency } from "@app/types/amounts"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { CommonActions } from "@react-navigation/native"
-import { translate } from "@app/utils/translate"
+import { useI18nContext } from "@app/i18n/i18n-react"
+
 
 export const ConversionConfirmationScreen = ({
   navigation,
@@ -22,7 +23,7 @@ export const ConversionConfirmationScreen = ({
   const [intraLedgerUsdPaymentSend, { loading: intraLedgerUsdPaymentSendLoading }] =
     useMutation.intraLedgerUsdPaymentSend()
   const isLoading = intraLedgerPaymentSendLoading || intraLedgerUsdPaymentSendLoading
-
+  const { LL } = useI18nContext()
   const fromAmount = fromWallet.currency === WalletCurrency.BTC ? btcAmount : usdAmount
   const toAmount = toWallet.currency === WalletCurrency.BTC ? btcAmount : usdAmount
 
@@ -97,30 +98,30 @@ export const ConversionConfirmationScreen = ({
       <View style={styles.conversionInfoCard}>
         <View style={styles.conversionInfoField}>
           <Text style={styles.conversionInfoFieldTitle}>
-            {translate("ConversionConfirmationScreen.youreConverting")}
+            {LL.ConversionConfirmationScreen.youreConverting()}
           </Text>
           <Text style={styles.conversionInfoFieldValue}>
             {paymentAmountToTextWithUnits(fromAmount)}
           </Text>
         </View>
         <View style={styles.conversionInfoField}>
-          <Text style={styles.conversionInfoFieldTitle}>{translate("common.to")}</Text>
+          <Text style={styles.conversionInfoFieldTitle}>{LL.common.to()}</Text>
           <Text style={styles.conversionInfoFieldValue}>
             ~{paymentAmountToTextWithUnits(toAmount)}
           </Text>
         </View>
         <View style={styles.conversionInfoField}>
           <Text style={styles.conversionInfoFieldTitle}>
-            {translate("ConversionConfirmationScreen.receivingAccount")}
+            {LL.ConversionConfirmationScreen.receivingAccount()}
           </Text>
           <Text style={styles.conversionInfoFieldValue}>
             {toWallet.currency === WalletCurrency.BTC
-              ? translate("common.btcAccount")
-              : translate("common.usdAccount")}
+              ? LL.common.btcAccount()
+              : LL.common.usdAccount()}
           </Text>
         </View>
         <View style={styles.conversionInfoField}>
-          <Text style={styles.conversionInfoFieldTitle}>{translate("common.rate")}</Text>
+          <Text style={styles.conversionInfoFieldTitle}>{LL.common.rate()}</Text>
           <Text style={styles.conversionInfoFieldValue}>
             ~ {paymentAmountToTextWithUnits(usdPerBtc)} / 1 BTC
           </Text>
@@ -133,7 +134,7 @@ export const ConversionConfirmationScreen = ({
       )}
       <View style={styles.buttonContainer}>
         <Button
-          title={translate("common.convert")}
+          title={LL.common.convert()}
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitleStyle}
           disabledStyle={[styles.button, styles.disabledButtonStyle]}

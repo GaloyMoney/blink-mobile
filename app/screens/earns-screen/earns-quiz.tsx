@@ -20,7 +20,8 @@ import type { ScreenType } from "../../types/jsx"
 import { StackNavigationProp } from "@react-navigation/stack"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { RouteProp } from "@react-navigation/native"
-import { translate } from "@app/utils/translate"
+import { useI18nContext } from "@app/i18n/i18n-react"
+
 
 const styles = EStyleSheet.create({
   answersView: {
@@ -170,6 +171,7 @@ export const EarnQuiz: ScreenType = ({ route, navigation }: Props) => {
   const [quizVisible, setQuizVisible] = useState(false)
   const [recordedAnswer, setRecordedAnswer] = useState([])
   const [permutation] = useState(shuffle([0, 1, 2]))
+  const { LL } = useI18nContext()
 
   const addRecordedAnswer = (value) => {
     setRecordedAnswer([...recordedAnswer, value])
@@ -197,8 +199,8 @@ export const EarnQuiz: ScreenType = ({ route, navigation }: Props) => {
     return recordedAnswer.indexOf(i) === -1
       ? styles.quizButtonStyle
       : i === 0
-      ? styles.quizCorrectButtonStyle
-      : styles.quizWrongButtonStyle
+        ? styles.quizCorrectButtonStyle
+        : styles.quizWrongButtonStyle
   }
 
   let j = 0
@@ -228,7 +230,7 @@ export const EarnQuiz: ScreenType = ({ route, navigation }: Props) => {
           />
         </View>
         {recordedAnswer.length > 0 &&
-        recordedAnswer.indexOf(i) === recordedAnswer.length - 1 ? (
+          recordedAnswer.indexOf(i) === recordedAnswer.length - 1 ? (
           <Text style={i === 0 ? styles.correctAnswerText : styles.incorrectAnswerText}>
             {feedback[i]}
           </Text>
@@ -271,7 +273,7 @@ export const EarnQuiz: ScreenType = ({ route, navigation }: Props) => {
             <View>
               {recordedAnswer.indexOf(0) === -1 ? null : (
                 <Button
-                  title={translate("EarnScreen.keepDigging")}
+                  title={LL.EarnScreen.keepDigging()}
                   type="outline"
                   onPress={async () => close()}
                   containerStyle={styles.keepDiggingContainerStyle}
@@ -298,27 +300,25 @@ export const EarnQuiz: ScreenType = ({ route, navigation }: Props) => {
           {(isCompleted && (
             <>
               <Text style={styles.textEarn}>
-                {translate("EarnScreen.quizComplete", { amount })}
+                {LL.EarnScreen.quizComplete({ amount })}
               </Text>
               <Button
-                title={translate("EarnScreen.reviewQuiz")}
+                title={LL.EarnScreen.reviewQuiz()}
                 type="clear"
                 titleStyle={styles.completedTitleStyle}
                 onPress={() => setQuizVisible(true)}
               />
             </>
           )) || (
-            <Button
-              title={translate("EarnScreen.earnSats", {
-                count: amount,
-                // eslint-disable-next-line camelcase
-                formatted_number: I18n.toNumber(amount, { precision: 0 }),
-              })}
-              buttonStyle={styles.buttonStyle}
-              titleStyle={styles.titleStyle}
-              onPress={() => setQuizVisible(true)}
-            />
-          )}
+              <Button
+                title={LL.EarnScreen.earnSats[amount === 1 ? "one" : "other"]({
+                  formattedNumber: I18n.toNumber(amount, { precision: 0 }),
+                })}
+                buttonStyle={styles.buttonStyle}
+                titleStyle={styles.titleStyle}
+                onPress={() => setQuizVisible(true)}
+              />
+            )}
         </View>
       </SafeAreaView>
     </Screen>

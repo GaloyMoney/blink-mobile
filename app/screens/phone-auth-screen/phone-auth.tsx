@@ -36,7 +36,8 @@ import { parseTimer } from "../../utils/timer"
 import { useGeetestCaptcha } from "../../hooks"
 import { networkVar } from "../../graphql/client-only-query"
 import DownArrow from "@app/assets/icons/downarrow.svg"
-import { translate } from "@app/utils/translate"
+import { useI18nContext } from "@app/i18n/i18n-react"
+
 
 const phoneRegex = new RegExp("^\\+[0-9]+$")
 
@@ -147,6 +148,8 @@ export const WelcomePhoneInputScreen: ScreenType = ({
     resetValidationData,
   } = useGeetestCaptcha()
 
+  const { LL } = useI18nContext()
+
   const [phoneNumber, setPhoneNumber] = useState("")
 
   const phoneInputRef = useRef<PhoneInput | null>()
@@ -191,19 +194,19 @@ export const WelcomePhoneInputScreen: ScreenType = ({
       } else if (data.captchaRequestAuthCode.errors.length > 0) {
         const errorMessage = data.captchaRequestAuthCode.errors[0].message
         if (errorMessage === "Too many requests") {
-          toastShow({ message: translate("errors.tooManyRequestsPhoneCode") })
+          toastShow({ message: LL.errors.tooManyRequestsPhoneCode() })
         } else {
           toastShow({ message: errorMessage })
         }
       } else {
-        toastShow({ message: translate("errors.generic") })
+        toastShow({ message: LL.errors.generic() })
       }
     } catch (err) {
       console.debug({ err })
       if (err.message === "Too many requests") {
-        toastShow({ message: translate("errors.tooManyRequestsPhoneCode") })
+        toastShow({ message: LL.errors.tooManyRequestsPhoneCode() })
       } else {
-        toastShow({ message: translate("errors.generic") })
+        toastShow({ message: LL.errors.generic() })
       }
     }
   }, [
@@ -243,7 +246,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
       !phoneInputRef.current.isValidNumber(phone) ||
       !phoneRegex.test(cleanFormattedNumber)
     ) {
-      Alert.alert(`${phone} ${translate("errors.invalidPhoneNumber")}`)
+      Alert.alert(`${phone} ${LL.errors.invalidPhoneNumber()}`)
       return
     }
 
@@ -270,8 +273,8 @@ export const WelcomePhoneInputScreen: ScreenType = ({
           <BadgerPhone style={styles.image} />
           <Text style={styles.text}>
             {showCaptcha
-              ? translate("WelcomePhoneInputScreen.headerVerify")
-              : translate("WelcomePhoneInputScreen.header")}
+              ? LL.WelcomePhoneInputScreen.headerVerify()
+              : LL.WelcomePhoneInputScreen.header()}
           </Text>
         </View>
         {showCaptcha ? (
@@ -289,7 +292,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
               layout="first"
               renderDropdownImage={renderDropdownImage()}
               textInputProps={{
-                placeholder: translate("WelcomePhoneInputScreen.placeholder"),
+                placeholder: LL.WelcomePhoneInputScreen.placeholder(),
                 returnKeyType: loadingRequestPhoneCode ? "default" : "done",
                 onSubmitEditing: submitPhoneNumber,
                 keyboardType: "phone-pad",
@@ -314,7 +317,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
         )}
         <Button
           buttonStyle={styles.buttonContinue}
-          title={translate("WelcomePhoneInputScreen.continue")}
+          title={LL.WelcomePhoneInputScreen.continue()}
           disabled={Boolean(phoneNumber)}
           onPress={() => {
             submitPhoneNumber()
@@ -336,7 +339,7 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
   navigation,
 }: WelcomePhoneValidationScreenDataInjectedProps) => {
   const { saveToken, hasToken } = useToken()
-
+  const { LL } = useI18nContext()
   const [userLogin, { loading, error }] = useMutation.userLogin({
     fetchPolicy: "no-cache",
     onCompleted: async (data) => {
@@ -359,7 +362,7 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
       login={userLogin}
       loading={loading || hasToken}
       // Todo: provide specific translated error messages in known cases
-      error={error?.message ? translate("errors.generic") + error.message : ""}
+      error={error?.message ? LL.errors.generic() + error.message : ""}
       saveToken={saveToken}
     />
   )
@@ -385,7 +388,7 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
   const client = useApolloClient()
   const [code, setCode] = useState("")
   const [secondsRemaining, setSecondsRemaining] = useState<number>(60)
-
+  const { LL } = useI18nContext()
   const { phone } = route.params
   const inputRef = useRef<TextInput>()
 
@@ -399,7 +402,7 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
         return
       }
       if (code.length !== 6) {
-        throw new Error(translate("WelcomePhoneValidationScreen.need6Digits"))
+        throw new Error(LL.WelcomePhoneValidationScreen.need6Digits())
       }
 
       try {
@@ -415,7 +418,7 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
           await saveToken(token)
           await addDeviceToken(client)
         } else {
-          throw new Error(translate("WelcomePhoneValidationScreen.errorLoggingIn"))
+          throw new Error(LL.WelcomePhoneValidationScreen.errorLoggingIn())
         }
       } catch (err) {
         console.debug({ err })
@@ -448,7 +451,7 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
         <ScrollView>
           <View style={{ flex: 1, minHeight: 32 }} />
           <Text style={styles.text}>
-            {translate("WelcomePhoneValidationScreen.header", { phone })}
+            {LL.WelcomePhoneValidationScreen.header({ phoneNumber: phone })}
           </Text>
           <KeyboardAvoidingView
             keyboardVerticalOffset={-110}
@@ -465,7 +468,7 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
               onChangeText={updateCode}
               keyboardType="number-pad"
               textContentType="oneTimeCode"
-              placeholder={translate("WelcomePhoneValidationScreen.placeholder")}
+              placeholder={LL.WelcomePhoneValidationScreen.placeholder()}
               returnKeyType={loading ? "default" : "done"}
               maxLength={6}
             >
@@ -474,7 +477,7 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
             {secondsRemaining > 0 ? (
               <View style={styles.timerRow}>
                 <Text style={styles.textDisabledSendAgain}>
-                  {translate("WelcomePhoneValidationScreen.sendAgain")}
+                  {LL.WelcomePhoneValidationScreen.sendAgain()}
                 </Text>
                 <Text>{parseTimer(secondsRemaining)}</Text>
               </View>
@@ -482,7 +485,7 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
               <View style={styles.sendAgainButtonRow}>
                 <Button
                   buttonStyle={styles.buttonResend}
-                  title={translate("WelcomePhoneValidationScreen.sendAgain")}
+                  title={LL.WelcomePhoneValidationScreen.sendAgain()}
                   onPress={() => {
                     if (!loading) {
                       route.params?.setPhone(phone)

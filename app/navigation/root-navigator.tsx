@@ -9,7 +9,6 @@ import * as React from "react"
 import { useCallback, useEffect } from "react"
 import { AppState } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
-import * as RNLocalize from "react-native-localize"
 import analytics from "@react-native-firebase/analytics"
 
 import {
@@ -67,8 +66,8 @@ import {
   ConversionSuccessScreen,
   ConversionConfirmationScreen,
 } from "@app/screens/conversion-flow"
-import { translate, setLocale } from "../utils/translate"
 import { useAuthenticationContext } from "@app/store/authentication-context"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
 PushNotification.configure({
@@ -133,7 +132,7 @@ export const RootStack: NavigatorType = () => {
   const appState = React.useRef(AppState.currentState)
   const client = useApolloClient()
   const { token, hasToken, tokenNetwork } = useToken()
-  const { userPreferredLanguage, myPubKey, username } = useMainQuery()
+  const { myPubKey, username } = useMainQuery()
   const { isAppLocked } = useAuthenticationContext()
   const _handleAppStateChange = useCallback(
     async (nextAppState) => {
@@ -153,6 +152,7 @@ export const RootStack: NavigatorType = () => {
     },
     [client, hasToken, tokenNetwork, myPubKey, username, isAppLocked],
   )
+  const { LL } = useI18nContext()
 
   useEffect(() => {
     const subscription = AppState.addEventListener("change", _handleAppStateChange)
@@ -192,14 +192,6 @@ export const RootStack: NavigatorType = () => {
       // number: 18, // (optional) Valid 32 bit integer specified as string. default: none (Cannot be zero) --> badge
     })
   }
-
-  const fallback = RNLocalize.getLocales()?.[0]?.languageCode ?? "es-SV"
-
-  setLocale(
-    !userPreferredLanguage || userPreferredLanguage === "DEFAULT"
-      ? fallback
-      : userPreferredLanguage,
-  )
 
   // TODO: need to add isHeadless?
   // https://rnfirebase.io/messaging/usage
@@ -263,7 +255,7 @@ export const RootStack: NavigatorType = () => {
     <RootNavigator.Navigator
       screenOptions={{
         gestureEnabled: false,
-        headerBackTitle: translate("common.back"),
+        headerBackTitle: LL.common.back(),
       }}
       initialRouteName={token ? "authenticationCheck" : "getStarted"}
     >
@@ -301,14 +293,14 @@ export const RootStack: NavigatorType = () => {
         options={{
           headerShown: false,
           animationEnabled: false,
-          title: translate("PrimaryScreen.title"),
+          title: LL.PrimaryScreen.title(),
         }}
       />
       <RootNavigator.Screen
         name="scanningQRCode"
         component={ScanningQRCodeScreen}
         options={{
-          title: translate("ScanningQRCodeScreen.title"),
+          title: LL.ScanningQRCodeScreen.title(),
           headerShown: false,
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}
@@ -316,42 +308,42 @@ export const RootStack: NavigatorType = () => {
       <RootNavigator.Screen
         name="sendBitcoinDestination"
         component={SendBitcoinDestinationScreen}
-        options={{ title: translate("SendBitcoinScreen.title") }}
+        options={{ title: LL.SendBitcoinScreen.title() }}
       />
       <RootNavigator.Screen
         name="sendBitcoinDetails"
         component={SendBitcoinDetailsScreen}
-        options={{ title: translate("SendBitcoinScreen.title") }}
+        options={{ title: LL.SendBitcoinScreen.title() }}
       />
       <RootNavigator.Screen
         name="sendBitcoinConfirmation"
         component={SendBitcoinConfirmationScreen}
-        options={{ title: translate("SendBitcoinScreen.title") }}
+        options={{ title: LL.SendBitcoinScreen.title() }}
       />
       <RootNavigator.Screen
         name="sendBitcoinSuccess"
         component={SendBitcoinSuccessScreen}
-        options={{ title: translate("SendBitcoinScreen.title") }}
+        options={{ title: LL.SendBitcoinScreen.title() }}
       />
       <RootNavigator.Screen
         name="receiveBitcoin"
         component={ReceiveBitcoinScreen}
         options={{
-          title: translate("ReceiveBitcoinScreen.title"),
+          title: LL.ReceiveBitcoinScreen.title(),
         }}
       />
       <RootNavigator.Screen
         name="conversionDetails"
         component={ConversionDetailsScreen}
         options={{
-          title: translate("ConversionDetailsScreen.title"),
+          title: LL.ConversionDetailsScreen.title(),
         }}
       />
       <RootNavigator.Screen
         name="conversionConfirmation"
         component={ConversionConfirmationScreen}
         options={{
-          title: translate("ConversionConfirmationScreen.title"),
+          title: LL.ConversionConfirmationScreen.title(),
         }}
       />
       <RootNavigator.Screen
@@ -359,7 +351,7 @@ export const RootStack: NavigatorType = () => {
         component={ConversionSuccessScreen}
         options={{
           headerShown: false,
-          title: translate("ConversionSuccess.title"),
+          title: LL.ConversionSuccessScreen.title(),
         }}
       />
       <RootNavigator.Screen
@@ -387,7 +379,7 @@ export const RootStack: NavigatorType = () => {
         name="settings"
         component={SettingsScreen}
         options={() => ({
-          title: translate("SettingsScreen.title"),
+          title: LL.SettingsScreen.title(),
         })}
       />
       <RootNavigator.Screen
@@ -400,12 +392,12 @@ export const RootStack: NavigatorType = () => {
       <RootNavigator.Screen
         name="language"
         component={LanguageScreen}
-        options={{ title: translate("common.languagePreference") }}
+        options={{ title: LL.common.languagePreference() }}
       />
       <RootNavigator.Screen
         name="security"
         component={SecurityScreen}
-        options={{ title: translate("common.security") }}
+        options={{ title: LL.common.security() }}
       />
       <RootNavigator.Screen
         name="lnurl"
@@ -440,14 +432,14 @@ export const RootStack: NavigatorType = () => {
       <RootNavigator.Screen
         name="transactionHistory"
         component={TransactionHistoryScreenDataInjected}
-        options={{ title: translate("TransactionScreen.transactionHistoryTitle") }}
+        options={{ title: LL.TransactionScreen.transactionHistoryTitle() }}
       />
       <RootNavigator.Screen
         name="priceDetail"
         component={PriceScreen}
         options={{
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-          title: translate("common.bitcoinPrice"),
+          title: LL.common.bitcoinPrice(),
         }}
         initialParams={{ account: AccountType.Bitcoin }}
       />
@@ -457,45 +449,50 @@ export const RootStack: NavigatorType = () => {
 
 const StackContacts = createStackNavigator<ContactStackParamList>()
 
-export const ContactNavigator: NavigatorType = () => (
-  <StackContacts.Navigator>
-    <StackContacts.Screen
-      name="Contacts"
-      component={ContactsScreen}
-      options={{
-        title: translate("ContactsScreen.title"),
-        headerShown: false,
-      }}
-    />
-    <StackContacts.Screen
-      name="contactDetail"
-      component={ContactsDetailScreen}
-      options={{ headerShown: false, title: "test" }}
-    />
-  </StackContacts.Navigator>
-)
-
+export const ContactNavigator: NavigatorType = () => {
+  const { LL } = useI18nContext()
+  return (
+    <StackContacts.Navigator>
+      <StackContacts.Screen
+        name="Contacts"
+        component={ContactsScreen}
+        options={{
+          title: LL.ContactsScreen.title(),
+          headerShown: false,
+        }}
+      />
+      <StackContacts.Screen
+        name="contactDetail"
+        component={ContactsDetailScreen}
+        options={{ headerShown: false, title: "test" }}
+      />
+    </StackContacts.Navigator>
+  )
+}
 const StackPhoneValidation = createStackNavigator<PhoneValidationStackParamList>()
 
-export const PhoneValidationNavigator: NavigatorType = () => (
-  <StackPhoneValidation.Navigator>
-    <StackPhoneValidation.Screen
-      name="welcomePhoneInput"
-      options={{
-        headerShown: false,
-        title: translate("common.phoneNumber"),
-      }}
-      component={WelcomePhoneInputScreen}
-    />
-    <StackPhoneValidation.Screen
-      name="welcomePhoneValidation"
-      component={WelcomePhoneValidationScreenDataInjected}
-      options={{
-        title: "",
-      }}
-    />
-  </StackPhoneValidation.Navigator>
-)
+export const PhoneValidationNavigator: NavigatorType = () => {
+  const { LL } = useI18nContext()
+  return (
+    <StackPhoneValidation.Navigator>
+      <StackPhoneValidation.Screen
+        name="welcomePhoneInput"
+        options={{
+          headerShown: false,
+          title: LL.common.phoneNumber(),
+        }}
+        component={WelcomePhoneInputScreen}
+      />
+      <StackPhoneValidation.Screen
+        name="welcomePhoneValidation"
+        component={WelcomePhoneValidationScreenDataInjected}
+        options={{
+          title: "",
+        }}
+      />
+    </StackPhoneValidation.Navigator>
+  )
+}
 
 const Tab = createBottomTabNavigator<PrimaryStackParamList>()
 
@@ -505,7 +502,7 @@ type TabProps = {
 
 export const PrimaryNavigator: NavigatorType = () => {
   const { tokenNetwork } = useToken()
-
+  const { LL } = useI18nContext()
   // The cacheId is updated after every mutation that affects current user data (balanace, contacts, ...)
   // It's used to re-mount this component and thus reset what's cached in Apollo (and React)
 
@@ -531,7 +528,7 @@ export const PrimaryNavigator: NavigatorType = () => {
         name="MoveMoney"
         component={MoveMoneyScreenDataInjected}
         options={{
-          title: translate("MoveMoneyScreen.title"),
+          title: LL.MoveMoneyScreen.title(),
           tabBarIcon: ({ color }: TabProps) => (
             <HomeIcon fill="currentColor" color={color} />
           ),
@@ -543,7 +540,7 @@ export const PrimaryNavigator: NavigatorType = () => {
         component={ContactNavigator}
         options={{
           headerShown: false,
-          title: translate("ContactsScreen.title"),
+          title: LL.ContactsScreen.title(),
           tabBarIcon: ({ color }: TabProps) => (
             <ContactsIcon fill="currentColor" color={color} />
           ),
@@ -553,7 +550,7 @@ export const PrimaryNavigator: NavigatorType = () => {
         name="Map"
         component={MapScreen}
         options={{
-          title: translate("MapScreen.title"),
+          title: LL.MapScreen.title(),
           headerShown: false,
           tabBarIcon: ({ color }: TabProps) => <MapIcon color={color} />,
         }}
@@ -562,7 +559,7 @@ export const PrimaryNavigator: NavigatorType = () => {
         name="Earn"
         component={EarnMapDataInjected}
         options={{
-          title: translate("EarnScreen.title"),
+          title: LL.EarnScreen.title(),
           headerShown: false,
           tabBarIcon: ({ color }: TabProps) => (
             <LearnIcon fill="currentColor" color={color} />

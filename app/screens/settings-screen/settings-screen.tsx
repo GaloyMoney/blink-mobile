@@ -20,7 +20,7 @@ import useLogout from "../../hooks/use-logout"
 import useMainQuery from "@app/hooks/use-main-query"
 import crashlytics from "@react-native-firebase/crashlytics"
 import ContactModal from "@app/components/contact-modal/contact-modal"
-import { translate } from "@app/utils/translate"
+
 import { copyPaymentInfoToClipboard } from "@app/utils/clipboard"
 
 type Props = {

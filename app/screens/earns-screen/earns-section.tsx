@@ -24,7 +24,8 @@ import { SVGs } from "./earn-svg-factory"
 import { getCardsFromSection, remainingSatsOnSection } from "./earns-utils"
 import { getQuizQuestions } from "../../graphql/query"
 import useMainQuery from "@app/hooks/use-main-query"
-import { translate } from "@app/utils/translate"
+import { useI18nContext } from "@app/i18n/i18n-react"
+
 
 const { width: screenWidth } = Dimensions.get("window")
 
@@ -122,7 +123,7 @@ export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
   const { hasToken } = useToken()
   const client = useApolloClient()
   const { refetch: refetchMain } = useMainQuery()
-
+  const { LL } = useI18nContext()
   const [userQuizQuestionUpdateCompleted] = useMutation.userQuizQuestionUpdateCompleted({
     onCompleted: () => refetchMain(),
   })
@@ -141,7 +142,7 @@ export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
   const [initialRemainingSats] = useState(remainingSats)
   const currentRemainingEarn = remainingSats
 
-  const sectionTitle = translate(`EarnScreen.earns.${sectionIndex}.meta.title`)
+  const sectionTitle = LL.EarnScreen.earns[sectionIndex].meta.title()
 
   const isFocused = useIsFocused()
 
@@ -237,14 +238,10 @@ export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
               titleStyle={
                 item.fullfilled ? styles.titleStyleFullfilled : styles.titleStyle
               }
-              title={translate(
-                item.fullfilled ? "EarnScreen.satsEarned" : "EarnScreen.earnSats",
-                {
-                  count: item.value,
-                  // eslint-disable-next-line camelcase
-                  formatted_number: I18n.toNumber(item.value, { precision: 0 }),
-                },
-              )}
+              title={
+                item.fullfilled ? LL.EarnScreen.satsEarned({ formattedNumber: I18n.toNumber(item.value, { precision: 0 }) }) : LL.EarnScreen.earnSats(
+                  { formattedNumber: I18n.toNumber(item.value, { precision: 0 }) }
+                )}
               icon={
                 item.fullfilled ? (
                   <Icon
@@ -261,7 +258,7 @@ export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
         {!item.enabled && (
           <>
             <Text style={styles.unlockQuestion}>
-              {translate("EarnScreen.unlockQuestion")}
+              {LL.EarnScreen.unlockQuestion()}
             </Text>
             <Text style={styles.unlock}>{item.nonEnabledMessage}</Text>
           </>

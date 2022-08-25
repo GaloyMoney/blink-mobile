@@ -1,7 +1,5 @@
 import Toast from "react-native-toast-message"
 
-import { translate } from "@app/utils/translate"
-
 export const toastShow = ({
   message,
   _onHide,

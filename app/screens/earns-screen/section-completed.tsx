@@ -11,7 +11,8 @@ import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { RouteProp } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import type { ScreenType } from "../../types/jsx"
-import { translate } from "@app/utils/translate"
+import { useI18nContext } from "@app/i18n/i18n-react"
+
 
 const styles = EStyleSheet.create({
   bottomView: {
@@ -63,7 +64,7 @@ type Props = {
 
 export const SectionCompleted: ScreenType = ({ navigation, route }: Props) => {
   const { amount, sectionTitle } = route.params
-
+  const { LL } = useI18nContext()
   return (
     <Screen backgroundColor={palette.orange} unsafe>
       <MountainHeader amount={amount.toString()} color={palette.orange} />
@@ -71,11 +72,11 @@ export const SectionCompleted: ScreenType = ({ navigation, route }: Props) => {
         <View style={styles.divider} />
         <BadgerShovelBitcoin />
         <Text style={styles.headerSection}>
-          {translate("EarnScreen.sectionsCompleted")}
+          {LL.EarnScreen.sectionsCompleted()}
         </Text>
         <Text style={styles.titleSection}>{sectionTitle}</Text>
         <Button
-          title={translate("EarnScreen.keepDigging")}
+          title={LL.EarnScreen.keepDigging()}
           type="solid"
           buttonStyle={styles.buttonStyle}
           titleStyle={styles.titleStyle}

@@ -21,7 +21,7 @@ import {
   usdAmountDisplay,
 } from "@app/utils/currencyConversion"
 import { TransactionDate } from "@app/components/transaction-date"
-import { translate } from "@app/utils/translate"
+
 
 const viewInExplorer = (hash: string): Promise<Linking> =>
   Linking.openURL(BLOCKCHAIN_EXPLORER_URL + hash)
@@ -156,9 +156,9 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
     settlementCurrency === WalletCurrency.BTC
       ? `${settlementFee} sats (${usdAmountDisplay(settlementFee * usdPerSat)})`
       : paymentAmountToTextWithUnits({
-          amount: settlementFee,
-          currency: settlementCurrency as WalletCurrency,
-        })
+        amount: settlementFee,
+        currency: settlementCurrency as WalletCurrency,
+      })
 
   const walletSummary = (
     <WalletSummary

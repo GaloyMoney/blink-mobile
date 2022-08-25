@@ -1,12 +1,11 @@
+import { detectLocale, i18nObject } from "@app/i18n/i18n-util"
 import filter from "lodash.filter"
 import sumBy from "lodash.sumby"
 import type { QuizQuestion, QuizSectionContent } from "../../types/quiz"
-import { translate } from "@app/utils/translate"
 
 export const getCardsFromSection = ({ quizQuestions, sectionIndex }): QuizQuestion[] => {
-  const quizQuestionsContent = translate(
-    "EarnScreen.earns",
-  ) as unknown as QuizSectionContent[]
+  const LL = i18nObject(detectLocale())
+  const quizQuestionsContent = LL.EarnScreen.earns as unknown as QuizSectionContent[]
 
   const { allQuestions, myCompletedQuestions } = quizQuestions
 

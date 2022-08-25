@@ -21,7 +21,7 @@ import type { StackNavigationProp } from "@react-navigation/stack"
 import type { ComponentType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import useMainQuery from "@app/hooks/use-main-query"
-import { translate } from "@app/utils/translate"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 const styles = StyleSheet.create({
   buttonContainer: {
@@ -82,6 +82,7 @@ export const ModalClipboard: ComponentType = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { tokenNetwork } = useToken()
   const { myPubKey, username } = useMainQuery()
+  const { LL } = useI18nContext()
   const open = async () => {
     modalClipboardVisibleVar(false)
     const clipboardString = await Clipboard.getString()
@@ -114,7 +115,7 @@ export const ModalClipboard: ComponentType = () => {
       return
     }
 
-    ;(async () => {
+    ; (async () => {
       const clipboard = await Clipboard.getString()
       if (clipboard) {
         const { paymentType } = parsePaymentDestination({
@@ -127,10 +128,10 @@ export const ModalClipboard: ComponentType = () => {
           paymentType === "lightning"
             ? "ModalClipboard.pendingInvoice"
             : "ModalClipboard.pendingBitcoin"
-        setMessage(translate(pathString))
+        setMessage(LL[pathString]())
       }
     })()
-  }, [client, isVisible, myPubKey, tokenNetwork, username])
+  }, [client, isVisible, myPubKey, tokenNetwork, username, LL])
 
   return (
     <Modal
@@ -159,12 +160,12 @@ export const ModalClipboard: ComponentType = () => {
         <Text style={styles.message}>{message}</Text>
         <View style={styles.buttonContainer}>
           <Button
-            title={translate("ModalClipboard.dismiss")}
+            title={LL.ModalClipboard.dismiss()}
             onPress={dismiss}
             buttonStyle={styles.buttonStyle}
           />
           <Button
-            title={translate("ModalClipboard.open")}
+            title={LL.ModalClipboard.open()}
             onPress={open}
             buttonStyle={styles.buttonStyle}
           />

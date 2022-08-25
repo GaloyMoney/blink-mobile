@@ -5,11 +5,12 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import LottieView from "lottie-react-native"
 
 import { palette } from "../../theme/palette"
-import { translate } from "@app/utils/translate"
+
 
 import successLottieJson from "./success_lottie.json"
 import errorLottieJson from "./error_lottie.json"
 import pendingLottieJson from "./pending_lottie.json"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 type Props = {
   errs: { message: string }[]
@@ -17,6 +18,7 @@ type Props = {
 }
 
 export const PaymentStatusIndicator = ({ errs, status }: Props): JSX.Element => {
+  const { LL } = useI18nContext()
   if (status === "success") {
     return (
       <>
@@ -28,7 +30,7 @@ export const PaymentStatusIndicator = ({ errs, status }: Props): JSX.Element => 
           resizeMode="cover"
         />
         <Text style={styles.successLottieText}>
-          {translate("SendBitcoinScreen.success")}
+          {LL.SendBitcoinScreen.success()}
         </Text>
       </>
     )
@@ -64,7 +66,7 @@ export const PaymentStatusIndicator = ({ errs, status }: Props): JSX.Element => 
           resizeMode="cover"
         />
         <Text style={styles.pendingLottieText}>
-          {translate("SendBitcoinScreen.notConfirmed")}
+          {LL.SendBitcoinScreen.notConfirmed()}
         </Text>
       </>
     )

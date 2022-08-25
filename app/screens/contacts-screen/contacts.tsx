@@ -21,7 +21,8 @@ import { color } from "../../theme"
 import { ScreenType } from "../../types/jsx"
 import { toastShow } from "../../utils/toast"
 import useToken from "../../hooks/use-token"
-import { translate } from "@app/utils/translate"
+
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 // TODO: get rid of this wrapper once SearchBar props are figured out ref: https://github.com/react-native-elements/react-native-elements/issues/3089
 const SafeSearchBar = SearchBar as unknown as React.FC<
@@ -99,7 +100,7 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
   const { hasToken } = useToken()
   const [matchingContacts, setMatchingContacts] = useState([])
   const [searchText, setSearchText] = useState("")
-
+  const { LL } = useI18nContext()
   const { loading, data, error } = useQuery(
     gql`
       query contacts {
@@ -179,7 +180,7 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
   if (contacts.length > 0) {
     searchBarContent = (
       <SafeSearchBar
-        placeholder={translate("common.search")}
+        placeholder={LL.common.search()}
         value={searchText}
         onChangeText={updateMatchingContacts}
         platform="default"
@@ -201,7 +202,7 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
     listEmptyContent = (
       <View style={styles.emptyListNoMatching}>
         <Text style={styles.emptyListTitle}>
-          {translate("ContactsScreen.noMatchingContacts")}
+          {LL.ContactsScreen.noMatchingContacts()}
         </Text>
       </View>
     )
@@ -215,10 +216,10 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
     listEmptyContent = (
       <View style={styles.emptyListNoContacts}>
         <Text style={styles.emptyListTitle}>
-          {translate("ContactsScreen.noContactsTitle")}
+          {LL.ContactsScreen.noContactsTitle()}
         </Text>
         <Text style={styles.emptyListText}>
-          {translate("ContactsScreen.noContactsYet")}
+          {LL.ContactsScreen.noContactsYet()}
         </Text>
       </View>
     )

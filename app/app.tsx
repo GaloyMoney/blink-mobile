@@ -57,7 +57,7 @@ import "moment/locale/fr-ca"
 import "moment/locale/pt-br"
 import { PriceContextProvider } from "./store/price-context"
 import { AuthenticationContext } from "./store/authentication-context"
-
+import { LocalizationContextProvider } from "./store/localization-context"
 export const BUILD_VERSION = "build_version"
 
 export const { link: linkNetworkStatusNotifier, useApolloNetworkStatus } =
@@ -313,30 +313,32 @@ export const App = (): JSX.Element => {
         value={{ isAppLocked, setAppUnlocked, setAppLocked }}
       >
         <ApolloProvider client={apolloClient}>
-          <PriceContextProvider>
-            <ErrorBoundary FallbackComponent={ErrorScreen}>
-              <NavigationContainer
-                key={token}
-                linking={linking}
-                onStateChange={(state) => {
-                  const currentRouteName = getActiveRouteName(state)
-                  if (routeName.current !== currentRouteName) {
-                    analytics().logScreenView({
-                      screen_name: currentRouteName,
-                      screen_class: currentRouteName,
-                    })
-                    routeName.current = currentRouteName
-                  }
-                }}
-              >
-                <RootSiblingParent>
-                  <GlobalErrorToast />
-                  <RootStack />
-                  <Toast />
-                </RootSiblingParent>
-              </NavigationContainer>
-            </ErrorBoundary>
-          </PriceContextProvider>
+          <LocalizationContextProvider>
+            <PriceContextProvider>
+              <ErrorBoundary FallbackComponent={ErrorScreen}>
+                <NavigationContainer
+                  key={token}
+                  linking={linking}
+                  onStateChange={(state) => {
+                    const currentRouteName = getActiveRouteName(state)
+                    if (routeName.current !== currentRouteName) {
+                      analytics().logScreenView({
+                        screen_name: currentRouteName,
+                        screen_class: currentRouteName,
+                      })
+                      routeName.current = currentRouteName
+                    }
+                  }}
+                >
+                  <RootSiblingParent>
+                    <GlobalErrorToast />
+                    <RootStack />
+                    <Toast />
+                  </RootSiblingParent>
+                </NavigationContainer>
+              </ErrorBoundary>
+            </PriceContextProvider>
+          </LocalizationContextProvider>
         </ApolloProvider>
       </AuthenticationContext.Provider>
     </AppConfigurationContext.Provider>

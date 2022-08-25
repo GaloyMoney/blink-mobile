@@ -20,7 +20,7 @@ import {
   saveHiddenBalanceToolTip,
 } from "../../graphql/client-only-query"
 import { useApolloClient, useQuery } from "@apollo/client"
-import { translate } from "@app/utils/translate"
+
 
 const styles = EStyleSheet.create({
   button: {

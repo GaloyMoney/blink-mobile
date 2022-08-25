@@ -20,8 +20,8 @@ import useToken from "../../hooks/use-token"
 import BitcoinBeachLogo from "../get-started-screen/bitcoin-beach-logo.png"
 import useLogout from "../../hooks/use-logout"
 import useMainQuery from "@app/hooks/use-main-query"
-import { translate } from "@app/utils/translate"
 import { useAuthenticationContext } from "@app/store/authentication-context"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 const styles = EStyleSheet.create({
   Logo: {
@@ -81,6 +81,7 @@ export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) =
   const { myPubKey, username } = useMainQuery()
   const { screenPurpose, isPinEnabled } = route.params
   const { setAppUnlocked } = useAuthenticationContext()
+  const { LL } = useI18nContext()
 
   useFocusEffect(() => {
     attemptAuthentication()
@@ -89,9 +90,9 @@ export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) =
   const attemptAuthentication = () => {
     let description
     if (screenPurpose === AuthenticationScreenPurpose.Authenticate) {
-      description = translate("AuthenticationScreen.authenticationDescription")
+      description = LL.AuthenticationScreen.authenticationDescription()
     } else if (screenPurpose === AuthenticationScreenPurpose.TurnOnAuthentication) {
-      description = translate("AuthenticationScreen.setUpAuthenticationDescription")
+      description = LL.AuthenticationScreen.setUpAuthenticationDescription()
     }
     // Presents the OS specific authentication prompt
     BiometricWrapper.authenticate(
@@ -126,9 +127,9 @@ export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) =
 
   const logoutAndNavigateToPrimary = async () => {
     await logout()
-    Alert.alert(translate("common.loggedOut"), "", [
+    Alert.alert(LL.common.loggedOut(), "", [
       {
-        text: translate("common.ok"),
+        text: LL.common.ok(),
         onPress: () => {
           navigation.replace("Primary")
         },
@@ -142,7 +143,7 @@ export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) =
   if (isPinEnabled) {
     pinButtonContent = (
       <Button
-        title={translate("AuthenticationScreen.usePin")}
+        title={LL.AuthenticationScreen.usePin()}
         buttonStyle={styles.buttonAlternate}
         titleStyle={styles.buttonAlternateTitle}
         onPress={() =>
@@ -160,7 +161,7 @@ export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) =
       <>
         {pinButtonContent}
         <Button
-          title={translate("common.logout")}
+          title={LL.common.logout()}
           buttonStyle={styles.buttonAlternate}
           titleStyle={styles.buttonAlternateTitle}
           onPress={() => logoutAndNavigateToPrimary()}
@@ -171,7 +172,7 @@ export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) =
   } else if (screenPurpose === AuthenticationScreenPurpose.TurnOnAuthentication) {
     alternateContent = (
       <Button
-        title={translate("AuthenticationScreen.skip")}
+        title={LL.AuthenticationScreen.skip()}
         buttonStyle={styles.buttonAlternate}
         titleStyle={styles.buttonAlternateTitle}
         onPress={() => navigation.replace("Primary")}
@@ -193,11 +194,11 @@ export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) =
         <Button
           title={(() => {
             if (screenPurpose === AuthenticationScreenPurpose.Authenticate) {
-              return translate("AuthenticationScreen.unlock")
+              return LL.AuthenticationScreen.unlock()
             } else if (
               screenPurpose === AuthenticationScreenPurpose.TurnOnAuthentication
             ) {
-              return translate("AuthenticationScreen.setUp")
+              return LL.AuthenticationScreen.setUp()
             }
             return ""
           })()}

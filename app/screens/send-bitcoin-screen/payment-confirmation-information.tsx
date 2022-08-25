@@ -4,7 +4,8 @@ import EStyleSheet from "react-native-extended-stylesheet"
 
 import { currencyToTextWithUnits } from "../../utils/currencyConversion"
 import { palette } from "../../theme/palette"
-import { translate } from "@app/utils/translate"
+import { useI18nContext } from "@app/i18n/i18n-react"
+
 
 type FeeType = {
   value: number | null | undefined
@@ -35,11 +36,12 @@ export const PaymentConfirmationInformation = ({
   primaryTotalAmount,
   secondaryTotalAmount,
 }: PaymentConfirmationInformationProps): JSX.Element => {
+  const { LL } = useI18nContext()
   return (
     <View style={styles.paymentInformation}>
       <View style={styles.paymentInformationRow}>
         <Text style={styles.paymentInformationLabel}>
-          {translate("SendBitcoinConfirmationScreen.destinationLabel")}
+          {LL.SendBitcoinConfirmationScreen.destinationLabel()}
         </Text>
         {destination?.length > 0 && (
           <Text style={styles.paymentInformationData}>{destination}</Text>
@@ -49,7 +51,7 @@ export const PaymentConfirmationInformation = ({
       {memo?.length > 0 && (
         <View style={styles.paymentInformationRow}>
           <Text style={styles.paymentInformationLabel}>
-            {translate("SendBitcoinConfirmationScreen.memoLabel")}
+            {LL.SendBitcoinConfirmationScreen.memoLabel()}
           </Text>
           <Text style={styles.paymentInformationData}>{memo}</Text>
         </View>
@@ -58,7 +60,7 @@ export const PaymentConfirmationInformation = ({
       {fee.value === null && (
         <View style={styles.paymentInformationRow}>
           <Text style={styles.paymentInformationLabel}>
-            {translate("SendBitcoinConfirmationScreen.amountLabel")}
+            {LL.SendBitcoinConfirmationScreen.amountLabel()}
           </Text>
           <Text style={styles.paymentInformationMainAmount}>
             {currencyToTextWithUnits(primaryAmount)}
@@ -72,7 +74,7 @@ export const PaymentConfirmationInformation = ({
       {fee.value !== null && (
         <View style={styles.paymentInformationRow}>
           <Text style={styles.paymentInformationLabel}>
-            {translate("SendBitcoinConfirmationScreen.totalLabel")}
+            {LL.SendBitcoinConfirmationScreen.totalLabel()}
           </Text>
           <Text style={styles.paymentInformationMainAmount}>
             {currencyToTextWithUnits(primaryTotalAmount)}
@@ -85,7 +87,7 @@ export const PaymentConfirmationInformation = ({
 
       <View style={styles.paymentInformationRow}>
         <Text style={styles.paymentInformationLabel}>
-          {translate("SendBitcoinConfirmationScreen.feeLabel")}
+          {LL.SendBitcoinConfirmationScreen.feeLabel()}
         </Text>
         <FeeDetails fee={fee} />
       </View>
@@ -94,6 +96,7 @@ export const PaymentConfirmationInformation = ({
 }
 
 const FeeDetails = ({ fee }: FeeDetailsProps): JSX.Element => {
+  const { LL } = useI18nContext()
   if (fee.status === "loading") {
     return (
       <ActivityIndicator
@@ -108,7 +111,7 @@ const FeeDetails = ({ fee }: FeeDetailsProps): JSX.Element => {
   if (fee.status === "error") {
     return (
       <Text style={styles.paymentInformationData}>
-        {translate("SendBitcoinScreen.feeCalculationUnsuccessful")}
+        {LL.SendBitcoinScreen.feeCalculationUnsuccessful()}
       </Text>
     ) // todo: same calculation as backend
   }

@@ -20,7 +20,7 @@ import useToken from "../../hooks/use-token"
 import useLogout from "../../hooks/use-logout"
 import useMainQuery from "@app/hooks/use-main-query"
 import { useAuthenticationContext } from "@app/store/authentication-context"
-import { translate } from "@app/utils/translate"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 const styles = EStyleSheet.create({
   bottomSpacer: {
@@ -126,18 +126,19 @@ export const PinScreen: ScreenType = ({ route, navigation }: Props) => {
   const { myPubKey, username } = useMainQuery()
   const { screenPurpose } = route.params
   const { setAppUnlocked } = useAuthenticationContext()
-
+  const { LL } = useI18nContext()
   const [enteredPIN, setEnteredPIN] = useState("")
   const [helperText, setHelperText] = useState(
-    screenPurpose === PinScreenPurpose.SetPin ? translate("PinScreen.setPin") : "",
+    screenPurpose === PinScreenPurpose.SetPin ? LL.PinScreen.setPin() : "",
   )
   const [previousPIN, setPreviousPIN] = useState("")
   const [pinAttempts, setPinAttempts] = useState(0)
 
+
   const MAX_PIN_ATTEMPTS = 3
 
   useEffect(() => {
-    ;(async () => {
+    ; (async () => {
       setPinAttempts(await KeyStoreWrapper.getPinAttemptsOrZero())
     })()
   }, [])
@@ -164,13 +165,13 @@ export const PinScreen: ScreenType = ({ route, navigation }: Props) => {
       setPinAttempts(newPinAttempts)
       setEnteredPIN("")
       if (newPinAttempts === MAX_PIN_ATTEMPTS - 1) {
-        setHelperText(translate("PinScreen.oneAttemptRemaining"))
+        setHelperText(LL.PinScreen.oneAttemptRemaining())
       } else {
         const attemptsRemaining = MAX_PIN_ATTEMPTS - newPinAttempts
-        setHelperText(translate("PinScreen.attemptsRemaining", { attemptsRemaining }))
+        setHelperText(LL.PinScreen.attemptsRemaining({ attemptsRemaining }))
       }
     } else {
-      setHelperText(translate("PinScreen.tooManyAttempts"))
+      setHelperText(LL.PinScreen.tooManyAttempts())
       await logout()
       await sleep(1000)
       navigation.reset({
@@ -183,7 +184,7 @@ export const PinScreen: ScreenType = ({ route, navigation }: Props) => {
   const handleCompletedPinForSetPin = (newEnteredPIN: string) => {
     if (previousPIN.length === 0) {
       setPreviousPIN(newEnteredPIN)
-      setHelperText(translate("PinScreen.verifyPin"))
+      setHelperText(LL.PinScreen.verifyPin())
       setEnteredPIN("")
     } else {
       verifyPINCodeMathes(newEnteredPIN)
@@ -212,7 +213,7 @@ export const PinScreen: ScreenType = ({ route, navigation }: Props) => {
         navigation.goBack()
       } else {
         returnToSetPin()
-        Alert.alert(translate("PinScreen.storePinFailed"))
+        Alert.alert(LL.PinScreen.storePinFailed())
       }
     } else {
       returnToSetPin()
@@ -221,7 +222,7 @@ export const PinScreen: ScreenType = ({ route, navigation }: Props) => {
 
   const returnToSetPin = () => {
     setPreviousPIN("")
-    setHelperText(translate("PinScreen.setPinFailedMatch"))
+    setHelperText(LL.PinScreen.setPinFailedMatch())
     setEnteredPIN("")
   }
 

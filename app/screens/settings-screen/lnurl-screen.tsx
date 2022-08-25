@@ -18,8 +18,9 @@ import { Button, Text } from "react-native-elements"
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 import { color } from "@app/theme"
 import { toastShow } from "@app/utils/toast"
-import { translate } from "@app/utils/translate"
+
 import { copyPaymentInfoToClipboard } from "@app/utils/clipboard"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 const styles = EStyleSheet.create({
   container: {
@@ -56,16 +57,9 @@ type Props = {
   route: RouteProp<RootStackParamList, "lnurl">
 }
 
-const copyToClipboard = (str) => {
-  copyPaymentInfoToClipboard(str)
-  toastShow({
-    message: translate("SettingsScreen.copyClipboardLnurl"),
-    type: "success",
-  })
-}
-
 export const LnurlScreen: ScreenType = ({ route }: Props) => {
   const { username } = route.params
+  const { LL } = useI18nContext()
   const lnurl = bech32.encode(
     "lnurl",
     bech32.toWords(
@@ -79,6 +73,14 @@ export const LnurlScreen: ScreenType = ({ route }: Props) => {
   )}`
   const viewPrintableVersion = (): Promise<Linking> =>
     Linking.openURL(`${GALOY_PAY_DOMAIN}${username}/print`)
+
+  const copyToClipboard = (str) => {
+    copyPaymentInfoToClipboard(str)
+    toastShow({
+      message: LL.SettingsScreen.copyClipboardLnurl(),
+      type: "success",
+    })
+  }
 
   return (
     <Screen style={styles.container} preset="scroll">
@@ -98,7 +100,7 @@ export const LnurlScreen: ScreenType = ({ route }: Props) => {
         <Button
           buttonStyle={styles.buttonStyle}
           containerStyle={{ flex: 1 }}
-          title={translate("lnurl.viewPrintable")}
+          title={LL.lnurl.viewPrintable()}
           onPress={viewPrintableVersion}
         />
       </View>

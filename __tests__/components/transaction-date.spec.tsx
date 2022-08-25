@@ -5,7 +5,6 @@ import { createMock } from "ts-auto-mock"
 import moment from "moment"
 
 import { TransactionDate } from "../../app/components/transaction-date"
-import { translate } from "../../app/utils/translate"
 
 describe("Display the createdAt date for a transaction", () => {
   it("Displays pending for a pending onchain transaction", () => {

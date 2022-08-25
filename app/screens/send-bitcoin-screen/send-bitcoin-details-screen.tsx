@@ -26,7 +26,8 @@ import SwitchIcon from "@app/assets/icons/switch.svg"
 import Icon from "react-native-vector-icons/Ionicons"
 import NoteIcon from "@app/assets/icons/note.svg"
 import { Button } from "react-native-elements"
-import { translate } from "@app/utils/translate"
+import { useI18nContext } from "@app/i18n/i18n-react"
+
 
 const Styles = StyleSheet.create({
   scrollView: {
@@ -213,7 +214,7 @@ const SendBitcoinDetailsScreen = ({
   )
   const [note, setNote] = useState(initialNote)
   const [fromWallet, setFromWallet] = useState(defaultWallet)
-
+  const { LL } = useI18nContext()
   const toggleAmountCurrency = useCallback(() => {
     if (fixedAmount) {
       return
@@ -283,7 +284,7 @@ const SendBitcoinDetailsScreen = ({
         setErrorMessage("")
       } else {
         setErrorMessage(
-          translate("SendBitcoinScreen.amountExceed", {
+          LL.SendBitcoinScreen.amountExceed({
             balance: satAmountDisplay(btcWalletBalance),
           }),
         )
@@ -296,7 +297,7 @@ const SendBitcoinDetailsScreen = ({
         setErrorMessage("")
       } else {
         setErrorMessage(
-          translate("SendBitcoinScreen.amountExceed", {
+          LL.SendBitcoinScreen.amountExceed({
             balance: usdAmountDisplay(usdWalletBalance / 100),
           }),
         )
@@ -409,7 +410,7 @@ const SendBitcoinDetailsScreen = ({
         invoice = result.invoice
       } catch (error) {
         console.error(error)
-        setErrorMessage(translate("SendBitcoinScreen.failedToFetchLnurlInvoice"))
+        setErrorMessage(LL.SendBitcoinScreen.failedToFetchLnurlInvoice())
         return
       }
     }
@@ -441,7 +442,7 @@ const SendBitcoinDetailsScreen = ({
     >
       <View style={Styles.sendBitcoinAmountContainer}>
         <View style={Styles.fieldContainer}>
-          <Text style={Styles.fieldTitleText}>{translate("common.from")}</Text>
+          <Text style={Styles.fieldTitleText}>{LL.common.from()}</Text>
           <TouchableWithoutFeedback onPress={() => showWalletPicker && toggleModal()}>
             <View style={Styles.fieldBackground}>
               <View style={Styles.walletSelectorTypeContainer}>
@@ -502,7 +503,7 @@ const SendBitcoinDetailsScreen = ({
         </View>
         <View style={Styles.fieldContainer}>
           <Text style={Styles.fieldTitleText}>
-            {translate("SendBitcoinScreen.amount")}
+            {LL.SendBitcoinScreen.amount()}
           </Text>
           <View style={Styles.fieldBackground}>
             <View style={Styles.currencyInputContainer}>
@@ -585,22 +586,22 @@ const SendBitcoinDetailsScreen = ({
               Min:{" "}
               {fromWallet.__typename === "UsdWallet"
                 ? convertPaymentAmount(
-                    { amount: lnurlParams.min, currency: WalletCurrency.BTC },
-                    WalletCurrency.USD,
-                  ).amount / 100
+                  { amount: lnurlParams.min, currency: WalletCurrency.BTC },
+                  WalletCurrency.USD,
+                ).amount / 100
                 : lnurlParams.min}{" "}
               - Max:{" "}
               {fromWallet.__typename === "UsdWallet"
                 ? convertPaymentAmount(
-                    { amount: lnurlParams.max, currency: WalletCurrency.BTC },
-                    WalletCurrency.USD,
-                  ).amount / 100
+                  { amount: lnurlParams.max, currency: WalletCurrency.BTC },
+                  WalletCurrency.USD,
+                ).amount / 100
                 : lnurlParams.max}
             </Text>
           )}
         </View>
         <View style={Styles.fieldContainer}>
-          <Text style={Styles.fieldTitleText}>{translate("SendBitcoinScreen.note")}</Text>
+          <Text style={Styles.fieldTitleText}>{LL.SendBitcoinScreen.note()}</Text>
           <View style={Styles.fieldBackground}>
             <View style={Styles.noteContainer}>
               <View style={Styles.noteIconContainer}>
@@ -608,7 +609,7 @@ const SendBitcoinDetailsScreen = ({
               </View>
               <TextInput
                 style={Styles.noteInput}
-                placeholder={translate("SendBitcoinScreen.note")}
+                placeholder={LL.SendBitcoinScreen.note()}
                 onChangeText={setNote}
                 value={note}
                 selectTextOnFocus
@@ -626,7 +627,7 @@ const SendBitcoinDetailsScreen = ({
 
         <View style={Styles.buttonContainer}>
           <Button
-            title={translate("common.next")}
+            title={LL.common.next()}
             buttonStyle={[Styles.button, Styles.activeButtonStyle]}
             titleStyle={Styles.activeButtonTitleStyle}
             disabledStyle={[Styles.button, Styles.disabledButtonStyle]}

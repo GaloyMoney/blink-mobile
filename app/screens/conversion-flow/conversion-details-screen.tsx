@@ -19,7 +19,8 @@ import { useUsdBtcAmount } from "@app/hooks/use-amount"
 import { WalletDescriptor } from "@app/types/wallets"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { translate } from "@app/utils/translate"
+import { useI18nContext } from "@app/i18n/i18n-react"
+
 
 export const ConversionDetailsScreen = ({
   route,
@@ -47,6 +48,7 @@ export const ConversionDetailsScreen = ({
   const [activeCurrencyInput, setActiveCurrencyInput] = useState<WalletCurrency>(
     WalletCurrency.USD,
   )
+  const { LL } = useI18nContext()
 
   useEffect(() => {
     const defaultWallet = wallets.find((wallet) => wallet.id === defaultWalletId)
@@ -61,7 +63,7 @@ export const ConversionDetailsScreen = ({
     if (fromWallet.currency === WalletCurrency.BTC) {
       if (btcAmount.amount > btcWalletBalance) {
         setAmountFieldError(
-          translate("SendBitcoinScreen.amountExceed", {
+          LL.SendBitcoinScreen.amountExceed({
             balance: satAmountDisplay(btcWalletBalance),
           }),
         )
@@ -73,7 +75,7 @@ export const ConversionDetailsScreen = ({
     if (fromWallet.currency === WalletCurrency.USD) {
       if (usdAmount.amount > usdWalletBalance) {
         setAmountFieldError(
-          translate("SendBitcoinScreen.amountExceed", {
+          LL.SendBitcoinScreen.amountExceed({
             balance: usdAmountDisplay(usdWalletBalance / 100),
           }),
         )
@@ -81,7 +83,7 @@ export const ConversionDetailsScreen = ({
         setAmountFieldError(undefined)
       }
     }
-  }, [btcAmount, usdAmount, fromWallet, toWallet, btcWalletBalance, usdWalletBalance])
+  }, [btcAmount, usdAmount, fromWallet, toWallet, btcWalletBalance, usdWalletBalance, LL])
 
   useEffect(() => {
     if (!fromWallet) return
@@ -160,7 +162,7 @@ export const ConversionDetailsScreen = ({
       <View style={styles.fieldContainer}>
         <View style={styles.fromFieldContainer}>
           <View style={styles.fieldLabelContainer}>
-            <Text style={styles.fieldLabel}>{translate("common.from")}</Text>
+            <Text style={styles.fieldLabel}>{LL.common.from()}</Text>
           </View>
           <View style={styles.walletSelectorTypeContainer}>
             <View
@@ -218,7 +220,7 @@ export const ConversionDetailsScreen = ({
         </View>
         <View style={styles.toFieldContainer}>
           <View style={styles.fieldLabelContainer}>
-            <Text style={styles.fieldLabel}>{translate("common.to")}</Text>
+            <Text style={styles.fieldLabel}>{LL.common.to()}</Text>
           </View>
           <View style={styles.walletSelectorTypeContainer}>
             <View
@@ -271,7 +273,7 @@ export const ConversionDetailsScreen = ({
         <View style={styles.amountFieldContainer}>
           <View style={styles.fieldLabelContainer}>
             <Text style={styles.amountFieldLabel}>
-              {translate("SendBitcoinScreen.amount")}
+              {LL.SendBitcoinScreen.amount()}
             </Text>
           </View>
           <View style={styles.currencyInputContainer}>
@@ -358,7 +360,7 @@ export const ConversionDetailsScreen = ({
         <View style={styles.percentageContainer}>
           <View style={styles.percentageLabelContainer}>
             <Text style={styles.percentageFieldLabel}>
-              {translate("TransferScreen.percentageToConvert")}
+              {LL.TransferScreen.percentageToConvert()}
             </Text>
           </View>
           <View style={styles.percentageFieldContainer}>
@@ -387,7 +389,7 @@ export const ConversionDetailsScreen = ({
       </View>
       <View style={styles.buttonContainer}>
         <Button
-          title={translate("common.next")}
+          title={LL.common.next()}
           buttonStyle={[styles.button, styles.activeButtonStyle]}
           titleStyle={styles.activeButtonTitleStyle}
           disabledStyle={[styles.button, styles.disabledButtonStyle]}
