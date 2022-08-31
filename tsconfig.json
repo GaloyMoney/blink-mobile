@@ -29,8 +29,14 @@
         "cacheBetweenTests": false,
         "features": ["random"]
       }
+    ],
+    "types": [
+      "node",
+      "webdriverio/async",
+      "@wdio/mocha-framework",
+      "@wdio/devtools-service"
     ]
   },
   "exclude": ["node_modules"],
-  "include": ["app", "test", "storybook", "utils/declaration.d.ts"]
+  "include": ["app", "test", "storybook", "utils/declaration.d.ts", "__tests__"]
 }
