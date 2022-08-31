@@ -9,7 +9,6 @@ import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import useMainQuery from "@app/hooks/use-main-query"
 import { useI18nContext } from "@app/i18n/i18n-react"
 
-
 export const ConversionSuccessScreen = ({
   navigation,
 }: StackScreenProps<RootStackParamList, "conversionSuccess">) => {
@@ -31,9 +30,7 @@ export const ConversionSuccessScreen = ({
         style={styles.lottie}
         resizeMode="cover"
       />
-      <Text style={styles.successLottieText}>
-        {LL.ConversionSuccessScreen.message()}
-      </Text>
+      <Text style={styles.successLottieText}>{LL.ConversionSuccessScreen.message()}</Text>
     </View>
   )
 }

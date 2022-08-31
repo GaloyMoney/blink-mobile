@@ -127,8 +127,9 @@ export const ContactsDetailScreenJSX: ScreenType = ({
             {contact.alias}
           </Input>
         </View>
-        <Text style={styles.amountSecondary}>{`${LL.common.username()}: ${contact.username
-          }`}</Text>
+        <Text style={styles.amountSecondary}>{`${LL.common.username()}: ${
+          contact.username
+        }`}</Text>
       </View>
       <View style={styles.contactBodyContainer}>
         <View style={styles.transactionsView}>

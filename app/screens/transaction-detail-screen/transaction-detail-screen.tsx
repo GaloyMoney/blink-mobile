@@ -23,7 +23,6 @@ import {
 import { TransactionDate } from "@app/components/transaction-date"
 import { useI18nContext } from "@app/i18n/i18n-react"
 
-
 const viewInExplorer = (hash: string): Promise<Linking> =>
   Linking.openURL(BLOCKCHAIN_EXPLORER_URL + hash)
 
@@ -158,9 +157,9 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
     settlementCurrency === WalletCurrency.BTC
       ? `${settlementFee} sats (${usdAmountDisplay(settlementFee * usdPerSat)})`
       : paymentAmountToTextWithUnits({
-        amount: settlementFee,
-        currency: settlementCurrency as WalletCurrency,
-      })
+          amount: settlementFee,
+          currency: settlementCurrency as WalletCurrency,
+        })
 
   const walletSummary = (
     <WalletSummary
@@ -214,10 +213,7 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
           entry={isReceive ? "Receiving Wallet" : "Sending Wallet"}
           content={walletSummary}
         />
-        <Row
-          entry={LL.common.date()}
-          value={<TransactionDate tx={route.params} />}
-        />
+        <Row entry={LL.common.date()} value={<TransactionDate tx={route.params} />} />
         {!isReceive && <Row entry={LL.common.fees()} value={feeEntry} />}
         <Row entry={LL.common.description()} value={description} />
         {settlementVia.__typename === "SettlementViaIntraLedger" && (
@@ -226,10 +222,7 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
             value={settlementVia.counterPartyUsername || "BitcoinBeach Wallet"}
           />
         )}
-        <Row
-          entry={LL.common.type()}
-          value={typeDisplay(settlementVia.__typename)}
-        />
+        <Row entry={LL.common.type()} value={typeDisplay(settlementVia.__typename)} />
         {settlementVia.__typename === "SettlementViaLn" &&
           initiationVia.__typename === "InitiationViaLn" && (
             <Row entry="Hash" value={initiationVia.paymentHash} />

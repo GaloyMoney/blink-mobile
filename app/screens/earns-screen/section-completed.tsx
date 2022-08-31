@@ -13,7 +13,6 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import type { ScreenType } from "../../types/jsx"
 import { useI18nContext } from "@app/i18n/i18n-react"
 
-
 const styles = EStyleSheet.create({
   bottomView: {
     backgroundColor: palette.lightBlue,
@@ -71,9 +70,7 @@ export const SectionCompleted: ScreenType = ({ navigation, route }: Props) => {
       <View style={styles.container}>
         <View style={styles.divider} />
         <BadgerShovelBitcoin />
-        <Text style={styles.headerSection}>
-          {LL.EarnScreen.sectionsCompleted()}
-        </Text>
+        <Text style={styles.headerSection}>{LL.EarnScreen.sectionsCompleted()}</Text>
         <Text style={styles.titleSection}>{sectionTitle}</Text>
         <Button
           title={LL.EarnScreen.keepDigging()}

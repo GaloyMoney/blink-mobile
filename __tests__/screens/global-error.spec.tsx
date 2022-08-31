@@ -11,7 +11,8 @@ import { GlobalErrorToast } from "../../app/components/global-error"
 import { NetworkErrorCode } from "../../app/components/global-error/network-error-code"
 import * as toastShowModule from "../../app/utils/toast"
 import { AuthenticationContext } from "../../app/store/authentication-context"
-import { LocalizationContextProvider } from "../../app/store/localization-context"
+import { i18nObject } from "../../app/i18n/i18n-util"
+import { loadLocale } from "../../app/i18n/i18n-util.sync"
 
 jest.mock("../../app/app")
 jest.mock("react-native/Libraries/EventEmitter/NativeEventEmitter")
@@ -28,6 +29,12 @@ jest.mock("react-native-qrcode-svg", () => ({}))
 jest.mock("react-native-share", () => ({}))
 jest.mock("react-native-gesture-handler", () => ({}))
 jest.mock("@app/i18n/i18n-react", () => ({}))
+jest.mock("@app/i18n/i18n-react", () => ({
+  useI18nContext: () => {
+    loadLocale("en")
+    return { LL: i18nObject("en") }
+  },
+}))
 describe("GlobalError tests", () => {
   afterEach(() => {
     jest.clearAllMocks()
@@ -43,13 +50,15 @@ describe("GlobalError tests", () => {
     useApolloNetworkStatusMock.mockReturnValue(status)
     const tree = render(
       <MockedProvider>
-        <LocalizationContextProvider>
-          <AuthenticationContext.Provider
-            value={{ isAppLocked: false, setAppLocked: () => { }, setAppUnlocked: () => { } }}
-          >
-            <GlobalErrorToast />
-          </AuthenticationContext.Provider>
-        </LocalizationContextProvider>
+        <AuthenticationContext.Provider
+          value={{
+            isAppLocked: false,
+            setAppLocked: () => {},
+            setAppUnlocked: () => {},
+          }}
+        >
+          <GlobalErrorToast />
+        </AuthenticationContext.Provider>
       </MockedProvider>,
     ).toJSON()
 

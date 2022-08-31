@@ -11,7 +11,6 @@ import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import ReceiveBtc from "./receive-btc"
 import ReceiveUsd from "./receive-usd"
 
-
 const styles = EStyleSheet.create({
   container: {
     flexDirection: "column",

@@ -25,7 +25,6 @@ import { copyPaymentInfoToClipboard } from "@app/utils/clipboard"
 import moment from "moment"
 import { useI18nContext } from "@app/i18n/i18n-react"
 
-
 const styles = EStyleSheet.create({
   container: {
     marginTop: "14rem",
@@ -242,7 +241,7 @@ const ReceiveUsd = () => {
         throw err
       }
     },
-    [lnNoAmountInvoiceCreate, lnUsdInvoiceCreate],
+    [lnNoAmountInvoiceCreate, lnUsdInvoiceCreate, LL],
   )
 
   useEffect((): void | (() => void) => {
@@ -263,7 +262,7 @@ const ReceiveUsd = () => {
     } else if (status !== "error") {
       setErr("")
     }
-  }, [status])
+  }, [status, LL])
 
   const share = useCallback(async () => {
     try {
@@ -299,7 +298,9 @@ const ReceiveUsd = () => {
     return (
       <View style={styles.inputForm}>
         <View style={styles.container}>
-          <Text style={styles.fieldTitleText}>{LL.ReceiveBitcoinScreen.invoiceAmount()}</Text>
+          <Text style={styles.fieldTitleText}>
+            {LL.ReceiveBitcoinScreen.invoiceAmount()}
+          </Text>
           <View style={styles.field}>
             <FakeCurrencyInput
               value={usdAmount}
@@ -360,7 +361,9 @@ const ReceiveUsd = () => {
   const displayAmount = () => {
     if (!usdAmount) {
       return (
-        <Text style={styles.primaryAmount}>{LL.ReceiveBitcoinScreen.flexibleAmountInvoice()}</Text>
+        <Text style={styles.primaryAmount}>
+          {LL.ReceiveBitcoinScreen.flexibleAmountInvoice()}
+        </Text>
       )
     }
     return (

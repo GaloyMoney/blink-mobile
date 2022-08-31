@@ -6,7 +6,6 @@ import { currencyToTextWithUnits } from "../../utils/currencyConversion"
 import { palette } from "../../theme/palette"
 import { useI18nContext } from "@app/i18n/i18n-react"
 
-
 type FeeType = {
   value: number | null | undefined
   status: string

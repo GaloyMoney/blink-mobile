@@ -215,12 +215,8 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
   } else {
     listEmptyContent = (
       <View style={styles.emptyListNoContacts}>
-        <Text style={styles.emptyListTitle}>
-          {LL.ContactsScreen.noContactsTitle()}
-        </Text>
-        <Text style={styles.emptyListText}>
-          {LL.ContactsScreen.noContactsYet()}
-        </Text>
+        <Text style={styles.emptyListTitle}>{LL.ContactsScreen.noContactsTitle()}</Text>
+        <Text style={styles.emptyListText}>{LL.ContactsScreen.noContactsYet()}</Text>
       </View>
     )
   }

@@ -115,7 +115,7 @@ export const ModalClipboard: ComponentType = () => {
       return
     }
 
-    ; (async () => {
+    ;(async () => {
       const clipboard = await Clipboard.getString()
       if (clipboard) {
         const { paymentType } = parsePaymentDestination({

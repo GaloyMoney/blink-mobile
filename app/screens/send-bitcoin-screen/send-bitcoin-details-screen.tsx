@@ -28,7 +28,6 @@ import NoteIcon from "@app/assets/icons/note.svg"
 import { Button } from "react-native-elements"
 import { useI18nContext } from "@app/i18n/i18n-react"
 
-
 const Styles = StyleSheet.create({
   scrollView: {
     flexDirection: "column",
@@ -502,9 +501,7 @@ const SendBitcoinDetailsScreen = ({
           {chooseWalletModal}
         </View>
         <View style={Styles.fieldContainer}>
-          <Text style={Styles.fieldTitleText}>
-            {LL.SendBitcoinScreen.amount()}
-          </Text>
+          <Text style={Styles.fieldTitleText}>{LL.SendBitcoinScreen.amount()}</Text>
           <View style={Styles.fieldBackground}>
             <View style={Styles.currencyInputContainer}>
               {fromWallet.__typename === "BTCWallet" && amountCurrency === "BTC" && (
@@ -586,16 +583,16 @@ const SendBitcoinDetailsScreen = ({
               Min:{" "}
               {fromWallet.__typename === "UsdWallet"
                 ? convertPaymentAmount(
-                  { amount: lnurlParams.min, currency: WalletCurrency.BTC },
-                  WalletCurrency.USD,
-                ).amount / 100
+                    { amount: lnurlParams.min, currency: WalletCurrency.BTC },
+                    WalletCurrency.USD,
+                  ).amount / 100
                 : lnurlParams.min}{" "}
               - Max:{" "}
               {fromWallet.__typename === "UsdWallet"
                 ? convertPaymentAmount(
-                  { amount: lnurlParams.max, currency: WalletCurrency.BTC },
-                  WalletCurrency.USD,
-                ).amount / 100
+                    { amount: lnurlParams.max, currency: WalletCurrency.BTC },
+                    WalletCurrency.USD,
+                  ).amount / 100
                 : lnurlParams.max}
             </Text>
           )}

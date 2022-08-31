@@ -146,9 +146,9 @@ export const PriceGraph: ComponentType = ({
     })
     priceDomain = [
       (priceDomain[0] / 10 ** startPriceData.offset) *
-      multiple(startPriceData.currencyUnit),
+        multiple(startPriceData.currencyUnit),
       (priceDomain[1] / 10 ** startPriceData.offset) *
-      multiple(startPriceData.currencyUnit),
+        multiple(startPriceData.currencyUnit),
     ]
   } catch (err) {
     // FIXME proper Loader

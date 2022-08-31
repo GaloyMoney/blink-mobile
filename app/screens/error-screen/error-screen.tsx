@@ -15,7 +15,6 @@ import useLogout from "@app/hooks/use-logout"
 import ContactModal from "@app/components/contact-modal/contact-modal"
 import { useI18nContext } from "@app/i18n/i18n-react"
 
-
 const styles = EStyleSheet.create({
   $color: palette.white,
   $paddingHorizontal: "20rem",

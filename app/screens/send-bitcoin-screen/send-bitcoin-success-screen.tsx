@@ -8,7 +8,6 @@ import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { useI18nContext } from "@app/i18n/i18n-react"
 
-
 const styles = StyleSheet.create({
   scrollView: {
     flexDirection: "column",
@@ -60,9 +59,7 @@ const SendBitcoinSuccessScreen = ({
           style={styles.lottie}
           resizeMode="cover"
         />
-        <Text style={styles.successLottieText}>
-          {LL.SendBitcoinScreen.success()}
-        </Text>
+        <Text style={styles.successLottieText}>{LL.SendBitcoinScreen.success()}</Text>
       </View>
     </ScrollView>
   )

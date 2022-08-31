@@ -10,7 +10,6 @@ import useToken from "../../hooks/use-token"
 import useMainQuery from "@app/hooks/use-main-query"
 import { useI18nContext } from "@app/i18n/i18n-react"
 
-
 const styles = EStyleSheet.create({
   screenStyle: {
     marginHorizontal: 48,
@@ -53,7 +52,7 @@ export const LanguageScreen: ScreenType = () => {
             }
           }}
         >
-          <ListItem.Title>{LL.Languages[language]}</ListItem.Title>
+          <ListItem.Title>{LL.Languages[language]()}</ListItem.Title>
           {userPreferredLanguage === language && (
             <Icon name="ios-checkmark-circle" size={18} color={palette.green} />
           )}

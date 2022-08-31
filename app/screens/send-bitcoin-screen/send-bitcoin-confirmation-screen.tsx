@@ -22,7 +22,6 @@ import { CommonActions } from "@react-navigation/native"
 import useMainQuery from "@app/hooks/use-main-query"
 import { useI18nContext } from "@app/i18n/i18n-react"
 
-
 const styles = StyleSheet.create({
   scrollView: {
     flexDirection: "column",
@@ -404,9 +403,7 @@ const SendBitcoinConfirmationScreen = ({
       contentContainerStyle={styles.contentContainer}
     >
       <View style={styles.sendBitcoinConfirmationContainer}>
-        <Text style={styles.fieldTitleText}>
-          {LL.SendBitcoinScreen.destination()}
-        </Text>
+        <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.destination()}</Text>
         <View style={styles.fieldBackground}>
           <View style={styles.destinationIconContainer}>
             <DestinationIcon />
@@ -509,9 +506,7 @@ const SendBitcoinConfirmationScreen = ({
         </View>
         {note ? (
           <>
-            <Text style={styles.fieldTitleText}>
-              {LL.SendBitcoinScreen.note()}
-            </Text>
+            <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.note()}</Text>
             <View style={styles.fieldBackground}>
               <View style={styles.noteIconContainer}>
                 <NoteIcon style={styles.noteIcon} />

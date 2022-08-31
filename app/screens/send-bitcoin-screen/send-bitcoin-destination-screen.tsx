@@ -22,7 +22,6 @@ import { Button } from "react-native-elements"
 import ScanIcon from "@app/assets/icons/scan.svg"
 import { useI18nContext } from "@app/i18n/i18n-react"
 
-
 const Styles = StyleSheet.create({
   scrollView: {
     flexDirection: "column",
@@ -205,6 +204,7 @@ const SendBitcoinDestinationScreen = ({
       tokenNetwork,
       userDefaultWalletIdLoading,
       userDefaultWalletIdQuery,
+      LL,
     ],
   )
 
@@ -258,9 +258,7 @@ const SendBitcoinDestinationScreen = ({
       contentContainerStyle={Styles.contentContainer}
     >
       <View style={Styles.sendBitcoinDestinationContainer}>
-        <Text style={Styles.fieldTitleText}>
-          {LL.SendBitcoinScreen.destination()}
-        </Text>
+        <Text style={Styles.fieldTitleText}>{LL.SendBitcoinScreen.destination()}</Text>
 
         <View style={Styles.fieldBackground}>
           <TextInput

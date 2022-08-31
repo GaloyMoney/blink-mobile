@@ -6,7 +6,6 @@ import LottieView from "lottie-react-native"
 
 import { palette } from "../../theme/palette"
 
-
 import successLottieJson from "./success_lottie.json"
 import errorLottieJson from "./error_lottie.json"
 import pendingLottieJson from "./pending_lottie.json"
@@ -29,9 +28,7 @@ export const PaymentStatusIndicator = ({ errs, status }: Props): JSX.Element => 
           style={styles.lottie}
           resizeMode="cover"
         />
-        <Text style={styles.successLottieText}>
-          {LL.SendBitcoinScreen.success()}
-        </Text>
+        <Text style={styles.successLottieText}>{LL.SendBitcoinScreen.success()}</Text>
       </>
     )
   }

@@ -69,11 +69,9 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
         onCompleted: onGetCsvCallback,
         onError: (error) => {
           crashlytics().recordError(error)
-          Alert.alert(
-            LL.common.error(),
-            LL.SettingsScreen.csvTransactionsError(),
-            [{ text: LL.common.ok() }],
-          )
+          Alert.alert(LL.common.error(), LL.SettingsScreen.csvTransactionsError(), [
+            { text: LL.common.ok() },
+          ])
         },
       },
     )

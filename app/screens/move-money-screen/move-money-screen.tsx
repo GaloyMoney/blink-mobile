@@ -46,7 +46,6 @@ import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs"
 import { CompositeNavigationProp } from "@react-navigation/native"
 import { useI18nContext } from "@app/i18n/i18n-react"
 
-
 const styles = EStyleSheet.create({
   bottom: {
     alignItems: "center",

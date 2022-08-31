@@ -4,7 +4,6 @@ import moment from "moment"
 import { GaloyGQL } from "@galoymoney/client"
 import { toMomentLocale } from "@app/utils/date"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { detectLocale } from "@app/i18n/i18n-util"
 
 type TransactionDateProps = {
   tx: GaloyGQL.Transaction
@@ -17,9 +16,9 @@ export const TransactionDate = ({
   friendly = false,
   diffDate = false,
 }: TransactionDateProps) => {
-  const { LL } = useI18nContext()
+  const { LL, locale } = useI18nContext()
   const { status, createdAt } = tx
-  moment.locale(toMomentLocale(detectLocale()))
+  moment.locale(toMomentLocale(locale))
   if (status === "PENDING") {
     return <Text>{LL.common.pending()?.toUpperCase()}</Text>
   }

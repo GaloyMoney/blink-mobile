@@ -21,7 +21,6 @@ import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { RouteProp } from "@react-navigation/native"
 import { useI18nContext } from "@app/i18n/i18n-react"
 
-
 const styles = EStyleSheet.create({
   answersView: {
     flex: 1,
@@ -198,8 +197,8 @@ export const EarnQuiz: ScreenType = ({ route, navigation }: Props) => {
     return recordedAnswer.indexOf(i) === -1
       ? styles.quizButtonStyle
       : i === 0
-        ? styles.quizCorrectButtonStyle
-        : styles.quizWrongButtonStyle
+      ? styles.quizCorrectButtonStyle
+      : styles.quizWrongButtonStyle
   }
 
   let j = 0
@@ -229,7 +228,7 @@ export const EarnQuiz: ScreenType = ({ route, navigation }: Props) => {
           />
         </View>
         {recordedAnswer.length > 0 &&
-          recordedAnswer.indexOf(i) === recordedAnswer.length - 1 ? (
+        recordedAnswer.indexOf(i) === recordedAnswer.length - 1 ? (
           <Text style={i === 0 ? styles.correctAnswerText : styles.incorrectAnswerText}>
             {feedback[i]}
           </Text>
@@ -309,15 +308,15 @@ export const EarnQuiz: ScreenType = ({ route, navigation }: Props) => {
               />
             </>
           )) || (
-              <Button
-                title={LL.EarnScreen.earnSats[amount === 1 ? "one" : "other"]({
-                  formattedNumber: amount
-                })}
-                buttonStyle={styles.buttonStyle}
-                titleStyle={styles.titleStyle}
-                onPress={() => setQuizVisible(true)}
-              />
-            )}
+            <Button
+              title={LL.EarnScreen.earnSats({
+                formattedNumber: amount,
+              })}
+              buttonStyle={styles.buttonStyle}
+              titleStyle={styles.titleStyle}
+              onPress={() => setQuizVisible(true)}
+            />
+          )}
         </View>
       </SafeAreaView>
     </Screen>

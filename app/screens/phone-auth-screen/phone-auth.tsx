@@ -38,7 +38,6 @@ import { networkVar } from "../../graphql/client-only-query"
 import DownArrow from "@app/assets/icons/downarrow.svg"
 import { useI18nContext } from "@app/i18n/i18n-react"
 
-
 const phoneRegex = new RegExp("^\\+[0-9]+$")
 
 type UserLoginMutationResponse = {
@@ -215,6 +214,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
     phoneNumber,
     captchaRequestAuthCode,
     resetValidationData,
+    LL,
   ])
 
   useEffect(() => {
@@ -426,7 +426,7 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
         toastShow({ message: `${err}` })
       }
     },
-    [client, loading, login, phone, saveToken, setCode],
+    [client, loading, login, phone, saveToken, setCode, LL],
   )
 
   const updateCode = (code: string) => {

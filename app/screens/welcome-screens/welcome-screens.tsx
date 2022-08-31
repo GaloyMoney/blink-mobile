@@ -16,7 +16,6 @@ import MascotDollarBitcoin from "./honey-badger-money-bitcoin-01.svg"
 import HoneyBadgerShovel from "./honey-badger-shovel-01.svg"
 import { useI18nContext } from "@app/i18n/i18n-react"
 
-
 const styles = EStyleSheet.create({
   $color: palette.white,
   $fontWeight: "bold",

@@ -14,11 +14,17 @@ import {
   defaultConfiguration,
 } from "../../app/store/app-configuration-context"
 import { PriceContextProvider } from "../../app/store/price-context"
-import { LocalizationContextProvider } from "../../app/store/localization-context"
+import { i18nObject } from "../../app/i18n/i18n-util"
+import { loadLocale } from "../../app/i18n/i18n-util.sync"
 
 jest.mock("react-native/Libraries/EventEmitter/NativeEventEmitter")
 jest.mock("react-native-fingerprint-scanner", () => ({}))
-
+jest.mock("../../app/i18n/i18n-react", () => ({
+  useI18nContext: () => {
+    loadLocale("en")
+    return { LL: i18nObject("en") }
+  },
+}))
 const cache = new InMemoryCache()
 
 describe("WelcomePhoneInputScreen", () => {
@@ -28,15 +34,13 @@ describe("WelcomePhoneInputScreen", () => {
       <AppConfigurationContext.Provider
         value={{
           appConfig: defaultConfiguration,
-          setAppConfig: (config: AppConfiguration) => { },
+          setAppConfig: (config: AppConfiguration) => {},
         }}
       >
         <MockedProvider cache={cache}>
-          <LocalizationContextProvider>
-            <PriceContextProvider>
-              <WelcomePhoneInputScreen />
-            </PriceContextProvider>
-          </LocalizationContextProvider>
+          <PriceContextProvider>
+            <WelcomePhoneInputScreen />
+          </PriceContextProvider>
         </MockedProvider>
       </AppConfigurationContext.Provider>,
     )
@@ -47,37 +51,31 @@ describe("WelcomePhoneInputScreen", () => {
       <AppConfigurationContext.Provider
         value={{
           appConfig: defaultConfiguration,
-          setAppConfig: (config: AppConfiguration) => { },
+          setAppConfig: (config: AppConfiguration) => {},
         }}
       >
         <MockedProvider cache={cache}>
-          <LocalizationContextProvider>
-            <PriceContextProvider>
-              <WelcomePhoneInputScreen />
-            </PriceContextProvider>
-          </LocalizationContextProvider>
+          <PriceContextProvider>
+            <WelcomePhoneInputScreen />
+          </PriceContextProvider>
         </MockedProvider>
       </AppConfigurationContext.Provider>,
     )
     expect(queryByA11yLabel("Input phone number")).not.toBeNull()
-    expect(
-      queryByPlaceholderText("Phone Number"),
-    ).not.toBeNull()
+    expect(queryByPlaceholderText("Phone Number")).not.toBeNull()
   })
   it("country picker is visible on press", async () => {
     const { getByTestId } = render(
       <AppConfigurationContext.Provider
         value={{
           appConfig: defaultConfiguration,
-          setAppConfig: (config: AppConfiguration) => { },
+          setAppConfig: (config: AppConfiguration) => {},
         }}
       >
         <MockedProvider cache={cache}>
-          <LocalizationContextProvider>
-            <PriceContextProvider>
-              <WelcomePhoneInputScreen />
-            </PriceContextProvider>
-          </LocalizationContextProvider>
+          <PriceContextProvider>
+            <WelcomePhoneInputScreen />
+          </PriceContextProvider>
         </MockedProvider>
       </AppConfigurationContext.Provider>,
     )

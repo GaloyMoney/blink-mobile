@@ -21,7 +21,6 @@ import useMainQuery from "@app/hooks/use-main-query"
 import Clipboard from "@react-native-community/clipboard"
 import { useI18nContext } from "@app/i18n/i18n-react"
 
-
 const CAMERA: ViewStyle = {
   width: "100%",
   height: "100%",

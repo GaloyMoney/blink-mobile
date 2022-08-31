@@ -215,7 +215,7 @@ const ReceiveBtc = () => {
         setLoading(false)
       }
     },
-    [lnInvoiceCreate, lnNoAmountInvoiceCreate],
+    [lnInvoiceCreate, lnNoAmountInvoiceCreate, LL],
   )
 
   const updateBtcAddress = useCallback(
@@ -245,7 +245,7 @@ const ReceiveBtc = () => {
         setLoading(false)
       }
     },
-    [generateBtcAddress],
+    [generateBtcAddress, LL],
   )
 
   const toggleAmountCurrency = () => {
@@ -303,7 +303,7 @@ const ReceiveBtc = () => {
       message: LL.ReceiveBitcoinScreen.copyClipboard(),
       type: "success",
     })
-  }, [paymentFullUri])
+  }, [paymentFullUri, LL])
 
   const share = useCallback(async () => {
     try {
@@ -472,7 +472,9 @@ const ReceiveBtc = () => {
   const displayAmount = () => {
     if (!satAmount) {
       return (
-        <Text style={styles.primaryAmount}>{LL.ReceiveBitcoinScreen.flexibleAmountInvoice()}</Text>
+        <Text style={styles.primaryAmount}>
+          {LL.ReceiveBitcoinScreen.flexibleAmountInvoice()}
+        </Text>
       )
     }
     return (
@@ -563,7 +565,9 @@ const ReceiveBtc = () => {
                     <NoteIcon />
                   </View>
                   <View style={styles.fieldTextContainer}>
-                    <Text style={styles.fieldText}>{LL.ReceiveBitcoinScreen.setANote}</Text>
+                    <Text style={styles.fieldText}>
+                      {LL.ReceiveBitcoinScreen.setANote}
+                    </Text>
                   </View>
                   <View style={styles.fieldArrowContainer}>
                     <ChevronIcon />

@@ -120,9 +120,7 @@ export const Overlay: ComponentType = ({ screen }: Props) => {
                 />
               </Svg>
               <View style={styles.textContainer}>
-                <Text style={styles.modalText}>
-                  {LL.Overlay.rewards.download()}
-                </Text>
+                <Text style={styles.modalText}>{LL.Overlay.rewards.download()}</Text>
                 <Text style={styles.modalText}>{LL.Overlay.rewards.getMore()}</Text>
               </View>
             </View>

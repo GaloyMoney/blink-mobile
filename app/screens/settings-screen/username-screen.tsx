@@ -17,7 +17,6 @@ import { USERNAME_AVAILABLE } from "../../graphql/query"
 import useMainQuery from "@app/hooks/use-main-query"
 import { useI18nContext } from "@app/i18n/i18n-react"
 
-
 const styles = EStyleSheet.create({
   activity: { marginTop: 12 },
 
@@ -104,7 +103,7 @@ export const UsernameScreen: ScreenType = ({ navigation }: Props) => {
           })
         }
       }, 1000),
-    [checkUsername, input],
+    [checkUsername, input, LL],
   )
 
   React.useEffect(() => {

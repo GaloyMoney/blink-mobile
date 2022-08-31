@@ -134,11 +134,10 @@ export const PinScreen: ScreenType = ({ route, navigation }: Props) => {
   const [previousPIN, setPreviousPIN] = useState("")
   const [pinAttempts, setPinAttempts] = useState(0)
 
-
   const MAX_PIN_ATTEMPTS = 3
 
   useEffect(() => {
-    ; (async () => {
+    ;(async () => {
       setPinAttempts(await KeyStoreWrapper.getPinAttemptsOrZero())
     })()
   }, [])

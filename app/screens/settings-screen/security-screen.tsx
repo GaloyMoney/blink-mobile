@@ -22,7 +22,6 @@ import {
 import { useApolloClient, useQuery } from "@apollo/client"
 import { useI18nContext } from "@app/i18n/i18n-react"
 
-
 const styles = EStyleSheet.create({
   button: {
     backgroundColor: palette.white,
@@ -172,9 +171,7 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
       <View style={styles.settingContainer}>
         <View style={styles.textContainer}>
           <Text style={styles.title}>{LL.SecurityScreen.biometricTitle()}</Text>
-          <Text style={styles.subtitle}>
-            {LL.SecurityScreen.biometricSubtitle()}
-          </Text>
+          <Text style={styles.subtitle}>{LL.SecurityScreen.biometricSubtitle()}</Text>
           <Text style={styles.description}>
             {LL.SecurityScreen.biometricDescription()}
           </Text>
@@ -190,9 +187,7 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
         <View style={styles.textContainer}>
           <Text style={styles.title}>{LL.SecurityScreen.pinTitle()}</Text>
           <Text style={styles.subtitle}>{LL.SecurityScreen.pinSubtitle()}</Text>
-          <Text style={styles.description}>
-            {LL.SecurityScreen.pinDescription()}
-          </Text>
+          <Text style={styles.description}>{LL.SecurityScreen.pinDescription()}</Text>
         </View>
         <Switch
           style={styles.switch}
@@ -214,9 +209,7 @@ export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
       <View style={styles.settingContainer}>
         <View style={styles.textContainer}>
           <Text style={styles.title}>{LL.SecurityScreen.hideBalanceTitle()}</Text>
-          <Text style={styles.subtitle}>
-            {LL.SecurityScreen.hideBalanceSubtitle()}
-          </Text>
+          <Text style={styles.subtitle}>{LL.SecurityScreen.hideBalanceSubtitle()}</Text>
           <Text style={styles.description}>
             {LL.SecurityScreen.hideBalanceDescription()}
           </Text>

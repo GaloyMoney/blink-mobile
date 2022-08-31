@@ -10,7 +10,6 @@ import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import type { ScreenType } from "../../types/jsx"
 
-
 import BitcoinBeachLogo from "./bitcoin-beach-logo.png"
 
 const styles = EStyleSheet.create({

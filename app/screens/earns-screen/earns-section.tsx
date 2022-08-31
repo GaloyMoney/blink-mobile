@@ -20,11 +20,15 @@ import type { ScreenType } from "../../types/jsx"
 import useToken from "../../hooks/use-token"
 import { toastShow } from "../../utils/toast"
 import { SVGs } from "./earn-svg-factory"
-import { getCardsFromSection, remainingSatsOnSection } from "./earns-utils"
+import {
+  getCardsFromSection,
+  getQuizQuestionsContent,
+  remainingSatsOnSection,
+} from "./earns-utils"
 import { getQuizQuestions } from "../../graphql/query"
 import useMainQuery from "@app/hooks/use-main-query"
 import { useI18nContext } from "@app/i18n/i18n-react"
-
+import { earnSections } from "./sections"
 
 const { width: screenWidth } = Dimensions.get("window")
 
@@ -129,19 +133,26 @@ export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
 
   const quizQuestions = getQuizQuestions(client, { hasToken })
 
+  const quizQuestionsContent = getQuizQuestionsContent({ LL })
+
   const sectionIndex = route.params.section
-  const cards = getCardsFromSection({ quizQuestions, sectionIndex })
+  const cards = getCardsFromSection({ quizQuestions, sectionIndex, quizQuestionsContent })
 
   const itemIndex = cards.findIndex((item) => !item.fullfilled)
   const [firstItem] = useState(itemIndex >= 0 ? itemIndex : 0)
   const [currRewardIndex, setCurrRewardIndex] = useState(firstItem)
 
-  const remainingSats = remainingSatsOnSection({ quizQuestions, sectionIndex })
+  const remainingSats = remainingSatsOnSection({
+    quizQuestions,
+    sectionIndex,
+    quizQuestionsContent,
+  })
 
   const [initialRemainingSats] = useState(remainingSats)
   const currentRemainingEarn = remainingSats
 
-  const sectionTitle = LL.EarnScreen.earns[sectionIndex].meta.title()
+  const sectionTitle =
+    LL.EarnScreen.earnSections[Object.keys(earnSections)[sectionIndex]].meta.title()
 
   const isFocused = useIsFocused()
 
@@ -238,9 +249,10 @@ export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
                 item.fullfilled ? styles.titleStyleFullfilled : styles.titleStyle
               }
               title={
-                item.fullfilled ? LL.EarnScreen.satsEarned({ formattedNumber: item.value }) : LL.EarnScreen.earnSats(
-                  { formattedNumber: item.value }
-                )}
+                item.fullfilled
+                  ? LL.EarnScreen.satsEarned({ formattedNumber: item.value })
+                  : LL.EarnScreen.earnSats({ formattedNumber: item.value })
+              }
               icon={
                 item.fullfilled ? (
                   <Icon
@@ -256,9 +268,7 @@ export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
         </View>
         {!item.enabled && (
           <>
-            <Text style={styles.unlockQuestion}>
-              {LL.EarnScreen.unlockQuestion()}
-            </Text>
+            <Text style={styles.unlockQuestion}>{LL.EarnScreen.unlockQuestion()}</Text>
             <Text style={styles.unlock}>{item.nonEnabledMessage}</Text>
           </>
         )}

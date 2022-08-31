@@ -21,7 +21,6 @@ import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { useI18nContext } from "@app/i18n/i18n-react"
 
-
 export const ConversionDetailsScreen = ({
   route,
   navigation,
@@ -272,9 +271,7 @@ export const ConversionDetailsScreen = ({
       <View style={styles.fieldContainer}>
         <View style={styles.amountFieldContainer}>
           <View style={styles.fieldLabelContainer}>
-            <Text style={styles.amountFieldLabel}>
-              {LL.SendBitcoinScreen.amount()}
-            </Text>
+            <Text style={styles.amountFieldLabel}>{LL.SendBitcoinScreen.amount()}</Text>
           </View>
           <View style={styles.currencyInputContainer}>
             {fromWallet.currency === WalletCurrency.BTC &&

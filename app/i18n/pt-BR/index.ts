@@ -28,11 +28,12 @@ const ptBR: Translation = {
     title: "Transações com {username}",
   },
   EarnScreen: {
-    earnSats: "Ganhe {formattedNumber}",
-    earns: [
-      {
-        content: [
-          {
+    earnSats: "Ganhe {formattedNumber|sats}",
+    earnSections: {
+      bitcoinWhatIsIt: {
+        title: "Bitcoin: O que é isso?",
+        questions: {
+          whatIsBitcoin: {
             answers: [
               "Dinheiro digital",
               "Um videogame",
@@ -43,13 +44,12 @@ const ptBR: Translation = {
               "Incorreto, tente novamente.",
               "Não. Pelo menos não um que conhecemos!",
             ],
-            id: "whatIsBitcoin",
             question: "Então, o que exatamente é Bitcoin?",
             text: "Bitcoin é dinheiro digital. \n\nEle pode ser transferido instantaneamente e com segurança entre duas pessoas no mundo, sem a necessidade de um banco ou qualquer outra empresa financeira no meio.",
             title: "Então, o que exatamente é Bitcoin?",
             type: "Text",
           },
-          {
+          sat: {
             answers: [
               "A menor unidade de Bitcoin",
               "Um pequeno satélite",
@@ -60,26 +60,24 @@ const ptBR: Translation = {
               "Talvez… mas essa não é a resposta correta neste contexto 🙂",
               "Ummm... não exatamente!",
             ],
-            id: "sat",
             question: 'Acabei de ganhar um “Sat". O que é isso?',
             text: "Um “Sat” é a menor unidade de um bitcoin. \n\nTodos sabemos que um dólar americano pode ser dividido em 100 centavos. Da mesma forma, um Bitcoin pode ser dividido em 100.000.000 sats. \n\nNa verdade , você não precisa possuir um bitcoin inteiro para usá-lo. Você pode usar bitcoin se tiver 20 sats, 3.000 sats — ou 100.000.000 sats (que agora você sabe que é igual a um bitcoin).",
             title: 'Acabei de ganhar um “Sat". O que é isso?',
             type: "Text",
           },
-          {
+          whereBitcoinExist: {
             answers: ["Na Internet", "Na lua", "Em uma conta bancária"],
             feedback: [
               "Correto. Você acabou de ganhar mais 5 sats.",
               "Incorreto. Bem... pelo menos ainda não ;)",
               "Errado. Por favor, tente novamente.",
             ],
-            id: "whereBitcoinExist",
             question: "Onde existem os bitcoins?",
             text: "Bitcoin é uma nova forma de dinheiro. Ele pode ser usado por qualquer pessoa, a qualquer hora -- em qualquer lugar do mundo. \n\nEle não está vinculado a um governo ou região específica (como dólares americanos). Há também sem notas de papel, moedas de metal ou cartões de plástico. \n\nTudo é 100% digital. Bitcoin é uma rede de computadores rodando na internet. \n\nSeu bitcoin é facilmente gerenciado com software em seu smartphone ou computador!",
             title: "Onde os bitcoins existem?",
             type: "Text",
           },
-          {
+          whoControlsBitcoin: {
             answers: [
               "Uma comunidade voluntária de usuários em todo o mundo",
               "Senhor Burns de Os Simpsons",
@@ -90,13 +88,12 @@ const ptBR: Translation = {
               "Um pensamento divertido - mas não correto!",
               "Errado. Não há empresa nem governo que controle o Bitcoin.",
             ],
-            id: "whoControlsBitcoin",
             question: "Quem controla o Bitcoin?",
             text: "Bitcoin não é controlado por qualquer pessoa, empresa ou governo. \n\nEle é administrado pela comunidade de usuários -- pessoas e empresas em todo o mundo -- executando voluntariamente software bitcoin em seus computadores e smartphones.",
             title: "Quem controla o Bitcoin?",
             type: "Text",
           },
-          {
+          copyBitcoin: {
             answers: [
               "Não - é impossível copiar ou duplicar o valor do bitcoin",
               "Sim, você pode copiar bitcoins tão facilmente quanto copiar uma foto digital",
@@ -107,7 +104,6 @@ const ptBR: Translation = {
               "Você sabe que não é verdade. Tente novamente.",
               "Incorreto. Não há como alguém copiar ou criar uma duplicata do bitcoin.",
             ],
-            id: "copyBitcoin",
             question:
               "Se o Bitcoin é dinheiro digital, alguém não pode simplesmente copiá-lo - e criar dinheiro grátis?",
             text: "O valor de um bitcoin nunca pode ser copiado. Esta é a razão pela qual o Bitcoin é uma nova invenção tão poderosa!!\n\nA maioria dos arquivos digitais — como uma foto do iPhone, uma música MP3 ou um arquivo da Microsoft Documento do Word — pode ser facilmente duplicado e compartilhado. \n\nO software Bitcoin impede de forma exclusiva a duplicação — ou “gasto duplo” — de dinheiro digital. Compartilharemos exatamente como isso funciona mais tarde!",
@@ -115,15 +111,12 @@ const ptBR: Translation = {
               "Se o Bitcoin é dinheiro digital, alguém não pode simplesmente copiá-lo - e criar dinheiro grátis?",
             type: "Text",
           },
-        ],
-        meta: {
-          id: "bitcoinWhatIsIt",
-          title: "Bitcoin: O que é isso?",
         },
       },
-      {
-        content: [
-          {
+      WhatIsMoney: {
+        title: "O que é dinheiro? ",
+        questions: {
+          moneySocialAggrement: {
             answers: [
               "Porque as pessoas confiam que outras pessoas irão valorizar o dinheiro da mesma forma",
               "Porque sua mãe te disse isso",
@@ -134,13 +127,12 @@ const ptBR: Translation = {
               "Ela pode muito bem ter. Mas essa não é a resposta correta aqui!",
               "Não. No passado, você podia trocar dólares americanos por ouro. Mas isso não é mais o caso.",
             ],
-            id: "moneySocialAggrement",
             question: "Por que o dinheiro tem valor?",
             text: "Dinheiro exige que as pessoas confiem. \n\nAs pessoas confiam nas notas de dólar em seu bolso. Elas confiam nos dígitos de sua conta bancária on-line. Elas confiam que o saldo de um vale-presente da loja será resgatável. \n\nTer dinheiro permite às pessoas trocá-lo imediatamente por um bem ou serviço.",
             title: "Dinheiro é um acordo social.",
             type: "Text",
           },
-          {
+          coincidenceOfWants: {
             answers: [
               "Coincidência de desejos",
               "Coincidência do dia e da noite",
@@ -151,13 +143,13 @@ const ptBR: Translation = {
               "Não bobo, você sabe que não é a resposta.",
               "Não exatamente. Chamamos isso de eclipse solar 🌚",
             ],
-            id: "coincidenceOfWants",
             question: "Qual coincidência o dinheiro resolve?",
             text: "Séculos atrás, antes que as pessoas tivessem dinheiro, elas trocavam -- ou regateavam sobre como trocar um item único por outro item ou serviço. \n\nDigamos que você queira fazer uma refeição no local restaurante e ofereceu uma vassoura ao proprietário. O proprietário pode dizer “não”, mas eu aceitarei três chapéus em vez disso, se você os tiver. \n\nVocê pode imaginar como seria difícil e ineficiente uma “economia de troca” ! \n\nPor outro lado, com dinheiro, você pode simplesmente apresentar uma nota de US$ 20. E você sabe que o dono do restaurante a aceitará prontamente.",
-            title: "Dinheiro resolve a “coincidência de desejos”... O que é isso??",
+            title:
+              "Dinheiro resolve a “coincidência de desejos”... O que é isso??",
             type: "Text",
           },
-          {
+          moneyEvolution: {
             answers: [
               "Pedras, conchas e ouro",
               "Casas de jogo de tabuleiro Monopoly de plástico",
@@ -168,14 +160,13 @@ const ptBR: Translation = {
               "Errado. Eles podem ter valor ao jogar um jogo - mas não na palavra real!",
               "Não. Eles podem ser saborosos. Mas não são úteis como dinheiro.",
             ],
-            id: "moneyEvolution",
             question:
               "Quais são alguns itens que foram historicamente usados como unidade monetária?",
             text: "Milhares de anos atrás, a sociedade na Micronésia usava pedras muito grandes e escassas como uma forma de moeda acordada. \n\nA partir de 1500, raras conchas de cauris (encontradas no oceano) tornaram-se comumente usadas em muitas nações como uma forma de dinheiro.\n\nE por milênios, o ouro tem sido usado como uma forma de dinheiro para países ao redor do mundo, incluindo os Estados Unidos (até 1971).",
             title: "O dinheiro evoluiu, desde quase o início dos tempos.",
             type: "Text",
           },
-          {
+          whyStonesShellGold: {
             answers: [
               "Porque eles têm características-chave - como serem duráveis, uniformes e divisíveis.",
               "Porque eles são bonitos e brilhantes.",
@@ -186,7 +177,6 @@ const ptBR: Translation = {
               "Incorreto. Isso pode ser verdade, mas por si só não são grandes características do dinheiro.",
               "Não exatamente. Embora esses itens fossem certamente portáteis, isso por si só não era a razão para ser usado como dinheiro.",
             ],
-            id: "whyStonesShellGold",
             question:
               "Por que pedras, conchas e ouro foram usados como unidades de dinheiro?",
             text: "Bem, todos esses itens tinham algumas, mas não todas, as características de um bom dinheiro. \n\nEntão, quais características fazem um “bom” dinheiro? \nPouco: não é abundante, nem fácil de reproduzir ou cópia \nAceito: relativamente fácil para as pessoas verificarem sua autenticidade \nDurável: fácil de manter, e não perece ou desmorona\nUniforme: facilmente intercambiável com outro item da mesma forma\nPortátil: fácil de transportar\nDivisível: pode ser dividido e dividido em pedaços menores",
@@ -194,7 +184,7 @@ const ptBR: Translation = {
               "Por que pedras, conchas e ouro eram comumente usados como dinheiro no passado?",
             type: "Text",
           },
-          {
+          moneyIsImportant: {
             answers: [
               "O dinheiro permite que as pessoas comprem bens e serviços hoje - e amanhã.",
               "O dinheiro permite que você vá para a lua.",
@@ -205,13 +195,13 @@ const ptBR: Translation = {
               "Incorreto. Embora isso possa mudar no futuro ;)",
               "Não exatamente. Embora algumas pessoas possam acreditar nisso, esta resposta não aborda o objetivo principal do dinheiro.",
             ],
-            id: "moneyIsImportant",
-            question: "Qual é a principal razão pela qual o dinheiro é importante?",
+            question:
+              "Qual é a principal razão pela qual o dinheiro é importante?",
             text: "Todo mundo sabe que o dinheiro é importante.\n\nA maioria das pessoas troca seu tempo e energia -- na forma de trabalho -- para obter dinheiro. As pessoas fazem isso para poder comprar bens e serviços hoje -- e no futuro.",
             title: "O dinheiro é importante para os indivíduos",
             type: "Text",
           },
-          {
+          moneyImportantGovernement: {
             answers: [
               "O Banco Central dos EUA (Federal Reserve)",
               "Senhor Burns de Os Simpsons",
@@ -222,22 +212,18 @@ const ptBR: Translation = {
               "Incorreto. Embora pareça que ele sempre teve muito dinheiro.",
               "Não. Embora algumas pessoas criem notas de dólar falsas, isso definitivamente não é legal!",
             ],
-            id: "moneyImportantGovernement",
             question:
               "Quem pode imprimir legalmente dólares americanos, sempre que desejar?",
             text: "As economias modernas são organizadas por estados-nação: EUA, Japão, Suíça, Brasil, Noruega, China etc. \n\nAssim, na maioria das nações, o governo detém o poder de emitir e controlar dinheiro . \n\nNos Estados Unidos, o Banco Central (conhecido como Federal Reserve, ou “Fed”) pode imprimir ou criar mais dólares americanos a qualquer momento. \n\nO “Fed” não precisa de permissão do Presidente, nem do Congresso, e certamente não de cidadãos dos EUA. \n\nImagine se você pudesse imprimir dólares americanos sempre que quisesse -- o que você faria??",
             title: "O dinheiro também é importante para os governos",
             type: "Text",
           },
-        ],
-        meta: {
-          id: "WhatIsMoney",
-          title: "O que é dinheiro? ",
         },
       },
-      {
-        content: [
-          {
+      HowDoesMoneyWork: {
+        title: "Como funciona o dinheiro? ",
+        questions: {
+          WhatIsFiat: {
             answers: [
               "É criado por ordem do governo nacional em um determinado país.",
               "Pelo gerente da agência bancária local.",
@@ -248,14 +234,13 @@ const ptBR: Translation = {
               "Incorreto. Um banco local só pode administrar dinheiro que foi criado anteriormente pelo governo.",
               "Não. Tente novamente!",
             ],
-            id: "WhatIsFiat",
             question:
               "Quem cria moeda fiduciária, como dólares americanos ou francos suíços?",
             text: "Todas as moedas nacionais em circulação hoje são chamadas de moeda fiduciária. Isso inclui dólares americanos, ienes japoneses, francos suíços e assim por diante. \n\nA palavra fiduciária é latina para por “decreto” -- que significa “por ordem oficial”. \n\nIsso significa que todo dinheiro fiduciário, incluindo o dólar americano, é simplesmente criado por ordem do governo nacional.",
             title: "Moeda fiduciária: o que é isso?",
             type: "Text",
           },
-          {
+          whyCareAboutFiatMoney: {
             answers: [
               "Toda moeda fiduciária acaba sendo abusada pelas autoridades governamentais.",
               "Os bancos locais podem não ter espaço suficiente no cofre para guardar todas as notas de dólar.",
@@ -266,7 +251,6 @@ const ptBR: Translation = {
               "Não, isso certamente não é o caso.",
               "Errado. Por favor, tente novamente.",
             ],
-            id: "whyCareAboutFiatMoney",
             question:
               "Por que eu deveria me preocupar com o governo controlando a moeda fiduciária?",
             text: "Conforme compartilhado em um teste anterior, o Banco Central dos EUA é o Federal Reserve, ou o “Fed”.\n\nO Fed pode imprimir mais dólares a qualquer momento -- e não precisa de permissão do presidente, nem do Congresso, e certamente não de cidadãos dos EUA. \n\nTer o controle do dinheiro pode ser muito tentador para as autoridades abusarem - e muitas vezes o tempo leva a uma inflação maciça, confisco arbitrário e corrupção. \n\nNa verdade, Alan Greenspan, o famoso ex-presidente do Fed, disse que os EUA “podem pagar qualquer dívida que tenham, porque sempre podemos imprimir mais para fazer isso”.",
@@ -274,7 +258,7 @@ const ptBR: Translation = {
               "Confio no meu governo. \nPor que devo me preocupar com dinheiro fiduciário?",
             type: "Text",
           },
-          {
+          GovernementCanPrintMoney: {
             answers: [
               "A impressão de dinheiro adicional leva à inflação.",
               "As pessoas devem trocar notas de dólar antigas no banco todos os anos.",
@@ -285,14 +269,13 @@ const ptBR: Translation = {
               "Não. Notas de dólar mais antigas são tão válidas quanto as mais novas.",
               "Incorreto. Embora o governo possa emitir novos olhares para as contas, isso não tem nada a ver com o aumento da oferta de dinheiro.",
             ],
-            id: "GovernementCanPrintMoney",
             question: "O que significa quando o governo imprime dinheiro?",
             text: "Bem, todos deveriam se importar! \n\nA prática do governo imprimir dinheiro -- ou aumentar a oferta de dólares -- leva à inflação.\n\nA inflação é um aumento no preço de bens e serviços. Em em outras palavras, o preço de algo no futuro será mais caro do que hoje.\n\nEntão, o que a inflação significa para os cidadãos?\n\nNo Reino Unido, a libra esterlina perdeu 99,5% de seu valor desde que foi introduzida em 300 anos atrás. \n\nNos Estados Unidos, o dólar perdeu 97% de seu valor desde o fim da Primeira Guerra Mundial, cerca de 100 anos atrás. \n\nIsso significa que um bife que custava US$ 0,30 em 1920... custava US$ 3 em 1990… e cerca de US$ 15 hoje, no ano de 2020!",
             title:
               "Quem deve se importar que o governo possa imprimir dinheiro ilimitado?",
             type: "Text",
           },
-          {
+          FiatLosesValueOverTime: {
             answers: [
               "Toda moeda fiduciária que já existiu perdeu uma enorme quantidade de valor.",
               "O valor permanece o mesmo para sempre.",
@@ -303,7 +286,6 @@ const ptBR: Translation = {
               "Incorreto. Tente novamente.",
               "Não exatamente. Embora o design das notas de papel possa mudar, isso não tem nada a ver com seu valor.",
             ],
-            id: "FiatLosesValueOverTime",
             question:
               "O que acontece com o valor de todas as moedas fiduciárias ao longo do tempo?",
             text: "Correto. \n\nNa história do mundo, foram criadas 775 moedas fiduciárias. A maioria não existe mais, e a vida média de qualquer moeda fiduciária é de apenas 27 anos.\n\nOs britânicos A libra é a moeda fiduciária mais antiga. Ela perdeu mais de 99% de seu valor desde 1694. \n\nNão há precedentes para qualquer moeda fiduciária manter seu valor ao longo do tempo. Isso é inflação. \nÉ efetivamente uma forma de roubo de dinheiro seu próprio dinheiro suado!",
@@ -311,7 +293,7 @@ const ptBR: Translation = {
               "Isso significa que todo dinheiro fiduciário perde valor ao longo do tempo?",
             type: "Text",
           },
-          {
+          OtherIssues: {
             answers: [
               "Dinheiro é difícil de movimentar pelo mundo, e também pode ser vigiado.",
               "O dinheiro não é mais necessário no século 21.",
@@ -322,7 +304,6 @@ const ptBR: Translation = {
               "Resposta errada. Você sabe que isso não é verdade.",
               "Enquanto alguns podem acreditar que é assim, não é a resposta que estamos procurando aqui.",
             ],
-            id: "OtherIssues",
             question:
               "Quais são alguns outros problemas que existem com dinheiro fiduciário?",
             text: "Sim, existem muitos outros problemas que existem com a moeda fiduciária moderna. \n\nPrimeiro, pode ser extremamente difícil movimentar dinheiro ao redor do mundo. Muitas vezes, os governos restringem completamente o movimento -- e às vezes até confiscam dinheiro -- sem um motivo ou explicação válida. E mesmo quando você pode enviar dinheiro, as altas taxas de transação o tornam muito caro.\n\nSegundo, mesmo nos EUA, houve uma perda total de privacidade, já que a maioria do comércio ocorre com cartões de débito e crédito, bem como on-line com outros sistemas, como PayPal e Apple Pay.\n\nVocê já reparou como um anúncio aparece em suas redes sociais ou no Gmail momentos depois de pesquisar um determinado produto ou serviço? Isso é conhecido como “capitalismo de vigilância”, e é baseado em empresas que vendem seus dados financeiros pessoais.",
@@ -330,15 +311,12 @@ const ptBR: Translation = {
               "OK, dinheiro fiduciário perde valor com o tempo. Existem outros problemas?",
             type: "Text",
           },
-        ],
-        meta: {
-          id: "HowDoesMoneyWork",
-          title: "Como funciona o dinheiro? ",
         },
       },
-      {
-        content: [
-          {
+      BitcoinWhySpecial: {
+        title: "Bitcoin: Por que é especial? ",
+        questions: {
+          LimitedSupply: {
             answers: [
               "Sim. Nunca pode haver mais de 21 milhões de bitcoins criados.",
               "Não. O governo pode criar mais bitcoins a qualquer momento.",
@@ -349,13 +327,12 @@ const ptBR: Translation = {
               "Resposta errada. O governo não tem controle sobre o Bitcoin.",
               "Incorreto. Um dos principais atributos do bitcoin é que a oferta é limitada para sempre.",
             ],
-            id: "LimitedSupply",
             question: "O fornecimento de bitcoin é limitado para sempre?",
             text: "Os governos podem imprimir moeda fiduciária em quantidades ilimitadas. \n\nPor outro lado, a oferta de Bitcoin é fixa — e nunca pode exceder 21 milhões de moedas. \n\nUma oferta cada vez maior de moeda fiduciária cria inflação. Isso significa que o dinheiro que você tem hoje é menos valioso no futuro. \n\nUm exemplo simples: \nUm pão que custava cerca de 8 centavos em 1920. No ano de 1990, um pão custava cerca de US$ 1,00, e hoje o preço é mais perto de US$ 2,50 ! \n\nA oferta limitada de bitcoin tem o efeito oposto, de deflação. \n\nIsso significa que o bitcoin que você possui hoje foi projetado para ser mais valioso no futuro — porque é escasso.",
             title: "Característica Especial #1:\nFornecimento Limitado",
             type: "Text",
           },
-          {
+          Decentralized: {
             answers: [
               "Não. O Bitcoin é completamente “decentralizado”.",
               "Sim. É controlado centralmente pelas Nações Unidas.",
@@ -366,13 +343,12 @@ const ptBR: Translation = {
               "Resposta errada. Por favor, tente novamente.",
               "Incorreto. Você já sabe que isso não é verdade!",
             ],
-            id: "Decentralized",
             question: "O bitcoin é centralizado?",
             text: "A moeda fiduciária é controlada por bancos e governos - e é por isso que as pessoas se referem a ela como uma moeda “centralizada”.\n\nBitcoin não é controlado por nenhuma pessoa, governo ou empresa - o que a torna “descentralizada” \n\nNão ter bancos envolvidos significa que ninguém pode negar o acesso ao bitcoin — por causa de raça, sexo, renda, histórico de crédito, localização geográfica — ou qualquer outro fator. \n\nQualquer pessoa — em qualquer lugar do mundo — pode acessar e usar o Bitcoin a hora que você quiser. Tudo que você precisa é de um computador ou smartphone e uma conexão com a internet!",
             title: "Característica Especial #2: Descentralizado",
             type: "Text",
           },
-          {
+          NoCounterfeitMoney: {
             answers: [
               "Não. É impossível falsificar Bitcoin.",
               "Sim. Embora a criação de bitcoin falso exija computadores muito especializados.",
@@ -383,13 +359,12 @@ const ptBR: Translation = {
               "Incorreto. Não há como alguém copiar ou duplicar o valor de um bitcoin.",
               "Errado. Embora o governo possa imprimir dólares ilimitados, ele não pode imprimir bitcoins.",
             ],
-            id: "NoCounterfeitMoney",
             question: "As pessoas podem falsificar Bitcoin?",
             text: "Papel-moeda, cheques e transações com cartão de crédito podem ser falsificados ou falsificados. \n\nO software exclusivo que executa a rede Bitcoin elimina a possibilidade de duplicar dinheiro para fins de falsificação. \n\nNovos bitcoins só podem ser emitido se houver acordo entre os participantes da rede. Pessoas que executam voluntariamente software bitcoin em seus próprios computadores e smartphones.\n\nIsso garante que é impossível falsificar ou criar bitcoins falsos.",
             title: "Característica especial nº 3: \nSem dinheiro falso",
             type: "Text",
           },
-          {
+          HighlyDivisible: {
             answers: [
               "0.00000001 BTC",
               "Um bitcoin inteiro. Não é possível usar nada menos.",
@@ -400,14 +375,13 @@ const ptBR: Translation = {
               "Errado. Bitcoin é altamente divisível. Você pode facilmente usar uma fração muito pequena de um bitcoin.",
               "Incorreto. Embora a menor unidade da moeda americana seja um centavo, um bitcoin é divisível por muito mais do que 100x.",
             ],
-            id: "HighlyDivisible",
             question:
               "Qual é a menor quantidade de Bitcoin que alguém pode possuir ou usar?",
             text: 'O dinheiro fiduciário antiquado só pode ser gasto em quantias tão pequenas quanto um centavo - ou duas casas decimais para um dólar americano (US$ 0,01).\n\nPor outro lado, o Bitcoin pode ser dividido 100.000.000 vezes. Isso significa que você pode gastar apenas ₿0,00000001. Você notará o símbolo "₿", que é o equivalente Bitcion de "$". Às vezes, você também verá o uso de BTC, em vez de ₿.\n\nPor outro lado, o Bitcoin pode lidar com pagamentos muito pequenos - mesmo aqueles com menos de um centavo dos EUA!',
             title: "Característica especial nº 4: \nAltamente divisível",
             type: "Text",
           },
-          {
+          securePartOne: {
             answers: [
               "Sim. A rede bitcoin é muito segura.",
               "Talvez. Depende do dia da semana.",
@@ -418,13 +392,12 @@ const ptBR: Translation = {
               "Boa tentativa, mas errada. A rede bitcoin é segura e protegida - 24 horas por dia, 365 dias por ano.",
               "Correto. Embora o bitcoin seja de fato um software de “código aberto” - ou disponível ao público gratuitamente - ainda é extremamente seguro.",
             ],
-            id: "securePartOne",
             question: "A rede Bitcoin é segura?",
             text: "A rede bitcoin vale bem mais de US$ 100 bilhões hoje. Portanto, a rede deve ser muito segura — para que o dinheiro nunca seja roubado. \n\nBitcoin é conhecido como a primeira criptomoeda do mundo. \n\nA “criptografia” ” parte do nome vem da criptografia. Simplificando, a criptografia protege as informações por meio de funções matemáticas muito complexas. \n\nA maioria das pessoas não percebe, mas o Bitcoin é, na verdade, a rede de computadores mais segura do mundo! \n\n(você pode já ouviu falar sobre “hacks” de bitcoin – que vamos desmascarar no próximo quiz)",
             title: "Característica especial nº 5: \nSegurança -- Parte I",
             type: "Text",
           },
-          {
+          securePartTwo: {
             answers: [
               "Não. O Bitcoin nunca foi hackeado.",
               "Sim. O Bitcoin é hackeado com frequência.",
@@ -435,27 +408,23 @@ const ptBR: Translation = {
               "Errado. Tente novamente.",
               "Não bobo, você sabe que não é a resposta correta.",
             ],
-            id: "securePartTwo",
             question: "O Bitcoin já foi hackeado?",
             text: "Para ser direto: a própria rede bitcoin nunca foi hackeada. Nunca.\n\nEntão o que exatamente foi hackeado? \n\nCertas carteiras digitais que não tinham segurança adequada. \n\nApenas assim como uma carteira física contém moeda fiduciária (na forma de notas de papel), as carteiras digitais contêm uma certa quantidade de bitcoin. \n\nNo mundo físico, os criminosos roubam bancos e saem com dólares americanos. O fato de alguém ter roubado um banco não tem qualquer relação se o dólar americano é um dinheiro estável ou confiável. \n\nDa mesma forma, alguns hackers de computador roubaram bitcoins de carteiras digitais inseguras, o equivalente on-line de um assalto a banco. \n\nNo entanto, é importante saiba que a rede bitcoin nunca foi hackeada ou comprometida!",
             title: "Característica especial nº 5: \nSegurança -- Parte II",
             type: "Text",
           },
-        ],
-        meta: {
-          id: "BitcoinWhySpecial",
-          title: "Bitcoin: Por que é especial? ",
         },
       },
-    ],
-    finishText: "Por enquanto é só, avisaremos quando houver mais para descobrir",
+    },
+    finishText:
+      "Por enquanto é só, avisaremos quando houver mais para descobrir",
     getRewardNow: "Responder quiz",
     keepDigging: "Continue cavando!",
     phoneNumberNeeded: "Número de telefone obrigatório",
     quizComplete: "Quiz concluído e {amount} sats ganhos",
     reviewQuiz: "Revisar quiz",
     satAccumulated: "Sats acumulados",
-    satsEarned: "{formattedNumber} ganhos",
+    satsEarned: "{formattedNumber|sats} ganhos",
     sectionsCompleted: "Você concluiu",
     title: "Ganhar",
     unlockQuestion: "Para desbloquear, responda a pergunta:",

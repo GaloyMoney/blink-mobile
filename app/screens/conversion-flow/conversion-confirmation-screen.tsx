@@ -11,7 +11,6 @@ import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { CommonActions } from "@react-navigation/native"
 import { useI18nContext } from "@app/i18n/i18n-react"
 
-
 export const ConversionConfirmationScreen = ({
   navigation,
   route,

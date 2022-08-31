@@ -117,10 +117,14 @@ type RootTranslation = {
 		 * @param {unknown} formattedNumber
 		 */
 		earnSats: RequiredParams<'formattedNumber|sats'>
-		earns: {
-			'0': {
-				content: {
-					'0': {
+		earnSections: {
+			bitcoinWhatIsIt: {
+				/**
+				 * Bitcoin: What is it?
+				 */
+				title: string
+				questions: {
+					whatIsBitcoin: {
 						answers: {
 							/**
 							 * Digital money
@@ -150,10 +154,6 @@ type RootTranslation = {
 							'2': string
 						}
 						/**
-						 * whatIsBitcoin
-						 */
-						id: string
-						/**
 						 * So what exactly is Bitcoin?
 						 */
 						question: string
@@ -172,7 +172,7 @@ type RootTranslation = {
 						 */
 						type: string
 					}
-					'1': {
+					sat: {
 						answers: {
 							/**
 							 * The smallest unit of Bitcoin
@@ -202,10 +202,6 @@ type RootTranslation = {
 							'2': string
 						}
 						/**
-						 * sat
-						 */
-						id: string
-						/**
 						 * I just earned a “Sat". What is that?
 						 */
 						question: string
@@ -226,7 +222,7 @@ type RootTranslation = {
 						 */
 						type: string
 					}
-					'2': {
+					whereBitcoinExist: {
 						answers: {
 							/**
 							 * On the Internet
@@ -256,10 +252,6 @@ type RootTranslation = {
 							'2': string
 						}
 						/**
-						 * whereBitcoinExist
-						 */
-						id: string
-						/**
 						 * Where do the bitcoins exist?
 						 */
 						question: string
@@ -282,7 +274,7 @@ type RootTranslation = {
 						 */
 						type: string
 					}
-					'3': {
+					whoControlsBitcoin: {
 						answers: {
 							/**
 							 * A voluntary community of users around the world
@@ -312,10 +304,6 @@ type RootTranslation = {
 							'2': string
 						}
 						/**
-						 * whoControlsBitcoin
-						 */
-						id: string
-						/**
 						 * Who controls Bitcoin?
 						 */
 						question: string
@@ -334,7 +322,7 @@ type RootTranslation = {
 						 */
 						type: string
 					}
-					'4': {
+					copyBitcoin: {
 						answers: {
 							/**
 							 * No — it is impossible to copy or duplicate the value of bitcoin
@@ -364,10 +352,6 @@ type RootTranslation = {
 							'2': string
 						}
 						/**
-						 * copyBitcoin
-						 */
-						id: string
-						/**
 						 * If Bitcoin is digital money, can’t someone just copy it — and create free money?
 						 */
 						question: string
@@ -389,20 +373,14 @@ type RootTranslation = {
 						type: string
 					}
 				}
-				meta: {
-					/**
-					 * bitcoinWhatIsIt
-					 */
-					id: string
-					/**
-					 * Bitcoin: What is it?
-					 */
-					title: string
-				}
 			}
-			'1': {
-				content: {
-					'0': {
+			WhatIsMoney: {
+				/**
+				 * What is Money? 
+				 */
+				title: string
+				questions: {
+					moneySocialAggrement: {
 						answers: {
 							/**
 							 * Because people trust that other people will value money similarly
@@ -432,10 +410,6 @@ type RootTranslation = {
 							'2': string
 						}
 						/**
-						 * moneySocialAggrement
-						 */
-						id: string
-						/**
 						 * Why does money have value?
 						 */
 						question: string
@@ -456,7 +430,7 @@ type RootTranslation = {
 						 */
 						type: string
 					}
-					'1': {
+					coincidenceOfWants: {
 						answers: {
 							/**
 							 * Coincidence of wants
@@ -486,10 +460,6 @@ type RootTranslation = {
 							'2': string
 						}
 						/**
-						 * coincidenceOfWants
-						 */
-						id: string
-						/**
 						 * Which coincidence does money solve?
 						 */
 						question: string
@@ -512,7 +482,7 @@ type RootTranslation = {
 						 */
 						type: string
 					}
-					'2': {
+					moneyEvolution: {
 						answers: {
 							/**
 							 * Stones, seashells and gold
@@ -542,10 +512,6 @@ type RootTranslation = {
 							'2': string
 						}
 						/**
-						 * moneyEvolution
-						 */
-						id: string
-						/**
 						 * What are some items that have been historically used as a unit of money?
 						 */
 						question: string
@@ -566,7 +532,7 @@ type RootTranslation = {
 						 */
 						type: string
 					}
-					'3': {
+					whyStonesShellGold: {
 						answers: {
 							/**
 							 * Because they have key characteristics -- such as being durable, uniform and divisible.
@@ -596,10 +562,6 @@ type RootTranslation = {
 							'2': string
 						}
 						/**
-						 * whyStonesShellGold
-						 */
-						id: string
-						/**
 						 * Why were stones, seashells and gold used as units of money?
 						 */
 						question: string
@@ -624,7 +586,7 @@ type RootTranslation = {
 						 */
 						type: string
 					}
-					'4': {
+					moneyIsImportant: {
 						answers: {
 							/**
 							 * Money allows people to buy goods and services today -- and tomorrow.
@@ -654,10 +616,6 @@ type RootTranslation = {
 							'2': string
 						}
 						/**
-						 * moneyIsImportant
-						 */
-						id: string
-						/**
 						 * What is the primary reason money is important?
 						 */
 						question: string
@@ -676,7 +634,7 @@ type RootTranslation = {
 						 */
 						type: string
 					}
-					'5': {
+					moneyImportantGovernement: {
 						answers: {
 							/**
 							 * The US Central Bank (The Federal Reserve)
@@ -706,10 +664,6 @@ type RootTranslation = {
 							'2': string
 						}
 						/**
-						 * moneyImportantGovernement
-						 */
-						id: string
-						/**
 						 * Who can legally print US Dollars, anytime they wish?
 						 */
 						question: string
@@ -735,20 +689,14 @@ type RootTranslation = {
 						type: string
 					}
 				}
-				meta: {
-					/**
-					 * WhatIsMoney
-					 */
-					id: string
-					/**
-					 * What is Money? 
-					 */
-					title: string
-				}
 			}
-			'2': {
-				content: {
-					'0': {
+			HowDoesMoneyWork: {
+				/**
+				 * How Does Money Work? 
+				 */
+				title: string
+				questions: {
+					WhatIsFiat: {
 						answers: {
 							/**
 							 * It is created by order of the National government in a given country.
@@ -778,10 +726,6 @@ type RootTranslation = {
 							'2': string
 						}
 						/**
-						 * WhatIsFiat
-						 */
-						id: string
-						/**
 						 * Who creates fiat money, such as US Dollars or Swiss Francs?
 						 */
 						question: string
@@ -802,7 +746,7 @@ type RootTranslation = {
 						 */
 						type: string
 					}
-					'1': {
+					whyCareAboutFiatMoney: {
 						answers: {
 							/**
 							 * All fiat currency is eventually abused by government authorities.
@@ -832,10 +776,6 @@ type RootTranslation = {
 							'2': string
 						}
 						/**
-						 * whyCareAboutFiatMoney
-						 */
-						id: string
-						/**
 						 * Why should I care about the government controlling fiat money?
 						 */
 						question: string
@@ -859,7 +799,7 @@ type RootTranslation = {
 						 */
 						type: string
 					}
-					'2': {
+					GovernementCanPrintMoney: {
 						answers: {
 							/**
 							 * The printing of additional money leads to inflation.
@@ -889,10 +829,6 @@ type RootTranslation = {
 							'2': string
 						}
 						/**
-						 * GovernementCanPrintMoney
-						 */
-						id: string
-						/**
 						 * What does it mean when the government prints money?
 						 */
 						question: string
@@ -921,7 +857,7 @@ type RootTranslation = {
 						 */
 						type: string
 					}
-					'3': {
+					FiatLosesValueOverTime: {
 						answers: {
 							/**
 							 * Every fiat currency that ever existed has lost a massive amount of value.
@@ -951,10 +887,6 @@ type RootTranslation = {
 							'2': string
 						}
 						/**
-						 * FiatLosesValueOverTime
-						 */
-						id: string
-						/**
 						 * What happens to the value of all fiat money over time?
 						 */
 						question: string
@@ -978,7 +910,7 @@ type RootTranslation = {
 						 */
 						type: string
 					}
-					'4': {
+					OtherIssues: {
 						answers: {
 							/**
 							 * Money is difficult to move around the world, and can also be surveilled.
@@ -1008,10 +940,6 @@ type RootTranslation = {
 							'2': string
 						}
 						/**
-						 * OtherIssues
-						 */
-						id: string
-						/**
 						 * What are some other issues that exist with fiat money?
 						 */
 						question: string
@@ -1035,20 +963,14 @@ type RootTranslation = {
 						type: string
 					}
 				}
-				meta: {
-					/**
-					 * HowDoesMoneyWork
-					 */
-					id: string
-					/**
-					 * How Does Money Work? 
-					 */
-					title: string
-				}
 			}
-			'3': {
-				content: {
-					'0': {
+			BitcoinWhySpecial: {
+				/**
+				 * Bitcoin: Why is it special? 
+				 */
+				title: string
+				questions: {
+					LimitedSupply: {
 						answers: {
 							/**
 							 * Yes. There can never be more than 21 million bitcoin created.
@@ -1078,10 +1000,6 @@ type RootTranslation = {
 							'2': string
 						}
 						/**
-						 * LimitedSupply
-						 */
-						id: string
-						/**
 						 * Is the supply of bitcoin limited forever?
 						 */
 						question: string
@@ -1110,7 +1028,7 @@ type RootTranslation = {
 						 */
 						type: string
 					}
-					'1': {
+					Decentralized: {
 						answers: {
 							/**
 							 * No. Bitcoin is completely “decentralized”.
@@ -1140,10 +1058,6 @@ type RootTranslation = {
 							'2': string
 						}
 						/**
-						 * Decentralized
-						 */
-						id: string
-						/**
 						 * Is bitcoin centralized?
 						 */
 						question: string
@@ -1166,7 +1080,7 @@ type RootTranslation = {
 						 */
 						type: string
 					}
-					'2': {
+					NoCounterfeitMoney: {
 						answers: {
 							/**
 							 * No. It is impossible to counterfeit Bitcoin.
@@ -1196,10 +1110,6 @@ type RootTranslation = {
 							'2': string
 						}
 						/**
-						 * NoCounterfeitMoney
-						 */
-						id: string
-						/**
 						 * Can people counterfeit Bitcoin?
 						 */
 						question: string
@@ -1223,7 +1133,7 @@ type RootTranslation = {
 						 */
 						type: string
 					}
-					'3': {
+					HighlyDivisible: {
 						answers: {
 							/**
 							 * 0.00000001 BTC
@@ -1253,10 +1163,6 @@ type RootTranslation = {
 							'2': string
 						}
 						/**
-						 * HighlyDivisible
-						 */
-						id: string
-						/**
 						 * What is the smallest amount of Bitcoin one can own, or use?
 						 */
 						question: string
@@ -1278,7 +1184,7 @@ type RootTranslation = {
 						 */
 						type: string
 					}
-					'4': {
+					securePartOne: {
 						answers: {
 							/**
 							 * Yes. The bitcoin network is very secure.
@@ -1308,10 +1214,6 @@ type RootTranslation = {
 							'2': string
 						}
 						/**
-						 * securePartOne
-						 */
-						id: string
-						/**
 						 * Is the Bitcoin network secure?
 						 */
 						question: string
@@ -1337,7 +1239,7 @@ type RootTranslation = {
 						 */
 						type: string
 					}
-					'5': {
+					securePartTwo: {
 						answers: {
 							/**
 							 * No. Bitcoin has never been hacked.
@@ -1366,10 +1268,6 @@ type RootTranslation = {
 							 */
 							'2': string
 						}
-						/**
-						 * securePartTwo
-						 */
-						id: string
 						/**
 						 * Has Bitcoin ever been hacked?
 						 */
@@ -1400,16 +1298,6 @@ type RootTranslation = {
 						 */
 						type: string
 					}
-				}
-				meta: {
-					/**
-					 * BitcoinWhySpecial
-					 */
-					id: string
-					/**
-					 * Bitcoin: Why is it special? 
-					 */
-					title: string
 				}
 			}
 		}
@@ -2707,10 +2595,14 @@ export type TranslationFunctions = {
 		 * Earn {formattedNumber|sats}
 		 */
 		earnSats: (arg: { formattedNumber: unknown }) => LocalizedString
-		earns: {
-			'0': {
-				content: {
-					'0': {
+		earnSections: {
+			bitcoinWhatIsIt: {
+				/**
+				 * Bitcoin: What is it?
+				 */
+				title: () => LocalizedString
+				questions: {
+					whatIsBitcoin: {
 						answers: {
 							/**
 							 * Digital money
@@ -2740,10 +2632,6 @@ export type TranslationFunctions = {
 							'2': () => LocalizedString
 						}
 						/**
-						 * whatIsBitcoin
-						 */
-						id: () => LocalizedString
-						/**
 						 * So what exactly is Bitcoin?
 						 */
 						question: () => LocalizedString
@@ -2762,7 +2650,7 @@ export type TranslationFunctions = {
 						 */
 						type: () => LocalizedString
 					}
-					'1': {
+					sat: {
 						answers: {
 							/**
 							 * The smallest unit of Bitcoin
@@ -2792,10 +2680,6 @@ export type TranslationFunctions = {
 							'2': () => LocalizedString
 						}
 						/**
-						 * sat
-						 */
-						id: () => LocalizedString
-						/**
 						 * I just earned a “Sat". What is that?
 						 */
 						question: () => LocalizedString
@@ -2816,7 +2700,7 @@ export type TranslationFunctions = {
 						 */
 						type: () => LocalizedString
 					}
-					'2': {
+					whereBitcoinExist: {
 						answers: {
 							/**
 							 * On the Internet
@@ -2846,10 +2730,6 @@ export type TranslationFunctions = {
 							'2': () => LocalizedString
 						}
 						/**
-						 * whereBitcoinExist
-						 */
-						id: () => LocalizedString
-						/**
 						 * Where do the bitcoins exist?
 						 */
 						question: () => LocalizedString
@@ -2872,7 +2752,7 @@ export type TranslationFunctions = {
 						 */
 						type: () => LocalizedString
 					}
-					'3': {
+					whoControlsBitcoin: {
 						answers: {
 							/**
 							 * A voluntary community of users around the world
@@ -2902,10 +2782,6 @@ export type TranslationFunctions = {
 							'2': () => LocalizedString
 						}
 						/**
-						 * whoControlsBitcoin
-						 */
-						id: () => LocalizedString
-						/**
 						 * Who controls Bitcoin?
 						 */
 						question: () => LocalizedString
@@ -2924,7 +2800,7 @@ export type TranslationFunctions = {
 						 */
 						type: () => LocalizedString
 					}
-					'4': {
+					copyBitcoin: {
 						answers: {
 							/**
 							 * No — it is impossible to copy or duplicate the value of bitcoin
@@ -2954,10 +2830,6 @@ export type TranslationFunctions = {
 							'2': () => LocalizedString
 						}
 						/**
-						 * copyBitcoin
-						 */
-						id: () => LocalizedString
-						/**
 						 * If Bitcoin is digital money, can’t someone just copy it — and create free money?
 						 */
 						question: () => LocalizedString
@@ -2979,20 +2851,14 @@ export type TranslationFunctions = {
 						type: () => LocalizedString
 					}
 				}
-				meta: {
-					/**
-					 * bitcoinWhatIsIt
-					 */
-					id: () => LocalizedString
-					/**
-					 * Bitcoin: What is it?
-					 */
-					title: () => LocalizedString
-				}
 			}
-			'1': {
-				content: {
-					'0': {
+			WhatIsMoney: {
+				/**
+				 * What is Money? 
+				 */
+				title: () => LocalizedString
+				questions: {
+					moneySocialAggrement: {
 						answers: {
 							/**
 							 * Because people trust that other people will value money similarly
@@ -3022,10 +2888,6 @@ export type TranslationFunctions = {
 							'2': () => LocalizedString
 						}
 						/**
-						 * moneySocialAggrement
-						 */
-						id: () => LocalizedString
-						/**
 						 * Why does money have value?
 						 */
 						question: () => LocalizedString
@@ -3046,7 +2908,7 @@ export type TranslationFunctions = {
 						 */
 						type: () => LocalizedString
 					}
-					'1': {
+					coincidenceOfWants: {
 						answers: {
 							/**
 							 * Coincidence of wants
@@ -3076,10 +2938,6 @@ export type TranslationFunctions = {
 							'2': () => LocalizedString
 						}
 						/**
-						 * coincidenceOfWants
-						 */
-						id: () => LocalizedString
-						/**
 						 * Which coincidence does money solve?
 						 */
 						question: () => LocalizedString
@@ -3102,7 +2960,7 @@ export type TranslationFunctions = {
 						 */
 						type: () => LocalizedString
 					}
-					'2': {
+					moneyEvolution: {
 						answers: {
 							/**
 							 * Stones, seashells and gold
@@ -3132,10 +2990,6 @@ export type TranslationFunctions = {
 							'2': () => LocalizedString
 						}
 						/**
-						 * moneyEvolution
-						 */
-						id: () => LocalizedString
-						/**
 						 * What are some items that have been historically used as a unit of money?
 						 */
 						question: () => LocalizedString
@@ -3156,7 +3010,7 @@ export type TranslationFunctions = {
 						 */
 						type: () => LocalizedString
 					}
-					'3': {
+					whyStonesShellGold: {
 						answers: {
 							/**
 							 * Because they have key characteristics -- such as being durable, uniform and divisible.
@@ -3186,10 +3040,6 @@ export type TranslationFunctions = {
 							'2': () => LocalizedString
 						}
 						/**
-						 * whyStonesShellGold
-						 */
-						id: () => LocalizedString
-						/**
 						 * Why were stones, seashells and gold used as units of money?
 						 */
 						question: () => LocalizedString
@@ -3214,7 +3064,7 @@ export type TranslationFunctions = {
 						 */
 						type: () => LocalizedString
 					}
-					'4': {
+					moneyIsImportant: {
 						answers: {
 							/**
 							 * Money allows people to buy goods and services today -- and tomorrow.
@@ -3244,10 +3094,6 @@ export type TranslationFunctions = {
 							'2': () => LocalizedString
 						}
 						/**
-						 * moneyIsImportant
-						 */
-						id: () => LocalizedString
-						/**
 						 * What is the primary reason money is important?
 						 */
 						question: () => LocalizedString
@@ -3266,7 +3112,7 @@ export type TranslationFunctions = {
 						 */
 						type: () => LocalizedString
 					}
-					'5': {
+					moneyImportantGovernement: {
 						answers: {
 							/**
 							 * The US Central Bank (The Federal Reserve)
@@ -3296,10 +3142,6 @@ export type TranslationFunctions = {
 							'2': () => LocalizedString
 						}
 						/**
-						 * moneyImportantGovernement
-						 */
-						id: () => LocalizedString
-						/**
 						 * Who can legally print US Dollars, anytime they wish?
 						 */
 						question: () => LocalizedString
@@ -3325,20 +3167,14 @@ export type TranslationFunctions = {
 						type: () => LocalizedString
 					}
 				}
-				meta: {
-					/**
-					 * WhatIsMoney
-					 */
-					id: () => LocalizedString
-					/**
-					 * What is Money? 
-					 */
-					title: () => LocalizedString
-				}
 			}
-			'2': {
-				content: {
-					'0': {
+			HowDoesMoneyWork: {
+				/**
+				 * How Does Money Work? 
+				 */
+				title: () => LocalizedString
+				questions: {
+					WhatIsFiat: {
 						answers: {
 							/**
 							 * It is created by order of the National government in a given country.
@@ -3368,10 +3204,6 @@ export type TranslationFunctions = {
 							'2': () => LocalizedString
 						}
 						/**
-						 * WhatIsFiat
-						 */
-						id: () => LocalizedString
-						/**
 						 * Who creates fiat money, such as US Dollars or Swiss Francs?
 						 */
 						question: () => LocalizedString
@@ -3392,7 +3224,7 @@ export type TranslationFunctions = {
 						 */
 						type: () => LocalizedString
 					}
-					'1': {
+					whyCareAboutFiatMoney: {
 						answers: {
 							/**
 							 * All fiat currency is eventually abused by government authorities.
@@ -3422,10 +3254,6 @@ export type TranslationFunctions = {
 							'2': () => LocalizedString
 						}
 						/**
-						 * whyCareAboutFiatMoney
-						 */
-						id: () => LocalizedString
-						/**
 						 * Why should I care about the government controlling fiat money?
 						 */
 						question: () => LocalizedString
@@ -3449,7 +3277,7 @@ export type TranslationFunctions = {
 						 */
 						type: () => LocalizedString
 					}
-					'2': {
+					GovernementCanPrintMoney: {
 						answers: {
 							/**
 							 * The printing of additional money leads to inflation.
@@ -3479,10 +3307,6 @@ export type TranslationFunctions = {
 							'2': () => LocalizedString
 						}
 						/**
-						 * GovernementCanPrintMoney
-						 */
-						id: () => LocalizedString
-						/**
 						 * What does it mean when the government prints money?
 						 */
 						question: () => LocalizedString
@@ -3511,7 +3335,7 @@ export type TranslationFunctions = {
 						 */
 						type: () => LocalizedString
 					}
-					'3': {
+					FiatLosesValueOverTime: {
 						answers: {
 							/**
 							 * Every fiat currency that ever existed has lost a massive amount of value.
@@ -3541,10 +3365,6 @@ export type TranslationFunctions = {
 							'2': () => LocalizedString
 						}
 						/**
-						 * FiatLosesValueOverTime
-						 */
-						id: () => LocalizedString
-						/**
 						 * What happens to the value of all fiat money over time?
 						 */
 						question: () => LocalizedString
@@ -3568,7 +3388,7 @@ export type TranslationFunctions = {
 						 */
 						type: () => LocalizedString
 					}
-					'4': {
+					OtherIssues: {
 						answers: {
 							/**
 							 * Money is difficult to move around the world, and can also be surveilled.
@@ -3598,10 +3418,6 @@ export type TranslationFunctions = {
 							'2': () => LocalizedString
 						}
 						/**
-						 * OtherIssues
-						 */
-						id: () => LocalizedString
-						/**
 						 * What are some other issues that exist with fiat money?
 						 */
 						question: () => LocalizedString
@@ -3625,20 +3441,14 @@ export type TranslationFunctions = {
 						type: () => LocalizedString
 					}
 				}
-				meta: {
-					/**
-					 * HowDoesMoneyWork
-					 */
-					id: () => LocalizedString
-					/**
-					 * How Does Money Work? 
-					 */
-					title: () => LocalizedString
-				}
 			}
-			'3': {
-				content: {
-					'0': {
+			BitcoinWhySpecial: {
+				/**
+				 * Bitcoin: Why is it special? 
+				 */
+				title: () => LocalizedString
+				questions: {
+					LimitedSupply: {
 						answers: {
 							/**
 							 * Yes. There can never be more than 21 million bitcoin created.
@@ -3668,10 +3478,6 @@ export type TranslationFunctions = {
 							'2': () => LocalizedString
 						}
 						/**
-						 * LimitedSupply
-						 */
-						id: () => LocalizedString
-						/**
 						 * Is the supply of bitcoin limited forever?
 						 */
 						question: () => LocalizedString
@@ -3700,7 +3506,7 @@ export type TranslationFunctions = {
 						 */
 						type: () => LocalizedString
 					}
-					'1': {
+					Decentralized: {
 						answers: {
 							/**
 							 * No. Bitcoin is completely “decentralized”.
@@ -3730,10 +3536,6 @@ export type TranslationFunctions = {
 							'2': () => LocalizedString
 						}
 						/**
-						 * Decentralized
-						 */
-						id: () => LocalizedString
-						/**
 						 * Is bitcoin centralized?
 						 */
 						question: () => LocalizedString
@@ -3756,7 +3558,7 @@ export type TranslationFunctions = {
 						 */
 						type: () => LocalizedString
 					}
-					'2': {
+					NoCounterfeitMoney: {
 						answers: {
 							/**
 							 * No. It is impossible to counterfeit Bitcoin.
@@ -3786,10 +3588,6 @@ export type TranslationFunctions = {
 							'2': () => LocalizedString
 						}
 						/**
-						 * NoCounterfeitMoney
-						 */
-						id: () => LocalizedString
-						/**
 						 * Can people counterfeit Bitcoin?
 						 */
 						question: () => LocalizedString
@@ -3813,7 +3611,7 @@ export type TranslationFunctions = {
 						 */
 						type: () => LocalizedString
 					}
-					'3': {
+					HighlyDivisible: {
 						answers: {
 							/**
 							 * 0.00000001 BTC
@@ -3843,10 +3641,6 @@ export type TranslationFunctions = {
 							'2': () => LocalizedString
 						}
 						/**
-						 * HighlyDivisible
-						 */
-						id: () => LocalizedString
-						/**
 						 * What is the smallest amount of Bitcoin one can own, or use?
 						 */
 						question: () => LocalizedString
@@ -3868,7 +3662,7 @@ export type TranslationFunctions = {
 						 */
 						type: () => LocalizedString
 					}
-					'4': {
+					securePartOne: {
 						answers: {
 							/**
 							 * Yes. The bitcoin network is very secure.
@@ -3898,10 +3692,6 @@ export type TranslationFunctions = {
 							'2': () => LocalizedString
 						}
 						/**
-						 * securePartOne
-						 */
-						id: () => LocalizedString
-						/**
 						 * Is the Bitcoin network secure?
 						 */
 						question: () => LocalizedString
@@ -3927,7 +3717,7 @@ export type TranslationFunctions = {
 						 */
 						type: () => LocalizedString
 					}
-					'5': {
+					securePartTwo: {
 						answers: {
 							/**
 							 * No. Bitcoin has never been hacked.
@@ -3956,10 +3746,6 @@ export type TranslationFunctions = {
 							 */
 							'2': () => LocalizedString
 						}
-						/**
-						 * securePartTwo
-						 */
-						id: () => LocalizedString
 						/**
 						 * Has Bitcoin ever been hacked?
 						 */
@@ -3990,16 +3776,6 @@ export type TranslationFunctions = {
 						 */
 						type: () => LocalizedString
 					}
-				}
-				meta: {
-					/**
-					 * BitcoinWhySpecial
-					 */
-					id: () => LocalizedString
-					/**
-					 * Bitcoin: Why is it special? 
-					 */
-					title: () => LocalizedString
 				}
 			}
 		}
