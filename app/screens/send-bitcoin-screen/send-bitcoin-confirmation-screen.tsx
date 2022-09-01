@@ -526,7 +526,7 @@ const SendBitcoinConfirmationScreen = ({
               <Text>{feeDisplayText} *</Text>
             )}
             {fee.status === "error" && !feeDisplayText && (
-              <Text>{translate("SendBitcoinConfirmationScreen.feeError")}</Text>
+              <Text>{LL.SendBitcoinConfirmationScreen.feeError()}</Text>
             )}
           </View>
         </View>
