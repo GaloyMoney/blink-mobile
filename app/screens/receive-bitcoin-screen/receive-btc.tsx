@@ -18,8 +18,9 @@ import ChevronIcon from "@app/assets/icons/chevron.svg"
 import ChainIcon from "@app/assets/icons/chain.svg"
 import NoteIcon from "@app/assets/icons/note.svg"
 import { toastShow } from "@app/utils/toast"
-import { translate } from "@app/utils/translate"
+
 import { copyPaymentInfoToClipboard } from "@app/utils/clipboard"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 const styles = EStyleSheet.create({
   container: {
@@ -169,7 +170,7 @@ const ReceiveBtc = () => {
   const [lnNoAmountInvoiceCreate] = useMutation.lnNoAmountInvoiceCreate()
   const [lnInvoiceCreate] = useMutation.lnInvoiceCreate()
   const [generateBtcAddress] = useMutation.onChainAddressCurrent()
-
+  const { LL } = useI18nContext()
   const updateInvoice = useCallback(
     async ({ walletId, satAmount, memo }) => {
       setLoading(true)
@@ -185,7 +186,7 @@ const ReceiveBtc = () => {
           })
           if (errors && errors.length !== 0) {
             console.error(errors, "error with lnNoAmountInvoiceCreate")
-            setErr(translate("ReceiveBitcoinScreen.error"))
+            setErr(LL.ReceiveBitcoinScreen.error())
             return
           }
           setInvoice(invoice)
@@ -201,7 +202,7 @@ const ReceiveBtc = () => {
           })
           if (errors && errors.length !== 0) {
             console.error(errors, "error with lnInvoiceCreate")
-            setErr(translate("ReceiveBitcoinScreen.error"))
+            setErr(LL.ReceiveBitcoinScreen.error())
             return
           }
           setInvoice(invoice)
@@ -214,7 +215,7 @@ const ReceiveBtc = () => {
         setLoading(false)
       }
     },
-    [lnInvoiceCreate, lnNoAmountInvoiceCreate],
+    [lnInvoiceCreate, lnNoAmountInvoiceCreate, LL],
   )
 
   const updateBtcAddress = useCallback(
@@ -232,7 +233,7 @@ const ReceiveBtc = () => {
         })
         if (errors && errors.length !== 0) {
           console.error(errors, "error with generateBtcAddress")
-          setErr(translate("ReceiveBitcoinScreen.error"))
+          setErr(LL.ReceiveBitcoinScreen.error())
           return
         }
         setBtcAddress(address)
@@ -244,7 +245,7 @@ const ReceiveBtc = () => {
         setLoading(false)
       }
     },
-    [generateBtcAddress],
+    [generateBtcAddress, LL],
   )
 
   const toggleAmountCurrency = () => {
@@ -299,10 +300,10 @@ const ReceiveBtc = () => {
   const copyToClipboard = useCallback(() => {
     copyPaymentInfoToClipboard(paymentFullUri)
     toastShow({
-      message: translate("ReceiveBitcoinScreen.copyClipboard"),
+      message: LL.ReceiveBitcoinScreen.copyClipboard(),
       type: "success",
     })
-  }, [paymentFullUri])
+  }, [paymentFullUri, LL])
 
   const share = useCallback(async () => {
     try {
@@ -419,7 +420,7 @@ const ReceiveBtc = () => {
         </View>
 
         <Button
-          title={translate("Update Invoice")}
+          title={LL.ReceiveBitcoinScreen.updateInvoice()}
           buttonStyle={[styles.button, styles.activeButtonStyle]}
           titleStyle={styles.activeButtonTitleStyle}
           disabledStyle={[styles.button, styles.disabledButtonStyle]}
@@ -441,11 +442,11 @@ const ReceiveBtc = () => {
     return (
       <View style={styles.inputForm}>
         <View style={styles.container}>
-          <Text style={styles.fieldTitleText}>{translate("SendBitcoinScreen.note")}</Text>
+          <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.note()}</Text>
           <View style={styles.field}>
             <TextInput
               style={styles.noteInput}
-              placeholder={translate("SendBitcoinScreen.note")}
+              placeholder={LL.SendBitcoinScreen.note()}
               onChangeText={(note) => setMemo(note)}
               value={memo}
               multiline={true}
@@ -455,7 +456,7 @@ const ReceiveBtc = () => {
           </View>
 
           <Button
-            title={translate("Update Invoice")}
+            title={LL.ReceiveBitcoinScreen.updateInvoice()}
             buttonStyle={[styles.button, styles.activeButtonStyle]}
             titleStyle={styles.activeButtonTitleStyle}
             onPress={() => {
@@ -471,7 +472,9 @@ const ReceiveBtc = () => {
   const displayAmount = () => {
     if (!satAmount) {
       return (
-        <Text style={styles.primaryAmount}>{translate("Flexible Amount Invoice")}</Text>
+        <Text style={styles.primaryAmount}>
+          {LL.ReceiveBitcoinScreen.flexibleAmountInvoice()}
+        </Text>
       )
     }
     return (
@@ -508,11 +511,9 @@ const ReceiveBtc = () => {
                   <Text style={styles.infoText}>
                     <Icon style={styles.infoText} name="copy-outline" />
                     <Text> </Text>
-                    {translate(
-                      paymentLayer === TYPE_LIGHTNING_BTC
-                        ? "ReceiveBitcoinScreen.copyInvoice"
-                        : "Copy Address",
-                    )}
+                    {paymentLayer === TYPE_LIGHTNING_BTC
+                      ? LL.ReceiveBitcoinScreen.copyInvoice()
+                      : LL.ReceiveBitcoinScreen.copyAddress()}
                   </Text>
                 </Pressable>
               </View>
@@ -521,17 +522,15 @@ const ReceiveBtc = () => {
                   <Text style={styles.infoText}>
                     <Icon style={styles.infoText} name="share-outline" />
                     <Text> </Text>
-                    {translate(
-                      paymentLayer === TYPE_LIGHTNING_BTC
-                        ? "ReceiveBitcoinScreen.shareInvoice"
-                        : "Share Address",
-                    )}
+                    {paymentLayer === TYPE_LIGHTNING_BTC
+                      ? LL.ReceiveBitcoinScreen.shareInvoice()
+                      : LL.ReceiveBitcoinScreen.shareAddress()}
                   </Text>
                 </Pressable>
               </View>
             </>
           ) : (
-            <Text>{translate("Generating Invoice...")}</Text>
+            <Text>{`${LL.ReceiveBitcoinScreen.generatingInvoice()}...`}</Text>
           )}
         </View>
 
@@ -547,7 +546,7 @@ const ReceiveBtc = () => {
                   </View>
                   <View style={styles.fieldTextContainer}>
                     <Text style={styles.fieldText}>
-                      {translate("ReceiveBitcoinScreen.addAmount")}
+                      {LL.ReceiveBitcoinScreen.addAmount()}
                     </Text>
                   </View>
                   <View style={styles.fieldArrowContainer}>
@@ -566,7 +565,9 @@ const ReceiveBtc = () => {
                     <NoteIcon />
                   </View>
                   <View style={styles.fieldTextContainer}>
-                    <Text style={styles.fieldText}>{translate("Set a note/label")}</Text>
+                    <Text style={styles.fieldText}>
+                      {LL.ReceiveBitcoinScreen.setANote}
+                    </Text>
                   </View>
                   <View style={styles.fieldArrowContainer}>
                     <ChevronIcon />
@@ -584,11 +585,9 @@ const ReceiveBtc = () => {
                 </View>
                 <View style={styles.fieldTextContainer}>
                   <Text style={styles.fieldText}>
-                    {translate(
-                      paymentLayer === TYPE_LIGHTNING_BTC
-                        ? "Use a Bitcoin on-chain address"
-                        : "Use a Lightning invoice",
-                    )}
+                    {paymentLayer === TYPE_LIGHTNING_BTC
+                      ? LL.ReceiveBitcoinScreen.useABitcoinOnchainAddress()
+                      : LL.ReceiveBitcoinScreen.useALightningInvoice()}
                   </Text>
                 </View>
                 <View style={styles.fieldArrowContainer}>

@@ -13,7 +13,7 @@ import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import type { ComponentType } from "../../types/jsx"
 import { Defs, LinearGradient, Stop } from "react-native-svg"
-import { translate } from "@app/utils/translate"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 const BTC_PRICE_LIST = gql`
   query btcPriceList($range: PriceGraphRange!) {
@@ -122,6 +122,7 @@ export const PriceGraph: ComponentType = ({
   prices,
   setGraphRange,
 }: Props) => {
+  const { LL } = useI18nContext()
   let price
   let delta
   let color
@@ -157,15 +158,15 @@ export const PriceGraph: ComponentType = ({
   const label = () => {
     switch (graphRange) {
       case GraphRange.ONE_DAY:
-        return translate("PriceScreen.today")
+        return LL.PriceScreen.today()
       case GraphRange.ONE_WEEK:
-        return translate("PriceScreen.thisWeek")
+        return LL.PriceScreen.thisWeek()
       case GraphRange.ONE_MONTH:
-        return translate("PriceScreen.thisMonth")
+        return LL.PriceScreen.thisMonth()
       case GraphRange.ONE_YEAR:
-        return translate("PriceScreen.thisYear")
+        return LL.PriceScreen.thisYear()
       case GraphRange.FIVE_YEARS:
-        return translate("PriceScreen.lastFiveYears")
+        return LL.PriceScreen.lastFiveYears()
     }
   }
 
@@ -183,7 +184,7 @@ export const PriceGraph: ComponentType = ({
   return (
     <>
       <View style={styles.textView}>
-        <Text style={styles.neutral}>{translate("PriceScreen.satPrice")}</Text>
+        <Text style={styles.neutral}>{LL.PriceScreen.satPrice()}</Text>
         <Text style={styles.price}>${price.toFixed(2)}</Text>
       </View>
       <View style={styles.textView}>
@@ -243,31 +244,31 @@ export const PriceGraph: ComponentType = ({
       </View>
       <View style={styles.pricesContainer}>
         <Button
-          title={translate("PriceScreen.oneDay")}
+          title={LL.PriceScreen.oneDay()}
           buttonStyle={buttonStyleForRange(GraphRange.ONE_DAY)}
           titleStyle={titleStyleForRange(GraphRange.ONE_DAY)}
           onPress={() => setGraphRange(GraphRange.ONE_DAY)}
         />
         <Button
-          title={translate("PriceScreen.oneWeek")}
+          title={LL.PriceScreen.oneWeek()}
           buttonStyle={buttonStyleForRange(GraphRange.ONE_WEEK)}
           titleStyle={titleStyleForRange(GraphRange.ONE_WEEK)}
           onPress={() => setGraphRange(GraphRange.ONE_WEEK)}
         />
         <Button
-          title={translate("PriceScreen.oneMonth")}
+          title={LL.PriceScreen.oneMonth()}
           buttonStyle={buttonStyleForRange(GraphRange.ONE_MONTH)}
           titleStyle={titleStyleForRange(GraphRange.ONE_MONTH)}
           onPress={() => setGraphRange(GraphRange.ONE_MONTH)}
         />
         <Button
-          title={translate("PriceScreen.oneYear")}
+          title={LL.PriceScreen.oneYear()}
           buttonStyle={buttonStyleForRange(GraphRange.ONE_YEAR)}
           titleStyle={titleStyleForRange(GraphRange.ONE_YEAR)}
           onPress={() => setGraphRange(GraphRange.ONE_YEAR)}
         />
         <Button
-          title={translate("PriceScreen.fiveYears")}
+          title={LL.PriceScreen.fiveYears()}
           buttonStyle={buttonStyleForRange(GraphRange.FIVE_YEARS)}
           titleStyle={titleStyleForRange(GraphRange.FIVE_YEARS)}
           onPress={() => setGraphRange(GraphRange.FIVE_YEARS)}

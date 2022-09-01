@@ -7,7 +7,7 @@ import type { StackNavigationProp } from "@react-navigation/stack"
 import type { TextStyleProp } from "react-native/Libraries/StyleSheet/StyleSheet"
 import type { ComponentType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
-import { translate } from "@app/utils/translate"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 const styles = StyleSheet.create({
   version: {
@@ -25,7 +25,7 @@ type VersionComponentNavigationProp = StackNavigationProp<
 
 export const VersionComponent: ComponentType = ({ style }: { style?: TextStyleProp }) => {
   const { navigate } = useNavigation<VersionComponentNavigationProp>()
-
+  const { LL } = useI18nContext()
   const [secretMenuCounter, setSecretMenuCounter] = React.useState(0)
   React.useEffect(() => {
     if (secretMenuCounter > 2) {
@@ -41,7 +41,7 @@ export const VersionComponent: ComponentType = ({ style }: { style?: TextStylePr
         {"\n"}
         {/* network: {Config.BITCOIN_NETWORK} TODO */}
         {/* FIXME should be a props */}
-        {translate("GetStartedScreen.headline")}
+        {LL.GetStartedScreen.headline()}
       </Text>
     </Pressable>
   )

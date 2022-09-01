@@ -6,7 +6,7 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import ReactNativeModal from "react-native-modal"
 import { openWhatsApp } from "@app/utils/external"
 import { ListItem, Icon } from "react-native-elements"
-import { translate } from "@app/utils/translate"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 const styles = EStyleSheet.create({
   container: {
@@ -29,16 +29,15 @@ const styles = EStyleSheet.create({
 A modal component that displays contact options at the bottom of the screen.
 */
 const ContactModal = ({ isVisble, toggleModal }) => {
+  const { LL } = useI18nContext()
   const openWhatsAppAction = () => {
-    openWhatsApp(WHATSAPP_CONTACT_NUMBER, translate("support.defaultSupportMessage"))
+    openWhatsApp(WHATSAPP_CONTACT_NUMBER, LL.support.defaultSupportMessage())
     toggleModal()
   }
 
   const openEmailAction = () => {
     Linking.openURL(
-      `mailto:${CONTACT_EMAIL_ADDRESS}?subject=${translate(
-        "support.defaultEmailSubject",
-      )}&body=${translate("support.defaultSupportMessage")}`,
+      `mailto:${CONTACT_EMAIL_ADDRESS}?subject=${LL.support.defaultEmailSubject()}&body=${LL.support.defaultSupportMessage()}`,
     )
     toggleModal()
   }
@@ -50,17 +49,17 @@ const ContactModal = ({ isVisble, toggleModal }) => {
 
   const contactOptionList = [
     {
-      name: translate("support.whatsapp"),
+      name: LL.support.whatsapp(),
       icon: "ios-logo-whatsapp",
       action: openWhatsAppAction,
     },
     {
-      name: translate("support.email"),
+      name: LL.support.email(),
       icon: "mail-outline",
       action: openEmailAction,
     },
     {
-      name: translate("support.phone"),
+      name: LL.support.phone(),
       icon: "call-outline",
       action: openPhoneAction,
     },

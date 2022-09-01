@@ -7,12 +7,13 @@ import successLottieJson from "../send-bitcoin-screen/success_lottie.json"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import useMainQuery from "@app/hooks/use-main-query"
-import { translate } from "@app/utils/translate"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 export const ConversionSuccessScreen = ({
   navigation,
 }: StackScreenProps<RootStackParamList, "conversionSuccess">) => {
   const { refetch } = useMainQuery()
+  const { LL } = useI18nContext()
   const CALLBACK_DELAY = 2000
   useEffect(() => {
     refetch()
@@ -29,9 +30,7 @@ export const ConversionSuccessScreen = ({
         style={styles.lottie}
         resizeMode="cover"
       />
-      <Text style={styles.successLottieText}>
-        {translate("ConversionSuccessScreen.message")}
-      </Text>
+      <Text style={styles.successLottieText}>{LL.ConversionSuccessScreen.message()}</Text>
     </View>
   )
 }

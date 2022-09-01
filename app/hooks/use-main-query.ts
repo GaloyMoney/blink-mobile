@@ -5,7 +5,7 @@ import NetInfo from "@react-native-community/netinfo"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { useAppConfig } from "./use-app-config"
 import { usePriceConversion } from "./use-price-conversion"
-import { translate } from "../utils/translate"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 const useMainQuery = (): useMainQueryOutput => {
   const { hasToken } = useToken()
@@ -14,6 +14,7 @@ const useMainQuery = (): useMainQueryOutput => {
   const { data, previousData, error, loading, refetch } = useQuery(MAIN_QUERY, {
     variables: { hasToken },
   })
+  const { LL } = useI18nContext()
   let errors = []
   if (error) {
     if (error.graphQLErrors?.length > 0 && previousData) {
@@ -32,10 +33,10 @@ const useMainQuery = (): useMainQueryOutput => {
       // Call to mainquery has failed but we have data in the cache
       NetInfo.fetch().then((state) => {
         if (state.isConnected) {
-          errors.push({ message: translate("errors.network.request") })
+          errors.push({ message: LL.errors.network.request() })
         } else {
           // We failed to fetch the data because the device is offline
-          errors.push({ message: translate("errors.network.connection") })
+          errors.push({ message: LL.errors.network.connection() })
         }
       })
     }

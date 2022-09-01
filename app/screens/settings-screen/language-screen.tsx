@@ -8,7 +8,7 @@ import { palette } from "../../theme/palette"
 import type { ScreenType } from "../../types/jsx"
 import useToken from "../../hooks/use-token"
 import useMainQuery from "@app/hooks/use-main-query"
-import { translate } from "@app/utils/translate"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 const styles = EStyleSheet.create({
   screenStyle: {
@@ -22,6 +22,7 @@ export const LanguageScreen: ScreenType = () => {
   const [updateLanguage] = useMutation.userUpdateLanguage({
     onCompleted: () => refetchMain(),
   })
+  const { LL } = useI18nContext()
 
   const list = ["DEFAULT", "en-US", "es-SV", "pt-BR", "fr-CA"]
 
@@ -51,7 +52,7 @@ export const LanguageScreen: ScreenType = () => {
             }
           }}
         >
-          <ListItem.Title>{translate(`Languages.${language}`)}</ListItem.Title>
+          <ListItem.Title>{LL.Languages[language]()}</ListItem.Title>
           {userPreferredLanguage === language && (
             <Icon name="ios-checkmark-circle" size={18} color={palette.green} />
           )}

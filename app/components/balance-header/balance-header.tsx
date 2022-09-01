@@ -11,7 +11,7 @@ import { useIsFocused } from "@react-navigation/native"
 import { useHiddenBalanceToolTip, useHideBalance } from "../../hooks"
 import { saveHiddenBalanceToolTip } from "../../graphql/client-only-query"
 import { useApolloClient } from "@apollo/client"
-import { translate } from "@app/utils/translate"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 const styles = EStyleSheet.create({
   container: {
@@ -91,10 +91,11 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
   btcWalletValueInUsd,
   usdWalletBalance,
 }: BalanceHeaderProps) => {
+  const { LL } = useI18nContext()
   return (
     <View style={[styles.balanceHeaderContainer, style]}>
       <Text testID="currentBalance" style={styles.balanceText}>
-        {translate("BalanceHeader.currentBalance")}
+        {LL.BalanceHeader.currentBalance()}
       </Text>
       <View style={styles.balanceAmountContainer}>
         {loading ? (
@@ -124,7 +125,7 @@ export const BalanceHeaderDisplay: React.FC<BalanceHeaderProps> = ({
   const isFocused = useIsFocused()
   const [showToolTip, setShowToolTip] = useState<boolean>(false)
   const [mHideBalance, setHideBalance] = useState<boolean>(hideBalance)
-
+  const { LL } = useI18nContext()
   const closeToolTip = useCallback(async () => {
     setShowToolTip(await saveHiddenBalanceToolTip(client, false))
   }, [client])
@@ -159,7 +160,7 @@ export const BalanceHeaderDisplay: React.FC<BalanceHeaderProps> = ({
       <>
         <Tooltip
           isVisible={showToolTip}
-          content={<Text>{translate("BalanceHeader.hiddenBalanceToolTip")}</Text>}
+          content={<Text>{LL.BalanceHeader.hiddenBalanceToolTip()}</Text>}
           placement="bottom"
           onClose={closeToolTip}
         >

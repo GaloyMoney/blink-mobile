@@ -19,7 +19,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import useToken from "../../hooks/use-token"
 import useMainQuery from "@app/hooks/use-main-query"
 import Clipboard from "@react-native-community/clipboard"
-import { translate } from "@app/utils/translate"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 const CAMERA: ViewStyle = {
   width: "100%",
@@ -78,7 +78,7 @@ export const ScanningQRCodeScreen: ScreenType = ({
   const [pending, setPending] = React.useState(false)
   const { tokenNetwork } = useToken()
   const { myPubKey } = useMainQuery()
-
+  const { LL } = useI18nContext()
   const decodeInvoice = async (data) => {
     if (pending) {
       return
@@ -113,13 +113,13 @@ export const ScanningQRCodeScreen: ScreenType = ({
               break
             default:
               Alert.alert(
-                translate("ScanningQRCodeScreen.invalidTitle"),
-                translate("ScanningQRCodeScreen.invalidContentLnurl", {
+                LL.ScanningQRCodeScreen.invalidTitle(),
+                LL.ScanningQRCodeScreen.invalidContentLnurl({
                   found: lnurlParams.tag,
                 }),
                 [
                   {
-                    text: translate("common.ok"),
+                    text: LL.common.ok(),
                     onPress: () => setPending(false),
                   },
                 ],
@@ -134,13 +134,13 @@ export const ScanningQRCodeScreen: ScreenType = ({
       } else {
         setPending(true)
         Alert.alert(
-          translate("ScanningQRCodeScreen.invalidTitle"),
-          translate("ScanningQRCodeScreen.invalidContent", {
+          LL.ScanningQRCodeScreen.invalidTitle(),
+          LL.ScanningQRCodeScreen.invalidContent({
             found: data.toString(),
           }),
           [
             {
-              text: translate("common.ok"),
+              text: LL.common.ok(),
               onPress: () => setPending(false),
             },
           ],
@@ -174,7 +174,7 @@ export const ScanningQRCodeScreen: ScreenType = ({
                 if (!error) {
                   decodeInvoice(result)
                 } else if (error.message === "Feature size is zero!") {
-                  Alert.alert(translate("ScanningQRCodeScreen.noQrCode"))
+                  Alert.alert(LL.ScanningQRCodeScreen.noQrCode())
                 } else {
                   console.error(error)
                   Alert.alert(`${error}`)

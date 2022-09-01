@@ -21,7 +21,7 @@ import {
   usdAmountDisplay,
 } from "@app/utils/currencyConversion"
 import { TransactionDate } from "@app/components/transaction-date"
-import { translate } from "@app/utils/translate"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 const viewInExplorer = (hash: string): Promise<Linking> =>
   Linking.openURL(BLOCKCHAIN_EXPLORER_URL + hash)
@@ -144,10 +144,11 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
 
     isReceive,
   } = route.params
+  const { LL } = useI18nContext()
   const walletType = settlementCurrency as WalletType
   const spendOrReceiveText = isReceive
-    ? translate("TransactionDetailScreen.received")
-    : translate("TransactionDetailScreen.spent")
+    ? LL.TransactionDetailScreen.received()
+    : LL.TransactionDetailScreen.spent()
 
   const { base, offset } = settlementPrice
   const usdPerSat = base / 10 ** offset / 100
@@ -204,7 +205,7 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
       </View>
       <View style={styles.transactionDetailView}>
         <Text style={styles.transactionDetailText}>
-          {translate("TransactionDetailScreen.detail")}
+          {LL.TransactionDetailScreen.detail()}
         </Text>
         <Divider style={styles.divider} />
         {/* NEED TRANSLATION */}
@@ -212,22 +213,16 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
           entry={isReceive ? "Receiving Wallet" : "Sending Wallet"}
           content={walletSummary}
         />
-        <Row
-          entry={translate("common.date")}
-          value={<TransactionDate tx={route.params} />}
-        />
-        {!isReceive && <Row entry={translate("common.fees")} value={feeEntry} />}
-        <Row entry={translate("common.description")} value={description} />
+        <Row entry={LL.common.date()} value={<TransactionDate tx={route.params} />} />
+        {!isReceive && <Row entry={LL.common.fees()} value={feeEntry} />}
+        <Row entry={LL.common.description()} value={description} />
         {settlementVia.__typename === "SettlementViaIntraLedger" && (
           <Row
-            entry={translate("TransactionDetailScreen.paid")}
+            entry={LL.TransactionDetailScreen.paid()}
             value={settlementVia.counterPartyUsername || "BitcoinBeach Wallet"}
           />
         )}
-        <Row
-          entry={translate("common.type")}
-          value={typeDisplay(settlementVia.__typename)}
-        />
+        <Row entry={LL.common.type()} value={typeDisplay(settlementVia.__typename)} />
         {settlementVia.__typename === "SettlementViaLn" &&
           initiationVia.__typename === "InitiationViaLn" && (
             <Row entry="Hash" value={initiationVia.paymentHash} />

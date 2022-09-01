@@ -7,3 +7,4 @@ package.json
 __generated__
 app/components/price-graph/data-tst.ts
 .yalc
+app/i18n/**/*

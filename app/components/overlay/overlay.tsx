@@ -5,7 +5,8 @@ import { StyleSheet, View, Modal, SafeAreaView, Text, Dimensions } from "react-n
 import Svg, { Path, Defs, ClipPath, G, Rect, Circle } from "react-native-svg"
 import { palette } from "../../theme/palette"
 import type { ComponentType } from "../../types/jsx"
-import { translate } from "@app/utils/translate"
+
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 const CY = 200
 const R = 135
@@ -71,7 +72,7 @@ type Props = {
 
 export const Overlay: ComponentType = ({ screen }: Props) => {
   const [modalVisible, setModalVisible] = useState(true)
-
+  const { LL } = useI18nContext()
   return (
     <Modal visible={modalVisible} transparent animationType="fade">
       {screen === "accounts" && (
@@ -84,7 +85,7 @@ export const Overlay: ComponentType = ({ screen }: Props) => {
             <SafeAreaView style={styles.flex}>
               <View style={styles.flex}>
                 <View style={styles.flex} />
-                <Text style={styles.modalText}>{translate("Overlay.accounts")}</Text>
+                <Text style={styles.modalText}>{LL.Overlay.accounts()}</Text>
                 <DownArrow style={styles.arrow} />
               </View>
             </SafeAreaView>
@@ -119,10 +120,8 @@ export const Overlay: ComponentType = ({ screen }: Props) => {
                 />
               </Svg>
               <View style={styles.textContainer}>
-                <Text style={styles.modalText}>
-                  {translate("Overlay.earns.download")}
-                </Text>
-                <Text style={styles.modalText}>{translate("Overlay.earns.getMore")}</Text>
+                <Text style={styles.modalText}>{LL.Overlay.rewards.download()}</Text>
+                <Text style={styles.modalText}>{LL.Overlay.rewards.getMore()}</Text>
               </View>
             </View>
           </TouchableWithoutFeedback>

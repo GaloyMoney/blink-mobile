@@ -14,11 +14,17 @@ import {
   defaultConfiguration,
 } from "../../app/store/app-configuration-context"
 import { PriceContextProvider } from "../../app/store/price-context"
-import { translate } from "../../app/utils/translate"
+import { i18nObject } from "../../app/i18n/i18n-util"
+import { loadLocale } from "../../app/i18n/i18n-util.sync"
 
 jest.mock("react-native/Libraries/EventEmitter/NativeEventEmitter")
 jest.mock("react-native-fingerprint-scanner", () => ({}))
-
+jest.mock("../../app/i18n/i18n-react", () => ({
+  useI18nContext: () => {
+    loadLocale("en")
+    return { LL: i18nObject("en") }
+  },
+}))
 const cache = new InMemoryCache()
 
 describe("WelcomePhoneInputScreen", () => {
@@ -56,9 +62,7 @@ describe("WelcomePhoneInputScreen", () => {
       </AppConfigurationContext.Provider>,
     )
     expect(queryByA11yLabel("Input phone number")).not.toBeNull()
-    expect(
-      queryByPlaceholderText(translate("WelcomePhoneInputScreen.placeholder")),
-    ).not.toBeNull()
+    expect(queryByPlaceholderText("Phone Number")).not.toBeNull()
   })
   it("country picker is visible on press", async () => {
     const { getByTestId } = render(

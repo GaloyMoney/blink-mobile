@@ -5,8 +5,12 @@ import { createMock } from "ts-auto-mock"
 import moment from "moment"
 
 import { TransactionDate } from "../../app/components/transaction-date"
-import { translate } from "../../app/utils/translate"
-
+import { i18nObject } from "../../app/i18n/i18n-util"
+jest.mock("@app/i18n/i18n-react", () => ({
+  useI18nContext: () => {
+    return i18nObject("en")
+  },
+}))
 describe("Display the createdAt date for a transaction", () => {
   it("Displays pending for a pending onchain transaction", () => {
     const mockedTransaction = createMock<GaloyGQL.Transaction>({
@@ -15,7 +19,7 @@ describe("Display the createdAt date for a transaction", () => {
     })
 
     const { queryAllByText } = render(<TransactionDate tx={mockedTransaction} />)
-    expect(queryAllByText(translate("common.pending"))).not.toBeNull()
+    expect(queryAllByText("pending")).not.toBeNull()
   })
   it("Displays friendly date", () => {
     const testTransactionCreatedAtDate = moment().subtract(1, "days")

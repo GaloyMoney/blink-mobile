@@ -57,7 +57,9 @@ import "moment/locale/fr-ca"
 import "moment/locale/pt-br"
 import { PriceContextProvider } from "./store/price-context"
 import { AuthenticationContext } from "./store/authentication-context"
-
+import { LocalizationContextProvider } from "./store/localization-context"
+import { loadAllLocales } from "./i18n/i18n-util.sync"
+import TypesafeI18n from "./i18n/i18n-react"
 export const BUILD_VERSION = "build_version"
 
 export const { link: linkNetworkStatusNotifier, useApolloNetworkStatus } =
@@ -95,6 +97,8 @@ const noRetryOperations = [
   "onChainPaymentSend",
   "onChainTxFee",
 ]
+
+loadAllLocales()
 
 /**
  * This is the root component of our app.
@@ -314,28 +318,32 @@ export const App = (): JSX.Element => {
       >
         <ApolloProvider client={apolloClient}>
           <PriceContextProvider>
-            <ErrorBoundary FallbackComponent={ErrorScreen}>
-              <NavigationContainer
-                key={token}
-                linking={linking}
-                onStateChange={(state) => {
-                  const currentRouteName = getActiveRouteName(state)
-                  if (routeName.current !== currentRouteName) {
-                    analytics().logScreenView({
-                      screen_name: currentRouteName,
-                      screen_class: currentRouteName,
-                    })
-                    routeName.current = currentRouteName
-                  }
-                }}
-              >
-                <RootSiblingParent>
-                  <GlobalErrorToast />
-                  <RootStack />
-                  <Toast />
-                </RootSiblingParent>
-              </NavigationContainer>
-            </ErrorBoundary>
+            <TypesafeI18n locale={"en"}>
+              <LocalizationContextProvider>
+                <ErrorBoundary FallbackComponent={ErrorScreen}>
+                  <NavigationContainer
+                    key={token}
+                    linking={linking}
+                    onStateChange={(state) => {
+                      const currentRouteName = getActiveRouteName(state)
+                      if (routeName.current !== currentRouteName) {
+                        analytics().logScreenView({
+                          screen_name: currentRouteName,
+                          screen_class: currentRouteName,
+                        })
+                        routeName.current = currentRouteName
+                      }
+                    }}
+                  >
+                    <RootSiblingParent>
+                      <GlobalErrorToast />
+                      <RootStack />
+                      <Toast />
+                    </RootSiblingParent>
+                  </NavigationContainer>
+                </ErrorBoundary>
+              </LocalizationContextProvider>
+            </TypesafeI18n>
           </PriceContextProvider>
         </ApolloProvider>
       </AuthenticationContext.Provider>

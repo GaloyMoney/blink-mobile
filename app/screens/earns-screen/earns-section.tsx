@@ -9,7 +9,6 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import Carousel, { Pagination } from "react-native-snap-carousel"
 import Icon from "react-native-vector-icons/Ionicons"
-import I18n from "i18n-js"
 
 import { Screen } from "../../components/screen"
 import { useMutation } from "@galoymoney/client"
@@ -21,10 +20,15 @@ import type { ScreenType } from "../../types/jsx"
 import useToken from "../../hooks/use-token"
 import { toastShow } from "../../utils/toast"
 import { SVGs } from "./earn-svg-factory"
-import { getCardsFromSection, remainingSatsOnSection } from "./earns-utils"
+import {
+  getCardsFromSection,
+  getQuizQuestionsContent,
+  remainingSatsOnSection,
+} from "./earns-utils"
 import { getQuizQuestions } from "../../graphql/query"
 import useMainQuery from "@app/hooks/use-main-query"
-import { translate } from "@app/utils/translate"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { earnSections } from "./sections"
 
 const { width: screenWidth } = Dimensions.get("window")
 
@@ -122,26 +126,33 @@ export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
   const { hasToken } = useToken()
   const client = useApolloClient()
   const { refetch: refetchMain } = useMainQuery()
-
+  const { LL } = useI18nContext()
   const [userQuizQuestionUpdateCompleted] = useMutation.userQuizQuestionUpdateCompleted({
     onCompleted: () => refetchMain(),
   })
 
   const quizQuestions = getQuizQuestions(client, { hasToken })
 
+  const quizQuestionsContent = getQuizQuestionsContent({ LL })
+
   const sectionIndex = route.params.section
-  const cards = getCardsFromSection({ quizQuestions, sectionIndex })
+  const cards = getCardsFromSection({ quizQuestions, sectionIndex, quizQuestionsContent })
 
   const itemIndex = cards.findIndex((item) => !item.fullfilled)
   const [firstItem] = useState(itemIndex >= 0 ? itemIndex : 0)
   const [currRewardIndex, setCurrRewardIndex] = useState(firstItem)
 
-  const remainingSats = remainingSatsOnSection({ quizQuestions, sectionIndex })
+  const remainingSats = remainingSatsOnSection({
+    quizQuestions,
+    sectionIndex,
+    quizQuestionsContent,
+  })
 
   const [initialRemainingSats] = useState(remainingSats)
   const currentRemainingEarn = remainingSats
 
-  const sectionTitle = translate(`EarnScreen.earns.${sectionIndex}.meta.title`)
+  const sectionTitle =
+    LL.EarnScreen.earnSections[Object.keys(earnSections)[sectionIndex]].meta.title()
 
   const isFocused = useIsFocused()
 
@@ -237,14 +248,11 @@ export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
               titleStyle={
                 item.fullfilled ? styles.titleStyleFullfilled : styles.titleStyle
               }
-              title={translate(
-                item.fullfilled ? "EarnScreen.satsEarned" : "EarnScreen.earnSats",
-                {
-                  count: item.value,
-                  // eslint-disable-next-line camelcase
-                  formatted_number: I18n.toNumber(item.value, { precision: 0 }),
-                },
-              )}
+              title={
+                item.fullfilled
+                  ? LL.EarnScreen.satsEarned({ formattedNumber: item.value })
+                  : LL.EarnScreen.earnSats({ formattedNumber: item.value })
+              }
               icon={
                 item.fullfilled ? (
                   <Icon
@@ -260,9 +268,7 @@ export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
         </View>
         {!item.enabled && (
           <>
-            <Text style={styles.unlockQuestion}>
-              {translate("EarnScreen.unlockQuestion")}
-            </Text>
+            <Text style={styles.unlockQuestion}>{LL.EarnScreen.unlockQuestion()}</Text>
             <Text style={styles.unlock}>{item.nonEnabledMessage}</Text>
           </>
         )}

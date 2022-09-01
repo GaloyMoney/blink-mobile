@@ -44,7 +44,7 @@ import PriceIcon from "@app/assets/icons/price.svg"
 import SettingsIcon from "@app/assets/icons/settings.svg"
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs"
 import { CompositeNavigationProp } from "@react-navigation/native"
-import { translate } from "@app/utils/translate"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 const styles = EStyleSheet.create({
   bottom: {
@@ -263,6 +263,7 @@ export const MoveMoneyScreen: ScreenType = ({
   usdWalletBalance,
 }: MoveMoneyScreenProps) => {
   const [modalVisible, setModalVisible] = useState(false)
+  const { LL } = useI18nContext()
 
   const onMenuClick = (target) => {
     if (hasToken) {
@@ -311,7 +312,7 @@ export const MoveMoneyScreen: ScreenType = ({
 
   if (hasToken && transactionsEdges?.length) {
     recentTransactionsData = {
-      title: translate("TransactionScreen.title"),
+      title: LL.TransactionScreen.title(),
       target: "transactionHistory",
       style: styles.transactionViewButton,
       details: (
@@ -358,9 +359,9 @@ export const MoveMoneyScreen: ScreenType = ({
             color={palette.lightGrey}
             style={styles.icon}
           />
-          <Text style={styles.text}>{translate("common.needWallet")}</Text>
+          <Text style={styles.text}>{LL.common.needWallet()}</Text>
           <Button
-            title={translate("common.openWallet")}
+            title={LL.common.openWallet()}
             onPress={activateWallet}
             type="outline"
             buttonStyle={styles.buttonStyle}
@@ -421,17 +422,17 @@ export const MoveMoneyScreen: ScreenType = ({
         )}
         data={[
           {
-            title: translate("ScanningQRCodeScreen.title"),
+            title: LL.ScanningQRCodeScreen.title(),
             target: "scanningQRCode",
             icon: <QrCodeIcon />,
           },
           {
-            title: translate("MoveMoneyScreen.send"),
+            title: LL.MoveMoneyScreen.send(),
             target: "sendBitcoinDestination",
             icon: <SendIcon />,
           },
           {
-            title: translate("MoveMoneyScreen.receive"),
+            title: LL.MoveMoneyScreen.receive(),
             target: "receiveBitcoin",
             icon: <ReceiveIcon />,
           },
@@ -457,7 +458,7 @@ export const MoveMoneyScreen: ScreenType = ({
         {isUpdateAvailable && (
           <Pressable onPress={linkUpgrade}>
             <Text style={styles.lightningText}>
-              {translate("MoveMoneyScreen.updateAvailable")}
+              {LL.MoveMoneyScreen.updateAvailable()}
             </Text>
           </Pressable>
         )}

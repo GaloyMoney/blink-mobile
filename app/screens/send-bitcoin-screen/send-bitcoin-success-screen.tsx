@@ -6,7 +6,7 @@ import successLottieJson from "./success_lottie.json"
 import useMainQuery from "@app/hooks/use-main-query"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { translate } from "@app/utils/translate"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -37,6 +37,7 @@ const SendBitcoinSuccessScreen = ({
   navigation,
 }: StackScreenProps<RootStackParamList, "sendBitcoinSuccess">) => {
   const { refetch } = useMainQuery()
+  const { LL } = useI18nContext()
   const CALLBACK_DELAY = 2000
   useEffect(() => {
     refetch()
@@ -58,9 +59,7 @@ const SendBitcoinSuccessScreen = ({
           style={styles.lottie}
           resizeMode="cover"
         />
-        <Text style={styles.successLottieText}>
-          {translate("SendBitcoinScreen.success")}
-        </Text>
+        <Text style={styles.successLottieText}>{LL.SendBitcoinScreen.success()}</Text>
       </View>
     </ScrollView>
   )

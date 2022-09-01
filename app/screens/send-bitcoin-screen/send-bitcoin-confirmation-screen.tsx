@@ -20,7 +20,7 @@ import { Button } from "react-native-elements"
 import NoteIcon from "@app/assets/icons/note.svg"
 import { CommonActions } from "@react-navigation/native"
 import useMainQuery from "@app/hooks/use-main-query"
-import { translate } from "@app/utils/translate"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -210,6 +210,7 @@ const SendBitcoinConfirmationScreen = ({
     useMutation.lnNoAmountUsdInvoicePaymentSend()
   const [onChainPaymentSend, { loading: onChainLoading }] =
     useMutation.onChainPaymentSend()
+  const { LL } = useI18nContext()
 
   const isLoading =
     intraledgerLoading ||
@@ -378,7 +379,7 @@ const SendBitcoinConfirmationScreen = ({
   if (fee.amount && payerWalletDescriptor.currency === WalletCurrency.BTC) {
     validAmount = paymentAmountInBtc.amount + fee.amount.amount <= btcWalletBalance
     if (!validAmount) {
-      invalidAmountErrorMessage = translate("SendBitcoinScreen.amountExceed", {
+      invalidAmountErrorMessage = LL.SendBitcoinScreen.amountExceed({
         balance: satAmountDisplay(btcWalletBalance),
       })
     }
@@ -387,7 +388,7 @@ const SendBitcoinConfirmationScreen = ({
   if (fee.amount && payerWalletDescriptor.currency === WalletCurrency.USD) {
     validAmount = paymentAmountInUsd.amount + fee.amount.amount <= usdWalletBalance
     if (!validAmount) {
-      invalidAmountErrorMessage = translate("SendBitcoinScreen.amountExceed", {
+      invalidAmountErrorMessage = LL.SendBitcoinScreen.amountExceed({
         balance: usdAmountDisplay(usdWalletBalance / 100),
       })
     }
@@ -402,9 +403,7 @@ const SendBitcoinConfirmationScreen = ({
       contentContainerStyle={styles.contentContainer}
     >
       <View style={styles.sendBitcoinConfirmationContainer}>
-        <Text style={styles.fieldTitleText}>
-          {translate("SendBitcoinScreen.destination")}
-        </Text>
+        <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.destination()}</Text>
         <View style={styles.fieldBackground}>
           <View style={styles.destinationIconContainer}>
             <DestinationIcon />
@@ -414,7 +413,7 @@ const SendBitcoinConfirmationScreen = ({
           </View>
         </View>
 
-        <Text style={styles.fieldTitleText}>{translate("SendBitcoinScreen.amount")}</Text>
+        <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.amount()}</Text>
         <View style={styles.fieldBackground}>
           <View style={styles.amountContainer}>
             {payerWalletDescriptor.currency === WalletCurrency.BTC && (
@@ -456,7 +455,7 @@ const SendBitcoinConfirmationScreen = ({
             )}
           </View>
         </View>
-        <Text style={styles.fieldTitleText}>{translate("common.from")}</Text>
+        <Text style={styles.fieldTitleText}>{LL.common.from()}</Text>
         <View style={styles.fieldBackground}>
           <View style={styles.walletSelectorTypeContainer}>
             <View
@@ -507,9 +506,7 @@ const SendBitcoinConfirmationScreen = ({
         </View>
         {note ? (
           <>
-            <Text style={styles.fieldTitleText}>
-              {translate("SendBitcoinScreen.note")}
-            </Text>
+            <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.note()}</Text>
             <View style={styles.fieldBackground}>
               <View style={styles.noteIconContainer}>
                 <NoteIcon style={styles.noteIcon} />
@@ -519,7 +516,7 @@ const SendBitcoinConfirmationScreen = ({
           </>
         ) : null}
         <Text style={styles.fieldTitleText}>
-          {translate("SendBitcoinConfirmationScreen.feeLabel")}
+          {LL.SendBitcoinConfirmationScreen.feeLabel()}
         </Text>
         <View style={styles.fieldBackground}>
           <View style={styles.destinationText}>
@@ -529,13 +526,13 @@ const SendBitcoinConfirmationScreen = ({
               <Text>{feeDisplayText} *</Text>
             )}
             {fee.status === "error" && !feeDisplayText && (
-              <Text>{translate("SendBitcoinConfirmationScreen.feeError")}</Text>
+              <Text>{LL.SendBitcoinConfirmationScreen.feeError()}</Text>
             )}
           </View>
         </View>
         {fee.status === "error" && Boolean(feeDisplayText) && (
           <Text style={styles.maxFeeWarningText}>
-            {"* " + translate("SendBitcoinConfirmationScreen.maxFeeSelected")}
+            {"*" + LL.SendBitcoinConfirmationScreen.maxFeeSelected()}
           </Text>
         )}
 
@@ -547,7 +544,7 @@ const SendBitcoinConfirmationScreen = ({
         <View style={styles.buttonContainer}>
           <Button
             loading={isLoading}
-            title={translate("SendBitcoinConfirmationScreen.title")}
+            title={LL.SendBitcoinConfirmationScreen.title()}
             buttonStyle={styles.button}
             titleStyle={styles.buttonTitleStyle}
             disabledStyle={[styles.button, styles.disabledButtonStyle]}

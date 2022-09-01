@@ -1,3 +1,4 @@
+import { useI18nContext } from "@app/i18n/i18n-react"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { Image, View } from "react-native"
@@ -8,7 +9,6 @@ import { VersionComponent } from "../../components/version"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import type { ScreenType } from "../../types/jsx"
-import { translate } from "@app/utils/translate"
 
 import BitcoinBeachLogo from "./bitcoin-beach-logo.png"
 
@@ -55,24 +55,27 @@ type Props = {
   navigation: StackNavigationProp<RootStackParamList, "getStarted">
 }
 
-export const GetStartedScreen: ScreenType = ({ navigation }: Props) => (
-  <Screen
-    style={styles.container}
-    backgroundColor={palette.white}
-    statusBar="light-content"
-  >
-    <Image style={styles.Logo} source={BitcoinBeachLogo} resizeMode="contain" />
-    <VersionComponent style={styles.version} />
-    <View style={styles.bottom}>
-      <Button
-        title={translate("GetStartedScreen.getStarted")}
-        buttonStyle={styles.button}
-        titleStyle={styles.buttonTitle}
-        onPress={() => navigation.replace("welcomeFirst")}
-        containerStyle={styles.buttonContainer}
-        testID="getStarted"
-        accessibilityLabel="getStarted"
-      />
-    </View>
-  </Screen>
-)
+export const GetStartedScreen: ScreenType = ({ navigation }: Props) => {
+  const { LL } = useI18nContext()
+  return (
+    <Screen
+      style={styles.container}
+      backgroundColor={palette.white}
+      statusBar="light-content"
+    >
+      <Image style={styles.Logo} source={BitcoinBeachLogo} resizeMode="contain" />
+      <VersionComponent style={styles.version} />
+      <View style={styles.bottom}>
+        <Button
+          title={LL.GetStartedScreen.getStarted()}
+          buttonStyle={styles.button}
+          titleStyle={styles.buttonTitle}
+          onPress={() => navigation.replace("welcomeFirst")}
+          containerStyle={styles.buttonContainer}
+          testID="getStarted"
+          accessibilityLabel="getStarted"
+        />
+      </View>
+    </Screen>
+  )
+}

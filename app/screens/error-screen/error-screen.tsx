@@ -13,7 +13,7 @@ import crashlytics from "@react-native-firebase/crashlytics"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import useLogout from "@app/hooks/use-logout"
 import ContactModal from "@app/components/contact-modal/contact-modal"
-import { translate } from "@app/utils/translate"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 const styles = EStyleSheet.create({
   $color: palette.white,
@@ -59,6 +59,7 @@ const styles = EStyleSheet.create({
 export const ErrorScreen = ({ error, resetError }) => {
   const [isContactModalVisible, setIsContactModalVisible] = React.useState(false)
   const { logout } = useLogout()
+  const { LL } = useI18nContext()
   useEffect(() => crashlytics().recordError(error), [error])
 
   const resetApp = async () => {
@@ -79,33 +80,34 @@ export const ErrorScreen = ({ error, resetError }) => {
     >
       <StatusBar barStyle={"dark-content"} backgroundColor={palette.lightBlue} />
       <SafeAreaView style={presets.fixed.inner}>
-        <Text style={styles.header}>{translate("common.error")}</Text>
+        <Text style={styles.header}>{LL.common.error()}</Text>
         <View style={styles.container}>
           <HoneyBadgerShovel style={styles.image} />
-          <Text style={styles.text}>{translate("errors.fatalError")}</Text>
+          <Text style={styles.text}>{LL.errors.fatalError()}</Text>
           <Button
-            title={translate("errors.showError")}
-            onPress={() => Alert.alert(translate("common.error"), String(error))}
+            title={LL.errors.showError()}
+            onPress={() => Alert.alert(LL.common.error(), String(error))}
             containerStyle={styles.buttonContainer}
             buttonStyle={styles.buttonStyle}
             titleStyle={styles.buttonTitle}
           />
           <Button
-            title={translate("support.contactUs")}
+            title={LL.support.contactUs()}
             onPress={() => toggleIsContactModalVisible()}
             containerStyle={styles.buttonContainer}
             buttonStyle={styles.buttonStyle}
             titleStyle={styles.buttonTitle}
           />
           <Button
-            title={translate("common.tryAgain")}
+            title={LL.common.tryAgain()}
             onPress={() => resetError()}
             containerStyle={styles.buttonContainer}
             buttonStyle={styles.buttonStyle}
             titleStyle={styles.buttonTitle}
           />
           <Button
-            title={translate("Clear App Cache and Logout")}
+            // TODO: translate this
+            title={"Clear App Cache and Logout"}
             onPress={() => resetApp()}
             containerStyle={styles.buttonContainer}
             buttonStyle={styles.buttonStyle}

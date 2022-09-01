@@ -4,7 +4,7 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import Montain from "./mointains-cloud-01.svg"
 import { palette } from "../../theme/palette"
 import type { ComponentType } from "../../types/jsx"
-import { translate } from "@app/utils/translate"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 const styles = EStyleSheet.create({
   amountContainer: {
@@ -39,16 +39,19 @@ type Props = {
   color: string
 }
 
-export const MountainHeader: ComponentType = ({ amount, color }: Props) => (
-  <View style={{ backgroundColor: color }}>
-    <View style={styles.topView}>
-      <View style={styles.amountContainer}>
-        <Text style={styles.headerSection}>{translate("EarnScreen.youEarned")}</Text>
-        <Text style={styles.titleSection}>{amount} sats</Text>
+export const MountainHeader: ComponentType = ({ amount, color }: Props) => {
+  const { LL } = useI18nContext()
+  return (
+    <View style={{ backgroundColor: color }}>
+      <View style={styles.topView}>
+        <View style={styles.amountContainer}>
+          <Text style={styles.headerSection}>{LL.EarnScreen.youEarned()}</Text>
+          <Text style={styles.titleSection}>{amount} sats</Text>
+        </View>
+      </View>
+      <View style={styles.mountainView}>
+        <Montain />
       </View>
     </View>
-    <View style={styles.mountainView}>
-      <Montain />
-    </View>
-  </View>
-)
+  )
+}

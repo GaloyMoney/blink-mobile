@@ -23,7 +23,7 @@ import NoteIcon from "@app/assets/icons/note.svg"
 import { toastShow } from "@app/utils/toast"
 import { copyPaymentInfoToClipboard } from "@app/utils/clipboard"
 import moment from "moment"
-import { translate } from "@app/utils/translate"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 const styles = EStyleSheet.create({
   container: {
@@ -153,6 +153,7 @@ const ReceiveUsd = () => {
   const { lnUpdate } = useSubscriptionUpdates()
   const [showMemoInput, setShowMemoInput] = useState(false)
   const [showAmountInput, setShowAmountInput] = useState(false)
+  const { LL } = useI18nContext()
   const { timeLeft, startCountdownTimer, resetCountdownTimer, stopCountdownTimer } =
     useCountdownTimer()
   useEffect(() => {
@@ -208,7 +209,7 @@ const ReceiveUsd = () => {
           })
           if (errors && errors.length !== 0) {
             console.error(errors, "error with lnNoAmountInvoiceCreate")
-            setErr(translate("ReceiveBitcoinScreen.error"))
+            setErr(LL.ReceiveBitcoinScreen.error())
             setStatus("error")
             return
           }
@@ -226,7 +227,7 @@ const ReceiveUsd = () => {
 
           if (errors && errors.length !== 0) {
             console.error(errors, "error with lnInvoiceCreate")
-            setErr(translate("ReceiveBitcoinScreen.error"))
+            setErr(LL.ReceiveBitcoinScreen.error())
             setStatus("error")
             return
           }
@@ -240,7 +241,7 @@ const ReceiveUsd = () => {
         throw err
       }
     },
-    [lnNoAmountInvoiceCreate, lnUsdInvoiceCreate],
+    [lnNoAmountInvoiceCreate, lnUsdInvoiceCreate, LL],
   )
 
   useEffect((): void | (() => void) => {
@@ -257,11 +258,11 @@ const ReceiveUsd = () => {
 
   useEffect((): void | (() => void) => {
     if (status === "expired") {
-      setErr(translate("ReceiveBitcoinScreen.expired"))
+      setErr(LL.ReceiveBitcoinScreen.expired())
     } else if (status !== "error") {
       setErr("")
     }
-  }, [status])
+  }, [status, LL])
 
   const share = useCallback(async () => {
     try {
@@ -288,7 +289,7 @@ const ReceiveUsd = () => {
       getFullUri({ input: invoice?.paymentRequest, prefix: false }),
     )
     toastShow({
-      message: translate("ReceiveBitcoinScreen.copyClipboard"),
+      message: LL.ReceiveBitcoinScreen.copyClipboard(),
       type: "success",
     })
   }
@@ -297,7 +298,9 @@ const ReceiveUsd = () => {
     return (
       <View style={styles.inputForm}>
         <View style={styles.container}>
-          <Text style={styles.fieldTitleText}>{translate("Invoice Amount")}</Text>
+          <Text style={styles.fieldTitleText}>
+            {LL.ReceiveBitcoinScreen.invoiceAmount()}
+          </Text>
           <View style={styles.field}>
             <FakeCurrencyInput
               value={usdAmount}
@@ -314,7 +317,7 @@ const ReceiveUsd = () => {
           </View>
 
           <Button
-            title={translate("Update Invoice")}
+            title={LL.ReceiveBitcoinScreen.updateInvoice()}
             buttonStyle={[styles.button, styles.activeButtonStyle]}
             titleStyle={styles.activeButtonTitleStyle}
             disabledStyle={[styles.button, styles.disabledButtonStyle]}
@@ -331,11 +334,11 @@ const ReceiveUsd = () => {
     return (
       <View style={styles.inputForm}>
         <View style={styles.container}>
-          <Text style={styles.fieldTitleText}>{translate("SendBitcoinScreen.note")}</Text>
+          <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.note()}</Text>
           <View style={styles.field}>
             <TextInput
               style={styles.noteInput}
-              placeholder={translate("SendBitcoinScreen.note")}
+              placeholder={LL.SendBitcoinScreen.note()}
               onChangeText={(note) => setMemo(note)}
               value={memo}
               multiline={true}
@@ -345,7 +348,7 @@ const ReceiveUsd = () => {
           </View>
 
           <Button
-            title={translate("Update Invoice")}
+            title={LL.ReceiveBitcoinScreen.updateInvoice()}
             buttonStyle={[styles.button, styles.activeButtonStyle]}
             titleStyle={styles.activeButtonTitleStyle}
             onPress={() => setShowMemoInput(false)}
@@ -358,7 +361,9 @@ const ReceiveUsd = () => {
   const displayAmount = () => {
     if (!usdAmount) {
       return (
-        <Text style={styles.primaryAmount}>{translate("Flexible Amount Invoice")}</Text>
+        <Text style={styles.primaryAmount}>
+          {LL.ReceiveBitcoinScreen.flexibleAmountInvoice()}
+        </Text>
       )
     }
     return (
@@ -390,7 +395,7 @@ const ReceiveUsd = () => {
             <>
               <View style={styles.textContainer}>
                 {loading ? (
-                  <Text>{translate("Generating Invoice...")}</Text>
+                  <Text>{LL.ReceiveBitcoinScreen.generatingInvoice()}</Text>
                 ) : (
                   <>
                     <View style={styles.copyInvoiceContainer}>
@@ -398,7 +403,7 @@ const ReceiveUsd = () => {
                         <Text style={styles.infoText}>
                           <Icon style={styles.infoText} name="copy-outline" />
                           <Text> </Text>
-                          {translate("ReceiveBitcoinScreen.copyInvoice")}
+                          {LL.ReceiveBitcoinScreen.copyInvoice()}
                         </Text>
                       </Pressable>
                     </View>
@@ -407,7 +412,7 @@ const ReceiveUsd = () => {
                         <Text style={styles.infoText}>
                           <Icon style={styles.infoText} name="share-outline" />
                           <Text> </Text>
-                          {translate("ReceiveBitcoinScreen.shareInvoice")}
+                          {LL.ReceiveBitcoinScreen.shareInvoice()}
                         </Text>
                       </Pressable>
                     </View>
@@ -423,10 +428,10 @@ const ReceiveUsd = () => {
         {status === "expired" && (
           <View style={[styles.container, styles.invoiceExpired]}>
             <Text style={styles.invoiceExpiredMessage}>
-              {translate("Invoice Expired")}
+              {LL.ReceiveBitcoinScreen.expired()}
             </Text>
             <Button
-              title={translate("Generate new invoice")}
+              title={LL.ReceiveBitcoinScreen.generatingInvoice()}
               buttonStyle={[styles.button, styles.activeButtonStyle]}
               titleStyle={styles.activeButtonTitleStyle}
               onPress={() => {
@@ -449,7 +454,7 @@ const ReceiveUsd = () => {
                       </View>
                       <View style={styles.fieldTextContainer}>
                         <Text style={styles.fieldText}>
-                          {translate("ReceiveBitcoinScreen.addAmount")}
+                          {LL.ReceiveBitcoinScreen.addAmount()}
                         </Text>
                       </View>
                       <View style={styles.fieldArrowContainer}>
@@ -469,7 +474,7 @@ const ReceiveUsd = () => {
                       </View>
                       <View style={styles.fieldTextContainer}>
                         <Text style={styles.fieldText}>
-                          {translate("Set a note/label")}
+                          {LL.ReceiveBitcoinScreen.setANote()}
                         </Text>
                       </View>
                       <View style={styles.fieldArrowContainer}>
@@ -482,7 +487,7 @@ const ReceiveUsd = () => {
               {Boolean(timeLeft) && (
                 <View style={styles.countdownTimer}>
                   <Text style={timeLeft < 10 ? styles.lowTimer : undefined}>
-                    {translate("ReceiveBitcoinScreen.expiresIn")}:{" "}
+                    {LL.ReceiveBitcoinScreen.expiresIn()}:{" "}
                     {moment.utc(timeLeft * 1000).format("m:ss")}
                   </Text>
                 </View>

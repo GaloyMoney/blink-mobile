@@ -8,7 +8,6 @@ import { ScrollView, TouchableWithoutFeedback } from "react-native-gesture-handl
 import Modal from "react-native-modal"
 import { SafeAreaView } from "react-native-safe-area-context"
 import Icon from "react-native-vector-icons/Ionicons"
-import I18n from "i18n-js"
 
 import { CloseCross } from "../../components/close-cross"
 import { Screen } from "../../components/screen"
@@ -20,7 +19,7 @@ import type { ScreenType } from "../../types/jsx"
 import { StackNavigationProp } from "@react-navigation/stack"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { RouteProp } from "@react-navigation/native"
-import { translate } from "@app/utils/translate"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 const styles = EStyleSheet.create({
   answersView: {
@@ -170,6 +169,7 @@ export const EarnQuiz: ScreenType = ({ route, navigation }: Props) => {
   const [quizVisible, setQuizVisible] = useState(false)
   const [recordedAnswer, setRecordedAnswer] = useState([])
   const [permutation] = useState(shuffle([0, 1, 2]))
+  const { LL } = useI18nContext()
 
   const addRecordedAnswer = (value) => {
     setRecordedAnswer([...recordedAnswer, value])
@@ -271,7 +271,7 @@ export const EarnQuiz: ScreenType = ({ route, navigation }: Props) => {
             <View>
               {recordedAnswer.indexOf(0) === -1 ? null : (
                 <Button
-                  title={translate("EarnScreen.keepDigging")}
+                  title={LL.EarnScreen.keepDigging()}
                   type="outline"
                   onPress={async () => close()}
                   containerStyle={styles.keepDiggingContainerStyle}
@@ -298,10 +298,10 @@ export const EarnQuiz: ScreenType = ({ route, navigation }: Props) => {
           {(isCompleted && (
             <>
               <Text style={styles.textEarn}>
-                {translate("EarnScreen.quizComplete", { amount })}
+                {LL.EarnScreen.quizComplete({ amount })}
               </Text>
               <Button
-                title={translate("EarnScreen.reviewQuiz")}
+                title={LL.EarnScreen.reviewQuiz()}
                 type="clear"
                 titleStyle={styles.completedTitleStyle}
                 onPress={() => setQuizVisible(true)}
@@ -309,10 +309,8 @@ export const EarnQuiz: ScreenType = ({ route, navigation }: Props) => {
             </>
           )) || (
             <Button
-              title={translate("EarnScreen.earnSats", {
-                count: amount,
-                // eslint-disable-next-line camelcase
-                formatted_number: I18n.toNumber(amount, { precision: 0 }),
+              title={LL.EarnScreen.earnSats({
+                formattedNumber: amount,
               })}
               buttonStyle={styles.buttonStyle}
               titleStyle={styles.titleStyle}

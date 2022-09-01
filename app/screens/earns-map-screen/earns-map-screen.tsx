@@ -11,8 +11,7 @@ import { PrimaryStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import { ComponentType, ScreenType } from "../../types/jsx"
 import useToken from "../../hooks/use-token"
-import { sectionCompletedPct } from "../earns-screen"
-import { translate, getLocale } from "@app/utils/translate"
+import { getQuizQuestionsContent, sectionCompletedPct } from "../earns-screen"
 
 import BitcoinCircle from "./bitcoin-circle-01.svg"
 import BottomOngoing from "./bottom-ongoing-01.svg"
@@ -31,6 +30,7 @@ import RightComplete from "./right-section-completed-01.svg"
 import RightOngoing from "./right-section-ongoing-01.svg"
 import RightTodo from "./right-section-to-do-01.svg"
 import TextBlock from "./text-block-medium.svg"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 const BottomOngoingEN = React.lazy(() => import("./bottom-ongoing-01.en.svg"))
 const BottomOngoingES = React.lazy(() => import("./bottom-ongoing-01.es.svg"))
@@ -128,12 +128,14 @@ export const EarnMapDataInjected: ScreenType = ({ navigation }: EarnMapDataProps
   const { hasToken } = useToken()
   const client = useApolloClient()
   const quizQuestions = getQuizQuestions(client, { hasToken })
-
+  const { LL } = useI18nContext()
   if (!quizQuestions.allQuestions) {
     return null
   }
 
-  const sectionIndexs = Object.keys(translate("EarnScreen.earns"))
+  const quizQuestionsContent = getQuizQuestionsContent({ LL })
+
+  const sectionIndexs = Object.keys(LL.EarnScreen.earnSections)
 
   const sectionsData = []
   let currSection = 0
@@ -142,14 +144,18 @@ export const EarnMapDataInjected: ScreenType = ({ navigation }: EarnMapDataProps
   for (const sectionIndex of sectionIndexs) {
     sectionsData.push({
       index: sectionIndex,
-      text: translate(`EarnScreen.earns.${sectionIndex}.meta.title`),
+      text: LL.EarnScreen.earnSections[sectionIndex].title(),
       icon: BitcoinCircle,
       onPress: navigation.navigate.bind(navigation.navigate, "earnsSection", {
         section: sectionIndex,
       }),
     })
 
-    const sectionCompletion = sectionCompletedPct({ quizQuestions, sectionIndex })
+    const sectionCompletion = sectionCompletedPct({
+      quizQuestions,
+      sectionIndex,
+      quizQuestionsContent,
+    })
 
     if (sectionCompletion === 1) {
       currSection += 1
@@ -184,12 +190,13 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> = ({
   progress,
   earned,
 }: IEarnMapScreen) => {
+  const { LL, locale } = useI18nContext()
   const Finish = ({ currSection, length }: FinishProps) => {
     if (currSection !== sectionsData.length) return null
 
     return (
       <>
-        <Text style={styles.finishText}>{translate("EarnScreen.finishText")}</Text>
+        <Text style={styles.finishText}>{LL.EarnScreen.finishText()}</Text>
         {/* TODO FIXME for even section # */}
         {length % 2 ? <LeftFinish /> : <RightFinish />}
       </>
@@ -295,7 +302,7 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> = ({
   const backgroundColor = currSection < sectionsData.length ? palette.sky : palette.orange
 
   const translatedBottomOngoing = () => {
-    switch (getLocale()) {
+    switch (locale) {
       case "es":
         return <BottomOngoingES />
       default:
@@ -304,7 +311,7 @@ export const EarnMapScreen: React.FC<IEarnMapScreen> = ({
   }
 
   const translatedBottomStart = () => {
-    switch (getLocale()) {
+    switch (locale) {
       case "es":
         return <BottomStartES />
       default:

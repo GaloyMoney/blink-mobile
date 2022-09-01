@@ -15,7 +15,7 @@ import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { USERNAME_AVAILABLE } from "../../graphql/query"
 import useMainQuery from "@app/hooks/use-main-query"
-import { translate } from "@app/utils/translate"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 const styles = EStyleSheet.create({
   activity: { marginTop: 12 },
@@ -52,11 +52,12 @@ export const UsernameScreen: ScreenType = ({ navigation }: Props) => {
   )
   const { refetch: refetchMain } = useMainQuery()
   const inputForm = React.createRef<TextInput>()
+  const { LL } = useI18nContext()
 
   const [updateUsername, { loading: updatingUsername }] = useMutation.userUpdateUsername({
     onError: (error) => {
       console.error(error)
-      setInputStatus({ message: translate("errors.generic"), status: "error" })
+      setInputStatus({ message: LL.errors.generic(), status: "error" })
     },
     onCompleted: (data) => {
       const { errors, user } = data.userUpdateUsername
@@ -72,9 +73,9 @@ export const UsernameScreen: ScreenType = ({ navigation }: Props) => {
 
       refetchMain()
 
-      Alert.alert(translate("UsernameScreen.success", { input }), null, [
+      Alert.alert(LL.UsernameScreen.success({ username: input }), null, [
         {
-          text: translate("common.ok"),
+          text: LL.common.ok(),
           onPress: () => {
             navigation.pop(2)
           },
@@ -91,18 +92,18 @@ export const UsernameScreen: ScreenType = ({ navigation }: Props) => {
 
         if (usernameAvailable === true) {
           setInputStatus({
-            message: translate("UsernameScreen.available", { input }),
+            message: LL.UsernameScreen.available({ username: input }),
             status: "available",
           })
         }
         if (usernameAvailable === false) {
           setInputStatus({
-            message: translate("UsernameScreen.notAvailable", { input }),
+            message: LL.UsernameScreen.notAvailable({ username: input }),
             status: "error",
           })
         }
       }, 1000),
-    [checkUsername, input],
+    [checkUsername, input, LL],
   )
 
   React.useEffect(() => {
@@ -118,7 +119,7 @@ export const UsernameScreen: ScreenType = ({ navigation }: Props) => {
 
     if (!UsernameValidation.hasValidLength(input)) {
       setInputStatus({
-        message: translate("UsernameScreen.3CharactersMinimum"),
+        message: LL.UsernameScreen["3CharactersMinimum"](),
         status: "error",
       })
       inputForm.current.focus()
@@ -126,16 +127,16 @@ export const UsernameScreen: ScreenType = ({ navigation }: Props) => {
     }
 
     Alert.alert(
-      translate("UsernameScreen.confirmTitle", { input }),
-      translate("UsernameScreen.confirmSubtext"),
+      LL.UsernameScreen.confirmTitle({ username: input }),
+      LL.UsernameScreen.confirmSubtext(),
       [
         {
-          text: translate("common.cancel"),
+          text: LL.common.cancel(),
           onPress: () => console.debug("Cancel Pressed"),
           style: "cancel",
         },
         {
-          text: translate("common.ok"),
+          text: LL.common.ok(),
           onPress: () =>
             updateUsername({
               variables: { input: { username: input } },
@@ -158,11 +159,11 @@ export const UsernameScreen: ScreenType = ({ navigation }: Props) => {
 
   return (
     <Screen preset="scroll" style={styles.screenStyle}>
-      <Text style={styles.text}>{translate("UsernameScreen.usernameToUse")}</Text>
+      <Text style={styles.text}>{LL.UsernameScreen.usernameToUse()}</Text>
       <Input
         ref={inputForm}
         autoFocus
-        placeholder={translate("common.username")}
+        placeholder={LL.common.username()}
         leftIcon={{ type: "ionicon", name: "ios-person-circle" }}
         onChangeText={onChangeText}
         errorStyle={styles[`${inputStatus.status}Message`]}

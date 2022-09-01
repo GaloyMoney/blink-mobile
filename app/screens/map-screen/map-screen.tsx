@@ -14,7 +14,7 @@ import { isIos } from "../../utils/helper"
 import { palette } from "../../theme/palette"
 import { toastShow } from "../../utils/toast"
 import useToken from "../../hooks/use-token"
-import { translate } from "@app/utils/translate"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 const QUERY_BUSINESSES = gql`
   query businessMapMarkers {
@@ -59,6 +59,7 @@ export const MapScreen: ScreenType = ({ navigation }: Props) => {
   const { data, error, refetch } = useQuery(QUERY_BUSINESSES, {
     notifyOnNetworkStatusChange: true,
   })
+  const { LL } = useI18nContext()
 
   useFocusEffect(() => {
     if (!isRefreshed) {
@@ -78,11 +79,11 @@ export const MapScreen: ScreenType = ({ navigation }: Props) => {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
         {
-          title: translate("MapScreen.locationPermissionTitle"),
-          message: translate("MapScreen.locationPermissionMessage"),
-          buttonNeutral: translate("MapScreen.locationPermissionNeutral"),
-          buttonNegative: translate("MapScreen.locationPermissionNegative"),
-          buttonPositive: translate("MapScreen.locationPermissionPositive"),
+          title: LL.MapScreen.locationPermissionTitle(),
+          message: LL.MapScreen.locationPermissionMessage(),
+          buttonNeutral: LL.MapScreen.locationPermissionNeutral(),
+          buttonNegative: LL.MapScreen.locationPermissionNegative(),
+          buttonPositive: LL.MapScreen.locationPermissionPositive(),
         },
       )
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
@@ -98,6 +99,7 @@ export const MapScreen: ScreenType = ({ navigation }: Props) => {
   useFocusEffect(
     useCallback(() => {
       requestLocationPermission()
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []),
   )
 
@@ -135,13 +137,13 @@ export const MapScreen: ScreenType = ({ navigation }: Props) => {
             {Boolean(item.username) && !isIos && (
               <Button
                 containerStyle={styles.android}
-                title={translate("MapScreen.payBusiness")}
+                title={LL.MapScreen.payBusiness()}
               />
             )}
             {isIos && (
               <CalloutSubview onPress={() => (item.username ? onPress() : null)}>
                 {Boolean(item.username) && (
-                  <Button style={styles.ios} title={translate("MapScreen.payBusiness")} />
+                  <Button style={styles.ios} title={LL.MapScreen.payBusiness()} />
                 )}
               </CalloutSubview>
             )}

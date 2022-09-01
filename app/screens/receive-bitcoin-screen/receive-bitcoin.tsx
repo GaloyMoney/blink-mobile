@@ -1,4 +1,5 @@
 import useMainQuery from "@app/hooks/use-main-query"
+import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { palette } from "@app/theme"
 import { WalletCurrency } from "@app/types/amounts"
@@ -9,7 +10,6 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import ReceiveBtc from "./receive-btc"
 import ReceiveUsd from "./receive-usd"
-import { translate } from "@app/utils/translate"
 
 const styles = EStyleSheet.create({
   container: {
@@ -65,16 +65,17 @@ const ReceiveBitcoinScreen = ({
   const [receiveCurrency, setReceiveCurrency] = useState<WalletCurrency>(
     initialReceiveCurrency || WalletCurrency.BTC,
   )
+  const { LL } = useI18nContext()
 
   useEffect(() => {
     if (receiveCurrency === WalletCurrency.USD) {
-      navigation.setOptions({ title: translate("ReceiveBitcoinScreen.usdTitle") })
+      navigation.setOptions({ title: LL.ReceiveBitcoinScreen.usdTitle() })
     }
 
     if (receiveCurrency === WalletCurrency.BTC) {
-      navigation.setOptions({ title: translate("ReceiveBitcoinScreen.title") })
+      navigation.setOptions({ title: LL.ReceiveBitcoinScreen.title() })
     }
-  }, [receiveCurrency, navigation])
+  }, [receiveCurrency, navigation, LL])
 
   if (!usdWalletId) {
     return <ReceiveBtc />
