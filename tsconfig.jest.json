@@ -1,7 +1,22 @@
 {
   "extends": "./tsconfig",
   "compilerOptions": {
-    "jsx": "react",
-    "module": "commonjs"
-  }
+    "jsx": "react-native",
+    "module": "commonjs",
+    "types": [
+      // "webdriverio/async",
+      // "@wdio/mocha-framework",
+      // "@wdio/devtools-service",
+      // "@types/jest"
+    ],
+    "plugins": [
+      {
+        "transform": "ts-auto-mock/transformer",
+        "cacheBetweenTests": false,
+        "features": ["random"]
+      }
+    ]
+  },
+  "include": ["app", "__tests__", "test", "storybook", "utils/declaration.d.ts"],
+  "exclude": ["node_modules"]
 }

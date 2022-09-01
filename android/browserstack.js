@@ -50,6 +50,13 @@ exports.config = {
         },
       ]);
     });
-  }
+  },
+  autoCompileOpts: {
+        autoCompile: true,
+        tsNodeOpts: {
+            transpileOnly: true,
+            project: 'tsconfig.jest.json'
+        },
+    }
     
 };

@@ -1,4 +1,6 @@
-module.exports = {
+import type { InitialOptionsTsJest } from "ts-jest"
+
+const config: InitialOptionsTsJest = {
   preset: "react-native",
   setupFiles: ["<rootDir>/jest-ts-auto-mock-config.ts"],
   setupFilesAfterEnv: ["<rootDir>/__tests__/helpers/jest.setup.js"],
@@ -49,3 +51,5 @@ module.exports = {
       ")/)",
   ],
 }
+
+export default config

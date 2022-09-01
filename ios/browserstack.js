@@ -56,7 +56,7 @@ exports.config = {
         autoCompile: true,
         tsNodeOpts: {
             transpileOnly: true,
-            project: 'tsconfig.json'
+            project: 'tsconfig.jest.json'
         },
     }
 };
