@@ -3,7 +3,7 @@ import { getStartedButton } from "./screens/GetStartedScreen"
 
 describe("Unauthenticated navigation renders correctly", () => {
   it("Welcome flow", async () => {
-    await (await getStartedButton()).click()
+    await getStartedButton().click()
     expect(await $("~Bitcoin:").isDisplayed()).toBeTruthy()
     expect(await $(`~${translate("WelcomeFirstScreen.care")}`).isDisplayed()).toBeTruthy()
 
