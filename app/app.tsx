@@ -2,7 +2,7 @@
 // Welcome to the main entry point of the app.
 //
 // In this file, we'll be kicking off our app or storybook.
-
+import "intl-pluralrules"
 import {
   ApolloClient,
   ApolloProvider,
