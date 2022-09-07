@@ -1,20 +1,25 @@
-import {
-  AppConfiguration,
-  AppConfigurationContext,
-  saveAppConfig,
-} from "@app/store/app-configuration-context"
-import { useContext } from "react"
+import { usePersistentStateContext } from "@app/store/persistent-state"
+import { useCallback, useMemo } from "react"
+
+export type AppConfiguration = {
+  isUsdDisabled: boolean
+}
 
 export const useAppConfig = () => {
-  const { appConfig, setAppConfig } = useContext(AppConfigurationContext)
+  const persistentStateContext = usePersistentStateContext()
 
-  const setAndSaveConfig = (config: AppConfiguration) => {
-    setAppConfig(config)
-    saveAppConfig(config)
-  }
+  const appConfig = useMemo(() => {
+    return {
+      isUsdDisabled: persistentStateContext.persistentState.isUsdDisabled,
+    }
+  }, [persistentStateContext.persistentState])
 
-  const toggleUsdDisabled = () =>
-    setAndSaveConfig({ ...appConfig, isUsdDisabled: !appConfig.isUsdDisabled })
+  const toggleUsdDisabled = useCallback(() => {
+    persistentStateContext.updateState((state) => ({
+      ...state,
+      isUsdDisabled: !state.isUsdDisabled,
+    }))
+  }, [persistentStateContext.updateState])
 
-  return { appConfig, toggleUsdDisabled, setAppConfig }
+  return { appConfig, toggleUsdDisabled }
 }

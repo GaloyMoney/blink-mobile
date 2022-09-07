@@ -8,14 +8,14 @@ import "react-native-gesture-handler/jestSetup.js"
 import "@mocks/react-navigation-native"
 import "@mocks/react-native-geetest-module"
 import { WelcomePhoneInputScreen } from "../../app/screens/phone-auth-screen"
-import {
-  AppConfiguration,
-  AppConfigurationContext,
-  defaultConfiguration,
-} from "../../app/store/app-configuration-context"
 import { PriceContextProvider } from "../../app/store/price-context"
 import { i18nObject } from "../../app/i18n/i18n-util"
 import { loadLocale } from "../../app/i18n/i18n-util.sync"
+import {
+  PersistentStateContext,
+  PersistentStateProvider,
+} from "../../app/store/persistent-state"
+import { defaultPersistentState } from "../../app/store/persistent-state/state-migrations"
 
 jest.mock("react-native/Libraries/EventEmitter/NativeEventEmitter")
 jest.mock("react-native-fingerprint-scanner", () => ({}))
@@ -31,10 +31,11 @@ describe("WelcomePhoneInputScreen", () => {
   afterEach(cleanup)
   it("render matches snapshot", () => {
     const tree = render(
-      <AppConfigurationContext.Provider
+      <PersistentStateContext.Provider
         value={{
-          appConfig: defaultConfiguration,
-          setAppConfig: (config: AppConfiguration) => {},
+          persistentState: defaultPersistentState,
+          resetState: () => {},
+          updateState: (state) => {},
         }}
       >
         <MockedProvider cache={cache}>
@@ -42,16 +43,17 @@ describe("WelcomePhoneInputScreen", () => {
             <WelcomePhoneInputScreen />
           </PriceContextProvider>
         </MockedProvider>
-      </AppConfigurationContext.Provider>,
+      </PersistentStateContext.Provider>,
     )
     expect(tree).toMatchSnapshot()
   })
   it("has TextInput", () => {
     const { queryByA11yLabel, queryByPlaceholderText } = render(
-      <AppConfigurationContext.Provider
+      <PersistentStateContext.Provider
         value={{
-          appConfig: defaultConfiguration,
-          setAppConfig: (config: AppConfiguration) => {},
+          persistentState: defaultPersistentState,
+          resetState: () => {},
+          updateState: (state) => {},
         }}
       >
         <MockedProvider cache={cache}>
@@ -59,17 +61,18 @@ describe("WelcomePhoneInputScreen", () => {
             <WelcomePhoneInputScreen />
           </PriceContextProvider>
         </MockedProvider>
-      </AppConfigurationContext.Provider>,
+      </PersistentStateContext.Provider>,
     )
     expect(queryByA11yLabel("Input phone number")).not.toBeNull()
     expect(queryByPlaceholderText("Phone Number")).not.toBeNull()
   })
   it("country picker is visible on press", async () => {
     const { getByTestId } = render(
-      <AppConfigurationContext.Provider
+      <PersistentStateContext.Provider
         value={{
-          appConfig: defaultConfiguration,
-          setAppConfig: (config: AppConfiguration) => {},
+          persistentState: defaultPersistentState,
+          resetState: () => {},
+          updateState: (state) => {},
         }}
       >
         <MockedProvider cache={cache}>
@@ -77,7 +80,7 @@ describe("WelcomePhoneInputScreen", () => {
             <WelcomePhoneInputScreen />
           </PriceContextProvider>
         </MockedProvider>
-      </AppConfigurationContext.Provider>,
+      </PersistentStateContext.Provider>,
     )
 
     const DropDownButton = getByTestId("DropDownButton")

@@ -619,6 +619,12 @@ const es: Translation = {
     "pt-BR": "Portugués (Brasil)",
     "fr-CA": "Francés (Canadá)",
   },
+  StablesatsModal: {
+    header: "¡Ya tienes una cuenta en USD agregada a su billetera con StableSats!",
+    body: "Puedes enviar y recibir bitcoins, transferir el valor instantáneamente entre tu cuenta BTC y USD. El valor en la cuenta en USD no fluctúa con el precio de Bitcoin. Esta función no es compatible con el sistema bancario tradicional.",
+    termsAndConditions: "Lee los términos y condiciones.",
+    learnMore: "Aprende más sobre StableSats"
+  },
   SplashScreen: {
     update:
       "\nTu aplicación está desactualizada. Se necesita una actualización antes de que se pueda utilizar la aplicación. Esto se puede hacer desde PlayStore para Android y Testflight para iOS.",
@@ -683,7 +689,7 @@ const es: Translation = {
     amountRequired: "Se requiere una cantidad",
     back: "Atrás",
     bank: "Banco",
-    backHome: "Inicio",
+    backHome: "Atrás",
     bankAccount: "Cuenta de efectivo",
     bitcoin: "Bitcoin",
     bitcoinPrice: "Precio de Bitcoin",

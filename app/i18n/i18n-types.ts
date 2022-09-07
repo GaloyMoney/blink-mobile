@@ -1917,6 +1917,24 @@ type RootTranslation = {
 		 */
 		'fr-CA': string
 	}
+	StablesatsModal: {
+		/**
+		 * With Stablesats, you now have a USD account added to your wallet!
+		 */
+		header: string
+		/**
+		 * You can use it to send and receive Bitcoin, and instantly transfer value between your BTC and USD account. Value in the USD account will not fluctuate with the price of Bitcoin. This feature is not compatible with the traditional banking system.
+		 */
+		body: string
+		/**
+		 * Read the Terms & Conditions.
+		 */
+		termsAndConditions: string
+		/**
+		 * Learn more about Stablesats
+		 */
+		learnMore: string
+	}
 	SplashScreen: {
 		/**
 		 * Your app is outdated. An update is needed before the app can be used.
@@ -4386,6 +4404,24 @@ export type TranslationFunctions = {
 		 * French (Canada)
 		 */
 		'fr-CA': () => LocalizedString
+	}
+	StablesatsModal: {
+		/**
+		 * With Stablesats, you now have a USD account added to your wallet!
+		 */
+		header: () => LocalizedString
+		/**
+		 * You can use it to send and receive Bitcoin, and instantly transfer value between your BTC and USD account. Value in the USD account will not fluctuate with the price of Bitcoin. This feature is not compatible with the traditional banking system.
+		 */
+		body: () => LocalizedString
+		/**
+		 * Read the Terms & Conditions.
+		 */
+		termsAndConditions: () => LocalizedString
+		/**
+		 * Learn more about Stablesats
+		 */
+		learnMore: () => LocalizedString
 	}
 	SplashScreen: {
 		/**

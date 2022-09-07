@@ -46,11 +46,6 @@ import { INetwork } from "./types/network"
 import ErrorBoundary from "react-native-error-boundary"
 import { ErrorScreen } from "./screens/error-screen"
 import Toast from "react-native-toast-message"
-import {
-  AppConfigurationContext,
-  AppConfiguration,
-  loadAppConfig,
-} from "./store/app-configuration-context"
 // import moment locale files so we can display dates in the user's language
 import "moment/locale/es"
 import "moment/locale/fr-ca"
@@ -139,10 +134,8 @@ export const App = (): JSX.Element => {
 
     return route.name
   }
-  const [appConfig, setAppConfig] = useState<AppConfiguration>(undefined)
   useEffect(() => {
     loadAuthToken()
-    loadAppConfig().then((config) => setAppConfig(config))
   }, [])
 
   useEffect(() => {
@@ -273,7 +266,7 @@ export const App = (): JSX.Element => {
   //
   // You're welcome to swap in your own component to render if your boot up
   // sequence is too slow though.
-  if (!apolloClient || !persistor || !appConfig) {
+  if (!apolloClient || !persistor) {
     return null
   }
 
@@ -312,41 +305,38 @@ export const App = (): JSX.Element => {
   }
 
   return (
-    <AppConfigurationContext.Provider value={{ appConfig, setAppConfig }}>
-      <AuthenticationContext.Provider
-        value={{ isAppLocked, setAppUnlocked, setAppLocked }}
-      >
-        <ApolloProvider client={apolloClient}>
-          <PriceContextProvider>
-            <TypesafeI18n locale={"en"}>
-              <LocalizationContextProvider>
-                <ErrorBoundary FallbackComponent={ErrorScreen}>
-                  <NavigationContainer
-                    key={token}
-                    linking={linking}
-                    onStateChange={(state) => {
-                      const currentRouteName = getActiveRouteName(state)
-                      if (routeName.current !== currentRouteName) {
-                        analytics().logScreenView({
-                          screen_name: currentRouteName,
-                          screen_class: currentRouteName,
-                        })
-                        routeName.current = currentRouteName
-                      }
-                    }}
-                  >
-                    <RootSiblingParent>
-                      <GlobalErrorToast />
-                      <RootStack />
-                      <Toast />
-                    </RootSiblingParent>
-                  </NavigationContainer>
-                </ErrorBoundary>
-              </LocalizationContextProvider>
-            </TypesafeI18n>
-          </PriceContextProvider>
-        </ApolloProvider>
-      </AuthenticationContext.Provider>
-    </AppConfigurationContext.Provider>
+    <AuthenticationContext.Provider value={{ isAppLocked, setAppUnlocked, setAppLocked }}>
+      <ApolloProvider client={apolloClient}>
+        <PriceContextProvider>
+          <TypesafeI18n locale={"en"}>
+            <LocalizationContextProvider>
+              <ErrorBoundary FallbackComponent={ErrorScreen}>
+                <NavigationContainer
+                  key={token}
+                  linking={linking}
+                  onStateChange={(state) => {
+                    const currentRouteName = getActiveRouteName(state)
+
+                    if (routeName.current !== currentRouteName) {
+                      analytics().logScreenView({
+                        screen_name: currentRouteName,
+                        screen_class: currentRouteName,
+                      })
+                      routeName.current = currentRouteName
+                    }
+                  }}
+                >
+                  <RootSiblingParent>
+                    <GlobalErrorToast />
+                    <RootStack />
+                    <Toast />
+                  </RootSiblingParent>
+                </NavigationContainer>
+              </ErrorBoundary>
+            </LocalizationContextProvider>
+          </TypesafeI18n>
+        </PriceContextProvider>
+      </ApolloProvider>
+    </AuthenticationContext.Provider>
   )
 }
