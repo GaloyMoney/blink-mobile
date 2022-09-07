@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.6.6",
-    "@galoymoney/client": "^0.1.47",
+    "@galoymoney/client": "^0.1.48",
     "@galoymoney/react-native-geetest-module": "^0.1.3",
     "@react-native-async-storage/async-storage": "^1.17.6",
     "@react-native-community/clipboard": "^1.2.3",
@@ -87,6 +87,7 @@
     "react-native-keychain": "^8.0.0",
     "react-native-localize": "^2.2.2",
     "react-native-maps": "0.31.1",
+    "react-native-markdown-display": "^7.0.0-alpha.2",
     "react-native-modal": "^13.0.1",
     "react-native-phone-number-input": "^2.1.0",
     "react-native-push-notification": "^8.1.1",

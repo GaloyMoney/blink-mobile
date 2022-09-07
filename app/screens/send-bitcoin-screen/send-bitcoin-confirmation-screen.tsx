@@ -409,7 +409,10 @@ const SendBitcoinConfirmationScreen = ({
             <DestinationIcon />
           </View>
           <View style={styles.destinationText}>
-            <PaymentDestinationDisplay destination={destination} />
+            <PaymentDestinationDisplay
+              destination={destination}
+              paymentType={paymentType}
+            />
           </View>
         </View>
 

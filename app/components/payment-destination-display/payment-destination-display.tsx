@@ -1,3 +1,4 @@
+import { lnDomain } from "@app/screens/send-bitcoin-screen/send-bitcoin-destination-screen"
 import { palette } from "@app/theme"
 import React from "react"
 import { ActivityIndicator, Text } from "react-native"
@@ -11,7 +12,13 @@ const styles = EStyleSheet.create({
   },
 })
 
-export const PaymentDestinationDisplay = ({ destination }: { destination?: string }) => {
+export const PaymentDestinationDisplay = ({
+  destination,
+  paymentType,
+}: {
+  destination?: string
+  paymentType?: string
+}) => {
   if (!destination) {
     return <ActivityIndicator />
   }
@@ -19,7 +26,10 @@ export const PaymentDestinationDisplay = ({ destination }: { destination?: strin
   if (destination.length < 40) {
     return (
       <Text numberOfLines={1} ellipsizeMode={"middle"}>
-        <Text>{destination}</Text>
+        <Text>
+          {destination}
+          {paymentType === "intraledger" ? `@${lnDomain}` : ""}
+        </Text>
       </Text>
     )
   }
