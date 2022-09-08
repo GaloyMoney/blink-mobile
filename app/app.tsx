@@ -55,6 +55,7 @@ import { AuthenticationContext } from "./store/authentication-context"
 import { LocalizationContextProvider } from "./store/localization-context"
 import { loadAllLocales } from "./i18n/i18n-util.sync"
 import TypesafeI18n from "./i18n/i18n-react"
+import { customLocaleDetector } from "./utils/locale-detector"
 export const BUILD_VERSION = "build_version"
 
 export const { link: linkNetworkStatusNotifier, useApolloNetworkStatus } =
@@ -308,7 +309,7 @@ export const App = (): JSX.Element => {
     <AuthenticationContext.Provider value={{ isAppLocked, setAppUnlocked, setAppLocked }}>
       <ApolloProvider client={apolloClient}>
         <PriceContextProvider>
-          <TypesafeI18n locale={"en"}>
+          <TypesafeI18n locale={customLocaleDetector()}>
             <LocalizationContextProvider>
               <ErrorBoundary FallbackComponent={ErrorScreen}>
                 <NavigationContainer

@@ -1,12 +1,19 @@
 import * as RNLocalize from "react-native-localize"
 
 export const customLocaleDetector = () => {
-  if (RNLocalize.getLocales()) {
-    return RNLocalize.getLocales()?.map((locale) => {
-      return getLanguageFromLocale(locale.languageCode)
-    })
+  if (
+    RNLocalize.getLocales() &&
+    RNLocalize.getLocales().some(
+      (locale) =>
+        locale.languageCode?.startsWith("en") ||
+        locale.languageCode?.startsWith("es") ||
+        locale.languageCode?.startsWith("fr") ||
+        locale.languageCode?.startsWith("pt"),
+    )
+  ) {
+    return getLanguageFromLocale(RNLocalize.getLocales()[0].languageCode)
   }
-  return ["es"]
+  return "en"
 }
 
 export const getLanguageFromLocale = (locale: string) => {
