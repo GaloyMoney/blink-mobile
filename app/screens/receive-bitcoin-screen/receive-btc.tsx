@@ -566,7 +566,7 @@ const ReceiveBtc = () => {
                   </View>
                   <View style={styles.fieldTextContainer}>
                     <Text style={styles.fieldText}>
-                      {LL.ReceiveBitcoinScreen.setANote}
+                      {LL.ReceiveBitcoinScreen.setANote()}
                     </Text>
                   </View>
                   <View style={styles.fieldArrowContainer}>
