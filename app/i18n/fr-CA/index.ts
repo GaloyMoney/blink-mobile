@@ -564,6 +564,32 @@ const frCA: Translation = {
       "Il s'agit des frais maximum qui vous seront facturés pour cette transaction. Il peut finir par être inférieur une fois le paiement effectué.",
     feeError: "Échec du calcul des frais",
   },
+  // TODO translate the below section
+  SendBitcoinDestinationScreen: {
+    usernameNowAddress: "{bankName} usernames are now {bankName} addresses.",
+    usernameNowAddressInfo: "When you enter a {bankName} username, we will add “@{lnDomain}” to it (e.g maria@{lnDomain}) to make it an address. Your username is now a {bankName} address too.\n\nGo to your {bankName} address page from your Settings to learn how to use it or to share it to receive payments.",
+    enterValidDestination: "Please enter a valid destination",
+    destinationOptions: "You can send to a {bankName} address, LN address, LN invoice, or BTC address.",
+    expiredInvoice: "This invoice has expired. Please generate a new invoice.",
+    wrongNetwork: "This invoice is for a different network. Please generate a new invoice.",
+    invalidAmount: "This contains an invalid amount. Please regenerate with a valid amount.",
+    usernameDoesNotExist: "{lnAddress} doesn't seem to be a {bankName} address that exists.",
+    usernameDoesNotExistAdvice: "Either make sure the spelling is right or ask the recipient for an LN invoice or BTC address instead.",
+    selfPaymentError: "{lnAddress} is your {bankName} address.",
+    selfPaymentAdvice: "If you want to send money to another account that you own, you can use an invoice, LN or BTC address instead.",
+    lnAddressError: "We can't reach this Lightning address. If you are sure it exists, you can try again later.",
+    lnAddressAdvice: "Either make sure the spelling is right or ask the recipient for an invoice or BTC address instead.",
+    unknownLightning: "We can't parse this Lightning address. Please try again.",
+    unknownOnchain: "We can't parse this Bitcoin address. Please try again.",
+    newBankAddressUsername: "{lnAddress} exists as a {bankName} address, but you've never sent money to it.",
+    confirmModal: {
+      title: "You've never sent money to \"{lnAddress}\" before.",
+      body:  "Please make sure the recipient gave you a {bankName} address, **not a username from another wallet**. Otherwise, the money will go to a {bankName} Account that has the “{lnAddress}” address.\n\nCheck the spelling of the first part of the address as well. e.g. jackie and jack1e are 2 different addresses",
+      warning: "If the {bankName} address is entered incorrectly, {bankName} can't undo the transaction.",
+      checkBox: "{lnAddress} is the right address.",
+      confirmButton: "I'm 100% sure",
+    }
+  },
   SendBitcoinScreen: {
     amount: "Montant",
     amountExceed: "Le montant excède votre solde de {balance}",
@@ -582,10 +608,7 @@ const frCA: Translation = {
     note: "note optionnelle",
     success: "Le paiement a été envoyé avec succès",
     title: "Envoyer des bitcoins",
-    usernameNotFound: "Un usager correspondant au nom saisi est introuvable.",
-    failedToFetchLnurlParams: "Impossible de récupérer les paramètres lnurl",
     failedToFetchLnurlInvoice: "Échec de la récupération de la facture lnurl",
-    youCantSendAPaymentToYourself: "Vous ne pouvez pas envoyer de paiement à vous-même",
   },
   SettingsScreen: {
     activated: "Activé",
@@ -680,6 +703,10 @@ const frCA: Translation = {
     bankAccount: "Compte comptant",
     bitcoin: "Bitcoin",
     bitcoinPrice: "Prix Bitcoin",
+    // TO DO: Translate
+    bankAdvice: "{bankName} Advice",
+    // TO DO: Translate
+    bankInfo: "{bankName} Info",
     cancel: "Annuler",
     close: "Fermer",
     confirm: "Confirmer",

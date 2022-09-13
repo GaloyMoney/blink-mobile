@@ -1,5 +1,5 @@
 import useMainQuery from "@app/hooks/use-main-query"
-import React, { useEffect, useState } from "react"
+import React, { useCallback, useEffect, useMemo } from "react"
 import {
   ScrollView,
   StyleSheet,
@@ -11,8 +11,9 @@ import {
 import { palette } from "@app/theme"
 import {
   fetchLnurlPaymentParams,
-  parsePaymentDestination,
+  parsingv2,
   useDelayedQuery,
+  useQuery as useGaloyQuery,
 } from "@galoymoney/client"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
@@ -21,6 +22,18 @@ import { PaymentAmount, WalletCurrency } from "@app/types/amounts"
 import { Button } from "react-native-elements"
 import ScanIcon from "@app/assets/icons/scan.svg"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import {
+  InvalidDestinationReason,
+  useSendBitcoinDestinationReducer,
+  ValidPaymentDestination,
+} from "./send-bitcoin-reducer"
+import { ConfirmDestinationModal } from "./confirm-destination-modal"
+import { DestinationInformation } from "./destination-information"
+import {
+  PaymentType,
+  InvalidLightningDestinationReason,
+  InvalidOnchainDestinationReason,
+} from "@galoymoney/client/dist/parsing-v2"
 
 const Styles = StyleSheet.create({
   scrollView: {
@@ -50,6 +63,20 @@ const Styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     height: 60,
+    marginBottom: 10,
+  },
+  enteringInputContainer: {},
+  errorInputContainer: {
+    borderColor: palette.red,
+    borderWidth: 1,
+  },
+  validInputContainer: {
+    borderColor: palette.green,
+    borderWidth: 1,
+  },
+  warningInputContainer: {
+    borderColor: palette.orange,
+    borderWidth: 1,
   },
   buttonContainer: {
     flex: 1,
@@ -90,143 +117,356 @@ const Styles = StyleSheet.create({
   },
 })
 
+const parsePaymentDestination = parsingv2.parsePaymentDestination
+
 const domains = [
   "https://ln.bitcoinbeach.com/",
   "https://pay.mainnet.galoy.io/",
   "https://pay.bbw.sv/",
 ]
 
+export const bankName = "BBW"
+export const lnDomain = "pay.bbw.sv"
+
 const lnurlDomains = ["ln.bitcoinbeach.com", "pay.bbw.sv"]
+
+type UsernameStatus = "paid-before" | "never-paid" | "does-not-exist" | "self"
+
+const minimumValidationDuration = 500
+const wait = (ms: number) => {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms)
+  })
+}
+async function withMinimumDuration<T>(
+  promise: Promise<T> | T,
+  duration?: number,
+): Promise<T> {
+  return (await Promise.all([promise, wait(duration || minimumValidationDuration)]))[0]
+}
+
+type GetUsernameStatusParams = {
+  username: string
+  contacts: string[]
+  myUsername: string
+  getWalletIdForUsername: (username: string) => Promise<string | undefined>
+}
+
+const getUsernameStatus = async ({
+  username,
+  contacts,
+  myUsername,
+  getWalletIdForUsername,
+}: GetUsernameStatusParams): Promise<{
+  usernameStatus: UsernameStatus
+  walletId?: string
+}> => {
+  if (username.toLowerCase() === myUsername?.toLowerCase()) {
+    return { usernameStatus: "self" }
+  }
+
+  const walletId = await getWalletIdForUsername(username)
+  if (
+    walletId &&
+    contacts.map((contact) => contact.toLowerCase()).includes(username.toLowerCase())
+  ) {
+    return { usernameStatus: "paid-before", walletId }
+  } else if (walletId) {
+    return { usernameStatus: "never-paid", walletId }
+  }
+  return { usernameStatus: "does-not-exist" }
+}
+
+const sendBitcoinDetailsScreenParams = (destination: ValidPaymentDestination) => {
+  switch (destination.paymentType) {
+    case PaymentType.Lightning:
+      return {
+        destination: destination.paymentRequest,
+        fixedAmount:
+          destination.amount &&
+          ({
+            amount: destination.amount,
+            currency: WalletCurrency.BTC,
+          } as PaymentAmount<WalletCurrency.BTC>),
+        paymentType: PaymentType.Lightning,
+        sameNode: destination.sameNode,
+        note: destination.memo,
+      }
+    case PaymentType.Intraledger:
+      return {
+        destination: destination.handle,
+        recipientWalletId: destination.walletId,
+        paymentType: PaymentType.Intraledger,
+        sameNode: true,
+      }
+    case PaymentType.Lnurl:
+      return {
+        destination: destination.lnurl,
+        paymentType: PaymentType.Lnurl,
+        lnurl: destination.lnurlParams,
+        sameNode: false,
+      }
+    case PaymentType.Onchain:
+      return {
+        destination: destination.address,
+        fixedAmount:
+          destination.amount &&
+          ({
+            amount: destination.amount,
+            currency: WalletCurrency.BTC,
+          } as PaymentAmount<WalletCurrency.BTC>),
+        note: destination.memo,
+        paymentType: PaymentType.Onchain,
+        sameNode: false,
+      }
+  }
+}
 
 const SendBitcoinDestinationScreen = ({
   navigation,
   route,
 }: StackScreenProps<RootStackParamList, "sendBitcoinDestination">) => {
-  const [destination, setDestination] = useState("")
+  const [destinationState, dispatchDestinationStateAction] =
+    useSendBitcoinDestinationReducer()
+  const [goToNextScreenWhenValid, setGoToNextScreenWhenValid] = React.useState(false)
   const { myPubKey, username: myUsername } = useMainQuery()
-  const [error, setError] = useState<string | undefined>(undefined)
   const { tokenNetwork } = useToken()
   const { LL } = useI18nContext()
+  const [userDefaultWalletIdQuery] = useDelayedQuery.userDefaultWalletId()
+  const { data } = useGaloyQuery.contacts()
 
-  const [userDefaultWalletIdQuery, { loading: userDefaultWalletIdLoading }] =
-    useDelayedQuery.userDefaultWalletId()
+  const checkUsername:
+    | ((
+        username: string,
+      ) => Promise<{ usernameStatus: UsernameStatus; walletId?: string }>)
+    | null = useMemo(() => {
+    if (!data.me?.contacts) {
+      return null
+    }
+    const lowercaseContacts = data.me.contacts.map((contact) =>
+      contact.username.toLowerCase(),
+    )
+    const lowercaseMyUsername = myUsername ? myUsername.toLowerCase() : ""
+    const getWalletIdForUsername = async (username: string) => {
+      const { data } = await userDefaultWalletIdQuery({ username })
+      return data?.userDefaultWalletId
+    }
+    return async (username: string) =>
+      getUsernameStatus({
+        username,
+        contacts: lowercaseContacts,
+        myUsername: lowercaseMyUsername,
+        getWalletIdForUsername,
+      })
+  }, [data, userDefaultWalletIdQuery, myUsername])
+
+  const loaded = myPubKey && checkUsername
 
   const validateDestination = React.useCallback(
     async (destination) => {
-      setError(undefined)
+      if (destinationState.destinationState !== "entering" || !loaded) {
+        return
+      }
 
-      const {
-        valid,
-        errorMessage,
-
-        paymentType,
-        address,
-        paymentRequest,
-        handle,
-
-        amount: amountInvoice,
-        memo: memoInvoice,
-        sameNode,
-      } = parsePaymentDestination({
+      const parsedPaymentDestination = parsePaymentDestination({
         destination,
         network: tokenNetwork,
         pubKey: myPubKey,
+        lnAddressDomains: lnurlDomains,
       })
-      let isSameNode = sameNode
-      let lnurlParams
 
-      if (destination === myUsername) {
-        setError(LL.SendBitcoinScreen.youCantSendAPaymentToYourself())
+      dispatchDestinationStateAction({
+        type: "set-validating",
+        payload: {
+          parsedDestination: parsedPaymentDestination,
+          unparsedDestination: destination,
+        },
+      })
 
-        return { valid: false }
-      }
-
-      let recipientWalletId, note, parsedDestination
-
-      if (valid) {
-        if (paymentType === "onchain") parsedDestination = address
-        if (paymentType === "lightning") parsedDestination = paymentRequest
-
-        if (paymentType === "intraledger") {
-          if (userDefaultWalletIdLoading) {
-            return { valid: false }
-          }
-
-          const { data, errorsMessage } = await userDefaultWalletIdQuery({
-            username: handle,
+      switch (parsedPaymentDestination.paymentType) {
+        case PaymentType.Unknown: {
+          await wait(minimumValidationDuration)
+          return dispatchDestinationStateAction({
+            type: "set-invalid",
+            payload: {
+              invalidDestinationReason: "unknown-destination",
+              unparsedDestination: destination,
+            },
           })
-
-          if (errorsMessage) {
-            setError(errorsMessage)
-            return { valid: false }
+        }
+        case PaymentType.Lnurl: {
+          if (parsedPaymentDestination.valid) {
+            try {
+              const lnurlParams = await withMinimumDuration(
+                fetchLnurlPaymentParams({ lnUrlOrAddress: destination }),
+              )
+              return dispatchDestinationStateAction({
+                type: "set-valid",
+                payload: {
+                  validDestination: { ...parsedPaymentDestination, lnurlParams },
+                  unparsedDestination: destination,
+                },
+              })
+            } catch {}
           }
-          parsedDestination = handle
-          recipientWalletId = data?.userDefaultWalletId
+          await wait(minimumValidationDuration)
+          return dispatchDestinationStateAction({
+            type: "set-invalid",
+            payload: {
+              invalidDestinationReason: "lnurl-error",
+              unparsedDestination: destination,
+            },
+          })
         }
-
-        if (paymentType === "lnurl") {
-          try {
-            lnurlParams = await fetchLnurlPaymentParams({ lnUrlOrAddress: destination })
-          } catch (error) {
-            setError(LL.SendBitcoinScreen.failedToFetchLnurlParams())
-            return { valid: false }
+        case PaymentType.Intraledger: {
+          const usernameInfo = await withMinimumDuration(
+            checkUsername(parsedPaymentDestination.handle),
+          )
+          switch (usernameInfo.usernameStatus) {
+            case "paid-before":
+              return dispatchDestinationStateAction({
+                type: "set-valid",
+                payload: {
+                  validDestination: {
+                    ...parsedPaymentDestination,
+                    valid: true,
+                    walletId: usernameInfo.walletId,
+                  },
+                  unparsedDestination: destination,
+                },
+              })
+            case "never-paid":
+              return dispatchDestinationStateAction({
+                type: "set-requires-confirmation",
+                payload: {
+                  confirmationType: {
+                    type: "new-username",
+                    username: parsedPaymentDestination.handle,
+                  },
+                  validDestination: {
+                    ...parsedPaymentDestination,
+                    valid: true,
+                    walletId: usernameInfo.walletId,
+                  },
+                  unparsedDestination: destination,
+                },
+              })
+            case "does-not-exist":
+              return dispatchDestinationStateAction({
+                type: "set-invalid",
+                payload: {
+                  invalidDestinationReason: "username-does-not-exist",
+                  unparsedDestination: destination,
+                },
+              })
+            case "self":
+              return dispatchDestinationStateAction({
+                type: "set-invalid",
+                payload: {
+                  invalidDestinationReason: "self-payment",
+                  unparsedDestination: destination,
+                },
+              })
           }
-          isSameNode = lnurlDomains.some((domain) => lnurlParams?.domain.includes(domain))
-          parsedDestination = destination
+          break
         }
+        case PaymentType.Lightning: {
+          await wait(minimumValidationDuration)
+          if (parsedPaymentDestination.valid === true) {
+            return dispatchDestinationStateAction({
+              type: "set-valid",
+              payload: {
+                validDestination: parsedPaymentDestination,
+                unparsedDestination: destination,
+              },
+            })
+          }
 
-        if (memoInvoice) {
-          note = memoInvoice.toString()
+          let invalidDestinationReason: InvalidDestinationReason
+          switch (parsedPaymentDestination.invalidReason) {
+            case InvalidLightningDestinationReason.InvoiceExpired:
+              invalidDestinationReason = "expired-invoice"
+              break
+            case InvalidLightningDestinationReason.WrongNetwork:
+              invalidDestinationReason = "wrong-network"
+              break
+            case InvalidLightningDestinationReason.Unknown:
+              invalidDestinationReason = "unknown-destination"
+              break
+          }
+
+          return dispatchDestinationStateAction({
+            type: "set-invalid",
+            payload: { invalidDestinationReason, unparsedDestination: destination },
+          })
         }
-      } else {
-        setError(errorMessage || "Invalid Payment Destination")
-      }
-
-      return {
-        valid,
-        paymentType,
-        sameNode: isSameNode,
-        destination: parsedDestination,
-        fixedAmount:
-          amountInvoice &&
-          ({
-            amount: amountInvoice,
-            currency: WalletCurrency.BTC,
-          } as PaymentAmount<WalletCurrency.BTC>),
-        note,
-        recipientWalletId,
-        lnurlParams,
+        case PaymentType.Onchain: {
+          await wait(minimumValidationDuration)
+          if (parsedPaymentDestination.valid === true) {
+            return dispatchDestinationStateAction({
+              type: "set-valid",
+              payload: {
+                validDestination: parsedPaymentDestination,
+                unparsedDestination: destination,
+              },
+            })
+          }
+          let invalidOnchainDestinationReason: InvalidDestinationReason
+          switch (parsedPaymentDestination.invalidReason) {
+            case InvalidOnchainDestinationReason.InvalidAmount:
+              invalidOnchainDestinationReason = "invalid-amount"
+              break
+            case InvalidOnchainDestinationReason.WrongNetwork:
+              invalidOnchainDestinationReason = "wrong-network"
+              break
+            case InvalidOnchainDestinationReason.Unknown:
+              invalidOnchainDestinationReason = "unknown-onchain"
+          }
+          return dispatchDestinationStateAction({
+            type: "set-invalid",
+            payload: {
+              invalidDestinationReason: invalidOnchainDestinationReason,
+              unparsedDestination: destination,
+            },
+          })
+        }
       }
     },
     [
       myPubKey,
-      myUsername,
+      loaded,
       tokenNetwork,
-      userDefaultWalletIdLoading,
-      userDefaultWalletIdQuery,
-      LL,
+      checkUsername,
+      destinationState.destinationState,
+      dispatchDestinationStateAction,
     ],
   )
 
-  const handleChangeText = (newDestination) => {
-    setError(undefined)
-    setDestination(newDestination)
-  }
-
-  const goToNextScreen = async () => {
-    const parsedDestination = await validateDestination(destination)
-
-    if (parsedDestination.valid) {
-      return navigation.navigate("sendBitcoinDetails", {
-        fixedAmount: parsedDestination.fixedAmount,
-        destination: parsedDestination.destination,
-        note: parsedDestination.note,
-        recipientWalletId: parsedDestination.recipientWalletId,
-        lnurl: parsedDestination.lnurlParams,
-        sameNode: parsedDestination.sameNode,
-        paymentType: parsedDestination.paymentType,
+  const handleChangeText = useCallback(
+    (newDestination) => {
+      dispatchDestinationStateAction({
+        type: "set-unparsed-destination",
+        payload: { unparsedDestination: newDestination },
       })
+      setGoToNextScreenWhenValid(false)
+    },
+    [dispatchDestinationStateAction, setGoToNextScreenWhenValid],
+  )
+
+  useEffect(() => {
+    if (goToNextScreenWhenValid && destinationState.destinationState === "valid") {
+      // go to next screen
+      setGoToNextScreenWhenValid(false)
+      return navigation.navigate(
+        "sendBitcoinDetails",
+        sendBitcoinDetailsScreenParams(destinationState.destination),
+      )
     }
+  }, [destinationState, goToNextScreenWhenValid, navigation, setGoToNextScreenWhenValid])
+
+  const initiateGoToNextScreen = async () => {
+    validateDestination(destinationState.unparsedDestination)
+    setGoToNextScreenWhenValid(true)
   }
 
   useEffect(() => {
@@ -236,36 +476,64 @@ const SendBitcoinDestinationScreen = ({
       if (route.params.payment.startsWith("https://")) {
         domains.forEach((domain) => {
           if (route.params?.payment?.startsWith(domain)) {
-            setDestination(route.params?.payment?.substring(domain.length))
+            handleChangeText(route.params?.payment?.substring(domain.length))
           }
         })
       } else {
-        setDestination(route.params?.payment)
+        handleChangeText(route.params?.payment)
       }
     }
-  }, [route.params?.payment])
+  }, [route.params?.payment, handleChangeText])
 
   useEffect(() => {
     if (route.params?.username) {
-      setDestination(route.params?.username)
+      handleChangeText(route.params?.username)
     }
-  }, [route.params?.username])
+  }, [route.params?.username, handleChangeText])
+
+  let inputContainerStyle
+  switch (destinationState.destinationState) {
+    case "entering":
+    case "validating":
+      inputContainerStyle = Styles.enteringInputContainer
+      break
+    case "invalid":
+      inputContainerStyle = Styles.errorInputContainer
+      break
+    case "valid":
+      if (!destinationState.confirmationType) {
+        inputContainerStyle = Styles.validInputContainer
+        break
+      }
+      inputContainerStyle = Styles.warningInputContainer
+      break
+    case "requires-confirmation":
+      inputContainerStyle = Styles.warningInputContainer
+  }
 
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
       style={Styles.scrollView}
       contentContainerStyle={Styles.contentContainer}
+      keyboardShouldPersistTaps="always"
     >
+      <ConfirmDestinationModal
+        destinationState={destinationState}
+        dispatchDestinationStateAction={dispatchDestinationStateAction}
+      />
       <View style={Styles.sendBitcoinDestinationContainer}>
         <Text style={Styles.fieldTitleText}>{LL.SendBitcoinScreen.destination()}</Text>
 
-        <View style={Styles.fieldBackground}>
+        <View style={[Styles.fieldBackground, inputContainerStyle]}>
           <TextInput
             style={Styles.input}
             placeholder={LL.SendBitcoinScreen.input()}
             onChangeText={handleChangeText}
-            value={destination}
+            value={destinationState.unparsedDestination}
+            onSubmitEditing={() =>
+              validateDestination(destinationState.unparsedDestination)
+            }
             selectTextOnFocus
             autoCapitalize="none"
             autoCorrect={false}
@@ -276,26 +544,25 @@ const SendBitcoinDestinationScreen = ({
             </View>
           </TouchableWithoutFeedback>
         </View>
-
-        {error && (
-          <View style={Styles.errorContainer}>
-            <Text style={Styles.errorText}>{error}</Text>
-          </View>
-        )}
-
+        <DestinationInformation destinationState={destinationState} />
         <View style={Styles.buttonContainer}>
           <Button
             title={
-              destination
+              destinationState.unparsedDestination
                 ? LL.common.next()
                 : LL.SendBitcoinScreen.destinationIsRequired()
             }
+            loading={destinationState.destinationState === "validating"}
             buttonStyle={[Styles.button, Styles.activeButtonStyle]}
             titleStyle={Styles.activeButtonTitleStyle}
             disabledStyle={[Styles.button, Styles.disabledButtonStyle]}
             disabledTitleStyle={Styles.disabledButtonTitleStyle}
-            disabled={Boolean(!destination || error)}
-            onPress={goToNextScreen}
+            disabled={
+              !loaded ||
+              destinationState.destinationState === "validating" ||
+              destinationState.destinationState === "invalid"
+            }
+            onPress={initiateGoToNextScreen}
           />
         </View>
       </View>

@@ -2,7 +2,8 @@
 import { PaymentAmount, WalletCurrency } from "@app/types/amounts"
 import { WalletDescriptor } from "@app/types/wallets"
 import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
-import { GaloyGQL, PaymentType } from "@galoymoney/client"
+import { GaloyGQL } from "@galoymoney/client"
+import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
 import { contacts_me_contacts } from "../screens/contacts-screen/__generated__/contacts"
 import { AccountType, AuthenticationScreenPurpose, PinScreenPurpose } from "../utils/enum"
 
@@ -44,7 +45,7 @@ export type RootStackParamList = {
     username?: string
   }
   sendBitcoinDetails: {
-    fixedAmount: PaymentAmount<WalletCurrency.BTC> | undefined
+    fixedAmount?: PaymentAmount<WalletCurrency.BTC>
     destination: string
     note?: string
     lnurl?: LnUrlPayServiceResponse

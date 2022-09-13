@@ -19,6 +19,7 @@ export const useAppConfig = () => {
       ...state,
       isUsdDisabled: !state.isUsdDisabled,
     }))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [persistentStateContext.updateState])
 
   return { appConfig, toggleUsdDisabled }

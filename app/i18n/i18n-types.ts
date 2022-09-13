@@ -1774,6 +1774,113 @@ type RootTranslation = {
 		 */
 		feeError: string
 	}
+	SendBitcoinDestinationScreen: {
+		/**
+		 * {bankName} usernames are now {bankName} addresses.
+		 * @param {string} bankName
+		 */
+		usernameNowAddress: RequiredParams<'bankName' | 'bankName'>
+		/**
+		 * When you enter a {bankName} username, we will add “@{lnDomain}” to it (e.g maria@{lnDomain}) to make it an address. Your username is now a {bankName} address too.
+
+	Go to your {bankName} address page from your Settings to learn how to use it or to share it to receive payments.
+		 * @param {string} bankName
+		 * @param {string} lnDomain
+		 */
+		usernameNowAddressInfo: RequiredParams<'bankName' | 'bankName' | 'bankName' | 'lnDomain' | 'lnDomain'>
+		/**
+		 * Please enter a valid destination
+		 */
+		enterValidDestination: string
+		/**
+		 * You can send to a {bankName} address, LN address, LN invoice, or BTC address.
+		 * @param {string} bankName
+		 */
+		destinationOptions: RequiredParams<'bankName'>
+		/**
+		 * This invoice has expired. Please generate a new invoice.
+		 */
+		expiredInvoice: string
+		/**
+		 * This invoice is for a different network. Please generate a new invoice.
+		 */
+		wrongNetwork: string
+		/**
+		 * This contains an invalid amount. Please regenerate with a valid amount.
+		 */
+		invalidAmount: string
+		/**
+		 * {lnAddress} doesn't seem to be a {bankName} address that exists.
+		 * @param {string} bankName
+		 * @param {string} lnAddress
+		 */
+		usernameDoesNotExist: RequiredParams<'bankName' | 'lnAddress'>
+		/**
+		 * Either make sure the spelling is right or ask the recipient for an LN invoice or BTC address instead.
+		 */
+		usernameDoesNotExistAdvice: string
+		/**
+		 * {lnAddress} is your {bankName} address.
+		 * @param {string} bankName
+		 * @param {string} lnAddress
+		 */
+		selfPaymentError: RequiredParams<'bankName' | 'lnAddress'>
+		/**
+		 * If you want to send money to another account that you own, you can use an invoice, LN or BTC address instead.
+		 */
+		selfPaymentAdvice: string
+		/**
+		 * We can't reach this Lightning address. If you are sure it exists, you can try again later.
+		 */
+		lnAddressError: string
+		/**
+		 * Either make sure the spelling is right or ask the recipient for an invoice or BTC address instead.
+		 */
+		lnAddressAdvice: string
+		/**
+		 * We can't parse this Lightning address. Please try again.
+		 */
+		unknownLightning: string
+		/**
+		 * We can't parse this Bitcoin address. Please try again.
+		 */
+		unknownOnchain: string
+		/**
+		 * {lnAddress} exists as a {bankName} address, but you've never sent money to it.
+		 * @param {string} bankName
+		 * @param {string} lnAddress
+		 */
+		newBankAddressUsername: RequiredParams<'bankName' | 'lnAddress'>
+		confirmModal: {
+			/**
+			 * You've never sent money to "{lnAddress}" before.
+			 * @param {string} lnAddress
+			 */
+			title: RequiredParams<'lnAddress'>
+			/**
+			 * Please make sure the recipient gave you a {bankName} address, **not a username from another wallet**. Otherwise, the money will go to a {bankName} Account that has the “{lnAddress}” address.
+	
+		Check the spelling of the first part of the address as well. e.g. jackie and jack1e are 2 different addresses
+			 * @param {string} bankName
+			 * @param {string} lnAddress
+			 */
+			body: RequiredParams<'bankName' | 'bankName' | 'lnAddress'>
+			/**
+			 * If the {bankName} address is entered incorrectly, {bankName} can't undo the transaction.
+			 * @param {string} bankName
+			 */
+			warning: RequiredParams<'bankName' | 'bankName'>
+			/**
+			 * {lnAddress} is the right address.
+			 * @param {string} lnAddress
+			 */
+			checkBox: RequiredParams<'lnAddress'>
+			/**
+			 * I'm 100% sure
+			 */
+			confirmButton: string
+		}
+	}
 	SendBitcoinScreen: {
 		/**
 		 * Amount
@@ -1841,21 +1948,9 @@ type RootTranslation = {
 		 */
 		title: string
 		/**
-		 * A user matching the entered username could not be found.
-		 */
-		usernameNotFound: string
-		/**
-		 * Failed to fetch lnurl params
-		 */
-		failedToFetchLnurlParams: string
-		/**
 		 * Failed to fetch lnurl invoice
 		 */
 		failedToFetchLnurlInvoice: string
-		/**
-		 * You can't send a payment to yourself
-		 */
-		youCantSendAPaymentToYourself: string
 	}
 	SettingsScreen: {
 		/**
@@ -2131,6 +2226,16 @@ type RootTranslation = {
 		 * Cash Account
 		 */
 		bankAccount: string
+		/**
+		 * {bankName} Advice
+		 * @param {string} bankName
+		 */
+		bankAdvice: RequiredParams<'bankName'>
+		/**
+		 * {bankName} Info
+		 * @param {string} bankName
+		 */
+		bankInfo: RequiredParams<'bankName'>
 		/**
 		 * Bitcoin
 		 */
@@ -4263,6 +4368,98 @@ export type TranslationFunctions = {
 		 */
 		feeError: () => LocalizedString
 	}
+	SendBitcoinDestinationScreen: {
+		/**
+		 * {bankName} usernames are now {bankName} addresses.
+		 */
+		usernameNowAddress: (arg: { bankName: string }) => LocalizedString
+		/**
+		 * When you enter a {bankName} username, we will add “@{lnDomain}” to it (e.g maria@{lnDomain}) to make it an address. Your username is now a {bankName} address too.
+
+	Go to your {bankName} address page from your Settings to learn how to use it or to share it to receive payments.
+		 */
+		usernameNowAddressInfo: (arg: { bankName: string, lnDomain: string }) => LocalizedString
+		/**
+		 * Please enter a valid destination
+		 */
+		enterValidDestination: () => LocalizedString
+		/**
+		 * You can send to a {bankName} address, LN address, LN invoice, or BTC address.
+		 */
+		destinationOptions: (arg: { bankName: string }) => LocalizedString
+		/**
+		 * This invoice has expired. Please generate a new invoice.
+		 */
+		expiredInvoice: () => LocalizedString
+		/**
+		 * This invoice is for a different network. Please generate a new invoice.
+		 */
+		wrongNetwork: () => LocalizedString
+		/**
+		 * This contains an invalid amount. Please regenerate with a valid amount.
+		 */
+		invalidAmount: () => LocalizedString
+		/**
+		 * {lnAddress} doesn't seem to be a {bankName} address that exists.
+		 */
+		usernameDoesNotExist: (arg: { bankName: string, lnAddress: string }) => LocalizedString
+		/**
+		 * Either make sure the spelling is right or ask the recipient for an LN invoice or BTC address instead.
+		 */
+		usernameDoesNotExistAdvice: () => LocalizedString
+		/**
+		 * {lnAddress} is your {bankName} address.
+		 */
+		selfPaymentError: (arg: { bankName: string, lnAddress: string }) => LocalizedString
+		/**
+		 * If you want to send money to another account that you own, you can use an invoice, LN or BTC address instead.
+		 */
+		selfPaymentAdvice: () => LocalizedString
+		/**
+		 * We can't reach this Lightning address. If you are sure it exists, you can try again later.
+		 */
+		lnAddressError: () => LocalizedString
+		/**
+		 * Either make sure the spelling is right or ask the recipient for an invoice or BTC address instead.
+		 */
+		lnAddressAdvice: () => LocalizedString
+		/**
+		 * We can't parse this Lightning address. Please try again.
+		 */
+		unknownLightning: () => LocalizedString
+		/**
+		 * We can't parse this Bitcoin address. Please try again.
+		 */
+		unknownOnchain: () => LocalizedString
+		/**
+		 * {lnAddress} exists as a {bankName} address, but you've never sent money to it.
+		 */
+		newBankAddressUsername: (arg: { bankName: string, lnAddress: string }) => LocalizedString
+		confirmModal: {
+			/**
+			 * You've never sent money to "{lnAddress}" before.
+			 */
+			title: (arg: { lnAddress: string }) => LocalizedString
+			/**
+			 * Please make sure the recipient gave you a {bankName} address, **not a username from another wallet**. Otherwise, the money will go to a {bankName} Account that has the “{lnAddress}” address.
+	
+		Check the spelling of the first part of the address as well. e.g. jackie and jack1e are 2 different addresses
+			 */
+			body: (arg: { bankName: string, lnAddress: string }) => LocalizedString
+			/**
+			 * If the {bankName} address is entered incorrectly, {bankName} can't undo the transaction.
+			 */
+			warning: (arg: { bankName: string }) => LocalizedString
+			/**
+			 * {lnAddress} is the right address.
+			 */
+			checkBox: (arg: { lnAddress: string }) => LocalizedString
+			/**
+			 * I'm 100% sure
+			 */
+			confirmButton: () => LocalizedString
+		}
+	}
 	SendBitcoinScreen: {
 		/**
 		 * Amount
@@ -4329,21 +4526,9 @@ export type TranslationFunctions = {
 		 */
 		title: () => LocalizedString
 		/**
-		 * A user matching the entered username could not be found.
-		 */
-		usernameNotFound: () => LocalizedString
-		/**
-		 * Failed to fetch lnurl params
-		 */
-		failedToFetchLnurlParams: () => LocalizedString
-		/**
 		 * Failed to fetch lnurl invoice
 		 */
 		failedToFetchLnurlInvoice: () => LocalizedString
-		/**
-		 * You can't send a payment to yourself
-		 */
-		youCantSendAPaymentToYourself: () => LocalizedString
 	}
 	SettingsScreen: {
 		/**
@@ -4614,6 +4799,14 @@ export type TranslationFunctions = {
 		 * Cash Account
 		 */
 		bankAccount: () => LocalizedString
+		/**
+		 * {bankName} Advice
+		 */
+		bankAdvice: (arg: { bankName: string }) => LocalizedString
+		/**
+		 * {bankName} Info
+		 */
+		bankInfo: (arg: { bankName: string }) => LocalizedString
 		/**
 		 * Bitcoin
 		 */

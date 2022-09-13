@@ -57,6 +57,7 @@ export const defaultPersistentState: PersistentState = {
   theme: defaultTheme,
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const deserializeAndMigratePersistentState = (data: any): PersistentState => {
   if (Boolean(data) && data.schemaVersion in stateMigrations) {
     try {
