@@ -240,7 +240,7 @@ const SendBitcoinDestinationScreen = ({
         username: string,
       ) => Promise<{ usernameStatus: UsernameStatus; walletId?: string }>)
     | null = useMemo(() => {
-    if (!data.me?.contacts) {
+    if (!data?.me?.contacts) {
       return null
     }
     const lowercaseContacts = data.me.contacts.map((contact) =>

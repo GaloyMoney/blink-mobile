@@ -600,7 +600,7 @@ const es: Translation = {
     usernameNowAddress: "Los nombres de usuario de {bankName} ahora son direcciones de {bankName}.",
     usernameNowAddressInfo: "Cuando ingrese un nombre de usuario de {bankName}, le agregaremos \"@{lnDomain}\" (por ejemplo, maria@{lnDomain}) para convertirlo en una dirección. Tu nombre de usuario ahora también es una dirección de {bankName}.\n\nLos nombres de usuario de {bankName} solo permitían transacciones dentro de {bankName}, mientras que las direcciones de {bankName} permiten realizar pagos con personas que usan diferentes billeteras.",
     enterValidDestination: "Introduzca un destino válido.",
-    destinationOptions: "Puedes enviar a una dirección {bankName}, una dirección LN, una factura LN o una dirección {bankName}.",
+    destinationOptions: "Puede enviar a una dirección {bankName}, una dirección LN, una factura LN o una dirección BTC.",
     expiredInvoice: "Esta factura ha caducado. Por favor, genere una nueva factura.",
     wrongNetwork: "Esta factura es para una red diferente. Por favor, genere una nueva factura.",
     invalidAmount: "Esto contiene un monto inválido. Por favor, ingrese nuevamente con un monto válido.",
@@ -610,7 +610,7 @@ const es: Translation = {
     selfPaymentAdvice: "Si desea enviar dinero a otra billetera de su propiedad, puede usar una factura, una dirección LN o BTC en su lugar.",
     lnAddressError: "No podemos comunicarnos con esta dirección Lightning. Si está seguro de que existe, puede volver a intentarlo más tarde.",
     lnAddressAdvice: "En su lugar, puede pedirle al destinatario una factura o una dirección BTC.",
-    unknownLightning: "No podemos verificar esta dirección Lightning. Por favor, inténtalo de nuevo con una dirección diferente.",
+    unknownLightning: "No podemos verificar esta dirección Lightning. Por favor, inténtelo de nuevo con una dirección diferente.",
     unknownOnchain: "No podemos verificar esta dirección Bitcoin. Por favor, inténtelo de nuevo con una dirección diferente.",
     newBankAddressUsername: "{lnAddress} existe como dirección de {bankName}, pero nunca has enviado dinero a esta dirección.",
     confirmModal: {

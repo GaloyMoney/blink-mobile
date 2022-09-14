@@ -7,6 +7,11 @@ import { Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { SendBitcoinDestinationState } from "./send-bitcoin-reducer"
 import { lnDomain, bankName } from "./send-bitcoin-destination-screen"
+import { IntraledgerPaymentDestination } from "@galoymoney/client/dist/parsing-v2"
+
+const toLnAddress = (handle: string) => {
+  return `${handle}@${lnDomain}`
+}
 
 const destinationStateToInformation = (
   destinationState: SendBitcoinDestinationState,
@@ -26,12 +31,6 @@ const destinationStateToInformation = (
       },
     }
   }
-
-  const lnAddress =
-    destinationState.destinationState === "invalid" &&
-    destinationState.parsedPaymentDestination.paymentType === "intraledger"
-      ? destinationState.parsedPaymentDestination.handle
-      : null
 
   if (destinationState.destinationState === "invalid") {
     switch (destinationState.invalidReason) {
@@ -57,7 +56,10 @@ const destinationStateToInformation = (
       case "username-does-not-exist":
         return {
           error: translate.SendBitcoinDestinationScreen.usernameDoesNotExist({
-            lnAddress,
+            lnAddress: toLnAddress(
+              (destinationState.parsedPaymentDestination as IntraledgerPaymentDestination)
+                .handle,
+            ),
             bankName,
           }),
           adviceTooltip: {
@@ -67,7 +69,10 @@ const destinationStateToInformation = (
       case "self-payment":
         return {
           error: translate.SendBitcoinDestinationScreen.selfPaymentError({
-            lnAddress,
+            lnAddress: toLnAddress(
+              (destinationState.parsedPaymentDestination as IntraledgerPaymentDestination)
+                .handle,
+            ),
             bankName,
           }),
           adviceTooltip: {
@@ -98,7 +103,7 @@ const destinationStateToInformation = (
   ) {
     return {
       warning: translate.SendBitcoinDestinationScreen.newBankAddressUsername({
-        lnAddress,
+        lnAddress: toLnAddress(destinationState.confirmationType.username),
         bankName,
       }),
     }
