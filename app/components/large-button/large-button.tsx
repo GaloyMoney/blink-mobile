@@ -43,8 +43,6 @@ export const LargeButton: ComponentType = ({
     style={styles.accountView}
     containerStyle={style ? style : styles.accountViewContainer}
     onPress={onPress}
-    underlayColor={palette.lighterGrey}
-    activeOpacity={0.7}
     {...props}
   >
     {

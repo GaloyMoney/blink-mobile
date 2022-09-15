@@ -7,7 +7,7 @@ import { Dimensions, Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableOpacity } from "react-native-gesture-handler"
-import Carousel, { Pagination } from "react-native-snap-carousel"
+import Carousel from "react-native-reanimated-carousel"
 import Icon from "react-native-vector-icons/Ionicons"
 
 import { Screen } from "../../components/screen"
@@ -29,12 +29,17 @@ import { getQuizQuestions } from "../../graphql/query"
 import useMainQuery from "@app/hooks/use-main-query"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { earnSections } from "./sections"
+import { PaginationItem } from "@app/components/pagination"
+import { useSharedValue } from "react-native-reanimated"
 
 const { width: screenWidth } = Dimensions.get("window")
 
 const svgWidth = screenWidth - 60
 
 const styles = EStyleSheet.create({
+  container: {
+    alignItems: "center",
+  },
   buttonStyleDisabled: {
     backgroundColor: palette.white,
     borderRadius: 24,
@@ -50,16 +55,14 @@ const styles = EStyleSheet.create({
     marginVertical: 32,
   },
 
-  divider: { flex: 1 },
-
   // eslint-disable-next-line react-native/no-color-literals
-  dot: {
-    backgroundColor: "rgba(255, 255, 255, 0.92)",
-    borderRadius: 5,
-    height: 10,
-    marginHorizontal: 0,
-    width: 10,
-  },
+  // dot: {
+  //   backgroundColor: "rgba(255, 255, 255, 0.92)",
+  //   borderRadius: 5,
+  //   height: 10,
+  //   marginHorizontal: 0,
+  //   width: 10,
+  // },
 
   icon: { paddingRight: 12, paddingTop: 3 },
 
@@ -115,6 +118,14 @@ const styles = EStyleSheet.create({
     fontSize: "16rem",
     paddingTop: "18rem",
   },
+  paginationContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: 100,
+    alignSelf: "center",
+    position: "absolute",
+    bottom: 40,
+  },
 })
 
 type Props = {
@@ -140,8 +151,7 @@ export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
 
   const itemIndex = cards.findIndex((item) => !item.fullfilled)
   const [firstItem] = useState(itemIndex >= 0 ? itemIndex : 0)
-  const [currRewardIndex, setCurrRewardIndex] = useState(firstItem)
-
+  const progressValue = useSharedValue<number>(0)
   const remainingSats = remainingSatsOnSection({
     quizQuestions,
     sectionIndex,
@@ -278,27 +288,38 @@ export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
 
   return (
     <Screen backgroundColor={palette.blue} statusBar="light-content">
-      <View style={styles.divider} />
-      <Carousel
-        data={cards}
-        renderItem={CardItem}
-        sliderWidth={screenWidth}
-        // scrollEnabled={!isRewardOpen}
-        itemWidth={screenWidth - 60}
-        hasParallaxImages
-        firstItem={firstItem}
-        // inactiveSlideOpacity={isRewardOpen ? 0 : 0.7}
-        removeClippedSubviews={false}
-        onBeforeSnapToItem={(index) => setCurrRewardIndex(index)}
-      />
-      <View style={styles.divider} />
-      <Pagination
-        dotsLength={cards.length}
-        activeDotIndex={currRewardIndex}
-        dotStyle={styles.dot}
-        inactiveDotOpacity={0.4}
-        inactiveDotScale={0.6}
-      />
+      <View style={styles.container}>
+        <Carousel
+          data={cards}
+          renderItem={CardItem}
+          width={screenWidth}
+          mode="parallax"
+          defaultIndex={firstItem}
+          loop={false}
+          modeConfig={{
+            parallaxScrollingScale: 0.9,
+            parallaxScrollingOffset: 50,
+          }}
+          onProgressChange={(_, absoluteProgress) =>
+            (progressValue.value = absoluteProgress)
+          }
+        />
+        {Boolean(progressValue) && (
+          <View style={styles.paginationContainer}>
+            {cards.map((card, index) => {
+              return (
+                <PaginationItem
+                  backgroundColor={"grey"}
+                  animValue={progressValue}
+                  index={index}
+                  key={index}
+                  length={cards.length}
+                />
+              )
+            })}
+          </View>
+        )}
+      </View>
     </Screen>
   )
 }

@@ -1,31 +1,40 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-platform :ios, '12.0'
-
+platform :ios, '12.4'
+install! 'cocoapods', :deterministic_uuids => false
+production = ENV["PRODUCTION"] == "1"
+$RNFirebaseAnalyticsWithoutAdIdSupport=true
 target 'GaloyApp' do
   config = use_native_modules!
 
-  use_react_native!(:path => config["reactNativePath"])
+  # Flags change depending on the env values.
+  flags = get_default_flags()
 
-  # Enables Flipper.
-  #
-  # Note that if you have use_frameworks! enabled, Flipper will not work and
-  # you should disable these next few lines.
-  # use_flipper!
-  # post_install do |installer|
-  #   flipper_post_install(installer)
-  # end
+  use_react_native!(
+    :path => config["reactNativePath"],
+  # to enable hermes on iOS, change `false` to `true` and then install pods
+    :production => production,
+    :hermes_enabled => flags[:hermes_enabled],
+    :fabric_enabled => flags[:fabric_enabled],
+    :flipper_configuration => FlipperConfiguration.enabled(["Debug"], { 'Flipper' => '0.163.0' }),
+    # An absolute path to your application root.
+    :app_path => "#{Pod::Config.instance.installation_root}/..")
 
   pod 'XCDYouTubeKit', '~> 2.8' # for YouTubeStandaloneIOS
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
+  # post_install do |installer|
+  #   installer.pods_project.build_configurations.each do |config|
+  #     config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'
+  #     config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
+  #   end
+  #   react_native_post_install(installer)
+  #   __apply_Xcode_12_5_M1_post_install_workaround(installer)
+  # end
+
   post_install do |installer|
-    installer.pods_project.build_configurations.each do |config|
-      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'
-      config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
-    end
     react_native_post_install(installer)
     __apply_Xcode_12_5_M1_post_install_workaround(installer)
   end

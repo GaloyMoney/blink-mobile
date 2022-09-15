@@ -3,6 +3,7 @@
 //
 // In this file, we'll be kicking off our app or storybook.
 import "intl-pluralrules"
+import "react-native-reanimated"
 import {
   ApolloClient,
   ApolloProvider,

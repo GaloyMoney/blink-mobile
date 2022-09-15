@@ -31,3 +31,21 @@ declare module "react-native-restart" {
   const module: { Restart: () => void }
   export default module
 }
+
+declare module "react-native-walkthrough-tooltip" {
+  export interface TooltipProps {
+    children: React.ReactNode
+  }
+}
+declare interface MarkdownProps {
+  rules?: RenderRules
+  children?: ReactNode
+  style?: StyleSheet.NamedStyles<any>
+  renderer?: AstRenderer
+  markdownit?: MarkdownIt
+  mergeStyle?: boolean
+  debugPrintTree?: boolean
+  onLinkPress?: (url: string) => boolean
+}
+
+declare type MarkdownStatic = ComponentType<MarkdownProps>

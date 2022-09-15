@@ -20,7 +20,6 @@ jest.mock("react-native-version-number", () => ({}))
 jest.mock("@react-native-community/push-notification-ios", () => ({}))
 jest.mock("react-native-walkthrough-tooltip", () => ({}))
 jest.mock("react-native-fingerprint-scanner", () => ({}))
-jest.mock("react-native-snap-carousel", () => ({}))
 jest.mock("react-native-markdown-display", () => ({}))
 jest.mock("react-native-maps", () => ({}))
 jest.mock("react-native-phone-number-input", () => ({}))
@@ -36,6 +35,8 @@ jest.mock("@app/i18n/i18n-react", () => ({
     return { LL: i18nObject("en") }
   },
 }))
+jest.mock("react-native-image-crop-picker", () => ({}))
+jest.mock("rn-qr-generator", () => ({}))
 describe("GlobalError tests", () => {
   afterEach(() => {
     jest.clearAllMocks()

@@ -3,14 +3,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { useCallback, useMemo, useState } from "react"
 import { ActivityIndicator, Text, View } from "react-native"
-import {
-  ListItem,
-  SearchBar,
-  SearchBarAndroidProps,
-  SearchBarDefaultProps,
-  SearchBarIosProps,
-} from "react-native-elements"
-import { SearchBarBaseProps } from "react-native-elements/dist/searchbar/SearchBar"
+import { ListItem, SearchBar } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { FlatList } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
@@ -23,11 +16,6 @@ import { toastShow } from "../../utils/toast"
 import useToken from "../../hooks/use-token"
 
 import { useI18nContext } from "@app/i18n/i18n-react"
-
-// TODO: get rid of this wrapper once SearchBar props are figured out ref: https://github.com/react-native-elements/react-native-elements/issues/3089
-const SafeSearchBar = SearchBar as unknown as React.FC<
-  SearchBarBaseProps | SearchBarDefaultProps | SearchBarAndroidProps | SearchBarIosProps
->
 
 const filteredContactNames = ["BitcoinBeachMarketing"]
 
@@ -179,14 +167,13 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
 
   if (contacts.length > 0) {
     searchBarContent = (
-      <SafeSearchBar
+      <SearchBar
         placeholder={LL.common.search()}
         value={searchText}
         onChangeText={updateMatchingContacts}
         platform="default"
         round
         lightTheme
-        showCancel={false}
         showLoading={false}
         containerStyle={styles.searchBarContainer}
         inputContainerStyle={styles.searchBarInputContainerStyle}
@@ -231,8 +218,6 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
         renderItem={({ item }) => (
           <ListItem
             key={item.username}
-            underlayColor={color.palette.lighterGrey}
-            activeOpacity={0.7}
             style={styles.item}
             containerStyle={styles.itemContainer}
             onPress={() => navigation.navigate("contactDetail", { contact: item })}

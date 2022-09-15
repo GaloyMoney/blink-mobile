@@ -36,7 +36,6 @@ module.exports = {
       "|react-native-error-boundary" +
       "|react-native-extended-stylesheet" +
       "|react-native-haptic-feedback" +
-      "|react-native-image-picker" +
       "|react-native-keyboard-aware-scroll-view" +
       "|react-native-modal" +
       "|react-native-phone-number-input" +
@@ -49,6 +48,9 @@ module.exports = {
       "|react-native-toast-message" +
       "|react-native-vector-icons" +
       "|react-navigation-tabs" +
+      "|@rneui" +
+      "|rn-qr-generator" +
+      "|react-native-image-crop-picker" +
       ")/)",
   ],
 }

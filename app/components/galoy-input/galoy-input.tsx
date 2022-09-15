@@ -37,6 +37,7 @@ const GaloyInputFunction = (
         props.onBlur?.(e)
       }}
       ref={ref}
+      autoComplete="off"
     />
   )
 }

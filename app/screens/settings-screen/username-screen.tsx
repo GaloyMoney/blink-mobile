@@ -172,7 +172,7 @@ export const UsernameScreen: ScreenType = ({ navigation }: Props) => {
         returnKeyType="send"
         textContentType="username"
         onBlur={validateAndConfirm}
-        autoCompleteType="username"
+        autoComplete="username"
         autoCapitalize="none"
       />
       <ActivityIndicator

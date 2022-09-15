@@ -12,6 +12,8 @@ import {
 import Markdown from "react-native-markdown-display"
 import { useI18nContext } from "@app/i18n/i18n-react"
 
+const TypedMarkdown = Markdown as MarkdownStatic
+
 export type ConfirmDestinationModalProps = {
   destinationState: SendBitcoinDestinationState
   dispatchDestinationStateAction: Dispatch<SendBitcoinDestinationAction>
@@ -92,9 +94,9 @@ export const ConfirmDestinationModal: React.FC<ConfirmDestinationModalProps> = (
           </Text>
         </View>
         <View style={styles.bodyContainer}>
-          <Markdown style={{ body: styles.bodyText }}>
+          <TypedMarkdown style={{ body: styles.bodyText }}>
             {LL.SendBitcoinDestinationScreen.confirmModal.body({ bankName, lnAddress })}
-          </Markdown>
+          </TypedMarkdown>
           <Text style={styles.warningText}>
             {LL.SendBitcoinDestinationScreen.confirmModal.warning({ bankName })}
           </Text>

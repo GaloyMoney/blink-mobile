@@ -97,19 +97,21 @@ const Row = ({
   content?: unknown
 }) => (
   <View style={styles.description}>
-    <Text style={styles.entry}>
-      {entry + " "}
-      {type === "SettlementViaOnChain" && (
-        <Icon name="open-outline" size={18} color={palette.darkGrey} />
+    <>
+      <Text style={styles.entry}>
+        {entry + " "}
+        {type === "SettlementViaOnChain" && (
+          <Icon name="open-outline" size={18} color={palette.darkGrey} />
+        )}
+      </Text>
+      {content || (
+        <View style={styles.valueContainer}>
+          <Text selectable style={styles.value}>
+            {value}
+          </Text>
+        </View>
       )}
-    </Text>
-    {content || (
-      <View style={styles.valueContainer}>
-        <Text selectable style={styles.value}>
-          {value}
-        </Text>
-      </View>
-    )}
+    </>
   </View>
 )
 
