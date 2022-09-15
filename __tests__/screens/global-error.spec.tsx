@@ -20,7 +20,6 @@ jest.mock("react-native-version-number", () => ({}))
 jest.mock("@react-native-community/push-notification-ios", () => ({}))
 jest.mock("react-native-walkthrough-tooltip", () => ({}))
 jest.mock("react-native-fingerprint-scanner", () => ({}))
-jest.mock("react-native-snap-carousel", () => ({}))
 jest.mock("react-native-markdown-display", () => ({}))
 jest.mock("react-native-maps", () => ({}))
 jest.mock("react-native-phone-number-input", () => ({}))
@@ -56,8 +55,8 @@ describe("GlobalError tests", () => {
         <AuthenticationContext.Provider
           value={{
             isAppLocked: false,
-            setAppLocked: () => { },
-            setAppUnlocked: () => { },
+            setAppLocked: () => {},
+            setAppUnlocked: () => {},
           }}
         >
           <GlobalErrorToast />

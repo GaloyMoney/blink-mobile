@@ -8,6 +8,8 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import Markdown from "react-native-markdown-display"
 import Modal from "react-native-modal"
 
+const TypedMarkdown = Markdown as MarkdownStatic
+
 const styles = EStyleSheet.create({
   modalStyle: { margin: 0, flexDirection: "column", justifyContent: "flex-end" },
   fillerOpacity: { flex: 3 },
@@ -78,7 +80,7 @@ export const FloorTooltip: React.FC<FloorTooltipProps> = ({
             <Text style={styles.modalTitleText}>{modalTitle}</Text>
           </View>
           <ScrollView>
-            <Markdown style={{ body: styles.markdownText }}>{text}</Markdown>
+            <TypedMarkdown style={{ body: styles.markdownText }}>{text}</TypedMarkdown>
           </ScrollView>
         </View>
       </Modal>
