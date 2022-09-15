@@ -1,11 +1,8 @@
-import { useNavigation } from "@react-navigation/native"
 import * as React from "react"
 import { StyleSheet, Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-import type { StackNavigationProp } from "@react-navigation/stack"
-import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import type { ScreenType } from "../../types/jsx"
 
 const styles = StyleSheet.create({
@@ -47,7 +44,6 @@ const styles = StyleSheet.create({
 
 type Props = {
   children: JSX.Element
-  next: keyof RootStackParamList
   nextTitle: string
   action: () => void
   Svg: typeof React.Component
@@ -57,15 +53,12 @@ type Props = {
 
 export const OnboardingScreen: ScreenType = ({
   children,
-  next /* screen */,
   nextTitle,
   action,
   Svg,
   header = "",
   loading = false,
 }: Props) => {
-  const navigation =
-    useNavigation<StackNavigationProp<RootStackParamList, "welcomeFirst">>()
   return (
     <>
       <Text style={styles.header}>{header}</Text>
@@ -73,10 +66,10 @@ export const OnboardingScreen: ScreenType = ({
         <Svg style={styles.image} />
         {children}
       </View>
-      {(next || action) && (
+      {action && (
         <Button
           title={nextTitle || "Next"}
-          onPress={next ? () => navigation.navigate(next) : action}
+          onPress={action}
           containerStyle={styles.buttonContainer}
           buttonStyle={styles.buttonStyle}
           loading={loading}

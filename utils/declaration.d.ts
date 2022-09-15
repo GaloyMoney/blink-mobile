@@ -31,3 +31,9 @@ declare module "react-native-restart" {
   const module: { Restart: () => void }
   export default module
 }
+
+declare module "react-native-walkthrough-tooltip" {
+  export interface TooltipProps {
+    children: React.ReactNode
+  }
+}

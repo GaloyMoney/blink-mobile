@@ -16,3 +16,6 @@
 # GeeTest SDK has already been obfuscated, please do not obfuscate it again
 -dontwarn com.geetest.sdk.**
 -keep class com.geetest.sdk.**{*;}
+
+-keep class com.swmansion.reanimated.** { *; }
+-keep class com.facebook.react.turbomodule.** { *; }

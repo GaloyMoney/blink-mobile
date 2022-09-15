@@ -4,10 +4,7 @@ import { ActivityIndicator, StyleProp, Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { VictoryAxis, VictoryChart, VictoryArea } from "victory-native"
-import {
-  TextStyle,
-  ViewStyle,
-} from "react-native-vector-icons/node_modules/@types/react-native/index"
+import { TextStyle, ViewStyle } from "node_modules/@types/react-native/index"
 
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"

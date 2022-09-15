@@ -36,6 +36,8 @@ jest.mock("@app/i18n/i18n-react", () => ({
     return { LL: i18nObject("en") }
   },
 }))
+jest.mock("react-native-image-crop-picker", () => ({}))
+jest.mock("rn-qr-generator", () => ({}))
 describe("GlobalError tests", () => {
   afterEach(() => {
     jest.clearAllMocks()
@@ -54,8 +56,8 @@ describe("GlobalError tests", () => {
         <AuthenticationContext.Provider
           value={{
             isAppLocked: false,
-            setAppLocked: () => {},
-            setAppUnlocked: () => {},
+            setAppLocked: () => { },
+            setAppUnlocked: () => { },
           }}
         >
           <GlobalErrorToast />
