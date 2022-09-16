@@ -10,6 +10,7 @@ import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { CommonActions } from "@react-navigation/native"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { logConversionAttempt, logConversionResult } from "@app/utils/analytics"
 
 export const ConversionConfirmationScreen = ({
   navigation,
@@ -56,6 +57,10 @@ export const ConversionConfirmationScreen = ({
   const payWallet = async () => {
     if (fromWallet.currency === WalletCurrency.BTC) {
       try {
+        logConversionAttempt({
+          sendingWallet: fromWallet.currency,
+          receivingWallet: toWallet.currency,
+        })
         const { data, errorsMessage } = await intraLedgerPaymentSend({
           variables: {
             input: {
@@ -67,6 +72,12 @@ export const ConversionConfirmationScreen = ({
         })
 
         const status = data.intraLedgerPaymentSend.status
+
+        logConversionResult({
+          sendingWallet: fromWallet.currency,
+          receivingWallet: toWallet.currency,
+          paymentStatus: status,
+        })
         handlePaymentReturn(status, errorsMessage)
       } catch (err) {
         handlePaymentError(err)
@@ -74,6 +85,10 @@ export const ConversionConfirmationScreen = ({
     }
     if (fromWallet.currency === WalletCurrency.USD) {
       try {
+        logConversionAttempt({
+          sendingWallet: fromWallet.currency,
+          receivingWallet: toWallet.currency,
+        })
         const { data, errorsMessage } = await intraLedgerUsdPaymentSend({
           variables: {
             input: {
@@ -85,6 +100,11 @@ export const ConversionConfirmationScreen = ({
         })
 
         const status = data.intraLedgerUsdPaymentSend.status
+        logConversionResult({
+          sendingWallet: fromWallet.currency,
+          receivingWallet: toWallet.currency,
+          paymentStatus: status,
+        })
         handlePaymentReturn(status, errorsMessage)
       } catch (err) {
         handlePaymentError(err)

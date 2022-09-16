@@ -68,6 +68,7 @@ import {
 } from "@app/screens/conversion-flow"
 import { useAuthenticationContext } from "@app/store/authentication-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { logEnterBackground, logEnterForeground } from "@app/utils/analytics"
 
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
 PushNotification.configure({
@@ -133,11 +134,17 @@ export const RootStack: NavigatorType = () => {
   const client = useApolloClient()
   const { token, hasToken, tokenNetwork } = useToken()
   const { myPubKey, username } = useMainQuery()
+
+  useEffect(() => {
+    analytics().setUserProperty("hasUsername", username ? "true" : "false")
+  }, [username])
+
   const { isAppLocked } = useAuthenticationContext()
   const _handleAppStateChange = useCallback(
     async (nextAppState) => {
       if (appState.current.match(/background/) && nextAppState === "active") {
         console.info("App has come to the foreground!")
+        logEnterForeground()
         if (hasToken && !isAppLocked) {
           showModalClipboardIfValidPayment({
             client,
@@ -146,6 +153,10 @@ export const RootStack: NavigatorType = () => {
             username,
           })
         }
+      }
+
+      if (appState.current.match(/active/) && nextAppState === "background") {
+        logEnterBackground()
       }
 
       appState.current = nextAppState

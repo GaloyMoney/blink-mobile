@@ -24,6 +24,8 @@ import { toastShow } from "@app/utils/toast"
 import { copyPaymentInfoToClipboard } from "@app/utils/clipboard"
 import moment from "moment"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { logGeneratePaymentRequest } from "@app/utils/analytics"
+import { WalletCurrency } from "@app/types/amounts"
 
 const styles = EStyleSheet.create({
   container: {
@@ -200,6 +202,11 @@ const ReceiveUsd = () => {
       setStatus("loading")
       try {
         if (usdAmount === 0) {
+          logGeneratePaymentRequest({
+            paymentType: "lightning",
+            hasAmount: false,
+            receivingWallet: WalletCurrency.USD,
+          })
           const {
             data: {
               lnNoAmountInvoiceCreate: { invoice, errors },
@@ -215,6 +222,11 @@ const ReceiveUsd = () => {
           }
           setInvoice(invoice)
         } else {
+          logGeneratePaymentRequest({
+            paymentType: "lightning",
+            hasAmount: true,
+            receivingWallet: WalletCurrency.USD,
+          })
           const {
             data: {
               lnUsdInvoiceCreate: { invoice, errors },
