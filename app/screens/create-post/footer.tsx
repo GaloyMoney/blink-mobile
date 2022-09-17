@@ -9,7 +9,7 @@ const IMAGE_WIDTH = width - 32 * 2
 const IMAGE_HEIGHT = IMAGE_WIDTH * 0.635
 interface Props {
   onPress: () => void
-  style: ViewStyle
+  style?: ViewStyle
 }
 export const FooterCreatePost: React.FC<Props> = ({ onPress, style }) => {
   return (

@@ -7,6 +7,7 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -35,10 +36,10 @@ interface Props {
 }
 export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
   const dispatch = useDispatch()
-  const [name, setName] = useState("Half eaten burger")
-  const [price, setPrice] = useState("3000")
+  const [name, setName] = useState("")
+  const [price, setPrice] = useState("0")
   const [category, setCategory] = useState("Foods")
-  const [description, setDescription] = useState("Very delicious")
+  const [description, setDescription] = useState("")
   const [isLoading, setIsLoading] = useState(false)
 
   const [priceError, setPriceError] = useState("")
@@ -107,72 +108,79 @@ export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
       //  preset="scroll"
     >
       <HeaderComponent style={{ paddingHorizontal: 20, width }} />
-      <TouchableOpacity
-        style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-        onPress={() => {
-          Keyboard.dismiss()
-        }}
-        activeOpacity={1}
-      >
-        <View style={GlobalStyles.center}>
-          <Image source={images.backgroundSimple} style={{ width: 177, height: 158 }} />
-          <Text style={styles.title}>{eng.create_post}</Text>
-        </View>
-        <View style={{ paddingHorizontal: 30, width: "100%" }}>
-          <TextInputComponent
-            title={"Name"}
-            containerStyle={[{ marginTop: 40 }]}
-            onChangeText={setName}
-            value={name}
-            placeholder={"Burger"}
-            isError={nameError !== ""}
-          />
-          {nameError ? <Text style={styles.errorText}>{nameError}</Text> : null}
-          <Text style={styles.labelStyle}>Category</Text>
-          <DropDownPicker
-            style={styles.dropdownStyle}
-            textStyle={{
-              fontFamily: typography.regular,
-              fontSize: fontSize.font16,
+      <View style={{ flex: 1 }}>
+        <ScrollView>
+          <TouchableOpacity
+            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+            onPress={() => {
+              Keyboard.dismiss()
             }}
-            dropDownContainerStyle={{ borderColor: "#EBEBEB" }}
-            placeholder={"Category"}
-            placeholderStyle={{ color: "#c0c0c0" }}
-            open={open}
-            value={category}
-            items={items}
-            setOpen={setOpen}
-            setValue={setCategory}
-          />
-          <TextInputComponent
-            title={"Price"}
-            containerStyle={[{ marginTop: 40 }]}
-            onChangeText={setPrice}
-            value={price}
-            placeholder={"Price"}
-            isError={priceError !== ""}
-            keyboardType={"decimal-pad"}
-          />
+            activeOpacity={1}
+          >
+            <View style={GlobalStyles.center}>
+              <Image
+                source={images.backgroundSimple}
+                style={{ width: 177, height: 158 }}
+              />
+              <Text style={styles.title}>{eng.create_post}</Text>
+            </View>
+            <View style={{ paddingHorizontal: 30, width: "100%" }}>
+              <TextInputComponent
+                title={"Name"}
+                containerStyle={[{ marginTop: 40 }]}
+                onChangeText={setName}
+                value={name}
+                placeholder={"Burger"}
+                isError={nameError !== ""}
+              />
+              {nameError ? <Text style={styles.errorText}>{nameError}</Text> : null}
+              <Text style={styles.labelStyle}>Category</Text>
+              <DropDownPicker
+                style={styles.dropdownStyle}
+                textStyle={{
+                  fontFamily: typography.regular,
+                  fontSize: fontSize.font16,
+                }}
+                dropDownContainerStyle={{ borderColor: "#EBEBEB" }}
+                placeholder={"Category"}
+                placeholderStyle={{ color: "#c0c0c0" }}
+                open={open}
+                value={category}
+                items={items}
+                setOpen={setOpen}
+                setValue={setCategory}
+              />
+              <TextInputComponent
+                title={"Price"}
+                containerStyle={[{ marginTop: 40 }]}
+                onChangeText={setPrice}
+                value={price}
+                placeholder={"Price"}
+                isError={priceError !== ""}
+                keyboardType={"decimal-pad"}
+              />
 
-          <TextInputComponent
-            title={"Description"}
-            placeholder={"Description ..."}
-            containerStyle={[{ marginTop: 20 }]}
-            textField={true}
-            onChangeText={setDescription}
-            value={description}
-            isError={descriptionError !== ""}
-          />
-          {descriptionError ? (
-            <Text style={styles.errorText}>{descriptionError}</Text>
-          ) : null}
-          <View style={{ alignItems: "flex-end", marginTop: 15 }}>
-            <TouchableOpacity style={styles.button} onPress={onNext}>
-              <Text style={[styles.text]}>{eng.next}</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </TouchableOpacity>
+              <TextInputComponent
+                title={"Description"}
+                placeholder={"Description ..."}
+                containerStyle={[{ marginTop: 20 }]}
+                textField={true}
+                onChangeText={setDescription}
+                value={description}
+                isError={descriptionError !== ""}
+              />
+              {descriptionError ? (
+                <Text style={styles.errorText}>{descriptionError}</Text>
+              ) : null}
+              <View style={{ alignItems: "flex-end", marginVertical: 15 }}>
+                <TouchableOpacity style={styles.button} onPress={onNext}>
+                  <Text style={[styles.text]}>{eng.next}</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </ScrollView>
+      </View>
       <LoadingComponent isLoading={isLoading} />
     </Screen>
   )

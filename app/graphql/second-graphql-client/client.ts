@@ -11,6 +11,7 @@ import {
 import { getMainDefinition } from "@apollo/client/utilities"
 import { setContext } from "@apollo/client/link/context"
 import { onError } from "@apollo/client/link/error"
+import { createUploadLink } from "apollo-upload-client"
 
 let attemps = 0
 
@@ -26,9 +27,10 @@ const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
     })
   if (networkError) console.log(`[Network error]: ${networkError}`)
 })
-const httpLink = new HttpLink({
-  uri: `https://api-puravida.herokuapp.com/graphql`,
-})
+const httpLink = createUploadLink({ uri: "https://api-puravida.herokuapp.com/graphql" })
+// new HttpLink({
+//   uri: `https://api-puravida.herokuapp.com/graphql`,
+// })
 
 const authLink = setContext(async (_, { headers }) => {
   // get the authentication token from local storage if it exists

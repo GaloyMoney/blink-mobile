@@ -1,53 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"
 import type { PayloadAction } from "@reduxjs/toolkit"
 
-const FAKE_DATA = [
-  {
-    name: "Avenida 24 bar",
-    location: {
-      lat: 9.922547,
-      long: -84.075127,
-    },
-    distance: 200,
-    rating: 4,
-    description: "Burgers - Italian - Hot vine - Grilled - Canadian",
-    reviewNumber: 54,
-  },
-  {
-    name: "Dónde Glori",
-    location: {
-      lat: 9.9231,
-      long: -84.074872,
-    },
-    distance: 321,
-    rating: 4.5,
-    description: "Burgers - Italian - Hot vine - Grilled - Canadian",
-    reviewNumber: 54,
-  },
-  {
-    name: "Mariscos Bar",
-    location: {
-      lat: 9.922835,
-      long: -84.07583,
-    },
-    distance: 222,
-    rating: 5,
-    description: "Burgers - Italian - Hot vine - Grilled - Canadian",
-    reviewNumber: 54,
-  },
-  {
-    name: `Miriam's Cupcakes`,
-    location: {
-      lat: 9.924091,
-      long: -84.072507,
-    },
-    distance: 155,
-    rating: 5,
-    description: "Burgers - Italian - Hot vine - Grilled - Canadian",
-    reviewNumber: 54,
-  },
-]
-
 export interface PostAttributes {
   _id: string
   address: string
@@ -66,6 +19,8 @@ export interface PostAttributes {
   rating?: number
   updatedAt: string
   userId: string
+  phone?: string
+  email?: string
 }
 interface StoreReducer {
   value: number

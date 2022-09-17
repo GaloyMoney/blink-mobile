@@ -39,11 +39,13 @@ export const VerticalDataComponent: React.FC<Props> = ({ product, onItemPress })
     <TouchableOpacity style={styles.container} onPress={onItemPress}>
       <Image
         style={{ height: ITEM_WIDTH, width: ITEM_WIDTH }}
-        source={images.tempStore}
+        source={
+          product?.mainImageUrl ? { uri: product.mainImageUrl } : images.placeholderImage
+        }
       />
       <View style={{ padding: 10 }}>
         <Text style={{ fontFamily: typography.bold, fontSize: fontSize.font14 }}>
-          $ 200
+          $ {product.price}
         </Text>
         <Text
           style={{

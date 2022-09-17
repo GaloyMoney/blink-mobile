@@ -136,13 +136,13 @@ export const StoreListScreen: ScreenType = ({ navigation }: Props) => {
 
   useEffect(() => {
     Geolocation.getCurrentPosition(
-      (pos) => {
-        // setPosition({
-        //   latitude: crd.latitude,
-        //   longitude: crd.longitude,
-        //   latitudeDelta: 0.02,
-        //   longitudeDelta: 0.02,
-        // })
+      ({ coords }) => {
+        setPosition({
+          latitude: coords.latitude,
+          longitude: coords.longitude,
+          latitudeDelta: 0.02,
+          longitudeDelta: 0.02,
+        })
       },
       (err) => {
         console.log("err: ", err)

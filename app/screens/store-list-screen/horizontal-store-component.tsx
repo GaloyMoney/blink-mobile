@@ -44,7 +44,11 @@ export const LandscapeDataComponent: React.FC<Props> = ({
       <Row containerStyle={{ flex: 1 }}>
         <Image
           style={{ width: 89, height: "100%", borderRadius: 4, marginRight: 10 }}
-          source={images.placeholderImage}
+          source={
+            product?.mainImageUrl
+              ? { uri: product.mainImageUrl }
+              : images.placeholderImage
+          }
         />
         <View style={{ flex: 1 }}>
           <Text style={styles.bigText}>{product.name}</Text>

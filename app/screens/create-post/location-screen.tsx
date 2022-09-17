@@ -64,23 +64,23 @@ export const AddLocationScreen: React.FC<Props> = ({ navigation }) => {
           setTempStore({
             ...tempPost,
             location: {
-              // lat: crd.latitude,
-              // long: crd.longitude,
-              lat: 9.9227376,
-              long: -84.0748629,
+              lat: crd.latitude,
+              long: crd.longitude,
+              // lat: 9.9227376,
+              // long: -84.0748629,
             },
           }),
         )
         setPosition({
-          // latitude: crd.latitude,
-          // longitude: crd.longitude,
-          // latitudeDelta: 0.02,
-          // longitudeDelta: 0.02,
+          latitude: crd.latitude,
+          longitude: crd.longitude,
+          latitudeDelta: 0.02,
+          longitudeDelta: 0.02,
 
-          latitude: 9.9227376,
-          longitude: -84.0748629,
-          latitudeDelta: 0.001,
-          longitudeDelta: 0.001,
+          // latitude: 9.9227376,
+          // longitude: -84.0748629,
+          // latitudeDelta: 0.001,
+          // longitudeDelta: 0.001,
         })
       },
       (err) => {
@@ -168,7 +168,7 @@ export const AddLocationScreen: React.FC<Props> = ({ navigation }) => {
             onPress={() => {
               navigation.navigate("AddContact")
             }}
-            style={{ position: "absolute", bottom: 0, left: 30, marginBottom: 20 }}
+            style={{ marginVertical: 20 }}
           />
         </View>
       </Screen>
