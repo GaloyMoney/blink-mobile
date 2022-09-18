@@ -37,7 +37,7 @@ interface Props {
 export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
   const dispatch = useDispatch()
   const [name, setName] = useState("")
-  const [price, setPrice] = useState("0")
+  const [price, setPrice] = useState("")
   const [category, setCategory] = useState("Foods")
   const [description, setDescription] = useState("")
   const [isLoading, setIsLoading] = useState(false)
@@ -105,7 +105,7 @@ export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
     <Screen
       style={styles.container}
       keyboardOffset={"none"}
-      //  preset="scroll"
+    //  preset="scroll"
     >
       <HeaderComponent style={{ paddingHorizontal: 20, width }} />
       <View style={{ flex: 1 }}>
@@ -157,7 +157,7 @@ export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
                 value={price}
                 placeholder={"Price"}
                 isError={priceError !== ""}
-                keyboardType={"decimal-pad"}
+                keyboardType={"number-pad"}
               />
 
               <TextInputComponent

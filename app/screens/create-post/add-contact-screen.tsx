@@ -30,6 +30,7 @@ import { eng } from "@app/constants/en"
 import PhoneInput from "react-native-phone-number-input"
 import { translateUnknown as translate } from "@galoymoney/client"
 import { setTempStore } from "@app/redux/reducers/store-reducer"
+import useMainQuery from "@app/hooks/use-main-query"
 const { width, height } = Dimensions.get("window")
 const IMAGE_WIDTH = width - 30 * 2
 const IMAGE_HEIGHT = IMAGE_WIDTH * 0.61
@@ -48,10 +49,11 @@ export const AddContactScreen: React.FC<Props> = ({ navigation }) => {
   )
   const [phone, setPhone] = useState("")
   const [email, setEmail] = useState("")
-  const [phoneNumber, setPhoneNumber] = useState("")
+  // const [phoneNumber, setPhoneNumber] = useState("")
 
   const phoneInputRef = useRef<PhoneInput | null>()
 
+  const { btcWalletId, username, phoneNumber, userPreferredLanguage } = useMainQuery()
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <Screen style={styles.container}>
@@ -81,14 +83,10 @@ export const AddContactScreen: React.FC<Props> = ({ navigation }) => {
             <CustomTextInput
               placeHolder={eng.account_contact_will_be_filled}
               title={eng.use_existing_information}
+              value={phoneNumber}
               disabled
-              rightComponent={
-                <View style={styles.rightComponent}>
-                  <CheckSvg />
-                </View>
-              }
             />
-            <Text style={styles.orText}>Or</Text>
+            {/* <Text style={styles.orText}>Or</Text> */}
             {/* <CustomTextInput
               placeHolder={eng.phone_number}
               title={eng.phone}
@@ -96,7 +94,7 @@ export const AddContactScreen: React.FC<Props> = ({ navigation }) => {
               value={phone}
             /> */}
 
-            <Row>
+            {/* <Row>
               <PhoneInput
                 ref={phoneInputRef}
                 value={phoneNumber}
@@ -136,14 +134,14 @@ export const AddContactScreen: React.FC<Props> = ({ navigation }) => {
               <TouchableOpacity style={styles.rightComponent} onPress={() => {}}>
                 <CheckSvg />
               </TouchableOpacity>
-            </Row>
-            <Text style={styles.orText}>Or</Text>
+            </Row> */}
+            {/* <Text style={styles.orText}>Or</Text>
             <CustomTextInput
               placeHolder={eng.email}
               title={eng.email}
               onChangeText={setEmail}
               value={email}
-            />
+            /> */}
 
             <AndroidBottomSpace isPaddingBottom />
           </ScrollView>

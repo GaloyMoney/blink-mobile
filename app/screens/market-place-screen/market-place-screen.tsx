@@ -1,8 +1,9 @@
-import { gql } from "@apollo/client"
+
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 // eslint-disable-next-line react-native/split-platform-components
 import {
+  Alert,
   Dimensions,
   Image,
   SafeAreaView,
@@ -22,6 +23,8 @@ import { eng } from "@app/constants/en"
 import FilterSvg from "@asset/svgs/filter.svg"
 import { images } from "@app/assets/images"
 import { CreatePostSuccessModal } from "@app/components/create-post-success-modal"
+import useToken from "@app/utils/use-token"
+import { UnAuthModal } from "@app/components/un-auth-modal"
 const { width, height } = Dimensions.get("window")
 const IMAGE_WIDTH = width - 32 * 2
 const IMAGE_HEIGHT = IMAGE_WIDTH * 0.635
@@ -31,6 +34,8 @@ type Props = {
 }
 
 export const MarketPlace: ScreenType = ({ navigation }: Props) => {
+  const { hasToken } = useToken()
+  const [isModalVisible, setIsModalVisible] = React.useState(false)
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Screen style={styles.screenContainer}>
@@ -58,16 +63,22 @@ export const MarketPlace: ScreenType = ({ navigation }: Props) => {
           <Row containerStyle={styles.buttonRow}>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => navigation.navigate("CreatePost")}
+              onPress={() => {
+                hasToken ? navigation.navigate("CreatePost") : setIsModalVisible(true)
+              }}
             >
               <Text style={[styles.text]}>{eng.create_post}</Text>
             </TouchableOpacity>
             <View style={{ width: 30 }} />
-            <TouchableOpacity style={[styles.button, styles.secondButton]}>
+            <TouchableOpacity style={[styles.button, styles.secondButton]}
+              onPress={() => {
+                hasToken ? Alert.alert("Stay tuned") : setIsModalVisible(true)
+              }}>
               <Text style={[styles.text, { color: "#3653FE" }]}>{eng.my_post}</Text>
             </TouchableOpacity>
           </Row>
         </View>
+        <UnAuthModal modalVisible={isModalVisible} setModalVisible={setIsModalVisible}/>
       </Screen>
     </SafeAreaView>
   )
