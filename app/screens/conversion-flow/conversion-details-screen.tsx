@@ -295,6 +295,7 @@ export const ConversionDetailsScreen = ({
                     separator="."
                     precision={2}
                     editable={false}
+                    minValue={0}
                     style={styles.convertedAmountText}
                   />
                 </>
@@ -319,6 +320,7 @@ export const ConversionDetailsScreen = ({
                     separator="."
                     suffix=" sats"
                     precision={0}
+                    minValue={0}
                     editable={false}
                     style={styles.convertedAmountText}
                   />

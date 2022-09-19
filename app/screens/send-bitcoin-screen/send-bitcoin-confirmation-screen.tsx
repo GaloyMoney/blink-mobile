@@ -438,6 +438,7 @@ const SendBitcoinConfirmationScreen = ({
                   delimiter=","
                   separator="."
                   precision={2}
+                  minValue={0}
                   editable={false}
                   style={styles.convertedAmountText}
                 />

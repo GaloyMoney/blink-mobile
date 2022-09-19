@@ -21,17 +21,23 @@ export const useUsdBtcAmount = (initialAmount?: PaymentAmount<WalletCurrency>) =
 
   const setAmountsWithBtc = React.useCallback(
     (sats: number) => {
-      setPaymentAmount({ amount: sats, currency: WalletCurrency.BTC })
+      setPaymentAmount({ amount: Math.abs(sats), currency: WalletCurrency.BTC })
     },
     [setPaymentAmount],
   )
 
   const setAmountsWithUsd = React.useCallback(
     (cents: number) => {
-      setPaymentAmount({ amount: cents, currency: WalletCurrency.USD })
+      setPaymentAmount({ amount: Math.abs(cents), currency: WalletCurrency.USD })
     },
     [setPaymentAmount],
   )
+
+  const toggleAmountCurrency = React.useCallback(() => {
+    setPaymentAmount(
+      paymentAmount.currency === WalletCurrency.BTC ? usdAmount : btcAmount,
+    )
+  }, [paymentAmount, btcAmount, usdAmount])
 
   return {
     btcAmount,
@@ -40,5 +46,6 @@ export const useUsdBtcAmount = (initialAmount?: PaymentAmount<WalletCurrency>) =
     setAmountsWithUsd,
     paymentAmount,
     setPaymentAmount,
+    toggleAmountCurrency,
   }
 }
