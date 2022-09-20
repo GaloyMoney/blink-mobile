@@ -164,7 +164,7 @@ android {
             abiFilters (*reactNativeArchitectures())
         }
     }
-}
+
     }
 
     if (isNewArchitectureEnabled()) {

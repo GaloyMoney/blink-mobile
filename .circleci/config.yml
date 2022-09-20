@@ -77,8 +77,8 @@ jobs:
       - run: sudo npm install -g yarn
       - run: gpg --keyserver keyserver.ubuntu.com --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
 
-      - run: cd android && bundle config set deployment 'true'
       - run: cd android && bundle check || bundle install
+      - run: cd android && bundle config set deployment 'true'
 
       - run: echo $ANDROID_SERVICE_ACCOUNT_UPLOAD | base64 -d > android/api-8350101450647692243-59029-b9bec84a7e5a.json
       - run: echo $RELEASE_KEYSTORE | base64 -d > android/release.keystore
@@ -124,8 +124,8 @@ jobs:
             - "19:7e:f3:6c:be:a7:17:01:7d:09:ca:39:c3:98:86:90"
       - restore_cache:
           key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
-      - run: cd ios && bundle config set deployment 'true'
       - run: cd ios && bundle check || bundle install
+      - run: cd ios && bundle config set deployment 'true'
       - save_cache:
           key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
           paths:
@@ -162,8 +162,8 @@ jobs:
             - "19:7e:f3:6c:be:a7:17:01:7d:09:ca:39:c3:98:86:90"
       - restore_cache:
           key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
-      - run: cd ios && bundle config set deployment 'true'
       - run: cd ios && bundle check || bundle install
+      - run: cd ios && bundle config set deployment 'true'
       - save_cache:
           key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
           paths:
