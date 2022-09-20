@@ -159,13 +159,18 @@ android {
                     targets "galoyapp_appmodules"
                 }
             }
-    if (!enableSeparateBuildPerCPUArchitecture) {
-        ndk {
-            abiFilters (*reactNativeArchitectures())
+            if (!enableSeparateBuildPerCPUArchitecture) {
+                ndk {
+                    abiFilters (*reactNativeArchitectures())
+                }
+            }
         }
     }
+<<<<<<< HEAD
 
     }
+=======
+>>>>>>> 91f01cfe (fix: upgrade and fix build files)
 
     if (isNewArchitectureEnabled()) {
         // We configure the NDK build only if you decide to opt-in for the New Architecture.
