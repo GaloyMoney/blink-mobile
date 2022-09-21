@@ -166,11 +166,6 @@ android {
             }
         }
     }
-<<<<<<< HEAD
-
-    }
-=======
->>>>>>> 91f01cfe (fix: upgrade and fix build files)
 
     if (isNewArchitectureEnabled()) {
         // We configure the NDK build only if you decide to opt-in for the New Architecture.
