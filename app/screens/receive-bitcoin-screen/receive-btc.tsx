@@ -21,6 +21,8 @@ import { toastShow } from "@app/utils/toast"
 
 import { copyPaymentInfoToClipboard } from "@app/utils/clipboard"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { logGeneratePaymentRequest } from "@app/utils/analytics"
+import { WalletCurrency } from "@app/types/amounts"
 
 const styles = EStyleSheet.create({
   container: {
@@ -177,6 +179,11 @@ const ReceiveBtc = () => {
       setInvoice(null)
       try {
         if (satAmount === 0) {
+          logGeneratePaymentRequest({
+            paymentType: "lightning",
+            hasAmount: false,
+            receivingWallet: WalletCurrency.BTC,
+          })
           const {
             data: {
               lnNoAmountInvoiceCreate: { invoice, errors },
@@ -191,6 +198,11 @@ const ReceiveBtc = () => {
           }
           setInvoice(invoice)
         } else {
+          logGeneratePaymentRequest({
+            paymentType: "lightning",
+            hasAmount: true,
+            receivingWallet: WalletCurrency.BTC,
+          })
           const {
             data: {
               lnInvoiceCreate: { invoice, errors },
@@ -222,6 +234,11 @@ const ReceiveBtc = () => {
     async ({ walletId }) => {
       setLoading(true)
       try {
+        logGeneratePaymentRequest({
+          paymentType: "onchain",
+          hasAmount: false,
+          receivingWallet: WalletCurrency.BTC,
+        })
         const {
           data: {
             onChainAddressCurrent: { address, errors },

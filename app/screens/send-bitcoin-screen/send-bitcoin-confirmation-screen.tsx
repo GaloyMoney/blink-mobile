@@ -21,6 +21,7 @@ import NoteIcon from "@app/assets/icons/note.svg"
 import { CommonActions } from "@react-navigation/native"
 import useMainQuery from "@app/hooks/use-main-query"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { logPaymentAttempt, logPaymentResult } from "@app/utils/analytics"
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -346,9 +347,17 @@ const SendBitcoinConfirmationScreen = ({
   const sendPayment = async () => {
     setStatus(Status.LOADING)
     try {
+      logPaymentAttempt({
+        paymentType,
+        sendingWallet: payerWalletDescriptor.currency,
+      })
       const paymentMutation = transactionPaymentMutation()
       const { status, errorsMessage } = await paymentMutation()
-
+      logPaymentResult({
+        paymentType,
+        paymentStatus: status,
+        sendingWallet: payerWalletDescriptor.currency,
+      })
       if (!errorsMessage && status === "SUCCESS") {
         setStatus(Status.SUCCESS)
         navigation.dispatch((state) => {

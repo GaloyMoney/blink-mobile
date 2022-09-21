@@ -34,6 +34,7 @@ import {
   InvalidLightningDestinationReason,
   InvalidOnchainDestinationReason,
 } from "@galoymoney/client/dist/parsing-v2"
+import { logPaymentDestinationAccepted } from "@app/utils/analytics"
 
 const Styles = StyleSheet.create({
   scrollView: {
@@ -456,6 +457,7 @@ const SendBitcoinDestinationScreen = ({
   useEffect(() => {
     if (goToNextScreenWhenValid && destinationState.destinationState === "valid") {
       // go to next screen
+      logPaymentDestinationAccepted(destinationState.destination.paymentType)
       setGoToNextScreenWhenValid(false)
       return navigation.navigate(
         "sendBitcoinDetails",

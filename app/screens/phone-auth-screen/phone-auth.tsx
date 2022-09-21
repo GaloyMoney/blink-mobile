@@ -37,6 +37,7 @@ import { useGeetestCaptcha } from "../../hooks"
 import { networkVar } from "../../graphql/client-only-query"
 import DownArrow from "@app/assets/icons/downarrow.svg"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { logRequestAuthCode } from "@app/utils/analytics"
 
 const phoneRegex = new RegExp("^\\+[0-9]+$")
 
@@ -184,6 +185,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
         secCode: geetestValidationData?.geetestSecCode,
       }
       resetValidationData()
+      logRequestAuthCode(networkVar())
 
       const { data } = await captchaRequestAuthCode({ variables: { input } })
 

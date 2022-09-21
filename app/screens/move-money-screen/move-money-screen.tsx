@@ -373,7 +373,6 @@ export const MoveMoneyScreen: ScreenType = ({
           <View style={styles.divider} />
         </View>
       </Modal>
-
       <View style={styles.header}>
         <Button
           buttonStyle={styles.topButton}
