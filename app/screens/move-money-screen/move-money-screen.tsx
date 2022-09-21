@@ -84,12 +84,13 @@ const styles = EStyleSheet.create({
   header: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-around",
     alignItems: "center",
     marginTop: "15rem",
+    marginHorizontal: "20rem",
     height: "120rem",
   },
 
+  balanceHeaderContainer: { flex: 1, flexDirection: "column" },
   walletOverview: {
     marginBottom: "15rem",
   },
@@ -384,13 +385,15 @@ export const MoveMoneyScreen: ScreenType = ({
           icon={<PriceIcon />}
         />
 
-        <BalanceHeader
-          loading={loading}
-          showSecondaryCurrency={!hasUsdWallet}
-          btcWalletBalance={btcWalletBalance}
-          btcWalletValueInUsd={btcWalletValueInUsd}
-          usdWalletBalance={usdWalletBalance}
-        />
+        <View style={styles.balanceHeaderContainer}>
+          <BalanceHeader
+            loading={loading}
+            hasUsdWallet={hasUsdWallet}
+            btcWalletBalance={btcWalletBalance}
+            btcWalletValueInUsd={btcWalletValueInUsd}
+            usdWalletBalance={usdWalletBalance}
+          />
+        </View>
 
         <Button
           buttonStyle={styles.topButton}
