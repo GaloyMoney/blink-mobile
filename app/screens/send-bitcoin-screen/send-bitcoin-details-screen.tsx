@@ -1,5 +1,5 @@
 import useMainQuery from "@app/hooks/use-main-query"
-import React, { useCallback, useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import {
   ScrollView,
   StyleSheet,
@@ -9,12 +9,12 @@ import {
   View,
 } from "react-native"
 import { palette } from "@app/theme"
-import { PaymentAmount, WalletCurrency } from "@app/types/amounts"
+import { WalletCurrency } from "@app/types/amounts"
 import { fetchLnurlInvoice } from "@galoymoney/client"
 import { Satoshis } from "lnurl-pay/dist/types/types"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { usePriceConversion } from "@app/hooks"
+import { usePriceConversion, useUsdBtcAmount } from "@app/hooks"
 import {
   paymentAmountToDollarsOrSats,
   satAmountDisplay,
@@ -208,53 +208,27 @@ const SendBitcoinDetailsScreen = ({
     btcWalletValueInUsd,
     usdWalletBalance,
   } = useMainQuery()
-  const [amountCurrency, setAmountCurrency] = useState<WalletCurrency>(
-    fixedAmount ? WalletCurrency.BTC : WalletCurrency.USD,
-  )
+
   const [note, setNote] = useState(initialNote)
   const [fromWallet, setFromWallet] = useState(defaultWallet)
   const { LL } = useI18nContext()
-  const toggleAmountCurrency = useCallback(() => {
-    if (fixedAmount) {
-      return
-    }
-
-    if (amountCurrency === WalletCurrency.USD) {
-      setAmountCurrency(WalletCurrency.BTC)
-    }
-    if (amountCurrency === WalletCurrency.BTC) {
-      setAmountCurrency(WalletCurrency.USD)
-    }
-  }, [amountCurrency, fixedAmount])
+  const { convertPaymentAmount } = usePriceConversion()
+  const {
+    btcAmount,
+    usdAmount,
+    setAmountsWithBtc,
+    setAmountsWithUsd,
+    toggleAmountCurrency,
+    paymentAmount,
+  } = useUsdBtcAmount(fixedAmount)
 
   const [isModalVisible, setIsModalVisible] = useState(false)
   const { wallets } = useMainQuery()
-  const [centAmount, setCentAmount] = useState<PaymentAmount<WalletCurrency.USD>>({
-    amount: 0,
-    currency: WalletCurrency.USD,
-  })
-  const [satAmount, setSatAmount] = useState<PaymentAmount<WalletCurrency.BTC>>(
-    fixedAmount || { amount: 0, currency: WalletCurrency.BTC },
-  )
-  const setRawCentAmount = (dollars) => {
-    setCentAmount({ amount: dollars * 100, currency: WalletCurrency.USD })
-  }
-  const setRawSatAmount = (sats) => {
-    setSatAmount({ amount: sats, currency: WalletCurrency.BTC })
-  }
 
-  const { convertPaymentAmount } = usePriceConversion()
   const [errorMessage, setErrorMessage] = useState("")
   const [validAmount, setValidAmount] = useState(false)
   const usdDisabled = paymentType === "onchain" || usdWalletId === undefined
   const isFixedAmountInvoice = fixedAmount !== undefined
-
-  useEffect(() => {
-    if (isFixedAmountInvoice) {
-      const centAmount = convertPaymentAmount(fixedAmount, WalletCurrency.USD)
-      setCentAmount(centAmount)
-    }
-  }, [convertPaymentAmount, fixedAmount, isFixedAmountInvoice])
 
   useEffect(() => {
     setFromWallet(
@@ -266,18 +240,8 @@ const SendBitcoinDetailsScreen = ({
   }, [defaultWallet, usdDisabled, wallets])
 
   useEffect(() => {
-    if (amountCurrency === WalletCurrency.USD) {
-      setSatAmount(convertPaymentAmount(centAmount, WalletCurrency.BTC))
-    }
-    if (amountCurrency === WalletCurrency.BTC) {
-      setCentAmount(convertPaymentAmount(satAmount, WalletCurrency.USD))
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [satAmount.amount, centAmount.amount, amountCurrency, convertPaymentAmount])
-
-  useEffect(() => {
-    if (fromWallet.__typename === "BTCWallet" && satAmount) {
-      const isAmountValid = satAmount.amount <= btcWalletBalance
+    if (fromWallet.__typename === "BTCWallet") {
+      const isAmountValid = btcAmount.amount <= btcWalletBalance
       setValidAmount(isAmountValid)
       if (isAmountValid) {
         setErrorMessage("")
@@ -289,8 +253,9 @@ const SendBitcoinDetailsScreen = ({
         )
       }
     }
-    if (fromWallet.__typename === "UsdWallet" && centAmount) {
-      const isAmountValid = centAmount.amount <= usdWalletBalance
+
+    if (fromWallet.__typename === "UsdWallet") {
+      const isAmountValid = usdAmount.amount <= usdWalletBalance
       setValidAmount(isAmountValid)
       if (isAmountValid) {
         setErrorMessage("")
@@ -303,13 +268,7 @@ const SendBitcoinDetailsScreen = ({
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    fromWallet,
-    satAmount.amount,
-    centAmount.amount,
-    btcWalletBalance,
-    usdWalletBalance,
-  ])
+  }, [fromWallet, btcAmount, usdAmount, btcWalletBalance, usdWalletBalance])
 
   if (!defaultWallet) {
     return <></>
@@ -397,14 +356,11 @@ const SendBitcoinDetailsScreen = ({
   const goToNextScreen = async () => {
     let invoice: string | undefined
 
-    const paymentAmountInBtc = satAmount
-    const paymentAmountInUsd = centAmount
-
     if (paymentType === "lnurl") {
       try {
         const result = await fetchLnurlInvoice({
           lnUrlOrAddress: destination,
-          tokens: satAmount.amount as Satoshis,
+          tokens: btcAmount.amount as Satoshis,
         })
         invoice = result.invoice
       } catch (error) {
@@ -421,9 +377,9 @@ const SendBitcoinDetailsScreen = ({
     }
     navigation.navigate("sendBitcoinConfirmation", {
       lnurlInvoice: invoice,
-      fixedAmount: paymentType === "lnurl" ? paymentAmountInBtc : fixedAmount,
-      paymentAmountInBtc,
-      paymentAmountInUsd,
+      fixedAmount: paymentType === "lnurl" ? btcAmount : fixedAmount,
+      paymentAmountInBtc: btcAmount,
+      paymentAmountInUsd: usdAmount,
       recipientWalletId,
       paymentType,
       destination,
@@ -504,11 +460,11 @@ const SendBitcoinDetailsScreen = ({
           <Text style={Styles.fieldTitleText}>{LL.SendBitcoinScreen.amount()}</Text>
           <View style={Styles.fieldBackground}>
             <View style={Styles.currencyInputContainer}>
-              {fromWallet.__typename === "BTCWallet" && amountCurrency === "BTC" && (
+              {fromWallet.__typename === "BTCWallet" && paymentAmount.currency === "BTC" && (
                 <>
                   <FakeCurrencyInput
-                    value={paymentAmountToDollarsOrSats(satAmount)}
-                    onChangeValue={setRawSatAmount}
+                    value={paymentAmountToDollarsOrSats(btcAmount)}
+                    onChangeValue={setAmountsWithBtc}
                     prefix=""
                     delimiter=","
                     separator="."
@@ -519,22 +475,23 @@ const SendBitcoinDetailsScreen = ({
                     style={Styles.walletBalanceInput}
                   />
                   <FakeCurrencyInput
-                    value={paymentAmountToDollarsOrSats(centAmount)}
-                    onChangeValue={setRawCentAmount}
+                    value={paymentAmountToDollarsOrSats(usdAmount)}
+                    onChangeValue={(amount) => setAmountsWithUsd(amount * 100)}
                     prefix="$"
                     delimiter=","
                     separator="."
                     precision={2}
+                    minValue={0}
                     editable={false}
                     style={Styles.convertedAmountText}
                   />
                 </>
               )}
-              {fromWallet.__typename === "BTCWallet" && amountCurrency === "USD" && (
+              {fromWallet.__typename === "BTCWallet" && paymentAmount.currency === "USD" && (
                 <>
                   <FakeCurrencyInput
-                    value={paymentAmountToDollarsOrSats(centAmount)}
-                    onChangeValue={setRawCentAmount}
+                    value={paymentAmountToDollarsOrSats(usdAmount)}
+                    onChangeValue={(amount) => setAmountsWithUsd(amount * 100)}
                     prefix="$"
                     delimiter=","
                     separator="."
@@ -544,13 +501,14 @@ const SendBitcoinDetailsScreen = ({
                     editable={!isFixedAmountInvoice}
                   />
                   <FakeCurrencyInput
-                    value={paymentAmountToDollarsOrSats(satAmount)}
-                    onChangeValue={setRawSatAmount}
+                    value={paymentAmountToDollarsOrSats(btcAmount)}
+                    onChangeValue={setAmountsWithBtc}
                     prefix=""
                     delimiter=","
                     separator="."
                     suffix=" sats"
                     precision={0}
+                    minValue={0}
                     editable={false}
                     style={Styles.convertedAmountText}
                   />
@@ -558,8 +516,8 @@ const SendBitcoinDetailsScreen = ({
               )}
               {fromWallet.__typename === "UsdWallet" && (
                 <FakeCurrencyInput
-                  value={paymentAmountToDollarsOrSats(centAmount)}
-                  onChangeValue={setRawCentAmount}
+                  value={paymentAmountToDollarsOrSats(usdAmount)}
+                  onChangeValue={(amount) => setAmountsWithUsd(amount * 100)}
                   prefix="$"
                   delimiter=","
                   separator="."
@@ -570,7 +528,7 @@ const SendBitcoinDetailsScreen = ({
                 />
               )}
             </View>
-            {fromWallet.__typename === "BTCWallet" && (
+            {fromWallet.__typename === "BTCWallet" && !fixedAmount && (
               <TouchableWithoutFeedback onPress={toggleAmountCurrency}>
                 <View style={Styles.switchCurrencyIconContainer}>
                   <SwitchIcon />
@@ -629,7 +587,7 @@ const SendBitcoinDetailsScreen = ({
             titleStyle={Styles.activeButtonTitleStyle}
             disabledStyle={[Styles.button, Styles.disabledButtonStyle]}
             disabledTitleStyle={Styles.disabledButtonTitleStyle}
-            disabled={!validAmount || satAmount.amount === 0}
+            disabled={!validAmount || paymentAmount.amount === 0}
             onPress={goToNextScreen}
           />
         </View>

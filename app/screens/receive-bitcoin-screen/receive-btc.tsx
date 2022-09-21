@@ -378,6 +378,7 @@ const ReceiveBtc = () => {
                   delimiter=","
                   separator="."
                   precision={2}
+                  minValue={0}
                   editable={false}
                   style={styles.convertedAmountText}
                 />
@@ -403,6 +404,7 @@ const ReceiveBtc = () => {
                   separator="."
                   suffix=" sats"
                   precision={0}
+                  minValue={0}
                   editable={false}
                   style={styles.convertedAmountText}
                 />
