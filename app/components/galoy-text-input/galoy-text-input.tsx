@@ -53,20 +53,10 @@ export const GaloyTextInput = ({
   prepend = "",
   onChangeText,
 }: GaloyTextInputProps) => {
-  const [value, setValue] = React.useState("")
+  const [value, setValue] = useState(prepend + append)
   const [cleanValue, setCleanValue] = useState("")
 
   useEffect(() => {
-    if (prepend && !value.startsWith(prepend)) {
-      setValue(prepend + value)
-    }
-    if (append && !value.endsWith(append)) {
-      setValue(value + append)
-    }
-  }, [append, prepend, value])
-
-  useEffect(() => {
-    // Extracts the clean value without the prepend and append
     let cleanedValue = value
     if (prepend && cleanedValue.startsWith(prepend)) {
       cleanedValue = cleanedValue.slice(prepend.length)
@@ -74,14 +64,13 @@ export const GaloyTextInput = ({
     if (append && cleanedValue.endsWith(append)) {
       cleanedValue = cleanedValue.slice(0, value.length - append.length)
     }
-    setCleanValue(cleanedValue)
-  }, [prepend, append, value])
-
-  useEffect(() => {
-    if (cleanValue) {
-      onChangeText(cleanValue)
+    if (cleanedValue) {
+      onChangeText(cleanedValue)
     }
-  }, [cleanValue, onChangeText])
+    if (cleanedValue !== cleanValue) {
+      setCleanValue(cleanedValue)
+    }
+  }, [value, onChangeText, prepend, append, cleanValue])
 
   return (
     <View style={styles.container}>
