@@ -21,6 +21,11 @@ or alternatively using `brew install fastlane`
 fastlane ios beta
 ```
 Push a new beta build to TestFlight
+### ios browserstack
+```
+fastlane ios browserstack
+```
+End to end testing on browserstack
 ### ios increment
 ```
 fastlane ios increment
@@ -31,6 +36,11 @@ increment path version
 fastlane ios build_ipa
 ```
 build ipa
+### ios build_e2e
+```
+fastlane ios build_e2e
+```
+Build for end to end tests
 
 ----
 
