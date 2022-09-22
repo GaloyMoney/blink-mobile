@@ -68,6 +68,6 @@ There is a husky pre-push hook which will check for yalc references in the `pack
 
 **These instructions are correct as of react-native 0.69. If you are using a different version, you may need to adjust the instructions.**
 
-1. Add the new fonts to the `assets/fonts` directory.
+1. Add the new fonts to the `app/assets/fonts` directory.
 2. Run `yarn fonts` to link the font files to the native projects.
 3. You should see the new font in the `ios/GaloyApp/Info.plist` file and the `android/app/src/main/assets/fonts` directory.
