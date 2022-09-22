@@ -1,5 +1,5 @@
 import { palette } from "@app/theme"
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { TextInput, View } from "react-native"
 import { Text } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
@@ -53,10 +53,9 @@ export const GaloyTextInput = ({
   prepend = "",
   onChangeText,
 }: GaloyTextInputProps) => {
-  const [value, setValue] = useState(prepend + append)
   const [cleanValue, setCleanValue] = useState("")
 
-  useEffect(() => {
+  const updateValue = (value) => {
     let cleanedValue = value
     if (prepend && cleanedValue.startsWith(prepend)) {
       cleanedValue = cleanedValue.slice(prepend.length)
@@ -70,7 +69,7 @@ export const GaloyTextInput = ({
     if (cleanedValue !== cleanValue) {
       setCleanValue(cleanedValue)
     }
-  }, [value, onChangeText, prepend, append, cleanValue])
+  }
 
   return (
     <View style={styles.container}>
@@ -83,7 +82,7 @@ export const GaloyTextInput = ({
         <TextInput
           style={styles.input}
           placeholder={placeholder}
-          onChangeText={setValue}
+          onChangeText={updateValue}
           selection={{
             start: prepend.length + cleanValue.length,
             end: prepend.length + cleanValue.length,
