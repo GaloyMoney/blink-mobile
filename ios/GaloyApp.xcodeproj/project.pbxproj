@@ -60,6 +60,7 @@
 		F195826128D9B0D8000313FF /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F195824F28D9B0D8000313FF /* Roboto-Thin.ttf */; };
 		F195826228D9B0D8000313FF /* RobotoCondensed-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F195825028D9B0D8000313FF /* RobotoCondensed-Italic.ttf */; };
 		F195826328D9B0EC000313FF /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB61A68108700A75B9A /* Info.plist */; };
+		F1D71F3628CE5C9A00636277 /* AppDelegate.h in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FAF1A68108700A75B9A /* AppDelegate.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
