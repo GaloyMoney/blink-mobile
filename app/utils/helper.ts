@@ -31,3 +31,8 @@ export const scriptHostname = (): string => {
 }
 
 export const isIos = Platform.OS === "ios"
+
+export const getLocation = (location: { lat?: any; long?: any }) => {
+  if (!location || !location?.lat || !location?.long) return ""
+  return `Lat: ${location.lat}, Long: ${location.long}`
+}

@@ -25,7 +25,6 @@ import { EarnMapDataInjected } from "../screens/earns-map-screen"
 import { EarnQuiz, EarnSection } from "../screens/earns-screen"
 import { SectionCompleted } from "../screens/earns-screen/section-completed"
 import { GetStartedScreen } from "../screens/get-started-screen"
-import { MapScreen } from "../screens/map-screen/map-screen"
 import { MoveMoneyScreenDataInjected } from "../screens/move-money-screen"
 import {
   WelcomePhoneInputScreen,
@@ -61,7 +60,12 @@ import type { NavigatorType } from "../types/jsx"
 import PushNotification from "react-native-push-notification"
 import useMainQuery from "@app/hooks/use-main-query"
 import { LnurlScreen } from "@app/screens/settings-screen/lnurl-screen"
-
+import { eng } from "@app/constants/en"
+import MarketPlaceSvg from "../assets/svgs/market-place.svg"
+import { MarketPlaceStacks } from "./marketplace-stack"
+import { StoreListScreen } from "@app/screens/store-list-screen"
+import { StoreListViewScreen } from "@app/screens/store-list-screen/list-view-screen"
+import { StoreDetailScreen } from "@app/screens/store-detail-screen"
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
 PushNotification.configure({
   // (optional) Called when Token is generated (iOS and Android)
@@ -259,7 +263,7 @@ export const RootStack: NavigatorType = () => {
         gestureEnabled: false,
         headerBackTitle: translate("common.back"),
       }}
-      initialRouteName={token ? "authenticationCheck" : "getStarted"}
+      initialRouteName={"Primary"}
     >
       <RootNavigator.Screen
         name="getStarted"
@@ -413,6 +417,27 @@ export const RootStack: NavigatorType = () => {
         }}
         initialParams={{ account: AccountType.Bitcoin }}
       />
+      <RootNavigator.Screen
+        name="StoreList"
+        component={StoreListScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <RootNavigator.Screen
+        name="StoreListView"
+        component={StoreListViewScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <RootNavigator.Screen
+        name="StoreDetail"
+        component={StoreDetailScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
     </RootNavigator.Navigator>
   )
 }
@@ -527,13 +552,14 @@ export const PrimaryNavigator: NavigatorType = () => {
         }}
       />
       <Tab.Screen
-        name="Map"
-        component={MapScreen}
+        name="MarketPlaceTab"
+        component={MarketPlaceStacks}
         options={{
-          title: translate("MapScreen.title"),
+          title: eng.marketPlace,
           headerShown: false,
           tabBarIcon: ({ color }: TabProps) => (
-            <Icon name="ios-map-outline" size={size} color={color} />
+            <MarketPlaceSvg stroke={color} />
+            // <Icon name="ios-map-outline" size={size} color={color} />
           ),
         }}
       />

@@ -1,3 +1,4 @@
+import { PostAttributes } from "@app/redux/reducers/store-reducer"
 import { LNURLPayParams } from "js-lnurl"
 import { contacts_me_contacts } from "../screens/contacts-screen/__generated__/contacts"
 import { AccountType, AuthenticationScreenPurpose, PinScreenPurpose } from "../utils/enum"
@@ -50,6 +51,9 @@ export type RootStackParamList = {
   transactionDetail: TransactionDetail
   transactionHistory: undefined
   Earn: undefined
+  StoreList: undefined
+  StoreListView: { searchText: string }
+  StoreDetail: { editable?: boolean; storeInfor: PostAttributes }
 }
 
 export type ContactStackParamList = {
@@ -104,9 +108,21 @@ export type PhoneValidationStackParamList = {
 export type PrimaryStackParamList = {
   MoveMoney: undefined
   Contacts: undefined
-  Map: undefined
+  MarketPlaceTab: MarketPlaceParamList
   Earn: undefined
   sendBitcoin: { username: string }
   phoneValidation: undefined
   earnsSection: { section: string }
+}
+
+export type MarketPlaceParamList = {
+  MarketPlace: undefined
+  CreatePost: undefined
+  AddImage: undefined
+  AddLocation: undefined
+  MapScreen: undefined
+  AddContact: undefined
+  ConfirmInformation: { editable?: boolean }
+  StoreList: undefined
+  StoreListView: { searchText?: string }
 }

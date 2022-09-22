@@ -14,7 +14,7 @@ import { App } from "./app/app.tsx"
 /**
  * This needs to match what's found in your app_delegate.m and MainActivity.java.
  */
-const APP_NAME = "GaloyApp"
+const APP_NAME = "PuraVida"
 
 // Should we show storybook instead of our app?
 //
