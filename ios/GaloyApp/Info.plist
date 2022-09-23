@@ -120,6 +120,9 @@
 	<string>Import a screenshot with a QR code</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Roboto-Bold.ttf</string>
+		<string>Roboto-Medium.ttf</string>
+		<string>Roboto-Black.ttf</string>
 		<string>AntDesign.ttf</string>
 		<string>Entypo.ttf</string>
 		<string>EvilIcons.ttf</string>
@@ -142,6 +145,21 @@
 		<string>DMSans-Medium.ttf</string>
 		<string>DMSans-MediumItalic.ttf</string>
 		<string>DMSans-Regular.ttf</string>
+		<string>Roboto-BlackItalic.ttf</string>
+		<string>Roboto-BoldItalic.ttf</string>
+		<string>Roboto-Italic.ttf</string>
+		<string>Roboto-Light.ttf</string>
+		<string>Roboto-LightItalic.ttf</string>
+		<string>Roboto-MediumItalic.ttf</string>
+		<string>Roboto-Regular.ttf</string>
+		<string>Roboto-Thin.ttf</string>
+		<string>Roboto-ThinItalic.ttf</string>
+		<string>RobotoCondensed-Bold.ttf</string>
+		<string>RobotoCondensed-BoldItalic.ttf</string>
+		<string>RobotoCondensed-Italic.ttf</string>
+		<string>RobotoCondensed-Light.ttf</string>
+		<string>RobotoCondensed-LightItalic.ttf</string>
+		<string>RobotoCondensed-Regular.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

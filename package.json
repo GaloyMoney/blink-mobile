@@ -26,7 +26,8 @@
     "prepare": "npm-run-all patch hack:* && husky install",
     "client:dev": "yalc add @galoymoney/client",
     "yalc:check": "yalc check",
-    "typesafe-i18n": "typesafe-i18n"
+    "typesafe-i18n": "typesafe-i18n",
+    "fonts": "npx react-native-assets"
   },
   "dependencies": {
     "@apollo/client": "^3.6.6",

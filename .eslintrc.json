@@ -149,5 +149,6 @@
     "react": {
       "version": "detect"
     }
-  }
+  },
+  "ignorePatterns": ["**/*story.tsx"]
 }
