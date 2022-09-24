@@ -94,16 +94,16 @@ jobs:
       - run: echo $JAVA_OPTS
       - run: echo $GRADLE_OPTS
       - run: cd android && bundle exec fastlane android beta
-      - run: git checkout main
+      - run: git checkout hotfix-notification-issue
       - run: git config credential.helper 'cache --timeout=120'
       - run: git config --global user.name "circleci-bot"
       - run: git config --global user.email "bot@circleci.com"
       - run: git config pull.rebase false
-      - run: git pull origin main
+      - run: git pull origin hotfix-notification-issue
       - run: cd ~/galoy-mobile
       - run: git add --force android/app/build/generated/sourcemaps/react/release
       - run: git commit -a -m "new android build [ci skip]"
-      - run: git push -q https://${GITHUB_TOKEN}@github.com/GaloyMoney/galoy-mobile.git main
+      - run: git push -q https://${GITHUB_TOKEN}@github.com/GaloyMoney/galoy-mobile.git hotfix-notification-issue
 
       - run: gh release upload $CIRCLE_TAG "android/app/build/outputs/apk/release/app-release.apk" --clobber
       - store_artifacts:
@@ -186,10 +186,10 @@ jobs:
       - run: git config --global user.name "circleci-bot"
       - run: git config --global user.email "bot@circleci.com"
       - run: git config pull.rebase false
-      - run: git pull https://${GITHUB_TOKEN}@github.com/GaloyMoney/galoy-mobile.git main
+      - run: git pull https://${GITHUB_TOKEN}@github.com/GaloyMoney/galoy-mobile.git hotfix-notification-issue
       - run: git commit -a -m "new ios build [ci skip]"
       - run: git reset -- GoogleService-Info.plist
-      - run: git push -q https://${GITHUB_TOKEN}@github.com/GaloyMoney/galoy-mobile.git main
+      - run: git push -q https://${GITHUB_TOKEN}@github.com/GaloyMoney/galoy-mobile.git hotfix-notification-issue
       - run: gh release upload $CIRCLE_TAG "ios/output/gym/Bitcoin Beach.ipa" --clobber
       - store_artifacts:
           path: ios/output
@@ -199,29 +199,21 @@ workflows:
     jobs:
       - test_ios:
           filters:
-            tags:
-              only: /^[0-9]+\.[0-9]+\.[0-9]+/
             branches:
-              ignore: /.*/
+              only: hotfix-notification-issue
       - build_ios:
           requires:
             - test_ios
           filters:
-            tags:
-              only: /^[0-9]+\.[0-9]+\.[0-9]+/
             branches:
-              ignore: /.*/
+              only: hotfix-notification-issue
       - test_android:
           filters:
-            tags:
-              only: /^[0-9]+\.[0-9]+\.[0-9]+/
             branches:
-              ignore: /.*/
+              only: hotfix-notification-issue
       - build_android:
           requires:
             - test_android
           filters:
-            tags:
-              only: /^[0-9]+\.[0-9]+\.[0-9]+/
             branches:
-              ignore: /.*/
+              only: hotfix-notification-issue
