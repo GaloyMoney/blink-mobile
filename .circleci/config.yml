@@ -200,20 +200,20 @@ workflows:
       - test_ios:
           filters:
             branches:
-              only: hotfix-notification-issue
+              only: hotfix-notifications-issue
       - build_ios:
           requires:
             - test_ios
           filters:
             branches:
-              only: hotfix-notification-issue
+              only: hotfix-notifications-issue
       - test_android:
           filters:
             branches:
-              only: hotfix-notification-issue
+              only: hotfix-notifications-issue
       - build_android:
           requires:
             - test_android
           filters:
             branches:
-              only: hotfix-notification-issue
+              only: hotfix-notifications-issue
