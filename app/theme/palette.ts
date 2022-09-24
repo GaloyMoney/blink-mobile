@@ -29,4 +29,5 @@ export const palette = {
   inputBackground: "#F4F6F9",
   inputLabel: "#344075",
   secondaryText: "#34407566",
+  primaryButtonColor: "#536FF2",
 }
