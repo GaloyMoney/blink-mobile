@@ -1,11 +1,14 @@
+import { useApolloClient } from "@apollo/client"
 import useMainQuery from "@app/hooks/use-main-query"
+import useToken from "@app/hooks/use-token"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { palette } from "@app/theme"
 import { WalletCurrency } from "@app/types/amounts"
+import { hasFullPermissions, requestPermission } from "@app/utils/notifications"
 import { StackScreenProps } from "@react-navigation/stack"
 import React, { useEffect, useState } from "react"
-import { Text, View } from "react-native"
+import { Alert, Platform, Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import ReceiveBtc from "./receive-btc"
@@ -59,6 +62,8 @@ const ReceiveBitcoinScreen = ({
   navigation,
   route,
 }: StackScreenProps<RootStackParamList, "receiveBitcoin">) => {
+  const client = useApolloClient()
+  const { hasToken } = useToken()
   const { receiveCurrency: initialReceiveCurrency } = route.params || {}
 
   const { usdWalletId } = useMainQuery()
@@ -76,6 +81,41 @@ const ReceiveBitcoinScreen = ({
       navigation.setOptions({ title: LL.ReceiveBitcoinScreen.title() })
     }
   }, [receiveCurrency, navigation, LL])
+
+  useEffect(() => {
+    const notifRequest = async () => {
+      const waitUntilAuthorizationWindow = 5000
+
+      if (Platform.OS === "ios") {
+        if (await hasFullPermissions()) {
+          return
+        }
+
+        setTimeout(
+          () =>
+            Alert.alert(
+              LL.common.notification(),
+              LL.ReceiveBitcoinScreen.activateNotifications(),
+              [
+                {
+                  text: LL.common.later(),
+                  // todo: add analytics
+                  onPress: () => console.log("Cancel/Later Pressed"),
+                  style: "cancel",
+                },
+                {
+                  text: LL.common.ok(),
+                  onPress: () => hasToken && requestPermission(client),
+                },
+              ],
+              { cancelable: true },
+            ),
+          waitUntilAuthorizationWindow,
+        )
+      }
+    }
+    notifRequest()
+  }, [LL.ReceiveBitcoinScreen, LL.common, client, hasToken])
 
   if (!usdWalletId) {
     return <ReceiveBtc />
