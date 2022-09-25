@@ -5,6 +5,6 @@
 gem 'fastlane-plugin-increment_version_code'
 # gem 'fastlane-plugin-huawei_appgallery_connect'
 gem 'fastlane-plugin-properties'
-gem 'fastlane-plugin-firebase_app_distribution'
+
 
 
