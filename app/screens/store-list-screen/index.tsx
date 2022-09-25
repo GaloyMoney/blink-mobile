@@ -37,6 +37,7 @@ import {
 } from "@app/redux/reducers/store-reducer"
 import { getListPost } from "@app/graphql/second-graphql-client"
 import { LoadingComponent } from "@app/components/loading-component"
+import { openMap } from "@app/utils/helper"
 const { width } = Dimensions.get("window")
 
 const itemWidth = 330
@@ -84,6 +85,9 @@ export const StoreListScreen: ScreenType = ({ navigation }: Props) => {
             animated: true,
             offset: snapToOffsets[index],
           })
+        }}
+        onDirectionPress={()=>{
+          openMap(item.location.lat,item.location.long)
         }}
       />
     )

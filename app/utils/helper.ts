@@ -1,4 +1,4 @@
-import { NativeModules, Platform } from "react-native"
+import { Linking, NativeModules, Platform } from "react-native"
 
 export const emailIsValid = (email: string): boolean =>
   /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
@@ -35,4 +35,16 @@ export const isIos = Platform.OS === "ios"
 export const getLocation = (location: { lat?: any; long?: any }) => {
   if (!location || !location?.lat || !location?.long) return ""
   return `Lat: ${location.lat}, Long: ${location.long}`
+}
+export const openMap =(lat:any,lng:any)=>{
+  const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
+  const latLng = `${lat},${lng}`;
+const label = 'Here'
+  const url = Platform.select({
+    ios: `${scheme}${label||""}@${latLng}`,
+    android: `${scheme}${latLng}(${label||""})`
+  });
+
+
+  Linking.openURL(url);
 }

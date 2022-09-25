@@ -56,21 +56,6 @@ export const StoreListViewScreen: React.FC<Props> = ({ navigation }) => {
   }
 
   React.useEffect(() => {
-    Geolocation.getCurrentPosition(
-      (pos) => {
-        // setPosition({
-        //   latitude: crd.latitude,
-        //   longitude: crd.longitude,
-        //   latitudeDelta: 0.02,
-        //   longitudeDelta: 0.02,
-        // })
-      },
-      (err) => {
-        console.log("err: ", err)
-      },
-    )
-  }, [])
-  React.useEffect(() => {
     setSearchText(route.params.searchText)
   }, [route.params.searchText])
   return (

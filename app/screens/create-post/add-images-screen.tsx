@@ -208,7 +208,7 @@ export const AddImageScreen: React.FC<Props> = ({ navigation }) => {
                 <FlatList
                   data={pickedImages}
                   keyExtractor={(_, index) => "images" + index}
-                  renderItem={({ item }) => {
+                  renderItem={({ item,index }) => {
                     return (
                       <TouchableOpacity
                         onPress={() => {
@@ -221,7 +221,7 @@ export const AddImageScreen: React.FC<Props> = ({ navigation }) => {
                             styles.imageStyle,
                             {
                               borderColor:
-                                thumbnail && thumbnail === item ? "red" : "#EBEBEB",
+                                (!thumbnail&&pickedImages[0] &&index==0)||(thumbnail && thumbnail === item) ? "red" : "#EBEBEB",
                             },
                           ]}
                         />

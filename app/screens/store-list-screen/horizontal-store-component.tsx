@@ -1,30 +1,18 @@
-import { HeaderComponent } from "@app/components/header"
 import { Row } from "@app/components/row"
-import { color, fontSize, GlobalStyles, spacing, typography } from "@app/theme"
-import { StackNavigationProp } from "@react-navigation/stack"
+import { color, fontSize, typography } from "@app/theme"
 import * as React from "react"
 // eslint-disable-next-line react-native/split-platform-components
 import {
   Dimensions,
-  FlatList,
   Image,
-  SafeAreaView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from "react-native"
-import { MarketPlaceParamList } from "../../navigation/stack-param-lists"
-import { ScreenType } from "../../types/jsx"
-import FilterSvg from "@asset/svgs/filter.svg"
-import { eng } from "@app/constants/en"
-import MapView, { Marker } from "react-native-maps"
-import Geolocation from "@react-native-community/geolocation"
 import DirectionSvg from "@asset/svgs/direction-icon.svg"
 import FilledDirectionSvg from "@asset/svgs/filled-direction-icon.svg"
 import { images } from "@app/assets/images"
-import StarRating from "react-native-star-rating"
 import LocationSvg from "@asset/svgs/location-marker.svg"
 import { PostAttributes } from "@app/redux/reducers/store-reducer"
 const { width, height } = Dimensions.get("window")
@@ -32,11 +20,13 @@ type Props = {
   product: PostAttributes
   onLocationPress: () => void
   onItemPress: () => void
+  onDirectionPress: () => void
 }
 
 export const LandscapeDataComponent: React.FC<Props> = ({
   product,
   onLocationPress,
+  onDirectionPress,
   onItemPress,
 }) => {
   return (
@@ -56,7 +46,7 @@ export const LandscapeDataComponent: React.FC<Props> = ({
             <FilledDirectionSvg />
             <Text style={styles.smallText}> {product.distance || 0}m</Text>
           </Row>
-          <Row containerStyle={{ justifyContent: "space-between", alignItems: "center" }}>
+          {/* <Row containerStyle={{ justifyContent: "space-between", alignItems: "center" }}>
             <StarRating
               disabled
               maxStars={5}
@@ -67,21 +57,23 @@ export const LandscapeDataComponent: React.FC<Props> = ({
               containerStyle={{ width: 13 * 5 + 4 * 3, marginVertical: 10 }}
             />
             <Text style={styles.smallText}> {product.reviewNumber} review</Text>
-          </Row>
+          </Row> */}
           <Text style={[styles.bigText, { fontSize: fontSize.font14 }]} numberOfLines={2}>
             {product.description}
           </Text>
+          <Row containerStyle={{ marginTop: 10 }}>
+            <TouchableOpacity style={styles.buttonStyle}
+            onPress={onDirectionPress}
+            >
+              <DirectionSvg />
+              <Text style={styles.buttonText}>Direction</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.buttonStyle} onPress={onLocationPress}>
+              <LocationSvg fill={"#3752FE"} />
+              <Text style={styles.buttonText}>Location</Text>
+            </TouchableOpacity>
+          </Row>
         </View>
-      </Row>
-      <Row containerStyle={{ marginTop: 10 }}>
-        <TouchableOpacity style={styles.buttonStyle}>
-          <DirectionSvg />
-          <Text style={styles.buttonText}>Direction</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonStyle} onPress={onLocationPress}>
-          <LocationSvg fill={"#3752FE"} />
-          <Text style={styles.buttonText}>Location</Text>
-        </TouchableOpacity>
       </Row>
     </TouchableOpacity>
   )
@@ -99,7 +91,7 @@ const styles = StyleSheet.create({
     padding: 8,
     paddingRight: 16,
     backgroundColor: "white",
-    height: 160,
+    // height: 160,
     borderRadius: 10,
   },
   bigText: { fontFamily: typography.medium, fontSize: fontSize.font16 },

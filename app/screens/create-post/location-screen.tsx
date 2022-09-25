@@ -29,6 +29,7 @@ import Geolocation from "@react-native-community/geolocation"
 import CurrentLocation from "@asset/svgs/current-location.svg"
 import { Row } from "@app/components/row"
 import { AndroidBottomSpace } from "./android-bottom-spacing"
+import useMainQuery from "@app/hooks/use-main-query"
 const { width, height } = Dimensions.get("window")
 const IMAGE_WIDTH = width - 30 * 2
 const IMAGE_HEIGHT = IMAGE_WIDTH * 0.61
@@ -46,6 +47,7 @@ export const AddLocationScreen: React.FC<Props> = ({ navigation }) => {
     (state: RootState) => state.storeReducer?.tempStore?.mainImageUrl,
   )
 
+  const { phoneNumber } = useMainQuery()
   const [position, setPosition] = useState({
     latitude: 10,
     longitude: 10,
@@ -124,10 +126,6 @@ export const AddLocationScreen: React.FC<Props> = ({ navigation }) => {
                 pinColor={palette.orange}
                 draggable
                 onDragEnd={({ nativeEvent: { coordinate } }) => {
-                  // location: {
-                  //   lat: coordinate.latitude,
-                  //   long: coordinate.longitude,
-                  // },
                   dispatch(
                     setTempStore({
                       ...tempPost,
@@ -136,13 +134,7 @@ export const AddLocationScreen: React.FC<Props> = ({ navigation }) => {
                         long: coordinate.longitude,
                       },
                     }),
-                  )
-                  // setPosition({
-                  //   latitude: coordinate.latitude,
-                  //   longitude: coordinate.longitude,
-                  //   latitudeDelta: 0.02,
-                  //   longitudeDelta: 0.02,
-                  // })
+                  ) 
                 }}
               />
             </MapView>
@@ -165,9 +157,17 @@ export const AddLocationScreen: React.FC<Props> = ({ navigation }) => {
             <AndroidBottomSpace />
           </ScrollView>
           <FooterCreatePost
-            onPress={() => {
-              navigation.navigate("AddContact")
-            }}
+          
+          onPress={() => {
+            dispatch(
+              setTempStore({
+                ...tempPost,
+                email: "TestMail@gmail.com",
+                phone:phoneNumber,
+              }),
+            )
+            navigation.navigate("ConfirmInformation", { editable: true })
+          }}
             style={{ marginVertical: 20 }}
           />
         </View>

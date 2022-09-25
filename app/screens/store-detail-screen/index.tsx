@@ -1,13 +1,11 @@
 import * as React from "react"
-import { useState } from "react"
+import { useState,useEffect } from "react"
 // eslint-disable-next-line react-native/split-platform-components
 import {
   Alert,
   Dimensions,
   Image,
   ImageBackground,
-  SafeAreaView,
-  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -19,34 +17,30 @@ import { HeaderComponent } from "@app/components/header"
 import { images } from "@app/assets/images"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "@app/redux"
-import { FooterCreatePost } from "../create-post/footer"
 import {
   MarketPlaceParamList,
   RootStackParamList,
 } from "@app/navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
-import CurrentLocation from "@asset/svgs/current-location.svg"
-import CheckSvg from "@asset/svgs/check-icon.svg"
 import { Row } from "@app/components/row"
-import { CustomTextInput } from "@app/components/text-input"
 import EditSvg from "@asset/svgs/edit-pen.svg"
 import LocationSvg from "@asset/svgs/location.svg"
+import EyeOffSvg from "@asset/svgs/eye-off.svg"
+import EyeOnSvg from "@asset/svgs/eye-on.svg"
 import LocationMarkerSvg from "@asset/svgs/location-marker.svg"
-import { getLocation } from "@app/utils/helper"
-import StarRating from "react-native-star-rating"
+import { getLocation, openMap } from "@app/utils/helper"
 import { eng } from "@app/constants/en"
 import { RouteProp, useRoute } from "@react-navigation/native"
 import { createPost } from "@app/graphql/second-graphql-client"
 import { LoadingComponent } from "@app/components/loading-component"
 import { CreatePostSuccessModal } from "@app/components/create-post-success-modal"
 const { width, height } = Dimensions.get("window")
-const IMAGE_WIDTH = width - 30 * 2
-const IMAGE_HEIGHT = IMAGE_WIDTH * 0.61
 interface Props {
   navigation: StackNavigationProp<MarketPlaceParamList>
 }
-const DetailComponent = () => {
+const DetailComponent = ({editable}) => {
   const tempStore = useSelector((state: RootState) => state.storeReducer?.tempStore)
+  const [isHidePhone,setIsHidePhone]=useState(false)
   return (
     <View style={{ width: "100%" }}>
       <Row>
@@ -54,13 +48,17 @@ const DetailComponent = () => {
           <Text style={detailStyle.label}>{eng.price}</Text>
           <Text style={detailStyle.value}>$ {tempStore?.price || 0}</Text>
         </View>
-        {/* <View style={detailStyle.rowItem}>
-          <Text style={detailStyle.label}>{eng.cuisines}</Text>
-          <Text style={detailStyle.value}>Western, Asian</Text>
-        </View> */}
       </Row>
       <Text style={detailStyle.label}>{eng.description}</Text>
       <Text style={detailStyle.value}>{tempStore?.description}</Text>
+
+      <View style={detailStyle.rowItem}>
+        <Row hc>
+          <Text style={[detailStyle.label,{marginRight:5}]}>{eng.phone_number}</Text>
+          {editable&&(<TouchableOpacity onPress={()=>setIsHidePhone(!isHidePhone)}>{isHidePhone ? <EyeOnSvg/> :<EyeOffSvg/>}</TouchableOpacity>)}
+        </Row>
+        <Text style={detailStyle.value}>{isHidePhone?'---------':tempStore?.phone}</Text>
+      </View>
     </View>
   )
 }
@@ -72,7 +70,7 @@ const detailStyle = StyleSheet.create({
     marginTop: 5,
   },
   label: { color: "#212121", fontFamily: typography.medium, fontSize: fontSize.font16 },
-  rowItem: { flex: 1, marginVertical: 10 },
+  rowItem: { marginVertical: 10 },
 })
 export const StoreDetailScreen: React.FC<Props> = ({ navigation }) => {
   const route = useRoute<RouteProp<RootStackParamList, "StoreDetail">>()
@@ -80,7 +78,6 @@ export const StoreDetailScreen: React.FC<Props> = ({ navigation }) => {
   const [store, setStore] = useState<any>({})
   const [isLoading, setIsLoading] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
-  const dispatch = useDispatch()
   const tempStore = useSelector((state: RootState) => state.storeReducer?.tempStore)
   const thumbnail = useSelector(
     (state: RootState) => state.storeReducer?.tempStore?.mainImageUrl,
@@ -96,6 +93,7 @@ export const StoreDetailScreen: React.FC<Props> = ({ navigation }) => {
       address: "hardcoded_address",
     }
   }
+
   const onSubmit = async () => {
     try {
       setIsLoading(true)
@@ -110,7 +108,77 @@ export const StoreDetailScreen: React.FC<Props> = ({ navigation }) => {
       setIsLoading(false)
     }
   }
-  React.useEffect(() => {
+  const getUri = ()=>{
+    if(store) return  tempStore.mainImageUrl ? { uri: tempStore.mainImageUrl } : images.landscapePlaceholderImage
+    return thumbnail ? { uri: thumbnail } : images.landscapePlaceholderImage
+  }
+  const renderContent =()=>{
+    return (
+      <View style={styles.contentContainer}>
+        <Row containerStyle={styles.titleRow}>
+          <Text style={[styles.title,{flex:1,paddingRight:10}]}>{store.name}</Text>
+          <TouchableOpacity onPress={()=>{openMap(tempStore.location.lat,tempStore.location.long)}}>
+            <Row containerStyle={styles.locationButtonContainer}>
+              <Text style={styles.locationText}>{eng.location}</Text>
+              <View style={styles.locationSvgContainer}>
+                <LocationSvg />
+              </View>
+            </Row>
+          </TouchableOpacity>
+        </Row>
+        <Row containerStyle={[{ marginTop: 5, alignItems: "center" }]}>
+          <LocationMarkerSvg />
+          <Text style={styles.addressText}>{getLocation(store.location)}</Text>
+        </Row>
+        
+        <DetailComponent editable={editable}/>
+
+        {editable ? (
+          <TouchableOpacity
+            style={styles.submitButton}
+            onPress={onSubmit}
+          >
+            <Text style={styles.locationText}>{eng.submit}</Text>
+          </TouchableOpacity>
+        ) : null}
+      </View>)
+  }
+  const renderHeader = ()=>{
+    return (
+      <ImageBackground
+        source={getUri()}
+        style={styles.imageBackground}
+      >
+        <HeaderComponent
+          style={{ paddingHorizontal: 20, marginTop: 10 }}
+          rightComponent={
+            editable ? (
+              <TouchableOpacity activeOpacity={1} 
+              onPress={()=>navigation.navigate("AddImage")}
+              >
+              <Row containerStyle={styles.headerRow}>
+                <Text style={styles.headerText}>{eng.update_cover_image}</Text>
+                <Image
+                  source={images.uploadIcon}
+                  style={{ width: 25, height: 19, marginLeft: 5 }}
+                />
+              </Row>
+              </TouchableOpacity>
+            ) : null
+          }
+        />
+        {editable ? (
+          <TouchableOpacity
+            style={styles.editButtonContainer}
+            onPress={() => navigation.navigate("CreatePost")}
+          >
+            <EditSvg />
+          </TouchableOpacity>
+        ) : null}
+      </ImageBackground>
+    )
+  }
+  useEffect(() => {
     if (route.params.storeInfor) {
       setStore(route.params.storeInfor)
     } else {
@@ -119,78 +187,8 @@ export const StoreDetailScreen: React.FC<Props> = ({ navigation }) => {
   }, [])
   return (
     <Screen style={styles.container}>
-      <ImageBackground
-        source={thumbnail ? { uri: thumbnail } : images.landscapePlaceholderImage}
-        style={styles.imageBackground}
-      >
-        <HeaderComponent
-          style={{ paddingHorizontal: 20, marginTop: 10 }}
-          rightComponent={
-            editable ? (
-              <Row containerStyle={styles.headerRow}>
-                <Text style={styles.headerText}>{eng.update_cover_image}</Text>
-                <Image
-                  source={images.uploadIcon}
-                  style={{ width: 25, height: 19, marginLeft: 5 }}
-                />
-              </Row>
-            ) : null
-          }
-        />
-        {editable ? (
-          <TouchableOpacity
-            style={styles.editButtonContainer}
-            onPress={() => {
-              navigation.navigate("CreatePost")
-            }}
-          >
-            <EditSvg />
-          </TouchableOpacity>
-        ) : null}
-      </ImageBackground>
-      <View style={styles.contentContainer}>
-        <Row containerStyle={styles.titleRow}>
-          <Text style={[styles.title]}>{store.name}</Text>
-          <Row containerStyle={styles.locationButtonContainer}>
-            <Text style={styles.locationText}>{eng.location}</Text>
-            <View style={styles.locationSvgContainer}>
-              <LocationSvg />
-            </View>
-          </Row>
-        </Row>
-        <Row containerStyle={[{ marginTop: 5, alignItems: "center" }]}>
-          <LocationMarkerSvg />
-          <Text style={styles.addressText}>{getLocation(store.location)}</Text>
-        </Row>
-        <StarRating
-          disabled
-          maxStars={5}
-          rating={store.rating}
-          selectedStar={(rating) => {}}
-          emptyStarColor={"#FFC62B"}
-          fullStarColor={"#FFC62B"}
-          starSize={18}
-          containerStyle={{ width: 18 * 5 + 4 * 7, marginVertical: 10 }}
-        />
-        <Text style={styles.value}>{store.description}</Text>
-        <DetailComponent />
-
-        {editable ? (
-          <TouchableOpacity
-            style={{
-              backgroundColor: "#3653FE",
-              alignSelf: "flex-end",
-              paddingHorizontal: 15,
-              paddingVertical: 5,
-              marginVertical: 15,
-              borderRadius: 22,
-            }}
-            onPress={onSubmit}
-          >
-            <Text style={styles.locationText}>{eng.submit}</Text>
-          </TouchableOpacity>
-        ) : null}
-      </View>
+      {renderHeader()}
+      {renderContent()}
       <LoadingComponent isLoading={isLoading} />
       <CreatePostSuccessModal
         isVisible={isVisible}
@@ -204,6 +202,14 @@ export const StoreDetailScreen: React.FC<Props> = ({ navigation }) => {
 }
 
 const styles = StyleSheet.create({
+  submitButton:{
+    backgroundColor: "#3653FE",
+    alignSelf: "flex-end",
+    paddingHorizontal: 15,
+    paddingVertical: 5,
+    marginVertical: 15,
+    borderRadius: 22,
+  },
   contentContainer: { flex: 1, paddingHorizontal: 30, width: "100%" },
   locationSvgContainer: {
     borderRadius: 100,

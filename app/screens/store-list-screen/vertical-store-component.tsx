@@ -1,31 +1,15 @@
-import { HeaderComponent } from "@app/components/header"
-import { Row } from "@app/components/row"
-import { color, fontSize, GlobalStyles, spacing, typography } from "@app/theme"
-import { StackNavigationProp } from "@react-navigation/stack"
+import { fontSize, GlobalStyles, typography } from "@app/theme"
 import * as React from "react"
 // eslint-disable-next-line react-native/split-platform-components
 import {
   Dimensions,
-  FlatList,
   Image,
-  SafeAreaView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from "react-native"
-import { MarketPlaceParamList } from "../../navigation/stack-param-lists"
-import { ScreenType } from "../../types/jsx"
-import FilterSvg from "@asset/svgs/filter.svg"
-import { eng } from "@app/constants/en"
-import MapView, { Marker } from "react-native-maps"
-import Geolocation from "@react-native-community/geolocation"
-import DirectionSvg from "@asset/svgs/direction-icon.svg"
-import FilledDirectionSvg from "@asset/svgs/filled-direction-icon.svg"
 import { images } from "@app/assets/images"
-import StarRating from "react-native-star-rating"
-import LocationSvg from "@asset/svgs/location-marker.svg"
 import { PostAttributes } from "@app/redux/reducers/store-reducer"
 const { width, height } = Dimensions.get("window")
 const ITEM_WIDTH = (width - 20 * 2 - 32) / 2
