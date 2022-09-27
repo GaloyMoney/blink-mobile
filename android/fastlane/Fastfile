@@ -40,9 +40,29 @@ platform :android do
   desc "Deploy a new version to both Play Store and Huawei Store"
   lane :beta do
     # build
+    build_bundle
     play_store_release
     # huawei_release
   end
+
+  desc "Create Release Bundle"
+   lane :build_bundle do
+     increment_build
+     store_password = get_properties_value(
+         key: "keystore_password",
+         path: "fastlane/puravida-app.properties"
+      )
+ 
+     gradle(
+       task: "clean bundle",
+       build_type: "Release",
+       print_command: false,
+       properties: {
+           "RELEASE_STORE_PASSWORD" => store_password
+       },
+       flags: "--no-daemon --max-workers=8 --stacktrace --info"
+     )
+   end
 
   desc "Deploy a new version to the Google Play"
   lane :play_store_release do
