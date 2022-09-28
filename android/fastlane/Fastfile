@@ -86,9 +86,6 @@ platform :android do
       build_type: "Release",
       print_command: false,
       flags: "--no-daemon --max-workers=8 --stacktrace --info",
-      properties: {
-        "android.injected.version.name" => ENV["CIRCLE_TAG"],
-      }
     )
   end
 
