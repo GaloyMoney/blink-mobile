@@ -29,9 +29,6 @@ platform :android do
       build_type: "Release",
       print_command: false,
       flags: "--no-daemon --max-workers=8 --stacktrace --info",
-      properties: {
-        "android.injected.version.name" => ENV["CIRCLE_TAG"],
-      }
     )
     # gradle(task: "clean assembleRelease", print_command: false)
 
@@ -53,6 +50,7 @@ platform :android do
       track: "internal",
       skip_upload_changelogs: true,
       skip_upload_images: true,
+      version_name: ENV["CIRCLE_TAG"],
     )
   end
 
