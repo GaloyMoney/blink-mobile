@@ -14,7 +14,7 @@ import { App } from "./app/app.tsx"
 /**
  * This needs to match what's found in your app_delegate.m and MainActivity.java.
  */
-const APP_NAME = "PuraVida"
+const APP_NAME = "PuraVidaBitCoin"
 
 // Should we show storybook instead of our app?
 //

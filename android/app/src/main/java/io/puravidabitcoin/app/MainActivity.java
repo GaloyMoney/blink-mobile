@@ -1,4 +1,4 @@
-package com.puravida.app;
+package io.puravidabitcoin.app;
 
 import android.os.Bundle;
 
@@ -31,7 +31,7 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-        return "PuraVida";
+        return "PuraVidaBitCoin";
     }
 
     @Override

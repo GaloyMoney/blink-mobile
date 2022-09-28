@@ -35,12 +35,12 @@ android_library(
 
 android_build_config(
     name = "build_config",
-    package = "com.puravida.app",
+    package = "io.puravidabitcoin.app",
 )
 
 android_resource(
     name = "res",
-    package = "com.puravida.app",
+    package = "io.puravidabitcoin.app",
     res = "src/main/res",
 )
 

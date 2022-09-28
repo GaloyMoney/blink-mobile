@@ -41,7 +41,11 @@ platform :android do
   lane :beta do
     # build
     build_bundle
-    play_store_release
+    upload_to_play_store(
+      track: 'internal',
+      release_status: 'draft',
+      aab:'./app/build/outputs/bundle/release/app-release.aab'
+    )
     # huawei_release
   end
 

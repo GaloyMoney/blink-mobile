@@ -130,7 +130,7 @@ android {
     compileSdkVersion 33
 
     defaultConfig {
-        applicationId "com.puravida.app"
+        applicationId "io.puravidabitcoin.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode Integer.parseInt(VERSION_CODE)
