@@ -67,3 +67,6 @@ galoy.code-workspace
 
 .phrase.yml
 ios/GoogleService-Info.plist
+
+# Key File
+android/app/pc-api-8676380407595964857-312-0eab1c9f93c6.json
