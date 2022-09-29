@@ -24,6 +24,9 @@ platform :android do
   desc "Submit a new Beta Build to Crashlytics Beta"
   lane :build do
     increment_version_code(gradle_file_path: "app/build.gradle")
+    android_set_version_name(
+    version_name: ENV["CIRCLE_TAG"],
+  )
     gradle(
       task: "clean assemble",
       build_type: "Release",
@@ -50,7 +53,6 @@ platform :android do
       track: "internal",
       skip_upload_changelogs: true,
       skip_upload_images: true,
-      version_name: ENV["CIRCLE_TAG"],
     )
   end
 
