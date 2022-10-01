@@ -4,7 +4,7 @@ import type { PayloadAction } from "@reduxjs/toolkit"
 export interface PostAttributes {
   _id: string
   address: string
-  categoryId: string
+  categoryId?: string
   createdAt: string
   description: string
   imagesUrls?: string[]
@@ -15,7 +15,7 @@ export interface PostAttributes {
   mainImageUrl: string
   name: string
   openHours?: string
-  price: number
+  price?: number
   rating?: number
   updatedAt: string
   userId: string

@@ -16,7 +16,7 @@ import {
   View,
 } from "react-native"
 import { Screen } from "../../components/screen"
-import { fontSize, typography } from "@app/theme"
+import { fontSize, palette, typography } from "@app/theme"
 import { HeaderComponent } from "@app/components/header"
 import { images } from "@app/assets/images"
 import { eng } from "@app/constants/en"
@@ -32,6 +32,7 @@ import { ReactNativeFile } from "apollo-upload-client"
 import { gql, useMutation } from "@apollo/client"
 import { uploadImage } from "@app/graphql/second-graphql-client"
 import { LoadingComponent } from "@app/components/loading-component"
+import { useTranslation } from "react-i18next"
 const { width, height } = Dimensions.get("window")
 const IMAGE_WIDTH = width - 32 * 2
 const IMAGE_HEIGHT = IMAGE_WIDTH * 0.635
@@ -61,11 +62,9 @@ export const AddImageScreen: React.FC<Props> = ({ navigation }) => {
   const [thumbnail, setThumbnail] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [isShowLoading, setIsShowloading] = useState(false)
-  // const [uploadImage, { data, loading }] = useMutation(UPLOAD_IMAGE);
+  const { t } = useTranslation()
   const uploadSingle = async (uri, name, type) => {
-    const file = generateRNFile(uri, name, type)
-    // console.log('file: ',file);
-
+    const file = generateRNFile(uri, name, type) 
     try {
       const url = await uploadImage(file)
       return url
@@ -238,8 +237,9 @@ export const AddImageScreen: React.FC<Props> = ({ navigation }) => {
             </ScrollView>
           </View>
           <FooterCreatePost
+            disableSkip
             onPress={() => {
-
+              if(!getMainImgUrl())return Alert.alert(t("you_must_add_at_least_one_image"))
               dispatch(
                 setTempStore({
                   ...tempPost,
@@ -315,7 +315,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: palette.lighterGrey,
     alignItems: "center",
   },
 })

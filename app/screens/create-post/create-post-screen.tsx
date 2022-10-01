@@ -14,7 +14,7 @@ import {
   View,
 } from "react-native"
 import { Screen } from "../../components/screen"
-import { color, fontSize, GlobalStyles, typography } from "@app/theme"
+import { color, fontSize, GlobalStyles, palette, typography } from "@app/theme"
 import { HeaderComponent } from "@app/components/header"
 import { images } from "@app/assets/images"
 import { eng } from "@app/constants/en"
@@ -28,6 +28,7 @@ import TextInputComponent from "@app/components/text-input-component"
 import { getMartketPlaceCategories } from "@app/graphql/second-graphql-client"
 import { LoadingComponent } from "@app/components/loading-component"
 import { CreatePostSuccessModal } from "@app/components/create-post-success-modal"
+import { useTranslation } from "react-i18next"
 const { width, height } = Dimensions.get("window")
 const IMAGE_WIDTH = width - 32 * 2
 const IMAGE_HEIGHT = IMAGE_WIDTH * 0.635
@@ -36,39 +37,27 @@ interface Props {
 }
 export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
   const dispatch = useDispatch()
-  const [name, setName] = useState("")
-  const [price, setPrice] = useState("")
-  const [category, setCategory] = useState("Foods")
+  const [name, setName] = useState("") 
   const [description, setDescription] = useState("")
   const [isLoading, setIsLoading] = useState(false)
-
-  const [priceError, setPriceError] = useState("")
+ 
   const [nameError, setNameError] = useState("")
-  const [descriptionError, setDescriptionError] = useState("")
-  const [open, setOpen] = useState(false)
-  const [items, setItems] = useState([])
+  const [descriptionError, setDescriptionError] = useState("") 
+  const { t } = useTranslation()
   const isCorrectInput = () => {
     let nameValid = false
-    let descriptionValid = false
-    let priceValid = false
-    console.log("name: ", name, description)
+    let descriptionValid = false 
 
-    if (!name) setNameError("Name is required")
-    else if (name?.length < 2) setNameError("Name must be more than 2 characters")
+    if (!name) setNameError(t("name_is_required"))
+    else if (name?.length < 2) setNameError(t("name_must_be_more_than_2_characters"))
     else {
       nameValid = true
       setNameError("")
     }
 
-    if (!price) setPriceError("Description is required")
-    else {
-      priceValid = true
-      setPriceError("")
-    }
-
-    if (!description) setDescriptionError("Description is required")
+    if (!description) setDescriptionError(t("description_is_required"))
     else if (description?.length < 2)
-      setDescriptionError("Description must be more than 2 characters")
+      setDescriptionError(t("description_must_be_more_than_2_characters"))
     else {
       descriptionValid = true
       setDescriptionError("")
@@ -78,7 +67,7 @@ export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
   }
   const onNext = () => {
     if (!isCorrectInput()) return
-    dispatch(setTempStore({ name, description, category, price: parseInt(price) }))
+    dispatch(setTempStore({ name, description }))
     navigation.navigate("AddImage")
   }
 
@@ -86,14 +75,7 @@ export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
     const initData = async () => {
       setIsLoading(true)
       try {
-        let categories = await getMartketPlaceCategories()
-        let mappedCategory = categories.map((item) => ({
-          label: item.name,
-          value: item._id,
-        }))
-        console.log("mappedCategory: ", mappedCategory)
-        setItems(mappedCategory)
-        setCategory(mappedCategory[0].value)
+        
       } catch (error) {
       } finally {
         setIsLoading(false)
@@ -122,46 +104,23 @@ export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
                 source={images.backgroundSimple}
                 style={{ width: 177, height: 158 }}
               />
-              <Text style={styles.title}>{eng.create_post}</Text>
+              <Text style={styles.title}>{t("create_post")}</Text>
             </View>
             <View style={{ paddingHorizontal: 30, width: "100%" }}>
               <TextInputComponent
-                title={"Name"}
+                title={t("name")}
                 containerStyle={[{ marginTop: 40 }]}
                 onChangeText={setName}
                 value={name}
                 placeholder={"Burger"}
                 isError={nameError !== ""}
               />
-              {nameError ? <Text style={styles.errorText}>{nameError}</Text> : null}
-              <Text style={styles.labelStyle}>Category</Text>
-              <DropDownPicker
-                style={styles.dropdownStyle}
-                textStyle={{
-                  fontFamily: typography.regular,
-                  fontSize: fontSize.font16,
-                }}
-                dropDownContainerStyle={{ borderColor: "#EBEBEB" }}
-                placeholder={"Category"}
-                placeholderStyle={{ color: "#c0c0c0" }}
-                open={open}
-                value={category}
-                items={items}
-                setOpen={setOpen}
-                setValue={setCategory}
-              />
-              <TextInputComponent
-                title={"Price"}
-                containerStyle={[{ marginTop: 40 }]}
-                onChangeText={setPrice}
-                value={price}
-                placeholder={"Price"}
-                isError={priceError !== ""}
-                keyboardType={"number-pad"}
-              />
 
+              {nameError ? (
+                <Text style={styles.errorText}>{nameError}</Text>
+              ) : null}
               <TextInputComponent
-                title={"Description"}
+                title={t("description")}
                 placeholder={"Description ..."}
                 containerStyle={[{ marginTop: 20 }]}
                 textField={true}
@@ -234,7 +193,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor:palette.lighterGrey,
     alignItems: "center",
   },
 })

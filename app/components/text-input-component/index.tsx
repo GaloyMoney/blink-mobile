@@ -1,4 +1,4 @@
-import { color, fontSize, typography } from "@app/theme"
+import { color, fontSize, palette, typography } from "@app/theme"
 import React, { useLayoutEffect, useRef, useState, useEffect } from "react"
 import {
   TextInput,
@@ -120,6 +120,7 @@ export default React.forwardRef(TextInputComponent)
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor:'white',
     flexDirection: "row",
     width: width - 50,
     borderRadius: 4,
@@ -139,7 +140,7 @@ const styles = StyleSheet.create({
     left: 18,
     fontFamily: typography.regular,
     fontSize: fontSize.font16,
-    backgroundColor: color.white,
+    backgroundColor: palette.lighterGrey,
     paddingHorizontal: 4,
   },
   input: {

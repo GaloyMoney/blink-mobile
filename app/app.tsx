@@ -46,6 +46,8 @@ import { INetwork } from "./types/network"
 import ErrorBoundary from "react-native-error-boundary"
 import { ErrorScreen } from "./screens/error-screen"
 import store from "./redux"
+import { I18nextProvider } from "react-i18next";
+import { i18nInit } from "./i18n/i18n"
 
 export const BUILD_VERSION = "build_version"
 
@@ -251,30 +253,33 @@ export const App = (): JSX.Element => {
   return (
     <ApolloProvider client={apolloClient}>
       <Provider store={store}>
-        <ErrorBoundary FallbackComponent={ErrorScreen}>
-          <NavigationContainer
-            key={token}
-            linking={linking}
-            // fallback={<Text>Loading...</Text>}
-            onStateChange={(state) => {
-              const currentRouteName = getActiveRouteName(state)
 
-              if (routeName !== currentRouteName) {
-                analytics().logScreenView({
-                  screen_name: currentRouteName,
-                  screen_class: currentRouteName,
-                })
-                setRouteName(currentRouteName)
-                console.log("currentRouteName: ", currentRouteName)
-              }
-            }}
-          >
-            <RootSiblingParent>
-              <GlobalErrorToast />
-              <RootStack />
-            </RootSiblingParent>
-          </NavigationContainer>
-        </ErrorBoundary>
+        <I18nextProvider i18n={i18nInit}>
+          <ErrorBoundary FallbackComponent={ErrorScreen}>
+            <NavigationContainer
+              key={token}
+              linking={linking}
+              // fallback={<Text>Loading...</Text>}
+              onStateChange={(state) => {
+                const currentRouteName = getActiveRouteName(state)
+
+                if (routeName !== currentRouteName) {
+                  analytics().logScreenView({
+                    screen_name: currentRouteName,
+                    screen_class: currentRouteName,
+                  })
+                  setRouteName(currentRouteName)
+                  console.log("currentRouteName: ", currentRouteName)
+                }
+              }}
+            >
+              <RootSiblingParent>
+                <GlobalErrorToast />
+                <RootStack />
+              </RootSiblingParent>
+            </NavigationContainer>
+          </ErrorBoundary>
+        </I18nextProvider>
       </Provider>
     </ApolloProvider>
   )

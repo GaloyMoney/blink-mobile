@@ -5,7 +5,7 @@ import { Row } from "../row"
 
 import BackSvg from "@asset/svgs/back-button.svg"
 import { useNavigation } from "@react-navigation/native"
-import { fontSize, typography } from "@app/theme"
+import { fontSize, palette, typography } from "@app/theme"
 const styles = EStyleSheet.create({})
 
 export interface HeaderProps {
@@ -30,7 +30,7 @@ export const HeaderComponent: React.FC<HeaderProps> = ({
           }
         }}
       >
-        <BackSvg />
+        <BackSvg fill={palette.orange}/>
         <Text style={{ fontFamily: typography.regular, fontSize: fontSize.font20 }}>
           {title}
         </Text>

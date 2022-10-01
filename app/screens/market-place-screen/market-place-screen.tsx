@@ -25,6 +25,7 @@ import { images } from "@app/assets/images"
 import { CreatePostSuccessModal } from "@app/components/create-post-success-modal"
 import useToken from "@app/utils/use-token"
 import { UnAuthModal } from "@app/components/un-auth-modal"
+import { useTranslation } from "react-i18next"
 const { width, height } = Dimensions.get("window")
 const IMAGE_WIDTH = width - 32 * 2
 const IMAGE_HEIGHT = IMAGE_WIDTH * 0.635
@@ -36,6 +37,7 @@ type Props = {
 export const MarketPlace: ScreenType = ({ navigation }: Props) => {
   const { hasToken } = useToken()
   const [isModalVisible, setIsModalVisible] = React.useState(false)
+  const { t } = useTranslation()
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Screen style={styles.screenContainer}>
@@ -43,7 +45,7 @@ export const MarketPlace: ScreenType = ({ navigation }: Props) => {
           <Row containerStyle={styles.rowContainer}>
             <TextInput
               style={styles.searchText}
-              placeholder={eng.search}
+              placeholder={t("search")}
               editable={false}
               onPressIn={() => {
                 navigation.navigate("StoreList")
@@ -57,7 +59,7 @@ export const MarketPlace: ScreenType = ({ navigation }: Props) => {
               style={{ height: IMAGE_HEIGHT, width: IMAGE_WIDTH }}
             />
             <Text style={styles.description1}>
-              {eng.post_what_would_you_like_too_offer_for_bitcoin}
+              {t("post_what_would_you_like_too_offer_for_bitcoin")}
             </Text>
           </View>
           <Row containerStyle={styles.buttonRow}>
@@ -67,14 +69,14 @@ export const MarketPlace: ScreenType = ({ navigation }: Props) => {
                 hasToken ? navigation.navigate("CreatePost") : setIsModalVisible(true)
               }}
             >
-              <Text style={[styles.text]}>{eng.create_post}</Text>
+              <Text style={[styles.text]}>{t("create_post")}</Text>
             </TouchableOpacity>
             <View style={{ width: 30 }} />
             <TouchableOpacity style={[styles.button, styles.secondButton]}
               onPress={() => {
                 hasToken ? Alert.alert("Stay tuned") : setIsModalVisible(true)
               }}>
-              <Text style={[styles.text, { color: "#3653FE" }]}>{eng.my_post}</Text>
+              <Text style={[styles.text, { color: palette.orange }]}>{t("my_post")}</Text>
             </TouchableOpacity>
           </Row>
         </View>
@@ -89,7 +91,7 @@ const styles = StyleSheet.create({
   imageRow: { flex: 1, justifyContent: "center", alignItems: "center" },
   screenContainer: {
     flex: 1,
-    backgroundColor: "#E5E9EF",
+    backgroundColor: palette.lighterGrey,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -127,11 +129,11 @@ const styles = StyleSheet.create({
     paddingBottom: 24,
     paddingHorizontal: spacing[4],
   },
-  secondButton: { backgroundColor: "white", borderWidth: 1, borderColor: "#3653FE" },
+  secondButton: { backgroundColor: "white", borderWidth: 1, borderColor: palette.orange },
   button: {
     borderRadius: 20,
     paddingVertical: 7,
-    backgroundColor: "#3653FE",
+    backgroundColor: palette.orange,
     justifyContent: "center",
     alignItems: "center",
     flex: 1,

@@ -12,7 +12,7 @@ import {
   View,
 } from "react-native"
 import { Screen } from "../../components/screen"
-import { fontSize, typography } from "@app/theme"
+import { fontSize, palette, typography } from "@app/theme"
 import { HeaderComponent } from "@app/components/header"
 import { images } from "@app/assets/images"
 import { useDispatch, useSelector } from "react-redux"
@@ -34,6 +34,7 @@ import { RouteProp, useRoute } from "@react-navigation/native"
 import { createPost } from "@app/graphql/second-graphql-client"
 import { LoadingComponent } from "@app/components/loading-component"
 import { CreatePostSuccessModal } from "@app/components/create-post-success-modal"
+import { useTranslation } from "react-i18next"
 const { width, height } = Dimensions.get("window")
 interface Props {
   navigation: StackNavigationProp<MarketPlaceParamList>
@@ -41,20 +42,21 @@ interface Props {
 const DetailComponent = ({editable}) => {
   const tempStore = useSelector((state: RootState) => state.storeReducer?.tempStore)
   const [isHidePhone,setIsHidePhone]=useState(false)
+  const {t}=useTranslation()
   return (
     <View style={{ width: "100%" }}>
       <Row>
         <View style={detailStyle.rowItem}>
-          <Text style={detailStyle.label}>{eng.price}</Text>
+          <Text style={detailStyle.label}>{t("price")}</Text>
           <Text style={detailStyle.value}>$ {tempStore?.price || 0}</Text>
         </View>
       </Row>
-      <Text style={detailStyle.label}>{eng.description}</Text>
+      <Text style={detailStyle.label}>{t("description")}</Text>
       <Text style={detailStyle.value}>{tempStore?.description}</Text>
 
       <View style={detailStyle.rowItem}>
         <Row hc>
-          <Text style={[detailStyle.label,{marginRight:5}]}>{eng.phone_number}</Text>
+          <Text style={[detailStyle.label,{marginRight:5}]}>{t("phone_number")}</Text>
           {editable&&(<TouchableOpacity onPress={()=>setIsHidePhone(!isHidePhone)}>{isHidePhone ? <EyeOnSvg/> :<EyeOffSvg/>}</TouchableOpacity>)}
         </Row>
         <Text style={detailStyle.value}>{isHidePhone?'---------':tempStore?.phone}</Text>
@@ -82,6 +84,7 @@ export const StoreDetailScreen: React.FC<Props> = ({ navigation }) => {
   const thumbnail = useSelector(
     (state: RootState) => state.storeReducer?.tempStore?.mainImageUrl,
   )
+  const {t}=useTranslation()
   const formatRequestObject = (tempPost) => {
     return {
       ...tempPost,
@@ -119,15 +122,15 @@ export const StoreDetailScreen: React.FC<Props> = ({ navigation }) => {
           <Text style={[styles.title,{flex:1,paddingRight:10}]}>{store.name}</Text>
           <TouchableOpacity onPress={()=>{openMap(tempStore.location.lat,tempStore.location.long)}}>
             <Row containerStyle={styles.locationButtonContainer}>
-              <Text style={styles.locationText}>{eng.location}</Text>
+              <Text style={styles.locationText}>{t("location")}</Text>
               <View style={styles.locationSvgContainer}>
-                <LocationSvg />
+                <LocationSvg fill={palette.orange}/>
               </View>
             </Row>
           </TouchableOpacity>
         </Row>
         <Row containerStyle={[{ marginTop: 5, alignItems: "center" }]}>
-          <LocationMarkerSvg />
+          <LocationMarkerSvg fill={palette.orange}/>
           <Text style={styles.addressText}>{getLocation(store.location)}</Text>
         </Row>
         
@@ -138,7 +141,7 @@ export const StoreDetailScreen: React.FC<Props> = ({ navigation }) => {
             style={styles.submitButton}
             onPress={onSubmit}
           >
-            <Text style={styles.locationText}>{eng.submit}</Text>
+            <Text style={styles.locationText}>{t("submit")}</Text>
           </TouchableOpacity>
         ) : null}
       </View>)
@@ -157,7 +160,7 @@ export const StoreDetailScreen: React.FC<Props> = ({ navigation }) => {
               onPress={()=>navigation.navigate("AddImage")}
               >
               <Row containerStyle={styles.headerRow}>
-                <Text style={styles.headerText}>{eng.update_cover_image}</Text>
+                <Text style={styles.headerText}>{t("update_cover_image")}</Text>
                 <Image
                   source={images.uploadIcon}
                   style={{ width: 25, height: 19, marginLeft: 5 }}
@@ -172,7 +175,7 @@ export const StoreDetailScreen: React.FC<Props> = ({ navigation }) => {
             style={styles.editButtonContainer}
             onPress={() => navigation.navigate("CreatePost")}
           >
-            <EditSvg />
+            <EditSvg fill={palette.orange}/>
           </TouchableOpacity>
         ) : null}
       </ImageBackground>
@@ -203,21 +206,21 @@ export const StoreDetailScreen: React.FC<Props> = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   submitButton:{
-    backgroundColor: "#3653FE",
+    backgroundColor: palette.orange,
     alignSelf: "flex-end",
     paddingHorizontal: 15,
     paddingVertical: 5,
     marginVertical: 15,
     borderRadius: 22,
   },
-  contentContainer: { flex: 1, paddingHorizontal: 30, width: "100%" },
+  contentContainer: { flex: 1, paddingHorizontal: 30, width: "100%",backgroundColor:palette.lighterGrey },
   locationSvgContainer: {
     borderRadius: 100,
     padding: 6,
     backgroundColor: "white",
     marginLeft: 7,
   },
-  imageBackground: { width, height: height * 0.3, borderRadius: 8, marginTop: 10 },
+  imageBackground: { width, height: height * 0.3, borderRadius: 8, marginTop: 10,zIndex:1 },
   value: {
     color: "#9499A5",
     fontFamily: typography.regular,
@@ -225,7 +228,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   headerRow: {
-    backgroundColor: "#3653FE",
+    backgroundColor: palette.orange,
     paddingHorizontal: 10,
     paddingVertical: 5,
     borderRadius: 15,
@@ -248,7 +251,7 @@ const styles = StyleSheet.create({
     fontSize: fontSize.font14,
   },
   locationButtonContainer: {
-    backgroundColor: "#3653FE",
+    backgroundColor: palette.orange,
     paddingHorizontal: 15,
     paddingVertical: 5,
     borderRadius: 15,
@@ -262,7 +265,7 @@ const styles = StyleSheet.create({
     height: 58,
     bottom: -24,
     right: 20,
-    backgroundColor: "#EAEDFF",
+    backgroundColor: "white",
     borderRadius: 54,
     justifyContent: "center",
     alignItems: "center",
