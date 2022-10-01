@@ -10,7 +10,7 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		70BB85CB93E26051A44AB5F5 /* libPods-PuraVida.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 41AA1BB4324532A9D12AE542 /* libPods-PuraVida.a */; };
+		70BB85CB93E26051A44AB5F5 /* libPods-PuraVidaBitCoin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 41AA1BB4324532A9D12AE542 /* libPods-PuraVidaBitCoin.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		C61EE0AD23C530E30054100C /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C61EE0AC23C530E30054100C /* AuthenticationServices.framework */; };
 		C6A433CD2457478B00AA6FFC /* DMSans-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C6A433C72457478A00AA6FFC /* DMSans-BoldItalic.ttf */; };
@@ -27,12 +27,12 @@
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		0FB417A8CA3C4CB2BC55769B /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* Bitcoin Beach.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bitcoin Beach.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = PuraVida/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = PuraVida/AppDelegate.m; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = PuraVida/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = PuraVida/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = PuraVida/main.m; sourceTree = "<group>"; };
-		15376C89FA465EACA8E6EE76 /* Pods-PuraVida.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PuraVida.debug.xcconfig"; path = "Target Support Files/Pods-PuraVida/Pods-PuraVida.debug.xcconfig"; sourceTree = "<group>"; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = PuraVidaBitCoin/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = PuraVidaBitCoin/AppDelegate.m; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = PuraVidaBitCoin/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = PuraVidaBitCoin/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = PuraVidaBitCoin/main.m; sourceTree = "<group>"; };
+		15376C89FA465EACA8E6EE76 /* Pods-PuraVidaBitCoin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PuraVidaBitCoin.debug.xcconfig"; path = "Target Support Files/Pods-PuraVidaBitCoin/Pods-PuraVidaBitCoin.debug.xcconfig"; sourceTree = "<group>"; };
 		22D3BDC4B6ED42C7B1CBF55F /* DMSans-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans-BoldItalic.ttf"; path = "../app/theme/fonts/DMSans-BoldItalic.ttf"; sourceTree = "<group>"; };
 		2E782F00A296471DB427D608 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		2EFF6533FCEE4AB58597954F /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
@@ -40,15 +40,15 @@
 		3A418AF8DE4946B59D01BDD6 /* DMSans-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans-Bold.ttf"; path = "../app/theme/fonts/DMSans-Bold.ttf"; sourceTree = "<group>"; };
 		3AA3EC1AA44F4D358652CFFC /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
 		3F49B60C79EF40B08647DEDF /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
-		41AA1BB4324532A9D12AE542 /* libPods-PuraVida.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PuraVida.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		41AA1BB4324532A9D12AE542 /* libPods-PuraVidaBitCoin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PuraVidaBitCoin.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5199AF134C714977A0F48103 /* DMSans-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans-Italic.ttf"; path = "../app/theme/fonts/DMSans-Italic.ttf"; sourceTree = "<group>"; };
 		62AB4662383743FF9DA52105 /* DMSans-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans-Medium.ttf"; path = "../app/theme/fonts/DMSans-Medium.ttf"; sourceTree = "<group>"; };
 		641BD61D5FDE432BA408632A /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		673E42F21AB74B5AAF79DFD2 /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
 		7607B08C71E540A28DA96574 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
-		7627187D9FE766A169DD8656 /* Pods-PuraVida.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PuraVida.release.xcconfig"; path = "Target Support Files/Pods-PuraVida/Pods-PuraVida.release.xcconfig"; sourceTree = "<group>"; };
+		7627187D9FE766A169DD8656 /* Pods-PuraVidaBitCoin.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PuraVidaBitCoin.release.xcconfig"; path = "Target Support Files/Pods-PuraVidaBitCoin/Pods-PuraVidaBitCoin.release.xcconfig"; sourceTree = "<group>"; };
 		7AB6CFBCAB7241E4A3309DE0 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
-		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = PuraVida/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = PuraVidaBitCoin/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		821637C995554B50B12C3A13 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		82BC61FD324542C5B6EE33A9 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
 		8BB9CB264CB6434FA3B52051 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
@@ -56,7 +56,7 @@
 		B32B7D09D5FF45EB8C3689F2 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		B5173FE621CC41AB828DE6C0 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		B5356F23AC564972BCEF1DE5 /* DMSans-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans-MediumItalic.ttf"; path = "../app/theme/fonts/DMSans-MediumItalic.ttf"; sourceTree = "<group>"; };
-		C61EE0AB23C52FBA0054100C /* PuraVida.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = PuraVida.entitlements; path = PuraVida/PuraVida.entitlements; sourceTree = "<group>"; };
+		C61EE0AB23C52FBA0054100C /* PuraVidaBitCoin.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = PuraVidaBitCoin.entitlements; path = PuraVidaBitCoin/PuraVidaBitCoin.entitlements; sourceTree = "<group>"; };
 		C61EE0AC23C530E30054100C /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
 		C69AA16C232DD68A00606E11 /* Fontisto.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Fontisto.ttf; sourceTree = "<group>"; };
 		C69AA16D232DD68A00606E11 /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
@@ -81,7 +81,7 @@
 		C6A433CB2457478B00AA6FFC /* DMSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "DMSans-Bold.ttf"; path = "../../../app/theme/fonts/DMSans-Bold.ttf"; sourceTree = "<group>"; };
 		C6A433CC2457478B00AA6FFC /* DMSans-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "DMSans-Medium.ttf"; path = "../../../app/theme/fonts/DMSans-Medium.ttf"; sourceTree = "<group>"; };
 		C6E810002333FDA400D41794 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		C6FCE05724592E5E0076B3C0 /* PuraVida-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PuraVida-Bridging-Header.h"; sourceTree = "<group>"; };
+		C6FCE05724592E5E0076B3C0 /* PuraVidaBitCoin-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PuraVidaBitCoin-Bridging-Header.h"; sourceTree = "<group>"; };
 		C6FCE05824592E5E0076B3C0 /* LottieEmptyFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieEmptyFile.swift; sourceTree = "<group>"; };
 		E5A2237A1830429A9171428B /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -94,17 +94,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				C61EE0AD23C530E30054100C /* AuthenticationServices.framework in Frameworks */,
-				70BB85CB93E26051A44AB5F5 /* libPods-PuraVida.a in Frameworks */,
+				70BB85CB93E26051A44AB5F5 /* libPods-PuraVidaBitCoin.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		13B07FAE1A68108700A75B9A /* PuraVida */ = {
+		13B07FAE1A68108700A75B9A /* PuraVidaBitCoin */ = {
 			isa = PBXGroup;
 			children = (
-				C61EE0AB23C52FBA0054100C /* PuraVida.entitlements */,
+				C61EE0AB23C52FBA0054100C /* PuraVidaBitCoin.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -113,7 +113,7 @@
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
-			name = PuraVida;
+			name = PuraVidaBitCoin;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
@@ -122,7 +122,7 @@
 				C61EE0AC23C530E30054100C /* AuthenticationServices.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
-				41AA1BB4324532A9D12AE542 /* libPods-PuraVida.a */,
+				41AA1BB4324532A9D12AE542 /* libPods-PuraVidaBitCoin.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -159,8 +159,8 @@
 		52DBFAFEE2028D1D4AE01CB9 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				15376C89FA465EACA8E6EE76 /* Pods-PuraVida.debug.xcconfig */,
-				7627187D9FE766A169DD8656 /* Pods-PuraVida.release.xcconfig */,
+				15376C89FA465EACA8E6EE76 /* Pods-PuraVidaBitCoin.debug.xcconfig */,
+				7627187D9FE766A169DD8656 /* Pods-PuraVidaBitCoin.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -178,13 +178,13 @@
 				C6FCE05824592E5E0076B3C0 /* LottieEmptyFile.swift */,
 				C6E810002333FDA400D41794 /* GoogleService-Info.plist */,
 				C69AA16B232DD68A00606E11 /* Fonts */,
-				13B07FAE1A68108700A75B9A /* PuraVida */,
+				13B07FAE1A68108700A75B9A /* PuraVidaBitCoin */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				52DBFAFEE2028D1D4AE01CB9 /* Pods */,
 				3D774DD6035C45B3A44518AC /* Resources */,
-				C6FCE05724592E5E0076B3C0 /* PuraVida-Bridging-Header.h */,
+				C6FCE05724592E5E0076B3C0 /* PuraVidaBitCoin-Bridging-Header.h */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -232,9 +232,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		13B07F861A680F5B00A75B9A /* PuraVida */ = {
+		13B07F861A680F5B00A75B9A /* PuraVidaBitCoin */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "PuraVida" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "PuraVidaBitCoin" */;
 			buildPhases = (
 				2323346F80DC53C15AE29C39 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
@@ -251,8 +251,8 @@
 			);
 			dependencies = (
 			);
-			name = PuraVida;
-			productName = PuraVida;
+			name = PuraVidaBitCoin;
+			productName = PuraVidaBitCoin;
 			productReference = 13B07F961A680F5B00A75B9A /* Bitcoin Beach.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -272,7 +272,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "PuraVida" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "PuraVidaBitCoin" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -285,7 +285,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* PuraVida */,
+				13B07F861A680F5B00A75B9A /* PuraVidaBitCoin */,
 			);
 		};
 /* End PBXProject section */
@@ -339,7 +339,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-PuraVida-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-PuraVidaBitCoin-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -365,7 +365,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PuraVida/Pods-PuraVida-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-PuraVidaBitCoin/Pods-PuraVidaBitCoin-resources.sh",
 				"${PODS_ROOT}/GT3Captcha-iOS/SDK/GT3Captcha.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/RNImageCropPicker/QBImagePicker.bundle",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf",
@@ -414,7 +414,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PuraVida/Pods-PuraVida-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PuraVidaBitCoin/Pods-PuraVidaBitCoin-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		B74B8DDC47B897EBAFEBC6AB /* [CP-User] [RNFB] Crashlytics Configuration */ = {
@@ -486,11 +486,11 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 15376C89FA465EACA8E6EE76 /* Pods-PuraVida.debug.xcconfig */;
+			baseConfigurationReference = 15376C89FA465EACA8E6EE76 /* Pods-PuraVidaBitCoin.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = PuraVida/PuraVida.entitlements;
+				CODE_SIGN_ENTITLEMENTS = PuraVidaBitCoin/PuraVidaBitCoin.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
@@ -499,7 +499,7 @@
 				DEVELOPMENT_TEAM = 7HMDAT3267;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = PuraVida/Info.plist;
+				INFOPLIST_FILE = PuraVidaBitCoin/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
 				MARKETING_VERSION = 1.7.7;
@@ -510,8 +510,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = ios.puravidabitcoin.app;
 				PRODUCT_NAME = "Bitcoin Beach";
-				PROVISIONING_PROFILE_SPECIFIER = "PuraVidaBitcoin Distribution 3";
-				SWIFT_OBJC_BRIDGING_HEADER = "PuraVida-Bridging-Header.h";
+				PROVISIONING_PROFILE_SPECIFIER = "PuraVidaBitCoinBitcoin Distribution 3";
+				SWIFT_OBJC_BRIDGING_HEADER = "PuraVidaBitCoin-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -520,18 +520,18 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7627187D9FE766A169DD8656 /* Pods-PuraVida.release.xcconfig */;
+			baseConfigurationReference = 7627187D9FE766A169DD8656 /* Pods-PuraVidaBitCoin.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = PuraVida/PuraVida.entitlements;
+				CODE_SIGN_ENTITLEMENTS = PuraVidaBitCoin/PuraVidaBitCoin.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 328;
 				DEVELOPMENT_TEAM = 7HMDAT3267;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = PuraVida/Info.plist;
+				INFOPLIST_FILE = PuraVidaBitCoin/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
 				MARKETING_VERSION = 1.7.7;
@@ -542,8 +542,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = ios.puravidabitcoin.app;
 				PRODUCT_NAME = "Bitcoin Beach";
-				PROVISIONING_PROFILE_SPECIFIER = "PuraVidaBitcoin Distribution 3";
-				SWIFT_OBJC_BRIDGING_HEADER = "PuraVida-Bridging-Header.h";
+				PROVISIONING_PROFILE_SPECIFIER = "PuraVidaBitCoinBitcoin Distribution 3";
+				SWIFT_OBJC_BRIDGING_HEADER = "PuraVidaBitCoin-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -670,7 +670,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "PuraVida" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "PuraVidaBitCoin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -679,7 +679,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "PuraVida" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "PuraVidaBitCoin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,

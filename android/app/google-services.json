@@ -40,6 +40,42 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:796001515981:android:3eaaf25588072bd27b2c84",
+        "android_client_info": {
+          "package_name": "io.puravidabitcoin.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "796001515981-ks4oomfgiove5m8vt47hglv9rb0bq15i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAikq7MkBhUg-TtvDkacYPEXr1plYnGciU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "796001515981-ks4oomfgiove5m8vt47hglv9rb0bq15i.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "796001515981-gdqb577847h3codpfvrhe1ipu8hnbnav.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.puravida.app"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

@@ -47,6 +47,14 @@ Submit a new Beta Build to Crashlytics Beta
 
 Deploy a new version to both Play Store and Huawei Store
 
+### android build_bundle
+
+```sh
+[bundle exec] fastlane android build_bundle
+```
+
+Create Release Bundle
+
 ### android play_store_release
 
 ```sh
