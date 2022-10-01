@@ -342,7 +342,7 @@ PODS:
     - React-Core
   - react-native-geolocation (2.0.2):
     - React
-  - react-native-image-picker (4.3.0):
+  - react-native-image-picker (4.10.0):
     - React-Core
   - react-native-maps (0.29.4):
     - React-Core
@@ -465,8 +465,6 @@ PODS:
     - React-Core
     - React-RCTImage
     - TOCropViewController
-  - RNInAppBrowser (3.6.3):
-    - React-Core
   - RNKeychain (8.0.0):
     - React-Core
   - RNLocalize (2.1.5):
@@ -581,7 +579,6 @@ DEPENDENCIES:
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNICloudStore (from `../node_modules/react-native-icloudstore`)
   - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
-  - RNInAppBrowser (from `../node_modules/react-native-inappbrowser-reborn`)
   - RNKeychain (from `../node_modules/react-native-keychain`)
   - RNLocalize (from `../node_modules/react-native-localize`)
   - RNReactNativeHapticFeedback (from `../node_modules/react-native-haptic-feedback`)
@@ -732,8 +729,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-icloudstore"
   RNImageCropPicker:
     :path: "../node_modules/react-native-image-crop-picker"
-  RNInAppBrowser:
-    :path: "../node_modules/react-native-inappbrowser-reborn"
   RNKeychain:
     :path: "../node_modules/react-native-keychain"
   RNLocalize:
@@ -796,7 +791,7 @@ SPEC CHECKSUMS:
   react-native-fingerprint-scanner: ac6656f18c8e45a7459302b84da41a44ad96dbbe
   react-native-geetest-module: 602c894ef1790a953a46cd45c11e585972e3970d
   react-native-geolocation: c956aeb136625c23e0dce0467664af2c437888c9
-  react-native-image-picker: 869530859570f2af86ae57bc48886a5e2367a825
+  react-native-image-picker: 4bc9ed38c8be255b515d8c88babbaf74973f91a8
   react-native-maps: a421fe6aeb74279597c4ea9598f25796108e2d89
   react-native-netinfo: 27f287f2d191693f3b9d01a4273137fcf91c3b5d
   react-native-qrcode-local-image: a16d554baf5cf5c04da86b464d99cf658e215c52
@@ -830,7 +825,6 @@ SPEC CHECKSUMS:
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNICloudStore: bc6e225811637c09bd1eb055d6cd7448e61cd451
   RNImageCropPicker: ffbba608264885c241cbf3a8f78eb7aeeb978241
-  RNInAppBrowser: 3ff3a3b8f458aaf25aaee879d057352862edf357
   RNKeychain: 4f63aada75ebafd26f4bc2c670199461eab85d94
   RNLocalize: 74b82db20cc3895ccc25af992c644879bcec2815
   RNReactNativeHapticFeedback: b83bfb4b537bdd78eb4f6ffe63c6884f7b049ead
@@ -846,6 +840,6 @@ SPEC CHECKSUMS:
   Yoga: 32a18c0e845e185f4a2a66ec76e1fd1f958f22fa
   YoutubePlayer-in-WKWebView: 4fca3b4f6f09940077bfbae7bddb771f2b43aacd
 
-PODFILE CHECKSUM: b363bbc05eba5c994d892177ce4a665e17b92833
+PODFILE CHECKSUM: 3fbcea4f0bf6561f5d189a41626e2ca175f05cf5
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3

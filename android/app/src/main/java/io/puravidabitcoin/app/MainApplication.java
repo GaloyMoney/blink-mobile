@@ -1,4 +1,4 @@
-package com.puravida.app;
+package io.puravidabitcoin.app;
 
 import android.app.Application;
 import android.content.Context;

@@ -28,16 +28,9 @@ platform :android do
 
   desc "Submit a new Beta Build to Crashlytics Beta"
   lane :build do
-    increment_version_code(gradle_file_path: "app/build.gradle")
-    gradle(
-      task: "clean assemble",
-      build_type: "Release",
-      print_command: false,
-      flags: "--no-daemon --max-workers=8 --stacktrace --info",
-      properties: {
-        "android.injected.version.name" => ENV["CIRCLE_TAG"],
-      }
-    )
+    
+    gradle(task: 'incrementVersionCode', project_dir: './')
+    gradle(task: 'bundle', project_dir: './')
     # gradle(task: "clean assembleRelease", print_command: false)
 
     # sh "your_script.sh"
@@ -46,10 +39,34 @@ platform :android do
 
   desc "Deploy a new version to both Play Store and Huawei Store"
   lane :beta do
-    build
-    play_store_release
-    huawei_release
+    # build
+    build_bundle
+    upload_to_play_store(
+      track: 'internal',
+      release_status: 'draft',
+      aab:'./app/build/outputs/bundle/release/app-release.aab'
+    )
+    # huawei_release
   end
+
+  desc "Create Release Bundle"
+   lane :build_bundle do
+     increment_build
+     store_password = get_properties_value(
+         key: "keystore_password",
+         path: "fastlane/puravida-app.properties"
+      )
+ 
+     gradle(
+       task: "clean bundle",
+       build_type: "Release",
+       print_command: false,
+       properties: {
+           "RELEASE_STORE_PASSWORD" => store_password
+       },
+       flags: "--no-daemon --max-workers=8 --stacktrace --info"
+     )
+   end
 
   desc "Deploy a new version to the Google Play"
   lane :play_store_release do
@@ -58,6 +75,7 @@ platform :android do
       track: "internal",
       skip_upload_changelogs: true,
       skip_upload_images: true,
+      aab:'./app/build/outputs/bundle/release/app-release.aab'
     )
   end
 
