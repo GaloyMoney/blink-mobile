@@ -68,6 +68,15 @@
 		EA8ACECD39344665B72B55CE /* Roboto-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9BBF1416D82546F684D6EB09 /* Roboto-ThinItalic.ttf */; };
 		F195826328D9B0EC000313FF /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB61A68108700A75B9A /* Info.plist */; };
 		F1D71F3628CE5C9A00636277 /* AppDelegate.h in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FAF1A68108700A75B9A /* AppDelegate.h */; };
+		68EA8F742EAE4C91959555D1 /* Inter-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E74E643DCC3B414CA33E2CDE /* Inter-Black.ttf */; };
+		6D78BA1244994F018946125A /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A08D964F3105498380E543B0 /* Inter-Bold.ttf */; };
+		4CF6AFEBA003485BAC70E446 /* Inter-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F478293BB4E4ABE833102E9 /* Inter-ExtraBold.ttf */; };
+		0A8C86828B2D4FCEA5444285 /* Inter-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C74AE816FC15453DA6CB199B /* Inter-ExtraLight.ttf */; };
+		BF5A393C0C1845938462792D /* Inter-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5BFC364E0C1546F086762606 /* Inter-Light.ttf */; };
+		537487C20589408FAB03E8BC /* Inter-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6C4A1F31E752457DAC14D236 /* Inter-Medium.ttf */; };
+		FD7A4C007A74495C9AD937DD /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3F46711D6B0644C09A085D1E /* Inter-Regular.ttf */; };
+		8C980DB1FFE3451C882D4F5F /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0587AAB016894B45A354C119 /* Inter-SemiBold.ttf */; };
+		0B1825A7DE1C42D3BBF3670F /* Inter-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B9466311C80847D2BCCDCFE5 /* Inter-Thin.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -259,6 +268,15 @@
 				759D93489935422C85F61117 /* RobotoCondensed-LightItalic.ttf */,
 				B98C34782C7041CB924E15FD /* RobotoCondensed-Regular.ttf */,
 				2AAD31A547FB45A3B4F93293 /* OFL.txt */,
+				E74E643DCC3B414CA33E2CDE /* Inter-Black.ttf */,
+				A08D964F3105498380E543B0 /* Inter-Bold.ttf */,
+				1F478293BB4E4ABE833102E9 /* Inter-ExtraBold.ttf */,
+				C74AE816FC15453DA6CB199B /* Inter-ExtraLight.ttf */,
+				5BFC364E0C1546F086762606 /* Inter-Light.ttf */,
+				6C4A1F31E752457DAC14D236 /* Inter-Medium.ttf */,
+				3F46711D6B0644C09A085D1E /* Inter-Regular.ttf */,
+				0587AAB016894B45A354C119 /* Inter-SemiBold.ttf */,
+				B9466311C80847D2BCCDCFE5 /* Inter-Thin.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -432,6 +450,15 @@
 				35C2F6FD4D7A4875A8F9222F /* RobotoCondensed-LightItalic.ttf in Resources */,
 				AF74D0C8A86E4EBE8715E84D /* RobotoCondensed-Regular.ttf in Resources */,
 				B73CB1EC784046ADACAEF572 /* OFL.txt in Resources */,
+				68EA8F742EAE4C91959555D1 /* Inter-Black.ttf in Resources */,
+				6D78BA1244994F018946125A /* Inter-Bold.ttf in Resources */,
+				4CF6AFEBA003485BAC70E446 /* Inter-ExtraBold.ttf in Resources */,
+				0A8C86828B2D4FCEA5444285 /* Inter-ExtraLight.ttf in Resources */,
+				BF5A393C0C1845938462792D /* Inter-Light.ttf in Resources */,
+				537487C20589408FAB03E8BC /* Inter-Medium.ttf in Resources */,
+				FD7A4C007A74495C9AD937DD /* Inter-Regular.ttf in Resources */,
+				8C980DB1FFE3451C882D4F5F /* Inter-SemiBold.ttf in Resources */,
+				0B1825A7DE1C42D3BBF3670F /* Inter-Thin.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

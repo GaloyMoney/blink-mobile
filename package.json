@@ -27,7 +27,7 @@
     "client:dev": "yalc add @galoymoney/client",
     "yalc:check": "yalc check",
     "typesafe-i18n": "typesafe-i18n",
-    "fonts": "npx react-native-assets"
+    "fonts": "npx react-native-asset"
   },
   "dependencies": {
     "@apollo/client": "^3.6.6",
