@@ -29,5 +29,8 @@
   "name_must_be_more_than_2_characters":"Name must be more than 2 characters",
   "description_is_required":"Description is required",
   "description_must_be_more_than_2_characters": "Description must be more than 2 characters",
-  "you_must_add_at_least_one_image":"You must add at least one image"
+  "you_must_add_at_least_one_image":"You must add at least one image",
+  "enter_your_own_tags":"Enter your own tags",
+  "tags":"Tags",
+  "your_selected_tag":"Your selected tag"
 }

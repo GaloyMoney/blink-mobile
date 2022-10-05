@@ -3,10 +3,9 @@ import { useState } from "react"
 // eslint-disable-next-line react-native/split-platform-components
 import {
   Dimensions,
+  FlatList,
   Image,
   Keyboard,
-  KeyboardAvoidingView,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -20,33 +19,94 @@ import { images } from "@app/assets/images"
 import { eng } from "@app/constants/en"
 import { useDispatch } from "react-redux"
 import { setTempStore } from "@app/redux/reducers/store-reducer"
-import DropDownPicker from "react-native-dropdown-picker"
 import { MarketPlaceParamList } from "@app/navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { CustomTextInput } from "@app/components/text-input"
 import TextInputComponent from "@app/components/text-input-component"
-import { getMartketPlaceCategories } from "@app/graphql/second-graphql-client"
 import { LoadingComponent } from "@app/components/loading-component"
-import { CreatePostSuccessModal } from "@app/components/create-post-success-modal"
 import { useTranslation } from "react-i18next"
+import { Row } from "@app/components/row"
+import XSvg from '@asset/svgs/x.svg'
+import { MarketplaceTag } from "@app/puravida-src/constant/model"
 const { width, height } = Dimensions.get("window")
-const IMAGE_WIDTH = width - 32 * 2
-const IMAGE_HEIGHT = IMAGE_WIDTH * 0.635
+const FAKE_TAGS = [
+  {
+    "_id": "633868d33e3e998e4c674303",
+    "createdAt": "1664641235567",
+    "name": "restaurants",
+    "updatedAt": "1664641235567"
+  },
+  {
+    "_id": "633868c93e3e998e4c674300",
+    "createdAt": "1664641225401",
+    "name": "vehicle",
+    "updatedAt": "1664641225401"
+  },
+  {
+    "_id": "633868b33e3e998e4c6742fd",
+    "createdAt": "1664641203639",
+    "name": "Tag #2",
+    "updatedAt": "1664641203639"
+  },
+  {
+    "_id": "633842fbf55946fb0c4cc09a",
+    "createdAt": "1664631547736",
+    "name": "Tag #1",
+    "updatedAt": "1664631547736"
+  },
+  {
+    "_id": "633842fbf55946fb0c4cc09a1",
+    "createdAt": "1664631547736",
+    "name": "Tag #2",
+    "updatedAt": "1664631547736"
+  },
+  {
+    "_id": "633842fbf55946fb0c4cc09a2",
+    "createdAt": "1664631547736",
+    "name": "Tag #2",
+    "updatedAt": "1664631547736"
+  },
+  {
+    "_id": "633842fbf55946fb0c4cc09a3",
+    "createdAt": "1664631547736",
+    "name": "Tag #3",
+    "updatedAt": "1664631547736"
+  },
+  {
+    "_id": "633842fbf55946fb0c4cc09a4",
+    "createdAt": "1664631547736",
+    "name": "Tag #4",
+    "updatedAt": "1664631547736"
+  },
+  {
+    "_id": "633842fbf55946fb0c4cc09a5",
+    "createdAt": "1664631547736",
+    "name": "Tag #5",
+    "updatedAt": "1664631547736"
+  },
+  {
+    "_id": "633842fbf55946fb0c4cc09a6",
+    "createdAt": "1664631547736",
+    "name": "Tag #6",
+    "updatedAt": "1664631547736"
+  }
+]
 interface Props {
   navigation: StackNavigationProp<MarketPlaceParamList>
 }
 export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
   const dispatch = useDispatch()
-  const [name, setName] = useState("") 
+  const [name, setName] = useState("")
   const [description, setDescription] = useState("")
   const [isLoading, setIsLoading] = useState(false)
- 
+  const [tag, setTag] = useState("")
+
   const [nameError, setNameError] = useState("")
-  const [descriptionError, setDescriptionError] = useState("") 
+  const [descriptionError, setDescriptionError] = useState("")
+  const [selectedTags, setSelectedTags] = useState<MarketplaceTag[]>([])
   const { t } = useTranslation()
   const isCorrectInput = () => {
     let nameValid = false
-    let descriptionValid = false 
+    let descriptionValid = false
 
     if (!name) setNameError(t("name_is_required"))
     else if (name?.length < 2) setNameError(t("name_must_be_more_than_2_characters"))
@@ -70,12 +130,23 @@ export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
     dispatch(setTempStore({ name, description }))
     navigation.navigate("AddImage")
   }
+  const addTag = (item: MarketplaceTag) => {
+    const newTags = [...selectedTags]
+    if (newTags.length >= 5) newTags.pop()
+    newTags.unshift(item)
+    setSelectedTags(newTags)
+  }
+  const removeTag = (index: number) => {
 
+    const newTags = [...selectedTags]
+    newTags.splice(index, 1)
+    setSelectedTags(newTags)
+  }
   React.useEffect(() => {
     const initData = async () => {
       setIsLoading(true)
       try {
-        
+
       } catch (error) {
       } finally {
         setIsLoading(false)
@@ -107,9 +178,9 @@ export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
               <Text style={styles.title}>{t("create_post")}</Text>
             </View>
             <View style={{ paddingHorizontal: 30, width: "100%" }}>
+              <Text style={styles.labelStyle}>{t("name")}</Text>
               <TextInputComponent
-                title={t("name")}
-                containerStyle={[{ marginTop: 40 }]}
+                // title={t("name")}
                 onChangeText={setName}
                 value={name}
                 placeholder={"Burger"}
@@ -119,10 +190,59 @@ export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
               {nameError ? (
                 <Text style={styles.errorText}>{nameError}</Text>
               ) : null}
+
+              <Text style={styles.labelStyle}>{t("your_selected_tag")}</Text>
+              <FlatList
+                data={selectedTags}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                renderItem={({ item, index }) => {
+                  return <Row
+                    containerStyle={{ paddingVertical: 3, paddingHorizontal: 7, borderRadius: 12, backgroundColor: palette.lightOrange }}
+                    hc
+                  >
+                    <Text style={{ color: 'white' }}>{item.name}</Text>
+                    <TouchableOpacity
+                      onPress={() => removeTag(index)}
+                      hitSlop={{ right: 5, left: 5, bottom: 5, top: 5 }}
+                    >
+                      <XSvg height={15} />
+                    </TouchableOpacity>
+                  </Row>
+                }}
+                ItemSeparatorComponent={() => <View style={{ width: 12 }} />}
+                keyExtractor={(item, index) => item._id + '_' + index}
+              />
               <TextInputComponent
-                title={t("description")}
+                containerStyle={{ marginTop: selectedTags?.length ? 12 : 0 }}
+                onChangeText={setTag}
+                value={tag}
+                placeholder={t("enter_your_own_tags")}
+                isError={false}
+                onSubmitEditing={() => {
+                  addTag({ name: tag })
+                  setTag('')
+                }}
+              />
+              <FlatList
+                data={FAKE_TAGS}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                renderItem={({ item }) => {
+                  return <TouchableOpacity
+                    style={{ paddingVertical: 3, paddingHorizontal: 7, borderRadius: 12, backgroundColor: palette.lightOrange }}
+                    onPress={() => addTag(item)}
+                  >
+                    <Text style={{ color: 'white' }}>{item.name}</Text>
+                  </TouchableOpacity>
+                }}
+                style={{ marginTop: 12 }}
+                ItemSeparatorComponent={() => <View style={{ width: 12 }} />}
+                keyExtractor={item => item._id}
+              />
+              <Text style={styles.labelStyle}>{t("description")}</Text>
+              <TextInputComponent
                 placeholder={"Description ..."}
-                containerStyle={[{ marginTop: 20 }]}
                 textField={true}
                 onChangeText={setDescription}
                 value={description}
@@ -170,7 +290,8 @@ const styles = StyleSheet.create({
   labelStyle: {
     fontFamily: typography.regular,
     fontSize: fontSize.font16,
-    marginVertical: 10,
+    marginTop: 10,
+    marginBottom: 5
   },
   text: {
     fontFamily: typography.medium,
@@ -181,7 +302,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingHorizontal: 25,
     paddingVertical: 7,
-    backgroundColor: "#3653FE",
+    backgroundColor: palette.orange,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -193,7 +314,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor:palette.lighterGrey,
+    backgroundColor: palette.lighterGrey,
     alignItems: "center",
   },
 })

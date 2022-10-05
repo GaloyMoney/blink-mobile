@@ -31,3 +31,14 @@ export const GET_POSTS = gql`
     }
   }
 `
+
+export const FIND_TAGS = gql`
+query marketplaceAutoCompleteTag ($autoCompleteTagInput: AutoCompleteTagInput!) {
+    marketplaceAutoCompleteTag (autoCompleteTagInput: $autoCompleteTagInput) {
+        _id
+        createdAt
+        name
+        updatedAt
+    }
+}
+`
