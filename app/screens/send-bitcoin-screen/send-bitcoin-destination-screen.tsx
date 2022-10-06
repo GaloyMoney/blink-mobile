@@ -17,7 +17,6 @@ import {
 } from "@galoymoney/client"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import useToken from "@app/hooks/use-token"
 import { PaymentAmount, WalletCurrency } from "@app/types/amounts"
 import { Button } from "react-native-elements"
 import ScanIcon from "@app/assets/icons/scan.svg"
@@ -35,6 +34,7 @@ import {
   InvalidOnchainDestinationReason,
 } from "@galoymoney/client/dist/parsing-v2"
 import { logPaymentDestinationAccepted } from "@app/utils/analytics"
+import { useAppConfig } from "@app/hooks"
 
 const Styles = StyleSheet.create({
   scrollView: {
@@ -231,7 +231,8 @@ const SendBitcoinDestinationScreen = ({
     useSendBitcoinDestinationReducer()
   const [goToNextScreenWhenValid, setGoToNextScreenWhenValid] = React.useState(false)
   const { myPubKey, username: myUsername } = useMainQuery()
-  const { tokenNetwork } = useToken()
+  const { appConfig } = useAppConfig()
+  const bitcoinNetwork = appConfig.galoyInstance.network
   const { LL } = useI18nContext()
   const [userDefaultWalletIdQuery] = useDelayedQuery.userDefaultWalletId()
   const { data } = useGaloyQuery.contacts()
@@ -271,7 +272,7 @@ const SendBitcoinDestinationScreen = ({
 
       const parsedPaymentDestination = parsePaymentDestination({
         destination,
-        network: tokenNetwork,
+        network: bitcoinNetwork,
         pubKey: myPubKey,
         lnAddressDomains: lnurlDomains,
       })
@@ -436,7 +437,7 @@ const SendBitcoinDestinationScreen = ({
     [
       myPubKey,
       loaded,
-      tokenNetwork,
+      bitcoinNetwork,
       checkUsername,
       destinationState.destinationState,
       dispatchDestinationStateAction,

@@ -1,5 +1,4 @@
 import * as React from "react"
-import { useCallback } from "react"
 import { Alert, DevSettings, Text, View } from "react-native"
 import { Button, ButtonGroup } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
@@ -7,17 +6,16 @@ import { useApolloClient } from "@apollo/client"
 
 import { Screen } from "../../components/screen"
 import { color } from "../../theme"
-import { getGraphQLUri, loadNetwork, saveNetwork } from "../../utils/network"
 import { addDeviceToken, requestPermission } from "../../utils/notifications"
 import useToken from "../../hooks/use-token"
 import type { ScreenType } from "../../types/jsx"
-import type { INetwork } from "../../types/network"
-import { networkVar } from "../../graphql/client-only-query"
 import { usePriceConversion } from "../../hooks"
 import useLogout from "../../hooks/use-logout"
 import { GaloyInput } from "@app/components/galoy-input"
 import { useAppConfig } from "@app/hooks/use-app-config"
 import { usePersistentStateContext } from "@app/store/persistent-state"
+import { GALOY_INSTANCES } from "@app/config/galoy-instances"
+import { useEffect } from "react"
 
 const styles = EStyleSheet.create({
   button: {
@@ -33,58 +31,17 @@ const usingHermes = typeof HermesInternal === "object" && HermesInternal !== nul
 export const DebugScreen: ScreenType = () => {
   const client = useApolloClient()
   const { usdPerSat } = usePriceConversion()
-  const { hasToken, tokenUid, tokenNetwork, saveToken } = useToken()
+  const { token, hasToken, saveToken } = useToken()
+  const [tempToken, setTempToken] = React.useState(token)
+  useEffect(() => {
+    setTempToken(token)
+  }, [token])
   const { logout } = useLogout()
-  const [token, setToken] = React.useState()
   const persistentState = usePersistentStateContext()
-  const networks: INetwork[] = ["regtest", "testnet", "mainnet"]
-  const [networkState, setNetworkState] = React.useState("")
-  const [graphQLURIs, setGraphQLURIs] = React.useState({
-    GRAPHQL_URI: "",
-    GRAPHQL_WS_URI: "",
-  })
-  const { appConfig, toggleUsdDisabled } = useAppConfig()
-  const updateNetwork = useCallback(
-    async (network?) => {
-      let newNetwork = tokenNetwork || network
-      if (!newNetwork) {
-        if (networkVar()) {
-          newNetwork = networkVar()
-        } else {
-          newNetwork = await loadNetwork()
-        }
-      }
-      setGraphQLURIs(getGraphQLUri(newNetwork))
-      setNetworkState(newNetwork)
-    },
-    [tokenNetwork],
-  )
-
-  React.useEffect(() => {
-    updateNetwork()
-  }, [updateNetwork])
+  const { appConfig, toggleUsdDisabled, setGaloyInstance } = useAppConfig()
 
   return (
     <Screen preset="scroll" backgroundColor={color.transparent}>
-      {/* <Button
-        title="Delete account and log out (TODO)"
-        onPress={async () => {
-          logout()
-          if (token.has()) {
-            try { // FIXME
-              const query = `mutation deleteCurrentUser {
-                deleteCurrentUser
-              }`
-              // const result = await request(getGraphQLUri(), query, {uid: "1234"})
-              // FIXME
-            } catch (err) {
-              console.log(`${err}`)
-            }
-          }
-          await token.delete()
-          Alert.alert("user succesfully deleted. Restart your app")
-        }}
-        /> */}
       <Button
         title="Log out"
         style={styles.button}
@@ -144,35 +101,34 @@ export const DebugScreen: ScreenType = () => {
           }}
         /> */}
       <View>
-        <Text>UID: {tokenUid}</Text>
-        <Text>Token network: {tokenNetwork}</Text>
-        <Text>GRAPHQL_URL: {graphQLURIs.GRAPHQL_URI}</Text>
-        <Text>GRAPHQL_WS_URL: {graphQLURIs.GRAPHQL_WS_URI}</Text>
+        <Text>Token network: {appConfig.galoyInstance.network}</Text>
+        <Text>GRAPHQL_URL: {appConfig.galoyInstance.graphqlUri}</Text>
+        <Text>GRAPHQL_WS_URL: {appConfig.galoyInstance.graphqlWsUri}</Text>
         <Text>USD per 1 sat: {usdPerSat ? `$${usdPerSat}` : "No price data"}</Text>
         <Text>Hermes: {String(Boolean(usingHermes))}</Text>
-
         <ButtonGroup
           onPress={(index) => {
-            saveNetwork(networks[index])
-            networkVar(networks[index])
-            updateNetwork(networks[index])
+            setGaloyInstance(GALOY_INSTANCES[index])
+            logout()
           }}
-          selectedIndex={networks.findIndex((value) => value === networkState)}
-          buttons={networks}
+          selectedIndex={GALOY_INSTANCES.findIndex(
+            (value) => value.name === appConfig.galoyInstance.name,
+          )}
+          buttons={GALOY_INSTANCES.map((instance) => instance.name)}
           buttonStyle={styles.button} // FIXME
           containerStyle={styles.container}
         />
         <GaloyInput
           placeholder={"Input access token"}
-          value={token}
-          onChangeText={(value) => setToken(value)}
+          value={tempToken}
+          onChangeText={setTempToken}
           selectTextOnFocus
         />
         <Button
           title="Change token"
           style={styles.button}
           onPress={async () => {
-            await saveToken(token)
+            await saveToken(tempToken)
             await addDeviceToken(client)
           }}
         />

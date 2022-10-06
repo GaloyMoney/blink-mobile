@@ -69,6 +69,7 @@ import {
 import { useAuthenticationContext } from "@app/store/authentication-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { logEnterBackground, logEnterForeground } from "@app/utils/analytics"
+import { useAppConfig } from "@app/hooks"
 
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
 PushNotification.configure({
@@ -132,12 +133,28 @@ const RootNavigator = createStackNavigator<RootStackParamList>()
 export const RootStack: NavigatorType = () => {
   const appState = React.useRef(AppState.currentState)
   const client = useApolloClient()
-  const { token, hasToken, tokenNetwork } = useToken()
-  const { myPubKey, username } = useMainQuery()
+  const { appConfig } = useAppConfig()
+  const { token, hasToken } = useToken()
+  const { myPubKey, username, me } = useMainQuery()
+
+  const bitcoinNetwork = appConfig.galoyInstance.network
 
   useEffect(() => {
     analytics().setUserProperty("hasUsername", username ? "true" : "false")
   }, [username])
+
+  const userId = me?.id
+  useEffect(() => {
+    if (userId) {
+      analytics().setUserId(userId)
+    }
+  }, [userId])
+
+  useEffect(() => {
+    if (bitcoinNetwork) {
+      analytics().setUserProperties({ network: bitcoinNetwork })
+    }
+  }, [bitcoinNetwork])
 
   const { isAppLocked } = useAuthenticationContext()
   const _handleAppStateChange = useCallback(
@@ -148,7 +165,7 @@ export const RootStack: NavigatorType = () => {
         if (hasToken && !isAppLocked) {
           showModalClipboardIfValidPayment({
             client,
-            network: tokenNetwork,
+            network: bitcoinNetwork,
             myPubKey,
             username,
           })
@@ -161,7 +178,7 @@ export const RootStack: NavigatorType = () => {
 
       appState.current = nextAppState
     },
-    [client, hasToken, tokenNetwork, myPubKey, username, isAppLocked],
+    [client, hasToken, bitcoinNetwork, myPubKey, username, isAppLocked],
   )
   const { LL } = useI18nContext()
 
@@ -512,23 +529,15 @@ type TabProps = {
 }
 
 export const PrimaryNavigator: NavigatorType = () => {
-  const { tokenNetwork } = useToken()
   const { LL } = useI18nContext()
   // The cacheId is updated after every mutation that affects current user data (balanace, contacts, ...)
   // It's used to re-mount this component and thus reset what's cached in Apollo (and React)
-
-  React.useEffect(() => {
-    if (tokenNetwork) {
-      analytics().setUserProperties({ network: tokenNetwork })
-    }
-  }, [tokenNetwork])
 
   return (
     <Tab.Navigator
       initialRouteName="MoveMoney"
       screenOptions={{
-        tabBarActiveTintColor:
-          tokenNetwork === "mainnet" ? palette.galoyBlue : palette.orange,
+        tabBarActiveTintColor: palette.galoyBlue,
         tabBarInactiveTintColor: palette.coolGrey,
         tabBarStyle: styles.bottomNavigatorStyle,
         tabBarLabelStyle: { paddingBottom: 6 },

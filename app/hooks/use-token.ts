@@ -1,10 +1,7 @@
 import * as React from "react"
-import { useReactiveVar } from "@apollo/client"
 import jwtDecode from "jwt-decode"
-
-import { saveString } from "../utils/storage"
 import type { INetwork } from "../types/network"
-import { authTokenVar } from "../graphql/client-only-query"
+import { usePersistentStateContext } from "@app/store/persistent-state"
 
 // key used to stored the token within the phone
 export const TOKEN_KEY = "GaloyToken"
@@ -12,7 +9,7 @@ export const TOKEN_KEY = "GaloyToken"
 export const decodeToken: (string) => {
   uid: string
   network: INetwork
-} = (token) => {
+} | null = (token) => {
   try {
     const { uid, network } = jwtDecode<JwtPayload>(token)
     return { uid, network }
@@ -24,35 +21,36 @@ export const decodeToken: (string) => {
 
 type UseTokenReturn = {
   token: string | undefined
-  tokenUid: string | undefined
-  tokenNetwork: INetwork | undefined
   hasToken: boolean
-
-  saveToken: (token: string) => Promise<boolean>
+  saveToken: (token: string) => void
+  clearToken: () => void
 }
 
-export const getAuthorizationHeader = (): string => {
-  const authToken = authTokenVar()
-  return authToken?.token ? `Bearer ${authToken?.token}` : ""
+export const getAuthorizationHeader = (token: string): string => {
+  return `Bearer ${token}`
 }
 
 const useToken = (): UseTokenReturn => {
-  const authToken = useReactiveVar<TokenPayload | null>(authTokenVar) // null means there is no user session
+  const { persistentState, updateState } = usePersistentStateContext()
 
   return React.useMemo(
     () => ({
-      token: authToken?.token,
-      tokenUid: authToken?.uid,
-      tokenNetwork: authToken?.network,
-      hasToken: Boolean(authToken?.token),
-
-      saveToken: async (token: string) => {
-        const { uid, network } = decodeToken(token)
-        authTokenVar({ token, uid, network })
-        return saveString(TOKEN_KEY, token)
+      token: persistentState.galoyAuthToken,
+      hasToken: Boolean(persistentState.galoyAuthToken),
+      saveToken: (token: string) => {
+        updateState((state) => ({
+          ...state,
+          galoyAuthToken: token,
+        }))
+      },
+      clearToken: () => {
+        updateState((state) => ({
+          ...state,
+          galoyAuthToken: "",
+        }))
       },
     }),
-    [authToken],
+    [persistentState.galoyAuthToken, updateState],
   )
 }
 

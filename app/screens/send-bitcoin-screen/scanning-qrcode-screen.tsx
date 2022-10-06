@@ -26,13 +26,13 @@ import { getParams } from "js-lnurl"
 import Reanimated from "react-native-reanimated"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
-import useToken from "../../hooks/use-token"
 import useMainQuery from "@app/hooks/use-main-query"
 import Clipboard from "@react-native-community/clipboard"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import RNQRGenerator from "rn-qr-generator"
 import { BarcodeFormat, useScanBarcodes } from "vision-camera-code-scanner"
 import ImagePicker from "react-native-image-crop-picker"
+import { useAppConfig } from "@app/hooks"
 
 const { width: screenWidth } = Dimensions.get("window")
 const { height: screenHeight } = Dimensions.get("window")
@@ -88,7 +88,8 @@ export const ScanningQRCodeScreen: ScreenType = ({
 }: ScanningQRCodeScreenProps) => {
   const index = useNavigationState((state) => state.index)
   const [pending, setPending] = React.useState(false)
-  const { tokenNetwork } = useToken()
+  const { appConfig } = useAppConfig()
+  const bitcoinNetwork = appConfig.galoyInstance.network
   const { myPubKey } = useMainQuery()
   const { LL } = useI18nContext()
   const devices = useCameraDevices()
@@ -120,7 +121,7 @@ export const ScanningQRCodeScreen: ScreenType = ({
       try {
         const { valid, lnurl } = parsePaymentDestination({
           destination: data,
-          network: tokenNetwork,
+          network: bitcoinNetwork,
           pubKey: myPubKey,
         })
 
@@ -191,7 +192,7 @@ export const ScanningQRCodeScreen: ScreenType = ({
       myPubKey,
       navigation,
       pending,
-      tokenNetwork,
+      bitcoinNetwork,
     ],
   )
 

@@ -10,7 +10,7 @@ import { palette } from "../../theme/palette"
 
 import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
-import { GALOY_PAY_DOMAIN } from "../../constants/support"
+import { GALOY_PAY_DOMAIN } from "../../config/support"
 
 import { bech32 } from "bech32"
 import QRCode from "react-native-qrcode-svg"

@@ -22,6 +22,7 @@ import useLogout from "../../hooks/use-logout"
 import useMainQuery from "@app/hooks/use-main-query"
 import { useAuthenticationContext } from "@app/store/authentication-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { useAppConfig } from "@app/hooks"
 
 const styles = EStyleSheet.create({
   Logo: {
@@ -76,7 +77,9 @@ type Props = {
 
 export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) => {
   const client = useApolloClient()
-  const { hasToken, tokenNetwork } = useToken()
+  const { hasToken } = useToken()
+  const { appConfig } = useAppConfig()
+  const bitcoinNetwork = appConfig.galoyInstance.network
   const { logout } = useLogout()
   const { myPubKey, username } = useMainQuery()
   const { screenPurpose, isPinEnabled } = route.params
@@ -113,7 +116,7 @@ export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) =
     if (hasToken) {
       showModalClipboardIfValidPayment({
         client,
-        network: tokenNetwork,
+        network: bitcoinNetwork,
         myPubKey,
         username,
       })

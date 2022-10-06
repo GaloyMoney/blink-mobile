@@ -18,13 +18,13 @@ const savePersistentState = async (state: PersistentState) => {
   return saveJson(PERSISTENT_STATE_KEY, state)
 }
 
-export type PersistentStateContext = {
+export type PersistentStateContextType = {
   persistentState: PersistentState
   updateState: (update: (state: PersistentState) => PersistentState) => void
   resetState: () => void
 }
 
-export const PersistentStateContext = createContext<PersistentStateContext>(undefined)
+export const PersistentStateContext = createContext<PersistentStateContextType>(undefined)
 
 export const PersistentStateProvider = ({ children }) => {
   const [persistentState, setPersistentState] = React.useState<PersistentState>()
