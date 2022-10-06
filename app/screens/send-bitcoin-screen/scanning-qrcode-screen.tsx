@@ -113,7 +113,7 @@ export const ScanningQRCodeScreen: ScreenType = ({
   }, [cameraPermissionStatus, navigation, requestCameraPermission])
 
   const decodeInvoice = React.useCallback(
-    async (data) => {
+    async (data: string) => {
       if (pending) {
         return
       }
@@ -196,10 +196,8 @@ export const ScanningQRCodeScreen: ScreenType = ({
   )
 
   React.useEffect(() => {
-    if (barcodes.length > 0) {
-      const barcode = barcodes[0]
-      const { data } = barcode.content
-      decodeInvoice(data)
+    if (barcodes.length > 0 && barcodes[0].rawValue) {
+      decodeInvoice(barcodes[0].rawValue)
     }
   }, [barcodes, decodeInvoice])
 
