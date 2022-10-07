@@ -619,6 +619,7 @@ const ptBR: Translation = {
     lnurlNoUsername:
       "Para gerar um endereço lnurl você deve primeiro definir um nome de usuário. Deseja definir um nome de usuário agora?",
     copyClipboardLnurl: "O endereço Lnurl foi copiado na área de transferência",
+    deleteAccount: "Excluir conta",
   },
   Languages: {
     "DEFAULT": "Default (OS)",
@@ -804,6 +805,8 @@ const ptBR: Translation = {
     phone: "Telefone",
     defaultEmailSubject: "Bitcoin Beach Wallet - Suporte",
     defaultSupportMessage: "Ei! Preciso de ajuda com a Bitcoin Beach Wallet",
+    deleteAccount: "Olá. Por favor, exclua minha conta.",
+    deleteAccountEmailSubject: "Solicitação de exclusão de conta: {phoneNumber}",
   },
   lnurl: {
     overLimit: "Você não pode enviar mais do que o valor máximo",
