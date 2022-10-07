@@ -620,6 +620,7 @@ const frCA: Translation = {
     lnurlNoUsername:
       "Pour générer une adresse LNURL, vous devez d'abord définir un nom d'usager. Voulez-vous définir un nom d'usager maintenant?",
     copyClipboardLnurl: "L'adresse a été copiée dans le presse-papiers",
+    deleteAccount: "Supprimer le compte",
   },
   Languages: {
     "DEFAULT": "Default (OS)",
@@ -809,6 +810,8 @@ const frCA: Translation = {
     phone: "Téléphoner",
     defaultEmailSubject: "Bitcoin Beach Wallet - Soutien",
     defaultSupportMessage: "Salut! J'ai besoin d'aide avec Bitcoin Forest Wallet",
+    deleteAccount: "Bonjour. Veuillez supprimer mon compte.",
+    deleteAccountEmailSubject: "Demande de suppression de compte: {phoneNumber}"
   },
   lnurl: {
     overLimit: "Vous ne pouvez pas envoyer plus que le montant maximum",

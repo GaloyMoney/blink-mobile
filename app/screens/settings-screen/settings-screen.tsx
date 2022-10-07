@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Alert, Text, TextStyle } from "react-native"
+import { Alert, Linking, Text } from "react-native"
 import Share from "react-native-share"
 import { Divider, Icon, ListItem } from "react-native-elements"
 import { StackNavigationProp } from "@react-navigation/stack"
@@ -9,7 +9,11 @@ import type { ViewStyleProp } from "react-native/Libraries/StyleSheet/StyleSheet
 import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
 import { palette } from "../../theme/palette"
-import { GALOY_PAY_DOMAIN } from "../../constants/support"
+import {
+  CONTACT_EMAIL_ADDRESS,
+  GALOY_PAY_DOMAIN,
+  WHATSAPP_CONTACT_NUMBER,
+} from "../../constants/support"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
@@ -23,6 +27,7 @@ import ContactModal from "@app/components/contact-modal/contact-modal"
 
 import { copyPaymentInfoToClipboard } from "@app/utils/clipboard"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { openWhatsApp } from "@app/utils/external"
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "settings">
@@ -123,6 +128,26 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
     }
   }
 
+  const deleteAccountAction = async () => {
+    try {
+      await openWhatsApp(WHATSAPP_CONTACT_NUMBER, LL.support.deleteAccount())
+    } catch (err) {
+      // Failed to open whatsapp - trying email
+      console.error(err)
+      Linking.openURL(
+        `mailto:${CONTACT_EMAIL_ADDRESS}?subject=${LL.support.deleteAccountEmailSubject({
+          phoneNumber,
+        })}&body=${LL.support.deleteAccount()}`,
+      ).catch((err) => {
+        // Email also failed to open.  Displaying alert.
+        console.error(err)
+        Alert.alert(LL.common.error(), LL.errors.problemPersists(), [
+          { text: LL.common.ok() },
+        ])
+      })
+    }
+  }
+
   return (
     <SettingsScreenJSX
       hasToken={hasToken}
@@ -143,6 +168,7 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
       logoutAction={logoutAction}
       loadingCsvTransactions={loadingCsvTransactions}
       lnurlAction={lnurlAction}
+      deleteAccountAction={deleteAccountAction}
     />
   )
 }
@@ -159,6 +185,7 @@ type SettingsScreenProps = {
   logoutAction: () => Promise<void>
   lnurlAction: () => void
   loadingCsvTransactions: boolean
+  deleteAccountAction: () => void
 }
 
 type SettingRow = {
@@ -172,6 +199,7 @@ type SettingRow = {
   action?: () => void
   greyed?: boolean
   styleDivider?: ViewStyleProp
+  dangerous?: boolean
 }
 
 export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
@@ -188,6 +216,7 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
     logoutAction,
     lnurlAction,
     loadingCsvTransactions,
+    deleteAccountAction,
   } = params
   const copyToClipBoard = (username) => {
     copyPaymentInfoToClipboard(GALOY_PAY_DOMAIN + username)
@@ -280,6 +309,16 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       greyed: !hasToken,
       hidden: !hasToken,
     },
+    {
+      category: LL.SettingsScreen.deleteAccount(),
+      id: "delete-account",
+      icon: "ios-trash",
+      dangerous: true,
+      action: () => deleteAccountAction(),
+      enabled: hasToken,
+      greyed: !hasToken,
+      hidden: !hasToken,
+    },
   ]
 
   return (
@@ -288,8 +327,15 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
         if (setting.hidden) {
           return null
         }
-        const settingColor = setting.greyed ? palette.midGrey : palette.darkGrey
-        const settingStyle: TextStyle = { color: settingColor }
+        let settingColor
+        let settingStyle
+        if (setting?.dangerous) {
+          settingColor = setting.greyed ? palette.midGrey : palette.red
+          settingStyle = { color: palette.red }
+        } else {
+          settingColor = setting.greyed ? palette.midGrey : palette.darkGrey
+          settingStyle = { color: settingColor }
+        }
 
         return (
           <React.Fragment key={`setting-option-${i}`}>

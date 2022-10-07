@@ -1781,7 +1781,7 @@ type RootTranslation = {
 		 */
 		usernameNowAddress: RequiredParams<'bankName' | 'bankName'>
 		/**
-		 * When you enter a {bankName} username, we will add “@{lnDomain}” to it (e.g maria@{lnDomain}) to make it an address. Your username is now a {bankName} address too.
+		 * When you enter a {bankName} username, we will add "@{lnDomain}" to it (e.g maria@{lnDomain}) to make it an address. Your username is now a {bankName} address too.
 
 	Go to your {bankName} address page from your Settings to learn how to use it or to share it to receive payments.
 		 * @param {string} bankName
@@ -1981,6 +1981,10 @@ type RootTranslation = {
 		 * Lnurl address has been copied in the clipboard
 		 */
 		copyClipboardLnurl: string
+		/**
+		 * Delete Account
+		 */
+		deleteAccount: string
 	}
 	Languages: {
 		/**
@@ -2597,6 +2601,15 @@ type RootTranslation = {
 		 * Hey there! I need some help with Bitcoin Beach Wallet
 		 */
 		defaultSupportMessage: string
+		/**
+		 * Hello.  Please delete my account.
+		 */
+		deleteAccount: string
+		/**
+		 * Account deletion request: {phoneNumber}
+		 * @param {string} phoneNumber
+		 */
+		deleteAccountEmailSubject: RequiredParams<'phoneNumber'>
 	}
 	lnurl: {
 		/**
@@ -4374,7 +4387,7 @@ export type TranslationFunctions = {
 		 */
 		usernameNowAddress: (arg: { bankName: string }) => LocalizedString
 		/**
-		 * When you enter a {bankName} username, we will add “@{lnDomain}” to it (e.g maria@{lnDomain}) to make it an address. Your username is now a {bankName} address too.
+		 * When you enter a {bankName} username, we will add "@{lnDomain}" to it (e.g maria@{lnDomain}) to make it an address. Your username is now a {bankName} address too.
 
 	Go to your {bankName} address page from your Settings to learn how to use it or to share it to receive payments.
 		 */
@@ -4559,6 +4572,10 @@ export type TranslationFunctions = {
 		 * Lnurl address has been copied in the clipboard
 		 */
 		copyClipboardLnurl: () => LocalizedString
+		/**
+		 * Delete Account
+		 */
+		deleteAccount: () => LocalizedString
 	}
 	Languages: {
 		/**
@@ -5166,6 +5183,14 @@ export type TranslationFunctions = {
 		 * Hey there! I need some help with Bitcoin Beach Wallet
 		 */
 		defaultSupportMessage: () => LocalizedString
+		/**
+		 * Hello.  Please delete my account.
+		 */
+		deleteAccount: () => LocalizedString
+		/**
+		 * Account deletion request: {phoneNumber}
+		 */
+		deleteAccountEmailSubject: (arg: { phoneNumber: string }) => LocalizedString
 	}
 	lnurl: {
 		/**
