@@ -29,7 +29,7 @@ import { AndroidBottomSpace } from "./android-bottom-spacing"
 import { eng } from "@app/constants/en"
 import PhoneInput from "react-native-phone-number-input"
 import { translateUnknown as translate } from "@galoymoney/client"
-import { setTempStore } from "@app/redux/reducers/store-reducer"
+import { setTempPost } from "@app/redux/reducers/store-reducer"
 import useMainQuery from "@app/hooks/use-main-query"
 const { width, height } = Dimensions.get("window")
 const IMAGE_WIDTH = width - 30 * 2
@@ -39,13 +39,13 @@ interface Props {
 }
 export const AddContactScreen: React.FC<Props> = ({ navigation }) => {
   const dispatch = useDispatch()
-  const name = useSelector((state: RootState) => state.storeReducer?.tempStore?.name)
-  const tempPost = useSelector((state: RootState) => state.storeReducer?.tempStore)
+  const name = useSelector((state: RootState) => state.storeReducer?.tempPost?.name)
+  const tempPost = useSelector((state: RootState) => state.storeReducer?.tempPost)
   const location = useSelector(
-    (state: RootState) => state.storeReducer?.tempStore?.location,
+    (state: RootState) => state.storeReducer?.tempPost?.location,
   )
   const thumbnail = useSelector(
-    (state: RootState) => state.storeReducer?.tempStore?.mainImageUrl,
+    (state: RootState) => state.storeReducer?.tempPost?.mainImageUrl,
   )
   const [phone, setPhone] = useState("")
   const [email, setEmail] = useState("")
@@ -149,7 +149,7 @@ export const AddContactScreen: React.FC<Props> = ({ navigation }) => {
           <FooterCreatePost
             onPress={() => {
               dispatch(
-                setTempStore({
+                setTempPost({
                   ...tempPost,
                   email: email || "TestMail@gmail.com",
                   phone,

@@ -13,7 +13,6 @@ export const GET_POSTS = gql`
     getMarketplacePosts(getMarketplacePostsInput: { limit: 100 }) {
       _id
       address
-      categoryId
       createdAt
       description
       imagesUrls
@@ -23,22 +22,49 @@ export const GET_POSTS = gql`
       mainImageUrl
       name
       openHours
-      price
       rating
       status
       updatedAt
       userId
+      tags {
+        _id
+        name
+      }
+      hidePhoneNumber
     }
   }
 `
 
-export const FIND_TAGS = gql`
-query marketplaceAutoCompleteTag ($autoCompleteTagInput: AutoCompleteTagInput!) {
-    marketplaceAutoCompleteTag (autoCompleteTagInput: $autoCompleteTagInput) {
-        _id
-        createdAt
-        name
-        updatedAt
-    }
+export const AUTO_COMPLETE_TAGS = gql`
+query marketplaceAutoCompleteTag($name: String!) {
+  marketplaceAutoCompleteTag(
+    autoCompleteTagInput: { name: $name }
+  ) {
+    _id
+    name
+    createdAt
+    updatedAt
+  }
+}
+`
+export const GET_TAGS = gql`
+query{
+  getMarketplaceTags(getMarketPlaceTagsInput:{}){   
+      _id,
+      name,
+      createdAt,
+      updatedAt
+  }
+}
+`
+
+export const AUTO_COMPLETE_LOCATION = gql`
+query googleMapAutoComplete($name: String!) {
+  googleMapAutoComplete(
+    name: $name 
+  ) {
+    id
+    name 
+  }
 }
 `

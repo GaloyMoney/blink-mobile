@@ -58,6 +58,7 @@ const TextInputComponent = (props: Props, ref) => {
     textField,
     disabled,
     keyboardType,
+    rightComponent
   } = props
   let titleRef = useRef(null)
   let inputRef = useRef(null)
@@ -112,6 +113,7 @@ const TextInputComponent = (props: Props, ref) => {
           {title}
         </Text>
       )}
+      {rightComponent?rightComponent():null}
     </TouchableOpacity>
   )
 }

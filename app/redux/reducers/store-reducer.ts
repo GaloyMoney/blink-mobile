@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"
 import type { PayloadAction } from "@reduxjs/toolkit"
+import { MarketplaceTag } from "@app/constants/model"
 
 export interface PostAttributes {
   _id: string
@@ -12,6 +13,7 @@ export interface PostAttributes {
     lat: number
     long: number
   }
+  tags:MarketplaceTag[]|[]
   mainImageUrl: string
   name: string
   openHours?: string
@@ -24,13 +26,13 @@ export interface PostAttributes {
 }
 interface StoreReducer {
   value: number
-  tempStore: PostAttributes
+  tempPost: PostAttributes
   postList: PostAttributes[]
 }
 
 const initialState = {
   value: 0,
-  tempStore: null,
+  tempPost: null,
   postList: [],
 } as StoreReducer
 
@@ -38,11 +40,11 @@ const storeSlice = createSlice({
   name: "store",
   initialState,
   reducers: {
-    setTempStore(state, action: PayloadAction<PostAttributes>) {
-      state.tempStore = { ...state.tempStore, ...action.payload }
+    setTempPost(state, action: PayloadAction<PostAttributes>) {
+      state.tempPost = { ...state.tempPost, ...action.payload }
     },
     clearTempStore(state) {
-      state.tempStore = null
+      state.tempPost = null
     },
     setPostList(state, action: PayloadAction<PostAttributes[]>) {
       state.postList = action.payload
@@ -50,5 +52,5 @@ const storeSlice = createSlice({
   },
 })
 
-export const { setTempStore, clearTempStore, setPostList } = storeSlice.actions
+export const { setTempPost, clearTempStore, setPostList } = storeSlice.actions
 export default storeSlice.reducer

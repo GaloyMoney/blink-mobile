@@ -28,9 +28,6 @@ export const VerticalDataComponent: React.FC<Props> = ({ product, onItemPress })
         }
       />
       <View style={{ padding: 10 }}>
-        <Text style={{ fontFamily: typography.bold, fontSize: fontSize.font14 }}>
-          $ {product.price}
-        </Text>
         <Text
           style={{
             fontFamily: typography.regular,

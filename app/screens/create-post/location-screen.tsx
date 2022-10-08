@@ -19,7 +19,7 @@ import { RootState } from "@app/redux"
 import { FooterCreatePost } from "./footer"
 import { MarketPlaceParamList } from "@app/navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { setTempStore } from "@app/redux/reducers/store-reducer"
+import { setTempPost } from "@app/redux/reducers/store-reducer"
 import MapView, { Marker } from "react-native-maps"
 import Geolocation from "@react-native-community/geolocation"
 import CurrentLocation from "@asset/svgs/current-location.svg"
@@ -35,13 +35,13 @@ interface Props {
 }
 export const AddLocationScreen: React.FC<Props> = ({ navigation }) => {
   const dispatch = useDispatch()
-  const name = useSelector((state: RootState) => state.storeReducer?.tempStore?.name)
-  const tempPost = useSelector((state: RootState) => state.storeReducer?.tempStore)
+  const name = useSelector((state: RootState) => state.storeReducer?.tempPost?.name)
+  const tempPost = useSelector((state: RootState) => state.storeReducer?.tempPost)
   const location = useSelector(
-    (state: RootState) => state.storeReducer?.tempStore?.location,
+    (state: RootState) => state.storeReducer?.tempPost?.location,
   )
   const thumbnail = useSelector(
-    (state: RootState) => state.storeReducer?.tempStore?.mainImageUrl,
+    (state: RootState) => state.storeReducer?.tempPost?.mainImageUrl,
   )
 
   const { phoneNumber } = useMainQuery()
@@ -61,7 +61,7 @@ export const AddLocationScreen: React.FC<Props> = ({ navigation }) => {
       (pos) => {
         const crd = pos.coords
         dispatch(
-          setTempStore({
+          setTempPost({
             ...tempPost,
             location: {
               lat: crd.latitude,
@@ -118,7 +118,7 @@ export const AddLocationScreen: React.FC<Props> = ({ navigation }) => {
                 draggable
                 onDragEnd={({ nativeEvent: { coordinate } }) => {
                   dispatch(
-                    setTempStore({
+                    setTempPost({
                       ...tempPost,
                       location: {
                         lat: coordinate.latitude,
@@ -130,13 +130,14 @@ export const AddLocationScreen: React.FC<Props> = ({ navigation }) => {
               />
             </MapView>
             <Text style={[styles.title, { marginTop: 20 }]}>
-              {t("use_my_current_position")}
+              {t("select_your_address")}
             </Text>
             <Row
               containerStyle={styles.rowContainer}
+              onPress={()=>{}}
             >
               <CurrentLocation fill={palette.orange} />
-              <Text style={[styles.location, { marginLeft: 10 }]}>{getLocation()}</Text>
+              <Text style={[styles.location, { marginLeft: 10 }]}>{}</Text>
             </Row>
             <AndroidBottomSpace />
           </ScrollView>
@@ -144,7 +145,7 @@ export const AddLocationScreen: React.FC<Props> = ({ navigation }) => {
             disableSkip
             onPress={() => {
               dispatch(
-                setTempStore({
+                setTempPost({
                   ...tempPost,
                   email: "TestMail@gmail.com",
                   phone: phoneNumber,

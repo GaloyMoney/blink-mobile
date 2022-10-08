@@ -1,8 +1,14 @@
+export const TemplateMarketPlaceTag ={
+  _id:'',
+  createdAt: '',
+  name: '',
+  updatedAt: '',
+}
 export interface MarketplaceTag {
-    _id?: string
-    createdAt?: string
+    _id: string
+    createdAt: string
     name: string
-    updatedAt?: string
+    updatedAt: string
   }
   enum POST_STATUS {
     APPROVED="APPROVED",

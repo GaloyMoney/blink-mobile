@@ -3,23 +3,24 @@ import { ApolloClient, gql } from "@apollo/client"
 export const CREATE_POST = gql`
   mutation createPost(
     $address: String
-    $categoryId: String!
     $description: String!
     $email: String
     $imagesUrls: [String!]
     $latitude: Float!
     $longitude: Float!
-    $mainImageUrl: String
+    $mainImageUrl: String!
     $name: String!
     $openHours: String
     $phoneNumber: String
-    $price: Float!
     $userId: String!
+    
+    $tagsIds: [String!]
+    $hidePhoneNumber: Boolean!
+
   ) {
     createMarketplacePost(
       createMarketplacePostInput: {
         address: $address
-        categoryId: $categoryId
         description: $description
         email: $email
         imagesUrls: $imagesUrls
@@ -29,11 +30,13 @@ export const CREATE_POST = gql`
         name: $name
         openHours: $openHours
         phoneNumber: $phoneNumber
-        price: $price
         userId: $userId
+        hidePhoneNumber: $hidePhoneNumber
+        tagsIds: $tagsIds
       }
     ) {
       status
+      _id
     }
   }
 `

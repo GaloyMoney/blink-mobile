@@ -6,6 +6,7 @@ import {
   Dimensions,
   Image,
   ImageBackground,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -35,31 +36,38 @@ import { createPost } from "@app/graphql/second-graphql-client"
 import { LoadingComponent } from "@app/components/loading-component"
 import { CreatePostSuccessModal } from "@app/components/create-post-success-modal"
 import { useTranslation } from "react-i18next"
+import { TagComponent } from "@app/components/tag-components"
 const { width, height } = Dimensions.get("window")
 interface Props {
   navigation: StackNavigationProp<MarketPlaceParamList>
 }
-const DetailComponent = ({editable}) => {
-  const tempStore = useSelector((state: RootState) => state.storeReducer?.tempStore)
-  const [isHidePhone,setIsHidePhone]=useState(false)
-  const {t}=useTranslation()
+const DetailComponent = ({editable,isHidePhone,setIsHidePhone}) => {
+  const tempPost = useSelector((state: RootState) => state.storeReducer?.tempPost)
+  const { t } = useTranslation()
+  const renderTags = ()=>{
+    return tempPost?.tags?.map((tag)=>{
+      return <TagComponent title={tag.name} key={tag.name} style={{marginRight:10}}/>
+    })
+  }
   return (
     <View style={{ width: "100%" }}>
-      <Row>
-        <View style={detailStyle.rowItem}>
-          <Text style={detailStyle.label}>{t("price")}</Text>
-          <Text style={detailStyle.value}>$ {tempStore?.price || 0}</Text>
-        </View>
-      </Row>
+      <View style={detailStyle.rowItem}>
+        <Text style={detailStyle.label}>{t("tags")}</Text> 
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}
+        style={{marginTop:10}}
+        >
+          {renderTags()}
+        </ScrollView>
+      </View>
       <Text style={detailStyle.label}>{t("description")}</Text>
-      <Text style={detailStyle.value}>{tempStore?.description}</Text>
+      <Text style={detailStyle.value}>{tempPost?.description}</Text>
 
       <View style={detailStyle.rowItem}>
         <Row hc>
           <Text style={[detailStyle.label,{marginRight:5}]}>{t("phone_number")}</Text>
           {editable&&(<TouchableOpacity onPress={()=>setIsHidePhone(!isHidePhone)}>{isHidePhone ? <EyeOnSvg/> :<EyeOffSvg/>}</TouchableOpacity>)}
         </Row>
-        <Text style={detailStyle.value}>{isHidePhone?'---------':tempStore?.phone}</Text>
+        <Text style={detailStyle.value}>{isHidePhone?'---------':tempPost?.phone}</Text>
       </View>
     </View>
   )
@@ -76,18 +84,23 @@ const detailStyle = StyleSheet.create({
 })
 export const StoreDetailScreen: React.FC<Props> = ({ navigation }) => {
   const route = useRoute<RouteProp<RootStackParamList, "StoreDetail">>()
+
+  const [isHidePhone, setIsHidePhone] = useState(false)
   const editable = route.params.editable
   const [store, setStore] = useState<any>({})
   const [isLoading, setIsLoading] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
-  const tempStore = useSelector((state: RootState) => state.storeReducer?.tempStore)
+  const tempPost = useSelector((state: RootState) => state.storeReducer?.tempPost)
   const thumbnail = useSelector(
-    (state: RootState) => state.storeReducer?.tempStore?.mainImageUrl,
+    (state: RootState) => state.storeReducer?.tempPost?.mainImageUrl,
   )
   const {t}=useTranslation()
   const formatRequestObject = (tempPost) => {
+
     return {
       ...tempPost,
+      hidePhoneNumber:isHidePhone,
+      tagsIds:tempPost.tags?.map(item=>item._id),
       latitude: tempPost.location.lat,
       longitude: tempPost.location.long,
       categoryId: tempPost.category,
@@ -100,8 +113,8 @@ export const StoreDetailScreen: React.FC<Props> = ({ navigation }) => {
   const onSubmit = async () => {
     try {
       setIsLoading(true)
-      let request = formatRequestObject(tempStore)
-      console.log("store: ", tempStore, request)
+      let request = formatRequestObject(tempPost)
+      console.log("store: ", request)
       let res = await createPost(request)
 
       setIsVisible(true)
@@ -112,7 +125,7 @@ export const StoreDetailScreen: React.FC<Props> = ({ navigation }) => {
     }
   }
   const getUri = ()=>{
-    if(store) return  tempStore.mainImageUrl ? { uri: tempStore.mainImageUrl } : images.landscapePlaceholderImage
+    if(store) return  tempPost.mainImageUrl ? { uri: tempPost.mainImageUrl } : images.landscapePlaceholderImage
     return thumbnail ? { uri: thumbnail } : images.landscapePlaceholderImage
   }
   const renderContent =()=>{
@@ -120,7 +133,7 @@ export const StoreDetailScreen: React.FC<Props> = ({ navigation }) => {
       <View style={styles.contentContainer}>
         <Row containerStyle={styles.titleRow}>
           <Text style={[styles.title,{flex:1,paddingRight:10}]}>{store.name}</Text>
-          <TouchableOpacity onPress={()=>{openMap(tempStore.location.lat,tempStore.location.long)}}>
+          <TouchableOpacity onPress={()=>{openMap(tempPost.location.lat,tempPost.location.long)}}>
             <Row containerStyle={styles.locationButtonContainer}>
               <Text style={styles.locationText}>{t("location")}</Text>
               <View style={styles.locationSvgContainer}>
@@ -134,7 +147,7 @@ export const StoreDetailScreen: React.FC<Props> = ({ navigation }) => {
           <Text style={styles.addressText}>{getLocation(store.location)}</Text>
         </Row>
         
-        <DetailComponent editable={editable}/>
+        <DetailComponent editable={editable} setIsHidePhone={setIsHidePhone} isHidePhone={isHidePhone}/>
 
         {editable ? (
           <TouchableOpacity
@@ -185,7 +198,7 @@ export const StoreDetailScreen: React.FC<Props> = ({ navigation }) => {
     if (route.params.storeInfor) {
       setStore(route.params.storeInfor)
     } else {
-      setStore(tempStore)
+      setStore(tempPost)
     }
   }, [])
   return (

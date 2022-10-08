@@ -4,6 +4,7 @@ import { PostAttributes } from "@app/redux/reducers/store-reducer"
 import { CREATE_POST } from "../mutations/marketplace-mutation"
 import PuravidaClient from "./client"
 import { getMarketPlaceCategoriesHandler, getPostsHandler } from "./handler"
+export * from './market-place'
 export const getMartketPlaceCategories = async (): Promise<
   { _id: string; name: string }[]
 > => {

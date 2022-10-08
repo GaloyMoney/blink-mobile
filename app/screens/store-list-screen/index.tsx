@@ -31,7 +31,7 @@ import SpoonSvg from "@asset/svgs/spoon.svg"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "@app/redux"
 import {
-  setTempStore,
+  setTempPost,
   PostAttributes,
   setPostList,
 } from "@app/redux/reducers/store-reducer"
@@ -67,11 +67,13 @@ export const StoreListScreen: ScreenType = ({ navigation }: Props) => {
   })
 
   const renderData = ({ item, index }: { item: PostAttributes; index: number }) => {
+    console.log('item: ',item);
+    
     return (
       <LandscapeDataComponent
         product={item}
         onItemPress={() => {
-          dispatch(setTempStore(item))
+          dispatch(setTempPost(item))
           navigation.navigate("StoreDetail", { editable: false, storeInfor: item })
         }}
         onLocationPress={() => {

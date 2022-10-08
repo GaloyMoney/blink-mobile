@@ -14,7 +14,7 @@ import { AddLocationScreen } from "@app/screens/create-post/location-screen"
 import { MarketPlace } from "@app/screens/market-place-screen/market-place-screen"
 import { MapScreen } from "@app/screens/full-view-map-screen/map-screen"
 import { AddContactScreen } from "@app/screens/create-post/add-contact-screen"
-import { StoreDetailScreen } from "@app/screens/store-detail-screen"
+import { StoreDetailScreen } from "@app/screens/post-detail-screen"
 import { StoreListScreen } from "@app/screens/store-list-screen"
 
 const MarketPlaceStack = createStackNavigator<MarketPlaceParamList>()

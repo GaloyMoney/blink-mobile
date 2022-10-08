@@ -9,7 +9,7 @@ import MapView, { Callout, Marker } from "react-native-maps"
 import Geolocation from "@react-native-community/geolocation"
 import { HeaderComponent } from "@app/components/header"
 import { useDispatch, useSelector } from "react-redux"
-import { setTempStore } from "@app/redux/reducers/store-reducer"
+import { setTempPost } from "@app/redux/reducers/store-reducer"
 import { getLocation } from "@app/utils/helper"
 import { RootState } from "@app/redux"
 const { width, height } = Dimensions.get("window")
@@ -22,7 +22,7 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
   const dispatch = useDispatch()
 
   const location = useSelector(
-    (state: RootState) => state.storeReducer?.tempStore?.location,
+    (state: RootState) => state.storeReducer?.tempPost?.location,
   )
   const [position, setPosition] = useState({
     latitude: 10,
@@ -38,7 +38,7 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
         console.log("pos: ", pos)
 
         dispatch(
-          setTempStore({
+          setTempPost({
             location: {
               lat: crd.latitude,
               long: crd.longitude,
@@ -74,7 +74,7 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
           draggable={true}
           onDragEnd={({ nativeEvent: { coordinate } }) => {
             dispatch(
-              setTempStore({
+              setTempPost({
                 location: {
                   lat: coordinate.latitude,
                   long: coordinate.longitude,

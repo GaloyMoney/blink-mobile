@@ -32,5 +32,7 @@
   "you_must_add_at_least_one_image":"You must add at least one image",
   "enter_your_own_tags":"Enter your own tags",
   "tags":"Tags",
-  "your_selected_tag":"Your selected tag"
+  "your_selected_tag":"Your selected tag",
+
+  "select_your_address":"Select your address"
 }

@@ -65,7 +65,7 @@ import MarketPlaceSvg from "../assets/svgs/market-place.svg"
 import { MarketPlaceStacks } from "./marketplace-stack"
 import { StoreListScreen } from "@app/screens/store-list-screen"
 import { StoreListViewScreen } from "@app/screens/store-list-screen/list-view-screen"
-import { StoreDetailScreen } from "@app/screens/store-detail-screen"
+import { StoreDetailScreen } from "@app/screens/post-detail-screen"
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
 PushNotification.configure({
   // (optional) Called when Token is generated (iOS and Android)

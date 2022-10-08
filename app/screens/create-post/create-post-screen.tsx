@@ -2,6 +2,7 @@ import * as React from "react"
 import { useState } from "react"
 // eslint-disable-next-line react-native/split-platform-components
 import {
+  ActivityIndicator,
   Dimensions,
   FlatList,
   Image,
@@ -17,8 +18,8 @@ import { color, fontSize, GlobalStyles, palette, typography } from "@app/theme"
 import { HeaderComponent } from "@app/components/header"
 import { images } from "@app/assets/images"
 import { eng } from "@app/constants/en"
-import { useDispatch } from "react-redux"
-import { setTempStore } from "@app/redux/reducers/store-reducer"
+import { useDispatch, useSelector } from "react-redux"
+import { setTempPost } from "@app/redux/reducers/store-reducer"
 import { MarketPlaceParamList } from "@app/navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
 import TextInputComponent from "@app/components/text-input-component"
@@ -26,7 +27,10 @@ import { LoadingComponent } from "@app/components/loading-component"
 import { useTranslation } from "react-i18next"
 import { Row } from "@app/components/row"
 import XSvg from '@asset/svgs/x.svg'
-import { MarketplaceTag } from "@app/puravida-src/constant/model"
+import { MarketplaceTag, TemplateMarketPlaceTag } from "@app/constants/model"
+import { autoCompleteTags, getTags } from "@app/graphql/second-graphql-client"
+import { RootState } from "@app/redux"
+import { TagComponent } from "@app/components/tag-components"
 const { width, height } = Dimensions.get("window")
 const FAKE_TAGS = [
   {
@@ -98,12 +102,17 @@ export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  const [tagLoading, setTagLoading] = useState(false)
+  const tempPost = useSelector((state:RootState)=>state.storeReducer.tempPost)
   const [tag, setTag] = useState("")
 
   const [nameError, setNameError] = useState("")
   const [descriptionError, setDescriptionError] = useState("")
+  const [filteredTags, setFilteredTags] = useState<MarketplaceTag[]>([])
   const [selectedTags, setSelectedTags] = useState<MarketplaceTag[]>([])
+  const timeoutRef= React.useRef(null)
   const { t } = useTranslation()
+
   const isCorrectInput = () => {
     let nameValid = false
     let descriptionValid = false
@@ -127,10 +136,11 @@ export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
   }
   const onNext = () => {
     if (!isCorrectInput()) return
-    dispatch(setTempStore({ name, description }))
+    dispatch(setTempPost({ ...tempPost, name, description, tags: selectedTags }))
     navigation.navigate("AddImage")
   }
   const addTag = (item: MarketplaceTag) => {
+    if(selectedTags.findIndex(tag=>tag.name===item.name)!==-1) return
     const newTags = [...selectedTags]
     if (newTags.length >= 5) newTags.pop()
     newTags.unshift(item)
@@ -142,15 +152,37 @@ export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
     newTags.splice(index, 1)
     setSelectedTags(newTags)
   }
-  React.useEffect(() => {
-    const initData = async () => {
-      setIsLoading(true)
-      try {
+  const debounceFindTags = (text: string) => {
 
-      } catch (error) {
-      } finally {
-        setIsLoading(false)
-      }
+    timeoutRef.current = setTimeout(() => {
+      setTagLoading(true)
+      autoCompleteTags(text).then(data => {
+        setFilteredTags(data)
+      }).finally(() => {
+        setTagLoading(false)
+      })
+    }, 500)
+  }
+  const onChangeTags = (text: string) => {
+    setTag(text)
+    if (!text) {
+      return clearTimeout(timeoutRef.current||0)
+    }
+    if (timeoutRef.current != null) {
+      clearTimeout(timeoutRef.current)
+      debounceFindTags(text)
+    }else{
+      debounceFindTags(text)
+    }
+  }
+
+  React.useEffect(() => {
+    const initData = () => {
+      setIsLoading(true)
+      getTags()
+        .then(tags => setFilteredTags(tags))
+        .finally(() => setIsLoading(false))
+
     }
     initData()
   }, [])
@@ -180,7 +212,6 @@ export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
             <View style={{ paddingHorizontal: 30, width: "100%" }}>
               <Text style={styles.labelStyle}>{t("name")}</Text>
               <TextInputComponent
-                // title={t("name")}
                 onChangeText={setName}
                 value={name}
                 placeholder={"Burger"}
@@ -197,44 +228,48 @@ export const CreatePostScreen: React.FC<Props> = ({ navigation }) => {
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 renderItem={({ item, index }) => {
-                  return <Row
-                    containerStyle={{ paddingVertical: 3, paddingHorizontal: 7, borderRadius: 12, backgroundColor: palette.lightOrange }}
-                    hc
-                  >
-                    <Text style={{ color: 'white' }}>{item.name}</Text>
-                    <TouchableOpacity
-                      onPress={() => removeTag(index)}
-                      hitSlop={{ right: 5, left: 5, bottom: 5, top: 5 }}
-                    >
-                      <XSvg height={15} />
-                    </TouchableOpacity>
-                  </Row>
+                  return <TagComponent
+                    title={item.name}
+                    onClear={() => removeTag(index)}
+                    disabled
+                  />
                 }}
                 ItemSeparatorComponent={() => <View style={{ width: 12 }} />}
                 keyExtractor={(item, index) => item._id + '_' + index}
               />
+              {selectedTags?.length>=5 ? (
+                <Text style={styles.errorText}>{"You can select up to 5 tags."}</Text>
+              ) : null}
               <TextInputComponent
                 containerStyle={{ marginTop: selectedTags?.length ? 12 : 0 }}
-                onChangeText={setTag}
+                onChangeText={(text)=>onChangeTags(text)}
                 value={tag}
                 placeholder={t("enter_your_own_tags")}
                 isError={false}
-                onSubmitEditing={() => {
-                  addTag({ name: tag })
+                
+                rightComponent={() => {
+                  const isTagNotFound = (tag && !tagLoading && !filteredTags?.length)
+                  return isTagNotFound?<Text style={[styles.text, { color: palette.orange }]}
+                  onPress={()=>{
+                  addTag({...TemplateMarketPlaceTag, name: tag })
                   setTag('')
+                  }}
+                  >Add</Text>:null
                 }}
               />
               <FlatList
-                data={FAKE_TAGS}
+                data={filteredTags}
                 horizontal
                 showsHorizontalScrollIndicator={false}
+                ListEmptyComponent={()=>{
+                  if(tagLoading) return <ActivityIndicator color={palette.orange}/>
+                  return tag?<Text>Can't find tag? Add your own</Text>:null
+                }}
                 renderItem={({ item }) => {
-                  return <TouchableOpacity
-                    style={{ paddingVertical: 3, paddingHorizontal: 7, borderRadius: 12, backgroundColor: palette.lightOrange }}
-                    onPress={() => addTag(item)}
-                  >
-                    <Text style={{ color: 'white' }}>{item.name}</Text>
-                  </TouchableOpacity>
+                  return <TagComponent
+                  title={item.name}  
+                  onPress={() => addTag(item)}
+                />
                 }}
                 style={{ marginTop: 12 }}
                 ItemSeparatorComponent={() => <View style={{ width: 12 }} />}

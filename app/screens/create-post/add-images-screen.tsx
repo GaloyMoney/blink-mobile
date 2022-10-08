@@ -26,7 +26,7 @@ import ImagePicker from "react-native-image-crop-picker"
 import { FooterCreatePost } from "./footer"
 import { MarketPlaceParamList } from "@app/navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { setTempStore } from "@app/redux/reducers/store-reducer"
+import { setTempPost } from "@app/redux/reducers/store-reducer"
 
 import { ReactNativeFile } from "apollo-upload-client"
 import { gql, useMutation } from "@apollo/client"
@@ -55,8 +55,8 @@ const UPLOAD_IMAGE = gql`
 `
 export const AddImageScreen: React.FC<Props> = ({ navigation }) => {
   const dispatch = useDispatch()
-  const name = useSelector((state: RootState) => state.storeReducer?.tempStore?.name)
-  const tempPost = useSelector((state: RootState) => state.storeReducer?.tempStore)
+  const name = useSelector((state: RootState) => state.storeReducer?.tempPost?.name)
+  const tempPost = useSelector((state: RootState) => state.storeReducer?.tempPost)
   const [pickedImages, setPickedImages] = useState(["", "", "", "", "", ""])
   const [remoteUrls, setRemoteUrls] = useState(["", "", "", "", "", ""])
   const [thumbnail, setThumbnail] = useState("")
@@ -175,6 +175,19 @@ export const AddImageScreen: React.FC<Props> = ({ navigation }) => {
       handlePickSingle()
     }
   }
+
+  React.useEffect(() => {
+    if (tempPost.imagesUrls?.length) {
+      const selectedImages = new Array(5).fill('')
+      pickedImages.forEach((_,index) =>{
+        selectedImages[index] = tempPost.imagesUrls?.[index] ||''
+      }) 
+      setRemoteUrls(selectedImages)
+      setPickedImages(selectedImages)
+      setThumbnail(selectedImages[0])
+    }
+  }, [])
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Screen style={styles.container} preset="fixed">
@@ -239,11 +252,9 @@ export const AddImageScreen: React.FC<Props> = ({ navigation }) => {
           <FooterCreatePost
             disableSkip
             onPress={() => {
-              console.log('getMainImgUrl(): ',getMainImgUrl());
-              
-              if(!getMainImgUrl())return Alert.alert(t("you_must_add_at_least_one_image"))
+              // if(!getMainImgUrl())return Alert.alert(t("you_must_add_at_least_one_image"))
               dispatch(
-                setTempStore({
+                setTempPost({
                   ...tempPost,
                   imagesUrls: remoteUrls.filter((url) => url != ""),
                   mainImageUrl: getMainImgUrl(),
