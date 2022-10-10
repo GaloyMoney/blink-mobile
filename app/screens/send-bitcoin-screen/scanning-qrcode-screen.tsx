@@ -145,6 +145,16 @@ export const ScanningQRCodeScreen: ScreenType = ({
                   })
                 }
                 break
+              case "withdrawRequest":
+                navigation.navigate("redeemBitcoin", {
+                  callback: lnurlParams.callback,
+                  domain: lnurlParams.domain,
+                  k1: lnurlParams.k1,
+                  defaultDescription: lnurlParams.defaultDescription,
+                  minWithdrawable: lnurlParams.minWithdrawable,
+                  maxWithdrawable: lnurlParams.maxWithdrawable,
+                })
+                break
               default:
                 Alert.alert(
                   LL.ScanningQRCodeScreen.invalidTitle(),

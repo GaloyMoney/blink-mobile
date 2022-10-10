@@ -1636,6 +1636,40 @@ type RootTranslation = {
 		 */
 		invoiceAmount: string
 	}
+	RedeemBitcoinScreen: {
+		/**
+		 * Redeem Bitcoin
+		 */
+		title: string
+		/**
+		 * Redeem for USD
+		 */
+		usdTitle: string
+		/**
+		 * Failed to generate invoice. Please contact support if this problem persists.
+		 */
+		error: string
+		/**
+		 * Failed to submit withdrawal request. Please contact support if this problem persists.
+		 */
+		redeemingError: string
+		/**
+		 * Failed to submit withdrawal request. Please contact support if this problem persists.
+		 */
+		submissionError: string
+		/**
+		 * Min
+		 */
+		min: string
+		/**
+		 * Max
+		 */
+		max: string
+		/**
+		 * Redeem Bitcoin
+		 */
+		redeemBitcoin: string
+	}
 	ScanningQRCodeScreen: {
 		/**
 		 * We found:
@@ -4233,6 +4267,40 @@ export type TranslationFunctions = {
 		 * Invoice Amount
 		 */
 		invoiceAmount: () => LocalizedString
+	}
+	RedeemBitcoinScreen: {
+		/**
+		 * Redeem Bitcoin
+		 */
+		title: () => LocalizedString
+		/**
+		 * Redeem for USD
+		 */
+		usdTitle: () => LocalizedString
+		/**
+		 * Failed to generate invoice. Please contact support if this problem persists.
+		 */
+		error: () => LocalizedString
+		/**
+		 * Failed to submit withdrawal request. Please contact support if this problem persists.
+		 */
+		redeemingError: () => LocalizedString
+		/**
+		 * Failed to submit withdrawal request. Please contact support if this problem persists.
+		 */
+		submissionError: () => LocalizedString
+		/**
+		 * Min
+		 */
+		min: () => LocalizedString
+		/**
+		 * Max
+		 */
+		max: () => LocalizedString
+		/**
+		 * Update Invoice
+		 */
+		redeemBitcoin: () => LocalizedString
 	}
 	ScanningQRCodeScreen: {
 		/**

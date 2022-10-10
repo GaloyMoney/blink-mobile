@@ -511,6 +511,16 @@ const en: BaseTranslation = {
     setANote: "Set a Note",
     invoiceAmount: "Invoice Amount",
   },
+  RedeemBitcoinScreen: {
+    title: "Redeem Bitcoin",
+    usdTitle: "Redeem for USD",
+    error: "Failed to generate invoice. Please contact support if this problem persists.",
+    redeemingError: "Failed to redeem Bitcoin. Please contact support if this problem persists.",
+    submissionError: "Failed to submit withdrawal request. Please contact support if this problem persists.",
+    min: "Min",
+    max: "Max",
+    redeemBitcoin: "Redeem Bitcoin"
+  },
   ScanningQRCodeScreen: {
     invalidContent:
       "We found:\n\n{found: string}\n\nThis is not a valid Bitcoin address or Lightning invoice",

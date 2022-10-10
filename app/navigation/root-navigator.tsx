@@ -50,6 +50,7 @@ import {
 } from "./stack-param-lists"
 import type { NavigatorType } from "../types/jsx"
 import ReceiveBitcoinScreen from "@app/screens/receive-bitcoin-screen/receive-bitcoin"
+import RedeemBitcoinScreen from "@app/screens/redeem-lnurl-withdrawal-screen/redeem-bitcoin"
 import PushNotification from "react-native-push-notification"
 import useMainQuery from "@app/hooks/use-main-query"
 import { LnurlScreen } from "@app/screens/settings-screen/lnurl-screen"
@@ -341,6 +342,13 @@ export const RootStack: NavigatorType = () => {
         component={ReceiveBitcoinScreen}
         options={{
           title: LL.ReceiveBitcoinScreen.title(),
+        }}
+      />
+      <RootNavigator.Screen
+        name="redeemBitcoin"
+        component={RedeemBitcoinScreen}
+        options={{
+          title: "Redeem BTC",
         }}
       />
       <RootNavigator.Screen

@@ -96,6 +96,14 @@ export type RootStackParamList = {
   receiveBitcoin: {
     receiveCurrency?: WalletCurrency
   }
+  redeemBitcoin: {
+    callback: string
+    domain: string
+    k1: string
+    defaultDescription: string
+    minWithdrawable: number
+    maxWithdrawable: number
+  }
   phoneValidation: undefined
   transactionDetail: TransactionDetail
   transactionHistory: undefined

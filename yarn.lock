@@ -6063,7 +6063,7 @@ create-react-context@0.3.0:
     gud "^1.0.0"
     warning "^4.0.3"
 
-cross-fetch@3.1.5, cross-fetch@^3.0.4:
+cross-fetch@3.1.5, cross-fetch@^3.0.4, cross-fetch@^3.1.5:
   version "3.1.5"
   resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-3.1.5.tgz#e1389f44d9e7ba767907f7af8454787952ab534f"
   integrity sha512-lvb1SBsI0Z7GDwmuid+mU3kWVBwTVUbe7S0H52yaaAdQOXq2YktTCZdlAcNKFzE6QtRz0snpw9bNiPeOIkkQvw==
@@ -10349,10 +10349,10 @@ joi@^17.2.1:
     "@sideway/formula" "^3.0.0"
     "@sideway/pinpoint" "^2.0.0"
 
-js-lnurl@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/js-lnurl/-/js-lnurl-0.3.0.tgz#14d3e1de279a8ccf2a84bb59f4675b75c9742839"
-  integrity sha512-+7RY/22pcglaRiEvBPxlGvQTZF4TuVP2WhDp11UUpIbKQgsqwQMOOE0Iustx9UGj7JZm35e0ez4bfhLAJbj1YA==
+js-lnurl@0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/js-lnurl/-/js-lnurl-0.5.1.tgz#d755a2fbefa5dfd2764d65addee64253c60c6108"
+  integrity sha512-nNGiRInXfjw9EnzF/nfzqMCOeT2fqgyzB3iXuPSxktPa3UGV3HRHuhTSUid+G/GwblZj1o9y27gi6sdZTNO+7Q==
   dependencies:
     "@types/aes-js" "^3.1.1"
     "@types/base64-js" "^1.2.5"
@@ -16827,8 +16827,10 @@ watchpack@^1.7.4:
   resolved "https://registry.yarnpkg.com/watchpack/-/watchpack-1.7.5.tgz#1267e6c55e0b9b5be44c2023aed5437a2c26c453"
   integrity sha512-9P3MWk6SrKjHsGkLT2KHXdQ/9SNkyoJbabxnKOoJepsvJjJG8uYTR3yTPxPQvNDI3w4Nz1xnE0TLHK4RIVe/MQ==
   dependencies:
+    chokidar "^3.4.1"
     graceful-fs "^4.1.2"
     neo-async "^2.5.0"
+    watchpack-chokidar2 "^2.0.1"
   optionalDependencies:
     chokidar "^3.4.1"
     watchpack-chokidar2 "^2.0.1"

@@ -531,6 +531,16 @@ const es: Translation = {
     setANote: "Establecer una nota",
     invoiceAmount: "Monto de la factura",
   },
+  RedeemBitcoinScreen: {
+    title: "Redeem Bitcoin",
+    usdTitle: "Redeem for USD",
+    error: "Failed to generate invoice. Please contact support if this problem persists.",
+    redeemingError: "Failed to redeem Bitcoin. Please contact support if this problem persists.",
+    submissionError: "Failed to submit withdrawal request. Please contact support if this problem persists.",
+    min: "Min",
+    max: "Max",
+    redeemBitcoin: "Redeem Bitcoin"
+  },
   ScanningQRCodeScreen: {
     invalidContent:
       "Encontramos lo siguiente:\n\n{{found}}\n\nEsto no es una dirección Bitcoin o factura Lightning válida",

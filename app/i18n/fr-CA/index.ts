@@ -521,6 +521,16 @@ const frCA: Translation = {
     setANote: "Ajouter une note",
     invoiceAmount: "Montant de la facture",
   },
+  RedeemBitcoinScreen: {
+    title: "Redeem Bitcoin",
+    usdTitle: "Redeem for USD",
+    error: "Failed to generate invoice. Please contact support if this problem persists.",
+    redeemingError: "Failed to redeem Bitcoin. Please contact support if this problem persists.",
+    submissionError: "Failed to submit withdrawal request. Please contact support if this problem persists.",
+    min: "Min",
+    max: "Max",
+    redeemBitcoin: "Redeem Bitcoin"
+  },
   ScanningQRCodeScreen: {
     invalidContent:
       "Nous avons trouvé:\n\n{{found}}\n\nCeci n'est pas une adresse valide pour une facture Lightning.",
