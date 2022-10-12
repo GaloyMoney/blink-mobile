@@ -1,6 +1,6 @@
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
-import React, { useState } from "react"
+import React from "react"
 import { Button, Modal, Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 
@@ -42,10 +42,7 @@ type SetAddressModalProps = {
   toggleModal?: () => void
 }
 
-export const SetAddressModal = ({
-  modalVisible,
-  toggleModal,
-}: SetAddressModalProps) => {
+export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalProps) => {
   const { LL } = useI18nContext()
   return (
     <View style={styles.centeredView}>
@@ -60,7 +57,7 @@ export const SetAddressModal = ({
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={styles.modalText}>Hello World!</Text>
-            <Button title={LL.AddressScreen.buttonTitle({ bankName: "BBW" })} onPress={() => setModalVisible(false)} />
+            <Button title={LL.AddressScreen.buttonTitle({ bankName: "BBW" })} />
           </View>
         </View>
       </Modal>
