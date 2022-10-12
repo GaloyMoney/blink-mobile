@@ -5,11 +5,11 @@ import { scriptHostname } from "./helper"
 
 export const NETWORK_STRING = "NETWORK_STRING"
 
-const GRAPHQL_REGTEST_URI = `http://${scriptHostname()}:4002/graphql`
+const GRAPHQL_REGTEST_URI = `http://${scriptHostname()}:4455/graphql`
 const GRAPHQL_TESTNET_URI = "https://api.staging.galoy.io/graphql"
 const GRAPHQL_MAINNET_URI = "https://api.mainnet.galoy.io/graphql"
 
-const GRAPHQL_REGTEST_WS_URI = `ws://${scriptHostname()}:4002/graphql`
+const GRAPHQL_REGTEST_WS_URI = `ws://${scriptHostname()}:4455/graphql`
 const GRAPHQL_TESTNET_WS_URI = "wss://api.staging.galoy.io/graphql"
 const GRAPHQL_MAINNET_WS_URI = "wss://api.mainnet.galoy.io/graphql"
 
