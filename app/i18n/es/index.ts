@@ -5,6 +5,10 @@ import { Translation } from "../i18n-types";
 /* eslint-disable no-template-curly-in-string */
 /* eslint-disable max-lines */
 const es: Translation = {
+  AddressScreen: {
+    buttonTitle: "Set your {bankName} address", // todo translate
+    yourAddress: "Your {bankName} address", // todo translate
+  },
   AuthenticationScreen: {
     authenticationDescription: "Autentiquese para continuar",
     setUp: "Configurar autenticación biométrica",
@@ -624,6 +628,7 @@ const es: Translation = {
   SettingsScreen: {
     activated: "Activada",
     tapLogIn: "\nIngrese aquí para iniciar sesión",
+    addressScreen: "Receive payments using your {bankName} address or the merchants features", // todo translate
     tapUserName: "Ingrese aquí para configurarlo",
     title: "Configuración",
     csvTransactionsError:

@@ -5,6 +5,10 @@ import { BaseTranslation } from "../i18n-types"
 /* eslint-disable no-template-curly-in-string */
 /* eslint-disable max-lines */
 const en: BaseTranslation = {
+  AddressScreen: {
+    buttonTitle: "Set your {bankName: string} address",
+    yourAddress: "Your {bankName: string} address",
+  },
   AuthenticationScreen: {
     authenticationDescription: "Authenticate to continue",
     setUp: "Set up Biometric Authentication",
@@ -601,6 +605,7 @@ const en: BaseTranslation = {
   SettingsScreen: {
     activated: "Activated",
     tapLogIn: "Tap to log in",
+    addressScreen: "Receive payments using your {bankName: string} address or the merchants features",
     tapUserName: "Tap to set username",
     title: "Settings",
     csvTransactionsError:

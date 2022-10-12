@@ -16,6 +16,18 @@ export type Translation = RootTranslation
 export type Translations = RootTranslation
 
 type RootTranslation = {
+	AddressScreen: {
+		/**
+		 * Set your {bankName} address
+		 * @param {string} bankName
+		 */
+		buttonTitle: RequiredParams<'bankName'>
+		/**
+		 * Your {bankName} address
+		 * @param {string} bankName
+		 */
+		yourAddress: RequiredParams<'bankName'>
+	}
 	AuthenticationScreen: {
 		/**
 		 * Authenticate to continue
@@ -1962,6 +1974,11 @@ type RootTranslation = {
 		 */
 		tapLogIn: string
 		/**
+		 * Receive payments using your {bankName} address or the merchants features
+		 * @param {string} bankName
+		 */
+		addressScreen: RequiredParams<'bankName'>
+		/**
 		 * Tap to set username
 		 */
 		tapUserName: string
@@ -2632,6 +2649,16 @@ type RootTranslation = {
 }
 
 export type TranslationFunctions = {
+	AddressScreen: {
+		/**
+		 * Set your {bankName} address
+		 */
+		buttonTitle: (arg: { bankName: string }) => LocalizedString
+		/**
+		 * Your {bankName} address
+		 */
+		yourAddress: (arg: { bankName: string }) => LocalizedString
+	}
 	AuthenticationScreen: {
 		/**
 		 * Authenticate to continue
@@ -4552,6 +4579,10 @@ export type TranslationFunctions = {
 		 * Tap to log in
 		 */
 		tapLogIn: () => LocalizedString
+		/**
+		 * Receive payments using your {bankName} address or the merchants features
+		 */
+		addressScreen: (arg: { bankName: string }) => LocalizedString
 		/**
 		 * Tap to set username
 		 */
