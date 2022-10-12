@@ -31,7 +31,7 @@ import {
 import { PriceScreen } from "../screens/price-screen/price-screen"
 
 import { ScanningQRCodeScreen } from "../screens/send-bitcoin-screen"
-import { SettingsScreen, UsernameScreen } from "../screens/settings-screen"
+import { SettingsScreen } from "../screens/settings-screen"
 import { LanguageScreen } from "../screens/settings-screen/language-screen"
 import { SecurityScreen } from "../screens/settings-screen/security-screen"
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
