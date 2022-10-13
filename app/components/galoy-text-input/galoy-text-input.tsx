@@ -63,9 +63,7 @@ export const GaloyTextInput = ({
     if (append && cleanedValue.endsWith(append)) {
       cleanedValue = cleanedValue.slice(0, value.length - append.length)
     }
-    if (cleanedValue) {
-      onChangeText(cleanedValue)
-    }
+    onChangeText(cleanedValue)
     if (cleanedValue !== cleanValue) {
       setCleanValue(cleanedValue)
     }

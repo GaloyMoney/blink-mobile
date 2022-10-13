@@ -27,6 +27,20 @@ type RootTranslation = {
 		 * @param {string} bankName
 		 */
 		yourAddress: RequiredParams<'bankName'>
+		/**
+		 * You won't be able to change your {bankName} address after it's set.
+		 * @param {string} bankName
+		 */
+		notAbleToChange: RequiredParams<'bankName'>
+		/**
+		 * This {bankName} address is already taken.
+		 * @param {string} bankName
+		 */
+		addressNotAvailable: RequiredParams<'bankName'>
+		/**
+		 * Something went wrong. Please try again later.
+		 */
+		somethingWentWrong: string
 	}
 	AuthenticationScreen: {
 		/**
@@ -2658,6 +2672,18 @@ export type TranslationFunctions = {
 		 * Your {bankName} address
 		 */
 		yourAddress: (arg: { bankName: string }) => LocalizedString
+		/**
+		 * You won't be able to change your {bankName} address after it's set.
+		 */
+		notAbleToChange: (arg: { bankName: string }) => LocalizedString
+		/**
+		 * This {bankName} address is already taken.
+		 */
+		addressNotAvailable: (arg: { bankName: string }) => LocalizedString
+		/**
+		 * Something went wrong. Please try again later.
+		 */
+		somethingWentWrong: () => LocalizedString
 	}
 	AuthenticationScreen: {
 		/**

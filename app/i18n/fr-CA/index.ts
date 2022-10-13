@@ -8,6 +8,9 @@ const frCA: Translation = {
   AddressScreen: {
     buttonTitle: "Set your {bankName} address", // todo translate
     yourAddress: "Your {bankName} address", // todo translate
+    notAbleToChange: "You won't be able to change your {bankName} address after it's set.", // todo translate
+    addressNotAvailable: "This {bankName} address is already taken.", // todo translate
+    somethingWentWrong: "Something went wrong. Please try again later.", // todo translate
   },
   AuthenticationScreen: {
     authenticationDescription: "Authentifiez vous pour continuer",

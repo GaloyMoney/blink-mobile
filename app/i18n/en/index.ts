@@ -8,6 +8,9 @@ const en: BaseTranslation = {
   AddressScreen: {
     buttonTitle: "Set your {bankName: string} address",
     yourAddress: "Your {bankName: string} address",
+    notAbleToChange: "You won't be able to change your {bankName: string} address after it's set.",
+    addressNotAvailable: "This {bankName: string} address is already taken.",
+    somethingWentWrong: "Something went wrong. Please try again later.",
   },
   AuthenticationScreen: {
     authenticationDescription: "Authenticate to continue",

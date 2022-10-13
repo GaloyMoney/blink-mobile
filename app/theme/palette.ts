@@ -30,4 +30,5 @@ export const palette = {
   inputLabel: "#344075",
   secondaryText: "#34407566",
   primaryButtonColor: "#536FF2",
+  error: "#DF477E",
 }

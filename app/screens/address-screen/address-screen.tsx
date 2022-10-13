@@ -1,5 +1,6 @@
 import { CustomIcon } from "@app/components/custom-icon"
 import { Screen } from "@app/components/screen"
+import useMainQuery from "@app/hooks/use-main-query"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
 import React from "react"
@@ -48,11 +49,26 @@ const styles = EStyleSheet.create({
     borderRadius: 8,
     height: 48,
   },
+  addressTextContainer: {
+    borderWidth: 1,
+    borderColor: palette.lapisLazuli,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 8,
+    marginTop: 10,
+    height: 50,
+  },
+  addressText: {
+    color: palette.lapisLazuli,
+    fontSize: 18,
+    fontFamily: "Roboto",
+    fontWeight: "500",
+  },
 })
 
 export const AddressScreen = () => {
   const { LL } = useI18nContext()
-
+  const { username } = useMainQuery()
   const [chooseAddressModalVisible, setChooseAddressModalVisible] = React.useState(false)
 
   const toggleChooseAddressModal = () => {
@@ -78,14 +94,24 @@ export const AddressScreen = () => {
             </Text>
           </View>
         </View>
-        <Button
-          title={LL.AddressScreen.buttonTitle({ bankName: "BBW" })}
-          buttonStyle={styles.buttonStyle}
-          containerStyle={styles.buttonContainerStyle}
-          onPress={() => toggleChooseAddressModal()}
-        />
+        {!username && (
+          <Button
+            title={LL.AddressScreen.buttonTitle({ bankName: "BBW" })}
+            buttonStyle={styles.buttonStyle}
+            containerStyle={styles.buttonContainerStyle}
+            onPress={() => toggleChooseAddressModal()}
+          />
+        )}
+        {username && (
+          <View style={styles.addressTextContainer}>
+            <Text style={styles.addressText}>{username}@bbw.sv</Text>
+          </View>
+        )}
       </View>
-      <SetAddressModal modalVisible={chooseAddressModalVisible} />
+      <SetAddressModal
+        modalVisible={chooseAddressModalVisible}
+        toggleModal={toggleChooseAddressModal}
+      />
     </Screen>
   )
 }
