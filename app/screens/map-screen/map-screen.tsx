@@ -15,6 +15,7 @@ import { palette } from "../../theme/palette"
 import { toastShow } from "../../utils/toast"
 import useToken from "../../hooks/use-token"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import crashlytics from "@react-native-firebase/crashlytics"
 
 const QUERY_BUSINESSES = gql`
   query businessMapMarkers {
@@ -92,6 +93,7 @@ export const MapScreen: ScreenType = ({ navigation }: Props) => {
         console.debug("Location permission denied")
       }
     } catch (err) {
+      crashlytics().recordError(err)
       console.debug(err)
     }
   }

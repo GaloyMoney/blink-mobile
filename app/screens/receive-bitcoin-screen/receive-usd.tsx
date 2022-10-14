@@ -23,6 +23,7 @@ import moment from "moment"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { logGeneratePaymentRequest } from "@app/utils/analytics"
 import { WalletCurrency } from "@app/types/amounts"
+import crashlytics from "@react-native-firebase/crashlytics"
 
 const styles = EStyleSheet.create({
   container: {
@@ -248,6 +249,7 @@ const ReceiveUsd = () => {
         }
         setStatus("active")
       } catch (err) {
+        crashlytics().recordError(err)
         console.error(err, "error with AddInvoice")
         setStatus("error")
         setErr(`${err}`)
@@ -293,6 +295,7 @@ const ReceiveUsd = () => {
         // dismissed
       }
     } catch (error) {
+      crashlytics().recordError(error)
       Alert.alert(error.message)
     }
   }, [invoice?.paymentRequest])

@@ -305,7 +305,9 @@ const SendBitcoinDestinationScreen = ({
                   unparsedDestination: destination,
                 },
               })
-            } catch {}
+            } catch (err) {
+              crashlytics().recordError(err)
+            }
           }
           await wait(minimumValidationDuration)
           return dispatchDestinationStateAction({

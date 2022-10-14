@@ -28,6 +28,7 @@ import NoteIcon from "@app/assets/icons/note.svg"
 import { Button } from "react-native-elements"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { testProps } from "../../../utils/testProps"
+import crashlytics from "@react-native-firebase/crashlytics"
 
 const Styles = StyleSheet.create({
   scrollView: {
@@ -365,6 +366,7 @@ const SendBitcoinDetailsScreen = ({
         })
         invoice = result.invoice
       } catch (error) {
+        crashlytics().recordError(error)
         console.error(error)
         setErrorMessage(LL.SendBitcoinScreen.failedToFetchLnurlInvoice())
         return

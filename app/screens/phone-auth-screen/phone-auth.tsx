@@ -36,6 +36,7 @@ import { useAppConfig, useGeetestCaptcha } from "../../hooks"
 import DownArrow from "@app/assets/icons/downarrow.svg"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { logRequestAuthCode } from "@app/utils/analytics"
+import crashlytics from "@react-native-firebase/crashlytics"
 
 const phoneRegex = new RegExp("^\\+[0-9]+$")
 
@@ -202,6 +203,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
         toastShow({ message: LL.errors.generic() })
       }
     } catch (err) {
+      crashlytics().recordError(err)
       console.debug({ err })
       if (err.message === "Too many requests") {
         toastShow({ message: LL.errors.tooManyRequestsPhoneCode() })
@@ -418,12 +420,12 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
           analytics().logLogin({ method: "phone" })
           await saveToken(token)
         } else {
-          throw new Error(LL.WelcomePhoneValidationScreen.errorLoggingIn())
+          setCode("")
+          toastShow({ message: LL.WelcomePhoneValidationScreen.errorLoggingIn() })
         }
       } catch (err) {
+        crashlytics().recordError(err)
         console.debug({ err })
-        setCode("")
-        toastShow({ message: `${err}` })
       }
     },
     [loading, login, phone, saveToken, setCode, LL],

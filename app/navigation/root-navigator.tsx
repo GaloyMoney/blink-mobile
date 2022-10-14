@@ -485,7 +485,7 @@ export const ContactNavigator: NavigatorType = () => {
   return (
     <StackContacts.Navigator>
       <StackContacts.Screen
-        name="Contacts"
+        name="contactList"
         component={ContactsScreen}
         options={{
           title: LL.ContactsScreen.title(),
