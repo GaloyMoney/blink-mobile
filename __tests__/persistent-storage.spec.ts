@@ -3,13 +3,13 @@ import {
   deserializeAndMigratePersistentState,
 } from "../app/store/persistent-state/state-migrations"
 
-it("uses default state when none is present", () => {
-  const state = deserializeAndMigratePersistentState({})
+it("uses default state when none is present", async () => {
+  const state = await deserializeAndMigratePersistentState({})
   expect(state).toEqual(defaultPersistentState)
 })
 
-it("migrates persistent state", () => {
-  const state = deserializeAndMigratePersistentState({
+it("migrates persistent state", async () => {
+  const state = await deserializeAndMigratePersistentState({
     schemaVersion: 0,
     isUsdDisabled: true,
   })
@@ -19,9 +19,9 @@ it("migrates persistent state", () => {
   })
 })
 
-it("returns default when schema is not present", () => {
-  const state = deserializeAndMigratePersistentState({
-    schemaVersion: 3,
+it("returns default when schema is not present", async () => {
+  const state = await deserializeAndMigratePersistentState({
+    schemaVersion: -2,
   })
   expect(state).toEqual(defaultPersistentState)
 })

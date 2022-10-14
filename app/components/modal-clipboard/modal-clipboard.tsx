@@ -16,12 +16,12 @@ import { parsePaymentDestination } from "@galoymoney/client"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { cache } from "../../graphql/cache"
-import useToken from "../../hooks/use-token"
 import type { StackNavigationProp } from "@react-navigation/stack"
 import type { ComponentType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import useMainQuery from "@app/hooks/use-main-query"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { useAppConfig } from "@app/hooks"
 
 const styles = StyleSheet.create({
   buttonContainer: {
@@ -80,9 +80,10 @@ const styles = StyleSheet.create({
 export const ModalClipboard: ComponentType = () => {
   const client = useApolloClient()
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const { tokenNetwork } = useToken()
+  const { appConfig } = useAppConfig()
   const { myPubKey, username } = useMainQuery()
   const { LL } = useI18nContext()
+
   const open = async () => {
     modalClipboardVisibleVar(false)
     const clipboardString = await Clipboard.getString()
@@ -120,18 +121,16 @@ export const ModalClipboard: ComponentType = () => {
       if (clipboard) {
         const { paymentType } = parsePaymentDestination({
           destination: clipboard,
-          network: tokenNetwork,
+          network: appConfig.galoyInstance.network,
           pubKey: myPubKey,
         })
 
         const pathString =
-          paymentType === "lightning"
-            ? "ModalClipboard.pendingInvoice"
-            : "ModalClipboard.pendingBitcoin"
-        setMessage(LL[pathString]())
+          paymentType === "lightning" ? "pendingInvoice" : "pendingBitcoin"
+        setMessage(LL.ModalClipboard[pathString]())
       }
     })()
-  }, [client, isVisible, myPubKey, tokenNetwork, username, LL])
+  }, [client, isVisible, myPubKey, appConfig.galoyInstance.network, username, LL])
 
   return (
     <Modal

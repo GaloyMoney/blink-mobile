@@ -1,4 +1,4 @@
-import { CONTACT_EMAIL_ADDRESS, WHATSAPP_CONTACT_NUMBER } from "@app/constants/support"
+import { CONTACT_EMAIL_ADDRESS, WHATSAPP_CONTACT_NUMBER } from "@app/config/support"
 import { palette } from "@app/theme"
 import React from "react"
 import { Linking, View } from "react-native"

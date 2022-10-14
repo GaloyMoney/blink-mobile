@@ -6,10 +6,10 @@ import "intl-pluralrules"
 import "react-native-reanimated"
 import {
   ApolloClient,
+  ApolloLink,
   ApolloProvider,
   HttpLink,
   NormalizedCacheObject,
-  useReactiveVar,
   split,
 } from "@apollo/client"
 import { WebSocketLink } from "@apollo/client/link/ws"
@@ -41,9 +41,6 @@ import { RootStack } from "./navigation/root-navigator"
 import { isIos } from "./utils/helper"
 import { saveString, loadString } from "./utils/storage"
 import useToken, { getAuthorizationHeader } from "./hooks/use-token"
-import { getGraphQLUri, loadNetwork } from "./utils/network"
-import { loadAuthToken, networkVar } from "./graphql/client-only-query"
-import { INetwork } from "./types/network"
 import ErrorBoundary from "react-native-error-boundary"
 import { ErrorScreen } from "./screens/error-screen"
 import Toast from "react-native-toast-message"
@@ -57,6 +54,7 @@ import { LocalizationContextProvider } from "./store/localization-context"
 import { loadAllLocales } from "./i18n/i18n-util.sync"
 import TypesafeI18n from "./i18n/i18n-react"
 import { customLocaleDetector } from "./utils/locale-detector"
+import { useAppConfig } from "./hooks"
 export const BUILD_VERSION = "build_version"
 
 export const { link: linkNetworkStatusNotifier, useApolloNetworkStatus } =
@@ -101,8 +99,8 @@ loadAllLocales()
  * This is the root component of our app.
  */
 export const App = (): JSX.Element => {
-  const { token, hasToken, tokenNetwork } = useToken()
-  const networkReactiveVar = useReactiveVar<INetwork | null>(networkVar)
+  const { token, hasToken, saveToken } = useToken()
+  const { appConfig } = useAppConfig()
   const routeName = useRef("Initial")
   const [apolloClient, setApolloClient] = useState<ApolloClient<NormalizedCacheObject>>()
   const [persistor, setPersistor] = useState<CachePersistor<NormalizedCacheObject>>()
@@ -136,41 +134,35 @@ export const App = (): JSX.Element => {
 
     return route.name
   }
-  useEffect(() => {
-    loadAuthToken()
-  }, [])
 
   useEffect(() => {
     const fn = async () => {
-      let currentNetwork: INetwork
-
-      if (token) {
-        currentNetwork = tokenNetwork
-      } else if (networkReactiveVar) {
-        currentNetwork = networkReactiveVar
-      } else {
-        currentNetwork = await loadNetwork()
-        networkVar(currentNetwork)
-      }
-
-      const { GRAPHQL_URI, GRAPHQL_WS_URI } = getGraphQLUri(currentNetwork)
-
-      // legacy. when was using mst-gql. storage is deleted as we don't want
-      // to keep this around.
-      const LEGACY_ROOT_STATE_STORAGE_KEY = "rootAppGaloy"
-      await AsyncStorage.multiRemove([LEGACY_ROOT_STATE_STORAGE_KEY])
-
       const httpLink = new HttpLink({
-        uri: GRAPHQL_URI,
+        uri: appConfig.galoyInstance.graphqlUri,
+      })
+
+      // TODO: used to migrate from jwt to kratos token, remove after a few releases
+      const updateTokenLink = new ApolloLink((operation, forward) => {
+        return forward(operation).map((response) => {
+          const context = operation.getContext()
+
+          const kratosToken = context.response.headers.get("kratos-session-token")
+
+          if (kratosToken) {
+            saveToken(kratosToken)
+          }
+
+          return response
+        })
       })
 
       const wsLink = new WebSocketLink({
-        uri: GRAPHQL_WS_URI,
+        uri: appConfig.galoyInstance.graphqlWsUri,
         options: {
           reconnect: true,
           reconnectionAttempts: 3,
           connectionParams: {
-            authorization: getAuthorizationHeader(),
+            authorization: hasToken ? getAuthorizationHeader(token) : "",
           },
         },
       })
@@ -184,14 +176,14 @@ export const App = (): JSX.Element => {
           )
         },
         wsLink,
-        httpLink,
+        updateTokenLink.concat(httpLink),
       )
 
       const authLink = setContext((request, { headers }) => {
         return {
           headers: {
             ...headers,
-            authorization: getAuthorizationHeader(),
+            authorization: hasToken ? getAuthorizationHeader(token) : "",
           },
         }
       })
@@ -205,7 +197,7 @@ export const App = (): JSX.Element => {
         attempts: {
           max: 3,
           retryIf: (error, operation) => {
-            console.debug({ error }, "retry error")
+            console.debug(JSON.stringify(error), "retry error test")
             return Boolean(error) && !noRetryOperations.includes(operation.operationName)
           },
         },
@@ -235,9 +227,6 @@ export const App = (): JSX.Element => {
         })
       }
 
-      // init the DB. will be override if a cache exists
-      await initDb()
-
       // Read the current schema version from AsyncStorage.
       const currentVersion = await loadString(BUILD_VERSION)
       const buildVersion = String(VersionNumber.buildVersion)
@@ -250,7 +239,10 @@ export const App = (): JSX.Element => {
       } else {
         // Otherwise, we'll want to purge the outdated persisted cache
         // and mark ourselves as having updated to the latest version.
+
+        // init the DB. will be override if a cache exists
         await persistor_.purge()
+        await initDb()
         await saveString(BUILD_VERSION, buildVersion)
       }
 
@@ -259,7 +251,7 @@ export const App = (): JSX.Element => {
       setApolloClient(client)
     }
     fn()
-  }, [networkReactiveVar, token, tokenNetwork])
+  }, [appConfig.galoyInstance, token, saveToken, hasToken])
 
   // Before we show the app, we have to wait for our state to be ready.
   // In the meantime, don't render anything. This will be the background
@@ -315,7 +307,6 @@ export const App = (): JSX.Element => {
             <LocalizationContextProvider>
               <ErrorBoundary FallbackComponent={ErrorScreen}>
                 <NavigationContainer
-                  key={token}
                   linking={linking}
                   onStateChange={(state) => {
                     const currentRouteName = getActiveRouteName(state)

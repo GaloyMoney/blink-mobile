@@ -13,7 +13,7 @@ import {
   CONTACT_EMAIL_ADDRESS,
   GALOY_PAY_DOMAIN,
   WHATSAPP_CONTACT_NUMBER,
-} from "../../constants/support"
+} from "../../config/support"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"

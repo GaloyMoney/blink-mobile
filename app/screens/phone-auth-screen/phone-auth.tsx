@@ -33,8 +33,7 @@ import { AuthenticationScreenPurpose } from "../../utils/enum"
 import BadgerPhone from "./badger-phone-01.svg"
 import type { PhoneValidationStackParamList } from "../../navigation/stack-param-lists"
 import { parseTimer } from "../../utils/timer"
-import { useGeetestCaptcha } from "../../hooks"
-import { networkVar } from "../../graphql/client-only-query"
+import { useAppConfig, useGeetestCaptcha } from "../../hooks"
 import DownArrow from "@app/assets/icons/downarrow.svg"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { logRequestAuthCode } from "@app/utils/analytics"
@@ -151,6 +150,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
   const { LL } = useI18nContext()
 
   const [phoneNumber, setPhoneNumber] = useState("")
+  const { appConfig } = useAppConfig()
 
   const phoneInputRef = useRef<PhoneInput | null>()
 
@@ -167,14 +167,14 @@ export const WelcomePhoneInputScreen: ScreenType = ({
   // Comment it out to test captcha locally
   useEffect(() => {
     if (phoneNumber) {
-      if (networkVar() === "regtest") {
+      if (appConfig.galoyInstance.name === "Local") {
         navigation.navigate("welcomePhoneValidation", { phone: phoneNumber, setPhone })
         setPhoneNumber("")
       } else {
         registerCaptcha()
       }
     }
-  }, [navigation, phoneNumber, registerCaptcha])
+  }, [appConfig.galoyInstance.name, navigation, phoneNumber, registerCaptcha])
 
   const sendRequestAuthCode = useCallback(async () => {
     try {
@@ -185,7 +185,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
         secCode: geetestValidationData?.geetestSecCode,
       }
       resetValidationData()
-      logRequestAuthCode(networkVar())
+      logRequestAuthCode(appConfig.galoyInstance.network)
 
       const { data } = await captchaRequestAuthCode({ variables: { input } })
 
@@ -217,6 +217,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
     captchaRequestAuthCode,
     resetValidationData,
     LL,
+    appConfig.galoyInstance.network,
   ])
 
   useEffect(() => {

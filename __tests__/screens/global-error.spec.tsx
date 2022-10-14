@@ -13,6 +13,11 @@ import * as toastShowModule from "../../app/utils/toast"
 import { AuthenticationContext } from "../../app/store/authentication-context"
 import { i18nObject } from "../../app/i18n/i18n-util"
 import { loadLocale } from "../../app/i18n/i18n-util.sync"
+import {
+  PersistentStateContext,
+  PersistentStateContextType,
+} from "../../app/store/persistent-state"
+import { createMock } from "ts-auto-mock"
 
 jest.mock("../../app/app")
 jest.mock("react-native/Libraries/EventEmitter/NativeEventEmitter")
@@ -37,6 +42,9 @@ jest.mock("@app/i18n/i18n-react", () => ({
 }))
 jest.mock("react-native-image-crop-picker", () => ({}))
 jest.mock("rn-qr-generator", () => ({}))
+
+const persistentStateContextMock = createMock<PersistentStateContextType>()
+
 describe("GlobalError tests", () => {
   afterEach(() => {
     jest.clearAllMocks()
@@ -51,17 +59,19 @@ describe("GlobalError tests", () => {
   function renderGlobalErrorToast(status: NetworkStatus | unknown) {
     useApolloNetworkStatusMock.mockReturnValue(status)
     const tree = render(
-      <MockedProvider>
-        <AuthenticationContext.Provider
-          value={{
-            isAppLocked: false,
-            setAppLocked: () => {},
-            setAppUnlocked: () => {},
-          }}
-        >
-          <GlobalErrorToast />
-        </AuthenticationContext.Provider>
-      </MockedProvider>,
+      <PersistentStateContext.Provider value={persistentStateContextMock}>
+        <MockedProvider>
+          <AuthenticationContext.Provider
+            value={{
+              isAppLocked: false,
+              setAppLocked: () => {},
+              setAppUnlocked: () => {},
+            }}
+          >
+            <GlobalErrorToast />
+          </AuthenticationContext.Provider>
+        </MockedProvider>
+      </PersistentStateContext.Provider>,
     ).toJSON()
 
     expect(tree).toBeNull()
