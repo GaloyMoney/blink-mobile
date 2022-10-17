@@ -6,6 +6,7 @@ import crashlytics from "@react-native-firebase/crashlytics"
 import { useAppConfig } from "./use-app-config"
 import { usePriceConversion } from "./use-price-conversion"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { useMainQueryOutput } from "./hooks.types"
 
 const useMainQuery = (): useMainQueryOutput => {
   const { hasToken } = useToken()
@@ -74,6 +75,8 @@ const useMainQuery = (): useMainQueryOutput => {
 
   const initialBtcPrice = data?.btcPrice
 
+  const network = data?.globals?.network
+
   return {
     userPreferredLanguage,
     btcWalletBalance,
@@ -91,6 +94,7 @@ const useMainQuery = (): useMainQueryOutput => {
     phoneNumber,
     mobileVersions,
     initialBtcPrice,
+    network,
     loading,
     refetch,
     errors,

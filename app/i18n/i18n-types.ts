@@ -41,6 +41,65 @@ type RootTranslation = {
 		 * Something went wrong. Please try again later.
 		 */
 		somethingWentWrong: string
+		/**
+		 * For merchants
+		 */
+		merchantTitle: string
+		/**
+		 * Your Cash Register
+		 */
+		yourCashRegister: string
+		/**
+		 * Your Paycode
+		 */
+		yourPaycode: string
+		/**
+		 * Copied {bankName} address to clipboard
+		 * @param {string} bankName
+		 */
+		copiedAddressToClipboard: RequiredParams<'bankName'>
+		/**
+		 * Copied Paycode to clipboard
+		 */
+		copiedPaycodeToClipboard: string
+		/**
+		 * Copied Cash Register to clipboard
+		 */
+		copiedCashRegisterToClipboard: string
+		/**
+		 * How to use your {bankName} address
+		 * @param {string} bankName
+		 */
+		howToUseYourAddress: RequiredParams<'bankName'>
+		/**
+		 * How to use your Paycode
+		 */
+		howToUseYourPaycode: string
+		/**
+		 * How to use your Cash Register
+		 */
+		howToUseYourCashRegister: string
+		/**
+		 * Your {bankName} address is your own Lightning address. It’s like an email address, but for your Bitcoin.
+
+	To receive payments, share your full address to someone using a wallet supporting the Lightning address.
+
+	These wallets support it:
+		 * @param {string} bankName
+		 */
+		howToUseYourAddressExplainer: RequiredParams<'bankName'>
+		/**
+		 * You can print your Paycode (which is an amountless invoice) and display it in your business to receive payments. Individuals can pay you by scanning it with a Lightning-enabled wallet.
+
+	However, be aware that some wallets can’t scan an amountless invoice such as:
+		 */
+		howToUseYourPaycodeExplainer: string
+		/**
+		 * Your Cash Register let your employees collect payments without needing to give them access to your wallet.
+
+	Share your link. They can pin it to their homescreen and generate Lightning invoices on your behalf. The payments collected using the Cash Register will be sent directly to your Bitcoin Beach Wallet.
+		 */
+		howToUseYourCashRegisterExplainer: string
 	}
 	AuthenticationScreen: {
 		/**
@@ -2684,6 +2743,62 @@ export type TranslationFunctions = {
 		 * Something went wrong. Please try again later.
 		 */
 		somethingWentWrong: () => LocalizedString
+		/**
+		 * For merchants
+		 */
+		merchantTitle: () => LocalizedString
+		/**
+		 * Your Cash Register
+		 */
+		yourCashRegister: () => LocalizedString
+		/**
+		 * Your Paycode
+		 */
+		yourPaycode: () => LocalizedString
+		/**
+		 * Copied {bankName} address to clipboard
+		 */
+		copiedAddressToClipboard: (arg: { bankName: string }) => LocalizedString
+		/**
+		 * Copied Paycode to clipboard
+		 */
+		copiedPaycodeToClipboard: () => LocalizedString
+		/**
+		 * Copied Cash Register to clipboard
+		 */
+		copiedCashRegisterToClipboard: () => LocalizedString
+		/**
+		 * How to use your {bankName} address
+		 */
+		howToUseYourAddress: (arg: { bankName: string }) => LocalizedString
+		/**
+		 * How to use your Paycode
+		 */
+		howToUseYourPaycode: () => LocalizedString
+		/**
+		 * How to use your Cash Register
+		 */
+		howToUseYourCashRegister: () => LocalizedString
+		/**
+		 * Your {bankName} address is your own Lightning address. It’s like an email address, but for your Bitcoin.
+
+	To receive payments, share your full address to someone using a wallet supporting the Lightning address.
+
+	These wallets support it:
+		 */
+		howToUseYourAddressExplainer: (arg: { bankName: string }) => LocalizedString
+		/**
+		 * You can print your Paycode (which is an amountless invoice) and display it in your business to receive payments. Individuals can pay you by scanning it with a Lightning-enabled wallet.
+
+	However, be aware that some wallets can’t scan an amountless invoice such as:
+		 */
+		howToUseYourPaycodeExplainer: () => LocalizedString
+		/**
+		 * Your Cash Register let your employees collect payments without needing to give them access to your wallet.
+
+	Share your link. They can pin it to their homescreen and generate Lightning invoices on your behalf. The payments collected using the Cash Register will be sent directly to your Bitcoin Beach Wallet.
+		 */
+		howToUseYourCashRegisterExplainer: () => LocalizedString
 	}
 	AuthenticationScreen: {
 		/**

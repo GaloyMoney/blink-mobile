@@ -3,10 +3,15 @@ import { Screen } from "@app/components/screen"
 import useMainQuery from "@app/hooks/use-main-query"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
+import { getLightningAddress } from "@app/utils/pay-links"
+import { toastShow } from "@app/utils/toast"
+import Clipboard from "@react-native-community/clipboard"
 import React from "react"
-import { View } from "react-native"
+import { Share, TouchableWithoutFeedback, View } from "react-native"
 import { Button, Text } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
+import { AddressExplainerModal } from "./address-explainer-modal"
+import { MerchantsDropdown } from "./merchants-dropdown"
 import { SetAddressModal } from "./set-address-modal"
 
 const styles = EStyleSheet.create({
@@ -49,16 +54,19 @@ const styles = EStyleSheet.create({
     borderRadius: 8,
     height: 48,
   },
-  addressTextContainer: {
-    borderWidth: 1,
-    borderColor: palette.lapisLazuli,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 8,
-    marginTop: 10,
-    height: 50,
+  merchantsSectionContainer: {
+    marginTop: 20,
   },
-  addressText: {
+  usernameField: {
+    backgroundColor: palette.white,
+    borderRadius: 8,
+    height: 40,
+    justifyContent: "center",
+    paddingLeft: 10,
+    paddingRight: 10,
+    marginTop: 8,
+  },
+  usernameText: {
     color: palette.lapisLazuli,
     fontSize: 18,
     fontFamily: "Roboto",
@@ -70,9 +78,14 @@ export const AddressScreen = () => {
   const { LL } = useI18nContext()
   const { username } = useMainQuery()
   const [chooseAddressModalVisible, setChooseAddressModalVisible] = React.useState(false)
-
+  const { network } = useMainQuery()
+  const [explainerModalVisible, setExplainerModalVisible] = React.useState(false)
+  const lightningAddress = getLightningAddress(network, username)
   const toggleChooseAddressModal = () => {
     setChooseAddressModalVisible(!chooseAddressModalVisible)
+  }
+  const toggleExplainerModal = () => {
+    setExplainerModalVisible(!explainerModalVisible)
   }
   return (
     <Screen>
@@ -81,18 +94,43 @@ export const AddressScreen = () => {
           {LL.SettingsScreen.addressScreen({ bankName: "BBW" })}
         </Text>
         <View style={styles.addressInfoContainer}>
-          <Text style={styles.addressInfoText}>
-            <CustomIcon name="custom-info-icon" color={palette.lapisLazuli} />{" "}
-            {LL.AddressScreen.yourAddress({ bankName: "BBW" })}
-          </Text>
-          <View style={styles.iconContainer}>
-            <Text style={styles.addressCopyIcon}>
-              <CustomIcon name="custom-copy-icon" color={palette.midGrey} />
+          <TouchableWithoutFeedback onPress={() => toggleExplainerModal()}>
+            <Text style={styles.addressInfoText}>
+              <CustomIcon name="custom-info-icon" color={palette.lapisLazuli} />{" "}
+              {LL.AddressScreen.yourAddress({ bankName: "BBW" })}
             </Text>
-            <Text>
-              <CustomIcon name="custom-share-icon" color={palette.midGrey} />
-            </Text>
-          </View>
+          </TouchableWithoutFeedback>
+          {username && (
+            <View style={styles.iconContainer}>
+              <TouchableWithoutFeedback
+                onPress={() => {
+                  Clipboard.setString(lightningAddress)
+                  toastShow({
+                    message: LL.AddressScreen.copiedAddressToClipboard({
+                      bankName: "BBW",
+                    }),
+                    type: "success",
+                  })
+                }}
+              >
+                <Text style={styles.addressCopyIcon}>
+                  <CustomIcon name="custom-copy-icon" color={palette.midGrey} />
+                </Text>
+              </TouchableWithoutFeedback>
+              <TouchableWithoutFeedback
+                onPress={() => {
+                  Share.share({
+                    url: lightningAddress,
+                    message: lightningAddress,
+                  })
+                }}
+              >
+                <Text>
+                  <CustomIcon name="custom-share-icon" color={palette.midGrey} />
+                </Text>
+              </TouchableWithoutFeedback>
+            </View>
+          )}
         </View>
         {!username && (
           <Button
@@ -103,14 +141,23 @@ export const AddressScreen = () => {
           />
         )}
         {username && (
-          <View style={styles.addressTextContainer}>
-            <Text style={styles.addressText}>{username}@bbw.sv</Text>
-          </View>
+          <>
+            <View style={styles.usernameField}>
+              <Text style={styles.usernameText}>{lightningAddress}</Text>
+            </View>
+            <View style={styles.merchantsSectionContainer}>
+              <MerchantsDropdown username={username} />
+            </View>
+          </>
         )}
       </View>
       <SetAddressModal
         modalVisible={chooseAddressModalVisible}
         toggleModal={toggleChooseAddressModal}
+      />
+      <AddressExplainerModal
+        modalVisible={explainerModalVisible}
+        toggleModal={toggleExplainerModal}
       />
     </Screen>
   )
