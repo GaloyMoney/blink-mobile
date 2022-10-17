@@ -51,6 +51,13 @@ export const DebugScreen: ScreenType = () => {
   const [newGraphqlWslUri, setNewGraphqlWslUri] = React.useState(
     currentGaloyInstance.name === "Custom" ? currentGaloyInstance.graphqlWsUri : "",
   )
+  const [newPosUrl, setNewPosUrl] = React.useState(
+    currentGaloyInstance.name === "Custom" ? currentGaloyInstance.posUrl : "",
+  )
+  const [newLnAddressHostname, setNewLnAddressHostname] = React.useState(
+    currentGaloyInstance.name === "Custom" ? currentGaloyInstance.lnAddressHostname : "",
+  )
+
   const galoyInstances: GaloyInstanceNames[] = [
     ...GALOY_INSTANCES.map((instance) => instance.name),
     "Custom",
@@ -62,10 +69,14 @@ export const DebugScreen: ScreenType = () => {
 
   const changesHaveBeenMade =
     newToken !== token ||
-    newGaloyInstance !== currentGaloyInstance.name ||
-    (currentGaloyInstance.name === "Custom" &&
+    (newGaloyInstance !== currentGaloyInstance.name && newGaloyInstance !== "Custom") ||
+    (newGaloyInstance === "Custom" &&
+      Boolean(newGraphqlUri) &&
+      Boolean(newGraphqlWslUri) &&
       (newGraphqlUri !== currentGaloyInstance.graphqlUri ||
-        newGraphqlWslUri !== currentGaloyInstance.graphqlWsUri))
+        newGraphqlWslUri !== currentGaloyInstance.graphqlWsUri ||
+        newPosUrl !== currentGaloyInstance.posUrl ||
+        newLnAddressHostname !== currentGaloyInstance.lnAddressHostname))
 
   const handleSave = async () => {
     await logout(false)
@@ -77,6 +88,8 @@ export const DebugScreen: ScreenType = () => {
         name: "Custom",
         graphqlUri: newGraphqlUri,
         graphqlWsUri: newGraphqlWslUri,
+        posUrl: newPosUrl,
+        lnAddressHostname: newLnAddressHostname,
       })
       return
     }
@@ -95,22 +108,6 @@ export const DebugScreen: ScreenType = () => {
           onPress={async () => {
             await logout()
             Alert.alert("state succesfully deleted. Restart your app")
-          }}
-        />
-        <Button
-          title="Send notifications"
-          containerStyle={styles.button}
-          onPress={async () => {
-            // TODO
-            // mutateTestMessage()
-          }}
-        />
-        <Button
-          title="Copy store"
-          containerStyle={styles.button}
-          onPress={() => {
-            // Clipboard.setString(JSON.stringify(store))
-            // Alert.alert("Store copied in clipboard. send it over whatsapp or email")
           }}
         />
         <Button
@@ -154,6 +151,10 @@ export const DebugScreen: ScreenType = () => {
           <Text selectable>Galoy Instance: {appConfig.galoyInstance.name}</Text>
           <Text selectable>GQL_URL: {appConfig.galoyInstance.graphqlUri}</Text>
           <Text selectable>GQL_WS_URL: {appConfig.galoyInstance.graphqlWsUri}</Text>
+          <Text selectable>POS URL: {appConfig.galoyInstance.posUrl}</Text>
+          <Text selectable>
+            LN Address Hostname: {appConfig.galoyInstance.lnAddressHostname}
+          </Text>
           <Text selectable>
             USD per 1 sat: {usdPerSat ? `$${usdPerSat}` : "No price data"}
           </Text>
@@ -201,6 +202,8 @@ export const DebugScreen: ScreenType = () => {
               <GaloyInput
                 label="Graphql Uri"
                 placeholder={"Graphql Uri"}
+                autoCapitalize="none"
+                autoCorrect={false}
                 value={newGraphqlUri}
                 onChangeText={setNewGraphqlUri}
                 selectTextOnFocus
@@ -208,8 +211,28 @@ export const DebugScreen: ScreenType = () => {
               <GaloyInput
                 label="Graphql Ws Uri"
                 placeholder={"Graphql Ws Uri"}
+                autoCapitalize="none"
+                autoCorrect={false}
                 value={newGraphqlWslUri}
                 onChangeText={setNewGraphqlWslUri}
+                selectTextOnFocus
+              />
+              <GaloyInput
+                label="POS Url"
+                placeholder={"POS Url"}
+                autoCapitalize="none"
+                autoCorrect={false}
+                value={newPosUrl}
+                onChangeText={setNewPosUrl}
+                selectTextOnFocus
+              />
+              <GaloyInput
+                label="LN Address Hostname"
+                placeholder={"LN Address Hostname"}
+                autoCapitalize="none"
+                autoCorrect={false}
+                value={newLnAddressHostname}
+                onChangeText={setNewLnAddressHostname}
                 selectTextOnFocus
               />
             </>
