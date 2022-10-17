@@ -1,12 +1,12 @@
 /* eslint-disable camelcase */
+import { GaloyInstanceNames } from "@app/config/galoy-instances"
 import { WalletCurrency } from "@app/types/amounts"
-import { INetwork } from "@app/types/network"
 import { GaloyGQL } from "@galoymoney/client"
 import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
 import analytics from "@react-native-firebase/analytics"
 
-export const logRequestAuthCode = (network: INetwork) => {
-  analytics().logEvent("request_auth_code", { network })
+export const logRequestAuthCode = (instance: GaloyInstanceNames) => {
+  analytics().logEvent("request_auth_code", { instance })
 }
 
 export const logPaymentDestinationAccepted = (paymentType: PaymentType) => {

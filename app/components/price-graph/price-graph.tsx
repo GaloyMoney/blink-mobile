@@ -45,7 +45,7 @@ const GraphRange = {
 
 type GraphRangeType = typeof GraphRange[keyof typeof GraphRange]
 
-type Price = {
+export type Price = {
   base: number
   offset: number
   currencyUnit: string

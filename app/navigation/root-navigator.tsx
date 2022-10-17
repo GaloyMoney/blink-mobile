@@ -39,7 +39,7 @@ import { TransactionHistoryScreenDataInjected } from "../screens/transaction-scr
 import { WelcomeFirstScreen } from "../screens/welcome-screens"
 import { palette } from "../theme/palette"
 import { AccountType } from "../utils/enum"
-import { addDeviceToken } from "../utils/notifications"
+import { addDeviceToken, hasNotificationPermission } from "../utils/notifications"
 import useToken from "../hooks/use-token"
 import { showModalClipboardIfValidPayment } from "../utils/clipboard"
 import {
@@ -69,7 +69,6 @@ import {
 import { useAuthenticationContext } from "@app/store/authentication-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { logEnterBackground, logEnterForeground } from "@app/utils/analytics"
-import { useAppConfig } from "@app/hooks"
 import { GaloyAddressScreen } from "@app/screens/galoy-address-screen"
 
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
@@ -134,11 +133,8 @@ const RootNavigator = createStackNavigator<RootStackParamList>()
 export const RootStack: NavigatorType = () => {
   const appState = React.useRef(AppState.currentState)
   const client = useApolloClient()
-  const { appConfig } = useAppConfig()
   const { token, hasToken } = useToken()
-  const { myPubKey, username, me } = useMainQuery()
-
-  const bitcoinNetwork = appConfig.galoyInstance.network
+  const { myPubKey, username, me, network: bitcoinNetwork } = useMainQuery()
 
   useEffect(() => {
     analytics().setUserProperty("hasUsername", username ? "true" : "false")
@@ -275,10 +271,18 @@ export const RootStack: NavigatorType = () => {
       })
   }, [])
 
-  useEffect(
-    () => messaging().onTokenRefresh(() => token && addDeviceToken(client)),
-    [client, token],
-  )
+  useEffect(() => {
+    const setupNotifications = async () => {
+      if (hasToken && client) {
+        const hasPermission = await hasNotificationPermission()
+        if (hasPermission) {
+          addDeviceToken(client)
+          messaging().onTokenRefresh(() => addDeviceToken(client))
+        }
+      }
+    }
+    setupNotifications()
+  }, [client, hasToken])
 
   return (
     <RootNavigator.Navigator

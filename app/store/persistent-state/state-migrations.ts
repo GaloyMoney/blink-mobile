@@ -40,15 +40,17 @@ const migrate2ToCurrent = async (state: _PersistentState_2): Promise<PersistentS
 
   if (token && decodeToken(token)) {
     const { network } = decodeToken(token)
-    const galoyInstance = GALOY_INSTANCES.find((instance) => instance.network === network)
-    if (galoyInstance) {
-      return migrate3ToCurrent({
-        ...state,
-        schemaVersion: 3,
-        galoyInstance,
-        galoyAuthToken: token,
-        isAnalyticsEnabled: true,
-      })
+    if (network === "mainnet") {
+      const galoyInstance = GALOY_INSTANCES.find((instance) => instance.name === "BBW")
+      if (galoyInstance) {
+        return migrate3ToCurrent({
+          ...state,
+          schemaVersion: 3,
+          galoyInstance,
+          galoyAuthToken: token,
+          isAnalyticsEnabled: true,
+        })
+      }
     }
   }
 
