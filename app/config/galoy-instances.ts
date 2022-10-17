@@ -24,7 +24,7 @@ export const GALOY_INSTANCES: GaloyInstance[] = [
   {
     name: "Local",
     network: "regtest",
-    graphqlUri: `http://${scriptHostname()}:4002/graphql`,
-    graphqlWsUri: `ws://${scriptHostname()}:4002/graphql`,
+    graphqlUri: `http://${scriptHostname()}:4455/graphql`,
+    graphqlWsUri: `ws://${scriptHostname()}:4455/graphql`,
   },
 ]
