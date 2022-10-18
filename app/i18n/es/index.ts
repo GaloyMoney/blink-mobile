@@ -10,7 +10,7 @@ const es: Translation = {
     yourAddress: "Su dirección {bankName}",
     notAbleToChange: "No podrá cambiar su dirección {bankName} después de que esta esté configurada.",
     addressNotAvailable: "Esta dirección {bankName} ya está ocupada.",
-    somethingWentWrong: "Something went wrong. Please try again later.", // todo translate,
+    somethingWentWrong: "Algo salió mal. Por favor, inténtelo de nuevo más tarde.",
     merchantTitle: "Para comercios",
     yourCashRegister: "Su caja registradora o terminal de punto de venta (POS)",
     yourPaycode: "Su código de pago",
@@ -18,10 +18,10 @@ const es: Translation = {
     copiedPaycodeToClipboard: "Código de pago copiado al portapapeles",
     copiedCashRegisterToClipboard: "Caja registradora copiada al portapapeles",
     howToUseYourAddress: "Cómo usar su dirección {bankName}",
-    howToUseYourPaycode: "How to use your Paycode", // todo translate
+    howToUseYourPaycode: "Cómo utilizar su Código de Pago",
     howToUseYourCashRegister: "Cómo usar tu caja registradora / Cómo usar tu terminal de punto de venta",
     howToUseYourAddressExplainer: "Su dirección {bankName} es su propia dirección lightning. Es como una dirección de correo electrónico, pero para tu Bitcoin. Para recibir pagos, comparte tu dirección completa con alguien que use una billetera que admita la dirección Lightning.\n\nEstas carteras lo admiten:",
-    howToUseYourPaycodeExplainer: "You can print your Paycode (which is an amountless invoice) and display it in your business to receive payments. Individuals can pay you by scanning it with a Lightning-enabled wallet.\n\nHowever, be aware that some wallets can’t scan an amountless invoice such as:", // todo translate
+    howToUseYourPaycodeExplainer: "Puede imprimir su código de pago (que es una factura sin monto) y mostrarlo en su negocio para recibir pagos. Los usuarios pueden pagarle al escanearlo con una billetera habilitada para Lightning.\n\nSin embargo, tenga en cuenta que algunas billeteras no pueden escanear una factura sin monto como:",
     howToUseYourCashRegisterExplainer: "Su caja registradora permite a sus empleados cobrar pagos sin necesidad de darles acceso a su billetera. Comparte tu enlace. Pueden anclarlo a su pantalla de inicio y generar facturas Lightning en su nombre. Los pagos cobrados utilizando la caja registradora se enviarán directamente a su billetera Bitcoin Beach.",
   },
   AuthenticationScreen: {
