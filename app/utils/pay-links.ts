@@ -1,37 +1,40 @@
-import { INetwork } from "@app/types/network"
+import { GaloyInstance } from "@app/config/galoy-instances"
 import { scriptHostname } from "./helper"
 
 // TODO: Return all of these values from the API?
 
-export const getPosUrl = (network: INetwork, address: string): string => {
-  switch (network) {
-    case "regtest":
+export const getPosUrl = (instance: GaloyInstance, address: string): string => {
+  switch (instance.name) {
+    case "Local":
       return `http://${scriptHostname()}:3000/${address}`
-    case "testnet":
+    case "Staging":
       return `https://staging.pay.galoy.io/${address}`
-    case "mainnet":
+    case "BBW":
       return `https://pay.bbw.sv/${address}`
   }
 }
 
-export const getPrintableQrCodeUrl = (network: INetwork, address: string): string => {
-  switch (network) {
-    case "regtest":
+export const getPrintableQrCodeUrl = (
+  instance: GaloyInstance,
+  address: string,
+): string => {
+  switch (instance.name) {
+    case "Local":
       return `http://${scriptHostname()}:3000/${address}/print`
-    case "testnet":
+    case "Staging":
       return `https://pay.staging.galoy.io/${address}/print`
-    case "mainnet":
+    case "BBW":
       return `https://pay.bbw.sv/${address}/print`
   }
 }
 
-export const getLightningAddress = (network: INetwork, address: string): string => {
-  switch (network) {
-    case "regtest":
+export const getLightningAddress = (instance: GaloyInstance, address: string): string => {
+  switch (instance.name) {
+    case "Local":
       return `${address}@${scriptHostname()}:3000`
-    case "testnet":
+    case "Staging":
       return `${address}@pay.staging.galoy.io`
-    case "mainnet":
+    case "BBW":
       return `${address}@bbw.sv`
   }
 }

@@ -1,5 +1,6 @@
 import { CustomIcon } from "@app/components/custom-icon"
 import { Screen } from "@app/components/screen"
+import { useAppConfig } from "@app/hooks"
 import useMainQuery from "@app/hooks/use-main-query"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
@@ -78,9 +79,11 @@ export const GaloyAddressScreen = () => {
   const { LL } = useI18nContext()
   const { username } = useMainQuery()
   const [chooseAddressModalVisible, setChooseAddressModalVisible] = React.useState(false)
-  const { network } = useMainQuery()
+  const {
+    appConfig: { galoyInstance },
+  } = useAppConfig()
   const [explainerModalVisible, setExplainerModalVisible] = React.useState(false)
-  const lightningAddress = getLightningAddress(network, username)
+  const lightningAddress = getLightningAddress(galoyInstance, username)
   const toggleChooseAddressModal = () => {
     setChooseAddressModalVisible(!chooseAddressModalVisible)
   }

@@ -1,6 +1,6 @@
 import { CustomIcon } from "@app/components/custom-icon"
 import { Dropdown } from "@app/components/dropdown"
-import useMainQuery from "@app/hooks/use-main-query"
+import { useAppConfig } from "@app/hooks"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
 import { getPosUrl, getPrintableQrCodeUrl } from "@app/utils/pay-links"
@@ -59,9 +59,11 @@ const styles = EStyleSheet.create({
 
 export const MerchantsDropdown = ({ username }: { username: string }) => {
   const { LL } = useI18nContext()
-  const { network } = useMainQuery()
-  const posUrl = getPosUrl(network, username)
-  const payCodeUrl = getPrintableQrCodeUrl(network, username)
+  const {
+    appConfig: { galoyInstance },
+  } = useAppConfig()
+  const posUrl = getPosUrl(galoyInstance, username)
+  const payCodeUrl = getPrintableQrCodeUrl(galoyInstance, username)
   const [isPosExplainerModalOpen, setIsPosExplainerModalOpen] = React.useState(false)
   const [isPaycodeExplainerModalOpen, setIsPaycodeExplainerModalOpen] =
     React.useState(false)
