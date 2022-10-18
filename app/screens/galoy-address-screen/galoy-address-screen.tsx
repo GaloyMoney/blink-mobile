@@ -74,7 +74,7 @@ const styles = EStyleSheet.create({
   },
 })
 
-export const AddressScreen = () => {
+export const GaloyAddressScreen = () => {
   const { LL } = useI18nContext()
   const { username } = useMainQuery()
   const [chooseAddressModalVisible, setChooseAddressModalVisible] = React.useState(false)
@@ -97,7 +97,7 @@ export const AddressScreen = () => {
           <TouchableWithoutFeedback onPress={() => toggleExplainerModal()}>
             <Text style={styles.addressInfoText}>
               <CustomIcon name="custom-info-icon" color={palette.lapisLazuli} />{" "}
-              {LL.AddressScreen.yourAddress({ bankName: "BBW" })}
+              {LL.GaloyAddressScreen.yourAddress({ bankName: "BBW" })}
             </Text>
           </TouchableWithoutFeedback>
           {username && (
@@ -106,7 +106,7 @@ export const AddressScreen = () => {
                 onPress={() => {
                   Clipboard.setString(lightningAddress)
                   toastShow({
-                    message: LL.AddressScreen.copiedAddressToClipboard({
+                    message: LL.GaloyAddressScreen.copiedAddressToClipboard({
                       bankName: "BBW",
                     }),
                     type: "success",
@@ -134,7 +134,7 @@ export const AddressScreen = () => {
         </View>
         {!username && (
           <Button
-            title={LL.AddressScreen.buttonTitle({ bankName: "BBW" })}
+            title={LL.GaloyAddressScreen.buttonTitle({ bankName: "BBW" })}
             buttonStyle={styles.buttonStyle}
             containerStyle={styles.buttonContainerStyle}
             onPress={() => toggleChooseAddressModal()}

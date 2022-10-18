@@ -16,7 +16,7 @@ export type Translation = RootTranslation
 export type Translations = RootTranslation
 
 type RootTranslation = {
-	AddressScreen: {
+	GaloyAddressScreen: {
 		/**
 		 * Set your {bankName} address
 		 * @param {string} bankName
@@ -2722,7 +2722,7 @@ type RootTranslation = {
 }
 
 export type TranslationFunctions = {
-	AddressScreen: {
+	GaloyAddressScreen: {
 		/**
 		 * Set your {bankName} address
 		 */

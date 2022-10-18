@@ -5,7 +5,7 @@ import { Translation } from "../i18n-types";
 /* eslint-disable no-template-curly-in-string */
 /* eslint-disable max-lines */
 const frCA: Translation = {
-  AddressScreen: {
+  GaloyAddressScreen: {
     buttonTitle: "Set your {bankName} address", // todo translate
     yourAddress: "Your {bankName} address", // todo translate
     notAbleToChange: "You won't be able to change your {bankName} address after it's set.", // todo translate

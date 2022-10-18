@@ -1,7 +1,7 @@
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
 import React from "react"
-import { Modal, TouchableWithoutFeedback, View } from "react-native"
+import { FlatList, Modal, TouchableWithoutFeedback, View } from "react-native"
 import { Text } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 
@@ -55,7 +55,7 @@ type SetAddressModalProps = {
   toggleModal?: () => void
 }
 
-export const PosExplainerModal = ({
+export const AddressExplainerModal = ({
   modalVisible,
   toggleModal,
 }: SetAddressModalProps) => {
@@ -73,10 +73,28 @@ export const PosExplainerModal = ({
       >
         <View style={styles.modalView}>
           <Text style={styles.titleText}>
-            {LL.AddressScreen.howToUseYourCashRegister()}
+            {LL.GaloyAddressScreen.howToUseYourAddress({ bankName: "BBW" })}
           </Text>
           <Text style={styles.bodyText}>
-            {LL.AddressScreen.howToUseYourCashRegisterExplainer()}
+            {LL.GaloyAddressScreen.howToUseYourAddressExplainer({ bankName: "BBW" })}
+          </Text>
+          <Text style={styles.bodyText}>
+            <FlatList
+              data={[
+                { key: "Bitcoin Beach Wallet" },
+                { key: "Blue Wallet" },
+                { key: "Breez" },
+                { key: "Phoenix" },
+                { key: "Simple Bitcoin Wallet (SBW)" },
+                { key: "Wallet of Satoshi" },
+              ]}
+              renderItem={({ item }) => (
+                <Text style={styles.bodyText}>
+                  {"\u2B24 "}
+                  {item.key}
+                </Text>
+              )}
+            />
           </Text>
           <TouchableWithoutFeedback onPress={() => toggleModal()}>
             <View style={styles.backText}>

@@ -77,7 +77,7 @@ export const MerchantsDropdown = ({ username }: { username: string }) => {
   const dropdownTitle = (
     <Text style={styles.title}>
       <CustomIcon name="custom-merchant-icon" color={palette.lapisLazuli} />{" "}
-      {LL.AddressScreen.merchantTitle()}
+      {LL.GaloyAddressScreen.merchantTitle()}
     </Text>
   )
 
@@ -90,7 +90,7 @@ export const MerchantsDropdown = ({ username }: { username: string }) => {
         >
           <Text style={styles.fieldText}>
             <CustomIcon name="custom-info-icon" color={palette.lapisLazuli} />{" "}
-            {LL.AddressScreen.yourCashRegister()}
+            {LL.GaloyAddressScreen.yourCashRegister()}
           </Text>
         </TouchableWithoutFeedback>
 
@@ -104,7 +104,7 @@ export const MerchantsDropdown = ({ username }: { username: string }) => {
             onPress={() => {
               Clipboard.setString(posUrl)
               toastShow({
-                message: LL.AddressScreen.copiedCashRegisterToClipboard(),
+                message: LL.GaloyAddressScreen.copiedCashRegisterToClipboard(),
                 type: "success",
               })
             }}
@@ -137,7 +137,7 @@ export const MerchantsDropdown = ({ username }: { username: string }) => {
         >
           <Text style={styles.fieldText}>
             <CustomIcon name="custom-info-icon" color={palette.lapisLazuli} />{" "}
-            {LL.AddressScreen.yourPaycode()}
+            {LL.GaloyAddressScreen.yourPaycode()}
           </Text>
         </TouchableWithoutFeedback>
         <View style={styles.iconContainer}>
@@ -150,7 +150,7 @@ export const MerchantsDropdown = ({ username }: { username: string }) => {
             onPress={() => {
               Clipboard.setString(payCodeUrl)
               toastShow({
-                message: LL.AddressScreen.copiedPaycodeToClipboard(),
+                message: LL.GaloyAddressScreen.copiedPaycodeToClipboard(),
                 type: "success",
               })
             }}

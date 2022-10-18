@@ -1,7 +1,7 @@
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
 import React from "react"
-import { FlatList, Modal, TouchableWithoutFeedback, View } from "react-native"
+import { Modal, TouchableWithoutFeedback, View } from "react-native"
 import { Text } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 
@@ -55,7 +55,7 @@ type SetAddressModalProps = {
   toggleModal?: () => void
 }
 
-export const PayCodeExplainerModal = ({
+export const PosExplainerModal = ({
   modalVisible,
   toggleModal,
 }: SetAddressModalProps) => {
@@ -72,20 +72,11 @@ export const PayCodeExplainerModal = ({
         }}
       >
         <View style={styles.modalView}>
-          <Text style={styles.titleText}>{LL.AddressScreen.howToUseYourPaycode()}</Text>
-          <Text style={styles.bodyText}>
-            {LL.AddressScreen.howToUseYourPaycodeExplainer()}
+          <Text style={styles.titleText}>
+            {LL.GaloyAddressScreen.howToUseYourCashRegister()}
           </Text>
           <Text style={styles.bodyText}>
-            <FlatList
-              data={[{ key: "Muun" }, { key: "Chivo" }, { key: "Strike" }]}
-              renderItem={({ item }) => (
-                <Text style={styles.bodyText}>
-                  {"\u2B24 "}
-                  {item.key}
-                </Text>
-              )}
-            />
+            {LL.GaloyAddressScreen.howToUseYourCashRegisterExplainer()}
           </Text>
           <TouchableWithoutFeedback onPress={() => toggleModal()}>
             <View style={styles.backText}>

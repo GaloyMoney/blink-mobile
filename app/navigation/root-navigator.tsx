@@ -70,7 +70,7 @@ import { useAuthenticationContext } from "@app/store/authentication-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { logEnterBackground, logEnterForeground } from "@app/utils/analytics"
 import { useAppConfig } from "@app/hooks"
-import { AddressScreen } from "@app/screens/address-screen"
+import { GaloyAddressScreen } from "@app/screens/galoy-address-screen"
 
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
 PushNotification.configure({
@@ -413,7 +413,7 @@ export const RootStack: NavigatorType = () => {
       />
       <RootNavigator.Screen
         name="addressScreen"
-        component={AddressScreen}
+        component={GaloyAddressScreen}
         options={() => ({
           title: "",
         })}

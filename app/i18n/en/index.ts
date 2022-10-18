@@ -5,7 +5,7 @@ import { BaseTranslation } from "../i18n-types"
 /* eslint-disable no-template-curly-in-string */
 /* eslint-disable max-lines */
 const en: BaseTranslation = {
-  AddressScreen: {
+  GaloyAddressScreen: {
     buttonTitle: "Set your {bankName: string} address",
     yourAddress: "Your {bankName: string} address",
     notAbleToChange: "You won't be able to change your {bankName: string} address after it's set.",

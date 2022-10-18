@@ -55,7 +55,7 @@ type SetAddressModalProps = {
   toggleModal?: () => void
 }
 
-export const AddressExplainerModal = ({
+export const PayCodeExplainerModal = ({
   modalVisible,
   toggleModal,
 }: SetAddressModalProps) => {
@@ -73,21 +73,14 @@ export const AddressExplainerModal = ({
       >
         <View style={styles.modalView}>
           <Text style={styles.titleText}>
-            {LL.AddressScreen.howToUseYourAddress({ bankName: "BBW" })}
+            {LL.GaloyAddressScreen.howToUseYourPaycode()}
           </Text>
           <Text style={styles.bodyText}>
-            {LL.AddressScreen.howToUseYourAddressExplainer({ bankName: "BBW" })}
+            {LL.GaloyAddressScreen.howToUseYourPaycodeExplainer()}
           </Text>
           <Text style={styles.bodyText}>
             <FlatList
-              data={[
-                { key: "Bitcoin Beach Wallet" },
-                { key: "Blue Wallet" },
-                { key: "Breez" },
-                { key: "Phoenix" },
-                { key: "Simple Bitcoin Wallet (SBW)" },
-                { key: "Wallet of Satoshi" },
-              ]}
+              data={[{ key: "Muun" }, { key: "Chivo" }, { key: "Strike" }]}
               renderItem={({ item }) => (
                 <Text style={styles.bodyText}>
                   {"\u2B24 "}
