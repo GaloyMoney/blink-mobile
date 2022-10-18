@@ -2,7 +2,7 @@ import { GaloyTextInput } from "@app/components/galoy-text-input"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
 import { useMutation } from "@galoymoney/client"
-import React, { useEffect } from "react"
+import React from "react"
 import { Modal, TouchableWithoutFeedback, View } from "react-native"
 import { Button, Text } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
@@ -103,7 +103,6 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
   const [address, setAddress] = React.useState("")
   const [error, setError] = React.useState("")
   const [newAddress, setNewAddress] = React.useState("")
-  const [pristine, setPristine] = React.useState(true)
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
 
   const [updateUsername, { loading }] = useMutation.userUpdateUsername({
@@ -127,12 +126,6 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
     },
   })
 
-  useEffect(() => {
-    if (!address) {
-      setPristine(true)
-    }
-  }, [address])
-
   const handleSubmit = () => {
     setError("")
     updateUsername({
@@ -145,7 +138,6 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
   }
 
   const handleOnChangeText = (value) => {
-    setPristine(false)
     setError("")
     setAddress(value)
   }
@@ -183,7 +175,7 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
                 buttonStyle={styles.buttonStyle}
                 loading={loading}
                 onPress={() => handleSubmit()}
-                disabled={pristine || Boolean(error)}
+                disabled={!address || Boolean(error)}
               />
               <View style={styles.cancelTextContainer}>
                 <TouchableWithoutFeedback onPress={() => toggleModal()}>
