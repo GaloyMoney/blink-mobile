@@ -47,7 +47,7 @@
     "apollo3-cache-persist": "^0.13.0",
     "bech32": "^2.0.0",
     "bitcoinjs-lib": "^5.1.10",
-    "bolt11": "nicolasburtey/bolt11",
+    "bolt11": "^1.4.0",
     "crypto-browserify": "^3.12.0",
     "currency.js": "^2.0.2",
     "deprecated-react-native-prop-types": "^2.3.0",
