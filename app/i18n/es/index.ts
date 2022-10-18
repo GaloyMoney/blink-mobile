@@ -6,23 +6,23 @@ import { Translation } from "../i18n-types";
 /* eslint-disable max-lines */
 const es: Translation = {
   GaloyAddressScreen: {
-    buttonTitle: "Set your {bankName} address", // todo translate
-    yourAddress: "Your {bankName} address", // todo translate
-    notAbleToChange: "You won't be able to change your {bankName} address after it's set.", // todo translate
-    addressNotAvailable: "This {bankName} address is already taken.", // todo translate
+    buttonTitle: "Establezca su dirección {bankName} ",
+    yourAddress: "Su dirección {bankName}",
+    notAbleToChange: "No podrá cambiar su dirección {bankName} después de que esta esté configurada.",
+    addressNotAvailable: "Esta dirección {bankName} ya está ocupada.",
     somethingWentWrong: "Something went wrong. Please try again later.", // todo translate,
-    merchantTitle: "For merchants", // todo translate
-    yourCashRegister: "Your Cash Register", // todo translate
-    yourPaycode: "Your Paycode", // todo translate
-    copiedAddressToClipboard: "Copied {bankName} address to clipboard", // todo translate
-    copiedPaycodeToClipboard: "Copied Paycode to clipboard", // todo translate
-    copiedCashRegisterToClipboard: "Copied Cash Register to clipboard", // todo translate
-    howToUseYourAddress: "How to use your {bankName} address", // todo translate
+    merchantTitle: "Para comercios",
+    yourCashRegister: "Su caja registradora o terminal de punto de venta (POS)",
+    yourPaycode: "Su código de pago",
+    copiedAddressToClipboard: "Dirección {bankName} copiada al portapapeles",
+    copiedPaycodeToClipboard: "Código de pago copiado al portapapeles",
+    copiedCashRegisterToClipboard: "Caja registradora copiada al portapapeles",
+    howToUseYourAddress: "Cómo usar su dirección {bankName}",
     howToUseYourPaycode: "How to use your Paycode", // todo translate
-    howToUseYourCashRegister: "How to use your Cash Register", // todo translate
-    howToUseYourAddressExplainer: "Your {bankName} address is your own Lightning address. It’s like an email address, but for your Bitcoin.\n\nTo receive payments, share your full address to someone using a wallet supporting the Lightning address.\n\nThese wallets support it:", // todo translate
+    howToUseYourCashRegister: "Cómo usar tu caja registradora / Cómo usar tu terminal de punto de venta",
+    howToUseYourAddressExplainer: "Su dirección {bankName} es su propia dirección lightning. Es como una dirección de correo electrónico, pero para tu Bitcoin. Para recibir pagos, comparte tu dirección completa con alguien que use una billetera que admita la dirección Lightning.\n\nEstas carteras lo admiten:",
     howToUseYourPaycodeExplainer: "You can print your Paycode (which is an amountless invoice) and display it in your business to receive payments. Individuals can pay you by scanning it with a Lightning-enabled wallet.\n\nHowever, be aware that some wallets can’t scan an amountless invoice such as:", // todo translate
-    howToUseYourCashRegisterExplainer: "Your Cash Register let your employees collect payments without needing to give them access to your wallet.\n\nShare your link. They can pin it to their homescreen and generate Lightning invoices on your behalf. The payments collected using the Cash Register will be sent directly to your Bitcoin Beach Wallet.", // todo translate
+    howToUseYourCashRegisterExplainer: "Su caja registradora permite a sus empleados cobrar pagos sin necesidad de darles acceso a su billetera. Comparte tu enlace. Pueden anclarlo a su pantalla de inicio y generar facturas Lightning en su nombre. Los pagos cobrados utilizando la caja registradora se enviarán directamente a su billetera Bitcoin Beach.",
   },
   AuthenticationScreen: {
     authenticationDescription: "Autentiquese para continuar",
@@ -643,7 +643,7 @@ const es: Translation = {
   SettingsScreen: {
     activated: "Activada",
     tapLogIn: "\nIngrese aquí para iniciar sesión",
-    addressScreen: "Receive payments using your {bankName} address or the merchants features", // todo translate
+    addressScreen: "Reciba pagos utilizando su dirección {bankName} o las funciones de la interfaz de red de pago",
     tapUserName: "Ingrese aquí para configurarlo",
     title: "Configuración",
     csvTransactionsError:
