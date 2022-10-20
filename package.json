@@ -19,7 +19,7 @@
     "fastlane-update": "(cd ios && bundle update fastlane && cd ../android && bundle update fastlane)",
     "increment": "(cd ios && fastlane ios increment && cd ../android && echo 'fastlane android increment')",
     "storybook": "start-storybook -p 9001",
-    "adb": "adb reverse tcp:9090 tcp:9090 && adb reverse tcp:3000 tcp:3000 && adb reverse tcp:4000 tcp:4000 && adb reverse tcp:9001 tcp:9001 && adb reverse tcp:8081 tcp:8081 && adb reverse tcp:4455 tcp:4455",
+    "adb": "adb reverse tcp:9090 tcp:9090 && adb reverse tcp:3000 tcp:3000 && adb reverse tcp:4000 tcp:4000 && adb reverse tcp:9001 tcp:9001 && adb reverse tcp:8081 tcp:8081 && adb reverse tcp:4002 tcp:4002",
     "patch": "patch-package",
     "postinstall": "jetify && if which pod >/dev/null; then (cd ios; pod install); fi",
     "hack:types-react-native": "rimraf node_modules/@types/react-native/node_modules/@types",
