@@ -6,11 +6,11 @@ import { scriptHostname } from "./helper"
 export const getPosUrl = (instance: GaloyInstance, address: string): string => {
   switch (instance.name) {
     case "Local":
-      return `http://${scriptHostname()}:3000/${address}`
+      return `http://${scriptHostname()}:3000/merchant/${address}`
     case "Staging":
-      return `https://staging.pay.galoy.io/${address}`
+      return `https://staging.pay.galoy.io/merchant/${address}`
     case "BBW":
-      return `https://pay.bbw.sv/${address}`
+      return `https://pay.bbw.sv/merchant/${address}`
   }
 }
 
