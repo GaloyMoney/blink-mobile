@@ -50,7 +50,9 @@ import {
 } from "./stack-param-lists"
 import type { NavigatorType } from "../types/jsx"
 import ReceiveBitcoinScreen from "@app/screens/receive-bitcoin-screen/receive-bitcoin"
-import RedeemBitcoinScreen from "@app/screens/redeem-lnurl-withdrawal-screen/redeem-bitcoin"
+import RedeemBitcoinDetailScreen from "@app/screens/redeem-lnurl-withdrawal-screen/redeem-bitcoin-detail-screen"
+import RedeemBitcoinConfirmationScreen from "@app/screens/redeem-lnurl-withdrawal-screen/redeem-bitcoin-confirmation-screen"
+import RedeemBitcoinSuccessScreen from "@app/screens/redeem-lnurl-withdrawal-screen/redeem-bitcoin-success-screen"
 import PushNotification from "react-native-push-notification"
 import useMainQuery from "@app/hooks/use-main-query"
 import { LnurlScreen } from "@app/screens/settings-screen/lnurl-screen"
@@ -345,8 +347,22 @@ export const RootStack: NavigatorType = () => {
         }}
       />
       <RootNavigator.Screen
-        name="redeemBitcoin"
-        component={RedeemBitcoinScreen}
+        name="redeemBitcoinDetail"
+        component={RedeemBitcoinDetailScreen}
+        options={{
+          title: "Redeem BTC",
+        }}
+      />
+      <RootNavigator.Screen
+        name="redeemBitcoinConfirmation"
+        component={RedeemBitcoinConfirmationScreen}
+        options={{
+          title: "Redeem BTC",
+        }}
+      />
+      <RootNavigator.Screen
+        name="redeemBitcoinSuccess"
+        component={RedeemBitcoinSuccessScreen}
         options={{
           title: "Redeem BTC",
         }}

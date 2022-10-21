@@ -184,7 +184,7 @@ const RedeemBtc = ({
 
   const [memo, setMemo] = useState(defaultDescription)
   const [showMemoInput, setShowMemoInput] = useState(false)
-  const [showAmountInput, setShowAmountInput] = useState(true)
+  const [showAmountInput, setShowAmountInput] = useState(true) // TODO: If min==max then don't show amountInput...
   const [amountCurrency, setAmountCurrency] = useState("BTC")
 
   const [paymentLayer] = useState<"LIGHTNING_BTC">(TYPE_LIGHTNING_BTC)

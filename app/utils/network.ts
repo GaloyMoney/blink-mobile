@@ -24,7 +24,7 @@ export const loadNetwork = async (): Promise<INetwork> => {
   let network = await loadString(NETWORK_STRING)
 
   if (!network) {
-    network = __DEV__ ? "testnet" : "mainnet"
+    network = "mainnet"
   }
 
   return network as INetwork

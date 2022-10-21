@@ -1,1 +1,1 @@
-export * from "./redeem-bitcoin"
+export * from "./redeem-bitcoin-detail-screen"

@@ -146,7 +146,7 @@ export const ScanningQRCodeScreen: ScreenType = ({
                 }
                 break
               case "withdrawRequest":
-                navigation.navigate("redeemBitcoin", {
+                navigation.navigate("redeemBitcoinDetail", {
                   callback: lnurlParams.callback,
                   domain: lnurlParams.domain,
                   k1: lnurlParams.k1,
