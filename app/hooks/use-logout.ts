@@ -1,7 +1,6 @@
 import { useApolloClient } from "@apollo/client"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { BUILD_VERSION } from "../app"
-import { NETWORK_STRING } from "../utils/network"
 import KeyStoreWrapper from "../utils/storage/secureStorage"
 import useToken, { TOKEN_KEY } from "./use-token"
 
@@ -13,7 +12,7 @@ const useLogout = () => {
     try {
       await client.clearStore()
       clearToken()
-      await AsyncStorage.multiRemove([NETWORK_STRING, TOKEN_KEY, BUILD_VERSION]) // use storage.ts wrapper
+      await AsyncStorage.multiRemove([TOKEN_KEY, BUILD_VERSION]) // use storage.ts wrapper
       await KeyStoreWrapper.removeIsBiometricsEnabled()
       await KeyStoreWrapper.removePin()
       await KeyStoreWrapper.removePinAttempts()

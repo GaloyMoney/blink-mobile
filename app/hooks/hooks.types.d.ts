@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { INetwork } from "@app/types/network"
+
 type SetConvertedAmountsInput = {
   moneyAmount: MoneyAmount
 }
@@ -30,4 +32,5 @@ type useMainQueryOutput = {
   loading: boolean
   refetch: () => void
   errors: object[]
+  network: INetwork
 }
