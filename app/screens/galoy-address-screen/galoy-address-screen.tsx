@@ -18,13 +18,8 @@ import { SetAddressModal } from "./set-address-modal"
 const styles = EStyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-  },
-  title: {
-    color: palette.lapisLazuli,
-    fontSize: 18,
-    fontFamily: "Roboto",
-    fontWeight: "500",
+    paddingLeft: 20,
+    paddingRight: 20,
   },
   addressInfoContainer: {
     flexDirection: "row",
@@ -37,7 +32,6 @@ const styles = EStyleSheet.create({
     fontSize: 14,
     fontFamily: "Roboto",
     fontWeight: "500",
-    flex: 4,
   },
   addressCopyIcon: {
     marginRight: 20,
@@ -73,6 +67,19 @@ const styles = EStyleSheet.create({
     fontFamily: "Roboto",
     fontWeight: "500",
   },
+  fieldNameContainer: {
+    flexDirection: "row",
+  },
+  fieldNameComponent: {
+    justifyContent: "center",
+  },
+  title: {
+    color: palette.lapisLazuli,
+    fontSize: 18,
+    fontFamily: "Roboto",
+    fontWeight: "500",
+    flexWrap: "wrap",
+  },
 })
 
 export const GaloyAddressScreen = () => {
@@ -98,10 +105,18 @@ export const GaloyAddressScreen = () => {
         </Text>
         <View style={styles.addressInfoContainer}>
           <TouchableWithoutFeedback onPress={() => toggleExplainerModal()}>
-            <Text style={styles.addressInfoText}>
-              <CustomIcon name="custom-info-icon" color={palette.lapisLazuli} />{" "}
-              {LL.GaloyAddressScreen.yourAddress({ bankName: "BBW" })}
-            </Text>
+            <View style={styles.fieldNameContainer}>
+              <View style={styles.fieldNameComponent}>
+                <View style={styles.fieldText}>
+                  <CustomIcon name="custom-info-icon" color={palette.lapisLazuli} />
+                </View>
+              </View>
+              <View style={styles.fieldNameComponent}>
+                <Text style={styles.addressInfoText}>
+                  {" " + LL.GaloyAddressScreen.yourAddress({ bankName: "BBW" })}
+                </Text>
+              </View>
+            </View>
           </TouchableWithoutFeedback>
           {username && (
             <View style={styles.iconContainer}>

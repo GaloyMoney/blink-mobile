@@ -12,13 +12,25 @@ import Animated, {
 } from "react-native-reanimated"
 import { palette } from "@app/theme"
 import { CustomIcon } from "../custom-icon"
+import EStyleSheet from "react-native-extended-stylesheet"
+
+const styles = EStyleSheet.create({
+  fieldNameContainer: {
+    flexDirection: "row",
+  },
+  fieldNameComponent: {
+    justifyContent: "center",
+  },
+})
 
 export const Dropdown = ({
+  icon,
   content,
   dropdownTitle,
   titleStyle,
 }: {
-  dropdownTitle: JSX.Element
+  icon?: string
+  dropdownTitle: string
   content: JSX.Element
   titleStyle: TextProps
 }) => {
@@ -55,9 +67,17 @@ export const Dropdown = ({
   return (
     <View>
       <TouchableWithoutFeedback onPress={toggleDropdown}>
-        <Text style={titleStyle}>
-          {dropdownTitle} {renderCollapseIcon()}
-        </Text>
+        <View style={styles.fieldNameContainer}>
+          {icon && (
+            <View style={styles.fieldNameComponent}>
+              <CustomIcon name={icon} color={palette.lapisLazuli} />
+            </View>
+          )}
+          <Text style={titleStyle}>
+            {icon && " "}
+            {dropdownTitle} {renderCollapseIcon()}
+          </Text>
+        </View>
       </TouchableWithoutFeedback>
       {isDropdownOpen && (
         <Animated.View entering={ZoomInEasyUp} layout={Layout.springify()}>

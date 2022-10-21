@@ -416,6 +416,10 @@ export const RootStack: NavigatorType = () => {
         component={GaloyAddressScreen}
         options={() => ({
           title: "",
+          headerStyle: {
+            backgroundColor: "#E6EBEF",
+            flexWrap: "wrap",
+          },
         })}
       />
       <RootNavigator.Screen

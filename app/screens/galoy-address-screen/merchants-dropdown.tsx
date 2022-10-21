@@ -20,6 +20,8 @@ const styles = EStyleSheet.create({
     fontSize: 18,
     fontFamily: "Roboto",
     fontWeight: "500",
+    flexShrink: 1,
+    flexWrap: "nowrap",
   },
   fieldContainer: {
     flexDirection: "row",
@@ -27,12 +29,19 @@ const styles = EStyleSheet.create({
     alignItems: "center",
     marginTop: 32,
   },
+  fieldNameContainer: {
+    flex: 4,
+    flexDirection: "row",
+  },
+  fieldNameComponent: {
+    justifyContent: "center",
+  },
   fieldText: {
     color: palette.lapisLazuli,
     fontSize: 14,
     fontFamily: "Roboto",
     fontWeight: "500",
-    flex: 4,
+    verticalTextAlign: "center",
   },
   copyIcon: {
     marginRight: 20,
@@ -50,10 +59,12 @@ const styles = EStyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10,
     marginTop: 8,
+    flexShrink: 1,
+    flexWrap: "nowrap",
   },
   // For some reason the first TouchableWithoutFeedback requires a height otherwise the Text component doesn't show
   visualBugFix: {
-    height: 21,
+    height: 30,
   },
 })
 
@@ -76,13 +87,6 @@ export const MerchantsDropdown = ({ username }: { username: string }) => {
     setIsPaycodeExplainerModalOpen(!isPaycodeExplainerModalOpen)
   }
 
-  const dropdownTitle = (
-    <Text style={styles.title}>
-      <CustomIcon name="custom-merchant-icon" color={palette.lapisLazuli} />{" "}
-      {LL.GaloyAddressScreen.merchantTitle()}
-    </Text>
-  )
-
   const dropdownContent = (
     <View>
       <View style={styles.fieldContainer}>
@@ -90,10 +94,18 @@ export const MerchantsDropdown = ({ username }: { username: string }) => {
           style={styles.visualBugFix}
           onPress={() => togglePosExplainerModal()}
         >
-          <Text style={styles.fieldText}>
-            <CustomIcon name="custom-info-icon" color={palette.lapisLazuli} />{" "}
-            {LL.GaloyAddressScreen.yourCashRegister()}
-          </Text>
+          <View style={styles.fieldNameContainer}>
+            <View style={styles.fieldNameComponent}>
+              <View style={styles.fieldText}>
+                <CustomIcon name="custom-info-icon" color={palette.lapisLazuli} />
+              </View>
+            </View>
+            <View style={styles.fieldNameComponent}>
+              <Text style={styles.fieldText}>
+                {" " + LL.GaloyAddressScreen.yourCashRegister()}
+              </Text>
+            </View>
+          </View>
         </TouchableWithoutFeedback>
 
         <View style={styles.iconContainer}>
@@ -130,17 +142,27 @@ export const MerchantsDropdown = ({ username }: { username: string }) => {
         </View>
       </View>
       <View style={styles.usernameField}>
-        <Text style={styles.title}>{posUrl}</Text>
+        <Text style={styles.title} numberOfLines={1}>
+          {posUrl}
+        </Text>
       </View>
       <View style={styles.fieldContainer}>
         <TouchableWithoutFeedback
           style={styles.visualBugFix}
           onPress={() => togglePaycodeExplainerModal()}
         >
-          <Text style={styles.fieldText}>
-            <CustomIcon name="custom-info-icon" color={palette.lapisLazuli} />{" "}
-            {LL.GaloyAddressScreen.yourPaycode()}
-          </Text>
+          <View style={styles.fieldNameContainer}>
+            <View style={styles.fieldNameComponent}>
+              <View style={styles.fieldText}>
+                <CustomIcon name="custom-info-icon" color={palette.lapisLazuli} />
+              </View>
+            </View>
+            <View style={styles.fieldNameComponent}>
+              <Text style={styles.fieldText}>
+                {" " + LL.GaloyAddressScreen.yourPaycode()}
+              </Text>
+            </View>
+          </View>
         </TouchableWithoutFeedback>
         <View style={styles.iconContainer}>
           <TouchableWithoutFeedback onPress={() => Linking.openURL(payCodeUrl)}>
@@ -176,7 +198,9 @@ export const MerchantsDropdown = ({ username }: { username: string }) => {
         </View>
       </View>
       <View style={styles.usernameField}>
-        <Text style={styles.title}>{payCodeUrl}</Text>
+        <Text style={styles.title} numberOfLines={1}>
+          {payCodeUrl}
+        </Text>
       </View>
       <PosExplainerModal
         modalVisible={isPosExplainerModalOpen}
@@ -191,7 +215,8 @@ export const MerchantsDropdown = ({ username }: { username: string }) => {
 
   return (
     <Dropdown
-      dropdownTitle={dropdownTitle}
+      icon={"custom-merchant-icon"}
+      dropdownTitle={LL.GaloyAddressScreen.merchantTitle()}
       content={dropdownContent}
       titleStyle={styles.title}
     />
