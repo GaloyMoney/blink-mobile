@@ -156,7 +156,7 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
             <KeyboardAwareScrollView>
               <GaloyTextInput
                 label={LL.GaloyAddressScreen.buttonTitle({ bankName: "BBW" })}
-                append="@bbw.sv"
+                append="@pay.bbw.sv"
                 onChangeText={handleOnChangeText}
                 labelStyle={styles.labelStyle}
               />
@@ -190,7 +190,7 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
                 {LL.GaloyAddressScreen.yourAddress({ bankName: "BBW" })}
               </Text>
               <View style={styles.newAddressContainer}>
-                <Text style={styles.newAddressText}>{newAddress}@bbw.sv</Text>
+                <Text style={styles.newAddressText}>{newAddress}@pay.bbw.sv</Text>
               </View>
               <Button
                 title={LL.MoveMoneyScreen.title()}

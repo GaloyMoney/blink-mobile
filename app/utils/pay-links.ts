@@ -35,6 +35,6 @@ export const getLightningAddress = (instance: GaloyInstance, address: string): s
     case "Staging":
       return `${address}@pay.staging.galoy.io`
     case "BBW":
-      return `${address}@bbw.sv`
+      return `${address}@pay.bbw.sv`
   }
 }
