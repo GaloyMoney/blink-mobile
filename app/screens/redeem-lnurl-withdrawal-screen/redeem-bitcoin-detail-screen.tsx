@@ -70,12 +70,22 @@ const styles = EStyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     padding: 10,
+    marginTop: 10,
     backgroundColor: palette.white,
     borderRadius: 10,
   },
   infoText: {
     color: palette.midGrey,
     fontSize: "12rem",
+  },
+  withdrawalErrorText: {
+    color: palette.red,
+    fontSize: "12rem",
+  },
+  withdrawableDescriptionText: {
+    color: palette.midGrey,
+    fontSize: "14rem",
+    textAlign: "center",
   },
   walletBalanceInput: {
     color: palette.lapisLazuli,
@@ -201,7 +211,8 @@ const RedeemBitcoinDetailScreen = ({
 
   const [amountCurrency, setAmountCurrency] = useState("BTC")
 
-  const { btcWalletId, usdWalletId } = useMainQuery()
+  const { btcWalletId } = useMainQuery()
+  const usdWalletId = null // TODO: when usd wallet ln invoices can be generated providing the sats amount as in put we can have the usdWalletId from useMainQuery as follows: const { usdWalletId } = useMainQuery()
 
   const toggleAmountCurrency = () => {
     if (amountCurrency === "USD") {
@@ -219,17 +230,36 @@ const RedeemBitcoinDetailScreen = ({
     }
   }
 
-  const usdAmountInSats = Math.round(
-    convertCurrencyAmount({
-      amount: usdAmount ?? 0,
-      from: "USD",
-      to: "BTC",
-    }),
-  )
+  const updateUSDAmount = (usdAmount) => {
+    setUsdAmount(usdAmount)
+
+    setSatAmount(
+      Math.min(
+        minWithdrawableSatoshis,
+        Math.max(
+          maxWithdrawable,
+          // UsdAmountInSats
+          Math.round(
+            convertCurrencyAmount({
+              amount: usdAmount ?? 0,
+              from: "USD",
+              to: "BTC",
+            }),
+          ),
+        ),
+      ),
+    )
+  }
 
   const validAmount =
-    (amountCurrency === "BTC" && satAmount !== null) ||
-    (amountCurrency === "USD" && usdAmount !== null)
+    (amountCurrency === "BTC" &&
+      satAmount !== null &&
+      satAmount <= maxWithdrawableSatoshis &&
+      satAmount >= minWithdrawableSatoshis) ||
+    (amountCurrency === "USD" &&
+      usdAmount !== null &&
+      satAmount <= maxWithdrawableSatoshis &&
+      satAmount >= minWithdrawableSatoshis)
 
   return (
     <View style={styles.container}>
@@ -279,15 +309,17 @@ const RedeemBitcoinDetailScreen = ({
           </TouchableWithoutFeedback>
         </View>
       )}
-
-      {/* {receiveCurrency === WalletCurrency.USD && <ReceiveUsd />}
-      {receiveCurrency === WalletCurrency.BTC && <RedeemBtc />} */}
       <View style={[styles.inputForm, styles.container]}>
+        {defaultDescription && (
+          <Text style={styles.withdrawableDescriptionText}>{defaultDescription}</Text>
+        )}
+        <Text style={[styles.infoText, styles.padding]}>
+          {LL.RedeemBitcoinScreen.amountToRedeemFrom({ domain })}
+        </Text>
         <View style={styles.currencyInputContainer}>
           <View style={styles.currencyInput}>
             {amountCurrency === "BTC" && (
               <>
-                <Text style={styles.infoText}>Amount to redeem from {domain}</Text>
                 <FakeCurrencyInput
                   value={satAmount}
                   onChangeValue={(newValue) => setSatAmount(newValue)}
@@ -297,12 +329,21 @@ const RedeemBitcoinDetailScreen = ({
                   precision={0}
                   suffix=" sats"
                   minValue={minWithdrawableSatoshis}
-                  maxValue={maxWithdrawableSatoshis}
                   style={styles.walletBalanceInput}
                   autoFocus
                 />
-                <Text style={styles.infoText}>
-                  Min: {minWithdrawableSatoshis} sats, Max: {maxWithdrawableSatoshis} sats
+                <Text
+                  style={
+                    satAmount <= maxWithdrawableSatoshis
+                      ? styles.infoText
+                      : styles.withdrawalErrorText
+                  }
+                >
+                  {LL.RedeemBitcoinScreen.minMaxRange({
+                    minimumAmount: minWithdrawableSatoshis.toString(),
+                    maximumAmount: maxWithdrawableSatoshis.toString(),
+                    currencyTicker: "sats",
+                  })}
                 </Text>
                 <FakeCurrencyInput
                   value={satAmountInUsd}
@@ -321,7 +362,9 @@ const RedeemBitcoinDetailScreen = ({
               <>
                 <FakeCurrencyInput
                   value={usdAmount}
-                  onChangeValue={(newValue) => setUsdAmount(newValue)}
+                  onChangeValue={(newValue) => {
+                    updateUSDAmount(newValue)
+                  }}
                   prefix="$"
                   delimiter=","
                   separator="."
@@ -331,12 +374,21 @@ const RedeemBitcoinDetailScreen = ({
                   maxValue={maxSatAmountInUsd}
                   autoFocus
                 />
-                <Text style={styles.infoText}>
-                  Min: {minSatAmountInUsd.toFixed(2)} USD, Max:{" "}
-                  {maxSatAmountInUsd.toFixed(2)} USD
+                <Text
+                  style={
+                    satAmount <= maxWithdrawableSatoshis
+                      ? styles.infoText
+                      : styles.withdrawalErrorText
+                  }
+                >
+                  {LL.RedeemBitcoinScreen.minMaxRange({
+                    minimumAmount: minSatAmountInUsd.toFixed(2),
+                    maximumAmount: maxSatAmountInUsd.toFixed(2),
+                    currencyTicker: "USD",
+                  })}
                 </Text>
                 <FakeCurrencyInput
-                  value={usdAmountInSats}
+                  value={satAmount}
                   prefix=""
                   delimiter=","
                   separator="."
@@ -367,9 +419,9 @@ const RedeemBitcoinDetailScreen = ({
           disabledTitleStyle={styles.disabledButtonTitleStyle}
           disabled={!validAmount}
           onPress={() => {
-            if (amountCurrency === "USD" && usdAmount) {
-              setSatAmount(usdAmountInSats)
-            }
+            // if (amountCurrency === "USD" && usdAmount) {
+            //   setSatAmount(usdAmountInSats)
+            // }
             navigation.navigate("redeemBitcoinConfirmation", {
               callback,
               domain,

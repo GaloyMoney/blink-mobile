@@ -28,12 +28,18 @@ const styles = EStyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     padding: 10,
+    marginTop: 10,
     backgroundColor: palette.white,
     borderRadius: 10,
   },
   infoText: {
     color: palette.midGrey,
     fontSize: "12rem",
+  },
+  withdrawableDescriptionText: {
+    color: palette.midGrey,
+    fontSize: "14rem",
+    textAlign: "center",
   },
   walletBalanceInput: {
     color: palette.lapisLazuli,
@@ -184,15 +190,20 @@ const RedeemBitcoinConfirmationScreen = ({
 
   return (
     <View style={styles.container}>
-      {/* {receiveCurrency === WalletCurrency.USD && <ReceiveUsd />}
-      {receiveCurrency === WalletCurrency.BTC && <RedeemBtc />} */}
       <View style={[styles.inputForm, styles.container]}>
+        {defaultDescription && (
+          <Text style={styles.withdrawableDescriptionText}>{defaultDescription}</Text>
+        )}
         <View style={styles.currencyInputContainer}>
           <View style={styles.currencyInput}>
-            {receiveCurrency === WalletCurrency.BTC && (
+            {amountCurrency === WalletCurrency.BTC && (
               <>
                 <Text style={styles.infoText}>
-                  redeem {satAmount} sats from {domain}
+                  {LL.RedeemBitcoinScreen.redeemAmountFrom({
+                    amountToRedeem: satAmount.toString(),
+                    currencyTicker: "sats",
+                    domain,
+                  })}
                 </Text>
                 <FakeCurrencyInput
                   value={satAmount}
@@ -220,10 +231,14 @@ const RedeemBitcoinConfirmationScreen = ({
                 />
               </>
             )}
-            {receiveCurrency === WalletCurrency.USD && (
+            {amountCurrency === WalletCurrency.USD && (
               <>
                 <Text style={styles.infoText}>
-                  redeem {satAmountInUsd.toFixed(2)} USD from {domain}
+                  {LL.RedeemBitcoinScreen.redeemAmountFrom({
+                    amountToRedeem: satAmountInUsd.toFixed(2),
+                    currencyTicker: "USD",
+                    domain,
+                  })}
                 </Text>
                 <FakeCurrencyInput
                   value={usdAmount}
@@ -237,10 +252,6 @@ const RedeemBitcoinConfirmationScreen = ({
                   editable={false}
                   autoFocus
                 />
-                <Text style={styles.infoText}>
-                  Min: {minSatAmountInUsd.toFixed(2)} USD, Max:{" "}
-                  {maxSatAmountInUsd.toFixed(2)} USD
-                </Text>
                 <FakeCurrencyInput
                   value={usdAmountInSats}
                   prefix=""

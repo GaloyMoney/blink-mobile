@@ -1658,17 +1658,21 @@ type RootTranslation = {
 		 */
 		submissionError: string
 		/**
-		 * Min
+		 * Amount to Redeem From
 		 */
-		min: string
-		/**
-		 * Max
-		 */
-		max: string
+		minMaxRange: RequiredParams<'minimumAmount' | 'maximumAmount' | 'currencyTicker'>
 		/**
 		 * Redeem Bitcoin
 		 */
 		redeemBitcoin: string
+		/**
+		 * Amount to Redeem From
+		 */
+		amountToRedeemFrom: RequiredParams<'domain'>
+		/**
+		 * Amount to Redeem From
+		 */
+		redeemAmountFrom: RequiredParams<'amountToRedeem' | 'currencyTicker' | 'domain'>
 	}
 	ScanningQRCodeScreen: {
 		/**
@@ -4290,17 +4294,21 @@ export type TranslationFunctions = {
 		 */
 		submissionError: () => LocalizedString
 		/**
-		 * Min
+		 * Amount to Redeem From
 		 */
-		min: () => LocalizedString
+		minMaxRange: (arg: { minimumAmount: string, maximumAmount: string, currencyTicker: string }) => LocalizedString
 		/**
-		 * Max
-		 */
-		max: () => LocalizedString
-		/**
-		 * Update Invoice
+		 * Redeem Bitcoin
 		 */
 		redeemBitcoin: () => LocalizedString
+		/**
+		 * Amount to Redeem From
+		 */
+		amountToRedeemFrom: (arg: { domain: string }) => LocalizedString
+		/**
+		 * Redeem amount from 
+		 */
+		redeemAmountFrom: (arg: { amountToRedeem: string, currencyTicker: string, domain: string }) => LocalizedString
 	}
 	ScanningQRCodeScreen: {
 		/**

@@ -517,9 +517,10 @@ const en: BaseTranslation = {
     error: "Failed to generate invoice. Please contact support if this problem persists.",
     redeemingError: "Failed to redeem Bitcoin. Please contact support if this problem persists.",
     submissionError: "Failed to submit withdrawal request. Please contact support if this problem persists.",
-    min: "Min",
-    max: "Max",
-    redeemBitcoin: "Redeem Bitcoin"
+    minMaxRange: "Min: {minimumAmount: string} {currencyTicker: string}, Max: {maximumAmount: string} {currencyTicker: string}",
+    redeemBitcoin: "Redeem Bitcoin",
+    amountToRedeemFrom: "Amount to redeem from {domain: string}",
+    redeemAmountFrom: "redeem {amountToRedeem: string} {currencyTicker: string} from {domain: string}",
   },
   ScanningQRCodeScreen: {
     invalidContent:

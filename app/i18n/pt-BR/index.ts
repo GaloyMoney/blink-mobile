@@ -525,9 +525,10 @@ const ptBR: Translation = {
     error: "Failed to generate invoice. Please contact support if this problem persists.",
     redeemingError: "Failed to redeem Bitcoin. Please contact support if this problem persists.",
     submissionError: "Failed to submit withdrawal request. Please contact support if this problem persists.",
-    min: "Min",
-    max: "Max",
-    redeemBitcoin: "Redeem Bitcoin"
+    minMaxRange: "Min: {{minimumAmount}} {{currencyTicker}}, Max: {{maximumAmount}} {{currencyTicker}}",
+    redeemBitcoin: "Redeem Bitcoin",
+    amountToRedeemFrom: "Amount to redeem from {{domain}}",
+    redeemAmountFrom: "redeem {{amountToRedeem}} {{currencyTicker}} from {{domain}}"
   },
   ScanningQRCodeScreen: {
     invalidContent:
