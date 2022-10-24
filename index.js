@@ -23,6 +23,8 @@ const APP_NAME = "GaloyApp"
 // ⚠️ Leave this as `false` when checking into git.
 const SHOW_STORYBOOK = false
 
+console.log("test")
+
 let RootComponent = () => {
   return (
     <PersistentStateProvider>
