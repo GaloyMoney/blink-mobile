@@ -28,6 +28,7 @@ import ContactModal from "@app/components/contact-modal/contact-modal"
 import { copyPaymentInfoToClipboard } from "@app/utils/clipboard"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { openWhatsApp } from "@app/utils/external"
+import { CustomIcon } from "@app/components/custom-icon"
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "settings">
@@ -91,26 +92,6 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
     })
   }
 
-  const lnurlAction = () => {
-    if (username) {
-      navigation.navigate("lnurl", { username })
-    } else {
-      Alert.alert(
-        `Lnurl ${LL.SettingsScreen.title()}`,
-        LL.SettingsScreen.lnurlNoUsername(),
-        [
-          {
-            text: LL.common.yes(),
-            onPress: () => navigation.navigate("setUsername"),
-          },
-          {
-            text: LL.common.No(),
-          },
-        ],
-      )
-    }
-  }
-
   const logoutAction = async () => {
     try {
       await logout()
@@ -167,7 +148,6 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
       securityAction={securityAction}
       logoutAction={logoutAction}
       loadingCsvTransactions={loadingCsvTransactions}
-      lnurlAction={lnurlAction}
       deleteAccountAction={deleteAccountAction}
     />
   )
@@ -183,7 +163,6 @@ type SettingsScreenProps = {
   csvAction: (options?: QueryLazyOptions<OperationVariables>) => void
   securityAction: () => void
   logoutAction: () => Promise<void>
-  lnurlAction: () => void
   loadingCsvTransactions: boolean
   deleteAccountAction: () => void
 }
@@ -214,7 +193,6 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
     csvAction,
     securityAction,
     logoutAction,
-    lnurlAction,
     loadingCsvTransactions,
     deleteAccountAction,
   } = params
@@ -241,13 +219,11 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       greyed: hasToken,
     },
     {
-      category: LL.common.username(),
-      icon: "ios-person-circle",
-      id: "username",
-      subTitleDefaultValue: LL.SettingsScreen.tapUserName(),
-      subTitleText: username,
-      action: () => navigation.navigate("setUsername"),
-      enabled: hasToken && !username,
+      category: LL.SettingsScreen.addressScreen({ bankName: "BBW" }),
+      icon: "custom-receive-bitcoin",
+      id: "address",
+      action: () => navigation.navigate("addressScreen"),
+      enabled: hasToken,
       greyed: !hasToken,
     },
     {
@@ -266,14 +242,6 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       action: securityAction,
       enabled: hasToken,
       greyed: !hasToken,
-    },
-    {
-      category: "lnurl",
-      icon: "ios-globe",
-      id: "lnurl",
-      action: lnurlAction,
-      enabled: hasToken,
-      greyed: !hasToken || !username,
     },
     {
       category: LL.common.csvExport(),
@@ -340,7 +308,12 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
         return (
           <React.Fragment key={`setting-option-${i}`}>
             <ListItem onPress={setting.action} disabled={!setting.enabled}>
-              <Icon name={setting.icon} type="ionicon" color={settingColor} />
+              {!setting.icon?.startsWith("custom") && (
+                <Icon name={setting.icon} type="ionicon" color={settingColor} />
+              )}
+              {setting.icon?.startsWith("custom") && (
+                <CustomIcon name={setting.icon} color={settingColor} />
+              )}
               <ListItem.Content>
                 <ListItem.Title style={settingStyle}>
                   <Text>{setting.category}</Text>

@@ -13,7 +13,7 @@ storiesOf("Galoy text input", module)
         <GaloyTextInput
           label="Set your BBW address"
           onChangeText={(value) => console.log(value)}
-          append="@bbw.sv"
+          append="@pay.bbw.sv"
         />
       </UseCase>
       <UseCase text="Set Username" usage="with prepended string">

@@ -31,7 +31,7 @@ import {
 import { PriceScreen } from "../screens/price-screen/price-screen"
 
 import { ScanningQRCodeScreen } from "../screens/send-bitcoin-screen"
-import { SettingsScreen, UsernameScreen } from "../screens/settings-screen"
+import { SettingsScreen } from "../screens/settings-screen"
 import { LanguageScreen } from "../screens/settings-screen/language-screen"
 import { SecurityScreen } from "../screens/settings-screen/security-screen"
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
@@ -70,6 +70,7 @@ import { useAuthenticationContext } from "@app/store/authentication-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { logEnterBackground, logEnterForeground } from "@app/utils/analytics"
 import { useAppConfig } from "@app/hooks"
+import { GaloyAddressScreen } from "@app/screens/galoy-address-screen"
 
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
 PushNotification.configure({
@@ -411,10 +412,14 @@ export const RootStack: NavigatorType = () => {
         })}
       />
       <RootNavigator.Screen
-        name="setUsername"
-        component={UsernameScreen}
+        name="addressScreen"
+        component={GaloyAddressScreen}
         options={() => ({
           title: "",
+          headerStyle: {
+            backgroundColor: "#E6EBEF",
+            flexWrap: "wrap",
+          },
         })}
       />
       <RootNavigator.Screen

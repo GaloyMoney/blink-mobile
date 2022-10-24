@@ -65,6 +65,7 @@ export const MAIN_QUERY = gql`
   query mainQuery($hasToken: Boolean!) {
     globals {
       nodesIds
+      network
     }
     quizQuestions {
       id

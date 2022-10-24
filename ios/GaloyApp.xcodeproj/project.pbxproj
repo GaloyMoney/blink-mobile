@@ -27,7 +27,6 @@
 		A03F0E7F5E614536B49BB82B /* RobotoCondensed-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ADDF2F92D8464BEEA080008C /* RobotoCondensed-Bold.ttf */; };
 		A82C0D7CD8E743A58CC0CF23 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 96846CEB72F24120952E19D4 /* Roboto-Regular.ttf */; };
 		AF74D0C8A86E4EBE8715E84D /* RobotoCondensed-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B98C34782C7041CB924E15FD /* RobotoCondensed-Regular.ttf */; };
-		B73CB1EC784046ADACAEF572 /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2AAD31A547FB45A3B4F93293 /* OFL.txt */; };
 		BEC37172836B442E8F6E4EA9 /* Roboto-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 676B0D654D0F4EEEA5103A08 /* Roboto-LightItalic.ttf */; };
 		C61EE0AD23C530E30054100C /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C61EE0AC23C530E30054100C /* AuthenticationServices.framework */; };
 		C6A433CD2457478B00AA6FFC /* DMSans-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C6A433C72457478A00AA6FFC /* DMSans-BoldItalic.ttf */; };
@@ -385,7 +384,6 @@
 				38D4EC659E4F48A385D0E983 /* RobotoCondensed-Light.ttf in Resources */,
 				35C2F6FD4D7A4875A8F9222F /* RobotoCondensed-LightItalic.ttf in Resources */,
 				AF74D0C8A86E4EBE8715E84D /* RobotoCondensed-Regular.ttf in Resources */,
-				B73CB1EC784046ADACAEF572 /* OFL.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

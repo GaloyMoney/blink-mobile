@@ -5,6 +5,25 @@ import { BaseTranslation } from "../i18n-types"
 /* eslint-disable no-template-curly-in-string */
 /* eslint-disable max-lines */
 const en: BaseTranslation = {
+  GaloyAddressScreen: {
+    buttonTitle: "Set your {bankName: string} address",
+    yourAddress: "Your {bankName: string} address",
+    notAbleToChange: "You won't be able to change your {bankName: string} address after it's set.",
+    addressNotAvailable: "This {bankName: string} address is already taken.",
+    somethingWentWrong: "Something went wrong. Please try again later.",
+    merchantTitle: "For merchants",
+    yourCashRegister: "Your Cash Register",
+    yourPaycode: "Your Paycode",
+    copiedAddressToClipboard: "Copied {bankName: string} address to clipboard",
+    copiedPaycodeToClipboard: "Copied Paycode to clipboard",
+    copiedCashRegisterToClipboard: "Copied Cash Register to clipboard",
+    howToUseYourAddress: "How to use your {bankName: string} address",
+    howToUseYourPaycode: "How to use your Paycode",
+    howToUseYourCashRegister: "How to use your Cash Register",
+    howToUseYourAddressExplainer: "Your {bankName: string} address is your own Lightning address. It’s like an email address, but for your Bitcoin.\n\nTo receive payments, share your full address to someone using a wallet supporting the Lightning address.\n\nThese wallets support it:",
+    howToUseYourPaycodeExplainer: "You can print your Paycode (which is an amountless invoice) and display it in your business to receive payments. Individuals can pay you by scanning it with a Lightning-enabled wallet.\n\nHowever, be aware that some wallets can’t scan an amountless invoice such as:",
+    howToUseYourCashRegisterExplainer: "Your Cash Register let your employees collect payments without needing to give them access to your wallet.\n\nShare your link. They can pin it to their homescreen and generate Lightning invoices on your behalf. The payments collected using the Cash Register will be sent directly to your Bitcoin Beach Wallet.",
+  },
   AuthenticationScreen: {
     authenticationDescription: "Authenticate to continue",
     setUp: "Set up Biometric Authentication",
@@ -601,6 +620,7 @@ const en: BaseTranslation = {
   SettingsScreen: {
     activated: "Activated",
     tapLogIn: "Tap to log in",
+    addressScreen: "Receive payments using your {bankName: string} address or the merchants features",
     tapUserName: "Tap to set username",
     title: "Settings",
     csvTransactionsError:

@@ -5,6 +5,25 @@ import { Translation } from "../i18n-types";
 /* eslint-disable no-template-curly-in-string */
 /* eslint-disable max-lines */
 const es: Translation = {
+  GaloyAddressScreen: {
+    buttonTitle: "Establezca su dirección {bankName} ",
+    yourAddress: "Su dirección {bankName}",
+    notAbleToChange: "No podrá cambiar su dirección {bankName} después de que esta esté configurada.",
+    addressNotAvailable: "Esta dirección {bankName} ya está ocupada.",
+    somethingWentWrong: "Algo salió mal. Por favor, inténtelo de nuevo más tarde.",
+    merchantTitle: "Para comercios",
+    yourCashRegister: "Su caja registradora o terminal de punto de venta (POS)",
+    yourPaycode: "Su código de pago",
+    copiedAddressToClipboard: "Dirección {bankName} copiada al portapapeles",
+    copiedPaycodeToClipboard: "Código de pago copiado al portapapeles",
+    copiedCashRegisterToClipboard: "Caja registradora copiada al portapapeles",
+    howToUseYourAddress: "Cómo usar su dirección {bankName}",
+    howToUseYourPaycode: "Cómo utilizar su Código de Pago",
+    howToUseYourCashRegister: "Cómo usar tu caja registradora / Cómo usar tu terminal de punto de venta",
+    howToUseYourAddressExplainer: "Su dirección {bankName} es su propia dirección lightning. Es como una dirección de correo electrónico, pero para tu Bitcoin. Para recibir pagos, comparte tu dirección completa con alguien que use una billetera que admita la dirección Lightning.\n\nEstas carteras lo admiten:",
+    howToUseYourPaycodeExplainer: "Puede imprimir su código de pago (que es una factura sin monto) y mostrarlo en su negocio para recibir pagos. Los usuarios pueden pagarle al escanearlo con una billetera habilitada para Lightning.\n\nSin embargo, tenga en cuenta que algunas billeteras no pueden escanear una factura sin monto como:",
+    howToUseYourCashRegisterExplainer: "Su caja registradora permite a sus empleados cobrar pagos sin necesidad de darles acceso a su billetera. Comparte tu enlace. Pueden anclarlo a su pantalla de inicio y generar facturas Lightning en su nombre. Los pagos cobrados utilizando la caja registradora se enviarán directamente a su billetera Bitcoin Beach.",
+  },
   AuthenticationScreen: {
     authenticationDescription: "Autentiquese para continuar",
     setUp: "Configurar autenticación biométrica",
@@ -624,6 +643,7 @@ const es: Translation = {
   SettingsScreen: {
     activated: "Activada",
     tapLogIn: "\nIngrese aquí para iniciar sesión",
+    addressScreen: "Reciba pagos utilizando su dirección {bankName} o las funciones de la interfaz de red de pago",
     tapUserName: "Ingrese aquí para configurarlo",
     title: "Configuración",
     csvTransactionsError:
