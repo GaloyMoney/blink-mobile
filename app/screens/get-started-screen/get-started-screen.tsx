@@ -9,6 +9,7 @@ import { VersionComponent } from "../../components/version"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import type { ScreenType } from "../../types/jsx"
+import { testProps } from "../../../utils/testProps"
 
 import BitcoinBeachLogo from "./bitcoin-beach-logo.png"
 
@@ -72,8 +73,7 @@ export const GetStartedScreen: ScreenType = ({ navigation }: Props) => {
           titleStyle={styles.buttonTitle}
           onPress={() => navigation.replace("welcomeFirst")}
           containerStyle={styles.buttonContainer}
-          testID="getStarted"
-          accessibilityLabel="getStarted"
+          {...testProps(LL.GetStartedScreen.getStarted())}
         />
       </View>
     </Screen>
