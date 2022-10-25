@@ -30,8 +30,9 @@
     "fonts": "npx react-native-assets",
     "apk:debug": "cd android && ./gradlew assembleDebug",
     "start:appium": "appium",
-    "test:e2e:android": "E2E_DEVICE=\"android\" ./node_modules/.bin/wdio e2e/config/wdio.conf.js",
-    "test:e2e:ios": "E2E_DEVICE=\"ios\" ./node_modules/.bin/wdio e2e/config/wdio.conf.js",
+    "test:get:device": "./bin/get-testing-device.sh",
+    "test:e2e:android": "yarn test:get:device && E2E_DEVICE=\"android\" ./node_modules/.bin/wdio e2e/config/wdio.conf.js",
+    "test:e2e:ios": "yarn test:get:device && E2E_DEVICE=\"ios\" ./node_modules/.bin/wdio e2e/config/wdio.conf.js",
     "test:browserstack:android": "E2E_DEVICE=\"android\" ./node_modules/.bin/wdio e2e/config/browserstack.conf.js",
     "test:browserstack:ios": "E2E_DEVICE=\"ios\" ./node_modules/.bin/wdio e2e/config/browserstack.conf.js"
   },
