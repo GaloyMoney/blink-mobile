@@ -4,6 +4,7 @@ let capabilities = {
   deviceName: "Pixel 3 API 29",
   app: "./android/app/build/outputs/apk/debug/app-debug.apk", // "./android/app/release/app-release.apk",
   automationName: "UiAutomator2",
+  snapshotMaxDepth: 1000,
 }
 if (process.env.E2E_DEVICE === "ios") {
   capabilities = {
@@ -12,6 +13,7 @@ if (process.env.E2E_DEVICE === "ios") {
     deviceName: "iPhone 13",
     bundleId: "io.galoy.bitcoinbeach",
     automationName: "XCUITest",
+    snapshotMaxDepth: 1000,
   }
 }
 
@@ -21,7 +23,7 @@ exports.config = {
   framework: "mocha",
   mochaOpts: {
     ui: "bdd",
-    timeout: 20000,
+    timeout: 60000,
   },
   exclude: [],
   path: "/wd/hub",

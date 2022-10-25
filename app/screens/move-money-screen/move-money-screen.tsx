@@ -46,6 +46,7 @@ import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs"
 import { CompositeNavigationProp, useIsFocused } from "@react-navigation/native"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { StableSatsModal } from "@app/components/stablesats-modal"
+import { testProps } from "../../../utils/testProps"
 
 const styles = EStyleSheet.create({
   bottom: {
@@ -395,6 +396,7 @@ export const MoveMoneyScreen: ScreenType = ({
         </View>
 
         <Button
+          {...testProps("Settings Button")}
           buttonStyle={styles.topButton}
           containerStyle={styles.separator}
           onPress={() => navigation.navigate("settings")}

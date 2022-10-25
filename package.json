@@ -33,7 +33,7 @@
     "test:e2e:android": "E2E_DEVICE=\"android\" ./node_modules/.bin/wdio e2e/config/wdio.conf.js",
     "test:e2e:ios": "E2E_DEVICE=\"ios\" ./node_modules/.bin/wdio e2e/config/wdio.conf.js",
     "test:browserstack:android": "E2E_DEVICE=\"android\" ./node_modules/.bin/wdio e2e/config/browserstack.conf.js",
-    "test:browserstacck:ios": "E2E_DEVICE=\"ios\" ./node_modules/.bin/wdio e2e/config/browserstack.conf.js"
+    "test:browserstack:ios": "E2E_DEVICE=\"ios\" ./node_modules/.bin/wdio e2e/config/browserstack.conf.js"
   },
   "dependencies": {
     "@apollo/client": "^3.6.6",
@@ -178,7 +178,7 @@
     "ts-node": "^10.9.1",
     "ttypescript": "^1.5.13",
     "typescript": "^4.7.3",
-    "webdriverio": "^7.25.2",
+    "webdriverio": "7.24.1",
     "yalc": "^1.0.0-pre.53"
   },
   "resolutions": {

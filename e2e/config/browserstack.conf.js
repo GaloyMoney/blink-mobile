@@ -1,6 +1,29 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const browserstack = require("browserstack-local")
 
+let capabilities = {
+  "project": "Android Test",
+  "build": "Webdriverio Android Local",
+  "name": "local_test",
+  "device": "Google Pixel 3",
+  "os_version": "9.0",
+  "app": process.env.BROWSERSTACK_APP_ID || "bs://<hashed app-id>",
+  "browserstack.local": true,
+  "browserstack.debug": true,
+}
+if (process.env.E2E_DEVICE === "ios") {
+  capabilities = {
+    "project": "ios Test",
+    "build": "ios Local",
+    "name": "local_test_ios",
+    "device": "iPhone 13",
+    "os_version": "13",
+    "app": process.env.BROWSERSTACK_APP_ID || "bs://<hashed app-id>",
+    "browserstack.local": true,
+    "browserstack.debug": true,
+  }
+}
+
 exports.config = {
   user: process.env.BROWSERSTACK_USER || "BROWSERSTACK_USER",
   key: process.env.BROWSERSTACK_ACCESS_KEY || "BROWSERSTACK_ACCESS_KEY",
@@ -10,18 +33,7 @@ exports.config = {
   reporters: ["spec"],
   exclude: [],
 
-  capabilities: [
-    {
-      "project": "Android Test",
-      "build": "Webdriverio Android Local",
-      "name": "local_test",
-      "device": "Google Pixel 3",
-      "os_version": "9.0",
-      "app": process.env.BROWSERSTACK_APP_ID || "bs://<hashed app-id>",
-      "browserstack.local": true,
-      "browserstack.debug": true,
-    },
-  ],
+  capabilities: [capabilities],
 
   logLevel: "info",
   coloredLogs: true,
@@ -34,7 +46,7 @@ exports.config = {
   framework: "mocha",
   mochaOpts: {
     ui: "bdd",
-    timeout: 20000,
+    timeout: 60000,
   },
 
   // Code to start browserstack local before start of test

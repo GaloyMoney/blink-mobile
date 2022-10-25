@@ -1,5 +1,6 @@
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
+import { swipe, selector } from "./utils"
 
 describe("Welcome Screen", async () => {
   loadLocale("en")
@@ -11,10 +12,24 @@ describe("Welcome Screen", async () => {
     console.info("[afterAll] Done with testing!")
   })
   it("loads and clicks 'Get Started button' ", async () => {
-    const getStartedButton = await $(`~${LL.GetStartedScreen.getStarted()}`)
+    const getStartedButton = await $(selector(LL.GetStartedScreen.getStarted()))
     await getStartedButton.waitForDisplayed({ timeout: 30000 })
-    if (getStartedButton) await getStartedButton.click()
-    await driver.pause(3000)
+    await getStartedButton.click()
     expect(true).toBeTruthy()
+  })
+
+  it("swipes 1", async () => {
+    await swipe()
+    await browser.pause(600)
+  })
+
+  it("swipes 2", async () => {
+    await swipe()
+    await browser.pause(600)
+  })
+
+  it("swipes 3", async () => {
+    await swipe()
+    await browser.pause(600)
   })
 })
