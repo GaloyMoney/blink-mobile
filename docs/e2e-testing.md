@@ -19,7 +19,7 @@ export BROWSERSTACK_APP_ID=bs://YOURAPPID
 
 run `yarn test:browserstack:android`
 
-## Getting the Name of an Andoid or IOS device
+## Getting the Name of an Android or IOS device
 
 There is a script in `bin/get-testing-device.sh` that will automatically get the name of the android or ios device and set the env vars `TEST_DEVICE_ANDROID` and `TEST_DEVICE_IOS`
 
@@ -36,3 +36,7 @@ IOS
 ```
 TEST_DEVICE_IOS="iPhone 13" yarn test:e2e:ios
 ```
+
+## Authenticated Tests
+
+To run the authenticated tests you need to set the env variable `GALOY_TOKEN`. The e2e test will navigate to the settings/build version page and input the token

@@ -36,11 +36,8 @@ export const VersionComponent: ComponentType = ({ style }: { style?: TextStylePr
   }, [navigate, secretMenuCounter])
 
   return (
-    <Pressable
-      {...testProps("Version Build Button")}
-      onPress={() => setSecretMenuCounter(secretMenuCounter + 1)}
-    >
-      <Text style={[styles.version, style]}>
+    <Pressable onPress={() => setSecretMenuCounter(secretMenuCounter + 1)}>
+      <Text {...testProps("Version Build Text")} style={[styles.version, style]}>
         v{VersionNumber.appVersion} build {VersionNumber.buildVersion}
         {"\n"}
         {/* network: {Config.BITCOIN_NETWORK} TODO */}

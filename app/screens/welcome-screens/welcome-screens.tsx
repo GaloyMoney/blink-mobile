@@ -70,12 +70,16 @@ export const WelcomeFirstScreen: ScreenType = ({ navigation }: Props) => {
       </Screen>
       <Screen backgroundColor={palette.lightBlue}>
         <OnboardingScreen Svg={BitcoinBitcoin}>
-          <Text style={styles.text}>{LL.WelcomeFirstScreen.bank()}</Text>
+          <Text {...testProps(LL.WelcomeFirstScreen.bank())} style={styles.text}>
+            {LL.WelcomeFirstScreen.bank()}
+          </Text>
         </OnboardingScreen>
       </Screen>
       <Screen backgroundColor={palette.lightBlue} statusBar="light-content">
         <OnboardingScreen Svg={BankShop}>
-          <Text style={styles.text}>{LL.WelcomeFirstScreen.before()}</Text>
+          <Text {...testProps(LL.WelcomeFirstScreen.before())} style={styles.text}>
+            {LL.WelcomeFirstScreen.before()}
+          </Text>
         </OnboardingScreen>
       </Screen>
       <Screen backgroundColor={palette.lightBlue} statusBar="light-content">
@@ -86,7 +90,9 @@ export const WelcomeFirstScreen: ScreenType = ({ navigation }: Props) => {
           Svg={HoneyBadgerShovel}
           nextTitle={LL.WelcomeFirstScreen.learnToEarn()}
         >
-          <Text style={styles.text}>{LL.WelcomeFirstScreen.learn()}</Text>
+          <Text {...testProps(LL.WelcomeFirstScreen.learn())} style={styles.text}>
+            {LL.WelcomeFirstScreen.learn()}
+          </Text>
         </OnboardingScreen>
       </Screen>
     </Swiper>
