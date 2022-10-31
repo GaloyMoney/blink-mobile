@@ -1,6 +1,7 @@
 import * as React from "react"
 import { StyleSheet, Text, View } from "react-native"
 import { Button } from "react-native-elements"
+import { testProps } from "../../../utils/testProps"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import type { ScreenType } from "../../types/jsx"
@@ -68,6 +69,7 @@ export const OnboardingScreen: ScreenType = ({
       </View>
       {action && (
         <Button
+          {...testProps(nextTitle)}
           title={nextTitle || "Next"}
           onPress={action}
           containerStyle={styles.buttonContainer}

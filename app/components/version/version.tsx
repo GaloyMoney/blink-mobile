@@ -8,6 +8,7 @@ import type { TextStyleProp } from "react-native/Libraries/StyleSheet/StyleSheet
 import type { ComponentType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { testProps } from "../../../utils/testProps"
 
 const styles = StyleSheet.create({
   version: {
@@ -36,7 +37,7 @@ export const VersionComponent: ComponentType = ({ style }: { style?: TextStylePr
 
   return (
     <Pressable onPress={() => setSecretMenuCounter(secretMenuCounter + 1)}>
-      <Text style={[styles.version, style]}>
+      <Text {...testProps("Version Build Text")} style={[styles.version, style]}>
         v{VersionNumber.appVersion} build {VersionNumber.buildVersion}
         {"\n"}
         {/* network: {Config.BITCOIN_NETWORK} TODO */}
