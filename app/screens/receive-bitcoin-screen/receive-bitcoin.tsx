@@ -100,8 +100,6 @@ const ReceiveBitcoinScreen = ({
                 {
                   text: LL.common.later(),
                   // todo: add analytics
-                  // eslint-disable-next-line no-console
-                  onPress: () => console.log("Cancel/Later Pressed"),
                   style: "cancel",
                 },
                 {
