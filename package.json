@@ -35,7 +35,8 @@
     "test:e2e:android": "yarn test:get:device && E2E_DEVICE=\"android\" ./node_modules/.bin/wdio e2e/config/wdio.conf.js",
     "test:e2e:ios": "yarn test:get:device && E2E_DEVICE=\"ios\" ./node_modules/.bin/wdio e2e/config/wdio.conf.js",
     "test:browserstack:android": "E2E_DEVICE=\"android\" ./node_modules/.bin/wdio e2e/config/browserstack.conf.js",
-    "test:browserstack:ios": "E2E_DEVICE=\"ios\" ./node_modules/.bin/wdio e2e/config/browserstack.conf.js"
+    "test:browserstack:ios": "E2E_DEVICE=\"ios\" ./node_modules/.bin/wdio e2e/config/browserstack.conf.js",
+    "test:e2e:ios:auth": "yarn test:get:device && E2E_DEVICE=\"ios\" ./node_modules/.bin/wdio e2e/config/wdio.conf.js --spec ./e2e/03**.e2e.spec.ts"
   },
   "dependencies": {
     "@apollo/client": "^3.6.6",
