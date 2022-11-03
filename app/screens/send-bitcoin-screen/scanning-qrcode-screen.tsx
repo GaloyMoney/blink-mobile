@@ -19,10 +19,18 @@ import Svg, { Circle } from "react-native-svg"
 import Icon from "react-native-vector-icons/Ionicons"
 import Paste from "react-native-vector-icons/FontAwesome"
 import { Screen } from "../../components/screen"
-import { parsePaymentDestination } from "@galoymoney/client"
+import { parsingv2 } from "@galoymoney/client"
+const parsePaymentDestination = parsingv2.parsePaymentDestination
 import { palette } from "../../theme/palette"
 import type { ScreenType } from "../../types/jsx"
-import { getParams } from "js-lnurl"
+import {
+  getParams,
+  LNURLAuthParams,
+  LNURLChannelParams,
+  LNURLPayParams,
+  LNURLResponse,
+  LNURLWithdrawParams,
+} from "js-lnurl"
 import Reanimated from "react-native-reanimated"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
@@ -33,6 +41,8 @@ import RNQRGenerator from "rn-qr-generator"
 import { BarcodeFormat, useScanBarcodes } from "vision-camera-code-scanner"
 import ImagePicker from "react-native-image-crop-picker"
 import { useAppConfig } from "@app/hooks"
+import { lnurlDomains } from "./send-bitcoin-destination-screen"
+import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
 
 const { width: screenWidth } = Dimensions.get("window")
 const { height: screenHeight } = Dimensions.get("window")
@@ -83,6 +93,28 @@ type ScanningQRCodeScreenProps = {
   navigation: StackNavigationProp<RootStackParamList, "sendBitcoinDestination">
 }
 
+const galoyAddressFromLnurlParams = (
+  params:
+    | LNURLResponse
+    | LNURLChannelParams
+    | LNURLWithdrawParams
+    | LNURLAuthParams
+    | LNURLPayParams,
+): string | null => {
+  if (lnurlDomains.includes(params.domain)) {
+    if ("decodedMetadata" in params) {
+      const lnAddressMetadata = params.decodedMetadata.find(
+        (metadata) => metadata[0] === "text/identifier",
+      )
+      if (lnAddressMetadata) {
+        return lnAddressMetadata[1] || null
+      }
+    }
+  }
+
+  return null
+}
+
 export const ScanningQRCodeScreen: ScreenType = ({
   navigation,
 }: ScanningQRCodeScreenProps) => {
@@ -119,16 +151,21 @@ export const ScanningQRCodeScreen: ScreenType = ({
         return
       }
       try {
-        const { valid, lnurl } = parsePaymentDestination({
+        const parsedDestination = parsePaymentDestination({
           destination: data,
           network: bitcoinNetwork,
           pubKey: myPubKey,
+          lnAddressDomains: lnurlDomains,
         })
 
-        if (valid) {
-          if (lnurl) {
+        const paymentIsValid =
+          ("valid" in parsedDestination && parsedDestination.valid) ||
+          parsedDestination.paymentType === PaymentType.Intraledger
+
+        if (paymentIsValid) {
+          if (parsedDestination.paymentType === PaymentType.Lnurl) {
             setPending(true)
-            const lnurlParams = await getParams(lnurl)
+            const lnurlParams = await getParams(parsedDestination.lnurl)
 
             if ("reason" in lnurlParams) {
               throw lnurlParams.reason
@@ -138,11 +175,11 @@ export const ScanningQRCodeScreen: ScreenType = ({
               case "payRequest":
                 if (index <= 1) {
                   navigation.replace("sendBitcoinDestination", {
-                    payment: data,
+                    payment: galoyAddressFromLnurlParams(lnurlParams) || data,
                   })
                 } else {
                   navigation.navigate("sendBitcoinDestination", {
-                    payment: data,
+                    payment: galoyAddressFromLnurlParams(lnurlParams) || data,
                   })
                 }
                 break
@@ -162,9 +199,19 @@ export const ScanningQRCodeScreen: ScreenType = ({
                 break
             }
           } else if (index <= 1) {
-            navigation.replace("sendBitcoinDestination", { payment: data })
+            navigation.replace("sendBitcoinDestination", {
+              payment:
+                parsedDestination.paymentType === PaymentType.Intraledger
+                  ? parsedDestination.handle
+                  : data,
+            })
           } else {
-            navigation.navigate("sendBitcoinDestination", { payment: data })
+            navigation.navigate("sendBitcoinDestination", {
+              payment:
+                parsedDestination.paymentType === PaymentType.Intraledger
+                  ? parsedDestination.handle
+                  : data,
+            })
           }
         } else {
           setPending(true)

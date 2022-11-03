@@ -12,7 +12,8 @@ import {
   LAST_CLIPBOARD_PAYMENT,
   modalClipboardVisibleVar,
 } from "../../graphql/client-only-query"
-import { parsePaymentDestination } from "@galoymoney/client"
+import { parsingv2 } from "@galoymoney/client"
+const parsePaymentDestination = parsingv2.parsePaymentDestination
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import { cache } from "../../graphql/cache"
@@ -22,6 +23,8 @@ import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import useMainQuery from "@app/hooks/use-main-query"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useAppConfig } from "@app/hooks"
+import { lnurlDomains } from "@app/screens/send-bitcoin-screen/send-bitcoin-destination-screen"
+import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
 
 const styles = StyleSheet.create({
   buttonContainer: {
@@ -123,10 +126,13 @@ export const ModalClipboard: ComponentType = () => {
           destination: clipboard,
           network: appConfig.galoyInstance.network,
           pubKey: myPubKey,
+          lnAddressDomains: lnurlDomains,
         })
 
         const pathString =
-          paymentType === "lightning" ? "pendingInvoice" : "pendingBitcoin"
+          paymentType === (PaymentType.Lightning || PaymentType.Lnurl)
+            ? "pendingInvoice"
+            : "pendingBitcoin"
         setMessage(LL.ModalClipboard[pathString]())
       }
     })()
