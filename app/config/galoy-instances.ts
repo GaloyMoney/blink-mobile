@@ -17,7 +17,7 @@ export const GALOY_INSTANCES: GaloyInstance[] = [
   },
   {
     name: "Staging",
-    network: "testnet",
+    network: "signet",
     graphqlUri: "https://api.staging.galoy.io/graphql",
     graphqlWsUri: "wss://api.staging.galoy.io/graphql",
   },

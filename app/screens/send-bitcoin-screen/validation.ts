@@ -12,7 +12,7 @@ export const isDestinationNetworkValid = (
   network: INetwork,
 ): boolean => {
   return (
-    (network === "testnet" && destination.toLowerCase().startsWith("lntb")) ||
+    (network === "signet" && destination.toLowerCase().startsWith("lntb")) ||
     (network === "mainnet" && destination.toLowerCase().startsWith("lnbc"))
   )
 }
