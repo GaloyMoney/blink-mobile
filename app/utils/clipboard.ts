@@ -7,7 +7,9 @@ import {
 } from "../graphql/client-only-query"
 import { cache } from "../graphql/cache"
 import { INetwork } from "../types/network"
-import { parsePaymentDestination } from "@galoymoney/client"
+import { parsingv2 } from "@galoymoney/client"
+import { lnurlDomains } from "@app/screens/send-bitcoin-screen/send-bitcoin-destination-screen"
+const parsePaymentDestination = parsingv2.parsePaymentDestination
 
 type ShowModalClipboardIfValidPaymentInput = {
   client: ApolloClient<unknown>
@@ -34,13 +36,16 @@ export const showModalClipboardIfValidPayment = async ({
     return
   }
 
-  const { valid } = parsePaymentDestination({
+  const parsedDestination = parsePaymentDestination({
     destination: clipboard,
     network,
     pubKey: myPubKey,
+    lnAddressDomains: lnurlDomains,
   })
 
-  if (!valid) {
+  const clipboardShouldPrompt = "valid" in parsedDestination && parsedDestination.valid
+
+  if (!clipboardShouldPrompt) {
     return
   }
 

@@ -120,16 +120,10 @@ const Styles = StyleSheet.create({
 
 const parsePaymentDestination = parsingv2.parsePaymentDestination
 
-const domains = [
-  "https://ln.bitcoinbeach.com/",
-  "https://pay.mainnet.galoy.io/",
-  "https://pay.bbw.sv/",
-]
-
 export const bankName = "BBW"
 export const lnDomain = "pay.bbw.sv"
 
-const lnurlDomains = ["ln.bitcoinbeach.com", "pay.bbw.sv"]
+export const lnurlDomains = ["ln.bitcoinbeach.com", "pay.bbw.sv"]
 
 type UsernameStatus = "paid-before" | "never-paid" | "does-not-exist" | "self"
 
@@ -476,15 +470,7 @@ const SendBitcoinDestinationScreen = ({
     // If we scan a QR code encoded with a payment url for a specific user e.g. https://{domain}/{username}
     // then we want to detect the username as the destination
     if (route.params?.payment) {
-      if (route.params.payment.startsWith("https://")) {
-        domains.forEach((domain) => {
-          if (route.params?.payment?.startsWith(domain)) {
-            handleChangeText(route.params?.payment?.substring(domain.length))
-          }
-        })
-      } else {
-        handleChangeText(route.params?.payment)
-      }
+      handleChangeText(route.params?.payment)
     }
   }, [route.params?.payment, handleChangeText])
 
