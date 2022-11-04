@@ -30,12 +30,12 @@ describe("Payments Flow", async () => {
     // gen invoice from +503XXX55540
     const authToken = process.env.GALOY_TOKEN_2
     const config = {
-      network: "testnet",
+      network: "signet",
       graphqlUrl: "https://api.staging.galoy.io/graphql",
     }
     const client = createGaloyServerClient({ config })({ authToken })
     const result = await client.mutate({
-      variables: { input: { walletId: "6d6a3842-4f89-4b6a-a95a-7a7ce7faabed" } },
+      variables: { input: { walletId: "8914b38f-b0ea-4639-9f01-99c03125eea5" } },
       mutation: MUTATIONS.lnNoAmountInvoiceCreate,
       fetchPolicy: "no-cache",
     })
@@ -56,6 +56,10 @@ describe("Payments Flow", async () => {
     }
   })
 
+  it("Add amount", async () => {
+    // USD Amount or BTC Amount
+  })
+
   it("Add Note or label", async () => {
     //
   })
@@ -69,10 +73,13 @@ describe("Payments Flow", async () => {
 
   it("Wait for fee calulation to return", async () => {
     //
+    await browser.pause(8000)
   })
 
   it("Click 'Confirm Payment'", async () => {
-    //
+    // const nextButton = await $(selector(LL.common.next()))
+    // await nextButton.waitForDisplayed({ timeout })
+    // await nextButton.click()
   })
 
   it("Wait for Green check", async () => {
