@@ -1,4 +1,5 @@
 import { useApolloClient } from "@apollo/client"
+import { Screen } from "@app/components/screen"
 import useMainQuery from "@app/hooks/use-main-query"
 import useToken from "@app/hooks/use-token"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -122,7 +123,7 @@ const ReceiveBitcoinScreen = ({
   }
 
   return (
-    <View style={styles.container}>
+    <Screen style={styles.container}>
       <View style={styles.tabRow}>
         <TouchableWithoutFeedback onPress={() => setReceiveCurrency(WalletCurrency.BTC)}>
           <View
@@ -165,7 +166,7 @@ const ReceiveBitcoinScreen = ({
       </View>
       {receiveCurrency === WalletCurrency.USD && <ReceiveUsd />}
       {receiveCurrency === WalletCurrency.BTC && <ReceiveBtc />}
-    </View>
+    </Screen>
   )
 }
 
