@@ -22,6 +22,7 @@ import { CommonActions } from "@react-navigation/native"
 import useMainQuery from "@app/hooks/use-main-query"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { logPaymentAttempt, logPaymentResult } from "@app/utils/analytics"
+import { testProps } from "../../../utils/testProps"
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -556,6 +557,7 @@ const SendBitcoinConfirmationScreen = ({
         ) : null}
         <View style={styles.buttonContainer}>
           <Button
+            {...testProps(LL.SendBitcoinConfirmationScreen.title())}
             loading={isLoading}
             title={LL.SendBitcoinConfirmationScreen.title()}
             buttonStyle={styles.button}

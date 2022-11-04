@@ -27,7 +27,7 @@ import Icon from "react-native-vector-icons/Ionicons"
 import NoteIcon from "@app/assets/icons/note.svg"
 import { Button } from "react-native-elements"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { testProps } from "utils/testProps"
+import { testProps } from "../../../utils/testProps"
 
 const Styles = StyleSheet.create({
   scrollView: {
