@@ -16,7 +16,14 @@ if (process.env.E2E_DEVICE === "ios") {
 }
 
 exports.config = {
-  specs: [["./e2e/01**.e2e.spec.ts", "./e2e/02**.e2e.spec.ts", "./e2e/03**.e2e.spec.ts"]],
+  specs: [
+    [
+      "./e2e/01**.e2e.spec.ts",
+      "./e2e/02**.e2e.spec.ts",
+      "./e2e/03**.e2e.spec.ts",
+      "./e2e/04**.e2e.spec.ts",
+    ],
+  ],
   reporters: ["spec"],
   framework: "mocha",
   mochaOpts: {

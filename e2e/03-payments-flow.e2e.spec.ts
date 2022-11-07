@@ -88,18 +88,17 @@ describe("Payments Flow", async () => {
 
   it("Wait for fee calulation to return", async () => {
     //
-    await browser.pause(8000)
+    await browser.pause(4000)
   })
 
-  it("Click 'Confirm Payment'", async () => {
+  it("Click 'Confirm Payment' and get Green Checkmark success", async () => {
     const confirmPaymentButton = await $(
       selector(LL.SendBitcoinConfirmationScreen.title()),
     )
     await confirmPaymentButton.waitForDisplayed({ timeout })
     await confirmPaymentButton.click()
-  })
-
-  it("Wait for Green check", async () => {
-    //
+    const successCheck = await $(selector(LL.SendBitcoinScreen.success(), "StaticText"))
+    await successCheck.waitForDisplayed({ timeout })
+    expect(successCheck.isDisplayed()).toBeTruthy()
   })
 })

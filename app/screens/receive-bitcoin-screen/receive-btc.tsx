@@ -23,6 +23,7 @@ import { copyPaymentInfoToClipboard } from "@app/utils/clipboard"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { logGeneratePaymentRequest } from "@app/utils/analytics"
 import { WalletCurrency } from "@app/types/amounts"
+import { testProps } from "../../../utils/testProps"
 
 const styles = EStyleSheet.create({
   container: {
@@ -526,7 +527,10 @@ const ReceiveBtc = () => {
           {invoiceReady ? (
             <>
               <View style={styles.copyInvoiceContainer}>
-                <Pressable onPress={copyToClipboard}>
+                <Pressable
+                  {...testProps(LL.ReceiveBitcoinScreen.copyInvoice())}
+                  onPress={copyToClipboard}
+                >
                   <Text style={styles.infoText}>
                     <Icon style={styles.infoText} name="copy-outline" />
                     <Text> </Text>
