@@ -3926,10 +3926,17 @@
   dependencies:
     react-native-version-number "*"
 
-"@types/react-native@*", "@types/react-native@^0.69.5":
+"@types/react-native@*":
   version "0.69.8"
   resolved "https://registry.npmjs.org/@types/react-native/-/react-native-0.69.8.tgz"
   integrity sha512-KW5KQdg4vjG7Mo2muCTRSe3CwVNEROa4Hlh7wIkfv+be92jdFwq6tf+i1q7dD3wDnUinc/cVi/6/PJbGpbshEA==
+  dependencies:
+    "@types/react" "*"
+
+"@types/react-native@0.69.7":
+  version "0.69.7"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.69.7.tgz#fc2f2cfa0ef824ff6094eb7385f6bfab2ef1345e"
+  integrity sha512-IVWswgynlIfYLJHegI4ABCO+7p5sY+vq4/+lHV/NKVZ9WjZj9HrBsLJjWAqO1fMywyAaR8gGMSUtAilu5e2E3A==
   dependencies:
     "@types/react" "*"
 
@@ -15569,10 +15576,10 @@ promise.prototype.finally@^3.1.0:
     define-properties "^1.1.3"
     es-abstract "^1.19.1"
 
-promise@^8.0.3:
-  version "8.2.0"
-  resolved "https://registry.npmjs.org/promise/-/promise-8.2.0.tgz"
-  integrity sha512-+CMAlLHqwRYwBMXKCP+o8ns7DN+xHDUiI+0nArsiJ9y+kJVPLFxEaSw6Ha9s9H0tftxg2Yzl25wqj9G7m5wLZg==
+promise@^8.2.0:
+  version "8.3.0"
+  resolved "https://registry.yarnpkg.com/promise/-/promise-8.3.0.tgz#8cb333d1edeb61ef23869fbb8a4ea0279ab60e0a"
+  integrity sha512-rZPNPKTOYVNEEKFaq1HqTgOwZD+4/YHS5ukLzQCypkj+OkYx7iv0mA91lJlpPPZ8vMau3IIGj5Qlwrx+8iiSmg==
   dependencies:
     asap "~2.0.6"
 
@@ -16401,10 +16408,10 @@ react-native-walkthrough-tooltip@^1.4.0:
     prop-types "^15.6.1"
     react-fast-compare "^2.0.4"
 
-react-native@^0.69.5:
-  version "0.69.5"
-  resolved "https://registry.npmjs.org/react-native/-/react-native-0.69.5.tgz"
-  integrity sha512-4Psrj1nDMLQjBXVH8n3UikzOHQc8+sa6NbxZQR0XKtpx8uC3HiJBgX+/FIum/RWxfi5J/Dt/+A2gLGmq2Hps8g==
+react-native@0.69.7:
+  version "0.69.7"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.69.7.tgz#891ba4ed7722f1ab570099ce097c355bef8ceb05"
+  integrity sha512-T3z2utgRcE/+mMML3Wg4vvpnFoGWJcqWskq+8vdFS4ASM1zYg5Hab5vPlKZp9uncD8weYiGsYwkWXzrvZrsayQ==
   dependencies:
     "@jest/create-cache-key-function" "^27.0.1"
     "@react-native-community/cli" "^8.0.4"
@@ -16427,7 +16434,7 @@ react-native@^0.69.5:
     mkdirp "^0.5.1"
     nullthrows "^1.1.1"
     pretty-format "^26.5.2"
-    promise "^8.0.3"
+    promise "^8.2.0"
     react-devtools-core "4.24.0"
     react-native-codegen "^0.69.2"
     react-native-gradle-plugin "^0.0.7"
