@@ -4,6 +4,7 @@ let capabilities = {
   app: "./android/app/build/outputs/apk/debug/app-debug.apk", // "./android/app/release/app-release.apk",
   automationName: "UiAutomator2",
   snapshotMaxDepth: 1000,
+  autoGrantPermissions: true,
 }
 if (process.env.E2E_DEVICE === "ios") {
   capabilities = {
@@ -12,6 +13,7 @@ if (process.env.E2E_DEVICE === "ios") {
     bundleId: "io.galoy.bitcoinbeach",
     automationName: "XCUITest",
     snapshotMaxDepth: 1000,
+    autoGrantPermissions: true,
   }
 }
 

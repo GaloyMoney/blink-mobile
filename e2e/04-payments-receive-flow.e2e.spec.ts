@@ -21,10 +21,16 @@ describe("Receive Payment Flow", async () => {
   })
 
   it("Click 'Back Home' on the stablesats tutorial modal", async () => {
-    const backHomeButton = await $(selector(LL.common.backHome()))
-    await backHomeButton.waitForDisplayed({ timeout: 2000 })
-    if (backHomeButton.isDisplayed()) {
-      await backHomeButton.click()
+    try {
+      const backHomeButton = await $(selector(LL.common.backHome()))
+      await backHomeButton.waitForDisplayed({ timeout: 5000 })
+      if (backHomeButton.isDisplayed()) {
+        await backHomeButton.click()
+      } else {
+        expect(backHomeButton.isDisplayed()).toBeFalsy()
+      }
+    } catch (e) {
+      expect(false).toBeFalsy()
     }
   })
 
@@ -69,8 +75,25 @@ describe("Receive Payment Flow", async () => {
     expect(payResult).toBeTruthy()
   })
 
+  // it("Click ok for 'Do you want to activate notifications'", async () => {
+  //   const notifOk = await $(selector(LL.common.ok()))
+  //   await notifOk.waitForDisplayed({ timeout: 5000 })
+  //   if (notifOk.isDisplayed()) {
+  //     await notifOk.click()
+  //   }
+  // })
+
+  // it("Click allow for notifications", async () => {
+  //   const allowButton = await $(selector("Allow"))
+  //   await allowButton.waitForDisplayed({ timeout: 5000 })
+  //   if (allowButton.isDisplayed()) {
+  //     await allowButton.click()
+  //   }
+  // })
+
   it("Wait for Green check", async () => {
-    const successCheck = await $(selector(LL.SendBitcoinScreen.success(), "StaticText"))
-    await successCheck.waitForDisplayed()
+    const successCheck = await $(selector("Success Icon", "Other"))
+    await successCheck.waitForDisplayed({ timeout })
+    expect(successCheck.isDisplayed()).toBeTruthy()
   })
 })

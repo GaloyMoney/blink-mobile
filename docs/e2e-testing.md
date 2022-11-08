@@ -40,3 +40,21 @@ TEST_DEVICE_IOS="iPhone 13" yarn test:e2e:ios
 ## Authenticated Tests
 
 To run the authenticated tests you need to set the env variable `GALOY_TOKEN`. The e2e test will navigate to the settings/build version page and input the token
+
+## Troubleshooting
+
+If you have any issues with appium then run `yarn appium-doctor`
+
+## Finding Elements
+
+You can install `appium inspector` https://github.com/appium/appium-inspector to find elements in the GUI. It can be configured by setting the `remote path` to `/wd/hub` and then using the `Desired Capabilities JSON repesentation`, example below. (make sure to input your simulator or android emulator settings):
+
+```
+{
+  "platformName": "iOS",
+  "appium:deviceName": "iPhone 13",
+  "appium:bundleId": "io.galoy.bitcoinbeach",
+  "appium:automationName": "XCUITest",
+  "appium:platformVersion": "15.4"
+}
+```

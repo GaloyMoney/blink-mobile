@@ -10,6 +10,7 @@ let capabilities = {
   "app": process.env.BROWSERSTACK_APP_ID,
   "browserstack.local": true,
   "browserstack.debug": true,
+  "autoGrantPermissions": true,
 }
 if (process.env.E2E_DEVICE === "ios") {
   capabilities = {
@@ -18,9 +19,10 @@ if (process.env.E2E_DEVICE === "ios") {
     "name": "local_test_ios",
     "device": "iPhone 13",
     "os_version": "13",
-    "app": process.env.BROWSERSTACK_APP_ID || "bs://<hashed app-id>",
+    "app": process.env.BROWSERSTACK_APP_ID,
     "browserstack.local": true,
     "browserstack.debug": true,
+    "autoGrantPermissions": true,
   }
 }
 
