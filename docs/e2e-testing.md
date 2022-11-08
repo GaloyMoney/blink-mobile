@@ -6,6 +6,15 @@
 2. In a new terminal run `yarn start:appium`
 3. In a new terminal run `yarn test:e2e:android` or `yarn test:e2e:ios`
 
+```mermaid
+  flowchart TD;
+      A[E2E Test]-->B{Cloud CI or Local?};
+      B -- Cloud --> C[Browserstack]
+      B -- Local --> D[Appium]
+      C -- Test On --> E[Cloud Device]
+      D -- Test On --> G[Local Simulator/Emulator/Phone]
+```
+
 ## To Test with Browserstack (cloud devices):
 
 \*\* this will eventually be integrated into CI, but for now you can test locally if you have
@@ -19,7 +28,9 @@ export BROWSERSTACK_APP_ID=bs://YOURAPPID
 
 run `yarn test:browserstack:android`
 
-## Getting the Name of an Android or IOS device
+## To Test Locally
+
+### Getting the Name of an Android or IOS device
 
 There is a script in `bin/get-testing-device.sh` that will automatically get the name of the android or ios device and set the env vars `TEST_DEVICE_ANDROID` and `TEST_DEVICE_IOS`
 
