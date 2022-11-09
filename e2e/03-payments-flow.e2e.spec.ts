@@ -20,6 +20,20 @@ describe("Payments Flow", async () => {
     await browser.setClipboard("", "plaintext")
   })
 
+  it("Click 'Back Home' on the stablesats tutorial modal", async () => {
+    try {
+      const backHomeButton = await $(selector(LL.common.backHome()))
+      await backHomeButton.waitForDisplayed({ timeout: 5000 })
+      if (backHomeButton.isDisplayed()) {
+        await backHomeButton.click()
+      } else {
+        expect(backHomeButton.isDisplayed()).toBeFalsy()
+      }
+    } catch (e) {
+      expect(false).toBeFalsy()
+    }
+  })
+
   it("Click Send", async () => {
     const sendButton = await $(selector(LL.MoveMoneyScreen.send(), "Other"))
     await sendButton.waitForDisplayed({ timeout })

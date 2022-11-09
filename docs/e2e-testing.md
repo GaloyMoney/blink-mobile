@@ -1,11 +1,5 @@
 # E2E Testing
 
-## To Test locally with Appium and Webdriver:
-
-1. run the debug version of the app `yarn android` or `yarn ios`
-2. In a new terminal run `yarn start:appium`
-3. In a new terminal run `yarn test:e2e:android` or `yarn test:e2e:ios`
-
 ```mermaid
   flowchart TD;
       A[E2E Test]-->B{Cloud CI or Local?};
@@ -14,6 +8,12 @@
       C -- Test On --> E[Cloud Device]
       D -- Test On --> G[Local Simulator/Emulator/Phone]
 ```
+
+## To Test locally with Appium and Webdriver:
+
+1. run the debug version of the app `yarn android` or `yarn ios`
+2. In a new terminal run `yarn start:appium`
+3. In a new terminal run `yarn test:e2e:android` or `yarn test:e2e:ios`
 
 ## To Test with Browserstack (cloud devices):
 
@@ -48,6 +48,14 @@ IOS
 TEST_DEVICE_IOS="iPhone 13" yarn test:e2e:ios
 ```
 
+Here are the other env variables you need to set
+
+```
+GALOY_TOKEN={YOUR_TOKEN}
+GALOY_TOKEN_2={SECOND_WALLET_TOKEN}
+E2E_DEVICE={ios or android}
+```
+
 ## Authenticated Tests
 
 To run the authenticated tests you need to set the env variable `GALOY_TOKEN`. The e2e test will navigate to the settings/build version page and input the token
@@ -57,6 +65,21 @@ To run the authenticated tests you need to set the env variable `GALOY_TOKEN`. T
 If you have any issues with appium then run `yarn appium-doctor`
 
 ## Finding Elements
+
+Appium uses `Accessibility Labels` to locate components, such as buttons.
+
+```ts
+// This is used for E2E tests to apply id's to a <Component/>
+// Usage:
+//  <Button {...testProps("testID")} />
+export const testProps = (testID: string) => {
+  return {
+    testID,
+    accessible: true,
+    accessibilityLabel: testID,
+  }
+}
+```
 
 You can install `appium inspector` https://github.com/appium/appium-inspector to find elements in the GUI. It can be configured by setting the `remote path` to `/wd/hub` and then using the `Desired Capabilities JSON repesentation`, example below. (make sure to input your simulator or android emulator settings):
 
