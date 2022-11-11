@@ -60,6 +60,12 @@ E2E_DEVICE={ios or android}
 
 To run the authenticated tests you need to set the env variable `GALOY_TOKEN`. The e2e test will navigate to the settings/build version page and input the token
 
+Then you can run one test at a time:
+
+```
+TEST="03" yarn test:e2e:ios:auth
+```
+
 ## Troubleshooting
 
 If you have any issues with appium then run `yarn appium-doctor`

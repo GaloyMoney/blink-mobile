@@ -1,7 +1,8 @@
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
 import { selector } from "./utils"
-import { MUTATIONS, createGaloyServerClient } from "@galoymoney/client"
+import { MUTATIONS, createGaloyServerClient, GaloyGQL } from "@galoymoney/client"
+import { ApolloQueryResult, gql } from "@apollo/client"
 
 describe("Receive Payment Flow", async () => {
   loadLocale("en")
@@ -57,10 +58,32 @@ describe("Receive Payment Flow", async () => {
       graphqlUrl: "https://api.staging.galoy.io/graphql",
     }
     const client = createGaloyServerClient({ config })({ authToken })
+
+    //
+    const accountResult: ApolloQueryResult<{ me: GaloyGQL.MeFragment }> =
+      await client.query({
+        query: gql`
+          {
+            me {
+              defaultAccount {
+                wallets {
+                  walletCurrency
+                  id
+                }
+              }
+            }
+          }
+        `,
+        fetchPolicy: "no-cache",
+      })
+    const walletId = accountResult.data.me.defaultAccount.wallets.filter(
+      (w) => w.walletCurrency === "BTC",
+    )[0].id
+
     const result = await client.mutate({
       variables: {
         input: {
-          walletId: "8914b38f-b0ea-4639-9f01-99c03125eea5", // wallet 2
+          walletId, // (lookup wallet 2 id from graphql) i.e "8914b38f-b0ea-4639-9f01-99c03125eea5"
           paymentRequest: invoice,
           amount: 5,
         },
