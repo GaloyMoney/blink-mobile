@@ -1,6 +1,6 @@
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
-import { goBack, selector, enter } from "./utils"
+import { selector } from "./utils"
 import { MUTATIONS, createGaloyServerClient } from "@galoymoney/client"
 
 describe("Receive Payment Flow", async () => {
@@ -8,13 +8,6 @@ describe("Receive Payment Flow", async () => {
   const LL = i18nObject("en")
   const timeout = 30000
   let invoice
-  beforeEach(async () => {
-    console.info("[beforeAll]")
-  })
-  afterEach(async () => {
-    console.info("[afterAll] Done with testing!")
-    await browser.pause(5000)
-  })
 
   it("Clear the clipboard", async () => {
     await browser.setClipboard("", "plaintext")
@@ -41,8 +34,12 @@ describe("Receive Payment Flow", async () => {
   })
 
   it("Click Copy Invoice", async () => {
-    // selector(LL.ReceiveBitcoinScreen.copyInvoice(), "Other", "[2]"),
-    const copyInvoiceButton = await $('(//XCUIElementTypeOther[@name="Copy Invoice"])[2]')
+    let copyInvoiceButton
+    if (process.env.E2E_DEVICE === "ios") {
+      copyInvoiceButton = await $('(//XCUIElementTypeOther[@name="Copy Invoice"])[2]')
+    } else {
+      copyInvoiceButton = await $(selector("Copy Invoice"))
+    }
     await copyInvoiceButton.waitForDisplayed({ timeout })
     await copyInvoiceButton.click()
   })
@@ -74,22 +71,6 @@ describe("Receive Payment Flow", async () => {
     const payResult = result
     expect(payResult).toBeTruthy()
   })
-
-  // it("Click ok for 'Do you want to activate notifications'", async () => {
-  //   const notifOk = await $(selector(LL.common.ok()))
-  //   await notifOk.waitForDisplayed({ timeout: 5000 })
-  //   if (notifOk.isDisplayed()) {
-  //     await notifOk.click()
-  //   }
-  // })
-
-  // it("Click allow for notifications", async () => {
-  //   const allowButton = await $(selector("Allow"))
-  //   await allowButton.waitForDisplayed({ timeout: 5000 })
-  //   if (allowButton.isDisplayed()) {
-  //     await allowButton.click()
-  //   }
-  // })
 
   it("Wait for Green check", async () => {
     const successCheck = await $(selector("Success Icon", "Other"))

@@ -587,6 +587,7 @@ const SendBitcoinDetailsScreen = ({
 
         <View style={Styles.buttonContainer}>
           <Button
+            {...testProps(LL.common.next())}
             title={LL.common.next()}
             buttonStyle={[Styles.button, Styles.activeButtonStyle]}
             titleStyle={Styles.activeButtonTitleStyle}

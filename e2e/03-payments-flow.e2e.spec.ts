@@ -1,6 +1,6 @@
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
-import { goBack, selector, enter } from "./utils"
+import { selector, enter } from "./utils"
 import { MUTATIONS, createGaloyServerClient } from "@galoymoney/client"
 
 describe("Payments Flow", async () => {
@@ -8,14 +8,6 @@ describe("Payments Flow", async () => {
   const LL = i18nObject("en")
   const timeout = 30000
   let invoice
-  beforeEach(async () => {
-    console.info("[beforeAll]")
-  })
-  afterEach(async () => {
-    console.info("[afterAll] Done with testing!")
-    await browser.pause(5000)
-  })
-
   it("Clear the clipboard", async () => {
     await browser.setClipboard("", "plaintext")
   })
@@ -65,6 +57,7 @@ describe("Payments Flow", async () => {
       await browser.pause(500)
       await invoiceInput.sendKeys(invoice.split(""))
       await enter(invoiceInput)
+      await browser.pause(5000)
     } catch (e) {
       // TODO this passes but throws an error on ios even tho it works
     }
@@ -73,16 +66,16 @@ describe("Payments Flow", async () => {
   it("Click Next", async () => {
     const nextButton = await $(selector(LL.common.next()))
     await nextButton.waitForDisplayed({ timeout })
+    await nextButton.isEnabled()
     await nextButton.click()
   })
 
   it("Add amount", async () => {
-    // USD Amount or BTC Amount
     try {
       const amountInput = await $(selector("USD Amount", "TextField"))
       await amountInput.waitForDisplayed({ timeout })
       await amountInput.click()
-      await browser.pause(500)
+      await browser.pause(1000)
       await amountInput.sendKeys("2".split(""))
       await enter(amountInput)
     } catch (e) {
@@ -95,13 +88,15 @@ describe("Payments Flow", async () => {
   })
 
   it("Click Next", async () => {
+    await browser.pause(3000)
     const nextButton = await $(selector(LL.common.next()))
     await nextButton.waitForDisplayed({ timeout })
+    await nextButton.isEnabled()
     await nextButton.click()
   })
 
   it("Wait for fee calulation to return", async () => {
-    //
+    // TODO use waitForDisplayed
     await browser.pause(4000)
   })
 

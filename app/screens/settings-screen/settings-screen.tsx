@@ -29,6 +29,7 @@ import { copyPaymentInfoToClipboard } from "@app/utils/clipboard"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { openWhatsApp } from "@app/utils/external"
 import { CustomIcon } from "@app/components/custom-icon"
+import { testProps } from "../../../utils/testProps"
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "settings">
@@ -307,7 +308,11 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
 
         return (
           <React.Fragment key={`setting-option-${i}`}>
-            <ListItem onPress={setting.action} disabled={!setting.enabled}>
+            <ListItem
+              onPress={setting.action}
+              disabled={!setting.enabled}
+              {...testProps(setting.category)}
+            >
               {!setting.icon?.startsWith("custom") && (
                 <Icon name={setting.icon} type="ionicon" color={settingColor} />
               )}

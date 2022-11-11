@@ -6,13 +6,7 @@ describe("Login Flow", async () => {
   loadLocale("en")
   const LL = i18nObject("en")
   const timeout = 30000
-  beforeEach(async () => {
-    console.info("[beforeAll]")
-  })
-  afterEach(async () => {
-    console.info("[afterAll] Done with testing!")
-    await browser.pause(5000)
-  })
+
   it("clicks Settings Icon", async () => {
     const settingsButton = await $(selector("Settings Button"))
     await settingsButton.waitForDisplayed({ timeout })
@@ -37,6 +31,7 @@ describe("Login Flow", async () => {
     const midpointX = width / 2 + x
     const midpointY = height / 2 + y
     await browser.touchAction({ action: "tap", x: midpointX, y: midpointY })
+    await browser.pause(6000)
   })
 
   it("input token", async () => {
@@ -44,7 +39,7 @@ describe("Login Flow", async () => {
       const tokenInput = await $(selector("Input access token", "TextField"))
       await tokenInput.waitForDisplayed({ timeout })
       await tokenInput.click()
-      await browser.pause(500)
+      await browser.pause(1000)
       await tokenInput.sendKeys(process.env.GALOY_TOKEN?.split(""))
       await enter(tokenInput)
     } catch (e) {
@@ -56,12 +51,20 @@ describe("Login Flow", async () => {
     const changeTokenButton = await $(selector("Change Token Button"))
     await changeTokenButton.waitForDisplayed({ timeout })
     await changeTokenButton.click()
+    await browser.pause(5000)
   })
 
   it("click go back to settings screen", async () => {
     const backButton = await $(goBack())
     await backButton.waitForDisplayed({ timeout })
     await backButton.click()
+    await browser.pause(5000)
+  })
+
+  it("are we logged in?", async () => {
+    const loggedInListItem = await $(selector(LL.common.logout(), "Other"))
+    await loggedInListItem.waitForDisplayed({ timeout })
+    expect(loggedInListItem.isDisplayed()).toBeTruthy()
   })
 
   it("click go back to home screen", async () => {

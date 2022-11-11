@@ -6,13 +6,13 @@ describe("Welcome Screen Flow", async () => {
   loadLocale("en")
   const LL = i18nObject("en")
   const timeout = 30000
-  beforeEach(async () => {
-    console.info("[beforeAll]")
+  before(async () => {
+    console.info("before")
   })
-  afterEach(async () => {
-    console.info("[afterAll] Done with testing!")
-    await browser.pause(1500)
+  after(async () => {
+    console.info("after")
   })
+
   it("loads and clicks 'Get Started button' ", async () => {
     const getStartedButton = await $(selector(LL.GetStartedScreen.getStarted()))
     await getStartedButton.waitForDisplayed({ timeout })

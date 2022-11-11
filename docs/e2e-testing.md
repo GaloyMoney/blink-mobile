@@ -83,6 +83,8 @@ export const testProps = (testID: string) => {
 
 You can install `appium inspector` https://github.com/appium/appium-inspector to find elements in the GUI. It can be configured by setting the `remote path` to `/wd/hub` and then using the `Desired Capabilities JSON repesentation`, example below. (make sure to input your simulator or android emulator settings):
 
+ios
+
 ```
 {
   "platformName": "iOS",
@@ -90,5 +92,16 @@ You can install `appium inspector` https://github.com/appium/appium-inspector to
   "appium:bundleId": "io.galoy.bitcoinbeach",
   "appium:automationName": "XCUITest",
   "appium:platformVersion": "15.4"
+}
+```
+
+android
+
+```
+{
+  "app": "/path/to/code/galoy-mobile/android/app/build/outputs/apk/debug/app-debug.apk",
+  "platformName": "Android",
+  "deviceName": "generic_x86",
+  "automationName": "UiAutomator2"
 }
 ```
