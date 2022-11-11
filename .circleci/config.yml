@@ -228,8 +228,8 @@ workflows:
       - test_ios:
           filters:
             branches:
-              only: improve-end-to-end-tests
+              only: e2e-testing-payments
       - test_android:
           filters:
             branches:
-              only: improve-end-to-end-tests
+              only: e2e-testing-payments
