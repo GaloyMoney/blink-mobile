@@ -15,24 +15,44 @@ export type GaloyInstance = {
   graphqlUri: string
   graphqlWsUri: string
 }
-
 export const GALOY_INSTANCES: GaloyInstance[] = [
   {
     name: "BBW",
     network: "mainnet",
-    graphqlUri: GRAPHQL_MAINNET_URI,
-    graphqlWsUri: GRAPHQL_MAINNET_WS_URI,
+    graphqlUri: "https://api.mainnet.galoy.io/graphql",
+    graphqlWsUri: "wss://api.mainnet.galoy.io/graphql",
   },
   {
     name: "Staging",
     network: "signet",
-    graphqlUri: GRAPHQL_TESTNET_URI,
-    graphqlWsUri: GRAPHQL_TESTNET_WS_URI,
+    graphqlUri: "https://api.staging.galoy.io/graphql",
+    graphqlWsUri: "wss://api.staging.galoy.io/graphql",
   },
   {
     name: "Local",
     network: "regtest",
-    graphqlUri: GRAPHQL_REGTEST_URI,
-    graphqlWsUri: GRAPHQL_REGTEST_WS_URI,
+    graphqlUri: `http://${scriptHostname()}:4002/graphql`,
+    graphqlWsUri: `ws://${scriptHostname()}:4002/graphql`,
   },
 ]
+
+// export const GALOY_INSTANCES: GaloyInstance[] = [
+//   {
+//     name: "BBW",
+//     network: "mainnet",
+//     graphqlUri: GRAPHQL_MAINNET_URI,
+//     graphqlWsUri: GRAPHQL_MAINNET_WS_URI,
+//   },
+//   {
+//     name: "Staging",
+//     network: "signet",
+//     graphqlUri: GRAPHQL_TESTNET_URI,
+//     graphqlWsUri: GRAPHQL_TESTNET_WS_URI,
+//   },
+//   {
+//     name: "Local",
+//     network: "regtest",
+//     graphqlUri: GRAPHQL_REGTEST_URI,
+//     graphqlWsUri: GRAPHQL_REGTEST_WS_URI,
+//   },
+// ]

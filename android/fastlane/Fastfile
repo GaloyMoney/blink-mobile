@@ -21,18 +21,16 @@ platform :android do
     gradle(task: "test")
   end
 
+  desc "Increment Build Number"
+  lane :increment_build do
+    gradle(task: 'incrementVersionCode', project_dir: './')
+  end 
+
   desc "Submit a new Beta Build to Crashlytics Beta"
   lane :build do
-    increment_version_code(gradle_file_path: "app/build.gradle")
-    android_set_version_name(
-    version_name: ENV["CIRCLE_TAG"],
-  )
-    gradle(
-      task: "clean assemble",
-      build_type: "Release",
-      print_command: false,
-      flags: "--no-daemon --max-workers=8 --stacktrace --info",
-    )
+    
+    gradle(task: 'incrementVersionCode', project_dir: './')
+    gradle(task: 'bundle', project_dir: './')
     # gradle(task: "clean assembleRelease", print_command: false)
 
     # sh "your_script.sh"
@@ -41,10 +39,34 @@ platform :android do
 
   desc "Deploy a new version to both Play Store and Huawei Store"
   lane :beta do
-    build
-    play_store_release
-    huawei_release
+    # build
+    build_bundle
+    upload_to_play_store(
+      track: 'internal',
+      release_status: 'draft',
+      aab:'./app/build/outputs/bundle/release/app-release.aab'
+    )
+    # huawei_release
   end
+
+  desc "Create Release Bundle"
+   lane :build_bundle do
+     increment_build
+     store_password = get_properties_value(
+         key: "keystore_password",
+         path: "fastlane/puravida-app.properties"
+      )
+ 
+     gradle(
+       task: "clean bundle",
+       build_type: "Release",
+       print_command: false,
+       properties: {
+           "RELEASE_STORE_PASSWORD" => store_password
+       },
+       flags: "--no-daemon --max-workers=8 --stacktrace --info"
+     )
+   end
 
   desc "Deploy a new version to the Google Play"
   lane :play_store_release do
@@ -53,44 +75,56 @@ platform :android do
       track: "internal",
       skip_upload_changelogs: true,
       skip_upload_images: true,
+      aab:'./app/build/outputs/bundle/release/app-release.aab'
     )
   end
 
-  desc "Deploy a new version to Huawei App Gallery"
-  lane :huawei_release do
-    huawei_appgallery_connect(
-      client_id: ENV["HUAWEI_CLIENT_ID"],
-      client_secret: ENV["HAUWEI_CLIENT_SECRET"],
-      app_id: ENV["HUAWEI_APP_ID"],
-      apk_path: "./app/build/outputs/apk/release/app-release.apk",
-      phase_wise_release: true,
-      phase_release_percent: "1",
-      phase_release_description: "Phased Release",
-      submit_for_review: false
-    )
-  end
+  # desc "Deploy a new version to Huawei App Gallery"
+  # lane :huawei_release do
+  #   huawei_appgallery_connect(
+  #     client_id: ENV["HUAWEI_CLIENT_ID"],
+  #     client_secret: ENV["HAUWEI_CLIENT_SECRET"],
+  #     app_id: ENV["HUAWEI_APP_ID"],
+  #     apk_path: "./app/build/outputs/apk/release/app-release.apk",
+  #     phase_wise_release: true,
+  #     phase_release_percent: "1",
+  #     phase_release_description: "Phased Release",
+  #     submit_for_review: false
+  #   )
+  # end
 
-  desc "End to end testing on browserstack"
-  lane :browserstack do
-    build_e2e
-    upload_to_browserstack_app_automate(
-      browserstack_username: ENV["BROWSERSTACK_USER"],
-      browserstack_access_key: ENV["BROWSERSTACK_ACCESS_KEY"],
-      file_path: lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH],
+  desc "Create Release APK"
+  lane :build_apk do
+    increment_build
+    store_password = get_properties_value(
+        key: "keystore_password",
+        path: "fastlane/puravida-app.properties"
     )
-    sh("npx wdio ../browserstack.js")
-  end
 
-  desc "Build for end to end testing"
-  lane :build_e2e do
     gradle(
-      task: "clean assemble",
+      task: "assemble",
       build_type: "Release",
       print_command: false,
-      flags: "--no-daemon --max-workers=8 --stacktrace --info",
+      properties: {
+          "RELEASE_STORE_PASSWORD" => store_password
+      },
+      flags: "--no-daemon --max-workers=8 --stacktrace --info"
     )
   end
 
+  desc "Deploy a new version to Firebase"
+  lane :firebase do
+  #  build_apk
+       # build_android_app is a built-in fastlane action.
+       firebase_app_distribution(
+           app: "1:771930724259:android:43aa97660b38a7aedd2c16",
+           groups: "internal-testers",
+           release_notes: "",
+           android_artifact_path:"./app/release/app-release.apk",
+
+           android_artifact_type:"APK"
+       )
+   end
 #  desc "Promote Internal to Alpha"
 #  lane :promote_internal_to_alpha do
 #    upload_to_play_store(
@@ -102,4 +136,27 @@ platform :android do
 #      )
 #  end
 
+  # lane :firebase do
+  #   build_android_app(...)
+  #   # build_android_app is a built-in fastlane action.
+  #   firebase_app_distribution(
+  #       app: "responsive-edge-344815",
+  #       testers: "tester1@company.com, tester2@company.com",
+  #       release_notes: "Lots of amazing new features to test out!"
+  #   )
+  # end
+  desc "Submit a new build Deploy gate"
+  lane :release_dg do 
+    # gradle(task: "clean") 
+    build_bundle
+
+    deploygate(
+      api_token: "681aa4d1-a920-4b99-9667-1b5c7644d58b",
+      user: "phaoga54",
+      apk: './app/build/outputs/bundle/release/app-release.aab',
+      message: "Build #{lane_context[SharedValues::BUILD_NUMBER]}",
+    )
+    # sh "your_script.sh"
+    # You can also use other beta testing services here
+  end 
 end
