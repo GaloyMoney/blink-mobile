@@ -17,6 +17,7 @@ import { usePersistentStateContext } from "@app/store/persistent-state"
 import { GALOY_INSTANCES } from "@app/config/galoy-instances"
 import { useEffect } from "react"
 import { testProps } from "../../../utils/testProps"
+import Clipboard from "@react-native-community/clipboard"
 
 const styles = EStyleSheet.create({
   button: {
@@ -126,6 +127,7 @@ export const DebugScreen: ScreenType = () => {
           value={tempToken}
           onChangeText={setTempToken}
           selectTextOnFocus
+          secureTextEntry={true}
         />
         <Button
           {...testProps("Change Token Button")}
@@ -135,6 +137,16 @@ export const DebugScreen: ScreenType = () => {
             await saveToken(tempToken)
             await addDeviceToken(client)
           }}
+        />
+        <Button
+          {...testProps("Copy access token")}
+          title="Copy access token"
+          style={styles.button}
+          onPress={async () => {
+            Clipboard.setString(tempToken)
+            Alert.alert("Token copied in clipboard.")
+          }}
+          disabled={!tempToken}
         />
       </View>
     </Screen>
