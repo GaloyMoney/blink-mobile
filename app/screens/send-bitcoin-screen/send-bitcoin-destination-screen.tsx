@@ -546,7 +546,11 @@ const SendBitcoinDestinationScreen = ({
             titleStyle={Styles.activeButtonTitleStyle}
             disabledStyle={[Styles.button, Styles.disabledButtonStyle]}
             disabledTitleStyle={Styles.disabledButtonTitleStyle}
-            disabled={!loaded || destinationState.destinationState !== "valid"}
+            disabled={
+              !loaded ||
+              destinationState.destinationState === "validating" ||
+              destinationState.destinationState === "invalid"
+            }
             onPress={initiateGoToNextScreen}
           />
         </View>
