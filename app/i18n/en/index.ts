@@ -820,6 +820,48 @@ const en: BaseTranslation = {
     commentRequired: "Comment required",
     viewPrintable: "View Printable Version",
   },
+  marketPlace: {
+    name: "Name",
+    marketPlace: "Marketplace",
+    search: "Search",
+    post_what_would_you_like_too_offer_for_bitcoin: "Post what would you like too offer for bitcoin",
+    create_post: "Create Post",
+    my_post: "My Posts",
+    register_store: "Register Store",
+    next: "Next",
+    skip: "Skip",
+    share_location: "Share location",
+    use_my_current_position: "Use My Current Location",
+    open_hour: "Open Hour",
+    cuisines: "Cuisines",
+    description: "Description",
+    update_cover_image: "Update cover Image",
+    location: "Location",
+    submit: "Submit",
+    upload_image: "Upload Image",
+    image_uploaded: "Image uploaded",
+    account_contact_will_be_filled: "Account contact will be filled",
+    use_existing_information: "Use Existing Information",
+    phone: "Phone",
+    phone_number: "Phone number",
+    email: "Email",
+    price: "Price",
+    name_is_required: "Name is required",
+    name_must_be_more_than_2_characters: "Name must be more than 2 characters",
+    description_is_required: "Description is required",
+    description_must_be_more_than_2_characters: "Description must be more than 2 characters",
+    you_must_add_at_least_one_image: "You must add at least one image",
+    enter_your_own_tags: "Enter your own tags",
+    tags: "Tags",
+    your_selected_tag: "Your selected tag",
+
+    select_your_address: "Select your address",
+    enter_your_location: "Enter your location",
+    search_your_location: "Search your location",
+    or_select_your_address: "Or Select Your Address",
+    there_are_no_posts: "There are no posts around you"
+  }
+
 }
 
 export default en

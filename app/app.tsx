@@ -55,6 +55,8 @@ import { loadAllLocales } from "./i18n/i18n-util.sync"
 import TypesafeI18n from "./i18n/i18n-react"
 import { customLocaleDetector } from "./utils/locale-detector"
 import { useAppConfig } from "./hooks"
+import { Provider } from "react-redux"
+import store from "./modules/market-place/redux"
 export const BUILD_VERSION = "build_version"
 
 export const { link: linkNetworkStatusNotifier, useApolloNetworkStatus } =
@@ -302,34 +304,38 @@ export const App = (): JSX.Element => {
   return (
     <AuthenticationContext.Provider value={{ isAppLocked, setAppUnlocked, setAppLocked }}>
       <ApolloProvider client={apolloClient}>
-        <PriceContextProvider>
-          <TypesafeI18n locale={customLocaleDetector()}>
-            <LocalizationContextProvider>
-              <ErrorBoundary FallbackComponent={ErrorScreen}>
-                <NavigationContainer
-                  linking={linking}
-                  onStateChange={(state) => {
-                    const currentRouteName = getActiveRouteName(state)
+        <Provider store={store}>
+          <PriceContextProvider>
+            <TypesafeI18n locale={customLocaleDetector()}>
+              <LocalizationContextProvider>
+                <ErrorBoundary FallbackComponent={ErrorScreen}>
+                  <NavigationContainer
+                    linking={linking}
+                    onStateChange={(state) => {
+                      const currentRouteName = getActiveRouteName(state)
 
-                    if (routeName.current !== currentRouteName) {
-                      analytics().logScreenView({
-                        screen_name: currentRouteName,
-                        screen_class: currentRouteName,
-                      })
-                      routeName.current = currentRouteName
-                    }
-                  }}
-                >
-                  <RootSiblingParent>
-                    <GlobalErrorToast />
-                    <RootStack />
-                    <Toast />
-                  </RootSiblingParent>
-                </NavigationContainer>
-              </ErrorBoundary>
-            </LocalizationContextProvider>
-          </TypesafeI18n>
-        </PriceContextProvider>
+                      if (routeName.current !== currentRouteName) {
+                        // analytics().logScreenView({
+                        //   screen_name: currentRouteName,
+                        //   screen_class: currentRouteName,
+                        // })
+                        console.log("route: ", currentRouteName)
+
+                        routeName.current = currentRouteName
+                      }
+                    }}
+                  >
+                    <RootSiblingParent>
+                      <GlobalErrorToast />
+                      <RootStack />
+                      <Toast />
+                    </RootSiblingParent>
+                  </NavigationContainer>
+                </ErrorBoundary>
+              </LocalizationContextProvider>
+            </TypesafeI18n>
+          </PriceContextProvider>
+        </Provider>
       </ApolloProvider>
     </AuthenticationContext.Provider>
   )

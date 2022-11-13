@@ -6,6 +6,7 @@ import { GaloyGQL } from "@galoymoney/client"
 import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
 import { contacts_me_contacts } from "../screens/contacts-screen/__generated__/contacts"
 import { AccountType, AuthenticationScreenPurpose, PinScreenPurpose } from "../utils/enum"
+import { PostAttributes } from "@app/modules/market-place/redux/reducers/store-reducer"
 
 export type TransactionDetail = GaloyGQL.Transaction & {
   usdAmount: number
@@ -100,6 +101,10 @@ export type RootStackParamList = {
   transactionDetail: TransactionDetail
   transactionHistory: undefined
   Earn: undefined
+
+  PostDetail: { editable?: boolean; storeInfor: PostAttributes }
+  StoreListView: { searchText: string }
+  StoreList: undefined
 }
 
 export type ContactStackParamList = {
@@ -131,4 +136,5 @@ export type PrimaryStackParamList = {
   sendBitcoinDestination: { username: string }
   phoneValidation: undefined
   earnsSection: { section: string }
+  MarketPlace: undefined
 }

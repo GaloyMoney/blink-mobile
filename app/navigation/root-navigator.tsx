@@ -9,7 +9,7 @@ import * as React from "react"
 import { useCallback, useEffect } from "react"
 import { AppState } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
-import analytics from "@react-native-firebase/analytics"
+// import analytics from "@react-native-firebase/analytics"
 
 import {
   AuthenticationScreen,
@@ -22,7 +22,7 @@ import { EarnMapDataInjected } from "../screens/earns-map-screen"
 import { EarnQuiz, EarnSection } from "../screens/earns-screen"
 import { SectionCompleted } from "../screens/earns-screen/section-completed"
 import { GetStartedScreen } from "../screens/get-started-screen"
-import { MapScreen } from "../screens/map-screen/map-screen"
+// import { MapScreen } from "../screens/map-screen/map-screen"
 import { MoveMoneyScreenDataInjected } from "../screens/move-money-screen"
 import {
   WelcomePhoneInputScreen,
@@ -55,7 +55,7 @@ import useMainQuery from "@app/hooks/use-main-query"
 import { LnurlScreen } from "@app/screens/settings-screen/lnurl-screen"
 import HomeIcon from "@app/assets/icons/home.svg"
 import ContactsIcon from "@app/assets/icons/contacts.svg"
-import MapIcon from "@app/assets/icons/map.svg"
+// import MapIcon from "@app/assets/icons/map.svg"
 import LearnIcon from "@app/assets/icons/learn.svg"
 import SendBitcoinDestinationScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-destination-screen"
 import SendBitcoinDetailsScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-details-screen"
@@ -71,7 +71,11 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { logEnterBackground, logEnterForeground } from "@app/utils/analytics"
 import { useAppConfig } from "@app/hooks"
 import { GaloyAddressScreen } from "@app/screens/galoy-address-screen"
-
+import { MarketPlaceStacks } from "@app/modules/market-place/navigation/marketplace-stack"
+import { PostDetailScreen } from "@app/modules/market-place/screens/post-detail-screen"
+import { StoreListViewScreen } from "@app/modules/market-place/screens/post-list-screen/list-view-screen"
+import MarketPlaceSvg from "@app/modules/market-place/assets/svgs/market-place.svg"
+import { StoreListScreen } from "@app/modules/market-place/screens/post-list-screen"
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
 PushNotification.configure({
   // (optional) Called when Token is generated (iOS and Android)
@@ -141,19 +145,19 @@ export const RootStack: NavigatorType = () => {
   const bitcoinNetwork = appConfig.galoyInstance.network
 
   useEffect(() => {
-    analytics().setUserProperty("hasUsername", username ? "true" : "false")
+    // analytics().setUserProperty("hasUsername", username ? "true" : "false")
   }, [username])
 
   const userId = me?.id
   useEffect(() => {
     if (userId) {
-      analytics().setUserId(userId)
+      // analytics().setUserId(userId)
     }
   }, [userId])
 
   useEffect(() => {
     if (bitcoinNetwork) {
-      analytics().setUserProperties({ network: bitcoinNetwork })
+      // analytics().setUserProperties({ network: bitcoinNetwork })
     }
   }, [bitcoinNetwork])
 
@@ -476,6 +480,28 @@ export const RootStack: NavigatorType = () => {
         }}
         initialParams={{ account: AccountType.Bitcoin }}
       />
+      <RootNavigator.Screen
+        name="PostDetail"
+        component={PostDetailScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <RootNavigator.Screen
+        name="StoreListView"
+        component={StoreListViewScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      <RootNavigator.Screen
+        name="StoreList"
+        component={StoreListScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
     </RootNavigator.Navigator>
   )
 }
@@ -572,12 +598,12 @@ export const PrimaryNavigator: NavigatorType = () => {
         }}
       />
       <Tab.Screen
-        name="Map"
-        component={MapScreen}
+        name="MarketPlace"
+        component={MarketPlaceStacks}
         options={{
-          title: LL.MapScreen.title(),
+          title: LL.marketPlace.marketPlace(),
           headerShown: false,
-          tabBarIcon: ({ color }: TabProps) => <MapIcon color={color} />,
+          tabBarIcon: ({ color }: TabProps) => <MarketPlaceSvg stroke={color} />,
         }}
       />
       <Tab.Screen

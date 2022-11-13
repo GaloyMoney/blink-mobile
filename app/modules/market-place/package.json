@@ -1,0 +1,12 @@
+{
+
+  "dependencies": {
+
+    "@reduxjs/toolkit": "^1.8.3",
+    "@react-native-community/geolocation": "^2.0.2",
+    "react-redux": "7.2.8",
+    "apollo-upload-client": "^17.0.0"
+  },
+  "devDependencies": {
+  }
+}

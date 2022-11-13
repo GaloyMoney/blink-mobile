@@ -15,7 +15,7 @@ import { Button, Input } from "react-native-elements"
 import { FetchResult, useApolloClient } from "@apollo/client"
 import EStyleSheet from "react-native-extended-stylesheet"
 import PhoneInput from "react-native-phone-number-input"
-import analytics from "@react-native-firebase/analytics"
+// import analytics from "@react-native-firebase/analytics"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { RouteProp } from "@react-navigation/native"
 
@@ -417,7 +417,7 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
         const token = data?.userLogin?.authToken
 
         if (token) {
-          analytics().logLogin({ method: "phone" })
+          // analytics().logLogin({ method: "phone" })
           await saveToken(token)
           await addDeviceToken(client)
         } else {
