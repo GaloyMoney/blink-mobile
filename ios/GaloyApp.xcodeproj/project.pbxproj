@@ -595,7 +595,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 24;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = AYPCPV46WW;
 				ENABLE_BITCODE = NO;
@@ -610,7 +610,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.puravidabitcoin.app;
-				PRODUCT_NAME = "Puravida Bitcoin";
+				PRODUCT_NAME = "PuravidaBitcoin";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development io.galoy.bitcoinbeach";
 				SWIFT_OBJC_BRIDGING_HEADER = "GaloyApp-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -628,7 +628,7 @@
 				CODE_SIGN_ENTITLEMENTS = GaloyApp/GaloyApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 24;
 				DEVELOPMENT_TEAM = HYJM89X9ZB;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -642,7 +642,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.puravidabitcoin.app;
-				PRODUCT_NAME = "Puravida Bitcoin";
+				PRODUCT_NAME = "PuravidaBitcoin";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "GaloyApp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
