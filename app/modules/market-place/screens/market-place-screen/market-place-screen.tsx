@@ -5,6 +5,8 @@ import {
   Alert,
   Dimensions,
   Image,
+  Platform,
+  Pressable,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -45,17 +47,21 @@ export const MarketPlace = ({ navigation }: Props) => {
     <SafeAreaView style={{ flex: 1 }}>
       <Screen style={styles.screenContainer}>
         <View style={styles.contentContainer}>
-          <Row containerStyle={styles.rowContainer}>
-            <TextInput
-              style={styles.searchText}
-              placeholder={t.marketPlace.search()}
-              editable={false}
-              onPressIn={() => {
-                navigation.navigate("StoreList")
-              }}
-            />
-            <FilterSvg />
-          </Row>
+          <Pressable
+            onPress={() => {
+              navigation.navigate("StoreList")
+            }}
+          >
+
+            <Row containerStyle={styles.rowContainer}>
+              <TextInput
+                style={styles.searchText}
+                placeholder={t.marketPlace.search()}
+                editable={false}
+              />
+              <FilterSvg />
+            </Row>
+          </Pressable>
           <View style={styles.imageRow}>
             <Image
               source={images.group}
@@ -122,7 +128,7 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingHorizontal: 30,
     paddingRight: spacing[3],
-    paddingVertical: 9,
+    paddingVertical: Platform.OS === 'android' ? 0 : 9,
     alignItems: "center",
   },
   contentContainer: {

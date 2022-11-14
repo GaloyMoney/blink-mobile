@@ -10,7 +10,7 @@ import { palette } from "../../theme/palette"
 import { CompositeNavigationProp, ParamListBase } from "@react-navigation/native"
 import { prefCurrencyVar as primaryCurrencyVar } from "../../graphql/client-only-query"
 import { useHideBalance } from "../../hooks"
-import { satAmountDisplay, usdAmountDisplay } from "@app/utils/currencyConversion"
+import { crcAmountDisplay, satAmountDisplay, usdAmountDisplay } from "@app/utils/currencyConversion"
 import { GaloyGQL } from "@galoymoney/client"
 import { WalletCurrency } from "@app/types/amounts"
 import { WalletType } from "@app/utils/enum"
@@ -168,7 +168,7 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
           >
             {primaryCurrency === "BTC" && tx.settlementCurrency === WalletCurrency.BTC
               ? satAmountDisplay(tx.settlementAmount)
-              : usdAmountDisplay(usdAmount)}
+              : crcAmountDisplay(usdAmount)}
           </Text>
         )}
       </ListItem>

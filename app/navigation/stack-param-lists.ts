@@ -136,5 +136,5 @@ export type PrimaryStackParamList = {
   sendBitcoinDestination: { username: string }
   phoneValidation: undefined
   earnsSection: { section: string }
-  MarketPlace: undefined
+  MarketPlaceStack: undefined
 }

@@ -11,13 +11,13 @@ import { palette } from "../../theme/palette"
 import type { ScreenType } from "../../types/jsx"
 import { testProps } from "../../../utils/testProps"
 
-import BitcoinBeachLogo from "./bitcoin-beach-logo.png"
+import PuraVidaLogo from "./puravida-logo.png"
 
 const styles = EStyleSheet.create({
   Logo: {
     marginTop: 24,
     maxHeight: "50%",
-    maxWidth: "85%",
+    maxWidth: "60%",
   },
 
   bottom: {
@@ -64,7 +64,7 @@ export const GetStartedScreen: ScreenType = ({ navigation }: Props) => {
       backgroundColor={palette.white}
       statusBar="light-content"
     >
-      <Image style={styles.Logo} source={BitcoinBeachLogo} resizeMode="contain" />
+      <Image style={styles.Logo} source={PuraVidaLogo} resizeMode="contain" />
       <VersionComponent style={styles.version} />
       <View style={styles.bottom}>
         <Button

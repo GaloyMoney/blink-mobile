@@ -598,7 +598,7 @@ export const PrimaryNavigator: NavigatorType = () => {
         }}
       />
       <Tab.Screen
-        name="MarketPlace"
+        name="MarketPlaceStack"
         component={MarketPlaceStacks}
         options={{
           title: LL.marketPlace.marketPlace(),

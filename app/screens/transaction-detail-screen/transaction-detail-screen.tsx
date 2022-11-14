@@ -192,7 +192,7 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
         <Text style={styles.amountText}>{spendOrReceiveText}</Text>
         <TextCurrencyForAmount
           amount={Math.abs(usdAmount)}
-          currency="USD"
+          currency="CRC"
           style={styles.amount}
         />
         {walletType === WalletType.BTC && (
