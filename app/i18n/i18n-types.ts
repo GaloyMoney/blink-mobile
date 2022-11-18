@@ -196,6 +196,12 @@ type RootTranslation = {
 		 */
 		message: string
 	}
+	changeDefaultWalletScreen: {
+		/**
+		 * Change Default Wallet
+		 */
+		title: string
+	}
 	EarnScreen: {
 		/**
 		 * Earn {formattedNumber|sats}
@@ -2893,6 +2899,12 @@ export type TranslationFunctions = {
 		 * Conversion successful
 		 */
 		message: () => LocalizedString
+	}
+	changeDefaultWalletScreen: {
+		/**
+		 * Change Default Wallet
+		 */
+		title: () => LocalizedString
 	}
 	EarnScreen: {
 		/**
