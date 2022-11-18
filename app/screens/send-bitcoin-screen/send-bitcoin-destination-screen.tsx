@@ -549,7 +549,8 @@ const SendBitcoinDestinationScreen = ({
             disabled={
               !loaded ||
               destinationState.destinationState === "validating" ||
-              destinationState.destinationState === "invalid"
+              destinationState.destinationState === "invalid" ||
+              destinationState.unparsedDestination === ""
             }
             onPress={initiateGoToNextScreen}
           />
