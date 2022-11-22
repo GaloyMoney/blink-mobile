@@ -111,3 +111,14 @@ android
   "automationName": "UiAutomator2"
 }
 ```
+
+ios on browserstack - choose 'select cloud providers' then 'browserstack'
+
+```
+{
+  "appium:deviceName": "iPhone 13",
+  "appium:automationName": "XCUITest",
+  "appium:platformVersion": "15.1",
+  "appium:app": "bs://{YOUR_BROWSERSTACK_ID_FROM_CIRCLE_CI}"
+}
+```

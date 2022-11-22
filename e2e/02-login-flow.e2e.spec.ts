@@ -17,7 +17,9 @@ describe("Login Flow", async () => {
     const buildButton = await $(selector("Version Build Text", "StaticText"))
     await buildButton.waitForDisplayed({ timeout })
     await buildButton.click()
+    await browser.pause(800)
     await buildButton.click()
+    await browser.pause(800)
     await buildButton.click()
   })
 

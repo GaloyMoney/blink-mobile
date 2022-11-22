@@ -95,6 +95,19 @@ describe("Receive Payment Flow", async () => {
     expect(payResult).toBeTruthy()
   })
 
+  it("Click ok for allowing push notifications popup", async () => {
+    try {
+      const okButton = await $(selector(LL.common.ok()))
+      await okButton.waitForDisplayed({ timeout: 3000 })
+      await okButton.click()
+      const allowButton = await $(selector("Allow"))
+      await allowButton.waitForDisplayed({ timeout: 3000 })
+      await allowButton.click()
+    } catch (e) {
+      // keep going, it might have already been clicked
+    }
+  })
+
   it("Wait for Green check", async () => {
     const successCheck = await $(selector("Success Icon", "Other"))
     await successCheck.waitForDisplayed({ timeout })
