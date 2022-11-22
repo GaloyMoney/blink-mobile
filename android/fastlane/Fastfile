@@ -79,7 +79,7 @@ platform :android do
       file_path: lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH],
     )
     # sh("npx wdio ../browserstack.js")
-    sh("GALOY_TOKEN=$GALOY_TOKEN && GALOY_TOKEN_2=$GALOY_TOKEN_2 && yarn test:browserstack:android")
+    sh("GALOY_TOKEN=$GALOY_TOKEN && GALOY_TOKEN_2=$GALOY_TOKEN_2 && BROWSERSTACK_APP_ID=$BROWSERSTACK_APP_ID && yarn test:browserstack:android")
   end
 
   desc "Build for end to end testing"

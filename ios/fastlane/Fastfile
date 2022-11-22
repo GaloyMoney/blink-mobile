@@ -47,7 +47,7 @@ platform :ios do
       browserstack_access_key: ENV["BROWSERSTACK_ACCESS_KEY"],
     )
     # sh("npx wdio ../browserstack.js")
-    sh("GALOY_TOKEN=$GALOY_TOKEN && GALOY_TOKEN_2=$GALOY_TOKEN_2 && yarn test:browserstack:ios")
+    sh("GALOY_TOKEN=$GALOY_TOKEN && GALOY_TOKEN_2=$GALOY_TOKEN_2 && BROWSERSTACK_APP_ID=$BROWSERSTACK_APP_ID && yarn test:browserstack:ios")
   end
 
   desc "increment path version"
