@@ -38,7 +38,7 @@ describe("Login Flow", async () => {
 
   it("input token", async () => {
     try {
-      const tokenInput = await $(selector("Input access token", "TextField"))
+      const tokenInput = await $(selector("Input access token", "SecureTextField"))
       await tokenInput.waitForDisplayed({ timeout })
       await tokenInput.click()
       await browser.pause(1000)
