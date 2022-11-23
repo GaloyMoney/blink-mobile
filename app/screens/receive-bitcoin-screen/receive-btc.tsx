@@ -541,7 +541,10 @@ const ReceiveBtc = () => {
                 </Pressable>
               </View>
               <View style={styles.shareInvoiceContainer}>
-                <Pressable onPress={share}>
+                <Pressable
+                  {...testProps(LL.ReceiveBitcoinScreen.shareInvoice())}
+                  onPress={share}
+                >
                   <Text style={styles.infoText}>
                     <Icon style={styles.infoText} name="share-outline" />
                     <Text> </Text>

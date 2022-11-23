@@ -34,6 +34,37 @@ describe("Receive Payment Flow", async () => {
     await receiveButton.click()
   })
 
+  it("Click Copy Invoice to prompt for notification permission popup", async () => {
+    let copyInvoiceButton
+    if (process.env.E2E_DEVICE === "ios") {
+      copyInvoiceButton = await $('(//XCUIElementTypeOther[@name="Copy Invoice"])[2]')
+    } else {
+      copyInvoiceButton = await $(selector("Copy Invoice"))
+    }
+    await copyInvoiceButton.waitForDisplayed({ timeout })
+    await copyInvoiceButton.click()
+  })
+
+  it("Get Invoice from clipboard to prompt for notification permission popup", async () => {
+    await browser.pause(800)
+    const invoiceBase64 = await browser.getClipboard()
+    invoice = new Buffer(invoiceBase64, "base64").toString()
+  })
+
+  it("Click OK to allow push notifications", async () => {
+    try {
+      const okButton = await $(selector(LL.common.ok()))
+      await okButton.waitForDisplayed({ timeout: 8000 })
+      await okButton.click()
+      await browser.pause(1000)
+      const allowButton = await $(selector("Allow"))
+      await allowButton.waitForDisplayed({ timeout: 8000 })
+      await allowButton.click()
+    } catch (e) {
+      // keep going, it might have already been clicked
+    }
+  })
+
   it("Click Copy Invoice", async () => {
     let copyInvoiceButton
     if (process.env.E2E_DEVICE === "ios") {
@@ -45,10 +76,25 @@ describe("Receive Payment Flow", async () => {
     await copyInvoiceButton.click()
   })
 
-  it("Get Invoice from clipboard", async () => {
-    await browser.pause(800)
-    const invoiceBase64 = await browser.getClipboard()
-    invoice = new Buffer(invoiceBase64, "base64").toString()
+  it("Get Invoice from clipboard (android) or share link (ios)", async () => {
+    await browser.pause(2000)
+    if (process.env.E2E_DEVICE === "ios") {
+      // get from share link
+      const shareButton = await await $(
+        '(//XCUIElementTypeOther[@name="Share Invoice"])[2]',
+      )
+      await shareButton.waitForDisplayed({ timeout: 8000 })
+      await shareButton.click()
+      const invoiceSharedScreen = await await $('//*[contains(@name,"lntbs")]')
+      const invoiceSharedScreenElement = await invoiceSharedScreen.waitForDisplayed({
+        timeout: 8000,
+      })
+      invoice = await invoiceSharedScreen.getAttribute("name")
+    } else {
+      // get from clipboard in android
+      const invoiceBase64 = await browser.getClipboard()
+      invoice = new Buffer(invoiceBase64, "base64").toString()
+    }
   })
 
   it("External User Pays the Invoice", async () => {
@@ -58,8 +104,6 @@ describe("Receive Payment Flow", async () => {
       graphqlUrl: "https://api.staging.galoy.io/graphql",
     }
     const client = createGaloyServerClient({ config })({ authToken })
-
-    //
     const accountResult: ApolloQueryResult<{ me: GaloyGQL.MeFragment }> =
       await client.query({
         query: gql`
@@ -83,29 +127,16 @@ describe("Receive Payment Flow", async () => {
     const result = await client.mutate({
       variables: {
         input: {
-          walletId, // (lookup wallet 2 id from graphql) i.e "8914b38f-b0ea-4639-9f01-99c03125eea5"
+          walletId,
           paymentRequest: invoice,
           amount: 5,
         },
-      }, // TODO (lookup wallet id from graphql)
+      },
       mutation: MUTATIONS.lnNoAmountInvoicePaymentSend,
       fetchPolicy: "no-cache",
     })
     const payResult = result
     expect(payResult).toBeTruthy()
-  })
-
-  it("Click ok for allowing push notifications popup", async () => {
-    try {
-      const okButton = await $(selector(LL.common.ok()))
-      await okButton.waitForDisplayed({ timeout: 3000 })
-      await okButton.click()
-      const allowButton = await $(selector("Allow"))
-      await allowButton.waitForDisplayed({ timeout: 3000 })
-      await allowButton.click()
-    } catch (e) {
-      // keep going, it might have already been clicked
-    }
   })
 
   it("Wait for Green check", async () => {

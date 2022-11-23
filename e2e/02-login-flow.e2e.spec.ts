@@ -33,14 +33,24 @@ describe("Login Flow", async () => {
     const midpointX = width / 2 + x
     const midpointY = height / 2 + y
     await browser.touchAction({ action: "tap", x: midpointX, y: midpointY })
-    await browser.pause(6000)
+    await browser.pause(8000)
   })
 
   it("input token", async () => {
     try {
       const tokenInput = await $(selector("Input access token", "SecureTextField"))
       await tokenInput.waitForDisplayed({ timeout })
-      await tokenInput.click()
+      if (tokenInput.isDisplayed()) {
+        await tokenInput.click()
+      } else {
+        try {
+          const tokenInput2 = await $(selector("Input access token", "TextField"))
+          await tokenInput2.waitForDisplayed({ timeout })
+          await tokenInput2.click()
+        } catch (e) {
+          // pass thru
+        }
+      }
       await browser.pause(1000)
       await tokenInput.sendKeys(process.env.GALOY_TOKEN?.split(""))
       await enter(tokenInput)

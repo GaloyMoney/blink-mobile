@@ -18,7 +18,7 @@ if (process.env.E2E_DEVICE === "ios") {
     "build": "ios Local",
     "name": "local_test_ios",
     "device": "iPhone 13",
-    "os_version": "15.1",
+    "os_version": "15.5",
     "app": process.env.BROWSERSTACK_APP_ID,
     "browserstack.local": true,
     "browserstack.debug": true,
