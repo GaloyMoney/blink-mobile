@@ -3,7 +3,7 @@ const browserstack = require("browserstack-local")
 
 let capabilities = {
   "project": "Android Test",
-  "build": "Webdriverio Android Local",
+  "build": "CircleCI Android",
   "name": "local_test",
   "device": "Google Pixel 3",
   "os_version": "9.0",
@@ -15,7 +15,7 @@ let capabilities = {
 if (process.env.E2E_DEVICE === "ios") {
   capabilities = {
     "project": "ios Test",
-    "build": "ios Local",
+    "build": "CircleCI iOS",
     "name": "local_test_ios",
     "device": "iPhone 13 Pro",
     "platformVersion": "15.6",
