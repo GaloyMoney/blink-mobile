@@ -1,12 +1,14 @@
 import { CustomIcon } from "@app/components/custom-icon"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { TouchableWithoutFeedback, View } from "react-native"
 import { CheckBox, Text } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import useMainQuery from "@app/hooks/use-main-query"
 import { useMutation } from "@galoymoney/client"
+import { toastShow } from "@app/utils/toast"
+import { DefaultWalletExplainerModal } from "./default-wallet-explainer-modal"
 
 const styles = EStyleSheet.create({
   fieldContainer: {
@@ -41,10 +43,16 @@ const styles = EStyleSheet.create({
 
 export const SetDefaultWallet = () => {
   const { LL } = useI18nContext()
-  const { defaultWallet } = useMainQuery()
+  const { defaultWallet, accountId, btcWalletId, usdWalletId} = useMainQuery()
   const [isDefaultWalletExplainerModalOpen, setIsDefaultWalletExplainerModalOpen] =
     useState(false)
-  const [accountUpdateDefaultWallet] = useMutation.accountUpdateDefaultWalletId()
+  const [accountUpdateDefaultWallet, { error }] = useMutation.accountUpdateDefaultWalletId()
+
+  useEffect(() => {
+    if(error){
+      toastShow({message: error.message, type: "error"})
+    }
+  }, [error])
 
   const toggleDefaultWalletExplainerModal = () => {
     setIsDefaultWalletExplainerModalOpen(!isDefaultWalletExplainerModalOpen)
@@ -57,6 +65,16 @@ export const SetDefaultWallet = () => {
           walletId: newDefaultWalletId,
         },
       },
+      optimisticResponse: {
+        accountUpdateDefaultWalletId: {
+          errors: null,
+          account: {
+            defaultWalletId: newDefaultWalletId,
+            id: accountId,
+            __typename: "ConsumerAccount"
+          }
+        }
+      }
     })
   }
 
@@ -86,9 +104,9 @@ export const SetDefaultWallet = () => {
           title="BTC"
           checkedIcon="dot-circle-o"
           uncheckedIcon="circle-o"
-          checked={defaultWallet.walletCurrency === "BTC"}
+          checked={defaultWallet?.walletCurrency === "BTC"}
           containerStyle={{ backgroundColor: palette.lighterGrey }}
-          onPress={() => updateDefaultWallet("BTC")}
+          onPress={() => updateDefaultWallet(btcWalletId)}
           checkedColor={palette.lapisLazuli}
           textStyle={{ color: palette.lapisLazuli }}
         />
@@ -96,13 +114,14 @@ export const SetDefaultWallet = () => {
           title="USD"
           checkedIcon="dot-circle-o"
           uncheckedIcon="circle-o"
-          checked={defaultWallet.walletCurrency === "USD"}
+          checked={defaultWallet?.walletCurrency === "USD"}
           containerStyle={{ backgroundColor: palette.lighterGrey }}
-          onPress={() => updateDefaultWallet("USD")}
+          onPress={() => updateDefaultWallet(usdWalletId)}
           checkedColor={palette.lapisLazuli}
           textStyle={{ color: palette.lapisLazuli }}
         />
       </View>
+      <DefaultWalletExplainerModal modalVisible={isDefaultWalletExplainerModalOpen} toggleModal={toggleDefaultWalletExplainerModal} />
     </>
   )
 }
