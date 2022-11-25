@@ -9,6 +9,7 @@ type mobileVersions = {
 }
 
 export type useMainQueryOutput = {
+  accountId: string
   userPreferredLanguage: string
   btcWalletBalance: number
   btcWalletValueInUsd: number
