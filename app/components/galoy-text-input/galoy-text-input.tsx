@@ -21,9 +21,6 @@ const styles = EStyleSheet.create({
   labelContainer: {
     flex: 1,
   },
-  inputContainer: {
-    flex: 1,
-  },
   label: {
     color: palette.inputLabel,
     fontSize: 18,
@@ -36,6 +33,8 @@ const styles = EStyleSheet.create({
     borderRadius: 8,
     paddingVertical: 8,
     paddingHorizontal: 12,
+    fontSize: 20,
+    height: 50,
   },
   appendTextStyle: {
     color: palette.secondaryText,
@@ -76,7 +75,7 @@ export const GaloyTextInput = ({
           {label}
         </Text>
       </View>
-      <View style={styles.inputContainer}>
+      <View>
         <TextInput
           style={styles.input}
           placeholder={placeholder}

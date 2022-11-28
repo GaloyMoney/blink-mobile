@@ -3,11 +3,10 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
 import { useMutation } from "@galoymoney/client"
 import React from "react"
-import { Modal, TouchableWithoutFeedback, View } from "react-native"
+import { Modal, Platform, StatusBar, TouchableWithoutFeedback, View } from "react-native"
 import { Button, Text } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import crashlytics from "@react-native-firebase/crashlytics"
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import { CustomIcon } from "@app/components/custom-icon"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
@@ -34,6 +33,7 @@ const styles = EStyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     width: "90%",
+    marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 40,
   },
   buttonStyle: {
     backgroundColor: palette.primaryButtonColor,
@@ -153,7 +153,7 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
       >
         <View style={styles.modalView}>
           {!newAddress && (
-            <KeyboardAwareScrollView>
+            <>
               <GaloyTextInput
                 label={LL.GaloyAddressScreen.buttonTitle({ bankName: "BBW" })}
                 append="@pay.bbw.sv"
@@ -182,7 +182,7 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
                   <Text style={styles.cancelText}>{LL.common.cancel()}</Text>
                 </TouchableWithoutFeedback>
               </View>
-            </KeyboardAwareScrollView>
+            </>
           )}
           {newAddress && (
             <View>

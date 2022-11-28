@@ -43,14 +43,15 @@ const styles = EStyleSheet.create({
 
 export const SetDefaultWallet = () => {
   const { LL } = useI18nContext()
-  const { defaultWallet, accountId, btcWalletId, usdWalletId} = useMainQuery()
+  const { defaultWallet, accountId, btcWalletId, usdWalletId } = useMainQuery()
   const [isDefaultWalletExplainerModalOpen, setIsDefaultWalletExplainerModalOpen] =
     useState(false)
-  const [accountUpdateDefaultWallet, { error }] = useMutation.accountUpdateDefaultWalletId()
+  const [accountUpdateDefaultWallet, { error }] =
+    useMutation.accountUpdateDefaultWalletId()
 
   useEffect(() => {
-    if(error){
-      toastShow({message: error.message, type: "error"})
+    if (error) {
+      toastShow({ message: error.message, type: "error" })
     }
   }, [error])
 
@@ -71,10 +72,10 @@ export const SetDefaultWallet = () => {
           account: {
             defaultWalletId: newDefaultWalletId,
             id: accountId,
-            __typename: "ConsumerAccount"
-          }
-        }
-      }
+            __typename: "ConsumerAccount",
+          },
+        },
+      },
     })
   }
 
@@ -121,7 +122,10 @@ export const SetDefaultWallet = () => {
           textStyle={{ color: palette.lapisLazuli }}
         />
       </View>
-      <DefaultWalletExplainerModal modalVisible={isDefaultWalletExplainerModalOpen} toggleModal={toggleDefaultWalletExplainerModal} />
+      <DefaultWalletExplainerModal
+        modalVisible={isDefaultWalletExplainerModalOpen}
+        toggleModal={toggleDefaultWalletExplainerModal}
+      />
     </>
   )
 }
