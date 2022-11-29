@@ -1,7 +1,7 @@
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
 import React from "react"
-import { Modal, TouchableWithoutFeedback, View } from "react-native"
+import { Modal, Platform, StatusBar, TouchableWithoutFeedback, View } from "react-native"
 import { Text } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 
@@ -26,6 +26,7 @@ const styles = EStyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     width: "90%",
+    marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 40,
   },
   titleText: {
     color: palette.lapisLazuli,

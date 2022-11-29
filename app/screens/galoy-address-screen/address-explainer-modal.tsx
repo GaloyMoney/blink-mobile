@@ -1,9 +1,18 @@
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
 import React from "react"
-import { FlatList, Modal, TouchableWithoutFeedback, View } from "react-native"
+import { Modal, Platform, StatusBar, TouchableWithoutFeedback, View } from "react-native"
 import { Text } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
+
+const wallets = [
+  "Bitcoin Beach Wallet",
+  "Blue Wallet",
+  "Breez",
+  "Phoenix",
+  "Simple Bitcoin Wallet (SBW)",
+  "Wallet of Satoshi",
+]
 
 const styles = EStyleSheet.create({
   centeredView: {
@@ -26,6 +35,7 @@ const styles = EStyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     width: "90%",
+    marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 40,
   },
   titleText: {
     color: palette.lapisLazuli,
@@ -79,22 +89,13 @@ export const AddressExplainerModal = ({
             {LL.GaloyAddressScreen.howToUseYourAddressExplainer({ bankName: "BBW" })}
           </Text>
           <Text style={styles.bodyText}>
-            <FlatList
-              data={[
-                { key: "Bitcoin Beach Wallet" },
-                { key: "Blue Wallet" },
-                { key: "Breez" },
-                { key: "Phoenix" },
-                { key: "Simple Bitcoin Wallet (SBW)" },
-                { key: "Wallet of Satoshi" },
-              ]}
-              renderItem={({ item }) => (
-                <Text style={styles.bodyText}>
-                  {"\u2B24 "}
-                  {item.key}
-                </Text>
-              )}
-            />
+            {wallets.map((wallet) => (
+              <Text key={wallet} style={styles.bodyText}>
+                {"\n"}
+                {"\u2B24 "}
+                {wallet}
+              </Text>
+            ))}
           </Text>
           <TouchableWithoutFeedback onPress={() => toggleModal()}>
             <View style={styles.backText}>
