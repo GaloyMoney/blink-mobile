@@ -79,7 +79,8 @@ describe("Receive Payment Flow", async () => {
   it("Get Invoice from clipboard (android) or share link (ios)", async () => {
     await browser.pause(2000)
     if (process.env.E2E_DEVICE === "ios") {
-      // get from share link
+      // on ios, get invoice from share link because copy does not
+      // work on physical device for security reasons
       const shareButton = await await $(
         '(//XCUIElementTypeOther[@name="Share Invoice"])[2]',
       )

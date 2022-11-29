@@ -55,7 +55,8 @@ describe("Login Flow", async () => {
       await tokenInput.sendKeys(process.env.GALOY_TOKEN?.split(""))
       await enter(tokenInput)
     } catch (e) {
-      // TODO this passes but throws an error on ios even tho it works
+      // this passes but sometimes throws an error on ios
+      // even though it works properly
     }
   })
 

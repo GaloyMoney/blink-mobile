@@ -10,6 +10,7 @@ if (process.env.E2E_DEVICE === "ios") {
   capabilities = {
     platformName: "iOS",
     deviceName: process.env.TEST_DEVICE_IOS || "iPhone 13",
+    platformVersion: process.env.PLATFORM_VERSION || "",
     bundleId: "io.galoy.bitcoinbeach",
     automationName: "XCUITest",
     snapshotMaxDepth: 1000,

@@ -63,7 +63,7 @@ To run the authenticated tests you need to set the env variable `GALOY_TOKEN`. T
 Then you can run one test at a time:
 
 ```
-TEST="03" yarn test:e2e:ios:auth
+TEST="03" PLATFORM_VERSION="15.4" yarn test:e2e:ios:auth
 ```
 
 ## Troubleshooting

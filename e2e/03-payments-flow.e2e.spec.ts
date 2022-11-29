@@ -81,7 +81,8 @@ describe("Payments Flow", async () => {
       await enter(invoiceInput)
       await browser.pause(5000)
     } catch (e) {
-      // TODO this passes but throws an error on ios even tho it works
+      // this passes but sometimes throws an error on ios
+      // even though it works properly
     }
   })
 
@@ -101,12 +102,9 @@ describe("Payments Flow", async () => {
       await amountInput.sendKeys("2".split(""))
       await enter(amountInput)
     } catch (e) {
-      // TODO this passes but throws an error on ios even tho it works
+      // this passes but sometimes throws an error on ios
+      // even though it works properly
     }
-  })
-
-  it("Add Note or label", async () => {
-    //
   })
 
   it("Click Next", async () => {
@@ -118,7 +116,6 @@ describe("Payments Flow", async () => {
   })
 
   it("Wait for fee calulation to return", async () => {
-    // TODO use waitForDisplayed
     await browser.pause(4000)
   })
 
