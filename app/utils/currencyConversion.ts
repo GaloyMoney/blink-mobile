@@ -1,4 +1,5 @@
 import * as currencyFmt from "currency.js"
+import crashlytics from "@react-native-firebase/crashlytics"
 
 import { PaymentAmount, WalletCurrency } from "@app/types/amounts"
 
@@ -64,19 +65,32 @@ export const paymentAmountToText = (
   locale = "en-US",
 ): string => {
   if (paymentAmount.currency === WalletCurrency.USD) {
-    return (paymentAmount.amount / 100).toLocaleString(locale, {
-      style: "decimal",
-      maximumFractionDigits: 2,
-      minimumFractionDigits: 2,
-    })
+    try {
+      const amount = paymentAmount.amount / 100
+      return amount.toLocaleString(locale, {
+        style: "decimal",
+        maximumFractionDigits: 2,
+        minimumFractionDigits: 2,
+      })
+    } catch (error) {
+      console.error(error)
+      crashlytics().recordError(error)
+      return "USD formating error"
+    }
   }
 
   if (paymentAmount.currency === WalletCurrency.BTC) {
-    return paymentAmount.amount.toLocaleString(locale, {
-      style: "decimal",
-      maximumFractionDigits: 0,
-      minimumFractionDigits: 0,
-    })
+    try {
+      return paymentAmount.amount.toLocaleString(locale, {
+        style: "decimal",
+        maximumFractionDigits: 0,
+        minimumFractionDigits: 0,
+      })
+    } catch (error) {
+      console.error(error)
+      crashlytics().recordError(error)
+      return "Unable to parse amount to"
+    }
   }
 
   throw Error("Currency not supported")
