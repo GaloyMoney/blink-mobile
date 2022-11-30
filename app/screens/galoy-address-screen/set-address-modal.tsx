@@ -1,10 +1,9 @@
-import { GaloyTextInput } from "@app/components/galoy-text-input"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
 import { useMutation } from "@galoymoney/client"
 import React from "react"
 import { Modal, Platform, StatusBar, TouchableWithoutFeedback, View } from "react-native"
-import { Button, Text } from "react-native-elements"
+import { Button, Input, Text } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { CustomIcon } from "@app/components/custom-icon"
@@ -47,9 +46,6 @@ const styles = EStyleSheet.create({
   cancelText: {
     color: palette.primaryButtonColor,
   },
-  labelStyle: {
-    marginBottom: 16,
-  },
   errorStyle: {
     color: palette.error,
     marginTop: 16,
@@ -60,7 +56,6 @@ const styles = EStyleSheet.create({
     fontWeight: "400",
     fontSize: 15,
     lineHeight: 24,
-    marginTop: 16,
   },
   titleText: {
     fontFamily: "Roboto",
@@ -90,6 +85,26 @@ const styles = EStyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 16,
+  },
+  rightIconTextStyle: {
+    color: palette.secondaryText,
+  },
+  inputContainerStyle: {
+    backgroundColor: palette.inputBackground,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    overflow: "hidden",
+    borderColor: palette.inputBackground,
+  },
+  containerStyle: { paddingLeft: 0, paddingRight: 0 },
+  fieldLabelStyle: {
+    color: palette.inputLabel,
+    fontSize: 18,
+    lineHeight: 24,
+    fontFamily: "Roboto",
+    fontWeight: "500",
+    marginBottom: 16,
   },
 })
 
@@ -154,11 +169,14 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
         <View style={styles.modalView}>
           {!newAddress && (
             <>
-              <GaloyTextInput
-                label={LL.GaloyAddressScreen.buttonTitle({ bankName: "BBW" })}
-                append="@pay.bbw.sv"
+              <Input
+                rightIcon={<Text style={styles.rightIconTextStyle}>@pay.galoy.io</Text>}
+                inputContainerStyle={styles.inputContainerStyle}
+                containerStyle={styles.containerStyle}
                 onChangeText={handleOnChangeText}
-                labelStyle={styles.labelStyle}
+                autoComplete={"off"}
+                label={LL.GaloyAddressScreen.buttonTitle({ bankName: "BBW" })}
+                labelStyle={styles.fieldLabelStyle}
               />
               {!error && (
                 <Text style={styles.explainerText}>
