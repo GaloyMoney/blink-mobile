@@ -1,6 +1,6 @@
 import { palette } from "@app/theme"
 import React, { useState } from "react"
-import { TextInput, View } from "react-native"
+import { View, TouchableOpacity, TextInput } from "react-native"
 import { Text } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 
@@ -22,7 +22,12 @@ const styles = EStyleSheet.create({
     flex: 1,
   },
   inputContainer: {
-    flex: 1,
+    flexDirection: "row",
+    backgroundColor: palette.inputBackground,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    overflow: "hidden",
   },
   label: {
     color: palette.inputLabel,
@@ -32,10 +37,7 @@ const styles = EStyleSheet.create({
     fontWeight: "500",
   },
   input: {
-    backgroundColor: palette.inputBackground,
-    borderRadius: 8,
-    paddingVertical: 8,
-    paddingHorizontal: 12,
+    flex: 1,
   },
   appendTextStyle: {
     color: palette.secondaryText,
@@ -53,20 +55,11 @@ export const GaloyTextInput = ({
   prepend = "",
   onChangeText,
 }: GaloyTextInputProps) => {
-  const [cleanValue, setCleanValue] = useState("")
-
+  const [inputValue, setInputValue] = useState("")
+  const textInputRef = React.useRef<TextInput>(null)
   const updateValue = (value) => {
-    let cleanedValue = value
-    if (prepend && cleanedValue.startsWith(prepend)) {
-      cleanedValue = cleanedValue.slice(prepend.length)
-    }
-    if (append && cleanedValue.endsWith(append)) {
-      cleanedValue = cleanedValue.slice(0, value.length - append.length)
-    }
-    onChangeText(cleanedValue)
-    if (cleanedValue !== cleanValue) {
-      setCleanValue(cleanedValue)
-    }
+    onChangeText(value)
+    setInputValue(value)
   }
 
   return (
@@ -76,21 +69,24 @@ export const GaloyTextInput = ({
           {label}
         </Text>
       </View>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder={placeholder}
-          onChangeText={updateValue}
-          selection={{
-            start: prepend.length + cleanValue.length,
-            end: prepend.length + cleanValue.length,
-          }}
-        >
+      <TouchableOpacity activeOpacity={1} onPress={() => textInputRef.current.focus()}>
+        <View style={styles.inputContainer}>
           {prepend && <Text style={styles.prependTextStyle}>{prepend}</Text>}
-          <Text>{cleanValue}</Text>
+          <TextInput
+            ref={textInputRef}
+            autoCorrect={false}
+            autoCapitalize={"none"}
+            selectTextOnFocus={false}
+            autoComplete={"off"}
+            style={styles.input}
+            textAlign={"left"}
+            placeholder={placeholder}
+            onChangeText={updateValue}
+            defaultValue={inputValue}
+          ></TextInput>
           {append && <Text style={styles.appendTextStyle}>{append}</Text>}
-        </TextInput>
-      </View>
+        </View>
+      </TouchableOpacity>
     </View>
   )
 }
