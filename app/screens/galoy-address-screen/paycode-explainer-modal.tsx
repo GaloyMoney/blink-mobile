@@ -1,14 +1,7 @@
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
 import React from "react"
-import {
-  FlatList,
-  Modal,
-  Platform,
-  StatusBar,
-  TouchableWithoutFeedback,
-  View,
-} from "react-native"
+import { Modal, Platform, StatusBar, TouchableWithoutFeedback, View } from "react-native"
 import { Text } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 
@@ -63,6 +56,8 @@ type SetAddressModalProps = {
   toggleModal?: () => void
 }
 
+const wallets = ["Muun", "Chivo", "Strike"]
+
 export const PayCodeExplainerModal = ({
   modalVisible,
   toggleModal,
@@ -87,15 +82,13 @@ export const PayCodeExplainerModal = ({
             {LL.GaloyAddressScreen.howToUseYourPaycodeExplainer()}
           </Text>
           <Text style={styles.bodyText}>
-            <FlatList
-              data={[{ key: "Muun" }, { key: "Chivo" }, { key: "Strike" }]}
-              renderItem={({ item }) => (
-                <Text style={styles.bodyText}>
-                  {"\u2B24 "}
-                  {item.key}
-                </Text>
-              )}
-            />
+            {wallets.map((wallet) => (
+              <Text key={wallet} style={styles.bodyText}>
+                {"\n"}
+                {"\u2B24 "}
+                {wallet}
+              </Text>
+            ))}
           </Text>
           <TouchableWithoutFeedback onPress={() => toggleModal()}>
             <View style={styles.backText}>

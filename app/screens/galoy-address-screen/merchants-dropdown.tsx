@@ -31,7 +31,7 @@ const styles = EStyleSheet.create({
     marginTop: 32,
   },
   fieldNameContainer: {
-    flex: 4,
+    flex: 1,
     flexDirection: "row",
   },
   fieldNameComponent: {
