@@ -25,11 +25,10 @@ export const useAppConfig = () => {
   }, [updateState])
 
   const setGaloyInstance = useCallback(
-    (newInstance) => {
+    (newInstance: GaloyInstance) => {
       updateState((state) => ({
         ...state,
         galoyInstance: newInstance,
-        galoyAuthToken: "",
       }))
     },
     [updateState],

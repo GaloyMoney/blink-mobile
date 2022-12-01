@@ -22,7 +22,6 @@ import type { ComponentType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import useMainQuery from "@app/hooks/use-main-query"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { useAppConfig } from "@app/hooks"
 import { lnurlDomains } from "@app/screens/send-bitcoin-screen/send-bitcoin-destination-screen"
 import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
 
@@ -83,8 +82,7 @@ const styles = StyleSheet.create({
 export const ModalClipboard: ComponentType = () => {
   const client = useApolloClient()
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const { appConfig } = useAppConfig()
-  const { myPubKey, username } = useMainQuery()
+  const { myPubKey, username, network } = useMainQuery()
   const { LL } = useI18nContext()
 
   const open = async () => {
@@ -124,7 +122,7 @@ export const ModalClipboard: ComponentType = () => {
       if (clipboard) {
         const { paymentType } = parsePaymentDestination({
           destination: clipboard,
-          network: appConfig.galoyInstance.network,
+          network,
           pubKey: myPubKey,
           lnAddressDomains: lnurlDomains,
         })
@@ -136,7 +134,7 @@ export const ModalClipboard: ComponentType = () => {
         setMessage(LL.ModalClipboard[pathString]())
       }
     })()
-  }, [client, isVisible, myPubKey, appConfig.galoyInstance.network, username, LL])
+  }, [client, isVisible, myPubKey, network, username, LL])
 
   return (
     <Modal

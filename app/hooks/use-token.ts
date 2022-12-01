@@ -3,9 +3,6 @@ import jwtDecode from "jwt-decode"
 import type { INetwork } from "../types/network"
 import { usePersistentStateContext } from "@app/store/persistent-state"
 
-// key used to stored the token within the phone
-export const TOKEN_KEY = "GaloyToken"
-
 export const decodeToken: (string) => {
   uid: string
   network: INetwork

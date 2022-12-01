@@ -40,7 +40,6 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import RNQRGenerator from "rn-qr-generator"
 import { BarcodeFormat, useScanBarcodes } from "vision-camera-code-scanner"
 import ImagePicker from "react-native-image-crop-picker"
-import { useAppConfig } from "@app/hooks"
 import { lnurlDomains } from "./send-bitcoin-destination-screen"
 import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
 
@@ -119,9 +118,7 @@ export const ScanningQRCodeScreen: ScreenType = ({
   navigation,
 }: ScanningQRCodeScreenProps) => {
   const [pending, setPending] = React.useState(false)
-  const { appConfig } = useAppConfig()
-  const bitcoinNetwork = appConfig.galoyInstance.network
-  const { myPubKey } = useMainQuery()
+  const { myPubKey, network: bitcoinNetwork } = useMainQuery()
   const { LL } = useI18nContext()
   const devices = useCameraDevices()
   const [cameraPermissionStatus, setCameraPermissionStatus] =

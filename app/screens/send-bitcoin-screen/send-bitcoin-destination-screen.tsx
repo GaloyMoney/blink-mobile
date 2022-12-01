@@ -34,7 +34,6 @@ import {
   InvalidOnchainDestinationReason,
 } from "@galoymoney/client/dist/parsing-v2"
 import { logPaymentDestinationAccepted } from "@app/utils/analytics"
-import { useAppConfig } from "@app/hooks"
 
 const Styles = StyleSheet.create({
   scrollView: {
@@ -224,9 +223,7 @@ const SendBitcoinDestinationScreen = ({
   const [destinationState, dispatchDestinationStateAction] =
     useSendBitcoinDestinationReducer()
   const [goToNextScreenWhenValid, setGoToNextScreenWhenValid] = React.useState(false)
-  const { myPubKey, username: myUsername } = useMainQuery()
-  const { appConfig } = useAppConfig()
-  const bitcoinNetwork = appConfig.galoyInstance.network
+  const { myPubKey, username: myUsername, network: bitcoinNetwork } = useMainQuery()
   const { LL } = useI18nContext()
   const [userDefaultWalletIdQuery] = useDelayedQuery.userDefaultWalletId()
   const { data } = useGaloyQuery.contacts()
