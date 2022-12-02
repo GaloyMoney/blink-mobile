@@ -1,6 +1,6 @@
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
-import { swipe, selector } from "./utils"
+import { swipeLeft, selector } from "./utils"
 
 describe("Welcome Screen Flow", async () => {
   loadLocale("en")
@@ -17,19 +17,19 @@ describe("Welcome Screen Flow", async () => {
   it("swipes Why Should I Care?", async () => {
     const caresText = await $(selector(LL.WelcomeFirstScreen.care(), "StaticText"))
     await caresText.waitForDisplayed({ timeout })
-    await swipe()
+    await swipeLeft()
   })
 
   it("swipes Bitcoin is designed to let you...bank", async () => {
     const bankText = await $(selector(LL.WelcomeFirstScreen.bank(), "StaticText"))
     await bankText.waitForDisplayed({ timeout })
-    await swipe()
+    await swipeLeft()
   })
 
   it("swipes Before Bitcoin people had to...", async () => {
     const beforeText = await $(selector(LL.WelcomeFirstScreen.before(), "StaticText"))
     await beforeText.waitForDisplayed({ timeout })
-    await swipe()
+    await swipeLeft()
   })
 
   it("clicks 'Learn to Earn' and enters the main app", async () => {

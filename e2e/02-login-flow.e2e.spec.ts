@@ -1,6 +1,6 @@
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
-import { goBack, selector, enter } from "./utils"
+import { goBack, selector, enter, scroll } from "./utils"
 
 describe("Login Flow", async () => {
   loadLocale("en")
@@ -23,8 +23,13 @@ describe("Login Flow", async () => {
     await buildButton.click()
   })
 
+  it("Scroll to bottom", async () => {
+    await browser.pause(2000)
+    await scroll()
+  })
+
   it("click staging environment", async () => {
-    await browser.pause(1000)
+    await browser.pause(2000)
     const instanceButton = await $(selector("Galoy Instance Button", "Other"))
     await instanceButton.waitForDisplayed({ timeout })
     const { x, y } = await instanceButton.getLocation()
@@ -78,11 +83,13 @@ describe("Login Flow", async () => {
     const loggedInListItem = await $(selector(LL.common.logout(), "Other"))
     await loggedInListItem.waitForDisplayed({ timeout })
     expect(loggedInListItem.isDisplayed()).toBeTruthy()
+    await browser.pause(1000)
   })
 
   it("click go back to home screen", async () => {
     const backButton = await $(goBack())
     await backButton.waitForDisplayed({ timeout })
     await backButton.click()
+    await browser.pause(1000)
   })
 })
