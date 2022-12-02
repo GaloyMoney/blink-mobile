@@ -46,7 +46,6 @@ platform :ios do
       browserstack_username: ENV["BROWSERSTACK_USER"],
       browserstack_access_key: ENV["BROWSERSTACK_ACCESS_KEY"],
     )
-    # sh("npx wdio ../browserstack.js")
     sh("GALOY_TOKEN=$GALOY_TOKEN && GALOY_TOKEN_2=$GALOY_TOKEN_2 && yarn test:browserstack:ios")
   end
 
