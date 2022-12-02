@@ -26,7 +26,6 @@ import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import useToken from "../../hooks/use-token"
 import { toastShow } from "../../utils/toast"
-import { addDeviceToken } from "../../utils/notifications"
 import BiometricWrapper from "../../utils/biometricAuthentication"
 import type { ScreenType } from "../../types/jsx"
 import { AuthenticationScreenPurpose } from "../../utils/enum"
@@ -185,7 +184,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
         secCode: geetestValidationData?.geetestSecCode,
       }
       resetValidationData()
-      logRequestAuthCode(appConfig.galoyInstance.network)
+      logRequestAuthCode(appConfig.galoyInstance.name)
 
       const { data } = await captchaRequestAuthCode({ variables: { input } })
 
@@ -217,7 +216,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
     captchaRequestAuthCode,
     resetValidationData,
     LL,
-    appConfig.galoyInstance.network,
+    appConfig.galoyInstance.name,
   ])
 
   useEffect(() => {
@@ -419,7 +418,6 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
         if (token) {
           analytics().logLogin({ method: "phone" })
           await saveToken(token)
-          await addDeviceToken(client)
         } else {
           throw new Error(LL.WelcomePhoneValidationScreen.errorLoggingIn())
         }

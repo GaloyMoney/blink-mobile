@@ -1,5 +1,5 @@
 import DestinationIcon from "@app/assets/icons/destination.svg"
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-native"
 import { palette } from "@app/theme"
 import { WalletCurrency } from "@app/types/amounts"
@@ -23,6 +23,7 @@ import useMainQuery from "@app/hooks/use-main-query"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { logPaymentAttempt, logPaymentResult } from "@app/utils/analytics"
 import { testProps } from "../../../utils/testProps"
+import crashlytics from "@react-native-firebase/crashlytics"
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -192,6 +193,7 @@ const SendBitcoinConfirmationScreen = ({
   const { usdWalletBalance, btcWalletBalance, btcWalletValueInUsd } = useMainQuery()
   const isNoAmountInvoice = fixedAmount === undefined
   const [, setStatus] = useState<Status>(Status.IDLE)
+  const [feeDisplayText, setFeeDisplayText] = useState<string>("")
 
   const paymentAmountInWalletCurrency =
     payerWalletDescriptor.currency === WalletCurrency.BTC
@@ -232,7 +234,16 @@ const SendBitcoinConfirmationScreen = ({
     paymentAmount: paymentAmountInWalletCurrency,
   })
 
-  const feeDisplayText = fee.amount && paymentAmountToTextWithUnits(fee.amount)
+  useEffect(() => {
+    if (fee.amount) {
+      try {
+        setFeeDisplayText(paymentAmountToTextWithUnits(fee.amount))
+      } catch (error) {
+        setFeeDisplayText("Unable to calculate fee")
+        crashlytics().recordError(error)
+      }
+    }
+  }, [fee])
 
   const payIntraLedger = async () => {
     const { data, errorsMessage } = await intraLedgerPaymentSend({

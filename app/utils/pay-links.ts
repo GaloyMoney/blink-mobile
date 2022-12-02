@@ -11,6 +11,8 @@ export const getPosUrl = (instance: GaloyInstance, address: string): string => {
       return `https://staging.pay.galoy.io/${address}`
     case "BBW":
       return `https://pay.bbw.sv/${address}`
+    case "Custom":
+      return "Unknown"
   }
 }
 
@@ -25,6 +27,8 @@ export const getPrintableQrCodeUrl = (
       return `https://pay.staging.galoy.io/${address}/print`
     case "BBW":
       return `https://pay.bbw.sv/${address}/print`
+    case "Custom":
+      return "Unsupp"
   }
 }
 
@@ -36,5 +40,7 @@ export const getLightningAddress = (instance: GaloyInstance, address: string): s
       return `${address}@pay.staging.galoy.io`
     case "BBW":
       return `${address}@pay.bbw.sv`
+    case "Custom":
+      return "Unknown"
   }
 }
