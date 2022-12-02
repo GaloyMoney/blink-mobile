@@ -30,8 +30,8 @@ describe("Login Flow", async () => {
     const { x, y } = await instanceButton.getLocation()
     const { width, height } = await instanceButton.getSize()
     // calc the midpoint center because we want to click the second button - in the middle
-    const midpointX = width / 2 + x
-    const midpointY = height / 2 + y
+    const midpointX = width / 3 + x
+    const midpointY = height / 3 + y
     await browser.touchAction({ action: "tap", x: midpointX, y: midpointY })
     await browser.pause(8000)
   })
@@ -60,8 +60,8 @@ describe("Login Flow", async () => {
     }
   })
 
-  it("click change token", async () => {
-    const changeTokenButton = await $(selector("Change Token Button"))
+  it("click Save Changes", async () => {
+    const changeTokenButton = await $(selector("Save Changes"))
     await changeTokenButton.waitForDisplayed({ timeout })
     await changeTokenButton.click()
     await browser.pause(5000)
