@@ -34,7 +34,6 @@ import {
   InvalidOnchainDestinationReason,
 } from "@galoymoney/client/dist/parsing-v2"
 import { logPaymentDestinationAccepted } from "@app/utils/analytics"
-import { useAppConfig } from "@app/hooks"
 import { testProps } from "../../../utils/testProps"
 
 const Styles = StyleSheet.create({
