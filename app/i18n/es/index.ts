@@ -12,7 +12,7 @@ const es: Translation = {
     addressNotAvailable: "Esta dirección {bankName} ya está ocupada.",
     somethingWentWrong: "Algo salió mal. Por favor, inténtelo de nuevo más tarde.",
     merchantTitle: "Para comercios",
-    yourCashRegister: "Su caja registradora o terminal de punto de venta (POS)",
+    yourCashRegister: "Su caja registradora",
     yourPaycode: "Su código de pago",
     copiedAddressToClipboard: "Dirección {bankName} copiada al portapapeles",
     copiedPaycodeToClipboard: "Código de pago copiado al portapapeles",
