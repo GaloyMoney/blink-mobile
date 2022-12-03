@@ -41,6 +41,13 @@ describe("Login Flow", async () => {
     await browser.pause(8000)
   })
 
+  it("click Save Changes", async () => {
+    const changeTokenButton = await $(selector("Save Changes"))
+    await changeTokenButton.waitForDisplayed({ timeout })
+    await changeTokenButton.click()
+    await browser.pause(2000)
+  })
+
   it("input token", async () => {
     try {
       const tokenInput = await $(selector("Input access token", "SecureTextField"))
@@ -69,7 +76,7 @@ describe("Login Flow", async () => {
     const changeTokenButton = await $(selector("Save Changes"))
     await changeTokenButton.waitForDisplayed({ timeout })
     await changeTokenButton.click()
-    await browser.pause(5000)
+    await browser.pause(8000)
   })
 
   it("click go back to settings screen", async () => {
