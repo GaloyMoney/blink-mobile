@@ -251,7 +251,7 @@ export const App = (): JSX.Element => {
       setApolloClient(client)
     }
     fn()
-  }, [appConfig.galoyInstance, token, saveToken, hasToken])
+  }, [appConfig.galoyInstance, token, hasToken])
 
   // Before we show the app, we have to wait for our state to be ready.
   // In the meantime, don't render anything. This will be the background
