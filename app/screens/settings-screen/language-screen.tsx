@@ -23,7 +23,7 @@ export const LanguageScreen: ScreenType = () => {
   })
   const { LL } = useI18nContext()
 
-  const list = ["DEFAULT", "en-US", "es-SV", "pt-BR", "fr-CA"]
+  const list = ["DEFAULT", "en-US", "es-SV", "pt-BR", "fr-CA", "de-DE"]
 
   return (
     <Screen preset="scroll" style={styles.screenStyle}>

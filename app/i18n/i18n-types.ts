@@ -9,7 +9,8 @@ export type Locales =
 	| 'en'
 	| 'es'
 	| 'fr-CA'
-	| 'pt-BR'
+  | 'pt-BR'
+  | 'de'
 
 export type Translation = RootTranslation
 
@@ -243,8 +244,8 @@ type RootTranslation = {
 						 */
 						question: string
 						/**
-						 * Bitcoin is digital money. 
-				
+						 * Bitcoin is digital money.
+
 					It can be transferred instantly and securely between any two people in the world — without the need for a bank or any other financial company in the middle.
 						 */
 						text: string
@@ -291,10 +292,10 @@ type RootTranslation = {
 						 */
 						question: string
 						/**
-						 * One “Sat” is the smallest unit of a bitcoin. 
-				
-					We all know that one US Dollar can be divided into 100 cents. Similarly, one Bitcoin can be divided into 100,000,000 sats. 
-				
+						 * One “Sat” is the smallest unit of a bitcoin.
+
+					We all know that one US Dollar can be divided into 100 cents. Similarly, one Bitcoin can be divided into 100,000,000 sats.
+
 					In fact, you do not need to own one whole bitcoin in order to use it. You can use bitcoin whether you have 20 sats, 3000 sats — or 100,000,000 sats (which you now know is equal to one bitcoin).
 						 */
 						text: string
@@ -341,12 +342,12 @@ type RootTranslation = {
 						 */
 						question: string
 						/**
-						 * Bitcoin is a new form of money. It can be used by anyone, anytime -- anywhere in the world. 
-				
-					It is not tied to a specific government or region (like US Dollars). There are also no paper bills, metal coins or plastic cards. 
-				
-					Everything is 100% digital. Bitcoin is a network of computers running on the internet. 
-				
+						 * Bitcoin is a new form of money. It can be used by anyone, anytime -- anywhere in the world.
+
+					It is not tied to a specific government or region (like US Dollars). There are also no paper bills, metal coins or plastic cards.
+
+					Everything is 100% digital. Bitcoin is a network of computers running on the internet.
+
 					Your bitcoin is easily managed with software on your smartphone or computer!
 						 */
 						text: string
@@ -393,8 +394,8 @@ type RootTranslation = {
 						 */
 						question: string
 						/**
-						 * Bitcoin is not controlled by any person, company or government. 
-				
+						 * Bitcoin is not controlled by any person, company or government.
+
 					It is run by the community of users -- people and companies all around the world -- voluntarily running bitcoin software on their computers and smartphones.
 						 */
 						text: string
@@ -442,9 +443,9 @@ type RootTranslation = {
 						question: string
 						/**
 						 * The value of a bitcoin can never be copied. This is the very reason why Bitcoin is such a powerful new invention!!
-				
-					Most digital files — such as an iPhone photo, an MP3 song, or a Microsoft Word document — can easily be duplicated and shared. 
-				
+
+					Most digital files — such as an iPhone photo, an MP3 song, or a Microsoft Word document — can easily be duplicated and shared.
+
 					The Bitcoin software uniquely prevents the duplication — or “double spending” — of digital money. We will share exactly how this works later on!
 						 */
 						text: string
@@ -461,7 +462,7 @@ type RootTranslation = {
 			}
 			WhatIsMoney: {
 				/**
-				 * What is Money? 
+				 * What is Money?
 				 */
 				title: string
 				questions: {
@@ -499,10 +500,10 @@ type RootTranslation = {
 						 */
 						question: string
 						/**
-						 * Money requires people to trust. 
-				
-					People trust the paper dollar bills in their pocket. They trust the digits in their online bank account. They trust the balance on a store gift card will be redeemable. 
-				
+						 * Money requires people to trust.
+
+					People trust the paper dollar bills in their pocket. They trust the digits in their online bank account. They trust the balance on a store gift card will be redeemable.
+
 					Having money allows people to easy trade it immediately for a good, or a service.
 						 */
 						text: string
@@ -549,12 +550,12 @@ type RootTranslation = {
 						 */
 						question: string
 						/**
-						 * Centuries ago, before people had money, they would barter -- or haggle over how to trade one unique item, in exchange for another item or service. 
-				
-					Let’s say you wanted to have a meal at the local restaurant, and offered the owner a broom. The owner might say “no” -- but I will accept three hats instead, if you happen to have them. 
-				
-					You can imagine how difficult and inefficient a “barter economy” would be !  
-				
+						 * Centuries ago, before people had money, they would barter -- or haggle over how to trade one unique item, in exchange for another item or service.
+
+					Let’s say you wanted to have a meal at the local restaurant, and offered the owner a broom. The owner might say “no” -- but I will accept three hats instead, if you happen to have them.
+
+					You can imagine how difficult and inefficient a “barter economy” would be !
+
 					By contrast, with money, you can simply present a $20 bill. And you know that the restaurant owner will readily accept it.
 						 */
 						text: string
@@ -601,10 +602,10 @@ type RootTranslation = {
 						 */
 						question: string
 						/**
-						 * Thousands of years ago, society in Micronesia used very large and scarce stones as a form of agreed currency. 
-				
+						 * Thousands of years ago, society in Micronesia used very large and scarce stones as a form of agreed currency.
+
 					Starting in the 1500’s, rare Cowrie shells (found in the ocean) became commonly used in many nations as a form of money.
-				
+
 					And for millenia, gold has been used as a form of money for countries around the world -- including the United States (until 1971).
 						 */
 						text: string
@@ -651,11 +652,11 @@ type RootTranslation = {
 						 */
 						question: string
 						/**
-						 * Well, these items all had some -- but not all -- of the characteristics of good money. 
-				
-					So what characteristics make for “good” money? 
-					Scarce: not abundant, nor easy to reproduce or copy 
-					Accepted: relatively easy for people to verify its authenticity 
+						 * Well, these items all had some -- but not all -- of the characteristics of good money.
+
+					So what characteristics make for “good” money?
+					Scarce: not abundant, nor easy to reproduce or copy
+					Accepted: relatively easy for people to verify its authenticity
 					Durable: easy to maintain, and does not perish or fall apart
 					Uniform: readily interchangeable with another item of the same form
 					Portable: easy to transport
@@ -706,7 +707,7 @@ type RootTranslation = {
 						question: string
 						/**
 						 * Everybody knows that money matters.
-				
+
 					Most people exchange their time and energy -- in the form of work -- to obtain money. People do so, to be able to buy goods and services today -- and in the future.
 						 */
 						text: string
@@ -753,14 +754,14 @@ type RootTranslation = {
 						 */
 						question: string
 						/**
-						 * Modern-day economies are organized by nation-states: USA, Japan, Switzerland, Brazil, Norway, China, etc. 
-				
-					Accordingly, in most every nation, the government holds the power to issue and control money. 
-				
-					In the United States, the Central Bank (known as the Federal Reserve, or “Fed”) can print, or create, more US Dollars at any time it wants. 
-				
-					The “Fed” does not need permission from the President, nor Congress, and certainly not from US citizens.  
-				
+						 * Modern-day economies are organized by nation-states: USA, Japan, Switzerland, Brazil, Norway, China, etc.
+
+					Accordingly, in most every nation, the government holds the power to issue and control money.
+
+					In the United States, the Central Bank (known as the Federal Reserve, or “Fed”) can print, or create, more US Dollars at any time it wants.
+
+					The “Fed” does not need permission from the President, nor Congress, and certainly not from US citizens.
+
 					Imagine if you had the ability to print US Dollars anytime you wanted to -- what would you do??
 						 */
 						text: string
@@ -777,7 +778,7 @@ type RootTranslation = {
 			}
 			HowDoesMoneyWork: {
 				/**
-				 * How Does Money Work? 
+				 * How Does Money Work?
 				 */
 				title: string
 				questions: {
@@ -815,10 +816,10 @@ type RootTranslation = {
 						 */
 						question: string
 						/**
-						 * All national currencies in circulation today are called “fiat” money. This includes US Dollars, Japanese Yen, Swiss Francs, and so forth. 
-				
-					The word “fiat” is latin for “by decree” -- which means “by official order”. 
-				
+						 * All national currencies in circulation today are called “fiat” money. This includes US Dollars, Japanese Yen, Swiss Francs, and so forth.
+
+					The word “fiat” is latin for “by decree” -- which means “by official order”.
+
 					This means that all fiat money -- including the US Dollar -- is simply created by the order of the national government.
 						 */
 						text: string
@@ -866,16 +867,16 @@ type RootTranslation = {
 						question: string
 						/**
 						 * As shared in a prior quiz, the US Central Bank is the Federal Reserve, or the “Fed”.
-				
-					The Fed can print more dollars at any time -- and does not need permission from the President, nor Congress, and certainly not from US citizens.  
-				
-					Having control of money can be very tempting for authorities to abuse -- and often time leads to massive inflation, arbitrary confiscation and corruption. 
-				
+
+					The Fed can print more dollars at any time -- and does not need permission from the President, nor Congress, and certainly not from US citizens.
+
+					Having control of money can be very tempting for authorities to abuse -- and often time leads to massive inflation, arbitrary confiscation and corruption.
+
 					In fact, Alan Greenspan, the famous former chairman of The Fed, famously said the US “can pay any debt that it has, because we can always print more to do that”.
 						 */
 						text: string
 						/**
-						 * I trust my government. 
+						 * I trust my government.
 					Why should I care about fiat money?
 						 */
 						title: string
@@ -918,18 +919,18 @@ type RootTranslation = {
 						 */
 						question: string
 						/**
-						 * Well, everybody should care! 
-				
+						 * Well, everybody should care!
+
 					The practice of government printing money -- or increasing the supply of dollars -- leads to inflation.
-				
+
 					Inflation is an increase in the price of goods and services. In other words, the price for something in the future will be more expensive than today.
-				
-					So what does inflation mean for citizens? 
-				
-					In the United Kingdom, the Pound Sterling has lost 99.5% of its value since being introduced over 300 years ago. 
-				
-					In the United States, the dollar has lost 97% of its value since the end of WWI, about 100 years ago. 
-				
+
+					So what does inflation mean for citizens?
+
+					In the United Kingdom, the Pound Sterling has lost 99.5% of its value since being introduced over 300 years ago.
+
+					In the United States, the dollar has lost 97% of its value since the end of WWI, about 100 years ago.
+
 					This means a steak that cost $0.30 in 1920... was $3 in 1990… and about $15 today, in the year 2020!
 						 */
 						text: string
@@ -976,13 +977,13 @@ type RootTranslation = {
 						 */
 						question: string
 						/**
-						 * That is correct. 
-				
+						 * That is correct.
+
 					In the history of the world, there have been 775 fiat currencies created. Most no longer exist, and the average life for any fiat money is only 27 years.
-				
-					The British Pound is the oldest fiat currency. It has lost more than 99% of its value since 1694. 
-				
-					There is no precedent for any fiat money maintaining its value over time. This is inflation. 
+
+					The British Pound is the oldest fiat currency. It has lost more than 99% of its value since 1694.
+
+					There is no precedent for any fiat money maintaining its value over time. This is inflation.
 					It is effectively a form of theft of your own hard earned money !
 						 */
 						text: string
@@ -1029,12 +1030,12 @@ type RootTranslation = {
 						 */
 						question: string
 						/**
-						 * Yes, there are many other issues that exist with modern fiat money. 
-				
+						 * Yes, there are many other issues that exist with modern fiat money.
+
 					First, it can be extremely difficult to move money around the world. Often, governments will outright restrict the movement -- and sometimes even confiscate money -- without a valid reason or explanation. And even when you can send money, high transaction fees make it very expensive.
-				
+
 					Second, even in the US, there has been a complete loss of privacy, as the majority of commerce takes places with debit and credit cards, as well as online with other systems such as PayPal and Apple Pay.
-				
+
 					Ever notice how an ad appears in your social media or Gmail just moments after searching for a certain product or service? This is known as “surveillance capitalism”, and is based on companies selling your personal financial data.
 						 */
 						text: string
@@ -1051,7 +1052,7 @@ type RootTranslation = {
 			}
 			BitcoinWhySpecial: {
 				/**
-				 * Bitcoin: Why is it special? 
+				 * Bitcoin: Why is it special?
 				 */
 				title: string
 				questions: {
@@ -1089,17 +1090,17 @@ type RootTranslation = {
 						 */
 						question: string
 						/**
-						 * Governments can print fiat money in unlimited quantities. 
-				
-					By way of contrast, the supply of Bitcoin is fixed — and can never exceed 21 million coins. 
-				
-					A continually increasing supply of fiat money creates inflation. This means that the money you hold today is less valuable in the future. 
-				
-					One simple example: 
-					A loaf of bread that cost about 8 cents in 1920. In the year 1990 one loaf cost about $1.00, and today the price is closer to $2.50 ! 
-				
-					The limited supply of bitcoin has the opposite effect, one of deflation. 
-				
+						 * Governments can print fiat money in unlimited quantities.
+
+					By way of contrast, the supply of Bitcoin is fixed — and can never exceed 21 million coins.
+
+					A continually increasing supply of fiat money creates inflation. This means that the money you hold today is less valuable in the future.
+
+					One simple example:
+					A loaf of bread that cost about 8 cents in 1920. In the year 1990 one loaf cost about $1.00, and today the price is closer to $2.50 !
+
+					The limited supply of bitcoin has the opposite effect, one of deflation.
+
 					This means that the bitcoin you hold today is designed to be more valuable in the future — because it is scarce.
 						 */
 						text: string
@@ -1148,11 +1149,11 @@ type RootTranslation = {
 						question: string
 						/**
 						 * Fiat money is controlled by banks and governments — which is why people refer to it as a “centralized” currency.
-				
-					Bitcoin is not controlled by any person, government or company — which makes it “decentralized” 
-				
-					Not having banks involved means that nobody can deny you access to bitcoin — because of race, gender, income, credit history, geographical location — or any other factor. 
-				
+
+					Bitcoin is not controlled by any person, government or company — which makes it “decentralized”
+
+					Not having banks involved means that nobody can deny you access to bitcoin — because of race, gender, income, credit history, geographical location — or any other factor.
+
 					Anybody — anywhere in the world — can access and use Bitcoin anytime you want. All you need is a computer or smartphone, and an internet connection!
 						 */
 						text: string
@@ -1199,17 +1200,17 @@ type RootTranslation = {
 						 */
 						question: string
 						/**
-						 * Paper money, checks and credit card transactions can all be counterfeit, or faked. 
-				
-					The unique software that runs the Bitcoin network eliminates the possibility of duplicating money for counterfeit purposes.  
-				
+						 * Paper money, checks and credit card transactions can all be counterfeit, or faked.
+
+					The unique software that runs the Bitcoin network eliminates the possibility of duplicating money for counterfeit purposes.
+
 					New bitcoin can only be issued if there is agreement amongst the participants in the network. People who are voluntarily running bitcoin software on their own computers and smartphones.
-				
+
 					This ensures that it is impossible to counterfeit, or create fake bitcoins.
 						 */
 						text: string
 						/**
-						 * Special Characteristic #3: 
+						 * Special Characteristic #3:
 					No Counterfeit Money
 						 */
 						title: string
@@ -1253,14 +1254,14 @@ type RootTranslation = {
 						question: string
 						/**
 						 * Old-fashioned fiat money can only be spent in amounts as small as one penny — or two decimal places for one US Dollar ($0.01).
-				
+
 					On the other hand, Bitcoin can be divided 100,000,000 times over. This means that you could spend as little as ₿0.00000001. You will note the "₿" symbol, which is the Bitcoin equivalent of "$". Sometimes you will also see the use of BTC, instead of ₿.
-				
+
 					By way of contrast, Bitcoin can handle very small payments — even those less than one US penny!
 						 */
 						text: string
 						/**
-						 * Special Characteristic #4: 
+						 * Special Characteristic #4:
 					Highly Divisible
 						 */
 						title: string
@@ -1303,19 +1304,19 @@ type RootTranslation = {
 						 */
 						question: string
 						/**
-						 * The bitcoin network is worth well over $100 billion today. Accordingly, the network must be very secure — so that money is never stolen. 
-				
-					Bitcoin is known as the world’s first cryptocurrency. 
-				
-					The “crypto” part of the name comes from cryptography. Simply put, cryptography protects information through very complex math functions. 
-				
-					Most people do not realize — but Bitcoin is actually the most secure computer network in the world ! 
-				
+						 * The bitcoin network is worth well over $100 billion today. Accordingly, the network must be very secure — so that money is never stolen.
+
+					Bitcoin is known as the world’s first cryptocurrency.
+
+					The “crypto” part of the name comes from cryptography. Simply put, cryptography protects information through very complex math functions.
+
+					Most people do not realize — but Bitcoin is actually the most secure computer network in the world !
+
 					(you may have heard about bitcoin “hacks” — which we will debunk in the next quiz)
 						 */
 						text: string
 						/**
-						 * Special Characteristic #5: 
+						 * Special Characteristic #5:
 					Secure -- Part I
 						 */
 						title: string
@@ -1359,22 +1360,22 @@ type RootTranslation = {
 						question: string
 						/**
 						 * To be direct: the bitcoin network itself has never been hacked. Never once.
-				
-					Then what exactly has been hacked? 
-				
-					Certain digital wallets that did not have proper security in place. 
-				
-					Just like a physical wallet holds fiat currency (in the form of paper bills), digital wallets hold some amount of bitcoin. 
-				
-					In the physical world, criminals rob banks — and walk away with US Dollars. The fact that someone robbed a bank does not have any relationship as to whether the US Dollar is stable or reliable money. 
-				
-					Similarly, some computer hackers have stolen bitcoin from insecure digital wallets — the online equivalent of a bank robbery. 
-				
+
+					Then what exactly has been hacked?
+
+					Certain digital wallets that did not have proper security in place.
+
+					Just like a physical wallet holds fiat currency (in the form of paper bills), digital wallets hold some amount of bitcoin.
+
+					In the physical world, criminals rob banks — and walk away with US Dollars. The fact that someone robbed a bank does not have any relationship as to whether the US Dollar is stable or reliable money.
+
+					Similarly, some computer hackers have stolen bitcoin from insecure digital wallets — the online equivalent of a bank robbery.
+
 					However, it is important to know that the bitcoin network has never been hacked or compromised !
 						 */
 						text: string
 						/**
-						 * Special Characteristic #5: 
+						 * Special Characteristic #5:
 					Secure -- Part II
 						 */
 						title: string
@@ -1593,7 +1594,7 @@ type RootTranslation = {
 		 */
 		prevMonths: string
 		/**
-		 * Price for 100,000 sats: 
+		 * Price for 100,000 sats:
 		 */
 		satPrice: string
 		/**
@@ -1944,7 +1945,7 @@ type RootTranslation = {
 			title: RequiredParams<'lnAddress'>
 			/**
 			 * Please make sure the recipient gave you a {bankName} address, **not a username from another wallet**. Otherwise, the money will go to a {bankName} Account that has the “{lnAddress}” address.
-	
+
 		Check the spelling of the first part of the address as well. e.g. jackie and jack1e are 2 different addresses
 			 * @param {string} bankName
 			 * @param {string} lnAddress
@@ -2104,7 +2105,11 @@ type RootTranslation = {
 		/**
 		 * French (Canada)
 		 */
-		'fr-CA': string
+    'fr-CA': string
+    /**
+     * German
+     */
+    'de': string
 	}
 	StablesatsModal: {
 		/**
@@ -2940,8 +2945,8 @@ export type TranslationFunctions = {
 						 */
 						question: () => LocalizedString
 						/**
-						 * Bitcoin is digital money. 
-				
+						 * Bitcoin is digital money.
+
 					It can be transferred instantly and securely between any two people in the world — without the need for a bank or any other financial company in the middle.
 						 */
 						text: () => LocalizedString
@@ -2988,10 +2993,10 @@ export type TranslationFunctions = {
 						 */
 						question: () => LocalizedString
 						/**
-						 * One “Sat” is the smallest unit of a bitcoin. 
-				
-					We all know that one US Dollar can be divided into 100 cents. Similarly, one Bitcoin can be divided into 100,000,000 sats. 
-				
+						 * One “Sat” is the smallest unit of a bitcoin.
+
+					We all know that one US Dollar can be divided into 100 cents. Similarly, one Bitcoin can be divided into 100,000,000 sats.
+
 					In fact, you do not need to own one whole bitcoin in order to use it. You can use bitcoin whether you have 20 sats, 3000 sats — or 100,000,000 sats (which you now know is equal to one bitcoin).
 						 */
 						text: () => LocalizedString
@@ -3038,12 +3043,12 @@ export type TranslationFunctions = {
 						 */
 						question: () => LocalizedString
 						/**
-						 * Bitcoin is a new form of money. It can be used by anyone, anytime -- anywhere in the world. 
-				
-					It is not tied to a specific government or region (like US Dollars). There are also no paper bills, metal coins or plastic cards. 
-				
-					Everything is 100% digital. Bitcoin is a network of computers running on the internet. 
-				
+						 * Bitcoin is a new form of money. It can be used by anyone, anytime -- anywhere in the world.
+
+					It is not tied to a specific government or region (like US Dollars). There are also no paper bills, metal coins or plastic cards.
+
+					Everything is 100% digital. Bitcoin is a network of computers running on the internet.
+
 					Your bitcoin is easily managed with software on your smartphone or computer!
 						 */
 						text: () => LocalizedString
@@ -3090,8 +3095,8 @@ export type TranslationFunctions = {
 						 */
 						question: () => LocalizedString
 						/**
-						 * Bitcoin is not controlled by any person, company or government. 
-				
+						 * Bitcoin is not controlled by any person, company or government.
+
 					It is run by the community of users -- people and companies all around the world -- voluntarily running bitcoin software on their computers and smartphones.
 						 */
 						text: () => LocalizedString
@@ -3139,9 +3144,9 @@ export type TranslationFunctions = {
 						question: () => LocalizedString
 						/**
 						 * The value of a bitcoin can never be copied. This is the very reason why Bitcoin is such a powerful new invention!!
-				
-					Most digital files — such as an iPhone photo, an MP3 song, or a Microsoft Word document — can easily be duplicated and shared. 
-				
+
+					Most digital files — such as an iPhone photo, an MP3 song, or a Microsoft Word document — can easily be duplicated and shared.
+
 					The Bitcoin software uniquely prevents the duplication — or “double spending” — of digital money. We will share exactly how this works later on!
 						 */
 						text: () => LocalizedString
@@ -3158,7 +3163,7 @@ export type TranslationFunctions = {
 			}
 			WhatIsMoney: {
 				/**
-				 * What is Money? 
+				 * What is Money?
 				 */
 				title: () => LocalizedString
 				questions: {
@@ -3196,10 +3201,10 @@ export type TranslationFunctions = {
 						 */
 						question: () => LocalizedString
 						/**
-						 * Money requires people to trust. 
-				
-					People trust the paper dollar bills in their pocket. They trust the digits in their online bank account. They trust the balance on a store gift card will be redeemable. 
-				
+						 * Money requires people to trust.
+
+					People trust the paper dollar bills in their pocket. They trust the digits in their online bank account. They trust the balance on a store gift card will be redeemable.
+
 					Having money allows people to easy trade it immediately for a good, or a service.
 						 */
 						text: () => LocalizedString
@@ -3246,12 +3251,12 @@ export type TranslationFunctions = {
 						 */
 						question: () => LocalizedString
 						/**
-						 * Centuries ago, before people had money, they would barter -- or haggle over how to trade one unique item, in exchange for another item or service. 
-				
-					Let’s say you wanted to have a meal at the local restaurant, and offered the owner a broom. The owner might say “no” -- but I will accept three hats instead, if you happen to have them. 
-				
-					You can imagine how difficult and inefficient a “barter economy” would be !  
-				
+						 * Centuries ago, before people had money, they would barter -- or haggle over how to trade one unique item, in exchange for another item or service.
+
+					Let’s say you wanted to have a meal at the local restaurant, and offered the owner a broom. The owner might say “no” -- but I will accept three hats instead, if you happen to have them.
+
+					You can imagine how difficult and inefficient a “barter economy” would be !
+
 					By contrast, with money, you can simply present a $20 bill. And you know that the restaurant owner will readily accept it.
 						 */
 						text: () => LocalizedString
@@ -3298,10 +3303,10 @@ export type TranslationFunctions = {
 						 */
 						question: () => LocalizedString
 						/**
-						 * Thousands of years ago, society in Micronesia used very large and scarce stones as a form of agreed currency. 
-				
+						 * Thousands of years ago, society in Micronesia used very large and scarce stones as a form of agreed currency.
+
 					Starting in the 1500’s, rare Cowrie shells (found in the ocean) became commonly used in many nations as a form of money.
-				
+
 					And for millenia, gold has been used as a form of money for countries around the world -- including the United States (until 1971).
 						 */
 						text: () => LocalizedString
@@ -3348,11 +3353,11 @@ export type TranslationFunctions = {
 						 */
 						question: () => LocalizedString
 						/**
-						 * Well, these items all had some -- but not all -- of the characteristics of good money. 
-				
-					So what characteristics make for “good” money? 
-					Scarce: not abundant, nor easy to reproduce or copy 
-					Accepted: relatively easy for people to verify its authenticity 
+						 * Well, these items all had some -- but not all -- of the characteristics of good money.
+
+					So what characteristics make for “good” money?
+					Scarce: not abundant, nor easy to reproduce or copy
+					Accepted: relatively easy for people to verify its authenticity
 					Durable: easy to maintain, and does not perish or fall apart
 					Uniform: readily interchangeable with another item of the same form
 					Portable: easy to transport
@@ -3403,7 +3408,7 @@ export type TranslationFunctions = {
 						question: () => LocalizedString
 						/**
 						 * Everybody knows that money matters.
-				
+
 					Most people exchange their time and energy -- in the form of work -- to obtain money. People do so, to be able to buy goods and services today -- and in the future.
 						 */
 						text: () => LocalizedString
@@ -3450,14 +3455,14 @@ export type TranslationFunctions = {
 						 */
 						question: () => LocalizedString
 						/**
-						 * Modern-day economies are organized by nation-states: USA, Japan, Switzerland, Brazil, Norway, China, etc. 
-				
-					Accordingly, in most every nation, the government holds the power to issue and control money. 
-				
-					In the United States, the Central Bank (known as the Federal Reserve, or “Fed”) can print, or create, more US Dollars at any time it wants. 
-				
-					The “Fed” does not need permission from the President, nor Congress, and certainly not from US citizens.  
-				
+						 * Modern-day economies are organized by nation-states: USA, Japan, Switzerland, Brazil, Norway, China, etc.
+
+					Accordingly, in most every nation, the government holds the power to issue and control money.
+
+					In the United States, the Central Bank (known as the Federal Reserve, or “Fed”) can print, or create, more US Dollars at any time it wants.
+
+					The “Fed” does not need permission from the President, nor Congress, and certainly not from US citizens.
+
 					Imagine if you had the ability to print US Dollars anytime you wanted to -- what would you do??
 						 */
 						text: () => LocalizedString
@@ -3474,7 +3479,7 @@ export type TranslationFunctions = {
 			}
 			HowDoesMoneyWork: {
 				/**
-				 * How Does Money Work? 
+				 * How Does Money Work?
 				 */
 				title: () => LocalizedString
 				questions: {
@@ -3512,10 +3517,10 @@ export type TranslationFunctions = {
 						 */
 						question: () => LocalizedString
 						/**
-						 * All national currencies in circulation today are called “fiat” money. This includes US Dollars, Japanese Yen, Swiss Francs, and so forth. 
-				
-					The word “fiat” is latin for “by decree” -- which means “by official order”. 
-				
+						 * All national currencies in circulation today are called “fiat” money. This includes US Dollars, Japanese Yen, Swiss Francs, and so forth.
+
+					The word “fiat” is latin for “by decree” -- which means “by official order”.
+
 					This means that all fiat money -- including the US Dollar -- is simply created by the order of the national government.
 						 */
 						text: () => LocalizedString
@@ -3563,16 +3568,16 @@ export type TranslationFunctions = {
 						question: () => LocalizedString
 						/**
 						 * As shared in a prior quiz, the US Central Bank is the Federal Reserve, or the “Fed”.
-				
-					The Fed can print more dollars at any time -- and does not need permission from the President, nor Congress, and certainly not from US citizens.  
-				
-					Having control of money can be very tempting for authorities to abuse -- and often time leads to massive inflation, arbitrary confiscation and corruption. 
-				
+
+					The Fed can print more dollars at any time -- and does not need permission from the President, nor Congress, and certainly not from US citizens.
+
+					Having control of money can be very tempting for authorities to abuse -- and often time leads to massive inflation, arbitrary confiscation and corruption.
+
 					In fact, Alan Greenspan, the famous former chairman of The Fed, famously said the US “can pay any debt that it has, because we can always print more to do that”.
 						 */
 						text: () => LocalizedString
 						/**
-						 * I trust my government. 
+						 * I trust my government.
 					Why should I care about fiat money?
 						 */
 						title: () => LocalizedString
@@ -3615,18 +3620,18 @@ export type TranslationFunctions = {
 						 */
 						question: () => LocalizedString
 						/**
-						 * Well, everybody should care! 
-				
+						 * Well, everybody should care!
+
 					The practice of government printing money -- or increasing the supply of dollars -- leads to inflation.
-				
+
 					Inflation is an increase in the price of goods and services. In other words, the price for something in the future will be more expensive than today.
-				
-					So what does inflation mean for citizens? 
-				
-					In the United Kingdom, the Pound Sterling has lost 99.5% of its value since being introduced over 300 years ago. 
-				
-					In the United States, the dollar has lost 97% of its value since the end of WWI, about 100 years ago. 
-				
+
+					So what does inflation mean for citizens?
+
+					In the United Kingdom, the Pound Sterling has lost 99.5% of its value since being introduced over 300 years ago.
+
+					In the United States, the dollar has lost 97% of its value since the end of WWI, about 100 years ago.
+
 					This means a steak that cost $0.30 in 1920... was $3 in 1990… and about $15 today, in the year 2020!
 						 */
 						text: () => LocalizedString
@@ -3673,13 +3678,13 @@ export type TranslationFunctions = {
 						 */
 						question: () => LocalizedString
 						/**
-						 * That is correct. 
-				
+						 * That is correct.
+
 					In the history of the world, there have been 775 fiat currencies created. Most no longer exist, and the average life for any fiat money is only 27 years.
-				
-					The British Pound is the oldest fiat currency. It has lost more than 99% of its value since 1694. 
-				
-					There is no precedent for any fiat money maintaining its value over time. This is inflation. 
+
+					The British Pound is the oldest fiat currency. It has lost more than 99% of its value since 1694.
+
+					There is no precedent for any fiat money maintaining its value over time. This is inflation.
 					It is effectively a form of theft of your own hard earned money !
 						 */
 						text: () => LocalizedString
@@ -3726,12 +3731,12 @@ export type TranslationFunctions = {
 						 */
 						question: () => LocalizedString
 						/**
-						 * Yes, there are many other issues that exist with modern fiat money. 
-				
+						 * Yes, there are many other issues that exist with modern fiat money.
+
 					First, it can be extremely difficult to move money around the world. Often, governments will outright restrict the movement -- and sometimes even confiscate money -- without a valid reason or explanation. And even when you can send money, high transaction fees make it very expensive.
-				
+
 					Second, even in the US, there has been a complete loss of privacy, as the majority of commerce takes places with debit and credit cards, as well as online with other systems such as PayPal and Apple Pay.
-				
+
 					Ever notice how an ad appears in your social media or Gmail just moments after searching for a certain product or service? This is known as “surveillance capitalism”, and is based on companies selling your personal financial data.
 						 */
 						text: () => LocalizedString
@@ -3748,7 +3753,7 @@ export type TranslationFunctions = {
 			}
 			BitcoinWhySpecial: {
 				/**
-				 * Bitcoin: Why is it special? 
+				 * Bitcoin: Why is it special?
 				 */
 				title: () => LocalizedString
 				questions: {
@@ -3786,17 +3791,17 @@ export type TranslationFunctions = {
 						 */
 						question: () => LocalizedString
 						/**
-						 * Governments can print fiat money in unlimited quantities. 
-				
-					By way of contrast, the supply of Bitcoin is fixed — and can never exceed 21 million coins. 
-				
-					A continually increasing supply of fiat money creates inflation. This means that the money you hold today is less valuable in the future. 
-				
-					One simple example: 
-					A loaf of bread that cost about 8 cents in 1920. In the year 1990 one loaf cost about $1.00, and today the price is closer to $2.50 ! 
-				
-					The limited supply of bitcoin has the opposite effect, one of deflation. 
-				
+						 * Governments can print fiat money in unlimited quantities.
+
+					By way of contrast, the supply of Bitcoin is fixed — and can never exceed 21 million coins.
+
+					A continually increasing supply of fiat money creates inflation. This means that the money you hold today is less valuable in the future.
+
+					One simple example:
+					A loaf of bread that cost about 8 cents in 1920. In the year 1990 one loaf cost about $1.00, and today the price is closer to $2.50 !
+
+					The limited supply of bitcoin has the opposite effect, one of deflation.
+
 					This means that the bitcoin you hold today is designed to be more valuable in the future — because it is scarce.
 						 */
 						text: () => LocalizedString
@@ -3845,11 +3850,11 @@ export type TranslationFunctions = {
 						question: () => LocalizedString
 						/**
 						 * Fiat money is controlled by banks and governments — which is why people refer to it as a “centralized” currency.
-				
-					Bitcoin is not controlled by any person, government or company — which makes it “decentralized” 
-				
-					Not having banks involved means that nobody can deny you access to bitcoin — because of race, gender, income, credit history, geographical location — or any other factor. 
-				
+
+					Bitcoin is not controlled by any person, government or company — which makes it “decentralized”
+
+					Not having banks involved means that nobody can deny you access to bitcoin — because of race, gender, income, credit history, geographical location — or any other factor.
+
 					Anybody — anywhere in the world — can access and use Bitcoin anytime you want. All you need is a computer or smartphone, and an internet connection!
 						 */
 						text: () => LocalizedString
@@ -3896,17 +3901,17 @@ export type TranslationFunctions = {
 						 */
 						question: () => LocalizedString
 						/**
-						 * Paper money, checks and credit card transactions can all be counterfeit, or faked. 
-				
-					The unique software that runs the Bitcoin network eliminates the possibility of duplicating money for counterfeit purposes.  
-				
+						 * Paper money, checks and credit card transactions can all be counterfeit, or faked.
+
+					The unique software that runs the Bitcoin network eliminates the possibility of duplicating money for counterfeit purposes.
+
 					New bitcoin can only be issued if there is agreement amongst the participants in the network. People who are voluntarily running bitcoin software on their own computers and smartphones.
-				
+
 					This ensures that it is impossible to counterfeit, or create fake bitcoins.
 						 */
 						text: () => LocalizedString
 						/**
-						 * Special Characteristic #3: 
+						 * Special Characteristic #3:
 					No Counterfeit Money
 						 */
 						title: () => LocalizedString
@@ -3950,14 +3955,14 @@ export type TranslationFunctions = {
 						question: () => LocalizedString
 						/**
 						 * Old-fashioned fiat money can only be spent in amounts as small as one penny — or two decimal places for one US Dollar ($0.01).
-				
+
 					On the other hand, Bitcoin can be divided 100,000,000 times over. This means that you could spend as little as ₿0.00000001. You will note the "₿" symbol, which is the Bitcoin equivalent of "$". Sometimes you will also see the use of BTC, instead of ₿.
-				
+
 					By way of contrast, Bitcoin can handle very small payments — even those less than one US penny!
 						 */
 						text: () => LocalizedString
 						/**
-						 * Special Characteristic #4: 
+						 * Special Characteristic #4:
 					Highly Divisible
 						 */
 						title: () => LocalizedString
@@ -4000,19 +4005,19 @@ export type TranslationFunctions = {
 						 */
 						question: () => LocalizedString
 						/**
-						 * The bitcoin network is worth well over $100 billion today. Accordingly, the network must be very secure — so that money is never stolen. 
-				
-					Bitcoin is known as the world’s first cryptocurrency. 
-				
-					The “crypto” part of the name comes from cryptography. Simply put, cryptography protects information through very complex math functions. 
-				
-					Most people do not realize — but Bitcoin is actually the most secure computer network in the world ! 
-				
+						 * The bitcoin network is worth well over $100 billion today. Accordingly, the network must be very secure — so that money is never stolen.
+
+					Bitcoin is known as the world’s first cryptocurrency.
+
+					The “crypto” part of the name comes from cryptography. Simply put, cryptography protects information through very complex math functions.
+
+					Most people do not realize — but Bitcoin is actually the most secure computer network in the world !
+
 					(you may have heard about bitcoin “hacks” — which we will debunk in the next quiz)
 						 */
 						text: () => LocalizedString
 						/**
-						 * Special Characteristic #5: 
+						 * Special Characteristic #5:
 					Secure -- Part I
 						 */
 						title: () => LocalizedString
@@ -4056,22 +4061,22 @@ export type TranslationFunctions = {
 						question: () => LocalizedString
 						/**
 						 * To be direct: the bitcoin network itself has never been hacked. Never once.
-				
-					Then what exactly has been hacked? 
-				
-					Certain digital wallets that did not have proper security in place. 
-				
-					Just like a physical wallet holds fiat currency (in the form of paper bills), digital wallets hold some amount of bitcoin. 
-				
-					In the physical world, criminals rob banks — and walk away with US Dollars. The fact that someone robbed a bank does not have any relationship as to whether the US Dollar is stable or reliable money. 
-				
-					Similarly, some computer hackers have stolen bitcoin from insecure digital wallets — the online equivalent of a bank robbery. 
-				
+
+					Then what exactly has been hacked?
+
+					Certain digital wallets that did not have proper security in place.
+
+					Just like a physical wallet holds fiat currency (in the form of paper bills), digital wallets hold some amount of bitcoin.
+
+					In the physical world, criminals rob banks — and walk away with US Dollars. The fact that someone robbed a bank does not have any relationship as to whether the US Dollar is stable or reliable money.
+
+					Similarly, some computer hackers have stolen bitcoin from insecure digital wallets — the online equivalent of a bank robbery.
+
 					However, it is important to know that the bitcoin network has never been hacked or compromised !
 						 */
 						text: () => LocalizedString
 						/**
-						 * Special Characteristic #5: 
+						 * Special Characteristic #5:
 					Secure -- Part II
 						 */
 						title: () => LocalizedString
@@ -4287,7 +4292,7 @@ export type TranslationFunctions = {
 		 */
 		prevMonths: () => LocalizedString
 		/**
-		 * Price for 100,000 sats: 
+		 * Price for 100,000 sats:
 		 */
 		satPrice: () => LocalizedString
 		/**
@@ -4623,7 +4628,7 @@ export type TranslationFunctions = {
 			title: (arg: { lnAddress: string }) => LocalizedString
 			/**
 			 * Please make sure the recipient gave you a {bankName} address, **not a username from another wallet**. Otherwise, the money will go to a {bankName} Account that has the “{lnAddress}” address.
-	
+
 		Check the spelling of the first part of the address as well. e.g. jackie and jack1e are 2 different addresses
 			 */
 			body: (arg: { bankName: string, lnAddress: string }) => LocalizedString
@@ -4777,7 +4782,11 @@ export type TranslationFunctions = {
 		/**
 		 * French (Canada)
 		 */
-		'fr-CA': () => LocalizedString
+    'fr-CA': () => LocalizedString
+    /**
+     * German
+     */
+    'de': () => LocalizedString
 	}
 	StablesatsModal: {
 		/**
