@@ -53,10 +53,11 @@ describe("Receive Payment Flow", async () => {
 
   it("Click OK to allow push notifications", async () => {
     try {
-      const okButton = await $(selector(LL.common.ok()))
-      await okButton.waitForDisplayed({ timeout: 8000 })
-      await okButton.click()
-      await browser.pause(1000)
+      if (process.env.E2E_DEVICE === "android") {
+        const okButton = await $(selector(LL.common.ok()))
+        await okButton.waitForDisplayed({ timeout: 8000 })
+        await okButton.click()
+      }
       const allowButton = await $(selector("Allow"))
       await allowButton.waitForDisplayed({ timeout: 8000 })
       await allowButton.click()
