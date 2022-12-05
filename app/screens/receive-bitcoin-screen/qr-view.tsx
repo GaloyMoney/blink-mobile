@@ -104,7 +104,7 @@ export const QRView = ({
     const getQrSize = () => {
       if (Platform.OS === "android") {
         if (scale > 3) {
-          return 270
+          return 260
         }
       }
       return size
@@ -164,7 +164,7 @@ const styles = EStyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: palette.white,
-    width: Platform.OS === "android" ? undefined : "100%",
+    width: "100%",
     height: undefined,
     borderRadius: 10,
     aspectRatio: 1,
