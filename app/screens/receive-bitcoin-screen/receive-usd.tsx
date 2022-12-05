@@ -227,13 +227,14 @@ const ReceiveUsd = () => {
             hasAmount: true,
             receivingWallet: WalletCurrency.USD,
           })
+          const amountInCents = Math.round(parseFloat(usdAmount) * 100)
           const {
             data: {
               lnUsdInvoiceCreate: { invoice, errors },
             },
           } = await lnUsdInvoiceCreate({
             variables: {
-              input: { walletId, amount: parseFloat(usdAmount) * 100, memo },
+              input: { walletId, amount: amountInCents, memo },
             },
           })
 
