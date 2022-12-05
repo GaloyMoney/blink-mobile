@@ -227,7 +227,7 @@ const ReceiveUsd = () => {
             hasAmount: true,
             receivingWallet: WalletCurrency.USD,
           })
-          const amountInCents = Number((parseFloat(usdAmount) * 100).toFixed(2))
+          const amountInCents = Math.round(parseFloat(usdAmount) * 100)
           const {
             data: {
               lnUsdInvoiceCreate: { invoice, errors },
