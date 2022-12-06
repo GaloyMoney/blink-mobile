@@ -311,10 +311,10 @@ export const App = (): JSX.Element => {
                   onStateChange={(state) => {
                     const currentRouteName = getActiveRouteName(state)
 
-                    if (routeName.current !== currentRouteName) {
+                    if (routeName.current !== currentRouteName && currentRouteName) {
                       analytics().logScreenView({
-                        screen_name: currentRouteName,
-                        screen_class: currentRouteName,
+                        screen_name: currentRouteName + "Manual",
+                        screen_class: currentRouteName + "Manual",
                       })
                       routeName.current = currentRouteName
                     }
