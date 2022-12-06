@@ -10,14 +10,17 @@ const useLogout = () => {
 
   const logout = async (shouldClearToken = true): Promise<void> => {
     try {
-      await client.clearStore()
+      await Promise.all([
+        client.clearStore(),
+        AsyncStorage.multiRemove([BUILD_VERSION]),
+        KeyStoreWrapper.removeIsBiometricsEnabled(),
+        KeyStoreWrapper.removePin(),
+        KeyStoreWrapper.removePinAttempts(),
+      ])
+
       if (shouldClearToken) {
         clearToken()
       }
-      await AsyncStorage.multiRemove([BUILD_VERSION]) // use storage.ts wrapper
-      await KeyStoreWrapper.removeIsBiometricsEnabled()
-      await KeyStoreWrapper.removePin()
-      await KeyStoreWrapper.removePinAttempts()
     } catch (err) {
       console.debug({ err }, `error resetting RootStore`)
     }

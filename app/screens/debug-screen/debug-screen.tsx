@@ -78,8 +78,8 @@ export const DebugScreen: ScreenType = () => {
         newPosUrl !== currentGaloyInstance.posUrl ||
         newLnAddressHostname !== currentGaloyInstance.lnAddressHostname))
 
-  const handleSave = async () => {
-    await logout(false)
+  const handleSave = () => {
+    logout(false)
 
     saveToken(newToken)
 
