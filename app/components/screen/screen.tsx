@@ -9,7 +9,6 @@ import {
 
 import { ScreenProps } from "./screen.props"
 import { isNonScrolling, offsets, presets } from "./screen.presets"
-import { ModalClipboard } from "../modal-clipboard"
 import { isIos } from "../../utils/helper"
 
 function ScreenWithoutScrolling(props: ScreenProps) {
@@ -30,8 +29,6 @@ function ScreenWithoutScrolling(props: ScreenProps) {
         barStyle={props.statusBar || "dark-content"}
         backgroundColor={props.backgroundColor}
       />
-      {/* modalClipboard requires StoreContext which requiere being inside a navigator */}
-      <ModalClipboard />
       <Wrapper style={[preset.inner, style]}>{props.children}</Wrapper>
     </KeyboardAvoidingView>
   )
@@ -55,7 +52,6 @@ function ScreenWithScrolling(props: ScreenProps) {
         barStyle={props.statusBar || "dark-content"}
         backgroundColor={props.backgroundColor}
       />
-      <ModalClipboard />
       <Wrapper style={[preset.outer, backgroundStyle]}>
         <ScrollView
           style={[preset.outer, backgroundStyle]}

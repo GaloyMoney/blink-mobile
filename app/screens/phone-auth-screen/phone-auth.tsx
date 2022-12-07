@@ -12,7 +12,7 @@ import {
   View,
 } from "react-native"
 import { Button, Input } from "react-native-elements"
-import { FetchResult, useApolloClient } from "@apollo/client"
+import { FetchResult } from "@apollo/client"
 import EStyleSheet from "react-native-extended-stylesheet"
 import PhoneInput from "react-native-phone-number-input"
 import analytics from "@react-native-firebase/analytics"
@@ -387,7 +387,6 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
   error,
   saveToken,
 }: WelcomePhoneValidationScreenProps) => {
-  const client = useApolloClient()
   const [code, setCode] = useState("")
   const [secondsRemaining, setSecondsRemaining] = useState<number>(60)
   const { LL } = useI18nContext()
@@ -427,7 +426,7 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
         toastShow({ message: `${err}` })
       }
     },
-    [client, loading, login, phone, saveToken, setCode, LL],
+    [loading, login, phone, saveToken, setCode, LL],
   )
 
   const updateCode = (code: string) => {

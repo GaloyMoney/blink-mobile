@@ -478,12 +478,6 @@ const es: Translation = {
     payBusiness: "pagar a este negocio",
     title: "Mapa",
   },
-  ModalClipboard: {
-    dismiss: "Rechazar",
-    open: "Abrir",
-    pendingBitcoin: "Hay una dirección Bitcoin en el portapapeles",
-    pendingInvoice: "Hay una factura Lightning en el portapapeles",
-  },
   MoveMoneyScreen: {
     receive: "Recibir",
     send: "Enviar",
@@ -641,7 +635,8 @@ const es: Translation = {
       warning: "Si la dirección de {bankName} se ingresa incorrectamente, {bankName} no puede deshacer la transacción.",
       checkBox: "{lnAddress} si es la dirección correcta.",
       confirmButton: "Estoy 100% seguro",
-    }
+    },
+    clipboardError: "Error al obtener el valor del portapapeles"
   },
   SettingsScreen: {
     activated: "Activada",

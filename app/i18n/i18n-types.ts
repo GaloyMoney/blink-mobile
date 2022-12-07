@@ -1490,24 +1490,6 @@ type RootTranslation = {
 		 */
 		title: string
 	}
-	ModalClipboard: {
-		/**
-		 * Dismiss
-		 */
-		dismiss: string
-		/**
-		 * Open
-		 */
-		open: string
-		/**
-		 * You have a Bitcoin address in your clipboard
-		 */
-		pendingBitcoin: string
-		/**
-		 * You have a Lightning Invoice in your clipboard
-		 */
-		pendingInvoice: string
-	}
 	MoveMoneyScreen: {
 		/**
 		 * Receive
@@ -1978,6 +1960,10 @@ type RootTranslation = {
 			 */
 			confirmButton: string
 		}
+		/**
+		 * Error getting value from clipboard
+		 */
+		clipboardError: string
 	}
 	SendBitcoinScreen: {
 		/**
@@ -4201,24 +4187,6 @@ export type TranslationFunctions = {
 		 */
 		title: () => LocalizedString
 	}
-	ModalClipboard: {
-		/**
-		 * Dismiss
-		 */
-		dismiss: () => LocalizedString
-		/**
-		 * Open
-		 */
-		open: () => LocalizedString
-		/**
-		 * You have a Bitcoin address in your clipboard
-		 */
-		pendingBitcoin: () => LocalizedString
-		/**
-		 * You have a Lightning Invoice in your clipboard
-		 */
-		pendingInvoice: () => LocalizedString
-	}
 	MoveMoneyScreen: {
 		/**
 		 * Receive
@@ -4669,6 +4637,10 @@ export type TranslationFunctions = {
 			 */
 			confirmButton: () => LocalizedString
 		}
+		/**
+		 * Error getting value from clipboard
+		 */
+		clipboardError: () => LocalizedString
 	}
 	SendBitcoinScreen: {
 		/**

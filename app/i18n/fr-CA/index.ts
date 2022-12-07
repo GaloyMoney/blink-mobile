@@ -466,12 +466,6 @@ const frCA: Translation = {
     payBusiness: "payez l'entreprise",
     title: "Carte",
   },
-  ModalClipboard: {
-    dismiss: "Rejeter",
-    open: "Ouvrir",
-    pendingBitcoin: "Vous avez une adresse Bitcoin dans votre presse-papier",
-    pendingInvoice: "Vous avez une Facture Lightning dans votre presse-papier",
-  },
   MoveMoneyScreen: {
     receive: "Recevoir",
     send: "Envoyer",
@@ -610,7 +604,8 @@ const frCA: Translation = {
       warning: "If the {bankName} address is entered incorrectly, {bankName} can't undo the transaction.",
       checkBox: "{lnAddress} is the right address.",
       confirmButton: "I'm 100% sure",
-    }
+    },
+    clipboardError: "Error getting value from clipboard", // TODO translate
   },
   SendBitcoinScreen: {
     amount: "Montant",

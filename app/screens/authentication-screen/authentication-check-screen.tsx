@@ -10,7 +10,6 @@ import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import BiometricWrapper from "../../utils/biometricAuthentication"
 import type { ScreenType } from "../../types/jsx"
 import { AuthenticationScreenPurpose, PinScreenPurpose } from "../../utils/enum"
-import { showModalClipboardIfValidPayment } from "../../utils/clipboard"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
 
@@ -60,14 +59,6 @@ export const AuthenticationCheckScreen: ScreenType = ({ navigation }: Props) => 
       } else {
         setAppUnlocked()
         navigation.replace("Primary")
-        if (hasToken) {
-          showModalClipboardIfValidPayment({
-            client,
-            network: bitcoinNetwork,
-            myPubKey,
-            username,
-          })
-        }
       }
     })()
   }, [client, hasToken, myPubKey, navigation, bitcoinNetwork, username, setAppUnlocked])
