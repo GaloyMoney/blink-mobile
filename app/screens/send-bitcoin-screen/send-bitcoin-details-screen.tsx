@@ -27,6 +27,7 @@ import Icon from "react-native-vector-icons/Ionicons"
 import NoteIcon from "@app/assets/icons/note.svg"
 import { Button } from "react-native-elements"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { testProps } from "../../../utils/testProps"
 
 const Styles = StyleSheet.create({
   scrollView: {
@@ -462,6 +463,7 @@ const SendBitcoinDetailsScreen = ({
               {fromWallet.walletCurrency === "BTC" && paymentAmount.currency === "BTC" && (
                 <>
                   <FakeCurrencyInput
+                    {...testProps("BTC Amount")}
                     value={paymentAmountToDollarsOrSats(btcAmount)}
                     onChangeValue={setAmountsWithBtc}
                     prefix=""
@@ -474,6 +476,7 @@ const SendBitcoinDetailsScreen = ({
                     style={Styles.walletBalanceInput}
                   />
                   <FakeCurrencyInput
+                    {...testProps("USD Amount")}
                     value={paymentAmountToDollarsOrSats(usdAmount)}
                     onChangeValue={(amount) => setAmountsWithUsd(amount * 100)}
                     prefix="$"
@@ -489,6 +492,7 @@ const SendBitcoinDetailsScreen = ({
               {fromWallet.walletCurrency === "BTC" && paymentAmount.currency === "USD" && (
                 <>
                   <FakeCurrencyInput
+                    {...testProps("USD Amount")}
                     value={paymentAmountToDollarsOrSats(usdAmount)}
                     onChangeValue={(amount) => setAmountsWithUsd(amount * 100)}
                     prefix="$"
@@ -500,6 +504,7 @@ const SendBitcoinDetailsScreen = ({
                     editable={!isFixedAmountInvoice}
                   />
                   <FakeCurrencyInput
+                    {...testProps("BTC Amount")}
                     value={paymentAmountToDollarsOrSats(btcAmount)}
                     onChangeValue={setAmountsWithBtc}
                     prefix=""
@@ -581,6 +586,7 @@ const SendBitcoinDetailsScreen = ({
 
         <View style={Styles.buttonContainer}>
           <Button
+            {...testProps(LL.common.next())}
             title={LL.common.next()}
             buttonStyle={[Styles.button, Styles.activeButtonStyle]}
             titleStyle={Styles.activeButtonTitleStyle}

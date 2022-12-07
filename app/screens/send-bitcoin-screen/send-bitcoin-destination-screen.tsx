@@ -34,6 +34,7 @@ import {
   InvalidOnchainDestinationReason,
 } from "@galoymoney/client/dist/parsing-v2"
 import { logPaymentDestinationAccepted } from "@app/utils/analytics"
+import { testProps } from "../../../utils/testProps"
 
 const Styles = StyleSheet.create({
   scrollView: {
@@ -513,6 +514,7 @@ const SendBitcoinDestinationScreen = ({
 
         <View style={[Styles.fieldBackground, inputContainerStyle]}>
           <TextInput
+            {...testProps(LL.SendBitcoinScreen.input())}
             style={Styles.input}
             placeholder={LL.SendBitcoinScreen.input()}
             onChangeText={handleChangeText}
@@ -533,6 +535,7 @@ const SendBitcoinDestinationScreen = ({
         <DestinationInformation destinationState={destinationState} />
         <View style={Styles.buttonContainer}>
           <Button
+            {...testProps(LL.common.next())}
             title={
               destinationState.unparsedDestination
                 ? LL.common.next()

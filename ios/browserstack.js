@@ -35,13 +35,10 @@ exports.config = {
   },
 
   onPrepare: (config, capabilities) => {
-    console.log("Connecting local");
     return new Promise((resolve, reject) => {
       exports.bs_local = new browserstack.Local();
       exports.bs_local.start({ 'key': exports.config.key }, (error) => {
         if (error) return reject(error);
-        console.log('Connected. Now testing...');
-
         resolve();
       });
     });
@@ -49,12 +46,9 @@ exports.config = {
 
   // Code to stop browserstack local after end of test
   onComplete: (capabilties, specs) => {
-    console.log("Closing local tunnel");
     return new Promise((resolve, reject) => {
       exports.bs_local.stop((error) => {
         if (error) return reject(error);
-        console.log("Stopped BrowserStackLocal");
-
         resolve();
       });
     });

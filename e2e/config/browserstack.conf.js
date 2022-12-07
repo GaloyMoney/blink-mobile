@@ -3,24 +3,27 @@ const browserstack = require("browserstack-local")
 
 let capabilities = {
   "project": "Android Test",
-  "build": "Webdriverio Android Local",
-  "name": "local_test",
+  "build": process.env.BROWSERSTACK_BUILD || "CircleCI Android",
+  "name": process.env.BROWSERSTACK_BUILD_VERSION || "local_test",
   "device": "Google Pixel 3",
   "os_version": "9.0",
   "app": process.env.BROWSERSTACK_APP_ID,
   "browserstack.local": true,
   "browserstack.debug": true,
+  "autoGrantPermissions": true,
 }
 if (process.env.E2E_DEVICE === "ios") {
   capabilities = {
     "project": "ios Test",
-    "build": "ios Local",
+    "build": "CircleCI iOS",
     "name": "local_test_ios",
-    "device": "iPhone 13",
-    "os_version": "13",
-    "app": process.env.BROWSERSTACK_APP_ID || "bs://<hashed app-id>",
+    "device": "iPhone 13 Pro",
+    "platformVersion": "15.6",
+    "os_version": "15.6",
+    "app": process.env.BROWSERSTACK_APP_ID,
     "browserstack.local": true,
     "browserstack.debug": true,
+    "autoGrantPermissions": true,
   }
 }
 
@@ -29,7 +32,14 @@ exports.config = {
   key: process.env.BROWSERSTACK_ACCESS_KEY || "BROWSERSTACK_ACCESS_KEY",
 
   updateJob: false,
-  specs: [["./e2e/01**.e2e.spec.ts", "./e2e/02**.e2e.spec.ts"]],
+  specs: [
+    [
+      "./e2e/01**.e2e.spec.ts",
+      "./e2e/02**.e2e.spec.ts",
+      "./e2e/03**.e2e.spec.ts",
+      "./e2e/04**.e2e.spec.ts",
+    ],
+  ],
   reporters: ["spec"],
   exclude: [],
 

@@ -7,6 +7,7 @@ import useMainQuery from "@app/hooks/use-main-query"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { testProps } from "../../../utils/testProps"
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -59,7 +60,12 @@ const SendBitcoinSuccessScreen = ({
           style={styles.lottie}
           resizeMode="cover"
         />
-        <Text style={styles.successLottieText}>{LL.SendBitcoinScreen.success()}</Text>
+        <Text
+          {...testProps(LL.SendBitcoinScreen.success())}
+          style={styles.successLottieText}
+        >
+          {LL.SendBitcoinScreen.success()}
+        </Text>
       </View>
     </ScrollView>
   )

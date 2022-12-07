@@ -24,6 +24,7 @@ import {
 } from "../../utils/wallet"
 
 import successLottie from "../send-bitcoin-screen/success_lottie.json"
+import { testProps } from "../../../utils/testProps"
 
 const configByType = {
   [TYPE_LIGHTNING_BTC]: {
@@ -79,7 +80,7 @@ export const QRView = ({
   const renderSuccessView = useMemo(() => {
     if (completed) {
       return (
-        <View style={styles.container}>
+        <View {...testProps("Success Icon")} style={styles.container}>
           <LottieView
             source={successLottie}
             loop={false}
