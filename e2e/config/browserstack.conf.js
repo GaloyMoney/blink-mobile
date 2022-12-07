@@ -3,8 +3,8 @@ const browserstack = require("browserstack-local")
 
 let capabilities = {
   "project": "Android Test",
-  "build": "CircleCI Android",
-  "name": "local_test",
+  "build": process.env.BROWSERSTACK_BUILD || "CircleCI Android",
+  "name": process.env.BROWSERSTACK_BUILD_VERSION || "local_test",
   "device": "Google Pixel 3",
   "os_version": "9.0",
   "app": process.env.BROWSERSTACK_APP_ID,
