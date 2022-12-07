@@ -197,12 +197,12 @@ jobs:
 workflows:
   mobile:
     jobs:
-      # - test_ios:
-      #     filters:
-      #       tags:
-      #         only: /^[0-9]+\.[0-9]+\.[0-9]+/
-      #       branches:
-      #         ignore: /.*/
+      - test_ios:
+          filters:
+            tags:
+              only: /^[0-9]+\.[0-9]+\.[0-9]+/
+            branches:
+              ignore: /.*/
       - build_ios:
           requires:
             - test_ios
@@ -211,12 +211,12 @@ workflows:
               only: /^[0-9]+\.[0-9]+\.[0-9]+/
             branches:
               ignore: /.*/
-      # - test_android:
-      #     filters:
-      #       tags:
-      #         only: /^[0-9]+\.[0-9]+\.[0-9]+/
-      #       branches:
-      #         ignore: /.*/
+      - test_android:
+          filters:
+            tags:
+              only: /^[0-9]+\.[0-9]+\.[0-9]+/
+            branches:
+              ignore: /.*/
       - build_android:
           requires:
             - test_android
@@ -225,11 +225,3 @@ workflows:
               only: /^[0-9]+\.[0-9]+\.[0-9]+/
             branches:
               ignore: /.*/
-      - test_ios:
-          filters:
-            branches:
-              only: e2e-testing-payments
-      - test_android:
-          filters:
-            branches:
-              only: e2e-testing-payments
