@@ -653,6 +653,7 @@ const frCA: Translation = {
     "es-SV": "Spanish",
     "pt-BR": "Portuguese",
     "fr-CA": "Français Canada",
+    "de": "Allemand",
   },
   // TODO translate StablesatsModal
   StablesatsModal: {

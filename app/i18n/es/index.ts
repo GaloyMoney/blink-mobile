@@ -664,6 +664,7 @@ const es: Translation = {
     "es-SV": "Español",
     "pt-BR": "Portugués (Brasil)",
     "fr-CA": "Francés (Canadá)",
+    "de": "Alemán",
   },
   StablesatsModal: {
     header: "¡Ya tienes una cuenta en USD agregada a su billetera con StableSats!",
