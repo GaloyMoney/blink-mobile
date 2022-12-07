@@ -75,9 +75,11 @@ const useMainQuery = (): useMainQueryOutput => {
   const mobileVersions = data?.mobileVersions
   const mergedTransactions = me?.defaultAccount?.transactions?.edges
 
+  const accountId = data?.me?.defaultAccount?.id
   const initialBtcPrice = data?.btcPrice
 
   return {
+    accountId,
     userPreferredLanguage,
     btcWalletBalance,
     btcWalletValueInUsd,

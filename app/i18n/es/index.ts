@@ -12,7 +12,7 @@ const es: Translation = {
     addressNotAvailable: "Esta dirección {bankName} ya está ocupada.",
     somethingWentWrong: "Algo salió mal. Por favor, inténtelo de nuevo más tarde.",
     merchantTitle: "Para comercios",
-    yourCashRegister: "Su caja registradora o terminal de punto de venta (POS)",
+    yourCashRegister: "Su caja registradora",
     yourPaycode: "Su código de pago",
     copiedAddressToClipboard: "Dirección {bankName} copiada al portapapeles",
     copiedPaycodeToClipboard: "Código de pago copiado al portapapeles",
@@ -23,6 +23,9 @@ const es: Translation = {
     howToUseYourAddressExplainer: "Su dirección {bankName} es su propia dirección lightning. Es como una dirección de correo electrónico, pero para tu Bitcoin. Para recibir pagos, comparte tu dirección completa con alguien que use una billetera que admita la dirección Lightning.\n\nEstas carteras lo admiten:",
     howToUseYourPaycodeExplainer: "Puede imprimir su código de pago (que es una factura sin monto) y mostrarlo en su negocio para recibir pagos. Los usuarios pueden pagarle al escanearlo con una billetera habilitada para Lightning.\n\nSin embargo, tenga en cuenta que algunas billeteras no pueden escanear una factura sin monto como:",
     howToUseYourCashRegisterExplainer: "Su caja registradora permite a sus empleados cobrar pagos sin necesidad de darles acceso a su billetera. Comparte tu enlace. Pueden anclarlo a su pantalla de inicio y generar facturas Lightning en su nombre. Los pagos cobrados utilizando la caja registradora se enviarán directamente a su billetera Bitcoin Beach.",
+    defaultWallet: "Cartera Predeterminada",
+    whatIsDefaultWalletTitle: "¿Qué es la cartera predeterminada?",
+    whatIsDefaultWalletDescription: "Su billetera predeterminada es la billetera que se utilizará al recibir pagos a través del POS. Puede cambiarlo en cualquier momento aquí en la configuración.",
   },
   AuthenticationScreen: {
     authenticationDescription: "Autentiquese para continuar",

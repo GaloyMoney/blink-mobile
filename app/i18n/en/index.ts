@@ -23,6 +23,9 @@ const en: BaseTranslation = {
     howToUseYourAddressExplainer: "Your {bankName: string} address is your own Lightning address. It’s like an email address, but for your Bitcoin.\n\nTo receive payments, share your full address to someone using a wallet supporting the Lightning address.\n\nThese wallets support it:",
     howToUseYourPaycodeExplainer: "You can print your Paycode (which is an amountless invoice) and display it in your business to receive payments. Individuals can pay you by scanning it with a Lightning-enabled wallet.\n\nHowever, be aware that some wallets can’t scan an amountless invoice such as:",
     howToUseYourCashRegisterExplainer: "Your Cash Register let your employees collect payments without needing to give them access to your wallet.\n\nShare your link. They can pin it to their homescreen and generate Lightning invoices on your behalf. The payments collected using the Cash Register will be sent directly to your Bitcoin Beach Wallet.",
+    defaultWallet: "Default Wallet",
+    whatIsDefaultWalletTitle: "What is the default wallet?",
+    whatIsDefaultWalletDescription: "Your default wallet is the wallet that will be used when receiving payments through the POS. You can change it at any time here in the settings.",
   },
   AuthenticationScreen: {
     authenticationDescription: "Authenticate to continue",

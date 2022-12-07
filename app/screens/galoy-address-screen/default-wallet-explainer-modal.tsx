@@ -5,15 +5,6 @@ import { Modal, Platform, StatusBar, TouchableWithoutFeedback, View } from "reac
 import { Text } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 
-const wallets = [
-  "Bitcoin Beach Wallet",
-  "Blue Wallet",
-  "Breez",
-  "Phoenix",
-  "Simple Bitcoin Wallet (SBW)",
-  "Wallet of Satoshi",
-]
-
 const styles = EStyleSheet.create({
   centeredView: {
     flex: 1,
@@ -60,15 +51,15 @@ const styles = EStyleSheet.create({
   },
 })
 
-type SetAddressModalProps = {
+type DefaultWalletExplainerModalProps = {
   modalVisible: boolean
   toggleModal?: () => void
 }
 
-export const AddressExplainerModal = ({
+export const DefaultWalletExplainerModal = ({
   modalVisible,
   toggleModal,
-}: SetAddressModalProps) => {
+}: DefaultWalletExplainerModalProps) => {
   const { LL } = useI18nContext()
 
   return (
@@ -83,19 +74,10 @@ export const AddressExplainerModal = ({
       >
         <View style={styles.modalView}>
           <Text style={styles.titleText}>
-            {LL.GaloyAddressScreen.howToUseYourAddress({ bankName: "BBW" })}
+            {LL.GaloyAddressScreen.whatIsDefaultWalletTitle()}
           </Text>
           <Text style={styles.bodyText}>
-            {LL.GaloyAddressScreen.howToUseYourAddressExplainer({ bankName: "BBW" })}
-          </Text>
-          <Text style={styles.bodyText}>
-            {wallets.map((wallet) => (
-              <Text key={wallet} style={styles.bodyText}>
-                {"\n"}
-                {"\u2B24 "}
-                {wallet}
-              </Text>
-            ))}
+            {LL.GaloyAddressScreen.whatIsDefaultWalletDescription()}
           </Text>
           <TouchableWithoutFeedback onPress={() => toggleModal()}>
             <View style={styles.backText}>

@@ -100,6 +100,18 @@ type RootTranslation = {
 	Share your link. They can pin it to their homescreen and generate Lightning invoices on your behalf. The payments collected using the Cash Register will be sent directly to your Bitcoin Beach Wallet.
 		 */
 		howToUseYourCashRegisterExplainer: string
+		/**
+		 * Default Wallet
+		 */
+		defaultWallet: string
+		/**
+		 * What is the default wallet?
+		 */
+		whatIsDefaultWalletTitle: string
+		/**
+		 * Your default wallet is the wallet that will be used when receiving payments through the POS. You can change it at any time here in the settings.
+		 */
+		whatIsDefaultWalletDescription: string
 	}
 	AuthenticationScreen: {
 		/**
@@ -2799,6 +2811,18 @@ export type TranslationFunctions = {
 	Share your link. They can pin it to their homescreen and generate Lightning invoices on your behalf. The payments collected using the Cash Register will be sent directly to your Bitcoin Beach Wallet.
 		 */
 		howToUseYourCashRegisterExplainer: () => LocalizedString
+		/**
+		 * Default Wallet
+		 */
+		defaultWallet: () => LocalizedString
+		/**
+		 * What is the default wallet?
+		 */
+		whatIsDefaultWalletTitle: () => LocalizedString
+		/**
+		 * Your default wallet is the wallet that will be used when receiving payments through the POS. You can change it at any time here in the settings.
+		 */
+		whatIsDefaultWalletDescription: () => LocalizedString
 	}
 	AuthenticationScreen: {
 		/**
