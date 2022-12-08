@@ -55,17 +55,6 @@ jobs:
           name: Test Browserstack
           command: cd android && bundle exec fastlane browserstack
 
-  browserstack_android:
-    docker:
-      - image: cimg/node:18.10.0
-    resource_class: large
-    working_directory: ~/galoy-mobile
-    steps:
-      - gh/install
-      - checkout:
-          path: ~/galoy-mobile
-      - run: echo "Done Testing, check in Browserstack the result"
-
   build_android:
     docker:
       - image: cimg/android:2022.06.1
@@ -236,15 +225,13 @@ workflows:
               only: /^[0-9]+\.[0-9]+\.[0-9]+/
             branches:
               ignore: /.*/
-  main:
+  main-branch:
     jobs:
-      - browserstack_android:
-          requires:
-            - test_android
+      - test_android:
           filters:
             branches:
               only: ci-browserstack-config
-      - test_android:
+      - test_ios:
           filters:
             branches:
               only: ci-browserstack-config
