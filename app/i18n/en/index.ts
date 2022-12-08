@@ -460,12 +460,6 @@ const en: BaseTranslation = {
     payBusiness: "pay this business",
     title: "Map",
   },
-  ModalClipboard: {
-    dismiss: "Dismiss",
-    open: "Open",
-    pendingBitcoin: "You have a Bitcoin address in your clipboard",
-    pendingInvoice: "You have a Lightning Invoice in your clipboard",
-  },
   MoveMoneyScreen: {
     receive: "Receive",
     send: "Send",
@@ -598,7 +592,8 @@ const en: BaseTranslation = {
       warning: "If the {bankName: string} address is entered incorrectly, {bankName: string} can't undo the transaction.",
       checkBox: "{lnAddress: string} is the right address.",
       confirmButton: "I'm 100% sure",
-    }
+    },
+    clipboardError: "Error getting value from clipboard"
   },
   SendBitcoinScreen: {
     amount: "Amount",

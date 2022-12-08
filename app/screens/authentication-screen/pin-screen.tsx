@@ -4,7 +4,6 @@ import { Alert, StatusBar, Text, View } from "react-native"
 import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Feather"
-import { useApolloClient } from "@apollo/client"
 
 import { Screen } from "../../components/screen"
 import { palette } from "../../theme/palette"
@@ -12,13 +11,10 @@ import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import type { ScreenType } from "../../types/jsx"
 import { PinScreenPurpose } from "../../utils/enum"
 import { sleep } from "../../utils/sleep"
-import { showModalClipboardIfValidPayment } from "../../utils/clipboard"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { RouteProp } from "@react-navigation/native"
-import useToken from "../../hooks/use-token"
 import useLogout from "../../hooks/use-logout"
-import useMainQuery from "@app/hooks/use-main-query"
 import { useAuthenticationContext } from "@app/store/authentication-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 
@@ -120,10 +116,7 @@ type Props = {
 }
 
 export const PinScreen: ScreenType = ({ route, navigation }: Props) => {
-  const client = useApolloClient()
-  const { hasToken } = useToken()
   const { logout } = useLogout()
-  const { myPubKey, username, network: bitcoinNetwork } = useMainQuery()
   const { screenPurpose } = route.params
   const { setAppUnlocked } = useAuthenticationContext()
   const { LL } = useI18nContext()
@@ -150,14 +143,6 @@ export const PinScreen: ScreenType = ({ route, navigation }: Props) => {
         index: 0,
         routes: [{ name: "Primary" }],
       })
-      if (hasToken) {
-        showModalClipboardIfValidPayment({
-          client,
-          network: bitcoinNetwork,
-          myPubKey,
-          username,
-        })
-      }
     } else if (pinAttempts < MAX_PIN_ATTEMPTS - 1) {
       const newPinAttempts = pinAttempts + 1
       KeyStoreWrapper.setPinAttempts(newPinAttempts.toString())

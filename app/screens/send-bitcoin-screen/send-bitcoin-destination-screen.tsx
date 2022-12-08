@@ -35,6 +35,10 @@ import {
 } from "@galoymoney/client/dist/parsing-v2"
 import { logPaymentDestinationAccepted } from "@app/utils/analytics"
 import { testProps } from "../../../utils/testProps"
+import Paste from "react-native-vector-icons/FontAwesome"
+import Clipboard from "@react-native-community/clipboard"
+import crashlytics from "@react-native-firebase/crashlytics"
+import { toastShow } from "@app/utils/toast"
 
 const Styles = StyleSheet.create({
   scrollView: {
@@ -529,6 +533,31 @@ const SendBitcoinDestinationScreen = ({
           <TouchableWithoutFeedback onPress={() => navigation.navigate("scanningQRCode")}>
             <View style={Styles.iconContainer}>
               <ScanIcon />
+            </View>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback
+            onPress={() => {
+              try {
+                Clipboard.getString().then(async (data) => {
+                  dispatchDestinationStateAction({
+                    type: "set-unparsed-destination",
+                    payload: {
+                      unparsedDestination: data,
+                    },
+                  })
+                  await validateDestination(data)
+                })
+              } catch (err) {
+                crashlytics().recordError(err)
+                toastShow({
+                  type: "error",
+                  message: LL.SendBitcoinDestinationScreen.clipboardError(),
+                })
+              }
+            }}
+          >
+            <View style={Styles.iconContainer}>
+              <Paste name="paste" color={palette.primaryButtonColor} />
             </View>
           </TouchableWithoutFeedback>
         </View>

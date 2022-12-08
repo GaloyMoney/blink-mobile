@@ -465,12 +465,6 @@ const ptBR: Translation = {
     payBusiness: "pagar este negócio",
     title: "Map",
   },
-  ModalClipboard: {
-    dismiss: "Dispensar",
-    open: "Abrir",
-    pendingBitcoin: "Você tem um endereço Bitcoin na sua área de transferência",
-    pendingInvoice: "Você tem uma fatura Lightning em sua área de transferência",
-  },
   MoveMoneyScreen: {
     receive: "Receber",
     send: "Enviar",
@@ -608,7 +602,8 @@ const ptBR: Translation = {
       warning: "If the {bankName} address is entered incorrectly, {bankName} can't undo the transaction.",
       checkBox: "{lnAddress} is the right address.",
       confirmButton: "I'm 100% sure",
-    }
+    },
+    clipboardError: "Error getting value from clipboard", // TODO translate
   },
   SendBitcoinScreen: {
     amount: "quantidade",

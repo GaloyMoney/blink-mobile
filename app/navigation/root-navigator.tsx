@@ -41,7 +41,6 @@ import { palette } from "../theme/palette"
 import { AccountType } from "../utils/enum"
 import { addDeviceToken, hasNotificationPermission } from "../utils/notifications"
 import useToken from "../hooks/use-token"
-import { showModalClipboardIfValidPayment } from "../utils/clipboard"
 import {
   ContactStackParamList,
   PhoneValidationStackParamList,
@@ -66,7 +65,6 @@ import {
   ConversionSuccessScreen,
   ConversionConfirmationScreen,
 } from "@app/screens/conversion-flow"
-import { useAuthenticationContext } from "@app/store/authentication-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { logEnterBackground, logEnterForeground } from "@app/utils/analytics"
 import { GaloyAddressScreen } from "@app/screens/galoy-address-screen"
@@ -134,7 +132,7 @@ export const RootStack: NavigatorType = () => {
   const appState = React.useRef(AppState.currentState)
   const client = useApolloClient()
   const { token, hasToken } = useToken()
-  const { myPubKey, username, me, network: bitcoinNetwork } = useMainQuery()
+  const { username, me, network: bitcoinNetwork } = useMainQuery()
 
   useEffect(() => {
     analytics().setUserProperty("hasUsername", username ? "true" : "false")
@@ -153,30 +151,18 @@ export const RootStack: NavigatorType = () => {
     }
   }, [bitcoinNetwork])
 
-  const { isAppLocked } = useAuthenticationContext()
-  const _handleAppStateChange = useCallback(
-    async (nextAppState) => {
-      if (appState.current.match(/background/) && nextAppState === "active") {
-        console.info("App has come to the foreground!")
-        logEnterForeground()
-        if (hasToken && !isAppLocked) {
-          showModalClipboardIfValidPayment({
-            client,
-            network: bitcoinNetwork,
-            myPubKey,
-            username,
-          })
-        }
-      }
+  const _handleAppStateChange = useCallback(async (nextAppState) => {
+    if (appState.current.match(/background/) && nextAppState === "active") {
+      console.info("App has come to the foreground!")
+      logEnterForeground()
+    }
 
-      if (appState.current.match(/active/) && nextAppState === "background") {
-        logEnterBackground()
-      }
+    if (appState.current.match(/active/) && nextAppState === "background") {
+      logEnterBackground()
+    }
 
-      appState.current = nextAppState
-    },
-    [client, hasToken, bitcoinNetwork, myPubKey, username, isAppLocked],
-  )
+    appState.current = nextAppState
+  }, [])
   const { LL } = useI18nContext()
 
   useEffect(() => {

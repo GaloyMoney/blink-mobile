@@ -2,7 +2,6 @@ import { ApolloClient, gql, makeVar } from "@apollo/client"
 import indexOf from "lodash.indexof"
 
 export const prefCurrencyVar = makeVar<CurrencyType>("USD")
-export const modalClipboardVisibleVar = makeVar(false)
 
 export const nextPrefCurrency = (): void => {
   const units: CurrencyType[] = ["BTC", "USD"]
