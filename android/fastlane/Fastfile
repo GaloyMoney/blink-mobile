@@ -76,9 +76,9 @@ platform :android do
     upload_to_browserstack_app_automate(
       browserstack_username: ENV["BROWSERSTACK_USER"],
       browserstack_access_key: ENV["BROWSERSTACK_ACCESS_KEY"],
-      file_path: lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH],
+      file_path: lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]
     )
-    # sh("GALOY_TOKEN=$GALOY_TOKEN && GALOY_TOKEN_2=$GALOY_TOKEN_2 && yarn test:browserstack:android")
+    sh("GALOY_TOKEN=$GALOY_TOKEN && GALOY_TOKEN_2=$GALOY_TOKEN_2 && yarn test:browserstack:android")
   end
 
   desc "Build for end to end testing"
