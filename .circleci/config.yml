@@ -282,8 +282,8 @@ workflows:
       - browserstack_android:
           filters:
             branches:
-              only: ci-browserstack-config
+              only: main
       - browserstack_ios:
           filters:
             branches:
-              only: ci-browserstack-config
+              only: main
