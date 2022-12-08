@@ -78,8 +78,8 @@ jobs:
                 ) | .app_url
               '
           );
-          echo "ANDROID_BROWSERSTACK_APP_ID=$ANDROID_BROWSERSTACK_APP_ID" >> $GITHUB_ENV;
           echo $ANDROID_BROWSERSTACK_APP_ID;
+          BROWSERSTACK_BUILD="CircleCI Android" BROWSERSTACK_BUILD_VERSION="$APP_VERSION" BROWSERSTACK_APP_ID="$ANDROID_BROWSERSTACK_APP_ID" E2E_DEVICE="android" ./node_modules/.bin/wdio e2e/config/browserstack.conf.js;
 
   build_android:
     docker:
