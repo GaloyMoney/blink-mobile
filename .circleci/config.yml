@@ -244,3 +244,7 @@ workflows:
           filters:
             branches:
               only: ci-browserstack-config
+      - test_android:
+          filters:
+            branches:
+              only: ci-browserstack-config
