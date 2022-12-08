@@ -61,27 +61,11 @@ jobs:
     resource_class: large
     working_directory: ~/galoy-mobile
     steps:
+      - gh/install
+      - checkout:
+          path: ~/galoy-mobile
       - run: echo "Done Testing, check in Browserstack the result"
-      # - gh/install
-      # - checkout:
-      #     path: ~/galoy-mobile
-      # - run: yarn install
-      # - run:
-      #     name: "Android E2E Test on Browserstack"
-      #     command: |-
-      #       APP_VERSION=$(curl https://raw.githubusercontent.com/GaloyMoney/galoy-mobile/version/version)
-      #       ANDROID_BROWSERSTACK_APP_ID=$(
-      #         curl -u "$BROWSERSTACK_USER:$BROWSERSTACK_ACCESS_KEY" \
-      #           -X GET "https://api-cloud.browserstack.com/app-automate/recent_group_apps" | \
-      #           APP_VERSION=$APP_VERSION jq '
-      #             first( .[]
-      #               | select(.app_version == env.APP_VERSION)
-      #               | select(.app_name | contains("apk"))
-      #             ) | .app_url
-      #           '
-      #       );
-      #       echo $ANDROID_BROWSERSTACK_APP_ID;
-      #       BROWSERSTACK_BUILD="CircleCI Android" BROWSERSTACK_BUILD_VERSION="$APP_VERSION" BROWSERSTACK_APP_ID="$ANDROID_BROWSERSTACK_APP_ID" E2E_DEVICE="android" ./node_modules/.bin/wdio e2e/config/browserstack.conf.js;
+
 
   build_android:
     docker:
