@@ -55,6 +55,32 @@ jobs:
           name: Test Browserstack
           command: cd android && bundle exec fastlane browserstack
 
+  browserstack_android:
+    docker:
+      - image: cimg/node:18.10.0
+    resource_class: large
+    environment:
+      APP_VERSION: 2.0.58
+    working_directory: ~/galoy-mobile
+    steps:
+      - gh/install
+      - checkout:
+          path: ~/galoy-mobile
+      - run: yarn install
+      - run: |-
+          ANDROID_BROWSERSTACK_APP_ID=$(
+            curl -u "$BROWSERSTACK_USER:$BROWSERSTACK_ACCESS_KEY" \
+              -X GET "https://api-cloud.browserstack.com/app-automate/recent_group_apps" | \
+              APP_VERSION=$APP_VERSION jq '
+                first( .[]
+                  | select(.app_version == env.APP_VERSION)
+                  | select(.app_name | contains("apk"))
+                ) | .app_url
+              '
+          );
+          echo "ANDROID_BROWSERSTACK_APP_ID=$ANDROID_BROWSERSTACK_APP_ID" >> $GITHUB_ENV;
+          echo $ANDROID_BROWSERSTACK_APP_ID;
+
   build_android:
     docker:
       - image: cimg/android:2022.06.1
@@ -225,3 +251,7 @@ workflows:
               only: /^[0-9]+\.[0-9]+\.[0-9]+/
             branches:
               ignore: /.*/
+      - browserstack_android:
+          filters:
+            branches:
+              only: ci-browserstack-config
