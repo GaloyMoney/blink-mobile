@@ -4,7 +4,7 @@ const browserstack = require("browserstack-local")
 let capabilities = {
   "project": "Android Test",
   "build": process.env.BROWSERSTACK_BUILD || "CircleCI Android",
-  "name": process.env.BROWSERSTACK_BUILD_VERSION || "local_test",
+  "name": process.env.BROWSERSTACK_BUILD_VERSION || "CircleCI Automated Build",
   "device": "Google Pixel 3",
   "os_version": "9.0",
   "app": process.env.BROWSERSTACK_APP_ID,
@@ -15,8 +15,8 @@ let capabilities = {
 if (process.env.E2E_DEVICE === "ios") {
   capabilities = {
     "project": "ios Test",
-    "build": "CircleCI iOS",
-    "name": "local_test_ios",
+    "build": process.env.BROWSERSTACK_BUILD || "CircleCI iOS",
+    "name": process.env.BROWSERSTACK_BUILD_VERSION || "CircleCI Automated Build",
     "device": "iPhone 13 Pro",
     "platformVersion": "15.6",
     "os_version": "15.6",
