@@ -801,10 +801,6 @@ const de: BaseTranslation = {
       title: "Zahlung empfangen",
     },
   },
-  tippingLink: {
-    title: "Möchtest du Trinkgeld erhalten? Teile diesen Link!",
-    copied: "{data: string} in die Zwischenablage kopiert",
-  },
   support: {
     contactUs: "Du brauchst Hilfe? Kontaktiere uns.",
     whatsapp: "WhatsApp",

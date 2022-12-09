@@ -9,23 +9,17 @@ import type { ViewStyleProp } from "react-native/Libraries/StyleSheet/StyleSheet
 import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
 import { palette } from "../../theme/palette"
-import {
-  CONTACT_EMAIL_ADDRESS,
-  GALOY_PAY_DOMAIN,
-  WHATSAPP_CONTACT_NUMBER,
-} from "../../config/support"
+import { CONTACT_EMAIL_ADDRESS, WHATSAPP_CONTACT_NUMBER } from "../../config/support"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
-import Clipboard from "@react-native-community/clipboard"
-import { toastShow } from "../../utils/toast"
+
 import useToken from "../../hooks/use-token"
 import useLogout from "../../hooks/use-logout"
 import useMainQuery from "@app/hooks/use-main-query"
 import crashlytics from "@react-native-firebase/crashlytics"
 import ContactModal from "@app/components/contact-modal/contact-modal"
 
-import { copyPaymentInfoToClipboard } from "@app/utils/clipboard"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { openWhatsApp } from "@app/utils/external"
 import { CustomIcon } from "@app/components/custom-icon"
@@ -188,7 +182,6 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
   const {
     hasToken,
     navigation,
-    username,
     phone,
     language,
     csvAction,
@@ -197,12 +190,6 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
     loadingCsvTransactions,
     deleteAccountAction,
   } = params
-  const copyToClipBoard = (username) => {
-    copyPaymentInfoToClipboard(GALOY_PAY_DOMAIN + username)
-    Clipboard.getString().then((data) =>
-      toastShow({ message: LL.tippingLink.copied({ data }), type: "success" }),
-    )
-  }
 
   const toggleIsContactModalVisible = () => {
     setIsContactModalVisible(!isContactModalVisible)
@@ -251,14 +238,6 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       action: () => csvAction(),
       enabled: hasToken && !loadingCsvTransactions,
       greyed: !hasToken || loadingCsvTransactions,
-    },
-    {
-      category: LL.tippingLink.title(),
-      icon: "cash-outline",
-      id: "tippingLink",
-      action: () => copyToClipBoard(username),
-      enabled: hasToken && username !== null,
-      greyed: !hasToken || username === null,
     },
     {
       category: LL.support.contactUs(),
