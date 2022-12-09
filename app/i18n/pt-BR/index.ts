@@ -813,10 +813,6 @@ const ptBR: Translation = {
       title: "Pagamento recebido",
     },
   },
-  tippingLink: {
-    title: "Quer receber gorjetas? Compartilhe seu link de gorjetas!",
-    copied: "{data} salvo na área de transferência",
-  },
   support: {
     contactUs: "Preciso de ajuda? Contate-Nos.",
     whatsapp: "WhatsApp",

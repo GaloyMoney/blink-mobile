@@ -799,10 +799,6 @@ const en: BaseTranslation = {
       title: "Payment received",
     },
   },
-  tippingLink: {
-    title: "Want to receive tips? Share your tipping link!",
-    copied: "{data: string} saved to clipboard",
-  },
   support: {
     contactUs: "Need help?  Contact us.",
     whatsapp: "WhatsApp",

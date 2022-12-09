@@ -827,10 +827,6 @@ const es: Translation = {
       title: "Pago recibido",
     },
   },
-  tippingLink: {
-    title: "Comparte este link para recibir pagos o propinas de tus clientes o amigos",
-    copied: "{{data}} se ha copiado en el portapapeles",
-  },
   support: {
     contactUs: "¿Necesitas ayuda? Contáctenos.",
     whatsapp: "WhatsApp",

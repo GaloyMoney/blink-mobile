@@ -818,10 +818,6 @@ const frCA: Translation = {
       title: "Paiement reçu",
     },
   },
-  tippingLink: {
-    title: "Vous souhaitez recevoir des pourboires? Partagez votre lien de pourboires!",
-    copied: "{{data}} sauvegardé dans votre presse-papier",
-  },
   support: {
     contactUs: "Besoin d'aide? Contactez-nous.",
     whatsapp: "WhatsApp",
