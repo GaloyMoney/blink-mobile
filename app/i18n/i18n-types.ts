@@ -4881,10 +4881,14 @@ export type TranslationFunctions = {
 		 */
 		deleteAccount: () => LocalizedString
 		/**
+		 * Rate us
+		 */
+		rateUs: () => LocalizedString
+		/*
 		 * Default Account
 		 */
-		defaultWallet: () => LocalizedString
-	}
+	  defaultWallet: () => LocalizedString
+ 	}
 	DefaultWalletScreen: {
 		/**
 		 * Default Account

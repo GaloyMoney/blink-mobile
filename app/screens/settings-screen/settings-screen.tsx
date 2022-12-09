@@ -29,6 +29,8 @@ import { SettingsRow } from "./settings-row"
 import { updateColorScheme } from "@app/graphql/client-only-query"
 import { getReadableVersion } from "react-native-device-info"
 import { isIos } from "@app/utils/helper"
+import Rate, { AndroidMarket } from "react-native-rate"
+import { Alert } from "react-native"
 
 gql`
   query walletCSVTransactions($walletIds: [WalletId!]!) {
@@ -153,6 +155,14 @@ export const SettingsScreen: React.FC = () => {
   const contactMessageSubject = LL.support.defaultEmailSubject({
     bankName,
   })
+  // TODO: move to a separate file
+  const ratingOptions = {
+    AppleAppID: "1531383905",
+    GooglePackageName: "com.galoyapp",
+    preferredAndroidMarket: AndroidMarket.Google,
+    preferInApp: true,
+    openAppStoreIfInAppFails: true,
+  }
 
   const settingsList: SettingRow[] = [
     {
@@ -276,6 +286,23 @@ export const SettingsScreen: React.FC = () => {
       enabled: true,
       greyed: false,
       styleDivider: true,
+    },
+    {
+      category: LL.SettingsScreen.rateUs(),
+      id: "rate-us",
+      icon: "ios-star",
+      action: () =>
+        Rate.rate(ratingOptions, (success: any, error: string | undefined) => {
+          if (success) {
+            // this technically only tells us if the user successfully went to the Review Page.
+            // Whether they actually did anything, we do not know.
+          } else if (error) {
+            Alert.alert("Error", error)
+          }
+        }),
+      enabled: true,
+      greyed: false,
+      hidden: !__DEV__,
     },
   ]
 
