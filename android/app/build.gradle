@@ -135,8 +135,8 @@ android {
         applicationId "com.galoyapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 358
-        versionName "2.0.59"
+        versionCode 359
+        versionName "2.0.60"
         missingDimensionStrategy 'react-native-camera', 'general' // React native camera
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
         vectorDrawables.useSupportLibrary = true
