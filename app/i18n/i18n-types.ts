@@ -2107,7 +2107,7 @@ type RootTranslation = {
 		/**
 		 * German
 		 */
-		de: string
+		'de-DE': string
 	}
 	StablesatsModal: {
 		/**
@@ -4771,7 +4771,7 @@ export type TranslationFunctions = {
 		/**
 		 * German
 		 */
-		de: () => LocalizedString
+		'de-DE': () => LocalizedString
 	}
 	StablesatsModal: {
 		/**

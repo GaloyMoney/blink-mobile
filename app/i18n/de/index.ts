@@ -638,7 +638,7 @@ const de: BaseTranslation = {
     "es-SV": "Spanisch",
     "pt-BR": "Portugiesisch (Brazilianisch)",
     "fr-CA": "Französisch (Kanadisch)",
-    "de": "Deutsch",
+    "de-DE": "Deutsch",
   },
   StablesatsModal: {
     header: "Mit Stablesats kannst du ein USD Konto mit deiner Wallet nutzen!",
