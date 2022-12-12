@@ -647,7 +647,7 @@ const ptBR: Translation = {
     "es-SV": "Spanish",
     "pt-BR": "Portuguese (Brazil)",
     "fr-CA": "French (Canada)",
-    "de": "Alemão"
+    "de-DE": "Alemão"
   },
   // TODO translate StablesatsModal
   StablesatsModal: {
