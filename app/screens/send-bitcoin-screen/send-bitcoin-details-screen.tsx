@@ -235,13 +235,13 @@ const SendBitcoinDetailsScreen = ({
     setFromWallet(
       // Force from wallet to be BTC for onchain
       usdDisabled
-        ? wallets.find((wallet) => wallet?.WalletCurrency === "BTC")
+        ? wallets.find((wallet) => wallet?.walletCurrency === WalletCurrency.BTC)
         : defaultWallet,
     )
   }, [defaultWallet, usdDisabled, wallets])
 
   useEffect(() => {
-    if (fromWallet.walletCurrency === "BTC") {
+    if (fromWallet.walletCurrency === WalletCurrency.BTC) {
       const isAmountValid = btcAmount.amount <= btcWalletBalance
       setValidAmount(isAmountValid)
       if (isAmountValid) {
@@ -255,7 +255,7 @@ const SendBitcoinDetailsScreen = ({
       }
     }
 
-    if (fromWallet.walletCurrency === "USD") {
+    if (fromWallet.walletCurrency === WalletCurrency.USD) {
       const isAmountValid = usdAmount.amount <= usdWalletBalance
       setValidAmount(isAmountValid)
       if (isAmountValid) {
@@ -301,12 +301,12 @@ const SendBitcoinDetailsScreen = ({
                 <View style={Styles.walletSelectorTypeContainer}>
                   <View
                     style={
-                      wallet.walletCurrency === "BTC"
+                      wallet.walletCurrency === WalletCurrency.BTC
                         ? Styles.walletSelectorTypeLabelBitcoin
                         : Styles.walletSelectorTypeLabelUsd
                     }
                   >
-                    {wallet.walletCurrency === "BTC" ? (
+                    {wallet.walletCurrency === WalletCurrency.BTC ? (
                       <Text style={Styles.walletSelectorTypeLabelBtcText}>BTC</Text>
                     ) : (
                       <Text style={Styles.walletSelectorTypeLabelUsdText}>USD</Text>
@@ -315,7 +315,7 @@ const SendBitcoinDetailsScreen = ({
                 </View>
                 <View style={Styles.walletSelectorInfoContainer}>
                   <View style={Styles.walletSelectorTypeTextContainer}>
-                    {wallet.walletCurrency === "BTC" ? (
+                    {wallet.walletCurrency === WalletCurrency.BTC ? (
                       <>
                         <Text style={Styles.walletTypeText}>Bitcoin Wallet</Text>
                       </>
@@ -326,7 +326,7 @@ const SendBitcoinDetailsScreen = ({
                     )}
                   </View>
                   <View style={Styles.walletSelectorBalanceContainer}>
-                    {wallet.walletCurrency === "BTC" ? (
+                    {wallet.walletCurrency === WalletCurrency.BTC ? (
                       <>
                         <Text style={Styles.walletBalanceText}>
                           {usdAmountDisplay(btcWalletValueInUsd)}
@@ -403,12 +403,12 @@ const SendBitcoinDetailsScreen = ({
               <View style={Styles.walletSelectorTypeContainer}>
                 <View
                   style={
-                    fromWallet.walletCurrency === "BTC"
+                    fromWallet.walletCurrency === WalletCurrency.BTC
                       ? Styles.walletSelectorTypeLabelBitcoin
                       : Styles.walletSelectorTypeLabelUsd
                   }
                 >
-                  {fromWallet.walletCurrency === "BTC" ? (
+                  {fromWallet.walletCurrency === WalletCurrency.BTC ? (
                     <Text style={Styles.walletSelectorTypeLabelBtcText}>BTC</Text>
                   ) : (
                     <Text style={Styles.walletSelectorTypeLabelUsdText}>USD</Text>
@@ -417,7 +417,7 @@ const SendBitcoinDetailsScreen = ({
               </View>
               <View style={Styles.walletSelectorInfoContainer}>
                 <View style={Styles.walletSelectorTypeTextContainer}>
-                  {fromWallet.walletCurrency === "BTC" ? (
+                  {fromWallet.walletCurrency === WalletCurrency.BTC ? (
                     <>
                       <Text style={Styles.walletTypeText}>Bitcoin Wallet</Text>
                     </>
@@ -428,7 +428,7 @@ const SendBitcoinDetailsScreen = ({
                   )}
                 </View>
                 <View style={Styles.walletSelectorBalanceContainer}>
-                  {fromWallet.walletCurrency === "BTC" ? (
+                  {fromWallet.walletCurrency === WalletCurrency.BTC ? (
                     <>
                       <Text style={Styles.walletBalanceText}>
                         {usdAmountDisplay(btcWalletValueInUsd)}
@@ -460,65 +460,67 @@ const SendBitcoinDetailsScreen = ({
           <Text style={Styles.fieldTitleText}>{LL.SendBitcoinScreen.amount()}</Text>
           <View style={Styles.fieldBackground}>
             <View style={Styles.currencyInputContainer}>
-              {fromWallet.walletCurrency === "BTC" && paymentAmount.currency === "BTC" && (
-                <>
-                  <FakeCurrencyInput
-                    {...testProps("BTC Amount")}
-                    value={paymentAmountToDollarsOrSats(btcAmount)}
-                    onChangeValue={setAmountsWithBtc}
-                    prefix=""
-                    delimiter=","
-                    separator="."
-                    precision={0}
-                    suffix=" sats"
-                    minValue={0}
-                    editable={!isFixedAmountInvoice}
-                    style={Styles.walletBalanceInput}
-                  />
-                  <FakeCurrencyInput
-                    {...testProps("USD Amount")}
-                    value={paymentAmountToDollarsOrSats(usdAmount)}
-                    onChangeValue={(amount) => setAmountsWithUsd(amount * 100)}
-                    prefix="$"
-                    delimiter=","
-                    separator="."
-                    precision={2}
-                    minValue={0}
-                    editable={false}
-                    style={Styles.convertedAmountText}
-                  />
-                </>
-              )}
-              {fromWallet.walletCurrency === "BTC" && paymentAmount.currency === "USD" && (
-                <>
-                  <FakeCurrencyInput
-                    {...testProps("USD Amount")}
-                    value={paymentAmountToDollarsOrSats(usdAmount)}
-                    onChangeValue={(amount) => setAmountsWithUsd(amount * 100)}
-                    prefix="$"
-                    delimiter=","
-                    separator="."
-                    precision={2}
-                    style={Styles.walletBalanceInput}
-                    minValue={0}
-                    editable={!isFixedAmountInvoice}
-                  />
-                  <FakeCurrencyInput
-                    {...testProps("BTC Amount")}
-                    value={paymentAmountToDollarsOrSats(btcAmount)}
-                    onChangeValue={setAmountsWithBtc}
-                    prefix=""
-                    delimiter=","
-                    separator="."
-                    suffix=" sats"
-                    precision={0}
-                    minValue={0}
-                    editable={false}
-                    style={Styles.convertedAmountText}
-                  />
-                </>
-              )}
-              {fromWallet.walletCurrency === "USD" && (
+              {fromWallet.walletCurrency === WalletCurrency.BTC &&
+                paymentAmount.currency === WalletCurrency.BTC && (
+                  <>
+                    <FakeCurrencyInput
+                      {...testProps("BTC Amount")}
+                      value={paymentAmountToDollarsOrSats(btcAmount)}
+                      onChangeValue={setAmountsWithBtc}
+                      prefix=""
+                      delimiter=","
+                      separator="."
+                      precision={0}
+                      suffix=" sats"
+                      minValue={0}
+                      editable={!isFixedAmountInvoice}
+                      style={Styles.walletBalanceInput}
+                    />
+                    <FakeCurrencyInput
+                      {...testProps("USD Amount")}
+                      value={paymentAmountToDollarsOrSats(usdAmount)}
+                      onChangeValue={(amount) => setAmountsWithUsd(amount * 100)}
+                      prefix="$"
+                      delimiter=","
+                      separator="."
+                      precision={2}
+                      minValue={0}
+                      editable={false}
+                      style={Styles.convertedAmountText}
+                    />
+                  </>
+                )}
+              {fromWallet.walletCurrency === WalletCurrency.BTC &&
+                paymentAmount.currency === WalletCurrency.USD && (
+                  <>
+                    <FakeCurrencyInput
+                      {...testProps("USD Amount")}
+                      value={paymentAmountToDollarsOrSats(usdAmount)}
+                      onChangeValue={(amount) => setAmountsWithUsd(amount * 100)}
+                      prefix="$"
+                      delimiter=","
+                      separator="."
+                      precision={2}
+                      style={Styles.walletBalanceInput}
+                      minValue={0}
+                      editable={!isFixedAmountInvoice}
+                    />
+                    <FakeCurrencyInput
+                      {...testProps("BTC Amount")}
+                      value={paymentAmountToDollarsOrSats(btcAmount)}
+                      onChangeValue={setAmountsWithBtc}
+                      prefix=""
+                      delimiter=","
+                      separator="."
+                      suffix=" sats"
+                      precision={0}
+                      minValue={0}
+                      editable={false}
+                      style={Styles.convertedAmountText}
+                    />
+                  </>
+                )}
+              {fromWallet.walletCurrency === WalletCurrency.USD && (
                 <FakeCurrencyInput
                   value={paymentAmountToDollarsOrSats(usdAmount)}
                   onChangeValue={(amount) => setAmountsWithUsd(amount * 100)}
@@ -532,7 +534,7 @@ const SendBitcoinDetailsScreen = ({
                 />
               )}
             </View>
-            {fromWallet.walletCurrency === "BTC" && !fixedAmount && (
+            {fromWallet.walletCurrency === WalletCurrency.BTC && !fixedAmount && (
               <TouchableWithoutFeedback onPress={toggleAmountCurrency}>
                 <View style={Styles.switchCurrencyIconContainer}>
                   <SwitchIcon />
@@ -543,14 +545,14 @@ const SendBitcoinDetailsScreen = ({
           {lnurlParams && (
             <Text>
               Min:{" "}
-              {fromWallet.walletCurrency === "USD"
+              {fromWallet.walletCurrency === WalletCurrency.USD
                 ? convertPaymentAmount(
                     { amount: lnurlParams.min, currency: WalletCurrency.BTC },
                     WalletCurrency.USD,
                   ).amount / 100
                 : lnurlParams.min}{" "}
               - Max:{" "}
-              {fromWallet.walletCurrency === "USD"
+              {fromWallet.walletCurrency === WalletCurrency.USD
                 ? convertPaymentAmount(
                     { amount: lnurlParams.max, currency: WalletCurrency.BTC },
                     WalletCurrency.USD,
