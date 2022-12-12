@@ -1,26 +1,28 @@
 // prettier-ignore
 
-import { BaseTranslation } from "../i18n-types"
+import { Translation } from "../i18n-types"
+import en from '../en'
+import { merge } from 'lodash'
 
 /* eslint-disable no-template-curly-in-string */
 /* eslint-disable max-lines */
-const de: BaseTranslation = {
+const de: Translation = merge({}, en as Translation, {
   GaloyAddressScreen: {
-    buttonTitle: "Wähle deine {bankName: string} Adresse",
-    yourAddress: "Deine {bankName: string} Adresse",
-    notAbleToChange: "Du kannst deine {bankName: string} Adresse nicht ändern, sobald sie einmal gesetzt wurde.",
-    addressNotAvailable: "Diese {bankName: string} Adresse ist bereits vergeben.",
+    buttonTitle: "Wähle deine {bankName} Adresse",
+    yourAddress: "Deine {bankName} Adresse",
+    notAbleToChange: "Du kannst deine {bankName} Adresse nicht ändern, sobald sie einmal gesetzt wurde.",
+    addressNotAvailable: "Diese {bankName} Adresse ist bereits vergeben.",
     somethingWentWrong: "Etwas lief schief. Bitte versuche es später erneut.",
     merchantTitle: "Für Verkäufer",
     yourCashRegister: "Deine Kasse",
     yourPaycode: "Dein Zahlungscode",
-    copiedAddressToClipboard: "Deine {bankName: string} Adresse wurde kopiert",
+    copiedAddressToClipboard: "Deine {bankName} Adresse wurde kopiert",
     copiedPaycodeToClipboard: "Dein Zahlungscode wurde kopiert",
     copiedCashRegisterToClipboard: "Copied Cash Register to clipboard",
-    howToUseYourAddress: "Wie du die {bankName: string} Adresse nutzt",
+    howToUseYourAddress: "Wie du die {bankName} Adresse nutzt",
     howToUseYourPaycode: "Wie der Zahlungscode funktioniert",
     howToUseYourCashRegister: "Wie deine Kasse funktioniert",
-    howToUseYourAddressExplainer: "Deine {bankName: string} Adresse ist deine eigene Lightning Adresse. Es ist wie eine E-Mail Adresse, aber für Bitcoin.\n\nUm Zahlungen zu empfangen, teile deine Lightning Adresse mit Leuten, deren Wallet Lightning Adressen unterstützt.\n\nDazu gehören folgende Wallets:",
+    howToUseYourAddressExplainer: "Deine {bankName} Adresse ist deine eigene Lightning Adresse. Es ist wie eine E-Mail Adresse, aber für Bitcoin.\n\nUm Zahlungen zu empfangen, teile deine Lightning Adresse mit Leuten, deren Wallet Lightning Adressen unterstützt.\n\nDazu gehören folgende Wallets:",
     howToUseYourPaycodeExplainer: "Du kannst deinen Zahlungscode ausdrucken und im Geschäft nutzen, um Zahlungen zu empfangen. Käufer können dich bezahlen, indem sie den Zahlungscode mit einer Lightning Wallet scannen.\n\nBedenke dabei, das bspw. die folgenden Wallets keine Rechnungen ohne fixen Betrag unterstützen:",
     howToUseYourCashRegisterExplainer: "Deine Kasse emöglicht es deinen Angestellten, Zahlungen zu empfangen ohne Zugriff auf deine Wallet zu haben.\n\nTeile deinen Link und sie können damit Rechnungen erstellen. Die Zahlungen, die darŭber empfangen werden, landen direkt in deiner Wallet.",
   },
@@ -44,7 +46,7 @@ const de: BaseTranslation = {
     title: "Kontakte",
   },
   ContactDetailsScreen: {
-    title: "Transaktionen mit {username: string}",
+    title: "Transaktionen mit {username}",
   },
   ConversionDetailsScreen: {
     title: "Umtauschen",
@@ -434,7 +436,7 @@ const de: BaseTranslation = {
     getRewardNow: "Zum Quiz",
     keepDigging: "Weiter!",
     phoneNumberNeeded: "Mobilnummer benötigt",
-    quizComplete: "Quiz abgeschlossen und {amount: number} Sats verdient",
+    quizComplete: "Quiz abgeschlossen und {amount} Sats verdient",
     reviewQuiz: "Quiz ansehen",
     satAccumulated: "Sats gesammelt",
     satsEarned: "{formattedNumber|sats} verdient",
@@ -478,7 +480,7 @@ const de: BaseTranslation = {
     },
   },
   PinScreen: {
-    attemptsRemaining: "Falsche PIN. {attemptsRemaining: number} verbleibende Versuche.",
+    attemptsRemaining: "Falsche PIN. {attemptsRemaining} verbleibende Versuche.",
     oneAttemptRemaining: "Falsche PIN. Letzter Versuch.",
     setPin: "Setze deinen PIN Code",
     setPinFailedMatch: "Die PINs stimmen nicht überein - Setze deinen PIN Code",
@@ -532,11 +534,11 @@ const de: BaseTranslation = {
   },
   ScanningQRCodeScreen: {
     invalidContent:
-      "Gefunden:\n\n{found: string}\n\nDies ist keine gültige Bitcoin Adresse oder Lightning Rechnung",
+      "Gefunden:\n\n{found}\n\nDies ist keine gültige Bitcoin Adresse oder Lightning Rechnung",
     invalidTitle: "Ungültiger QR Code",
     noQrCode: "Es konnte kein QR Code im Bild gefunden werden",
     title: "QR Code scannen",
-    invalidContentLnurl: "Gefunden:\n\n{found: string}\n\n ist aktuell nicht unterstützt",
+    invalidContentLnurl: "Gefunden:\n\n{found}\n\n ist aktuell nicht unterstützt",
   },
   SecurityScreen: {
     biometricDescription: "Mit Fingerabdruck oder Gesichtserkennung entsperren.",
@@ -567,39 +569,39 @@ const de: BaseTranslation = {
       "Der Bitcoin Preis ist veraltet und wurde zuletzt {timePeriod} aktualisiert. Bitte starte die App erneut, bevor du eine Zahlung machst.",
     title: "Zahlung bestätigen",
     totalLabel: "Gesamt:",
-    totalExceed: "Der Gesamtbetrag übersteigt dein Guthaben von {balance: string}",
+    totalExceed: "Der Gesamtbetrag übersteigt dein Guthaben von {balance}",
     maxFeeSelected:
       "Dies ist die maximale Transaktionsgebühr. Die tatsächlich gezahlte Gebühr kann weniger betragen.",
     feeError: "Gebühr konnte nicht berechnet werden",
   },
   SendBitcoinDestinationScreen: {
-    usernameNowAddress: "{bankName: string} Benutzernamen sind nun {bankName: string} Adressen.",
-    usernameNowAddressInfo: "Wenn du einen {bankName: string} Benutzernamen angibst, ergänzen wir \"@{lnDomain: string}\" (bspw. maria@{lnDomain: string}) um daraus eine Adresse zu machen. Dein Benutzername ist jetzt auch eine {bankName: string} Adresse.\n\nGehe zu deiner {bankName: string} Adresse in den Einstellungen, um mehr darüber zu erfahren.",
+    usernameNowAddress: "{bankName} Benutzernamen sind nun {bankName} Adressen.",
+    usernameNowAddressInfo: "Wenn du einen {bankName} Benutzernamen angibst, ergänzen wir \"@{lnDomain}\" (bspw. maria@{lnDomain}) um daraus eine Adresse zu machen. Dein Benutzername ist jetzt auch eine {bankName} Adresse.\n\nGehe zu deiner {bankName} Adresse in den Einstellungen, um mehr darüber zu erfahren.",
     enterValidDestination: "Bitte gib eine gültige Adresse oder Rechnung an",
-    destinationOptions: "Du kannst an eine {bankName: string} Adresse, Lightning Adresse oder Rechnung und BTC Adresse senden.",
+    destinationOptions: "Du kannst an eine {bankName} Adresse, Lightning Adresse oder Rechnung und BTC Adresse senden.",
     expiredInvoice: "Diese Rechnung ist abgelaufen. Bitte generiere eine neue Rechnung.",
     wrongNetwork: "Diese Rechnung ist für ein anderes Netzwerk. Bitte generiere eine neue Rechnung.",
     invalidAmount: "Diese Rechnung enthält einen ungültigen Betrag. Bitte generiere eine neue Rechnung.",
-    usernameDoesNotExist: "{lnAddress: string} scheint keine existierende {bankName: string} Adresse zu sein.",
+    usernameDoesNotExist: "{lnAddress} scheint keine existierende {bankName} Adresse zu sein.",
     usernameDoesNotExistAdvice: "Gehe sicher, dass du alles richtig geschrieben hast oder frage den Empfänger nach einer Lightning Rechnung oder BTC Adresse.",
-    selfPaymentError: "{lnAddress: string} ist deine {bankName: string} Adresse.",
+    selfPaymentError: "{lnAddress} ist deine {bankName} Adresse.",
     selfPaymentAdvice: "Wenn du Geld an ein anderes Konto von dir senden möchtest, nutze dafür eine Lightning Rechnung oder BTC Adresse.",
     lnAddressError: "Wir konnten diese Lightning Adresse nicht erreichen. Wenn du dir sicher bist dass sie existiert, probiere es später erneut.",
     lnAddressAdvice: "Gehe sicher, dass du alles richtig geschrieben hast oder frage den Empfänger nach einer Lightning Rechnung oder BTC Adresse.",
     unknownLightning: "Wir können diese Lightning Adresse nicht dekodieren. Bitte versuche es erneut.",
     unknownOnchain: "Wir können diese Bitcoin Adresse nicht dekodieren. Bitte versuche es erneut.",
-    newBankAddressUsername: "{lnAddress: string} ist eine {bankName: string} Adresse, aber du hast bisher keine Geld dorthin gesendet.",
+    newBankAddressUsername: "{lnAddress} ist eine {bankName} Adresse, aber du hast bisher keine Geld dorthin gesendet.",
     confirmModal: {
-      title: "Du hast bislang kein Geld an \"{lnAddress: string}\" gesendet.",
-      body:  "Bitte gehe sicher, dass der Empfänger dir eine {bankName: string} Adresse gegeben hat, **nicht den Benutzernamen einer anderen Wallet**. Anonsten geht das Geld an ein {bankName: string} Konto mit der Adresse “{lnAddress: string}”.\n\nÜberprüfe ebenso den ersten Teil der Adresse. Bspw. sind jackie und jack1e zwei verschiedene Adressen.",
-      warning: "Wenn die {bankName: string} Adresse falsch geschrieben ist, kann {bankName: string} die Transaktion nicht rückgängig machen.",
-      checkBox: "{lnAddress: string} ist die richtige Adresse.",
+      title: "Du hast bislang kein Geld an \"{lnAddress}\" gesendet.",
+      body:  "Bitte gehe sicher, dass der Empfänger dir eine {bankName} Adresse gegeben hat, **nicht den Benutzernamen einer anderen Wallet**. Anonsten geht das Geld an ein {bankName} Konto mit der Adresse “{lnAddress}”.\n\nÜberprüfe ebenso den ersten Teil der Adresse. Bspw. sind jackie und jack1e zwei verschiedene Adressen.",
+      warning: "Wenn die {bankName} Adresse falsch geschrieben ist, kann {bankName} die Transaktion nicht rückgängig machen.",
+      checkBox: "{lnAddress} ist die richtige Adresse.",
       confirmButton: "Ich bin mir sicher",
     }
   },
   SendBitcoinScreen: {
     amount: "Betrag",
-    amountExceed: "Der Betrag übersteigt dein Guthaben von {balance: string}",
+    amountExceed: "Der Betrag übersteigt dein Guthaben von {balance}",
     amountIsRequired: "Betrag ist erfordert",
     cost: "Kosten",
     destination: "Empfänger",
@@ -620,7 +622,7 @@ const de: BaseTranslation = {
   SettingsScreen: {
     activated: "Aktiviert",
     tapLogIn: "Antippen zum Einloggen",
-    addressScreen: "Empfange Zahlungen mit deiner {bankName: string} Adresse oder den Funktionen für Verkäufer",
+    addressScreen: "Empfange Zahlungen mit deiner {bankName} Adresse oder den Funktionen für Verkäufer",
     tapUserName: "Antippen um einen Benutzernamen festzulegen",
     title: "Einstellungen",
     csvTransactionsError:
@@ -668,15 +670,15 @@ const de: BaseTranslation = {
   UsernameScreen: {
     "3CharactersMinimum": "es sind mindestens drei Zeichen nötig",
     "50CharactersMaximum": "Benutzername kann nicht länger als 50 Zeichen sein",
-    "available": "✅  {username: string} ist verfügbar",
+    "available": "✅  {username} ist verfügbar",
     "confirmSubtext": "Der Benutzername kann später nicht geändert werden",
-    "confirmTitle": "{username: string} als deinen Benutzernamen festlegen?",
+    "confirmTitle": "{username} als deinen Benutzernamen festlegen?",
     "forbiddenStart":
       "Darf nicht mit lnbc1, bc1, 1 oder 3 beginnen und kann keine Bitcoin Adresse oder Lightning Rechnung sein",
     "letterAndNumber": "Nur kleingeschriebene Buchstaben, Zahlen und Unterstriche (_) sind gültig",
     "emailAddress": "Benutzername darf keine E-Mail Adresse sein",
-    "notAvailable": "❌  {username: string} ist nicht verfügbar",
-    "success": "{username: string} ist nun dein Benutzername!",
+    "notAvailable": "❌  {username} ist nicht verfügbar",
+    "success": "{username} ist nun dein Benutzername!",
     "usernameToUse": "Welchen Benutzernamen möchtest du nutzen?",
   },
   WelcomeFirstScreen: {
@@ -697,7 +699,7 @@ const de: BaseTranslation = {
   WelcomePhoneValidationScreen: {
     errorLoggingIn: "Fehler beim Login. Hast du den richtigen Code verwendet?",
     header:
-      "Um deine Telefonnummer zu bestätigen, gib den Code an, welchen wir dir soeben an {phoneNumber: string} gesendet haben.",
+      "Um deine Telefonnummer zu bestätigen, gib den Code an, welchen wir dir soeben an {phoneNumber} gesendet haben.",
     need6Digits: "Der Code muss aus 6 Zeichen bestehen",
     placeholder: "6 Zeichen Code",
     sendAgain: "Erneut senden",
@@ -710,8 +712,8 @@ const de: BaseTranslation = {
     backHome: "Zurück zur Übersicht",
     bank: "Bank",
     bankAccount: "Konto",
-    bankAdvice: "{bankName: string} Hinweise",
-    bankInfo: "{bankName: string} Info",
+    bankAdvice: "{bankName} Hinweise",
+    bankInfo: "{bankName} Info",
     bitcoin: "Bitcoin",
     bitcoinPrice: "Bitcoin-Preis",
     btcAccount: "BTC Konto",
@@ -797,7 +799,7 @@ const de: BaseTranslation = {
   },
   notifications: {
     payment: {
-      body: "Du hast {value: string} Sats empfangen",
+      body: "Du hast {value} Sats empfangen",
       title: "Zahlung empfangen",
     },
   },
@@ -809,7 +811,7 @@ const de: BaseTranslation = {
     defaultEmailSubject: "Bitcoin Beach Wallet - Support",
     defaultSupportMessage: "Hallo! Ich brauche Hilfe mit der Bitcoin Beach Wallet",
     deleteAccount: "Hallo. Bitte löscht mein Benutzerkonto.",
-    deleteAccountEmailSubject: "Benutzerkonto löschen: {phoneNumber: string}",
+    deleteAccountEmailSubject: "Benutzerkonto löschen: {phoneNumber}",
   },
   lnurl: {
     overLimit: "Du kannst nicht mehr als den Maximalbetrag senden",
@@ -817,6 +819,6 @@ const de: BaseTranslation = {
     commentRequired: "Kommentar erfordert",
     viewPrintable: "Druckversion anzeigen",
   },
-}
+})
 
 export default de

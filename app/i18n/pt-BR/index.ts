@@ -1,10 +1,12 @@
 // prettier-ignore
 
 import { Translation } from "../i18n-types"
+import en from '../en'
+import { merge } from 'lodash'
 
 /* eslint-disable no-template-curly-in-string */
 /* eslint-disable max-lines */
-const ptBR: Translation = {
+const ptBR: Translation = merge({}, en as Translation, {
   GaloyAddressScreen: {
     buttonTitle: "Set your {bankName} address", // todo translate
     yourAddress: "Your {bankName} address", // todo translate
@@ -847,6 +849,6 @@ const ptBR: Translation = {
     title: "",
     percentageToConvert: "",
   },
-}
+})
 
 export default ptBR
