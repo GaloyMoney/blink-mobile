@@ -1,10 +1,12 @@
 // prettier-ignore
 
 import { Translation } from "../i18n-types";
+import en from '../en'
+import { merge } from 'lodash'
 
 /* eslint-disable no-template-curly-in-string */
 /* eslint-disable max-lines */
-const frCA: Translation = {
+const frCA: Translation = merge({}, en as Translation, {
   GaloyAddressScreen: {
     buttonTitle: "Set your {bankName} address", // todo translate
     yourAddress: "Your {bankName} address", // todo translate
@@ -17,7 +19,7 @@ const frCA: Translation = {
     copiedAddressToClipboard: "Copied {bankName} address to clipboard", // todo translate
     copiedPaycodeToClipboard: "Copied Paycode to clipboard", // todo translate
     copiedCashRegisterToClipboard: "Copied Cash Register to clipboard", // todo translate
-        howToUseYourAddress: "How to use your {bankName} address", // todo translate
+    howToUseYourAddress: "How to use your {bankName} address", // todo translate
     howToUseYourPaycode: "How to use your Paycode", // todo translate
     howToUseYourCashRegister: "How to use your Cash Register", // todo translate
     howToUseYourAddressExplainer: "Your {bankName} address is your own Lightning address. It’s like an email address, but for your Bitcoin.\n\nTo receive payments, share your full address to someone using a wallet supporting the Lightning address.\n\nThese wallets support it:", // todo translate
@@ -140,7 +142,7 @@ const frCA: Translation = {
         },
       },
       WhatIsMoney: {
-         title: "Qu'est-ce que c'est de la monnaie? ",
+        title: "Qu'est-ce que c'est de la monnaie? ",
         questions: {
           moneySocialAggrement: {
             answers: [
@@ -600,7 +602,7 @@ const frCA: Translation = {
     newBankAddressUsername: "{lnAddress} exists as a {bankName} address, but you've never sent money to it.",
     confirmModal: {
       title: "You've never sent money to \"{lnAddress}\" before.",
-      body:  "Please make sure the recipient gave you a {bankName} address, **not a username from another wallet**. Otherwise, the money will go to a {bankName} Account that has the “{lnAddress}” address.\n\nCheck the spelling of the first part of the address as well. e.g. jackie and jack1e are 2 different addresses",
+      body: "Please make sure the recipient gave you a {bankName} address, **not a username from another wallet**. Otherwise, the money will go to a {bankName} Account that has the “{lnAddress}” address.\n\nCheck the spelling of the first part of the address as well. e.g. jackie and jack1e are 2 different addresses",
       warning: "If the {bankName} address is entered incorrectly, {bankName} can't undo the transaction.",
       checkBox: "{lnAddress} is the right address.",
       confirmButton: "I'm 100% sure",
@@ -848,6 +850,6 @@ const frCA: Translation = {
     title: "",
     message: "",
   },
-}
+})
 
 export default frCA
