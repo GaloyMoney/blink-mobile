@@ -127,6 +127,12 @@ describe("Payments Flow", async () => {
     await confirmPaymentButton.click()
     const successCheck = await $(selector(LL.SendBitcoinScreen.success(), "StaticText"))
     await successCheck.waitForDisplayed({ timeout })
+    if (!successCheck.isDisplayed()) {
+      // wait to throttle the rate limiting
+      await browser.pause(30000)
+      await confirmPaymentButton.click()
+      await successCheck.waitForDisplayed({ timeout })
+    }
     expect(successCheck.isDisplayed()).toBeTruthy()
   })
 })

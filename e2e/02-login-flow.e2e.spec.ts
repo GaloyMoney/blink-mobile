@@ -31,7 +31,7 @@ describe("Login Flow", async () => {
   it("click staging environment", async () => {
     await browser.pause(2000)
     const instanceButton = await $(selector("Galoy Instance Button", "Other"))
-    await instanceButton.waitForDisplayed({ timeout })
+    await instanceButton.waitForDisplayed({ timeout: 60000 })
     const { x, y } = await instanceButton.getLocation()
     const { width, height } = await instanceButton.getSize()
     // calc the midpoint center because we want to click the second button - in the middle
