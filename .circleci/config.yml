@@ -230,8 +230,8 @@ workflows:
       - test_android:
           filters:
             branches:
-              only: fix-e2e-network-timeout
+              only: main
       - test_ios:
           filters:
             branches:
-              only: fix-e2e-network-timeout
+              only: main
