@@ -131,14 +131,6 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       greyed: hasToken,
     },
     {
-      category: LL.common.account(),
-      icon: "person-outline",
-      id: "account",
-      action: () => navigation.navigate("accountScreen"),
-      enabled: hasToken,
-      greyed: !hasToken,
-    },
-    {
       category: LL.SettingsScreen.addressScreen({ bankName: "BBW" }),
       icon: "custom-receive-bitcoin",
       id: "address",
@@ -179,6 +171,14 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       enabled: true,
       greyed: false,
       styleDivider: { backgroundColor: palette.lighterGrey, height: 18 },
+    },
+    {
+      category: LL.common.account(),
+      icon: "person-outline",
+      id: "account",
+      action: () => navigation.navigate("accountScreen"),
+      enabled: hasToken,
+      greyed: !hasToken,
     },
   ]
 
