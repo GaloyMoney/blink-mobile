@@ -100,6 +100,7 @@ export type RootStackParamList = {
   transactionDetail: TransactionDetail
   transactionHistory: undefined
   Earn: undefined
+  accountScreen: undefined
 }
 
 export type ContactStackParamList = {

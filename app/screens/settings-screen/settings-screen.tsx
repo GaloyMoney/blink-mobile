@@ -1,29 +1,23 @@
 import * as React from "react"
-import { Alert, Linking, Text } from "react-native"
+import { Alert } from "react-native"
 import Share from "react-native-share"
-import { Divider, Icon, ListItem } from "react-native-elements"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { gql, OperationVariables, QueryLazyOptions, useLazyQuery } from "@apollo/client"
-import type { ViewStyleProp } from "react-native/Libraries/StyleSheet/StyleSheet"
+import { gql, useLazyQuery } from "@apollo/client"
 
 import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
 import { palette } from "../../theme/palette"
-import { CONTACT_EMAIL_ADDRESS, WHATSAPP_CONTACT_NUMBER } from "../../config/support"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 
 import useToken from "../../hooks/use-token"
-import useLogout from "../../hooks/use-logout"
 import useMainQuery from "@app/hooks/use-main-query"
 import crashlytics from "@react-native-firebase/crashlytics"
 import ContactModal from "@app/components/contact-modal/contact-modal"
 
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { openWhatsApp } from "@app/utils/external"
-import { CustomIcon } from "@app/components/custom-icon"
-import { testProps } from "../../../utils/testProps"
+import { SettingsRow } from "./settings-row"
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "settings">
@@ -31,7 +25,6 @@ type Props = {
 
 export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
   const { hasToken } = useToken()
-  const { logout } = useLogout()
   const { LL } = useI18nContext()
   const { btcWalletId, username, phoneNumber, userPreferredLanguage } = useMainQuery()
 
@@ -87,43 +80,6 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
     })
   }
 
-  const logoutAction = async () => {
-    try {
-      await logout()
-      Alert.alert(LL.common.loggedOut(), "", [
-        {
-          text: LL.common.ok(),
-          onPress: () => {
-            navigation.goBack()
-          },
-        },
-      ])
-    } catch (err) {
-      // TODO: figure out why ListItem onPress is swallowing errors
-      console.error(err)
-    }
-  }
-
-  const deleteAccountAction = async () => {
-    try {
-      await openWhatsApp(WHATSAPP_CONTACT_NUMBER, LL.support.deleteAccount())
-    } catch (err) {
-      // Failed to open whatsapp - trying email
-      console.error(err)
-      Linking.openURL(
-        `mailto:${CONTACT_EMAIL_ADDRESS}?subject=${LL.support.deleteAccountEmailSubject({
-          phoneNumber,
-        })}&body=${LL.support.deleteAccount()}`,
-      ).catch((err) => {
-        // Email also failed to open.  Displaying alert.
-        console.error(err)
-        Alert.alert(LL.common.error(), LL.errors.problemPersists(), [
-          { text: LL.common.ok() },
-        ])
-      })
-    }
-  }
-
   return (
     <SettingsScreenJSX
       hasToken={hasToken}
@@ -141,39 +97,9 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
         }
       }}
       securityAction={securityAction}
-      logoutAction={logoutAction}
       loadingCsvTransactions={loadingCsvTransactions}
-      deleteAccountAction={deleteAccountAction}
     />
   )
-}
-
-type SettingsScreenProps = {
-  hasToken: boolean
-  navigation: StackNavigationProp<RootStackParamList, "settings">
-  username: string
-  phone: string
-  language: string
-  notificationsEnabled: boolean
-  csvAction: (options?: QueryLazyOptions<OperationVariables>) => void
-  securityAction: () => void
-  logoutAction: () => Promise<void>
-  loadingCsvTransactions: boolean
-  deleteAccountAction: () => void
-}
-
-type SettingRow = {
-  id: string
-  icon: string
-  category: string
-  hidden?: boolean
-  enabled?: boolean
-  subTitleText?: string
-  subTitleDefaultValue?: string
-  action?: () => void
-  greyed?: boolean
-  styleDivider?: ViewStyleProp
-  dangerous?: boolean
 }
 
 export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
@@ -186,9 +112,7 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
     language,
     csvAction,
     securityAction,
-    logoutAction,
     loadingCsvTransactions,
-    deleteAccountAction,
   } = params
 
   const toggleIsContactModalVisible = () => {
@@ -249,71 +173,20 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       styleDivider: { backgroundColor: palette.lighterGrey, height: 18 },
     },
     {
-      category: LL.common.logout(),
-      id: "logout",
-      icon: "ios-log-out",
-      action: () => logoutAction(),
+      category: LL.common.account(),
+      icon: "person-outline",
+      id: "account",
+      action: () => navigation.navigate("accountScreen"),
       enabled: hasToken,
       greyed: !hasToken,
-      hidden: !hasToken,
-    },
-    {
-      category: LL.SettingsScreen.deleteAccount(),
-      id: "delete-account",
-      icon: "ios-trash",
-      dangerous: true,
-      action: () => deleteAccountAction(),
-      enabled: hasToken,
-      greyed: !hasToken,
-      hidden: !hasToken,
     },
   ]
 
   return (
     <Screen preset="scroll">
-      {settingList.map((setting, i) => {
-        if (setting.hidden) {
-          return null
-        }
-        let settingColor
-        let settingStyle
-        if (setting?.dangerous) {
-          settingColor = setting.greyed ? palette.midGrey : palette.red
-          settingStyle = { color: palette.red }
-        } else {
-          settingColor = setting.greyed ? palette.midGrey : palette.darkGrey
-          settingStyle = { color: settingColor }
-        }
-
-        return (
-          <React.Fragment key={`setting-option-${i}`}>
-            <ListItem
-              onPress={setting.action}
-              disabled={!setting.enabled}
-              {...testProps(setting.category)}
-            >
-              {!setting.icon?.startsWith("custom") && (
-                <Icon name={setting.icon} type="ionicon" color={settingColor} />
-              )}
-              {setting.icon?.startsWith("custom") && (
-                <CustomIcon name={setting.icon} color={settingColor} />
-              )}
-              <ListItem.Content>
-                <ListItem.Title style={settingStyle}>
-                  <Text>{setting.category}</Text>
-                </ListItem.Title>
-                {setting.subTitleText && (
-                  <ListItem.Subtitle style={settingStyle}>
-                    <Text>{setting.subTitleText}</Text>
-                  </ListItem.Subtitle>
-                )}
-              </ListItem.Content>
-              {setting.enabled && <ListItem.Chevron />}
-            </ListItem>
-            <Divider style={setting.styleDivider} />
-          </React.Fragment>
-        )
-      })}
+      {settingList.map((setting) => (
+        <SettingsRow setting={setting} key={setting.id} />
+      ))}
       <VersionComponent />
       <ContactModal
         isVisble={isContactModalVisible}
