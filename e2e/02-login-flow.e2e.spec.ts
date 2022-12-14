@@ -89,7 +89,8 @@ describe("Login Flow", async () => {
   it("are we logged in?", async () => {
     let loginSelector
     if (process.env.E2E_DEVICE === "ios") {
-      loginSelector = `(//XCUIElementTypeOther[@name="${LL.common.phoneNumber()}"])[3]`
+      loginSelector = `(//XCUIElementTypeOther[@name="${LL.common.phoneNumber()}"])[2]/XCUIElementTypeStaticText[2]`
+      // loginSelector = `	/XCUIElementTypeApplication/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeScrollView/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeStaticText[2]`
     } else {
       loginSelector = `//android.view.ViewGroup[@content-desc="${LL.common.phoneNumber()}"]/android.view.ViewGroup/android.widget.TextView[2]`
     }

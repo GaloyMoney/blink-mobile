@@ -230,7 +230,7 @@ workflows:
       - test_android:
           filters:
             branches:
-              only: e2e-update-login-verify
+              only: main
       - test_ios:
           filters:
             branches:
