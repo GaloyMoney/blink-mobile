@@ -234,4 +234,4 @@ workflows:
       - test_ios:
           filters:
             branches:
-              only: e2e-update-login-verify
+              only: main

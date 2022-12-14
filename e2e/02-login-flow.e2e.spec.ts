@@ -90,8 +90,6 @@ describe("Login Flow", async () => {
     let loginSelector
     if (process.env.E2E_DEVICE === "ios") {
       loginSelector = '//*[contains(@label,"+")]'
-      // loginSelector = `(//XCUIElementTypeOther[@name="${LL.common.phoneNumber()}"])[2]/XCUIElementTypeStaticText[2]`
-      // loginSelector = `	/XCUIElementTypeApplication/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeScrollView/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeStaticText[2]`
     } else {
       loginSelector = `//android.view.ViewGroup[@content-desc="${LL.common.phoneNumber()}"]/android.view.ViewGroup/android.widget.TextView[2]`
     }
@@ -99,10 +97,6 @@ describe("Login Flow", async () => {
     await phoneNumberListItem.waitForDisplayed({ timeout })
     expect(phoneNumberListItem.isDisplayed()).toBeTruthy()
     await browser.pause(1000)
-    // const loggedInListItem = await $(selector(LL.common.logout(), "Other"))
-    // await loggedInListItem.waitForDisplayed({ timeout })
-    // expect(loggedInListItem.isDisplayed()).toBeTruthy()
-    // await browser.pause(1000)
   })
 
   it("click go back to home screen", async () => {
