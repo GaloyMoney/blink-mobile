@@ -559,24 +559,6 @@
         "maxFeeSelected": "Tarifa máxima que se cobrará por esta transacción. Podría ser menor una vez se realice el pago.",
         "feeError": "Error al calcular la tarifa"
     },
-    "SendBitcoinScreen": {
-        "amount": "Cantidad",
-        "amountExceed": "La cantidad excede su saldo de {balance}",
-        "amountIsRequired": "Se requiere cantidad",
-        "cost": "Costo",
-        "destination": "Destino",
-        "destinationIsRequired": "El destino es obligatorio",
-        "fee": "tarifa de red",
-        "feeCalculationUnsuccessful": "Error al calcular, inténtelo de nuevo ⚠️",
-        "input": "Nombre de usuario o factura",
-        "invalidUsername": "Nombre de usuario no válido",
-        "noAmount": "Esta factura no tiene un monto, por lo que debe especificar manualmente cuánto dinero desea enviar",
-        "notConfirmed": "El pago ha sido enviado.\npero aún no está confirmado\n\nPuedes comprobar el estado\ndel pago en Transacciones",
-        "note": "Nota",
-        "success": "El pago se ha enviado correctamente.",
-        "title": "Enviar Bitcoin",
-        "failedToFetchLnurlInvoice": "Error al obtener la factura de lnurl"
-    },
     "SendBitcoinDestinationScreen": {
         "usernameNowAddress": "Los nombres de usuario de {bankName} ahora son direcciones de {bankName}.",
         "usernameNowAddressInfo": "Cuando ingrese un nombre de usuario de {bankName}, le agregaremos \"@{lnDomain}\" (por ejemplo, maria@{lnDomain}) para convertirlo en una dirección. Tu nombre de usuario ahora también es una dirección de {bankName}.\n\nLos nombres de usuario de {bankName} solo permitían transacciones dentro de {bankName}, mientras que las direcciones de {bankName} permiten realizar pagos con personas que usan diferentes billeteras.",
@@ -602,6 +584,24 @@
             "confirmButton": "Estoy 100% seguro"
         },
         "clipboardError": "Error al obtener el valor del portapapeles"
+    },
+    "SendBitcoinScreen": {
+        "amount": "Cantidad",
+        "amountExceed": "La cantidad excede su saldo de {balance}",
+        "amountIsRequired": "Se requiere cantidad",
+        "cost": "Costo",
+        "destination": "Destino",
+        "destinationIsRequired": "El destino es obligatorio",
+        "fee": "tarifa de red",
+        "feeCalculationUnsuccessful": "Error al calcular, inténtelo de nuevo ⚠️",
+        "input": "Nombre de usuario o factura",
+        "invalidUsername": "Nombre de usuario no válido",
+        "noAmount": "Esta factura no tiene un monto, por lo que debe especificar manualmente cuánto dinero desea enviar",
+        "notConfirmed": "El pago ha sido enviado.\npero aún no está confirmado\n\nPuedes comprobar el estado\ndel pago en Transacciones",
+        "note": "Nota",
+        "success": "El pago se ha enviado correctamente.",
+        "title": "Enviar Bitcoin",
+        "failedToFetchLnurlInvoice": "Error al obtener la factura de lnurl"
     },
     "SettingsScreen": {
         "activated": "Activada",
@@ -687,8 +687,8 @@
         "activateWallet": "Activar billetera",
         "amountRequired": "Se requiere una cantidad",
         "back": "Atrás",
-        "bank": "Banco",
         "backHome": "Atrás",
+        "bank": "Banco",
         "bankAccount": "Cuenta de efectivo",
         "bankAdvice": "{bankName} Tip",
         "bankInfo": "{bankName} Info",
@@ -764,8 +764,8 @@
         "tooManyRequestsPhoneCode": "Demasiadas peticiones. Por favor, espere antes de solicitar otro mensaje de texto.",
         "network": {
             "server": "Hubo un error en el servidor.\nPor favor intente más tarde",
-            "connection": "Error al conectar.\nVerifique su conexión a internet.",
-            "request": "Hay un error en el requerimiento. Póngase en contacto con el soporte técnico si este problema persiste."
+            "request": "Hay un error en el requerimiento. Póngase en contacto con el soporte técnico si este problema persiste.",
+            "connection": "Error al conectar.\nVerifique su conexión a internet."
         },
         "unexpectedError": "Ocurrió un error inesperado",
         "restartApp": "Reinicie la aplicación.",
