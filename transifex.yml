@@ -1,0 +1,10 @@
+git:
+  filters:
+  - filter_type: file
+    file_format: KEYVALUEJSON
+    source_language: en
+    source_file: app/i18n/raw-i18n/source/en.json
+    translation_files_expression: 'app/i18n/raw-i18n/translations/<lang>.json'
+    language_mapping:
+      pt_BR: pt-br
+      fr_CA: fr-CA
