@@ -2,7 +2,7 @@
 
 import { Translation } from "../i18n-types"
 import en from '../en'
-import rawDe from '../raw-translations/de.json'
+import rawDe from '../raw-i18n/translations/de.json'
 import { merge } from 'lodash'
 
 /* eslint-disable no-template-curly-in-string */
