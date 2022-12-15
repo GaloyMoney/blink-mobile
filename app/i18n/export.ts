@@ -2,7 +2,7 @@ import { readTranslationFromDisk } from 'typesafe-i18n/exporter'
 import fs from 'fs'
 import { BaseTranslation } from 'typesafe-i18n'
 
-const DEFAULT_RAW_EXPORT_PATH = `${__dirname}/raw-translations`
+const DEFAULT_RAW_EXPORT_PATH = `${__dirname}/raw-i18n`
 
 const writeToFile = async (translation: BaseTranslation, locale: string, directory: string) => {
     const filePath = `${directory}/${locale}.json`
@@ -26,7 +26,8 @@ const exportTranslationsForLocale = async (locale: string, directory: string) : 
 }
 
 const locale = process.argv[2] || 'en'
-const exportDirectory = process.argv[3] || DEFAULT_RAW_EXPORT_PATH
+const fallbackExportDirectory = locale === 'en' ? `${DEFAULT_RAW_EXPORT_PATH}/source` : `${DEFAULT_RAW_EXPORT_PATH}/translations`
+const exportDirectory = process.argv[3] || fallbackExportDirectory
 
 
 exportTranslationsForLocale(locale, exportDirectory)

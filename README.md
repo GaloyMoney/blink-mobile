@@ -76,4 +76,4 @@ There is a husky pre-push hook which will check for yalc references in the `pack
 
 To add a new string to be used in the application navigate to [en/index.ts](app/i18n/en/index.ts) and add the phrase you need in english. Proceed to run the command `yarn update-translations`. This command will update the translation types as well as the raw english translation file. The new phrase can now be used throughout the application, with all languages falling back to the english translation.
 
-**Warning**: Do not update files in the [raw translations folder](/app/i18n/raw-translations/). These files are managed programtically.
+**Warning**: Do not update files in the [raw translations folder](/app/i18n/raw-i18n/). These files are managed programtically.
