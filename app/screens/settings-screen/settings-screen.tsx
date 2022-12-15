@@ -170,7 +170,6 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       action: toggleIsContactModalVisible,
       enabled: true,
       greyed: false,
-      styleDivider: { backgroundColor: palette.lighterGrey, height: 18 },
     },
     {
       category: LL.common.account(),
@@ -179,6 +178,7 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       action: () => navigation.navigate("accountScreen"),
       enabled: hasToken,
       greyed: !hasToken,
+      styleDivider: { backgroundColor: palette.lighterGrey, height: 18 },
     },
   ]
 
