@@ -40,6 +40,7 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
         // message: 'export message'
       })
     } catch (err) {
+      crashlytics().recordError(err)
       console.error(err)
     }
   }

@@ -9,11 +9,6 @@ import { ListItem, Icon } from "react-native-elements"
 import { useI18nContext } from "@app/i18n/i18n-react"
 
 const styles = EStyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
   modal: {
     justifyContent: "flex-end",
     margin: 0,
@@ -65,27 +60,25 @@ const ContactModal = ({ isVisble, toggleModal }) => {
     },
   ]
   return (
-    <View style={styles.container}>
-      <ReactNativeModal
-        isVisible={isVisble}
-        onBackdropPress={() => toggleModal()}
-        style={styles.modal}
-      >
-        <View style={styles.content}>
-          {contactOptionList.map((item, i) => {
-            return (
-              <ListItem key={i} bottomDivider onPress={item.action}>
-                <Icon name={item.icon} type="ionicon" />
-                <ListItem.Content>
-                  <ListItem.Title>{item.name}</ListItem.Title>
-                </ListItem.Content>
-                <ListItem.Chevron />
-              </ListItem>
-            )
-          })}
-        </View>
-      </ReactNativeModal>
-    </View>
+    <ReactNativeModal
+      isVisible={isVisble}
+      onBackdropPress={() => toggleModal()}
+      style={styles.modal}
+    >
+      <View style={styles.content}>
+        {contactOptionList.map((item, i) => {
+          return (
+            <ListItem key={i} bottomDivider onPress={item.action}>
+              <Icon name={item.icon} type="ionicon" />
+              <ListItem.Content>
+                <ListItem.Title>{item.name}</ListItem.Title>
+              </ListItem.Content>
+              <ListItem.Chevron />
+            </ListItem>
+          )
+        })}
+      </View>
+    </ReactNativeModal>
   )
 }
 

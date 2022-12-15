@@ -104,7 +104,7 @@ export type RootStackParamList = {
 }
 
 export type ContactStackParamList = {
-  Contacts: undefined
+  contactList: undefined
   contactDetail: { contact: contacts_me_contacts }
   phoneValidation: undefined
   sendBitcoinDestination: { username: string }

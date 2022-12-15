@@ -390,6 +390,7 @@ const SendBitcoinConfirmationScreen = ({
 
       setPaymentError(errorsMessage || "Something went wrong")
     } catch (err) {
+      crashlytics().recordError(err)
       setStatus(Status.ERROR)
       setPaymentError(err.message || err.toString())
     }

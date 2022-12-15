@@ -2,6 +2,7 @@ import { saveJson, loadJson } from "@app/utils/storage"
 import { createContext, useContext, useEffect, useReducer } from "react"
 import * as React from "react"
 import { usePriceSubscription } from "@app/hooks/use-price-subscription"
+import crashlytics from "@react-native-firebase/crashlytics"
 
 export type PriceData =
   | {
@@ -79,7 +80,9 @@ export const PriceContextProvider = ({ children }) => {
             },
           })
         }
-      } catch {}
+      } catch (err) {
+        crashlytics().recordError(err)
+      }
     }
     loadPrice()
   }, [])

@@ -3,6 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 import { BUILD_VERSION } from "../app"
 import KeyStoreWrapper from "../utils/storage/secureStorage"
 import useToken from "./use-token"
+import crashlytics from "@react-native-firebase/crashlytics"
 
 const useLogout = () => {
   const client = useApolloClient()
@@ -22,6 +23,7 @@ const useLogout = () => {
         clearToken()
       }
     } catch (err) {
+      crashlytics().recordError(err)
       console.debug({ err }, `error resetting RootStore`)
     }
   }

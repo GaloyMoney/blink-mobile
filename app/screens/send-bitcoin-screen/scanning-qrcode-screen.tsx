@@ -42,6 +42,7 @@ import { BarcodeFormat, useScanBarcodes } from "vision-camera-code-scanner"
 import ImagePicker from "react-native-image-crop-picker"
 import { lnurlDomains } from "./send-bitcoin-destination-screen"
 import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
+import crashlytics from "@react-native-firebase/crashlytics"
 
 const { width: screenWidth } = Dimensions.get("window")
 const { height: screenHeight } = Dimensions.get("window")
@@ -212,6 +213,7 @@ export const ScanningQRCodeScreen: ScreenType = ({
           )
         }
       } catch (err) {
+        crashlytics().recordError(err)
         Alert.alert(err.toString())
       }
     },
@@ -230,6 +232,7 @@ export const ScanningQRCodeScreen: ScreenType = ({
         decodeInvoice(data)
       })
     } catch (err) {
+      crashlytics().recordError(err)
       Alert.alert(err.toString())
     }
   }
@@ -250,6 +253,7 @@ export const ScanningQRCodeScreen: ScreenType = ({
         Alert.alert(LL.ScanningQRCodeScreen.noQrCode())
       }
     } catch (err) {
+      crashlytics().recordError(err)
       Alert.alert(err.toString())
     }
   }
