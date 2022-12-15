@@ -1,6 +1,6 @@
 {
     "GaloyAddressScreen": {
-        "buttonTitle": "Set your {bankName: string} address",
+        "buttonTitle": "Testing this feature",
         "yourAddress": "Your {bankName: string} address",
         "notAbleToChange": "You won't be able to change your {bankName: string} address after it's set.",
         "addressNotAvailable": "This {bankName: string} address is already taken.",
