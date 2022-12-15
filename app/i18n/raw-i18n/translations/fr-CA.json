@@ -1,4 +1,26 @@
 {
+    "GaloyAddressScreen": {
+        "buttonTitle": "Set your {bankName: string} address",
+        "yourAddress": "Your {bankName: string} address",
+        "notAbleToChange": "You won't be able to change your {bankName: string} address after it's set.",
+        "addressNotAvailable": "This {bankName: string} address is already taken.",
+        "somethingWentWrong": "Something went wrong. Please try again later.",
+        "merchantTitle": "For merchants",
+        "yourCashRegister": "Your Cash Register",
+        "yourPaycode": "Your Paycode",
+        "copiedAddressToClipboard": "Copied {bankName: string} address to clipboard",
+        "copiedPaycodeToClipboard": "Copied Paycode to clipboard",
+        "copiedCashRegisterToClipboard": "Copied Cash Register to clipboard",
+        "howToUseYourAddress": "How to use your {bankName: string} address",
+        "howToUseYourPaycode": "How to use your Paycode",
+        "howToUseYourCashRegister": "How to use your Cash Register",
+        "howToUseYourAddressExplainer": "Your {bankName: string} address is your own Lightning address. It’s like an email address, but for your Bitcoin.\n\nTo receive payments, share your full address to someone using a wallet supporting the Lightning address.\n\nThese wallets support it:",
+        "howToUseYourPaycodeExplainer": "You can print your Paycode (which is an amountless invoice) and display it in your business to receive payments. Individuals can pay you by scanning it with a Lightning-enabled wallet.\n\nHowever, be aware that some wallets can’t scan an amountless invoice such as:",
+        "howToUseYourCashRegisterExplainer": "Your Cash Register let your employees collect payments without needing to give them access to your wallet.\n\nShare your link. They can pin it to their homescreen and generate Lightning invoices on your behalf. The payments collected using the Cash Register will be sent directly to your Bitcoin Beach Wallet.",
+        "defaultWallet": "Default Wallet",
+        "whatIsDefaultWalletTitle": "What is the default wallet?",
+        "whatIsDefaultWalletDescription": "Your default wallet is the wallet that will be used when receiving payments through the POS. You can change it at any time here in the settings."
+    },
     "AuthenticationScreen": {
         "authenticationDescription": "Authentifiez vous pour continuer",
         "setUp": "Configurez l'authentification biométrique",
@@ -19,6 +41,19 @@
     },
     "ContactDetailsScreen": {
         "title": "Transactions avec {username}"
+    },
+    "ConversionDetailsScreen": {
+        "title": "Convert",
+        "percentageToConvert": "% to convert"
+    },
+    "ConversionConfirmationScreen": {
+        "title": "Review conversion",
+        "youreConverting": "You're converting",
+        "receivingAccount": "Receiving account"
+    },
+    "ConversionSuccessScreen": {
+        "title": "Conversion Success",
+        "message": "Conversion successful"
     },
     "EarnScreen": {
         "earnSats": "Gagner {formattedNumber|sats}",
@@ -524,6 +559,32 @@
         "maxFeeSelected": "Il s'agit des frais maximum qui vous seront facturés pour cette transaction. Il peut finir par être inférieur une fois le paiement effectué.",
         "feeError": "Échec du calcul des frais"
     },
+    "SendBitcoinDestinationScreen": {
+        "usernameNowAddress": "{bankName: string} usernames are now {bankName: string} addresses.",
+        "usernameNowAddressInfo": "When you enter a {bankName: string} username, we will add \"@{lnDomain: string}\" to it (e.g maria@{lnDomain: string}) to make it an address. Your username is now a {bankName: string} address too.\n\nGo to your {bankName: string} address page from your Settings to learn how to use it or to share it to receive payments.",
+        "enterValidDestination": "Please enter a valid destination",
+        "destinationOptions": "You can send to a {bankName: string} address, LN address, LN invoice, or BTC address.",
+        "expiredInvoice": "This invoice has expired. Please generate a new invoice.",
+        "wrongNetwork": "This invoice is for a different network. Please generate a new invoice.",
+        "invalidAmount": "This contains an invalid amount. Please regenerate with a valid amount.",
+        "usernameDoesNotExist": "{lnAddress: string} doesn't seem to be a {bankName: string} address that exists.",
+        "usernameDoesNotExistAdvice": "Either make sure the spelling is right or ask the recipient for an LN invoice or BTC address instead.",
+        "selfPaymentError": "{lnAddress: string} is your {bankName: string} address.",
+        "selfPaymentAdvice": "If you want to send money to another account that you own, you can use an invoice, LN or BTC address instead.",
+        "lnAddressError": "We can't reach this Lightning address. If you are sure it exists, you can try again later.",
+        "lnAddressAdvice": "Either make sure the spelling is right or ask the recipient for an invoice or BTC address instead.",
+        "unknownLightning": "We can't parse this Lightning address. Please try again.",
+        "unknownOnchain": "We can't parse this Bitcoin address. Please try again.",
+        "newBankAddressUsername": "{lnAddress: string} exists as a {bankName: string} address, but you've never sent money to it.",
+        "confirmModal": {
+            "title": "You've never sent money to \"{lnAddress: string}\" before.",
+            "body": "Please make sure the recipient gave you a {bankName: string} address, **not a username from another wallet**. Otherwise, the money will go to a {bankName: string} Account that has the “{lnAddress: string}” address.\n\nCheck the spelling of the first part of the address as well. e.g. jackie and jack1e are 2 different addresses",
+            "warning": "If the {bankName: string} address is entered incorrectly, {bankName: string} can't undo the transaction.",
+            "checkBox": "{lnAddress: string} is the right address.",
+            "confirmButton": "I'm 100% sure"
+        },
+        "clipboardError": "Error getting value from clipboard"
+    },
     "SendBitcoinScreen": {
         "amount": "Montant",
         "amountExceed": "Le montant excède votre solde de {balance}",
@@ -545,6 +606,7 @@
     "SettingsScreen": {
         "activated": "Activé",
         "tapLogIn": "Appuyer pour vous connecter",
+        "addressScreen": "Receive payments using your {bankName: string} address or the merchants features",
         "tapUserName": "Appuyer pour définir le nom d'usager",
         "title": "Configurations",
         "csvTransactionsError": "Impossible d'exporter les transactions vers un fichier CSV. Une erreur s'est produite. Si le problème persiste, veuillez contacter le support technique.",
@@ -561,6 +623,12 @@
         "pt-BR": "Portuguese",
         "fr-CA": "Français Canada",
         "de-DE": "Allemand"
+    },
+    "StablesatsModal": {
+        "header": "With Stablesats, you now have a USD account added to your wallet!",
+        "body": "You can use it to send and receive Bitcoin, and instantly transfer value between your BTC and USD account. Value in the USD account will not fluctuate with the price of Bitcoin. This feature is not compatible with the traditional banking system.",
+        "termsAndConditions": "Read the Terms & Conditions.",
+        "learnMore": "Learn more about Stablesats"
     },
     "SplashScreen": {
         "update": "Votre application n'est plus à jour. Une mise à jour est nécessaire avant que l'application puisse être utilisée.\n\nCela peut être fait depuis le PlayStore pour Android et Testflight pour iOS"
@@ -622,6 +690,8 @@
         "backHome": "Retour à l'accueil",
         "bank": "Retour",
         "bankAccount": "Compte comptant",
+        "bankAdvice": "{bankName: string} Advice",
+        "bankInfo": "{bankName: string} Info",
         "bitcoin": "Bitcoin",
         "bitcoinPrice": "Prix Bitcoin",
         "btcAccount": "Compte Bitcoin",
@@ -630,6 +700,7 @@
         "confirm": "Confirmer",
         "convert": "Convertir",
         "csvExport": "Exporter les transactions sous format CSV",
+        "date": "Date",
         "description": "Description",
         "domain": "Domaine",
         "email": "Courriel",
@@ -655,6 +726,7 @@
         "needWallet": "Validez votre téléphone pour ouvrir votre portefeuille",
         "next": "Suivant",
         "No": "Non",
+        "note": "Note",
         "notification": "Notification",
         "ok": "OK",
         "openWallet": "Ouvrir Portefeuille",
