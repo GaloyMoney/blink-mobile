@@ -59,43 +59,24 @@ export const useAccountLimitsQuery = (): useAccountLimitsOutput => {
   const { data, loading, error, refetch } = useQuery(ACCOUNT_LIMITS_QUERY)
   const limits: accountLimitsData = data?.me?.defaultAccount?.limits
 
-  const [accountLimits, setAccountLimits] = React.useState<accountLimitsData[]>(null)
-
-  const withdrawalLimitsRef = React.useRef<accountLimitPeriod>(null)
-  const internalSendLimitsRef = React.useRef<accountLimitPeriod>(null)
-  const convertLimitsRef = React.useRef<accountLimitPeriod>(null)
-
-  if (error) {
-    crashlytics().recordError(error)
-  }
-
   React.useEffect(() => {
-    if (data) setAccountLimits([limits])
-  }, [data, limits])
+    if (error) {
+      crashlytics().recordError(error)
+    }
+  }, [error])
 
-  React.useMemo(
-    () =>
-      accountLimits?.map((data) => {
-        withdrawalLimitsRef.current = data.withdrawal.reduce(
-          (prev, curr) => ({ ...prev, [curr.__typename]: curr }),
-          {},
-        )
-        internalSendLimitsRef.current = data.internalSend.reduce(
-          (prev, curr) => ({ ...prev, [curr.__typename]: curr }),
-          {},
-        )
-        convertLimitsRef.current = data.convert.reduce(
-          (prev, curr) => ({ ...prev, [curr.__typename]: curr }),
-          {},
-        )
-        return { withdrawalLimitsRef, internalSendLimitsRef, convertLimitsRef }
-      }),
-    [accountLimits],
+  const withdrawalLimits: Readonly<accountLimitPeriod> = limits?.withdrawal.reduce(
+    (prev, curr) => ({ ...prev, [curr.__typename]: curr }),
+    {},
   )
-
-  const withdrawalLimits: Readonly<accountLimitPeriod> = withdrawalLimitsRef.current
-  const internalSendLimits: Readonly<accountLimitPeriod> = internalSendLimitsRef.current
-  const convertLimits: Readonly<accountLimitPeriod> = convertLimitsRef.current
+  const internalSendLimits: Readonly<accountLimitPeriod> = limits?.withdrawal.reduce(
+    (prev, curr) => ({ ...prev, [curr.__typename]: curr }),
+    {},
+  )
+  const convertLimits: Readonly<accountLimitPeriod> = limits?.withdrawal.reduce(
+    (prev, curr) => ({ ...prev, [curr.__typename]: curr }),
+    {},
+  )
 
   return {
     withdrawalLimits,
