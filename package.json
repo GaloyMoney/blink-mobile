@@ -91,6 +91,7 @@
     "react-native": "0.69.7",
     "react-native-countdown-circle-timer": "^3.0.9",
     "react-native-currency-input": "^1.0.1",
+    "react-native-currency-picker": "^1.0.5",
     "react-native-device-info": "^9.0.2",
     "react-native-elements": "^4.0.0-rc.2",
     "react-native-error-boundary": "^1.1.13",

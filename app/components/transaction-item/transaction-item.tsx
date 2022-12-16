@@ -10,12 +10,13 @@ import { palette } from "../../theme/palette"
 import { CompositeNavigationProp, ParamListBase } from "@react-navigation/native"
 import { prefCurrencyVar as primaryCurrencyVar } from "../../graphql/client-only-query"
 import { useHideBalance } from "../../hooks"
-import { satAmountDisplay, usdAmountDisplay } from "@app/utils/currencyConversion"
+import { satAmountDisplay } from "@app/utils/currencyConversion"
 import { GaloyGQL } from "@galoymoney/client"
 import { WalletCurrency } from "@app/types/amounts"
 import { WalletType } from "@app/utils/enum"
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs"
 import { TransactionDate } from "../transaction-date"
+import { LocalizationContext } from "@app/store/localization-context"
 
 const styles = EStyleSheet.create({
   container: {
@@ -117,7 +118,7 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
   const description = descriptionDisplay(tx)
   const usdAmount = computeUsdAmount(tx)
   const [txHideBalance, setTxHideBalance] = useState(hideBalance)
-
+  const { convertUsdToDisplayCurrency } = React.useContext(LocalizationContext)
   useEffect(() => {
     setTxHideBalance(hideBalance)
   }, [hideBalance])
@@ -168,7 +169,7 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
           >
             {primaryCurrency === "BTC" && tx.settlementCurrency === WalletCurrency.BTC
               ? satAmountDisplay(tx.settlementAmount)
-              : usdAmountDisplay(usdAmount)}
+              : convertUsdToDisplayCurrency(usdAmount)}
           </Text>
         )}
       </ListItem>
