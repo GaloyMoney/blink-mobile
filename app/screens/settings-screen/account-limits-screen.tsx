@@ -9,6 +9,7 @@ import { useAccountLimitsQuery } from "@app/hooks/use-account-limits"
 import { palette } from "@app/theme"
 import { WalletCurrency } from "@app/types/amounts"
 import { usdAmountDisplay } from "@app/utils/currencyConversion"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 const styles = EStyleSheet.create({
   container: {
@@ -78,6 +79,7 @@ const styles = EStyleSheet.create({
 export const TransactionTypeArray = ["BTC", "USD"] as const
 
 export const AccountLimitsScreen = () => {
+  const { LL } = useI18nContext()
   const { withdrawalLimits, internalSendLimits, convertLimits, loading, error, refetch } =
     useAccountLimitsQuery()
 
@@ -86,7 +88,7 @@ export const AccountLimitsScreen = () => {
       <Screen>
         <View style={styles.errorWrapper}>
           <Text adjustsFontSizeToFit style={styles.errorText}>
-            Unable to fetch limits at this time
+            {LL.AccountLimitsScreen.error()}
           </Text>
           <Button
             title="reload"
@@ -117,35 +119,37 @@ export const AccountLimitsScreen = () => {
             return (
               <View style={styles.container} key={index}>
                 <Text style={styles.header}>
-                  {txType === WalletCurrency.BTC ? "Bitcoin" : txType} transactions
+                  {txType === WalletCurrency.BTC
+                    ? LL.AccountLimitsScreen.bitcoinTransactions()
+                    : LL.AccountLimitsScreen.USDTransactions()}
                 </Text>
                 <View style={styles.content}>
                   <Text adjustsFontSizeToFit style={styles.valueFieldType}>
-                    Receive
+                    {LL.AccountLimitsScreen.receive()}
                   </Text>
                   <View style={styles.contentTextBox}>
                     <Text adjustsFontSizeToFit style={styles.valueRemaining}>
-                      Unlimited
+                      {LL.AccountLimitsScreen.unlimited()}
                     </Text>
                   </View>
                 </View>
                 <View style={styles.divider} />
                 <View style={styles.content}>
                   <Text adjustsFontSizeToFit style={styles.valueFieldType}>
-                    Withdraw
+                    {LL.AccountLimitsScreen.withdraw()}
                   </Text>
                   <View style={styles.contentTextBox}>
                     <Text adjustsFontSizeToFit style={styles.valueRemaining}>
                       {`${usdAmountDisplay(
                         Number(withdrawalLimits?.DailyAccountLimit.remainingLimit),
                         0,
-                      )} remaining`}
+                      )} ${LL.AccountLimitsScreen.remaining().toLocaleLowerCase()}`}
                     </Text>
                     <Text adjustsFontSizeToFit style={styles.valueTotal}>
                       {`${usdAmountDisplay(
                         Number(withdrawalLimits?.DailyAccountLimit.totalLimit),
                         0,
-                      )} per day`}
+                      )} ${LL.AccountLimitsScreen.perDay()}`}
                     </Text>
                   </View>
                   <View style={styles.contentTextBox}>
@@ -153,27 +157,27 @@ export const AccountLimitsScreen = () => {
                       {`${usdAmountDisplay(
                         Number(withdrawalLimits?.WeeklyAccountLimit.remainingLimit),
                         0,
-                      )} remaining`}
+                      )} ${LL.AccountLimitsScreen.remaining().toLocaleLowerCase()}`}
                     </Text>
                     <Text adjustsFontSizeToFit style={styles.valueTotal}>
                       {`${usdAmountDisplay(
                         Number(withdrawalLimits?.WeeklyAccountLimit.totalLimit),
                         0,
-                      )} per week`}
+                      )} ${LL.AccountLimitsScreen.perWeek()}`}
                     </Text>
                   </View>
                 </View>
                 <View style={styles.divider} />
                 <View style={styles.content}>
                   <Text adjustsFontSizeToFit style={styles.valueFieldType}>
-                    Send to BBW User
+                    {LL.AccountLimitsScreen.internalSend()}
                   </Text>
                   <View style={styles.contentTextBox}>
                     <Text adjustsFontSizeToFit style={styles.valueRemaining}>
                       {`${usdAmountDisplay(
                         Number(internalSendLimits?.DailyAccountLimit.remainingLimit),
                         0,
-                      )} remaining`}
+                      )} ${LL.AccountLimitsScreen.remaining().toLocaleLowerCase()}`}
                     </Text>
                     <Text adjustsFontSizeToFit style={styles.valueTotal}>
                       {`${usdAmountDisplay(
@@ -187,13 +191,13 @@ export const AccountLimitsScreen = () => {
                       {`${usdAmountDisplay(
                         Number(internalSendLimits?.WeeklyAccountLimit.remainingLimit),
                         0,
-                      )} remaining`}
+                      )} ${LL.AccountLimitsScreen.remaining().toLocaleLowerCase()}`}
                     </Text>
                     <Text adjustsFontSizeToFit style={styles.valueTotal}>
                       {`${usdAmountDisplay(
                         Number(internalSendLimits?.WeeklyAccountLimit.totalLimit),
                         0,
-                      )} per week`}
+                      )} ${LL.AccountLimitsScreen.perWeek()}`}
                     </Text>
                   </View>
                 </View>
@@ -201,20 +205,20 @@ export const AccountLimitsScreen = () => {
                 {txType === WalletCurrency.USD ? (
                   <View style={styles.content}>
                     <Text adjustsFontSizeToFit style={styles.valueFieldType}>
-                      Convert to Stablesat
+                      {LL.AccountLimitsScreen.convertToStablesat()}
                     </Text>
                     <View style={styles.contentTextBox}>
                       <Text adjustsFontSizeToFit style={styles.valueRemaining}>
                         {`${usdAmountDisplay(
                           Number(convertLimits?.DailyAccountLimit.remainingLimit),
                           0,
-                        )} remaining`}
+                        )} ${LL.AccountLimitsScreen.remaining().toLocaleLowerCase()}`}
                       </Text>
                       <Text adjustsFontSizeToFit style={styles.valueTotal}>
                         {`${usdAmountDisplay(
                           Number(convertLimits?.DailyAccountLimit.totalLimit),
                           0,
-                        )} per day`}
+                        )} ${LL.AccountLimitsScreen.perDay()}`}
                       </Text>
                     </View>
                     <View style={styles.contentTextBox}>
@@ -222,13 +226,13 @@ export const AccountLimitsScreen = () => {
                         {`${usdAmountDisplay(
                           Number(convertLimits?.WeeklyAccountLimit.remainingLimit),
                           0,
-                        )} remaining`}
+                        )} ${LL.AccountLimitsScreen.remaining().toLocaleLowerCase()}`}
                       </Text>
                       <Text adjustsFontSizeToFit style={styles.valueTotal}>
                         {`${usdAmountDisplay(
                           Number(convertLimits?.WeeklyAccountLimit.totalLimit),
                           0,
-                        )} per week`}
+                        )} ${LL.AccountLimitsScreen.perWeek()}`}
                       </Text>
                     </View>
                   </View>

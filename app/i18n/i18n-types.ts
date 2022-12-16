@@ -140,6 +140,52 @@ type RootTranslation = {
 		 */
 		usePin: string
 	}
+	AccountLimitsScreen: {
+		/**
+		 * Bitcoin transactions
+		 */
+		bitcoinTransactions: string
+		/**
+		 * USD transactions
+		 */
+		USDTransactions: string
+		/**
+		 * Receive
+		 */
+		receive: string
+		/**
+		 * Withdraw
+		 */
+		withdraw: string
+		/**
+		 * per day
+		 */
+		perDay: string
+		/**
+		 * per week
+		 */
+		perWeek: string
+		/**
+		 * Unlimited
+		 */
+		unlimited: string
+		/**
+		 * Remaining
+		 */
+		remaining: string
+		/**
+		 * Convert to Stablesat
+		 */
+		convertToStablesat: string
+		/**
+		 * Send to BBW user
+		 */
+		internalSend: string
+		/**
+		 * Unable to fetch limits at this time
+		 */
+		error: string
+	}
 	BalanceHeader: {
 		/**
 		 * Current Balance
@@ -2300,6 +2346,10 @@ type RootTranslation = {
 		 */
 		account: string
 		/**
+		 * Account Limits
+		 */
+		accountLimits: string
+		/**
 		 * Activate Wallet
 		 */
 		activateWallet: string
@@ -2829,6 +2879,52 @@ export type TranslationFunctions = {
 		 * Use PIN
 		 */
 		usePin: () => LocalizedString
+	}
+	AccountLimitsScreen: {
+		/**
+		 * Bitcoin transactions
+		 */
+		bitcoinTransactions: () => LocalizedString
+		/**
+		 * USD transactions
+		 */
+		USDTransactions: () => LocalizedString
+		/**
+		 * Receive
+		 */
+		receive: () => LocalizedString
+		/**
+		 * Withdraw
+		 */
+		withdraw: () => LocalizedString
+		/**
+		 * per day
+		 */
+		perDay: () => LocalizedString
+		/**
+		 * per week
+		 */
+		perWeek: () => LocalizedString
+		/**
+		 * Unlimited
+		 */
+		unlimited: () => LocalizedString
+		/**
+		 * Remaining
+		 */
+		remaining: () => LocalizedString
+		/**
+		 * Convert to Stablesat
+		 */
+		convertToStablesat: () => LocalizedString
+		/**
+		 * Send to BBW user
+		 */
+		internalSend: () => LocalizedString
+		/**
+		 * Unable to fetch limits at this time
+		 */
+		error: () => LocalizedString
 	}
 	BalanceHeader: {
 		/**
@@ -4955,13 +5051,13 @@ export type TranslationFunctions = {
 	}
 	common: {
 		/**
-		 * Account Limits
-		 */
-    	accountLimits(): LocalizedString
-		/**
 		 * Account
 		 */
 		account: () => LocalizedString
+		/**
+		 * Account Limits
+		 */
+		accountLimits: () => LocalizedString
 		/**
 		 * Activate Wallet
 		 */
