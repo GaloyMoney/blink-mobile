@@ -4955,6 +4955,10 @@ export type TranslationFunctions = {
 	}
 	common: {
 		/**
+		 * Account Limits
+		 */
+    	accountLimits(): LocalizedString
+		/**
 		 * Account
 		 */
 		account: () => LocalizedString

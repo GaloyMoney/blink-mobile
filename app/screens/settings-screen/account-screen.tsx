@@ -60,6 +60,15 @@ export const AccountScreen = ({ navigation }: Props) => {
 
   const accountSettingsList: SettingRow[] = [
     {
+      category: LL.common.accountLimits(),
+      id: "limits",
+      icon: "",
+      action: () => navigation.navigate("accountLimitsScreen"),
+      enabled: hasToken,
+      greyed: !hasToken,
+      hidden: !hasToken,
+    },
+    {
       category: LL.common.logout(),
       id: "logout",
       icon: "ios-log-out",

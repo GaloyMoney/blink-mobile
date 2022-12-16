@@ -702,6 +702,7 @@ const en: BaseTranslation = {
   },
   common: {
     account: "Account",
+    accountLimits: "Account Limits",
     activateWallet: "Activate Wallet",
     amountRequired: "Amount is required",
     back: "Back",

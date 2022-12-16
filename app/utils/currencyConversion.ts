@@ -111,10 +111,15 @@ const addDecimalToNumber = (number: string, separator: string) => {
   return integerDigits + separator + fractionDigits
 }
 
-export const usdAmountDisplay = (amount: number): string =>
+export const usdAmountDisplay = (amount: number, precision?: number): string =>
   currencyFmt
     .default(amount, {
-      precision: Math.abs(amount) < 0.01 && amount !== 0 ? 4 : 2,
+      precision:
+        precision === 0
+          ? null
+          : precision ?? (Math.abs(amount) < 0.01 && amount !== 0)
+          ? 4
+          : 2,
       separator: ",",
       symbol: "$",
     })
