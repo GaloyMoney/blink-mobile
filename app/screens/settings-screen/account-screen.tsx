@@ -62,7 +62,7 @@ export const AccountScreen = ({ navigation }: Props) => {
     {
       category: LL.common.accountLimits(),
       id: "limits",
-      icon: "",
+      icon: "custom-info-icon",
       action: () => navigation.navigate("accountLimitsScreen"),
       enabled: hasToken,
       greyed: !hasToken,

@@ -16,8 +16,7 @@ const styles = EStyleSheet.create({
     marginTop: 10,
   },
   limitWrapper: {
-    paddingTop: 20,
-    paddingBottom: 20,
+    marginBottom: 10,
   },
   header: {
     paddingLeft: 20,
@@ -114,10 +113,10 @@ export const AccountLimitsScreen = () => {
   return (
     <ScrollView>
       <Screen>
-        <View style={styles.limitWrapper}>
+        <View style={styles.container}>
           {TransactionTypeArray.map((txType, index: number) => {
             return (
-              <View style={styles.container} key={index}>
+              <View style={styles.limitWrapper} key={index}>
                 <Text style={styles.header}>
                   {txType === WalletCurrency.BTC
                     ? LL.AccountLimitsScreen.bitcoinTransactions()
