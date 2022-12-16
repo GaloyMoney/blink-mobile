@@ -16,7 +16,7 @@ import { PersistentStateProvider } from "./app/store/persistent-state"
 /**
  * This needs to match what's found in your app_delegate.m and MainActivity.java.
  */
-const APP_NAME = "PuraVida Bitcoin"
+const APP_NAME = "GaloyApp"
 
 // Should we show storybook instead of our app?
 //

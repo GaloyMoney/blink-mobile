@@ -307,7 +307,6 @@
 				94231985FB9080C37DCDD8D7 /* [CP-User] [RNFB] Core Configuration */,
 				DA3B94DA02E4512EB6147B52 /* [CP-User] [RNFB] Crashlytics Configuration */,
 				C655A53423D256CE008ACDDA /* ShellScript */,
-				3E784E38A97E98AB5AFC0F0B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -424,28 +423,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		3E784E38A97E98AB5AFC0F0B /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-GaloyApp/Pods-GaloyApp-frameworks.sh",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/Flipper-DoubleConversion/double-conversion.framework/double-conversion",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/Flipper-Glog/glog.framework/glog",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenSSL-Universal/OpenSSL.framework/OpenSSL",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/double-conversion.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/glog.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenSSL.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GaloyApp/Pods-GaloyApp-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		44548BFCF0198A3451F79130 /* [CP] Copy Pods Resources */ = {
@@ -610,7 +587,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.puravidabitcoin.app;
-				PRODUCT_NAME = "PuravidaBitcoin";
+				PRODUCT_NAME = PuravidaBitcoin;
 				PROVISIONING_PROFILE_SPECIFIER = "match Development io.galoy.bitcoinbeach";
 				SWIFT_OBJC_BRIDGING_HEADER = "GaloyApp-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -642,7 +619,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.puravidabitcoin.app;
-				PRODUCT_NAME = "PuravidaBitcoin";
+				PRODUCT_NAME = PuravidaBitcoin;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "GaloyApp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
