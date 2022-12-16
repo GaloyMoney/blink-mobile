@@ -52,6 +52,9 @@ module.exports = {
       "|@rneui" +
       "|rn-qr-generator" +
       "|react-native-image-crop-picker" +
+      "|react-native-currency-picker" +
+      "|react-native-status-bar-height" +
+      "|react-native-auto-height-image" +
       ")/)",
   ],
 }
