@@ -104,17 +104,6 @@ platform :android do
     sh("GALOY_TOKEN=$GALOY_TOKEN && GALOY_TOKEN_2=$GALOY_TOKEN_2 && yarn test:browserstack:android")
   end
 
-    gradle(
-      task: "assemble",
-      build_type: "Release",
-      print_command: false,
-      properties: {
-          "RELEASE_STORE_PASSWORD" => store_password
-      },
-      flags: "--no-daemon --max-workers=8 --stacktrace --info"
-    )
-  end
-
   desc "Deploy a new version to Firebase"
   lane :firebase do
   #  build_apk
@@ -162,6 +151,7 @@ platform :android do
     # sh "your_script.sh"
     # You can also use other beta testing services here
   end 
+
   desc "Create Release APK"
   lane :build_apk do
     increment_build

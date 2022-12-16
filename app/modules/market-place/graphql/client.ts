@@ -1,27 +1,15 @@
 import {
   ApolloClient,
-  ApolloLink,
   DefaultOptions,
   from,
-  HttpLink,
   InMemoryCache,
-  fromPromise,
 } from "@apollo/client"
 
-import { getMainDefinition } from "@apollo/client/utilities"
 import { setContext } from "@apollo/client/link/context"
 import { onError } from "@apollo/client/link/error"
 import { createUploadLink } from "apollo-upload-client"
-import { scriptHostname } from "../utils/helper"
+import { GRAPHQL_MARKET_PLACE_URI } from "../config"
 
-const attemps = 0
-const GRAPHQL_REGTEST_URI = `http://${scriptHostname()}:4002/graphql`
-const GRAPHQL_TESTNET_URI = "https://api.pvbtc1.staging.pvbtc.cloud/graphql"
-const GRAPHQL_MAINNET_URI = "https://api.production.pvbtc.cloud/graphql"
-
-const GRAPHQL_REGTEST_WS_URI = `ws://${scriptHostname()}:4002/graphql`
-const GRAPHQL_TESTNET_WS_URI = "wss://api.pvbtc1.staging.pvbtc.cloud/graphql"
-const GRAPHQL_MAINNET_WS_URI = "wss://api.production.pvbtc.cloud/graphql"
 const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
   if (graphQLErrors)
     graphQLErrors.forEach(async ({ message, locations, path }) => {
@@ -34,7 +22,7 @@ const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
     })
   if (networkError) console.log(`[Network error]: ${networkError}`)
 })
-const httpLink = createUploadLink({ uri: "https://api-puravida.herokuapp.com/graphql" })
+const httpLink = createUploadLink({ uri: GRAPHQL_MARKET_PLACE_URI })
 // new HttpLink({
 //   uri: `https://api-puravida.herokuapp.com/graphql`,
 // })

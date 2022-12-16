@@ -26,7 +26,7 @@ import EyeOffSvg from "@app/modules/market-place/assets/svgs/eye-off.svg"
 import EyeOnSvg from "@app/modules/market-place/assets/svgs/eye-on.svg"
 import LocationMarkerSvg from "@app/modules/market-place/assets/svgs/location-marker.svg"
 import { RouteProp, useRoute } from "@react-navigation/native"
-import { createPost, createTag } from "@app/modules/market-place/graphql"
+
 import { LoadingComponent } from "@app/modules/market-place/components/loading-component"
 import { clearTempStore } from "@app/modules/market-place/redux/reducers/store-reducer"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
@@ -37,6 +37,8 @@ import { Row } from "../../components/row"
 import { fontSize, typography } from "../../theme/typography"
 import { getLocation, openMap } from "../../utils/helper"
 import { CreatePostSuccessModal } from "../../components/create-post-success-modal"
+import { createPost, createTag } from "../../graphql"
+
 const { width, height } = Dimensions.get("window")
 interface Props {
   navigation: StackNavigationProp<MarketPlaceParamList>

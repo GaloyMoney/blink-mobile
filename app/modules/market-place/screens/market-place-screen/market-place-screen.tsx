@@ -43,24 +43,18 @@ export const MarketPlace = ({ navigation }: Props) => {
 
   const { LL: t } = useI18nContext()
   const dispatch = useDispatch()
+
+  const goesToStoreList = () => navigation.navigate("StoreList")
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Screen style={styles.screenContainer}>
         <View style={styles.contentContainer}>
           <Pressable
-            onPress={() => {
-              console.log('going to store list');
-              
-              navigation.navigate("StoreList")
-            }}
+            onPress={goesToStoreList}
           >
 
             <Row containerStyle={styles.rowContainer}>
-              {/* <TextInput
-                style={styles.searchText}
-                placeholder={t.marketPlace.search()}
-                editable={false}
-              /> */}
               <Text style={styles.searchText}>{t.marketPlace.search()}</Text>
               <FilterSvg />
             </Row>
@@ -123,7 +117,8 @@ const styles = StyleSheet.create({
     flex: 1,
     fontFamily: typography.regular,
     fontSize: fontSize.font22,
-    color:"#9499A5"
+    color:"#9499A5",
+    paddingVertical: Platform.OS == "android" ? 10 : 0
   },
   rowContainer: {
     borderRadius: 20,

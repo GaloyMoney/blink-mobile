@@ -28,12 +28,13 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { setTempPost } from "@app/modules/market-place/redux/reducers/store-reducer"
 
 import { ReactNativeFile } from "apollo-upload-client"
-import { gql, useMutation } from "@apollo/client"
-import { uploadImage } from "@app/modules/market-place/graphql"
+import { gql } from "@apollo/client"
+
 import { LoadingComponent } from "@app/modules/market-place/components/loading-component"
 import { HeaderComponent } from "../../components/header"
 import { fontSize, typography } from "../../theme/typography"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { uploadImage } from "../../graphql"
 const { width, height } = Dimensions.get("window")
 const IMAGE_WIDTH = width - 32 * 2
 const IMAGE_HEIGHT = IMAGE_WIDTH * 0.635
