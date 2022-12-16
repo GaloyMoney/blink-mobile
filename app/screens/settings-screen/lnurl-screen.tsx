@@ -14,7 +14,7 @@ import { GALOY_PAY_DOMAIN } from "../../config/support"
 
 import { bech32 } from "bech32"
 import QRCode from "react-native-qrcode-svg"
-import { Button, Text } from "react-native-elements"
+import { Button, Text } from "@rneui/themed"
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 import { color } from "@app/theme"
 import { toastShow } from "@app/utils/toast"

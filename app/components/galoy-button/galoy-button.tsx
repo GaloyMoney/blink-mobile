@@ -1,7 +1,7 @@
 import React from "react"
 import { palette } from "@app/theme"
 import { View, ViewStyle } from "react-native"
-import { Button } from "react-native-elements"
+import { Button } from "@rneui/themed"
 import EStyleSheet from "react-native-extended-stylesheet"
 
 type GaloyButtonProps = {

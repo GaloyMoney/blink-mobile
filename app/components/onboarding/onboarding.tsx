@@ -1,6 +1,6 @@
 import * as React from "react"
 import { StyleSheet, Text, View } from "react-native"
-import { Button } from "react-native-elements"
+import { Button } from "@rneui/themed"
 import { testProps } from "../../../utils/testProps"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"

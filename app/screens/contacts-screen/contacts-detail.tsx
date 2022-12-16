@@ -1,6 +1,6 @@
 import * as React from "react"
 import { View } from "react-native"
-import { Input, Text } from "react-native-elements"
+import { Input, Text } from "@rneui/themed"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 import { CloseCross } from "../../components/close-cross"

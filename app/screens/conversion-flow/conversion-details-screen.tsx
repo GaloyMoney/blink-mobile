@@ -3,7 +3,7 @@ import { ActivityIndicator, Platform, Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { ScrollView, TouchableWithoutFeedback } from "react-native-gesture-handler"
 import { FakeCurrencyInput } from "react-native-currency-input"
-import { Button } from "react-native-elements"
+import { Button } from "@rneui/themed"
 
 import { color, palette } from "@app/theme"
 import useMainQuery from "@app/hooks/use-main-query"
