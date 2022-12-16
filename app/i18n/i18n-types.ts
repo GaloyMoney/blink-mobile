@@ -6,6 +6,7 @@ export type BaseTranslation = BaseTranslationType
 export type BaseLocale = 'en'
 
 export type Locales =
+	| 'de'
 	| 'en'
 	| 'es'
 	| 'fr-CA'
@@ -100,6 +101,18 @@ type RootTranslation = {
 	Share your link. They can pin it to their homescreen and generate Lightning invoices on your behalf. The payments collected using the Cash Register will be sent directly to your Bitcoin Beach Wallet.
 		 */
 		howToUseYourCashRegisterExplainer: string
+		/**
+		 * Default Wallet
+		 */
+		defaultWallet: string
+		/**
+		 * What is the default wallet?
+		 */
+		whatIsDefaultWalletTitle: string
+		/**
+		 * Your default wallet is the wallet that will be used when receiving payments through the POS. You can change it at any time here in the settings.
+		 */
+		whatIsDefaultWalletDescription: string
 	}
 	AuthenticationScreen: {
 		/**
@@ -1477,24 +1490,6 @@ type RootTranslation = {
 		 */
 		title: string
 	}
-	ModalClipboard: {
-		/**
-		 * Dismiss
-		 */
-		dismiss: string
-		/**
-		 * Open
-		 */
-		open: string
-		/**
-		 * You have a Bitcoin address in your clipboard
-		 */
-		pendingBitcoin: string
-		/**
-		 * You have a Lightning Invoice in your clipboard
-		 */
-		pendingInvoice: string
-	}
 	MoveMoneyScreen: {
 		/**
 		 * Receive
@@ -1965,6 +1960,10 @@ type RootTranslation = {
 			 */
 			confirmButton: string
 		}
+		/**
+		 * Error getting value from clipboard
+		 */
+		clipboardError: string
 	}
 	SendBitcoinScreen: {
 		/**
@@ -2105,6 +2104,10 @@ type RootTranslation = {
 		 * French (Canada)
 		 */
 		'fr-CA': string
+		/**
+		 * German
+		 */
+		'de-DE': string
 	}
 	StablesatsModal: {
 		/**
@@ -2655,17 +2658,6 @@ type RootTranslation = {
 			title: string
 		}
 	}
-	tippingLink: {
-		/**
-		 * Want to receive tips? Share your tipping link!
-		 */
-		title: string
-		/**
-		 * {data} saved to clipboard
-		 * @param {string} data
-		 */
-		copied: RequiredParams<'data'>
-	}
 	support: {
 		/**
 		 * Need help?  Contact us.
@@ -2799,6 +2791,18 @@ export type TranslationFunctions = {
 	Share your link. They can pin it to their homescreen and generate Lightning invoices on your behalf. The payments collected using the Cash Register will be sent directly to your Bitcoin Beach Wallet.
 		 */
 		howToUseYourCashRegisterExplainer: () => LocalizedString
+		/**
+		 * Default Wallet
+		 */
+		defaultWallet: () => LocalizedString
+		/**
+		 * What is the default wallet?
+		 */
+		whatIsDefaultWalletTitle: () => LocalizedString
+		/**
+		 * Your default wallet is the wallet that will be used when receiving payments through the POS. You can change it at any time here in the settings.
+		 */
+		whatIsDefaultWalletDescription: () => LocalizedString
 	}
 	AuthenticationScreen: {
 		/**
@@ -4172,24 +4176,6 @@ export type TranslationFunctions = {
 		 */
 		title: () => LocalizedString
 	}
-	ModalClipboard: {
-		/**
-		 * Dismiss
-		 */
-		dismiss: () => LocalizedString
-		/**
-		 * Open
-		 */
-		open: () => LocalizedString
-		/**
-		 * You have a Bitcoin address in your clipboard
-		 */
-		pendingBitcoin: () => LocalizedString
-		/**
-		 * You have a Lightning Invoice in your clipboard
-		 */
-		pendingInvoice: () => LocalizedString
-	}
 	MoveMoneyScreen: {
 		/**
 		 * Receive
@@ -4640,6 +4626,10 @@ export type TranslationFunctions = {
 			 */
 			confirmButton: () => LocalizedString
 		}
+		/**
+		 * Error getting value from clipboard
+		 */
+		clipboardError: () => LocalizedString
 	}
 	SendBitcoinScreen: {
 		/**
@@ -4778,6 +4768,10 @@ export type TranslationFunctions = {
 		 * French (Canada)
 		 */
 		'fr-CA': () => LocalizedString
+		/**
+		 * German
+		 */
+		'de-DE': () => LocalizedString
 	}
 	StablesatsModal: {
 		/**
@@ -5319,16 +5313,6 @@ export type TranslationFunctions = {
 			 */
 			title: () => LocalizedString
 		}
-	}
-	tippingLink: {
-		/**
-		 * Want to receive tips? Share your tipping link!
-		 */
-		title: () => LocalizedString
-		/**
-		 * {data} saved to clipboard
-		 */
-		copied: (arg: { data: string }) => LocalizedString
 	}
 	support: {
 		/**

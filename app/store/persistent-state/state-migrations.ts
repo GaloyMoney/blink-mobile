@@ -31,8 +31,29 @@ type _PersistentState_3 = {
   theme?: Theme
 }
 
-const migrate3ToCurrent = (state: _PersistentState_3): Promise<PersistentState> =>
+type _PersistentState_4 = {
+  schemaVersion: 4
+  hasShownStableSatsWelcome: boolean
+  isUsdDisabled: boolean
+  galoyInstance: GaloyInstance
+  galoyAuthToken: string
+  isAnalyticsEnabled: boolean
+  theme?: Theme
+}
+
+const migrate4ToCurrent = (state: _PersistentState_4): Promise<PersistentState> =>
   Promise.resolve(state)
+
+const migrate3ToCurrent = (state: _PersistentState_3): Promise<PersistentState> => {
+  const newGaloyInstance = GALOY_INSTANCES.find(
+    (instance) => instance.name === state.galoyInstance.name,
+  )
+  return migrate4ToCurrent({
+    ...state,
+    galoyInstance: newGaloyInstance,
+    schemaVersion: 4,
+  })
+}
 
 const migrate2ToCurrent = async (state: _PersistentState_2): Promise<PersistentState> => {
   const LEGACY_TOKEN_KEY = "GaloyToken"
@@ -40,15 +61,17 @@ const migrate2ToCurrent = async (state: _PersistentState_2): Promise<PersistentS
 
   if (token && decodeToken(token)) {
     const { network } = decodeToken(token)
-    const galoyInstance = GALOY_INSTANCES.find((instance) => instance.network === network)
-    if (galoyInstance) {
-      return migrate3ToCurrent({
-        ...state,
-        schemaVersion: 3,
-        galoyInstance,
-        galoyAuthToken: token,
-        isAnalyticsEnabled: true,
-      })
+    if (network === "mainnet") {
+      const galoyInstance = GALOY_INSTANCES.find((instance) => instance.name === "BBW")
+      if (galoyInstance) {
+        return migrate3ToCurrent({
+          ...state,
+          schemaVersion: 3,
+          galoyInstance,
+          galoyAuthToken: token,
+          isAnalyticsEnabled: true,
+        })
+      }
     }
   }
 
@@ -82,6 +105,7 @@ type StateMigrations = {
   1: (state: _PersistentState_1) => Promise<PersistentState>
   2: (state: _PersistentState_2) => Promise<PersistentState>
   3: (state: _PersistentState_3) => Promise<PersistentState>
+  4: (state: _PersistentState_4) => Promise<PersistentState>
 }
 
 const stateMigrations: StateMigrations = {
@@ -89,12 +113,13 @@ const stateMigrations: StateMigrations = {
   1: migrate1ToCurrent,
   2: migrate2ToCurrent,
   3: migrate3ToCurrent,
+  4: migrate4ToCurrent,
 }
 
-export type PersistentState = _PersistentState_3
+export type PersistentState = _PersistentState_4
 
 export const defaultPersistentState: PersistentState = {
-  schemaVersion: 3,
+  schemaVersion: 4,
   hasShownStableSatsWelcome: false,
   isUsdDisabled: false,
   galoyInstance: GALOY_INSTANCES.find((instance) => instance.name === "BBW"),
@@ -111,7 +136,9 @@ export const deserializeAndMigratePersistentState = async (
     try {
       const migration = stateMigrations[data.schemaVersion]
       const persistentState = (await migration(data)) as PersistentState
-      return persistentState
+      if (persistentState) {
+        return persistentState
+      }
     } catch {}
   }
 

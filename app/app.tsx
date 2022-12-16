@@ -253,7 +253,7 @@ export const App = (): JSX.Element => {
       setApolloClient(client)
     }
     fn()
-  }, [appConfig.galoyInstance, token, saveToken, hasToken])
+  }, [appConfig.galoyInstance, token, hasToken, saveToken])
 
   // Before we show the app, we have to wait for our state to be ready.
   // In the meantime, don't render anything. This will be the background
@@ -305,36 +305,36 @@ export const App = (): JSX.Element => {
     <AuthenticationContext.Provider value={{ isAppLocked, setAppUnlocked, setAppLocked }}>
       <ApolloProvider client={apolloClient}>
         <Provider store={store}>
-          <PriceContextProvider>
-            <TypesafeI18n locale={customLocaleDetector()}>
-              <LocalizationContextProvider>
-                <ErrorBoundary FallbackComponent={ErrorScreen}>
-                  <NavigationContainer
-                    linking={linking}
-                    onStateChange={(state) => {
-                      const currentRouteName = getActiveRouteName(state)
+        <PriceContextProvider>
+          <TypesafeI18n locale={customLocaleDetector()}>
+            <LocalizationContextProvider>
+              <ErrorBoundary FallbackComponent={ErrorScreen}>
+                <NavigationContainer
+                  linking={linking}
+                  onStateChange={(state) => {
+                    const currentRouteName = getActiveRouteName(state)
 
-                      if (routeName.current !== currentRouteName) {
-                        // analytics().logScreenView({
-                        //   screen_name: currentRouteName,
-                        //   screen_class: currentRouteName,
-                        // })
-                        console.log("route: ", currentRouteName)
+                    if (routeName.current !== currentRouteName && currentRouteName) {
+                      // analytics().logScreenView({
+                      //   screen_name: currentRouteName + "Manual",
+                      //   screen_class: currentRouteName + "Manual",
+                      // })
+                      routeName.current = currentRouteName
 
-                        routeName.current = currentRouteName
-                      }
-                    }}
-                  >
-                    <RootSiblingParent>
-                      <GlobalErrorToast />
-                      <RootStack />
-                      <Toast />
-                    </RootSiblingParent>
-                  </NavigationContainer>
-                </ErrorBoundary>
-              </LocalizationContextProvider>
-            </TypesafeI18n>
-          </PriceContextProvider>
+                      console.log("route: ", currentRouteName)
+                    }
+                  }}
+                >
+                  <RootSiblingParent>
+                    <GlobalErrorToast />
+                    <RootStack />
+                    <Toast />
+                  </RootSiblingParent>
+                </NavigationContainer>
+              </ErrorBoundary>
+            </LocalizationContextProvider>
+          </TypesafeI18n>
+        </PriceContextProvider>
         </Provider>
       </ApolloProvider>
     </AuthenticationContext.Provider>

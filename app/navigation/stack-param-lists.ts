@@ -101,14 +101,14 @@ export type RootStackParamList = {
   transactionDetail: TransactionDetail
   transactionHistory: undefined
   Earn: undefined
-
+  accountScreen: undefined
   PostDetail: { editable?: boolean; storeInfor: PostAttributes }
   StoreListView: { searchText: string }
   StoreList: undefined
 }
 
 export type ContactStackParamList = {
-  Contacts: undefined
+  contactList: undefined
   contactDetail: { contact: contacts_me_contacts }
   phoneValidation: undefined
   sendBitcoinDestination: { username: string }

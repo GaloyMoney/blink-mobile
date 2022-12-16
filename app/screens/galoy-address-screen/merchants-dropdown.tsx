@@ -13,6 +13,7 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import { PayCodeExplainerModal } from "./paycode-explainer-modal"
 import { PosExplainerModal } from "./pos-explainer-modal"
+import { SetDefaultWallet } from "./set-default-wallet"
 
 const styles = EStyleSheet.create({
   title: {
@@ -30,7 +31,7 @@ const styles = EStyleSheet.create({
     marginTop: 32,
   },
   fieldNameContainer: {
-    flex: 4,
+    flex: 1,
     flexDirection: "row",
   },
   fieldNameComponent: {
@@ -66,6 +67,9 @@ const styles = EStyleSheet.create({
   visualBugFix: {
     height: 30,
   },
+  modalToggleContainer: {
+    flex: 4,
+  },
 })
 
 export const MerchantsDropdown = ({ username }: { username: string }) => {
@@ -90,24 +94,25 @@ export const MerchantsDropdown = ({ username }: { username: string }) => {
   const dropdownContent = (
     <View>
       <View style={styles.fieldContainer}>
-        <TouchableWithoutFeedback
-          style={styles.visualBugFix}
-          onPress={() => togglePosExplainerModal()}
-        >
-          <View style={styles.fieldNameContainer}>
-            <View style={styles.fieldNameComponent}>
-              <View style={styles.fieldText}>
-                <CustomIcon name="custom-info-icon" color={palette.lapisLazuli} />
+        <View style={styles.modalToggleContainer}>
+          <TouchableWithoutFeedback
+            style={styles.visualBugFix}
+            onPress={() => togglePosExplainerModal()}
+          >
+            <View style={styles.fieldNameContainer}>
+              <View style={styles.fieldNameComponent}>
+                <View style={styles.fieldText}>
+                  <CustomIcon name="custom-info-icon" color={palette.lapisLazuli} />
+                </View>
+              </View>
+              <View style={styles.fieldNameComponent}>
+                <Text style={styles.fieldText} numberOfLines={2}>
+                  {" " + LL.GaloyAddressScreen.yourCashRegister()}
+                </Text>
               </View>
             </View>
-            <View style={styles.fieldNameComponent}>
-              <Text style={styles.fieldText}>
-                {" " + LL.GaloyAddressScreen.yourCashRegister()}
-              </Text>
-            </View>
-          </View>
-        </TouchableWithoutFeedback>
-
+          </TouchableWithoutFeedback>
+        </View>
         <View style={styles.iconContainer}>
           <TouchableWithoutFeedback onPress={() => Linking.openURL(posUrl)}>
             <Text style={styles.copyIcon}>
@@ -147,23 +152,25 @@ export const MerchantsDropdown = ({ username }: { username: string }) => {
         </Text>
       </View>
       <View style={styles.fieldContainer}>
-        <TouchableWithoutFeedback
-          style={styles.visualBugFix}
-          onPress={() => togglePaycodeExplainerModal()}
-        >
-          <View style={styles.fieldNameContainer}>
-            <View style={styles.fieldNameComponent}>
-              <View style={styles.fieldText}>
-                <CustomIcon name="custom-info-icon" color={palette.lapisLazuli} />
+        <View style={styles.modalToggleContainer}>
+          <TouchableWithoutFeedback
+            style={styles.visualBugFix}
+            onPress={() => togglePaycodeExplainerModal()}
+          >
+            <View style={styles.fieldNameContainer}>
+              <View style={styles.fieldNameComponent}>
+                <View style={styles.fieldText}>
+                  <CustomIcon name="custom-info-icon" color={palette.lapisLazuli} />
+                </View>
+              </View>
+              <View style={styles.fieldNameComponent}>
+                <Text style={styles.fieldText}>
+                  {" " + LL.GaloyAddressScreen.yourPaycode()}
+                </Text>
               </View>
             </View>
-            <View style={styles.fieldNameComponent}>
-              <Text style={styles.fieldText}>
-                {" " + LL.GaloyAddressScreen.yourPaycode()}
-              </Text>
-            </View>
-          </View>
-        </TouchableWithoutFeedback>
+          </TouchableWithoutFeedback>
+        </View>
         <View style={styles.iconContainer}>
           <TouchableWithoutFeedback onPress={() => Linking.openURL(payCodeUrl)}>
             <Text style={styles.copyIcon}>
@@ -202,6 +209,7 @@ export const MerchantsDropdown = ({ username }: { username: string }) => {
           {payCodeUrl}
         </Text>
       </View>
+      <SetDefaultWallet />
       <PosExplainerModal
         modalVisible={isPosExplainerModalOpen}
         toggleModal={togglePosExplainerModal}

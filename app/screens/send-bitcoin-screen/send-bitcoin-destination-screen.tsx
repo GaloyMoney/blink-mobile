@@ -34,7 +34,11 @@ import {
   InvalidOnchainDestinationReason,
 } from "@galoymoney/client/dist/parsing-v2"
 import { logPaymentDestinationAccepted } from "@app/utils/analytics"
-import { useAppConfig } from "@app/hooks"
+import { testProps } from "../../../utils/testProps"
+import Paste from "react-native-vector-icons/FontAwesome"
+import Clipboard from "@react-native-community/clipboard"
+import crashlytics from "@react-native-firebase/crashlytics"
+import { toastShow } from "@app/utils/toast"
 
 const Styles = StyleSheet.create({
   scrollView: {
@@ -224,9 +228,7 @@ const SendBitcoinDestinationScreen = ({
   const [destinationState, dispatchDestinationStateAction] =
     useSendBitcoinDestinationReducer()
   const [goToNextScreenWhenValid, setGoToNextScreenWhenValid] = React.useState(false)
-  const { myPubKey, username: myUsername } = useMainQuery()
-  const { appConfig } = useAppConfig()
-  const bitcoinNetwork = appConfig.galoyInstance.network
+  const { myPubKey, username: myUsername, network: bitcoinNetwork } = useMainQuery()
   const { LL } = useI18nContext()
   const [userDefaultWalletIdQuery] = useDelayedQuery.userDefaultWalletId()
   const { data } = useGaloyQuery.contacts()
@@ -303,7 +305,9 @@ const SendBitcoinDestinationScreen = ({
                   unparsedDestination: destination,
                 },
               })
-            } catch {}
+            } catch (err) {
+              crashlytics().recordError(err)
+            }
           }
           await wait(minimumValidationDuration)
           return dispatchDestinationStateAction({
@@ -516,6 +520,7 @@ const SendBitcoinDestinationScreen = ({
 
         <View style={[Styles.fieldBackground, inputContainerStyle]}>
           <TextInput
+            {...testProps(LL.SendBitcoinScreen.input())}
             style={Styles.input}
             placeholder={LL.SendBitcoinScreen.input()}
             onChangeText={handleChangeText}
@@ -532,10 +537,36 @@ const SendBitcoinDestinationScreen = ({
               <ScanIcon />
             </View>
           </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback
+            onPress={() => {
+              try {
+                Clipboard.getString().then(async (data) => {
+                  dispatchDestinationStateAction({
+                    type: "set-unparsed-destination",
+                    payload: {
+                      unparsedDestination: data,
+                    },
+                  })
+                  await validateDestination(data)
+                })
+              } catch (err) {
+                crashlytics().recordError(err)
+                toastShow({
+                  type: "error",
+                  message: LL.SendBitcoinDestinationScreen.clipboardError(),
+                })
+              }
+            }}
+          >
+            <View style={Styles.iconContainer}>
+              <Paste name="paste" color={palette.primaryButtonColor} />
+            </View>
+          </TouchableWithoutFeedback>
         </View>
         <DestinationInformation destinationState={destinationState} />
         <View style={Styles.buttonContainer}>
           <Button
+            {...testProps(LL.common.next())}
             title={
               destinationState.unparsedDestination
                 ? LL.common.next()

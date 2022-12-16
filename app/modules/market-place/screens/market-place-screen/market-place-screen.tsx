@@ -49,16 +49,19 @@ export const MarketPlace = ({ navigation }: Props) => {
         <View style={styles.contentContainer}>
           <Pressable
             onPress={() => {
+              console.log('going to store list');
+              
               navigation.navigate("StoreList")
             }}
           >
 
             <Row containerStyle={styles.rowContainer}>
-              <TextInput
+              {/* <TextInput
                 style={styles.searchText}
                 placeholder={t.marketPlace.search()}
                 editable={false}
-              />
+              /> */}
+              <Text style={styles.searchText}>{t.marketPlace.search()}</Text>
               <FilterSvg />
             </Row>
           </Pressable>
@@ -120,6 +123,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontFamily: typography.regular,
     fontSize: fontSize.font22,
+    color:"#9499A5"
   },
   rowContainer: {
     borderRadius: 20,

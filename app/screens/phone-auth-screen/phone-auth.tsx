@@ -12,7 +12,7 @@ import {
   View,
 } from "react-native"
 import { Button, Input } from "react-native-elements"
-import { FetchResult, useApolloClient } from "@apollo/client"
+import { FetchResult } from "@apollo/client"
 import EStyleSheet from "react-native-extended-stylesheet"
 import PhoneInput from "react-native-phone-number-input"
 // import analytics from "@react-native-firebase/analytics"
@@ -26,7 +26,6 @@ import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import useToken from "../../hooks/use-token"
 import { toastShow } from "../../utils/toast"
-import { addDeviceToken } from "../../utils/notifications"
 import BiometricWrapper from "../../utils/biometricAuthentication"
 import type { ScreenType } from "../../types/jsx"
 import { AuthenticationScreenPurpose } from "../../utils/enum"
@@ -37,6 +36,7 @@ import { useAppConfig, useGeetestCaptcha } from "../../hooks"
 import DownArrow from "@app/assets/icons/downarrow.svg"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { logRequestAuthCode } from "@app/utils/analytics"
+import crashlytics from "@react-native-firebase/crashlytics"
 
 const phoneRegex = new RegExp("^\\+[0-9]+$")
 
@@ -185,7 +185,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
         secCode: geetestValidationData?.geetestSecCode,
       }
       resetValidationData()
-      logRequestAuthCode(appConfig.galoyInstance.network)
+      logRequestAuthCode(appConfig.galoyInstance.name)
 
       const { data } = await captchaRequestAuthCode({ variables: { input } })
 
@@ -203,6 +203,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
         toastShow({ message: LL.errors.generic() })
       }
     } catch (err) {
+      crashlytics().recordError(err)
       console.debug({ err })
       if (err.message === "Too many requests") {
         toastShow({ message: LL.errors.tooManyRequestsPhoneCode() })
@@ -217,7 +218,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
     captchaRequestAuthCode,
     resetValidationData,
     LL,
-    appConfig.galoyInstance.network,
+    appConfig.galoyInstance.name,
   ])
 
   useEffect(() => {
@@ -388,7 +389,6 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
   error,
   saveToken,
 }: WelcomePhoneValidationScreenProps) => {
-  const client = useApolloClient()
   const [code, setCode] = useState("")
   const [secondsRemaining, setSecondsRemaining] = useState<number>(60)
   const { LL } = useI18nContext()
@@ -419,17 +419,16 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
         if (token) {
           // analytics().logLogin({ method: "phone" })
           await saveToken(token)
-          await addDeviceToken(client)
         } else {
-          throw new Error(LL.WelcomePhoneValidationScreen.errorLoggingIn())
+          setCode("")
+          toastShow({ message: LL.WelcomePhoneValidationScreen.errorLoggingIn() })
         }
       } catch (err) {
+        crashlytics().recordError(err)
         console.debug({ err })
-        setCode("")
-        toastShow({ message: `${err}` })
       }
     },
-    [client, loading, login, phone, saveToken, setCode, LL],
+    [loading, login, phone, saveToken, setCode, LL],
   )
 
   const updateCode = (code: string) => {

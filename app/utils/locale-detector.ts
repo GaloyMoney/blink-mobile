@@ -26,5 +26,8 @@ export const getLanguageFromLocale = (locale: string) => {
   if (locale.startsWith("fr")) {
     return "fr-CA"
   }
+  if (locale.startsWith("de")) {
+    return "de"
+  }
   return "en"
 }

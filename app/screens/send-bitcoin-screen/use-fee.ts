@@ -2,6 +2,7 @@ import { useMutation, useDelayedQuery } from "@galoymoney/client"
 import { useState, useEffect } from "react"
 import { WalletDescriptor } from "@app/types/wallets"
 import { PaymentAmount, WalletCurrency } from "@app/types/amounts"
+import crashlytics from "@react-native-firebase/crashlytics"
 
 type FeeType = {
   amount?: PaymentAmount<WalletCurrency>
@@ -112,6 +113,7 @@ const useFee = ({
             status: feeProbeFailed ? "error" : "set",
           })
         } catch (err) {
+          crashlytics().recordError(err)
           console.debug({ err, message: "error getting lightning fees" })
           setFee({ status: "error" })
         }
@@ -142,6 +144,7 @@ const useFee = ({
             status: "set",
           })
         } catch (err) {
+          crashlytics().recordError(err)
           console.debug({ err, message: "error getting onchains fees" })
           setFee({ status: "error" })
         }

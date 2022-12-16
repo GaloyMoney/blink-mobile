@@ -4,6 +4,7 @@ import sumBy from "lodash.sumby"
 import { LocalizedString } from "typesafe-i18n"
 import type { QuizQuestion, QuizSectionContent } from "../../types/quiz"
 import { earnSections } from "./sections"
+import crashlytics from "@react-native-firebase/crashlytics"
 
 export const getCardsFromSection = ({
   quizQuestions,
@@ -67,6 +68,7 @@ export const sectionCompletedPct = ({
     })
     return earns.filter((item) => item.fullfilled).length / earns.length
   } catch (err) {
+    crashlytics().recordError(err)
     return 0
   }
 }

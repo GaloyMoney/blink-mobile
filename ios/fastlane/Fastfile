@@ -31,7 +31,9 @@ platform :ios do
       key_filepath: "./fastlane/AuthKey_4CB2N65TA9.p8",
       in_house: false
     )
+
     # upload_to_testflight(changelog: "No changelog")
+    
     build_app(workspace: "GaloyApp.xcworkspace", scheme: "GaloyApp",xcargs: "-allowProvisioningUpdates")
     upload_to_testflight
   end
@@ -43,7 +45,7 @@ platform :ios do
       browserstack_username: ENV["BROWSERSTACK_USER"],
       browserstack_access_key: ENV["BROWSERSTACK_ACCESS_KEY"],
     )
-    sh("npx wdio ../browserstack.js")
+    sh("GALOY_TOKEN=$GALOY_TOKEN && GALOY_TOKEN_2=$GALOY_TOKEN_2 && yarn test:browserstack:ios")
   end
 
   desc "increment path version"

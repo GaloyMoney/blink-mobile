@@ -81,7 +81,7 @@ const styles = EStyleSheet.create({
 })
 
 type Props = {
-  navigation: StackNavigationProp<ContactStackParamList, "Contacts">
+  navigation: StackNavigationProp<ContactStackParamList, "contactList">
 }
 
 export const ContactsScreen: ScreenType = ({ navigation }: Props) => {

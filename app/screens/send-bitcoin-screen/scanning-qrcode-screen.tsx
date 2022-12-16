@@ -1,4 +1,4 @@
-import { useIsFocused, useNavigationState } from "@react-navigation/native"
+import { useIsFocused } from "@react-navigation/native"
 import * as React from "react"
 import {
   Alert,
@@ -40,9 +40,9 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import RNQRGenerator from "rn-qr-generator"
 import { BarcodeFormat, useScanBarcodes } from "vision-camera-code-scanner"
 import ImagePicker from "react-native-image-crop-picker"
-import { useAppConfig } from "@app/hooks"
 import { lnurlDomains } from "./send-bitcoin-destination-screen"
 import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
+import crashlytics from "@react-native-firebase/crashlytics"
 
 const { width: screenWidth } = Dimensions.get("window")
 const { height: screenHeight } = Dimensions.get("window")
@@ -118,11 +118,8 @@ const galoyAddressFromLnurlParams = (
 export const ScanningQRCodeScreen: ScreenType = ({
   navigation,
 }: ScanningQRCodeScreenProps) => {
-  const index = useNavigationState((state) => state.index)
   const [pending, setPending] = React.useState(false)
-  const { appConfig } = useAppConfig()
-  const bitcoinNetwork = appConfig.galoyInstance.network
-  const { myPubKey } = useMainQuery()
+  const { myPubKey, network: bitcoinNetwork } = useMainQuery()
   const { LL } = useI18nContext()
   const devices = useCameraDevices()
   const [cameraPermissionStatus, setCameraPermissionStatus] =
@@ -173,15 +170,9 @@ export const ScanningQRCodeScreen: ScreenType = ({
 
             switch (lnurlParams.tag) {
               case "payRequest":
-                if (index <= 1) {
-                  navigation.replace("sendBitcoinDestination", {
-                    payment: galoyAddressFromLnurlParams(lnurlParams) || data,
-                  })
-                } else {
-                  navigation.navigate("sendBitcoinDestination", {
-                    payment: galoyAddressFromLnurlParams(lnurlParams) || data,
-                  })
-                }
+                navigation.replace("sendBitcoinDestination", {
+                  payment: galoyAddressFromLnurlParams(lnurlParams) || data,
+                })
                 break
               default:
                 Alert.alert(
@@ -198,15 +189,8 @@ export const ScanningQRCodeScreen: ScreenType = ({
                 )
                 break
             }
-          } else if (index <= 1) {
-            navigation.replace("sendBitcoinDestination", {
-              payment:
-                parsedDestination.paymentType === PaymentType.Intraledger
-                  ? parsedDestination.handle
-                  : data,
-            })
           } else {
-            navigation.navigate("sendBitcoinDestination", {
+            navigation.replace("sendBitcoinDestination", {
               payment:
                 parsedDestination.paymentType === PaymentType.Intraledger
                   ? parsedDestination.handle
@@ -229,25 +213,18 @@ export const ScanningQRCodeScreen: ScreenType = ({
           )
         }
       } catch (err) {
+        crashlytics().recordError(err)
         Alert.alert(err.toString())
       }
     },
-    [
-      LL.ScanningQRCodeScreen,
-      LL.common,
-      index,
-      myPubKey,
-      navigation,
-      pending,
-      bitcoinNetwork,
-    ],
+    [LL.ScanningQRCodeScreen, LL.common, myPubKey, navigation, pending, bitcoinNetwork],
   )
 
   React.useEffect(() => {
-    if (barcodes.length > 0 && barcodes[0].rawValue) {
+    if (barcodes.length > 0 && barcodes[0].rawValue && isFocused) {
       decodeInvoice(barcodes[0].rawValue)
     }
-  }, [barcodes, decodeInvoice])
+  }, [barcodes, decodeInvoice, isFocused])
 
   const handleInvoicePaste = async () => {
     try {
@@ -255,6 +232,7 @@ export const ScanningQRCodeScreen: ScreenType = ({
         decodeInvoice(data)
       })
     } catch (err) {
+      crashlytics().recordError(err)
       Alert.alert(err.toString())
     }
   }
@@ -275,6 +253,7 @@ export const ScanningQRCodeScreen: ScreenType = ({
         Alert.alert(LL.ScanningQRCodeScreen.noQrCode())
       }
     } catch (err) {
+      crashlytics().recordError(err)
       Alert.alert(err.toString())
     }
   }

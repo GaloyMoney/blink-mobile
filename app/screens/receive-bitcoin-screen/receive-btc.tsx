@@ -23,6 +23,8 @@ import { copyPaymentInfoToClipboard } from "@app/utils/clipboard"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { logGeneratePaymentRequest } from "@app/utils/analytics"
 import { WalletCurrency } from "@app/types/amounts"
+import { testProps } from "../../../utils/testProps"
+import crashlytics from "@react-native-firebase/crashlytics"
 
 const styles = EStyleSheet.create({
   container: {
@@ -221,6 +223,7 @@ const ReceiveBtc = () => {
         }
       } catch (err) {
         console.error(err, "error with AddInvoice")
+        crashlytics().recordError(err)
         setErr(`${err}`)
         throw err
       } finally {
@@ -255,6 +258,7 @@ const ReceiveBtc = () => {
         }
         setBtcAddress(address)
       } catch (err) {
+        crashlytics().recordError(err)
         console.error(err, "error with updateBtcAddress")
         setErr(`${err}`)
         throw err
@@ -336,6 +340,7 @@ const ReceiveBtc = () => {
         // dismissed
       }
     } catch (error) {
+      crashlytics().recordError(error)
       Alert.alert(error.message)
     }
   }, [paymentFullUri])
@@ -526,7 +531,10 @@ const ReceiveBtc = () => {
           {invoiceReady ? (
             <>
               <View style={styles.copyInvoiceContainer}>
-                <Pressable onPress={copyToClipboard}>
+                <Pressable
+                  {...testProps(LL.ReceiveBitcoinScreen.copyInvoice())}
+                  onPress={copyToClipboard}
+                >
                   <Text style={styles.infoText}>
                     <Icon style={styles.infoText} name="copy-outline" />
                     <Text> </Text>
@@ -537,7 +545,10 @@ const ReceiveBtc = () => {
                 </Pressable>
               </View>
               <View style={styles.shareInvoiceContainer}>
-                <Pressable onPress={share}>
+                <Pressable
+                  {...testProps(LL.ReceiveBitcoinScreen.shareInvoice())}
+                  onPress={share}
+                >
                   <Text style={styles.infoText}>
                     <Icon style={styles.infoText} name="share-outline" />
                     <Text> </Text>

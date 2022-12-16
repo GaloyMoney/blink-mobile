@@ -39,9 +39,8 @@ import { TransactionHistoryScreenDataInjected } from "../screens/transaction-scr
 import { WelcomeFirstScreen } from "../screens/welcome-screens"
 import { palette } from "../theme/palette"
 import { AccountType } from "../utils/enum"
-import { addDeviceToken } from "../utils/notifications"
+import { addDeviceToken, hasNotificationPermission } from "../utils/notifications"
 import useToken from "../hooks/use-token"
-import { showModalClipboardIfValidPayment } from "../utils/clipboard"
 import {
   ContactStackParamList,
   PhoneValidationStackParamList,
@@ -66,16 +65,16 @@ import {
   ConversionSuccessScreen,
   ConversionConfirmationScreen,
 } from "@app/screens/conversion-flow"
-import { useAuthenticationContext } from "@app/store/authentication-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { logEnterBackground, logEnterForeground } from "@app/utils/analytics"
-import { useAppConfig } from "@app/hooks"
 import { GaloyAddressScreen } from "@app/screens/galoy-address-screen"
+import { AccountScreen } from "@app/screens/settings-screen/account-screen"
 import { MarketPlaceStacks } from "@app/modules/market-place/navigation/marketplace-stack"
 import { PostDetailScreen } from "@app/modules/market-place/screens/post-detail-screen"
 import { StoreListViewScreen } from "@app/modules/market-place/screens/post-list-screen/list-view-screen"
 import MarketPlaceSvg from "@app/modules/market-place/assets/svgs/market-place.svg"
 import { StoreListScreen } from "@app/modules/market-place/screens/post-list-screen"
+
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
 PushNotification.configure({
   // (optional) Called when Token is generated (iOS and Android)
@@ -138,11 +137,8 @@ const RootNavigator = createStackNavigator<RootStackParamList>()
 export const RootStack: NavigatorType = () => {
   const appState = React.useRef(AppState.currentState)
   const client = useApolloClient()
-  const { appConfig } = useAppConfig()
   const { token, hasToken } = useToken()
-  const { myPubKey, username, me } = useMainQuery()
-
-  const bitcoinNetwork = appConfig.galoyInstance.network
+  const { username, me, network: bitcoinNetwork } = useMainQuery()
 
   useEffect(() => {
     // analytics().setUserProperty("hasUsername", username ? "true" : "false")
@@ -161,30 +157,18 @@ export const RootStack: NavigatorType = () => {
     }
   }, [bitcoinNetwork])
 
-  const { isAppLocked } = useAuthenticationContext()
-  const _handleAppStateChange = useCallback(
-    async (nextAppState) => {
-      if (appState.current.match(/background/) && nextAppState === "active") {
-        console.info("App has come to the foreground!")
-        logEnterForeground()
-        if (hasToken && !isAppLocked) {
-          showModalClipboardIfValidPayment({
-            client,
-            network: bitcoinNetwork,
-            myPubKey,
-            username,
-          })
-        }
-      }
+  const _handleAppStateChange = useCallback(async (nextAppState) => {
+    if (appState.current.match(/background/) && nextAppState === "active") {
+      console.info("App has come to the foreground!")
+      logEnterForeground()
+    }
 
-      if (appState.current.match(/active/) && nextAppState === "background") {
-        logEnterBackground()
-      }
+    if (appState.current.match(/active/) && nextAppState === "background") {
+      logEnterBackground()
+    }
 
-      appState.current = nextAppState
-    },
-    [client, hasToken, bitcoinNetwork, myPubKey, username, isAppLocked],
-  )
+    appState.current = nextAppState
+  }, [])
   const { LL } = useI18nContext()
 
   useEffect(() => {
@@ -279,10 +263,18 @@ export const RootStack: NavigatorType = () => {
       })
   }, [])
 
-  useEffect(
-    () => messaging().onTokenRefresh(() => token && addDeviceToken(client)),
-    [client, token],
-  )
+  useEffect(() => {
+    const setupNotifications = async () => {
+      if (hasToken && client) {
+        const hasPermission = await hasNotificationPermission()
+        if (hasPermission) {
+          addDeviceToken(client)
+          messaging().onTokenRefresh(() => addDeviceToken(client))
+        }
+      }
+    }
+    setupNotifications()
+  }, [client, hasToken])
 
   return (
     <RootNavigator.Navigator
@@ -481,6 +473,13 @@ export const RootStack: NavigatorType = () => {
         initialParams={{ account: AccountType.Bitcoin }}
       />
       <RootNavigator.Screen
+        name="accountScreen"
+        component={AccountScreen}
+        options={{
+          title: LL.common.account(),
+        }}
+      />
+      <RootNavigator.Screen
         name="PostDetail"
         component={PostDetailScreen}
         options={{
@@ -513,7 +512,7 @@ export const ContactNavigator: NavigatorType = () => {
   return (
     <StackContacts.Navigator>
       <StackContacts.Screen
-        name="Contacts"
+        name="contactList"
         component={ContactsScreen}
         options={{
           title: LL.ContactsScreen.title(),

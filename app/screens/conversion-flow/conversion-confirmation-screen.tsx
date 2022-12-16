@@ -11,6 +11,7 @@ import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { CommonActions } from "@react-navigation/native"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { logConversionAttempt, logConversionResult } from "@app/utils/analytics"
+import crashlytics from "@react-native-firebase/crashlytics"
 
 export const ConversionConfirmationScreen = ({
   navigation,
@@ -80,6 +81,7 @@ export const ConversionConfirmationScreen = ({
         })
         handlePaymentReturn(status, errorsMessage)
       } catch (err) {
+        crashlytics().recordError(err)
         handlePaymentError(err)
       }
     }
@@ -107,6 +109,7 @@ export const ConversionConfirmationScreen = ({
         })
         handlePaymentReturn(status, errorsMessage)
       } catch (err) {
+        crashlytics().recordError(err)
         handlePaymentError(err)
       }
     }

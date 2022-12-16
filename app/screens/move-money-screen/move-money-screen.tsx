@@ -449,6 +449,7 @@ export const MoveMoneyScreen: ScreenType = ({
           item && (
             <>
               <LargeButton
+                {...testProps(item.title)}
                 title={item.title}
                 icon={item.icon}
                 onPress={() => onMenuClick(item.target)}

@@ -1,10 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
+import { Price } from "@app/components/price-graph"
 import { INetwork } from "@app/types/network"
-
-type SetConvertedAmountsInput = {
-  moneyAmount: MoneyAmount
-}
+import { GaloyGQL } from "@galoymoney/client"
 
 type mobileVersions = {
   currentSupported: string
@@ -12,17 +8,19 @@ type mobileVersions = {
   platform: string
 }
 
-type useMainQueryOutput = {
+export type useMainQueryOutput = {
+  accountId: string
   userPreferredLanguage: string
   btcWalletBalance: number
   btcWalletValueInUsd: number
   usdWalletBalance: number
+  network: INetwork
   btcWalletId: string
   usdWalletId: string
   defaultWalletId: string
   mergedTransactions: object[]
   wallets: any[]
-  defaultWallet: any
+  defaultWallet: GaloyGQL.Wallet
   me: any
   myPubKey: string
   username?: string
@@ -32,5 +30,4 @@ type useMainQueryOutput = {
   loading: boolean
   refetch: () => void
   errors: object[]
-  network: INetwork
 }

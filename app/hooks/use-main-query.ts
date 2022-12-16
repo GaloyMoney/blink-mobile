@@ -58,6 +58,8 @@ const useMainQuery = (): useMainQueryOutput => {
     : wallets?.find((wallet) => wallet?.__typename === "UsdWallet")
 
   const btcWalletBalance = btcWallet?.balance || 0
+  const network = data?.globals?.network
+
   const btcWalletValueInUsd = convertCurrencyAmount({
     amount: btcWalletBalance,
     from: "BTC",
@@ -71,13 +73,13 @@ const useMainQuery = (): useMainQueryOutput => {
   const username = data?.me?.username
   const phoneNumber = data?.me?.phone
   const mobileVersions = data?.mobileVersions
-  const mergedTransactions = me.defaultAccount?.transactions.edges
+  const mergedTransactions = me?.defaultAccount?.transactions?.edges
 
+  const accountId = data?.me?.defaultAccount?.id
   const initialBtcPrice = data?.btcPrice
 
-  const network = data?.globals?.network
-
   return {
+    accountId,
     userPreferredLanguage,
     btcWalletBalance,
     btcWalletValueInUsd,

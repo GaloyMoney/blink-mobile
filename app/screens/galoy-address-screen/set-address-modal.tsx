@@ -1,17 +1,16 @@
-import { GaloyTextInput } from "@app/components/galoy-text-input"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
 import { useMutation } from "@galoymoney/client"
 import React from "react"
-import { Modal, TouchableWithoutFeedback, View } from "react-native"
-import { Button, Text } from "react-native-elements"
+import { Modal, Platform, StatusBar, TouchableWithoutFeedback, View } from "react-native"
+import { Button, Input, Text } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
 import crashlytics from "@react-native-firebase/crashlytics"
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import { CustomIcon } from "@app/components/custom-icon"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import useMainQuery from "@app/hooks/use-main-query"
 
 const styles = EStyleSheet.create({
   centeredView: {
@@ -34,6 +33,7 @@ const styles = EStyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     width: "90%",
+    marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 40,
   },
   buttonStyle: {
     backgroundColor: palette.primaryButtonColor,
@@ -47,9 +47,6 @@ const styles = EStyleSheet.create({
   cancelText: {
     color: palette.primaryButtonColor,
   },
-  labelStyle: {
-    marginBottom: 16,
-  },
   errorStyle: {
     color: palette.error,
     marginTop: 16,
@@ -60,7 +57,6 @@ const styles = EStyleSheet.create({
     fontWeight: "400",
     fontSize: 15,
     lineHeight: 24,
-    marginTop: 16,
   },
   titleText: {
     fontFamily: "Roboto",
@@ -91,6 +87,26 @@ const styles = EStyleSheet.create({
     alignItems: "center",
     marginTop: 16,
   },
+  rightIconTextStyle: {
+    color: palette.secondaryText,
+  },
+  inputContainerStyle: {
+    backgroundColor: palette.inputBackground,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    overflow: "hidden",
+    borderColor: palette.inputBackground,
+  },
+  containerStyle: { paddingLeft: 0, paddingRight: 0 },
+  fieldLabelStyle: {
+    color: palette.inputLabel,
+    fontSize: 18,
+    lineHeight: 24,
+    fontFamily: "Roboto",
+    fontWeight: "500",
+    marginBottom: 16,
+  },
 })
 
 type SetAddressModalProps = {
@@ -100,6 +116,7 @@ type SetAddressModalProps = {
 
 export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalProps) => {
   const { LL } = useI18nContext()
+  const { refetch: refetchMainQuery } = useMainQuery()
   const [address, setAddress] = React.useState("")
   const [error, setError] = React.useState("")
   const [newAddress, setNewAddress] = React.useState("")
@@ -122,13 +139,14 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
         }
       } else if (result.userUpdateUsername.user) {
         setNewAddress(result.userUpdateUsername.user.username)
+        refetchMainQuery()
       }
     },
   })
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setError("")
-    updateUsername({
+    await updateUsername({
       variables: {
         input: {
           username: address,
@@ -153,12 +171,15 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
       >
         <View style={styles.modalView}>
           {!newAddress && (
-            <KeyboardAwareScrollView>
-              <GaloyTextInput
-                label={LL.GaloyAddressScreen.buttonTitle({ bankName: "BBW" })}
-                append="@pay.bbw.sv"
+            <>
+              <Input
+                rightIcon={<Text style={styles.rightIconTextStyle}>@pay.galoy.io</Text>}
+                inputContainerStyle={styles.inputContainerStyle}
+                containerStyle={styles.containerStyle}
                 onChangeText={handleOnChangeText}
-                labelStyle={styles.labelStyle}
+                autoComplete={"off"}
+                label={LL.GaloyAddressScreen.buttonTitle({ bankName: "BBW" })}
+                labelStyle={styles.fieldLabelStyle}
               />
               {!error && (
                 <Text style={styles.explainerText}>
@@ -182,7 +203,7 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
                   <Text style={styles.cancelText}>{LL.common.cancel()}</Text>
                 </TouchableWithoutFeedback>
               </View>
-            </KeyboardAwareScrollView>
+            </>
           )}
           {newAddress && (
             <View>

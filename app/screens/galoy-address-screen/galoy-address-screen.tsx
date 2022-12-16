@@ -17,7 +17,6 @@ import { SetAddressModal } from "./set-address-modal"
 
 const styles = EStyleSheet.create({
   container: {
-    flex: 1,
     paddingLeft: 20,
     paddingRight: 20,
   },
@@ -98,7 +97,7 @@ export const GaloyAddressScreen = () => {
     setExplainerModalVisible(!explainerModalVisible)
   }
   return (
-    <Screen>
+    <Screen style={styles.container}>
       <View style={styles.container}>
         <Text style={styles.title}>
           {LL.SettingsScreen.addressScreen({ bankName: "BBW" })}

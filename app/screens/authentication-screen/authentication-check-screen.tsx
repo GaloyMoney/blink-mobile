@@ -10,7 +10,6 @@ import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import BiometricWrapper from "../../utils/biometricAuthentication"
 import type { ScreenType } from "../../types/jsx"
 import { AuthenticationScreenPurpose, PinScreenPurpose } from "../../utils/enum"
-import { showModalClipboardIfValidPayment } from "../../utils/clipboard"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
 
@@ -18,7 +17,6 @@ import BitcoinBeachLogo from "../get-started-screen/bitcoin-beach-logo.png"
 import useToken from "../../hooks/use-token"
 import useMainQuery from "@app/hooks/use-main-query"
 import { useAuthenticationContext } from "@app/store/authentication-context"
-import { useAppConfig } from "@app/hooks"
 
 const styles = EStyleSheet.create({
   Logo: {
@@ -41,9 +39,7 @@ type Props = {
 export const AuthenticationCheckScreen: ScreenType = ({ navigation }: Props) => {
   const client = useApolloClient()
   const { hasToken } = useToken()
-  const { appConfig } = useAppConfig()
-  const bitcoinNetwork = appConfig.galoyInstance.network
-  const { myPubKey, username } = useMainQuery()
+  const { myPubKey, username, network: bitcoinNetwork } = useMainQuery()
   const { setAppUnlocked } = useAuthenticationContext()
 
   useEffect(() => {
@@ -63,14 +59,6 @@ export const AuthenticationCheckScreen: ScreenType = ({ navigation }: Props) => 
       } else {
         setAppUnlocked()
         navigation.replace("Primary")
-        if (hasToken) {
-          showModalClipboardIfValidPayment({
-            client,
-            network: bitcoinNetwork,
-            myPubKey,
-            username,
-          })
-        }
       }
     })()
   }, [client, hasToken, myPubKey, navigation, bitcoinNetwork, username, setAppUnlocked])

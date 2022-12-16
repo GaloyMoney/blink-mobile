@@ -3,7 +3,6 @@ import { RouteProp, useFocusEffect } from "@react-navigation/native"
 import { Alert, Image, View } from "react-native"
 import { Button } from "react-native-elements"
 import EStyleSheet from "react-native-extended-stylesheet"
-import { useApolloClient } from "@apollo/client"
 
 import { Screen } from "../../components/screen"
 import { color } from "../../theme"
@@ -12,17 +11,13 @@ import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import BiometricWrapper from "../../utils/biometricAuthentication"
 import type { ScreenType } from "../../types/jsx"
 import { AuthenticationScreenPurpose, PinScreenPurpose } from "../../utils/enum"
-import { showModalClipboardIfValidPayment } from "../../utils/clipboard"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
-import useToken from "../../hooks/use-token"
 
 import BitcoinBeachLogo from "../get-started-screen/bitcoin-beach-logo.png"
 import useLogout from "../../hooks/use-logout"
-import useMainQuery from "@app/hooks/use-main-query"
 import { useAuthenticationContext } from "@app/store/authentication-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { useAppConfig } from "@app/hooks"
 
 const styles = EStyleSheet.create({
   Logo: {
@@ -76,12 +71,7 @@ type Props = {
 }
 
 export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) => {
-  const client = useApolloClient()
-  const { hasToken } = useToken()
-  const { appConfig } = useAppConfig()
-  const bitcoinNetwork = appConfig.galoyInstance.network
   const { logout } = useLogout()
-  const { myPubKey, username } = useMainQuery()
   const { screenPurpose, isPinEnabled } = route.params
   const { setAppUnlocked } = useAuthenticationContext()
   const { LL } = useI18nContext()
@@ -113,14 +103,6 @@ export const AuthenticationScreen: ScreenType = ({ route, navigation }: Props) =
     }
     setAppUnlocked()
     navigation.replace("Primary")
-    if (hasToken) {
-      showModalClipboardIfValidPayment({
-        client,
-        network: bitcoinNetwork,
-        myPubKey,
-        username,
-      })
-    }
   }
 
   const handleAuthenticationFailure = () => {

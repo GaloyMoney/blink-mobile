@@ -2,12 +2,9 @@ import { useSubscriptionUpdates, useCountdownTimer } from "@app/hooks"
 import useMainQuery from "@app/hooks/use-main-query"
 import { palette } from "@app/theme"
 import { getFullUri, TYPE_LIGHTNING_USD } from "@app/utils/wallet"
-import {
-  decodeInvoiceString,
-  GaloyGQL,
-  getLightningInvoiceExpiryTime,
-  useMutation,
-} from "@galoymoney/client"
+import { parsingv2, GaloyGQL, useMutation } from "@galoymoney/client"
+const { decodeInvoiceString, getLightningInvoiceExpiryTime } = parsingv2
+
 import React, { useCallback, useEffect, useRef, useState } from "react"
 import { Alert, AppState, Pressable, Share, TextInput, View } from "react-native"
 import { Button, Text } from "react-native-elements"
@@ -26,6 +23,7 @@ import moment from "moment"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { logGeneratePaymentRequest } from "@app/utils/analytics"
 import { WalletCurrency } from "@app/types/amounts"
+import crashlytics from "@react-native-firebase/crashlytics"
 
 const styles = EStyleSheet.create({
   container: {
@@ -146,7 +144,7 @@ const ReceiveUsd = () => {
   const [err, setErr] = useState("")
   const [lnNoAmountInvoiceCreate] = useMutation.lnNoAmountInvoiceCreate()
   const [lnUsdInvoiceCreate] = useMutation.lnUsdInvoiceCreate()
-  const { usdWalletId } = useMainQuery()
+  const { usdWalletId, network } = useMainQuery()
   const [invoice, setInvoice] = useState<
     GaloyGQL.LnInvoice | GaloyGQL.LnNoAmountInvoice | null
   >(null)
@@ -158,13 +156,15 @@ const ReceiveUsd = () => {
   const { LL } = useI18nContext()
   const { timeLeft, startCountdownTimer, resetCountdownTimer, stopCountdownTimer } =
     useCountdownTimer()
+
   useEffect(() => {
     if (invoice && usdAmount > 0) {
       const subscription = AppState.addEventListener("change", (nextAppState) => {
         if (appState.current.match(/inactive|background/) && nextAppState === "active") {
           const timeUntilInvoiceExpires =
-            getLightningInvoiceExpiryTime(decodeInvoiceString(invoice.paymentRequest)) -
-            Math.round(Date.now() / 1000)
+            getLightningInvoiceExpiryTime(
+              decodeInvoiceString(invoice.paymentRequest, network),
+            ) - Math.round(Date.now() / 1000)
           if (timeUntilInvoiceExpires <= 0) {
             setStatus("expired")
             stopCountdownTimer()
@@ -178,7 +178,7 @@ const ReceiveUsd = () => {
       }
     }
     return undefined
-  }, [invoice, setStatus, stopCountdownTimer, resetCountdownTimer, usdAmount])
+  }, [invoice, setStatus, stopCountdownTimer, resetCountdownTimer, usdAmount, network])
 
   useEffect(() => {
     if (usdAmount && usdAmount > 0) {
@@ -186,8 +186,9 @@ const ReceiveUsd = () => {
         setStatus("expired")
       }
       const timeUntilInvoiceExpires =
-        getLightningInvoiceExpiryTime(decodeInvoiceString(invoice.paymentRequest)) -
-        Math.round(Date.now() / 1000)
+        getLightningInvoiceExpiryTime(
+          decodeInvoiceString(invoice.paymentRequest, network),
+        ) - Math.round(Date.now() / 1000)
       if (timeUntilInvoiceExpires <= 0) {
         callback()
         return
@@ -195,7 +196,7 @@ const ReceiveUsd = () => {
       startCountdownTimer(timeUntilInvoiceExpires, callback)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [usdAmount, invoice])
+  }, [usdAmount, invoice, network])
 
   const updateInvoice = useCallback(
     async ({ walletId, usdAmount, memo }) => {
@@ -227,13 +228,14 @@ const ReceiveUsd = () => {
             hasAmount: true,
             receivingWallet: WalletCurrency.USD,
           })
+          const amountInCents = Math.round(parseFloat(usdAmount) * 100)
           const {
             data: {
               lnUsdInvoiceCreate: { invoice, errors },
             },
           } = await lnUsdInvoiceCreate({
             variables: {
-              input: { walletId, amount: parseFloat(usdAmount) * 100, memo },
+              input: { walletId, amount: amountInCents, memo },
             },
           })
 
@@ -247,6 +249,7 @@ const ReceiveUsd = () => {
         }
         setStatus("active")
       } catch (err) {
+        crashlytics().recordError(err)
         console.error(err, "error with AddInvoice")
         setStatus("error")
         setErr(`${err}`)
@@ -292,6 +295,7 @@ const ReceiveUsd = () => {
         // dismissed
       }
     } catch (error) {
+      crashlytics().recordError(error)
       Alert.alert(error.message)
     }
   }, [invoice?.paymentRequest])

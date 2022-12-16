@@ -1,4 +1,3 @@
-import { useApolloClient } from "@apollo/client"
 import { Screen } from "@app/components/screen"
 import useMainQuery from "@app/hooks/use-main-query"
 import useToken from "@app/hooks/use-token"
@@ -6,10 +5,11 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { palette } from "@app/theme"
 import { WalletCurrency } from "@app/types/amounts"
-import { hasFullPermissions, requestPermission } from "@app/utils/notifications"
+import { requestNotificationPermission } from "@app/utils/notifications"
+import { useIsFocused } from "@react-navigation/native"
 import { StackScreenProps } from "@react-navigation/stack"
 import React, { useEffect, useState } from "react"
-import { Alert, Platform, Text, View } from "react-native"
+import { Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import ReceiveBtc from "./receive-btc"
@@ -63,7 +63,6 @@ const ReceiveBitcoinScreen = ({
   navigation,
   route,
 }: StackScreenProps<RootStackParamList, "receiveBitcoin">) => {
-  const client = useApolloClient()
   const { hasToken } = useToken()
   const { receiveCurrency: initialReceiveCurrency } = route.params || {}
 
@@ -72,6 +71,20 @@ const ReceiveBitcoinScreen = ({
     initialReceiveCurrency || WalletCurrency.BTC,
   )
   const { LL } = useI18nContext()
+  const isFocused = useIsFocused()
+
+  useEffect(() => {
+    let timeout
+    if (hasToken && isFocused) {
+      const WAIT_TIME_TO_PROMPT_USER = 2000
+      timeout = setTimeout(
+        requestNotificationPermission, // no op if already requested
+        WAIT_TIME_TO_PROMPT_USER,
+      )
+    }
+
+    return () => timeout && clearTimeout(timeout)
+  }, [hasToken, isFocused])
 
   useEffect(() => {
     if (receiveCurrency === WalletCurrency.USD) {
@@ -82,41 +95,6 @@ const ReceiveBitcoinScreen = ({
       navigation.setOptions({ title: LL.ReceiveBitcoinScreen.title() })
     }
   }, [receiveCurrency, navigation, LL])
-
-  useEffect(() => {
-    const notifRequest = async () => {
-      const waitUntilAuthorizationWindow = 5000
-
-      if (Platform.OS === "ios") {
-        if (await hasFullPermissions()) {
-          return
-        }
-
-        setTimeout(
-          () =>
-            Alert.alert(
-              LL.common.notification(),
-              LL.ReceiveBitcoinScreen.activateNotifications(),
-              [
-                {
-                  text: LL.common.later(),
-                  // todo: add analytics
-                  style: "cancel",
-                },
-                {
-                  text: LL.common.ok(),
-                  onPress: () => hasToken && requestPermission(client),
-                },
-              ],
-              { cancelable: true },
-            ),
-          waitUntilAuthorizationWindow,
-        )
-      }
-    }
-    notifRequest()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [client, hasToken])
 
   if (!usdWalletId) {
     return <ReceiveBtc />
