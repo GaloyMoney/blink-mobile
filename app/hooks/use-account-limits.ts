@@ -29,7 +29,7 @@ const ACCOUNT_LIMITS_QUERY = gql`
   }
 `
 
-type limitValue = {
+export type limitValue = {
   __typename: string
   remainingLimit: string
   totalLimit: string
@@ -41,15 +41,8 @@ type accountLimitsData = {
   convert: limitValue[]
 }
 
-type accountLimitPeriod = {
-  DailyAccountLimit?: limitValue
-  WeeklyAccountLimit?: limitValue
-}
-
 type useAccountLimitsOutput = {
-  withdrawalLimits: Readonly<accountLimitPeriod>
-  internalSendLimits: Readonly<accountLimitPeriod>
-  convertLimits: Readonly<accountLimitPeriod>
+  limits: accountLimitsData
   loading: boolean
   error: ApolloError
   refetch: () => Promise<ApolloQueryResult<unknown>>
@@ -65,23 +58,8 @@ export const useAccountLimitsQuery = (): useAccountLimitsOutput => {
     }
   }, [error])
 
-  const withdrawalLimits: Readonly<accountLimitPeriod> = limits?.withdrawal.reduce(
-    (prev, curr) => ({ ...prev, [curr.__typename]: curr }),
-    {},
-  )
-  const internalSendLimits: Readonly<accountLimitPeriod> = limits?.withdrawal.reduce(
-    (prev, curr) => ({ ...prev, [curr.__typename]: curr }),
-    {},
-  )
-  const convertLimits: Readonly<accountLimitPeriod> = limits?.withdrawal.reduce(
-    (prev, curr) => ({ ...prev, [curr.__typename]: curr }),
-    {},
-  )
-
   return {
-    withdrawalLimits,
-    internalSendLimits,
-    convertLimits,
+    limits,
     loading,
     error,
     refetch,

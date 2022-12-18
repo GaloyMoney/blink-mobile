@@ -142,14 +142,6 @@ type RootTranslation = {
 	}
 	AccountLimitsScreen: {
 		/**
-		 * Bitcoin transactions
-		 */
-		bitcoinTransactions: string
-		/**
-		 * USD transactions
-		 */
-		USDTransactions: string
-		/**
 		 * Receive
 		 */
 		receive: string
@@ -166,6 +158,10 @@ type RootTranslation = {
 		 */
 		perWeek: string
 		/**
+		 * per month
+		 */
+		perMonth: string
+		/**
 		 * Unlimited
 		 */
 		unlimited: string
@@ -174,11 +170,11 @@ type RootTranslation = {
 		 */
 		remaining: string
 		/**
-		 * Convert to Stablesat
+		 * Stablesat Transfers
 		 */
-		convertToStablesat: string
+		stablesatTransfers: string
 		/**
-		 * Send to BBW user
+		 * Send to BBW User
 		 */
 		internalSend: string
 		/**
@@ -2882,14 +2878,6 @@ export type TranslationFunctions = {
 	}
 	AccountLimitsScreen: {
 		/**
-		 * Bitcoin transactions
-		 */
-		bitcoinTransactions: () => LocalizedString
-		/**
-		 * USD transactions
-		 */
-		USDTransactions: () => LocalizedString
-		/**
 		 * Receive
 		 */
 		receive: () => LocalizedString
@@ -2906,6 +2894,10 @@ export type TranslationFunctions = {
 		 */
 		perWeek: () => LocalizedString
 		/**
+		 * per month
+		 */
+		perMonth: () => LocalizedString
+		/**
 		 * Unlimited
 		 */
 		unlimited: () => LocalizedString
@@ -2914,11 +2906,11 @@ export type TranslationFunctions = {
 		 */
 		remaining: () => LocalizedString
 		/**
-		 * Convert to Stablesat
+		 * Stablesat Transfers
 		 */
-		convertToStablesat: () => LocalizedString
+		stablesatTransfers: () => LocalizedString
 		/**
-		 * Send to BBW user
+		 * Send to BBW User
 		 */
 		internalSend: () => LocalizedString
 		/**

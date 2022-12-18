@@ -30,16 +30,15 @@
         "usePin": "Use PIN"
     },
     "AccountLimitsScreen": {
-        "bitcoinTransactions": "Bitcoin transactions",
-        "USDTransactions": "USD transactions",
         "receive": "Receive",
         "withdraw": "Withdraw",
         "perDay": "per day",
         "perWeek": "per week",
+        "perMonth": "per month",
         "unlimited": "Unlimited",
         "remaining": "Remaining",
-        "convertToStablesat": "Convert to Stablesat",
-        "internalSend": "Send to BBW user",
+        "stablesatTransfers": "Stablesat Transfers",
+        "internalSend": "Send to BBW User",
         "error": "Unable to fetch limits at this time"
     },
     "BalanceHeader": {
