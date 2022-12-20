@@ -158,10 +158,6 @@ type RootTranslation = {
 		 */
 		perWeek: string
 		/**
-		 * per month
-		 */
-		perMonth: string
-		/**
 		 * Unlimited
 		 */
 		unlimited: string
@@ -2893,10 +2889,6 @@ export type TranslationFunctions = {
 		 * per week
 		 */
 		perWeek: () => LocalizedString
-		/**
-		 * per month
-		 */
-		perMonth: () => LocalizedString
 		/**
 		 * Unlimited
 		 */

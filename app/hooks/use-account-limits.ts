@@ -8,20 +8,26 @@ const ACCOUNT_LIMITS_QUERY = gql`
     me {
       defaultAccount {
         limits {
-          withdrawal {
-            __typename
-            totalLimit
-            remainingLimit
-          }
-          internalSend {
-            __typename
-            totalLimit
-            remainingLimit
-          }
-          convert {
-            __typename
-            totalLimit
-            remainingLimit
+          __typename
+          rolling {
+            withdrawal {
+              totalLimit
+              remainingLimit
+              interval
+              __typename
+            }
+            internalSend {
+              totalLimit
+              remainingLimit
+              interval
+              __typename
+            }
+            convert {
+              totalLimit
+              remainingLimit
+              interval
+              __typename
+            }
           }
         }
       }
@@ -33,6 +39,7 @@ export type limitValue = {
   __typename: string
   remainingLimit: string
   totalLimit: string
+  interval: string
 }
 
 export type accountLimitsData = {
@@ -50,7 +57,7 @@ type useAccountLimitsOutput = {
 
 export const useAccountLimitsQuery = (): useAccountLimitsOutput => {
   const { data, loading, error, refetch } = useQuery(ACCOUNT_LIMITS_QUERY)
-  const limits: accountLimitsData = data?.me?.defaultAccount?.limits
+  const limits: accountLimitsData = data?.me?.defaultAccount?.limits?.rolling
 
   React.useEffect(() => {
     if (error) {

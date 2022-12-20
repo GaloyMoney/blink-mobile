@@ -40,7 +40,6 @@ const en: BaseTranslation = {
     withdraw: "Withdraw",
     perDay: "per day",
     perWeek: "per week",
-    perMonth: "per month",
     unlimited: "Unlimited",
     remaining: "Remaining",
     stablesatTransfers: "Stablesat Transfers",

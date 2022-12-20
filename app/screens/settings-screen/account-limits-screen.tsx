@@ -5,11 +5,7 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import { LocalizedString } from "typesafe-i18n"
 
 import { Screen } from "@app/components/screen"
-import {
-  accountLimitsData,
-  limitValue,
-  useAccountLimitsQuery,
-} from "@app/hooks/use-account-limits"
+import { limitValue, useAccountLimitsQuery } from "@app/hooks/use-account-limits"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
 import { usdAmountDisplay } from "@app/utils/currencyConversion"
@@ -72,49 +68,14 @@ type accountLimitsPeriodProps = {
   data: limitValue
 }
 
-enum accountLimitsPeriod {
-  DAILY = "DailyAccountLimit",
-  WEEKLY = "WeeklyAccountLimit",
-  MONTHLY = "MonthlyAccountLimit",
-}
+const accountLimitsPeriod = {
+  DAILY: "24",
+  WEEKLY: "168",
+} as const
 
 export const AccountLimitsScreen = () => {
   const { LL } = useI18nContext()
   const { limits, loading, error, refetch } = useAccountLimitsQuery()
-
-  function sortLimits(limit: accountLimitsData) {
-    limit?.withdrawal.sort((a, b) => {
-      if (a.__typename === accountLimitsPeriod.DAILY) {
-        return -1
-      }
-      if (a.__typename === accountLimitsPeriod.WEEKLY) {
-        return 1
-      }
-      return 0
-    })
-
-    limit?.internalSend.sort((a, b) => {
-      if (a.__typename === accountLimitsPeriod.DAILY) {
-        return -1
-      }
-      if (a.__typename === accountLimitsPeriod.WEEKLY) {
-        return 1
-      }
-      return 0
-    })
-
-    limit?.convert.sort((a, b) => {
-      if (a.__typename === accountLimitsPeriod.DAILY) {
-        return -1
-      }
-      if (a.__typename === accountLimitsPeriod.WEEKLY) {
-        return 1
-      }
-      return 0
-    })
-
-    return limit
-  }
 
   if (error) {
     return (
@@ -166,7 +127,7 @@ export const AccountLimitsScreen = () => {
           <Text adjustsFontSizeToFit style={styles.valueFieldType}>
             {LL.AccountLimitsScreen.withdraw()}
           </Text>
-          {sortLimits(limits)?.withdrawal.map((data, index: number) => {
+          {limits?.withdrawal.map((data, index: number) => {
             return <AccountLimitsPeriod data={data} key={index} />
           })}
         </View>
@@ -177,7 +138,7 @@ export const AccountLimitsScreen = () => {
           <Text adjustsFontSizeToFit style={styles.valueFieldType}>
             {LL.AccountLimitsScreen.internalSend()}
           </Text>
-          {sortLimits(limits)?.internalSend.map((data, index: number) => {
+          {limits?.internalSend.map((data, index: number) => {
             return <AccountLimitsPeriod data={data} key={index} />
           })}
         </View>
@@ -188,7 +149,7 @@ export const AccountLimitsScreen = () => {
           <Text adjustsFontSizeToFit style={styles.valueFieldType}>
             {LL.AccountLimitsScreen.stablesatTransfers()}
           </Text>
-          {sortLimits(limits)?.convert.map((data, index: number) => {
+          {limits?.convert.map((data, index: number) => {
             return <AccountLimitsPeriod data={data} key={index} />
           })}
         </View>
@@ -201,13 +162,12 @@ const AccountLimitsPeriod = ({ data }: accountLimitsPeriodProps) => {
   const { LL } = useI18nContext()
 
   const getLimitDuration = (period: string): LocalizedString => {
-    switch (period) {
+    const interval = (Number(period) / (60 * 60)).toString()
+    switch (interval) {
       case accountLimitsPeriod.DAILY:
         return LL.AccountLimitsScreen.perDay()
       case accountLimitsPeriod.WEEKLY:
         return LL.AccountLimitsScreen.perWeek()
-      case accountLimitsPeriod.MONTHLY:
-        return LL.AccountLimitsScreen.perMonth()
       default:
         return null
     }
@@ -224,7 +184,7 @@ const AccountLimitsPeriod = ({ data }: accountLimitsPeriodProps) => {
         </Text>
         <Text adjustsFontSizeToFit style={styles.valueTotal}>
           {`${usdAmountDisplay(Number(data.totalLimit), 0)} ${getLimitDuration(
-            data.__typename,
+            data.interval,
           )}`}
         </Text>
       </View>
