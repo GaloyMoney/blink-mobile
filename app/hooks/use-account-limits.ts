@@ -35,7 +35,7 @@ export type limitValue = {
   totalLimit: string
 }
 
-type accountLimitsData = {
+export type accountLimitsData = {
   withdrawal: limitValue[]
   internalSend: limitValue[]
   convert: limitValue[]

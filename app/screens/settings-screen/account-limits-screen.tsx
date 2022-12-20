@@ -5,7 +5,11 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import { LocalizedString } from "typesafe-i18n"
 
 import { Screen } from "@app/components/screen"
-import { limitValue, useAccountLimitsQuery } from "@app/hooks/use-account-limits"
+import {
+  accountLimitsData,
+  limitValue,
+  useAccountLimitsQuery,
+} from "@app/hooks/use-account-limits"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
 import { usdAmountDisplay } from "@app/utils/currencyConversion"
@@ -78,6 +82,40 @@ export const AccountLimitsScreen = () => {
   const { LL } = useI18nContext()
   const { limits, loading, error, refetch } = useAccountLimitsQuery()
 
+  function sortLimits(limit: accountLimitsData) {
+    limit?.withdrawal.sort((a, b) => {
+      if (a.__typename === accountLimitsPeriod.DAILY) {
+        return -1
+      }
+      if (a.__typename === accountLimitsPeriod.WEEKLY) {
+        return 1
+      }
+      return 0
+    })
+
+    limit?.internalSend.sort((a, b) => {
+      if (a.__typename === accountLimitsPeriod.DAILY) {
+        return -1
+      }
+      if (a.__typename === accountLimitsPeriod.WEEKLY) {
+        return 1
+      }
+      return 0
+    })
+
+    limit?.convert.sort((a, b) => {
+      if (a.__typename === accountLimitsPeriod.DAILY) {
+        return -1
+      }
+      if (a.__typename === accountLimitsPeriod.WEEKLY) {
+        return 1
+      }
+      return 0
+    })
+
+    return limit
+  }
+
   if (error) {
     return (
       <Screen>
@@ -128,7 +166,7 @@ export const AccountLimitsScreen = () => {
           <Text adjustsFontSizeToFit style={styles.valueFieldType}>
             {LL.AccountLimitsScreen.withdraw()}
           </Text>
-          {limits?.withdrawal.map((data, index: number) => {
+          {sortLimits(limits)?.withdrawal.map((data, index: number) => {
             return <AccountLimitsPeriod data={data} key={index} />
           })}
         </View>
@@ -139,7 +177,7 @@ export const AccountLimitsScreen = () => {
           <Text adjustsFontSizeToFit style={styles.valueFieldType}>
             {LL.AccountLimitsScreen.internalSend()}
           </Text>
-          {limits?.internalSend.map((data, index: number) => {
+          {sortLimits(limits)?.internalSend.map((data, index: number) => {
             return <AccountLimitsPeriod data={data} key={index} />
           })}
         </View>
@@ -150,7 +188,7 @@ export const AccountLimitsScreen = () => {
           <Text adjustsFontSizeToFit style={styles.valueFieldType}>
             {LL.AccountLimitsScreen.stablesatTransfers()}
           </Text>
-          {limits?.convert.map((data, index: number) => {
+          {sortLimits(limits)?.convert.map((data, index: number) => {
             return <AccountLimitsPeriod data={data} key={index} />
           })}
         </View>
