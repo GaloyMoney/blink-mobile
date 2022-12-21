@@ -8,7 +8,11 @@ type LocalizationContextType = {
   setDisplayCurrency: React.Dispatch<React.SetStateAction<string>>
 }
 
-export const LocalizationContext = createContext<LocalizationContextType>(null)
+export const LocalizationContext = createContext<LocalizationContextType>({
+  displayCurrency: "USD",
+  // eslint-disable-next-line no-empty-function
+  setDisplayCurrency: () => {},
+})
 
 export const LocalizationContextProvider = ({ children }) => {
   const { userPreferredLanguage } = useMainQuery()
