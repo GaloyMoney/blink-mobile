@@ -7,7 +7,16 @@ const theme = createTheme({
   mode: "light",
   components: {
     Button: {
-      buttonStyle: {},
+      containerStyle: {
+        borderRadius: 50,
+        height: 40,
+      },
+      buttonStyle: {
+        paddingHorizontal: 32,
+        paddingVertical: 8,
+        borderRadius: 50,
+        height: 40,
+      },
     },
   },
 })

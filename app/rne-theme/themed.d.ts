@@ -23,5 +23,27 @@ declare module "@rneui/themed" {
     grey8: string
     grey10: string
     grey11: string
+    horizonBlue: {
+      colors: string[]
+      start: {
+        x: number
+        y: number
+      }
+      end: {
+        x: number
+        y: number
+      }
+    }
+    verticalBlue: {
+      colors: string[]
+      start: {
+        x: number
+        y: number
+      }
+      end: {
+        x: number
+        y: number
+      }
+    }
   }
 }
