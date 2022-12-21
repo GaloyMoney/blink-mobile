@@ -19,7 +19,7 @@ import { WalletCurrency } from "@app/types/amounts"
 import { paymentAmountToTextWithUnits } from "@app/utils/currencyConversion"
 import { TransactionDate } from "@app/components/transaction-date"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { LocalizationContext } from "@app/store/localization-context"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 
 const viewInExplorer = (hash: string): Promise<Linking> =>
   Linking.openURL(BLOCKCHAIN_EXPLORER_URL + hash)
@@ -145,7 +145,7 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
     isReceive,
   } = route.params
   const { LL } = useI18nContext()
-  const { convertUsdToDisplayCurrency } = React.useContext(LocalizationContext)
+  const { formatToDisplayCurrency } = useDisplayCurrency()
 
   const walletType = settlementCurrency as WalletType
   const spendOrReceiveText = isReceive
@@ -157,9 +157,7 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
 
   const feeEntry =
     settlementCurrency === WalletCurrency.BTC
-      ? `${settlementFee} sats (${convertUsdToDisplayCurrency(
-          settlementFee * usdPerSat,
-        )})`
+      ? `${settlementFee} sats (${formatToDisplayCurrency(settlementFee * usdPerSat)})`
       : paymentAmountToTextWithUnits({
           amount: settlementFee,
           currency: settlementCurrency as WalletCurrency,
@@ -194,7 +192,7 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
         <Text style={styles.amountText}>{spendOrReceiveText}</Text>
         <TextCurrencyForAmount
           amount={Math.abs(usdAmount)}
-          currency="USD"
+          currency="display"
           style={styles.amount}
         />
         {walletType === WalletType.BTC && (

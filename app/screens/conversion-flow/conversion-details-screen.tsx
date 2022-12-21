@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { ActivityIndicator, Platform, Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { ScrollView, TouchableWithoutFeedback } from "react-native-gesture-handler"
@@ -19,7 +19,7 @@ import { WalletDescriptor } from "@app/types/wallets"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { LocalizationContext } from "@app/store/localization-context"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 
 export const ConversionDetailsScreen = ({
   route,
@@ -48,7 +48,7 @@ export const ConversionDetailsScreen = ({
     WalletCurrency.USD,
   )
   const { LL } = useI18nContext()
-  const { convertUsdToDisplayCurrency } = useContext(LocalizationContext)
+  const { formatToDisplayCurrency } = useDisplayCurrency()
 
   useEffect(() => {
     const defaultWallet = wallets.find((wallet) => wallet.id === defaultWalletId)
@@ -76,7 +76,7 @@ export const ConversionDetailsScreen = ({
       if (usdAmount.amount > usdWalletBalance) {
         setAmountFieldError(
           LL.SendBitcoinScreen.amountExceed({
-            balance: convertUsdToDisplayCurrency(usdWalletBalance / 100),
+            balance: formatToDisplayCurrency(usdWalletBalance / 100),
           }),
         )
       } else {
@@ -91,7 +91,7 @@ export const ConversionDetailsScreen = ({
     btcWalletBalance,
     usdWalletBalance,
     LL,
-    convertUsdToDisplayCurrency,
+    formatToDisplayCurrency,
   ])
 
   useEffect(() => {
@@ -204,7 +204,7 @@ export const ConversionDetailsScreen = ({
               {fromWallet.currency === WalletCurrency.BTC ? (
                 <>
                   <Text style={styles.walletBalanceText}>
-                    {convertUsdToDisplayCurrency(btcWalletValueInUsd)}
+                    {formatToDisplayCurrency(btcWalletValueInUsd)}
                     {" - "}
                     {satAmountDisplay(btcWalletBalance)}
                   </Text>
@@ -212,7 +212,7 @@ export const ConversionDetailsScreen = ({
               ) : (
                 <>
                   <Text style={styles.walletBalanceText}>
-                    {convertUsdToDisplayCurrency(usdWalletBalance / 100)}
+                    {formatToDisplayCurrency(usdWalletBalance / 100)}
                   </Text>
                 </>
               )}
@@ -262,7 +262,7 @@ export const ConversionDetailsScreen = ({
               {toWallet.currency === WalletCurrency.BTC ? (
                 <>
                   <Text style={styles.walletBalanceText}>
-                    {convertUsdToDisplayCurrency(btcWalletValueInUsd)}
+                    {formatToDisplayCurrency(btcWalletValueInUsd)}
                     {" - "}
                     {satAmountDisplay(btcWalletBalance)}
                   </Text>
@@ -270,7 +270,7 @@ export const ConversionDetailsScreen = ({
               ) : (
                 <>
                   <Text style={styles.walletBalanceText}>
-                    {convertUsdToDisplayCurrency(usdWalletBalance / 100)}
+                    {formatToDisplayCurrency(usdWalletBalance / 100)}
                   </Text>
                 </>
               )}

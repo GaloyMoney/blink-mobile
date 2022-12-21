@@ -18,7 +18,7 @@ import { testProps } from "../../../utils/testProps"
 import Clipboard from "@react-native-community/clipboard"
 import { GaloyInstanceNames, GALOY_INSTANCES } from "@app/config/galoy-instances"
 import CurrencyPicker from "react-native-currency-picker"
-import { LocalizationContext } from "@app/store/localization-context"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 
 const styles = EStyleSheet.create({
   button: {
@@ -38,7 +38,7 @@ const styles = EStyleSheet.create({
 const usingHermes = typeof HermesInternal === "object" && HermesInternal !== null
 
 export const DebugScreen: ScreenType = () => {
-  const { displayCurrency, setDisplayCurrency } = React.useContext(LocalizationContext)
+  const { displayCurrency, setDisplayCurrency } = useDisplayCurrency()
   const client = useApolloClient()
   const { usdPerSat } = usePriceConversion()
   const { token, hasToken, saveToken } = useToken()

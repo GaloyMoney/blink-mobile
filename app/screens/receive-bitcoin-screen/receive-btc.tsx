@@ -2,7 +2,7 @@ import { usePriceConversion, useSubscriptionUpdates } from "@app/hooks"
 import useMainQuery from "@app/hooks/use-main-query"
 import { getFullUri, TYPE_LIGHTNING_BTC, TYPE_BITCOIN_ONCHAIN } from "@app/utils/wallet"
 import { GaloyGQL, useMutation } from "@galoymoney/client"
-import React, { useCallback, useContext, useEffect, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import { Alert, Pressable, Share, TextInput, View } from "react-native"
 import { Button, Text } from "@rneui/themed"
 import EStyleSheet from "react-native-extended-stylesheet"
@@ -25,7 +25,7 @@ import { logGeneratePaymentRequest } from "@app/utils/analytics"
 import { WalletCurrency } from "@app/types/amounts"
 import { testProps } from "../../../utils/testProps"
 import crashlytics from "@react-native-firebase/crashlytics"
-import { LocalizationContext } from "@app/store/localization-context"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 
 const styles = EStyleSheet.create({
   container: {
@@ -176,7 +176,7 @@ const ReceiveBtc = () => {
   const [lnInvoiceCreate] = useMutation.lnInvoiceCreate()
   const [generateBtcAddress] = useMutation.onChainAddressCurrent()
   const { LL } = useI18nContext()
-  const { convertUsdToDisplayCurrency } = useContext(LocalizationContext)
+  const { formatToDisplayCurrency } = useDisplayCurrency()
 
   const updateInvoice = useCallback(
     async ({ walletId, satAmount, memo }) => {
@@ -508,7 +508,7 @@ const ReceiveBtc = () => {
       <>
         <Text style={styles.primaryAmount}>{satAmountDisplay(satAmount)}</Text>
         <Text style={styles.convertedAmount}>
-          &#8776; {convertUsdToDisplayCurrency(satAmountInUsd)}
+          &#8776; {formatToDisplayCurrency(satAmountInUsd)}
         </Text>
       </>
     )

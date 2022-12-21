@@ -1,8 +1,8 @@
-import { LocalizationContext } from "@app/store/localization-context"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { palette } from "@app/theme"
 import { satAmountDisplay } from "@app/utils/currencyConversion"
 import { WalletType } from "@app/utils/enum"
-import React, { FunctionComponent, useContext } from "react"
+import React, { FunctionComponent } from "react"
 import { Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { CurrencyTag } from "../currency-tag"
@@ -45,7 +45,7 @@ export const WalletSummary: FunctionComponent<WalletSummaryProps> = ({
   btcBalanceInSats,
   amountType = "BALANCE",
 }) => {
-  const { convertUsdToDisplayCurrency } = useContext(LocalizationContext)
+  const { formatToDisplayCurrency } = useDisplayCurrency()
   const currencySpecificValues =
     walletType === WalletType.BTC
       ? {
@@ -59,7 +59,7 @@ export const WalletSummary: FunctionComponent<WalletSummaryProps> = ({
           walletName: "US Dollar Wallet",
         }
 
-  const formattedUsdAmount = convertUsdToDisplayCurrency(usdBalanceInDollars)
+  const formattedUsdAmount = formatToDisplayCurrency(usdBalanceInDollars)
 
   const formattedBtcAmount = btcBalanceInSats ? satAmountDisplay(btcBalanceInSats) : ""
 

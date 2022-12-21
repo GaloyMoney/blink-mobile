@@ -16,7 +16,7 @@ import { WalletCurrency } from "@app/types/amounts"
 import { WalletType } from "@app/utils/enum"
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs"
 import { TransactionDate } from "../transaction-date"
-import { LocalizationContext } from "@app/store/localization-context"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 
 const styles = EStyleSheet.create({
   container: {
@@ -118,7 +118,7 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
   const description = descriptionDisplay(tx)
   const usdAmount = computeUsdAmount(tx)
   const [txHideBalance, setTxHideBalance] = useState(hideBalance)
-  const { convertUsdToDisplayCurrency } = React.useContext(LocalizationContext)
+  const { formatToDisplayCurrency } = useDisplayCurrency()
   useEffect(() => {
     setTxHideBalance(hideBalance)
   }, [hideBalance])
@@ -169,7 +169,7 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
           >
             {primaryCurrency === "BTC" && tx.settlementCurrency === WalletCurrency.BTC
               ? satAmountDisplay(tx.settlementAmount)
-              : convertUsdToDisplayCurrency(usdAmount)}
+              : formatToDisplayCurrency(usdAmount)}
           </Text>
         )}
       </ListItem>

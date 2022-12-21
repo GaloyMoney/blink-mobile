@@ -5,7 +5,7 @@ import { getFullUri, TYPE_LIGHTNING_USD } from "@app/utils/wallet"
 import { parsingv2, GaloyGQL, useMutation } from "@galoymoney/client"
 const { decodeInvoiceString, getLightningInvoiceExpiryTime } = parsingv2
 
-import React, { useCallback, useContext, useEffect, useRef, useState } from "react"
+import React, { useCallback, useEffect, useRef, useState } from "react"
 import { Alert, AppState, Pressable, Share, TextInput, View } from "react-native"
 import { Button, Text } from "@rneui/themed"
 import EStyleSheet from "react-native-extended-stylesheet"
@@ -23,7 +23,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { logGeneratePaymentRequest } from "@app/utils/analytics"
 import { WalletCurrency } from "@app/types/amounts"
 import crashlytics from "@react-native-firebase/crashlytics"
-import { LocalizationContext } from "@app/store/localization-context"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 
 const styles = EStyleSheet.create({
   container: {
@@ -156,7 +156,7 @@ const ReceiveUsd = () => {
   const { LL } = useI18nContext()
   const { timeLeft, startCountdownTimer, resetCountdownTimer, stopCountdownTimer } =
     useCountdownTimer()
-  const { convertUsdToDisplayCurrency } = useContext(LocalizationContext)
+  const { formatToDisplayCurrency } = useDisplayCurrency()
 
   useEffect(() => {
     if (invoice && usdAmount > 0) {
@@ -385,7 +385,7 @@ const ReceiveUsd = () => {
     }
     return (
       <>
-        <Text style={styles.primaryAmount}>{convertUsdToDisplayCurrency(usdAmount)}</Text>
+        <Text style={styles.primaryAmount}>{formatToDisplayCurrency(usdAmount)}</Text>
       </>
     )
   }
