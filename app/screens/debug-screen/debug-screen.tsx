@@ -1,6 +1,6 @@
 import * as React from "react"
 import { Alert, DevSettings, Text, View } from "react-native"
-import { Button, ButtonGroup } from "react-native-elements"
+import { Button, ButtonGroup } from "@rneui/themed"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { useApolloClient } from "@apollo/client"
 import crashlytics from "@react-native-firebase/crashlytics"

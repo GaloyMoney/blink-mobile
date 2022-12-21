@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { StyleSheet, Text, View } from "react-native"
-import { Button } from "react-native-elements"
+import { Button } from "@rneui/themed"
 import { useMutation } from "@galoymoney/client"
 import { palette } from "@app/theme"
 import { toastShow } from "@app/utils/toast"

@@ -7,7 +7,7 @@ const { decodeInvoiceString, getLightningInvoiceExpiryTime } = parsingv2
 
 import React, { useCallback, useEffect, useRef, useState } from "react"
 import { Alert, AppState, Pressable, Share, TextInput, View } from "react-native"
-import { Button, Text } from "react-native-elements"
+import { Button, Text } from "@rneui/themed"
 import EStyleSheet from "react-native-extended-stylesheet"
 import QRView from "./qr-view"
 import Icon from "react-native-vector-icons/Ionicons"

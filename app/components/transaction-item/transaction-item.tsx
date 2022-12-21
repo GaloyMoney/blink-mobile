@@ -1,7 +1,7 @@
 import * as React from "react"
 import { useState, useEffect } from "react"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { ListItem } from "react-native-elements"
+import { ListItem } from "@rneui/themed"
 import { Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"

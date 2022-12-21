@@ -1,5 +1,5 @@
 import * as React from "react"
-import { ListItem } from "react-native-elements"
+import { ListItem } from "@rneui/themed"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { palette } from "../../theme/palette"
 import { ComponentType } from "../../types/jsx"
@@ -34,7 +34,7 @@ export const LargeButton: ComponentType = ({
   onPress,
   ...props
 }: {
-  icon: React.Component
+  icon: React.ReactNode
   title: string
   onPress: () => void
   style?
@@ -45,10 +45,7 @@ export const LargeButton: ComponentType = ({
     onPress={onPress}
     {...props}
   >
-    {
-      icon && icon
-      // <Avatar avatarStyle={{ borderColor: "black", borderWidth: 1 }}>{icon}</Avatar>
-    }
+    {icon && icon}
     <ListItem.Content>
       <ListItem.Title style={styles.accountViewTitle}>{title}</ListItem.Title>
     </ListItem.Content>

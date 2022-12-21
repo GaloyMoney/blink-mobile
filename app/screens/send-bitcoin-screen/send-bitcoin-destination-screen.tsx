@@ -18,7 +18,7 @@ import {
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { PaymentAmount, WalletCurrency } from "@app/types/amounts"
-import { Button } from "react-native-elements"
+import { Button } from "@rneui/themed"
 import ScanIcon from "@app/assets/icons/scan.svg"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import {

@@ -3,7 +3,7 @@ import { useState } from "react"
 import { RouteProp, useFocusEffect } from "@react-navigation/native"
 import { Text, View } from "react-native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Button, Switch } from "react-native-elements"
+import { Button, Switch } from "@rneui/themed"
 import EStyleSheet from "react-native-extended-stylesheet"
 
 import { Screen } from "../../components/screen"

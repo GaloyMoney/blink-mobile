@@ -16,7 +16,7 @@ import {
 } from "@app/utils/currencyConversion"
 import { PaymentDestinationDisplay } from "@app/components/payment-destination-display"
 import { FakeCurrencyInput } from "react-native-currency-input"
-import { Button } from "react-native-elements"
+import { Button } from "@rneui/themed"
 import NoteIcon from "@app/assets/icons/note.svg"
 import { CommonActions } from "@react-navigation/native"
 import useMainQuery from "@app/hooks/use-main-query"

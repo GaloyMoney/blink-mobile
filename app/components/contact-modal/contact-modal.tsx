@@ -5,7 +5,7 @@ import { Linking, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import ReactNativeModal from "react-native-modal"
 import { openWhatsApp } from "@app/utils/external"
-import { ListItem, Icon } from "react-native-elements"
+import { ListItem, Icon } from "@rneui/themed"
 import { useI18nContext } from "@app/i18n/i18n-react"
 
 const styles = EStyleSheet.create({

@@ -1,6 +1,6 @@
 import * as React from "react"
 import { TextInput } from "react-native"
-import { Input, InputProps } from "react-native-elements"
+import { Input, InputProps } from "@rneui/themed"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { color } from "../../theme"
 import { ComponentType } from "../../types/jsx"
@@ -17,7 +17,7 @@ type GaloyInputProps = {
 
 const GaloyInputFunction = (
   props: InputProps & GaloyInputProps,
-  ref: React.Ref<TextInput>,
+  ref: React.Ref<TextInput> & React.Ref<React.PropsWithChildren<InputProps>>,
 ) => {
   const [isFocused, setIsFocused] = React.useState(props.initIsFocused ?? false)
 

@@ -1,7 +1,7 @@
 import { CustomIcon } from "@app/components/custom-icon"
 import { palette } from "@app/theme"
 import React from "react"
-import { Divider, Icon, ListItem, Text } from "react-native-elements"
+import { Divider, Icon, ListItem, Text } from "@rneui/themed"
 import { testProps } from "../../../utils/testProps"
 
 export const SettingsRow = ({ setting }: { setting: SettingRow }) => {

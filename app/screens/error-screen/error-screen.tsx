@@ -3,7 +3,7 @@
 import React, { useEffect } from "react"
 import { color, palette } from "@app/theme"
 import { Alert, KeyboardAvoidingView, StatusBar, Text, View } from "react-native"
-import { Button } from "react-native-elements"
+import { Button } from "@rneui/themed"
 import EStyleSheet from "react-native-extended-stylesheet"
 import HoneyBadgerShovel from "../welcome-screens/honey-badger-shovel-01.svg"
 import { SafeAreaView } from "react-native-safe-area-context"

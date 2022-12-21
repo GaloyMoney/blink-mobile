@@ -55,6 +55,9 @@ import { loadAllLocales } from "./i18n/i18n-util.sync"
 import TypesafeI18n from "./i18n/i18n-react"
 import { customLocaleDetector } from "./utils/locale-detector"
 import { useAppConfig } from "./hooks"
+import { ThemeProvider } from "@rneui/themed"
+import theme from "./rne-theme/theme"
+
 export const BUILD_VERSION = "build_version"
 
 export const { link: linkNetworkStatusNotifier, useApolloNetworkStatus } =
@@ -301,36 +304,38 @@ export const App = (): JSX.Element => {
 
   return (
     <AuthenticationContext.Provider value={{ isAppLocked, setAppUnlocked, setAppLocked }}>
-      <ApolloProvider client={apolloClient}>
-        <PriceContextProvider>
-          <TypesafeI18n locale={customLocaleDetector()}>
-            <LocalizationContextProvider>
-              <ErrorBoundary FallbackComponent={ErrorScreen}>
-                <NavigationContainer
-                  linking={linking}
-                  onStateChange={(state) => {
-                    const currentRouteName = getActiveRouteName(state)
+      <ThemeProvider theme={theme}>
+        <ApolloProvider client={apolloClient}>
+          <PriceContextProvider>
+            <TypesafeI18n locale={customLocaleDetector()}>
+              <LocalizationContextProvider>
+                <ErrorBoundary FallbackComponent={ErrorScreen}>
+                  <NavigationContainer
+                    linking={linking}
+                    onStateChange={(state) => {
+                      const currentRouteName = getActiveRouteName(state)
 
-                    if (routeName.current !== currentRouteName && currentRouteName) {
-                      analytics().logScreenView({
-                        screen_name: currentRouteName + "Manual",
-                        screen_class: currentRouteName + "Manual",
-                      })
-                      routeName.current = currentRouteName
-                    }
-                  }}
-                >
-                  <RootSiblingParent>
-                    <GlobalErrorToast />
-                    <RootStack />
-                    <Toast />
-                  </RootSiblingParent>
-                </NavigationContainer>
-              </ErrorBoundary>
-            </LocalizationContextProvider>
-          </TypesafeI18n>
-        </PriceContextProvider>
-      </ApolloProvider>
+                      if (routeName.current !== currentRouteName && currentRouteName) {
+                        analytics().logScreenView({
+                          screen_name: currentRouteName + "Manual",
+                          screen_class: currentRouteName + "Manual",
+                        })
+                        routeName.current = currentRouteName
+                      }
+                    }}
+                  >
+                    <RootSiblingParent>
+                      <GlobalErrorToast />
+                      <RootStack />
+                      <Toast />
+                    </RootSiblingParent>
+                  </NavigationContainer>
+                </ErrorBoundary>
+              </LocalizationContextProvider>
+            </TypesafeI18n>
+          </PriceContextProvider>
+        </ApolloProvider>
+      </ThemeProvider>
     </AuthenticationContext.Provider>
   )
 }

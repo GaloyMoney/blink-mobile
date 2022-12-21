@@ -1,7 +1,7 @@
 import { palette } from "@app/theme"
 import React, { useState } from "react"
 import { Platform, TouchableHighlight, View } from "react-native"
-import { Text } from "react-native-elements"
+import { Text } from "@rneui/themed"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TextCurrencyForAmount } from "../text-currency"
 import TransferIcon from "@app/assets/icons/transfer.svg"

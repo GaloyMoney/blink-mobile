@@ -3,7 +3,7 @@ import { bankName } from "@app/screens/send-bitcoin-screen/send-bitcoin-destinat
 import { palette } from "@app/theme"
 import * as React from "react"
 import { Text, View, TouchableOpacity, ScrollView } from "react-native"
-import { Icon } from "react-native-elements"
+import { Icon } from "@rneui/themed"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Markdown from "react-native-markdown-display"
 import Modal from "react-native-modal"
