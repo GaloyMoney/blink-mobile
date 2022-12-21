@@ -68,7 +68,7 @@ type accountLimitsPeriodProps = {
   data: limitValue
 }
 
-const accountLimitsPeriod = {
+const accountLimitsPeriodInHrs = {
   DAILY: "24",
   WEEKLY: "168",
 } as const
@@ -164,9 +164,9 @@ const AccountLimitsPeriod = ({ data }: accountLimitsPeriodProps) => {
   const getLimitDuration = (period: string): LocalizedString => {
     const interval = (Number(period) / (60 * 60)).toString()
     switch (interval) {
-      case accountLimitsPeriod.DAILY:
+      case accountLimitsPeriodInHrs.DAILY:
         return LL.AccountLimitsScreen.perDay()
-      case accountLimitsPeriod.WEEKLY:
+      case accountLimitsPeriodInHrs.WEEKLY:
         return LL.AccountLimitsScreen.perWeek()
       default:
         return null
