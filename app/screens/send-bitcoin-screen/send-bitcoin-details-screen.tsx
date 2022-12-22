@@ -18,7 +18,6 @@ import { usePriceConversion, useUsdBtcAmount } from "@app/hooks"
 import {
   paymentAmountToDollarsOrSats,
   satAmountDisplay,
-  usdAmountDisplay,
 } from "@app/utils/currencyConversion"
 import ReactNativeModal from "react-native-modal"
 import { FakeCurrencyInput } from "react-native-currency-input"
@@ -30,6 +29,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { testProps } from "../../../utils/testProps"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { decodeInvoiceString } from "@galoymoney/client/dist/parsing-v2"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 
 const Styles = StyleSheet.create({
   scrollView: {
@@ -216,6 +216,7 @@ const SendBitcoinDetailsScreen = ({
   const [note, setNote] = useState(initialNote)
   const [fromWallet, setFromWallet] = useState(defaultWallet)
   const { LL } = useI18nContext()
+  const { formatToDisplayCurrency } = useDisplayCurrency()
   const { convertPaymentAmount } = usePriceConversion()
   const {
     btcAmount,
@@ -266,7 +267,7 @@ const SendBitcoinDetailsScreen = ({
       } else {
         setErrorMessage(
           LL.SendBitcoinScreen.amountExceed({
-            balance: usdAmountDisplay(usdWalletBalance / 100),
+            balance: formatToDisplayCurrency(usdWalletBalance / 100),
           }),
         )
       }
@@ -332,7 +333,7 @@ const SendBitcoinDetailsScreen = ({
                     {wallet.walletCurrency === WalletCurrency.BTC ? (
                       <>
                         <Text style={Styles.walletBalanceText}>
-                          {usdAmountDisplay(btcWalletValueInUsd)}
+                          {formatToDisplayCurrency(btcWalletValueInUsd)}
                           {" - "}
                           {satAmountDisplay(btcWalletBalance)}
                         </Text>
@@ -340,7 +341,7 @@ const SendBitcoinDetailsScreen = ({
                     ) : (
                       <>
                         <Text style={Styles.walletBalanceText}>
-                          {usdAmountDisplay(usdWalletBalance / 100)}
+                          {formatToDisplayCurrency(usdWalletBalance / 100)}
                         </Text>
                       </>
                     )}
@@ -450,7 +451,7 @@ const SendBitcoinDetailsScreen = ({
                   {fromWallet.walletCurrency === WalletCurrency.BTC ? (
                     <>
                       <Text style={Styles.walletBalanceText}>
-                        {usdAmountDisplay(btcWalletValueInUsd)}
+                        {formatToDisplayCurrency(btcWalletValueInUsd)}
                         {" - "}
                         {satAmountDisplay(btcWalletBalance)}
                       </Text>
@@ -458,7 +459,7 @@ const SendBitcoinDetailsScreen = ({
                   ) : (
                     <>
                       <Text style={Styles.walletBalanceText}>
-                        {usdAmountDisplay(usdWalletBalance / 100)}
+                        {formatToDisplayCurrency(usdWalletBalance / 100)}
                       </Text>
                     </>
                   )}

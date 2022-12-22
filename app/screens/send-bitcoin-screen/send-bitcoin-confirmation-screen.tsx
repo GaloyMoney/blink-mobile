@@ -12,7 +12,6 @@ import {
   paymentAmountToDollarsOrSats,
   paymentAmountToTextWithUnits,
   satAmountDisplay,
-  usdAmountDisplay,
 } from "@app/utils/currencyConversion"
 import { PaymentDestinationDisplay } from "@app/components/payment-destination-display"
 import { FakeCurrencyInput } from "react-native-currency-input"
@@ -24,6 +23,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { logPaymentAttempt, logPaymentResult } from "@app/utils/analytics"
 import { testProps } from "../../../utils/testProps"
 import crashlytics from "@react-native-firebase/crashlytics"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -215,7 +215,7 @@ const SendBitcoinConfirmationScreen = ({
   const [onChainPaymentSend, { loading: onChainLoading }] =
     useMutation.onChainPaymentSend()
   const { LL } = useI18nContext()
-
+  const { formatToDisplayCurrency } = useDisplayCurrency()
   const isLoading =
     intraledgerLoading ||
     intraLedgerUsdLoading ||
@@ -411,7 +411,7 @@ const SendBitcoinConfirmationScreen = ({
     validAmount = paymentAmountInUsd.amount + fee.amount.amount <= usdWalletBalance
     if (!validAmount) {
       invalidAmountErrorMessage = LL.SendBitcoinScreen.amountExceed({
-        balance: usdAmountDisplay(usdWalletBalance / 100),
+        balance: formatToDisplayCurrency(usdWalletBalance / 100),
       })
     }
   }
@@ -516,13 +516,13 @@ const SendBitcoinConfirmationScreen = ({
                   <Text style={styles.walletBalanceText}>
                     {satAmountDisplay(btcWalletBalance)}
                     {" - "}
-                    {usdAmountDisplay(btcWalletValueInUsd)}
+                    {formatToDisplayCurrency(btcWalletValueInUsd)}
                   </Text>
                 </>
               ) : (
                 <>
                   <Text style={styles.walletBalanceText}>
-                    {usdAmountDisplay(usdWalletBalance / 100)}
+                    {formatToDisplayCurrency(usdWalletBalance / 100)}
                   </Text>
                 </>
               )}

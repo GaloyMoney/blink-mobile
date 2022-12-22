@@ -129,7 +129,7 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
               ) : (
                 <TextCurrencyForAmount
                   style={styles.primaryBalanceText}
-                  currency={"USD"}
+                  currency={"display"}
                   amount={primaryBalance}
                 />
               )}

@@ -5,6 +5,7 @@ import { palette } from "@app/theme"
 import SatsIcon from "../../assets/icons/sat.svg"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { satAmountDisplay, usdAmountDisplay } from "@app/utils/currencyConversion"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 type Props = {
   amount: number
   currency: CurrencyType
@@ -29,6 +30,10 @@ export const TextCurrencyForAmount: ComponentType = ({
   satsIconSize,
   iconColor = palette.black,
 }: Props) => {
+  const { formatToDisplayCurrency } = useDisplayCurrency()
+  if (currency === "display") {
+    return <Text style={style}>{formatToDisplayCurrency(amount)}</Text>
+  }
   if (currency === "USD") {
     const amountDisplay = Number.isNaN(amount) ? "..." : usdAmountDisplay(amount)
     return <Text style={style}>{amountDisplay}</Text>

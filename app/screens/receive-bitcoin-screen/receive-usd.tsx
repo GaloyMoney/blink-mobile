@@ -13,7 +13,6 @@ import QRView from "./qr-view"
 import Icon from "react-native-vector-icons/Ionicons"
 import { FakeCurrencyInput } from "react-native-currency-input"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
-import { usdAmountDisplay } from "@app/utils/currencyConversion"
 import CalculatorIcon from "@app/assets/icons/calculator.svg"
 import ChevronIcon from "@app/assets/icons/chevron.svg"
 import NoteIcon from "@app/assets/icons/note.svg"
@@ -24,6 +23,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { logGeneratePaymentRequest } from "@app/utils/analytics"
 import { WalletCurrency } from "@app/types/amounts"
 import crashlytics from "@react-native-firebase/crashlytics"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 
 const styles = EStyleSheet.create({
   container: {
@@ -156,6 +156,7 @@ const ReceiveUsd = () => {
   const { LL } = useI18nContext()
   const { timeLeft, startCountdownTimer, resetCountdownTimer, stopCountdownTimer } =
     useCountdownTimer()
+  const { formatToDisplayCurrency } = useDisplayCurrency()
 
   useEffect(() => {
     if (invoice && usdAmount > 0) {
@@ -384,7 +385,7 @@ const ReceiveUsd = () => {
     }
     return (
       <>
-        <Text style={styles.primaryAmount}>{usdAmountDisplay(usdAmount)}</Text>
+        <Text style={styles.primaryAmount}>{formatToDisplayCurrency(usdAmount)}</Text>
       </>
     )
   }

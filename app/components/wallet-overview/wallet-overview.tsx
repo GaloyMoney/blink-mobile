@@ -142,7 +142,7 @@ const WalletOverview = ({
         >
           <TextCurrencyForAmount
             amount={btcWalletValueInUsd}
-            currency={"USD"}
+            currency={"display"}
             style={styles.textPrimary}
           />
           <TextCurrencyForAmount
