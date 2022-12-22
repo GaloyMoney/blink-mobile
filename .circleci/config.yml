@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   gh: circleci/github-cli@2.0
+  queue: eddiewebb/queue@1.8.4
 
 jobs:
   test_android:
@@ -196,9 +197,11 @@ jobs:
 
 workflows:
   mobile:
-    serial: true
     jobs:
+      - queue/block_workflow
       - test_ios:
+          requires:
+            - queue/block_workflow
           filters:
             tags:
               only: /^[0-9]+\.[0-9]+\.[0-9]+/
@@ -213,6 +216,8 @@ workflows:
             branches:
               ignore: /.*/
       - test_android:
+          requires:
+            - queue/block_workflow
           filters:
             tags:
               only: /^[0-9]+\.[0-9]+\.[0-9]+/
@@ -227,13 +232,17 @@ workflows:
             branches:
               ignore: /.*/
   main-branch:
-    serial: true
     jobs:
+      - queue/block_workflow
       - test_android:
+          requires:
+            - queue/block_workflow
           filters:
             branches:
               only: main
       - test_ios:
+          requires:
+            - queue/block_workflow
           filters:
             branches:
               only: main
