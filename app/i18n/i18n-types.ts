@@ -2035,6 +2035,14 @@ type RootTranslation = {
 		 * Failed to fetch lnurl invoice
 		 */
 		failedToFetchLnurlInvoice: string
+		/**
+		 * The lnurl server responded with an invoice with an incorrect amount.
+		 */
+		lnurlInvoiceIncorrectAmount: string
+		/**
+		 * The lnurl server responded with an invoice with an incorrect description hash.
+		 */
+		lnurlInvoiceIncorrectDescription: string
 	}
 	SettingsScreen: {
 		/**
@@ -4700,6 +4708,14 @@ export type TranslationFunctions = {
 		 * Failed to fetch lnurl invoice
 		 */
 		failedToFetchLnurlInvoice: () => LocalizedString
+		/**
+		 * The lnurl server responded with an invoice with an incorrect amount.
+		 */
+		lnurlInvoiceIncorrectAmount: () => LocalizedString
+		/**
+		 * The lnurl server responded with an invoice with an incorrect description hash.
+		 */
+		lnurlInvoiceIncorrectDescription: () => LocalizedString
 	}
 	SettingsScreen: {
 		/**
