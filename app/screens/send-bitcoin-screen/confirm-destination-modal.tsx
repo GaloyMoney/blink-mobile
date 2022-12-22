@@ -1,7 +1,7 @@
 import { palette } from "@app/theme"
 import React, { Dispatch, useCallback, useState } from "react"
 import { Text, View } from "react-native"
-import { Button, CheckBox } from "@rneui/themed"
+import { Button, CheckBox } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Modal from "react-native-modal"
 import { bankName, lnDomain } from "./send-bitcoin-destination-screen"

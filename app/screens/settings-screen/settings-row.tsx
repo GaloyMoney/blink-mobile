@@ -1,7 +1,7 @@
 import { CustomIcon } from "@app/components/custom-icon"
 import { palette } from "@app/theme"
 import React from "react"
-import { Divider, Icon, ListItem, Text } from "@rneui/themed"
+import { Divider, Icon, ListItem, Text } from "@rneui/base"
 import { testProps } from "../../../utils/testProps"
 
 export const SettingsRow = ({ setting }: { setting: SettingRow }) => {

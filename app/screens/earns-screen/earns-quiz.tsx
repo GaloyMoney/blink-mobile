@@ -2,7 +2,7 @@
 import * as React from "react"
 import { useEffect, useState } from "react"
 import { StatusBar, Text, View } from "react-native"
-import { Button } from "@rneui/themed"
+import { Button } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { ScrollView, TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Modal from "react-native-modal"

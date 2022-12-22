@@ -2,7 +2,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
 import React from "react"
 import { Modal, Platform, StatusBar, TouchableWithoutFeedback, View } from "react-native"
-import { Text } from "@rneui/themed"
+import { Text } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
 
 const wallets = [
