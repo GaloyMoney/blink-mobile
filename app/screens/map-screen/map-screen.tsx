@@ -5,7 +5,7 @@ import * as React from "react"
 import { useCallback } from "react"
 // eslint-disable-next-line react-native/split-platform-components
 import { PermissionsAndroid, StyleSheet, Text, View } from "react-native"
-import { Button } from "@rneui/themed"
+import { Button } from "@rneui/base"
 import MapView, { Callout, CalloutSubview, Marker } from "react-native-maps"
 import { Screen } from "../../components/screen"
 import { PrimaryStackParamList } from "../../navigation/stack-param-lists"

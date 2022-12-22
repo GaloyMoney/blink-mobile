@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import * as React from "react"
-import { PropsWithChildren, Ref, useCallback, useEffect, useRef, useState } from "react"
+import { LegacyRef, Ref, useCallback, useEffect, useRef, useState } from "react"
 import {
   ActivityIndicator,
   Alert,
@@ -11,7 +11,7 @@ import {
   TextInput,
   View,
 } from "react-native"
-import { Button, Input, InputProps } from "@rneui/themed"
+import { Button, Input } from "@rneui/base"
 import { FetchResult } from "@apollo/client"
 import EStyleSheet from "react-native-extended-stylesheet"
 import PhoneInput from "react-native-phone-number-input"
@@ -393,7 +393,7 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
   const [secondsRemaining, setSecondsRemaining] = useState<number>(60)
   const { LL } = useI18nContext()
   const { phone } = route.params
-  const inputRef: Ref<TextInput> & Ref<PropsWithChildren<InputProps>> = useRef(null)
+  const inputRef: LegacyRef<Input> & Ref<TextInput> = useRef(null)
 
   useEffect(() => {
     setTimeout(() => inputRef?.current?.focus(), 150)

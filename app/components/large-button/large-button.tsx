@@ -1,5 +1,5 @@
 import * as React from "react"
-import { ListItem } from "@rneui/themed"
+import { ListItem } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { palette } from "../../theme/palette"
 import { ComponentType } from "../../types/jsx"

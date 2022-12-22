@@ -4,7 +4,7 @@ import { getFullUri, TYPE_LIGHTNING_BTC, TYPE_BITCOIN_ONCHAIN } from "@app/utils
 import { GaloyGQL, useMutation } from "@galoymoney/client"
 import React, { useCallback, useEffect, useState } from "react"
 import { Alert, Pressable, Share, TextInput, View } from "react-native"
-import { Button, Text } from "@rneui/themed"
+import { Button, Text } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
 import QRView from "./qr-view"
 import Icon from "react-native-vector-icons/Ionicons"
