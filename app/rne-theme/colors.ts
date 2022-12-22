@@ -27,6 +27,16 @@ const colors = {
   grey7: "#929A0",
   grey8: "AEAEB8",
   grey10: "F0F0F2",
+  horizonBlue: {
+    colors: ["#4453E2", "#5269FF"],
+    start: { x: 0, y: 0.5 },
+    end: { x: 1, y: 0.5 },
+  },
+  verticalBlue: {
+    colors: ["#5269FF", "#4453E2"],
+    start: { x: 0.5, y: 0 },
+    end: { x: 0.5, y: 1 },
+  },
 }
 
 export default colors

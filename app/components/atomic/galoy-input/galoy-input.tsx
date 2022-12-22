@@ -2,8 +2,8 @@ import * as React from "react"
 import { TextInput } from "react-native"
 import { Input, InputProps } from "@rneui/themed"
 import EStyleSheet from "react-native-extended-stylesheet"
-import { color } from "../../theme"
-import { ComponentType } from "../../types/jsx"
+import { color } from "../../../theme"
+import { ComponentType } from "../../../types/jsx"
 
 const styles = EStyleSheet.create({
   inputContainerFocused: {

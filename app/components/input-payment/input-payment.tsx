@@ -7,7 +7,7 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { palette } from "../../theme/palette"
 import type { ComponentType } from "../../types/jsx"
 import { currencyToText, textToCurrency } from "../../utils/currencyConversion"
-import { GaloyInput } from "../galoy-input"
+import { GaloyInput } from "../atomic/galoy-input"
 
 const digitLimit = 10
 
