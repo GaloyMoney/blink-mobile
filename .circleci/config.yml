@@ -196,6 +196,7 @@ jobs:
 
 workflows:
   mobile:
+    serial: true
     jobs:
       - test_ios:
           filters:
@@ -226,6 +227,7 @@ workflows:
             branches:
               ignore: /.*/
   main-branch:
+    serial: true
     jobs:
       - test_android:
           filters:
