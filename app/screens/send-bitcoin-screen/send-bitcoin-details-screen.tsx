@@ -29,6 +29,7 @@ import { Button } from "@rneui/themed"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { testProps } from "../../../utils/testProps"
 import crashlytics from "@react-native-firebase/crashlytics"
+import { decodeInvoiceString } from "@galoymoney/client/dist/parsing-v2"
 
 const Styles = StyleSheet.create({
   scrollView: {
@@ -209,6 +210,7 @@ const SendBitcoinDetailsScreen = ({
     btcWalletBalance,
     btcWalletValueInUsd,
     usdWalletBalance,
+    network,
   } = useMainQuery()
 
   const [note, setNote] = useState(initialNote)
@@ -365,9 +367,24 @@ const SendBitcoinDetailsScreen = ({
           tokens: btcAmount.amount as Satoshis,
         })
         invoice = result.invoice
+        const decodedInvoice = decodeInvoiceString(invoice, network)
+
+        if (
+          Math.round(Number(decodedInvoice.millisatoshis) / 1000) !== btcAmount.amount
+        ) {
+          setErrorMessage(LL.SendBitcoinScreen.lnurlInvoiceIncorrectAmount())
+          return
+        }
+
+        const decodedDescriptionHash = decodedInvoice.tags.find(
+          (tag) => tag.tagName === "purpose_commit_hash",
+        )?.data
+        if (lnurlParams.metadataHash !== decodedDescriptionHash) {
+          setErrorMessage(LL.SendBitcoinScreen.lnurlInvoiceIncorrectDescription())
+          return
+        }
       } catch (error) {
         crashlytics().recordError(error)
-        console.error(error)
         setErrorMessage(LL.SendBitcoinScreen.failedToFetchLnurlInvoice())
         return
       }

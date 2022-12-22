@@ -21,6 +21,7 @@ module.exports = {
     "typesafe-i18n/react": "typesafe-i18n/react/index.cjs",
     "typesafe-i18n/formatters": "typesafe-i18n/formatters/index.cjs",
     "typesafe-i18n/detectors": "typesafe-i18n/detectors/index.cjs",
+    "axios": "axios/dist/node/axios.cjs",
   },
   transformIgnorePatterns: [
     "node_modules/(?!(react-native" +
