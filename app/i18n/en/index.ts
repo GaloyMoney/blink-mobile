@@ -35,6 +35,17 @@ const en: BaseTranslation = {
     unlock: "Unlock",
     usePin: "Use PIN",
   },
+  AccountLimitsScreen: {
+    receive: "Receive",
+    withdraw: "Withdraw",
+    perDay: "per day",
+    perWeek: "per week",
+    unlimited: "Unlimited",
+    remaining: "Remaining",
+    stablesatTransfers: "Stablesat Transfers",
+    internalSend: "Send to BBW User",
+    error: "Unable to fetch limits at this time",
+  },
   BalanceHeader: {
     currentBalance: "Current Balance",
     hiddenBalanceToolTip: "Tap to reveal your balance",
@@ -704,6 +715,7 @@ const en: BaseTranslation = {
   },
   common: {
     account: "Account",
+    accountLimits: "Account Limits",
     activateWallet: "Activate Wallet",
     amountRequired: "Amount is required",
     back: "Back",
