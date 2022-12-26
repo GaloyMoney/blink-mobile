@@ -161,6 +161,11 @@ export const AccountLimitsScreen = () => {
 const AccountLimitsPeriod = ({ data }: accountLimitsPeriodProps) => {
   const { LL } = useI18nContext()
 
+  const convertCentToUSD = (centAmount: string) => {
+    const usdAmount = Number(centAmount) / 100
+    return usdAmountDisplay(usdAmount, 0)
+  }
+
   const getLimitDuration = (period: string): LocalizedString => {
     const interval = (Number(period) / (60 * 60)).toString()
     switch (interval) {
@@ -177,15 +182,12 @@ const AccountLimitsPeriod = ({ data }: accountLimitsPeriodProps) => {
     <View style={styles.content}>
       <View style={styles.contentTextBox}>
         <Text adjustsFontSizeToFit style={styles.valueRemaining}>
-          {`${usdAmountDisplay(
-            Number(data.remainingLimit),
-            0,
+          {`${convertCentToUSD(
+            data.remainingLimit,
           )} ${LL.AccountLimitsScreen.remaining().toLocaleLowerCase()}`}
         </Text>
         <Text adjustsFontSizeToFit style={styles.valueTotal}>
-          {`${usdAmountDisplay(Number(data.totalLimit), 0)} ${getLimitDuration(
-            data.interval,
-          )}`}
+          {`${convertCentToUSD(data.totalLimit)} ${getLimitDuration(data.interval)}`}
         </Text>
       </View>
     </View>
