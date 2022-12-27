@@ -101,7 +101,7 @@ export type RootStackParamList = {
   transactionHistory: undefined
   Earn: undefined
   accountScreen: undefined
-  accountLimitsScreen: undefined
+  transactionLimitsScreen: undefined
 }
 
 export type ContactStackParamList = {

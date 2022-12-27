@@ -73,7 +73,7 @@ const accountLimitsPeriodInHrs = {
   WEEKLY: "168",
 } as const
 
-export const AccountLimitsScreen = () => {
+export const TransactionLimitsScreen = () => {
   const { LL } = useI18nContext()
   const { limits, loading, error, refetch } = useAccountLimitsQuery()
 
@@ -82,7 +82,7 @@ export const AccountLimitsScreen = () => {
       <Screen>
         <View style={styles.errorWrapper}>
           <Text adjustsFontSizeToFit style={styles.errorText}>
-            {LL.AccountLimitsScreen.error()}
+            {LL.TransactionLimitsScreen.error()}
           </Text>
           <Button
             title="reload"
@@ -110,12 +110,12 @@ export const AccountLimitsScreen = () => {
       <View style={styles.container}>
         <View style={styles.limitWrapper}>
           <Text adjustsFontSizeToFit style={styles.valueFieldType}>
-            {LL.AccountLimitsScreen.receive()}
+            {LL.TransactionLimitsScreen.receive()}
           </Text>
           <View style={styles.content}>
             <View style={styles.contentTextBox}>
               <Text adjustsFontSizeToFit style={styles.valueRemaining}>
-                {LL.AccountLimitsScreen.unlimited()}
+                {LL.TransactionLimitsScreen.unlimited()}
               </Text>
             </View>
           </View>
@@ -125,10 +125,10 @@ export const AccountLimitsScreen = () => {
 
         <View style={styles.limitWrapper}>
           <Text adjustsFontSizeToFit style={styles.valueFieldType}>
-            {LL.AccountLimitsScreen.withdraw()}
+            {LL.TransactionLimitsScreen.withdraw()}
           </Text>
           {limits?.withdrawal.map((data, index: number) => {
-            return <AccountLimitsPeriod data={data} key={index} />
+            return <TransactionLimitsPeriod data={data} key={index} />
           })}
         </View>
 
@@ -136,10 +136,10 @@ export const AccountLimitsScreen = () => {
 
         <View style={styles.limitWrapper}>
           <Text adjustsFontSizeToFit style={styles.valueFieldType}>
-            {LL.AccountLimitsScreen.internalSend()}
+            {LL.TransactionLimitsScreen.internalSend()}
           </Text>
           {limits?.internalSend.map((data, index: number) => {
-            return <AccountLimitsPeriod data={data} key={index} />
+            return <TransactionLimitsPeriod data={data} key={index} />
           })}
         </View>
 
@@ -147,10 +147,10 @@ export const AccountLimitsScreen = () => {
 
         <View style={styles.limitWrapper}>
           <Text adjustsFontSizeToFit style={styles.valueFieldType}>
-            {LL.AccountLimitsScreen.stablesatTransfers()}
+            {LL.TransactionLimitsScreen.stablesatTransfers()}
           </Text>
           {limits?.convert.map((data, index: number) => {
-            return <AccountLimitsPeriod data={data} key={index} />
+            return <TransactionLimitsPeriod data={data} key={index} />
           })}
         </View>
       </View>
@@ -158,16 +158,21 @@ export const AccountLimitsScreen = () => {
   )
 }
 
-const AccountLimitsPeriod = ({ data }: accountLimitsPeriodProps) => {
+const TransactionLimitsPeriod = ({ data }: accountLimitsPeriodProps) => {
   const { LL } = useI18nContext()
+
+  const convertCentToUSD = (centAmount: string) => {
+    const usdAmount = Number(centAmount) / 100
+    return usdAmountDisplay(usdAmount, 0)
+  }
 
   const getLimitDuration = (period: string): LocalizedString => {
     const interval = (Number(period) / (60 * 60)).toString()
     switch (interval) {
       case accountLimitsPeriodInHrs.DAILY:
-        return LL.AccountLimitsScreen.perDay()
+        return LL.TransactionLimitsScreen.perDay()
       case accountLimitsPeriodInHrs.WEEKLY:
-        return LL.AccountLimitsScreen.perWeek()
+        return LL.TransactionLimitsScreen.perWeek()
       default:
         return null
     }
@@ -177,15 +182,12 @@ const AccountLimitsPeriod = ({ data }: accountLimitsPeriodProps) => {
     <View style={styles.content}>
       <View style={styles.contentTextBox}>
         <Text adjustsFontSizeToFit style={styles.valueRemaining}>
-          {`${usdAmountDisplay(
-            Number(data.remainingLimit),
-            0,
-          )} ${LL.AccountLimitsScreen.remaining().toLocaleLowerCase()}`}
+          {`${convertCentToUSD(
+            data.remainingLimit,
+          )} ${LL.TransactionLimitsScreen.remaining().toLocaleLowerCase()}`}
         </Text>
         <Text adjustsFontSizeToFit style={styles.valueTotal}>
-          {`${usdAmountDisplay(Number(data.totalLimit), 0)} ${getLimitDuration(
-            data.interval,
-          )}`}
+          {`${convertCentToUSD(data.totalLimit)} ${getLimitDuration(data.interval)}`}
         </Text>
       </View>
     </View>

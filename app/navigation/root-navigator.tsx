@@ -69,7 +69,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { logEnterBackground, logEnterForeground } from "@app/utils/analytics"
 import { GaloyAddressScreen } from "@app/screens/galoy-address-screen"
 import { AccountScreen } from "@app/screens/settings-screen/account-screen"
-import { AccountLimitsScreen } from "@app/screens/settings-screen/account-limits-screen"
+import { TransactionLimitsScreen } from "@app/screens/settings-screen/transaction-limits-screen"
 
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
 PushNotification.configure({
@@ -476,10 +476,10 @@ export const RootStack: NavigatorType = () => {
         }}
       />
       <RootNavigator.Screen
-        name="accountLimitsScreen"
-        component={AccountLimitsScreen}
+        name="transactionLimitsScreen"
+        component={TransactionLimitsScreen}
         options={{
-          title: LL.common.accountLimits(),
+          title: LL.common.transactionLimits(),
         }}
       />
     </RootNavigator.Navigator>

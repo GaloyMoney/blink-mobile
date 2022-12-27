@@ -140,6 +140,14 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       greyed: !hasToken,
     },
     {
+      category: LL.common.transactionLimits(),
+      id: "limits",
+      icon: "custom-info-icon",
+      action: () => navigation.navigate("transactionLimitsScreen"),
+      enabled: hasToken,
+      greyed: !hasToken,
+    },
+    {
       category: LL.common.language(),
       icon: "ios-language",
       id: "language",

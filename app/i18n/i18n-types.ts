@@ -140,44 +140,6 @@ type RootTranslation = {
 		 */
 		usePin: string
 	}
-	AccountLimitsScreen: {
-		/**
-		 * Receive
-		 */
-		receive: string
-		/**
-		 * Withdraw
-		 */
-		withdraw: string
-		/**
-		 * per day
-		 */
-		perDay: string
-		/**
-		 * per week
-		 */
-		perWeek: string
-		/**
-		 * Unlimited
-		 */
-		unlimited: string
-		/**
-		 * Remaining
-		 */
-		remaining: string
-		/**
-		 * Stablesat Transfers
-		 */
-		stablesatTransfers: string
-		/**
-		 * Send to BBW User
-		 */
-		internalSend: string
-		/**
-		 * Unable to fetch limits at this time
-		 */
-		error: string
-	}
 	BalanceHeader: {
 		/**
 		 * Current Balance
@@ -2199,6 +2161,44 @@ type RootTranslation = {
 		 */
 		spent: string
 	}
+	TransactionLimitsScreen: {
+		/**
+		 * Receive
+		 */
+		receive: string
+		/**
+		 * Withdraw
+		 */
+		withdraw: string
+		/**
+		 * per day
+		 */
+		perDay: string
+		/**
+		 * per week
+		 */
+		perWeek: string
+		/**
+		 * Unlimited
+		 */
+		unlimited: string
+		/**
+		 * Remaining
+		 */
+		remaining: string
+		/**
+		 * Stablesat Transfers
+		 */
+		stablesatTransfers: string
+		/**
+		 * Send to BBW User
+		 */
+		internalSend: string
+		/**
+		 * Unable to fetch limits at this time
+		 */
+		error: string
+	}
 	TransactionScreen: {
 		/**
 		 * No transaction to show
@@ -2346,9 +2346,9 @@ type RootTranslation = {
 		 */
 		account: string
 		/**
-		 * Account Limits
+		 * Transaction Limits
 		 */
-		accountLimits: string
+		transactionLimits: string
 		/**
 		 * Activate Wallet
 		 */
@@ -2879,44 +2879,6 @@ export type TranslationFunctions = {
 		 * Use PIN
 		 */
 		usePin: () => LocalizedString
-	}
-	AccountLimitsScreen: {
-		/**
-		 * Receive
-		 */
-		receive: () => LocalizedString
-		/**
-		 * Withdraw
-		 */
-		withdraw: () => LocalizedString
-		/**
-		 * per day
-		 */
-		perDay: () => LocalizedString
-		/**
-		 * per week
-		 */
-		perWeek: () => LocalizedString
-		/**
-		 * Unlimited
-		 */
-		unlimited: () => LocalizedString
-		/**
-		 * Remaining
-		 */
-		remaining: () => LocalizedString
-		/**
-		 * Stablesat Transfers
-		 */
-		stablesatTransfers: () => LocalizedString
-		/**
-		 * Send to BBW User
-		 */
-		internalSend: () => LocalizedString
-		/**
-		 * Unable to fetch limits at this time
-		 */
-		error: () => LocalizedString
 	}
 	BalanceHeader: {
 		/**
@@ -4913,6 +4875,44 @@ export type TranslationFunctions = {
 		 */
 		spent: () => LocalizedString
 	}
+	TransactionLimitsScreen: {
+		/**
+		 * Receive
+		 */
+		receive: () => LocalizedString
+		/**
+		 * Withdraw
+		 */
+		withdraw: () => LocalizedString
+		/**
+		 * per day
+		 */
+		perDay: () => LocalizedString
+		/**
+		 * per week
+		 */
+		perWeek: () => LocalizedString
+		/**
+		 * Unlimited
+		 */
+		unlimited: () => LocalizedString
+		/**
+		 * Remaining
+		 */
+		remaining: () => LocalizedString
+		/**
+		 * Stablesat Transfers
+		 */
+		stablesatTransfers: () => LocalizedString
+		/**
+		 * Send to BBW User
+		 */
+		internalSend: () => LocalizedString
+		/**
+		 * Unable to fetch limits at this time
+		 */
+		error: () => LocalizedString
+	}
 	TransactionScreen: {
 		/**
 		 * No transaction to show
@@ -5055,9 +5055,9 @@ export type TranslationFunctions = {
 		 */
 		account: () => LocalizedString
 		/**
-		 * Account Limits
+		 * Transaction Limits
 		 */
-		accountLimits: () => LocalizedString
+		transactionLimits: () => LocalizedString
 		/**
 		 * Activate Wallet
 		 */
