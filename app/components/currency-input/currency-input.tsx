@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import { TextInput, View } from "react-native"
 
 interface CurrencyInputProps {
@@ -10,46 +10,64 @@ export const CurrencyInput: React.FC<CurrencyInputProps> = ({
   currencyType,
   onValueChange,
 }) => {
-  const [currencySymbol, setCurrencySymbol] = useState(() => {
+  const inputRef = useRef(null)
+
+  const [inputValue, setInputValue] = useState(() => {
+    if (currencyType === "BTC") {
+      return "0 sats"
+    }
     return new Intl.NumberFormat("en-US", {
       style: "currency",
       currency: currencyType,
-    })
-      .format(1)
-      .charAt(0)
+    }).format(0)
   })
-  const [inputValue, setInputValue] = useState(`${currencySymbol}0.00`)
 
   useEffect(() => {
-    setCurrencySymbol(
-      new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: currencyType,
-      })
-        .format(1)
-        .charAt(0),
-    )
+    if (currencyType === "BTC") {
+      setInputValue("0 sats")
+    } else {
+      setInputValue(
+        new Intl.NumberFormat("en-US", {
+          style: "currency",
+          currency: currencyType,
+        }).format(0),
+      )
+    }
   }, [currencyType])
 
   const handleChangeText = (text: string) => {
     // Strip out non-numeric characters from the input value
+    let formattedText
     const strippedText = text.replace(/[^\d.]/g, "")
-    // Format the input value with commas as thousand separators
-    const formattedText = new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: currencyType,
-    }).format(Number(strippedText) / 100)
+    if (currencyType === "BTC") {
+      formattedText = `${new Intl.NumberFormat("en-US", {
+        useGrouping: true,
+      }).format(Number(strippedText))} sats`
+    } else {
+      // Format the input value with commas as thousand separators
+      formattedText = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: currencyType,
+      }).format(Number(strippedText) / 100)
+    }
     setInputValue(`${formattedText}`)
     onValueChange(Number(strippedText))
+  }
+
+  const handleSelectionChange = (event) => {
+    const { selection } = event.nativeEvent
+    inputRef.current.setNativeProps({ selection })
   }
 
   return (
     <View>
       <TextInput
+        ref={inputRef}
         value={inputValue}
         onChangeText={handleChangeText}
         keyboardType="numeric"
         testID="currency-input"
+        onSelectionChange={handleSelectionChange}
       />
     </View>
   )

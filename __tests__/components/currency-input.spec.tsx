@@ -56,4 +56,15 @@ describe("CurrencyInput", () => {
     fireEvent.changeText(input, "$123,456a789b0c")
     expect(onValueChange).toHaveBeenCalledWith(1234567890)
   })
+
+  it("supports BTC as a valid currency and accepts sats as input", async () => {
+    const onValueChange = jest.fn()
+    const { getByTestId } = render(
+      <CurrencyInput currencyType="BTC" onValueChange={onValueChange} />,
+    )
+    const input = getByTestId("currency-input")
+    fireEvent.changeText(input, "12345")
+    expect(onValueChange).toHaveBeenCalledWith(12345)
+    expect(input.props.value).toBe("12,345 sats")
+  })
 })
