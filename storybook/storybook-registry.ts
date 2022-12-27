@@ -13,5 +13,6 @@ require("../app/components/atomic/galoy-checkbox-button/galoy-checkbox-button.st
 require("./defaults/text.story")
 require("./defaults/colors.story")
 require("../app/components/atomic/galoy-input/galoy-input.story")
+require("../app/components/currency-input/currency-input.story")
 
 export {}
