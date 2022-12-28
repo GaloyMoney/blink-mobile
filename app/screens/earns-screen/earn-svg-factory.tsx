@@ -1,6 +1,5 @@
 import * as React from "react"
-import { StyleSheet, Dimensions } from "react-native"
-import LottieView from "lottie-react-native"
+import { Dimensions, Text } from "react-native"
 import WhatIsBitcoinSVG from "./01-so-what-exactly-is-bitcoin-01.svg"
 import SatSVG from "./02-i-just-earned-a-sat-01.svg"
 import WhereBitcoinExistSVG from "./03-where-do-the-bitcoins-exist-01.svg"
@@ -17,6 +16,7 @@ import MoneyIsImportant from "./05-money-is-important-01.svg"
 import MoneyImportantGovernement from "./06-important-to-governments-03.svg"
 
 import WhatIsFiat from "./01-fiat-currency-01.svg"
+import WhyCareAboutFiatMoney from "./02-i-trust-my-government-01.svg"
 import GovernementCanPrintMoney from "./03-print-unlimited-money-01.svg"
 import GovernementCanPrintMoneyDark from "./03-print-unlimited-money-02.svg"
 import FiatLosesValueOverTime from "./04-fiat-money-loses-value-01.svg"
@@ -35,17 +35,11 @@ import SecurePartOneDark from "./05-secure-part-i-02.svg"
 import SecurePartTwo from "./06-secure-part-ii-01.svg"
 import SecurePartTwoDark from "./06-secure-part-ii-02.svg"
 
-import lottieTest from "./02-i-trust-my-government-02.json"
-
 interface ISVGs {
   name: string
   width?: number
   theme?: "dark" | "light"
 }
-
-const styles = StyleSheet.create({
-  lottieContainer: { alignSelf: "center" },
-})
 
 export const SVGs = ({ name, width, theme }: ISVGs): React.ReactNode => {
   const { width: screenWidth } = Dimensions.get("window")
@@ -87,7 +81,8 @@ export const SVGs = ({ name, width, theme }: ISVGs): React.ReactNode => {
 
     case "WhatIsFiat":
       return <WhatIsFiat width={rWidth} />
-    // case "whyCareAboutFiatMoney": return <WhyCareAboutFiatMoney width={rWidth} />
+    case "whyCareAboutFiatMoney":
+      return <WhyCareAboutFiatMoney width={rWidth} />
     case "GovernementCanPrintMoney":
       return theme === "dark" ? (
         <GovernementCanPrintMoneyDark width={rWidth} />
@@ -137,14 +132,6 @@ export const SVGs = ({ name, width, theme }: ISVGs): React.ReactNode => {
       )
 
     default:
-      return (
-        <LottieView
-          source={lottieTest}
-          style={[styles.lottieContainer, { width: rWidth }]}
-          autoPlay
-          loop
-        />
-      )
-    // default: return <Text>{name} does not exist</Text>
+      return <Text>{name} does not exist</Text>
   }
 }
