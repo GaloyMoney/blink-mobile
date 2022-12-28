@@ -3,7 +3,7 @@
 import { Translation } from "../i18n-types"
 import en from '../en'
 import rawEs from '../raw-i18n/translations/es.json'
-import { merge } from 'lodash'
+import merge from "lodash.merge"
 
 /* eslint-disable no-template-curly-in-string */
 /* eslint-disable max-lines */
