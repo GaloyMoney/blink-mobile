@@ -94,7 +94,7 @@ export type RootStackParamList = {
   }
   Profile: undefined
   receiveBitcoin: {
-    receiveCurrency?: WalletCurrency
+    receiveCurrency?: GaloyGQL.WalletCurrency
   }
   phoneValidation: undefined
   transactionDetail: TransactionDetail
