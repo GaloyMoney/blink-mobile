@@ -11,5 +11,6 @@ require("../app/components/atomic/galoy-currency-bubble/galoy-currency-bubble.st
 require("../app/components/atomic/galoy-button-field/galoy-button-field.story")
 require("./defaults/text.story")
 require("./defaults/colors.story")
+require("../app/components/atomic/galoy-input/galoy-input.story")
 
 export {}
