@@ -14,6 +14,7 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import ReceiveBtc from "./receive-btc"
 import ReceiveUsd from "./receive-usd"
+import { GaloyGQL } from "@galoymoney/client"
 
 const styles = EStyleSheet.create({
   container: {
@@ -65,10 +66,11 @@ const ReceiveBitcoinScreen = ({
 }: StackScreenProps<RootStackParamList, "receiveBitcoin">) => {
   const { hasToken } = useToken()
   const { receiveCurrency: initialReceiveCurrency } = route.params || {}
+  const { defaultWallet } = useMainQuery()
 
   const { usdWalletId } = useMainQuery()
-  const [receiveCurrency, setReceiveCurrency] = useState<WalletCurrency>(
-    initialReceiveCurrency || WalletCurrency.BTC,
+  const [receiveCurrency, setReceiveCurrency] = useState<GaloyGQL.WalletCurrency>(
+    initialReceiveCurrency || defaultWallet.walletCurrency,
   )
   const { LL } = useI18nContext()
   const isFocused = useIsFocused()
