@@ -7,5 +7,6 @@ require("../app/components/atomic/galoy-secondary-button/galoy-secondary-button.
 require("../app/components/atomic/galoy-secondary-button/galoy-secondary-button.story")
 require("../app/components/atomic/galoy-icon/galoy-icon.story")
 require("../app/components/atomic/galoy-icon-button/galoy-icon-button.story")
+require("../app/components/atomic/galoy-currency-bubble/galoy-currency-bubble.story")
 
 export {}
