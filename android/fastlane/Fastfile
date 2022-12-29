@@ -42,8 +42,8 @@ platform :android do
   desc "Deploy a new version to both Play Store and Huawei Store"
   lane :beta do
     build
-    play_store_release
     huawei_release
+    play_store_release
   end
 
   desc "Deploy a new version to the Google Play"
@@ -62,7 +62,7 @@ platform :android do
       client_id: ENV["HUAWEI_CLIENT_ID"],
       client_secret: ENV["HAUWEI_CLIENT_SECRET"],
       app_id: ENV["HUAWEI_APP_ID"],
-      apk_path: "./app/build/outputs/apk/release/app-release.apk",
+      apk_path: "./app/build/outputs/apk/release/app-universal-release.apk",
       phase_wise_release: true,
       phase_release_percent: "1",
       phase_release_description: "Phased Release",
