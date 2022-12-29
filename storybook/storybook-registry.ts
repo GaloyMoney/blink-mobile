@@ -5,5 +5,6 @@ require("../app/components/wallet-summary/wallet-summary.story")
 require("../app/components/atomic/galoy-primary-button/galoy-primary-button.story")
 require("../app/components/atomic/galoy-secondary-button/galoy-secondary-button.story")
 require("../app/components/atomic/galoy-secondary-button/galoy-secondary-button.story")
+require("../app/components/atomic/galoy-icon/galoy-icon.story")
 
 export {}
