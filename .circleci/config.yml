@@ -197,24 +197,24 @@ jobs:
 workflows:
   mobile:
     jobs:
-      # - test_ios:
-      #     filters:
-      #       tags:
-      #         only: /^[0-9]+\.[0-9]+\.[0-9]+/
-      #       branches:
-      #         ignore: /.*/
+      - test_ios:
+          filters:
+            tags:
+              only: /^[0-9]+\.[0-9]+\.[0-9]+/
+            branches:
+              ignore: /.*/
       - build_ios:
           filters:
             tags:
               only: /^[0-9]+\.[0-9]+\.[0-9]+/
             branches:
               ignore: /.*/
-      # - test_android:
-      #     filters:
-      #       tags:
-      #         only: /^[0-9]+\.[0-9]+\.[0-9]+/
-      #       branches:
-      #         ignore: /.*/
+      - test_android:
+          filters:
+            tags:
+              only: /^[0-9]+\.[0-9]+\.[0-9]+/
+            branches:
+              ignore: /.*/
       - build_android:
           filters:
             tags:
