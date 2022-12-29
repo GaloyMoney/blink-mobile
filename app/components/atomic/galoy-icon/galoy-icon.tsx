@@ -40,7 +40,8 @@ import Transfer from "@app/assets/icons-redesign/transfer.svg"
 import User from "@app/assets/icons-redesign/user.svg"
 import Video from "@app/assets/icons-redesign/video.svg"
 import Warning from "@app/assets/icons-redesign/warning.svg"
-import { useTheme } from "react-native-elements"
+import { useTheme } from "@rneui/themed"
+import { StyleProp, View, ViewStyle } from "react-native"
 
 const icons = {
   "arrow-right": ArrowRight,
@@ -92,12 +93,60 @@ type GaloyIconProps = {
   name: IconNamesType
   size: number
   color?: string
+  style?: StyleProp<ViewStyle>
+  backgroundColor?: string
+  opacity?: number
 }
 
-export const GaloyIcon = ({ name, size, color }: GaloyIconProps) => {
+export const circleDiameterThatContainsSquare = (squareSize: number) => {
+  const SQRT2 = 1.414
+  return Math.round(squareSize * SQRT2)
+}
+
+export const GaloyIcon = ({
+  name,
+  size,
+  color,
+  style,
+  backgroundColor,
+  opacity,
+}: GaloyIconProps) => {
   const { theme } = useTheme()
 
   const Icon = icons[name]
 
-  return <Icon width={size} height={size} color={color || theme.colors.black} />
+  let iconContainer = null
+  if (backgroundColor) {
+    const containerSize = circleDiameterThatContainsSquare(size)
+    iconContainer = {
+      opacity: opacity || 1,
+      backgroundColor,
+      borderRadius: containerSize,
+      width: containerSize,
+      height: containerSize,
+      alignItems: "center",
+      justifyContent: "center",
+    }
+  }
+
+  return iconContainer ? (
+    <View style={[style, iconContainer]}>
+      <Icon
+        width={size}
+        opacity={opacity || 1}
+        height={size}
+        color={color || theme.colors.black}
+        fontWeight={"600"}
+      />
+    </View>
+  ) : (
+    <Icon
+      opacity={opacity || 1}
+      width={size}
+      height={size}
+      color={color || theme.colors.black}
+      style={style}
+      fontWeight={"600"}
+    />
+  )
 }

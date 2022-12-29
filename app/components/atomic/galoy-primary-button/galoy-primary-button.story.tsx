@@ -7,7 +7,7 @@ storiesOf("Galoy Primary Button", module)
   .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
   .add("Style Presets", () => (
     <Story>
-      <UseCase text="Happy path">
+      <UseCase text="Default">
         <GaloyPrimaryButton title="Happy path" />
       </UseCase>
       <UseCase text="Long title">

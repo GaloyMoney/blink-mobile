@@ -25,8 +25,8 @@ const colors = {
   black: "#000000",
   grey5: "#61637A",
   grey7: "#929A0",
-  grey8: "AEAEB8",
-  grey10: "F0F0F2",
+  grey8: "#AEAEB8",
+  grey10: "#F0F0F2",
   horizonBlue: {
     colors: ["#4453E2", "#5269FF"],
     start: { x: 0, y: 0.5 },
