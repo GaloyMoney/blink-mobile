@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react"
 import { TextInput, View } from "react-native"
+import { HiddenTextInput } from "../hidden-text-input"
 
 interface CurrencyInputProps {
   currencyType: string
@@ -10,17 +11,22 @@ export const CurrencyInput: React.FC<CurrencyInputProps> = ({
   currencyType,
   onValueChange,
 }) => {
-  const inputRef = useRef(null)
-
   const [inputValue, setInputValue] = useState(() => {
     if (currencyType === "BTC") {
       return "0 sats"
-    }
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: currencyType,
-    }).format(0)
+    } 
+      return new Intl.NumberFormat("en-US", {
+          style: "currency",
+          currency: currencyType,
+        }).format(0)
+    
   })
+  const inputRef = useRef(null)
+
+  const formatDefaultValue = currencyType === "BTC" ? "0 sats" : new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: currencyType,
+  }).format(0)
 
   useEffect(() => {
     if (currencyType === "BTC") {
@@ -39,36 +45,49 @@ export const CurrencyInput: React.FC<CurrencyInputProps> = ({
     // Strip out non-numeric characters from the input value
     let formattedText
     const strippedText = text.replace(/[^\d.]/g, "")
+    console.log(strippedText)
     if (currencyType === "BTC") {
       formattedText = `${new Intl.NumberFormat("en-US", {
         useGrouping: true,
       }).format(Number(strippedText))} sats`
+      onValueChange(Number(strippedText))
     } else {
       // Format the input value with commas as thousand separators
       formattedText = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: currencyType,
-      }).format(Number(strippedText) / 100)
+      }).format(Number(strippedText) * 10)
+      onValueChange(Number(strippedText) * 100)
     }
     setInputValue(`${formattedText}`)
-    onValueChange(Number(strippedText))
+    // inputRef.current.setNativeProps({ value: formattedText })
   }
 
-  const handleSelectionChange = (event) => {
-    const { selection } = event.nativeEvent
-    inputRef.current.setNativeProps({ selection })
-  }
+  // const handleSelectionChange = (event) => {
+  //   const { selection } = event.nativeEvent
+  //   if(currencyType === "USD" && selection !== 0){
+  //     const newSelection = {
+  //       start: selection.start + 2,
+  //       end: selection.end + 2
+  //     }
+  //     inputRef.current.setNativeProps({ selection: newSelection })
+  //   } else {
+  //   inputRef.current.setNativeProps({ selection })
+  //   }
+  // }
 
   return (
     <View>
-      <TextInput
+      {/* <TextInput
         ref={inputRef}
         value={inputValue}
+        defaultValue={formatDefaultValue}
         onChangeText={handleChangeText}
         keyboardType="numeric"
         testID="currency-input"
         onSelectionChange={handleSelectionChange}
-      />
+      /> */}
+      <HiddenTextInput value={inputValue} onChangeText={handleChangeText} />
     </View>
   )
 }

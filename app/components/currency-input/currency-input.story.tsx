@@ -5,12 +5,12 @@ import { CurrencyInput } from "./currency-input"
 
 declare let module
 
-storiesOf("Large Button", module)
+storiesOf("Currency Input", module)
   .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
   .add("Style Presets", () => (
     <Story>
-      <UseCase text="Dollar" usage="The primary.">
-        <CurrencyInput currencyType="USD" onValueChange={(value) => console.log(value)} />
+      <UseCase text="USD" usage="USD currency input">
+        <CurrencyInput currencyType="USD" onValueChange={(value) => console.log("onValueChange: " + value)} />
       </UseCase>
     </Story>
   ))

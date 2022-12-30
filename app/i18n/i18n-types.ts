@@ -210,6 +210,12 @@ type RootTranslation = {
 		 */
 		message: string
 	}
+	CurrencyInputScreen: {
+		/**
+		 * Enter amount
+		 */
+		title: string
+	}
 	EarnScreen: {
 		/**
 		 * Earn {formattedNumber|sats}
@@ -2952,6 +2958,12 @@ export type TranslationFunctions = {
 		 * Conversion successful
 		 */
 		message: () => LocalizedString
+	}
+	CurrencyInputScreen: {
+		/**
+		 * Enter amount
+		 */
+		title: () => LocalizedString
 	}
 	EarnScreen: {
 		/**
