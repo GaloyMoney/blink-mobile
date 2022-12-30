@@ -33,7 +33,6 @@ module.exports = {
       "|react-native-animatable" +
       "|react-native-camera" +
       "|react-native-country-picker-modal" +
-      "|react-native-elements" +
       "|react-native-error-boundary" +
       "|react-native-extended-stylesheet" +
       "|react-native-haptic-feedback" +

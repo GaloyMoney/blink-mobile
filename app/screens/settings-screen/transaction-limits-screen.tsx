@@ -1,6 +1,6 @@
 import React from "react"
 import { ActivityIndicator, Button, View } from "react-native"
-import { Text } from "react-native-elements"
+import { Text } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { LocalizedString } from "typesafe-i18n"
 
