@@ -1,4 +1,5 @@
 import { createTheme } from "@rneui/themed"
+import { StyleProp, TextStyle } from "react-native"
 import colors from "./colors"
 
 const theme = createTheme({
@@ -17,6 +18,50 @@ const theme = createTheme({
         borderRadius: 50,
         height: 40,
       },
+    },
+    Text: (props, theme) => {
+      const universalStyle = {
+        color: props.color || theme.colors.grey5,
+        fontWeight: props.bold ? "600" : "400",
+      }
+
+      const sizeStyle =
+        {
+          h1: {
+            fontSize: 24,
+            lineHeight: 32,
+          },
+          h2: {
+            fontSize: 20,
+            lineHeight: 24,
+          },
+          p1: {
+            fontSize: 18,
+            lineHeight: 24,
+          },
+          p2: {
+            fontSize: 16,
+            lineHeight: 24,
+            fontWeight: props.bold ? "600" : "400",
+          },
+          p3: {
+            fontSize: 14,
+            lineHeight: 18,
+            fontWeight: props.bold ? "600" : "400",
+          },
+          p4: {
+            fontSize: 12,
+            lineHeight: 18,
+            fontWeight: props.bold ? "600" : "400",
+          },
+        }[props.type] || {}
+
+      return {
+        style: {
+          ...universalStyle,
+          ...sizeStyle,
+        } as StyleProp<TextStyle>,
+      }
     },
   },
 })

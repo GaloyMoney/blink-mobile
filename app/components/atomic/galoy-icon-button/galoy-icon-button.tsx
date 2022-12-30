@@ -1,13 +1,6 @@
 import React from "react"
-import {
-  Pressable,
-  PressableProps,
-  Text,
-  TextStyle,
-  ViewStyle,
-  StyleProp,
-} from "react-native"
-import { useTheme } from "@rneui/themed"
+import { Pressable, PressableProps, TextStyle, ViewStyle, StyleProp } from "react-native"
+import { useTheme, Text } from "@rneui/themed"
 import {
   GaloyIcon,
   IconNamesType,
@@ -93,11 +86,7 @@ export const GaloyIconButton = ({
   const fontStyle = (disabled): StyleProp<TextStyle> => {
     return {
       marginTop: 8,
-      color: theme.colors.grey5,
       opacity: disabled ? 0.7 : 1,
-      fontSize: 14,
-      lineHeight: 20,
-      fontWeight: "400",
     }
   }
 
@@ -116,7 +105,11 @@ export const GaloyIconButton = ({
               size={sizeMapping[size]}
               {...iconProps(pressed, iconOnly, disabled)}
             />
-            {text && <Text style={fontStyle(disabled)}>{text}</Text>}
+            {text && (
+              <Text type="p3" style={fontStyle(disabled)}>
+                {text}
+              </Text>
+            )}
           </>
         )
       }}

@@ -3,7 +3,6 @@ import { storiesOf } from "@storybook/react-native"
 import { Story, StoryScreen, UseCase } from "../../../../storybook/views"
 import { GaloyCurrencyBubble } from "."
 import { WalletCurrency } from "@app/types/amounts"
-import { GaloyIcon } from "../galoy-icon"
 
 storiesOf("Galoy Currency Bubble", module)
   .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)

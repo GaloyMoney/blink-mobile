@@ -46,4 +46,14 @@ declare module "@rneui/themed" {
       }
     }
   }
+
+  export interface TextProps {
+    bold?: boolean
+    type?: "p1" | "p2" | "p3" | "p4" | "h1" | "h2"
+    color?: string
+  }
+
+  export interface ComponentTheme {
+    Text: Partial<TextProps>
+  }
 }

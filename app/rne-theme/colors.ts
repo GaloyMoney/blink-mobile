@@ -24,7 +24,7 @@ const colors = {
   white: "#FFFFFF",
   black: "#000000",
   grey5: "#61637A",
-  grey7: "#929A0",
+  grey7: "#9292A0",
   grey8: "#AEAEB8",
   grey10: "#F0F0F2",
   horizonBlue: {
