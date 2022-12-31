@@ -2,10 +2,10 @@ import React from "react"
 import { Text } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 
-import { CustomIcon } from "@app/components/custom-icon"
 import { storiesOf } from "@storybook/react-native"
 
 import { Story, StoryScreen, UseCase } from "../../../../storybook/views"
+import { GaloyIcon } from "../galoy-icon"
 import { GaloyInputRedesigned } from "./galoy-redesigned-input"
 
 const styles = EStyleSheet.create({
@@ -42,7 +42,7 @@ storiesOf("Galoy Input Redsigned", module)
           forceKeyboard={false}
           label={"Input Label"}
           placeholder={"placeholder"}
-          leftIcon={<CustomIcon name="custom-copy-icon" color="blue" />}
+          leftIcon={<GaloyIcon name="bitcoin" size={30} color="blue" />}
         />
       </UseCase>
       <UseCase text="Input with TextIcon">

@@ -1,25 +1,23 @@
 import * as React from "react"
 import { TextInput } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
 
-import colors from "@app/rne-theme/colors"
-import { Input, InputProps } from "@rneui/themed"
+import { Input, InputProps, makeStyles, useTheme } from "@rneui/themed"
 
 import { ComponentType } from "../../../types/jsx"
 
-const styles = EStyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   inputContainerFocused: {
-    borderColor: colors.primary5,
-    backgroundColor: colors.white,
+    borderColor: theme.colors.primary5,
+    backgroundColor: theme.colors.white,
     shadowOffset: { width: 3, height: 2 },
     shadowRadius: 2,
     shadowOpacity: 1,
   },
   captionStyle: {
-    color: colors.grey5,
+    color: theme.colors.grey5,
     textTransform: "lowercase",
   },
-})
+}))
 
 type GaloyInputProps = {
   initIsFocused?: boolean
@@ -30,18 +28,18 @@ const GaloyInputFunctions = (
   props: InputProps & GaloyInputProps,
   ref: React.Ref<TextInput> & React.Ref<React.PropsWithChildren<InputProps>>,
 ) => {
+  const { theme } = useTheme()
+  const styles = useStyles(theme)
   const [isFocused, setIsFocused] = React.useState(props.initIsFocused ?? false)
 
   return (
     <Input
       {...props}
-      label={props.label ?? null}
       inputContainerStyle={[
         props.inputContainerStyle,
         isFocused ? styles.inputContainerFocused : null,
       ]}
-      placeholder={props.placeholder ?? null}
-      placeholderTextColor={colors.grey8}
+      placeholderTextColor={theme.colors.grey8}
       onFocus={(e) => {
         setIsFocused(true)
         props.onFocus?.(e)
@@ -51,7 +49,7 @@ const GaloyInputFunctions = (
         props.onBlur?.(e)
       }}
       errorMessage={props.errorMessage ?? props.caption}
-      errorStyle={props.errorMessage ? styles.errorMessageStyle : styles.captionStyle}
+      errorStyle={props.errorMessage ? null : styles.captionStyle}
       ref={ref}
     />
   )
