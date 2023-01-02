@@ -6,6 +6,7 @@ export type BaseTranslation = BaseTranslationType
 export type BaseLocale = 'en'
 
 export type Locales =
+	| 'cs'
 	| 'de'
 	| 'en'
 	| 'es'
@@ -2116,6 +2117,10 @@ type RootTranslation = {
 		 * German
 		 */
 		'de-DE': string
+		/**
+		 * Czech
+		 */
+		cs: string
 	}
 	StablesatsModal: {
 		/**
@@ -4830,6 +4835,10 @@ export type TranslationFunctions = {
 		 * German
 		 */
 		'de-DE': () => LocalizedString
+		/**
+		 * Czech
+		 */
+		cs: () => LocalizedString
 	}
 	StablesatsModal: {
 		/**

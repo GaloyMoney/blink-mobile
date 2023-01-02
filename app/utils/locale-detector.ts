@@ -8,7 +8,9 @@ export const customLocaleDetector = () => {
         locale.languageCode?.startsWith("en") ||
         locale.languageCode?.startsWith("es") ||
         locale.languageCode?.startsWith("fr") ||
-        locale.languageCode?.startsWith("pt"),
+        locale.languageCode?.startsWith("pt") ||
+        locale.languageCode?.startsWith("de") ||
+        locale.languageCode?.startsWith("cs"),
     )
   ) {
     return getLanguageFromLocale(RNLocalize.getLocales()[0].languageCode)
@@ -28,6 +30,9 @@ export const getLanguageFromLocale = (locale: string) => {
   }
   if (locale.startsWith("de")) {
     return "de"
+  }
+  if (locale.startsWith("cs")) {
+    return "cs"
   }
   return "en"
 }
