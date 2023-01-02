@@ -174,6 +174,7 @@ PODS:
     - GoogleUtilities/Logger
   - GT3Captcha-iOS (0.15.8)
   - GTMSessionFetcher/Core (1.7.2)
+  - hermes-engine (0.69.7)
   - libevent (2.1.12)
   - lottie-ios (3.4.3)
   - lottie-react-native (5.1.4):
@@ -218,6 +219,12 @@ PODS:
     - DoubleConversion
     - fmt (~> 6.2.1)
     - glog
+  - RCT-Folly/Futures (2021.06.28.00-v2):
+    - boost
+    - DoubleConversion
+    - fmt (~> 6.2.1)
+    - glog
+    - libevent
   - RCTRequired (0.69.7)
   - RCTTypeSafety (0.69.7):
     - FBLazyVector (= 0.69.7)
@@ -395,6 +402,17 @@ PODS:
     - React-logger (= 0.69.7)
     - React-perflogger (= 0.69.7)
     - React-runtimeexecutor (= 0.69.7)
+  - React-hermes (0.69.7):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2021.06.28.00-v2)
+    - RCT-Folly/Futures (= 2021.06.28.00-v2)
+    - React-cxxreact (= 0.69.7)
+    - React-jsi (= 0.69.7)
+    - React-jsiexecutor (= 0.69.7)
+    - React-jsinspector (= 0.69.7)
+    - React-perflogger (= 0.69.7)
   - React-jsi (0.69.7):
     - boost (= 1.76.0)
     - DoubleConversion
@@ -625,6 +643,8 @@ DEPENDENCIES:
   - FlipperKit/FlipperKitUserDefaultsPlugin (= 0.163.0)
   - FlipperKit/SKIOSNetworkPlugin (= 0.163.0)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
+  - hermes-engine (from `../node_modules/react-native/sdks/hermes/hermes-engine.podspec`)
+  - libevent (~> 2.1.12)
   - lottie-ios (from `../node_modules/lottie-ios`)
   - lottie-react-native (from `../node_modules/lottie-react-native`)
   - OpenSSL-Universal (= 1.1.1100)
@@ -640,6 +660,7 @@ DEPENDENCIES:
   - React-Core/RCTWebSocket (from `../node_modules/react-native/`)
   - React-CoreModules (from `../node_modules/react-native/React/CoreModules`)
   - React-cxxreact (from `../node_modules/react-native/ReactCommon/cxxreact`)
+  - React-hermes (from `../node_modules/react-native/ReactCommon/hermes`)
   - React-jsi (from `../node_modules/react-native/ReactCommon/jsi`)
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
@@ -743,6 +764,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/React/FBReactNativeSpec"
   glog:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
+  hermes-engine:
+    :podspec: "../node_modules/react-native/sdks/hermes/hermes-engine.podspec"
   lottie-ios:
     :path: "../node_modules/lottie-ios"
   lottie-react-native:
@@ -767,6 +790,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/React/CoreModules"
   React-cxxreact:
     :path: "../node_modules/react-native/ReactCommon/cxxreact"
+  React-hermes:
+    :path: "../node_modules/react-native/ReactCommon/hermes"
   React-jsi:
     :path: "../node_modules/react-native/ReactCommon/jsi"
   React-jsiexecutor:
@@ -891,6 +916,7 @@ SPEC CHECKSUMS:
   GoogleUtilitiesComponents: 679b2c881db3b615a2777504623df6122dd20afe
   GT3Captcha-iOS: 4e641d94875feefd92191a3d68de3df2a32f4f5a
   GTMSessionFetcher: 5595ec75acf5be50814f81e9189490412bad82ba
+  hermes-engine: 51aaceb1f6dc1aed44b8bbf866f52ec146c00a89
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   lottie-ios: 9ae750cdc7820fecbd3c2f0cfc493038208fcdc4
   lottie-react-native: b702fab740cdb952a8e2354713d3beda63ff97b0
@@ -912,6 +938,7 @@ SPEC CHECKSUMS:
   React-Core: 138385d05068622b2b1873eee7dc5be9762f5383
   React-CoreModules: 3a9be624998677db102b19090b1c33c7564ead6d
   React-cxxreact: eb24a767b0b811259947f3d538e7c999467e7131
+  React-hermes: 3a08a232d6783e21930b0f10f1c15d209ec9f7ad
   React-jsi: 9c1cc1173fc8a24b094e01c54d8e3b567fed7edc
   React-jsiexecutor: a73bec0218ba959fc92f811b581ad6c2270c6b6f
   React-jsinspector: 8134ee22182b8dd98dc0973db6266c398103ce6c
@@ -963,6 +990,6 @@ SPEC CHECKSUMS:
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: c33e84a44c1499677fb3c6ad929aea6a51ce0e6d
+PODFILE CHECKSUM: 91ea5762417863833d37e22f2039b1a3fa6e6970
 
 COCOAPODS: 1.11.3
