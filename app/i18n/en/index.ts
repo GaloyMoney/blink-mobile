@@ -639,6 +639,7 @@ const en: BaseTranslation = {
     "pt-BR": "Portuguese (Brazil)",
     "fr-CA": "French (Canada)",
     "de-DE": "German",
+    "cs": "Czech",
   },
   StablesatsModal: {
     header: "With Stablesats, you now have a USD account added to your wallet!",
