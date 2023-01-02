@@ -15,7 +15,7 @@ target 'GaloyApp' do
     :path => config["reactNativePath"],
   # to enable hermes on iOS, change `false` to `true` and then install pods
     :production => production,
-    :hermes_enabled => true,
+    :hermes_enabled => false,
     :fabric_enabled => flags[:fabric_enabled],
     :flipper_configuration => FlipperConfiguration.enabled(["Debug"], { 'Flipper' => '0.163.0' }),
     # An absolute path to your application root.
