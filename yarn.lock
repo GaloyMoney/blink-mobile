@@ -2923,18 +2923,6 @@
     color "^4.2.3"
     warn-once "^0.1.0"
 
-"@rneui/base@4.0.0-rc.2":
-  version "4.0.0-rc.2"
-  resolved "https://registry.npmjs.org/@rneui/base/-/base-4.0.0-rc.2.tgz"
-  integrity sha512-RUP8aku6OQhj03g2in+2sZlxn8/rh8BQMWistVl9o7JQRRwx9HJQhR+qDisPy8AS0X55VRo6P21oNDh6TYrUFA==
-  dependencies:
-    "@types/react-native-vector-icons" "^6.4.6"
-    color "^3.1.2"
-    deepmerge "^4.2.2"
-    hoist-non-react-statics "^3.3.2"
-    react-native-ratings "^8.1.0"
-    react-native-size-matters "^0.4.0"
-
 "@rneui/base@^4.0.0-rc.7":
   version "4.0.0-rc.7"
   resolved "https://registry.yarnpkg.com/@rneui/base/-/base-4.0.0-rc.7.tgz#d24666d0e195e5a9da41cea0573464a73acc7989"
@@ -2946,11 +2934,6 @@
     hoist-non-react-statics "^3.3.2"
     react-native-ratings "^8.1.0"
     react-native-size-matters "^0.4.0"
-
-"@rneui/themed@4.0.0-rc.2":
-  version "4.0.0-rc.2"
-  resolved "https://registry.npmjs.org/@rneui/themed/-/themed-4.0.0-rc.2.tgz"
-  integrity sha512-yLBMLLmKvhRO7ID+pru0FtXE3WKnnMO05CcHk8HVss+YdO39qjwxmAta5tdXTfytczqCGA1AGUpCHhA6eDEhPA==
 
 "@rneui/themed@^4.0.0-rc.7":
   version "4.0.0-rc.7"
@@ -4189,7 +4172,7 @@
   dependencies:
     react-native-swiper "*"
 
-"@types/react-native-vector-icons@^6.4.10", "@types/react-native-vector-icons@^6.4.6":
+"@types/react-native-vector-icons@^6.4.10":
   version "6.4.12"
   resolved "https://registry.npmjs.org/@types/react-native-vector-icons/-/react-native-vector-icons-6.4.12.tgz"
   integrity sha512-gSXtv3NMOsRwSXJ/gvGebm7CNjHbkeFKCse9h/Pvi+x2yjCLOkJR1FBfec06DhaFJpsK7Y8WRQpwOS0eLqx5Rg==
@@ -7770,7 +7753,7 @@ color-support@^1.1.2, color-support@^1.1.3:
   resolved "https://registry.yarnpkg.com/color-support/-/color-support-1.1.3.tgz#93834379a1cc9a0c61f82f52f0d04322251bd5a2"
   integrity sha512-qiBjkpbMLO/HL68y+lh4q0/O1MZFj2RX6X/KmMa3+gJD3z+WwI1ZzDHysvqHGS3mP6mznPckpXmw1nI9cJjyRg==
 
-color@^3.1.2, color@^3.1.3, color@^3.2.1:
+color@^3.1.3, color@^3.2.1:
   version "3.2.1"
   resolved "https://registry.npmjs.org/color/-/color-3.2.1.tgz"
   integrity sha512-aBl7dZI9ENN6fUGC7mWpMTPNHmWUSNan9tuWN6ahh5ZLNk9baLJOnSMlrQkHcrfFgz2/RigjUVAjdx36VcemKA==
@@ -16672,14 +16655,6 @@ react-native-device-info@^9.0.2:
   version "9.0.2"
   resolved "https://registry.npmjs.org/react-native-device-info/-/react-native-device-info-9.0.2.tgz"
   integrity sha512-+IfYZ/OuKjnFf7SFfgIzEqynSeFngrIHc5KgHUIfXusLDXIFJ+LhRBCD7skqnraHrfmESUOMjLbNcvy4SVdwSA==
-
-react-native-elements@^4.0.0-rc.2:
-  version "4.0.0-rc.2"
-  resolved "https://registry.npmjs.org/react-native-elements/-/react-native-elements-4.0.0-rc.2.tgz"
-  integrity sha512-WSpYcCQvdO8Z41MDPhzWhnmE/BQ1FyozxKjUOur9ZPaGg0RQI7P0X9D3na/ollyBUoHPbUFKbb1xZb+jm3sEpA==
-  dependencies:
-    "@rneui/base" "4.0.0-rc.2"
-    "@rneui/themed" "4.0.0-rc.2"
 
 react-native-error-boundary@^1.1.13:
   version "1.1.15"
