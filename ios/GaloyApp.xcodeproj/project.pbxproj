@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -35,6 +35,7 @@
 		C6A433D02457478B00AA6FFC /* DMSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C6A433CA2457478B00AA6FFC /* DMSans-Regular.ttf */; };
 		C6A433D12457478B00AA6FFC /* DMSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C6A433CB2457478B00AA6FFC /* DMSans-Bold.ttf */; };
 		C6A433D22457478B00AA6FFC /* DMSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C6A433CC2457478B00AA6FFC /* DMSans-Medium.ttf */; };
+		C6AFA3DB296337950041D8C5 /* hermes.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6AFA3DA296337950041D8C5 /* hermes.xcframework */; };
 		C6E810012333FDA500D41794 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C6E810002333FDA400D41794 /* GoogleService-Info.plist */; };
 		C6FCE05924592E5E0076B3C0 /* LottieEmptyFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6FCE05824592E5E0076B3C0 /* LottieEmptyFile.swift */; };
 		D959806A9E4747F590B765E0 /* Roboto-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BB3D64D6222B4E5C8B45CF6C /* Roboto-BoldItalic.ttf */; };
@@ -115,6 +116,7 @@
 		C6A433CA2457478B00AA6FFC /* DMSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "DMSans-Regular.ttf"; path = "../../../app/assets/fonts/DMSans-Regular.ttf"; sourceTree = "<group>"; };
 		C6A433CB2457478B00AA6FFC /* DMSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "DMSans-Bold.ttf"; path = "../../../app/assets/fonts/DMSans-Bold.ttf"; sourceTree = "<group>"; };
 		C6A433CC2457478B00AA6FFC /* DMSans-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "DMSans-Medium.ttf"; path = "../../../app/assets/fonts/DMSans-Medium.ttf"; sourceTree = "<group>"; };
+		C6AFA3DA296337950041D8C5 /* hermes.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = hermes.xcframework; path = "Pods/hermes-engine/destroot/Library/Frameworks/universal/hermes.xcframework"; sourceTree = "<group>"; };
 		C6E810002333FDA400D41794 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C6FCE05724592E5E0076B3C0 /* GaloyApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GaloyApp-Bridging-Header.h"; sourceTree = "<group>"; };
 		C6FCE05824592E5E0076B3C0 /* LottieEmptyFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieEmptyFile.swift; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C6AFA3DB296337950041D8C5 /* hermes.xcframework in Frameworks */,
 				C61EE0AD23C530E30054100C /* AuthenticationServices.framework in Frameworks */,
 				87F232313AB3D5FE3DC03E9E /* libPods-GaloyApp.a in Frameworks */,
 			);
@@ -160,6 +163,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C6AFA3DA296337950041D8C5 /* hermes.xcframework */,
 				C61EE0AC23C530E30054100C /* AuthenticationServices.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
@@ -683,7 +687,7 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -700,7 +704,10 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					/usr/lib/swift,
+					"$(inherited)",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(SDKROOT)/usr/lib/swift",
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
@@ -746,7 +753,7 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -756,7 +763,10 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					/usr/lib/swift,
+					"$(inherited)",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(SDKROOT)/usr/lib/swift",
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
