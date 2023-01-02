@@ -6255,10 +6255,10 @@ axios@^0.21.4:
   dependencies:
     follow-redirects "^1.14.0"
 
-axios@^1.1.3:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-1.2.1.tgz#44cf04a3c9f0c2252ebd85975361c026cb9f864a"
-  integrity sha512-I88cFiGu9ryt/tfVEi4kX2SITsvDddTajXTOFmt2uK1ZVA8LytjtdeyefdQWEf5PU8w+4SSJDoYnggflB5tW4A==
+axios@^1.2.1:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-1.2.2.tgz#72681724c6e6a43a9fea860fc558127dbe32f9f1"
+  integrity sha512-bz/J4gS2S3I7mpN/YZfGFTqhXTYzRho8Ay38w2otuuDR322KzFIWm/4W2K6gIwvWaws5n+mnb7D1lN9uD+QH6Q==
   dependencies:
     follow-redirects "^1.15.0"
     form-data "^4.0.0"
@@ -13409,15 +13409,15 @@ listr@^0.14.3:
     p-map "^2.0.0"
     rxjs "^6.3.3"
 
-lnurl-pay@2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/lnurl-pay/-/lnurl-pay-2.0.2.tgz#b32a23a74458ce38afa52f4b7285cd9d6fa43782"
-  integrity sha512-EzSiOvD35qSZqhdT+aP7o/sfHNQ238vsN6Sn29e7SyQk597MZ0A/y3NdgfcZgb7UCCHWz+YWTVxcJLyUD+ZgKw==
+lnurl-pay@2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/lnurl-pay/-/lnurl-pay-2.1.0.tgz#c3843aed328e4f6f6eb0ee413a830f8386d39523"
+  integrity sha512-Dd6ZGDDbyolyCWHaeaV9E2eCxUXahYjSYNZa7TM/+VAYRCmXVibGU2i6yjqtDbOtvlKF6X74dHtH36xEO8x2nw==
   dependencies:
     "@aws-crypto/sha256-js" "^2.0.2"
     aes-js "^3.1.2"
     assert "^2.0.0"
-    axios "^1.1.3"
+    axios "^1.2.1"
     base64-js "^1.5.1"
     bech32 "^2.0.0"
     bolt11 "^1.4.0"
@@ -13427,7 +13427,7 @@ lnurl-pay@2.0.2:
     is-url "^1.2.4"
     stream-browserify "^3.0.0"
     stream-http "^3.2.0"
-    tslib "^2.4.0"
+    tslib "^2.4.1"
     url "^0.11.0"
 
 load-bmfont@^1.3.1, load-bmfont@^1.4.0:
@@ -19181,12 +19181,7 @@ tslib@^1.11.1, tslib@^1.8.1, tslib@^1.9.0:
   resolved "https://registry.npmjs.org/tslib/-/tslib-1.14.1.tgz"
   integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
 
-tslib@^2.0.0, tslib@^2.0.1, tslib@^2.0.3, tslib@^2.1.0, tslib@^2.3.0:
-  version "2.4.0"
-  resolved "https://registry.npmjs.org/tslib/-/tslib-2.4.0.tgz"
-  integrity sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==
-
-tslib@^2.3.1, tslib@^2.4.0:
+tslib@^2.0.0, tslib@^2.0.1, tslib@^2.0.3, tslib@^2.1.0, tslib@^2.3.0, tslib@^2.3.1, tslib@^2.4.1:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.4.1.tgz#0d0bfbaac2880b91e22df0768e55be9753a5b17e"
   integrity sha512-tGyy4dAjRIEwI7BzsB0lynWgOpfqjUdq91XXAlIWD2OwKBH7oCl/GZG/HT4BOHrTlPMOASlMQ7veyTqpmRcrNA==
