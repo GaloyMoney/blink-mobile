@@ -1,25 +1,14 @@
 import React, { FunctionComponent, PropsWithChildren } from "react"
-import { Button, ButtonProps, useTheme } from "@rneui/themed"
+import { Button, ButtonProps, useTheme, makeStyles } from "@rneui/themed"
 import LinearGradient from "react-native-linear-gradient"
-import { StyleProp, TextStyle, TouchableHighlight } from "react-native"
+import { TouchableHighlight } from "react-native"
 
 export const GaloyPrimaryButton: FunctionComponent<PropsWithChildren<ButtonProps>> = (
   props,
 ) => {
   const { theme } = useTheme()
   const linearGradientProps = theme.colors.horizonBlue
-  const disabledStyle = {
-    opacity: 0.3,
-  }
-  const disabledTitleStyle = {
-    color: theme.colors.white,
-  }
-
-  const titleStyle: StyleProp<TextStyle> = {
-    fontSize: 20,
-    lineHeight: 24,
-    fontWeight: "600",
-  }
+  const styles = useStyles()
 
   return (
     <Button
@@ -27,10 +16,24 @@ export const GaloyPrimaryButton: FunctionComponent<PropsWithChildren<ButtonProps
       activeOpacity={0.7}
       TouchableComponent={TouchableHighlight}
       ViewComponent={LinearGradient}
-      titleStyle={titleStyle}
-      disabledStyle={disabledStyle}
-      disabledTitleStyle={disabledTitleStyle}
+      titleStyle={styles.titleStyle}
+      disabledStyle={styles.disabledStyle}
+      disabledTitleStyle={styles.disabledTitleStyle}
       linearGradientProps={linearGradientProps}
     />
   )
 }
+
+const useStyles = makeStyles((theme) => ({
+  titleStyle: {
+    fontSize: 20,
+    lineHeight: 24,
+    fontWeight: "600",
+  },
+  disabledStyle: {
+    opacity: 0.3,
+  },
+  disabledTitleStyle: {
+    color: theme.colors.white,
+  },
+}))

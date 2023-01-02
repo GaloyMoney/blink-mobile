@@ -1,4 +1,4 @@
-import { useTheme, Text } from "@rneui/themed"
+import { useTheme, Text, makeStyles } from "@rneui/themed"
 import React from "react"
 import { Pressable, PressableProps, StyleProp, View, ViewStyle } from "react-native"
 import { GaloyIcon } from "../galoy-icon"
@@ -26,6 +26,7 @@ export const GaloyButtonField = ({
   ...props
 }: GaloyButtonFieldProps) => {
   const { theme } = useTheme()
+  const styles = useStyles()
 
   const pressableStyle = ({ pressed }): StyleProp<ViewStyle> => {
     let colorStyles = {}
@@ -63,31 +64,17 @@ export const GaloyButtonField = ({
     return { ...style, ...colorStyles, ...sizeStyles }
   }
 
-  const contentContainerStyle: StyleProp<ViewStyle> = {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    flex: 1,
-  }
-
   const primaryText = value || placeholder || ""
-  const iconStyle = {
-    marginLeft: 8,
-    flex: 1,
-  }
-  const primaryTextSyle = {
-    flex: 1,
-  }
 
   const indexToStartHighlight = primaryText.length - (highlightEnding ? 5 : 0)
 
   return (
     <Pressable {...props} style={pressableStyle} disabled={disabled}>
-      <View style={contentContainerStyle}>
+      <View style={styles.contentContainerStyle}>
         <Text
           type="p1"
           color={error && theme.colors.error4}
-          style={primaryTextSyle}
+          style={styles.primaryTextStyle}
           numberOfLines={1}
           ellipsizeMode="middle"
         >
@@ -98,7 +85,7 @@ export const GaloyButtonField = ({
         </Text>
         {iconName && (
           <GaloyIcon
-            style={iconStyle}
+            style={styles.iconStyle}
             name={iconName}
             size={20}
             color={error ? theme.colors.error4 : theme.colors.primary}
@@ -113,3 +100,19 @@ export const GaloyButtonField = ({
     </Pressable>
   )
 }
+
+const useStyles = makeStyles(() => ({
+  contentContainerStyle: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    flex: 1,
+  },
+  iconStyle: {
+    marginLeft: 8,
+    flex: 1,
+  },
+  primaryTextStyle: {
+    flex: 1,
+  },
+}))
