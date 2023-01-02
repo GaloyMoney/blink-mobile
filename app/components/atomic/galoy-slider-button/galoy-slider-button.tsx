@@ -1,63 +1,17 @@
 import React, { useState } from "react"
-import { View, StyleSheet } from "react-native"
-import { Slider, Text } from "@rneui/themed"
-import { GaloyIcon } from "../galoy-icon"
-import colors from "@app/rne-theme/colors"
+import { View } from "react-native"
 
-const styles = StyleSheet.create({
-  contentView: {
-    padding: 20,
-    width: "100%",
-    justifyContent: "center",
-    alignItems: "stretch",
-  },
-  verticalContent: {
-    padding: 20,
-    flex: 1,
-    flexDirection: "row",
-    height: 500,
-    justifyContent: "center",
-    alignItems: "stretch",
-  },
-  subHeader: {
-    backgroundColor: "#2089dc",
-    color: "white",
-    textAlign: "center",
-    paddingVertical: 5,
-    marginBottom: 10,
-  },
-  trackStyle: {
-    height: 40,
-    borderRadius: 40,
-  },
-  IconContainerStyle: {
-    bottom: -5,
-    right: -8,
-  },
-  thumbStyle: {
-    height: 40,
-    width: 45,
-    color: colors.verticalBlue,
-    borderRadius: 40,
-  },
-  SlideTextStyle: {
-    color: colors.white,
-    paddingTop: 20,
-    bottom: 55,
-    left: 115,
-    fontWeight: "600",
-    fontSize: 20,
-  },
-  thumbTouchSize: {
-    width: 20,
-    height: 20,
-  },
-})
+import colors from "@app/rne-theme/colors"
+import { makeStyles, Slider, Text, useTheme } from "@rneui/themed"
+
+import { GaloyIcon } from "../galoy-icon"
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 type SlidersComponentProps = {}
 
 export const Sliders: React.FunctionComponent<SlidersComponentProps> = () => {
+  const { theme } = useTheme()
+  const styles = useStyles(theme)
   const [value, setValue] = useState(0)
 
   //   const interpolate = (start: number, end: number) => {
@@ -81,12 +35,12 @@ export const Sliders: React.FunctionComponent<SlidersComponentProps> = () => {
           maximumValue={30}
           minimumValue={0}
           step={1}
-          maximumTrackTintColor={"#4453E2"}
-          minimumTrackTintColor={"#5269FF"}
+          maximumTrackTintColor={theme.colors.primary3}
+          minimumTrackTintColor={theme.colors.primary5}
           allowTouchTrack
           trackStyle={styles.trackStyle}
           thumbStyle={styles.thumbStyle}
-          thumbTintColor={"#5269FF"}
+          thumbTintColor={theme.colors.primary5}
           thumbTouchSize={styles.thumbTouchSize}
           thumbProps={{
             children: (
@@ -105,4 +59,37 @@ export const Sliders: React.FunctionComponent<SlidersComponentProps> = () => {
   )
 }
 
-// export default Sliders;
+const useStyles = makeStyles((theme) => ({
+  contentView: {
+    padding: 20,
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "stretch",
+  },
+  trackStyle: {
+    height: 40,
+    borderRadius: 40,
+  },
+  IconContainerStyle: {
+    bottom: -5,
+    right: -8,
+  },
+  thumbStyle: {
+    height: 40,
+    width: 45,
+    color: theme.colors.verticalBlue,
+    borderRadius: 40,
+  },
+  SlideTextStyle: {
+    color: colors.white,
+    paddingTop: 20,
+    bottom: 55,
+    left: 115,
+    fontWeight: "600",
+    fontSize: 20,
+  },
+  thumbTouchSize: {
+    width: 20,
+    height: 20,
+  },
+}))
