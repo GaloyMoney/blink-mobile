@@ -41,6 +41,8 @@ import User from "@app/assets/icons-redesign/user.svg"
 import Video from "@app/assets/icons-redesign/video.svg"
 import Warning from "@app/assets/icons-redesign/warning.svg"
 import { makeStyles, useTheme } from "@rneui/themed"
+import SwitchCurrency from "@app/assets/icons/switch-currency.svg"
+
 import { StyleProp, View, ViewStyle } from "react-native"
 
 const icons = {
@@ -84,6 +86,7 @@ const icons = {
   "user": User,
   "video": Video,
   "warning": Warning,
+  "switch-currency": SwitchCurrency,
 }
 
 export type IconNamesType = keyof typeof icons

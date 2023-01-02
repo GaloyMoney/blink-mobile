@@ -1,12 +1,16 @@
 /* eslint-disable camelcase */
-import { PaymentAmount, WalletCurrency } from "@app/types/amounts"
+import {
+  DisplayAmount,
+  DisplayCurrency,
+  PaymentAmount,
+  WalletCurrency,
+} from "@app/types/amounts"
 import { WalletDescriptor } from "@app/types/wallets"
 import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
 import { GaloyGQL } from "@galoymoney/client"
 import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
 import { contacts_me_contacts } from "../screens/contacts-screen/__generated__/contacts"
 import { AccountType, AuthenticationScreenPurpose, PinScreenPurpose } from "../utils/enum"
-import { Payment } from "bitcoinjs-lib"
 
 export type TransactionDetail = GaloyGQL.Transaction & {
   usdAmount: number
@@ -80,13 +84,7 @@ export type RootStackParamList = {
     toWallet: WalletDescriptor<WalletCurrency>
     btcAmount: PaymentAmount<WalletCurrency.BTC>
     usdAmount: PaymentAmount<WalletCurrency.USD>
-  },
-  currencyInputScreen: {
-    amountCallback: () => PaymentAmount<WalletCurrency>,
-    primaryCurrency: GaloyGQL.WalletCurrency,
-    secondaryCurrency: GaloyGQL.WalletCurrency,
-    initialAmount?: PaymentAmount<WalletCurrency>
-  },
+  }
   sendBitcoinSuccess: undefined
   language: undefined
   security: {
@@ -101,6 +99,8 @@ export type RootStackParamList = {
   Profile: undefined
   receiveBitcoin: {
     receiveCurrency?: GaloyGQL.WalletCurrency
+    primaryAmount?: PaymentAmount<WalletCurrency>
+    secondaryAmount?: DisplayAmount<DisplayCurrency>
   }
   phoneValidation: undefined
   transactionDetail: TransactionDetail

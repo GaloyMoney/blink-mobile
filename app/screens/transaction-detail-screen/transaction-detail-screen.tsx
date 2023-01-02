@@ -145,7 +145,7 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
     isReceive,
   } = route.params
   const { LL } = useI18nContext()
-  const { formatToDisplayCurrency } = useDisplayCurrency()
+  const { formatToCurrency, displayCurrency } = useDisplayCurrency()
 
   const walletType = settlementCurrency as WalletType
   const spendOrReceiveText = isReceive
@@ -157,7 +157,10 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
 
   const feeEntry =
     settlementCurrency === WalletCurrency.BTC
-      ? `${settlementFee} sats (${formatToDisplayCurrency(settlementFee * usdPerSat)})`
+      ? `${settlementFee} sats (${formatToCurrency(
+          settlementFee * usdPerSat,
+          displayCurrency,
+        )})`
       : paymentAmountToTextWithUnits({
           amount: settlementFee,
           currency: settlementCurrency as WalletCurrency,

@@ -14,7 +14,5 @@ require("./defaults/text.story")
 require("./defaults/colors.story")
 require("../app/components/atomic/galoy-input/galoy-input.story")
 require("../app/components/currency-input/currency-input.story")
-
-// require("../app/components/currency-input/currency-input.story")
 require("../app/components/currency-keyboard/currency-keyboard.story")
 export {}

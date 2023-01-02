@@ -1,9 +1,9 @@
-export enum WalletCurrency {
+export const enum WalletCurrency {
   BTC = "BTC",
   USD = "USD",
 }
 
-export enum DisplayCurrency {
+export const enum DisplayCurrency {
   BTC = "BTC",
   USD = "USD",
 }
@@ -15,6 +15,8 @@ export type PaymentAmount<T extends WalletCurrency> = {
 export type DisplayAmount<T extends DisplayCurrency> = {
   amount: number
   currency: T
+  display?: string
+  precision?: number
 }
 
 export type BtcDisplayAmount = DisplayAmount<DisplayCurrency.BTC>

@@ -6,12 +6,11 @@ import { parsingv2, GaloyGQL, useMutation } from "@galoymoney/client"
 const { decodeInvoiceString, getLightningInvoiceExpiryTime } = parsingv2
 
 import React, { useCallback, useEffect, useRef, useState } from "react"
-import { Alert, AppState, Pressable, Share, TextInput, View } from "react-native"
+import { Alert, AppState, Modal, Pressable, Share, TextInput, View } from "react-native"
 import { Button, Text } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
 import QRView from "./qr-view"
 import Icon from "react-native-vector-icons/Ionicons"
-import { FakeCurrencyInput } from "react-native-currency-input"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import CalculatorIcon from "@app/assets/icons/calculator.svg"
 import ChevronIcon from "@app/assets/icons/chevron.svg"
@@ -21,9 +20,10 @@ import { copyPaymentInfoToClipboard } from "@app/utils/clipboard"
 import moment from "moment"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { logGeneratePaymentRequest } from "@app/utils/analytics"
-import { WalletCurrency } from "@app/types/amounts"
+import { DisplayCurrency, WalletCurrency } from "@app/types/amounts"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+import { CurrencyInput } from "@app/components/currency-input"
 
 const styles = EStyleSheet.create({
   container: {
@@ -96,11 +96,6 @@ const styles = EStyleSheet.create({
     color: palette.lapisLazuli,
     fontSize: "14rem",
   },
-  amountInput: {
-    color: palette.lapisLazuli,
-    fontSize: 20,
-    fontWeight: "600",
-  },
   button: {
     height: 60,
     borderRadius: 10,
@@ -120,13 +115,6 @@ const styles = EStyleSheet.create({
     fontWeight: "bold",
     color: palette.lapisLazuli,
     marginBottom: 5,
-  },
-  disabledButtonStyle: {
-    backgroundColor: palette.lighterGrey,
-  },
-  disabledButtonTitleStyle: {
-    color: palette.lightBlue,
-    fontWeight: "600",
   },
   lowTimer: {
     color: palette.red,
@@ -156,7 +144,7 @@ const ReceiveUsd = () => {
   const { LL } = useI18nContext()
   const { timeLeft, startCountdownTimer, resetCountdownTimer, stopCountdownTimer } =
     useCountdownTimer()
-  const { formatToDisplayCurrency } = useDisplayCurrency()
+  const { formatToCurrency, displayCurrency } = useDisplayCurrency()
 
   useEffect(() => {
     if (invoice && usdAmount > 0) {
@@ -228,14 +216,13 @@ const ReceiveUsd = () => {
             hasAmount: true,
             receivingWallet: WalletCurrency.USD,
           })
-          const amountInCents = Math.round(parseFloat(usdAmount) * 100)
           const {
             data: {
               lnUsdInvoiceCreate: { invoice, errors },
             },
           } = await lnUsdInvoiceCreate({
             variables: {
-              input: { walletId, amount: amountInCents, memo },
+              input: { walletId, amount: usdAmount, memo },
             },
           })
 
@@ -310,40 +297,8 @@ const ReceiveUsd = () => {
     })
   }
 
-  if (showAmountInput) {
-    return (
-      <View style={styles.inputForm}>
-        <View style={styles.container}>
-          <Text style={styles.fieldTitleText}>
-            {LL.ReceiveBitcoinScreen.invoiceAmount()}
-          </Text>
-          <View style={styles.field}>
-            <FakeCurrencyInput
-              value={usdAmount}
-              onChangeValue={(newValue) => setUsdAmount(newValue)}
-              prefix="$"
-              delimiter=","
-              separator="."
-              precision={2}
-              suffix=""
-              minValue={0}
-              style={styles.amountInput}
-              autoFocus
-            />
-          </View>
-
-          <Button
-            title={LL.ReceiveBitcoinScreen.updateInvoice()}
-            buttonStyle={[styles.button, styles.activeButtonStyle]}
-            titleStyle={styles.activeButtonTitleStyle}
-            disabledStyle={[styles.button, styles.disabledButtonStyle]}
-            disabledTitleStyle={styles.disabledButtonTitleStyle}
-            disabled={usdAmount === null}
-            onPress={() => setShowAmountInput(false)}
-          />
-        </View>
-      </View>
-    )
+  const toggleShowAmountInput = () => {
+    setShowAmountInput(!showAmountInput)
   }
 
   if (showMemoInput) {
@@ -384,7 +339,9 @@ const ReceiveUsd = () => {
     }
     return (
       <>
-        <Text style={styles.primaryAmount}>{formatToDisplayCurrency(usdAmount)}</Text>
+        <Text style={styles.primaryAmount}>
+          {formatToCurrency(usdAmount, DisplayCurrency.USD)}
+        </Text>
       </>
     )
   }
@@ -463,7 +420,7 @@ const ReceiveUsd = () => {
             <View style={styles.optionsContainer}>
               {!showAmountInput && (
                 <View style={styles.field}>
-                  <Pressable onPress={() => setShowAmountInput(true)}>
+                  <Pressable onPress={() => toggleShowAmountInput()}>
                     <View style={styles.fieldContainer}>
                       <View style={styles.fieldIconContainer}>
                         <CalculatorIcon />
@@ -511,6 +468,25 @@ const ReceiveUsd = () => {
             </View>
           </>
         )}
+        <Modal
+          visible={showAmountInput}
+          animationType="slide"
+          onRequestClose={toggleShowAmountInput}
+          presentationStyle="fullScreen"
+        >
+          <CurrencyInput
+            amountCallback={({ primaryAmount, secondaryAmount }) => {
+              if (primaryAmount.currency === "USD") {
+                setUsdAmount(primaryAmount.amount)
+              } else {
+                setUsdAmount(secondaryAmount.amount)
+              }
+            }}
+            primaryCurrency={displayCurrency}
+            secondaryCurrency={DisplayCurrency.USD}
+            close={toggleShowAmountInput}
+          />
+        </Modal>
       </View>
     </KeyboardAwareScrollView>
   )

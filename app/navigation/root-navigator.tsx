@@ -69,7 +69,6 @@ import { logEnterBackground, logEnterForeground } from "@app/utils/analytics"
 import { GaloyAddressScreen } from "@app/screens/galoy-address-screen"
 import { AccountScreen } from "@app/screens/settings-screen/account-screen"
 import { TransactionLimitsScreen } from "@app/screens/settings-screen/transaction-limits-screen"
-import { CurrencyInputScreen } from "@app/screens/currency-input-screen"
 
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
 PushNotification.configure({
@@ -476,12 +475,6 @@ export const RootStack: NavigatorType = () => {
           title: LL.common.transactionLimits(),
         }}
       />
-      <RootNavigator.Screen
-      name="currencyInputScreen"
-      component={CurrencyInputScreen}
-      options={{
-        title: LL.CurrencyInputScreen.title()
-      }} />
     </RootNavigator.Navigator>
   )
 }

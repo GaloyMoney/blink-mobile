@@ -1,5 +1,10 @@
 import { usePriceContext } from "@app/store/price-context"
-import { PaymentAmount, WalletCurrency } from "@app/types/amounts"
+import {
+  DisplayAmount,
+  DisplayCurrency,
+  PaymentAmount,
+  WalletCurrency,
+} from "@app/types/amounts"
 import * as React from "react"
 
 export const usePriceConversion = () => {
@@ -23,6 +28,7 @@ export const usePriceConversion = () => {
       if (from === "USD" && to === "BTC") {
         return (100 * amount) / priceData.price
       }
+      // TODO this is where we will need logic to support exchange between multiple display currencies
       return amount
     },
     [priceData],
@@ -68,9 +74,50 @@ export const usePriceConversion = () => {
     [priceData],
   )
 
+  const convertDisplayAmount = React.useCallback(
+    <T extends DisplayCurrency>(
+      displayAmount: DisplayAmount<DisplayCurrency>,
+      toCurrency: T,
+    ): DisplayAmount<T> => {
+      if (!priceData.initialized) {
+        return {
+          amount: NaN,
+          currency: toCurrency,
+        }
+      }
+
+      if (
+        displayAmount.currency === DisplayCurrency.BTC &&
+        toCurrency === DisplayCurrency.USD
+      ) {
+        return {
+          amount: Math.round(displayAmount.amount * priceData.price),
+          currency: toCurrency,
+        }
+      }
+
+      if (
+        displayAmount.currency === DisplayCurrency.USD &&
+        toCurrency === DisplayCurrency.BTC
+      ) {
+        return {
+          amount: Math.round(displayAmount.amount / priceData.price),
+          currency: toCurrency,
+        }
+      }
+
+      return {
+        amount: Math.round(displayAmount.amount),
+        currency: toCurrency,
+      }
+    },
+    [priceData],
+  )
+
   return {
     convertCurrencyAmount,
     convertPaymentAmount,
+    convertDisplayAmount,
     usdPerBtc: {
       currency: WalletCurrency.USD,
       amount: priceData.initialized ? priceData.price * 100000000 : NaN,

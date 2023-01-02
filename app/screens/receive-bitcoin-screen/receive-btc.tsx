@@ -3,14 +3,12 @@ import useMainQuery from "@app/hooks/use-main-query"
 import { getFullUri, TYPE_LIGHTNING_BTC, TYPE_BITCOIN_ONCHAIN } from "@app/utils/wallet"
 import { GaloyGQL, useMutation } from "@galoymoney/client"
 import React, { useCallback, useEffect, useState } from "react"
-import { Alert, Pressable, Share, TextInput, View } from "react-native"
+import { Alert, Modal, Pressable, Share, TextInput, View } from "react-native"
 import { Button, Text } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
 import QRView from "./qr-view"
 import Icon from "react-native-vector-icons/Ionicons"
-import { FakeCurrencyInput } from "react-native-currency-input"
 import { palette } from "@app/theme"
-import SwitchIcon from "@app/assets/icons/switch.svg"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import { satAmountDisplay } from "@app/utils/currencyConversion"
 import CalculatorIcon from "@app/assets/icons/calculator.svg"
@@ -22,10 +20,11 @@ import { toastShow } from "@app/utils/toast"
 import { copyPaymentInfoToClipboard } from "@app/utils/clipboard"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { logGeneratePaymentRequest } from "@app/utils/analytics"
-import { WalletCurrency } from "@app/types/amounts"
+import { DisplayCurrency, WalletCurrency } from "@app/types/amounts"
 import { testProps } from "../../../utils/testProps"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+import { CurrencyInput } from "@app/components/currency-input"
 
 const styles = EStyleSheet.create({
   container: {
@@ -41,13 +40,6 @@ const styles = EStyleSheet.create({
   },
   inputForm: {
     marginVertical: 20,
-  },
-  currencyInputContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 10,
-    backgroundColor: palette.white,
-    borderRadius: 10,
   },
   infoText: {
     color: palette.midGrey,
@@ -91,27 +83,6 @@ const styles = EStyleSheet.create({
     color: palette.lapisLazuli,
     fontSize: "14rem",
   },
-  walletBalanceInput: {
-    color: palette.lapisLazuli,
-    fontSize: 20,
-    fontWeight: "600",
-  },
-  convertedAmountText: {
-    color: palette.coolGrey,
-    fontSize: 12,
-  },
-  switchCurrencyIconContainer: {
-    width: 50,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  currencyInput: {
-    flexDirection: "column",
-    flex: 1,
-  },
-  toggle: {
-    justifyContent: "flex-end",
-  },
   button: {
     height: 60,
     borderRadius: 10,
@@ -142,13 +113,6 @@ const styles = EStyleSheet.create({
     color: palette.lapisLazuli,
     marginBottom: 5,
   },
-  disabledButtonStyle: {
-    backgroundColor: palette.lighterGrey,
-  },
-  disabledButtonTitleStyle: {
-    color: palette.lightBlue,
-    fontWeight: "600",
-  },
 })
 
 const ReceiveBtc = () => {
@@ -159,11 +123,9 @@ const ReceiveBtc = () => {
   >(null)
   const [btcAddress, setBtcAddress] = useState<string | null>(null)
   const [satAmount, setSatAmount] = useState(0)
-  const [usdAmount, setUsdAmount] = useState(0)
   const [memo, setMemo] = useState("")
   const [showMemoInput, setShowMemoInput] = useState(false)
   const [showAmountInput, setShowAmountInput] = useState(false)
-  const [amountCurrency, setAmountCurrency] = useState("USD")
 
   const [paymentLayer, setPaymentLayer] = useState<"BITCOIN_ONCHAIN" | "LIGHTNING_BTC">(
     TYPE_LIGHTNING_BTC,
@@ -176,7 +138,7 @@ const ReceiveBtc = () => {
   const [lnInvoiceCreate] = useMutation.lnInvoiceCreate()
   const [generateBtcAddress] = useMutation.onChainAddressCurrent()
   const { LL } = useI18nContext()
-  const { formatToDisplayCurrency } = useDisplayCurrency()
+  const { formatToDisplayCurrency, displayCurrency } = useDisplayCurrency()
 
   const updateInvoice = useCallback(
     async ({ walletId, satAmount, memo }) => {
@@ -272,20 +234,8 @@ const ReceiveBtc = () => {
     [generateBtcAddress, LL],
   )
 
-  const toggleAmountCurrency = () => {
-    if (amountCurrency === "USD") {
-      setAmountCurrency("BTC")
-    }
-    if (amountCurrency === "BTC") {
-      setAmountCurrency("USD")
-      setUsdAmount(
-        convertCurrencyAmount({
-          amount: satAmount,
-          from: "BTC",
-          to: "USD",
-        }),
-      )
-    }
+  const toggleShowAmountInput = () => {
+    setShowAmountInput(!showAmountInput)
   }
 
   useEffect((): void | (() => void) => {
@@ -365,105 +315,6 @@ const ReceiveBtc = () => {
     from: "BTC",
     to: "USD",
   })
-
-  if (showAmountInput) {
-    const usdAmountInSats = Math.round(
-      convertCurrencyAmount({
-        amount: usdAmount ?? 0,
-        from: "USD",
-        to: "BTC",
-      }),
-    )
-
-    const validAmount =
-      (amountCurrency === "BTC" && satAmount !== null) ||
-      (amountCurrency === "USD" && usdAmount !== null)
-
-    return (
-      <View style={[styles.inputForm, styles.container]}>
-        <View style={styles.currencyInputContainer}>
-          <View style={styles.currencyInput}>
-            {amountCurrency === "BTC" && (
-              <>
-                <FakeCurrencyInput
-                  value={satAmount}
-                  onChangeValue={(newValue) => setSatAmount(newValue)}
-                  prefix=""
-                  delimiter=","
-                  separator="."
-                  precision={0}
-                  suffix=" sats"
-                  minValue={0}
-                  style={styles.walletBalanceInput}
-                  autoFocus
-                />
-                <FakeCurrencyInput
-                  value={satAmountInUsd}
-                  prefix="$"
-                  delimiter=","
-                  separator="."
-                  precision={2}
-                  minValue={0}
-                  editable={false}
-                  style={styles.convertedAmountText}
-                />
-              </>
-            )}
-            {amountCurrency === "USD" && (
-              <>
-                <FakeCurrencyInput
-                  value={usdAmount}
-                  onChangeValue={(newValue) => setUsdAmount(newValue)}
-                  prefix="$"
-                  delimiter=","
-                  separator="."
-                  precision={2}
-                  style={styles.walletBalanceInput}
-                  minValue={0}
-                  autoFocus
-                />
-                <FakeCurrencyInput
-                  value={usdAmountInSats}
-                  prefix=""
-                  delimiter=","
-                  separator="."
-                  suffix=" sats"
-                  precision={0}
-                  minValue={0}
-                  editable={false}
-                  style={styles.convertedAmountText}
-                />
-              </>
-            )}
-          </View>
-
-          <View style={styles.toggle}>
-            <Pressable onPress={toggleAmountCurrency}>
-              <View style={styles.switchCurrencyIconContainer}>
-                <SwitchIcon />
-              </View>
-            </Pressable>
-          </View>
-        </View>
-
-        <Button
-          title={LL.ReceiveBitcoinScreen.updateInvoice()}
-          buttonStyle={[styles.button, styles.activeButtonStyle]}
-          titleStyle={styles.activeButtonTitleStyle}
-          disabledStyle={[styles.button, styles.disabledButtonStyle]}
-          disabledTitleStyle={styles.disabledButtonTitleStyle}
-          disabled={!validAmount}
-          onPress={() => {
-            if (amountCurrency === "USD" && usdAmount) {
-              setSatAmount(usdAmountInSats)
-            }
-            setShowAmountInput(false)
-            setInvoice(null)
-          }}
-        />
-      </View>
-    )
-  }
 
   if (showMemoInput) {
     return (
@@ -572,7 +423,7 @@ const ReceiveBtc = () => {
         <View style={styles.optionsContainer}>
           {!showAmountInput && (
             <View style={styles.field}>
-              <Pressable onPress={() => setShowAmountInput(true)}>
+              <Pressable onPress={() => toggleShowAmountInput()}>
                 <View style={styles.fieldContainer}>
                   <View style={styles.fieldIconContainer}>
                     <CalculatorIcon />
@@ -631,6 +482,26 @@ const ReceiveBtc = () => {
           </View>
         </View>
       </View>
+      <Modal
+        visible={showAmountInput}
+        animationType="slide"
+        onRequestClose={toggleShowAmountInput}
+        presentationStyle="fullScreen"
+      >
+        <CurrencyInput
+          amountCallback={({ primaryAmount, secondaryAmount }) => {
+            setInvoice(null)
+            if (primaryAmount.currency === "BTC") {
+              setSatAmount(primaryAmount.amount)
+            } else {
+              setSatAmount(secondaryAmount.amount)
+            }
+          }}
+          primaryCurrency={displayCurrency}
+          secondaryCurrency={DisplayCurrency.BTC}
+          close={toggleShowAmountInput}
+        />
+      </Modal>
     </KeyboardAwareScrollView>
   )
 }
