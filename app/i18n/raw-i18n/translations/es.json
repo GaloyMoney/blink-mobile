@@ -601,7 +601,9 @@
         "note": "Nota",
         "success": "El pago se ha enviado correctamente.",
         "title": "Enviar Bitcoin",
-        "failedToFetchLnurlInvoice": "Error al obtener la factura de lnurl"
+        "failedToFetchLnurlInvoice": "Error al obtener la factura de lnurl",
+        "lnurlInvoiceIncorrectAmount": "The lnurl server responded with an invoice with an incorrect amount.",
+        "lnurlInvoiceIncorrectDescription": "The lnurl server responded with an invoice with an incorrect description hash."
     },
     "SettingsScreen": {
         "activated": "Activada",
@@ -638,6 +640,17 @@
         "paid": "Pagado a/desde",
         "received": "Recibiste",
         "spent": "Gastaste"
+    },
+    "TransactionLimitsScreen": {
+        "receive": "Receive",
+        "withdraw": "Withdraw",
+        "perDay": "per day",
+        "perWeek": "per week",
+        "unlimited": "Unlimited",
+        "remaining": "Remaining",
+        "stablesatTransfers": "Stablesat Transfers",
+        "internalSend": "Send to BBW User",
+        "error": "Unable to fetch limits at this time"
     },
     "TransactionScreen": {
         "noTransaction": "\nNo se han realizado transacciones",
@@ -684,6 +697,7 @@
     },
     "common": {
         "account": "Cuenta",
+        "transactionLimits": "Transaction Limits",
         "activateWallet": "Activar billetera",
         "amountRequired": "Se requiere una cantidad",
         "back": "Atrás",
