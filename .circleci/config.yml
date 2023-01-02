@@ -104,7 +104,11 @@ jobs:
       - run: git add --force android/app/build/generated/sourcemaps/react/release
       - run: git commit -a -m "new android build [ci skip]"
       - run: git push -q https://${GITHUB_TOKEN}@github.com/GaloyMoney/galoy-mobile.git main
-      - run: gh release upload $CIRCLE_TAG "android/app/build/outputs/apk/release/app-release.apk" --clobber
+      - run: gh release upload $CIRCLE_TAG "android/app/build/outputs/apk/release/app-arm64-v8a-release.apk" --clobber
+      - run: gh release upload $CIRCLE_TAG "android/app/build/outputs/apk/release/app-armeabi-v7a-release.apk" --clobber
+      - run: gh release upload $CIRCLE_TAG "android/app/build/outputs/apk/release/app-universal-release.apk" --clobber
+      - run: gh release upload $CIRCLE_TAG "android/app/build/outputs/apk/release/app-x86-release.apk" --clobber
+      - run: gh release upload $CIRCLE_TAG "android/app/build/outputs/apk/release/app-x86_64-release.apk" --clobber
       - run: gh release upload $CIRCLE_TAG "android/app/build/generated/sourcemaps/react/release/index.android.bundle.map" --clobber
       - store_artifacts:
           path: android/app/build/outputs
