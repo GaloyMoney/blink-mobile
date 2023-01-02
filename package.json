@@ -79,7 +79,7 @@
     "lodash.merge": "^4.6.2",
     "lodash.sumby": "^4.6.0",
     "lodash.tonumber": "^4.0.3",
-    "lottie-ios": "^3.4.1",
+    "lottie-ios": "^3.5.0",
     "lottie-react-native": "^5.1.4",
     "moment": "^2.29.3",
     "node-libs-react-native": "^1.2.1",
