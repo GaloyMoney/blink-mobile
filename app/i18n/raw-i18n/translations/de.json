@@ -16,7 +16,10 @@
         "howToUseYourCashRegister": "Wie deine Kasse funktioniert",
         "howToUseYourAddressExplainer": "Deine {bankName} Adresse ist deine eigene Lightning Adresse. Es ist wie eine E-Mail Adresse, aber für Bitcoin.\n\nUm Zahlungen zu empfangen, teile deine Lightning Adresse mit Leuten, deren Wallet Lightning Adressen unterstützt.\n\nDazu gehören folgende Wallets:",
         "howToUseYourPaycodeExplainer": "Du kannst deinen Zahlungscode ausdrucken und im Geschäft nutzen, um Zahlungen zu empfangen. Käufer können dich bezahlen, indem sie den Zahlungscode mit einer Lightning Wallet scannen.\n\nBedenke dabei, das bspw. die folgenden Wallets keine Rechnungen ohne fixen Betrag unterstützen:",
-        "howToUseYourCashRegisterExplainer": "Deine Kasse emöglicht es deinen Angestellten, Zahlungen zu empfangen ohne Zugriff auf deine Wallet zu haben.\n\nTeile deinen Link und sie können damit Rechnungen erstellen. Die Zahlungen, die darŭber empfangen werden, landen direkt in deiner Wallet."
+        "howToUseYourCashRegisterExplainer": "Deine Kasse emöglicht es deinen Angestellten, Zahlungen zu empfangen ohne Zugriff auf deine Wallet zu haben.\n\nTeile deinen Link und sie können damit Rechnungen erstellen. Die Zahlungen, die darŭber empfangen werden, landen direkt in deiner Wallet.",
+        "defaultWallet": "Default Wallet",
+        "whatIsDefaultWalletTitle": "What is the default wallet?",
+        "whatIsDefaultWalletDescription": "Your default wallet is the wallet that will be used when receiving payments through the POS. You can change it at any time here in the settings."
     },
     "AuthenticationScreen": {
         "authenticationDescription": "Authentifizieren um fortzusetzen",
@@ -108,9 +111,9 @@
                     },
                     "whoControlsBitcoin": {
                         "answers": [
-                            "A voluntary community of users around the world",
-                            "Mr Burns from The Simpsons",
-                            "The government of France"
+                            "Eine freiwillige Gemeinschaft von Benutzern auf der ganzen Welt",
+                            "Mister Burns aus Die Simpsons",
+                            "Die französische Regierung"
                         ],
                         "feedback": [
                             "That is right. Bitcoin is made possible by people all around the world running bitcoin software on their computers and smartphones.",
@@ -579,7 +582,8 @@
             "warning": "Wenn die {bankName} Adresse falsch geschrieben ist, kann {bankName} die Transaktion nicht rückgängig machen.",
             "checkBox": "{lnAddress} ist die richtige Adresse.",
             "confirmButton": "Ich bin mir sicher"
-        }
+        },
+        "clipboardError": "Error getting value from clipboard"
     },
     "SendBitcoinScreen": {
         "amount": "Betrag",
@@ -597,7 +601,9 @@
         "note": "Notiz",
         "success": "Zahlung erfolgreich gesendet",
         "title": "Sende Bitcoin",
-        "failedToFetchLnurlInvoice": "LNURL Rechnung konnte nicht abgerufen werden"
+        "failedToFetchLnurlInvoice": "LNURL Rechnung konnte nicht abgerufen werden",
+        "lnurlInvoiceIncorrectAmount": "The lnurl server responded with an invoice with an incorrect amount.",
+        "lnurlInvoiceIncorrectDescription": "The lnurl server responded with an invoice with an incorrect description hash."
     },
     "SettingsScreen": {
         "activated": "Aktiviert",
@@ -634,6 +640,17 @@
         "paid": "Gezahlt an/von",
         "received": "Du erhieltst",
         "spent": "Du zahltest"
+    },
+    "TransactionLimitsScreen": {
+        "receive": "Receive",
+        "withdraw": "Withdraw",
+        "perDay": "per day",
+        "perWeek": "per week",
+        "unlimited": "Unlimited",
+        "remaining": "Remaining",
+        "stablesatTransfers": "Stablesat Transfers",
+        "internalSend": "Send to BBW User",
+        "error": "Unable to fetch limits at this time"
     },
     "TransactionScreen": {
         "noTransaction": "Keine Transaktionen",
@@ -680,6 +697,7 @@
     },
     "common": {
         "account": "Konto",
+        "transactionLimits": "Transaction Limits",
         "activateWallet": "Wallet aktivieren",
         "amountRequired": "Betrag ist erforderlich",
         "back": "Zurück",
@@ -790,11 +808,5 @@
         "underLimit": "Du kannst nicht weniger als den Minimalbetrag senden",
         "commentRequired": "Kommentar erfordert",
         "viewPrintable": "Druckversion anzeigen"
-    },
-    "ModalClipboard": {
-        "dismiss": "Schließen",
-        "open": "Öffnen",
-        "pendingBitcoin": "Du hast eine Bitcoin Adresse in der Zwischenablage",
-        "pendingInvoice": "Du hast eine Lightning Rechnung in der Zwischenablage"
     }
 }
