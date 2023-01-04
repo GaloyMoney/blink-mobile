@@ -624,7 +624,8 @@
         "es-SV": "Španělsky",
         "pt-BR": "Portugalsky (Brazílie)",
         "fr-CA": "Francouzsky (Kanada)",
-        "de-DE": "Německy"
+        "de-DE": "Německy",
+        "cs": "Česky"
     },
     "StablesatsModal": {
         "header": "Se Stablesats máte nyní ve své peněžence přidaný účet v USD!",
@@ -642,15 +643,15 @@
         "spent": "Utratili jste"
     },
     "TransactionLimitsScreen": {
-        "receive": "Receive",
-        "withdraw": "Withdraw",
-        "perDay": "per day",
-        "perWeek": "per week",
-        "unlimited": "Unlimited",
-        "remaining": "Remaining",
-        "stablesatTransfers": "Stablesat Transfers",
-        "internalSend": "Send to BBW User",
-        "error": "Unable to fetch limits at this time"
+        "receive": "Přijmout",
+        "withdraw": "Vybrat",
+        "perDay": "denně",
+        "perWeek": "týdně",
+        "unlimited": "Neomezeně",
+        "remaining": "Zbývající",
+        "stablesatTransfers": "Převody ze Stablesat",
+        "internalSend": "Odeslat uživateli BBW",
+        "error": "V tuto chvíli nelze načíst limity"
     },
     "TransactionScreen": {
         "noTransaction": "Žádná transakce k zobrazení",
@@ -697,7 +698,7 @@
     },
     "common": {
         "account": "Účet",
-        "transactionLimits": "Transaction Limits",
+        "transactionLimits": "Transakční limity",
         "activateWallet": "Aktivovat peněženku",
         "amountRequired": "Je požadována částka",
         "back": "Zpět",
