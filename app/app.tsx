@@ -165,9 +165,7 @@ export const App = (): JSX.Element => {
       const wsLink = new GraphQLWsLink(
         createClient({
           url: appConfig.galoyInstance.graphqlWsUri,
-          connectionParams: hasToken
-            ? { Authorization: `Bearer ${token}` }
-            : undefined,
+          connectionParams: hasToken ? { Authorization: `Bearer ${token}` } : undefined,
           // Voluntary not using: webSocketImpl: WebSocket
           // seems react native already have an implement of the websocket?
           //
