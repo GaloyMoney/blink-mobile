@@ -12,7 +12,6 @@ import {
   NormalizedCacheObject,
   split,
 } from "@apollo/client"
-import { WebSocketLink } from "@apollo/client/link/ws"
 import { getMainDefinition } from "@apollo/client/utilities"
 import { setContext } from "@apollo/client/link/context"
 import { RetryLink } from "@apollo/client/link/retry"
@@ -57,6 +56,8 @@ import { customLocaleDetector } from "./utils/locale-detector"
 import { useAppConfig } from "./hooks"
 import { ThemeProvider } from "@rneui/themed"
 import theme from "./rne-theme/theme"
+import { createClient } from "graphql-ws"
+import { GraphQLWsLink } from "@apollo/client/link/subscriptions"
 
 export const BUILD_VERSION = "build_version"
 
@@ -161,16 +162,19 @@ export const App = (): JSX.Element => {
         })
       })
 
-      const wsLink = new WebSocketLink({
-        uri: appConfig.galoyInstance.graphqlWsUri,
-        options: {
-          reconnect: true,
-          reconnectionAttempts: 3,
-          connectionParams: {
-            authorization: hasToken ? getAuthorizationHeader(token) : "",
-          },
-        },
-      })
+      const wsLink = new GraphQLWsLink(
+        createClient({
+          url: appConfig.galoyInstance.graphqlWsUri,
+          connectionParams: hasToken
+            ? { Authorization: `Bearer ${token}` }
+            : undefined,
+          // Voluntary not using: webSocketImpl: WebSocket
+          // seems react native already have an implement of the websocket?
+          //
+          // TODO: implement keepAlive and reconnection?
+          // https://github.com/enisdenjo/graphql-ws/blob/master/docs/interfaces/client.ClientOptions.md#keepalive
+        }),
+      )
 
       const splitLink = split(
         ({ query }) => {
