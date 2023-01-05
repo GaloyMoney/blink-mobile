@@ -66,7 +66,7 @@ export const GaloyIconButton = ({
         return {
           backgroundColor: theme.colors.primary9,
           color: theme.colors.primary5,
-          opacity: 0.7,
+          opacity: 0.6,
         }
       case !iconOnly && pressed:
         return {
@@ -124,7 +124,7 @@ export const GaloyEditButton = ({ disabled, ...remainingProps }: PressableProps)
       width: 32,
       height: 32,
       borderRadius: 8,
-      opacity: disabled ? 0.7 : 1,
+      opacity: disabled ? 0.5 : 1,
       backgroundColor: pressed ? theme.colors.primary9 : theme.colors.primary10,
       alignItems: "center",
       justifyContent: "center",

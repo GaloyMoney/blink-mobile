@@ -39,6 +39,7 @@ const theme = createTheme({
       const universalStyle = {
         color: props.color || theme.colors.grey5,
         fontWeight: props.bold ? "600" : "400",
+        fontFamily: "SourceSansPro-Regular",
       }
 
       const sizeStyle =
