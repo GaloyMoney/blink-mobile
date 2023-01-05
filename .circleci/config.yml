@@ -7,7 +7,7 @@ jobs:
   test_android:
     docker:
       - image: cimg/android:2022.06.1
-    resource_class: 2xlarge
+    resource_class: xlarge
     environment:
       TERM: dumb
       JAVA_OPTS: -Xms512m -Xmx2g
