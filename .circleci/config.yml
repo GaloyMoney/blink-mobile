@@ -235,3 +235,9 @@ workflows:
           filters:
             branches:
               only: main
+  in-pr:
+    jobs:
+      - test_android:
+          filters:
+            branches:
+              ignore: main
