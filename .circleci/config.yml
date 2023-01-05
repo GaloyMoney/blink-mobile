@@ -17,6 +17,8 @@ jobs:
     steps:
       - checkout:
           path: ~/galoy-mobile
+      - run: echo $GCLOUD_SERVICE_KEY
+      - run: echo $GCLOUD_SERVICE_KEY | base64
       - run: sudo apt-get update
       - run: curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
       - run: sudo apt-get install -y gnupg2 gcc g++ make nodejs
