@@ -151,6 +151,7 @@ const useFee = ({
       }
     }
     initializeFee()
+    // TODO: rewrite this hook and correclty include all dependencies
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paymentType, invoice])
 

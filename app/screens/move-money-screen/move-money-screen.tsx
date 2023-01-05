@@ -182,8 +182,7 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
     }
     const subscription = AppState.addEventListener("change", _handleAppStateChange)
     return () => subscription.remove()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [refetch])
 
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async (_remoteMessage) => {
@@ -193,8 +192,7 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
     })
 
     return unsubscribe
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [refetch])
 
   function isUpdateAvailableOrRequired(mobileVersions) {
     try {
