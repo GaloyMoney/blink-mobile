@@ -33,8 +33,8 @@ export const ConversionDetailsScreen = ({
     btcWalletValueInUsd,
   } = useMainQuery()
   const { usdPerBtc } = usePriceConversion()
-  const [fromWallet, setFromWallet] = useState<WalletDescriptor<WalletCurrency>>()
-  const [toWallet, setToWallet] = useState<WalletDescriptor<WalletCurrency>>()
+  const [fromWallet, setFromWallet] = useState<WalletDescriptor>()
+  const [toWallet, setToWallet] = useState<WalletDescriptor>()
   const {
     usdAmount,
     btcAmount,

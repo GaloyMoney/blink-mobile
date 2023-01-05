@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { PaymentAmount, WalletCurrency } from "@app/types/amounts"
+import { PaymentAmount } from "@app/types/amounts"
 import { WalletDescriptor } from "@app/types/wallets"
 import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
 import { GaloyGQL } from "@galoymoney/client"
@@ -45,7 +45,7 @@ export type RootStackParamList = {
     username?: string
   }
   sendBitcoinDetails: {
-    fixedAmount?: PaymentAmount<WalletCurrency.BTC>
+    fixedAmount?: PaymentAmount
     destination: string
     note?: string
     lnurl?: LnUrlPayServiceResponse
@@ -54,32 +54,32 @@ export type RootStackParamList = {
     sameNode: boolean
   }
   sendBitcoinConfirmation: {
-    fixedAmount?: PaymentAmount<WalletCurrency.BTC>
+    fixedAmount?: PaymentAmount
     destination: string
     recipientWalletId?: string
-    payerWalletDescriptor: WalletDescriptor<WalletCurrency>
-    paymentAmountInBtc?: PaymentAmount<WalletCurrency.BTC>
-    paymentAmountInUsd?: PaymentAmount<WalletCurrency.USD>
+    payerWalletDescriptor: WalletDescriptor
+    paymentAmountInBtc?: PaymentAmount
+    paymentAmountInUsd?: PaymentAmount
     note?: string
     paymentType: PaymentType
     sameNode: boolean
     lnurlInvoice?: string
   }
   conversionDetails: {
-    transferAmount: PaymentAmount<WalletCurrency> | undefined
+    transferAmount: PaymentAmount | undefined
   }
   conversionConfirmation: {
-    fromWallet: WalletDescriptor<WalletCurrency>
-    toWallet: WalletDescriptor<WalletCurrency>
-    btcAmount: PaymentAmount<WalletCurrency.BTC>
-    usdAmount: PaymentAmount<WalletCurrency.USD>
-    usdPerBtc: PaymentAmount<WalletCurrency.USD>
+    fromWallet: WalletDescriptor
+    toWallet: WalletDescriptor
+    btcAmount: PaymentAmount
+    usdAmount: PaymentAmount
+    usdPerBtc: PaymentAmount
   }
   conversionSuccess: {
-    fromWallet: WalletDescriptor<WalletCurrency>
-    toWallet: WalletDescriptor<WalletCurrency>
-    btcAmount: PaymentAmount<WalletCurrency.BTC>
-    usdAmount: PaymentAmount<WalletCurrency.USD>
+    fromWallet: WalletDescriptor
+    toWallet: WalletDescriptor
+    btcAmount: PaymentAmount
+    usdAmount: PaymentAmount
   }
   sendBitcoinSuccess: undefined
   language: undefined

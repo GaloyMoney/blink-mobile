@@ -186,7 +186,7 @@ const sendBitcoinDetailsScreenParams = (destination: ValidPaymentDestination) =>
           ({
             amount: destination.amount,
             currency: WalletCurrency.BTC,
-          } as PaymentAmount<WalletCurrency.BTC>),
+          } as PaymentAmount),
         paymentType: PaymentType.Lightning,
         sameNode: destination.sameNode,
         note: destination.memo,
@@ -213,7 +213,7 @@ const sendBitcoinDetailsScreenParams = (destination: ValidPaymentDestination) =>
           ({
             amount: destination.amount,
             currency: WalletCurrency.BTC,
-          } as PaymentAmount<WalletCurrency.BTC>),
+          } as PaymentAmount),
         note: destination.memo,
         paymentType: PaymentType.Onchain,
         sameNode: false,

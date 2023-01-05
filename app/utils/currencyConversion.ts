@@ -6,9 +6,7 @@ const isCurrencyWithDecimals = (currency) => {
   return currency === "USD"
 }
 
-export const paymentAmountToDollarsOrSats = (
-  paymentAmount: PaymentAmount<WalletCurrency>,
-) => {
+export const paymentAmountToDollarsOrSats = (paymentAmount: PaymentAmount) => {
   return paymentAmount.currency === WalletCurrency.USD
     ? paymentAmount.amount / 100
     : paymentAmount.amount
@@ -42,9 +40,7 @@ export const currencyToTextWithUnits = (moneyAmount: MoneyAmount): string => {
   throw Error("wrong currency")
 }
 
-export const paymentAmountToTextWithUnits = (
-  paymentAmount: PaymentAmount<WalletCurrency>,
-): string => {
+export const paymentAmountToTextWithUnits = (paymentAmount: PaymentAmount): string => {
   if (paymentAmount.currency === WalletCurrency.BTC) {
     if (paymentAmount.amount === 1) {
       return "1 sat"
@@ -60,7 +56,7 @@ export const paymentAmountToTextWithUnits = (
 }
 
 export const paymentAmountToText = (
-  paymentAmount: PaymentAmount<WalletCurrency>,
+  paymentAmount: PaymentAmount,
   locale = "en-US",
 ): string => {
   if (paymentAmount.currency === WalletCurrency.USD) {

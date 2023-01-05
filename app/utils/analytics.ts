@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import { GaloyInstanceNames } from "@app/config/galoy-instances"
-import { WalletCurrency } from "@app/types/amounts"
+import { WalletCurrencyType } from "@app/types/amounts"
 import { GaloyGQL } from "@galoymoney/client"
 import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
 import analytics from "@react-native-firebase/analytics"
@@ -15,7 +15,7 @@ export const logPaymentDestinationAccepted = (paymentType: PaymentType) => {
 
 type LogPaymentAttemptParams = {
   paymentType: PaymentType
-  sendingWallet: WalletCurrency
+  sendingWallet: WalletCurrencyType
 }
 
 export const logPaymentAttempt = (params: LogPaymentAttemptParams) => {
@@ -27,7 +27,7 @@ export const logPaymentAttempt = (params: LogPaymentAttemptParams) => {
 
 type LogPaymentResultParams = {
   paymentType: PaymentType
-  sendingWallet: WalletCurrency
+  sendingWallet: WalletCurrencyType
   paymentStatus: GaloyGQL.PaymentSendResult
 }
 
@@ -40,8 +40,8 @@ export const logPaymentResult = (params: LogPaymentResultParams) => {
 }
 
 type LogConversionAttemptParams = {
-  sendingWallet: WalletCurrency
-  receivingWallet: WalletCurrency
+  sendingWallet: WalletCurrencyType
+  receivingWallet: WalletCurrencyType
 }
 
 export const logConversionAttempt = (params: LogConversionAttemptParams) => {
@@ -52,8 +52,8 @@ export const logConversionAttempt = (params: LogConversionAttemptParams) => {
 }
 
 type LogConversionResultParams = {
-  sendingWallet: WalletCurrency
-  receivingWallet: WalletCurrency
+  sendingWallet: WalletCurrencyType
+  receivingWallet: WalletCurrencyType
   paymentStatus: GaloyGQL.PaymentSendResult
 }
 export const logConversionResult = (params: LogConversionResultParams) => {
@@ -67,7 +67,7 @@ export const logConversionResult = (params: LogConversionResultParams) => {
 type LogGeneratePaymentRequestParams = {
   paymentType: "lightning" | "onchain"
   hasAmount: boolean
-  receivingWallet: WalletCurrency
+  receivingWallet: WalletCurrencyType
 }
 
 export const logGeneratePaymentRequest = (params: LogGeneratePaymentRequestParams) => {

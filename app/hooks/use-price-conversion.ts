@@ -30,9 +30,9 @@ export const usePriceConversion = () => {
 
   const convertPaymentAmount = React.useCallback(
     <T extends WalletCurrency>(
-      paymentAmount: PaymentAmount<WalletCurrency>,
+      paymentAmount: PaymentAmount,
       toCurrency: T,
-    ): PaymentAmount<T> => {
+    ): PaymentAmount => {
       if (!priceData.initialized) {
         return {
           amount: NaN,
@@ -74,7 +74,7 @@ export const usePriceConversion = () => {
     usdPerBtc: {
       currency: WalletCurrency.USD,
       amount: priceData.initialized ? priceData.price * 100000000 : NaN,
-    } as PaymentAmount<WalletCurrency.USD>,
+    } as PaymentAmount,
     usdPerSat: priceData.initialized ? (priceData.price / 100).toFixed(8) : null,
   }
 }

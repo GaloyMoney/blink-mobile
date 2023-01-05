@@ -5,18 +5,18 @@ import { PaymentAmount, WalletCurrency } from "@app/types/amounts"
 import crashlytics from "@react-native-firebase/crashlytics"
 
 type FeeType = {
-  amount?: PaymentAmount<WalletCurrency>
+  amount?: PaymentAmount
   status: "loading" | "error" | "unset" | "set"
 }
 
 type UseFeeInput = {
-  walletDescriptor: WalletDescriptor<WalletCurrency>
+  walletDescriptor: WalletDescriptor
   address: string
   isNoAmountInvoice: boolean
   invoice: string
   paymentType: string
   sameNode: boolean
-  paymentAmount: PaymentAmount<WalletCurrency>
+  paymentAmount: PaymentAmount
 }
 
 const useFee = ({

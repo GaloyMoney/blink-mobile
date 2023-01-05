@@ -1,9 +1,6 @@
-import { WalletCurrency } from "./amounts"
+import { WalletCurrencyType } from "./amounts"
 
-export type WalletDescriptor<T extends WalletCurrency> = {
+export type WalletDescriptor = {
   id: string
-  currency: T
+  currency: WalletCurrencyType
 }
-
-export type UsdWalletDescriptor = WalletDescriptor<WalletCurrency.USD>
-export type BtcWalletDescriptor = WalletDescriptor<WalletCurrency.BTC>

@@ -2,20 +2,20 @@ import { PaymentAmount, WalletCurrency } from "@app/types/amounts"
 import React from "react"
 import { usePriceConversion } from "./use-price-conversion"
 
-export const useUsdBtcAmount = (initialAmount?: PaymentAmount<WalletCurrency>) => {
-  const [paymentAmount, setPaymentAmount] = React.useState<PaymentAmount<WalletCurrency>>(
+export const useUsdBtcAmount = (initialAmount?: PaymentAmount) => {
+  const [paymentAmount, setPaymentAmount] = React.useState<PaymentAmount>(
     initialAmount || { amount: 0, currency: WalletCurrency.USD },
   )
   const { convertPaymentAmount } = usePriceConversion()
 
   const btcAmount = React.useMemo(() => {
     return paymentAmount.currency === WalletCurrency.BTC
-      ? (paymentAmount as PaymentAmount<WalletCurrency.BTC>)
+      ? (paymentAmount as PaymentAmount)
       : convertPaymentAmount(paymentAmount, WalletCurrency.BTC)
   }, [paymentAmount, convertPaymentAmount])
   const usdAmount = React.useMemo(() => {
     return paymentAmount.currency === WalletCurrency.USD
-      ? (paymentAmount as PaymentAmount<WalletCurrency.USD>)
+      ? (paymentAmount as PaymentAmount)
       : convertPaymentAmount(paymentAmount, WalletCurrency.USD)
   }, [paymentAmount, convertPaymentAmount])
 
