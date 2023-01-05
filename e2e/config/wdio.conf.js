@@ -1,7 +1,9 @@
 let capabilities = {
   platformName: "Android",
   deviceName: process.env.TEST_DEVICE_ANDROID || "generic_x86",
-  app: "./android/app/build/outputs/apk/debug/app-debug.apk", // "./android/app/release/app-release.apk",
+  app:
+    process.env.TEST_APK_PATH ||
+    "./android/app/build/outputs/apk/debug/app-universal-debug.apk", // "./android/app/release/app-release.apk",
   automationName: "UiAutomator2",
   snapshotMaxDepth: 1000,
   autoGrantPermissions: true,

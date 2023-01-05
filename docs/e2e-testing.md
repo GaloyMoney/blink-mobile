@@ -40,6 +40,7 @@ Android
 
 ```
 TEST_DEVICE_ANDROID="Pixel 3 API 29" yarn test:e2e:android
+TEST_APK_PATH="./android/app/build/outputs/apk/debug/app-universal-debug.apk"
 ```
 
 IOS
