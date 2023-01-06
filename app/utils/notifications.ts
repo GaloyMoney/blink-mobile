@@ -1,7 +1,7 @@
 import { ApolloClient, DocumentNode } from "@apollo/client"
 import messaging from "@react-native-firebase/messaging"
 import crashlytics from "@react-native-firebase/crashlytics"
-import { MUTATIONS } from "@galoymoney/client/dist/graphql/import"
+import { MUTATIONS } from "@galoymoney/client"
 
 // No op if the permission has already been requested
 export const requestNotificationPermission = () => messaging().requestPermission()

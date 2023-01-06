@@ -1753,10 +1753,10 @@
   resolved "https://registry.npmjs.org/@expo/sdk-runtime-versions/-/sdk-runtime-versions-1.0.0.tgz"
   integrity sha512-Doz2bfiPndXYFPMRwPyGa1k5QaKDVpY806UJj570epIiMzWaYyCtobasyfC++qfIXVb5Ocy7r3tP9d62hAQ7IQ==
 
-"@galoymoney/client@^0.1.67":
-  version "0.1.67"
-  resolved "https://registry.yarnpkg.com/@galoymoney/client/-/client-0.1.67.tgz#2f4a36b2ba6b5616845aa56e14220f9bb8c293a7"
-  integrity sha512-RdLNwkcxpFt6gBs5BeTdUVitMsfcxc7LhHM+DluCtn/aL3RFNITBmHprnElbQ5DE4j/n2LeZKYizSOFecc/s5A==
+"@galoymoney/client@^0.1.69":
+  version "0.1.69"
+  resolved "https://registry.yarnpkg.com/@galoymoney/client/-/client-0.1.69.tgz#9cb0d1b0cbfd527d949a0c8259113d3026a4b7a1"
+  integrity sha512-Zj0cnYCVX2dETQ+/dvHAPQSamZY3Gmw8ESDb13AtXOjIhvB1t6Eb1eXcCwCjNO0/hKm9nOYkbRA61vPdS7FMtA==
   dependencies:
     "@babel/cli" "^7.20.7"
     "@babel/core" "^7.20.7"
