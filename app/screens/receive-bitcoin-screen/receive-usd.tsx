@@ -196,8 +196,7 @@ const ReceiveUsd = () => {
       }
       startCountdownTimer(timeUntilInvoiceExpires, callback)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [usdAmount, invoice, network])
+  }, [usdAmount, invoice, network, startCountdownTimer])
 
   const updateInvoice = useCallback(
     async ({ walletId, usdAmount, memo }) => {

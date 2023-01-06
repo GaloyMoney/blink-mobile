@@ -75,44 +75,35 @@ export const MapScreen: ScreenType = ({ navigation }: Props) => {
 
   const maps = data?.businessMapMarkers ?? []
 
-  const requestLocationPermission = async () => {
-    try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-        {
-          title: LL.MapScreen.locationPermissionTitle(),
-          message: LL.MapScreen.locationPermissionMessage(),
-          buttonNeutral: LL.MapScreen.locationPermissionNeutral(),
-          buttonNegative: LL.MapScreen.locationPermissionNegative(),
-          buttonPositive: LL.MapScreen.locationPermissionPositive(),
-        },
-      )
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        console.debug("You can use the location")
-      } else {
-        console.debug("Location permission denied")
+  const requestLocationPermission = useCallback(() => {
+    const asyncRequestLocationPermission = async () => {
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+          {
+            title: LL.MapScreen.locationPermissionTitle(),
+            message: LL.MapScreen.locationPermissionMessage(),
+            buttonNeutral: LL.MapScreen.locationPermissionNeutral(),
+            buttonNegative: LL.MapScreen.locationPermissionNegative(),
+            buttonPositive: LL.MapScreen.locationPermissionPositive(),
+          },
+        )
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          console.debug("You can use the location")
+        } else {
+          console.debug("Location permission denied")
+        }
+      } catch (err) {
+        crashlytics().recordError(err)
+        console.debug(err)
       }
-    } catch (err) {
-      crashlytics().recordError(err)
-      console.debug(err)
     }
-  }
+    asyncRequestLocationPermission()
+    // disable eslint because we don't want to re-run this function when the language changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-  useFocusEffect(
-    useCallback(() => {
-      requestLocationPermission()
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []),
-  )
-
-  // React.useLayoutEffect(() => {
-  //   navigation.setOptions(
-  //     {
-  //       title: route.params.title,
-  //     },
-  //     [],
-  //   )
-  // })
+  useFocusEffect(requestLocationPermission)
 
   const markers: JSX.Element[] = []
   maps.forEach((item) => {

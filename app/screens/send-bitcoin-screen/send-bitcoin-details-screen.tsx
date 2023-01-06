@@ -272,8 +272,17 @@ const SendBitcoinDetailsScreen = ({
         )
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fromWallet, btcAmount, usdAmount, btcWalletBalance, usdWalletBalance])
+  }, [
+    fromWallet,
+    btcAmount,
+    usdAmount,
+    btcWalletBalance,
+    usdWalletBalance,
+    setValidAmount,
+    setErrorMessage,
+    LL,
+    formatToDisplayCurrency,
+  ])
 
   if (!defaultWallet) {
     return <></>
