@@ -56,9 +56,9 @@ jobs:
           command: |
             cd android && bundle exec fastlane browserstack | tee browserstack_output.log
             SESSION_ID=$(cat browserstack_output.log | grep sessionId | head -n1 | sed -n "s/^.*'\(.*\)'.*$/\1/ p")
-            echo $SESSION_ID
+            echo "Session ID - "  $SESSION_ID
             VIDEO_URL=$(curl -u "$BROWSERSTACK_USER:$BROWSERSTACK_ACCESS_KEY" -X GET "https://api-cloud.browserstack.com/app-automate/sessions/$SESSION_ID.json" | jq '.automation_session.video_url')
-            echo $VIDEO_URL
+            echo "Video URL - " $VIDEO_URL
 
   build_android:
     docker:
