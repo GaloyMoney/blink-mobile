@@ -162,7 +162,7 @@
     "babel-loader": "^8.2.5",
     "babel-plugin-module-resolver": "^4.1.0",
     "browserstack-local": "^1.5.1",
-    "csv-parse": "^5.1.0",
+    "csv-parse": "^5.3.3",
     "eslint": "^8.17.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-react": "^7.30.0",
