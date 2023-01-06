@@ -1,5 +1,5 @@
-import React, { useState } from "react"
-import { View } from "react-native"
+import React from "react"
+import { GestureResponderEvent, View } from "react-native"
 
 import { CheckBox, CheckBoxProps, Icon, makeStyles, useTheme } from "@rneui/themed"
 
@@ -10,21 +10,12 @@ type ButtonTypeOptions = "radio" | "checkbox"
 type GaloyCheckboxButtonProps = {
   buttonType: ButtonTypeOptions
   disabled?: boolean
-  callback?: () => void
+  onPress?: (event: GestureResponderEvent) => void
 }
 
 export const GaloyCheckboxButton = (props: GaloyCheckboxButtonProps & CheckBoxProps) => {
   const { theme } = useTheme()
-  const styles = useStyles(theme)
-
-  const [checked, setChecked] = useState<boolean>(props.checked)
-
-  const onPress = () => {
-    setChecked(!checked)
-    if (props.callback) {
-      props.callback()
-    }
-  }
+  const styles = useStyles()
 
   return (
     <CheckBox
@@ -51,9 +42,8 @@ export const GaloyCheckboxButton = (props: GaloyCheckboxButtonProps & CheckBoxPr
       }
       uncheckedColor={props.disabled ? theme.colors.primary7 : theme.colors.primary8}
       checkedColor={theme.colors.primary5}
-      checked={checked}
-      onIconPress={() => setChecked(!checked)}
-      onPress={onPress}
+      checked={props.checked}
+      onPress={props.onPress}
     />
   )
 }
