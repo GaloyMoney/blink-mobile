@@ -26,12 +26,12 @@ storiesOf("Galoy Input Redsigned", module)
         <GaloyInputRedesigned
           forceKeyboard={false}
           placeholder={"placeholder"}
-          label={"Input Label"}
+          label={"Form Label"}
         />
       </UseCase>
       <UseCase text="Focused input">
         <GaloyInputRedesigned
-          label={"Input Label"}
+          label={"Form Label"}
           forceKeyboard={false}
           placeholder={"placeholder"}
           initIsFocused={true}
@@ -40,15 +40,14 @@ storiesOf("Galoy Input Redsigned", module)
       <UseCase text="Input with CustomIcon">
         <GaloyInputRedesigned
           forceKeyboard={false}
-          label={"Input Label"}
+          label={"Form Label"}
           placeholder={"placeholder"}
           leftIcon={<GaloyIcon name="bitcoin" size={30} color="blue" />}
         />
       </UseCase>
-      <UseCase text="Input with TextIcon">
+      <UseCase text="Input with TextIcon and No Label">
         <GaloyInputRedesigned
           forceKeyboard={false}
-          label={"Input Label"}
           placeholder={"placeholder"}
           leftIcon={<Text style={styles.textStyleIcon}>usd</Text>}
         />
@@ -56,9 +55,8 @@ storiesOf("Galoy Input Redsigned", module)
       <UseCase text="Input with padding">
         <GaloyInputRedesigned
           forceKeyboard={false}
-          label={"Input Label"}
+          label={"Form Label"}
           inputContainerStyle={styles.paddedInput}
-          value={"123.45"}
           caption={"caption"}
           placeholder={"placeholder"}
         />
