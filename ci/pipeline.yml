@@ -24,6 +24,13 @@ source:
   repository: #@ release_pipeline_image()
 #@ end
 
+resources:
+- name: daily-release
+  type: cron
+  source:
+    interval: 24h
+    day_of_week: 1-5 # Monday to Friday
+
 jobs:
 - name: install-deps
   plan:
@@ -81,7 +88,40 @@ jobs:
       run:
         path: pipeline-tasks/ci/tasks/check-code.sh
 
-- name: release
+- name: release-cron
+  plan:
+  - in_parallel:
+    - get: daily-release
+    - get: repo
+      passed:
+      - test-unit
+      - check-code
+    - get: pipeline-tasks
+    - get: version
+  - task: prep-release
+    config:
+      platform: linux
+      image_resource: #@ release_task_image_config()
+      inputs:
+      - name: repo
+      - name: pipeline-tasks
+      - name: version
+      outputs:
+      - name: version
+      - name: artifacts
+      run:
+        path: pipeline-tasks/ci/tasks/vendor/prep-release-src.sh
+  - in_parallel:
+    - put: gh-release
+      params:
+        name: artifacts/gh-release-name
+        tag: artifacts/gh-release-tag
+        body: artifacts/gh-release-notes.md
+    - put: version
+      params:
+        file: version/version
+
+- name: release-manual
   plan:
   - in_parallel:
     - get: repo
