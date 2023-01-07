@@ -19,7 +19,7 @@ jobs:
           path: ~/galoy-mobile
       - run: sudo apt-get update
       - run: curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
-      - run: sudo apt-get install -y gnupg2 gcc g++ make nodejs
+      - run: sudo apt-get install -y gnupg2 gcc g++ make nodejs jq
       - run: sudo npm install -g yarn
 
       - run: sudo apt-get update
@@ -53,7 +53,14 @@ jobs:
       - run: echo $RELEASE_KEYSTORE | base64 -d > android/app/release.keystore
       - run:
           name: Test Browserstack
-          command: cd android && bundle exec fastlane browserstack
+          command: |
+            cd android && bundle exec fastlane browserstack | tee browserstack_output.log
+            SESSION_ID=$(cat browserstack_output.log | grep sessionId | head -n1 | sed -n "s/^.*'\(.*\)'.*$/\1/ p")
+            echo "Session ID"
+            echo $SESSION_ID
+            VIDEO_URL=$(curl -s -u "$BROWSERSTACK_USER:$BROWSERSTACK_ACCESS_KEY" -X GET "https://api-cloud.browserstack.com/app-automate/sessions/$SESSION_ID.json" | jq '.automation_session.video_url')
+            echo "Video URL"
+            echo $VIDEO_URL
 
   build_android:
     docker:
@@ -147,7 +154,14 @@ jobs:
           command: yarn test
       - run:
           name: Browserstack Testing
-          command: cd ios && bundle exec fastlane browserstack
+          command: |
+            cd ios && bundle exec fastlane browserstack
+            SESSION_ID=$(cat browserstack_output.log | grep sessionId | head -n1 | sed -n "s/^.*'\(.*\)'.*$/\1/ p")
+            echo "Session ID"
+            echo $SESSION_ID
+            VIDEO_URL=$(curl -s -u "$BROWSERSTACK_USER:$BROWSERSTACK_ACCESS_KEY" -X GET "https://api-cloud.browserstack.com/app-automate/sessions/$SESSION_ID.json" | jq '.automation_session.video_url')
+            echo "Video URL"
+            echo $VIDEO_URL
           no_output_timeout: 15m
 
   build_ios:
