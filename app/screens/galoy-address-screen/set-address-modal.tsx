@@ -162,10 +162,7 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
     setAddress(value)
   }
 
-  const usernameSuffix =
-    appConfig.galoyInstance.name.toLowerCase() === "staging"
-      ? "@pay.staging.galoy.io"
-      : "@pay.bbw.sv"
+  const usernameSuffix = `@${appConfig.galoyInstance.lnAddressHostname}`
 
   return (
     <View style={styles.centeredView}>
