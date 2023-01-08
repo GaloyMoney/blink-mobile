@@ -1,14 +1,15 @@
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
 import { selector, enter } from "./utils"
-import { MUTATIONS, createGaloyServerClient, GaloyGQL } from "@galoymoney/client"
-import { ApolloQueryResult, gql } from "@apollo/client"
+import { getInvoice } from "./utils/graphql"
 
 describe("Payments Flow", async () => {
   loadLocale("en")
   const LL = i18nObject("en")
   const timeout = 30000
-  let invoice
+  let invoice: string
+
+  // having an invoice or bitcoin address would popup a modal
   it("Clear the clipboard", async () => {
     await browser.setClipboard("", "plaintext")
   })
@@ -33,42 +34,9 @@ describe("Payments Flow", async () => {
     await sendButton.click()
   })
 
-  it("Create Invoice", async () => {
-    // gen invoice from +503XXX55540
-    const authToken = process.env.GALOY_TOKEN_2
-    const config = {
-      network: "signet",
-      graphqlUrl: "https://api.staging.galoy.io/graphql",
-    }
-    const client = createGaloyServerClient({ config })({ authToken })
-    // get BTC wallet id
-    const accountResult: ApolloQueryResult<{ me: GaloyGQL.MeFragment }> =
-      await client.query({
-        query: gql`
-          {
-            me {
-              defaultAccount {
-                wallets {
-                  walletCurrency
-                  id
-                }
-              }
-            }
-          }
-        `,
-        fetchPolicy: "no-cache",
-      })
-    const walletId = accountResult.data.me.defaultAccount.wallets.filter(
-      (w) => w.walletCurrency === "BTC",
-    )[0].id
-
-    const result = await client.mutate({
-      variables: { input: { walletId } }, // (lookup wallet 2 id from graphql) i.e "8914b38f-b0ea-4639-9f01-99c03125eea5"
-      mutation: MUTATIONS.lnNoAmountInvoiceCreate,
-      fetchPolicy: "no-cache",
-    })
-    invoice = result.data.lnNoAmountInvoiceCreate.invoice.paymentRequest
-    expect(invoice).toBeTruthy()
+  it("Create Invoice from API", async () => {
+    invoice = await getInvoice()
+    expect(invoice).toContain("ln")
   })
 
   it("Paste Invoice", async () => {

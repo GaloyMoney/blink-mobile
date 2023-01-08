@@ -30,5 +30,7 @@ export const usePriceSubscription = (onPriceChange: (price: number) => void) => 
         onPriceChange(data.data.price.price.formattedAmount)
       }
     },
+    onError: (error) => console.error(error, "useSubscription PRICE_SUBSCRIPTION"),
+    onComplete: () => console.info("onComplete useSubscription PRICE_SUBSCRIPTION"),
   })
 }
