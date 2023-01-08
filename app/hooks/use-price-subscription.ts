@@ -25,9 +25,9 @@ export const usePriceSubscription = (onPriceChange: (price: number) => void) => 
         priceCurrencyUnit: "USDCENT",
       },
     },
-    onSubscriptionData: ({ subscriptionData }) => {
-      if (subscriptionData.data?.price?.price?.formattedAmount) {
-        onPriceChange(subscriptionData.data.price.price.formattedAmount)
+    onData: ({ data }) => {
+      if (data.data?.price?.price?.formattedAmount) {
+        onPriceChange(data.data.price.price.formattedAmount)
       }
     },
   })

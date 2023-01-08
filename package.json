@@ -12,7 +12,6 @@
     "prettier:check": "prettier '**/*.{js,ts,tsx,json}' --check",
     "prettier:fix": "prettier '**/*.{js,ts,tsx,json}' --write",
     "check-code": "yarn tsc:check && yarn eslint:check && yarn prettier:check",
-    "codegen": "apollo client:codegen --endpoint http://127.0.0.1:4000/graphql --target typescript --globalTypesFile=app/__generated__/globalTypes.ts -c ./apollo.client.js --watch",
     "test": "LOGLEVEL=warn jest --runInBand",
     "coverage": "jest --runInBand --coverage",
     "ios-session": "(cd ios && fastlane spaceauth -u david@galoy.io)",
@@ -43,8 +42,8 @@
     "test:e2e:ios:auth": "yarn test:get:device && E2E_DEVICE=\"ios\" ./node_modules/.bin/wdio e2e/config/wdio.conf.js --spec $TEST"
   },
   "dependencies": {
-    "@apollo/client": "^3.6.6",
-    "@galoymoney/client": "^0.1.60",
+    "@apollo/client": "^3.7.3",
+    "@galoymoney/client": "^0.1.69",
     "@galoymoney/react-native-geetest-module": "^0.1.3",
     "@react-native-async-storage/async-storage": "^1.17.7",
     "@react-native-community/clipboard": "^1.2.3",
@@ -67,6 +66,7 @@
     "currency.js": "^2.0.2",
     "deprecated-react-native-prop-types": "^2.3.0",
     "graphql": "^16.5.0",
+    "graphql-ws": "^5.11.2",
     "intl": "^1.2.5",
     "intl-pluralrules": "^1.3.1",
     "js-lnurl": "^0.3.0",
@@ -189,7 +189,7 @@
     "ts-node": "^10.9.1",
     "tsx": "^3.12.1",
     "ttypescript": "^1.5.13",
-    "typescript": "^4.7.3",
+    "typescript": "^4.9.4",
     "webdriverio": "7.24.1",
     "yalc": "^1.0.0-pre.53"
   },
