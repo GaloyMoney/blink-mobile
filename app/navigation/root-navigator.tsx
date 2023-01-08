@@ -410,7 +410,6 @@ export const RootStack: NavigatorType = () => {
           title: "",
           headerStyle: {
             backgroundColor: "#E6EBEF",
-            flexWrap: "wrap",
           },
         })}
       />
