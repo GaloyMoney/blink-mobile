@@ -15,8 +15,6 @@ export type PaymentAmount<T extends WalletCurrency> = {
 export type DisplayAmount<T extends DisplayCurrency> = {
   amount: number
   currency: T
-  display?: string
-  precision?: number
 }
 
 export type BtcDisplayAmount = DisplayAmount<DisplayCurrency.BTC>

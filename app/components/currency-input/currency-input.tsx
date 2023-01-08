@@ -1,10 +1,10 @@
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 import { palette } from "@app/theme"
 import React, { useEffect, useReducer } from "react"
-import { Pressable, Text, View } from "react-native"
+import { Pressable, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
-import { ACTIONS, currencyInputReducer } from "./currency-input-state"
+import { currencyInputReducer } from "./currency-input-state"
 import {
   DisplayAmount,
   DisplayCurrency,
@@ -12,8 +12,11 @@ import {
   WalletCurrency,
 } from "@app/types/amounts"
 import { CurrencyKeyboard } from "@app/components/currency-keyboard"
-import { Button } from "@rneui/base"
 import { usePriceConversion } from "@app/hooks"
+import { GaloyPrimaryButton } from "../atomic/galoy-primary-button"
+import { Text } from "@rneui/themed"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { addDigit, deleteDigit, togglePrimaryCurrency, updateConversionFunction } from "./actions"
 
 const styles = EStyleSheet.create({
   container: {
@@ -72,13 +75,6 @@ const styles = EStyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  header: {
-    fontFamily: "Source Sans Pro",
-    fontStyle: "normal",
-    fontWeight: "600",
-    fontSize: 20,
-    lineHeight: 24,
-  },
   closeSymbol: {
     fontFamily: "Source Sans Pro",
     fontStyle: "normal",
@@ -115,16 +111,13 @@ export const CurrencyInput = ({
   initialAmount,
   close,
 }: CurrencyInputScreenProps) => {
+  const { LL } = useI18nContext()
   const { formatToCurrency } = useDisplayCurrency()
   const { convertDisplayAmount, convertCurrencyAmount } = usePriceConversion()
   const [state, dispatch] = useReducer(currencyInputReducer, {
     primaryAmount: {
       currency: initialPrimaryCurrency,
       amount: initialAmount ? initialAmount.amount : 0,
-      display: formatToCurrency(
-        initialAmount ? initialAmount.amount : 0,
-        initialPrimaryCurrency,
-      ),
     },
     secondaryAmount: {
       currency: initialSecondaryCurrency,
@@ -135,68 +128,67 @@ export const CurrencyInput = ({
             amount: initialAmount.amount,
           })
         : 0,
-      display: formatToCurrency(
-        convertCurrencyAmount({
-          from: initialPrimaryCurrency,
-          to: initialSecondaryCurrency,
-          amount: initialAmount ? initialAmount.amount : 0,
-        }),
-        initialSecondaryCurrency,
-      ),
     },
+    conversionFunction: convertDisplayAmount
   })
+
+  useEffect(() => {
+    dispatch(updateConversionFunction(convertDisplayAmount))
+  },
+    // I've deliberately left the `convertDisplayAmount` function out of the dependency array so that the
+    // secondary value does not update while the user is entering a value
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+   [dispatch])
 
   useEffect(
     () => {
       if (state.secondaryAmount.currency === "BTC") {
-        dispatch({
-          type: ACTIONS.UPDATE_PRIMARY_DISPLAY_VALUE,
-          payload: formatToCurrency(
-            state.primaryAmount.amount,
-            state.primaryAmount.currency,
-          ),
-        })
-        dispatch({
-          type: ACTIONS.UPDATE_SECONDARY_AMOUNT,
-          payload: {
-            ...convertDisplayAmount(state.primaryAmount, state.secondaryAmount.currency),
-            display: formatToCurrency(
-              convertCurrencyAmount({
-                from: state.primaryAmount.currency,
-                to: state.secondaryAmount.currency,
-                amount: state.primaryAmount.amount,
-              }) / 100,
-              state.secondaryAmount.currency,
-            ),
-          },
-        })
+        // dispatch({
+        //   type: ACTIONS.UPDATE_PRIMARY_DISPLAY_VALUE,
+        //   payload: formatToCurrency(
+        //     state.primaryAmount.amount,
+        //     state.primaryAmount.currency,
+        //   ),
+        // })
+        // dispatch({
+        //   type: ACTIONS.UPDATE_SECONDARY_AMOUNT,
+        //   payload: {
+        //     ...convertDisplayAmount(state.primaryAmount, state.secondaryAmount.currency),
+        //     display: formatToCurrency(
+        //       convertCurrencyAmount({
+        //         from: state.primaryAmount.currency,
+        //         to: state.secondaryAmount.currency,
+        //         amount: state.primaryAmount.amount,
+        //       }) / 100,
+        //       state.secondaryAmount.currency,
+        //     ),
+        //   },
+        // })
       } else {
-        dispatch({
-          type: ACTIONS.UPDATE_PRIMARY_DISPLAY_VALUE,
-          payload: formatToCurrency(
-            state.primaryAmount.amount,
-            state.primaryAmount.currency,
-          ),
-        })
-        dispatch({
-          type: ACTIONS.UPDATE_SECONDARY_AMOUNT,
-          payload: {
-            ...convertDisplayAmount(state.primaryAmount, state.secondaryAmount.currency),
-            display: formatToCurrency(
-              convertCurrencyAmount({
-                from: state.primaryAmount.currency,
-                to: state.secondaryAmount.currency,
-                amount: state.primaryAmount.amount,
-              }),
-              state.secondaryAmount.currency,
-            ),
-          },
-        })
+        // dispatch({
+        //   type: ACTIONS.UPDATE_PRIMARY_DISPLAY_VALUE,
+        //   payload: formatToCurrency(
+        //     state.primaryAmount.amount,
+        //     state.primaryAmount.currency,
+        //   ),
+        // })
+        // dispatch({
+        //   type: ACTIONS.UPDATE_SECONDARY_AMOUNT,
+        //   payload: {
+        //     ...convertDisplayAmount(state.primaryAmount, state.secondaryAmount.currency),
+        //     display: formatToCurrency(
+        //       convertCurrencyAmount({
+        //         from: state.primaryAmount.currency,
+        //         to: state.secondaryAmount.currency,
+        //         amount: state.primaryAmount.amount,
+        //       }),
+        //       state.secondaryAmount.currency,
+        //     ),
+        //   },
+        // })
       }
     },
-    // I've deliberately left the `convertCurrencyAmount` function out of the dependency array so that the
-    // secondary value does not update while the user is entering a value
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
     [
       formatToCurrency,
       state.primaryAmount.amount,
@@ -209,21 +201,18 @@ export const CurrencyInput = ({
 
   const onKeyboardPress = (pressed) => {
     if (pressed === "\b") {
-      dispatch({
-        type: ACTIONS.DELETE_DIGIT,
-      })
+      dispatch(deleteDigit())
       return
     }
-    dispatch({
-      type: ACTIONS.ADD_DIGIT,
-      payload: pressed,
-    })
+    dispatch(addDigit(pressed))
   }
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <View style={styles.headerTextRow}>
-          <Text style={styles.header}>{"Set Amount"}</Text>
+        <Text type={"h1"} bold>
+          {LL.CurrencyInputScreen.title()}
+          </Text>
           <Pressable onPress={() => close()}>
             <Text style={styles.closeSymbol}>X</Text>
           </Pressable>
@@ -241,9 +230,7 @@ export const CurrencyInput = ({
               <View style={styles.horizontalLine} />
               <Pressable
                 onPress={() =>
-                  dispatch({
-                    type: ACTIONS.TOGGLE_PRIMARY_CURRENCY,
-                  })
+                  dispatch(togglePrimaryCurrency())
                 }
               >
                 <GaloyIcon name="switch-currency" size={50} style={styles.switchButton} />
@@ -264,22 +251,23 @@ export const CurrencyInput = ({
         <CurrencyKeyboard onPress={onKeyboardPress} />
       </View>
       <View style={styles.buttonContainer}>
-        <Button
-          title={"Set Amount"}
-          onPress={() => {
-            // TODO forcing all fiat amounts to be returned as USD until we have Display Currency exchange rates available
-            amountCallback({
-              primaryAmount: {
-                amount: primaryAmount.amount,
-                currency:
-                  primaryAmount.currency === "BTC"
-                    ? ("BTC" as WalletCurrency)
-                    : ("USD" as WalletCurrency),
-              },
-              secondaryAmount,
-            })
-            close()
-          }}
+        <GaloyPrimaryButton 
+        title={"Set Amount"}
+        onPress={() => {
+          // TODO forcing all fiat amounts to be returned as USD until we have Display Currency exchange rates available
+          amountCallback({
+            primaryAmount: {
+              amount: primaryAmount.amount,
+              currency:
+                primaryAmount.currency === "BTC"
+                  ? ("BTC" as WalletCurrency)
+                  : ("USD" as WalletCurrency),
+            },
+            secondaryAmount,
+          })
+          close()
+        }}
+        disabled={primaryAmount.amount === 0}
         />
       </View>
     </View>

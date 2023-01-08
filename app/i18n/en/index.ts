@@ -63,7 +63,8 @@ const en: BaseTranslation = {
     message: "Conversion successful",
   },
   CurrencyInputScreen: {
-    title: "Enter amount"
+    title: "Enter amount",
+    setAmount: "Set Amount"
   },
   EarnScreen: {
     earnSats: "Earn {formattedNumber|sats}",
