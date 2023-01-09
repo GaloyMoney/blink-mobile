@@ -801,7 +801,7 @@
         "phone": "Phone",
         "defaultEmailSubject": "Bitcoin Beach Wallet - Support",
         "defaultSupportMessage": "Hey there! I need some help with Bitcoin Beach Wallet",
-        "deleteAccount": "Hello.  Please delete my account.",
+        "deleteAccount": "Hello. Please delete my account.",
         "deleteAccountEmailSubject": "Account deletion request: {phoneNumber: string}"
     },
     "lnurl": {

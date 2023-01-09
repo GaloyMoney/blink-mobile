@@ -2739,7 +2739,7 @@ type RootTranslation = {
 		 */
 		defaultSupportMessage: string
 		/**
-		 * Hello.  Please delete my account.
+		 * Hello. Please delete my account.
 		 */
 		deleteAccount: string
 		/**
@@ -5449,7 +5449,7 @@ export type TranslationFunctions = {
 		 */
 		defaultSupportMessage: () => LocalizedString
 		/**
-		 * Hello.  Please delete my account.
+		 * Hello. Please delete my account.
 		 */
 		deleteAccount: () => LocalizedString
 		/**
