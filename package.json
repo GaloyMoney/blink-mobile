@@ -139,7 +139,7 @@
     "@storybook/addon-ondevice-knobs": "^5.3.25",
     "@storybook/react-native": "^5.3.17",
     "@storybook/react-native-server": "^5.3.17",
-    "@testing-library/jest-native": "^4.0.5",
+    "@testing-library/jest-native": "^5.4.1",
     "@testing-library/react-native": "^9.1.0",
     "@types/jest": "^28.1.1",
     "@types/ramda": "0.28.14",
