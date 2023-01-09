@@ -23,7 +23,9 @@ export const LocalizationContextProvider = ({ children }) => {
     if (userPreferredLanguage && userPreferredLanguage !== locale) {
       setLocale(getLanguageFromLocale(userPreferredLanguage))
     }
-  }, [userPreferredLanguage, setLocale, locale])
+    // setLocale is not set as a dependency because it changes every render
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userPreferredLanguage, locale])
 
   const localizationContext = {
     displayCurrency,
