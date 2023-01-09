@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 // Welcome to the main entry point of the app.
 //
 // In this file, we'll be kicking off our app or storybook.
@@ -225,6 +224,7 @@ export const App = (): JSX.Element => {
         ),
         name: isIos ? "iOS" : "Android",
         version: `${VersionNumber.appVersion}-${VersionNumber.buildVersion}`,
+        connectToDevTools: true,
       })
 
       const initDb = async () => {
@@ -320,6 +320,7 @@ export const App = (): JSX.Element => {
                       const currentRouteName = getActiveRouteName(state)
 
                       if (routeName.current !== currentRouteName && currentRouteName) {
+                        /* eslint-disable camelcase */
                         analytics().logScreenView({
                           screen_name: currentRouteName + "Manual",
                           screen_class: currentRouteName + "Manual",

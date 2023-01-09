@@ -1,8 +1,7 @@
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
 import { selector } from "./utils"
-import { MUTATIONS, createGaloyServerClient, GaloyGQL } from "@galoymoney/client"
-import { ApolloQueryResult, gql } from "@apollo/client"
+import { payInvoice } from "./utils/graphql"
 
 describe("Receive Payment Flow", async () => {
   loadLocale("en")
@@ -98,49 +97,12 @@ describe("Receive Payment Flow", async () => {
     } else {
       // get from clipboard in android
       const invoiceBase64 = await browser.getClipboard()
-      invoice = new Buffer(invoiceBase64, "base64").toString()
+      invoice = Buffer.from(invoiceBase64, "base64").toString()
     }
   })
 
-  it("External User Pays the Invoice", async () => {
-    const authToken = process.env.GALOY_TOKEN_2
-    const config = {
-      network: "signet",
-      graphqlUrl: "https://api.staging.galoy.io/graphql",
-    }
-    const client = createGaloyServerClient({ config })({ authToken })
-    const accountResult: ApolloQueryResult<{ me: GaloyGQL.MeFragment }> =
-      await client.query({
-        query: gql`
-          {
-            me {
-              defaultAccount {
-                wallets {
-                  walletCurrency
-                  id
-                }
-              }
-            }
-          }
-        `,
-        fetchPolicy: "no-cache",
-      })
-    const walletId = accountResult.data.me.defaultAccount.wallets.filter(
-      (w) => w.walletCurrency === "BTC",
-    )[0].id
-
-    const result = await client.mutate({
-      variables: {
-        input: {
-          walletId,
-          paymentRequest: invoice,
-          amount: 5,
-        },
-      },
-      mutation: MUTATIONS.lnNoAmountInvoicePaymentSend,
-      fetchPolicy: "no-cache",
-    })
-    const payResult = result
+  it("External User Pays the Invoice through API", async () => {
+    const payResult = await payInvoice(invoice)
     expect(payResult).toBeTruthy()
   })
 

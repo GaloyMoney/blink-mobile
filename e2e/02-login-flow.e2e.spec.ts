@@ -1,6 +1,6 @@
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
-import { goBack, selector, enter, scroll } from "./utils"
+import { goBack, selector, enter, scrollDown, scrollUp } from "./utils"
 
 describe("Login Flow", async () => {
   loadLocale("en")
@@ -14,6 +14,10 @@ describe("Login Flow", async () => {
   })
 
   it("taps Build version 3 times", async () => {
+    // scroll down for small screens
+    await browser.pause(2000)
+    await scrollDown()
+
     const buildButton = await $(selector("Version Build Text", "StaticText"))
     await buildButton.waitForDisplayed({ timeout })
     await buildButton.click()
@@ -23,12 +27,11 @@ describe("Login Flow", async () => {
     await buildButton.click()
   })
 
-  it("Scroll to bottom", async () => {
-    await browser.pause(2000)
-    await scroll()
-  })
-
   it("click staging environment", async () => {
+    // scroll down for small screens
+    await browser.pause(2000)
+    await scrollDown()
+
     await browser.pause(2000)
     const instanceButton = await $(selector("Galoy Instance Button", "Other"))
     await instanceButton.waitForDisplayed({ timeout: 60000 })
@@ -80,6 +83,10 @@ describe("Login Flow", async () => {
   })
 
   it("are we logged in?", async () => {
+    // scroll up for small screens
+    await browser.pause(2000)
+    scrollUp()
+
     let loginSelector
     if (process.env.E2E_DEVICE === "ios") {
       loginSelector = '//*[contains(@label,"+")]'
