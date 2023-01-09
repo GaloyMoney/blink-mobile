@@ -1,0 +1,34 @@
+name: Update Cocoapods Dependencies
+on:
+  push:
+    branches:
+      - dependabot/npm_and_yarn/**
+  pull_request:
+    branches:
+      - dependabot/npm_and_yarn/**
+
+jobs:
+  run:
+    name: Run pod install
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Packages
+        run: yarn install --non-interactive --frozen-lockfile
+
+      - name: Cache pods
+        uses: actions/cache@v1
+        with:
+          path: ios/Pods
+          key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pods-
+
+      - name: Install Cocoapods Packages
+        run: pushd ios && pod install --verbose && popd
+
+      - uses: stefanzweifel/git-auto-commit-action@v4.1.1
+        with:
+          commit_message: Bump Cocoapods Packages
+          branch: ${{ github.head_ref }}
