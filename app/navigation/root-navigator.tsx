@@ -36,7 +36,6 @@ import { LanguageScreen } from "../screens/settings-screen/language-screen"
 import { SecurityScreen } from "../screens/settings-screen/security-screen"
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
 import { TransactionHistoryScreenDataInjected } from "../screens/transaction-screen/transaction-screen"
-import { WelcomeFirstScreen } from "../screens/welcome-screens"
 import { palette } from "../theme/palette"
 import { AccountType } from "../utils/enum"
 import { addDeviceToken, hasNotificationPermission } from "../utils/notifications"
@@ -287,11 +286,6 @@ export const RootStack: NavigatorType = () => {
           headerShown: false,
           animationEnabled: false,
         }}
-      />
-      <RootNavigator.Screen
-        name="welcomeFirst"
-        component={WelcomeFirstScreen}
-        options={{ headerShown: false }}
       />
       <RootNavigator.Screen
         name="authenticationCheck"

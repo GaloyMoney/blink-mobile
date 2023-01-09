@@ -4307,13 +4307,6 @@
     "@types/react" "*"
     "@types/react-native" "*"
 
-"@types/react-native-swiper@^1.5.12":
-  version "1.5.12"
-  resolved "https://registry.npmjs.org/@types/react-native-swiper/-/react-native-swiper-1.5.12.tgz"
-  integrity sha512-xFNvc/tAnrBTC1lTDh/upedd9GtEsmIR/RNAAprQGk5AU0CngifI1nlEqnMdKagbBoCmXErcySG7bVXwPXEFnA==
-  dependencies:
-    react-native-swiper "*"
-
 "@types/react-native-vector-icons@^6.4.10":
   version "6.4.12"
   resolved "https://registry.npmjs.org/@types/react-native-vector-icons/-/react-native-vector-icons-6.4.12.tgz"
@@ -17074,13 +17067,6 @@ react-native-swipe-gestures@^1.0.4:
   version "1.0.5"
   resolved "https://registry.npmjs.org/react-native-swipe-gestures/-/react-native-swipe-gestures-1.0.5.tgz"
   integrity sha512-Ns7Bn9H/Tyw278+5SQx9oAblDZ7JixyzeOczcBK8dipQk2pD7Djkcfnf1nB/8RErAmMLL9iXgW0QHqiII8AhKw==
-
-react-native-swiper@*, react-native-swiper@^1.6.0-rc.3:
-  version "1.6.0"
-  resolved "https://registry.npmjs.org/react-native-swiper/-/react-native-swiper-1.6.0.tgz"
-  integrity sha512-OnkTTZi+9uZUgy0uz1I9oYDhCU3z36lZn+LFsk9FXPRelxb/KeABzvPs3r3SrHWy1aA67KGtSFj0xNK2QD0NJQ==
-  dependencies:
-    prop-types "^15.5.10"
 
 react-native-toast-message@^2.1.5:
   version "2.1.5"
