@@ -1,4 +1,4 @@
-import { GaloyInstance } from "@app/config/galoy-instances"
+import { GaloyInstance } from "@app/config"
 import { usePersistentStateContext } from "@app/store/persistent-state"
 import { useCallback, useMemo } from "react"
 

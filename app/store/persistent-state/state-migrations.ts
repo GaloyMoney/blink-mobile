@@ -1,4 +1,4 @@
-import { GaloyInstance, GALOY_INSTANCES } from "@app/config/galoy-instances"
+import { GaloyInstance, GALOY_INSTANCES } from "@app/config"
 import { decodeToken } from "@app/hooks/use-token"
 import { defaultTheme, Theme } from "@app/theme/default-theme"
 import { loadString } from "@app/utils/storage"

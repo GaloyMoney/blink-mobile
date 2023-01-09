@@ -58,11 +58,9 @@ import { createClient } from "graphql-ws"
 import { GraphQLWsLink } from "@apollo/client/link/subscriptions"
 import { GaloyToast } from "./components/galoy-toast"
 import { InitWalletDocument } from "./graphql/generated"
+import { BUILD_VERSION } from "@app/config"
 
-export const BUILD_VERSION = "build_version"
-
-export const { link: linkNetworkStatusNotifier, useApolloNetworkStatus } =
-  createNetworkStatusNotifier()
+const { link: linkNetworkStatusNotifier } = createNetworkStatusNotifier()
 
 const entireScreenWidth = Dimensions.get("window").width
 EStyleSheet.build({
