@@ -83,10 +83,10 @@ export const AddressExplainerModal = ({
       >
         <View style={styles.modalView}>
           <Text style={styles.titleText}>
-            {LL.GaloyAddressScreen.howToUseYourAddress({ bankName: "BBW" })}
+            {LL.GaloyAddressScreen.howToUseYourAddress({ bankName: "flash" })}
           </Text>
           <Text style={styles.bodyText}>
-            {LL.GaloyAddressScreen.howToUseYourAddressExplainer({ bankName: "BBW" })}
+            {LL.GaloyAddressScreen.howToUseYourAddressExplainer({ bankName: "flash" })}
           </Text>
           <Text style={styles.bodyText}>
             {wallets.map((wallet) => (

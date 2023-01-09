@@ -132,7 +132,7 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       greyed: hasToken,
     },
     {
-      category: LL.SettingsScreen.addressScreen({ bankName: "BBW" }),
+      category: LL.SettingsScreen.addressScreen({ bankName: "flash" }),
       icon: "custom-receive-bitcoin",
       id: "address",
       action: () => navigation.navigate("addressScreen"),

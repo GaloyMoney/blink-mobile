@@ -22,7 +22,7 @@ const en: BaseTranslation = {
     howToUseYourCashRegister: "How to use your Cash Register",
     howToUseYourAddressExplainer: "Your {bankName: string} address is your own Lightning address. It’s like an email address, but for your Bitcoin.\n\nTo receive payments, share your full address to someone using a wallet supporting the Lightning address.\n\nThese wallets support it:",
     howToUseYourPaycodeExplainer: "You can print your Paycode (which is an amountless invoice) and display it in your business to receive payments. Individuals can pay you by scanning it with a Lightning-enabled wallet.\n\nHowever, be aware that some wallets can’t scan an amountless invoice such as:",
-    howToUseYourCashRegisterExplainer: "Your Cash Register let your employees collect payments without needing to give them access to your wallet.\n\nShare your link. They can pin it to their homescreen and generate Lightning invoices on your behalf. The payments collected using the Cash Register will be sent directly to your Bitcoin Beach Wallet.",
+    howToUseYourCashRegisterExplainer: "Your Cash Register let your employees collect payments without needing to give them access to your wallet.\n\nShare your link. They can pin it to their homescreen and generate Lightning invoices on your behalf. The payments collected using the Cash Register will be sent directly to your Flash App.",
     defaultWallet: "Default Wallet",
     whatIsDefaultWalletTitle: "What is the default wallet?",
     whatIsDefaultWalletDescription: "Your default wallet is the wallet that will be used when receiving payments through the POS. You can change it at any time here in the settings.",
@@ -448,7 +448,7 @@ const en: BaseTranslation = {
   },
   GetStartedScreen: {
     getStarted: "Get Started",
-    headline: "Wallet powered by Galoy",
+    headline: "Powered by Galoy | IBEX | Strike API \n Product of Jamaica",
   },
   MapScreen: {
     locationPermissionMessage:
@@ -571,7 +571,7 @@ const en: BaseTranslation = {
   },
   SendBitcoinDestinationScreen: {
     usernameNowAddress: "{bankName: string} usernames are now {bankName: string} addresses.",
-    usernameNowAddressInfo: "When you enter a {bankName: string} username, we will add \"@{lnDomain: string}\" to it (e.g maria@{lnDomain: string}) to make it an address. Your username is now a {bankName: string} address too.\n\nGo to your {bankName: string} address page from your Settings to learn how to use it or to share it to receive payments.",
+    usernameNowAddressInfo: "When you enter a {bankName: string} username, we will add \"@{lnDomain: string}\" to it (e.g yanique@{lnDomain: string}) to make it an address. Your username is now a {bankName: string} address too.\n\nGo to your {bankName: string} address page from your Settings to learn how to use it or to share it to receive payments.",
     enterValidDestination: "Please enter a valid destination",
     destinationOptions: "You can send to a {bankName: string} address, LN address, LN invoice, or BTC address.",
     expiredInvoice: "This invoice has expired. Please generate a new invoice.",
@@ -819,8 +819,8 @@ const en: BaseTranslation = {
     whatsapp: "WhatsApp",
     email: "Email",
     phone: "Phone",
-    defaultEmailSubject: "Bitcoin Beach Wallet - Support",
-    defaultSupportMessage: "Hey there! I need some help with Bitcoin Beach Wallet",
+    defaultEmailSubject: "Flash App - Support",
+    defaultSupportMessage: "Hey there! I need some help with Flash App",
     deleteAccount: "Hello.  Please delete my account.",
     deleteAccountEmailSubject: "Account deletion request: {phoneNumber: string}",
   },

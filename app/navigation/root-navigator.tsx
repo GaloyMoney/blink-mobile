@@ -577,7 +577,7 @@ export const PrimaryNavigator: NavigatorType = () => {
           ),
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Map"
         component={MapScreen}
         options={{
@@ -596,7 +596,7 @@ export const PrimaryNavigator: NavigatorType = () => {
             <LearnIcon fill="currentColor" color={color} />
           ),
         }}
-      />
+      /> */}
     </Tab.Navigator>
   )
 }

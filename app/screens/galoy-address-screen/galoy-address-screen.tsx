@@ -100,7 +100,7 @@ export const GaloyAddressScreen = () => {
     <Screen style={styles.container}>
       <View style={styles.container}>
         <Text style={styles.title}>
-          {LL.SettingsScreen.addressScreen({ bankName: "BBW" })}
+          {LL.SettingsScreen.addressScreen({ bankName: "flash" })}
         </Text>
         <View style={styles.addressInfoContainer}>
           <TouchableWithoutFeedback onPress={() => toggleExplainerModal()}>
@@ -112,7 +112,7 @@ export const GaloyAddressScreen = () => {
               </View>
               <View style={styles.fieldNameComponent}>
                 <Text style={styles.addressInfoText}>
-                  {" " + LL.GaloyAddressScreen.yourAddress({ bankName: "BBW" })}
+                  {" " + LL.GaloyAddressScreen.yourAddress({ bankName: "flash" })}
                 </Text>
               </View>
             </View>
@@ -124,7 +124,7 @@ export const GaloyAddressScreen = () => {
                   Clipboard.setString(lightningAddress)
                   toastShow({
                     message: LL.GaloyAddressScreen.copiedAddressToClipboard({
-                      bankName: "BBW",
+                      bankName: "flash",
                     }),
                     type: "success",
                   })
@@ -151,7 +151,7 @@ export const GaloyAddressScreen = () => {
         </View>
         {!username && (
           <Button
-            title={LL.GaloyAddressScreen.buttonTitle({ bankName: "BBW" })}
+            title={LL.GaloyAddressScreen.buttonTitle({ bankName: "flash" })}
             buttonStyle={styles.buttonStyle}
             containerStyle={styles.buttonContainerStyle}
             onPress={() => toggleChooseAddressModal()}
