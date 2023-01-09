@@ -264,3 +264,13 @@ workflows:
           filters:
             branches:
               ignore: main
+  test-build:
+    jobs:
+      - build_android:
+          filters:
+              branches:
+                ignore: change-github-user-for-build
+      - build_ios:
+          filters:
+              branches:
+                ignore: change-github-user-for-build
