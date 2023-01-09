@@ -7,6 +7,11 @@ describe("Welcome Screen Flow", async () => {
   const LL = i18nObject("en")
   const timeout = 30000
 
+  // having an invoice or bitcoin address would popup a modal
+  it("Clear the clipboard", async () => {
+    await browser.setClipboard("", "plaintext")
+  })
+
   it("loads and clicks 'Get Started button' ", async () => {
     const getStartedButton = await $(selector(LL.GetStartedScreen.getStarted()))
     await getStartedButton.waitForDisplayed({ timeout })

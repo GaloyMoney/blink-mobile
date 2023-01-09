@@ -38,6 +38,7 @@ exports.config = {
       "./e2e/02**.e2e.spec.ts",
       "./e2e/03**.e2e.spec.ts",
       "./e2e/04**.e2e.spec.ts",
+      "./e2e/05**.e2e.spec.ts",
     ],
   ],
   reporters: ["spec"],
