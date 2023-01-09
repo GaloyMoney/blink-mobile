@@ -17,7 +17,6 @@ export type TransactionDetail = GaloyGQL.Transaction & {
 export type RootStackParamList = {
   getStarted: undefined
   debug: undefined
-  welcomeFirst: undefined
   authenticationCheck: undefined
   authentication: {
     screenPurpose: AuthenticationScreenPurpose
