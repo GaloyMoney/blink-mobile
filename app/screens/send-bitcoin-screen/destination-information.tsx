@@ -2,21 +2,24 @@ import { FloorTooltip } from "@app/components/floor-tooltip/floor-tooltip"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { TranslationFunctions } from "@app/i18n/i18n-types"
 import { palette } from "@app/theme"
+import { useAppConfig } from "@app/hooks"
 import React from "react"
 import { Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { SendBitcoinDestinationState } from "./send-bitcoin-reducer"
-import { lnDomain, bankName } from "./send-bitcoin-destination-screen"
 import { IntraledgerPaymentDestination } from "@galoymoney/client/dist/parsing-v2"
 
-const toLnAddress = (handle: string) => {
+const toLnAddress = (handle: string, lnDomain: string) => {
   return `${handle}@${lnDomain}`
 }
 
 const destinationStateToInformation = (
   destinationState: SendBitcoinDestinationState,
   translate: TranslationFunctions,
+  bankDetails: { bankName: string; lnDomain: string },
 ) => {
+  const { bankName, lnDomain } = bankDetails
+
   if (destinationState.destinationState === "entering") {
     return {
       information: translate.SendBitcoinDestinationScreen.usernameNowAddress({
@@ -59,6 +62,7 @@ const destinationStateToInformation = (
             lnAddress: toLnAddress(
               (destinationState.parsedPaymentDestination as IntraledgerPaymentDestination)
                 .handle,
+              lnDomain,
             ),
             bankName,
           }),
@@ -72,6 +76,7 @@ const destinationStateToInformation = (
             lnAddress: toLnAddress(
               (destinationState.parsedPaymentDestination as IntraledgerPaymentDestination)
                 .handle,
+              lnDomain,
             ),
             bankName,
           }),
@@ -103,7 +108,7 @@ const destinationStateToInformation = (
   ) {
     return {
       warning: translate.SendBitcoinDestinationScreen.newBankAddressUsername({
-        lnAddress: toLnAddress(destinationState.confirmationType.username),
+        lnAddress: toLnAddress(destinationState.confirmationType.username, lnDomain),
         bankName,
       }),
     }
@@ -136,7 +141,10 @@ export const DestinationInformation = ({
   destinationState: SendBitcoinDestinationState
 }) => {
   const { LL } = useI18nContext()
-  const information = destinationStateToInformation(destinationState, LL)
+  const { appConfig } = useAppConfig()
+  const { lnAddressHostname, name } = appConfig.galoyInstance
+  const bankDetails = { lnDomain: lnAddressHostname, bankName: name.toUpperCase() }
+  const information = destinationStateToInformation(destinationState, LL, bankDetails)
 
   return (
     <View style={styles.informationContainer}>

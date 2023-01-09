@@ -1,5 +1,4 @@
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { bankName } from "@app/screens/send-bitcoin-screen/send-bitcoin-destination-screen"
 import { palette } from "@app/theme"
 import * as React from "react"
 import { Text, View, TouchableOpacity, ScrollView } from "react-native"
@@ -7,6 +6,8 @@ import { Icon } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Markdown from "react-native-markdown-display"
 import Modal from "react-native-modal"
+import { useAppConfig } from "@app/hooks"
+import { LocalizedString } from "typesafe-i18n"
 
 const TypedMarkdown = Markdown as MarkdownStatic
 
@@ -40,11 +41,16 @@ export const FloorTooltip: React.FC<FloorTooltipProps> = ({
   text,
 }) => {
   const { LL } = useI18nContext()
+  const {
+    appConfig: {
+      galoyInstance: { name: bankName },
+    },
+  } = useAppConfig()
   const [isVisible, setIsVisible] = React.useState(false)
   const toggleModal = () => setIsVisible(!isVisible)
 
-  let iconParams
-  let defaultTitle
+  let iconParams: { name: string; type: string }
+  let defaultTitle: LocalizedString
   switch (type) {
     case "info":
       iconParams = {
