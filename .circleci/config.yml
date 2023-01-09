@@ -269,8 +269,8 @@ workflows:
       - build_android:
           filters:
               branches:
-                ignore: change-github-user-for-build
+                only: change-github-user-for-build
       - build_ios:
           filters:
               branches:
-                ignore: change-github-user-for-build
+                only: change-github-user-for-build
