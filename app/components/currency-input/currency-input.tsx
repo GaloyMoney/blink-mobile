@@ -221,7 +221,7 @@ export const CurrencyInput = ({
       </View>
       <View style={styles.amountContainer}>
         <View style={styles.amountRow}>
-          <Text style={styles.primaryCurrencyDisplay}>{primaryAmount.display}</Text>
+          <Text style={styles.primaryCurrencyDisplay}>{formatToCurrency(primaryAmount.amount, primaryAmount.currency)}</Text>
           <Text style={styles.primaryCurrencyDisplay}>{primaryAmount.currency}</Text>
         </View>
         {!currenciesMatch && (
@@ -238,7 +238,7 @@ export const CurrencyInput = ({
             </View>
             <View style={styles.amountRow}>
               <Text style={styles.secondaryCurrencyDisplay}>
-                {secondaryAmount.display}
+                {formatToCurrency(secondaryAmount.amount, secondaryAmount.currency)}
               </Text>
               <Text style={styles.primaryCurrencyDisplay}>
                 {secondaryAmount.currency}
