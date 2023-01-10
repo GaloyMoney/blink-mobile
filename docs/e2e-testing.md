@@ -9,6 +9,23 @@
       D -- Test On --> G[Local Simulator/Emulator/Phone]
 ```
 
+## We use appium v2
+
+install with:
+
+```
+npm install -g appium@next
+appium driver install uiautomator2
+appium driver install xcuitest
+```
+
+verify install is correct:
+
+`appium --version` should show v2
+
+Note: appium can only be (officialy) install with npm, not yarn.
+`npm -g install npm` can be handy if you have an old npm version.
+
 ## To Test locally with Appium and Webdriver:
 
 1. run the debug version of the app `yarn android` or `yarn ios`

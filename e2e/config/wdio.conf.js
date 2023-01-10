@@ -1,50 +1,58 @@
 let capabilities = {
-  platformName: "Android",
-  deviceName: process.env.TEST_DEVICE_ANDROID || "generic_x86",
-  app:
+  "platformName": "Android",
+  "appium:deviceName": process.env.TEST_DEVICE_ANDROID || "generic_x86",
+  "appium:app":
     process.env.TEST_APK_PATH ||
-    "./android/app/build/outputs/apk/debug/app-universal-debug.apk", // "./android/app/release/app-release.apk",
-  automationName: "UiAutomator2",
-  snapshotMaxDepth: 1000,
-  autoGrantPermissions: true,
+    "./android/app/build/outputs/apk/debug/app-universal-debug.apk",
+  "appium:automationName": "UiAutomator2",
+  "appium:snapshotMaxDepth": 1000,
+  "appium:autoGrantPermissions": true,
 }
 if (process.env.E2E_DEVICE === "ios") {
   capabilities = {
-    platformName: "iOS",
-    deviceName: process.env.TEST_DEVICE_IOS || "iPhone 13",
-    platformVersion: process.env.PLATFORM_VERSION || "",
-    bundleId: "io.galoy.bitcoinbeach",
-    automationName: "XCUITest",
-    snapshotMaxDepth: 1000,
-    autoGrantPermissions: true,
+    "platformName": "iOS",
+    "appium:deviceName": process.env.TEST_DEVICE_IOS || "iPhone 14",
+    "appium:platformVersion": process.env.PLATFORM_VERSION || "",
+    "appium:bundleId": "io.galoy.bitcoinbeach",
+    "appium:automationName": "XCUITest",
+    "appium:snapshotMaxDepth": 1000,
+    "appium:autoGrantPermissions": true,
   }
 }
 
-exports.config = {
+const baseSpec = {
   specs: [
-    [
-      "./e2e/01**.e2e.spec.ts",
-      "./e2e/02**.e2e.spec.ts",
-      "./e2e/03**.e2e.spec.ts",
-      "./e2e/04**.e2e.spec.ts",
-      "./e2e/05**.e2e.spec.ts",
-    ],
-  ],
-  reporters: ["spec"],
-  framework: "mocha",
-  mochaOpts: {
-    ui: "bdd",
-    timeout: 60000,
-  },
-  exclude: [],
-  path: "/wd/hub",
-  port: 4723,
+   [
+     "./e2e/01**.e2e.spec.ts",
+     "./e2e/02**.e2e.spec.ts",
+     "./e2e/03**.e2e.spec.ts",
+     "./e2e/04**.e2e.spec.ts",
+     "./e2e/05**.e2e.spec.ts",
+   ],
+ ],
+ reporters: ["spec"],
+ framework: "mocha",
+ mochaOpts: {
+   ui: "bdd",
+   timeout: 60000,
+ },
+ exclude: [],
+ 
+ autoCompileOpts: {
+   autoCompile: true,
+   tsNodeOpts: {
+     transpileOnly: true,
+     project: "tsconfig.jest.json",
+   },
+ },
+} 
+
+exports.baseSpec = baseSpec
+
+exports.config = {
+  ...baseSpec,
   capabilities: [capabilities],
-  autoCompileOpts: {
-    autoCompile: true,
-    tsNodeOpts: {
-      transpileOnly: true,
-      project: "tsconfig.jest.json",
-    },
-  },
+
+  port: 4723,
+  services: ['appium'],
 }
