@@ -7,8 +7,8 @@ describe("See transactions list", async () => {
   const LL = i18nObject("en")
   const timeout = 30000
 
-  it.skip("Click 'Transactions'", async () => {
-    const backHomeButton = await $(selector(LL.common.transactions()))
+  it("Click 'Transactions'", async () => {
+    const backHomeButton = await $(selector(LL.common.transactions(), "Other"))
     await backHomeButton.waitForDisplayed({ timeout })
     await backHomeButton.click()
 
