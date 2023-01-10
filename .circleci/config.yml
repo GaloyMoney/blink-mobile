@@ -251,6 +251,8 @@ workflows:
   in-pr:
     jobs:
       - test_android:
-          if: ${CI_PULL_REQUEST}
+          branches:
+              ignore: main
       - test_ios:
-          if: ${CI_PULL_REQUEST}
+          branches:
+              ignore: main
