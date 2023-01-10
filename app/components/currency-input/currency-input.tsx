@@ -1,8 +1,6 @@
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
-import { palette } from "@app/theme"
-import React, { useEffect, useReducer } from "react"
+import React, { useReducer } from "react"
 import { Pressable, View } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { currencyInputReducer } from "./currency-input-state"
 import {
@@ -14,17 +12,19 @@ import {
 import { CurrencyKeyboard } from "@app/components/currency-keyboard"
 import { usePriceConversion } from "@app/hooks"
 import { GaloyPrimaryButton } from "../atomic/galoy-primary-button"
-import { Text } from "@rneui/themed"
+import { makeStyles, Text, useTheme } from "@rneui/themed"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { addDigit, deleteDigit, togglePrimaryCurrency, updateConversionFunction } from "./actions"
+import { addDigit, deleteDigit, togglePrimaryCurrency } from "./actions"
 
-const styles = EStyleSheet.create({
+
+
+const useStyles = makeStyles((theme) => ({
   container: {
     flex: 1,
     alignItems: "center",
     paddingLeft: 20,
     paddingRight: 20,
-    backgroundColor: palette.white,
+    backgroundColor: theme.colors.white,
   },
   switchButtonContainer: {
     width: "100%",
@@ -35,14 +35,14 @@ const styles = EStyleSheet.create({
     left: 0,
     right: 0,
     height: 1,
-    backgroundColor: palette.transferIconGrey,
+    backgroundColor: theme.colors.primary9,
     width: "100%",
   },
   switchButton: {
     alignSelf: "center",
   },
   primaryCurrencyDisplay: {
-    color: palette.greyFive,
+    color: theme.colors.grey5,
     fontFamily: "Source Sans Pro",
     fontStyle: "normal",
     fontWeight: "600",
@@ -50,7 +50,7 @@ const styles = EStyleSheet.create({
     lineHeight: 32,
   },
   secondaryCurrencyDisplay: {
-    color: palette.greyFive,
+    color: theme.colors.grey5,
     fontFamily: "Source Sans Pro",
     fontStyle: "normal",
     fontWeight: "600",
@@ -88,10 +88,10 @@ const styles = EStyleSheet.create({
     left: 0,
     right: 0,
     height: 1,
-    backgroundColor: palette.transferIconGrey,
+    backgroundColor: theme.colors.primary9,
     width: "100%",
   },
-})
+}))
 
 type CurrencyInputScreenProps = {
   amountCallback: (callbackAmounts: {
@@ -111,6 +111,8 @@ export const CurrencyInput = ({
   initialAmount,
   close,
 }: CurrencyInputScreenProps) => {
+  const { theme } = useTheme()
+  const styles = useStyles(theme)
   const { LL } = useI18nContext()
   const { formatToCurrency } = useDisplayCurrency()
   const { convertDisplayAmount, convertCurrencyAmount } = usePriceConversion()

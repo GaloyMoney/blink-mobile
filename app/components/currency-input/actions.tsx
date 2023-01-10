@@ -4,8 +4,7 @@ export enum ActionType {
   ADD_DIGIT = "add-digit",
   DELETE_DIGIT = "delete-digit",
   CLEAR_INPUT = "clear-input",
-  TOGGLE_PRIMARY_CURRENCY = "toggle-primary-currency",
-  UPDATE_CONVERSION_FUNCTION = "update-conversion-function"
+  TOGGLE_PRIMARY_CURRENCY = "toggle-primary-currency"
 }
 
 interface AddDigitAction {
@@ -38,19 +37,8 @@ export const togglePrimaryCurrency = (): TogglePrimaryCurrencyAction => ({
   type: ActionType.TOGGLE_PRIMARY_CURRENCY,
 })
 
-interface UpdateConversionFunctionAction {
-    type: ActionType.UPDATE_CONVERSION_FUNCTION,
-    payload: (displayAmount: DisplayAmount<DisplayCurrency>, toCurrency: DisplayCurrency) => DisplayAmount<DisplayCurrency>
-}
-
-export const updateConversionFunction = (conversionFunction: (displayAmount: DisplayAmount<DisplayCurrency>, toCurrency: DisplayCurrency) => DisplayAmount<DisplayCurrency>): UpdateConversionFunctionAction => ({
-    type: ActionType.UPDATE_CONVERSION_FUNCTION,
-    payload: conversionFunction
-})
-
 export type CurrencyInputAction =
   | AddDigitAction
   | DeleteDigitAction
   | ClearInputAction
   | TogglePrimaryCurrencyAction
-  | UpdateConversionFunctionAction

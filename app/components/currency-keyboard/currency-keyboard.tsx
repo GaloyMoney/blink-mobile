@@ -1,13 +1,12 @@
-import { palette } from "@app/theme"
 import React from "react"
 import { View } from "react-native"
 import { Button } from "@rneui/base"
-import EStyleSheet from "react-native-extended-stylesheet"
+import { makeStyles, useTheme } from "@rneui/themed"
 
-const styles = EStyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   container: {
     flex: 1,
-    backgroundColor: palette.white,
+    backgroundColor: theme.colors.white,
   },
   buttonRow: {
     flexDirection: "row",
@@ -16,24 +15,26 @@ const styles = EStyleSheet.create({
     flex: 1,
   },
   buttonContainer: {
-    backgroundColor: palette.white,
+    backgroundColor: theme.colors.white,
     borderRadius: 40,
   },
   button: {
     width: 80,
     height: 80,
-    backgroundColor: palette.white,
+    backgroundColor: theme.colors.white,
   },
   buttonText: {
-    color: palette.greyFive,
+    color: theme.colors.grey5,
   },
-})
+}))
 
 type CurrencyKeyboardProps = {
   onPress: (pressed: string) => void
 }
 
 export const CurrencyKeyboard = ({ onPress }: CurrencyKeyboardProps) => {
+  const { theme } = useTheme()
+  const styles = useStyles(theme)
   return (
     <View style={styles.container}>
       <View style={styles.buttonRow}>
