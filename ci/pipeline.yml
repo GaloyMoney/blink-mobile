@@ -24,13 +24,6 @@ source:
   repository: #@ release_pipeline_image()
 #@ end
 
-resources:
-- name: daily-release
-  type: cron
-  source:
-    interval: 24h
-    day_of_week: 1-5 # Monday to Friday
-
 jobs:
 - name: install-deps
   plan:
@@ -92,6 +85,7 @@ jobs:
   plan:
   - in_parallel:
     - get: daily-release
+      trigger: true
     - get: repo
       passed:
       - test-unit
@@ -251,6 +245,12 @@ resources:
     uri: #@ data.values.git_uri
     branch: #@ data.values.pipeline_git_branch
     private_key: #@ data.values.github_private_key
+
+- name: daily-release
+  type: time
+  source:
+    interval: 24h
+    day_of_week: 1-5
 
 resource_types:
 - name: gcs-resource
