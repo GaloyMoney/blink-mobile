@@ -1,6 +1,6 @@
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
-import { selector } from "./utils"
+import { goBack, selector } from "./utils"
 import { payInvoice } from "./utils/graphql"
 
 describe("Receive Payment Flow", async () => {
@@ -110,5 +110,12 @@ describe("Receive Payment Flow", async () => {
     const successCheck = await $(selector("Success Icon", "Other"))
     await successCheck.waitForDisplayed({ timeout })
     expect(successCheck.isDisplayed()).toBeTruthy()
+  })
+
+  it("go back to main screen", async () => {
+    const backButton = await $(goBack())
+    await backButton.waitForDisplayed({ timeout })
+    await backButton.click()
+    await browser.pause(2000)
   })
 })

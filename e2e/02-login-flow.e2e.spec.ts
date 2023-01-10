@@ -105,4 +105,18 @@ describe("Login Flow", async () => {
     await backButton.click()
     await browser.pause(1000)
   })
+
+  it("Dismiss stablesats tutorial modal", async () => {
+    try {
+      const backHomeButton = await $(selector(LL.common.backHome()))
+      await backHomeButton.waitForDisplayed({ timeout: 5000 })
+      if (backHomeButton.isDisplayed()) {
+        await backHomeButton.click()
+      } else {
+        expect(backHomeButton.isDisplayed()).toBeFalsy()
+      }
+    } catch (e) {
+      expect(false).toBeFalsy()
+    }
+  })
 })
