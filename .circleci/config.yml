@@ -218,7 +218,7 @@ jobs:
           path: ios/output
 
 workflows:
-  mobile:
+  release:
     jobs:
       - test_ios:
           filters:
@@ -248,19 +248,7 @@ workflows:
               only: /^[0-9]+\.[0-9]+\.[0-9]+/
             branches:
               ignore: /.*/
-  main-branch:
-    jobs:
-      - test_android:
-          filters:
-            branches:
-              only: main
-      - test_ios:
-          filters:
-            branches:
-              only: main
   in-pr:
     jobs:
-      - test_android:
-          filters:
-            branches:
-              ignore: main
+      - test_android
+      - test_ios
