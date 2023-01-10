@@ -19,5 +19,4 @@ describe("See transactions list", async () => {
     // TODO
     // look for the "From" text
   })
-
 })
