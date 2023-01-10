@@ -22,30 +22,30 @@ if (process.env.E2E_DEVICE === "ios") {
 
 const baseSpec = {
   specs: [
-   [
-     "./e2e/01**.e2e.spec.ts",
-     "./e2e/02**.e2e.spec.ts",
-     "./e2e/03**.e2e.spec.ts",
-     "./e2e/04**.e2e.spec.ts",
-     "./e2e/05**.e2e.spec.ts",
-   ],
- ],
- reporters: ["spec"],
- framework: "mocha",
- mochaOpts: {
-   ui: "bdd",
-   timeout: 60000,
- },
- exclude: [],
- 
- autoCompileOpts: {
-   autoCompile: true,
-   tsNodeOpts: {
-     transpileOnly: true,
-     project: "tsconfig.jest.json",
-   },
- },
-} 
+    [
+      "./e2e/01**.e2e.spec.ts",
+      "./e2e/02**.e2e.spec.ts",
+      "./e2e/03**.e2e.spec.ts",
+      "./e2e/04**.e2e.spec.ts",
+      "./e2e/05**.e2e.spec.ts",
+    ],
+  ],
+  reporters: ["spec"],
+  framework: "mocha",
+  mochaOpts: {
+    ui: "bdd",
+    timeout: 60000,
+  },
+  exclude: [],
+
+  autoCompileOpts: {
+    autoCompile: true,
+    tsNodeOpts: {
+      transpileOnly: true,
+      project: "tsconfig.jest.json",
+    },
+  },
+}
 
 exports.baseSpec = baseSpec
 
@@ -54,5 +54,5 @@ exports.config = {
   capabilities: [capabilities],
 
   port: 4723,
-  services: ['appium'],
+  services: ["appium"],
 }
