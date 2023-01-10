@@ -9,6 +9,23 @@
       D -- Test On --> G[Local Simulator/Emulator/Phone]
 ```
 
+## We use appium v2
+
+install with:
+
+```
+npm install -g appium@next
+appium driver install uiautomator2
+appium driver install xcuitest
+```
+
+verify install is correct:
+
+`appium --version` should show v2
+
+Note: appium can only be (officialy) install with npm, not yarn.
+`npm -g install npm` can be handy if you have an old npm version.
+
 ## To Test locally with Appium and Webdriver:
 
 1. run the debug version of the app `yarn android` or `yarn ios`
@@ -106,10 +123,10 @@ android
 
 ```
 {
-  "app": "/path/to/code/galoy-mobile/android/app/build/outputs/apk/debug/app-debug.apk",
   "platformName": "Android",
-  "deviceName": "generic_x86",
-  "automationName": "UiAutomator2"
+  "appium:app": "/path/to/code/galoy-mobile/android/app/build/outputs/apk/debug/app-debug.apk",
+  "appium:deviceName": "generic_x86",
+  "appium:automationName": "UiAutomator2"
 }
 ```
 
@@ -122,4 +139,13 @@ ios on browserstack - choose 'select cloud providers' then 'browserstack'
   "appium:platformVersion": "15.1",
   "appium:app": "bs://{YOUR_BROWSERSTACK_ID_FROM_CIRCLE_CI}"
 }
+```
+
+## Develop locally
+
+those properties can be added to capabilities to avoid the app been reset across tests:
+
+```
+  "appium:noReset" : "true",
+  "appium:fullReset" : "false"
 ```
