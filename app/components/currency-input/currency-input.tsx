@@ -16,8 +16,6 @@ import { makeStyles, Text, useTheme } from "@rneui/themed"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { addDigit, deleteDigit, togglePrimaryCurrency } from "./actions"
 
-
-
 const useStyles = makeStyles((theme) => ({
   container: {
     flex: 1,
@@ -131,7 +129,7 @@ export const CurrencyInput = ({
           })
         : 0,
     },
-    conversionFunction: convertDisplayAmount
+    conversionFunction: convertDisplayAmount,
   })
 
   const currenciesMatch = initialPrimaryCurrency === initialSecondaryCurrency
@@ -148,8 +146,8 @@ export const CurrencyInput = ({
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <View style={styles.headerTextRow}>
-        <Text type={"h1"} bold>
-          {LL.CurrencyInputScreen.title()}
+          <Text type={"h1"} bold>
+            {LL.CurrencyInputScreen.title()}
           </Text>
           <Pressable onPress={() => close()}>
             <Text style={styles.closeSymbol}>X</Text>
@@ -159,18 +157,16 @@ export const CurrencyInput = ({
       </View>
       <View style={styles.amountContainer}>
         <View style={styles.amountRow}>
-          <Text style={styles.primaryCurrencyDisplay}>{formatToCurrency(primaryAmount.amount, primaryAmount.currency)}</Text>
+          <Text style={styles.primaryCurrencyDisplay}>
+            {formatToCurrency(primaryAmount.amount, primaryAmount.currency)}
+          </Text>
           <Text style={styles.primaryCurrencyDisplay}>{primaryAmount.currency}</Text>
         </View>
         {!currenciesMatch && (
           <>
             <View style={styles.switchButtonContainer}>
               <View style={styles.horizontalLine} />
-              <Pressable
-                onPress={() =>
-                  dispatch(togglePrimaryCurrency())
-                }
-              >
+              <Pressable onPress={() => dispatch(togglePrimaryCurrency())}>
                 <GaloyIcon name="switch-currency" size={50} style={styles.switchButton} />
               </Pressable>
             </View>
@@ -189,23 +185,23 @@ export const CurrencyInput = ({
         <CurrencyKeyboard onPress={onKeyboardPress} />
       </View>
       <View style={styles.buttonContainer}>
-        <GaloyPrimaryButton 
-        title={"Set Amount"}
-        onPress={() => {
-          // TODO forcing all fiat amounts to be returned as USD until we have Display Currency exchange rates available
-          amountCallback({
-            primaryAmount: {
-              amount: primaryAmount.amount,
-              currency:
-                primaryAmount.currency === "BTC"
-                  ? ("BTC" as WalletCurrency)
-                  : ("USD" as WalletCurrency),
-            },
-            secondaryAmount,
-          })
-          close()
-        }}
-        disabled={primaryAmount.amount === 0}
+        <GaloyPrimaryButton
+          title={"Set Amount"}
+          onPress={() => {
+            // TODO forcing all fiat amounts to be returned as USD until we have Display Currency exchange rates available
+            amountCallback({
+              primaryAmount: {
+                amount: primaryAmount.amount,
+                currency:
+                  primaryAmount.currency === "BTC"
+                    ? ("BTC" as WalletCurrency)
+                    : ("USD" as WalletCurrency),
+              },
+              secondaryAmount,
+            })
+            close()
+          }}
+          disabled={primaryAmount.amount === 0}
         />
       </View>
     </View>

@@ -1,10 +1,8 @@
-import { DisplayAmount, DisplayCurrency } from "@app/types/amounts"
-
 export enum ActionType {
   ADD_DIGIT = "add-digit",
   DELETE_DIGIT = "delete-digit",
   CLEAR_INPUT = "clear-input",
-  TOGGLE_PRIMARY_CURRENCY = "toggle-primary-currency"
+  TOGGLE_PRIMARY_CURRENCY = "toggle-primary-currency",
 }
 
 interface AddDigitAction {

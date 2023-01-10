@@ -4,7 +4,7 @@ import { DisplayCurrency } from "@app/types/amounts"
 import { getLanguageFromLocale } from "@app/utils/locale-detector"
 import React, { createContext, useEffect, useState } from "react"
 
-export type Locale = "de" | "en" | "es" | "fr-CA" | "pt-BR"
+export type Locale = "de" | "en" | "es" | "fr-CA" | "pt-BR" | "cs"
 
 type LocalizationContextType = {
   displayCurrency: DisplayCurrency

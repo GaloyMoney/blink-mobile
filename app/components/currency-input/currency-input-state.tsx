@@ -4,7 +4,10 @@ import { ActionType, CurrencyInputAction } from "./actions"
 type CurrencyInputState = {
   primaryAmount: DisplayAmount<DisplayCurrency>
   secondaryAmount: DisplayAmount<DisplayCurrency>
-  conversionFunction: (displayAmount: DisplayAmount<DisplayCurrency>, toCurrency: DisplayCurrency) => DisplayAmount<DisplayCurrency>
+  conversionFunction: (
+    displayAmount: DisplayAmount<DisplayCurrency>,
+    toCurrency: DisplayCurrency,
+  ) => DisplayAmount<DisplayCurrency>
   enteringMinorCurrencyUnits?: boolean
 }
 
@@ -15,7 +18,8 @@ export function currencyInputReducer(
   switch (action.type) {
     case ActionType.ADD_DIGIT:
       if (action.payload === "0" && state.primaryAmount.amount === 0) return state
-      if (action.payload === "." && !Number.isInteger(state.primaryAmount.amount)) return state
+      if (action.payload === "." && !Number.isInteger(state.primaryAmount.amount))
+        return state
       if (action.payload === "." && state.primaryAmount.currency === "BTC") return state
       if (state.primaryAmount.amount.toString().length >= 15) return state
       if (state.primaryAmount.currency === DisplayCurrency.BTC) {
@@ -25,12 +29,13 @@ export function currencyInputReducer(
             ...state.primaryAmount,
             amount: Number(state.primaryAmount.amount.toString() + action.payload),
           },
-          secondaryAmount: state.conversionFunction({
+          secondaryAmount: state.conversionFunction(
+            {
               ...state.primaryAmount,
               amount: Number(state.primaryAmount.amount.toString() + action.payload),
             },
-            state.secondaryAmount.currency
-          )
+            state.secondaryAmount.currency,
+          ),
         }
       }
       if (action.payload === ".")
@@ -49,13 +54,17 @@ export function currencyInputReducer(
                 state.primaryAmount.amount.toString().slice(0, -2) + action.payload + "0",
               ),
             },
-            secondaryAmount: state.conversionFunction({
-              ...state.primaryAmount,
-              amount: Number(
-                state.primaryAmount.amount.toString().slice(0, -2) + action.payload + "0",
-              ),
-            },
-            state.secondaryAmount.currency)
+            secondaryAmount: state.conversionFunction(
+              {
+                ...state.primaryAmount,
+                amount: Number(
+                  state.primaryAmount.amount.toString().slice(0, -2) +
+                    action.payload +
+                    "0",
+                ),
+              },
+              state.secondaryAmount.currency,
+            ),
           }
         }
         if (state.primaryAmount.amount.toString().slice(-1) === "0") {
@@ -68,13 +77,15 @@ export function currencyInputReducer(
                 state.primaryAmount.amount.toString().slice(0, -1) + action.payload,
               ),
             },
-            secondaryAmount: state.conversionFunction({
-              ...state.primaryAmount,
-              amount: Number(
-                state.primaryAmount.amount.toString().slice(0, -1) + action.payload,
-              ),
-            },
-            state.secondaryAmount.currency)
+            secondaryAmount: state.conversionFunction(
+              {
+                ...state.primaryAmount,
+                amount: Number(
+                  state.primaryAmount.amount.toString().slice(0, -1) + action.payload,
+                ),
+              },
+              state.secondaryAmount.currency,
+            ),
           }
         }
         if (!state.primaryAmount.amount.toString().slice(-2).includes("0")) {
@@ -87,11 +98,13 @@ export function currencyInputReducer(
             ...state.primaryAmount,
             amount: Number(state.primaryAmount.amount.toString() + action.payload),
           },
-          secondaryAmount: state.conversionFunction({
-            ...state.primaryAmount,
-            amount: Number(state.primaryAmount.amount.toString() + action.payload),
-          },
-          state.secondaryAmount.currency)
+          secondaryAmount: state.conversionFunction(
+            {
+              ...state.primaryAmount,
+              amount: Number(state.primaryAmount.amount.toString() + action.payload),
+            },
+            state.secondaryAmount.currency,
+          ),
         }
       }
       return {
@@ -99,16 +112,26 @@ export function currencyInputReducer(
         primaryAmount: {
           ...state.primaryAmount,
           amount: state.primaryAmount.amount.toString().endsWith("00")
-            ? Number(state.primaryAmount.amount.toString().slice(0, -2) + action.payload + "00")
+            ? Number(
+                state.primaryAmount.amount.toString().slice(0, -2) +
+                  action.payload +
+                  "00",
+              )
             : Number(state.primaryAmount.amount.toString() + action.payload + "00"),
         },
-        secondaryAmount: state.conversionFunction({
-          ...state.primaryAmount,
-          amount: state.primaryAmount.amount.toString().endsWith("00")
-            ? Number(state.primaryAmount.amount.toString().slice(0, -2) + action.payload + "00")
-            : Number(state.primaryAmount.amount.toString() + action.payload + "00"),
-        },
-        state.secondaryAmount.currency)
+        secondaryAmount: state.conversionFunction(
+          {
+            ...state.primaryAmount,
+            amount: state.primaryAmount.amount.toString().endsWith("00")
+              ? Number(
+                  state.primaryAmount.amount.toString().slice(0, -2) +
+                    action.payload +
+                    "00",
+                )
+              : Number(state.primaryAmount.amount.toString() + action.payload + "00"),
+          },
+          state.secondaryAmount.currency,
+        ),
       }
     case ActionType.DELETE_DIGIT:
       if (state.primaryAmount.currency === DisplayCurrency.BTC) {
@@ -118,11 +141,13 @@ export function currencyInputReducer(
             ...state.primaryAmount,
             amount: Number(state.primaryAmount.amount.toString().slice(0, -1)),
           },
-          secondaryAmount: state.conversionFunction({
-            ...state.primaryAmount,
-            amount: Number(state.primaryAmount.amount.toString().slice(0, -1)),
-          },
-          state.secondaryAmount.currency)
+          secondaryAmount: state.conversionFunction(
+            {
+              ...state.primaryAmount,
+              amount: Number(state.primaryAmount.amount.toString().slice(0, -1)),
+            },
+            state.secondaryAmount.currency,
+          ),
         }
       }
       if (
@@ -143,11 +168,13 @@ export function currencyInputReducer(
             ...state.primaryAmount,
             amount: Number(state.primaryAmount.amount.toString().slice(0, -2) + "00"),
           },
-          secondaryAmount: state.conversionFunction({
-            ...state.primaryAmount,
-            amount: Number(state.primaryAmount.amount.toString().slice(0, -2) + "00"),
-          },
-          state.secondaryAmount.currency)
+          secondaryAmount: state.conversionFunction(
+            {
+              ...state.primaryAmount,
+              amount: Number(state.primaryAmount.amount.toString().slice(0, -2) + "00"),
+            },
+            state.secondaryAmount.currency,
+          ),
         }
       }
       if (
@@ -161,11 +188,13 @@ export function currencyInputReducer(
             ...state.primaryAmount,
             amount: Number(state.primaryAmount.amount.toString().slice(0, -1) + "0"),
           },
-          secondaryAmount: state.conversionFunction({
-            ...state.primaryAmount,
-            amount: Number(state.primaryAmount.amount.toString().slice(0, -1) + "0"),
-          },
-          state.secondaryAmount.currency)
+          secondaryAmount: state.conversionFunction(
+            {
+              ...state.primaryAmount,
+              amount: Number(state.primaryAmount.amount.toString().slice(0, -1) + "0"),
+            },
+            state.secondaryAmount.currency,
+          ),
         }
       }
       if (
@@ -179,11 +208,13 @@ export function currencyInputReducer(
             ...state.primaryAmount,
             amount: Number(state.primaryAmount.amount.toString().slice(0, -3) + "00"),
           },
-          secondaryAmount: state.conversionFunction({
-            ...state.primaryAmount,
-            amount: Number(state.primaryAmount.amount.toString().slice(0, -3) + "00"),
-          },
-          state.secondaryAmount.currency)
+          secondaryAmount: state.conversionFunction(
+            {
+              ...state.primaryAmount,
+              amount: Number(state.primaryAmount.amount.toString().slice(0, -3) + "00"),
+            },
+            state.secondaryAmount.currency,
+          ),
         }
       }
       return {
@@ -192,11 +223,13 @@ export function currencyInputReducer(
           ...state.primaryAmount,
           amount: Number(state.primaryAmount.amount.toString().slice(0, -1)),
         },
-        secondaryAmount: state.conversionFunction({
-          ...state.primaryAmount,
-          amount: Number(state.primaryAmount.amount.toString().slice(0, -1)),
-        },
-        state.secondaryAmount.currency)
+        secondaryAmount: state.conversionFunction(
+          {
+            ...state.primaryAmount,
+            amount: Number(state.primaryAmount.amount.toString().slice(0, -1)),
+          },
+          state.secondaryAmount.currency,
+        ),
       }
     case ActionType.CLEAR_INPUT:
       return {
