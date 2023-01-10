@@ -13,7 +13,7 @@ describe("Welcome Screen Flow", async () => {
   })
 
   it("loads and clicks 'Get Started button' ", async () => {
-    const getStartedButton = await $(selector(LL.GetStartedScreen.getStarted()))
+    const getStartedButton = await $(selector(LL.GetStartedScreen.getStarted(), "Button"))
     await getStartedButton.waitForDisplayed({ timeout })
     await getStartedButton.click()
     expect(true).toBeTruthy()

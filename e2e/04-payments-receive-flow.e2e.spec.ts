@@ -15,7 +15,7 @@ describe("Receive Payment Flow", async () => {
 
   it("Click 'Back Home' on the stablesats tutorial modal", async () => {
     try {
-      const backHomeButton = await $(selector(LL.common.backHome()))
+      const backHomeButton = await $(selector(LL.common.backHome(), "Button"))
       await backHomeButton.waitForDisplayed({ timeout: 5000 })
       if (backHomeButton.isDisplayed()) {
         await backHomeButton.click()
@@ -38,7 +38,7 @@ describe("Receive Payment Flow", async () => {
     if (process.env.E2E_DEVICE === "ios") {
       copyInvoiceButton = await $('(//XCUIElementTypeOther[@name="Copy Invoice"])[2]')
     } else {
-      copyInvoiceButton = await $(selector("Copy Invoice"))
+      copyInvoiceButton = await $(selector("Copy Invoice", "Button"))
     }
     await copyInvoiceButton.waitForDisplayed({ timeout })
     await copyInvoiceButton.click()
@@ -53,11 +53,11 @@ describe("Receive Payment Flow", async () => {
   it("Click OK to allow push notifications", async () => {
     try {
       if (process.env.E2E_DEVICE === "android") {
-        const okButton = await $(selector(LL.common.ok()))
+        const okButton = await $(selector(LL.common.ok(), "Button"))
         await okButton.waitForDisplayed({ timeout: 8000 })
         await okButton.click()
       }
-      const allowButton = await $(selector("Allow"))
+      const allowButton = await $(selector("Allow", "Button"))
       await allowButton.waitForDisplayed({ timeout: 8000 })
       await allowButton.click()
     } catch (e) {
@@ -70,7 +70,7 @@ describe("Receive Payment Flow", async () => {
     if (process.env.E2E_DEVICE === "ios") {
       copyInvoiceButton = await $('(//XCUIElementTypeOther[@name="Copy Invoice"])[2]')
     } else {
-      copyInvoiceButton = await $(selector("Copy Invoice"))
+      copyInvoiceButton = await $(selector("Copy Invoice", "Button"))
     }
     await copyInvoiceButton.waitForDisplayed({ timeout })
     await copyInvoiceButton.click()
@@ -81,9 +81,7 @@ describe("Receive Payment Flow", async () => {
     if (process.env.E2E_DEVICE === "ios") {
       // on ios, get invoice from share link because copy does not
       // work on physical device for security reasons
-      const shareButton = await await $(
-        '(//XCUIElementTypeOther[@name="Share Invoice"])[2]',
-      )
+      const shareButton = await $('(//XCUIElementTypeOther[@name="Share Invoice"])[2]')
       await shareButton.waitForDisplayed({ timeout: 8000 })
       await shareButton.click()
       const invoiceSharedScreen = await $('//*[contains(@name,"lntbs")]')
@@ -91,7 +89,7 @@ describe("Receive Payment Flow", async () => {
         timeout: 8000,
       })
       invoice = await invoiceSharedScreen.getAttribute("name")
-      const closeShareButton = await $(selector("Close"))
+      const closeShareButton = await $(selector("Close", "Button"))
       await closeShareButton.waitForDisplayed({ timeout: 8000 })
       await closeShareButton.click()
     } else {

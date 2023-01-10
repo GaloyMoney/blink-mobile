@@ -36,7 +36,7 @@ describe("Payments Flow", async () => {
   })
 
   it("Click Next", async () => {
-    const nextButton = await $(selector(LL.common.next()))
+    const nextButton = await $(selector(LL.common.next(), "Button"))
     await nextButton.waitForDisplayed({ timeout })
     await nextButton.isEnabled()
     await nextButton.click()
@@ -58,7 +58,7 @@ describe("Payments Flow", async () => {
 
   it("Click Next", async () => {
     await browser.pause(3000)
-    const nextButton = await $(selector(LL.common.next()))
+    const nextButton = await $(selector(LL.common.next(), "Button"))
     await nextButton.waitForDisplayed({ timeout })
     await nextButton.isEnabled()
     await nextButton.click()
@@ -70,7 +70,7 @@ describe("Payments Flow", async () => {
 
   it("Click 'Confirm Payment' and get Green Checkmark success", async () => {
     const confirmPaymentButton = await $(
-      selector(LL.SendBitcoinConfirmationScreen.title()),
+      selector(LL.SendBitcoinConfirmationScreen.title(), "Button"),
     )
     await confirmPaymentButton.waitForDisplayed({ timeout })
     await confirmPaymentButton.click()

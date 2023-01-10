@@ -8,7 +8,7 @@ describe("Login Flow", async () => {
   const timeout = 30000
 
   it("clicks Settings Icon", async () => {
-    const settingsButton = await $(selector("Settings Button"))
+    const settingsButton = await $(selector("Settings Button", "Button"))
     await settingsButton.waitForDisplayed({ timeout })
     await settingsButton.click()
   })
@@ -69,7 +69,7 @@ describe("Login Flow", async () => {
   })
 
   it("click Save Changes", async () => {
-    const changeTokenButton = await $(selector("Save Changes"))
+    const changeTokenButton = await $(selector("Save Changes", "Button"))
     await changeTokenButton.waitForDisplayed({ timeout })
     await changeTokenButton.click()
     await browser.pause(8000)
@@ -108,7 +108,7 @@ describe("Login Flow", async () => {
 
   it("Dismiss stablesats tutorial modal", async () => {
     try {
-      const backHomeButton = await $(selector(LL.common.backHome()))
+      const backHomeButton = await $(selector(LL.common.backHome(), "Button"))
       await backHomeButton.waitForDisplayed({ timeout: 5000 })
       if (backHomeButton.isDisplayed()) {
         await backHomeButton.click()
