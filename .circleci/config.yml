@@ -251,8 +251,10 @@ workflows:
   in-pr:
     jobs:
       - test_android:
-          branches:
-              ignore: main
+          filters:
+            branches:
+                ignore: main
       - test_ios:
-          branches:
-              ignore: main
+          filters:
+            branches:
+                ignore: main
