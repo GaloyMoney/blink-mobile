@@ -123,10 +123,10 @@ android
 
 ```
 {
-  "app": "/path/to/code/galoy-mobile/android/app/build/outputs/apk/debug/app-debug.apk",
   "platformName": "Android",
-  "deviceName": "generic_x86",
-  "automationName": "UiAutomator2"
+  "appium:app": "/path/to/code/galoy-mobile/android/app/build/outputs/apk/debug/app-debug.apk",
+  "appium:deviceName": "generic_x86",
+  "appium:automationName": "UiAutomator2"
 }
 ```
 
@@ -139,4 +139,13 @@ ios on browserstack - choose 'select cloud providers' then 'browserstack'
   "appium:platformVersion": "15.1",
   "appium:app": "bs://{YOUR_BROWSERSTACK_ID_FROM_CIRCLE_CI}"
 }
+```
+
+## Develop locally
+
+those properties can be added to capabilities to avoid the app been reset across tests:
+
+```
+  "appium:noReset" : "true",
+  "appium:fullReset" : "false"
 ```
