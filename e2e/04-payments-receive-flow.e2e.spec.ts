@@ -81,9 +81,7 @@ describe("Receive Payment Flow", async () => {
     if (process.env.E2E_DEVICE === "ios") {
       // on ios, get invoice from share link because copy does not
       // work on physical device for security reasons
-      const shareButton = await $(
-        '(//XCUIElementTypeOther[@name="Share Invoice"])[2]',
-      )
+      const shareButton = await $('(//XCUIElementTypeOther[@name="Share Invoice"])[2]')
       await shareButton.waitForDisplayed({ timeout: 8000 })
       await shareButton.click()
       const invoiceSharedScreen = await $('//*[contains(@name,"lntbs")]')
