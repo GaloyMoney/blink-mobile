@@ -11,6 +11,7 @@ import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import useMainQuery from "@app/hooks/use-main-query"
+import { useAppConfig } from "@app/hooks/use-app-config"
 
 const styles = EStyleSheet.create({
   centeredView: {
@@ -116,6 +117,7 @@ type SetAddressModalProps = {
 
 export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalProps) => {
   const { LL } = useI18nContext()
+  const { appConfig } = useAppConfig()
   const { refetch: refetchMainQuery } = useMainQuery()
   const [address, setAddress] = React.useState("")
   const [error, setError] = React.useState("")
@@ -159,6 +161,9 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
     setError("")
     setAddress(value)
   }
+
+  const usernameSuffix = `@${appConfig.galoyInstance.lnAddressHostname}`
+
   return (
     <View style={styles.centeredView}>
       <Modal
@@ -173,7 +178,9 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
           {!newAddress && (
             <>
               <Input
-                rightIcon={<Text style={styles.rightIconTextStyle}>@pay.galoy.io</Text>}
+                rightIcon={
+                  <Text style={styles.rightIconTextStyle}>{usernameSuffix}</Text>
+                }
                 inputContainerStyle={styles.inputContainerStyle}
                 containerStyle={styles.containerStyle}
                 onChangeText={handleOnChangeText}
@@ -211,7 +218,10 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
                 {LL.GaloyAddressScreen.yourAddress({ bankName: "BBW" })}
               </Text>
               <View style={styles.newAddressContainer}>
-                <Text style={styles.newAddressText}>{newAddress}@pay.bbw.sv</Text>
+                <Text style={styles.newAddressText}>
+                  {newAddress}
+                  {usernameSuffix}
+                </Text>
               </View>
               <Button
                 title={LL.MoveMoneyScreen.title()}
