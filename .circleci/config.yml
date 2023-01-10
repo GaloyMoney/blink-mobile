@@ -220,7 +220,12 @@ jobs:
 workflows:
   mobile:
     jobs:
-      - test_ios
+      - test_ios:
+          filters:
+            tags:
+              only: /^[0-9]+\.[0-9]+\.[0-9]+/
+            branches:
+              ignore: /.*/
       - build_ios:
           requires:
             - test_ios
@@ -229,7 +234,12 @@ workflows:
               only: /^[0-9]+\.[0-9]+\.[0-9]+/
             branches:
               ignore: /.*/
-      - test_android
+      - test_android:
+          filters:
+            tags:
+              only: /^[0-9]+\.[0-9]+\.[0-9]+/
+            branches:
+              ignore: /.*/
       - build_android:
           requires:
             - test_android
@@ -238,3 +248,19 @@ workflows:
               only: /^[0-9]+\.[0-9]+\.[0-9]+/
             branches:
               ignore: /.*/
+  main-branch:
+    jobs:
+      - test_android:
+          filters:
+            branches:
+              only: main
+      - test_ios:
+          filters:
+            branches:
+              only: main
+  in-pr:
+    jobs:
+      - test_android:
+          filters:
+            branches:
+              ignore: main
