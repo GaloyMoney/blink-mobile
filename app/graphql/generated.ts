@@ -2047,6 +2047,81 @@ export type AccountLimitsQuery = {
   } | null
 }
 
+export type UserDefaultWalletIdQueryVariables = Exact<{
+  username: Scalars["Username"]
+}>
+
+export type UserDefaultWalletIdQuery = {
+  readonly __typename?: "Query"
+  readonly userDefaultWalletId: string
+}
+
+export type PriceSubscriptionVariables = Exact<{
+  input: PriceInput
+}>
+
+export type PriceSubscription = {
+  readonly __typename?: "Subscription"
+  readonly price: {
+    readonly __typename?: "PricePayload"
+    readonly price?: {
+      readonly __typename?: "Price"
+      readonly base: number
+      readonly offset: number
+      readonly currencyUnit: ExchangeCurrencyUnit
+      readonly formattedAmount: string
+    } | null
+    readonly errors: ReadonlyArray<{
+      readonly __typename?: "GraphQLApplicationError"
+      readonly message: string
+    }>
+  }
+}
+
+export type MyUpdatesSubscriptionVariables = Exact<{ [key: string]: never }>
+
+export type MyUpdatesSubscription = {
+  readonly __typename?: "Subscription"
+  readonly myUpdates: {
+    readonly __typename?: "MyUpdatesPayload"
+    readonly errors: ReadonlyArray<{
+      readonly __typename?: "GraphQLApplicationError"
+      readonly message: string
+    }>
+    readonly update?:
+      | {
+          readonly __typename?: "IntraLedgerUpdate"
+          readonly txNotificationType: TxNotificationType
+          readonly amount: number
+          readonly usdPerSat: number
+          readonly type: "IntraLedgerUpdate"
+        }
+      | {
+          readonly __typename?: "LnUpdate"
+          readonly paymentHash: string
+          readonly status: InvoicePaymentStatus
+          readonly type: "LnUpdate"
+        }
+      | {
+          readonly __typename?: "OnChainUpdate"
+          readonly txNotificationType: TxNotificationType
+          readonly txHash: string
+          readonly amount: number
+          readonly usdPerSat: number
+          readonly type: "OnChainUpdate"
+        }
+      | {
+          readonly __typename?: "Price"
+          readonly base: number
+          readonly offset: number
+          readonly currencyUnit: ExchangeCurrencyUnit
+          readonly formattedAmount: string
+          readonly type: "Price"
+        }
+      | null
+  }
+}
+
 export const TransactionListFragmentDoc = gql`
   fragment TransactionList on TransactionConnection {
     pageInfo {
@@ -3861,3 +3936,168 @@ export type AccountLimitsQueryResult = Apollo.QueryResult<
   AccountLimitsQuery,
   AccountLimitsQueryVariables
 >
+export const UserDefaultWalletIdDocument = gql`
+  query userDefaultWalletId($username: Username!) {
+    userDefaultWalletId(username: $username)
+  }
+`
+
+/**
+ * __useUserDefaultWalletIdQuery__
+ *
+ * To run a query within a React component, call `useUserDefaultWalletIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserDefaultWalletIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserDefaultWalletIdQuery({
+ *   variables: {
+ *      username: // value for 'username'
+ *   },
+ * });
+ */
+export function useUserDefaultWalletIdQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    UserDefaultWalletIdQuery,
+    UserDefaultWalletIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<UserDefaultWalletIdQuery, UserDefaultWalletIdQueryVariables>(
+    UserDefaultWalletIdDocument,
+    options,
+  )
+}
+export function useUserDefaultWalletIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    UserDefaultWalletIdQuery,
+    UserDefaultWalletIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<UserDefaultWalletIdQuery, UserDefaultWalletIdQueryVariables>(
+    UserDefaultWalletIdDocument,
+    options,
+  )
+}
+export type UserDefaultWalletIdQueryHookResult = ReturnType<
+  typeof useUserDefaultWalletIdQuery
+>
+export type UserDefaultWalletIdLazyQueryHookResult = ReturnType<
+  typeof useUserDefaultWalletIdLazyQuery
+>
+export type UserDefaultWalletIdQueryResult = Apollo.QueryResult<
+  UserDefaultWalletIdQuery,
+  UserDefaultWalletIdQueryVariables
+>
+export const PriceDocument = gql`
+  subscription price($input: PriceInput!) {
+    price(input: $input) {
+      price {
+        base
+        offset
+        currencyUnit
+        formattedAmount
+      }
+      errors {
+        message
+      }
+    }
+  }
+`
+
+/**
+ * __usePriceSubscription__
+ *
+ * To run a query within a React component, call `usePriceSubscription` and pass it any options that fit your needs.
+ * When your component renders, `usePriceSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePriceSubscription({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function usePriceSubscription(
+  baseOptions: Apollo.SubscriptionHookOptions<
+    PriceSubscription,
+    PriceSubscriptionVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useSubscription<PriceSubscription, PriceSubscriptionVariables>(
+    PriceDocument,
+    options,
+  )
+}
+export type PriceSubscriptionHookResult = ReturnType<typeof usePriceSubscription>
+export type PriceSubscriptionResult = Apollo.SubscriptionResult<PriceSubscription>
+export const MyUpdatesDocument = gql`
+  subscription myUpdates {
+    myUpdates {
+      errors {
+        message
+      }
+      update {
+        type: __typename
+        ... on Price {
+          base
+          offset
+          currencyUnit
+          formattedAmount
+        }
+        ... on LnUpdate {
+          paymentHash
+          status
+        }
+        ... on OnChainUpdate {
+          txNotificationType
+          txHash
+          amount
+          usdPerSat
+        }
+        ... on IntraLedgerUpdate {
+          txNotificationType
+          amount
+          usdPerSat
+        }
+      }
+    }
+  }
+`
+
+/**
+ * __useMyUpdatesSubscription__
+ *
+ * To run a query within a React component, call `useMyUpdatesSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useMyUpdatesSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMyUpdatesSubscription({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMyUpdatesSubscription(
+  baseOptions?: Apollo.SubscriptionHookOptions<
+    MyUpdatesSubscription,
+    MyUpdatesSubscriptionVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useSubscription<MyUpdatesSubscription, MyUpdatesSubscriptionVariables>(
+    MyUpdatesDocument,
+    options,
+  )
+}
+export type MyUpdatesSubscriptionHookResult = ReturnType<typeof useMyUpdatesSubscription>
+export type MyUpdatesSubscriptionResult = Apollo.SubscriptionResult<MyUpdatesSubscription>

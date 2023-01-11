@@ -1,4 +1,3 @@
-import { GaloyGQL } from "@galoymoney/client"
 import {
   ApolloClient,
   ApolloQueryResult,
@@ -6,10 +5,13 @@ import {
   createHttpLink,
   gql,
 } from "@apollo/client"
+import { GaloyGQL } from "@galoymoney/client"
 import {
   LnNoAmountInvoiceCreateDocument,
   LnNoAmountInvoicePaymentSendDocument,
 } from "../../app/graphql/generated"
+
+import fetch from "cross-fetch"
 
 const config = {
   network: "signet",
@@ -24,6 +26,7 @@ const createGaloyServerClient = (config) => (authToken) => {
       headers: {
         authorization: authToken ? `Bearer ${authToken}` : "",
       },
+      fetch,
     }),
     cache: new InMemoryCache(),
   })

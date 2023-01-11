@@ -151,5 +151,9 @@ export default gql`
     }
   }
 
+  query userDefaultWalletId($username: Username!) {
+    userDefaultWalletId(username: $username)
+  }
+
   ${Fragments}
 `

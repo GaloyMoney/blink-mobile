@@ -6,6 +6,6 @@ unit:
 
 test: unit check-code
 
-gen:
+codegen:
 	yarn dev:codegen
 	yarn prettier:fix
