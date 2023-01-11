@@ -44,7 +44,7 @@ export type RootStackParamList = {
     username?: string
   }
   sendBitcoinDetails: {
-    fixedAmount?: PaymentAmount<WalletCurrency> // was "BTC" before but typescript complained?
+    fixedAmount?: PaymentAmount<WalletCurrency> // FIXME was "BTC" before but typescript complained?
     destination: string
     note?: string
     lnurl?: LnUrlPayServiceResponse
@@ -53,7 +53,7 @@ export type RootStackParamList = {
     sameNode: boolean
   }
   sendBitcoinConfirmation: {
-    fixedAmount?: PaymentAmount<WalletCurrency> // was "BTC" before but typescript complained?
+    fixedAmount?: PaymentAmount<WalletCurrency> // FIXME was "BTC" before but typescript complained?
     destination: string
     recipientWalletId?: string
     payerWalletDescriptor: WalletDescriptor<WalletCurrency>

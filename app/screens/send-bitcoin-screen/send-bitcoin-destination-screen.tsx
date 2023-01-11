@@ -213,7 +213,7 @@ const sendBitcoinDetailsScreenParams = (destination: ValidPaymentDestination) =>
           ({
             amount: destination.amount,
             currency: WalletCurrency.Btc,
-          } as PaymentAmount<WalletCurrency>),
+          } as PaymentAmount<"BTC">),
         note: destination.memo,
         paymentType: PaymentType.Onchain,
         sameNode: false,
