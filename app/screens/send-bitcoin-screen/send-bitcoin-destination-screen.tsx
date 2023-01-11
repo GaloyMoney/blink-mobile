@@ -12,7 +12,7 @@ import { palette } from "@app/theme"
 import { fetchLnurlPaymentParams, parsingv2 } from "@galoymoney/client"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { PaymentAmount, WalletCurrency } from "@app/types/amounts"
+import { PaymentAmount } from "@app/types/amounts"
 import { Button } from "@rneui/base"
 import ScanIcon from "@app/assets/icons/scan.svg"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -34,7 +34,11 @@ import Paste from "react-native-vector-icons/FontAwesome"
 import Clipboard from "@react-native-community/clipboard"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { toastShow } from "@app/utils/toast"
-import { useContactsQuery, useUserDefaultWalletIdLazyQuery } from "@app/graphql/generated"
+import {
+  WalletCurrency,
+  useContactsQuery,
+  useUserDefaultWalletIdLazyQuery,
+} from "@app/graphql/generated"
 
 const Styles = StyleSheet.create({
   scrollView: {
@@ -181,8 +185,8 @@ const sendBitcoinDetailsScreenParams = (destination: ValidPaymentDestination) =>
           destination.amount &&
           ({
             amount: destination.amount,
-            currency: WalletCurrency.BTC,
-          } as PaymentAmount<WalletCurrency.BTC>),
+            currency: WalletCurrency.Btc,
+          } as PaymentAmount<"BTC">),
         paymentType: PaymentType.Lightning,
         sameNode: destination.sameNode,
         note: destination.memo,
@@ -208,8 +212,8 @@ const sendBitcoinDetailsScreenParams = (destination: ValidPaymentDestination) =>
           destination.amount &&
           ({
             amount: destination.amount,
-            currency: WalletCurrency.BTC,
-          } as PaymentAmount<WalletCurrency.BTC>),
+            currency: WalletCurrency.Btc,
+          } as PaymentAmount<WalletCurrency>),
         note: destination.memo,
         paymentType: PaymentType.Onchain,
         sameNode: false,
