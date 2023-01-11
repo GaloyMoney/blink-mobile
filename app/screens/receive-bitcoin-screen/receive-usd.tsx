@@ -1,35 +1,35 @@
-import { useSubscriptionUpdates, useCountdownTimer } from "@app/hooks"
+import { useCountdownTimer, useSubscriptionUpdates } from "@app/hooks"
 import useMainQuery from "@app/hooks/use-main-query"
 import { palette } from "@app/theme"
-import { getFullUri, TYPE_LIGHTNING_USD } from "@app/utils/wallet"
+import { TYPE_LIGHTNING_USD, getFullUri } from "@app/utils/wallet"
 import { parsingv2 } from "@galoymoney/client"
 const { decodeInvoiceString, getLightningInvoiceExpiryTime } = parsingv2
 
-import React, { useCallback, useEffect, useRef, useState } from "react"
-import { Alert, AppState, Pressable, Share, TextInput, View } from "react-native"
-import { Button, Text } from "@rneui/base"
-import EStyleSheet from "react-native-extended-stylesheet"
-import QRView from "./qr-view"
-import Icon from "react-native-vector-icons/Ionicons"
-import { FakeCurrencyInput } from "react-native-currency-input"
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import CalculatorIcon from "@app/assets/icons/calculator.svg"
 import ChevronIcon from "@app/assets/icons/chevron.svg"
 import NoteIcon from "@app/assets/icons/note.svg"
-import { toastShow } from "@app/utils/toast"
-import { copyPaymentInfoToClipboard } from "@app/utils/clipboard"
-import moment from "moment"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { logGeneratePaymentRequest } from "@app/utils/analytics"
-import { WalletCurrency } from "@app/types/amounts"
-import crashlytics from "@react-native-firebase/crashlytics"
-import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import {
   LnInvoice,
   LnNoAmountInvoice,
+  WalletCurrency,
   useLnNoAmountInvoiceCreateMutation,
   useLnUsdInvoiceCreateMutation,
 } from "@app/graphql/generated"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { logGeneratePaymentRequest } from "@app/utils/analytics"
+import { copyPaymentInfoToClipboard } from "@app/utils/clipboard"
+import { toastShow } from "@app/utils/toast"
+import crashlytics from "@react-native-firebase/crashlytics"
+import { Button, Text } from "@rneui/base"
+import moment from "moment"
+import React, { useCallback, useEffect, useRef, useState } from "react"
+import { Alert, AppState, Pressable, Share, TextInput, View } from "react-native"
+import { FakeCurrencyInput } from "react-native-currency-input"
+import EStyleSheet from "react-native-extended-stylesheet"
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
+import Icon from "react-native-vector-icons/Ionicons"
+import QRView from "./qr-view"
 
 const styles = EStyleSheet.create({
   container: {
@@ -210,7 +210,7 @@ const ReceiveUsd = () => {
           logGeneratePaymentRequest({
             paymentType: "lightning",
             hasAmount: false,
-            receivingWallet: WalletCurrency.USD,
+            receivingWallet: WalletCurrency.Usd,
           })
           const {
             data: {
@@ -230,7 +230,7 @@ const ReceiveUsd = () => {
           logGeneratePaymentRequest({
             paymentType: "lightning",
             hasAmount: true,
-            receivingWallet: WalletCurrency.USD,
+            receivingWallet: WalletCurrency.Usd,
           })
           const amountInCents = Math.round(parseFloat(usdAmount) * 100)
           const {

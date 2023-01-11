@@ -1,23 +1,23 @@
-import React, { useState } from "react"
-import { StyleSheet, Text, View } from "react-native"
-import { Button } from "@rneui/base"
-import { palette } from "@app/theme"
-import { toastShow } from "@app/utils/toast"
-import { paymentAmountToTextWithUnits } from "@app/utils/currencyConversion"
-import { WalletCurrency } from "@app/types/amounts"
-import { StackScreenProps } from "@react-navigation/stack"
-import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { CommonActions } from "@react-navigation/native"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { logConversionAttempt, logConversionResult } from "@app/utils/analytics"
-import crashlytics from "@react-native-firebase/crashlytics"
 import {
   PaymentSendResult,
+  WalletCurrency,
   useIntraLedgerPaymentSendMutation,
   useIntraLedgerUsdPaymentSendMutation,
 } from "@app/graphql/generated"
-import { GraphQLError } from "graphql"
 import { joinErrorsMessages } from "@app/graphql/utils"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { palette } from "@app/theme"
+import { logConversionAttempt, logConversionResult } from "@app/utils/analytics"
+import { paymentAmountToTextWithUnits } from "@app/utils/currencyConversion"
+import { toastShow } from "@app/utils/toast"
+import crashlytics from "@react-native-firebase/crashlytics"
+import { CommonActions } from "@react-navigation/native"
+import { StackScreenProps } from "@react-navigation/stack"
+import { Button } from "@rneui/base"
+import { GraphQLError } from "graphql"
+import React, { useState } from "react"
+import { StyleSheet, Text, View } from "react-native"
 
 export const ConversionConfirmationScreen = ({
   navigation,
@@ -31,8 +31,8 @@ export const ConversionConfirmationScreen = ({
     useIntraLedgerUsdPaymentSendMutation()
   const isLoading = intraLedgerPaymentSendLoading || intraLedgerUsdPaymentSendLoading
   const { LL } = useI18nContext()
-  const fromAmount = fromWallet.currency === WalletCurrency.BTC ? btcAmount : usdAmount
-  const toAmount = toWallet.currency === WalletCurrency.BTC ? btcAmount : usdAmount
+  const fromAmount = fromWallet.currency === WalletCurrency.Btc ? btcAmount : usdAmount
+  const toAmount = toWallet.currency === WalletCurrency.Btc ? btcAmount : usdAmount
 
   const handlePaymentReturn = (
     status: PaymentSendResult,
@@ -65,7 +65,7 @@ export const ConversionConfirmationScreen = ({
   }
 
   const payWallet = async () => {
-    if (fromWallet.currency === WalletCurrency.BTC) {
+    if (fromWallet.currency === WalletCurrency.Btc) {
       try {
         logConversionAttempt({
           sendingWallet: fromWallet.currency,
@@ -94,7 +94,7 @@ export const ConversionConfirmationScreen = ({
         handlePaymentError(err)
       }
     }
-    if (fromWallet.currency === WalletCurrency.USD) {
+    if (fromWallet.currency === WalletCurrency.Usd) {
       try {
         logConversionAttempt({
           sendingWallet: fromWallet.currency,
@@ -146,7 +146,7 @@ export const ConversionConfirmationScreen = ({
             {LL.ConversionConfirmationScreen.receivingAccount()}
           </Text>
           <Text style={styles.conversionInfoFieldValue}>
-            {toWallet.currency === WalletCurrency.BTC
+            {toWallet.currency === WalletCurrency.Btc
               ? LL.common.btcAccount()
               : LL.common.usdAccount()}
           </Text>

@@ -1,22 +1,21 @@
-import * as React from "react"
-import { useState, useEffect } from "react"
+import { Transaction, WalletCurrency } from "@app/graphql/generated"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+import { satAmountDisplay } from "@app/utils/currencyConversion"
+import { WalletType } from "@app/utils/enum"
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs"
+import { CompositeNavigationProp, ParamListBase } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { ListItem } from "@rneui/base"
+import * as React from "react"
+import { useEffect, useState } from "react"
 import { Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
-import { IconTransaction } from "../icon-transactions"
-import { palette } from "../../theme/palette"
-import { CompositeNavigationProp, ParamListBase } from "@react-navigation/native"
 import { prefCurrencyVar as primaryCurrencyVar } from "../../graphql/client-only-query"
 import { useHideBalance } from "../../hooks"
-import { satAmountDisplay } from "@app/utils/currencyConversion"
-import { WalletCurrency } from "@app/types/amounts"
-import { WalletType } from "@app/utils/enum"
-import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs"
+import { palette } from "../../theme/palette"
+import { IconTransaction } from "../icon-transactions"
 import { TransactionDate } from "../transaction-date"
-import { useDisplayCurrency } from "@app/hooks/use-display-currency"
-import { Transaction } from "@app/graphql/generated"
 
 const styles = EStyleSheet.create({
   container: {
@@ -167,7 +166,7 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
             style={amountDisplayStyle({ isReceive, isPending })}
             onPress={hideBalance ? pressTxAmount : undefined}
           >
-            {primaryCurrency === "BTC" && tx.settlementCurrency === WalletCurrency.BTC
+            {primaryCurrency === "BTC" && tx.settlementCurrency === WalletCurrency.Btc
               ? satAmountDisplay(tx.settlementAmount)
               : formatToDisplayCurrency(usdAmount)}
           </Text>

@@ -57,5 +57,5 @@ type MutationError = {
 type Wallet = {
   id: string
   balance: number
-  walletCurrency: string
+  walletCurrency: WalletCurrency
 }

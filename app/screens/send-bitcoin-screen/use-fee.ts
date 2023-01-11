@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react"
 import { WalletDescriptor } from "@app/types/wallets"
-import { PaymentAmount, WalletCurrency } from "@app/types/amounts"
+import { PaymentAmount } from "@app/types/amounts"
 import crashlytics from "@react-native-firebase/crashlytics"
 import {
+  WalletCurrency,
   useLnInvoiceFeeProbeMutation,
   useLnNoAmountInvoiceFeeProbeMutation,
   useLnNoAmountUsdInvoiceFeeProbeMutation,
@@ -44,12 +45,12 @@ const useFee = ({
   const [lnNoAmountUsdInvoiceFeeProbe] = useLnNoAmountUsdInvoiceFeeProbeMutation()
   const [onChainTxFee] = useOnChainTxFeeLazyQuery()
   const getLightningFees =
-    walletDescriptor.currency === WalletCurrency.BTC
+    walletDescriptor.currency === WalletCurrency.Btc
       ? lnInvoiceFeeProbe
       : lnUsdInvoiceFeeProbe
 
   const getNoAmountLightningFees =
-    walletDescriptor.currency === WalletCurrency.BTC
+    walletDescriptor.currency === WalletCurrency.Btc
       ? lnNoAmountInvoiceFeeProbe
       : lnNoAmountUsdInvoiceFeeProbe
 

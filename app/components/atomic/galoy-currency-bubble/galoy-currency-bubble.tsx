@@ -1,7 +1,7 @@
 import React from "react"
-import { WalletCurrency } from "@app/types/amounts"
 import { useTheme } from "@rneui/themed"
 import { GaloyIcon } from "../galoy-icon"
+import { WalletCurrency } from "@app/graphql/generated"
 
 export const GaloyCurrencyBubble = ({
   currency,
@@ -24,7 +24,7 @@ export const GaloyCurrencyBubble = ({
       iconSize = size || 24
   }
 
-  return currency === WalletCurrency.BTC ? (
+  return currency === WalletCurrency.Btc ? (
     <GaloyIcon
       name="bitcoin"
       size={iconSize}
