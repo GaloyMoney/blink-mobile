@@ -1,7 +1,6 @@
 import { usePriceConversion, useSubscriptionUpdates } from "@app/hooks"
 import useMainQuery from "@app/hooks/use-main-query"
 import { getFullUri, TYPE_LIGHTNING_BTC, TYPE_BITCOIN_ONCHAIN } from "@app/utils/wallet"
-import { GaloyGQL } from "@galoymoney/client"
 import React, { useCallback, useEffect, useState } from "react"
 import { Alert, Pressable, Share, TextInput, View } from "react-native"
 import { Button, Text } from "@rneui/base"
@@ -27,6 +26,8 @@ import { testProps } from "../../../utils/testProps"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import {
+  LnInvoice,
+  LnNoAmountInvoice,
   useLnInvoiceCreateMutation,
   useLnNoAmountInvoiceCreateMutation,
   useOnChainAddressCurrentMutation,
@@ -159,9 +160,7 @@ const styles = EStyleSheet.create({
 const ReceiveBtc = () => {
   const [loading, setLoading] = useState(true)
   const [err, setErr] = useState("")
-  const [invoice, setInvoice] = useState<
-    GaloyGQL.LnInvoice | GaloyGQL.LnNoAmountInvoice | null
-  >(null)
+  const [invoice, setInvoice] = useState<LnInvoice | LnNoAmountInvoice | null>(null)
   const [btcAddress, setBtcAddress] = useState<string | null>(null)
   const [satAmount, setSatAmount] = useState(0)
   const [usdAmount, setUsdAmount] = useState(0)

@@ -1,4 +1,5 @@
 import { gql } from "@apollo/client"
+
 export default gql`
   fragment TransactionList on TransactionConnection {
     pageInfo {
@@ -53,6 +54,25 @@ export default gql`
             transactionHash
           }
         }
+      }
+    }
+  }
+
+  fragment Me on User {
+    id
+    language
+    username
+    phone
+    defaultAccount {
+      id
+      defaultWalletId
+      transactions(first: $recentTransactions) {
+        ...TransactionList
+      }
+      wallets {
+        id
+        balance
+        walletCurrency
       }
     }
   }

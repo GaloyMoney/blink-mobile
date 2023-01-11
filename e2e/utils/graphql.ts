@@ -5,10 +5,10 @@ import {
   createHttpLink,
   gql,
 } from "@apollo/client"
-import { GaloyGQL } from "@galoymoney/client"
 import {
   LnNoAmountInvoiceCreateDocument,
   LnNoAmountInvoicePaymentSendDocument,
+  MeFragment,
 } from "../../app/graphql/generated"
 
 import fetch from "cross-fetch"
@@ -37,22 +37,21 @@ const authToken = process.env.GALOY_TOKEN_2
 export const getInvoice = async () => {
   const client = createGaloyServerClient(config)(authToken)
   // get BTC wallet id
-  const accountResult: ApolloQueryResult<{ me: GaloyGQL.MeFragment }> =
-    await client.query({
-      query: gql`
-        {
-          me {
-            defaultAccount {
-              wallets {
-                walletCurrency
-                id
-              }
+  const accountResult: ApolloQueryResult<{ me: MeFragment }> = await client.query({
+    query: gql`
+      {
+        me {
+          defaultAccount {
+            wallets {
+              walletCurrency
+              id
             }
           }
         }
-      `,
-      fetchPolicy: "no-cache",
-    })
+      }
+    `,
+    fetchPolicy: "no-cache",
+  })
   const walletId = accountResult.data.me.defaultAccount.wallets.filter(
     (w) => w.walletCurrency === "BTC",
   )[0].id
@@ -69,22 +68,21 @@ export const getInvoice = async () => {
 
 export const payInvoice = async (invoice: string) => {
   const client = createGaloyServerClient(config)(authToken)
-  const accountResult: ApolloQueryResult<{ me: GaloyGQL.MeFragment }> =
-    await client.query({
-      query: gql`
-        {
-          me {
-            defaultAccount {
-              wallets {
-                walletCurrency
-                id
-              }
+  const accountResult: ApolloQueryResult<{ me: MeFragment }> = await client.query({
+    query: gql`
+      {
+        me {
+          defaultAccount {
+            wallets {
+              walletCurrency
+              id
             }
           }
         }
-      `,
-      fetchPolicy: "no-cache",
-    })
+      }
+    `,
+    fetchPolicy: "no-cache",
+  })
   const walletId = accountResult.data.me.defaultAccount.wallets.filter(
     (w) => w.walletCurrency === "BTC",
   )[0].id

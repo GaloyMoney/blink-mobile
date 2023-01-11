@@ -7,14 +7,16 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
 import { TransactionItem } from "../../components/transaction-item"
 import { nextPrefCurrency, prefCurrencyVar } from "../../graphql/client-only-query"
-import { GaloyGQL } from "@galoymoney/client"
 import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import { sameDay, sameMonth } from "../../utils/date"
 import { toastShow } from "../../utils/toast"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { useTransactionListForDefaultAccountQuery } from "@app/graphql/generated"
+import {
+  Transaction,
+  useTransactionListForDefaultAccountQuery,
+} from "@app/graphql/generated"
 
 const styles = EStyleSheet.create({
   errorText: { alignSelf: "center", color: palette.red, paddingBottom: 18 },
@@ -169,7 +171,7 @@ type TransactionScreenProps = {
   nextPrefCurrency: () => void
   sections: {
     title: string
-    data: GaloyGQL.Transaction[]
+    data: Transaction[]
   }[]
   fetchNextTransactionsPage: () => void
   loading: boolean

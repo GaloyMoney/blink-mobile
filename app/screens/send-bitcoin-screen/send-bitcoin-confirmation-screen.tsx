@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react"
 import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-native"
 import { palette } from "@app/theme"
 import { WalletCurrency } from "@app/types/amounts"
-import { GaloyGQL } from "@galoymoney/client"
 import { Status } from "./send-bitcoin.types"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
@@ -25,6 +24,7 @@ import { testProps } from "../../../utils/testProps"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import {
+  PaymentSendResult,
   useIntraLedgerPaymentSendMutation,
   useIntraLedgerUsdPaymentSendMutation,
   useLnInvoicePaymentSendMutation,
@@ -349,7 +349,7 @@ const SendBitcoinConfirmationScreen = ({
   }
 
   const transactionPaymentMutation = (): (() => Promise<{
-    status: GaloyGQL.PaymentSendResult
+    status: PaymentSendResult
     errorsMessage: string
   }>) => {
     switch (paymentType) {

@@ -4,7 +4,6 @@ import useToken from "@app/hooks/use-token"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { palette } from "@app/theme"
-import { WalletCurrency } from "@app/types/amounts"
 import { requestNotificationPermission } from "@app/utils/notifications"
 import { useIsFocused } from "@react-navigation/native"
 import { StackScreenProps } from "@react-navigation/stack"
@@ -14,7 +13,7 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import ReceiveBtc from "./receive-btc"
 import ReceiveUsd from "./receive-usd"
-import { GaloyGQL } from "@galoymoney/client"
+import { WalletCurrency } from "@app/graphql/generated"
 
 const styles = EStyleSheet.create({
   container: {
@@ -69,7 +68,7 @@ const ReceiveBitcoinScreen = ({
   const { defaultWallet } = useMainQuery()
 
   const { usdWalletId } = useMainQuery()
-  const [receiveCurrency, setReceiveCurrency] = useState<GaloyGQL.WalletCurrency>(
+  const [receiveCurrency, setReceiveCurrency] = useState<WalletCurrency>(
     initialReceiveCurrency || defaultWallet.walletCurrency,
   )
   const { LL } = useI18nContext()

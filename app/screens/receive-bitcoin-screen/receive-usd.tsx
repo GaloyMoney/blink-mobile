@@ -2,7 +2,7 @@ import { useSubscriptionUpdates, useCountdownTimer } from "@app/hooks"
 import useMainQuery from "@app/hooks/use-main-query"
 import { palette } from "@app/theme"
 import { getFullUri, TYPE_LIGHTNING_USD } from "@app/utils/wallet"
-import { parsingv2, GaloyGQL } from "@galoymoney/client"
+import { parsingv2 } from "@galoymoney/client"
 const { decodeInvoiceString, getLightningInvoiceExpiryTime } = parsingv2
 
 import React, { useCallback, useEffect, useRef, useState } from "react"
@@ -25,6 +25,8 @@ import { WalletCurrency } from "@app/types/amounts"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import {
+  LnInvoice,
+  LnNoAmountInvoice,
   useLnNoAmountInvoiceCreateMutation,
   useLnUsdInvoiceCreateMutation,
 } from "@app/graphql/generated"
@@ -149,9 +151,7 @@ const ReceiveUsd = () => {
   const [lnNoAmountInvoiceCreate] = useLnNoAmountInvoiceCreateMutation()
   const [lnUsdInvoiceCreate] = useLnUsdInvoiceCreateMutation()
   const { usdWalletId, network } = useMainQuery()
-  const [invoice, setInvoice] = useState<
-    GaloyGQL.LnInvoice | GaloyGQL.LnNoAmountInvoice | null
-  >(null)
+  const [invoice, setInvoice] = useState<LnInvoice | LnNoAmountInvoice | null>(null)
   const [usdAmount, setUsdAmount] = useState(0)
   const [memo, setMemo] = useState("")
   const { lnUpdate } = useSubscriptionUpdates()

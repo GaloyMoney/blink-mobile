@@ -1,6 +1,5 @@
 import { Price } from "@app/components/price-graph"
 import { INetwork } from "@app/types/network"
-import { GaloyGQL } from "@galoymoney/client"
 
 type mobileVersions = {
   currentSupported: string
@@ -20,7 +19,7 @@ export type useMainQueryOutput = {
   defaultWalletId: string
   mergedTransactions: object[]
   wallets: any[]
-  defaultWallet: GaloyGQL.Wallet
+  defaultWallet: Wallet
   me: any
   myPubKey: string
   username?: string

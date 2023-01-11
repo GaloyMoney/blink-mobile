@@ -1289,6 +1289,87 @@ export type TransactionListFragment = {
   }> | null
 }
 
+export type MeFragment = {
+  readonly __typename?: "User"
+  readonly id: string
+  readonly language: string
+  readonly username?: string | null
+  readonly phone?: string | null
+  readonly defaultAccount: {
+    readonly __typename?: "ConsumerAccount"
+    readonly id: string
+    readonly defaultWalletId: string
+    readonly transactions?: {
+      readonly __typename?: "TransactionConnection"
+      readonly pageInfo: {
+        readonly __typename?: "PageInfo"
+        readonly hasNextPage: boolean
+        readonly hasPreviousPage: boolean
+        readonly startCursor?: string | null
+        readonly endCursor?: string | null
+      }
+      readonly edges?: ReadonlyArray<{
+        readonly __typename?: "TransactionEdge"
+        readonly cursor: string
+        readonly node: {
+          readonly __typename: "Transaction"
+          readonly id: string
+          readonly status: TxStatus
+          readonly direction: TxDirection
+          readonly memo?: string | null
+          readonly createdAt: number
+          readonly settlementAmount: number
+          readonly settlementFee: number
+          readonly settlementCurrency: WalletCurrency
+          readonly settlementPrice: {
+            readonly __typename?: "Price"
+            readonly base: number
+            readonly offset: number
+            readonly currencyUnit: ExchangeCurrencyUnit
+            readonly formattedAmount: string
+          }
+          readonly initiationVia:
+            | {
+                readonly __typename: "InitiationViaIntraLedger"
+                readonly counterPartyWalletId?: string | null
+                readonly counterPartyUsername?: string | null
+              }
+            | { readonly __typename: "InitiationViaLn"; readonly paymentHash: string }
+            | { readonly __typename: "InitiationViaOnChain"; readonly address: string }
+          readonly settlementVia:
+            | {
+                readonly __typename: "SettlementViaIntraLedger"
+                readonly counterPartyWalletId?: string | null
+                readonly counterPartyUsername?: string | null
+              }
+            | {
+                readonly __typename: "SettlementViaLn"
+                readonly paymentSecret?: string | null
+              }
+            | {
+                readonly __typename: "SettlementViaOnChain"
+                readonly transactionHash: string
+              }
+        }
+      }> | null
+    } | null
+    readonly wallets: ReadonlyArray<
+      | {
+          readonly __typename?: "BTCWallet"
+          readonly id: string
+          readonly balance: number
+          readonly walletCurrency: WalletCurrency
+        }
+      | {
+          readonly __typename?: "UsdWallet"
+          readonly id: string
+          readonly balance: number
+          readonly walletCurrency: WalletCurrency
+        }
+    >
+  }
+}
+
 export type CaptchaCreateChallengeMutationVariables = Exact<{ [key: string]: never }>
 
 export type CaptchaCreateChallengeMutation = {
@@ -2177,6 +2258,27 @@ export const TransactionListFragmentDoc = gql`
       }
     }
   }
+`
+export const MeFragmentDoc = gql`
+  fragment Me on User {
+    id
+    language
+    username
+    phone
+    defaultAccount {
+      id
+      defaultWalletId
+      transactions(first: $recentTransactions) {
+        ...TransactionList
+      }
+      wallets {
+        id
+        balance
+        walletCurrency
+      }
+    }
+  }
+  ${TransactionListFragmentDoc}
 `
 export const CaptchaCreateChallengeDocument = gql`
   mutation captchaCreateChallenge {

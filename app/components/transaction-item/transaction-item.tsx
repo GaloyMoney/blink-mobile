@@ -11,12 +11,12 @@ import { CompositeNavigationProp, ParamListBase } from "@react-navigation/native
 import { prefCurrencyVar as primaryCurrencyVar } from "../../graphql/client-only-query"
 import { useHideBalance } from "../../hooks"
 import { satAmountDisplay } from "@app/utils/currencyConversion"
-import { GaloyGQL } from "@galoymoney/client"
 import { WalletCurrency } from "@app/types/amounts"
 import { WalletType } from "@app/utils/enum"
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs"
 import { TransactionDate } from "../transaction-date"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+import { Transaction } from "@app/graphql/generated"
 
 const styles = EStyleSheet.create({
   container: {
@@ -64,18 +64,18 @@ export interface TransactionItemProps {
     | StackNavigationProp<ParamListBase>
   isFirst?: boolean
   isLast?: boolean
-  tx: GaloyGQL.Transaction
+  tx: Transaction
   subtitle?: boolean
 }
 
-const computeUsdAmount = (tx: GaloyGQL.Transaction) => {
+const computeUsdAmount = (tx: Transaction) => {
   const { settlementAmount, settlementPrice } = tx
   const { base, offset } = settlementPrice
   const usdPerSat = base / 10 ** offset / 100
   return settlementAmount * usdPerSat
 }
 
-const descriptionDisplay = (tx: GaloyGQL.Transaction) => {
+const descriptionDisplay = (tx: Transaction) => {
   const { memo, direction, settlementVia } = tx
   if (memo) {
     return memo
