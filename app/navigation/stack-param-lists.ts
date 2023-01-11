@@ -2,7 +2,7 @@
 import { PaymentAmount, WalletCurrency } from "@app/types/amounts"
 import { WalletDescriptor } from "@app/types/wallets"
 import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
-import { GaloyGQL } from "@galoymoney/client"
+import { GaloyGQL } from "@app/graphql/generated/types"
 import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
 import { contacts_me_contacts } from "../screens/contacts-screen/__generated__/contacts"
 import { AccountType, AuthenticationScreenPurpose, PinScreenPurpose } from "../utils/enum"

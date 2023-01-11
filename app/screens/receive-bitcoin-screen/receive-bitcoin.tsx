@@ -14,7 +14,7 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import ReceiveBtc from "./receive-btc"
 import ReceiveUsd from "./receive-usd"
-import { GaloyGQL } from "@galoymoney/client"
+import { GaloyGQL } from "@app/graphql/generated/types"
 
 const styles = EStyleSheet.create({
   container: {

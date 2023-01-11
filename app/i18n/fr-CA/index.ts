@@ -6,7 +6,6 @@ import rawFrCA from '../raw-i18n/translations/fr-CA.json'
 import merge from "lodash.merge"
 
 /* eslint-disable no-template-curly-in-string */
-/* eslint-disable max-lines */
 const frCA: Translation = merge({}, en as Translation, rawFrCA)
 
 export default frCA

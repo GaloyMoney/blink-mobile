@@ -1,4 +1,4 @@
-import { GaloyGQL } from "@galoymoney/client"
+import { GaloyGQL } from "@app/graphql/generated/types"
 
 import messaging from "@react-native-firebase/messaging"
 import * as React from "react"

@@ -11,7 +11,7 @@ import { CompositeNavigationProp, ParamListBase } from "@react-navigation/native
 import { prefCurrencyVar as primaryCurrencyVar } from "../../graphql/client-only-query"
 import { useHideBalance } from "../../hooks"
 import { satAmountDisplay } from "@app/utils/currencyConversion"
-import { GaloyGQL } from "@galoymoney/client"
+import { GaloyGQL } from "@app/graphql/generated/types"
 import { WalletCurrency } from "@app/types/amounts"
 import { WalletType } from "@app/utils/enum"
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs"

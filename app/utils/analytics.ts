@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import { GaloyInstanceNames } from "@app/config/galoy-instances"
 import { WalletCurrency } from "@app/types/amounts"
-import { GaloyGQL } from "@galoymoney/client"
+import { GaloyGQL } from "@app/graphql/generated/types"
 import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
 import analytics from "@react-native-firebase/analytics"
 
