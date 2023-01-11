@@ -1,5 +1,9 @@
-import { MUTATIONS, createGaloyServerClient, GaloyGQL } from "@galoymoney/client"
+import { createGaloyServerClient, GaloyGQL } from "@galoymoney/client"
 import { ApolloQueryResult, gql } from "@apollo/client"
+import {
+  LnNoAmountInvoiceCreateDocument,
+  LnNoAmountInvoicePaymentSendDocument,
+} from "../../app/graphql/generated"
 
 const config = {
   network: "signet",
@@ -33,7 +37,7 @@ export const getInvoice = async () => {
 
   const result = await client.mutate({
     variables: { input: { walletId } }, // (lookup wallet 2 id from graphql) i.e "8914b38f-b0ea-4639-9f01-99c03125eea5"
-    mutation: MUTATIONS.lnNoAmountInvoiceCreate,
+    mutation: LnNoAmountInvoiceCreateDocument,
     fetchPolicy: "no-cache",
   })
   const invoice = result.data.lnNoAmountInvoiceCreate.invoice.paymentRequest
@@ -71,7 +75,7 @@ export const payInvoice = async (invoice: string) => {
         amount: 5,
       },
     },
-    mutation: MUTATIONS.lnNoAmountInvoicePaymentSend,
+    mutation: LnNoAmountInvoicePaymentSendDocument,
     fetchPolicy: "no-cache",
   })
 }

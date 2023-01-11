@@ -188,4 +188,101 @@ export default gql`
       authToken
     }
   }
+
+  mutation lnNoAmountInvoiceCreate($input: LnNoAmountInvoiceCreateInput!) {
+    lnNoAmountInvoiceCreate(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      invoice {
+        __typename
+        paymentHash
+        paymentRequest
+        paymentSecret
+      }
+    }
+  }
+
+  mutation lnInvoiceCreate($input: LnInvoiceCreateInput!) {
+    lnInvoiceCreate(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      invoice {
+        __typename
+        paymentHash
+        paymentRequest
+        paymentSecret
+        satoshis
+      }
+    }
+  }
+
+  mutation onChainAddressCurrent($input: OnChainAddressCurrentInput!) {
+    onChainAddressCurrent(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      address
+    }
+  }
+
+  mutation lnUsdInvoiceCreate($input: LnUsdInvoiceCreateInput!) {
+    lnUsdInvoiceCreate(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      invoice {
+        __typename
+        paymentHash
+        paymentRequest
+        paymentSecret
+        satoshis
+      }
+    }
+  }
+
+  mutation lnNoAmountInvoicePaymentSend($input: LnNoAmountInvoicePaymentInput!) {
+    lnNoAmountInvoicePaymentSend(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      status
+    }
+  }
+
+  mutation lnInvoicePaymentSend($input: LnInvoicePaymentInput!) {
+    lnInvoicePaymentSend(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      status
+    }
+  }
+
+  mutation lnNoAmountUsdInvoicePaymentSend($input: LnNoAmountUsdInvoicePaymentInput!) {
+    lnNoAmountUsdInvoicePaymentSend(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      status
+    }
+  }
+
+  mutation onChainPaymentSend($input: OnChainPaymentSendInput!) {
+    onChainPaymentSend(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      status
+    }
+  }
 `

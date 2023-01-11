@@ -1552,6 +1552,151 @@ export type UserLoginMutation = {
   }
 }
 
+export type LnNoAmountInvoiceCreateMutationVariables = Exact<{
+  input: LnNoAmountInvoiceCreateInput
+}>
+
+export type LnNoAmountInvoiceCreateMutation = {
+  readonly __typename?: "Mutation"
+  readonly lnNoAmountInvoiceCreate: {
+    readonly __typename?: "LnNoAmountInvoicePayload"
+    readonly errors: ReadonlyArray<{
+      readonly __typename: "GraphQLApplicationError"
+      readonly message: string
+    }>
+    readonly invoice?: {
+      readonly __typename: "LnNoAmountInvoice"
+      readonly paymentHash: string
+      readonly paymentRequest: string
+      readonly paymentSecret: string
+    } | null
+  }
+}
+
+export type LnInvoiceCreateMutationVariables = Exact<{
+  input: LnInvoiceCreateInput
+}>
+
+export type LnInvoiceCreateMutation = {
+  readonly __typename?: "Mutation"
+  readonly lnInvoiceCreate: {
+    readonly __typename?: "LnInvoicePayload"
+    readonly errors: ReadonlyArray<{
+      readonly __typename: "GraphQLApplicationError"
+      readonly message: string
+    }>
+    readonly invoice?: {
+      readonly __typename: "LnInvoice"
+      readonly paymentHash: string
+      readonly paymentRequest: string
+      readonly paymentSecret: string
+      readonly satoshis?: number | null
+    } | null
+  }
+}
+
+export type OnChainAddressCurrentMutationVariables = Exact<{
+  input: OnChainAddressCurrentInput
+}>
+
+export type OnChainAddressCurrentMutation = {
+  readonly __typename?: "Mutation"
+  readonly onChainAddressCurrent: {
+    readonly __typename?: "OnChainAddressPayload"
+    readonly address?: string | null
+    readonly errors: ReadonlyArray<{
+      readonly __typename: "GraphQLApplicationError"
+      readonly message: string
+    }>
+  }
+}
+
+export type LnUsdInvoiceCreateMutationVariables = Exact<{
+  input: LnUsdInvoiceCreateInput
+}>
+
+export type LnUsdInvoiceCreateMutation = {
+  readonly __typename?: "Mutation"
+  readonly lnUsdInvoiceCreate: {
+    readonly __typename?: "LnInvoicePayload"
+    readonly errors: ReadonlyArray<{
+      readonly __typename: "GraphQLApplicationError"
+      readonly message: string
+    }>
+    readonly invoice?: {
+      readonly __typename: "LnInvoice"
+      readonly paymentHash: string
+      readonly paymentRequest: string
+      readonly paymentSecret: string
+      readonly satoshis?: number | null
+    } | null
+  }
+}
+
+export type LnNoAmountInvoicePaymentSendMutationVariables = Exact<{
+  input: LnNoAmountInvoicePaymentInput
+}>
+
+export type LnNoAmountInvoicePaymentSendMutation = {
+  readonly __typename?: "Mutation"
+  readonly lnNoAmountInvoicePaymentSend: {
+    readonly __typename?: "PaymentSendPayload"
+    readonly status?: PaymentSendResult | null
+    readonly errors: ReadonlyArray<{
+      readonly __typename: "GraphQLApplicationError"
+      readonly message: string
+    }>
+  }
+}
+
+export type LnInvoicePaymentSendMutationVariables = Exact<{
+  input: LnInvoicePaymentInput
+}>
+
+export type LnInvoicePaymentSendMutation = {
+  readonly __typename?: "Mutation"
+  readonly lnInvoicePaymentSend: {
+    readonly __typename?: "PaymentSendPayload"
+    readonly status?: PaymentSendResult | null
+    readonly errors: ReadonlyArray<{
+      readonly __typename: "GraphQLApplicationError"
+      readonly message: string
+    }>
+  }
+}
+
+export type LnNoAmountUsdInvoicePaymentSendMutationVariables = Exact<{
+  input: LnNoAmountUsdInvoicePaymentInput
+}>
+
+export type LnNoAmountUsdInvoicePaymentSendMutation = {
+  readonly __typename?: "Mutation"
+  readonly lnNoAmountUsdInvoicePaymentSend: {
+    readonly __typename?: "PaymentSendPayload"
+    readonly status?: PaymentSendResult | null
+    readonly errors: ReadonlyArray<{
+      readonly __typename: "GraphQLApplicationError"
+      readonly message: string
+    }>
+  }
+}
+
+export type OnChainPaymentSendMutationVariables = Exact<{
+  input: OnChainPaymentSendInput
+}>
+
+export type OnChainPaymentSendMutation = {
+  readonly __typename?: "Mutation"
+  readonly onChainPaymentSend: {
+    readonly __typename?: "PaymentSendPayload"
+    readonly status?: PaymentSendResult | null
+    readonly errors: ReadonlyArray<{
+      readonly __typename: "GraphQLApplicationError"
+      readonly message: string
+    }>
+  }
+}
+
 export type TransactionListForContactQueryVariables = Exact<{
   username: Scalars["Username"]
   first?: InputMaybe<Scalars["Int"]>
@@ -2508,6 +2653,454 @@ export type UserLoginMutationResult = Apollo.MutationResult<UserLoginMutation>
 export type UserLoginMutationOptions = Apollo.BaseMutationOptions<
   UserLoginMutation,
   UserLoginMutationVariables
+>
+export const LnNoAmountInvoiceCreateDocument = gql`
+  mutation lnNoAmountInvoiceCreate($input: LnNoAmountInvoiceCreateInput!) {
+    lnNoAmountInvoiceCreate(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      invoice {
+        __typename
+        paymentHash
+        paymentRequest
+        paymentSecret
+      }
+    }
+  }
+`
+export type LnNoAmountInvoiceCreateMutationFn = Apollo.MutationFunction<
+  LnNoAmountInvoiceCreateMutation,
+  LnNoAmountInvoiceCreateMutationVariables
+>
+
+/**
+ * __useLnNoAmountInvoiceCreateMutation__
+ *
+ * To run a mutation, you first call `useLnNoAmountInvoiceCreateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLnNoAmountInvoiceCreateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [lnNoAmountInvoiceCreateMutation, { data, loading, error }] = useLnNoAmountInvoiceCreateMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useLnNoAmountInvoiceCreateMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    LnNoAmountInvoiceCreateMutation,
+    LnNoAmountInvoiceCreateMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    LnNoAmountInvoiceCreateMutation,
+    LnNoAmountInvoiceCreateMutationVariables
+  >(LnNoAmountInvoiceCreateDocument, options)
+}
+export type LnNoAmountInvoiceCreateMutationHookResult = ReturnType<
+  typeof useLnNoAmountInvoiceCreateMutation
+>
+export type LnNoAmountInvoiceCreateMutationResult =
+  Apollo.MutationResult<LnNoAmountInvoiceCreateMutation>
+export type LnNoAmountInvoiceCreateMutationOptions = Apollo.BaseMutationOptions<
+  LnNoAmountInvoiceCreateMutation,
+  LnNoAmountInvoiceCreateMutationVariables
+>
+export const LnInvoiceCreateDocument = gql`
+  mutation lnInvoiceCreate($input: LnInvoiceCreateInput!) {
+    lnInvoiceCreate(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      invoice {
+        __typename
+        paymentHash
+        paymentRequest
+        paymentSecret
+        satoshis
+      }
+    }
+  }
+`
+export type LnInvoiceCreateMutationFn = Apollo.MutationFunction<
+  LnInvoiceCreateMutation,
+  LnInvoiceCreateMutationVariables
+>
+
+/**
+ * __useLnInvoiceCreateMutation__
+ *
+ * To run a mutation, you first call `useLnInvoiceCreateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLnInvoiceCreateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [lnInvoiceCreateMutation, { data, loading, error }] = useLnInvoiceCreateMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useLnInvoiceCreateMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    LnInvoiceCreateMutation,
+    LnInvoiceCreateMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<LnInvoiceCreateMutation, LnInvoiceCreateMutationVariables>(
+    LnInvoiceCreateDocument,
+    options,
+  )
+}
+export type LnInvoiceCreateMutationHookResult = ReturnType<
+  typeof useLnInvoiceCreateMutation
+>
+export type LnInvoiceCreateMutationResult = Apollo.MutationResult<LnInvoiceCreateMutation>
+export type LnInvoiceCreateMutationOptions = Apollo.BaseMutationOptions<
+  LnInvoiceCreateMutation,
+  LnInvoiceCreateMutationVariables
+>
+export const OnChainAddressCurrentDocument = gql`
+  mutation onChainAddressCurrent($input: OnChainAddressCurrentInput!) {
+    onChainAddressCurrent(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      address
+    }
+  }
+`
+export type OnChainAddressCurrentMutationFn = Apollo.MutationFunction<
+  OnChainAddressCurrentMutation,
+  OnChainAddressCurrentMutationVariables
+>
+
+/**
+ * __useOnChainAddressCurrentMutation__
+ *
+ * To run a mutation, you first call `useOnChainAddressCurrentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useOnChainAddressCurrentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [onChainAddressCurrentMutation, { data, loading, error }] = useOnChainAddressCurrentMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useOnChainAddressCurrentMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    OnChainAddressCurrentMutation,
+    OnChainAddressCurrentMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    OnChainAddressCurrentMutation,
+    OnChainAddressCurrentMutationVariables
+  >(OnChainAddressCurrentDocument, options)
+}
+export type OnChainAddressCurrentMutationHookResult = ReturnType<
+  typeof useOnChainAddressCurrentMutation
+>
+export type OnChainAddressCurrentMutationResult =
+  Apollo.MutationResult<OnChainAddressCurrentMutation>
+export type OnChainAddressCurrentMutationOptions = Apollo.BaseMutationOptions<
+  OnChainAddressCurrentMutation,
+  OnChainAddressCurrentMutationVariables
+>
+export const LnUsdInvoiceCreateDocument = gql`
+  mutation lnUsdInvoiceCreate($input: LnUsdInvoiceCreateInput!) {
+    lnUsdInvoiceCreate(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      invoice {
+        __typename
+        paymentHash
+        paymentRequest
+        paymentSecret
+        satoshis
+      }
+    }
+  }
+`
+export type LnUsdInvoiceCreateMutationFn = Apollo.MutationFunction<
+  LnUsdInvoiceCreateMutation,
+  LnUsdInvoiceCreateMutationVariables
+>
+
+/**
+ * __useLnUsdInvoiceCreateMutation__
+ *
+ * To run a mutation, you first call `useLnUsdInvoiceCreateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLnUsdInvoiceCreateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [lnUsdInvoiceCreateMutation, { data, loading, error }] = useLnUsdInvoiceCreateMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useLnUsdInvoiceCreateMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    LnUsdInvoiceCreateMutation,
+    LnUsdInvoiceCreateMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    LnUsdInvoiceCreateMutation,
+    LnUsdInvoiceCreateMutationVariables
+  >(LnUsdInvoiceCreateDocument, options)
+}
+export type LnUsdInvoiceCreateMutationHookResult = ReturnType<
+  typeof useLnUsdInvoiceCreateMutation
+>
+export type LnUsdInvoiceCreateMutationResult =
+  Apollo.MutationResult<LnUsdInvoiceCreateMutation>
+export type LnUsdInvoiceCreateMutationOptions = Apollo.BaseMutationOptions<
+  LnUsdInvoiceCreateMutation,
+  LnUsdInvoiceCreateMutationVariables
+>
+export const LnNoAmountInvoicePaymentSendDocument = gql`
+  mutation lnNoAmountInvoicePaymentSend($input: LnNoAmountInvoicePaymentInput!) {
+    lnNoAmountInvoicePaymentSend(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      status
+    }
+  }
+`
+export type LnNoAmountInvoicePaymentSendMutationFn = Apollo.MutationFunction<
+  LnNoAmountInvoicePaymentSendMutation,
+  LnNoAmountInvoicePaymentSendMutationVariables
+>
+
+/**
+ * __useLnNoAmountInvoicePaymentSendMutation__
+ *
+ * To run a mutation, you first call `useLnNoAmountInvoicePaymentSendMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLnNoAmountInvoicePaymentSendMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [lnNoAmountInvoicePaymentSendMutation, { data, loading, error }] = useLnNoAmountInvoicePaymentSendMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useLnNoAmountInvoicePaymentSendMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    LnNoAmountInvoicePaymentSendMutation,
+    LnNoAmountInvoicePaymentSendMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    LnNoAmountInvoicePaymentSendMutation,
+    LnNoAmountInvoicePaymentSendMutationVariables
+  >(LnNoAmountInvoicePaymentSendDocument, options)
+}
+export type LnNoAmountInvoicePaymentSendMutationHookResult = ReturnType<
+  typeof useLnNoAmountInvoicePaymentSendMutation
+>
+export type LnNoAmountInvoicePaymentSendMutationResult =
+  Apollo.MutationResult<LnNoAmountInvoicePaymentSendMutation>
+export type LnNoAmountInvoicePaymentSendMutationOptions = Apollo.BaseMutationOptions<
+  LnNoAmountInvoicePaymentSendMutation,
+  LnNoAmountInvoicePaymentSendMutationVariables
+>
+export const LnInvoicePaymentSendDocument = gql`
+  mutation lnInvoicePaymentSend($input: LnInvoicePaymentInput!) {
+    lnInvoicePaymentSend(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      status
+    }
+  }
+`
+export type LnInvoicePaymentSendMutationFn = Apollo.MutationFunction<
+  LnInvoicePaymentSendMutation,
+  LnInvoicePaymentSendMutationVariables
+>
+
+/**
+ * __useLnInvoicePaymentSendMutation__
+ *
+ * To run a mutation, you first call `useLnInvoicePaymentSendMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLnInvoicePaymentSendMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [lnInvoicePaymentSendMutation, { data, loading, error }] = useLnInvoicePaymentSendMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useLnInvoicePaymentSendMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    LnInvoicePaymentSendMutation,
+    LnInvoicePaymentSendMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    LnInvoicePaymentSendMutation,
+    LnInvoicePaymentSendMutationVariables
+  >(LnInvoicePaymentSendDocument, options)
+}
+export type LnInvoicePaymentSendMutationHookResult = ReturnType<
+  typeof useLnInvoicePaymentSendMutation
+>
+export type LnInvoicePaymentSendMutationResult =
+  Apollo.MutationResult<LnInvoicePaymentSendMutation>
+export type LnInvoicePaymentSendMutationOptions = Apollo.BaseMutationOptions<
+  LnInvoicePaymentSendMutation,
+  LnInvoicePaymentSendMutationVariables
+>
+export const LnNoAmountUsdInvoicePaymentSendDocument = gql`
+  mutation lnNoAmountUsdInvoicePaymentSend($input: LnNoAmountUsdInvoicePaymentInput!) {
+    lnNoAmountUsdInvoicePaymentSend(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      status
+    }
+  }
+`
+export type LnNoAmountUsdInvoicePaymentSendMutationFn = Apollo.MutationFunction<
+  LnNoAmountUsdInvoicePaymentSendMutation,
+  LnNoAmountUsdInvoicePaymentSendMutationVariables
+>
+
+/**
+ * __useLnNoAmountUsdInvoicePaymentSendMutation__
+ *
+ * To run a mutation, you first call `useLnNoAmountUsdInvoicePaymentSendMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLnNoAmountUsdInvoicePaymentSendMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [lnNoAmountUsdInvoicePaymentSendMutation, { data, loading, error }] = useLnNoAmountUsdInvoicePaymentSendMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useLnNoAmountUsdInvoicePaymentSendMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    LnNoAmountUsdInvoicePaymentSendMutation,
+    LnNoAmountUsdInvoicePaymentSendMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    LnNoAmountUsdInvoicePaymentSendMutation,
+    LnNoAmountUsdInvoicePaymentSendMutationVariables
+  >(LnNoAmountUsdInvoicePaymentSendDocument, options)
+}
+export type LnNoAmountUsdInvoicePaymentSendMutationHookResult = ReturnType<
+  typeof useLnNoAmountUsdInvoicePaymentSendMutation
+>
+export type LnNoAmountUsdInvoicePaymentSendMutationResult =
+  Apollo.MutationResult<LnNoAmountUsdInvoicePaymentSendMutation>
+export type LnNoAmountUsdInvoicePaymentSendMutationOptions = Apollo.BaseMutationOptions<
+  LnNoAmountUsdInvoicePaymentSendMutation,
+  LnNoAmountUsdInvoicePaymentSendMutationVariables
+>
+export const OnChainPaymentSendDocument = gql`
+  mutation onChainPaymentSend($input: OnChainPaymentSendInput!) {
+    onChainPaymentSend(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      status
+    }
+  }
+`
+export type OnChainPaymentSendMutationFn = Apollo.MutationFunction<
+  OnChainPaymentSendMutation,
+  OnChainPaymentSendMutationVariables
+>
+
+/**
+ * __useOnChainPaymentSendMutation__
+ *
+ * To run a mutation, you first call `useOnChainPaymentSendMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useOnChainPaymentSendMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [onChainPaymentSendMutation, { data, loading, error }] = useOnChainPaymentSendMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useOnChainPaymentSendMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    OnChainPaymentSendMutation,
+    OnChainPaymentSendMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    OnChainPaymentSendMutation,
+    OnChainPaymentSendMutationVariables
+  >(OnChainPaymentSendDocument, options)
+}
+export type OnChainPaymentSendMutationHookResult = ReturnType<
+  typeof useOnChainPaymentSendMutation
+>
+export type OnChainPaymentSendMutationResult =
+  Apollo.MutationResult<OnChainPaymentSendMutation>
+export type OnChainPaymentSendMutationOptions = Apollo.BaseMutationOptions<
+  OnChainPaymentSendMutation,
+  OnChainPaymentSendMutationVariables
 >
 export const TransactionListForContactDocument = gql`
   query transactionListForContact(
