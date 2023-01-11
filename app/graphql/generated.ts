@@ -1234,6 +1234,61 @@ export type WalletTransactionsByAddressArgs = {
 
 export type WalletCurrency = "BTC" | "USD"
 
+export type TransactionListFragment = {
+  readonly __typename?: "TransactionConnection"
+  readonly pageInfo: {
+    readonly __typename?: "PageInfo"
+    readonly hasNextPage: boolean
+    readonly hasPreviousPage: boolean
+    readonly startCursor?: string | null
+    readonly endCursor?: string | null
+  }
+  readonly edges?: ReadonlyArray<{
+    readonly __typename?: "TransactionEdge"
+    readonly cursor: string
+    readonly node: {
+      readonly __typename: "Transaction"
+      readonly id: string
+      readonly status: TxStatus
+      readonly direction: TxDirection
+      readonly memo?: string | null
+      readonly createdAt: number
+      readonly settlementAmount: number
+      readonly settlementFee: number
+      readonly settlementCurrency: WalletCurrency
+      readonly settlementPrice: {
+        readonly __typename?: "Price"
+        readonly base: number
+        readonly offset: number
+        readonly currencyUnit: ExchangeCurrencyUnit
+        readonly formattedAmount: string
+      }
+      readonly initiationVia:
+        | {
+            readonly __typename: "InitiationViaIntraLedger"
+            readonly counterPartyWalletId?: string | null
+            readonly counterPartyUsername?: string | null
+          }
+        | { readonly __typename: "InitiationViaLn"; readonly paymentHash: string }
+        | { readonly __typename: "InitiationViaOnChain"; readonly address: string }
+      readonly settlementVia:
+        | {
+            readonly __typename: "SettlementViaIntraLedger"
+            readonly counterPartyWalletId?: string | null
+            readonly counterPartyUsername?: string | null
+          }
+        | {
+            readonly __typename: "SettlementViaLn"
+            readonly paymentSecret?: string | null
+          }
+        | {
+            readonly __typename: "SettlementViaOnChain"
+            readonly transactionHash: string
+          }
+    }
+  }> | null
+}
+
 export type CaptchaCreateChallengeMutationVariables = Exact<{ [key: string]: never }>
 
 export type CaptchaCreateChallengeMutation = {
@@ -1497,6 +1552,135 @@ export type UserLoginMutation = {
   }
 }
 
+export type TransactionListForContactQueryVariables = Exact<{
+  username: Scalars["Username"]
+  first?: InputMaybe<Scalars["Int"]>
+  after?: InputMaybe<Scalars["String"]>
+  last?: InputMaybe<Scalars["Int"]>
+  before?: InputMaybe<Scalars["String"]>
+}>
+
+export type TransactionListForContactQuery = {
+  readonly __typename?: "Query"
+  readonly me?: {
+    readonly __typename?: "User"
+    readonly id: string
+    readonly contactByUsername: {
+      readonly __typename?: "UserContact"
+      readonly transactions?: {
+        readonly __typename?: "TransactionConnection"
+        readonly pageInfo: {
+          readonly __typename?: "PageInfo"
+          readonly hasNextPage: boolean
+          readonly hasPreviousPage: boolean
+          readonly startCursor?: string | null
+          readonly endCursor?: string | null
+        }
+        readonly edges?: ReadonlyArray<{
+          readonly __typename?: "TransactionEdge"
+          readonly cursor: string
+          readonly node: {
+            readonly __typename: "Transaction"
+            readonly id: string
+            readonly status: TxStatus
+            readonly direction: TxDirection
+            readonly memo?: string | null
+            readonly createdAt: number
+            readonly settlementAmount: number
+            readonly settlementFee: number
+            readonly settlementCurrency: WalletCurrency
+            readonly settlementPrice: {
+              readonly __typename?: "Price"
+              readonly base: number
+              readonly offset: number
+              readonly currencyUnit: ExchangeCurrencyUnit
+              readonly formattedAmount: string
+            }
+            readonly initiationVia:
+              | {
+                  readonly __typename: "InitiationViaIntraLedger"
+                  readonly counterPartyWalletId?: string | null
+                  readonly counterPartyUsername?: string | null
+                }
+              | { readonly __typename: "InitiationViaLn"; readonly paymentHash: string }
+              | { readonly __typename: "InitiationViaOnChain"; readonly address: string }
+            readonly settlementVia:
+              | {
+                  readonly __typename: "SettlementViaIntraLedger"
+                  readonly counterPartyWalletId?: string | null
+                  readonly counterPartyUsername?: string | null
+                }
+              | {
+                  readonly __typename: "SettlementViaLn"
+                  readonly paymentSecret?: string | null
+                }
+              | {
+                  readonly __typename: "SettlementViaOnChain"
+                  readonly transactionHash: string
+                }
+          }
+        }> | null
+      } | null
+    }
+  } | null
+}
+
+export const TransactionListFragmentDoc = gql`
+  fragment TransactionList on TransactionConnection {
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+    edges {
+      cursor
+      node {
+        __typename
+        id
+        status
+        direction
+        memo
+        createdAt
+        settlementAmount
+        settlementFee
+        settlementCurrency
+        settlementPrice {
+          base
+          offset
+          currencyUnit
+          formattedAmount
+        }
+        initiationVia {
+          __typename
+          ... on InitiationViaIntraLedger {
+            counterPartyWalletId
+            counterPartyUsername
+          }
+          ... on InitiationViaLn {
+            paymentHash
+          }
+          ... on InitiationViaOnChain {
+            address
+          }
+        }
+        settlementVia {
+          __typename
+          ... on SettlementViaIntraLedger {
+            counterPartyWalletId
+            counterPartyUsername
+          }
+          ... on SettlementViaLn {
+            paymentSecret
+          }
+          ... on SettlementViaOnChain {
+            transactionHash
+          }
+        }
+      }
+    }
+  }
+`
 export const CaptchaCreateChallengeDocument = gql`
   mutation captchaCreateChallenge {
     captchaCreateChallenge {
@@ -2324,4 +2508,78 @@ export type UserLoginMutationResult = Apollo.MutationResult<UserLoginMutation>
 export type UserLoginMutationOptions = Apollo.BaseMutationOptions<
   UserLoginMutation,
   UserLoginMutationVariables
+>
+export const TransactionListForContactDocument = gql`
+  query transactionListForContact(
+    $username: Username!
+    $first: Int
+    $after: String
+    $last: Int
+    $before: String
+  ) {
+    me {
+      id
+      contactByUsername(username: $username) {
+        transactions(first: $first, after: $after, last: $last, before: $before) {
+          ...TransactionList
+        }
+      }
+    }
+  }
+  ${TransactionListFragmentDoc}
+`
+
+/**
+ * __useTransactionListForContactQuery__
+ *
+ * To run a query within a React component, call `useTransactionListForContactQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTransactionListForContactQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTransactionListForContactQuery({
+ *   variables: {
+ *      username: // value for 'username'
+ *      first: // value for 'first'
+ *      after: // value for 'after'
+ *      last: // value for 'last'
+ *      before: // value for 'before'
+ *   },
+ * });
+ */
+export function useTransactionListForContactQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    TransactionListForContactQuery,
+    TransactionListForContactQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<
+    TransactionListForContactQuery,
+    TransactionListForContactQueryVariables
+  >(TransactionListForContactDocument, options)
+}
+export function useTransactionListForContactLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    TransactionListForContactQuery,
+    TransactionListForContactQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<
+    TransactionListForContactQuery,
+    TransactionListForContactQueryVariables
+  >(TransactionListForContactDocument, options)
+}
+export type TransactionListForContactQueryHookResult = ReturnType<
+  typeof useTransactionListForContactQuery
+>
+export type TransactionListForContactLazyQueryHookResult = ReturnType<
+  typeof useTransactionListForContactLazyQuery
+>
+export type TransactionListForContactQueryResult = Apollo.QueryResult<
+  TransactionListForContactQuery,
+  TransactionListForContactQueryVariables
 >
