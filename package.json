@@ -140,7 +140,7 @@
     "@testing-library/jest-native": "^5.4.1",
     "@testing-library/react-native": "^9.1.0",
     "@types/jest": "^28.1.1",
-    "@types/ramda": "0.28.14",
+    "@types/ramda": "0.28.20",
     "@types/react": "^18.0.0",
     "@types/react-native": "0.69.7",
     "@types/react-native-push-notification": "^8.1.0",
