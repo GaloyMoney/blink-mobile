@@ -7,7 +7,6 @@ import { CloseCross } from "../../components/close-cross"
 import { IconTransaction } from "../../components/icon-transactions"
 import { LargeButton } from "../../components/large-button"
 import { Screen } from "../../components/screen"
-import { useMutation } from "@galoymoney/client"
 import { palette } from "../../theme/palette"
 import type { ContactStackParamList } from "../../navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
@@ -17,6 +16,7 @@ import { ContactTransactionsDataInjected } from "./contact-transactions"
 import useMainQuery from "@app/hooks/use-main-query"
 import { WalletType } from "@app/utils/enum"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { useUserContactUpdateAliasMutation } from "@app/graphql/generated"
 
 const styles = EStyleSheet.create({
   actionsContainer: { marginBottom: "15rem", backgroundColor: palette.lighterGrey },
@@ -93,7 +93,7 @@ export const ContactsDetailScreenJSX: ScreenType = ({
 }: ContactDetailScreenProps) => {
   const [contactName, setContactName] = React.useState(contact.alias)
   const { LL } = useI18nContext()
-  const [userContactUpdateAlias] = useMutation.userContactUpdateAlias({
+  const [userContactUpdateAlias] = useUserContactUpdateAliasMutation({
     onCompleted: () => refetchMain(),
   })
 

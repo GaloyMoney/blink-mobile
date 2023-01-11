@@ -1254,6 +1254,21 @@ export type CaptchaCreateChallengeMutation = {
   }
 }
 
+export type UserContactUpdateAliasMutationVariables = Exact<{
+  input: UserContactUpdateAliasInput
+}>
+
+export type UserContactUpdateAliasMutation = {
+  readonly __typename?: "Mutation"
+  readonly userContactUpdateAlias: {
+    readonly __typename?: "UserContactUpdateAliasPayload"
+    readonly errors: ReadonlyArray<{
+      readonly __typename: "GraphQLApplicationError"
+      readonly message: string
+    }>
+  }
+}
+
 export type DeviceNotificationTokenCreateMutationVariables = Exact<{
   input: DeviceNotificationTokenCreateInput
 }>
@@ -1328,6 +1343,59 @@ export type CaptchaCreateChallengeMutationResult =
 export type CaptchaCreateChallengeMutationOptions = Apollo.BaseMutationOptions<
   CaptchaCreateChallengeMutation,
   CaptchaCreateChallengeMutationVariables
+>
+export const UserContactUpdateAliasDocument = gql`
+  mutation userContactUpdateAlias($input: UserContactUpdateAliasInput!) {
+    userContactUpdateAlias(input: $input) {
+      errors {
+        __typename
+        message
+      }
+    }
+  }
+`
+export type UserContactUpdateAliasMutationFn = Apollo.MutationFunction<
+  UserContactUpdateAliasMutation,
+  UserContactUpdateAliasMutationVariables
+>
+
+/**
+ * __useUserContactUpdateAliasMutation__
+ *
+ * To run a mutation, you first call `useUserContactUpdateAliasMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserContactUpdateAliasMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userContactUpdateAliasMutation, { data, loading, error }] = useUserContactUpdateAliasMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUserContactUpdateAliasMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UserContactUpdateAliasMutation,
+    UserContactUpdateAliasMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    UserContactUpdateAliasMutation,
+    UserContactUpdateAliasMutationVariables
+  >(UserContactUpdateAliasDocument, options)
+}
+export type UserContactUpdateAliasMutationHookResult = ReturnType<
+  typeof useUserContactUpdateAliasMutation
+>
+export type UserContactUpdateAliasMutationResult =
+  Apollo.MutationResult<UserContactUpdateAliasMutation>
+export type UserContactUpdateAliasMutationOptions = Apollo.BaseMutationOptions<
+  UserContactUpdateAliasMutation,
+  UserContactUpdateAliasMutationVariables
 >
 export const DeviceNotificationTokenCreateDocument = gql`
   mutation deviceNotificationTokenCreate($input: DeviceNotificationTokenCreateInput!) {
