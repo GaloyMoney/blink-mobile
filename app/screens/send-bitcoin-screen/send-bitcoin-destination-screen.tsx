@@ -12,7 +12,7 @@ import { palette } from "@app/theme"
 import { fetchLnurlPaymentParams, parsingv2 } from "@galoymoney/client"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { PaymentAmount } from "@app/types/amounts"
+import { BtcPaymentAmount } from "@app/types/amounts"
 import { Button } from "@rneui/base"
 import ScanIcon from "@app/assets/icons/scan.svg"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -186,7 +186,7 @@ const sendBitcoinDetailsScreenParams = (destination: ValidPaymentDestination) =>
           ({
             amount: destination.amount,
             currency: WalletCurrency.Btc,
-          } as PaymentAmount<"BTC">),
+          } as BtcPaymentAmount),
         paymentType: PaymentType.Lightning,
         sameNode: destination.sameNode,
         note: destination.memo,
@@ -213,7 +213,7 @@ const sendBitcoinDetailsScreenParams = (destination: ValidPaymentDestination) =>
           ({
             amount: destination.amount,
             currency: WalletCurrency.Btc,
-          } as PaymentAmount<"BTC">),
+          } as BtcPaymentAmount),
         note: destination.memo,
         paymentType: PaymentType.Onchain,
         sameNode: false,

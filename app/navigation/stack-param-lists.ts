@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { PaymentAmount } from "@app/types/amounts"
+import { BtcPaymentAmount, PaymentAmount, UsdPaymentAmount } from "@app/types/amounts"
 import { WalletDescriptor } from "@app/types/wallets"
 import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
 import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
@@ -44,7 +44,7 @@ export type RootStackParamList = {
     username?: string
   }
   sendBitcoinDetails: {
-    fixedAmount?: PaymentAmount<WalletCurrency> // FIXME was "BTC" before but typescript complained?
+    fixedAmount?: BtcPaymentAmount
     destination: string
     note?: string
     lnurl?: LnUrlPayServiceResponse
@@ -53,12 +53,12 @@ export type RootStackParamList = {
     sameNode: boolean
   }
   sendBitcoinConfirmation: {
-    fixedAmount?: PaymentAmount<WalletCurrency> // FIXME was "BTC" before but typescript complained?
+    fixedAmount?: BtcPaymentAmount
     destination: string
     recipientWalletId?: string
     payerWalletDescriptor: WalletDescriptor<WalletCurrency>
-    paymentAmountInBtc?: PaymentAmount<"BTC">
-    paymentAmountInUsd?: PaymentAmount<"USD">
+    paymentAmountInBtc?: BtcPaymentAmount
+    paymentAmountInUsd?: UsdPaymentAmount
     note?: string
     paymentType: PaymentType
     sameNode: boolean
@@ -70,15 +70,15 @@ export type RootStackParamList = {
   conversionConfirmation: {
     fromWallet: WalletDescriptor<WalletCurrency>
     toWallet: WalletDescriptor<WalletCurrency>
-    btcAmount: PaymentAmount<"BTC">
-    usdAmount: PaymentAmount<"USD">
-    usdPerBtc: PaymentAmount<"USD">
+    btcAmount: BtcPaymentAmount
+    usdAmount: UsdPaymentAmount
+    usdPerBtc: UsdPaymentAmount
   }
   conversionSuccess: {
     fromWallet: WalletDescriptor<WalletCurrency>
     toWallet: WalletDescriptor<WalletCurrency>
-    btcAmount: PaymentAmount<"BTC">
-    usdAmount: PaymentAmount<"USD">
+    btcAmount: BtcPaymentAmount
+    usdAmount: UsdPaymentAmount
   }
   sendBitcoinSuccess: undefined
   language: undefined

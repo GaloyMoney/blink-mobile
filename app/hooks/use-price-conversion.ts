@@ -1,6 +1,6 @@
 import { WalletCurrency } from "@app/graphql/generated"
 import { usePriceContext } from "@app/store/price-context"
-import { PaymentAmount } from "@app/types/amounts"
+import { PaymentAmount, UsdPaymentAmount } from "@app/types/amounts"
 import * as React from "react"
 
 export const usePriceConversion = () => {
@@ -75,7 +75,7 @@ export const usePriceConversion = () => {
     usdPerBtc: {
       currency: WalletCurrency.Usd,
       amount: priceData.initialized ? priceData.price * 100000000 : NaN,
-    } as PaymentAmount<"USD">,
+    } as UsdPaymentAmount,
     usdPerSat: priceData.initialized ? (priceData.price / 100).toFixed(8) : null,
   }
 }
