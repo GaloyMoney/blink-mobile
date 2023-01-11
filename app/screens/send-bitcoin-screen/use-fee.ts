@@ -1,4 +1,3 @@
-import { useDelayedQuery } from "@galoymoney/client"
 import { useState, useEffect } from "react"
 import { WalletDescriptor } from "@app/types/wallets"
 import { PaymentAmount, WalletCurrency } from "@app/types/amounts"
@@ -8,6 +7,7 @@ import {
   useLnNoAmountInvoiceFeeProbeMutation,
   useLnNoAmountUsdInvoiceFeeProbeMutation,
   useLnUsdInvoiceFeeProbeMutation,
+  useOnChainTxFeeLazyQuery,
 } from "@app/graphql/generated"
 
 type FeeType = {
@@ -42,7 +42,7 @@ const useFee = ({
   const [lnNoAmountInvoiceFeeProbe] = useLnNoAmountInvoiceFeeProbeMutation()
   const [lnUsdInvoiceFeeProbe] = useLnUsdInvoiceFeeProbeMutation()
   const [lnNoAmountUsdInvoiceFeeProbe] = useLnNoAmountUsdInvoiceFeeProbeMutation()
-  const [onChainTxFee] = useDelayedQuery.onChainTxFee()
+  const [onChainTxFee] = useOnChainTxFeeLazyQuery()
   const getLightningFees =
     walletDescriptor.currency === WalletCurrency.BTC
       ? lnInvoiceFeeProbe
@@ -138,9 +138,11 @@ const useFee = ({
             amount: { amount: 0, currency: walletDescriptor.currency },
           })
           const { data } = await onChainTxFee({
-            walletId: walletDescriptor.id,
-            address,
-            amount: paymentAmount.amount,
+            variables: {
+              walletId: walletDescriptor.id,
+              address,
+              amount: paymentAmount.amount,
+            },
           })
 
           const feeValue = data.onChainTxFee.amount

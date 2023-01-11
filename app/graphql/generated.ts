@@ -1770,6 +1770,259 @@ export type TransactionListForContactQuery = {
   } | null
 }
 
+export type ContactsQueryVariables = Exact<{ [key: string]: never }>
+
+export type ContactsQuery = {
+  readonly __typename?: "Query"
+  readonly me?: {
+    readonly __typename?: "User"
+    readonly id: string
+    readonly contacts: ReadonlyArray<{
+      readonly __typename?: "UserContact"
+      readonly username: string
+      readonly alias?: string | null
+      readonly transactionsCount: number
+    }>
+  } | null
+}
+
+export type TransactionListForDefaultAccountQueryVariables = Exact<{
+  first?: InputMaybe<Scalars["Int"]>
+  after?: InputMaybe<Scalars["String"]>
+  last?: InputMaybe<Scalars["Int"]>
+  before?: InputMaybe<Scalars["String"]>
+}>
+
+export type TransactionListForDefaultAccountQuery = {
+  readonly __typename?: "Query"
+  readonly me?: {
+    readonly __typename?: "User"
+    readonly id: string
+    readonly defaultAccount: {
+      readonly __typename?: "ConsumerAccount"
+      readonly id: string
+      readonly transactions?: {
+        readonly __typename?: "TransactionConnection"
+        readonly pageInfo: {
+          readonly __typename?: "PageInfo"
+          readonly hasNextPage: boolean
+          readonly hasPreviousPage: boolean
+          readonly startCursor?: string | null
+          readonly endCursor?: string | null
+        }
+        readonly edges?: ReadonlyArray<{
+          readonly __typename?: "TransactionEdge"
+          readonly cursor: string
+          readonly node: {
+            readonly __typename: "Transaction"
+            readonly id: string
+            readonly status: TxStatus
+            readonly direction: TxDirection
+            readonly memo?: string | null
+            readonly createdAt: number
+            readonly settlementAmount: number
+            readonly settlementFee: number
+            readonly settlementCurrency: WalletCurrency
+            readonly settlementPrice: {
+              readonly __typename?: "Price"
+              readonly base: number
+              readonly offset: number
+              readonly currencyUnit: ExchangeCurrencyUnit
+              readonly formattedAmount: string
+            }
+            readonly initiationVia:
+              | {
+                  readonly __typename: "InitiationViaIntraLedger"
+                  readonly counterPartyWalletId?: string | null
+                  readonly counterPartyUsername?: string | null
+                }
+              | { readonly __typename: "InitiationViaLn"; readonly paymentHash: string }
+              | { readonly __typename: "InitiationViaOnChain"; readonly address: string }
+            readonly settlementVia:
+              | {
+                  readonly __typename: "SettlementViaIntraLedger"
+                  readonly counterPartyWalletId?: string | null
+                  readonly counterPartyUsername?: string | null
+                }
+              | {
+                  readonly __typename: "SettlementViaLn"
+                  readonly paymentSecret?: string | null
+                }
+              | {
+                  readonly __typename: "SettlementViaOnChain"
+                  readonly transactionHash: string
+                }
+          }
+        }> | null
+      } | null
+    }
+  } | null
+}
+
+export type UserDefaultWalletIdQueryVariables = Exact<{
+  username: Scalars["Username"]
+}>
+
+export type UserDefaultWalletIdQuery = {
+  readonly __typename?: "Query"
+  readonly userDefaultWalletId: string
+}
+
+export type OnChainTxFeeQueryVariables = Exact<{
+  walletId: Scalars["WalletId"]
+  address: Scalars["OnChainAddress"]
+  amount: Scalars["SatAmount"]
+  targetConfirmations?: InputMaybe<Scalars["TargetConfirmations"]>
+}>
+
+export type OnChainTxFeeQuery = {
+  readonly __typename?: "Query"
+  readonly onChainTxFee: {
+    readonly __typename?: "OnChainTxFee"
+    readonly amount: number
+    readonly targetConfirmations: number
+  }
+}
+
+export type BtcPriceListQueryVariables = Exact<{
+  range: PriceGraphRange
+}>
+
+export type BtcPriceListQuery = {
+  readonly __typename?: "Query"
+  readonly btcPriceList?: ReadonlyArray<{
+    readonly __typename?: "PricePoint"
+    readonly timestamp: number
+    readonly price: {
+      readonly __typename?: "Price"
+      readonly base: number
+      readonly offset: number
+      readonly currencyUnit: ExchangeCurrencyUnit
+      readonly formattedAmount: string
+    }
+  } | null> | null
+}
+
+export type MainQueryQueryVariables = Exact<{
+  hasToken: Scalars["Boolean"]
+}>
+
+export type MainQueryQuery = {
+  readonly __typename?: "Query"
+  readonly globals?: {
+    readonly __typename?: "Globals"
+    readonly nodesIds: ReadonlyArray<string>
+    readonly network: Network
+  } | null
+  readonly quizQuestions?: ReadonlyArray<{
+    readonly __typename?: "QuizQuestion"
+    readonly id: string
+    readonly earnAmount: number
+  } | null> | null
+  readonly btcPrice?: {
+    readonly __typename: "Price"
+    readonly base: number
+    readonly offset: number
+    readonly currencyUnit: ExchangeCurrencyUnit
+    readonly formattedAmount: string
+  } | null
+  readonly me?: {
+    readonly __typename?: "User"
+    readonly id: string
+    readonly language: string
+    readonly username?: string | null
+    readonly phone?: string | null
+    readonly quizQuestions: ReadonlyArray<{
+      readonly __typename?: "UserQuizQuestion"
+      readonly completed: boolean
+      readonly question: {
+        readonly __typename?: "QuizQuestion"
+        readonly id: string
+        readonly earnAmount: number
+      }
+    }>
+    readonly defaultAccount: {
+      readonly __typename?: "ConsumerAccount"
+      readonly id: string
+      readonly defaultWalletId: string
+      readonly transactions?: {
+        readonly __typename?: "TransactionConnection"
+        readonly pageInfo: {
+          readonly __typename?: "PageInfo"
+          readonly hasNextPage: boolean
+          readonly hasPreviousPage: boolean
+          readonly startCursor?: string | null
+          readonly endCursor?: string | null
+        }
+        readonly edges?: ReadonlyArray<{
+          readonly __typename?: "TransactionEdge"
+          readonly cursor: string
+          readonly node: {
+            readonly __typename: "Transaction"
+            readonly id: string
+            readonly status: TxStatus
+            readonly direction: TxDirection
+            readonly memo?: string | null
+            readonly createdAt: number
+            readonly settlementAmount: number
+            readonly settlementFee: number
+            readonly settlementCurrency: WalletCurrency
+            readonly settlementPrice: {
+              readonly __typename?: "Price"
+              readonly base: number
+              readonly offset: number
+              readonly currencyUnit: ExchangeCurrencyUnit
+              readonly formattedAmount: string
+            }
+            readonly initiationVia:
+              | {
+                  readonly __typename: "InitiationViaIntraLedger"
+                  readonly counterPartyWalletId?: string | null
+                  readonly counterPartyUsername?: string | null
+                }
+              | { readonly __typename: "InitiationViaLn"; readonly paymentHash: string }
+              | { readonly __typename: "InitiationViaOnChain"; readonly address: string }
+            readonly settlementVia:
+              | {
+                  readonly __typename: "SettlementViaIntraLedger"
+                  readonly counterPartyWalletId?: string | null
+                  readonly counterPartyUsername?: string | null
+                }
+              | {
+                  readonly __typename: "SettlementViaLn"
+                  readonly paymentSecret?: string | null
+                }
+              | {
+                  readonly __typename: "SettlementViaOnChain"
+                  readonly transactionHash: string
+                }
+          }
+        }> | null
+      } | null
+      readonly wallets: ReadonlyArray<
+        | {
+            readonly __typename?: "BTCWallet"
+            readonly id: string
+            readonly balance: number
+            readonly walletCurrency: WalletCurrency
+          }
+        | {
+            readonly __typename?: "UsdWallet"
+            readonly id: string
+            readonly balance: number
+            readonly walletCurrency: WalletCurrency
+          }
+      >
+    }
+  } | null
+  readonly mobileVersions?: ReadonlyArray<{
+    readonly __typename?: "MobileVersions"
+    readonly platform: string
+    readonly currentSupported: number
+    readonly minSupported: number
+  } | null> | null
+}
+
 export const TransactionListFragmentDoc = gql`
   fragment TransactionList on TransactionConnection {
     pageInfo {
@@ -3175,4 +3428,395 @@ export type TransactionListForContactLazyQueryHookResult = ReturnType<
 export type TransactionListForContactQueryResult = Apollo.QueryResult<
   TransactionListForContactQuery,
   TransactionListForContactQueryVariables
+>
+export const ContactsDocument = gql`
+  query contacts {
+    me {
+      id
+      contacts {
+        username
+        alias
+        transactionsCount
+      }
+    }
+  }
+`
+
+/**
+ * __useContactsQuery__
+ *
+ * To run a query within a React component, call `useContactsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useContactsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useContactsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useContactsQuery(
+  baseOptions?: Apollo.QueryHookOptions<ContactsQuery, ContactsQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<ContactsQuery, ContactsQueryVariables>(ContactsDocument, options)
+}
+export function useContactsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<ContactsQuery, ContactsQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<ContactsQuery, ContactsQueryVariables>(
+    ContactsDocument,
+    options,
+  )
+}
+export type ContactsQueryHookResult = ReturnType<typeof useContactsQuery>
+export type ContactsLazyQueryHookResult = ReturnType<typeof useContactsLazyQuery>
+export type ContactsQueryResult = Apollo.QueryResult<
+  ContactsQuery,
+  ContactsQueryVariables
+>
+export const TransactionListForDefaultAccountDocument = gql`
+  query transactionListForDefaultAccount(
+    $first: Int
+    $after: String
+    $last: Int
+    $before: String
+  ) {
+    me {
+      id
+      defaultAccount {
+        id
+        transactions(first: $first, after: $after, last: $last, before: $before) {
+          ...TransactionList
+        }
+      }
+    }
+  }
+  ${TransactionListFragmentDoc}
+`
+
+/**
+ * __useTransactionListForDefaultAccountQuery__
+ *
+ * To run a query within a React component, call `useTransactionListForDefaultAccountQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTransactionListForDefaultAccountQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTransactionListForDefaultAccountQuery({
+ *   variables: {
+ *      first: // value for 'first'
+ *      after: // value for 'after'
+ *      last: // value for 'last'
+ *      before: // value for 'before'
+ *   },
+ * });
+ */
+export function useTransactionListForDefaultAccountQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    TransactionListForDefaultAccountQuery,
+    TransactionListForDefaultAccountQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<
+    TransactionListForDefaultAccountQuery,
+    TransactionListForDefaultAccountQueryVariables
+  >(TransactionListForDefaultAccountDocument, options)
+}
+export function useTransactionListForDefaultAccountLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    TransactionListForDefaultAccountQuery,
+    TransactionListForDefaultAccountQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<
+    TransactionListForDefaultAccountQuery,
+    TransactionListForDefaultAccountQueryVariables
+  >(TransactionListForDefaultAccountDocument, options)
+}
+export type TransactionListForDefaultAccountQueryHookResult = ReturnType<
+  typeof useTransactionListForDefaultAccountQuery
+>
+export type TransactionListForDefaultAccountLazyQueryHookResult = ReturnType<
+  typeof useTransactionListForDefaultAccountLazyQuery
+>
+export type TransactionListForDefaultAccountQueryResult = Apollo.QueryResult<
+  TransactionListForDefaultAccountQuery,
+  TransactionListForDefaultAccountQueryVariables
+>
+export const UserDefaultWalletIdDocument = gql`
+  query userDefaultWalletId($username: Username!) {
+    userDefaultWalletId(username: $username)
+  }
+`
+
+/**
+ * __useUserDefaultWalletIdQuery__
+ *
+ * To run a query within a React component, call `useUserDefaultWalletIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserDefaultWalletIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserDefaultWalletIdQuery({
+ *   variables: {
+ *      username: // value for 'username'
+ *   },
+ * });
+ */
+export function useUserDefaultWalletIdQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    UserDefaultWalletIdQuery,
+    UserDefaultWalletIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<UserDefaultWalletIdQuery, UserDefaultWalletIdQueryVariables>(
+    UserDefaultWalletIdDocument,
+    options,
+  )
+}
+export function useUserDefaultWalletIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    UserDefaultWalletIdQuery,
+    UserDefaultWalletIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<UserDefaultWalletIdQuery, UserDefaultWalletIdQueryVariables>(
+    UserDefaultWalletIdDocument,
+    options,
+  )
+}
+export type UserDefaultWalletIdQueryHookResult = ReturnType<
+  typeof useUserDefaultWalletIdQuery
+>
+export type UserDefaultWalletIdLazyQueryHookResult = ReturnType<
+  typeof useUserDefaultWalletIdLazyQuery
+>
+export type UserDefaultWalletIdQueryResult = Apollo.QueryResult<
+  UserDefaultWalletIdQuery,
+  UserDefaultWalletIdQueryVariables
+>
+export const OnChainTxFeeDocument = gql`
+  query onChainTxFee(
+    $walletId: WalletId!
+    $address: OnChainAddress!
+    $amount: SatAmount!
+    $targetConfirmations: TargetConfirmations
+  ) {
+    onChainTxFee(
+      walletId: $walletId
+      address: $address
+      amount: $amount
+      targetConfirmations: $targetConfirmations
+    ) {
+      amount
+      targetConfirmations
+    }
+  }
+`
+
+/**
+ * __useOnChainTxFeeQuery__
+ *
+ * To run a query within a React component, call `useOnChainTxFeeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useOnChainTxFeeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useOnChainTxFeeQuery({
+ *   variables: {
+ *      walletId: // value for 'walletId'
+ *      address: // value for 'address'
+ *      amount: // value for 'amount'
+ *      targetConfirmations: // value for 'targetConfirmations'
+ *   },
+ * });
+ */
+export function useOnChainTxFeeQuery(
+  baseOptions: Apollo.QueryHookOptions<OnChainTxFeeQuery, OnChainTxFeeQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<OnChainTxFeeQuery, OnChainTxFeeQueryVariables>(
+    OnChainTxFeeDocument,
+    options,
+  )
+}
+export function useOnChainTxFeeLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    OnChainTxFeeQuery,
+    OnChainTxFeeQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<OnChainTxFeeQuery, OnChainTxFeeQueryVariables>(
+    OnChainTxFeeDocument,
+    options,
+  )
+}
+export type OnChainTxFeeQueryHookResult = ReturnType<typeof useOnChainTxFeeQuery>
+export type OnChainTxFeeLazyQueryHookResult = ReturnType<typeof useOnChainTxFeeLazyQuery>
+export type OnChainTxFeeQueryResult = Apollo.QueryResult<
+  OnChainTxFeeQuery,
+  OnChainTxFeeQueryVariables
+>
+export const BtcPriceListDocument = gql`
+  query btcPriceList($range: PriceGraphRange!) {
+    btcPriceList(range: $range) {
+      timestamp
+      price {
+        base
+        offset
+        currencyUnit
+        formattedAmount
+      }
+    }
+  }
+`
+
+/**
+ * __useBtcPriceListQuery__
+ *
+ * To run a query within a React component, call `useBtcPriceListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBtcPriceListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBtcPriceListQuery({
+ *   variables: {
+ *      range: // value for 'range'
+ *   },
+ * });
+ */
+export function useBtcPriceListQuery(
+  baseOptions: Apollo.QueryHookOptions<BtcPriceListQuery, BtcPriceListQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<BtcPriceListQuery, BtcPriceListQueryVariables>(
+    BtcPriceListDocument,
+    options,
+  )
+}
+export function useBtcPriceListLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    BtcPriceListQuery,
+    BtcPriceListQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<BtcPriceListQuery, BtcPriceListQueryVariables>(
+    BtcPriceListDocument,
+    options,
+  )
+}
+export type BtcPriceListQueryHookResult = ReturnType<typeof useBtcPriceListQuery>
+export type BtcPriceListLazyQueryHookResult = ReturnType<typeof useBtcPriceListLazyQuery>
+export type BtcPriceListQueryResult = Apollo.QueryResult<
+  BtcPriceListQuery,
+  BtcPriceListQueryVariables
+>
+export const MainQueryDocument = gql`
+  query mainQuery($hasToken: Boolean!) {
+    globals {
+      nodesIds
+      network
+    }
+    quizQuestions {
+      id
+      earnAmount
+    }
+    btcPrice {
+      __typename
+      base
+      offset
+      currencyUnit
+      formattedAmount
+    }
+    me @include(if: $hasToken) {
+      id
+      language
+      username
+      phone
+      quizQuestions {
+        question {
+          id
+          earnAmount
+        }
+        completed
+      }
+      defaultAccount {
+        id
+        defaultWalletId
+        transactions(first: 3) {
+          ...TransactionList
+        }
+        wallets {
+          id
+          balance
+          walletCurrency
+        }
+      }
+    }
+    mobileVersions {
+      platform
+      currentSupported
+      minSupported
+    }
+  }
+  ${TransactionListFragmentDoc}
+`
+
+/**
+ * __useMainQueryQuery__
+ *
+ * To run a query within a React component, call `useMainQueryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMainQueryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMainQueryQuery({
+ *   variables: {
+ *      hasToken: // value for 'hasToken'
+ *   },
+ * });
+ */
+export function useMainQueryQuery(
+  baseOptions: Apollo.QueryHookOptions<MainQueryQuery, MainQueryQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<MainQueryQuery, MainQueryQueryVariables>(
+    MainQueryDocument,
+    options,
+  )
+}
+export function useMainQueryLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<MainQueryQuery, MainQueryQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<MainQueryQuery, MainQueryQueryVariables>(
+    MainQueryDocument,
+    options,
+  )
+}
+export type MainQueryQueryHookResult = ReturnType<typeof useMainQueryQuery>
+export type MainQueryLazyQueryHookResult = ReturnType<typeof useMainQueryLazyQuery>
+export type MainQueryQueryResult = Apollo.QueryResult<
+  MainQueryQuery,
+  MainQueryQueryVariables
 >
