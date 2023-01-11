@@ -1,22 +1,21 @@
-import * as React from "react"
-import { useState, useEffect } from "react"
+import { Transaction, WalletCurrency } from "@app/graphql/generated"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+import { satAmountDisplay } from "@app/utils/currencyConversion"
+import { WalletType } from "@app/utils/enum"
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs"
+import { CompositeNavigationProp, ParamListBase } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { ListItem } from "@rneui/base"
+import * as React from "react"
+import { useEffect, useState } from "react"
 import { Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
-import { IconTransaction } from "../icon-transactions"
-import { palette } from "../../theme/palette"
-import { CompositeNavigationProp, ParamListBase } from "@react-navigation/native"
 import { prefCurrencyVar as primaryCurrencyVar } from "../../graphql/client-only-query"
 import { useHideBalance } from "../../hooks"
-import { satAmountDisplay } from "@app/utils/currencyConversion"
-import { GaloyGQL } from "@galoymoney/client"
-import { WalletCurrency } from "@app/types/amounts"
-import { WalletType } from "@app/utils/enum"
-import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs"
+import { palette } from "../../theme/palette"
+import { IconTransaction } from "../icon-transactions"
 import { TransactionDate } from "../transaction-date"
-import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 
 const styles = EStyleSheet.create({
   container: {
@@ -64,18 +63,18 @@ export interface TransactionItemProps {
     | StackNavigationProp<ParamListBase>
   isFirst?: boolean
   isLast?: boolean
-  tx: GaloyGQL.Transaction
+  tx: Transaction
   subtitle?: boolean
 }
 
-const computeUsdAmount = (tx: GaloyGQL.Transaction) => {
+const computeUsdAmount = (tx: Transaction) => {
   const { settlementAmount, settlementPrice } = tx
   const { base, offset } = settlementPrice
   const usdPerSat = base / 10 ** offset / 100
   return settlementAmount * usdPerSat
 }
 
-const descriptionDisplay = (tx: GaloyGQL.Transaction) => {
+const descriptionDisplay = (tx: Transaction) => {
   const { memo, direction, settlementVia } = tx
   if (memo) {
     return memo
@@ -167,7 +166,7 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
             style={amountDisplayStyle({ isReceive, isPending })}
             onPress={hideBalance ? pressTxAmount : undefined}
           >
-            {primaryCurrency === "BTC" && tx.settlementCurrency === WalletCurrency.BTC
+            {primaryCurrency === "BTC" && tx.settlementCurrency === WalletCurrency.Btc
               ? satAmountDisplay(tx.settlementAmount)
               : formatToDisplayCurrency(usdAmount)}
           </Text>

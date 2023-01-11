@@ -243,8 +243,13 @@ export type Error = {
   readonly path?: Maybe<ReadonlyArray<Maybe<Scalars["String"]>>>
 }
 
-export type ExchangeCurrencyUnit = "BTCSAT" | "USDCENT"
+export const ExchangeCurrencyUnit = {
+  Btcsat: "BTCSAT",
+  Usdcent: "USDCENT",
+} as const
 
+export type ExchangeCurrencyUnit =
+  typeof ExchangeCurrencyUnit[keyof typeof ExchangeCurrencyUnit]
 /** Provides global settings for the application which might have an impact for the user. */
 export type Globals = {
   readonly __typename?: "Globals"
@@ -319,8 +324,13 @@ export type IntraLedgerUsdPaymentSendInput = {
   readonly walletId: Scalars["WalletId"]
 }
 
-export type InvoicePaymentStatus = "PAID" | "PENDING"
+export const InvoicePaymentStatus = {
+  Paid: "PAID",
+  Pending: "PENDING",
+} as const
 
+export type InvoicePaymentStatus =
+  typeof InvoicePaymentStatus[keyof typeof InvoicePaymentStatus]
 export type LnInvoice = {
   readonly __typename?: "LnInvoice"
   readonly paymentHash: Scalars["PaymentHash"]
@@ -725,8 +735,14 @@ export type MyUpdatesPayload = {
   readonly update?: Maybe<UserUpdate>
 }
 
-export type Network = "mainnet" | "regtest" | "signet" | "testnet"
+export const Network = {
+  Mainnet: "mainnet",
+  Regtest: "regtest",
+  Signet: "signet",
+  Testnet: "testnet",
+} as const
 
+export type Network = typeof Network[keyof typeof Network]
 export type OnChainAddressCreateInput = {
   readonly walletId: Scalars["WalletId"]
 }
@@ -816,10 +832,21 @@ export type PaymentSendPayload = {
   readonly status?: Maybe<PaymentSendResult>
 }
 
-export type PaymentSendResult = "ALREADY_PAID" | "FAILURE" | "PENDING" | "SUCCESS"
+export const PaymentSendResult = {
+  AlreadyPaid: "ALREADY_PAID",
+  Failure: "FAILURE",
+  Pending: "PENDING",
+  Success: "SUCCESS",
+} as const
 
-export type PhoneCodeChannelType = "SMS" | "WHATSAPP"
+export type PaymentSendResult = typeof PaymentSendResult[keyof typeof PaymentSendResult]
+export const PhoneCodeChannelType = {
+  Sms: "SMS",
+  Whatsapp: "WHATSAPP",
+} as const
 
+export type PhoneCodeChannelType =
+  typeof PhoneCodeChannelType[keyof typeof PhoneCodeChannelType]
 /** Price amount expressed in base/offset. To calculate, use: `base / 10^offset` */
 export type Price = {
   readonly __typename?: "Price"
@@ -830,13 +857,15 @@ export type Price = {
 }
 
 /** The range for the X axis in the BTC price graph */
-export type PriceGraphRange =
-  | "FIVE_YEARS"
-  | "ONE_DAY"
-  | "ONE_MONTH"
-  | "ONE_WEEK"
-  | "ONE_YEAR"
+export const PriceGraphRange = {
+  FiveYears: "FIVE_YEARS",
+  OneDay: "ONE_DAY",
+  OneMonth: "ONE_MONTH",
+  OneWeek: "ONE_WEEK",
+  OneYear: "ONE_YEAR",
+} as const
 
+export type PriceGraphRange = typeof PriceGraphRange[keyof typeof PriceGraphRange]
 export type PriceInput = {
   readonly amount: Scalars["SatAmount"]
   readonly amountCurrencyUnit: ExchangeCurrencyUnit
@@ -1020,18 +1049,30 @@ export type TransactionEdge = {
   readonly node: Transaction
 }
 
-export type TxDirection = "RECEIVE" | "SEND"
+export const TxDirection = {
+  Receive: "RECEIVE",
+  Send: "SEND",
+} as const
+
+export type TxDirection = typeof TxDirection[keyof typeof TxDirection]
+export const TxNotificationType = {
+  IntraLedgerPayment: "IntraLedgerPayment",
+  IntraLedgerReceipt: "IntraLedgerReceipt",
+  LnInvoicePaid: "LnInvoicePaid",
+  OnchainPayment: "OnchainPayment",
+  OnchainReceipt: "OnchainReceipt",
+  OnchainReceiptPending: "OnchainReceiptPending",
+} as const
 
 export type TxNotificationType =
-  | "IntraLedgerPayment"
-  | "IntraLedgerReceipt"
-  | "LnInvoicePaid"
-  | "OnchainPayment"
-  | "OnchainReceipt"
-  | "OnchainReceiptPending"
+  typeof TxNotificationType[keyof typeof TxNotificationType]
+export const TxStatus = {
+  Failure: "FAILURE",
+  Pending: "PENDING",
+  Success: "SUCCESS",
+} as const
 
-export type TxStatus = "FAILURE" | "PENDING" | "SUCCESS"
-
+export type TxStatus = typeof TxStatus[keyof typeof TxStatus]
 /** A wallet belonging to an account which contains a USD balance and a list of transactions. */
 export type UsdWallet = Wallet & {
   readonly __typename?: "UsdWallet"
@@ -1232,8 +1273,12 @@ export type WalletTransactionsByAddressArgs = {
   last?: InputMaybe<Scalars["Int"]>
 }
 
-export type WalletCurrency = "BTC" | "USD"
+export const WalletCurrency = {
+  Btc: "BTC",
+  Usd: "USD",
+} as const
 
+export type WalletCurrency = typeof WalletCurrency[keyof typeof WalletCurrency]
 export type TransactionListFragment = {
   readonly __typename?: "TransactionConnection"
   readonly pageInfo: {
@@ -1287,6 +1332,87 @@ export type TransactionListFragment = {
           }
     }
   }> | null
+}
+
+export type MeFragment = {
+  readonly __typename?: "User"
+  readonly id: string
+  readonly language: string
+  readonly username?: string | null
+  readonly phone?: string | null
+  readonly defaultAccount: {
+    readonly __typename?: "ConsumerAccount"
+    readonly id: string
+    readonly defaultWalletId: string
+    readonly transactions?: {
+      readonly __typename?: "TransactionConnection"
+      readonly pageInfo: {
+        readonly __typename?: "PageInfo"
+        readonly hasNextPage: boolean
+        readonly hasPreviousPage: boolean
+        readonly startCursor?: string | null
+        readonly endCursor?: string | null
+      }
+      readonly edges?: ReadonlyArray<{
+        readonly __typename?: "TransactionEdge"
+        readonly cursor: string
+        readonly node: {
+          readonly __typename: "Transaction"
+          readonly id: string
+          readonly status: TxStatus
+          readonly direction: TxDirection
+          readonly memo?: string | null
+          readonly createdAt: number
+          readonly settlementAmount: number
+          readonly settlementFee: number
+          readonly settlementCurrency: WalletCurrency
+          readonly settlementPrice: {
+            readonly __typename?: "Price"
+            readonly base: number
+            readonly offset: number
+            readonly currencyUnit: ExchangeCurrencyUnit
+            readonly formattedAmount: string
+          }
+          readonly initiationVia:
+            | {
+                readonly __typename: "InitiationViaIntraLedger"
+                readonly counterPartyWalletId?: string | null
+                readonly counterPartyUsername?: string | null
+              }
+            | { readonly __typename: "InitiationViaLn"; readonly paymentHash: string }
+            | { readonly __typename: "InitiationViaOnChain"; readonly address: string }
+          readonly settlementVia:
+            | {
+                readonly __typename: "SettlementViaIntraLedger"
+                readonly counterPartyWalletId?: string | null
+                readonly counterPartyUsername?: string | null
+              }
+            | {
+                readonly __typename: "SettlementViaLn"
+                readonly paymentSecret?: string | null
+              }
+            | {
+                readonly __typename: "SettlementViaOnChain"
+                readonly transactionHash: string
+              }
+        }
+      }> | null
+    } | null
+    readonly wallets: ReadonlyArray<
+      | {
+          readonly __typename?: "BTCWallet"
+          readonly id: string
+          readonly balance: number
+          readonly walletCurrency: WalletCurrency
+        }
+      | {
+          readonly __typename?: "UsdWallet"
+          readonly id: string
+          readonly balance: number
+          readonly walletCurrency: WalletCurrency
+        }
+    >
+  }
 }
 
 export type CaptchaCreateChallengeMutationVariables = Exact<{ [key: string]: never }>
@@ -2177,6 +2303,27 @@ export const TransactionListFragmentDoc = gql`
       }
     }
   }
+`
+export const MeFragmentDoc = gql`
+  fragment Me on User {
+    id
+    language
+    username
+    phone
+    defaultAccount {
+      id
+      defaultWalletId
+      transactions(first: $recentTransactions) {
+        ...TransactionList
+      }
+      wallets {
+        id
+        balance
+        walletCurrency
+      }
+    }
+  }
+  ${TransactionListFragmentDoc}
 `
 export const CaptchaCreateChallengeDocument = gql`
   mutation captchaCreateChallenge {

@@ -1,13 +1,13 @@
 /* eslint-disable camelcase */
-import { PaymentAmount, WalletCurrency } from "@app/types/amounts"
+import { BtcPaymentAmount, PaymentAmount, UsdPaymentAmount } from "@app/types/amounts"
 import { WalletDescriptor } from "@app/types/wallets"
 import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
-import { GaloyGQL } from "@galoymoney/client"
 import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
 import { contacts_me_contacts } from "../screens/contacts-screen/__generated__/contacts"
 import { AccountType, AuthenticationScreenPurpose, PinScreenPurpose } from "../utils/enum"
+import { Transaction, WalletCurrency } from "@app/graphql/generated"
 
-export type TransactionDetail = GaloyGQL.Transaction & {
+export type TransactionDetail = Transaction & {
   usdAmount: number
   description: string
   isReceive: boolean
@@ -44,7 +44,7 @@ export type RootStackParamList = {
     username?: string
   }
   sendBitcoinDetails: {
-    fixedAmount?: PaymentAmount<WalletCurrency.BTC>
+    fixedAmount?: BtcPaymentAmount
     destination: string
     note?: string
     lnurl?: LnUrlPayServiceResponse
@@ -53,12 +53,12 @@ export type RootStackParamList = {
     sameNode: boolean
   }
   sendBitcoinConfirmation: {
-    fixedAmount?: PaymentAmount<WalletCurrency.BTC>
+    fixedAmount?: BtcPaymentAmount
     destination: string
     recipientWalletId?: string
     payerWalletDescriptor: WalletDescriptor<WalletCurrency>
-    paymentAmountInBtc?: PaymentAmount<WalletCurrency.BTC>
-    paymentAmountInUsd?: PaymentAmount<WalletCurrency.USD>
+    paymentAmountInBtc?: BtcPaymentAmount
+    paymentAmountInUsd?: UsdPaymentAmount
     note?: string
     paymentType: PaymentType
     sameNode: boolean
@@ -70,15 +70,15 @@ export type RootStackParamList = {
   conversionConfirmation: {
     fromWallet: WalletDescriptor<WalletCurrency>
     toWallet: WalletDescriptor<WalletCurrency>
-    btcAmount: PaymentAmount<WalletCurrency.BTC>
-    usdAmount: PaymentAmount<WalletCurrency.USD>
-    usdPerBtc: PaymentAmount<WalletCurrency.USD>
+    btcAmount: BtcPaymentAmount
+    usdAmount: UsdPaymentAmount
+    usdPerBtc: UsdPaymentAmount
   }
   conversionSuccess: {
     fromWallet: WalletDescriptor<WalletCurrency>
     toWallet: WalletDescriptor<WalletCurrency>
-    btcAmount: PaymentAmount<WalletCurrency.BTC>
-    usdAmount: PaymentAmount<WalletCurrency.USD>
+    btcAmount: BtcPaymentAmount
+    usdAmount: UsdPaymentAmount
   }
   sendBitcoinSuccess: undefined
   language: undefined
@@ -93,7 +93,7 @@ export type RootStackParamList = {
   }
   Profile: undefined
   receiveBitcoin: {
-    receiveCurrency?: GaloyGQL.WalletCurrency
+    receiveCurrency?: WalletCurrency
   }
   phoneValidation: undefined
   transactionDetail: TransactionDetail

@@ -10,7 +10,8 @@ generates:
       - typescript-operations
       - typescript-react-apollo
     config:
-      enumsAsTypes: true
+      # typesPrefix: GQL
+      enumsAsConst: true
       immutableTypes: true
       strictScalars: true
       scalars:

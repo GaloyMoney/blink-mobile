@@ -15,7 +15,7 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { BLOCKCHAIN_EXPLORER_URL } from "../../config/support"
 import { WalletType } from "@app/utils/enum"
 import { WalletSummary } from "@app/components/wallet-summary"
-import { WalletCurrency } from "@app/types/amounts"
+import { WalletCurrency } from "@app/graphql/generated"
 import { paymentAmountToTextWithUnits } from "@app/utils/currencyConversion"
 import { TransactionDate } from "@app/components/transaction-date"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -156,7 +156,7 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
   const usdPerSat = base / 10 ** offset / 100
 
   const feeEntry =
-    settlementCurrency === WalletCurrency.BTC
+    settlementCurrency === WalletCurrency.Btc
       ? `${settlementFee} sats (${formatToDisplayCurrency(settlementFee * usdPerSat)})`
       : paymentAmountToTextWithUnits({
           amount: settlementFee,

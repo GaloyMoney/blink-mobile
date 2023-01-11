@@ -44,7 +44,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.7.3",
-    "@galoymoney/client": "^0.1.73",
+    "@galoymoney/client": "^0.1.74",
     "@galoymoney/react-native-geetest-module": "^0.1.3",
     "@graphql-codegen/add": "^3.2.3",
     "@graphql-codegen/cli": "^2.16.4",

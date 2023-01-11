@@ -5,7 +5,7 @@ import moment from "moment"
 
 import { TransactionDate } from "../../app/components/transaction-date"
 import { i18nObject } from "../../app/i18n/i18n-util"
-import { GaloyGQL } from "@galoymoney/client"
+import { Transaction } from "../../app/graphql/generated"
 
 jest.mock("@app/i18n/i18n-react", () => ({
   useI18nContext: () => {
@@ -15,7 +15,7 @@ jest.mock("@app/i18n/i18n-react", () => ({
 
 describe("Display the createdAt date for a transaction", () => {
   it("Displays pending for a pending onchain transaction", () => {
-    const mockedTransaction = createMock<GaloyGQL.Transaction>({
+    const mockedTransaction = createMock<Transaction>({
       status: "PENDING",
       createdAt: new Date().getDate(),
     })
@@ -25,7 +25,7 @@ describe("Display the createdAt date for a transaction", () => {
   })
   it("Displays friendly date", () => {
     const testTransactionCreatedAtDate = moment().subtract(1, "days")
-    const mockedTransaction = createMock<GaloyGQL.Transaction>({
+    const mockedTransaction = createMock<Transaction>({
       createdAt: testTransactionCreatedAtDate.unix(),
     })
 

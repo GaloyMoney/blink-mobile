@@ -1,4 +1,4 @@
-import { gql, useSubscription } from "@apollo/client"
+import { useMyUpdatesSubscription } from "@app/graphql/generated"
 import * as React from "react"
 
 type UseMyUpdates = {
@@ -20,42 +20,8 @@ type UseMyUpdates = {
   mySubscriptionLoading: boolean
 }
 
-const MY_UPDATES_SUBSCRIPTION = gql`
-  subscription myUpdates {
-    myUpdates {
-      errors {
-        message
-      }
-      update {
-        type: __typename
-        ... on Price {
-          base
-          offset
-          currencyUnit
-          formattedAmount
-        }
-        ... on LnUpdate {
-          paymentHash
-          status
-        }
-        ... on OnChainUpdate {
-          txNotificationType
-          txHash
-          amount
-          usdPerSat
-        }
-        ... on IntraLedgerUpdate {
-          txNotificationType
-          amount
-          usdPerSat
-        }
-      }
-    }
-  }
-`
-
 export const useSubscriptionUpdates = (): UseMyUpdates => {
-  const { data, loading } = useSubscription(MY_UPDATES_SUBSCRIPTION)
+  const { data, loading } = useMyUpdatesSubscription()
 
   const intraLedgerUpdate = React.useRef<UseMyUpdates["intraLedgerUpdate"]>(null)
   const lnUpdate = React.useRef<UseMyUpdates["lnUpdate"]>(null)

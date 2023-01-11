@@ -1,5 +1,3 @@
-import { GaloyGQL } from "@galoymoney/client"
-
 import messaging from "@react-native-firebase/messaging"
 import * as React from "react"
 import { useEffect, useState } from "react"
@@ -47,6 +45,7 @@ import { CompositeNavigationProp, useIsFocused } from "@react-navigation/native"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { StableSatsModal } from "@app/components/stablesats-modal"
 import { testProps } from "../../../utils/testProps"
+import { Transaction } from "@app/graphql/generated"
 
 const styles = EStyleSheet.create({
   bottom: {
@@ -240,7 +239,7 @@ type MoveMoneyScreenProps = {
   >
   loading: boolean
   errors: []
-  transactionsEdges: { cursor: string; node: GaloyGQL.Transaction | null }[]
+  transactionsEdges: { cursor: string; node: Transaction | null }[]
   refetch: () => void
   isUpdateAvailable: boolean
   hasToken: boolean
