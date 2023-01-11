@@ -13,6 +13,8 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GT }}
 
       - name: Install Packages
         run: yarn install --non-interactive --frozen-lockfile
@@ -32,3 +34,4 @@ jobs:
         with:
           commit_message: Bump Cocoapods Packages
           branch: ${{ github.head_ref }}
+          token: ${{ secrets.GT }}
