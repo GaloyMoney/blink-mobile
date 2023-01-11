@@ -1,9 +1,9 @@
 import React from "react"
 import { Text } from "react-native"
 import moment from "moment"
-import { GaloyGQL } from "@galoymoney/client"
 import { toMomentLocale } from "@app/utils/date"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { GaloyGQL } from "@galoymoney/client"
 
 type TransactionDateProps = {
   tx: GaloyGQL.Transaction

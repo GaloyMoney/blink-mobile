@@ -1,16 +1,18 @@
 import * as React from "react"
 import { render } from "@testing-library/react-native"
-import { GaloyGQL } from "@galoymoney/client"
 import { createMock } from "ts-auto-mock"
 import moment from "moment"
 
 import { TransactionDate } from "../../app/components/transaction-date"
 import { i18nObject } from "../../app/i18n/i18n-util"
+import { GaloyGQL } from "@galoymoney/client"
+
 jest.mock("@app/i18n/i18n-react", () => ({
   useI18nContext: () => {
     return i18nObject("en")
   },
 }))
+
 describe("Display the createdAt date for a transaction", () => {
   it("Displays pending for a pending onchain transaction", () => {
     const mockedTransaction = createMock<GaloyGQL.Transaction>({

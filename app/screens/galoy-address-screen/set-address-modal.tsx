@@ -1,6 +1,5 @@
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
-import { useMutation } from "@galoymoney/client"
 import React from "react"
 import { Modal, Platform, StatusBar, TouchableWithoutFeedback, View } from "react-native"
 import { Button, Input, Text } from "@rneui/base"
@@ -12,6 +11,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import useMainQuery from "@app/hooks/use-main-query"
 import { useAppConfig } from "@app/hooks/use-app-config"
+import { useUserUpdateUsernameMutation } from "@app/graphql/generated"
 
 const styles = EStyleSheet.create({
   centeredView: {
@@ -124,7 +124,7 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
   const [newAddress, setNewAddress] = React.useState("")
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
 
-  const [updateUsername, { loading }] = useMutation.userUpdateUsername({
+  const [updateUsername, { loading }] = useUserUpdateUsernameMutation({
     onError: (error) => {
       setError(LL.GaloyAddressScreen.somethingWentWrong())
       crashlytics().recordError(error)

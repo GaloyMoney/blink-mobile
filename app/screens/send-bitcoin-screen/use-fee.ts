@@ -1,8 +1,14 @@
-import { useMutation, useDelayedQuery } from "@galoymoney/client"
 import { useState, useEffect } from "react"
 import { WalletDescriptor } from "@app/types/wallets"
 import { PaymentAmount, WalletCurrency } from "@app/types/amounts"
 import crashlytics from "@react-native-firebase/crashlytics"
+import {
+  useLnInvoiceFeeProbeMutation,
+  useLnNoAmountInvoiceFeeProbeMutation,
+  useLnNoAmountUsdInvoiceFeeProbeMutation,
+  useLnUsdInvoiceFeeProbeMutation,
+  useOnChainTxFeeLazyQuery,
+} from "@app/graphql/generated"
 
 type FeeType = {
   amount?: PaymentAmount<WalletCurrency>
@@ -32,11 +38,11 @@ const useFee = ({
     status: "unset",
   })
 
-  const [lnInvoiceFeeProbe] = useMutation.lnInvoiceFeeProbe()
-  const [lnNoAmountInvoiceFeeProbe] = useMutation.lnNoAmountInvoiceFeeProbe()
-  const [lnUsdInvoiceFeeProbe] = useMutation.lnUsdInvoiceFeeProbe()
-  const [lnNoAmountUsdInvoiceFeeProbe] = useMutation.lnNoAmountUsdInvoiceFeeProbe()
-  const [onChainTxFee] = useDelayedQuery.onChainTxFee()
+  const [lnInvoiceFeeProbe] = useLnInvoiceFeeProbeMutation()
+  const [lnNoAmountInvoiceFeeProbe] = useLnNoAmountInvoiceFeeProbeMutation()
+  const [lnUsdInvoiceFeeProbe] = useLnUsdInvoiceFeeProbeMutation()
+  const [lnNoAmountUsdInvoiceFeeProbe] = useLnNoAmountUsdInvoiceFeeProbeMutation()
+  const [onChainTxFee] = useOnChainTxFeeLazyQuery()
   const getLightningFees =
     walletDescriptor.currency === WalletCurrency.BTC
       ? lnInvoiceFeeProbe
@@ -74,7 +80,7 @@ const useFee = ({
 
           let feeValue: number
           if (isNoAmountInvoice) {
-            const { data, errorsMessage } = await getNoAmountLightningFees({
+            const { data, errors } = await getNoAmountLightningFees({
               variables: {
                 input: {
                   walletId: walletDescriptor.id,
@@ -89,11 +95,11 @@ const useFee = ({
                 ? data.lnNoAmountInvoiceFeeProbe.amount
                 : data.lnNoAmountUsdInvoiceFeeProbe.amount
 
-            if (errorsMessage && feeValue) {
+            if (Boolean(errors.length) && feeValue) {
               feeProbeFailed = true
             }
           } else {
-            const { data, errorsMessage } = await getLightningFees({
+            const { data, errors } = await getLightningFees({
               variables: {
                 input: { walletId: walletDescriptor.id, paymentRequest: invoice },
               },
@@ -103,7 +109,7 @@ const useFee = ({
               "lnInvoiceFeeProbe" in data
                 ? data.lnInvoiceFeeProbe.amount
                 : data.lnUsdInvoiceFeeProbe.amount
-            if (errorsMessage && feeValue) {
+            if (Boolean(errors.length) && feeValue) {
               feeProbeFailed = true
             }
           }
@@ -132,9 +138,11 @@ const useFee = ({
             amount: { amount: 0, currency: walletDescriptor.currency },
           })
           const { data } = await onChainTxFee({
-            walletId: walletDescriptor.id,
-            address,
-            amount: paymentAmount.amount,
+            variables: {
+              walletId: walletDescriptor.id,
+              address,
+              amount: paymentAmount.amount,
+            },
           })
 
           const feeValue = data.onChainTxFee.amount

@@ -7,13 +7,13 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
 import { TransactionItem } from "../../components/transaction-item"
 import { nextPrefCurrency, prefCurrencyVar } from "../../graphql/client-only-query"
-import { useQuery } from "@galoymoney/client"
 import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import { sameDay, sameMonth } from "../../utils/date"
 import { toastShow } from "../../utils/toast"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { useTransactionListForContactQuery } from "@app/graphql/generated"
 
 const styles = EStyleSheet.create({
   errorText: { alignSelf: "center", color: palette.red, paddingBottom: 18 },
@@ -79,7 +79,7 @@ export const ContactTransactionsDataInjected: ScreenType = ({
   const { LL } = useI18nContext()
   const currency = "sat" // FIXME
 
-  const { error, data, refetch } = useQuery.transactionListForContact({
+  const { error, data, refetch } = useTransactionListForContactQuery({
     variables: { username: contactUsername, first: TRANSACTIONS_PER_PAGE, after: null },
   })
 

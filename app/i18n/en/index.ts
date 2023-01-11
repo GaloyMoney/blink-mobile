@@ -3,7 +3,6 @@
 import { BaseTranslation } from "../i18n-types"
 
 /* eslint-disable no-template-curly-in-string */
-/* eslint-disable max-lines */
 const en: BaseTranslation = {
   GaloyAddressScreen: {
     buttonTitle: "Set your {bankName: string} address",

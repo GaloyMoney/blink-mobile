@@ -11,7 +11,6 @@ import Carousel from "react-native-reanimated-carousel"
 import Icon from "react-native-vector-icons/Ionicons"
 
 import { Screen } from "../../components/screen"
-import { useMutation } from "@galoymoney/client"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
@@ -31,6 +30,8 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { earnSections } from "./sections"
 import { PaginationItem } from "@app/components/pagination"
 import { useSharedValue } from "react-native-reanimated"
+import { useUserQuizQuestionUpdateCompletedMutation } from "@app/graphql/generated"
+import { joinErrorsMessages } from "@app/graphql/utils"
 
 const { width: screenWidth } = Dimensions.get("window")
 
@@ -138,7 +139,7 @@ export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
   const client = useApolloClient()
   const { refetch: refetchMain } = useMainQuery()
   const { LL } = useI18nContext()
-  const [userQuizQuestionUpdateCompleted] = useMutation.userQuizQuestionUpdateCompleted({
+  const [userQuizQuestionUpdateCompleted] = useUserQuizQuestionUpdateCompletedMutation({
     onCompleted: () => refetchMain(),
   })
 
@@ -201,11 +202,11 @@ export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
           feedback: card.feedback,
           // store.earnComplete(card.id),
           onComplete: async () => {
-            const { errorsMessage } = await userQuizQuestionUpdateCompleted({
+            const { errors } = await userQuizQuestionUpdateCompleted({
               variables: { input: { id: card.id } },
             })
-            if (errorsMessage) {
-              toastShow({ message: errorsMessage })
+            if (errors.length) {
+              toastShow({ message: joinErrorsMessages(errors) })
             }
           },
           id: card.id,

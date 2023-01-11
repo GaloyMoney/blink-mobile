@@ -1,4 +1,3 @@
-import { useMutation } from "@galoymoney/client"
 import * as React from "react"
 import { ListItem } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
@@ -8,6 +7,8 @@ import { palette } from "../../theme/palette"
 import type { ScreenType } from "../../types/jsx"
 import useMainQuery from "@app/hooks/use-main-query"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { useUserUpdateLanguageMutation } from "@app/graphql/generated"
+import { testProps } from "../../../utils/testProps"
 
 const styles = EStyleSheet.create({
   screenStyle: {
@@ -18,7 +19,7 @@ const styles = EStyleSheet.create({
 export const LanguageScreen: ScreenType = () => {
   const { userPreferredLanguage, me, refetch: refetchMain } = useMainQuery()
 
-  const [updateLanguage] = useMutation.userUpdateLanguage({
+  const [updateLanguage] = useUserUpdateLanguageMutation({
     onCompleted: () => refetchMain(),
   })
   const { LL } = useI18nContext()
@@ -51,7 +52,9 @@ export const LanguageScreen: ScreenType = () => {
             }
           }}
         >
-          <ListItem.Title>{LL.Languages[language]()}</ListItem.Title>
+          <ListItem.Title {...testProps(LL.Languages[language]())}>
+            {LL.Languages[language]()}
+          </ListItem.Title>
           {userPreferredLanguage === language && (
             <Icon name="ios-checkmark-circle" size={18} color={palette.green} />
           )}

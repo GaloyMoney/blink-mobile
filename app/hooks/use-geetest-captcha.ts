@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { EventSubscription, NativeEventEmitter, NativeModules } from "react-native"
 import GeetestModule from "@galoymoney/react-native-geetest-module"
-import { useMutation } from "@galoymoney/client"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { useCaptchaCreateChallengeMutation } from "@app/graphql/generated"
 
 type GeetestCaptchaReturn = {
   geetestError: string | null
@@ -22,7 +22,7 @@ export const useGeetestCaptcha = (): GeetestCaptchaReturn => {
   const onGeeTestFailedListener = useRef<EventSubscription>()
 
   const [captchaCreateChallenge, { loading: loadingRegisterCaptcha }] =
-    useMutation.captchaCreateChallenge({
+    useCaptchaCreateChallengeMutation({
       fetchPolicy: "no-cache",
     })
 

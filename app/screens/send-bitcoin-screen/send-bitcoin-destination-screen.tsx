@@ -9,12 +9,7 @@ import {
   View,
 } from "react-native"
 import { palette } from "@app/theme"
-import {
-  fetchLnurlPaymentParams,
-  parsingv2,
-  useDelayedQuery,
-  useQuery as useGaloyQuery,
-} from "@galoymoney/client"
+import { fetchLnurlPaymentParams, parsingv2 } from "@galoymoney/client"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { PaymentAmount, WalletCurrency } from "@app/types/amounts"
@@ -39,6 +34,7 @@ import Paste from "react-native-vector-icons/FontAwesome"
 import Clipboard from "@react-native-community/clipboard"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { toastShow } from "@app/utils/toast"
+import { useContactsQuery, useUserDefaultWalletIdLazyQuery } from "@app/graphql/generated"
 
 const Styles = StyleSheet.create({
   scrollView: {
@@ -230,8 +226,8 @@ const SendBitcoinDestinationScreen = ({
   const [goToNextScreenWhenValid, setGoToNextScreenWhenValid] = React.useState(false)
   const { myPubKey, username: myUsername, network: bitcoinNetwork } = useMainQuery()
   const { LL } = useI18nContext()
-  const [userDefaultWalletIdQuery] = useDelayedQuery.userDefaultWalletId()
-  const { data } = useGaloyQuery.contacts()
+  const [userDefaultWalletIdQuery] = useUserDefaultWalletIdLazyQuery()
+  const { data } = useContactsQuery()
 
   const checkUsername:
     | ((
@@ -246,7 +242,7 @@ const SendBitcoinDestinationScreen = ({
     )
     const lowercaseMyUsername = myUsername ? myUsername.toLowerCase() : ""
     const getWalletIdForUsername = async (username: string) => {
-      const { data } = await userDefaultWalletIdQuery({ username })
+      const { data } = await userDefaultWalletIdQuery({ variables: { username } })
       return data?.userDefaultWalletId
     }
     return async (username: string) =>

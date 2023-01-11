@@ -11,7 +11,7 @@ echo $TEST_DEVICE_ANDROID
 if [ "$TEST_DEVICE_IOS" ]; then
   echo "ios exists"
 else
-  TEST_DEVICE_IOS=$(xcrun simctl list devices booted | grep Booted | awk -F'(' '{print $1}' )
+  TEST_DEVICE_IOS=$(xcrun simctl list devices booted | grep Booted | awk -F'(' '{print $1}' | sed -e 's/^[ \t]*//' -e 's/[ \t]*$//')
 fi
 echo $TEST_DEVICE_IOS
 

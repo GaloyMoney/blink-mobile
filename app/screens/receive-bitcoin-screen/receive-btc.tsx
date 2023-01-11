@@ -1,7 +1,7 @@
 import { usePriceConversion, useSubscriptionUpdates } from "@app/hooks"
 import useMainQuery from "@app/hooks/use-main-query"
 import { getFullUri, TYPE_LIGHTNING_BTC, TYPE_BITCOIN_ONCHAIN } from "@app/utils/wallet"
-import { GaloyGQL, useMutation } from "@galoymoney/client"
+import { GaloyGQL } from "@galoymoney/client"
 import React, { useCallback, useEffect, useState } from "react"
 import { Alert, Pressable, Share, TextInput, View } from "react-native"
 import { Button, Text } from "@rneui/base"
@@ -26,6 +26,11 @@ import { WalletCurrency } from "@app/types/amounts"
 import { testProps } from "../../../utils/testProps"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+import {
+  useLnInvoiceCreateMutation,
+  useLnNoAmountInvoiceCreateMutation,
+  useOnChainAddressCurrentMutation,
+} from "@app/graphql/generated"
 
 const styles = EStyleSheet.create({
   container: {
@@ -172,9 +177,9 @@ const ReceiveBtc = () => {
   const { btcWalletId } = useMainQuery()
   const { lnUpdate } = useSubscriptionUpdates()
 
-  const [lnNoAmountInvoiceCreate] = useMutation.lnNoAmountInvoiceCreate()
-  const [lnInvoiceCreate] = useMutation.lnInvoiceCreate()
-  const [generateBtcAddress] = useMutation.onChainAddressCurrent()
+  const [lnNoAmountInvoiceCreate] = useLnNoAmountInvoiceCreateMutation()
+  const [lnInvoiceCreate] = useLnInvoiceCreateMutation()
+  const [generateBtcAddress] = useOnChainAddressCurrentMutation()
   const { LL } = useI18nContext()
   const { formatToDisplayCurrency } = useDisplayCurrency()
 

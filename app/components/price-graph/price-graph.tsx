@@ -1,4 +1,3 @@
-import { gql, useQuery } from "@apollo/client"
 import * as React from "react"
 import { ActivityIndicator, StyleProp, Text, View } from "react-native"
 import { Button } from "@rneui/base"
@@ -11,20 +10,7 @@ import { palette } from "../../theme/palette"
 import type { ComponentType } from "../../types/jsx"
 import { Defs, LinearGradient, Stop } from "react-native-svg"
 import { useI18nContext } from "@app/i18n/i18n-react"
-
-const BTC_PRICE_LIST = gql`
-  query btcPriceList($range: PriceGraphRange!) {
-    btcPriceList(range: $range) {
-      timestamp
-      price {
-        base
-        offset
-        currencyUnit
-        formattedAmount
-      }
-    }
-  }
-`
+import { useBtcPriceListQuery } from "@app/graphql/generated"
 
 const multiple = (currentUnit: string) => {
   switch (currentUnit) {
@@ -60,7 +46,7 @@ type PricePoint = {
 export const PriceGraphDataInjected: ComponentType = () => {
   const [graphRange, setGraphRange] = React.useState<GraphRangeType>(GraphRange.ONE_DAY)
 
-  const { error, loading, data, refetch } = useQuery(BTC_PRICE_LIST, {
+  const { error, loading, data, refetch } = useBtcPriceListQuery({
     variables: { range: graphRange },
     notifyOnNetworkStatusChange: true,
   })
