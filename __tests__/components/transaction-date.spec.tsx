@@ -5,6 +5,7 @@ import moment from "moment"
 
 import { TransactionDate } from "../../app/components/transaction-date"
 import { i18nObject } from "../../app/i18n/i18n-util"
+import { GaloyGQL } from "@galoymoney/client"
 
 jest.mock("@app/i18n/i18n-react", () => ({
   useI18nContext: () => {

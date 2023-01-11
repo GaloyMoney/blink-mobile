@@ -1,6 +1,6 @@
 import { Price } from "@app/components/price-graph"
 import { INetwork } from "@app/types/network"
-import { GaloyGQL } from "@app/graphql/generated/types"
+import { GaloyGQL } from "@galoymoney/client"
 
 type mobileVersions = {
   currentSupported: string

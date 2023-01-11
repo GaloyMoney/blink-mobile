@@ -50,6 +50,7 @@
     "@graphql-codegen/cli": "^2.16.4",
     "@graphql-codegen/typescript": "^2.8.7",
     "@graphql-codegen/typescript-operations": "^2.5.12",
+    "@graphql-codegen/typescript-react-apollo": "^3.3.7",
     "@react-native-async-storage/async-storage": "^1.17.7",
     "@react-native-community/clipboard": "^1.2.3",
     "@react-native-community/netinfo": "^8.0.0",
@@ -137,6 +138,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.18.2",
+    "@graphql-codegen/client-preset": "^1.2.6",
     "@storybook/addon-actions": "^6.3.12",
     "@storybook/addon-knobs": "^6.1.9",
     "@storybook/addon-ondevice-actions": "^5.3.18",

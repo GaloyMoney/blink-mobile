@@ -3,9 +3,12 @@ overwrite: true
 schema: "https://raw.githubusercontent.com/GaloyMoney/galoy/feb351eb62943bef80f8694868a0bf27596b4951/src/graphql/main/schema.graphql"
 documents: 
   - "app/graphql/*/*.ts"
-  - "app/graphql/*/*.gql"
 generates:
-  app/graphql/generated/types.ts:
+  app/graphql/generated.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
     config:
       enumsAsTypes: true
       immutableTypes: true
@@ -35,13 +38,3 @@ generates:
         WalletId: "string"
         Seconds: "number"
         DisplayCurrency: "string"
-    plugins:
-      - add:
-          content: "/* eslint-disable */"
-      - add:
-          content: "export namespace GaloyGQL {"
-      - add:
-          placement: append
-          content: "}"
-      - "typescript"
-      - "typescript-operations"
