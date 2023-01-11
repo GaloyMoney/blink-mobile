@@ -54,4 +54,22 @@ export default gql`
       status
     }
   }
+
+  mutation userQuizQuestionUpdateCompleted(
+    $input: UserQuizQuestionUpdateCompletedInput!
+  ) {
+    userQuizQuestionUpdateCompleted(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      userQuizQuestion {
+        question {
+          id
+          earnAmount
+        }
+        completed
+      }
+    }
+  }
 `

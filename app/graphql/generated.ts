@@ -1317,6 +1317,30 @@ export type IntraLedgerUsdPaymentSendMutation = {
   }
 }
 
+export type UserQuizQuestionUpdateCompletedMutationVariables = Exact<{
+  input: UserQuizQuestionUpdateCompletedInput
+}>
+
+export type UserQuizQuestionUpdateCompletedMutation = {
+  readonly __typename?: "Mutation"
+  readonly userQuizQuestionUpdateCompleted: {
+    readonly __typename?: "UserQuizQuestionUpdateCompletedPayload"
+    readonly errors: ReadonlyArray<{
+      readonly __typename: "GraphQLApplicationError"
+      readonly message: string
+    }>
+    readonly userQuizQuestion?: {
+      readonly __typename?: "UserQuizQuestion"
+      readonly completed: boolean
+      readonly question: {
+        readonly __typename?: "QuizQuestion"
+        readonly id: string
+        readonly earnAmount: number
+      }
+    } | null
+  }
+}
+
 export const CaptchaCreateChallengeDocument = gql`
   mutation captchaCreateChallenge {
     captchaCreateChallenge {
@@ -1590,4 +1614,66 @@ export type IntraLedgerUsdPaymentSendMutationResult =
 export type IntraLedgerUsdPaymentSendMutationOptions = Apollo.BaseMutationOptions<
   IntraLedgerUsdPaymentSendMutation,
   IntraLedgerUsdPaymentSendMutationVariables
+>
+export const UserQuizQuestionUpdateCompletedDocument = gql`
+  mutation userQuizQuestionUpdateCompleted(
+    $input: UserQuizQuestionUpdateCompletedInput!
+  ) {
+    userQuizQuestionUpdateCompleted(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      userQuizQuestion {
+        question {
+          id
+          earnAmount
+        }
+        completed
+      }
+    }
+  }
+`
+export type UserQuizQuestionUpdateCompletedMutationFn = Apollo.MutationFunction<
+  UserQuizQuestionUpdateCompletedMutation,
+  UserQuizQuestionUpdateCompletedMutationVariables
+>
+
+/**
+ * __useUserQuizQuestionUpdateCompletedMutation__
+ *
+ * To run a mutation, you first call `useUserQuizQuestionUpdateCompletedMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserQuizQuestionUpdateCompletedMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userQuizQuestionUpdateCompletedMutation, { data, loading, error }] = useUserQuizQuestionUpdateCompletedMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUserQuizQuestionUpdateCompletedMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UserQuizQuestionUpdateCompletedMutation,
+    UserQuizQuestionUpdateCompletedMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    UserQuizQuestionUpdateCompletedMutation,
+    UserQuizQuestionUpdateCompletedMutationVariables
+  >(UserQuizQuestionUpdateCompletedDocument, options)
+}
+export type UserQuizQuestionUpdateCompletedMutationHookResult = ReturnType<
+  typeof useUserQuizQuestionUpdateCompletedMutation
+>
+export type UserQuizQuestionUpdateCompletedMutationResult =
+  Apollo.MutationResult<UserQuizQuestionUpdateCompletedMutation>
+export type UserQuizQuestionUpdateCompletedMutationOptions = Apollo.BaseMutationOptions<
+  UserQuizQuestionUpdateCompletedMutation,
+  UserQuizQuestionUpdateCompletedMutationVariables
 >
