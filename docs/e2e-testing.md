@@ -74,15 +74,17 @@ GALOY_TOKEN_2={SECOND_WALLET_TOKEN}
 E2E_DEVICE={ios or android}
 ```
 
-## Authenticated Tests
+## Running Single Tests that Require Authentication
 
-To run the authenticated tests you need to set the env variable `GALOY_TOKEN`. The e2e test will navigate to the settings/build version page and input the token
+To run the authenticated tests you need to set the env variable `GALOY_TOKEN`.
 
-Then you can run one test at a time:
+State in the application in cleared between testing invocations. The following command will always run tests 01 and 02 in order to authenticate the app, then run the test specified by the `TEST` env variable.
+
 
 ```
-TEST="03" PLATFORM_VERSION="15.4" yarn test:e2e:ios:auth
+TEST="03" yarn test:e2e:ios:auth
 ```
+
 
 ## Troubleshooting
 
@@ -115,7 +117,6 @@ ios
   "appium:deviceName": "iPhone 13",
   "appium:bundleId": "io.galoy.bitcoinbeach",
   "appium:automationName": "XCUITest",
-  "appium:platformVersion": "15.4"
 }
 ```
 
@@ -124,7 +125,7 @@ android
 ```
 {
   "platformName": "Android",
-  "appium:app": "/path/to/code/galoy-mobile/android/app/build/outputs/apk/debug/app-debug.apk",
+  "appium:app": "/path/to/code/galoy-mobile/android/app/build/outputs/apk/debug/app-universal-debug.apk",
   "appium:deviceName": "generic_x86",
   "appium:automationName": "UiAutomator2"
 }
