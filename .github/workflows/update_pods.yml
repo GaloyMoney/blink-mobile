@@ -15,6 +15,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           token: ${{ secrets.GT }}
+          ref: ${{ github.head_ref }}
 
       - name: Install Packages
         run: yarn install --non-interactive --frozen-lockfile
