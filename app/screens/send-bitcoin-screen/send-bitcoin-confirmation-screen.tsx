@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react"
 import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-native"
 import { palette } from "@app/theme"
 import { WalletCurrency } from "@app/types/amounts"
-import { GaloyGQL, useMutation } from "@galoymoney/client"
+import { GaloyGQL } from "@galoymoney/client"
 import { Status } from "./send-bitcoin.types"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
@@ -24,6 +24,15 @@ import { logPaymentAttempt, logPaymentResult } from "@app/utils/analytics"
 import { testProps } from "../../../utils/testProps"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+import {
+  useIntraLedgerPaymentSendMutation,
+  useIntraLedgerUsdPaymentSendMutation,
+  useLnInvoicePaymentSendMutation,
+  useLnNoAmountInvoicePaymentSendMutation,
+  useLnNoAmountUsdInvoicePaymentSendMutation,
+  useOnChainPaymentSendMutation,
+} from "@app/graphql/generated"
+import { joinErrorsMessages } from "@app/graphql/utils"
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -203,17 +212,17 @@ const SendBitcoinConfirmationScreen = ({
   const [paymentError, setPaymentError] = useState<string | undefined>(undefined)
 
   const [intraLedgerPaymentSend, { loading: intraledgerLoading }] =
-    useMutation.intraLedgerPaymentSend()
+    useIntraLedgerPaymentSendMutation()
   const [intraLedgerUsdPaymentSend, { loading: intraLedgerUsdLoading }] =
-    useMutation.intraLedgerUsdPaymentSend()
+    useIntraLedgerUsdPaymentSendMutation()
   const [lnInvoicePaymentSend, { loading: lnInvoiceLoading }] =
-    useMutation.lnInvoicePaymentSend()
+    useLnInvoicePaymentSendMutation()
   const [lnNoAmountInvoicePaymentSend, { loading: lnNoAmountInvoiceLoading }] =
-    useMutation.lnNoAmountInvoicePaymentSend()
+    useLnNoAmountInvoicePaymentSendMutation()
   const [lnNoAmountUsdInvoicePaymentSend, { loading: lnNoAmountUsdLoading }] =
-    useMutation.lnNoAmountUsdInvoicePaymentSend()
+    useLnNoAmountUsdInvoicePaymentSendMutation()
   const [onChainPaymentSend, { loading: onChainLoading }] =
-    useMutation.onChainPaymentSend()
+    useOnChainPaymentSendMutation()
   const { LL } = useI18nContext()
   const { formatToDisplayCurrency } = useDisplayCurrency()
   const isLoading =
@@ -246,7 +255,7 @@ const SendBitcoinConfirmationScreen = ({
   }, [fee])
 
   const payIntraLedger = async () => {
-    const { data, errorsMessage } = await intraLedgerPaymentSend({
+    const { data, errors } = await intraLedgerPaymentSend({
       variables: {
         input: {
           walletId: payerWalletDescriptor.id,
@@ -256,11 +265,13 @@ const SendBitcoinConfirmationScreen = ({
         },
       },
     })
+
+    const errorsMessage = joinErrorsMessages(errors)
     return { status: data.intraLedgerPaymentSend.status, errorsMessage }
   }
 
   const payIntraLedgerUsd = async () => {
-    const { data, errorsMessage } = await intraLedgerUsdPaymentSend({
+    const { data, errors } = await intraLedgerUsdPaymentSend({
       variables: {
         input: {
           walletId: payerWalletDescriptor.id,
@@ -270,11 +281,13 @@ const SendBitcoinConfirmationScreen = ({
         },
       },
     })
+
+    const errorsMessage = joinErrorsMessages(errors)
     return { status: data.intraLedgerUsdPaymentSend.status, errorsMessage }
   }
 
   const payLnInvoice = async () => {
-    const { data, errorsMessage } = await lnInvoicePaymentSend({
+    const { data, errors } = await lnInvoicePaymentSend({
       variables: {
         input: {
           walletId: payerWalletDescriptor.id,
@@ -284,11 +297,12 @@ const SendBitcoinConfirmationScreen = ({
       },
     })
 
+    const errorsMessage = joinErrorsMessages(errors)
     return { status: data.lnInvoicePaymentSend.status, errorsMessage }
   }
 
   const payLnNoAmountInvoice = async () => {
-    const { data, errorsMessage } = await lnNoAmountInvoicePaymentSend({
+    const { data, errors } = await lnNoAmountInvoicePaymentSend({
       variables: {
         input: {
           walletId: payerWalletDescriptor.id,
@@ -299,11 +313,12 @@ const SendBitcoinConfirmationScreen = ({
       },
     })
 
+    const errorsMessage = joinErrorsMessages(errors)
     return { status: data.lnNoAmountInvoicePaymentSend.status, errorsMessage }
   }
 
   const payLnNoAmountUsdInvoice = async () => {
-    const { data, errorsMessage } = await lnNoAmountUsdInvoicePaymentSend({
+    const { data, errors } = await lnNoAmountUsdInvoicePaymentSend({
       variables: {
         input: {
           walletId: payerWalletDescriptor.id,
@@ -313,11 +328,12 @@ const SendBitcoinConfirmationScreen = ({
         },
       },
     })
+    const errorsMessage = joinErrorsMessages(errors)
     return { status: data.lnNoAmountUsdInvoicePaymentSend.status, errorsMessage }
   }
 
   const payOnChain = async () => {
-    const { data, errorsMessage } = await onChainPaymentSend({
+    const { data, errors } = await onChainPaymentSend({
       variables: {
         input: {
           walletId: payerWalletDescriptor.id,
@@ -328,6 +344,7 @@ const SendBitcoinConfirmationScreen = ({
       },
     })
 
+    const errorsMessage = joinErrorsMessages(errors)
     return { status: data.onChainPaymentSend.status, errorsMessage }
   }
 

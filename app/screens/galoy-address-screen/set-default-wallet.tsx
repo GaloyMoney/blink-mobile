@@ -6,9 +6,9 @@ import { TouchableWithoutFeedback, View } from "react-native"
 import { CheckBox, Text } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
 import useMainQuery from "@app/hooks/use-main-query"
-import { useMutation } from "@galoymoney/client"
 import { toastShow } from "@app/utils/toast"
 import { DefaultWalletExplainerModal } from "./default-wallet-explainer-modal"
+import { useAccountUpdateDefaultWalletIdMutation } from "@app/graphql/generated"
 
 const styles = EStyleSheet.create({
   fieldContainer: {
@@ -47,7 +47,7 @@ export const SetDefaultWallet = () => {
   const [isDefaultWalletExplainerModalOpen, setIsDefaultWalletExplainerModalOpen] =
     useState(false)
   const [accountUpdateDefaultWallet, { error }] =
-    useMutation.accountUpdateDefaultWalletId()
+    useAccountUpdateDefaultWalletIdMutation()
 
   useEffect(() => {
     if (error) {

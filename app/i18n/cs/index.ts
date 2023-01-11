@@ -6,7 +6,6 @@ import rawCs from '../raw-i18n/translations/cs.json'
 import merge from "lodash.merge"
 
 /* eslint-disable no-template-curly-in-string */
-/* eslint-disable max-lines */
 const cs: Translation = merge({}, en as Translation, rawCs)
 
 export default cs

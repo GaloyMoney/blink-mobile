@@ -21,7 +21,6 @@ import { RouteProp } from "@react-navigation/native"
 
 import { CloseCross } from "../../components/close-cross"
 import { Screen } from "../../components/screen"
-import { useMutation } from "@galoymoney/client"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import useToken from "../../hooks/use-token"
@@ -37,6 +36,10 @@ import DownArrow from "@app/assets/icons/downarrow.svg"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { logRequestAuthCode } from "@app/utils/analytics"
 import crashlytics from "@react-native-firebase/crashlytics"
+import {
+  useCaptchaRequestAuthCodeMutation,
+  useUserLoginMutation,
+} from "@app/graphql/generated"
 
 const phoneRegex = new RegExp("^\\+[0-9]+$")
 
@@ -155,7 +158,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
   const phoneInputRef = useRef<PhoneInput | null>()
 
   const [captchaRequestAuthCode, { loading: loadingRequestPhoneCode }] =
-    useMutation.captchaRequestAuthCode({
+    useCaptchaRequestAuthCodeMutation({
       fetchPolicy: "no-cache",
     })
 
@@ -344,7 +347,7 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
 }: WelcomePhoneValidationScreenDataInjectedProps) => {
   const { saveToken, hasToken } = useToken()
   const { LL } = useI18nContext()
-  const [userLogin, { loading, error }] = useMutation.userLogin({
+  const [userLogin, { loading, error }] = useUserLoginMutation({
     fetchPolicy: "no-cache",
     onCompleted: async (data) => {
       if (data.userLogin.authToken) {

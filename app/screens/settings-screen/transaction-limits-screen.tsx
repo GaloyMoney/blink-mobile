@@ -5,10 +5,10 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import { LocalizedString } from "typesafe-i18n"
 
 import { Screen } from "@app/components/screen"
-import { limitValue, useAccountLimitsQuery } from "@app/hooks/use-account-limits"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
 import { usdAmountDisplay } from "@app/utils/currencyConversion"
+import { useAccountLimitsQuery } from "@app/graphql/generated"
 
 const styles = EStyleSheet.create({
   container: {
@@ -64,10 +64,6 @@ const styles = EStyleSheet.create({
   },
 })
 
-type accountLimitsPeriodProps = {
-  data: limitValue
-}
-
 const accountLimitsPeriodInHrs = {
   DAILY: "24",
   WEEKLY: "168",
@@ -75,7 +71,7 @@ const accountLimitsPeriodInHrs = {
 
 export const TransactionLimitsScreen = () => {
   const { LL } = useI18nContext()
-  const { limits, loading, error, refetch } = useAccountLimitsQuery()
+  const { data, loading, error, refetch } = useAccountLimitsQuery()
 
   if (error) {
     return (
@@ -127,7 +123,7 @@ export const TransactionLimitsScreen = () => {
           <Text adjustsFontSizeToFit style={styles.valueFieldType}>
             {LL.TransactionLimitsScreen.withdraw()}
           </Text>
-          {limits?.withdrawal.map((data, index: number) => {
+          {data.me.defaultAccount.limits?.withdrawal.map((data, index: number) => {
             return <TransactionLimitsPeriod data={data} key={index} />
           })}
         </View>
@@ -138,7 +134,7 @@ export const TransactionLimitsScreen = () => {
           <Text adjustsFontSizeToFit style={styles.valueFieldType}>
             {LL.TransactionLimitsScreen.internalSend()}
           </Text>
-          {limits?.internalSend.map((data, index: number) => {
+          {data.me.defaultAccount.limits?.internalSend.map((data, index: number) => {
             return <TransactionLimitsPeriod data={data} key={index} />
           })}
         </View>
@@ -149,7 +145,7 @@ export const TransactionLimitsScreen = () => {
           <Text adjustsFontSizeToFit style={styles.valueFieldType}>
             {LL.TransactionLimitsScreen.stablesatTransfers()}
           </Text>
-          {limits?.convert.map((data, index: number) => {
+          {data.me.defaultAccount.limits?.convert.map((data, index: number) => {
             return <TransactionLimitsPeriod data={data} key={index} />
           })}
         </View>
@@ -158,7 +154,7 @@ export const TransactionLimitsScreen = () => {
   )
 }
 
-const TransactionLimitsPeriod = ({ data }: accountLimitsPeriodProps) => {
+const TransactionLimitsPeriod = ({ data }) => {
   const { LL } = useI18nContext()
 
   const convertCentToUSD = (centAmount: string) => {
