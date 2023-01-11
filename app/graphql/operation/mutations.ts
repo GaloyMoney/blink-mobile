@@ -34,4 +34,24 @@ export default gql`
       success
     }
   }
+
+  mutation intraLedgerPaymentSend($input: IntraLedgerPaymentSendInput!) {
+    intraLedgerPaymentSend(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      status
+    }
+  }
+
+  mutation intraLedgerUsdPaymentSend($input: IntraLedgerUsdPaymentSendInput!) {
+    intraLedgerUsdPaymentSend(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      status
+    }
+  }
 `

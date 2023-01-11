@@ -1285,6 +1285,38 @@ export type DeviceNotificationTokenCreateMutation = {
   }
 }
 
+export type IntraLedgerPaymentSendMutationVariables = Exact<{
+  input: IntraLedgerPaymentSendInput
+}>
+
+export type IntraLedgerPaymentSendMutation = {
+  readonly __typename?: "Mutation"
+  readonly intraLedgerPaymentSend: {
+    readonly __typename?: "PaymentSendPayload"
+    readonly status?: PaymentSendResult | null
+    readonly errors: ReadonlyArray<{
+      readonly __typename: "GraphQLApplicationError"
+      readonly message: string
+    }>
+  }
+}
+
+export type IntraLedgerUsdPaymentSendMutationVariables = Exact<{
+  input: IntraLedgerUsdPaymentSendInput
+}>
+
+export type IntraLedgerUsdPaymentSendMutation = {
+  readonly __typename?: "Mutation"
+  readonly intraLedgerUsdPaymentSend: {
+    readonly __typename?: "PaymentSendPayload"
+    readonly status?: PaymentSendResult | null
+    readonly errors: ReadonlyArray<{
+      readonly __typename: "GraphQLApplicationError"
+      readonly message: string
+    }>
+  }
+}
+
 export const CaptchaCreateChallengeDocument = gql`
   mutation captchaCreateChallenge {
     captchaCreateChallenge {
@@ -1450,4 +1482,112 @@ export type DeviceNotificationTokenCreateMutationResult =
 export type DeviceNotificationTokenCreateMutationOptions = Apollo.BaseMutationOptions<
   DeviceNotificationTokenCreateMutation,
   DeviceNotificationTokenCreateMutationVariables
+>
+export const IntraLedgerPaymentSendDocument = gql`
+  mutation intraLedgerPaymentSend($input: IntraLedgerPaymentSendInput!) {
+    intraLedgerPaymentSend(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      status
+    }
+  }
+`
+export type IntraLedgerPaymentSendMutationFn = Apollo.MutationFunction<
+  IntraLedgerPaymentSendMutation,
+  IntraLedgerPaymentSendMutationVariables
+>
+
+/**
+ * __useIntraLedgerPaymentSendMutation__
+ *
+ * To run a mutation, you first call `useIntraLedgerPaymentSendMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useIntraLedgerPaymentSendMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [intraLedgerPaymentSendMutation, { data, loading, error }] = useIntraLedgerPaymentSendMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useIntraLedgerPaymentSendMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    IntraLedgerPaymentSendMutation,
+    IntraLedgerPaymentSendMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    IntraLedgerPaymentSendMutation,
+    IntraLedgerPaymentSendMutationVariables
+  >(IntraLedgerPaymentSendDocument, options)
+}
+export type IntraLedgerPaymentSendMutationHookResult = ReturnType<
+  typeof useIntraLedgerPaymentSendMutation
+>
+export type IntraLedgerPaymentSendMutationResult =
+  Apollo.MutationResult<IntraLedgerPaymentSendMutation>
+export type IntraLedgerPaymentSendMutationOptions = Apollo.BaseMutationOptions<
+  IntraLedgerPaymentSendMutation,
+  IntraLedgerPaymentSendMutationVariables
+>
+export const IntraLedgerUsdPaymentSendDocument = gql`
+  mutation intraLedgerUsdPaymentSend($input: IntraLedgerUsdPaymentSendInput!) {
+    intraLedgerUsdPaymentSend(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      status
+    }
+  }
+`
+export type IntraLedgerUsdPaymentSendMutationFn = Apollo.MutationFunction<
+  IntraLedgerUsdPaymentSendMutation,
+  IntraLedgerUsdPaymentSendMutationVariables
+>
+
+/**
+ * __useIntraLedgerUsdPaymentSendMutation__
+ *
+ * To run a mutation, you first call `useIntraLedgerUsdPaymentSendMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useIntraLedgerUsdPaymentSendMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [intraLedgerUsdPaymentSendMutation, { data, loading, error }] = useIntraLedgerUsdPaymentSendMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useIntraLedgerUsdPaymentSendMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    IntraLedgerUsdPaymentSendMutation,
+    IntraLedgerUsdPaymentSendMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    IntraLedgerUsdPaymentSendMutation,
+    IntraLedgerUsdPaymentSendMutationVariables
+  >(IntraLedgerUsdPaymentSendDocument, options)
+}
+export type IntraLedgerUsdPaymentSendMutationHookResult = ReturnType<
+  typeof useIntraLedgerUsdPaymentSendMutation
+>
+export type IntraLedgerUsdPaymentSendMutationResult =
+  Apollo.MutationResult<IntraLedgerUsdPaymentSendMutation>
+export type IntraLedgerUsdPaymentSendMutationOptions = Apollo.BaseMutationOptions<
+  IntraLedgerUsdPaymentSendMutation,
+  IntraLedgerUsdPaymentSendMutationVariables
 >
