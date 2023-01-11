@@ -32,7 +32,7 @@ describe("Login Flow", async () => {
     await browser.pause(2000)
     await scrollDown()
 
-    await browser.pause(2000)
+    await browser.pause(1000)
     const instanceButton = await $(selector("Galoy Instance Button", "Other"))
     await instanceButton.waitForDisplayed({ timeout: 60000 })
     const { x, y } = await instanceButton.getLocation()
@@ -41,7 +41,7 @@ describe("Login Flow", async () => {
     const midpointX = width / 3 + x
     const midpointY = height / 3 + y
     await browser.touchAction({ action: "tap", x: midpointX, y: midpointY })
-    await browser.pause(8000)
+    await browser.pause(2000)
   })
 
   it("input token", async () => {
@@ -72,14 +72,14 @@ describe("Login Flow", async () => {
     const changeTokenButton = await $(selector("Save Changes", "Button"))
     await changeTokenButton.waitForDisplayed({ timeout })
     await changeTokenButton.click()
-    await browser.pause(8000)
+    await browser.pause(2000)
   })
 
   it("click go back to settings screen", async () => {
     const backButton = await $(goBack())
     await backButton.waitForDisplayed({ timeout })
     await backButton.click()
-    await browser.pause(5000)
+    await browser.pause(1000)
   })
 
   it("are we logged in?", async () => {
@@ -87,15 +87,15 @@ describe("Login Flow", async () => {
     await browser.pause(2000)
     scrollUp()
 
-    let loginSelector
-    if (process.env.E2E_DEVICE === "ios") {
-      loginSelector = '//*[contains(@label,"+")]'
-    } else {
-      loginSelector = `//android.view.ViewGroup[@content-desc="${LL.common.phoneNumber()}"]/android.view.ViewGroup/android.widget.TextView[2]`
-    }
-    const phoneNumberListItem = await $(loginSelector)
-    await phoneNumberListItem.waitForDisplayed({ timeout })
-    expect(phoneNumberListItem.isDisplayed()).toBeTruthy()
+    const accountButton = await $(selector(LL.common.account(), "StaticText"))
+    await accountButton.waitForDisplayed({ timeout })
+    await accountButton.click()
+    const logoutButton = await $(selector(LL.common.logout(), "StaticText"))
+    await logoutButton.waitForDisplayed({ timeout })
+    expect(logoutButton.isDisplayed()).toBeTruthy()
+    const backButton = await $(goBack())
+    await backButton.waitForDisplayed({ timeout })
+    await backButton.click()
     await browser.pause(1000)
   })
 
