@@ -1,5 +1,11 @@
-import { createGaloyServerClient, GaloyGQL } from "@galoymoney/client"
-import { ApolloQueryResult, gql } from "@apollo/client"
+import { GaloyGQL } from "@galoymoney/client"
+import {
+  ApolloClient,
+  ApolloQueryResult,
+  InMemoryCache,
+  createHttpLink,
+  gql,
+} from "@apollo/client"
 import {
   LnNoAmountInvoiceCreateDocument,
   LnNoAmountInvoicePaymentSendDocument,
@@ -10,10 +16,23 @@ const config = {
   graphqlUrl: "https://api.staging.galoy.io/graphql",
 }
 
+const createGaloyServerClient = (config) => (authToken) => {
+  return new ApolloClient({
+    ssrMode: true,
+    link: createHttpLink({
+      uri: config.graphqlUrl,
+      headers: {
+        authorization: authToken ? `Bearer ${authToken}` : "",
+      },
+    }),
+    cache: new InMemoryCache(),
+  })
+}
+
 const authToken = process.env.GALOY_TOKEN_2
 
 export const getInvoice = async () => {
-  const client = createGaloyServerClient({ config })({ authToken })
+  const client = createGaloyServerClient(config)(authToken)
   // get BTC wallet id
   const accountResult: ApolloQueryResult<{ me: GaloyGQL.MeFragment }> =
     await client.query({
@@ -46,7 +65,7 @@ export const getInvoice = async () => {
 }
 
 export const payInvoice = async (invoice: string) => {
-  const client = createGaloyServerClient({ config })({ authToken })
+  const client = createGaloyServerClient(config)(authToken)
   const accountResult: ApolloQueryResult<{ me: GaloyGQL.MeFragment }> =
     await client.query({
       query: gql`
