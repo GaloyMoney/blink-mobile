@@ -20,9 +20,6 @@ const theme = createTheme({
       },
     },
     Input: (props, theme) => ({
-      labelStyle: {
-        display: "none",
-      },
       inputStyle: {
         color: theme.colors.grey5,
       },
@@ -36,9 +33,6 @@ const theme = createTheme({
       leftIconContainerStyle: {
         marginRight: 5,
         opacity: 0.5,
-      },
-      errorStyle: {
-        display: "none",
       },
     }),
     Text: (props, theme) => {

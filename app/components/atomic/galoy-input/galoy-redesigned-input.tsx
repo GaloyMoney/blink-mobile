@@ -22,6 +22,12 @@ const useStyles = makeStyles((theme) => ({
   errorStateStyle: {
     borderColor: theme.colors.error5,
   },
+  labelStyle: {
+    display: "none",
+  },
+  errorStyle: {
+    display: "none",
+  },
 }))
 
 type GaloyInputProps = {
@@ -34,41 +40,44 @@ const GaloyInputFunctions = (
   ref: React.Ref<TextInput> & React.Ref<React.PropsWithChildren<InputProps>>,
 ) => {
   const { theme } = useTheme()
-  const [isFocused, setIsFocused] = React.useState(props.initIsFocused ?? false)
-  const styles = useStyles(props)
+  const { containerStyle, ...remainingProps } = props
+  const styles = useStyles(remainingProps)
+  const [isFocused, setIsFocused] = React.useState(remainingProps.initIsFocused ?? false)
 
   return (
-    <View>
+    <View style={containerStyle}>
       <LabelComponent
-        props={props}
+        props={remainingProps}
         theme={theme}
         isFocused={isFocused}
-        labelStyle={props.labelStyle}
+        labelStyle={remainingProps.labelStyle}
       />
       <Input
-        {...props}
+        {...remainingProps}
+        labelStyle={styles.labelStyle}
+        errorStyle={styles.errorStyle}
         containerStyle={isFocused ? styles.ContainerStyle : null}
         inputContainerStyle={[
-          props.inputContainerStyle,
-          props.errorMessage ? styles.errorStateStyle : null,
+          remainingProps.inputContainerStyle,
+          remainingProps.errorMessage ? styles.errorStateStyle : null,
           isFocused ? styles.inputContainerFocused : null,
         ]}
         placeholderTextColor={theme.colors.grey8}
         onFocus={(e) => {
           setIsFocused(true)
-          props.onFocus?.(e)
+          remainingProps.onFocus?.(e)
         }}
         onBlur={(e) => {
           setIsFocused(false)
-          props.onBlur?.(e)
+          remainingProps.onBlur?.(e)
         }}
         ref={ref}
       />
       <CaptionComponent
-        props={props}
+        props={remainingProps}
         isFocused={isFocused}
         theme={theme}
-        errorStyles={props.errorStyle}
+        errorStyles={remainingProps.errorStyle}
       />
     </View>
   )
