@@ -1,4 +1,3 @@
-import { useMutation } from "@galoymoney/client"
 import * as React from "react"
 import { ListItem } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
@@ -8,6 +7,7 @@ import { palette } from "../../theme/palette"
 import type { ScreenType } from "../../types/jsx"
 import useMainQuery from "@app/hooks/use-main-query"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { useUserUpdateLanguageMutation } from "@app/graphql/generated"
 
 const styles = EStyleSheet.create({
   screenStyle: {
@@ -18,7 +18,7 @@ const styles = EStyleSheet.create({
 export const LanguageScreen: ScreenType = () => {
   const { userPreferredLanguage, me, refetch: refetchMain } = useMainQuery()
 
-  const [updateLanguage] = useMutation.userUpdateLanguage({
+  const [updateLanguage] = useUserUpdateLanguageMutation({
     onCompleted: () => refetchMain(),
   })
   const { LL } = useI18nContext()

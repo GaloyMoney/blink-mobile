@@ -1,6 +1,5 @@
 check-code:
 	yarn check-code
-	yarn prettier:check
 
 unit:
 	yarn test

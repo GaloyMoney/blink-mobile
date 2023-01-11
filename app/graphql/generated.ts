@@ -1341,6 +1341,162 @@ export type UserQuizQuestionUpdateCompletedMutation = {
   }
 }
 
+export type UserUpdateUsernameMutationVariables = Exact<{
+  input: UserUpdateUsernameInput
+}>
+
+export type UserUpdateUsernameMutation = {
+  readonly __typename?: "Mutation"
+  readonly userUpdateUsername: {
+    readonly __typename?: "UserUpdateUsernamePayload"
+    readonly errors: ReadonlyArray<{
+      readonly __typename: "GraphQLApplicationError"
+      readonly message: string
+    }>
+    readonly user?: {
+      readonly __typename: "User"
+      readonly id: string
+      readonly username?: string | null
+    } | null
+  }
+}
+
+export type AccountUpdateDefaultWalletIdMutationVariables = Exact<{
+  input: AccountUpdateDefaultWalletIdInput
+}>
+
+export type AccountUpdateDefaultWalletIdMutation = {
+  readonly __typename?: "Mutation"
+  readonly accountUpdateDefaultWalletId: {
+    readonly __typename?: "AccountUpdateDefaultWalletIdPayload"
+    readonly errors: ReadonlyArray<{
+      readonly __typename: "GraphQLApplicationError"
+      readonly message: string
+    }>
+    readonly account?: {
+      readonly __typename: "ConsumerAccount"
+      readonly id: string
+      readonly defaultWalletId: string
+    } | null
+  }
+}
+
+export type CaptchaRequestAuthCodeMutationVariables = Exact<{
+  input: CaptchaRequestAuthCodeInput
+}>
+
+export type CaptchaRequestAuthCodeMutation = {
+  readonly __typename?: "Mutation"
+  readonly captchaRequestAuthCode: {
+    readonly __typename?: "SuccessPayload"
+    readonly success?: boolean | null
+    readonly errors: ReadonlyArray<{
+      readonly __typename: "GraphQLApplicationError"
+      readonly message: string
+    }>
+  }
+}
+
+export type LnNoAmountInvoiceFeeProbeMutationVariables = Exact<{
+  input: LnNoAmountInvoiceFeeProbeInput
+}>
+
+export type LnNoAmountInvoiceFeeProbeMutation = {
+  readonly __typename?: "Mutation"
+  readonly lnNoAmountInvoiceFeeProbe: {
+    readonly __typename?: "SatAmountPayload"
+    readonly amount?: number | null
+    readonly errors: ReadonlyArray<{
+      readonly __typename: "GraphQLApplicationError"
+      readonly message: string
+    }>
+  }
+}
+
+export type LnInvoiceFeeProbeMutationVariables = Exact<{
+  input: LnInvoiceFeeProbeInput
+}>
+
+export type LnInvoiceFeeProbeMutation = {
+  readonly __typename?: "Mutation"
+  readonly lnInvoiceFeeProbe: {
+    readonly __typename?: "SatAmountPayload"
+    readonly amount?: number | null
+    readonly errors: ReadonlyArray<{
+      readonly __typename: "GraphQLApplicationError"
+      readonly message: string
+    }>
+  }
+}
+
+export type LnUsdInvoiceFeeProbeMutationVariables = Exact<{
+  input: LnUsdInvoiceFeeProbeInput
+}>
+
+export type LnUsdInvoiceFeeProbeMutation = {
+  readonly __typename?: "Mutation"
+  readonly lnUsdInvoiceFeeProbe: {
+    readonly __typename?: "SatAmountPayload"
+    readonly amount?: number | null
+    readonly errors: ReadonlyArray<{
+      readonly __typename: "GraphQLApplicationError"
+      readonly message: string
+    }>
+  }
+}
+
+export type LnNoAmountUsdInvoiceFeeProbeMutationVariables = Exact<{
+  input: LnNoAmountUsdInvoiceFeeProbeInput
+}>
+
+export type LnNoAmountUsdInvoiceFeeProbeMutation = {
+  readonly __typename?: "Mutation"
+  readonly lnNoAmountUsdInvoiceFeeProbe: {
+    readonly __typename?: "CentAmountPayload"
+    readonly amount?: number | null
+    readonly errors: ReadonlyArray<{
+      readonly __typename: "GraphQLApplicationError"
+      readonly message: string
+    }>
+  }
+}
+
+export type UserUpdateLanguageMutationVariables = Exact<{
+  input: UserUpdateLanguageInput
+}>
+
+export type UserUpdateLanguageMutation = {
+  readonly __typename?: "Mutation"
+  readonly userUpdateLanguage: {
+    readonly __typename?: "UserUpdateLanguagePayload"
+    readonly errors: ReadonlyArray<{
+      readonly __typename: "GraphQLApplicationError"
+      readonly message: string
+    }>
+    readonly user?: {
+      readonly __typename: "User"
+      readonly id: string
+      readonly language: string
+    } | null
+  }
+}
+
+export type UserLoginMutationVariables = Exact<{
+  input: UserLoginInput
+}>
+
+export type UserLoginMutation = {
+  readonly __typename?: "Mutation"
+  readonly userLogin: {
+    readonly __typename?: "AuthTokenPayload"
+    readonly authToken?: string | null
+    readonly errors: ReadonlyArray<{
+      readonly __typename: "GraphQLApplicationError"
+      readonly message: string
+    }>
+  }
+}
+
 export const CaptchaCreateChallengeDocument = gql`
   mutation captchaCreateChallenge {
     captchaCreateChallenge {
@@ -1676,4 +1832,496 @@ export type UserQuizQuestionUpdateCompletedMutationResult =
 export type UserQuizQuestionUpdateCompletedMutationOptions = Apollo.BaseMutationOptions<
   UserQuizQuestionUpdateCompletedMutation,
   UserQuizQuestionUpdateCompletedMutationVariables
+>
+export const UserUpdateUsernameDocument = gql`
+  mutation userUpdateUsername($input: UserUpdateUsernameInput!) {
+    userUpdateUsername(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      user {
+        __typename
+        id
+        username
+      }
+    }
+  }
+`
+export type UserUpdateUsernameMutationFn = Apollo.MutationFunction<
+  UserUpdateUsernameMutation,
+  UserUpdateUsernameMutationVariables
+>
+
+/**
+ * __useUserUpdateUsernameMutation__
+ *
+ * To run a mutation, you first call `useUserUpdateUsernameMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserUpdateUsernameMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userUpdateUsernameMutation, { data, loading, error }] = useUserUpdateUsernameMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUserUpdateUsernameMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UserUpdateUsernameMutation,
+    UserUpdateUsernameMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    UserUpdateUsernameMutation,
+    UserUpdateUsernameMutationVariables
+  >(UserUpdateUsernameDocument, options)
+}
+export type UserUpdateUsernameMutationHookResult = ReturnType<
+  typeof useUserUpdateUsernameMutation
+>
+export type UserUpdateUsernameMutationResult =
+  Apollo.MutationResult<UserUpdateUsernameMutation>
+export type UserUpdateUsernameMutationOptions = Apollo.BaseMutationOptions<
+  UserUpdateUsernameMutation,
+  UserUpdateUsernameMutationVariables
+>
+export const AccountUpdateDefaultWalletIdDocument = gql`
+  mutation accountUpdateDefaultWalletId($input: AccountUpdateDefaultWalletIdInput!) {
+    accountUpdateDefaultWalletId(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      account {
+        __typename
+        id
+        defaultWalletId
+      }
+    }
+  }
+`
+export type AccountUpdateDefaultWalletIdMutationFn = Apollo.MutationFunction<
+  AccountUpdateDefaultWalletIdMutation,
+  AccountUpdateDefaultWalletIdMutationVariables
+>
+
+/**
+ * __useAccountUpdateDefaultWalletIdMutation__
+ *
+ * To run a mutation, you first call `useAccountUpdateDefaultWalletIdMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAccountUpdateDefaultWalletIdMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [accountUpdateDefaultWalletIdMutation, { data, loading, error }] = useAccountUpdateDefaultWalletIdMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useAccountUpdateDefaultWalletIdMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    AccountUpdateDefaultWalletIdMutation,
+    AccountUpdateDefaultWalletIdMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    AccountUpdateDefaultWalletIdMutation,
+    AccountUpdateDefaultWalletIdMutationVariables
+  >(AccountUpdateDefaultWalletIdDocument, options)
+}
+export type AccountUpdateDefaultWalletIdMutationHookResult = ReturnType<
+  typeof useAccountUpdateDefaultWalletIdMutation
+>
+export type AccountUpdateDefaultWalletIdMutationResult =
+  Apollo.MutationResult<AccountUpdateDefaultWalletIdMutation>
+export type AccountUpdateDefaultWalletIdMutationOptions = Apollo.BaseMutationOptions<
+  AccountUpdateDefaultWalletIdMutation,
+  AccountUpdateDefaultWalletIdMutationVariables
+>
+export const CaptchaRequestAuthCodeDocument = gql`
+  mutation captchaRequestAuthCode($input: CaptchaRequestAuthCodeInput!) {
+    captchaRequestAuthCode(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      success
+    }
+  }
+`
+export type CaptchaRequestAuthCodeMutationFn = Apollo.MutationFunction<
+  CaptchaRequestAuthCodeMutation,
+  CaptchaRequestAuthCodeMutationVariables
+>
+
+/**
+ * __useCaptchaRequestAuthCodeMutation__
+ *
+ * To run a mutation, you first call `useCaptchaRequestAuthCodeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCaptchaRequestAuthCodeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [captchaRequestAuthCodeMutation, { data, loading, error }] = useCaptchaRequestAuthCodeMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCaptchaRequestAuthCodeMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CaptchaRequestAuthCodeMutation,
+    CaptchaRequestAuthCodeMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    CaptchaRequestAuthCodeMutation,
+    CaptchaRequestAuthCodeMutationVariables
+  >(CaptchaRequestAuthCodeDocument, options)
+}
+export type CaptchaRequestAuthCodeMutationHookResult = ReturnType<
+  typeof useCaptchaRequestAuthCodeMutation
+>
+export type CaptchaRequestAuthCodeMutationResult =
+  Apollo.MutationResult<CaptchaRequestAuthCodeMutation>
+export type CaptchaRequestAuthCodeMutationOptions = Apollo.BaseMutationOptions<
+  CaptchaRequestAuthCodeMutation,
+  CaptchaRequestAuthCodeMutationVariables
+>
+export const LnNoAmountInvoiceFeeProbeDocument = gql`
+  mutation lnNoAmountInvoiceFeeProbe($input: LnNoAmountInvoiceFeeProbeInput!) {
+    lnNoAmountInvoiceFeeProbe(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      amount
+    }
+  }
+`
+export type LnNoAmountInvoiceFeeProbeMutationFn = Apollo.MutationFunction<
+  LnNoAmountInvoiceFeeProbeMutation,
+  LnNoAmountInvoiceFeeProbeMutationVariables
+>
+
+/**
+ * __useLnNoAmountInvoiceFeeProbeMutation__
+ *
+ * To run a mutation, you first call `useLnNoAmountInvoiceFeeProbeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLnNoAmountInvoiceFeeProbeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [lnNoAmountInvoiceFeeProbeMutation, { data, loading, error }] = useLnNoAmountInvoiceFeeProbeMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useLnNoAmountInvoiceFeeProbeMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    LnNoAmountInvoiceFeeProbeMutation,
+    LnNoAmountInvoiceFeeProbeMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    LnNoAmountInvoiceFeeProbeMutation,
+    LnNoAmountInvoiceFeeProbeMutationVariables
+  >(LnNoAmountInvoiceFeeProbeDocument, options)
+}
+export type LnNoAmountInvoiceFeeProbeMutationHookResult = ReturnType<
+  typeof useLnNoAmountInvoiceFeeProbeMutation
+>
+export type LnNoAmountInvoiceFeeProbeMutationResult =
+  Apollo.MutationResult<LnNoAmountInvoiceFeeProbeMutation>
+export type LnNoAmountInvoiceFeeProbeMutationOptions = Apollo.BaseMutationOptions<
+  LnNoAmountInvoiceFeeProbeMutation,
+  LnNoAmountInvoiceFeeProbeMutationVariables
+>
+export const LnInvoiceFeeProbeDocument = gql`
+  mutation lnInvoiceFeeProbe($input: LnInvoiceFeeProbeInput!) {
+    lnInvoiceFeeProbe(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      amount
+    }
+  }
+`
+export type LnInvoiceFeeProbeMutationFn = Apollo.MutationFunction<
+  LnInvoiceFeeProbeMutation,
+  LnInvoiceFeeProbeMutationVariables
+>
+
+/**
+ * __useLnInvoiceFeeProbeMutation__
+ *
+ * To run a mutation, you first call `useLnInvoiceFeeProbeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLnInvoiceFeeProbeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [lnInvoiceFeeProbeMutation, { data, loading, error }] = useLnInvoiceFeeProbeMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useLnInvoiceFeeProbeMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    LnInvoiceFeeProbeMutation,
+    LnInvoiceFeeProbeMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    LnInvoiceFeeProbeMutation,
+    LnInvoiceFeeProbeMutationVariables
+  >(LnInvoiceFeeProbeDocument, options)
+}
+export type LnInvoiceFeeProbeMutationHookResult = ReturnType<
+  typeof useLnInvoiceFeeProbeMutation
+>
+export type LnInvoiceFeeProbeMutationResult =
+  Apollo.MutationResult<LnInvoiceFeeProbeMutation>
+export type LnInvoiceFeeProbeMutationOptions = Apollo.BaseMutationOptions<
+  LnInvoiceFeeProbeMutation,
+  LnInvoiceFeeProbeMutationVariables
+>
+export const LnUsdInvoiceFeeProbeDocument = gql`
+  mutation lnUsdInvoiceFeeProbe($input: LnUsdInvoiceFeeProbeInput!) {
+    lnUsdInvoiceFeeProbe(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      amount
+    }
+  }
+`
+export type LnUsdInvoiceFeeProbeMutationFn = Apollo.MutationFunction<
+  LnUsdInvoiceFeeProbeMutation,
+  LnUsdInvoiceFeeProbeMutationVariables
+>
+
+/**
+ * __useLnUsdInvoiceFeeProbeMutation__
+ *
+ * To run a mutation, you first call `useLnUsdInvoiceFeeProbeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLnUsdInvoiceFeeProbeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [lnUsdInvoiceFeeProbeMutation, { data, loading, error }] = useLnUsdInvoiceFeeProbeMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useLnUsdInvoiceFeeProbeMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    LnUsdInvoiceFeeProbeMutation,
+    LnUsdInvoiceFeeProbeMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    LnUsdInvoiceFeeProbeMutation,
+    LnUsdInvoiceFeeProbeMutationVariables
+  >(LnUsdInvoiceFeeProbeDocument, options)
+}
+export type LnUsdInvoiceFeeProbeMutationHookResult = ReturnType<
+  typeof useLnUsdInvoiceFeeProbeMutation
+>
+export type LnUsdInvoiceFeeProbeMutationResult =
+  Apollo.MutationResult<LnUsdInvoiceFeeProbeMutation>
+export type LnUsdInvoiceFeeProbeMutationOptions = Apollo.BaseMutationOptions<
+  LnUsdInvoiceFeeProbeMutation,
+  LnUsdInvoiceFeeProbeMutationVariables
+>
+export const LnNoAmountUsdInvoiceFeeProbeDocument = gql`
+  mutation lnNoAmountUsdInvoiceFeeProbe($input: LnNoAmountUsdInvoiceFeeProbeInput!) {
+    lnNoAmountUsdInvoiceFeeProbe(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      amount
+    }
+  }
+`
+export type LnNoAmountUsdInvoiceFeeProbeMutationFn = Apollo.MutationFunction<
+  LnNoAmountUsdInvoiceFeeProbeMutation,
+  LnNoAmountUsdInvoiceFeeProbeMutationVariables
+>
+
+/**
+ * __useLnNoAmountUsdInvoiceFeeProbeMutation__
+ *
+ * To run a mutation, you first call `useLnNoAmountUsdInvoiceFeeProbeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLnNoAmountUsdInvoiceFeeProbeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [lnNoAmountUsdInvoiceFeeProbeMutation, { data, loading, error }] = useLnNoAmountUsdInvoiceFeeProbeMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useLnNoAmountUsdInvoiceFeeProbeMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    LnNoAmountUsdInvoiceFeeProbeMutation,
+    LnNoAmountUsdInvoiceFeeProbeMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    LnNoAmountUsdInvoiceFeeProbeMutation,
+    LnNoAmountUsdInvoiceFeeProbeMutationVariables
+  >(LnNoAmountUsdInvoiceFeeProbeDocument, options)
+}
+export type LnNoAmountUsdInvoiceFeeProbeMutationHookResult = ReturnType<
+  typeof useLnNoAmountUsdInvoiceFeeProbeMutation
+>
+export type LnNoAmountUsdInvoiceFeeProbeMutationResult =
+  Apollo.MutationResult<LnNoAmountUsdInvoiceFeeProbeMutation>
+export type LnNoAmountUsdInvoiceFeeProbeMutationOptions = Apollo.BaseMutationOptions<
+  LnNoAmountUsdInvoiceFeeProbeMutation,
+  LnNoAmountUsdInvoiceFeeProbeMutationVariables
+>
+export const UserUpdateLanguageDocument = gql`
+  mutation userUpdateLanguage($input: UserUpdateLanguageInput!) {
+    userUpdateLanguage(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      user {
+        __typename
+        id
+        language
+      }
+    }
+  }
+`
+export type UserUpdateLanguageMutationFn = Apollo.MutationFunction<
+  UserUpdateLanguageMutation,
+  UserUpdateLanguageMutationVariables
+>
+
+/**
+ * __useUserUpdateLanguageMutation__
+ *
+ * To run a mutation, you first call `useUserUpdateLanguageMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserUpdateLanguageMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userUpdateLanguageMutation, { data, loading, error }] = useUserUpdateLanguageMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUserUpdateLanguageMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UserUpdateLanguageMutation,
+    UserUpdateLanguageMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    UserUpdateLanguageMutation,
+    UserUpdateLanguageMutationVariables
+  >(UserUpdateLanguageDocument, options)
+}
+export type UserUpdateLanguageMutationHookResult = ReturnType<
+  typeof useUserUpdateLanguageMutation
+>
+export type UserUpdateLanguageMutationResult =
+  Apollo.MutationResult<UserUpdateLanguageMutation>
+export type UserUpdateLanguageMutationOptions = Apollo.BaseMutationOptions<
+  UserUpdateLanguageMutation,
+  UserUpdateLanguageMutationVariables
+>
+export const UserLoginDocument = gql`
+  mutation userLogin($input: UserLoginInput!) {
+    userLogin(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      authToken
+    }
+  }
+`
+export type UserLoginMutationFn = Apollo.MutationFunction<
+  UserLoginMutation,
+  UserLoginMutationVariables
+>
+
+/**
+ * __useUserLoginMutation__
+ *
+ * To run a mutation, you first call `useUserLoginMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserLoginMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userLoginMutation, { data, loading, error }] = useUserLoginMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUserLoginMutation(
+  baseOptions?: Apollo.MutationHookOptions<UserLoginMutation, UserLoginMutationVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<UserLoginMutation, UserLoginMutationVariables>(
+    UserLoginDocument,
+    options,
+  )
+}
+export type UserLoginMutationHookResult = ReturnType<typeof useUserLoginMutation>
+export type UserLoginMutationResult = Apollo.MutationResult<UserLoginMutation>
+export type UserLoginMutationOptions = Apollo.BaseMutationOptions<
+  UserLoginMutation,
+  UserLoginMutationVariables
 >
