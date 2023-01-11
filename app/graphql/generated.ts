@@ -1859,15 +1859,6 @@ export type TransactionListForDefaultAccountQuery = {
   } | null
 }
 
-export type UserDefaultWalletIdQueryVariables = Exact<{
-  username: Scalars["Username"]
-}>
-
-export type UserDefaultWalletIdQuery = {
-  readonly __typename?: "Query"
-  readonly userDefaultWalletId: string
-}
-
 export type OnChainTxFeeQueryVariables = Exact<{
   walletId: Scalars["WalletId"]
   address: Scalars["OnChainAddress"]
@@ -2021,6 +2012,39 @@ export type MainQueryQuery = {
     readonly currentSupported: number
     readonly minSupported: number
   } | null> | null
+}
+
+export type AccountLimitsQueryVariables = Exact<{ [key: string]: never }>
+
+export type AccountLimitsQuery = {
+  readonly __typename?: "Query"
+  readonly me?: {
+    readonly __typename?: "User"
+    readonly defaultAccount: {
+      readonly __typename?: "ConsumerAccount"
+      readonly limits: {
+        readonly __typename?: "AccountLimits"
+        readonly withdrawal: ReadonlyArray<{
+          readonly __typename: "OneDayAccountLimit"
+          readonly totalLimit: number
+          readonly remainingLimit?: number | null
+          readonly interval?: number | null
+        }>
+        readonly internalSend: ReadonlyArray<{
+          readonly __typename: "OneDayAccountLimit"
+          readonly totalLimit: number
+          readonly remainingLimit?: number | null
+          readonly interval?: number | null
+        }>
+        readonly convert: ReadonlyArray<{
+          readonly __typename: "OneDayAccountLimit"
+          readonly totalLimit: number
+          readonly remainingLimit?: number | null
+          readonly interval?: number | null
+        }>
+      }
+    }
+  } | null
 }
 
 export const TransactionListFragmentDoc = gql`
@@ -3551,62 +3575,6 @@ export type TransactionListForDefaultAccountQueryResult = Apollo.QueryResult<
   TransactionListForDefaultAccountQuery,
   TransactionListForDefaultAccountQueryVariables
 >
-export const UserDefaultWalletIdDocument = gql`
-  query userDefaultWalletId($username: Username!) {
-    userDefaultWalletId(username: $username)
-  }
-`
-
-/**
- * __useUserDefaultWalletIdQuery__
- *
- * To run a query within a React component, call `useUserDefaultWalletIdQuery` and pass it any options that fit your needs.
- * When your component renders, `useUserDefaultWalletIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useUserDefaultWalletIdQuery({
- *   variables: {
- *      username: // value for 'username'
- *   },
- * });
- */
-export function useUserDefaultWalletIdQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    UserDefaultWalletIdQuery,
-    UserDefaultWalletIdQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useQuery<UserDefaultWalletIdQuery, UserDefaultWalletIdQueryVariables>(
-    UserDefaultWalletIdDocument,
-    options,
-  )
-}
-export function useUserDefaultWalletIdLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    UserDefaultWalletIdQuery,
-    UserDefaultWalletIdQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useLazyQuery<UserDefaultWalletIdQuery, UserDefaultWalletIdQueryVariables>(
-    UserDefaultWalletIdDocument,
-    options,
-  )
-}
-export type UserDefaultWalletIdQueryHookResult = ReturnType<
-  typeof useUserDefaultWalletIdQuery
->
-export type UserDefaultWalletIdLazyQueryHookResult = ReturnType<
-  typeof useUserDefaultWalletIdLazyQuery
->
-export type UserDefaultWalletIdQueryResult = Apollo.QueryResult<
-  UserDefaultWalletIdQuery,
-  UserDefaultWalletIdQueryVariables
->
 export const OnChainTxFeeDocument = gql`
   query onChainTxFee(
     $walletId: WalletId!
@@ -3819,4 +3787,77 @@ export type MainQueryLazyQueryHookResult = ReturnType<typeof useMainQueryLazyQue
 export type MainQueryQueryResult = Apollo.QueryResult<
   MainQueryQuery,
   MainQueryQueryVariables
+>
+export const AccountLimitsDocument = gql`
+  query accountLimits {
+    me {
+      defaultAccount {
+        limits {
+          withdrawal {
+            totalLimit
+            remainingLimit
+            interval
+            __typename
+          }
+          internalSend {
+            totalLimit
+            remainingLimit
+            interval
+            __typename
+          }
+          convert {
+            totalLimit
+            remainingLimit
+            interval
+            __typename
+          }
+        }
+      }
+    }
+  }
+`
+
+/**
+ * __useAccountLimitsQuery__
+ *
+ * To run a query within a React component, call `useAccountLimitsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAccountLimitsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAccountLimitsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAccountLimitsQuery(
+  baseOptions?: Apollo.QueryHookOptions<AccountLimitsQuery, AccountLimitsQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<AccountLimitsQuery, AccountLimitsQueryVariables>(
+    AccountLimitsDocument,
+    options,
+  )
+}
+export function useAccountLimitsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    AccountLimitsQuery,
+    AccountLimitsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<AccountLimitsQuery, AccountLimitsQueryVariables>(
+    AccountLimitsDocument,
+    options,
+  )
+}
+export type AccountLimitsQueryHookResult = ReturnType<typeof useAccountLimitsQuery>
+export type AccountLimitsLazyQueryHookResult = ReturnType<
+  typeof useAccountLimitsLazyQuery
+>
+export type AccountLimitsQueryResult = Apollo.QueryResult<
+  AccountLimitsQuery,
+  AccountLimitsQueryVariables
 >

@@ -124,5 +124,32 @@ export default gql`
     }
   }
 
+  query accountLimits {
+    me {
+      defaultAccount {
+        limits {
+          withdrawal {
+            totalLimit
+            remainingLimit
+            interval
+            __typename
+          }
+          internalSend {
+            totalLimit
+            remainingLimit
+            interval
+            __typename
+          }
+          convert {
+            totalLimit
+            remainingLimit
+            interval
+            __typename
+          }
+        }
+      }
+    }
+  }
+
   ${Fragments}
 `
