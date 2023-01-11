@@ -19,6 +19,8 @@ import Clipboard from "@react-native-community/clipboard"
 import { GaloyInstanceNames, GALOY_INSTANCES } from "@app/config/galoy-instances"
 import CurrencyPicker from "react-native-currency-picker"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+import { toastShow } from "@app/utils/toast"
+import { i18nObject } from "@app/i18n/i18n-util"
 
 const styles = EStyleSheet.create({
   button: {
@@ -145,6 +147,17 @@ export const DebugScreen: ScreenType = () => {
               onPress={() => {
                 crashlytics().log("Testing crash")
                 crashlytics().crash()
+              }}
+            />
+            <Button
+              title="Error toast with translation"
+              containerStyle={styles.button}
+              {...testProps("Error Toast")}
+              onPress={() => {
+                toastShow({
+                  message: (translations) => translations.errors.generic(),
+                  currentTranslation: i18nObject("es"),
+                })
               }}
             />
           </>

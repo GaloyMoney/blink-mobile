@@ -553,7 +553,9 @@ const SendBitcoinDestinationScreen = ({
                 crashlytics().recordError(err)
                 toastShow({
                   type: "error",
-                  message: LL.SendBitcoinDestinationScreen.clipboardError(),
+                  message: (translations) =>
+                    translations.SendBitcoinDestinationScreen.clipboardError(),
+                  currentTranslation: LL,
                 })
               }
             }}

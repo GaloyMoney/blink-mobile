@@ -123,8 +123,10 @@ export const MerchantsDropdown = ({ username }: { username: string }) => {
             onPress={() => {
               Clipboard.setString(posUrl)
               toastShow({
-                message: LL.GaloyAddressScreen.copiedCashRegisterToClipboard(),
+                message: (translations) =>
+                  translations.GaloyAddressScreen.copiedCashRegisterToClipboard(),
                 type: "success",
+                currentTranslation: LL,
               })
             }}
           >
@@ -181,8 +183,10 @@ export const MerchantsDropdown = ({ username }: { username: string }) => {
             onPress={() => {
               Clipboard.setString(payCodeUrl)
               toastShow({
-                message: LL.GaloyAddressScreen.copiedPaycodeToClipboard(),
+                message: (translations) =>
+                  translations.GaloyAddressScreen.copiedPaycodeToClipboard(),
                 type: "success",
+                currentTranslation: LL,
               })
             }}
           >

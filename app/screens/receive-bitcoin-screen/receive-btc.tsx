@@ -328,7 +328,8 @@ const ReceiveBtc = () => {
   const copyToClipboard = useCallback(() => {
     copyPaymentInfoToClipboard(paymentFullUri)
     toastShow({
-      message: LL.ReceiveBitcoinScreen.copyClipboard(),
+      message: (translations) => translations.ReceiveBitcoinScreen.copyClipboard(),
+      currentTranslation: LL,
       type: "success",
     })
   }, [paymentFullUri, LL])

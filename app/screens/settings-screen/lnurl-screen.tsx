@@ -77,8 +77,9 @@ export const LnurlScreen: ScreenType = ({ route }: Props) => {
   const copyToClipboard = (str) => {
     copyPaymentInfoToClipboard(str)
     toastShow({
-      message: LL.SettingsScreen.copyClipboardLnurl(),
+      message: (translations) => translations.SettingsScreen.copyClipboardLnurl(),
       type: "success",
+      currentTranslation: LL,
     })
   }
 

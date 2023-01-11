@@ -4,8 +4,8 @@ import { ComponentType } from "../../types/jsx"
 import { NetworkErrorCode } from "./network-error-code"
 import { toastShow } from "@app/utils/toast"
 import useLogout from "@app/hooks/use-logout"
-import { useI18nContext } from "@app/i18n/i18n-react"
 import { useEffect } from "react"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 export const GlobalErrorToast: ComponentType = () => {
   const status = useApolloNetworkStatus()
@@ -31,7 +31,10 @@ export const GlobalErrorToast: ComponentType = () => {
 
     if (networkError.statusCode >= 500) {
       // TODO translation
-      toastShow({ message: LL.errors.network.server() })
+      toastShow({
+        message: (translations) => translations.errors.network.server(),
+        currentTranslation: LL,
+      })
     }
 
     if (networkError.statusCode >= 400 && networkError.statusCode < 500) {
@@ -47,19 +50,29 @@ export const GlobalErrorToast: ComponentType = () => {
 
       switch (errorCode) {
         case NetworkErrorCode.InvalidAuthentication:
-          toastShow({ message: LL.common.reauth(), _onHide: () => logout() })
+          toastShow({
+            message: (translations) => translations.common.reauth(),
+            onHide: () => logout(),
+            currentTranslation: LL,
+          })
           break
 
         default:
           // TODO translation
-          toastShow({ message: LL.errors.network.request() })
+          toastShow({
+            message: (translations) => translations.errors.network.request(),
+            currentTranslation: LL,
+          })
           break
       }
     }
 
     if (networkError.message === "Network request failed") {
       // TODO translation
-      toastShow({ message: LL.errors.network.connection() })
+      toastShow({
+        message: (translations) => translations.errors.network.connection(),
+        currentTranslation: LL,
+      })
     }
 
     if (status.mutationError) {

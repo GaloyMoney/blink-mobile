@@ -41,7 +41,6 @@ import { saveString, loadString } from "./utils/storage"
 import useToken, { getAuthorizationHeader } from "./hooks/use-token"
 import ErrorBoundary from "react-native-error-boundary"
 import { ErrorScreen } from "./screens/error-screen"
-import Toast from "react-native-toast-message"
 // import moment locale files so we can display dates in the user's language
 import "moment/locale/es"
 import "moment/locale/fr-ca"
@@ -57,6 +56,7 @@ import { ThemeProvider } from "@rneui/themed"
 import theme from "./rne-theme/theme"
 import { createClient } from "graphql-ws"
 import { GraphQLWsLink } from "@apollo/client/link/subscriptions"
+import { GaloyToast } from "./components/galoy-toast"
 
 export const BUILD_VERSION = "build_version"
 
@@ -322,8 +322,9 @@ export const App = (): JSX.Element => {
                       if (routeName.current !== currentRouteName && currentRouteName) {
                         /* eslint-disable camelcase */
                         analytics().logScreenView({
-                          screen_name: currentRouteName + "Manual",
-                          screen_class: currentRouteName + "Manual",
+                          screen_name: currentRouteName,
+                          screen_class: currentRouteName,
+                          is_manual_log: true,
                         })
                         routeName.current = currentRouteName
                       }
@@ -332,7 +333,7 @@ export const App = (): JSX.Element => {
                     <RootSiblingParent>
                       <GlobalErrorToast />
                       <RootStack />
-                      <Toast />
+                      <GaloyToast />
                     </RootSiblingParent>
                   </NavigationContainer>
                 </ErrorBoundary>

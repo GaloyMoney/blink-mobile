@@ -82,7 +82,10 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
 
   if (error) {
     console.error(error)
-    toastShow({ message: LL.common.transactionsError() })
+    toastShow({
+      message: (translations) => translations.common.transactionsError(),
+      currentTranslation: LL,
+    })
     return null
   }
 
