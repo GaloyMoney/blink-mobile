@@ -155,6 +155,64 @@ export default gql`
     userDefaultWalletId(username: $username)
   }
 
+  query mainQuery($hasToken: Boolean!) {
+    globals {
+      nodesIds
+      network
+    }
+    quizQuestions {
+      id
+      earnAmount
+    }
+    btcPrice {
+      __typename
+      base
+      offset
+      currencyUnit
+      formattedAmount
+    }
+    me @include(if: $hasToken) {
+      id
+      language
+      username
+      phone
+      quizQuestions {
+        question {
+          id
+          earnAmount
+        }
+        completed
+      }
+      defaultAccount {
+        id
+        defaultWalletId
+        transactions(first: 3) {
+          ...TransactionList
+        }
+        wallets {
+          id
+          balance
+          walletCurrency
+        }
+      }
+    }
+    mobileVersions {
+      platform
+      currentSupported
+      minSupported
+    }
+  }
+
+  query rootStack($hasToken: Boolean!) {
+    me @include(if: $hasToken) {
+      username
+      id
+    }
+    globals {
+      network
+    }
+  }
+
   # test only. could be in a dedicated file
   query wallets {
     me {

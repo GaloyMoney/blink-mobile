@@ -1,6 +1,5 @@
 import { InMemoryCache } from "@apollo/client"
-import { MAIN_QUERY } from "@app/graphql/query"
-import { PriceCacheDocument } from "@app/graphql/generated"
+import { PriceCacheDocument, MainQueryDocument } from "@app/graphql/generated"
 
 export const cacheWallet = (cache: InMemoryCache, balance: number): void => {
   // TODO: figure out why no tests are failing with these commented out!!
@@ -65,7 +64,7 @@ export const cacheWallet = (cache: InMemoryCache, balance: number): void => {
   // ]
 
   cache.writeQuery({
-    query: MAIN_QUERY,
+    query: MainQueryDocument,
     variables: { hasToken: true },
     data: {
       globals: {

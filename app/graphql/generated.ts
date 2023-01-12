@@ -2217,6 +2217,20 @@ export type UserDefaultWalletIdQuery = {
   readonly userDefaultWalletId: string
 }
 
+export type RootStackQueryVariables = Exact<{
+  hasToken: Scalars["Boolean"]
+}>
+
+export type RootStackQuery = {
+  readonly __typename?: "Query"
+  readonly me?: {
+    readonly __typename?: "User"
+    readonly username?: string | null
+    readonly id: string
+  } | null
+  readonly globals?: { readonly __typename?: "Globals"; readonly network: Network } | null
+}
+
 export type WalletsQueryVariables = Exact<{ [key: string]: never }>
 
 export type WalletsQuery = {
@@ -4352,6 +4366,58 @@ export type UserDefaultWalletIdLazyQueryHookResult = ReturnType<
 export type UserDefaultWalletIdQueryResult = Apollo.QueryResult<
   UserDefaultWalletIdQuery,
   UserDefaultWalletIdQueryVariables
+>
+export const RootStackDocument = gql`
+  query rootStack($hasToken: Boolean!) {
+    me @include(if: $hasToken) {
+      username
+      id
+    }
+    globals {
+      network
+    }
+  }
+`
+
+/**
+ * __useRootStackQuery__
+ *
+ * To run a query within a React component, call `useRootStackQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRootStackQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useRootStackQuery({
+ *   variables: {
+ *      hasToken: // value for 'hasToken'
+ *   },
+ * });
+ */
+export function useRootStackQuery(
+  baseOptions: Apollo.QueryHookOptions<RootStackQuery, RootStackQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<RootStackQuery, RootStackQueryVariables>(
+    RootStackDocument,
+    options,
+  )
+}
+export function useRootStackLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<RootStackQuery, RootStackQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<RootStackQuery, RootStackQueryVariables>(
+    RootStackDocument,
+    options,
+  )
+}
+export type RootStackQueryHookResult = ReturnType<typeof useRootStackQuery>
+export type RootStackLazyQueryHookResult = ReturnType<typeof useRootStackLazyQuery>
+export type RootStackQueryResult = Apollo.QueryResult<
+  RootStackQuery,
+  RootStackQueryVariables
 >
 export const WalletsDocument = gql`
   query wallets {
