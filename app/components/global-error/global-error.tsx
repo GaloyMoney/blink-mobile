@@ -1,13 +1,11 @@
 import { ServerError, ServerParseError } from "@apollo/client"
-import { createNetworkStatusNotifier } from "react-apollo-network-status"
+import { useApolloNetworkStatus } from "../../app"
 import { ComponentType } from "../../types/jsx"
 import { NetworkErrorCode } from "./network-error-code"
 import { toastShow } from "@app/utils/toast"
 import useLogout from "@app/hooks/use-logout"
 import { useEffect } from "react"
 import { useI18nContext } from "@app/i18n/i18n-react"
-
-export const { useApolloNetworkStatus } = createNetworkStatusNotifier()
 
 export const GlobalErrorToast: ComponentType = () => {
   const status = useApolloNetworkStatus()

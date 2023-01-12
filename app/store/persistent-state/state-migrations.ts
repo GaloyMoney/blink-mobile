@@ -1,5 +1,7 @@
-import { GaloyInstance, GALOY_INSTANCES } from "@app/config"
-import { decodeToken } from "@app/hooks/use-token"
+import jwtDecode from "jwt-decode"
+
+import { GALOY_INSTANCES, GaloyInstance } from "@app/config"
+import { Network } from "@app/graphql/generated"
 import { defaultTheme, Theme } from "@app/theme/default-theme"
 import { loadString } from "@app/utils/storage"
 
@@ -39,6 +41,16 @@ type _PersistentState_4 = {
   galoyAuthToken: string
   isAnalyticsEnabled: boolean
   theme?: Theme
+}
+
+const decodeToken = (token: string): { uid: string; network: Network } | null => {
+  try {
+    const { uid, network } = jwtDecode<JwtPayload>(token)
+    return { uid, network }
+  } catch (err) {
+    console.debug(err.toString())
+    return null
+  }
 }
 
 const migrate4ToCurrent = (state: _PersistentState_4): Promise<PersistentState> =>

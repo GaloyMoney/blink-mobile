@@ -60,7 +60,8 @@ import { GaloyToast } from "./components/galoy-toast"
 import { InitWalletDocument } from "./graphql/generated"
 import { BUILD_VERSION } from "@app/config"
 
-const { link: linkNetworkStatusNotifier } = createNetworkStatusNotifier()
+export const { link: linkNetworkStatusNotifier, useApolloNetworkStatus } =
+  createNetworkStatusNotifier()
 
 const entireScreenWidth = Dimensions.get("window").width
 EStyleSheet.build({
