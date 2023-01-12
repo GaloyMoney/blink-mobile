@@ -1,34 +1,48 @@
 import * as React from "react"
-import { StyleProp, Text, TextInput, View, ViewStyle } from "react-native"
+import { TextInput, View } from "react-native"
 
-import { Input, InputProps, makeStyles, useTheme } from "@rneui/themed"
+import { Input, InputProps, Text, makeStyles, useTheme } from "@rneui/themed"
 
 import { ComponentType } from "../../../types/jsx"
 
-const useStyles = makeStyles((theme) => ({
-  ContainerStyle: {
-    paddingBottom: 3,
-    paddingTop: 3,
-    marginLeft: 0,
-    borderRadius: 10,
-    backgroundColor: theme.colors.primary9,
-  },
-  inputContainerFocused: {
-    borderColor: theme.colors.primary5,
-    backgroundColor: theme.colors.white,
-    marginLeft: -7,
-    marginRight: -7,
-  },
-  errorStateStyle: {
-    borderColor: theme.colors.error5,
-  },
-  labelStyle: {
-    display: "none",
-  },
-  errorStyle: {
-    display: "none",
-  },
-}))
+const useStyles = makeStyles(
+  (theme, { props, isFocused }: { props: GaloyInputProps; isFocused: boolean }) => ({
+    ContainerStyle: {
+      paddingBottom: 3,
+      paddingTop: 3,
+      marginLeft: 0,
+      borderRadius: 10,
+      backgroundColor: theme.colors.primary9,
+    },
+    inputContainerFocused: {
+      borderColor: theme.colors.primary5,
+      backgroundColor: theme.colors.white,
+      marginLeft: -7,
+      marginRight: -7,
+    },
+    errorStateStyle: {
+      borderColor: theme.colors.error5,
+    },
+    labelComponentStyles: {
+      marginBottom: 9,
+      fontWeight: "400",
+      color: theme.colors.grey5,
+      marginLeft: isFocused ? 2 : 10,
+    },
+    errorMessageStyles: {
+      color: props.caption ? theme.colors.grey5 : theme.colors.error5,
+      textTransform: "capitalize",
+      marginTop: 9,
+      marginLeft: isFocused ? 2 : 10,
+    },
+    labelStyle: {
+      display: "none",
+    },
+    errorStyle: {
+      display: "none",
+    },
+  }),
+)
 
 type GaloyInputProps = {
   initIsFocused?: boolean
@@ -41,15 +55,14 @@ const GaloyInputFunctions = (
 ) => {
   const { theme } = useTheme()
   const { containerStyle, ...remainingProps } = props
-  const styles = useStyles(remainingProps)
   const [isFocused, setIsFocused] = React.useState(remainingProps.initIsFocused ?? false)
+  const styles = useStyles({ props, isFocused })
 
   return (
     <View style={containerStyle}>
       <LabelComponent
         props={remainingProps}
-        theme={theme}
-        isFocused={isFocused}
+        styles={styles.labelComponentStyles}
         labelStyle={remainingProps.labelStyle}
       />
       <Input
@@ -75,45 +88,28 @@ const GaloyInputFunctions = (
       />
       <CaptionComponent
         props={remainingProps}
-        isFocused={isFocused}
-        theme={theme}
+        styles={styles.errorMessageStyles}
         errorStyles={remainingProps.errorStyle}
       />
     </View>
   )
 }
 
-const LabelComponent = ({ props, labelStyle, isFocused, theme }) => {
+const LabelComponent = ({ props, labelStyle, styles }) => {
   if (!props.label) return null
-  const styles = (): StyleProp<ViewStyle> => {
-    const labelStyles = {
-      marginLeft: isFocused ? 2 : 10,
-      marginBottom: 9,
-      fontWeight: "400",
-      fontSize: 16,
-      lineHeight: 24,
-      color: theme.colors.grey5,
-    }
-    return labelStyles
-  }
-  return <Text style={[styles(), labelStyle]}>{props.label}</Text>
+  return (
+    <Text type="p2" style={[styles, labelStyle]}>
+      {props.label}
+    </Text>
+  )
 }
 
-const CaptionComponent = ({ props, errorStyles, isFocused, theme }) => {
+const CaptionComponent = ({ props, errorStyles, styles }) => {
   if (!props.caption && !props.errorMessage) return null
-  const styles = (): StyleProp<ViewStyle> => {
-    const errorMessageStyles = {
-      color: props.caption ? theme.colors.grey5 : theme.colors.error5,
-      textTransform: "capitalize",
-      fontSize: 14,
-      marginTop: 9,
-      lineHeight: 24,
-      marginLeft: isFocused ? 2 : 10,
-    }
-    return errorMessageStyles
-  }
   return (
-    <Text style={[styles(), errorStyles]}>{props.caption || props.errorMessage}</Text>
+    <Text type="p3" style={[styles, errorStyles]}>
+      {props.caption || props.errorMessage}
+    </Text>
   )
 }
 
