@@ -37,7 +37,6 @@ const authToken = process.env.GALOY_TOKEN
 const authTokenOther = process.env.GALOY_TOKEN_2
 
 const getDefaultWalletId = async (client) => {
-
   const accountResult: ApolloQueryResult<{ me: MeFragment }> = await client.query({
     query: WalletsDocument,
     fetchPolicy: "no-cache",
