@@ -50,7 +50,7 @@ export const ConversionConfirmationScreen = ({
       })
     }
 
-    if (errorsMessage.length) {
+    if (errorsMessage?.length) {
       setErrorMessage(joinErrorsMessages(errorsMessage))
     }
   }
