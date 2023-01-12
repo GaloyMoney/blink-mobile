@@ -76,54 +76,6 @@ export default gql`
     }
   }
 
-  query mainQuery($hasToken: Boolean!) {
-    globals {
-      nodesIds
-      network
-    }
-    quizQuestions {
-      id
-      earnAmount
-    }
-    btcPrice {
-      __typename
-      base
-      offset
-      currencyUnit
-      formattedAmount
-    }
-    me @include(if: $hasToken) {
-      id
-      language
-      username
-      phone
-      quizQuestions {
-        question {
-          id
-          earnAmount
-        }
-        completed
-      }
-      defaultAccount {
-        id
-        defaultWalletId
-        transactions(first: 3) {
-          ...TransactionList
-        }
-        wallets {
-          id
-          balance
-          walletCurrency
-        }
-      }
-    }
-    mobileVersions {
-      platform
-      currentSupported
-      minSupported
-    }
-  }
-
   query accountLimits {
     me {
       defaultAccount {
@@ -161,6 +113,7 @@ export default gql`
       network
     }
     quizQuestions {
+      __typename
       id
       earnAmount
     }
@@ -172,12 +125,15 @@ export default gql`
       formattedAmount
     }
     me @include(if: $hasToken) {
+      __typename
       id
       language
       username
       phone
       quizQuestions {
+        __typename
         question {
+          __typename
           id
           earnAmount
         }
