@@ -61,12 +61,14 @@ export type Scalars = {
 }
 
 export type Account = {
+  readonly btcWallet?: Maybe<Wallet>
   readonly csvTransactions: Scalars["String"]
   readonly defaultWalletId: Scalars["WalletId"]
   readonly displayCurrency: Scalars["DisplayCurrency"]
   readonly id: Scalars["ID"]
   readonly limits: AccountLimits
   readonly transactions?: Maybe<TransactionConnection>
+  readonly usdWallet?: Maybe<Wallet>
   readonly wallets: ReadonlyArray<Wallet>
 }
 
@@ -196,6 +198,7 @@ export type CentAmountPayload = {
 
 export type ConsumerAccount = Account & {
   readonly __typename: "ConsumerAccount"
+  readonly btcWallet?: Maybe<Wallet>
   /** return CSV stream, base64 encoded, of the list of transactions in the wallet */
   readonly csvTransactions: Scalars["String"]
   readonly defaultWalletId: Scalars["WalletId"]
@@ -204,6 +207,7 @@ export type ConsumerAccount = Account & {
   readonly limits: AccountLimits
   /** A list of all transactions associated with walletIds optionally passed. */
   readonly transactions?: Maybe<TransactionConnection>
+  readonly usdWallet?: Maybe<Wallet>
   readonly wallets: ReadonlyArray<Wallet>
 }
 
@@ -2209,20 +2213,6 @@ export type MainQueryQuery = {
   } | null> | null
 }
 
-export type RootStackQueryVariables = Exact<{
-  hasToken: Scalars["Boolean"]
-}>
-
-export type RootStackQuery = {
-  readonly __typename: "Query"
-  readonly me?: {
-    readonly __typename: "User"
-    readonly username?: string | null
-    readonly id: string
-  } | null
-  readonly globals?: { readonly __typename: "Globals"; readonly network: Network } | null
-}
-
 export type BusinessMapMarkersQueryVariables = Exact<{ [key: string]: never }>
 
 export type BusinessMapMarkersQuery = {
@@ -2284,6 +2274,56 @@ export type InitWalletQuery = {
             readonly walletCurrency: WalletCurrency
           }
       >
+    }
+  } | null
+}
+
+export type RootStackQueryVariables = Exact<{
+  hasToken: Scalars["Boolean"]
+}>
+
+export type RootStackQuery = {
+  readonly __typename: "Query"
+  readonly me?: {
+    readonly __typename: "User"
+    readonly username?: string | null
+    readonly id: string
+  } | null
+  readonly globals?: { readonly __typename: "Globals"; readonly network: Network } | null
+}
+
+export type ConversionScreenQueryVariables = Exact<{ [key: string]: never }>
+
+export type ConversionScreenQuery = {
+  readonly __typename: "Query"
+  readonly me?: {
+    readonly __typename: "User"
+    readonly defaultAccount: {
+      readonly __typename: "ConsumerAccount"
+      readonly usdWallet?:
+        | {
+            readonly __typename: "BTCWallet"
+            readonly id: string
+            readonly balance: number
+          }
+        | {
+            readonly __typename: "UsdWallet"
+            readonly id: string
+            readonly balance: number
+          }
+        | null
+      readonly btcWallet?:
+        | {
+            readonly __typename: "BTCWallet"
+            readonly id: string
+            readonly balance: number
+          }
+        | {
+            readonly __typename: "UsdWallet"
+            readonly id: string
+            readonly balance: number
+          }
+        | null
     }
   } | null
 }
@@ -4365,58 +4405,6 @@ export type MainQueryQueryResult = Apollo.QueryResult<
   MainQueryQuery,
   MainQueryQueryVariables
 >
-export const RootStackDocument = gql`
-  query rootStack($hasToken: Boolean!) {
-    me @include(if: $hasToken) {
-      username
-      id
-    }
-    globals {
-      network
-    }
-  }
-`
-
-/**
- * __useRootStackQuery__
- *
- * To run a query within a React component, call `useRootStackQuery` and pass it any options that fit your needs.
- * When your component renders, `useRootStackQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useRootStackQuery({
- *   variables: {
- *      hasToken: // value for 'hasToken'
- *   },
- * });
- */
-export function useRootStackQuery(
-  baseOptions: Apollo.QueryHookOptions<RootStackQuery, RootStackQueryVariables>,
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useQuery<RootStackQuery, RootStackQueryVariables>(
-    RootStackDocument,
-    options,
-  )
-}
-export function useRootStackLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<RootStackQuery, RootStackQueryVariables>,
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useLazyQuery<RootStackQuery, RootStackQueryVariables>(
-    RootStackDocument,
-    options,
-  )
-}
-export type RootStackQueryHookResult = ReturnType<typeof useRootStackQuery>
-export type RootStackLazyQueryHookResult = ReturnType<typeof useRootStackLazyQuery>
-export type RootStackQueryResult = Apollo.QueryResult<
-  RootStackQuery,
-  RootStackQueryVariables
->
 export const BusinessMapMarkersDocument = gql`
   query businessMapMarkers {
     businessMapMarkers {
@@ -4598,6 +4586,122 @@ export type InitWalletLazyQueryHookResult = ReturnType<typeof useInitWalletLazyQ
 export type InitWalletQueryResult = Apollo.QueryResult<
   InitWalletQuery,
   InitWalletQueryVariables
+>
+export const RootStackDocument = gql`
+  query rootStack($hasToken: Boolean!) {
+    me @include(if: $hasToken) {
+      username
+      id
+    }
+    globals {
+      network
+    }
+  }
+`
+
+/**
+ * __useRootStackQuery__
+ *
+ * To run a query within a React component, call `useRootStackQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRootStackQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useRootStackQuery({
+ *   variables: {
+ *      hasToken: // value for 'hasToken'
+ *   },
+ * });
+ */
+export function useRootStackQuery(
+  baseOptions: Apollo.QueryHookOptions<RootStackQuery, RootStackQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<RootStackQuery, RootStackQueryVariables>(
+    RootStackDocument,
+    options,
+  )
+}
+export function useRootStackLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<RootStackQuery, RootStackQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<RootStackQuery, RootStackQueryVariables>(
+    RootStackDocument,
+    options,
+  )
+}
+export type RootStackQueryHookResult = ReturnType<typeof useRootStackQuery>
+export type RootStackLazyQueryHookResult = ReturnType<typeof useRootStackLazyQuery>
+export type RootStackQueryResult = Apollo.QueryResult<
+  RootStackQuery,
+  RootStackQueryVariables
+>
+export const ConversionScreenDocument = gql`
+  query conversionScreen {
+    me {
+      defaultAccount {
+        usdWallet @client {
+          id
+          balance
+        }
+        btcWallet @client {
+          id
+          balance
+        }
+      }
+    }
+  }
+`
+
+/**
+ * __useConversionScreenQuery__
+ *
+ * To run a query within a React component, call `useConversionScreenQuery` and pass it any options that fit your needs.
+ * When your component renders, `useConversionScreenQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useConversionScreenQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useConversionScreenQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    ConversionScreenQuery,
+    ConversionScreenQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<ConversionScreenQuery, ConversionScreenQueryVariables>(
+    ConversionScreenDocument,
+    options,
+  )
+}
+export function useConversionScreenLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    ConversionScreenQuery,
+    ConversionScreenQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<ConversionScreenQuery, ConversionScreenQueryVariables>(
+    ConversionScreenDocument,
+    options,
+  )
+}
+export type ConversionScreenQueryHookResult = ReturnType<typeof useConversionScreenQuery>
+export type ConversionScreenLazyQueryHookResult = ReturnType<
+  typeof useConversionScreenLazyQuery
+>
+export type ConversionScreenQueryResult = Apollo.QueryResult<
+  ConversionScreenQuery,
+  ConversionScreenQueryVariables
 >
 export const WalletsDocument = gql`
   query wallets {

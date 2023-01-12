@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import { BtcPaymentAmount, PaymentAmount, UsdPaymentAmount } from "@app/types/amounts"
 import { WalletDescriptor } from "@app/types/wallets"
 import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
@@ -67,8 +66,7 @@ export type RootStackParamList = {
     transferAmount: PaymentAmount<WalletCurrency> | undefined
   }
   conversionConfirmation: {
-    fromWallet: WalletDescriptor<WalletCurrency>
-    toWallet: WalletDescriptor<WalletCurrency>
+    fromWalletCurrency: WalletCurrency
     btcAmount: BtcPaymentAmount
     usdAmount: UsdPaymentAmount
     usdPerBtc: UsdPaymentAmount

@@ -33,7 +33,7 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import { RootSiblingParent } from "react-native-root-siblings"
 import VersionNumber from "react-native-version-number"
 import { GlobalErrorToast } from "./components/global-error"
-import { cache } from "./graphql/cache"
+import { createCache } from "./graphql/cache"
 import { initQuery } from "./graphql/init"
 import "./utils/polyfill"
 import { RootStack } from "./navigation/root-navigator"
@@ -214,6 +214,9 @@ export const App = (): JSX.Element => {
         },
       })
 
+      const cacheWrapper = createCache()
+      const cache = cacheWrapper.getCache()
+
       const persistor_ = new CachePersistor({
         cache,
         storage: new AsyncStorageWrapper(AsyncStorage),
@@ -231,6 +234,8 @@ export const App = (): JSX.Element => {
         version: `${VersionNumber.appVersion}-${VersionNumber.buildVersion}`,
         connectToDevTools: true,
       })
+
+      cacheWrapper.setClient(client)
 
       const initDb = async () => {
         client.writeQuery({

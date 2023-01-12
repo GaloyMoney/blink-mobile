@@ -151,16 +151,6 @@ export default gql`
     }
   }
 
-  query rootStack($hasToken: Boolean!) {
-    me @include(if: $hasToken) {
-      username
-      id
-    }
-    globals {
-      network
-    }
-  }
-
   query businessMapMarkers {
     businessMapMarkers {
       username
@@ -194,6 +184,32 @@ export default gql`
           id
           balance
           walletCurrency
+        }
+      }
+    }
+  }
+
+  # new queries dedicated to screen
+  query rootStack($hasToken: Boolean!) {
+    me @include(if: $hasToken) {
+      username
+      id
+    }
+    globals {
+      network
+    }
+  }
+
+  query conversionScreen {
+    me {
+      defaultAccount {
+        usdWallet @client {
+          id
+          balance
+        }
+        btcWallet @client {
+          id
+          balance
         }
       }
     }

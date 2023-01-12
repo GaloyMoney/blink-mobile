@@ -120,7 +120,6 @@
     "no-unneeded-ternary": "error",
     "no-unreachable-loop": "error",
     "no-unsafe-optional-chaining": "error",
-    "no-unused-expressions": "error",
     "no-useless-call": "error",
     "no-useless-computed-key": "error",
     "no-useless-concat": "error",

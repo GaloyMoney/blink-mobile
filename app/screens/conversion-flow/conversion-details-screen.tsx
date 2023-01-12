@@ -1,40 +1,37 @@
+import { Button } from "@rneui/base"
 import React, { useEffect, useState } from "react"
 import { ActivityIndicator, Platform, Text, View } from "react-native"
+import { FakeCurrencyInput } from "react-native-currency-input"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { ScrollView, TouchableWithoutFeedback } from "react-native-gesture-handler"
-import { FakeCurrencyInput } from "react-native-currency-input"
-import { Button } from "@rneui/base"
 
-import { color, palette } from "@app/theme"
-import useMainQuery from "@app/hooks/use-main-query"
-import { usePriceConversion } from "@app/hooks"
 import SwitchButton from "@app/assets/icons/transfer.svg"
+import { WalletCurrency, useConversionScreenQuery } from "@app/graphql/generated"
+import { usePriceConversion } from "@app/hooks"
+import { useUsdBtcAmount } from "@app/hooks/use-amount"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { color, palette } from "@app/theme"
 import {
   paymentAmountToDollarsOrSats,
   satAmountDisplay,
 } from "@app/utils/currencyConversion"
-import { WalletCurrency } from "@app/graphql/generated"
-import { useUsdBtcAmount } from "@app/hooks/use-amount"
-import { WalletDescriptor } from "@app/types/wallets"
 import { StackScreenProps } from "@react-navigation/stack"
-import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 
 export const ConversionDetailsScreen = ({
   route,
   navigation,
 }: StackScreenProps<RootStackParamList, "conversionDetails">) => {
-  const {
-    wallets,
-    defaultWalletId,
-    usdWalletBalance,
-    btcWalletBalance,
-    btcWalletValueInUsd,
-  } = useMainQuery()
-  const { usdPerBtc } = usePriceConversion()
-  const [fromWallet, setFromWallet] = useState<WalletDescriptor<WalletCurrency>>()
-  const [toWallet, setToWallet] = useState<WalletDescriptor<WalletCurrency>>()
+  const { data } = useConversionScreenQuery({
+    fetchPolicy: "cache-only",
+    returnPartialData: true,
+  })
+
+  const { usdPerBtc, convertCurrencyAmount } = usePriceConversion()
+  const [fromWalletCurrency, setFromWalletCurrency] = useState<WalletCurrency>(
+    WalletCurrency.Btc,
+  )
   const {
     usdAmount,
     btcAmount,
@@ -51,16 +48,19 @@ export const ConversionDetailsScreen = ({
   const { formatToDisplayCurrency } = useDisplayCurrency()
 
   useEffect(() => {
-    const defaultWallet = wallets.find((wallet) => wallet.id === defaultWalletId)
-    const nonDefaultWallet = wallets.find((wallet) => wallet.id !== defaultWalletId)
-    setFromWallet({ id: nonDefaultWallet.id, currency: nonDefaultWallet.walletCurrency })
-    setToWallet({ id: defaultWallet.id, currency: defaultWallet.walletCurrency })
-  }, [wallets, defaultWalletId, setFromWallet, setToWallet])
+    if (!data?.me?.defaultAccount) {
+      return
+    }
 
-  useEffect(() => {
-    if (!fromWallet) return
+    const btcWallet = data.me.defaultAccount.btcWallet
+    const usdWallet = data.me.defaultAccount.usdWallet
 
-    if (fromWallet.currency === WalletCurrency.Btc) {
+    const btcWalletBalance = btcWallet?.balance ?? NaN
+    const usdWalletBalance = usdWallet?.balance ?? NaN
+
+    console.log({ btcWalletBalance, usdWalletBalance, usdWallet })
+
+    if (fromWalletCurrency === WalletCurrency.Btc) {
       if (btcAmount.amount > btcWalletBalance) {
         setAmountFieldError(
           LL.SendBitcoinScreen.amountExceed({
@@ -72,7 +72,7 @@ export const ConversionDetailsScreen = ({
       }
     }
 
-    if (fromWallet.currency === WalletCurrency.Usd) {
+    if (fromWalletCurrency === WalletCurrency.Usd) {
       if (usdAmount.amount > usdWalletBalance) {
         setAmountFieldError(
           LL.SendBitcoinScreen.amountExceed({
@@ -86,27 +86,27 @@ export const ConversionDetailsScreen = ({
   }, [
     btcAmount,
     usdAmount,
-    fromWallet,
-    toWallet,
-    btcWalletBalance,
-    usdWalletBalance,
+    fromWalletCurrency,
+    data?.me?.defaultAccount,
     LL,
     formatToDisplayCurrency,
   ])
 
   useEffect(() => {
-    if (!fromWallet) return
+    if (!fromWalletCurrency) return
 
-    if (fromWallet.currency === WalletCurrency.Usd) {
+    if (fromWalletCurrency === WalletCurrency.Usd) {
       setActiveCurrencyInput(WalletCurrency.Usd)
     }
-  }, [fromWallet])
+  }, [fromWalletCurrency])
 
   const switchWallets = () => {
     setAmountFieldError(undefined)
     setPaymentAmount({ amount: 0, currency: WalletCurrency.Usd })
-    setFromWallet(toWallet)
-    setToWallet(fromWallet)
+
+    fromWalletCurrency === WalletCurrency.Btc
+      ? setFromWalletCurrency(WalletCurrency.Usd)
+      : setFromWalletCurrency(WalletCurrency.Btc)
   }
 
   const toggleActiveCurrenyInput = () => {
@@ -117,30 +117,39 @@ export const ConversionDetailsScreen = ({
     )
   }
 
-  const setAmountToBalancePercentage = (percentage: number) => {
-    if (!fromWallet) return
+  if (!data?.me?.defaultAccount) {
+    // TODO: proper error handling. non possible event?
+    return <></>
+  }
 
-    if (fromWallet.currency === WalletCurrency.Btc) {
+  const btcWallet = data.me.defaultAccount.btcWallet
+  const usdWallet = data.me.defaultAccount.usdWallet
+
+  const btcWalletBalance = btcWallet?.balance ?? NaN
+  const usdWalletBalance = usdWallet?.balance ?? NaN
+
+  const setAmountToBalancePercentage = (percentage: number) => {
+    if (fromWalletCurrency === WalletCurrency.Btc) {
       setAmountsWithBtc(Math.floor((btcWalletBalance * percentage) / 100))
       setActiveCurrencyInput(WalletCurrency.Btc)
     }
-    if (fromWallet.currency === WalletCurrency.Usd) {
+    if (fromWalletCurrency === WalletCurrency.Usd) {
       setAmountsWithUsd(Math.floor((usdWalletBalance * percentage) / 100))
       setActiveCurrencyInput(WalletCurrency.Usd)
     }
   }
 
   const isButtonEnabled = () => {
-    if (!fromWallet || paymentAmount.amount === 0) return false
+    if (paymentAmount.amount === 0) return false
 
     if (
-      fromWallet.currency === WalletCurrency.Btc &&
+      fromWalletCurrency === WalletCurrency.Btc &&
       btcAmount.amount <= btcWalletBalance
     ) {
       return true
     }
     if (
-      fromWallet.currency === WalletCurrency.Usd &&
+      fromWalletCurrency === WalletCurrency.Usd &&
       usdAmount.amount <= usdWalletBalance
     ) {
       return true
@@ -151,21 +160,31 @@ export const ConversionDetailsScreen = ({
 
   const moveToNextScreen = () => {
     navigation.navigate("conversionConfirmation", {
-      fromWallet,
-      toWallet,
+      fromWalletCurrency,
       usdAmount,
       btcAmount,
       usdPerBtc,
     })
   }
 
-  if (!fromWallet || !toWallet) {
+  // FIXME: this one (fromWalletCurrency) is always available. is there another one that is relevant?
+  if (!fromWalletCurrency) {
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator />
       </View>
     )
   }
+
+  const toWalletCurrency =
+    fromWalletCurrency === WalletCurrency.Btc ? WalletCurrency.Usd : WalletCurrency.Btc
+
+  const btcWalletValueInUsd = convertCurrencyAmount({
+    amount: btcWalletBalance,
+    from: "BTC",
+    to: "USD",
+  })
+
   return (
     <ScrollView style={styles.transferScreenContainer}>
       <View style={styles.fieldContainer}>
@@ -176,12 +195,12 @@ export const ConversionDetailsScreen = ({
           <View style={styles.walletSelectorTypeContainer}>
             <View
               style={
-                fromWallet.currency === WalletCurrency.Btc
+                fromWalletCurrency === WalletCurrency.Btc
                   ? styles.walletSelectorTypeLabelBitcoin
                   : styles.walletSelectorTypeLabelUsd
               }
             >
-              {fromWallet.currency === WalletCurrency.Btc ? (
+              {fromWalletCurrency === WalletCurrency.Btc ? (
                 <Text style={styles.walletSelectorTypeLabelBtcText}>BTC</Text>
               ) : (
                 <Text style={styles.walletSelectorTypeLabelUsdText}>USD</Text>
@@ -190,18 +209,18 @@ export const ConversionDetailsScreen = ({
           </View>
           <View style={styles.walletSelectorInfoContainer}>
             <View style={styles.walletSelectorTypeTextContainer}>
-              {fromWallet.currency === WalletCurrency.Btc ? (
+              {fromWalletCurrency === WalletCurrency.Btc ? (
                 <>
-                  <Text style={styles.walletTypeText}>Bitcoin Wallet</Text>
+                  <Text style={styles.walletTypeText}>{`${LL.common.btcAccount()}`}</Text>
                 </>
               ) : (
                 <>
-                  <Text style={styles.walletTypeText}>US Dollar Wallet</Text>
+                  <Text style={styles.walletTypeText}>{`${LL.common.usdAccount()}`}</Text>
                 </>
               )}
             </View>
             <View style={styles.walletSelectorBalanceContainer}>
-              {fromWallet.currency === WalletCurrency.Btc ? (
+              {fromWalletCurrency === WalletCurrency.Btc ? (
                 <>
                   <Text style={styles.walletBalanceText}>
                     {formatToDisplayCurrency(btcWalletValueInUsd)}
@@ -220,10 +239,7 @@ export const ConversionDetailsScreen = ({
           </View>
         </View>
         <View style={styles.switchButtonContainer}>
-          <TouchableWithoutFeedback
-            style={styles.switchButton}
-            onPress={() => switchWallets()}
-          >
+          <TouchableWithoutFeedback style={styles.switchButton} onPress={switchWallets}>
             <SwitchButton />
           </TouchableWithoutFeedback>
         </View>
@@ -234,12 +250,12 @@ export const ConversionDetailsScreen = ({
           <View style={styles.walletSelectorTypeContainer}>
             <View
               style={
-                toWallet.currency === WalletCurrency.Btc
+                toWalletCurrency === WalletCurrency.Btc
                   ? styles.walletSelectorTypeLabelBitcoin
                   : styles.walletSelectorTypeLabelUsd
               }
             >
-              {toWallet.currency === WalletCurrency.Btc ? (
+              {toWalletCurrency === WalletCurrency.Btc ? (
                 <Text style={styles.walletSelectorTypeLabelBtcText}>BTC</Text>
               ) : (
                 <Text style={styles.walletSelectorTypeLabelUsdText}>USD</Text>
@@ -248,18 +264,18 @@ export const ConversionDetailsScreen = ({
           </View>
           <View style={styles.walletSelectorInfoContainer}>
             <View style={styles.walletSelectorTypeTextContainer}>
-              {toWallet.currency === WalletCurrency.Btc ? (
+              {toWalletCurrency === WalletCurrency.Btc ? (
                 <>
-                  <Text style={styles.walletTypeText}>Bitcoin Wallet</Text>
+                  <Text style={styles.walletTypeText}>{`${LL.common.btcAccount()}`}</Text>
                 </>
               ) : (
                 <>
-                  <Text style={styles.walletTypeText}>US Dollar Wallet</Text>
+                  <Text style={styles.walletTypeText}>{`${LL.common.usdAccount()}`}</Text>
                 </>
               )}
             </View>
             <View style={styles.walletSelectorBalanceContainer}>
-              {toWallet.currency === WalletCurrency.Btc ? (
+              {toWalletCurrency === WalletCurrency.Btc ? (
                 <>
                   <Text style={styles.walletBalanceText}>
                     {formatToDisplayCurrency(btcWalletValueInUsd)}
@@ -284,7 +300,7 @@ export const ConversionDetailsScreen = ({
             <Text style={styles.amountFieldLabel}>{LL.SendBitcoinScreen.amount()}</Text>
           </View>
           <View style={styles.currencyInputContainer}>
-            {fromWallet.currency === WalletCurrency.Btc &&
+            {fromWalletCurrency === WalletCurrency.Btc &&
               activeCurrencyInput === WalletCurrency.Btc && (
                 <>
                   <FakeCurrencyInput
@@ -310,7 +326,7 @@ export const ConversionDetailsScreen = ({
                   />
                 </>
               )}
-            {fromWallet.currency === WalletCurrency.Btc &&
+            {fromWalletCurrency === WalletCurrency.Btc &&
               activeCurrencyInput === WalletCurrency.Usd && (
                 <>
                   <FakeCurrencyInput
@@ -336,7 +352,7 @@ export const ConversionDetailsScreen = ({
                   />
                 </>
               )}
-            {fromWallet.currency === WalletCurrency.Usd && (
+            {fromWalletCurrency === WalletCurrency.Usd && (
               <FakeCurrencyInput
                 value={paymentAmountToDollarsOrSats(usdAmount)}
                 onChangeValue={(value) => setAmountsWithUsd(value * 100)}
@@ -349,7 +365,7 @@ export const ConversionDetailsScreen = ({
               />
             )}
           </View>
-          {fromWallet.currency === WalletCurrency.Btc && (
+          {fromWalletCurrency === WalletCurrency.Btc && (
             <View style={styles.switchCurrencyIconContainer}>
               <TouchableWithoutFeedback onPress={toggleActiveCurrenyInput}>
                 <View>

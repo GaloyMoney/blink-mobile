@@ -15,3 +15,13 @@ extend type Query {
   hiddenBalanceToolTip: Boolean!
   price: String # FIXME test only?
 }
+
+extend type Account {
+  usdWallet: Wallet
+  btcWallet: Wallet
+}
+
+extend type ConsumerAccount {
+  usdWallet: Wallet
+  btcWallet: Wallet
+}
