@@ -9,10 +9,6 @@ describe("Receive Payment Flow", async () => {
   const timeout = 30000
   let invoice
 
-  it("Clear the clipboard", async () => {
-    await browser.setClipboard("", "plaintext")
-  })
-
   it("Click 'Back Home' on the stablesats tutorial modal", async () => {
     try {
       const backHomeButton = await $(selector(LL.common.backHome(), "Button"))

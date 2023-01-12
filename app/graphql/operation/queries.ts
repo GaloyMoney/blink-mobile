@@ -155,5 +155,17 @@ export default gql`
     userDefaultWalletId(username: $username)
   }
 
+  # test only. could be in a dedicated file
+  query wallets {
+    me {
+      defaultAccount {
+        wallets {
+          walletCurrency
+          id
+        }
+      }
+    }
+  }
+
   ${Fragments}
 `

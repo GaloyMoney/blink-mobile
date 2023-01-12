@@ -74,17 +74,17 @@ GALOY_TOKEN_2={SECOND_WALLET_TOKEN}
 E2E_DEVICE={ios or android}
 ```
 
+to simplify your workflow, you can put those env variables in a .env and use [direnv](https://direnv.net/)
+
 ## Running Single Tests that Require Authentication
 
 To run the authenticated tests you need to set the env variable `GALOY_TOKEN`.
 
 State in the application in cleared between testing invocations. The following command will always run tests 01 and 02 in order to authenticate the app, then run the test specified by the `TEST` env variable.
 
-
 ```
 TEST="03" yarn test:e2e:ios:auth
 ```
-
 
 ## Troubleshooting
 
