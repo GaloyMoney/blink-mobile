@@ -2,7 +2,6 @@ import * as React from "react"
 import { Alert } from "react-native"
 import Share from "react-native-share"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { gql, useLazyQuery } from "@apollo/client"
 
 import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
@@ -18,6 +17,7 @@ import ContactModal from "@app/components/contact-modal/contact-modal"
 
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { SettingsRow } from "./settings-row"
+import { useWalletCsvTransactionsLazyQuery } from "@app/graphql/generated"
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "settings">
@@ -46,30 +46,17 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
   }
 
   const [fetchCsvTransactions, { loading: loadingCsvTransactions, called, refetch }] =
-    useLazyQuery(
-      gql`
-        query getWalletCSVTransactions($defaultWalletId: WalletId!) {
-          me {
-            id
-            defaultAccount {
-              id
-              csvTransactions(walletIds: [$defaultWalletId])
-            }
-          }
-        }
-      `,
-      {
-        fetchPolicy: "network-only",
-        notifyOnNetworkStatusChange: true,
-        onCompleted: onGetCsvCallback,
-        onError: (error) => {
-          crashlytics().recordError(error)
-          Alert.alert(LL.common.error(), LL.SettingsScreen.csvTransactionsError(), [
-            { text: LL.common.ok() },
-          ])
-        },
+    useWalletCsvTransactionsLazyQuery({
+      fetchPolicy: "network-only",
+      notifyOnNetworkStatusChange: true,
+      onCompleted: onGetCsvCallback,
+      onError: (error) => {
+        crashlytics().recordError(error)
+        Alert.alert(LL.common.error(), LL.SettingsScreen.csvTransactionsError(), [
+          { text: LL.common.ok() },
+        ])
       },
-    )
+    })
 
   const securityAction = async () => {
     const isBiometricsEnabled = await KeyStoreWrapper.getIsBiometricsEnabled()

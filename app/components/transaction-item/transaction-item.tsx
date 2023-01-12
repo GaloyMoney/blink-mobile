@@ -1,4 +1,4 @@
-import { Transaction, WalletCurrency } from "@app/graphql/generated"
+import { Transaction, WalletCurrency, useHideBalanceQuery } from "@app/graphql/generated"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { satAmountDisplay } from "@app/utils/currencyConversion"
 import { WalletType } from "@app/utils/enum"
@@ -12,7 +12,6 @@ import { Text, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 import { prefCurrencyVar as primaryCurrencyVar } from "../../graphql/client-only-query"
-import { useHideBalance } from "../../hooks"
 import { palette } from "../../theme/palette"
 import { IconTransaction } from "../icon-transactions"
 import { TransactionDate } from "../transaction-date"
@@ -110,7 +109,9 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
   subtitle = false,
 }: TransactionItemProps) => {
   const primaryCurrency = primaryCurrencyVar()
-  const hideBalance = useHideBalance()
+  const {
+    data: { hideBalance },
+  } = useHideBalanceQuery()
 
   const isReceive = tx.direction === "RECEIVE"
   const isPending = tx.status === "PENDING"

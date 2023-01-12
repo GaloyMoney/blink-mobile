@@ -1,4 +1,3 @@
-import { gql, useQuery } from "@apollo/client"
 import { useFocusEffect } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
@@ -16,21 +15,7 @@ import { toastShow } from "../../utils/toast"
 import useToken from "../../hooks/use-token"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import crashlytics from "@react-native-firebase/crashlytics"
-
-const QUERY_BUSINESSES = gql`
-  query businessMapMarkers {
-    businessMapMarkers {
-      username
-      mapInfo {
-        title
-        coordinates {
-          longitude
-          latitude
-        }
-      }
-    }
-  }
-`
+import { useBusinessMapMarkersQuery } from "@app/graphql/generated"
 
 const styles = StyleSheet.create({
   android: { marginTop: 18 },
@@ -57,7 +42,7 @@ type Props = {
 export const MapScreen: ScreenType = ({ navigation }: Props) => {
   const { hasToken } = useToken()
   const [isRefreshed, setIsRefreshed] = React.useState(false)
-  const { data, error, refetch } = useQuery(QUERY_BUSINESSES, {
+  const { data, error, refetch } = useBusinessMapMarkersQuery({
     notifyOnNetworkStatusChange: true,
   })
   const { LL } = useI18nContext()

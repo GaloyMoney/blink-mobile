@@ -2,7 +2,7 @@ import { useCountdownTimer, useSubscriptionUpdates } from "@app/hooks"
 import useMainQuery from "@app/hooks/use-main-query"
 import { palette } from "@app/theme"
 import { TYPE_LIGHTNING_USD, getFullUri } from "@app/utils/wallet"
-import { parsingv2 } from "@galoymoney/client"
+import { parsingv2, Network as NetworkLibGaloy } from "@galoymoney/client"
 const { decodeInvoiceString, getLightningInvoiceExpiryTime } = parsingv2
 
 import CalculatorIcon from "@app/assets/icons/calculator.svg"
@@ -168,7 +168,7 @@ const ReceiveUsd = () => {
         if (appState.current.match(/inactive|background/) && nextAppState === "active") {
           const timeUntilInvoiceExpires =
             getLightningInvoiceExpiryTime(
-              decodeInvoiceString(invoice.paymentRequest, network),
+              decodeInvoiceString(invoice.paymentRequest, network as NetworkLibGaloy),
             ) - Math.round(Date.now() / 1000)
           if (timeUntilInvoiceExpires <= 0) {
             setStatus("expired")
@@ -192,7 +192,7 @@ const ReceiveUsd = () => {
       }
       const timeUntilInvoiceExpires =
         getLightningInvoiceExpiryTime(
-          decodeInvoiceString(invoice.paymentRequest, network),
+          decodeInvoiceString(invoice.paymentRequest, network as NetworkLibGaloy),
         ) - Math.round(Date.now() / 1000)
       if (timeUntilInvoiceExpires <= 0) {
         callback()

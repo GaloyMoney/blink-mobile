@@ -18,12 +18,12 @@ declare module "*.json" {
 
 type JwtPayload = {
   uid: string
-  network: INetwork
+  network: Network
 }
 
 type TokenPayload = {
   uid: string
-  network: INetwork
+  network: Network
   token: string
 }
 

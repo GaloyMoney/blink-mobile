@@ -1,11 +1,11 @@
 import * as React from "react"
 import jwtDecode from "jwt-decode"
-import type { INetwork } from "../types/network"
 import { usePersistentStateContext } from "@app/store/persistent-state"
+import { Network } from "@app/graphql/generated"
 
 export const decodeToken: (string) => {
   uid: string
-  network: INetwork
+  network: Network
 } | null = (token) => {
   try {
     const { uid, network } = jwtDecode<JwtPayload>(token)

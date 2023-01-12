@@ -12,4 +12,7 @@ extend type Contact {
 
 extend type Query {
   lastClipboardPayment: String
+  hideBalance: Boolean!
+  hiddenBalanceToolTip: Boolean!
+  price: String # FIXME test only?
 }

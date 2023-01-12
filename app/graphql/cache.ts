@@ -18,5 +18,16 @@ export const cache = new InMemoryCache({
         },
       },
     },
+    Query: {
+      fields: {
+        // local only fields
+        hideBalance: {
+          read: (value) => value ?? false,
+        },
+        hiddenBalanceToolTip: {
+          read: (value) => value ?? false,
+        },
+      },
+    },
   },
 })

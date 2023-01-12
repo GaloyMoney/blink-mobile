@@ -9,7 +9,11 @@ import {
   View,
 } from "react-native"
 import { palette } from "@app/theme"
-import { fetchLnurlPaymentParams, parsingv2 } from "@galoymoney/client"
+import {
+  fetchLnurlPaymentParams,
+  parsingv2,
+  Network as NetworkLibGaloy,
+} from "@galoymoney/client"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { BtcPaymentAmount } from "@app/types/amounts"
@@ -268,7 +272,7 @@ const SendBitcoinDestinationScreen = ({
 
       const parsedPaymentDestination = parsePaymentDestination({
         destination,
-        network: bitcoinNetwork,
+        network: bitcoinNetwork as NetworkLibGaloy,
         pubKey: myPubKey,
         lnAddressDomains: lnurlDomains,
       })

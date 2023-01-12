@@ -10,7 +10,7 @@ import {
 } from "react-native"
 import { palette } from "@app/theme"
 import { WalletCurrency } from "@app/graphql/generated"
-import { fetchLnurlInvoice } from "@galoymoney/client"
+import { fetchLnurlInvoice, Network as NetworkLibGaloy } from "@galoymoney/client"
 import { Satoshis } from "lnurl-pay/dist/types/types"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
@@ -377,7 +377,7 @@ const SendBitcoinDetailsScreen = ({
           tokens: btcAmount.amount as Satoshis,
         })
         invoice = result.invoice
-        const decodedInvoice = decodeInvoiceString(invoice, network)
+        const decodedInvoice = decodeInvoiceString(invoice, network as NetworkLibGaloy)
 
         if (
           Math.round(Number(decodedInvoice.millisatoshis) / 1000) !== btcAmount.amount

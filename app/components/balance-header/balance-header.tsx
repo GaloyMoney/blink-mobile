@@ -7,8 +7,8 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { palette } from "../../theme/palette"
 import { TextCurrencyForAmount } from "../text-currency/text-currency"
 import { useIsFocused } from "@react-navigation/native"
-import { useHideBalance } from "../../hooks"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { useHideBalanceQuery } from "@app/graphql/generated"
 
 const styles = EStyleSheet.create({
   balanceHeaderContainer: {
@@ -94,7 +94,9 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
   usdWalletBalance,
 }: BalanceHeaderProps) => {
   const { LL } = useI18nContext()
-  const hideBalance = useHideBalance()
+  const {
+    data: { hideBalance },
+  } = useHideBalanceQuery()
   const isFocused = useIsFocused()
   const [balanceHidden, setBalanceHidden] = useState(hideBalance)
   const primaryBalance =

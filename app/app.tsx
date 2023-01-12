@@ -33,7 +33,7 @@ import { RootSiblingParent } from "react-native-root-siblings"
 import VersionNumber from "react-native-version-number"
 import { GlobalErrorToast } from "./components/global-error"
 import { cache } from "./graphql/cache"
-import { initQuery, INITWALLET } from "./graphql/init"
+import { initQuery } from "./graphql/init"
 import "./utils/polyfill"
 import { RootStack } from "./navigation/root-navigator"
 import { isIos } from "./utils/helper"
@@ -57,6 +57,7 @@ import theme from "./rne-theme/theme"
 import { createClient } from "graphql-ws"
 import { GraphQLWsLink } from "@apollo/client/link/subscriptions"
 import { GaloyToast } from "./components/galoy-toast"
+import { InitWalletDocument } from "./graphql/generated"
 
 export const BUILD_VERSION = "build_version"
 
@@ -229,7 +230,7 @@ export const App = (): JSX.Element => {
 
       const initDb = async () => {
         client.writeQuery({
-          query: INITWALLET,
+          query: InitWalletDocument,
           data: initQuery,
         })
       }

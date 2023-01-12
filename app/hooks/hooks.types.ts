@@ -1,9 +1,9 @@
 import { Price } from "@app/components/price-graph"
-import { INetwork } from "@app/types/network"
+import { Network } from "@app/graphql/generated"
 
 type mobileVersions = {
-  currentSupported: string
-  minSupported: string
+  currentSupported: number
+  minSupported: number
   platform: string
 }
 
@@ -13,12 +13,12 @@ export type useMainQueryOutput = {
   btcWalletBalance: number
   btcWalletValueInUsd: number
   usdWalletBalance: number
-  network: INetwork
+  network: Network
   btcWalletId: string
   usdWalletId: string
   defaultWalletId: string
-  mergedTransactions: object[]
-  wallets: any[]
+  mergedTransactions: readonly object[]
+  wallets: readonly any[]
   defaultWallet: Wallet
   me: any
   myPubKey: string

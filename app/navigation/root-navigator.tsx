@@ -49,7 +49,6 @@ import {
 import type { NavigatorType } from "../types/jsx"
 import ReceiveBitcoinScreen from "@app/screens/receive-bitcoin-screen/receive-bitcoin"
 import PushNotification from "react-native-push-notification"
-import useMainQuery from "@app/hooks/use-main-query"
 import { LnurlScreen } from "@app/screens/settings-screen/lnurl-screen"
 import HomeIcon from "@app/assets/icons/home.svg"
 import ContactsIcon from "@app/assets/icons/contacts.svg"
@@ -69,6 +68,7 @@ import { logEnterBackground, logEnterForeground } from "@app/utils/analytics"
 import { GaloyAddressScreen } from "@app/screens/galoy-address-screen"
 import { AccountScreen } from "@app/screens/settings-screen/account-screen"
 import { TransactionLimitsScreen } from "@app/screens/settings-screen/transaction-limits-screen"
+import { useRootStackQuery } from "@app/graphql/generated"
 
 // Must be outside of any component LifeCycle (such as `componentDidMount`).
 PushNotification.configure({
@@ -133,24 +133,26 @@ export const RootStack: NavigatorType = () => {
   const appState = React.useRef(AppState.currentState)
   const client = useApolloClient()
   const { token, hasToken } = useToken()
-  const { username, me, network: bitcoinNetwork } = useMainQuery()
+  const { data } = useRootStackQuery({
+    variables: { hasToken },
+    fetchPolicy: "cache-only",
+  })
 
   useEffect(() => {
-    analytics().setUserProperty("hasUsername", username ? "true" : "false")
-  }, [username])
+    analytics().setUserProperty("hasUsername", data?.me?.username ? "true" : "false")
+  }, [data?.me?.username])
 
-  const userId = me?.id
   useEffect(() => {
-    if (userId) {
-      analytics().setUserId(userId)
+    if (data?.me?.id) {
+      analytics().setUserId(data?.me?.id)
     }
-  }, [userId])
+  }, [data?.me?.id])
 
   useEffect(() => {
-    if (bitcoinNetwork) {
-      analytics().setUserProperties({ network: bitcoinNetwork })
+    if (data?.globals?.network) {
+      analytics().setUserProperties({ network: data.globals.network })
     }
-  }, [bitcoinNetwork])
+  }, [data?.globals?.network])
 
   const _handleAppStateChange = useCallback(async (nextAppState) => {
     if (appState.current.match(/background/) && nextAppState === "active") {

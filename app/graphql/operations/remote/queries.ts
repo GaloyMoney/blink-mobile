@@ -21,8 +21,8 @@ export default gql`
 
   query contacts {
     me {
-      id
       contacts {
+        id
         username
         alias
         transactionsCount
@@ -76,6 +76,34 @@ export default gql`
     }
   }
 
+  query accountLimits {
+    me {
+      defaultAccount {
+        limits {
+          withdrawal {
+            totalLimit
+            remainingLimit
+            interval
+          }
+          internalSend {
+            totalLimit
+            remainingLimit
+            interval
+          }
+          convert {
+            totalLimit
+            remainingLimit
+            interval
+          }
+        }
+      }
+    }
+  }
+
+  query userDefaultWalletId($username: Username!) {
+    userDefaultWalletId(username: $username)
+  }
+
   query mainQuery($hasToken: Boolean!) {
     globals {
       nodesIds
@@ -86,7 +114,6 @@ export default gql`
       earnAmount
     }
     btcPrice {
-      __typename
       base
       offset
       currencyUnit
@@ -124,35 +151,52 @@ export default gql`
     }
   }
 
-  query accountLimits {
-    me {
-      defaultAccount {
-        limits {
-          withdrawal {
-            totalLimit
-            remainingLimit
-            interval
-            __typename
-          }
-          internalSend {
-            totalLimit
-            remainingLimit
-            interval
-            __typename
-          }
-          convert {
-            totalLimit
-            remainingLimit
-            interval
-            __typename
-          }
+  query rootStack($hasToken: Boolean!) {
+    me @include(if: $hasToken) {
+      username
+      id
+    }
+    globals {
+      network
+    }
+  }
+
+  query businessMapMarkers {
+    businessMapMarkers {
+      username
+      mapInfo {
+        title
+        coordinates {
+          longitude
+          latitude
         }
       }
     }
   }
 
-  query userDefaultWalletId($username: Username!) {
-    userDefaultWalletId(username: $username)
+  query walletCSVTransactions($defaultWalletId: WalletId!) {
+    me {
+      id
+      defaultAccount {
+        id
+        csvTransactions(walletIds: [$defaultWalletId])
+      }
+    }
+  }
+
+  query initWallet {
+    me {
+      id
+      defaultAccount {
+        id
+        defaultWalletId
+        wallets {
+          id
+          balance
+          walletCurrency
+        }
+      }
+    }
   }
 
   # test only. could be in a dedicated file
