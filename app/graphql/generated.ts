@@ -2231,22 +2231,87 @@ export type RootStackQuery = {
   readonly globals?: { readonly __typename: "Globals"; readonly network: Network } | null
 }
 
+export type BusinessMapMarkersQueryVariables = Exact<{ [key: string]: never }>
+
+export type BusinessMapMarkersQuery = {
+  readonly __typename: "Query"
+  readonly businessMapMarkers?: ReadonlyArray<{
+    readonly __typename: "MapMarker"
+    readonly username?: string | null
+    readonly mapInfo: {
+      readonly __typename: "MapInfo"
+      readonly title: string
+      readonly coordinates: {
+        readonly __typename: "Coordinates"
+        readonly longitude: number
+        readonly latitude: number
+      }
+    }
+  } | null> | null
+}
+
+export type WalletCsvTransactionsQueryVariables = Exact<{
+  defaultWalletId: Scalars["WalletId"]
+}>
+
+export type WalletCsvTransactionsQuery = {
+  readonly __typename: "Query"
+  readonly me?: {
+    readonly __typename: "User"
+    readonly id: string
+    readonly defaultAccount: {
+      readonly __typename: "ConsumerAccount"
+      readonly id: string
+      readonly csvTransactions: string
+    }
+  } | null
+}
+
+export type InitWalletQueryVariables = Exact<{ [key: string]: never }>
+
+export type InitWalletQuery = {
+  readonly __typename: "Query"
+  readonly me?: {
+    readonly __typename: "User"
+    readonly id: string
+    readonly defaultAccount: {
+      readonly __typename: "ConsumerAccount"
+      readonly id: string
+      readonly defaultWalletId: string
+      readonly wallets: ReadonlyArray<
+        | {
+            readonly __typename: "BTCWallet"
+            readonly id: string
+            readonly balance: number
+            readonly walletCurrency: WalletCurrency
+          }
+        | {
+            readonly __typename: "UsdWallet"
+            readonly id: string
+            readonly balance: number
+            readonly walletCurrency: WalletCurrency
+          }
+      >
+    }
+  } | null
+}
+
 export type WalletsQueryVariables = Exact<{ [key: string]: never }>
 
 export type WalletsQuery = {
-  readonly __typename?: "Query"
+  readonly __typename: "Query"
   readonly me?: {
-    readonly __typename?: "User"
+    readonly __typename: "User"
     readonly defaultAccount: {
-      readonly __typename?: "ConsumerAccount"
+      readonly __typename: "ConsumerAccount"
       readonly wallets: ReadonlyArray<
         | {
-            readonly __typename?: "BTCWallet"
+            readonly __typename: "BTCWallet"
             readonly walletCurrency: WalletCurrency
             readonly id: string
           }
         | {
-            readonly __typename?: "UsdWallet"
+            readonly __typename: "UsdWallet"
             readonly walletCurrency: WalletCurrency
             readonly id: string
           }
@@ -4414,6 +4479,188 @@ export type RootStackLazyQueryHookResult = ReturnType<typeof useRootStackLazyQue
 export type RootStackQueryResult = Apollo.QueryResult<
   RootStackQuery,
   RootStackQueryVariables
+>
+export const BusinessMapMarkersDocument = gql`
+  query businessMapMarkers {
+    businessMapMarkers {
+      username
+      mapInfo {
+        title
+        coordinates {
+          longitude
+          latitude
+        }
+      }
+    }
+  }
+`
+
+/**
+ * __useBusinessMapMarkersQuery__
+ *
+ * To run a query within a React component, call `useBusinessMapMarkersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBusinessMapMarkersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBusinessMapMarkersQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useBusinessMapMarkersQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    BusinessMapMarkersQuery,
+    BusinessMapMarkersQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<BusinessMapMarkersQuery, BusinessMapMarkersQueryVariables>(
+    BusinessMapMarkersDocument,
+    options,
+  )
+}
+export function useBusinessMapMarkersLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    BusinessMapMarkersQuery,
+    BusinessMapMarkersQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<BusinessMapMarkersQuery, BusinessMapMarkersQueryVariables>(
+    BusinessMapMarkersDocument,
+    options,
+  )
+}
+export type BusinessMapMarkersQueryHookResult = ReturnType<
+  typeof useBusinessMapMarkersQuery
+>
+export type BusinessMapMarkersLazyQueryHookResult = ReturnType<
+  typeof useBusinessMapMarkersLazyQuery
+>
+export type BusinessMapMarkersQueryResult = Apollo.QueryResult<
+  BusinessMapMarkersQuery,
+  BusinessMapMarkersQueryVariables
+>
+export const WalletCsvTransactionsDocument = gql`
+  query walletCSVTransactions($defaultWalletId: WalletId!) {
+    me {
+      id
+      defaultAccount {
+        id
+        csvTransactions(walletIds: [$defaultWalletId])
+      }
+    }
+  }
+`
+
+/**
+ * __useWalletCsvTransactionsQuery__
+ *
+ * To run a query within a React component, call `useWalletCsvTransactionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useWalletCsvTransactionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useWalletCsvTransactionsQuery({
+ *   variables: {
+ *      defaultWalletId: // value for 'defaultWalletId'
+ *   },
+ * });
+ */
+export function useWalletCsvTransactionsQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    WalletCsvTransactionsQuery,
+    WalletCsvTransactionsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<WalletCsvTransactionsQuery, WalletCsvTransactionsQueryVariables>(
+    WalletCsvTransactionsDocument,
+    options,
+  )
+}
+export function useWalletCsvTransactionsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    WalletCsvTransactionsQuery,
+    WalletCsvTransactionsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<
+    WalletCsvTransactionsQuery,
+    WalletCsvTransactionsQueryVariables
+  >(WalletCsvTransactionsDocument, options)
+}
+export type WalletCsvTransactionsQueryHookResult = ReturnType<
+  typeof useWalletCsvTransactionsQuery
+>
+export type WalletCsvTransactionsLazyQueryHookResult = ReturnType<
+  typeof useWalletCsvTransactionsLazyQuery
+>
+export type WalletCsvTransactionsQueryResult = Apollo.QueryResult<
+  WalletCsvTransactionsQuery,
+  WalletCsvTransactionsQueryVariables
+>
+export const InitWalletDocument = gql`
+  query InitWallet {
+    me {
+      id
+      defaultAccount {
+        id
+        defaultWalletId
+        wallets {
+          id
+          balance
+          walletCurrency
+        }
+      }
+    }
+  }
+`
+
+/**
+ * __useInitWalletQuery__
+ *
+ * To run a query within a React component, call `useInitWalletQuery` and pass it any options that fit your needs.
+ * When your component renders, `useInitWalletQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useInitWalletQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useInitWalletQuery(
+  baseOptions?: Apollo.QueryHookOptions<InitWalletQuery, InitWalletQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<InitWalletQuery, InitWalletQueryVariables>(
+    InitWalletDocument,
+    options,
+  )
+}
+export function useInitWalletLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<InitWalletQuery, InitWalletQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<InitWalletQuery, InitWalletQueryVariables>(
+    InitWalletDocument,
+    options,
+  )
+}
+export type InitWalletQueryHookResult = ReturnType<typeof useInitWalletQuery>
+export type InitWalletLazyQueryHookResult = ReturnType<typeof useInitWalletLazyQuery>
+export type InitWalletQueryResult = Apollo.QueryResult<
+  InitWalletQuery,
+  InitWalletQueryVariables
 >
 export const WalletsDocument = gql`
   query wallets {

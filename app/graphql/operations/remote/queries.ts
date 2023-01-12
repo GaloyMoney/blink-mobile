@@ -161,6 +161,44 @@ export default gql`
     }
   }
 
+  query businessMapMarkers {
+    businessMapMarkers {
+      username
+      mapInfo {
+        title
+        coordinates {
+          longitude
+          latitude
+        }
+      }
+    }
+  }
+
+  query walletCSVTransactions($defaultWalletId: WalletId!) {
+    me {
+      id
+      defaultAccount {
+        id
+        csvTransactions(walletIds: [$defaultWalletId])
+      }
+    }
+  }
+
+  query initWallet {
+    me {
+      id
+      defaultAccount {
+        id
+        defaultWalletId
+        wallets {
+          id
+          balance
+          walletCurrency
+        }
+      }
+    }
+  }
+
   # test only. could be in a dedicated file
   query wallets {
     me {
