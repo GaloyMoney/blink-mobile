@@ -2182,6 +2182,30 @@ export type UserDefaultWalletIdQuery = {
   readonly userDefaultWalletId: string
 }
 
+export type WalletsQueryVariables = Exact<{ [key: string]: never }>
+
+export type WalletsQuery = {
+  readonly __typename?: "Query"
+  readonly me?: {
+    readonly __typename?: "User"
+    readonly defaultAccount: {
+      readonly __typename?: "ConsumerAccount"
+      readonly wallets: ReadonlyArray<
+        | {
+            readonly __typename?: "BTCWallet"
+            readonly walletCurrency: WalletCurrency
+            readonly id: string
+          }
+        | {
+            readonly __typename?: "UsdWallet"
+            readonly walletCurrency: WalletCurrency
+            readonly id: string
+          }
+      >
+    }
+  } | null
+}
+
 export type PriceSubscriptionVariables = Exact<{
   input: PriceInput
 }>
@@ -4139,6 +4163,52 @@ export type UserDefaultWalletIdQueryResult = Apollo.QueryResult<
   UserDefaultWalletIdQuery,
   UserDefaultWalletIdQueryVariables
 >
+export const WalletsDocument = gql`
+  query wallets {
+    me {
+      defaultAccount {
+        wallets {
+          walletCurrency
+          id
+        }
+      }
+    }
+  }
+`
+
+/**
+ * __useWalletsQuery__
+ *
+ * To run a query within a React component, call `useWalletsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useWalletsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useWalletsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useWalletsQuery(
+  baseOptions?: Apollo.QueryHookOptions<WalletsQuery, WalletsQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<WalletsQuery, WalletsQueryVariables>(WalletsDocument, options)
+}
+export function useWalletsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<WalletsQuery, WalletsQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<WalletsQuery, WalletsQueryVariables>(
+    WalletsDocument,
+    options,
+  )
+}
+export type WalletsQueryHookResult = ReturnType<typeof useWalletsQuery>
+export type WalletsLazyQueryHookResult = ReturnType<typeof useWalletsLazyQuery>
+export type WalletsQueryResult = Apollo.QueryResult<WalletsQuery, WalletsQueryVariables>
 export const PriceDocument = gql`
   subscription price($input: PriceInput!) {
     price(input: $input) {

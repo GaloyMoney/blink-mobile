@@ -3,12 +3,13 @@ import {
   ApolloQueryResult,
   InMemoryCache,
   createHttpLink,
-  gql,
 } from "@apollo/client"
 import {
   LnNoAmountInvoiceCreateDocument,
   LnNoAmountInvoicePaymentSendDocument,
   MeFragment,
+  UserUpdateLanguageDocument,
+  WalletsDocument,
 } from "../../app/graphql/generated"
 
 import fetch from "cross-fetch"
@@ -32,29 +33,24 @@ const createGaloyServerClient = (config) => (authToken) => {
   })
 }
 
-const authToken = process.env.GALOY_TOKEN_2
+const authToken = process.env.GALOY_TOKEN
+const authTokenOther = process.env.GALOY_TOKEN_2
 
-export const getInvoice = async () => {
-  const client = createGaloyServerClient(config)(authToken)
-  // get BTC wallet id
+const getDefaultWalletId = async (client) => {
   const accountResult: ApolloQueryResult<{ me: MeFragment }> = await client.query({
-    query: gql`
-      {
-        me {
-          defaultAccount {
-            wallets {
-              walletCurrency
-              id
-            }
-          }
-        }
-      }
-    `,
+    query: WalletsDocument,
     fetchPolicy: "no-cache",
   })
   const walletId = accountResult.data.me.defaultAccount.wallets.filter(
     (w) => w.walletCurrency === "BTC",
   )[0].id
+
+  return walletId
+}
+
+export const getInvoice = async () => {
+  const client = createGaloyServerClient(config)(authTokenOther)
+  const walletId = await getDefaultWalletId(client)
 
   const result = await client.mutate({
     variables: { input: { walletId } }, // (lookup wallet 2 id from graphql) i.e "8914b38f-b0ea-4639-9f01-99c03125eea5"
@@ -67,25 +63,8 @@ export const getInvoice = async () => {
 }
 
 export const payInvoice = async (invoice: string) => {
-  const client = createGaloyServerClient(config)(authToken)
-  const accountResult: ApolloQueryResult<{ me: MeFragment }> = await client.query({
-    query: gql`
-      {
-        me {
-          defaultAccount {
-            wallets {
-              walletCurrency
-              id
-            }
-          }
-        }
-      }
-    `,
-    fetchPolicy: "no-cache",
-  })
-  const walletId = accountResult.data.me.defaultAccount.wallets.filter(
-    (w) => w.walletCurrency === "BTC",
-  )[0].id
+  const client = createGaloyServerClient(config)(authTokenOther)
+  const walletId = await getDefaultWalletId(client)
 
   return client.mutate({
     variables: {
@@ -96,6 +75,20 @@ export const payInvoice = async (invoice: string) => {
       },
     },
     mutation: LnNoAmountInvoicePaymentSendDocument,
+    fetchPolicy: "no-cache",
+  })
+}
+
+export const resetLanguage = async () => {
+  const client = createGaloyServerClient(config)(authToken)
+
+  return client.mutate({
+    variables: {
+      input: {
+        language: "",
+      },
+    },
+    mutation: UserUpdateLanguageDocument,
     fetchPolicy: "no-cache",
   })
 }

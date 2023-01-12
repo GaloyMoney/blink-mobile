@@ -25,12 +25,14 @@ describe("Chang Language Flow", async () => {
     const languageButton = await $(selector(enLL.Languages.es(), "StaticText"))
     await languageButton.waitForDisplayed({ timeout })
     await languageButton.click()
+    await browser.pause(2000)
   })
 
   it("clicks Predetermined", async () => {
     const languageButton = await $(selector(esLL.Languages.DEFAULT(), "StaticText"))
     await languageButton.waitForDisplayed({ timeout })
     await languageButton.click()
+    await browser.pause(2000)
   })
 
   it("click go back to settings screen", async () => {
