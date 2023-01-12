@@ -1,12 +1,6 @@
 import { gql } from "@apollo/client"
 import { MockableApolloClient } from "../types/mockable"
 
-export const USERNAME_AVAILABLE = gql`
-  query usernameAvailable($username: Username!) {
-    usernameAvailable(username: $username)
-  }
-`
-
 const TRANSACTION_LIST_FRAGMENT = gql`
   fragment TransactionList on TransactionConnection {
     pageInfo {
