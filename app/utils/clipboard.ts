@@ -1,11 +1,11 @@
 import Clipboard from "@react-native-community/clipboard"
 
-import { LAST_CLIPBOARD_PAYMENT } from "../graphql/client-only-query"
 import { cache } from "../graphql/cache"
+import { LastClipboardPaymentDocument } from "@app/graphql/generated"
 
 export const copyPaymentInfoToClipboard = (paymentInfo: string): void => {
   cache.writeQuery({
-    query: LAST_CLIPBOARD_PAYMENT,
+    query: LastClipboardPaymentDocument,
     data: {
       lastClipboardPayment: paymentInfo,
     },

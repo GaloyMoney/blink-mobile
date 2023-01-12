@@ -7,7 +7,7 @@ import { TextCurrencyForAmount } from "../text-currency"
 import TransferIcon from "@app/assets/icons/transfer.svg"
 import Icon from "react-native-vector-icons/Ionicons"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
-import { useHideBalance } from "@app/hooks"
+import { useHideBalanceQuery } from "@app/graphql/generated"
 
 const styles = EStyleSheet.create({
   container: {
@@ -126,7 +126,9 @@ const WalletOverview = ({
   btcWalletValueInUsd,
   usdWalletBalance,
 }: WalletOverviewProps) => {
-  const defaultHideBalance = useHideBalance()
+  const {
+    data: { hideBalance },
+  } = useHideBalanceQuery()
 
   return (
     <View style={styles.container}>
@@ -136,8 +138,8 @@ const WalletOverview = ({
         </View>
 
         <HidableArea
-          key={`BTC-hide-balance-${defaultHideBalance}`}
-          hidden={defaultHideBalance}
+          key={`BTC-hide-balance-${hideBalance}`}
+          hidden={hideBalance}
           style={styles.textLeft}
         >
           <TextCurrencyForAmount
@@ -162,8 +164,8 @@ const WalletOverview = ({
 
       <View style={styles.balanceRight}>
         <HidableArea
-          key={`USD-hide-balance-${defaultHideBalance}`}
-          hidden={defaultHideBalance}
+          key={`USD-hide-balance-${hideBalance}`}
+          hidden={hideBalance}
           style={styles.textRight}
         >
           <TextCurrencyForAmount

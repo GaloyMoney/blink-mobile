@@ -2,9 +2,10 @@ overwrite: true
 # schema: "https://raw.githubusercontent.com/GaloyMoney/galoy/main/src/graphql/main/schema.graphql"
 schema: "https://raw.githubusercontent.com/GaloyMoney/galoy/feb351eb62943bef80f8694868a0bf27596b4951/src/graphql/main/schema.graphql"
 documents: 
-  - "app/graphql/*/*.ts"
+  - "app/graphql/operations/*/*.ts"
 generates:
   app/graphql/generated.ts:
+    schema: "app/graphql/operations/local/schema.graphql"
     plugins:
       - typescript
       - typescript-operations

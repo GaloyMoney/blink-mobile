@@ -1,5 +1,3 @@
-export * from "./use-hidden-balance-walk-through-tooltip"
-export * from "./use-hide-balance"
 export * from "./use-subscription-updates"
 export * from "./use-geetest-captcha"
 export * from "./use-price-conversion"

@@ -11,6 +11,10 @@ type RouteData = {
 const route: RouteData = {
   params: {
     __typename: "Transaction",
+    date: "2021-08-03T20:12:50.000Z",
+    date_format: "Tue Aug 03 2021 15:12:50 GMT-0500",
+    date_nice_print: "hace 21 horas",
+    text: "Add a comment",
     id: "6235dae37f4f0102b6cca792",
     status: "SUCCESS",
     direction: "RECEIVE",

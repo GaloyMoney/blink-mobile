@@ -219,6 +219,11 @@ export type ConsumerAccountTransactionsArgs = {
   walletIds?: InputMaybe<ReadonlyArray<InputMaybe<Scalars["WalletId"]>>>
 }
 
+export type Contact = {
+  readonly __typename?: "Contact"
+  readonly prettyName: Scalars["String"]
+}
+
 export type Coordinates = {
   readonly __typename?: "Coordinates"
   readonly latitude: Scalars["Float"]
@@ -900,11 +905,15 @@ export type Query = {
   readonly businessMapMarkers?: Maybe<ReadonlyArray<Maybe<MapMarker>>>
   readonly currencyList?: Maybe<ReadonlyArray<Maybe<Currency>>>
   readonly globals?: Maybe<Globals>
+  readonly hiddenBalanceToolTip: Scalars["Boolean"]
+  readonly hideBalance: Scalars["Boolean"]
+  readonly lastClipboardPayment?: Maybe<Scalars["String"]>
   readonly lnInvoicePaymentStatus: LnInvoicePaymentStatusPayload
   readonly me?: Maybe<User>
   readonly mobileVersions?: Maybe<ReadonlyArray<Maybe<MobileVersions>>>
   readonly onChainTxFee: OnChainTxFee
   readonly onChainUsdTxFee: OnChainUsdTxFee
+  readonly price?: Maybe<Scalars["String"]>
   readonly quizQuestions?: Maybe<ReadonlyArray<Maybe<QuizQuestion>>>
   /** @deprecated will be migrated to AccountDefaultWalletId */
   readonly userDefaultWalletId: Scalars["WalletId"]
@@ -1014,10 +1023,14 @@ export type SuccessPayload = {
 export type Transaction = {
   readonly __typename?: "Transaction"
   readonly createdAt: Scalars["Timestamp"]
+  readonly date: Scalars["String"]
+  readonly date_format: Scalars["String"]
+  readonly date_nice_print: Scalars["String"]
   readonly direction: TxDirection
   readonly id: Scalars["ID"]
   /** From which protocol the payment has been initiated. */
   readonly initiationVia: InitiationVia
+  readonly isReceive: Scalars["Boolean"]
   readonly memo?: Maybe<Scalars["Memo"]>
   /** Amount of the settlement currency sent or received. */
   readonly settlementAmount: Scalars["SignedAmount"]
@@ -1029,6 +1042,7 @@ export type Transaction = {
   /** To which protocol the payment has settled on. */
   readonly settlementVia: SettlementVia
   readonly status: TxStatus
+  readonly text: Scalars["String"]
 }
 
 /** A connection to a list of items. */
@@ -1279,6 +1293,27 @@ export const WalletCurrency = {
 } as const
 
 export type WalletCurrency = typeof WalletCurrency[keyof typeof WalletCurrency]
+export type LastClipboardPaymentQueryVariables = Exact<{ [key: string]: never }>
+
+export type LastClipboardPaymentQuery = {
+  readonly __typename?: "Query"
+  readonly lastClipboardPayment?: string | null
+}
+
+export type HideBalanceQueryVariables = Exact<{ [key: string]: never }>
+
+export type HideBalanceQuery = {
+  readonly __typename?: "Query"
+  readonly hideBalance: boolean
+}
+
+export type HiddenBalanceToolTipQueryVariables = Exact<{ [key: string]: never }>
+
+export type HiddenBalanceToolTipQuery = {
+  readonly __typename?: "Query"
+  readonly hiddenBalanceToolTip: boolean
+}
+
 export type TransactionListFragment = {
   readonly __typename?: "TransactionConnection"
   readonly pageInfo: {
@@ -2349,6 +2384,161 @@ export const MeFragmentDoc = gql`
   }
   ${TransactionListFragmentDoc}
 `
+export const LastClipboardPaymentDocument = gql`
+  query LastClipboardPayment {
+    lastClipboardPayment @client
+  }
+`
+
+/**
+ * __useLastClipboardPaymentQuery__
+ *
+ * To run a query within a React component, call `useLastClipboardPaymentQuery` and pass it any options that fit your needs.
+ * When your component renders, `useLastClipboardPaymentQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useLastClipboardPaymentQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useLastClipboardPaymentQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    LastClipboardPaymentQuery,
+    LastClipboardPaymentQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<LastClipboardPaymentQuery, LastClipboardPaymentQueryVariables>(
+    LastClipboardPaymentDocument,
+    options,
+  )
+}
+export function useLastClipboardPaymentLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    LastClipboardPaymentQuery,
+    LastClipboardPaymentQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<
+    LastClipboardPaymentQuery,
+    LastClipboardPaymentQueryVariables
+  >(LastClipboardPaymentDocument, options)
+}
+export type LastClipboardPaymentQueryHookResult = ReturnType<
+  typeof useLastClipboardPaymentQuery
+>
+export type LastClipboardPaymentLazyQueryHookResult = ReturnType<
+  typeof useLastClipboardPaymentLazyQuery
+>
+export type LastClipboardPaymentQueryResult = Apollo.QueryResult<
+  LastClipboardPaymentQuery,
+  LastClipboardPaymentQueryVariables
+>
+export const HideBalanceDocument = gql`
+  query HideBalance {
+    hideBalance @client
+  }
+`
+
+/**
+ * __useHideBalanceQuery__
+ *
+ * To run a query within a React component, call `useHideBalanceQuery` and pass it any options that fit your needs.
+ * When your component renders, `useHideBalanceQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useHideBalanceQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useHideBalanceQuery(
+  baseOptions?: Apollo.QueryHookOptions<HideBalanceQuery, HideBalanceQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<HideBalanceQuery, HideBalanceQueryVariables>(
+    HideBalanceDocument,
+    options,
+  )
+}
+export function useHideBalanceLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<HideBalanceQuery, HideBalanceQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<HideBalanceQuery, HideBalanceQueryVariables>(
+    HideBalanceDocument,
+    options,
+  )
+}
+export type HideBalanceQueryHookResult = ReturnType<typeof useHideBalanceQuery>
+export type HideBalanceLazyQueryHookResult = ReturnType<typeof useHideBalanceLazyQuery>
+export type HideBalanceQueryResult = Apollo.QueryResult<
+  HideBalanceQuery,
+  HideBalanceQueryVariables
+>
+export const HiddenBalanceToolTipDocument = gql`
+  query HiddenBalanceToolTip {
+    hiddenBalanceToolTip @client
+  }
+`
+
+/**
+ * __useHiddenBalanceToolTipQuery__
+ *
+ * To run a query within a React component, call `useHiddenBalanceToolTipQuery` and pass it any options that fit your needs.
+ * When your component renders, `useHiddenBalanceToolTipQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useHiddenBalanceToolTipQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useHiddenBalanceToolTipQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    HiddenBalanceToolTipQuery,
+    HiddenBalanceToolTipQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<HiddenBalanceToolTipQuery, HiddenBalanceToolTipQueryVariables>(
+    HiddenBalanceToolTipDocument,
+    options,
+  )
+}
+export function useHiddenBalanceToolTipLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    HiddenBalanceToolTipQuery,
+    HiddenBalanceToolTipQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<
+    HiddenBalanceToolTipQuery,
+    HiddenBalanceToolTipQueryVariables
+  >(HiddenBalanceToolTipDocument, options)
+}
+export type HiddenBalanceToolTipQueryHookResult = ReturnType<
+  typeof useHiddenBalanceToolTipQuery
+>
+export type HiddenBalanceToolTipLazyQueryHookResult = ReturnType<
+  typeof useHiddenBalanceToolTipLazyQuery
+>
+export type HiddenBalanceToolTipQueryResult = Apollo.QueryResult<
+  HiddenBalanceToolTipQuery,
+  HiddenBalanceToolTipQueryVariables
+>
 export const CaptchaCreateChallengeDocument = gql`
   mutation captchaCreateChallenge {
     captchaCreateChallenge {

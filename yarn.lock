@@ -4004,6 +4004,13 @@
   dependencies:
     "@types/lodash" "*"
 
+"@types/lodash.indexof@^4.0.7":
+  version "4.0.7"
+  resolved "https://registry.yarnpkg.com/@types/lodash.indexof/-/lodash.indexof-4.0.7.tgz#3380a75764a08d8bb506812f3370939dcb1ef4a9"
+  integrity sha512-yXJkKeJ/25z1y9IVLewC4mn3IfcpJvN3mEGLbjxCZ4GKwqFHMmFxI0DjpCBrNjhA9ON935/4TSHYAKw6Kzb3hQ==
+  dependencies:
+    "@types/lodash" "*"
+
 "@types/lodash.pickby@^4.6.6":
   version "4.6.7"
   resolved "https://registry.npmjs.org/@types/lodash.pickby/-/lodash.pickby-4.6.7.tgz"
