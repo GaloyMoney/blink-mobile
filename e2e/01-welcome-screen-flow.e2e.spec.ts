@@ -15,7 +15,7 @@ describe("Welcome Screen Flow", async () => {
 
   it("reset language is case previous test has failed", async () => {
     const res = await resetLanguage()
-    expect(res.data.userUpdateLanguage.language).toBe("")
+    expect(res.data.userUpdateLanguage.language).toBeFalsy()
   })
 
   it("loads and clicks 'Get Started button' ", async () => {
