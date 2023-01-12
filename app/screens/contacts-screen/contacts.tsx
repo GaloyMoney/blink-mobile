@@ -1,23 +1,21 @@
-import { gql, useQuery } from "@apollo/client"
 import { StackNavigationProp } from "@react-navigation/stack"
+import { ListItem, SearchBar } from "@rneui/base"
 import * as React from "react"
 import { useCallback, useMemo, useState } from "react"
 import { ActivityIndicator, Text, View } from "react-native"
-import { ListItem, SearchBar } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { FlatList } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
 
 import { Screen } from "../../components/screen"
+import useToken from "../../hooks/use-token"
 import { ContactStackParamList } from "../../navigation/stack-param-lists"
 import { color } from "../../theme"
 import { ScreenType } from "../../types/jsx"
 import { toastShow } from "../../utils/toast"
-import useToken from "../../hooks/use-token"
 
+import { useContactsQuery } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
-
-const filteredContactNames = ["BitcoinBeachMarketing"]
 
 const styles = EStyleSheet.create({
   activityIndicatorContainer: {
@@ -89,35 +87,17 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
   const [matchingContacts, setMatchingContacts] = useState([])
   const [searchText, setSearchText] = useState("")
   const { LL } = useI18nContext()
-  const { loading, data, error } = useQuery(
-    gql`
-      query contacts {
-        me {
-          id
-          contacts {
-            username
-            alias
-            transactionsCount
-          }
-        }
-      }
-    `,
-    {
-      skip: !hasToken,
-      fetchPolicy: "cache-and-network",
-    },
-  )
+  const { loading, data, error } = useContactsQuery({
+    skip: !hasToken,
+    fetchPolicy: "cache-and-network",
+  })
 
   if (error) {
     toastShow({ message: error.message })
   }
 
   const contacts: Contact[] = useMemo(() => {
-    return (
-      data?.me?.contacts.filter((contact) => {
-        return !filteredContactNames.includes(contact.username)
-      }) ?? []
-    )
+    return data?.me?.contacts.slice() ?? []
   }, [data])
 
   React.useEffect(() => {

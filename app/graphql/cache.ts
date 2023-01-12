@@ -26,8 +26,8 @@ export const cache = new InMemoryCache({
         },
         hiddenBalanceToolTip: {
           read: (value) => value ?? false,
-        }
-      }
-    }
+        },
+      },
+    },
   },
 })

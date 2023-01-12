@@ -1937,9 +1937,9 @@ export type ContactsQuery = {
   readonly __typename?: "Query"
   readonly me?: {
     readonly __typename?: "User"
-    readonly id: string
     readonly contacts: ReadonlyArray<{
       readonly __typename?: "UserContact"
+      readonly id: string
       readonly username: string
       readonly alias?: string | null
       readonly transactionsCount: number
@@ -3892,8 +3892,8 @@ export type TransactionListForContactQueryResult = Apollo.QueryResult<
 export const ContactsDocument = gql`
   query contacts {
     me {
-      id
       contacts {
+        id
         username
         alias
         transactionsCount

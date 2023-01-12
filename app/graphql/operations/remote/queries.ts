@@ -21,8 +21,8 @@ export default gql`
 
   query contacts {
     me {
-      id
       contacts {
+        id
         username
         alias
         transactionsCount
