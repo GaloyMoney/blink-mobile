@@ -96,7 +96,7 @@ const useFee = ({
                 ? data.lnNoAmountInvoiceFeeProbe.amount
                 : data.lnNoAmountUsdInvoiceFeeProbe.amount
 
-            if (Boolean(errors.length) && feeValue) {
+            if (Boolean(errors?.length) && feeValue) {
               feeProbeFailed = true
             }
           } else {
