@@ -72,7 +72,7 @@ const useMainQuery = (): useMainQueryOutput => {
   const username = data?.me?.username
   const phoneNumber = data?.me?.phone
   const mobileVersions = data?.mobileVersions[0] // FIXME array/item mismatch
-  const mergedTransactions = data.me?.defaultAccount?.transactions?.edges
+  const mergedTransactions = data?.me?.defaultAccount?.transactions?.edges
 
   const accountId = data?.me?.defaultAccount?.id
   const initialBtcPrice = data?.btcPrice
