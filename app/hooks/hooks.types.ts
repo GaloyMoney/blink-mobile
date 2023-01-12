@@ -1,5 +1,5 @@
 import { Price } from "@app/components/price-graph"
-import { MeFragment, Transaction, Network } from "@app/graphql/generated"
+import { Network } from "@app/graphql/generated"
 
 type mobileVersions = {
   currentSupported: number
@@ -17,10 +17,10 @@ export type useMainQueryOutput = {
   btcWalletId: string
   usdWalletId: string
   defaultWalletId: string
-  mergedTransactions: Transaction[]
-  wallets: Wallet[]
+  mergedTransactions: readonly object[]
+  wallets: readonly any[]
   defaultWallet: Wallet
-  me: MeFragment
+  me: any
   myPubKey: string
   username?: string
   phoneNumber: string
