@@ -18,7 +18,7 @@ import {
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { logGeneratePaymentRequest } from "@app/utils/analytics"
-import { copyPaymentInfoToClipboard } from "@app/utils/clipboard"
+import Clipboard from "@react-native-community/clipboard"
 import { toastShow } from "@app/utils/toast"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { Button, Text } from "@rneui/base"
@@ -305,9 +305,8 @@ const ReceiveUsd = () => {
   }, [invoice?.paymentRequest])
 
   const copyToClipboard = () => {
-    copyPaymentInfoToClipboard(
-      getFullUri({ input: invoice?.paymentRequest, prefix: false }),
-    )
+    Clipboard.setString(getFullUri({ input: invoice?.paymentRequest, prefix: false }))
+
     toastShow({
       message: (translations) => translations.ReceiveBitcoinScreen.copyClipboard(),
       currentTranslation: LL,

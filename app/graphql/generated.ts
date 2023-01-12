@@ -907,7 +907,6 @@ export type Query = {
   readonly globals?: Maybe<Globals>
   readonly hiddenBalanceToolTip: Scalars["Boolean"]
   readonly hideBalance: Scalars["Boolean"]
-  readonly lastClipboardPayment?: Maybe<Scalars["String"]>
   readonly lnInvoicePaymentStatus: LnInvoicePaymentStatusPayload
   readonly me?: Maybe<User>
   readonly mobileVersions?: Maybe<ReadonlyArray<Maybe<MobileVersions>>>
@@ -1293,13 +1292,6 @@ export const WalletCurrency = {
 } as const
 
 export type WalletCurrency = typeof WalletCurrency[keyof typeof WalletCurrency]
-export type LastClipboardPaymentQueryVariables = Exact<{ [key: string]: never }>
-
-export type LastClipboardPaymentQuery = {
-  readonly __typename: "Query"
-  readonly lastClipboardPayment?: string | null
-}
-
 export type HideBalanceQueryVariables = Exact<{ [key: string]: never }>
 
 export type HideBalanceQuery = {
@@ -2463,61 +2455,6 @@ export const MeFragmentDoc = gql`
   }
   ${TransactionListFragmentDoc}
 `
-export const LastClipboardPaymentDocument = gql`
-  query LastClipboardPayment {
-    lastClipboardPayment @client
-  }
-`
-
-/**
- * __useLastClipboardPaymentQuery__
- *
- * To run a query within a React component, call `useLastClipboardPaymentQuery` and pass it any options that fit your needs.
- * When your component renders, `useLastClipboardPaymentQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useLastClipboardPaymentQuery({
- *   variables: {
- *   },
- * });
- */
-export function useLastClipboardPaymentQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    LastClipboardPaymentQuery,
-    LastClipboardPaymentQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useQuery<LastClipboardPaymentQuery, LastClipboardPaymentQueryVariables>(
-    LastClipboardPaymentDocument,
-    options,
-  )
-}
-export function useLastClipboardPaymentLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    LastClipboardPaymentQuery,
-    LastClipboardPaymentQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useLazyQuery<
-    LastClipboardPaymentQuery,
-    LastClipboardPaymentQueryVariables
-  >(LastClipboardPaymentDocument, options)
-}
-export type LastClipboardPaymentQueryHookResult = ReturnType<
-  typeof useLastClipboardPaymentQuery
->
-export type LastClipboardPaymentLazyQueryHookResult = ReturnType<
-  typeof useLastClipboardPaymentLazyQuery
->
-export type LastClipboardPaymentQueryResult = Apollo.QueryResult<
-  LastClipboardPaymentQuery,
-  LastClipboardPaymentQueryVariables
->
 export const HideBalanceDocument = gql`
   query HideBalance {
     hideBalance @client
@@ -4607,7 +4544,7 @@ export type WalletCsvTransactionsQueryResult = Apollo.QueryResult<
   WalletCsvTransactionsQueryVariables
 >
 export const InitWalletDocument = gql`
-  query InitWallet {
+  query initWallet {
     me {
       id
       defaultAccount {

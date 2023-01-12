@@ -19,7 +19,7 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 import { color } from "@app/theme"
 import { toastShow } from "@app/utils/toast"
 
-import { copyPaymentInfoToClipboard } from "@app/utils/clipboard"
+import Clipboard from "@react-native-community/clipboard"
 import { useI18nContext } from "@app/i18n/i18n-react"
 
 const styles = EStyleSheet.create({
@@ -75,7 +75,7 @@ export const LnurlScreen: ScreenType = ({ route }: Props) => {
     Linking.openURL(`${GALOY_PAY_DOMAIN}${username}/print`)
 
   const copyToClipboard = (str) => {
-    copyPaymentInfoToClipboard(str)
+    Clipboard.setString(str)
     toastShow({
       message: (translations) => translations.SettingsScreen.copyClipboardLnurl(),
       type: "success",
