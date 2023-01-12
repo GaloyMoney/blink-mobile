@@ -84,19 +84,16 @@ export default gql`
             totalLimit
             remainingLimit
             interval
-            __typename
           }
           internalSend {
             totalLimit
             remainingLimit
             interval
-            __typename
           }
           convert {
             totalLimit
             remainingLimit
             interval
-            __typename
           }
         }
       }
@@ -113,27 +110,22 @@ export default gql`
       network
     }
     quizQuestions {
-      __typename
       id
       earnAmount
     }
     btcPrice {
-      __typename
       base
       offset
       currencyUnit
       formattedAmount
     }
     me @include(if: $hasToken) {
-      __typename
       id
       language
       username
       phone
       quizQuestions {
-        __typename
         question {
-          __typename
           id
           earnAmount
         }
