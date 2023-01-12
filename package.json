@@ -71,7 +71,7 @@
     "bolt11": "^1.4.0",
     "crypto-browserify": "^3.12.0",
     "currency.js": "^2.0.2",
-    "deprecated-react-native-prop-types": "^2.3.0",
+    "deprecated-react-native-prop-types": "^4.0.0",
     "graphql": "^16.5.0",
     "graphql-ws": "^5.11.2",
     "intl": "^1.2.5",
