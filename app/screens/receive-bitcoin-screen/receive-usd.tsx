@@ -309,7 +309,8 @@ const ReceiveUsd = () => {
       getFullUri({ input: invoice?.paymentRequest, prefix: false }),
     )
     toastShow({
-      message: LL.ReceiveBitcoinScreen.copyClipboard(),
+      message: (translations) => translations.ReceiveBitcoinScreen.copyClipboard(),
+      currentTranslation: LL,
       type: "success",
     })
   }

@@ -198,20 +198,32 @@ export const WelcomePhoneInputScreen: ScreenType = ({
       } else if (data.captchaRequestAuthCode.errors.length > 0) {
         const errorMessage = data.captchaRequestAuthCode.errors[0].message
         if (errorMessage === "Too many requests") {
-          toastShow({ message: LL.errors.tooManyRequestsPhoneCode() })
+          toastShow({
+            message: (translations) => translations.errors.tooManyRequestsPhoneCode(),
+            currentTranslation: LL,
+          })
         } else {
           toastShow({ message: errorMessage })
         }
       } else {
-        toastShow({ message: LL.errors.generic() })
+        toastShow({
+          message: (translations) => translations.errors.generic(),
+          currentTranslation: LL,
+        })
       }
     } catch (err) {
       crashlytics().recordError(err)
       console.debug({ err })
       if (err.message === "Too many requests") {
-        toastShow({ message: LL.errors.tooManyRequestsPhoneCode() })
+        toastShow({
+          message: (translations) => translations.errors.tooManyRequestsPhoneCode(),
+          currentTranslation: LL,
+        })
       } else {
-        toastShow({ message: LL.errors.generic() })
+        toastShow({
+          message: (translations) => translations.errors.generic(),
+          currentTranslation: LL,
+        })
       }
     }
   }, [
@@ -220,8 +232,8 @@ export const WelcomePhoneInputScreen: ScreenType = ({
     phoneNumber,
     captchaRequestAuthCode,
     resetValidationData,
-    LL,
     appConfig.galoyInstance.name,
+    LL,
   ])
 
   useEffect(() => {
@@ -424,7 +436,11 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
           await saveToken(token)
         } else {
           setCode("")
-          toastShow({ message: LL.WelcomePhoneValidationScreen.errorLoggingIn() })
+          toastShow({
+            message: (translations) =>
+              translations.WelcomePhoneValidationScreen.errorLoggingIn(),
+            currentTranslation: LL,
+          })
         }
       } catch (err) {
         crashlytics().recordError(err)

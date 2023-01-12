@@ -90,7 +90,10 @@ export const ContactTransactionsDataInjected: ScreenType = ({
   const transactionsRef = React.useRef([])
 
   if (error) {
-    toastShow({ message: LL.common.transactionsError() })
+    toastShow({
+      message: (translations) => translations.common.transactionsError(),
+      currentTranslation: LL,
+    })
     return null
   }
 

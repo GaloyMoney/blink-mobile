@@ -1,32 +1,39 @@
 import Toast from "react-native-toast-message"
-import { i18nObject, detectLocale } from "@app/i18n/i18n-util"
+import { i18nObject } from "@app/i18n/i18n-util"
+import { TranslationFunctions } from "@app/i18n/i18n-types"
+import { logToastShown } from "./analytics"
 
 export const toastShow = ({
   message,
-  _onHide,
+  currentTranslation,
+  onHide,
   type = "error",
 }: {
-  message: string
-  _onHide?: () => void
+  message: ((translations: TranslationFunctions) => string) | string
+  currentTranslation?: TranslationFunctions
+  onHide?: () => void
   type?: "error" | "success" | "warning"
 }): void => {
-  const LL = i18nObject(detectLocale())
-  if (_onHide) {
-    Toast.show({
-      type,
-      text1: type === "error" ? LL.common.error() : LL.common.success(),
-      text2: message,
-      position: "bottom",
-      bottomOffset: 80,
-      onHide: () => _onHide(),
-    })
-  } else {
-    Toast.show({
-      type,
-      text1: type === "error" ? LL.common.error() : LL.common.success(),
-      text2: message,
-      position: "bottom",
-      bottomOffset: 80,
-    })
-  }
+  const englishTranslation = i18nObject("en")
+  const englishMessage =
+    typeof message === "function" ? message(englishTranslation) : message
+  const translations = currentTranslation || englishTranslation
+  const translatedMessage =
+    typeof message === "function" ? message(translations) : message
+
+  logToastShown({
+    message: englishMessage,
+    type,
+    isTranslated: translatedMessage !== englishMessage,
+  })
+
+  Toast.show({
+    type,
+    text1: type === "error" ? translations.common.error() : translations.common.success(),
+    text2: translatedMessage,
+    position: "bottom",
+    bottomOffset: 80,
+    onHide,
+    visibilityTime: 4000,
+  })
 }

@@ -9,7 +9,7 @@ import { UseApolloNetworkStatusOptions } from "react-apollo-network-status/dist/
 import { useApolloNetworkStatus } from "../../app/app"
 import { GlobalErrorToast } from "../../app/components/global-error"
 import { NetworkErrorCode } from "../../app/components/global-error/network-error-code"
-import * as toastShowModule from "../../app/utils/toast"
+import Toast from "react-native-toast-message"
 import { AuthenticationContext } from "../../app/store/authentication-context"
 import { i18nObject } from "../../app/i18n/i18n-util"
 import { loadLocale } from "../../app/i18n/i18n-util.sync"
@@ -33,6 +33,7 @@ jest.mock("react-native-qrcode-svg", () => ({}))
 jest.mock("react-native-share", () => ({}))
 jest.mock("react-native-gesture-handler", () => ({}))
 jest.mock("@app/i18n/i18n-react", () => ({}))
+jest.mock("@react-native-firebase/analytics", () => () => ({ logEvent: () => {} }))
 jest.mock("@app/i18n/i18n-react", () => ({
   useI18nContext: () => {
     loadLocale("en")
@@ -49,7 +50,7 @@ describe("GlobalError tests", () => {
     jest.clearAllMocks()
   })
 
-  const toastSpy = jest.spyOn(toastShowModule, "toastShow")
+  const toastSpy = jest.spyOn(Toast, "show")
 
   const useApolloNetworkStatusMock = useApolloNetworkStatus as jest.MockedFunction<
     (options?: UseApolloNetworkStatusOptions) => NetworkStatus | unknown
@@ -98,9 +99,11 @@ describe("GlobalError tests", () => {
     })
 
     expect(toastSpy).toHaveBeenCalledTimes(1)
-    expect(toastSpy).toHaveBeenCalledWith({
-      message: "Server Error. Please try again later",
-    })
+    expect(toastSpy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        text2: "Server Error. Please try again later",
+      }),
+    )
   })
 
   it(`should show a toast with "Your session has expired. Please log in again." 
@@ -115,10 +118,12 @@ describe("GlobalError tests", () => {
     })
 
     expect(toastSpy).toHaveBeenCalledTimes(1)
-    expect(toastSpy).toHaveBeenCalledWith({
-      message: "Your session has expired. Please log in again.",
-      _onHide: expect.any(Function),
-    })
+    expect(toastSpy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        text2: "Your session has expired. Please log in again.",
+        onHide: expect.any(Function),
+      }),
+    )
   })
 
   it(`should show a toast with "Request issue.\nContact support if the problem persists" 
@@ -128,13 +133,15 @@ describe("GlobalError tests", () => {
     })
 
     expect(toastSpy).toHaveBeenCalledTimes(1)
-    expect(toastSpy).toHaveBeenCalledWith({
-      message: "Request issue.\nContact support if the problem persists",
-    })
+    expect(toastSpy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        text2: "Request issue.\nContact support if the problem persists",
+      }),
+    )
   })
 
   it(`should show a toast with "Connection issue.\nVerify your internet connection" 
-      when message is "Network request failed"`, () => {
+      when text2 is "Network request failed"`, () => {
     renderGlobalErrorToast({
       queryError: {
         networkError: { message: "Network request failed" },
@@ -142,8 +149,10 @@ describe("GlobalError tests", () => {
     })
 
     expect(toastSpy).toHaveBeenCalledTimes(1)
-    expect(toastSpy).toHaveBeenCalledWith({
-      message: "Connection issue.\nVerify your internet connection",
-    })
+    expect(toastSpy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        text2: "Connection issue.\nVerify your internet connection",
+      }),
+    )
   })
 })

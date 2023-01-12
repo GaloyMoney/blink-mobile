@@ -123,10 +123,12 @@ export const GaloyAddressScreen = () => {
                 onPress={() => {
                   Clipboard.setString(lightningAddress)
                   toastShow({
-                    message: LL.GaloyAddressScreen.copiedAddressToClipboard({
-                      bankName: "BBW",
-                    }),
+                    message: (translations) =>
+                      translations.GaloyAddressScreen.copiedAddressToClipboard({
+                        bankName: "BBW",
+                      }),
                     type: "success",
+                    currentTranslation: LL,
                   })
                 }}
               >
