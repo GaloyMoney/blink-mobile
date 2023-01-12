@@ -67,7 +67,9 @@ export const SetDefaultWallet = () => {
         },
       },
       optimisticResponse: {
+        __typename: "Mutation",
         accountUpdateDefaultWalletId: {
+          __typename: "AccountUpdateDefaultWalletIdPayload",
           errors: null,
           account: {
             defaultWalletId: newDefaultWalletId,

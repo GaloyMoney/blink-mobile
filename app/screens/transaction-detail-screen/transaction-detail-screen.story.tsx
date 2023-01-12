@@ -24,6 +24,7 @@ const route: RouteData = {
     settlementAmount: 500,
     settlementFee: 0,
     settlementPrice: {
+      __typename: "Price",
       base: 999616128000,
       offset: 12,
       formattedAmount: "",
