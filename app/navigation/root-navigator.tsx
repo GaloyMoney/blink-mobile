@@ -133,7 +133,10 @@ export const RootStack: NavigatorType = () => {
   const appState = React.useRef(AppState.currentState)
   const client = useApolloClient()
   const { token, hasToken } = useToken()
-  const { data } = useRootStackQuery({ variables: { hasToken } })
+  const { data } = useRootStackQuery({
+    variables: { hasToken },
+    fetchPolicy: "cache-only",
+  })
 
   useEffect(() => {
     analytics().setUserProperty("hasUsername", data?.me?.username ? "true" : "false")
