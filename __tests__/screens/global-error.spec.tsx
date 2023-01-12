@@ -6,8 +6,8 @@ import { render } from "@testing-library/react-native"
 import * as React from "react"
 import { NetworkStatus } from "react-apollo-network-status"
 import { UseApolloNetworkStatusOptions } from "react-apollo-network-status/dist/src/useApolloNetworkStatus"
-import { useApolloNetworkStatus } from "../../app/app"
 import { GlobalErrorToast } from "../../app/components/global-error"
+import { useApolloNetworkStatus } from "../../app/app"
 import { NetworkErrorCode } from "../../app/components/global-error/network-error-code"
 import Toast from "react-native-toast-message"
 import { AuthenticationContext } from "../../app/store/authentication-context"
@@ -33,7 +33,7 @@ jest.mock("react-native-qrcode-svg", () => ({}))
 jest.mock("react-native-share", () => ({}))
 jest.mock("react-native-gesture-handler", () => ({}))
 jest.mock("@app/i18n/i18n-react", () => ({}))
-jest.mock("@react-native-firebase/analytics", () => () => ({ logEvent: () => {} }))
+jest.mock("@react-native-firebase/analytics", () => () => ({ logEvent: () => null }))
 jest.mock("@app/i18n/i18n-react", () => ({
   useI18nContext: () => {
     loadLocale("en")
@@ -64,8 +64,8 @@ describe("GlobalError tests", () => {
           <AuthenticationContext.Provider
             value={{
               isAppLocked: false,
-              setAppLocked: () => {},
-              setAppUnlocked: () => {},
+              setAppLocked: () => null,
+              setAppUnlocked: () => null,
             }}
           >
             <GlobalErrorToast />

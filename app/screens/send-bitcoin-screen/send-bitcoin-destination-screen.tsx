@@ -128,9 +128,6 @@ const Styles = StyleSheet.create({
 
 const parsePaymentDestination = parsingv2.parsePaymentDestination
 
-export const bankName = "BBW"
-export const lnDomain = "pay.bbw.sv"
-
 export const lnurlDomains = ["ln.bitcoinbeach.com", "pay.bbw.sv"]
 
 type UsernameStatus = "paid-before" | "never-paid" | "does-not-exist" | "self"

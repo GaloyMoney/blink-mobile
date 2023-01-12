@@ -1,5 +1,5 @@
 import { Screen } from "@app/components/screen"
-import { CONTACT_EMAIL_ADDRESS, WHATSAPP_CONTACT_NUMBER } from "@app/config/support"
+import { CONTACT_EMAIL_ADDRESS, WHATSAPP_CONTACT_NUMBER } from "@app/config"
 import useLogout from "@app/hooks/use-logout"
 import useMainQuery from "@app/hooks/use-main-query"
 import useToken from "@app/hooks/use-token"

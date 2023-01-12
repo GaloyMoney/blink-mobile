@@ -9,6 +9,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 
 export const GlobalErrorToast: ComponentType = () => {
   const status = useApolloNetworkStatus()
+
   // use logout hook
   const { logout } = useLogout()
   const { LL } = useI18nContext()

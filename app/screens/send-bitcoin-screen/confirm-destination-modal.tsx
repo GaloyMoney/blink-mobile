@@ -4,13 +4,13 @@ import { Text, View } from "react-native"
 import { Button, CheckBox } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Modal from "react-native-modal"
-import { bankName, lnDomain } from "./send-bitcoin-destination-screen"
 import {
   SendBitcoinDestinationAction,
   SendBitcoinDestinationState,
 } from "./send-bitcoin-reducer"
 import Markdown from "react-native-markdown-display"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { useAppConfig } from "@app/hooks"
 
 const TypedMarkdown = Markdown as MarkdownStatic
 
@@ -72,8 +72,10 @@ export const ConfirmDestinationModal: React.FC<ConfirmDestinationModalProps> = (
   destinationState,
   dispatchDestinationStateAction,
 }) => {
-  const [confirmationEnabled, setConfirmationEnabled] = useState(false)
   const { LL } = useI18nContext()
+  const { appConfig } = useAppConfig()
+  const { lnAddressHostname: lnDomain, name: bankName } = appConfig.galoyInstance
+  const [confirmationEnabled, setConfirmationEnabled] = useState(false)
   const confirmDestination = useCallback(() => {
     dispatchDestinationStateAction({
       type: "set-confirmed",

@@ -58,8 +58,7 @@ import { createClient } from "graphql-ws"
 import { GraphQLWsLink } from "@apollo/client/link/subscriptions"
 import { GaloyToast } from "./components/galoy-toast"
 import { InitWalletDocument } from "./graphql/generated"
-
-export const BUILD_VERSION = "build_version"
+import { BUILD_VERSION } from "@app/config"
 
 export const { link: linkNetworkStatusNotifier, useApolloNetworkStatus } =
   createNetworkStatusNotifier()
