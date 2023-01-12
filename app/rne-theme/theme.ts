@@ -20,34 +20,19 @@ const theme = createTheme({
       },
     },
     Input: (props, theme) => ({
-      labelStyle: {
-        fontWeight: "400",
-        fontSize: 16,
-        lineHeight: 24,
-        color: theme.colors.grey5,
-        paddingBottom: 8,
-      },
       inputStyle: {
         color: theme.colors.grey5,
       },
       inputContainerStyle: {
+        backgroundColor: theme.colors.white,
         borderWidth: 1,
         borderRadius: 10,
-        paddingTop: 0,
         paddingLeft: 10,
         borderColor: theme.colors.primary8,
-        shadowColor: theme.colors.primary8,
-        shadowOffset: { width: -2, height: 3 },
-        shadowOpacity: 0.7,
-        shadowRadius: 10,
-        elevation: -1,
       },
       leftIconContainerStyle: {
         marginRight: 5,
-      },
-      errorStyle: {
-        color: theme.colors.error5,
-        textTransform: "capitalize",
+        opacity: 0.5,
       },
     }),
     Text: (props, theme) => {
