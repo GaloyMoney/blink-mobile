@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react"
 
 type useCountdownTimerReturnValue = {
-  timeLeft: number
+  timeLeft: number | undefined
   startCountdownTimer: (seconds: number, callback?: () => void) => void
   stopCountdownTimer: () => void
   resetCountdownTimer: (seconds: number, newCallback?: () => void) => void

@@ -100,9 +100,12 @@ export const ContactsDetailScreenJSX: ScreenType = ({
   const updateName = async () => {
     // TODO: need optimistic updates
     // FIXME this one doesn't work
-    await userContactUpdateAlias({
-      variables: { input: { username: contact.username, alias: contactName } },
-    })
+    if (contactName) {
+      await userContactUpdateAlias({
+        variables: { input: { username: contact.username, alias: contactName } },
+      })
+    }
+
   }
 
   return (
@@ -127,15 +130,14 @@ export const ContactsDetailScreenJSX: ScreenType = ({
             {contact.alias}
           </Input>
         </View>
-        <Text style={styles.amountSecondary}>{`${LL.common.username()}: ${
-          contact.username
-        }`}</Text>
+        <Text style={styles.amountSecondary}>{`${LL.common.username()}: ${contact.username
+          }`}</Text>
       </View>
       <View style={styles.contactBodyContainer}>
         <View style={styles.transactionsView}>
           <Text style={styles.screenTitle}>
             {LL.ContactDetailsScreen.title({
-              username: contact.alias,
+              username: contact.alias || contact.username,
             })}
           </Text>
           <ContactTransactionsDataInjected

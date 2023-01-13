@@ -31,8 +31,8 @@ export const useGeetestCaptcha = (): GeetestCaptchaReturn => {
 
   const registerCaptcha = useCallback(async () => {
     const { data } = await captchaCreateChallenge()
-    const result = data.captchaCreateChallenge?.result
-    const errors = data.captchaCreateChallenge?.errors ?? []
+    const result = data?.captchaCreateChallenge?.result
+    const errors = data?.captchaCreateChallenge?.errors ?? []
     if (errors.length > 0) {
       setError(errors[0].message)
     } else if (result) {
@@ -75,8 +75,8 @@ export const useGeetestCaptcha = (): GeetestCaptchaReturn => {
 
     return () => {
       GeetestModule.tearDown()
-      onGeeTestDialogResultListener.current.remove()
-      onGeeTestFailedListener.current.remove()
+      onGeeTestDialogResultListener.current && onGeeTestDialogResultListener.current.remove()
+      onGeeTestFailedListener.current && onGeeTestFailedListener.current.remove()
     }
   }, [])
 

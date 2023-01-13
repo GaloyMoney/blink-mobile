@@ -7,13 +7,15 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
 import { TransactionItem } from "../../components/transaction-item"
 import { nextPrefCurrency, prefCurrencyVar } from "../../graphql/client-only-query"
-import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
+import { ScreenType } from '@app/types/jsx'
 import { palette } from "../../theme/palette"
 import { sameDay, sameMonth } from "../../utils/date"
 import { toastShow } from "../../utils/toast"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { useTransactionListForContactQuery } from "@app/graphql/generated"
+
+import {  ExchangeCurrencyUnit, TxDirection, TxStatus, useTransactionListForContactQuery, WalletCurrency } from "@app/graphql/generated"
+import { LocalizedString } from "typesafe-i18n"
 
 const styles = EStyleSheet.create({
   errorText: { alignSelf: "center", color: palette.red, paddingBottom: 18 },
@@ -72,7 +74,53 @@ type Props = {
 
 const TRANSACTIONS_PER_PAGE = 20
 
-export const ContactTransactionsDataInjected: ScreenType = ({
+
+type QueryTransactionEdge = {
+  readonly __typename: "TransactionEdge"
+  readonly cursor: string
+  readonly node: {
+    readonly __typename: "Transaction"
+    readonly id: string
+    readonly status: TxStatus
+    readonly direction: TxDirection
+    readonly memo?: string | null
+    readonly createdAt: number
+    readonly settlementAmount: number
+    readonly settlementFee: number
+    readonly settlementCurrency: WalletCurrency
+    readonly settlementPrice: {
+      readonly __typename: "Price"
+      readonly base: number
+      readonly offset: number
+      readonly currencyUnit: ExchangeCurrencyUnit
+      readonly formattedAmount: string
+    }
+    readonly initiationVia:
+      | {
+          readonly __typename: "InitiationViaIntraLedger"
+          readonly counterPartyWalletId?: string | null
+          readonly counterPartyUsername?: string | null
+        }
+      | { readonly __typename: "InitiationViaLn"; readonly paymentHash: string }
+      | { readonly __typename: "InitiationViaOnChain"; readonly address: string }
+    readonly settlementVia:
+      | {
+          readonly __typename: "SettlementViaIntraLedger"
+          readonly counterPartyWalletId?: string | null
+          readonly counterPartyUsername?: string | null
+        }
+      | {
+          readonly __typename: "SettlementViaLn"
+          readonly paymentSecret?: string | null
+        }
+      | {
+          readonly __typename: "SettlementViaOnChain"
+          readonly transactionHash: string
+        }
+  }
+}
+
+export const ContactTransactionsDataInjected = ({
   navigation,
   contactUsername,
 }: Props) => {
@@ -87,7 +135,7 @@ export const ContactTransactionsDataInjected: ScreenType = ({
 
   // The source of truth for listing the transactions
   // The data gets "cached" here and more pages are appended when they're fetched (through useQuery)
-  const transactionsRef = React.useRef([])
+  const transactionsRef = React.useRef<QueryTransactionEdge[]>([])
 
   if (error) {
     toastShow({
@@ -97,7 +145,7 @@ export const ContactTransactionsDataInjected: ScreenType = ({
     return null
   }
 
-  if (!data) {
+  if (!data?.me?.contactByUsername?.transactions?.edges) {
     return null
   }
 
@@ -121,11 +169,14 @@ export const ContactTransactionsDataInjected: ScreenType = ({
     refetch({ first: TRANSACTIONS_PER_PAGE, after: lastSeenCursor })
   }
 
-  const sections = []
-  const today = []
-  const yesterday = []
-  const thisMonth = []
-  const before = []
+  const sections: {
+    data: QueryTransactionEdge["node"][]
+    title: LocalizedString
+  }[] = []
+  const today: QueryTransactionEdge["node"][] = []
+  const yesterday: QueryTransactionEdge["node"][] = []
+  const thisMonth: QueryTransactionEdge["node"][] = []
+  const before: QueryTransactionEdge["node"][] = []
 
   for (const txEdge of transactionsRef.current) {
     const tx = txEdge.node
@@ -170,7 +221,7 @@ export const ContactTransactionsDataInjected: ScreenType = ({
 
 type ContactTransactionsProps = {
   refreshing: boolean
-  navigation: StackNavigationProp<RootStackParamList, "transactionHistory">
+  navigation: StackNavigationProp<RootStackParamList, "contactDetail">
   onRefresh: () => void
   error: ApolloError
   prefCurrency: string

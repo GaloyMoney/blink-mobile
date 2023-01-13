@@ -7,10 +7,10 @@ import { TextStyle, ViewStyle } from "node_modules/@types/react-native/index"
 
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-import type { ComponentType } from "../../types/jsx"
 import { Defs, LinearGradient, Stop } from "react-native-svg"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useBtcPriceListQuery } from "@app/graphql/generated"
+import { boolean } from "@storybook/addon-knobs"
 
 const multiple = (currentUnit: string) => {
   switch (currentUnit) {
@@ -43,7 +43,7 @@ type PricePoint = {
   price: Price
 }
 
-export const PriceGraphDataInjected: ComponentType = () => {
+export const PriceGraphDataInjected = () => {
   const [graphRange, setGraphRange] = React.useState<GraphRangeType>(GraphRange.ONE_DAY)
 
   const { error, loading, data, refetch } = useBtcPriceListQuery({
@@ -51,7 +51,7 @@ export const PriceGraphDataInjected: ComponentType = () => {
     notifyOnNetworkStatusChange: true,
   })
 
-  if (loading || data === null) {
+  if (loading || data === null || !(data?.btcPriceList)) {
     return <ActivityIndicator animating size="large" color={palette.lightBlue} />
   }
 
@@ -59,8 +59,9 @@ export const PriceGraphDataInjected: ComponentType = () => {
     return <Text>{`${error}`}</Text>
   }
 
+
   const lastPrice = data.btcPriceList[data.btcPriceList.length - 1]
-  if (!loading) {
+  if (!loading && lastPrice) {
     const unixTime = Date.now() / 1000
     if (graphRange === GraphRange.ONE_DAY) {
       if (unixTime - lastPrice.timestamp > 300) {
@@ -87,6 +88,8 @@ export const PriceGraphDataInjected: ComponentType = () => {
 
   return (
     <PriceGraph
+      // FIXME btcPriceList is a weird type that allows for null values within the array
+      // @ts-ignore
       prices={data.btcPriceList}
       graphRange={graphRange}
       setGraphRange={setGraphRange}
@@ -100,7 +103,7 @@ type Props = {
   setGraphRange: (graphRange: GraphRangeType) => void
 }
 
-export const PriceGraph: ComponentType = ({
+export const PriceGraph = ({
   graphRange,
   prices,
   setGraphRange,

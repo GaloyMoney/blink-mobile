@@ -4,7 +4,6 @@ import { Button } from "@rneui/base"
 import { testProps } from "../../../utils/testProps"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
-import type { ScreenType } from "../../types/jsx"
 
 const styles = StyleSheet.create({
   buttonContainer: {
@@ -52,7 +51,7 @@ type Props = {
   loading: boolean
 }
 
-export const OnboardingScreen: ScreenType = ({
+export const OnboardingScreen = ({
   children,
   nextTitle,
   action,

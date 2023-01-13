@@ -48,4 +48,4 @@ declare interface MarkdownProps {
   onLinkPress?: (url: string) => boolean
 }
 
-declare type MarkdownStatic = ComponentType<MarkdownProps>
+declare type MarkdownStatic = MarkdownProps

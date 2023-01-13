@@ -1,15 +1,13 @@
 import { ServerError, ServerParseError } from "@apollo/client"
 import { useApolloNetworkStatus } from "../../app"
-import { ComponentType } from "../../types/jsx"
 import { NetworkErrorCode } from "./network-error-code"
 import { toastShow } from "@app/utils/toast"
 import useLogout from "@app/hooks/use-logout"
 import { useEffect } from "react"
 import { useI18nContext } from "@app/i18n/i18n-react"
 
-export const GlobalErrorToast: ComponentType = () => {
+export const GlobalErrorToast = () => {
   const status = useApolloNetworkStatus()
-
   // use logout hook
   const { logout } = useLogout()
   const { LL } = useI18nContext()
@@ -77,11 +75,11 @@ export const GlobalErrorToast: ComponentType = () => {
     }
 
     if (status.mutationError) {
-      status.mutationError.networkError = null
+      status.mutationError.networkError = undefined
     }
 
     if (status.queryError) {
-      status.queryError.networkError = null
+      status.queryError.networkError = undefined
     }
   })
 
