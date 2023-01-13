@@ -1,6 +1,7 @@
 import {
   PaymentSendResult,
   WalletCurrency,
+  useConversionScreenQuery,
   useIntraLedgerPaymentSendMutation,
   useIntraLedgerUsdPaymentSendMutation,
 } from "@app/graphql/generated"
@@ -8,6 +9,7 @@ import { joinErrorsMessages } from "@app/graphql/utils"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { palette } from "@app/theme"
+import { WalletDescriptor } from "@app/types/wallets"
 import { logConversionAttempt, logConversionResult } from "@app/utils/analytics"
 import { paymentAmountToTextWithUnits } from "@app/utils/currencyConversion"
 import { toastShow } from "@app/utils/toast"
@@ -23,7 +25,7 @@ export const ConversionConfirmationScreen = ({
   navigation,
   route,
 }: StackScreenProps<RootStackParamList, "conversionConfirmation">) => {
-  const { fromWallet, toWallet, btcAmount, usdAmount, usdPerBtc } = route.params
+  const { fromWalletCurrency, btcAmount, usdAmount, usdPerBtc } = route.params
   const [errorMessage, setErrorMessage] = useState<string | undefined>()
   const [intraLedgerPaymentSend, { loading: intraLedgerPaymentSendLoading }] =
     useIntraLedgerPaymentSendMutation()
@@ -31,6 +33,23 @@ export const ConversionConfirmationScreen = ({
     useIntraLedgerUsdPaymentSendMutation()
   const isLoading = intraLedgerPaymentSendLoading || intraLedgerUsdPaymentSendLoading
   const { LL } = useI18nContext()
+
+  let fromWallet: WalletDescriptor<WalletCurrency>
+  let toWallet: WalletDescriptor<WalletCurrency>
+
+  const { data } = useConversionScreenQuery({ fetchPolicy: "cache-only" })
+
+  const usdWallet = data.me.defaultAccount.usdWallet
+  const btcWallet = data.me.defaultAccount.btcWallet
+
+  if (fromWalletCurrency === WalletCurrency.Btc) {
+    fromWallet = { id: btcWallet.id, currency: WalletCurrency.Btc }
+    toWallet = { id: usdWallet.id, currency: WalletCurrency.Usd }
+  } else {
+    fromWallet = { id: usdWallet.id, currency: WalletCurrency.Usd }
+    toWallet = { id: btcWallet.id, currency: WalletCurrency.Btc }
+  }
+
   const fromAmount = fromWallet.currency === WalletCurrency.Btc ? btcAmount : usdAmount
   const toAmount = toWallet.currency === WalletCurrency.Btc ? btcAmount : usdAmount
 

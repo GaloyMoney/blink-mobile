@@ -1,4 +1,3 @@
-/* eslint-disable react/display-name */
 import { useApolloClient } from "@apollo/client"
 import PushNotificationIOS from "@react-native-community/push-notification-ios"
 import messaging from "@react-native-firebase/messaging"

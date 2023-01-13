@@ -33,7 +33,7 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import { RootSiblingParent } from "react-native-root-siblings"
 import VersionNumber from "react-native-version-number"
 import { GlobalErrorToast } from "./components/global-error"
-import { cache } from "./graphql/cache"
+import { createCache } from "./graphql/cache"
 import { initQuery } from "./graphql/init"
 import "./utils/polyfill"
 import { RootStack } from "./navigation/root-navigator"
@@ -213,6 +213,8 @@ export const App = (): JSX.Element => {
           },
         },
       })
+
+      const cache = createCache()
 
       const persistor_ = new CachePersistor({
         cache,
