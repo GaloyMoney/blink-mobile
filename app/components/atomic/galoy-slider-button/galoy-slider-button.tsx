@@ -7,15 +7,13 @@ import { GaloyIcon } from "../galoy-icon"
 
 type GaloySliderComponentProps = {
   disabled?: boolean
+  loading?: boolean
+  showSlidingTextIcon?: boolean
   callback?: () => void
-  text?: string
-}
-
-enum sliderTextValues {
-  send = "slide to send",
-  sending = "send",
-  sent = "sent!",
-  failed = "failed",
+  initialText?: string
+  slidingText?: string
+  disabledText?: string
+  completedText?: string
 }
 
 const sliderStartValue = 6
@@ -24,50 +22,62 @@ const sliderMaxValue = 100
 export const Sliders: React.FunctionComponent<GaloySliderComponentProps> = (props) => {
   const { theme } = useTheme()
   const styles = useStyles(props)
+  const {
+    disabled,
+    loading,
+    initialText,
+    completedText,
+    slidingText,
+    disabledText,
+    showSlidingTextIcon,
+    callback,
+  } = props
 
   const [value, setValue] = useState(sliderStartValue)
   const [showIcon, setShowIcon] = useState<boolean>(true)
-  const [sliderText, setSliderText] = useState<sliderTextValues>(sliderTextValues.send)
+  const [sliderText, setSliderText] = useState<string>(initialText)
 
-  React.useEffect(() => {
-    if (value === sliderStartValue) {
-      setSliderText(sliderTextValues.send)
-    }
-    if (value >= sliderMaxValue / 2) {
-      setValue(sliderMaxValue)
-    }
-  }, [value])
-
-  const onSlidingComplete = async () => {
-    if (value <= sliderMaxValue / 2) {
+  const onSlidingComplete = () => {
+    if (value <= sliderMaxValue / 3) {
       setValue(sliderStartValue)
       return
     }
     setShowIcon(false)
-    if (props.callback) {
-      props.callback()
-      setSliderText(() => {
-        switch (props.text?.toLowerCase()) {
-          case sliderTextValues.send:
-            return sliderTextValues.send
-          case sliderTextValues.sending:
-            return sliderTextValues.sending
-          case sliderTextValues.sent:
-            return sliderTextValues.sent
-          case sliderTextValues.failed:
-            return sliderTextValues.failed
-          default:
-            return sliderTextValues.send
-        }
-      })
+    if (callback) {
+      callback()
+      if (loading) {
+        setSliderText(slidingText)
+      }
     }
   }
+
+  const slidingTextIcon =
+    showSlidingTextIcon && !disabled && sliderText === slidingText ? (
+      <Text>
+        <GaloyIcon name={"arrow-right"} size={30} color={theme.colors.white} />
+      </Text>
+    ) : undefined
+
+  React.useEffect(() => {
+    if (!loading) {
+      setSliderText(completedText)
+    }
+  }, [loading, completedText])
+
+  React.useEffect(() => {
+    if (value === sliderStartValue) {
+      setSliderText(initialText)
+    }
+    if (value >= sliderMaxValue / 3) {
+      setValue(sliderMaxValue)
+    }
+  }, [value, initialText])
 
   return (
     <>
       <View style={styles.contentView}>
         <Slider
-          disabled={props.disabled}
+          disabled={disabled}
           onSlidingComplete={onSlidingComplete}
           value={value}
           onValueChange={setValue}
@@ -86,18 +96,16 @@ export const Sliders: React.FunctionComponent<GaloySliderComponentProps> = (prop
               <View style={styles.IconContainerStyle}>
                 {showIcon ? (
                   <GaloyIcon name={"arrow-right"} size={30} color={theme.colors.white} />
-                ) : null}
+                ) : undefined}
               </View>
             ),
           }}
         />
         <View style={styles.SlideTextContainer}>
-          <Text style={styles.SliderTextStyle}>{sliderText}</Text>
-          {sliderText === sliderTextValues.sending && (
-            <Text>
-              <GaloyIcon name={"arrow-right"} size={30} color={theme.colors.white} />
-            </Text>
-          )}
+          <Text type="h2" style={styles.SliderTextStyle}>
+            {disabled ? disabledText : sliderText}
+          </Text>
+          {slidingTextIcon}
         </View>
       </View>
     </>
@@ -144,15 +152,12 @@ const useStyles = makeStyles((theme, props: GaloySliderComponentProps) => ({
     paddingTop: 20,
     bottom: 53.5,
     left: 100,
-    fontWeight: "600",
-    fontSize: 20,
     flexDirection: "row",
   },
   SliderTextStyle: {
     color: theme.colors.white,
     textAlign: "center",
     fontWeight: "600",
-    fontSize: 20,
     paddingRight: 10,
   },
 }))

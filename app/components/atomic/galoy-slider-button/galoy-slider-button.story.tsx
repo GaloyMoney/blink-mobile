@@ -7,7 +7,6 @@ import { Sliders } from "./"
 
 const onSlidingComplete = () => {
   console.log("callback called!")
-  return null
 }
 
 storiesOf("Galoy Slider Button", module)
@@ -15,13 +14,27 @@ storiesOf("Galoy Slider Button", module)
   .add("Style Presets", () => (
     <Story>
       <UseCase text="Default">
-        <Sliders callback={onSlidingComplete} text={"send"} />
+        <Sliders
+          callback={onSlidingComplete}
+          initialText={"slide to send"}
+          slidingText={"send"}
+          completedText={"sent!"}
+          showSlidingTextIcon
+          loading={false}
+        />
       </UseCase>
-      <UseCase text="Sent">
-        <Sliders callback={onSlidingComplete} text={"sent!"} />
+      <UseCase text="Sending">
+        <Sliders
+          callback={onSlidingComplete}
+          initialText={"slide to send"}
+          slidingText={"converting"}
+          completedText={"completed"}
+          showSlidingTextIcon
+          loading
+        />
       </UseCase>
       <UseCase text="Disabled">
-        <Sliders disabled={true} />
+        <Sliders disabled={true} disabledText={"disabled"} />
       </UseCase>
     </Story>
   ))
