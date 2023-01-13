@@ -10,7 +10,7 @@ export interface StoryScreenProps {
 const mockClient = createMockClient()
 const behavior = Platform.OS === "ios" ? "padding" : null
 export const StoryScreen = (props) => (
-  <KeyboardAvoidingView style={ROOT} behavior={behavior} keyboardVerticalOffset={50}>
+  <KeyboardAvoidingView style={ROOT} behavior={behavior || undefined} keyboardVerticalOffset={50}>
     <ApolloProvider client={mockClient}>{props.children}</ApolloProvider>
   </KeyboardAvoidingView>
 )
