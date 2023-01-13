@@ -15,7 +15,6 @@ import { StackNavigationProp } from "@react-navigation/stack"
 
 import BitcoinBeachLogo from "../get-started-screen/bitcoin-beach-logo.png"
 import useToken from "../../hooks/use-token"
-import useMainQuery from "@app/hooks/use-main-query"
 import { useAuthenticationContext } from "@app/store/authentication-context"
 
 const styles = EStyleSheet.create({
@@ -39,7 +38,6 @@ type Props = {
 export const AuthenticationCheckScreen: ScreenType = ({ navigation }: Props) => {
   const client = useApolloClient()
   const { hasToken } = useToken()
-  const { myPubKey, username, network: bitcoinNetwork } = useMainQuery()
   const { setAppUnlocked } = useAuthenticationContext()
 
   useEffect(() => {
@@ -61,7 +59,7 @@ export const AuthenticationCheckScreen: ScreenType = ({ navigation }: Props) => 
         navigation.replace("Primary")
       }
     })()
-  }, [client, hasToken, myPubKey, navigation, bitcoinNetwork, username, setAppUnlocked])
+  }, [client, hasToken, navigation, setAppUnlocked])
 
   return (
     <Screen
