@@ -3,7 +3,6 @@ import { BtcPaymentAmount, PaymentAmount, UsdPaymentAmount } from "@app/types/am
 import { WalletDescriptor } from "@app/types/wallets"
 import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
 import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
-import { contacts_me_contacts } from "../screens/contacts-screen/__generated__/contacts"
 import { AccountType, AuthenticationScreenPurpose, PinScreenPurpose } from "../utils/enum"
 import { Transaction, WalletCurrency } from "@app/graphql/generated"
 
@@ -105,7 +104,7 @@ export type RootStackParamList = {
 
 export type ContactStackParamList = {
   contactList: undefined
-  contactDetail: { contact: contacts_me_contacts }
+  contactDetail: { contact: Contact }
   phoneValidation: undefined
   sendBitcoinDestination: { username: string }
   transactionDetail: TransactionDetail

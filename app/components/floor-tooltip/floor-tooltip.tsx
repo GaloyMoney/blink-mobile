@@ -9,7 +9,6 @@ import Modal from "react-native-modal"
 import { useAppConfig } from "@app/hooks"
 import { LocalizedString } from "typesafe-i18n"
 
-
 const styles = EStyleSheet.create({
   modalStyle: { margin: 0, flexDirection: "column", justifyContent: "flex-end" },
   fillerOpacity: { flex: 3 },

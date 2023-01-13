@@ -131,12 +131,12 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
       .toLowerCase()
       .includes(searchWord.toLowerCase())
 
-    if (!contact.alias) {
-      contactPrettyNameMatchesSearchWord = false
-    } else {
+    if (contact.alias) {
       contactPrettyNameMatchesSearchWord = contact.alias
         .toLowerCase()
         .includes(searchWord.toLowerCase())
+    } else {
+      contactPrettyNameMatchesSearchWord = false
     }
 
     return contactNameMatchesSearchWord || contactPrettyNameMatchesSearchWord

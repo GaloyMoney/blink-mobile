@@ -44,7 +44,11 @@ export const TextCurrencyForAmount = ({
       <View style={ComponentStyle.view}>
         <SatsIcon
           // @ts-expect-error: fill
-          style={{ fill: iconColor || palette.black, width: satsIconSize, height: satsIconSize }}
+          style={{
+            fill: iconColor || palette.black,
+            width: satsIconSize,
+            height: satsIconSize,
+          }}
         />
         <Text style={style}>{satAmountDisplay(amount)}</Text>
       </View>

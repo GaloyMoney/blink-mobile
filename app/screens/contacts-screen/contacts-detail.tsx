@@ -1,22 +1,25 @@
+import { useUserContactUpdateAliasMutation } from "@app/graphql/generated"
+import useMainQuery from "@app/hooks/use-main-query"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { WalletType } from "@app/utils/enum"
+import { RouteProp } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { Input, Text } from "@rneui/base"
 import * as React from "react"
 import { View } from "react-native"
-import { Input, Text } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 import { CloseCross } from "../../components/close-cross"
 import { IconTransaction } from "../../components/icon-transactions"
 import { LargeButton } from "../../components/large-button"
 import { Screen } from "../../components/screen"
+import type {
+  ContactStackParamList,
+  RootStackParamList,
+} from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
-import type { ContactStackParamList } from "../../navigation/stack-param-lists"
-import { StackNavigationProp } from "@react-navigation/stack"
-import { RouteProp } from "@react-navigation/native"
 import type { ScreenType } from "../../types/jsx"
 import { ContactTransactionsDataInjected } from "./contact-transactions"
-import useMainQuery from "@app/hooks/use-main-query"
-import { WalletType } from "@app/utils/enum"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { useUserContactUpdateAliasMutation } from "@app/graphql/generated"
 
 const styles = EStyleSheet.create({
   actionsContainer: { marginBottom: "15rem", backgroundColor: palette.lighterGrey },
@@ -82,7 +85,7 @@ export const ContactsDetailScreen: ScreenType = ({
 
 type ContactDetailScreenProps = {
   contact: Contact
-  navigation: StackNavigationProp<ContactStackParamList, "contactDetail">
+  navigation: StackNavigationProp<RootStackParamList, "transactionHistory">
   refetchMain: () => void
 }
 
@@ -105,7 +108,6 @@ export const ContactsDetailScreenJSX: ScreenType = ({
         variables: { input: { username: contact.username, alias: contactName } },
       })
     }
-
   }
 
   return (
@@ -130,8 +132,9 @@ export const ContactsDetailScreenJSX: ScreenType = ({
             {contact.alias}
           </Input>
         </View>
-        <Text style={styles.amountSecondary}>{`${LL.common.username()}: ${contact.username
-          }`}</Text>
+        <Text style={styles.amountSecondary}>{`${LL.common.username()}: ${
+          contact.username
+        }`}</Text>
       </View>
       <View style={styles.contactBodyContainer}>
         <View style={styles.transactionsView}>

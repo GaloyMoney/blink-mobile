@@ -24,10 +24,14 @@ export type PersistentStateContextType = {
   resetState: () => void
 }
 
-export const PersistentStateContext = createContext<PersistentStateContextType | null>(null)
+export const PersistentStateContext = createContext<PersistentStateContextType | null>(
+  null,
+)
 
 export const PersistentStateProvider = ({ children }) => {
-  const [persistentState, setPersistentState] = React.useState<PersistentState | null>(null)
+  const [persistentState, setPersistentState] = React.useState<PersistentState | null>(
+    null,
+  )
 
   React.useEffect(() => {
     if (persistentState) {
@@ -54,4 +58,5 @@ export const PersistentStateProvider = ({ children }) => {
   ) : null
 }
 
-export const usePersistentStateContext = (() => useContext(PersistentStateContext)) as () => PersistentStateContextType
+export const usePersistentStateContext = (() =>
+  useContext(PersistentStateContext)) as () => PersistentStateContextType

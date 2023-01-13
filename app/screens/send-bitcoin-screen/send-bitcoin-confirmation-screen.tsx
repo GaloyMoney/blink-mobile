@@ -205,10 +205,11 @@ const SendBitcoinConfirmationScreen = ({
   const [feeDisplayText, setFeeDisplayText] = useState<string>("")
 
   // FIXME we lose type safety here
-  const paymentAmountInWalletCurrency =
-    (payerWalletDescriptor.currency === WalletCurrency.Btc
+  const paymentAmountInWalletCurrency = (
+    payerWalletDescriptor.currency === WalletCurrency.Btc
       ? paymentAmountInBtc
-      : paymentAmountInUsd)!
+      : paymentAmountInUsd
+  )!
 
   const [paymentError, setPaymentError] = useState<string | undefined>(undefined)
 
@@ -254,7 +255,6 @@ const SendBitcoinConfirmationScreen = ({
       }
     }
   }, [fee])
-
 
   const payIntraLedger = async () => {
     const { data, errors } = await intraLedgerPaymentSend({
@@ -356,8 +356,6 @@ const SendBitcoinConfirmationScreen = ({
   }>) => {
     switch (paymentType) {
       case "intraledger":
-
-
         return payerWalletDescriptor.currency === WalletCurrency.Usd
           ? payIntraLedgerUsd
           : payIntraLedger

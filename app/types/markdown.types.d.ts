@@ -2,6 +2,6 @@ import { MarkdownProps as OriginalMarkdownProps } from "react-native-markdown-di
 
 declare module "react-native-markdown-display" {
   interface MarkdownProps extends OriginalMarkdownProps {
-    children?: React.ReactNode;
+    children?: React.ReactNode
   }
 }

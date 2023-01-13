@@ -28,7 +28,7 @@ import "node-libs-react-native/globals" // needed for Buffer?
 import * as React from "react"
 import { useEffect, useMemo, useRef, useState } from "react"
 import { createNetworkStatusNotifier } from "react-apollo-network-status"
-import { Dimensions, Linking, LogBox, View } from "react-native"
+import { Dimensions, Linking, LogBox } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { RootSiblingParent } from "react-native-root-siblings"
 import VersionNumber from "react-native-version-number"
@@ -113,7 +113,9 @@ export const App = (): JSX.Element => {
   const [persistor, setPersistor] = useState<CachePersistor<NormalizedCacheObject>>()
   const [isAppLocked, setIsAppLocked] = useState(true)
   const processLink = useRef<((url: string) => void) | null>(null)
-  processLink.current = (url: string) => {}
+  processLink.current = () => {
+    return undefined
+  }
   const setAppUnlocked = useMemo(
     () => () => {
       setIsAppLocked(false)
@@ -286,10 +288,10 @@ export const App = (): JSX.Element => {
       screens: {
         sendBitcoinDestination: ":username",
         Primary: {
-          screens:{
+          screens: {
             moveMoney: "/",
-          }
-        }
+          },
+        },
       },
     },
     getInitialURL: async () => {

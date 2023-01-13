@@ -54,7 +54,7 @@ export const presets = {
 /**
  * The variations of screens.
  */
-export type ScreenPresets = (keyof typeof presets) | undefined
+export type ScreenPresets = keyof typeof presets | undefined
 
 /**
  * Is this preset a non-scrolling one?

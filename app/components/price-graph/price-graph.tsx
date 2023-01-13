@@ -10,7 +10,6 @@ import { palette } from "../../theme/palette"
 import { Defs, LinearGradient, Stop } from "react-native-svg"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useBtcPriceListQuery } from "@app/graphql/generated"
-import { boolean } from "@storybook/addon-knobs"
 
 const multiple = (currentUnit: string) => {
   switch (currentUnit) {
@@ -51,14 +50,13 @@ export const PriceGraphDataInjected = () => {
     notifyOnNetworkStatusChange: true,
   })
 
-  if (loading || data === null || !(data?.btcPriceList)) {
+  if (loading || data === null || !data?.btcPriceList) {
     return <ActivityIndicator animating size="large" color={palette.lightBlue} />
   }
 
   if (error) {
     return <Text>{`${error}`}</Text>
   }
-
 
   const lastPrice = data.btcPriceList[data.btcPriceList.length - 1]
   if (!loading && lastPrice) {
@@ -88,9 +86,7 @@ export const PriceGraphDataInjected = () => {
 
   return (
     <PriceGraph
-      // FIXME btcPriceList is a weird type that allows for null values within the array
-      // @ts-ignore
-      prices={data.btcPriceList}
+      prices={data.btcPriceList.slice()} // FIXME: remove the slice by having readonly props
       graphRange={graphRange}
       setGraphRange={setGraphRange}
     />
@@ -103,11 +99,7 @@ type Props = {
   setGraphRange: (graphRange: GraphRangeType) => void
 }
 
-export const PriceGraph = ({
-  graphRange,
-  prices,
-  setGraphRange,
-}: Props) => {
+export const PriceGraph = ({ graphRange, prices, setGraphRange }: Props) => {
   const { LL } = useI18nContext()
   let price
   let delta

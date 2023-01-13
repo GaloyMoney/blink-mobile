@@ -23,10 +23,7 @@ storiesOf("Galoy Input Redsigned", module)
   .add("Style Presets", () => (
     <Story>
       <UseCase text="Default">
-        <GaloyInputRedesigned
-          placeholder={"placeholder"}
-          label={"Form Label"}
-        />
+        <GaloyInputRedesigned placeholder={"placeholder"} label={"Form Label"} />
       </UseCase>
       <UseCase text="Focused input">
         <GaloyInputRedesigned

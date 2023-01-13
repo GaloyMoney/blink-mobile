@@ -72,7 +72,7 @@ const useMainQuery = (): useMainQueryOutput => {
   const myPubKey = data?.globals?.nodesIds?.[0] ?? ""
   const username = data?.me?.username
   const phoneNumber = data?.me?.phone
-  const mobileVersions = data?.mobileVersions ? data.mobileVersions[0] : undefined// FIXME array/item mismatch
+  const mobileVersions = data?.mobileVersions ? data.mobileVersions[0] : undefined // FIXME array/item mismatch
   const mergedTransactions = data?.me?.defaultAccount?.transactions?.edges
 
   const accountId = data?.me?.defaultAccount?.id
