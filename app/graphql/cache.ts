@@ -1,11 +1,8 @@
-import { ApolloClient, InMemoryCache, gql } from "@apollo/client"
+import { InMemoryCache, gql } from "@apollo/client"
 import { WalletCurrency } from "./generated"
 
-// FIXME is there a way to avoid the circular dependency cache/client?
 export const createCache = () => {
-  let client: ApolloClient<unknown> | undefined
-
-  const cache = new InMemoryCache({
+  return new InMemoryCache({
     typePolicies: {
       Contact: {
         fields: {
@@ -37,12 +34,12 @@ export const createCache = () => {
       ConsumerAccount: {
         fields: {
           usdWallet: {
-            read: (_, { readField }) => {
+            read: (_, { readField, cache }) => {
               const wallets = readField("wallets")
               if (Array.isArray(wallets)) {
                 for (const w of wallets) {
                   try {
-                    const wallet = client?.readFragment({
+                    const wallet: Wallet = cache.readFragment({
                       id: w.__ref,
                       fragment: gql`
                         fragment MyWallet on UsdWallet {
@@ -64,12 +61,12 @@ export const createCache = () => {
             },
           },
           btcWallet: {
-            read: (_, { readField }) => {
+            read: (_, { readField, cache }) => {
               const wallets = readField("wallets")
               if (Array.isArray(wallets)) {
                 for (const w of wallets) {
                   try {
-                    const wallet = client?.readFragment({
+                    const wallet: Wallet = cache.readFragment({
                       id: w.__ref,
                       fragment: gql`
                         fragment MyWallet on BTCWallet {
@@ -94,11 +91,4 @@ export const createCache = () => {
       },
     },
   })
-
-  const getCache = () => cache
-  const setClient = (c: ApolloClient<unknown>) => {
-    client = c
-  }
-
-  return { getCache, setClient }
 }

@@ -214,8 +214,7 @@ export const App = (): JSX.Element => {
         },
       })
 
-      const cacheWrapper = createCache()
-      const cache = cacheWrapper.getCache()
+      const cache = createCache()
 
       const persistor_ = new CachePersistor({
         cache,
@@ -234,8 +233,6 @@ export const App = (): JSX.Element => {
         version: `${VersionNumber.appVersion}-${VersionNumber.buildVersion}`,
         connectToDevTools: true,
       })
-
-      cacheWrapper.setClient(client)
 
       const initDb = async () => {
         client.writeQuery({
