@@ -18,6 +18,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 import analytics from "@react-native-firebase/analytics"
 import "@react-native-firebase/crashlytics"
 import {
+  LinkingOptions,
   NavigationContainer,
   NavigationState,
   PartialState,
@@ -59,6 +60,7 @@ import { GraphQLWsLink } from "@apollo/client/link/subscriptions"
 import { GaloyToast } from "./components/galoy-toast"
 import { InitWalletDocument } from "./graphql/generated"
 import { BUILD_VERSION } from "@app/config"
+import { RootStackParamList } from "./navigation/stack-param-lists"
 
 export const { link: linkNetworkStatusNotifier, useApolloNetworkStatus } =
   createNetworkStatusNotifier()
@@ -110,7 +112,10 @@ export const App = (): JSX.Element => {
   const [apolloClient, setApolloClient] = useState<ApolloClient<NormalizedCacheObject>>()
   const [persistor, setPersistor] = useState<CachePersistor<NormalizedCacheObject>>()
   const [isAppLocked, setIsAppLocked] = useState(true)
-  const processLink = useRef(null)
+  const processLink = useRef<((url: string) => void) | null>(null)
+  processLink.current = () => {
+    return undefined
+  }
   const setAppUnlocked = useMemo(
     () => () => {
       setIsAppLocked(false)
@@ -189,7 +194,7 @@ export const App = (): JSX.Element => {
         return {
           headers: {
             ...headers,
-            authorization: hasToken ? getAuthorizationHeader(token) : "",
+            authorization: token ? getAuthorizationHeader(token) : "",
           },
         }
       })
@@ -269,10 +274,10 @@ export const App = (): JSX.Element => {
   // You're welcome to swap in your own component to render if your boot up
   // sequence is too slow though.
   if (!apolloClient || !persistor) {
-    return null
+    return <></>
   }
 
-  const linking = {
+  const linking: LinkingOptions<RootStackParamList> = {
     prefixes: [
       "https://ln.bitcoinbeach.com",
       "bitcoinbeach://",
@@ -282,7 +287,11 @@ export const App = (): JSX.Element => {
     config: {
       screens: {
         sendBitcoinDestination: ":username",
-        moveMoney: "/",
+        Primary: {
+          screens: {
+            moveMoney: "/",
+          },
+        },
       },
     },
     getInitialURL: async () => {

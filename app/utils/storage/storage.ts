@@ -48,7 +48,7 @@ export async function saveJson(key: string, value: any): Promise<boolean> {
 export async function loadJson(key: string): Promise<any | null> {
   try {
     const data = await AsyncStorage.getItem(key)
-    return JSON.parse(data)
+    return data ? JSON.parse(data) : null
   } catch {
     return null
   }

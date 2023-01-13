@@ -9,7 +9,7 @@ import { Screen } from "../../components/screen"
 import { getQuizQuestions } from "../../graphql/query"
 import { PrimaryStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
-import { ComponentType, ScreenType } from "../../types/jsx"
+import { ScreenType } from "../../types/jsx"
 import useToken from "../../hooks/use-token"
 import { getQuizQuestionsContent, sectionCompletedPct } from "../earns-screen"
 
@@ -108,7 +108,7 @@ type ProgressProps = {
   progress: number
 }
 
-export const ProgressBar: ComponentType = ({ progress }: ProgressProps) => {
+export const ProgressBar = ({ progress }: ProgressProps) => {
   const balanceWidth = `${progress * 100}%`
 
   return (

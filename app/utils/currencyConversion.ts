@@ -29,20 +29,6 @@ export const textToCurrency = (
   return value
 }
 
-export const currencyToTextWithUnits = (moneyAmount: MoneyAmount): string => {
-  if (moneyAmount.currency === "BTC") {
-    if (moneyAmount.value === 1) {
-      return "1 sat"
-    }
-    return currencyToText(moneyAmount.value.toString(), moneyAmount.currency) + " sats"
-  }
-
-  if (moneyAmount.currency === "USD") {
-    return "$" + currencyToText(moneyAmount.value.toString(), moneyAmount.currency)
-  }
-  throw Error("wrong currency")
-}
-
 export const paymentAmountToTextWithUnits = (
   paymentAmount: PaymentAmount<WalletCurrency>,
 ): string => {
@@ -117,7 +103,7 @@ export const usdAmountDisplay = (amount: number, precision?: number): string =>
     .default(amount, {
       precision:
         precision === 0
-          ? null
+          ? undefined
           : precision ?? (Math.abs(amount) < 0.01 && amount !== 0)
           ? 4
           : 2,

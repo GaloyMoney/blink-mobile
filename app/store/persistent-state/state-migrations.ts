@@ -62,7 +62,7 @@ const migrate3ToCurrent = (state: _PersistentState_3): Promise<PersistentState> 
   )
   return migrate4ToCurrent({
     ...state,
-    galoyInstance: newGaloyInstance,
+    galoyInstance: newGaloyInstance!,
     schemaVersion: 4,
   })
 }
@@ -72,7 +72,8 @@ const migrate2ToCurrent = async (state: _PersistentState_2): Promise<PersistentS
   const token = await loadString(LEGACY_TOKEN_KEY)
 
   if (token && decodeToken(token)) {
-    const { network } = decodeToken(token)
+    const decodedToken = decodeToken(token)
+    const network = decodedToken?.network
     if (network === "mainnet") {
       const galoyInstance = GALOY_INSTANCES.find((instance) => instance.name === "BBW")
       if (galoyInstance) {
@@ -90,7 +91,7 @@ const migrate2ToCurrent = async (state: _PersistentState_2): Promise<PersistentS
   return migrate3ToCurrent({
     ...state,
     schemaVersion: 3,
-    galoyInstance: GALOY_INSTANCES.find((instance) => instance.name === "BBW"),
+    galoyInstance: GALOY_INSTANCES.find((instance) => instance.name === "BBW")!,
     galoyAuthToken: "",
     isAnalyticsEnabled: true,
   })
@@ -134,7 +135,7 @@ export const defaultPersistentState: PersistentState = {
   schemaVersion: 4,
   hasShownStableSatsWelcome: false,
   isUsdDisabled: false,
-  galoyInstance: GALOY_INSTANCES.find((instance) => instance.name === "BBW"),
+  galoyInstance: GALOY_INSTANCES.find((instance) => instance.name === "BBW")!,
   galoyAuthToken: "",
   isAnalyticsEnabled: true,
   theme: defaultTheme,

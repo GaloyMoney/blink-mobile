@@ -23,23 +23,17 @@ storiesOf("Galoy Input Redsigned", module)
   .add("Style Presets", () => (
     <Story>
       <UseCase text="Default">
-        <GaloyInputRedesigned
-          forceKeyboard={false}
-          placeholder={"placeholder"}
-          label={"Form Label"}
-        />
+        <GaloyInputRedesigned placeholder={"placeholder"} label={"Form Label"} />
       </UseCase>
       <UseCase text="Focused input">
         <GaloyInputRedesigned
           label={"Form Label"}
-          forceKeyboard={false}
           placeholder={"placeholder"}
           initIsFocused={true}
         />
       </UseCase>
       <UseCase text="Input with CustomIcon">
         <GaloyInputRedesigned
-          forceKeyboard={false}
           label={"Form Label"}
           placeholder={"placeholder"}
           leftIcon={<GaloyIcon name="bitcoin" size={30} color="blue" />}
@@ -47,14 +41,12 @@ storiesOf("Galoy Input Redsigned", module)
       </UseCase>
       <UseCase text="Input with TextIcon and No Label">
         <GaloyInputRedesigned
-          forceKeyboard={false}
           placeholder={"placeholder"}
           leftIcon={<Text style={styles.textStyleIcon}>usd</Text>}
         />
       </UseCase>
       <UseCase text="Input with padding">
         <GaloyInputRedesigned
-          forceKeyboard={false}
           label={"Form Label"}
           inputContainerStyle={styles.paddedInput}
           caption={"caption"}
@@ -63,7 +55,6 @@ storiesOf("Galoy Input Redsigned", module)
       </UseCase>
       <UseCase text="Error">
         <GaloyInputRedesigned
-          forceKeyboard={false}
           label={"Input Label"}
           placeholder={"placeholder"}
           errorMessage={"Ooops! something went wrong!"}

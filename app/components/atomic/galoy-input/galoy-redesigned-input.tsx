@@ -3,8 +3,6 @@ import { TextInput, View } from "react-native"
 
 import { Input, InputProps, Text, makeStyles, useTheme } from "@rneui/themed"
 
-import { ComponentType } from "../../../types/jsx"
-
 const useStyles = makeStyles(
   (theme, { props, isFocused }: { props: GaloyInputProps; isFocused: boolean }) => ({
     ContainerStyle: {
@@ -113,4 +111,4 @@ const CaptionComponent = ({ props, errorStyles, styles }) => {
   )
 }
 
-export const GaloyInputRedesigned: ComponentType = React.forwardRef(GaloyInputFunctions)
+export const GaloyInputRedesigned = React.forwardRef(GaloyInputFunctions)

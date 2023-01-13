@@ -84,7 +84,7 @@ type Props = {
 
 export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
   const { hasToken } = useToken()
-  const [matchingContacts, setMatchingContacts] = useState([])
+  const [matchingContacts, setMatchingContacts] = useState<Contact[]>([])
   const [searchText, setSearchText] = useState("")
   const { LL } = useI18nContext()
   const { loading, data, error } = useContactsQuery({
@@ -131,12 +131,12 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
       .toLowerCase()
       .includes(searchWord.toLowerCase())
 
-    if (contact.alias === null) {
-      contactPrettyNameMatchesSearchWord = false
-    } else {
+    if (contact.alias) {
       contactPrettyNameMatchesSearchWord = contact.alias
         .toLowerCase()
         .includes(searchWord.toLowerCase())
+    } else {
+      contactPrettyNameMatchesSearchWord = false
     }
 
     return contactNameMatchesSearchWord || contactPrettyNameMatchesSearchWord
@@ -162,7 +162,7 @@ export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
       />
     )
   } else {
-    searchBarContent = null
+    searchBarContent = <></>
   }
 
   if (contacts.length > 0) {

@@ -3,7 +3,6 @@ import { TextInput } from "react-native"
 import { Input, InputProps } from "@rneui/themed"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { color } from "../../../theme"
-import { ComponentType } from "../../../types/jsx"
 
 const styles = EStyleSheet.create({
   inputContainerFocused: {
@@ -42,4 +41,4 @@ const GaloyInputFunction = (
   )
 }
 
-export const GaloyInput: ComponentType = React.forwardRef(GaloyInputFunction)
+export const GaloyInput = React.forwardRef(GaloyInputFunction)

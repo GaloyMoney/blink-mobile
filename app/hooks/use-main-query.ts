@@ -16,7 +16,7 @@ const useMainQuery = (): useMainQueryOutput => {
     notifyOnNetworkStatusChange: true,
   })
   const { LL } = useI18nContext()
-  let errors = []
+  let errors: { message: string }[] = []
   if (error) {
     if (error.graphQLErrors?.length > 0 && previousData) {
       // We got an error back from the server but we have data in the cache
@@ -47,6 +47,7 @@ const useMainQuery = (): useMainQueryOutput => {
       // TODO: check if error is INVALID_AUTHENTICATION here
     }
   }
+
   const userPreferredLanguage = data?.me?.language
   const wallets = data?.me?.defaultAccount?.wallets
   const defaultWalletId = data?.me?.defaultAccount?.defaultWalletId
@@ -71,7 +72,7 @@ const useMainQuery = (): useMainQueryOutput => {
   const myPubKey = data?.globals?.nodesIds?.[0] ?? ""
   const username = data?.me?.username
   const phoneNumber = data?.me?.phone
-  const mobileVersions = data?.mobileVersions[0] // FIXME array/item mismatch
+  const mobileVersions = data?.mobileVersions ? data.mobileVersions[0] : undefined // FIXME array/item mismatch
   const mergedTransactions = data?.me?.defaultAccount?.transactions?.edges
 
   const accountId = data?.me?.defaultAccount?.id

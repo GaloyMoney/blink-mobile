@@ -1,8 +1,8 @@
+import { useCaptchaCreateChallengeMutation } from "@app/graphql/generated"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import GeetestModule from "@galoymoney/react-native-geetest-module"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { EventSubscription, NativeEventEmitter, NativeModules } from "react-native"
-import GeetestModule from "@galoymoney/react-native-geetest-module"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { useCaptchaCreateChallengeMutation } from "@app/graphql/generated"
 
 type GeetestCaptchaReturn = {
   geetestError: string | null
@@ -31,8 +31,8 @@ export const useGeetestCaptcha = (): GeetestCaptchaReturn => {
 
   const registerCaptcha = useCallback(async () => {
     const { data } = await captchaCreateChallenge()
-    const result = data.captchaCreateChallenge?.result
-    const errors = data.captchaCreateChallenge?.errors ?? []
+    const result = data?.captchaCreateChallenge?.result
+    const errors = data?.captchaCreateChallenge?.errors ?? []
     if (errors.length > 0) {
       setError(errors[0].message)
     } else if (result) {
@@ -75,8 +75,14 @@ export const useGeetestCaptcha = (): GeetestCaptchaReturn => {
 
     return () => {
       GeetestModule.tearDown()
-      onGeeTestDialogResultListener.current.remove()
-      onGeeTestFailedListener.current.remove()
+
+      if (onGeeTestDialogResultListener.current) {
+        onGeeTestDialogResultListener.current.remove()
+      }
+
+      if (onGeeTestFailedListener.current) {
+        onGeeTestFailedListener.current.remove()
+      }
     }
   }, [])
 

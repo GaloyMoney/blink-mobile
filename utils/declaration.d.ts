@@ -37,15 +37,3 @@ declare module "react-native-walkthrough-tooltip" {
     children: React.ReactNode
   }
 }
-declare interface MarkdownProps {
-  rules?: RenderRules
-  children?: ReactNode
-  style?: StyleSheet.NamedStyles<any>
-  renderer?: AstRenderer
-  markdownit?: MarkdownIt
-  mergeStyle?: boolean
-  debugPrintTree?: boolean
-  onLinkPress?: (url: string) => boolean
-}
-
-declare type MarkdownStatic = ComponentType<MarkdownProps>

@@ -16,13 +16,16 @@ import * as lightningPayReq from "bolt11"
 
 export const getDescription = (
   decoded: lightningPayReq.PaymentRequestObject,
-): lightningPayReq.TagData =>
+): lightningPayReq.TagData | undefined =>
   decoded.tags.find((value) => value.tagName === "description")?.data
 
-export const getDestination = (decoded: lightningPayReq.PaymentRequestObject): string =>
-  decoded.payeeNodeKey
+export const getDestination = (
+  decoded: lightningPayReq.PaymentRequestObject,
+): string | undefined => decoded.payeeNodeKey
 
-export const getHashFromInvoice = (invoice: string): lightningPayReq.TagData => {
+export const getHashFromInvoice = (
+  invoice: string,
+): lightningPayReq.TagData | undefined => {
   const decoded = lightningPayReq.decode(invoice)
   return decoded.tags.find((value) => value.tagName === "payment_hash")?.data
 }
