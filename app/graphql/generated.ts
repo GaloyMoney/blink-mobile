@@ -2505,6 +2505,67 @@ export type SendBitcoinDestinationQuery = {
   } | null
 }
 
+export type SendBitcoinDetailsScreenQueryVariables = Exact<{ [key: string]: never }>
+
+export type SendBitcoinDetailsScreenQuery = {
+  readonly __typename: "Query"
+  readonly globals?: { readonly __typename: "Globals"; readonly network: Network } | null
+  readonly me?: {
+    readonly __typename: "User"
+    readonly defaultAccount: {
+      readonly __typename: "ConsumerAccount"
+      readonly defaultWallet?:
+        | {
+            readonly __typename: "BTCWallet"
+            readonly id: string
+            readonly walletCurrency: WalletCurrency
+          }
+        | {
+            readonly __typename: "UsdWallet"
+            readonly id: string
+            readonly walletCurrency: WalletCurrency
+          }
+        | null
+      readonly btcWallet?:
+        | {
+            readonly __typename: "BTCWallet"
+            readonly id: string
+            readonly balance: number
+            readonly walletCurrency: WalletCurrency
+            readonly accountId: string
+            readonly pendingIncomingBalance: number
+          }
+        | {
+            readonly __typename: "UsdWallet"
+            readonly id: string
+            readonly balance: number
+            readonly walletCurrency: WalletCurrency
+            readonly accountId: string
+            readonly pendingIncomingBalance: number
+          }
+        | null
+      readonly usdWallet?:
+        | {
+            readonly __typename: "BTCWallet"
+            readonly id: string
+            readonly balance: number
+            readonly walletCurrency: WalletCurrency
+            readonly accountId: string
+            readonly pendingIncomingBalance: number
+          }
+        | {
+            readonly __typename: "UsdWallet"
+            readonly id: string
+            readonly balance: number
+            readonly walletCurrency: WalletCurrency
+            readonly accountId: string
+            readonly pendingIncomingBalance: number
+          }
+        | null
+    }
+  } | null
+}
+
 export type AccountScreenQueryVariables = Exact<{ [key: string]: never }>
 
 export type AccountScreenQuery = {
@@ -5266,6 +5327,85 @@ export type SendBitcoinDestinationLazyQueryHookResult = ReturnType<
 export type SendBitcoinDestinationQueryResult = Apollo.QueryResult<
   SendBitcoinDestinationQuery,
   SendBitcoinDestinationQueryVariables
+>
+export const SendBitcoinDetailsScreenDocument = gql`
+  query sendBitcoinDetailsScreen {
+    globals {
+      network
+    }
+    me {
+      defaultAccount {
+        defaultWallet {
+          id
+          walletCurrency
+        }
+        btcWallet {
+          id
+          balance
+          walletCurrency
+          accountId
+          pendingIncomingBalance
+        }
+        usdWallet {
+          id
+          balance
+          walletCurrency
+          accountId
+          pendingIncomingBalance
+        }
+      }
+    }
+  }
+`
+
+/**
+ * __useSendBitcoinDetailsScreenQuery__
+ *
+ * To run a query within a React component, call `useSendBitcoinDetailsScreenQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSendBitcoinDetailsScreenQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSendBitcoinDetailsScreenQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useSendBitcoinDetailsScreenQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    SendBitcoinDetailsScreenQuery,
+    SendBitcoinDetailsScreenQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<
+    SendBitcoinDetailsScreenQuery,
+    SendBitcoinDetailsScreenQueryVariables
+  >(SendBitcoinDetailsScreenDocument, options)
+}
+export function useSendBitcoinDetailsScreenLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    SendBitcoinDetailsScreenQuery,
+    SendBitcoinDetailsScreenQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<
+    SendBitcoinDetailsScreenQuery,
+    SendBitcoinDetailsScreenQueryVariables
+  >(SendBitcoinDetailsScreenDocument, options)
+}
+export type SendBitcoinDetailsScreenQueryHookResult = ReturnType<
+  typeof useSendBitcoinDetailsScreenQuery
+>
+export type SendBitcoinDetailsScreenLazyQueryHookResult = ReturnType<
+  typeof useSendBitcoinDetailsScreenLazyQuery
+>
+export type SendBitcoinDetailsScreenQueryResult = Apollo.QueryResult<
+  SendBitcoinDetailsScreenQuery,
+  SendBitcoinDetailsScreenQueryVariables
 >
 export const AccountScreenDocument = gql`
   query AccountScreen {

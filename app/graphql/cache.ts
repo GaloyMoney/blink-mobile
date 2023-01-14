@@ -1,5 +1,5 @@
 import { InMemoryCache, gql } from "@apollo/client"
-import { Account, MyWalletsFragmentDoc, WalletCurrency } from "./generated"
+import { Account, MyWalletsFragmentDoc, Wallet, WalletCurrency } from "./generated"
 
 gql`
   fragment MyWallets on ConsumerAccount {

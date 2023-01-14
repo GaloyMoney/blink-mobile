@@ -19,7 +19,7 @@ export type useMainQueryOutput = {
   defaultWalletId: string | undefined
   mergedTransactions: readonly object[] | undefined | null
   wallets: readonly any[] | undefined
-  defaultWallet: Wallet | undefined
+  defaultWallet: object | undefined
   me: any
   myPubKey: string
   username?: string | null
