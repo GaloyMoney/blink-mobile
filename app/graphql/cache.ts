@@ -1,20 +1,28 @@
 import { InMemoryCache, gql } from "@apollo/client"
-import { WalletCurrency, WalletInfoFragmentDoc } from "./generated"
+import { Account, MyWalletsFragmentDoc, WalletCurrency } from "./generated"
 
 gql`
-  fragment WalletInfo on Wallet {
-    ... on BTCWallet {
+  fragment MyWallets on ConsumerAccount {
+    wallets {
       id
-      walletCurrency
       balance
-    }
-    ... on UsdWallet {
-      id
       walletCurrency
-      balance
     }
   }
 `
+
+const getWallets = ({ readField, cache }): readonly Wallet[] | undefined => {
+  const id = readField("id")
+  const key = `ConsumerAccount:${id}`
+  const account: Account | null = cache.readFragment({
+    id: key,
+    fragment: MyWalletsFragmentDoc,
+  })
+  if (account === null) {
+    return undefined
+  }
+  return account.wallets
+}
 
 export const createCache = () => {
   return new InMemoryCache({
@@ -49,68 +57,38 @@ export const createCache = () => {
       ConsumerAccount: {
         fields: {
           usdWallet: {
-            read: (_, { readField, cache }) => {
-              const wallets = readField("wallets")
-              if (Array.isArray(wallets)) {
-                for (const w of wallets) {
-                  try {
-                    const wallet: Wallet | null = cache.readFragment({
-                      id: w.__ref,
-                      fragment: WalletInfoFragmentDoc,
-                    })
-                    if (wallet?.walletCurrency === WalletCurrency.Usd) {
-                      return wallet
-                    }
-                  } catch (err) {
-                    console.error("err usdWallet", err)
-                  }
-                }
+            read: (_, { readField, cache }): Wallet | undefined => {
+              const wallets = getWallets({ readField, cache })
+              if (wallets === undefined || wallets.length === 0) {
+                return undefined
               }
-              return undefined
+
+              return wallets.find(
+                (wallet) => wallet.walletCurrency === WalletCurrency.Btc,
+              )
             },
           },
           btcWallet: {
-            read: (_, { readField, cache }) => {
-              const wallets = readField("wallets")
-              if (Array.isArray(wallets)) {
-                for (const w of wallets) {
-                  try {
-                    const wallet: Wallet | null = cache.readFragment({
-                      id: w.__ref,
-                      fragment: WalletInfoFragmentDoc,
-                    })
-                    if (wallet?.walletCurrency === WalletCurrency.Btc) {
-                      return wallet
-                    }
-                  } catch (err) {
-                    console.error("err btcWallet", err)
-                  }
-                }
+            read: (_, { readField, cache }): Wallet | undefined => {
+              const wallets = getWallets({ readField, cache })
+              if (wallets === undefined || wallets.length === 0) {
+                return undefined
               }
-              return undefined
+
+              return wallets.find(
+                (wallet) => wallet.walletCurrency === WalletCurrency.Btc,
+              )
             },
           },
           defaultWallet: {
-            read: (_, { readField, cache }) => {
-              const wallets = readField("wallets")
-              const defaultWalletId = readField("defaultWalletId")
-              console.log("defaultWalletId", defaultWalletId)
-              if (Array.isArray(wallets)) {
-                for (const w of wallets) {
-                  try {
-                    const wallet: Wallet | null = cache.readFragment({
-                      id: w.__ref,
-                      fragment: WalletInfoFragmentDoc,
-                    })
-                    if (wallet?.id === defaultWalletId) {
-                      return wallet
-                    }
-                  } catch (err) {
-                    console.log("err btcWallet", err)
-                  }
-                }
+            read: (_, { readField, cache }): Wallet | undefined => {
+              const wallets = getWallets({ readField, cache })
+              if (wallets === undefined || wallets.length === 0) {
+                return undefined
               }
-              return undefined
+
+              const defaultWalletId = readField("defaultWalletId")
+              return wallets.find((wallet) => wallet.id === defaultWalletId)
             },
           },
         },

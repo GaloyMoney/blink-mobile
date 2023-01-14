@@ -1298,23 +1298,23 @@ export const WalletCurrency = {
 } as const
 
 export type WalletCurrency = typeof WalletCurrency[keyof typeof WalletCurrency]
-type WalletInfo_BtcWallet_Fragment = {
-  readonly __typename: "BTCWallet"
-  readonly id: string
-  readonly walletCurrency: WalletCurrency
-  readonly balance: number
+export type MyWalletsFragment = {
+  readonly __typename: "ConsumerAccount"
+  readonly wallets: ReadonlyArray<
+    | {
+        readonly __typename: "BTCWallet"
+        readonly id: string
+        readonly balance: number
+        readonly walletCurrency: WalletCurrency
+      }
+    | {
+        readonly __typename: "UsdWallet"
+        readonly id: string
+        readonly balance: number
+        readonly walletCurrency: WalletCurrency
+      }
+  >
 }
-
-type WalletInfo_UsdWallet_Fragment = {
-  readonly __typename: "UsdWallet"
-  readonly id: string
-  readonly walletCurrency: WalletCurrency
-  readonly balance: number
-}
-
-export type WalletInfoFragment =
-  | WalletInfo_BtcWallet_Fragment
-  | WalletInfo_UsdWallet_Fragment
 
 export type HideBalanceQueryVariables = Exact<{ [key: string]: never }>
 
@@ -2586,17 +2586,12 @@ export type LocalizationContextProviderQuery = {
   readonly me?: { readonly __typename: "User"; readonly language: string } | null
 }
 
-export const WalletInfoFragmentDoc = gql`
-  fragment WalletInfo on Wallet {
-    ... on BTCWallet {
+export const MyWalletsFragmentDoc = gql`
+  fragment MyWallets on ConsumerAccount {
+    wallets {
       id
-      walletCurrency
       balance
-    }
-    ... on UsdWallet {
-      id
       walletCurrency
-      balance
     }
   }
 `

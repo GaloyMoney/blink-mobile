@@ -56,7 +56,10 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
   const { hasToken } = useToken()
   const { LL } = useI18nContext()
 
-  const { data } = useSettingsScreenQuery({ fetchPolicy: "cache-only" })
+  const { data } = useSettingsScreenQuery({
+    fetchPolicy: "cache-only",
+    returnPartialData: true,
+  })
 
   const username = data?.me?.username
   const phone = data?.me?.phone
