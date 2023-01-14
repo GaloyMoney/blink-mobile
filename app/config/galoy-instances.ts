@@ -9,6 +9,8 @@ export type GaloyInstance = {
   lnAddressHostname: string
 }
 
+export const bankName = "BBW"
+
 export const GALOY_INSTANCES: GaloyInstance[] = [
   {
     name: "BBW",

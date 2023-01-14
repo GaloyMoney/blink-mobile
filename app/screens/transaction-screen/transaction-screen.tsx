@@ -79,7 +79,7 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
   const prefCurrency = useReactiveVar(prefCurrencyVar)
 
   // The source of truth for listing the transactions
-  // The data gets "cached" here and more pages are appended when they're fetched (through useQuery)
+  // The data gets "cached" here and more pages are appended when they're fetched (through useMainQuery)
   const transactionsRef = React.useRef<
     {
       cursor: string

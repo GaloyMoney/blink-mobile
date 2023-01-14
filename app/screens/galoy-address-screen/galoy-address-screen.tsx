@@ -15,6 +15,7 @@ import { MerchantsDropdown } from "./merchants-dropdown"
 import { SetAddressModal } from "./set-address-modal"
 import { useAddressScreenQuery } from "../../graphql/generated"
 import { gql } from "@apollo/client"
+import { bankName } from "@app/config"
 
 const styles = EStyleSheet.create({
   container: {
@@ -116,9 +117,7 @@ export const GaloyAddressScreen = () => {
   return (
     <Screen style={styles.container}>
       <View style={styles.container}>
-        <Text style={styles.title}>
-          {LL.SettingsScreen.addressScreen({ bankName: "BBW" })}
-        </Text>
+        <Text style={styles.title}>{LL.SettingsScreen.addressScreen({ bankName })}</Text>
         <View style={styles.addressInfoContainer}>
           <TouchableWithoutFeedback onPress={() => toggleExplainerModal()}>
             <View style={styles.fieldNameContainer}>
@@ -129,7 +128,7 @@ export const GaloyAddressScreen = () => {
               </View>
               <View style={styles.fieldNameComponent}>
                 <Text style={styles.addressInfoText}>
-                  {" " + LL.GaloyAddressScreen.yourAddress({ bankName: "BBW" })}
+                  {" " + LL.GaloyAddressScreen.yourAddress({ bankName })}
                 </Text>
               </View>
             </View>
@@ -142,7 +141,7 @@ export const GaloyAddressScreen = () => {
                   toastShow({
                     message: (translations) =>
                       translations.GaloyAddressScreen.copiedAddressToClipboard({
-                        bankName: "BBW",
+                        bankName,
                       }),
                     type: "success",
                     currentTranslation: LL,
@@ -170,7 +169,7 @@ export const GaloyAddressScreen = () => {
         </View>
         {!username && (
           <Button
-            title={LL.GaloyAddressScreen.buttonTitle({ bankName: "BBW" })}
+            title={LL.GaloyAddressScreen.buttonTitle({ bankName })}
             buttonStyle={styles.buttonStyle}
             containerStyle={styles.buttonContainerStyle}
             onPress={() => toggleChooseAddressModal()}
