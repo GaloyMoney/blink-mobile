@@ -86,7 +86,7 @@ export const PriceGraphDataInjected = () => {
 
   return (
     <PriceGraph
-      prices={data.btcPriceList.slice()} // FIXME: remove the slice by having readonly props
+      prices={data.btcPriceList.slice()} // FIXME: PricePoint should be non-nullable
       graphRange={graphRange}
       setGraphRange={setGraphRange}
     />

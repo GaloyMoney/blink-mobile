@@ -89,9 +89,7 @@ type Props = {
 export const SecurityScreen: ScreenType = ({ route, navigation }: Props) => {
   const client = useApolloClient()
   const { mIsBiometricsEnabled, mIsPinEnabled } = route.params
-  const {
-    data: { hideBalance },
-  } = useHideBalanceQuery()
+  const { data: { hideBalance } = {} } = useHideBalanceQuery()
   const { LL } = useI18nContext()
   const [isBiometricsEnabled, setIsBiometricsEnabled] = useState(mIsBiometricsEnabled)
   const [isPinEnabled, setIsPinEnabled] = useState(mIsPinEnabled)

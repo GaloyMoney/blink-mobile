@@ -168,7 +168,9 @@ export const TransactionDetailScreen: ScreenType = ({ route, navigation }: Props
       walletType={walletType}
       amountType={isReceive ? "RECEIVE" : "SEND"}
       usdBalanceInDollars={Math.abs(usdAmount)}
-      btcBalanceInSats={walletType === WalletType.BTC && Math.abs(settlementAmount)}
+      btcBalanceInSats={
+        walletType === WalletType.BTC ? Math.abs(settlementAmount) : undefined
+      }
     />
   )
 

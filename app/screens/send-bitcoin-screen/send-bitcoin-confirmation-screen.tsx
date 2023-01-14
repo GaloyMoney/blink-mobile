@@ -204,12 +204,10 @@ const SendBitcoinConfirmationScreen = ({
   const [, setStatus] = useState<Status>(Status.IDLE)
   const [feeDisplayText, setFeeDisplayText] = useState<string>("")
 
-  // FIXME we lose type safety here
-  const paymentAmountInWalletCurrency = (
+  const paymentAmountInWalletCurrency =
     payerWalletDescriptor.currency === WalletCurrency.Btc
       ? paymentAmountInBtc
       : paymentAmountInUsd
-  )!
 
   const [paymentError, setPaymentError] = useState<string | undefined>(undefined)
 
@@ -237,9 +235,9 @@ const SendBitcoinConfirmationScreen = ({
 
   const fee = useFee({
     walletDescriptor: payerWalletDescriptor,
-    address: paymentType === "lnurl" ? lnurlInvoice! : destination,
+    address: paymentType === "lnurl" ? lnurlInvoice : destination,
     isNoAmountInvoice,
-    invoice: paymentType === "lnurl" ? lnurlInvoice! : destination,
+    invoice: paymentType === "lnurl" ? lnurlInvoice : destination,
     paymentType,
     sameNode,
     paymentAmount: paymentAmountInWalletCurrency,

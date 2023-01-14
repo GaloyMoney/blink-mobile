@@ -60,7 +60,7 @@ export const LanguageScreen: ScreenType = () => {
           key={language}
           bottomDivider
           onPress={() => {
-            if (language !== languageServer) {
+            if (language !== languageServer && userId) {
               updateLanguage({
                 variables: { input: { language } },
                 optimisticResponse: {

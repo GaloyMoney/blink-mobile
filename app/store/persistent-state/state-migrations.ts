@@ -60,9 +60,14 @@ const migrate3ToCurrent = (state: _PersistentState_3): Promise<PersistentState> 
   const newGaloyInstance = GALOY_INSTANCES.find(
     (instance) => instance.name === state.galoyInstance.name,
   )
+
+  if (!newGaloyInstance) {
+    throw new Error("Galoy instance not found")
+  }
+
   return migrate4ToCurrent({
     ...state,
-    galoyInstance: newGaloyInstance!,
+    galoyInstance: newGaloyInstance,
     schemaVersion: 4,
   })
 }
@@ -88,10 +93,15 @@ const migrate2ToCurrent = async (state: _PersistentState_2): Promise<PersistentS
     }
   }
 
+  const newGaloyInstance = GALOY_INSTANCES.find((instance) => instance.name === "BBW")
+  if (!newGaloyInstance) {
+    throw new Error("Galoy instance not found")
+  }
+
   return migrate3ToCurrent({
     ...state,
     schemaVersion: 3,
-    galoyInstance: GALOY_INSTANCES.find((instance) => instance.name === "BBW")!,
+    galoyInstance: newGaloyInstance,
     galoyAuthToken: "",
     isAnalyticsEnabled: true,
   })
@@ -135,7 +145,7 @@ export const defaultPersistentState: PersistentState = {
   schemaVersion: 4,
   hasShownStableSatsWelcome: false,
   isUsdDisabled: false,
-  galoyInstance: GALOY_INSTANCES.find((instance) => instance.name === "BBW")!,
+  galoyInstance: GALOY_INSTANCES[0],
   galoyAuthToken: "",
   isAnalyticsEnabled: true,
   theme: defaultTheme,

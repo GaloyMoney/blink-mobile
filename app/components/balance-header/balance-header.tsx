@@ -94,13 +94,13 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
   usdWalletBalance,
 }: BalanceHeaderProps) => {
   const { LL } = useI18nContext()
-  const {
-    data: { hideBalance },
-  } = useHideBalanceQuery()
+  const { data: { hideBalance } = {} } = useHideBalanceQuery()
   const isFocused = useIsFocused()
   const [balanceHidden, setBalanceHidden] = useState(hideBalance)
   const primaryBalance =
-    btcWalletValueInUsd + (usdWalletBalance ? usdWalletBalance / 100 : 0)
+    typeof btcWalletValueInUsd === "number"
+      ? btcWalletValueInUsd + (usdWalletBalance ? usdWalletBalance / 100 : 0)
+      : NaN
   const secondaryBalanceEnabled = !hasUsdWallet
   const secondaryBalance = btcWalletBalance
 
@@ -138,7 +138,9 @@ export const BalanceHeader: React.FC<BalanceHeaderProps> = ({
             </View>
             <View>
               {secondaryBalanceEnabled && loading ? <SecondaryLoader /> : null}
-              {secondaryBalanceEnabled && !loading ? (
+              {secondaryBalanceEnabled &&
+              typeof secondaryBalance === "number" &&
+              !loading ? (
                 <TextCurrencyForAmount
                   currency={"BTC"}
                   style={styles.secondaryBalanceText}

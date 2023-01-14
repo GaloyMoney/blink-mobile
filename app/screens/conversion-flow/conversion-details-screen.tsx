@@ -58,8 +58,6 @@ export const ConversionDetailsScreen = ({
     const btcWalletBalance = btcWallet?.balance ?? NaN
     const usdWalletBalance = usdWallet?.balance ?? NaN
 
-    console.log({ btcWalletBalance, usdWalletBalance, usdWallet })
-
     if (fromWalletCurrency === WalletCurrency.Btc) {
       if (btcAmount.amount > btcWalletBalance) {
         setAmountFieldError(
@@ -331,7 +329,7 @@ export const ConversionDetailsScreen = ({
                 <>
                   <FakeCurrencyInput
                     value={paymentAmountToDollarsOrSats(usdAmount)}
-                    onChangeValue={(value) => setAmountsWithUsd(value * 100)}
+                    onChangeValue={(value) => setAmountsWithUsd(Number(value) * 100)}
                     prefix="$"
                     delimiter=","
                     separator="."
@@ -355,7 +353,7 @@ export const ConversionDetailsScreen = ({
             {fromWalletCurrency === WalletCurrency.Usd && (
               <FakeCurrencyInput
                 value={paymentAmountToDollarsOrSats(usdAmount)}
-                onChangeValue={(value) => setAmountsWithUsd(value * 100)}
+                onChangeValue={(value) => setAmountsWithUsd(Number(value) * 100)}
                 prefix="$"
                 delimiter=","
                 separator="."
