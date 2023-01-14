@@ -1,5 +1,4 @@
 import { useCountdownTimer, useSubscriptionUpdates } from "@app/hooks"
-import useMainQuery from "@app/hooks/use-main-query"
 import { palette } from "@app/theme"
 import { TYPE_LIGHTNING_USD, getFullUri } from "@app/utils/wallet"
 import { parsingv2, Network as NetworkLibGaloy } from "@galoymoney/client"
@@ -14,6 +13,7 @@ import {
   WalletCurrency,
   useLnNoAmountInvoiceCreateMutation,
   useLnUsdInvoiceCreateMutation,
+  useReceiveUsdQuery,
 } from "@app/graphql/generated"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -30,6 +30,8 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import Icon from "react-native-vector-icons/Ionicons"
 import QRView from "./qr-view"
+
+import { gql } from "@apollo/client"
 
 const styles = EStyleSheet.create({
   container: {
@@ -142,6 +144,37 @@ const styles = EStyleSheet.create({
   },
 })
 
+gql`
+  query receiveUsd {
+    globals {
+      network
+    }
+    me {
+      defaultAccount {
+        usdWallet {
+          id
+        }
+      }
+    }
+  }
+
+  mutation lnUsdInvoiceCreate($input: LnUsdInvoiceCreateInput!) {
+    lnUsdInvoiceCreate(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      invoice {
+        __typename
+        paymentHash
+        paymentRequest
+        paymentSecret
+        satoshis
+      }
+    }
+  }
+`
+
 const ReceiveUsd = () => {
   const appState = useRef(AppState.currentState)
   const [status, setStatus] = useState<
@@ -150,7 +183,11 @@ const ReceiveUsd = () => {
   const [err, setErr] = useState("")
   const [lnNoAmountInvoiceCreate] = useLnNoAmountInvoiceCreateMutation()
   const [lnUsdInvoiceCreate] = useLnUsdInvoiceCreateMutation()
-  const { usdWalletId, network } = useMainQuery()
+
+  const { data } = useReceiveUsdQuery({ fetchPolicy: "cache-only" })
+  const usdWalletId = data?.me?.defaultAccount?.usdWallet?.id
+  const network = data?.globals?.network
+
   const [invoice, setInvoice] = useState<LnInvoice | LnNoAmountInvoice | null>(null)
   const [usdAmount, setUsdAmount] = useState(0)
   const [memo, setMemo] = useState("")

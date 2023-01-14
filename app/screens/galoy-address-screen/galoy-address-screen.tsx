@@ -1,7 +1,6 @@
 import { CustomIcon } from "@app/components/custom-icon"
 import { Screen } from "@app/components/screen"
 import { useAppConfig } from "@app/hooks"
-import useMainQuery from "@app/hooks/use-main-query"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
 import { getLightningAddress } from "@app/utils/pay-links"
@@ -14,6 +13,8 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import { AddressExplainerModal } from "./address-explainer-modal"
 import { MerchantsDropdown } from "./merchants-dropdown"
 import { SetAddressModal } from "./set-address-modal"
+import { useAddressScreenQuery } from "../../graphql/generated"
+import { gql } from "@apollo/client"
 
 const styles = EStyleSheet.create({
   container: {
@@ -81,14 +82,30 @@ const styles = EStyleSheet.create({
   },
 })
 
+gql`
+  query addressScreen {
+    me {
+      username
+    }
+  }
+`
+
 export const GaloyAddressScreen = () => {
   const { LL } = useI18nContext()
-  const { username } = useMainQuery()
+  const { data } = useAddressScreenQuery({ fetchPolicy: "cache-only" })
+
   const [chooseAddressModalVisible, setChooseAddressModalVisible] = React.useState(false)
   const {
     appConfig: { galoyInstance },
   } = useAppConfig()
   const [explainerModalVisible, setExplainerModalVisible] = React.useState(false)
+
+  if (!data?.me?.username) {
+    return <> </>
+  }
+
+  const username = data.me.username
+
   const lightningAddress = getLightningAddress(galoyInstance, username)
   const toggleChooseAddressModal = () => {
     setChooseAddressModalVisible(!chooseAddressModalVisible)

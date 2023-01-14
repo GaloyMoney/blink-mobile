@@ -43,7 +43,7 @@ describe("Receive Payment Flow", async () => {
   it("Get Invoice from clipboard to prompt for notification permission popup", async () => {
     await browser.pause(800)
     const invoiceBase64 = await browser.getClipboard()
-    invoice = new Buffer(invoiceBase64, "base64").toString()
+    invoice = Buffer.from(invoiceBase64, "base64").toString()
   })
 
   it("Click OK to allow push notifications", async () => {

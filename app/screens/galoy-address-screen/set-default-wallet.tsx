@@ -5,10 +5,13 @@ import React, { useEffect, useState } from "react"
 import { TouchableWithoutFeedback, View } from "react-native"
 import { CheckBox, Text } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
-import useMainQuery from "@app/hooks/use-main-query"
 import { toastShow } from "@app/utils/toast"
 import { DefaultWalletExplainerModal } from "./default-wallet-explainer-modal"
-import { useAccountUpdateDefaultWalletIdMutation } from "@app/graphql/generated"
+import {
+  useAccountUpdateDefaultWalletIdMutation,
+  useSetDefaultWalletQuery,
+} from "@app/graphql/generated"
+import { gql } from "@apollo/client"
 
 const styles = EStyleSheet.create({
   fieldContainer: {
@@ -41,9 +44,47 @@ const styles = EStyleSheet.create({
   },
 })
 
+gql`
+  mutation accountUpdateDefaultWalletId($input: AccountUpdateDefaultWalletIdInput!) {
+    accountUpdateDefaultWalletId(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      account {
+        __typename
+        id
+        defaultWalletId
+      }
+    }
+  }
+
+  query setDefaultWallet {
+    me {
+      defaultAccount {
+        id
+        defaultWalletId
+        btcWallet {
+          id
+        }
+        usdWallet {
+          id
+        }
+      }
+    }
+  }
+`
+
 export const SetDefaultWallet = () => {
   const { LL } = useI18nContext()
-  const { defaultWallet, accountId, btcWalletId, usdWalletId } = useMainQuery()
+
+  const { data } = useSetDefaultWalletQuery({ fetchPolicy: "cache-only" })
+
+  const accountId = data?.me?.defaultAccount?.id
+  const btcWalletId = data?.me?.defaultAccount?.btcWallet?.id
+  const usdWalletId = data?.me?.defaultAccount?.usdWallet?.id
+  const defaultWalletId = data?.me?.defaultAccount?.defaultWalletId
+
   const [isDefaultWalletExplainerModalOpen, setIsDefaultWalletExplainerModalOpen] =
     useState(false)
   const [accountUpdateDefaultWallet, { error }] =
@@ -107,7 +148,7 @@ export const SetDefaultWallet = () => {
           title="BTC"
           checkedIcon="dot-circle-o"
           uncheckedIcon="circle-o"
-          checked={defaultWallet?.walletCurrency === "BTC"}
+          checked={defaultWalletId === btcWalletId}
           containerStyle={{ backgroundColor: palette.lighterGrey }}
           onPress={() => updateDefaultWallet(btcWalletId)}
           checkedColor={palette.lapisLazuli}
@@ -117,7 +158,7 @@ export const SetDefaultWallet = () => {
           title="USD"
           checkedIcon="dot-circle-o"
           uncheckedIcon="circle-o"
-          checked={defaultWallet?.walletCurrency === "USD"}
+          checked={defaultWalletId === usdWalletId}
           containerStyle={{ backgroundColor: palette.lighterGrey }}
           onPress={() => updateDefaultWallet(usdWalletId)}
           checkedColor={palette.lapisLazuli}

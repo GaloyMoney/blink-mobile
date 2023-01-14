@@ -71,7 +71,7 @@ export const payInvoice = async (invoice: string) => {
       input: {
         walletId,
         paymentRequest: invoice,
-        amount: 5,
+        amount: 150,
       },
     },
     mutation: LnNoAmountInvoicePaymentSendDocument,

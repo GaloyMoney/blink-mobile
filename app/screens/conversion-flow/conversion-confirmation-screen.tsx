@@ -1,3 +1,4 @@
+import { gql } from "@apollo/client"
 import {
   PaymentSendResult,
   WalletCurrency,
@@ -20,6 +21,23 @@ import { Button } from "@rneui/base"
 import { GraphQLError } from "graphql"
 import React, { useState } from "react"
 import { StyleSheet, Text, View } from "react-native"
+
+gql`
+  query conversionScreen {
+    me {
+      defaultAccount {
+        usdWallet @client {
+          id
+          balance
+        }
+        btcWallet @client {
+          id
+          balance
+        }
+      }
+    }
+  }
+`
 
 export const ConversionConfirmationScreen = ({
   navigation,
