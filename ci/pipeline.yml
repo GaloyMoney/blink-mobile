@@ -249,7 +249,7 @@ resources:
 - name: daily-release
   type: time
   source:
-    day_of_week: 1-5
+    day_of_week: 1-6
     start: 6:00 AM
     stop: 6:00 AM
     location: UTC
