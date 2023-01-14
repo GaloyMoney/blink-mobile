@@ -248,7 +248,10 @@ const SendBitcoinDestinationScreen = ({
     useSendBitcoinDestinationReducer()
   const [goToNextScreenWhenValid, setGoToNextScreenWhenValid] = React.useState(false)
 
-  const { data } = useSendBitcoinDestinationQuery({ fetchPolicy: "cache-only" })
+  const { data } = useSendBitcoinDestinationQuery({
+    fetchPolicy: "cache-only",
+    returnPartialData: true,
+  })
   const myPubKey = data?.globals?.nodesIds?.[0] ?? "" // FIXME: there can be more than one node
   const myUsername = data?.me?.username
   const bitcoinNetwork = data?.globals?.network
@@ -281,11 +284,9 @@ const SendBitcoinDestinationScreen = ({
       })
   }, [data, userDefaultWalletIdQuery, myUsername])
 
-  const loaded = myPubKey && checkUsername
-
   const validateDestination = React.useCallback(
     async (destination) => {
-      if (destinationState.destinationState !== "entering" || !loaded) {
+      if (destinationState.destinationState !== "entering") {
         return
       }
 
@@ -457,7 +458,6 @@ const SendBitcoinDestinationScreen = ({
     },
     [
       myPubKey,
-      loaded,
       bitcoinNetwork,
       checkUsername,
       destinationState.destinationState,
@@ -603,7 +603,6 @@ const SendBitcoinDestinationScreen = ({
             disabledStyle={[Styles.button, Styles.disabledButtonStyle]}
             disabledTitleStyle={Styles.disabledButtonTitleStyle}
             disabled={
-              !loaded ||
               destinationState.destinationState === "validating" ||
               destinationState.destinationState === "invalid"
             }
