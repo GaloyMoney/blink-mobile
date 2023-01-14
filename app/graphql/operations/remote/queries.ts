@@ -164,16 +164,6 @@ export default gql`
     }
   }
 
-  query walletCSVTransactions($defaultWalletId: WalletId!) {
-    me {
-      id
-      defaultAccount {
-        id
-        csvTransactions(walletIds: [$defaultWalletId])
-      }
-    }
-  }
-
   query initWallet {
     me {
       id
@@ -184,32 +174,6 @@ export default gql`
           id
           balance
           walletCurrency
-        }
-      }
-    }
-  }
-
-  # new queries dedicated to screen
-  query rootStack($hasToken: Boolean!) {
-    me @include(if: $hasToken) {
-      username
-      id
-    }
-    globals {
-      network
-    }
-  }
-
-  query conversionScreen {
-    me {
-      defaultAccount {
-        usdWallet @client {
-          id
-          balance
-        }
-        btcWallet @client {
-          id
-          balance
         }
       }
     }

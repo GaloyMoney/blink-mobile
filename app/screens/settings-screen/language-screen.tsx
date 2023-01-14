@@ -5,10 +5,13 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
 import { palette } from "../../theme/palette"
 import type { ScreenType } from "../../types/jsx"
-import useMainQuery from "@app/hooks/use-main-query"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { useUserUpdateLanguageMutation } from "@app/graphql/generated"
+import {
+  useLanguageScreenQuery,
+  useUserUpdateLanguageMutation,
+} from "@app/graphql/generated"
 import { testProps } from "../../../utils/testProps"
+import { gql } from "@apollo/client"
 
 const styles = EStyleSheet.create({
   screenStyle: {
@@ -16,12 +19,36 @@ const styles = EStyleSheet.create({
   },
 })
 
-export const LanguageScreen: ScreenType = () => {
-  const { userPreferredLanguage, me, refetch: refetchMain } = useMainQuery()
+gql`
+  query languageScreen {
+    me {
+      language
+      id
+    }
+  }
 
-  const [updateLanguage] = useUserUpdateLanguageMutation({
-    onCompleted: () => refetchMain(),
-  })
+  mutation userUpdateLanguage($input: UserUpdateLanguageInput!) {
+    userUpdateLanguage(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      user {
+        __typename
+        id
+        language
+      }
+    }
+  }
+`
+
+export const LanguageScreen: ScreenType = () => {
+  const { data } = useLanguageScreenQuery({ fetchPolicy: "cache-only" })
+
+  const languageServer = data?.me?.language
+  const userId = data?.me?.id
+
+  const [updateLanguage] = useUserUpdateLanguageMutation()
   const { LL } = useI18nContext()
 
   const list = ["DEFAULT", "en-US", "es-SV", "pt-BR", "fr-CA", "de-DE", "cs"]
@@ -33,7 +60,7 @@ export const LanguageScreen: ScreenType = () => {
           key={language}
           bottomDivider
           onPress={() => {
-            if (language !== userPreferredLanguage) {
+            if (language !== languageServer) {
               updateLanguage({
                 variables: { input: { language } },
                 optimisticResponse: {
@@ -43,7 +70,7 @@ export const LanguageScreen: ScreenType = () => {
                     errors: [],
                     user: {
                       __typename: "User",
-                      id: me?.id,
+                      id: userId,
                       language,
                     },
                   },
@@ -55,7 +82,7 @@ export const LanguageScreen: ScreenType = () => {
           <ListItem.Title {...testProps(LL.Languages[language]())}>
             {LL.Languages[language]()}
           </ListItem.Title>
-          {userPreferredLanguage === language && (
+          {languageServer === language && (
             <Icon name="ios-checkmark-circle" size={18} color={palette.green} />
           )}
         </ListItem>

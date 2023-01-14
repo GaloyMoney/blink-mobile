@@ -4,7 +4,6 @@ import ChevronIcon from "@app/assets/icons/chevron.svg"
 import NoteIcon from "@app/assets/icons/note.svg"
 import SwitchIcon from "@app/assets/icons/switch.svg"
 import { usePriceConversion, useSubscriptionUpdates } from "@app/hooks"
-import useMainQuery from "@app/hooks/use-main-query"
 import { palette } from "@app/theme"
 import { satAmountDisplay } from "@app/utils/currencyConversion"
 import { toastShow } from "@app/utils/toast"
@@ -25,6 +24,7 @@ import {
   useLnInvoiceCreateMutation,
   useLnNoAmountInvoiceCreateMutation,
   useOnChainAddressCurrentMutation,
+  useReceiveBtcQuery,
 } from "@app/graphql/generated"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -32,6 +32,7 @@ import { logGeneratePaymentRequest } from "@app/utils/analytics"
 import Clipboard from "@react-native-community/clipboard"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { testProps } from "../../../utils/testProps"
+import { gql } from "@apollo/client"
 
 const styles = EStyleSheet.create({
   container: {
@@ -157,6 +158,59 @@ const styles = EStyleSheet.create({
   },
 })
 
+gql`
+  query receiveBtc {
+    me {
+      defaultAccount {
+        btcWallet {
+          id
+        }
+      }
+    }
+  }
+
+  mutation lnNoAmountInvoiceCreate($input: LnNoAmountInvoiceCreateInput!) {
+    lnNoAmountInvoiceCreate(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      invoice {
+        __typename
+        paymentHash
+        paymentRequest
+        paymentSecret
+      }
+    }
+  }
+
+  mutation lnInvoiceCreate($input: LnInvoiceCreateInput!) {
+    lnInvoiceCreate(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      invoice {
+        __typename
+        paymentHash
+        paymentRequest
+        paymentSecret
+        satoshis
+      }
+    }
+  }
+
+  mutation onChainAddressCurrent($input: OnChainAddressCurrentInput!) {
+    onChainAddressCurrent(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      address
+    }
+  }
+`
+
 const ReceiveBtc = () => {
   const [loading, setLoading] = useState(true)
   const [err, setErr] = useState("")
@@ -173,7 +227,10 @@ const ReceiveBtc = () => {
     TYPE_LIGHTNING_BTC,
   )
   const { convertCurrencyAmount } = usePriceConversion()
-  const { btcWalletId } = useMainQuery()
+
+  const { data } = useReceiveBtcQuery({ fetchPolicy: "cache-only" })
+  const btcWalletId = data?.me?.defaultAccount?.btcWallet?.id
+
   const { lnUpdate } = useSubscriptionUpdates()
 
   const [lnNoAmountInvoiceCreate] = useLnNoAmountInvoiceCreateMutation()

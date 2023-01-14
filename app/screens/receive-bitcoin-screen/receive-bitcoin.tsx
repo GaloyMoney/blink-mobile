@@ -1,5 +1,4 @@
 import { Screen } from "@app/components/screen"
-import useMainQuery from "@app/hooks/use-main-query"
 import useToken from "@app/hooks/use-token"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
@@ -13,7 +12,8 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import ReceiveBtc from "./receive-btc"
 import ReceiveUsd from "./receive-usd"
-import { WalletCurrency } from "@app/graphql/generated"
+import { WalletCurrency, useReceiveBitcoinScreenQuery } from "@app/graphql/generated"
+import { gql } from "@apollo/client"
 
 const styles = EStyleSheet.create({
   container: {
@@ -59,16 +59,36 @@ const styles = EStyleSheet.create({
     color: palette.coolGrey,
   },
 })
+
+gql`
+  query receiveBitcoinScreen {
+    me {
+      defaultAccount {
+        defaultWallet {
+          walletCurrency
+        }
+        usdWallet {
+          id
+        }
+      }
+    }
+  }
+`
+
 const ReceiveBitcoinScreen = ({
   navigation,
   route,
 }: StackScreenProps<RootStackParamList, "receiveBitcoin">) => {
   const { hasToken } = useToken()
   const { receiveCurrency: initialReceiveCurrency } = route.params || {}
-  const { defaultWallet, usdWalletId } = useMainQuery()
+
+  const { data } = useReceiveBitcoinScreenQuery({ fetchPolicy: "cache-only" })
+
+  const defaultCurrency = data?.me?.defaultAccount?.defaultWallet?.walletCurrency
+  const usdWalletId = data?.me?.defaultAccount?.usdWallet?.id
 
   const [receiveCurrency, setReceiveCurrency] = useState<WalletCurrency>(
-    initialReceiveCurrency || defaultWallet.walletCurrency,
+    initialReceiveCurrency || defaultCurrency,
   )
   const { LL } = useI18nContext()
   const isFocused = useIsFocused()

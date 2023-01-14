@@ -298,7 +298,7 @@ const SendBitcoinDetailsScreen = ({
       animationIn="fadeInDown"
       animationOut="fadeOutUp"
       isVisible={isModalVisible}
-      onBackButtonPress={() => toggleModal()}
+      onBackButtonPress={toggleModal}
     >
       <View>
         {wallets?.map((wallet) => {
@@ -330,11 +330,15 @@ const SendBitcoinDetailsScreen = ({
                   <View style={Styles.walletSelectorTypeTextContainer}>
                     {wallet.walletCurrency === WalletCurrency.Btc ? (
                       <>
-                        <Text style={Styles.walletTypeText}>Bitcoin Wallet</Text>
+                        <Text
+                          style={Styles.walletTypeText}
+                        >{`${LL.common.btcAccount()}`}</Text>
                       </>
                     ) : (
                       <>
-                        <Text style={Styles.walletTypeText}>US Dollar Wallet</Text>
+                        <Text
+                          style={Styles.walletTypeText}
+                        >{`${LL.common.usdAccount()}`}</Text>
                       </>
                     )}
                   </View>

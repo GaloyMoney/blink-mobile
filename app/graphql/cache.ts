@@ -1,5 +1,20 @@
 import { InMemoryCache, gql } from "@apollo/client"
-import { WalletCurrency } from "./generated"
+import { WalletCurrency, WalletInfoFragmentDoc } from "./generated"
+
+gql`
+  fragment WalletInfo on Wallet {
+    ... on BTCWallet {
+      id
+      walletCurrency
+      balance
+    }
+    ... on UsdWallet {
+      id
+      walletCurrency
+      balance
+    }
+  }
+`
 
 export const createCache = () => {
   return new InMemoryCache({
@@ -39,21 +54,15 @@ export const createCache = () => {
               if (Array.isArray(wallets)) {
                 for (const w of wallets) {
                   try {
-                    const wallet: Wallet = cache.readFragment({
+                    const wallet: Wallet | null = cache.readFragment({
                       id: w.__ref,
-                      fragment: gql`
-                        fragment MyWallet on UsdWallet {
-                          id
-                          walletCurrency
-                          balance
-                        }
-                      `,
+                      fragment: WalletInfoFragmentDoc,
                     })
-                    if (wallet.walletCurrency === WalletCurrency.Usd) {
+                    if (wallet?.walletCurrency === WalletCurrency.Usd) {
                       return wallet
                     }
                   } catch (err) {
-                    console.log("err usdWallet", err)
+                    console.error("err usdWallet", err)
                   }
                 }
               }
@@ -66,17 +75,34 @@ export const createCache = () => {
               if (Array.isArray(wallets)) {
                 for (const w of wallets) {
                   try {
-                    const wallet: Wallet = cache.readFragment({
+                    const wallet: Wallet | null = cache.readFragment({
                       id: w.__ref,
-                      fragment: gql`
-                        fragment MyWallet on BTCWallet {
-                          id
-                          walletCurrency
-                          balance
-                        }
-                      `,
+                      fragment: WalletInfoFragmentDoc,
                     })
-                    if (wallet.walletCurrency === WalletCurrency.Btc) {
+                    if (wallet?.walletCurrency === WalletCurrency.Btc) {
+                      return wallet
+                    }
+                  } catch (err) {
+                    console.error("err btcWallet", err)
+                  }
+                }
+              }
+              return undefined
+            },
+          },
+          defaultWallet: {
+            read: (_, { readField, cache }) => {
+              const wallets = readField("wallets")
+              const defaultWalletId = readField("defaultWalletId")
+              console.log("defaultWalletId", defaultWalletId)
+              if (Array.isArray(wallets)) {
+                for (const w of wallets) {
+                  try {
+                    const wallet: Wallet | null = cache.readFragment({
+                      id: w.__ref,
+                      fragment: WalletInfoFragmentDoc,
+                    })
+                    if (wallet?.id === defaultWalletId) {
                       return wallet
                     }
                   } catch (err) {

@@ -1,4 +1,5 @@
 import { gql } from "@apollo/client"
+
 export default gql`
   mutation captchaCreateChallenge {
     captchaCreateChallenge {
@@ -87,20 +88,6 @@ export default gql`
     }
   }
 
-  mutation accountUpdateDefaultWalletId($input: AccountUpdateDefaultWalletIdInput!) {
-    accountUpdateDefaultWalletId(input: $input) {
-      errors {
-        __typename
-        message
-      }
-      account {
-        __typename
-        id
-        defaultWalletId
-      }
-    }
-  }
-
   mutation captchaRequestAuthCode($input: CaptchaRequestAuthCodeInput!) {
     captchaRequestAuthCode(input: $input) {
       errors {
@@ -165,20 +152,6 @@ export default gql`
     }
   }
 
-  mutation userUpdateLanguage($input: UserUpdateLanguageInput!) {
-    userUpdateLanguage(input: $input) {
-      errors {
-        __typename
-        message
-      }
-      user {
-        __typename
-        id
-        language
-      }
-    }
-  }
-
   mutation userLogin($input: UserLoginInput!) {
     userLogin(input: $input) {
       errors {
@@ -186,63 +159,6 @@ export default gql`
         message
       }
       authToken
-    }
-  }
-
-  mutation lnNoAmountInvoiceCreate($input: LnNoAmountInvoiceCreateInput!) {
-    lnNoAmountInvoiceCreate(input: $input) {
-      errors {
-        __typename
-        message
-      }
-      invoice {
-        __typename
-        paymentHash
-        paymentRequest
-        paymentSecret
-      }
-    }
-  }
-
-  mutation lnInvoiceCreate($input: LnInvoiceCreateInput!) {
-    lnInvoiceCreate(input: $input) {
-      errors {
-        __typename
-        message
-      }
-      invoice {
-        __typename
-        paymentHash
-        paymentRequest
-        paymentSecret
-        satoshis
-      }
-    }
-  }
-
-  mutation onChainAddressCurrent($input: OnChainAddressCurrentInput!) {
-    onChainAddressCurrent(input: $input) {
-      errors {
-        __typename
-        message
-      }
-      address
-    }
-  }
-
-  mutation lnUsdInvoiceCreate($input: LnUsdInvoiceCreateInput!) {
-    lnUsdInvoiceCreate(input: $input) {
-      errors {
-        __typename
-        message
-      }
-      invoice {
-        __typename
-        paymentHash
-        paymentRequest
-        paymentSecret
-        satoshis
-      }
     }
   }
 

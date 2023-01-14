@@ -2,7 +2,8 @@ overwrite: true
 # schema: "https://raw.githubusercontent.com/GaloyMoney/galoy/main/src/graphql/main/schema.graphql"
 schema: "https://raw.githubusercontent.com/GaloyMoney/galoy/feb351eb62943bef80f8694868a0bf27596b4951/src/graphql/main/schema.graphql"
 documents: 
-  - "app/graphql/operations/*/*.ts"
+  - "app/**/*.ts"
+  - "app/**/*.tsx"
 generates:
   app/graphql/generated.ts:
     schema: "app/graphql/operations/local/schema.graphql"
