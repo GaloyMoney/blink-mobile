@@ -8,4 +8,3 @@ test: unit check-code
 
 codegen:
 	yarn dev:codegen
-	yarn prettier:fix

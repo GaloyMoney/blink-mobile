@@ -12,7 +12,7 @@ import {
   View,
 } from "react-native"
 import { Button, Input } from "@rneui/base"
-import { FetchResult } from "@apollo/client"
+import { FetchResult, gql } from "@apollo/client"
 import EStyleSheet from "react-native-extended-stylesheet"
 import PhoneInput from "react-native-phone-number-input"
 import analytics from "@react-native-firebase/analytics"
@@ -137,6 +137,17 @@ const styles = EStyleSheet.create({
 type WelcomePhoneInputScreenProps = {
   navigation: StackNavigationProp<PhoneValidationStackParamList, "welcomePhoneInput">
 }
+
+gql`
+  mutation captchaRequestAuthCode($input: CaptchaRequestAuthCodeInput!) {
+    captchaRequestAuthCode(input: $input) {
+      errors {
+        message
+      }
+      success
+    }
+  }
+`
 
 export const WelcomePhoneInputScreen: ScreenType = ({
   navigation,

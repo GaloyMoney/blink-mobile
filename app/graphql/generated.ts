@@ -61,7 +61,7 @@ export type Scalars = {
 }
 
 export type Account = {
-  readonly btcWallet?: Maybe<Wallet>
+  readonly btcWallet?: Maybe<BtcWallet>
   readonly csvTransactions: Scalars["String"]
   readonly defaultWallet?: Maybe<Wallet>
   readonly defaultWalletId: Scalars["WalletId"]
@@ -69,7 +69,7 @@ export type Account = {
   readonly id: Scalars["ID"]
   readonly limits: AccountLimits
   readonly transactions?: Maybe<TransactionConnection>
-  readonly usdWallet?: Maybe<Wallet>
+  readonly usdWallet?: Maybe<UsdWallet>
   readonly wallets: ReadonlyArray<Wallet>
 }
 
@@ -142,6 +142,7 @@ export type BtcWallet = Wallet & {
   /** A list of BTC transactions associated with this wallet. */
   readonly transactions?: Maybe<TransactionConnection>
   readonly transactionsByAddress?: Maybe<TransactionConnection>
+  readonly usdBalance?: Maybe<Scalars["SignedAmount"]>
   readonly walletCurrency: WalletCurrency
 }
 
@@ -199,7 +200,7 @@ export type CentAmountPayload = {
 
 export type ConsumerAccount = Account & {
   readonly __typename: "ConsumerAccount"
-  readonly btcWallet?: Maybe<Wallet>
+  readonly btcWallet?: Maybe<BtcWallet>
   /** return CSV stream, base64 encoded, of the list of transactions in the wallet */
   readonly csvTransactions: Scalars["String"]
   readonly defaultWallet?: Maybe<Wallet>
@@ -209,7 +210,7 @@ export type ConsumerAccount = Account & {
   readonly limits: AccountLimits
   /** A list of all transactions associated with walletIds optionally passed. */
   readonly transactions?: Maybe<TransactionConnection>
-  readonly usdWallet?: Maybe<Wallet>
+  readonly usdWallet?: Maybe<UsdWallet>
   readonly wallets: ReadonlyArray<Wallet>
 }
 
@@ -1316,6 +1317,16 @@ export type MyWalletsFragment = {
   >
 }
 
+export type CurrentPriceQueryVariables = Exact<{ [key: string]: never }>
+
+export type CurrentPriceQuery = {
+  readonly __typename: "Query"
+  readonly btcPrice?: {
+    readonly __typename: "Price"
+    readonly formattedAmount: string
+  } | null
+}
+
 export type HideBalanceQueryVariables = Exact<{ [key: string]: never }>
 
 export type HideBalanceQuery = {
@@ -1498,26 +1509,6 @@ export type MeFragment = {
           readonly walletCurrency: WalletCurrency
         }
     >
-  }
-}
-
-export type CaptchaCreateChallengeMutationVariables = Exact<{ [key: string]: never }>
-
-export type CaptchaCreateChallengeMutation = {
-  readonly __typename: "Mutation"
-  readonly captchaCreateChallenge: {
-    readonly __typename: "CaptchaCreateChallengePayload"
-    readonly errors: ReadonlyArray<{
-      readonly __typename: "GraphQLApplicationError"
-      readonly message: string
-    }>
-    readonly result?: {
-      readonly __typename: "CaptchaCreateChallengeResult"
-      readonly id: string
-      readonly challengeCode: string
-      readonly newCaptcha: boolean
-      readonly failbackMode: boolean
-    } | null
   }
 }
 
@@ -2226,28 +2217,6 @@ export type WalletsQuery = {
   } | null
 }
 
-export type PriceSubscriptionVariables = Exact<{
-  input: PriceInput
-}>
-
-export type PriceSubscription = {
-  readonly __typename: "Subscription"
-  readonly price: {
-    readonly __typename: "PricePayload"
-    readonly price?: {
-      readonly __typename: "Price"
-      readonly base: number
-      readonly offset: number
-      readonly currencyUnit: ExchangeCurrencyUnit
-      readonly formattedAmount: string
-    } | null
-    readonly errors: ReadonlyArray<{
-      readonly __typename: "GraphQLApplicationError"
-      readonly message: string
-    }>
-  }
-}
-
 export type MyUpdatesSubscriptionVariables = Exact<{ [key: string]: never }>
 
 export type MyUpdatesSubscription = {
@@ -2292,6 +2261,26 @@ export type MyUpdatesSubscription = {
   }
 }
 
+export type CaptchaCreateChallengeMutationVariables = Exact<{ [key: string]: never }>
+
+export type CaptchaCreateChallengeMutation = {
+  readonly __typename: "Mutation"
+  readonly captchaCreateChallenge: {
+    readonly __typename: "CaptchaCreateChallengePayload"
+    readonly errors: ReadonlyArray<{
+      readonly __typename: "GraphQLApplicationError"
+      readonly message: string
+    }>
+    readonly result?: {
+      readonly __typename: "CaptchaCreateChallengeResult"
+      readonly id: string
+      readonly challengeCode: string
+      readonly newCaptcha: boolean
+      readonly failbackMode: boolean
+    } | null
+  }
+}
+
 export type RootStackQueryVariables = Exact<{
   hasToken: Scalars["Boolean"]
 }>
@@ -2314,30 +2303,16 @@ export type ConversionScreenQuery = {
     readonly __typename: "User"
     readonly defaultAccount: {
       readonly __typename: "ConsumerAccount"
-      readonly usdWallet?:
-        | {
-            readonly __typename: "BTCWallet"
-            readonly id: string
-            readonly balance: number
-          }
-        | {
-            readonly __typename: "UsdWallet"
-            readonly id: string
-            readonly balance: number
-          }
-        | null
-      readonly btcWallet?:
-        | {
-            readonly __typename: "BTCWallet"
-            readonly id: string
-            readonly balance: number
-          }
-        | {
-            readonly __typename: "UsdWallet"
-            readonly id: string
-            readonly balance: number
-          }
-        | null
+      readonly usdWallet?: {
+        readonly __typename: "UsdWallet"
+        readonly id: string
+        readonly balance: number
+      } | null
+      readonly btcWallet?: {
+        readonly __typename: "BTCWallet"
+        readonly id: string
+        readonly balance: number
+      } | null
     }
   } | null
 }
@@ -2379,14 +2354,14 @@ export type SetDefaultWalletQuery = {
       readonly __typename: "ConsumerAccount"
       readonly id: string
       readonly defaultWalletId: string
-      readonly btcWallet?:
-        | { readonly __typename: "BTCWallet"; readonly id: string }
-        | { readonly __typename: "UsdWallet"; readonly id: string }
-        | null
-      readonly usdWallet?:
-        | { readonly __typename: "BTCWallet"; readonly id: string }
-        | { readonly __typename: "UsdWallet"; readonly id: string }
-        | null
+      readonly btcWallet?: {
+        readonly __typename: "BTCWallet"
+        readonly id: string
+      } | null
+      readonly usdWallet?: {
+        readonly __typename: "UsdWallet"
+        readonly id: string
+      } | null
     }
   } | null
 }
@@ -2403,10 +2378,10 @@ export type ReceiveBitcoinScreenQuery = {
         | { readonly __typename: "BTCWallet"; readonly walletCurrency: WalletCurrency }
         | { readonly __typename: "UsdWallet"; readonly walletCurrency: WalletCurrency }
         | null
-      readonly usdWallet?:
-        | { readonly __typename: "BTCWallet"; readonly id: string }
-        | { readonly __typename: "UsdWallet"; readonly id: string }
-        | null
+      readonly usdWallet?: {
+        readonly __typename: "UsdWallet"
+        readonly id: string
+      } | null
     }
   } | null
 }
@@ -2419,10 +2394,10 @@ export type ReceiveBtcQuery = {
     readonly __typename: "User"
     readonly defaultAccount: {
       readonly __typename: "ConsumerAccount"
-      readonly btcWallet?:
-        | { readonly __typename: "BTCWallet"; readonly id: string }
-        | { readonly __typename: "UsdWallet"; readonly id: string }
-        | null
+      readonly btcWallet?: {
+        readonly __typename: "BTCWallet"
+        readonly id: string
+      } | null
     }
   } | null
 }
@@ -2495,10 +2470,10 @@ export type ReceiveUsdQuery = {
     readonly __typename: "User"
     readonly defaultAccount: {
       readonly __typename: "ConsumerAccount"
-      readonly usdWallet?:
-        | { readonly __typename: "BTCWallet"; readonly id: string }
-        | { readonly __typename: "UsdWallet"; readonly id: string }
-        | null
+      readonly usdWallet?: {
+        readonly __typename: "UsdWallet"
+        readonly id: string
+      } | null
     }
   } | null
 }
@@ -2568,42 +2543,23 @@ export type SendBitcoinDetailsScreenQuery = {
             readonly walletCurrency: WalletCurrency
           }
         | null
-      readonly btcWallet?:
-        | {
-            readonly __typename: "BTCWallet"
-            readonly id: string
-            readonly balance: number
-            readonly walletCurrency: WalletCurrency
-            readonly accountId: string
-            readonly pendingIncomingBalance: number
-          }
-        | {
-            readonly __typename: "UsdWallet"
-            readonly id: string
-            readonly balance: number
-            readonly walletCurrency: WalletCurrency
-            readonly accountId: string
-            readonly pendingIncomingBalance: number
-          }
-        | null
-      readonly usdWallet?:
-        | {
-            readonly __typename: "BTCWallet"
-            readonly id: string
-            readonly balance: number
-            readonly walletCurrency: WalletCurrency
-            readonly accountId: string
-            readonly pendingIncomingBalance: number
-          }
-        | {
-            readonly __typename: "UsdWallet"
-            readonly id: string
-            readonly balance: number
-            readonly walletCurrency: WalletCurrency
-            readonly accountId: string
-            readonly pendingIncomingBalance: number
-          }
-        | null
+      readonly btcWallet?: {
+        readonly __typename: "BTCWallet"
+        readonly id: string
+        readonly balance: number
+        readonly walletCurrency: WalletCurrency
+        readonly usdBalance?: number | null
+        readonly accountId: string
+        readonly pendingIncomingBalance: number
+      } | null
+      readonly usdWallet?: {
+        readonly __typename: "UsdWallet"
+        readonly id: string
+        readonly balance: number
+        readonly walletCurrency: WalletCurrency
+        readonly accountId: string
+        readonly pendingIncomingBalance: number
+      } | null
     }
   } | null
 }
@@ -2674,10 +2630,11 @@ export type SettingsScreenQuery = {
     readonly language: string
     readonly defaultAccount: {
       readonly __typename: "ConsumerAccount"
-      readonly btcWallet?:
-        | { readonly __typename: "BTCWallet"; readonly id: string }
-        | { readonly __typename: "UsdWallet"; readonly id: string }
-        | null
+      readonly btcWallet?: {
+        readonly __typename: "BTCWallet"
+        readonly id: string
+        readonly usdBalance?: number | null
+      } | null
     }
   } | null
 }
@@ -2687,6 +2644,28 @@ export type LocalizationContextProviderQueryVariables = Exact<{ [key: string]: n
 export type LocalizationContextProviderQuery = {
   readonly __typename: "Query"
   readonly me?: { readonly __typename: "User"; readonly language: string } | null
+}
+
+export type PriceSubscriptionVariables = Exact<{
+  input: PriceInput
+}>
+
+export type PriceSubscription = {
+  readonly __typename: "Subscription"
+  readonly price: {
+    readonly __typename: "PricePayload"
+    readonly price?: {
+      readonly __typename: "Price"
+      readonly base: number
+      readonly offset: number
+      readonly currencyUnit: ExchangeCurrencyUnit
+      readonly formattedAmount: string
+    } | null
+    readonly errors: ReadonlyArray<{
+      readonly __typename: "GraphQLApplicationError"
+      readonly message: string
+    }>
+  }
 }
 
 export const MyWalletsFragmentDoc = gql`
@@ -2781,6 +2760,56 @@ export const MeFragmentDoc = gql`
   }
   ${TransactionListFragmentDoc}
 `
+export const CurrentPriceDocument = gql`
+  query currentPrice {
+    btcPrice {
+      formattedAmount
+    }
+  }
+`
+
+/**
+ * __useCurrentPriceQuery__
+ *
+ * To run a query within a React component, call `useCurrentPriceQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCurrentPriceQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCurrentPriceQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCurrentPriceQuery(
+  baseOptions?: Apollo.QueryHookOptions<CurrentPriceQuery, CurrentPriceQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<CurrentPriceQuery, CurrentPriceQueryVariables>(
+    CurrentPriceDocument,
+    options,
+  )
+}
+export function useCurrentPriceLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    CurrentPriceQuery,
+    CurrentPriceQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<CurrentPriceQuery, CurrentPriceQueryVariables>(
+    CurrentPriceDocument,
+    options,
+  )
+}
+export type CurrentPriceQueryHookResult = ReturnType<typeof useCurrentPriceQuery>
+export type CurrentPriceLazyQueryHookResult = ReturnType<typeof useCurrentPriceLazyQuery>
+export type CurrentPriceQueryResult = Apollo.QueryResult<
+  CurrentPriceQuery,
+  CurrentPriceQueryVariables
+>
 export const HideBalanceDocument = gql`
   query HideBalance {
     hideBalance @client
@@ -2881,70 +2910,10 @@ export type HiddenBalanceToolTipQueryResult = Apollo.QueryResult<
   HiddenBalanceToolTipQuery,
   HiddenBalanceToolTipQueryVariables
 >
-export const CaptchaCreateChallengeDocument = gql`
-  mutation captchaCreateChallenge {
-    captchaCreateChallenge {
-      errors {
-        __typename
-        message
-      }
-      result {
-        __typename
-        id
-        challengeCode
-        newCaptcha
-        failbackMode
-      }
-    }
-  }
-`
-export type CaptchaCreateChallengeMutationFn = Apollo.MutationFunction<
-  CaptchaCreateChallengeMutation,
-  CaptchaCreateChallengeMutationVariables
->
-
-/**
- * __useCaptchaCreateChallengeMutation__
- *
- * To run a mutation, you first call `useCaptchaCreateChallengeMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCaptchaCreateChallengeMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [captchaCreateChallengeMutation, { data, loading, error }] = useCaptchaCreateChallengeMutation({
- *   variables: {
- *   },
- * });
- */
-export function useCaptchaCreateChallengeMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    CaptchaCreateChallengeMutation,
-    CaptchaCreateChallengeMutationVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useMutation<
-    CaptchaCreateChallengeMutation,
-    CaptchaCreateChallengeMutationVariables
-  >(CaptchaCreateChallengeDocument, options)
-}
-export type CaptchaCreateChallengeMutationHookResult = ReturnType<
-  typeof useCaptchaCreateChallengeMutation
->
-export type CaptchaCreateChallengeMutationResult =
-  Apollo.MutationResult<CaptchaCreateChallengeMutation>
-export type CaptchaCreateChallengeMutationOptions = Apollo.BaseMutationOptions<
-  CaptchaCreateChallengeMutation,
-  CaptchaCreateChallengeMutationVariables
->
 export const UserContactUpdateAliasDocument = gql`
   mutation userContactUpdateAlias($input: UserContactUpdateAliasInput!) {
     userContactUpdateAlias(input: $input) {
       errors {
-        __typename
         message
       }
     }
@@ -2997,7 +2966,6 @@ export const DeviceNotificationTokenCreateDocument = gql`
   mutation deviceNotificationTokenCreate($input: DeviceNotificationTokenCreateInput!) {
     deviceNotificationTokenCreate(input: $input) {
       errors {
-        __typename
         message
       }
       success
@@ -3051,7 +3019,6 @@ export const IntraLedgerPaymentSendDocument = gql`
   mutation intraLedgerPaymentSend($input: IntraLedgerPaymentSendInput!) {
     intraLedgerPaymentSend(input: $input) {
       errors {
-        __typename
         message
       }
       status
@@ -3105,7 +3072,6 @@ export const IntraLedgerUsdPaymentSendDocument = gql`
   mutation intraLedgerUsdPaymentSend($input: IntraLedgerUsdPaymentSendInput!) {
     intraLedgerUsdPaymentSend(input: $input) {
       errors {
-        __typename
         message
       }
       status
@@ -3161,7 +3127,6 @@ export const UserQuizQuestionUpdateCompletedDocument = gql`
   ) {
     userQuizQuestionUpdateCompleted(input: $input) {
       errors {
-        __typename
         message
       }
       userQuizQuestion {
@@ -3221,11 +3186,9 @@ export const UserUpdateUsernameDocument = gql`
   mutation userUpdateUsername($input: UserUpdateUsernameInput!) {
     userUpdateUsername(input: $input) {
       errors {
-        __typename
         message
       }
       user {
-        __typename
         id
         username
       }
@@ -3279,7 +3242,6 @@ export const CaptchaRequestAuthCodeDocument = gql`
   mutation captchaRequestAuthCode($input: CaptchaRequestAuthCodeInput!) {
     captchaRequestAuthCode(input: $input) {
       errors {
-        __typename
         message
       }
       success
@@ -3333,7 +3295,6 @@ export const LnNoAmountInvoiceFeeProbeDocument = gql`
   mutation lnNoAmountInvoiceFeeProbe($input: LnNoAmountInvoiceFeeProbeInput!) {
     lnNoAmountInvoiceFeeProbe(input: $input) {
       errors {
-        __typename
         message
       }
       amount
@@ -3387,7 +3348,6 @@ export const LnInvoiceFeeProbeDocument = gql`
   mutation lnInvoiceFeeProbe($input: LnInvoiceFeeProbeInput!) {
     lnInvoiceFeeProbe(input: $input) {
       errors {
-        __typename
         message
       }
       amount
@@ -3441,7 +3401,6 @@ export const LnUsdInvoiceFeeProbeDocument = gql`
   mutation lnUsdInvoiceFeeProbe($input: LnUsdInvoiceFeeProbeInput!) {
     lnUsdInvoiceFeeProbe(input: $input) {
       errors {
-        __typename
         message
       }
       amount
@@ -3495,7 +3454,6 @@ export const LnNoAmountUsdInvoiceFeeProbeDocument = gql`
   mutation lnNoAmountUsdInvoiceFeeProbe($input: LnNoAmountUsdInvoiceFeeProbeInput!) {
     lnNoAmountUsdInvoiceFeeProbe(input: $input) {
       errors {
-        __typename
         message
       }
       amount
@@ -3549,7 +3507,6 @@ export const UserLoginDocument = gql`
   mutation userLogin($input: UserLoginInput!) {
     userLogin(input: $input) {
       errors {
-        __typename
         message
       }
       authToken
@@ -3597,7 +3554,6 @@ export const LnNoAmountInvoicePaymentSendDocument = gql`
   mutation lnNoAmountInvoicePaymentSend($input: LnNoAmountInvoicePaymentInput!) {
     lnNoAmountInvoicePaymentSend(input: $input) {
       errors {
-        __typename
         message
       }
       status
@@ -3651,7 +3607,6 @@ export const LnInvoicePaymentSendDocument = gql`
   mutation lnInvoicePaymentSend($input: LnInvoicePaymentInput!) {
     lnInvoicePaymentSend(input: $input) {
       errors {
-        __typename
         message
       }
       status
@@ -3705,7 +3660,6 @@ export const LnNoAmountUsdInvoicePaymentSendDocument = gql`
   mutation lnNoAmountUsdInvoicePaymentSend($input: LnNoAmountUsdInvoicePaymentInput!) {
     lnNoAmountUsdInvoicePaymentSend(input: $input) {
       errors {
-        __typename
         message
       }
       status
@@ -3759,7 +3713,6 @@ export const OnChainPaymentSendDocument = gql`
   mutation onChainPaymentSend($input: OnChainPaymentSendInput!) {
     onChainPaymentSend(input: $input) {
       errors {
-        __typename
         message
       }
       status
@@ -4515,52 +4468,6 @@ export function useWalletsLazyQuery(
 export type WalletsQueryHookResult = ReturnType<typeof useWalletsQuery>
 export type WalletsLazyQueryHookResult = ReturnType<typeof useWalletsLazyQuery>
 export type WalletsQueryResult = Apollo.QueryResult<WalletsQuery, WalletsQueryVariables>
-export const PriceDocument = gql`
-  subscription price($input: PriceInput!) {
-    price(input: $input) {
-      price {
-        base
-        offset
-        currencyUnit
-        formattedAmount
-      }
-      errors {
-        message
-      }
-    }
-  }
-`
-
-/**
- * __usePriceSubscription__
- *
- * To run a query within a React component, call `usePriceSubscription` and pass it any options that fit your needs.
- * When your component renders, `usePriceSubscription` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = usePriceSubscription({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function usePriceSubscription(
-  baseOptions: Apollo.SubscriptionHookOptions<
-    PriceSubscription,
-    PriceSubscriptionVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useSubscription<PriceSubscription, PriceSubscriptionVariables>(
-    PriceDocument,
-    options,
-  )
-}
-export type PriceSubscriptionHookResult = ReturnType<typeof usePriceSubscription>
-export type PriceSubscriptionResult = Apollo.SubscriptionResult<PriceSubscription>
 export const MyUpdatesDocument = gql`
   subscription myUpdates {
     myUpdates {
@@ -4624,6 +4531,65 @@ export function useMyUpdatesSubscription(
 }
 export type MyUpdatesSubscriptionHookResult = ReturnType<typeof useMyUpdatesSubscription>
 export type MyUpdatesSubscriptionResult = Apollo.SubscriptionResult<MyUpdatesSubscription>
+export const CaptchaCreateChallengeDocument = gql`
+  mutation captchaCreateChallenge {
+    captchaCreateChallenge {
+      errors {
+        __typename
+        message
+      }
+      result {
+        __typename
+        id
+        challengeCode
+        newCaptcha
+        failbackMode
+      }
+    }
+  }
+`
+export type CaptchaCreateChallengeMutationFn = Apollo.MutationFunction<
+  CaptchaCreateChallengeMutation,
+  CaptchaCreateChallengeMutationVariables
+>
+
+/**
+ * __useCaptchaCreateChallengeMutation__
+ *
+ * To run a mutation, you first call `useCaptchaCreateChallengeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCaptchaCreateChallengeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [captchaCreateChallengeMutation, { data, loading, error }] = useCaptchaCreateChallengeMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCaptchaCreateChallengeMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CaptchaCreateChallengeMutation,
+    CaptchaCreateChallengeMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    CaptchaCreateChallengeMutation,
+    CaptchaCreateChallengeMutationVariables
+  >(CaptchaCreateChallengeDocument, options)
+}
+export type CaptchaCreateChallengeMutationHookResult = ReturnType<
+  typeof useCaptchaCreateChallengeMutation
+>
+export type CaptchaCreateChallengeMutationResult =
+  Apollo.MutationResult<CaptchaCreateChallengeMutation>
+export type CaptchaCreateChallengeMutationOptions = Apollo.BaseMutationOptions<
+  CaptchaCreateChallengeMutation,
+  CaptchaCreateChallengeMutationVariables
+>
 export const RootStackDocument = gql`
   query rootStack($hasToken: Boolean!) {
     me @include(if: $hasToken) {
@@ -5397,6 +5363,7 @@ export const SendBitcoinDetailsScreenDocument = gql`
           id
           balance
           walletCurrency
+          usdBalance
           accountId
           pendingIncomingBalance
         }
@@ -5698,6 +5665,7 @@ export const SettingsScreenDocument = gql`
       defaultAccount {
         btcWallet {
           id
+          usdBalance
         }
       }
     }
@@ -5808,3 +5776,49 @@ export type LocalizationContextProviderQueryResult = Apollo.QueryResult<
   LocalizationContextProviderQuery,
   LocalizationContextProviderQueryVariables
 >
+export const PriceDocument = gql`
+  subscription price($input: PriceInput!) {
+    price(input: $input) {
+      price {
+        base
+        offset
+        currencyUnit
+        formattedAmount
+      }
+      errors {
+        message
+      }
+    }
+  }
+`
+
+/**
+ * __usePriceSubscription__
+ *
+ * To run a query within a React component, call `usePriceSubscription` and pass it any options that fit your needs.
+ * When your component renders, `usePriceSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePriceSubscription({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function usePriceSubscription(
+  baseOptions: Apollo.SubscriptionHookOptions<
+    PriceSubscription,
+    PriceSubscriptionVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useSubscription<PriceSubscription, PriceSubscriptionVariables>(
+    PriceDocument,
+    options,
+  )
+}
+export type PriceSubscriptionHookResult = ReturnType<typeof usePriceSubscription>
+export type PriceSubscriptionResult = Apollo.SubscriptionResult<PriceSubscription>
