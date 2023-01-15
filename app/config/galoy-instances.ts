@@ -1,5 +1,5 @@
 import { scriptHostname } from "@app/utils/helper"
-import { GRAPHQL_TESTNET_URI,GRAPHQL_TESTNET_WS_URI } from "@app/modules/market-place/config"
+import { PURAVIDA_GRAPHQL_TESTNET_URI,PURAVIDA_GRAPHQL_TESTNET_WS_URI, PURAVIDA_LN_ADDRESS, PURAVIDA_POS_URL } from "@app/modules/market-place/config"
 
 export type GaloyInstanceNames = "BBW" | "Staging" | "Local" | "Custom"
 export type GaloyInstance = {
@@ -19,10 +19,10 @@ export const GALOY_INSTANCES: GaloyInstance[] = [
   },
   {
     name: "Staging",
-    graphqlUri: GRAPHQL_TESTNET_URI,
-    graphqlWsUri: GRAPHQL_TESTNET_WS_URI,
-    posUrl: "https://pay.staging.galoy.io",
-    lnAddressHostname: "pay.staging.galoy.io",
+    graphqlUri: PURAVIDA_GRAPHQL_TESTNET_URI,
+    graphqlWsUri: PURAVIDA_GRAPHQL_TESTNET_WS_URI,
+    posUrl: PURAVIDA_POS_URL,
+    lnAddressHostname: PURAVIDA_LN_ADDRESS,
   },
   {
     name: "Local",
