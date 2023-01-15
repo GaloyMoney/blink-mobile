@@ -1,3 +1,22 @@
+fragment Me on User {
+  id
+  language
+  username
+  phone
+  defaultAccount {
+    id
+    defaultWalletId
+    transactions(first: $recentTransactions) {
+      ...TransactionList
+    }
+    wallets {
+      id
+      balance
+      walletCurrency
+    }
+  }
+}
+
 fragment MyWallets on ConsumerAccount {
   wallets {
     id
@@ -65,31 +84,18 @@ fragment TransactionList on TransactionConnection {
   }
 }
 
-fragment Me on User {
-  id
-  language
-  username
-  phone
-  defaultAccount {
-    id
-    defaultWalletId
-    transactions(first: $recentTransactions) {
-      ...TransactionList
+mutation accountUpdateDefaultWalletId($input: AccountUpdateDefaultWalletIdInput!) {
+  accountUpdateDefaultWalletId(input: $input) {
+    errors {
+      __typename
+      message
     }
-    wallets {
+    account {
+      __typename
       id
-      balance
-      walletCurrency
+      defaultWalletId
     }
   }
-}
-
-query HideBalance {
-  hideBalance @client
-}
-
-query HiddenBalanceToolTip {
-  hiddenBalanceToolTip @client
 }
 
 mutation captchaCreateChallenge {
@@ -108,12 +114,13 @@ mutation captchaCreateChallenge {
   }
 }
 
-mutation userContactUpdateAlias($input: UserContactUpdateAliasInput!) {
-  userContactUpdateAlias(input: $input) {
+mutation captchaRequestAuthCode($input: CaptchaRequestAuthCodeInput!) {
+  captchaRequestAuthCode(input: $input) {
     errors {
       __typename
       message
     }
+    success
   }
 }
 
@@ -147,6 +154,162 @@ mutation intraLedgerUsdPaymentSend($input: IntraLedgerUsdPaymentSendInput!) {
   }
 }
 
+mutation lnInvoiceCreate($input: LnInvoiceCreateInput!) {
+  lnInvoiceCreate(input: $input) {
+    errors {
+      __typename
+      message
+    }
+    invoice {
+      __typename
+      paymentHash
+      paymentRequest
+      paymentSecret
+      satoshis
+    }
+  }
+}
+
+mutation lnInvoiceFeeProbe($input: LnInvoiceFeeProbeInput!) {
+  lnInvoiceFeeProbe(input: $input) {
+    errors {
+      __typename
+      message
+    }
+    amount
+  }
+}
+
+mutation lnInvoicePaymentSend($input: LnInvoicePaymentInput!) {
+  lnInvoicePaymentSend(input: $input) {
+    errors {
+      __typename
+      message
+    }
+    status
+  }
+}
+
+mutation lnNoAmountInvoiceCreate($input: LnNoAmountInvoiceCreateInput!) {
+  lnNoAmountInvoiceCreate(input: $input) {
+    errors {
+      __typename
+      message
+    }
+    invoice {
+      __typename
+      paymentHash
+      paymentRequest
+      paymentSecret
+    }
+  }
+}
+
+mutation lnNoAmountInvoiceFeeProbe($input: LnNoAmountInvoiceFeeProbeInput!) {
+  lnNoAmountInvoiceFeeProbe(input: $input) {
+    errors {
+      __typename
+      message
+    }
+    amount
+  }
+}
+
+mutation lnNoAmountInvoicePaymentSend($input: LnNoAmountInvoicePaymentInput!) {
+  lnNoAmountInvoicePaymentSend(input: $input) {
+    errors {
+      __typename
+      message
+    }
+    status
+  }
+}
+
+mutation lnNoAmountUsdInvoiceFeeProbe($input: LnNoAmountUsdInvoiceFeeProbeInput!) {
+  lnNoAmountUsdInvoiceFeeProbe(input: $input) {
+    errors {
+      __typename
+      message
+    }
+    amount
+  }
+}
+
+mutation lnNoAmountUsdInvoicePaymentSend($input: LnNoAmountUsdInvoicePaymentInput!) {
+  lnNoAmountUsdInvoicePaymentSend(input: $input) {
+    errors {
+      __typename
+      message
+    }
+    status
+  }
+}
+
+mutation lnUsdInvoiceCreate($input: LnUsdInvoiceCreateInput!) {
+  lnUsdInvoiceCreate(input: $input) {
+    errors {
+      __typename
+      message
+    }
+    invoice {
+      __typename
+      paymentHash
+      paymentRequest
+      paymentSecret
+      satoshis
+    }
+  }
+}
+
+mutation lnUsdInvoiceFeeProbe($input: LnUsdInvoiceFeeProbeInput!) {
+  lnUsdInvoiceFeeProbe(input: $input) {
+    errors {
+      __typename
+      message
+    }
+    amount
+  }
+}
+
+mutation onChainAddressCurrent($input: OnChainAddressCurrentInput!) {
+  onChainAddressCurrent(input: $input) {
+    errors {
+      __typename
+      message
+    }
+    address
+  }
+}
+
+mutation onChainPaymentSend($input: OnChainPaymentSendInput!) {
+  onChainPaymentSend(input: $input) {
+    errors {
+      __typename
+      message
+    }
+    status
+  }
+}
+
+mutation userContactUpdateAlias($input: UserContactUpdateAliasInput!) {
+  userContactUpdateAlias(input: $input) {
+    errors {
+      __typename
+      message
+    }
+  }
+}
+
+mutation userLogin($input: UserLoginInput!) {
+  userLogin(input: $input) {
+    errors {
+      __typename
+      message
+    }
+    authToken
+  }
+}
+
 mutation userQuizQuestionUpdateCompleted($input: UserQuizQuestionUpdateCompletedInput!) {
   userQuizQuestionUpdateCompleted(input: $input) {
     errors {
@@ -159,6 +322,20 @@ mutation userQuizQuestionUpdateCompleted($input: UserQuizQuestionUpdateCompleted
         earnAmount
       }
       completed
+    }
+  }
+}
+
+mutation userUpdateLanguage($input: UserUpdateLanguageInput!) {
+  userUpdateLanguage(input: $input) {
+    errors {
+      __typename
+      message
+    }
+    user {
+      __typename
+      id
+      language
     }
   }
 }
@@ -177,160 +354,35 @@ mutation userUpdateUsername($input: UserUpdateUsernameInput!) {
   }
 }
 
-mutation captchaRequestAuthCode($input: CaptchaRequestAuthCodeInput!) {
-  captchaRequestAuthCode(input: $input) {
-    errors {
-      __typename
-      message
-    }
-    success
-  }
-}
-
-mutation lnNoAmountInvoiceFeeProbe($input: LnNoAmountInvoiceFeeProbeInput!) {
-  lnNoAmountInvoiceFeeProbe(input: $input) {
-    errors {
-      __typename
-      message
-    }
-    amount
-  }
-}
-
-mutation lnInvoiceFeeProbe($input: LnInvoiceFeeProbeInput!) {
-  lnInvoiceFeeProbe(input: $input) {
-    errors {
-      __typename
-      message
-    }
-    amount
-  }
-}
-
-mutation lnUsdInvoiceFeeProbe($input: LnUsdInvoiceFeeProbeInput!) {
-  lnUsdInvoiceFeeProbe(input: $input) {
-    errors {
-      __typename
-      message
-    }
-    amount
-  }
-}
-
-mutation lnNoAmountUsdInvoiceFeeProbe($input: LnNoAmountUsdInvoiceFeeProbeInput!) {
-  lnNoAmountUsdInvoiceFeeProbe(input: $input) {
-    errors {
-      __typename
-      message
-    }
-    amount
-  }
-}
-
-mutation userLogin($input: UserLoginInput!) {
-  userLogin(input: $input) {
-    errors {
-      __typename
-      message
-    }
-    authToken
-  }
-}
-
-mutation lnNoAmountInvoicePaymentSend($input: LnNoAmountInvoicePaymentInput!) {
-  lnNoAmountInvoicePaymentSend(input: $input) {
-    errors {
-      __typename
-      message
-    }
-    status
-  }
-}
-
-mutation lnInvoicePaymentSend($input: LnInvoicePaymentInput!) {
-  lnInvoicePaymentSend(input: $input) {
-    errors {
-      __typename
-      message
-    }
-    status
-  }
-}
-
-mutation lnNoAmountUsdInvoicePaymentSend($input: LnNoAmountUsdInvoicePaymentInput!) {
-  lnNoAmountUsdInvoicePaymentSend(input: $input) {
-    errors {
-      __typename
-      message
-    }
-    status
-  }
-}
-
-mutation onChainPaymentSend($input: OnChainPaymentSendInput!) {
-  onChainPaymentSend(input: $input) {
-    errors {
-      __typename
-      message
-    }
-    status
-  }
-}
-
-query transactionListForContact($username: Username!, $first: Int, $after: String, $last: Int, $before: String) {
+query AccountScreen {
   me {
-    id
-    contactByUsername(username: $username) {
-      transactions(first: $first, after: $after, last: $last, before: $before) {
-        ...TransactionList
-      }
-    }
+    phone
   }
 }
 
-query contacts {
+query HiddenBalanceToolTip {
+  hiddenBalanceToolTip @client
+}
+
+query HideBalance {
+  hideBalance @client
+}
+
+query LocalizationContextProvider {
   me {
-    contacts {
-      id
-      username
-      alias
-      transactionsCount
-    }
+    language
   }
 }
 
-query transactionListForDefaultAccount($first: Int, $after: String, $last: Int, $before: String) {
+query SettingsScreen {
   me {
-    id
+    phone
+    username
+    language
     defaultAccount {
-      id
-      transactions(first: $first, after: $after, last: $last, before: $before) {
-        ...TransactionList
+      btcWallet {
+        id
       }
-    }
-  }
-}
-
-query onChainTxFee($walletId: WalletId!, $address: OnChainAddress!, $amount: SatAmount!, $targetConfirmations: TargetConfirmations) {
-  onChainTxFee(
-    walletId: $walletId
-    address: $address
-    amount: $amount
-    targetConfirmations: $targetConfirmations
-  ) {
-    amount
-    targetConfirmations
-  }
-}
-
-query btcPriceList($range: PriceGraphRange!) {
-  btcPriceList(range: $range) {
-    timestamp
-    price {
-      base
-      offset
-      currencyUnit
-      formattedAmount
     }
   }
 }
@@ -359,8 +411,83 @@ query accountLimits {
   }
 }
 
-query userDefaultWalletId($username: Username!) {
-  userDefaultWalletId(username: $username)
+query addressScreen {
+  me {
+    username
+  }
+}
+
+query btcPriceList($range: PriceGraphRange!) {
+  btcPriceList(range: $range) {
+    timestamp
+    price {
+      base
+      offset
+      currencyUnit
+      formattedAmount
+    }
+  }
+}
+
+query businessMapMarkers {
+  businessMapMarkers {
+    username
+    mapInfo {
+      title
+      coordinates {
+        longitude
+        latitude
+      }
+    }
+  }
+}
+
+query contacts {
+  me {
+    contacts {
+      id
+      username
+      alias
+      transactionsCount
+    }
+  }
+}
+
+query conversionScreen {
+  me {
+    defaultAccount {
+      usdWallet @client {
+        id
+        balance
+      }
+      btcWallet @client {
+        id
+        balance
+      }
+    }
+  }
+}
+
+query initWallet {
+  me {
+    id
+    defaultAccount {
+      id
+      defaultWalletId
+      wallets {
+        id
+        balance
+        walletCurrency
+      }
+    }
+  }
+}
+
+query languageScreen {
+  me {
+    language
+    id
+  }
 }
 
 query mainQuery($hasToken: Boolean!) {
@@ -410,148 +537,15 @@ query mainQuery($hasToken: Boolean!) {
   }
 }
 
-query businessMapMarkers {
-  businessMapMarkers {
-    username
-    mapInfo {
-      title
-      coordinates {
-        longitude
-        latitude
-      }
-    }
-  }
-}
-
-query initWallet {
-  me {
-    id
-    defaultAccount {
-      id
-      defaultWalletId
-      wallets {
-        id
-        balance
-        walletCurrency
-      }
-    }
-  }
-}
-
-query wallets {
-  me {
-    defaultAccount {
-      wallets {
-        walletCurrency
-        id
-      }
-    }
-  }
-}
-
-subscription price($input: PriceInput!) {
-  price(input: $input) {
-    price {
-      base
-      offset
-      currencyUnit
-      formattedAmount
-    }
-    errors {
-      message
-    }
-  }
-}
-
-subscription myUpdates {
-  myUpdates {
-    errors {
-      message
-    }
-    update {
-      type: __typename
-      ... on Price {
-        base
-        offset
-        currencyUnit
-        formattedAmount
-      }
-      ... on LnUpdate {
-        paymentHash
-        status
-      }
-      ... on OnChainUpdate {
-        txNotificationType
-        txHash
-        amount
-        usdPerSat
-      }
-      ... on IntraLedgerUpdate {
-        txNotificationType
-        amount
-        usdPerSat
-      }
-    }
-  }
-}
-
-query rootStack($hasToken: Boolean!) {
-  me @include(if: $hasToken) {
-    username
-    id
-  }
-  globals {
-    network
-  }
-}
-
-query conversionScreen {
-  me {
-    defaultAccount {
-      usdWallet @client {
-        id
-        balance
-      }
-      btcWallet @client {
-        id
-        balance
-      }
-    }
-  }
-}
-
-query addressScreen {
-  me {
-    username
-  }
-}
-
-mutation accountUpdateDefaultWalletId($input: AccountUpdateDefaultWalletIdInput!) {
-  accountUpdateDefaultWalletId(input: $input) {
-    errors {
-      __typename
-      message
-    }
-    account {
-      __typename
-      id
-      defaultWalletId
-    }
-  }
-}
-
-query setDefaultWallet {
-  me {
-    defaultAccount {
-      id
-      defaultWalletId
-      btcWallet {
-        id
-      }
-      usdWallet {
-        id
-      }
-    }
+query onChainTxFee($walletId: WalletId!, $address: OnChainAddress!, $amount: SatAmount!, $targetConfirmations: TargetConfirmations) {
+  onChainTxFee(
+    walletId: $walletId
+    address: $address
+    amount: $amount
+    targetConfirmations: $targetConfirmations
+  ) {
+    amount
+    targetConfirmations
   }
 }
 
@@ -578,47 +572,6 @@ query receiveBtc {
   }
 }
 
-mutation lnNoAmountInvoiceCreate($input: LnNoAmountInvoiceCreateInput!) {
-  lnNoAmountInvoiceCreate(input: $input) {
-    errors {
-      __typename
-      message
-    }
-    invoice {
-      __typename
-      paymentHash
-      paymentRequest
-      paymentSecret
-    }
-  }
-}
-
-mutation lnInvoiceCreate($input: LnInvoiceCreateInput!) {
-  lnInvoiceCreate(input: $input) {
-    errors {
-      __typename
-      message
-    }
-    invoice {
-      __typename
-      paymentHash
-      paymentRequest
-      paymentSecret
-      satoshis
-    }
-  }
-}
-
-mutation onChainAddressCurrent($input: OnChainAddressCurrentInput!) {
-  onChainAddressCurrent(input: $input) {
-    errors {
-      __typename
-      message
-    }
-    address
-  }
-}
-
 query receiveUsd {
   globals {
     network
@@ -632,19 +585,13 @@ query receiveUsd {
   }
 }
 
-mutation lnUsdInvoiceCreate($input: LnUsdInvoiceCreateInput!) {
-  lnUsdInvoiceCreate(input: $input) {
-    errors {
-      __typename
-      message
-    }
-    invoice {
-      __typename
-      paymentHash
-      paymentRequest
-      paymentSecret
-      satoshis
-    }
+query rootStack($hasToken: Boolean!) {
+  me @include(if: $hasToken) {
+    username
+    id
+  }
+  globals {
+    network
   }
 }
 
@@ -692,31 +639,46 @@ query sendBitcoinDetailsScreen {
   }
 }
 
-query AccountScreen {
+query setDefaultWallet {
   me {
-    phone
-  }
-}
-
-query languageScreen {
-  me {
-    language
-    id
-  }
-}
-
-mutation userUpdateLanguage($input: UserUpdateLanguageInput!) {
-  userUpdateLanguage(input: $input) {
-    errors {
-      __typename
-      message
-    }
-    user {
-      __typename
+    defaultAccount {
       id
-      language
+      defaultWalletId
+      btcWallet {
+        id
+      }
+      usdWallet {
+        id
+      }
     }
   }
+}
+
+query transactionListForContact($username: Username!, $first: Int, $after: String, $last: Int, $before: String) {
+  me {
+    id
+    contactByUsername(username: $username) {
+      transactions(first: $first, after: $after, last: $last, before: $before) {
+        ...TransactionList
+      }
+    }
+  }
+}
+
+query transactionListForDefaultAccount($first: Int, $after: String, $last: Int, $before: String) {
+  me {
+    id
+    defaultAccount {
+      id
+      transactions(first: $first, after: $after, last: $last, before: $before) {
+        ...TransactionList
+      }
+    }
+  }
+}
+
+query userDefaultWalletId($username: Username!) {
+  userDefaultWalletId(username: $username)
 }
 
 query walletCSVTransactions($defaultWalletId: WalletId!) {
@@ -729,22 +691,60 @@ query walletCSVTransactions($defaultWalletId: WalletId!) {
   }
 }
 
-query SettingsScreen {
+query wallets {
   me {
-    phone
-    username
-    language
     defaultAccount {
-      btcWallet {
+      wallets {
+        walletCurrency
         id
       }
     }
   }
 }
 
-query LocalizationContextProvider {
-  me {
-    language
+subscription myUpdates {
+  myUpdates {
+    errors {
+      message
+    }
+    update {
+      type: __typename
+      ... on Price {
+        base
+        offset
+        currencyUnit
+        formattedAmount
+      }
+      ... on LnUpdate {
+        paymentHash
+        status
+      }
+      ... on OnChainUpdate {
+        txNotificationType
+        txHash
+        amount
+        usdPerSat
+      }
+      ... on IntraLedgerUpdate {
+        txNotificationType
+        amount
+        usdPerSat
+      }
+    }
+  }
+}
+
+subscription price($input: PriceInput!) {
+  price(input: $input) {
+    price {
+      base
+      offset
+      currencyUnit
+      formattedAmount
+    }
+    errors {
+      message
+    }
   }
 }
 
