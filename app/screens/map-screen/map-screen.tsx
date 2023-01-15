@@ -1,11 +1,10 @@
-import { gql, useQuery } from "@apollo/client"
 import { useFocusEffect } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { useCallback } from "react"
 // eslint-disable-next-line react-native/split-platform-components
 import { PermissionsAndroid, StyleSheet, Text, View } from "react-native"
-import { Button } from "react-native-elements"
+import { Button } from "@rneui/base"
 import MapView, { Callout, CalloutSubview, Marker } from "react-native-maps"
 import { Screen } from "../../components/screen"
 import { PrimaryStackParamList } from "../../navigation/stack-param-lists"
@@ -16,21 +15,7 @@ import { toastShow } from "../../utils/toast"
 import useToken from "../../hooks/use-token"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import crashlytics from "@react-native-firebase/crashlytics"
-
-const QUERY_BUSINESSES = gql`
-  query businessMapMarkers {
-    businessMapMarkers {
-      username
-      mapInfo {
-        title
-        coordinates {
-          longitude
-          latitude
-        }
-      }
-    }
-  }
-`
+import { useBusinessMapMarkersQuery } from "@app/graphql/generated"
 
 const styles = StyleSheet.create({
   android: { marginTop: 18 },
@@ -57,7 +42,7 @@ type Props = {
 export const MapScreen: ScreenType = ({ navigation }: Props) => {
   const { hasToken } = useToken()
   const [isRefreshed, setIsRefreshed] = React.useState(false)
-  const { data, error, refetch } = useQuery(QUERY_BUSINESSES, {
+  const { data, error, refetch } = useBusinessMapMarkersQuery({
     notifyOnNetworkStatusChange: true,
   })
   const { LL } = useI18nContext()
@@ -75,44 +60,35 @@ export const MapScreen: ScreenType = ({ navigation }: Props) => {
 
   const maps = data?.businessMapMarkers ?? []
 
-  const requestLocationPermission = async () => {
-    try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-        {
-          title: LL.MapScreen.locationPermissionTitle(),
-          message: LL.MapScreen.locationPermissionMessage(),
-          buttonNeutral: LL.MapScreen.locationPermissionNeutral(),
-          buttonNegative: LL.MapScreen.locationPermissionNegative(),
-          buttonPositive: LL.MapScreen.locationPermissionPositive(),
-        },
-      )
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        console.debug("You can use the location")
-      } else {
-        console.debug("Location permission denied")
+  const requestLocationPermission = useCallback(() => {
+    const asyncRequestLocationPermission = async () => {
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+          {
+            title: LL.MapScreen.locationPermissionTitle(),
+            message: LL.MapScreen.locationPermissionMessage(),
+            buttonNeutral: LL.MapScreen.locationPermissionNeutral(),
+            buttonNegative: LL.MapScreen.locationPermissionNegative(),
+            buttonPositive: LL.MapScreen.locationPermissionPositive(),
+          },
+        )
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          console.debug("You can use the location")
+        } else {
+          console.debug("Location permission denied")
+        }
+      } catch (err) {
+        crashlytics().recordError(err)
+        console.debug(err)
       }
-    } catch (err) {
-      crashlytics().recordError(err)
-      console.debug(err)
     }
-  }
+    asyncRequestLocationPermission()
+    // disable eslint because we don't want to re-run this function when the language changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-  useFocusEffect(
-    useCallback(() => {
-      requestLocationPermission()
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []),
-  )
-
-  // React.useLayoutEffect(() => {
-  //   navigation.setOptions(
-  //     {
-  //       title: route.params.title,
-  //     },
-  //     [],
-  //   )
-  // })
+  useFocusEffect(requestLocationPermission)
 
   const markers: JSX.Element[] = []
   maps.forEach((item) => {

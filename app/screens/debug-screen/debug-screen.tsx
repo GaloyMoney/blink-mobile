@@ -1,6 +1,6 @@
 import * as React from "react"
 import { Alert, DevSettings, Text, View } from "react-native"
-import { Button, ButtonGroup } from "react-native-elements"
+import { Button, ButtonGroup } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { useApolloClient } from "@apollo/client"
 import crashlytics from "@react-native-firebase/crashlytics"
@@ -11,12 +11,16 @@ import useToken from "../../hooks/use-token"
 import type { ScreenType } from "../../types/jsx"
 import { usePriceConversion } from "../../hooks"
 import useLogout from "../../hooks/use-logout"
-import { GaloyInput } from "@app/components/galoy-input"
+import { GaloyInput } from "@app/components/atomic/galoy-input"
 import { useAppConfig } from "@app/hooks/use-app-config"
 import { usePersistentStateContext } from "@app/store/persistent-state"
 import { testProps } from "../../../utils/testProps"
 import Clipboard from "@react-native-community/clipboard"
-import { GaloyInstanceNames, GALOY_INSTANCES } from "@app/config/galoy-instances"
+import { GaloyInstanceNames, GALOY_INSTANCES } from "@app/config"
+import CurrencyPicker from "react-native-currency-picker"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+import { toastShow } from "@app/utils/toast"
+import { i18nObject } from "@app/i18n/i18n-util"
 
 const styles = EStyleSheet.create({
   button: {
@@ -36,6 +40,7 @@ const styles = EStyleSheet.create({
 const usingHermes = typeof HermesInternal === "object" && HermesInternal !== null
 
 export const DebugScreen: ScreenType = () => {
+  const { displayCurrency, setDisplayCurrency } = useDisplayCurrency()
   const client = useApolloClient()
   const { usdPerSat } = usePriceConversion()
   const { token, hasToken, saveToken } = useToken()
@@ -144,8 +149,63 @@ export const DebugScreen: ScreenType = () => {
                 crashlytics().crash()
               }}
             />
+            <Button
+              title="Error toast with translation"
+              containerStyle={styles.button}
+              {...testProps("Error Toast")}
+              onPress={() => {
+                toastShow({
+                  message: (translations) => translations.errors.generic(),
+                  currentTranslation: i18nObject("es"),
+                })
+              }}
+            />
           </>
         )}
+        <CurrencyPicker
+          enable={true}
+          darkMode={false}
+          currencyCode={displayCurrency}
+          showFlag={true}
+          showCurrencyName={false}
+          showCurrencyCode={true}
+          onSelectCurrency={(data) => {
+            setDisplayCurrency(data.code)
+          }}
+          showNativeSymbol={false}
+          // eslint-disable-next-line react-native/no-inline-styles
+          containerStyle={{
+            container: {
+              borderWidth: 1,
+              borderRadius: 5,
+              justifyContent: "center",
+              height: 50,
+              marginTop: 5,
+            },
+            flagWidth: 25,
+            currencyCodeStyle: {},
+            currencyNameStyle: {},
+            symbolStyle: {},
+            symbolNativeStyle: {},
+          }}
+          modalStyle={{
+            container: {},
+            searchStyle: {},
+            tileStyle: {},
+            itemStyle: {
+              itemContainer: {},
+              flagWidth: 25,
+              currencyCodeStyle: {},
+              currencyNameStyle: {},
+              symbolStyle: {},
+              symbolNativeStyle: {},
+            },
+          }}
+          title={"Currency"}
+          searchPlaceholder={"Search"}
+          showCloseButton={true}
+          showModalTitle={true}
+        />
         <View>
           <Text style={styles.textHeader}>Environment Information</Text>
           <Text selectable>Galoy Instance: {appConfig.galoyInstance.name}</Text>

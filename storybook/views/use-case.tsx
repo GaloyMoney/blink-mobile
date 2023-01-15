@@ -28,7 +28,7 @@ const HEADER: ViewStyle = {
   borderBottomColor: "#e6e6e6",
   borderBottomWidth: 1,
 }
-const COMPONENT: ViewStyle = { backgroundColor: color.background }
+const COMPONENT: ViewStyle = { backgroundColor: color.palette.white }
 
 export interface UseCaseProps {
   /** The title. */

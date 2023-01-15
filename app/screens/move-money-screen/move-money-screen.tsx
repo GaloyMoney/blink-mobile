@@ -1,5 +1,3 @@
-import { GaloyGQL } from "@galoymoney/client"
-
 import messaging from "@react-native-firebase/messaging"
 import * as React from "react"
 import { useEffect, useState } from "react"
@@ -14,7 +12,7 @@ import {
   Text,
   View,
 } from "react-native"
-import { Button } from "react-native-elements"
+import { Button } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
@@ -47,6 +45,7 @@ import { CompositeNavigationProp, useIsFocused } from "@react-navigation/native"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { StableSatsModal } from "@app/components/stablesats-modal"
 import { testProps } from "../../../utils/testProps"
+import { Transaction } from "@app/graphql/generated"
 
 const styles = EStyleSheet.create({
   bottom: {
@@ -182,8 +181,7 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
     }
     const subscription = AppState.addEventListener("change", _handleAppStateChange)
     return () => subscription.remove()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [refetch])
 
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async (_remoteMessage) => {
@@ -193,8 +191,7 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
     })
 
     return unsubscribe
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [refetch])
 
   function isUpdateAvailableOrRequired(mobileVersions) {
     try {
@@ -242,7 +239,7 @@ type MoveMoneyScreenProps = {
   >
   loading: boolean
   errors: []
-  transactionsEdges: { cursor: string; node: GaloyGQL.Transaction | null }[]
+  transactionsEdges: { cursor: string; node: Transaction | null }[]
   refetch: () => void
   isUpdateAvailable: boolean
   hasToken: boolean

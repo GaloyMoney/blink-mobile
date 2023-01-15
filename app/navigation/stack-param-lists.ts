@@ -1,14 +1,12 @@
-/* eslint-disable camelcase */
-import { PaymentAmount, WalletCurrency } from "@app/types/amounts"
+import { BtcPaymentAmount, PaymentAmount, UsdPaymentAmount } from "@app/types/amounts"
 import { WalletDescriptor } from "@app/types/wallets"
 import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
-import { GaloyGQL } from "@galoymoney/client"
 import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
-import { contacts_me_contacts } from "../screens/contacts-screen/__generated__/contacts"
 import { AccountType, AuthenticationScreenPurpose, PinScreenPurpose } from "../utils/enum"
 import { PostAttributes } from "@app/modules/market-place/redux/reducers/store-reducer"
+import { Transaction, WalletCurrency } from "@app/graphql/generated"
 
-export type TransactionDetail = GaloyGQL.Transaction & {
+export type TransactionDetail = Transaction & {
   usdAmount: number
   description: string
   isReceive: boolean
@@ -18,7 +16,6 @@ export type TransactionDetail = GaloyGQL.Transaction & {
 export type RootStackParamList = {
   getStarted: undefined
   debug: undefined
-  welcomeFirst: undefined
   authenticationCheck: undefined
   authentication: {
     screenPurpose: AuthenticationScreenPurpose
@@ -46,7 +43,7 @@ export type RootStackParamList = {
     username?: string
   }
   sendBitcoinDetails: {
-    fixedAmount?: PaymentAmount<WalletCurrency.BTC>
+    fixedAmount?: BtcPaymentAmount
     destination: string
     note?: string
     lnurl?: LnUrlPayServiceResponse
@@ -55,12 +52,12 @@ export type RootStackParamList = {
     sameNode: boolean
   }
   sendBitcoinConfirmation: {
-    fixedAmount?: PaymentAmount<WalletCurrency.BTC>
+    fixedAmount?: BtcPaymentAmount
     destination: string
     recipientWalletId?: string
     payerWalletDescriptor: WalletDescriptor<WalletCurrency>
-    paymentAmountInBtc?: PaymentAmount<WalletCurrency.BTC>
-    paymentAmountInUsd?: PaymentAmount<WalletCurrency.USD>
+    paymentAmountInBtc?: BtcPaymentAmount
+    paymentAmountInUsd?: UsdPaymentAmount
     note?: string
     paymentType: PaymentType
     sameNode: boolean
@@ -70,17 +67,16 @@ export type RootStackParamList = {
     transferAmount: PaymentAmount<WalletCurrency> | undefined
   }
   conversionConfirmation: {
-    fromWallet: WalletDescriptor<WalletCurrency>
-    toWallet: WalletDescriptor<WalletCurrency>
-    btcAmount: PaymentAmount<WalletCurrency.BTC>
-    usdAmount: PaymentAmount<WalletCurrency.USD>
-    usdPerBtc: PaymentAmount<WalletCurrency.USD>
+    fromWalletCurrency: WalletCurrency
+    btcAmount: BtcPaymentAmount
+    usdAmount: UsdPaymentAmount
+    usdPerBtc: UsdPaymentAmount
   }
   conversionSuccess: {
     fromWallet: WalletDescriptor<WalletCurrency>
     toWallet: WalletDescriptor<WalletCurrency>
-    btcAmount: PaymentAmount<WalletCurrency.BTC>
-    usdAmount: PaymentAmount<WalletCurrency.USD>
+    btcAmount: BtcPaymentAmount
+    usdAmount: UsdPaymentAmount
   }
   sendBitcoinSuccess: undefined
   language: undefined
@@ -102,6 +98,8 @@ export type RootStackParamList = {
   transactionHistory: undefined
   Earn: undefined
   accountScreen: undefined
+  transactionLimitsScreen: undefined
+
   PostDetail: { editable?: boolean; storeInfor: PostAttributes }
   StoreListView: { searchText: string }
   StoreList: undefined
@@ -109,7 +107,7 @@ export type RootStackParamList = {
 
 export type ContactStackParamList = {
   contactList: undefined
-  contactDetail: { contact: contacts_me_contacts }
+  contactDetail: { contact: Contact }
   phoneValidation: undefined
   sendBitcoinDestination: { username: string }
   transactionDetail: TransactionDetail

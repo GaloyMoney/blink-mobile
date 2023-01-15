@@ -1,30 +1,38 @@
+import CalculatorIcon from "@app/assets/icons/calculator.svg"
+import ChainIcon from "@app/assets/icons/chain.svg"
+import ChevronIcon from "@app/assets/icons/chevron.svg"
+import NoteIcon from "@app/assets/icons/note.svg"
+import SwitchIcon from "@app/assets/icons/switch.svg"
 import { usePriceConversion, useSubscriptionUpdates } from "@app/hooks"
-import useMainQuery from "@app/hooks/use-main-query"
-import { getFullUri, TYPE_LIGHTNING_BTC, TYPE_BITCOIN_ONCHAIN } from "@app/utils/wallet"
-import { GaloyGQL, useMutation } from "@galoymoney/client"
+import { palette } from "@app/theme"
+import { satAmountDisplay } from "@app/utils/currencyConversion"
+import { toastShow } from "@app/utils/toast"
+import { TYPE_BITCOIN_ONCHAIN, TYPE_LIGHTNING_BTC, getFullUri } from "@app/utils/wallet"
+import { Button, Text } from "@rneui/base"
 import React, { useCallback, useEffect, useState } from "react"
 import { Alert, Pressable, Share, TextInput, View } from "react-native"
-import { Button, Text } from "react-native-elements"
-import EStyleSheet from "react-native-extended-stylesheet"
-import QRView from "./qr-view"
-import Icon from "react-native-vector-icons/Ionicons"
 import { FakeCurrencyInput } from "react-native-currency-input"
-import { palette } from "@app/theme"
-import SwitchIcon from "@app/assets/icons/switch.svg"
+import EStyleSheet from "react-native-extended-stylesheet"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
-import { satAmountDisplay, usdAmountDisplay } from "@app/utils/currencyConversion"
-import CalculatorIcon from "@app/assets/icons/calculator.svg"
-import ChevronIcon from "@app/assets/icons/chevron.svg"
-import ChainIcon from "@app/assets/icons/chain.svg"
-import NoteIcon from "@app/assets/icons/note.svg"
-import { toastShow } from "@app/utils/toast"
+import Icon from "react-native-vector-icons/Ionicons"
+import QRView from "./qr-view"
 
-import { copyPaymentInfoToClipboard } from "@app/utils/clipboard"
+import {
+  LnInvoice,
+  LnNoAmountInvoice,
+  WalletCurrency,
+  useLnInvoiceCreateMutation,
+  useLnNoAmountInvoiceCreateMutation,
+  useOnChainAddressCurrentMutation,
+  useReceiveBtcQuery,
+} from "@app/graphql/generated"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { logGeneratePaymentRequest } from "@app/utils/analytics"
-import { WalletCurrency } from "@app/types/amounts"
-import { testProps } from "../../../utils/testProps"
+import Clipboard from "@react-native-community/clipboard"
 import crashlytics from "@react-native-firebase/crashlytics"
+import { testProps } from "../../../utils/testProps"
+import { gql } from "@apollo/client"
 
 const styles = EStyleSheet.create({
   container: {
@@ -150,12 +158,63 @@ const styles = EStyleSheet.create({
   },
 })
 
+gql`
+  query receiveBtc {
+    me {
+      defaultAccount {
+        btcWallet {
+          id
+        }
+      }
+    }
+  }
+
+  mutation lnNoAmountInvoiceCreate($input: LnNoAmountInvoiceCreateInput!) {
+    lnNoAmountInvoiceCreate(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      invoice {
+        __typename
+        paymentHash
+        paymentRequest
+        paymentSecret
+      }
+    }
+  }
+
+  mutation lnInvoiceCreate($input: LnInvoiceCreateInput!) {
+    lnInvoiceCreate(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      invoice {
+        __typename
+        paymentHash
+        paymentRequest
+        paymentSecret
+        satoshis
+      }
+    }
+  }
+
+  mutation onChainAddressCurrent($input: OnChainAddressCurrentInput!) {
+    onChainAddressCurrent(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      address
+    }
+  }
+`
+
 const ReceiveBtc = () => {
   const [loading, setLoading] = useState(true)
   const [err, setErr] = useState("")
-  const [invoice, setInvoice] = useState<
-    GaloyGQL.LnInvoice | GaloyGQL.LnNoAmountInvoice | null
-  >(null)
+  const [invoice, setInvoice] = useState<LnInvoice | LnNoAmountInvoice | null>(null)
   const [btcAddress, setBtcAddress] = useState<string | null>(null)
   const [satAmount, setSatAmount] = useState(0)
   const [usdAmount, setUsdAmount] = useState(0)
@@ -168,13 +227,18 @@ const ReceiveBtc = () => {
     TYPE_LIGHTNING_BTC,
   )
   const { convertCurrencyAmount } = usePriceConversion()
-  const { btcWalletId } = useMainQuery()
+
+  const { data } = useReceiveBtcQuery({ fetchPolicy: "cache-only" })
+  const btcWalletId = data?.me?.defaultAccount?.btcWallet?.id
+
   const { lnUpdate } = useSubscriptionUpdates()
 
-  const [lnNoAmountInvoiceCreate] = useMutation.lnNoAmountInvoiceCreate()
-  const [lnInvoiceCreate] = useMutation.lnInvoiceCreate()
-  const [generateBtcAddress] = useMutation.onChainAddressCurrent()
+  const [lnNoAmountInvoiceCreate] = useLnNoAmountInvoiceCreateMutation()
+  const [lnInvoiceCreate] = useLnInvoiceCreateMutation()
+  const [generateBtcAddress] = useOnChainAddressCurrentMutation()
   const { LL } = useI18nContext()
+  const { formatToDisplayCurrency } = useDisplayCurrency()
+
   const updateInvoice = useCallback(
     async ({ walletId, satAmount, memo }) => {
       setLoading(true)
@@ -184,7 +248,7 @@ const ReceiveBtc = () => {
           logGeneratePaymentRequest({
             paymentType: "lightning",
             hasAmount: false,
-            receivingWallet: WalletCurrency.BTC,
+            receivingWallet: WalletCurrency.Btc,
           })
           const {
             data: {
@@ -203,7 +267,7 @@ const ReceiveBtc = () => {
           logGeneratePaymentRequest({
             paymentType: "lightning",
             hasAmount: true,
-            receivingWallet: WalletCurrency.BTC,
+            receivingWallet: WalletCurrency.Btc,
           })
           const {
             data: {
@@ -240,7 +304,7 @@ const ReceiveBtc = () => {
         logGeneratePaymentRequest({
           paymentType: "onchain",
           hasAmount: false,
-          receivingWallet: WalletCurrency.BTC,
+          receivingWallet: WalletCurrency.Btc,
         })
         const {
           data: {
@@ -319,9 +383,11 @@ const ReceiveBtc = () => {
   })
 
   const copyToClipboard = useCallback(() => {
-    copyPaymentInfoToClipboard(paymentFullUri)
+    Clipboard.setString(paymentFullUri)
+
     toastShow({
-      message: LL.ReceiveBitcoinScreen.copyClipboard(),
+      message: (translations) => translations.ReceiveBitcoinScreen.copyClipboard(),
+      currentTranslation: LL,
       type: "success",
     })
   }, [paymentFullUri, LL])
@@ -505,7 +571,7 @@ const ReceiveBtc = () => {
       <>
         <Text style={styles.primaryAmount}>{satAmountDisplay(satAmount)}</Text>
         <Text style={styles.convertedAmount}>
-          &#8776; {usdAmountDisplay(satAmountInUsd)}
+          &#8776; {formatToDisplayCurrency(satAmountInUsd)}
         </Text>
       </>
     )

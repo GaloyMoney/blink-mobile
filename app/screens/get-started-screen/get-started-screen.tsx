@@ -2,7 +2,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { Image, View } from "react-native"
-import { Button } from "react-native-elements"
+import { Button } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { Screen } from "../../components/screen"
 import { VersionComponent } from "../../components/version"
@@ -71,7 +71,7 @@ export const GetStartedScreen: ScreenType = ({ navigation }: Props) => {
           title={LL.GetStartedScreen.getStarted()}
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitle}
-          onPress={() => navigation.replace("welcomeFirst")}
+          onPress={() => navigation.replace("Primary")}
           containerStyle={styles.buttonContainer}
           {...testProps(LL.GetStartedScreen.getStarted())}
         />

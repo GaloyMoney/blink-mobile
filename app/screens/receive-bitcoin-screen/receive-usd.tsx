@@ -1,29 +1,37 @@
-import { useSubscriptionUpdates, useCountdownTimer } from "@app/hooks"
-import useMainQuery from "@app/hooks/use-main-query"
+import { useCountdownTimer, useSubscriptionUpdates } from "@app/hooks"
 import { palette } from "@app/theme"
-import { getFullUri, TYPE_LIGHTNING_USD } from "@app/utils/wallet"
-import { parsingv2, GaloyGQL, useMutation } from "@galoymoney/client"
+import { TYPE_LIGHTNING_USD, getFullUri } from "@app/utils/wallet"
+import { parsingv2, Network as NetworkLibGaloy } from "@galoymoney/client"
 const { decodeInvoiceString, getLightningInvoiceExpiryTime } = parsingv2
 
-import React, { useCallback, useEffect, useRef, useState } from "react"
-import { Alert, AppState, Pressable, Share, TextInput, View } from "react-native"
-import { Button, Text } from "react-native-elements"
-import EStyleSheet from "react-native-extended-stylesheet"
-import QRView from "./qr-view"
-import Icon from "react-native-vector-icons/Ionicons"
-import { FakeCurrencyInput } from "react-native-currency-input"
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
-import { usdAmountDisplay } from "@app/utils/currencyConversion"
 import CalculatorIcon from "@app/assets/icons/calculator.svg"
 import ChevronIcon from "@app/assets/icons/chevron.svg"
 import NoteIcon from "@app/assets/icons/note.svg"
-import { toastShow } from "@app/utils/toast"
-import { copyPaymentInfoToClipboard } from "@app/utils/clipboard"
-import moment from "moment"
+import {
+  LnInvoice,
+  LnNoAmountInvoice,
+  WalletCurrency,
+  useLnNoAmountInvoiceCreateMutation,
+  useLnUsdInvoiceCreateMutation,
+  useReceiveUsdQuery,
+} from "@app/graphql/generated"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { logGeneratePaymentRequest } from "@app/utils/analytics"
-import { WalletCurrency } from "@app/types/amounts"
+import Clipboard from "@react-native-community/clipboard"
+import { toastShow } from "@app/utils/toast"
 import crashlytics from "@react-native-firebase/crashlytics"
+import { Button, Text } from "@rneui/base"
+import moment from "moment"
+import React, { useCallback, useEffect, useRef, useState } from "react"
+import { Alert, AppState, Pressable, Share, TextInput, View } from "react-native"
+import { FakeCurrencyInput } from "react-native-currency-input"
+import EStyleSheet from "react-native-extended-stylesheet"
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
+import Icon from "react-native-vector-icons/Ionicons"
+import QRView from "./qr-view"
+
+import { gql } from "@apollo/client"
 
 const styles = EStyleSheet.create({
   container: {
@@ -136,18 +144,51 @@ const styles = EStyleSheet.create({
   },
 })
 
+gql`
+  query receiveUsd {
+    globals {
+      network
+    }
+    me {
+      defaultAccount {
+        usdWallet {
+          id
+        }
+      }
+    }
+  }
+
+  mutation lnUsdInvoiceCreate($input: LnUsdInvoiceCreateInput!) {
+    lnUsdInvoiceCreate(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      invoice {
+        __typename
+        paymentHash
+        paymentRequest
+        paymentSecret
+        satoshis
+      }
+    }
+  }
+`
+
 const ReceiveUsd = () => {
   const appState = useRef(AppState.currentState)
   const [status, setStatus] = useState<
     "loading" | "active" | "expired" | "error" | "paid"
   >("loading")
   const [err, setErr] = useState("")
-  const [lnNoAmountInvoiceCreate] = useMutation.lnNoAmountInvoiceCreate()
-  const [lnUsdInvoiceCreate] = useMutation.lnUsdInvoiceCreate()
-  const { usdWalletId, network } = useMainQuery()
-  const [invoice, setInvoice] = useState<
-    GaloyGQL.LnInvoice | GaloyGQL.LnNoAmountInvoice | null
-  >(null)
+  const [lnNoAmountInvoiceCreate] = useLnNoAmountInvoiceCreateMutation()
+  const [lnUsdInvoiceCreate] = useLnUsdInvoiceCreateMutation()
+
+  const { data } = useReceiveUsdQuery({ fetchPolicy: "cache-only" })
+  const usdWalletId = data?.me?.defaultAccount?.usdWallet?.id
+  const network = data?.globals?.network
+
+  const [invoice, setInvoice] = useState<LnInvoice | LnNoAmountInvoice | null>(null)
   const [usdAmount, setUsdAmount] = useState(0)
   const [memo, setMemo] = useState("")
   const { lnUpdate } = useSubscriptionUpdates()
@@ -156,6 +197,7 @@ const ReceiveUsd = () => {
   const { LL } = useI18nContext()
   const { timeLeft, startCountdownTimer, resetCountdownTimer, stopCountdownTimer } =
     useCountdownTimer()
+  const { formatToDisplayCurrency } = useDisplayCurrency()
 
   useEffect(() => {
     if (invoice && usdAmount > 0) {
@@ -163,7 +205,7 @@ const ReceiveUsd = () => {
         if (appState.current.match(/inactive|background/) && nextAppState === "active") {
           const timeUntilInvoiceExpires =
             getLightningInvoiceExpiryTime(
-              decodeInvoiceString(invoice.paymentRequest, network),
+              decodeInvoiceString(invoice.paymentRequest, network as NetworkLibGaloy),
             ) - Math.round(Date.now() / 1000)
           if (timeUntilInvoiceExpires <= 0) {
             setStatus("expired")
@@ -187,7 +229,7 @@ const ReceiveUsd = () => {
       }
       const timeUntilInvoiceExpires =
         getLightningInvoiceExpiryTime(
-          decodeInvoiceString(invoice.paymentRequest, network),
+          decodeInvoiceString(invoice.paymentRequest, network as NetworkLibGaloy),
         ) - Math.round(Date.now() / 1000)
       if (timeUntilInvoiceExpires <= 0) {
         callback()
@@ -195,8 +237,7 @@ const ReceiveUsd = () => {
       }
       startCountdownTimer(timeUntilInvoiceExpires, callback)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [usdAmount, invoice, network])
+  }, [usdAmount, invoice, network, startCountdownTimer])
 
   const updateInvoice = useCallback(
     async ({ walletId, usdAmount, memo }) => {
@@ -206,7 +247,7 @@ const ReceiveUsd = () => {
           logGeneratePaymentRequest({
             paymentType: "lightning",
             hasAmount: false,
-            receivingWallet: WalletCurrency.USD,
+            receivingWallet: WalletCurrency.Usd,
           })
           const {
             data: {
@@ -226,7 +267,7 @@ const ReceiveUsd = () => {
           logGeneratePaymentRequest({
             paymentType: "lightning",
             hasAmount: true,
-            receivingWallet: WalletCurrency.USD,
+            receivingWallet: WalletCurrency.Usd,
           })
           const amountInCents = Math.round(parseFloat(usdAmount) * 100)
           const {
@@ -301,11 +342,11 @@ const ReceiveUsd = () => {
   }, [invoice?.paymentRequest])
 
   const copyToClipboard = () => {
-    copyPaymentInfoToClipboard(
-      getFullUri({ input: invoice?.paymentRequest, prefix: false }),
-    )
+    Clipboard.setString(getFullUri({ input: invoice?.paymentRequest, prefix: false }))
+
     toastShow({
-      message: LL.ReceiveBitcoinScreen.copyClipboard(),
+      message: (translations) => translations.ReceiveBitcoinScreen.copyClipboard(),
+      currentTranslation: LL,
       type: "success",
     })
   }
@@ -384,7 +425,7 @@ const ReceiveUsd = () => {
     }
     return (
       <>
-        <Text style={styles.primaryAmount}>{usdAmountDisplay(usdAmount)}</Text>
+        <Text style={styles.primaryAmount}>{formatToDisplayCurrency(usdAmount)}</Text>
       </>
     )
   }

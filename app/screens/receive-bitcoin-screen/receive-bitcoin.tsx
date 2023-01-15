@@ -1,10 +1,8 @@
 import { Screen } from "@app/components/screen"
-import useMainQuery from "@app/hooks/use-main-query"
 import useToken from "@app/hooks/use-token"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { palette } from "@app/theme"
-import { WalletCurrency } from "@app/types/amounts"
 import { requestNotificationPermission } from "@app/utils/notifications"
 import { useIsFocused } from "@react-navigation/native"
 import { StackScreenProps } from "@react-navigation/stack"
@@ -14,6 +12,8 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import ReceiveBtc from "./receive-btc"
 import ReceiveUsd from "./receive-usd"
+import { WalletCurrency, useReceiveBitcoinScreenQuery } from "@app/graphql/generated"
+import { gql } from "@apollo/client"
 
 const styles = EStyleSheet.create({
   container: {
@@ -59,6 +59,22 @@ const styles = EStyleSheet.create({
     color: palette.coolGrey,
   },
 })
+
+gql`
+  query receiveBitcoinScreen {
+    me {
+      defaultAccount {
+        defaultWallet {
+          walletCurrency
+        }
+        usdWallet {
+          id
+        }
+      }
+    }
+  }
+`
+
 const ReceiveBitcoinScreen = ({
   navigation,
   route,
@@ -66,9 +82,13 @@ const ReceiveBitcoinScreen = ({
   const { hasToken } = useToken()
   const { receiveCurrency: initialReceiveCurrency } = route.params || {}
 
-  const { usdWalletId } = useMainQuery()
+  const { data } = useReceiveBitcoinScreenQuery({ fetchPolicy: "cache-only" })
+
+  const defaultCurrency = data?.me?.defaultAccount?.defaultWallet?.walletCurrency
+  const usdWalletId = data?.me?.defaultAccount?.usdWallet?.id
+
   const [receiveCurrency, setReceiveCurrency] = useState<WalletCurrency>(
-    initialReceiveCurrency || WalletCurrency.BTC,
+    initialReceiveCurrency || defaultCurrency,
   )
   const { LL } = useI18nContext()
   const isFocused = useIsFocused()
@@ -87,11 +107,11 @@ const ReceiveBitcoinScreen = ({
   }, [hasToken, isFocused])
 
   useEffect(() => {
-    if (receiveCurrency === WalletCurrency.USD) {
+    if (receiveCurrency === WalletCurrency.Usd) {
       navigation.setOptions({ title: LL.ReceiveBitcoinScreen.usdTitle() })
     }
 
-    if (receiveCurrency === WalletCurrency.BTC) {
+    if (receiveCurrency === WalletCurrency.Btc) {
       navigation.setOptions({ title: LL.ReceiveBitcoinScreen.title() })
     }
   }, [receiveCurrency, navigation, LL])
@@ -103,17 +123,17 @@ const ReceiveBitcoinScreen = ({
   return (
     <Screen style={styles.container}>
       <View style={styles.tabRow}>
-        <TouchableWithoutFeedback onPress={() => setReceiveCurrency(WalletCurrency.BTC)}>
+        <TouchableWithoutFeedback onPress={() => setReceiveCurrency(WalletCurrency.Btc)}>
           <View
             style={
-              receiveCurrency === WalletCurrency.BTC
+              receiveCurrency === WalletCurrency.Btc
                 ? styles.btcActive
                 : styles.inactiveTab
             }
           >
             <Text
               style={
-                receiveCurrency === WalletCurrency.BTC
+                receiveCurrency === WalletCurrency.Btc
                   ? styles.activeTabText
                   : styles.inactiveTabText
               }
@@ -122,17 +142,17 @@ const ReceiveBitcoinScreen = ({
             </Text>
           </View>
         </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={() => setReceiveCurrency(WalletCurrency.USD)}>
+        <TouchableWithoutFeedback onPress={() => setReceiveCurrency(WalletCurrency.Usd)}>
           <View
             style={
-              receiveCurrency === WalletCurrency.USD
+              receiveCurrency === WalletCurrency.Usd
                 ? styles.usdActive
                 : styles.inactiveTab
             }
           >
             <Text
               style={
-                receiveCurrency === WalletCurrency.USD
+                receiveCurrency === WalletCurrency.Usd
                   ? styles.activeTabText
                   : styles.inactiveTabText
               }
@@ -142,8 +162,8 @@ const ReceiveBitcoinScreen = ({
           </View>
         </TouchableWithoutFeedback>
       </View>
-      {receiveCurrency === WalletCurrency.USD && <ReceiveUsd />}
-      {receiveCurrency === WalletCurrency.BTC && <ReceiveBtc />}
+      {receiveCurrency === WalletCurrency.Usd && <ReceiveUsd />}
+      {receiveCurrency === WalletCurrency.Btc && <ReceiveBtc />}
     </Screen>
   )
 }

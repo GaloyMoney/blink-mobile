@@ -8,7 +8,7 @@ import { toastShow } from "@app/utils/toast"
 import Clipboard from "@react-native-community/clipboard"
 import React from "react"
 import { Linking, Share, View } from "react-native"
-import { Text } from "react-native-elements"
+import { Text } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import { PayCodeExplainerModal } from "./paycode-explainer-modal"
@@ -123,8 +123,10 @@ export const MerchantsDropdown = ({ username }: { username: string }) => {
             onPress={() => {
               Clipboard.setString(posUrl)
               toastShow({
-                message: LL.GaloyAddressScreen.copiedCashRegisterToClipboard(),
+                message: (translations) =>
+                  translations.GaloyAddressScreen.copiedCashRegisterToClipboard(),
                 type: "success",
+                currentTranslation: LL,
               })
             }}
           >
@@ -181,8 +183,10 @@ export const MerchantsDropdown = ({ username }: { username: string }) => {
             onPress={() => {
               Clipboard.setString(payCodeUrl)
               toastShow({
-                message: LL.GaloyAddressScreen.copiedPaycodeToClipboard(),
+                message: (translations) =>
+                  translations.GaloyAddressScreen.copiedPaycodeToClipboard(),
                 type: "success",
+                currentTranslation: LL,
               })
             }}
           >

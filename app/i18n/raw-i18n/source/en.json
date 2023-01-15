@@ -601,7 +601,9 @@
         "note": "Note or label",
         "success": "Payment has been sent successfully",
         "title": "Send Bitcoin",
-        "failedToFetchLnurlInvoice": "Failed to fetch lnurl invoice"
+        "failedToFetchLnurlInvoice": "Failed to fetch lnurl invoice",
+        "lnurlInvoiceIncorrectAmount": "The lnurl server responded with an invoice with an incorrect amount.",
+        "lnurlInvoiceIncorrectDescription": "The lnurl server responded with an invoice with an incorrect description hash."
     },
     "SettingsScreen": {
         "activated": "Activated",
@@ -622,7 +624,8 @@
         "es-SV": "Spanish",
         "pt-BR": "Portuguese (Brazil)",
         "fr-CA": "French (Canada)",
-        "de-DE": "German"
+        "de-DE": "German",
+        "cs": "Czech"
     },
     "StablesatsModal": {
         "header": "With Stablesats, you now have a USD account added to your wallet!",
@@ -638,6 +641,17 @@
         "paid": "Paid to/from",
         "received": "You received",
         "spent": "You spent"
+    },
+    "TransactionLimitsScreen": {
+        "receive": "Receive",
+        "withdraw": "Withdraw",
+        "perDay": "per day",
+        "perWeek": "per week",
+        "unlimited": "Unlimited",
+        "remaining": "Remaining",
+        "stablesatTransfers": "Stablesat Transfers",
+        "internalSend": "Send to BBW User",
+        "error": "Unable to fetch limits at this time"
     },
     "TransactionScreen": {
         "noTransaction": "No transaction to show",
@@ -684,6 +698,7 @@
     },
     "common": {
         "account": "Account",
+        "transactionLimits": "Transaction Limits",
         "activateWallet": "Activate Wallet",
         "amountRequired": "Amount is required",
         "back": "Back",
@@ -786,7 +801,7 @@
         "phone": "Phone",
         "defaultEmailSubject": "Bitcoin Beach Wallet - Support",
         "defaultSupportMessage": "Hey there! I need some help with Bitcoin Beach Wallet",
-        "deleteAccount": "Hello.  Please delete my account.",
+        "deleteAccount": "Hello. Please delete my account.",
         "deleteAccountEmailSubject": "Account deletion request: {phoneNumber: string}"
     },
     "lnurl": {

@@ -3,7 +3,6 @@
 import { BaseTranslation } from "../i18n-types"
 
 /* eslint-disable no-template-curly-in-string */
-/* eslint-disable max-lines */
 const en: BaseTranslation = {
   GaloyAddressScreen: {
     buttonTitle: "Set your {bankName: string} address",
@@ -467,13 +466,6 @@ const en: BaseTranslation = {
     updateAvailable: "An update is available.\nTap to update now",
     useLightning: "We use the Lightning Network.",
   },
-  Overlay: {
-    accounts: "Start by getting\nsome rewards!",
-    rewards: {
-      download: "We gave you 1 sat as a gift\nto download the app.",
-      getMore: "Learn about #bitcoin and earn more!",
-    },
-  },
   PinScreen: {
     attemptsRemaining: "Incorrect PIN. {attemptsRemaining: number} attempts remaining.",
     oneAttemptRemaining: "Incorrect PIN. 1 attempt remaining.",
@@ -614,6 +606,8 @@ const en: BaseTranslation = {
     success: "Payment has been sent successfully",
     title: "Send Bitcoin",
     failedToFetchLnurlInvoice: "Failed to fetch lnurl invoice",
+    lnurlInvoiceIncorrectAmount: "The lnurl server responded with an invoice with an incorrect amount.",
+    lnurlInvoiceIncorrectDescription: "The lnurl server responded with an invoice with an incorrect description hash.",
   },
   SettingsScreen: {
     activated: "Activated",
@@ -637,6 +631,7 @@ const en: BaseTranslation = {
     "pt-BR": "Portuguese (Brazil)",
     "fr-CA": "French (Canada)",
     "de-DE": "German",
+    "cs": "Czech",
   },
   StablesatsModal: {
     header: "With Stablesats, you now have a USD account added to your wallet!",
@@ -653,6 +648,17 @@ const en: BaseTranslation = {
     paid: "Paid to/from",
     received: "You received",
     spent: "You spent",
+  },
+  TransactionLimitsScreen: {
+    receive: "Receive",
+    withdraw: "Withdraw",
+    perDay: "per day",
+    perWeek: "per week",
+    unlimited: "Unlimited",
+    remaining: "Remaining",
+    stablesatTransfers: "Stablesat Transfers",
+    internalSend: "Send to BBW User",
+    error: "Unable to fetch limits at this time",
   },
   TransactionScreen: {
     noTransaction: "No transaction to show",
@@ -702,6 +708,7 @@ const en: BaseTranslation = {
   },
   common: {
     account: "Account",
+    transactionLimits: "Transaction Limits",
     activateWallet: "Activate Wallet",
     amountRequired: "Amount is required",
     back: "Back",
@@ -806,7 +813,7 @@ const en: BaseTranslation = {
     phone: "Phone",
     defaultEmailSubject: "Bitcoin Beach Wallet - Support",
     defaultSupportMessage: "Hey there! I need some help with Bitcoin Beach Wallet",
-    deleteAccount: "Hello.  Please delete my account.",
+    deleteAccount: "Hello. Please delete my account.",
     deleteAccountEmailSubject: "Account deletion request: {phoneNumber: string}",
   },
   lnurl: {

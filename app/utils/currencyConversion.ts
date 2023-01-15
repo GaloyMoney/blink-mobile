@@ -1,6 +1,7 @@
 import * as currencyFmt from "currency.js"
 
-import { PaymentAmount, WalletCurrency } from "@app/types/amounts"
+import { PaymentAmount } from "@app/types/amounts"
+import { WalletCurrency } from "@app/graphql/generated"
 
 const isCurrencyWithDecimals = (currency) => {
   return currency === "USD"
@@ -9,7 +10,7 @@ const isCurrencyWithDecimals = (currency) => {
 export const paymentAmountToDollarsOrSats = (
   paymentAmount: PaymentAmount<WalletCurrency>,
 ) => {
-  return paymentAmount.currency === WalletCurrency.USD
+  return paymentAmount.currency === WalletCurrency.Usd
     ? paymentAmount.amount / 100
     : paymentAmount.amount
 }
@@ -28,31 +29,17 @@ export const textToCurrency = (
   return value
 }
 
-export const currencyToTextWithUnits = (moneyAmount: MoneyAmount): string => {
-  if (moneyAmount.currency === "BTC") {
-    if (moneyAmount.value === 1) {
-      return "1 sat"
-    }
-    return currencyToText(moneyAmount.value.toString(), moneyAmount.currency) + " sats"
-  }
-
-  if (moneyAmount.currency === "USD") {
-    return "$" + currencyToText(moneyAmount.value.toString(), moneyAmount.currency)
-  }
-  throw Error("wrong currency")
-}
-
 export const paymentAmountToTextWithUnits = (
   paymentAmount: PaymentAmount<WalletCurrency>,
 ): string => {
-  if (paymentAmount.currency === WalletCurrency.BTC) {
+  if (paymentAmount.currency === WalletCurrency.Btc) {
     if (paymentAmount.amount === 1) {
       return "1 sat"
     }
     return paymentAmountToText(paymentAmount) + " sats"
   }
 
-  if (paymentAmount.currency === WalletCurrency.USD) {
+  if (paymentAmount.currency === WalletCurrency.Usd) {
     return "$" + paymentAmountToText(paymentAmount)
   }
 
@@ -63,7 +50,7 @@ export const paymentAmountToText = (
   paymentAmount: PaymentAmount<WalletCurrency>,
   locale = "en-US",
 ): string => {
-  if (paymentAmount.currency === WalletCurrency.USD) {
+  if (paymentAmount.currency === WalletCurrency.Usd) {
     return (paymentAmount.amount / 100).toLocaleString(locale, {
       style: "decimal",
       maximumFractionDigits: 2,
@@ -71,7 +58,7 @@ export const paymentAmountToText = (
     })
   }
 
-  if (paymentAmount.currency === WalletCurrency.BTC) {
+  if (paymentAmount.currency === WalletCurrency.Btc) {
     return paymentAmount.amount.toLocaleString(locale, {
       style: "decimal",
       maximumFractionDigits: 0,
@@ -111,10 +98,15 @@ const addDecimalToNumber = (number: string, separator: string) => {
   return integerDigits + separator + fractionDigits
 }
 
-export const usdAmountDisplay = (amount: number): string =>
+export const usdAmountDisplay = (amount: number, precision?: number): string =>
   currencyFmt
     .default(amount, {
-      precision: Math.abs(amount) < 0.01 && amount !== 0 ? 4 : 2,
+      precision:
+        precision === 0
+          ? undefined
+          : precision ?? (Math.abs(amount) < 0.01 && amount !== 0)
+          ? 4
+          : 2,
       separator: ",",
       symbol: "$",
     })

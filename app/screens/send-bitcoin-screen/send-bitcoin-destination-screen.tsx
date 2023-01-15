@@ -1,4 +1,3 @@
-import useMainQuery from "@app/hooks/use-main-query"
 import React, { useCallback, useEffect, useMemo } from "react"
 import {
   ScrollView,
@@ -12,13 +11,12 @@ import { palette } from "@app/theme"
 import {
   fetchLnurlPaymentParams,
   parsingv2,
-  useDelayedQuery,
-  useQuery as useGaloyQuery,
+  Network as NetworkLibGaloy,
 } from "@galoymoney/client"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { PaymentAmount, WalletCurrency } from "@app/types/amounts"
-import { Button } from "react-native-elements"
+import { BtcPaymentAmount } from "@app/types/amounts"
+import { Button } from "@rneui/base"
 import ScanIcon from "@app/assets/icons/scan.svg"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import {
@@ -39,6 +37,12 @@ import Paste from "react-native-vector-icons/FontAwesome"
 import Clipboard from "@react-native-community/clipboard"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { toastShow } from "@app/utils/toast"
+import {
+  WalletCurrency,
+  useSendBitcoinDestinationQuery,
+  useUserDefaultWalletIdLazyQuery,
+} from "@app/graphql/generated"
+import { gql } from "@apollo/client"
 
 const Styles = StyleSheet.create({
   scrollView: {
@@ -124,9 +128,6 @@ const Styles = StyleSheet.create({
 
 const parsePaymentDestination = parsingv2.parsePaymentDestination
 
-export const bankName = "BBW"
-export const lnDomain = "pay.bbw.sv"
-
 export const lnurlDomains = ["ln.bitcoinbeach.com", "pay.bbw.sv"]
 
 type UsernameStatus = "paid-before" | "never-paid" | "does-not-exist" | "self"
@@ -185,8 +186,8 @@ const sendBitcoinDetailsScreenParams = (destination: ValidPaymentDestination) =>
           destination.amount &&
           ({
             amount: destination.amount,
-            currency: WalletCurrency.BTC,
-          } as PaymentAmount<WalletCurrency.BTC>),
+            currency: WalletCurrency.Btc,
+          } as BtcPaymentAmount),
         paymentType: PaymentType.Lightning,
         sameNode: destination.sameNode,
         note: destination.memo,
@@ -212,14 +213,32 @@ const sendBitcoinDetailsScreenParams = (destination: ValidPaymentDestination) =>
           destination.amount &&
           ({
             amount: destination.amount,
-            currency: WalletCurrency.BTC,
-          } as PaymentAmount<WalletCurrency.BTC>),
+            currency: WalletCurrency.Btc,
+          } as BtcPaymentAmount),
         note: destination.memo,
         paymentType: PaymentType.Onchain,
         sameNode: false,
       }
   }
 }
+
+gql`
+  query sendBitcoinDestination {
+    globals {
+      nodesIds
+      network
+    }
+    me {
+      username
+      contacts {
+        id
+        username
+        alias
+        transactionsCount
+      }
+    }
+  }
+`
 
 const SendBitcoinDestinationScreen = ({
   navigation,
@@ -228,10 +247,17 @@ const SendBitcoinDestinationScreen = ({
   const [destinationState, dispatchDestinationStateAction] =
     useSendBitcoinDestinationReducer()
   const [goToNextScreenWhenValid, setGoToNextScreenWhenValid] = React.useState(false)
-  const { myPubKey, username: myUsername, network: bitcoinNetwork } = useMainQuery()
+
+  const { data } = useSendBitcoinDestinationQuery({
+    fetchPolicy: "cache-only",
+    returnPartialData: true,
+  })
+  const myPubKey = data?.globals?.nodesIds?.[0] ?? "" // FIXME: there can be more than one node
+  const myUsername = data?.me?.username
+  const bitcoinNetwork = data?.globals?.network
+
   const { LL } = useI18nContext()
-  const [userDefaultWalletIdQuery] = useDelayedQuery.userDefaultWalletId()
-  const { data } = useGaloyQuery.contacts()
+  const [userDefaultWalletIdQuery] = useUserDefaultWalletIdLazyQuery()
 
   const checkUsername:
     | ((
@@ -246,7 +272,7 @@ const SendBitcoinDestinationScreen = ({
     )
     const lowercaseMyUsername = myUsername ? myUsername.toLowerCase() : ""
     const getWalletIdForUsername = async (username: string) => {
-      const { data } = await userDefaultWalletIdQuery({ username })
+      const { data } = await userDefaultWalletIdQuery({ variables: { username } })
       return data?.userDefaultWalletId
     }
     return async (username: string) =>
@@ -258,17 +284,15 @@ const SendBitcoinDestinationScreen = ({
       })
   }, [data, userDefaultWalletIdQuery, myUsername])
 
-  const loaded = myPubKey && checkUsername
-
   const validateDestination = React.useCallback(
     async (destination) => {
-      if (destinationState.destinationState !== "entering" || !loaded) {
+      if (destinationState.destinationState !== "entering") {
         return
       }
 
       const parsedPaymentDestination = parsePaymentDestination({
         destination,
-        network: bitcoinNetwork,
+        network: bitcoinNetwork as NetworkLibGaloy,
         pubKey: myPubKey,
         lnAddressDomains: lnurlDomains,
       })
@@ -434,7 +458,6 @@ const SendBitcoinDestinationScreen = ({
     },
     [
       myPubKey,
-      loaded,
       bitcoinNetwork,
       checkUsername,
       destinationState.destinationState,
@@ -540,20 +563,22 @@ const SendBitcoinDestinationScreen = ({
           <TouchableWithoutFeedback
             onPress={() => {
               try {
-                Clipboard.getString().then(async (data) => {
+                Clipboard.getString().then(async (clipboard) => {
                   dispatchDestinationStateAction({
                     type: "set-unparsed-destination",
                     payload: {
-                      unparsedDestination: data,
+                      unparsedDestination: clipboard,
                     },
                   })
-                  await validateDestination(data)
+                  await validateDestination(clipboard)
                 })
               } catch (err) {
                 crashlytics().recordError(err)
                 toastShow({
                   type: "error",
-                  message: LL.SendBitcoinDestinationScreen.clipboardError(),
+                  message: (translations) =>
+                    translations.SendBitcoinDestinationScreen.clipboardError(),
+                  currentTranslation: LL,
                 })
               }
             }}
@@ -578,7 +603,6 @@ const SendBitcoinDestinationScreen = ({
             disabledStyle={[Styles.button, Styles.disabledButtonStyle]}
             disabledTitleStyle={Styles.disabledButtonTitleStyle}
             disabled={
-              !loaded ||
               destinationState.destinationState === "validating" ||
               destinationState.destinationState === "invalid"
             }

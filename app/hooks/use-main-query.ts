@@ -1,5 +1,3 @@
-import { useQuery } from "@apollo/client"
-import { MAIN_QUERY } from "@app/graphql/query"
 import useToken from "@app/hooks/use-token"
 import NetInfo from "@react-native-community/netinfo"
 import crashlytics from "@react-native-firebase/crashlytics"
@@ -7,17 +5,18 @@ import { useAppConfig } from "./use-app-config"
 import { usePriceConversion } from "./use-price-conversion"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useMainQueryOutput } from "./hooks.types"
+import { useMainQueryQuery } from "@app/graphql/generated"
 
 const useMainQuery = (): useMainQueryOutput => {
   const { hasToken } = useToken()
   const { appConfig } = useAppConfig()
   const { convertCurrencyAmount } = usePriceConversion()
-  const { data, previousData, error, loading, refetch } = useQuery(MAIN_QUERY, {
+  const { data, previousData, error, loading, refetch } = useMainQueryQuery({
     variables: { hasToken },
     notifyOnNetworkStatusChange: true,
   })
   const { LL } = useI18nContext()
-  let errors = []
+  let errors: { message: string }[] = []
   if (error) {
     if (error.graphQLErrors?.length > 0 && previousData) {
       // We got an error back from the server but we have data in the cache
@@ -48,6 +47,7 @@ const useMainQuery = (): useMainQueryOutput => {
       // TODO: check if error is INVALID_AUTHENTICATION here
     }
   }
+
   const userPreferredLanguage = data?.me?.language
   const wallets = data?.me?.defaultAccount?.wallets
   const defaultWalletId = data?.me?.defaultAccount?.defaultWalletId
@@ -72,8 +72,8 @@ const useMainQuery = (): useMainQueryOutput => {
   const myPubKey = data?.globals?.nodesIds?.[0] ?? ""
   const username = data?.me?.username
   const phoneNumber = data?.me?.phone
-  const mobileVersions = data?.mobileVersions
-  const mergedTransactions = me?.defaultAccount?.transactions?.edges
+  const mobileVersions = data?.mobileVersions ? data.mobileVersions[0] : undefined // FIXME array/item mismatch
+  const mergedTransactions = data?.me?.defaultAccount?.transactions?.edges
 
   const accountId = data?.me?.defaultAccount?.id
   const initialBtcPrice = data?.btcPrice

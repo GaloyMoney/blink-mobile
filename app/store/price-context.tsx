@@ -1,8 +1,9 @@
-import { saveJson, loadJson } from "@app/utils/storage"
-import { createContext, useContext, useEffect, useReducer } from "react"
-import * as React from "react"
-import { usePriceSubscription } from "@app/hooks/use-price-subscription"
+import { loadJson, saveJson } from "@app/utils/storage"
 import crashlytics from "@react-native-firebase/crashlytics"
+import * as React from "react"
+import { createContext, useContext, useEffect, useReducer } from "react"
+
+import { usePriceSubscription } from "@app/graphql/generated"
 
 export type PriceData =
   | {
@@ -65,7 +66,24 @@ export const PriceContextProvider = ({ children }) => {
     })
   }
 
-  usePriceSubscription(setPrice)
+  usePriceSubscription({
+    variables: {
+      input: {
+        amount: 1,
+        amountCurrencyUnit: "BTCSAT",
+        priceCurrencyUnit: "USDCENT",
+      },
+    },
+    onData: ({ data }) => {
+      if (data.data?.price?.price?.formattedAmount) {
+        // FIXME type. casting should not be necessary
+        const n = Number(data.data.price.price.formattedAmount)
+        setPrice(n)
+      }
+    },
+    onError: (error) => console.error(error, "useSubscription PRICE_SUBSCRIPTION"),
+    onComplete: () => console.info("onComplete useSubscription PRICE_SUBSCRIPTION"),
+  })
 
   useEffect(() => {
     const loadPrice = async () => {

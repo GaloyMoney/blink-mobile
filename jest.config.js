@@ -21,6 +21,7 @@ module.exports = {
     "typesafe-i18n/react": "typesafe-i18n/react/index.cjs",
     "typesafe-i18n/formatters": "typesafe-i18n/formatters/index.cjs",
     "typesafe-i18n/detectors": "typesafe-i18n/detectors/index.cjs",
+    "axios": "axios/dist/node/axios.cjs",
   },
   transformIgnorePatterns: [
     "node_modules/(?!(react-native" +
@@ -32,7 +33,6 @@ module.exports = {
       "|react-native-animatable" +
       "|react-native-camera" +
       "|react-native-country-picker-modal" +
-      "|react-native-elements" +
       "|react-native-error-boundary" +
       "|react-native-extended-stylesheet" +
       "|react-native-haptic-feedback" +
@@ -51,6 +51,9 @@ module.exports = {
       "|@rneui" +
       "|rn-qr-generator" +
       "|react-native-image-crop-picker" +
+      "|react-native-currency-picker" +
+      "|react-native-status-bar-height" +
+      "|react-native-auto-height-image" +
       ")/)",
   ],
 }

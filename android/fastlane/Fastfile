@@ -39,14 +39,9 @@ platform :android do
 
   desc "Deploy a new version to both Play Store and Huawei Store"
   lane :beta do
-    # build
-    build_bundle
-    upload_to_play_store(
-      track: 'internal',
-      release_status: 'draft',
-      aab:'./app/build/outputs/bundle/release/app-release.aab'
-    )
-    # huawei_release
+    build
+    huawei_release
+    play_store_release
   end
 
   desc "Create Release Bundle"
@@ -79,19 +74,19 @@ platform :android do
     )
   end
 
-  # desc "Deploy a new version to Huawei App Gallery"
-  # lane :huawei_release do
-  #   huawei_appgallery_connect(
-  #     client_id: ENV["HUAWEI_CLIENT_ID"],
-  #     client_secret: ENV["HAUWEI_CLIENT_SECRET"],
-  #     app_id: ENV["HUAWEI_APP_ID"],
-  #     apk_path: "./app/build/outputs/apk/release/app-release.apk",
-  #     phase_wise_release: true,
-  #     phase_release_percent: "1",
-  #     phase_release_description: "Phased Release",
-  #     submit_for_review: false
-  #   )
-  # end
+  desc "Deploy a new version to Huawei App Gallery"
+  lane :huawei_release do
+    huawei_appgallery_connect(
+      client_id: ENV["HUAWEI_CLIENT_ID"],
+      client_secret: ENV["HAUWEI_CLIENT_SECRET"],
+      app_id: ENV["HUAWEI_APP_ID"],
+      apk_path: "./app/build/outputs/apk/release/app-universal-release.apk",
+      phase_wise_release: true,
+      phase_release_percent: "1",
+      phase_release_description: "Phased Release",
+      submit_for_review: false
+    )
+  end
 
   desc "End to end testing on browserstack"
   lane :browserstack do
@@ -99,7 +94,7 @@ platform :android do
     upload_to_browserstack_app_automate(
       browserstack_username: ENV["BROWSERSTACK_USER"],
       browserstack_access_key: ENV["BROWSERSTACK_ACCESS_KEY"],
-      file_path: lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]
+      file_path: "./app/build/outputs/apk/release/app-universal-release.apk"
     )
     sh("GALOY_TOKEN=$GALOY_TOKEN && GALOY_TOKEN_2=$GALOY_TOKEN_2 && yarn test:browserstack:android")
   end

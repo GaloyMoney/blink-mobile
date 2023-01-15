@@ -1,5 +1,7 @@
-import { GaloyInstance, GALOY_INSTANCES } from "@app/config/galoy-instances"
-import { decodeToken } from "@app/hooks/use-token"
+import jwtDecode from "jwt-decode"
+
+import { GALOY_INSTANCES, GaloyInstance } from "@app/config"
+import { Network } from "@app/graphql/generated"
 import { defaultTheme, Theme } from "@app/theme/default-theme"
 import { loadString } from "@app/utils/storage"
 
@@ -41,6 +43,16 @@ type _PersistentState_4 = {
   theme?: Theme
 }
 
+const decodeToken = (token: string): { uid: string; network: Network } | null => {
+  try {
+    const { uid, network } = jwtDecode<JwtPayload>(token)
+    return { uid, network }
+  } catch (err) {
+    console.debug(err.toString())
+    return null
+  }
+}
+
 const migrate4ToCurrent = (state: _PersistentState_4): Promise<PersistentState> =>
   Promise.resolve(state)
 
@@ -50,7 +62,7 @@ const migrate3ToCurrent = (state: _PersistentState_3): Promise<PersistentState> 
   )
   return migrate4ToCurrent({
     ...state,
-    galoyInstance: newGaloyInstance,
+    galoyInstance: newGaloyInstance!,
     schemaVersion: 4,
   })
 }
@@ -60,7 +72,8 @@ const migrate2ToCurrent = async (state: _PersistentState_2): Promise<PersistentS
   const token = await loadString(LEGACY_TOKEN_KEY)
 
   if (token && decodeToken(token)) {
-    const { network } = decodeToken(token)
+    const decodedToken = decodeToken(token)
+    const network = decodedToken?.network
     if (network === "mainnet") {
       const galoyInstance = GALOY_INSTANCES.find((instance) => instance.name === "BBW")
       if (galoyInstance) {
@@ -78,7 +91,7 @@ const migrate2ToCurrent = async (state: _PersistentState_2): Promise<PersistentS
   return migrate3ToCurrent({
     ...state,
     schemaVersion: 3,
-    galoyInstance: GALOY_INSTANCES.find((instance) => instance.name === "BBW"),
+    galoyInstance: GALOY_INSTANCES.find((instance) => instance.name === "BBW")!,
     galoyAuthToken: "",
     isAnalyticsEnabled: true,
   })
@@ -122,7 +135,7 @@ export const defaultPersistentState: PersistentState = {
   schemaVersion: 4,
   hasShownStableSatsWelcome: false,
   isUsdDisabled: false,
-  galoyInstance: GALOY_INSTANCES.find((instance) => instance.name === "BBW"),
+  galoyInstance: GALOY_INSTANCES.find((instance) => instance.name === "BBW")!,
   galoyAuthToken: "",
   isAnalyticsEnabled: true,
   theme: defaultTheme,

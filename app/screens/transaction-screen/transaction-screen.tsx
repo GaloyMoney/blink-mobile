@@ -7,13 +7,16 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
 import { TransactionItem } from "../../components/transaction-item"
 import { nextPrefCurrency, prefCurrencyVar } from "../../graphql/client-only-query"
-import { GaloyGQL, useQuery as useGaloyQuery } from "@galoymoney/client"
 import type { ScreenType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import { sameDay, sameMonth } from "../../utils/date"
 import { toastShow } from "../../utils/toast"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import {
+  Transaction,
+  useTransactionListForDefaultAccountQuery,
+} from "@app/graphql/generated"
 
 const styles = EStyleSheet.create({
   errorText: { alignSelf: "center", color: palette.red, paddingBottom: 18 },
@@ -70,8 +73,7 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
 }: Props) => {
   const currency = "sat" // FIXME
   const { LL } = useI18nContext()
-  const { data, error, refetch, loading } =
-    useGaloyQuery.transactionListForDefaultAccount()
+  const { data, error, refetch, loading } = useTransactionListForDefaultAccountQuery()
   const prefCurrency = useReactiveVar(prefCurrencyVar)
 
   // The source of truth for listing the transactions
@@ -80,7 +82,10 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
 
   if (error) {
     console.error(error)
-    toastShow({ message: LL.common.transactionsError() })
+    toastShow({
+      message: (translations) => translations.common.transactionsError(),
+      currentTranslation: LL,
+    })
     return null
   }
 
@@ -169,7 +174,7 @@ type TransactionScreenProps = {
   nextPrefCurrency: () => void
   sections: {
     title: string
-    data: GaloyGQL.Transaction[]
+    data: Transaction[]
   }[]
   fetchNextTransactionsPage: () => void
   loading: boolean

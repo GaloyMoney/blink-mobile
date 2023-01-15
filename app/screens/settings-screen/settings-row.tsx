@@ -1,7 +1,7 @@
 import { CustomIcon } from "@app/components/custom-icon"
 import { palette } from "@app/theme"
 import React from "react"
-import { Divider, Icon, ListItem, Text } from "react-native-elements"
+import { Divider, Icon, ListItem, Text } from "@rneui/base"
 import { testProps } from "../../../utils/testProps"
 
 export const SettingsRow = ({ setting }: { setting: SettingRow }) => {
@@ -20,11 +20,7 @@ export const SettingsRow = ({ setting }: { setting: SettingRow }) => {
 
   return (
     <React.Fragment key={`setting-option-${setting.id}`}>
-      <ListItem
-        onPress={setting.action}
-        disabled={!setting.enabled}
-        {...testProps(setting.category)}
-      >
+      <ListItem onPress={setting.action} disabled={!setting.enabled}>
         {!setting.icon?.startsWith("custom") && (
           <Icon name={setting.icon} type="ionicon" color={settingColor} />
         )}
@@ -32,11 +28,11 @@ export const SettingsRow = ({ setting }: { setting: SettingRow }) => {
           <CustomIcon name={setting.icon} color={settingColor} />
         )}
         <ListItem.Content>
-          <ListItem.Title style={settingStyle}>
+          <ListItem.Title {...testProps(setting.category)} style={settingStyle}>
             <Text>{setting.category}</Text>
           </ListItem.Title>
           {setting.subTitleText && (
-            <ListItem.Subtitle style={settingStyle}>
+            <ListItem.Subtitle {...testProps(setting.subTitleText)} style={settingStyle}>
               <Text>{setting.subTitleText}</Text>
             </ListItem.Subtitle>
           )}

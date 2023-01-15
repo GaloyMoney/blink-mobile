@@ -1,41 +1,27 @@
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
-import { swipeLeft, selector } from "./utils"
+import { selector } from "./utils"
+import { resetLanguage } from "./utils/graphql"
 
 describe("Welcome Screen Flow", async () => {
   loadLocale("en")
   const LL = i18nObject("en")
   const timeout = 30000
 
+  // having an invoice or bitcoin address would popup a modal
+  it("Clear the clipboard", async () => {
+    await browser.setClipboard("", "plaintext")
+  })
+
+  it("reset language is case previous test has failed", async () => {
+    const res = await resetLanguage()
+    expect(res.data.userUpdateLanguage.language).toBeFalsy()
+  })
+
   it("loads and clicks 'Get Started button' ", async () => {
-    const getStartedButton = await $(selector(LL.GetStartedScreen.getStarted()))
+    const getStartedButton = await $(selector(LL.GetStartedScreen.getStarted(), "Button"))
     await getStartedButton.waitForDisplayed({ timeout })
     await getStartedButton.click()
-    expect(true).toBeTruthy()
-  })
-
-  it("swipes Why Should I Care?", async () => {
-    const caresText = await $(selector(LL.WelcomeFirstScreen.care(), "StaticText"))
-    await caresText.waitForDisplayed({ timeout })
-    await swipeLeft()
-  })
-
-  it("swipes Bitcoin is designed to let you...bank", async () => {
-    const bankText = await $(selector(LL.WelcomeFirstScreen.bank(), "StaticText"))
-    await bankText.waitForDisplayed({ timeout })
-    await swipeLeft()
-  })
-
-  it("swipes Before Bitcoin people had to...", async () => {
-    const beforeText = await $(selector(LL.WelcomeFirstScreen.before(), "StaticText"))
-    await beforeText.waitForDisplayed({ timeout })
-    await swipeLeft()
-  })
-
-  it("clicks 'Learn to Earn' and enters the main app", async () => {
-    const learnButton = await $(selector(LL.WelcomeFirstScreen.learnToEarn()))
-    await learnButton.waitForDisplayed({ timeout })
-    await learnButton.click()
     expect(true).toBeTruthy()
   })
 })

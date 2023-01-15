@@ -1,12 +1,12 @@
 import React from "react"
 import { Text } from "react-native"
 import moment from "moment"
-import { GaloyGQL } from "@galoymoney/client"
 import { toMomentLocale } from "@app/utils/date"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { Transaction } from "@app/graphql/generated"
 
 type TransactionDateProps = {
-  tx: GaloyGQL.Transaction
+  tx: Transaction
   friendly?: boolean
   diffDate?: boolean
 }

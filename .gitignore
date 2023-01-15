@@ -73,3 +73,5 @@ ios/GoogleService-Info.plist
 yalc.lock
 
 *.log
+
+.env

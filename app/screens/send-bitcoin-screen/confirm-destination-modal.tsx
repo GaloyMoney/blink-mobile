@@ -1,18 +1,16 @@
 import { palette } from "@app/theme"
 import React, { Dispatch, useCallback, useState } from "react"
 import { Text, View } from "react-native"
-import { Button, CheckBox } from "react-native-elements"
+import { Button, CheckBox } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Modal from "react-native-modal"
-import { bankName, lnDomain } from "./send-bitcoin-destination-screen"
 import {
   SendBitcoinDestinationAction,
   SendBitcoinDestinationState,
 } from "./send-bitcoin-reducer"
 import Markdown from "react-native-markdown-display"
 import { useI18nContext } from "@app/i18n/i18n-react"
-
-const TypedMarkdown = Markdown as MarkdownStatic
+import { useAppConfig } from "@app/hooks"
 
 export type ConfirmDestinationModalProps = {
   destinationState: SendBitcoinDestinationState
@@ -72,8 +70,10 @@ export const ConfirmDestinationModal: React.FC<ConfirmDestinationModalProps> = (
   destinationState,
   dispatchDestinationStateAction,
 }) => {
-  const [confirmationEnabled, setConfirmationEnabled] = useState(false)
   const { LL } = useI18nContext()
+  const { appConfig } = useAppConfig()
+  const { lnAddressHostname: lnDomain, name: bankName } = appConfig.galoyInstance
+  const [confirmationEnabled, setConfirmationEnabled] = useState(false)
   const confirmDestination = useCallback(() => {
     dispatchDestinationStateAction({
       type: "set-confirmed",
@@ -94,9 +94,9 @@ export const ConfirmDestinationModal: React.FC<ConfirmDestinationModalProps> = (
           </Text>
         </View>
         <View style={styles.bodyContainer}>
-          <TypedMarkdown style={{ body: styles.bodyText }}>
+          <Markdown style={{ body: styles.bodyText }}>
             {LL.SendBitcoinDestinationScreen.confirmModal.body({ bankName, lnAddress })}
-          </TypedMarkdown>
+          </Markdown>
           <Text style={styles.warningText}>
             {LL.SendBitcoinDestinationScreen.confirmModal.warning({ bankName })}
           </Text>

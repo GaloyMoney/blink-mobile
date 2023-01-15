@@ -1,6 +1,6 @@
 import React from "react"
 import { TextProps, View } from "react-native"
-import { Text } from "react-native-elements"
+import { Text } from "@rneui/base"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Animated, {
   Layout,

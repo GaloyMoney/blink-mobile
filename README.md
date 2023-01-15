@@ -50,6 +50,10 @@ In `index.js`, change `SHOW_STORYBOOK` to `true` and reload the app and run `yar
 
 For Visual Studio Code users, there is a handy extension that makes it easy to load Storybook use cases into a running emulator via tapping on items in the editor sidebar. Install the `React Native Storybook` extension by `Orta`, hit `cmd + shift + P` and select "Reconnect Storybook to VSCode". Expand the STORYBOOK section in the sidebar to see all use cases for components that have `.story.tsx` files in their directories.
 
+## E2E testing:
+
+see [readme](docs/e2e-testing.md)
+
 ## Local development with galoy-client
 
 The mobile app uses the [galoy-client](https://github.com/GaloyMoney/galoy-client) for communication with the galoy API and translations. If you want to make changes to the galoy-client locally to test changes in the app e.g. you want to add a key to the translations file this is the steps you should take. Since the metro bundler [does not support](https://github.com/facebook/metro/issues/68) `yarn link`, we have to use [yalc](https://www.npmjs.com/package/yalc).

@@ -1,9 +1,8 @@
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
-import { useMutation } from "@galoymoney/client"
 import React from "react"
 import { Modal, Platform, StatusBar, TouchableWithoutFeedback, View } from "react-native"
-import { Button, Input, Text } from "react-native-elements"
+import { Button, Input, Text } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { CustomIcon } from "@app/components/custom-icon"
@@ -11,6 +10,8 @@ import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import useMainQuery from "@app/hooks/use-main-query"
+import { useAppConfig } from "@app/hooks/use-app-config"
+import { useUserUpdateUsernameMutation } from "@app/graphql/generated"
 
 const styles = EStyleSheet.create({
   centeredView: {
@@ -116,13 +117,14 @@ type SetAddressModalProps = {
 
 export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalProps) => {
   const { LL } = useI18nContext()
+  const { appConfig } = useAppConfig()
   const { refetch: refetchMainQuery } = useMainQuery()
   const [address, setAddress] = React.useState("")
   const [error, setError] = React.useState("")
   const [newAddress, setNewAddress] = React.useState("")
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
 
-  const [updateUsername, { loading }] = useMutation.userUpdateUsername({
+  const [updateUsername, { loading }] = useUserUpdateUsernameMutation({
     onError: (error) => {
       setError(LL.GaloyAddressScreen.somethingWentWrong())
       crashlytics().recordError(error)
@@ -159,6 +161,9 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
     setError("")
     setAddress(value)
   }
+
+  const usernameSuffix = `@${appConfig.galoyInstance.lnAddressHostname}`
+
   return (
     <View style={styles.centeredView}>
       <Modal
@@ -173,7 +178,9 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
           {!newAddress && (
             <>
               <Input
-                rightIcon={<Text style={styles.rightIconTextStyle}>@pay.galoy.io</Text>}
+                rightIcon={
+                  <Text style={styles.rightIconTextStyle}>{usernameSuffix}</Text>
+                }
                 inputContainerStyle={styles.inputContainerStyle}
                 containerStyle={styles.containerStyle}
                 onChangeText={handleOnChangeText}
@@ -211,7 +218,10 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
                 {LL.GaloyAddressScreen.yourAddress({ bankName: "BBW" })}
               </Text>
               <View style={styles.newAddressContainer}>
-                <Text style={styles.newAddressText}>{newAddress}@pay.bbw.sv</Text>
+                <Text style={styles.newAddressText}>
+                  {newAddress}
+                  {usernameSuffix}
+                </Text>
               </View>
               <Button
                 title={LL.MoveMoneyScreen.title()}

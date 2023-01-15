@@ -1,4 +1,4 @@
-import { GaloyInstance } from "@app/config/galoy-instances"
+import { GaloyInstance } from "@app/config"
 
 export const getPosUrl = (instance: GaloyInstance, address: string): string => {
   return `${instance.posUrl}/${address}`

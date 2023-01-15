@@ -1,13 +1,17 @@
-import { useMutation } from "@galoymoney/client"
 import * as React from "react"
-import { ListItem } from "react-native-elements"
+import { ListItem } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
 import { palette } from "../../theme/palette"
 import type { ScreenType } from "../../types/jsx"
-import useMainQuery from "@app/hooks/use-main-query"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import {
+  useLanguageScreenQuery,
+  useUserUpdateLanguageMutation,
+} from "@app/graphql/generated"
+import { testProps } from "../../../utils/testProps"
+import { gql } from "@apollo/client"
 
 const styles = EStyleSheet.create({
   screenStyle: {
@@ -15,15 +19,39 @@ const styles = EStyleSheet.create({
   },
 })
 
-export const LanguageScreen: ScreenType = () => {
-  const { userPreferredLanguage, me, refetch: refetchMain } = useMainQuery()
+gql`
+  query languageScreen {
+    me {
+      language
+      id
+    }
+  }
 
-  const [updateLanguage] = useMutation.userUpdateLanguage({
-    onCompleted: () => refetchMain(),
-  })
+  mutation userUpdateLanguage($input: UserUpdateLanguageInput!) {
+    userUpdateLanguage(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      user {
+        __typename
+        id
+        language
+      }
+    }
+  }
+`
+
+export const LanguageScreen: ScreenType = () => {
+  const { data } = useLanguageScreenQuery({ fetchPolicy: "cache-only" })
+
+  const languageServer = data?.me?.language
+  const userId = data?.me?.id
+
+  const [updateLanguage] = useUserUpdateLanguageMutation()
   const { LL } = useI18nContext()
 
-  const list = ["DEFAULT", "en-US", "es-SV", "pt-BR", "fr-CA", "de-DE"]
+  const list = ["DEFAULT", "en-US", "es-SV", "pt-BR", "fr-CA", "de-DE", "cs"]
 
   return (
     <Screen preset="scroll" style={styles.screenStyle}>
@@ -32,7 +60,7 @@ export const LanguageScreen: ScreenType = () => {
           key={language}
           bottomDivider
           onPress={() => {
-            if (language !== userPreferredLanguage) {
+            if (language !== languageServer) {
               updateLanguage({
                 variables: { input: { language } },
                 optimisticResponse: {
@@ -42,7 +70,7 @@ export const LanguageScreen: ScreenType = () => {
                     errors: [],
                     user: {
                       __typename: "User",
-                      id: me?.id,
+                      id: userId,
                       language,
                     },
                   },
@@ -51,8 +79,10 @@ export const LanguageScreen: ScreenType = () => {
             }
           }}
         >
-          <ListItem.Title>{LL.Languages[language]()}</ListItem.Title>
-          {userPreferredLanguage === language && (
+          <ListItem.Title {...testProps(LL.Languages[language]())}>
+            {LL.Languages[language]()}
+          </ListItem.Title>
+          {languageServer === language && (
             <Icon name="ios-checkmark-circle" size={18} color={palette.green} />
           )}
         </ListItem>

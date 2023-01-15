@@ -1,32 +1,31 @@
 import { Price } from "@app/components/price-graph"
-import { INetwork } from "@app/types/network"
-import { GaloyGQL } from "@galoymoney/client"
+import { Network } from "@app/graphql/generated"
 
 type mobileVersions = {
-  currentSupported: string
-  minSupported: string
+  currentSupported: number
+  minSupported: number
   platform: string
 }
 
 export type useMainQueryOutput = {
-  accountId: string
-  userPreferredLanguage: string
+  accountId: string | undefined
+  userPreferredLanguage: string | undefined
   btcWalletBalance: number
   btcWalletValueInUsd: number
   usdWalletBalance: number
-  network: INetwork
-  btcWalletId: string
-  usdWalletId: string
-  defaultWalletId: string
-  mergedTransactions: object[]
-  wallets: any[]
-  defaultWallet: GaloyGQL.Wallet
+  network: Network | undefined
+  btcWalletId: string | undefined
+  usdWalletId: string | undefined
+  defaultWalletId: string | undefined
+  mergedTransactions: readonly object[] | undefined | null
+  wallets: readonly any[] | undefined
+  defaultWallet: object | undefined
   me: any
   myPubKey: string
-  username?: string
-  phoneNumber: string
-  mobileVersions: mobileVersions
-  initialBtcPrice: Price
+  username?: string | null
+  phoneNumber: string | null | undefined
+  mobileVersions: mobileVersions | null | undefined
+  initialBtcPrice: Price | undefined | null
   loading: boolean
   refetch: () => void
   errors: object[]

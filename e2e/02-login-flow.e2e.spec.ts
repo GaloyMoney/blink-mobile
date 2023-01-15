@@ -1,6 +1,6 @@
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
-import { goBack, selector, enter, scroll } from "./utils"
+import { goBack, selector, enter, scrollDown, scrollUp } from "./utils"
 
 describe("Login Flow", async () => {
   loadLocale("en")
@@ -8,12 +8,16 @@ describe("Login Flow", async () => {
   const timeout = 30000
 
   it("clicks Settings Icon", async () => {
-    const settingsButton = await $(selector("Settings Button"))
+    const settingsButton = await $(selector("Settings Button", "Button"))
     await settingsButton.waitForDisplayed({ timeout })
     await settingsButton.click()
   })
 
   it("taps Build version 3 times", async () => {
+    // scroll down for small screens
+    await browser.pause(2000)
+    await scrollDown()
+
     const buildButton = await $(selector("Version Build Text", "StaticText"))
     await buildButton.waitForDisplayed({ timeout })
     await buildButton.click()
@@ -23,13 +27,12 @@ describe("Login Flow", async () => {
     await buildButton.click()
   })
 
-  it("Scroll to bottom", async () => {
-    await browser.pause(2000)
-    await scroll()
-  })
-
   it("click staging environment", async () => {
+    // scroll down for small screens
     await browser.pause(2000)
+    await scrollDown()
+
+    await browser.pause(1000)
     const instanceButton = await $(selector("Galoy Instance Button", "Other"))
     await instanceButton.waitForDisplayed({ timeout: 60000 })
     const { x, y } = await instanceButton.getLocation()
@@ -38,13 +41,6 @@ describe("Login Flow", async () => {
     const midpointX = width / 3 + x
     const midpointY = height / 3 + y
     await browser.touchAction({ action: "tap", x: midpointX, y: midpointY })
-    await browser.pause(8000)
-  })
-
-  it("click Save Changes", async () => {
-    const changeTokenButton = await $(selector("Save Changes"))
-    await changeTokenButton.waitForDisplayed({ timeout })
-    await changeTokenButton.click()
     await browser.pause(2000)
   })
 
@@ -73,29 +69,33 @@ describe("Login Flow", async () => {
   })
 
   it("click Save Changes", async () => {
-    const changeTokenButton = await $(selector("Save Changes"))
+    const changeTokenButton = await $(selector("Save Changes", "Button"))
     await changeTokenButton.waitForDisplayed({ timeout })
     await changeTokenButton.click()
-    await browser.pause(8000)
+    await browser.pause(2000)
   })
 
   it("click go back to settings screen", async () => {
     const backButton = await $(goBack())
     await backButton.waitForDisplayed({ timeout })
     await backButton.click()
-    await browser.pause(5000)
+    await browser.pause(1000)
   })
 
   it("are we logged in?", async () => {
-    let loginSelector
-    if (process.env.E2E_DEVICE === "ios") {
-      loginSelector = '//*[contains(@label,"+")]'
-    } else {
-      loginSelector = `//android.view.ViewGroup[@content-desc="${LL.common.phoneNumber()}"]/android.view.ViewGroup/android.widget.TextView[2]`
-    }
-    const phoneNumberListItem = await $(loginSelector)
-    await phoneNumberListItem.waitForDisplayed({ timeout })
-    expect(phoneNumberListItem.isDisplayed()).toBeTruthy()
+    // scroll up for small screens
+    await browser.pause(2000)
+    scrollUp()
+
+    const accountButton = await $(selector(LL.common.account(), "StaticText"))
+    await accountButton.waitForDisplayed({ timeout })
+    await accountButton.click()
+    const logoutButton = await $(selector(LL.common.logout(), "StaticText"))
+    await logoutButton.waitForDisplayed({ timeout })
+    expect(logoutButton.isDisplayed()).toBeTruthy()
+    const backButton = await $(goBack())
+    await backButton.waitForDisplayed({ timeout })
+    await backButton.click()
     await browser.pause(1000)
   })
 
@@ -104,5 +104,19 @@ describe("Login Flow", async () => {
     await backButton.waitForDisplayed({ timeout })
     await backButton.click()
     await browser.pause(1000)
+  })
+
+  it("Dismiss stablesats tutorial modal", async () => {
+    try {
+      const backHomeButton = await $(selector(LL.common.backHome(), "Button"))
+      await backHomeButton.waitForDisplayed({ timeout: 5000 })
+      if (backHomeButton.isDisplayed()) {
+        await backHomeButton.click()
+      } else {
+        expect(backHomeButton.isDisplayed()).toBeFalsy()
+      }
+    } catch (e) {
+      expect(false).toBeFalsy()
+    }
   })
 })

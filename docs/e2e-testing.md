@@ -9,6 +9,23 @@
       D -- Test On --> G[Local Simulator/Emulator/Phone]
 ```
 
+## We use appium v2
+
+install with:
+
+```
+npm install -g appium@next
+appium driver install uiautomator2
+appium driver install xcuitest
+```
+
+verify install is correct:
+
+`appium --version` should show v2
+
+Note: appium can only be (officialy) install with npm, not yarn.
+`npm -g install npm` can be handy if you have an old npm version.
+
 ## To Test locally with Appium and Webdriver:
 
 1. run the debug version of the app `yarn android` or `yarn ios`
@@ -40,6 +57,7 @@ Android
 
 ```
 TEST_DEVICE_ANDROID="Pixel 3 API 29" yarn test:e2e:android
+TEST_APK_PATH="./android/app/build/outputs/apk/debug/app-universal-debug.apk"
 ```
 
 IOS
@@ -56,14 +74,16 @@ GALOY_TOKEN_2={SECOND_WALLET_TOKEN}
 E2E_DEVICE={ios or android}
 ```
 
-## Authenticated Tests
+to simplify your workflow, you can put those env variables in a .env and use [direnv](https://direnv.net/)
 
-To run the authenticated tests you need to set the env variable `GALOY_TOKEN`. The e2e test will navigate to the settings/build version page and input the token
+## Running Single Tests that Require Authentication
 
-Then you can run one test at a time:
+To run the authenticated tests you need to set the env variable `GALOY_TOKEN`.
+
+State in the application in cleared between testing invocations. The following command will always run tests 01 and 02 in order to authenticate the app, then run the test specified by the `TEST` env variable.
 
 ```
-TEST="03" PLATFORM_VERSION="15.4" yarn test:e2e:ios:auth
+TEST="03" yarn test:e2e:ios:auth
 ```
 
 ## Troubleshooting
@@ -97,7 +117,6 @@ ios
   "appium:deviceName": "iPhone 13",
   "appium:bundleId": "io.galoy.bitcoinbeach",
   "appium:automationName": "XCUITest",
-  "appium:platformVersion": "15.4"
 }
 ```
 
@@ -105,10 +124,10 @@ android
 
 ```
 {
-  "app": "/path/to/code/galoy-mobile/android/app/build/outputs/apk/debug/app-debug.apk",
   "platformName": "Android",
-  "deviceName": "generic_x86",
-  "automationName": "UiAutomator2"
+  "appium:app": "/path/to/code/galoy-mobile/android/app/build/outputs/apk/debug/app-universal-debug.apk",
+  "appium:deviceName": "generic_x86",
+  "appium:automationName": "UiAutomator2"
 }
 ```
 
@@ -121,4 +140,13 @@ ios on browserstack - choose 'select cloud providers' then 'browserstack'
   "appium:platformVersion": "15.1",
   "appium:app": "bs://{YOUR_BROWSERSTACK_ID_FROM_CIRCLE_CI}"
 }
+```
+
+## Develop locally
+
+those properties can be added to capabilities to avoid the app been reset across tests:
+
+```
+  "appium:noReset" : "true",
+  "appium:fullReset" : "false"
 ```

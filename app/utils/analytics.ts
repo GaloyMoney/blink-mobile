@@ -1,7 +1,6 @@
 /* eslint-disable camelcase */
 import { GaloyInstanceNames } from "@app/config/galoy-instances"
-import { WalletCurrency } from "@app/types/amounts"
-import { GaloyGQL } from "@galoymoney/client"
+import { PaymentSendResult, WalletCurrency } from "@app/graphql/generated"
 import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
 // import analytics from "@react-native-firebase/analytics"
 
@@ -28,7 +27,7 @@ export const logPaymentAttempt = (params: LogPaymentAttemptParams) => {
 type LogPaymentResultParams = {
   paymentType: PaymentType
   sendingWallet: WalletCurrency
-  paymentStatus: GaloyGQL.PaymentSendResult
+  paymentStatus: PaymentSendResult
 }
 
 export const logPaymentResult = (params: LogPaymentResultParams) => {
@@ -54,7 +53,7 @@ export const logConversionAttempt = (params: LogConversionAttemptParams) => {
 type LogConversionResultParams = {
   sendingWallet: WalletCurrency
   receivingWallet: WalletCurrency
-  paymentStatus: GaloyGQL.PaymentSendResult
+  paymentStatus: PaymentSendResult
 }
 export const logConversionResult = (params: LogConversionResultParams) => {
   // analytics().logEvent("conversion_result", {
@@ -84,4 +83,22 @@ export const logEnterForeground = () => {
 
 export const logEnterBackground = () => {
   // analytics().logEvent("enter_background")
+}
+
+export const logLogout = () => {
+  analytics().logEvent("logout")
+}
+
+type LogToastShownParams = {
+  message: string
+  type: "error" | "success" | "warning"
+  isTranslated: boolean
+}
+
+export const logToastShown = (params: LogToastShownParams) => {
+  analytics().logEvent("toast_shown", {
+    message: params.message,
+    type: params.type,
+    is_translated: params.isTranslated,
+  })
 }

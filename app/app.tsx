@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 // Welcome to the main entry point of the app.
 //
 // In this file, we'll be kicking off our app or storybook.
@@ -12,7 +11,6 @@ import {
   NormalizedCacheObject,
   split,
 } from "@apollo/client"
-import { WebSocketLink } from "@apollo/client/link/ws"
 import { getMainDefinition } from "@apollo/client/utilities"
 import { setContext } from "@apollo/client/link/context"
 import { RetryLink } from "@apollo/client/link/retry"
@@ -20,6 +18,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 import analytics from "@react-native-firebase/analytics"
 import "@react-native-firebase/crashlytics"
 import {
+  LinkingOptions,
   NavigationContainer,
   NavigationState,
   PartialState,
@@ -34,8 +33,8 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import { RootSiblingParent } from "react-native-root-siblings"
 import VersionNumber from "react-native-version-number"
 import { GlobalErrorToast } from "./components/global-error"
-import { cache } from "./graphql/cache"
-import { initQuery, INITWALLET } from "./graphql/init"
+import { createCache } from "./graphql/cache"
+import { initQuery } from "./graphql/init"
 import "./utils/polyfill"
 import { RootStack } from "./navigation/root-navigator"
 import { isIos } from "./utils/helper"
@@ -43,7 +42,6 @@ import { saveString, loadString } from "./utils/storage"
 import useToken, { getAuthorizationHeader } from "./hooks/use-token"
 import ErrorBoundary from "react-native-error-boundary"
 import { ErrorScreen } from "./screens/error-screen"
-import Toast from "react-native-toast-message"
 // import moment locale files so we can display dates in the user's language
 import "moment/locale/es"
 import "moment/locale/fr-ca"
@@ -55,9 +53,16 @@ import { loadAllLocales } from "./i18n/i18n-util.sync"
 import TypesafeI18n from "./i18n/i18n-react"
 import { customLocaleDetector } from "./utils/locale-detector"
 import { useAppConfig } from "./hooks"
+import { ThemeProvider } from "@rneui/themed"
+import theme from "./rne-theme/theme"
+import { createClient } from "graphql-ws"
+import { GraphQLWsLink } from "@apollo/client/link/subscriptions"
+import { GaloyToast } from "./components/galoy-toast"
+import { InitWalletDocument } from "./graphql/generated"
+import { BUILD_VERSION } from "@app/config"
+import { RootStackParamList } from "./navigation/stack-param-lists"
 import { Provider } from "react-redux"
 import store from "./modules/market-place/redux"
-export const BUILD_VERSION = "build_version"
 
 export const { link: linkNetworkStatusNotifier, useApolloNetworkStatus } =
   createNetworkStatusNotifier()
@@ -83,6 +88,7 @@ LogBox.ignoreAllLogs()
 
 const noRetryOperations = [
   "intraLedgerPaymentSend",
+  "intraLedgerUsdPaymentSend",
 
   "lnInvoiceFeeProbe",
   "lnInvoicePaymentSend",
@@ -90,6 +96,7 @@ const noRetryOperations = [
   "lnNoAmountInvoicePaymentSend",
   "lnNoAmountUsdInvoiceFeeProbe",
   "lnUsdInvoiceFeeProbe",
+  "lnNoAmountUsdInvoicePaymentSend",
 
   "onChainPaymentSend",
   "onChainTxFee",
@@ -107,7 +114,10 @@ export const App = (): JSX.Element => {
   const [apolloClient, setApolloClient] = useState<ApolloClient<NormalizedCacheObject>>()
   const [persistor, setPersistor] = useState<CachePersistor<NormalizedCacheObject>>()
   const [isAppLocked, setIsAppLocked] = useState(true)
-  const processLink = useRef(null)
+  const processLink = useRef<((url: string) => void) | null>(null)
+  processLink.current = () => {
+    return undefined
+  }
   const setAppUnlocked = useMemo(
     () => () => {
       setIsAppLocked(false)
@@ -158,16 +168,17 @@ export const App = (): JSX.Element => {
         })
       })
 
-      const wsLink = new WebSocketLink({
-        uri: appConfig.galoyInstance.graphqlWsUri,
-        options: {
-          reconnect: true,
-          reconnectionAttempts: 3,
-          connectionParams: {
-            authorization: hasToken ? getAuthorizationHeader(token) : "",
-          },
-        },
-      })
+      const wsLink = new GraphQLWsLink(
+        createClient({
+          url: appConfig.galoyInstance.graphqlWsUri,
+          connectionParams: hasToken ? { Authorization: `Bearer ${token}` } : undefined,
+          // Voluntary not using: webSocketImpl: WebSocket
+          // seems react native already have an implement of the websocket?
+          //
+          // TODO: implement keepAlive and reconnection?
+          // https://github.com/enisdenjo/graphql-ws/blob/master/docs/interfaces/client.ClientOptions.md#keepalive
+        }),
+      )
 
       const splitLink = split(
         ({ query }) => {
@@ -185,7 +196,7 @@ export const App = (): JSX.Element => {
         return {
           headers: {
             ...headers,
-            authorization: hasToken ? getAuthorizationHeader(token) : "",
+            authorization: token ? getAuthorizationHeader(token) : "",
           },
         }
       })
@@ -205,6 +216,8 @@ export const App = (): JSX.Element => {
         },
       })
 
+      const cache = createCache()
+
       const persistor_ = new CachePersistor({
         cache,
         storage: new AsyncStorageWrapper(AsyncStorage),
@@ -220,11 +233,12 @@ export const App = (): JSX.Element => {
         ),
         name: isIos ? "iOS" : "Android",
         version: `${VersionNumber.appVersion}-${VersionNumber.buildVersion}`,
+        connectToDevTools: true,
       })
 
       const initDb = async () => {
         client.writeQuery({
-          query: INITWALLET,
+          query: InitWalletDocument,
           data: initQuery,
         })
       }
@@ -264,10 +278,10 @@ export const App = (): JSX.Element => {
   // You're welcome to swap in your own component to render if your boot up
   // sequence is too slow though.
   if (!apolloClient || !persistor) {
-    return null
+    return <></>
   }
 
-  const linking = {
+  const linking: LinkingOptions<RootStackParamList> = {
     prefixes: [
       "https://ln.bitcoinbeach.com",
       "bitcoinbeach://",
@@ -277,7 +291,11 @@ export const App = (): JSX.Element => {
     config: {
       screens: {
         sendBitcoinDestination: ":username",
-        moveMoney: "/",
+        Primary: {
+          screens: {
+            moveMoney: "/",
+          },
+        },
       },
     },
     getInitialURL: async () => {
@@ -303,40 +321,42 @@ export const App = (): JSX.Element => {
 
   return (
     <AuthenticationContext.Provider value={{ isAppLocked, setAppUnlocked, setAppLocked }}>
-      <ApolloProvider client={apolloClient}>
-        <Provider store={store}>
-        <PriceContextProvider>
-          <TypesafeI18n locale={customLocaleDetector()}>
-            <LocalizationContextProvider>
-              <ErrorBoundary FallbackComponent={ErrorScreen}>
-                <NavigationContainer
-                  linking={linking}
-                  onStateChange={(state) => {
-                    const currentRouteName = getActiveRouteName(state)
-
-                    if (routeName.current !== currentRouteName && currentRouteName) {
-                      // analytics().logScreenView({
-                      //   screen_name: currentRouteName + "Manual",
-                      //   screen_class: currentRouteName + "Manual",
-                      // })
-                      routeName.current = currentRouteName
-
-                      console.log("route: ", currentRouteName)
-                    }
-                  }}
-                >
-                  <RootSiblingParent>
-                    <GlobalErrorToast />
-                    <RootStack />
-                    <Toast />
-                  </RootSiblingParent>
-                </NavigationContainer>
-              </ErrorBoundary>
-            </LocalizationContextProvider>
-          </TypesafeI18n>
-        </PriceContextProvider>
+      <ThemeProvider theme={theme}>
+        <ApolloProvider client={apolloClient}>
+          <Provider store={store}>
+          <PriceContextProvider>
+            <TypesafeI18n locale={customLocaleDetector()}>
+              <LocalizationContextProvider>
+                <ErrorBoundary FallbackComponent={ErrorScreen}>
+                  <NavigationContainer
+                    linking={linking}
+                    onStateChange={(state) => {
+                      const currentRouteName = getActiveRouteName(state)
+  
+                      if (routeName.current !== currentRouteName && currentRouteName) {
+                        // analytics().logScreenView({
+                        //   screen_name: currentRouteName + "Manual",
+                        //   screen_class: currentRouteName + "Manual",
+                        // })
+                        routeName.current = currentRouteName
+  
+                        console.log("route: ", currentRouteName)
+                      }
+                    }}
+                  >
+                    <RootSiblingParent>
+                      <GlobalErrorToast />
+                      <RootStack />
+                      <GaloyToast />
+                    </RootSiblingParent>
+                  </NavigationContainer>
+                </ErrorBoundary>
+              </LocalizationContextProvider>
+            </TypesafeI18n>
+          </PriceContextProvider>
         </Provider>
-      </ApolloProvider>
+        </ApolloProvider>
+      </ThemeProvider>
     </AuthenticationContext.Provider>
   )
 }

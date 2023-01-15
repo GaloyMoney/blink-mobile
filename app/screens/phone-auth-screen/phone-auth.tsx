@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import * as React from "react"
-import { useCallback, useEffect, useRef, useState } from "react"
+import { LegacyRef, Ref, useCallback, useEffect, useRef, useState } from "react"
 import {
   ActivityIndicator,
   Alert,
@@ -11,7 +11,7 @@ import {
   TextInput,
   View,
 } from "react-native"
-import { Button, Input } from "react-native-elements"
+import { Button, Input } from "@rneui/base"
 import { FetchResult } from "@apollo/client"
 import EStyleSheet from "react-native-extended-stylesheet"
 import PhoneInput from "react-native-phone-number-input"
@@ -21,7 +21,6 @@ import { RouteProp } from "@react-navigation/native"
 
 import { CloseCross } from "../../components/close-cross"
 import { Screen } from "../../components/screen"
-import { useMutation } from "@galoymoney/client"
 import { color } from "../../theme"
 import { palette } from "../../theme/palette"
 import useToken from "../../hooks/use-token"
@@ -37,6 +36,10 @@ import DownArrow from "@app/assets/icons/downarrow.svg"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { logRequestAuthCode } from "@app/utils/analytics"
 import crashlytics from "@react-native-firebase/crashlytics"
+import {
+  useCaptchaRequestAuthCodeMutation,
+  useUserLoginMutation,
+} from "@app/graphql/generated"
 
 const phoneRegex = new RegExp("^\\+[0-9]+$")
 
@@ -155,7 +158,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
   const phoneInputRef = useRef<PhoneInput | null>()
 
   const [captchaRequestAuthCode, { loading: loadingRequestPhoneCode }] =
-    useMutation.captchaRequestAuthCode({
+    useCaptchaRequestAuthCodeMutation({
       fetchPolicy: "no-cache",
     })
 
@@ -195,20 +198,32 @@ export const WelcomePhoneInputScreen: ScreenType = ({
       } else if (data.captchaRequestAuthCode.errors.length > 0) {
         const errorMessage = data.captchaRequestAuthCode.errors[0].message
         if (errorMessage === "Too many requests") {
-          toastShow({ message: LL.errors.tooManyRequestsPhoneCode() })
+          toastShow({
+            message: (translations) => translations.errors.tooManyRequestsPhoneCode(),
+            currentTranslation: LL,
+          })
         } else {
           toastShow({ message: errorMessage })
         }
       } else {
-        toastShow({ message: LL.errors.generic() })
+        toastShow({
+          message: (translations) => translations.errors.generic(),
+          currentTranslation: LL,
+        })
       }
     } catch (err) {
       crashlytics().recordError(err)
       console.debug({ err })
       if (err.message === "Too many requests") {
-        toastShow({ message: LL.errors.tooManyRequestsPhoneCode() })
+        toastShow({
+          message: (translations) => translations.errors.tooManyRequestsPhoneCode(),
+          currentTranslation: LL,
+        })
       } else {
-        toastShow({ message: LL.errors.generic() })
+        toastShow({
+          message: (translations) => translations.errors.generic(),
+          currentTranslation: LL,
+        })
       }
     }
   }, [
@@ -217,8 +232,8 @@ export const WelcomePhoneInputScreen: ScreenType = ({
     phoneNumber,
     captchaRequestAuthCode,
     resetValidationData,
-    LL,
     appConfig.galoyInstance.name,
+    LL,
   ])
 
   useEffect(() => {
@@ -344,7 +359,7 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
 }: WelcomePhoneValidationScreenDataInjectedProps) => {
   const { saveToken, hasToken } = useToken()
   const { LL } = useI18nContext()
-  const [userLogin, { loading, error }] = useMutation.userLogin({
+  const [userLogin, { loading, error }] = useUserLoginMutation({
     fetchPolicy: "no-cache",
     onCompleted: async (data) => {
       if (data.userLogin.authToken) {
@@ -393,7 +408,7 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
   const [secondsRemaining, setSecondsRemaining] = useState<number>(60)
   const { LL } = useI18nContext()
   const { phone } = route.params
-  const inputRef = useRef<TextInput>()
+  const inputRef: LegacyRef<Input> & Ref<TextInput> = useRef(null)
 
   useEffect(() => {
     setTimeout(() => inputRef?.current?.focus(), 150)
@@ -421,7 +436,11 @@ export const WelcomePhoneValidationScreen: ScreenType = ({
           await saveToken(token)
         } else {
           setCode("")
-          toastShow({ message: LL.WelcomePhoneValidationScreen.errorLoggingIn() })
+          toastShow({
+            message: (translations) =>
+              translations.WelcomePhoneValidationScreen.errorLoggingIn(),
+            currentTranslation: LL,
+          })
         }
       } catch (err) {
         crashlytics().recordError(err)

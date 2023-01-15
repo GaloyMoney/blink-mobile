@@ -1,7 +1,6 @@
 import { Screen } from "@app/components/screen"
-import { CONTACT_EMAIL_ADDRESS, WHATSAPP_CONTACT_NUMBER } from "@app/config/support"
+import { CONTACT_EMAIL_ADDRESS, WHATSAPP_CONTACT_NUMBER } from "@app/config"
 import useLogout from "@app/hooks/use-logout"
-import useMainQuery from "@app/hooks/use-main-query"
 import useToken from "@app/hooks/use-token"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
@@ -10,16 +9,27 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import React from "react"
 import { Alert, Linking } from "react-native"
 import { SettingsRow } from "./settings-row"
+import { gql } from "@apollo/client"
+import { useAccountScreenQuery } from "@app/graphql/generated"
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "accountScreen">
 }
 
+gql`
+  query AccountScreen {
+    me {
+      phone
+    }
+  }
+`
+
 export const AccountScreen = ({ navigation }: Props) => {
   const { hasToken } = useToken()
   const { logout } = useLogout()
   const { LL } = useI18nContext()
-  const { phoneNumber } = useMainQuery()
+
+  const { data } = useAccountScreenQuery({ fetchPolicy: "cache-only" })
 
   const logoutAction = async () => {
     try {
@@ -46,7 +56,7 @@ export const AccountScreen = ({ navigation }: Props) => {
       console.error(err)
       Linking.openURL(
         `mailto:${CONTACT_EMAIL_ADDRESS}?subject=${LL.support.deleteAccountEmailSubject({
-          phoneNumber,
+          phoneNumber: data?.me?.phone,
         })}&body=${LL.support.deleteAccount()}`,
       ).catch((err) => {
         // Email also failed to open.  Displaying alert.

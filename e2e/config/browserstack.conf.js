@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const browserstack = require("browserstack-local")
+const { baseSpec } = require("./wdio.conf")
 
 let capabilities = {
   "project": "Android Test",
@@ -28,23 +29,13 @@ if (process.env.E2E_DEVICE === "ios") {
 }
 
 exports.config = {
+  ...baseSpec,
+  capabilities: [capabilities],
+
   user: process.env.BROWSERSTACK_USER || "BROWSERSTACK_USER",
   key: process.env.BROWSERSTACK_ACCESS_KEY || "BROWSERSTACK_ACCESS_KEY",
 
   updateJob: false,
-  specs: [
-    [
-      "./e2e/01**.e2e.spec.ts",
-      "./e2e/02**.e2e.spec.ts",
-      "./e2e/03**.e2e.spec.ts",
-      "./e2e/04**.e2e.spec.ts",
-    ],
-  ],
-  reporters: ["spec"],
-  exclude: [],
-
-  capabilities: [capabilities],
-
   logLevel: "info",
   coloredLogs: true,
   screenshotPath: "./errorShots/",
@@ -52,12 +43,6 @@ exports.config = {
   waitforTimeout: 10000,
   connectionRetryTimeout: 90000,
   connectionRetryCount: 3,
-
-  framework: "mocha",
-  mochaOpts: {
-    ui: "bdd",
-    timeout: 60000,
-  },
 
   // Code to start browserstack local before start of test
   onPrepare: (config, capabilities) => {
@@ -78,13 +63,5 @@ exports.config = {
         resolve()
       })
     })
-  },
-
-  autoCompileOpts: {
-    autoCompile: true,
-    tsNodeOpts: {
-      transpileOnly: true,
-      project: "tsconfig.jest.json",
-    },
   },
 }

@@ -6,6 +6,7 @@ export type BaseTranslation = BaseTranslationType
 export type BaseLocale = 'en'
 
 export type Locales =
+	| 'cs'
 	| 'de'
 	| 'en'
 	| 'es'
@@ -2035,6 +2036,14 @@ type RootTranslation = {
 		 * Failed to fetch lnurl invoice
 		 */
 		failedToFetchLnurlInvoice: string
+		/**
+		 * The lnurl server responded with an invoice with an incorrect amount.
+		 */
+		lnurlInvoiceIncorrectAmount: string
+		/**
+		 * The lnurl server responded with an invoice with an incorrect description hash.
+		 */
+		lnurlInvoiceIncorrectDescription: string
 	}
 	SettingsScreen: {
 		/**
@@ -2108,6 +2117,10 @@ type RootTranslation = {
 		 * German
 		 */
 		'de-DE': string
+		/**
+		 * Czech
+		 */
+		cs: string
 	}
 	StablesatsModal: {
 		/**
@@ -2152,6 +2165,44 @@ type RootTranslation = {
 		 * You spent
 		 */
 		spent: string
+	}
+	TransactionLimitsScreen: {
+		/**
+		 * Receive
+		 */
+		receive: string
+		/**
+		 * Withdraw
+		 */
+		withdraw: string
+		/**
+		 * per day
+		 */
+		perDay: string
+		/**
+		 * per week
+		 */
+		perWeek: string
+		/**
+		 * Unlimited
+		 */
+		unlimited: string
+		/**
+		 * Remaining
+		 */
+		remaining: string
+		/**
+		 * Stablesat Transfers
+		 */
+		stablesatTransfers: string
+		/**
+		 * Send to BBW User
+		 */
+		internalSend: string
+		/**
+		 * Unable to fetch limits at this time
+		 */
+		error: string
 	}
 	TransactionScreen: {
 		/**
@@ -2299,6 +2350,10 @@ type RootTranslation = {
 		 * Account
 		 */
 		account: string
+		/**
+		 * Transaction Limits
+		 */
+		transactionLimits: string
 		/**
 		 * Activate Wallet
 		 */
@@ -2684,7 +2739,7 @@ type RootTranslation = {
 		 */
 		defaultSupportMessage: string
 		/**
-		 * Hello.  Please delete my account.
+		 * Hello. Please delete my account.
 		 */
 		deleteAccount: string
 		/**
@@ -4700,6 +4755,14 @@ export type TranslationFunctions = {
 		 * Failed to fetch lnurl invoice
 		 */
 		failedToFetchLnurlInvoice: () => LocalizedString
+		/**
+		 * The lnurl server responded with an invoice with an incorrect amount.
+		 */
+		lnurlInvoiceIncorrectAmount: () => LocalizedString
+		/**
+		 * The lnurl server responded with an invoice with an incorrect description hash.
+		 */
+		lnurlInvoiceIncorrectDescription: () => LocalizedString
 	}
 	SettingsScreen: {
 		/**
@@ -4772,6 +4835,10 @@ export type TranslationFunctions = {
 		 * German
 		 */
 		'de-DE': () => LocalizedString
+		/**
+		 * Czech
+		 */
+		cs: () => LocalizedString
 	}
 	StablesatsModal: {
 		/**
@@ -4816,6 +4883,44 @@ export type TranslationFunctions = {
 		 * You spent
 		 */
 		spent: () => LocalizedString
+	}
+	TransactionLimitsScreen: {
+		/**
+		 * Receive
+		 */
+		receive: () => LocalizedString
+		/**
+		 * Withdraw
+		 */
+		withdraw: () => LocalizedString
+		/**
+		 * per day
+		 */
+		perDay: () => LocalizedString
+		/**
+		 * per week
+		 */
+		perWeek: () => LocalizedString
+		/**
+		 * Unlimited
+		 */
+		unlimited: () => LocalizedString
+		/**
+		 * Remaining
+		 */
+		remaining: () => LocalizedString
+		/**
+		 * Stablesat Transfers
+		 */
+		stablesatTransfers: () => LocalizedString
+		/**
+		 * Send to BBW User
+		 */
+		internalSend: () => LocalizedString
+		/**
+		 * Unable to fetch limits at this time
+		 */
+		error: () => LocalizedString
 	}
 	TransactionScreen: {
 		/**
@@ -4958,6 +5063,10 @@ export type TranslationFunctions = {
 		 * Account
 		 */
 		account: () => LocalizedString
+		/**
+		 * Transaction Limits
+		 */
+		transactionLimits: () => LocalizedString
 		/**
 		 * Activate Wallet
 		 */
@@ -5340,7 +5449,7 @@ export type TranslationFunctions = {
 		 */
 		defaultSupportMessage: () => LocalizedString
 		/**
-		 * Hello.  Please delete my account.
+		 * Hello. Please delete my account.
 		 */
 		deleteAccount: () => LocalizedString
 		/**

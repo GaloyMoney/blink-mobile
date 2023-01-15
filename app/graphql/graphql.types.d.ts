@@ -53,9 +53,3 @@ type WalletTransaction = {
 type MutationError = {
   message: string
 }
-
-type Wallet = {
-  id: string
-  balance: number
-  walletCurrency: string
-}

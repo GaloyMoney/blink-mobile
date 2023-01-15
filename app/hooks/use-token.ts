@@ -1,20 +1,5 @@
 import * as React from "react"
-import jwtDecode from "jwt-decode"
-import type { INetwork } from "../types/network"
 import { usePersistentStateContext } from "@app/store/persistent-state"
-
-export const decodeToken: (string) => {
-  uid: string
-  network: INetwork
-} | null = (token) => {
-  try {
-    const { uid, network } = jwtDecode<JwtPayload>(token)
-    return { uid, network }
-  } catch (err) {
-    console.debug(err.toString())
-    return null
-  }
-}
 
 type UseTokenReturn = {
   token: string | undefined

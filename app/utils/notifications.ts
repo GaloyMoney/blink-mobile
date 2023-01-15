@@ -1,7 +1,7 @@
 import { ApolloClient } from "@apollo/client"
-import { MUTATIONS } from "@galoymoney/client"
 import messaging from "@react-native-firebase/messaging"
 import crashlytics from "@react-native-firebase/crashlytics"
+import { DeviceNotificationTokenCreateDocument } from "@app/graphql/generated"
 
 // No op if the permission has already been requested
 export const requestNotificationPermission = () => messaging().requestPermission()
@@ -10,7 +10,7 @@ export const addDeviceToken = async (client: ApolloClient<unknown>): Promise<voi
   try {
     const deviceToken = await messaging().getToken()
     await client.mutate({
-      mutation: MUTATIONS.deviceNotificationTokenCreate,
+      mutation: DeviceNotificationTokenCreateDocument,
       variables: { input: { deviceToken } },
     })
   } catch (err) {

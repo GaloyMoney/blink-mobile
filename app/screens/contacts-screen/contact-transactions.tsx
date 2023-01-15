@@ -1,4 +1,6 @@
 import { ApolloError, useReactiveVar } from "@apollo/client"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { ScreenType } from "@app/types/jsx"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { SectionList, Text, View } from "react-native"
@@ -7,13 +9,19 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
 import { TransactionItem } from "../../components/transaction-item"
 import { nextPrefCurrency, prefCurrencyVar } from "../../graphql/client-only-query"
-import { useQuery } from "@galoymoney/client"
-import type { ScreenType } from "../../types/jsx"
-import type { RootStackParamList } from "../../navigation/stack-param-lists"
+import type {
+  ContactStackParamList,
+  RootStackParamList,
+} from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import { sameDay, sameMonth } from "../../utils/date"
 import { toastShow } from "../../utils/toast"
-import { useI18nContext } from "@app/i18n/i18n-react"
+
+import {
+  TransactionEdge,
+  useTransactionListForContactQuery,
+} from "@app/graphql/generated"
+import { LocalizedString } from "typesafe-i18n"
 
 const styles = EStyleSheet.create({
   errorText: { alignSelf: "center", color: palette.red, paddingBottom: 18 },
@@ -72,14 +80,14 @@ type Props = {
 
 const TRANSACTIONS_PER_PAGE = 20
 
-export const ContactTransactionsDataInjected: ScreenType = ({
+export const ContactTransactionsDataInjected = ({
   navigation,
   contactUsername,
 }: Props) => {
   const { LL } = useI18nContext()
   const currency = "sat" // FIXME
 
-  const { error, data, refetch } = useQuery.transactionListForContact({
+  const { error, data, refetch } = useTransactionListForContactQuery({
     variables: { username: contactUsername, first: TRANSACTIONS_PER_PAGE, after: null },
   })
 
@@ -87,18 +95,22 @@ export const ContactTransactionsDataInjected: ScreenType = ({
 
   // The source of truth for listing the transactions
   // The data gets "cached" here and more pages are appended when they're fetched (through useQuery)
-  const transactionsRef = React.useRef([])
+  const transactionsRef = React.useRef<TransactionEdge[]>([])
 
   if (error) {
-    toastShow({ message: LL.common.transactionsError() })
-    return null
+    toastShow({
+      message: (translations) => translations.common.transactionsError(),
+      currentTranslation: LL,
+    })
+    return <></>
   }
 
-  if (!data) {
-    return null
+  if (!data?.me?.contactByUsername?.transactions?.edges) {
+    return <></>
   }
 
-  const transactionEdges = data.me.contactByUsername.transactions.edges
+  const transactionEdges = data.me.contactByUsername.transactions
+    .edges as TransactionEdge[] // FIXME why is casting necessary?
   const lastDataCursor =
     transactionEdges.length > 0
       ? transactionEdges[transactionEdges.length - 1].cursor
@@ -118,11 +130,14 @@ export const ContactTransactionsDataInjected: ScreenType = ({
     refetch({ first: TRANSACTIONS_PER_PAGE, after: lastSeenCursor })
   }
 
-  const sections = []
-  const today = []
-  const yesterday = []
-  const thisMonth = []
-  const before = []
+  const sections: {
+    data: TransactionEdge["node"][]
+    title: LocalizedString
+  }[] = []
+  const today: TransactionEdge["node"][] = []
+  const yesterday: TransactionEdge["node"][] = []
+  const thisMonth: TransactionEdge["node"][] = []
+  const before: TransactionEdge["node"][] = []
 
   for (const txEdge of transactionsRef.current) {
     const tx = txEdge.node
@@ -167,7 +182,7 @@ export const ContactTransactionsDataInjected: ScreenType = ({
 
 type ContactTransactionsProps = {
   refreshing: boolean
-  navigation: StackNavigationProp<RootStackParamList, "transactionHistory">
+  navigation: StackNavigationProp<ContactStackParamList, "contactDetail">
   onRefresh: () => void
   error: ApolloError
   prefCurrency: string

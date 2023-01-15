@@ -5,7 +5,6 @@ import VersionNumber from "react-native-version-number"
 import { palette } from "../../theme/palette"
 import type { StackNavigationProp } from "@react-navigation/stack"
 import type { TextStyleProp } from "react-native/Libraries/StyleSheet/StyleSheet"
-import type { ComponentType } from "../../types/jsx"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { testProps } from "../../../utils/testProps"
@@ -24,7 +23,7 @@ type VersionComponentNavigationProp = StackNavigationProp<
   "getStarted" | "settings"
 >
 
-export const VersionComponent: ComponentType = ({ style }: { style?: TextStyleProp }) => {
+export const VersionComponent = ({ style }: { style?: TextStyleProp }) => {
   const { navigate } = useNavigation<VersionComponentNavigationProp>()
   const { LL } = useI18nContext()
   const [secretMenuCounter, setSecretMenuCounter] = React.useState(0)
