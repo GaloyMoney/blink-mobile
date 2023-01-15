@@ -64,7 +64,7 @@ export const createCache = () => {
               }
 
               return wallets.find(
-                (wallet) => wallet.walletCurrency === WalletCurrency.Btc,
+                (wallet) => wallet.walletCurrency === WalletCurrency.Usd,
               )
             },
           },
