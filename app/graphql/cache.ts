@@ -15,9 +15,7 @@ gql`
       walletCurrency
     }
   }
-`
 
-gql`
   query currentPrice {
     btcPrice {
       formattedAmount
@@ -117,15 +115,14 @@ export const createCache = () => {
               const res: any = cache.readQuery({
                 query: CurrentPriceDocument,
               })
-              console.log("res", res)
               if (!res?.btcPrice?.formattedAmount) {
                 return undefined
               }
 
+              // TODO: use function from usePriceConversion
               // TODO: verify type
               const btcPrice = Number(res.btcPrice.formattedAmount)
               const satsAmount = Number(readField("balance"))
-              console.log({ btcPrice, satsAmount })
 
               return (satsAmount * btcPrice) / 100
             },

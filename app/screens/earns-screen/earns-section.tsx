@@ -1,4 +1,4 @@
-import { useApolloClient } from "@apollo/client"
+import { gql, useApolloClient } from "@apollo/client"
 import { RouteProp, useIsFocused } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
@@ -24,14 +24,14 @@ import {
   getQuizQuestionsContent,
   remainingSatsOnSection,
 } from "./earns-utils"
-import { getQuizQuestions } from "../../graphql/query"
+import { getQuizQuestions } from "./query"
 import useMainQuery from "@app/hooks/use-main-query"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { earnSections } from "./sections"
 import { PaginationItem } from "@app/components/pagination"
 import { useSharedValue } from "react-native-reanimated"
-import { useUserQuizQuestionUpdateCompletedMutation } from "@app/graphql/generated"
 import { joinErrorsMessages } from "@app/graphql/utils"
+import { useUserQuizQuestionUpdateCompletedMutation } from "@app/graphql/generated"
 
 const { width: screenWidth } = Dimensions.get("window")
 
@@ -133,6 +133,26 @@ type Props = {
   navigation: StackNavigationProp<RootStackParamList, "earnsSection">
   route: RouteProp<RootStackParamList, "earnsSection">
 }
+
+gql`
+  mutation userQuizQuestionUpdateCompleted(
+    $input: UserQuizQuestionUpdateCompletedInput!
+  ) {
+    userQuizQuestionUpdateCompleted(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      userQuizQuestion {
+        question {
+          id
+          earnAmount
+        }
+        completed
+      }
+    }
+  }
+`
 
 export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
   const { hasToken } = useToken()

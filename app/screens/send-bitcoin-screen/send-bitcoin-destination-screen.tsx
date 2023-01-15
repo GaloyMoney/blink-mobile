@@ -239,6 +239,10 @@ gql`
       }
     }
   }
+
+  query userDefaultWalletId($username: Username!) {
+    userDefaultWalletId(username: $username)
+  }
 `
 
 const SendBitcoinDestinationScreen = ({

@@ -19,17 +19,6 @@ export default gql`
     }
   }
 
-  query contacts {
-    me {
-      contacts {
-        id
-        username
-        alias
-        transactionsCount
-      }
-    }
-  }
-
   query transactionListForDefaultAccount(
     $first: Int
     $after: String
@@ -64,18 +53,6 @@ export default gql`
     }
   }
 
-  query btcPriceList($range: PriceGraphRange!) {
-    btcPriceList(range: $range) {
-      timestamp
-      price {
-        base
-        offset
-        currencyUnit
-        formattedAmount
-      }
-    }
-  }
-
   query accountLimits {
     me {
       defaultAccount {
@@ -100,19 +77,19 @@ export default gql`
     }
   }
 
-  query userDefaultWalletId($username: Username!) {
-    userDefaultWalletId(username: $username)
-  }
-
   query mainQuery($hasToken: Boolean!) {
     globals {
       nodesIds
       network
     }
+
+    # TODO: remove from main query
     quizQuestions {
       id
       earnAmount
     }
+    # END TODO
+
     btcPrice {
       base
       offset
@@ -124,6 +101,8 @@ export default gql`
       language
       username
       phone
+
+      # TODO: remove from main query
       quizQuestions {
         question {
           id
@@ -131,6 +110,8 @@ export default gql`
         }
         completed
       }
+      # END TODO
+
       contacts {
         id
         username
@@ -154,19 +135,6 @@ export default gql`
       platform
       currentSupported
       minSupported
-    }
-  }
-
-  query businessMapMarkers {
-    businessMapMarkers {
-      username
-      mapInfo {
-        title
-        coordinates {
-          longitude
-          latitude
-        }
-      }
     }
   }
 
