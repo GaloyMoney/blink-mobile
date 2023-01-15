@@ -233,14 +233,21 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
     previousData,
     refetch,
     error,
-  } = useMainQuery({ variables: { hasToken }, notifyOnNetworkStatusChange: true })
+  } = useMainQuery({
+    variables: { hasToken },
+    notifyOnNetworkStatusChange: true,
+    returnPartialData: true,
+  })
 
   const mobileVersions = data?.mobileVersions ? data.mobileVersions[0] : undefined // FIXME array/item mismatch
   const mergedTransactions = data?.me?.defaultAccount?.transactions?.edges
-  const btcWalletBalance = data?.me?.defaultAccount?.btcWallet?.balance
-  const btcWalletValueInUsd = data?.me?.defaultAccount?.btcWallet?.usdBalance
-  const usdWalletBalance = data?.me?.defaultAccount?.usdWallet?.balance
   const usdWalletId = data?.me?.defaultAccount?.usdWallet?.id
+
+  const btcWalletValueInUsd = hasToken
+    ? data?.me?.defaultAccount?.btcWallet?.usdBalance
+    : 0
+  const usdWalletBalance = hasToken ? data?.me?.defaultAccount?.usdWallet?.balance : 0
+  const btcWalletBalance = hasToken ? data?.me?.defaultAccount?.btcWallet?.balance : 0
 
   let errors: { message: string }[] = []
   if (error) {

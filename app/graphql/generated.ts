@@ -1806,35 +1806,6 @@ export type AccountLimitsQuery = {
   } | null
 }
 
-export type InitWalletQueryVariables = Exact<{ [key: string]: never }>
-
-export type InitWalletQuery = {
-  readonly __typename: "Query"
-  readonly me?: {
-    readonly __typename: "User"
-    readonly id: string
-    readonly defaultAccount: {
-      readonly __typename: "ConsumerAccount"
-      readonly id: string
-      readonly defaultWalletId: string
-      readonly wallets: ReadonlyArray<
-        | {
-            readonly __typename: "BTCWallet"
-            readonly id: string
-            readonly balance: number
-            readonly walletCurrency: WalletCurrency
-          }
-        | {
-            readonly __typename: "UsdWallet"
-            readonly id: string
-            readonly balance: number
-            readonly walletCurrency: WalletCurrency
-          }
-      >
-    }
-  } | null
-}
-
 export type WalletsQueryVariables = Exact<{ [key: string]: never }>
 
 export type WalletsQuery = {
@@ -3598,62 +3569,6 @@ export type AccountLimitsLazyQueryHookResult = ReturnType<
 export type AccountLimitsQueryResult = Apollo.QueryResult<
   AccountLimitsQuery,
   AccountLimitsQueryVariables
->
-export const InitWalletDocument = gql`
-  query initWallet {
-    me {
-      id
-      defaultAccount {
-        id
-        defaultWalletId
-        wallets {
-          id
-          balance
-          walletCurrency
-        }
-      }
-    }
-  }
-`
-
-/**
- * __useInitWalletQuery__
- *
- * To run a query within a React component, call `useInitWalletQuery` and pass it any options that fit your needs.
- * When your component renders, `useInitWalletQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useInitWalletQuery({
- *   variables: {
- *   },
- * });
- */
-export function useInitWalletQuery(
-  baseOptions?: Apollo.QueryHookOptions<InitWalletQuery, InitWalletQueryVariables>,
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useQuery<InitWalletQuery, InitWalletQueryVariables>(
-    InitWalletDocument,
-    options,
-  )
-}
-export function useInitWalletLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<InitWalletQuery, InitWalletQueryVariables>,
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useLazyQuery<InitWalletQuery, InitWalletQueryVariables>(
-    InitWalletDocument,
-    options,
-  )
-}
-export type InitWalletQueryHookResult = ReturnType<typeof useInitWalletQuery>
-export type InitWalletLazyQueryHookResult = ReturnType<typeof useInitWalletLazyQuery>
-export type InitWalletQueryResult = Apollo.QueryResult<
-  InitWalletQuery,
-  InitWalletQueryVariables
 >
 export const WalletsDocument = gql`
   query wallets {

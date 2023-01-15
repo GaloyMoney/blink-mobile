@@ -77,21 +77,6 @@ export default gql`
     }
   }
 
-  query initWallet {
-    me {
-      id
-      defaultAccount {
-        id
-        defaultWalletId
-        wallets {
-          id
-          balance
-          walletCurrency
-        }
-      }
-    }
-  }
-
   # test only. could be in a dedicated file
   query wallets {
     me {

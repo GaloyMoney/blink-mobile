@@ -39,6 +39,7 @@ const getWallets = ({ readField, cache }): readonly Wallet[] | undefined => {
 export const createCache = () => {
   return new InMemoryCache({
     possibleTypes: {
+      // TODO: add other possible types
       Wallet: ["BTCWallet", "UsdWallet"],
     },
     typePolicies: {
