@@ -47,6 +47,7 @@ gql`
       defaultAccount {
         btcWallet {
           id
+          usdBalance
         }
       }
     }
@@ -66,6 +67,8 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
   const phone = data?.me?.phone
   const language = data?.me?.language ?? "DEFAULT"
   const btcWalletId = data?.me?.defaultAccount?.btcWallet?.id
+
+  console.log({ data })
 
   const onGetCsvCallback = async (data: WalletCsvTransactionsQuery) => {
     const csvEncoded = data?.me?.defaultAccount?.csvTransactions

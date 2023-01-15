@@ -1,4 +1,3 @@
-import useMainQuery from "@app/hooks/use-main-query"
 import React, { useEffect, useMemo, useRef, useState } from "react"
 import {
   ScrollView,
@@ -210,6 +209,7 @@ gql`
           id
           balance
           walletCurrency
+          usdBalance
 
           # TODO: see if there is a way to make those 2 properties optional
           accountId
@@ -244,6 +244,7 @@ const SendBitcoinDetailsScreen = ({
   const btcWalletBalance = data?.me?.defaultAccount?.btcWallet?.balance
   const usdWalletBalance = data?.me?.defaultAccount?.usdWallet?.balance
   const network = data?.globals?.network
+  const btcBalanceInUsd = data?.me?.defaultAccount?.btcWallet?.usdBalance
 
   const wallets = useRef<Wallet[]>()
 
@@ -253,8 +254,6 @@ const SendBitcoinDetailsScreen = ({
       data.me?.defaultAccount?.usdWallet,
     ]
   }, [data?.me?.defaultAccount])
-
-  const { btcWalletValueInUsd } = useMainQuery()
 
   const {
     fixedAmount,
@@ -400,7 +399,7 @@ const SendBitcoinDetailsScreen = ({
                     {wallet.walletCurrency === WalletCurrency.Btc ? (
                       <>
                         <Text style={Styles.walletBalanceText}>
-                          {formatToDisplayCurrency(btcWalletValueInUsd)}
+                          {formatToDisplayCurrency(btcBalanceInUsd)}
                           {" - "}
                           {satAmountDisplay(btcWalletBalance)}
                         </Text>
@@ -518,7 +517,7 @@ const SendBitcoinDetailsScreen = ({
                   {fromWallet.walletCurrency === WalletCurrency.Btc ? (
                     <>
                       <Text style={Styles.walletBalanceText}>
-                        {formatToDisplayCurrency(btcWalletValueInUsd)}
+                        {formatToDisplayCurrency(btcBalanceInUsd)}
                         {" - "}
                         {satAmountDisplay(btcWalletBalance)}
                       </Text>

@@ -1,5 +1,11 @@
 import { InMemoryCache, gql } from "@apollo/client"
-import { Account, MyWalletsFragmentDoc, Wallet, WalletCurrency } from "./generated"
+import {
+  Account,
+  CurrentPriceDocument,
+  MyWalletsFragmentDoc,
+  Wallet,
+  WalletCurrency,
+} from "./generated"
 
 gql`
   fragment MyWallets on ConsumerAccount {
@@ -7,6 +13,14 @@ gql`
       id
       balance
       walletCurrency
+    }
+  }
+`
+
+gql`
+  query currentPrice {
+    btcPrice {
+      formattedAmount
     }
   }
 `
@@ -26,6 +40,9 @@ const getWallets = ({ readField, cache }): readonly Wallet[] | undefined => {
 
 export const createCache = () => {
   return new InMemoryCache({
+    possibleTypes: {
+      Wallet: ["BTCWallet", "UsdWallet"],
+    },
     typePolicies: {
       Contact: {
         fields: {
@@ -69,7 +86,7 @@ export const createCache = () => {
             },
           },
           btcWallet: {
-            read: (_, { readField, cache }): Wallet | undefined => {
+            read: (_, { readField, cache }) => {
               const wallets = getWallets({ readField, cache })
               if (wallets === undefined || wallets.length === 0) {
                 return undefined
@@ -89,6 +106,28 @@ export const createCache = () => {
 
               const defaultWalletId = readField("defaultWalletId")
               return wallets.find((wallet) => wallet.id === defaultWalletId)
+            },
+          },
+        },
+      },
+      BTCWallet: {
+        fields: {
+          usdBalance: {
+            read: (_, { readField, cache }) => {
+              const res: any = cache.readQuery({
+                query: CurrentPriceDocument,
+              })
+              console.log("res", res)
+              if (!res?.btcPrice?.formattedAmount) {
+                return undefined
+              }
+
+              // TODO: verify type
+              const btcPrice = Number(res.btcPrice.formattedAmount)
+              const satsAmount = Number(readField("balance"))
+              console.log({ btcPrice, satsAmount })
+
+              return (satsAmount * btcPrice) / 100
             },
           },
         },
