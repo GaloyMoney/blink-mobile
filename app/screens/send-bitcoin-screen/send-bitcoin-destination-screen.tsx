@@ -128,6 +128,7 @@ const Styles = StyleSheet.create({
 
 const parsePaymentDestination = parsingv2.parsePaymentDestination
 
+// FIXME this should come from globals.lightningAddressDomainAliases
 export const lnurlDomains = ["ln.bitcoinbeach.com", "pay.bbw.sv"]
 
 type UsernameStatus = "paid-before" | "never-paid" | "does-not-exist" | "self"

@@ -131,6 +131,12 @@ export default gql`
         }
         completed
       }
+      contacts {
+        id
+        username
+        alias
+        transactionsCount
+      }
       defaultAccount {
         id
         defaultWalletId
