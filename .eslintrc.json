@@ -3,13 +3,7 @@
     "es2021": true,
     "react-native/react-native": true
   },
-  "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:react-hooks/recommended",
-    "plugin:react-native/all",
-    "plugin:@typescript-eslint/recommended"
-  ],
+  "ignorePatterns": ["**/*story.tsx"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
@@ -17,7 +11,14 @@
     },
     "ecmaVersion": 12
   },
-  "plugins": ["react", "react-hooks", "react-native", "@typescript-eslint", "import"],
+  "plugins": ["react", "react-hooks", "react-native", "@typescript-eslint", "import", "prettier"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:react-native/all",
+    "plugin:@typescript-eslint/recommended"
+  ],
   "rules": {
     "@typescript-eslint/no-extra-semi": "off", // Prettier work
     "@typescript-eslint/no-unused-vars": [
@@ -29,14 +30,32 @@
         "argsIgnorePattern": "^_"
       }
     ],
-    "@typescript-eslint/explicit-module-boundary-types": "off",
-    "@typescript-eslint/no-empty-function": "off",
     "@typescript-eslint/prefer-for-of": "error",
     "@typescript-eslint/unified-signatures": "error",
+
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-empty-function": "off",
 
     "import/no-extraneous-dependencies": "error",
     "import/no-unresolved": "off",
     "import/prefer-default-export": "off",
+
+    "prettier/prettier": [
+      "error",
+      {
+        "semi": false,
+        "trailingComma": "all",
+        "printWidth": 90,
+        "quoteProps": "consistent",
+        "singleQuote": false,
+        "tabWidth": 2,
+        "useTabs": false,
+        "bracketSpacing": true,
+        "arrowParens": "always",
+        "proseWrap": "preserve",
+        "endOfLine": "lf"
+      }
+    ],
 
     "react/no-unescaped-entities": ["error", { "forbid": [">", "}"] }],
     "react/prop-types": "off",
@@ -147,6 +166,5 @@
     "react": {
       "version": "detect"
     }
-  },
-  "ignorePatterns": ["**/*story.tsx"]
+  }
 }
