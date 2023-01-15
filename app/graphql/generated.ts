@@ -1330,6 +1330,41 @@ export type HiddenBalanceToolTipQuery = {
   readonly hiddenBalanceToolTip: boolean
 }
 
+export type TransactionFragment = {
+  readonly __typename: "Transaction"
+  readonly id: string
+  readonly status: TxStatus
+  readonly direction: TxDirection
+  readonly memo?: string | null
+  readonly createdAt: number
+  readonly settlementAmount: number
+  readonly settlementFee: number
+  readonly settlementCurrency: WalletCurrency
+  readonly settlementPrice: {
+    readonly __typename: "Price"
+    readonly base: number
+    readonly offset: number
+    readonly currencyUnit: ExchangeCurrencyUnit
+    readonly formattedAmount: string
+  }
+  readonly initiationVia:
+    | {
+        readonly __typename: "InitiationViaIntraLedger"
+        readonly counterPartyWalletId?: string | null
+        readonly counterPartyUsername?: string | null
+      }
+    | { readonly __typename: "InitiationViaLn"; readonly paymentHash: string }
+    | { readonly __typename: "InitiationViaOnChain"; readonly address: string }
+  readonly settlementVia:
+    | {
+        readonly __typename: "SettlementViaIntraLedger"
+        readonly counterPartyWalletId?: string | null
+        readonly counterPartyUsername?: string | null
+      }
+    | { readonly __typename: "SettlementViaLn"; readonly paymentSecret?: string | null }
+    | { readonly __typename: "SettlementViaOnChain"; readonly transactionHash: string }
+}
+
 export type TransactionListFragment = {
   readonly __typename: "TransactionConnection"
   readonly pageInfo: {
@@ -2656,6 +2691,51 @@ export const MyWalletsFragmentDoc = gql`
     }
   }
 `
+export const TransactionFragmentDoc = gql`
+  fragment Transaction on Transaction {
+    __typename
+    id
+    status
+    direction
+    memo
+    createdAt
+    settlementAmount
+    settlementFee
+    settlementCurrency
+    settlementPrice {
+      base
+      offset
+      currencyUnit
+      formattedAmount
+    }
+    initiationVia {
+      __typename
+      ... on InitiationViaIntraLedger {
+        counterPartyWalletId
+        counterPartyUsername
+      }
+      ... on InitiationViaLn {
+        paymentHash
+      }
+      ... on InitiationViaOnChain {
+        address
+      }
+    }
+    settlementVia {
+      __typename
+      ... on SettlementViaIntraLedger {
+        counterPartyWalletId
+        counterPartyUsername
+      }
+      ... on SettlementViaLn {
+        paymentSecret
+      }
+      ... on SettlementViaOnChain {
+        transactionHash
+      }
+    }
+  }
+`
 export const TransactionListFragmentDoc = gql`
   fragment TransactionList on TransactionConnection {
     pageInfo {
@@ -2667,50 +2747,11 @@ export const TransactionListFragmentDoc = gql`
     edges {
       cursor
       node {
-        __typename
-        id
-        status
-        direction
-        memo
-        createdAt
-        settlementAmount
-        settlementFee
-        settlementCurrency
-        settlementPrice {
-          base
-          offset
-          currencyUnit
-          formattedAmount
-        }
-        initiationVia {
-          __typename
-          ... on InitiationViaIntraLedger {
-            counterPartyWalletId
-            counterPartyUsername
-          }
-          ... on InitiationViaLn {
-            paymentHash
-          }
-          ... on InitiationViaOnChain {
-            address
-          }
-        }
-        settlementVia {
-          __typename
-          ... on SettlementViaIntraLedger {
-            counterPartyWalletId
-            counterPartyUsername
-          }
-          ... on SettlementViaLn {
-            paymentSecret
-          }
-          ... on SettlementViaOnChain {
-            transactionHash
-          }
-        }
+        ...Transaction
       }
     }
   }
+  ${TransactionFragmentDoc}
 `
 export const MeFragmentDoc = gql`
   fragment Me on User {

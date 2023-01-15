@@ -109,9 +109,7 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
   subtitle = false,
 }: TransactionItemProps) => {
   const primaryCurrency = primaryCurrencyVar()
-  const {
-    data: { hideBalance },
-  } = useHideBalanceQuery()
+  const { data: { hideBalance } = {} } = useHideBalanceQuery()
 
   const isReceive = tx.direction === "RECEIVE"
   const isPending = tx.status === "PENDING"

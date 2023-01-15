@@ -118,9 +118,10 @@ export const SettingsScreen: ScreenType = ({ navigation }: Props) => {
           // FIXME: do we only fetch the csv from the btc wallet?
           refetch({ defaultWalletId: btcWalletId })
         } else {
-          fetchCsvTransactions({
-            variables: { defaultWalletId: btcWalletId },
-          })
+          btcWalletId &&
+            fetchCsvTransactions({
+              variables: { defaultWalletId: btcWalletId },
+            })
         }
       }}
       securityAction={securityAction}

@@ -126,9 +126,7 @@ const WalletOverview = ({
   btcWalletValueInUsd,
   usdWalletBalance,
 }: WalletOverviewProps) => {
-  const {
-    data: { hideBalance },
-  } = useHideBalanceQuery()
+  const { data: { hideBalance } = {} } = useHideBalanceQuery()
 
   return (
     <View style={styles.container}>

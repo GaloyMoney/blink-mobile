@@ -56,7 +56,7 @@ export const AccountScreen = ({ navigation }: Props) => {
       console.error(err)
       Linking.openURL(
         `mailto:${CONTACT_EMAIL_ADDRESS}?subject=${LL.support.deleteAccountEmailSubject({
-          phoneNumber: data?.me?.phone,
+          phoneNumber: data?.me?.phone || "",
         })}&body=${LL.support.deleteAccount()}`,
       ).catch((err) => {
         // Email also failed to open.  Displaying alert.

@@ -15,8 +15,10 @@ import { toastShow } from "../../utils/toast"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import {
   Transaction,
+  TransactionFragment,
   useTransactionListForDefaultAccountQuery,
 } from "@app/graphql/generated"
+import { LocalizedString } from "typesafe-i18n"
 
 const styles = EStyleSheet.create({
   errorText: { alignSelf: "center", color: palette.red, paddingBottom: 18 },
@@ -78,7 +80,12 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
 
   // The source of truth for listing the transactions
   // The data gets "cached" here and more pages are appended when they're fetched (through useQuery)
-  const transactionsRef = React.useRef([])
+  const transactionsRef = React.useRef<
+    {
+      cursor: string
+      node: TransactionFragment
+    }[]
+  >([])
 
   if (error) {
     console.error(error)
@@ -86,10 +93,10 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
       message: (translations) => translations.common.transactionsError(),
       currentTranslation: LL,
     })
-    return null
+    return <></>
   }
 
-  if (!data?.me?.defaultAccount) {
+  if (!data?.me?.defaultAccount?.transactions) {
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator color={palette.coolGrey} size={"large"} />
@@ -98,7 +105,7 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
   }
 
   const { edges, pageInfo } = data.me.defaultAccount.transactions
-  const lastDataCursor = edges.length > 0 ? edges[edges.length - 1].cursor : null
+  const lastDataCursor = pageInfo.endCursor || null
   let lastSeenCursor =
     transactionsRef.current.length > 0
       ? transactionsRef.current[transactionsRef.current.length - 1].cursor
@@ -106,7 +113,7 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
 
   // Add page of data to the source of truth if the data is new
   if (lastSeenCursor !== lastDataCursor) {
-    transactionsRef.current = transactionsRef.current.concat(edges)
+    transactionsRef.current = transactionsRef.current.concat(edges || [])
     lastSeenCursor = lastDataCursor
   }
 
@@ -116,11 +123,14 @@ export const TransactionHistoryScreenDataInjected: ScreenType = ({
     }
   }
 
-  const sections = []
-  const today = []
-  const yesterday = []
-  const thisMonth = []
-  const before = []
+  const sections: {
+    data: TransactionFragment[]
+    title: LocalizedString
+  }[] = []
+  const today: TransactionFragment[] = []
+  const yesterday: TransactionFragment[] = []
+  const thisMonth: TransactionFragment[] = []
+  const before: TransactionFragment[] = []
 
   for (const txEdge of transactionsRef.current) {
     const tx = txEdge.node

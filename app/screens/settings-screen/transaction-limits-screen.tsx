@@ -123,7 +123,7 @@ export const TransactionLimitsScreen = () => {
           <Text adjustsFontSizeToFit style={styles.valueFieldType}>
             {LL.TransactionLimitsScreen.withdraw()}
           </Text>
-          {data.me.defaultAccount.limits?.withdrawal.map((data, index: number) => {
+          {data?.me?.defaultAccount.limits?.withdrawal.map((data, index: number) => {
             return <TransactionLimitsPeriod data={data} key={index} />
           })}
         </View>
@@ -134,7 +134,7 @@ export const TransactionLimitsScreen = () => {
           <Text adjustsFontSizeToFit style={styles.valueFieldType}>
             {LL.TransactionLimitsScreen.internalSend()}
           </Text>
-          {data.me.defaultAccount.limits?.internalSend.map((data, index: number) => {
+          {data?.me?.defaultAccount.limits?.internalSend.map((data, index: number) => {
             return <TransactionLimitsPeriod data={data} key={index} />
           })}
         </View>
@@ -145,7 +145,7 @@ export const TransactionLimitsScreen = () => {
           <Text adjustsFontSizeToFit style={styles.valueFieldType}>
             {LL.TransactionLimitsScreen.stablesatTransfers()}
           </Text>
-          {data.me.defaultAccount.limits?.convert.map((data, index: number) => {
+          {data?.me?.defaultAccount.limits?.convert.map((data, index: number) => {
             return <TransactionLimitsPeriod data={data} key={index} />
           })}
         </View>
@@ -154,16 +154,24 @@ export const TransactionLimitsScreen = () => {
   )
 }
 
-const TransactionLimitsPeriod = ({ data }) => {
+const TransactionLimitsPeriod = ({
+  data,
+}: {
+  data: {
+    readonly totalLimit: number
+    readonly remainingLimit?: number | null
+    readonly interval?: number | null
+  }
+}) => {
   const { LL } = useI18nContext()
 
-  const convertCentToUSD = (centAmount: string) => {
-    const usdAmount = Number(centAmount) / 100
+  const convertCentToUSD = (centAmount: number) => {
+    const usdAmount = centAmount / 100
     return usdAmountDisplay(usdAmount, 0)
   }
 
-  const getLimitDuration = (period: string): LocalizedString => {
-    const interval = (Number(period) / (60 * 60)).toString()
+  const getLimitDuration = (period: number): LocalizedString | null => {
+    const interval = (period / (60 * 60)).toString()
     switch (interval) {
       case accountLimitsPeriodInHrs.DAILY:
         return LL.TransactionLimitsScreen.perDay()
@@ -178,12 +186,16 @@ const TransactionLimitsPeriod = ({ data }) => {
     <View style={styles.content}>
       <View style={styles.contentTextBox}>
         <Text adjustsFontSizeToFit style={styles.valueRemaining}>
-          {`${convertCentToUSD(
-            data.remainingLimit,
-          )} ${LL.TransactionLimitsScreen.remaining().toLocaleLowerCase()}`}
+          {typeof data.remainingLimit === "number"
+            ? `${convertCentToUSD(
+                data.remainingLimit,
+              )} ${LL.TransactionLimitsScreen.remaining().toLocaleLowerCase()}`
+            : ""}
         </Text>
         <Text adjustsFontSizeToFit style={styles.valueTotal}>
-          {`${convertCentToUSD(data.totalLimit)} ${getLimitDuration(data.interval)}`}
+          {`${convertCentToUSD(data.totalLimit)} ${
+            data.interval && getLimitDuration(data.interval)
+          }`}
         </Text>
       </View>
     </View>

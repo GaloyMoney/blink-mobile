@@ -103,7 +103,7 @@ export const usdAmountDisplay = (amount: number, precision?: number): string =>
     .default(amount, {
       precision:
         precision === 0
-          ? undefined
+          ? 0
           : precision ?? (Math.abs(amount) < 0.01 && amount !== 0)
           ? 4
           : 2,

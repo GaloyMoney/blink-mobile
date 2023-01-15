@@ -28,10 +28,14 @@ type PriceReducerAction = {
   type: PriceReducerActionType
   payload: {
     price: number
-    priceDate: Date | undefined
+    priceDate: Date
   }
 }
-const PriceContext = createContext<PriceContextType>(undefined)
+
+// The initial value will never be null because the provider will always pass a non null value
+// eslint-disable-next-line
+// @ts-ignore
+const PriceContext = createContext<PriceContextType>(null)
 
 const initialState: PriceData = {
   initialized: false,

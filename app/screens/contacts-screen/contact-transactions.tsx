@@ -18,7 +18,7 @@ import { sameDay, sameMonth } from "../../utils/date"
 import { toastShow } from "../../utils/toast"
 
 import {
-  TransactionEdge,
+  TransactionFragment,
   useTransactionListForContactQuery,
 } from "@app/graphql/generated"
 import { LocalizedString } from "typesafe-i18n"
@@ -95,7 +95,12 @@ export const ContactTransactionsDataInjected = ({
 
   // The source of truth for listing the transactions
   // The data gets "cached" here and more pages are appended when they're fetched (through useQuery)
-  const transactionsRef = React.useRef<TransactionEdge[]>([])
+  const transactionsRef = React.useRef<
+    {
+      cursor: string
+      node: TransactionFragment
+    }[]
+  >([])
 
   if (error) {
     toastShow({
@@ -109,8 +114,7 @@ export const ContactTransactionsDataInjected = ({
     return <></>
   }
 
-  const transactionEdges = data.me.contactByUsername.transactions
-    .edges as TransactionEdge[] // FIXME why is casting necessary?
+  const transactionEdges = data.me.contactByUsername.transactions.edges
   const lastDataCursor =
     transactionEdges.length > 0
       ? transactionEdges[transactionEdges.length - 1].cursor
@@ -131,13 +135,13 @@ export const ContactTransactionsDataInjected = ({
   }
 
   const sections: {
-    data: TransactionEdge["node"][]
+    data: TransactionFragment[]
     title: LocalizedString
   }[] = []
-  const today: TransactionEdge["node"][] = []
-  const yesterday: TransactionEdge["node"][] = []
-  const thisMonth: TransactionEdge["node"][] = []
-  const before: TransactionEdge["node"][] = []
+  const today: TransactionFragment[] = []
+  const yesterday: TransactionFragment[] = []
+  const thisMonth: TransactionFragment[] = []
+  const before: TransactionFragment[] = []
 
   for (const txEdge of transactionsRef.current) {
     const tx = txEdge.node
