@@ -18,7 +18,7 @@ export const ConversionSuccessScreen = ({
   const CALLBACK_DELAY = 2000
   useEffect(() => {
     client.refetchQueries({
-      include: ["mainQuery"],
+      include: ["main"],
     })
 
     const navigateToHomeTimeout = setTimeout(() => navigation.popToTop(), CALLBACK_DELAY)

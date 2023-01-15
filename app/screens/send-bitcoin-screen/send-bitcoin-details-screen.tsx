@@ -11,6 +11,7 @@ import { palette } from "@app/theme"
 import {
   Wallet,
   WalletCurrency,
+  WalletMetaFragment,
   useSendBitcoinDetailsScreenQuery,
 } from "@app/graphql/generated"
 import { fetchLnurlInvoice, Network as NetworkLibGaloy } from "@galoymoney/client"
@@ -210,22 +211,20 @@ gql`
           balance
           walletCurrency
           usdBalance
-
-          # TODO: see if there is a way to make those 2 properties optional
-          accountId
-          pendingIncomingBalance
         }
         usdWallet {
           id
           balance
           walletCurrency
-
-          # TODO: see if there is a way to make those 2 properties optional
-          accountId
-          pendingIncomingBalance
         }
       }
     }
+  }
+
+  fragment WalletMeta on Wallet {
+    id
+    walletCurrency
+    balance
   }
 `
 
@@ -246,7 +245,7 @@ const SendBitcoinDetailsScreen = ({
   const network = data?.globals?.network
   const btcBalanceInUsd = data?.me?.defaultAccount?.btcWallet?.usdBalance
 
-  const wallets = useRef<Wallet[]>()
+  const wallets = useRef<WalletMetaFragment[]>()
 
   useMemo(() => {
     wallets.current = [

@@ -25,7 +25,6 @@ import {
   remainingSatsOnSection,
 } from "./earns-utils"
 import { getQuizQuestions } from "./query"
-import useMainQuery from "@app/hooks/use-main-query"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { earnSections } from "./sections"
 import { PaginationItem } from "@app/components/pagination"
@@ -157,10 +156,14 @@ gql`
 export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
   const { hasToken } = useToken()
   const client = useApolloClient()
-  const { refetch: refetchMain } = useMainQuery()
   const { LL } = useI18nContext()
+
   const [userQuizQuestionUpdateCompleted] = useUserQuizQuestionUpdateCompletedMutation({
-    onCompleted: () => refetchMain(),
+    onCompleted: () => {
+      client.refetchQueries({
+        include: ["main"],
+      })
+    },
   })
 
   const quizQuestions = getQuizQuestions(client, { hasToken })

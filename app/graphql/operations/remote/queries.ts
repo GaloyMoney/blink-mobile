@@ -77,67 +77,6 @@ export default gql`
     }
   }
 
-  query mainQuery($hasToken: Boolean!) {
-    globals {
-      nodesIds
-      network
-    }
-
-    # TODO: remove from main query
-    quizQuestions {
-      id
-      earnAmount
-    }
-    # END TODO
-
-    btcPrice {
-      base
-      offset
-      currencyUnit
-      formattedAmount
-    }
-    me @include(if: $hasToken) {
-      id
-      language
-      username
-      phone
-
-      # TODO: remove from main query
-      quizQuestions {
-        question {
-          id
-          earnAmount
-        }
-        completed
-      }
-      # END TODO
-
-      contacts {
-        id
-        username
-        alias
-        transactionsCount
-      }
-      defaultAccount {
-        id
-        defaultWalletId
-        transactions(first: 3) {
-          ...TransactionList
-        }
-        wallets {
-          id
-          balance
-          walletCurrency
-        }
-      }
-    }
-    mobileVersions {
-      platform
-      currentSupported
-      minSupported
-    }
-  }
-
   query initWallet {
     me {
       id

@@ -9,7 +9,6 @@ import { CustomIcon } from "@app/components/custom-icon"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import useMainQuery from "@app/hooks/use-main-query"
 import { useAppConfig } from "@app/hooks/use-app-config"
 import { useUserUpdateUsernameMutation } from "@app/graphql/generated"
 import { bankName } from "@app/config"
@@ -134,7 +133,6 @@ gql`
 export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalProps) => {
   const { LL } = useI18nContext()
   const { appConfig } = useAppConfig()
-  const { refetch: refetchMainQuery } = useMainQuery()
   const [address, setAddress] = React.useState("")
   const [error, setError] = React.useState("")
   const [newAddress, setNewAddress] = React.useState("")
@@ -157,7 +155,6 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
         }
       } else if (result.userUpdateUsername.user) {
         setNewAddress(result.userUpdateUsername.user.username)
-        refetchMainQuery()
       }
     },
   })

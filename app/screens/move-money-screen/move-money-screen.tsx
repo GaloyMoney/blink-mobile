@@ -33,7 +33,6 @@ import {
   PrimaryStackParamList,
   RootStackParamList,
 } from "../../navigation/stack-param-lists"
-import useMainQuery from "@app/hooks/use-main-query"
 import WalletOverview from "@app/components/wallet-overview/wallet-overview"
 import QrCodeIcon from "@app/assets/icons/qr-code.svg"
 import SendIcon from "@app/assets/icons/send.svg"
@@ -45,7 +44,10 @@ import { CompositeNavigationProp, useIsFocused } from "@react-navigation/native"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { StableSatsModal } from "@app/components/stablesats-modal"
 import { testProps } from "../../../utils/testProps"
-import { Transaction } from "@app/graphql/generated"
+import { Transaction, useMainQuery } from "@app/graphql/generated"
+import { gql } from "@apollo/client"
+import crashlytics from "@react-native-firebase/crashlytics"
+import NetInfo from "@react-native-community/netinfo"
 
 const styles = EStyleSheet.create({
   bottom: {
@@ -157,17 +159,120 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
   navigation,
 }: MoveMoneyScreenDataInjectedProps) => {
   const { hasToken } = useToken()
+
+  gql`
+    query main($hasToken: Boolean!) {
+      globals {
+        nodesIds
+        network
+      }
+
+      # TODO: remove from main query
+      quizQuestions {
+        id
+        earnAmount
+      }
+      # END TODO
+
+      btcPrice {
+        base
+        offset
+        currencyUnit
+        formattedAmount
+      }
+      me @include(if: $hasToken) {
+        id
+        language
+        username
+        phone
+
+        # TODO: remove from main query
+        quizQuestions {
+          question {
+            id
+            earnAmount
+          }
+          completed
+        }
+        # END TODO
+
+        defaultAccount {
+          id
+          defaultWalletId
+          transactions(first: 3) {
+            ...TransactionList
+          }
+          wallets {
+            id
+            balance
+            walletCurrency
+          }
+          btcWallet @client {
+            balance
+            usdBalance
+          }
+          usdWallet @client {
+            id
+            balance
+          }
+        }
+      }
+      mobileVersions {
+        platform
+        currentSupported
+        minSupported
+      }
+    }
+  `
+
+  const { LL } = useI18nContext()
+
   const {
-    mobileVersions,
-    mergedTransactions,
-    btcWalletBalance,
-    btcWalletValueInUsd,
-    usdWalletBalance,
-    errors,
+    data,
     loading: loadingMain,
+    previousData,
     refetch,
-    usdWalletId,
-  } = useMainQuery()
+    error,
+  } = useMainQuery({ variables: { hasToken }, notifyOnNetworkStatusChange: true })
+
+  const mobileVersions = data?.mobileVersions ? data.mobileVersions[0] : undefined // FIXME array/item mismatch
+  const mergedTransactions = data?.me?.defaultAccount?.transactions?.edges
+  const btcWalletBalance = data?.me?.defaultAccount?.btcWallet?.balance
+  const btcWalletValueInUsd = data?.me?.defaultAccount?.btcWallet?.usdBalance
+  const usdWalletBalance = data?.me?.defaultAccount?.usdWallet?.balance
+  const usdWalletId = data?.me?.defaultAccount?.usdWallet?.id
+
+  let errors: { message: string }[] = []
+  if (error) {
+    if (error.graphQLErrors?.length > 0 && previousData) {
+      // We got an error back from the server but we have data in the cache
+      errors = [...error.graphQLErrors]
+    }
+
+    if (error.graphQLErrors?.length > 0 && !previousData) {
+      // This is the first execution of mainquery and we received errors back from the server
+      error.graphQLErrors.forEach((e) => {
+        crashlytics().recordError(e)
+        console.debug(e)
+      })
+    }
+    if (error.networkError && previousData) {
+      // Call to mainquery has failed but we have data in the cache
+      NetInfo.fetch().then((state) => {
+        if (state.isConnected) {
+          errors.push({ message: LL.errors.network.request() })
+        } else {
+          // We failed to fetch the data because the device is offline
+          errors.push({ message: LL.errors.network.connection() })
+        }
+      })
+    }
+    if (error.networkError && !previousData) {
+      // This is the first execution of mainquery and it has failed
+      crashlytics().recordError(error.networkError)
+      // TODO: check if error is INVALID_AUTHENTICATION here
+    }
+  }
 
   // temporary fix until we have a better management of notifications:
   // when coming back to active state. look if the invoice has been paid

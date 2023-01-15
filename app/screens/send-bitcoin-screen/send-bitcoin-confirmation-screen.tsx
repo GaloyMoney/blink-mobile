@@ -10,10 +10,10 @@ import {
   useLnNoAmountInvoicePaymentSendMutation,
   useLnNoAmountUsdInvoicePaymentSendMutation,
   useOnChainPaymentSendMutation,
+  useSendBitcoinConfirmationScreenQuery,
 } from "@app/graphql/generated"
 import { joinErrorsMessages } from "@app/graphql/utils"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
-import useMainQuery from "@app/hooks/use-main-query"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { palette } from "@app/theme"
@@ -184,6 +184,20 @@ const styles = StyleSheet.create({
 })
 
 gql`
+  query sendBitcoinConfirmationScreen {
+    me {
+      defaultAccount {
+        btcWallet {
+          balance
+          usdBalance
+        }
+        usdWallet {
+          balance
+        }
+      }
+    }
+  }
+
   mutation intraLedgerPaymentSend($input: IntraLedgerPaymentSendInput!) {
     intraLedgerPaymentSend(input: $input) {
       errors {
@@ -256,7 +270,11 @@ const SendBitcoinConfirmationScreen = ({
     note,
   } = route.params
 
-  const { usdWalletBalance, btcWalletBalance, btcWalletValueInUsd } = useMainQuery()
+  const { data } = useSendBitcoinConfirmationScreenQuery()
+  const usdWalletBalance = data?.me?.defaultAccount?.usdWallet?.balance
+  const btcWalletBalance = data?.me?.defaultAccount?.btcWallet?.balance
+  const btcWalletValueInUsd = data?.me?.defaultAccount?.btcWallet?.usdBalance
+
   const isNoAmountInvoice = fixedAmount === undefined
   const [, setStatus] = useState<Status>(Status.IDLE)
   const [feeDisplayText, setFeeDisplayText] = useState<string>("")
