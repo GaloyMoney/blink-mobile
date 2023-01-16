@@ -1,13 +1,13 @@
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
 import { selector, enter } from "./utils"
-import { getInvoice } from "./utils/graphql"
 
 describe("Username Payment Flow", async () => {
   loadLocale("en")
   const LL = i18nObject("en")
   const timeout = 30000
   const username: string = "extheo"
+  const lnAddress: string = "extheo@pay.staging.galoy.io"
 
   it("Click Send", async () => {
     const sendButton = await $(selector(LL.MoveMoneyScreen.send(), "Other"))
@@ -33,6 +33,21 @@ describe("Username Payment Flow", async () => {
 
   it("Click Next", async () => {
     const nextButton = await $(selector(LL.common.next(), "Button"))
+    const checkBoxButton = await $(
+      selector(
+        LL.SendBitcoinDestinationScreen.confirmModal.checkBox({ lnAddress }),
+        "Other",
+      ),
+    )
+    const confirmButton = await $(
+      selector(LL.SendBitcoinDestinationScreen.confirmModal.confirmButton(), "Button"),
+    )
+    await checkBoxButton.waitForDisplayed({ timeout: "5000" })
+    if (checkBoxButton.isDisplayed() || confirmButton.isEnabled()) {
+      await checkBoxButton.click()
+      await confirmButton.isEnabled()
+      await confirmButton.click()
+    }
     await nextButton.waitForDisplayed({ timeout })
     await nextButton.isEnabled()
     await nextButton.click()
@@ -66,14 +81,8 @@ describe("Username Payment Flow", async () => {
     )
     await confirmPaymentButton.waitForDisplayed({ timeout })
     await confirmPaymentButton.click()
-    const successCheck = await $(selector(LL.SendBitcoinScreen.success(), "StaticText"))
-    await successCheck.waitForDisplayed({ timeout })
-    if (!successCheck.isDisplayed()) {
-      // wait to throttle the rate limiting
-      await browser.pause(30000)
-      await confirmPaymentButton.click()
-      await successCheck.waitForDisplayed({ timeout })
-    }
-    expect(successCheck.isDisplayed()).toBeTruthy()
+    const currentBalanceHeader = await $(selector("Current Balance Header", "StaticText"))
+    // Wait 5 seconds for move money screen to be displayed
+    await currentBalanceHeader.waitForDisplayed({ timeout: 5000 })
   })
 })
