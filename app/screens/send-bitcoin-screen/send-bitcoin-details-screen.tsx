@@ -602,7 +602,7 @@ const SendBitcoinDetailsScreen = ({
                 )}
               {fromWallet.walletCurrency === WalletCurrency.Usd && (
                 <FakeCurrencyInput
-                {...testProps("USD Amount")}
+                  {...testProps("USD Amount")}
                   value={paymentAmountToDollarsOrSats(usdAmount)}
                   onChangeValue={(amount) => setAmountsWithUsd(amount * 100)}
                   prefix="$"
