@@ -65,7 +65,7 @@ const SendBitcoinSuccessScreen = ({
           resizeMode="cover"
         />
         <Text
-          {...testProps(LL.SendBitcoinScreen.success())}
+          {...testProps("Success Text")}
           style={styles.successLottieText}
         >
           {LL.SendBitcoinScreen.success()}
