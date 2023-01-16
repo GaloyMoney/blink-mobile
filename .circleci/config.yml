@@ -18,13 +18,13 @@ jobs:
       - checkout:
           path: ~/galoy-mobile
       - run: sudo apt-get update
-      - run: curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+      - run: curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
       - run: sudo apt-get install -y gnupg2 gcc g++ make nodejs jq
       - run: sudo npm install -g yarn
 
       - run: sudo apt-get update
       - run: sudo apt-get install gnupg2
-      - run: curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+      - run: curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
       - run: sudo apt-get install -y nodejs
       - run: sudo apt-get install gcc g++ make
       - run: sudo npm install -g yarn
@@ -81,7 +81,7 @@ jobs:
           path: ~/galoy-mobile
       - run: sudo apt-get update
       - run: sudo apt-get install gnupg2
-      - run: curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+      - run: curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
       - run: sudo apt-get install -y nodejs
       - run: sudo apt-get install gcc g++ make
       - run: sudo npm install -g yarn
