@@ -16,22 +16,6 @@ declare module "*.json" {
   export default content
 }
 
-type JwtPayload = {
-  uid: string
-  network: Network
-}
-
-type TokenPayload = {
-  uid: string
-  network: Network
-  token: string
-}
-
-declare module "react-native-restart" {
-  const module: { Restart: () => void }
-  export default module
-}
-
 declare module "react-native-walkthrough-tooltip" {
   export interface TooltipProps {
     children: React.ReactNode

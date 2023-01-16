@@ -43,6 +43,11 @@ type _PersistentState_4 = {
   theme?: Theme
 }
 
+type JwtPayload = {
+  uid: string
+  network: Network
+}
+
 const decodeToken = (token: string): { uid: string; network: Network } | null => {
   try {
     const { uid, network } = jwtDecode<JwtPayload>(token)
