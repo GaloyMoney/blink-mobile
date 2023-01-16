@@ -76,8 +76,8 @@ describe("Payments Flow", async () => {
     await confirmPaymentButton.click()
     const successCheck = await $(selector(LL.SendBitcoinScreen.success(), "StaticText"))
     // Wait 5 seconds for the success screen to be shown
-    await successCheck.waitForDisplayed({ timeout: 5000 })
+    await successCheck.waitForDisplayed({ timeout: 5000, interval: 100 })
     // Wait 5 seconds for the success screen to be removed
-    await successCheck.waitForDisplayed({ timeout: 5000, reverse: true })
+    await successCheck.waitForDisplayed({ timeout: 5000, reverse: true, interval: 100 })
   })
 })
