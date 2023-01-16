@@ -53,30 +53,6 @@ export default gql`
     }
   }
 
-  query accountLimits {
-    me {
-      defaultAccount {
-        limits {
-          withdrawal {
-            totalLimit
-            remainingLimit
-            interval
-          }
-          internalSend {
-            totalLimit
-            remainingLimit
-            interval
-          }
-          convert {
-            totalLimit
-            remainingLimit
-            interval
-          }
-        }
-      }
-    }
-  }
-
   # test only. could be in a dedicated file
   query wallets {
     me {

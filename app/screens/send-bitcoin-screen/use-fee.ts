@@ -10,6 +10,7 @@ import {
   useLnUsdInvoiceFeeProbeMutation,
   useOnChainTxFeeLazyQuery,
 } from "@app/graphql/generated"
+import { gql } from "@apollo/client"
 
 type FeeType = {
   amount?: PaymentAmount<WalletCurrency>
@@ -25,6 +26,44 @@ type UseFeeInput = {
   sameNode: boolean
   paymentAmount: PaymentAmount<WalletCurrency>
 }
+
+gql`
+  mutation lnNoAmountInvoiceFeeProbe($input: LnNoAmountInvoiceFeeProbeInput!) {
+    lnNoAmountInvoiceFeeProbe(input: $input) {
+      errors {
+        message
+      }
+      amount
+    }
+  }
+
+  mutation lnInvoiceFeeProbe($input: LnInvoiceFeeProbeInput!) {
+    lnInvoiceFeeProbe(input: $input) {
+      errors {
+        message
+      }
+      amount
+    }
+  }
+
+  mutation lnUsdInvoiceFeeProbe($input: LnUsdInvoiceFeeProbeInput!) {
+    lnUsdInvoiceFeeProbe(input: $input) {
+      errors {
+        message
+      }
+      amount
+    }
+  }
+
+  mutation lnNoAmountUsdInvoiceFeeProbe($input: LnNoAmountUsdInvoiceFeeProbeInput!) {
+    lnNoAmountUsdInvoiceFeeProbe(input: $input) {
+      errors {
+        message
+      }
+      amount
+    }
+  }
+`
 
 const useFee = ({
   walletDescriptor,
