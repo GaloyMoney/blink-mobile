@@ -284,25 +284,15 @@ const SendBitcoinDestinationScreen = ({
 
   const validateDestination = React.useCallback(
     async (destination: string) => {
-      console.log("validateDestination", { destination, destinationState })
-
       if (destinationState.destinationState !== "entering") {
         return
       }
-
-      console.log({
-        destination,
-        network: bitcoinNetwork as NetworkLibGaloy,
-        lnAddressDomains: lnurlDomains,
-      })
 
       const parsedPaymentDestination = parsePaymentDestination({
         destination,
         network: bitcoinNetwork as NetworkLibGaloy,
         lnAddressDomains: lnurlDomains,
       })
-
-      console.log("validateDestination", { parsedPaymentDestination })
 
       dispatchDestinationStateAction({
         type: "set-validating",

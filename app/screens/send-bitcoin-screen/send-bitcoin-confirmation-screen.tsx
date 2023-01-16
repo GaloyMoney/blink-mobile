@@ -11,6 +11,7 @@ import {
   useLnNoAmountUsdInvoicePaymentSendMutation,
   useOnChainPaymentSendMutation,
   useSendBitcoinConfirmationScreenQuery,
+  Maybe,
 } from "@app/graphql/generated"
 import { joinErrorsMessages } from "@app/graphql/utils"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
@@ -339,8 +340,16 @@ const SendBitcoinConfirmationScreen = ({
       },
     })
 
-    const errorsMessage = joinErrorsMessages(errors)
-    return { status: data.intraLedgerPaymentSend.status, errorsMessage }
+    let errorsMessage = ""
+    if (errors) {
+      errorsMessage = joinErrorsMessages(errors)
+    }
+
+    if (data?.intraLedgerPaymentSend?.errors.length) {
+      errorsMessage =
+        errorsMessage + ` ${data?.intraLedgerPaymentSend?.errors[0].message}`
+    }
+    return { status: data?.intraLedgerPaymentSend.status, errorsMessage }
   }
 
   const payIntraLedgerUsd = async () => {
@@ -355,8 +364,16 @@ const SendBitcoinConfirmationScreen = ({
       },
     })
 
-    const errorsMessage = joinErrorsMessages(errors)
-    return { status: data.intraLedgerUsdPaymentSend.status, errorsMessage }
+    let errorsMessage = ""
+    if (errors) {
+      errorsMessage = joinErrorsMessages(errors)
+    }
+
+    if (data?.intraLedgerUsdPaymentSend?.errors.length) {
+      errorsMessage =
+        errorsMessage + ` ${data?.intraLedgerUsdPaymentSend?.errors[0].message}`
+    }
+    return { status: data?.intraLedgerUsdPaymentSend.status, errorsMessage }
   }
 
   const payLnInvoice = async () => {
@@ -370,8 +387,15 @@ const SendBitcoinConfirmationScreen = ({
       },
     })
 
-    const errorsMessage = joinErrorsMessages(errors)
-    return { status: data.lnInvoicePaymentSend.status, errorsMessage }
+    let errorsMessage = ""
+    if (errors) {
+      errorsMessage = joinErrorsMessages(errors)
+    }
+
+    if (data?.lnInvoicePaymentSend?.errors.length) {
+      errorsMessage = errorsMessage + ` ${data?.lnInvoicePaymentSend?.errors[0].message}`
+    }
+    return { status: data?.lnInvoicePaymentSend.status, errorsMessage }
   }
 
   const payLnNoAmountInvoice = async () => {
@@ -386,8 +410,16 @@ const SendBitcoinConfirmationScreen = ({
       },
     })
 
-    const errorsMessage = joinErrorsMessages(errors)
-    return { status: data.lnNoAmountInvoicePaymentSend.status, errorsMessage }
+    let errorsMessage = ""
+    if (errors) {
+      errorsMessage = joinErrorsMessages(errors)
+    }
+
+    if (data?.lnNoAmountInvoicePaymentSend?.errors.length) {
+      errorsMessage =
+        errorsMessage + ` ${data?.lnNoAmountInvoicePaymentSend?.errors[0].message}`
+    }
+    return { status: data?.lnNoAmountInvoicePaymentSend.status, errorsMessage }
   }
 
   const payLnNoAmountUsdInvoice = async () => {
@@ -401,8 +433,17 @@ const SendBitcoinConfirmationScreen = ({
         },
       },
     })
-    const errorsMessage = joinErrorsMessages(errors)
-    return { status: data.lnNoAmountUsdInvoicePaymentSend.status, errorsMessage }
+
+    let errorsMessage = ""
+    if (errors) {
+      errorsMessage = joinErrorsMessages(errors)
+    }
+
+    if (data?.lnNoAmountUsdInvoicePaymentSend?.errors.length) {
+      errorsMessage =
+        errorsMessage + ` ${data?.lnNoAmountUsdInvoicePaymentSend?.errors[0]?.message}`
+    }
+    return { status: data?.lnNoAmountUsdInvoicePaymentSend.status, errorsMessage }
   }
 
   const payOnChain = async () => {
@@ -417,12 +458,19 @@ const SendBitcoinConfirmationScreen = ({
       },
     })
 
-    const errorsMessage = joinErrorsMessages(errors)
-    return { status: data.onChainPaymentSend.status, errorsMessage }
+    let errorsMessage = ""
+    if (errors) {
+      errorsMessage = joinErrorsMessages(errors)
+    }
+
+    if (data?.onChainPaymentSend?.errors.length) {
+      errorsMessage = errorsMessage + ` ${data?.onChainPaymentSend?.errors[0].message}`
+    }
+    return { status: data?.onChainPaymentSend.status, errorsMessage }
   }
 
   const transactionPaymentMutation = (): (() => Promise<{
-    status: PaymentSendResult
+    status: Maybe<PaymentSendResult>
     errorsMessage: string
   }>) => {
     switch (paymentType) {
@@ -431,12 +479,12 @@ const SendBitcoinConfirmationScreen = ({
           ? payIntraLedgerUsd
           : payIntraLedger
       case "lightning":
-        if (!isNoAmountInvoice) {
-          return payLnInvoice
+        if (isNoAmountInvoice) {
+          return payerWalletDescriptor.currency === WalletCurrency.Usd
+            ? payLnNoAmountUsdInvoice
+            : payLnNoAmountInvoice
         }
-        return payerWalletDescriptor.currency === WalletCurrency.Usd
-          ? payLnNoAmountUsdInvoice
-          : payLnNoAmountInvoice
+        return payLnInvoice
       case "onchain":
         return payOnChain
       case "lnurl":
