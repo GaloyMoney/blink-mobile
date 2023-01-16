@@ -64,10 +64,7 @@ const SendBitcoinSuccessScreen = ({
           style={styles.lottie}
           resizeMode="cover"
         />
-        <Text
-          {...testProps(LL.SendBitcoinScreen.success())}
-          style={styles.successLottieText}
-        >
+        <Text {...testProps("Success Text")} style={styles.successLottieText}>
           {LL.SendBitcoinScreen.success()}
         </Text>
       </View>
