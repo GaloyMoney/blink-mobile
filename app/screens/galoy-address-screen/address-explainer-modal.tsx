@@ -4,6 +4,7 @@ import React from "react"
 import { Modal, Platform, StatusBar, TouchableWithoutFeedback, View } from "react-native"
 import { Text } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
+import { bankName } from "@app/config"
 
 const wallets = [
   "Bitcoin Beach Wallet",
@@ -83,10 +84,10 @@ export const AddressExplainerModal = ({
       >
         <View style={styles.modalView}>
           <Text style={styles.titleText}>
-            {LL.GaloyAddressScreen.howToUseYourAddress({ bankName: "BBW" })}
+            {LL.GaloyAddressScreen.howToUseYourAddress({ bankName })}
           </Text>
           <Text style={styles.bodyText}>
-            {LL.GaloyAddressScreen.howToUseYourAddressExplainer({ bankName: "BBW" })}
+            {LL.GaloyAddressScreen.howToUseYourAddressExplainer({ bankName })}
           </Text>
           <Text style={styles.bodyText}>
             {wallets.map((wallet) => (
