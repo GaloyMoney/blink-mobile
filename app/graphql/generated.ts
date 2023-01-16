@@ -2592,6 +2592,20 @@ export type SendBitcoinDetailsScreenQuery = {
         readonly balance: number
         readonly walletCurrency: WalletCurrency
       } | null
+      readonly wallets: ReadonlyArray<
+        | {
+            readonly __typename: "BTCWallet"
+            readonly id: string
+            readonly walletCurrency: WalletCurrency
+            readonly balance: number
+          }
+        | {
+            readonly __typename: "UsdWallet"
+            readonly id: string
+            readonly walletCurrency: WalletCurrency
+            readonly balance: number
+          }
+      >
     }
   } | null
 }
@@ -5551,6 +5565,11 @@ export const SendBitcoinDetailsScreenDocument = gql`
           id
           balance
           walletCurrency
+        }
+        wallets {
+          id
+          walletCurrency
+          balance
         }
       }
     }

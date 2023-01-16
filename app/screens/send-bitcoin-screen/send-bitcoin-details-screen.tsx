@@ -1,4 +1,27 @@
-import React, { useEffect, useMemo, useRef, useState } from "react"
+import { gql } from "@apollo/client"
+import NoteIcon from "@app/assets/icons/note.svg"
+import SwitchIcon from "@app/assets/icons/switch.svg"
+import {
+  Wallet,
+  WalletCurrency,
+  useSendBitcoinDetailsScreenQuery,
+} from "@app/graphql/generated"
+import { usePriceConversion, useUsdBtcAmount } from "@app/hooks"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { palette } from "@app/theme"
+import {
+  paymentAmountToDollarsOrSats,
+  satAmountDisplay,
+} from "@app/utils/currencyConversion"
+import { Network as NetworkLibGaloy, fetchLnurlInvoice } from "@galoymoney/client"
+import { decodeInvoiceString } from "@galoymoney/client/dist/parsing-v2"
+import crashlytics from "@react-native-firebase/crashlytics"
+import { StackScreenProps } from "@react-navigation/stack"
+import { Button } from "@rneui/base"
+import { Satoshis } from "lnurl-pay/dist/types/types"
+import React, { useEffect, useState } from "react"
 import {
   ScrollView,
   StyleSheet,
@@ -7,34 +30,10 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native"
-import { palette } from "@app/theme"
-import {
-  Wallet,
-  WalletCurrency,
-  WalletMetaFragment,
-  useSendBitcoinDetailsScreenQuery,
-} from "@app/graphql/generated"
-import { fetchLnurlInvoice, Network as NetworkLibGaloy } from "@galoymoney/client"
-import { Satoshis } from "lnurl-pay/dist/types/types"
-import { StackScreenProps } from "@react-navigation/stack"
-import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { usePriceConversion, useUsdBtcAmount } from "@app/hooks"
-import {
-  paymentAmountToDollarsOrSats,
-  satAmountDisplay,
-} from "@app/utils/currencyConversion"
-import ReactNativeModal from "react-native-modal"
 import { FakeCurrencyInput } from "react-native-currency-input"
-import SwitchIcon from "@app/assets/icons/switch.svg"
+import ReactNativeModal from "react-native-modal"
 import Icon from "react-native-vector-icons/Ionicons"
-import NoteIcon from "@app/assets/icons/note.svg"
-import { Button } from "@rneui/base"
-import { useI18nContext } from "@app/i18n/i18n-react"
 import { testProps } from "../../../utils/testProps"
-import crashlytics from "@react-native-firebase/crashlytics"
-import { decodeInvoiceString } from "@galoymoney/client/dist/parsing-v2"
-import { useDisplayCurrency } from "@app/hooks/use-display-currency"
-import { gql } from "@apollo/client"
 
 const Styles = StyleSheet.create({
   scrollView: {
@@ -217,6 +216,11 @@ gql`
           balance
           walletCurrency
         }
+        wallets {
+          id
+          walletCurrency
+          balance
+        }
       }
     }
   }
@@ -245,14 +249,7 @@ const SendBitcoinDetailsScreen = ({
   const network = data?.globals?.network
   const btcBalanceInUsd = data?.me?.defaultAccount?.btcWallet?.usdBalance
 
-  const wallets = useRef<WalletMetaFragment[]>()
-
-  useMemo(() => {
-    wallets.current = [
-      data.me?.defaultAccount?.btcWallet,
-      data.me?.defaultAccount?.usdWallet,
-    ]
-  }, [data?.me?.defaultAccount])
+  const wallets = data.me?.defaultAccount?.wallets
 
   const {
     fixedAmount,
@@ -353,7 +350,7 @@ const SendBitcoinDetailsScreen = ({
       onBackButtonPress={toggleModal}
     >
       <View>
-        {wallets.current.map((wallet) => {
+        {wallets.map((wallet) => {
           return (
             <TouchableWithoutFeedback
               key={wallet.id}
@@ -421,7 +418,7 @@ const SendBitcoinDetailsScreen = ({
     </ReactNativeModal>
   )
 
-  const showWalletPicker = !usdDisabled && wallets.current.length > 1
+  const showWalletPicker = !usdDisabled && wallets.length > 1
 
   const goToNextScreen = async () => {
     let invoice: string | undefined
