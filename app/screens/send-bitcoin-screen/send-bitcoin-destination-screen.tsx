@@ -260,6 +260,7 @@ const SendBitcoinDestinationScreen = ({
   const myPubKey = data?.globals?.nodesIds?.[0] ?? "" // FIXME: there can be more than one node
   const myUsername = data?.me?.username
   const bitcoinNetwork = data?.globals?.network
+  const contacts = useMemo(() => data?.me?.contacts ?? [], [data?.me?.contacts])
 
   const { LL } = useI18nContext()
   const [userDefaultWalletIdQuery] = useUserDefaultWalletIdLazyQuery()
@@ -269,12 +270,10 @@ const SendBitcoinDestinationScreen = ({
         username: string,
       ) => Promise<{ usernameStatus: UsernameStatus; walletId?: string }>)
     | null = useMemo(() => {
-    if (!data?.me?.contacts) {
+    if (!contacts) {
       return null
     }
-    const lowercaseContacts = data.me.contacts.map((contact) =>
-      contact.username.toLowerCase(),
-    )
+    const lowercaseContacts = contacts.map((contact) => contact.username.toLowerCase())
     const lowercaseMyUsername = myUsername ? myUsername.toLowerCase() : ""
     const getWalletIdForUsername = async (username: string) => {
       const { data } = await userDefaultWalletIdQuery({ variables: { username } })
@@ -287,7 +286,7 @@ const SendBitcoinDestinationScreen = ({
         myUsername: lowercaseMyUsername,
         getWalletIdForUsername,
       })
-  }, [data, userDefaultWalletIdQuery, myUsername])
+  }, [contacts, userDefaultWalletIdQuery, myUsername])
 
   const validateDestination = React.useCallback(
     async (destination) => {
