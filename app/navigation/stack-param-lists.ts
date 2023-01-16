@@ -48,7 +48,6 @@ export type RootStackParamList = {
     lnurl?: LnUrlPayServiceResponse
     recipientWalletId?: string
     paymentType: PaymentType
-    sameNode: boolean
   }
   sendBitcoinConfirmation: {
     fixedAmount?: BtcPaymentAmount
@@ -59,7 +58,6 @@ export type RootStackParamList = {
     paymentAmountInUsd?: UsdPaymentAmount
     note?: string
     paymentType: PaymentType
-    sameNode: boolean
     lnurlInvoice?: string
   }
   conversionDetails: {

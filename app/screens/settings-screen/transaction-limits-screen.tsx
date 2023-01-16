@@ -9,6 +9,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { palette } from "@app/theme"
 import { usdAmountDisplay } from "@app/utils/currencyConversion"
 import { useAccountLimitsQuery } from "@app/graphql/generated"
+import { gql } from "@apollo/client"
 
 const styles = EStyleSheet.create({
   container: {
@@ -68,6 +69,32 @@ const accountLimitsPeriodInHrs = {
   DAILY: "24",
   WEEKLY: "168",
 } as const
+
+gql`
+  query accountLimits {
+    me {
+      defaultAccount {
+        limits {
+          withdrawal {
+            totalLimit
+            remainingLimit
+            interval
+          }
+          internalSend {
+            totalLimit
+            remainingLimit
+            interval
+          }
+          convert {
+            totalLimit
+            remainingLimit
+            interval
+          }
+        }
+      }
+    }
+  }
+`
 
 export const TransactionLimitsScreen = () => {
   const { LL } = useI18nContext()

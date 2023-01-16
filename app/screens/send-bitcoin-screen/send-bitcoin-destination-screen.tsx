@@ -190,7 +190,6 @@ const sendBitcoinDetailsScreenParams = (destination: ValidPaymentDestination) =>
             currency: WalletCurrency.Btc,
           } as BtcPaymentAmount),
         paymentType: PaymentType.Lightning,
-        sameNode: destination.sameNode,
         note: destination.memo,
       }
     case PaymentType.Intraledger:
@@ -198,14 +197,12 @@ const sendBitcoinDetailsScreenParams = (destination: ValidPaymentDestination) =>
         destination: destination.handle,
         recipientWalletId: destination.walletId,
         paymentType: PaymentType.Intraledger,
-        sameNode: true,
       }
     case PaymentType.Lnurl:
       return {
         destination: destination.lnurl,
         paymentType: PaymentType.Lnurl,
         lnurl: destination.lnurlParams,
-        sameNode: false,
       }
     case PaymentType.Onchain:
       return {
@@ -218,7 +215,6 @@ const sendBitcoinDetailsScreenParams = (destination: ValidPaymentDestination) =>
           } as BtcPaymentAmount),
         note: destination.memo,
         paymentType: PaymentType.Onchain,
-        sameNode: false,
       }
   }
 }
@@ -226,7 +222,6 @@ const sendBitcoinDetailsScreenParams = (destination: ValidPaymentDestination) =>
 gql`
   query sendBitcoinDestination {
     globals {
-      nodesIds
       network
     }
     me {
@@ -238,6 +233,10 @@ gql`
         transactionsCount
       }
     }
+  }
+
+  query userDefaultWalletId($username: Username!) {
+    userDefaultWalletId(username: $username)
   }
 `
 
@@ -253,9 +252,9 @@ const SendBitcoinDestinationScreen = ({
     fetchPolicy: "cache-only",
     returnPartialData: true,
   })
-  const myPubKey = data?.globals?.nodesIds?.[0] ?? "" // FIXME: there can be more than one node
   const myUsername = data?.me?.username
   const bitcoinNetwork = data?.globals?.network
+  const contacts = useMemo(() => data?.me?.contacts ?? [], [data?.me?.contacts])
 
   const { LL } = useI18nContext()
   const [userDefaultWalletIdQuery] = useUserDefaultWalletIdLazyQuery()
@@ -265,12 +264,10 @@ const SendBitcoinDestinationScreen = ({
         username: string,
       ) => Promise<{ usernameStatus: UsernameStatus; walletId?: string }>)
     | null = useMemo(() => {
-    if (!data?.me?.contacts) {
+    if (!contacts) {
       return null
     }
-    const lowercaseContacts = data.me.contacts.map((contact) =>
-      contact.username.toLowerCase(),
-    )
+    const lowercaseContacts = contacts.map((contact) => contact.username.toLowerCase())
     const lowercaseMyUsername = myUsername ? myUsername.toLowerCase() : ""
     const getWalletIdForUsername = async (username: string) => {
       const { data } = await userDefaultWalletIdQuery({ variables: { username } })
@@ -283,10 +280,10 @@ const SendBitcoinDestinationScreen = ({
         myUsername: lowercaseMyUsername,
         getWalletIdForUsername,
       })
-  }, [data, userDefaultWalletIdQuery, myUsername])
+  }, [contacts, userDefaultWalletIdQuery, myUsername])
 
   const validateDestination = React.useCallback(
-    async (destination) => {
+    async (destination: string) => {
       if (destinationState.destinationState !== "entering") {
         return
       }
@@ -294,7 +291,6 @@ const SendBitcoinDestinationScreen = ({
       const parsedPaymentDestination = parsePaymentDestination({
         destination,
         network: bitcoinNetwork as NetworkLibGaloy,
-        pubKey: myPubKey,
         lnAddressDomains: lnurlDomains,
       })
 
@@ -458,7 +454,6 @@ const SendBitcoinDestinationScreen = ({
       }
     },
     [
-      myPubKey,
       bitcoinNetwork,
       checkUsername,
       destinationState.destinationState,

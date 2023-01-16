@@ -12,7 +12,7 @@ import {
   View,
 } from "react-native"
 import { Button, Input } from "@rneui/base"
-import { FetchResult } from "@apollo/client"
+import { gql } from "@apollo/client"
 import EStyleSheet from "react-native-extended-stylesheet"
 import PhoneInput from "react-native-phone-number-input"
 import analytics from "@react-native-firebase/analytics"
@@ -37,20 +37,12 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { logRequestAuthCode } from "@app/utils/analytics"
 import crashlytics from "@react-native-firebase/crashlytics"
 import {
+  UserLoginMutationHookResult,
   useCaptchaRequestAuthCodeMutation,
   useUserLoginMutation,
 } from "@app/graphql/generated"
 
 const phoneRegex = new RegExp("^\\+[0-9]+$")
-
-type UserLoginMutationResponse = {
-  errors: MutationError[]
-  authToken?: string
-}
-
-type LoginMutationFunction = (
-  params,
-) => Promise<FetchResult<Record<string, UserLoginMutationResponse>>>
 
 const styles = EStyleSheet.create({
   authCodeEntryContainer: {
@@ -137,6 +129,26 @@ const styles = EStyleSheet.create({
 type WelcomePhoneInputScreenProps = {
   navigation: StackNavigationProp<PhoneValidationStackParamList, "welcomePhoneInput">
 }
+
+gql`
+  mutation captchaRequestAuthCode($input: CaptchaRequestAuthCodeInput!) {
+    captchaRequestAuthCode(input: $input) {
+      errors {
+        message
+      }
+      success
+    }
+  }
+
+  mutation userLogin($input: UserLoginInput!) {
+    userLogin(input: $input) {
+      errors {
+        message
+      }
+      authToken
+    }
+  }
+`
 
 export const WelcomePhoneInputScreen: ScreenType = ({
   navigation,
@@ -388,7 +400,7 @@ export const WelcomePhoneValidationScreenDataInjected: ScreenType = ({
 }
 
 type WelcomePhoneValidationScreenProps = {
-  login: LoginMutationFunction
+  login: UserLoginMutationHookResult[0]
   navigation: StackNavigationProp<PhoneValidationStackParamList, "welcomePhoneValidation">
   route: RouteProp<PhoneValidationStackParamList, "welcomePhoneValidation">
   loading: boolean

@@ -84,6 +84,12 @@ fragment TransactionList on TransactionConnection {
   }
 }
 
+fragment WalletMeta on Wallet {
+  id
+  walletCurrency
+  balance
+}
+
 mutation accountUpdateDefaultWalletId($input: AccountUpdateDefaultWalletIdInput!) {
   accountUpdateDefaultWalletId(input: $input) {
     errors {
@@ -117,7 +123,6 @@ mutation captchaCreateChallenge {
 mutation captchaRequestAuthCode($input: CaptchaRequestAuthCodeInput!) {
   captchaRequestAuthCode(input: $input) {
     errors {
-      __typename
       message
     }
     success
@@ -127,7 +132,6 @@ mutation captchaRequestAuthCode($input: CaptchaRequestAuthCodeInput!) {
 mutation deviceNotificationTokenCreate($input: DeviceNotificationTokenCreateInput!) {
   deviceNotificationTokenCreate(input: $input) {
     errors {
-      __typename
       message
     }
     success
@@ -137,7 +141,6 @@ mutation deviceNotificationTokenCreate($input: DeviceNotificationTokenCreateInpu
 mutation intraLedgerPaymentSend($input: IntraLedgerPaymentSendInput!) {
   intraLedgerPaymentSend(input: $input) {
     errors {
-      __typename
       message
     }
     status
@@ -147,7 +150,6 @@ mutation intraLedgerPaymentSend($input: IntraLedgerPaymentSendInput!) {
 mutation intraLedgerUsdPaymentSend($input: IntraLedgerUsdPaymentSendInput!) {
   intraLedgerUsdPaymentSend(input: $input) {
     errors {
-      __typename
       message
     }
     status
@@ -173,7 +175,6 @@ mutation lnInvoiceCreate($input: LnInvoiceCreateInput!) {
 mutation lnInvoiceFeeProbe($input: LnInvoiceFeeProbeInput!) {
   lnInvoiceFeeProbe(input: $input) {
     errors {
-      __typename
       message
     }
     amount
@@ -183,7 +184,6 @@ mutation lnInvoiceFeeProbe($input: LnInvoiceFeeProbeInput!) {
 mutation lnInvoicePaymentSend($input: LnInvoicePaymentInput!) {
   lnInvoicePaymentSend(input: $input) {
     errors {
-      __typename
       message
     }
     status
@@ -208,7 +208,6 @@ mutation lnNoAmountInvoiceCreate($input: LnNoAmountInvoiceCreateInput!) {
 mutation lnNoAmountInvoiceFeeProbe($input: LnNoAmountInvoiceFeeProbeInput!) {
   lnNoAmountInvoiceFeeProbe(input: $input) {
     errors {
-      __typename
       message
     }
     amount
@@ -218,7 +217,6 @@ mutation lnNoAmountInvoiceFeeProbe($input: LnNoAmountInvoiceFeeProbeInput!) {
 mutation lnNoAmountInvoicePaymentSend($input: LnNoAmountInvoicePaymentInput!) {
   lnNoAmountInvoicePaymentSend(input: $input) {
     errors {
-      __typename
       message
     }
     status
@@ -228,7 +226,6 @@ mutation lnNoAmountInvoicePaymentSend($input: LnNoAmountInvoicePaymentInput!) {
 mutation lnNoAmountUsdInvoiceFeeProbe($input: LnNoAmountUsdInvoiceFeeProbeInput!) {
   lnNoAmountUsdInvoiceFeeProbe(input: $input) {
     errors {
-      __typename
       message
     }
     amount
@@ -238,7 +235,6 @@ mutation lnNoAmountUsdInvoiceFeeProbe($input: LnNoAmountUsdInvoiceFeeProbeInput!
 mutation lnNoAmountUsdInvoicePaymentSend($input: LnNoAmountUsdInvoicePaymentInput!) {
   lnNoAmountUsdInvoicePaymentSend(input: $input) {
     errors {
-      __typename
       message
     }
     status
@@ -248,11 +244,9 @@ mutation lnNoAmountUsdInvoicePaymentSend($input: LnNoAmountUsdInvoicePaymentInpu
 mutation lnUsdInvoiceCreate($input: LnUsdInvoiceCreateInput!) {
   lnUsdInvoiceCreate(input: $input) {
     errors {
-      __typename
       message
     }
     invoice {
-      __typename
       paymentHash
       paymentRequest
       paymentSecret
@@ -264,7 +258,6 @@ mutation lnUsdInvoiceCreate($input: LnUsdInvoiceCreateInput!) {
 mutation lnUsdInvoiceFeeProbe($input: LnUsdInvoiceFeeProbeInput!) {
   lnUsdInvoiceFeeProbe(input: $input) {
     errors {
-      __typename
       message
     }
     amount
@@ -284,7 +277,6 @@ mutation onChainAddressCurrent($input: OnChainAddressCurrentInput!) {
 mutation onChainPaymentSend($input: OnChainPaymentSendInput!) {
   onChainPaymentSend(input: $input) {
     errors {
-      __typename
       message
     }
     status
@@ -294,8 +286,11 @@ mutation onChainPaymentSend($input: OnChainPaymentSendInput!) {
 mutation userContactUpdateAlias($input: UserContactUpdateAliasInput!) {
   userContactUpdateAlias(input: $input) {
     errors {
-      __typename
       message
+    }
+    contact {
+      alias
+      id
     }
   }
 }
@@ -303,7 +298,6 @@ mutation userContactUpdateAlias($input: UserContactUpdateAliasInput!) {
 mutation userLogin($input: UserLoginInput!) {
   userLogin(input: $input) {
     errors {
-      __typename
       message
     }
     authToken
@@ -343,11 +337,9 @@ mutation userUpdateLanguage($input: UserUpdateLanguageInput!) {
 mutation userUpdateUsername($input: UserUpdateUsernameInput!) {
   userUpdateUsername(input: $input) {
     errors {
-      __typename
       message
     }
     user {
-      __typename
       id
       username
     }
@@ -468,18 +460,9 @@ query conversionScreen {
   }
 }
 
-query initWallet {
-  me {
-    id
-    defaultAccount {
-      id
-      defaultWalletId
-      wallets {
-        id
-        balance
-        walletCurrency
-      }
-    }
+query currentPrice {
+  btcPrice {
+    formattedAmount
   }
 }
 
@@ -490,9 +473,8 @@ query languageScreen {
   }
 }
 
-query mainQuery($hasToken: Boolean!) {
+query main($hasToken: Boolean!) {
   globals {
-    nodesIds
     network
   }
   quizQuestions {
@@ -528,6 +510,14 @@ query mainQuery($hasToken: Boolean!) {
         balance
         walletCurrency
       }
+      btcWallet @client {
+        balance
+        usdBalance
+      }
+      usdWallet @client {
+        id
+        balance
+      }
     }
   }
   mobileVersions {
@@ -546,6 +536,22 @@ query onChainTxFee($walletId: WalletId!, $address: OnChainAddress!, $amount: Sat
   ) {
     amount
     targetConfirmations
+  }
+}
+
+query quizQuestions($hasToken: Boolean!) {
+  quizQuestions {
+    id
+    earnAmount
+  }
+  me @include(if: $hasToken) {
+    quizQuestions {
+      completed
+      question {
+        id
+        earnAmount
+      }
+    }
   }
 }
 
@@ -595,9 +601,28 @@ query rootStack($hasToken: Boolean!) {
   }
 }
 
+query scanningQRCodeScreen {
+  globals {
+    network
+  }
+}
+
+query sendBitcoinConfirmationScreen {
+  me {
+    defaultAccount {
+      btcWallet {
+        balance
+        usdBalance
+      }
+      usdWallet {
+        balance
+      }
+    }
+  }
+}
+
 query sendBitcoinDestination {
   globals {
-    nodesIds
     network
   }
   me {
@@ -625,15 +650,17 @@ query sendBitcoinDetailsScreen {
         id
         balance
         walletCurrency
-        accountId
-        pendingIncomingBalance
+        usdBalance
       }
       usdWallet {
         id
         balance
         walletCurrency
-        accountId
-        pendingIncomingBalance
+      }
+      wallets {
+        id
+        walletCurrency
+        balance
       }
     }
   }

@@ -1,20 +1,6 @@
 import { gql } from "@apollo/client"
 
 export default gql`
-  subscription price($input: PriceInput!) {
-    price(input: $input) {
-      price {
-        base
-        offset
-        currencyUnit
-        formattedAmount
-      }
-      errors {
-        message
-      }
-    }
-  }
-
   subscription myUpdates {
     myUpdates {
       errors {

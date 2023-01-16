@@ -10,6 +10,7 @@ import {
   useLnUsdInvoiceFeeProbeMutation,
   useOnChainTxFeeLazyQuery,
 } from "@app/graphql/generated"
+import { gql } from "@apollo/client"
 
 type FeeType = {
   amount?: PaymentAmount<WalletCurrency>
@@ -22,9 +23,46 @@ type UseFeeInput = {
   isNoAmountInvoice: boolean
   invoice: string
   paymentType: string
-  sameNode: boolean
   paymentAmount: PaymentAmount<WalletCurrency>
 }
+
+gql`
+  mutation lnNoAmountInvoiceFeeProbe($input: LnNoAmountInvoiceFeeProbeInput!) {
+    lnNoAmountInvoiceFeeProbe(input: $input) {
+      errors {
+        message
+      }
+      amount
+    }
+  }
+
+  mutation lnInvoiceFeeProbe($input: LnInvoiceFeeProbeInput!) {
+    lnInvoiceFeeProbe(input: $input) {
+      errors {
+        message
+      }
+      amount
+    }
+  }
+
+  mutation lnUsdInvoiceFeeProbe($input: LnUsdInvoiceFeeProbeInput!) {
+    lnUsdInvoiceFeeProbe(input: $input) {
+      errors {
+        message
+      }
+      amount
+    }
+  }
+
+  mutation lnNoAmountUsdInvoiceFeeProbe($input: LnNoAmountUsdInvoiceFeeProbeInput!) {
+    lnNoAmountUsdInvoiceFeeProbe(input: $input) {
+      errors {
+        message
+      }
+      amount
+    }
+  }
+`
 
 const useFee = ({
   walletDescriptor,
@@ -32,7 +70,6 @@ const useFee = ({
   isNoAmountInvoice,
   invoice,
   paymentType,
-  sameNode,
   paymentAmount,
 }: UseFeeInput): FeeType => {
   const [fee, setFee] = useState<FeeType>({
@@ -66,7 +103,8 @@ const useFee = ({
       if (paymentType === "lightning" || paymentType === "lnurl") {
         let feeProbeFailed = false
 
-        if (sameNode || (isNoAmountInvoice && paymentAmount.amount === 0)) {
+        // TODO(nb): check if the condition below make sense?
+        if (isNoAmountInvoice && paymentAmount.amount === 0) {
           return setFee({
             amount: { amount: 0, currency: walletDescriptor.currency },
             status: "set",

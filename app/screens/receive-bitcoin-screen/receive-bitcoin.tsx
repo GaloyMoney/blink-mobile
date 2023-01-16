@@ -75,6 +75,8 @@ gql`
   }
 `
 
+// FIXME ReceiveBitcoinScreen and ReceiveBTC are confusing names
+// how do they differ?
 const ReceiveBitcoinScreen = ({
   navigation,
   route,

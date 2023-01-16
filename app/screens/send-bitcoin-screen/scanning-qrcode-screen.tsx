@@ -34,7 +34,6 @@ import {
 import Reanimated from "react-native-reanimated"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
-import useMainQuery from "@app/hooks/use-main-query"
 import Clipboard from "@react-native-community/clipboard"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import RNQRGenerator from "rn-qr-generator"
@@ -43,6 +42,8 @@ import ImagePicker from "react-native-image-crop-picker"
 import { lnurlDomains } from "./send-bitcoin-destination-screen"
 import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
 import crashlytics from "@react-native-firebase/crashlytics"
+import { gql } from "@apollo/client"
+import { useScanningQrCodeScreenQuery } from "@app/graphql/generated"
 
 const { width: screenWidth } = Dimensions.get("window")
 const { height: screenHeight } = Dimensions.get("window")
@@ -115,11 +116,22 @@ const galoyAddressFromLnurlParams = (
   return null
 }
 
+gql`
+  query scanningQRCodeScreen {
+    globals {
+      network
+    }
+  }
+`
+
 export const ScanningQRCodeScreen: ScreenType = ({
   navigation,
 }: ScanningQRCodeScreenProps) => {
   const [pending, setPending] = React.useState(false)
-  const { myPubKey, network: bitcoinNetwork } = useMainQuery()
+
+  const { data } = useScanningQrCodeScreenQuery()
+  const bitcoinNetwork = data?.globals?.network
+
   const { LL } = useI18nContext()
   const devices = useCameraDevices()
   const [cameraPermissionStatus, setCameraPermissionStatus] =
@@ -151,7 +163,6 @@ export const ScanningQRCodeScreen: ScreenType = ({
         const parsedDestination = parsePaymentDestination({
           destination: data,
           network: bitcoinNetwork as NetworkLibGaloy,
-          pubKey: myPubKey,
           lnAddressDomains: lnurlDomains,
         })
 
@@ -217,7 +228,7 @@ export const ScanningQRCodeScreen: ScreenType = ({
         Alert.alert(err.toString())
       }
     },
-    [LL.ScanningQRCodeScreen, LL.common, myPubKey, navigation, pending, bitcoinNetwork],
+    [LL.ScanningQRCodeScreen, LL.common, navigation, pending, bitcoinNetwork],
   )
 
   React.useEffect(() => {

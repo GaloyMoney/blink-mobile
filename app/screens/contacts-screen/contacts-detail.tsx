@@ -1,5 +1,4 @@
 import { useUserContactUpdateAliasMutation } from "@app/graphql/generated"
-import useMainQuery from "@app/hooks/use-main-query"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { WalletType } from "@app/utils/enum"
 import { RouteProp } from "@react-navigation/native"
@@ -20,6 +19,7 @@ import type {
 import { palette } from "../../theme/palette"
 import type { ScreenType } from "../../types/jsx"
 import { ContactTransactionsDataInjected } from "./contact-transactions"
+import { gql } from "@apollo/client"
 
 const styles = EStyleSheet.create({
   actionsContainer: { marginBottom: "15rem", backgroundColor: palette.lighterGrey },
@@ -73,32 +73,37 @@ export const ContactsDetailScreen: ScreenType = ({
   navigation,
 }: ContactDetailProps) => {
   const { contact } = route.params
-  const { refetch: refetchMain } = useMainQuery()
-  return (
-    <ContactsDetailScreenJSX
-      navigation={navigation}
-      contact={contact}
-      refetchMain={refetchMain}
-    />
-  )
+  return <ContactsDetailScreenJSX navigation={navigation} contact={contact} />
 }
 
 type ContactDetailScreenProps = {
   contact: Contact
   navigation: StackNavigationProp<RootStackParamList, "transactionHistory">
-  refetchMain: () => void
 }
+
+gql`
+  mutation userContactUpdateAlias($input: UserContactUpdateAliasInput!) {
+    userContactUpdateAlias(input: $input) {
+      errors {
+        message
+      }
+      contact {
+        alias
+        id
+      }
+    }
+  }
+`
 
 export const ContactsDetailScreenJSX: ScreenType = ({
   contact,
   navigation,
-  refetchMain,
 }: ContactDetailScreenProps) => {
   const [contactName, setContactName] = React.useState(contact.alias)
   const { LL } = useI18nContext()
-  const [userContactUpdateAlias] = useUserContactUpdateAliasMutation({
-    onCompleted: () => refetchMain(),
-  })
+
+  // TODO: feature seems broken. need to fix.
+  const [userContactUpdateAlias] = useUserContactUpdateAliasMutation({})
 
   const updateName = async () => {
     // TODO: need optimistic updates

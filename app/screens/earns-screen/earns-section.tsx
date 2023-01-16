@@ -1,4 +1,4 @@
-import { useApolloClient } from "@apollo/client"
+import { gql, useApolloClient } from "@apollo/client"
 import { RouteProp, useIsFocused } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
@@ -24,14 +24,13 @@ import {
   getQuizQuestionsContent,
   remainingSatsOnSection,
 } from "./earns-utils"
-import { getQuizQuestions } from "../../graphql/query"
-import useMainQuery from "@app/hooks/use-main-query"
+import { getQuizQuestions } from "./query"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { earnSections } from "./sections"
 import { PaginationItem } from "@app/components/pagination"
 import { useSharedValue } from "react-native-reanimated"
-import { useUserQuizQuestionUpdateCompletedMutation } from "@app/graphql/generated"
 import { joinErrorsMessages } from "@app/graphql/utils"
+import { useUserQuizQuestionUpdateCompletedMutation } from "@app/graphql/generated"
 
 const { width: screenWidth } = Dimensions.get("window")
 
@@ -134,13 +133,37 @@ type Props = {
   route: RouteProp<RootStackParamList, "earnsSection">
 }
 
+gql`
+  mutation userQuizQuestionUpdateCompleted(
+    $input: UserQuizQuestionUpdateCompletedInput!
+  ) {
+    userQuizQuestionUpdateCompleted(input: $input) {
+      errors {
+        __typename
+        message
+      }
+      userQuizQuestion {
+        question {
+          id
+          earnAmount
+        }
+        completed
+      }
+    }
+  }
+`
+
 export const EarnSection: ScreenType = ({ route, navigation }: Props) => {
   const { hasToken } = useToken()
   const client = useApolloClient()
-  const { refetch: refetchMain } = useMainQuery()
   const { LL } = useI18nContext()
+
   const [userQuizQuestionUpdateCompleted] = useUserQuizQuestionUpdateCompletedMutation({
-    onCompleted: () => refetchMain(),
+    onCompleted: () => {
+      client.refetchQueries({
+        include: ["main"],
+      })
+    },
   })
 
   const quizQuestions = getQuizQuestions(client, { hasToken })

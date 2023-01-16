@@ -1,3 +1,4 @@
+import { gql } from "@apollo/client"
 import { useCaptchaCreateChallengeMutation } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import GeetestModule from "@galoymoney/react-native-geetest-module"
@@ -12,6 +13,24 @@ type GeetestCaptchaReturn = {
   resetError: () => void
   resetValidationData: () => void
 }
+
+gql`
+  mutation captchaCreateChallenge {
+    captchaCreateChallenge {
+      errors {
+        __typename
+        message
+      }
+      result {
+        __typename
+        id
+        challengeCode
+        newCaptcha
+        failbackMode
+      }
+    }
+  }
+`
 
 export const useGeetestCaptcha = (): GeetestCaptchaReturn => {
   const [geetestValidationData, setGeetesValidationData] =

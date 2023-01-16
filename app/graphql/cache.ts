@@ -1,5 +1,12 @@
 import { InMemoryCache, gql } from "@apollo/client"
-import { Account, MyWalletsFragmentDoc, Wallet, WalletCurrency } from "./generated"
+import {
+  Account,
+  CurrentPriceDocument,
+  CurrentPriceQuery,
+  MyWalletsFragmentDoc,
+  Wallet,
+  WalletCurrency,
+} from "./generated"
 
 gql`
   fragment MyWallets on ConsumerAccount {
@@ -7,6 +14,12 @@ gql`
       id
       balance
       walletCurrency
+    }
+  }
+
+  query currentPrice {
+    btcPrice {
+      formattedAmount
     }
   }
 `
@@ -26,6 +39,10 @@ const getWallets = ({ readField, cache }): readonly Wallet[] | undefined => {
 
 export const createCache = () => {
   return new InMemoryCache({
+    possibleTypes: {
+      // TODO: add other possible types
+      Wallet: ["BTCWallet", "UsdWallet"],
+    },
     typePolicies: {
       Contact: {
         fields: {
@@ -69,7 +86,7 @@ export const createCache = () => {
             },
           },
           btcWallet: {
-            read: (_, { readField, cache }): Wallet | undefined => {
+            read: (_, { readField, cache }) => {
               const wallets = getWallets({ readField, cache })
               if (wallets === undefined || wallets.length === 0) {
                 return undefined
@@ -89,6 +106,27 @@ export const createCache = () => {
 
               const defaultWalletId = readField("defaultWalletId")
               return wallets.find((wallet) => wallet.id === defaultWalletId)
+            },
+          },
+        },
+      },
+      BTCWallet: {
+        fields: {
+          usdBalance: {
+            read: (_, { readField, cache }) => {
+              const res = cache.readQuery<CurrentPriceQuery>({
+                query: CurrentPriceDocument,
+              })
+              if (!res?.btcPrice?.formattedAmount) {
+                return undefined
+              }
+
+              // TODO: use function from usePriceConversion
+              // TODO: verify type
+              const btcPrice = Number(res.btcPrice.formattedAmount)
+              const satsAmount = Number(readField("balance"))
+
+              return (satsAmount * btcPrice) / 100
             },
           },
         },

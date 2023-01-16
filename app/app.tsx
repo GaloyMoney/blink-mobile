@@ -34,7 +34,6 @@ import { RootSiblingParent } from "react-native-root-siblings"
 import VersionNumber from "react-native-version-number"
 import { GlobalErrorToast } from "./components/global-error"
 import { createCache } from "./graphql/cache"
-import { initQuery } from "./graphql/init"
 import "./utils/polyfill"
 import { RootStack } from "./navigation/root-navigator"
 import { isIos } from "./utils/helper"
@@ -58,7 +57,6 @@ import theme from "./rne-theme/theme"
 import { createClient } from "graphql-ws"
 import { GraphQLWsLink } from "@apollo/client/link/subscriptions"
 import { GaloyToast } from "./components/galoy-toast"
-import { InitWalletDocument } from "./graphql/generated"
 import { BUILD_VERSION } from "@app/config"
 import { RootStackParamList } from "./navigation/stack-param-lists"
 
@@ -234,13 +232,6 @@ export const App = (): JSX.Element => {
         connectToDevTools: true,
       })
 
-      const initDb = async () => {
-        client.writeQuery({
-          query: InitWalletDocument,
-          data: initQuery,
-        })
-      }
-
       // Read the current schema version from AsyncStorage.
       const currentVersion = await loadString(BUILD_VERSION)
       const buildVersion = String(VersionNumber.buildVersion)
@@ -256,11 +247,8 @@ export const App = (): JSX.Element => {
 
         // init the DB. will be override if a cache exists
         await persistor_.purge()
-        await initDb()
         await saveString(BUILD_VERSION, buildVersion)
       }
-
-      client.onClearStore(initDb)
 
       setApolloClient(client)
     }

@@ -16,6 +16,7 @@ import { toastShow } from "../../utils/toast"
 
 import { useContactsQuery } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { gql } from "@apollo/client"
 
 const styles = EStyleSheet.create({
   activityIndicatorContainer: {
@@ -81,6 +82,19 @@ const styles = EStyleSheet.create({
 type Props = {
   navigation: StackNavigationProp<ContactStackParamList, "contactList">
 }
+
+gql`
+  query contacts {
+    me {
+      contacts {
+        id
+        username
+        alias
+        transactionsCount
+      }
+    }
+  }
+`
 
 export const ContactsScreen: ScreenType = ({ navigation }: Props) => {
   const { hasToken } = useToken()

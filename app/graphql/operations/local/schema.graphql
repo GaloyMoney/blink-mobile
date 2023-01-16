@@ -17,13 +17,17 @@ extend type Query {
 }
 
 extend type Account {
-  usdWallet: Wallet
-  btcWallet: Wallet
+  usdWallet: UsdWallet
+  btcWallet: BTCWallet
   defaultWallet: Wallet
 }
 
 extend type ConsumerAccount {
-  usdWallet: Wallet
-  btcWallet: Wallet
+  usdWallet: UsdWallet
+  btcWallet: BTCWallet
   defaultWallet: Wallet
+}
+
+extend type BTCWallet {
+  usdBalance: SignedAmount
 }

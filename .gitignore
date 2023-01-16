@@ -75,3 +75,4 @@ yalc.lock
 *.log
 
 .env
+.envrc

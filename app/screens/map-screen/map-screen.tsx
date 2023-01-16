@@ -16,6 +16,7 @@ import useToken from "../../hooks/use-token"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { useBusinessMapMarkersQuery } from "@app/graphql/generated"
+import { gql } from "@apollo/client"
 
 const styles = StyleSheet.create({
   android: { marginTop: 18 },
@@ -38,6 +39,21 @@ const styles = StyleSheet.create({
 type Props = {
   navigation: StackNavigationProp<PrimaryStackParamList, "Map">
 }
+
+gql`
+  query businessMapMarkers {
+    businessMapMarkers {
+      username
+      mapInfo {
+        title
+        coordinates {
+          longitude
+          latitude
+        }
+      }
+    }
+  }
+`
 
 export const MapScreen: ScreenType = ({ navigation }: Props) => {
   const { hasToken } = useToken()

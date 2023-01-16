@@ -69,7 +69,6 @@ export const cacheWallet = (cache: InMemoryCache, balance: number): void => {
     data: {
       globals: {
         __typename: "Globals",
-        nodesIds: [""],
       },
       quizQuestions: [],
       me: {

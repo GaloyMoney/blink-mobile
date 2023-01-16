@@ -6,20 +6,24 @@ import { palette } from "@app/theme"
 import successLottieJson from "../send-bitcoin-screen/success_lottie.json"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import useMainQuery from "@app/hooks/use-main-query"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { useApolloClient } from "@apollo/client"
 
 export const ConversionSuccessScreen = ({
   navigation,
 }: StackScreenProps<RootStackParamList, "conversionSuccess">) => {
-  const { refetch } = useMainQuery()
+  const client = useApolloClient()
+
   const { LL } = useI18nContext()
   const CALLBACK_DELAY = 2000
   useEffect(() => {
-    refetch()
+    client.refetchQueries({
+      include: ["main"],
+    })
+
     const navigateToHomeTimeout = setTimeout(() => navigation.popToTop(), CALLBACK_DELAY)
     return () => clearTimeout(navigateToHomeTimeout)
-  }, [navigation, refetch])
+  }, [navigation, client])
 
   return (
     <View style={styles.lottieContainer}>

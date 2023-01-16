@@ -1,9 +1,27 @@
-import { MockableApolloClient } from "../types/mockable"
-import { MainQueryDocument } from "./generated"
+import { ApolloClient, gql } from "@apollo/client"
+import { QuizQuestionsDocument, QuizQuestionsQuery } from "../../graphql/generated"
 
-export const getQuizQuestions = (client: MockableApolloClient, { hasToken }) => {
-  const data = client.readQuery({
-    query: MainQueryDocument,
+gql`
+  query quizQuestions($hasToken: Boolean!) {
+    quizQuestions {
+      id
+      earnAmount
+    }
+    me @include(if: $hasToken) {
+      quizQuestions {
+        completed
+        question {
+          id
+          earnAmount
+        }
+      }
+    }
+  }
+`
+
+export const getQuizQuestions = (client: ApolloClient<unknown>, { hasToken }) => {
+  const data = client.readQuery<QuizQuestionsQuery>({
+    query: QuizQuestionsDocument,
     variables: { hasToken },
   })
 

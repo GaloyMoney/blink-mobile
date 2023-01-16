@@ -4,6 +4,23 @@ import * as React from "react"
 import { createContext, useContext, useEffect, useReducer } from "react"
 
 import { usePriceSubscription } from "@app/graphql/generated"
+import { gql } from "@apollo/client"
+
+gql`
+  subscription price($input: PriceInput!) {
+    price(input: $input) {
+      price {
+        base
+        offset
+        currencyUnit
+        formattedAmount
+      }
+      errors {
+        message
+      }
+    }
+  }
+`
 
 export type PriceData =
   | {

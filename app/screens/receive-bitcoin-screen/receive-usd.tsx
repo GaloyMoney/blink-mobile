@@ -161,11 +161,9 @@ gql`
   mutation lnUsdInvoiceCreate($input: LnUsdInvoiceCreateInput!) {
     lnUsdInvoiceCreate(input: $input) {
       errors {
-        __typename
         message
       }
       invoice {
-        __typename
         paymentHash
         paymentRequest
         paymentSecret
@@ -185,13 +183,16 @@ const ReceiveUsd = () => {
   const [lnUsdInvoiceCreate] = useLnUsdInvoiceCreateMutation()
 
   const { data } = useReceiveUsdQuery({ fetchPolicy: "cache-only" })
-  const usdWalletId = data?.me?.defaultAccount?.usdWallet?.id
+  const walletId = data?.me?.defaultAccount?.usdWallet?.id
   const network = data?.globals?.network
 
   const [invoice, setInvoice] = useState<LnInvoice | LnNoAmountInvoice | null>(null)
   const [usdAmount, setUsdAmount] = useState(0)
   const [memo, setMemo] = useState("")
+
+  // FIXME: we should subscribe at the root level, so we receive update even if we're not on the receive screen
   const { lnUpdate } = useSubscriptionUpdates()
+
   const [showMemoInput, setShowMemoInput] = useState(false)
   const [showAmountInput, setShowAmountInput] = useState(false)
   const { LL } = useI18nContext()
@@ -301,10 +302,10 @@ const ReceiveUsd = () => {
   )
 
   useEffect((): void | (() => void) => {
-    if (usdWalletId && !showAmountInput && !showMemoInput) {
-      updateInvoice({ walletId: usdWalletId, usdAmount, memo })
+    if (walletId && !showAmountInput && !showMemoInput) {
+      updateInvoice({ walletId, usdAmount, memo })
     }
-  }, [usdAmount, memo, updateInvoice, usdWalletId, showAmountInput, showMemoInput])
+  }, [usdAmount, memo, updateInvoice, walletId, showAmountInput, showMemoInput])
 
   useEffect((): void | (() => void) => {
     if (lnUpdate?.paymentHash === invoice?.paymentHash && lnUpdate?.status === "PAID") {
@@ -493,7 +494,7 @@ const ReceiveUsd = () => {
               titleStyle={styles.activeButtonTitleStyle}
               onPress={() => {
                 setStatus("loading")
-                updateInvoice({ walletId: usdWalletId, usdAmount, memo })
+                updateInvoice({ walletId, usdAmount, memo })
               }}
             />
           </View>
