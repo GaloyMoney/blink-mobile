@@ -44,7 +44,7 @@ describe("Username Payment Flow", async () => {
       await amountInput.waitForDisplayed({ timeout })
       await amountInput.click()
       await browser.pause(1000)
-      await amountInput.sendKeys("1".split(""))
+      await amountInput.sendKeys("2".split(""))
       await enter(amountInput)
     } catch (e) {
       console.error(e)
