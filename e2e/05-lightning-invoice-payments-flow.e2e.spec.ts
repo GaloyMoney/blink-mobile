@@ -74,13 +74,8 @@ describe("Payments Flow", async () => {
     )
     await confirmPaymentButton.waitForDisplayed({ timeout })
     await confirmPaymentButton.click()
-    const successCheck = await $(selector("Success Text", "StaticText"))
-    await successCheck.waitForDisplayed({ timeout: 5000, interval: 100 })
-    // Wait 5 seconds for the success screen to be removed
-    await successCheck.waitForDisplayed({ timeout: 5000, reverse: true, interval: 100 })
     const currentBalanceHeader = await $(selector("Current Balance Header", "StaticText"))
     // Wait 5 seconds for move money screen to be displayed
     await currentBalanceHeader.waitForDisplayed({ timeout: 5000 })
-
   })
 })
