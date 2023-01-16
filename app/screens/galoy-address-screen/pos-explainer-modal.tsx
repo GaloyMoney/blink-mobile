@@ -53,7 +53,7 @@ const styles = EStyleSheet.create({
 
 type SetAddressModalProps = {
   modalVisible: boolean
-  toggleModal?: () => void
+  toggleModal: () => void
 }
 
 export const PosExplainerModal = ({
@@ -68,9 +68,7 @@ export const PosExplainerModal = ({
         animationType="slide"
         transparent={true}
         visible={modalVisible}
-        onRequestClose={() => {
-          toggleModal()
-        }}
+        onRequestClose={toggleModal}
       >
         <View style={styles.modalView}>
           <Text style={styles.titleText}>
@@ -79,7 +77,7 @@ export const PosExplainerModal = ({
           <Text style={styles.bodyText}>
             {LL.GaloyAddressScreen.howToUseYourCashRegisterExplainer()}
           </Text>
-          <TouchableWithoutFeedback onPress={() => toggleModal()}>
+          <TouchableWithoutFeedback onPress={toggleModal}>
             <View style={styles.backText}>
               <Text style={styles.cancelText}>{LL.common.back()}</Text>
             </View>

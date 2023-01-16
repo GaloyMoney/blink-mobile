@@ -113,7 +113,7 @@ const styles = EStyleSheet.create({
 
 type SetAddressModalProps = {
   modalVisible: boolean
-  toggleModal?: () => void
+  toggleModal: () => void
 }
 
 gql`
@@ -153,7 +153,7 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
           )
           setError(LL.GaloyAddressScreen.somethingWentWrong())
         }
-      } else if (result.userUpdateUsername.user) {
+      } else if (result.userUpdateUsername.user?.username) {
         setNewAddress(result.userUpdateUsername.user.username)
       }
     },
@@ -219,7 +219,7 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
                 disabled={!address || Boolean(error)}
               />
               <View style={styles.cancelTextContainer}>
-                <TouchableWithoutFeedback onPress={() => toggleModal()}>
+                <TouchableWithoutFeedback onPress={toggleModal}>
                   <Text style={styles.cancelText}>{LL.common.cancel()}</Text>
                 </TouchableWithoutFeedback>
               </View>
@@ -241,7 +241,7 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
                 buttonStyle={styles.buttonStyle}
                 onPress={() => navigation.popToTop()}
               />
-              <TouchableWithoutFeedback onPress={() => toggleModal()}>
+              <TouchableWithoutFeedback onPress={toggleModal}>
                 <View style={styles.backText}>
                   <Text style={styles.cancelText}>{LL.common.back()}</Text>
                 </View>

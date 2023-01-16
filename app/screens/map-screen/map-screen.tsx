@@ -108,43 +108,46 @@ export const MapScreen: ScreenType = ({ navigation }: Props) => {
 
   const markers: JSX.Element[] = []
   maps.forEach((item) => {
-    const onPress = () => {
-      if (hasToken) {
-        navigation.navigate("sendBitcoinDestination", { username: item.username })
-      } else {
-        navigation.navigate("phoneValidation")
+    if (item) {
+      const onPress = () => {
+        if (hasToken && item?.username) {
+          navigation.navigate("sendBitcoinDestination", { username: item.username })
+        } else {
+          navigation.navigate("phoneValidation")
+        }
       }
-    }
-    markers.push(
-      <Marker
-        coordinate={item.mapInfo.coordinates}
-        key={item.username}
-        pinColor={palette.orange}
-      >
-        <Callout
-          // alphaHitTest
-          // tooltip
-          onPress={() => (Boolean(item.username) && !isIos ? onPress() : null)}
+
+      markers.push(
+        <Marker
+          coordinate={item.mapInfo.coordinates}
+          key={item.username}
+          pinColor={palette.orange}
         >
-          <View style={styles.customView}>
-            <Text style={styles.title}>{item.mapInfo.title}</Text>
-            {Boolean(item.username) && !isIos && (
-              <Button
-                containerStyle={styles.android}
-                title={LL.MapScreen.payBusiness()}
-              />
-            )}
-            {isIos && (
-              <CalloutSubview onPress={() => (item.username ? onPress() : null)}>
-                {Boolean(item.username) && (
-                  <Button style={styles.ios} title={LL.MapScreen.payBusiness()} />
-                )}
-              </CalloutSubview>
-            )}
-          </View>
-        </Callout>
-      </Marker>,
-    )
+          <Callout
+            // alphaHitTest
+            // tooltip
+            onPress={() => (Boolean(item.username) && !isIos ? onPress() : null)}
+          >
+            <View style={styles.customView}>
+              <Text style={styles.title}>{item.mapInfo.title}</Text>
+              {Boolean(item.username) && !isIos && (
+                <Button
+                  containerStyle={styles.android}
+                  title={LL.MapScreen.payBusiness()}
+                />
+              )}
+              {isIos && (
+                <CalloutSubview onPress={() => (item.username ? onPress() : null)}>
+                  {Boolean(item.username) && (
+                    <Button style={styles.ios} title={LL.MapScreen.payBusiness()} />
+                  )}
+                </CalloutSubview>
+              )}
+            </View>
+          </Callout>
+        </Marker>,
+      )
+    }
   })
 
   return (

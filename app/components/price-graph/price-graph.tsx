@@ -101,7 +101,9 @@ export const PriceGraphDataInjected = () => {
 
   return (
     <PriceGraph
-      prices={data.btcPriceList.slice()} // FIXME: PricePoint should be non-nullable
+      prices={data.btcPriceList
+        .filter((price) => price !== null)
+        .map((price) => price as PricePoint)} // FIXME: backend should be updated so that PricePoint is non-nullable
       graphRange={graphRange}
       setGraphRange={setGraphRange}
     />

@@ -99,25 +99,27 @@ export const SetDefaultWallet = () => {
   }
 
   const updateDefaultWallet = async (newDefaultWalletId: string) => {
-    await accountUpdateDefaultWallet({
-      variables: {
-        input: {
-          walletId: newDefaultWalletId,
-        },
-      },
-      optimisticResponse: {
-        __typename: "Mutation",
-        accountUpdateDefaultWalletId: {
-          __typename: "AccountUpdateDefaultWalletIdPayload",
-          errors: null,
-          account: {
-            defaultWalletId: newDefaultWalletId,
-            id: accountId,
-            __typename: "ConsumerAccount",
+    if (accountId) {
+      await accountUpdateDefaultWallet({
+        variables: {
+          input: {
+            walletId: newDefaultWalletId,
           },
         },
-      },
-    })
+        optimisticResponse: {
+          __typename: "Mutation",
+          accountUpdateDefaultWalletId: {
+            __typename: "AccountUpdateDefaultWalletIdPayload",
+            errors: [],
+            account: {
+              defaultWalletId: newDefaultWalletId,
+              id: accountId,
+              __typename: "ConsumerAccount",
+            },
+          },
+        },
+      })
+    }
   }
 
   return (
@@ -148,7 +150,7 @@ export const SetDefaultWallet = () => {
           uncheckedIcon="circle-o"
           checked={defaultWalletId === btcWalletId}
           containerStyle={{ backgroundColor: palette.lighterGrey }}
-          onPress={() => updateDefaultWallet(btcWalletId)}
+          onPress={() => btcWalletId && updateDefaultWallet(btcWalletId)}
           checkedColor={palette.lapisLazuli}
           textStyle={{ color: palette.lapisLazuli }}
         />
@@ -158,7 +160,7 @@ export const SetDefaultWallet = () => {
           uncheckedIcon="circle-o"
           checked={defaultWalletId === usdWalletId}
           containerStyle={{ backgroundColor: palette.lighterGrey }}
-          onPress={() => updateDefaultWallet(usdWalletId)}
+          onPress={() => usdWalletId && updateDefaultWallet(usdWalletId)}
           checkedColor={palette.lapisLazuli}
           textStyle={{ color: palette.lapisLazuli }}
         />

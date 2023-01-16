@@ -61,7 +61,7 @@ export type RootStackParamList = {
     lnurlInvoice?: string
   }
   conversionDetails: {
-    transferAmount: PaymentAmount<WalletCurrency> | undefined
+    transferAmount?: PaymentAmount<WalletCurrency>
   }
   conversionConfirmation: {
     fromWalletCurrency: WalletCurrency
