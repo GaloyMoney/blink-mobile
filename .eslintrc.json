@@ -17,7 +17,8 @@
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
     "plugin:react-native/all",
-    "plugin:@typescript-eslint/recommended"
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
   ],
   "rules": {
     "@typescript-eslint/no-extra-semi": "off", // Prettier work
