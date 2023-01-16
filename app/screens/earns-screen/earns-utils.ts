@@ -2,27 +2,33 @@ import { TranslationFunctions } from "@app/i18n/i18n-types"
 import filter from "lodash.filter"
 import sumBy from "lodash.sumby"
 import { LocalizedString } from "typesafe-i18n"
-import type { QuizQuestion, QuizSectionContent } from "../../types/quiz"
-import { earnSections } from "./sections"
-import crashlytics from "@react-native-firebase/crashlytics"
+import { EarnSectionType, earnSections } from "./sections"
+import { QuizQuestion, QuizSectionContent } from "./earns-section"
 
 export const getCardsFromSection = ({
   quizQuestions,
-  sectionIndex,
+  section,
   quizQuestionsContent,
+}: {
+  section: EarnSectionType
+  quizQuestions: {
+    allQuestions: Record<string, number>
+    myCompletedQuestions: Record<string, number>
+  }
+  quizQuestionsContent: QuizSectionContent[]
 }): QuizQuestion[] => {
   const { allQuestions, myCompletedQuestions } = quizQuestions
 
   const cards = quizQuestionsContent
-    .find((content) => sectionIndex === content.meta.id)
-    .content.map((card) => {
+    .find((content) => section === content.meta.id)
+    ?.content.map((card) => {
       card.value = allQuestions[card.id]
       return card
     })
 
   // add fullfilled property to each card
   // eslint-disable-next-line array-callback-return
-  cards.filter((card) => {
+  cards?.filter((card) => {
     card.fullfilled = myCompletedQuestions && Boolean(myCompletedQuestions[card.id])
   })
 
@@ -30,7 +36,7 @@ export const getCardsFromSection = ({
   let nonEnabledMessage = ""
 
   // add enabled and nonEnabledMessage property
-  cards.forEach((card) => {
+  cards?.forEach((card) => {
     card.enabled = true
 
     if (allPreviousFullfilled === false) {
@@ -44,42 +50,43 @@ export const getCardsFromSection = ({
     }
   })
 
-  return cards
+  return cards || []
 }
 
 export const sectionCompletedPct = ({
   quizQuestions,
-  sectionIndex,
+  section,
   quizQuestionsContent,
-}): number => {
-  // there is a recurring crash. from crashlytics:
-  // using try catch until this is fixed
-  //
-  // Fatal Exception: com.facebook.react.common.JavascriptException: TypeError: undefined is not an object (evaluating '(0,n.find)(o,{id:t.id}).value')
-  // <unknown>@2707:336
-  // forEach@-1
-  // l@2707:285
-  // sectionCompletedPct@2707:675
-  try {
-    const earns = getCardsFromSection({
-      quizQuestions,
-      sectionIndex,
-      quizQuestionsContent,
-    })
-    return earns.filter((item) => item.fullfilled).length / earns.length
-  } catch (err) {
-    crashlytics().recordError(err)
-    return 0
+}: {
+  section: EarnSectionType
+  quizQuestions: {
+    allQuestions: Record<string, number>
+    myCompletedQuestions: Record<string, number>
   }
+  quizQuestionsContent: QuizSectionContent[]
+}): number => {
+  const earns = getCardsFromSection({
+    quizQuestions,
+    section,
+    quizQuestionsContent,
+  })
+  return earns.filter((item) => item.fullfilled).length / earns.length
 }
 
 export const remainingSatsOnSection = ({
   quizQuestions,
-  sectionIndex,
+  section,
   quizQuestionsContent,
+}: {
+  section: EarnSectionType
+  quizQuestions: {
+    allQuestions: Record<string, number>
+    myCompletedQuestions: Record<string, number>
+  }
+  quizQuestionsContent: QuizSectionContent[]
 }): number =>
   sumBy(
-    filter(getCardsFromSection({ quizQuestions, sectionIndex, quizQuestionsContent }), {
+    filter(getCardsFromSection({ quizQuestions, section, quizQuestionsContent }), {
       fullfilled: false,
     }),
     "value",
@@ -90,28 +97,34 @@ export const getQuizQuestionsContent = ({
 }: {
   LL: TranslationFunctions
 }): QuizSectionContent[] => {
-  const quizSectionContent = Object.keys(earnSections).map((sectionId) => {
-    return {
-      meta: {
-        id: sectionId,
-        title: LL.EarnScreen.earnSections[sectionId].title(),
-      },
-      content: earnSections[sectionId].questions.map((question) => {
-        return {
+  const LLEarn = LL.EarnScreen.earnSections
+
+  const quizSectionContent = (Object.keys(earnSections) as EarnSectionType[]).map(
+    (sectionId) => {
+      return {
+        meta: {
+          id: sectionId,
+          title: LLEarn[sectionId].title(),
+        },
+        content: earnSections[sectionId].questions.map((question) => ({
           id: question,
-          type: LL.EarnScreen.earnSections[sectionId].questions[question].type(),
-          title: LL.EarnScreen.earnSections[sectionId].questions[question].title(),
-          text: LL.EarnScreen.earnSections[sectionId].questions[question].text(),
-          question: LL.EarnScreen.earnSections[sectionId].questions[question].question(),
-          answers: Object.values(
-            LL.EarnScreen.earnSections[sectionId].questions[question].answers,
-          ).map((answer: () => LocalizedString) => answer()),
-          feedback: Object.values(
-            LL.EarnScreen.earnSections[sectionId].questions[question].feedback,
-          ).map((feedback: () => LocalizedString) => feedback()),
-        }
-      }),
-    }
-  })
+          type: LLEarn[sectionId].questions[question].type(),
+          title: LLEarn[sectionId].questions[question].title(),
+          text: LLEarn[sectionId].questions[question].text(),
+          question: LLEarn[sectionId].questions[question].question(),
+          answers: Object.values(LLEarn[sectionId].questions[question].answers).map(
+            (answer: () => LocalizedString) => answer(),
+          ),
+          feedback: Object.values(LLEarn[sectionId].questions[question].feedback).map(
+            (feedback: () => LocalizedString) => feedback(),
+          ),
+          value: NaN, // doesn't matter?
+          fullfilled: null,
+          enabled: null,
+          nonEnabledMessage: null,
+        })),
+      }
+    },
+  )
   return quizSectionContent
 }

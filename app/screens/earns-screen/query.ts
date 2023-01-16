@@ -19,7 +19,7 @@ gql`
   }
 `
 
-export const getQuizQuestions = (client: ApolloClient<unknown>, { hasToken }) => {
+export const getQuizQuestions = (client: ApolloClient<unknown>, hasToken: boolean) => {
   const data = client.readQuery<QuizQuestionsQuery>({
     query: QuizQuestionsDocument,
     variables: { hasToken },
@@ -44,5 +44,9 @@ export const getQuizQuestions = (client: ApolloClient<unknown>, { hasToken }) =>
   return {
     allQuestions,
     myCompletedQuestions,
+  } as {
+    // FIXME: could be null but will be deleted shortly
+    allQuestions: Record<string, number>
+    myCompletedQuestions: Record<string, number>
   }
 }
