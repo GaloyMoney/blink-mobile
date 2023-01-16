@@ -3,7 +3,7 @@
     "es2021": true,
     "react-native/react-native": true
   },
-  "ignorePatterns": ["**/*story.tsx"],
+  "ignorePatterns": ["**/*story.tsx", "generated.ts"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
