@@ -22,6 +22,7 @@ import {
   useWalletCsvTransactionsLazyQuery,
 } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
+import { bankName } from "@app/config"
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "settings">
@@ -159,7 +160,7 @@ export const SettingsScreenJSX: ScreenType = (params: SettingsScreenProps) => {
       greyed: hasToken,
     },
     {
-      category: LL.SettingsScreen.addressScreen({ bankName: "BBW" }),
+      category: LL.SettingsScreen.addressScreen({ bankName }),
       icon: "custom-receive-bitcoin",
       id: "address",
       action: () => navigation.navigate("addressScreen"),

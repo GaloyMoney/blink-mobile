@@ -1514,24 +1514,6 @@ type RootTranslation = {
 		 */
 		useLightning: string
 	}
-	Overlay: {
-		/**
-		 * Start by getting
-	some rewards!
-		 */
-		accounts: string
-		rewards: {
-			/**
-			 * We gave you 1 sat as a gift
-		to download the app.
-			 */
-			download: string
-			/**
-			 * Learn about #bitcoin and earn more!
-			 */
-			getMore: string
-		}
-	}
 	PinScreen: {
 		/**
 		 * Incorrect PIN. {attemptsRemaining} attempts remaining.
@@ -4253,24 +4235,6 @@ export type TranslationFunctions = {
 		 * We use the Lightning Network.
 		 */
 		useLightning: () => LocalizedString
-	}
-	Overlay: {
-		/**
-		 * Start by getting
-	some rewards!
-		 */
-		accounts: () => LocalizedString
-		rewards: {
-			/**
-			 * We gave you 1 sat as a gift
-		to download the app.
-			 */
-			download: () => LocalizedString
-			/**
-			 * Learn about #bitcoin and earn more!
-			 */
-			getMore: () => LocalizedString
-		}
 	}
 	PinScreen: {
 		/**

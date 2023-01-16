@@ -2065,6 +2065,13 @@ export type MainQueryQuery = {
         readonly earnAmount: number
       }
     }>
+    readonly contacts: ReadonlyArray<{
+      readonly __typename: "UserContact"
+      readonly id: string
+      readonly username: string
+      readonly alias?: string | null
+      readonly transactionsCount: number
+    }>
     readonly defaultAccount: {
       readonly __typename: "ConsumerAccount"
       readonly id: string
@@ -4273,6 +4280,12 @@ export const MainQueryDocument = gql`
           earnAmount
         }
         completed
+      }
+      contacts {
+        id
+        username
+        alias
+        transactionsCount
       }
       defaultAccount {
         id

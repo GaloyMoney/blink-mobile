@@ -12,6 +12,7 @@ import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import useMainQuery from "@app/hooks/use-main-query"
 import { useAppConfig } from "@app/hooks/use-app-config"
 import { useUserUpdateUsernameMutation } from "@app/graphql/generated"
+import { bankName } from "@app/config"
 
 const styles = EStyleSheet.create({
   centeredView: {
@@ -132,7 +133,7 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
     onCompleted: (result) => {
       if (result.userUpdateUsername.errors.length > 0) {
         if (result.userUpdateUsername.errors[0].message === "username not available") {
-          setError(LL.GaloyAddressScreen.addressNotAvailable({ bankName: "BBW" }))
+          setError(LL.GaloyAddressScreen.addressNotAvailable({ bankName }))
         } else {
           crashlytics().recordError(
             new Error(result.userUpdateUsername.errors[0].message),
@@ -185,12 +186,12 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
                 containerStyle={styles.containerStyle}
                 onChangeText={handleOnChangeText}
                 autoComplete={"off"}
-                label={LL.GaloyAddressScreen.buttonTitle({ bankName: "BBW" })}
+                label={LL.GaloyAddressScreen.buttonTitle({ bankName })}
                 labelStyle={styles.fieldLabelStyle}
               />
               {!error && (
                 <Text style={styles.explainerText}>
-                  {LL.GaloyAddressScreen.notAbleToChange({ bankName: "BBW" })}
+                  {LL.GaloyAddressScreen.notAbleToChange({ bankName })}
                 </Text>
               )}
               {error && (
@@ -199,7 +200,7 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
                 </Text>
               )}
               <Button
-                title={LL.GaloyAddressScreen.buttonTitle({ bankName: "BBW" })}
+                title={LL.GaloyAddressScreen.buttonTitle({ bankName })}
                 buttonStyle={styles.buttonStyle}
                 loading={loading}
                 onPress={() => handleSubmit()}
@@ -215,7 +216,7 @@ export const SetAddressModal = ({ modalVisible, toggleModal }: SetAddressModalPr
           {newAddress && (
             <View>
               <Text style={styles.titleText}>
-                {LL.GaloyAddressScreen.yourAddress({ bankName: "BBW" })}
+                {LL.GaloyAddressScreen.yourAddress({ bankName })}
               </Text>
               <View style={styles.newAddressContainer}>
                 <Text style={styles.newAddressText}>

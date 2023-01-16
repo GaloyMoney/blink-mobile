@@ -11,6 +11,7 @@ import {
 import Markdown from "react-native-markdown-display"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useAppConfig } from "@app/hooks"
+import { testProps } from "../../../utils/testProps"
 
 export type ConfirmDestinationModalProps = {
   destinationState: SendBitcoinDestinationState
@@ -102,6 +103,9 @@ export const ConfirmDestinationModal: React.FC<ConfirmDestinationModalProps> = (
           </Text>
           <View style={styles.checkBoxContainer}>
             <CheckBox
+              {...testProps(
+                LL.SendBitcoinDestinationScreen.confirmModal.checkBox({ lnAddress }),
+              )}
               checked={confirmationEnabled}
               onPress={() => setConfirmationEnabled(!confirmationEnabled)}
             />
@@ -112,6 +116,7 @@ export const ConfirmDestinationModal: React.FC<ConfirmDestinationModalProps> = (
         </View>
         <View style={styles.buttonsContainer}>
           <Button
+            {...testProps(LL.SendBitcoinDestinationScreen.confirmModal.confirmButton())}
             title={LL.SendBitcoinDestinationScreen.confirmModal.confirmButton()}
             buttonStyle={styles.confirmButton}
             onPress={confirmDestination}

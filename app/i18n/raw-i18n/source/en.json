@@ -464,13 +464,6 @@
         "updateAvailable": "An update is available.\nTap to update now",
         "useLightning": "We use the Lightning Network."
     },
-    "Overlay": {
-        "accounts": "Start by getting\nsome rewards!",
-        "rewards": {
-            "download": "We gave you 1 sat as a gift\nto download the app.",
-            "getMore": "Learn about #bitcoin and earn more!"
-        }
-    },
     "PinScreen": {
         "attemptsRemaining": "Incorrect PIN. {attemptsRemaining: number} attempts remaining.",
         "oneAttemptRemaining": "Incorrect PIN. 1 attempt remaining.",
