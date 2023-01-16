@@ -172,11 +172,9 @@ gql`
   mutation lnNoAmountInvoiceCreate($input: LnNoAmountInvoiceCreateInput!) {
     lnNoAmountInvoiceCreate(input: $input) {
       errors {
-        __typename
         message
       }
       invoice {
-        __typename
         paymentHash
         paymentRequest
         paymentSecret
@@ -187,11 +185,9 @@ gql`
   mutation lnInvoiceCreate($input: LnInvoiceCreateInput!) {
     lnInvoiceCreate(input: $input) {
       errors {
-        __typename
         message
       }
       invoice {
-        __typename
         paymentHash
         paymentRequest
         paymentSecret
@@ -203,7 +199,6 @@ gql`
   mutation onChainAddressCurrent($input: OnChainAddressCurrentInput!) {
     onChainAddressCurrent(input: $input) {
       errors {
-        __typename
         message
       }
       address

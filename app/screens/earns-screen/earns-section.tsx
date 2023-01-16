@@ -139,7 +139,6 @@ gql`
   ) {
     userQuizQuestionUpdateCompleted(input: $input) {
       errors {
-        __typename
         message
       }
       userQuizQuestion {
