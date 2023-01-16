@@ -258,7 +258,6 @@ const SendBitcoinDetailsScreen = ({
     lnurl: lnurlParams,
     recipientWalletId,
     paymentType,
-    sameNode,
   } = route.params
 
   // TODO: refactor wallet descriptor to be able to pass a wallet object
@@ -467,7 +466,6 @@ const SendBitcoinDetailsScreen = ({
       destination,
       payerWalletDescriptor,
       note,
-      sameNode,
     })
   }
 

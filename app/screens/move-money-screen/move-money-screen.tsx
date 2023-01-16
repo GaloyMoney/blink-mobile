@@ -163,7 +163,6 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
   gql`
     query main($hasToken: Boolean!) {
       globals {
-        nodesIds
         network
       }
 

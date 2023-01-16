@@ -23,7 +23,6 @@ type UseFeeInput = {
   isNoAmountInvoice: boolean
   invoice: string
   paymentType: string
-  sameNode: boolean
   paymentAmount: PaymentAmount<WalletCurrency>
 }
 
@@ -71,7 +70,6 @@ const useFee = ({
   isNoAmountInvoice,
   invoice,
   paymentType,
-  sameNode,
   paymentAmount,
 }: UseFeeInput): FeeType => {
   const [fee, setFee] = useState<FeeType>({
@@ -105,7 +103,8 @@ const useFee = ({
       if (paymentType === "lightning" || paymentType === "lnurl") {
         let feeProbeFailed = false
 
-        if (sameNode || (isNoAmountInvoice && paymentAmount.amount === 0)) {
+        // TODO(nb): check if the condition below make sense?
+        if (isNoAmountInvoice && paymentAmount.amount === 0) {
           return setFee({
             amount: { amount: 0, currency: walletDescriptor.currency },
             status: "set",

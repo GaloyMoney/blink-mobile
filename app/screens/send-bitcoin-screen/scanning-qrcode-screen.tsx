@@ -119,7 +119,6 @@ const galoyAddressFromLnurlParams = (
 gql`
   query scanningQRCodeScreen {
     globals {
-      nodesIds
       network
     }
   }
@@ -131,7 +130,6 @@ export const ScanningQRCodeScreen: ScreenType = ({
   const [pending, setPending] = React.useState(false)
 
   const { data } = useScanningQrCodeScreenQuery()
-  const myPubKey = data?.globals?.nodesIds?.[0] ?? "" // FIXME: there can be more than one node
   const bitcoinNetwork = data?.globals?.network
 
   const { LL } = useI18nContext()
@@ -165,7 +163,6 @@ export const ScanningQRCodeScreen: ScreenType = ({
         const parsedDestination = parsePaymentDestination({
           destination: data,
           network: bitcoinNetwork as NetworkLibGaloy,
-          pubKey: myPubKey,
           lnAddressDomains: lnurlDomains,
         })
 
@@ -231,7 +228,7 @@ export const ScanningQRCodeScreen: ScreenType = ({
         Alert.alert(err.toString())
       }
     },
-    [LL.ScanningQRCodeScreen, LL.common, myPubKey, navigation, pending, bitcoinNetwork],
+    [LL.ScanningQRCodeScreen, LL.common, navigation, pending, bitcoinNetwork],
   )
 
   React.useEffect(() => {

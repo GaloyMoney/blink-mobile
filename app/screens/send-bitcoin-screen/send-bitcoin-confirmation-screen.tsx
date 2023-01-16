@@ -266,7 +266,6 @@ const SendBitcoinConfirmationScreen = ({
     recipientWalletId,
     lnurlInvoice,
     payerWalletDescriptor,
-    sameNode,
     note,
   } = route.params
 
@@ -314,7 +313,6 @@ const SendBitcoinConfirmationScreen = ({
     isNoAmountInvoice,
     invoice: paymentType === "lnurl" ? lnurlInvoice : destination,
     paymentType,
-    sameNode,
     paymentAmount: paymentAmountInWalletCurrency,
   })
 

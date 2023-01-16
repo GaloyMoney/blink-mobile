@@ -190,7 +190,6 @@ const sendBitcoinDetailsScreenParams = (destination: ValidPaymentDestination) =>
             currency: WalletCurrency.Btc,
           } as BtcPaymentAmount),
         paymentType: PaymentType.Lightning,
-        sameNode: destination.sameNode,
         note: destination.memo,
       }
     case PaymentType.Intraledger:
@@ -198,14 +197,12 @@ const sendBitcoinDetailsScreenParams = (destination: ValidPaymentDestination) =>
         destination: destination.handle,
         recipientWalletId: destination.walletId,
         paymentType: PaymentType.Intraledger,
-        sameNode: true,
       }
     case PaymentType.Lnurl:
       return {
         destination: destination.lnurl,
         paymentType: PaymentType.Lnurl,
         lnurl: destination.lnurlParams,
-        sameNode: false,
       }
     case PaymentType.Onchain:
       return {
@@ -218,7 +215,6 @@ const sendBitcoinDetailsScreenParams = (destination: ValidPaymentDestination) =>
           } as BtcPaymentAmount),
         note: destination.memo,
         paymentType: PaymentType.Onchain,
-        sameNode: false,
       }
   }
 }
@@ -226,7 +222,6 @@ const sendBitcoinDetailsScreenParams = (destination: ValidPaymentDestination) =>
 gql`
   query sendBitcoinDestination {
     globals {
-      nodesIds
       network
     }
     me {
@@ -257,7 +252,6 @@ const SendBitcoinDestinationScreen = ({
     fetchPolicy: "cache-only",
     returnPartialData: true,
   })
-  const myPubKey = data?.globals?.nodesIds?.[0] ?? "" // FIXME: there can be more than one node
   const myUsername = data?.me?.username
   const bitcoinNetwork = data?.globals?.network
   const contacts = useMemo(() => data?.me?.contacts ?? [], [data?.me?.contacts])
@@ -289,17 +283,26 @@ const SendBitcoinDestinationScreen = ({
   }, [contacts, userDefaultWalletIdQuery, myUsername])
 
   const validateDestination = React.useCallback(
-    async (destination) => {
+    async (destination: string) => {
+      console.log("validateDestination", { destination, destinationState })
+
       if (destinationState.destinationState !== "entering") {
         return
       }
 
+      console.log({
+        destination,
+        network: bitcoinNetwork as NetworkLibGaloy,
+        lnAddressDomains: lnurlDomains,
+      })
+
       const parsedPaymentDestination = parsePaymentDestination({
         destination,
         network: bitcoinNetwork as NetworkLibGaloy,
-        pubKey: myPubKey,
         lnAddressDomains: lnurlDomains,
       })
+
+      console.log("validateDestination", { parsedPaymentDestination })
 
       dispatchDestinationStateAction({
         type: "set-validating",
@@ -461,7 +464,6 @@ const SendBitcoinDestinationScreen = ({
       }
     },
     [
-      myPubKey,
       bitcoinNetwork,
       checkUsername,
       destinationState.destinationState,

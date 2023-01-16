@@ -1996,11 +1996,7 @@ export type MainQueryVariables = Exact<{
 
 export type MainQuery = {
   readonly __typename: "Query"
-  readonly globals?: {
-    readonly __typename: "Globals"
-    readonly nodesIds: ReadonlyArray<string>
-    readonly network: Network
-  } | null
+  readonly globals?: { readonly __typename: "Globals"; readonly network: Network } | null
   readonly quizQuestions?: ReadonlyArray<{
     readonly __typename: "QuizQuestion"
     readonly id: string
@@ -2290,11 +2286,7 @@ export type ScanningQrCodeScreenQueryVariables = Exact<{ [key: string]: never }>
 
 export type ScanningQrCodeScreenQuery = {
   readonly __typename: "Query"
-  readonly globals?: {
-    readonly __typename: "Globals"
-    readonly nodesIds: ReadonlyArray<string>
-    readonly network: Network
-  } | null
+  readonly globals?: { readonly __typename: "Globals"; readonly network: Network } | null
 }
 
 export type SendBitcoinConfirmationScreenQueryVariables = Exact<{ [key: string]: never }>
@@ -2418,11 +2410,7 @@ export type SendBitcoinDestinationQueryVariables = Exact<{ [key: string]: never 
 
 export type SendBitcoinDestinationQuery = {
   readonly __typename: "Query"
-  readonly globals?: {
-    readonly __typename: "Globals"
-    readonly nodesIds: ReadonlyArray<string>
-    readonly network: Network
-  } | null
+  readonly globals?: { readonly __typename: "Globals"; readonly network: Network } | null
   readonly me?: {
     readonly __typename: "User"
     readonly username?: string | null
@@ -4060,7 +4048,6 @@ export type BusinessMapMarkersQueryResult = Apollo.QueryResult<
 export const MainDocument = gql`
   query main($hasToken: Boolean!) {
     globals {
-      nodesIds
       network
     }
     quizQuestions {
@@ -4648,7 +4635,6 @@ export type LnUsdInvoiceCreateMutationOptions = Apollo.BaseMutationOptions<
 export const ScanningQrCodeScreenDocument = gql`
   query scanningQRCodeScreen {
     globals {
-      nodesIds
       network
     }
   }
@@ -5089,7 +5075,6 @@ export type OnChainPaymentSendMutationOptions = Apollo.BaseMutationOptions<
 export const SendBitcoinDestinationDocument = gql`
   query sendBitcoinDestination {
     globals {
-      nodesIds
       network
     }
     me {

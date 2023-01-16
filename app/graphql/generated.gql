@@ -475,7 +475,6 @@ query languageScreen {
 
 query main($hasToken: Boolean!) {
   globals {
-    nodesIds
     network
   }
   quizQuestions {
@@ -604,7 +603,6 @@ query rootStack($hasToken: Boolean!) {
 
 query scanningQRCodeScreen {
   globals {
-    nodesIds
     network
   }
 }
@@ -625,7 +623,6 @@ query sendBitcoinConfirmationScreen {
 
 query sendBitcoinDestination {
   globals {
-    nodesIds
     network
   }
   me {
