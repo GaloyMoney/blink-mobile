@@ -1,5 +1,5 @@
 import { ApolloClient, gql } from "@apollo/client"
-import { QuizQuestionsDocument } from "../../graphql/generated"
+import { QuizQuestionsDocument, QuizQuestionsQuery } from "../../graphql/generated"
 
 gql`
   query quizQuestions($hasToken: Boolean!) {
@@ -20,7 +20,7 @@ gql`
 `
 
 export const getQuizQuestions = (client: ApolloClient<unknown>, { hasToken }) => {
-  const data = client.readQuery({
+  const data = client.readQuery<QuizQuestionsQuery>({
     query: QuizQuestionsDocument,
     variables: { hasToken },
   })

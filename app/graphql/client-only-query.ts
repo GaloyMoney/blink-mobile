@@ -1,6 +1,11 @@
-import { ApolloClient, makeVar } from "@apollo/client"
+import { ApolloClient, makeVar, gql } from "@apollo/client"
 import indexOf from "lodash.indexof"
-import { HiddenBalanceToolTipDocument, HideBalanceDocument } from "./generated"
+import {
+  HiddenBalanceToolTipDocument,
+  HiddenBalanceToolTipQuery,
+  HideBalanceDocument,
+  HideBalanceQuery,
+} from "./generated"
 
 export const prefCurrencyVar = makeVar<CurrencyType>("USD")
 
@@ -10,14 +15,25 @@ export const nextPrefCurrency = (): void => {
   prefCurrencyVar(units[(currentIndex + 1) % units.length])
 }
 
+export default gql`
+  query HideBalance {
+    hideBalance @client
+  }
+
+  query HiddenBalanceToolTip {
+    hiddenBalanceToolTip @client
+  }
+`
+
 export const saveHideBalance = (
   client: ApolloClient<unknown>,
   status: boolean,
 ): boolean => {
   try {
-    client.writeQuery({
+    client.writeQuery<HideBalanceQuery>({
       query: HideBalanceDocument,
       data: {
+        __typename: "Query",
         hideBalance: status,
       },
     })
@@ -32,9 +48,10 @@ export const saveHiddenBalanceToolTip = (
   status: boolean,
 ): boolean => {
   try {
-    client.writeQuery({
+    client.writeQuery<HiddenBalanceToolTipQuery>({
       query: HiddenBalanceToolTipDocument,
       data: {
+        __typename: "Query",
         hiddenBalanceToolTip: status,
       },
     })

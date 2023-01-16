@@ -2,6 +2,7 @@ import { InMemoryCache, gql } from "@apollo/client"
 import {
   Account,
   CurrentPriceDocument,
+  CurrentPriceQuery,
   MyWalletsFragmentDoc,
   Wallet,
   WalletCurrency,
@@ -113,7 +114,7 @@ export const createCache = () => {
         fields: {
           usdBalance: {
             read: (_, { readField, cache }) => {
-              const res: any = cache.readQuery({
+              const res = cache.readQuery<CurrentPriceQuery>({
                 query: CurrentPriceDocument,
               })
               if (!res?.btcPrice?.formattedAmount) {
