@@ -29,7 +29,7 @@ const GraphRange = {
   FIVE_YEARS: "FIVE_YEARS",
 } as const
 
-type GraphRangeType = typeof GraphRange[keyof typeof GraphRange]
+type GraphRangeType = (typeof GraphRange)[keyof typeof GraphRange]
 
 export type Price = {
   base: number
