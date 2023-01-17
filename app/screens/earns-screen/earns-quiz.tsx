@@ -15,7 +15,6 @@ import { palette } from "../../theme/palette"
 import { shuffle } from "../../utils/helper"
 import { sleep } from "../../utils/sleep"
 import { SVGs } from "./earn-svg-factory"
-import type { ScreenType } from "../../types/jsx"
 import { StackNavigationProp } from "@react-navigation/stack"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { RouteProp } from "@react-navigation/native"
@@ -161,21 +160,21 @@ type Props = {
   route: RouteProp<RootStackParamList, "earnsQuiz">
 }
 
-export const EarnQuiz: ScreenType = ({ route, navigation }: Props) => {
+export const EarnQuiz = ({ route, navigation }: Props) => {
   const { title, text, amount, answers, feedback, question, onComplete, id, completed } =
     route.params
 
   const [isCompleted, setIsCompleted] = useState(completed)
   const [quizVisible, setQuizVisible] = useState(false)
-  const [recordedAnswer, setRecordedAnswer] = useState([])
-  const [permutation] = useState(shuffle([0, 1, 2]))
+  const [recordedAnswer, setRecordedAnswer] = useState<number[]>([])
+  const [permutation] = useState<ZeroTo2[]>(shuffle([0, 1, 2]))
   const { LL } = useI18nContext()
 
-  const addRecordedAnswer = (value) => {
+  const addRecordedAnswer = (value: number) => {
     setRecordedAnswer([...recordedAnswer, value])
   }
 
-  const answersShuffled = []
+  const answersShuffled: Array<React.ReactNode> = []
 
   useEffect(() => {
     if (recordedAnswer.indexOf(0) !== -1) {
@@ -193,7 +192,9 @@ export const EarnQuiz: ScreenType = ({ route, navigation }: Props) => {
     navigation.goBack()
   }
 
-  const buttonStyleHelper = (i) => {
+  type ZeroTo2 = 0 | 1 | 2
+
+  const buttonStyleHelper = (i: ZeroTo2) => {
     return recordedAnswer.indexOf(i) === -1
       ? styles.quizButtonStyle
       : i === 0
@@ -201,7 +202,7 @@ export const EarnQuiz: ScreenType = ({ route, navigation }: Props) => {
       : styles.quizWrongButtonStyle
   }
 
-  let j = 0
+  let j: ZeroTo2 = 0
   permutation.forEach((i) => {
     answersShuffled.push(
       <View key={i} style={{ width: "100%" }}>
@@ -235,7 +236,7 @@ export const EarnQuiz: ScreenType = ({ route, navigation }: Props) => {
         ) : null}
       </View>,
     )
-    j = j + 1
+    j = (j + 1) as ZeroTo2
   })
 
   return (

@@ -463,10 +463,6 @@ query main($hasToken: Boolean!) {
   globals {
     network
   }
-  quizQuestions {
-    id
-    earnAmount
-  }
   btcPrice {
     base
     offset
@@ -478,13 +474,6 @@ query main($hasToken: Boolean!) {
     language
     username
     phone
-    quizQuestions {
-      question {
-        id
-        earnAmount
-      }
-      completed
-    }
     defaultAccount {
       id
       defaultWalletId
@@ -526,10 +515,6 @@ query onChainTxFee($walletId: WalletId!, $address: OnChainAddress!, $amount: Sat
 }
 
 query quizQuestions($hasToken: Boolean!) {
-  quizQuestions {
-    id
-    earnAmount
-  }
   me @include(if: $hasToken) {
     quizQuestions {
       completed

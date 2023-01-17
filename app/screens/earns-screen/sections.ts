@@ -1,3 +1,5 @@
+export type EarnSectionType = keyof typeof earnSections
+
 export const earnSections = {
   bitcoinWhatIsIt: {
     questions: [
@@ -37,4 +39,4 @@ export const earnSections = {
       "securePartTwo",
     ],
   },
-}
+} as const

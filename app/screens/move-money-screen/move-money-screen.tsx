@@ -166,13 +166,6 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
         network
       }
 
-      # TODO: remove from main query
-      quizQuestions {
-        id
-        earnAmount
-      }
-      # END TODO
-
       btcPrice {
         base
         offset
@@ -184,16 +177,6 @@ export const MoveMoneyScreenDataInjected: ScreenType = ({
         language
         username
         phone
-
-        # TODO: remove from main query
-        quizQuestions {
-          question {
-            id
-            earnAmount
-          }
-          completed
-        }
-        # END TODO
 
         defaultAccount {
           id

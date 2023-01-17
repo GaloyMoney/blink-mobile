@@ -4,6 +4,7 @@ import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
 import { PaymentType } from "@galoymoney/client/dist/parsing-v2"
 import { AccountType, AuthenticationScreenPurpose, PinScreenPurpose } from "../utils/enum"
 import { Transaction, WalletCurrency } from "@app/graphql/generated"
+import { EarnSectionType } from "@app/screens/earns-screen/sections"
 
 export type TransactionDetail = Transaction & {
   usdAmount: number
@@ -22,7 +23,7 @@ export type RootStackParamList = {
   }
   pin: { screenPurpose: PinScreenPurpose }
   Primary: undefined
-  earnsSection: { section: number }
+  earnsSection: { section: EarnSectionType }
   earnsQuiz: {
     title: string
     text: string
@@ -126,5 +127,4 @@ export type PrimaryStackParamList = {
   Earn: undefined
   sendBitcoinDestination: { username: string }
   phoneValidation: undefined
-  earnsSection: { section: string }
 }

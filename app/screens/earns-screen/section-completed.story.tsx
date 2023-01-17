@@ -4,8 +4,6 @@ import { SafeAreaProvider } from "react-native-safe-area-context"
 import { Story, StoryScreen, UseCase } from "../../../storybook/views"
 import { SectionCompleted } from "./section-completed"
 
-declare let module
-
 const route = {
   params: {
     sectionTitle: "Bitcoin: What is it?",
@@ -19,6 +17,9 @@ storiesOf("Section Completed", module)
     <SafeAreaProvider>
       <Story>
         <UseCase text="not earned">
+        {/* TODO: look at the type issue when using the storybook */}
+        {/* eslint-disable-next-line */}
+        {/* @ts-ignore */}
           <SectionCompleted route={route} />
         </UseCase>
       </Story>
