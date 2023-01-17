@@ -89,7 +89,7 @@ const icons = {
   "warning": Warning,
   "payment-success": PaymentSuccess,
   "payment-pending": PaymentPending,
-  "payment-error": PaymentError
+  "payment-error": PaymentError,
 }
 
 export type IconNamesType = keyof typeof icons
