@@ -3,6 +3,7 @@ import {
   ApolloQueryResult,
   InMemoryCache,
   createHttpLink,
+  NormalizedCacheObject,
 } from "@apollo/client"
 import {
   LnNoAmountInvoiceCreateDocument,
@@ -19,7 +20,7 @@ const config = {
   graphqlUrl: "https://api.staging.galoy.io/graphql",
 }
 
-const createGaloyServerClient = (config) => (authToken) => {
+const createGaloyServerClient = (config) => (authToken: string) => {
   return new ApolloClient({
     ssrMode: true,
     link: createHttpLink({
@@ -33,31 +34,21 @@ const createGaloyServerClient = (config) => (authToken) => {
   })
 }
 
-const authTokens = process.env.GALOY_TEST_TOKENS?.split(",") || []
-
 const randomizeTokens = (arr: string[]): string => {
-  for (let i = arr.length - 1; i > 0; i -= 1) {
-    const j = Math.floor(Math.random() * (i + 1))
-    ;[arr[i], arr[j]] = [arr[j], arr[i]]
-  }
-  return arr[0]
+  const randomIndex = Math.floor(Math.random() * arr.length)
+  return arr[randomIndex]
 }
 
-const getToken = () => {
-  const firstAuthToken = randomizeTokens(authTokens)
-  let secondAuthToken = randomizeTokens(authTokens)
-  while (firstAuthToken === secondAuthToken) {
-    secondAuthToken = randomizeTokens(authTokens)
-  }
-  return { firstAuthToken, secondAuthToken }
-}
+const authTokens = process.env.GALOY_TEST_TOKENS?.split(",") || []
+const firstAuthToken = randomizeTokens(authTokens)
+const secondAuthToken = process.env.GALOY_TOKEN
 
-console.log(getToken())
+console.log(firstAuthToken, secondAuthToken)
 
-const authToken = process.env.GALOY_TOKEN
-const authTokenOther = process.env.GALOY_TOKEN_2
+const authToken = process.env.GALOY_TOKEN || ""
+const authTokenOther = process.env.GALOY_TOKEN_2 || ""
 
-const getDefaultWalletId = async (client) => {
+const getDefaultWalletId = async (client: ApolloClient<NormalizedCacheObject>) => {
   const accountResult: ApolloQueryResult<{ me: MeFragment }> = await client.query({
     query: WalletsDocument,
     fetchPolicy: "no-cache",
