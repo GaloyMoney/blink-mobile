@@ -125,7 +125,7 @@ jobs:
 
   test_ios:
     macos:
-      xcode: 13.3.0
+      xcode: 14.0.0
     working_directory: ~/galoy-mobile
     environment:
       FL_OUTPUT_DIR: output
@@ -172,7 +172,7 @@ jobs:
 
   build_ios:
     macos:
-      xcode: 13.3.0
+      xcode: 14.0.0
     working_directory: ~/galoy-mobile
     environment:
       FL_OUTPUT_DIR: output
