@@ -9,7 +9,7 @@ import { satAmountDisplay } from "@app/utils/currencyConversion"
 import { toastShow } from "@app/utils/toast"
 import { TYPE_BITCOIN_ONCHAIN, TYPE_LIGHTNING_BTC, getFullUri } from "@app/utils/wallet"
 import { Button, Text } from "@rneui/base"
-import React, { useCallback, useEffect, useState } from "react"
+import React, { useCallback, useEffect, useMemo, useState } from "react"
 import { Alert, Pressable, Share, TextInput, View } from "react-native"
 import { FakeCurrencyInput } from "react-native-currency-input"
 import EStyleSheet from "react-native-extended-stylesheet"
@@ -245,46 +245,56 @@ const ReceiveBtc = () => {
             hasAmount: false,
             receivingWallet: WalletCurrency.Btc,
           })
-          const {
-            data: {
-              lnNoAmountInvoiceCreate: { invoice, errors },
-            },
-          } = await lnNoAmountInvoiceCreate({
+          const { data } = await lnNoAmountInvoiceCreate({
             variables: { input: { walletId, memo } },
           })
+
+          if (!data) {
+            throw new Error("No data returned from lnNoAmountInvoiceCreate")
+          }
+
+          const {
+            lnNoAmountInvoiceCreate: { invoice, errors },
+          } = data
+
           if (errors && errors.length !== 0) {
             console.error(errors, "error with lnNoAmountInvoiceCreate")
             setErr(LL.ReceiveBitcoinScreen.error())
             return
           }
-          setInvoice(invoice)
+
+          invoice && setInvoice(invoice)
         } else {
           logGeneratePaymentRequest({
             paymentType: "lightning",
             hasAmount: true,
             receivingWallet: WalletCurrency.Btc,
           })
-          const {
-            data: {
-              lnInvoiceCreate: { invoice, errors },
-            },
-          } = await lnInvoiceCreate({
+          const { data } = await lnInvoiceCreate({
             variables: {
               input: { walletId, amount: satAmount, memo },
             },
           })
+
+          if (!data) {
+            throw new Error("No data returned from lnInvoiceCreate")
+          }
+
+          const {
+            lnInvoiceCreate: { invoice, errors },
+          } = data
+
           if (errors && errors.length !== 0) {
             console.error(errors, "error with lnInvoiceCreate")
             setErr(LL.ReceiveBitcoinScreen.error())
             return
           }
-          setInvoice(invoice)
+          invoice && setInvoice(invoice)
         }
       } catch (err) {
         console.error(err, "error with AddInvoice")
         crashlytics().recordError(err)
         setErr(`${err}`)
-        throw err
       } finally {
         setLoading(false)
       }
@@ -301,21 +311,26 @@ const ReceiveBtc = () => {
           hasAmount: false,
           receivingWallet: WalletCurrency.Btc,
         })
-        const {
-          data: {
-            onChainAddressCurrent: { address, errors },
-          },
-        } = await generateBtcAddress({
+        const { data } = await generateBtcAddress({
           variables: {
             input: { walletId },
           },
         })
+
+        if (!data) {
+          throw new Error("No data returned from generateBtcAddress")
+        }
+
+        const {
+          onChainAddressCurrent: { address, errors },
+        } = data
+
         if (errors && errors.length !== 0) {
           console.error(errors, "error with generateBtcAddress")
           setErr(LL.ReceiveBitcoinScreen.error())
           return
         }
-        setBtcAddress(address)
+        address && setBtcAddress(address)
       } catch (err) {
         crashlytics().recordError(err)
         console.error(err, "error with updateBtcAddress")
@@ -369,40 +384,54 @@ const ReceiveBtc = () => {
   const paymentDestination =
     paymentLayer === TYPE_LIGHTNING_BTC ? invoice?.paymentRequest : btcAddress
 
-  const paymentFullUri = getFullUri({
-    type: paymentLayer,
-    input: paymentDestination,
-    amount: satAmount,
-    memo,
-    prefix: false,
-  })
-
-  const copyToClipboard = useCallback(() => {
-    Clipboard.setString(paymentFullUri)
-
-    toastShow({
-      message: (translations) => translations.ReceiveBitcoinScreen.copyClipboard(),
-      currentTranslation: LL,
-      type: "success",
+  const paymentFullUri =
+    paymentDestination &&
+    getFullUri({
+      type: paymentLayer,
+      input: paymentDestination,
+      amount: satAmount,
+      memo,
+      prefix: false,
     })
+
+  const copyToClipboard = useMemo(() => {
+    if (!paymentFullUri) {
+      return null
+    }
+
+    return () => {
+      Clipboard.setString(paymentFullUri)
+
+      toastShow({
+        message: (translations) => translations.ReceiveBitcoinScreen.copyClipboard(),
+        currentTranslation: LL,
+        type: "success",
+      })
+    }
   }, [paymentFullUri, LL])
 
-  const share = useCallback(async () => {
-    try {
-      const result = await Share.share({ message: paymentFullUri })
+  const share = useMemo(() => {
+    if (!paymentFullUri) {
+      return null
+    }
 
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-        } else {
-          // shared
+    return async () => {
+      try {
+        const result = await Share.share({ message: paymentFullUri })
+
+        if (result.action === Share.sharedAction) {
+          if (result.activityType) {
+            // shared with activity type of result.activityType
+          } else {
+            // shared
+          }
+        } else if (result.action === Share.dismissedAction) {
+          // dismissed
         }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
+      } catch (error) {
+        crashlytics().recordError(error)
+        Alert.alert(error.message)
       }
-    } catch (error) {
-      crashlytics().recordError(error)
-      Alert.alert(error.message)
     }
   }, [paymentFullUri])
 
@@ -445,7 +474,7 @@ const ReceiveBtc = () => {
               <>
                 <FakeCurrencyInput
                   value={satAmount}
-                  onChangeValue={(newValue) => setSatAmount(newValue)}
+                  onChangeValue={(newValue) => setSatAmount(Number(newValue))}
                   prefix=""
                   delimiter=","
                   separator="."
@@ -471,7 +500,7 @@ const ReceiveBtc = () => {
               <>
                 <FakeCurrencyInput
                   value={usdAmount}
-                  onChangeValue={(newValue) => setUsdAmount(newValue)}
+                  onChangeValue={(newValue) => setUsdAmount(Number(newValue))}
                   prefix="$"
                   delimiter=","
                   separator="."
@@ -572,14 +601,14 @@ const ReceiveBtc = () => {
     )
   }
 
-  const invoiceReady = paymentDestination && !loading
+  const invoiceReady = paymentDestination && !loading && copyToClipboard && share
 
   return (
     <KeyboardAwareScrollView>
       <View style={styles.container}>
         <Pressable onPress={copyToClipboard}>
           <QRView
-            data={paymentDestination}
+            data={paymentDestination || ""}
             type={paymentLayer}
             amount={satAmount}
             memo={memo}

@@ -57,8 +57,13 @@ export const ConversionConfirmationScreen = ({
 
   const { data } = useConversionScreenQuery({ fetchPolicy: "cache-only" })
 
-  const usdWallet = data.me.defaultAccount.usdWallet
-  const btcWallet = data.me.defaultAccount.btcWallet
+  const usdWallet = data?.me?.defaultAccount.usdWallet
+  const btcWallet = data?.me?.defaultAccount.btcWallet
+
+  if (!data?.me || !usdWallet || !btcWallet) {
+    // TODO: handle errors and or provide some loading state
+    return null
+  }
 
   if (fromWalletCurrency === WalletCurrency.Btc) {
     fromWallet = { id: btcWallet.id, currency: WalletCurrency.Btc }
@@ -118,14 +123,18 @@ export const ConversionConfirmationScreen = ({
           },
         })
 
-        const status = data.intraLedgerPaymentSend.status
+        const status = data?.intraLedgerPaymentSend.status
+
+        if (!status) {
+          throw new Error("Conversion failed")
+        }
 
         logConversionResult({
           sendingWallet: fromWallet.currency,
           receivingWallet: toWallet.currency,
           paymentStatus: status,
         })
-        handlePaymentReturn(status, errors)
+        handlePaymentReturn(status, errors || [])
       } catch (err) {
         crashlytics().recordError(err)
         handlePaymentError(err)
@@ -147,13 +156,18 @@ export const ConversionConfirmationScreen = ({
           },
         })
 
-        const status = data.intraLedgerUsdPaymentSend.status
+        const status = data?.intraLedgerUsdPaymentSend.status
+
+        if (!status) {
+          throw new Error("Conversion failed")
+        }
+
         logConversionResult({
           sendingWallet: fromWallet.currency,
           receivingWallet: toWallet.currency,
           paymentStatus: status,
         })
-        handlePaymentReturn(status, errors)
+        handlePaymentReturn(status, errors || [])
       } catch (err) {
         crashlytics().recordError(err)
         handlePaymentError(err)

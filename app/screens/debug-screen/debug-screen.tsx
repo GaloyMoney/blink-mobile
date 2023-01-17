@@ -86,7 +86,7 @@ export const DebugScreen: ScreenType = () => {
   const handleSave = () => {
     logout(false)
 
-    saveToken(newToken)
+    saveToken(newToken || "")
 
     if (newGaloyInstance === "Custom") {
       setGaloyInstance({
@@ -99,9 +99,11 @@ export const DebugScreen: ScreenType = () => {
       return
     }
 
-    setGaloyInstance(
-      GALOY_INSTANCES.find((instance) => instance.name === newGaloyInstance),
+    const newGaloyInstanceObject = GALOY_INSTANCES.find(
+      (instance) => instance.name === newGaloyInstance,
     )
+
+    newGaloyInstanceObject && setGaloyInstance(newGaloyInstanceObject)
   }
 
   return (
@@ -252,7 +254,7 @@ export const DebugScreen: ScreenType = () => {
             title="Copy access token"
             containerStyle={styles.button}
             onPress={async () => {
-              Clipboard.setString(newToken)
+              Clipboard.setString(newToken || "")
               Alert.alert("Token copied in clipboard.")
             }}
             disabled={!newToken}

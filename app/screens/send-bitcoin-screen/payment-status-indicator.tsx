@@ -69,7 +69,7 @@ export const PaymentStatusIndicator = ({ errs, status }: Props): JSX.Element => 
     )
   }
 
-  return null
+  return <></>
 }
 
 const styles = EStyleSheet.create({

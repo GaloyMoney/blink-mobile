@@ -167,7 +167,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
   const [phoneNumber, setPhoneNumber] = useState("")
   const { appConfig } = useAppConfig()
 
-  const phoneInputRef = useRef<PhoneInput | null>()
+  const phoneInputRef = useRef<PhoneInput | null>(null)
 
   const [captchaRequestAuthCode, { loading: loadingRequestPhoneCode }] =
     useCaptchaRequestAuthCodeMutation({
@@ -191,72 +191,72 @@ export const WelcomePhoneInputScreen: ScreenType = ({
     }
   }, [appConfig.galoyInstance.name, navigation, phoneNumber, registerCaptcha])
 
-  const sendRequestAuthCode = useCallback(async () => {
-    try {
-      const input = {
-        phone: phoneNumber,
-        challengeCode: geetestValidationData?.geetestChallenge,
-        validationCode: geetestValidationData?.geetestValidate,
-        secCode: geetestValidationData?.geetestSecCode,
-      }
-      resetValidationData()
-      logRequestAuthCode(appConfig.galoyInstance.name)
+  useEffect(() => {
+    if (geetestValidationData) {
+      const sendRequestAuthCode = async () => {
+        try {
+          const input = {
+            phone: phoneNumber,
+            challengeCode: geetestValidationData?.geetestChallenge,
+            validationCode: geetestValidationData?.geetestValidate,
+            secCode: geetestValidationData?.geetestSecCode,
+          }
+          resetValidationData()
+          logRequestAuthCode(appConfig.galoyInstance.name)
 
-      const { data } = await captchaRequestAuthCode({ variables: { input } })
+          const { data } = await captchaRequestAuthCode({ variables: { input } })
 
-      if (data.captchaRequestAuthCode.success) {
-        navigation.navigate("welcomePhoneValidation", { phone: phoneNumber, setPhone })
-        setPhoneNumber("")
-      } else if (data.captchaRequestAuthCode.errors.length > 0) {
-        const errorMessage = data.captchaRequestAuthCode.errors[0].message
-        if (errorMessage === "Too many requests") {
+          if (!data) {
+            toastShow({
+              message: (translations) => translations.errors.generic(),
+              currentTranslation: LL,
+            })
+            return
+          }
+
+          if (data.captchaRequestAuthCode.success) {
+            navigation.navigate("welcomePhoneValidation", {
+              phone: phoneNumber,
+              setPhone,
+            })
+            setPhoneNumber("")
+          } else if ((data?.captchaRequestAuthCode?.errors?.length || 0) > 0) {
+            const errorMessage = data.captchaRequestAuthCode.errors[0].message
+            if (errorMessage === "Too many requests") {
+              toastShow({
+                message: (translations) => translations.errors.tooManyRequestsPhoneCode(),
+                currentTranslation: LL,
+              })
+            } else {
+              toastShow({ message: errorMessage })
+            }
+          } else {
+            toastShow({
+              message: (translations) => translations.errors.generic(),
+              currentTranslation: LL,
+            })
+          }
+        } catch (err) {
+          crashlytics().recordError(err)
+          console.debug({ err })
           toastShow({
-            message: (translations) => translations.errors.tooManyRequestsPhoneCode(),
+            message: (translations) => translations.errors.generic(),
             currentTranslation: LL,
           })
-        } else {
-          toastShow({ message: errorMessage })
         }
-      } else {
-        toastShow({
-          message: (translations) => translations.errors.generic(),
-          currentTranslation: LL,
-        })
       }
-    } catch (err) {
-      crashlytics().recordError(err)
-      console.debug({ err })
-      if (err.message === "Too many requests") {
-        toastShow({
-          message: (translations) => translations.errors.tooManyRequestsPhoneCode(),
-          currentTranslation: LL,
-        })
-      } else {
-        toastShow({
-          message: (translations) => translations.errors.generic(),
-          currentTranslation: LL,
-        })
-      }
+      sendRequestAuthCode()
     }
   }, [
     geetestValidationData,
     navigation,
     phoneNumber,
+    setPhoneNumber,
     captchaRequestAuthCode,
     resetValidationData,
     appConfig.galoyInstance.name,
     LL,
   ])
-
-  useEffect(() => {
-    if (
-      geetestValidationData?.geetestValidate &&
-      geetestValidationData?.geetestChallenge &&
-      geetestValidationData?.geetestSecCode
-    ) {
-      sendRequestAuthCode()
-    }
-  }, [geetestValidationData, sendRequestAuthCode])
 
   useEffect(() => {
     if (geetestError) {
@@ -267,6 +267,10 @@ export const WelcomePhoneInputScreen: ScreenType = ({
   })
 
   const submitPhoneNumber = () => {
+    if (!phoneInputRef.current) {
+      return
+    }
+
     const phone = phoneInputRef.current.state.number
 
     const formattedNumber = phoneInputRef.current.getNumberAfterPossiblyEliminatingZero()
@@ -285,7 +289,7 @@ export const WelcomePhoneInputScreen: ScreenType = ({
   }
 
   const showCaptcha = phoneNumber.length > 0
-  let captchaContent: JSX.Element
+  let captchaContent: JSX.Element | null
 
   if (loadingRegisterCaptcha || loadingRequestPhoneCode) {
     captchaContent = <ActivityIndicator size="large" color={color.primary} />

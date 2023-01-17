@@ -2,6 +2,7 @@ import * as React from "react"
 import { ListItem } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { palette } from "../../theme/palette"
+import { StyleProp, ViewStyle } from "react-native"
 
 const styles = EStyleSheet.create({
   accountView: {
@@ -33,10 +34,10 @@ export const LargeButton = ({
   onPress,
   ...props
 }: {
-  icon: React.ReactNode
+  icon?: React.ReactNode
   title: string
   onPress?: () => void
-  style?
+  style?: StyleProp<ViewStyle>
 }) => (
   <ListItem
     style={styles.accountView}

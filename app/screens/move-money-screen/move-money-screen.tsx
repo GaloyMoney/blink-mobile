@@ -9,8 +9,10 @@ import {
   Pressable,
   RefreshControl,
   StatusBar,
+  StyleProp,
   Text,
   View,
+  ViewStyle,
 } from "react-native"
 import { Button } from "@rneui/base"
 import EStyleSheet from "react-native-extended-stylesheet"
@@ -48,6 +50,7 @@ import { Transaction, useMainQuery } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
 import crashlytics from "@react-native-firebase/crashlytics"
 import NetInfo from "@react-native-community/netinfo"
+import { LocalizedString } from "typesafe-i18n"
 
 const styles = EStyleSheet.create({
   bottom: {
@@ -400,7 +403,14 @@ export const MoveMoneyScreen: ScreenType = ({
       // handle error
     })
 
-  let recentTransactionsData = undefined
+  let recentTransactionsData:
+    | {
+        title: LocalizedString
+        target: string
+        style: StyleProp<ViewStyle>
+        details: JSX.Element
+      }
+    | undefined = undefined
 
   const TRANSACTIONS_TO_SHOW = 3
 
@@ -498,7 +508,7 @@ export const MoveMoneyScreen: ScreenType = ({
       {hasUsdWallet && (
         <View style={styles.walletOverview}>
           <WalletOverview
-            navigateToTransferScreen={() => navigation.navigate("conversionDetails")}
+            navigateToTransferScreen={() => navigation.navigate("conversionDetails", {})}
             btcWalletBalance={btcWalletBalance}
             usdWalletBalance={usdWalletBalance}
             btcWalletValueInUsd={btcWalletValueInUsd}
@@ -537,18 +547,18 @@ export const MoveMoneyScreen: ScreenType = ({
         style={styles.listContainer}
         refreshControl={<RefreshControl refreshing={loading} onRefresh={refetch} />}
         renderItem={({ item }) =>
-          item && (
+          item ? (
             <>
               <LargeButton
                 {...testProps(item.title)}
                 title={item.title}
-                icon={item.icon}
+                icon={"icon" in item ? item.icon : undefined}
                 onPress={() => onMenuClick(item.target)}
-                style={item.style}
+                style={"style" in item ? item.style : undefined}
               />
-              {item.details}
+              {"details" in item ? item.details : null}
             </>
-          )
+          ) : null
         }
       />
       <View style={styles.bottom}>

@@ -53,7 +53,7 @@ const styles = EStyleSheet.create({
 
 type DefaultWalletExplainerModalProps = {
   modalVisible: boolean
-  toggleModal?: () => void
+  toggleModal: () => void
 }
 
 export const DefaultWalletExplainerModal = ({
@@ -68,9 +68,7 @@ export const DefaultWalletExplainerModal = ({
         animationType="slide"
         transparent={true}
         visible={modalVisible}
-        onRequestClose={() => {
-          toggleModal()
-        }}
+        onRequestClose={toggleModal}
       >
         <View style={styles.modalView}>
           <Text style={styles.titleText}>
@@ -79,7 +77,7 @@ export const DefaultWalletExplainerModal = ({
           <Text style={styles.bodyText}>
             {LL.GaloyAddressScreen.whatIsDefaultWalletDescription()}
           </Text>
-          <TouchableWithoutFeedback onPress={() => toggleModal()}>
+          <TouchableWithoutFeedback onPress={toggleModal}>
             <View style={styles.backText}>
               <Text style={styles.cancelText}>{LL.common.back()}</Text>
             </View>

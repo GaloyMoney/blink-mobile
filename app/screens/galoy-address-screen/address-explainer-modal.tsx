@@ -78,9 +78,7 @@ export const AddressExplainerModal = ({
         animationType="slide"
         transparent={true}
         visible={modalVisible}
-        onRequestClose={() => {
-          toggleModal()
-        }}
+        onRequestClose={toggleModal}
       >
         <View style={styles.modalView}>
           <Text style={styles.titleText}>
@@ -98,7 +96,7 @@ export const AddressExplainerModal = ({
               </Text>
             ))}
           </Text>
-          <TouchableWithoutFeedback onPress={() => toggleModal()}>
+          <TouchableWithoutFeedback onPress={toggleModal}>
             <View style={styles.backText}>
               <Text style={styles.cancelText}>{LL.common.back()}</Text>
             </View>

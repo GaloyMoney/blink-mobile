@@ -23,7 +23,7 @@ import { toastShow } from "@app/utils/toast"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { Button, Text } from "@rneui/base"
 import moment from "moment"
-import React, { useCallback, useEffect, useRef, useState } from "react"
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { Alert, AppState, Pressable, Share, TextInput, View } from "react-native"
 import { FakeCurrencyInput } from "react-native-currency-input"
 import EStyleSheet from "react-native-extended-stylesheet"
@@ -224,7 +224,7 @@ const ReceiveUsd = () => {
   }, [invoice, setStatus, stopCountdownTimer, resetCountdownTimer, usdAmount, network])
 
   useEffect(() => {
-    if (usdAmount && usdAmount > 0) {
+    if (usdAmount && usdAmount > 0 && invoice) {
       const callback = () => {
         setStatus("expired")
       }
@@ -250,20 +250,26 @@ const ReceiveUsd = () => {
             hasAmount: false,
             receivingWallet: WalletCurrency.Usd,
           })
-          const {
-            data: {
-              lnNoAmountInvoiceCreate: { invoice, errors },
-            },
-          } = await lnNoAmountInvoiceCreate({
+          const { data } = await lnNoAmountInvoiceCreate({
             variables: { input: { walletId, memo } },
           })
+
+          if (!data) {
+            throw new Error("lnNoAmountInvoiceCreate returned no data")
+          }
+
+          const {
+            lnNoAmountInvoiceCreate: { invoice, errors },
+          } = data
+
           if (errors && errors.length !== 0) {
             console.error(errors, "error with lnNoAmountInvoiceCreate")
             setErr(LL.ReceiveBitcoinScreen.error())
             setStatus("error")
             return
           }
-          setInvoice(invoice)
+
+          invoice && setInvoice(invoice)
         } else {
           logGeneratePaymentRequest({
             paymentType: "lightning",
@@ -271,15 +277,19 @@ const ReceiveUsd = () => {
             receivingWallet: WalletCurrency.Usd,
           })
           const amountInCents = Math.round(parseFloat(usdAmount) * 100)
-          const {
-            data: {
-              lnUsdInvoiceCreate: { invoice, errors },
-            },
-          } = await lnUsdInvoiceCreate({
+          const { data } = await lnUsdInvoiceCreate({
             variables: {
               input: { walletId, amount: amountInCents, memo },
             },
           })
+
+          if (!data) {
+            throw new Error("lnUsdInvoiceCreate returned no data")
+          }
+
+          const {
+            lnUsdInvoiceCreate: { invoice, errors },
+          } = data
 
           if (errors && errors.length !== 0) {
             console.error(errors, "error with lnInvoiceCreate")
@@ -287,7 +297,7 @@ const ReceiveUsd = () => {
             setStatus("error")
             return
           }
-          setInvoice(invoice)
+          invoice && setInvoice(invoice)
         }
         setStatus("active")
       } catch (err) {
@@ -321,37 +331,50 @@ const ReceiveUsd = () => {
     }
   }, [status, LL])
 
-  const share = useCallback(async () => {
-    try {
-      const result = await Share.share({
-        message: getFullUri({ input: invoice?.paymentRequest, prefix: false }),
-      })
+  const paymentRequest = invoice?.paymentRequest
+  const paymentFullUri =
+    paymentRequest && getFullUri({ input: paymentRequest, prefix: false })
 
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-        } else {
-          // shared
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-      }
-    } catch (error) {
-      crashlytics().recordError(error)
-      Alert.alert(error.message)
+  const copyToClipboard = useMemo(() => {
+    if (!paymentFullUri) {
+      return null
     }
-  }, [invoice?.paymentRequest])
 
-  const copyToClipboard = () => {
-    Clipboard.setString(getFullUri({ input: invoice?.paymentRequest, prefix: false }))
+    return () => {
+      Clipboard.setString(paymentFullUri)
 
-    toastShow({
-      message: (translations) => translations.ReceiveBitcoinScreen.copyClipboard(),
-      currentTranslation: LL,
-      type: "success",
-    })
-  }
+      toastShow({
+        message: (translations) => translations.ReceiveBitcoinScreen.copyClipboard(),
+        currentTranslation: LL,
+        type: "success",
+      })
+    }
+  }, [paymentFullUri, LL])
 
+  const share = useMemo(() => {
+    if (!paymentFullUri) {
+      return null
+    }
+
+    return async () => {
+      try {
+        const result = await Share.share({ message: paymentFullUri })
+
+        if (result.action === Share.sharedAction) {
+          if (result.activityType) {
+            // shared with activity type of result.activityType
+          } else {
+            // shared
+          }
+        } else if (result.action === Share.dismissedAction) {
+          // dismissed
+        }
+      } catch (error) {
+        crashlytics().recordError(error)
+        Alert.alert(error.message)
+      }
+    }
+  }, [paymentFullUri])
   if (showAmountInput) {
     return (
       <View style={styles.inputForm}>
@@ -362,7 +385,7 @@ const ReceiveUsd = () => {
           <View style={styles.field}>
             <FakeCurrencyInput
               value={usdAmount}
-              onChangeValue={(newValue) => setUsdAmount(newValue)}
+              onChangeValue={(newValue) => setUsdAmount(Number(newValue))}
               prefix="$"
               delimiter=","
               separator="."
@@ -440,7 +463,7 @@ const ReceiveUsd = () => {
           <>
             <Pressable onPress={copyToClipboard}>
               <QRView
-                data={invoice?.paymentRequest}
+                data={invoice?.paymentRequest || ""}
                 type={TYPE_LIGHTNING_USD}
                 amount={usdAmount}
                 memo={memo}
@@ -452,7 +475,7 @@ const ReceiveUsd = () => {
 
             <>
               <View style={styles.textContainer}>
-                {loading ? (
+                {loading || !share || !copyToClipboard ? (
                   <Text>{LL.ReceiveBitcoinScreen.generatingInvoice()}</Text>
                 ) : (
                   <>
@@ -542,7 +565,7 @@ const ReceiveUsd = () => {
                   </Pressable>
                 </View>
               )}
-              {Boolean(timeLeft) && (
+              {timeLeft && (
                 <View style={styles.countdownTimer}>
                   <Text style={timeLeft < 10 ? styles.lowTimer : undefined}>
                     {LL.ReceiveBitcoinScreen.expiresIn()}:{" "}

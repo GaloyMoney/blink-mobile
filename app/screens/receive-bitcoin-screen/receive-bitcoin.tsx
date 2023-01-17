@@ -90,7 +90,7 @@ const ReceiveBitcoinScreen = ({
   const usdWalletId = data?.me?.defaultAccount?.usdWallet?.id
 
   const [receiveCurrency, setReceiveCurrency] = useState<WalletCurrency>(
-    initialReceiveCurrency || defaultCurrency,
+    initialReceiveCurrency || defaultCurrency || WalletCurrency.Usd,
   )
   const { LL } = useI18nContext()
   const isFocused = useIsFocused()
