@@ -12,7 +12,7 @@ jobs:
     name: Run pod install
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           token: ${{ secrets.GT }}
           ref: ${{ github.head_ref }}
