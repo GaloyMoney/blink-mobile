@@ -22,12 +22,14 @@ import {
   getQuizQuestionsContent,
   remainingSatsOnSection,
 } from "./earns-utils"
-import { getQuizQuestions } from "./query"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { PaginationItem } from "@app/components/pagination"
 import { useSharedValue } from "react-native-reanimated"
 import { joinErrorsMessages } from "@app/graphql/utils"
-import { useUserQuizQuestionUpdateCompletedMutation } from "@app/graphql/generated"
+import {
+  useQuizQuestionsQuery,
+  useUserQuizQuestionUpdateCompletedMutation,
+} from "@app/graphql/generated"
 
 const { width: screenWidth } = Dimensions.get("window")
 
@@ -40,17 +42,22 @@ export type QuizQuestion = {
   answers: string[]
   feedback: string[]
   value: number
-  fullfilled: boolean | null
-  enabled: boolean | null
-  nonEnabledMessage: string | null
+  fullfilled: boolean
+  enabled?: boolean
+  nonEnabledMessage?: string
 }
+
+type QuizQuestionContent = Omit<
+  QuizQuestion,
+  "value" | "fullfilled" | "enabled" | "nonEnabledMessage"
+>
 
 export type QuizSectionContent = {
   meta: {
     id: string
     title: string
   }
-  content: QuizQuestion[]
+  content: QuizQuestionContent[]
 }
 
 const svgWidth = screenWidth - 60
@@ -176,6 +183,10 @@ export const EarnSection = ({ route, navigation }: Props) => {
   const client = useApolloClient()
   const { LL } = useI18nContext()
 
+  const { data } = useQuizQuestionsQuery({ variables: { hasToken } })
+
+  const quizQuestions = data?.me?.quizQuestions ?? []
+
   const [userQuizQuestionUpdateCompleted] = useUserQuizQuestionUpdateCompletedMutation({
     onCompleted: () =>
       client.refetchQueries({
@@ -183,7 +194,6 @@ export const EarnSection = ({ route, navigation }: Props) => {
       }),
   })
 
-  const quizQuestions = getQuizQuestions(client, hasToken)
   const quizQuestionsContent = getQuizQuestionsContent({ LL })
 
   const section = route.params.section
@@ -244,7 +254,8 @@ export const EarnSection = ({ route, navigation }: Props) => {
         }
       },
       id: card.id,
-      completed: Boolean(quizQuestions.myCompletedQuestions[card.id]),
+      completed:
+        quizQuestions.find((quiz) => quiz.question.id === card.id).completed || false,
     })
   }
 

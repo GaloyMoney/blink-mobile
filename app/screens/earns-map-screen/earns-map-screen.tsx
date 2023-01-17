@@ -1,4 +1,3 @@
-import { useApolloClient } from "@apollo/client"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { StyleSheet, Text, View } from "react-native"
@@ -6,7 +5,6 @@ import { ScrollView, TouchableOpacity } from "react-native-gesture-handler"
 import { SvgProps } from "react-native-svg"
 import { MountainHeader } from "../../components/mountain-header"
 import { Screen } from "../../components/screen"
-import { getQuizQuestions } from "../earns-screen/query"
 import { PrimaryStackParamList } from "../../navigation/stack-param-lists"
 import { palette } from "../../theme/palette"
 import useToken from "../../hooks/use-token"
@@ -124,11 +122,39 @@ type EarnMapDataProps = {
 }
 
 import { EarnSectionType, earnSections } from "../earns-screen/sections"
+import { useQuizQuestionsQuery } from "@app/graphql/generated"
+import { gql } from "@apollo/client"
+
+export type QuizQuestionGQL = readonly {
+  readonly __typename: "UserQuizQuestion"
+  readonly completed: boolean
+  readonly question: {
+    readonly __typename: "QuizQuestion"
+    readonly id: string
+    readonly earnAmount: number
+  }
+}[]
+
+gql`
+  query quizQuestions($hasToken: Boolean!) {
+    me @include(if: $hasToken) {
+      quizQuestions {
+        completed
+        question {
+          id
+          earnAmount
+        }
+      }
+    }
+  }
+`
 
 export const EarnMapDataInjected = ({ navigation }: EarnMapDataProps) => {
   const { hasToken } = useToken()
-  const client = useApolloClient()
-  const quizQuestions = getQuizQuestions(client, hasToken)
+  const { data } = useQuizQuestionsQuery({ variables: { hasToken } })
+
+  const quizQuestions = data?.me?.quizQuestions ?? []
+
   const { LL } = useI18nContext()
 
   const quizQuestionsContent = getQuizQuestionsContent({ LL })
@@ -162,9 +188,9 @@ export const EarnMapDataInjected = ({ navigation }: EarnMapDataProps) => {
     }
   }
 
-  const earnedSat = quizQuestions.myCompletedQuestions
-    ? Object.values(quizQuestions.myCompletedQuestions).reduce((a, b) => a + b, 0)
-    : 0
+  const earnedSat = quizQuestions
+    .filter((quiz) => quiz.completed)
+    .reduce((acc, { question: { earnAmount } }) => acc + earnAmount, 0)
 
   return (
     <EarnMapScreen

@@ -4,6 +4,7 @@ import sumBy from "lodash.sumby"
 import { LocalizedString } from "typesafe-i18n"
 import { EarnSectionType, earnSections } from "./sections"
 import { QuizQuestion, QuizSectionContent } from "./earns-section"
+import { QuizQuestionGQL } from "../earns-map-screen"
 
 export const getCardsFromSection = ({
   quizQuestions,
@@ -11,26 +12,21 @@ export const getCardsFromSection = ({
   quizQuestionsContent,
 }: {
   section: EarnSectionType
-  quizQuestions: {
-    allQuestions: Record<string, number>
-    myCompletedQuestions: Record<string, number>
-  }
+  quizQuestions: QuizQuestionGQL
   quizQuestionsContent: QuizSectionContent[]
 }): QuizQuestion[] => {
-  const { allQuestions, myCompletedQuestions } = quizQuestions
-
   const cards = quizQuestionsContent
     .find((content) => section === content.meta.id)
-    ?.content.map((card) => {
-      card.value = allQuestions[card.id]
-      return card
-    })
-
-  // add fullfilled property to each card
-  // eslint-disable-next-line array-callback-return
-  cards?.filter((card) => {
-    card.fullfilled = myCompletedQuestions && Boolean(myCompletedQuestions[card.id])
-  })
+    ?.content.map(
+      (card): QuizQuestion => ({
+        ...card,
+        value:
+          quizQuestions.find((quiz) => quiz.question.id === card.id)?.question
+            .earnAmount || 0,
+        fullfilled:
+          quizQuestions.find((quiz) => quiz.question.id === card.id)?.completed || false,
+      }),
+    )
 
   let allPreviousFullfilled = true
   let nonEnabledMessage = ""
@@ -58,11 +54,8 @@ export const sectionCompletedPct = ({
   section,
   quizQuestionsContent,
 }: {
+  quizQuestions: QuizQuestionGQL
   section: EarnSectionType
-  quizQuestions: {
-    allQuestions: Record<string, number>
-    myCompletedQuestions: Record<string, number>
-  }
   quizQuestionsContent: QuizSectionContent[]
 }): number => {
   const earns = getCardsFromSection({
@@ -79,10 +72,7 @@ export const remainingSatsOnSection = ({
   quizQuestionsContent,
 }: {
   section: EarnSectionType
-  quizQuestions: {
-    allQuestions: Record<string, number>
-    myCompletedQuestions: Record<string, number>
-  }
+  quizQuestions: QuizQuestionGQL
   quizQuestionsContent: QuizSectionContent[]
 }): number =>
   sumBy(
@@ -118,10 +108,6 @@ export const getQuizQuestionsContent = ({
           feedback: Object.values(LLEarn[sectionId].questions[question].feedback).map(
             (feedback: () => LocalizedString) => feedback(),
           ),
-          value: NaN, // doesn't matter?
-          fullfilled: null,
-          enabled: null,
-          nonEnabledMessage: null,
         })),
       }
     },
