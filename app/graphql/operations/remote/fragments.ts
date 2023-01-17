@@ -20,7 +20,6 @@ export default gql`
     }
 
     initiationVia {
-      __typename
       ... on InitiationViaIntraLedger {
         counterPartyWalletId
         counterPartyUsername
@@ -33,7 +32,6 @@ export default gql`
       }
     }
     settlementVia {
-      __typename
       ... on SettlementViaIntraLedger {
         counterPartyWalletId
         counterPartyUsername

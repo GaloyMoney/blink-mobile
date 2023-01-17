@@ -42,7 +42,6 @@ fragment Transaction on Transaction {
     formattedAmount
   }
   initiationVia {
-    __typename
     ... on InitiationViaIntraLedger {
       counterPartyWalletId
       counterPartyUsername
@@ -55,7 +54,6 @@ fragment Transaction on Transaction {
     }
   }
   settlementVia {
-    __typename
     ... on SettlementViaIntraLedger {
       counterPartyWalletId
       counterPartyUsername
@@ -93,11 +91,9 @@ fragment WalletMeta on Wallet {
 mutation accountUpdateDefaultWalletId($input: AccountUpdateDefaultWalletIdInput!) {
   accountUpdateDefaultWalletId(input: $input) {
     errors {
-      __typename
       message
     }
     account {
-      __typename
       id
       defaultWalletId
     }
@@ -107,11 +103,9 @@ mutation accountUpdateDefaultWalletId($input: AccountUpdateDefaultWalletIdInput!
 mutation captchaCreateChallenge {
   captchaCreateChallenge {
     errors {
-      __typename
       message
     }
     result {
-      __typename
       id
       challengeCode
       newCaptcha
@@ -159,11 +153,9 @@ mutation intraLedgerUsdPaymentSend($input: IntraLedgerUsdPaymentSendInput!) {
 mutation lnInvoiceCreate($input: LnInvoiceCreateInput!) {
   lnInvoiceCreate(input: $input) {
     errors {
-      __typename
       message
     }
     invoice {
-      __typename
       paymentHash
       paymentRequest
       paymentSecret
@@ -193,11 +185,9 @@ mutation lnInvoicePaymentSend($input: LnInvoicePaymentInput!) {
 mutation lnNoAmountInvoiceCreate($input: LnNoAmountInvoiceCreateInput!) {
   lnNoAmountInvoiceCreate(input: $input) {
     errors {
-      __typename
       message
     }
     invoice {
-      __typename
       paymentHash
       paymentRequest
       paymentSecret
@@ -267,7 +257,6 @@ mutation lnUsdInvoiceFeeProbe($input: LnUsdInvoiceFeeProbeInput!) {
 mutation onChainAddressCurrent($input: OnChainAddressCurrentInput!) {
   onChainAddressCurrent(input: $input) {
     errors {
-      __typename
       message
     }
     address
@@ -307,7 +296,6 @@ mutation userLogin($input: UserLoginInput!) {
 mutation userQuizQuestionUpdateCompleted($input: UserQuizQuestionUpdateCompletedInput!) {
   userQuizQuestionUpdateCompleted(input: $input) {
     errors {
-      __typename
       message
     }
     userQuizQuestion {
@@ -323,11 +311,9 @@ mutation userQuizQuestionUpdateCompleted($input: UserQuizQuestionUpdateCompleted
 mutation userUpdateLanguage($input: UserUpdateLanguageInput!) {
   userUpdateLanguage(input: $input) {
     errors {
-      __typename
       message
     }
     user {
-      __typename
       id
       language
     }

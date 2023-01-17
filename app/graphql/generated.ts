@@ -1731,7 +1731,6 @@ export const TransactionFragmentDoc = gql`
     formattedAmount
   }
   initiationVia {
-    __typename
     ... on InitiationViaIntraLedger {
       counterPartyWalletId
       counterPartyUsername
@@ -1744,7 +1743,6 @@ export const TransactionFragmentDoc = gql`
     }
   }
   settlementVia {
-    __typename
     ... on SettlementViaIntraLedger {
       counterPartyWalletId
       counterPartyUsername
@@ -2170,11 +2168,9 @@ export const CaptchaCreateChallengeDocument = gql`
     mutation captchaCreateChallenge {
   captchaCreateChallenge {
     errors {
-      __typename
       message
     }
     result {
-      __typename
       id
       challengeCode
       newCaptcha
@@ -2372,7 +2368,6 @@ export const UserQuizQuestionUpdateCompletedDocument = gql`
     mutation userQuizQuestionUpdateCompleted($input: UserQuizQuestionUpdateCompletedInput!) {
   userQuizQuestionUpdateCompleted(input: $input) {
     errors {
-      __typename
       message
     }
     userQuizQuestion {
@@ -2533,11 +2528,9 @@ export const AccountUpdateDefaultWalletIdDocument = gql`
     mutation accountUpdateDefaultWalletId($input: AccountUpdateDefaultWalletIdInput!) {
   accountUpdateDefaultWalletId(input: $input) {
     errors {
-      __typename
       message
     }
     account {
-      __typename
       id
       defaultWalletId
     }
@@ -2892,11 +2885,9 @@ export const LnNoAmountInvoiceCreateDocument = gql`
     mutation lnNoAmountInvoiceCreate($input: LnNoAmountInvoiceCreateInput!) {
   lnNoAmountInvoiceCreate(input: $input) {
     errors {
-      __typename
       message
     }
     invoice {
-      __typename
       paymentHash
       paymentRequest
       paymentSecret
@@ -2934,11 +2925,9 @@ export const LnInvoiceCreateDocument = gql`
     mutation lnInvoiceCreate($input: LnInvoiceCreateInput!) {
   lnInvoiceCreate(input: $input) {
     errors {
-      __typename
       message
     }
     invoice {
-      __typename
       paymentHash
       paymentRequest
       paymentSecret
@@ -2977,7 +2966,6 @@ export const OnChainAddressCurrentDocument = gql`
     mutation onChainAddressCurrent($input: OnChainAddressCurrentInput!) {
   onChainAddressCurrent(input: $input) {
     errors {
-      __typename
       message
     }
     address
@@ -3735,11 +3723,9 @@ export const UserUpdateLanguageDocument = gql`
     mutation userUpdateLanguage($input: UserUpdateLanguageInput!) {
   userUpdateLanguage(input: $input) {
     errors {
-      __typename
       message
     }
     user {
-      __typename
       id
       language
     }

@@ -30,11 +30,9 @@ gql`
   mutation userUpdateLanguage($input: UserUpdateLanguageInput!) {
     userUpdateLanguage(input: $input) {
       errors {
-        __typename
         message
       }
       user {
-        __typename
         id
         language
       }
