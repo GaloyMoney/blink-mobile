@@ -33,6 +33,27 @@ const createGaloyServerClient = (config) => (authToken) => {
   })
 }
 
+const authTokens = process.env.GALOY_TEST_TOKENS?.split(",") || []
+
+const randomizeTokens = (arr: string[]): string => {
+  for (let i = arr.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[arr[i], arr[j]] = [arr[j], arr[i]]
+  }
+  return arr[0]
+}
+
+const getToken = () => {
+  const firstAuthToken = randomizeTokens(authTokens)
+  let secondAuthToken = randomizeTokens(authTokens)
+  while (firstAuthToken === secondAuthToken) {
+    secondAuthToken = randomizeTokens(authTokens)
+  }
+  return { firstAuthToken, secondAuthToken }
+}
+
+console.log(getToken())
+
 const authToken = process.env.GALOY_TOKEN
 const authTokenOther = process.env.GALOY_TOKEN_2
 
