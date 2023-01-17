@@ -235,6 +235,7 @@ gql`
     }
   }
 
+  # TODO replace with AccountDefaultWallet?
   query userDefaultWalletId($username: Username!) {
     userDefaultWalletId(username: $username)
   }

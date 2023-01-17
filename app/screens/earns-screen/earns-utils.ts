@@ -1,6 +1,4 @@
 import { TranslationFunctions } from "@app/i18n/i18n-types"
-import filter from "lodash.filter"
-import sumBy from "lodash.sumby"
 import { LocalizedString } from "typesafe-i18n"
 import { EarnSectionType, earnSections } from "./sections"
 import { QuizQuestion, QuizSectionContent } from "./earns-section"
@@ -66,22 +64,6 @@ export const sectionCompletedPct = ({
   return earns.filter((item) => item.fullfilled).length / earns.length
 }
 
-export const remainingSatsOnSection = ({
-  quizQuestions,
-  section,
-  quizQuestionsContent,
-}: {
-  section: EarnSectionType
-  quizQuestions: QuizQuestionGQL
-  quizQuestionsContent: QuizSectionContent[]
-}): number =>
-  sumBy(
-    filter(getCardsFromSection({ quizQuestions, section, quizQuestionsContent }), {
-      fullfilled: false,
-    }),
-    "value",
-  )
-
 export const getQuizQuestionsContent = ({
   LL,
 }: {
@@ -90,27 +72,25 @@ export const getQuizQuestionsContent = ({
   const LLEarn = LL.EarnScreen.earnSections
 
   const quizSectionContent = (Object.keys(earnSections) as EarnSectionType[]).map(
-    (sectionId) => {
-      return {
-        meta: {
-          id: sectionId,
-          title: LLEarn[sectionId].title(),
-        },
-        content: earnSections[sectionId].questions.map((question) => ({
-          id: question,
-          type: LLEarn[sectionId].questions[question].type(),
-          title: LLEarn[sectionId].questions[question].title(),
-          text: LLEarn[sectionId].questions[question].text(),
-          question: LLEarn[sectionId].questions[question].question(),
-          answers: Object.values(LLEarn[sectionId].questions[question].answers).map(
-            (answer: () => LocalizedString) => answer(),
-          ),
-          feedback: Object.values(LLEarn[sectionId].questions[question].feedback).map(
-            (feedback: () => LocalizedString) => feedback(),
-          ),
-        })),
-      }
-    },
+    (sectionId) => ({
+      meta: {
+        id: sectionId,
+        title: LLEarn[sectionId].title(),
+      },
+      content: earnSections[sectionId].questions.map((question) => ({
+        id: question,
+        type: LLEarn[sectionId].questions[question].type(),
+        title: LLEarn[sectionId].questions[question].title(),
+        text: LLEarn[sectionId].questions[question].text(),
+        question: LLEarn[sectionId].questions[question].question(),
+        answers: Object.values(LLEarn[sectionId].questions[question].answers).map(
+          (answer: () => LocalizedString) => answer(),
+        ),
+        feedback: Object.values(LLEarn[sectionId].questions[question].feedback).map(
+          (feedback: () => LocalizedString) => feedback(),
+        ),
+      })),
+    }),
   )
   return quizSectionContent
 }

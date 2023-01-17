@@ -17,11 +17,7 @@ import { palette } from "../../theme/palette"
 import useToken from "../../hooks/use-token"
 import { toastShow } from "../../utils/toast"
 import { SVGs } from "./earn-svg-factory"
-import {
-  getCardsFromSection,
-  getQuizQuestionsContent,
-  remainingSatsOnSection,
-} from "./earns-utils"
+import { getCardsFromSection, getQuizQuestionsContent } from "./earns-utils"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { PaginationItem } from "@app/components/pagination"
 import { useSharedValue } from "react-native-reanimated"
@@ -206,20 +202,15 @@ export const EarnSection = ({ route, navigation }: Props) => {
   const itemIndex = cards.findIndex((item) => !item.fullfilled)
   const [firstItem] = useState(itemIndex >= 0 ? itemIndex : 0)
   const progressValue = useSharedValue<number>(0)
-  const remainingSats = remainingSatsOnSection({
-    quizQuestions,
-    section,
-    quizQuestionsContent,
-  })
 
-  const [initialRemainingSats] = useState(remainingSats)
-  const currentRemainingEarn = remainingSats
+  const isCompleted = cards.every((item) => item.fullfilled)
+  const [initialIsCompleted] = useState(isCompleted)
 
   const sectionTitle = LL.EarnScreen.earnSections[section].title()
 
   const isFocused = useIsFocused()
 
-  if (initialRemainingSats !== 0 && currentRemainingEarn === 0 && isFocused) {
+  if (initialIsCompleted === false && isCompleted && isFocused) {
     navigation.navigate("sectionCompleted", {
       amount: cards.reduce((acc, item) => item.value + acc, 0),
       sectionTitle,

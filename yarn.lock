@@ -3907,13 +3907,6 @@
   dependencies:
     "@types/lodash" "*"
 
-"@types/lodash.filter@^4.6.7":
-  version "4.6.7"
-  resolved "https://registry.yarnpkg.com/@types/lodash.filter/-/lodash.filter-4.6.7.tgz#ff5d20d824cba30186a23336c568207da1e50d08"
-  integrity sha512-ka742YGB8YavNRe8grQ5zFBiJBHPjmgT99lAq4Od5FwKKege5pTd/b8arGGzVePc2x90C7U7jcLeaQw+q0lFBA==
-  dependencies:
-    "@types/lodash" "*"
-
 "@types/lodash.flattendeep@^4.4.6":
   version "4.4.7"
   resolved "https://registry.npmjs.org/@types/lodash.flattendeep/-/lodash.flattendeep-4.4.7.tgz"
@@ -3932,13 +3925,6 @@
   version "4.6.7"
   resolved "https://registry.npmjs.org/@types/lodash.pickby/-/lodash.pickby-4.6.7.tgz"
   integrity sha512-4ebXRusuLflfscbD0PUX4eVknDHD9Yf+uMtBIvA/hrnTqeAzbuHuDjvnYriLjUrI9YrhCPVKUf4wkRSXJQ6gig==
-  dependencies:
-    "@types/lodash" "*"
-
-"@types/lodash.sumby@^4.6.7":
-  version "4.6.7"
-  resolved "https://registry.yarnpkg.com/@types/lodash.sumby/-/lodash.sumby-4.6.7.tgz#0fdb742ffba958ea5f6cf25ad311b619f33bfb2a"
-  integrity sha512-KmclwYKp3Lj8Y6zFQrhkd7O0NYdARge7eAVdJ8DlZ3CeDBGeX4DvjWW62dCvK417eGZOj+O54M2as+KGAdsw/w==
   dependencies:
     "@types/lodash" "*"
 
@@ -12493,11 +12479,6 @@ lodash.difference@^4.5.0:
   resolved "https://registry.npmjs.org/lodash.difference/-/lodash.difference-4.5.0.tgz"
   integrity sha512-dS2j+W26TQ7taQBGN8Lbbq04ssV3emRw4NY58WErlTO29pIqS0HmoT5aJ9+TUQ1N3G+JOZSji4eugsWwGp9yPA==
 
-lodash.filter@^4.6.0:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/lodash.filter/-/lodash.filter-4.6.0.tgz#668b1d4981603ae1cc5a6fa760143e480b4c4ace"
-  integrity sha512-pXYUy7PR8BCLwX5mgJ/aNtyOvuJTdZAo9EQFUvMIYugqmJxnrYaANvTbgndOzHSCSR0wnlBBfRXJL5SbWxo3FQ==
-
 lodash.flatten@^4.4.0:
   version "4.4.0"
   resolved "https://registry.npmjs.org/lodash.flatten/-/lodash.flatten-4.4.0.tgz"
@@ -12587,11 +12568,6 @@ lodash.startcase@^4.4.0:
   version "4.4.0"
   resolved "https://registry.npmjs.org/lodash.startcase/-/lodash.startcase-4.4.0.tgz"
   integrity sha512-+WKqsK294HMSc2jEbNgpHpd0JfIBhp7rEV4aqXWqFr6AlXov+SlcgB1Fv01y2kGe3Gc8nMW7VA0SrGuSkRfIEg==
-
-lodash.sumby@^4.6.0:
-  version "4.6.0"
-  resolved "https://registry.npmjs.org/lodash.sumby/-/lodash.sumby-4.6.0.tgz"
-  integrity sha512-DCF6ONVffD6cdnZzZ7Ewhl23AOvXAvwGTfabmj4+WWkX8nXvyklgLkT5IyGt3kxX5CgfvQgLgYRRvEDsi7jTOQ==
 
 lodash.throttle@^4.1.1:
   version "4.1.1"
