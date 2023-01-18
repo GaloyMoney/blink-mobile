@@ -32,6 +32,10 @@ exports.config = {
   ...baseSpec,
   capabilities: [capabilities],
 
+  appium: {
+    version: "2.0.0",
+  },
+
   user: process.env.BROWSERSTACK_USER || "BROWSERSTACK_USER",
   key: process.env.BROWSERSTACK_ACCESS_KEY || "BROWSERSTACK_ACCESS_KEY",
 

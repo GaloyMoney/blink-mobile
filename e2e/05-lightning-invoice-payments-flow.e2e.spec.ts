@@ -2,6 +2,7 @@ import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
 import { selector, enter } from "./utils"
 import { getInvoice } from "./utils/graphql"
+import { setInputValue } from "./utils/set-value"
 
 describe("Payments Flow", async () => {
   loadLocale("en")
@@ -21,18 +22,10 @@ describe("Payments Flow", async () => {
   })
 
   it("Paste Invoice", async () => {
-    try {
-      const invoiceInput = await $(selector(LL.SendBitcoinScreen.input(), "Other", "[1]"))
-      await invoiceInput.waitForDisplayed({ timeout })
-      await invoiceInput.click()
-      await browser.pause(500)
-      await invoiceInput.sendKeys(invoice.split(""))
-      await enter(invoiceInput)
-      await browser.pause(5000)
-    } catch (e) {
-      // this passes but sometimes throws an error on ios
-      // even though it works properly
-    }
+    const invoiceInput = await $(selector(LL.SendBitcoinScreen.input(), "TextField"))
+    await invoiceInput.waitForDisplayed({ timeout })
+    await invoiceInput.clearValue()
+    await setInputValue(invoiceInput, invoice)
   })
 
   it("Click Next", async () => {
@@ -68,14 +61,14 @@ describe("Payments Flow", async () => {
     await browser.pause(4000)
   })
 
-  it("Click 'Confirm Payment' and get Green Checkmark success", async () => {
+  it("Click 'Confirm Payment' and navigate to move money screen", async () => {
     const confirmPaymentButton = await $(
       selector(LL.SendBitcoinConfirmationScreen.title(), "Button"),
     )
     await confirmPaymentButton.waitForDisplayed({ timeout })
     await confirmPaymentButton.click()
     const currentBalanceHeader = await $(selector("Current Balance Header", "StaticText"))
-    // Wait 5 seconds for move money screen to be displayed
-    await currentBalanceHeader.waitForDisplayed({ timeout: 5000 })
+    // Wait 10 seconds for move money screen to be displayed
+    await currentBalanceHeader.waitForDisplayed({ timeout: 10000 })
   })
 })

@@ -81,7 +81,7 @@ describe("Receive Payment Flow", async () => {
       await shareButton.waitForDisplayed({ timeout: 8000 })
       await shareButton.click()
       const invoiceSharedScreen = await $('//*[contains(@name,"lntbs")]')
-      const invoiceSharedScreenElement = await invoiceSharedScreen.waitForDisplayed({
+      await invoiceSharedScreen.waitForDisplayed({
         timeout: 8000,
       })
       invoice = await invoiceSharedScreen.getAttribute("name")

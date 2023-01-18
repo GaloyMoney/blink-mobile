@@ -18,7 +18,7 @@ export async function swipeRight() {
     const { height, width } = await browser.getWindowRect()
     const y = height / 2
     const fromX = width / 8
-    const toX = width - toX
+    const toX = width - fromX
     await browser.touchAction([
       { action: "press", x: fromX, y },
       { action: "wait", ms: 500 },
