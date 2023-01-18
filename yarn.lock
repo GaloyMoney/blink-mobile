@@ -3820,11 +3820,6 @@
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.191.tgz#09511e7f7cba275acd8b419ddac8da9a6a79e2fa"
   integrity sha512-BdZ5BCCvho3EIXw6wUCXHe7rS53AIDPLE+JzwgT+OsJk53oBfbSmZZ7CX4VaRoN78N+TJpFi9QPlfIVNmJYWxQ==
 
-"@types/mocha@^10.0.0":
-  version "10.0.1"
-  resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-10.0.1.tgz#2f4f65bb08bc368ac39c96da7b2f09140b26851b"
-  integrity sha512-/fvYntiO1GeICvqbQ3doGDIP97vWmvFt83GKguJ6prmQM2iXZfFcq6YE8KteFyRtX2/h5Hf91BYvPodJKFYv5Q==
-
 "@types/node@*", "@types/node@^18.0.0":
   version "18.11.18"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-18.11.18.tgz#8dfb97f0da23c2293e554c5a50d61ef134d7697f"
@@ -4297,16 +4292,25 @@
     loglevel-plugin-prefix "^0.8.4"
     strip-ansi "^6.0.0"
 
-"@wdio/mocha-framework@^7.19.7":
-  version "7.26.0"
-  resolved "https://registry.yarnpkg.com/@wdio/mocha-framework/-/mocha-framework-7.26.0.tgz#757be1648c662d5637b1d4522f826613c5647e95"
-  integrity sha512-iqAVRDc5ECeRUV2sk6AfCH0eryR3GtdDbDHUr4IxPjb9avtuYhHBR20hCV5c6PAyX33h7ZnHCIIej4bUZcCI6g==
+"@wdio/logger@8.1.0":
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/@wdio/logger/-/logger-8.1.0.tgz#aaefce7da066a477249191aec8e9caa8581aeb33"
+  integrity sha512-QRC5b7FF4JIYUCqggnVA0sZ80TwIUFN9JyBSbuGuMxaSLSLujSo7WfuSrnQXVvsRbnJ16wWwJWYigfLkxOW86Q==
   dependencies:
-    "@types/mocha" "^10.0.0"
-    "@wdio/logger" "7.26.0"
-    "@wdio/types" "7.26.0"
-    "@wdio/utils" "7.26.0"
-    expect-webdriverio "^3.0.0"
+    chalk "^5.1.2"
+    loglevel "^1.6.0"
+    loglevel-plugin-prefix "^0.8.4"
+    strip-ansi "^6.0.0"
+
+"@wdio/mocha-framework@^8.1.2":
+  version "8.1.2"
+  resolved "https://registry.yarnpkg.com/@wdio/mocha-framework/-/mocha-framework-8.1.2.tgz#5e7a7669141fc9d9591d71b68b9b9b263ae8a945"
+  integrity sha512-aF7AO/tH1MJZZTkpsvhslSYCb90EXUXSRxQ3TgDC7jSlZh2dstPftO9ySYkHciGEi+CH3qNr/aGVElSoKueLgQ==
+  dependencies:
+    "@types/node" "^18.0.0"
+    "@wdio/logger" "8.1.0"
+    "@wdio/types" "8.1.2"
+    "@wdio/utils" "8.1.2"
     mocha "^10.0.0"
 
 "@wdio/protocols@7.22.0":
@@ -4391,6 +4395,13 @@
     "@types/node" "^18.0.0"
     got "^11.8.1"
 
+"@wdio/types@8.1.2":
+  version "8.1.2"
+  resolved "https://registry.yarnpkg.com/@wdio/types/-/types-8.1.2.tgz#6221eae9e6665a4fcced83a37f4f4fa8c9b1c254"
+  integrity sha512-k2I/u08Ljtl7i6i+ANSo7ghPRsdTdJfwl3j8jFSzO98IwOqcmVItC3ysmiuVSlSrbOUljlmo0uohIpiTZHkyKw==
+  dependencies:
+    "@types/node" "^18.0.0"
+
 "@wdio/utils@7.24.1":
   version "7.24.1"
   resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-7.24.1.tgz#c04db6fe10c135717a62d7c8219b887d3fc911a7"
@@ -4407,6 +4418,16 @@
   dependencies:
     "@wdio/logger" "7.26.0"
     "@wdio/types" "7.26.0"
+    p-iteration "^1.1.8"
+
+"@wdio/utils@8.1.2":
+  version "8.1.2"
+  resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-8.1.2.tgz#326be503a787c9d5e685f25e95099319106445a7"
+  integrity sha512-Pw4AZMibpAMdQXs7EGkamtwRLjl63V+i9C7FghWwGXu3/4fFkj9TcET6F8tl2cUQtIXjSVGp/JVgv6+u8m4pHQ==
+  dependencies:
+    "@wdio/logger" "8.1.0"
+    "@wdio/types" "8.1.2"
+    import-meta-resolve "^2.2.0"
     p-iteration "^1.1.8"
 
 "@webassemblyjs/ast@1.9.0":
@@ -6312,6 +6333,11 @@ chalk@^4.0.0, chalk@^4.0.2, chalk@^4.1.0, chalk@^4.1.1, chalk@^4.1.2:
   dependencies:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
+
+chalk@^5.1.2:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/chalk/-/chalk-5.2.0.tgz#249623b7d66869c673699fb66d65723e54dfcfb3"
+  integrity sha512-ree3Gqw/nazQAPuJJEy+avdl7QfZMcUvmHIKgEZkGL+xOBzRvup5Hxo6LHuMceSxOabuJLJm5Yp/92R9eMmMvA==
 
 change-case-all@1.0.14:
   version "1.0.14"
@@ -8695,14 +8721,6 @@ expand-tilde@^2.0.0, expand-tilde@^2.0.2:
   dependencies:
     homedir-polyfill "^1.0.1"
 
-expect-webdriverio@^3.0.0:
-  version "3.5.3"
-  resolved "https://registry.yarnpkg.com/expect-webdriverio/-/expect-webdriverio-3.5.3.tgz#1f233de6f8abd76e1315f1e34d0a8cc5d34f28fc"
-  integrity sha512-pMecdn7JOde9ko0F6+v/DOAPTYg7FqmpXEx7dn0AST0+Z/RYj9DHqg40PrUBdHi4gsCHEUE6/ryalf0Nfo7bVQ==
-  dependencies:
-    expect "^28.1.0"
-    jest-matcher-utils "^28.1.0"
-
 expect@^26.6.2:
   version "26.6.2"
   resolved "https://registry.yarnpkg.com/expect/-/expect-26.6.2.tgz#c6b996bf26bf3fe18b67b2d0f51fc981ba934417"
@@ -8715,7 +8733,7 @@ expect@^26.6.2:
     jest-message-util "^26.6.2"
     jest-regex-util "^26.0.0"
 
-expect@^28.0.0, expect@^28.1.0:
+expect@^28.0.0:
   version "28.1.3"
   resolved "https://registry.yarnpkg.com/expect/-/expect-28.1.3.tgz#90a7c1a124f1824133dd4533cce2d2bdcb6603ec"
   integrity sha512-eEh0xn8HlsuOBxFgIss+2mX85VAS4Qy3OSkjV7rlBWljtA4oWH37glVGyOZSZvErDT/yBywZdPGwCXuTvSG85g==
@@ -10240,6 +10258,11 @@ import-local@^3.0.2:
     pkg-dir "^4.2.0"
     resolve-cwd "^3.0.0"
 
+import-meta-resolve@^2.2.0:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/import-meta-resolve/-/import-meta-resolve-2.2.1.tgz#80fdeddbc15d7f3992c37425023ffb4aca7cb583"
+  integrity sha512-C6lLL7EJPY44kBvA80gq4uMsVFw5x3oSKfuMl1cuZ2RkI5+UJqQXgn+6hlUew0y4ig7Ypt4CObAAIzU53Nfpuw==
+
 imurmurhash@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/imurmurhash/-/imurmurhash-0.1.4.tgz#9218b9b2b928a238b13dc4fb6b6d576f231453ea"
@@ -11327,7 +11350,7 @@ jest-matcher-utils@^26.6.2:
     jest-get-type "^26.3.0"
     pretty-format "^26.6.2"
 
-jest-matcher-utils@^28.1.0, jest-matcher-utils@^28.1.3:
+jest-matcher-utils@^28.1.3:
   version "28.1.3"
   resolved "https://registry.yarnpkg.com/jest-matcher-utils/-/jest-matcher-utils-28.1.3.tgz#5a77f1c129dd5ba3b4d7fc20728806c78893146e"
   integrity sha512-kQeJ7qHemKfbzKoGjHHrRKH6atgxMk8Enkk2iPQ3XwO6oE/KYD8lMYOziCkeSB9G4adPM4nR1DE8Tf5JeWH6Bw==
