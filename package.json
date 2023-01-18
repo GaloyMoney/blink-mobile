@@ -11,7 +11,7 @@
     "eslint:fix": "eslint app --ext .js,.ts,.tsx --fix",
     "check-code": "yarn tsc:check && yarn eslint:check && yarn check:translations && yarn check:codegen",
     "check:translations": "yarn update-translations && if git diff --name-only | grep -q 'app/i18n/i18n-types.ts'; then echo 'Error: app/i18n/i18n-types.ts has changes, run `yarn update-translations` and re-recommit' >&2; exit 1; fi",
-    "check:codegen": "yarn dev:codegen && if git diff --name-only | grep -q 'app/graphql/generated.ts'; then echo 'Error: app/graphql/generated.ts has changes, run `yarn dev:codegenp` and re-recommit' >&2; exit 1; fi",
+    "check:codegen": "yarn dev:codegen && if git diff --name-only | grep -q 'app/graphql/generated.ts'; then echo 'Error: app/graphql/generated.ts has changes, run `yarn dev:codegen` and re-recommit' >&2; exit 1; fi",
     "test": "LOGLEVEL=warn jest --runInBand",
     "coverage": "jest --runInBand --coverage",
     "ios-session": "(cd ios && fastlane spaceauth -u david@galoy.io)",

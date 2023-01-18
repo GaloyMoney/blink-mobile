@@ -125,35 +125,34 @@ import { EarnSectionType, earnSections } from "../earns-screen/sections"
 import { useQuizQuestionsQuery } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
 
-export type QuizQuestionGQL = readonly {
-  readonly __typename: "UserQuizQuestion"
-  readonly completed: boolean
-  readonly question: {
-    readonly __typename: "QuizQuestion"
-    readonly id: string
-    readonly earnAmount: number
-  }
-}[]
-
 gql`
   query quizQuestions($hasToken: Boolean!) {
     me @include(if: $hasToken) {
-      quizQuestions {
-        completed
-        question {
-          id
-          earnAmount
+      defaultAccount {
+        ... on ConsumerAccount {
+          quiz {
+            id
+            amount
+            completed
+          }
         }
       }
     }
   }
 `
 
+export type QuizQuestions = {
+  readonly __typename: "Quiz"
+  readonly id: string
+  readonly amount: number
+  readonly completed: boolean
+}[]
+
 export const EarnMapDataInjected = ({ navigation }: EarnMapDataProps) => {
   const { hasToken } = useToken()
   const { data } = useQuizQuestionsQuery({ variables: { hasToken } })
 
-  const quizQuestions = data?.me?.quizQuestions ?? []
+  const quizQuestions = data?.me?.defaultAccount.quiz.slice() ?? []
 
   const { LL } = useI18nContext()
 
@@ -190,7 +189,7 @@ export const EarnMapDataInjected = ({ navigation }: EarnMapDataProps) => {
 
   const earnedSat = quizQuestions
     .filter((quiz) => quiz.completed)
-    .reduce((acc, { question: { earnAmount } }) => acc + earnAmount, 0)
+    .reduce((acc, { amount }) => acc + amount, 0)
 
   return (
     <EarnMapScreen

@@ -210,6 +210,8 @@ export type ConsumerAccount = Account & {
   readonly displayCurrency: Scalars['DisplayCurrency'];
   readonly id: Scalars['ID'];
   readonly limits: AccountLimits;
+  /** List the quiz questions of the consumer account */
+  readonly quiz: ReadonlyArray<Quiz>;
   /** A list of all transactions associated with walletIds optionally passed. */
   readonly transactions?: Maybe<TransactionConnection>;
   readonly usdWallet?: Maybe<UsdWallet>;
@@ -594,12 +596,12 @@ export type Mutation = {
   readonly onChainPaymentSend: PaymentSendPayload;
   readonly onChainPaymentSendAll: PaymentSendPayload;
   readonly onChainUsdPaymentSend: PaymentSendPayload;
+  readonly quizCompleted: QuizCompletedPayload;
   /** @deprecated will be moved to AccountContact */
   readonly userContactUpdateAlias: UserContactUpdateAliasPayload;
-  readonly userDeviceAccountCreate: AuthTokenPayload;
   readonly userLogin: AuthTokenPayload;
-  readonly userLoginUpgrade: AuthTokenPayload;
   readonly userLogout: AuthTokenPayload;
+  /** @deprecated Use QuizCompletedMutation instead */
   readonly userQuizQuestionUpdateCompleted: UserQuizQuestionUpdateCompletedPayload;
   readonly userRequestAuthCode: SuccessPayload;
   readonly userUpdateLanguage: UserUpdateLanguagePayload;
@@ -728,23 +730,18 @@ export type MutationOnChainUsdPaymentSendArgs = {
 };
 
 
+export type MutationQuizCompletedArgs = {
+  input: QuizCompletedInput;
+};
+
+
 export type MutationUserContactUpdateAliasArgs = {
   input: UserContactUpdateAliasInput;
 };
 
 
-export type MutationUserDeviceAccountCreateArgs = {
-  input: UserDeviceAccountCreateInput;
-};
-
-
 export type MutationUserLoginArgs = {
   input: UserLoginInput;
-};
-
-
-export type MutationUserLoginUpgradeArgs = {
-  input: UserLoginUpgrade;
 };
 
 
@@ -951,6 +948,7 @@ export type Query = {
   readonly onChainTxFee: OnChainTxFee;
   readonly onChainUsdTxFee: OnChainUsdTxFee;
   readonly price?: Maybe<Scalars['String']>;
+  /** @deprecated TODO: remove. we don't need a non authenticated version of this query. the users can only do the query while authenticated */
   readonly quizQuestions?: Maybe<ReadonlyArray<Maybe<QuizQuestion>>>;
   /** @deprecated will be migrated to AccountDefaultWalletId */
   readonly userDefaultWalletId: Scalars['WalletId'];
@@ -997,6 +995,24 @@ export type QueryUserDefaultWalletIdArgs = {
 
 export type QueryUsernameAvailableArgs = {
   username: Scalars['Username'];
+};
+
+export type Quiz = {
+  readonly __typename: 'Quiz';
+  /** The reward in Satoshis for the quiz question */
+  readonly amount: Scalars['SatAmount'];
+  readonly completed: Scalars['Boolean'];
+  readonly id: Scalars['ID'];
+};
+
+export type QuizCompletedInput = {
+  readonly id: Scalars['ID'];
+};
+
+export type QuizCompletedPayload = {
+  readonly __typename: 'QuizCompletedPayload';
+  readonly errors: ReadonlyArray<Error>;
+  readonly quiz?: Maybe<Quiz>;
 };
 
 export type QuizQuestion = {
@@ -1187,7 +1203,7 @@ export type User = {
   readonly phone?: Maybe<Scalars['Phone']>;
   /**
    * List the quiz questions the user may have completed.
-   * @deprecated will be moved to Accounts
+   * @deprecated use Quiz from Account instead
    */
   readonly quizQuestions: ReadonlyArray<UserQuizQuestion>;
   /**
@@ -1236,16 +1252,7 @@ export type UserContactUpdateAliasPayload = {
   readonly errors: ReadonlyArray<Error>;
 };
 
-export type UserDeviceAccountCreateInput = {
-  readonly deviceId: Scalars['String'];
-};
-
 export type UserLoginInput = {
-  readonly code: Scalars['OneTimeAuthCode'];
-  readonly phone: Scalars['Phone'];
-};
-
-export type UserLoginUpgrade = {
   readonly code: Scalars['OneTimeAuthCode'];
   readonly phone: Scalars['Phone'];
 };
@@ -1446,14 +1453,14 @@ export type QuizQuestionsQueryVariables = Exact<{
 }>;
 
 
-export type QuizQuestionsQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly quizQuestions: ReadonlyArray<{ readonly __typename: 'UserQuizQuestion', readonly completed: boolean, readonly question: { readonly __typename: 'QuizQuestion', readonly id: string, readonly earnAmount: number } }> } | null };
+export type QuizQuestionsQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly quiz: ReadonlyArray<{ readonly __typename: 'Quiz', readonly id: string, readonly amount: number, readonly completed: boolean }> } } | null };
 
-export type UserQuizQuestionUpdateCompletedMutationVariables = Exact<{
-  input: UserQuizQuestionUpdateCompletedInput;
+export type QuizCompletedMutationVariables = Exact<{
+  input: QuizCompletedInput;
 }>;
 
 
-export type UserQuizQuestionUpdateCompletedMutation = { readonly __typename: 'Mutation', readonly userQuizQuestionUpdateCompleted: { readonly __typename: 'UserQuizQuestionUpdateCompletedPayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly userQuizQuestion?: { readonly __typename: 'UserQuizQuestion', readonly completed: boolean, readonly question: { readonly __typename: 'QuizQuestion', readonly id: string, readonly earnAmount: number } } | null } };
+export type QuizCompletedMutation = { readonly __typename: 'Mutation', readonly quizCompleted: { readonly __typename: 'QuizCompletedPayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly quiz?: { readonly __typename: 'Quiz', readonly id: string, readonly amount: number, readonly completed: boolean } | null } };
 
 export type AddressScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2367,11 +2374,13 @@ export type ConversionScreenQueryResult = Apollo.QueryResult<ConversionScreenQue
 export const QuizQuestionsDocument = gql`
     query quizQuestions($hasToken: Boolean!) {
   me @include(if: $hasToken) {
-    quizQuestions {
-      completed
-      question {
-        id
-        earnAmount
+    defaultAccount {
+      ... on ConsumerAccount {
+        quiz {
+          id
+          amount
+          completed
+        }
       }
     }
   }
@@ -2405,48 +2414,46 @@ export function useQuizQuestionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
 export type QuizQuestionsQueryHookResult = ReturnType<typeof useQuizQuestionsQuery>;
 export type QuizQuestionsLazyQueryHookResult = ReturnType<typeof useQuizQuestionsLazyQuery>;
 export type QuizQuestionsQueryResult = Apollo.QueryResult<QuizQuestionsQuery, QuizQuestionsQueryVariables>;
-export const UserQuizQuestionUpdateCompletedDocument = gql`
-    mutation userQuizQuestionUpdateCompleted($input: UserQuizQuestionUpdateCompletedInput!) {
-  userQuizQuestionUpdateCompleted(input: $input) {
+export const QuizCompletedDocument = gql`
+    mutation quizCompleted($input: QuizCompletedInput!) {
+  quizCompleted(input: $input) {
     errors {
       message
     }
-    userQuizQuestion {
-      question {
-        id
-        earnAmount
-      }
+    quiz {
+      id
+      amount
       completed
     }
   }
 }
     `;
-export type UserQuizQuestionUpdateCompletedMutationFn = Apollo.MutationFunction<UserQuizQuestionUpdateCompletedMutation, UserQuizQuestionUpdateCompletedMutationVariables>;
+export type QuizCompletedMutationFn = Apollo.MutationFunction<QuizCompletedMutation, QuizCompletedMutationVariables>;
 
 /**
- * __useUserQuizQuestionUpdateCompletedMutation__
+ * __useQuizCompletedMutation__
  *
- * To run a mutation, you first call `useUserQuizQuestionUpdateCompletedMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUserQuizQuestionUpdateCompletedMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useQuizCompletedMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useQuizCompletedMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [userQuizQuestionUpdateCompletedMutation, { data, loading, error }] = useUserQuizQuestionUpdateCompletedMutation({
+ * const [quizCompletedMutation, { data, loading, error }] = useQuizCompletedMutation({
  *   variables: {
  *      input: // value for 'input'
  *   },
  * });
  */
-export function useUserQuizQuestionUpdateCompletedMutation(baseOptions?: Apollo.MutationHookOptions<UserQuizQuestionUpdateCompletedMutation, UserQuizQuestionUpdateCompletedMutationVariables>) {
+export function useQuizCompletedMutation(baseOptions?: Apollo.MutationHookOptions<QuizCompletedMutation, QuizCompletedMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UserQuizQuestionUpdateCompletedMutation, UserQuizQuestionUpdateCompletedMutationVariables>(UserQuizQuestionUpdateCompletedDocument, options);
+        return Apollo.useMutation<QuizCompletedMutation, QuizCompletedMutationVariables>(QuizCompletedDocument, options);
       }
-export type UserQuizQuestionUpdateCompletedMutationHookResult = ReturnType<typeof useUserQuizQuestionUpdateCompletedMutation>;
-export type UserQuizQuestionUpdateCompletedMutationResult = Apollo.MutationResult<UserQuizQuestionUpdateCompletedMutation>;
-export type UserQuizQuestionUpdateCompletedMutationOptions = Apollo.BaseMutationOptions<UserQuizQuestionUpdateCompletedMutation, UserQuizQuestionUpdateCompletedMutationVariables>;
+export type QuizCompletedMutationHookResult = ReturnType<typeof useQuizCompletedMutation>;
+export type QuizCompletedMutationResult = Apollo.MutationResult<QuizCompletedMutation>;
+export type QuizCompletedMutationOptions = Apollo.BaseMutationOptions<QuizCompletedMutation, QuizCompletedMutationVariables>;
 export const AddressScreenDocument = gql`
     query addressScreen {
   me {
