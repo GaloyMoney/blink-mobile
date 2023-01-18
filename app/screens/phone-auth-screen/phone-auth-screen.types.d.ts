@@ -3,8 +3,3 @@ type GeetestValidationData = {
   geetestSecCode: string
   geetestValidate: string
 }
-
-type CaptchaRequestAuthCodeData = {
-  errors: GaloyServerError[]
-  success: boolean
-}
